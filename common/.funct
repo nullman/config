@@ -1233,7 +1233,7 @@ gitsynchome()
     # pull (update) home git repository (from origin)
     for ((x = 0; x < ${#dirs[@]}; x++)) ; do
         dir="${HOME}/${dirs[${x}]}"
-        echo "Pulling '${dir}' from origin..."
+        echo "Pulling ${dir} from origin..."
         (cd "${dir}" && git pull origin)
     done
 
