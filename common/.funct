@@ -1238,10 +1238,12 @@ gitsynchome()
     done
 
     #if [[ -L .cron ]] && [[ -f config-private/custom/$(uname -n)/.cron ]] ; then
+    #    echo "Update crontab..."
     #    crontab -l > config-private/custom/$(uname -n)/.cron
     #fi
     # update addressbook
     if [[ -f "${HOME}/.addressbook" ]] && [[ ! -L "${HOME}/.addressbook" ]] ; then
+        echo "Update .addressbook..."
         (cd "${HOME}" && \
              cp .addressbook config-private/common/ && \
              ln -sf config-private/common/.addressbook)
@@ -1249,6 +1251,7 @@ gitsynchome()
     # only update xscreensaver preferences on tank
     if [[ -f "${HOME}/.xscreensaver" ]] && [[ ! -L "${HOME}/.xscreensaver" ]] && \
            [[ "$(uname -n)" == "tank" ]] ; then
+            echo "Update .xscreensaver..."
         (cd "${HOME}" && \
              cp .xscreensaver config-private/common/ && \
              ln -sf config-private/common/.xscreensaver)
