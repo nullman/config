@@ -1725,10 +1725,29 @@ EOF
 #        homeinitialize          stow links from ~/ to ~/config and ~/config-private dirs
 homeinitialize()
 {
-    backup="${HOME}/original-configuration-files"
+    backupdir="${HOME}/original-configuration-files"
+    backupfiles=(
+        ".bash_logout"
+        ".bash_profile"
+        ".bashrc"
+        ".config"
+        ".i3"
+        ".profile"
+        ".xinitrc"
+        ".Xresources"
+    )
+    symlinkdirs=(
+        "doc/avatars"
+        "doc/icons"
+        "doc/images"
+        "doc/sounds"
+        "/home/data/media/audio/Sounds"
+        "/home/data/media/repos/C64"
+        "/home/data/media/repos/DOS"
+    )
 
     echo "You are about to setup links from '${HOME}' to '${HOME}/config' and '${HOME}/config-private'."
-    echo "All files and directories replaced will be moved to '${backup}'."
+    echo "All files and directories replaced will be moved to '${backupdir}'."
     echo "This command should only be run once for a given HOME directory."
     [[ -e "${HOME}/.alias" ]] && echo "It looks like stow initialization has already occurred" && exit 1
     echo -n "Do you wish to proceed? [yN] " ; read a
@@ -1737,12 +1756,12 @@ homeinitialize()
         y|Y)
             [[ -d "config" ]] || echo "Missing config directory!" && exit 1
 
-            echo "Moving existing home files to: ${backup}..."
+            echo "Moving existing home files to: ${backupdir}..."
             (cd "${HOME}" && \
-                 mkdir -p "${backup}" && \
-                 for file in .bash_logout .bash_profile .bashrc .config .i3 .profile .xinitrc .Xresources ; do
-                     echo "  ${file} ==> ${backup}"
-                     mv --verbose "${file}" "${backup}/"
+                 mkdir -p "${backupdir}" && \
+                 for file in ${backupfiles[@]} ; do
+                     echo "  ${file} ==> ${backupdir}"
+                     mv --verbose "${file}" "${backupdir}/"
                  done) || exit 1
 
             dirs=("config" "config-private")
@@ -1760,15 +1779,8 @@ homeinitialize()
 
             echo "Making other symlinks..."
             (cd "${HOME}" && \
-                 for file in "doc/avatars"
-                             "doc/icons"
-                             "doc/images"
-                             "doc/sounds"
-                             "/home/data/media/audio/Sounds"
-                             "/home/data/media/repos/C64"
-                             "/home/data/media/repos/DOS"
-                 do
-                     if [[ -d ${file} ]] ; then
+                 for file in ${symlinkdirs[@]} ; do
+                     if [[ -d "${file}" ]] ; then
                          echo "  ${file}"
                          ln -sf "${file}" .
                      fi
