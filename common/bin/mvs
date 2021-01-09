@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+#===============================================================================
+# mvs
+#
+# Perform a move (rename) of all files in the current directory using a search
+# and replace of a regular expression string.  If a file is under git
+# tracking, then a git move is performed instead.
+#
+# Author: Kyle W T Sherman
+#===============================================================================
+
+if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+    echo "Usage: $(basename $0) SOURCE_PATTERN DEST_PATTERN"
+    exit 1
+fi
+
+pat1="$1"
+pat2="$2"
+
+ls -1 | while read file1 ; do
+    file2=$(echo "${file1}" | sed "s/${pat1}/${pat2}/g")
+    if [[ "${file1}" != "${file2}" ]] ; then
+       echo "${file1} => ${file2}"
+       git=$(git ls-files "${file1}" 2>/dev/null)
+       if [[ -n "${git}" ]] ; then
+           git mv "${file1}" "${file2}"
+       else
+           mv "${file1}" "${file2}"
+       fi
+    fi
+done
+
+#===============================================================================
+# End of File
+#===============================================================================

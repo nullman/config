@@ -1,0 +1,255 @@
+#!/usr/bin/env bash
+#=============================================================================
+# .profile
+#
+# Profile Config
+#
+# Some options are controled by uncommenting lines in the .profile_run file.
+#
+# Author: Kyle W T Sherman
+#=============================================================================
+
+# source funct
+[[ -f "${HOME}/.funct" ]] && source "${HOME}/.funct" 2>&1
+
+# source alias
+[[ -f "${HOME}/.alias" ]] && source "${HOME}/.alias" 2>&1
+
+# add to the run path
+export runpath="${runpath}:${HOME}/.profile"
+logger "Running: ${HOME}/.profile"
+
+# check if executable command is found in the path
+_command()
+{
+    command -v "$1" > /dev/null 2>&1
+}
+
+# prevent duplicate path entries
+_pathadd()
+{
+    if [[ -d "$1" ]] ; then
+        p=$(cd "$1" && pwd)
+        q=$(echo "$p" | sed 's/(/\\(/g ; s/)/\\)/g')
+        if ! echo "${PATH}" | egrep -q "(^|:)$q($|:)" ; then
+            if [[ -z "${PATH}" ]] ; then
+                PATH="${p}"
+            else
+                if [[ "$2" == "before" ]] ; then
+                    PATH="${p}:${PATH}"
+                else
+                    PATH="${PATH}:${p}"
+                fi
+            fi
+        fi
+    fi
+}
+
+# prevent duplicate infopath entries
+_infopathadd()
+{
+    if [[ -d "$1" ]] ; then
+        p=$(cd "$1" && pwd)
+        q=$(echo "$p" | sed 's/(/\\(/g ; s/)/\\)/g')
+        if ! echo "${INFOPATH}" | egrep -q "(^|:)$q($|:)" ; then
+            if [[ -z "${INFOPATH}" ]] ; then
+                INFOPATH="${p}"
+            else
+                if [[ "$2" == "before" ]] ; then
+                    INFOPATH="${p}:${INFOPATH}"
+                else
+                    INFOPATH="${INFOPATH}:${p}"
+                fi
+            fi
+        fi
+    fi
+}
+
+# set environmental vars
+export USERNAME="${USER}"
+export HOSTNAME="$(uname -n)"
+export home="${HOME}"
+#export DISPLAY=":0.0"
+[[ "${USER}" == "root" ]] && export DISPLAY=":0.0"
+[[ -z "${REAL_TERM}" ]] && export REAL_TERM="${TERM}" # keep original TERM value for scripts to use
+#[[ "${TERM}" == "urxvt-256color" ]] && export TERM="urxvt"
+[[ -z "${TERM}" ]] && export TERM="xterm-256color" # act like xterm with color support
+export TERMINAL="${TERM}"
+export PAGER="less"
+export LESS="--CLEAR-SCREEN --quit-if-one-screen --ignore-case --jump-target=10 --LONG-PROMPT --RAW-CONTROL-CHARS --no-init --tilde --shift 4"
+export PROCESS_SHELL="$(ps -hp $$ | awk '{print $5}')"
+export EDITOR="emacsed"                 # default terminal editor
+export VISUAL="${EDITOR}"               # default GUI editor
+#export EDITOR="emacsclient -t -a ''"    # default terminal editor
+#export VISUAL="emacsclient -c -a emacs" # default GUI editor
+export GIT_EDITOR="emacsedwait"
+export BROWSER="firefox"
+export NNTPSERVER="netnews.comcast.net"
+#export NNTPSERVER="news.usenetserver.com"
+export EMAIL="kylewsherman@gmail.com"
+#export MAIL="/var/mail/${USER}"
+unset MAIL
+#export MAILDIR="${HOME}/.maildir"
+#export MAILDIR="imap://morpheus.nullware.com/kyle"
+export LEDGER_FILE="${HOME}/ledger/checking-kyle.dat"
+export ANDROID_SDK="${HOME}/android-sdk"
+export ANDROID_NDK="${HOME}/android-sdk/ndk-bundle"
+export GOROOT="/usr/lib/go"
+export GOPATH="${HOME}/gocode"
+export SDKMAN_DIR="${HOME}/.sdkman"
+export GEM_HOME="$(_command ruby && ruby -e 'print Gem.user_dir')"
+
+# shell colors
+export COLOR_DEFAULT="\[\033[0m\]"
+export COLOR_BLACK="\[\033[0;30m\]"
+export COLOR_DARK_GRAY="\[\033[1;30m\]"
+export COLOR_RED="\[\033[0;31m\]"
+export COLOR_LIGHT_RED="\[\033[1;31m\]"
+export COLOR_GREEN="\[\033[0;32m\]"
+export COLOR_LIGHT_GREEN="\[\033[1;32m\]"
+export COLOR_BROWN="\[\033[0;33m\]"
+export COLOR_YELLOW="\[\033[1;33m\]"
+export COLOR_BLUE="\[\033[0;34m\]"
+export COLOR_LIGHT_BLUE="\[\033[1;34m\]"
+export COLOR_PURPLE="\[\033[0;35m\]"
+export COLOR_LIGHT_PURPLE="\[\033[1;35m\]"
+export COLOR_CYAN="\[\033[0;36m\]"
+export COLOR_LIGHT_CYAN="\[\033[1;36m\]"
+export COLOR_LIGHT_GRAY="\[\033[0;37m\]"
+export COLOR_WHITE="\[\033[1;37m\]"
+
+# path additions
+# path addition "befores" in reverse order
+[[ -L /usr/games ]] || _pathadd /usr/games before
+[[ -L /usr/local/games ]] || _pathadd /usr/local/games before
+[[ -L /bin ]] || _pathadd /bin before
+[[ -L /usr/bin ]] || _pathadd /usr/bin before
+[[ -L /usr/local/bin ]] || _pathadd /usr/local/bin before
+[[ -L /sbin ]] || _pathadd /sbin before
+[[ -L /usr/sbin ]] || _pathadd /usr/sbin before
+[[ -L /usr/local/sbin ]] || _pathadd /usr/local/sbin before
+# path addition "afters" in order
+_pathadd "${HOME}/bin"
+_pathadd "${HOME}/bin/vendor"
+_pathadd "${HOME}/.nix-profile/bin"
+_pathadd "${HOME}/node_modules/.bin"
+_pathadd "${HOME}/android-sdk/tools"
+_pathadd "${HOME}/android-sdk/tools/bin"
+_pathadd "${HOME}/android-sdk/platform-tools"
+[[ -d "${HOME}/android-sdk/build-tools" ]] && BUILD_TOOLS_DIR="${HOME}/android-sdk/build-tools/$(ls -1 ${HOME}/android-sdk/build-tools/ | tail -n 1)"
+_pathadd "${BUILD_TOOLS_DIR}"
+_pathadd "${HOME}/android-studio/bin"
+_command ruby && [[ -d "${HOME}/.gem/ruby" ]] && _pathadd "${HOME}/.gem/ruby/$(ls -1 ${HOME}/.gem/ruby/ | tail -n 1)/bin"
+_pathadd "${HOME}/code/cc65/bin"
+_pathadd "${HOME}/code/commander-x16/x16-emulator"
+_pathadd "${HOME}/coursera/algs4/bin"
+_pathadd "${GOROOT}/bin"
+_pathadd "${GOPATH}/bin"
+_pathadd "${SDKMAN_DIR}/candidates/kotlin/current/bin"
+_pathadd "${HOME}/.cargo/bin"
+export PATH
+
+# cd path
+CDPATH=":.:/mnt:/home/data/media:/home/data/media/audio/Music:${HOME}"
+export CDPATH
+
+# add libraries to LD_LIBRARY_PATH
+echo "${LD_LIBRARY_PATH}" | grep -q "/usr/lib" || LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/usr/lib"
+echo "${LD_LIBRARY_PATH}" | grep -q "/usr/local/lib" || LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/usr/local/lib"
+
+# info path
+_infopathadd "/usr/share/info" before
+export INFOPATH
+
+# set screen temp dir
+export SCREENDIR="${HOME}/.screendir"
+[[ -d "${SCREENDIR}" ]] || mkdir -p -m 700 "${SCREENDIR}"
+
+# # run ssh-agent
+# #pstest ssh-add || ssh-add > /dev/null 2>&1
+# pstest ssh-agent || ssh-agent > /dev/null 2>&1
+
+# # run keychain for one-time entry of ssh passphrase
+# [[ -d "${HOME}/.ssh" ]] && eval "$(keychain --quiet --eval id_rsa)"
+
+# set XDG_DATA_DIRS
+export XDG_DATA_DIRS="/usr/local/share/:/usr/share/"
+# add flatpak support
+export XDG_DATA_DIRS="${XDG_DATA_DIRS}:${HOME}/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share"
+
+# # set oracle environment
+# source /etc/.oracle_profile
+
+# set vitualenv environment
+export WORKON_HOME="${HOME}/.virtualenvs"
+export PROJECT_HOME="${HOME}/.virtualenv-projects"
+[[ -x "/usr/local/bin/virtualenvwrapper.sh" ]] && source "/usr/local/bin/virtualenvwrapper.sh" 2>&1
+
+# prodvd key
+export CDR_SECURITY="8:dvd,clone:sparc-sun-solaris2,i386-pc-solaris2,i586-pc-linux\,powerpc-apple,hppa,powerpc-ibm-aix,i386-unknown-freebsd,i386-unknown-openbsd,i38\6-unknown-netbsd,powerpc-apple-netbsd,i386-pc-bsdi,mips-sgi-irix,i386-pc-sco:1.11\::1093000000:::private/research/educational_non-commercial_use:9vl2T2kP6w6O4h.bXu\et8hP1Z3H5erm3qWmxhbcr.fHvuN8ZJbhQUWBzjAc"
+
+# # set ocaml package manager environment
+# [[ -x "${HOME}/.opam/opam-init/init.sh" ]] && source "${HOME}/.opam/opam-init/init.sh" > /dev/null 2>&1
+
+# initialize nvm
+[[ -f "/usr/share/nvm/init-nvm.sh" ]] && source "/usr/share/nvm/init-nvm.sh" 2>&1
+
+# initialize opam (ocaml package manager)
+#[[ "${SHELL: -4}" == "bash" ]] && [[ -f "${HOME}/.opam/opam-init/init.sh" ]] && source "${HOME}/.opam/opam-init/init.sh"
+#[[ "${SHELL: -3}" == "zsh" ]] && [[ -f "${HOME}/.opam/opam-init/init.zsh" ]] && source "${HOME}/.opam/opam-init/init.zsh"
+
+# # if we are running X then...
+# if [[ -n "$(ps -e --format pid,ppid,user,args | grep -v grep | grep Xorg)" ]] && [[ -n "${DISPLAY}" ]] ; then
+#     # # run .xprofile
+#     # [[ -f "${HOME}/.xprofile" ]] && source "${HOME}/.xprofile"
+
+#     # # set no energy saving, no screen saving, no bell, mouse acceleration rate,
+#     # # and keyboard acceleration rate
+#     # if [[ -n "$(greppr screen_blank)" ]] ; then
+#     #     xset -dpms s on b off m 2/1 4 r rate 500 35 > /dev/null 2>&1
+#     # else
+#     #     xset -dpms s off b off m 2/1 4 r rate 500 35 > /dev/null 2>&1
+#     # fi
+
+#     # # set terminal window titles
+#     # #export PS1="${PS1}\[\e]0;\h:\u:\w\a\]"
+
+#     # # xhost
+#     # #_command xhost && xhost +localhost > /dev/null 2>&1
+#     # #_command xhost && xhost +mouse1 > /dev/null 2>&1
+
+#     # # load xresources
+#     # [[ -f "/etc/X11/xinit/.Xresources" ]] && xrdb -merge "/etc/X11/xinit/.Xresources"
+#     # [[ -f "${HOME}/.Xresources" ]] && xrdb -merge "${HOME}/.Xresources"
+
+#     # # set xmodmap
+#     # [[ -f "/etc/X11/xinit/.Xmodmap" ]] || xmodmap "/etc/X11/xinit/.Xmodmap"
+#     # [[ -f "${HOME}.Xmodmap" ]] || xmodmap "${HOME}.Xmodmap"
+# fi
+
+# # run-app
+# [[ -x "${HOME}/bin/run-app" ]] && ${HOME}/bin/run-app 2>&1
+
+# install broot
+[[ -f "${HOME}/.config/broot/launcher/bash/br" ]] && source "${HOME}/.config/broot/launcher/bash/br"
+
+# source work profile
+[[ -e "${HOME}/.work" ]] && [[ -f "${HOME}/.profile-work" ]] && source "${HOME}/.profile-work" 2>&1
+
+# source secure environment settings
+[[ -f "${HOME}/.secure-env" ]] && source "${HOME}/.secure-env" 2>&1
+
+# display something
+
+# display system information
+_command neofetch && neofetch 2>&1
+
+# # display color script
+# _command colorscript && colorscript random 2>&1
+
+# # display weather
+# _command curl && curl --silent wttr.in 2>&1 | head -n 7
+
+#=============================================================================
+# End of File
+#=============================================================================

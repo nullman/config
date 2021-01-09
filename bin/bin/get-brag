@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+#===============================================================================
+# get-brag
+#
+# Get news binaries using brag.
+#
+# Author: Kyle W T Sherman
+#===============================================================================
+
+if [[ $# -lt 1 ]] || [[ $# -gt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+    echo "Usage: $(basename $0) GROUP [FILTER]"
+    echo "Get news binaries from GROUP with FILTER using brag."
+    echo "  GROUP examples:"
+    echo "    alt.binaries.dvd.erotica"
+    echo "    alt.binaries.dvd.music"
+    echo "    alt.binaries.mpeg.video.music"
+    echo "    alt.binaries.pictures.cemetaries"
+    echo "    alt.binaries.pictures.wallpaper"
+    echo "    alt.binaries.sounds.radio.misc"
+    echo "  FILTER  optional wildcard filter (e.g. '*.jpg*')."
+    exit 1
+fi
+
+group="$1"
+
+if [[ -z "$2" ]] ; then
+    filter="*"
+else
+    filter="$2"
+fi
+
+for i in 1 2 3 ; do
+    brag -s news.usenetserver.com -g ${group} -l nullman -p esuesu -a ${filter}
+    if [[ $? != 2 ]] ; then break ; fi
+    sleep 60
+done
+
+#===============================================================================
+# End of File
+#===============================================================================

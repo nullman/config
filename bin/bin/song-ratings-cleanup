@@ -1,0 +1,104 @@
+#!/usr/bin/env bash
+#===============================================================================
+# song-ratings-cleanup
+#
+# Remove missing entries from song ratings files.
+#
+# Author: Kyle W T Sherman
+#===============================================================================
+
+# set line separator to newline
+oldIFS=${IFS}
+IFS=$'\n'
+
+dir="${HOME}/.song-ratings"
+files="$(ls -1 ${dir})"
+audiodir="/home/data/media/audio/Music"
+dryrun=false
+yes=false
+quiet=false
+
+for arg in "$@" ; do
+    case "${arg}" in
+        -h|--help)
+            echo "Usage: $(basename $0) [OPTIONS]"
+            echo "Removes missing entries from song ratings files."
+            echo "  OPTIONS:"
+            echo "    -h, --help     show this help"
+            echo "    -d, --dry-run  show which songs would be removed"
+            echo "    -y, --yes      auto-answer yes when prompted to remove songs"
+            echo "    -q, --quiet    run with no output to terminal"
+            exit 1
+            ;;
+        -d|--dry-run)
+            dryrun=true
+            ;;
+        -y|--yes)
+            yes=true
+            ;;
+        -q|--quiet)
+            quiet=true
+            ;;
+        *)
+            ;;
+    esac
+done
+
+dryrun()
+{
+    echo "The following songs are not found:"
+    echo
+    for file in ${files} ; do
+        for song in $(cat "${dir}/${file}") ; do
+            if [[ ! -e "${audiodir}/${song}" ]] ; then
+                echo "${file}: ${song}"
+            fi
+        done
+    done
+}
+
+process()
+{
+    tmpdir=$(mktemp -d)
+    for file in ${files} ; do
+        ${quiet} || echo "Checking file: ${file}..."
+        tmpfile="${tmpdir}/${file}"
+        touch ${tmpfile}
+        for song in $(cat "${dir}/${file}") ; do
+            if [[ -e "${audiodir}/${song}" ]] ; then
+                echo "${song}" >> ${tmpfile}
+            else
+                ${quiet} || echo "Removed missing song: ${song}"
+            fi
+        done
+        mv "${tmpfile}" "${dir}/${file}"
+    done
+    rm -rf "${tmpdir}"
+}
+
+# dry run
+if [[ ${quiet} = false ]] && ([[ ${dryrun} = true ]] || [[ ${yes} = false ]]) ; then
+    dryrun
+fi
+
+# remove bad songs
+if [[ ${dryrun} = false ]] ; then
+    if [[ ${yes} = true ]] ; then
+        process
+    else
+        echo
+        echo -n "Do you want to remove all missing files? [yN] " ; read a
+        case "${a}" in
+            y|Y)
+                process
+                ;;
+        esac
+    fi
+fi
+
+# restore line separator
+IFS=${oldIFS}
+
+#===============================================================================
+# End of File
+#===============================================================================

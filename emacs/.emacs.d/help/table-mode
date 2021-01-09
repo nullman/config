@@ -1,0 +1,199 @@
+================================================================================
+Table Mode Reference
+================================================================================
+
++------------------------------------------------------------------+
+|                    User Visible Entry Points                     |
++-------------------------------+----------------------------------+
+|           Function            |           Description            |
++-------------------------------+----------------------------------+
+|`table-insert'                 |Insert a table consisting of grid |
+|                               |of cells by specifying the number |
+|                               |of COLUMNS, number of ROWS, cell  |
+|                               |WIDTH and cell HEIGHT.            |
++-------------------------------+----------------------------------+
+|`table-insert-row'             |Insert row(s) of cells before the |
+|                               |current row that matches the      |
+|                               |current row structure.            |
++-------------------------------+----------------------------------+
+|`table-insert-column'          |Insert column(s) of cells before  |
+|                               |the current column that matches   |
+|                               |the current column structure.     |
++-------------------------------+----------------------------------+
+|`table-delete-row'             |Delete row(s) of cells.  The row  |
+|                               |must consist from cells of the    |
+|                               |same height.                      |
++-------------------------------+----------------------------------+
+|`table-delete-column'          |Delete column(s) of cells.  The   |
+|                               |column must consist from cells of |
+|                               |the same width.                   |
++-------------------------------+----------------------------------+
+|`table-recognize'              |Recognize all tables in the       |
+|`table-unrecognize'            |current buffer and                |
+|                               |activate/inactivate them.         |
++-------------------------------+----------------------------------+
+|`table-recognize-region'       |Recognize all the cells in a      |
+|`table-unrecognize-region'     |region and activate/inactivate    |
+|                               |them.                             |
++-------------------------------+----------------------------------+
+|`table-recognize-table'        |Recognize all the cells in a      |
+|`table-unrecognize-table'      |single table and                  |
+|                               |activate/inactivate them.         |
++-------------------------------+----------------------------------+
+|`table-recognize-cell'         |Recognize a cell.  Find a cell    |
+|`table-unrecognize-cell'       |which contains the current point  |
+|                               |and activate/inactivate that cell.|
++-------------------------------+----------------------------------+
+|`table-forward-cell'           |Move point to the next Nth cell in|
+|                               |a table.                          |
++-------------------------------+----------------------------------+
+|`table-backward-cell'          |Move point to the previous Nth    |
+|                               |cell in a table.                  |
++-------------------------------+----------------------------------+
+|`table-span-cell'              |Span the current cell toward the  |
+|                               |specified direction and merge it  |
+|                               |with the adjacent cell.  The      |
+|                               |direction is right, left, above or|
+|                               |below.                            |
++-------------------------------+----------------------------------+
+|`table-split-cell-vertically'  |Split the current cell vertically |
+|                               |and create a cell above and a cell|
+|                               |below the point location.         |
++-------------------------------+----------------------------------+
+|`table-split-cell-horizontally'|Split the current cell            |
+|                               |horizontally and create a cell on |
+|                               |the left and a cell on the right  |
+|                               |of the point location.            |
++-------------------------------+----------------------------------+
+|`table-split-cell'             |Split the current cell vertically |
+|                               |or horizontally.  This is a       |
+|                               |wrapper command to the other two  |
+|                               |orientation specific commands.    |
++-------------------------------+----------------------------------+
+|`table-heighten-cell'          |Heighten the current cell.        |
++-------------------------------+----------------------------------+
+|`table-shorten-cell'           |Shorten the current cell.         |
++-------------------------------+----------------------------------+
+|`table-widen-cell'             |Widen the current cell.           |
++-------------------------------+----------------------------------+
+|`table-narrow-cell'            |Narrow the current cell.          |
++-------------------------------+----------------------------------+
+|`table-fixed-width-mode'       |Toggle fixed width mode.  In the  |
+|                               |fixed width mode, typing inside a |
+|                               |cell never changes the cell width,|
+|                               |while in the normal mode the cell |
+|                               |width expands automatically in    |
+|                               |order to prevent a word being     |
+|                               |folded into multiple lines.  Fixed|
+|                               |width mode reverses video or      |
+|                               |underline the cell contents for   |
+|                               |its indication.                   |
++-------------------------------+----------------------------------+
+|`table-query-dimension'        |Compute and report the current    |
+|                               |cell dimension, current table     |
+|                               |dimension and the number of       |
+|                               |columns and rows in the table.    |
++-------------------------------+----------------------------------+
+|`table-generate-source'        |Generate the source of the current|
+|                               |table in the specified language   |
+|                               |and insert it into a specified    |
+|                               |buffer.                           |
++-------------------------------+----------------------------------+
+|`table-insert-sequence'        |Travel cells forward while        |
+|                               |inserting a specified sequence    |
+|                               |string into each cell.            |
++-------------------------------+----------------------------------+
+|`table-capture'                |Convert plain text into a table by|
+|                               |capturing the text in the region. |
++-------------------------------+----------------------------------+
+|`table-release'                |Convert a table into plain text by|
+|                               |removing the frame from a table.  |
++-------------------------------+----------------------------------+
+|`table-justify'                |Justify the contents of cell(s).  |
++-------------------------------+----------------------------------+
+|`table-disable-advice'         |Disable all table advice by       |
+|                               |removing them.                    |
++-------------------------------+----------------------------------+
+|`table-enable-advice'          |Enable table advice.              |
++-------------------------------+----------------------------------+
+|`table-version'                |Show the current table package    |
+|                               |version.                          |
++-------------------------------+----------------------------------+
+
+*Note*
+
+You may find that some of commonly expected table commands are
+missing such as copying a row/column and yanking it.  Those
+functions can be obtained through existing Emacs text editing
+commands.  Rows are easily manipulated with region commands and
+columns can be copied and pasted through rectangle commands.  After
+all a table is still a part of text in the buffer.  Only the
+special behaviors exist inside each cell through text properties.
+
+`table-generate-html' which appeared in earlier releases is
+deprecated in favor of `table-generate-source'.  Now HTML is
+treated as one of the languages used for describing the table's
+logical structure.
+
+
+-------
+Keymap:
+-------
+
+Although this package does not use a mode it does use its own
+keymap inside a table cell by way of keymap text property.  Some of
+the standard basic editing commands bound to certain keys are
+replaced with the table specific version of corresponding commands.
+This replacement combination is listed in the constant alist
+`table-command-replacement-alist' declared below.  This alist is
+not meant to be user configurable but mentioned here for your
+better understanding of using this package.  In addition, table
+cells have some table specific bindings for cell navigation and
+cell reformation.  You can find these additional bindings in the
+constant `table-cell-bindings'.  Those key bound functions are
+considered as internal functions instead of normal commands,
+therefore they have special prefix, *table-- instead of table-, for
+symbols.  The purpose of this is to make it easier for a user to
+use command name completion.  There is a "normal hooks" variable
+`table-cell-map-hook' prepared for users to override the default
+table cell bindings.  Following is the table of predefined default
+key bound commands inside a table cell.  Remember these bindings
+exist only inside a table cell.  When your terminal is a tty, the
+control modifier may not be available or applicable for those
+special characters.  In this case use "C-cC-c", which is
+customizable via `table-command-prefix', as the prefix key
+sequence.  This should preceding the following special character
+without the control modifier.  For example, use "C-cC-c|" instead
+of "C-|".
+
++------------------------------------------------------------------+
+|                Default Bindings in a Table Cell                  |
++-------+----------------------------------------------------------+
+|  Key  |                      Function                            |
++-------+----------------------------------------------------------+
+|  TAB  |Move point forward to the beginning of the next cell.     |
++-------+----------------------------------------------------------+
+| "C->" |Widen the current cell.                                   |
++-------+----------------------------------------------------------+
+| "C-<" |Narrow the current cell.                                  |
++-------+----------------------------------------------------------+
+| "C-}" |Heighten the current cell.                                |
++-------+----------------------------------------------------------+
+| "C-{" |Shorten the current cell.                                 |
++-------+----------------------------------------------------------+
+| "C--" |Split current cell vertically. (one above and one below)  |
++-------+----------------------------------------------------------+
+| "C-|" |Split current cell horizontally. (one left and one right) |
++-------+----------------------------------------------------------+
+| "C-*" |Span current cell into adjacent one.                      |
++-------+----------------------------------------------------------+
+| "C-+" |Insert row(s)/column(s).                                  |
++-------+----------------------------------------------------------+
+| "C-!" |Toggle between normal mode and fixed width mode.          |
++-------+----------------------------------------------------------+
+| "C-#" |Report cell and table dimension.                          |
++-------+----------------------------------------------------------+
+| "C-^" |Generate the source in a language from the current table. |
++-------+----------------------------------------------------------+
+| "C-:" |Justify the contents of cell(s).                          |
++-------+----------------------------------------------------------+

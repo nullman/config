@@ -1,0 +1,24 @@
+#=============================================================================
+# <varlookup "user-login-name"> crontab
+#
+# Author: <varlookup "user-full-name">
+#
+# Line format:
+#   minutes hours days months day_of_week command > /dev/null 2>&1
+#   0-59    0-24  0-31 0-11   0-6
+#
+# Use * for wildcard and */# for every # time.  Example:
+#   */5 * * * 0 /bin/date > /dev/null 2>&1
+# The above line will execute the date command every 5 minutes on Sundays.
+#=============================================================================
+
+#!/bin/sh
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:/usr/bin:/bin:/usr/bin/X11
+HOME=/home/<varlookup "user-login-name">
+
+<endpoint>
+
+#=============================================================================
+# End of File
+#=============================================================================

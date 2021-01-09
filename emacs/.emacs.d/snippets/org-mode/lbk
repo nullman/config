@@ -1,0 +1,29 @@
+# -*- mode: snippet -*-
+# name: Literate Block Kotlin
+# key: lbk
+# expand-env: ((yas-after-exit-snippet-hook #'org-fix-literate-programming-heading))
+# --
+${1:Name}
+$>:PROPERTIES:
+$>:CUSTOM_ID: ${1:$(org-generate-custom-id-from-title yas-text)}
+$>:END:
+
+#+BEGIN_SRC kotlin
+  `(if (> (org-reduced-level (org-current-level)) 1)
+     "  //------------------------------------------------------------------------------"
+     "  //==============================================================================")`
+  ///`(if (> (org-reduced-level (org-current-level)) 2) "/" "")` $1
+  `(if (> (org-reduced-level (org-current-level)) 1)
+     "  //------------------------------------------------------------------------------"
+     "  //==============================================================================")`
+
+  fun $1 {
+  }
+#+END_SRC
+
+#+BEGIN_SRC kotlin :tangle no
+  fun $1Test() {
+      assert($1() == )
+  }
+#+END_SRC
+$0

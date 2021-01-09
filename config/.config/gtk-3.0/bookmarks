@@ -1,0 +1,18 @@
+file:///home/kyle/Downloads Downloads
+file:///home/kyle/Documents Documents
+file:///home/kyle/Music Music
+file:///home/kyle/Pictures Pictures
+file:///home/kyle/Videos Videos
+file:/// /
+file:///home/kyle/tmp tmp
+file:///home/kyle/doc doc
+file:///home/kyle/mp3 mp3
+file:///home/data/media media
+file:///home/data/media/software software
+file:///home/data/media/repos repos
+file:///home/data/media/software/Linux Linux
+file:///home/data/media/text/Books/Computer Computer Books
+file:///home/data/media/text/Magazines Magazines
+file:///home/data/media/text/Manuals/Computer Computer Manuals
+sftp://morpheus/home/data/media sftp:media
+smb://morpheus/media smb:media

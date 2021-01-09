@@ -1,0 +1,42 @@
+======================================================================
+		    README FILE FOR EMACS SOKOBAN
+		2005, Sascha Wilde <wilde@sha-bang.de>
+======================================================================
+
+
+Staring the Game
+================
+
+After installing Emacs Sokoban (see INSTALL) you can start a game of
+sokoban with 
+
+  M-x sokoban <RET>
+
+
+The Goal of the Game
+====================
+
+The goal of the game is to place all boulders (or treasures if you
+like better) represented by "o"s in the buffer in the pits,
+represented by "."s.  The "#"s represent walls.
+
+This has to be done be the player character (the "@") by pushing the
+boulders.  You can only push one boulder at a time (you are not strong
+enough to push a row of two) and you can't pull them, so be careful
+not to put them in a place where they can't be moved anymore.
+
+That's all, easy isn't it?
+
+
+Playing the Game
+================
+
+- Move the player-character using the arrow-keys of your keyboard.
+  After finishing a level you will automatically get to the next.
+- If you mess up things undo moves by pressing `u' but be aware that
+  will be counted as 10 moves (this penalty is customizeable).
+- Press `b' to view best players list (the "highscoe" which is a
+  low-score in fact).
+- Press `<' or`>' to jump back/forth one level.
+
+

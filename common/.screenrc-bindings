@@ -1,0 +1,116 @@
+#===============================================================================
+# .screenrc-bindings
+#
+# Screen Key Bindings
+#
+# Author: Kyle W T Sherman
+#===============================================================================
+
+#-------------------------------------------------------------------------------
+# Custom Key Bindings
+#
+## General Rules:
+## - Lower case is used for basic commands.
+## - C (control) modifier key is used for advanced commands
+##     (or modified basic ones).
+## - M (alt) modifier key is used for commands that launch applications.
+## - Upper case is used for other commands.
+#-------------------------------------------------------------------------------
+
+bind = source ${HOME}/.screenrc-bindings
+bind ^M windowlist -b
+bind , prev
+bind . next
+bind / blanker
+
+# screen switching
+
+# 0-9 switches to screens 0-9
+bind 0 select 0
+bind 1 select 1
+bind 2 select 2
+bind 3 select 3
+bind 4 select 4
+bind 5 select 5
+bind 7 select 6
+bind 7 select 7
+bind 8 select 8
+bind 9 select 9
+# - 0-9 switches to screens 10-19
+bind - command -c select_1n
+bind -c select_1n 0 select 10
+bind -c select_1n 1 select 11
+bind -c select_1n 2 select 12
+bind -c select_1n 3 select 13
+bind -c select_1n 4 select 14
+bind -c select_1n 5 select 15
+bind -c select_1n 6 select 16
+bind -c select_1n 7 select 17
+bind -c select_1n 8 select 18
+bind -c select_1n 9 select 19
+# - - 0-9 switches to screens 20-29
+bind -c select_1n - command -c select_2n
+bind -c select_2n 0 select 20
+bind -c select_2n 1 select 21
+bind -c select_2n 2 select 22
+bind -c select_2n 3 select 23
+bind -c select_2n 4 select 24
+bind -c select_2n 5 select 25
+bind -c select_2n 6 select 26
+bind -c select_2n 7 select 27
+bind -c select_2n 8 select 28
+bind -c select_2n 9 select 29
+
+# app launching
+
+# ` 0-9 launches screen apps 0-9
+bind ` command -c launch_0n
+bind -c launch_0n 0 exec ${HOME}/bin/screen_app 0
+bind -c launch_0n 1 exec ${HOME}/bin/screen_app 1
+bind -c launch_0n 2 exec ${HOME}/bin/screen_app 2
+bind -c launch_0n 3 exec ${HOME}/bin/screen_app 3
+bind -c launch_0n 4 exec ${HOME}/bin/screen_app 4
+bind -c launch_0n 5 exec ${HOME}/bin/screen_app 5
+bind -c launch_0n 6 exec ${HOME}/bin/screen_app 6
+bind -c launch_0n 7 exec ${HOME}/bin/screen_app 7
+bind -c launch_0n 8 exec ${HOME}/bin/screen_app 8
+bind -c launch_0n 9 exec ${HOME}/bin/screen_app 9
+# ` ` 0-9 launches screen apps 10-19
+bind -c launch_0n ` command -c launch_1n
+bind -c launch_1n 0 exec ${HOME}/bin/screen_app 10
+bind -c launch_1n 1 exec ${HOME}/bin/screen_app 11
+bind -c launch_1n 2 exec ${HOME}/bin/screen_app 12
+bind -c launch_1n 3 exec ${HOME}/bin/screen_app 13
+bind -c launch_1n 4 exec ${HOME}/bin/screen_app 14
+bind -c launch_1n 5 exec ${HOME}/bin/screen_app 15
+bind -c launch_1n 6 exec ${HOME}/bin/screen_app 16
+bind -c launch_1n 7 exec ${HOME}/bin/screen_app 17
+bind -c launch_1n 8 exec ${HOME}/bin/screen_app 18
+bind -c launch_1n 9 exec ${HOME}/bin/screen_app 19
+# ` ` ` 0-9 launches screen apps 20-29
+bind -c launch_1n ` command -c launch_2n
+bind -c launch_2n 0 exec ${HOME}/bin/screen_app 20
+bind -c launch_2n 1 exec ${HOME}/bin/screen_app 21
+bind -c launch_2n 2 exec ${HOME}/bin/screen_app 22
+bind -c launch_2n 3 exec ${HOME}/bin/screen_app 23
+bind -c launch_2n 4 exec ${HOME}/bin/screen_app 24
+bind -c launch_2n 5 exec ${HOME}/bin/screen_app 25
+bind -c launch_2n 6 exec ${HOME}/bin/screen_app 26
+bind -c launch_2n 7 exec ${HOME}/bin/screen_app 27
+bind -c launch_2n 8 exec ${HOME}/bin/screen_app 28
+bind -c launch_2n 9 exec ${HOME}/bin/screen_app 29
+
+#-------------------------------------------------------------------------------
+# No meta key key bindings (using bindkey)
+#-------------------------------------------------------------------------------
+
+# use PgUp to enter copy mode
+#bindkey -k kP copy
+
+# use F11 and F12 for prev and next
+bindkey -k F1 prev
+bindkey -k F2 next
+
+#===============================================================================
+# End of File
+#===============================================================================

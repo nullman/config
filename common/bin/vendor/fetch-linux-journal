@@ -1,0 +1,204 @@
+#!/usr/bin/env bash
+
+cfg_dir=${XDG_CONFIG_HOME:-$HOME/.config}
+
+cfg_file=${cfg_dir}/$(basename $0 .sh).cfg
+crontab_file=${cfg_dir}/$(basename $0 .sh).crontab
+notify_img=${cfg_dir}/$(basename $0 .sh).png
+
+
+while [[ "$1" ]]
+do
+    case "$1" in
+    --init)
+        init=1
+        shift
+        ;;
+    --no-download)
+        testpfx=echo
+        shift
+        ;;
+    -*)
+        echo "Unrecognized option: $1"
+        exit 1
+        ;;
+    *)
+        echo "Unexpected argument: $1"
+        exit 1
+        ;;
+    esac
+done
+
+
+# Check to make sure config file exists or the --init options was specified.
+if [[ -z "$init"  &&  ! -f "$cfg_file" ]]; then
+    echo "Config file not found: $cfg_file"
+    echo "Run $0 --init to create an initial config file"
+    exit 1
+fi
+
+# Proceed unless the --init option was specified.
+if [[ -z "$init" ]]; then
+
+    source $cfg_file
+    test -z "$email"  &&  { echo "Variable not set: email"; exit 1; }
+    test -z "$zip"    &&  { echo "Variable not set: zip"; exit 1; }
+    test "$do_notify" -ne 1  &&  unset do_notify
+
+    test "$do_notify"  &&  test -x /usr/bin/notify-send  &&  notify_send_bin=/usr/bin/notify-send
+
+    get_link_url="https://secure2.linuxjournal.com/pdf/get-link.php"
+
+    for doc in $doctypes
+    do
+        test "$doc" == 'epub' -o "$doc" == 'mobi' -o "$doc" == 'pdf'  ||  { echo "Invalid doctype"; continue; }
+
+        # URL encode the email and zip code.
+        edata=$(echo -n "$email" | curl -Gso /dev/null -w %{url_effective} --data-urlencode @- "")
+        edata=${edata:2}
+        zdata="email=$email&zip=$zip&doc=$doc"
+        zdata=$(echo -n "$zip" | curl -Gso /dev/null -w %{url_effective} --data-urlencode @- "")
+        zdata=${zdata:2}
+        data="email=$edata&zip=$zdata&doc=$doc"
+
+        resp=$(curl --silent -d "$data" "$get_link_url")
+
+        if [[ "${resp:0:4}" == 'http' ]]; then
+            parts=($resp)
+            url=${parts[0]}
+            inum=${parts[1]}
+            month=${parts[2]}
+            year=${parts[3]}
+            odir="$(eval echo ${save_dir})"
+            ofile="$(eval echo ${save_file})"
+            opath="$odir/$ofile"
+            if [[ -n "$testpfx" ]]; then
+                echo "URL  : $url"
+                echo "INUM : $inum"
+                echo "MONTH: $month"
+                echo "YEAR : $year"
+                echo "ODIR : $odir"
+                echo "OFILE: $ofile"
+            fi
+            if [[ ! -f "$opath" ]]; then
+                $testpfx mkdir -p "$odir"
+                if $testpfx curl --silent --output "$opath" "$url"; then
+                    msg="$(eval echo -e "$notify_msg")"
+                    echo $msg   # no quotes (eliminates newlines)
+                    test -n "$notify_send_bin"  &&  "$notify_send_bin" --icon="$notify_img" "$msg"
+                else
+                    msg="ERROR: Unable to download Linux Journal ${doc^^}"
+                    echo "$msg"
+                    test -n "$notify_send_bin"  &&  "$notify_send_bin" --icon="$notify_img" "$msg"
+                fi
+            fi
+        else
+            msg="ERROR: $resp (Linux Journal ${doc^^})"
+            echo "$msg"
+            test -n "$notify_send_bin"  &&  "$notify_send_bin"  --icon="$notify_img" "$msg"
+        fi
+    done
+else
+    echo "Enter the email and zip/postal code associated"
+    echo "with your Linux Journal subscription"
+    read -p "EMail: " email
+    read -p "Zip  : " zip
+
+    echo "Creating initial config file."
+    echo "Change your preferences in '$cfg_file'."
+
+    mkdir -p "$cfg_dir"
+
+    cat >"$cfg_file" <<EOF
+# Default config file for downloading new Linux Journal issues.
+email='${email}'
+zip='${zip}'
+
+# File types to download.
+#doctypes='epub mobi pdf'
+doctypes='pdf'
+
+# The variables save_dir, save_file, and notify_msg will be
+# eval'd when needed.  Put the values in single quotes
+# so that any variables or command substitutions are not
+# done when the config file is first read.
+#
+# In addition to the normal environment variables,
+# the following variables will be present:
+#
+#    inum:   issue number
+#    month:  issue month as a number
+#    year:   issue year
+#    doc:    document type (pdf, epub or mobi)
+
+# Directory for storing downloads.
+save_dir='\$HOME/linuxjournal/issues'
+
+# File name.
+save_file='LJ-\$(printf %03d \${inum})-\$year-\$(printf %02d \${month}).\${doc}'
+
+# Notification message (also eval'd).
+notify_msg='The \$(date +%B --date \${month}/1) \${year} Linux Journal \${doc^^}\\\\nhas been downloaded.'
+
+# Disable notification by setting do_notify to 0.
+do_notify=1
+EOF
+
+    echo "Sample crontab configuration is in '$crontab_file'."
+
+    # Create initial crontab file.
+    cat >"$crontab_file" <<EOF
+DISPLAY=:0
+$(($RANDOM % 60)) $(($RANDOM % 5)) 1-7 * * $HOME/bin/autolj.sh
+EOF
+
+    # Create notification image.
+    base64 --decode >"$notify_img" <<EOF
+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
+AAAASUVORK5CYII=
+EOF
+fi

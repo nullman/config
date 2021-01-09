@@ -1,0 +1,35 @@
+================================================================================
+BASH Key Bindings
+================================================================================
+
+|---------------+--------------------------------------------------------|
+| Key Binding   | Action                                                 |
+|---------------+--------------------------------------------------------|
+| Ctrl-r        | History reverse search                                 |
+| Ctrl-a        | Jump to BOL                                            |
+| Ctrl-e        | Jump to EOL                                            |
+| Ctrl-l        | Clear terminal                                         |
+| Ctrl-k        | Delete from cursor to EOL                              |
+| Ctrl-\        | Undo last operation                                    |
+| Ctrl-m        | Return                                                 |
+| Ctrl-w        | Delete word left from cursor                           |
+| Ctrl-u        | Delete from BOL to cursor                              |
+| Ctrl-x Ctrl-e | Open the default editor $EDITOR and run edited command |
+| Ctrl-p        | Previous command in history                            |
+| Ctrl-n        | Next command in history                                |
+| Ctrl-f        | Move forward a char                                    |
+| Ctrl-b        | Move backward a char                                   |
+| Alt-f         | Move forward a word                                    |
+| Alt-b         | Move backward a word                                   |
+| Ctrl-d        | Delete char under cursor (exit shell if empty)         |
+| Alt-d         | Delete forward word                                    |
+| Ctrl-y        | Paste content of the kill ring                         |
+| Ctrl-t        | Swap current char with previous char                   |
+| Alt-t         | Swap current word with previous word                   |
+| Alt-u         | Uppercase word at cursor                               |
+| Alt-l         | Lowercase word at cursor                               |
+| Ctrl-s        | Freeze terminal                                        |
+| Ctrl-q        | Restore frozen terminal                                |
+| Shift-PgUp    | Scroll screen up                                       |
+| Shift-PgDn    | Scroll screen down                                     |
+|---------------+--------------------------------------------------------|

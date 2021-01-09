@@ -1,0 +1,51 @@
+#!/usr/bin/env perl
+#===============================================================================
+# google-calc
+#
+# Query google calculator.
+#
+# Options:
+#   exp  - expression to query
+#
+# Author: Kyle W T Sherman
+#===============================================================================
+
+#BEGIN { $^W = 1; }
+
+use strict;
+use warnings;
+
+use URI::Escape;
+use LWP::UserAgent;
+
+if ($#ARGV < 0 || $ARGV[0] eq '-h' || $ARGV[0] eq '--help') {
+    print("Usage: google-calc EXP\n");
+    print("Query google calculator.\n");
+    print("  EXP  expression to query\n");
+    exit;
+}
+
+my $url = 'http://www.google.com/search?num=1&q=' . uri_escape(join ' ' => @ARGV);
+
+my $ua = LWP::UserAgent->new(agent => 'Mozilla/5.0');
+
+my $response = $ua->get($url);
+$response->is_success or die("$url: " . $response->status_line);
+
+my $content = $response->content;
+
+my ($result) = $content =~ m|<h2 class=r.*><b>(.*?)</b></h2>|;
+
+if ($result) {
+    $result =~ s/<sup>/^/g;
+    $result =~ s/&times;/x/g;
+    $result =~ s/<.+?>//g;
+    print("$result\n");
+}
+else {
+    print "No result\n";
+}
+
+#===============================================================================
+# End of File
+#===============================================================================

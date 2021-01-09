@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+#===============================================================================
+# date-convert
+#
+# Print the current date in a variety of formats.
+#
+# Author: Kyle W T Sherman
+#===============================================================================
+
+tmp=/tmp/date-convert-$$
+
+cat > ${tmp} <<EOD
+(require 'calendar)
+
+;; use current date if no date is given on the command line
+(if (= 3 (length command-line-args-left))
+    (setq date (mapcar 'string-to-int command-line-args-left))
+  (setq date (calendar-current-date)))
+
+;; make the conversions and print the results
+(princ
+ (concat
+  "Gregorian: " (calendar-date-string date) "\n"
+  "      ISO: " (calendar-iso-date-string date) "\n"
+  "   Julian: " (calendar-julian-date-string date) "\n"
+  "   Hebrew: " (calendar-hebrew-date-string date) "\n"
+  "  Islamic: " (calendar-islamic-date-string date) "\n"
+  "  Chinese: " (calendar-chinese-date-string date) "\n"
+  "    Mayan: " (calendar-mayan-date-string date) "\n"
+  "    Epoch: " (number-to-string (truncate (time-to-seconds (apply (quote encode-time) (append (list 0 0 0) date))))) "\n"))
+EOD
+
+emacs --script ${tmp} 2>/dev/null
+
+#===============================================================================
+# End of File
+#===============================================================================

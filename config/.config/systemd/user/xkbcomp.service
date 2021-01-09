@@ -1,0 +1,26 @@
+#===============================================================================
+# .config/systemd/user/xkbcomp.service
+#
+# Configuration for systemd user xkbcomp service.
+#
+# Enable:   systemctl --user enable xkbcomp.service
+# Start:    systemctl --user start xkbcomp.service
+# Stop:     systemctl --user stop xkbcomp.service
+# Disable:  systemctl --user disable xkbcomp.service
+#
+# Reference:  https://wiki.archlinux.org/index.php/Systemd/User
+#===============================================================================
+
+[Unit]
+Description=Keyboard mappings: disable Insert key
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/xkbcomp ${DISPLAY} - | sed 's/ Insert / NoSymbol /' | xkbcomp - ${DISPLAY}
+
+[Install]
+WantedBy=default.target
+
+#===============================================================================
+# End of File
+#===============================================================================

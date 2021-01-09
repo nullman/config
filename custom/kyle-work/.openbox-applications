@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+#===============================================================================
+# .openbox-applications
+#
+# Openbox Window Manager auto-start applications script.
+#
+# Reference:  http://openbox.org/
+#===============================================================================
+
+# initialize background applications and services
+xscreensaver -no-splash &
+#xautolock -time 30 -locker blurlock & # lock screen after 30 minutes
+#xautolock -time 30 -locker 'xscreensaver-command -lock' & # lock screen after 30 minutes
+#mpd ~/.mpd/mpd.conf &
+#dropbox start &
+#barriers --config ~/.barrier.conf &
+#barrierc SERVER &
+#run-app &
+#emacs --daemon &
+
+# initialize foreground applications
+alacritty -e ~/bin/run-screen &
+emacs &
+slack &
+thunderbird &
+firefox &
+#chromium &
+pcmanfm &
+#idea &
+#discord &
+#tootle &
+#lbry &
+#syncterm &
+
+#===============================================================================
+# End of File
+#===============================================================================

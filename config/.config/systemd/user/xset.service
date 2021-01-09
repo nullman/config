@@ -1,0 +1,26 @@
+#===============================================================================
+# .config/systemd/user/xset.service
+#
+# Configuration for systemd user xset service.
+#
+# Enable:   systemctl --user enable xset.service
+# Start:    systemctl --user start xset.service
+# Stop:     systemctl --user stop xset.service
+# Disable:  systemctl --user disable xset.service
+#
+# Reference:  https://wiki.archlinux.org/index.php/Systemd/User
+#===============================================================================
+
+[Unit]
+Description=Set mouse speed and keyboard rate
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/xset -dpms s off b off m 2/1 4 r rate 500 35
+
+[Install]
+WantedBy=default.target
+
+#===============================================================================
+# End of File
+#===============================================================================

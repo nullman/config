@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+#===============================================================================
+# boinc-ssaver
+#
+# Run current boinc result as a full screen screen saver.
+#
+# Author: Kyle W T Sherman
+#===============================================================================
+
+# get current project name
+name=$(boinc_cmd --get_results | grep "^ *name: " | sed 's/^ *name: //' | head -n 1)
+echo "name: ${name}"
+
+# get current project url
+url=$(boinc_cmd --get_results | grep "^ *project URL: " | sed 's/^ *project URL: //' | head -n 1)
+echo "url: ${url}"
+
+# make sure boinc has permissions to use X display
+xhost +local:boinc
+
+# launch screen saver
+boinc_cmd --result ${url} ${name} graphics_fullscreen
+
+# TODO: need to run it in a root window somehow
+
+#===============================================================================
+# End of File
+#===============================================================================

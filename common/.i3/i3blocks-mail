@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Gmail Count
+#
+# Fill in the USER and PASS vars below.
+# Then run 'shc -f i3blocks-mail' to create 'i3blocks-mail.x'.
+
+USERNAME="Your_Gmail_Username"
+PASSWORD="Your_Gmail_Password"
+
+COUNT=$(curl -su ${USERNAME}:${PASSWORD} https://mail.google.com/mail/feed/atom || echo "<fullcount>?</fullcount>")
+COUNT=$(echo "$COUNT" | grep -oPm1 "(?<=<fullcount>)[^<]+")
+echo ${COUNT}
+if [[ "${COUNT}" != "0" ]] ; then
+    if [[ "${COUNT}" == "1" ]] ;then
+        WORD="mail"
+    else
+        WORD="mails"
+    fi
+fi

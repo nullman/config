@@ -1,0 +1,230 @@
+#!/usr/bin/env bash
+#===============================================================================
+# make-apache-site-files
+#
+# Make apache site files in `/etc/apache2/sites-available'.
+#
+# Author: Kyle W T Sherman
+#===============================================================================
+
+sadir=/etc/apache2/sites-available
+sedir=/etc/apache2/sites-enabled
+
+echo "You are about to install a set of apache site files."
+echo -n "Do you wish to proceed? [yN] "
+read a
+case "${a}" in
+    y|Y)
+        echo "Installing files..."
+        ;;
+    *)
+        exit 0
+        ;;
+esac
+
+echo "  kylesherman"
+sudo bash -c "cat > '${sadir}/kylesherman'" <<'EOF'
+<VirtualHost *>
+    ServerName kylesherman.net
+    ServerAlias kylesherman.net *.kylesherman.net
+    ServerAdmin webmaster@nullware.com
+    DocumentRoot /home/kyle/public_html/sites/kylesherman/
+    #ProxyPass / http://localhost/~kyle/sites/kylesherman/
+    #ProxyPassReverse / http://localhost/~kyle/sites/kylesherman/
+</VirtualHost>
+
+<VirtualHost *>
+    ServerName kylesherman.com
+    ServerAlias kylesherman.com *.kylesherman.com
+    ServerAdmin webmaster@nullware.com
+    Redirect permanent / http://kylesherman.net/
+</VirtualHost>
+
+<VirtualHost *>
+    ServerName kylesherman.org
+    ServerAlias kylesherman.org *.kylesherman.org
+    ServerAdmin webmaster@nullware.com
+    Redirect permanent / http://kylesherman.net/
+</VirtualHost>
+EOF
+
+# echo "  nulldigital"
+# sudo bash -c "cat > '${sadir}/nulldigital'" <<'EOF'
+# <VirtualHost *>
+#     ServerName nulldigital.com
+#     ServerAlias nulldigital.com *.nulldigital.com
+#     ServerAdmin webmaster@nullware.com
+
+# #    ProxyPass / http://nulldigital.com00/
+# #    ProxyPassReverse / http://nulldigital.com00/
+#     ProxyPass / http://192.168.0.41/
+#     ProxyPassReverse / http://192.168.0.41/
+# </VirtualHost>
+# EOF
+
+echo "  nulldot"
+sudo bash -c "cat > '${sadir}/nulldot'" <<'EOF'
+<VirtualHost *>
+    ServerName nulldot.net
+    ServerAlias nulldot.net *.nulldot.net
+    ServerAdmin webmaster@nullware.com
+    DocumentRoot /home/kyle/public_html/sites/nulldot/
+    #ProxyPass / http://localhost/~kyle/sites/nulldot/
+    #ProxyPassReverse / http://localhost/~kyle/sites/nulldot/
+</VirtualHost>
+
+<VirtualHost *>
+    ServerName nulldot.com
+    ServerAlias nulldot.com *.nulldot.com
+    ServerAdmin webmaster@nullware.com
+    Redirect permanent / http://nulldot.net/
+</VirtualHost>
+
+<VirtualHost *>
+    ServerName nulldot.org
+    ServerAlias nulldot.org *.nulldot.org
+    ServerAdmin webmaster@nullware.com
+    Redirect permanent / http://nulldot.net/
+</VirtualHost>
+EOF
+
+echo "  nullman"
+sudo bash -c "cat > '${sadir}/nullman'" <<'EOF'
+#<VirtualHost *>
+#    ServerName nullman.com
+#    ServerAlias nullman.com *.nullman.com
+#    ServerAlias nullman.net *.nullman.net
+#    ServerAlias nullman.org *.nullman.org
+#    ServerAdmin webmaster@nullware.com
+#
+#    ProxyPass / http://localhost/~kyle/
+#    ProxyPassReverse / http://localhost/~kyle/
+#
+##    ProxyPass /media http://localhost/media
+##    ProxyPassReverse /media http://localhost/media
+##    ProxyPass /mp3 http://localhost/mp3
+##    ProxyPassReverse /mp3 http://localhost/mp3
+##    ProxyPass /netjuke http://localhost/netjuke
+##    ProxyPassReverse /netjuke http://localhost/netjuke
+##    ProxyPass /squirrelmail http://localhost/squirrelmail
+##    ProxyPassReverse /squirrelmail http://localhost/squirrelmail
+##    ProxyPass /muse http://localhost/muse
+##    ProxyPassReverse /muse http://localhost/muse
+##    ProxyPass /radio http://localhost/radio
+##    ProxyPassReverse /radio http://localhost/radio
+##    ProxyPass /cgiirc http://localhost/cgiirc
+##    ProxyPassReverse /cgiirc http://localhost/cgiirc
+##    ProxyPass /webplay http://localhost/webplay
+##    ProxyPassReverse /webplay http://localhost/webplay
+#
+##    ProxyPass / http://nullman.com:81/
+##    ProxyPassReverse / http://nullman.com:81/
+##    ProxyPass /misc_ http://nullman.com/misc_
+##    ProxyPass /p_ http://nullman.com/p_
+##    RewriteEngine on
+##    RewriteRule ^/(.*) http://nullman.com:81/$1 [P,L]
+#</VirtualHost>
+
+<VirtualHost *>
+    ServerName nullman.net
+    ServerAlias nullman.net *.nullman.net
+    ServerAdmin webmaster@nullware.com
+    DocumentRoot /home/kyle/public_html/sites/nullman/
+    #ProxyPass / http://localhost/~kyle/sites/nullman/
+    #ProxyPassReverse / http://localhost/~kyle/sites/nullman/
+</VirtualHost>
+
+<VirtualHost *>
+    ServerName nullman.com
+    ServerAlias nullman.com *.nullman.com
+    ServerAdmin webmaster@nullware.com
+    Redirect permanent / http://nullman.net/
+</VirtualHost>
+
+<VirtualHost *>
+    ServerName nullman.org
+    ServerAlias nullman.org *.nullman.org
+    ServerAdmin webmaster@nullware.com
+    Redirect permanent / http://nullman.net/
+</VirtualHost>
+EOF
+
+echo "  nullware"
+sudo bash -c "cat > '${sadir}/nullware'" <<'EOF'
+<VirtualHost *>
+    ServerName fortunequote.nullware.com
+    ServerAdmin webmaster@nullware.com
+    DocumentRoot /home/kyle/public_html/sites/nullware/fortunequote/
+    #ProxyPass / http://localhost/~kyle/sites/nullware/fortunequote/
+    #ProxyPassReverse / http://localhost/~kyle/sites/nullware/fortunequote/
+</VirtualHost>
+
+<VirtualHost *>
+    ServerName fortunequote.nullware.org
+    ServerAdmin webmaster@nullware.com
+    Redirect permanent / http://fortunequote.nullware.com/
+</VirtualHost>
+
+<VirtualHost *>
+    ServerName powerhouse.nullware.com
+    ServerAdmin webmaster@nullware.com
+    DocumentRoot /home/kyle/public_html/sites/nullware/powerhouse/
+    #ProxyPass / http://localhost/~kyle/sites/nullware/powerhouse/
+    #ProxyPassReverse / http://localhost/~kyle/sites/nullware/powerhouse/
+</VirtualHost>
+
+<VirtualHost *>
+    ServerName powerhouse.nullware.org
+    ServerAdmin webmaster@nullware.com
+    Redirect permanent / http://powerhouse.nullware.com/
+</VirtualHost>
+
+<VirtualHost *>
+    ServerName bloodmoon.nullware.com
+    ServerAdmin webmaster@nullware.com
+    DocumentRoot /home/kyle/public_html/sites/nullware/bloodmoon/
+    #ProxyPass / http://localhost/~kyle/sites/nullware/bloodmoon/
+    #ProxyPassReverse / http://localhost/~kyle/sites/nullware/bloodmoon/
+    ProxyPass /server/ http://localhost:8031/
+    ProxyPassReverse /server/ http://localhost:8031/
+</VirtualHost>
+
+<VirtualHost *>
+    ServerName bloodmoon.nullware.org
+    ServerAdmin webmaster@nullware.com
+    Redirect permanent / http://bloodmoon.nullware.com/
+</VirtualHost>
+
+<VirtualHost *>
+    ServerName nullware.com
+    ServerAlias nullware.com *.nullware.com
+    ServerAdmin webmaster@nullware.com
+    DocumentRoot /home/kyle/public_html/sites/nullware/
+    #ProxyPass / http://localhost/~kyle/sites/nullware/
+    #ProxyPassReverse / http://localhost/~kyle/sites/nullware/
+</VirtualHost>
+
+<VirtualHost *>
+    ServerName nullware.org
+    ServerAlias nullware.org *.nullware.org
+    ServerAdmin webmaster@nullware.com
+    Redirect permanent / http://nullware.com/
+</VirtualHost>
+EOF
+
+echo "Setting symbolic links for active sites..."
+
+sudo bash -c "cd '${sedir}' && (
+    ln -s ../sites-available/kylesherman
+    ln -s ../sites-available/nulldot
+    ln -s ../sites-available/nullman
+    ln -s ../sites-available/nullware
+    )"
+
+echo "Restarting apache for these changes to take effect..."
+
+sudo service apache2 restart
+
+#===============================================================================
+# End of File
+#===============================================================================

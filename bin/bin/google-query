@@ -1,0 +1,65 @@
+#!/usr/bin/env perl
+#===============================================================================
+# google-query
+#
+# Query google.
+#
+# Options:
+#   query - string to query
+#   num   - number of results to return (default = 10)
+#   mode  - normal or im (default = normal)
+#
+# Author: Kyle W T Sherman
+#===============================================================================
+
+#BEGIN { $^W = 1; }
+
+#use strict;
+use WWW::Search;
+
+my $key = 'xK0jzPFQFHIy4wJY4ExtUkvB2QRBSzys';
+
+if ($#ARGV < 0 || $ARGV[0] eq '-h' || $ARGV[0] eq '--help') {
+    print("Usage: google-query QUERY NUM MODE\n");
+    print("Query google search.\n");
+    print("  QUERY  string to query\n");
+    print("  NUM    number of results to return (defaults to 10)\n");
+    print("  MODE   `normal' or `im' (defaults to `normal')\n");
+    exit;
+}
+
+my $query = $ARGV[0];
+my $num = 10;
+if ($#ARGV > 0) { $num = $ARGV[1]; }
+my $mode = 'normal';
+if ($#ARGV > 1) { $mode = $ARGV[2]; }
+
+my $search = WWW::Search->new('Google', key => $key);
+$search->native_query("$query");
+my $i = 0;
+while ((my $result = $search->next_result()) && ($i < $num)) {
+    my $out;
+    if ($mode eq 'normal') {
+        $out = $result->title . "\n";
+        $out .= $result->url . "\n";
+        $out .= $result->description . "\n\n";
+        $out =~ s/<br>/\n/g;
+    }
+    if ($mode eq 'im') {
+        $out = $result->url . " -- " . $result->title;
+        $out =~ s/<br>/ /g;
+        if ($i > 0) { $out = "\n" . $out; }
+    }
+    $out =~ s/<\/?b>//g;
+    $out =~ s/&#39;/\'/g;
+    $out =~ s/&quot;/\"/g;
+    $out =~ s/&amp;/&/g;
+    $out =~ s/WWW\:\:Search\:\:Google=HASH.*//g;
+    print($out);
+    $i += 1;
+}
+#print($search);
+
+#===============================================================================
+# End of File
+#===============================================================================

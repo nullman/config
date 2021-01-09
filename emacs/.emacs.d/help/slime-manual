@@ -1,0 +1,343 @@
+SLIME User Manual
+The Superior Lisp Interaction Mode for Emacs 1.0 alpha, $Date: 2004/06/30 22:08:22 $
+
+i
+
+Table of Contents
+1 2 Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1 Getting started . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2
+2.1 Supported Platforms . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2.2 Downloading SLIME . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2.2.1 Downloading from CVS . . . . . . . . . . . . . . . . . . . . . . . . . 2.2.2 CVS incantations . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2.3 Installation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2.4 Running SLIME . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2 2 2 2 3 3
+
+3
+
+slime-mode . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4
+3.1 User-interface conventions. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4 3.1.1 Temporary buﬀers . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4 3.1.2 Key bindings . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4 3.1.3 *inferior-lisp* buﬀer . . . . . . . . . . . . . . . . . . . . . . . . 4 3.2 Commands . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5 3.2.1 Compilation commands . . . . . . . . . . . . . . . . . . . . . . . . . 5 3.2.2 Finding deﬁnitions (“Meta-Point”). . . . . . . . . . . . . . . 5 3.2.3 Lisp Evaluation. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6 3.2.4 Documentation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6 3.2.5 Programming Helpers . . . . . . . . . . . . . . . . . . . . . . . . . . . 7 3.2.6 Abort/Recovery . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7 3.2.7 Cross-reference . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7 3.2.8 Inspector. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 8 3.2.9 Proﬁling . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9 3.3 Semantic indentation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9 3.4 Reader conditional fontiﬁcation. . . . . . . . . . . . . . . . . . . . . . . . . . 10
+
+4
+
+REPL: the “top level” . . . . . . . . . . . . . . . . . . . . 11
+4.1 REPL commands . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 11 4.2 Input navigation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 11 4.3 Shortcuts . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+
+5
+
+SLDB: the SLIME debugger . . . . . . . . . . . . . . . 13
+5.1 5.2 5.3 5.4 Examining frames . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . Invoking restarts . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . Navigating between frames . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . Miscellaneous Commands . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 13 13 13 14
+
+ii
+
+6
+
+Extras . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+6.1 slime-autodoc-mode . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15 6.2 Multiple connections . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15 6.3 Typeout frames . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+
+7
+
+Customization . . . . . . . . . . . . . . . . . . . . . . . . . . . . 17
+7.1 Emacs-side . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7.1.1 Hooks . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7.2 Lisp-side (Swank) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7.2.1 Communication style. . . . . . . . . . . . . . . . . . . . . . . . . . . 7.2.2 Other conﬁgurables . . . . . . . . . . . . . . . . . . . . . . . . . . . . 17 17 18 18 19
+
+8
+
+Credits. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 20
+Hackers of the good hack . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 20 Thanks! . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 20
+
+Chapter 1: Introduction
+
+1
+
+1 Introduction
+slime is the “Superior Lisp Interaction Mode for Emacs.” slime extends Emacs with new support interactive programming in Common Lisp. The features are centred around slime-mode, an Emacs minor-mode that compliments the standard lisp-mode. While lisp-mode supports editing Lisp source ﬁles, slime-mode adds support for interacting with a running Common Lisp process for compilation, debugging, documentation lookup, and so on. The slime-mode programming environment follows the example of Emacs’s native Emacs Lisp environment. We have also included good ideas from similar systems (such as ilisp) and some new ideas of our own. slime is constructed from two parts: a user-interface written in Emacs Lisp, and a supporting server program written in Common Lisp. The two sides are connected together with a socket and communicate using an rpc-like protocol. The Lisp server is primarily written in portable Common Lisp. The required implementation-speciﬁc functionality is speciﬁed by a well-deﬁned interface and implemented separately for each Lisp implementation. This makes slime readily portable.
+
+Chapter 2: Getting started
+
+2
+
+2 Getting started
+This chapter tells you how to get slime up and running.
+
+2.1 Supported Platforms
+slime supports a wide range of operating systems and Lisp implementations. slime runs on Unix systems, Mac OSX, and Microsoft Windows. GNU Emacs versions 20 and 21 and XEmacs version 21 are supported. The supported Lisp implementations, roughly ordered from the best-supported, are: • CMU Common Lisp (cmucl) • Steel Bank Common Lisp (sbcl) • OpenMCL • LispWorks • Allegro Common Lisp (acl) • clisp • Armed Bear Common Lisp (abcl) Most features work uniformly across implementations, but some are prone to variation. These include the precision of placing compiler-note annotations, xref support, and fancy debugger commands (like “restart frame”).
+
+2.2 Downloading SLIME
+You can choose between using a released version of slime or accessing our cvs repository directly. You can download the latest released version from our website: http://www.common-lisp.net/project/slime/ We recommend that users who participate in the slime-devel mailing list use the cvs version of the code.
+
+2.2.1 Downloading from CVS
+slime is available from the cvs repository on ‘common-lisp.net’. You have the option to use either the very latest code or the tagged FAIRLY-STABLE snapshot. The latest version tends to have more features and fewer bugs than the FAIRLY-STABLE version, but it can be unstable during times of major surgery. As a rule-of-thumb recommendation we suggest that if you follow the slime-devel mailing list then you’re better oﬀ with the latest version (we’ll send a note when it’s undergoing major hacking). If you don’t follow the mailing list you won’t know the status of the latest code, so tracking FAIRLY-STABLE or using a released version is the safe option. If you checkout from cvs then remember to cvs update occasionally. Improvements are continually being committed, and the FAIRLY-STABLE tag is moved forward from time to time (about once per month).
+
+Chapter 2: Getting started
+
+3
+
+2.2.2 CVS incantations
+To download slime you ﬁrst conﬁgure your CVSROOT and login to the repository. export CVSROOT=:pserver:anonymous@common-lisp.net:/project/slime/cvsroot cvs login (The password is anonymous) The latest version can then be checked out with: cvs checkout slime Or the FAIRLY-STABLE version can be checked out with: cvs checkout -rFAIRLY-STABLE slime If you want to ﬁnd out what’s new since the version you’re currently running, you can diﬀ the local ‘ChangeLog’ against the repository version: cvs diff -rHEAD ChangeLog # or: -rFAIRLY-STABLE
+
+2.3 Installation
+On Unix-like systems, installation just requires a few lines in your ‘~/.emacs’: (setq inferior-lisp-program "the path to your Lisp system ") (add-to-list ’load-path "the path of your ‘slime’ directory ") (require ’slime) (add-hook ’lisp-mode-hook (lambda () (slime-mode t))) (add-hook ’inferior-lisp-mode-hook (lambda () (inferior-slime-mode t))) The snippet above also appears in the ‘README’ ﬁle. You can copy&paste it from there, but remember to ﬁll in the appropriate path.
+
+2.4 Running SLIME
+slime is started with the Emacs command M-x slime. This uses the inferior-lisp package to start a Lisp process, loads and starts the Lisp-side server (known as “Swank”), and establishes a socket connection between Emacs and Lisp. Finally a repl buﬀer is created where you can enter Lisp expressions for evaluation. At this point slime is up and running and you can start exploring.
+
+Chapter 3: slime-mode
+
+4
+
+3 slime-mode
+slime’s commands are provided via slime-mode, a minor-mode used in conjunction with Emacs’s lisp-mode. This chapter describes the slime-mode and its relatives.
+
+3.1 User-interface conventions
+To use slime comfortably it is important to understand a few “global” user-interface characteristics. The most important principles are described in this section.
+
+3.1.1 Temporary buﬀers
+Some slime commands create temporary buﬀers to display their results. Although these buﬀers usually have their own special-purpose major-modes, certain conventions are observed throughout. Temporary buﬀers can be dismissed by pressing q. This kills the buﬀer and restores the window conﬁguration as it was before the buﬀer was displayed. Temporary buﬀers can also be killed with the usual commands like kill-buffer, in which case the previous window conﬁguration won’t be restored. Pressing RET is supposed to “do the most obvious useful thing.” For instance, in an apropos buﬀer this prints a full description of the symbol at point, and in an xref buﬀer it displays the source code for the reference at point. This convention is inherited from Emacs’s own buﬀers for apropos listings, compilation results, etc. Temporary buﬀers containing Lisp symbols use slime-mode in addition to any special mode of their own. This makes the usual slime commands available for describing symbols, looking up function deﬁnitions, and so on.
+
+3.1.2 Key bindings
+In general we try to make our key bindings ﬁt with the overall Emacs style. We also have the following somewhat unusual convention of our own: when entering a three-key sequence, the ﬁnal key can be pressed either with control or unmodiﬁed. For example, the slimedescribe-symbol command is bound to C-c C-d d, but it also works to type C-c C-d C-d. We’re simply binding both key sequences because some people like to hold control for all three keys and others don’t, and with the two-key preﬁx we’re not afraid of running out of keys.
+
+3.1.3 *inferior-lisp* buﬀer
+slime internally uses the inferior-lisp package to start Lisp processes. This has a few user-visible consequences, some good and some not-so-terribly. To avoid confusion it is useful to understand the interactions. The buﬀer *inferior-lisp* contains the Lisp process’s own top-level. This direct access to Lisp is useful for troubleshooting, and some degree of slime integration is available
+
+Chapter 3: slime-mode
+
+5
+
+using the inferior-slime-mode. However, in normal use we recommend using the fullyintegrated slime repl and ignoring the *inferior-lisp* buﬀer. An unfortunate property of inferior-lisp is it inserts some commands of its own directly into the lisp-mode keymap, such that they aren’t easily disabled. This makes Lisp source buﬀers slightly schizophrenic, having both slime and inferior-lisp commands bound to keys and operating independently. slime overrides most key bindings, so in practice you are unlikely to accidentally use an inferior-lisp command. If you do ﬁnd a command that pops up the *inferiorlisp* buﬀer, that command doesn’t belong to slime, and you should probably lookup our equivalent.
+
+3.2 Commands
+3.2.1 Compilation commands
+slime has fancy commands for compiling functions, ﬁles, and packages. The fancy part is that notes and warnings oﬀered by the Lisp compiler are intercepted and annotated directly onto the corresponding expressions in the Lisp source buﬀer. (Give it a try to see what this means.) C-c C-k C-c M-k C-c C-c slime-compile-and-load-file Compile and load the current buﬀer’s source ﬁle. slime-compile-file Compile (but don’t load) the current buﬀer’s source ﬁle. slime-compile-defun Compile the top-level form at point.
+
+The annotations are indicated as underlining on source forms. The compiler message associated with an annotation can be read either by placing the mouse over the text or with the selection commands below. M-n M-p slime-next-note, slime-previous-note These commands move the point between compiler notes and display the new note. slime-remove-notes Remove all annotations from the buﬀer.
+
+C-c M-c
+
+3.2.2 Finding deﬁnitions (“Meta-Point”).
+The familiar M-. command is provided. For generic functions this command ﬁnds all methods, and with some systems it does other fancy things (like tracing structure accessors to their DEFSTRUCT deﬁnition). M-. slime-edit-definition Go to the deﬁnition of the symbol at point.
+
+Chapter 3: slime-mode
+
+6
+
+M-,
+
+slime-pop-find-definition-stack Go back from a deﬁnition found with M.. This gives multi-level backtracking when M-. has been used several times.
+
+3.2.3 Lisp Evaluation
+C-M-x C-c C-e C-c C-p C-c C-r C-c : slime-eval-defun Evaluate top-level form. slime-eval-last-expression Evaluate the expression before point. slime-pprint-eval-last-expression Evaluate the expression before point and pretty-print the result. slime-eval-region Evaluate the region. slime-interactive-eval Evaluate an expression read from the minibuﬀer.
+
+M-x slime-scratch Create a ‘*slime-scratch*’ buﬀer. In this buﬀer you can enter Lisp expressions and evaluate them with C-j, like in Emacs’s ‘*scratch*’ buﬀer.
+
+3.2.4 Documentation
+slime’s online documentation commands follow the example of Emacs Lisp. The commands all share the common preﬁx C-c C-d and allow the ﬁnal key to be modiﬁed or unmodiﬁed (See Section 3.1.2 [Key bindings], page 4.) C-c C-d d slime-describe-symbol Describe the symbol at point. C-c C-d a slime-apropos Apropos search. Search Lisp symbol names for a substring match and present their documentation strings. By default the external symbols of all packages are searched. With a preﬁx argument you can choose a speciﬁc package and whether to include unexported symbols. C-c C-d z slime-apropos-all Like slime-apropos but also includes internal symbols by default. C-c C-d p slime-apropos-package Show apropos results of all symbols in a package. This command is for browsing a package at a high-level. With package-name completion it also serves as a rudimentary Smalltalk-ish image-browser. C-c C-d h slime-hyperspec-lookup Lookup the symbol at point in the Common Lisp Hyperspec. This uses the familiar ‘hyperspec.el’ to show the appropriate section in a web browser. The Hyperspec is found either on the Web or in common-lisp-hyperspec-root, and the browser is selected by browse-url-browser-function.
+
+Chapter 3: slime-mode
+
+7
+
+C-c C-d ~ common-lisp-hyperspec-format Lookup a format character in the Common Lisp Hyperspec.
+
+3.2.5 Programming Helpers
+M-TAB slime-complete-symbol Complete the symbol at point. Note that three styles of completion are available in slime, and the default diﬀers from normal Emacs completion. See Section 7.1 [Emacs-side customization], page 17. slime-fuzzy-complete-symbol Presents a list of likely completions to choose from for an abbreviation at point. This is a third completion method and it is very diﬀerent from the more traditional completion to which slime-complete-symbol defaults. It attempts to complete a symbol all at once, instead of in pieces. For example, “mvb” will ﬁnd “multiple-value-bind” and “norm-df” will ﬁnd “least-positivenormalized-double-float”. This can also be selected as the method of completion used for slime-complete-symbol. slime-space The space key inserts a space and also looks up and displays the argument list for the function at point, if there is one. slime-insert-arglist Looks up and inserts into the current buﬀer the argument list for the function at point, if there is one. slime-macroexpand-1 Macroexpand the expression at point once. slime-macroexpand-all Fully macroexpand the expression at point. slime-toggle-trace-fdefinition Toggle tracing of the function at point. slime-disassemble-symbol Disassemble the function deﬁnition of the symbol at point.
+
+C-c M-i
+
+SPC
+
+C-c C-s
+
+C-c C-m C-c M-m C-c C-t C-c M-d
+
+3.2.6 Abort/Recovery
+C-c C-g C-c ~ C-c M-p slime-interrupt Interrupt Lisp (send SIGINT). In XEmacs use C-c C-b. slime-sync-package-and-default-directory Synchronize the current package and working directory from Emacs to Lisp. slime-repl-set-package Set the current package of the repl.
+
+Chapter 3: slime-mode
+
+8
+
+3.2.7 Cross-reference
+slime’s cross-reference commands are based on the support provided by the Lisp system, which varies widely between Lisps. For systems with no builtin xref support slime queries a portable xref package, which is taken from the CMU AI Repository and bundled with slime. Each command operates on the symbol at point, or prompts if there is none. With a preﬁx argument they always prompt. You can either enter the key bindings as shown here or with the control modiﬁed on the last key, See Section 3.1.2 [Key bindings], page 4. C-c C-w c slime-who-calls Show function callers. C-c C-w r slime-who-references Show references to global variable. C-c C-w b slime-who-binds Show bindings of a global variable. C-c C-w s slime-who-sets Show assignments to a global variable. C-c C-w m slime-who-macroexpands Show expansions of a macro. M-x slime-who-specializes Show all known methods specialized on a class. There are also “List callers/callees” commands. These operate by rummaging through function objects on the heap at a low-level to discover the call graph. They are only available with some Lisp systems, and are most useful as a fallback when precise xref information is unavailable. C-c < C-c > slime-list-callers List callers of a function. slime-list-callees List callees of a function.
+
+3.2.8 Inspector
+The slime inspector is an Emacs-based version of the Lisp function INSPECT. The inspected object is presented in a buﬀer with one line per slot. C-c I slime-inspect Inspect the value of an expression entered in the minibuﬀer.
+
+The commands available in the inspector are: RET d slime-inspector-inspect-object-at-point Inspect the slot at point. The inspector is invoked recursively. slime-inspector-describe Describe the slot at point.
+
+Chapter 3: slime-mode
+
+9
+
+l n q
+
+slime-inspector-pop Go back to the previous object (return from RET). slime-inspector-next The inverse of l. Also bound to SPC. slime-inspector-quit Dismiss the inspector buﬀer.
+
+3.2.9 Proﬁling
+M-x slime-toggle-profile-fdefinition Toggle proﬁling of a function. M-x slime-profile-package Proﬁle all functions in a package. M-x slime-unprofile-all Unproﬁle all functions. M-x slime-profile-report Report proﬁler data. M-x slime-profile-reset Reset proﬁler data.
+
+3.3 Semantic indentation
+slime automatically discovers how to indent the macros in your Lisp system. To do this the Lisp side scans all the macros in the system and reports to Emacs all the ones with &body arguments. Emacs then indents these specially, putting the ﬁrst arguments four spaces in and the “body” arguments just two spaces, as usual. This should “just work.” If you are a lucky sort of person you needn’t read the rest of this section. To simplify the implementation, slime doesn’t distinguish between macros with the same symbol-name but diﬀerent packages. This makes it ﬁt nicely with Emacs’s indentation code. However, if you do have several macros with the same symbol-name then they will all be indented the same way, arbitrarily using the style from one of their arglists. You can ﬁnd out which symbols are involved in collisions with: (swank:print-indentation-lossage) If a collision causes you irritation, don’t have a nervous breakdown, just override the Elisp symbol’s common-lisp-indent-function property to your taste. slime won’t override your custom settings, it just tries to give you good defaults. A more subtle issue is that imperfect caching is used for the sake of performance.1 In an ideal world, Lisp would automatically scan every symbol for indentation changes after each command from Emacs. However, this is too expensive to do every time. Instead Lisp
+1
+
+Of course we made sure it was actually too slow before making the ugly optimization.
+
+Chapter 3: slime-mode
+
+10
+
+usually just scans the symbols whose home package matches the one used by the Emacs buﬀer where the request comes from. That is suﬃcient to pick up the indentation of most interactively-deﬁned macros. To catch the rest we make a full scan of every symbol each time a new Lisp package is created between commands – that takes care of things like new systems being loaded. You can use M-x slime-update-indentation to force all symbols to be scanned for indentation information.
+
+3.4 Reader conditional fontiﬁcation
+slime automatically evaluates reader-conditional expressions in source buﬀers and “grays out” code that will be skipped for the current Lisp connection.
+
+Chapter 4: REPL: the “top level”
+
+11
+
+4 REPL: the “top level”
+slime uses a custom Read-Eval-Print Loop (repl, also known as a “top level”). The repl user-interface is written in Emacs Lisp, which gives more Emacs-integration than the traditional comint-based Lisp interaction: • Conditions signalled in repl expressions are debugged with sldb. • Return values are distinguished from printed output by separate Emacs faces (colours). • Emacs manages the repl prompt with markers. This ensures that Lisp output is inserted in the right place, and doesn’t get mixed up with user input.
+
+4.1 REPL commands
+RET slime-repl-return Evaluate the current input in Lisp if it is complete. If incomplete, open a new line and indent. If a preﬁx argument is given then the input is evaluated without checking for completeness. slime-repl-closing-return Close any unmatched parenthesis and then evaluate the current input in Lisp. Also bound to M-RET. slime-repl-newline-and-indent Open and indent a new line. slime-interrupt Interrupt the Lisp process with SIGINT. slime-complete-symbol Complete the symbol at point. slime-repl-clear-output Remove the output and result of the previous expression from the buﬀer. slime-repl-clear-buffer Clear the entire buﬀer, leaving only a prompt.
+
+C-RET
+
+C-j C-c C-c TAB C-c C-o C-c C-t
+
+4.2 Input navigation
+C-a M-n M-p M-s M-r slime-repl-bol Go to the beginning of the line, but stop at the repl prompt.
+
+slime-repl-{next,previous}-input slime-repl-{next,previous}-matching-input comint-style input history commands. slime-repl-next-prompt, slime-repl-previous-prompt Move between the current and previous prompts in the repl buﬀer.
+
+C-c C-n C-c C-p
+
+Chapter 4: REPL: the “top level”
+
+12
+
+C-M-a C-M-e
+
+slime-repl-beginning-of-defun, slime-repl-end-of-defun These commands are like beginning-of-defun and end-of-defun, but when used inside the repl input area they instead go directly to the beginning or the end, respectively.
+
+4.3 Shortcuts
+“Shortcuts” are a special set of repl commands that are invoked by name. To invoke a shortcut you ﬁrst press , (comma) at the repl prompt and then enter the shortcut’s name when prompted. Shortcuts deal with things like switching between directories and compiling and loading Lisp systems. The exact set of shortcuts is not currently documented in this manual, but you can use the help shortcut to list them interactively.
+
+Chapter 5: SLDB: the SLIME debugger
+
+13
+
+5 SLDB: the SLIME debugger
+slime has a custom Emacs-based debugger called sldb. Conditions signalled in the Lisp system invoke sldb in Emacs by way of the Lisp *DEBUGGER-HOOK*. sldb pops up a buﬀer when a condition is signalled. The buﬀer displays a description of the condition, a list of restarts, and a backtrace. Commands are oﬀered for invoking restarts, examining the backtrace, and poking around in stack frames.
+
+5.1 Examining frames
+Commands for examining the stack frame at point. t v sldb-toggle-details Toggle display of local variables and CATCH tags. sldb-show-source View the frame’s current source expression. The expression is presented in the Lisp source ﬁle’s buﬀer. sldb-eval-in-frame Evaluate an expression in the frame. The expression can refer to the available local variables in the frame. sldb-pprint-eval-in-frame Evaluate an expression in the frame and pretty-print the result. sldb-disassemble Disassemble the frame’s function. Includes information such as the instruction pointer within the frame. sldb-inspect-in-frame Inspect the result of evaluating an expression in the frame. sldb-list-locals List the local variables and their bindings in the frame.
+
+e
+
+d D
+
+i l
+
+5.2 Invoking restarts
+a q c 0 ... 9 sldb-abort Invoke the ABORT restart. sldb-quit “Quit” – THROW to a tag that the top-level slime request-loop catches. sldb-continue Invoke the CONTINUE restart. Invoke a restart by number.
+
+Restarts can also be invoked by pressing RET or Mouse-2 on them in the buﬀer.
+
+Chapter 5: SLDB: the SLIME debugger
+
+14
+
+5.3 Navigating between frames
+n p M-n M-p sldb-details-{down,up} Move between frames “with sugar”: hide the details of the original frame and display the details and source code of the next. Sugared motion makes you see the details and source code for the current frame only. sldb-down, sldb-up Move between frames.
+
+5.4 Miscellaneous Commands
+r sldb-restart-frame Restart frame. Restart execution of the frame with the same arguments it was originally called with. (This command is not available in all implementations.) sldb-return-from-frame Return from frame. Return from the frame with a value entered in the minibuﬀer. (This command is not available in all implementations.) sldb-step Step to the next expression in the frame. (This command is not available in all implementations.) sldb-break-with-default-debugger Switch to default debugger. Exit sldb and debug the condition using the Lisp system’s default debugger. slime-interactive-eval Evaluate an expression entered in the minibuﬀer.
+
+R
+
+s
+
+B
+
+:
+
+Chapter 6: Extras
+
+15
+
+6 Extras
+6.1 slime-autodoc-mode
+slime-autodoc-mode is an additional minor-mode for automatically showing documentation (argument lists) for code near the point. It is a clone of eldoc-mode for Emacs Lisp. The mode can be enabled in your ~/.emacs: (add-hook ’slime-mode-hook (lambda () (slime-autodoc-mode t))) Autodoc has the potential to cause a lot of rpc messages, so simple caching is supported. The variable slime-autodoc-cache-type can be set to use one of three caching strategies: nil last all Don’t cache anything. This means a lot of network requests. Cache only documentation for the most recently queried symbol. Cache all documentation forever. This uses the fewest network requests, but does not learn about documentation changes.
+
+The default caching strategy is last.
+
+6.2 Multiple connections
+slime is able to connect to multiple Lisp processes at the same time. The M-x slime command, when invoked with a preﬁx argument, will oﬀer to create an additional Lisp process if one is already running. This is often convenient, but it requires some understanding to make sure that your slime commands execute in the Lisp that you expect them to. Some buﬀers are tied to speciﬁc Lisp processes. Each Lisp connection has its own repl buﬀer, and all expressions entered or slime commands invoked in that buﬀer are sent to the associated connection. Other buﬀers created by slime are similarly tied to the connections they originate from, including sldb buﬀers, apropos result listings, and so on. These buﬀers are the result of some interaction with a Lisp process, so commands in them always go back to that same process. Commands executed in other places, such as slime-mode source buﬀers, always use the “default” connection. Usually this is the most recently established connection, but this can be reassigned via the “connection list” buﬀer: C-c C-x c slime-list-connections Pop up a buﬀer listing the established connections. The buﬀer displayed by slime-list-connections gives a one-line summary of each connection. The summary shows the connection’s serial number, the name of the Lisp implementation, and other details of the Lisp process. The current “default” connection is indicated with an asterisk. The commands available in the connection-list buﬀer are: RET slime-goto-connection Pop to the repl buﬀer of the connection at point.
+
+Chapter 6: Extras
+
+16
+
+d
+
+slime-connection-list-make-default Make the connection at point the “default” connection. It will then be used for commands in slime-mode source buﬀers. slime-update-connection-list Update the connection list in the buﬀer. slime-temp-buffer-quit Quit the connection list (kill buﬀer, restore window conﬁguration).
+
+g q
+
+6.3 Typeout frames
+A “typeout frame” is a special Emacs frame which is used instead of the echo area (minibuffer) to display messages from slime commands.1 This is an optional feature. The advantage of a typeout frame over the echo area is that it can hold more text, it can be scrolled, and its contents don’t disappear when you press a key. All potentially long messages are sent to the typeout frame, such as argument lists, macro expansions, and so on. M-x slime-ensure-typeout-frame Ensure that a typeout frame exists, creating one if necessary. If the typeout frame is closed then the echo area will be used again as usual. To have a typeout frame created automatically at startup you can use the slimeconnected-hook: (add-hook ’slime-connected-hook ’slime-ensure-typeout-frame)
+
+1
+
+The name “typeout frame” is intended to be consistent with historical usage. If we are using the term inappropriately, please set us straight.
+
+Chapter 7: Customization
+
+17
+
+7 Customization
+7.1 Emacs-side
+The Emacs part of slime can be conﬁgured with the Emacs customize system, just use M-x customize-group slime RET. Because the customize system is self-describing, we only cover a few important or obscure conﬁguration options here in the manual. slime-truncate-lines The value to use for truncate-lines in line-by-line summary buﬀers popped up by slime. This is t by default, which ensures that lines do not wrap in backtraces, apropos listings, and so on. It can however cause information to spill oﬀ the screen. slime-multiprocessing This should be set to t if you want to use multiprocessing (threads) in your Lisp system. It causes any necessary initialization to be performed during Lisp server startup. slime-complete-symbol-function The function to use for completion of Lisp symbols. Three completion styles are available. The default slime-complete-symbol* performs completion “in parallel” over the hyphen-delimited sub-words of a symbol name.1 Formally this means that “a-b-c” can complete to any symbol matching the regular expression “^a.*-b.*-c.*” (where “dot” matches anything but a hyphen). Examples give a more intuitive feeling: • m-v-b completes to multiple-value-bind. • w-open is ambiguous: it completes to either with-open-file or withopen-stream. The symbol is expanded to the longest common completion (with-open-) and the point is placed at the ﬁrst point of ambiguity, which in this case is the end. • w--stream completes to with-open-stream. An alternative is slime-simple-complete-symbol, which completes in the usual Emacs way. Finally, there is slime-fuzzy-complete-symbol, which is quite diﬀerent from both of the above and tries to ﬁnd best matches to an abbreviated symbol. It also has its own keybinding, defaulting to C-c M-i. See [slime-fuzzy-complete-symbol], page 7, for more information. slime-translate-to-lisp-filename-function slime-translate-from-lisp-filename-function These functions can be used to translate ﬁlenames between Emacs and the Lisp system. They are useful if you run Emacs and Lisp on separate machines which share a common ﬁle system but use a diﬀerent directory structure (diﬀerent “mount points”). This is most common with smb-based ﬁle sharing.
+1
+
+This style of completion is modelled on ‘completer.el’ by Chris McConnell. This package is bundled with ilisp.
+
+Chapter 7: Customization
+
+18
+
+7.1.1 Hooks
+slime-mode-hook This hook is run each time a buﬀer enters slime-mode. It is most useful for setting buﬀer-local conﬁguration in your Lisp source buﬀers. An example use is to enable slime-autodoc-mode (See Section 6.1 [slime-autodoc-mode], page 15.) slime-connected-hook This hook is run when slime establishes a connection to a Lisp server. An example use is to create a Typeout frame (See Section 6.3 [Typeout frames], page 16.) sldb-hook This hook is run after sldb is invoked. The hook functions are called from the sldb buﬀer after it is initialized. An example use is to add sldb-printcondition to this hook, which makes all conditions debugged with sldb be recorded in the repl buﬀer.
+
+7.2 Lisp-side (Swank)
+The Lisp server side of slime (known as “Swank”) oﬀers several variables to conﬁgure. The initialization ﬁle ‘~/.swank.lisp’ is automatically evaluated at startup and can be used to set these variables.
+
+7.2.1 Communication style
+The most important conﬁgurable is SWANK:*COMMUNICATION-STYLE*, which speciﬁes the mechanism by which Lisp reads and processes protocol messages from Emacs. The choice of communication style has a global inﬂuence on slime’s operation. The available communication styles are: :FD-HANDLER This style uses the classical Unix-style “select()-loop.” Swank registers the communication socket with an event-dispatching framework (such as SERVEEVENT in cmucl and sbcl) and receives a callback when data is available. In this style requests from Emacs are only detected and processed when Lisp enters the event-loop. This style is simple and predictable. :SIGIO This style uses signal-driven I/O with a SIGIO signal handler. Lisp receives requests from Emacs along with a signal, causing it to interrupt whatever it is doing to serve the request. This style has the advantage of responsiveness, since Emacs can perform operations in Lisp even while it is busy doing other things. It also allows Emacs to issue requests concurrently, e.g. to send one long-running request (like compilation) and then interrupt that with several short requests before it completes. The disadvantages are that it may conﬂict with other uses of SIGIO by Lisp code, and it may cause untold havoc by interrupting Lisp at an awkward moment.
+
+Chapter 7: Customization
+
+19
+
+:SPAWN
+
+This style uses multiprocessing support in the Lisp system to execute each request in a separate thread. This style has similar properties to :SIGIO, but it does not use signals and all requests issued by Emacs can be executed in parallel.
+
+The default request handling style is chosen according to the capabilities your Lisp system. The general order of preference is :SPAWN, then :SIGIO, then :FD-HANDLER. You can check the default style by calling SWANK-BACKEND:PREFERRED-COMMUNICATION-STYLE. You can also override the default by setting SWANK:*COMMUNICATION-STYLE* in your Swank init ﬁle.
+
+7.2.2 Other conﬁgurables
+To use the sldb debugger globally for all debugging in the Lisp system you can add this line to your init ﬁle: (setq *debugger-hook* #’swank:swank-debugger-hook) You can also modify these Swank variables: SWANK:*CONFIGURE-EMACS-INDENTATION* This variable controls whether indentation styles for &body-arguments in macros are discovered and sent to Emacs. It is enabled by default. SWANK:*GLOBALLY-REDIRECT-IO* When true this causes the standard streams (*standard-output*, etc) to be globally redirected to the repl in Emacs. When NIL (the default) these streams are only temporarily redirected to Emacs using dynamic bindings while handling requests. Note that *standard-input* is currently never globally redirected into Emacs, because it can interact badly with the Lisp’s native repl by having it try to read from the Emacs one. SWANK:*SLDB-PPRINT-FRAMES* *PRINT-PRETTY* is bound to this value while formatting backtraces in sldb. The default value is NIL. SWANK:*USE-DEDICATED-OUTPUT-STREAM* This variable controls an optimization for sending printed output from Lisp to Emacs. When t (the default) a separate socket is established solely for Lisp to send printed output to Emacs through. Without the optimization it is necessary to send output in protocol-messages to Emacs which must then be decoded, and this doesn’t always keep up if Lisp starts “spewing” copious output. SWANK:*LOG-EVENTS* Setting this variable to t causes all protocol messages exchanged with Emacs to be printed to *TERMINAL-IO*. This is useful for low-level debugging and for observing how slime works “on the wire.” The output of *TERMINAL-IO* can be found in your Lisp system’s own listener, usually in the buﬀer *inferiorlisp*.
+
+Chapter 8: Credits
+
+20
+
+8 Credits
+The soppy ending...
+
+Hackers of the good hack
+slime is an Extension of slim by Eric Marsden. At the time of writing, the authors and code-contributors of slime are: Helmut Eller Luke Gorrie Marco Baringer Daniel Barlow Alan Ruttenberg Wolfgang Jenkner Lawrence Mitchell Peter Seibel Bill Clementson Michael Weber James Bielman Edi Weitz Thomas F. Burdick Christophe Rhodes Brian Downing Alan Shutko Tiago Maduro-Dias Robert E. Brown Matthew Danish Lars Magne Ingebrigtsen Jouni K Seppanen Bjørn Nordbø Andras Simon Zach Beane Sean O’Rourke Robert Lehr Raymond Toy Pawel Ostrowski Martin Simmons Lasse Rasinen Julian Stecklina Ivan Boldyrev Ignas Mikalajunas Hannu Koivisto Frederic Brunel Eric Blood Bryan O’Connor Brian Mastenbrook Barry Fishman ... not counting the bundled code from ‘hyperspec.el’, CLOCC, and the CMU AI Repository. Many people on the slime-devel mailing list have made non-code contributions to slime. Life is hard though: you gotta send code to get your name in the manual. :-)
+
+Thanks!
+We’re indebted to the good people of common-lisp.net for their hosting and help, and for rescuing us from “Sourceforge hell.” Implementors of the Lisps that we support have been a great help. Thanks to the cmucl maintainers on the cmucl-imp list, Dan Barlow1 and Christophe Rhodes of sbcl, Gary Byers of OpenMCL, Martin Simmons of LispWorks (generously sponsored by Alain Picard of Memetrics), Peter Graves of abcl, and to Craig Norvell and Kevin Layer of Franz.
+
+1
+
+Dan is one of “us”, so naturally these thanks apply to the sbcl-hacker side of his personality.
+
+

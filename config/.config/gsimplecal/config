@@ -1,0 +1,19 @@
+#===============================================================================
+# .config/gsimplecal/config
+#
+# Configuration for gsimplecal calendar application.
+#
+# Reference:  http://manpages.ubuntu.com/manpages/bionic/man1/gsimplecal.1.html
+#===============================================================================
+
+#show_calendar=1
+#mark_today=1
+#show_week_numbers=1
+close_on_unfocus=1
+#mainwindow_position=mouse
+#mainwindow_xoffset=-0
+#mainwindow_yoffset=20
+
+#===============================================================================
+# End of File
+#===============================================================================

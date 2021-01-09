@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+#===============================================================================
+# get-pictures
+#
+# Transfer all pictures from a canon s100 camera to the current directory and
+# rename them using the timestamp.
+#
+# Author: Kyle W T Sherman
+#===============================================================================
+
+echo -n "Download all the pictures from a Canon S-100? [yN] " ; read a
+case "${a}" in
+    y|Y)
+        echo
+        gphoto2 -P
+        echo
+        gphoto2 --show-info 1-$(ls -1 *.JPG | wc -l | sed 's/ //g') > __photo_info__
+        ;;
+    *)
+        echo
+        echo -n "Download picture info from a Canon S-100? [yN] " ; read a
+        case "${a}" in
+            y|Y)
+                echo
+                gphoto2 --show-info 1-$(ls -1 *.JPG | wc -l | sed 's/ //g') > __photo_info__
+                echo
+                echo "Saved as __photo_info__"
+                ;;
+        esac
+esac
+
+echo
+echo -n "Rename picture files using the timestamps in __photo_info__? [yN] " ; read a
+case "${a}" in
+    y|Y)
+        echo
+        # original version
+        # cat __photo_info__ | perl -e '%mon = ("Jan", "01", "Feb", "02", "Mar", "03", "Apr", "04", "May", "05", "Jun", "06", "Jul", "07", "Aug", "08", "Sep", "09", "Oct", "10", "Nov", "11", "Dec", "12"); while($l = <STDIN>) { chomp($l); if($l =~ /Name:/) { ($name = $l) =~ s/^.*\x27(.*)\x27.*$/$1/; $time = ""; while($l = <STDIN> and $time=="") { chomp($l); if($l =~ /Time:/) { ($time = $l) =~ s/^.*Time: *([^ ].*)$/$1/; $time =~ s/  / /; @parts = split(/ /, $time); $time = $parts[4] . "-" . $mon{$parts[1]} . "-" . substr("0" . $parts[2], -2) . " " . $parts[3]; $oname = $time . " - .jpg"; print("Renaming " . chr(39) . $name . chr(39) . " to " . chr(39) . $oname . chr(39) . chr(10)); rename($name, $oname); } } } }'
+        # version as of 2010-03-20
+        cat __photo_info__ | perl -e '%mon = ("Jan", "01", "Feb", "02", "Mar", "03", "Apr", "04", "May", "05", "Jun", "06", "Jul", "07", "Aug", "08", "Sep", "09", "Oct", "10", "Nov", "11", "Dec", "12"); while($l = <STDIN>) { chomp($l); if($l =~ /Information on file/) { ($name = $l) =~ s/^[^\x27]*\x27([^\x27]*)\x27.*$/$1/; $time = ""; while($l = <STDIN> and $time=="") { chomp($l); if($l =~ /Time:/) { ($time = $l) =~ s/^.*Time: *([^ ].*)$/$1/; $time =~ s/  / /; @parts = split(/ /, $time); $time = $parts[4] . "-" . $mon{$parts[1]} . "-" . substr("0" . $parts[2], -2) . " " . $parts[3]; $oname = $time . " - .jpg"; print("Renaming " . chr(39) . $name . chr(39) . " to " . chr(39) . $oname . chr(39) . chr(10)); rename($name, $oname); } } } }'
+        echo
+        echo "Deleting __photo_info__"
+        rm __photo_info__
+        ;;
+esac
+
+echo
+echo "Done"
+
+#===============================================================================
+# End of File
+#===============================================================================

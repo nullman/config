@@ -1,0 +1,99 @@
+#!/usr/bin/env bash
+#===============================================================================
+# im-bot-eliza
+#
+# Respond to instant messaging commands.
+#
+# Wrap the im-bot and determine whether to pass messages through unchanged or
+# to call it with the eliza-fortune option.
+#
+# Author: Kyle W T Sherman
+#===============================================================================
+
+# im-bot command
+bot="$(dirname $0)/im-bot"
+
+# command list
+cmdlist="|help|.h|eliza|.e|today|.y|fortune|.f|quote|.q|google|.g|lucky|.l|calc|.c|date|.d|time|.t|uptime|.up|uuid|.u|key|.k|keym|.km|keyc|.kc|"
+
+# get command
+cmd="$1"
+shift
+
+# get rest
+msg="$@"
+
+# if message is not a command, pass it on to eliza-fortune
+if [[ ! $(echo "${cmdlist}" | grep -q "|${cmd}|") ]] ; then
+    # call im-bot eliza-fortune
+    ${bot} eliza-fortune "${cmd}" "${msg[@]}" | head -c -1
+else
+    # # convert msg into an array
+    # msg=($(echo ${msg}))
+    # # get command part
+    # cmd=${msg[0]}
+    # # get rest of msg
+    # msg=(${msg[@]:1})
+    # remove '.' from command, if needed
+    if [[ "${cmd:0:1}" == "." ]] ; then
+        cmd="${cmd:1}"
+    fi
+    # main command handler
+    case "${cmd}" in
+        # help
+        help|h)
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a45a426 (Update)
+            cat <<EOF
+Commands I understand:
+  help    (.h)   this menu
+  eliza   (.e)   chat with elizatalk
+  today   (.y)   today in history
+  fortune (.f)   fortune teller
+  quote   (.q)   random quote
+  google  (.g)   google search
+  lucky   (.l)   google lucky search
+  calc    (.c)   google calculator
+  date    (.d)   date/time in default format
+  time    (.t)   date/time in YYYY-MM-DD HH:MM:SS format
+  uptime  (.up)  system uptime
+  uuid    (.u)   uuid (guid)
+  key     (.k)   key/value database (type .k help for more info)
+  keym    (.km)  abbreviation for '.key main'
+  keyc    (.kc)  abbreviation for '.key contacts'
+EOF
+<<<<<<< HEAD
+=======
+            echo "Commands I understand:"
+            echo "  help    (.h)  - this menu"
+            echo "  eliza   (.e)  - chat with elizatalk"
+            echo "  today   (.y)  - today in history"
+            echo "  fortune (.f)  - fortune teller"
+            echo "  quote   (.q)  - random quote"
+            echo "  google  (.g)  - google search"
+            echo "  lucky   (.l)  - google lucky search"
+            echo "  calc    (.c)  - google calculator"
+            echo "  date    (.d)  - date/time in default format"
+            echo "  time    (.t)  - date/time in YYYY-MM-DD HH:MM:SS format"
+            echo "  uptime  (.up) - system uptime"
+            echo "  uuid    (.u)  - uuid (guid)"
+            echo "  key     (.k)  - key/value database (type .k help for more info)"
+            echo "  keym    (.km) - abbreviation for '.key main'"
+            echo "  keyc    (.kc) - abbreviation for '.key contacts'"
+>>>>>>> 6554bfc (Initial commit after splitting home configuration files into public and private repos)
+=======
+>>>>>>> a45a426 (Update)
+            ;;
+        # other
+        *)
+            # call im-bot to handle request
+            (CONTACT_NICK=${CONTACT_NICK} ; ${bot} ${cmd} ${msg[@]} | head -c -1)
+            ;;
+    esac
+fi
+
+#===============================================================================
+# End of File
+#===============================================================================

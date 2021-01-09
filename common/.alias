@@ -1,0 +1,3324 @@
+#!/usr/bin/env bash
+#!       1         2         3         4         5         6         7         8
+#!345678901234567890123456789012345678901234567890123456789012345678901234567890
+#!==============================================================================
+#! .alias
+#!
+#! Alias Definitions
+#!
+#! Author: Kyle W T Sherman
+#!==============================================================================
+#!
+#! set variables
+#!
+#!       home
+home="$(cd ${HOME} ; cd .. ; pwd)"
+#!       terminal
+terminal="alacritty"
+#!       nullwareip
+nullwareip="159.203.165.79"
+#!
+#! helper functions
+#!
+#!       _command                check if executable command is found in the path
+_command()
+{
+    command -v "$1" > /dev/null 2>&1
+}
+#
+#===============================================================================
+# Alias Definitions
+#===============================================================================
+
+#
+# help
+#
+#        alh                     alias help
+alias alh="
+    cat \${HOME}/.alias \${HOME}/.alias-work 2>/dev/null | \
+      grep '^#' | grep -v '^#!' | sed 's/^#//' | more"
+#        alhl                    alias help (long)
+alias alhl="
+    cat \${HOME}/.alias \${HOME}/.alias-work 2>/dev/null | \
+      grep -v '^#!' | grep -v '^#  ' | sed 's/^#//' | more"
+#        alhg                    alias help with grep
+alias alhg="
+    cat \${HOME}/.alias \${HOME}/.alias-work 2>/dev/null | \
+      grep '^#' | grep -v '^#!' | sed 's/^#//' | grep -i"
+#!#        ahlg                    alias help (long) with grep
+#!alias ahlg="
+#!    cat \${HOME}/.alias \${HOME}/.alias-work 2>/dev/null | \
+#!      grep -v '^#!' | grep -v '^#  ' | sed 's/^#//' | more | grep -i"
+
+#
+# source core scripts
+#
+#        al                      source alias and funct scripts
+alias al="
+    for file in \".alias\" \".funct\" \".alias-work\" \".funct-work\" ; do
+        [[ -f \${HOME}/\${file} ]] && source \${HOME}/\${file}
+    done"
+#        spr                     source .profile
+alias spr="[[ -f \${HOME}/.profile ]] && source \${HOME}/.profile"
+#        sba                     source .bashrc
+alias sba="[[ -f \${HOME}/.bashrc ]] && source \${HOME}/.bashrc"
+#        szsh                    source .zsh
+alias szsh="[[ -f \${HOME}/.zshrc ]] && source \${HOME}/.zshrc"
+
+#
+# general (basic)
+#
+#        a                       alias
+alias a="alias"
+#        ua                      unalias
+alias ua="unalias"
+#        z                       exit shell
+alias z="exit"
+#        c                       clear shell buffer
+alias c="clear"
+#        r                       reset shell buffer
+alias r="reset"
+#        pager                   less (pager app)
+alias pager="less"
+#        zpager                  zless (pager app)
+alias zpager="zless"
+#        l                       less
+alias l="less"
+#        zl                      zless
+alias zl="zless"
+#        rd                      remove directory
+alias rd="rmdir"
+#        md                      make directory
+alias md="mkdir"
+#        free                    free -m (show sizes in MB)
+alias free="free -m"
+#        lns                     ln -s
+alias lns="ln -s"
+#        ln-remove-brokem        remove broken symbolic links
+alias ln-remove-broken="
+    find . -type l ! -exec test -e {} \; -print0 | \
+    grep -vz ':$' | xargs -0 rm"
+#        envs                    sorted env
+alias envs="env | sort"
+#        envg                    sorted env with grep
+alias envg="env | sort | grep -i"
+#        seba                    source /etc/bash.bashrc
+alias seba="source /etc/bash.bashrc"
+#        sepr                    source /etc/profile
+alias sepr="source /etc/profile"
+#        sra                     source ~/bin/run-app
+alias sra="source \${HOME}/bin/run-app"
+#        loc                     locate file (case insensitive)
+alias loc="locate -i"
+#        udb                     update locate database
+alias udb="sudo updatedb"
+#        psa                     ps -e --format pid,ppid,user,args --forest (all processes)
+alias psa="ps -e --format pid,ppid,user,args --forest"
+#        pscpu                   ps top cpu using processes
+alias pscpu="
+    ps -e --format pid,ppid,user,pcpu,pmem,args | \
+    head -n 1 && ps -e --format pid,ppid,user,pcpu,pmem,args | \
+    sort -nr -k 4 | head -n 10"
+#        psmem                   ps top memory using processes
+alias psmem="
+    ps -e --format pid,ppid,user,pcpu,pmem,args | \
+    head -n 1 && ps -e --format pid,ppid,user,pcpu,pmem,args | \
+    sort -nr -k 5 | head -n 10"
+#        un                      id -un (username)
+alias un="id -un"
+#        hn                      uname -n (hostname)
+alias hn="uname -n"
+#        una                     uname -a
+alias una="uname -a"
+#        path                    show path
+alias path="echo \${PATH}"
+#        ifconfig                ifconfig
+alias ifc="ifconfig"
+#        iwconfig                iwconfig
+alias iwc="iwconfig"
+#        dhc-release             release dhch leased ip address
+alias dhc-release="sudo dhclient -r -v"
+#        hidds                   bluetooth search (hidd --search)
+alias hidds="hidd --search"
+#        blue-on                 pon bluetooth
+alias blue-on="pon bluetooth"
+#        blue-off                poff bluetooth
+alias blue-off="poff bluetooth"
+#        dt                      display date and time
+alias dt="date '+%Y-%m-%d %H:%M:%S'"
+#        dt-clock                display updating date and time
+alias dt-clock="watch -n1 \"date '+%Y-%M-%d%n%n%T' | figlet -Wtc\""
+#        dtl                     display date and time (long version)
+alias dtl="date '+Date: %Y-%m-%d%nTime: %H:%M:%S'"
+#        dte                     display seconds since the epoch
+alias dte="date '+%s'"
+#        taill                   tail -n 100 (long tail)
+alias taill="tail -n 100"
+#        tailf                   tail -n 100 -f (continuous tail)
+alias tailf="tail -n 100 -f"
+#        headl                   head -n 100 (long head)
+alias headl="head -n 100"
+#        h                       history
+alias h="history"
+#        hh                      zsh long history (fc -l -300)
+alias hh="fc -l -300"
+#        hg                      history with grep
+alias hg="history | grep -i"
+#        hhg                     zsh long history with grep
+alias hhg="fc -l 1 | grep -i"
+#        xevkp                   xev key presses only
+alias xevkp="xev | sed -ne '/^KeyPress/,/^$/p'"
+#        xk                      xmodmap -pk (print keys)
+alias xk="xmodmap -pk | pager"
+#        xke                     xmodmap -pke (print keys as expressions)
+alias xke="xmodmap -pke | pager"
+#        xkb-rules               list xkb rules
+alias xkb-rules="pager /usr/share/X11/xkb/rules/base.lst"
+#        diffc                   diff -c (context output format)
+alias diffc="diff -c"
+#        xd                      xxdiff (X based diff app)
+alias xd="xxdiff"
+#        xl                      xlock (lock the screen)
+alias xl="xlock -nice 1 +usefirst -mode flame"
+#        xkeys                   list x11 keys
+alias xkeys="pager /usr/include/X11/keysumdef.h"
+#        setdate                 set system date using ntpdate
+alias setdate="ntpdate -su 128.101.101.101 ; hwclock --systohc"
+#        ra                      run-app
+alias ra="run-app"
+#        ccs                     ccache -s (cache status)
+alias ccs="ccache -s"
+#        lwords                  list words
+alias lwords="pager /usr/share/dict/words"
+#        fort                    fortune
+alias fort="\$(pathcmd fortune /usr/bin/fortune:/usr/games/fortune) -a"
+#        fortq                   fortune query
+alias fortq="\$(pathcmd fortune /usr/bin/fortune:/usr/games/fortune) -a -m"
+#        quote                   quote
+alias quote="\$(pathcmd fortune /usr/bin/fortune:/usr/games/fortune) -a \${HOME}/quotes"
+#        quoteq                  quote query
+alias quoteq="\$(pathcmd fortune /usr/bin/fortune:/usr/games/fortune) -a \${HOME}/quotes -m"
+#!#        uuid                    print a UUID (or GUID)
+#!alias uuid="uuidgen"
+#!#        uuid                    print a UUID (or GUID)
+#!alias uuid="
+#!    id=\$(mcookie)
+#!    echo \"${id:0:8}-${id:8:4}-${id:12:4}-${id:16:4}-${id:20:12}\""
+#        guid                    print a GUID
+alias guid="uuid"
+#        gf                      getfiles (function)
+alias gf="getfiles"
+#        netjuke-list            list netjuke play list
+alias netjuke-list="cat ${home}/data/www/netjuke/var/data/radio/playlist.m3u"
+#        naut                    nautilus --no-desktop --browser
+alias naut="nautilus --no-desktop --browser &"
+#        genpw                   generate some passwords
+alias genpw="apg -M L -t"
+#        gdmrs                   gdm restart
+alias gdmrs="sudo systemctl restart gdm.service"
+#        gnome-shell-restart     gnome-shell restart
+alias gnome-shell-restart="DISPLAY=:0 gnome-shell --replace"
+#        lightdm-restart         lightdm restart
+alias lightdm-resetart="sudo systemctl restart lightdm.service"
+#        menuw                   menu ~/.menu_work
+alias menuw="menu \${HOME}/.menu_work"
+#        mw                      menu ~/.menu_work
+alias mw="menu \${HOME}/.menu_work"
+#!#        beep                    beep console
+#!alias beep="echo -e -n \"\a\""
+#!#        beep-ten                beep console ten times
+#!alias beep-ten="
+#!    for ((x = 1; x < 10; x++)) ; do
+#!        echo -e -n \"\a\"
+#!        sleep 1
+#!    done"
+#!#        beep-loop               beep console until a key is pressed
+#!alias beep-loop=""
+#        click                   play click test sound with paplay
+alias click="paplay \${HOME}/sounds/click.wav"
+#        beep                    play beep test sound with paplay
+alias beep="paplay \${HOME}/sounds/shortbeep.wav"
+#        beep-ten                play beep test sound with paplay ten times
+alias beep-ten="
+    for ((x = 1; x < 10; x++)) ; do
+        paplay \${HOME}/sounds/beep.wav
+        sleep 1
+    done"
+#        fart                    play fart test sound with paplay
+alias fart="paplay \${HOME}/sounds/farts/0111.wav"
+#        find-kernel-mod         find kernel modules
+alias find-kernel-mod="find /lib/modules/\$(uname -r)/ -type f -iname '*.o' -or -iname '*.ko'"
+#        hosts                   cat /etc/hosts
+alias hosts="cat /etc/hosts | pager"
+#        hostsg                  grep /etc/hosts
+alias hostsg="cat /etc/hosts | grep -i"
+#        resolv                  cat /etc/resolv.conf
+alias resolv="cat /etc/resolv.conf"
+#        fstab                   cat /etc/fstab
+alias fstab="cat /etc/fstab"
+#        set-display             set DISPLAY environment
+alias set-display="export DISPLAY=:0.0"
+#        dimensions              show screen dimensions
+alias dimensions="xdpyinfo | grep 'dimensions:'"
+#        terminal-dimensions     show terminal width/height
+alias terminal-dimensions="
+    echo \"width:  \$(tput cols)\"
+    echo \"height: \$(tput lines)\""
+#        bookmarks-check         check validity of all bookmarks
+alias bookmarks-check="wget --spider --force-html -i \${HOME}/bookmarks.html"
+#        count                   count lines
+alias count="wc -l"
+#        geometry                current screen geometry
+alias geometry="xwininfo -root | grep geometry"
+#        rmkvm                   remove kvm kernel module (so virtualbox can run)
+alias rmkvm="sudo modprobe -r kvm_intel kvm"
+#        touchpad-reset          reset touchpad
+alias touchpad-reset="sudo modprobe -r psmouse && sudo modprobe psmouse"
+#        xh                      xhost +localhost
+alias xh="xhost +localhost"
+#        xauth-generate          xauth generate :0 .
+alias xauth-generate="xauth generate :0 ."
+#        xauth-merge-user        xauth merge from user
+alias xauth-merge-user="su \${USER} -c \"xauth extract - \${DISPLAY}\" | xauth merge -"
+#        xset-default            xset -dpms s off b off m 2/1 4 r rate 500 35
+alias xset-default="xset -dpms s off b off m 2/1 4 r rate 500 35"
+#        xset-mouse              xset -dpms s off b off m 2/1 4
+alias xset-mouse="xset -dpms s off b off m 2/1 4"
+#        xset-key                xset -dpms s off b off r rate 500 35
+alias xset-key="xset -dpms s off b off r rate 500 35"
+#        mac                     mount mac drive and run xhfs
+alias mac="mmac ; xhfs /dev/loop0 \${HOME}/Downloads/macintosh ; umac"
+#        sm                      configure squirrelmail
+alias sm="/etc/squirrelmail/conf.pl"
+#        debug-on                turn on files (library modules) debugging info
+alias debug-on="export LD_DEBUG=files"
+#        debug-off               turn off files (library modules) debugging info
+alias debug-off="export LD_DEBUG="
+#        monitor-reset           reset monitors
+alias monitor-reset="xrandr --auto"
+#        monitor-above           turn on external monitor (above laptop screen)
+alias monitor-above="
+    monitors=(\$(xrandr | grep ' connected ' | sed 's/ .*//')) && \
+    xrandr --output \${monitors[1]} --auto --above \${monitors[0]}"
+#!#        alsa-reset            restart alsa sound
+#!alias alsa-reset="sudo pkill -x pulseaudio ; sudo alsa force-reload"
+#!#        alsa-reset            restart alsa sound
+#!alias alsa-reset="sudo alsa force-reload"
+#        pulse-reset             restart pulseaudio sound
+alias pulse-reset="pkill -x pulseaudio ; sleep 2 ; pulseaudio --daemonize=no &"
+#        mpd-reset               restart mpd
+#!alias mpd-reset="sudo systemctl restart mpd.service"
+alias mpd-reset="(pkill -x mpd ; mpd) > /dev/null 2>&1"
+#        mpc-status              display artist and title of current song
+alias mpc-status="notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' \"\$(mpc | head -n 1)\""
+#        mpc-update              update mpc database
+alias mpc-update="mpc --wait update"
+#        ver                     distribution version
+alias ver="lsb_release -a"
+#        kernel                  kernel version
+alias kernel="mhwd-kernel -li"
+#        system-info             inxi -Fx (display system information)
+alias system-info="sudo inxi -Fx"
+#        font-aliases            list font aliases
+alias font-aliases="cat /usr/share/fonts/misc/fonts.alias"
+#        dconf-watch             dconf watch /
+alias dconf-watch="dconf watch /"
+#        figletwt                figlet -Wt (wide)
+alias figletwt="figlet -Wt"
+#        dos-format-720          ufiformat -f 720 -v
+alias dos-format-720="sudo ufiformat -f 720 -v "
+#        dos-format-1440         ufiformat -f 1440 -v
+alias dos-format-1440="sudo ufiformat -f 1440 -v "
+#        fdisk-list              sudo fdisk -l
+alias fdisk-list="sudo fdisk -l"
+#        dd-sync                 sudo dd conv=fdatasync status=progress
+alias dd-sync="sudo dd conv=fdatasync status=progress"
+#        tint2rs                 tint2 restart
+alias tint2rs="pkill -SIGUSR1 -x tint2"
+#        xrdb-list               list custom .Xresource settings
+alias xrdb-list="xrdb -query -all"
+#        xrdb-merge-home         merge ~/.Xresource settings into xrdb
+alias xrdb-merge-home="xrdb -merge \${HOME}/.Xresources"
+#        jctl                    systemd journal (explainations, current boot, priority errors+)
+alias jctl="journalctl -b -x -p 3"
+#        brh                     broot -h (show hidden files/directories)
+alias brh="br -h"
+#        find-duplicate-files    find duplicate files, recursively, starting from current directory
+alias find-duplicate-files="
+    find -not -empty -type f -printf \"%s\n\" | sort -rn | uniq -d | \
+    xargs -I{} -n1 find -type f -size {}c -print0 | xargs -0 md5sum | \
+    sort | uniq -w32 --all-repeated=separate"
+
+#
+# general (external)
+#
+#        youtube-dl-best         youtube-dl -f bestvideo+bestaudio
+alias youtube-dl-best="youtube-dl -f bestvideo+bestaudio"
+#        weather                 weather report
+alias weather="curl --silent wttr.in | head -n -2"
+#        termbin                 send content to termbin.com
+alias termbin="nc termbin.com 9999"
+#        tb                      send content to termbin.com
+alias tb="nc termbin.com 9999"
+#        starwars                star wars in ascii text
+alias starwars="telnet towel.blinkenlights.nl"
+#        rickroll                terminal rick-roll
+alias rickroll="curl -s -L https://raw.githubusercontent.com/keroserene/rickrollrc/master/roll.sh | bash"
+
+#
+# general (complex)
+#
+#!#        get-nasa-pictures               suck nasa pictures off the web
+#!alias get-nasa-pictures="wget -r -p -L -nc -nH -np -A big.jpg,big.gif,big.png http://antwrp.gsfc.nasa.gov/apod/image/"
+#        make-nasa-slideshow             make nasa slide show directory
+alias make-nasa-slideshow="
+    #rm -rf ${home}/data/media/pictures_slide_show/Nasa/*
+    pushd ${home}/data/media/nasa_pictures/apod/image/
+    find . -type f | while read file ; do
+        o=\$(echo \"\${file}\" | cut -c 3- | tr [/] [_])
+        o=\"${home}/data/media/pictures_slide_show/Nasa/\${o}\"
+        cp \"\${file}\" \"\${o}\"
+    done
+    popd"
+#        terminal-width-80               show terminal width grid
+alias terminal-width-80="
+    echo 'Terminal width:'
+    echo '                                                                                                   1         1         1         1         1         1         1         1         1         1         2'
+    echo '         1         2         3         4         5         6         7         8'
+    echo '12345678901234567890123456789012345678901234567890123456789012345678901234567890'
+    echo
+    echo 'Press Enter for terminal height: ' ; read a
+    for x in \$(seq 80 -1 2) ; do
+        echo \${x}
+    done"
+#        terminal-width-144              show terminal width grid
+alias terminal-width-144="
+    echo 'Terminal width:'
+    echo '                                                                                                   1         1         1         1         1'
+    echo '         1         2         3         4         5         6         7         8         9         0         1         2         3         4'
+    echo '123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234'
+    echo
+    echo 'Press Enter for terminal height: ' ; read a
+    for x in \$(seq 144 -1 2) ; do
+        echo \${x}
+    done"
+#        terminal-width-200              show terminal width grid
+alias terminal-width-200="
+    echo 'Terminal width:'
+    echo '                                                                                                   1         1         1         1         1         1         1         1         1         1         2'
+    echo '         1         2         3         4         5         6         7         8         9         0         1         2         3         4         5         6         7         8         9         0'
+    echo '12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890'
+    echo
+    echo 'Press Enter for terminal height: ' ; read a
+    for x in \$(seq 200 -1 2) ; do
+        echo \${x}
+    done"
+#        terminal-colors                 show terminal colors
+alias terminal-colors="
+    echo -e '\e[30m\e[40m   \e[31m\e[41m   \e[32m\e[42m   \e[33m\e[43m   \e[34m\e[44m   \e[35m\e[45m   \e[36m\e[46m   \e[37m\e[47m   \e[0m'
+    echo -e '\e[38;5;8m\e[48;5;8m   \e[38;5;9m\e[48;5;9m   \e[38;5;10m\e[48;5;10m   \e[38;5;11m\e[48;5;11m   \e[38;5;12m\e[48;5;12m   \e[38;5;13m\e[48;5;13m   \e[38;5;14m\e[48;5;14m   \e[38;5;15m\e[48;5;15m   \e[0m'"
+#        remove-org-font-files           remove org-src-fontification files
+alias remove-org-font-files="(
+    cd \${HOME} && \
+    for dir in config dev web ; do
+        [[ -d \${dir} ]] && \
+            find \${HOME}/\${dir} -name '*org-src-fontification*' -print | \
+            xargs rm > /dev/null 2>&1
+    done)"
+
+#
+# wallpaper
+#
+#        nitrogen-metcalfe-blue  set wallpaper to Metcalfe-Loves-Linux-1.jpg (blue)
+alias nitrogen-metcalfe-blue="nitrogen --save --set-tiled /usr/share/backgrounds/Metcalfe-Loves-Linux-1.jpg"
+#        nitrogen-metcalfe-gray  set wallpaper to Metcalfe-Loves-Linux-2.jpg (gray)
+alias nitrogen-metcalfe-gray="nitrogen --save --set-tiled /usr/share/backgrounds/Metcalfe-Loves-Linux-2.jpg"
+#        nitrogen-metcalfe-orange  set wallpaper to Metcalfe-Loves-Linux-3.jpg (orange)
+alias nitrogen-metcalfe-orange="nitrogen --save --set-tiled /usr/share/backgrounds/Metcalfe-Loves-Linux-3.jpg"
+#        nitrogen-metcalfe-green  set wallpaper to Metcalfe-Loves-Linux-4.jpg (green)
+alias nitrogen-metcalfe-green="nitrogen --save --set-tiled /usr/share/backgrounds/Metcalfe-Loves-Linux-4.jpg"
+
+#
+# bash
+#
+#        chsh-bash               set default shell to BASH
+alias chsh-bash="
+    sudo chsh ${USER} -s /bin/bash && \
+    echo 'Default shell is now BASH.  Logout out for it to take effect.'"
+#!#        set-prompt              set terminal prompt to: [host:user:path]$
+#!alias set-prompt="export PS1=\"[\h:\u:\w]\\$ \""
+#!#        set-prompt              set terminal prompt to: host:user path $
+#!alias set-prompt="export PS1=\"\[\033[01;32m\]\h:\u \[\033[01;34m\]\w \\$ \[\033[00m\]\""
+#!#        set-prompt              set terminal prompt to: host:user(window) path $
+#!alias set-prompt="export PS1=\"\[\033[01;32m\]\h:\u(${WINDOW:+${WINDOW}}) \[\033[01;34m\]\w \\$ \[\033[00m\]\""
+#!#        set-prompt              set terminal prompt to terminal window titles
+#!alias set-prompt="export PS1=\"${PS1}\[\e]0;\h:\u:\w\a\]\""
+#!#        set-prompt-no-color     set terminal prompt to: host:user path $ (no color)
+#!alias set-prompt-no-color="export PS1=\"\h:\u \w \\$ \""
+#        set-prompt              set terminal prompt to: host:user path (git-branch) $
+alias set-prompt="export PS1=\"${COLOR_LIGHT_GREEN}\h:\u ${COLOR_LIGHT_BLUE}\w${COLOR_CYAN}\$(gitbranchprompt) ${COLOR_YELLOW}\\$ ${COLOR_DEFAULT}\""
+#        set-prompt-emacs        set emacs prompt to: [host:user path (git-branch)]$
+alias set-prompt-emacs="export PS1=\"[\h:\u \w\$(gitbranchprompt)]\\$ \""
+#        set-prompt-dos          set terminal prompt to look like a DOS prompt
+alias set-prompt-dos="export PS1=\"C:{PWD////\\\\}> \""
+
+#
+# zsh
+#
+#        chsh-zsh                set default shell to ZSH
+alias chsh-zsh="
+    sudo chsh ${USER} -s /bin/zsh && \
+    echo 'Default shell is now ZSH.  Logout out for it to take effect.'"
+
+#
+# processes
+#
+#        lver                    linux/kernel version
+alias lver="cat /proc/version"
+#        mem                     memory info
+alias mem="cat /proc/meminfo"
+#        cpu                     cpu info
+alias cpu="cat /proc/cpuinfo"
+#        mod                     modules list
+alias mod="cat /proc/modules"
+#        fs                      file systems list
+alias fs="cat /proc/filesystems"
+#        part                    hard disk partitions list
+alias part="cat /proc/partitions"
+#        pci                     pci bus info
+alias pci="cat /proc/pci"
+#        dev                     devices list
+alias dev="cat /proc/devices"
+
+#
+# services (daemons)
+#
+#        systemctl-list          list all services
+alias systemctl-list="systemctl list-unit-files && systemctl --user list-unit-files"
+#        systemctl-list-enabled  list enabled services
+alias systemctl-list-enabled="(systemctl list-unit-files && systemctl --user list-unit-files) | grep enabled"
+#        systemctl-list-grep     list all services with grep
+alias systemctl-list-grep="(systemctl list-unit-files && systemctl --user list-unit-files) | grep -i"
+#        systemctl-enable        enable service
+alias systemctl-enable="sudo systemctl enable --now"
+#        systemctl-disable       disable service
+alias systemctl-disable="sudo systemctl disable"
+#        systemctl-user-reload   reload user service definitions
+alias systemctl-user-reload="systemctl --user daemon-reload"
+#        systemctl-restart       restart service
+alias systemctl-restart="sudo systemctl restart"
+
+#
+# web sites
+#
+#!#        web                     browse the web (lynx)
+#!alias web="lynx"
+#!#        web                     browse the web (w3m)
+#!alias web="w3m"
+#        web-home                browse nullman.com
+alias web-home="web http://nullman.com"
+#        web-links               browse nullman.com/links
+alias web-links="web http://nullman.com/links"
+#        web-note                browse nullman.com/notepad
+alias web-note="web http://nullman.com/notepad"
+#        web-firewall            browse firewall:81
+alias web-firewall="web http://firewall:81"
+#        ws                      calls websearch function
+alias ws="web-search"
+
+#
+# readme
+#
+#        readme-pine             readme for pine
+alias readme-pine="zpager \$(locate pine | grep README.gz)"
+#        readme-centericq        readme for centericq
+alias readme-centericq="zpager \$(locate centericq | grep README.gz)"
+#        readme-irssi            readme for irssi
+alias readme-irssi="zpager \$(locate irssi | grep README.gz)"
+
+#
+# manjaro
+#
+#        install-manjaro         run custom manjaro installation script
+alias install-manjaro="sudo bash -c \"bash <(curl -s http://kylesherman.net/init/manjaro.sh)\""
+#        scl                     list all services
+alias scl="systemctl list-unit-files && systemctl --user list-unit-files"
+#        scle                    list enabled services
+alias scle="systemctl list-unit-files | grep enabled && systemctl --user list-unit-files | grep enabled"
+#        sce                     enable service
+alias sce="sudo systemctl enable --now"
+#        scd                     disable service
+alias scd="sudo systemctl disable"
+#        scrs                    restart service
+alias scrs="sudo systemctl restart"
+
+#
+# ubuntu
+#
+#        dpkg-make-installed-packages make ~/installed-packages file
+alias dpkg-make-installed-packages="dpkg --get-selections > \${HOME}/installed-packages"
+#        dpkg-install-packages   install all deb packages in ~/installed-packages
+alias dpkg-install-packages="cat \${HOME}/installed-packages | xargs apt-get install -y"
+#        dpkg-config-fonts       configure fixed fonts in ubuntu
+alias dpkg-config-fonts="
+    dpkg-reconfigure fontconfig-config
+    dpkg-reconfigure fontconfig"
+#        dpkg-config-dash        change sh to use bash instead of dash
+alias dpkg-config-dash="dpkg-reconfigure dash"
+#        ubuntu-system-setup     initial system setup in ubuntu
+alias ubuntu-system-setup="
+    sudo bash -c \"
+        apt-get -y install linuxlogo && \
+          echo '-L ubuntu' > /etc/linux_logo.conf
+        linuxlogo > /etc/motd
+        linuxlogo > /etc/motd.tail
+    \""
+#        medibuntu-install       install medibuntu sources
+alias medibuntu-install="
+    sudo bash -c \"
+        wget --output-document=/etc/apt/sources.list.d/medibuntu.list \
+          http://www.medibuntu.org/sources.list.d/\$(lsb_release -cs).list && \
+          apt-get --quiet update && \
+          apt-get --yes --quiet --allow-unauthenticated install medibuntu-keyring && \
+          apt-get --quiet update
+     \""
+#        ubuntu-release-upgrade  install ubuntu release upgrade
+alias ubuntu-release-upgrade="sudo do-release-upgrade"
+#
+# debian
+#
+#        install-debian          run custom debian installation script
+alias install-debian="sudo bash -c \"bash <(curl -s http://kylesherman.net/init/debian.sh)\""
+#        install-gemini          run custom gemini installation script
+alias install-gemini="sudo bash -c \"bash <(curl -s http://kylesherman.net/init/gemini.sh)\""
+
+#
+# applications (general)
+#
+#!#        xterm                   xterm (with options set)
+#!alias xterm="xterm \$(cat \${HOME}/.xterm_options)"
+#        term                    run terminal
+alias term="${terminal}"
+#        email                   run pine
+alias email="pine"
+#        im                      run centericq
+alias im="centericq -a"
+#        irc                     run irssi
+alias irc="irssi"
+#        lynx-useragent-mozilla  run lynx (setting the useragent to mozilla)
+alias lynx-useragent-mozilla="lynx -useragent=\"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)\""
+#        web                     run lynx
+alias web="lynx -useragent=\"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)\""
+#        webb                    run lynx (bookmarks)
+alias webb="lynx -book -useragent=\"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)\""
+#        ff                      run firefox
+alias ff="firefox"
+#        news                    run tin
+alias news="tin -r -q"
+#!#        news                    run slrn (comcast)
+#!alias news="
+#!    sort -o \${HOME}/.slrn_comcast \${HOME}/.slrn_comcast
+#!    slrn --nntp -n -h netnews.comcast.net -f \${HOME}/.slrn_comcast"
+#!#        newsg                   run slrn (gmane)
+#!alias newsg="
+#!    sort -o \${HOME}/.slrn_gmane \${HOME}/.slrn_gmane
+#!    slrn --nntp -n -h news.gmane.org -f \${HOME}/.slrn_gmane"
+#        rss                     run snownews
+alias rss="snownews"
+#        spell                   run ispell
+alias spell="ispell"
+#!#        calc                    run orpie
+#!alias calc="orpie"
+#        calc                    run rpncalc
+alias calc="rpncalc"
+#        mca                     run midnight commander in ascii mode
+alias mca="mc -a"
+#        centericq               centericq -a (use asci characters only)
+alias centericq="\$(pathcmd centericq) -a"
+#        centericq-unsent        find unset messages in centericq
+alias centericq-unsent="find \${HOME}/.centericq/ -name offline"
+#        motor                   motor -a (use asci characters only)
+alias motor="\$(pathcmd motor) -a"
+#        seti                    run setiathome in the background
+alias seti="(cd \${HOME}/setiathome ; setiathome -email -nice 19) &"
+#!#        freenet-config          configure freenet
+#!alias freenet-config="ebuild /usr/portage/net-p2p/freenet/freenet-0.5.2.1-r8.ebuild config"
+#!#        centericq-fix-source    fix source code for centericq
+#!alias centericq-fix-source="
+#!    echo 'Changing DD.MM.YY dates to YY-MM-DD...'
+#!    sed -i \"s/DD.MM.YY/YY-MM-DD/g\" src/icqface.cc
+#!    echo 'Changing DD.MM dates to MM-DD...'
+#!    sed -i \"s/DD.MM/MM-DD/g\" src/icqface.cc
+#!    echo 'Changing DD-MM-YYYY dates to YYYY-MM-DD...'
+#!    sed -i \"s/DD-MM-YYYY/YYYY-MM-DD/g ; s/\&d, \&m, \&y/\&y, \&m, \&d/g\" src/icqdialogs.cc"
+
+#
+# emacs
+#
+#        emacs-cvs-co            emacs cvs source check-out
+alias emacs-cvs-co="
+    echo 'You are about to check-out emacs source tree to current directory.'
+    echo -n 'Do you wish to proceed? [yN] ' ; read a
+    case \${a} in
+        y|Y) cvs -z3 -d:pserver:anonymous@cvs.savannah.gnu.org:/sources/emacs co emacs ;;
+    esac"
+#        emacs-cvs-build         emacs cvs source build
+alias emacs-cvs-build="
+    ./configure --with-xpm --with-jpeg --with-tiff --with-png --with-x
+    make bootstrap
+    make install"
+#        emacs-install-v8        install v8 under .emacs.d dir
+alias emacs-install-v8="
+    dir=v8-tmp
+    pushd \${HOME}/.emacs.d/
+    if [[ -d \${dir} ]] ; then
+        svn checkout http://v8.googlecode.com/svn/trunk/ \${dir}
+    else
+        svn update \${dir}
+    fi
+    (cd \${dir} && make dependencies && make native)
+    [[ -d \${dir}/out/native/ ]] && mv \${dir}/out/native v8
+    rm -rf \${dir}
+    popd"
+
+#
+# etags
+#
+#        etags-emacs             make TAGS for emacs files
+alias etags-emacs="
+    o=\${HOME}/.emacs.d/TAGS
+    find \${HOME}/.emacs.d/ -name \"*.el\" -print0 | grep -zZv \"/.svn/\" | \
+      xargs -0 etags -a -o \${o} > /dev/null 2>&1
+    find /usr/share/emacs* -name \"*.el\" -print0 | grep -zZv \"/.svn/\" | \
+      xargs -0 etags -a -o \${o} > /dev/null 2>&1
+    cp \${o} \${HOME}/.emacs.d/TAGS"
+#        etags-c                 make TAGS for c/c++ files
+alias etags-c="
+    find . -name \"*.h\" -o -name \"*.c\" -o -name \"*.hpp\" -o -name \"*.cpp\" -print0 | \
+      grep -zZv \"/.svn/\" | xargs -0 etags > /dev/null 2>&1"
+#        etags-java              make TAGS for java files
+alias etags-java="
+    find . -name \"*.java\" -print0 | \
+      grep -zZv \"/.svn/\" | xargs -0 etags > /dev/null 2>&1"
+
+#
+# remind
+#
+#        rem                     remind
+alias rem="remind \${HOME}/.reminders"
+#        rembot                  remind bot
+alias rembot="remind \${HOME}/.reminders_bot"
+#        today                   today in history
+alias today="
+    remind \${HOME}/.reminders_bot | head -c -1 | \
+      sed 's/^Reminders for/Today in history: / ; s/ (today):$// ; /^$/d'"
+#        edrem                   edit .reminder file
+alias edrem="\${EDITOR} \${HOME}/.reminders"
+#        edreminders             edit reminder files
+alias edreminders="
+    \${EDITOR} \${HOME}/.reminders
+    pushd \${HOME}/reminders
+    \$(pathcmd ls) -1 | while read file ; do \${EDITOR} \"\${file}\" ; done
+    popd"
+
+#
+# xmms
+#
+#        xmmsdi                  xmms streaming digitally imported (trance 56k)
+alias xmmsdi="xmms http://205.188.209.193:80/stream/1007 &"
+#        xmmsall                 xmms playing all
+alias xmmsall="xmms ${home}/data/media/audio/Playlists/all.m3u &"
+#        xmmss                   xmms playing singles
+alias xmmss="xmms ${home}/data/media/audio/Playlists/singles.m3u &"
+#        xmmsa                   xmms playing albums
+alias xmmsa="xmms ${home}/data/media/audio/Playlists/albums.m3u &"
+
+#
+# mp3blaster
+#
+#        mpb                     mp3blaster
+alias mpb="nice -n -5 mp3blaster -2"
+#        mpbdi                   mp3blaster streaming digitally imported (trance 56k)
+alias mpbdi="nice -n -5 mp3blaster -2 http://205.188.209.193:80/stream/1007"
+#        mpball                  mp3blaster playing all (random)
+alias mpball="nice -n -5 mp3blaster -2 -l ${home}/data/media/audio/Playlists/sorted_all.m3u"
+#        mpbs                    mp3blaster playing singles (random)
+alias mpbs="nice -n -5 mp3blaster -2 -l ${home}/data/media/audio/Playlists/sorted_singles.m3u"
+#        mpba                    mp3blaster playing albums (random)
+alias mpba="nice -n -5 mp3blaster -2 -l ${home}/data/media/audio/Playlists/sorted_albums.m3u"
+
+#
+# mpg123
+#
+#        mpgdi                   mpg123 streaming digitally imported (trance 56k)
+alias mpgdi="mpg123 -b 5000 http://205.188.209.193:80/stream/1007"
+#        mpgall                  mpg123 playing all (random)
+alias mpgall="mpg123 -b 5000 -z -@ ${home}/data/media/audio/Playlists/all.m3u"
+#        mpgs                    mpg123 playing singles (random)
+alias mpgs="mpg123 -b 5000 -z -@ ${home}/data/media/audio/Playlists/singles.m3u"
+#        mpga                    mpg123 playing albums (random)
+alias mpga="mpg123 -b 5000 -z -@ ${home}/data/media/audio/Playlists/albums.m3u"
+
+#
+# xscreensaver
+#
+#        sson                    turn screensaver on
+alias sson="
+    rm -f \${HOME}/.noscreensaver
+    \${HOME}/bin/ssaverauto > /dev/null 2>&1"
+#        ssoff                   turn screensaver off
+alias ssoff="
+    touch \${HOME}/.noscreensaver
+    fuser -k -SIGTERM \${HOME}/bin/ssaver > /dev/null 2>&1
+    fuser -k -SIGTERM /usr/bin/xscreensaver > /dev/null 2>&1
+    fuser -k -SIGTERM /usr/bin/xlock > /dev/null 2>&1
+    fuser -k -SIGTERM /usr/bin/electricsheep > /dev/null 2>&1
+    fuser -k -SIGTERM /usr/bin/xautolock > /dev/null 2>&1
+    fuser -k -SIGKILL \${HOME}/bin/ssaver > /dev/null 2>&1
+    fuser -k -SIGKILL /usr/bin/xscreensaver > /dev/null 2>&1
+    fuser -k -SIGKILL /usr/bin/xlock > /dev/null 2>&1
+    fuser -k -SIGKILL /usr/bin/electricsheep > /dev/null 2>&1
+    fuser -k -SIGKILL /usr/bin/xautolock > /dev/null 2>&1"
+#        ssrs                    restart screensaver
+alias ssrs="
+    fuser -k -SIGTERM \${HOME}/bin/ssaver > /dev/null 2>&1
+    fuser -k -SIGTERM /usr/bin/xscreensaver > /dev/null 2>&1
+    fuser -k -SIGTERM /usr/bin/xlock > /dev/null 2>&1
+    fuser -k -SIGTERM /usr/bin/electricsheep > /dev/null 2>&1
+    fuser -k -SIGTERM /usr/bin/xautolock > /dev/null 2>&1
+    fuser -k -SIGKILL \${HOME}/bin/ssaver > /dev/null 2>&1
+    fuser -k -SIGKILL /usr/bin/xscreensaver > /dev/null 2>&1
+    fuser -k -SIGKILL /usr/bin/xlock > /dev/null 2>&1
+    fuser -k -SIGKILL /usr/bin/electricsheep > /dev/null 2>&1
+    fuser -k -SIGKILL /usr/bin/xautolock > /dev/null 2>&1
+    rm -f \${HOME}/.noscreensaver
+    \${HOME}/bin/ssaverauto > /dev/null 2>&1"
+#        xsc                     run xscreensaver in the background
+alias xsc="xscreensaver -no-splash & > /dev/null 2>&1"
+#        xscrs                   restart xscreensaver
+alias xscrs="
+    fuser -k -SIGTERM \$(pathcmd xscreensaver)
+    fuser -k -SIGKILL \$(pathcmd xscreensaver)
+    xscreensaver -no-splash & > /dev/null 2>&1"
+#        xscd                    run xscreensaver-demo
+alias xscd="xscreensaver-demo"
+#        xscl                    xscreensaver lock display
+alias xscl="xscreensaver-command -lock & > /dev/null 2>&1"
+#!#        cpxsc                   copy .xscreensaver to nobody and root
+#!alias cpxsc="
+#!    cp -p ${home}/somebody/.xscreensaver /
+#!    cp -p ${home}/somebody/.xscreensaver /root
+#!    chown nobody:nobody /.xscreensaver
+#!    chown root:root /root/.xscreensaver"
+#
+# slideshows and webcams
+#
+#        sschbg                  slideshow using chbg
+alias sschbg="chbg -randomize -interval 30.00 -R"
+#! add the following to .xscreensaver:
+#!  default-n:        "SlideShow (chbg)" \
+#!                    chbg -xscreensaver -randomize -interval 0.30 \
+#!                    -R /home/data/media/pictures_slide_show/Nasa/     \n\
+#        ssfeh                   slideshow using feh
+alias ssfeh="feh --title \"Slideshow\" -F -x -z -D 30.00 -r"
+#! add the following to .xscreensaver:
+#!  default-n:        "SlideShow (feh)" \
+#!                    feh --title "Slideshow" -F -x -D 0.30 \
+#!                    -r /home/data/media/pictures_slide_show/Nasa/     \n\
+#!       ssapp                   slideshow application
+ssapp="feh --title \"Slideshow\" -F -x -z -D 30.00 -r"
+#        sspersonal              personal slideshow
+alias sspersonal="${ssapp} ${home}/data/media/pictures_slide_show/Personal/"
+#        ssnasa                  nasa slideshow
+alias ssnasa="${ssapp} ${home}/data/media/pictures_slide_show/Nasa/"
+#        ssnerve                 nerve slideshow
+alias ssnerve="${ssapp} \"${home}/data/media/pictures_slide_show/Nerve Magazine/\""
+#        duluth-webcam-800       duluth webcam (800x640)
+alias duluth-webcam-800="arora \$(xwininfo -root | grep geometry) http://nullman.org/interesting/duluth-webcam-800x600.html"
+#        duluth-webcam-1024      duluth webcam (1024x768)
+alias duluth-webcam-1024="arora \$(xwininfo -root | grep geometry) http://nullman.org/interesting/duluth-webcam-1024x768.html"
+
+#
+# linuxlogo
+#
+#        dprll                   dpkg-reconfigure linuxlogo
+alias dprll="dpkg-reconfigure linuxlogo"
+#!#        llinit                  update /etc/inittab for linuxlogo
+#!alias llinit="
+#!    cp /etc/inittab /etc/inittab.old
+#!    sed inittab.old -e 's/getty 38400/getty -f \/etc\/issue.linuxlogo 38400/' > /etc/inittab"
+#        linuxlogo-setup         setup linuxlogo config
+alias linuxlogo-setup="
+    \$(cat /etc/linux_logo.conf | grep -q '^-l ubuntu$') || \
+    echo '-l ubuntu' >> /etc/linux_logo.conf"
+#        llmotd                  update /etc/motd with linuxlogo
+alias llmotd="
+    linuxlogo > /etc/motd
+    linuxlogo > /etc/motd.tail"
+
+#
+# offlineimap
+#
+#        imap-on                 turn offlineimap on
+alias imap-on="rm -f \${HOME}/.noofflineimap > /dev/null 2>&1"
+#! alias imap-on="
+#!     rm -f \${HOME}/.noofflineimap
+#!     \${HOME}/bin/run-app > /dev/null 2>&1"
+#        imap-off                turn offlineimap off
+alias imap-off="
+    touch \${HOME}/.noofflineimap
+    sudo pkill -SIGTERM /usr/bin/offlineimap"
+#! alias imap-off="touch \${HOME}/.noofflineimap > /dev/null 2>&1"
+#        imap-restart            restart offlineimap
+alias imap-restart="sudo pkill -SIGTERM /usr/bin/offlineimap"
+#        offlineimap-once        sync normal imap accounts once
+alias offlineimap-once="offlineimap -o -u ttyui"
+#        offlineimap-home        sync home imap account
+alias offlineimap-home="offlineimap -o -u ttyui -a Home"
+#        offlineimap-work        sync work imap account
+alias offlineimap-work="offlineimap -o -u ttyui -a Work"
+#        offlineimap-gmail       sync gmail imap accounts
+alias offlineimap-gmail="offlineimap -o -u ttyui -a Gmail"
+
+#
+# jpegtran
+#
+#        jpegtranleft            jpegtran -copy all -rotate 270
+alias jpegtranleft="jpegtran -copy all -rotate 270"
+#        jpegtranright           jpegtran -copy all -rotate 90
+alias jpegtranright="jpegtran -copy all -rotate 90"
+
+#
+# wine applications
+#
+#        winetricks-update       download latest version of winetricks
+alias winetricks-update="wget http://www.kegel.com/wine/winetricks -O \${HOME}/bin/vendor/winetricks"
+#        wine-civ                wine civilization
+#!alias wine-civ="WINEPREFIX=\${HOME}/.wine-civ4 wine explorer /desktop=civ,1280x800 \"C:\Program Files\Firaxis Games\Sid Meier's Civilization 4\Beyond the Sword\Civ4BeyondSword.exe\""
+alias wine-civ="WINEPREFIX=\${HOME}/.wine-civ4 wine explorer /desktop=civ,1920x1080 \"C:\Program Files\Firaxis Games\Sid Meier's Civilization 4\Beyond the Sword\Civ4BeyondSword.exe\""
+#        wine-ddo                wine ddo
+alias wine-ddo="WINEPREFIX=\${HOME}/.wine-ddo wine \"C:\Program Files (x86)\StandingStoneGames\Dungeons & Dragons Online\TurbineLauncher.exe\""
+#        wine-ddo-cp             wine ddo character planner
+alias wine-ddo-cp="WINEPREFIX=\${HOME}/.wine-ddocp wine \"C:\Games\DDOCharGen\DDOCharGen.exe\""
+#!#        wine-eve                wine eve online
+#!#!alias wine-eve="WINEPREFIX=\${HOME}/.wine-eve wine explorer /desktop=eve,1280x800 \"C:\Program Files (x86)\CCP\EVE\eve.exe\""
+#!alias wine-eve="WINEPREFIX=\${HOME}/.wine-eve wine explorer /desktop=eve,1920x1080 \"C:\Program Files (x86)\CCP\EVE\eve.exe\""
+#!alias wine-eve-file="WINEPREFIX=\${HOME}/.wine-eve wine explorer /desktop=eve,1920x1080 \"C:\Program Files (x86)\CCP\EVE\evefile.exe\""
+#!#        wine-eve2               wine eve online second install
+#!#!alias wine-eve2="WINEPREFIX=\${HOME}/.wine-eve2 wine explorer /desktop=eve2,1280x800 \"C:\Program Files (x86)\CCP\EVE\eve.exe\""
+#!alias wine-eve2="WINEPREFIX=\${HOME}/.wine-eve2 wine explorer /desktop=eve2,1920x1080 \"C:\Program Files (x86)\CCP\EVE\eve.exe\""
+#!#        wine-eft                wine eve online eft
+#!alias wine-eft="WINEPREFIX=\${HOME}/.wine-eve-tools wine \"C:\Program Files (x86)\Utilities\EFT\EFT.exe\""
+#!#        wine-eve-mon            wine eve online eve-mon
+#!alias wine-eve-mon="WINEPREFIX=\${HOME}/.wine-eve-tools wine \"C:\Program Files (x86)\EVEMon\EVEMon.exe\""
+#!#        eve-copy-settings       copy eve settings
+#!alias eve-copy-settings="
+#!    cp -r \"\${HOME}/Downloads/EVE/CCP/EVE/c_program_files_ccp_eve_tranquility/settings\" \
+#!      \"\${HOME}/.wine-eve/drive_c/windows/profiles/kyle/Local Settings/Application Data/CCP/EVE/c_program_files_ccp_eve_tranquility/\"
+#!    cp -r \"\${HOME}/Downloads/EVE/CCP/EVE/c_users_kyle_program_files_eve_tranquility/settings\" \
+#!      \"\${HOME}/.wine-eve2/drive_c/windows/profiles/kyle/Local Settings/Application Data/CCP/EVE/c_program_files_ccp_eve_tranquility/\""
+#        wine-tta                wine through the ages
+alias wine-tta="WINEPREFIX=\${HOME}/.wine-tta wine \"C:\GOG Games\Through the Ages\ThroughTheAges_gog.exe\""
+
+#
+# dosbox applications
+#
+#        dosbox-wc3              dosbox wing commander 3
+alias dosbox-wc3="(cd \${HOME}/.dosbox-wc3 && dosbox -conf .dosboxrc)"
+
+#
+# googlecl
+#
+#        google-contacts-to-abook import google contacts to abook
+alias google-contacts-to-abook="data=name,email,phone,address,im,company,notes; (echo $data; google contacts list $data) | abook --convert --informat csv --outformat abook --outfile \${HOME}/.abook/addressbook"
+
+#
+# ls
+#
+#        ls_                     ls (classify, columns, literal, human-readable, auto-color)
+alias ls_="ls -F -C -N -h --color=auto"
+#        lsa                     ls -A (allmost-all)
+alias lsa="ls_ -A"
+#        lsd                     ls -d (directories)
+alias lsd="ls_ -d */"
+#        lsr                     ls -R (recursive)
+alias lsr="ls_ -R"
+#        ls1                     ls -1 (one-file-per-line)
+alias ls1="ls_ -1"
+#        ll                      ls -l (long-format)
+alias ll="ls_ -l"
+#        lla                     ls -l -A (long-format, allmost-all)
+alias lla="ls_ -l -A"
+#        lld                     ls -l -d (long-format, directories)
+alias lld="ls_ -l -d */"
+#        llr                     ls -l -R (long-format, recursive)
+alias llr="ls_ -l -R"
+#        llra                    ls -l -R -A (long-format, recursive, allmost-all)
+alias llra="ls_ -l -R -A"
+#        llrt                    ls -l -r -t (long-format, reverse-order, time-sort)
+alias llrt="ls_ -l -r -t"
+#        llrta                   ls -l -r -t -A (long-format, reverse-order, time-sort, allmost-all)
+alias llrta="ls_ -l -r -t -A"
+#        llrtadl                 llrta ~/Downloads/
+alias llrtadl="ls_ -l -r -t -A \${HOME}/Downloads/"
+#        lllrtalog               llrta /var/log
+alias llrtalog="ls_ -l -r -t -A /var/log"
+#        llag                    ls -l -A (long-format, allmost-all) with grep -i
+alias llag="ls_ -l -A | grep -i"
+#        llp                     ls (pretty format)
+alias llp="(echo 'PERM LINKS OWNER GROUP SIZE MONTH DAY HH:MM/YEAR NAME' ; ls -l | sed 1d) | column --table"
+#        dir                     ls (like ftp dir command)
+alias dir="ls_ -l -A | pager"
+
+#
+# exa
+#
+if [[ $(_command exa) ]] ; then
+#        exa                     (color and group directories first)
+alias exa="exa --color=always --group-directories-first"
+#        lsa                     exa -a (almost-all)
+alias lsa="exa -a"
+#        lsd                     exa -D (directories)
+alias lsd="exa -D"
+#        lsr                     exa -R (recursive)
+alias lsr="exa -R"
+#        ls1                     exa -1 (one-file-per-line)
+alias ls1="exa -1"
+#        ll                      exa -l (long-format)
+alias ll="exa -l"
+#        lla                     exa -l -a (long-format, almost-all)
+alias lla="exa -l -a"
+#        lld                     exa -l -D (long-format, directories)
+alias lld="exa -l -D"
+#        llr                     exa -l -R (long-format, recursive)
+alias llr="exa -l -R"
+#        llra                    exa -l -R -a (long-format, recursive, almost-all)
+alias llra="exa -l -R -a"
+#        llrt                    exa -l -r -t (long-format, reverse-order, time-sort)
+alias llrt="exa -l -s newest"
+#        llrta                   exa -l -r -t -a (long-format, reverse-order, time-sort, almost-all)
+alias llrta="exa -l -s newest -a"
+#        llrtadl                 llrta ~/Downloads/
+alias llrtadl="exa -l -s newest -a \${HOME}/Downloads/"
+#        llrtalog                llrta /var/log
+alias llrtalog="exa -l -s newest -a /var/log"
+#        llag                    exa -l -a (long-format, almost-all) with grep -i
+alias llag="exa -l -a | grep -i"
+#        llt                     exa -T (tree)
+alias lst="exa -T -a"
+#        ls.                     exa -a (almost-all), dot files and directories only
+alias ls.="exa -a | egrep '^\.'"
+fi
+
+#
+# cd
+#
+#        ..                      cd up one directory
+alias ..="cd .."
+#        ...                     cd up two directories
+alias ...="cd ../.."
+#        ....                    cd up three directories
+alias ....="cd ../../.."
+#        ..2                     cd up two directories
+alias ..2="cd ../.."
+#        ..3                     cd up three directories
+alias ..3="cd ../../.."
+#        ..4                     cd up four directories
+alias ..4="cd ../../../.."
+#        ..5                     cd up five directories
+alias ..5="cd ../../../../.."
+#        cd..                    cd up one directory
+alias cd..="cd .."
+#        up                      cd up one directory
+alias up="cd .."
+#        cd1                     cd up one directory
+alias cd1="cd .."
+#        cd2                     cd up two directories
+alias cd2="cd ../.."
+#        cd3                     cd up three directories
+alias cd3="cd ../../.."
+#        cd4                     cd up four directories
+alias cd4="cd ../../../.."
+#        cd5                     cd up five directories
+alias cd5="cd ../../../../.."
+#        b                       cd to previous directory
+alias b="cd -"
+#        cd-                     cd to previous directory
+alias cd-="cd -"
+#        cdp                     cd to previous directory
+alias cdp="cd -"
+#        cdr                     cd / (root)
+alias cdr="cd /"
+#        cdbin                   cd /bin
+alias cdbin="cd /bin"
+#        cdbt                    cd /boot
+alias cdbt="cd /boot"
+#        cdbtg                   cd /boot/grub
+alias cdbtg="cd /boot/grub"
+#        cddata                  cd /home/data
+alias cddata="cd ${home}/data"
+#        cdbakup                 cd /home/data/backup
+alias cdbackup="cd ${home}/data/backup"
+#        cdftp                   cd /home/data/ftp
+alias cdftp="cd ${home}/data/ftp"
+#        cdhttp                  cd /home/data/httpd
+alias cdhttp="cd ${home}/data/httpd"
+#        cdmedia                 cd /home/data/media
+alias cdmedia="cd ${home}/data/media"
+#        cdaudio                 cd /home/data/media/audio
+alias cdaudio="cd ${home}/data/media/audio"
+#        cdmusic                 cd /home/data/media/audio/Music
+alias cdmusic="cd ${home}/data/media/audio/Music"
+#        cdpl                    cd /home/data/media/audio/Playlists
+alias cdpl="cd ${home}/data/media/audio/Playlists"
+#        cdgraphic               cd /home/data/media/graphic
+alias cdgraphic="cd ${home}/data/media/graphic"
+#        cdrepos                 cd /home/data/media/repos
+alias cdrepos="cd ${home}/data/media/repos"
+#        cdsoftware              cd /home/data/media/software
+alias cdsoftware="cd ${home}/data/media/software"
+#        cdvideo                 cd /home/data/media/video
+alias cdvideo="cd ${home}/data/media/video"
+#        cdmysql                 cd /home/data/mysql
+alias cdmysql="cd ${home}/data/mysql"
+#        cdstock                 cd /home/data/stock
+alias cdstock="cd ${home}/data/stock"
+#        cdwww                   cd /home/data/www
+alias cdwww="cd ${home}/data/www"
+#        cddoowat                cd /home/data/www/doowat
+alias cddoowat="cd ${home}/data/www/doowat"
+#        cdmason                 cd /home/data/www/mason
+alias cdmason="cd ${home}/data/www/mason"
+#!#        cdzope                  cd /home/data/zope
+#!alias cdzope="cd ${home}/data/zope"
+#!#        cdzopep                 cd /home/data/zope/Products
+#!alias cdzopep="cd ${home}/data/zope/Products"
+#!#        cdzopef                 cd /home/data/zope_files
+#!alias cdzopef="cd ${home}/data/zope_files"
+#!#        cddev                   cd /dev
+#!alias cddev="cd /dev"
+#        cde                     cd /etc
+alias cde="cd /etc"
+#        cdea                    cd /etc/apache
+alias cdea="cd /etc/apache"
+#        cdeac                   cd /etc/apache/conf
+alias cdeac="cd /etc/apache/conf"
+#        cdeas                   cd /etc/apache-ssl
+alias cdeas="cd /etc/apache-ssl"
+#        cded                    cd /etc/default
+alias cded="cd /etc/default"
+#        cdei                    cd /etc/init.d
+alias cdei="cd /etc/init.d"
+#        cden                    cd /etc/network
+alias cden="cd /etc/network"
+#        cdep                    cd /etc/pcmcia
+alias cdep="cd /etc/pcmcia"
+#        cderc                   cd /etc/rc.d
+alias cderc="cd /etc/rc.d"
+#        cdesam                  cd /etc/samba
+alias cdesam="cd /etc/samba"
+#        cdes                    cd /etc/ssl
+alias cdes="cd /etc/ssl"
+#        cdex                    cd /etc/X11
+alias cdex="cd /etc/X11"
+#        cdh                     cd /home
+alias cdh="cd ${home}"
+#        cdk                     cd ~
+alias cdk="cd \${HOME}"
+#        cdlib                   cd /lib
+alias cdlib="cd /lib"
+#        cdlm                    cd /lib/modules/<kernel>
+alias cdlm="cd /lib/modules/\$(uname -r)"
+#        cdm                     cd /run/media/USER
+alias cdm="cd /run/media/\${USER}"
+#        cdmnt                   cd /mnt
+alias cdmnt="cd /mnt"
+#        cdopt                   cd /opt
+alias cdopt="cd /opt"
+#        cdpr                    cd /proc
+alias cdpr="cd /proc"
+#        cdtt                    cd /tmp
+alias cdtt="cd /tmp"
+#        cdtmp                   cd /tmp
+alias cdtmp="cd /tmp"
+#        cdu                     cd /usr
+alias cdu="cd /usr"
+#        cdub                    cd /usr/bin
+alias cdub="cd /usr/bin"
+#        cdul                    cd /usr/local
+alias cdul="cd /usr/local"
+#!#        cdulp                   cd /usr/local/portage
+#!alias cdulp="cd /usr/local/portage"
+#!#        cdup                    cd /usr/portage
+#!alias cdup="cd /usr/portage"
+#!#        cdupp                   cd /usr/portage/packages
+#!alias cdupp="cd /usr/portage/packages"
+#        cduh                    cd /usr/share
+alias cduh="cd /usr/share"
+#        cdus                    cd /usr/src
+alias cdus="cd /usr/src"
+#        cdusl                   cd /usr/src/linux
+alias cdusl="cd /usr/src/linux"
+#        cdusc                   cd /usr/src/local
+alias cdusc="cd /usr/src/local"
+#        cdv                     cd /var
+alias cdv="cd /var"
+#        cdvl                    cd /var/log
+alias cdvl="cd /var/log"
+#!#        cdvtp                   cd /var/tmp/portage
+#!alias cdvtp="cd /var/tmp/portage"
+
+#
+# cd (home)
+#
+#        cdrh                    cd /root
+alias cdrh="cd /root"
+#        cdc                     cd ~/config
+alias cdc="cd \${HOME}/config"
+#        cdcp                    cd ~/config-private
+alias cdcp="cd \${HOME}/config-private"
+#        cdem                    cd ~/.emacs.d
+alias cdem="cd \${HOME}/.emacs.d"
+#        cdemlm                  cd ~/.emacs.d/local-modules
+alias cdemlm="cd \${HOME}/.emacs.d/local-modules"
+#        cdemwm                  cd ~/.emacs.d/local-work-modules
+alias cdemwm="cd \${HOME}/.emacs.d/local-work-modules"
+#        cdemm                   cd ~/.emacs.d/modules
+alias cdemm="cd \${HOME}/.emacs.d/modules"
+#        cdcc                    cd ~/config/custom/HOSTNAME
+alias cdcc="cd \${HOME}/config/custom/\$(uname -n)"
+#        cddl                    cd ~/Downloads
+alias cddl="cd \${HOME}/Downloads"
+#        cdb                     cd ~/bin
+alias cdb="cd \${HOME}/bin"
+#        cddoc                   cd ~/doc
+alias cddoc="cd \${HOME}/doc"
+#        cddev                   cd ~/dev
+alias cddev="cd \${HOME}/dev"
+#        cddevjs                 cd ~/dev/javascript
+alias cddevjs="cd \${HOME}/dev/javascript"
+#        cdo                     cd ~/org
+alias cdo="cd \${HOME}/org"
+#        cdprj                   cd ~/prj
+alias cdprj="cd \${HOME}/prj"
+#        cdprjjs                 cd ~/prj/javascript
+alias cdprjjs="cd \${HOME}/prj/javascript"
+#        cdt                     cd ~/tmp
+alias cdt="cd \${HOME}/tmp"
+#        cdw                     cd ~/web
+alias cdw="cd \${HOME}/web"
+#        cdwb                    cd ~/web/bin
+alias cdwb="cd \${HOME}/web/bin"
+#        cdweb                   cd ~/web
+alias cdweb="cd \${HOME}/web"
+#        cdwebb                  cd ~/web/bin
+alias cdwebb="cd \${HOME}/web/bin"
+
+#
+# edit
+#
+#        edit                    edit
+alias edit="\${EDITOR}"
+#        ed                      edit
+alias ed="edit"
+#!#        emacs                   emacs (text mode)
+#!alias emacs="emacs --no-site-file -nw"
+#        emacs-debug             emacs --debug-init
+alias emacs-debug="emacs --no-site-file -nw --debug-init"
+#!#        xemacs                  xemacs (text mode)
+#!alias xemacs="xemacs --no-site-file -nw"
+#        emacs-comp              emacs batch-byte-compile
+alias emacs-comp="emacs --no-init-file --no-site-file -batch -f batch-byte-compile"
+#        vi                      vim
+alias vi="vim"
+#!#        edal                    edit ~/.alias
+#!alias edal="edit \${HOME}/.alias"
+#!#        edalw                   edit ~/.alias-work
+#!alias edalw="edit \${HOME}/.alias-work"
+#!#        edba                    edit ~/.bashrc
+#!alias edba="edit \${HOME}/.bashrc"
+#!#        edca                    edit ~/.centericq/actions
+#!alias edca="edit \${HOME}/.centericq/actions"
+#!#        edce                    edit ~/.centericq/external
+#!alias edce="edit \${HOME}/.centericq/external"
+#!#        edfu                    edit ~/.funct
+#!alias edfu="edit \${HOME}/.funct"
+#!#        edfuw                   edit ~/.funct-work
+#!alias edfuw="edit \${HOME}/.funct-work"
+#!#        edemi                   edit ~/.emacs.d/init.el
+#!alias edemi="edit \${HOME}/.emacs.d/init.el"
+#!#        edemim                  edit ~/.emacs.d/init-main.org
+#!alias edemim="edit \${HOME}/.emacs.d/init-main.org"
+#!#        edho                    edit ~/.hosts
+#!alias edho="edit \${HOME}/.hosts"
+#!#        edhos                   edit ~/.hosts_ssmedia
+#!alias edhos="edit \${HOME}/.hosts_ssmedia"
+#!#        edkey                   edit ~/.keylaunchrc
+#!alias edkey="edit \${HOME}/.keylaunchrc"
+#!#        edm                     edit ~/.menu
+#!alias edm="edit \${HOME}/.menu"
+#!#        edmw                    edit ~/.menu_work
+#!alias edmw="edit \${HOME}/.menu_work"
+#!#        edoff                   edit ~/.offlineimaprc
+#!alias edoff="edit \${HOME}/.offlineimaprc"
+#!#        edpr                    edit ~/.profile
+#!alias edpr="edit \${HOME}/.profile"
+#!#        edprw                   edit ~/.profile-work
+#!alias edprw="edit \${HOME}/.profile-work"
+#!#        edrp                    edit ~/.ratpoisonrc
+#!alias edrp="edit \${HOME}/.ratpoisonrc"
+#!#        edrpb                   edit ~/.ratpoisonrc-bindings
+#!alias edrpb="edit \${HOME}/.ratpoisonrc-bindings"
+#!#        edsc                    edit ~/.screenrc
+#!alias edsc="edit \${HOME}/.screenrc"
+#!#        edscb                   edit ~/.screenrc-bindings
+#!alias edscb="edit \${HOME}/.screenrc-bindings"
+#!#        edsca                   edit ~/.screenrc-applications
+#!alias edsca="edit \${HOME}/.screenrc-applications"
+#!#        edsshak                 edit ~/.ssh/authorized_keys
+#!alias edsshak="edit \${HOME}/.ssh/authorized_keys"
+#!#        edsshc                  edit ~/.ssh/config
+#!alias edsshc="edit \${HOME}/.ssh/config"
+#!#        edsshkh                 edit ~/.ssh/known_hosts
+#!alias edsshkh="edit \${HOME}/.ssh/known_hosts"
+#!#        edvim                   edit ~/.vimrc
+#!alias edvim="edit \${HOME}/.vimrc"
+#!#        edxi                    edit ~/.xinitrc
+#!alias edxi="edit \${HOME}/.xinitrc"
+#!#        edxbk                   edit ~/.xbindkeysrc
+#!alias edxbk="edit \${HOME}/.xbindkeysrc"
+#!#        edxm                    edit ~/.Xmodmap
+#!alias edxm="edit \${HOME}/.Xmodmap"
+#!#        edxr                    edit ~/.Xresources
+#!alias edxr="edit \${HOME}/.Xresources"
+#!#        edxmame                 edit ~/.xmame/xmamerc
+#!alias edxmame="edit \${HOME}/.xmame/xmamerc"
+#!#        edxsc                   edit ~/.xscreensaver
+#!alias edxsc="edit \${HOME}/.xscreensaver"
+#!#        edxs                    edit ~/.xsession
+#!alias edxs="edit \${HOME}/.xsession"
+#!#        edsa                    edit ~/bin/screen-app
+#!alias edsa="edit \${HOME}/bin/screen-app"
+#!#        edra                    edit ~/bin/run-app
+#!alias edra="edit \${HOME}/bin/run-app"
+#!#        edrpm                   edit ~/bin/ratpoison-menu
+#!alias edrpm="edit \${HOME}/bin/ratpoison-menu"
+#!#        edrpw                   edit ~/bin/ratpoison-windows
+#!alias edrpw="edit \${HOME}/bin/ratpoison-windows"
+#        edbgc                   edit /boot/grub/grub.conf
+alias edbgc="edit /boot/grub/grub.conf"
+#        edbgm                   edit /boot/grub/menu.lst
+alias edbgm="edit /boot/grub/menu.lst"
+#        edeap                   edit /etc/apt/preferences
+alias edeap="edit /etc/apt/preferences"
+#        edeas                   edit /etc/apt/sources.list
+alias edeas="edit /etc/apt/sources.list"
+#        edeba                   edit /etc/bashrc
+alias edeba="edit /etc/bashrc"
+#        edeex                   edit /etc/exports
+alias edeex="edit /etc/exports"
+#        edefs                   edit /etc/fstab
+alias edefs="edit /etc/fstab"
+#        edegr                   edit /etc/group
+alias edegr="edit /etc/group"
+#        edeho                   edit /etc/hosts
+alias edeho="edit /etc/hosts ; cat /etc/hosts > \${HOME}/.hosts"
+#        edemc                   edit /etc/make.conf
+alias edemc="edit /etc/make.conf"
+#        edema                   edit /etc/modules.autoload
+alias edema="edit /etc/modules.autoload"
+#        edmotd                  edit /etc/motd
+alias edmotd="edit /etc/motd"
+#        edepw                   edit /etc/passwd
+alias edepw="edit /etc/passwd"
+#        edepr                   edit /etc/profile
+alias edepr="edit /etc/profile"
+#        ederc                   edit /etc/rc.conf
+alias ederc="edit /etc/rc.conf"
+#        eders                   edit /etc/resolv.conf
+alias eders="edit /etc/resolv.conf"
+#        edesh                   edit /etc/shadow
+alias edesh="edit /etc/shadow"
+#!#        edexc                   edit /etc/X11/xorg.conf
+#!alias edexc="edit /etc/X11/xorg.conf"
+#!#        edexf                   edit /etc/X11/XF86Config
+#!alias edexf="edit /etc/X11/XF86Config"
+#!#        edexa                   edit /etc/X11/xdm/Xaccess
+#!alias edexa="edit /etc/X11/xdm/Xaccess"
+#!#!#        edexs                   edit /etc/X11/xdm/Xsession
+#!#!alias edexs="edit /etc/X11/xdm/Xsession"
+#!#        edexi                   edit /etc/X11/xinit/xinitrc
+#!alias edexi="edit /etc/X11/xinit/xinitrc"
+#!#        edexv                   edit /etc/X11/xinit/xserverrc
+#!alias edexv="edit /etc/X11/xinit/xserverrc"
+#!#        edeni                   edit /etc/network/interfaces
+#!alias edeni="edit /etc/network/interfaces"
+#!#        edexdm                  ecit /etc/X11/startDM.sh
+#!alias edexdm="edit /etc/X11/startDM.sh"
+#!#        edexx                   edit /usr/X11R6/bin/startx
+#!alias edexx="edit /usr/X11R6/bin/startx"
+#!
+#!#        edepp                   edit /etc/apt/preferences
+#!alias edepp="edit /etc/apt/preferences"
+#!#        edeps                   edit /etc/apt/sources.list
+#!alias edeps="edit /etc/apt/sources.list"
+#!#        edekxs                  edit /etc/kde2/kdm/Xsession
+#!alias edekxs="edit /etc/kde2/kdm/Xsession"
+#!#        edekxp                  edit /etc/kde2/kdm/Xsetup
+#!alias edekxp="edit /etc/kde2/kdm/Xsetup"
+#!#        edekxv                  edit /etc/kde2/kdm/Xservers
+#!alias edekxv="edit /etc/kde2/kdm/Xservers"
+
+#
+# cp
+#
+#        cp                      copy (no dereference)
+[[ "\$(uname -s)" != "Darwin" ]] && alias cp="cp -d"
+#        cpr                     copy (recursive, no dereference)
+alias cpr="cp -R -d"
+#        cprp                    copy (recursive, preserve, no dereference)
+alias cprp="cp -R -p -d"
+#        cpp                     copy (preserve, no dereference)
+alias cpp="cp -p -d"
+#        cprdux                  copy (recursive, no dereference, update,
+#                                      same file system)
+alias cprdux="cp -R -d -u -x"
+#        cprpdux                 copy (recursive, preserve, no dereference,
+#                                      update, same file system)
+alias cprpdux="cp -R -p -d -u -x"
+
+#
+# su
+#
+#        sur                     su to root
+alias sur="sudo su -"
+#        suk                     su to kyle
+alias suk="sudo su - kyle"
+
+#
+# rm
+#
+#        del                     remove
+alias del="rm"
+#        rmi                     interactive remove
+alias rmi="rm -i"
+
+#
+# du
+#
+#        dfh                     df -h (human readable)
+alias dfh="df -h"
+#        duh                     du -h (human readable)
+alias duh="du -h"
+#        dub                     du -h -b (human readable, bytes)
+alias dub="du -h -b"
+#        dus                     du -s -h (summary, human readable)
+alias dus="du -s -h"
+#        dusb                    du -s -h -b (summary, human readable, bytes)
+alias dusb="du -s -h -b"
+#        duss                    du -s -h * | sort -h -r | head -n 40
+alias duss="du -s -h * | sort -h -r | head -n 40"
+
+#
+# kill
+#
+#        kt                      kill -SIGTERM (friendly kill)
+alias kt="kill -SIGTERM"
+#        kk                      kill -SIGKILL (forced kill)
+alias kk="kill -SIGKILL"
+
+#
+# fuser
+#
+#        fuvm                    fuser -v -m (verbose, mounted fs)
+alias fuvm="fuser -v -m"
+#        fuvmk                   fuser -v -m -k (verbose, mounted fs, kill)
+alias fuvmk="fuser -v -m -k"
+
+#
+# chmod
+#
+#        chmodx                  chmod +x
+alias chmodx="chmod +x"
+#        chmodd                  chmod u=rwx,g=rx,o=
+alias chmodd="chmod u=rwx,g=rx,o="
+#        chmoddo                 chmod u=rwx,g=rx,o=rx
+alias chmoddo="chmod u=rwx,g=rx,o=rx"
+
+#
+# chmod all
+#
+#        chmodar                 chmod u=r,g=r,o=r
+alias chmoda="chmod u=r,g=r,o=r"
+#        chmodarw                chmod u=rw,g=rw,o=rw
+alias chmodarw="chmod u=rw,g=rw,o=rw"
+#        chmodarx                chmod u=rx,g=rx,o=rx
+alias chmodarx="chmod u=rx,g=rx,o=rx"
+#        chmodaa                 chmod u=rwx,g=rwx,o=rwx
+alias chmodaa="chmod u=rwx,g=rwx,o=rwx"
+
+#
+# chmod user
+#
+#        chmodur                 chmod u=r,g=,o=
+alias chmodur="chmod u=r,g=,o="
+#        chmodurw                chmod u=rw,g=,o=
+alias chmodurw="chmod u=rw,g=,o="
+#        chmodurx                chmod u=rx,g=,o=
+alias chmodurx="chmod u=rx,g=,o="
+#        chmodua                 chmod u=rwx,g=,o=
+alias chmodua="chmod u=rwx,g=,o="
+
+#
+# chmod group
+#
+#        chmodgr                 chmod u=r,g=r,o=
+alias chmodgr="chmod u=r,g=r,o="
+#        chmodgrw                chmod u=rw,g=rw,o=
+alias chmodgrw="chmod u=rw,g=rw,o="
+#        chmodgrx                chmod u=rx,g=rx,o=
+alias chmodgrx="chmod u=rx,g=rx,o="
+#        chmodga                 chmod u=rwx,g=rwx,o=
+alias chmodga="chmod u=rwx,g=rwx,o="
+
+#
+# chown
+#
+#        chownr                  chown root:root
+alias chownr="sudo chown root:root"
+#        chownrr                 chown -R root:root
+alias chownrr="sudo chown -R root:root"
+#        chowna                  chown admin:admin
+alias chowna="sudo chown admin:admin"
+#        chownar                 chown -R admin:admin
+alias chownar="sudo chown -R admin:admin"
+#        chownk                  chown kyle:kyle
+alias chownk="sudo chown kyle:kyle"
+#        chownkr                 chown -R kyle:kyle
+alias chownkr="sudo chown -R kyle:kyle"
+
+#
+# grep
+#
+#        grep                    grep (no binaries, auto-color)
+alias grep="grep -I --color=auto"
+#        grepp                   grep (file names, line numbers)
+alias grepp="grep -H -n"
+#        grepi                   grep -i (case-insensitive)
+alias grepi="grep -H -n -i"
+#        grepir                  grep -i -r (case-insensitive, recursive)
+alias grepir="grep -H -n -i -r"
+#        fgrep                   fgrep (no binaries, auto-color)
+alias fgrep="fgrep -I --color=auto"
+#        egrep                   egrep (no binaries, auto-color)
+alias egrep="egrep -I --color=auto"
+
+#
+# compression
+#
+#        ungzip                  un-gzip files
+alias ungzip="gzip -d"
+#        bzip                    bzip2
+alias bzip="bzip2"
+#        unbzip                  un-bzip files
+alias unbzip="bzip2 -d -k"
+#!#        intar                   tar files [query user]
+#!alias intar="
+#!    echo -n 'File(s) to tar: ' ; read a
+#!    echo -n 'Name of tar: ' ; read b
+#!    tar cvf - \"\${a}\" > \"\${b}\""
+#        untar                   un-tar files
+alias untar="tar xvf"
+
+#
+# crontab
+#
+#        lcron                   list crontab
+alias lcron="crontab -l"
+#        acron                   list crontab (active)
+alias acron="crontab -l | grep \"^[^#]\""
+#        edcron                  edit crontab (and copy new crontab to ~/.cron)
+alias edcron="editor=vim crontab -e ; crontab -l > \${HOME}/.cron"
+#        mcron                   crontab -l > ~/.cron
+alias mcron="crontab -l > \${HOME}/.cron"
+
+#
+# cdrom
+#
+#        cdscan                  cdrecord -scanbus
+alias cdscan="cdrecord -scanbus"
+#        mkiso                   mkisofs <image.iso> <path/files>
+alias mkiso="mkisofs -v -r -o \$*"
+#        cdrec                   cdrecord -data <image.iso>
+alias cdrec="cdrecord -v dev=0,1,0 speed=8 -eject -data \$*"
+#        cdreca                  cdrecord -audio <path/files>
+alias cdreca="cdrecord -v dev=0,1,0 speed=8 -eject -audio \$*"
+#        cdblank                 cdrecord blank
+alias cdblank="cdrecord dev=0,1,0 speed=8 blank=fast"
+
+#
+# rdesktop
+#
+#        rdd                     rdesktop dozer (1024x768)
+alias rdd="rdesktop -u kyle -g 1024x768 -z -a16 dozer"
+#        rdd8                    rdesktop dozer (800x600)
+alias rdd8="rdesktop -u kyle -g 800x600 -z -a16 dozer"
+#        rddf                    rdesktop dozer (full)
+alias rddf="rdesktop -u kyle -f -z -a16 dozer"
+
+#
+# ssh
+#
+#        sshkeygen               generate rsa ssh keys
+alias sshkeygen="ssh-keygen -t rsa -b 4096"
+#! #        sshkeycp                copy ssh key to remote host
+#! alias sshkeycp="
+#!     echo -n 'Host to copy ssh key to: ' ; read a
+#!     ssh \${a} '[[ ! -d .ssh ]] && mkdir -p .ssh && chmod 700 .ssh'
+#!     [[ -f \${HOME}/.ssh/id_dsa.pub ]] && \
+#!       cat \${HOME}/.ssh/id_dsa.pub | ssh \${a} '/bin/cat >> .ssh/authorized_keys ; \
+#!       /bin/chmod 600 .ssh/authorized_keys'
+#!     [[ -f \${HOME}/.ssh/id_rsa.pub ]] && \
+#!       cat \${HOME}/.ssh/id_rsa.pub | ssh \${a} '/bin/cat >> .ssh/authorized_keys ; \
+#!       /bin/chmod 600 .ssh/authorized_keys'"
+#! #        sshurxvtcp              copy urxvt terminfo data to remote host
+#! alias sshurxvtcp="
+#!     echo -n 'Host to copy urxvt terminfo data to: ' ; read a
+#!     infocmp urxvt | \
+#!       ssh \${a} 'cat > /tmp/terminfo && mkdir -p .terminfo && \
+#!       tic /tmp/terminfo && rm -f /tmp/terminfo'"
+#        sshagent                turn on ssh agent
+alias sshagent="
+    ssh-agent
+    ssh-add
+    ssh-add -l"
+#!#        sshtunirc               ssh tunnel irc (freenode.net)
+#!alias sshtunirc="ssh -L 6670:irc.freenode.net:6667 \${nullwareip}"
+#!#!alias sshtunirc="ssh -L 6667:irc.freenode.net:6667 \${nullwareip}"
+#!#        sshtunimap              ssh tunnel imap (home)
+#!alias sshtunimap="ssh -L 8143:morpheus:143 \${nullwareip}"
+#!#        sshtungmail             ssh tunnel gmail pop
+#!alias sshtungmail="ssh -L 8995:pop.gmail.com:995 \${nullwareip}"
+#!#        sshtunldap              ssh tunnel scheduleworld ldap
+#!alias sshtunldap="ssh -L 8389:ldap.scheduleworld.com:389 \${nullwareip}"
+#!#        sshtunsshw              ssh tunnel ssh through work pc
+#!alias sshtunsshw="ssh -L 2222:\${nullwareip}:22 kyle-work"
+#
+# ssh logons (internal)
+#
+#        sshf                    ssh -p 8022 -l root firewall
+alias sshf="echo 'ssh:firewall:root' ; ssh -p 8022 -l root firewall"
+#        sshm                    ssh morpheus
+alias sshm="echo 'ssh:morpheus' ; ssh morpheus"
+#        sshmk                   ssh morpheus:kyle
+alias sshmk="echo 'ssh:morpheus:kyle' ; ssh -l kyle morpheus"
+#        sshmg                   ssh morpheus:git
+alias sshmg="echo 'ssh:morpheus:git' ; ssh -l git morpheus"
+#        sshn                    ssh neo
+alias sshn="echo 'ssh:neo' ; ssh neo"
+#        sshnr                   ssh neo:root
+alias sshnr="echo 'ssh:neo:root' ; ssh -l root neo"
+#        sshnk                   ssh neo:kyle
+alias sshnk="echo 'ssh:neo:kyle' ; ssh -l kyle neo"
+#        sshs                    ssh switch
+alias sshs="echo 'ssh:switch' ; ssh switch"
+#        ssht                    ssh tank
+alias ssht="echo 'ssh:tank' ; ssh tank"
+#        sshtk                   ssh tank:kyle
+alias sshtk="echo 'ssh:tank:kyle' ; ssh -l kyle tank"
+#        ssht2                   ssh tank (2nd nic)
+alias ssht2="echo 'ssh:tank' ; ssh 192.168.1.61"
+#        sshc                    ssh colleen
+alias sshc="echo 'ssh:colleen' ; ssh -l colleen colleen"
+#        ssha                    ssh apoc
+alias ssha="echo 'ssh:apoc' ; ssh apoc"
+#        sshak                   ssh apoc:kyle
+alias sshak="echo 'ssh:apoc:kyle' ; ssh -l kyle apoc"
+#        sshy                    ssh trinity
+alias sshy="echo 'ssh:trinity' ; ssh trinity"
+#        sshyk                   ssh trinity:kyle
+alias sshyk="echo 'ssh:trinity:kyle' ; ssh -l kyle trinity"
+#        sshm1                   ssh mouse1
+alias sshm1="echo 'ssh:mouse1' ; ssh mouse1"
+#        sshm2                   ssh mouse2
+alias sshm2="echo 'ssh:mouse2' ; ssh mouse2"
+#        sshm3                   ssh mouse3
+alias sshm3="echo 'ssh:mouse3' ; ssh mouse3"
+#        sshpi                   ssh raspberrypi
+alias sshpi="echo 'ssh:pi@raspberrypi' ; ssh pi@raspberrypi"
+#        sshpid                  ssh raspberrypid
+alias sshpid="echo 'ssh:pi@raspberrypid' ; ssh pi@raspberrypid"
+
+#
+# ssh logons (external)
+#
+#!#        sshx                    ssh nullware.com
+#!alias sshx="echo 'ssh:nullware.com' ; ssh \${nullwareip}"
+#!#        sshxr                   ssh nullware.com
+#!alias sshxr="echo 'ssh:nullware.com:root' ; ssh -l root \${nullwareip}"
+#!#        sshxk                   ssh nullware.com
+#!alias sshxk="echo 'ssh:nullware.com:kyle' ; ssh -l kyle \${nullwareip}"
+#        sshnw                   ssh nullware.com
+alias sshnw="echo 'ssh:nullware.com:kyle' ; ssh -l kyle \${nullwareip}"
+
+#
+# sftp (internal)
+#
+#        sftpf                   sftp -oPort=222 admin@firewall
+alias sftpf="echo 'sftp:firewall:admin' ; sftp -oPort=222 admin@firewall"
+#        sftpm                   sftp morpheus
+alias sftpm="echo 'sftp:morpheus' ; sftp morpheus"
+#        sftpmr                  sftp root@morpheus
+alias sftpmr="echo 'sftp:morpheus:root' ; sftp root@morpheus"
+#        sftpmk                  sftp kyle@morpheus
+alias sftpmk="echo 'sftp:morpheus:kyle' ; sftp kyle@morpheus"
+#        sftpn                   sftp neo
+alias sftpn="echo 'sftp:neo' ; sftp neo"
+#        sftpnr                  sftp root@neo
+alias sftpnr="echo 'sftp:neo:root' ; sftp root@neo"
+#        sftpnk                  sftp kyle@neo
+alias sftpnk="echo 'sftp:neo:kyle' ; sftp kyle@neo"
+#        sftpt                   sftp tank
+alias sftpt="echo 'sftp:tank' ; sftp tank"
+#        sftptr                  sftp root@tank
+alias sftptr="echo 'sftp:tank:root' ; sftp root@tank"
+#        sftptk                  sftp kyle@tank
+alias sftptk="echo 'sftp:tank:kyle' ; sftp kyle@tank"
+#        sftpa                   sftp apoc
+alias sftpa="echo 'sftp:apoc' ; sftp apoc"
+#        sftpar                  sftp root@apoc
+alias sftpar="echo 'sftp:apoc:root' ; sftp root@apoc"
+#        sftpak                  sftp kyle@apoc
+alias sftpak="echo 'sftp:apoc:kyle' ; sftp kyle@apoc"
+
+#
+# sftp (external)
+#
+#!#        sftpx                   sftp nullware.com
+#!alias sftpx="echo 'sftp:nullware.com' ; sftp \${nullwareip}"
+#!#        sftpxr                  sftp nullware.com
+#!alias sftpxr="echo 'sftp:nullware.com:root' ; sftp root@\${nullwareip}"
+#!#        sftpxk                  sftp nullware.com
+#!alias sftpxk="echo 'sftp:nullware.com:kyle' ; sftp kyle@\${nullwareip}"
+
+#
+# ssh run commands
+#
+#        sshmiftop               ssh -l root morpheus "TERM=screen iftop"
+alias sshmiftop="ssh -l root morpheus \"TERM=screen iftop\""
+
+#
+# file system
+#
+#        mkfs-ext2               format an ext2 filesystem (with 1% reserve)
+alias mkfs-ext2="sudo mkfs -t ext2 -m 1 -i 1024"
+#        mkfs-ext3               format an ext3 filesystem (with 1% reserve)
+alias mkfs-ext3="sudo mkfs -t ext3 -m 1 -i 1024"
+#        ext-dump                dump ext file system info
+alias ext-dump="dumpe2fs -h"
+
+#
+# networking (general)
+#
+export networkdevice="$(ip route get 1.1.1.1 | awk '{print $5}')"
+#        netdev                  network device
+alias netdev="echo \"$(ip route get 1.1.1.1 | awk '{print $5}')\""
+#        netip                   show ip address of main network device
+alias netip="
+    ifconfig \${networkdevice} | grep 'inet addr:[0-9]' | \
+    cut -d \":\" -f2 | cut -d \" \" -f1"
+#        netdns                  show dns routers of main network device
+alias netdns="nmcli dev list iface \${networkdevice} | grep IP4"
+#        ns                      netstat
+alias ns="sudo netstat"
+#        nsap                    netstat (all sockets, programs)
+alias nsap="sudo netstat -a -p"
+#        nstup                   netstat (tcp, udp, programs)
+alias nstup="sudo netstat -t -u -p"
+#        nstupl                  netstat (tcp, udp, programs, listening)
+alias nstupl="sudo netstat -t -u -p -l"
+#        lsofi                   lsof -i (list open files matching givin internet address)
+alias lsofi="sudo lsof -i"
+#        wgetp                   wget --passive-ftp
+alias wgetp="wget --passive-ftp"
+#        nml                     nmap localhost
+alias nml="nmap localhost"
+#        nmlp                    nmap -p 1-10000 localhost
+alias nmlp="nmap -p 1-10000 localhost"
+#        nmp                     nmap -p 1-10000
+alias nmp="nmap -p 1-10000"
+#        nmu                     nmap with udp
+alias nmu="nmap -sS -sU"
+
+#
+# networking (ping)
+#
+#        pinga                   ping airave
+alias pinga="ping 192.168.17.1"
+#        pingf                   ping firewall
+alias pingf="ping 192.168.1.1"
+#        pingb                   ping bridge
+alias pingb="ping 192.168.1.2"
+#        pingm                   ping morpheus
+alias pingm="ping 192.168.1.10"
+#        pingn                   ping neo
+alias pingn="ping 192.168.1.30"
+#        pingt                   ping tank
+alias pingt="ping 192.168.1.32"
+#        pinga                   ping apoc
+alias pinga="ping 192.168.1.34"
+#        pingy                   ping trinity
+alias pingy="ping 192.168.1.36"
+#        pingd                   ping dozer
+alias pingd="ping 192.168.1.40"
+#        pingc                   ping choi
+alias pingc="ping 192.168.1.42"
+#        pings                   ping switch
+alias pings="ping 192.168.1.44"
+#        pingm1                  ping mouse1
+alias pingm1="ping 192.168.1.51"
+#        pingm2                  ping mouse2
+alias pingm2="ping 192.168.1.52"
+#        pingm3                  ping mouse3
+alias pingm3="ping 192.168.1.53"
+#        pingpi                  ping raspberrypi
+alias pingpi="ping 192.168.1.54"
+#        pingpid                 ping raspberrypid
+alias pingpid="ping 192.168.1.55"
+#        pingc                   ping colleen
+alias pingc="ping 192.168.1.62"
+#        pingdns1                ping dns server 1
+alias pingdns1="ping 24.31.3.8"
+#        pingdns2                ping dns server 2
+alias pingdns2="ping 24.31.3.9"
+#        pinggate                ping gateway
+alias pinggate="ping 24.31.20.1"
+#        pingnw                  ping nullware
+alias pingnw="ping \${nullwareip}"
+#        pingw                   ping work
+alias pingw="ping kyle-work"
+#        pingg                   ping google.com
+alias pingg="ping google.com"
+#        pinggip                 ping google.com by ip address
+alias pinggip="ping 172.217.15.110"
+#        trg                     traceroute google.com
+alias trg="traceroute google.com"
+#        pingus                  ping uswest.net
+alias pingus="ping uswest.net"
+#        pingusip                ping uswest.net by ip address
+alias pingusip="ping 204.147.80.81"
+#        trus                    traceroute uswest.net
+alias trus="traceroute uswest.net"
+
+#
+# rsync
+#
+#        rsync-rlptx                     rsync -rlptx --progress
+alias rsync-rlptx="rsync -rlptx --progress"
+#        rsync-media-get-morpheus        rsync morpheus:/home/data/media /home/data/media
+alias rsync-media-get-morpheus="rsync -rlptx --progress morpheus:/home/data/media/ ${home}/data/media/"
+#        rsync-media-get-morpheus-gemini rsync morpheus:/home/data/media /home/data/media (minus software directory)
+alias rsync-media-get-morpheus-gemini="rsync -rlptx --progress --exclude='/software' morpheus:/home/data/media/ ${home}/data/media/"
+#        rsync-media-get-morpheus-mouse-delete rsync morpheus:/home/data/media /home/data/media (specific sub-directories)
+alias rsync-media-get-morpheus-mouse-delete="
+    rsync -rlptx --progress --delete --exclude={'/Humor/','/iTunes/','/Other/'} morpheus:/home/data/media/audio/ ${home}/data/media/audio/
+    rsync -rlptx --progress --delete morpheus:/home/data/media/music/ ${home}/data/media/music/
+    rsync -rlptx --progress --delete morpheus:/home/data/media/pictures_slide_show/ ${home}/data/media/pictures_slide_show/
+    #rsync -rlptx --progress --delete morpheus:/home/data/media/repos/ ${home}/data/media/repos/
+    rsync -rlptx --progress --delete morpheus:/home/data/media/text/ ${home}/data/media/text/
+    rsync -rlptx --progress --delete --exclude={'/Adult/','/Development/'} morpheus:/home/data/media/video/ ${home}/data/media/video/"
+#        rsync-media-put-morpheus        rsync /home/data/media morpheus:/home/data/media
+alias rsync-media-put-morpheus="rsync -rlptx --progress ${home}/data/media/ morpheus:/home/data/media/"
+#        rsync-media-put-morpheus-delete rsync /home/data/media morpheus:/home/data/media
+alias rsync-media-put-morpheus-delete="rsync -rlptx --progress --delete ${home}/data/media/ morpheus:/home/data/media/"
+#        rsync-text-get-morpheus         rsync morpheus:/home/data/media/text /home/data/media/text
+alias rsync-text-get-morpheus="rsync -rlptx --progress morpheus:/home/data/media/text/ ${home}/data/media/text/"
+#        rsync-text-put-morpheus         rsync /home/data/media/text morpheus:/home/data/media/text
+alias rsync-text-put-morpheus="rsync -rlptx --progress ${home}/data/media/text/ morpheus:/home/data/media/text/"
+#        rsync-books-get-morpheus        rsync morpheus:/home/data/media/text/Books /home/data/media/text/Books
+alias rsync-books-get-morpheus="
+    mkdir -p ${home}/data/media/text/Books &&
+    rsync -rlptx --progress morpheus:/home/data/media/text/Books/ ${home}/data/media/text/Books/"
+#        rsync-audio-get-morpheus        rsync morpheus:/home/data/media/audio /home/data/media/audio
+alias rsync-audio-get-morpheus="rsync -rlptx --progress morpheus:/home/data/media/audio/ ${home}/data/media/audio/"
+#        rsync-audio-put-morpheus        rsync morpheus:/home/data/media/audio /home/data/media/audio
+alias rsync-audio-put-morpheus="rsync -rlptx --progress morpheus:/home/data/media/audio/ ${home}/data/media/audio/"
+#        rsync-music-get-morpheus        rsync morpheus:/home/data/media/audio/Music /home/data/media/audio/Music
+alias rsync-music-get-morpheus="
+    rsync -rlptx --progress morpheus:/home/data/media/audio/Music/ ${home}/data/media/audio/Music/ &&
+    rsync -rlptx --progress morpheus:/home/data/media/audio/Playlists/ ${home}/data/media/audio/Playlists/"
+#        rsync-music-put-morpheus        rsync /home/data/media/audio/Music morpheus:/home/data/media/audio/Music
+alias rsync-music-put-morpheus="
+    rsync -rlptx --progress ${home}/data/media/audio/Music/ morpheus:${home}/data/media/audio/Music/ &&
+    rsync -rlptx --progress ${home}/data/media/audio/Playlists/ morpheus:${home}/data/media/audio/Playlists/"
+#        rsync-music-put-colleen         rsync /home/data/media/audio/Music colleen:/home/data/media/audio/Music
+alias rsync-music-put-colleen="
+    rsync -rlptx --progress ${home}/data/media/audio/Music/ colleen:${home}/data/media/audio/Music/ &&
+    rsync -rlptx --progress ${home}/data/media/audio/Playlists/ colleen:${home}/data/media/audio/Playlists/"
+#!#        rsync-music-put-jeep            rsync /home/data/media/audio/Music /media/${USER}/jeep
+#!alias rsync-music-put-jeep="
+#!    echo 'Copying muisc files and playlists to Jeep USB:'
+#!    o=/run/media/\${USER}/\$(cd /run/media/\${USER} && \$(pathcmd ls) -1)
+#!    cp \${HOME}/.mpd/playlists/kyle.m3u \${o}/
+#!    cp \${HOME}/.mpd/playlists/rated_good.m3u \${o}/
+#!    (cd \"${home}/data/media/audio/Music/\" &&
+#!    cat \${o}/*.m3u | while read line ; do
+#!        rsync -Rtxc --progress --delete \"\${line}\" \${o}/
+#!    done)"
+alias rsync-music-put-jeep="
+    o=/run/media/\${USER}/JEEP && \
+      rsync -rLtxc --progress --delete \${HOME}/.mpd/playlists/kyle.m3u \${o}/ && \
+      rsync -rLtxc --progress --delete \${HOME}/.mpd/playlists/rated_good.m3u \${o}/ && \
+      rsync -rLtxc --progress --delete ${home}/data/media/audio/Music/* \${o}/ && \
+      sync"
+#        rsync-video-get-morpheus        rsync morpheus:/home/data/media/video /home/data/media/video
+alias rsync-video-get-morpheus="rsync -rlptx --progress morpheus:/home/data/media/video/ ${home}/data/media/video/"
+#        rsync-video-put-morpheus        rsync morpheus:/home/data/media/video /home/data/media/video
+alias rsync-video-put-morpheus="rsync -rlptx --progress morpheus:/home/data/media/video/ ${home}/data/media/video/"
+#        rsync-amazon-get-morpheus       rsync "morpheus:/home/data/media/incoming/Music/Amazon MP3" "${HOME}/Music/Amazon MP3"
+alias rsync-amazon-get-morpheus="rsync -rlptx --progress \"morpheus:/home/data/media/incoming/Music/Amazon MP3\" \"\${HOME}/Music/\""
+#        rsync-amazon-put-morpheus       rsync "${HOME}/Music/Amazon MP3" "morpheus:/home/data/media/incoming/Music/Amazon MP3"
+alias rsync-amazon-put-morpheus="rsync -rlptx --progress \"\${HOME}/Music/Amazon MP3\" \"morpheus:${home}/data/media/incoming/Music\""
+#        rsync-repos-get-morpheus        rsync morpheus:/home/data/media/repos /home/data/media/repos
+alias rsync-repos-get-morpheus="rsync -rlptx --progress morpheus:/home/data/media/repos/ ${home}/data/media/repos/"
+#        rsync-repos-put-morpheus        rsync /home/data/media/repos morpheus:/home/data/media/repos
+alias rsync-repos-put-morpheus="rsync -rlptx --progress ${home}/data/media/repos/ morpheus:${home}/data/media/repos/"
+#        rsync-repos-put-colleen         rsync /home/data/media/repos colleen:/home/data/media/repos
+alias rsync-repos-put-colleen="rsync -rlptx --progress ${home}/data/media/repos/ colleen:${home}/data/media/repos/"
+#!#        rsync-playlists-put-pi          rsync /home/data/media/audio/Playlists raspberrypi:/media/playlists
+#!alias rsync-playlists-put-pi="rsync -rlptx --progress ${home}/data/media/audio/Playlists/ pi@raspberrypi:/media/playlists/"
+#!#        rsync-org-put-dropbox           rsync ${HOME}/org/* ${HOME}/Dropbox/Org/
+#!alias rsync-org-put-dropbox="[[ -d \${HOME}/Dropbox/Org ]] && rsync -aAXv --delete \${HOME}/org/* \${HOME}/Dropbox/Org/"
+#        rsync-aerial-get-morpheus       rsync morpheus:/home/data/media/aerial /home/data/media/aerial
+alias rsync-aerial-get-morpheus="rsync -rlptx --progress morpheus:/home/data/media/aerial/ ${home}/data/media/aerial/"
+#        rsync-win-apps-put-win_apps-sd  rsync /home/data/media/software/Windows*/* /run/media/${USER}/WIN_APPS/Windows*/
+alias rsync-win-apps-put-win_apps-sd="
+    rsync -rLtxc --progress --delete --exclude={'Windows OS/','Partitions/'} ${home}/data/media/software/Windows* /run/media/\${USER}/WIN_APPS/ && \
+      rsync -rLtxc --progress --delete ${home}/data/media/repos/DOS /run/media/\${USER}/WIN_APPS/ && \
+      sync"
+#        rsync-windows-put-win_apps-sd   rsync /home/data/media/software/Windows*/* /run/media/${USER}/WINDOWS/Windows*/
+alias rsync-windows-put-win_apps-sd="
+    rsync -rLtxc --progress --delete --exclude={'Windows OS/','Partitions/'} ${home}/data/media/software/Windows* /run/media/\${USER}/WINDOWS/ && \
+      rsync -rLtxc --progress --delete ${home}/data/media/repos/DOS /run/media/\${USER}/WINDOWS/ && \
+      sync"
+#        rsync-mac-put-mac_apps-sd       rsync /home/data/media/software/Macintosh/* /run/media/${USER}/MAC_APPS/Macintosh/
+alias rsync-mac-put-mac_apps-sd="
+    rsync -rLtxc --progress --delete --exclude='FINDER.DAT' ${home}/data/media/software/Macintosh/68000 /run/media/\${USER}/MAC_APPS/Macintosh/ && \
+      rsync -rLtxc --progress --delete --exclude='FINDER.DAT' ${home}/data/media/software/Macintosh/OS\ X /run/media/\${USER}/MAC_APPS/Macintosh/ && \
+      rsync -rLtxc --progress --delete --exclude='FINDER.DAT' ${home}/data/media/software/Macintosh/PPC /run/media/\${USER}/MAC_APPS/Macintosh/ && \
+      sync"
+#        rsync-c64-put-sd16              rsync ${HOME}/C64/* /run/media/${USER}/C64/
+alias rsync-c64-put-sd16="rsync -rLtxc --progress --delete --exclude='TOSEC/' \${HOME}/C64/* /run/media/\${USER}/C64/ && sync"
+#        rsync-c64-put-sd128             rsync ${HOME}/C64/* /run/media/${USER}/C64/
+alias rsync-c64-put-sd128="rsync -rLtxc --progress --delete \${HOME}/C64/* /run/media/\${USER}/C64/ && sync"
+#        rsync-adult-put-adult-sd        rsync /home/data/media/video/Adult/* /run/media/${USER}/ADULT/
+alias rsync-adult-put-adult-sd="rsync -rLtxc --progress --delete ${home}/data/media/video/Adult/ /run/media/\${USER}/ADULT/ && sync"
+#        rsync-common-put-media          rsync ${HOME}/config/icons/ and ${HOME}/config/images/ to /home/data/media/graphic/
+alias rsync-common-put-media="
+    rsync -rlptx --progress --delete \${HOME}/config/icons/ ${home}/data/media/graphic/Icons/Common/
+    rsync -rlptx --progress --delete \${HOME}/config/images/ ${home}/data/media/graphic/Images/Common/"
+
+#
+# update-alternatives
+#
+#        update-alternatives-x-session-manager   change default x session manager
+alias update-alternatives-x-session-manager="sudo update-alternatives --config x-session-manager"
+#        update-alternatives-x-window-manager    change default x window manager
+alias update-alternatives-x-window-manager="sudo update-alternatives --config x-window-manager"
+#        update-alternatives-java change default java implementation
+alias update-alternatives-java="sudo update-alternatives --config java"
+
+#
+# ratpoison
+#
+
+#
+# screen
+#
+#!#        sc                      screen
+#!alias sc="screen"
+#        sc                      screen (start, wipe, or attach as needed)
+alias sc="\${HOME}/bin/run-screen"
+#        sch                     screen --help
+alias sch="screen --help"
+#        scr                     screen -A -D -RR (do what it takes to run screen)
+alias scr="screen -A -D -RR"
+#        scx                     screen -x (attach to an existing screen session)
+alias scx="screen -x"
+#        scd                     screen -d (detach an existing screen session, then start)
+alias scd="screen -d ; \${HOME}/bin/run-screen"
+#        scl                     screen -list (list screen sockets)
+alias scl="screen -list"
+#        scw                     screen -wipe (remove destroyed sessions)
+alias scw="screen -wipe"
+#        scwx                    screen -wipe ; screen -x
+alias scwx="screen -wipe ; screen -x"
+
+#
+# screen applications
+#
+#        scmon                   screen-app mon
+alias scmon="\${HOME}/bin/screen-app mon"
+#        sctop                   screen-app top
+alias sctop="\${HOME}/bin/screen-app top"
+#        schtop                  screen-app htop
+alias schtop="\${HOME}/bin/screen-app htop"
+#        scifmon                 screen-app ifmon
+alias scifmon="\${HOME}/bin/screen-app ifmon"
+#        sciftop                 screen-app iftop
+alias sciftop="\${HOME}/bin/screen-app iftop"
+#        scem                    screen-app emacs
+alias scem="\${HOME}/bin/screen-app emacs"
+#        scmail                  screen-app mail
+alias scmail="\${HOME}/bin/screen-app mail"
+#        scim                    screen-app im
+alias scim="\${HOME}/bin/screen-app im"
+#        scirc                   screen-app irc
+alias scirc="\${HOME}/bin/screen-app irc"
+#        scircm                  screen-app irc (on morpheus)
+alias scircm="screen -t irc 13 ssh morpheus -t '\${HOME}/bin/run-screen -p irc'"
+#        scweb                   screen-app web
+alias scweb="\${HOME}/bin/screen-app web"
+#        scnews                  screen-app news
+alias scnews="\${HOME}/bin/screen-app news"
+#        scrss                   screen-app rss
+alias scrss="\${HOME}/bin/screen-app rss"
+#        sctrade                 screen-app trade
+alias sctrade="\${HOME}/bin/screen-app trade"
+#        sccal                   screen-app cal
+alias sccal="\${HOME}/bin/screen-app cal"
+#        sccalc                  screen-app calc
+alias sccalc="\${HOME}/bin/screen-app calc"
+#        scorpie                 screen-app orpie
+alias scorpie="\${HOME}/bin/screen-app orpie"
+#        scrpncalc               screen-app rpncalc
+alias scrpncalc="\${HOME}/bin/screen-app rpncalc"
+#        scspell                 screen-app spell
+alias scspell="\${HOME}/bin/screen-app spell"
+#        scdbm                   screen-app dbm
+alias scdbm="\${HOME}/bin/screen-app dbm"
+#        scdbc                   screen-app dbc
+alias scdbc="\${HOME}/bin/screen-app dbc"
+#        scdbq                   screen-app dbq
+alias scdbq="\${HOME}/bin/screen-app dbq"
+#        scdbi                   screen-app dbi
+alias scdbi="\${HOME}/bin/screen-app dbi"
+#        sc0                     screen-app 0
+alias sc0="\${HOME}/bin/screen-app 0"
+#        sc1                     screen-app 1
+alias sc1="\${HOME}/bin/screen-app 1"
+#        sc2                     screen-app 2
+alias sc2="\${HOME}/bin/screen-app 2"
+#        sc3                     screen-app 3
+alias sc3="\${HOME}/bin/screen-app 3"
+#        sc4                     screen-app 4
+alias sc4="\${HOME}/bin/screen-app 4"
+#        sc5                     screen-app 5
+alias sc5="\${HOME}/bin/screen-app 5"
+#        sc6                     screen-app 6
+alias sc6="\${HOME}/bin/screen-app 6"
+#        sc7                     screen-app 7
+alias sc7="\${HOME}/bin/screen-app 7"
+#        sc8                     screen-app 8
+alias sc8="\${HOME}/bin/screen-app 8"
+#        sc9                     screen-app 9
+alias sc9="\${HOME}/bin/screen-app 9"
+#        sc10                    screen-app 10
+alias sc10="\${HOME}/bin/screen-app 10"
+#        sc11                    screen-app 11
+alias sc11="\${HOME}/bin/screen-app 11"
+#        sc12                    screen-app 12
+alias sc12="\${HOME}/bin/screen-app 12"
+#        sc13                    screen-app 13
+alias sc13="\${HOME}/bin/screen-app 13"
+#        sc14                    screen-app 14
+alias sc14="\${HOME}/bin/screen-app 14"
+#        sc15                    screen-app 15
+alias sc15="\${HOME}/bin/screen-app 15"
+#        sc16                    screen-app 16
+alias sc16="\${HOME}/bin/screen-app 16"
+#        sc17                    screen-app 17
+alias sc17="\${HOME}/bin/screen-app 17"
+#        sc18                    screen-app 18
+alias sc18="\${HOME}/bin/screen-app 18"
+#        sc19                    screen-app 19
+alias sc19="\${HOME}/bin/screen-app 19"
+#        sc20                    screen-app 20
+alias sc20="\${HOME}/bin/screen-app 20"
+#!#        sctun                   screen ssh tunnels
+#!alias sctun="
+#!    screen -t shell 31 ssh -C -L 6670:irc.freenode.net:6667 \${nullwareip} && sleep 0.5 && \
+#!      screen -t shell 32 ssh -C -L 8993:imap.gmail.com:993 \${nullwareip} && sleep 0.5 && \
+#!      screen -t shell 33 ssh -C -L 8587:smtp.gmail.com:587 \${nullwareip} && sleep 0.5 && \
+#!      screen -t shell 34 ssh -C -L 8222:crypticspace.com:5222 \${nullwareip}"
+#!    screen -t shell 32 ssh -C -L 8143:morpheus:143 \${nullwareip} && sleep 0.5 && \
+#!      screen -t shell 33 ssh -C -L 8995:pop.gmail.com:995 \${nullwareip} && sleep 0.5 && \
+#!      screen -t shell 35 ssh -C -L 8389:ldap.scheduleworld.com:389 \${nullwareip} && \
+
+#
+# startx
+#
+#        startx-8                startx in 8 bit mode
+alias startx-8="startx -- -depth 8"
+#        startx-16               startx in 16 bit mode
+alias startx-16="startx -- -depth 16"
+#        startx-24               startx in 24 bit mode
+alias startx-24="startx -- -depth 24"
+
+#
+# service control
+#
+#!#        net-restart             restart networking
+#!alias net-restart="sudo /etc/init.d/networking restart"
+#!#        inetd-restart           restart inetd
+#!alias inetd-restart="sudo /etc/rc.d/init.d/inetd restart"
+#!#        nfs-restart             restart nfs
+#!alias nfs-restart="sudo /etc/rc.d/init.d/nfs restart"
+#!#        zope-restart            restart zope
+#!alias zope-restart="sudo /etc/init.d/zope stop ; /etc/init.d/zope start"
+#!#        zope-restart-debug      restart zope in debug mode
+#!alias zope-restart-debug="sudo /etc/init.d/zope stop ; /etc/init.d/zope start -D"
+
+#
+# apache
+#
+#        aprs                    apache restart
+alias aprs="sudo systemctl restart httpd.service"
+#        aprl                    apache reload
+alias aprl="sudo systemctl reload httpd.service"
+#        aps                     apache status
+alias aps="sudo systemctl status httpd.service"
+#        edeac                   edit /etc/httpd/conf/httpd.conf
+alias edeac="ed /etc/httpd/conf/httpd.conf"
+#        apal                    tail -f -n 100 /var/log/httpd/access_log
+alias apal="tail -f -n 100 /var/log/httpd/access_log"
+#        apel                    tail -f -n 100 /var/log/httpd/error_log
+alias apel="tail -f -n 100 /var/log/httpd/error_log"
+#        aptop                   apachetop -f /var/log/httpd/access_log
+alias aptop="apachetop -f /var/log/httpd/access_log"
+
+#
+# apache-ssl
+#
+#        apsrs                   restart apache-ssl
+alias apsrs="sudo systemctl restart https.service"
+#        sslcert                 build apache-ssl ssl certificate
+alias sslcert="
+    echo -n 'Build apache-ssl certificate? [yN] ' ; read a
+    case \${a} in
+        y|Y) \$(pathcmd ssl-certificate) --force ;;
+    esac"
+
+#
+# samba
+#
+#        samrs                   restart samba
+alias samrs="sudo systemctl restart samba.service"
+#        edesam                  edit /etc/samba/smb.conf
+alias edesam="ed /etc/samba/smb.conf"
+
+#
+# vnc (client)
+#
+#        vncm1                   vnc mouse1:0
+alias vncm1="vncviewer mouse1:0"
+#        vncm2                   vnc mouse2:0
+alias vncm2="vncviewer mouse2:0"
+#        vncm3                   vnc mouse3:0
+alias vncm3="vncviewer mouse3:0"
+#        vncy                    vnc trinity:0
+alias vncy="vncviewer trinity:0"
+#        vncvm1                  vnc mouse1:0 (view only)
+alias vncvm1="vncviewer -viewonly mouse1:0"
+#        vncvm2                  vnc mouse2:0 (view only)
+alias vncvm2="vncviewer -viewonly mouse2:0"
+#        vncvm3                  vnc mouse3:0 (view only)
+alias vncvm3="vncviewer -viewonly mouse3:0"
+#        vncvy                   vnc trinity:0 (view only)
+alias vncvy="vncviewer -viewonly trinity:0"
+
+#
+# vnc (server)
+#
+#        vncs8                   vncserver -depth 16 -geometry 800x600 :1
+alias vncs8="vncserver -depth 16 -geometry 800x600 :1"
+#        vncs10                  vncserver -depth 16 -geometry 1024x768 :1
+alias vncs10="vncserver -depth 16 -geometry 1024x768 :1"
+#        vncs11                  vncserver -depth 16 -geometry 1152x864 :1
+alias vncs11="vncserver -depth 16 -geometry 1152x864 :1"
+#        vncs12                  vncserver -depth 16 -geometry 1280x1024 :1
+alias vncs12="vncserver -depth 16 -geometry 1280x1024 :1"
+#        vncs8w                  vncserver -depth 16 -geometry 800x500 :1
+alias vncs8w="vncserver -depth 16 -geometry 800x500 :1"
+#        vncs10w                 vncserver -depth 16 -geometry 1024x640 :1
+alias vncs10w="vncserver -depth 16 -geometry 1024x640 :1"
+#        vncs11w                 vncserver -depth 16 -geometry 1152x720 :1
+alias vncs11w="vncserver -depth 16 -geometry 1152x720 :1"
+#        vncs12w                 vncserver -depth 16 -geometry 1280x800 :1
+alias vncs12w="vncserver -depth 16 -geometry 1280x800 :1"
+#        vncsk                   vncserver -kill :1
+alias vncsk="vncserver -kill :1"
+
+#
+# X (Windows)
+#
+#        xwi                     xwininfo
+alias xwi="xwininfo"
+#        xwir                    xwininfo -root
+alias xwir="xwininfo -root"
+
+#
+# x2x
+#
+#!#        x2xn                    x2x from neo
+#!alias x2xn="x2x -west -noautoup -resurface -from neo:0 &"
+#!#        x2xnr                   restart x2x from neo
+#!alias x2xnr="x2x_restart neo west"
+#!#        x2xm1                   x2x to mouse1
+#!alias x2xm1="x2x -west -noautoup -resurface -to mouse1:0 &"
+#!
+#        x2xm1                   x2x to mouse1
+alias x2xm1="
+    [[ -z \"\$(ps -af | grep -v grep | grep x2x | grep \${USER} | grep mouse1)\" ]] && ( \
+        ssh mouse1 'DISPLAY=:0 /usr/X11R6/bin/xhost +\$(uname -n)' ;
+        x2x -west -noautoup -resurface -to mouse1:0
+    ) &"
+#        x2xm2                   x2x to mouse2
+alias x2xm2="
+    [[ -z \"\$(ps -af | grep -v grep | grep x2x | grep \${USER} | grep mouse2)\" ]] && ( \
+        ssh mouse2 'DISPLAY=:0 /usr/X11R6/bin/xhost +\$(uname -n)' ;
+        x2x -west -noautoup -resurface -to mouse2:0
+    ) &"
+
+#
+# gpg (gnu pgp)
+#
+#        gpg-gen                 gpg --gen-key
+alias gpg-gen="gpg --gen-key"
+#        gpg-list                gpg --list-keys
+alias gpg-list="gpg --list-keys"
+#        gpg-list-secret         gpg --list-secret-keys
+alias gpg-list-secret="gpg --list-secret-keys"
+#        gpg-edit                gpg --edit-key
+alias gpg-edit="gpg --edit-key"
+#        gpg-send                gpg --keyserver 64.71.163.210 --send-keys
+alias gpg-send="gpg --keyserver 64.71.163.210 --send-keys"
+#        gpg-search              gpg --keyserver 64.71.163.210 --search-keys
+alias gpg-search="gpg --keyserver 64.71.163.210 --search-keys"
+
+#
+# printing
+#
+#        lps                     lpstat -t -d
+alias lps="lpstat -t -d"
+#        lprn2                   lpr n-up 2
+alias lprn2="lpr -o number-up=2 -o page-border=single"
+
+#
+# GNOME
+#
+#        gnome-gdm-setup                 gksu gdmsetup
+alias gnome-gdm-setup="gksu gdmsetup"
+#        gsetting-values                 dump all keybindings
+alias gsetting-values="
+    for schema in \$(gsettings list-schemas | sort) ; do
+        for key in \$(gsettings list-keys \${schema} | sort) ; do
+            echo \"\${schema}|\${key}|\$(gsettings get \${schema} \${key})\"
+        done
+    done | column --table --separator '|' --table-columns SCHEMA,KEY,VALUE"
+#        gsetting-ranges                 dump all keybindings
+alias gsetting-ranges="
+    for schema in \$(gsettings list-schemas | sort) ; do
+        for key in \$(gsettings list-keys \${schema} | sort) ; do
+            echo \"\${schema}|\${key}|\$(gsettings range \${schema} \${key} |  tr '\n' ' ')\"
+        done
+    done | column --table --separator '|' --table-columns SCHEMA,KEY,RANGE"
+#        gsetting-gnome-keybindings      dump gnome keybindings
+alias gsetting-gnome-keybindings="
+    for key in \$(gsettings list-keys org.gnome.desktop.wm.keybindings | sort) ; do
+        echo \"\${key}|\$(gsettings get org.gnome.desktop.wm.keybindings \${key})\"
+    done | column --table --separator '|' --table-columns KEY,VALUE"
+
+#
+# KDE
+#
+
+#
+# c/c++
+#
+#        mcm                     make clean && make
+alias mcm="make clean && make"
+
+#
+# perl
+#
+#        cpan                    run perl in CPAN mode (use default answers to prompts)
+alias cpan="PERL_MM_USE_DEFAULT=1 perl -MCPAN -e shell"
+
+#
+# ruby
+#
+#        gemq                    ruby gem query --name-matches
+alias gemq="gem query --name-matches"
+#        gemqr                   ruby gem query --remote --name-matches
+alias gemqr="gem query --remote --name-matches"
+#        gemir                   ruby gem install --remote
+alias gemir="gem install --remote"
+
+#
+# clojure
+#
+#          clj                   clojure
+alias clj="clojure"
+
+#
+# android
+#
+#        adbd                            adb devices
+alias adbd="adb devices"
+#        adblog                          adb logcat (no verboase logs)
+alias adblog="adb logcat | grep -v ' V '"
+#        adbloge                         adb -e logcat (no verboase logs)
+alias adbloge="adb -e logcat | grep -v ' V '"
+#        adblogd                         adb -d logcat (no verboase logs)
+alias adblogd="adb -d logcat | grep -v ' V '"
+#        adbi                            adb install
+alias adbi="adb install"
+#        adbie                           adb -e install
+alias adbie="adb -e install"
+#        adbid                           adb -d install
+alias adbid="adb -d install"
+#        adbir                           adb install -r
+alias adbir="adb install -r"
+#        adbire                          adb -e install -r
+alias adbire="adb -e install -r"
+#        adbird                          adb -d install -r
+alias adbird="adb -d install -r"
+#        adbdeeplink                     adb shell am start
+alias adbdeeplink="adb shell am start"
+#        adbdate                         adb set date on device
+alias adbdate="adb shell date \$(date +%m%d%H%M%Y.%S)"
+#        adbdatee                        adb set date on emulator
+alias adbdatee="adb -e shell date \$(date +%m%d%H%M%Y.%S)"
+#        adbdated                        adb set date on attached device
+alias adbdated="adb -d shell date \$(date +%m%d%H%M%Y.%S)"
+#        adbrs                           restart adb
+alias adbrs="
+    sudo \${HOME}/android-sdk/platform-tools/adb kill-server && \
+      sudo \${HOME}/android-sdk/platform-tools/adb start-server"
+#        adb-usb-setup                   setup adb usb device
+alias adb-usb-setup="
+    sudo bash -c \"
+        echo 'SUBSYSTEM==\\\"usb\\\", SYSFS{idVendor}==\\\"04e8\\\", MODE=\\\"0666\\\"' \
+          > /etc/udev/rules.d/51-android.rules && \
+          chmod a+r /etc/udev/rules.d/51-android.rules
+    \""
+#        adb-screenshot                  abd screenshot (portrait)
+alias adb-screenshot="
+    adb shell screencap -p /sdcard/screen.png &&
+    adb pull /sdcard/screen.png android-device-screenshot-\$(date '+%Y-%m-%d-%H%M%S').png"
+#        adb-screenshot-landscape        abd screenshot (landscape)
+alias adb-screenshot-landscape="(
+    name=android-device-screenshot-\$(date '+%Y-%m-%d-%H%M%S').png
+    adb shell screencap -p /sdcard/screen.png &&
+    adb pull /sdcard/screen.png \${name} &&
+    convert \${name} -rotate 270 \${name}.tmp && mv \${name}.tmp \${name}"
+#!#        adb-animation                   abd animation
+#!alias adb-animation="
+#!    adb shell screenrecord /sdcard/animation.mp4 &&
+#!    adb pull /sdcard/animation.mp4 android-device-screenshot-\$(date '+%Y-%m-%d-%H%M%S').mp4"
+#        adb-video-record                record a video
+alias adb-video-record="adb shell screenrecord /sdcard/animation.mp4"
+#        adb-video-copy                  copy a recorded video off of device
+alias adb-video-copy="adb pull /sdcard/animation.mp4 android-device-screenshot-\$(date '+%Y-%m-%d-%H%M%S').mp4"
+#        ibus-sync                       put ibus into sync mode to prevent keyboard issue in Android Studio
+alias ibus-sync="IBUS_ENABLE_SYNC_MODE=1 ibus-daemon -xrd"
+#        set-android-studio-stable       set android studio path to stable
+alias set-android-studio-stable="(cd \${HOME} && rm android-studio && ln -s android-studio-stable android-studio)"
+#        set-android-studio-beta         set android studio path to beta
+alias set-android-studio-beta="(cd \${HOME} && rm android-studio && ln -s android-studio-beta android-studio)"
+#        set-android-studio-canary       set android studio path to canary
+alias set-android-studio-canary="(cd \${HOME} && rm android-studio && ln -s android-studio-canary android-studio)"
+
+#
+# gradle
+#
+#        gradlec                 gradle clean
+alias gradlec="gradle clean"
+#        gradleb                 gradle build
+alias gradleb="gradle build"
+#        gradlecb                gradle clean && gradle build
+alias gradlecb="gradle clean && gradle build"
+#        gradlear                gradle assembleRelease
+alias gradlear="gradle assembleRelease"
+#        gradlecar               gradle clean && gradle assembleRelease
+alias gradlecar="gradle clean && gradle assembleRelease"
+
+#
+# mysql
+#
+#        myr                     mysql -u root -p
+alias myr="mysql -u root -p"
+#        myw                     mysql -u web -p web
+alias myw="mysql -u web -p web"
+#        mywin                   mysql -u web -p web < <file>
+alias mywin="mysql -u web -p web < "
+#        mys                     mysql -u stock -p stock
+alias mys="mysql -u stock -p stock"
+#        mysin                   mysql -u stock -p stock < <file>
+alias mysin="mysql -u stock -p stock < "
+#        mynopasswd              mysqld --skip-grant-tables
+alias mynopasswd="sudo systemctl restart mysqld.service --skip-grant-tables"
+#        mypasswd                mysql change password
+alias mypasswd="
+    echo \"mysqladmin -u root password '<password>'\"
+    echo \"mysqladmin -u root -h <hostname> password '<password>'\""
+
+#
+# postgresql
+#
+#        pgs                     psql -U stock stock
+alias pgs="psql -U stock stock"
+#        pgnj                    psql -U web netjuke
+alias pgnj="psql -U web netjuke"
+
+#
+# openldap
+#
+#        ldrs                    restart ldap
+alias ldrs="sudo systemctl restart ldap.service"
+#        lds                     search ldap
+alias lds="ldapsearch -D dc=localhost -s sub '(objectclass=*)' namingContexts -H ldap://localhost/ -x -w letmein"
+#        ldadd                   add ldif file to ldap
+alias ldadd="ldapadd -D 'dc=localhost' -W -H ldap://localhost/ -x -w letmein -f"
+#        lddel                   delete ldap node by dn
+alias lddel="ldapdelete -D 'dc=localhost' -W -H ldap://localhost/ -x -w letmein"
+#        lddelall                ldapdelall (all nodes)
+alias lddelall="ldapdelete -D 'dc=localhost' -H ldap://localhost/ -x -w letmein -r"
+
+#
+# docker
+#
+#        dockerrs                docker service restart
+alias dockerrs="sudo systemctl restart docker"
+#        dockerv                 docker version
+alias dockerv="docker version"
+#        dockerps                docker ps
+alias dockerps="docker ps"
+#        dockerpsa               docker ps -a
+alias dockerpsa="docker ps -a"
+#        dockerrsh               docker run debian container shell
+alias dockerrsh="docker run -i -t debian /bin/bash"
+#        dockerrmall             docker rm all containers
+alias dockerrmall="docker rm -v \$(docker ps -aq -f status=exited)"
+#        droplet-env-nullware-1  digital ocean env setup for droplet-nullware-1
+alias droplet-env-nullware-1="eval \"\$(docker-machine env droplet-nullware-1)\""
+
+#
+# ckermit
+#
+# ckermit-m100                 ckermit setup to connect to an M100/102/200 connected to ttyUSB0
+alias ckermit-m100="sudo ckermit \${HOME}/.ckermit_m100_connection"
+# ckermit-hp95lx               ckermit setup to connect to an HP95LX connected to ttyUSB0
+alias ckermit-hp95lx="sudo ckermit \${HOME}/.ckermit_hp95lx_connection"
+
+#
+# pacman (Package Manager)
+#
+#!#        pmu                     pacman -Syu (update packages with refresh)
+#!alias pmu="sudo pacman -Syu --noconfirm"
+#!#        pmuy                    pacman -Syyu (update packages with forced refresh)
+#!alias pmuy="sudo pacman -Syyu --noconfirm"
+#!#        pmi                     pacman -S (install package)
+#!alias pmi="sudo pacman -S --noconfirm"
+#!#        pmr                     pacman -R (remove package and configuration files)
+#!alias pmr="sudo pacman -R --noconfirm --nosave"
+#!#        pms                     pacman -Ss (search packages)
+#!alias pms="pacman -Ss"
+#!#        pmf                     pacman -F (search files)
+#!alias pmf="pacman -F"
+#!#        pmq                     pacman -Q (query installed packages)
+#!alias pmq="pacman -Q"
+#!#        pmqi                    pacman -Qi (query installed packages with info)
+#!alias pmqi="pacman -Qi"
+#!#        pml                     pacman -Qqett (list installed packages)
+#!alias pml="pacman -Qqett"
+#!#        pmln                    pacman -Qqettn (list installed native packages)
+#!alias pmln="pacman -Qqettn"
+#!#        pmlf                    pacman -Qqettm (list installed foreign/AUR packages)
+#!alias pmlf="pacman -Qqettm"
+#!#        pmls                    pacman -Qs (search installed packages)
+#!alias pmls="pacman -Qs"
+#!#        pmlsi                   pacman -Qsi (search installed packages with info)
+#!alias pmlsi="pacman -Qsi"
+#        pacman-rm-orphans       remove orphaned pacman packages
+alias pacman-rm-orphans="sudo pacman -Rns \$(pacman -Qtdq)"
+#        pacman-rm-lock          delete pacman db lock
+alias pacman-rm-lock="sudo rm /var/lib/pacman/db.lck"
+#        pacman-reset-mirrors    reset and rebuild pacman mirrors list
+alias pacman-reset-mirrors="sudo pacman-mirrors --geoip"
+#        pacman-reset-repository reset and rebuild pacman repository (used to recover from an invalid state)
+alias pacman-reset-repository="
+    # reset mirrors
+    sudo pacman-mirrors -c all
+
+    # update mirrors
+    #sudo pacman-mirrors -g
+
+    # update keyring
+    sudo pacman -Sy archlinux-keyring manjaro-keyring
+    sudo pacman-key --init
+    sudo pacman-key --populate archlinux manjaro
+    sudo pacman-key --refresh-keys
+
+    # remove unused packages (orphans)
+    sudo pacman -Rsn \$(pacman -Qdtq)
+
+    # safely remove old packages
+    sudo paccache -rvk3
+
+    # remove all cached packages that are not currently installed, and the unused sync database
+    sudo pacman -Sc
+
+    # clear sessions cache
+    rm -r ~/.cache/sessions/*
+
+    # update
+    sudo pacman -Syyu"
+
+#
+# yay (Package Manager)
+#
+#        yau                     yay -Syu (update packages with refresh)
+alias yau="yay -Syu --noconfirm"
+#        yauf                    yay -Syyu (update packages with forced refresh)
+alias yauf="yay -Syyu --noconfirm"
+#        yai                     yay -S (install package)
+alias yai="yay -S --noconfirm"
+#        yar                     yay -R (remove package and configuration files)
+alias yar="yay -R --noconfirm --nosave"
+#        yas                     yay -Ss (search packages)
+alias yas="yay -Ss"
+#        yaf                     yay -F (search files)
+alias yaf="yay -F"
+#        yaq                     yay -Q (query installed packages)
+alias yaq="yay -Q"
+#        yaqi                    yay -Qi (query installed packages with info)
+alias yaqi="yay -Qi"
+#        yal                     yay -Qqett (list installed packages)
+alias yal="yay -Qqett"
+#        yaln                    yay -Qqettn (list installed native packages)
+alias yaln="yay -Qqettn"
+#        yalf                    yay -Qqettm (list installed foreign/AUR packages)
+alias yalf="yay -Qqettm"
+#        yals                    yay -Qs (search installed packages)
+alias yals="yay -Qs"
+
+#
+# apt package mangement (debian/ubuntu)
+#
+#        agh                     apt-get help
+alias agh="apt-get --help"
+#        agul                    apt-get update (package list)
+alias agul="sudo apt-get update"
+#        agu                     apt-get --show-upgraded upgrade
+alias agu="sudo apt-get --show-upgraded upgrade"
+#        aguf                    apt-get --show-upgraded --fix-missing upgrade
+alias aguf="sudo apt-get --show-upgraded --fix-missing upgrade"
+#        agdu                    apt-get dist-upgrade
+alias agdu="sudo apt-get --show-upgraded dist-upgrade"
+#        agi                     apt-get install
+alias agi="sudo apt-get install"
+#        agif                    apt-get --fix-broken install
+alias agif="sudo apt-get --fix-broken install"
+#        agir                    apt-get --reinstall install
+alias agir="sudo apt-get --reinstall install"
+#        agr                     apt-get remove
+alias agr="sudo apt-get remove"
+#        agrp                    apt-get --purge remove
+alias agrp="sudo apt-get --purge remove"
+#        agp                     apt-get purge
+alias agp="sudo apt-get purge"
+#        agar                    apt-get autoremove
+alias agar="sudo apt-get autoremove"
+#        agitu                   apt-get --target-release unstable install
+alias agitu="sudo apt-get --target-release unstable install"
+#        acp                     apt-cache policy
+alias acp="apt-cache policy"
+#        acs                     apt-cache search
+alias acs="apt-cache search"
+#        acw                     apt-cache show
+alias acw="apt-cache show"
+#        afu                     apt-file update
+alias afu="apt-file update"
+#        afs                     apt-file search
+alias afs="apt-file search"
+#        afl                     apt-file list
+alias afl="apt-file list"
+#        agrpo                   apt-get --purge remove $(deborphan)
+alias agrpo="sudo apt-get --purge remove \$(deborphan)"
+
+#
+# dpkg package mangement (debian/ubuntu)
+#
+#        dpi                     dpkg -i (install)
+alias dpi="sudo dpkg -i"
+#        dpl                     dpkg -l (list)
+alias dpl="COLUMNS=200 ; dpkg -l"
+#        dplg                    dpkg -l (list) with grep
+alias dplg="dpkg -l | grep -i"
+#        dpll                    dpkg --get-selections
+alias dpll="dpkg --get-selections"
+#        dpllg                   dpkg --get-selections with grep
+alias dpllg="dpkg --get-selections | grep -i"
+#        dpr                     dpkg --remove
+alias dpr="sudo dpkg --remove"
+#        dpp                     dpkg -P (purge)
+alias dpp="sudo dpkg -P"
+#        dps                     dpkg -S (search)
+alias dps="dpkg -S"
+#        dpca                    dpkg --configure -a (fix)
+alias dpca="sudo dpkg --configure -a"
+#        dprc                    dpkg-reconfigure
+alias dprc="sudo dpkg-reconfigure"
+#        dprcl                   dpkg-reconfigure locales
+alias dprcl="sudo dpkg-reconfigure -plow locales"
+#        dprcx                   dpkg-reconfigure xserver
+alias dprcx="
+    echo -n 'Reconfigure X? [yN] ' ; read a
+    case \${a} in
+        y|Y) dpkg-reconfigure xserver-xfree86 xserver-common ;;
+    esac"
+#        dpkg-reinstall          reinstall all packages
+alias dpkg-reinstall="
+    echo 'You are about to reinstall all of your currently installed Debian packages.'
+    echo -n 'Do you wish to proceed? [yN] ' ; read a
+    case \${a} in
+        y|Y)
+            cat /var/lib/dpkg/status |
+              grep -B 1 installed | grep -v installed |
+              perl -ne 'if (/:\s+(.*)/) { print qq(\${1}\n); }' |
+              xargs apt-get --reinstall install or COLUMNS=200 dpkg -l |
+              awk '/^ii/ { print \${2} }' | xargs apt-get --reinstall install
+            ;;
+    esac"
+
+#
+# debian
+#
+#        debver                  debian version
+alias debver="cat /etc/debian_version"
+#        urc                     update-rc.d
+alias rcu="update-rc.d"
+#        kernel-mpkg             make-kpkg buildpackage
+alias kernel-mpkg="make-kpkg buildpackage"
+#        deb-cache-delete        delete /var/cache/apt/archives/*.deb
+alias deb-cache-delete="find /var/cache/apt/archives/ -name *.deb -print0 | xargs -0 -L 1 rm -f"
+#        cid                     checkinstall -D (create deb)
+alias cid="checkinstall -D make install"
+#        gpgdeb                  install debian gpg key
+alias gpgdeb="
+    gpg --keyserver subkeys.pgp.net --recv-keys 2D230C5F
+    gpg --export 084750FC01A6D388A643D869010908312D230C5F | sudo apt-key add -"
+#        debo                    deborphan (see orphaned packages)
+alias debo="deborphan"
+
+#
+# yum package mangement (fedora/redhat)
+#
+#        yumh                    yum help
+alias yumh="yum --help"
+#        yums                    yum search
+alias yums="yum search"
+#        yumi                    yum install
+alias yumi="sudo yum install"
+
+#
+# rpm package mangement
+#
+#        rpmu                    rpm update
+alias rpmu="rpm -U -v -h"
+#        rpmuf                   rpm update (force)
+alias rpmuf="rpm -U -v -h --force"
+#        rpmq                    rpm query all with grep
+alias rpmq="rpm -q -a | grep"
+
+#
+# qubes-dom0-update (Package Manager)
+#
+#        qdu                     qubes-dom0-update
+alias qdu="qubes-dom0-update --enablerepo=qubes-dom0-current-testing"
+
+#
+# git
+#
+#        gitprompt               show git branch name in terminal prompt
+#!alias gitprompt="export PS1=\"${COLOR_YELLOW}\\\$(gitbranch) ${COLOR_LIGHT_BLUE}\w \\$ ${COLOR_DEFAULT}\""
+#!alias gitprompt="export PS1=\"${COLOR_LIGHT_BLUE}\w ${COLOR_YELLOW}[\\\$(gitbranch)] ${COLOR_LIGHT_BLUE}\\$ ${COLOR_DEFAULT}\""
+#!alias gitprompt="export PS1=\"[${COLOR_LIGHT_GREEN}\h:\u ${COLOR_LIGHT_BLUE}\w ${COLOR_YELLOW}[\\\$(gitbranch)] ${COLOR_LIGHT_BLUE}\\$ ${COLOR_DEFAULT}\""
+alias gitprompt="export PS1=\"${COLOR_LIGHT_GREEN}\h:\u ${COLOR_LIGHT_BLUE}\w${COLOR_CYAN}\\\$(gitbranchprompt) ${COLOR_YELLOW}\\$ ${COLOR_DEFAULT}\""
+#        gith                    git help
+alias gith="git help"
+#        gits                    git status
+alias gits="git status"
+#        gitg                    git log
+alias gitg="git log"
+#        gitgs                   git log --stat
+alias gitgs="git log --stat"
+#        gitgh                   git log -p -- (show file diff history)
+alias gitgh="git log -p --"
+#        gitgg                   git log --graph
+alias gitgg="git log --graph --oneline --decorate --all"
+#        gitgf                   git log (formatted with one log entry per line)
+alias gitgf="git log --pretty=format:\"%h %ad %s\" --date=short --all"
+#        gitgfg                  git log (formatted) | grep
+alias gitgfg="git log --pretty=format:\"%h %ad %s\" --date=short --all | grep"
+#        gitd                    git diff (ignore white-space)
+alias gitd="git diff -w"
+#        gitco                   git checkout
+alias gitco="git checkout"
+#        gitcod                  git checkout develop
+alias gitcod="git checkout develop"
+#        gitcom                  git checkout master
+alias gitcom="git checkout master"
+#        gitcob                  git checkout -b
+alias gitcob="git checkout -b"
+#        gitci                   git commit
+alias gitci="git commit"
+#        gitcim                  git commit -m
+alias gitcim="git commit -m"
+#        gitcia                  git commit -a
+alias gitcia="git commit -a"
+#        gitciam                 git commit -a -m
+alias gitciam="git commit -a -m"
+#        gitciu                  git commit -a -m 'Update'
+alias gitciu="git commit -a -m 'Update'"
+#        gitcif                  git commit -a --fixup
+alias gitcif="git commit -a --fixup"
+#        gitcia                  git --no-pager commit --amend --reuse-message=HEAD
+alias gitcia="git --no-pager commit --amend --reuse-message=HEAD"
+#        gitca                   git commit --amend
+alias gitca="git commit --amend"
+#        gitcano                 git commit --amend --no-edit
+alias gitcano="git commit --amend --no-edit"
+#        gitst                   git stash
+alias gitst="git stash"
+#        gitstl                  git stash list
+alias gitstl="git stash list"
+#        gitstp                  git stash pop
+alias gitstp="git stash pop"
+#        gitu                    git pull
+alias gitu="git pull"
+#        gituo                   git pull origin
+alias gituo="git pull origin"
+#        gituob                  git pull origin (current branch)
+alias gituob="git pull origin \$(gitbranch)"
+#        gituod                  git pull origin develop
+alias gituod="git pull origin develop"
+#        gituom                  git pull origin master
+alias gituom="git pull origin master"
+#        gitua                   git pull --all
+alias gitua="git pull --all"
+#        gitpo                   git push origin
+alias gitpo="git push origin"
+#        gitpof                  git push origin --force
+alias gitpof="git push origin --force"
+#        gitpod                  git push origin develop
+alias gitpod="git push origin develop"
+#        gitpom                  git push origin master
+alias gitpom="git push origin master"
+#        gitb                    git branch
+alias gitb="git branch"
+#        gitba                   git branch -a
+alias gitba="git branch -a"
+#        gitbal                  git branch -a (local only)
+alias gitbal="git branch -a | grep -v remotes"
+#        gitbag                  git branch -a | grep
+alias gitbag="git branch -a | grep"
+#        gitbd                   git branch -d
+alias gitbd="git branch -d"
+#        gitbD                   git branch -D
+alias gitbD="git branch -D"
+#        gitmerge                git merge --no-ff
+alias gitmerge="git merge --no-ff"
+#        gitrebase               git rebase -i
+alias gitrebase="git rebase -i"
+#        gitrebase-autosquash    git rebase -i --autosquash
+alias gitrebase-autosquash="git rebase -i --autosquash"
+#        git-submodule-update    git submodule update (init, recursive, fetch, master)
+alias git-submodule-update="
+    git submodule update --init --recursive --checkout
+    git submodule foreach --recursive git checkout master
+    git submodule foreach --recursive git pull origin master"
+#        gitprune                git remote prune origin
+alias gitprune="git remote prune origin"
+#        gitresethead            git reset --hard HEAD
+alias gitresethead="git reset --hard HEAD"
+#        gitgc                   git gc
+alias gitgc="git gc"
+#        gitgca                  git gc --aggressive
+alias gitgca="git gc --aggressive"
+#        git-assume-unchanged    git update-index --assume-unchanged
+alias git-assume-unchanged="git update-index --assume-unchanged"
+#        git-no-assume-unchanged git update-index --no-assume-unchanged
+alias git-no-assume-unchanged="git update-index --no-assume-unchanged"
+#        git-setup-config        git set remote and merge in config
+alias git-setup-config="
+    git config branch.master.remote origin
+    git config branch.master.merge refs/heads/master"
+#        git-howto               print standard git process flow
+alias git-howto="
+    cat <<EOF
+Create task/bug branch from develop:
+  git checkout -b BRANCH develop
+Make changes and commit them to local branch:
+  git commit -a -m \"COMMENTS\"
+Merge with local develop and push changes to origin:
+  git checkout develop
+  git merge --no-ff BRANCH
+  git branch -d BRANCH
+  git push origin develop
+Create release:
+  git checkout -b release-#.#.# develop
+Update version number, commit, and push to origin:
+  git commit -a -m \"Bumped version to #.#.#.\"
+  git push origin release-#.#.#
+Merge with master, tag, and push changes to origin:
+  git checkout master
+  git merge --no-ff release-#.#.#
+  git push origin master
+  git tag -a tag-#.#.# -m \"Created #.#.# tag.\"
+  git push origin tag-#.#.#
+Update develop from master:
+  git checkout develop
+  git merge --no-ff release-#.#.#
+  git push origin develop
+<<<<<<< HEAD
+<<<<<<< HEAD
+EOF
+"
+=======
+EOF"
+>>>>>>> 6554bfc (Initial commit after splitting home configuration files into public and private repos)
+=======
+EOF
+"
+>>>>>>> a45a426 (Update)
+#        gitrm                   git remove all untracked files
+alias gitrm="
+    echo 'You are about to remove the following files:'
+    git status | grep '^#' | grep -v 'modified:' | tail -n +5 | sed 's/^#//'
+    echo -n 'Do you wish to proceed? [yN] ' ; read a
+    case \${a} in
+        y|Y)
+            git status | grep '^#' | grep -v 'modified:' | tail -n +5 | sed 's/^#//' | xargs rm
+        ;;
+    esac"
+#        git-commit-to-clipboard copy HEAD git commit to clipboard
+alias git-commit-to-clipboard="git rev-parse HEAD | tr -d '\n' | xsel && xsel --output | xsel --clipboard"
+#        git-clone-powerlevel10k= git clone powerlevel10k to ~/powerlevel10k
+alias git-clone-powerlevel10k="git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k"
+
+#
+# git respository
+#
+#!       GIT_REPOSITORY_CONFIG   git repository (config)
+export GIT_REPOSITORY_CONFIG="git@gitlab.com:kylesherman/config.git"
+#!       GIT_REPOSITORY_CONFIG_PRIVATE git repository (config-private)
+export GIT_REPOSITORY_CONFIG_PRIVATE="git@gitlab.com:kylesherman/config-private.git"
+#!       GIT_REPOSITORY_DOC      git repository (doc)
+export GIT_REPOSITORY_DOC="git@gitlab.com:kylesherman/doc.git"
+#!       GIT_REPOSITORY_DEV      git repository (dev)
+export GIT_REPOSITORY_DEV="git@gitlab.com:kylesherman/dev.git"
+#!       GIT_REPOSITORY_WEB      git repository (web)
+export GIT_REPOSITORY_WEB="git@gitlab.com:kylesherman/web.git"
+#        gitsh                   status home (config, config-private) git repositories
+alias gitsh="
+    (echo '~/config status' && cd \${HOME}/config && git status)
+    (echo '~/config-private status' && cd \${HOME}/config-private && git status)"
+#        gitcoh                  clone home (config, config-private) git repositories
+alias gitcoh="
+    git clone \${GIT_REPOSITORY_CONFIG} \${HOME}/config
+    git clone \${GIT_REPOSITORY_CONFIG_PRIVATE} \${HOME}/config-private"
+#        gitcihu                 commit (check in) home git repository (default update)
+alias gitcihu="
+    #if [[ -L \${HOME}/.cron -a -f \${HOME}/config/custom/\$(uname -n)/.cron ]] ; then
+    #    crontab -l > \${HOME}/config/custom/\$(uname -n)/.cron
+    #fi
+    if [[ -f \${HOME}/.addressbook -a ! -L \${HOME}/.addressbook ]] ; then
+        pushd \${HOME}
+        cp .addressbook config-private/common/
+        ln -sf config-private/common/.addressbook
+        popd
+    fi
+    if [[ -f \${HOME}/.xscreensaver -a ! -L \${HOME}/.xscreensaver ]] ; then
+        pushd \${HOME}
+        cp .xscreensaver config-private/common/
+        ln -sf config-private/common/.xscreensaver
+        popd
+    fi
+    (cd \${HOME}/config && git commit -a -m 'Update')
+    (cd \${HOME}/config-private && git commit -a -m 'Update')"
+#        gituoh                  pull (update) home git repository (from origin)
+alias gituoh="
+    (cd \${HOME}/config && git pull origin)
+    (cd \${HOME}/config-private && git pull origin)"
+#        gitpoh                  push home git repository (to origin)
+alias gitpoh="
+    (cd \${HOME}/config && git push origin)
+    (cd \${HOME}/config-private && git push origin)"
+#        gitsdev                 status dev git repository
+alias gitsdev="(cd \${HOME}/dev && removeorgfontfiles && git status)"
+#        gitcodev                clone dev git repository
+alias gitcodev="git clone \${GIT_REPOSITORY_DEV} \${HOME}/dev"
+#        gituodev                pull (update) dev git repository
+alias gituodev="(cd \${HOME}/dev && git pull origin)"
+#        gitpodev                push dev git repository (to origin)
+alias gitpodev="(cd \${HOME}/dev && git push origin)"
+#        gitsdoc                 status doc git repository
+alias gitsdoc="(cd \${HOME}/doc && removeorgfontfiles && git status)"
+#        gitcodoc                clone doc git repository
+alias gitcodoc="git clone \${GIT_REPOSITORY_DOC} \${HOME}/doc"
+#        gituodoc                pull (update) doc git repository
+alias gituodoc="(cd \${HOME}/doc && git pull origin)"
+#        gitpodoc                push doc git repository (to origin)
+alias gitpodoc="(cd \${HOME}/doc && git push origin)"
+#        gitsweb                 status web git repository
+alias gitsweb="(cd \${HOME}/web && removeorgfontfiles && git status)"
+#        gitcoweb                clone web git repository
+alias gitcoweb="git clone \${GIT_REPOSITORY_WEB} \${HOME}/web"
+#        gituoweb                pull (update) web git repository
+alias gituoweb="(cd \${HOME}/web && git pull origin)"
+#        gitpoweb                push web git repository (to origin)
+alias gitpoweb="(cd \${HOME}/web && git push origin)"
+#        gituoall                pull (update) all repositories
+alias gituoall="
+    echo 'Pulling config...'
+    (cd \${HOME}/config && git pull origin)
+    echo 'Pulling config-private...'
+    (cd \${HOME}/config-private && git pull origin)
+    echo 'Pulling dev...'
+    (cd \${HOME}/dev && git pull origin)
+    echo 'Pulling doc...'
+    (cd \${HOME}/doc && git pull origin)
+    echo 'Pulling web...'
+    (cd \${HOME}/web && git pull origin)"
+
+#
+# script help
+#
+#        script-head             print a standard script header
+alias script-head="
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a45a426 (Update)
+    cat <<EOF
+#!/usr/bin/env bash
+#===============================================================================
+# script_name
+#
+# script_description
+#
+# Author: Kyle W T Sherman
+#===============================================================================
+EOF
+"
+<<<<<<< HEAD
+#        script-tail             print a standard script footer
+alias script-tail="
+    cat <<EOF
+#===============================================================================
+# End of File
+#===============================================================================
+EOF
+"
+=======
+    echo '#!/usr/bin/env bash'
+    echo '#==============================================================================='
+    echo '# script_name'
+    echo '#'
+    echo '# script_description'
+    echo '#'
+    echo '# Author: Kyle W T Sherman'
+    echo '#==============================================================================='"
+#        script-tail             print a standard script footer
+alias script-tail="
+    echo '#==============================================================================='
+    echo '# End of File'
+    echo '#==============================================================================='"
+>>>>>>> 6554bfc (Initial commit after splitting home configuration files into public and private repos)
+=======
+#        script-tail             print a standard script footer
+alias script-tail="
+    cat <<EOF
+#===============================================================================
+# End of File
+#===============================================================================
+EOF
+"
+>>>>>>> a45a426 (Update)
+#        script-template         print a standard script template
+alias script-template="
+    echo ${scripthead}
+    echo
+    echo ${scripttail}"
+
+#
+# web
+#
+#!       web-generate-all        generate full web site and deploy
+alias web-generate-all="(cd \${HOME}/web/bin && ./generate-all --force && ./deploy)"
+#!       web-generate-presentation generate presentation web site and deploy
+alias web-generate-presentation="(cd \${HOME}/web/bin && ./generate-presentation && ./publish --force SitePresentation && ./deploy)"
+#!       web-generate-powerhouse generate powerhouse web site and deploy
+alias web-generate-powerhouse="(cd \${HOME}/web/bin && ./generate-powerhouse && ./publish --force SitePowerHouse && ./deploy)"
+#!       web-generate-bloodmoon  generate bloodmoon web site and deploy
+alias web-generate-bloodmoon="(cd \${HOME}/web/bin && ./generate-bloodmoon && ./publish --force SiteBloodMoon && ./deploy)"
+#!       web-generate-game       generate game web site and deploy
+alias web-generate-game="(cd \${HOME}/web/bin && ./generate-game && ./publish --force SiteGame && ./deploy)"
+
+#
+# backup
+#
+#!       rsyncexclusions         default rsync exclusions
+rsyncexclusions='{"/cdrom/*","/dev/*","/lost+found","/media/*","/mnt/*","/proc/*","/run/*","/sys/*","/tmp/*","/var/tmp/*","/home/*/.cache/*","/home/*/.ccache/*","/home/*/.gradle","/home/*/.gvfs","/home/*/.local/share/Trash/*","/home/*/.thumbnails/*","/home/backup/*"}'
+#!
+#        rsbid                   backup entire system to usb drive
+#!alias rsbid="sudo rsync -aAXv --delete --exclude=${rsyncexclusions} / /run/media/\${USER}/backup/\$(uname -n)"
+alias rsbid="
+    dir=/run/media/\${USER}
+    if [[ -d \${dir} ]] ; then
+        sudo rsync -aAXv --delete --exclude=${rsyncexclusions} / \${dir}/\$(cd \${dir} && \$(pathcmd ls) -1)/\$(uname -n)
+    else
+        echo \"Cannot find backup directory: \${dir}\"
+        echo \"Make sure the backup drive is mounted\"
+    fi"
+#        rsbidsome               backup etc, home, root, and opt dirs to usb drive
+alias rsbidsome="
+    dir=/run/media/\${USER}
+    if [[ -d \${dir} ]] ; then
+        echo 'Backing up:'
+        o=\${dir}/\$(cd \${dir} && \$(pathcmd ls) -1)/\$(uname -n)
+        for d in \"etc\" \"home\" \"root\" \"opt\" ; do
+            echo \"  /\${d} => \${o}/\"
+            sudo rsync -aAXv --exclude=${rsyncexclusions} /\${d} \${o}/
+        done
+    else
+        echo \"Cannot find back directory: \${dir}\"
+        echo \"Make sure the backup drive is mounted\"
+    fi"
+
+#
+# setup
+#
+#        home-howto              howto setup git home dir on a new machine
+alias home-howto="
+    user=\${USER}
+    cat <<EOF
+Install ccrypt
+Copy bundle.tgz.cpt from USB and decrypt it:
+  cp /run/media/kyle/Cruzer/bundle.tgz.cpt \${HOME}/
+  ccrypt -d bundle.tgz.cpt
+  tar xzf bundle.tgz
+Checkout 'config' and 'config-private':
+  git clone \${GIT_REPOSITORY_CONFIG} \${HOME}/config
+  git clone \${GIT_REPOSITORY_CONFIG_PRIVATE} \${HOME}/config-private
+Source '.funct', '.alias', and '.profile':
+  source \${HOME}/config/.funct \${HOME}/config/.alias ~/config/.profile
+Run 'gitcodoc' to checkout 'doc' repository.
+  gitcodoc
+Run 'gitcodev' to checkout 'dev' repository.
+  gitcodev
+Run 'gitcoweb' to checkout 'web' repository.
+  gitcoweb
+Run 'home-intiialize' to make the initial links from '\${HOME}' to '\${HOME}/config' and '\${HOME}/config-private'.
+  home-initialize
+Setup /home/data directory:
+  sudo mkdir -p /home/data && sudo chown \${user}:\${user} /home/data
+Optionally run 'make-cron' to install the default crontab.
+  make-cron
+<<<<<<< HEAD
+<<<<<<< HEAD
+EOF
+"
+=======
+EOF"
+>>>>>>> 6554bfc (Initial commit after splitting home configuration files into public and private repos)
+=======
+EOF
+"
+>>>>>>> a45a426 (Update)
+#        home-initialize         make links from ~/ to ~/config and ~/config-private dirs
+alias home-initialize="
+    o=\${HOME}/original-configuration-files
+    echo \"You are about to setup links from '\${HOME}' to '\${HOME}/config' and '\${HOME}/config-private'.\"
+    echo \"All files and directories replaced will be moved to '\${o}'.\"
+    echo \"This command should only be run once for a given HOME directory.\"
+    [[ -e \${HOME}/.alias ]] && echo \"It looks like stow initialization has already occurred\" && exit 1
+    echo -n 'Do you wish to proceed? [yN] ' ; read a
+    case \${a} in
+        y|Y)
+            [[ -d config ]] || echo \"Missing config directory!\" && exit 1
+            echo 'Moving existing home files to: \${o}'
+            (cd \${HOME} && \
+            mkdir -p \${o} && \
+            for file in .bash_logout .bash_profile .bashrc \
+                        .config .i3 .profile .xinitrc .Xresources ; do
+                echo '  \${file} ==> \${o}'
+                mv --verbose \${file} \${o}/
+            done || exit 1)
+            echo 'Stowing config packages'
+            (cd \${HOME}/config && \
+            ls -1 | while read file ; do
+                if [[ -d \${file} ]] ; then
+                    echo '  \${file}'
+                    stow --stow --verbose \${file}
+                fi
+            done)
+            echo 'Stowing config-private packages'
+            (cd \${HOME}/config-private && \
+            ls -1 | while read file ; do
+                if [[ -d \${file} ]] ; then
+                    echo '  \${file}'
+                    stow --stow --verbose \${file}
+                fi
+            done)
+            echo 'Making other symlinks'
+            (cd \${HOME} && \
+            for file in doc/avatars doc/icons doc/images doc/sounds \
+                        /home/data/media/audio/Sounds \
+                        /home/data/media/repos/C64 \
+                        /home/data/media/repos/DOS ; do
+                if [[ -d \${file} ]] ; then
+                    echo '  \${file}'
+                    ln -s \${file} .
+                fi
+            done)
+    esac"
+#        home-restow             restow links from ~/ to ~/config and ~/config-private
+alias home-restow="
+    echo 'Restowing config packages'
+    (cd \${HOME}/config && \
+    ls -1 | while read file ; do
+        if [[ -d \${file} ]] ; then
+            echo '  \${file}'
+            stow --restow --verbose \${file}
+        fi
+    done)
+    echo 'Restowing config-private packages'
+    (cd \${HOME}/config-private && \
+    ls -1 | while read file ; do
+        if [[ -d \${file} ]] ; then
+            echo '  \${file}'
+            stow --restow --verbose \${file}
+        fi
+    done)"
+#        make-cron               setup initial crontab
+alias make-cron="
+    echo \"You are about to overwrite your crontab with '\${HOME}/config/custom/\$(uname -n)/.cron'.\"
+    echo -n \"Do you wish to proceed? [yN] \" ; read a
+    case \${a} in
+        y|Y) crontab \${HOME}/config/custom/\$(uname -n)/.cron ;;
+    esac"
+#        mkraw                           make raw character device
+alias mkraw="
+  echo -n 'Raw device number: ' ; read a
+  mknod --mode=644 /dev/raw/raw\${a} c 162 \${a}"
+#!#        copy-hosts                      copy .hosts + .hosts_ssmedia to /etc/hosts
+#!alias copy-hosts="
+#!    echo \"You are about to replace your '/etc/hosts' file with\"
+#!    echo \"/root/.hosts plus '/root/.hosts_ssmedia'.\"
+#!    echo -n \"Do you wish to proceed? [yN] \" ; read a
+#!    case \${a} in
+#!        y|Y)
+#!            cp -p /etc/hosts /etc/hosts.old
+#!            cp /root/.hosts /etc/hosts
+#!            echo >> /etc/hosts
+#!            cat /root/.hosts_ssmedia >> /etc/hosts
+#!            ;;
+#!    esac"
+#!
+#!#        copy-hosts                      copy .hosts to /etc/hosts
+#!alias copy-hosts="
+#!    echo \"You are about to replace your '/etc/hosts' file with '/root/.hosts'.\"
+#!    echo -n \"Do you wish to proceed? [yN] \" ; read a
+#!    case \${a} in
+#!        y|Y)
+#!            cp -p /etc/hosts /etc/hosts.old
+#!            cp /root/.hosts /etc/hosts
+#!            ;;
+#!    esac"
+#        copy-wall                       copy wallpapers to system
+alias copy-wall="
+    sudo bash -c \"
+        mkdir -p /usr/local/share/wallpapers
+        cp \${HOME}/wallpapers/* /usr/local/share/wallpapers/
+        chmod 644 /usr/local/share/wallpapers/*
+        mkdir -p /usr/share/backgrounds
+        cp \${HOME}/wallpapers/* /usr/share/backgrounds/
+        chmod 644 /usr/share/backgrounds/*
+    \""
+#        copy-fonts                      copy fonts
+alias copy-fonts="
+    mkdir -p \${HOME}/.local/share/fonts
+    cp \${HOME}/config/fonts \${HOME}/.local/share/fonts/"
+#!#        copy-skins                      copy mp3 skins to xmms
+#!alias copy-skins="sudo cp -Rp \${HOME}/documents/Skins/* /usr/share/xmms/Skins/"
+#!#        copy-icewm                      copy icewm settings to ~/
+#!alias copy-icewm="
+#!    if [[ ! -e \${HOME}/.icewm ]] ; then
+#!        sudo cp -R /etc/X11/icewm \${HOME}/.icewm
+#!    else
+#!        echo '${HOME}/.icewm already exists'
+#!    fi"
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a45a426 (Update)
+#!#        make-ssh-config-external        make ~/.ssh/config file (external access)
+#!alias make-ssh-config-external="
+#!    o=\${HOME}/.ssh/config
+#!    if [[ ! -e \${o} ]] ; then
+#!        cat > \${o} <<EOF
+#!# hosts
+#!host firewall
+#!  hostname nullware.com
+#!  port 222
+#!
+#!host morpheus
+#!  hostname nullware.com
+#!  port 223
+#!
+#!host neo
+#!  hostname nullware.com
+#!  port 224
+#!
+#!host trinity
+#!  hostname nullware.com
+#!  port 225
+#!
+#!# keep ssh logins alive
+#!ServerAliveInterval 60
+#!EOF
+#!    else
+#!        echo \"You must first delete '\${o}'\"
+#!    fi"
+<<<<<<< HEAD
+=======
+#        make-ssh-config-external        make ~/.ssh/config file (external access)
+alias make-ssh-config-external="
+    o=\${HOME}/.ssh/config
+    if [[ ! -e \${o} ]] ; then
+        echo '# hosts' > \${o}
+        echo 'host firewall' >> \${o}
+        echo '  hostname nullware.com' >> \${o}
+        echo '  port 222' >> \${o}
+        echo '' >> \${o}
+        echo 'host morpheus' >> \${o}
+        echo '  hostname nullware.com' >> \${o}
+        echo '  port 223' >> \${o}
+        echo '' >> \${o}
+        echo 'host neo' >> \${o}
+        echo '  hostname nullware.com' >> \${o}
+        echo '  port 224' >> \${o}
+        echo '' >> \${o}
+        echo 'host trinity' >> \${o}
+        echo '  hostname nullware.com' >> \${o}
+        echo '  port 225' >> \${o}
+        echo '# keep ssh logins alive' >> \${o}
+        echo 'ServerAliveInterval 60' >> \${o}
+    else
+        echo \"You must first delete '\${o}'\"
+    fi"
+>>>>>>> 6554bfc (Initial commit after splitting home configuration files into public and private repos)
+=======
+>>>>>>> a45a426 (Update)
+#        make-ssh-config                 make ssh config file
+alias make-ssh-config="
+    o=\${HOME}/.ssh/config
+    echo -n \"Reset your '\${HOME}/.ssh/config' file? [yN] \" ; read a
+    case \${a} in
+        y|Y)
+            echo '# keep ssh logins alive' > \${o}
+            echo 'ServerAliveInterval 60' >> \${o}
+            ;;
+    esac"
+#!#        make-linuxlogo                  setup linux logo
+#!alias make-linuxlogo="
+#!    if [[ -x \$(pathcmd linux_logo) ]] ; then
+#!        linux_logo > /etc/motd
+#!        cp -p /etc/inittab /etc/inittab.backup
+#!        cat /etc/inittab.backup | sed 's%respawn:/sbin/getty 38400 tty%respawn:/sbin/getty -f /etc/issue.linuxlogo 38400 tty%' > /etc/inittab
+#!    else
+#!        echo 'You must first install linuxlogo'
+#!    fi"
+#        make-dict-words                 make /usr/share/dict/words file
+alias make-dict-words="sudo wget https://gist.githubusercontent.com/wchargin/8927565/raw/d9783627c731268fb2935a731a618aa8e95cf465/words -O /usr/share/dict/words"
+#        make-mpd-links                  make mpd links
+alias make-mpd-links="
+    sudo bash -c \"
+        cd /var/lib/mpd && \
+          rmdir music && \
+          rmdir playlists && \
+          ln -s ${home}/data/media/audio/Music music && \
+          ln -s ${home}/data/media/audio/Playlists playlists
+    \""
+#        disable-mpd-service             sudo systemctl disable mpd
+alias disable-mpd-service="sudo systemctl disable mpd"
+#!#        make-run-on-wakeup-script make /etc/pm/sleep.d/50-run-on-wakup
+#!alias make-run-on-wakeup-script="
+#!    o=/etc/pm/sleep.d/50-run-on-wakup
+#!    if [[ ! -e \${o} ]] ; then
+#!        sudo bash -c \"
+#!            echo '#!/bin/sh' > \${o}
+#!            echo 'case \\\$1 in' >> \${o}
+#!            echo '    resume|thaw)' >> \${o}
+#!            echo '        (xmodmap \${HOME}/.Xmodmap &) > /dev/null 2>&1' >> \${o}
+#!            echo '        ;;' >> \${o}
+#!            echo 'esac' >> \${o}
+#!            chmod +x \${o}
+#!        \"
+#!    else
+#!        echo \"You must first delete '\${o}'\"
+#!    fi"
+
+#
+# commander x-16
+#
+#        x16-setup               git clone commander x-16 repos and make
+alias x16-setup="
+    basedir=\${HOME}/code
+    cc65dir=\${basedir}/cc65
+    x16dir=\${basedir}/commander-x16
+    (cd \${basedir} &&
+      git clone git@github.com:cc65/cc65.git &&
+      echo \"Make sure your path contains: '\${cc65dir}/bin'\")
+    mkdir -p \${x16dir}
+    (cd \${x16dir} &&
+      git clone https://github.com/commanderx16/x16-demo.git &&
+      git clone https://github.com/commanderx16/x16-docs.git &&
+      git clone https://github.com/commanderx16/x16-emulator.git &&
+      git clone https://github.com/commanderx16/x16-rom.git &&
+      echo \"Make sure your path contains: '\${x16dir}/x16-emulator'\" &&
+      echo \"Now run x16update to build the repositories\")"
+#        x16-update              git pull commander x-16 repos and make
+alias x16-update="
+    basedir=\${HOME}/code
+    cc65dir=\${basedir}/cc65
+    x16dir=\${basedir}/commander-x16
+    (cd \${cc65dir} &&
+      git pull origin && make)
+    (cd \${x16dir} &&
+      cd x16-demo && git pull origin && cd .. &&
+      cd x16-docs && git pull origin && cd .. &&
+      cd x16-emulator && git pull origin && make && cd .. &&
+      cd x16-rom && git pull origin && make)"
+#        x16-emu                 commander x-16 emulator
+#!alias x16-emu="x16emu -rom /usr/share/x16-rom/rom.bin"
+alias x16-emu="x16emu -rom \${HOME}/code/commander-x16/x16-rom/rom.bin"
+
+#
+#!==============================================================================
+#! End of File
+#!==============================================================================

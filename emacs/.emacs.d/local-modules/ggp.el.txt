@@ -1,0 +1,1090 @@
+;;; ggp.el --- General Game Playing Client
+;;
+;;; Copyright (C) 2014 Kyle W T Sherman
+;;
+;; Author:   Kyle W T Sherman <kylewsherman at gmail dot com>
+;; Created:  2014-04-07
+;; Version:  0.1
+;; Keywords: general game playing client ggp
+;;
+;; This file is not part of GNU Emacs.
+;;
+;; This is free software; you can redistribute it and/or modify it under the
+;; terms of the GNU General Public License as published by the Free Software
+;; Foundation; either version 2, or (at your option) any later version.
+;;
+;; This is distributed in the hope that it will be useful, but WITHOUT ANY
+;; WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+;; FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+;; details.
+;;
+;; You should have received a copy of the GNU General Public License along
+;; with GNU Emacs; see the file COPYING.  If not, write to the Free Software
+;; Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+;;
+;;; Commentary:
+;;
+;; Starts a client that will play GGP (General Game Playing) matches.
+;;
+;; See http://www.ggp.org/ for more information on GGP.
+;;
+;; Installation:
+;;
+;; Put `ggp.el' where you keep your elisp files ...
+;;
+
+;;; Code:
+
+;; elnode
+(require 'elnode)
+
+;; customize group
+(defgroup ggp nil
+  "General Game Playing."
+  :tag "GGP"
+  :prefix "ggp-"
+  :group 'applications)
+
+(defcustom ggp-host
+  "192.168.1.61"
+  "Host address."
+  :type 'string
+  :group 'ggp)
+
+(defcustom ggp-port
+  ;;9147
+  9148
+  "Server port."
+  :type 'integer
+  :group 'ggp)
+
+(defcustom ggp-name
+  "nullman"
+  "Client name."
+  :type 'string
+  :group 'ggp)
+
+(defcustom ggp-player
+  'ggp-player-test
+  ;;'ggp-player-legal
+  "Current game player."
+  :type 'symbol
+  :group 'ggp
+  :options '(ggp-player-test ggp-player-legal))
+
+(defcustom ggp-debug-log
+  nil
+  "If non-nil debugging log entries are written to `ggp-debug-buffer-name'."
+  :type 'boolean
+  :group 'ggp)
+
+;;(setq ggp-debug-log nil)
+(setq ggp-debug-log t)
+
+;; ggp output buffer name
+(defconst ggp-output-buffer-name
+  "*ggp-output*"
+  "Buffer name to use for ggp output.")
+
+;; ggp debug buffer name
+(defconst ggp-debug-buffer-name
+  "*ggp-debug*"
+  "Buffer name to use for ggp debugging output.")
+
+;; clear debug buffer
+(defun ggp-debug-clear ()
+  "Clear debugging buffer."
+  (when ggp-debug-log
+    (save-excursion
+      (get-buffer-create ggp-debug-buffer-name)
+      (set-buffer ggp-debug-buffer-name)
+      (erase-buffer))))
+
+;; log to debug buffer
+(defun ggp-debug-log (message)
+  "Write MESSAGE to debugging buffer."
+  (when ggp-debug-log
+    (save-excursion
+      (get-buffer-create ggp-debug-buffer-name)
+      (set-buffer ggp-debug-buffer-name)
+      (goto-char (point-max))
+      (insert message)
+      (newline))))
+
+;; timestamp
+(defun ggp-timestamp ()
+  "Return current time in 'YYYY-MM-DDTHH:MM:SS' format."
+  (format-time-string "%Y-%m-%dT%H:%M:%S"))
+
+;; events
+(defconst ggp-keywords-events
+  '("info" "start" "play" "stop" "abort")
+  "GGP events.
+
+  (info)
+  (start MATCHID ROLE DESCRIPTION STARTCLOCK PLAYCLOCK)
+  (play MATCHID ACTIONS)
+  (stop MATCHID ACTIONS)
+  (abort MATCHID)")
+
+;; relations
+(defconst ggp-keywords-relations
+  '("base" "does" "goal" "init" "input" "legal" "next" "role" "terminal" "true")
+  "GGP relations.
+
+  (role ROLE)
+  (base PROPOSITION)
+  (input ROLE ACTION)
+  (init PROPOSITION)
+  (true PROPOSITION)
+  (next PROPOSITION)
+  (legal ROLE ACTION)
+  (does ROLE ACTION)
+  (goal ROLE ACTION)
+  (terminal)")
+
+;; functions
+(defconst ggp-keywords-functions
+  '("and" "distinct" "not")
+  "GGP funtions.
+
+  (and X1 X2 ... Xn)       All Xn's must be true; and is implied for all parameters
+  (distinct X1 X2 ... Xn)  All Xn's must be different
+  (not X)                  Negate X")
+
+;; list of ascii character codes and their enumerated types
+(defvar ggp-parse-grammar-char-type
+  `(,@(cl-loop for c from (string-to-char "A") to (string-to-char "Z") collect (cons c :letter))
+    ,@(cl-loop for c from (string-to-char "a") to (string-to-char "z") collect (cons c :letter))
+    ,@(cl-loop for c from (string-to-char "0") to (string-to-char "9") collect (cons c :number))
+    ;;,(cons (string-to-char "`") :back-tick)
+    ,(cons (string-to-char "~") :tilde)
+    ;;,(cons (string-to-char "!") :bang)
+    ;;,(cons (string-to-char "@") :at)
+    ;;,(cons (string-to-char "#") :pound)
+    ;;,(cons (string-to-char "$") :dollar)
+    ;;,(cons (string-to-char "%") :percent)
+    ;;,(cons (string-to-char "^") :carret)
+    ;;,(cons (string-to-char "&") :ampersand)
+    ;;,(cons (string-to-char "*") :asterisk)
+    ,(cons (string-to-char "(") :left-paren)
+    ,(cons (string-to-char ")") :right-paren)
+    ;;,(cons (string-to-char "-") :minus)
+    ;;,(cons (string-to-char "_") :underscore)
+    ,(cons (string-to-char "=") :equal)
+    ;;,(cons (string-to-char "+") :plus)
+    ;;,(cons (string-to-char "[") :left-bracket)
+    ;;,(cons (string-to-char "]") :right-bracket)
+    ;;,(cons (string-to-char "{") :left-curly-bracket)
+    ;;,(cons (string-to-char "}") :right-curly-bracket)
+    ;;,(cons (string-to-char "\\") :backslash)
+    ;;,(cons (string-to-char "|") :pipe)
+    ,(cons (string-to-char ";") :semicolon)
+    ;;,(cons (string-to-char ":") :colon)
+    ;;,(cons (string-to-char "'") :tick)
+    ;;,(cons (string-to-char "\"") :quote)
+    ,(cons (string-to-char ",") :comma)
+    ,(cons (string-to-char ".") :period)
+    ,(cons (string-to-char "<") :less-than)
+    ;;,(cons (string-to-char ">") :greater-than)
+    ;;,(cons (string-to-char "/") :slash)
+    ,(cons (string-to-char "?") :question)
+    ,@(list (cons (string-to-char " ") :whitespace)
+            (cons (string-to-char "\t") :whitespace))
+    ,(cons (string-to-char "\n") :newline))
+  "List of characters and their types.")
+
+;; hash table of codes to types
+(defvar ggp-parse-grammar-char-type-hash
+  (make-hash-table)
+  "List of characters and their types.")
+(dolist (item ggp-parse-grammar-char-type)
+  (setf (gethash (car item) ggp-parse-grammar-char-type-hash)
+        (cdr item)))
+
+;; list of enumerated types and their ascii character codes
+(defvar ggp-parse-grammar-type-char-hash
+  (make-hash-table)
+  "List of types and their characters.")
+(dolist (item ggp-parse-grammar-char-type)
+  (let ((entry (gethash (cdr item) ggp-parse-grammar-type-char-hash)))
+    (if entry
+        (if (listp entry)
+            (setf (gethash (cdr item) ggp-parse-grammar-type-char-hash)
+                  (append entry (list (car item))))
+          (setf (gethash (cdr item) ggp-parse-grammar-type-char-hash)
+                (list entry (car item))))
+      (setf (gethash (cdr item) ggp-parse-grammar-type-char-hash)
+            (car item)))))
+
+;; list of statements, reserverd words, and functions and their symbols
+(defvar ggp-parse-grammar-keyword-type
+  (sort
+   `(,@(cl-loop for key in ggp-keywords-events
+             for dkey = (downcase key)
+             collect (eval (read (concat "(cons " "\"" dkey "\"" " :" dkey ")"))))
+     ,@(cl-loop for key in ggp-keywords-relations
+             for dkey = (downcase key)
+             collect (eval (read (concat "(cons " "\"" dkey "\"" " :" dkey ")"))))
+     ,@(cl-loop for key in ggp-keywords-functions
+             for dkey = (downcase key)
+             collect (eval (read (concat "(cons " "\"" dkey "\"" " :" dkey ")")))))
+   (lambda (a b) (string< (car a) (car b)))))
+
+;; hash table of keywords to types
+(defvar ggp-parse-grammar-keyword-type-hash
+  (make-hash-table :test 'equal)
+  "List of keywords and their types.")
+(dolist (item ggp-parse-grammar-keyword-type)
+  (setf (gethash (car item) ggp-parse-grammar-keyword-type-hash)
+        (cdr item)))
+
+;; custom types
+(defvar ggp-parse-custom-types
+  '(:function :variable :constant)
+  "Custom types.")
+
+;; parse request
+(defun ggp-parse-request (request)
+  "Parse GGP REQUEST into a list of tokens.
+
+Format returned:
+
+  ((TYPE1 . VALUE1)
+   (TYPE2 . VALUE2)
+   ...)"
+  (let (tokens                        ; generated token list
+        current                       ; current string
+        (state :start)                ; current state
+        (current-type :constant))     ; current type
+    ;; loop over all characters in request
+    (cl-loop for char across (concat request " ")
+             do (let ((type (gethash char ggp-parse-grammar-char-type-hash)))
+                  ;; handle states differently
+                  ;; if inside a comment, ignore characters until a newline is reached
+                  (when (eq state :comment)
+                    (when (eq type :newline)
+                      (setq state :end)))
+                  ;; if inside text string, either add to it or push token
+                  (when (eq state :text)
+                    ;; letters and numbers are valid text
+                    (if (or (eq type :letter) (eq type :number) (eq type :period))
+                        (setq current (concat current (char-to-string char)))
+                      ;; else add current text token, and continue
+                      (progn
+                        ;; if text is a keyword (and a function)
+                        (if (and (eq current-type :function)
+                                 (gethash (downcase current) ggp-parse-grammar-keyword-type-hash))
+                            ;; push keyword token
+                            (push (cons (gethash (downcase current) ggp-parse-grammar-keyword-type-hash) nil) tokens)
+                          ;; else, push text
+                          (push (cons current-type current) tokens))
+                        (setq current nil
+                              current-type :constant
+                              state :start))))
+                  ;; if inside number string, either add to it or push token
+                  (when (eq state :number)
+                    ;; only numbers are valid
+                    (if (eq type :number)
+                        (setq current (concat current (char-to-string char)))
+                      ;; else add current number token, and continue
+                      (progn
+                        ;; letters may not follow a number
+                        (if (eq type :letter)
+                            (push (cons :error :syntax-error) tokens)
+                          (push (cons :number (string-to-number current)) tokens))
+                        (setq current nil
+                              state :start))))
+                  ;; handle everything else
+                  (when (eq state :start)
+                    ;; current should be nil (internal error, if not)
+                    (assert (eq current nil) t "Variable current not cleared")
+                    ;; type should be valid
+                    (if type
+                        ;; ignore whitespace and newlines
+                        (unless (or (eq type :whitespace) (eq type :newline))
+                          (cond
+                           ;; text start
+                           ((eq type :letter)
+                            (setq current (char-to-string char)
+                                  state :text))
+                           ;; number start
+                           ((eq type :number)
+                            (setq current (char-to-string char)
+                                  state :number))
+                           ;; variable start
+                           ((eq type :question)
+                            (setq state :text
+                                  current-type :variable))
+                           ;; function start
+                           ((eq type :left-paren)
+                            (setq current-type :function)
+                            (push (cons type nil) tokens))
+                           ;; comment start
+                           ((eq type :semicolon)
+                            (setq state :comment))
+                           ;; just add any other types verbatim
+                           (t
+                            (push (cons type nil) tokens))))
+                      ;; add error token for unknown symbol
+                      (push (cons :error :syntax-error) tokens)))
+                  (when (eq state :end)
+                    (setq state :start))))
+    ;; return tokens
+    (nreverse tokens)))
+
+;; extract event from parsed request
+(defun ggp-extract-event (parsed-request)
+  "Convert PARSED-REQUEST into a simpler event list.
+
+Format returned:
+
+  info  => (:info)
+  start => (:start MATCHID ROLE DESCRIPTION STARTCLOCK PLAYCLOCK)
+  play  => (:play MATCHID ACTIONS)
+  stop  => (:stop MATCHID ACTIONS)
+  abort => (:abort MATCHID)
+
+If any parsing errors occur, nil is returned."
+  (cl-labels ((match (type)
+                     (let ((item (car parsed-request)))
+                       (when (eq (car item) type)
+                         (setq parsed-request (cdr parsed-request))
+                         (or (cdr item) t))))
+              (match-parens ()
+                            (let ((count 0)
+                                  stack)
+                              (while (or (not stack) (plusp count))
+                                (let ((item (car parsed-request)))
+                                  (push item stack)
+                                  (setq parsed-request (cdr parsed-request))
+                                  (cond
+                                   ((eq (car item) :left-paren)
+                                    (setq count (1+ count)))
+                                   ((eq (car item) :right-paren)
+                                    (setq count (1- count))))))
+                              (nreverse stack))))
+    (when (match :left-paren)
+      (cond
+       ((match :info)
+        (when (match :right-paren)
+          (list :info)))
+       ((match :start)
+        (let ((matchid (match :constant))
+              (role (match :constant))
+              (description (match-parens))
+              (startclock (match :number))
+              (playclock (match :number)))
+          (when (and matchid role description startclock playclock
+                     (match :right-paren))
+            (list :start matchid role description startclock playclock))))
+       ((match :play)
+        (let ((matchid (match :constant))
+              (actions (match-parens)))
+          (when (and matchid actions (match :right-paren))
+            (list :play matchid actions))))
+       ((match :stop)
+        (let ((matchid (match :constant))
+              (actions (match-parens)))
+          (when (and matchid actions (match :right-paren))
+            (list :stop matchid actions))))
+       ((match :abort)
+        (let ((matchid (match :constant)))
+          (when (and matchid (match :right-paren))
+            (list :abort matchid))))))))
+
+;; extract rule-set from parsed description
+(defun ggp-extract-rule-set (description)
+  "Convert DESCRIPTION into a simpler rule set.
+
+Format returned:
+
+  ((:role . (ROLE1 ROLE2 ... ROLEn))
+   (:relation . (RELATION1 RELATION2 ... RELATIONn))
+   (:data . (DATA1 DATA2 ... DATAn)))
+
+If any parsing errors occur, nil is returned."
+  (let ((valid t)
+        role
+        relation
+        data)
+    (cl-labels ((look (type)
+                      (let ((item (car description)))
+                        (when (eq (car item) type)
+                          (or (cdr item) t))))
+                (soft (type)
+                      (let ((item (car description)))
+                        (when (eq (car item) type)
+                          (setq description (cdr description))
+                          (or (cdr item) t))))
+                (match (type)
+                       (let ((item (car description)))
+                         (if (eq (car item) type)
+                             (progn
+                               (setq description (cdr description))
+                               (or (cdr item) t))
+                           (setq valid nil))))
+                (match-parens (&optional no-left-paren)
+                              (let ((count (if no-left-paren 1 0))
+                                    stack)
+                                (while (and (or (not stack) (plusp count))
+                                            description)
+                                  (let ((item (car description)))
+                                    (cond
+                                     ((eq (car item) :left-paren)
+                                      (setq count (1+ count)))
+                                     ((eq (car item) :right-paren)
+                                      (setq count (1- count)))
+                                     (t
+                                      (push item stack)))
+                                    (setq description (cdr description))))
+                                (nreverse stack)))
+                (parse-tail ()
+                            (let (tail)
+                              (while (and (not (soft :right-paren))
+                                          description)
+                                (push (match-parens) tail))
+                              (nreverse tail)))
+                (parse-head ()
+                            (let ((lhs (match-parens t))
+                                  (rhs (parse-tail)))
+                              (append (list lhs) rhs)))
+                (parse-relation-complex (type)
+                               (if (assq type relation)
+                                   (setcdr (assq type relation) (list (append (cadr (assq type relation)) (list (parse-head)))))
+                                 (push (cons type (list (list (parse-head)))) relation)))
+                (parse-relation-simple (type)
+                              (if (assq type relation)
+                                  (setcdr (assq type relation) (list (append (cadr (assq type relation)) (list (parse-tail)))))
+                                (push (cons type (list (list (parse-tail)))) relation)))
+                (parse-data-simple (type)
+                                   (if (assq type data)
+                                       (setcdr (assq type data) (list (append (cadr (assq type data)) (list (parse-tail)))))
+                                     (push (cons type (list (list (parse-tail)))) data))))
+      (when (match :left-paren)
+        (while (and valid (soft :left-paren))
+          ;;(ggp-debug-log (format "Next token: %S" (car description)))
+          (cond
+           ;; relations
+           ((soft :less-than)
+            (match :equal)
+            (if (soft :left-paren)
+                (cond
+                 ((soft :base)
+                  (parse-relation-complex :base))
+                 ((soft :input)
+                  (parse-relation-complex :input))
+                 ((soft :init)
+                  (parse-relation-complex :init))
+                 ((soft :legal)
+                  (parse-relation-complex :legal))
+                 ((soft :next)
+                  (parse-relation-complex :next))
+                 ((soft :goal)
+                  (parse-relation-complex :goal))
+                 (t                     ; custom relation
+                  (parse-relation-complex :custom)))
+              (cond
+               ((soft :terminal)
+                (parse-relation-simple :terminal))
+               (t                       ; custom relation
+                (parse-relation-simple :custom)))))
+           ;; data
+           ((soft :role)
+            (let ((r (match :constant)))
+              (if (and r (match :right-paren))
+                  (push r role)
+                (setq valid nil))))
+           ((soft :base)
+            (parse-data-simple :base))
+           ((soft :input)
+            (parse-data-simple :input))
+           ((soft :init)
+            (parse-data-simple :init))
+           ((soft :terminal)
+            (parse-data-simple :terminal))
+           (t                           ; custom data
+            (parse-data-simple :custom))))
+        (match :right-paren)
+        (if (not valid)
+            (ggp-debug-log (format "Error extracting rule-set:\n  Remaining Description: %S\n  Parsed Role: %S\n  Parsed Relation: %S\n  Parsed Data: %S"
+                                   description (nreverse role) (nreverse relation) (nreverse data)))
+          `((:role . ,(nreverse role))
+            (:relation . ,(nreverse relation))
+            (:data . ,(nreverse data))))))))
+
+;; true
+(defun ggp-true (proposition state)
+  "Return non-nil if PROPOSITION is true for STATE."
+  (member proposition state))
+
+;; fund roles
+(defun ggp-find-roles (rules)
+  "Return list of roles found in RULES."
+  (cdr (assq :role rules)))
+
+;; find bases (propositions)
+(defun ggp-find-bases (rules)
+  "Return list of bases found in RULES."
+  (cdr (assq :base (cdr (assq :relation rules)))))
+
+;; find inputs (actions)
+(defun ggp-find-inputs (role rules)
+  "Return list of inputs found for ROLE in RULES."
+  )
+
+;; find inits
+(defun ggp-find-inits (rules)
+  "Return list of all propositions that are true in the initial state."
+  (let ((data (cdr (assq :data rules))))
+    (mapcar (lambda (x) (cadr x))
+            (cl-remove-if (lambda (x) (not (eq :init (car x)))) data))))
+
+;; find legal p
+
+;; find legal x
+
+;; find legal s
+
+;; find next s
+
+;; find reward
+
+;; find terminal p
+(defun ggp-find-terminal-p (state rules)
+  "Return list of terminal propositions found in RULES."
+  (cdr (assq :terminal (cdr (assq :relation rules)))))
+
+
+;; findroles(rules)
+;; findbases(rules)
+;; findinputs(role, rules)
+;; findinits(rules)
+;; findlegalp(role, action, state, rules)
+;; findlegalx(role, state, rules)
+;; findlegals(role, state, rules)
+;; findnexts(move, state, rules)
+;; findreward(role, state, rules)
+;; findterminalp(state, rules)
+
+;; findroles(game) - returns a sequence of roles.
+;; findpropositions(game) - returns a sequence of propositions.
+;; findactions(role,game) - returns a sequence of actions for a specified role.
+;; findinits(game) - returns a sequence of all propositions that are true in the initial state.
+;; findlegalx(role,state,game) - returns the first action that is legal for the specified role in the specified state.
+;; findlegals(role,state,game) - returns a sequence of all actions that are legal for the specified role in the specified state.
+;; findnext(roles,move,state,game) - returns a sequence of all propositions that are true in the state that results from the specified roles performing the specified move in the specified state.
+;; findreward(role,state,game) - returns the goal value for the specified role in the specified state.
+;; findterminalp(state,game) - returns a boolean indicating whether the specified state is terminal.
+
+
+;; onlisp example
+
+;; (defun make-db (&optional (size 100))
+;;   (make-hash-table :size size))
+
+;; (defvar *default-db* (make-db))
+
+;; (defun clear-db (&optional (db *default-db*))
+;;   (clrhash db))
+
+;; (defmacro db-query (key &optional (db '*default-db*))
+;;   `(gethash ,key ,db))
+
+;; (defun db-push (key val &optional (db *default-db*))
+;;   (push val (db-query key db)))
+
+;; (defmacro fact (pred &rest args)
+;;   `(progn (db-push ',pred ',args)
+;;           ',args))
+
+;; (defmacro with-answer (query &body body)
+;;   (let ((binds (gensym)))
+;;     `(dolist (,binds (interpret-query ',query))
+;;        (let , (mapcar (lambda (v)
+;;                         `(,v (binding ',v ,binds)))
+;;                       (vars-in query #'atom))
+;;          ,@body))))
+
+;; (defun interpret-query (expr &optional binds)
+;;   (case (car expr)
+;;     (and (interpret-and (reverse (cdr expr)) binds))
+;;     (or      (interpret-or (cdr expr) binds))
+;;     (not (interpret-not (cadr expr) binds))
+;;     (t       (lookup (car expr) (cdr expr) binds))))
+
+;; (defun interpret-and (clauses binds)
+;;   (if (null clauses)
+;;       (list binds)
+;;     (mapcan (lambda (b)
+;;               (interpret-query (car clauses) b))
+;;             (interpret-and (cdr clauses) binds))))
+
+;; (defun interpret-or (clauses binds)
+;;   (mapcan (lambda (c)
+;;             (interpret-query c binds))
+;;           clauses))
+
+;; (defun interpret-not (clause binds)
+;;   (if (interpret-query clause binds)
+;;       nil
+;;     (list binds)))
+
+;; (defun lookup (pred args &optional binds)
+;;   (mapcan (lambda (x)
+;;             (aif2 (match x args binds) (list it)))
+;;           (db-query pred)))
+
+;; (clear-db)
+;; (fact painter hogarth william english)
+;; (fact painter canale antonio venetian)
+;; (fact painter reynolds joshua english)
+;; (fact dates hogarth 1697 1772)
+;; (fact dates canale 1697 1768)
+;; (fact dates reynolds 1723 1792)
+
+
+;; (:left-paren)
+;; (:left-paren) (:role) (:constant . "robot") (:right-paren)
+;; (:left-paren) (:less-than) (:equal) (:left-paren) (:base) (:left-paren) (:function . "cell") (:variable . "M") (:variable . "N") (:variable . "P") (:right-paren) (:right-paren)
+;;     (:left-paren) (:function . "row") (:variable . "M") (:right-paren)
+;;     (:left-paren) (:function . "col") (:variable . "N") (:right-paren)
+;;     (:left-paren) (:function . "piece") (:variable . "P") (:right-paren) (:right-paren)
+;; (:left-paren) (:less-than) (:equal) (:left-paren) (:base) (:left-paren) (:function . "captures") (:variable . "M") (:right-paren) (:right-paren)
+;;     (:left-paren) (:function . "scoremap") (:variable . "M") (:variable . "N") (:right-paren) (:right-paren)
+;; (:left-paren) (:less-than) (:equal) (:left-paren) (:base) (:left-paren) (:function . "step") (:variable . "N") (:right-paren) (:right-paren)
+;;     (:left-paren) (:function . "succ") (:variable . "M") (:variable . "N") (:right-paren) (:right-paren)
+;; (:left-paren) (:less-than) (:equal) (:left-paren) (:input) (:constant . "robot") (:left-paren) (:function . "move") (:variable . "M1") (:variable . "N1") (:variable . "M2") (:variable . "N2") (:right-paren) (:right-paren)
+;;     (:left-paren) (:function . "row") (:variable . "M1") (:right-paren)
+;;     (:left-paren) (:function . "col") (:variable . "N1") (:right-paren)
+;;     (:left-paren) (:function . "knightmove") (:variable . "M1") (:variable . "N1") (:variable . "M2") (:variable . "N2") (:right-paren) (:right-paren)
+;; (:left-paren) (:function . "row") (:number . 1) (:right-paren)
+;; (:left-paren) (:function . "row") (:number . 2) (:right-paren)
+;; (:left-paren) (:function . "row") (:number . 3) (:right-paren)
+;; (:left-paren) (:function . "row") (:number . 4) (:right-paren)
+;; (:left-paren) (:function . "row") (:number . 5) (:right-paren)
+;; (:left-paren) (:function . "col") (:number . 1) (:right-paren)
+;; (:left-paren) (:function . "col") (:number . 2) (:right-paren)
+;; (:left-paren) (:function . "col") (:number . 3) (:right-paren)
+;; (:left-paren) (:function . "piece") (:constant . "knight") (:right-paren)
+;; (:left-paren) (:function . "piece") (:constant . "pawn") (:right-paren)
+;; (:left-paren) (:function . "piece") (:constant . "blank") (:right-paren)
+;; (:left-paren) (:init) (:left-paren) (:function . "cell") (:number . 1) (:number . 1) (:constant . "knight") (:right-paren) (:right-paren)
+;; (:left-paren) (:init) (:left-paren) (:function . "cell") (:number . 1) (:number . 2) (:constant . "pawn") (:right-paren) (:right-paren)
+;; (:left-paren) (:init) (:left-paren) (:function . "cell") (:number . 1) (:number . 3) (:constant . "pawn") (:right-paren) (:right-paren)
+;; (:left-paren) (:init) (:left-paren) (:function . "cell") (:number . 2) (:number . 1) (:constant . "pawn") (:right-paren) (:right-paren)
+;; (:left-paren) (:init) (:left-paren) (:function . "cell") (:number . 2) (:number . 2) (:constant . "pawn") (:right-paren) (:right-paren)
+;; (:left-paren) (:init) (:left-paren) (:function . "cell") (:number . 2) (:number . 3) (:constant . "pawn") (:right-paren) (:right-paren)
+;; (:left-paren) (:init) (:left-paren) (:function . "cell") (:number . 3) (:number . 1) (:constant . "pawn") (:right-paren) (:right-paren)
+;; (:left-paren) (:init) (:left-paren) (:function . "cell") (:number . 3) (:number . 2) (:constant . "pawn") (:right-paren) (:right-paren)
+;; (:left-paren) (:init) (:left-paren) (:function . "cell") (:number . 3) (:number . 3) (:constant . "pawn") (:right-paren) (:right-paren)
+;; (:left-paren) (:init) (:left-paren) (:function . "cell") (:number . 4) (:number . 1) (:constant . "pawn") (:right-paren) (:right-paren)
+;; (:left-paren) (:init) (:left-paren) (:function . "cell") (:number . 4) (:number . 2) (:constant . "pawn") (:right-paren) (:right-paren)
+;; (:left-paren) (:init) (:left-paren) (:function . "cell") (:number . 4) (:number . 3) (:constant . "pawn") (:right-paren) (:right-paren)
+;; (:left-paren) (:init) (:left-paren) (:function . "cell") (:number . 5) (:number . 1) (:constant . "pawn") (:right-paren) (:right-paren)
+;; (:left-paren) (:init) (:left-paren) (:function . "cell") (:number . 5) (:number . 2) (:constant . "pawn") (:right-paren) (:right-paren)
+;; (:left-paren) (:init) (:left-paren) (:function . "cell") (:number . 5) (:number . 3) (:constant . "pawn") (:right-paren) (:right-paren)
+;; (:left-paren) (:init) (:left-paren) (:function . "captures") (:number . 0) (:right-paren) (:right-paren)
+;; (:left-paren) (:init) (:left-paren) (:function . "step") (:number . 1) (:right-paren) (:right-paren)
+;; (:left-paren) (:less-than) (:equal) (:left-paren) (:legal) (:constant . "robot") (:left-paren) (:function . "move") (:variable . "M1") (:variable . "N1") (:variable . "M2") (:variable . "N2") (:right-paren) (:right-paren)
+;;     (:left-paren) (:true) (:left-paren) (:function . "cell") (:variable . "M1") (:variable . "N1") (:constant . "knight") (:right-paren) (:right-paren)
+;;     (:left-paren) (:function . "knightmove") (:variable . "M1") (:variable . "N1") (:variable . "M2") (:variable . "N2") (:right-paren) (:right-paren)
+;; (:left-paren) (:less-than) (:equal) (:left-paren) (:next) (:left-paren) (:function . "cell") (:variable . "M2") (:variable . "N2") (:constant . "knight") (:right-paren) (:right-paren)
+;;     (:left-paren) (:does) (:constant . "robot") (:left-paren) (:function . "move") (:variable . "M1") (:variable . "N1") (:variable . "M2") (:variable . "N2") (:right-paren) (:right-paren) (:right-paren)
+;; (:left-paren) (:less-than) (:equal) (:left-paren) (:next) (:left-paren) (:function . "cell") (:variable . "M1") (:variable . "N1") (:constant . "blank") (:right-paren) (:right-paren)
+;;     (:left-paren) (:does) (:constant . "robot") (:left-paren) (:function . "move") (:variable . "M1") (:variable . "N1") (:variable . "M2") (:variable . "N2") (:right-paren) (:right-paren) (:right-paren)
+;; (:left-paren) (:less-than) (:equal) (:left-paren) (:next) (:left-paren) (:function . "cell") (:variable . "U") (:variable . "V") (:constant . "pawn") (:right-paren) (:right-paren)
+;;     (:left-paren) (:true) (:left-paren) (:function . "cell") (:variable . "U") (:variable . "V") (:constant . "pawn") (:right-paren) (:right-paren)
+;;     (:left-paren) (:does) (:constant . "robot") (:left-paren) (:function . "move") (:variable . "M1") (:variable . "N1") (:variable . "M2") (:variable . "N2") (:right-paren) (:right-paren)
+;;     (:left-paren) (:distinct) (:variable . "U") (:variable . "M2") (:right-paren) (:right-paren)
+;; (:left-paren) (:less-than) (:equal) (:left-paren) (:next) (:left-paren) (:function . "cell") (:variable . "U") (:variable . "V") (:constant . "pawn") (:right-paren) (:right-paren)
+;;     (:left-paren) (:true) (:left-paren) (:function . "cell") (:variable . "U") (:variable . "V") (:constant . "pawn") (:right-paren) (:right-paren)
+;;     (:left-paren) (:does) (:constant . "robot") (:left-paren) (:function . "move") (:variable . "M1") (:variable . "N1") (:variable . "M2") (:variable . "N2") (:right-paren) (:right-paren)
+;;     (:left-paren) (:distinct) (:variable . "V") (:variable . "N2") (:right-paren) (:right-paren)
+;; (:left-paren) (:less-than) (:equal) (:left-paren) (:next) (:left-paren) (:function . "cell") (:variable . "U") (:variable . "V") (:constant . "blank") (:right-paren) (:right-paren)
+;;     (:left-paren) (:true) (:left-paren) (:function . "cell") (:variable . "U") (:variable . "V") (:constant . "blank") (:right-paren) (:right-paren)
+;;     (:left-paren) (:does) (:constant . "robot") (:left-paren) (:function . "move") (:variable . "M1") (:variable . "N1") (:variable . "M2") (:variable . "N2") (:right-paren) (:right-paren)
+;;     (:left-paren) (:distinct) (:variable . "U") (:variable . "M2") (:right-paren) (:right-paren)
+;; (:left-paren) (:less-than) (:equal) (:left-paren) (:next) (:left-paren) (:function . "cell") (:variable . "U") (:variable . "V") (:constant . "blank") (:right-paren) (:right-paren)
+;;     (:left-paren) (:true) (:left-paren) (:function . "cell") (:variable . "U") (:variable . "V") (:constant . "blank") (:right-paren) (:right-paren)
+;;     (:left-paren) (:does) (:constant . "robot") (:left-paren) (:function . "move") (:variable . "M1") (:variable . "N1") (:variable . "M2") (:variable . "N2") (:right-paren) (:right-paren)
+;;     (:left-paren) (:distinct) (:variable . "V") (:variable . "N2") (:right-paren) (:right-paren)
+;; (:left-paren) (:less-than) (:equal) (:left-paren) (:next) (:left-paren) (:function . "captures") (:variable . "Old") (:right-paren) (:right-paren)
+;;     (:left-paren) (:does) (:constant . "robot") (:left-paren) (:function . "move") (:variable . "M1") (:variable . "N1") (:variable . "M2") (:variable . "N2") (:right-paren) (:right-paren)
+;;     (:left-paren) (:true) (:left-paren) (:function . "cell") (:variable . "M2") (:variable . "N2") (:constant . "blank") (:right-paren) (:right-paren)
+;;     (:left-paren) (:true) (:left-paren) (:function . "captures") (:variable . "Old") (:right-paren) (:right-paren) (:right-paren)
+;; (:left-paren) (:less-than) (:equal) (:left-paren) (:next) (:left-paren) (:function . "captures") (:variable . "New") (:right-paren) (:right-paren)
+;;     (:left-paren) (:does) (:constant . "robot") (:left-paren) (:function . "move") (:variable . "M1") (:variable . "N1") (:variable . "M2") (:variable . "N2") (:right-paren) (:right-paren)
+;;     (:left-paren) (:true) (:left-paren) (:function . "cell") (:variable . "M2") (:variable . "N2") (:constant . "pawn") (:right-paren) (:right-paren)
+;;     (:left-paren) (:true) (:left-paren) (:function . "captures") (:variable . "Old") (:right-paren) (:right-paren)
+;;     (:left-paren) (:function . "succ") (:variable . "Old") (:variable . "New") (:right-paren) (:right-paren)
+;; (:left-paren) (:less-than) (:equal) (:left-paren) (:next) (:left-paren) (:function . "step") (:variable . "New") (:right-paren) (:right-paren)
+;;     (:left-paren) (:true) (:left-paren) (:function . "step") (:variable . "Old") (:right-paren) (:right-paren)
+;;     (:left-paren) (:function . "succ") (:variable . "Old") (:variable . "New") (:right-paren) (:right-paren)
+;; (:left-paren) (:less-than) (:equal) (:left-paren) (:goal) (:constant . "robot") (:goal) (:right-paren)
+;;     (:left-paren) (:true) (:left-paren) (:function . "captures") (:variable . "Count") (:right-paren) (:right-paren)
+;;     (:left-paren) (:function . "scoremap") (:variable . "Count") (:goal) (:right-paren) (:right-paren)
+;; (:left-paren) (:less-than) (:equal) (:terminal) (:left-paren) (:true) (:left-paren) (:function . "step") (:number . 15) (:right-paren) (:right-paren) (:right-paren)
+;; (:left-paren) (:less-than) (:equal) (:left-paren) (:function . "knightmove") (:variable . "M1") (:variable . "N1") (:variable . "M2") (:variable . "N2") (:right-paren)
+;;     (:left-paren) (:function . "add1row") (:variable . "M1") (:variable . "M2") (:right-paren)
+;;     (:left-paren) (:function . "add2col") (:variable . "N1") (:variable . "N2") (:right-paren) (:right-paren)
+;; (:left-paren) (:less-than) (:equal) (:left-paren) (:function . "knightmove") (:variable . "M1") (:variable . "N1") (:variable . "M2") (:variable . "N2") (:right-paren)
+;;     (:left-paren) (:function . "add1row") (:variable . "M1") (:variable . "M2") (:right-paren)
+;;     (:left-paren) (:function . "add2col") (:variable . "N2") (:variable . "N1") (:right-paren) (:right-paren)
+;; (:left-paren) (:less-than) (:equal) (:left-paren) (:function . "knightmove") (:variable . "M1") (:variable . "N1") (:variable . "M2") (:variable . "N2") (:right-paren)
+;;     (:left-paren) (:function . "add1row") (:variable . "M2") (:variable . "M1") (:right-paren)
+;;     (:left-paren) (:function . "add2col") (:variable . "N1") (:variable . "N2") (:right-paren) (:right-paren)
+;; (:left-paren) (:less-than) (:equal) (:left-paren) (:function . "knightmove") (:variable . "M1") (:variable . "N1") (:variable . "M2") (:variable . "N2") (:right-paren)
+;;     (:left-paren) (:function . "add1row") (:variable . "M2") (:variable . "M1") (:right-paren)
+;;     (:left-paren) (:function . "add2col") (:variable . "N2") (:variable . "N1") (:right-paren) (:right-paren)
+;; (:left-paren) (:less-than) (:equal) (:left-paren) (:function . "knightmove") (:variable . "M1") (:variable . "N1") (:variable . "M2") (:variable . "N2") (:right-paren)
+;;     (:left-paren) (:function . "add2row") (:variable . "M1") (:variable . "M2") (:right-paren)
+;;     (:left-paren) (:function . "add1col") (:variable . "N1") (:variable . "N2") (:right-paren) (:right-paren)
+;; (:left-paren) (:less-than) (:equal) (:left-paren) (:function . "knightmove") (:variable . "M1") (:variable . "N1") (:variable . "M2") (:variable . "N2") (:right-paren)
+;;     (:left-paren) (:function . "add2row") (:variable . "M1") (:variable . "M2") (:right-paren)
+;;     (:left-paren) (:function . "add1col") (:variable . "N2") (:variable . "N1") (:right-paren) (:right-paren)
+;; (:left-paren) (:less-than) (:equal) (:left-paren) (:function . "knightmove") (:variable . "M1") (:variable . "N1") (:variable . "M2") (:variable . "N2") (:right-paren)
+;;     (:left-paren) (:function . "add2row") (:variable . "M2") (:variable . "M1") (:right-paren)
+;;     (:left-paren) (:function . "add1col") (:variable . "N1") (:variable . "N2") (:right-paren) (:right-paren)
+;; (:left-paren) (:less-than) (:equal) (:left-paren) (:function . "knightmove") (:variable . "M1") (:variable . "N1") (:variable . "M2") (:variable . "N2") (:right-paren)
+;;     (:left-paren) (:function . "add2row") (:variable . "M2") (:variable . "M1") (:right-paren)
+;;     (:left-paren) (:function . "add1col") (:variable . "N2") (:variable . "N1") (:right-paren) (:right-paren)
+;; (:left-paren) (:function . "succ") (:number . 0) (:number . 1) (:right-paren)
+;; (:left-paren) (:function . "succ") (:number . 1) (:number . 2) (:right-paren)
+;; (:left-paren) (:function . "succ") (:number . 2) (:number . 3) (:right-paren)
+;; (:left-paren) (:function . "succ") (:number . 3) (:number . 4) (:right-paren)
+;; (:left-paren) (:function . "succ") (:number . 4) (:number . 5) (:right-paren)
+;; (:left-paren) (:function . "succ") (:number . 5) (:number . 6) (:right-paren)
+;; (:left-paren) (:function . "succ") (:number . 6) (:number . 7) (:right-paren)
+;; (:left-paren) (:function . "succ") (:number . 7) (:number . 8) (:right-paren)
+;; (:left-paren) (:function . "succ") (:number . 8) (:number . 9) (:right-paren)
+;; (:left-paren) (:function . "succ") (:number . 9) (:number . 10) (:right-paren)
+;; (:left-paren) (:function . "succ") (:number . 10) (:number . 11) (:right-paren)
+;; (:left-paren) (:function . "succ") (:number . 11) (:number . 12) (:right-paren)
+;; (:left-paren) (:function . "succ") (:number . 12) (:number . 13) (:right-paren)
+;; (:left-paren) (:function . "succ") (:number . 13) (:number . 14) (:right-paren)
+;; (:left-paren) (:function . "succ") (:number . 14) (:number . 15) (:right-paren)
+;; (:left-paren) (:function . "add1row") (:number . 1) (:number . 2) (:right-paren)
+;; (:left-paren) (:function . "add1row") (:number . 2) (:number . 3) (:right-paren)
+;; (:left-paren) (:function . "add1row") (:number . 3) (:number . 4) (:right-paren)
+;; (:left-paren) (:function . "add1row") (:number . 4) (:number . 5) (:right-paren)
+;; (:left-paren) (:function . "add2row") (:number . 1) (:number . 3) (:right-paren)
+;; (:left-paren) (:function . "add2row") (:number . 2) (:number . 4) (:right-paren)
+;; (:left-paren) (:function . "add2row") (:number . 3) (:number . 5) (:right-paren)
+;; (:left-paren) (:function . "add1col") (:number . 1) (:number . 2) (:right-paren)
+;; (:left-paren) (:function . "add1col") (:number . 2) (:number . 3) (:right-paren)
+;; (:left-paren) (:function . "add2col") (:number . 1) (:number . 3) (:right-paren)
+;; (:left-paren) (:function . "scoremap") (:number . 0) (:number . 0) (:right-paren)
+;; (:left-paren) (:function . "scoremap") (:number . 1) (:number . 1) (:right-paren)
+;; (:left-paren) (:function . "scoremap") (:number . 2) (:number . 3) (:right-paren)
+;; (:left-paren) (:function . "scoremap") (:number . 3) (:number . 7) (:right-paren)
+;; (:left-paren) (:function . "scoremap") (:number . 4) (:number . 11) (:right-paren)
+;; (:left-paren) (:function . "scoremap") (:number . 5) (:number . 16) (:right-paren)
+;; (:left-paren) (:function . "scoremap") (:number . 6) (:number . 22) (:right-paren)
+;; (:left-paren) (:function . "scoremap") (:number . 7) (:number . 29) (:right-paren)
+;; (:left-paren) (:function . "scoremap") (:number . 8) (:number . 37) (:right-paren)
+;; (:left-paren) (:function . "scoremap") (:number . 9) (:number . 45) (:right-paren)
+;; (:left-paren) (:function . "scoremap") (:number . 10) (:number . 54) (:right-paren)
+;; (:left-paren) (:function . "scoremap") (:number . 11) (:number . 64) (:right-paren)
+;; (:left-paren) (:function . "scoremap") (:number . 12) (:number . 75) (:right-paren)
+;; (:left-paren) (:function . "scoremap") (:number . 13) (:number . 87) (:right-paren)
+;; (:left-paren) (:function . "scoremap") (:number . 14) (:number . 100) (:right-paren)
+;; (:right-paren))
+
+;; variable to hold match and state information
+(defvar ggp-match-hash
+  (make-hash-table :test 'equal)
+  "Holds match information and state for any number of active matches.
+
+Format:
+
+  ((MATCHID . ((:matchid . MATCHID)
+               (:role . ROLE)
+               (:description . DESCRIPTION)
+               (:startclock . STARTCLOCK)
+               (:playclock . PLAYCLOCK)
+               (:expires . TIMESTAMP)
+               (:rules . RULES)
+               (:player . PLAYER)))
+   ...)")
+
+;; remove expired match data
+(defun ggp-match-hash-remove-expired ()
+  "Remove any expired matches from `ggp-match-hash'.
+\nMatches are expired when their :expires timestamp "
+  (maphash (lambda (key value)
+             (when (time-less-p (time-add (cdr (assq :expires value)) (seconds-to-time 10))
+                                (current-time))
+               (remhash key ggp-match-hash)))
+           ggp-match-hash))
+
+;; subroutines
+
+;; findroles(rules)
+;; findbases(rules)
+;; findinputs(role, rules)
+;; findinits(rules)
+;; findlegalp(role, action, state, rules)
+;; findlegalx(role, state, rules)
+;; findlegals(role, state, rules)
+;; findnexts(move, state, rules)
+;; findreward(role, state, rules)
+;; findterminalp(state, rules)
+;; doesify(roles, actions)
+;; undoesify(sentence)
+
+;; static responses
+(defconst ggp-response-error "error")
+(defconst ggp-response-ready "ready")
+(defconst ggp-response-busy "busy")
+(defconst ggp-response-done "done")
+(defconst ggp-response-noop "noop")
+
+;; parsed request handler
+(defun ggp-handle-request (parsed-request)
+  "Handle PARSED-REQUEST."
+  (let ((player (symbol-function (intern-soft ggp-player)))
+        (event (ggp-extract-event parsed-request)))
+    (ggp-debug-log (format "Event: %S" event))
+    (cond
+     ((not player)
+      (ggp-debug-log (format "Error: No player found with name: %s" ggp-player))
+      ggp-response-error)
+     ((not event)
+      (ggp-debug-log (format "Error: Invalid event: %s" parsed-request))
+      ggp-response-error)
+     ;; (info)
+     ((eq (car event) :info)
+      (ggp-match-hash-remove-expired)   ; remove any expired matches
+      ;; only play one game at a time (for now)
+      (if (and (zerop (hash-table-count ggp-match-hash))
+               (funcall player :info))
+          (concat "((name " ggp-name ") (status available))")
+        (concat "((name " ggp-name ") (status busy))")))
+     ;; (start ...)
+     ((eq (car event) :start)
+      (let ((matchid (nth 1 event))
+            (role (nth 2 event))
+            (description (nth 3 event))
+            (startclock (nth 4 event))
+            (playclock (nth 5 event)))
+        (let ((rules (ggp-extract-rule-set description)))
+          (setf (gethash matchid ggp-match-hash)
+                `((:matchid . ,matchid)
+                  (:role . ,role)
+                  (:description . ,description)
+                  (:startclock . ,startclock)
+                  (:playclock . ,playclock)
+                  (:expires . ,(time-add (current-time) (seconds-to-time startclock)))
+                  (:rules . ,rules)
+                  (:player . ,player)))
+          (ggp-debug-log (format "  Created match hash: %S" (gethash matchid ggp-match-hash)))
+          (funcall player :start matchid startclock)
+          ggp-response-ready)))
+     ;; (play ...)
+     ((eq (car event) :play)
+      (let ((matchid (nth 1 event))
+            (actions (nth 2 event)))
+        (let ((player (cdr (assq :player (gethash matchid ggp-match-hash))))
+              (response (funcall player :play matchid actions)))
+          (ggp-debug-log (format "Playing: %s" response))
+          response)))
+     ;; (stop ...)
+     ((eq (car event) :stop)
+      (let ((matchid (nth 1 event))
+            (actions (nth 2 event)))
+        (let ((player (cdr (assq :player (gethash matchid ggp-match-hash)))))
+          (funcall player :stop matchid actions)
+          (remhash matchid ggp-match-hash)
+          ggp-response-done)))
+     ;; (abort)
+     ((eq (car event) :abort)
+      (let ((matchid (nth 1 event)))
+        (let ((player (cdr (assq :player (gethash matchid ggp-match-hash)))))
+          (funcall player :abort matchid)
+          (remhash matchid ggp-match-hash)
+          ggp-response-done)))
+     ;; error
+     (t
+      (ggp-debug-log (format "Error: Invalid parsed-request: %S" parsed-request))
+      ggp-response-error))))
+
+;; main handler
+(defun ggp-handler (httpcon)
+  "Main GGP `elnode' handler."
+  (let* ((date (ggp-timestamp))
+         (request (substring (replace-regexp-in-string "" "\n"
+                                                       (replace-regexp-in-string "\" \. \"" "="
+                                                                                 (format "%S" (elnode-http-params httpcon))))
+                             3 -3))
+         (parsed-request (ggp-parse-request request)))
+    ;;(ggp-debug-log (format "%s %s" date (replace-regexp-in-string "\n" " " request)))
+    ;;(ggp-debug-log (format "%s %S" date parsed-request))
+    (let ((response (ggp-handle-request parsed-request)))
+      (ggp-debug-log (format "                ==> %s" response))
+      (elnode-http-start httpcon 200
+                         '("Content-Type" . "text/acl")
+                         `("Content-Length" . ,(int-to-string (length response)))
+                         '("Access-Control-Allow-Origin" . "*")
+                         '("Access-Control-Allow-Methods" . "POST, GET, OPTIONS")
+                         '("Access-Control-Allow-Headers" . " Content-Type")
+                         '("Access-Control-Allow-Age" . "86400"))
+      (elnode-http-return httpcon response))))
+
+;; clear debug log
+(ggp-debug-clear)
+
+;; start server
+(progn
+  ;; setup debug buffer (TODO: remove this)
+  (when ggp-debug-log
+    (delete-other-windows)
+    (split-window-vertically -10)
+    (other-window 1)
+    (get-buffer-create ggp-debug-buffer-name)
+    (set-buffer ggp-debug-buffer-name)
+    (switch-to-buffer ggp-debug-buffer-name)
+    (setq buffer-read-only nil)
+    (erase-buffer)
+    (other-window 1))
+  (elnode-stop ggp-port)
+  (clrhash ggp-match-hash)
+  (elnode-start 'ggp-handler :host ggp-host :port ggp-port))
+
+(provide 'ggp)
+
+;;; Players
+
+;; test player
+(lexical-let ((data (make-hash-table :test 'equal))) ; use a closure to hold persistent data
+  (defun ggp-player-test(event &rest args)
+    "Simple GGP player that just picks the next move found in `plays' each turn."
+    (let ((name "Test player")
+          ;; http://ggp.stanford.edu/applications/050201.php
+          (plays '("right"
+                   "down"
+                   "left"
+                   "up"
+                   "right"
+                   "down")))
+          ;; http://ggp.stanford.edu/applications/040100.php
+          ;; (plays '("(move 1 1 2 3)"
+          ;;          "(move 2 3 3 1)"
+          ;;          "(move 3 1 4 3)"
+          ;;          "(move 4 3 5 1)"
+          ;;          "(move 5 1 4 3)"
+          ;;          "(move 4 3 5 1)"
+          ;;          "(move 5 1 4 3)"
+          ;;          "(move 4 3 5 1)"
+          ;;          "(move 5 1 4 3)"
+          ;;          "(move 4 3 5 1)"
+          ;;          "(move 5 1 4 3)"
+          ;;          "(move 4 3 5 1)"
+          ;;          "(move 5 1 4 3)"
+          ;;          "(move 4 3 5 1)")))
+      (cond
+       ;; info returns ready
+       ((eq event :info)
+        (ggp-debug-log (format "%s: (info)" name))
+        ggp-response-ready)
+       ;; start returns ready
+       ((eq event :start)
+        (let ((matchid (nth 0 args))
+              (startclock (nth 1 args)))
+          (ggp-debug-log (format "%s: (start %s %s)" name matchid startclock))
+          (setf (gethash matchid data) plays) ; store plays
+          ggp-response-ready))
+       ;; play returns the next move
+       ((eq event :play)
+        (let ((matchid (nth 0 args))
+              (actions (nth 1 args)))
+          (ggp-debug-log (format "%s: (play %s %S)" name matchid actions))
+          (let* ((plays (gethash matchid data)) ; pop next play from storage
+                 (play (car plays)))
+            (setf (gethash matchid data) (cdr plays))
+            play)))
+       ;; stop returns ready
+       ((eq event :stop)
+        (let ((matchid (nth 0 args))
+              (actions (nth 1 args)))
+          (ggp-debug-log (format "%s: (stop %s %S)" name matchid actions))
+          (remhash matchid data)
+          ggp-response-ready))
+       ;; abort returns ready
+       ((eq event :abort)
+        (let ((matchid (nth 0 args)))
+          (ggp-debug-log (format "%s: (abort %s)" name matchid))
+          (remhash matchid data)
+          ggp-response-ready))))))
+
+;; legal player
+(lexical-let ((data (make-hash-table :test 'equal))) ; use a closure to hold persistent data
+  (defun ggp-player-legal(event &rest args)
+    "Simple GGP player that just picks the first legal move each turn."
+    (let ((name "Legal player"))
+      (cond
+       ;; info returns ready
+       ((eq event :info)
+        (ggp-debug-log (format "%s: (info)" name))
+        ggp-response-ready)
+       ;; start returns ready
+       ((eq event :start)
+        (let ((matchid (nth 0 args))
+              (startclock (nth 1 args)))
+          (ggp-debug-log (format "%s: (start %s %s)" name matchid startclock))
+          (let* ((match (gethash matchid ggp-match-hash))
+                 (rules (cdr (assq :rules match)))
+                 (role (cdr (assq :role match)))
+                 (roles (ggp-find-roles rules))
+                 (state (ggp-find-inits rules)))
+            (setf (gethash matchid data) `((:rules . ,rules) (:role . ,role) (:roles . ,roles) (:state . ,state)))
+            (ggp-debug-log (format "  Created match data: %S" (gethash matchid data)))
+            ggp-response-ready)))
+       ;; play returns the first legal move found
+       ((eq event :play)
+        (let ((matchid (nth 0 args))
+              (actions (nth 1 args)))
+          (ggp-debug-log (format "%s: (play %s %S)" name matchid actions))
+          (let ((state (cdr (assq :state (gethash matchid data)))))
+            (when actions
+              (setq state (ggp-find-next roles actions state rules)) ; update state with actions
+              (setcdr (assq :state (gethash matchid data)) state)) ; save state
+            (ggp-find-legal-x role state rules)))) ; return first legal move
+       ;; stop returns ready
+       ((eq event :stop)
+        (let ((matchid (nth 0 args))
+              (actions (nth 1 args)))
+          (ggp-debug-log (format "%s: (stop %s %S)" name matchid actions))
+          ggp-response-ready))
+       ;; abort returns ready
+       ((eq event :abort)
+        (let ((matchid (nth 0 args)))
+          (ggp-debug-log (format "%s: (abort %s)" name matchid))
+          ggp-response-ready))))))
+
+;; ;; random player
+;; (defvar ggp-player-random
+;;   `(
+;;     ;; info returns t (ready)
+;;     (:info . (lambda ()
+;;                (ggp-debug-log "Random player: (info)")
+;;                t))
+;;     ;; start returns t (ready)
+;;     (:start . (lambda (matchid startclock)
+;;                 (ggp-debug-log (format "Random player: (start %s %s)" matchid startclock))
+;;                 t))
+;;     ;; play returns a random legal move
+;;     (:play . (lambda (matchid actions)
+;;                (ggp-debug-log (format "Random player: (play %s %S)" matchid actions))
+;;                t))
+;;     ;; stop returns t (ready)
+;;     (:stop . (lambda (matchid actions)
+;;                (ggp-debug-log (format "Random player: (stop %s %S)" matchid actions))
+;;                t))
+;;     ;; abort returns t (ready)
+;;     (:abort . (lambda (matchid)
+;;                 (ggp-debug-log (format "Random player: (abort %s)" matchid))
+;;                 t)))
+;;   "Simple player that just picks a random legal move each turn.")
+
+;;; ggp.el ends here

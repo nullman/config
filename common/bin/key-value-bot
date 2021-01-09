@@ -1,0 +1,219 @@
+#!/usr/bin/env perl
+#===============================================================================
+# key-value-bot
+#
+# Run an AIM bot that implements the key-value script.
+#
+# Author: Kyle W T Sherman
+#===============================================================================
+
+# TODO: Add help
+
+BEGIN { $^W = 1; }
+
+use strict;
+use warnings;
+use Net::OSCAR qw(:standard);
+use Data::Dumper;
+
+my $un = $ARGV[0];
+my $pw = $ARGV[1];
+
+# print usage
+if (!defined($pw)) {
+    print("Usage: key-value-bot USERNAME PASSWORD [LOG]\n");
+    print("Run an AIM UUID generating bot.\n");
+    print("  USERNAME  AIM username to use\n");
+    print("  PASSWORD  AIM password to use\n");
+    print("  LOG       optional output log file\n");
+    exit;
+}
+
+my $log = undef;
+if (defined($ARGV[2])) {
+    $log = $ARGV[2];
+}
+
+# conect to aim via oscar
+my $oscar;
+$oscar = Net::OSCAR->new();
+$oscar->set_callback_im_in(\&im_in);
+$oscar->signon($un, $pw);
+
+print("Logged on to AIM as $un.\n");
+print("Press CTRL-C to disconnect.\n");
+
+while(1)
+{
+    $oscar->do_one_loop();
+}
+
+#-------------------------------------------------------------------------------
+# im_in (handle incoming message)
+#-------------------------------------------------------------------------------
+sub im_in {
+    my($oscar, $from, $msg, $is_away) = @_;
+
+    # print incoming message
+    print("[AWAY] ") if $is_away;
+    print("$from: $msg\n");
+
+    # if HTML was sent, convert it to plain text
+    $msg =~ s/<(.|\n)+?>//g;
+
+    # create response
+    my $response = "";
+
+    # set base directory for key/value files
+    my $base = "$ENV{HOME}/key-value";
+
+    # standardize user's nick (im login)
+    my $nick = lc($from);
+    $nick =~ s/[^a-z0-9_]//g;
+
+    # create directory to store key/value files in
+    system("mkdir -p \"$base/$nick\"");
+
+    # remove any whitespace around msg
+    $msg =~ s/^[ \t]+//;
+    $msg =~ s/[ \t]+$//;
+
+    # remove file name from msg
+    my $file;
+    if ($msg =~ /^[^ \t]+:/) {
+        $file = ($msg =~ s/:.*$//);
+        $msg =~ s/^[^ \t]+://;
+    } else {
+        $file = "main";
+    }
+
+    # remove operation from msg
+    my $op = $msg;
+    if ($msg =~ /[ \t]/) {
+        $op =~ s/[ \t].*$//;
+        $msg =~ s/^[^ \t]+[ \t]+//;
+    } else {
+        $msg = "";
+    }
+
+    # check for help request
+    if ($op eq "help" or $op eq "-h" or $op eq "--help" or $op eq "") {
+        $op = "--help";
+    }
+
+    # set full file name
+    $file = "$nick/$file";
+
+    # if operation is list, make file nick directory
+    if ($op eq "list") {
+        $file = "$nick";
+    }
+
+    #print("op: $op\n");
+    #print("file: $file\n");
+    #print("msg: $msg\n");
+
+    # if main file does not exist, then create it
+    # other files must be manually created
+    if ($file eq "$nick/main") {
+        system("touch $base/$file");
+    }
+
+    # call key-value script to handle request
+    open(CMD, "$ENV{HOME}/bin/key-value $op $file $msg |");
+
+    # add output to response
+    while(<CMD>) {
+        $response .= $_;
+    }
+
+    # close cmd
+    close(CMD);
+
+    # if help message was returned, replace with custom message
+    my $help = 0;
+    if (substr($response, 0, 6) eq "Usage:") {
+        $help = 1;
+        $response = <<END;
+Hello $from, I'm able to store key/value pairs of data for you.
+These lists of key/value pairs are stored in files, of which you may have any number.
+The default file <i>main</i> is used unless a file name is given.
+
+Command Syntax: <b>[file:]</b><b>operation</b> <b>arguments</b>
+
+  <b>operation</b> options (abbreviations in parenthesis):
+    <b>select</b>  (s)  query by key
+    <b>grep</b>    (g)  query keys and values via grep
+    <b>insert</b>  (i)  add new key/value
+    <b>update</b>  (u)  update existing value for a given key
+    <b>replace</b> (p)  insert or update key/value
+    <b>rename</b>  (r)  rename existing key
+    <b>delete</b>  (d)  delete existing key
+    <b>create</b>       create new file
+    <b>drop</b>         drop existing file
+    <b>list</b>         list files
+  <b>file</b> is an optional key/value database file (defaults to <i>main</i>)
+  <b>arguments</b> are extra parameters based on the operation being performed
+
+  Operation Arguments:
+    <b>select</b> <i>query</i>
+    <b>grep</b> <i>query</i>
+    <b>insert</b> <i>key</i> <i>value</i>
+    <b>update</b> <i>key</i> <i>value</i>
+    <b>replace</b> <i>key</i> <i>value</i>
+    <b>rename</b> <i>key</i> <i>newkey</i>
+    <b>delete</b> <i>key</i>
+    <b>create</b> <i>file</i>
+    <b>drop</b> drop
+    <b>list</b>
+
+    <i>file</i> is a key/value file
+    <i>query</i> is a grep string to match by
+    <i>key</i> is a specific key in the database
+    <i>value</i> is any text string
+    <i>newkey</i> is an unused key
+
+  Notes:
+    Files and keys may contain only alpha-numeric values (and underscores).
+    All other values are quietly trimmed before any action is taken.
+    The replace command will do an insert if the key does not exist,
+    or an update if it already exists.
+    The drop command requires the keyword 'drop' to be given as a precaution.
+END
+    }
+
+    # send response
+    chomp($response);
+    if ($response ne "") {
+        $oscar->send_im($from, $response);
+    }
+
+    # print response
+    print("response: $response\n");
+
+    # print log
+    if (defined($log)) {
+        # build log message
+        my $msg = "";
+        # add datetime to message
+        open(DATE, "date '+%Y-%m-%d_%H:%M:%S' |") or die("ERROR: Cannot get date");
+        while(<DATE>) { $msg .= $_; }
+        close(DATE);
+        chomp($msg);
+        $msg .= "\t";
+        $msg .= "from: $from\tmessage: $msg\tresponse: ";
+        if ($help) {
+            $msg .= "<help>";
+        } else {
+            $msg .= $response;
+        }
+        # write to log
+        open(LOG, ">>$log") or die("ERROR: Cannot write to log file: $log");
+        print(LOG "$msg\n");
+        close(LOG);
+    }
+}
+
+#===============================================================================
+# End of File
+#===============================================================================

@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+#===============================================================================
+# rofi-session-menu
+#
+# Present a Window Manager Session Menu using rofi.
+#
+# Author: Kyle W T Sherman
+# Original Author:  manjaro-openbox-scripts:rofr.sh
+#===============================================================================
+
+name=$(basename "$0")
+
+_usage()
+{
+    cat <<- EOF
+Usage: $(basename "$0") [options]
+
+Options:
+  -d  Show drun menu
+  -r  Show run menu
+  -w  Show window switcher
+  -r  Launcher dialog
+  -s  Session choices
+  -h  Show help (this message)
+EOF
+}
+
+# handle no arguments given
+if [[ $# -lt 1 ]] ; then
+    _usage
+    exit 1
+fi
+
+# handle command line arguments
+while getopts ":drwsh" opt ; do
+    case "${opt}" in
+        d)
+            rofi -modi drun -show drun
+            ;;
+        r)
+            rofi -modi run -show run
+            ;;
+        w)
+            rofi -modi window -show window
+            ;;
+        s)
+            sel=$(echo " Lock| Logout| Reboot| Shutdown" | \
+                      rofi -sep "|" -dmenu -i -p 'System ' "" -width 20 \
+                           -hide-scrollbar -padding 20 -lines 4)
+            case "${sel}" in
+                *Lock) lockscreen -- scrot ;;
+                *Logout) loginctl terminate-session $(loginctl session-status | head -n 1 | awk '{print $1}') ;;
+                *Reboot) systemctl reboot ;;
+                *Shutdown) systemctl poweroff ;;
+            esac
+            ;;
+        h)
+            _usage
+            exit 0
+            ;;
+        *)
+            echo -e "Invalid option: -$OPTARG"
+            _usage
+            exit 1
+    esac
+done
+
+shift $((OPTIND - 1))
+
+exit 0
+
+#===============================================================================
+# End of File
+#===============================================================================

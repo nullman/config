@@ -1,0 +1,29 @@
+#===============================================================================
+# .config/systemd/user/tightvnc.service
+#
+# Configuration for systemd user tightvnc service.
+#
+# Enable:   systemctl --user enable tightvnc.service
+# Start:    systemctl --user start tightvnc.service
+# Stop:     systemctl --user stop tightvnc.service
+# Disable:  systemctl --user disable tightvnc.service
+#
+# Reference:  https://wiki.archlinux.org/index.php/Systemd/User
+#===============================================================================
+
+[Unit]
+Description=TightVNC remote desktop server
+After=sshd.service
+
+[Service]
+#Type=dbus
+ExecStart=/usr/sbin/tightvnc
+#Type=forking
+
+[Install]
+WantedBy=default.target
+#WantedBy=multi-user.target
+
+#===============================================================================
+# End of File
+#===============================================================================

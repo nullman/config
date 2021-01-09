@@ -1,0 +1,38 @@
+#===============================================================================
+# .i3applications
+#
+# Configuration for i3 initial applications.
+#
+# Author: Kyle W T Sherman
+#===============================================================================
+
+# initialize background applications and services
+#i3-msg "exec --no-startup-id ssh-agent"
+#i3-msg "exec --no-startup-id ssh-add"
+#i3-msg "exec --no-startup-id xmodmap ~/.xmodmaprc"
+#i3-msg "exec --no-startup-id set-xkb"
+#i3-msg "exec --no-startup-id xbindkeys"
+i3-msg "exec --no-startup-id xscreensaver -no-splash"
+#i3-msg "exec --no-startup-id xautolock -time 30 -locker blurlock" # lock screen after 30 minutes
+i3-msg "exec --no-startup-id xautolock -time 30 -locker 'xscreensaver-command -lock'" # lock screen after 30 minutes
+i3-msg "exec --no-startup-id mpd ~/.mpd/mpd.conf"
+i3-msg "exec --no-startup-id dropbox start"
+#i3-msg "exec --no-startup-id barriers --config ~/.barrier.conf"
+#i3-msg "exec --no-startup-id barrierc SERVER"
+#i3-msg "exec --no-startup-id run-app"
+
+# initialize foreground applications
+i3-msg "exec --no-startup-id alacritty -e ~/bin/run-screen"
+i3-msg "exec --no-startup-id emacs"
+i3-msg "exec --no-startup-id slack"
+i3-msg "exec --no-startup-id thunderbird"
+i3-msg "exec --no-startup-id firefox"
+#i3-msg "exec --no-startup-id chromium"
+#i3-msg "exec --no-startup-id idea"
+
+# example using a saved i3 workspace via the i3-save-tree command
+# i3-msg "workspace 1 ; append_layout /home/kyle/.i3/worspace-1.json"
+
+#===============================================================================
+# End of File
+#===============================================================================

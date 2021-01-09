@@ -1,0 +1,117 @@
+#!/usr/bin/env bash
+#===============================================================================
+# trash-rm
+#
+# Perform an rm after copying any deleted files to the trash.
+#
+# Author: Kyle W T Sherman
+#===============================================================================
+
+trashdir="${HOME}/.Trash"
+opts=""
+files=""
+done=0
+help=0
+recurse=0
+
+# expand args
+args=""
+[[ "${DEBUG}" != "" ]] && echo "DEBUG: expanding arguments"
+for arg in "$@" ; do
+    if [[ "${arg:0:1}" == "-" ]] && [[ "${arg:1:1}" != "-" ]] ; then
+        arg=${arg:1}
+        len=${#arg}
+        for ((i = 0; i < ${len}; i += 1)) ; do
+            [[ "${DEBUG}" != "" ]] && echo "DEBUG: adding argument '${arg:$i:1}'"
+            args="${args} -${arg:$i:1}"
+        done
+    else
+        [[ "${DEBUG}" != "" ]] && echo "DEBUG: adding argument '${arg}'"
+        args="${args} ${arg}"
+    fi
+done
+[[ "${DEBUG}" != "" ]] && echo "DEBUG: args: '${args}'"
+
+# loop through all arguments separating options from files
+[[ "${DEBUG}" != "" ]] && echo "DEBUG: separating options from files"
+for arg in ${args} ; do
+    if [[ ${done} -eq 0 ]] ; then
+        if [[ "${arg}" == "--" ]] ; then
+            # remaining arguments are files
+            [[ "${DEBUG}" != "" ]] && echo "DEBUG: found '--' so remaining arguments are files"
+            done=1
+        else
+            if [[ "${arg:0:1}" == "-" ]] ; then
+                [[ "${DEBUG}" != "" ]] && echo "DEBUG: adding option '${arg}' to options"
+                opts="${opts} ${arg}"
+                # check for help
+                if [[ "${arg}" == "-h" ]] || [[ "${arg}" == "--help" ]] ; then
+                    [[ "${DEBUG}" != "" ]] && echo "DEBUG: help has been requested"
+                    help=1
+                fi
+                # check for recursion
+                if [[ "${arg}" == "-r" ]] || [[ "${arg}" == "-R" ]] || [[ "${arg}" == "--recursive" ]] \
+                        || [[ "${arg}" == "-d" ]] || [[ "${arg}" == "--directory" ]] ; then
+                    [[ "${DEBUG}" != "" ]] && echo "DEBUG: recursion has been requested"
+                    recurse=1
+                fi
+            else
+                [[ "${DEBUG}" != "" ]] && echo "DEBUG: adding file '${arg}' to files"
+                files="${files} ${arg}"
+            fi
+        fi
+    else
+        [[ "${DEBUG}" != "" ]] && echo "DEBUG: adding file '${arg}' to files"
+        files="${files} ${arg}"
+    fi
+done
+[[ "${DEBUG}" != "" ]] && echo "DEBUG: options: ${opts}"
+[[ "${DEBUG}" != "" ]] && echo "DEBUG: files: ${files}"
+
+# display help
+if [[ ${help} -eq 1 ]] ; then
+    rm --help
+    exit 1
+fi
+
+# make sure trash dir exists
+if [[ ! -d "${trashdir}" ]] ; then
+    echo "Could not find trash dir: ${trashdir}"
+    exit 1
+fi
+
+# copy files to trash dir
+for file in ${files} ; do
+    if [[ ${recurse} -eq 0 ]] && [[ -d "${file}" ]] ; then
+        # if directories are not explicitly requested, print error
+        [[ "${DEBUG}" != "" ]] && echo "rm: cannot remove '${file}': Is a directory"
+    elif [[ ! -e "${file}" ]] ; then
+        # if file or directory does not exist, let rm command give error unless in debug mode
+        [[ "${DEBUG}" != "" ]] && echo "rm: cannot stat '${file}': No such file or directory"
+    else
+        # destructively copy files to trash
+        #cp -dprf ${file} ${trashdir}
+        # non-destructively copy files to trash
+        dest="${trashdir}/$(basename ${file})"
+        [[ "${DEBUG}" != "" ]] && echo "DEBUG: testing that destination '${dest}' does not exist"
+        if [[ -e "${dest}" ]] ; then
+            n=2
+            while [[ -e "${dest} ${n}" ]] ; do
+                [[ "${DEBUG}" != "" ]] && echo "DEBUG: destination '${dest} ${n}' exists, trying a different name"
+                n=$((${n} + 1))
+            done
+            [[ "${DEBUG}" != "" ]] && echo "DEBUG: destination '${dest} ${n}' does not exist and will be used"
+            dest="${dest} ${n}"
+        fi
+        # copy file
+        [[ "${DEBUG}" != "" ]] && echo "DEBUG: performing copy command 'cp -dprf \"${file}\" \"${dest}\"'"
+        cp -dprf "${file}" "${dest}"
+        # delete file
+        [[ "${DEBUG}" != "" ]] && echo "DEBUG: performing delete command 'rm ${opts} \"${file}\"'"
+        rm ${opts} "${file}"
+    fi
+done
+
+#===============================================================================
+# End of File
+#===============================================================================

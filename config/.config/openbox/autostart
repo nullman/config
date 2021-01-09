@@ -1,0 +1,104 @@
+#===============================================================================
+# .config/openbox/autostart
+#
+# Openbox Window Manager auto-start applications script.
+#
+# Reference:  http://openbox.org/
+#===============================================================================
+
+# delay before launching applets
+delay=2
+
+# check if executable command is found in the path
+_command()
+{
+    command -v "$1" > /dev/null 2>&1
+}
+
+# delay running a command (SECONDS COMMAND)
+_delay()
+{
+    delay=$1
+    shift
+    sleep ${delay} && eval "$@"
+}
+
+# simple x hotkey daemon
+_command sxhkd && sxhkd -c "${HOME}/.config/sxhkd/sxhkdrc" &
+
+# xfce settings
+#_command xfsettingsd && xfsettingsd &
+
+# ssh-agent
+#_command ssh-agent && ssh-agent &
+#_command ssh-add && ssh-add &
+
+# key bindings
+#xmodmap "${HOME}/.xmodmaprc" &
+#set-xkb &
+#xbindkeys &
+
+# gnome policykit authentation agent
+[[ -x /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 ]] && /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+# gnome keyring
+#eval "$(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg)" &
+# lx policykit authentation agent
+#_command lxpolkit && lxpolkit &
+
+# compositor
+#_command manjaro-compositor && manjaro-compositor --start &
+_command compton && compton -c &
+
+# system bars
+#_command manjaro-tint2-session && manjaro-tint2-session &
+#_command polybar && polybar -c ${HOME}/.config/polybar/config openbox-bar &
+_command tint2 && tint2 &
+
+# system bar applets
+_command clipit && _delay ${delay} pgrep clipit > /dev/null || clipit &
+_command pa-applet && _delay ${delay} pgrep pa-applet > /dev/null || pa-applet &
+_command blueman-applet && _delay ${delay} pgrep blueman-applet > /dev/null || blueman-applet &
+_command nm-applet && _delay ${delay} pgrep nm-applet > /dev/null || nm-applet &
+_command pamac-tray && _delay ${delay} pgrep pamac-tray > /dev/null || pamac-tray &
+_command xfce4-power-manager && _delay ${delay} pgrep xfce4-power-manager > /dev/null || xfce4-power-manager &
+#_command volumeicon && _delay ${delay} pgrep volumeicon > /dev/null || volumeicon &
+#_command sbxkb && _delay ${delay} pgrep sbxkb > /dev/null || sbxkb &
+
+# system info and key bindings on wallpaper
+#_command manjaro-conky-session && manjaro-conky-session &
+_command conky && conky --config="${HOME}/.config/conky/system-info.conkyrc" &
+_command conky && conky --config="${HOME}/.config/conky/openbox-keybindings.conkyrc" &
+
+# full-screen task-switcher
+#_command skippy-xd && skippy-xd --config "${HOME}/.config/skippy-xd/skippy-xd.rc" --start-daemon &
+
+# localize user system folders
+#_command xdg-user-dirs-gtk-update && xdg-user-dirs-gtk-update &
+
+# enable numlock [do not use on laptops without numpads]
+#_command numlockx && numlockx &
+
+# screen saver
+#_command xautolock && xautolock -time 30 -locker blurlock & # lock screen after 30 minutes
+
+# tell firefox to match theme
+#_command ff-theme-util && ff-theme-util &
+
+# set cursor theme
+_command fix_xcursor && fix_xcursor &
+
+# hide mouse when not in use
+_command unclutter && unclutter &
+
+# wallpaper manager
+_command nitrogen && nitrogen --restore &
+
+# rebuild wm menu
+#sleep 10 && _command mmaker && mmaker --force openbox &
+
+# initialize custom applications
+[[ -f "${HOME}/.openbox-applications" ]] && source "${HOME}/.openbox-applications"
+
+#===============================================================================
+# End of File
+#===============================================================================

@@ -1,0 +1,63 @@
+conky.config = {
+        alignment = 'bottom_left',
+        background = true,
+        color2 = '2ECC71',
+        cpu_avg_samples = 2,
+        default_color = 'E0E2E3',
+        double_buffer = true,
+        font = 'Bitstream Vera Sans:size=12',
+        gap_x = 25,
+        gap_y = 45,
+        minimum_width = 400,
+        no_buffers = true,
+        own_window = true,
+        own_window_class = 'Conky',
+        own_window_type = 'desktop',
+        own_window_transparent = true,
+        update_interval = 2.0,
+        update_interval_on_battery = 10.0,
+        use_xft = true,
+}
+conky.text = [[
+${alignc}${font Bitstream Vera Sans:bold:size=16}K E Y   B I N D I N G S${font}
+${color2}${hr}${color}
+[Super + Alt] + H  ${alignr}Display Key Bindings
+[Super + Ctrl] + H  ${alignr}Display BSPWM Key Bindings
+[Super/Alt] + Tab  ${alignr}Focus Next Node (Any/Desktop)
+[Super/Alt + Shift] + Tab  ${alignr}Focus Prev Node (Any/Desktop)
+[Super/Alt] + Grave  ${alignr}Focus Last Desktop/Node
+[Super + Alt] + L/R  ${alignr}Focus L/R Desktop
+[Super + Shift] + L/R  ${alignr}Send to L/R Desktop
+[Super] + 1..0  ${alignr}Focus given Desktop
+[Super + Shift] + 1..0  ${alignr}Send to given Desktop
+[Super + Shift] + W  ${alignr}Close Node
+[Super + Shift] + Q  ${alignr}Kill Node
+[Super + Ctrl] + M  ${alignr}Toggle Monocle Layout
+[Super + Ctrl] + T/F  ${alignr}Set Tiled/Fullscreen Layout
+[Super + Ctrl + Shift] + T/F  ${alignr}Set Pseudo-Tiled/Floating Layout
+[Super] + I/K/J/L  ${alignr}Focus Node in Direction
+[Super + Shift] + I/K/J/L  ${alignr}Swap Node in Direction
+[Super] + ./,  ${alignr}Circulate Nodes Forward/Backward
+[Super + Shift] + ./,  ${alignr}Swap Node Forward/Backward
+[Super + Shift] + G  ${alignr}Swap Node with First Child
+[Super + Control] + S  ${alignr}Resize and Move Mode
+[Super + Control] + B/E  ${alignr}Balance/Equalize Nodes
+[Super + Alt] + Space/D  ${alignr}Application/Program Launcher
+[Super + Alt] + W/E/P  ${alignr}Window/Emoji/Bitwarden Selector
+[Super + Shift] + E  ${alignr}Lock, Logout, Reboot, Shutdown
+[Super + Shift] + P  ${alignr}Get XProp Class Name
+[Super + Shift] + Delete  ${alignr}Kill Process Clicked
+[Super + Alt] + Print  ${alignr}Screen Shapshot
+[Super + Control] + Print  ${alignr}Window Shapshot
+[Super + Shift] + Print  ${alignr}Region Shapshot
+[Super + Shift] + R  ${alignr}Reload Key Bindings
+[Super + Shift] + T  ${alignr}Reload Tint
+[Super + Alt] + Y/U  ${alignr}Git Sync Home/Doc
+[Super + Alt] + S/X  ${alignr}Start/Lock Screensaver
+[Super + Control + Alt] + L/R  ${alignr}Volume Down/Up 10%
+[Super + Control + Alt] + M  ${alignr}MPD Play/Pause
+[Super + Control + Alt] + ,  ${alignr}MPD Prev
+[Super + Control + Alt] + .  ${alignr}MPD Next
+[Super + Control + Alt] + /  ${alignr}MPD Playing
+[Super + Alt] + T/Return  ${alignr}Open Terminal
+]]

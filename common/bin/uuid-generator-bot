@@ -1,0 +1,106 @@
+#!/usr/bin/env perl
+#===============================================================================
+# uuid-generator-bot
+#
+# Run an AIM bot that just generates UUIDs.
+#
+# Author: Kyle W T Sherman
+#===============================================================================
+
+BEGIN { $^W = 1; }
+
+use strict;
+use warnings;
+use Net::OSCAR qw(:standard);
+use Data::UUID;
+use Data::Dumper;
+
+my $un = $ARGV[0];
+my $pw = $ARGV[1];
+
+# print usage
+if (!defined($pw)) {
+    print("Usage: uuid-generator-bot USERNAME PASSWORD [LOG]\n");
+    print("Run an AIM UUID generating bot.\n");
+    print("  USERNAME  AIM username to use.\n");
+    print("  PASSWORD  AIM password to use.\n");
+    print("  LOG       optional output log file.\n");
+    exit;
+}
+
+my $log = undef;
+if (defined($ARGV[2])) {
+    $log = $ARGV[2];
+}
+
+# conect to aim via oscar
+my $oscar;
+$oscar = Net::OSCAR->new();
+$oscar->set_callback_im_in(\&im_in);
+$oscar->signon($un, $pw);
+
+print("Logged on to AIM as $un.\n");
+print("Press CTRL-C to disconnect.\n");
+
+my $count = 1;
+while(1)
+{
+    $oscar->do_one_loop();
+    $count++;
+    # set idle every 5 minutes
+    if ($count >= 3000) {
+        $oscar->set_idle(0);
+        $count = 1;
+    }
+}
+
+#-------------------------------------------------------------------------------
+# im_in (handle incoming message)
+#-------------------------------------------------------------------------------
+sub im_in {
+    my($oscar, $from, $msg, $is_away) = @_;
+
+    # print incoming message
+    print("[AWAY] ") if $is_away;
+    print("$from: $msg\n");
+
+    # if HTML was sent, convert it to plain text
+    $msg =~ s/<(.|\n)+?>//g;
+
+    # create response
+    my $response = "";
+
+    # generate a uuid
+    my $ug = new Data::UUID;
+    my $uuid = $ug->create();
+
+    # add uuid to response
+    $response .= $ug->to_string($uuid);
+
+    # send response
+    $oscar->send_im($from, $response);
+
+    # print response
+    print("response: $response\n");
+
+    # print log
+    if (defined($log)) {
+        # build log message
+        my $msg = "";
+        # add datetime to message
+        open(DATE, "date '+%Y-%m-%d_%H:%M:%S' |") or die("ERROR: Cannot get date");
+        while(<DATE>) { $msg .= $_; }
+        close(DATE);
+        chomp($msg);
+        $msg .= "\t";
+        $msg .= "from: $from\tmessage: $msg\tresponse: $response";
+        # write to log
+        open(LOG, ">>$log") or die("ERROR: Cannot write to log file: $log");
+        print(LOG "$msg\n");
+        close(LOG);
+    }
+}
+
+#===============================================================================
+# End of File
+#===============================================================================

@@ -1,0 +1,16 @@
+;; [[file:~/.common/.emacs.d/init-emacs.org::*elpher][elpher:2]]
+;; Elpher Bookmarks File
+
+(("Gopherpedia" "gopher://gopherpedia.com/1")
+ ("Gopher Project" "gopher://gopherproject.org/1")
+ ("Floodgap Systems" "gopher://gopher.floodgap.com:70/1")
+ ("Hacker News" "gopher://hngopher.com/1")
+ ("Weather Forecasts" "gopher://gopher.floodgap.com:70/1/groundhog")
+ ("SDF Public Access UNIX System" "gopher://sdf.org/1")
+ ("Gopher Club" "gopher://gopher.club:70/1/phlogs/")
+ ("Zaibatsu" "gopher://zaibatsu.circumlunar.space/1")
+ ("Baud Baby" "gopher://baud.baby/1")
+ ("DistroTube" "gopher://distro.tube/1")
+ ("Quux" "gopher://quux.org/1")
+ ("Bitreich" "gopher://bitreich.org/1"))
+;; elpher:2 ends here

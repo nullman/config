@@ -1,0 +1,259 @@
+#!/usr/bin/env bash
+#===============================================================================
+# im-bot
+#
+# Respond to instant messaging commands.
+#
+# Author: Kyle W T Sherman
+#===============================================================================
+
+# extra fortune parameters
+fparam=""
+# show adult fortunes
+#fparam="-a"
+
+# tmp file
+mkdir -p "${HOME}/tmp"
+tmp="${HOME}/tmp/im-bot.$$"
+
+# get command
+cmd="$1"
+shift
+
+# get rest
+msg="$@"
+
+# random
+random()
+{
+    echo $(($RANDOM % $1))
+}
+
+# main command handler
+case "${cmd}" in
+    # eliza
+    eliza|e)
+        echo "${msg}" | elizatalk
+        ;;
+    # eliza or fortune
+    eliza-fortune|ef)
+        echo "${msg}" | elizatalk
+        # random chance to add a fortune (based on seconds)
+        if [[ $(random 10) -eq 0 ]] ; then
+            case "$(random 18)" in
+                0) echo "Here's a quote for you..." ;;
+                1) echo "What do you think of this quote?" ;;
+                2) echo "Have a quote on me..." ;;
+                3) echo "I like this quote a lot..." ;;
+                4) echo "This is my favorite quote of all..." ;;
+                5) echo "This guy is a genious..." ;;
+                6) echo "Have you heard this one?" ;;
+                7) echo "You don't hear this quote enough..." ;;
+                8) echo "If you will allow me to pontificate..." ;;
+                9) echo "Meditate on this..." ;;
+                10) echo "I got your quote, right here!" ;;
+                11) echo "I find the following discourse fascinating..." ;;
+                12) echo "Don't you love prose?" ;;
+                13) echo "I hope to be this smart one day..." ;;
+                14) echo "What does this mean to you?" ;;
+                15) echo "I've been thinking about this all day..." ;;
+                16) echo "This is total rubbish..." ;;
+                17) echo "I don't believe a word of this..." ;;
+            esac
+            fortune ${fparam} 2>/dev/null | sed -e 's/\t/    /g'
+        fi
+        ;;
+    # today's reminders
+    today|y)
+        remind "${HOME}/.reminders_bot" "${msg}" 2>/dev/null | sed 's/^Reminders for/Today in history: / ; s/ (today):$// ; /^$/d'
+        ;;
+    # fortune
+    fortune|f)
+        # generate list of fortune file options
+        unset fopt
+        for f in $(fortune -f 2>&1 | cut -f 7- -d ' ') ; do
+            if [[ -n "${fopt}" ]] ; then
+                fopt="${fopt} ${f}"
+            else
+                fopt="${f}"
+            fi
+        done
+        if [[ "${msg}" == "help" ]] ; then
+            echo "Fortune file options: ${fopt}"
+            echo "Anything else performs a query in all fortune files."
+        elif [[ -n "${msg}" ]] ; then
+            if $(echo "${fopt}" | grep -q "${msg}") ; then
+                # if fortune file option is given, then use
+                fortune ${fparam} "${msg}" 2>/dev/null | sed -e 's/\t/    /g'
+            else
+                # else, query for keyword
+                #fortune ${fparam} -m "${msg}" 2>/dev/null | sed -e 's/\t/    /g ; s/^%$//'
+                fortune ${fparam} -m "${msg}" 2>/dev/null > ${tmp}
+                if [[ -n "$(cat ${tmp})" ]] ; then
+                    strfile "${tmp}" > /dev/null
+                    fortune "${tmp}" | sed -e 's/\t/    /g ; s/^%$//'
+                fi
+                rm -f "${tmp}" "${tmp}.dat" > /dev/null 2>&1
+            fi
+        else
+            fortune ${fparam} 2>/dev/null | sed -e 's/\t/    /g'
+        fi
+        ;;
+    # quote
+    quote|q)
+        if [[ -n "${msg}" ]] ; then
+            # query for keyword, then return random quote
+            fortune "${HOME}/quotes" -m "${msg}" 2>/dev/null > ${tmp}
+            if [[ -n "$(cat ${tmp})" ]] ; then
+                strfile "${tmp}" > /dev/null
+                fortune "${tmp}" | sed -e 's/\t/    /g ; s/^%$//'
+            fi
+            rm -f "${tmp}" "${tmp}.dat" > /dev/null 2>&1
+        else
+            # return random quote
+            fortune "${HOME}/quotes" | sed -e 's/\t/    /g'
+            #fortune ${HOME}/quotes 2>/dev/null | sed -e :a -e '/$/N ; s/\n/ / ; ta' | sed 's/\t\t/\n\t/'
+        fi
+        ;;
+    # google search
+    google|g)
+        ${HOME}/bin/google-query "${msg}" 10 im
+        #curl -s -A "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)" "http://www.google.com/search?num=5&q=${msg}" | sed 's%<p class=g>%@@@%g ; s%\(<\/a>\)%\1~~~%g ; s%^[^@]*%% ; s%[^~]*\$%% ; s%~~~[^@]*@@@%~~~@@@%g ; s%<a href=\"\([^\"]*\)\"[^>]*>%\1 -- %g ; s%<\/a>%%g ; s%<table[^~]*%%g ; s%@@@%%g ; s%~~~%\n%g ; s%<\/\?b>%%g ; s%\&\#39\;%%g ; /^[ \t]*\$/d'
+        ;;
+    # google lucky search
+    lucky|l)
+        ${HOME}/bin/google-query "${msg}" 1 im
+        ;;
+    # google calculator
+    calc|c)
+        ${HOME}/bin/google-calc "${msg}"
+        ;;
+    # date
+    date|d)
+        date
+        ;;
+    # iso date
+    time|t)
+        date '+%Y-%m-%d %H:%M:%S'
+        ;;
+    # uptime
+    uptime|up)
+        uptime
+        ;;
+    # generate uuid
+    uuid|guid|u)
+        #uuidgen
+        #id=$(mcookie)
+        #echo "${id:0:8}-${id:8:4}-${id:12:4}-${id:16:4}-${id:20:12}"
+        ${HOME}/bin/uuid
+        ;;
+    # key value database
+    key|k|keym|km|keyc|kc)
+        # key/value base dir
+        base="${HOME}/key-value"
+        # standardize user's nick (im login)
+        if [[ "${CONTACT_NICK}" == "" ]] ; then
+            nick=${USER}
+        else
+            nick=$(echo ${CONTACT_NICK} | tr -c -d /A-Za-z0-9_/ | tr /A-Z/ /a-z/)
+        fi
+        # create directory to store key/value files in
+        mkdir -p "${base}/${nick}"
+        # create default key/value files
+        #touch ${base}/${nick}/main
+        #touch ${base}/${nick}/contacts
+        # convert msg into an array
+        msg=($(echo "${msg}"))
+        # get operation
+        op="${msg[0]}"
+        msg=(${msg[@]:1})
+        # get file and rest of msg
+        case "${cmd}" in
+            keym|km)
+                file=main
+                ;;
+            keyc|kc)
+                file=contacts
+                ;;
+            *)
+                file=${msg[0]}
+                msg=(${msg[@]:1})
+                ;;
+        esac
+        # add nick to the file path
+        file="${nick}/${file}"
+        # display values
+        #echo nick: ${nick}
+        #echo op: ${op}
+        #echo file: ${file}
+        #echo msg: ${msg[@]}
+        # check for help request
+        case "${op}" in
+            help|-h|--help|"") op="help" ;;
+        esac
+        # perform action
+        if [[ "${op}" == "help" ]] ; then
+            # show help
+            ${HOME}/bin/key-value --help
+        elif [[ "${file}" == "$(echo ${file} | tr -c -d /A-Za-z0-9_/)" ]] ; then
+            # if valid file name, call key-value script to handle request
+            ${HOME}/bin/key-value "${op}" "${file}" "${msg[@]}"
+        else
+            # else, error
+            echo "ERROR: Invalid file name: ${file}"
+            echo "Only letters A-Z and a-z, digits 0-9, and underscore _ are allowed"
+        fi
+        ;;
+    # help
+    help|h)
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a45a426 (Update)
+        cat <<EOF
+Commands:
+  help    (h)   this menu
+  eliza   (e)   chat with elizatalk <text>
+  today   (y)   today in history <MMM DD YYYY>
+  fortune (f)   fortune teller <query>
+  quote   (q)   random quote <query>
+  google  (g)   google search <search>
+  calc    (c)   google calculator <expression>
+  date    (d)   date/time in default format
+  time    (t)   date/time in YYYY-MM-DD HH:MM:SS format
+  uptime  (up)  system uptime
+  uuid    (u)   uuid (guid)
+  key     (k)   key/value database (type 'key help' for more info)
+  keym    (km)  abbreviation for 'key main'
+  keyc    (kc)  abbreviation for 'key contacts'
+EOF
+<<<<<<< HEAD
+=======
+        echo "Commands:"
+        echo "  help    (h)  - this menu"
+        echo "  eliza   (e)  - chat with elizatalk <text>"
+        echo "  today   (y)  - today in history <MMM DD YYYY>"
+        echo "  fortune (f)  - fortune teller <query>"
+        echo "  quote   (q)  - random quote <query>"
+        echo "  google  (g)  - google search <search>"
+        echo "  calc    (c)  - google calculator <expression>"
+        echo "  date    (d)  - date/time in default format"
+        echo "  time    (t)  - date/time in YYYY-MM-DD HH:MM:SS format"
+        echo "  uptime  (up) - system uptime"
+        echo "  uuid    (u)  - uuid (guid)"
+        echo "  key     (k)  - key/value database (type 'key help' for more info)"
+        echo "  keym    (km) - abbreviation for 'key main'"
+        echo "  keyc    (kc) - abbreviation for 'key contacts'"
+>>>>>>> 6554bfc (Initial commit after splitting home configuration files into public and private repos)
+=======
+>>>>>>> a45a426 (Update)
+        ;;
+    # other
+    *)
+        $0 eliza-fortune "${cmd}" "${msg}"
+        ;;
+esac
+
+#===============================================================================
+# End of File
+#===============================================================================

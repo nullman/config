@@ -1,0 +1,235 @@
+#!/usr/bin/env bash
+#===============================================================================
+# screen-app
+#
+# Launch various apps in specific screen windows.
+#
+# Author: Kyle W T Sherman
+#===============================================================================
+
+if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a45a426 (Update)
+    cat <<EOF
+Usage: $(basename $0) APPLICATION
+Launch APPLICATION in a specific screen window.
+  APPLICATION options:
+    app    application       window
+    -----  ----------------  ------
+    mon    top                  0
+    mon    htop                 0
+    mon    slmon                0
+    em     emacs                1
+    1      zsh                  1
+    2      zsh                  2
+    3      zsh                  3
+    4      zsh                  4
+    5      zsh                  5
+    6      zsh                  6
+    7      zsh                  7
+    8      zsh                  8
+    9      zsh                  9
+    ifmon  iftop               10
+    mail   pine                11
+    im     centerim            12
+    irc    irssi               13
+    web    lynx                14
+    news   tin                 15
+    rss    snownews            16
+    trade  linuxtrade          17
+    cal    wyrd                18
+    calc   orpie               19
+    calc   rpncalc             19
+    spell  ispell              20
+EOF
+<<<<<<< HEAD
+=======
+    echo "Usage: $(basename $0) APPLICATION"
+    echo "Launch APPLICATION in a specific screen window."
+    echo "  APPLICATION options:"
+    echo "    app    application       window"
+    echo "    -----  ----------------  ------"
+    echo "    mon    top                  0"
+    echo "    mon    htop                 0"
+    echo "    mon    slmon                0"
+    echo "    em     emacs                1"
+    # echo "    1      bash                 1"
+    # echo "    2      bash                 2"
+    # echo "    3      bash                 3"
+    # echo "    4      bash                 4"
+    # echo "    5      bash                 5"
+    # echo "    6      bash                 6"
+    # echo "    7      bash                 7"
+    # echo "    8      bash                 8"
+    # echo "    9      bash                 9"
+    echo "    1      zsh                  1"
+    echo "    2      zsh                  2"
+    echo "    3      zsh                  3"
+    echo "    4      zsh                  4"
+    echo "    5      zsh                  5"
+    echo "    6      zsh                  6"
+    echo "    7      zsh                  7"
+    echo "    8      zsh                  8"
+    echo "    9      zsh                  9"
+    echo "    ifmon  iftop               10"
+    echo "    mail   pine                11"
+    echo "    im     centerim            12"
+    echo "    irc    irssi               13"
+    echo "    web    lynx                14"
+    echo "    news   tin                 15"
+    echo "    rss    snownews            16"
+    echo "    trade  linuxtrade          17"
+    echo "    cal    wyrd                18"
+    echo "    calc   rpncalc             19"
+    echo "    calc   orpie               19"
+    echo "    spell  ispell              20"
+    # echo "    dbm    hnb main            21"
+    # echo "    dbc    hnb contacts        22"
+    # echo "    dbq    hnb quotes          23"
+    # echo "    dbi    hnb information     24"
+>>>>>>> 6554bfc (Initial commit after splitting home configuration files into public and private repos)
+=======
+>>>>>>> a45a426 (Update)
+    exit 1
+fi
+
+case "$1" in
+    mon|top) screen -t mon 0 top ;;
+    htop) screen -t mon 0 htop ;;
+    slmon) screen -t mon 0 slmon ;;
+    em|emacs) screen -t emacs 1 emacs --no-site-file -nw ;;
+    ifmon|iftop) screen -t ifmon 10 nice iftop ;;
+    mail|pine) screen -t mail 11 pine ;;
+    im|centerim) screen -t im 12 centerim -a ;;
+    irc|irssi) screen -t irc 13 irssi ;;
+    web|lynx) screen -t web 14 lynx -book -useragent="Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)" ;;
+    news|tin) screen -t news 15 tin -r -q -g news.comcast.net ;;
+    #news|tin) screen -t news 15 tin -r -q -g news.usenetserver.com ;;
+    slrn) screen -t news 15 bash -c "sort -o ${HOME}/.slrn_gmane ${HOME}/.slrn_gmane ; slrn --nntp -n -h news.gmane.org -f ${HOME}/.slrn_gmane" ;;
+    rss|snownews) screen -t rss 16 snownews ;;
+    trade) screen -t trade 17 linuxtrade ;;
+    cal|wyrd) screen -t calendar 18 wyrd ;;
+<<<<<<< HEAD
+<<<<<<< HEAD
+    calc|orpie) screen -t calculator 19 orpie ;;
+    rpncalc) screen -t calculator 19 rpncalc ;;
+    spell|ispell) screen -t spell 20 ispell -a ;;
+=======
+    calc|rpncalc) screen -t calculator 19 rpncalc ;;
+    orpie) screen -t calculator 19 orpie ;;
+    spell|ispell) screen -t spell 20 ispell -a ;;
+    # dbm|hnbm) screen -t db-main 21 hnb ${HOME}/hnb/main.hnb ;;
+    # dbc|hnbc) screen -t db-contacts 22 hnb ${HOME}/hnb/contacts.hnb ;;
+    # dbq|hnbq) screen -t db-quotes 23 hnb ${HOME}/hnb/quotes.hnb ;;
+    # dbi|hnbi) screen -t db-info 24 hnb ${HOME}/hnb/information.hnb ;;
+    # 0) screen -t shell 0 bash ;;
+    # 1) screen -t shell 1 bash ;;
+    # 2) screen -t shell 2 bash ;;
+    # 3) screen -t shell 3 bash ;;
+    # 4) screen -t shell 4 bash ;;
+    # 5) screen -t shell 5 bash ;;
+    # 6) screen -t shell 6 bash ;;
+    # 7) screen -t shell 7 bash ;;
+    # 8) screen -t shell 8 bash ;;
+    # 9) screen -t shell 9 bash ;;
+    # 10) screen -t shell 10 bash ;;
+    # 11) screen -t shell 11 bash ;;
+    # 12) screen -t shell 12 bash ;;
+    # 13) screen -t shell 13 bash ;;
+    # 14) screen -t shell 14 bash ;;
+    # 15) screen -t shell 15 bash ;;
+    # 16) screen -t shell 16 bash ;;
+    # 17) screen -t shell 17 bash ;;
+    # 18) screen -t shell 18 bash ;;
+    # 19) screen -t shell 19 bash ;;
+    # 20) screen -t shell 20 bash ;;
+>>>>>>> 6554bfc (Initial commit after splitting home configuration files into public and private repos)
+=======
+    calc|orpie) screen -t calculator 19 orpie ;;
+    rpncalc) screen -t calculator 19 rpncalc ;;
+    spell|ispell) screen -t spell 20 ispell -a ;;
+>>>>>>> a45a426 (Update)
+    0) screen -t shell 0 zsh ;;
+    1) screen -t shell 1 zsh ;;
+    2) screen -t shell 2 zsh ;;
+    3) screen -t shell 3 zsh ;;
+    4) screen -t shell 4 zsh ;;
+    5) screen -t shell 5 zsh ;;
+    6) screen -t shell 6 zsh ;;
+    7) screen -t shell 7 zsh ;;
+    8) screen -t shell 8 zsh ;;
+    9) screen -t shell 9 zsh ;;
+    10) screen -t shell 10 zsh ;;
+    11) screen -t shell 11 zsh ;;
+    12) screen -t shell 12 zsh ;;
+    13) screen -t shell 13 zsh ;;
+    14) screen -t shell 14 zsh ;;
+    15) screen -t shell 15 zsh ;;
+    16) screen -t shell 16 zsh ;;
+    17) screen -t shell 17 zsh ;;
+    18) screen -t shell 18 zsh ;;
+    19) screen -t shell 19 zsh ;;
+    20) screen -t shell 20 zsh ;;
+    apps)
+        ${HOME}/bin/screen_app mon
+        ${HOME}/bin/screen_app emacs
+        ${HOME}/bin/screen_app mail
+        ${HOME}/bin/screen_app ifmon
+        ${HOME}/bin/screen_app im
+        ${HOME}/bin/screen_app irc
+        ${HOME}/bin/screen_app web
+        ${HOME}/bin/screen_app news
+        ${HOME}/bin/screen_app rss
+        ${HOME}/bin/screen_app trade
+        ${HOME}/bin/screen_app cal
+        ${HOME}/bin/screen_app calc
+        ${HOME}/bin/screen_app spell
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+        # ${HOME}/bin/screen_app dbm
+        # ${HOME}/bin/screen_app dbc
+        # ${HOME}/bin/screen_app dbq
+>>>>>>> 6554bfc (Initial commit after splitting home configuration files into public and private repos)
+=======
+>>>>>>> a45a426 (Update)
+        ;;
+    all)
+        ${HOME}/bin/screen_app mon
+        ${HOME}/bin/screen_app emacs
+        ${HOME}/bin/screen_app 2
+        ${HOME}/bin/screen_app 3
+        ${HOME}/bin/screen_app 4
+        ${HOME}/bin/screen_app 5
+        ${HOME}/bin/screen_app 6
+        ${HOME}/bin/screen_app 7
+        ${HOME}/bin/screen_app 8
+        ${HOME}/bin/screen_app 9
+        ${HOME}/bin/screen_app ifmon
+        ${HOME}/bin/screen_app mail
+        ${HOME}/bin/screen_app im
+        ${HOME}/bin/screen_app irc
+        ${HOME}/bin/screen_app web
+        ${HOME}/bin/screen_app news
+        ${HOME}/bin/screen_app rss
+        ${HOME}/bin/screen_app trade
+        ${HOME}/bin/screen_app cal
+        ${HOME}/bin/screen_app calc
+        ${HOME}/bin/screen_app spell
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+        # ${HOME}/bin/screen_app dbm
+        # ${HOME}/bin/screen_app dbc
+        # ${HOME}/bin/screen_app dbq
+>>>>>>> 6554bfc (Initial commit after splitting home configuration files into public and private repos)
+=======
+>>>>>>> a45a426 (Update)
+        ;;
+esac
+
+#===============================================================================
+# End of File
+#===============================================================================

@@ -1,0 +1,66 @@
+Simple X Hotkey Daemon Key Bindings for BSPWM
+---------------------------------------------
+
+General
+
+| Super | Alt | Ctrl | Shift | Key | Description           |
+|-------+-----+------+-------+-----+-----------------------|
+| Super |     |      | Shift | w   | Close node            |
+| Super |     |      | Shift | q   | Kill node             |
+| Super |     | Ctrl |       | m   | Toggle monocle layout |
+
+
+State and Flags
+
+| Super | Alt | Ctrl | Shift | Key | Description         |
+|-------+-----+------+-------+-----+---------------------|
+| Super |     | Ctrl |       | t   | Tiled layout        |
+| Super |     | Ctrl | Shift | t   | Pseudo-tiled layout |
+| Super |     | Ctrl |       | f   | Fullscreen layout   |
+| Super |     | Ctrl | Shift | f   | Floating layout     |
+| Super |     | Ctrl |       | m   | Marked flag         |
+| Super |     | Ctrl |       | x   | Locked flag         |
+| Super |     | Ctrl |       | y   | Sticky flag         |
+| Super |     | Ctrl |       | z   | Private flag        |
+
+Focus and Swap
+
+| Super | Alt | Ctrl | Shift | Key     | Description                    |
+|-------+-----+------+-------+---------+--------------------------------|
+| Super |     |      |       | i,Up    | Focus up node                  |
+| Super |     |      |       | k,Down  | Focus down node                |
+| Super |     |      |       | j,Left  | Focus left node                |
+| Super |     |      |       | l,Right | Focus right node               |
+| Super |     |      | Shift | i,Up    | Swap node up                   |
+| Super |     |      | Shift | k,Down  | Swap node down                 |
+| Super |     |      | Shift | j,Left  | Swap node right                |
+| Super |     |      | Shift | l,Right | Swap node left                 |
+| Super |     |      |       | period  | Circulate nodes forward        |
+| Super |     |      | Shift | period  | Swap node forward              |
+| Super |     |      |       | comma   | Circulate nodes backward       |
+| Super |     |      | Shift | comma   | Swap node backward             |
+| Super |     |      | Shift | g       | Swap node with first child     |
+| Super | Alt |      |       | l,Right | Focus next desktop             |
+| Super | Alt |      |       | j,Left  | Focus previous desktop         |
+| Super | Alt |      |       | i,Up    | Focus next monitor             |
+| Super | Alt |      |       | k,Down  | Focus previous monitor         |
+|       | Alt |      |       | Tab     | Focus next node in desktop     |
+|       | Alt |      | Shift | Tab     | Focus previous node in desktop |
+| Super |     |      |       | Tab     | Focus older node               |
+| Super |     |      | Shift | Tab     | Focus newer node               |
+|       | Alt |      |       | grave   | Focus last node                |
+| Super |     |      |       | grave   | Focus last desktop             |
+| Super |     |      |       | 1-9,0   | Focus given desktop            |
+| Super |     |      | Shift | 1-9,0   | Move node to given desktop     |
+
+Move and Resize
+
+| Super | Alt | Ctrl | Shift | Key    | Description               |
+|-------+-----+------+-------+--------+---------------------------|
+| Super |     | Ctrl |       | s      | Resize/move node mode [1] |
+| Super |     | Ctrl |       | b      | Balance nodes             |
+| Super |     | Ctrl |       | e      | Equalize nodes            |
+
+[1] After entering expand/contract/move window mode, use I, K, J, and L to
+    expand/contract the current window, and use Up, Down, Left, and Right
+    arrow keys to move a floating window around.  Press Esc to exit mode.

@@ -1,0 +1,181 @@
+#!/usr/bin/env bash
+#===============================================================================
+# make-ssl-certs
+#
+# Step you through the process of generating openssl keys and certs.
+#
+# Author: Kyle W T Sherman
+#===============================================================================
+
+# tell the user what is going to happen and
+# make sure some initial setup has occured
+
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a45a426 (Update)
+cat <<EOF
+Make SSL Certificates
+
+Make sure the following setup has already taken place...
+
+openssl must be installed:
+  apt-get -i openssl
+
+sign.sh must be installed:
+  cd /usr/local/bin
+  wget http://willert.dk/geek/files/sign.sh
+  chmod 755 /usr/local/bin/sign.sh
+
+the /etc/ssl/openssl.cnf file must be setup:
+  in the [ CA_default ] section change:
+    dir             = /etc/ssl
+  in the [ req_distinguished_name ] section put in your specifications:
+    countryName_default         = US
+    stateOrProvinceName_default = Minnesota
+    localityName_default        = Minneapolis
+    0.organizationName_default  = My Company
+    commonName_default          = mycompany.com
+    emailAddress_default        = postmaster@mycompany.com
+EOF
+<<<<<<< HEAD
+=======
+echo "Make SSL Certificates"
+echo
+echo "Make sure the following setup has already taken place..."
+echo
+echo "- openssl must be installed:"
+echo "    apt-get -i openssl"
+echo
+echo "- sign.sh must be installed:"
+echo "    cd /usr/local/bin"
+echo "    wget http://willert.dk/geek/files/sign.sh"
+echo "    chmod 755 /usr/local/bin/sign.sh"
+echo
+echo "- the /etc/ssl/openssl.cnf file must be setup:"
+echo "  - in the [ CA_default ] section change:"
+echo "      dir             = /etc/ssl"
+echo "  - in the [ req_distinguished_name ] section put in your specifications:"
+echo "      countryName_default             = US"
+echo "      stateOrProvinceName_default     = Minnesota"
+echo "      localityName_default            = Minneapolis"
+echo "      0.organizationName_default      = My Company"
+echo "      commonName_default              = mycompany.com"
+echo "      emailAddress_default            = postmaster@mycompany.com"
+echo
+>>>>>>> 6554bfc (Initial commit after splitting home configuration files into public and private repos)
+=======
+>>>>>>> a45a426 (Update)
+echo -n "Are you ready to start? [yN] " ; read a
+case "${a}" in
+    y|Y)
+        pushd /etc/ssl
+
+        echo
+        echo -n "Create private key? [yN] " ; read a
+        case "${a}" in
+            y|Y)
+                echo
+                echo "Create RSA private key with passphrase..."
+                echo "  openssl genrsa -des3 -out server.key 1024"
+                openssl genrsa -des3 -out server.key 1024
+                echo
+                echo "  mv server.key private/"
+                mv server.key private/
+                echo "  chmod 600 private/server.key"
+                chmod 600 private/server.key
+                ;;
+        esac
+
+        echo
+        echo -n "Create signing request? [yN] " ; read a
+        case "${a}" in
+            y|Y)
+                echo
+                echo "Create signing request (CSR)..."
+                echo "  Note: When prompted for Organization Name, use 'My Company CA' instead."
+                echo "        Or any name other than 'My Company', otherwise you will get an"
+                echo "        error when creating certs."
+                echo "  openssl req -new -key server.key -out server.csr"
+                openssl req -new -key private/server.key -out server.csr
+                ;;
+        esac
+
+        echo
+        echo -n "Create private key for CA? [yN] " ; read a
+        case "${a}" in
+            y|Y)
+                echo
+                echo "Create private key for CA..."
+                echo "  openssl genrsa -des3 -out ca.key 1024"
+                openssl genrsa -des3 -out ca.key 1024
+                echo
+                echo "  mv ca.key private/"
+                mv ca.key private/
+                echo "  chmod 600 private/ca.key"
+                chmod 600 private/ca.key
+                ;;
+        esac
+
+        echo
+        echo -n "Create CA certificate? [yN] " ; read a
+        case "${a}" in
+            y|Y)
+                echo
+                echo "Create self-signed CA certificate (x509) with the RSA key of the CA..."
+                echo "  openssl req -new -x509 -days 365 -key ca.key -out ca.crt"
+                openssl req -new -x509 -days 365 -key private/ca.key -out ca.crt
+                echo
+                echo "  mv ca.crt certs/"
+                mv ca.crt certs/
+                echo "  chmod 600 certs/ca.crt"
+                chmod 600 certs/ca.crt
+                ;;
+        esac
+
+        if [[ -e server.csr ]] ; then
+            echo
+            echo "Sign the certificate request (server.csr)..."
+            echo "  /usr/local/bin/sign.sh server.csr"
+            /usr/local/bin/sign.sh server.csr
+            echo
+            echo "  mv server.crt certs/"
+            mv server.crt certs/
+            echo "  chmod 600 certs/server.crt"
+            chmod 600 certs/server.crt
+            echo
+            echo "Clean up..."
+            echo "  rm -f server.csr"
+            rm -f server.csr
+        fi
+
+        echo
+        echo -n "Create unencryped CA certificate? [yN] " ; read a
+        case "${a}" in
+            y|Y)
+                echo
+                echo "Create self-signed unencrypted CA certificate..."
+                echo "  openssl rsa -in private/ca.key -out private/ca.pkey"
+                openssl rsa -in private/ca.key -out private/ca.pkey
+                echo
+                echo "  chmod 600 private/ca.pkey"
+                chmod 600 private/ca.pkey
+                echo "  cp -p private/ca.pkey certs/ca_pkey.crt"
+                cp -p private/ca.pkey certs/ca_pkey.crt
+                echo "  cat certs/ca.crt >> certs/ca_pkey.crt"
+                cat certs/ca.crt >> certs/ca_pkey.crt
+                echo
+                echo "For imaps, copy certs/ca_pkey.crt to certs/imapd.pem"
+                ;;
+        esac
+
+        popd
+
+        echo
+        echo "Done"
+        ;;
+esac
+
+#===============================================================================
+# End of File
+#===============================================================================

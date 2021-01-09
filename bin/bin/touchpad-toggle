@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+#===============================================================================
+# touchpad-toggle
+#
+# Toggle the Synaptic Touchpad on and off.
+#
+# Author: Kyle W T Sherman
+#===============================================================================
+
+state=$(synclient -l | grep TouchpadOff | sed 's/^.* = //')
+
+if [[ $state -eq 1 ]] ; then
+    synclient TouchpadOff=0
+else
+    synclient TouchpadOff=1
+fi
+
+#===============================================================================
+# End of File
+#===============================================================================

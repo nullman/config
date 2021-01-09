@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+#===============================================================================
+# uuid-xml
+#
+# Print a uuid (guid) in Java serialized XML.
+#
+# Author: Kyle W T Sherman
+#===============================================================================
+
+class=UuidXml
+
+# class must be in local directory
+(cd $(dirname $0) && java ${class}) || \
+  echo "Could not find ${class}.class; it must be in the same directory as $(basename $0)"
+
+#===============================================================================
+# End of File
+#===============================================================================

@@ -1,0 +1,61 @@
+conky.config = {
+        alignment = 'bottom_left',
+        background = true,
+        color2 = '2ECC71',
+        cpu_avg_samples = 2,
+        default_color = 'E0E2E3',
+        double_buffer = true,
+        font = 'Bitstream Vera Sans:size=12',
+        gap_x = 25,
+        gap_y = 45,
+        minimum_width = 400,
+        no_buffers = true,
+        own_window = true,
+        own_window_class = 'Conky',
+        own_window_type = 'desktop',
+        own_window_transparent = true,
+        update_interval = 2.0,
+        update_interval_on_battery = 10.0,
+        use_xft = true,
+}
+conky.text = [[
+${alignc}${font Bitstream Vera Sans:bold:size=16}K E Y   B I N D I N G S${font}
+${color2}${hr}${color}
+[Super] + Esc  ${alignr}Application Menu
+[Alt] + Space  ${alignr}Window Menu
+[Super/Alt] + Tab  ${alignr}Next Window
+[Super/Alt + Shift] + Tab  ${alignr}Previous Window
+[Super + Alt] + L/R  ${alignr}Goto L/R Desktop
+[Super + Shift] + L/R  ${alignr}Send to L/R Desktop
+[Super] + 1..0  ${alignr}Goto NUM Desktop
+[Super + Shift] + 1..0  ${alignr}Send to NUM Desktop
+[Super + Shift] + D  ${alignr}Toggle Show Desktop
+[Super + Shift] + W  ${alignr}Close Window
+[Super + Shift] + Q  ${alignr}Kill Window
+[Super] + I/K/J/L  ${alignr}Focus Window
+[Super + Shift] + I/K/J/L  ${alignr}Move Window
+[Super + Control] + I/K/J/L  ${alignr}Resize Window
+[Super + Alt] + Up  ${alignr}Toggle Maximize
+[Super + Alt] + Down  ${alignr}Iconify
+[Super + Alt] + F  ${alignr}Toggle Fullscreen
+[Super + Alt] + R  ${alignr}Resize
+[Super + Alt] + M  ${alignr}Move
+[Super + Shift] + R  ${alignr}Reload Key Bindings
+[Super + Shift] + T  ${alignr}Reload Tint
+[Super + Shift] + E  ${alignr}Lock, Logout, Reboot, Shutdown
+[Super + Shift] + P  ${alignr}X-Prop
+[Super + Shift] + Delete  ${alignr}X-Kill
+[Super + Alt] + Print  ${alignr}Screen Shapshot
+[Super + Control] + Print  ${alignr}Window Shapshot
+[Super + Shift] + Print  ${alignr}Region Shapshot
+[Super + Alt] + T/Return  ${alignr}Terminal
+[Super + Alt] + Space  ${alignr}Rofi: drun
+[Super + Alt] + D  ${alignr}Rofi: run
+[Super + Alt] + S  ${alignr}Screensaver
+[Super + Alt] + X  ${alignr}Screensaver Lock
+[Super + Control + Alt] + M  ${alignr}MPC Toggle
+[Super + Control + Alt] + ,  ${alignr}MPC Prev
+[Super + Control + Alt] + .  ${alignr}MPC Next
+[Super + Control + Alt] + \  ${alignr}MPC Playing
+[Super + Alt] + H  ${alignr}Show Key Bindings
+]]

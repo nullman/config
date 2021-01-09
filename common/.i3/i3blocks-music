@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+# MPD Currently Playing Status
+#
+# Uses mpc to query the mpd server to get the status of the currently playing
+# song.
+
+mpc="$(mpc)"
+#echo "${mpc}"
+
+case "${BLOCK_BUTTON}" in
+    1) playerctl previous ;;
+    2) playerctl play-pause ;;
+    3) playerctl next ;;
+esac
+
+if [[ $(echo "${mpc}" | wc -l) == 3 ]] ; then
+    song=$(echo "${mpc}" | sed -n 1p)
+    #echo "${song}"
+    status=$(echo "${mpc}" | sed -n 2p)
+    #echo "${status}"
+    playpause=$(echo "${status}" | sed 's/^\[\(.*\)\].*$/\1/')
+    #echo "${playpause}"
+    num=$(echo "${status}" | sed 's/^.*#\([^ ]*\).*$/\1/')
+    #echo "${num}"
+    pct=$(echo "${status}" | sed 's/^.*(\(.*\)).*$/\1/')
+    pct="0${pct}"
+    pct="${pct: -3}"
+    #echo "${pct}"
+    if [[ "${playpause}" == "playing" ]] ; then
+        #echo "${song}  ${num}  ${pct}"
+        #echo "${song} ${num} ${pct} ⏵"
+        echo "${song} ${num} ${pct}  "
+    elif [[ "${playpause}" == "paused" ]] ; then
+        #echo "${song}  ${num}  ${pct}"
+        #echo "${song} ${num} ${pct} ⏸"
+        echo "${song} ${num} ${pct}  "
+    else
+        echo "${song}"
+    fi
+else
+    echo "-"
+fi

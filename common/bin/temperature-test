@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+#===============================================================================
+# temperature-test
+#
+# Run a temperature test.
+#
+# Dependencies: lm_sensors sysbench
+#
+# (Based on Christopher Barnatt's version found in his ExplainingComputers
+# videos on Youtube.)
+#
+# Author: Kyle W T Sherman
+#===============================================================================
+
+COUNT=6
+SARGS=
+
+# check for prerequisite applicaitons
+[[ -z "$(command -v sensors)" ]] && echo "lm_sensors is not installed!" && exit 1
+[[ -z "$(command -v sysbench)" ]] && echo "sysbench is not installed!" && exit 1
+
+# args
+while [[ $# -gt 0 ]] ; do
+    key="$1"
+    case "${key}" in
+        -c|--count)
+            COUNT="$2"
+            shift
+            shift
+            ;;
+        -f|--fahrenheit)
+            SARGS="$1"
+            shift
+            ;;
+        *)
+            help=true
+            shift
+            ;;
+    esac
+done
+
+# help
+if [[ "${help}" == "true" ]] ; then
+    echo "Usage: $(basename $0) [OPTIONS]"
+    echo "  OPTIONS:"
+    echo "    -c, --count       Number of 10 second tests to run [6]"
+    echo "    -f, --fahrenheit  Show temperatures in degrees fahrenheit"
+    exit 1
+fi
+
+get-temp()
+{
+    sensors ${SARGS} | grep "^Package id 0:" | sed 's/^Package id 0: \+// ; s/ \+(high.*$//'
+    #sensors ${SARGS} | grep "^Core 0" | sed 's/^Core 0: \+// ; s/ \+(high.*$//'
+}
+
+threads="$(lscpu -p | grep -v "^#" | wc -l)"
+
+echo "Performing CPU temperature test on ${threads} threads..."
+
+for x in $(seq ${COUNT}) ; do
+    c="00000${x}"
+    echo -n "[${c: $((-${#COUNT}))}/${COUNT}] "
+    get-temp $1
+    sysbench --test=cpu --cpu-max-prime=25000 --num-threads=${threads} run > /dev/null 2>&1
+done
+
+get-temp $1
+
+#===============================================================================
+# End of File
+#===============================================================================

@@ -1,0 +1,28 @@
+#===============================================================================
+# .config/systemd/user/barrier.service
+#
+# Configuration for systemd user barrier service.
+#
+# Enable:   systemctl --user enable barrier.service
+# Start:    systemctl --user start barrier.service
+# Stop:     systemctl --user stop barrier.service
+# Disable:  systemctl --user disable barrier.service
+#
+# Reference:  https://wiki.archlinux.org/index.php/Systemd/User
+#===============================================================================
+
+[Unit]
+Description=Barrier (barrier)
+
+[Service]
+#ExecStart=/bin/bash -c 'exec /usr/bin/barrierc --no-daemon --debug INFO --enable-crypto --enable-drag-drop [dozer]:24800 </dev/zero'
+ExecStart=/sbin/barrier
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=default.target
+
+#===============================================================================
+# End of File
+#===============================================================================

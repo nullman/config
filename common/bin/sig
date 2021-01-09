@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+#===============================================================================
+# sig
+#
+# Output a signature for use in email sending apps.
+#
+# Author: Kyle W T Sherman
+#===============================================================================
+
+echo "Kyle Sherman"
+echo "Director of Department of Redundancy Department"
+echo "Email: echo 'xlyrjfurezna~tznvy:pbz' | tr A-Za-z@.~: N-ZA-Mn-za-m~:@."
+echo "Web: http://nullman.net"
+echo
+fortune
+
+#===============================================================================
+# End of File
+#===============================================================================

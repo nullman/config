@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Dosbox Windows 95
+Comment=Emulator with builtin DOS for running DOS Games
+Exec=sh -c 'dosbox -conf ${HOME}/.dosbox/dosbox-0.74-3.conf -conf ${HOME}/.dosbox/dosbox-win95.conf'
+Icon=dosbox
+Terminal=false
+StartupNotify=false
+Categories=Application;Game;

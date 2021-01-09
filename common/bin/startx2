@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+#===============================================================================
+# startx2
+#
+# Launch a second X environment.
+#
+# Author: Kyle W T Sherman
+#===============================================================================
+
+if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+    echo "Usage: $(basename $0) COMMAND..."
+    echo "Launch a second X environment and run COMMANDs."
+    echo "Example: cd /path/to/halflife ; $0 wine -- hl.exe -console"
+    exit 1
+fi
+
+xconf="XF86Config2"
+xid="1"
+
+# xinit script - defaults to black box
+echo -n '# xinit script
+#!/usr/bin/env bash
+blackbox & wmpid=$!
+xterm -e ' > "${HOME}/.xinit2"
+echo -n "$@" >> "${HOME}/.xinit2"
+echo -n '
+wait $wmpid
+' >> "${HOME}/.xinit2"
+
+chmod +x "${HOME}/.xinit2"
+
+xinit "${HOME}/.xinit2" -- :${xid} -xf86config ${xconf} bc -ac
+
+#===============================================================================
+# End of File
+#===============================================================================

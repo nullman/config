@@ -1,0 +1,274 @@
+#!/usr/bin/env bash
+#===============================================================================
+# .config/bspwm/bspwmrc
+#
+# Configuration Binary Space Partitioning Window Manager (bspwm).
+#
+# Reference:  https://github.com/baskerville/bspwm
+# Reference:  https://gitlab.com/protesilaos/dotfiles/-/blob/v2.2.0/bspwm/.config/bspwm/bspwmrc
+#===============================================================================
+
+# bspc config
+_bc()
+{
+    bspc config "$@"
+}
+
+# bspc rule --add
+_ba()
+{
+    bspc rule --add
+}
+
+#-------------------------------------------------------------------------------
+# Monitors
+#-------------------------------------------------------------------------------
+
+#bspc monitor -d 1 2 3 4 5 6 7 8 9 10
+bspc monitor -d "1 " "2 " "3 " "4 " "5 " "6 " "7 " "8 " "9 " "10 "
+
+#-------------------------------------------------------------------------------
+# Configuration
+#-------------------------------------------------------------------------------
+
+# global settings
+_bc split_ratio                0.50
+_bc automatic_scheme           alternate
+_bc borderless_monocle         false
+_bc gapless_monocle            false
+_bc single_monocle             true
+_bc click_to_focus             any
+_bc swallow_first_click        false
+_bc focus_follows_pointer      false
+_bc pointer_follows_monitor    true
+_bc ignore_ewmh_focus          true
+_bc ignore_ewmh_fullscreen     none
+_bc ignore_ewmh_struts         false
+_bc center_pseudo_tiled        true
+_bc honor_size_hints           true
+_bc remove_disabled_monitors   true
+_bc remove_unplugged_monitors  true
+_bc merge_overlapping_monitors true
+
+# monitor and desktop settings
+_bc top_padding                0
+_bc right_padding              0
+_bc bottom_padding             30
+_bc left_padding               0
+
+# desktop settings
+_bc window_gap                 5
+
+# node settings
+_bc border_width               2
+
+# pointer bindings
+_bc pointer_modifier           mod4
+_bc pointer_action1            move
+_bc pointer_action2            resize_side
+_bc pointer_action3            resize_corner
+
+# default colors
+#_bc normal_border_color   "#30302f"
+#_bc active_border_color   "#474645"
+#_bc focused_border_color  "#817f7f"
+#_bc presel_feedback_color "#f4d775"
+
+# custom colors
+_bc normal_border_color   "#4c566a"
+_bc active_border_color   "#1e1e1e"
+_bc focused_border_color  "#5e81ac"
+_bc presel_feedback_color "#5e81ac"
+
+#-------------------------------------------------------------------------------
+# Status Bar
+#-------------------------------------------------------------------------------
+
+# status bar hidden when fullscreen
+#xdo above -t $(xdo id -n root) $(xdo id)
+
+#-------------------------------------------------------------------------------
+# Application Rules
+#-------------------------------------------------------------------------------
+
+# desktop assignments
+#_ba URxvt desktop='^1' follow=on
+#_ba Alacritty desktop='^1' follow=on
+#_ba Termite desktop='^1' follow=on
+_ba emacs desktop='^2' follow=on
+_ba slack desktop='^3' follow=on
+_ba thunderbird desktop='^3' follow=on
+_ba android-messages-desktop desktop='^3' follow=on
+_ba firefox desktop='^4' follow=on
+_ba chromium desktop='^4' follow=on
+_ba google-chrome desktop='^4' follow=on
+_ba gopherus-sdl desktop='^4' follow=on
+_ba pcmanfm desktop='^5' follow=on
+_ba org.gnome.nautilus desktop='^5' follow=on
+_ba thunar desktop='^5' follow=on
+_ba transmission-gtk desktop='^5' follow=on
+_ba balena-etcher-electron desktop='^5' follow=on
+_ba ghb desktop='^5' follow=on
+_ba jetbrains-idea desktop='^6' follow=on
+_ba jetbrains-idea-ce desktop='^6' follow=on
+_ba jetbrains-studio desktop='^6' follow=on
+_ba doxbox desktop='^6' follow=on
+_ba BasiliskII desktop='^6' follow=on
+_ba VirtualBox Manager desktop='^6' follow=on
+_ba VirtualBox Machine desktop='^6' follow=on
+_ba discord desktop='^7' follow=on
+_ba 'Hyperspace Desktop' desktop='^7' follow=on
+_ba Tootle desktop='^7' follow=on
+_ba com.github.bleakgrey.tootle desktop='^7' follow=on
+_ba gimp-2.10 desktop='^8' follow=on
+_ba Lollypop desktop='^8' follow=on
+_ba lbry desktop='^9' follow=on
+_ba bluejeans-v2 desktop='^9' follow=on
+_ba 'Microsoft Teams' desktop='^9' follow=on
+_ba syncterm desktop='^10' follow=on
+
+# tiled applications
+_ba emacs state=tiled
+
+# fullscreen applications
+_ba bluejeans-v2 state=fullscreen
+_ba ghb state=fullscreen
+_ba gimp-2.10 state=fullscreen
+_ba inkscape state=fullscreen
+_ba jetbrains-idea state=fullscreen
+_ba jetbrains-idea-ce state=fullscreen
+_ba jetbrains-studio state=fullscreen
+#_ba lbry state=fullscreen
+#_ba 'Microsoft Teams' state=fullscreen
+_ba mplayer2 state=fullscreen
+#_ba spotify state=fullscreen
+_ba vlc state=fullscreen
+_ba 'VirtualBox Manager' state=fullscreen
+_ba 'VirtualBox Machine' state=fullscreen
+
+# floating applications
+_ba arandr state=floating center=true
+_ba balena-etcher-electron state=floating center=true
+_ba BasiliskII state=floating center=true
+_ba dosbox state=floating center=true
+_ba feh state=floating center=true
+_ba font-manager state=floating center=true
+_ba font-viewer state=floating center=true
+_ba galculator state=floating center=true
+_ba gnome-disks state=floating center=true
+_ba gpartedbin state=floating center=true
+_ba gxmessage state=floating center=true
+_ba lxappearance state=floating center=true
+_ba manjaro-settings-manager state=floating center=true
+_ba mpv state=floating center=true sticky=on
+_ba nitrogen state=floating center=true
+_ba oblogout state=floating center=true
+_ba pamac-manager state=floating center=true
+_ba paprefs state=floating center=true
+_ba pavucontrol state=floating center=true
+_ba syncterm state=floating center=true
+_ba tint2conf state=floating center=true
+_ba x48 state=floating center=true
+_ba xfce4-settings-manager state=floating center=true
+_ba yad state=floating center=true
+
+#-------------------------------------------------------------------------------
+# Auto-Start Standard Applications
+#-------------------------------------------------------------------------------
+
+# delay before launching applets
+delay=2
+
+# check if executable command is found in the path
+_command()
+{
+    command -v "$1" > /dev/null 2>&1
+}
+
+# delay running a command (SECONDS COMMAND)
+_delay()
+{
+    delay=$1
+    shift
+    sleep ${delay} && eval "$@"
+}
+
+# simple x hotkey daemon (both standard and bspwm key bindings)
+_command sxhkd && sxhkd -c "${HOME}"/.config/sxhkd/sxhkdrc{,-bspwm} &
+
+# xfce settings
+#_command xfsettingsd && xfsettingsd &
+
+# ssh-agent
+#_command ssh-agent && ssh-agent &
+#_command ssh-add && ssh-add &
+
+# key bindings
+#xmodmap "${HOME}/.xmodmaprc" &
+#set-xkb &
+#xbindkeys &
+
+# gnome policykit authentation agent
+[[ -x /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 ]] && /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+# gnome keyring
+#eval "$(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg)" &
+# lx policykit authentation agent
+#_command lxpolkit && lxpolkit &
+
+# compositor
+#_command manjaro-compositor && manjaro-compositor --start &
+_command compton && compton -c &
+
+# system bars
+#_command manjaro-tint2-session && manjaro-tint2-session &
+#_command polybar && polybar -c ${HOME}/.config/polybar/config openbox-bar &
+_command tint2 && (tint2 && xdo above -t $(xdo id -n root) $(xdo id)) &
+
+# system bar applets
+_command clipit && _delay ${delay} pgrep clipit > /dev/null || clipit &
+_command pa-applet && _delay ${delay} pgrep pa-applet > /dev/null || pa-applet &
+_command blueman-applet && _delay ${delay} pgrep blueman-applet > /dev/null || blueman-applet &
+_command nm-applet && _delay ${delay} pgrep nm-applet > /dev/null || nm-applet &
+_command pamac-tray && _delay ${delay} pgrep pamac-tray > /dev/null || pamac-tray &
+_command xfce4-power-manager && _delay ${delay} pgrep xfce4-power-manager > /dev/null || xfce4-power-manager &
+#_command volumeicon && _delay ${delay} pgrep volumeicon > /dev/null || volumeicon &
+#_command sbxkb && _delay ${delay} pgrep sbxkb > /dev/null || sbxkb &
+
+# system info and key bindings on wallpaper
+#_command manjaro-conky-session && manjaro-conky-session &
+_command conky && conky --config="${HOME}/.config/conky/system-info.conkyrc" &
+_command conky && conky --config="${HOME}/.config/conky/bspwm-keybindings.conkyrc" &
+
+# full-screen task-switcher
+#_command skippy-xd && skippy-xd --config "${HOME}/.config/skippy-xd/skippy-xd.rc" --start-daemon &
+
+# localize user system folders
+#_command xdg-user-dirs-gtk-update && xdg-user-dirs-gtk-update &
+
+# enable numlock [do not use on laptops without numpads]
+#_command numlockx && numlockx &
+
+# screen saver
+#_command xautolock && xautolock -time 30 -locker blurlock & # lock screen after 30 minutes
+
+# tell firefox to match theme
+#_command ff-theme-util && ff-theme-util &
+
+# set cursor theme
+_command fix_xcursor && fix_xcursor &
+
+# hide mouse when not in use
+_command unclutter && unclutter &
+
+# wallpaper manager
+_command nitrogen && nitrogen --restore &
+
+# rebuild wm menu
+#sleep 10 && _command mmaker && mmaker --force openbox &
+
+# auto-start custom applications
+[[ -f "${HOME}/.bspwm-applications" ]] && source "${HOME}/.bspwm-applications"
+
+#===============================================================================
+# End of File
+#===============================================================================

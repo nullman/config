@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+#===============================================================================
+# emacsvied
+#
+# Run emacs if the emacs server is running or vi editor otherwise.
+#
+# Author: Kyle W T Sherman
+#===============================================================================
+
+WAIT=1 VI=1 emacsed "$@"
+if [[ -x "$(command -v vim)" ]] ; then
+    emacsclient --no-wait --alternate-editor "vim" "$@"
+elif [[ -x "$(command -v vi)" ]] ; then
+    emacsclient --no-wait --alternate-editor "vi" "$@"
+else
+    echo "Could not find an editor"
+fi
+
+#===============================================================================
+# End of File
+#===============================================================================

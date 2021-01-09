@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+#===============================================================================
+# mod-ftp
+#
+# Modify the file permissions and ownership of various ftp dirs.
+#
+# An entry in cron should execute this script every n minutes.
+#
+# Author: Kyle W T Sherman
+#===============================================================================
+
+datadir="/mnt/morpheus/data1"
+
+# chown & chmod media dirs
+
+chown -R -f admin:admin ${datadir}/media/*
+chown -f admin:users ${datadir}/incoming
+chgrp -R -f admin ${datadir}/incoming/*
+chown -f admin:users ${datadir}/incoming/mp3
+
+chmod -R -f u=rwX,g=rX,o=rX ${datadir}/media/*
+chmod -f u=rwX,g=rXs,o=rX ${datadir}/incoming
+chmod -f u=rwX,g=rXs,o=rX ${datadir}/incoming/mp3
+
+#===============================================================================
+# End of File
+#===============================================================================

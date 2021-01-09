@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+#===============================================================================
+# bash-prompt
+#
+# Set the bash shell prompt.
+#
+# Put the current directory in the upper right corner.
+#
+# Author: Kyle W T Sherman
+#===============================================================================
+
+prompt_command ()
+{
+    # save current position
+    tput sc
+
+    # determine dir location
+    x=$(($(tput cols) - $(echo $(pwd) | wc -m) - 2))
+
+    # position cursor at Y=0, X=x
+    tput cup 0 ${x}
+
+    # set color of opening bracket (blue)
+    tput setaf 4
+    tput bold
+
+    # print opening bracket
+    echo -n "["
+
+    # set color of current path (cyan)
+    tput setaf 6
+
+    # print path
+    echo -n "$(pwd)"
+
+    # set color of closing bracket (blue)
+    tput setaf 4
+    tput bold
+
+    # print closing bracket
+    echo -n "]"
+
+    # return cursor to saved position
+    tput rc
+}
+
+PROMPT_COMMAND=prompt_command
+
+GREEN="\[$(tput setaf 2 ; tput bold)\]"
+BLUE="\[$(tput setaf 4 ; tput bold)\]"
+NO_COLOR="\[$(tput sgr0)\]"
+
+case "${TERM}" in
+    xterm*|rxvt*|urxvt*|gnome-terminal&|alacritty*|termite*|terminator*) TITLEBAR='\[\033]0;\h:\u \007\]' ;;
+    *) TITLEBAR="" ;;
+esac
+
+PS1="${TITLEBAR}${GREEN}\h:\u ${BLUE}\$${NO_COLOR} "
+PS2='> '
+PS4='+ '
+
+#===============================================================================
+# End of File
+#===============================================================================

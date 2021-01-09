@@ -1,0 +1,108 @@
+#!/usr/bin/env bash
+#=============================================================================
+# .bashrc
+#
+# Bash Config
+#
+# Author: Kyle W T Sherman
+#=============================================================================
+
+# check if executable command is found in the path
+_command()
+{
+    command -v "$1" > /dev/null 2>&1
+}
+
+# check if running in windows os
+_iswindows()
+{
+    [[ "${OS}" == "Windows_NT" ]]
+}
+
+# keep original TERM value for scripts to use
+export REAL_TERM="${TERM}"
+# act like xterm with color support
+export TERM="xterm-256color"
+
+# only run if terminal is interactive
+[[ "$-" == "*i*" ]] && return 0
+
+# add to the run path
+export runpath="${runpath}:${HOME}/.bashrc"
+logger "Running: ${HOME}/.bashrc"
+
+# set environmental vars
+export SHELL="/bin/bash"
+
+# command history
+export HISTFILE="${HOME}/.cache/bash_history"
+export HISTSIZE="10000"
+export SAVEHIST="10000"
+export HISTCONTROL="ignoredups"
+export HISTORY_IGNORE="(ls|pwd|history|h|cd|cd -|cd ..|cdd|exit|reboot|sudo reboot)"
+shopt -s histappend    # allow multiple terminals to write to the history file
+
+# set prompt
+if [[ -n "${INSIDE_EMACS}" ]] ; then
+    # set emacs prompt to: host:user path (git-branch) $
+    #export PS1="\h:\u \w\$(gitbranchprompt)\\$ "
+    # set emacs prompt to: path (git-branch) $
+    export PS1="\w\$(gitbranchprompt) \\$ "
+else
+    # set terminal prompt to: host:user path $
+    #export PS1="${COLOR_LIGHT_GREEN}\h:\u ${COLOR_LIGHT_BLUE}\w ${COLOR_YELLOW}\\$ ${COLOR_DEFAULT}"
+    # set terminal prompt to: host:user path (git-branch) $
+    export PS1="${COLOR_LIGHT_GREEN}\h:\u ${COLOR_LIGHT_BLUE}\w${COLOR_CYAN}\$(gitbranchprompt) ${COLOR_YELLOW}\\$ ${COLOR_DEFAULT}"
+fi
+
+# other prompts
+# set prompt to: host:user path $
+#export PS1="\h:\u \w \\$ "
+# set prompt to: host:user path $ [with colors]
+#export PS1="\[\033[01;32m\]\h:\u \[\033[01;34m\]\w \\$ \[\033[00m\]"
+# set prompt to: host:user(window) path $
+#export PS1="\[\033[01;32m\]\h:\u(${WINDOW:+${WINDOW}}) \[\033[01;34m\]\w \\$ \[\033[00m\]"
+# set terminal window titles
+#export PS1="${PS1}\[\e]0;\h:\u:\w\a\]"
+# manjaro i3
+#export PS1="\[\033[1;32m\]\h:\u \[\033[1;34m\]\w \[\033[1;33m\]\$ \[\033[0m\]"
+
+# stty commands should only run on interactive terminals
+if [[ "$-" == "*i*" ]] ; then
+    # make backspace key work in terminal
+    #stty erase ^H
+    #stty erase ^?
+    #[[ -z "$(greppr erase)" ]] || stty erase $(getpr erase)
+
+    # set tabs
+    _command stty && stty tabs
+fi
+
+# make terminals not beep
+_iswindows || _command setterm && setterm -blength 0 > /dev/null 2>&1
+
+# set umask
+umask 0022
+
+# turn on auto cd
+shopt -s autocd
+
+# check window size
+shopt -s checkwinsize
+
+# source profile
+[[ -f "${HOME}/.profile" ]] && source "${HOME}/.profile" 2>&1
+
+# run bash completion
+[[ -x "/etc/bash-completion" ]] && source "/etc/bash-completion" 2>&1
+
+# perl modules
+#PATH="/home/kyle/perl5/bin${PATH:+:${PATH}}"; export PATH;
+#PERL5LIB="/home/kyle/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+#PERL_LOCAL_LIB_ROOT="/home/kyle/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+#PERL_MB_OPT="--install_base \"/home/kyle/perl5\""; export PERL_MB_OPT;
+#PERL_MM_OPT="INSTALL_BASE=/home/kyle/perl5"; export PERL_MM_OPT;
+
+#===============================================================================
+# End of File
+#===============================================================================

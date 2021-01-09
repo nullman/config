@@ -1,0 +1,395 @@
+#!/usr/bin/env bash
+#===============================================================================
+# menu
+#
+# Menu of commands to run.
+#
+# Use bash and tput to output a menu.
+#
+# The menu list comes from `~/.menu' or the first parameter.
+#
+# Run this script with the `--create' option to generate an initial menu list.
+# See that file for details on its format.
+#
+# Author: Kyle W T Sherman
+#
+# Copyright (C) 2006 Kyle W T Sherman
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+#===============================================================================
+
+# default menu file location
+menufile="${HOME}/.menu"
+
+# set initial values
+boldon=smso
+boldoff=rmso
+cols=$(tput cols)
+row=0
+oldrow=0
+maxrow=0
+section="main"
+key=""
+
+# get parameters
+while [[ -n "$1" ]] ; do
+
+    case "$1" in
+
+        -h|--help)
+        # usage
+            echo "Usage: $(basename $0) [OPTION] [FILE]"
+            echo "Present user with a menu of commands to run."
+            echo "  OPTION is one of:"
+            echo "    -c, --create   create an initial menu file"
+            echo "    -s, --section  start in a specific section"
+            echo "    -h, --help     this help info"
+            echo "    -l, --license  licensing info"
+            echo "  FILE  menu definitions file (defaults to '~/.menu')."
+            exit 1
+            ;;
+
+        -l|--license)
+        # usage
+            echo "License:"
+            cat <<EOF
+  Copyright (C) 2006 Kyle W T Sherman
+
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+EOF
+            exit 0
+            ;;
+
+        -c|--create)
+            shift
+            # create new menu file
+            if [[ $# -gt 0 ]] ; then
+                menufile="$1"
+                shift
+            fi
+            if [[ -e "${menufile}" ]] ; then
+                echo "Cannot create '${menufile}' because that file already exists"
+                exit 1
+            fi
+            cat > ${menufile} <<EOF
+# menu file
+
+# Sections start with a name that ends with a colon and end with an empty
+# line.  Leading whitespace is ignored for both section names are items.
+# The main section must always exist and builds the main (first) menu.
+# Menu items consist of display text, folowed by a pipe delimiter, folowed by
+# either a command to execute or another section name starting with a colon or
+# another menu file to load starting with an explaination point.
+
+main:
+  Browsers          ->|:browser
+  Email             ->|:email
+  Messagers         ->|:im
+  IRC               ->|:irc
+  Editors           ->|:edit
+  Applications      ->|:app
+  Utilities         ->|:util
+  Media             ->|:media
+  Games             ->|:game
+  Games (MAME)      ->|:mame
+  Terminals         ->|:term
+  Screen Saver      ->|:ssaver
+
+browser:
+  Firefox|firefox
+  Opera|opera
+  Mozilla|mozilla
+  Epiphany|epiphany
+  Konqueror|konqueror
+  Lynx|xterm -e lynx
+  Links|xterm -e links
+
+email:
+  Pine|pine
+  Thunderbird|thunderbird
+  Mutt|mutt
+  Mail|mail
+
+im:
+  CenterIM|centerim
+  Gaim|gaim
+
+irc:
+  CenterIM|centerim
+  Gaim|gaim
+
+edit:
+  Emacs|xterm -e emacs
+  Vim|xterm -e vim
+  Vi|xterm -e vi
+
+app:
+  OpenOffice|ooffice
+  FreeMind|freemind
+
+util:
+  clockywock (clock)|xterm -e clockywock
+  #orpie (rpn calculator)|xterm -e orpie
+  rpncalc (rpn calculator)|xterm -e rpncalc
+  curscpu (cpu monitor)|xterm -e curscpu
+  top (cpu monitor)|xterm -e top
+  slmon (cpu monitor)|xterm -e slmon
+
+media:
+  mp3blaster|mp3blaster
+
+game:
+  CXMAME|cxmame
+  PySol (solitare)|pysol
+  Frozen Bubble|froxen-bubble
+  Solar Wolf|solarwolf
+  Ice Breaker|icebreaker
+  cboard (chess)|xterm -e cboard
+
+mame:
+  CXMAME|cxmame
+  Ms Pacman|xmame.x11 mspacman
+
+term:
+  XTerm|xterm $(cat ${HOME}/.xterm_options)
+  Screen (connect)|xterm $(cat ${HOME}/.xterm_options ; echo -n "-e screen -x")
+  Screen (restart)|xterm $(cat ${HOME}/.xterm_options ; echo -n "-e screen -A -D -RR")
+
+ssaver:
+  xscreensaver|xscreensaver-command -lock
+  xscreensaver setup|xscreensaver-demo
+  xscreensaver on|rm -f ${HOME}/.noscreensaver ; source ${HOME}/bin/ssaverauto
+  xscreensaver off|touch ${HOME}/.noscreensaver ; fuser -k -SIGTERM /home/kyle/bin/ssaver ; fuser -k -SIGTERM /usr/bin/xscreensaver ; fuser -k -SIGTERM /usr/bin/xlock ; fuser -k -SIGTERM /usr/bin/electricsheep ; fuser -k -SIGKILL /home/kyle/bin/ssaver ; fuser -k -SIGKILL /usr/bin/xscreensaver ; fuser -k -SIGKILL /usr/bin/xlock ; fuser -k -SIGKILL /usr/bin/electricsheep
+  xlock|xlock -mode flame
+EOF
+            exit 0
+            ;;
+
+        -s|--section)
+            shift
+            # get section name from parameter if one is given
+            if [[ $# -gt 0 ]] ; then
+                section="$1"
+                shift
+            fi
+            ;;
+
+        *)
+            # set menu file
+            if [[ $# -gt 0 ]] ; then
+                menufile="$1"
+                shift
+            fi
+            ;;
+    esac
+
+done
+
+#tput init
+
+# check that menufile exists
+if [[ ! -e ${menufile} ]] ; then
+    echo "Could not find menu file '${menufile}'"
+    exit 1
+fi
+
+# load section display and commands into arrays
+
+# sed to parse the menu file
+sedparse='
+  # remove all lines before section
+  /^'
+sedparse+=${section}
+sedparse+=':$/!d
+
+  # add non-empty lines to hold space
+  :loop
+  # get next line
+  n
+  # if empty line, then done
+  /^$/ b done
+  # if comment line, then continue
+  /^#/ b loop
+  # remove leading spaces
+  s/^\s*//
+  # remove trailing spaces
+  s/\s*$//
+  # convert all spaces to @@
+  s/ /@@/g
+  # add line to hold space
+  H
+  b loop
+
+  # print hold space
+  :done
+  x
+  s/^\n//
+  p'
+
+# get block
+block=$(cat ${menufile} | sed -e '$a\\n' | sed -n "${sedparse}")
+
+#for line in ${block} ; do
+#    echo "${line}"
+#done
+
+# create display array
+x=0
+for line in ${block} ; do
+    # set display to the part before the pipe and convert @@ to spaces
+    display[${x}]=$(echo "${line}" | sed 's/^\([^|]*\)|\(.*\)$/\1/ ; s/@@/ /g')
+    x=$((${x} + 1))
+done
+
+#for ((x = 0; x < ${#display[*]}; x += 1)) ; do
+#    echo "${display[$x]}"
+#done
+
+# create command array
+x=0
+for line in ${block} ; do
+    # set command to the part after the pipe and convert @@ to spaces
+    command[${x}]=$(echo "${line}" | sed 's/^\([^|]*\)|\(.*\)$/\2/ ; s/@@/ /g')
+    x=$((${x} + 1))
+done
+
+#for ((x = 0; x < ${#display[*]}; x += 1)) ; do
+#    echo "${command[${x}]}"
+#done
+
+# update maxrow
+maxrow=$((${x} - 1))
+
+# if no rows found then exit
+if [[ ${maxrow} -lt ${row} ]] ; then
+    exit 1
+fi
+
+# get offset for centering
+len=0
+for ((x = 0; x < ${#display[*]}; x += 1)) ; do
+    if [[ ${#display[${x}]} -gt ${len} ]] ; then
+        len=${#display[${x}]}
+    fi
+done
+offset=$(((${cols} - ${len}) / 2))
+if [[ ${offset} -lt 0 ]] ; then offset=0 ; fi
+spc='' ; for ((x=0; x<${offset}; x+=1)) ; do spc+=' ' ; done
+
+# clear screen
+tput clear
+
+# move to top of screen
+tput cup 1 0
+
+# print header
+#echo "----- Menu -----"
+#echo
+
+# print display
+for ((x = 0; x < ${#display[*]}; x += 1)) ; do
+    if [[ "${row}" == "${x}" ]] ; then
+        echo -n "${spc}" ; tput ${boldon} ; echo "${display[${x}]}" ; tput ${boldoff}
+    else
+        echo -n "${spc}" ; echo "${display[${x}]}"
+    fi
+done
+
+# print info
+info="q=quit  up/down=movement  enter=select  u=up"
+offset=$(((${cols} - ${#info}) / 2))
+if [[ ${offset} -lt 0 ]] ; then offset=0 ; fi
+infospc='' ; for ((x=0; x<${offset}; x+=1)) ; do infospc+=' ' ; done
+echo
+echo -n "${infospc}"
+echo "q=quit  up/down=movement  enter=select  u=up"
+
+# main section
+while [[ "${key}" != "q" ]] ; do
+    oldrow=${row}
+    # get keypress
+    read -n 1 -s key
+    case "${key}" in
+        A)
+            # up arrow
+            row=$((${row} - 1))
+            ;;
+        B)
+            # down arrow
+            row=$((${row} + 1))
+            ;;
+        D|u|U)
+            # left arrow or U
+            exec $0 "${menufile}"
+            ;;
+        ""|C)
+            # return or right arrow
+            clear
+            case "${command[${row}]:0:1}" in
+                :)
+                    # if command starts with a colon then we switch to a new section
+                    exec $0 --section "${command[$row]:1}" "${menufile}"
+                    ;;
+                !)
+                    # if command starts with an explaination point then we run
+                    # a new instance of menu
+                    if [[ "${command[${row}]:1:2}" == "/" ]] ; then
+                        exec $0 "${command[$row]:1}"
+                    else
+                        exec $0 "${HOME}/${command[$row]:1}"
+                    fi
+                    ;;
+                *)
+                    # otherwise, run the command
+                    echo
+                    echo "Running: ${command[${row}]}"
+                    echo
+                    eval ${command[${row}]} ; exit 0
+                    ;;
+            esac
+            ;;
+    esac
+
+    # fix row
+    if [[ ${row} -lt 0 ]] ; then row=0 ; fi
+    if [[ ${row} -gt ${maxrow} ]] ; then row=${maxrow} ; fi
+
+    # redraw if necessary
+    if [[ ${row} -ne ${oldrow} ]] ; then
+        tput cup $((${oldrow} + 1)) 0
+        echo -n "${spc}" ; echo "${display[$oldrow]}"
+        tput cup $((${row} + 1)) 0
+        echo -n "${spc}" ; tput ${boldon} ; echo "${display[$row]}" ; tput ${boldoff}
+    fi
+done
+
+# clear screen
+tput clear
+
+#===============================================================================
+# End of File
+#===============================================================================

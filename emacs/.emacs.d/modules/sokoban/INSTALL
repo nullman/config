@@ -1,0 +1,54 @@
+======================================================================
+		 INSTALLATION NOTES FOR EMACS SOKOBAN
+		2005, Sascha Wilde <wilde@sha-bang.de>
+======================================================================
+
+Copy `sokoban.el' anywhere you like, best in a directory, which is in
+the default load-path of your emacs.
+
+Copy the directory `sokoban-levels' and it's content anywhere you
+like, the default configuration of Emacs Sokoban expects it in
+/usr/local/share/
+
+Add the following lines to your .emacs file:
+
+(autoload 'sokoban "sokoban.el"
+  "Start a new game of Sokoban." t)
+(autoload 'sokoban-mode "sokoban.el"
+  "Play Sokoban in current buffer." t)
+
+If you put `sokoban.el' in a place which is not in your load-path you
+have to write the full path like "/path/to/sokoban.el" instead of
+"sokoban.el".
+
+If you put the sokoban-levels in a other directory than
+/usr/local/share you must configure `sokoban-levels-dir' in your
+.emacs to point to the proper place:
+
+(setq sokoban-levels-dir "/path/to/sokoban-levels")
+
+This can also be set using emacs customize feature.
+
+
+Player files
+============
+
+By default Emacs Sokoban saves player-files to /tmp.  These files hold
+the best results for each player and the last level each player finished.
+
+If you want your player files to be put in another place set the value
+of `sokoban-playerfiles-dir' appropriate, either in your .emacs file
+with:
+
+(setq sokoban-playerfiles-dir "/path/to/sokoban-playerfiles")
+
+or using the emacs customize feature.
+
+IMPORTANT NOTE: The directory holding the playerfiles must be
+writeable for all players of Emacs Sokoban.  So it should be a
+dedicated directory with access permissions set to 1777 on *nix
+systems. 
+
+You can turn of writing of playerfiles by setting
+`sokoban-playerfiles-dir' to nil, but this will disable some features,
+such as best players listing.

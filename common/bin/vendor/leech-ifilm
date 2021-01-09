@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+#
+# LeechiFilm - saves movies from iFilm.com.
+# Part of the Leecharoo suite - for all those hard to leech places.
+# http://disobey.com/d/code/ or contact morbus@disobey.com.
+#
+# This code is free software; you can redistribute it and/or
+# modify it under the same terms as Perl itself.
+#
+
+for id in $*; do
+    f56="http://anon.ifilm.speedera.net/anon.ifilm/qt/portal/${id}_56.mov"
+    f200="http://anon.ifilm.speedera.net/anon.ifilm/qt/portal/${id}_200.mov"
+    f500="http://anon.ifilm.speedera.net/anon.ifilm/qt/portal/${id}_500.mov"
+    wget -c $f500 || wget -c $f200 || wget -c $f56
+done

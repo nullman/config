@@ -1,0 +1,32 @@
+#=============================================================================
+# .gitignore
+#
+# Git Ignore
+#
+# Author: Kyle W T Sherman
+#=============================================================================
+
+# rcs version control files
+RCS
+.+,v
+
+# cvs version control files
+CVS
+\.\#.+                                 # CVS conflict files / emacs lock files
+\.cvsignore
+
+# svn version control files
+\.svn
+_darcs
+\.hg
+
+# emacs files
+.+~                                     # emacs backup files
+\#.*\#                                  # emacs autosave files
+
+# mac files
+\.DS_Store
+
+#===============================================================================
+# End of File
+#===============================================================================

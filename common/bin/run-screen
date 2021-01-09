@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+#===============================================================================
+# run-screen
+#
+# Run screen.
+#
+# Author: Kyle W T Sherman
+#===============================================================================
+
+# set screen temp dir
+export SCREENDIR=${HOME}/.screendir
+[[ -d ${SCREENDIR} ]] || mkdir -p -m 700 ${SCREENDIR}
+
+if [[ $(pgrep --exact --euid ${USER} screen) ]] ; then
+    screen -wipe
+    screen -x "$@"
+else
+    screen -A -D -RR "$@"
+fi
+
+#===============================================================================
+# End of File
+#===============================================================================

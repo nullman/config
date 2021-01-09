@@ -1,0 +1,47 @@
+#!/usr/bin/env ruby
+#===============================================================================
+# irc-cat
+#
+# Log into an irc server and channel, then say whatever comes in to its STDIN.
+#
+# Author: Kyle W T Sherman
+#===============================================================================
+
+# set verbose mode
+$VERBOSE = true;
+
+# requires
+require 'rubygems'
+require 'IRC'
+
+# setup
+$server = "irc.win.dowjones.net"
+$port = "6667"
+$nick = "buildreport"
+$channels = ["build"]
+$command = "tail -n 0 -f cruisecontrol.log | grep INFO"
+
+# create irc bot
+bot = IRC.new($nick, $server, $port, $nick)
+
+# add callback on connect
+IRCEvent.add_callback('endofmotd') { |event|
+    # join channels
+    $channels.each do |channel|
+        bot.add_channel(channel)
+    end
+    # start talking
+    bot.send_message('build', "Test")
+}
+
+# add callback to say hello when user joins (for testing)
+IRCEvent.add_callback('join') { |event|
+    bot.send_message(event.channel, "Hello #{event.from}")
+}
+
+# connect to server
+bot.connect()
+
+#===============================================================================
+# End of File
+#===============================================================================

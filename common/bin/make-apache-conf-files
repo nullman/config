@@ -1,0 +1,163 @@
+#!/usr/bin/env bash
+#===============================================================================
+# make-apache-conf-files
+#
+# Make apache conf files in `/etc/apache2/conf-available'.
+#
+# Author: Kyle W T Sherman
+#===============================================================================
+
+cadir=/etc/apache2/conf-available
+cedir=/etc/apache2/conf-enabled
+
+echo "You are about to install a set of apache conf files."
+echo -n "Do you wish to proceed? [yN] "
+read a
+case "${a}" in
+    y|Y)
+        echo "Installing files..."
+        ;;
+    *)
+        exit 0
+        ;;
+esac
+
+echo "  bw.conf"
+sudo bash -c "cat > '${cadir}/bw.conf'" <<'EOF'
+<IfModule mod_bw.c>
+    # turn on bandwith limiting
+    BandwidthModule On
+    ForceBandWidthModule On
+    # connections get a max bandwidth of 102K
+    Bandwidth all 102400
+    # connections get a min bandwidth of 32K
+    MinBandwidth all 32000
+    # max 40 connections at once
+    MaxConnection all 40
+</IfModule>
+
+# vim: syntax=apache ts=4 sw=4 sts=4 sr noet
+EOF
+
+echo "  expires.conf"
+sudo bash -c "cat > '${cadir}/expires.conf'" <<'EOF'
+<IfModule mod_expires.c>
+    # enable the directives - assuming they're not enabled globally
+    ExpiresActive on
+
+    # send an expires header for each of these mimetypes (as defined by server)
+    # ico|pdf|flv|jpg|jpeg|png|gif|js|css|swf
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/gif "access plus 1 month"
+    ExpiresByType image/jpg "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/flv "access plus 1 month"
+    ExpiresByType image/swf "access plus 1 month"
+    ExpiresByType image/pdf "access plus 1 month"
+
+    ExpiresByType text/css "access plus 1 day"
+    ExpiresByType text/js "access plus 1 day"
+
+    # special mine type for icons (http://www.iana.org/assignments/media-types/image/vnd.microsoft.icon)
+    AddType image/vnd.microsoft.icon .ico
+    ExpiresByType image/vnd.microsoft.icon "access plus 3 months"
+</IfModule>
+
+# vim: syntax=apache ts=4 sw=4 sts=4 sr noet
+EOF
+
+echo "  proxy.conf"
+sudo bash -c "cat > '${cadir}/proxy.conf'" <<'EOF'
+<IfModule mod_proxy.c>
+    # If you want to use apache2 as a forward proxy, uncomment the
+    # 'ProxyRequests On' line and the <Proxy *> block below.
+    # WARNING: Be careful to restrict access inside the <Proxy *> block.
+    # Open proxy servers are dangerous both to your network and to the
+    # Internet at large.
+    #
+    # If you only want to use apache2 as a reverse proxy/gateway in
+    # front of some web application server, you DON'T need
+    # 'ProxyRequests On'.
+
+    #ProxyRequests On
+    #<Proxy *>
+    #   AddDefaultCharset off
+    #   Require all denied
+    #   #Require local
+    #</Proxy>
+
+    ProxyRequests Off
+
+    <Proxy *>
+        AddDefaultCharset off
+        Order deny,allow
+        Deny from all
+        #Allow from .example.com
+        #Allow from 192.168.0.???
+        #Allow from 127.0.0.1
+        Allow from all
+    </Proxy>
+
+    # Enable/disable the handling of HTTP/1.1 "Via:" headers.
+    # ("Full" adds the server version; "Block" removes all outgoing Via: headers)
+    # Set to one of: Off | On | Full | Block
+    ProxyVia On
+</IfModule>
+
+# vim: syntax=apache ts=4 sw=4 sts=4 sr noet
+EOF
+
+echo "  userdir.conf"
+sudo bash -c "cat > '${cadir}/userdir.conf'" <<'EOF'
+<IfModule mod_userdir.c>
+    UserDir public_html
+    UserDir disabled root
+
+    <Directory /home/*/public_html>
+        AllowOverride FileInfo AuthConfig Limit Indexes
+        Options MultiViews Indexes SymLinksIfOwnerMatch IncludesNoExec
+        <Limit GET POST OPTIONS>
+            Require all granted
+        </Limit>
+        <LimitExcept GET POST OPTIONS>
+            Require all denied
+        </LimitExcept>
+    </Directory>
+</IfModule>
+
+# vim: syntax=apache ts=4 sw=4 sts=4 sr noet
+EOF
+
+echo "  javascript-common.conf"
+sudo bash -c "cat > '${cadir}/javascript-common.conf'" <<'EOF'
+Alias /javascript /usr/share/javascript/
+
+<Directory "/usr/share/javascript/">
+    Options FollowSymLinks MultiViews
+</Directory>
+
+# vim: syntax=apache ts=4 sw=4 sts=4 sr noet
+EOF
+
+echo "Setting symbolic links for active confs..."
+
+sudo bash -c "cd '${cedir}' && (
+    ln -s ../conf-available/expires.conf
+    ln -s ../conf-available/javascript-common.conf
+    )"
+
+echo "Enable proxy pass module..."
+
+sudo a2enmod proxy expires
+
+echo "Enable header expiration module..."
+
+sudo a2enmod headers expires
+
+echo "Restarting apache for these changes to take effect..."
+
+sudo service apache2 restart
+
+#===============================================================================
+# End of File
+#===============================================================================

@@ -1,0 +1,25 @@
+# -*- mode: snippet -*-
+# name: Literate Block Init Emacs
+# key: lbie
+# expand-env: ((yas-after-exit-snippet-hook #'org-fix-literate-programming-heading))
+# --
+${1:Name}
+$>:PROPERTIES:
+$>:CUSTOM_ID: ${1:$(org-generate-custom-id-from-title yas-text)}
+$>:END:
+
+#+BEGIN_SRC emacs-lisp
+  `(if (> (org-reduced-level (org-current-level)) 1)
+     "  ;;------------------------------------------------------------------------------"
+     "  ;;==============================================================================")`
+  ;;;`(if (> (org-reduced-level (org-current-level)) 2) ";" "")` $1
+  `(if (> (org-reduced-level (org-current-level)) 1)
+     "  ;;------------------------------------------------------------------------------"
+     "  ;;==============================================================================")`
+
+  (init-message `(org-reduced-level (org-current-level))` "$1")
+
+  (use-package ${1:$(downcase yas-text)}
+    :quelpa (${1:$(downcase yas-text)}))
+#+END_SRC
+$0

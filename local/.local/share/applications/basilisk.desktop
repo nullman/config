@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Basilisk II
+Comment=Basilisk II Macintosh Emulator
+Exec=BasiliskII
+Terminal=false
+StartupNotify=true
+Categories=Emulators;Macintosh;

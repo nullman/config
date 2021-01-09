@@ -1,0 +1,75 @@
+#!/usr/bin/env bash
+#===============================================================================
+# root-background-list
+#
+# List of root background app commands to be used by the root_background script.
+#
+# Each line has the following format:
+#   <app_name>|<module_name>|<command>
+#
+# Author: Kyle W T Sherman
+#===============================================================================
+
+#-------------------------------------------------------------------------------
+# xplanet
+#-------------------------------------------------------------------------------
+
+# earth
+xplanet|earth|xplanet -latitude ${latitude} -longitude ${longitude} -wait ${wait}
+# earth with clouds
+xplanet|earth_clouds|xplanet -config overlay_clouds -latitude ${latitude} -longitude ${longitude} -wait ${wait}
+# earth orthographic
+xplanet|earth_orth|xplanet -projection orthographic -latitude ${latitude} -longitude ${longitude} -wait ${wait}
+# earth mercator
+xplanet|earth_merc|xplanet -projection mercator -latitude ${latitude} -longitude ${longitude} -wait ${wait}
+# earth orthographic centered randomly
+xplanet|earth_orth_rand|xplanet -projection orthographic -random -wait ${wait}
+# earth mercator centered randomly
+xplanet|earth_merc_rand|xplanet -projection mercator -random -wait ${wait}
+# earth with stars and planets
+xplanet|earth_stars_us|xplanet -label -radius 10 -range 2 -latitude ${latitude} -longitude ${longitude} -wait ${wait}
+# earth with stars and planets centered randomly
+xplanet|earth_stars_rand|xplanet -label -radius 10 -range 2 -random -wait ${wait}
+# behind earth looking at the sun
+xplanet|earth_behind|xplanet -range 20 -radius 30 -localtime 23.8 -latitude -21 -date 20040608.070000
+# earth and moon
+xplanet|earth_moon|xplanet -origin sun -target earth -date 20021204.060000 -north orbit
+
+# an eclipse
+xplanet|eclipse|xplanet -origin earth -target sun -radius 5 -wait ${wait}
+
+# saturn
+xplanet|saturn|xplanet -body saturn -latitude 25 -wait ${wait}
+# saturn up close
+xplanet|saturn_close|xplanet -origin iapetus -body sun -radius 2 -date 18891102.103000 -wait ${wait}
+# saturn up close with label
+#xplanet|saturn_close_label|xplanet -origin iapetus -body sun -radius 2 -date 18891102.103000 -label -fontsize 18 -wait ${wait}
+
+# jupiter
+#xplanet|jupiter|
+# jupiter with callisto and io
+xplanet|jupiter_moons|xplanet -origin callisto -body io -radius 1.5 -date 19971111.034500
+# jupiter close up of callisto and io
+xplanet|jupiter_moons_close|xplanet -origin callisto -body io -radius 3 -date 19971111.034500
+
+#-------------------------------------------------------------------------------
+# xfishtank
+#-------------------------------------------------------------------------------
+
+# default fishtank
+xfishtank|default|xfishtank -f 15 -b 32 -r .15 -d
+
+#-------------------------------------------------------------------------------
+# xpenguins
+#-------------------------------------------------------------------------------
+
+# default penguins
+xpenguins|default|xpenguins
+# big penguins
+xpenguins|big|xpenguins -t "Big Penguins"
+# bill
+xpenguins|bill|xpenguins -t "Bill"
+
+#===============================================================================
+# End of File
+#===============================================================================

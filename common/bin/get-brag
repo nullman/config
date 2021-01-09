@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+#===============================================================================
+# get-brag
+#
+# Get news binaries using brag.
+#
+# Author: Kyle W T Sherman
+#===============================================================================
+
+if [[ $# -lt 1 ]] || [[ $# -gt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a45a426 (Update)
+    cat <<EOF
+Usage: $(basename $0) GROUP [FILTER]
+Get news binaries from GROUP with FILTER using brag.
+  GROUP examples:
+    alt.binaries.dvd.erotica
+    alt.binaries.dvd.music
+    alt.binaries.mpeg.video.music
+    alt.binaries.pictures.cemetaries
+    alt.binaries.pictures.wallpaper
+    alt.binaries.sounds.radio.misc
+  FILTER  optional wildcard filter (e.g. '*.jpg*')
+EOF
+<<<<<<< HEAD
+=======
+    echo "Usage: $(basename $0) GROUP [FILTER]"
+    echo "Get news binaries from GROUP with FILTER using brag."
+    echo "  GROUP examples:"
+    echo "    alt.binaries.dvd.erotica"
+    echo "    alt.binaries.dvd.music"
+    echo "    alt.binaries.mpeg.video.music"
+    echo "    alt.binaries.pictures.cemetaries"
+    echo "    alt.binaries.pictures.wallpaper"
+    echo "    alt.binaries.sounds.radio.misc"
+    echo "  FILTER  optional wildcard filter (e.g. '*.jpg*')."
+>>>>>>> 6554bfc (Initial commit after splitting home configuration files into public and private repos)
+=======
+>>>>>>> a45a426 (Update)
+    exit 1
+fi
+
+group="$1"
+
+if [[ -z "$2" ]] ; then
+    filter="*"
+else
+    filter="$2"
+fi
+
+for i in 1 2 3 ; do
+<<<<<<< HEAD
+<<<<<<< HEAD
+    brag -s news.usenetserver.com -g ${group} -l USERNAME -p PASSWORD -a ${filter}
+=======
+    brag -s news.usenetserver.com -g ${group} -l nullman -p esuesu -a ${filter}
+>>>>>>> 6554bfc (Initial commit after splitting home configuration files into public and private repos)
+=======
+    brag -s news.usenetserver.com -g ${group} -l USERNAME -p PASSWORD -a ${filter}
+>>>>>>> a45a426 (Update)
+    if [[ $? != 2 ]] ; then break ; fi
+    sleep 60
+done
+
+#===============================================================================
+# End of File
+#===============================================================================

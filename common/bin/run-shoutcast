@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+#===============================================================================
+# run-shoutcast
+#
+# Run shoutcast.
+#
+# Author: Kyle W T Sherman
+#===============================================================================
+
+# kill any currently running shoutcasts
+fuser -k -SIGTERM /home/data/shoutcast/shoutcast/sc_serv
+fuser -k -SIGKILL /home/data/shoutcast/shoutcast/sc_serv
+
+# kill any currently running dnotify netjuke commands
+fuser -k -SIGTERM /home/data/shoutcast/sc_trans/sc_trans
+fuser -k -SIGKILL /home/data/shoutcast/sc_trans/sc_trans
+
+# start shoutcast server
+(cd /home/data/shoutcast/shoutcast ; su somebody -c "/home/data/shoutcast/shoutcast/sc_serv") > /dev/null &
+
+# start shoutcast transmitter
+(cd /home/data/shoutcast/sc_trans ; su somebody -c "/home/data/shoutcast/sc_trans/sc_trans &") > /dev/null &
+
+# start playlist watcher (to reset the shoutcast server if the playlist changes)
+dnotify -M /home/data/www/netjuke/var/data/radio -e kill -USR1 $(ps -ef | grep -v grep | grep ${USER} | grep sc_trans | cut -c 10-15) &
+
+#===============================================================================
+# End of File
+#===============================================================================
