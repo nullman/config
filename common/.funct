@@ -1217,27 +1217,24 @@ gitbranchprompt()
 #        gitsynchome             pull, commit, and push home git repository
 gitsynchome()
 {
-    names=("config" "config-private")
-    dirs=("${HOME}/config" "${HOME}/config-private")
+    dirs=("config" "config-private")
 
     # output datetime
     date '+%Y-%m-%d %H:%M:%S'
 
     # remove org font files
     echo "Removing org font files..."
-    pushd "${HOME}" > /dev/null
-    for x in "config" "config-private" "dev" "web" ; do
-        [[ -d "${x}" ]] && find "${x}" -name '*org-src-fontification*' -print | \
-                xargs rm > /dev/null 2>&1
-    done
-    popd > /dev/null
+    (cd "${HOME}" && \
+         for x in "config" "config-private" "dev" "web" ; do
+             [[ -d "${x}" ]] && find "${x}" -name '*org-src-fontification*' -print | \
+                     xargs rm > /dev/null 2>&1
+         done)
 
     # pull (update) home git repository (from origin)
     for ((x = 0; x < ${#dirs[@]}; x++)) ; do
-        echo "Pulling ${names[${x}]} from origin..."
-        pushd "${dirs[${x}]}" > /dev/null
-        git pull origin
-        popd > /dev/null
+        dir="${HOME}/${dirs[${x}]}"
+        echo "Pulling '${dir}' from origin..."
+        (cd "${dir}" && git pull origin)
     done
 
     #if [[ -L .cron ]] && [[ -f config-private/custom/$(uname -n)/.cron ]] ; then
@@ -1245,40 +1242,35 @@ gitsynchome()
     #fi
     # update addressbook
     if [[ -f "${HOME}/.addressbook" ]] && [[ ! -L "${HOME}/.addressbook" ]] ; then
-        pushd "${HOME}" > /dev/null
-        cp .addressbook config-private/common/
-        ln -sf config-private/common/.addressbook
-        popd > /dev/null
+        (cd "${HOME}" && \
+             cp .addressbook config-private/common/ && \
+             ln -sf config-private/common/.addressbook)
     fi
     # only update xscreensaver preferences on tank
     if [[ -f "${HOME}/.xscreensaver" ]] && [[ ! -L "${HOME}/.xscreensaver" ]] && \
            [[ "$(uname -n)" == "tank" ]] ; then
-        pushd "${HOME}" > /dev/null
-        cp .xscreensaver config-private/common/
-        ln -sf config-private/common/.xscreensaver
-        popd > /dev/null
+        (cd "${HOME}" && \
+             cp .xscreensaver config-private/common/ && \
+             ln -sf config-private/common/.xscreensaver)
     fi
 
     # commit (check in) home git repositories (default update)
     for ((x = 0; x < ${#dirs[@]}; x++)) ; do
-        echo "Committing ${names[${x}]}..."
-        pushd "${dirs[${x}]}" > /dev/null
-        git commit -a -m 'Update'
-        popd > /dev/null
+        dir="${HOME}/${dirs[${x}]}"
+        echo "Committing '${dir}'..."
+        (cd "${dir}" && git commit -a -m "Update")
     done
 
     # push home git repositories (to origin)
     for ((x = 0; x < ${#dirs[@]}; x++)) ; do
-        echo "Pushing ${names[${x}]} to origin..."
-        pushd "${dirs[${x}]}" > /dev/null
-        git push origin
-        popd > /dev/null
+        dir="${HOME}/${dirs[${x}]}"
+        echo "Pushing '${dir}' to origin..."
+        (cd "${dirs}" && git push origin)
     done
 }
 #        gitsyncdoc              pull, commit, and push doc git repository
 gitsyncdoc()
 {
-    name="doc"
     dir="${HOME}/doc"
 
     # output datetime
@@ -1286,29 +1278,22 @@ gitsyncdoc()
 
     # remove org font files
     echo "Removing org font files..."
-    pushd "${HOME}/doc" > /dev/null
-    for x in bbs ; do
-        [[ -d "${x}" ]] && find "${x}" -name '*org-src-fontification*' -print | \
-                xargs rm > /dev/null 2>&1
-    done
-    popd > /dev/null
+    (cd "${dir}" && \
+         for x in "bbs" ; do
+             [[ -d "${x}" ]] && find "${x}" -name '*org-src-fontification*' -print | \
+                     xargs rm > /dev/null 2>&1
+         done)
 
     # pull (update) doc git repository (from origin)
-    echo "Pulling ${name} from origin..."
-    pushd "${dir}" > /dev/null
-    git pull origin
-    popd > /dev/null
+    echo "Pulling '${dir}' from origin..."
+    (cd "${dir}" && git pull origin)
 
-    echo "Committing ${name}..."
-    pushd "${dir}" > /dev/null
-    git commit -a -m 'Update'
-    popd > /dev/null
+    echo "Committing '${dir}'..."
+    (cd "${dir}" && git commit -a -m "Update")
 
     # push doc git repository (to origin)
-    echo "Pushing ${name} to origin..."
-    pushd "${dir}" > /dev/null
-    git push origin
-    popd > /dev/null
+    echo "Pushing '${dir}' to origin..."
+    (cd "${dir}" && git push origin)
 }
 
 #
@@ -1660,10 +1645,6 @@ adblogapp()
 #        howtokernel             howto build the kernel
 howtokernel()
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a45a426 (Update)
     cat <<EOF
 HowTo Build the Kernel in Gentoo
 
@@ -1680,30 +1661,10 @@ Note:  This will delete the .config file.
 
 (Cross your fingers and reboot.)
 EOF
-<<<<<<< HEAD
-=======
-    echo "HowTo Build the Kernel in Gentoo"
-    echo
-    echo "# cd /usr/src/linux"
-    echo "# rm -f .version"
-    echo "if needed use 'make mrproper' to do a full clean"
-    echo "  - note: this will delete the .config file"
-    echo "# make menuconfig [make your config selections and save]"
-    echo "# make dep && make clean bzImage modules modules_install"
-    echo "# cp /boot/bzImage /boot/bzImage.old"
-    echo "# cp /usr/src/linux/arch/i386/boot/bzImage /boot"
-    echo "[then cross your fingers and reboot]"
->>>>>>> 6554bfc (Initial commit after splitting home configuration files into public and private repos)
-=======
->>>>>>> a45a426 (Update)
 }
 #        howtogrub               howto setup grub bootloader
 howtogrub()
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a45a426 (Update)
     cat <<EOF
 HowTo Setup the Grub Bootloader
 
@@ -1725,28 +1686,110 @@ It should look like this:
   grub> setup (hd0)
   grub> quit
 EOF
-<<<<<<< HEAD
-=======
-    echo "HowTo Setup the Grub Bootloader"
-    echo
-    echo "# mount /boot"
-    echo "# cd /boot/grub"
-    echo "# vi grub.conf"
-    echo "it should look like this:"
-    echo "  default 0"
-    echo "  timeout 5"
-    echo "  splashimage=(hd0,0)/boot/grub/splash.xpm.gz"
-    echo "  title=Gentoo Linux"
-    echo "  root (hd0,0)"
-    echo "  kernel /boot/bzImage root=/dev/hda3"
-    echo "# ln -s grub.conf menu.lst"
-    echo "# grub"
-    echo "  grub> root (hd0,0)"
-    echo "  grub> setup (hd0)"
-    echo "  grub> quit"
->>>>>>> 6554bfc (Initial commit after splitting home configuration files into public and private repos)
-=======
->>>>>>> a45a426 (Update)
+}
+
+#
+# setup
+#
+#        homehowto               howto setup git home dir on a new machine
+howtohome()
+{
+    user=${USER}
+    cat <<EOF
+Install ccrypt
+Copy bundle.tgz.cpt from USB and decrypt it:
+  cp /run/media/kyle/Cruzer/bundle.tgz.cpt ${HOME}/
+  ccrypt -d bundle.tgz.cpt
+  tar xzf bundle.tgz
+Checkout 'config' and 'config-private':
+  git clone ${GIT_REPOSITORY_CONFIG} ${HOME}/config
+  git clone ${GIT_REPOSITORY_CONFIG_PRIVATE} ${HOME}/config-private
+Source '.funct', '.alias', and '.profile':
+  source ${HOME}/config/.funct ${HOME}/config/.alias ~/config/.profile
+Run 'gitcodoc' to checkout 'doc' repository:
+  gitcodoc
+Run 'gitcodev' to checkout 'dev' repository:
+  gitcodev
+Run 'gitcoweb' to checkout 'web' repository:
+  gitcoweb
+Run 'homeintiialize' to create the initial links from '${HOME}'
+to '${HOME}/config' and '${HOME}/config-private':
+  homeinitialize
+(Run 'homerestow' to recreate the links in the future.)
+Setup /home/data directory:
+  sudo mkdir -p /home/data && sudo chown ${user}:${user} /home/data
+Optionally run 'make-cron' to install the default crontab:
+  make-cron
+EOF
+}
+#        homeinitialize          stow links from ~/ to ~/config and ~/config-private dirs
+homeinitialize()
+{
+    backup="${HOME}/original-configuration-files"
+
+    echo "You are about to setup links from '${HOME}' to '${HOME}/config' and '${HOME}/config-private'."
+    echo "All files and directories replaced will be moved to '${backup}'."
+    echo "This command should only be run once for a given HOME directory."
+    [[ -e "${HOME}/.alias" ]] && echo "It looks like stow initialization has already occurred" && exit 1
+    echo -n "Do you wish to proceed? [yN] " ; read a
+
+    case "${a}" in
+        y|Y)
+            [[ -d "config" ]] || echo "Missing config directory!" && exit 1
+
+            echo "Moving existing home files to: ${backup}..."
+            (cd "${HOME}" && \
+                 mkdir -p "${backup}" && \
+                 for file in .bash_logout .bash_profile .bashrc .config .i3 .profile .xinitrc .Xresources ; do
+                     echo "  ${file} ==> ${backup}"
+                     mv --verbose "${file}" "${backup}/"
+                 done) || exit 1
+
+            dirs=("config" "config-private")
+            for ((x = 0; x<${#dirs[@]}; x++)) ; do
+                dir="${dirs[${x}]}"
+                echo "Stowing ${dir} packages..."
+                (cd "${HOME}/${dir}" && \
+                     ls -1 | while read file ; do
+                         if [[ -d "${file}" ]] ; then
+                             echo "  ${file}"
+                             stow --stow --verbose "${file}"
+                         fi
+                     done)
+            done
+
+            echo "Making other symlinks..."
+            (cd "${HOME}" && \
+                 for file in "doc/avatars"
+                             "doc/icons"
+                             "doc/images"
+                             "doc/sounds"
+                             "/home/data/media/audio/Sounds"
+                             "/home/data/media/repos/C64"
+                             "/home/data/media/repos/DOS"
+                 do
+                     if [[ -d ${file} ]] ; then
+                         echo "  ${file}"
+                         ln -sf "${file}" .
+                     fi
+                 done)
+    esac
+}
+#        homerestow              restow links from ~/ to ~/config and ~/config-private dirs
+homerestow()
+{
+    dirs=("config" "config-private")
+    for ((x = 0; x<${#dirs[@]}; x++)) ; do
+        dir="${dirs[${x}]}"
+        echo "Restowing ${dir} packages..."
+        (cd "${HOME}/${dir}" && \
+             ls -1 | while read file ; do
+                 if [[ -d "${file}" ]] ; then
+                     echo "  ${file}"
+                     stow --restow --verbose "${file}"
+                 fi
+             done)
+    done
 }
 
 #!
