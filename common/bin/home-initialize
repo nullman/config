@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+#===============================================================================
+# home-initialize
+#
+# Stow links from ~/ to ~/config and ~/config-private dirs.
+#
+# Author: Kyle W T Sherman
+#===============================================================================
+
+backup="${HOME}/original-configuration-files"
+
+echo "You are about to setup links from '${HOME}' to '${HOME}/config' and '${HOME}/config-private'."
+echo "All files and directories replaced will be moved to '${backup}'."
+echo "This command should only be run once for a given HOME directory."
+[[ -e "${HOME}/.alias" ]] && echo "It looks like stow initialization has already occurred" && exit 1
+echo -n "Do you wish to proceed? [yN] " ; read a
+
+case "${a}" in
+    y|Y)
+        [[ -d "config" ]] || echo "Missing config directory!" && exit 1
+
+        echo "Moving existing home files to: ${backup}"
+        (cd "${HOME}" && \
+             mkdir -p "${backup}" && \
+             for file in .bash_logout .bash_profile .bashrc .config .i3 .profile .xinitrc .Xresources ; do
+                 echo "  ${file} ==> ${backup}"
+                 mv --verbose "${file}" "${backup}/"
+             done) || exit 1
+
+        dirs=("config" "config-private")
+        for ((x = 0; x<${#dirs[@]}; x++)) ; do
+            dir="${dirs[${x}]}"
+            echo "Stowing ${dir} packages"
+            (cd "${HOME}/${dir}" && \
+                 ls -1 | while read file ; do
+                     if [[ -d "${file}" ]] ; then
+                         echo "  ${file}"
+                         stow --stow --verbose "${file}"
+                     fi
+                 done)
+        done
+
+        echo "Making other symlinks"
+        (cd "${HOME}" && \
+             for file in "doc/avatars"
+                         "doc/icons"
+                         "doc/images"
+                         "doc/sounds"
+                         "/home/data/media/audio/Sounds"
+                         "/home/data/media/repos/C64"
+                         "/home/data/media/repos/DOS"
+             do
+                 if [[ -d ${file} ]] ; then
+                     echo "  ${file}"
+                     ln -sf "${file}" .
+                 fi
+             done)
+esac
+
+#===============================================================================
+# End of File
+#===============================================================================

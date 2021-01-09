@@ -2793,17 +2793,8 @@ Update develop from master:
   git checkout develop
   git merge --no-ff release-#.#.#
   git push origin develop
-<<<<<<< HEAD
-<<<<<<< HEAD
 EOF
 "
-=======
-EOF"
->>>>>>> 6554bfc (Initial commit after splitting home configuration files into public and private repos)
-=======
-EOF
-"
->>>>>>> a45a426 (Update)
 #        gitrm                   git remove all untracked files
 alias gitrm="
     echo 'You are about to remove the following files:'
@@ -2909,10 +2900,6 @@ alias gituoall="
 #
 #        script-head             print a standard script header
 alias script-head="
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a45a426 (Update)
     cat <<EOF
 #!/usr/bin/env bash
 #===============================================================================
@@ -2924,7 +2911,6 @@ alias script-head="
 #===============================================================================
 EOF
 "
-<<<<<<< HEAD
 #        script-tail             print a standard script footer
 alias script-tail="
     cat <<EOF
@@ -2933,31 +2919,6 @@ alias script-tail="
 #===============================================================================
 EOF
 "
-=======
-    echo '#!/usr/bin/env bash'
-    echo '#==============================================================================='
-    echo '# script_name'
-    echo '#'
-    echo '# script_description'
-    echo '#'
-    echo '# Author: Kyle W T Sherman'
-    echo '#==============================================================================='"
-#        script-tail             print a standard script footer
-alias script-tail="
-    echo '#==============================================================================='
-    echo '# End of File'
-    echo '#==============================================================================='"
->>>>>>> 6554bfc (Initial commit after splitting home configuration files into public and private repos)
-=======
-#        script-tail             print a standard script footer
-alias script-tail="
-    cat <<EOF
-#===============================================================================
-# End of File
-#===============================================================================
-EOF
-"
->>>>>>> a45a426 (Update)
 #        script-template         print a standard script template
 alias script-template="
     echo ${scripthead}
@@ -3026,94 +2987,22 @@ Checkout 'config' and 'config-private':
   git clone \${GIT_REPOSITORY_CONFIG_PRIVATE} \${HOME}/config-private
 Source '.funct', '.alias', and '.profile':
   source \${HOME}/config/.funct \${HOME}/config/.alias ~/config/.profile
-Run 'gitcodoc' to checkout 'doc' repository.
+Run 'gitcodoc' to checkout 'doc' repository:
   gitcodoc
-Run 'gitcodev' to checkout 'dev' repository.
+Run 'gitcodev' to checkout 'dev' repository:
   gitcodev
-Run 'gitcoweb' to checkout 'web' repository.
+Run 'gitcoweb' to checkout 'web' repository:
   gitcoweb
-Run 'home-intiialize' to make the initial links from '\${HOME}' to '\${HOME}/config' and '\${HOME}/config-private'.
+Run 'home-intiialize' to create the initial links from '\${HOME}'
+to '\${HOME}/config' and '\${HOME}/config-private':
   home-initialize
+(Run 'home-restow' to recreate the links in the future.)
 Setup /home/data directory:
   sudo mkdir -p /home/data && sudo chown \${user}:\${user} /home/data
-Optionally run 'make-cron' to install the default crontab.
+Optionally run 'make-cron' to install the default crontab:
   make-cron
-<<<<<<< HEAD
-<<<<<<< HEAD
 EOF
 "
-=======
-EOF"
->>>>>>> 6554bfc (Initial commit after splitting home configuration files into public and private repos)
-=======
-EOF
-"
->>>>>>> a45a426 (Update)
-#        home-initialize         make links from ~/ to ~/config and ~/config-private dirs
-alias home-initialize="
-    o=\${HOME}/original-configuration-files
-    echo \"You are about to setup links from '\${HOME}' to '\${HOME}/config' and '\${HOME}/config-private'.\"
-    echo \"All files and directories replaced will be moved to '\${o}'.\"
-    echo \"This command should only be run once for a given HOME directory.\"
-    [[ -e \${HOME}/.alias ]] && echo \"It looks like stow initialization has already occurred\" && exit 1
-    echo -n 'Do you wish to proceed? [yN] ' ; read a
-    case \${a} in
-        y|Y)
-            [[ -d config ]] || echo \"Missing config directory!\" && exit 1
-            echo 'Moving existing home files to: \${o}'
-            (cd \${HOME} && \
-            mkdir -p \${o} && \
-            for file in .bash_logout .bash_profile .bashrc \
-                        .config .i3 .profile .xinitrc .Xresources ; do
-                echo '  \${file} ==> \${o}'
-                mv --verbose \${file} \${o}/
-            done || exit 1)
-            echo 'Stowing config packages'
-            (cd \${HOME}/config && \
-            ls -1 | while read file ; do
-                if [[ -d \${file} ]] ; then
-                    echo '  \${file}'
-                    stow --stow --verbose \${file}
-                fi
-            done)
-            echo 'Stowing config-private packages'
-            (cd \${HOME}/config-private && \
-            ls -1 | while read file ; do
-                if [[ -d \${file} ]] ; then
-                    echo '  \${file}'
-                    stow --stow --verbose \${file}
-                fi
-            done)
-            echo 'Making other symlinks'
-            (cd \${HOME} && \
-            for file in doc/avatars doc/icons doc/images doc/sounds \
-                        /home/data/media/audio/Sounds \
-                        /home/data/media/repos/C64 \
-                        /home/data/media/repos/DOS ; do
-                if [[ -d \${file} ]] ; then
-                    echo '  \${file}'
-                    ln -s \${file} .
-                fi
-            done)
-    esac"
-#        home-restow             restow links from ~/ to ~/config and ~/config-private
-alias home-restow="
-    echo 'Restowing config packages'
-    (cd \${HOME}/config && \
-    ls -1 | while read file ; do
-        if [[ -d \${file} ]] ; then
-            echo '  \${file}'
-            stow --restow --verbose \${file}
-        fi
-    done)
-    echo 'Restowing config-private packages'
-    (cd \${HOME}/config-private && \
-    ls -1 | while read file ; do
-        if [[ -d \${file} ]] ; then
-            echo '  \${file}'
-            stow --restow --verbose \${file}
-        fi
-    done)"
 #        make-cron               setup initial crontab
 alias make-cron="
     echo \"You are about to overwrite your crontab with '\${HOME}/config/custom/\$(uname -n)/.cron'.\"
@@ -3172,10 +3061,6 @@ alias copy-fonts="
 #!    else
 #!        echo '${HOME}/.icewm already exists'
 #!    fi"
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a45a426 (Update)
 #!#        make-ssh-config-external        make ~/.ssh/config file (external access)
 #!alias make-ssh-config-external="
 #!    o=\${HOME}/.ssh/config
@@ -3204,36 +3089,6 @@ alias copy-fonts="
 #!    else
 #!        echo \"You must first delete '\${o}'\"
 #!    fi"
-<<<<<<< HEAD
-=======
-#        make-ssh-config-external        make ~/.ssh/config file (external access)
-alias make-ssh-config-external="
-    o=\${HOME}/.ssh/config
-    if [[ ! -e \${o} ]] ; then
-        echo '# hosts' > \${o}
-        echo 'host firewall' >> \${o}
-        echo '  hostname nullware.com' >> \${o}
-        echo '  port 222' >> \${o}
-        echo '' >> \${o}
-        echo 'host morpheus' >> \${o}
-        echo '  hostname nullware.com' >> \${o}
-        echo '  port 223' >> \${o}
-        echo '' >> \${o}
-        echo 'host neo' >> \${o}
-        echo '  hostname nullware.com' >> \${o}
-        echo '  port 224' >> \${o}
-        echo '' >> \${o}
-        echo 'host trinity' >> \${o}
-        echo '  hostname nullware.com' >> \${o}
-        echo '  port 225' >> \${o}
-        echo '# keep ssh logins alive' >> \${o}
-        echo 'ServerAliveInterval 60' >> \${o}
-    else
-        echo \"You must first delete '\${o}'\"
-    fi"
->>>>>>> 6554bfc (Initial commit after splitting home configuration files into public and private repos)
-=======
->>>>>>> a45a426 (Update)
 #        make-ssh-config                 make ssh config file
 alias make-ssh-config="
     o=\${HOME}/.ssh/config

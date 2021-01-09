@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+#===============================================================================
+# home-restow
+#
+# Restow links from ~/ to ~/config and ~/config-private dirs.
+#
+# Author: Kyle W T Sherman
+#===============================================================================
+
+dirs=("config" "config-private")
+for ((x = 0; x<${#dirs[@]}; x++)) ; do
+    dir="${dirs[${x}]}"
+    echo "Restowing ${dir} packages"
+    (cd "${HOME}/${dir}" && \
+         ls -1 | while read file ; do
+             if [[ -d "${file}" ]] ; then
+                 echo "  ${file}"
+                 stow --restow --verbose "${file}"
+             fi
+         done)
+done
+
+#===============================================================================
+# End of File
+#===============================================================================
