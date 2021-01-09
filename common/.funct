@@ -1265,7 +1265,7 @@ gitsynchome()
     for ((x = 1; x <= ${#dirs[@]}; x++)) ; do
         dir="${HOME}/${dirs[${x}]}"
         echo "Pushing '${dir}' to origin..."
-        (cd "${dirs}" && git push origin)
+        (cd "${dir}" && git push origin)
     done
 }
 #        gitsyncdoc              pull, commit, and push doc git repository
