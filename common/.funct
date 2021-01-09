@@ -1231,9 +1231,9 @@ gitsynchome()
          done)
 
     # pull (update) home git repository (from origin)
-    for ((x = 0; x < ${#dirs[@]}; x++)) ; do
+    for ((x = 1; x <= ${#dirs[@]}; x++)) ; do
         dir="${HOME}/${dirs[${x}]}"
-        echo "Pulling ${dir} from origin..."
+        echo "Pulling '${dir}' from origin..."
         (cd "${dir}" && git pull origin)
     done
 
@@ -1255,14 +1255,14 @@ gitsynchome()
     fi
 
     # commit (check in) home git repositories (default update)
-    for ((x = 0; x < ${#dirs[@]}; x++)) ; do
+    for ((x = 1; x <= ${#dirs[@]}; x++)) ; do
         dir="${HOME}/${dirs[${x}]}"
         echo "Committing '${dir}'..."
         (cd "${dir}" && git commit -a -m "Update")
     done
 
     # push home git repositories (to origin)
-    for ((x = 0; x < ${#dirs[@]}; x++)) ; do
+    for ((x = 1; x <= ${#dirs[@]}; x++)) ; do
         dir="${HOME}/${dirs[${x}]}"
         echo "Pushing '${dir}' to origin..."
         (cd "${dirs}" && git push origin)
@@ -1765,7 +1765,7 @@ homeinitialize()
                  done) || exit 1
 
             dirs=("config" "config-private")
-            for ((x = 0; x<${#dirs[@]}; x++)) ; do
+            for ((x = 1; x <= ${#dirs[@]}; x++)) ; do
                 dir="${dirs[${x}]}"
                 echo "Stowing ${dir} packages..."
                 (cd "${HOME}/${dir}" && \
@@ -1791,7 +1791,7 @@ homeinitialize()
 homerestow()
 {
     dirs=("config" "config-private")
-    for ((x = 0; x<${#dirs[@]}; x++)) ; do
+    for ((x = 1; x <= ${#dirs[@]}; x++)) ; do
         dir="${dirs[${x}]}"
         echo "Restowing ${dir} packages..."
         (cd "${HOME}/${dir}" && \
