@@ -18,11 +18,11 @@ if [[ $# -eq 0 ]] ; then
     cat <<EOF
 Usage: $(basename $0) [OPTION] FILE
   OPTION:
-    -h         Diff with latest in repository (HEAD) (default)
-    -b         Diff with what you had checked out (BASE)
-    -c         Diff with COMMITTED, the version before BASE
-    -p         Diff with PREV, the version before COMMITTED
-    -r revnum  Diff with specified revision (specify integer)
+    -h         diff with latest in repository (HEAD) (default)
+    -b         diff with what you had checked out (BASE)
+    -c         diff with COMMITTED, the version before BASE
+    -p         diff with PREV, the version before COMMITTED
+    -r revnum  diff with specified revision (specify integer)
 EOF
     exit 1
 fi

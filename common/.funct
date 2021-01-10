@@ -1293,6 +1293,8 @@ gitsynchome()
         echo "Pushing '${dir}' to origin..."
         (cd "${dir}" && git push origin)
     done
+
+    echo "Done"
 }
 #        gitsyncdoc              pull, commit, and push doc git repository
 gitsyncdoc()
@@ -1320,6 +1322,8 @@ gitsyncdoc()
     # push doc git repository (to origin)
     echo "Pushing '${dir}' to origin..."
     (cd "${dir}" && git push origin)
+
+    echo "Done"
 }
 
 #

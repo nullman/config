@@ -13,15 +13,15 @@ name=$(basename "$0")
 _usage()
 {
     cat <<EOF
-Usage: $(basename "$0") [options]
-
-Options:
-  -d  Show drun menu
-  -r  Show run menu
-  -w  Show window switcher
-  -r  Launcher dialog
-  -s  Session choices
-  -h  Show help (this message)
+Usage: $(basename "$0") [OPTIONS]
+Present a Window Manager Session Menu using rofi.
+OPTIONS:
+  -d  show drun menu
+  -r  show run menu
+  -w  show window switcher
+  -r  launcher dialog
+  -s  session choices
+  -h  show help (this message)
 EOF
 }
 
