@@ -33,7 +33,7 @@ _command xscreensaver && xscreensaver -no-splash &
 #_command emacs && emacs --daemon &
 
 # initialize foreground applications
-_command alacritty && alacritty -e run-screen &
+_command alacritty && alacritty -e ${HOME}/bin/run-screen &
 _command emacs && _delay 1 emacs &
 _command slack && _delay 1 slack &
 _command thunderbird && _delay 1 thunderbird &
