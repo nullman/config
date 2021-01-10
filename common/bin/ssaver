@@ -26,10 +26,6 @@
 #===============================================================================
 
 if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a45a426 (Update)
     cat <<EOF
 Usage: $(basename $0) SCREENSAVER [OPTION...]
 Run a SCREENSAVER passing any OPTIONs to it.
@@ -47,26 +43,6 @@ Run a SCREENSAVER passing any OPTIONs to it.
   MODE  xlock mode
   LOCK  time in seconds before the screen locks
 EOF
-<<<<<<< HEAD
-=======
-    echo "Usage: $(basename $0) SCREENSAVER [OPTION...]"
-    echo "Run a SCREENSAVER passing any OPTIONs to it."
-    echo "  SCREENSAVER options:"
-    echo "    xscreensaver"
-    echo "    xlock MODE [LOCK]"
-    echo "    slideshow DIR [DELAY]"
-    echo "    movie FILE"
-    echo "    flash FILE"
-    echo "    blank [LOCK]"
-    echo "    flame [LOCK]"
-    echo "    electric_sheep"
-    echo "    pictures [DELAY]"
-    echo "    nasa [DELAY]"
-    echo "  MODE  xlock mode"
-    echo "  LOCK  time in seconds before the screen locks"
->>>>>>> 6554bfc (Initial commit after splitting home configuration files into public and private repos)
-=======
->>>>>>> a45a426 (Update)
     exit 1
 fi
 

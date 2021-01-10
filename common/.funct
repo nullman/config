@@ -1752,25 +1752,28 @@ homeinitialize()
     echo "You are about to setup links from '${HOME}' to '${HOME}/config' and '${HOME}/config-private'."
     echo "All files and directories replaced will be moved to '${backupdir}'."
     echo "This command should only be run once for a given HOME directory."
-    [[ -e "${HOME}/.alias" ]] && echo "It looks like stow initialization has already occurred" && exit 1
+    [[ -e "${HOME}/.alias" ]] && echo "It looks like stow initialization has already occurred" && return 1
     echo -n "Do you wish to proceed? [yN] " ; read a
 
     case "${a}" in
         y|Y)
-            [[ -d "config" ]] || echo "Missing config directory!" && exit 1
+            [[ ! -d "${HOME}/config" ]] && echo "Missing config directory!" && return 1
 
-            echo "Moving existing home files to: ${backupdir}..."
+            echo "Moving existing home files to '${backupdir}'..."
             (cd "${HOME}" && \
                  mkdir -p "${backupdir}" && \
                  for file in ${backupfiles[@]} ; do
                      echo "  ${file} ==> ${backupdir}"
                      mv --verbose "${file}" "${backupdir}/"
-                 done) || exit 1
+                 done) || return 1
+
+            # create .emacs.d, if it doesn't exist, to prevent stow from linking the entire directory
+            mkdir -p "${HOME}/.emacs.d"
 
             dirs=("config" "config-private")
             for ((x = 1; x <= ${#dirs[@]}; x++)) ; do
                 dir="${dirs[${x}]}"
-                echo "Stowing ${dir} packages..."
+                echo "Stowing '${dir}' packages..."
                 (cd "${HOME}/${dir}" && \
                      ls -1 | while read file ; do
                          if [[ -d "${file}" ]] ; then
@@ -1788,6 +1791,7 @@ homeinitialize()
                          ln -sf "${file}" .
                      fi
                  done)
+            ;;
     esac
 }
 #        homerestow              restow links from ~/ to ~/config and ~/config-private dirs
@@ -1796,7 +1800,7 @@ homerestow()
     dirs=("config" "config-private")
     for ((x = 1; x <= ${#dirs[@]}; x++)) ; do
         dir="${dirs[${x}]}"
-        echo "Restowing ${dir} packages..."
+        echo "Restowing '${dir}' packages..."
         (cd "${HOME}/${dir}" && \
              ls -1 | while read file ; do
                  if [[ -d "${file}" ]] ; then

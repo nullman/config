@@ -49,10 +49,6 @@ while [[ -n "$1" ]] ; do
     case "$1" in
 
         -h|--help)
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a45a426 (Update)
             # usage
             cat <<EOF
 Usage: $(basename $0) [OPTION] [FILE]
@@ -64,33 +60,11 @@ Present user with a menu of commands to run.
     -l, --license  licensing info
   FILE  menu definitions file (defaults to '~/.menu').
 EOF
-<<<<<<< HEAD
-=======
-        # usage
-            echo "Usage: $(basename $0) [OPTION] [FILE]"
-            echo "Present user with a menu of commands to run."
-            echo "  OPTION is one of:"
-            echo "    -c, --create   create an initial menu file"
-            echo "    -s, --section  start in a specific section"
-            echo "    -h, --help     this help info"
-            echo "    -l, --license  licensing info"
-            echo "  FILE  menu definitions file (defaults to '~/.menu')."
->>>>>>> 6554bfc (Initial commit after splitting home configuration files into public and private repos)
-=======
->>>>>>> a45a426 (Update)
             exit 1
             ;;
 
         -l|--license)
-<<<<<<< HEAD
-<<<<<<< HEAD
             # usage
-=======
-        # usage
->>>>>>> 6554bfc (Initial commit after splitting home configuration files into public and private repos)
-=======
-            # usage
->>>>>>> a45a426 (Update)
             echo "License:"
             cat <<EOF
   Copyright (C) 2006 Kyle W T Sherman
@@ -293,7 +267,7 @@ for line in ${block} ; do
     x=$((${x} + 1))
 done
 
-#for ((x = 0; x < ${#display[*]}; x += 1)) ; do
+#for ((x = 0; x < ${#display[*]}; x++)) ; do
 #    echo "${display[$x]}"
 #done
 

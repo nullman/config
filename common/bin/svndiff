@@ -8,27 +8,13 @@
 #===============================================================================
 
 if [[ ! -d .svn ]] ; then
-<<<<<<< HEAD
-<<<<<<< HEAD
     echo "ERROR:  Not in an SVN directory"
     exit 1
-=======
-   echo "ERROR:  Not in an SVN directory"
-   exit 1
->>>>>>> 6554bfc (Initial commit after splitting home configuration files into public and private repos)
-=======
-    echo "ERROR:  Not in an SVN directory"
-    exit 1
->>>>>>> a45a426 (Update)
 fi
 
 rev="--revision HEAD"
 
 if [[ $# -eq 0 ]] ; then
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a45a426 (Update)
     cat <<EOF
 Usage: $(basename $0) [OPTION] FILE
   OPTION:
@@ -39,7 +25,6 @@ Usage: $(basename $0) [OPTION] FILE
     -r revnum  Diff with specified revision (specify integer)
 EOF
     exit 1
-<<<<<<< HEAD
 fi
 
 while getopts ":r:hbcp" opt ; do
@@ -50,38 +35,6 @@ while getopts ":r:hbcp" opt ; do
         p) rev="--revision PREV" ;;
         r) rev="--revision $OPTARG" ;;
         *) echo "Incorrect option specified" ;;
-=======
-   echo "Usage: $(basename $0) [OPTION] FILE"
-   echo "  OPTION:"
-   echo "    -h         Diff with latest in repository (HEAD) (default)"
-   echo "    -b         Diff with what you had checked out (BASE)"
-   echo "    -c         Diff with COMMITTED, the version before BASE"
-   echo "    -p         Diff with PREV, the version before COMMITTED"
-   echo "    -r revnum  Diff with specified revision (specify integer)"
-   exit 1
-fi
-
-while getopts ":r:hbcp" opt ; do
-   case "${opt}" in
-     h) rev="--revision HEAD" ;;
-     b) rev="--revision BASE" ;;
-     c) rev="--revision COMMITTED" ;;
-     p) rev="--revision PREV" ;;
-     r) rev="--revision $OPTARG" ;;
-     *) echo "Incorrect option specified" ;;
->>>>>>> 6554bfc (Initial commit after splitting home configuration files into public and private repos)
-=======
-fi
-
-while getopts ":r:hbcp" opt ; do
-    case "${opt}" in
-        h) rev="--revision HEAD" ;;
-        b) rev="--revision BASE" ;;
-        c) rev="--revision COMMITTED" ;;
-        p) rev="--revision PREV" ;;
-        r) rev="--revision $OPTARG" ;;
-        *) echo "Incorrect option specified" ;;
->>>>>>> a45a426 (Update)
     esac
 done
 shift $(($OPTIND -1))

@@ -8,10 +8,6 @@
 #===============================================================================
 
 if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a45a426 (Update)
     cat <<EOF
 Usage: $(basename $0) APPLICATION [OPTION...] [PARAMETER...]
 Run APPLICATION in the root window.
@@ -29,26 +25,6 @@ Run APPLICATION in the root window.
       MODE  default, big, bill
 See root_background_list file for more applications.
 EOF
-<<<<<<< HEAD
-=======
-    echo "Usage: $(basename $0) APPLICATION [OPTION...] [PARAMETER...]"
-    echo "Run APPLICATION in the root window."
-    echo "  APPLICATION options:"
-    echo "    xplanet MODE [PARMETER]..."
-    echo "      MODE       random, earth, earth_clouds, eclipse, saturn"
-    echo "      PARAMETER  any additional xplanet parameter"
-    echo "                 e.g. -output \"img.png\" -geometry 1024x768"
-    echo "    xplanetr MODE LONGITUDE [PARAMETER]..."
-    echo "      MODE       [same as above]"
-    echo "      LONGITUDE  current longitude in rotation"
-    echo "      PARAMETER  any additional xplanet parameters"
-    echo "    xfishtank"
-    echo "    xpenguins [MODE]"
-    echo "      MODE  default, big, bill"
-    echo "See root_background_list file for more applications."
->>>>>>> 6554bfc (Initial commit after splitting home configuration files into public and private repos)
-=======
->>>>>>> a45a426 (Update)
     exit 1
 fi
 

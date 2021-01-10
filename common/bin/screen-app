@@ -8,10 +8,6 @@
 #===============================================================================
 
 if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a45a426 (Update)
     cat <<EOF
 Usage: $(basename $0) APPLICATION
 Launch APPLICATION in a specific screen window.
@@ -44,54 +40,6 @@ Launch APPLICATION in a specific screen window.
     calc   rpncalc             19
     spell  ispell              20
 EOF
-<<<<<<< HEAD
-=======
-    echo "Usage: $(basename $0) APPLICATION"
-    echo "Launch APPLICATION in a specific screen window."
-    echo "  APPLICATION options:"
-    echo "    app    application       window"
-    echo "    -----  ----------------  ------"
-    echo "    mon    top                  0"
-    echo "    mon    htop                 0"
-    echo "    mon    slmon                0"
-    echo "    em     emacs                1"
-    # echo "    1      bash                 1"
-    # echo "    2      bash                 2"
-    # echo "    3      bash                 3"
-    # echo "    4      bash                 4"
-    # echo "    5      bash                 5"
-    # echo "    6      bash                 6"
-    # echo "    7      bash                 7"
-    # echo "    8      bash                 8"
-    # echo "    9      bash                 9"
-    echo "    1      zsh                  1"
-    echo "    2      zsh                  2"
-    echo "    3      zsh                  3"
-    echo "    4      zsh                  4"
-    echo "    5      zsh                  5"
-    echo "    6      zsh                  6"
-    echo "    7      zsh                  7"
-    echo "    8      zsh                  8"
-    echo "    9      zsh                  9"
-    echo "    ifmon  iftop               10"
-    echo "    mail   pine                11"
-    echo "    im     centerim            12"
-    echo "    irc    irssi               13"
-    echo "    web    lynx                14"
-    echo "    news   tin                 15"
-    echo "    rss    snownews            16"
-    echo "    trade  linuxtrade          17"
-    echo "    cal    wyrd                18"
-    echo "    calc   rpncalc             19"
-    echo "    calc   orpie               19"
-    echo "    spell  ispell              20"
-    # echo "    dbm    hnb main            21"
-    # echo "    dbc    hnb contacts        22"
-    # echo "    dbq    hnb quotes          23"
-    # echo "    dbi    hnb information     24"
->>>>>>> 6554bfc (Initial commit after splitting home configuration files into public and private repos)
-=======
->>>>>>> a45a426 (Update)
     exit 1
 fi
 
@@ -111,46 +59,9 @@ case "$1" in
     rss|snownews) screen -t rss 16 snownews ;;
     trade) screen -t trade 17 linuxtrade ;;
     cal|wyrd) screen -t calendar 18 wyrd ;;
-<<<<<<< HEAD
-<<<<<<< HEAD
     calc|orpie) screen -t calculator 19 orpie ;;
     rpncalc) screen -t calculator 19 rpncalc ;;
     spell|ispell) screen -t spell 20 ispell -a ;;
-=======
-    calc|rpncalc) screen -t calculator 19 rpncalc ;;
-    orpie) screen -t calculator 19 orpie ;;
-    spell|ispell) screen -t spell 20 ispell -a ;;
-    # dbm|hnbm) screen -t db-main 21 hnb ${HOME}/hnb/main.hnb ;;
-    # dbc|hnbc) screen -t db-contacts 22 hnb ${HOME}/hnb/contacts.hnb ;;
-    # dbq|hnbq) screen -t db-quotes 23 hnb ${HOME}/hnb/quotes.hnb ;;
-    # dbi|hnbi) screen -t db-info 24 hnb ${HOME}/hnb/information.hnb ;;
-    # 0) screen -t shell 0 bash ;;
-    # 1) screen -t shell 1 bash ;;
-    # 2) screen -t shell 2 bash ;;
-    # 3) screen -t shell 3 bash ;;
-    # 4) screen -t shell 4 bash ;;
-    # 5) screen -t shell 5 bash ;;
-    # 6) screen -t shell 6 bash ;;
-    # 7) screen -t shell 7 bash ;;
-    # 8) screen -t shell 8 bash ;;
-    # 9) screen -t shell 9 bash ;;
-    # 10) screen -t shell 10 bash ;;
-    # 11) screen -t shell 11 bash ;;
-    # 12) screen -t shell 12 bash ;;
-    # 13) screen -t shell 13 bash ;;
-    # 14) screen -t shell 14 bash ;;
-    # 15) screen -t shell 15 bash ;;
-    # 16) screen -t shell 16 bash ;;
-    # 17) screen -t shell 17 bash ;;
-    # 18) screen -t shell 18 bash ;;
-    # 19) screen -t shell 19 bash ;;
-    # 20) screen -t shell 20 bash ;;
->>>>>>> 6554bfc (Initial commit after splitting home configuration files into public and private repos)
-=======
-    calc|orpie) screen -t calculator 19 orpie ;;
-    rpncalc) screen -t calculator 19 rpncalc ;;
-    spell|ispell) screen -t spell 20 ispell -a ;;
->>>>>>> a45a426 (Update)
     0) screen -t shell 0 zsh ;;
     1) screen -t shell 1 zsh ;;
     2) screen -t shell 2 zsh ;;
@@ -186,15 +97,6 @@ case "$1" in
         ${HOME}/bin/screen_app cal
         ${HOME}/bin/screen_app calc
         ${HOME}/bin/screen_app spell
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-        # ${HOME}/bin/screen_app dbm
-        # ${HOME}/bin/screen_app dbc
-        # ${HOME}/bin/screen_app dbq
->>>>>>> 6554bfc (Initial commit after splitting home configuration files into public and private repos)
-=======
->>>>>>> a45a426 (Update)
         ;;
     all)
         ${HOME}/bin/screen_app mon
@@ -218,15 +120,6 @@ case "$1" in
         ${HOME}/bin/screen_app cal
         ${HOME}/bin/screen_app calc
         ${HOME}/bin/screen_app spell
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-        # ${HOME}/bin/screen_app dbm
-        # ${HOME}/bin/screen_app dbc
-        # ${HOME}/bin/screen_app dbq
->>>>>>> 6554bfc (Initial commit after splitting home configuration files into public and private repos)
-=======
->>>>>>> a45a426 (Update)
         ;;
 esac
 

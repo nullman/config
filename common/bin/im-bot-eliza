@@ -42,10 +42,6 @@ else
     case "${cmd}" in
         # help
         help|h)
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a45a426 (Update)
             cat <<EOF
 Commands I understand:
   help    (.h)   this menu
@@ -64,27 +60,6 @@ Commands I understand:
   keym    (.km)  abbreviation for '.key main'
   keyc    (.kc)  abbreviation for '.key contacts'
 EOF
-<<<<<<< HEAD
-=======
-            echo "Commands I understand:"
-            echo "  help    (.h)  - this menu"
-            echo "  eliza   (.e)  - chat with elizatalk"
-            echo "  today   (.y)  - today in history"
-            echo "  fortune (.f)  - fortune teller"
-            echo "  quote   (.q)  - random quote"
-            echo "  google  (.g)  - google search"
-            echo "  lucky   (.l)  - google lucky search"
-            echo "  calc    (.c)  - google calculator"
-            echo "  date    (.d)  - date/time in default format"
-            echo "  time    (.t)  - date/time in YYYY-MM-DD HH:MM:SS format"
-            echo "  uptime  (.up) - system uptime"
-            echo "  uuid    (.u)  - uuid (guid)"
-            echo "  key     (.k)  - key/value database (type .k help for more info)"
-            echo "  keym    (.km) - abbreviation for '.key main'"
-            echo "  keyc    (.kc) - abbreviation for '.key contacts'"
->>>>>>> 6554bfc (Initial commit after splitting home configuration files into public and private repos)
-=======
->>>>>>> a45a426 (Update)
             ;;
         # other
         *)

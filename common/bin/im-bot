@@ -206,10 +206,6 @@ case "${cmd}" in
         ;;
     # help
     help|h)
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a45a426 (Update)
         cat <<EOF
 Commands:
   help    (h)   this menu
@@ -227,26 +223,6 @@ Commands:
   keym    (km)  abbreviation for 'key main'
   keyc    (kc)  abbreviation for 'key contacts'
 EOF
-<<<<<<< HEAD
-=======
-        echo "Commands:"
-        echo "  help    (h)  - this menu"
-        echo "  eliza   (e)  - chat with elizatalk <text>"
-        echo "  today   (y)  - today in history <MMM DD YYYY>"
-        echo "  fortune (f)  - fortune teller <query>"
-        echo "  quote   (q)  - random quote <query>"
-        echo "  google  (g)  - google search <search>"
-        echo "  calc    (c)  - google calculator <expression>"
-        echo "  date    (d)  - date/time in default format"
-        echo "  time    (t)  - date/time in YYYY-MM-DD HH:MM:SS format"
-        echo "  uptime  (up) - system uptime"
-        echo "  uuid    (u)  - uuid (guid)"
-        echo "  key     (k)  - key/value database (type 'key help' for more info)"
-        echo "  keym    (km) - abbreviation for 'key main'"
-        echo "  keyc    (kc) - abbreviation for 'key contacts'"
->>>>>>> 6554bfc (Initial commit after splitting home configuration files into public and private repos)
-=======
->>>>>>> a45a426 (Update)
         ;;
     # other
     *)

@@ -21,10 +21,6 @@ quiet=false
 for arg in "$@" ; do
     case "${arg}" in
         -h|--help)
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a45a426 (Update)
             cat <<EOF
 Usage: $(basename $0) [OPTIONS]
 Removes missing entries from song ratings files.
@@ -34,18 +30,6 @@ Removes missing entries from song ratings files.
     -y, --yes      auto-answer yes when prompted to remove songs
     -q, --quiet    run with no output to terminal
 EOF
-<<<<<<< HEAD
-=======
-            echo "Usage: $(basename $0) [OPTIONS]"
-            echo "Removes missing entries from song ratings files."
-            echo "  OPTIONS:"
-            echo "    -h, --help     show this help"
-            echo "    -d, --dry-run  show which songs would be removed"
-            echo "    -y, --yes      auto-answer yes when prompted to remove songs"
-            echo "    -q, --quiet    run with no output to terminal"
->>>>>>> 6554bfc (Initial commit after splitting home configuration files into public and private repos)
-=======
->>>>>>> a45a426 (Update)
             exit 1
             ;;
         -d|--dry-run)

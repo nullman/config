@@ -75,10 +75,6 @@ fi
 
 # usage/help
 if [[ ${help} -eq 1 ]] ; then
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a45a426 (Update)
     cat <<EOF
 Usage: $(basename $0) OPERATION (FILE|DIR) ARGUMENT...
 Interface to a key-value data dictionary.
@@ -124,54 +120,6 @@ Notes:
   or an update if it already exists.
   The drop command requires the keyword 'drop' to be given as a precaution.
 EOF
-<<<<<<< HEAD
-=======
-    echo "Usage: $(basename $0) OPERATION (FILE|DIR) ARGUMENT..."
-    echo "Interface to a key-value data dictionary."
-    echo
-    echo "  OPERATION options (abbreviations in parenthesis):"
-    echo "    select  (s)  query by key"
-    echo "    grep    (g)  query keys and values via grep"
-    echo "    insert  (i)  add new key/value"
-    echo "    update  (u)  update existing value for a given key"
-    echo "    replace (p)  insert or update key/value"
-    echo "    rename  (r)  rename existing key"
-    echo "    delete  (d)  delete existing key"
-    echo "    create       create new file"
-    echo "    drop         drop existing file"
-    echo "    list         list files"
-    echo "  FILE      key/value database file, relative to '${base}'."
-    echo "  DIR       directory of database files, relative to '${base}'."
-    echo "  ARGUMENT  extra parameter based on the operation being performed."
-    echo
-    echo "  Operation Arguments:"
-    echo "    select FILE QUERY"
-    echo "    grep FILE QUERY"
-    echo "    insert FILE KEY VALUE"
-    echo "    update FILE KEY VALUE"
-    echo "    replace FILE KEY VALUE"
-    echo "    rename FILE KEY NEWKEY"
-    echo "    delete FILE KEY"
-    echo "    create FILE"
-    echo "    drop FILE drop"
-    echo "    list DIR"
-    echo
-    echo "  FILE    key/value file"
-    echo "  DIR     file directory"
-    echo "  QUERY   grep string to match by"
-    echo "  KEY     specific key in the database"
-    echo "  VALUE   any text string"
-    echo "  NEWKEY  an unused key"
-    echo
-    echo "Notes:"
-    echo "  Files and keys may contain only alpha-numeric values (and underscores)."
-    echo "  All other values are quietly trimmed before any action is taken."
-    echo "  The replace command will do an insert if the key does not exist,"
-    echo "  or an update if it already exists."
-    echo "  The drop command requires the keyword 'drop' to be given as a precaution."
->>>>>>> 6554bfc (Initial commit after splitting home configuration files into public and private repos)
-=======
->>>>>>> a45a426 (Update)
     exit 1
 fi
 

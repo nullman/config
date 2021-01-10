@@ -8,10 +8,6 @@
 #===============================================================================
 
 if [[ $# -lt 1 ]] || [[ $# -gt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a45a426 (Update)
     cat <<EOF
 Usage: $(basename $0) DIRECTORY [DATE]
 Get pictures from 'deviantart.com' DIRECTORY starting at DATE.
@@ -42,39 +38,6 @@ Get pictures from 'deviantart.com' DIRECTORY starting at DATE.
     unfinished
   DATE  First date to process (in YYYYMMDD format)
 EOF
-<<<<<<< HEAD
-=======
-    echo "Usage: $(basename $0) DIRECTORY [DATE]"
-    echo "Get pictures from 'deviantart.com' DIRECTORY starting at DATE."
-    echo "  DIRECTORY options:"
-    echo "    3d"
-    echo "    abstract"
-    echo "    automotive"
-    echo "    dark"
-    echo "    dualdisplay"
-    echo "    fantasy"
-    echo "    females"
-    echo "    freehand"
-    echo "    games"
-    echo "    widescreen"
-    echo "    light"
-    echo "    apple"
-    echo "    males"
-    echo "    medieval"
-    echo "    minimalistic"
-    echo "    movies"
-    echo "    photomanip"
-    echo "    political"
-    echo "    psychedelic"
-    echo "    scenery"
-    echo "    scifi"
-    echo "    technical"
-    echo "    tiles"
-    echo "    unfinished"
-    echo "  DATE  first date to process (in YYYYMMDD format)"
->>>>>>> 6554bfc (Initial commit after splitting home configuration files into public and private repos)
-=======
->>>>>>> a45a426 (Update)
     exit 1
 fi
 

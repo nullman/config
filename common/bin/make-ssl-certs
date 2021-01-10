@@ -10,10 +10,6 @@
 # tell the user what is going to happen and
 # make sure some initial setup has occured
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a45a426 (Update)
 cat <<EOF
 Make SSL Certificates
 
@@ -38,34 +34,6 @@ the /etc/ssl/openssl.cnf file must be setup:
     commonName_default          = mycompany.com
     emailAddress_default        = postmaster@mycompany.com
 EOF
-<<<<<<< HEAD
-=======
-echo "Make SSL Certificates"
-echo
-echo "Make sure the following setup has already taken place..."
-echo
-echo "- openssl must be installed:"
-echo "    apt-get -i openssl"
-echo
-echo "- sign.sh must be installed:"
-echo "    cd /usr/local/bin"
-echo "    wget http://willert.dk/geek/files/sign.sh"
-echo "    chmod 755 /usr/local/bin/sign.sh"
-echo
-echo "- the /etc/ssl/openssl.cnf file must be setup:"
-echo "  - in the [ CA_default ] section change:"
-echo "      dir             = /etc/ssl"
-echo "  - in the [ req_distinguished_name ] section put in your specifications:"
-echo "      countryName_default             = US"
-echo "      stateOrProvinceName_default     = Minnesota"
-echo "      localityName_default            = Minneapolis"
-echo "      0.organizationName_default      = My Company"
-echo "      commonName_default              = mycompany.com"
-echo "      emailAddress_default            = postmaster@mycompany.com"
-echo
->>>>>>> 6554bfc (Initial commit after splitting home configuration files into public and private repos)
-=======
->>>>>>> a45a426 (Update)
 echo -n "Are you ready to start? [yN] " ; read a
 case "${a}" in
     y|Y)
