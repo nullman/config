@@ -1780,7 +1780,7 @@ homeinitialize()
 
     case "${a}" in
         y|Y)
-            [[ ! -d "${HOME}/config" ]] && echo "Missing config directory!" && return 1
+            [[ -d "${HOME}/config" ]] || (echo "Missing config directory!" && return 1)
 
             echo "Moving existing home files to '${backupdir}'..."
             (cd "${HOME}" && \
@@ -1790,7 +1790,7 @@ homeinitialize()
                          echo "  ${file} ==> ${backupdir}"
                          mv --verbose "${file}" "${backupdir}/"
                      fi
-                 done) || echo "Errors encountered while backing up existing files!" && return 1
+                 done) || (echo "Errors encountered while backing up existing files!" && return 1)
 
             # create .emacs.d, if it doesn't exist, to prevent stow from linking the entire directory
             mkdir -p "${HOME}/.emacs.d"
