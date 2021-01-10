@@ -71,10 +71,10 @@ if [[ ${client} -eq 1 ]] ; then
 else
     if [[ ${vi} -eq 1 ]] ; then
 
-        if [[ -x "$(command -v vim)" ]] ; then
+        if [[ $(command -v vim) ]] ; then
             # launch vim
             vim "$@"
-        elif [[ -x "$(command -v vi)" ]] ; then
+        elif [[ $(command -v vi) ]] ; then
             # launch vi
             vi "$@"
         else

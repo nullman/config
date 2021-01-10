@@ -2,7 +2,7 @@
 #===============================================================================
 # get-id
 #
-# Return a unique id that will fix in a bigint.
+# Return a unique id that will fit in a bigint.
 #
 # Author: Kyle W T Sherman
 #===============================================================================

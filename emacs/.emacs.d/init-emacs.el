@@ -2732,7 +2732,7 @@ same directory as the org-buffer and insert a link to this file."
 
   ;; ;; work functions
   ;; (when (fboundp 'work-linkify-jira-card)
-  ;;   (bind-keys :map org-mode-map ("C-c C-x l" . work-linkify-jira-card)))
+  ;;   (bind-keys :map org-mode-map ("C-c C-x L" . work-linkify-jira-card)))
 
   ;; make sure tabs are not inserted
   (setq indent-tabs-mode nil)

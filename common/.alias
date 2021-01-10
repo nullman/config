@@ -3110,15 +3110,6 @@ alias make-ssh-config="
 #!    fi"
 #        make-dict-words                 make /usr/share/dict/words file
 alias make-dict-words="sudo wget https://gist.githubusercontent.com/wchargin/8927565/raw/d9783627c731268fb2935a731a618aa8e95cf465/words -O /usr/share/dict/words"
-#        make-mpd-links                  make mpd links
-alias make-mpd-links="
-    sudo bash -c \"
-        cd /var/lib/mpd && \
-          rmdir music && \
-          rmdir playlists && \
-          ln -s ${home}/data/media/audio/Music music && \
-          ln -s ${home}/data/media/audio/Playlists playlists
-    \""
 #        disable-mpd-service             sudo systemctl disable mpd
 alias disable-mpd-service="sudo systemctl disable mpd"
 #!#        make-run-on-wakeup-script make /etc/pm/sleep.d/50-run-on-wakup

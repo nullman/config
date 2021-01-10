@@ -17,7 +17,7 @@ fi
 pat1="$1"
 pat2="$2"
 
-ls -1 | while read file1 ; do
+ls -A1 | while read file1 ; do
     file2=$(echo "${file1}" | sed "s/${pat1}/${pat2}/g")
     if [[ "${file1}" != "${file2}" ]] ; then
        echo "${file1} => ${file2}"

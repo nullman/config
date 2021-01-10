@@ -8,9 +8,9 @@
 #===============================================================================
 
 WAIT=1 VI=1 emacsed "$@"
-if [[ -x "$(command -v vim)" ]] ; then
+if [[ $(command -v vim) ]] ; then
     emacsclient --no-wait --alternate-editor "vim" "$@"
-elif [[ -x "$(command -v vi)" ]] ; then
+elif [[ $(command -v vi) ]] ; then
     emacsclient --no-wait --alternate-editor "vi" "$@"
 else
     echo "Could not find an editor"

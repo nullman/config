@@ -36,9 +36,9 @@ pushd "${musicdir}" > /dev/null 2>&1
 for i in Albums ; do
     for j in Classic%Rock Classical%-%Instrumental Country Hard%Rock Pop%-%Dance R\&B Rap Reggae Rock%-%Alternative Techno%-%Electronic ; do
         d=$(echo "${j}" | sed "s/\%/ /g")
-        for k in $(/bin/ls -1 "${i}/${d}/" | sed 's/ /\%/g') ; do
+        for k in $(ls -1 "${i}/${d}/" | sed 's/ /\%/g') ; do
             e=$(echo "${k}" | sed 's/\%/ /g')
-            for l in $(/bin/ls -1 "${i}/${d}/${e}/" | sed 's/ /\%/g') ; do
+            for l in $(ls -1 "${i}/${d}/${e}/" | sed 's/ /\%/g') ; do
                 echo "${i}/${d}/${e}/${l}" | sed 's/\%/ /g' >> "${pldir}/${tmpfile}"
             done
         done
@@ -58,7 +58,7 @@ fi
 for i in Singles ; do
     for j in Classic%Rock Classical%-%Instrumental Country Hard%Rock Pop%-%Dance R\&B Rap Reggae Rock%-%Alternative Techno%-%Electronic ; do
         d=$(echo "${j}" | sed 's/\%/ /g')
-        for k in $(/bin/ls -1 "${i}/${d}/" | sed 's/ /\%/g') ; do
+        for k in $(ls -1 "${i}/${d}/" | sed 's/ /\%/g') ; do
             echo "${i}/${d}/${k}" | sed 's/\%/ /g' >> "${pldir}/${tmpfile}"
         done
     done
@@ -81,13 +81,13 @@ mv "${pldir}/${tmpfile}" "${pldir}/raw_all.m3u"
 #===============================================================================
 
 for i in Albums Singles ; do
-    for j in $(/bin/ls -1 "${i}/" | sed 's/ /\%/g') ; do
+    for j in $(ls -1 "${i}/" | sed 's/ /\%/g') ; do
         [[ -f "${pldir}/${tmpfile}" ]] && rm -f "${pldir}/${tmpfile}"
         d=$(echo "${j}" | sed "s/\%/ /g")
-        for k in $(/bin/ls -1 "${i}/${d}/" | sed 's/ /\%/g') ; do
+        for k in $(ls -1 "${i}/${d}/" | sed 's/ /\%/g') ; do
             if [[ "${i}" == "Albums" ]] ; then
                 e=$(echo "${k}" | sed 's/\%/ /g')
-                for l in $(/bin/ls -1 "${i}/${d}/${e}/" | sed 's/ /\%/g') ; do
+                for l in $(ls -1 "${i}/${d}/${e}/" | sed 's/ /\%/g') ; do
                     echo "${i}/${d}/${e}/${l}" | sed 's/\%/ /g' >> "${pldir}/${tmpfile}"
                 done
             else

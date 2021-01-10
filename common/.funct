@@ -540,7 +540,7 @@ seddir()
         read a
         case "${a}" in
             y|Y)
-                for file in $(ls -1 "${dir}/") ; do
+                for file in $(ls -A1 "${dir}/") ; do
                     test -f "${file}" && (
                         echo "${file}"
                         sed -i "${script}" "${file}"
@@ -549,6 +549,34 @@ seddir()
                 ;;
         esac
     fi
+}
+#        delete-broken-symlinks  find and delete broken symlinks in given directory
+delete-broken-symlinks()
+{
+    if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+        echo "Usage: $0 DIR"
+    else
+        dir="$1"
+        echo "Deleting broken symlinks in '${dir}'..."
+        ls -A1 "${dir}" | while read file ; do
+            if [[ -L "${file}" ]] && [[ ! -e "${file}" ]] ; then
+                echo "  ${file}"
+                rm "${file}"
+            fi
+        done
+    fi
+
+    # find command version:
+    #find -L . -name . -o -type d -prune -o -type l -exec rm {} +
+}
+
+#
+# tools
+#
+#        generateqrc             generate QR code from given URL, text, or VCARD
+generateqrc()
+{
+    printf "$@" | curl -F-=\<- qrenco.de
 }
 #        colors                  show terminal colors
 colors()
@@ -681,11 +709,6 @@ ansislideshow()
             sleep 10
         done
     fi
-}
-#        generateqrc             generate QR code from given URL, text, or VCARD
-generateqrc()
-{
-    printf "$@" | curl -F-=\<- qrenco.de
 }
 
 #
@@ -1728,7 +1751,7 @@ EOF
 #        homeinitialize          stow links from ~/ to ~/config and ~/config-private dirs
 homeinitialize()
 {
-    backupdir="${HOME}/original-configuration-files"
+    backupdir="${HOME}/original-configuration-files-$(date +'%Y%m%d')"
     backupfiles=(
         ".bash_logout"
         ".bash_profile"
@@ -1763,9 +1786,11 @@ homeinitialize()
             (cd "${HOME}" && \
                  mkdir -p "${backupdir}" && \
                  for file in ${backupfiles[@]} ; do
-                     echo "  ${file} ==> ${backupdir}"
-                     mv --verbose "${file}" "${backupdir}/"
-                 done) || return 1
+                     if [[ -e "${file}" ]] ; then
+                         echo "  ${file} ==> ${backupdir}"
+                         mv --verbose "${file}" "${backupdir}/"
+                     fi
+                 done) || echo "Errors encountered while backing up existing files!" && return 1
 
             # create .emacs.d, if it doesn't exist, to prevent stow from linking the entire directory
             mkdir -p "${HOME}/.emacs.d"
@@ -1778,7 +1803,11 @@ homeinitialize()
                      ls -1 | while read file ; do
                          if [[ -d "${file}" ]] ; then
                              echo "  ${file}"
-                             stow --stow --verbose "${file}"
+                             if [[ "${file}" == "custom" ]] ; then
+                                 (cd "${file}" && stow --stow --verbose "$(uname -n)")
+                             else
+                                 stow --stow --verbose "${file}"
+                             fi
                          fi
                      done)
             done
@@ -1805,7 +1834,11 @@ homerestow()
              ls -1 | while read file ; do
                  if [[ -d "${file}" ]] ; then
                      echo "  ${file}"
-                     stow --restow --verbose "${file}"
+                     if [[ "${file}" == "custom" ]] ; then
+                         (cd "${file}" && stow --restow --verbose "$(uname -n)")
+                     else
+                         stow --restow --verbose "${file}"
+                     fi
                  fi
              done)
     done

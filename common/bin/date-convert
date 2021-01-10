@@ -9,7 +9,7 @@
 
 tmp=/tmp/date-convert-$$
 
-cat > ${tmp} <<EOD
+cat > ${tmp} <<EOF
 (require 'calendar)
 
 ;; use current date if no date is given on the command line
@@ -28,7 +28,7 @@ cat > ${tmp} <<EOD
   "  Chinese: " (calendar-chinese-date-string date) "\n"
   "    Mayan: " (calendar-mayan-date-string date) "\n"
   "    Epoch: " (number-to-string (truncate (time-to-seconds (apply (quote encode-time) (append (list 0 0 0) date))))) "\n"))
-EOD
+EOF
 
 emacs --script ${tmp} 2>/dev/null
 

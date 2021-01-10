@@ -12,7 +12,7 @@ name=$(basename "$0")
 
 _usage()
 {
-    cat <<- EOF
+    cat <<EOF
 Usage: $(basename "$0") [options]
 
 Options:
