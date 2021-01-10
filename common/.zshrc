@@ -134,7 +134,7 @@ if [[ "$-" == "*i*" ]] ; then
     #[[ -z "$(greppr erase)" ]] || stty erase $(getpr erase)
 
     # set tabs
-    [[ -n "$(command -v stty)" ]] && stty tabs
+    [[ $(command -v stty) ]] && stty tabs
 fi
 
 # set umask
@@ -143,8 +143,8 @@ umask 0022
 # turn off console output warning
 typeset -g POWERLEVEL9K_INSTANT_PROMPT="quiet"
 
-# source profile
-[[ -f "${HOME}/.profile" ]] && source ${HOME}/.profile 2>&1
+# source shellrc
+[[ -f "${HOME}/.shellrc" ]] && source ${HOME}/.shellrc 2>&1
 
 #===============================================================================
 # End of File

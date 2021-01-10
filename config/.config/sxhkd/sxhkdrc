@@ -151,7 +151,7 @@ super + alt + p
 
 # session menu
 super + shift + e
-    rofi-session-menu -s
+    ${HOME}/bin/rofi-session-menu -s
 
 # get xprop class name
 super + shift + p

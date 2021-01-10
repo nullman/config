@@ -17,7 +17,7 @@ _bc()
 # bspc rule --add
 _ba()
 {
-    bspc rule --add
+    bspc rule --add "$@"
 }
 
 #-------------------------------------------------------------------------------
@@ -95,46 +95,45 @@ _bc presel_feedback_color "#5e81ac"
 #_ba URxvt desktop='^1' follow=on
 #_ba Alacritty desktop='^1' follow=on
 #_ba Termite desktop='^1' follow=on
-_ba emacs desktop='^2' follow=on
-_ba slack desktop='^3' follow=on
-_ba thunderbird desktop='^3' follow=on
+_ba Emacs desktop='^2' follow=on
+_ba Slack desktop='^3' follow=on
+_ba Thunderbird desktop='^3' follow=on
 _ba android-messages-desktop desktop='^3' follow=on
 _ba firefox desktop='^4' follow=on
-_ba chromium desktop='^4' follow=on
-_ba google-chrome desktop='^4' follow=on
+_ba Chromium desktop='^4' follow=on
+_ba Google-chrome desktop='^4' follow=on
 _ba gopherus-sdl desktop='^4' follow=on
-_ba pcmanfm desktop='^5' follow=on
-_ba org.gnome.nautilus desktop='^5' follow=on
-_ba thunar desktop='^5' follow=on
-_ba transmission-gtk desktop='^5' follow=on
+_ba Pcmanfm desktop='^5' follow=on
+_ba Org.gnome.Nautilus desktop='^5' follow=on
+_ba Thunar desktop='^5' follow=on
+_ba Transmission-gtk desktop='^5' follow=on
 _ba balena-etcher-electron desktop='^5' follow=on
-_ba ghb desktop='^5' follow=on
+_ba Ghb desktop='^5' follow=on
 _ba jetbrains-idea desktop='^6' follow=on
 _ba jetbrains-idea-ce desktop='^6' follow=on
 _ba jetbrains-studio desktop='^6' follow=on
-_ba doxbox desktop='^6' follow=on
+_ba dosbox desktop='^6' follow=on
 _ba BasiliskII desktop='^6' follow=on
-_ba VirtualBox Manager desktop='^6' follow=on
-_ba VirtualBox Machine desktop='^6' follow=on
+_ba 'VirtualBox Manager' desktop='^6' follow=on
+_ba 'VirtualBox Machine' desktop='^6' follow=on
 _ba discord desktop='^7' follow=on
 _ba 'Hyperspace Desktop' desktop='^7' follow=on
 _ba Tootle desktop='^7' follow=on
-_ba com.github.bleakgrey.tootle desktop='^7' follow=on
-_ba gimp-2.10 desktop='^8' follow=on
+_ba Com.github.bleakgrey.tootle desktop='^7' follow=on
+_ba Gimp-2.10 desktop='^8' follow=on
 _ba Lollypop desktop='^8' follow=on
-_ba lbry desktop='^9' follow=on
+_ba LBRY desktop='^9' follow=on
 _ba bluejeans-v2 desktop='^9' follow=on
 _ba 'Microsoft Teams' desktop='^9' follow=on
 _ba syncterm desktop='^10' follow=on
 
 # tiled applications
-_ba emacs state=tiled
+_ba Emacs state=tiled
 
 # fullscreen applications
 _ba bluejeans-v2 state=fullscreen
-_ba ghb state=fullscreen
-_ba gimp-2.10 state=fullscreen
-_ba inkscape state=fullscreen
+_ba Ghb state=fullscreen
+_ba Gimp-2.10 state=fullscreen
 _ba jetbrains-idea state=fullscreen
 _ba jetbrains-idea-ce state=fullscreen
 _ba jetbrains-studio state=fullscreen
@@ -152,25 +151,24 @@ _ba balena-etcher-electron state=floating center=true
 _ba BasiliskII state=floating center=true
 _ba dosbox state=floating center=true
 _ba feh state=floating center=true
-_ba font-manager state=floating center=true
-_ba font-viewer state=floating center=true
-_ba galculator state=floating center=true
-_ba gnome-disks state=floating center=true
-_ba gpartedbin state=floating center=true
-_ba gxmessage state=floating center=true
-_ba lxappearance state=floating center=true
-_ba manjaro-settings-manager state=floating center=true
+_ba Font-manager state=floating center=true
+_ba Font-viewer state=floating center=true
+_ba Gnome-disks state=floating center=true
+_ba GParted state=floating center=true
+_ba Gxmessage state=floating center=true
+_ba Lxappearance state=floating center=true
+_ba 'Manjaro Settings Manager' state=floating center=true
 _ba mpv state=floating center=true sticky=on
-_ba nitrogen state=floating center=true
+_ba Nitrogen state=floating center=true
 _ba oblogout state=floating center=true
-_ba pamac-manager state=floating center=true
-_ba paprefs state=floating center=true
-_ba pavucontrol state=floating center=true
+_ba Pamac-manager state=floating center=true
+_ba Paprefs state=floating center=true
+_ba Pavucontrol state=floating center=true
 _ba syncterm state=floating center=true
-_ba tint2conf state=floating center=true
-_ba x48 state=floating center=true
-_ba xfce4-settings-manager state=floating center=true
-_ba yad state=floating center=true
+_ba Tint2conf state=floating center=true
+_ba X48 state=floating center=true
+_ba Xfce4-settings-manager state=floating center=true
+_ba Yad state=floating center=true
 
 #-------------------------------------------------------------------------------
 # Auto-Start Standard Applications
@@ -194,7 +192,8 @@ _delay()
 }
 
 # simple x hotkey daemon (both standard and bspwm key bindings)
-_command sxhkd && sxhkd -c "${HOME}"/.config/sxhkd/sxhkdrc{,-bspwm} &
+# (might have been run already by .xprofile)
+_command sxhkd && ptest sxhkd || sxhkd -c "${HOME}"/.config/sxhkd/sxhkdrc{,-bspwm} &
 
 # xfce settings
 #_command xfsettingsd && xfsettingsd &
@@ -225,14 +224,14 @@ _command compton && compton -c &
 _command tint2 && (tint2 && xdo above -t $(xdo id -n root) $(xdo id)) &
 
 # system bar applets
-_command clipit && _delay ${delay} pgrep clipit > /dev/null || clipit &
-_command pa-applet && _delay ${delay} pgrep pa-applet > /dev/null || pa-applet &
-_command blueman-applet && _delay ${delay} pgrep blueman-applet > /dev/null || blueman-applet &
-_command nm-applet && _delay ${delay} pgrep nm-applet > /dev/null || nm-applet &
-_command pamac-tray && _delay ${delay} pgrep pamac-tray > /dev/null || pamac-tray &
-_command xfce4-power-manager && _delay ${delay} pgrep xfce4-power-manager > /dev/null || xfce4-power-manager &
-#_command volumeicon && _delay ${delay} pgrep volumeicon > /dev/null || volumeicon &
-#_command sbxkb && _delay ${delay} pgrep sbxkb > /dev/null || sbxkb &
+_command clipit && (_delay ${delay} pgrep --exact --euid ${USER} clipit > /dev/null || clipit) &
+_command pa-applet && (_delay ${delay} pgrep --exact --euid ${USER} pa-applet > /dev/null || pa-applet) &
+_command blueman-applet && (_delay ${delay} pgrep --exact --euid ${USER} blueman-applet > /dev/null || blueman-applet) &
+_command nm-applet && (_delay ${delay} pgrep --exact --euid ${USER} nm-applet > /dev/null || nm-applet) &
+_command pamac-tray && (_delay ${delay} pgrep --exact --euid ${USER} pamac-tray > /dev/null || pamac-tray) &
+_command xfce4-power-manager && (_delay ${delay} pgrep --exact --euid ${USER} xfce4-power-manager > /dev/null || xfce4-power-manager) &
+#_command volumeicon && (_delay ${delay} pgrep --exact --euid ${USER} volumeicon > /dev/null || volumeicon) &
+#_command sbxkb && (_delay ${delay} pgrep --exact --euid ${USER} sbxkb > /dev/null || sbxkb) &
 
 # system info and key bindings on wallpaper
 #_command manjaro-conky-session && manjaro-conky-session &

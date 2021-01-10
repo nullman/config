@@ -58,12 +58,14 @@ alias al="
     for file in \".alias\" \".funct\" \".alias-work\" \".funct-work\" ; do
         [[ -f \${HOME}/\${file} ]] && source \${HOME}/\${file}
     done"
-#        spr                     source .profile
-alias spr="[[ -f \${HOME}/.profile ]] && source \${HOME}/.profile"
+#        spr                     source profile (.shellrc)
+alias spr="[[ -f \${HOME}/.shellrc ]] && source \${HOME}/.shellrc"
 #        sba                     source .bashrc
 alias sba="[[ -f \${HOME}/.bashrc ]] && source \${HOME}/.bashrc"
 #        szsh                    source .zsh
 alias szsh="[[ -f \${HOME}/.zshrc ]] && source \${HOME}/.zshrc"
+#        sxp                     source .xprofile
+alias sxp="[[ -f \${HOME}/.xprofile ]] && source \${HOME}/.xprofile"
 
 #
 # general (basic)
@@ -1261,10 +1263,6 @@ alias vi="vim"
 #!alias edmw="edit \${HOME}/.menu_work"
 #!#        edoff                   edit ~/.offlineimaprc
 #!alias edoff="edit \${HOME}/.offlineimaprc"
-#!#        edpr                    edit ~/.profile
-#!alias edpr="edit \${HOME}/.profile"
-#!#        edprw                   edit ~/.profile-work
-#!alias edprw="edit \${HOME}/.profile-work"
 #!#        edrp                    edit ~/.ratpoisonrc
 #!alias edrp="edit \${HOME}/.ratpoisonrc"
 #!#        edrpb                   edit ~/.ratpoisonrc-bindings
@@ -1275,6 +1273,10 @@ alias vi="vim"
 #!alias edscb="edit \${HOME}/.screenrc-bindings"
 #!#        edsca                   edit ~/.screenrc-applications
 #!alias edsca="edit \${HOME}/.screenrc-applications"
+#!#        edsh                    edit ~/.shellrc
+#!alias edsh="edit \${HOME}/.shellrc"
+#!#        edshw                   edit ~/.shellrc-work
+#!alias edshw="edit \${HOME}/.shellrc-work"
 #!#        edsshak                 edit ~/.ssh/authorized_keys
 #!alias edsshak="edit \${HOME}/.ssh/authorized_keys"
 #!#        edsshc                  edit ~/.ssh/config
@@ -1289,6 +1291,8 @@ alias vi="vim"
 #!alias edxbk="edit \${HOME}/.xbindkeysrc"
 #!#        edxm                    edit ~/.Xmodmap
 #!alias edxm="edit \${HOME}/.Xmodmap"
+#!#        edpr                    edit ~/.xprofile
+#!alias edpr="edit \${HOME}/.xprofile"
 #!#        edxr                    edit ~/.Xresources
 #!alias edxr="edit \${HOME}/.Xresources"
 #!#        edxmame                 edit ~/.xmame/xmamerc
@@ -2985,8 +2989,8 @@ Copy bundle.tgz.cpt from USB and decrypt it:
 Checkout 'config' and 'config-private':
   git clone \${GIT_REPOSITORY_CONFIG} \${HOME}/config
   git clone \${GIT_REPOSITORY_CONFIG_PRIVATE} \${HOME}/config-private
-Source '.funct', '.alias', and '.profile':
-  source \${HOME}/config/.funct \${HOME}/config/.alias ~/config/.profile
+Source '.funct', '.alias', and '.shellrc':
+  source \${HOME}/config/.funct \${HOME}/config/.alias ~/config/.shellrc
 Run 'gitcodoc' to checkout 'doc' repository:
   gitcodoc
 Run 'gitcodev' to checkout 'dev' repository:

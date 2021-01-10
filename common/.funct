@@ -1478,12 +1478,12 @@ copykyle()
         y|Y)
             src=/home/kyle
             # copy config files
-            files=".alias .bashrc .funct .menu .profile .screenrc .screenrc-bindings .zshrc"
+            files=".alias .bashrc .funct .menu .screenrc .screenrc-bindings .shellrc .zshrc"
             for file in ${files} ; do
                 cp --preserve=mode,timestamps "${src}/config/${file}" "${HOME}/"
             done
             # copy config work files
-            files=".alias-work .funct-work .profile-work"
+            files=".alias-work .funct-work .shellrc-work"
             for file in ${files} ; do
                 cp --preserve=mode,timestamps "${src}/config/${file}" "${HOME}/"
             done
@@ -1533,7 +1533,7 @@ copyhome()
             y|Y)
                 src="$1"
                 # copy config files
-                files=".alias .bashrc .funct .menu .profile .screenrc .screenrc-bindings .zshrc"
+                files=".alias .bashrc .funct .menu .screenrc .screenrc-bindings .shellrc .zshrc"
                 for file in ${files} ; do
                     scp "${src}/config/${file}" "${HOME}/"
                 done
@@ -1577,7 +1577,7 @@ rsynchome()
                 src="$1"
                 dest="$2"
                 # rsync config files
-                files=".alias .alias-work .bashrc .funct .funct-work .menu .menu_work .profile .profile-work .screenrc .screenrc-bindings .zshrc"
+                files=".alias .alias-work .bashrc .funct .funct-work .menu .menu_work .screenrc .screenrc-bindings .shellrc .shellrc-work .zshrc"
                 filelist=""
                 for file in ${files} ; do
                     filelist="${filelist} ${src}/config/${file}"
@@ -1775,8 +1775,8 @@ Copy bundle.tgz.cpt from USB and decrypt it:
 Checkout 'config' and 'config-private':
   git clone ${GIT_REPOSITORY_CONFIG} ${HOME}/config
   git clone ${GIT_REPOSITORY_CONFIG_PRIVATE} ${HOME}/config-private
-Source '.funct', '.alias', and '.profile':
-  source ${HOME}/config/.funct ${HOME}/config/.alias ~/config/.profile
+Source '.funct', '.alias', and '.shellrc':
+  source ${HOME}/config/.funct ${HOME}/config/.alias ~/config/.shellrc
 Run 'gitcodoc' to checkout 'doc' repository:
   gitcodoc
 Run 'gitcodev' to checkout 'dev' repository:
@@ -1804,6 +1804,7 @@ homeinitialize()
         ".i3"
         ".profile"
         ".xinitrc"
+        ".xprofile"
         ".Xresources"
     )
     symlinkdirs=(

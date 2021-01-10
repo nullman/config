@@ -90,8 +90,8 @@ shopt -s autocd
 # check window size
 shopt -s checkwinsize
 
-# source profile
-[[ -f "${HOME}/.profile" ]] && source "${HOME}/.profile" 2>&1
+# source shellrc
+[[ -f "${HOME}/.shellrc" ]] && source "${HOME}/.shellrc" 2>&1
 
 # run bash completion
 [[ -x "/etc/bash-completion" ]] && source "/etc/bash-completion" 2>&1

@@ -11,62 +11,61 @@
 export runpath="${runpath}:${HOME}/.xprofile"
 logger "Running: ${HOME}/.xprofile"
 
+# check if executable command is found in the path
+_command()
+{
+    command -v "$1" > /dev/null 2>&1
+}
+
 # xresources
-[[ -f /etc/X11/xinit/.Xresources ]] && xrdb -merge /etc/X11/xinit/.Xresources
-[[ -f ${HOME}.Xresources ]] && xrdb -merge ${HOME}/.Xresources
+_command xrdb && [[ -f /etc/X11/xinit/.Xresources ]] && xrdb -merge /etc/X11/xinit/.Xresources
+_command xrdb && [[ -f ${HOME}.Xresources ]] && xrdb -merge ${HOME}/.Xresources
 
 # xmodmap
-[[ -f /etc/X11/xinit/.Xmodmap ]] && xmodmap /etc/X11/xinit/.Xmodmap
-[[ -f ${HOME}/.Xmodmap ]] && xmodmap ${HOME}/.Xmodmap
+_command xmodmap && [[ -f /etc/X11/xinit/.Xmodmap ]] && xmodmap /etc/X11/xinit/.Xmodmap
+_command xmodmap && [[ -f ${HOME}/.Xmodmap ]] && xmodmap ${HOME}/.Xmodmap
 
 # disable insert key
-# handled by systemctl script
-xkbcomp ${DISPLAY} - | sed 's/ Insert / NoSymbol /' | xkbcomp - ${DISPLAY} > /dev/null 2>&1
+_command xkbcomp && xkbcomp ${DISPLAY} - | sed 's/ Insert / NoSymbol /' | xkbcomp - ${DISPLAY} > /dev/null 2>&1
 
 # disable caps_lock key and toggle it via both shift keys
-# handled by systemctl script
-setxkbmap -option 'shift:both_capslock,caps:ctrl_modifier'
+_command setxkbmap && setxkbmap -option 'shift:both_capslock,caps:ctrl_modifier'
 
 # # xbindkeys
-# # handled by systemctl script
 # pkill -x xbindkeys > /dev/null 2>&1
-# [[ -f ${HOME}/.xbindkeysrc ]] && xbindkeys > /dev/null 2>&1
+# _command xbindkeys && [[ -f ${HOME}/.xbindkeysrc ]] && xbindkeys > /dev/null 2>&1
+
+# sxhkd
+pkill -x sxhkd > /dev/null 2>&1
+_command sxhkd && [[ -f ${HOME}/.config/sxhkd/sxhkdrc ]] && \
+    if [[ "${XDG_SESSION_DESKTOP}" == "bspwm" ]] ; then
+        sxhkd -c "${HOME}"/.config/sxhkd/sxhkdrc{,-bspwm} & > /dev/null 2>&1
+    else
+        sxhkd -c "${HOME}"/.config/sxhkd/sxhkdrc & > /dev/null 2>&1
+    fi
 
 # set no energy saving, mouse acceleration rate, and keyboard acceleration rate
-# handled by systemctl script
-xset -dpms s off b off m 2/1 4 r rate 500 35
+_command xset && xset -dpms s off b off m 2/1 4 r rate 500 35
 
 # set background color and mouse pointer
-#xsetroot -solid black -cursor_name left_ptr > /dev/null 2>&1
+#_command xsetroot && xsetroot -solid black -cursor_name left_ptr > /dev/null 2>&1
 
 # # set no energy saving, mouse acceleration rate, and keyboard acceleration rate
 # if [[ -n "$(greppr screen_blank)" ]] ; then
-#     xset -dpms s on b off m 2/1 4 r rate 500 35 > /dev/null 2>&1
+#     _command xset && xset -dpms s on b off m 2/1 4 r rate 500 35 > /dev/null 2>&1
 # else
-#     xset -dpms s off b off m 2/1 4 r rate 500 35 > /dev/null 2>&1
+#     _command xset && xset -dpms s off b off m 2/1 4 r rate 500 35 > /dev/null 2>&1
 # fi
 
-# set terminal window titles
-#export PS1="${PS1}\[\e]0;\h:\u:\w\a\]"
-
 # xhost
-#xhost +localhost > /dev/null 2>&1
-#xhost +mouse1 > /dev/null 2>&1
+#_command xhost && xhost +localhost > /dev/null 2>&1
+#_command xhost && xhost +mouse1 > /dev/null 2>&1
 
 # run-app
 #${HOME}/bin/run-app
 
 # run applications
-[[ -f ${HOME}/.xprofile-applications ]] && source ${HOME}/.xprofile-applications 2>&1
-
-# # mythtv stuff (if not already running (all users))
-# if [[ -n "$(greppr mythtv)" ]] ; then
-#   # launch irxevent for remote (if not already running)
-#   ps ux | grep -v grep | grep -q irxevent || (irxevent &) > /dev/null 2>&1
-
-#   # launch mythtv gui (if not already running)
-#   ps ux | grep -v grep | grep -q mythfrontend || (mythfrontend &) > /dev/null 2>&1
-# fi
+#[[ -f ${HOME}/.xprofile-applications ]] && source ${HOME}/.xprofile-applications 2>&1
 
 # start wm
 #[[ -z "$(greppr window_manager)" ]] || ps ux | grep -v grep | grep -q window_manager || (exec $(getpr window_manager) &) > /dev/null 2>&1
