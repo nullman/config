@@ -12,8 +12,9 @@
 # Author: Kyle W T Sherman
 #===============================================================================
 
-COUNT=6
-SARGS=
+count=6
+opts=
+help=0
 
 # check for prerequisite applicaitons
 [[ $(command -v sensors) ]] || echo "lm_sensors is not installed!" && exit 1
@@ -24,23 +25,23 @@ while [[ $# -gt 0 ]] ; do
     key="$1"
     case "${key}" in
         -c|--count)
-            COUNT="$2"
+            count="$2"
             shift
             shift
             ;;
         -f|--fahrenheit)
-            SARGS="$1"
+            opts="$1"
             shift
             ;;
         *)
-            help=true
+            help=1
             shift
             ;;
     esac
 done
 
 # help
-if [[ "${help}" == "true" ]] ; then
+if [[ ${help} -eq 1 ]] ; then
     echo "Usage: $(basename $0) [OPTIONS]"
     echo "  OPTIONS:"
     echo "    -c, --count       number of 10 second tests to run [6]"
@@ -50,17 +51,17 @@ fi
 
 get-temp()
 {
-    sensors ${SARGS} | grep "^Package id 0:" | sed 's/^Package id 0: \+// ; s/ \+(high.*$//'
-    #sensors ${SARGS} | grep "^Core 0" | sed 's/^Core 0: \+// ; s/ \+(high.*$//'
+    sensors ${opts} | grep "^Package id 0:" | sed 's/^Package id 0: \+// ; s/ \+(high.*$//'
+    #sensors ${opts} | grep "^Core 0" | sed 's/^Core 0: \+// ; s/ \+(high.*$//'
 }
 
 threads="$(lscpu -p | grep -v "^#" | wc -l)"
 
 echo "Performing CPU temperature test on ${threads} threads..."
 
-for x in $(seq ${COUNT}) ; do
+for x in $(seq ${count}) ; do
     c="00000${x}"
-    echo -n "[${c: $((-${#COUNT}))}/${COUNT}] "
+    echo -n "[${c: $((-${#count}))}/${count}] "
     get-temp $1
     sysbench --test=cpu --cpu-max-prime=25000 --num-threads=${threads} run > /dev/null 2>&1
 done

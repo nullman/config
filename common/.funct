@@ -347,7 +347,7 @@ dtloop()
     if [[ $# -gt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 [DELAY]"
         echo "Output the current date-time in a loop."
-        echo "  DELAY  time between outputs (defaults to 5s)."
+        echo "  DELAY  time between outputs (defaults to 5s)"
     else
         if [[ $# -eq 0 ]] ; then
             delay="5s"
@@ -519,12 +519,13 @@ longevity()
         esac
     fi
 }
-#        seddir                  apply sed to all files in current directory
+#        seddir                  apply sed to all files in directory
 seddir()
 {
     tmp=temp$$
     if [[ $# -lt 1 ]] || [[ $# -gt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 SCRIPT [DIR]"
+        echo "Apply sed SCRIPT to all files in current directory or DIR."
     else
         script="$1"
         shift
@@ -553,21 +554,57 @@ seddir()
 #        delete-broken-symlinks  find and delete broken symlinks in given directory
 delete-broken-symlinks()
 {
-    if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 DIR"
-    else
-        dir="$1"
-        echo "Deleting broken symlinks in '${dir}'..."
-        ls -A1 "${dir}" | while read file ; do
-            if [[ -L "${file}" ]] && [[ ! -e "${file}" ]] ; then
-                echo "  ${file}"
-                rm "${file}"
-            fi
-        done
+    opts="-maxdepth 0"
+    dir=""
+
+    _usage()
+    {
+        cat <<EOF
+Usage: $0 DIR [OPTIONS]
+Delete broken symlinks in DIR.
+OPTIONS:
+  DIR              directory to search in
+  -h, --help       show this help
+  -r, --recursive  recurse into sub-directories
+EOF
+    }
+
+    while [[ $# -gt 0 ]] ; do
+        opt="$1"
+        case "${opt}" in
+            -r|--recursive)
+                opts=""
+                shift
+                ;;
+            -h|--help)
+                _usage $0
+                return 0
+                ;;
+            *)
+                if [[ -z "${dir}" ]] ; then
+                    dir="${opt}"
+                    shift
+                else
+                    _usage $0
+                    return 1
+                fi
+                ;;
+        esac
+    done
+
+    if [[ -z "${dir}" ]] ; then
+        _usage $0
+        return 1
     fi
 
-    # find command version:
-    #find -L . -name . -o -type d -prune -o -type l -exec rm {} +
+    echo "Deleting broken symlinks in '${dir}'..."
+    cmd="find -L \"${dir}\" ${opts} -name . -o -type l -print"
+    eval "${cmd}" | while read file ; do
+        if [[ -L "${file}" ]] && [[ ! -e "${file}" ]] ; then
+            echo "  ${file}"
+            rm "${file}"
+        fi
+    done
 }
 
 #
@@ -620,16 +657,20 @@ colorscriptslideshow()
     length=$((${#list[@]} - 1)) # there is a bug where the last script does not work
     bad=(32 33 34)
 
-    show_help()
+    _usage()
     {
-        echo "Usage: $(basename $1) [-o,--once|-c,--continuous|-r,--random] [-d,-delay]"
-        echo "  -o, --once        run each script one time"
-        echo "  -c, --continuous  run all scripts in a continuous loop"
-        echo "  -r, --random      run scripts randomly"
-        echo "  -d, --delay       time to pause between scripts (defaults to 2s)"
+        cat <<EOF
+Usage: $1 [OPTIONS]
+Run colorscript scripts.
+OPTIONS:
+  -o, --once        run each script one time
+  -c, --continuous  run all scripts in a continuous loop
+  -r, --random      run scripts randomly
+  -d, --delay       time to pause between scripts (defaults to 2s)
+EOF
     }
 
-    show()
+    _show()
     {
         num="$1"
         # ignore scripts that never end
@@ -665,13 +706,13 @@ colorscriptslideshow()
                 shift
                 ;;
             -h|--help)
-                show_help $0
+                _usage $0
                 shift
                 return 0
                 ;;
             *)
                 printf "%s: unrecognized option '%s'\n\n" "$(basename $0)" "$1"
-                show_help $0
+                _usage $0
                 return 1
                 ;;
         esac
@@ -679,13 +720,13 @@ colorscriptslideshow()
 
     if [[ ${random} -eq 1 ]] ; then
         while true ; do
-            show $((${RANDOM} % length + 1))
+            _show $((${RANDOM} % length + 1))
         done
     elif [[ ${once} -eq 1 ]] ; then
-        for x in $(seq ${length}) ; do show ${x} ; done
+        for x in $(seq ${length}) ; do _show ${x} ; done
     else
         while true ; do
-            for x in $(seq ${length}) ; do show ${x} ; done
+            for x in $(seq ${length}) ; do _show ${x} ; done
         done
     fi
 }
@@ -1760,7 +1801,6 @@ homeinitialize()
         ".bash_logout"
         ".bash_profile"
         ".bashrc"
-        ".config"
         ".i3"
         ".profile"
         ".xinitrc"
