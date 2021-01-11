@@ -1833,7 +1833,7 @@ homeinitialize()
                  for file in ${backupfiles[@]} ; do
                      if [[ -e "${file}" ]] ; then
                          echo "  ${file} ==> ${backupdir}"
-                         mv --verbose "${file}" "${backupdir}/"
+                         mv "${file}" "${backupdir}/"
                      fi
                  done) || (echo "Errors encountered while backing up existing files!" && return 1)
 
@@ -1849,9 +1849,9 @@ homeinitialize()
                          if [[ -d "${file}" ]] ; then
                              echo "  ${file}"
                              if [[ "${file}" == "custom" ]] ; then
-                                 (cd "${file}" && stow --stow --verbose "$(uname -n)")
+                                 (cd "${file}" && stow --stow "$(uname -n)")
                              else
-                                 stow --stow --verbose "${file}"
+                                 stow --stow "${file}"
                              fi
                          fi
                      done)
@@ -1880,9 +1880,9 @@ homerestow()
                  if [[ -d "${file}" ]] ; then
                      echo "  ${file}"
                      if [[ "${file}" == "custom" ]] ; then
-                         (cd "${file}" && stow --restow --verbose "$(uname -n)")
+                         (cd "${file}" && stow --restow "$(uname -n)")
                      else
-                         stow --restow --verbose "${file}"
+                         stow --restow "${file}"
                      fi
                  fi
              done)
