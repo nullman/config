@@ -56,8 +56,7 @@ ${color2}${hr}${color}
 [Super + Alt] + S/X  ${alignr}Start/Lock Screensaver
 [Super + Control + Alt] + L/R  ${alignr}Volume Down/Up 10%
 [Super + Control + Alt] + M  ${alignr}MPD Play/Pause
-[Super + Control + Alt] + ,  ${alignr}MPD Prev
-[Super + Control + Alt] + .  ${alignr}MPD Next
+[Super + Control + Alt] + ,/.  ${alignr}MPD Prev/Next
 [Super + Control + Alt] + /  ${alignr}MPD Playing
 [Super + Alt] + T/Return  ${alignr}Open Terminal
 ]]
