@@ -777,10 +777,10 @@ A fortune is added if FORTUNE is non-nil."
 
 ;; [[file:init-emacs.org::*System][System:7]]
 ;; set max kill ring size
-(setq kill-ring-max 5000)               ; defaults to 60
+(setq kill-ring-max 100)                ; defaults to 60
 
 ;; set max mark ring size
-(setq mark-ring-max 5000)               ; defaults to 16
+(setq mark-ring-max 32)                 ; defaults to 16
 ;; System:7 ends here
 
 ;; [[file:init-emacs.org::*System][System:8]]
@@ -957,11 +957,9 @@ A fortune is added if FORTUNE is non-nil."
 ;; [[file:init-emacs.org::*Files][Files:18]]
 ;; save minibuffer history
 (when (fboundp 'savehist-mode)
-  ;;(setq savehist-file (expand-file-name "history" emacs-home-dir)) ; defaults to ~/.emacs.d/history
   (savehist-mode 1)
   (setq savehist-save-minibuffer-history 1
-        savehist-additional-variables '(kill-ring
-                                        search-ring
+        savehist-additional-variables '(search-ring
                                         regexp-search-ring)))
 ;; Files:18 ends here
 
@@ -4150,14 +4148,14 @@ If the first headline is \"Org\", it is ignored."
 (defun duluth-hotel-invoiced-expense (balance)
   "Insert Duluth Hotel Invoiced Expense."
   (interactive "*sTotal Balance: ")
-  (org-table-goto-column 8)
+  (org-table-goto-column 5)
   (org-table-blank-field)
   (org-table-recalculate)
-  (org-table-goto-column 9)
+  (org-table-goto-column 8)
   (let* ((invoice (/ (round (* (- (string-to-number (org-table-get-field))
                                   (string-to-number balance))
                                100)) 100.0)))
-    (org-table-goto-column 8)
+    (org-table-goto-column 5)
     (insert (format "%.2f" invoice))
     (org-table-recalculate)))
 ;; duluth-hotel-invoiced-expense:1 ends here
