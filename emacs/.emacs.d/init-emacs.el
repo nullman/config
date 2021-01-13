@@ -4000,7 +4000,10 @@ If the first headline is \"Org\", it is ignored."
 (init-message 3 "Org Mode: Bookmarks: org-bookmarks-export-to-json")
 
 (defun org-bookmarks-export-to-json (org-file &optional json-file)
-  "Export from an Org Bookmarks file to a Mozilla/Firefox Bookmarks JSON file."
+  "Export from an Org Bookmarks file, ORG-FILE,
+to a Mozilla/Firefox Bookmarks JSON file, JSON-FILE.
+
+If JSON-FILE is non-nil, then output is returned."
   (let* ((type-code-list '(("bookmark" . 1)
                            ("folder" . 2)))
          (type-value-list '(("bookmark" . "text/x-moz-place")

@@ -5350,7 +5350,10 @@ Export from an Org Bookmarks file to a Mozilla/Firefox Bookmarks JSON file.
   (init-message 3 "Org Mode: Bookmarks: org-bookmarks-export-to-json")
 
   (defun org-bookmarks-export-to-json (org-file &optional json-file)
-    "Export from an Org Bookmarks file to a Mozilla/Firefox Bookmarks JSON file."
+    "Export from an Org Bookmarks file, ORG-FILE,
+  to a Mozilla/Firefox Bookmarks JSON file, JSON-FILE.
+
+  If JSON-FILE is non-nil, then output is returned."
     (let* ((type-code-list '(("bookmark" . 1)
                              ("folder" . 2)))
            (type-value-list '(("bookmark" . "text/x-moz-place")
@@ -5419,6 +5422,84 @@ Export from an Org Bookmarks file to a Mozilla/Firefox Bookmarks JSON file.
             (if json-file
                 (write-region (point-min) (point-max) json-file)
               (buffer-substring-no-properties (point-min) (point-max))))))))
+#+END_SRC
+
+***** +org-bookmarks-export-to-html+
+      :PROPERTIES:
+      :CUSTOM_ID: org-mode-bookmarks-org-bookmarks-export-to-html
+      :END:
+
+Export from an Org Bookmarks file to a Mozilla/Firefox Bookmarks HTML file.
+
+#+BEGIN_SRC emacs-lisp :tangle no
+  ;; ;;------------------------------------------------------------------------------
+  ;; ;;;; Org Mode: Bookmarks: org-bookmarks-export-to-html
+  ;; ;;------------------------------------------------------------------------------
+
+  ;; (init-message 3 "Org Mode: Bookmarks: org-bookmarks-export-to-html")
+
+  ;; (defun org-bookmarks-export-to-html (org-file &optional html-file)
+  ;;   "Export from an Org Bookmarks file to a Mozilla/Firefox Bookmarks HTML file."
+  ;;   "Export from an Org Bookmarks file, ORG-FILE,
+  ;; to a Mozilla/Firefox Bookmarks HTML file, HTML-FILE.
+
+  ;; If HTML-FILE is non-nil, then output is returned."
+  ;;   (let* ((type-code-list '(("bookmark" . 1)
+  ;;                            ("folder" . 2)))
+  ;;          (type-value-list '(("bookmark" . "text/x-moz-place")
+  ;;                             ("folder" . "text/x-moz-place-container")))
+  ;;          (title-guid-list '(("Bookmarks Menu" . "menu________")
+  ;;                             ("Bookmarks Toolbar" . "toolbar_____")
+  ;;                             ("Other Bookmarks" . "unfiled_____")
+  ;;                             ("Mobile Bookmarks" . "mobile______")))
+  ;;          (title-root-list '(("Bookmarks Menu" . "bookmarksMenuFolder")
+  ;;                             ("Bookmarks Toolbar" . "toolbarFolder")
+  ;;                             ("Other Bookmarks" . "unfiledBookmarksFolder")
+  ;;                             ("Mobile Bookmarks" . "mobileFolder")))
+  ;;          (global-id 0)
+  ;;          (timestamp (org-bookmarks-timestamp)))
+  ;;     (cl-labels ((loop (bm tree indent)
+  ;;                       (let* ((type (plist-get bm :type))
+  ;;                              (type-value (cdr (assoc type type-value-list)))
+  ;;                              (type-code (cdr (assoc type type-code-list)))
+  ;;                              (title (plist-get bm :title))
+  ;;                              (uri (plist-get bm :uri))
+  ;;                              (keyword (plist-get bm :keyword))
+  ;;                              (children (plist-get bm :children))
+  ;;                              (root (cdr (assoc title title-root-list)))
+  ;;                              (custom-guid (cdr (assoc title title-guid-list)))
+  ;;                              (entry (list
+  ;;                                      :guid custom-guid
+  ;;                                      :title title
+  ;;                                      :dateAdded timestamp
+  ;;                                      :lastModified timestamp
+  ;;                                      :typeCode type-code
+  ;;                                      :type type-value)))
+  ;;                         (when uri
+  ;;                           (setq entry (append entry (list :uri uri))))
+  ;;                         (when keyword
+  ;;                           (setq entry (append entry (list :keyword keyword))))
+  ;;                         (when root
+  ;;                           (setq entry (append entry (list :root root))))
+  ;;                         (when children
+  ;;                           (setq entry (append entry (list :children (map 'vector (lambda (x) (loop x tree (+ indent 4))) children)))))
+  ;;                         (append tree entry))))
+  ;;       (let ((bookmarks (org-bookmarks-parse org-file)))
+  ;;         (with-temp-buffer
+  ;;           (insert
+  ;;            (concat
+  ;;             "<!DOCTYPE NETSCAPE-Bookmark-file-1>
+  ;; <META HTTP-EQUIV=\"Content-Type\" CONTENT=\"text/html; charset=UTF-8\">
+  ;; <TITLE>Bookmarks</TITLE>
+  ;; <H1>Bookmarks Menu</H1>
+
+  ;; <DL><p>
+  ;; "
+  ;;             (map 'concat (lambda (x) (loop x nil 0)) bookmarks))
+  ;;            "</DL>")
+  ;;           (if html-file
+  ;;               (write-region (point-min) (point-max) html-file)
+  ;;             (buffer-substring-no-properties (point-min) (point-max))))))))
 #+END_SRC
 
 *** Taxes
