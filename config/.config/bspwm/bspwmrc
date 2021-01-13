@@ -100,6 +100,8 @@ _ba Slack desktop='^3' follow=on
 _ba Thunderbird desktop='^3' follow=on
 _ba android-messages-desktop desktop='^3' follow=on
 _ba firefox desktop='^4' follow=on
+_ba LibreWolf desktop='^4' follow=on
+_ba Brave-browser desktop='^4' follow=on
 _ba Chromium desktop='^4' follow=on
 _ba Google-chrome desktop='^4' follow=on
 _ba gopherus-sdl desktop='^4' follow=on
@@ -235,8 +237,8 @@ _command xfce4-power-manager && (_delay ${delay} pgrep --exact --euid ${USER} xf
 
 # system info and key bindings on wallpaper
 #_command manjaro-conky-session && manjaro-conky-session &
-_command conky && conky --config="${HOME}/.config/conky/system-info.conkyrc" &
-_command conky && conky --config="${HOME}/.config/conky/bspwm-keybindings.conkyrc" &
+_command conky [[ -f "${HOME}/.config/conky/system-info.conkyrc" ]] && && conky --config="${HOME}/.config/conky/system-info.conkyrc" &
+_command conky [[ -f "${HOME}/.config/conky/bspwm-keybindings.conkyrc" ]] && && conky --config="${HOME}/.config/conky/bspwm-keybindings.conkyrc" &
 
 # full-screen task-switcher
 #_command skippy-xd && skippy-xd --config "${HOME}/.config/skippy-xd/skippy-xd.rc" --start-daemon &

@@ -1199,14 +1199,23 @@ uncompressdirtree()
 #
 # manjaro
 #
-#        pmi                     pamac install or build
-#
-pmi()
+#!#        pmi                     pamac install or build
+#!#
+#!pmi()
+#!{
+#!    if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+#!        echo "Usage: $0 PACKAGE"
+#!    else
+#!        pamac install --no-confirm "$1" || pamac build --no-confirm "$1"
+#!    fi
+#!}
+#        yasi                    yay search installed packages
+yasi()
 {
-    if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+    if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 PACKAGE"
     else
-        pamac install --no-confirm "$1" || pamac build --no-confirm "$1"
+        yay -Ss "$@" | grep " (Installed)$"
     fi
 }
 
