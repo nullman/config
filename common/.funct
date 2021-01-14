@@ -1852,18 +1852,22 @@ homeinitialize()
             dirs=("config" "config-private")
             for ((x = 1; x <= ${#dirs[@]}; x++)) ; do
                 dir="${dirs[${x}]}"
-                echo "Stowing '${dir}' packages..."
-                (cd "${HOME}/${dir}" && \
-                     ls -1 | while read file ; do
-                         if [[ -d "${file}" ]] ; then
-                             echo "  ${file}"
-                             if [[ "${file}" == "custom" ]] ; then
-                                 (cd "${file}" && stow --stow "$(uname -n)")
-                             else
-                                 stow --stow "${file}"
+                if [[ -d "${HOME}/${dir}" ]] ; then
+                    echo "Stowing '${dir}' packages..."
+                    (cd "${HOME}/${dir}" && \
+                         ls -1 | while read file ; do
+                             if [[ -d "${file}" ]] ; then
+                                 echo "  ${file}"
+                                 if [[ "${file}" == "custom" ]] ; then
+                                     (cd "${file}" && stow --stow "$(uname -n)")
+                                 else
+                                     stow --stow "${file}"
+                                 fi
                              fi
-                         fi
-                     done)
+                         done)
+                else
+                    echo "Skipping '${dir}' packages..."
+                fi
             done
 
             echo "Making other symlinks..."
@@ -1883,18 +1887,22 @@ homerestow()
     dirs=("config" "config-private")
     for ((x = 1; x <= ${#dirs[@]}; x++)) ; do
         dir="${dirs[${x}]}"
-        echo "Restowing '${dir}' packages..."
-        (cd "${HOME}/${dir}" && \
-             ls -1 | while read file ; do
-                 if [[ -d "${file}" ]] ; then
-                     echo "  ${file}"
-                     if [[ "${file}" == "custom" ]] ; then
-                         (cd "${file}" && stow --restow "$(uname -n)")
-                     else
-                         stow --restow "${file}"
+        if [[ -d "${HOME}/${dir}" ]] ; then
+            echo "Restowing '${dir}' packages..."
+            (cd "${HOME}/${dir}" && \
+                 ls -1 | while read file ; do
+                     if [[ -d "${file}" ]] ; then
+                         echo "  ${file}"
+                         if [[ "${file}" == "custom" ]] ; then
+                             (cd "${file}" && stow --restow "$(uname -n)")
+                         else
+                             stow --restow "${file}"
+                         fi
                      fi
-                 fi
-             done)
+                 done)
+        else
+            echo "Skipping '${dir}' packages..."
+        fi
     done
 }
 
