@@ -4074,6 +4074,71 @@ If JSON-FILE is non-nil, then output is returned."
             (buffer-substring-no-properties (point-min) (point-max))))))))
 ;; org-bookmarks-export-to-json:1 ends here
 
+;; [[file:init-emacs.org::*org-bookmarks-export-to-html][org-bookmarks-export-to-html:1]]
+;;------------------------------------------------------------------------------
+;;;; Org Mode: Bookmarks: org-bookmarks-export-to-html
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Org Mode: Bookmarks: org-bookmarks-export-to-html")
+
+(defun org-bookmarks-export-to-html (org-file &optional html-file)
+  "Export from an Org Bookmarks file to a Mozilla/Firefox Bookmarks HTML file."
+  "Export from an Org Bookmarks file, ORG-FILE,
+to a Mozilla/Firefox Bookmarks HTML file, HTML-FILE.
+
+If HTML-FILE is non-nil, then output is returned."
+  (let* ((type-code-list '(("bookmark" . 1)
+                           ("folder" . 2)))
+         (title-code-list '(("Bookmarks Toolbar" . "PERSONAL_TOOLBAR_FOLDER")
+                            ("Other Bookmarks" . "UNFILED_BOOKMARKS_FOLDER")))
+         (timestamp (number-to-string (truncate (org-bookmarks-timestamp) 1000000))))
+    (cl-labels ((indent (idt str)
+                        (concat (spaces-string idt) str))
+                (loop (bm str idt)
+                      (let* ((type (plist-get bm :type))
+                             (type-code (cdr (assoc type type-code-list)))
+                             (title (plist-get bm :title))
+                             (title-code (cdr (assoc title title-code-list)))
+                             (uri (url-encode-url (plist-get bm :uri)))
+                             (keyword (plist-get bm :keyword))
+                             (children (plist-get bm :children))
+                             (entry (case type-code
+                                      (2 (concat
+                                          (indent idt "<DT><H3>")
+                                          " ADD_DATE=\"" timestamp "\""
+                                          " LAST_MODIFIED=\"" timestamp "\""
+                                          (if title-code (concat " " title-code "=\"true\"") "")
+                                          ">" title "</H3>"))
+                                      (1 (concat
+                                          (indent idt "<DT>")
+                                          "<A HREF=\"" uri "\""
+                                          " ADD_DATE=\"" timestamp "\""
+                                          " LAST_MODIFIED=\"" timestamp "\""
+                                          (if keyword (concat " SHORTCUTURL=\"" keyword "\"") "")
+                                          ">" title "</A>")))))
+                        (when children
+                          (setq entry (concat entry
+                                              (indent idt "<DL><p>\n")
+                                              (mapconcat (lambda (x) (loop x str (+ idt 4))) children "\n")
+                                              (indent idt "</DL>\n"))))
+                        entry)))
+      (let ((bookmarks (org-bookmarks-parse org-file)))
+        (with-temp-buffer
+          (insert
+           (concat
+            "<!DOCTYPE NETSCAPE-Bookmark-file-1>
+<META HTTP-EQUIV=\"Content-Type\" CONTENT=\"text/html; charset=UTF-8\">
+<TITLE>Bookmarks</TITLE>
+<H1>Bookmarks Menu</H1>
+
+<DL><p>\n"
+            (mapconcat (lambda (x) (loop x "" 4)) bookmarks "\n"))
+           "</DL>\n")
+          (if html-file
+              (write-region (point-min) (point-max) html-file)
+            (buffer-substring-no-properties (point-min) (point-max))))))))
+;; org-bookmarks-export-to-html:1 ends here
+
 ;; [[file:init-emacs.org::*Taxes][Taxes:1]]
 ;;------------------------------------------------------------------------------
 ;;; Org Mode: Taxes
@@ -17534,7 +17599,8 @@ otherwise run `find-file-as-root'."
    ("World Time" "display-time-world" "Display the time in various time zones.")
    ("Colors Display" "list-colors-display" "List Emacs font colors.")
    ("Faces Display" "list-faces-display" "List Emacs font faces.")
-   ("Export Bookmarks" "(org-bookmarks-export-to-json \"~/org/bookmarks.org\" \"~/Desktop/bookmarks.json\")" "Export bookmarks.org to ~/Desktop/bookmarks.json.")
+   ("Export Bookmarks to JSON" "(org-bookmarks-export-to-json \"~/org/bookmarks.org\" \"~/Desktop/bookmarks.json\")" "Export bookmarks.org to ~/Desktop/bookmarks.json.")
+   ("Export Bookmarks to HTML" "(org-bookmarks-export-to-html \"~/org/bookmarks.org\" \"~/Desktop/bookmarks.html\")" "Export bookmarks.org to ~/Desktop/bookmarks.html.")
    ("Restart Emacs Server" "server-start-maybe" "Restart Emacs server.")
    ))
    ;;("Tip of the Day" "totd" "Display a random emacs command.")
