@@ -895,6 +895,8 @@ alias jpegtranright="jpegtran -copy all -rotate 90"
 #
 #        winetricks-update       download latest version of winetricks
 alias winetricks-update="wget http://www.kegel.com/wine/winetricks -O \${HOME}/bin/vendor/winetricks"
+#        wine-bookshelf          wine microsoft bookshelf 2000
+alias wine-bookshelf="WINEPREFIX=${HOME}/.wine-bookshelf2000 wine \"C:\Program Files (x86)\Microsoft Reference\Bookshelf 2000\bshelf2k.exe\""
 #        wine-civ                wine civilization
 #!alias wine-civ="WINEPREFIX=\${HOME}/.wine-civ4 wine explorer /desktop=civ,1280x800 \"C:\Program Files\Firaxis Games\Sid Meier's Civilization 4\Beyond the Sword\Civ4BeyondSword.exe\""
 alias wine-civ="WINEPREFIX=\${HOME}/.wine-civ4 wine explorer /desktop=civ,1920x1080 \"C:\Program Files\Firaxis Games\Sid Meier's Civilization 4\Beyond the Sword\Civ4BeyondSword.exe\""
