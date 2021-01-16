@@ -11761,6 +11761,70 @@ the form of `attribute::'."
               (forward-line 2))))))))
 ;; lisp-to-racket-conversion:1 ends here
 
+;; [[file:init-emacs.org::*integer-to-roman-numerals][integer-to-roman-numerals:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Esoteric Functions: integer-to-roman-numerals
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Esoteric Functions: integer-to-roman-numerals")
+
+(defun integer-to-roman-numerals (num)
+  "Return romain numeral version of given integer NUM.
+
+Roman numerals use I, V, X, L, C, D, and M, standing respectively
+for 1, 5, 10, 50, 100, 500, and 1,000."
+  (interactive "NInteger number: ")
+  (when (< num 0)
+    (error "NUM must be 1 or greater"))
+  (when (>= num 5000)
+    (error "NUM must be less than 5,000"))
+  (let ((roman))
+    (labels ((convert (num)
+                      (cond
+                       ((>= num 1000)
+                        (push "M" roman)
+                        (- num 1000))
+                       ((>= num 900)
+                        (push "CM" roman)
+                        (- num 900))
+                       ((>= num 500)
+                        (push "D" roman)
+                        (- num 500))
+                       ((>= num 400)
+                        (push "CD" roman)
+                        (- num 400))
+                       ((>= num 100)
+                        (push "C" roman)
+                        (- num 100))
+                       ((>= num 90)
+                        (push "XC" roman)
+                        (- num 90))
+                       ((>= num 50)
+                        (push "L" roman)
+                        (- num 50))
+                       ((>= num 40)
+                        (push "XL" roman)
+                        (- num 40))
+                       ((>= num 10)
+                        (push "X" roman)
+                        (- num 10))
+                       ((>= num 9)
+                        (push "IX" roman)
+                        (- num 9))
+                       ((>= num 5)
+                        (push "V" roman)
+                        (- num 5))
+                       ((>= num 4)
+                        (push "IV" roman)
+                        (- num 4))
+                       ((>= num 1)
+                        (push "I" roman)
+                        (- num 1)))))
+      (while (> num 0)
+        (setq num (convert num)))
+      (mapconcat 'identity (nreverse roman) ""))))
+;; integer-to-roman-numerals:1 ends here
+
 ;; [[file:init-emacs.org::*Programs][Programs:1]]
 ;;------------------------------------------------------------------------------
 ;;; Functions: Programs
@@ -12193,8 +12257,8 @@ be touched by character deletion.")
 
 (init-message 3 "Functions: Games: Towers of Hanoi")
 
-(defun towers (n)
-  "Solve the clasical Towers of Hanoi problem for N levels."
+(defun towers (disks)
+  "Solve the clasical Towers of Hanoi problem for given number of DISKS."
   (interactive "NNumber of disks: ")
   (let ((buffer "*Towers*"))
     ;; setup buffer
@@ -12203,12 +12267,12 @@ be touched by character deletion.")
     (setq buffer-read-only nil)
     (erase-buffer)
     ;; print header
-    (insert (format "Towers of Hanio puzzle with %d disks" n))
+    (insert (format "Towers of Hanio puzzle with %d disks" disks))
     (newline)
     (newline)
     ;; make initial call to towers move
     ;; move from peg 1 to 3 using 2
-    (towers-move n 1 3 2)
+    (towers-move disks 1 3 2)
     ;; set buffer to read-only
     (setq buffer-read-only t)
     ;; switch to buffer
