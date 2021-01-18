@@ -1989,8 +1989,8 @@ alias scweb="\${HOME}/bin/screen-app web"
 alias scnews="\${HOME}/bin/screen-app news"
 #        scrss                   screen-app rss
 alias scrss="\${HOME}/bin/screen-app rss"
-#        sctrade                 screen-app trade
-alias sctrade="\${HOME}/bin/screen-app trade"
+#        scstocks                screen-app stocks
+alias scstocks="\${HOME}/bin/screen-app stocks"
 #        sccal                   screen-app cal
 alias sccal="\${HOME}/bin/screen-app cal"
 #        sccalc                  screen-app calc
@@ -2001,14 +2001,6 @@ alias scorpie="\${HOME}/bin/screen-app orpie"
 alias scrpncalc="\${HOME}/bin/screen-app rpncalc"
 #        scspell                 screen-app spell
 alias scspell="\${HOME}/bin/screen-app spell"
-#        scdbm                   screen-app dbm
-alias scdbm="\${HOME}/bin/screen-app dbm"
-#        scdbc                   screen-app dbc
-alias scdbc="\${HOME}/bin/screen-app dbc"
-#        scdbq                   screen-app dbq
-alias scdbq="\${HOME}/bin/screen-app dbq"
-#        scdbi                   screen-app dbi
-alias scdbi="\${HOME}/bin/screen-app dbi"
 #        sc0                     screen-app 0
 alias sc0="\${HOME}/bin/screen-app 0"
 #        sc1                     screen-app 1
