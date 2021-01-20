@@ -7086,31 +7086,32 @@ Org Website supporting functions.
             ;; tags
             "      <div class=\"tags\">Tags: " (org-website-get-property-element property-list :tags) "</div>\n"
             "\n"
-            ;; disqus comments
-            "      <!-- comments start -->\n"
-            "\n"
-            "      <div id=\"comments\">\n"
-            "\n"
-            "        <div id=\"disqus_thread\"></div>\n"
-            "\n"
-            "        <script><!--\n"
-            "          var disqus_config = function () {\n"
-            "            this.page.url = \"" (org-website-get-url property-list) "\";\n"
-            "            this.page.identifier = \"" (org-website-get-property-element property-list :uuid) "\";\n"
-            "          };\n"
-            "          (function() {\n"
-            "            var d = document, s = d.createElement('script');\n"
-            "            s.src = '//nulldot.disqus.com/embed.js';\n"
-            "            s.setAttribute('data-timestamp', +new Date());\n"
-            "            (d.head || d.body).appendChild(s);\n"
-            "          })();\n"
-            "        // --></script>\n"
-            "\n"
-            "        <noscript>Please enable JavaScript to view the <a href=\"https://disqus.com/?ref_noscript\">comments powered by Disqus.</a></noscript>\n"
-            "\n"
-            "      </div>\n"
-            "\n"
-            "      <!-- comments end -->\n")
+            ;; ;; disqus comments
+            ;; "      <!-- comments start -->\n"
+            ;; "\n"
+            ;; "      <div id=\"comments\">\n"
+            ;; "\n"
+            ;; "        <div id=\"disqus_thread\"></div>\n"
+            ;; "\n"
+            ;; "        <script><!--\n"
+            ;; "          var disqus_config = function () {\n"
+            ;; "            this.page.url = \"" (org-website-get-url property-list) "\";\n"
+            ;; "            this.page.identifier = \"" (org-website-get-property-element property-list :uuid) "\";\n"
+            ;; "          };\n"
+            ;; "          (function() {\n"
+            ;; "            var d = document, s = d.createElement('script');\n"
+            ;; "            s.src = '//nulldot.disqus.com/embed.js';\n"
+            ;; "            s.setAttribute('data-timestamp', +new Date());\n"
+            ;; "            (d.head || d.body).appendChild(s);\n"
+            ;; "          })();\n"
+            ;; "        // --></script>\n"
+            ;; "\n"
+            ;; "        <noscript>Please enable JavaScript to view the <a href=\"https://disqus.com/?ref_noscript\">comments powered by Disqus.</a></noscript>\n"
+            ;; "\n"
+            ;; "      </div>\n"
+            ;; "\n"
+            ;; "      <!-- comments end -->\n"
+            )
          "")
        "\n"
        "    </div>\n"
@@ -15476,7 +15477,7 @@ extra whitespace.
       :CUSTOM_ID: functions-code-formatting-functions-java-remove-comments
       :END:
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :tangle no
   ;; ;;------------------------------------------------------------------------------
   ;; ;;;; Functions: Code Formatting Functions: java-remove-comments
   ;; ;;------------------------------------------------------------------------------
@@ -15485,50 +15486,50 @@ extra whitespace.
 
   ;; (defun java-remove-comments (string)
   ;;   "Return code STRING with all Java comments removed."
-  ;;   (loop with result = ()                ; result character list
-  ;;         with quote = nil                ; whether inside of a quote
-  ;;         with escape = nil               ; whether inside of an escape
-  ;;         with comment = 0                ; whether inside of a comment (0 = none, 1 = inline, 2 = block, 3 = ending block)
-  ;;         for pc = nil then c             ; previous character
-  ;;         for c across string             ; current character
-  ;;         for r = pc                      ; character to collect
-  ;;         do (cl-case c
-  ;;              (?\"                       ; quote
-  ;;               (unless escape
-  ;;                 (setq quote (not quote))))
-  ;;              (?\\                       ; escape
-  ;;               (setq escape (not escape)))
-  ;;              (t
-  ;;               (when pc
-  ;;                 (cl-case comment
-  ;;                   (0                         ; not inside a comment
-  ;;                    (unless (or quote escape) ; check for comment start
-  ;;                      (cond
-  ;;                       ((and (= pc ?/) (= c ?/)) ; inline comment start
-  ;;                        (setq comment 1))
-  ;;                       ((and (= pc ?/) (= c ?*)) ; block comment start
-  ;;                        (setq comment 2)))))
-  ;;                   (1                      ; inside an inline comment
-  ;;                    (when (= c ?\n)        ; inline comment ends with newline
-  ;;                      (setq comment 0
-  ;;                            r nil
-  ;;                            quote nil))) ; quotes cannot go past EOL for inline comments
-  ;;                   (2                    ; inside a block comment
-  ;;                    (when (and (not (or quote escape)) (= pc ?*) (= c ?/)) ; check for comment end
-  ;;                      (setq comment 3
-  ;;                            r nil)))
-  ;;                   (3
-  ;;                    (setq comment 0
-  ;;                          r nil))))))
-  ;;         do (when (and escape (/= c ?\\)) ; escape only lasts for next character
-  ;;              (setq escape nil))
-  ;;         do (when (and r (= comment 0))  ; add r to result
-  ;;              (push r result))
-  ;;         finally return (progn ; add last character to result and return string
-  ;;                          (when (= comment 0)
-  ;;                            (push c result))
-  ;;                          (message "=====> %S" (mapconcat 'string (nreverse result) ""))
-  ;;                          (mapconcat 'string (nreverse result) ""))))
+  ;;   (cl-loop with result = ()                ; result character list
+  ;;            with quote = nil                ; whether inside of a quote
+  ;;            with escape = nil               ; whether inside of an escape
+  ;;            with comment = 0                ; whether inside of a comment (0 = none, 1 = inline, 2 = block, 3 = ending block)
+  ;;            for pc = nil then c             ; previous character
+  ;;            for c across string             ; current character
+  ;;            for r = pc                      ; character to collect
+  ;;            do (cl-case c
+  ;;                 (?\"                       ; quote
+  ;;                  (unless escape
+  ;;                    (setq quote (not quote))))
+  ;;                 (?\\                       ; escape
+  ;;                  (setq escape (not escape)))
+  ;;                 (t
+  ;;                  (when pc
+  ;;                    (cl-case comment
+  ;;                      (0                         ; not inside a comment
+  ;;                       (unless (or quote escape) ; check for comment start
+  ;;                         (cond
+  ;;                          ((and (= pc ?/) (= c ?/)) ; inline comment start
+  ;;                           (setq comment 1))
+  ;;                          ((and (= pc ?/) (= c ?*)) ; block comment start
+  ;;                           (setq comment 2)))))
+  ;;                      (1                      ; inside an inline comment
+  ;;                       (when (= c ?\n)        ; inline comment ends with newline
+  ;;                         (setq comment 0
+  ;;                               r nil
+  ;;                               quote nil))) ; quotes cannot go past EOL for inline comments
+  ;;                      (2                    ; inside a block comment
+  ;;                       (when (and (not (or quote escape)) (= pc ?*) (= c ?/)) ; check for comment end
+  ;;                         (setq comment 3
+  ;;                               r nil)))
+  ;;                      (3
+  ;;                       (setq comment 0
+  ;;                             r nil))))))
+  ;;            do (when (and escape (/= c ?\\)) ; escape only lasts for next character
+  ;;                 (setq escape nil))
+  ;;            do (when (and r (= comment 0))  ; add r to result
+  ;;                 (push r result))
+  ;;            finally return (progn ; add last character to result and return string
+  ;;                             (when (= comment 0)
+  ;;                               (push c result))
+  ;;                             (message "=====> %S" (mapconcat 'string (nreverse result) ""))
+  ;;                             (mapconcat 'string (nreverse result) ""))))
 
 #+END_SRC
 
