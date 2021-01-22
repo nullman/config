@@ -237,8 +237,8 @@ _command xfce4-power-manager && (_delay ${delay} pgrep --exact --euid ${USER} xf
 
 # system info and key bindings on wallpaper
 #_command manjaro-conky-session && manjaro-conky-session &
-_command conky [[ -f "${HOME}/.config/conky/system-info.conkyrc" ]] && && conky --config="${HOME}/.config/conky/system-info.conkyrc" &
-_command conky [[ -f "${HOME}/.config/conky/bspwm-keybindings.conkyrc" ]] && && conky --config="${HOME}/.config/conky/bspwm-keybindings.conkyrc" &
+_command conky && [[ -f "${HOME}/.config/conky/system-info.conkyrc" ]] && conky --config="${HOME}/.config/conky/system-info.conkyrc" &
+_command conky && [[ -f "${HOME}/.config/conky/bspwm-keybindings.conkyrc" ]] && conky --config="${HOME}/.config/conky/bspwm-keybindings.conkyrc" &
 
 # full-screen task-switcher
 #_command skippy-xd && skippy-xd --config "${HOME}/.config/skippy-xd/skippy-xd.rc" --start-daemon &
@@ -268,7 +268,7 @@ _command nitrogen && nitrogen --restore &
 #sleep 10 && _command mmaker && mmaker --force openbox &
 
 # auto-start custom applications
-[[ -f "${HOME}/.bspwm-applications" ]] && source "${HOME}/.bspwm-applications"
+[[ -f "${HOME}/.config/bspwm/bspwmrc-applications" ]] && source "${HOME}/.config/bspwm/bspwmrc-applications"
 
 #===============================================================================
 # End of File
