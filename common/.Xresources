@@ -111,9 +111,9 @@
 !! General Settings
 !!------------------------------------------------------------------------------
 
-#define FONT_TERMINAL_REGULAR xft:Hack:style=Regular:pixelsize=14
-#define FONT_TERMINAL_BOLD xft:Hack:style=Bold:pixelsize=14
-#define FONT_TERMINAL_ITALIC xft:Hack:style=Italic:pixelsize=14
+#define FONT_TERMINAL_REGULAR xft:Hack:style=Regular:size=14
+#define FONT_TERMINAL_BOLD xft:Hack:style=Bold:size=14
+#define FONT_TERMINAL_ITALIC xft:Hack:style=Italic:size=14
 
 #define FONT_EDITOR Droid Sans Mono 12
 
@@ -179,7 +179,7 @@ XTerm.visualBell:        false
 XTerm.waitForMap:        true
 XTerm.saveLines:         16384
 XTerm.scrollBar:         false
-XTerm*faceName:          9x15, xft:Mononoki Nerd Font:size=14, xft:JoyPixels:size=14, xft:Monospace:style=Medium:size=14, FONT_TERMINAL_REGULAR
+XTerm*faceName:          FONT_TERMINAL_REGULAR, xft:Monospace:style=Medium:size=14, xft:JoyPixels:size=14, xft:Mononoki Nerd Font:size=14, 9x15
 XTerm*faceSize:          14
 XTerm*renderFont:        true
 XTerm*utf8:              2
@@ -238,7 +238,7 @@ URxvt.jumpScroll:            true
 URxvt.scrollBar:             false
 URxvt.cursorBlink:           false
 URxvt.pointerBlank:          true
-URxvt*font:                  9x15, xft:Mononoki Nerd Font:size=14, xft:JoyPixels:size=14, xft:Monospace:style=Medium:size=14, FONT_TERMINAL_REGULAR
+URxvt*font:                  FONT_TERMINAL_REGULAR, xft:Monospace:style=Medium:size=14, xft:JoyPixels:size=14, xft:Mononoki Nerd Font:size=14, 9x15
 URxvt*boldFont:              FONT_TERMINAL_BOLD
 URxvt*italicFont:            FONT_TERMINAL_ITALIC
 URxvt.intensityStyles:       false
