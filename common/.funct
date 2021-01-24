@@ -864,14 +864,14 @@ ktg()
 #        kkg                     kill -SIGKILL (forced) with grep
 kkg()
 {
-    kill -SIGTERM -i "$1"
+    pkill -SIGTERM -i "$1"
     sleep 1
-    kill -SIGKILL -i "$1"
+    pkill -SIGKILL -i "$1"
 }
 #        khg                     kill -HUP (restart) with grep
 khg()
 {
-    kill -SIGHUP -i "$1"
+    pkill -SIGHUP -i "$1"
 }
 
 #
