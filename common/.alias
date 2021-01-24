@@ -2492,7 +2492,9 @@ alias yau="yay -Syu --noconfirm"
 #        yauf                    yay -Syyu (update packages with forced refresh)
 alias yauf="yay -Syyu --noconfirm"
 #        yai                     yay -S (install package)
-alias yai="yay -S --noconfirm"
+alias yai="yay -S --noconfirm --needed"
+#        yair                    yay -S (reinstall package)
+alias yair="yay -S --noconfirm"
 #        yar                     yay -R (remove package and configuration files)
 alias yar="yay -R --noconfirm --nosave"
 #        yas                     yay -Ss (search packages)

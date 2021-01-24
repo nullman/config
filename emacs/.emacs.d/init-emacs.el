@@ -16565,13 +16565,13 @@ and 5 is most favorite.  0 will unset the rating."
           (,(openwith-make-extension-regexp
              '("xbm" "pbm" "pgm" "ppm" "pnm"
                "png" "gif" "bmp" "tif" "jpeg" "jpg"))
-           "gthumb" (file))
+           "feh" (file))
           ;; videos
           (,(openwith-make-extension-regexp
              '("mpg" "mpeg" "mp3" "mp4"
                "avi" "wmv" "wav" "mov" "flv"
                "ogm" "ogg" "mkv"))
-           "totem" (file))
+           "vlc" (file))
           ;; pdf
           (,(openwith-make-extension-regexp
              '("pdf" "ps" "ps.gz" "dvi"))
@@ -17013,9 +17013,7 @@ otherwise run `find-file-as-root'."
 (init-message 2 "Modules: undo-tree")
 
 (use-package undo-tree
-  ;; :quelpa (undo-tree)
-  ;; :quelpa (undo-tree :fetcher url :url "http://www.dr-qubit.org/download.php?file=undo-tree/undo-tree.el")
-  :quelpa (undo-tree :fetcher url :url "http://git.savannah.gnu.org/cgit/emacs/elpa.git/plain/packages/undo-tree/undo-tree.el")
+  :quelpa (undo-tree :fetcher github :repo "apchamberlain/undo-tree.el")
   :demand t
   :diminish undo-tree-mode
   :commands (global-undo-tree-mode
