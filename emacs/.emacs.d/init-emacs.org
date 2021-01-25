@@ -691,7 +691,8 @@ for work.
 #+END_SRC
 
 Set Emacs customizations file.  Used to save customizations made with the
-*customize* command.  I normally move these into this file.
+*customize* command.  This file is not loaded.  Any desired customizations
+should be moved into this file.
 
 #+BEGIN_SRC emacs-lisp
   ;; set customization file
@@ -22085,7 +22086,7 @@ Emacs Incremental and Narrowing Framework
             ("C-h r" . helm-info-emacs)           ; defaults to `info-emacs-manual'
             ("C-:" . helm-eval-expression-with-eldoc)
             ;;("C-," . helm-calcul-expression)
-            ("C-h d" . helm-info-at-point) ; defaults to `apropos-documentation'
+            ;;("C-h d" . helm-info-at-point) ; defaults to `apropos-documentation'
             ;;("C-c g" . helm-google-suggest)
             ;;("C-x C-d" . helm-browse-project)
             ;;("<f1>" . helm-resume)
@@ -22157,7 +22158,39 @@ Emacs Incremental and Narrowing Framework
 
         ;; lisp complete (rebind M-<tab>)
         (define-key lisp-interaction-mode-map [remap completion-at-point] 'helm-lisp-completion-at-point)
-        (define-key emacs-lisp-mode-map       [remap completion-at-point] 'helm-lisp-completion-at-point))))
+        (define-key emacs-lisp-mode-map       [remap completion-at-point] 'helm-lisp-completion-at-point)))
+
+    ;; turn off helm mode in other incompatable modes
+    (defun force-completing-read-default (orig-fun &rest args)
+      "Force a function to use `completing-read-default'."
+      (let ((completing-read-function 'completing-read-default))
+        (apply orig-fun args)))
+    ;; advise `tmm-prompt'
+    (advice-add 'tmm-prompt :around #'force-completing-read-default)
+    ;; advise `yas-expand-snippet'
+    (advice-add 'yas-expand-snippet :around #'force-completing-read-default))
+#+END_SRC
+
+*** helpful
+    :PROPERTIES:
+    :CUSTOM_ID: modules-helpful
+    :END:
+
+#+BEGIN_SRC emacs-lisp
+  ;;------------------------------------------------------------------------------
+  ;;; Modules: helpful
+  ;;------------------------------------------------------------------------------
+
+  (init-message 2 "Modules: helpful")
+
+  (use-package helpful
+    :quelpa (helpful)
+    :bind* (([remap describe-function] . helpful-callable)
+            ([remap describe-variable] . helpful-variable)
+            ([remap describe-key] . helpful-key)
+            ("C-h C-d" . helpful-at-point) ; defaults to `view-emacs-debugging'
+            ("C-h F" . helpful-function) ; defaults to `Info-goto-emacs-command-node'
+            ("C-h C" . helpful-command))) ; defaults to `describe-coding-system'
 #+END_SRC
 
 *** hippie-exp
@@ -22707,60 +22740,57 @@ Interface to spell checkers.
           (buffer-substring-no-properties)))))
 #+END_SRC
 
-*** ivy (counsel/swiper)
+*** +ivy (counsel/swiper)+
     :PROPERTIES:
     :CUSTOM_ID: modules-ivy-counsel-swiper
     :END:
 
 Generic completion method that adds wildcard name completion to common tasks.
 
-#+BEGIN_SRC emacs-lisp
-  ;;------------------------------------------------------------------------------
-  ;;; Modules: ivy
-  ;;
-  ;; Adds wildcard name completion to common tasks.
-  ;; Replaces `completing-read-function' with `ivy-completing-read'.
-  ;;------------------------------------------------------------------------------
+#+BEGIN_SRC emacs-lisp :tangle no
+  ;; ;;------------------------------------------------------------------------------
+  ;; ;;; Modules: ivy
+  ;; ;;
+  ;; ;; Add wildcard name completion to common tasks.
+  ;; ;; Replace `completing-read-function' with `ivy-completing-read'.
+  ;; ;;------------------------------------------------------------------------------
 
-  (init-message 2 "Modules: ivy (counsel/swiper)")
+  ;; (init-message 2 "Modules: ivy (counsel/swiper)")
 
-  (use-package ivy
-    :quelpa (ivy :fetcher github :repo "abo-abo/swiper")
-    :demand t
-    :diminish ivy-mode
-    :commands (ivy-mode)
-    ;; :bind* (("C-x C-r" . ivy-resume)      ; defaults to `find-file-read-only'
-    ;;         ("C-x b" . ivy-switch-buffer) ; defaults to `switch-to-buffer'
-    ;;         ("C-x B" . ivy-switch-buffer-other-window)) ; defaults to `switch-to-buffer'
-    :config
-    ;; ;; turn on `ivy-mode'
-    ;; (ivy-mode 1)
+  ;; (use-package ivy
+  ;;   :quelpa (ivy :fetcher github :repo "abo-abo/swiper")
+  ;;   :demand t
+  ;;   :diminish ivy-mode
+  ;;   :commands (ivy-mode)
+  ;;   :bind* (("C-x C-r" . ivy-resume)      ; defaults to `find-file-read-only'
+  ;;           ("C-x b" . ivy-switch-buffer) ; defaults to `switch-to-buffer'
+  ;;           ("C-x B" . ivy-switch-buffer-other-window)) ; defaults to `switch-to-buffer'
+  ;;   :config
+  ;;   ;; turn on `ivy-mode'
+  ;;   (ivy-mode 1)
 
-    ;; turn off `ivy-mode'
-    (ivy-mode -1)
+  ;;   ;; add recent files and bookmarks to `ivy-switch-buffer'
+  ;;   (setq ivy-use-virtual-buffers t)
 
-    ;; add recent files and bookmarks to `ivy-switch-buffer'
-    (setq ivy-use-virtual-buffers t)
+  ;;   ;; allow minibuffer commands to work in the minibuffer
+  ;;   (setq enable-recursive-minibuffers t)
 
-    ;; allow minibuffer commands to work in the minibuffer
-    (setq enable-recursive-minibuffers t)
+  ;;   ;; style to use for displaying the current candidate count
+  ;;   (setq ivy-count-format "(%d/%d) ")
 
-    ;; style to use for displaying the current candidate count
-    (setq ivy-count-format "(%d/%d) ")
+  ;;   ;; turn off ivy mode in other incompatable modes
+  ;;   (defun force-completing-read-default (orig-fun &rest args)
+  ;;     "Force a function to use `completing-read-default'."
+  ;;     (let ((completing-read-function 'completing-read-default))
+  ;;       (apply orig-fun args)))
+  ;;   ;; advise `tmm-prompt'
+  ;;   (advice-add 'tmm-prompt :around #'force-completing-read-default)
+  ;;   ;; advise `yas-expand-snippet'
+  ;;   (advice-add 'yas-expand-snippet :around #'force-completing-read-default))
 
-    ;; turn off ivy mode in other incompatable modes
-    (defun force-completing-read-default (orig-fun &rest args)
-      "Force a function to use `completing-read-default'."
-      (let ((completing-read-function 'completing-read-default))
-        (apply orig-fun args)))
-    ;; advise `tmm-prompt'
-    (advice-add 'tmm-prompt :around #'force-completing-read-default)
-    ;; advise `yas-expand-snippet'
-    (advice-add 'yas-expand-snippet :around #'force-completing-read-default))
-
-  ;;------------------------------------------------------------------------------
-  ;;;; counsel
-  ;;------------------------------------------------------------------------------
+  ;; ;;------------------------------------------------------------------------------
+  ;; ;;;; counsel
+  ;; ;;------------------------------------------------------------------------------
 
   ;; (init-message 3 "counsel")
 
@@ -22779,9 +22809,9 @@ Generic completion method that adds wildcard name completion to common tasks.
   ;;   :bind (:map minibuffer-local-map
   ;;               ("C-r" . counsel-minibuffer-history)))
 
-  ;;------------------------------------------------------------------------------
-  ;;;; swiper
-  ;;------------------------------------------------------------------------------
+  ;; ;;------------------------------------------------------------------------------
+  ;; ;;;; swiper
+  ;; ;;------------------------------------------------------------------------------
 
   ;; (init-message 3 "swiper")
 
@@ -22790,6 +22820,18 @@ Generic completion method that adds wildcard name completion to common tasks.
   ;;   :after (ivy)
   ;;   :demand t
   ;;   :bind* ("C-'" . swiper))            ; defaults to `isearch-forward-regexp'
+
+  ;; ;;------------------------------------------------------------------------------
+  ;; ;;;; ivy-rich
+  ;; ;;------------------------------------------------------------------------------
+
+  ;; (init-message 3 "ivy-rich")
+
+  ;; (use-package ivy-rich
+  ;;   :quelpa (ivy-rich)
+  ;;   :after (ivy)
+  ;;   :demand t
+  ;;   :init (ivy-rich-mode 1))
 #+END_SRC
 
 *** json

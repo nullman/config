@@ -68,6 +68,8 @@ zmodload zsh/terminfo
 if [[ -n "${INSIDE_EMACS}" ]] ; then
     # use simple prompt, if run from within emacs
     [[ -f "${HOME}/.p10k-simple.zsh" ]] && source ${HOME}/.p10k-simple.zsh 2>&1
+    #export TERM=eterm-256color
+    unset zle_bracketed_paste
 else
     # (To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.)
     #[[ -f "${HOME}/.p10k.zsh" ]] && source ${HOME}/.p10k.zsh

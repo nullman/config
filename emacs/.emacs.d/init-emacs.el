@@ -15300,7 +15300,7 @@ Uses `ispell--run-on-word' to spell check word."
           ("C-h r" . helm-info-emacs)           ; defaults to `info-emacs-manual'
           ("C-:" . helm-eval-expression-with-eldoc)
           ;;("C-," . helm-calcul-expression)
-          ("C-h d" . helm-info-at-point) ; defaults to `apropos-documentation'
+          ;;("C-h d" . helm-info-at-point) ; defaults to `apropos-documentation'
           ;;("C-c g" . helm-google-suggest)
           ;;("C-x C-d" . helm-browse-project)
           ;;("<f1>" . helm-resume)
@@ -15372,8 +15372,35 @@ First call indent, second complete symbol, third complete file name."
 
       ;; lisp complete (rebind M-<tab>)
       (define-key lisp-interaction-mode-map [remap completion-at-point] 'helm-lisp-completion-at-point)
-      (define-key emacs-lisp-mode-map       [remap completion-at-point] 'helm-lisp-completion-at-point))))
+      (define-key emacs-lisp-mode-map       [remap completion-at-point] 'helm-lisp-completion-at-point)))
+
+  ;; turn off helm mode in other incompatable modes
+  (defun force-completing-read-default (orig-fun &rest args)
+    "Force a function to use `completing-read-default'."
+    (let ((completing-read-function 'completing-read-default))
+      (apply orig-fun args)))
+  ;; advise `tmm-prompt'
+  (advice-add 'tmm-prompt :around #'force-completing-read-default)
+  ;; advise `yas-expand-snippet'
+  (advice-add 'yas-expand-snippet :around #'force-completing-read-default))
 ;; helm:1 ends here
+
+;; [[file:init-emacs.org::*helpful][helpful:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: helpful
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: helpful")
+
+(use-package helpful
+  :quelpa (helpful)
+  :bind* (([remap describe-function] . helpful-callable)
+          ([remap describe-variable] . helpful-variable)
+          ([remap describe-key] . helpful-key)
+          ("C-h C-d" . helpful-at-point) ; defaults to `view-emacs-debugging'
+          ("C-h F" . helpful-function) ; defaults to `Info-goto-emacs-command-node'
+          ("C-h C" . helpful-command))) ; defaults to `describe-coding-system'
+;; helpful:1 ends here
 
 ;; [[file:init-emacs.org::*hippie-exp][hippie-exp:1]]
 ;;------------------------------------------------------------------------------
@@ -15625,84 +15652,6 @@ User is prompted for WORD if none given."
         (ispell-word)
         (buffer-substring-no-properties)))))
 ;; ispell:1 ends here
-
-;; [[file:init-emacs.org::*ivy (counsel/swiper)][ivy (counsel/swiper):1]]
-;;------------------------------------------------------------------------------
-;;; Modules: ivy
-;;
-;; Adds wildcard name completion to common tasks.
-;; Replaces `completing-read-function' with `ivy-completing-read'.
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modules: ivy (counsel/swiper)")
-
-(use-package ivy
-  :quelpa (ivy :fetcher github :repo "abo-abo/swiper")
-  :demand t
-  :diminish ivy-mode
-  :commands (ivy-mode)
-  ;; :bind* (("C-x C-r" . ivy-resume)      ; defaults to `find-file-read-only'
-  ;;         ("C-x b" . ivy-switch-buffer) ; defaults to `switch-to-buffer'
-  ;;         ("C-x B" . ivy-switch-buffer-other-window)) ; defaults to `switch-to-buffer'
-  :config
-  ;; ;; turn on `ivy-mode'
-  ;; (ivy-mode 1)
-
-  ;; turn off `ivy-mode'
-  (ivy-mode -1)
-
-  ;; add recent files and bookmarks to `ivy-switch-buffer'
-  (setq ivy-use-virtual-buffers t)
-
-  ;; allow minibuffer commands to work in the minibuffer
-  (setq enable-recursive-minibuffers t)
-
-  ;; style to use for displaying the current candidate count
-  (setq ivy-count-format "(%d/%d) ")
-
-  ;; turn off ivy mode in other incompatable modes
-  (defun force-completing-read-default (orig-fun &rest args)
-    "Force a function to use `completing-read-default'."
-    (let ((completing-read-function 'completing-read-default))
-      (apply orig-fun args)))
-  ;; advise `tmm-prompt'
-  (advice-add 'tmm-prompt :around #'force-completing-read-default)
-  ;; advise `yas-expand-snippet'
-  (advice-add 'yas-expand-snippet :around #'force-completing-read-default))
-
-;;------------------------------------------------------------------------------
-;;;; counsel
-;;------------------------------------------------------------------------------
-
-;; (init-message 3 "counsel")
-
-;; ;; counsel (various completion functions using ivy)
-;; (use-package counsel
-;;   :quelpa (counsel :fetcher github :repo "abo-abo/swiper")
-;;   :after (ivy)
-;;   :demand t
-;;   :bind* (("M-x" . counsel-M-x)
-;;           ("C-x C-f" . counsel-find-file)
-;;           ("C-h f" . counsel-describe-function)
-;;           ("C-h v" . counsel-describe-variable)
-;;           ("C-h l" . counsel-find-library)
-;;           ("C-h C-i" . counsel-info-lookup-symbol)
-;;           ("C-h u" . counsel-unicode-char))
-;;   :bind (:map minibuffer-local-map
-;;               ("C-r" . counsel-minibuffer-history)))
-
-;;------------------------------------------------------------------------------
-;;;; swiper
-;;------------------------------------------------------------------------------
-
-;; (init-message 3 "swiper")
-
-;; (use-package swiper
-;;   :quelpa (swiper :fetcher github :repo "abo-abo/swiper")
-;;   :after (ivy)
-;;   :demand t
-;;   :bind* ("C-'" . swiper))            ; defaults to `isearch-forward-regexp'
-;; ivy (counsel/swiper):1 ends here
 
 ;; [[file:init-emacs.org::*json][json:1]]
 ;;------------------------------------------------------------------------------
