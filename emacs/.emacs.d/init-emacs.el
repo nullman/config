@@ -14923,17 +14923,46 @@ Uses `ispell--run-on-word' to spell check word."
   :quelpa (demo-it))
 ;; demo-it:1 ends here
 
-;; [[file:init-emacs.org::*doom-mode-line][doom-mode-line:1]]
+;; [[file:init-emacs.org::*doom-modeline][doom-modeline:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: doom-mode-line
+;;; Modules: doom-modeline
 ;;------------------------------------------------------------------------------
 
-(init-message 2 "Modules: doom-mode-line")
+(init-message 2 "Modules: doom-modeline")
 
 (use-package doom-modeline
   :quelpa (doom-modeline)
-  :init (doom-modeline-mode 1))
-;; doom-mode-line:1 ends here
+  :after (all-the-icons)
+  :init (doom-modeline-mode 1)
+  :config
+  ;; customizations
+  (setq doom-modeline-height 30)
+
+  ;; show line number in modeline
+  (line-number-mode 1)
+
+  ;; show column number in modeline
+  (column-number-mode 1))
+
+;;------------------------------------------------------------------------------
+;;;; all-the-icons
+;;------------------------------------------------------------------------------
+
+(init-message 3 "all-the-icons")
+
+(use-package all-the-icons
+  :quelpa (all-the-icons)
+  :config
+  ;; install fonts, if needed
+  (let ((font-dest (cl-case window-system
+                     (x  (concat (or (getenv "XDG_DATA_HOME")
+                                     (concat (getenv "HOME") "/.local/share"))
+                                 "/fonts/"))
+                     (mac (concat (getenv "HOME") "/Library/Fonts/" ))
+                     (ns (concat (getenv "HOME") "/Library/Fonts/" )))))
+    (or (file-exists-p (expand-file-name "all-the-icons.ttf" font-dest))
+        (all-the-icons-install-fonts :noconfirm))))
+;; doom-modeline:1 ends here
 
 ;; [[file:init-emacs.org::*easy-kill][easy-kill:1]]
 ;;------------------------------------------------------------------------------
@@ -15313,7 +15342,6 @@ Uses `ispell--run-on-word' to spell check word."
           ([remap dabbrev-expand] . helm-dabbrev)
           ([remap find-tag] . helm-etags-select)
           ([remap xref-find-definitions] . helm-etags-select))
-  ;;:bind (:map helm-major-mode-map
   :bind* (:map helm-map
                ("<tab>" . helm-execute-persistent-action)
                ("M-i" . helm-previous-line)
@@ -15331,7 +15359,9 @@ Uses `ispell--run-on-word' to spell check word."
                ("?\\t" . helm-execute-persistent-action)
                ("C-z" . helm-select-action)
                ([remap previous-line] . helm-previous-line)
-               ([remap next-line] . helm-next-line))
+               ([remap next-line] . helm-next-line)
+               ([remap previous-page] . helm-previous-line)
+               ([remap next-page] . helm-next-line))
   :config
   ;; customize
   (setq helm-exit-idle-delay 0
