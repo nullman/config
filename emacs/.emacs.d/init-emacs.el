@@ -12502,7 +12502,8 @@ Common values:
 (init-message 2 "Modes: Brainfuck")
 
 (use-package brainfuck
-  :quelpa (brainfuck :fetcher file :path "~/.emacs.d/local-modules/brainfuck.el")
+  ;;:quelpa (brainfuck :fetcher file :path (expand-file-name "brainfuck.el" local-modules-dir))
+  :load-path (lambda () (expand-file-name "brainfuck.el" local-modules-dir))
   :mode ("\\.bf\\'" . brainfuck-mode))
 ;; Brainfuck:1 ends here
 
@@ -12514,7 +12515,8 @@ Common values:
 (init-message 2 "Modes: BASIC")
 
 (use-package basic
-  :quelpa (basic :fetcher file :path "~/.emacs.d/local-modules/basic.el")
+  ;;:quelpa (basic :fetcher file :path (expand-file-name "basic.el" local-modules-dir))
+  :load-path (lambda () (expand-file-name "basic.el" local-modules-dir))
   :mode ("\\.bas\\'" . basic-mode))
 ;; BASIC:1 ends here
 
@@ -12675,8 +12677,15 @@ Common values:
   ;; mark holidays
   (setq calendar-mark-holidays-flag t))
 
+;;------------------------------------------------------------------------------
+;;;; calendar-remind
+;;------------------------------------------------------------------------------
+
+(init-message 3 "calendar-remind")
+
 (use-package calendar-remind
-  :quelpa (calendar-remind :fetcher file :path "~/.emacs.d/local-modules/calendar-remind.el")
+  ;;:quelpa (calendar-remind :fetcher file :path (expand-file-name "calendar-remind.el" local-modules-dir))
+  :load-path (lambda () (expand-file-name "calendar-remind.el" local-modules-dir))
   :after (calendar)
   :commands (calendar-remind-lookup
              calendar-remind-visit
@@ -14862,7 +14871,8 @@ Blank lines separate paragraphs.  Semicolons start comments.
 (init-message 2 "Modules: decimation")
 
 (use-package decimation
-  :quelpa (decimation :fetcher file :path "~/.emacs.d/local-modules/decimation.el")
+  ;;:quelpa (decimation :fetcher file :path (expand-file-name "decimation.el" local-modules-dir))
+  :load-path (lambda () (expand-file-name "decimation.el" local-modules-dir))
   :commands (decimation))
 ;; decimation:1 ends here
 
@@ -15139,7 +15149,8 @@ Uses `ispell--run-on-word' to spell check word."
 (init-message 2 "Modules: epoch")
 
 (use-package epoch
-  :quelpa (epoch :fetcher file :path "~/.emacs.d/local-modules/epoch.el")
+  ;;:quelpa (epoch :fetcher file :path (expand-file-name "epoch.el" local-modules-dir))
+  :load-path (lambda () (expand-file-name "epoch.el" local-modules-dir))
   :commands (epoch-menu time-to-epoch epoch-to-time))
 ;; epoch:1 ends here
 
@@ -15233,6 +15244,7 @@ Uses `ispell--run-on-word' to spell check word."
 
 (use-package fuzzy
   :quelpa (fuzzy)
+  :commands (turn-on-fuzzy-isearch)
   :init (turn-on-fuzzy-isearch))
 ;; fuzzy:1 ends here
 
@@ -15254,112 +15266,6 @@ Uses `ispell--run-on-word' to spell check word."
     (search-forward ";; Elpher Bookmarks File\n\n")
     (org-show-entry)))
 ;; elpher:1 ends here
-
-;; [[file:init-emacs.org::*helm][helm:1]]
-;;------------------------------------------------------------------------------
-;;; Modules: helm
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modules: helm")
-
-(use-package helm
-  :quelpa (helm)
-  :diminish helm-mode
-  :bind* (("M-x" . helm-M-x)            ; defaults to `execute-extended-command'
-          ("C-x b" . helm-mini)         ; defaults to `switch-buffer'
-          ("M-y" . helm-show-kill-ring) ; defaults to `yank-pop'
-          ("C-x C-r" . helm-recentf)    ; defaults to `find-file-read-only'
-          ("C-x C-f" . helm-find-files) ; defaults to `find-file'
-          ;;("C-c <SPC>" . helm-all-mark-rings)
-          ("C-x r b" . helm-filtered-bookmarks) ; defaults to `bookmark-jump'
-          ("C-h r" . helm-info-emacs)           ; defaults to `info-emacs-manual'
-          ("C-:" . helm-eval-expression-with-eldoc)
-          ;;("C-," . helm-calcul-expression)
-          ;;("C-h d" . helm-info-at-point) ; defaults to `apropos-documentation'
-          ;;("C-c g" . helm-google-suggest)
-          ;;("C-x C-d" . helm-browse-project)
-          ;;("<f1>" . helm-resume)
-          ;;("C-h C-f" . helm-apropos)
-          ("C-h C-a" . helm-apropos) ; defaults to `about-emacs'
-          ;;("<f5> s" . helm-find)
-          ;;("<f2>" . helm-execute-kmacro)
-          ([remap jump-to-register] . helm-register)
-          ;;([remap list-buffers] helm-buffers-list)
-          ([remap dabbrev-expand] . helm-dabbrev)
-          ([remap find-tag] . helm-etags-select)
-          ([remap xref-find-definitions] . helm-etags-select))
-  :bind* (:map helm-map
-               ("<tab>" . helm-execute-persistent-action)
-               ("M-i" . helm-previous-line)
-               ("M-k" . helm-next-line)
-               ("M-j" . left-char)
-               ("M-i" . right-char)
-               ("C-M-u" . backward-paragraph)
-               ("C-M-o" . forward-paragraph)
-               ("M-u" . left-word)
-               ("M-o" . right-word)
-               ("C-M-i" . helm-previous-page)
-               ("C-M-k" . helm-next-page)
-               ("C-M-j" . move-beginning-of-line)
-               ("C-M-l" . move-end-of-line)
-               ("?\\t" . helm-execute-persistent-action)
-               ("C-z" . helm-select-action)
-               ([remap previous-line] . helm-previous-line)
-               ([remap next-line] . helm-next-line)
-               ([remap previous-page] . helm-previous-line)
-               ([remap next-page] . helm-next-line))
-  :init
-  ;; customize
-  (setq helm-exit-idle-delay 0
-        helm-ff-file-name-history-use-recentf t
-        helm-ff-lynx-style-map nil
-        helm-ff-newfile-prompt-p nil
-        helm-left-margin-width 0
-        helm-split-window-in-side-p t)
-
-  ;; turn on helm-mode
-  (helm-mode 1)
-  (helm-adaptive-mode 1)
-  (helm-autoresize-mode 1)
-
-  ;; multiple completion options
-  (helm-multi-key-defun helm-multi-lisp-complete-at-point
-      "Multi key function for completion in emacs lisp buffers.
-First call indent, second complete symbol, third complete file name."
-    '(helm-lisp-indent
-      helm-lisp-completion-at-point
-      helm-complete-file-name-at-point)
-    0.3)
-
-  ;; tab auto complete
-  (if (and (boundp 'tab-always-indent)
-           (eq tab-always-indent 'complete)
-           (boundp 'completion-in-region-function))
-      (progn
-        (define-key lisp-interaction-mode-map [remap indent-for-tab-command] 'helm-multi-lisp-complete-at-point)
-        (define-key emacs-lisp-mode-map [remap indent-for-tab-command] 'helm-multi-lisp-complete-at-point)
-
-        ;; lisp complete (rebind M-<tab>)
-        (define-key lisp-interaction-mode-map [remap completion-at-point] 'helm-lisp-completion-at-point)
-        (define-key emacs-lisp-mode-map       [remap completion-at-point] 'helm-lisp-completion-at-point))
-    (progn
-      (define-key lisp-interaction-mode-map [remap indent-for-tab-command] 'helm-multi-lisp-complete-at-point)
-      (define-key emacs-lisp-mode-map [remap indent-for-tab-command] 'helm-multi-lisp-complete-at-point)
-
-      ;; lisp complete (rebind M-<tab>)
-      (define-key lisp-interaction-mode-map [remap completion-at-point] 'helm-lisp-completion-at-point)
-      (define-key emacs-lisp-mode-map       [remap completion-at-point] 'helm-lisp-completion-at-point)))
-
-  ;; turn off helm mode in other incompatable modes
-  (defun force-completing-read-default (orig-fun &rest args)
-    "Force a function to use `completing-read-default'."
-    (let ((completing-read-function 'completing-read-default))
-      (apply orig-fun args)))
-  ;; advise `tmm-prompt'
-  (advice-add 'tmm-prompt :around #'force-completing-read-default)
-  ;; advise `yas-expand-snippet'
-  (advice-add 'yas-expand-snippet :around #'force-completing-read-default))
-;; helm:1 ends here
 
 ;; [[file:init-emacs.org::*helpful][helpful:1]]
 ;;------------------------------------------------------------------------------
@@ -15629,6 +15535,93 @@ User is prompted for WORD if none given."
         (ispell-word)
         (buffer-substring-no-properties)))))
 ;; ispell:1 ends here
+
+;; [[file:init-emacs.org::*ivy (counsel/swiper)][ivy (counsel/swiper):1]]
+;;------------------------------------------------------------------------------
+;;; Modules: ivy
+;;
+;; Add wildcard name completion to common tasks.
+;; Replace `completing-read-function' with `ivy-completing-read'.
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: ivy (counsel/swiper)")
+
+(use-package ivy
+  :quelpa (ivy :fetcher github :repo "abo-abo/swiper")
+  ;;:demand t
+  :diminish ivy-mode
+  :commands (ivy-mode)
+  :bind* (("C-x C-r" . ivy-resume)      ; defaults to `find-file-read-only'
+          ("C-x b" . ivy-switch-buffer) ; defaults to `switch-to-buffer'
+          ("C-x o" . ivy-switch-buffer-other-window)) ; defaults to `switch-to-buffer'
+  :init
+  ;; turn on `ivy-mode'
+  (ivy-mode 1)
+  :config
+  ;; add recent files and bookmarks to `ivy-switch-buffer'
+  (setq ivy-use-virtual-buffers t)
+
+  ;; allow minibuffer commands to work in the minibuffer
+  (setq enable-recursive-minibuffers t)
+
+  ;; style to use for displaying the current candidate count
+  (setq ivy-count-format "(%d/%d) ")
+
+  ;; turn off ivy mode in other incompatable modes
+  (defun force-completing-read-default (orig-fun &rest args)
+    "Force a function to use `completing-read-default'."
+    (let ((completing-read-function 'completing-read-default))
+      (apply orig-fun args)))
+  ;; advise `tmm-prompt'
+  (advice-add 'tmm-prompt :around #'force-completing-read-default)
+  ;; advise `yas-expand-snippet'
+  (advice-add 'yas-expand-snippet :around #'force-completing-read-default))
+
+;;------------------------------------------------------------------------------
+;;;; counsel
+;;------------------------------------------------------------------------------
+
+(init-message 3 "counsel")
+
+;; counsel (various completion functions using ivy)
+(use-package counsel
+  :quelpa (counsel :fetcher github :repo "abo-abo/swiper")
+  :after (ivy)
+  ;;:demand t
+  :bind* (("M-x" . counsel-M-x)
+          ("C-x C-f" . counsel-find-file)
+          ("C-h f" . counsel-describe-function)
+          ("C-h v" . counsel-describe-variable)
+          ("C-h l" . counsel-find-library)
+          ("C-h C-i" . counsel-info-lookup-symbol)
+          ("C-h u" . counsel-unicode-char))
+  :bind (:map minibuffer-local-map
+              ("C-r" . counsel-minibuffer-history)))
+
+;;------------------------------------------------------------------------------
+;;;; swiper
+;;------------------------------------------------------------------------------
+
+(init-message 3 "swiper")
+
+(use-package swiper
+  :quelpa (swiper :fetcher github :repo "abo-abo/swiper")
+  :after (ivy)
+  ;;:demand t
+  :bind* ("C-'" . swiper))            ; defaults to `isearch-forward-regexp'
+
+;;------------------------------------------------------------------------------
+;;;; ivy-rich
+;;------------------------------------------------------------------------------
+
+(init-message 3 "ivy-rich")
+
+(use-package ivy-rich
+  :quelpa (ivy-rich)
+  :after (ivy)
+  ;;:demand t
+  :init (ivy-rich-mode 1))
+;; ivy (counsel/swiper):1 ends here
 
 ;; [[file:init-emacs.org::*json][json:1]]
 ;;------------------------------------------------------------------------------
@@ -16485,6 +16478,9 @@ and 5 is most favorite.  0 will unset the rating."
   :quelpa (openwith :fetcher github :repo "emacsmirror/openwith")
   :demand t
   :init
+  ;; turn on openwith mode
+  (openwith-mode 1)
+  :config
   ;; define associations
   (setq openwith-associations
         `(
@@ -16508,9 +16504,6 @@ and 5 is most favorite.  0 will unset the rating."
              '("doc" "xls" "ppt" "odt" "ods" "odg" "odp"))
            "libreoffice" (file))
           ))
-
-  ;; turn on openwith mode
-  (openwith-mode 1)
 
   (defun openwith-file-handler--no-error (orig-fun &rest args)
     "Do not throw an error when calling `openwith-file-handler'
@@ -16587,7 +16580,8 @@ to open a file."
   ;; this does not work as the file does not have the proper package end line
   ;;:quelpa (ps-ccrypt :fetcher url :url "http://ccrypt.sourceforge.net/ps-ccrypt.el"))
   ;; so we use a local copy with a bug fix instead
-  :quelpa (ps-ccrypt :fetcher file :path "~/.emacs.d/modules/ps-ccrypt.el"))
+  ;;:quelpa (ps-ccrypt :fetcher file :path (expand-file-name "ps-ccrypt.el" emacs-modules-dir))
+  :load-path (lambda () (expand-file-name "ps-ccrypt.el" emacs-modules-dir)))
 ;; ps-ccrypt:1 ends here
 
 ;; [[file:init-emacs.org::*recentf][recentf:1]]
@@ -16625,7 +16619,8 @@ to open a file."
 (init-message 2 "Modules: replacer")
 
 (use-package replacer
-  :quelpa (replacer :fetcher file :path "~/.emacs.d/local-modules/replacer.el")
+  ;;:quelpa (replacer :fetcher file :path (expand-file-name "replacer.el"))
+  :load-path (lambda () (expand-file-name "replacer.el"))
   :demand t
   :after (company)
   :commands (replacer-mode)
@@ -16708,7 +16703,8 @@ Do not perform the search on very large files (to avoid a delay when loaded)."
 (init-message 2 "Modules: sokoban")
 
 (use-package sokoban
-  :quelpa (sokoban :fetcher file :path "~/.emacs.d/modules/sokoban/sokoban.el")
+  ;;:quelpa (sokoban :fetcher file :path (expand-file-name "sokoban/sokoban.el" emacs-modules-dir))
+  :load-path (lambda () (expand-file-name "sokoban/sokoban.el" emacs-modules-dir))
   :commands (sokoban sokoban-mode)
   :config
   (setq sokoban-levels-dir (expand-file-name "sokoban/sokoban-levels" emacs-modules-dir)))
@@ -16722,7 +16718,8 @@ Do not perform the search on very large files (to avoid a delay when loaded)."
 (init-message 2 "Modules: split-move")
 
 (use-package split-move
-  :quelpa (split-move :fetcher file :path "~/.emacs.d/local-modules/split-move.el")
+  ;;:quelpa (split-move :fetcher file :path (expand-file-name "split-move.el" local-modules-dir))
+  :load-path (lambda () (expand-file-name "split-move.el" local-modules-dir))
   :commands (split-move-up split-move-down))
 ;; split-move:1 ends here
 
@@ -17021,7 +17018,8 @@ otherwise run `find-file-as-root'."
 (use-package web-query
   :when (executable-find "w3m")
   :after (w3m)
-  :quelpa (web-query :fetcher file :path "~/.emacs.d/local-modules/web-query.el")
+  ;;:quelpa (web-query :fetcher file :path (expand-file-name "web-query.el" local-modules-dir))
+  :load-path (lambda () (expand-file-name "web-query.el" local-modules-dir))
   :commands (web-query
              web-query-word
              web-query-word-at-point
@@ -17146,7 +17144,8 @@ otherwise run `find-file-as-root'."
 
 ;; auto-menu
 (use-package auto-menu
-  :quelpa (auto-menu :fetcher file :path "~/.emacs.d/local-modules/auto-menu.el")
+  ;;:quelpa (auto-menu :fetcher file :path (expand-file-name "auto-menu.el" local-modules-dir))
+  :load-path (lambda () (expand-file-name "auto-menu.el" local-modules-dir))
   :commands (auto-menu
              auto-menu-dired
              auto-menu-file

@@ -8,7 +8,7 @@
 #+LANGUAGE: en
 #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
 #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-#+TIMESTAMP: <2021-01-27 10:31 (kyle)>
+#+TIMESTAMP: <2021-01-27 12:42 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -17474,7 +17474,8 @@ Brainfuck Compiler/Interpreter
   (init-message 2 "Modes: Brainfuck")
 
   (use-package brainfuck
-    :quelpa (brainfuck :fetcher file :path "~/.emacs.d/local-modules/brainfuck.el")
+    ;;:quelpa (brainfuck :fetcher file :path (expand-file-name "brainfuck.el" local-modules-dir))
+    :load-path (lambda () (expand-file-name "brainfuck.el" local-modules-dir))
     :mode ("\\.bf\\'" . brainfuck-mode))
 #+END_SRC
 
@@ -17493,7 +17494,8 @@ Applesoft BASIC Compiler/Interpreter
   (init-message 2 "Modes: BASIC")
 
   (use-package basic
-    :quelpa (basic :fetcher file :path "~/.emacs.d/local-modules/basic.el")
+    ;;:quelpa (basic :fetcher file :path (expand-file-name "basic.el" local-modules-dir))
+    :load-path (lambda () (expand-file-name "basic.el" local-modules-dir))
     :mode ("\\.bas\\'" . basic-mode))
 #+END_SRC
 
@@ -17668,8 +17670,15 @@ Calendar Functions
     ;; mark holidays
     (setq calendar-mark-holidays-flag t))
 
+  ;;------------------------------------------------------------------------------
+  ;;;; calendar-remind
+  ;;------------------------------------------------------------------------------
+
+  (init-message 3 "calendar-remind")
+
   (use-package calendar-remind
-    :quelpa (calendar-remind :fetcher file :path "~/.emacs.d/local-modules/calendar-remind.el")
+    ;;:quelpa (calendar-remind :fetcher file :path (expand-file-name "calendar-remind.el" local-modules-dir))
+    :load-path (lambda () (expand-file-name "calendar-remind.el" local-modules-dir))
     :after (calendar)
     :commands (calendar-remind-lookup
                calendar-remind-visit
@@ -21423,7 +21432,8 @@ Decimation Game
   (init-message 2 "Modules: decimation")
 
   (use-package decimation
-    :quelpa (decimation :fetcher file :path "~/.emacs.d/local-modules/decimation.el")
+    ;;:quelpa (decimation :fetcher file :path (expand-file-name "decimation.el" local-modules-dir))
+    :load-path (lambda () (expand-file-name "decimation.el" local-modules-dir))
     :commands (decimation))
 #+END_SRC
 
@@ -21813,7 +21823,8 @@ Epoch time conversion tools.
   (init-message 2 "Modules: epoch")
 
   (use-package epoch
-    :quelpa (epoch :fetcher file :path "~/.emacs.d/local-modules/epoch.el")
+    ;;:quelpa (epoch :fetcher file :path (expand-file-name "epoch.el" local-modules-dir))
+    :load-path (lambda () (expand-file-name "epoch.el" local-modules-dir))
     :commands (epoch-menu time-to-epoch epoch-to-time))
 #+END_SRC
 
@@ -21975,6 +21986,7 @@ exact match is found.
 
   (use-package fuzzy
     :quelpa (fuzzy)
+    :commands (turn-on-fuzzy-isearch)
     :init (turn-on-fuzzy-isearch))
 #+END_SRC
 
@@ -22071,117 +22083,130 @@ Port of Sublime Text plugin GitGutter (git-gutter)
   ;;   (set-face-background 'git-gutter:deleted "red"))
 #+END_SRC
 
-*** helm
+*** +helm (swiper)+
     :PROPERTIES:
-    :CUSTOM_ID: modules-helm
+    :CUSTOM_ID: modules-helm-swiper
     :END:
 
-Emacs Incremental and Narrowing Framework
+Emacs incremental and narrowing framework.
 
-#+BEGIN_SRC emacs-lisp
-  ;;------------------------------------------------------------------------------
-  ;;; Modules: helm
-  ;;------------------------------------------------------------------------------
+Swiper search with =isearch= using =helm=.
 
-  (init-message 2 "Modules: helm")
+#+BEGIN_SRC emacs-lisp :tangle no
+  ;; ;;------------------------------------------------------------------------------
+  ;; ;;; Modules: helm (swiper)
+  ;; ;;------------------------------------------------------------------------------
 
-  (use-package helm
-    :quelpa (helm)
-    :diminish helm-mode
-    :bind* (("M-x" . helm-M-x)            ; defaults to `execute-extended-command'
-            ("C-x b" . helm-mini)         ; defaults to `switch-buffer'
-            ("M-y" . helm-show-kill-ring) ; defaults to `yank-pop'
-            ("C-x C-r" . helm-recentf)    ; defaults to `find-file-read-only'
-            ("C-x C-f" . helm-find-files) ; defaults to `find-file'
-            ;;("C-c <SPC>" . helm-all-mark-rings)
-            ("C-x r b" . helm-filtered-bookmarks) ; defaults to `bookmark-jump'
-            ("C-h r" . helm-info-emacs)           ; defaults to `info-emacs-manual'
-            ("C-:" . helm-eval-expression-with-eldoc)
-            ;;("C-," . helm-calcul-expression)
-            ;;("C-h d" . helm-info-at-point) ; defaults to `apropos-documentation'
-            ;;("C-c g" . helm-google-suggest)
-            ;;("C-x C-d" . helm-browse-project)
-            ;;("<f1>" . helm-resume)
-            ;;("C-h C-f" . helm-apropos)
-            ("C-h C-a" . helm-apropos) ; defaults to `about-emacs'
-            ;;("<f5> s" . helm-find)
-            ;;("<f2>" . helm-execute-kmacro)
-            ([remap jump-to-register] . helm-register)
-            ;;([remap list-buffers] helm-buffers-list)
-            ([remap dabbrev-expand] . helm-dabbrev)
-            ([remap find-tag] . helm-etags-select)
-            ([remap xref-find-definitions] . helm-etags-select))
-    :bind* (:map helm-map
-                 ("<tab>" . helm-execute-persistent-action)
-                 ("M-i" . helm-previous-line)
-                 ("M-k" . helm-next-line)
-                 ("M-j" . left-char)
-                 ("M-i" . right-char)
-                 ("C-M-u" . backward-paragraph)
-                 ("C-M-o" . forward-paragraph)
-                 ("M-u" . left-word)
-                 ("M-o" . right-word)
-                 ("C-M-i" . helm-previous-page)
-                 ("C-M-k" . helm-next-page)
-                 ("C-M-j" . move-beginning-of-line)
-                 ("C-M-l" . move-end-of-line)
-                 ("?\\t" . helm-execute-persistent-action)
-                 ("C-z" . helm-select-action)
-                 ([remap previous-line] . helm-previous-line)
-                 ([remap next-line] . helm-next-line)
-                 ([remap previous-page] . helm-previous-line)
-                 ([remap next-page] . helm-next-line))
-    :init
-    ;; customize
-    (setq helm-exit-idle-delay 0
-          helm-ff-file-name-history-use-recentf t
-          helm-ff-lynx-style-map nil
-          helm-ff-newfile-prompt-p nil
-          helm-left-margin-width 0
-          helm-split-window-in-side-p t)
+  ;; (init-message 2 "Modules: helm (swiper)")
 
-    ;; turn on helm-mode
-    (helm-mode 1)
-    (helm-adaptive-mode 1)
-    (helm-autoresize-mode 1)
+  ;; (use-package helm
+  ;;   :quelpa (helm)
+  ;;   :diminish helm-mode
+  ;;   :bind* (("M-x" . helm-M-x)            ; defaults to `execute-extended-command'
+  ;;           ("C-x b" . helm-mini)         ; defaults to `switch-buffer'
+  ;;           ("M-y" . helm-show-kill-ring) ; defaults to `yank-pop'
+  ;;           ("C-x C-r" . helm-recentf)    ; defaults to `find-file-read-only'
+  ;;           ("C-x C-f" . helm-find-files) ; defaults to `find-file'
+  ;;           ;;("C-c <SPC>" . helm-all-mark-rings)
+  ;;           ("C-x r b" . helm-filtered-bookmarks) ; defaults to `bookmark-jump'
+  ;;           ("C-h r" . helm-info-emacs)           ; defaults to `info-emacs-manual'
+  ;;           ("C-:" . helm-eval-expression-with-eldoc)
+  ;;           ;;("C-," . helm-calcul-expression)
+  ;;           ;;("C-h d" . helm-info-at-point) ; defaults to `apropos-documentation'
+  ;;           ;;("C-c g" . helm-google-suggest)
+  ;;           ;;("C-x C-d" . helm-browse-project)
+  ;;           ;;("<f1>" . helm-resume)
+  ;;           ;;("C-h C-f" . helm-apropos)
+  ;;           ("C-h C-a" . helm-apropos) ; defaults to `about-emacs'
+  ;;           ;;("<f5> s" . helm-find)
+  ;;           ;;("<f2>" . helm-execute-kmacro)
+  ;;           ([remap jump-to-register] . helm-register)
+  ;;           ;;([remap list-buffers] helm-buffers-list)
+  ;;           ([remap dabbrev-expand] . helm-dabbrev)
+  ;;           ([remap find-tag] . helm-etags-select)
+  ;;           ([remap xref-find-definitions] . helm-etags-select))
+  ;;   :bind* (:map helm-map
+  ;;                ("<tab>" . helm-execute-persistent-action)
+  ;;                ("M-i" . helm-previous-line)
+  ;;                ("M-k" . helm-next-line)
+  ;;                ("M-j" . left-char)
+  ;;                ("M-i" . right-char)
+  ;;                ("C-M-u" . backward-paragraph)
+  ;;                ("C-M-o" . forward-paragraph)
+  ;;                ("M-u" . left-word)
+  ;;                ("M-o" . right-word)
+  ;;                ("C-M-i" . helm-previous-page)
+  ;;                ("C-M-k" . helm-next-page)
+  ;;                ("C-M-j" . move-beginning-of-line)
+  ;;                ("C-M-l" . move-end-of-line)
+  ;;                ("?\\t" . helm-execute-persistent-action)
+  ;;                ("C-z" . helm-select-action)
+  ;;                ([remap previous-line] . helm-previous-line)
+  ;;                ([remap next-line] . helm-next-line)
+  ;;                ([remap previous-page] . helm-previous-line)
+  ;;                ([remap next-page] . helm-next-line))
+  ;;   :init
+  ;;   ;; customize
+  ;;   (setq helm-exit-idle-delay 0
+  ;;         helm-ff-file-name-history-use-recentf t
+  ;;         helm-ff-lynx-style-map nil
+  ;;         helm-ff-newfile-prompt-p nil
+  ;;         helm-left-margin-width 0
+  ;;         helm-split-window-in-side-p t)
 
-    ;; multiple completion options
-    (helm-multi-key-defun helm-multi-lisp-complete-at-point
-        "Multi key function for completion in emacs lisp buffers.
-  First call indent, second complete symbol, third complete file name."
-      '(helm-lisp-indent
-        helm-lisp-completion-at-point
-        helm-complete-file-name-at-point)
-      0.3)
+  ;;   ;; turn on helm-mode
+  ;;   (helm-mode 1)
+  ;;   (helm-adaptive-mode 1)
+  ;;   (helm-autoresize-mode 1)
 
-    ;; tab auto complete
-    (if (and (boundp 'tab-always-indent)
-             (eq tab-always-indent 'complete)
-             (boundp 'completion-in-region-function))
-        (progn
-          (define-key lisp-interaction-mode-map [remap indent-for-tab-command] 'helm-multi-lisp-complete-at-point)
-          (define-key emacs-lisp-mode-map [remap indent-for-tab-command] 'helm-multi-lisp-complete-at-point)
+  ;;   ;; multiple completion options
+  ;;   (helm-multi-key-defun helm-multi-lisp-complete-at-point
+  ;;       "Multi key function for completion in emacs lisp buffers.
+  ;; First call indent, second complete symbol, third complete file name."
+  ;;     '(helm-lisp-indent
+  ;;       helm-lisp-completion-at-point
+  ;;       helm-complete-file-name-at-point)
+  ;;     0.3)
 
-          ;; lisp complete (rebind M-<tab>)
-          (define-key lisp-interaction-mode-map [remap completion-at-point] 'helm-lisp-completion-at-point)
-          (define-key emacs-lisp-mode-map       [remap completion-at-point] 'helm-lisp-completion-at-point))
-      (progn
-        (define-key lisp-interaction-mode-map [remap indent-for-tab-command] 'helm-multi-lisp-complete-at-point)
-        (define-key emacs-lisp-mode-map [remap indent-for-tab-command] 'helm-multi-lisp-complete-at-point)
+  ;;   ;; tab auto complete
+  ;;   (if (and (boundp 'tab-always-indent)
+  ;;            (eq tab-always-indent 'complete)
+  ;;            (boundp 'completion-in-region-function))
+  ;;       (progn
+  ;;         (define-key lisp-interaction-mode-map [remap indent-for-tab-command] 'helm-multi-lisp-complete-at-point)
+  ;;         (define-key emacs-lisp-mode-map [remap indent-for-tab-command] 'helm-multi-lisp-complete-at-point)
 
-        ;; lisp complete (rebind M-<tab>)
-        (define-key lisp-interaction-mode-map [remap completion-at-point] 'helm-lisp-completion-at-point)
-        (define-key emacs-lisp-mode-map       [remap completion-at-point] 'helm-lisp-completion-at-point)))
+  ;;         ;; lisp complete (rebind M-<tab>)
+  ;;         (define-key lisp-interaction-mode-map [remap completion-at-point] 'helm-lisp-completion-at-point)
+  ;;         (define-key emacs-lisp-mode-map       [remap completion-at-point] 'helm-lisp-completion-at-point))
+  ;;     (progn
+  ;;       (define-key lisp-interaction-mode-map [remap indent-for-tab-command] 'helm-multi-lisp-complete-at-point)
+  ;;       (define-key emacs-lisp-mode-map [remap indent-for-tab-command] 'helm-multi-lisp-complete-at-point)
 
-    ;; turn off helm mode in other incompatable modes
-    (defun force-completing-read-default (orig-fun &rest args)
-      "Force a function to use `completing-read-default'."
-      (let ((completing-read-function 'completing-read-default))
-        (apply orig-fun args)))
-    ;; advise `tmm-prompt'
-    (advice-add 'tmm-prompt :around #'force-completing-read-default)
-    ;; advise `yas-expand-snippet'
-    (advice-add 'yas-expand-snippet :around #'force-completing-read-default))
+  ;;       ;; lisp complete (rebind M-<tab>)
+  ;;       (define-key lisp-interaction-mode-map [remap completion-at-point] 'helm-lisp-completion-at-point)
+  ;;       (define-key emacs-lisp-mode-map       [remap completion-at-point] 'helm-lisp-completion-at-point)))
+
+  ;;   ;; turn off helm mode in other incompatable modes
+  ;;   (defun force-completing-read-default (orig-fun &rest args)
+  ;;     "Force a function to use `completing-read-default'."
+  ;;     (let ((completing-read-function 'completing-read-default))
+  ;;       (apply orig-fun args)))
+  ;;   ;; advise `tmm-prompt'
+  ;;   (advice-add 'tmm-prompt :around #'force-completing-read-default)
+  ;;   ;; advise `yas-expand-snippet'
+  ;;   (advice-add 'yas-expand-snippet :around #'force-completing-read-default))
+
+  ;; ;;------------------------------------------------------------------------------
+  ;; ;;;; swiper-helm
+  ;; ;;------------------------------------------------------------------------------
+
+  ;; (init-message 3 "swiper-helm")
+
+  ;; (use-package swiper-helm
+  ;;   :quelpa (swiper-helm)
+  ;;   :after (helm)
+  ;;   :bind* ("C-'" . swiper))              ; defaults to `org-cycle-agenda-files'
 #+END_SRC
 
 *** helpful
@@ -22755,98 +22780,98 @@ Interface to spell checkers.
           (buffer-substring-no-properties)))))
 #+END_SRC
 
-*** +ivy (counsel/swiper)+
+*** ivy (counsel/swiper)
     :PROPERTIES:
     :CUSTOM_ID: modules-ivy-counsel-swiper
     :END:
 
 Generic completion method that adds wildcard name completion to common tasks.
 
-#+BEGIN_SRC emacs-lisp :tangle no
-  ;; ;;------------------------------------------------------------------------------
-  ;; ;;; Modules: ivy
-  ;; ;;
-  ;; ;; Add wildcard name completion to common tasks.
-  ;; ;; Replace `completing-read-function' with `ivy-completing-read'.
-  ;; ;;------------------------------------------------------------------------------
+#+BEGIN_SRC emacs-lisp
+  ;;------------------------------------------------------------------------------
+  ;;; Modules: ivy
+  ;;
+  ;; Add wildcard name completion to common tasks.
+  ;; Replace `completing-read-function' with `ivy-completing-read'.
+  ;;------------------------------------------------------------------------------
 
-  ;; (init-message 2 "Modules: ivy (counsel/swiper)")
+  (init-message 2 "Modules: ivy (counsel/swiper)")
 
-  ;; (use-package ivy
-  ;;   :quelpa (ivy :fetcher github :repo "abo-abo/swiper")
-  ;;   :demand t
-  ;;   :diminish ivy-mode
-  ;;   :commands (ivy-mode)
-  ;;   :bind* (("C-x C-r" . ivy-resume)      ; defaults to `find-file-read-only'
-  ;;           ("C-x b" . ivy-switch-buffer) ; defaults to `switch-to-buffer'
-  ;;           ("C-x B" . ivy-switch-buffer-other-window)) ; defaults to `switch-to-buffer'
-  ;;   :config
-  ;;   ;; turn on `ivy-mode'
-  ;;   (ivy-mode 1)
+  (use-package ivy
+    :quelpa (ivy :fetcher github :repo "abo-abo/swiper")
+    ;;:demand t
+    :diminish ivy-mode
+    :commands (ivy-mode)
+    :bind* (("C-x C-r" . ivy-resume)      ; defaults to `find-file-read-only'
+            ("C-x b" . ivy-switch-buffer) ; defaults to `switch-to-buffer'
+            ("C-x o" . ivy-switch-buffer-other-window)) ; defaults to `switch-to-buffer'
+    :init
+    ;; turn on `ivy-mode'
+    (ivy-mode 1)
+    :config
+    ;; add recent files and bookmarks to `ivy-switch-buffer'
+    (setq ivy-use-virtual-buffers t)
 
-  ;;   ;; add recent files and bookmarks to `ivy-switch-buffer'
-  ;;   (setq ivy-use-virtual-buffers t)
+    ;; allow minibuffer commands to work in the minibuffer
+    (setq enable-recursive-minibuffers t)
 
-  ;;   ;; allow minibuffer commands to work in the minibuffer
-  ;;   (setq enable-recursive-minibuffers t)
+    ;; style to use for displaying the current candidate count
+    (setq ivy-count-format "(%d/%d) ")
 
-  ;;   ;; style to use for displaying the current candidate count
-  ;;   (setq ivy-count-format "(%d/%d) ")
+    ;; turn off ivy mode in other incompatable modes
+    (defun force-completing-read-default (orig-fun &rest args)
+      "Force a function to use `completing-read-default'."
+      (let ((completing-read-function 'completing-read-default))
+        (apply orig-fun args)))
+    ;; advise `tmm-prompt'
+    (advice-add 'tmm-prompt :around #'force-completing-read-default)
+    ;; advise `yas-expand-snippet'
+    (advice-add 'yas-expand-snippet :around #'force-completing-read-default))
 
-  ;;   ;; turn off ivy mode in other incompatable modes
-  ;;   (defun force-completing-read-default (orig-fun &rest args)
-  ;;     "Force a function to use `completing-read-default'."
-  ;;     (let ((completing-read-function 'completing-read-default))
-  ;;       (apply orig-fun args)))
-  ;;   ;; advise `tmm-prompt'
-  ;;   (advice-add 'tmm-prompt :around #'force-completing-read-default)
-  ;;   ;; advise `yas-expand-snippet'
-  ;;   (advice-add 'yas-expand-snippet :around #'force-completing-read-default))
+  ;;------------------------------------------------------------------------------
+  ;;;; counsel
+  ;;------------------------------------------------------------------------------
 
-  ;; ;;------------------------------------------------------------------------------
-  ;; ;;;; counsel
-  ;; ;;------------------------------------------------------------------------------
+  (init-message 3 "counsel")
 
-  ;; (init-message 3 "counsel")
+  ;; counsel (various completion functions using ivy)
+  (use-package counsel
+    :quelpa (counsel :fetcher github :repo "abo-abo/swiper")
+    :after (ivy)
+    ;;:demand t
+    :bind* (("M-x" . counsel-M-x)
+            ("C-x C-f" . counsel-find-file)
+            ("C-h f" . counsel-describe-function)
+            ("C-h v" . counsel-describe-variable)
+            ("C-h l" . counsel-find-library)
+            ("C-h C-i" . counsel-info-lookup-symbol)
+            ("C-h u" . counsel-unicode-char))
+    :bind (:map minibuffer-local-map
+                ("C-r" . counsel-minibuffer-history)))
 
-  ;; ;; counsel (various completion functions using ivy)
-  ;; (use-package counsel
-  ;;   :quelpa (counsel :fetcher github :repo "abo-abo/swiper")
-  ;;   :after (ivy)
-  ;;   :demand t
-  ;;   :bind* (("M-x" . counsel-M-x)
-  ;;           ("C-x C-f" . counsel-find-file)
-  ;;           ("C-h f" . counsel-describe-function)
-  ;;           ("C-h v" . counsel-describe-variable)
-  ;;           ("C-h l" . counsel-find-library)
-  ;;           ("C-h C-i" . counsel-info-lookup-symbol)
-  ;;           ("C-h u" . counsel-unicode-char))
-  ;;   :bind (:map minibuffer-local-map
-  ;;               ("C-r" . counsel-minibuffer-history)))
+  ;;------------------------------------------------------------------------------
+  ;;;; swiper
+  ;;------------------------------------------------------------------------------
 
-  ;; ;;------------------------------------------------------------------------------
-  ;; ;;;; swiper
-  ;; ;;------------------------------------------------------------------------------
+  (init-message 3 "swiper")
 
-  ;; (init-message 3 "swiper")
+  (use-package swiper
+    :quelpa (swiper :fetcher github :repo "abo-abo/swiper")
+    :after (ivy)
+    ;;:demand t
+    :bind* ("C-'" . swiper))            ; defaults to `isearch-forward-regexp'
 
-  ;; (use-package swiper
-  ;;   :quelpa (swiper :fetcher github :repo "abo-abo/swiper")
-  ;;   :after (ivy)
-  ;;   :demand t
-  ;;   :bind* ("C-'" . swiper))            ; defaults to `isearch-forward-regexp'
+  ;;------------------------------------------------------------------------------
+  ;;;; ivy-rich
+  ;;------------------------------------------------------------------------------
 
-  ;; ;;------------------------------------------------------------------------------
-  ;; ;;;; ivy-rich
-  ;; ;;------------------------------------------------------------------------------
+  (init-message 3 "ivy-rich")
 
-  ;; (init-message 3 "ivy-rich")
-
-  ;; (use-package ivy-rich
-  ;;   :quelpa (ivy-rich)
-  ;;   :after (ivy)
-  ;;   :demand t
-  ;;   :init (ivy-rich-mode 1))
+  (use-package ivy-rich
+    :quelpa (ivy-rich)
+    :after (ivy)
+    ;;:demand t
+    :init (ivy-rich-mode 1))
 #+END_SRC
 
 *** json
@@ -23879,6 +23904,9 @@ A tree plugin like NerdTree for Vim.
     :quelpa (openwith :fetcher github :repo "emacsmirror/openwith")
     :demand t
     :init
+    ;; turn on openwith mode
+    (openwith-mode 1)
+    :config
     ;; define associations
     (setq openwith-associations
           `(
@@ -23902,9 +23930,6 @@ A tree plugin like NerdTree for Vim.
                '("doc" "xls" "ppt" "odt" "ods" "odg" "odp"))
              "libreoffice" (file))
             ))
-
-    ;; turn on openwith mode
-    (openwith-mode 1)
 
     (defun openwith-file-handler--no-error (orig-fun &rest args)
       "Do not throw an error when calling `openwith-file-handler'
@@ -24235,7 +24260,8 @@ work.
     ;; this does not work as the file does not have the proper package end line
     ;;:quelpa (ps-ccrypt :fetcher url :url "http://ccrypt.sourceforge.net/ps-ccrypt.el"))
     ;; so we use a local copy with a bug fix instead
-    :quelpa (ps-ccrypt :fetcher file :path "~/.emacs.d/modules/ps-ccrypt.el"))
+    ;;:quelpa (ps-ccrypt :fetcher file :path (expand-file-name "ps-ccrypt.el" emacs-modules-dir))
+    :load-path (lambda () (expand-file-name "ps-ccrypt.el" emacs-modules-dir)))
 #+END_SRC
 
 *** +psvn+
@@ -24368,7 +24394,8 @@ Replace strings as you type.
   (init-message 2 "Modules: replacer")
 
   (use-package replacer
-    :quelpa (replacer :fetcher file :path "~/.emacs.d/local-modules/replacer.el")
+    ;;:quelpa (replacer :fetcher file :path (expand-file-name "replacer.el"))
+    :load-path (lambda () (expand-file-name "replacer.el"))
     :demand t
     :after (company)
     :commands (replacer-mode)
@@ -25045,7 +25072,8 @@ Sokoban Game
   (init-message 2 "Modules: sokoban")
 
   (use-package sokoban
-    :quelpa (sokoban :fetcher file :path "~/.emacs.d/modules/sokoban/sokoban.el")
+    ;;:quelpa (sokoban :fetcher file :path (expand-file-name "sokoban/sokoban.el" emacs-modules-dir))
+    :load-path (lambda () (expand-file-name "sokoban/sokoban.el" emacs-modules-dir))
     :commands (sokoban sokoban-mode)
     :config
     (setq sokoban-levels-dir (expand-file-name "sokoban/sokoban-levels" emacs-modules-dir)))
@@ -25067,7 +25095,8 @@ successive call).
   (init-message 2 "Modules: split-move")
 
   (use-package split-move
-    :quelpa (split-move :fetcher file :path "~/.emacs.d/local-modules/split-move.el")
+    ;;:quelpa (split-move :fetcher file :path (expand-file-name "split-move.el" local-modules-dir))
+    :load-path (lambda () (expand-file-name "split-move.el" local-modules-dir))
     :commands (split-move-up split-move-down))
 #+END_SRC
 
@@ -25106,25 +25135,6 @@ Simple sudoku game, can download puzzles from the web.
   (use-package sudoku
     :quelpa (sudoku :fetcher github :repo "zevlg/sudoku.el")
     :commands (sudoku))
-#+END_SRC
-
-*** +swiper-helm+
-    :PROPERTIES:
-    :CUSTOM_ID: modules-swiper-helm
-    :END:
-
-Search with =isearch= using =helm=.
-
-#+BEGIN_SRC emacs-lisp :tangle no
-  ;; ;;------------------------------------------------------------------------------
-  ;; ;;; Modules: swiper-helm
-  ;; ;;------------------------------------------------------------------------------
-
-  ;; (init-message 2 "Modules: swiper-helm")
-
-  ;; (use-package swiper-helm
-  ;;   :quelpa (swiper-helm)
-  ;;   :bind* ("C-'" . swiper))              ; defaults to `org-cycle-agenda-files'
 #+END_SRC
 
 *** switch-window
@@ -25650,7 +25660,8 @@ Search web sites.
   (use-package web-query
     :when (executable-find "w3m")
     :after (w3m)
-    :quelpa (web-query :fetcher file :path "~/.emacs.d/local-modules/web-query.el")
+    ;;:quelpa (web-query :fetcher file :path (expand-file-name "web-query.el" local-modules-dir))
+    :load-path (lambda () (expand-file-name "web-query.el" local-modules-dir))
     :commands (web-query
                web-query-word
                web-query-word-at-point
@@ -25860,7 +25871,8 @@ Emacs menus.
 
   ;; auto-menu
   (use-package auto-menu
-    :quelpa (auto-menu :fetcher file :path "~/.emacs.d/local-modules/auto-menu.el")
+    ;;:quelpa (auto-menu :fetcher file :path (expand-file-name "auto-menu.el" local-modules-dir))
+    :load-path (lambda () (expand-file-name "auto-menu.el" local-modules-dir))
     :commands (auto-menu
                auto-menu-dired
                auto-menu-file
