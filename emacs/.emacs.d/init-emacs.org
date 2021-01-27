@@ -17313,24 +17313,23 @@ Do not show diary entries when =calendar= is run.
           mouse-wheel-progressive-speed t)
 
     ;; set default font
-    (cond
-     ((string= window-system "x")
-      (ignore-errors
-        (condition-case nil
-            ;;(set-frame-font"8x13" nil t)
-            ;;(set-frame-font "9x15" nil t)
-            ;;(set-frame-font "Ubuntu Mono-13" nil t)
-            ;;(set-frame-font "Inconsolata-15" nil t)
-            ;;(set-frame-font "Bitstream Vera Sans Mono-12" nil t)
-            (set-frame-font "Droid Sans Mono-12" nil t)
-          ('error
-           (set-frame-font "9x15" nil t)))))
-     ((string= window-system "ns")
-      (ignore-errors
-        (condition-case nil
-            (set-frame-font "Droid Sans Mono-14" nil t)
-          ('error
-           (set-frame-font "Menlo" nil t))))))
+    (ignore-errors
+      (cl-case window-system
+        (x
+         (condition-case nil
+             ;;(set-frame-font"8x13" nil t)
+             ;;(set-frame-font "9x15" nil t)
+             ;;(set-frame-font "Ubuntu Mono-13" nil t)
+             ;;(set-frame-font "Inconsolata-15" nil t)
+             ;;(set-frame-font "Bitstream Vera Sans Mono-12" nil t)
+             (set-frame-font "Droid Sans Mono-12" nil t)
+           ('error
+            (set-frame-font "9x15" nil t)))))
+      (ns
+       (condition-case nil
+           (set-frame-font "Droid Sans Mono-14" nil t)
+         ('error
+          (set-frame-font "Menlo" nil t)))))
 
     ;; faces
     ;; green foreground on black background with green cursor
@@ -20413,10 +20412,10 @@ Setup abbreviation mode, including auto load and save of abbreviations file.
     (defconst abbrev-file
       (expand-file-name "~/.abbrev_defs")
       "Abbreviations file used by `abbrev-mode'.")
-    :config
     (unless (file-exists-p abbrev-file)
       (call-process "touch" nil nil nil abbrev-file))
     (abbrev-mode 1)
+    :config
     (setq dabbrev-case-replace nil) ; preserve case when replacing abbreviations
     (quietly-read-abbrev-file abbrev-file)
     (setq save-abbrevs 'silently)
@@ -20464,13 +20463,11 @@ Quickly Switch Windows (ace-window)
 
   ;; (use-package ace-window
   ;;   :commands (ace-window)
-  ;;   :config (progn
-  ;;             ;; set jump keys
-  ;;             (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
-
-  ;;             ;; key bindings
-  ;;             (bind-keys ("C-x o" . ace-window)  ; defaults to `facemenu-keymap'
-  ;;                        ("M-o" . ace-window)))) ; defaults to `facemenu-keymap'
+  ;;   :bind* (("C-x o" . ace-window)        ; defaults to `facemenu-keymap'
+  ;;           ("M-o" . ace-window))         ; defaults to `facemenu-keymap'
+  ;;   :config
+  ;;   ;; set jump keys
+  ;;   (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
 #+END_SRC
 
 *** ag
@@ -20510,10 +20507,10 @@ Minor mode to aggressively keep code indented.
 
   ;; (use-package aggressive-indent
   ;;   :quelpa (aggressive-indent)
-  ;;   :config
-  ;;   ;; turn on aggressive indent mode globally
+  ;;   :init
+  ;;   ;; turn on aggressive indent mode globalls
   ;;   (global-aggressive-indent-mode 1)
-
+  ;;   :config
   ;;   ;; exclude certain modes
   ;;   ;;(add-to-list 'aggressive-indent-excluded-modes 'html-mode)
   ;;   )
@@ -20615,10 +20612,9 @@ Show number of matches in mode-line while searching.
   ;;              global-anzu-mode)
   ;;   :bind* (("M-%" . anzu-query-replace)           ; defaults to `query-replace'
   ;;           ("M-C-%" . anzu-query-replace-regexp)) ; defaults to `query-replace-regexp'
-  ;;   :config
+  ;;   :init
   ;;   ;; turn on anzu mode
   ;;   (anzu-mode +1)
-
   ;;   ;; turn on anzu mode globally
   ;;   (global-anzu-mode +1))
 #+END_SRC
@@ -20658,11 +20654,11 @@ Automatically compile Emacs Lisp libraries.
     :quelpa (auto-compile)
     :commands (auto-compile-on-load-mode
                auto-compile-on-save-mode)
-    :config
-    (setq load-prefer-newer t)
-    ;; turn on auto-compile
+    :init
     (auto-compile-on-load-mode 1)
-    (auto-compile-on-save-mode 1))
+    (auto-compile-on-save-mode 1)
+    :config
+    (setq load-prefer-newer t))
 #+END_SRC
 
 *** +auto-complete+
@@ -20683,26 +20679,26 @@ Auto Completion (auto-complete)
 
   ;; (use-package auto-complete
   ;;   :diminish auto-complete-mode
-  ;;   :config (progn
-  ;;             (global-auto-complete-mode 1)
-
-  ;;             ;; completion back-ends
-  ;;             (when (require 'auto-complete-config nil :no-error)
-  ;;               (ac-config-default))
-  ;;             (setq-default ac-sources '(ac-source-abbrev
-  ;;                                        ac-source-dictionary
-  ;;                                        ac-source-filename
-  ;;                                        ac-source-files-in-current-dir
-  ;;                                        ac-source-functions
-  ;;                                        ac-source-variables
-  ;;                                        ac-source-symbols
-  ;;                                        ac-source-features
-  ;;                                        ac-source-words-in-all-buffer
-  ;;                                        ac-source-words-in-same-mode-buffers))
-
-  ;;             ;; key bindings
-  ;;             (define-key ac-complete-mode-map (kbd "C-n") 'ac-next)
-  ;;             (define-key ac-complete-mode-map (kbd "C-p") 'ac-previous)))
+  ;;   :bind* (:map ac-complete-mode-map
+  ;;                ("C-n" . ac-next)
+  ;;                ("C-p" . ac-previous))
+  ;;   :init
+  ;;   ;; turn on auto-complete mode globally
+  ;;   (global-auto-complete-mode 1)
+  ;;   :config
+  ;;   ;; completion back-ends
+  ;;   (when (require 'auto-complete-config nil :no-error)
+  ;;     (ac-config-default))
+  ;;   (setq-default ac-sources '(ac-source-abbrev
+  ;;                              ac-source-dictionary
+  ;;                              ac-source-filename
+  ;;                              ac-source-files-in-current-dir
+  ;;                              ac-source-functions
+  ;;                              ac-source-variables
+  ;;                              ac-source-symbols
+  ;;                              ac-source-features
+  ;;                              ac-source-words-in-all-buffer
+  ;;                              ac-source-words-in-same-mode-buffers)))
 #+END_SRC
 
 *** avy
@@ -20748,8 +20744,7 @@ based on BASH completion.
   (use-package bash-completion
     :quelpa (bash-completion)
     :commands (bash-completion-setup)
-    :config
-    (bash-completion-setup))
+    :init (bash-completion-setup))
 #+END_SRC
 
 *** bbdb
@@ -20770,11 +20765,11 @@ The Insidious Big Brother Database
     :quelpa (bbdb)
     :commands (bbdb
                bbdb-initialize)
-    :config
+    :init
     ;;(bbdb-initialize)
     ;;(bbdb-initialize 'gnus 'message 'sc 'w3)
     (bbdb-initialize 'gnus 'message 'sc)
-
+    :config
     ;; the following settings were copied from here:
     ;; http://emacs-fu.blogspot.com/2009/08/managing-e-mail-addresses-with-bbdb.html
     ;; TODO: look at these settings
@@ -20946,11 +20941,11 @@ Highlight the cursor whenever the window scrolls.
 
   (use-package beacon
     :quelpa (beacon)
+    :init (beacon-mode 1)
     :config
     ;; speeding up the delay and duration (they default to 0.3)
     (setq beacon-delay 0.1
-          beacon-blink-duration 0.1)
-    (beacon-mode 1))
+          beacon-blink-duration 0.1))
 #+END_SRC
 
 *** boxquote
@@ -21129,9 +21124,7 @@ Collection of Emacs Development Environment Tools (CEDET/Semantic).
   (use-package semantic
     :after (cedet)
     :commands (semantic-mode)
-    :config
-    ;; turn on semantic parser features
-    (semantic-mode 1))
+    :init (semantic-mode 1))
 #+END_SRC
 
 *** centered-cursor-mode
@@ -21187,7 +21180,7 @@ Keyboard command logging.
 
   (use-package command-log-mode
     :quelpa (command-log-mode)
-    :config
+    :init
     (defun command-line-mode-on ()
       "Turn on `command-line-mode' and open the log buffer."
       (interactive)
@@ -21230,12 +21223,12 @@ Modular text completion framework.
     :bind (:map company-active-map
                 ("C-n" . company-select-next)
                 ("C-p" . company-select-previous))
-    :config
+    :init
     (setq company-auto-complete nil
           company-idle-delay 1.0)
     (global-company-mode 1)
     (add-hook 'after-init-hook #'global-company-mode)
-
+    :config
     ;; backends
     (when (fboundp 'company-dabbrev)
       (add-to-list 'company-backends 'company-dabbrev t))
@@ -21328,10 +21321,7 @@ Select buffer by cycling through them.
   (init-message 2 "Modules: cycle-buffer")
 
   (use-package cycle-buffer
-    ;; this does not work as the file does not have the proper package end line
     :quelpa (cycle-buffer :fetcher url :url "https://raw.githubusercontent.com/emacsmirror/emacswiki.org/master/cycle-buffer.el")
-    ;; so we use a local copy with a bug fix instead
-    ;;:quelpa (cycle-buffer :fetcher file :path "~/.emacs.d/modules/cycle-buffer.el")
     :demand t
     :commands (cycle-buffer
                cycle-buffer-backward
@@ -21344,7 +21334,7 @@ Select buffer by cycling through them.
             ("S-<f9>" . cycle-buffer-backward-permissive)
             ("<f10>" . cycle-buffer)      ; defaults to `tmm-menubar'
             ("S-<f10>" . cycle-buffer-permissive))
-    :config
+    :init
     (defun cycle-buffer--ignore-errors (orig-fun &rest args)
       "Ignore errors when interactively calling `cycle-buffer'."
       (condition-case err
@@ -21395,10 +21385,10 @@ Windows like cut-and-paste.
   (use-package cua-base
     :demand t
     ;; :bind* ("C-@" . cua-set-mark)
-    :config
+    :init
     ;; turn on cua mode with C-x/c/v support
     (cua-mode t)
-
+    :config
     ;; do not tabify after rectangle commands
     (setq cua-auto-tabify-rectangles nil)
 
@@ -21753,43 +21743,41 @@ Screen like functionality.
   ;; (init-message 2 "Modules: elscreen")
 
   ;; (use-package elscreen
-  ;;   :config (progn
-  ;;             ;; key bindings
-  ;;             (unbind-key "M-a")
-  ;;             (bind-keys ("M-a b" . elscreen-split)
-  ;;                        ("M-a l" . elscreen-link)
-  ;;                        ("M-a i" . elscreen-number-mode-line)
-  ;;                        ("M-a v" . elscreen-show-version)
-  ;;                        ("M-a A" . elscreen-name)
-  ;;                        ("M-a t" . elscreen-show-time)
-  ;;                        ("M-a m" . elscreen-show-last-message)
-  ;;                        ("M-a RET" . elscreen-show-last-message)
-  ;;                        ("M-a w" . elscreen-show-list)
-  ;;                        ("M-a M-w" . elscreen-show-list)
-  ;;                        ("M-a b" . elscreen-switch-to-buffer)
-  ;;                        ("M-a M-f" . elscreen-find-file)
-  ;;                        ("M-a ?" . elscreen-help)
-  ;;                        ("M-a 9" . elscreen-jump)
-  ;;                        ("M-a 8" . elscreen-jump)
-  ;;                        ("M-a 7" . elscreen-jump)
-  ;;                        ("M-a 6" . elscreen-jump)
-  ;;                        ("M-a 5" . elscreen-jump)
-  ;;                        ("M-a 4" . elscreen-jump)
-  ;;                        ("M-a 3" . elscreen-jump)
-  ;;                        ("M-a 2" . elscreen-jump)
-  ;;                        ("M-a 1" . elscreen-jump)
-  ;;                        ("M-a 0" . elscreen-jump)
-  ;;                        ("M-a g" . elscreen-goto)
-  ;;                        ("M-a a" . elscreen-toggle)
-  ;;                        ("M-a M-a" . elscreen-toggle)
-  ;;                        ("M-a n" . elscreen-next)
-  ;;                        ("M-a M-n" . elscreen-next)
-  ;;                        ("M-a p" . elscreen-previous)
-  ;;                        ("M-a M-p" . elscreen-previous)
-  ;;                        ("M-a k" . elscreen-kill)
-  ;;                        ("M-a M-k" . elscreen-kill)
-  ;;                        ("M-a c" . elscreen-create)
-  ;;                        ("M-a M-c" . elscreen-create))))
+  ;;   :init (unbind-key "M-a")
+  ;;   :bind* (("M-a b" . elscreen-split)
+  ;;           ("M-a l" . elscreen-link)
+  ;;           ("M-a i" . elscreen-number-mode-line)
+  ;;           ("M-a v" . elscreen-show-version)
+  ;;           ("M-a A" . elscreen-name)
+  ;;           ("M-a t" . elscreen-show-time)
+  ;;           ("M-a m" . elscreen-show-last-message)
+  ;;           ("M-a RET" . elscreen-show-last-message)
+  ;;           ("M-a w" . elscreen-show-list)
+  ;;           ("M-a M-w" . elscreen-show-list)
+  ;;           ("M-a b" . elscreen-switch-to-buffer)
+  ;;           ("M-a M-f" . elscreen-find-file)
+  ;;           ("M-a ?" . elscreen-help)
+  ;;           ("M-a 9" . elscreen-jump)
+  ;;           ("M-a 8" . elscreen-jump)
+  ;;           ("M-a 7" . elscreen-jump)
+  ;;           ("M-a 6" . elscreen-jump)
+  ;;           ("M-a 5" . elscreen-jump)
+  ;;           ("M-a 4" . elscreen-jump)
+  ;;           ("M-a 3" . elscreen-jump)
+  ;;           ("M-a 2" . elscreen-jump)
+  ;;           ("M-a 1" . elscreen-jump)
+  ;;           ("M-a 0" . elscreen-jump)
+  ;;           ("M-a g" . elscreen-goto)
+  ;;           ("M-a a" . elscreen-toggle)
+  ;;           ("M-a M-a" . elscreen-toggle)
+  ;;           ("M-a n" . elscreen-next)
+  ;;           ("M-a M-n" . elscreen-next)
+  ;;           ("M-a p" . elscreen-previous)
+  ;;           ("M-a M-p" . elscreen-previous)
+  ;;           ("M-a k" . elscreen-kill)
+  ;;           ("M-a M-k" . elscreen-kill)
+  ;;           ("M-a c" . elscreen-create)
+  ;;           ("M-a M-c" . elscreen-create)))
 #+END_SRC
 
 *** eperiodic
@@ -21864,8 +21852,7 @@ Get environment variables such as $PATH from the shell (for MacOS).
   (use-package exec-path-from-shell
     :when window-system-mac
     :quelpa (exec-path-from-shell)
-    :config
-    (exec-path-from-shell-initialize))
+    :init (exec-path-from-shell-initialize))
 #+END_SRC
 
 *** expand-region
@@ -21903,7 +21890,7 @@ Flash Parenthesis
   ;; (init-message 2 "Modules: flash-paren")
 
   ;; (use-package flash-paren
-  ;;   :config (flash-paren-mode 1))
+  ;;   :init (flash-paren-mode 1))
 #+END_SRC
 
 *** flycheck
@@ -21924,7 +21911,7 @@ On-the-fly syntax checking.
     :quelpa (flycheck)
     :commands (flycheck-mod
                global-flycheck-mode)
-    :config
+    :init
     ;; ;; initialize globally
     ;; (add-hook 'after-init-hook #'global-flycheck-mode)
     )
@@ -21989,8 +21976,7 @@ exact match is found.
 
   (use-package fuzzy
     :quelpa (fuzzy)
-    :config
-    (turn-on-fuzzy-isearch))
+    :init (turn-on-fuzzy-isearch))
 #+END_SRC
 
 *** elpher
@@ -22043,7 +22029,7 @@ A friendly gopher client.
 
 Port of Sublime Text plugin GitGutter (git-gutter)
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :tangle no
   ;; ;;------------------------------------------------------------------------------
   ;; ;; Modules: git-gutter
   ;; ;;------------------------------------------------------------------------------
@@ -22054,38 +22040,36 @@ Port of Sublime Text plugin GitGutter (git-gutter)
   ;;   :diminish (git-gutter-mode . "GG")
   ;;   :commands (git-gutter
   ;;              global-git-gutter-mode)
-  ;;   :config (progn
-  ;;             ;; turn on globally
-  ;;             ;;(global-git-gutter-mode 1)
+  ;;   :bind (("C-x C-g" . git-gutter)
+  ;;              ;; ("C-x v =" . git-gutter:popup-hunk)
+  ;;              ;; ("C-x p" . git-gutter:previous-hunk)
+  ;;              ;; ("C-x n" . git-gutter:next-hunk)
+  ;;              ;; ("C-x v s" . git-gutter:stage-hunk)
+  ;;              ;; ("C-x v r" . git-gutter:revert-hunk)
+  ;;              ;; ("C-x v SPC" . git-gutter:mark-hunk)
+  ;;              )
+  ;;   :init
+  ;;   ;; turn on globally
+  ;;   ;;(global-git-gutter-mode 1)
 
-  ;;             ;; turn off globally
-  ;;             (global-git-gutter-mode -1)
+  ;;   ;; turn off globally
+  ;;   (global-git-gutter-mode -1)
+  ;;   :config
+  ;;   ;; periodically update
+  ;;   (setq git-gutter:update-interval 2)
 
-  ;;             ;; key bindings
-  ;;             (bind-keys ("C-x C-g" . git-gutter)
-  ;;                        ;; ("C-x v =" . git-gutter:popup-hunk)
-  ;;                        ;; ("C-x p" . git-gutter:previous-hunk)
-  ;;                        ;; ("C-x n" . git-gutter:next-hunk)
-  ;;                        ;; ("C-x v s" . git-gutter:stage-hunk)
-  ;;                        ;; ("C-x v r" . git-gutter:revert-hunk)
-  ;;                        ;; ("C-x v SPC" . git-gutter:mark-hunk)
-  ;;                        )
+  ;;   ;; set symbols
+  ;;   (setq git-gutter:modified-sign "="
+  ;;         git-gutter:added-sign "+"
+  ;;         git-gutter:deleted-sign "-")
 
-  ;;             ;; periodically update
-  ;;             (setq git-gutter:update-interval 2)
-
-  ;;             ;; set symbols
-  ;;             (setq git-gutter:modified-sign "="
-  ;;                   git-gutter:added-sign "+"
-  ;;                   git-gutter:deleted-sign "-")
-
-  ;;             ;; set colors
-  ;;             ;; (set-face-foreground 'git-gutter:modified "gray")
-  ;;             ;; (set-face-foreground 'git-gutter:added "gray")
-  ;;             ;; (set-face-foreground 'git-gutter:deleted "gray")
-  ;;             (set-face-background 'git-gutter:modified "purple")
-  ;;             (set-face-background 'git-gutter:added "green")
-  ;;             (set-face-background 'git-gutter:deleted "red")))
+  ;;   ;; set colors
+  ;;   ;; (set-face-foreground 'git-gutter:modified "gray")
+  ;;   ;; (set-face-foreground 'git-gutter:added "gray")
+  ;;   ;; (set-face-foreground 'git-gutter:deleted "gray")
+  ;;   (set-face-background 'git-gutter:modified "purple")
+  ;;   (set-face-background 'git-gutter:added "green")
+  ;;   (set-face-background 'git-gutter:deleted "red"))
 #+END_SRC
 
 *** helm
@@ -22148,7 +22132,7 @@ Emacs Incremental and Narrowing Framework
                  ([remap next-line] . helm-next-line)
                  ([remap previous-page] . helm-previous-line)
                  ([remap next-page] . helm-next-line))
-    :config
+    :init
     ;; customize
     (setq helm-exit-idle-delay 0
           helm-ff-file-name-history-use-recentf t
@@ -22325,7 +22309,8 @@ executed.
     :commands (global-hungry-delete-mode
                hungry-delete-skip-ws-forward
                hungry-delete-skip-ws-backward)
-    :config
+    :init
+    ;; disable hungry delete mode globally
     (global-hungry-delete-mode -1)
 
     ;; custom versions of hungry delete functions that do not delete the space
@@ -22450,10 +22435,10 @@ Identica Mode (identica)
 
   ;; (use-package identica-mode
   ;;   :commands (identica-mode)
-  ;;   :config (progn
-  ;;             (setq identica-username "nullman")
-  ;;             ;; (setq identica-password "password")
-  ;;             ))
+  ;;   :config
+  ;;   (setq identica-username "nullman")
+  ;;   ;; (setq identica-password "password")
+  ;;   )
 #+END_SRC
 
 *** +ido+
@@ -22497,115 +22482,116 @@ Supporting packages:
   ;; (init-message 2 "Modules: ido")
 
   ;; (use-package ido
-  ;;   :config (progn
-  ;;             ;; use for both buffers and files
-  ;;             (ido-mode 1)
+  ;;   :bind* (("C-x C-f" . ido-find-file))   ; defaults to `find-file'
+  ;;   :init
+  ;;   ;; use for both buffers and files
+  ;;   (ido-mode 1)
 
-  ;;             ;; use in `switch-buffer' mode only
-  ;;             ;;(ido-mode 'buffer)
+  ;;   ;; use in `switch-buffer' mode only
+  ;;   ;;(ido-mode 'buffer)
 
-  ;;             ;; turn ido on everywhere
-  ;;             (ido-everywhere 1)
+  ;;   ;; turn ido on everywhere
+  ;;   (ido-everywhere 1)
 
-  ;;             ;; use vertical mode
-  ;;             (use-package ido-vertical-mode
-  ;;               :config (ido-vertical-mode 1))
+  ;;   :config
+  ;;   ;; use vertical mode
+  ;;   (use-package ido-vertical-mode
+  ;;     :init (ido-vertical-mode 1))
 
-  ;;             ;; flx fuzzy matching
-  ;;             (use-package flx
-  ;;               :config (use-package flx-ido
-  ;;                         :config (progn
-  ;;                                   (flx-ido-mode)
-  ;;                                   (setq ido-enable-flex-matching t)
-  ;;                                   ;; disable ido faces to see flx highlights
-  ;;                                   (setq ido-use-faces nil))))
+  ;;   ;; flx fuzzy matching
+  ;;   (use-package flx)
+  ;;   (use-package flx-ido
+  ;;     :after (flx)
+  ;;     :init
+  ;;     (flx-ido-mode)
+  ;;     (setq ido-enable-flex-matching t)
+  ;;     ;; disable ido faces to see flx highlights
+  ;;     (setq ido-use-faces nil))
 
-  ;;             ;; case-insensitive
-  ;;             (setq ido-case-fold t)
+  ;;   ;; case-insensitive
+  ;;   (setq ido-case-fold t)
 
-  ;;             ;; do not use file name at point
-  ;;             (setq ido-use-filename-at-point nil)
+  ;;   ;; do not use file name at point
+  ;;   (setq ido-use-filename-at-point nil)
 
-  ;;             ;; do not use url at point
-  ;;             (setq ido-use-url-at-point nil)
+  ;;   ;; do not use url at point
+  ;;   (setq ido-use-url-at-point nil)
 
-  ;;             ;; number of completions listed
-  ;;             (setq ido-max-prospects 12)
+  ;;   ;; number of completions listed
+  ;;   (setq ido-max-prospects 12)
 
-  ;;             ;; wait for <return>, even with unique completion
-  ;;             (setq ido-confirm-unique-completion t)
+  ;;   ;; wait for <return>, even with unique completion
+  ;;   (setq ido-confirm-unique-completion t)
 
-  ;;             ;; create new buffer w/o asking
-  ;;             ;;(setq ido-create-new-buffer 'always)
+  ;;   ;; create new buffer w/o asking
+  ;;   ;;(setq ido-create-new-buffer 'always)
 
-  ;;             ;; ignored buffers
-  ;;             ;;(setq ido-ignore-buffers '("^ " "^\*Mess" "^\*Back" ".*Completion" "^\*Ido"))
-  ;;             ;;(setq ido-ignore-buffers '("^ " "^\*Back" ".*Completion" "^\*Ido" "*Shell Command Output*"))
+  ;;   ;; ignored buffers
+  ;;   ;;(setq ido-ignore-buffers '("^ " "^\*Mess" "^\*Back" ".*Completion" "^\*Ido"))
+  ;;   ;;(setq ido-ignore-buffers '("^ " "^\*Back" ".*Completion" "^\*Ido" "*Shell Command Output*"))
 
-  ;;             ;; work directories
-  ;;             ;;(setq ido-work-directory-list '("~/" "~/Desktop" "~/Documents"))
+  ;;   ;; work directories
+  ;;   ;;(setq ido-work-directory-list '("~/" "~/Desktop" "~/Documents"))
 
-  ;;             ;; disable automatic switching to merged work directories during file name input
-  ;;             (setq ido-auto-merge-work-directories-length -1)
+  ;;   ;; disable automatic switching to merged work directories during file name input
+  ;;   (setq ido-auto-merge-work-directories-length -1)
 
-  ;;             ;; ido bookmark
-  ;;             ;; (setq enable-recursive-minibuffers t)
-  ;;             ;; (defun ido-goto-bookmark (bookmark)
-  ;;             ;;   (interactive
-  ;;             ;;    (list (bookmark-completing-read "Goto bookmark" bookmark-current-bookmark)))
-  ;;             ;;   (unless bookmark
-  ;;             ;;     (error "No bookmark specified"))
-  ;;             ;;   (let ((file-name (bookmark-get-filename bookmark)))
-  ;;             ;;     (ido-set-current-directory
-  ;;             ;;      (if (file-directory-p file-name)
-  ;;             ;;          file-name
-  ;;             ;;        (file-name-directory file-name)))
-  ;;             ;;     (setq ido-exit 'refresh
-  ;;             ;;           ido-text-init ido-text
-  ;;             ;;           ido-rotate-temp t)
-  ;;             ;;     (exit-minibuffer)))
-  ;;             ;; (define-key ido-file-dir-completion-map [(meta control ?b)] 'ido-goto-bookmark)
+  ;;   ;; ido bookmark
+  ;;   ;; (setq enable-recursive-minibuffers t)
+  ;;   ;; (defun ido-goto-bookmark (bookmark)
+  ;;   ;;   (interactive
+  ;;   ;;    (list (bookmark-completing-read "Goto bookmark" bookmark-current-bookmark)))
+  ;;   ;;   (unless bookmark
+  ;;   ;;     (error "No bookmark specified"))
+  ;;   ;;   (let ((file-name (bookmark-get-filename bookmark)))
+  ;;   ;;     (ido-set-current-directory
+  ;;   ;;      (if (file-directory-p file-name)
+  ;;   ;;          file-name
+  ;;   ;;        (file-name-directory file-name)))
+  ;;   ;;     (setq ido-exit 'refresh
+  ;;   ;;           ido-text-init ido-text
+  ;;   ;;           ido-rotate-temp t)
+  ;;   ;;     (exit-minibuffer)))
+  ;;   ;; (define-key ido-file-dir-completion-map [(meta control ?b)] 'ido-goto-bookmark)
 
-  ;;             ;; ~ goes to home directory
-  ;;             (define-key ido-file-completion-map
-  ;;               (kbd "~")
-  ;;               (lambda ()
-  ;;                 (interactive)
-  ;;                 (if (looking-back "/")
-  ;;                     (insert "~/")
-  ;;                   (call-interactively 'self-insert-command))))
+  ;;   ;; ~ goes to home directory
+  ;;   (define-key ido-file-completion-map
+  ;;     (kbd "~")
+  ;;     (lambda ()
+  ;;       (interactive)
+  ;;       (if (looking-back "/")
+  ;;           (insert "~/")
+  ;;         (call-interactively 'self-insert-command))))
 
-  ;;             ;; ;; ido-setup-hook
-  ;;             ;; (add-hook 'ido-setup-hook
-  ;;             ;;           (lambda ()
-  ;;             ;;             ;; go to home directory
-  ;;             ;;             (define-key ido-file-completion-map
-  ;;             ;;               (kbd "~")
-  ;;             ;;               (lambda ()
-  ;;             ;;                 (interactive)
-  ;;             ;;                 (if (looking-back "/")
-  ;;             ;;                     (insert "~/")
-  ;;             ;;                   (call-interactively #'self-insert-command))))))
+  ;;   ;; ;; ido-setup-hook
+  ;;   ;; (add-hook 'ido-setup-hook
+  ;;   ;;           (lambda ()
+  ;;   ;;             ;; go to home directory
+  ;;   ;;             (define-key ido-file-completion-map
+  ;;   ;;               (kbd "~")
+  ;;   ;;               (lambda ()
+  ;;   ;;                 (interactive)
+  ;;   ;;                 (if (looking-back "/")
+  ;;   ;;                     (insert "~/")
+  ;;   ;;                   (call-interactively #'self-insert-command))))))
 
-  ;;             ;; use ido everywhere
-  ;;             (use-package ido-ubiquitous
-  ;;               :config (ido-ubiquitous-mode 1))
+  ;;   ;; use ido everywhere
+  ;;   (use-package ido-ubiquitous
+  ;;     :config (ido-ubiquitous-mode 1))
 
-  ;;             ;; ;; ERROR: the code below throws an error
-  ;;             ;; ;; fix ido-ubiquitous for newer packages
-  ;;             ;; (defmacro ido-ubiquitous-use-new-completing-read (cmd package)
-  ;;             ;;   `(with-eval-after-load ,package
-  ;;             ;;      (let ((fun (inern (concat (symbol-name ,cmd) "--new"))))
-  ;;             ;;        (defun fun (orig-fun &rest args)
-  ;;             ;;          (let ((ido-ubiquitous-enable-compatibility nil))
-  ;;             ;;            (apply orig-fun args)))
-  ;;             ;;        (advice-add ,cmd :around fun))))
-  ;;             ;; (ido-ubiquitous-use-new-completing-read webjump webjump)
-  ;;             ;; (ido-ubiquitous-use-new-completing-read yas/expand yasnippet)
-  ;;             ;; (ido-ubiquitous-use-new-completing-read yas/visit-snippet-file yasnippet))
-
-  ;;             ;; key bindings
-  ;;             (bind-keys ("C-x C-f" . ido-find-file)))) ; defaults to `find-file'
+  ;;   ;; ;; ERROR: the code below throws an error
+  ;;   ;; ;; fix ido-ubiquitous for newer packages
+  ;;   ;; (defmacro ido-ubiquitous-use-new-completing-read (cmd package)
+  ;;   ;;   `(with-eval-after-load ,package
+  ;;   ;;      (let ((fun (inern (concat (symbol-name ,cmd) "--new"))))
+  ;;   ;;        (defun fun (orig-fun &rest args)
+  ;;   ;;          (let ((ido-ubiquitous-enable-compatibility nil))
+  ;;   ;;            (apply orig-fun args)))
+  ;;   ;;        (advice-add ,cmd :around fun))))
+  ;;   ;; (ido-ubiquitous-use-new-completing-read webjump webjump)
+  ;;   ;; (ido-ubiquitous-use-new-completing-read yas/expand yasnippet)
+  ;;   ;; (ido-ubiquitous-use-new-completing-read yas/visit-snippet-file yasnippet))
+  ;;   )
 #+END_SRC
 
 *** iedit
@@ -22897,7 +22883,7 @@ Key Bindings Cheats
 
   ;; (use-package keats-interactive
   ;;   :commands (keats-interactive)
-  ;;   :config (keats-mode 1))
+  ;;   :init (keats-mode 1))
 #+END_SRC
 
 *** key-chord
@@ -22918,10 +22904,10 @@ Map pairs of simultaneously pressed keys to commands.
     :quelpa (key-chord)
     :commands (key-chord-define-global
                key-chord-mode)
-    :config
+    :init
     ;; turn on `key-chord-mode'
     (key-chord-mode 1)
-
+    :config
     ;; key chords
     (key-chord-define-global ",." "<>\C-b")
     (key-chord-define-global "hj" 'undo)
@@ -22952,9 +22938,10 @@ Track command frequencies.
     :quelpa (keyfreq)
     :commands (keyfreq-autosave-mode
                keyfreq-mode)
-    :config
+    :init
     ;; turn on `keyfreq-mode'
     (keyfreq-mode 1)
+    :config
     ;; auto-save stats
     (keyfreq-autosave-mode 1))
 #+END_SRC
@@ -23799,24 +23786,22 @@ Mode Based Abbreviations (msf-abbrev)
   ;; (init-message 2 "Modules: msf-abbrev")
 
   ;; (use-package msf-abbrev
-  ;;   :config (progn
-  ;;             ;; turn abbrev mode on
-  ;;             (setq abbrev-mode t)
-  ;;             (setq-default abbrev-mode abbrev-mode)
+  ;;   :bind (("C-c C-a" . msf-abbrev-define-new-abbrev-this-mode)
+  ;;          ;;("C-c l" . msf-abbrev-goto-root)
+  ;;          ;;("C-c a" . msf-abbrev-define-new-abbrev-this-mode)
+  ;;          )
+  ;;   :config
+  ;;   ;; turn abbrev mode on
+  ;;   (setq abbrev-mode t)
+  ;;   (setq-default abbrev-mode abbrev-mode)
 
-  ;;             ;; do not prompt about saving abbreviations
-  ;;             (setq save-abbrevs nil)
+  ;;   ;; do not prompt about saving abbreviations
+  ;;   (setq save-abbrevs nil)
 
-  ;;             ;; key bindings
-  ;;             (bind-keys ("C-c C-a" . msf-abbrev-define-new-abbrev-this-mode)
-  ;;                        ;;("C-c l" . msf-abbrev-goto-root)
-  ;;                        ;;("C-c a" . msf-abbrev-define-new-abbrev-this-mode)
-  ;;                        )
-
-  ;;             ;; load up abbrevs for various modes
-  ;;             (setq msf-abbrev-verbose t)
-  ;;             (setq msf-abbrev-root (expand-file-name "mode-abbrevs" emacs-home-dir))
-  ;;             (msf-abbrev-load)))
+  ;;   ;; load up abbrevs for various modes
+  ;;   (setq msf-abbrev-verbose t)
+  ;;   (setq msf-abbrev-root (expand-file-name "mode-abbrevs" emacs-home-dir))
+  ;;   (msf-abbrev-load))
 #+END_SRC
 
 *** multiple-cursors
@@ -23891,10 +23876,10 @@ A tree plugin like NerdTree for Vim.
   (init-message 2 "Modules: openwith")
 
   (use-package openwith
-    :when (not window-system-mac)
+    :when window-system-linux
     :quelpa (openwith :fetcher github :repo "emacsmirror/openwith")
     :demand t
-    :config
+    :init
     ;; define associations
     (setq openwith-associations
           `(
@@ -23948,27 +23933,27 @@ Major mode for editing outline-format documents (outline).
   ;; (init-message 2 "Modules: outline")
 
   ;; (use-package outline
-  ;;   :config (progn
-  ;;             ;; use outline for all programming buffers
-  ;;             (add-hook 'prog-mode-hook #'outline-minor-mode)
+  ;;   :init
+  ;;   ;; use outline for all programming buffers
+  ;;   (add-hook 'prog-mode-hook #'outline-minor-mode)
 
-  ;;             ;; set outline prefix key to "\M-#" instead of "\C-c@"
-  ;;             ;; this needs to be set before outline mode is loaded
-  ;;             ;;(defvar outline-minor-mode-prefix (kbd "M-#")))) ; defaults to `calc-dispatch'
+  ;;   ;; set outline prefix key to "\M-#" instead of "\C-c@"
+  ;;   ;; this needs to be set before outline mode is loaded
+  ;;   ;;(defvar outline-minor-mode-prefix (kbd "M-#")))) ; defaults to `calc-dispatch'
 
-  ;;             (defun outline-minor-mode-hook--prefix-key ()
-  ;;               "Add additional prefix key to `outline-mode-prefix-map'."
-  ;;               (local-set-key (kbd "C-c C-o") outline-mode-prefix-map))
-  ;;               ;;(local-set-key (kbd "M-#") outline-mode-prefix-map))
-  ;;             (add-hook 'outline-minor-mode-hook #'outline-minor-mode-hook--prefix-key)
+  ;;   (defun outline-minor-mode-hook--prefix-key ()
+  ;;     "Add additional prefix key to `outline-mode-prefix-map'."
+  ;;     (local-set-key (kbd "C-c C-o") outline-mode-prefix-map))
+  ;;   ;;(local-set-key (kbd "M-#") outline-mode-prefix-map))
+  ;;   (add-hook 'outline-minor-mode-hook #'outline-minor-mode-hook--prefix-key)
 
-  ;;             ;; outshine (org-mode like behavior in outline-mode)
-  ;;             (use-package outshine
-  ;;               :functions (outshine-comment-region
-  ;;                           outshine-mimic-org-log-note-marker)
-  ;;               :config (progn
-  ;;                         ;; turn on outshine
-  ;;                         (add-hook 'outline-minor-mode-hook #'outshine-hook-function)))))
+  ;;   ;; outshine (org-mode like behavior in outline-mode)
+  ;;   (use-package outshine
+  ;;     :functions (outshine-comment-region
+  ;;                 outshine-mimic-org-log-note-marker)
+  ;;     :init
+  ;;     ;; turn on outshine
+  ;;     (add-hook 'outline-minor-mode-hook #'outshine-hook-function)))
 #+END_SRC
 
 *** +pabbrev+
@@ -23986,7 +23971,7 @@ Major mode for editing outline-format documents (outline).
   ;; (init-message 2 "Modules: pabbrev")
 
   ;; (use-package pabbrev
-  ;;   :config (setq global-pabbrev-mode t))
+  ;;   :init (setq global-pabbrev-mode t))
 #+END_SRC
 
 *** +paredit+
@@ -24005,14 +23990,14 @@ Parenthesis Editing Minor Mode (paredit)
 
   ;; (use-package paredit
   ;;   :commands (paredit-mode)
-  ;;   :config (progn
-  ;;             ;; turn on paredit mode for various modes
-  ;;             (defmacro paredit-on ()
-  ;;               `(lambda () (paredit-mode +1)))
-  ;;             (add-hook 'lisp-mode-hook #'paredit-on)
-  ;;             (add-hook 'elisp-mode-hook #'paredit-on)
-  ;;             (add-hook 'common-lisp-mode-hook #'paredit-on)
-  ;;             (add-hook 'clojure-mode-hook #'paredit-on)))
+  ;;   :init
+  ;;   ;; turn on paredit mode for various modes
+  ;;   (defmacro paredit-on ()
+  ;;     `(lambda () (paredit-mode +1)))
+  ;;   (add-hook 'lisp-mode-hook #'paredit-on)
+  ;;   (add-hook 'elisp-mode-hook #'paredit-on)
+  ;;   (add-hook 'common-lisp-mode-hook #'paredit-on)
+  ;;   (add-hook 'clojure-mode-hook #'paredit-on))
 #+END_SRC
 
 *** +pdf-tools+
@@ -24029,7 +24014,7 @@ Parenthesis Editing Minor Mode (paredit)
 
   ;; (use-package pdf-tools
   ;;   :quelpa (pdf-tools)
-  ;;   :config
+  ;;   :init
   ;;   (pdf-tools-install))
 #+END_SRC
 
@@ -24050,7 +24035,7 @@ Preserve the scratch buffer across Emacs sessions.
   (use-package persistent-scratch
     :quelpa (persistent-scratch)
     :commands (persistent-scratch-setup-default)
-    :config
+    :init
     ;; enable autosave and restore last saved state
     (persistent-scratch-setup-default))
 #+END_SRC
@@ -24106,51 +24091,51 @@ The Emacs Planner (planner)
   ;; (use-package planner
   ;;   :load-path (lambda () (expand-file-name "planner" emacs-modules-dir))
   ;;   :bind* ("C-x p" . plan)
-  ;;   :config (progn
-  ;;             (use-package planner-multi)
-  ;;             (use-package planner-publish
-  ;;               :config (progn
-  ;;                         (planner-option-customized #'planner-directory "~/plans")
-  ;;                         ;; (planner-option-customized 'planner-publishing-directory
-  ;;                         ;;                            "~/public_html/plans")
-  ;;                         (setq planner-carry-tasks-forward t)
-  ;;                         ;; key bindings
-  ;;                         (bind-key "n" planner-goto-today mode-specific-map)))))
+  ;;   :config
+  ;;   (use-package planner-multi)
+  ;;   (use-package planner-publish
+  ;;     :bind (:map planner-publish-map
+  ;;                 ("n" . planner-goto-today))
+  ;;     :config
+  ;;     (planner-option-customized #'planner-directory "~/plans")
+  ;;     ;; (planner-option-customized 'planner-publishing-directory
+  ;;     ;;                            "~/public_html/plans")
+  ;;     (setq planner-carry-tasks-forward t)))
 
   ;; ;;------------------------------------------------------------------------------
   ;; ;;;; planner-calendar
   ;; ;;------------------------------------------------------------------------------
 
-  ;; ;; (init-message 3 "planner-calendar")
+  ;; (init-message 3 "planner-calendar")
 
   ;; (use-package calendar
-  ;;   :config (progn
-  ;;             (use-package planner-calendar
-  ;;               :config (progn
-  ;;                         (use-package cal-desk-calendar
-  ;;                           :config (progn
-  ;;                                     (add-hook 'diary-display-hook #'sort-diary-entries)
-  ;;                                     (add-hook 'diary-display-hook #'fancy-schedule-display-desk-calendar :append)))))))
+  ;;   :init
+  ;;   (use-package planner-calendar
+  ;;     :init
+  ;;     (use-package cal-desk-calendar
+  ;;       :init
+  ;;       (add-hook 'diary-display-hook #'sort-diary-entries)
+  ;;       (add-hook 'diary-display-hook #'fancy-schedule-display-desk-calendar :append))))
 #+END_SRC
 
-*** powerline
+*** +powerline+
     :PROPERTIES:
     :CUSTOM_ID: modules-powerline
     :END:
 
 Emacs version of the Vim powerline.
 
-#+BEGIN_SRC emacs-lisp
-  ;;------------------------------------------------------------------------------
-  ;;; Modules: powerline
-  ;;------------------------------------------------------------------------------
+#+BEGIN_SRC emacs-lisp :tangle no
+  ;; ;;------------------------------------------------------------------------------
+  ;; ;;; Modules: powerline
+  ;; ;;------------------------------------------------------------------------------
 
-  (init-message 2 "Modules: powerline")
+  ;; (init-message 2 "Modules: powerline")
 
-  (use-package powerline
-    :quelpa (powerline)
-    :config
-    (powerline-default-theme))
+  ;; (use-package powerline
+  ;;   :quelpa (powerline)
+  ;;   :init
+  ;;   (powerline-default-theme))
 #+END_SRC
 
 *** proced
@@ -24212,10 +24197,10 @@ Manage and navigate projects in Emacs easily.
     ;;:after (ivy)
     :diminish (projectile-mode . "Proj")
     :commands (projectile-mode)
-    :config
+    :init
     ;; enable projectile globally
     (projectile-mode)
-
+    :config
     ;; open the root directory when switching projects
     (setq projectile-switch-project-action 'projectile-dired)
 
@@ -24270,10 +24255,10 @@ SVN Integration (psvn)
 
   ;; (use-package psvn
   ;;   :commands (psvn svn-checkout svn-examine svn-status)
-  ;;   :config (progn
-  ;;             ;; ignore whitespace with diff command
-  ;;             ;;(setq svn-status-default-diff-arguments '("--diff-cmd" "diff" "-x" "-wbBu")))
-  ;;             (setq svn-status-default-diff-arguments '("--diff-cmd" "diff" "-x" "-wu"))))
+  ;;   :config
+  ;;   ;; ignore whitespace with diff command
+  ;;   ;;(setq svn-status-default-diff-arguments '("--diff-cmd" "diff" "-x" "-wbBu")))
+  ;;   (setq svn-status-default-diff-arguments '("--diff-cmd" "diff" "-x" "-wu")))
 #+END_SRC
 
 *** recentf
@@ -24294,8 +24279,9 @@ Menu of recently opened files.
 
   (use-package recentf
     :commands (recentf-mode)
-    :config
+    :init
     (recentf-mode 1)
+    :config
     (setq recentf-max-menu-items 25))
 #+END_SRC
 
@@ -24318,12 +24304,10 @@ rect-mark (rectangle mark)
   ;;              rm-exchange-point-and-mark
   ;;              rm-kill-region
   ;;              rm-kill-ring-save)
-  ;;   :config (progn
-  ;;             ;; key bindings
-  ;;             (bind-keys ("C-x r C-SPC" . rm-set-mark)
-  ;;                        ("C-x r C-x" . rm-exchange-point-and-mark)
-  ;;                        ("C-x r C-w" . rm-kill-region)
-  ;;                        ("C-x r M-w" . rm-kill-ring-save))))
+  ;;   :bind* (("C-x r C-SPC" . rm-set-mark)
+  ;;           ("C-x r C-x" . rm-exchange-point-and-mark)
+  ;;           ("C-x r C-w" . rm-kill-region)
+  ;;           ("C-x r M-w" . rm-kill-ring-save)))
 #+END_SRC
 
 *** regex-tool
@@ -24367,9 +24351,7 @@ Reminders for init bindings.
   ;;   :hook (after-init . remind-bindings-initialise)
   ;;   :bind (("C-c M-d" . remind-bindings-toggle-buffer)
   ;;          ("C-c C-M-d" . remind-bindings-specific-mode))
-  ;;   :config
-  ;;   ;;(remind-bindings-specific-mode)
-  ;;   )
+  ;;   :config (remind-bindings-specific-mode))
 #+END_SRC
 
 *** replacer
@@ -24392,6 +24374,9 @@ Replace strings as you type.
     :after (company)
     :commands (replacer-mode)
     :functions (company-begin-backend)
+    :init
+    ;; turn replacer mode on
+    (replacer-mode 1)
     :config
     ;; set trigger start
     (setq replacer-trigger-start ";")
@@ -24423,10 +24408,7 @@ Replace strings as you type.
       (find-file (expand-file-name "init-emacs.org" emacs-home-dir))
       (goto-char (point-min))
       (search-forward "(setq replacer-replacements")
-      (org-show-entry))
-
-    ;; turn replacer mode on
-    (replacer-mode 1))
+      (org-show-entry)))
 #+END_SRC
 
 *** s

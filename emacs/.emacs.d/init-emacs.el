@@ -12390,24 +12390,23 @@ Otherwise, `local-tab-width' is used."
         mouse-wheel-progressive-speed t)
 
   ;; set default font
-  (cond
-   ((string= window-system "x")
-    (ignore-errors
-      (condition-case nil
-          ;;(set-frame-font"8x13" nil t)
-          ;;(set-frame-font "9x15" nil t)
-          ;;(set-frame-font "Ubuntu Mono-13" nil t)
-          ;;(set-frame-font "Inconsolata-15" nil t)
-          ;;(set-frame-font "Bitstream Vera Sans Mono-12" nil t)
-          (set-frame-font "Droid Sans Mono-12" nil t)
-        ('error
-         (set-frame-font "9x15" nil t)))))
-   ((string= window-system "ns")
-    (ignore-errors
-      (condition-case nil
-          (set-frame-font "Droid Sans Mono-14" nil t)
-        ('error
-         (set-frame-font "Menlo" nil t))))))
+  (ignore-errors
+    (cl-case window-system
+      (x
+       (condition-case nil
+           ;;(set-frame-font"8x13" nil t)
+           ;;(set-frame-font "9x15" nil t)
+           ;;(set-frame-font "Ubuntu Mono-13" nil t)
+           ;;(set-frame-font "Inconsolata-15" nil t)
+           ;;(set-frame-font "Bitstream Vera Sans Mono-12" nil t)
+           (set-frame-font "Droid Sans Mono-12" nil t)
+         ('error
+          (set-frame-font "9x15" nil t)))))
+    (ns
+     (condition-case nil
+         (set-frame-font "Droid Sans Mono-14" nil t)
+       ('error
+        (set-frame-font "Menlo" nil t)))))
 
   ;; faces
   ;; green foreground on black background with green cursor
@@ -14180,10 +14179,10 @@ Blank lines separate paragraphs.  Semicolons start comments.
   (defconst abbrev-file
     (expand-file-name "~/.abbrev_defs")
     "Abbreviations file used by `abbrev-mode'.")
-  :config
   (unless (file-exists-p abbrev-file)
     (call-process "touch" nil nil nil abbrev-file))
   (abbrev-mode 1)
+  :config
   (setq dabbrev-case-replace nil) ; preserve case when replacing abbreviations
   (quietly-read-abbrev-file abbrev-file)
   (setq save-abbrevs 'silently)
@@ -14274,11 +14273,11 @@ Blank lines separate paragraphs.  Semicolons start comments.
   :quelpa (auto-compile)
   :commands (auto-compile-on-load-mode
              auto-compile-on-save-mode)
-  :config
-  (setq load-prefer-newer t)
-  ;; turn on auto-compile
+  :init
   (auto-compile-on-load-mode 1)
-  (auto-compile-on-save-mode 1))
+  (auto-compile-on-save-mode 1)
+  :config
+  (setq load-prefer-newer t))
 ;; auto-compile:1 ends here
 
 ;; [[file:init-emacs.org::*avy][avy:1]]
@@ -14309,8 +14308,7 @@ Blank lines separate paragraphs.  Semicolons start comments.
 (use-package bash-completion
   :quelpa (bash-completion)
   :commands (bash-completion-setup)
-  :config
-  (bash-completion-setup))
+  :init (bash-completion-setup))
 ;; bash-completion:1 ends here
 
 ;; [[file:init-emacs.org::*bbdb][bbdb:1]]
@@ -14324,11 +14322,11 @@ Blank lines separate paragraphs.  Semicolons start comments.
   :quelpa (bbdb)
   :commands (bbdb
              bbdb-initialize)
-  :config
+  :init
   ;;(bbdb-initialize)
   ;;(bbdb-initialize 'gnus 'message 'sc 'w3)
   (bbdb-initialize 'gnus 'message 'sc)
-
+  :config
   ;; the following settings were copied from here:
   ;; http://emacs-fu.blogspot.com/2009/08/managing-e-mail-addresses-with-bbdb.html
   ;; TODO: look at these settings
@@ -14493,11 +14491,11 @@ Blank lines separate paragraphs.  Semicolons start comments.
 
 (use-package beacon
   :quelpa (beacon)
+  :init (beacon-mode 1)
   :config
   ;; speeding up the delay and duration (they default to 0.3)
   (setq beacon-delay 0.1
-        beacon-blink-duration 0.1)
-  (beacon-mode 1))
+        beacon-blink-duration 0.1))
 ;; beacon:1 ends here
 
 ;; [[file:init-emacs.org::*boxquote][boxquote:1]]
@@ -14641,9 +14639,7 @@ Blank lines separate paragraphs.  Semicolons start comments.
 (use-package semantic
   :after (cedet)
   :commands (semantic-mode)
-  :config
-  ;; turn on semantic parser features
-  (semantic-mode 1))
+  :init (semantic-mode 1))
 ;; cedet/semantic:1 ends here
 
 ;; [[file:init-emacs.org::*centered-cursor-mode][centered-cursor-mode:1]]
@@ -14667,7 +14663,7 @@ Blank lines separate paragraphs.  Semicolons start comments.
 
 (use-package command-log-mode
   :quelpa (command-log-mode)
-  :config
+  :init
   (defun command-line-mode-on ()
     "Turn on `command-line-mode' and open the log buffer."
     (interactive)
@@ -14701,12 +14697,12 @@ Blank lines separate paragraphs.  Semicolons start comments.
   :bind (:map company-active-map
               ("C-n" . company-select-next)
               ("C-p" . company-select-previous))
-  :config
+  :init
   (setq company-auto-complete nil
         company-idle-delay 1.0)
   (global-company-mode 1)
   (add-hook 'after-init-hook #'global-company-mode)
-
+  :config
   ;; backends
   (when (fboundp 'company-dabbrev)
     (add-to-list 'company-backends 'company-dabbrev t))
@@ -14784,10 +14780,7 @@ Blank lines separate paragraphs.  Semicolons start comments.
 (init-message 2 "Modules: cycle-buffer")
 
 (use-package cycle-buffer
-  ;; this does not work as the file does not have the proper package end line
   :quelpa (cycle-buffer :fetcher url :url "https://raw.githubusercontent.com/emacsmirror/emacswiki.org/master/cycle-buffer.el")
-  ;; so we use a local copy with a bug fix instead
-  ;;:quelpa (cycle-buffer :fetcher file :path "~/.emacs.d/modules/cycle-buffer.el")
   :demand t
   :commands (cycle-buffer
              cycle-buffer-backward
@@ -14800,7 +14793,7 @@ Blank lines separate paragraphs.  Semicolons start comments.
           ("S-<f9>" . cycle-buffer-backward-permissive)
           ("<f10>" . cycle-buffer)      ; defaults to `tmm-menubar'
           ("S-<f10>" . cycle-buffer-permissive))
-  :config
+  :init
   (defun cycle-buffer--ignore-errors (orig-fun &rest args)
     "Ignore errors when interactively calling `cycle-buffer'."
     (condition-case err
@@ -14837,10 +14830,10 @@ Blank lines separate paragraphs.  Semicolons start comments.
 (use-package cua-base
   :demand t
   ;; :bind* ("C-@" . cua-set-mark)
-  :config
+  :init
   ;; turn on cua mode with C-x/c/v support
   (cua-mode t)
-
+  :config
   ;; do not tabify after rectangle commands
   (setq cua-auto-tabify-rectangles nil)
 
@@ -15170,8 +15163,7 @@ Uses `ispell--run-on-word' to spell check word."
 (use-package exec-path-from-shell
   :when window-system-mac
   :quelpa (exec-path-from-shell)
-  :config
-  (exec-path-from-shell-initialize))
+  :init (exec-path-from-shell-initialize))
 ;; exec-path-from-shell:1 ends here
 
 ;; [[file:init-emacs.org::*expand-region][expand-region:1]]
@@ -15198,7 +15190,7 @@ Uses `ispell--run-on-word' to spell check word."
   :quelpa (flycheck)
   :commands (flycheck-mod
              global-flycheck-mode)
-  :config
+  :init
   ;; ;; initialize globally
   ;; (add-hook 'after-init-hook #'global-flycheck-mode)
   )
@@ -15241,8 +15233,7 @@ Uses `ispell--run-on-word' to spell check word."
 
 (use-package fuzzy
   :quelpa (fuzzy)
-  :config
-  (turn-on-fuzzy-isearch))
+  :init (turn-on-fuzzy-isearch))
 ;; fuzzy:1 ends here
 
 ;; [[file:init-emacs.org::*elpher][elpher:1]]
@@ -15263,51 +15254,6 @@ Uses `ispell--run-on-word' to spell check word."
     (search-forward ";; Elpher Bookmarks File\n\n")
     (org-show-entry)))
 ;; elpher:1 ends here
-
-;; [[file:init-emacs.org::*+git-gutter+][+git-gutter+:1]]
-;; ;;------------------------------------------------------------------------------
-;; ;; Modules: git-gutter
-;; ;;------------------------------------------------------------------------------
-
-;; (init-message 2 "Modules: git-gutter")
-
-;; (use-package git-gutter
-;;   :diminish (git-gutter-mode . "GG")
-;;   :commands (git-gutter
-;;              global-git-gutter-mode)
-;;   :config (progn
-;;             ;; turn on globally
-;;             ;;(global-git-gutter-mode 1)
-
-;;             ;; turn off globally
-;;             (global-git-gutter-mode -1)
-
-;;             ;; key bindings
-;;             (bind-keys ("C-x C-g" . git-gutter)
-;;                        ;; ("C-x v =" . git-gutter:popup-hunk)
-;;                        ;; ("C-x p" . git-gutter:previous-hunk)
-;;                        ;; ("C-x n" . git-gutter:next-hunk)
-;;                        ;; ("C-x v s" . git-gutter:stage-hunk)
-;;                        ;; ("C-x v r" . git-gutter:revert-hunk)
-;;                        ;; ("C-x v SPC" . git-gutter:mark-hunk)
-;;                        )
-
-;;             ;; periodically update
-;;             (setq git-gutter:update-interval 2)
-
-;;             ;; set symbols
-;;             (setq git-gutter:modified-sign "="
-;;                   git-gutter:added-sign "+"
-;;                   git-gutter:deleted-sign "-")
-
-;;             ;; set colors
-;;             ;; (set-face-foreground 'git-gutter:modified "gray")
-;;             ;; (set-face-foreground 'git-gutter:added "gray")
-;;             ;; (set-face-foreground 'git-gutter:deleted "gray")
-;;             (set-face-background 'git-gutter:modified "purple")
-;;             (set-face-background 'git-gutter:added "green")
-;;             (set-face-background 'git-gutter:deleted "red")))
-;; +git-gutter+:1 ends here
 
 ;; [[file:init-emacs.org::*helm][helm:1]]
 ;;------------------------------------------------------------------------------
@@ -15362,7 +15308,7 @@ Uses `ispell--run-on-word' to spell check word."
                ([remap next-line] . helm-next-line)
                ([remap previous-page] . helm-previous-line)
                ([remap next-page] . helm-next-line))
-  :config
+  :init
   ;; customize
   (setq helm-exit-idle-delay 0
         helm-ff-file-name-history-use-recentf t
@@ -15512,7 +15458,8 @@ First call indent, second complete symbol, third complete file name."
   :commands (global-hungry-delete-mode
              hungry-delete-skip-ws-forward
              hungry-delete-skip-ws-backward)
-  :config
+  :init
+  ;; disable hungry delete mode globally
   (global-hungry-delete-mode -1)
 
   ;; custom versions of hungry delete functions that do not delete the space
@@ -15704,10 +15651,10 @@ User is prompted for WORD if none given."
   :quelpa (key-chord)
   :commands (key-chord-define-global
              key-chord-mode)
-  :config
+  :init
   ;; turn on `key-chord-mode'
   (key-chord-mode 1)
-
+  :config
   ;; key chords
   (key-chord-define-global ",." "<>\C-b")
   (key-chord-define-global "hj" 'undo)
@@ -15731,9 +15678,10 @@ User is prompted for WORD if none given."
   :quelpa (keyfreq)
   :commands (keyfreq-autosave-mode
              keyfreq-mode)
-  :config
+  :init
   ;; turn on `keyfreq-mode'
   (keyfreq-mode 1)
+  :config
   ;; auto-save stats
   (keyfreq-autosave-mode 1))
 ;; keyfreq:1 ends here
@@ -16533,10 +16481,10 @@ and 5 is most favorite.  0 will unset the rating."
 (init-message 2 "Modules: openwith")
 
 (use-package openwith
-  :when (not window-system-mac)
+  :when window-system-linux
   :quelpa (openwith :fetcher github :repo "emacsmirror/openwith")
   :demand t
-  :config
+  :init
   ;; define associations
   (setq openwith-associations
         `(
@@ -16583,23 +16531,10 @@ to open a file."
 (use-package persistent-scratch
   :quelpa (persistent-scratch)
   :commands (persistent-scratch-setup-default)
-  :config
+  :init
   ;; enable autosave and restore last saved state
   (persistent-scratch-setup-default))
 ;; persistent-scratch:1 ends here
-
-;; [[file:init-emacs.org::*powerline][powerline:1]]
-;;------------------------------------------------------------------------------
-;;; Modules: powerline
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modules: powerline")
-
-(use-package powerline
-  :quelpa (powerline)
-  :config
-  (powerline-default-theme))
-;; powerline:1 ends here
 
 ;; [[file:init-emacs.org::*proced][proced:1]]
 ;;------------------------------------------------------------------------------
@@ -16628,10 +16563,10 @@ to open a file."
   ;;:after (ivy)
   :diminish (projectile-mode . "Proj")
   :commands (projectile-mode)
-  :config
+  :init
   ;; enable projectile globally
   (projectile-mode)
-
+  :config
   ;; open the root directory when switching projects
   (setq projectile-switch-project-action 'projectile-dired)
 
@@ -16664,8 +16599,9 @@ to open a file."
 
 (use-package recentf
   :commands (recentf-mode)
-  :config
+  :init
   (recentf-mode 1)
+  :config
   (setq recentf-max-menu-items 25))
 ;; recentf:1 ends here
 
@@ -16694,6 +16630,9 @@ to open a file."
   :after (company)
   :commands (replacer-mode)
   :functions (company-begin-backend)
+  :init
+  ;; turn replacer mode on
+  (replacer-mode 1)
   :config
   ;; set trigger start
   (setq replacer-trigger-start ";")
@@ -16725,10 +16664,7 @@ to open a file."
     (find-file (expand-file-name "init-emacs.org" emacs-home-dir))
     (goto-char (point-min))
     (search-forward "(setq replacer-replacements")
-    (org-show-entry))
-
-  ;; turn replacer mode on
-  (replacer-mode 1))
+    (org-show-entry)))
 ;; replacer:1 ends here
 
 ;; [[file:init-emacs.org::*s][s:1]]
