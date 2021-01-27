@@ -8,7 +8,7 @@
 #+LANGUAGE: en
 #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
 #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-#+TIMESTAMP: <2020-12-01 13:00 (kyle)>
+#+TIMESTAMP: <2021-01-27 10:31 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -25678,7 +25678,7 @@ Programmable web hot list.
 
   (use-package webjump
     :bind* ("C-x j" . webjump)
-    :init
+    :config
     ;; add some sites
     (add-to-list 'webjump-sites '("Urban Dictionary" . [simple-query "www.urbandictionary.com" "http://www.urbandictionary.com/define.php?term=" ""]) t))
 #+END_SRC

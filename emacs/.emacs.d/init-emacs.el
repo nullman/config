@@ -17042,7 +17042,7 @@ otherwise run `find-file-as-root'."
 
 (use-package webjump
   :bind* ("C-x j" . webjump)
-  :init
+  :config
   ;; add some sites
   (add-to-list 'webjump-sites '("Urban Dictionary" . [simple-query "www.urbandictionary.com" "http://www.urbandictionary.com/define.php?term=" ""]) t))
 ;; webjump:1 ends here
