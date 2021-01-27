@@ -16687,7 +16687,7 @@ to open a file."
 (init-message 2 "Modules: smerge")
 
 (use-package smerge-mode
-  :config
+  :init
   (defun smerge-mode-maybe ()
     "Auto turn on smerge mode when a file with merge conflicts is loaded.
 Do not perform the search on very large files (to avoid a delay when loaded)."
@@ -16749,18 +16749,6 @@ Do not perform the search on very large files (to avoid a delay when loaded)."
   :commands (sudoku))
 ;; sudoku:1 ends here
 
-;; [[file:init-emacs.org::*swiper-helm][swiper-helm:1]]
-;;------------------------------------------------------------------------------
-;;; Modules: swiper-helm
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modules: swiper-helm")
-
-(use-package swiper-helm
-  :quelpa (swiper-helm)
-  :bind* ("C-'" . swiper))              ; defaults to `org-cycle-agenda-files'
-;; swiper-helm:1 ends here
-
 ;; [[file:init-emacs.org::*switch-window][switch-window:1]]
 ;;------------------------------------------------------------------------------
 ;;; Modules: switch-window
@@ -16814,8 +16802,7 @@ Do not perform the search on very large files (to avoid a delay when loaded)."
          ("C-c ts" . timeclock-status-string)
          ("C-c td" . timeclock-mode-line-display)
          ("C-c tg" . timeclock-generate-report))
-  :config
-  ;;(timeclock-mode-line-display)
+  ;;:init (timeclock-mode-line-display)
   )
 ;; timeclock:1 ends here
 
@@ -16832,7 +16819,7 @@ Do not perform the search on very large files (to avoid a delay when loaded)."
 
 (use-package time-stamp
   :commands (time-stamp)
-  :config
+  :init
   (setq time-stamp-active t
         time-stamp-line-limit 20
         time-stamp-start "[Tt][Ii][Mm][Ee][-]?[Ss][Tt][Aa][Mm][Pp]:[    ]+\\\\?[\"<]+"
@@ -16936,7 +16923,7 @@ otherwise run `find-file-as-root'."
              undo-tree-undo)
   :bind* (("<M-mouse-5>" . undo-tree-redo)
           ("<M-mouse-4>" . undo-tree-undo))
-  :config
+  :init
   ;; turn on undo-tree globally
   (global-undo-tree-mode 1))
 ;; undo-tree:1 ends here
@@ -17015,7 +17002,7 @@ otherwise run `find-file-as-root'."
   :bind (:map w3m-mode-map
               ("S" . w3m-session-save)
               ("L" . w3m-session-load))
-  :config
+  ;;:config
   ;;(setq w3m-session-file "~/.w3m-session")
   ;;(setq w3m-session-save-always nil)
   ;;(setq w3m-session-load-always nil)
@@ -17055,7 +17042,7 @@ otherwise run `find-file-as-root'."
 
 (use-package webjump
   :bind* ("C-x j" . webjump)
-  :config
+  :init
   ;; add some sites
   (add-to-list 'webjump-sites '("Urban Dictionary" . [simple-query "www.urbandictionary.com" "http://www.urbandictionary.com/define.php?term=" ""]) t))
 ;; webjump:1 ends here
@@ -17088,8 +17075,7 @@ otherwise run `find-file-as-root'."
 
 (use-package which-key
   :quelpa (which-key)
-  :config
-  (which-key-mode))
+  :init (which-key-mode))
 ;; which-key:1 ends here
 
 ;; [[file:init-emacs.org::*wtf][wtf:1]]

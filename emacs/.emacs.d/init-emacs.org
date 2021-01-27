@@ -17702,42 +17702,41 @@ Clojure Mode (clojure-mode)
   ;;   :load-path (lambda () (expand-file-name "clojure-mode" emacs-modules-dir))
   ;;   :mode (("\\.clj\\'" . clojure-mode)
   ;;          ("\\.clojure\\'" . clojure-mode))
-  ;;   :config (progn
-  ;;             (defun local-clojure-mode-hook ()
-  ;;               ;; define keys
-  ;;               ;; (local-set-key (kbd "C-c C-c") 'slime-eval-sexp)
-  ;;               ;; (local-set-key (kbd "M-C-x") 'slime-eval-sexp)
-  ;;               ;; (local-set-key (kbd "C-x C-e") 'slime-eval-last-expression)
-  ;;               ;; (local-set-key (kbd "C-c C-k") 'slime-eval-buffer)
-  ;;               (local-set-key (kbd "C-c C-c") 'lisp-eval-defun)
-  ;;               (local-set-key (kbd "M-C-x") 'lisp-eval-defun)
-  ;;               (local-set-key (kbd "C-c C-k") 'lisp-eval-buffer)
-  ;;               (local-set-key (kbd "C-M-;") 'comment-or-uncomment-sexp)
+  ;;   :config
+  ;;   (defun local-clojure-mode-hook ()
+  ;;     ;; define keys
+  ;;     ;; (local-set-key (kbd "C-c C-c") 'slime-eval-sexp)
+  ;;     ;; (local-set-key (kbd "M-C-x") 'slime-eval-sexp)
+  ;;     ;; (local-set-key (kbd "C-x C-e") 'slime-eval-last-expression)
+  ;;     ;; (local-set-key (kbd "C-c C-k") 'slime-eval-buffer)
+  ;;     (local-set-key (kbd "C-c C-c") 'lisp-eval-defun)
+  ;;     (local-set-key (kbd "M-C-x") 'lisp-eval-defun)
+  ;;     (local-set-key (kbd "C-c C-k") 'lisp-eval-buffer)
+  ;;     (local-set-key (kbd "C-M-;") 'comment-or-uncomment-sexp)
 
-  ;;               ;; replace clojure mode indenting style with normal lisp indenting
-  ;;               ;;(setq lisp-indent-function 'lisp-indent-function)
-  ;;               )
-  ;;             (add-hook 'clojure-mode-hook #'local-clojure-mode-hook)
+  ;;     ;; replace clojure mode indenting style with normal lisp indenting
+  ;;     ;;(setq lisp-indent-function 'lisp-indent-function)
+  ;;     )
+  ;;   (add-hook 'clojure-mode-hook #'local-clojure-mode-hook)
 
-  ;;             ;; set inferior lisp program to clojure
-  ;;             (setq inferior-lisp-program (concat
-  ;;                                          "java -cp "
-  ;;                                          (expand-file-name "~/.clojure/clojure.jar")
-  ;;                                          " clojure.main"))
+  ;;   ;; set inferior lisp program to clojure
+  ;;   (setq inferior-lisp-program (concat
+  ;;                                "java -cp "
+  ;;                                (expand-file-name "~/.clojure/clojure.jar")
+  ;;                                " clojure.main"))
 
-  ;;             ;;(use-package clojure-paredit)
+  ;;   ;;(use-package clojure-paredit)
 
-  ;;             ;; remove trailing blanks
-  ;;             ;;(add-hook 'clojure-mode-hook #'install-remove-trailing-blanks)
+  ;;   ;; remove trailing blanks
+  ;;   ;;(add-hook 'clojure-mode-hook #'install-remove-trailing-blanks)
 
-  ;;             ;; remove tabs
-  ;;             ;;(add-hook 'clojure-mode-hook #'install-remove-tabs)
+  ;;   ;; remove tabs
+  ;;   ;;(add-hook 'clojure-mode-hook #'install-remove-tabs)
 
-  ;;             (defun lisp-eval-buffer ()
-  ;;               "Call `lisp-eval-region' with `point-min' and `point-max' as parameters."
-  ;;               (interactive)
-  ;;               (lisp-eval-region (point-min) (point-max)))
-  ;;             ))
+  ;;   (defun lisp-eval-buffer ()
+  ;;     "Call `lisp-eval-region' with `point-min' and `point-max' as parameters."
+  ;;     (interactive)
+  ;;     (lisp-eval-region (point-min) (point-max))))
 #+END_SRC
 
 *** Dired
@@ -24467,21 +24466,16 @@ Disabled due to it triggering when there is no selection.
   ;; (use-package selected
   ;;   :commands (selected-minor-mode)
   ;;   :defines (selected-org-mode-map)
-  ;;   :config (progn
-  ;;             ;; turn on globally
-  ;;             (selected-global-mode 1)
-  ;;             ;; key bindings
-  ;;             (setq selected-org-mode-map (make-sparse-keymap))
-  ;;             (bind-keys :map selected-keymap
-  ;;                        ("q" . selected-off)
-  ;;                        ("i" . indent-region)
-  ;;                        ("u" . upcase-region)
-  ;;                        ("d" . downcase-region)
-  ;;                        ("w" . count-words-region)
-  ;;                        ("m" . apply-macro-to-region-lines))
-  ;;             (bind-keys :map selected-org-mode-map
-  ;;                        ("c" . org-copy-to-clipboard)
-  ;;                        ("t" . org-table-convert-region))))
+  ;;   :bind (:map select-keymap
+  ;;               ("q" . selected-off)
+  ;;               ("i" . indent-region)
+  ;;               ("u" . upcase-region)
+  ;;               ("d" . downcase-region)
+  ;;               ("w" . count-words-region)
+  ;;               ("m" . apply-macro-to-region-lines))
+  ;;   :bind (:map selected-org-mode-map
+  ;;               ("c" . org-copy-to-clipboard)
+  ;;               ("t" . org-table-convert-region)))
 #+END_SRC
 
 *** +session+
@@ -24499,7 +24493,7 @@ Save Session State (session)
   ;; (init-message 2 "Modules: session")
 
   ;; (use-package session
-  ;;   :config (add-hook 'after-init-hook #'session-initialize))
+  ;;   :init (add-hook 'after-init-hook #'session-initialize))
 #+END_SRC
 
 *** +simple-mpc+
@@ -24964,34 +24958,28 @@ Slack Messaging Client (slack)
 
   ;; (use-package slack
   ;;   :commands (slack-start)
-  ;;   :init (progn
-  ;;           (setq slack-buffer-emojify t)
-  ;;           (setq slack-prefer-current-team t))
-  ;;   :config (progn
-  ;;             ;; ;; key bindings
-  ;;             ;; (bind-keys :map slack-mode-map
-  ;;             ;;            )
-  ;;             ;; (bind-keys :map slack-info-mode-map
-  ;;             ;;            )
-  ;;             ;; (bind-keys :map slack-edit-message-mode-map
-  ;;             ;;            )
+  ;;   :bind (:map slack-mode-map)
+  ;;   :bind (:map slack-info-mode-map)
+  ;;   :bind (:map slack-edit-message-mode-map)
+  ;;   :init
+  ;;   (setq slack-buffer-emojify t
+  ;;         slack-prefer-current-team t)
+  ;;   :config
+  ;;   ;; register teams
+  ;;   ;; (slack-register-team
+  ;;   ;;  :name "emacs-slack"
+  ;;   ;;  :default t
+  ;;   ;;  :client-id "aaaaaaaaaaa.00000000000"
+  ;;   ;;  :client-secret "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+  ;;   ;;  :token "aaaa-sssssssssss-88888888888-hhhhhhhhhhh-jjjjjjjjjj"
+  ;;   ;;  :subscribed-channels '(test-rename rrrrr))
 
-  ;;             ;; register teams
-  ;;             ;; (slack-register-team
-  ;;             ;;  :name "emacs-slack"
-  ;;             ;;  :default t
-  ;;             ;;  :client-id "aaaaaaaaaaa.00000000000"
-  ;;             ;;  :client-secret "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
-  ;;             ;;  :token "aaaa-sssssssssss-88888888888-hhhhhhhhhhh-jjjjjjjjjj"
-  ;;             ;;  :subscribed-channels '(test-rename rrrrr))
-
-  ;;             (slack-register-team
-  ;;              :name "nullman"
-  ;;              :client-id "3069866737.365990011479"
-  ;;              :client-secret "d06927ed004ffc14627ad8b8c0cb3a77"
-  ;;              :token "JQCs4sZ8rAbYT2HNi1G96CoB"
-  ;;              :subscribed-channels '())
-  ;;             ))
+  ;;   (slack-register-team
+  ;;    :name "nullman"
+  ;;    :client-id "3069866737.365990011479"
+  ;;    :client-secret "d06927ed004ffc14627ad8b8c0cb3a77"
+  ;;    :token "JQCs4sZ8rAbYT2HNi1G96CoB"
+  ;;    :subscribed-channels '()))
 #+END_SRC
 
 *** smerge
@@ -25009,7 +24997,7 @@ Minor mode to resolve diff3 conflicts.
   (init-message 2 "Modules: smerge")
 
   (use-package smerge-mode
-    :config
+    :init
     (defun smerge-mode-maybe ()
       "Auto turn on smerge mode when a file with merge conflicts is loaded.
   Do not perform the search on very large files (to avoid a delay when loaded)."
@@ -25039,7 +25027,7 @@ M-x Interface with Ido-Style Fuzzy Matching (smex)
   ;; (use-package smex
   ;;   :quelpa (smex)
   ;;   :commands (smex-initialize)
-  ;;   :config (smex-initialize))
+  ;;   :init (smex-initialize))
 #+END_SRC
 
 *** sokoban
@@ -25120,23 +25108,23 @@ Simple sudoku game, can download puzzles from the web.
     :commands (sudoku))
 #+END_SRC
 
-*** swiper-helm
+*** +swiper-helm+
     :PROPERTIES:
     :CUSTOM_ID: modules-swiper-helm
     :END:
 
 Search with =isearch= using =helm=.
 
-#+BEGIN_SRC emacs-lisp
-  ;;------------------------------------------------------------------------------
-  ;;; Modules: swiper-helm
-  ;;------------------------------------------------------------------------------
+#+BEGIN_SRC emacs-lisp :tangle no
+  ;; ;;------------------------------------------------------------------------------
+  ;; ;;; Modules: swiper-helm
+  ;; ;;------------------------------------------------------------------------------
 
-  (init-message 2 "Modules: swiper-helm")
+  ;; (init-message 2 "Modules: swiper-helm")
 
-  (use-package swiper-helm
-    :quelpa (swiper-helm)
-    :bind* ("C-'" . swiper))              ; defaults to `org-cycle-agenda-files'
+  ;; (use-package swiper-helm
+  ;;   :quelpa (swiper-helm)
+  ;;   :bind* ("C-'" . swiper))              ; defaults to `org-cycle-agenda-files'
 #+END_SRC
 
 *** switch-window
@@ -25205,10 +25193,11 @@ Error: Variable binding depth exceeds max-specpdl-size.
 
   ;; (use-package table
   ;;   :commands (table-recognize)
-  ;;   :config (progn
-  ;;             (add-hook 'text-mode-hook #'table-recognize)
-  ;;             (setq table-html-table-attribute "cellpadding=\"2\""
-  ;;                   table-html-th-rows 1)))
+  ;;   :init
+  ;;   (add-hook 'text-mode-hook #'table-recognize)
+  ;;   :config
+  ;;   (setq table-html-table-attribute "cellpadding=\"2\""
+  ;;         table-html-th-rows 1))
 #+END_SRC
 
 *** telnet
@@ -25243,7 +25232,7 @@ File Templates (template)
   ;; (init-message 2 "Modules: template")
 
   ;; (use-package template
-  ;;   :config (template-initialize))
+  ;;   :init (template-initialize))
 #+END_SRC
 
 *** timeclock
@@ -25281,8 +25270,7 @@ Mode for keeping track of how much you work.
            ("C-c ts" . timeclock-status-string)
            ("C-c td" . timeclock-mode-line-display)
            ("C-c tg" . timeclock-generate-report))
-    :config
-    ;;(timeclock-mode-line-display)
+    ;;:init (timeclock-mode-line-display)
     )
 #+END_SRC
 
@@ -25306,7 +25294,7 @@ Maintain last change time stamps in files edited by Emacs.
 
   (use-package time-stamp
     :commands (time-stamp)
-    :config
+    :init
     (setq time-stamp-active t
           time-stamp-line-limit 20
           time-stamp-start "[Tt][Ii][Mm][Ee][-]?[Ss][Tt][Aa][Mm][Pp]:[    ]+\\\\?[\"<]+"
@@ -25330,11 +25318,10 @@ Tip of the Day (totd)
 
   ;; (use-package totd
   ;;   :defer 20
-  ;;   :config
-  ;;   (progn
-  ;;     (add-to-list 'totd-keymaps 'org-mode-map t) ; add org-mode keys
-  ;;     ;;(totd-start)
-  ;;     ))
+  ;;   :init
+  ;;   (add-to-list 'totd-keymaps 'org-mode-map t) ; add org-mode keys
+  ;;   ;;(totd-start)
+  ;;   )
 #+END_SRC
 
 *** tramp
@@ -25465,7 +25452,7 @@ Treat undo history as a tree,
                undo-tree-undo)
     :bind* (("<M-mouse-5>" . undo-tree-redo)
             ("<M-mouse-4>" . undo-tree-undo))
-    :config
+    :init
     ;; turn on undo-tree globally
     (global-undo-tree-mode 1))
 #+END_SRC
@@ -25485,11 +25472,11 @@ Better Duplicate Buffer Naming (uniquify)
   ;; (init-message 2 "Modules: uniquify")
 
   ;; (use-package uniquify
-  ;;   :config (progn
-  ;;             (setq uniquify-buffer-name-style 'forward
-  ;;                   uniquify-separator "/"
-  ;;                   uniquify-after-kill-buffer-p t
-  ;;                   uniquify-ignore-buffers-re "^\\*")))
+  ;;   :config
+  ;;   (setq uniquify-buffer-name-style 'forward
+  ;;         uniquify-separator "/"
+  ;;         uniquify-after-kill-buffer-p t
+  ;;         uniquify-ignore-buffers-re "^\\*"))
 #+END_SRC
 
 *** vimish-fold
@@ -25585,7 +25572,7 @@ You need to have the *w3m* command installed on your system for this to work.
     :bind (:map w3m-mode-map
                 ("S" . w3m-session-save)
                 ("L" . w3m-session-load))
-    :config
+    ;;:config
     ;;(setq w3m-session-file "~/.w3m-session")
     ;;(setq w3m-session-save-always nil)
     ;;(setq w3m-session-load-always nil)
@@ -25610,40 +25597,40 @@ Email Client (wanderlust)
 
   ;; (use-package wl
   ;;   :command wl
-  ;;   :config (progn
-  ;;             (setq elmo-maildir-folder-path "~/Maildir"   ;; mailstorage location
-  ;;                   wl-stay-folder-window t                ;; show the folder pane (left)
-  ;;                   wl-folder-window-width 25              ;; toggle on/off with 'i'
-  ;;                   wl-smtp-posting-server "localhost"     ;; put the smtp server here
-  ;;                   wl-local-domain "myhost.example.com"   ;; put something here...
-  ;;                   wl-message-id-domain "myhost.example.com" ;; ...
-  ;;                   wl-from "Me <me@example.com>"             ;; my From:
-  ;;                   ;; note: all below are dirs (Maildirs) under elmo-maildir-folder-path
-  ;;                   ;; the '.'-prefix is for marking them as maildirs
-  ;;                   wl-fcc ".sent"          ;; sent msgs go to the "sent"-folder
-  ;;                   wl-fcc-force-as-read t  ;; mark sent messages as read
-  ;;                   wl-default-folder ".inbox" ;; my main inbox
-  ;;                   wl-draft-folder ".drafts"  ;; store drafts in 'postponed'
-  ;;                   wl-trash-folder ".trash"   ;; put trash in 'trash'
-  ;;                   wl-spam-folder ".trash"    ;; ...spam as well
-  ;;                   wl-queue-folder ".queue"   ;; we don't use this
-  ;;                   ;; check this folder periodically, and update mode-line
-  ;;                   wl-biff-check-folder-list '(".todo") ;; check every 180 seconds
-  ;;                   ;; (default: wl-biff-check-interval)
-  ;;                   wl-message-ignored-field-list '("^.*:") ;; hide many fields from message buffers
-  ;;                   wl-message-visible-field-list '("^\\(To\\|Cc\\):"
-  ;;                                                   "^Subject:"
-  ;;                                                   "^\\(From\\|Reply-To\\):"
-  ;;                                                   "^Organization:"
-  ;;                                                   "^Message-Id:"
-  ;;                                                   "^\\(Posted\\|Date\\):")
-  ;;                   wl-message-sort-field-list '("^From"
-  ;;                                                "^Organization:"
-  ;;                                                "^X-Attribution:"
-  ;;                                                "^Subject"
-  ;;                                                "^Date"
-  ;;                                                "^To"
-  ;;                                                "^Cc"))))
+  ;;   :config
+  ;;   (setq elmo-maildir-folder-path "~/Maildir"   ;; mailstorage location
+  ;;         wl-stay-folder-window t                ;; show the folder pane (left)
+  ;;         wl-folder-window-width 25              ;; toggle on/off with 'i'
+  ;;         wl-smtp-posting-server "localhost"     ;; put the smtp server here
+  ;;         wl-local-domain "myhost.example.com"   ;; put something here...
+  ;;         wl-message-id-domain "myhost.example.com" ;; ...
+  ;;         wl-from "Me <me@example.com>"             ;; my From:
+  ;;         ;; note: all below are dirs (Maildirs) under elmo-maildir-folder-path
+  ;;         ;; the '.'-prefix is for marking them as maildirs
+  ;;         wl-fcc ".sent"          ;; sent msgs go to the "sent"-folder
+  ;;         wl-fcc-force-as-read t  ;; mark sent messages as read
+  ;;         wl-default-folder ".inbox" ;; my main inbox
+  ;;         wl-draft-folder ".drafts"  ;; store drafts in 'postponed'
+  ;;         wl-trash-folder ".trash"   ;; put trash in 'trash'
+  ;;         wl-spam-folder ".trash"    ;; ...spam as well
+  ;;         wl-queue-folder ".queue"   ;; we don't use this
+  ;;         ;; check this folder periodically, and update mode-line
+  ;;         wl-biff-check-folder-list '(".todo") ;; check every 180 seconds
+  ;;         ;; (default: wl-biff-check-interval)
+  ;;         wl-message-ignored-field-list '("^.*:") ;; hide many fields from message buffers
+  ;;         wl-message-visible-field-list '("^\\(To\\|Cc\\):"
+  ;;                                         "^Subject:"
+  ;;                                         "^\\(From\\|Reply-To\\):"
+  ;;                                         "^Organization:"
+  ;;                                         "^Message-Id:"
+  ;;                                         "^\\(Posted\\|Date\\):")
+  ;;         wl-message-sort-field-list '("^From"
+  ;;                                      "^Organization:"
+  ;;                                      "^X-Attribution:"
+  ;;                                      "^Subject"
+  ;;                                      "^Date"
+  ;;                                      "^To"
+  ;;                                      "^Cc")))
 #+END_SRC
 
 *** web-query
@@ -25691,7 +25678,7 @@ Programmable web hot list.
 
   (use-package webjump
     :bind* ("C-x j" . webjump)
-    :config
+    :init
     ;; add some sites
     (add-to-list 'webjump-sites '("Urban Dictionary" . [simple-query "www.urbandictionary.com" "http://www.urbandictionary.com/define.php?term=" ""]) t))
 #+END_SRC
@@ -25738,8 +25725,7 @@ Display available key bindings in popup.
 
   (use-package which-key
     :quelpa (which-key)
-    :config
-    (which-key-mode))
+    :init (which-key-mode))
 #+END_SRC
 
 *** wtf
@@ -25805,7 +25791,7 @@ Yet Another Scroll Bar Mode (yascroll)
   ;; (init-message 2 "Modules: yascroll")
 
   ;; (use-package yascroll
-  ;;   :config (global-yascroll-bar-mode t))
+  ;;   :init (global-yascroll-bar-mode t))
 #+END_SRC
 
 * Menus
