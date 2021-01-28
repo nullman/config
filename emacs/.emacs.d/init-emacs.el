@@ -15553,7 +15553,7 @@ User is prompted for WORD if none given."
   :commands (ivy-mode)
   :bind* (("C-x C-r" . ivy-resume)      ; defaults to `find-file-read-only'
           ("C-x b" . ivy-switch-buffer) ; defaults to `switch-to-buffer'
-          ("C-x o" . ivy-switch-buffer-other-window)) ; defaults to `switch-to-buffer'
+          ("C-x O" . ivy-switch-buffer-other-window)) ; defaults to `other-window'
   :init
   ;; turn on `ivy-mode'
   (ivy-mode 1)
@@ -16619,8 +16619,8 @@ to open a file."
 (init-message 2 "Modules: replacer")
 
 (use-package replacer
-  ;;:quelpa (replacer :fetcher file :path (expand-file-name "replacer.el"))
-  :load-path (lambda () (expand-file-name "replacer.el"))
+  ;;:quelpa (replacer :fetcher file :path (expand-file-name "replacer.el" local-modules-dir))
+  :load-path (lambda () (expand-file-name "replacer.el" local-modules-dir))
   :demand t
   :after (company)
   :commands (replacer-mode)

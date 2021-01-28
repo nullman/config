@@ -64,6 +64,12 @@ zmodload zsh/terminfo
 # source powerlevel10k theme
 [[ -f "${HOME}/powerlevel10k/powerlevel10k.zsh-theme" ]] && source ${HOME}/powerlevel10k/powerlevel10k.zsh-theme 2>&1
 
+# fix home/end keys in screen/tmux
+if [[ -n "${STY}" ]] || [[ -n "${TMUX}" ]] ; then
+    bindkey "\e[1~" beginning-of-line
+    bindkey "\e[4~" end-of-line
+fi
+
 # set prompt
 if [[ -n "${INSIDE_EMACS}" ]] ; then
     # use simple prompt, if run from within emacs

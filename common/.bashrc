@@ -42,6 +42,12 @@ export HISTCONTROL="ignoredups"
 export HISTORY_IGNORE="(ls|pwd|history|h|cd|cd -|cd ..|cdd|exit|reboot|sudo reboot)"
 shopt -s histappend    # allow multiple terminals to write to the history file
 
+# fix home/end keys in screen/tmux
+if [[ -n "${STY}" ]] || [[ -n "${TMUX}" ]] ; then
+    bind '"\e[1~":"\eOH"'
+    bind '"\e[4~":"\eOF"'
+fi
+
 # set prompt
 if [[ -n "${INSIDE_EMACS}" ]] ; then
     # set emacs prompt to: host:user path (git-branch) $
