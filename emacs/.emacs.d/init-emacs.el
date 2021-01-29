@@ -15548,7 +15548,7 @@ User is prompted for WORD if none given."
 
 (use-package ivy
   :quelpa (ivy :fetcher github :repo "abo-abo/swiper")
-  ;;:demand t
+  :demand t
   :diminish ivy-mode
   :commands (ivy-mode)
   :bind* (("C-x C-r" . ivy-resume)      ; defaults to `find-file-read-only'
@@ -16476,7 +16476,7 @@ and 5 is most favorite.  0 will unset the rating."
 (use-package openwith
   :when window-system-linux
   :quelpa (openwith :fetcher github :repo "emacsmirror/openwith")
-  :demand t
+  ;;:demand t
   :init
   ;; turn on openwith mode
   (openwith-mode 1)
@@ -16621,10 +16621,7 @@ to open a file."
 (use-package replacer
   ;;:quelpa (replacer :fetcher file :path (expand-file-name "replacer.el" local-modules-dir))
   :load-path (lambda () (expand-file-name "replacer.el" local-modules-dir))
-  :demand t
-  :after (company)
   :commands (replacer-mode)
-  :functions (company-begin-backend)
   :init
   ;; turn replacer mode on
   (replacer-mode 1)
@@ -16913,7 +16910,7 @@ otherwise run `find-file-as-root'."
 
 (use-package undo-tree
   :quelpa (undo-tree :fetcher github :repo "apchamberlain/undo-tree.el")
-  :demand t
+  ;;:demand t
   :diminish undo-tree-mode
   :commands (global-undo-tree-mode
              undo-tree-redo

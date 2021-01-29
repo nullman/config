@@ -22092,6 +22092,8 @@ Emacs incremental and narrowing framework.
 
 Swiper search with =isearch= using =helm=.
 
+(Should not be enabled at the same time as =ivy=.)
+
 #+BEGIN_SRC emacs-lisp :tangle no
   ;; ;;------------------------------------------------------------------------------
   ;; ;;; Modules: helm (swiper)
@@ -22101,6 +22103,7 @@ Swiper search with =isearch= using =helm=.
 
   ;; (use-package helm
   ;;   :quelpa (helm)
+  ;;   :demand t
   ;;   :diminish helm-mode
   ;;   :bind* (("M-x" . helm-M-x)            ; defaults to `execute-extended-command'
   ;;           ("C-x b" . helm-mini)         ; defaults to `switch-buffer'
@@ -22146,6 +22149,12 @@ Swiper search with =isearch= using =helm=.
   ;;                ([remap previous-page] . helm-previous-line)
   ;;                ([remap next-page] . helm-next-line))
   ;;   :init
+  ;;   ;; turn on helm-mode
+  ;;   (helm-mode 1)
+  ;;   (helm-adaptive-mode 1)
+  ;;   (helm-autoresize-mode 1)
+
+  ;;   :config
   ;;   ;; customize
   ;;   (setq helm-exit-idle-delay 0
   ;;         helm-ff-file-name-history-use-recentf t
@@ -22153,11 +22162,6 @@ Swiper search with =isearch= using =helm=.
   ;;         helm-ff-newfile-prompt-p nil
   ;;         helm-left-margin-width 0
   ;;         helm-split-window-in-side-p t)
-
-  ;;   ;; turn on helm-mode
-  ;;   (helm-mode 1)
-  ;;   (helm-adaptive-mode 1)
-  ;;   (helm-autoresize-mode 1)
 
   ;;   ;; multiple completion options
   ;;   (helm-multi-key-defun helm-multi-lisp-complete-at-point
@@ -22787,6 +22791,8 @@ Interface to spell checkers.
 
 Generic completion method that adds wildcard name completion to common tasks.
 
+(Should not be enabled at the same time as =helm=.)
+
 #+BEGIN_SRC emacs-lisp
   ;;------------------------------------------------------------------------------
   ;;; Modules: ivy
@@ -22799,7 +22805,7 @@ Generic completion method that adds wildcard name completion to common tasks.
 
   (use-package ivy
     :quelpa (ivy :fetcher github :repo "abo-abo/swiper")
-    ;;:demand t
+    :demand t
     :diminish ivy-mode
     :commands (ivy-mode)
     :bind* (("C-x C-r" . ivy-resume)      ; defaults to `find-file-read-only'
@@ -23902,7 +23908,7 @@ A tree plugin like NerdTree for Vim.
   (use-package openwith
     :when window-system-linux
     :quelpa (openwith :fetcher github :repo "emacsmirror/openwith")
-    :demand t
+    ;;:demand t
     :init
     ;; turn on openwith mode
     (openwith-mode 1)
@@ -24396,10 +24402,7 @@ Replace strings as you type.
   (use-package replacer
     ;;:quelpa (replacer :fetcher file :path (expand-file-name "replacer.el" local-modules-dir))
     :load-path (lambda () (expand-file-name "replacer.el" local-modules-dir))
-    :demand t
-    :after (company)
     :commands (replacer-mode)
-    :functions (company-begin-backend)
     :init
     ;; turn replacer mode on
     (replacer-mode 1)
@@ -25455,7 +25458,7 @@ Treat undo history as a tree,
 
   (use-package undo-tree
     :quelpa (undo-tree :fetcher github :repo "apchamberlain/undo-tree.el")
-    :demand t
+    ;;:demand t
     :diminish undo-tree-mode
     :commands (global-undo-tree-mode
                undo-tree-redo
