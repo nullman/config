@@ -15554,6 +15554,23 @@ User is prompted for WORD if none given."
   :bind* (("C-x C-r" . ivy-resume)      ; defaults to `find-file-read-only'
           ("C-x b" . ivy-switch-buffer) ; defaults to `switch-to-buffer'
           ("C-x O" . ivy-switch-buffer-other-window)) ; defaults to `other-window'
+  ;; :bind (:map ivy-minibuffer-map
+  ;;             :map ivy-switch-buffer-map
+  ;;             :map ivy-reverse-i-search-map
+  ;;             :map ivy-occur-mode-map
+  ;;             :map ivy-occur-grep-mode-map
+  ;;                ("M-i" . helm-previous-line)
+  ;;                ("M-k" . helm-next-line)
+  ;;                ("M-j" . left-char)
+  ;;                ("M-i" . right-char)
+  ;;                ("C-M-u" . backward-paragraph)
+  ;;                ("C-M-o" . forward-paragraph)
+  ;;                ("M-u" . left-word)
+  ;;                ("M-o" . right-word)
+  ;;                ("C-M-i" . helm-previous-page)
+  ;;                ("C-M-k" . helm-next-page)
+  ;;                ("C-M-j" . move-beginning-of-line)
+  ;;                ("C-M-l" . move-end-of-line)
   :init
   ;; turn on `ivy-mode'
   (ivy-mode 1)
