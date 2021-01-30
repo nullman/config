@@ -7450,14 +7450,15 @@ Cursor is left at current column in newly created line."
       (when (or (eq major-mode 'emacs-lisp-mode)
                 (eq major-mode 'lisp-mode))
         (save-mark-and-excursion
-          (forward-line -1)
-          (goto-char (line-beginning-position))
-          (forward-sexp)
-          (when (looking-at "\\()+\\)[ \t]*;")
-            (replace-match (make-string (length (match-string 1)) ?\s) nil nil nil 1))
-          (when (looking-at ")+")
-            (replace-match ""))
-          (forward-line 1))))))
+          (ignore-errors
+            (forward-line -1)
+            (goto-char (line-beginning-position))
+            (forward-sexp)
+            (when (looking-at "\\()+\\)[ \t]*;")
+              (replace-match (make-string (length (match-string 1)) ?\s) nil nil nil 1))
+            (when (looking-at ")+")
+              (replace-match ""))
+            (forward-line 1)))))))
 ;; duplicate-line:1 ends here
 
 ;; [[file:init-emacs.org::*duplicate-line-inc][duplicate-line-inc:1]]
@@ -14560,70 +14561,6 @@ Blank lines separate paragraphs.  Semicolons start comments.
   :commands (browse-kill-ring))
 ;; browse-kill-ring:1 ends here
 
-;; [[file:init-emacs.org::*bs][bs:1]]
-;;------------------------------------------------------------------------------
-;;; Modules: bs
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modules: bs")
-
-;; original code by Scott Frazer
-(use-package bs
-  :quelpa (bs)
-  :demand t
-  :after (cycle-buffer)
-  ;; :bind* ("C-x C-b" . bs-show)           ; defaults to `list-buffers'
-  :bind* ([remap list-buffers] . bs-show)
-  :config
-  (defvar local-bs-always-show-regexps '("\\*\\(scratch\\|info\\|grep\\)\\*")
-    "*Buffer regexps to always show when buffer switching.")
-  (defvar local-bs-never-show-regexps '("^\\s-" "^\\*" "TAGS$" "^Map_Sym.txt$" "^magit")
-    "*Buffer regexps to never show when buffer switching.")
-  (defvar local-ido-ignore-dired-buffers nil
-    "*If non-nil, buffer switching should ignore dired buffers.")
-
-  (defun local-bs-string-in-regexps (string regexps)
-    "Return non-nil if STRING matches anything in REGEXPS list."
-    (let ((case-fold-search nil))
-      (catch 'done
-        (dolist (regexp regexps)
-          (when (string-match regexp string)
-            (throw 'done t))))))
-
-  (defun local-bs-ignore-buffer (buffer)
-    "Return non-nil if BUFFER should be ignored."
-    (or (and (not (local-bs-string-in-regexps buffer local-bs-always-show-regexps))
-             (local-bs-string-in-regexps buffer local-bs-never-show-regexps))
-        (and local-ido-ignore-dired-buffers
-             (with-current-buffer buffer
-               (equal major-mode 'dired-mode)))))
-
-  (defun bs-toggle-recent ()
-    "Toggle most recently visited buffers, ignoring certain ones."
-    (interactive)
-    (catch 'done
-      (dolist (buffer (buffer-list))
-        (unless (or (equal (current-buffer) buffer)
-                    (and (fboundp 'my-bs-ignore-buffer)
-                         (my-bs-ignore-buffer (buffer-name buffer))))
-          (switch-to-buffer buffer)
-          (throw 'done t)))))
-
-  ;; config bs
-  (setq bs-configurations
-        '(("all" nil nil nil nil nil)
-          ("files" nil nil nil (lambda (buffer) (local-bs-ignore-buffer (buffer-name buffer))) nil))
-        bs-cycle-configuration-name "files")
-
-  ;; ;; add ignore rules to ido
-  ;; (setq ido-ignore-buffers '(local-bs-ignore-buffer))
-
-  (defun local-bs-cycle-buffer-filter-extra ()
-    "Add ignore rules to `cycle-buffer'."
-    (not (local-bs-ignore-buffer (buffer-name))))
-  (add-to-list 'cycle-buffer-filter-extra '(local-bs-cycle-buffer-filter-extra) t))
-;; bs:1 ends here
-
 ;; [[file:init-emacs.org::*calc][calc:1]]
 ;;------------------------------------------------------------------------------
 ;;; Modules: calc
@@ -15548,7 +15485,6 @@ User is prompted for WORD if none given."
 
 (use-package ivy
   :quelpa (ivy :fetcher github :repo "abo-abo/swiper")
-  :demand t
   :diminish ivy-mode
   :commands (ivy-mode)
   :bind* (("C-x C-r" . ivy-resume)      ; defaults to `find-file-read-only'
@@ -15571,20 +15507,26 @@ User is prompted for WORD if none given."
   ;;                ("C-M-k" . helm-next-page)
   ;;                ("C-M-j" . move-beginning-of-line)
   ;;                ("C-M-l" . move-end-of-line)
+  :custom
+  ;; add recent files and bookmarks to `ivy-switch-buffer'
+  (ivy-use-virtual-buffers t)
+  ;; allow minibuffer commands to work in the minibuffer
+  (enable-recursive-minibuffers t)
+  ;; style to use for displaying the current candidate count
+  (ivy-count-format "(%d/%d) ")
+  ;; ;; wrap around when at first/last candidate positions
+  ;; (ivy-wrap t)
   :init
   ;; turn on `ivy-mode'
   (ivy-mode 1)
   :config
-  ;; add recent files and bookmarks to `ivy-switch-buffer'
-  (setq ivy-use-virtual-buffers t)
+  ;; ;; set minibuffer height (number of lines) for various callers
+  ;; (setf (alist-get 'counsel-projectile-ag ivy-height-alist) 15)
+  ;; (setf (alist-get 'counsel-projectile-rg ivy-height-alist) 15)
+  ;; (setf (alist-get 'swiper ivy-height-alist) 15)
+  ;; (setf (alist-get 'counsel-switch-buffer ivy-height-alist) 7))
 
-  ;; allow minibuffer commands to work in the minibuffer
-  (setq enable-recursive-minibuffers t)
-
-  ;; style to use for displaying the current candidate count
-  (setq ivy-count-format "(%d/%d) ")
-
-  ;; turn off ivy mode in other incompatable modes
+  ;; turn off ivy mode in incompatable modes
   (defun force-completing-read-default (orig-fun &rest args)
     "Force a function to use `completing-read-default'."
     (let ((completing-read-function 'completing-read-default))
@@ -15596,16 +15538,19 @@ User is prompted for WORD if none given."
 
 ;;------------------------------------------------------------------------------
 ;;;; counsel
+;;
+;; Various completion functions using ivy.
 ;;------------------------------------------------------------------------------
 
 (init-message 3 "counsel")
 
-;; counsel (various completion functions using ivy)
 (use-package counsel
   :quelpa (counsel :fetcher github :repo "abo-abo/swiper")
   :after (ivy)
-  ;;:demand t
   :bind* (("M-x" . counsel-M-x)
+          ;;("C-x b" . counsel-ibuffer)   ; defaults to `ivy-switch-buffer'
+          ;;("C-x C-b" . counsel-switch-buffer)   ; defaults to `list-buffers'
+          ([remap list-buffers] . counsel-switch-buffer)
           ("C-x C-f" . counsel-find-file)
           ("C-h f" . counsel-describe-function)
           ("C-h v" . counsel-describe-variable)
@@ -15613,10 +15558,18 @@ User is prompted for WORD if none given."
           ("C-h C-i" . counsel-info-lookup-symbol)
           ("C-h u" . counsel-unicode-char))
   :bind (:map minibuffer-local-map
-              ("C-r" . counsel-minibuffer-history)))
+              ("C-r" . counsel-minibuffer-history))
+  :custom
+  ;; format linux application names with name and comment only
+  (counsel-linux-app-format-function #'counsel-linux-app-format-function-name-only)
+  :config
+  ;; do not start searches with ^
+  (setq ivy-initial-inputs-alist nil))
 
 ;;------------------------------------------------------------------------------
 ;;;; swiper
+;;
+;; Isearch with an overview.
 ;;------------------------------------------------------------------------------
 
 (init-message 3 "swiper")
@@ -15624,20 +15577,75 @@ User is prompted for WORD if none given."
 (use-package swiper
   :quelpa (swiper :fetcher github :repo "abo-abo/swiper")
   :after (ivy)
-  ;;:demand t
   :bind* ("C-'" . swiper))            ; defaults to `isearch-forward-regexp'
 
 ;;------------------------------------------------------------------------------
 ;;;; ivy-rich
+;;
+;; More friendly display transformer for ivy.
 ;;------------------------------------------------------------------------------
 
 (init-message 3 "ivy-rich")
 
 (use-package ivy-rich
   :quelpa (ivy-rich)
+  :after (ivy counsel)
+  :init (ivy-rich-mode 1)
+  :config
+  ;; ignore exvm buffers
+  (let ((predicate (plist-get ivy-rich-display-transformers-list 'ivy-switch-buffer)))
+    (setq ivy-rich-display-transformers-list
+          (plist-put ivy-rich-display-transformers-list
+                     'ivy-switch-buffer
+                     `(:columns
+                       ,(plist-get predicate :columns)
+                       :predicate
+                       (lambda (cand)
+                         (if-let ((buffer (get-buffer cand)))
+                             (with-current-buffer buffer
+                               (not (derived-mode-p 'exwm-mode))))))))))
+
+;;------------------------------------------------------------------------------
+;;;; flx
+;;
+;; Improve sorting for fuzzy-matched results.
+;;------------------------------------------------------------------------------
+
+(init-message 3 "flx")
+
+(use-package flx
+  :quelpa (flx)
   :after (ivy)
-  ;;:demand t
-  :init (ivy-rich-mode 1))
+  :init
+  (setq ivy-flx-limit 10000))
+
+;;------------------------------------------------------------------------------
+;;;; ivy-prescient
+;;------------------------------------------------------------------------------
+
+(init-message 3 "ivy-prescient")
+
+(use-package prescient
+  :quelpa (prescient)
+  :after (ivy counsel)
+  :init (prescient-persist-mode 1))
+
+(use-package ivy-prescient
+  :quelpa (ivy-prescient)
+  :after (ivy counsel prescient)
+  :init (ivy-prescient-mode 1))
+
+;;------------------------------------------------------------------------------
+;;;; ivy-hydra
+;;
+;; Additional key bindings for Ivy.
+;;------------------------------------------------------------------------------
+
+;; (init-message 3 "ivy-hydra")
+
+;; (use-package ivy-hydra
+;;   :quelpa (ivy-hydra)
+;;   :after (ivy hydra))
 ;; ivy (counsel/swiper):1 ends here
 
 ;; [[file:init-emacs.org::*json][json:1]]
@@ -17077,6 +17085,17 @@ otherwise run `find-file-as-root'."
         `(("nullman" "http://www.blogger.com/api" ,user-mail-address "" "6007591")
           ("Nullman on Life" "http://www2.blogger.com/api" ,user-mail-address "" "6007591"))))
 ;; weblogger:1 ends here
+
+;; [[file:init-emacs.org::*wgrep][wgrep:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: wgrep
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: wgrep")
+
+(use-package wgrep
+  :quelpa (wgrep))
+;; wgrep:1 ends here
 
 ;; [[file:init-emacs.org::*which-key][which-key:1]]
 ;;------------------------------------------------------------------------------
