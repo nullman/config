@@ -1547,21 +1547,11 @@ KEYMAP defaults to `override-global-map'."
 
   ;; help commands
   ;; "C-h e" defaults to `view-echo-area-messages'
-  ;; (unbind-key "C-h e")
-  ;; (define-prefix-command 'help-find-map nil "Help Find Commands")
-  ;; (bind-keys* ("C-h e" . help-find-map))
-  ;; (bind-keys* :map help-find-map
-  ;;             ("e" . view-echo-area-messages)
-  ;;             ("f" . find-function)
-  ;;             ("k" . find-function-on-key)
-  ;;             ("l" . find-library)
-  ;;             ("v" . find-variable)
-  ;;             ("V" . apropos-value))
   (unbind-key "C-h e")
   (define-prefix-command 'help-find-map nil "Help Find Commands")
   (bind-keys* :prefix "C-h e"
               :prefix-map help-find-map
-              :menu-name "Help Find Commands 2"
+              :menu-name "Help Find Commands"
               ("e" . view-echo-area-messages)
               ("f" . find-function)
               ("k" . find-function-on-key)
@@ -1572,49 +1562,59 @@ KEYMAP defaults to `override-global-map'."
   ;; custom prefix launching point (M-space)
   (unbind-key "M-SPC")
   (define-prefix-command 'space-map nil "Space Prefix Launching Point")
-  (bind-keys* ("M-SPC" . space-map))
+  (bind-keys* :prefix "M-SPC"
+              :prefix-map space-map
+              :menu-name "Space Prefix Launching Point")
   (bind-keys* ("C-." . space-map))      ; in case the OS consumes M-SPC
 
   ;; menu
   (bind-keys :map space-map ("M-SPC" . tmm-menubar))
 
   ;; emacs commands
-  (define-prefix-command 'space-emacs-map nil "Emacs Commands")
-  (bind-keys :map space-map ("e" . space-emacs-map))
-  (bind-keys :map space-emacs-map
+  (bind-keys :map space-map
+             :prefix "e"
+             :prefix-map space-emacs-map
+             :menu-name "Emacs Commands"
              ("c" . emacs-lisp-byte-compile)
              ("d" . toggle-debug-on-error)
              ("m" . macrostep-mode)
              ("x" . regexp-builder))
   ;; emacs eval commands
-  (define-prefix-command 'space-emacs-eval-map nil "Emacs Eval Commands")
-  (bind-keys :map space-emacs-map ("e" . space-emacs-eval-map))
-  (bind-keys :map space-emacs-eval-map
+  (bind-keys :map space-emacs-map
+             :prefix "e"
+             :prefix-map space-emacs-eval-map
+             :menu-name "Emacs Eval Commands"
              ("b" . eval-buffer)
              ("r" . eval-region))
   ;; emacs format commands
-  (define-prefix-command 'space-emacs-format-map nil "Emacs Format Commands")
-  (bind-keys :map space-emacs-map ("f" . space-emacs-format-map))
-  (bind-keys :map space-emacs-format-map
+  (bind-keys :map space-emacs-map
+             :prefix "f"
+             :prefix-map space-emacs-format-map
+             :menu-name "Emacs Format Commands"
              ("j" . json-pretty-print-buffer)
              ("x" . xml-format))
   ;; emacs package commands
-  (define-prefix-command 'space-emacs-package-map nil "Emacs Package Commands")
-  (bind-keys :map space-emacs-map ("p" . space-emacs-package-map))
-  (bind-keys :map space-emacs-package-map
+  (bind-keys :map space-emacs-map
+             :prefix "p"
+             :prefix-map space-emacs-package-map
+             :menu-name "Emacs Package Commands"
              ("i" . package-install)
              ("l" . package-list-packages-no-fetch)
              ("L" . package-list-packages))
   ;; emacs run commands
-  (define-prefix-command 'space-emacs-run-map nil "Emacs Run Commands")
-  (bind-keys :map space-emacs-run-map ("r" . space-emacs-run-map))
+  (bind-keys :map space-emacs-map
+             :prefix "r"
+             :prefix-map space-emacs-run-map
+             :menu-name "Emacs Run Commands")
   (when (and (fboundp 'safe-load) (boundp 'emacs-home-dir))
     (defun safe-load-init-elisp ()
       (safe-load (expand-file-name "init.el" emacs-home-dir)))
     (bind-keys :map space-emacs-run-map ("i" . safe-load-init-elisp)))
   ;; emacs switch commands
-  (define-prefix-command 'space-emacs-switch-map nil "Emacs Switch Commands")
-  (bind-keys :map space-emacs-map ("s" . space-emacs-switch-map))
+  (bind-keys :map space-emacs-map
+             :prefix "s"
+             :prefix-map space-emacs-switch-map
+             :menu-name "Emacs Switch Commands")
   (when (fboundp 'switch-to-messages)
     (bind-keys :map space-emacs-switch-map ("m" . switch-to-messages)))
   (when (fboundp 'new-scratch)
@@ -1626,9 +1626,33 @@ KEYMAP defaults to `override-global-map'."
   (when (fboundp 'switch-to-scratch-for-current-mode)
     (bind-keys :map space-emacs-switch-map ("c" . switch-to-scratch-for-current-mode)))
 
+  ;; git commands
+  (bind-keys :map space-map
+             :prefix "g"
+             :prefix-map space-git-map
+             :menu-name "Git Commands"
+             ("b" . magit-branch)
+             ("c" . magit-branch-or-checkout)
+             ("d" . magit-diff-unstaged)
+             ("f" . magit-fetch)
+             ("F" . magit-fetch-all)
+             ("p" . magit-pull-branch)
+             ("P" . magit-push-current)
+             ("r" . magit-rebase)
+             ("s" . magit-status))
+  ;; git log commands
+  (bind-keys :map space-git-map
+             :prefix "l"
+             :prefix-map space-git-log-map
+             :menu-name "Git Log Commands"
+             ("l" . magit-log-current)
+             ("f" . magit-log-buffer-file))
+
   ;; grep commands
-  (define-prefix-command 'space-grep-map nil "Grep Commands")
-  (bind-keys :map space-map ("g" . space-grep-map))
+  (bind-keys :map space-map
+             :prefix "G"
+             :prefix-map space-grep-map
+             :menu-name "Grep Commands")
   (when (fboundp 'grep-bin)
     (bind-keys :map space-grep-map ("b" . grep-bin)))
   (when (fboundp 'grep-clojure)
@@ -1653,9 +1677,10 @@ KEYMAP defaults to `override-global-map'."
     (bind-keys :map space-grep-map ("w" . grep-web)))
 
   ;; browse-url commands
-  (define-prefix-command 'space-browse-url-map nil "Browse URL Commands")
-  (bind-keys :map space-map ("z" . space-browse-url-map))
-  (bind-keys :map space-browse-url-map
+  (bind-keys :map space-map
+             :prefix "z"
+             :prefix-map space-browse-url-map
+             :menu-name "Browse URL Commands"
              ("." . browse-url-at-point)
              ("b" . browse-url-of-buffer)
              ("r" . browse-url-of-region)
