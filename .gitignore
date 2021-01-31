@@ -23,6 +23,7 @@ _darcs
 # emacs files
 .+~                                     # emacs backup files
 \#.*\#                                  # emacs autosave files
+\.elc                                   # emacs byte-compile files
 
 # mac files
 \.DS_Store
