@@ -1570,61 +1570,21 @@ KEYMAP defaults to `override-global-map'."
   ;; menu
   (bind-keys :map space-map ("M-SPC" . tmm-menubar))
 
-  ;; emacs commands
+  ;; buffer commands
   (bind-keys :map space-map
-             :prefix "e"
-             :prefix-map space-emacs-map
-             :menu-name "Emacs Commands"
-             ("c" . emacs-lisp-byte-compile)
-             ("d" . toggle-debug-on-error)
-             ("m" . macrostep-mode)
-             ("x" . regexp-builder))
-  ;; emacs eval commands
-  (bind-keys :map space-emacs-map
-             :prefix "e"
-             :prefix-map space-emacs-eval-map
-             :menu-name "Emacs Eval Commands"
-             ("b" . eval-buffer)
-             ("r" . eval-region))
-  ;; emacs format commands
-  (bind-keys :map space-emacs-map
-             :prefix "f"
-             :prefix-map space-emacs-format-map
-             :menu-name "Emacs Format Commands"
-             ("j" . json-pretty-print-buffer)
-             ("x" . xml-format))
-  ;; emacs package commands
-  (bind-keys :map space-emacs-map
-             :prefix "p"
-             :prefix-map space-emacs-package-map
-             :menu-name "Emacs Package Commands"
-             ("i" . package-install)
-             ("l" . package-list-packages-no-fetch)
-             ("L" . package-list-packages))
-  ;; emacs run commands
-  (bind-keys :map space-emacs-map
-             :prefix "r"
-             :prefix-map space-emacs-run-map
-             :menu-name "Emacs Run Commands")
-  (when (and (fboundp 'safe-load) (boundp 'emacs-home-dir))
-    (defun safe-load-init-elisp ()
-      (safe-load (expand-file-name "init.el" emacs-home-dir)))
-    (bind-keys :map space-emacs-run-map ("i" . safe-load-init-elisp)))
-  ;; emacs switch commands
-  (bind-keys :map space-emacs-map
-             :prefix "s"
-             :prefix-map space-emacs-switch-map
-             :menu-name "Emacs Switch Commands")
+             :prefix "b"
+             :prefix-map space-buffer-map
+             :menu-name "Buffer Commands")
   (when (fboundp 'switch-to-messages)
-    (bind-keys :map space-emacs-switch-map ("m" . switch-to-messages)))
+    (bind-keys :map space-buffer-map ("m" . switch-to-messages)))
   (when (fboundp 'new-scratch)
-    (bind-keys :map space-emacs-switch-map ("n" . new-scratch)))
-  (when (fboundp 'new-emacs-lisp-scratch)
-    (bind-keys :map space-emacs-switch-map ("e" . new-emacs-lisp-scratch)))
+    (bind-keys :map space-buffer-map ("n" . new-scratch)))
+  (when (fboundp 'new-miscellaneous-lisp-scratch)
+    (bind-keys :map space-buffer-map ("e" . new-emacs-lisp-scratch)))
   (when (fboundp 'switch-to-scratch)
-    (bind-keys :map space-emacs-switch-map ("s" . switch-to-scratch)))
+    (bind-keys :map space-buffer-map ("s" . switch-to-scratch)))
   (when (fboundp 'switch-to-scratch-for-current-mode)
-    (bind-keys :map space-emacs-switch-map ("c" . switch-to-scratch-for-current-mode)))
+    (bind-keys :map space-buffer-map ("c" . switch-to-scratch-for-current-mode)))
 
   ;; git commands
   (bind-keys :map space-map
@@ -1675,6 +1635,72 @@ KEYMAP defaults to `override-global-map'."
     (bind-keys :map space-grep-map ("r" . grep-racket)))
   (when (fboundp 'grep-web)
     (bind-keys :map space-grep-map ("w" . grep-web)))
+
+  ;; insert commands
+  (bind-keys :map space-map
+             :prefix "i"
+             :prefix-map space-insert-map
+             :menu-name "Insert Commands"
+             ("d" . insert-date)
+             ("t" . insert-datetime)
+             ("u" . insert-uuid))
+  ;; insert org-babel commands
+  (bind-keys :map space-insert-map
+             :prefix "o"
+             :prefix-map space-insert-babel-map
+             :menu-name "Insert Org-Babel Commands"
+             ("b" . org-insert-literate-programming-src)
+             ("c" . org-insert-literate-programming-code-block)
+             ("e" . org-insert-literate-programming-src-emacs-lisp)
+             ("i" . org-insert-literate-programming-init-emacs-block)
+             ("k" . org-insert-literate-programming-src-kotlin)
+             ("n" . org-insert-literate-programming-name)
+             ("p" . org-insert-literate-programming-project-euler-problem-block)
+             ("r" . org-insert-literate-programming-src-racket)
+             ("s" . org-insert-literate-programming-src-sh))
+
+  ;; miscellaneous commands
+  (bind-keys :map space-map
+             :prefix "m"
+             :prefix-map space-miscellaneous-map
+             :menu-name "Miscellaneous Commands"
+             ("c" . emacs-lisp-byte-compile)
+             ("d" . toggle-debug-on-error)
+             ("m" . macrostep-mode)
+             ("x" . regexp-builder))
+  ;; miscellaneous eval commands
+  (bind-keys :map space-miscellaneous-map
+             :prefix "e"
+             :prefix-map space-miscellaneous-eval-map
+             :menu-name "Eval Commands"
+             ("b" . eval-buffer)
+             ("r" . eval-region))
+  ;; miscellaneous format commands
+  (bind-keys :map space-miscellaneous-map
+             :prefix "f"
+             :prefix-map space-miscellaneous-format-map
+             :menu-name "Format Commands"
+             ("j" . json-pretty-print-buffer)
+             ("x" . xml-format))
+
+  ;; package commands
+  (bind-keys :map space-map
+             :prefix "p"
+             :prefix-map space-package-map
+             :menu-name "Package Commands"
+             ("i" . package-install)
+             ("l" . package-list-packages-no-fetch)
+             ("L" . package-list-packages))
+
+  ;; run commands
+  (bind-keys :map space-map
+             :prefix "r"
+             :prefix-map space-run-map
+             :menu-name "Run Commands")
+  (when (and (fboundp 'safe-load) (boundp 'emacs-home-dir))
+    (defun safe-load-init-elisp ()
+      (safe-load (expand-file-name "init.el" emacs-home-dir)))
+    (bind-keys :map space-emacs-run-map ("i" . safe-load-init-elisp)))
 
   ;; browse-url commands
   (bind-keys :map space-map
@@ -15826,6 +15852,18 @@ User is prompted for WORD if none given."
                          (magit-get-remote nil)
                          "url"))
              (cdr (magit-get-push-branch))))))
+
+  ;;------------------------------------------------------------------------------
+  ;;;; forge
+  ;;
+  ;; Access Git forges from Magit.
+  ;;------------------------------------------------------------------------------
+
+  (init-message 3 "forge")
+
+  (use-package forge
+    :quelpa (forge)
+    :after (magit))
 ;; magit:1 ends here
 
 ;; [[file:init-emacs.org::*mingus][mingus:1]]
@@ -17641,6 +17679,8 @@ otherwise run `find-file-as-root'."
  '(("Org-Babel Inserts"
     (("Name" "org-insert-literate-programming-name" "Insert #+NAME.")
      ("Emacs Init Block" "org-insert-literate-programming-init-emacs-block" "Insert Emacs Init block.")
+     ("Code Block" "org-insert-literate-programming-code-block" "Insert Code block.")
+     ("Project Euler Block" "org-insert-literate-programming-project-euler-problem-block" "Insert Project Euler block.")
      ("Source Block" "org-insert-literate-programming-src" "Insert #+BEGIN_SRC ... #+END_SRC block.")
      ("Shell Block" "org-insert-literate-programming-src-sh" "Insert #+BEGIN_SRC sh ... #+END_SRC block.")
      ("Emacs Lisp Source Block" "org-insert-literate-programming-src-emacs-lisp" "Insert #+BEGIN_SRC emacs-lisp ... #+END_SRC block.")
