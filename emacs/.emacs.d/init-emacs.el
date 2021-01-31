@@ -12636,6 +12636,9 @@ Common values:
     (when (fboundp 'c-toggle-auto-hungry-state)
       (c-toggle-auto-hungry-state -1))
 
+    ;; disable tabs
+    (disable-tabs)
+
     ;; ;; key bindings for all supported languages
     ;; ;; can put these in c-mode-base-map because c-mode-map, c++-mode-map,
     ;; ;; objc-mode-map, java-mode-map, and idl-mode-map inherit from it
@@ -16600,14 +16603,32 @@ to open a file."
   :quelpa (projectile)
   :after (ivy)
   :diminish (projectile-mode . "Proj")
+  :bind* ("C-x p" . projectile-command-map)
+  :bind-keymap ("C-c p" . projectile-command-map)
   :custom
   ;; open the root directory when switching projects
-  (setq projectile-switch-project-action #'projectile-dired)
+  (projectile-switch-project-action #'projectile-dired)
   ;; use ivy
-  (setq projectile-completion-system 'ivy)
+  (projectile-completion-system 'ivy)
   :init
+  (dolist (x '("~/dev" "~/code" "~/web"))
+    (when (file-directory-p x)
+      (add-to-list 'projectile-project-search-path x)))
   ;; enable projectile globally
   (projectile-mode))
+
+;;------------------------------------------------------------------------------
+;;;; counsel-projectile
+;;
+;; Ivy integration for Projectile.
+;;------------------------------------------------------------------------------
+
+(init-message 3 "counsel-projectile")
+
+(use-package counsel-projectile
+  :quelpa (counsel-projectile)
+  :after (ivy counsel projectile)
+  :init (counsel-projectile-mode))
 ;; projectile:1 ends here
 
 ;; [[file:init-emacs.org::*ps-ccrypt][ps-ccrypt:1]]
