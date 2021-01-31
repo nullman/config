@@ -1359,7 +1359,6 @@ KEYMAP defaults to `override-global-map'."
   (when (fboundp 'delete-word)
     (bind-keys ("M-d" . delete-word))) ; defaults to `kill-word'
   (when (fboundp 'backward-delete-word)
-    (bind-keys ("C-S-d" . backward-delete-word))
     (bind-keys ("C-<backspace>" . backward-delete-word))) ; defaults to `backward-kill-word'
 
   ;; copy line
@@ -1548,10 +1547,21 @@ KEYMAP defaults to `override-global-map'."
 
   ;; help commands
   ;; "C-h e" defaults to `view-echo-area-messages'
+  ;; (unbind-key "C-h e")
+  ;; (define-prefix-command 'help-find-map nil "Help Find Commands")
+  ;; (bind-keys* ("C-h e" . help-find-map))
+  ;; (bind-keys* :map help-find-map
+  ;;             ("e" . view-echo-area-messages)
+  ;;             ("f" . find-function)
+  ;;             ("k" . find-function-on-key)
+  ;;             ("l" . find-library)
+  ;;             ("v" . find-variable)
+  ;;             ("V" . apropos-value))
   (unbind-key "C-h e")
   (define-prefix-command 'help-find-map nil "Help Find Commands")
-  (bind-keys* ("C-h e" . help-find-map))
-  (bind-keys* :map help-find-map
+  (bind-keys* :prefix "C-h e"
+              :prefix-map help-find-map
+              :menu-name "Help Find Commands 2"
               ("e" . view-echo-area-messages)
               ("f" . find-function)
               ("k" . find-function-on-key)
@@ -1574,28 +1584,47 @@ KEYMAP defaults to `override-global-map'."
   (bind-keys :map space-emacs-map
              ("c" . emacs-lisp-byte-compile)
              ("d" . toggle-debug-on-error)
-             ("eb" . eval-buffer)
-             ("er" . eval-region)
-             ("fj" . json-pretty-print-buffer)
-             ("fx" . xml-format)
              ("m" . macrostep-mode)
-             ("pl" . package-list-packages-no-fetch)
-             ("pL" . package-list-packages))
+             ("x" . regexp-builder))
+  ;; emacs eval commands
+  (define-prefix-command 'space-emacs-eval-map nil "Emacs Eval Commands")
+  (bind-keys :map space-emacs-map ("e" . space-emacs-eval-map))
+  (bind-keys :map space-emacs-eval-map
+             ("b" . eval-buffer)
+             ("r" . eval-region))
+  ;; emacs format commands
+  (define-prefix-command 'space-emacs-format-map nil "Emacs Format Commands")
+  (bind-keys :map space-emacs-map ("f" . space-emacs-format-map))
+  (bind-keys :map space-emacs-format-map
+             ("j" . json-pretty-print-buffer)
+             ("x" . xml-format))
+  ;; emacs package commands
+  (define-prefix-command 'space-emacs-package-map nil "Emacs Package Commands")
+  (bind-keys :map space-emacs-map ("p" . space-emacs-package-map))
+  (bind-keys :map space-emacs-package-map
+             ("i" . package-install)
+             ("l" . package-list-packages-no-fetch)
+             ("L" . package-list-packages))
+  ;; emacs run commands
+  (define-prefix-command 'space-emacs-run-map nil "Emacs Run Commands")
+  (bind-keys :map space-emacs-run-map ("r" . space-emacs-run-map))
   (when (and (fboundp 'safe-load) (boundp 'emacs-home-dir))
     (defun safe-load-init-elisp ()
       (safe-load (expand-file-name "init.el" emacs-home-dir)))
-    (bind-keys :map space-emacs-map ("ri" . safe-load-init-elisp)))
+    (bind-keys :map space-emacs-run-map ("i" . safe-load-init-elisp)))
+  ;; emacs switch commands
+  (define-prefix-command 'space-emacs-switch-map nil "Emacs Switch Commands")
+  (bind-keys :map space-emacs-map ("s" . space-emacs-switch-map))
   (when (fboundp 'switch-to-messages)
-    (bind-keys :map space-emacs-map ("sm" . switch-to-messages)))
+    (bind-keys :map space-emacs-switch-map ("m" . switch-to-messages)))
   (when (fboundp 'new-scratch)
-    (bind-keys :map space-emacs-map ("sn" . new-scratch)))
+    (bind-keys :map space-emacs-switch-map ("n" . new-scratch)))
   (when (fboundp 'new-emacs-lisp-scratch)
-    (bind-keys :map space-emacs-map ("se" . new-emacs-lisp-scratch)))
+    (bind-keys :map space-emacs-switch-map ("e" . new-emacs-lisp-scratch)))
   (when (fboundp 'switch-to-scratch)
-    (bind-keys :map space-emacs-map ("ss" . switch-to-scratch)))
+    (bind-keys :map space-emacs-switch-map ("s" . switch-to-scratch)))
   (when (fboundp 'switch-to-scratch-for-current-mode)
-    (bind-keys :map space-emacs-map ("sc" . switch-to-scratch-for-current-mode)))
-  (bind-keys :map space-emacs-map ("x" . regexp-builder))
+    (bind-keys :map space-emacs-switch-map ("c" . switch-to-scratch-for-current-mode)))
 
   ;; grep commands
   (define-prefix-command 'space-grep-map nil "Grep Commands")
@@ -15665,22 +15694,6 @@ User is prompted for WORD if none given."
   :after (ivy)
   :init
   (setq ivy-flx-limit 10000))
-
-;;------------------------------------------------------------------------------
-;;;; ivy-prescient
-;;------------------------------------------------------------------------------
-
-(init-message 3 "ivy-prescient")
-
-(use-package prescient
-  :quelpa (prescient)
-  :after (ivy counsel)
-  :init (prescient-persist-mode 1))
-
-(use-package ivy-prescient
-  :quelpa (ivy-prescient)
-  :after (ivy counsel prescient)
-  :init (ivy-prescient-mode 1))
 
 ;;------------------------------------------------------------------------------
 ;;;; ivy-hydra
