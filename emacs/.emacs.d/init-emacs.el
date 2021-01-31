@@ -3636,25 +3636,36 @@ Reset the CUSTOM_ID property, title comment, and `init-message'."
 (init-message 3 "Org Mode: Babel Functions: org-insert-literate-programming-statics")
 
 (defun org-insert-literate-programming-name ()
+  "Insert `org-babel' block NAME"
   (interactive "*")
   (insert "#+NAME: "))
 
 (defun org-insert-literate-programming-src ()
+  "Insert `org-babel' source block"
   (interactive "*")
   (insert "#+BEGIN_SRC\n\n#+END_SRC\n")
   (forward-line -2))
 
+(defun org-insert-literate-programming-src-sh ()
+  "Insert `org-babel' sh source block"
+  (interactive "*")
+  (insert "#+BEGIN_SRC sh\n\n#+END_SRC\n")
+  (forward-line -2))
+
 (defun org-insert-literate-programming-src-emacs-lisp ()
+  "Insert `org-babel' emacs-lisp source block"
   (interactive "*")
   (insert "#+BEGIN_SRC emacs-lisp\n\n#+END_SRC\n")
   (forward-line -2))
 
 (defun org-insert-literate-programming-src-racket ()
+  "Insert `org-babel' racket source block"
   (interactive "*")
   (insert "#+BEGIN_SRC racket\n\n#+END_SRC\n")
   (forward-line -2))
 
 (defun org-insert-literate-programming-src-kotlin ()
+  "Insert `org-babel' kotlin source block"
   (interactive "*")
   (insert "#+BEGIN_SRC kotlin\n\n#+END_SRC\n")
   (forward-line -2))
@@ -3885,10 +3896,11 @@ and update `org-visibility-state-file' with new state."
           (let ((visible-lines (org-visibility-get buffer)))
             (save-mark-and-excursion
               (dolist (x visible-lines)
-                (goto-char x)
-                (when (invisible-p (point))
-                  (forward-char -1)
-                  (org-cycle))))))))))
+                (ignore-errors
+                  (goto-char x)
+                  (when (invisible-p (point))
+                    (forward-char -1)
+                    (org-cycle)))))))))))
 
 (defun org-visibility-check-buffer-file-path (buffer)
   "Return whether BUFFER's file is in one of the paths in `org-visibility-paths'."
@@ -17630,6 +17642,7 @@ otherwise run `find-file-as-root'."
     (("Name" "org-insert-literate-programming-name" "Insert #+NAME.")
      ("Emacs Init Block" "org-insert-literate-programming-init-emacs-block" "Insert Emacs Init block.")
      ("Source Block" "org-insert-literate-programming-src" "Insert #+BEGIN_SRC ... #+END_SRC block.")
+     ("Shell Block" "org-insert-literate-programming-src-sh" "Insert #+BEGIN_SRC sh ... #+END_SRC block.")
      ("Emacs Lisp Source Block" "org-insert-literate-programming-src-emacs-lisp" "Insert #+BEGIN_SRC emacs-lisp ... #+END_SRC block.")
      ("Racket Source Block" "org-insert-literate-programming-src-racket" "Insert #+BEGIN_SRC racket ... #+END_SRC block.")
      ("Kotlin Source Block" "org-insert-literate-programming-src-kotlin" "Insert #+BEGIN_SRC kotlin ... #+END_SRC block.")))
