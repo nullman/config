@@ -1550,14 +1550,14 @@ KEYMAP defaults to `override-global-map'."
   ;; "C-h e" defaults to `view-echo-area-messages'
   (unbind-key "C-h e")
   (define-prefix-command 'help-find-map nil "Help Find Commands")
-  (bind-keys ("C-h e" . help-find-map))
-  (bind-keys :map help-find-map
-             ("e" . view-echo-area-messages)
-             ("f" . find-function)
-             ("k" . find-function-on-key)
-             ("l" . find-library)
-             ("v" . find-variable)
-             ("V" . apropos-value))
+  (bind-keys* ("C-h e" . help-find-map))
+  (bind-keys* :map help-find-map
+              ("e" . view-echo-area-messages)
+              ("f" . find-function)
+              ("k" . find-function-on-key)
+              ("l" . find-library)
+              ("v" . find-variable)
+              ("V" . apropos-value))
 
   ;; custom prefix launching point (M-space)
   (unbind-key "M-SPC")
@@ -14561,6 +14561,70 @@ Blank lines separate paragraphs.  Semicolons start comments.
   :commands (browse-kill-ring))
 ;; browse-kill-ring:1 ends here
 
+;; [[file:init-emacs.org::*bs][bs:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: bs
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: bs")
+
+;; original code by Scott Frazer
+(use-package bs
+  :quelpa (bs)
+  :demand t
+  :after (cycle-buffer)
+  ;; :bind* ("C-x C-b" . bs-show)           ; defaults to `list-buffers'
+  :bind* ([remap list-buffers] . bs-show)
+  :config
+  (defvar local-bs-always-show-regexps '("\\*\\(scratch\\|info\\|grep\\)\\*")
+    "*Buffer regexps to always show when buffer switching.")
+  (defvar local-bs-never-show-regexps '("^\\s-" "^\\*" "TAGS$" "^Map_Sym.txt$" "^magit")
+    "*Buffer regexps to never show when buffer switching.")
+  (defvar local-ido-ignore-dired-buffers nil
+    "*If non-nil, buffer switching should ignore dired buffers.")
+
+  (defun local-bs-string-in-regexps (string regexps)
+    "Return non-nil if STRING matches anything in REGEXPS list."
+    (let ((case-fold-search nil))
+      (catch 'done
+        (dolist (regexp regexps)
+          (when (string-match regexp string)
+            (throw 'done t))))))
+
+  (defun local-bs-ignore-buffer (buffer)
+    "Return non-nil if BUFFER should be ignored."
+    (or (and (not (local-bs-string-in-regexps buffer local-bs-always-show-regexps))
+             (local-bs-string-in-regexps buffer local-bs-never-show-regexps))
+        (and local-ido-ignore-dired-buffers
+             (with-current-buffer buffer
+               (equal major-mode 'dired-mode)))))
+
+  (defun bs-toggle-recent ()
+    "Toggle most recently visited buffers, ignoring certain ones."
+    (interactive)
+    (catch 'done
+      (dolist (buffer (buffer-list))
+        (unless (or (equal (current-buffer) buffer)
+                    (and (fboundp 'my-bs-ignore-buffer)
+                         (my-bs-ignore-buffer (buffer-name buffer))))
+          (switch-to-buffer buffer)
+          (throw 'done t)))))
+
+  ;; config bs
+  (setq bs-configurations
+        '(("all" nil nil nil nil nil)
+          ("files" nil nil nil (lambda (buffer) (local-bs-ignore-buffer (buffer-name buffer))) nil))
+        bs-cycle-configuration-name "files")
+
+  ;; ;; add ignore rules to ido
+  ;; (setq ido-ignore-buffers '(local-bs-ignore-buffer))
+
+  (defun local-bs-cycle-buffer-filter-extra ()
+    "Add ignore rules to `cycle-buffer'."
+    (not (local-bs-ignore-buffer (buffer-name))))
+  (add-to-list 'cycle-buffer-filter-extra '(local-bs-cycle-buffer-filter-extra) t))
+;; bs:1 ends here
+
 ;; [[file:init-emacs.org::*calc][calc:1]]
 ;;------------------------------------------------------------------------------
 ;;; Modules: calc
@@ -15490,23 +15554,6 @@ User is prompted for WORD if none given."
   :bind* (("C-x C-r" . ivy-resume)      ; defaults to `find-file-read-only'
           ("C-x b" . ivy-switch-buffer) ; defaults to `switch-to-buffer'
           ("C-x O" . ivy-switch-buffer-other-window)) ; defaults to `other-window'
-  ;; :bind (:map ivy-minibuffer-map
-  ;;             :map ivy-switch-buffer-map
-  ;;             :map ivy-reverse-i-search-map
-  ;;             :map ivy-occur-mode-map
-  ;;             :map ivy-occur-grep-mode-map
-  ;;                ("M-i" . helm-previous-line)
-  ;;                ("M-k" . helm-next-line)
-  ;;                ("M-j" . left-char)
-  ;;                ("M-i" . right-char)
-  ;;                ("C-M-u" . backward-paragraph)
-  ;;                ("C-M-o" . forward-paragraph)
-  ;;                ("M-u" . left-word)
-  ;;                ("M-o" . right-word)
-  ;;                ("C-M-i" . helm-previous-page)
-  ;;                ("C-M-k" . helm-next-page)
-  ;;                ("C-M-j" . move-beginning-of-line)
-  ;;                ("C-M-l" . move-end-of-line)
   :custom
   ;; add recent files and bookmarks to `ivy-switch-buffer'
   (ivy-use-virtual-buffers t)
@@ -15550,7 +15597,7 @@ User is prompted for WORD if none given."
   :bind* (("M-x" . counsel-M-x)
           ;;("C-x b" . counsel-ibuffer)   ; defaults to `ivy-switch-buffer'
           ;;("C-x C-b" . counsel-switch-buffer)   ; defaults to `list-buffers'
-          ([remap list-buffers] . counsel-switch-buffer)
+          ;;([remap list-buffers] . counsel-switch-buffer)
           ("C-x C-f" . counsel-find-file)
           ("C-h f" . counsel-describe-function)
           ("C-h v" . counsel-describe-variable)
