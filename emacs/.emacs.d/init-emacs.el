@@ -1359,7 +1359,6 @@ KEYMAP defaults to `override-global-map'."
   (when (fboundp 'delete-word)
     (bind-keys ("M-d" . delete-word))) ; defaults to `kill-word'
   (when (fboundp 'backward-delete-word)
-    (bind-keys ("C-S-d" . backward-delete-word))
     (bind-keys ("C-<backspace>" . backward-delete-word))) ; defaults to `backward-kill-word'
 
   ;; copy line
@@ -1550,56 +1549,70 @@ KEYMAP defaults to `override-global-map'."
   ;; "C-h e" defaults to `view-echo-area-messages'
   (unbind-key "C-h e")
   (define-prefix-command 'help-find-map nil "Help Find Commands")
-  (bind-keys ("C-h e" . help-find-map))
-  (bind-keys :map help-find-map
-             ("e" . view-echo-area-messages)
-             ("f" . find-function)
-             ("k" . find-function-on-key)
-             ("l" . find-library)
-             ("v" . find-variable)
-             ("V" . apropos-value))
+  (bind-keys* :prefix "C-h e"
+              :prefix-map help-find-map
+              :menu-name "Help Find Commands"
+              ("e" . view-echo-area-messages)
+              ("f" . find-function)
+              ("k" . find-function-on-key)
+              ("l" . find-library)
+              ("v" . find-variable)
+              ("V" . apropos-value))
 
   ;; custom prefix launching point (M-space)
   (unbind-key "M-SPC")
   (define-prefix-command 'space-map nil "Space Prefix Launching Point")
-  (bind-keys* ("M-SPC" . space-map))
+  (bind-keys* :prefix "M-SPC"
+              :prefix-map space-map
+              :menu-name "Space Prefix Launching Point")
   (bind-keys* ("C-." . space-map))      ; in case the OS consumes M-SPC
 
   ;; menu
   (bind-keys :map space-map ("M-SPC" . tmm-menubar))
 
-  ;; emacs commands
-  (define-prefix-command 'space-emacs-map nil "Emacs Commands")
-  (bind-keys :map space-map ("e" . space-emacs-map))
-  (bind-keys :map space-emacs-map
-             ("c" . emacs-lisp-byte-compile)
-             ("d" . toggle-debug-on-error)
-             ("eb" . eval-buffer)
-             ("er" . eval-region)
-             ("fj" . json-pretty-print-buffer)
-             ("fx" . xml-format)
-             ("m" . macrostep-mode)
-             ("pl" . package-list-packages-no-fetch)
-             ("pL" . package-list-packages))
-  (when (and (fboundp 'safe-load) (boundp 'emacs-home-dir))
-    (defun safe-load-init-elisp ()
-      (safe-load (expand-file-name "init.el" emacs-home-dir)))
-    (bind-keys :map space-emacs-map ("ri" . safe-load-init-elisp)))
+  ;; buffer commands
+  (bind-keys :map space-map
+             :prefix "b"
+             :prefix-map space-buffer-map
+             :menu-name "Buffer Commands")
   (when (fboundp 'switch-to-messages)
-    (bind-keys :map space-emacs-map ("sm" . switch-to-messages)))
+    (bind-keys :map space-buffer-map ("m" . switch-to-messages)))
   (when (fboundp 'new-scratch)
-    (bind-keys :map space-emacs-map ("sn" . new-scratch)))
-  (when (fboundp 'new-emacs-lisp-scratch)
-    (bind-keys :map space-emacs-map ("se" . new-emacs-lisp-scratch)))
+    (bind-keys :map space-buffer-map ("n" . new-scratch)))
+  (when (fboundp 'new-miscellaneous-lisp-scratch)
+    (bind-keys :map space-buffer-map ("e" . new-emacs-lisp-scratch)))
   (when (fboundp 'switch-to-scratch)
-    (bind-keys :map space-emacs-map ("ss" . switch-to-scratch)))
+    (bind-keys :map space-buffer-map ("s" . switch-to-scratch)))
   (when (fboundp 'switch-to-scratch-for-current-mode)
-    (bind-keys :map space-emacs-map ("sc" . switch-to-scratch-for-current-mode)))
-  (bind-keys :map space-emacs-map ("x" . regexp-builder))
+    (bind-keys :map space-buffer-map ("c" . switch-to-scratch-for-current-mode)))
+
+  ;; git commands
+  (bind-keys :map space-map
+             :prefix "g"
+             :prefix-map space-git-map
+             :menu-name "Git Commands"
+             ("b" . magit-branch)
+             ("c" . magit-branch-or-checkout)
+             ("d" . magit-diff-unstaged)
+             ("f" . magit-fetch)
+             ("F" . magit-fetch-all)
+             ("p" . magit-pull-branch)
+             ("P" . magit-push-current)
+             ("r" . magit-rebase)
+             ("s" . magit-status))
+  ;; git log commands
+  (bind-keys :map space-git-map
+             :prefix "l"
+             :prefix-map space-git-log-map
+             :menu-name "Git Log Commands"
+             ("l" . magit-log-current)
+             ("f" . magit-log-buffer-file))
 
   ;; grep commands
-  (define-prefix-command 'space-grep-map nil "Grep Commands")
-  (bind-keys :map space-map ("g" . space-grep-map))
+  (bind-keys :map space-map
+             :prefix "G"
+             :prefix-map space-grep-map
+             :menu-name "Grep Commands")
   (when (fboundp 'grep-bin)
     (bind-keys :map space-grep-map ("b" . grep-bin)))
   (when (fboundp 'grep-clojure)
@@ -1623,10 +1636,77 @@ KEYMAP defaults to `override-global-map'."
   (when (fboundp 'grep-web)
     (bind-keys :map space-grep-map ("w" . grep-web)))
 
+  ;; insert commands
+  (bind-keys :map space-map
+             :prefix "i"
+             :prefix-map space-insert-map
+             :menu-name "Insert Commands"
+             ("d" . insert-date)
+             ("t" . insert-datetime)
+             ("u" . insert-uuid))
+  ;; insert org-babel commands
+  (bind-keys :map space-insert-map
+             :prefix "o"
+             :prefix-map space-insert-babel-map
+             :menu-name "Insert Org-Babel Commands"
+             ("b" . org-insert-literate-programming-src)
+             ("c" . org-insert-literate-programming-code-block)
+             ("e" . org-insert-literate-programming-src-emacs-lisp)
+             ("i" . org-insert-literate-programming-init-emacs-block)
+             ("k" . org-insert-literate-programming-src-kotlin)
+             ("n" . org-insert-literate-programming-name)
+             ("p" . org-insert-literate-programming-project-euler-problem-block)
+             ("r" . org-insert-literate-programming-src-racket)
+             ("s" . org-insert-literate-programming-src-sh))
+
+  ;; miscellaneous commands
+  (bind-keys :map space-map
+             :prefix "m"
+             :prefix-map space-miscellaneous-map
+             :menu-name "Miscellaneous Commands"
+             ("c" . emacs-lisp-byte-compile)
+             ("d" . toggle-debug-on-error)
+             ("m" . macrostep-mode)
+             ("x" . regexp-builder))
+  ;; miscellaneous eval commands
+  (bind-keys :map space-miscellaneous-map
+             :prefix "e"
+             :prefix-map space-miscellaneous-eval-map
+             :menu-name "Eval Commands"
+             ("b" . eval-buffer)
+             ("r" . eval-region))
+  ;; miscellaneous format commands
+  (bind-keys :map space-miscellaneous-map
+             :prefix "f"
+             :prefix-map space-miscellaneous-format-map
+             :menu-name "Format Commands"
+             ("j" . json-pretty-print-buffer)
+             ("x" . xml-format))
+
+  ;; package commands
+  (bind-keys :map space-map
+             :prefix "p"
+             :prefix-map space-package-map
+             :menu-name "Package Commands"
+             ("i" . package-install)
+             ("l" . package-list-packages-no-fetch)
+             ("L" . package-list-packages))
+
+  ;; run commands
+  (bind-keys :map space-map
+             :prefix "r"
+             :prefix-map space-run-map
+             :menu-name "Run Commands")
+  (when (and (fboundp 'safe-load) (boundp 'emacs-home-dir))
+    (defun safe-load-init-elisp ()
+      (safe-load (expand-file-name "init.el" emacs-home-dir)))
+    (bind-keys :map space-emacs-run-map ("i" . safe-load-init-elisp)))
+
   ;; browse-url commands
-  (define-prefix-command 'space-browse-url-map nil "Browse URL Commands")
-  (bind-keys :map space-map ("z" . space-browse-url-map))
-  (bind-keys :map space-browse-url-map
+  (bind-keys :map space-map
+             :prefix "z"
+             :prefix-map space-browse-url-map
+             :menu-name "Browse URL Commands"
              ("." . browse-url-at-point)
              ("b" . browse-url-of-buffer)
              ("r" . browse-url-of-region)
@@ -3582,25 +3662,36 @@ Reset the CUSTOM_ID property, title comment, and `init-message'."
 (init-message 3 "Org Mode: Babel Functions: org-insert-literate-programming-statics")
 
 (defun org-insert-literate-programming-name ()
+  "Insert `org-babel' block NAME"
   (interactive "*")
   (insert "#+NAME: "))
 
 (defun org-insert-literate-programming-src ()
+  "Insert `org-babel' source block"
   (interactive "*")
   (insert "#+BEGIN_SRC\n\n#+END_SRC\n")
   (forward-line -2))
 
+(defun org-insert-literate-programming-src-sh ()
+  "Insert `org-babel' sh source block"
+  (interactive "*")
+  (insert "#+BEGIN_SRC sh\n\n#+END_SRC\n")
+  (forward-line -2))
+
 (defun org-insert-literate-programming-src-emacs-lisp ()
+  "Insert `org-babel' emacs-lisp source block"
   (interactive "*")
   (insert "#+BEGIN_SRC emacs-lisp\n\n#+END_SRC\n")
   (forward-line -2))
 
 (defun org-insert-literate-programming-src-racket ()
+  "Insert `org-babel' racket source block"
   (interactive "*")
   (insert "#+BEGIN_SRC racket\n\n#+END_SRC\n")
   (forward-line -2))
 
 (defun org-insert-literate-programming-src-kotlin ()
+  "Insert `org-babel' kotlin source block"
   (interactive "*")
   (insert "#+BEGIN_SRC kotlin\n\n#+END_SRC\n")
   (forward-line -2))
@@ -3747,7 +3838,7 @@ heading, properties, source block with title comment, and test block."
 
 ;; list of directories and files to automatically persist and
 ;; restore visibility state
-(defcustom org-visibility-paths `(,(file-truename "~/.emacs.d")
+(defcustom org-visibility-paths `(,(file-truename "~/.emacs.d/init-emacs.org")
                                   ,(file-truename "~/dev")
                                   ,(file-truename "~/doc/bbs")
                                   ,(file-truename "~/org")
@@ -3831,10 +3922,11 @@ and update `org-visibility-state-file' with new state."
           (let ((visible-lines (org-visibility-get buffer)))
             (save-mark-and-excursion
               (dolist (x visible-lines)
-                (goto-char x)
-                (when (invisible-p (point))
-                  (forward-char -1)
-                  (org-cycle))))))))))
+                (ignore-errors
+                  (goto-char x)
+                  (when (invisible-p (point))
+                    (forward-char -1)
+                    (org-cycle)))))))))))
 
 (defun org-visibility-check-buffer-file-path (buffer)
   "Return whether BUFFER's file is in one of the paths in `org-visibility-paths'."
@@ -7450,14 +7542,15 @@ Cursor is left at current column in newly created line."
       (when (or (eq major-mode 'emacs-lisp-mode)
                 (eq major-mode 'lisp-mode))
         (save-mark-and-excursion
-          (forward-line -1)
-          (goto-char (line-beginning-position))
-          (forward-sexp)
-          (when (looking-at "\\()+\\)[ \t]*;")
-            (replace-match (make-string (length (match-string 1)) ?\s) nil nil nil 1))
-          (when (looking-at ")+")
-            (replace-match ""))
-          (forward-line 1))))))
+          (ignore-errors
+            (forward-line -1)
+            (goto-char (line-beginning-position))
+            (forward-sexp)
+            (when (looking-at "\\()+\\)[ \t]*;")
+              (replace-match (make-string (length (match-string 1)) ?\s) nil nil nil 1))
+            (when (looking-at ")+")
+              (replace-match ""))
+            (forward-line 1)))))))
 ;; duplicate-line:1 ends here
 
 ;; [[file:init-emacs.org::*duplicate-line-inc][duplicate-line-inc:1]]
@@ -12581,6 +12674,9 @@ Common values:
     (when (fboundp 'c-toggle-auto-hungry-state)
       (c-toggle-auto-hungry-state -1))
 
+    ;; disable tabs
+    (disable-tabs)
+
     ;; ;; key bindings for all supported languages
     ;; ;; can put these in c-mode-base-map because c-mode-map, c++-mode-map,
     ;; ;; objc-mode-map, java-mode-map, and idl-mode-map inherit from it
@@ -14181,9 +14277,8 @@ Blank lines separate paragraphs.  Semicolons start comments.
 
 (use-package abbrev
   :diminish abbrev-mode
-  :commands (abbrev-mode
-             quietly-read-abbrev-file
-             write-abbrev-file)
+  :custom
+  (save-abbrevs 'silently)
   :init
   (defconst abbrev-file
     (expand-file-name "~/.abbrev_defs")
@@ -14194,7 +14289,6 @@ Blank lines separate paragraphs.  Semicolons start comments.
   :config
   (setq dabbrev-case-replace nil) ; preserve case when replacing abbreviations
   (quietly-read-abbrev-file abbrev-file)
-  (setq save-abbrevs 'silently)
   (defun local-kill-emacs-hook-write-abbrev-file ()
     (write-abbrev-file abbrev-file))
   (add-hook 'kill-emacs-hook #'local-kill-emacs-hook-write-abbrev-file))
@@ -14210,8 +14304,7 @@ Blank lines separate paragraphs.  Semicolons start comments.
 (use-package ag
   :quelpa (ag)
   :commands (ag)
-  :config
-  (setq ag-arguments (list "--smart-case" "--stats")))
+  :custom (ag-arguments (list "--smart-case" "--stats")))
 ;; ag:1 ends here
 
 ;; [[file:init-emacs.org::*alert][alert:1]]
@@ -14224,8 +14317,7 @@ Blank lines separate paragraphs.  Semicolons start comments.
 (use-package alert
   :quelpa (alert)
   :commands (alert)
-  :config
-  (setq alert-default-style 'libnotify))
+  :custom (alert-default-style 'libnotify))
 ;; alert:1 ends here
 
 ;; [[file:init-emacs.org::*analog-clock][analog-clock:1]]
@@ -14238,13 +14330,12 @@ Blank lines separate paragraphs.  Semicolons start comments.
 (use-package analog-clock
   :quelpa (analog-clock :fetcher url :url "http://yrk.nfshost.com/repos/analog-clock/analog-clock.el")
   :commands (analog-clock analog-clock-draw-analog)
-  :config
+  :custom
   ;; draw an analog clock
-  (setq analog-clock-draw-function #'analog-clock-draw-analog)
-
+  (analog-clock-draw-function #'analog-clock-draw-analog)
   ;; draw a digital clock
-  ;;(setq analog-clock-draw-function #'analog-clock-draw-ssd)
-
+  ;;(analog-clock-draw-function #'analog-clock-draw-ssd)
+  :init
   ;; screen saver mode (sort of)
   ;;(run-with-idle-timer 600 t #'analog-clock)
   )
@@ -14280,13 +14371,11 @@ Blank lines separate paragraphs.  Semicolons start comments.
 
 (use-package auto-compile
   :quelpa (auto-compile)
-  :commands (auto-compile-on-load-mode
-             auto-compile-on-save-mode)
+  :custom
+  (load-prefer-newer t)
   :init
   (auto-compile-on-load-mode 1)
-  (auto-compile-on-save-mode 1)
-  :config
-  (setq load-prefer-newer t))
+  (auto-compile-on-save-mode 1))
 ;; auto-compile:1 ends here
 
 ;; [[file:init-emacs.org::*avy][avy:1]]
@@ -14298,9 +14387,6 @@ Blank lines separate paragraphs.  Semicolons start comments.
 
 (use-package avy
   :quelpa (avy)
-  :commands (avy-goto-char
-             avy-goto-char-in-line
-             avy-goto-word-or-subword-1)
   :bind* (("C-;" . avy-goto-char)
           ("C-M-;" . pop-to-mark-command)
           ("C-x ." . avy-goto-word-or-subword-1)
@@ -14316,7 +14402,6 @@ Blank lines separate paragraphs.  Semicolons start comments.
 
 (use-package bash-completion
   :quelpa (bash-completion)
-  :commands (bash-completion-setup)
   :init (bash-completion-setup))
 ;; bash-completion:1 ends here
 
@@ -14329,8 +14414,6 @@ Blank lines separate paragraphs.  Semicolons start comments.
 
 (use-package bbdb
   :quelpa (bbdb)
-  :commands (bbdb
-             bbdb-initialize)
   :init
   ;;(bbdb-initialize)
   ;;(bbdb-initialize 'gnus 'message 'sc 'w3)
@@ -14500,11 +14583,12 @@ Blank lines separate paragraphs.  Semicolons start comments.
 
 (use-package beacon
   :quelpa (beacon)
-  :init (beacon-mode 1)
-  :config
-  ;; speeding up the delay and duration (they default to 0.3)
-  (setq beacon-delay 0.1
-        beacon-blink-duration 0.1))
+  :custom
+  ;; speed up duration (defaults to 0.3)
+  (beacon-blink-duration 0.1)
+  ;; speed up delay (defaults to 0.3)
+  (beacon-delay 0.1)
+  :init (beacon-mode 1))
 ;; beacon:1 ends here
 
 ;; [[file:init-emacs.org::*boxquote][boxquote:1]]
@@ -14516,20 +14600,6 @@ Blank lines separate paragraphs.  Semicolons start comments.
 
 (use-package boxquote
   :quelpa (boxquote)
-  :commands (boxquote-buffer
-             boxquote-describe-function
-             boxquote-describe-key
-             boxquote-describe-variable
-             boxquote-insert-file
-             boxquote-kill
-             boxquote-narrow-to-boxquote
-             boxquote-paragraph
-             boxquote-region
-             boxquote-shell-command
-             boxquote-title
-             boxquote-unbox-region
-             boxquote-where-is
-             boxquote-yank)
   :init (unbind-key "C-c b")
   :bind (("C-c by" . boxquote-yank)
          ("C-c br" . boxquote-region)
@@ -14556,8 +14626,8 @@ Blank lines separate paragraphs.  Semicolons start comments.
 
 (use-package browse-kill-ring
   :quelpa (browse-kill-ring)
-  :bind* ("C-M-_" . browse-kill-ring)
-  :commands (browse-kill-ring))
+  :bind* (("M-y" . browse-kill-ring)
+          ("C-M-_" . browse-kill-ring)))
 ;; browse-kill-ring:1 ends here
 
 ;; [[file:init-emacs.org::*bs][bs:1]]
@@ -14570,7 +14640,6 @@ Blank lines separate paragraphs.  Semicolons start comments.
 ;; original code by Scott Frazer
 (use-package bs
   :quelpa (bs)
-  :demand t
   :after (cycle-buffer)
   ;; :bind* ("C-x C-b" . bs-show)           ; defaults to `list-buffers'
   :bind* ([remap list-buffers] . bs-show)
@@ -14647,21 +14716,8 @@ Blank lines separate paragraphs.  Semicolons start comments.
 
 (use-package semantic
   :after (cedet)
-  :commands (semantic-mode)
   :init (semantic-mode 1))
 ;; cedet/semantic:1 ends here
-
-;; [[file:init-emacs.org::*centered-cursor-mode][centered-cursor-mode:1]]
-;;------------------------------------------------------------------------------
-;;; Modules: centered-cursor-mode
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modules: centered-cursor-mode")
-
-(use-package centered-cursor-mode
-  :quelpa (centered-cursor-mode)
-  :commands (centered-cursor-mode))
-;; centered-cursor-mode:1 ends here
 
 ;; [[file:init-emacs.org::*command-log][command-log:1]]
 ;;------------------------------------------------------------------------------
@@ -14697,18 +14753,16 @@ Blank lines separate paragraphs.  Semicolons start comments.
 
 (use-package company
   :quelpa (company)
-  :demand t
   :diminish company-mode
-  :commands (company-mode
-             company-select-next
-             company-select-previous
-             global-company-mode)
   :bind (:map company-active-map
               ("C-n" . company-select-next)
-              ("C-p" . company-select-previous))
+              ("C-p" . company-select-previous)
+              ("M-k" . company-select-next)
+              ("M-i" . company-select-previous))
+  :custom
+  (company-auto-commit nil)
+  (company-idle-delay 1.0)
   :init
-  (setq company-auto-complete nil
-        company-idle-delay 1.0)
   (global-company-mode 1)
   (add-hook 'after-init-hook #'global-company-mode)
   :config
@@ -14758,12 +14812,14 @@ Blank lines separate paragraphs.  Semicolons start comments.
 (init-message 2 "Modules: compile")
 
 (use-package compile
+  :custom
+  ;; auto save all modified buffers without asking
+  (compilation-ask-about-save nil)
+  ;; auto scroll compilation buffer
+  (compilation-scroll-output 'next-error)
+  ;; skip info and warnings
+  (compilation-skip-threshold 2)
   :config
-  ;; auto scroll compilation buffer to next error
-  (setq compilation-ask-about-save nil
-        compilation-scroll-output 'next-error
-        compilation-skip-threshold 2)     ; skip info and warnings
-
   ;; display compilation time in compile log
   ;; source: https://emacs.stackexchange.com/questions/31493/print-elapsed-time-in-compilation-buffer/56130#56130
 
@@ -14790,12 +14846,6 @@ Blank lines separate paragraphs.  Semicolons start comments.
 
 (use-package cycle-buffer
   :quelpa (cycle-buffer :fetcher url :url "https://raw.githubusercontent.com/emacsmirror/emacswiki.org/master/cycle-buffer.el")
-  :demand t
-  :commands (cycle-buffer
-             cycle-buffer-backward
-             cycle-buffer-permissive
-             cycle-buffer-backward-permissive
-             cycle-buffer-toggle-interesting)
   :bind* (("C-x C-n" . cycle-buffer)          ; defaults to `set-goal-column'
           ("C-x C-p" . cycle-buffer-backward) ; defaults to `mark-page'
           ("<f9>" . cycle-buffer-backward)
@@ -14824,9 +14874,7 @@ Blank lines separate paragraphs.  Semicolons start comments.
 
 (use-package css-mode
   :mode ("\\.css\\'" . css-mode)
-  :commands (css-mode cssm-c-style-indenter)
-  :config
-  (setq cssm-indent-function #'cssm-c-style-indenter))
+  :custom (cssm-indent-function #'cssm-c-style-indenter))
 ;; css-mode:1 ends here
 
 ;; [[file:init-emacs.org::*cua][cua:1]]
@@ -14837,23 +14885,21 @@ Blank lines separate paragraphs.  Semicolons start comments.
 (init-message 2 "Modules: cua")
 
 (use-package cua-base
-  :demand t
   ;; :bind* ("C-@" . cua-set-mark)
+  :custom
+  ;; do not tabify after rectangle commands
+  (cua-auto-tabify-rectangles nil)
+  ;; ;; standard windows behaviour
+  ;; (cua-keep-region-after-copy nil)
+  ;; use shifted prefix keys to inhitibt C-x/c/v overrides (C-S-x, C-S-c, and C-S-v)
+  (cua-prefix-override-inhibit-delay 0.1) ; defaults to 0.2
   :init
   ;; turn on cua mode with C-x/c/v support
   (cua-mode t)
-  :config
-  ;; do not tabify after rectangle commands
-  (setq cua-auto-tabify-rectangles nil)
 
+  :config
   ;; no region when it is not highlighted
   (transient-mark-mode t)
-
-  ;; ;; standard windows behaviour
-  ;; (setq cua-keep-region-after-copy nil)
-
-  ;; use shifted prefix keys to inhitibt C-x/c/v overrides (C-S-x, C-S-c, and C-S-v)
-  (setq cua-prefix-override-inhibit-delay 0.1) ; defaults to 0.2
 
   ;; ;; customize keybindings
   ;; (defun local-cua-rectangle-mark-mode-hook ()
@@ -14885,9 +14931,8 @@ Blank lines separate paragraphs.  Semicolons start comments.
 
 (use-package define-word
   :quelpa (define-word)
-  :commands (define-word define-word-at-point)
-  :bind (("<f5>" . define-word-after-spell-check)
-         ("S-<f5>" . define-word-at-point))
+  :bind* (("<f5>" . define-word-after-spell-check)
+          ("S-<f5>" . define-word-at-point))
   :config
   (defun define-word-after-spell-check (word service &optional choose-service)
     "Define WORD using various services after spell checking WORD.
@@ -14936,11 +14981,11 @@ Uses `ispell--run-on-word' to spell check word."
 (use-package doom-modeline
   :quelpa (doom-modeline)
   :after (all-the-icons)
+  :custom
+  ;; customizations
+  (doom-modeline-height 30)
   :init (doom-modeline-mode 1)
   :config
-  ;; customizations
-  (setq doom-modeline-height 30)
-
   ;; show line number in modeline
   (line-number-mode 1)
 
@@ -14974,9 +15019,6 @@ Uses `ispell--run-on-word' to spell check word."
 
 (use-package easy-kill
   :quelpa (easy-kill)
-  :demand t
-  :commands (easy-kill
-             easy-mark)
   :bind* (([remap kill-ring-save] . easy-kill)
           ([remap mark-sexp] . easy-mark)))
 ;; easy-kill:1 ends here
@@ -14989,9 +15031,9 @@ Uses `ispell--run-on-word' to spell check word."
 (init-message 2 "Modules: eldoc")
 
 (use-package eldoc
-  :config
+  :custom
   ;; no idle delay before showing contextual information
-  (setq eldoc-idle-delay 0))
+  (eldoc-idle-delay 0))
 ;; eldoc:1 ends here
 
 ;; [[file:init-emacs.org::*elfeed][elfeed:1]]
@@ -15009,10 +15051,10 @@ Uses `ispell--run-on-word' to spell check word."
   :bind (:map elfeed-show-mode-map
               ("h" . elfeed-show-mode-help)
               ("?" . elfeed-show-mode-help))
-  :config
+  :custom
   ;; standard filters
-  (setq-default elfeed-search-filter "-junk +unread")
-
+  (elfeed-search-filter "-junk +unread")
+  :config
   ;; increase default text size in `elfeed-show' buffers
   (defun local-elfeed-show-mode-hook ()
     ;; increase default text size
@@ -15187,7 +15229,7 @@ Uses `ispell--run-on-word' to spell check word."
 (use-package expand-region
   :quelpa (expand-region)
   :bind* (("C-=" . er/expand-region)     ; defaults to `count-lines-region'
-          ("M-=" . er/contract-region))) ; defaults to `count-lines-region'
+          ("C--" . er/contract-region))) ; defaults to `negative-argument'
 ;; expand-region:1 ends here
 
 ;; [[file:init-emacs.org::*flycheck][flycheck:1]]
@@ -15229,10 +15271,11 @@ Uses `ispell--run-on-word' to spell check word."
   :commands (flyspell-mode
              flyspell-mode-off
              flyspell-prog-mode)
-  :config
-  (setq flyspell-issue-welcome-flag nil ; this fixes the "enabling flyspell mode gave an error" bug
-        flyspell-sort-corrections nil
-        flyspell-use-meta-tab nil))
+  :custom
+  ;; this fixes the "enabling flyspell mode gave an error" bug
+  (flyspell-issue-welcome-flag nil)
+  (flyspell-sort-corrections nil)
+  (flyspell-use-meta-tab nil))
 ;; flyspell:1 ends here
 
 ;; [[file:init-emacs.org::*fuzzy][fuzzy:1]]
@@ -15244,7 +15287,6 @@ Uses `ispell--run-on-word' to spell check word."
 
 (use-package fuzzy
   :quelpa (fuzzy)
-  :commands (turn-on-fuzzy-isearch)
   :init (turn-on-fuzzy-isearch))
 ;; fuzzy:1 ends here
 
@@ -15293,19 +15335,19 @@ Uses `ispell--run-on-word' to spell check word."
 
 (use-package hippie-exp
   :bind* ("M-/" . hippie-expand)
-  :config
-  (setq hippie-expand-try-functions-list
-        '(try-expand-dabbrev
-          try-expand-dabbrev-all-buffers
-          try-expand-dabbrev-from-kill
-          try-complete-file-name-partially
-          try-complete-file-name
-          try-expand-all-abbrevs
-          try-expand-list
-          try-expand-line
-          try-complete-lisp-symbol-partially
-          try-complete-lisp-symbol
-          yas-hippie-try-expand)))
+  :custom
+  (hippie-expand-try-functions-list
+   '(try-expand-dabbrev
+     try-expand-dabbrev-all-buffers
+     try-expand-dabbrev-from-kill
+     try-complete-file-name-partially
+     try-complete-file-name
+     try-expand-all-abbrevs
+     try-expand-list
+     try-expand-line
+     try-complete-lisp-symbol-partially
+     try-complete-lisp-symbol
+     yas-hippie-try-expand)))
 ;; hippie-exp:1 ends here
 
 ;; [[file:init-emacs.org::*htmlize][htmlize:1]]
@@ -15548,26 +15590,31 @@ User is prompted for WORD if none given."
 
 (use-package ivy
   :quelpa (ivy :fetcher github :repo "abo-abo/swiper")
-  ;;:demand t
   :diminish ivy-mode
   :commands (ivy-mode)
   :bind* (("C-x C-r" . ivy-resume)      ; defaults to `find-file-read-only'
           ("C-x b" . ivy-switch-buffer) ; defaults to `switch-to-buffer'
           ("C-x O" . ivy-switch-buffer-other-window)) ; defaults to `other-window'
+  :custom
+  ;; add recent files and bookmarks to `ivy-switch-buffer'
+  (ivy-use-virtual-buffers t)
+  ;; allow minibuffer commands to work in the minibuffer
+  (enable-recursive-minibuffers t)
+  ;; style to use for displaying the current candidate count
+  (ivy-count-format "(%d/%d) ")
+  ;; ;; wrap around when at first/last candidate positions
+  ;; (ivy-wrap t)
   :init
   ;; turn on `ivy-mode'
   (ivy-mode 1)
   :config
-  ;; add recent files and bookmarks to `ivy-switch-buffer'
-  (setq ivy-use-virtual-buffers t)
+  ;; ;; set minibuffer height (number of lines) for various callers
+  ;; (setf (alist-get 'counsel-projectile-ag ivy-height-alist) 15)
+  ;; (setf (alist-get 'counsel-projectile-rg ivy-height-alist) 15)
+  ;; (setf (alist-get 'swiper ivy-height-alist) 15)
+  ;; (setf (alist-get 'counsel-switch-buffer ivy-height-alist) 7))
 
-  ;; allow minibuffer commands to work in the minibuffer
-  (setq enable-recursive-minibuffers t)
-
-  ;; style to use for displaying the current candidate count
-  (setq ivy-count-format "(%d/%d) ")
-
-  ;; turn off ivy mode in other incompatable modes
+  ;; turn off ivy mode in incompatable modes
   (defun force-completing-read-default (orig-fun &rest args)
     "Force a function to use `completing-read-default'."
     (let ((completing-read-function 'completing-read-default))
@@ -15579,16 +15626,19 @@ User is prompted for WORD if none given."
 
 ;;------------------------------------------------------------------------------
 ;;;; counsel
+;;
+;; Various completion functions using ivy.
 ;;------------------------------------------------------------------------------
 
 (init-message 3 "counsel")
 
-;; counsel (various completion functions using ivy)
 (use-package counsel
   :quelpa (counsel :fetcher github :repo "abo-abo/swiper")
   :after (ivy)
-  ;;:demand t
   :bind* (("M-x" . counsel-M-x)
+          ;;("C-x b" . counsel-ibuffer)   ; defaults to `ivy-switch-buffer'
+          ;;("C-x C-b" . counsel-switch-buffer)   ; defaults to `list-buffers'
+          ;;([remap list-buffers] . counsel-switch-buffer)
           ("C-x C-f" . counsel-find-file)
           ("C-h f" . counsel-describe-function)
           ("C-h v" . counsel-describe-variable)
@@ -15596,10 +15646,18 @@ User is prompted for WORD if none given."
           ("C-h C-i" . counsel-info-lookup-symbol)
           ("C-h u" . counsel-unicode-char))
   :bind (:map minibuffer-local-map
-              ("C-r" . counsel-minibuffer-history)))
+              ("C-r" . counsel-minibuffer-history))
+  :custom
+  ;; format linux application names with name and comment only
+  (counsel-linux-app-format-function #'counsel-linux-app-format-function-name-only)
+  :config
+  ;; do not start searches with ^
+  (setq ivy-initial-inputs-alist nil))
 
 ;;------------------------------------------------------------------------------
 ;;;; swiper
+;;
+;; Isearch with an overview.
 ;;------------------------------------------------------------------------------
 
 (init-message 3 "swiper")
@@ -15607,20 +15665,59 @@ User is prompted for WORD if none given."
 (use-package swiper
   :quelpa (swiper :fetcher github :repo "abo-abo/swiper")
   :after (ivy)
-  ;;:demand t
   :bind* ("C-'" . swiper))            ; defaults to `isearch-forward-regexp'
 
 ;;------------------------------------------------------------------------------
 ;;;; ivy-rich
+;;
+;; More friendly display transformer for ivy.
 ;;------------------------------------------------------------------------------
 
 (init-message 3 "ivy-rich")
 
 (use-package ivy-rich
   :quelpa (ivy-rich)
+  :after (ivy counsel)
+  :init (ivy-rich-mode 1)
+  :config
+  ;; ignore exvm buffers
+  (let ((predicate (plist-get ivy-rich-display-transformers-list 'ivy-switch-buffer)))
+    (setq ivy-rich-display-transformers-list
+          (plist-put ivy-rich-display-transformers-list
+                     'ivy-switch-buffer
+                     `(:columns
+                       ,(plist-get predicate :columns)
+                       :predicate
+                       (lambda (cand)
+                         (if-let ((buffer (get-buffer cand)))
+                             (with-current-buffer buffer
+                               (not (derived-mode-p 'exwm-mode))))))))))
+
+;;------------------------------------------------------------------------------
+;;;; flx
+;;
+;; Improve sorting for fuzzy-matched results.
+;;------------------------------------------------------------------------------
+
+(init-message 3 "flx")
+
+(use-package flx
+  :quelpa (flx)
   :after (ivy)
-  ;;:demand t
-  :init (ivy-rich-mode 1))
+  :init
+  (setq ivy-flx-limit 10000))
+
+;;------------------------------------------------------------------------------
+;;;; ivy-hydra
+;;
+;; Additional key bindings for Ivy.
+;;------------------------------------------------------------------------------
+
+;; (init-message 3 "ivy-hydra")
+
+;; (use-package ivy-hydra
+;;   :quelpa (ivy-hydra)
+;;   :after (ivy hydra))
 ;; ivy (counsel/swiper):1 ends here
 
 ;; [[file:init-emacs.org::*json][json:1]]
@@ -15642,8 +15739,6 @@ User is prompted for WORD if none given."
 
 (use-package key-chord
   :quelpa (key-chord)
-  :commands (key-chord-define-global
-             key-chord-mode)
   :init
   ;; turn on `key-chord-mode'
   (key-chord-mode 1)
@@ -15654,8 +15749,14 @@ User is prompted for WORD if none given."
   (key-chord-define-global "fg" 'undo-tree-redo)
   (key-chord-define-global "jk" 'dabbrev-expand)
   (key-chord-define-global "cv" 'reindent-then-newline-and-indent)
+  (key-chord-define-global "1q" "!")
   (key-chord-define-global "2w" "@")
+  (key-chord-define-global "3e" "#")
   (key-chord-define-global "4r" "$")
+  (key-chord-define-global "5t" "%")
+  (key-chord-define-global "6y" "^")
+  (key-chord-define-global "7y" "&")
+  (key-chord-define-global "8u" "*")
   (key-chord-define-global "9i" "(")
   (key-chord-define-global "0o" ")"))
 ;; key-chord:1 ends here
@@ -15669,8 +15770,6 @@ User is prompted for WORD if none given."
 
 (use-package keyfreq
   :quelpa (keyfreq)
-  :commands (keyfreq-autosave-mode
-             keyfreq-mode)
   :init
   ;; turn on `keyfreq-mode'
   (keyfreq-mode 1)
@@ -15689,22 +15788,17 @@ User is prompted for WORD if none given."
 (use-package langtool
   :when (executable-find "languagetool") ; only use if binary is available on system
   :quelpa (langtool)
-  :commands (langtool-check
-             langtool-check-done
-             langtool-correct-buffer
-             langtool-switch-default-language
-             langtool-show-message-at-point)
   :bind* (("C-x 4 w" . langtool-check)
           ("C-x 4 W" . langtool-check-done)
           ("C-x 4 l" . langtool-switch-default-language)
           ("C-x 4 4" . langtool-show-message-at-point)
           ("C-x 4 c" . langtool-correct-buffer))
-  :config
-  (setq langtool-java-classpath
-        (concat "/usr/share/java/languagetool"
-                ":/usr/share/java/languagetool/*"
-                ":/usr/share/languagetool"
-                ":/usr/share/languagetool/*")))
+  :custom
+  (langtool-java-classpath
+   (concat "/usr/share/java/languagetool"
+           ":/usr/share/java/languagetool/*"
+           ":/usr/share/languagetool"
+           ":/usr/share/languagetool/*")))
 ;; langtool:1 ends here
 
 ;; [[file:init-emacs.org::*magit][magit:1]]
@@ -15716,13 +15810,8 @@ User is prompted for WORD if none given."
 
 (use-package magit
   :quelpa (magit)
-  ;;:after (ivy)
+  :after (ivy)
   :diminish magit-auto-revert-mode
-  :commands (magit-dispatch
-             magit-get
-             magit-get-push-branch
-             magit-get-remote
-             magit-refresh)
   :bind* (("C-x g" . magit-status)
           ("C-x M-g" . magit-dispatch))
   :bind (:map magit-status-mode-map
@@ -15730,6 +15819,9 @@ User is prompted for WORD if none given."
               ("C-c C-a" . magit-commit-amend-without-prompt))
   :bind (:map magit-mode-map
               ("v" . magit-visit-pull-request-url))
+  :custom
+  ;; use ivy
+  (magit-completing-read-function #'ivy-completing-read)
   :init (setq magit-last-seen-setup-instructions "1.4.0")
   :config
   (defun magit-toggle-whitespace ()
@@ -15759,11 +15851,19 @@ User is prompted for WORD if none given."
               (magit-get "remote"
                          (magit-get-remote nil)
                          "url"))
-             (cdr (magit-get-push-branch)))))
+             (cdr (magit-get-push-branch))))))
 
-  ;; ;; use ivy
-  ;; (setq magit-completing-read-function 'ivy-completing-read)
-  )
+  ;;------------------------------------------------------------------------------
+  ;;;; forge
+  ;;
+  ;; Access Git forges from Magit.
+  ;;------------------------------------------------------------------------------
+
+  (init-message 3 "forge")
+
+  (use-package forge
+    :quelpa (forge)
+    :after (magit))
 ;; magit:1 ends here
 
 ;; [[file:init-emacs.org::*mingus][mingus:1]]
@@ -16451,12 +16551,12 @@ and 5 is most favorite.  0 will unset the rating."
              neo-global--window-exists-p
              neotree-toggle)
   :bind ("<f8>" . neotree-select-or-toggle)
-  :config
+  :custom
   ;; open tree at current file node
-  (setq neo-smart-open t)
+  (neo-smart-open t)
   ;; work with projectile
-  (setq projectile-switch-project-action 'neotree-projectile-action)
-
+  (projectile-switch-project-action #'neotree-projectile-action)
+  :config
   (defun neotree-select-or-toggle ()
     "Make an existing neotree window active or toggle it on/off."
     (interactive)
@@ -16476,13 +16576,9 @@ and 5 is most favorite.  0 will unset the rating."
 (use-package openwith
   :when window-system-linux
   :quelpa (openwith :fetcher github :repo "emacsmirror/openwith")
-  :demand t
-  :init
-  ;; turn on openwith mode
-  (openwith-mode 1)
-  :config
+  :custom
   ;; define associations
-  (setq openwith-associations
+  (openwith-associations
         `(
           ;; images
           (,(openwith-make-extension-regexp
@@ -16504,7 +16600,10 @@ and 5 is most favorite.  0 will unset the rating."
              '("doc" "xls" "ppt" "odt" "ods" "odg" "odp"))
            "libreoffice" (file))
           ))
-
+  :init
+  ;; turn on openwith mode
+  (openwith-mode 1)
+  :config
   (defun openwith-file-handler--no-error (orig-fun &rest args)
     "Do not throw an error when calling `openwith-file-handler'
 to open a file."
@@ -16523,7 +16622,6 @@ to open a file."
 
 (use-package persistent-scratch
   :quelpa (persistent-scratch)
-  :commands (persistent-scratch-setup-default)
   :init
   ;; enable autosave and restore last saved state
   (persistent-scratch-setup-default))
@@ -16553,19 +16651,34 @@ to open a file."
 
 (use-package projectile
   :quelpa (projectile)
-  ;;:after (ivy)
+  :after (ivy)
   :diminish (projectile-mode . "Proj")
-  :commands (projectile-mode)
-  :init
-  ;; enable projectile globally
-  (projectile-mode)
-  :config
+  :bind* ("C-x p" . projectile-command-map)
+  :bind-keymap ("C-c p" . projectile-command-map)
+  :custom
   ;; open the root directory when switching projects
-  (setq projectile-switch-project-action 'projectile-dired)
+  (projectile-switch-project-action #'projectile-dired)
+  ;; use ivy
+  (projectile-completion-system 'ivy)
+  :init
+  (dolist (x '("~/dev" "~/code" "~/web"))
+    (when (file-directory-p x)
+      (add-to-list 'projectile-project-search-path x)))
+  ;; enable projectile globally
+  (projectile-mode))
 
-  ;; ;; use ivy
-  ;; (setq projectile-completion-system 'ivy)
-  )
+;;------------------------------------------------------------------------------
+;;;; counsel-projectile
+;;
+;; Ivy integration for Projectile.
+;;------------------------------------------------------------------------------
+
+(init-message 3 "counsel-projectile")
+
+(use-package counsel-projectile
+  :quelpa (counsel-projectile)
+  :after (ivy counsel projectile)
+  :init (counsel-projectile-mode))
 ;; projectile:1 ends here
 
 ;; [[file:init-emacs.org::*ps-ccrypt][ps-ccrypt:1]]
@@ -16593,10 +16706,10 @@ to open a file."
 
 (use-package recentf
   :commands (recentf-mode)
+  :custom
+  (recentf-max-menu-items 25)
   :init
-  (recentf-mode 1)
-  :config
-  (setq recentf-max-menu-items 25))
+  (recentf-mode 1))
 ;; recentf:1 ends here
 
 ;; [[file:init-emacs.org::*regex-tool][regex-tool:1]]
@@ -16621,38 +16734,33 @@ to open a file."
 (use-package replacer
   ;;:quelpa (replacer :fetcher file :path (expand-file-name "replacer.el" local-modules-dir))
   :load-path (lambda () (expand-file-name "replacer.el" local-modules-dir))
-  :demand t
-  :after (company)
   :commands (replacer-mode)
-  :functions (company-begin-backend)
+  :custom
+  ;; set trigger start
+  (replacer-trigger-start ";")
+  ;; set trigger end
+  (replacer-trigger-end " ")
+  ;; set trigger keys and replacements
+  (replacer-replacements
+   '(
+     ;; insert
+     ("id" . insert-date)
+     ("idt" . insert-datetime)
+     ("its" . insert-timestamp)
+     ;; org-mode
+     ("on" . org-insert-literate-programming-name)
+     ("osb" . org-insert-literate-programming-src)
+     ("osbel" . org-insert-literate-programming-src-emacs-lisp)
+     ("osbr" . org-insert-literate-programming-src-racket)
+     ("osbk" . org-insert-literate-programming-src-kotlin)
+     ("oieb" . org-insert-literate-programming-init-emacs-block)
+     ("oicb" . org-insert-literate-programming-code-block)
+     ("oipeb" . org-insert-literate-programming-project-euler-problem-block)
+     ))
   :init
   ;; turn replacer mode on
   (replacer-mode 1)
   :config
-  ;; set trigger start
-  (setq replacer-trigger-start ";")
-
-  ;; set trigger end
-  (setq replacer-trigger-end " ")
-
-  ;; set trigger keys and replacements
-  (setq replacer-replacements
-        '(
-          ;; insert
-          ("id" . insert-date)
-          ("idt" . insert-datetime)
-          ("its" . insert-timestamp)
-          ;; org-mode
-          ("on" . org-insert-literate-programming-name)
-          ("osb" . org-insert-literate-programming-src)
-          ("osbel" . org-insert-literate-programming-src-emacs-lisp)
-          ("osbr" . org-insert-literate-programming-src-racket)
-          ("osbk" . org-insert-literate-programming-src-kotlin)
-          ("oieb" . org-insert-literate-programming-init-emacs-block)
-          ("oicb" . org-insert-literate-programming-code-block)
-          ("oipeb" . org-insert-literate-programming-project-euler-problem-block)
-          ))
-
   (defun replacer-replacements-edit ()
     "Open `init-emacs.org' and move point to `replacer-replacements' variable for easy editing."
     (interactive)
@@ -16670,7 +16778,6 @@ to open a file."
 (init-message 2 "Modules: s")
 
 (use-package s
-  :demand t
   :quelpa (s))
 ;; s:1 ends here
 
@@ -16706,8 +16813,8 @@ Do not perform the search on very large files (to avoid a delay when loaded)."
   ;;:quelpa (sokoban :fetcher file :path (expand-file-name "sokoban/sokoban.el" emacs-modules-dir))
   :load-path (lambda () (expand-file-name "sokoban/sokoban.el" emacs-modules-dir))
   :commands (sokoban sokoban-mode)
-  :config
-  (setq sokoban-levels-dir (expand-file-name "sokoban/sokoban-levels" emacs-modules-dir)))
+  :custom
+  (sokoban-levels-dir (expand-file-name "sokoban/sokoban-levels" emacs-modules-dir)))
 ;; sokoban:1 ends here
 
 ;; [[file:init-emacs.org::*split-move][split-move:1]]
@@ -16756,9 +16863,9 @@ Do not perform the search on very large files (to avoid a delay when loaded)."
 (use-package switch-window
   :quelpa (switch-window)
   :commands (switch-window switch-window-then-delete)
-  :config
+  :custom
   ;; use home keys to select windows
-  (setq switch-window-shortcut-style 'qwerty))
+  (switch-window-shortcut-style 'qwerty))
 ;; switch-window:1 ends here
 
 ;; [[file:init-emacs.org::*telnet][telnet:1]]
@@ -16779,16 +16886,6 @@ Do not perform the search on very large files (to avoid a delay when loaded)."
 (init-message 2 "Modules: timeclock")
 
 (use-package timeclock
-  :commands (timeclock-change
-             timeclock-generate-report
-             timeclock-in
-             timeclock-mode-line-display
-             timeclock-out
-             timeclock-reread-log
-             timeclock-status-string
-             timeclock-update-mode-line
-             timeclock-visit-timelog
-             timeclock-when-to-leave-string)
   :bind (("C-c ti" . timeclock-in)
          ("C-c to" . timeclock-out)
          ("C-c tc" . timeclock-change)
@@ -16816,9 +16913,9 @@ Do not perform the search on very large files (to avoid a delay when loaded)."
 
 (use-package time-stamp
   :commands (time-stamp)
+  :custom (time-stamp-active t)
   :init
-  (setq time-stamp-active t
-        time-stamp-line-limit 20
+  (setq time-stamp-line-limit 20
         time-stamp-start "[Tt][Ii][Mm][Ee][-]?[Ss][Tt][Aa][Mm][Pp]:[    ]+\\\\?[\"<]+"
         time-stamp-format "%Y-%02m-%02d %02H:%02M (%u)")
   (add-hook 'write-contents-functions #'time-stamp))
@@ -16833,8 +16930,9 @@ Do not perform the search on very large files (to avoid a delay when loaded)."
 
 (use-package tramp
   :commands (tramp)
+  :custom
+  (tramp-default-method "ssh")
   :config
-  (setq tramp-default-method "ssh")
   (add-to-list 'tramp-default-method-alist '("^localhost$" "^root$" "su") t))
 
 ;;------------------------------------------------------------------------------
@@ -16913,11 +17011,7 @@ otherwise run `find-file-as-root'."
 
 (use-package undo-tree
   :quelpa (undo-tree :fetcher github :repo "apchamberlain/undo-tree.el")
-  :demand t
   :diminish undo-tree-mode
-  :commands (global-undo-tree-mode
-             undo-tree-redo
-             undo-tree-undo)
   :bind* (("<M-mouse-5>" . undo-tree-redo)
           ("<M-mouse-4>" . undo-tree-undo))
   :init
@@ -16961,12 +17055,12 @@ otherwise run `find-file-as-root'."
   :bind (:map w3m-mode-map
               ("," . w3m-previous-buffer)
               ("." . w3m-next-buffer))
-  :config
-  (setq w3m-icon-directory "/usr/share/emacs-w3m/icon")
-
+  :custom
+  ;; directory of icon files
+  (w3m-icon-directory "/usr/share/emacs-w3m/icon")
   ;; turn on cookies
-  (setq w3m-use-cookies t)
-
+  (w3m-use-cookies t)
+  :config
   ;; add new functionality not in this version
   (defun w3m-buffer (&optional buffer)
     "Render the current buffer or BUFFER if given."
@@ -17057,12 +17151,25 @@ otherwise run `find-file-as-root'."
   :commands (weblogger-select-configuration
              weblogger-setup-weblog
              weblogger-start-entry)
-  :config
+  :custom
   ;; add weblog sites
-  (setq weblogger-config-alist
-        `(("nullman" "http://www.blogger.com/api" ,user-mail-address "" "6007591")
-          ("Nullman on Life" "http://www2.blogger.com/api" ,user-mail-address "" "6007591"))))
+  (weblogger-config-alist
+   `(("nullman" "http://www.blogger.com/api" ,user-mail-address "" "6007591")
+     ("Nullman on Life" "http://www2.blogger.com/api" ,user-mail-address "" "6007591"))))
 ;; weblogger:1 ends here
+
+;; [[file:init-emacs.org::*wgrep][wgrep:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: wgrep
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: wgrep")
+
+(use-package wgrep
+  :quelpa (wgrep)
+  :bind (:map grep-mode-map
+              ("C-x C-q" . wgrep-change-to-wgrep-mode))) ; same keybinding as `wdired-mode'
+;; wgrep:1 ends here
 
 ;; [[file:init-emacs.org::*which-key][which-key:1]]
 ;;------------------------------------------------------------------------------
@@ -17097,15 +17204,15 @@ otherwise run `find-file-as-root'."
 
 (use-package wttrin
   :quelpa (wttrin)
-  :config
+  :custom
   ;; default cities
-  (setq wttrin-default-cities '("Austin"
-                                "London"
-                                "Minneapolis"
-                                "New York"
-                                "San Diego"))
+  (wttrin-default-cities '("Austin"
+                           "London"
+                           "Minneapolis"
+                           "New York"
+                           "San Diego"))
   ;; default language
-  (setq wttrin-default-accept-language '("Accept-Language" . "en-US")))
+  (wttrin-default-accept-language '("Accept-Language" . "en-US")))
 ;; wttrin:1 ends here
 
 ;; [[file:init-emacs.org::*Menus][Menus:1]]
@@ -17572,7 +17679,10 @@ otherwise run `find-file-as-root'."
  '(("Org-Babel Inserts"
     (("Name" "org-insert-literate-programming-name" "Insert #+NAME.")
      ("Emacs Init Block" "org-insert-literate-programming-init-emacs-block" "Insert Emacs Init block.")
+     ("Code Block" "org-insert-literate-programming-code-block" "Insert Code block.")
+     ("Project Euler Block" "org-insert-literate-programming-project-euler-problem-block" "Insert Project Euler block.")
      ("Source Block" "org-insert-literate-programming-src" "Insert #+BEGIN_SRC ... #+END_SRC block.")
+     ("Shell Block" "org-insert-literate-programming-src-sh" "Insert #+BEGIN_SRC sh ... #+END_SRC block.")
      ("Emacs Lisp Source Block" "org-insert-literate-programming-src-emacs-lisp" "Insert #+BEGIN_SRC emacs-lisp ... #+END_SRC block.")
      ("Racket Source Block" "org-insert-literate-programming-src-racket" "Insert #+BEGIN_SRC racket ... #+END_SRC block.")
      ("Kotlin Source Block" "org-insert-literate-programming-src-kotlin" "Insert #+BEGIN_SRC kotlin ... #+END_SRC block.")))
