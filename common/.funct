@@ -1917,7 +1917,7 @@ manjaroinitialize()
         awk "${regexp}" "${file}" | tail -n +3 | head -n -1 | sed 's/^  //'
     }
 
-    sections=(
+    standard=(
         "manjaro-group"
         "manjaro-sudoers"
         "manjaro-locale"
@@ -1965,9 +1965,46 @@ manjaroinitialize()
         "manjaro-printer-cannon"
     )
 
+    optional=(
+        "manjaro-packages-optional-applications"
+        "manjaro-packages-optional-tools"
+        "manjaro-packages-optional-network"
+        "manjaro-packages-optional-development"
+        "manjaro-packages-optional-development-commander-x-16"
+        "manjaro-packages-optional-graphical"
+        "manjaro-packages-optional-audio"
+        "manjaro-packages-optional-audio-grip"
+        "manjaro-packages-optional-video"
+        "manjaro-packages-optional-video-dvd"
+        "manjaro-packages-optional-video-editors"
+        "manjaro-packages-optional-emulators"
+        "manjaro-packages-optional-emulators-virtualbox"
+        "manjaro-packages-optional-emulators-virtual-t"
+        "manjaro-packages-optional-games"
+        "manjaro-packages-optional-games-proton"
+        "manjaro-packages-optional-games-marathon"
+        "manjaro-packages-optional-other"
+        "manjaro-packages-optional-other-nvidia"
+    )
+
+    if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+        echo "Usage: $0 [--optional]"
+        echo "  -o,--optional  install optional packages instead"
+        return 1
+    fi
+
+    if [[ "$1" == "-o" ]] || [[ "$1" == "--optional" ]] ; then
+        opt=1
+        sections=${optional}
+    else
+        opt=0
+        sections=${standard}
+    fi
+
     echo "You are about to install a curated set of Manjaro packages and setup this system."
     echo "This command is normally run once for a given system installation, but it is"
     echo "safe to run multiple times to pick up new packages or configuration changes."
+    [[ ${opt} -eq 1 ]] && echo "The OPTIONAL parameter was given, so (only) optional packages will be installed."
     echo -n "Do you wish to proceed? [yN] " ; read a
 
     case "${a}" in

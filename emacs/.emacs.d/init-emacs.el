@@ -15287,6 +15287,7 @@ Uses `ispell--run-on-word' to spell check word."
 
 (use-package fuzzy
   :quelpa (fuzzy)
+  :commands (turn-on-fuzzy-isearch)
   :init (turn-on-fuzzy-isearch))
 ;; fuzzy:1 ends here
 
