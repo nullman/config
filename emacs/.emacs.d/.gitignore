@@ -6,28 +6,12 @@
 # Author: Kyle W T Sherman
 #=============================================================================
 
-# rcs version control files
-RCS
-#.+,v
-
-# cvs version control files
-CVS
-\.cvsignore
-# cvs conflict files / emacs lock files
-\.\#*
-
-# svn version control files
-\.svn
-_darcs
-\.hg
-
 # emacs backup files
 *~
 # emacs autosave files
 \#*\#
-
-# mac files
-\.DS_Store
+# emacs byte-compile files
+*\.elc
 
 #===============================================================================
 # End of File
