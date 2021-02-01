@@ -12492,12 +12492,19 @@ Otherwise, `local-tab-width' is used."
            ;;(set-frame-font "Ubuntu Mono-13" nil t)
            ;;(set-frame-font "Inconsolata-15" nil t)
            ;;(set-frame-font "Bitstream Vera Sans Mono-12" nil t)
-           (set-frame-font "Droid Sans Mono-12" nil t)
+           ;;(set-frame-font "BitstreamVeraSansMono Nerd Font Mono-12" nil t)
+           ;;(set-frame-font "Droid Sans Mono-12" nil t)
+           ;;(set-frame-font "DroidSansMono Nerd Font Mono-12" nil t)
+           ;;(set-frame-font "Hack-12" nil t)
+           (set-frame-font "Hack Nerd Font Mono-12" nil t)
          ('error
           (set-frame-font "9x15" nil t)))))
     (ns
      (condition-case nil
-         (set-frame-font "Droid Sans Mono-14" nil t)
+         ;;(set-frame-font "BitstreamVeraSansMono Nerd Font Mono-14" nil t)
+         ;;(set-frame-font "Droid Sans Mono-14" nil t)
+         ;;(set-frame-font "DroidSansMono Nerd Font Mono-14" nil t)
+         (set-frame-font "Hack Nerd Font Mono-14" nil t)
        ('error
         (set-frame-font "Menlo" nil t)))))
 
@@ -17588,10 +17595,14 @@ otherwise run `find-file-as-root'."
      ;;        (concat "Byte-Compile `" emacs-modules-dir "' directory."))
      ))
    ("Fonts"
-    (("Droid Sans Mono-12" "(set-frame-font \"Droid Sans Mono-12\" nil t)" "Call `set-frame-font` to set the font to Droid Sans Mono-12.")
-     ("Droid Sans Mono-14" "(set-frame-font \"Droid Sans Mono-14\" nil t)" "Call `set-frame-font` to set the font to Droid Sans Mono-14.")
-     ("9x15" "(set-frame-font \"9x15\" nil t)" "Call `set-frame-font` to set the font to 9x15.")
-     ("Menlo" "(set-frame-font \"Menlo\" nil t)" "Call `set-frame-font` to set the font to Menlo.")))
+    (
+     ("BitstreamVeraSansMono Nerd Font Mono-12" "(set-frame-font \"BitstreamVeraSansMono Nerd Font Mono-12\" nil t)" "Call `set-frame-font` to set the font to 'BitstreamVeraSansMono Nerd Font Mono-12'.")
+     ("BitstreamVeraSansMono Nerd Font Mono-14" "(set-frame-font \"BitstreamVeraSansMono Nerd Font Mono-14\" nil t)" "Call `set-frame-font` to set the font to 'BitstreamVeraSansMono Nerd Font Mono-14'.")
+     ("DroidSansMono Nerd Font Mono-12" "(set-frame-font \"DroidSansMono Nerd Font Mono-12\" nil t)" "Call `set-frame-font` to set the font to 'DroidSansMono Nerd Font Mono-12'.")
+     ("DroidSansMono Nerd Font Mono-14" "(set-frame-font \"DroidSansMono Nerd Font Mono-14\" nil t)" "Call `set-frame-font` to set the font to 'DroidSansMono Nerd Font Mono-14'.")
+     ("Hack Nerd Font Mono-12" "(set-frame-font \"Hack Nerd Font Mono-12\" nil t)" "Call `set-frame-font` to set the font to 'Hack Nerd Font Mono-12'.")
+     ("Hack Nerd Font Mono-14" "(set-frame-font \"Hack Nerd Font Mono-14\" nil t)" "Call `set-frame-font` to set the font to 'Hack Nerd Font Mono-14'.")
+     ("9x15" "(set-frame-font \"9x15\" nil t)" "Call `set-frame-font` to set the font to '9x15'.")))
    ("Coding System"
     (("UNIX Coding System" "(set-coding-system 'unix)" "Call `set-coding-system' to set the coding system to UNIX.")
      ("DOS Coding System" "(set-coding-system 'dos)" "Call `set-coding-system' to set the coding system to DOS.")
