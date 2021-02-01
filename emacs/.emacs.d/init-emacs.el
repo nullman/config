@@ -16621,10 +16621,7 @@ to open a file."
 (use-package replacer
   ;;:quelpa (replacer :fetcher file :path (expand-file-name "replacer.el" local-modules-dir))
   :load-path (lambda () (expand-file-name "replacer.el" local-modules-dir))
-  :demand t
-  :after (company)
   :commands (replacer-mode)
-  :functions (company-begin-backend)
   :init
   ;; turn replacer mode on
   (replacer-mode 1)
