@@ -1700,7 +1700,7 @@ KEYMAP defaults to `override-global-map'."
   (when (and (fboundp 'safe-load) (boundp 'emacs-home-dir))
     (defun safe-load-init-elisp ()
       (safe-load (expand-file-name "init.el" emacs-home-dir)))
-    (bind-keys :map space-emacs-run-map ("i" . safe-load-init-elisp)))
+    (bind-keys :map space-run-map ("i" . safe-load-init-elisp)))
 
   ;; browse-url commands
   (bind-keys :map space-map
@@ -15644,8 +15644,8 @@ User is prompted for WORD if none given."
           ;;("C-x C-b" . counsel-switch-buffer)   ; defaults to `list-buffers'
           ;;([remap list-buffers] . counsel-switch-buffer)
           ("C-x C-f" . counsel-find-file)
-          ("C-h f" . counsel-describe-function)
-          ("C-h v" . counsel-describe-variable)
+          ;;("C-h f" . counsel-describe-function)
+          ;;("C-h v" . counsel-describe-variable)
           ("C-h l" . counsel-find-library)
           ("C-h C-i" . counsel-info-lookup-symbol)
           ("C-h u" . counsel-unicode-char))
@@ -16570,53 +16570,6 @@ and 5 is most favorite.  0 will unset the rating."
       (neotree-toggle))))
 ;; neotree:1 ends here
 
-;; [[file:init-emacs.org::*openwith][openwith:1]]
-;;------------------------------------------------------------------------------
-;;; Modules: openwith
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modules: openwith")
-
-(use-package openwith
-  :when window-system-linux
-  :quelpa (openwith :fetcher github :repo "emacsmirror/openwith")
-  :custom
-  ;; define associations
-  (openwith-associations
-        `(
-          ;; images
-          (,(openwith-make-extension-regexp
-             '("xbm" "pbm" "pgm" "ppm" "pnm"
-               "png" "gif" "bmp" "tif" "jpeg" "jpg"))
-           "feh" (file))
-          ;; videos
-          (,(openwith-make-extension-regexp
-             '("mpg" "mpeg" "mp3" "mp4"
-               "avi" "wmv" "wav" "mov" "flv"
-               "ogm" "ogg" "mkv"))
-           "vlc" (file))
-          ;; pdf
-          (,(openwith-make-extension-regexp
-             '("pdf" "ps" "ps.gz" "dvi"))
-           "evince" (file))
-          ;; office
-          (,(openwith-make-extension-regexp
-             '("doc" "xls" "ppt" "odt" "ods" "odg" "odp"))
-           "libreoffice" (file))
-          ))
-  :init
-  ;; turn on openwith mode
-  (openwith-mode 1)
-  :config
-  (defun openwith-file-handler--no-error (orig-fun &rest args)
-    "Do not throw an error when calling `openwith-file-handler'
-to open a file."
-    (let ((debug-on-error nil))
-      (apply orig-fun args)))
-  ;; advise `openwith-file-handler'
-  (advice-add 'openwith-file-handler :around #'openwith-file-handler--no-error))
-;; openwith:1 ends here
-
 ;; [[file:init-emacs.org::*persistent-scratch][persistent-scratch:1]]
 ;;------------------------------------------------------------------------------
 ;;; Modules: persistent-scratch
@@ -16665,11 +16618,12 @@ to open a file."
   ;; use ivy
   (projectile-completion-system 'ivy)
   :init
+  ;; enable projectile globally
+  (projectile-mode)
+  :config
   (dolist (x '("~/dev" "~/code" "~/web"))
     (when (file-directory-p x)
-      (add-to-list 'projectile-project-search-path x)))
-  ;; enable projectile globally
-  (projectile-mode))
+      (add-to-list 'projectile-project-search-path x))))
 
 ;;------------------------------------------------------------------------------
 ;;;; counsel-projectile
