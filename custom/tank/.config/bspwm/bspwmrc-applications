@@ -39,7 +39,8 @@ _command slack && _delay 1 slack &
 _command thunderbird && _delay 1 thunderbird &
 _command firefox && _delay 1 firefox &
 #_command chromium && _delay 1 chromium &
-_command pcmanfm && _delay 1 pcmanfm &
+#_command pcmanfm && _delay 1 pcmanfm &
+_command thunar && _delay 1 pcmanfm &
 #_command idea && _delay 10 idea &
 _command discord && _delay 1 discord &
 #_command tootle && _delay 10 tootle &

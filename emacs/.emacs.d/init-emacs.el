@@ -14934,8 +14934,8 @@ Blank lines separate paragraphs.  Semicolons start comments.
 
 (use-package define-word
   :quelpa (define-word)
-  :bind* (("<f5>" . define-word-after-spell-check)
-          ("S-<f5>" . define-word-at-point))
+  :bind (("<f5>" . define-word-after-spell-check)
+         ("S-<f5>" . define-word-at-point))
   :config
   (defun define-word-after-spell-check (word service &optional choose-service)
     "Define WORD using various services after spell checking WORD.
