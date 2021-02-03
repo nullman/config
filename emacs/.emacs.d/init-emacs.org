@@ -8,7 +8,7 @@
 #+LANGUAGE: en
 #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
 #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-#+TIMESTAMP: <2021-01-31 10:14 (kyle)>
+#+TIMESTAMP: <2021-02-03 15:12 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -21142,9 +21142,7 @@ https://www.emacswiki.org/emacs/BufferSelection
   (use-package bs
     :quelpa (bs)
     :after (cycle-buffer)
-    :demand t
-    ;; :bind* ("C-x C-b" . bs-show)           ; defaults to `list-buffers'
-    :bind* ([remap list-buffers] . bs-show)
+    :bind* ("C-x C-b" . bs-show)           ; defaults to `list-buffers'
     :config
     (defvar local-bs-always-show-regexps '("\\*\\(scratch\\|info\\|grep\\)\\*")
       "*Buffer regexps to always show when buffer switching.")
@@ -21830,6 +21828,49 @@ The Emacs webserver.
     :commands (elnode))
 #+END_SRC
 
+*** elpher
+    :PROPERTIES:
+    :CUSTOM_ID: modules-elpher
+    :END:
+
+Elpher Gopher and Gemini Client
+
+#+BEGIN_SRC emacs-lisp
+  ;;------------------------------------------------------------------------------
+  ;;; Modules: elpher
+  ;;------------------------------------------------------------------------------
+
+  (init-message 2 "Modules: elpher")
+
+  (use-package elpher
+    :quelpa (elpher)
+    :init
+    (defun elpher-bookmarks-edit ()
+      "Open `init-emacs.org' and move point to `elpher-bookmarks' file for easy editing."
+      (interactive)
+      (find-file (expand-file-name "init-emacs.org" emacs-home-dir))
+      (goto-char (point-min))
+      (search-forward ";; Elpher Bookmarks File\n\n")
+      (org-show-entry)))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :tangle ~/.emacs.d/elpher-bookmarks
+  ;; Elpher Bookmarks File
+
+  (("Gopherpedia" "gopher://gopherpedia.com/1")
+   ("Gopher Project" "gopher://gopherproject.org/1")
+   ("Floodgap Systems" "gopher://gopher.floodgap.com:70/1")
+   ("Hacker News" "gopher://hngopher.com/1")
+   ("Weather Forecasts" "gopher://gopher.floodgap.com:70/1/groundhog")
+   ("SDF Public Access UNIX System" "gopher://sdf.org/1")
+   ("Gopher Club" "gopher://gopher.club:70/1/phlogs/")
+   ("Zaibatsu" "gopher://zaibatsu.circumlunar.space/1")
+   ("Baud Baby" "gopher://baud.baby/1")
+   ("DistroTube" "gopher://distro.tube/1")
+   ("Quux" "gopher://quux.org/1")
+   ("Bitreich" "gopher://bitreich.org/1"))
+#+END_SRC
+
 *** +elscreen+
     :PROPERTIES:
     :CUSTOM_ID: modules-elscreen
@@ -22084,49 +22125,6 @@ exact match is found.
     :init (turn-on-fuzzy-isearch))
 #+END_SRC
 
-*** elpher
-    :PROPERTIES:
-    :CUSTOM_ID: modules-elpher
-    :END:
-
-A friendly gopher client.
-
-#+BEGIN_SRC emacs-lisp
-  ;;------------------------------------------------------------------------------
-  ;;; Modules: elpher
-  ;;------------------------------------------------------------------------------
-
-  (init-message 2 "Modules: elpher")
-
-  (use-package elpher
-    :quelpa (elpher)
-    :init
-    (defun elpher-bookmarks-edit ()
-      "Open `init-emacs.org' and move point to `elpher-bookmarks' file for easy editing."
-      (interactive)
-      (find-file (expand-file-name "init-emacs.org" emacs-home-dir))
-      (goto-char (point-min))
-      (search-forward ";; Elpher Bookmarks File\n\n")
-      (org-show-entry)))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp :tangle ~/.emacs.d/elpher-bookmarks
-  ;; Elpher Bookmarks File
-
-  (("Gopherpedia" "gopher://gopherpedia.com/1")
-   ("Gopher Project" "gopher://gopherproject.org/1")
-   ("Floodgap Systems" "gopher://gopher.floodgap.com:70/1")
-   ("Hacker News" "gopher://hngopher.com/1")
-   ("Weather Forecasts" "gopher://gopher.floodgap.com:70/1/groundhog")
-   ("SDF Public Access UNIX System" "gopher://sdf.org/1")
-   ("Gopher Club" "gopher://gopher.club:70/1/phlogs/")
-   ("Zaibatsu" "gopher://zaibatsu.circumlunar.space/1")
-   ("Baud Baby" "gopher://baud.baby/1")
-   ("DistroTube" "gopher://distro.tube/1")
-   ("Quux" "gopher://quux.org/1")
-   ("Bitreich" "gopher://bitreich.org/1"))
-#+END_SRC
-
 *** +git-gutter+
     :PROPERTIES:
     :CUSTOM_ID: modules-git-gutter
@@ -22218,7 +22216,7 @@ Swiper search with =isearch= using =helm=.
   ;;           ;;("<f5> s" . helm-find)
   ;;           ;;("<f2>" . helm-execute-kmacro)
   ;;           ([remap jump-to-register] . helm-register)
-  ;;           ;;([remap list-buffers] helm-buffers-list)
+  ;;           ([remap list-buffers] helm-buffers-list)
   ;;           ([remap dabbrev-expand] . helm-dabbrev)
   ;;           ([remap find-tag] . helm-etags-select)
   ;;           ([remap xref-find-definitions] . helm-etags-select))
@@ -22952,7 +22950,7 @@ Generic completion method that adds wildcard name completion to common tasks.
     :bind* (("M-x" . counsel-M-x)
             ;;("C-x b" . counsel-ibuffer)   ; defaults to `ivy-switch-buffer'
             ;;("C-x C-b" . counsel-switch-buffer)   ; defaults to `list-buffers'
-            ;;([remap list-buffers] . counsel-switch-buffer)
+            ([remap list-buffers] . counsel-switch-buffer)
             ("C-x C-f" . counsel-find-file)
             ;;("C-h f" . counsel-describe-function)
             ;;("C-h v" . counsel-describe-variable)
@@ -25471,7 +25469,6 @@ Maintain last change time stamps in files edited by Emacs.
   (use-package time-stamp
     :commands (time-stamp)
     :custom (time-stamp-active t)
-    :hook ('write-contents-functions #'time-stamp)
     :init
     (setq time-stamp-line-limit 20
           time-stamp-start "[Tt][Ii][Mm][Ee][-]?[Ss][Tt][Aa][Mm][Pp]:[    ]+\\\\?[\"<]+"

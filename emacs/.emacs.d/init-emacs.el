@@ -14647,9 +14647,7 @@ Blank lines separate paragraphs.  Semicolons start comments.
 (use-package bs
   :quelpa (bs)
   :after (cycle-buffer)
-  :demand t
-  ;; :bind* ("C-x C-b" . bs-show)           ; defaults to `list-buffers'
-  :bind* ([remap list-buffers] . bs-show)
+  :bind* ("C-x C-b" . bs-show)           ; defaults to `list-buffers'
   :config
   (defvar local-bs-always-show-regexps '("\\*\\(scratch\\|info\\|grep\\)\\*")
     "*Buffer regexps to always show when buffer switching.")
@@ -15181,6 +15179,25 @@ Uses `ispell--run-on-word' to spell check word."
   :commands (elnode))
 ;; elnode:1 ends here
 
+;; [[file:init-emacs.org::*elpher][elpher:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: elpher
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: elpher")
+
+(use-package elpher
+  :quelpa (elpher)
+  :init
+  (defun elpher-bookmarks-edit ()
+    "Open `init-emacs.org' and move point to `elpher-bookmarks' file for easy editing."
+    (interactive)
+    (find-file (expand-file-name "init-emacs.org" emacs-home-dir))
+    (goto-char (point-min))
+    (search-forward ";; Elpher Bookmarks File\n\n")
+    (org-show-entry)))
+;; elpher:1 ends here
+
 ;; [[file:init-emacs.org::*eperiodic][eperiodic:1]]
 ;;------------------------------------------------------------------------------
 ;;; Modules: eperiodic
@@ -15300,25 +15317,6 @@ Uses `ispell--run-on-word' to spell check word."
   :commands (turn-on-fuzzy-isearch)
   :init (turn-on-fuzzy-isearch))
 ;; fuzzy:1 ends here
-
-;; [[file:init-emacs.org::*elpher][elpher:1]]
-;;------------------------------------------------------------------------------
-;;; Modules: elpher
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modules: elpher")
-
-(use-package elpher
-  :quelpa (elpher)
-  :init
-  (defun elpher-bookmarks-edit ()
-    "Open `init-emacs.org' and move point to `elpher-bookmarks' file for easy editing."
-    (interactive)
-    (find-file (expand-file-name "init-emacs.org" emacs-home-dir))
-    (goto-char (point-min))
-    (search-forward ";; Elpher Bookmarks File\n\n")
-    (org-show-entry)))
-;; elpher:1 ends here
 
 ;; [[file:init-emacs.org::*helpful][helpful:1]]
 ;;------------------------------------------------------------------------------
@@ -15652,7 +15650,7 @@ User is prompted for WORD if none given."
   :bind* (("M-x" . counsel-M-x)
           ;;("C-x b" . counsel-ibuffer)   ; defaults to `ivy-switch-buffer'
           ;;("C-x C-b" . counsel-switch-buffer)   ; defaults to `list-buffers'
-          ;;([remap list-buffers] . counsel-switch-buffer)
+          ([remap list-buffers] . counsel-switch-buffer)
           ("C-x C-f" . counsel-find-file)
           ;;("C-h f" . counsel-describe-function)
           ;;("C-h v" . counsel-describe-variable)
@@ -16886,7 +16884,6 @@ Do not perform the search on very large files (to avoid a delay when loaded)."
 (use-package time-stamp
   :commands (time-stamp)
   :custom (time-stamp-active t)
-  :hook ('write-contents-functions #'time-stamp)
   :init
   (setq time-stamp-line-limit 20
         time-stamp-start "[Tt][Ii][Mm][Ee][-]?[Ss][Tt][Aa][Mm][Pp]:[    ]+\\\\?[\"<]+"
