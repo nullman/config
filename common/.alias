@@ -243,7 +243,7 @@ alias beep="paplay \${HOME}/sounds/shortbeep.wav"
 #        beep-ten                play beep test sound with paplay ten times
 alias beep-ten="
     for ((x = 1; x < 10; x++)) ; do
-        paplay \${HOME}/sounds/beep.wav
+        paplay \${HOME}/sounds/shortbeep.wav
         sleep 1
     done"
 #        fart                    play fart test sound with paplay
@@ -1861,7 +1861,7 @@ alias rsync-music-put-morpheus="
 alias rsync-music-put-colleen="
     rsync -rlptx --progress ${home}/data/media/audio/Music/ colleen:${home}/data/media/audio/Music/ &&
     rsync -rlptx --progress ${home}/data/media/audio/Playlists/ colleen:${home}/data/media/audio/Playlists/"
-#!#        rsync-music-put-jeep            rsync /home/data/media/audio/Music /media/${USER}/jeep
+#        rsync-music-put-jeep            rsync /home/data/media/audio/Music /media/${USER}/jeep
 #!alias rsync-music-put-jeep="
 #!    echo 'Copying muisc files and playlists to Jeep USB:'
 #!    o=/run/media/\${USER}/\$(cd /run/media/\${USER} && \$(pathcmd ls) -1)
