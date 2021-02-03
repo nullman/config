@@ -2670,11 +2670,13 @@ Main Org Mode configuration.
   ;; skip levels
   (setq org-odd-levels-only t)
 
-  ;; use '…' for ellipsis instead of '...'
+  ;; use a different ellipsis indicator (than '...')
   (setq org-ellipsis "…")
-
-  ;; ;; use '⤵' for ellipsis instead of '...'
-  ;;(setq org-ellipsis "⤵")
+  ;;(setq org-ellipsis " ⤵")
+  ;;(setq org-ellipsis " ")
+  ;;(setq org-ellipsis " ")
+  ;;(setq org-ellipsis " ")
+  ;;(setq org-ellipsis " ")
 
   ;; return follows links
   ;;(setq org-return-follows-link t)
@@ -21054,6 +21056,7 @@ https://github.com/Malabarba/beacon
 
   (use-package beacon
     :quelpa (beacon)
+    :demand t
     :custom
     ;; speed up duration (defaults to 0.3)
     (beacon-blink-duration 0.1)
@@ -21139,6 +21142,7 @@ https://www.emacswiki.org/emacs/BufferSelection
   (use-package bs
     :quelpa (bs)
     :after (cycle-buffer)
+    :demand t
     ;; :bind* ("C-x C-b" . bs-show)           ; defaults to `list-buffers'
     :bind* ([remap list-buffers] . bs-show)
     :config
@@ -21483,6 +21487,7 @@ Windows like cut-and-paste.
   (init-message 2 "Modules: cua")
 
   (use-package cua-base
+    :demand t
     ;; :bind* ("C-@" . cua-set-mark)
     :custom
     ;; do not tabify after rectangle commands
@@ -21605,6 +21610,7 @@ Pragmatically create demonstrations.  [[http://github.com/howardabrams/demo-it][
   (use-package doom-modeline
     :quelpa (doom-modeline)
     :after (all-the-icons)
+    :demand t
     :custom
     ;; customizations
     (doom-modeline-height 30)
@@ -21650,6 +21656,7 @@ Kill and mark things easily.
 
   (use-package easy-kill
     :quelpa (easy-kill)
+    :demand t
     :bind* (([remap kill-ring-save] . easy-kill)
             ([remap mark-sexp] . easy-mark)))
 #+END_SRC
@@ -22190,6 +22197,7 @@ Swiper search with =isearch= using =helm=.
 
   ;; (use-package helm
   ;;   :quelpa (helm)
+  ;;   :demand t
   ;;   :diminish helm-mode
   ;;   :bind* (("M-x" . helm-M-x)            ; defaults to `execute-extended-command'
   ;;           ("C-x b" . helm-mini)         ; defaults to `switch-buffer'
@@ -22304,6 +22312,8 @@ Swiper search with =isearch= using =helm=.
     :CUSTOM_ID: modules-helpful
     :END:
 
+A better help buffer.
+
 #+BEGIN_SRC emacs-lisp
   ;;------------------------------------------------------------------------------
   ;;; Modules: helpful
@@ -22313,6 +22323,7 @@ Swiper search with =isearch= using =helm=.
 
   (use-package helpful
     :quelpa (helpful)
+    :demand t
     :bind* (([remap describe-function] . helpful-callable)
             ([remap describe-variable] . helpful-variable)
             ([remap describe-key] . helpful-key)
@@ -22379,7 +22390,7 @@ Convert buffer text and associated decorations to HTML.
   ;;   (defun org-html-htmlize-region-for-paste (beg end)
   ;;     "Convert the region between BEG and END to HTML, using htmlize.el.
   ;; This is much like `htmlize-region-for-paste', only that it uses
-  ;; the settings define in the org-... variables."
+  ;; the settings defined in the org-... variables."
   ;;     (let* ((htmlize-output-type org-html-htmlize-output-type)
   ;;            (htmlize-css-name-prefix org-html-htmlize-font-prefix)
   ;;            (htmlbuf (htmlize-region beg end)))
@@ -22420,6 +22431,7 @@ executed.
 
   (use-package hungry-delete
     :quelpa (hungry-delete)
+    :demand t
     :commands (global-hungry-delete-mode
                hungry-delete-skip-ws-forward
                hungry-delete-skip-ws-backward)
@@ -22891,6 +22903,7 @@ Generic completion method that adds wildcard name completion to common tasks.
 
   (use-package ivy
     :quelpa (ivy :fetcher github :repo "abo-abo/swiper")
+    :demand t
     :diminish ivy-mode
     :commands (ivy-mode)
     :bind* (("C-x C-r" . ivy-resume)      ; defaults to `find-file-read-only'
@@ -23073,6 +23086,7 @@ Map pairs of simultaneously pressed keys to commands.
 
   (use-package key-chord
     :quelpa (key-chord)
+    :demand t
     :init
     ;; turn on `key-chord-mode'
     (key-chord-mode 1)
@@ -23111,6 +23125,7 @@ Track command frequencies.
 
   (use-package keyfreq
     :quelpa (keyfreq)
+    :demand t
     :init
     ;; turn on `keyfreq-mode'
     (keyfreq-mode 1)
@@ -24208,6 +24223,7 @@ Preserve the scratch buffer across Emacs sessions.
 
   (use-package persistent-scratch
     :quelpa (persistent-scratch)
+    :demand t
     :init
     ;; enable autosave and restore last saved state
     (persistent-scratch-setup-default))
@@ -25312,6 +25328,7 @@ A *visual* way to switch windows.
 
   (use-package switch-window
     :quelpa (switch-window)
+    :demand t
     :commands (switch-window switch-window-then-delete)
     :custom
     ;; use home keys to select windows
@@ -25454,6 +25471,7 @@ Maintain last change time stamps in files edited by Emacs.
   (use-package time-stamp
     :commands (time-stamp)
     :custom (time-stamp-active t)
+    :hook ('write-contents-functions #'time-stamp)
     :init
     (setq time-stamp-line-limit 20
           time-stamp-start "[Tt][Ii][Mm][Ee][-]?[Ss][Tt][Aa][Mm][Pp]:[    ]+\\\\?[\"<]+"
@@ -25605,6 +25623,7 @@ Treat undo history as a tree,
 
   (use-package undo-tree
     :quelpa (undo-tree :fetcher github :repo "apchamberlain/undo-tree.el")
+    :demand t
     :diminish undo-tree-mode
     :bind* (("<M-mouse-5>" . undo-tree-redo)
             ("<M-mouse-4>" . undo-tree-undo))
@@ -25902,6 +25921,7 @@ Display available key bindings in popup.
 
   (use-package which-key
     :quelpa (which-key)
+    :demand t
     :init (which-key-mode))
 #+END_SRC
 

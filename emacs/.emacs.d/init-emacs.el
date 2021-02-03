@@ -1933,11 +1933,13 @@ DATA should have been made by `org-outline-overlay-data'."
 ;; skip levels
 (setq org-odd-levels-only t)
 
-;; use '…' for ellipsis instead of '...'
+;; use a different ellipsis indicator (than '...')
 (setq org-ellipsis "…")
-
-;; ;; use '⤵' for ellipsis instead of '...'
-;;(setq org-ellipsis "⤵")
+;;(setq org-ellipsis " ⤵")
+;;(setq org-ellipsis " ")
+;;(setq org-ellipsis " ")
+;;(setq org-ellipsis " ")
+;;(setq org-ellipsis " ")
 
 ;; return follows links
 ;;(setq org-return-follows-link t)
@@ -14586,6 +14588,7 @@ Blank lines separate paragraphs.  Semicolons start comments.
 
 (use-package beacon
   :quelpa (beacon)
+  :demand t
   :custom
   ;; speed up duration (defaults to 0.3)
   (beacon-blink-duration 0.1)
@@ -14644,6 +14647,7 @@ Blank lines separate paragraphs.  Semicolons start comments.
 (use-package bs
   :quelpa (bs)
   :after (cycle-buffer)
+  :demand t
   ;; :bind* ("C-x C-b" . bs-show)           ; defaults to `list-buffers'
   :bind* ([remap list-buffers] . bs-show)
   :config
@@ -14888,6 +14892,7 @@ Blank lines separate paragraphs.  Semicolons start comments.
 (init-message 2 "Modules: cua")
 
 (use-package cua-base
+  :demand t
   ;; :bind* ("C-@" . cua-set-mark)
   :custom
   ;; do not tabify after rectangle commands
@@ -14984,6 +14989,7 @@ Uses `ispell--run-on-word' to spell check word."
 (use-package doom-modeline
   :quelpa (doom-modeline)
   :after (all-the-icons)
+  :demand t
   :custom
   ;; customizations
   (doom-modeline-height 30)
@@ -15022,6 +15028,7 @@ Uses `ispell--run-on-word' to spell check word."
 
 (use-package easy-kill
   :quelpa (easy-kill)
+  :demand t
   :bind* (([remap kill-ring-save] . easy-kill)
           ([remap mark-sexp] . easy-mark)))
 ;; easy-kill:1 ends here
@@ -15322,6 +15329,7 @@ Uses `ispell--run-on-word' to spell check word."
 
 (use-package helpful
   :quelpa (helpful)
+  :demand t
   :bind* (([remap describe-function] . helpful-callable)
           ([remap describe-variable] . helpful-variable)
           ([remap describe-key] . helpful-key)
@@ -15374,7 +15382,7 @@ Uses `ispell--run-on-word' to spell check word."
 ;;   (defun org-html-htmlize-region-for-paste (beg end)
 ;;     "Convert the region between BEG and END to HTML, using htmlize.el.
 ;; This is much like `htmlize-region-for-paste', only that it uses
-;; the settings define in the org-... variables."
+;; the settings defined in the org-... variables."
 ;;     (let* ((htmlize-output-type org-html-htmlize-output-type)
 ;;            (htmlize-css-name-prefix org-html-htmlize-font-prefix)
 ;;            (htmlbuf (htmlize-region beg end)))
@@ -15407,6 +15415,7 @@ Uses `ispell--run-on-word' to spell check word."
 
 (use-package hungry-delete
   :quelpa (hungry-delete)
+  :demand t
   :commands (global-hungry-delete-mode
              hungry-delete-skip-ws-forward
              hungry-delete-skip-ws-backward)
@@ -15594,6 +15603,7 @@ User is prompted for WORD if none given."
 
 (use-package ivy
   :quelpa (ivy :fetcher github :repo "abo-abo/swiper")
+  :demand t
   :diminish ivy-mode
   :commands (ivy-mode)
   :bind* (("C-x C-r" . ivy-resume)      ; defaults to `find-file-read-only'
@@ -15743,6 +15753,7 @@ User is prompted for WORD if none given."
 
 (use-package key-chord
   :quelpa (key-chord)
+  :demand t
   :init
   ;; turn on `key-chord-mode'
   (key-chord-mode 1)
@@ -15774,6 +15785,7 @@ User is prompted for WORD if none given."
 
 (use-package keyfreq
   :quelpa (keyfreq)
+  :demand t
   :init
   ;; turn on `keyfreq-mode'
   (keyfreq-mode 1)
@@ -16579,6 +16591,7 @@ and 5 is most favorite.  0 will unset the rating."
 
 (use-package persistent-scratch
   :quelpa (persistent-scratch)
+  :demand t
   :init
   ;; enable autosave and restore last saved state
   (persistent-scratch-setup-default))
@@ -16820,6 +16833,7 @@ Do not perform the search on very large files (to avoid a delay when loaded)."
 
 (use-package switch-window
   :quelpa (switch-window)
+  :demand t
   :commands (switch-window switch-window-then-delete)
   :custom
   ;; use home keys to select windows
@@ -16872,6 +16886,7 @@ Do not perform the search on very large files (to avoid a delay when loaded)."
 (use-package time-stamp
   :commands (time-stamp)
   :custom (time-stamp-active t)
+  :hook ('write-contents-functions #'time-stamp)
   :init
   (setq time-stamp-line-limit 20
         time-stamp-start "[Tt][Ii][Mm][Ee][-]?[Ss][Tt][Aa][Mm][Pp]:[    ]+\\\\?[\"<]+"
@@ -16969,6 +16984,7 @@ otherwise run `find-file-as-root'."
 
 (use-package undo-tree
   :quelpa (undo-tree :fetcher github :repo "apchamberlain/undo-tree.el")
+  :demand t
   :diminish undo-tree-mode
   :bind* (("<M-mouse-5>" . undo-tree-redo)
           ("<M-mouse-4>" . undo-tree-undo))
@@ -17138,6 +17154,7 @@ otherwise run `find-file-as-root'."
 
 (use-package which-key
   :quelpa (which-key)
+  :demand t
   :init (which-key-mode))
 ;; which-key:1 ends here
 
