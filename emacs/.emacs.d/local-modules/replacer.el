@@ -80,7 +80,7 @@
   :type 'string
   :group 'replacer)
 
-;; replacer trigger end
+;; replacer replacements
 (defcustom replacer-replacements
   '()
   "List of pairs of trigger strings mapped to replacements.
@@ -130,11 +130,11 @@ possible replacements."
 
 ;; add company-mode backend for auto-completion of replacer keys
 (when (fboundp 'company-mode)
-  (defun company-replacer (command &optional arg &rest ignored)
+  (defun company-replacer-backend (command &optional arg &rest ignored)
     (interactive (list 'interactive))
     (cl-case command
       (interactive
-       (company-begin-backend 'company-replacer))
+       (company-begin-backend 'company-replacer-backend))
       (prefix
        (when (looking-back (regexp-quote replacer-trigger-start)
                            (line-beginning-position))
@@ -144,7 +144,43 @@ possible replacements."
                          replacer-replacements))
       (annotation
        (format " (%s)" (cdr (assoc arg replacer-replacements))))))
-  (add-to-list 'company-backends 'company-replacer))
+  (add-to-list 'company-backends 'company-replacer-backend))
+
+;; ;; add company-mode backend for auto-completion of replacer keys
+;; (when (fboundp 'company-mode)
+;;   (defun company-replacer--make-candidate (candidate)
+;;     (let ((text (car candidate))
+;;           (meta (cadr candidate)))
+;;       (propertize text 'meta meta)))
+
+;;   (defun company-replacer--candidates (prefix)
+;;     (let (res)
+;;       (dolist (item replacer-replacements)
+;;         (when (string-prefix-p prefix (car item))
+;;           (push (company-replacer--make-candidate item) res)))
+;;       res))
+
+;;   (defun company-replacer--meta (candidate)
+;;     (format "This will use %s of %s"
+;;             (get-text-property 0 'meta candidate)
+;;             (substring-no-properties candidate)))
+
+;;   (defun company-replacer--annotation (candidate)
+;;     (format " (%s)" (get-text-property 0 'meta candidate)))
+
+;;   ;; replacer-mode
+;;   (defun company-replacer-backend (command &optional arg &rest ignored)
+;;     (interactive (list 'interactive))
+;;     (cl-case command
+;;       (interactive (company-begin-backend 'company-replacer-backend))
+;;       (prefix (company-grab-symbol-cons
+;;                replacer-trigger-start
+;;                (length replacer-trigger-start)))
+;;       (candidates (company-replacer--candidates arg))
+;;       (annotation (company-replacer--annotation arg))
+;;       (meta (company-replacer--meta arg))))
+
+;;   (add-to-list 'company-backends 'company-replacer-backend))
 
 ;; replacer-mode
 ;;;###autoload

@@ -10569,6 +10569,7 @@ point, or line."
             (org-babel-do-in-edit-buffer (indent-region (point-min) (point-max))))
            ;; sexp
            ((beginning-of-defun)
+            (indent-region (line-beginning-position) (line-end-position))
             (let* ((bounds (bounds-of-thing-at-point 'sexp))
                    (beg (car bounds))
                    (end (cdr bounds)))
@@ -14780,17 +14781,17 @@ Blank lines separate paragraphs.  Semicolons start comments.
   :config
   ;; backends
   (when (fboundp 'company-dabbrev)
-    (add-to-list 'company-backends 'company-dabbrev t))
+    (add-to-list 'company-backends #'company-dabbrev t))
   (when (fboundp 'company-emacs-eclim)
-    (add-to-list 'company-backends 'company-emacs-eclim t))
+    (add-to-list 'company-backends #'company-emacs-eclim t))
   (when (fboundp 'company-elisp)
-    (add-to-list 'company-backends 'company-elisp t))
+    (add-to-list 'company-backends #'company-elisp t))
   (when (fboundp 'company-files)
-    (add-to-list 'company-backends 'company-files t))
+    (add-to-list 'company-backends #'company-files t))
   (when (fboundp 'company-ispell)
-    (add-to-list 'company-backends 'company-ispell t))
+    (add-to-list 'company-backends #'company-ispell t))
   (when (fboundp 'company-robe)
-    (add-to-list 'company-backends 'company-robe t)))
+    (add-to-list 'company-backends #'company-robe t)))
 
 ;; ;; remove troublesome backends
 ;; (setq company-backends (remove 'company-capf company-backends)))
@@ -15069,6 +15070,56 @@ Uses `ispell--run-on-word' to spell check word."
   :custom
   ;; standard filters
   (elfeed-search-filter "-junk +unread")
+  ;; custom feed list
+  (elfeed-feeds
+   '(
+     ;; Emacs
+     ("http://www.reddit.com/r/emacs.rss" emacs) ; Reddit Emacs Channel
+     ("http://rss.gmane.org/messages/excerpts/gmane.emacs.devel" emacs) ; Emacs Development Newsgroup
+     ("http://planet.emacsen.org/atom.xml" emacs) ; Planet Emacs
+     ("http://emacsredux.com/atom.xml" emacs)     ; Emacs Redux
+     ("http://whattheemacsd.com/atom.xml" emacs)  ; What the .emacs.d?
+     ("http://www.lunaryorn.com/feed.atom" emacs) ; Lunarsite Emacs
+     ("http://endlessparentheses.com/atom.xml" emacs) ; Endless Parentheses
+     ("http://nullprogram.com/feed/" emacs)           ; Null Program
+     ("http://www.masteringemacs.org/feed/" emacs)    ; Mastering Emacs
+     ("http://sachachua.com/blog/feed/" emacs)        ; Sacha Chua
+     ("http://kitchingroup.cheme.cmu.edu/blog/feed/index.xml" emacs) ; Kitchin Group
+     ;; Linux
+     ("http://www.reddit.com/r/linux.rss" linux) ; Reddit Linux Channel
+     ("https://www.linuxjournal.com/node/feed" linux) ; Linux Journal
+     ("https://www.archlinux.org/feeds/news/" linux) ; Arch News
+     ("https://forum.manjaro.org/c/announcements.rss" linux) ; Manjaro News
+     ("http://planet.ubuntu.com/rss20.xml" linux) ; Planet Ubuntu
+     ("http://feeds.feedburner.com/codinghorror?format=xml" linux) ; Planet Gnome
+     ("https://www.linuxfoundation.org/feed/" linux) ; Linux Foundation
+     ("https://www.linux-magazine.com/rss/feed/lmi_news" linux) ; Linux Magazine
+     ("https://linux.softpedia.com/backend.xml" linux)          ; Softpedia Linux
+     ("https://www.distrotube.com/videos/index.xml" linux)      ; DistroTube
+     ;; Computers / Technical
+     ("http://slashdot.org/slashdot.rss" dev) ; Slashdot
+     ("http://news.ycombinator.com/rss" dev)  ; Hacker News
+     ("http://feeds.arstechnica.com/arstechnica/index/" dev) ; Ars Technica
+     ("http://feeds.twit.tv/twit_video_hd.xml" dev)          ; TWIT
+     ("https://www.howtogeek.com/feed/" dev)                 ; How-To Geek
+     ("http://feeds.feedburner.com/codinghorror?format=xml" dev) ; Coding Horror
+     ("http://lunduke.com/index.xml" dev)            ; Lunduke
+     ("https://www.cyberciti.biz/atom/atom.xml" dev) ; nixCraft
+     ("https://www.tecmint.com/feed/" dev)           ; TecMint
+     ("https://lukesmith.xyz/rss.xml" dev)           ; The Latest from Luke
+     ;; Vintage Computing
+     ("https://bytecellar.com/feed" vintage) ; BYTE Cellar
+     ("https://nerd.fail/feed/" vintage)     ; Nerd Fail
+     ;; Games
+     ;;("https://robertsspaceindustries.com/comm-link/rss" game) ; Star Citizen
+     ("http://bitemyapp.com/atom.xml" dev) ; bitemyapp
+     ;; Other
+     ("http://open.blogs.nytimes.com/feed/" blog) ; New York Times OPEN Blogs
+     ;;("http://www.tjmaynes.com/atom.xml" blog) ; TJ Maynes
+     ("https://xkcd.com/atom.xml" comic)   ; XKCD Comic
+     ;; Personal
+     ("http://nulldot.net/index.rss" dev) ; Nulldot Blog
+     ))
   :config
   ;; increase default text size in `elfeed-show' buffers
   (defun local-elfeed-show-mode-hook ()
@@ -15076,63 +15127,12 @@ Uses `ispell--run-on-word' to spell check word."
     (text-scale-set 2))
   (add-hook 'elfeed-show-mode-hook #'local-elfeed-show-mode-hook)
 
-  ;; custom feed list
-  (setq elfeed-feeds
-        '(
-          ;; Emacs
-          ("http://www.reddit.com/r/emacs.rss" emacs) ; Reddit Emacs Channel
-          ("http://rss.gmane.org/messages/excerpts/gmane.emacs.devel" emacs) ; Emacs Development Newsgroup
-          ("http://planet.emacsen.org/atom.xml" emacs) ; Planet Emacs
-          ("http://emacsredux.com/atom.xml" emacs)     ; Emacs Redux
-          ("http://whattheemacsd.com/atom.xml" emacs)  ; What the .emacs.d?
-          ("http://www.lunaryorn.com/feed.atom" emacs) ; Lunarsite Emacs
-          ("http://endlessparentheses.com/atom.xml" emacs) ; Endless Parentheses
-          ("http://nullprogram.com/feed/" emacs)           ; Null Program
-          ("http://www.masteringemacs.org/feed/" emacs)    ; Mastering Emacs
-          ("http://sachachua.com/blog/feed/" emacs)        ; Sacha Chua
-          ("http://kitchingroup.cheme.cmu.edu/blog/feed/index.xml" emacs) ; Kitchin Group
-          ;; Linux
-          ("http://www.reddit.com/r/linux.rss" linux) ; Reddit Linux Channel
-          ("https://www.linuxjournal.com/node/feed" linux) ; Linux Journal
-          ("https://www.archlinux.org/feeds/news/" linux) ; Arch News
-          ("https://forum.manjaro.org/c/announcements.rss" linux) ; Manjaro News
-          ("http://planet.ubuntu.com/rss20.xml" linux) ; Planet Ubuntu
-          ("http://feeds.feedburner.com/codinghorror?format=xml" linux) ; Planet Gnome
-          ("https://www.linuxfoundation.org/feed/" linux) ; Linux Foundation
-          ("https://www.linux-magazine.com/rss/feed/lmi_news" linux) ; Linux Magazine
-          ("https://linux.softpedia.com/backend.xml" linux)          ; Softpedia Linux
-          ("https://www.distrotube.com/videos/index.xml" linux)      ; DistroTube
-          ;; Computers / Technical
-          ("http://slashdot.org/slashdot.rss" dev) ; Slashdot
-          ("http://news.ycombinator.com/rss" dev)  ; Hacker News
-          ("http://feeds.arstechnica.com/arstechnica/index/" dev) ; Ars Technica
-          ("http://feeds.twit.tv/twit_video_hd.xml" dev)          ; TWIT
-          ("https://www.howtogeek.com/feed/" dev)                 ; How-To Geek
-          ("http://feeds.feedburner.com/codinghorror?format=xml" dev) ; Coding Horror
-          ("http://lunduke.com/index.xml" dev)            ; Lunduke
-          ("https://www.cyberciti.biz/atom/atom.xml" dev) ; nixCraft
-          ("https://www.tecmint.com/feed/" dev)           ; TecMint
-          ("https://lukesmith.xyz/rss.xml" dev)           ; The Latest from Luke
-          ;; Vintage Computing
-          ("https://bytecellar.com/feed" vintage) ; BYTE Cellar
-          ("https://nerd.fail/feed/" vintage)     ; Nerd Fail
-          ;; Games
-          ;;("https://robertsspaceindustries.com/comm-link/rss" game) ; Star Citizen
-          ("http://bitemyapp.com/atom.xml" dev) ; bitemyapp
-          ;; Other
-          ("http://open.blogs.nytimes.com/feed/" blog) ; New York Times OPEN Blogs
-          ;;("http://www.tjmaynes.com/atom.xml" blog) ; TJ Maynes
-          ("https://xkcd.com/atom.xml" comic)   ; XKCD Comic
-          ;; Personal
-          ("http://nulldot.net/index.rss" dev) ; Nulldot Blog
-          ))
-
   (defun elfeed-feeds-edit ()
     "Open `init-emacs.org' and move point to `elfeed-feeds' variable for easy editing."
     (interactive)
     (find-file (expand-file-name "init-emacs.org" emacs-home-dir))
     (goto-char (point-min))
-    (search-forward "(setq elfeed-feeds")
+    (search-forward "elfeed-feeds")
     (org-show-entry))
 
   (defun elfeed-search-mode-help ()
@@ -16708,9 +16708,10 @@ and 5 is most favorite.  0 will unset the rating."
 (init-message 2 "Modules: replacer")
 
 (use-package replacer
-  ;;:quelpa (replacer :fetcher file :path (expand-file-name "replacer.el" local-modules-dir))
-  :load-path (lambda () (expand-file-name "replacer.el" local-modules-dir))
-  :commands (replacer-mode)
+  :quelpa (replacer :fetcher file :path (expand-file-name "replacer.el" local-modules-dir))
+  ;;:load-path (lambda () (expand-file-name "replacer.el" local-modules-dir))
+  :after (company-mode)
+  :commands (replacer-mode company-replacer-backend)
   :custom
   ;; set trigger start
   (replacer-trigger-start ";")
@@ -16725,13 +16726,14 @@ and 5 is most favorite.  0 will unset the rating."
      ("its" . insert-timestamp)
      ;; org-mode
      ("on" . org-insert-literate-programming-name)
-     ("osb" . org-insert-literate-programming-src)
-     ("osbel" . org-insert-literate-programming-src-emacs-lisp)
-     ("osbr" . org-insert-literate-programming-src-racket)
-     ("osbk" . org-insert-literate-programming-src-kotlin)
+     ("os" . org-insert-literate-programming-src)
+     ("oss" . org-insert-literate-programming-src-sh)
+     ("osel" . org-insert-literate-programming-src-emacs-lisp)
+     ("osr" . org-insert-literate-programming-src-racket)
+     ("osk" . org-insert-literate-programming-src-kotlin)
      ("oieb" . org-insert-literate-programming-init-emacs-block)
-     ("oicb" . org-insert-literate-programming-code-block)
-     ("oipeb" . org-insert-literate-programming-project-euler-problem-block)
+     ("ocb" . org-insert-literate-programming-code-block)
+     ("opeb" . org-insert-literate-programming-project-euler-problem-block)
      ))
   :init
   ;; turn replacer mode on
@@ -16742,7 +16744,7 @@ and 5 is most favorite.  0 will unset the rating."
     (interactive)
     (find-file (expand-file-name "init-emacs.org" emacs-home-dir))
     (goto-char (point-min))
-    (search-forward "(setq replacer-replacements")
+    (search-forward "replacer-replacements")
     (org-show-entry)))
 ;; replacer:1 ends here
 
