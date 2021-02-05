@@ -128,23 +128,23 @@ possible replacements."
               (insert replacement)))
           (setq replacer-state nil)))))))
 
-;; add company-mode backend for auto-completion of replacer keys
-(when (fboundp 'company-mode)
-  (defun company-replacer-backend (command &optional arg &rest ignored)
-    (interactive (list 'interactive))
-    (cl-case command
-      (interactive
-       (company-begin-backend 'company-replacer-backend))
-      (prefix
-       (when (looking-back (regexp-quote replacer-trigger-start)
-                           (line-beginning-position))
-         (match-string 0)))
-      (candidates
-       (cl-remove-if-not (lambda (x) (string-prefix-p arg (car x)))
-                         replacer-replacements))
-      (annotation
-       (format " (%s)" (cdr (assoc arg replacer-replacements))))))
-  (add-to-list 'company-backends 'company-replacer-backend))
+;; company-mode backend for auto-completion of replacer keys
+(defun company-replacer-backend (command &optional arg &rest ignored)
+  (interactive (list 'interactive))
+  (cl-case command
+    (interactive
+     (company-begin-backend 'company-replacer-backend))
+    (prefix
+     (when (looking-back (regexp-quote replacer-trigger-start)
+                         (line-beginning-position))
+       (match-string 0)))
+    (candidates
+     (cl-remove-if-not (lambda (x) (string-prefix-p arg (car x)))
+                       replacer-replacements))
+    (meta
+     (format " (%s)" (cdr (assoc arg replacer-replacements))))
+    (annotation
+     (format " (%s)" (cdr (assoc arg replacer-replacements))))))
 
 ;; ;; add company-mode backend for auto-completion of replacer keys
 ;; (when (fboundp 'company-mode)
@@ -201,9 +201,15 @@ Otherwise behave as if called interactively."
   :global t
   (cond
    (replacer-mode
-    (add-hook 'post-self-insert-hook #'replacer-post-self-insert-hook-function))
+    (add-hook 'post-self-insert-hook #'replacer-post-self-insert-hook-function)
+    ;; add company-mode backend for auto-completion of replacer keys
+    (when (boundp 'company-backends)
+      (add-to-list 'company-backends 'company-replacer-backend)))
    (t
-    (remove-hook 'post-self-insert-hook #'replacer-post-self-insert-hook-function))))
+    (remove-hook 'post-self-insert-hook #'replacer-post-self-insert-hook-function)
+    ;; remove company-mode backend
+    (when (boundp 'company-backends)
+      (setq company-backends (remove 'company-replacer-backend 'company-backends))))))
 
 (provide 'replacer)
 

@@ -3680,6 +3680,12 @@ Reset the CUSTOM_ID property, title comment, and `init-message'."
   (insert "#+BEGIN_SRC sh\n\n#+END_SRC\n")
   (forward-line -2))
 
+(defun org-insert-literate-programming-src-sh-sudo ()
+  "Insert `org-babel' sh (sudo) source block"
+  (interactive "*")
+  (insert "#+BEGIN_SRC sh :dir /sudo::\n\n#+END_SRC\n")
+  (forward-line -2))
+
 (defun org-insert-literate-programming-src-emacs-lisp ()
   "Insert `org-babel' emacs-lisp source block"
   (interactive "*")
@@ -14601,7 +14607,7 @@ Blank lines separate paragraphs.  Semicolons start comments.
   ;; speed up duration (defaults to 0.3)
   (beacon-blink-duration 0.1)
   ;; speed up delay (defaults to 0.3)
-  (beacon-delay 0.1)
+  (beacon-blink-delay 0.1)
   :init (beacon-mode 1))
 ;; beacon:1 ends here
 
@@ -16708,9 +16714,9 @@ and 5 is most favorite.  0 will unset the rating."
 (init-message 2 "Modules: replacer")
 
 (use-package replacer
-  :quelpa (replacer :fetcher file :path (expand-file-name "replacer.el" local-modules-dir))
-  ;;:load-path (lambda () (expand-file-name "replacer.el" local-modules-dir))
-  :after (company-mode)
+  ;;:quelpa (replacer :fetcher file :path (expand-file-name "replacer.el" local-modules-dir))
+  :load-path (lambda () (expand-file-name "replacer.el" local-modules-dir))
+  :after (company)
   :commands (replacer-mode company-replacer-backend)
   :custom
   ;; set trigger start
@@ -16720,6 +16726,9 @@ and 5 is most favorite.  0 will unset the rating."
   ;; set trigger keys and replacements
   (replacer-replacements
    '(
+     ;; help
+     ("h" . replacer-help)
+     ("help" . replacer-help)
      ;; insert
      ("id" . insert-date)
      ("idt" . insert-datetime)
@@ -16728,6 +16737,7 @@ and 5 is most favorite.  0 will unset the rating."
      ("on" . org-insert-literate-programming-name)
      ("os" . org-insert-literate-programming-src)
      ("oss" . org-insert-literate-programming-src-sh)
+     ("ossu" . org-insert-literate-programming-src-sh-sudo)
      ("osel" . org-insert-literate-programming-src-emacs-lisp)
      ("osr" . org-insert-literate-programming-src-racket)
      ("osk" . org-insert-literate-programming-src-kotlin)
@@ -16745,7 +16755,11 @@ and 5 is most favorite.  0 will unset the rating."
     (find-file (expand-file-name "init-emacs.org" emacs-home-dir))
     (goto-char (point-min))
     (search-forward "replacer-replacements")
-    (org-show-entry)))
+    (org-show-entry))
+
+  (defun replacer-help ()
+    "Show list of `replacer-replacements'."
+    (describe-variable 'replacer-replacements)))
 ;; replacer:1 ends here
 
 ;; [[file:init-emacs.org::*s][s:1]]

@@ -4901,6 +4901,12 @@ Various =org-babel= related static inserts.
     (insert "#+BEGIN_SRC sh\n\n#+END_SRC\n")
     (forward-line -2))
 
+  (defun org-insert-literate-programming-src-sh-sudo ()
+    "Insert `org-babel' sh (sudo) source block"
+    (interactive "*")
+    (insert "#+BEGIN_SRC sh :dir /sudo::\n\n#+END_SRC\n")
+    (forward-line -2))
+
   (defun org-insert-literate-programming-src-emacs-lisp ()
     "Insert `org-babel' emacs-lisp source block"
     (interactive "*")
@@ -21068,7 +21074,7 @@ https://github.com/Malabarba/beacon
     ;; speed up duration (defaults to 0.3)
     (beacon-blink-duration 0.1)
     ;; speed up delay (defaults to 0.3)
-    (beacon-delay 0.1)
+    (beacon-blink-delay 0.1)
     :init (beacon-mode 1))
 #+END_SRC
 
@@ -24579,9 +24585,9 @@ Replace strings as you type.
   (init-message 2 "Modules: replacer")
 
   (use-package replacer
-    :quelpa (replacer :fetcher file :path (expand-file-name "replacer.el" local-modules-dir))
-    ;;:load-path (lambda () (expand-file-name "replacer.el" local-modules-dir))
-    :after (company-mode)
+    ;;:quelpa (replacer :fetcher file :path (expand-file-name "replacer.el" local-modules-dir))
+    :load-path (lambda () (expand-file-name "replacer.el" local-modules-dir))
+    :after (company)
     :commands (replacer-mode company-replacer-backend)
     :custom
     ;; set trigger start
@@ -24591,6 +24597,9 @@ Replace strings as you type.
     ;; set trigger keys and replacements
     (replacer-replacements
      '(
+       ;; help
+       ("h" . replacer-help)
+       ("help" . replacer-help)
        ;; insert
        ("id" . insert-date)
        ("idt" . insert-datetime)
@@ -24599,6 +24608,7 @@ Replace strings as you type.
        ("on" . org-insert-literate-programming-name)
        ("os" . org-insert-literate-programming-src)
        ("oss" . org-insert-literate-programming-src-sh)
+       ("ossu" . org-insert-literate-programming-src-sh-sudo)
        ("osel" . org-insert-literate-programming-src-emacs-lisp)
        ("osr" . org-insert-literate-programming-src-racket)
        ("osk" . org-insert-literate-programming-src-kotlin)
@@ -24616,7 +24626,11 @@ Replace strings as you type.
       (find-file (expand-file-name "init-emacs.org" emacs-home-dir))
       (goto-char (point-min))
       (search-forward "replacer-replacements")
-      (org-show-entry)))
+      (org-show-entry))
+
+    (defun replacer-help ()
+      "Show list of `replacer-replacements'."
+      (describe-variable 'replacer-replacements)))
 #+END_SRC
 
 *** s
