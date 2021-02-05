@@ -12489,22 +12489,29 @@ Otherwise, `local-tab-width' is used."
     (cl-case window-system
       (x
        (condition-case nil
-           ;;(set-frame-font"8x13" nil t)
-           ;;(set-frame-font "9x15" nil t)
-           ;;(set-frame-font "Ubuntu Mono-13" nil t)
-           ;;(set-frame-font "Inconsolata-15" nil t)
-           (set-frame-font "Hack Nerd Font Mono-12" nil t)
-           ;;(set-frame-font "BitstreamVeraSansMono Nerd Font Mono-12" nil t)
-           ;;(set-frame-font "DroidSansMono Nerd Font Mono-12" nil t)
+           (progn
+             ;;(set-frame-font "8x13" nil t)
+             ;;(set-frame-font "9x15" nil t)
+             ;;(set-frame-font "Ubuntu Mono-13" nil t)
+             ;;(set-frame-font "Inconsolata-15" nil t)
+             ;;(set-frame-font "BitstreamVeraSansMono Nerd Font Mono-12" nil t)
+             ;;(set-frame-font "DroidSansMono Nerd Font Mono-12" nil t)
+             (set-frame-font "Hack Nerd Font Mono-12" nil t)
+             ;;(set-face-attribute 'default nil :font "Hack Nerd Font Mono" :height 132)
+             ;;(set-face-attribute 'fixed-pitch nil :font "Hack Nerd Font Mono" :height 156)
+             ;;(set-face-attribute 'variable-pitch nil :font "Hack Nerd Font" :height 168 :weight 'regular)
+             )
          ('error
-          (set-frame-font "9x15" nil t)))))
-    (ns
-     (condition-case nil
-         (set-frame-font "Hack Nerd Font Mono-14" nil t)
-         ;;(set-frame-font "BitstreamVeraSansMono Nerd Font Mono-14" nil t)
-         ;;(set-frame-font "DroidSansMono Nerd Font Mono-14" nil t)
-       ('error
-        (set-frame-font "Menlo" nil t)))))
+          (set-frame-font "9x15" nil t))))
+      (ns
+       (condition-case nil
+           (progn
+             ;;(set-frame-font "BitstreamVeraSansMono Nerd Font Mono-14" nil t)
+             ;;(set-frame-font "DroidSansMono Nerd Font Mono-14" nil t)
+             (set-frame-font "Hack Nerd Font Mono-14" nil t)
+             )
+         ('error
+          (set-frame-font "Menlo" nil t))))))
 
   ;; faces
   ;; green foreground on black background with green cursor
