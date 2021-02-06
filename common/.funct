@@ -1848,12 +1848,17 @@ homeinitialize()
                      fi
                  done) || (echo "Errors encountered while backing up existing files!" && return 1)
 
-            # create .emacs.d, if it doesn't exist, to prevent stow from linking the entire directory
+            # create stow target directories
             mkdir -p "${HOME}/.emacs.d"
+            mkdir -p "${HOME}/.local/share/applications"
+            ls -1 "${HOME}/config/config/.config" | while read dir ; do
+                if [[ -d "${HOME}/config/config/.config/${dir}" ]] ; then
+                    mkdir -p "${HOME}/.config/${dir}"
+                fi
+            done
 
             dirs=("config" "config-private")
-            for ((x = 1; x <= ${#dirs[@]}; x++)) ; do
-                dir="${dirs[${x}]}"
+            for dir in ${dirs[@]} ; do
                 if [[ -d "${HOME}/${dir}" ]] ; then
                     echo "Stowing '${dir}' packages..."
                     (cd "${HOME}/${dir}" && \
@@ -1886,9 +1891,17 @@ homeinitialize()
 #        homerestow              restow links from ~/ to ~/config and ~/config-private dirs
 homerestow()
 {
+    # create stow target directories
+    mkdir -p "${HOME}/.emacs.d"
+    mkdir -p "${HOME}/.local/share/applications"
+    ls -1 "${HOME}/config/config/.config" | while read dir ; do
+        if [[ -d "${HOME}/config/config/.config/${dir}" ]] ; then
+            mkdir -p "${HOME}/.config/${dir}"
+        fi
+    done
+
     dirs=("config" "config-private")
-    for ((x = 1; x <= ${#dirs[@]}; x++)) ; do
-        dir="${dirs[${x}]}"
+    for dir in ${dirs[@]} ; do
         if [[ -d "${HOME}/${dir}" ]] ; then
             echo "Restowing '${dir}' packages..."
             (cd "${HOME}/${dir}" && \
