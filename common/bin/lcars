@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+#
+# Author: Chris Titus
+# URL: https://christitus.com/lcars-screensaver/#script-creation
+
+export DISPLAY=:0
+
+# trigger timeout in minutes
+TIME_OUT=10
+# trigger timeout in milliseconds
+IDLE_TIME=$((TIME_OUT * 60 * 1000))
+
+# sequence to execute when timeout triggers
+trigger_cmd() {
+    WINEPREFIX=/home/kyle/.wine-lcars wine '/home/kyle/.wine-lcars/drive_c/windows/system32/System47.scr' /s
+}
+
+sleep_time=${IDLE_TIME}
+triggered=false
+
+while sleep $(((sleep_time + 999) / 1000)) ; do
+    idle=$(xprintidle)
+    if [[ ${idle} -ge ${IDLE_TIME} ]] ; then
+        if [[ ${triggered} -eq false ]] ; then
+            trigger_cmd
+            triggered=true
+            sleep_time=${IDLE_TIME}
+        fi
+    else
+        triggered=false
+        # give 100 ms buffer to avoid franticloops shortly before triggers
+        sleep_time=$((IDLE_TIME - idle + 100))
+    fi
+done
