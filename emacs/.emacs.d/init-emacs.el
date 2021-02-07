@@ -1788,19 +1788,19 @@ KEYMAP defaults to `override-global-map'."
           (while (< (point) start)
             (newline))
           (goto-char (line-end-position)))
-  (apply orig-fun args)))
+      (apply orig-fun args)))
   ;; advise `org-insert-heading' to fix extra newline bug
   (advice-add 'org-insert-heading :around #'org-insert-heading--fix-newline-bug)
 
   (defun org-fixup-indentation--unindent (diff)
     "Unindent org begin/end blocks, keywords, and paragraphs."
     (save-window-excursion
-  (save-mark-and-excursion
+      (save-mark-and-excursion
         (save-match-data
           (when (org-with-limited-levels (org-at-heading-p))
             (org-with-wide-buffer
              (narrow-to-region (line-beginning-position)
-                           (save-mark-and-excursion
+                               (save-mark-and-excursion
                                  (org-with-limited-levels (outline-next-heading))
                                  (point)))
              (forward-line 0)
@@ -1810,24 +1810,24 @@ KEYMAP defaults to `override-global-map'."
                     (spacing (make-string (abs diff) ? ))
                     (indented-regexp (concat "^" spacing "[ \t]*"))
                     (text-indent t))
-           (forward-line 1)
-           (while (not (eobp))
+               (forward-line 1)
+               (while (not (eobp))
                  (when (re-search-forward indented-regexp (line-end-position) :noerror)
                    (let ((line-indentation (- (point) (line-beginning-position))))
                      (forward-line 0)
                      (case (org-element-type (org-element-at-point))
-                   ('src-block
+                       ('src-block
                         (when (> diff 0)
                           (delete-char diff)))
-                   ('paragraph
+                       ((paragraph table table-row)
                         (if (> diff 0)
                             (when (or (not text-indent)
-                                  (< line-indentation indentation))
-                          (delete-char diff)
-                          (setq text-indent nil))
+                                      (< line-indentation indentation))
+                              (delete-char diff)
+                              (setq text-indent nil))
                           (if (and text-indent
                                    (>= line-indentation (- indentation diff)))
-                          (delete-char (abs diff))
+                              (delete-char (abs diff))
                             (setq text-indent nil)))))))
                  (forward-line 1)))))))))
   ;; advise `org-fixup-indentation' to unindent as needed
@@ -1876,8 +1876,8 @@ DATA should have been made by `org-outline-overlay-data'."
     "Ignore errors when interactively calling `outline-up-heading'."
     (condition-case err
         (apply orig-fun args)
-  ('error
-   (if (called-interactively-p 'any)
+      ('error
+       (if (called-interactively-p 'any)
            (message "%s" err)
          (error err)))))
   ;; advise `outline-up-heading' to suppress errors
@@ -1896,177 +1896,185 @@ DATA should have been made by `org-outline-overlay-data'."
 
 (init-message 2 "Org Mode: Configuration")
 
-;; org directory
-(setq org-directory (expand-file-name "~/org"))
+(use-package org
+  :config
+  ;; org directory
+  (setq org-directory (expand-file-name "~/org"))
 
-;; faces
-(custom-set-faces
- '(org-block ((t (:inherit shadow :foreground "green"))))
- '(org-level-1 ((t (:foreground "orange"))))
- '(org-level-2 ((t (:foreground "deep sky blue"))))
- '(org-level-3 ((t (:foreground "yellow green"))))
- '(org-level-4 ((t (:foreground "salmon"))))
- '(org-level-5 ((t (:foreground "orchid"))))
- '(org-level-6 ((t (:foreground "cyan"))))
- '(org-level-7 ((t (:foreground "spring green"))))
- '(org-level-8 ((t (:foreground "tomato")))))
+  ;; faces
+  (custom-set-faces
+   '(org-block ((t (:inherit shadow :foreground "green"))))
+   '(org-level-1 ((t (:foreground "orange"))))
+   '(org-level-2 ((t (:foreground "deep sky blue"))))
+   '(org-level-3 ((t (:foreground "yellow green"))))
+   '(org-level-4 ((t (:foreground "salmon"))))
+   '(org-level-5 ((t (:foreground "orchid"))))
+   '(org-level-6 ((t (:foreground "cyan"))))
+   '(org-level-7 ((t (:foreground "spring green"))))
+   '(org-level-8 ((t (:foreground "tomato")))))
 
-;; remap disputed keys (see `org-disputed-keys')
-(setq org-replace-disputed-keys t)
+  ;; remap disputed keys (see `org-disputed-keys')
+  (setq org-replace-disputed-keys t)
 
-;; set file apps
-(when window-system
-  (setq org-file-apps (quote ((auto-mode . emacs)
-                              ("\\.mm\\'" . default)
-                              ("\\.x?html?\\'" . default)
-                              ("\\.pdf\\'" . emacs))))) ; use internal PDF viewer
+  ;; set file apps
+  (when window-system
+    (setq org-file-apps (quote ((auto-mode . emacs)
+                                ("\\.mm\\'" . default)
+                                ("\\.x?html?\\'" . default)
+                                ("\\.pdf\\'" . emacs))))) ; use internal PDF viewer
 
-;; display inline images
-(setq org-startup-with-inline-images t)
+  ;; display inline images
+  (setq org-startup-with-inline-images t)
 
-;; do not insert empty lines around headings
-(setq org-blank-before-new-entry '((heading . nil) (plain-list-item . nil)))
+  ;; do not insert empty lines around headings
+  (setq org-blank-before-new-entry '((heading . nil) (plain-list-item . nil)))
 
-;; hide leading stars
-(setq org-hide-leading-stars t)
+  ;; hide leading stars
+  (setq org-hide-leading-stars t)
 
-;; skip levels
-(setq org-odd-levels-only t)
+  ;; skip levels
+  (setq org-odd-levels-only t)
 
-;; use a different ellipsis indicator (than '...')
-(setq org-ellipsis "…")
-;;(setq org-ellipsis " ⤵")
-;;(setq org-ellipsis " ")
-;;(setq org-ellipsis " ")
-;;(setq org-ellipsis " ")
-;;(setq org-ellipsis " ")
+  ;; use a different ellipsis indicator (than '...')
+  (setq org-ellipsis "…")
+  ;;(setq org-ellipsis " ⤵")
+  ;;(setq org-ellipsis " ")
+  ;;(setq org-ellipsis " ")
+  ;;(setq org-ellipsis " ")
+  ;;(setq org-ellipsis " ")
 
-;; return follows links
-;;(setq org-return-follows-link t)
+  ;; return follows links
+  ;;(setq org-return-follows-link t)
 
-;; HOME toggles between header start and line start
-;; END toggles between header end and end of tags
-(setq org-special-ctrl-a/e t)
+  ;; HOME toggles between header start and line start
+  ;; END toggles between header end and end of tags
+  (setq org-special-ctrl-a/e t)
 
-;; show and error on invisible edits
-(setq org-catch-invisible-edits 'show-and-error)
+  ;; show and error on invisible edits
+  (setq org-catch-invisible-edits 'show-and-error)
 
-;; use completion with `org-goto'
-(setq org-goto-interface 'outline-path-completion
-      org-outline-path-complete-in-steps nil
-      org-goto-max-level 10)
+  ;; use completion with `org-goto'
+  (setq org-goto-interface 'outline-path-completion
+        org-outline-path-complete-in-steps nil
+        org-goto-max-level 10)
 
-;; use todo key selection
-(setq org-use-fast-todo-selection t)
+  ;; use todo key selection
+  (setq org-use-fast-todo-selection t)
 
-;; use shift-left/right to change todo status without a state change
-(setq org-treat-S-cursor-todo-selection-as-state-change nil)
+  ;; use shift-left/right to change todo status without a state change
+  (setq org-treat-S-cursor-todo-selection-as-state-change nil)
 
-;; remember settings
-;;(setq remember-handler-functions '(org-remember-handler)
-;;      remember-annotation-functions '(org-remember-annotation))
-;;(add-hook 'remember-mode-hook #'org-remember-apply-template)
+  ;; remember settings
+  ;;(setq remember-handler-functions '(org-remember-handler)
+  ;;      remember-annotation-functions '(org-remember-annotation))
+  ;;(add-hook 'remember-mode-hook #'org-remember-apply-template)
 
-;; time stamp settings
-(setq org-display-custom-times t
-      org-time-stamp-custom-formats '("<%Y-%m-%d %a>" . "<%Y-%m-%d %a %H:%M>"))
+  ;; time stamp settings
+  (setq org-display-custom-times t
+        org-time-stamp-custom-formats '("<%Y-%m-%d %a>" . "<%Y-%m-%d %a %H:%M>"))
 
-;; todo keywords
-(setq org-todo-keywords '("TODO" "STARTED" "|" "DONE"))
+  ;; todo keywords
+  (setq org-todo-keywords '("TODO(t)" "NEXT(n)" "|" "DONE(d!)"))
+  ;; (setq org-todo-keywords
+  ;;       '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!)")
+  ;;         (sequence "BACKLOG(b)" "PLAN(p)" "READY(r)" "ACTIVE(a)" "REVIEW(v)" "WAIT(w@/!)" "HOLD(h)" "|" "COMPLETED(c)" "CANCELED(k@)"))
 
-;; ;; add todo state map
-;; (define-prefix-command 'org-todo-state-map)
-;; (define-key org-mode-map (kbd "C-c x" . org-todo-state-map)
-;; (define-key org-todo-state-map (kbd "s") (lambda () (interactive) (org-todo "STARTED")))
-;; (define-key org-todo-state-map (kbd "w") (lambda () (interactive) (org-todo "WAITING")))
-;; ;;(define-key org-todo-state-map (kbd "f") (lambda () (interactive) (org-todo "DEFERRED")))
-;; ;;(define-key org-todo-state-map (kbd "l") (lambda () (interactive) (org-todo "DELEGATED")))
-;; (define-key org-todo-state-map (kbd "d") (lambda () (interactive) (org-todo "DONE")))
-;; (define-key org-todo-state-map (kbd "c") (lambda () (interactive) (org-todo "CANCELED")))
+  ;; ;; add todo state map
+  ;; (define-prefix-command 'org-todo-state-map)
+  ;; (define-key org-mode-map (kbd "C-c x" . org-todo-state-map)
+  ;; (define-key org-todo-state-map (kbd "s") (lambda () (interactive) (org-todo "STARTED")))
+  ;; (define-key org-todo-state-map (kbd "w") (lambda () (interactive) (org-todo "WAITING")))
+  ;; ;;(define-key org-todo-state-map (kbd "f") (lambda () (interactive) (org-todo "DEFERRED")))
+  ;; ;;(define-key org-todo-state-map (kbd "l") (lambda () (interactive) (org-todo "DELEGATED")))
+  ;; (define-key org-todo-state-map (kbd "d") (lambda () (interactive) (org-todo "DONE")))
+  ;; (define-key org-todo-state-map (kbd "c") (lambda () (interactive) (org-todo "CANCELED")))
 
-;; log note settings
-(setq org-log-note-headings
-      '((done . "CLOSING NOTE %t")
-        ;;(state . "State %-12s from %-12S %t")
-        (state . "State %-12s %t")
-        (note . "Note taken on %t")
-        (reschedule . "Rescheduled from %S on %t")
-        (delschedule . "Not scheduled, was %S on %t")
-        (redeadline . "New deadline from %S on %t")
-        (deldeadline . "Removed deadline, was %S on %t")
-        (refile . "Refiled on %t")
-        (clock-out . "")))
+  ;; log note settings
+  (setq org-log-note-headings
+        '((done . "CLOSING NOTE %t")
+          ;;(state . "State %-12s from %-12S %t")
+          (state . "State %-12s %t")
+          (note . "Note taken on %t")
+          (reschedule . "Rescheduled from %S on %t")
+          (delschedule . "Not scheduled, was %S on %t")
+          (redeadline . "New deadline from %S on %t")
+          (deldeadline . "Removed deadline, was %S on %t")
+          (refile . "Refiled on %t")
+          (clock-out . "")))
 
-(defun pabbrev-global-mode--org-disable (orig-fun &rest args)
-  "Turn off pabbrev mode (it interferes with org mode)."
-  (unless (eq major-mode 'org-mode)
-    (apply orig-fun args)))
-;; advise `pabbrev-global-mode'
-(advice-add 'pabbrev-global-mode :around #'pabbrev-global-mode--org-disable)
+  ;; save buffers after refile
+  (advice-add 'org-refile :after #'org-save-all-org-buffers)
 
-;; make windmove work in org-mode
-(add-hook 'org-shiftup-final-hook #'windmove-up)
-(add-hook 'org-shiftleft-final-hook #'windmove-left)
-(add-hook 'org-shiftdown-final-hook #'windmove-down)
-(add-hook 'org-shiftright-final-hook #'windmove-right)
+  (defun pabbrev-global-mode--org-disable (orig-fun &rest args)
+    "Turn off pabbrev mode (it interferes with org mode)."
+    (unless (eq major-mode 'org-mode)
+      (apply orig-fun args)))
+  ;; advise `pabbrev-global-mode'
+  (advice-add 'pabbrev-global-mode :around #'pabbrev-global-mode--org-disable)
 
-;; mobile org settings
-(setq org-mobile-directory (expand-file-name "~/Dropbox/MobileOrg"))
-(setq org-mobile-inbox-for-pull (expand-file-name "index.org" org-mobile-directory))
+  ;; make windmove work in org-mode
+  (add-hook 'org-shiftup-final-hook #'windmove-up)
+  (add-hook 'org-shiftleft-final-hook #'windmove-left)
+  (add-hook 'org-shiftdown-final-hook #'windmove-down)
+  (add-hook 'org-shiftright-final-hook #'windmove-right)
 
-;; ;; latex settings
-;; ;; (minted is installed with the Ubuntu texlive-latex-extra package)
-;; (setq org-export-latex-listings 'minted)
-;; (add-to-list 'org-export-latex-packages-alist '("" "minted") t)
+  ;; mobile org settings
+  (setq org-mobile-directory (expand-file-name "~/Dropbox/MobileOrg"))
+  (setq org-mobile-inbox-for-pull (expand-file-name "index.org" org-mobile-directory))
 
-(defun org-update-parent-cookie ()
-  "Update parent TODO cookies when children entries are killed."
-  (when (eq major-mode 'org-mode)
-    (save-mark-and-excursion
-      (ignore-errors
-        (org-back-to-heading)
-        (org-update-parent-todo-statistics)))))
+  ;; ;; latex settings
+  ;; ;; (minted is installed with the Ubuntu texlive-latex-extra package)
+  ;; (setq org-export-latex-listings 'minted)
+  ;; (add-to-list 'org-export-latex-packages-alist '("" "minted") t)
 
-;; ;; too slow
-;; (defun org-kill-line--fix-cookies (&optional arg)
-;;   "Update parent todo cookies after `org-kill-line'."
-;;   (org-update-parent-cookie))
-;; ;; advise `org-kill-line'
-;; (advice-add 'org-kill-line :after #'org-kill-line--fix-cookies)
+  (defun org-update-parent-cookie ()
+    "Update parent TODO cookies when children entries are killed."
+    (when (eq major-mode 'org-mode)
+      (save-mark-and-excursion
+        (ignore-errors
+          (org-back-to-heading)
+          (org-update-parent-todo-statistics)))))
 
-;; ;; too slow
-;; (defun kill-whole-line--fix-cookies (&optional arg)
-;;   "Update parent todo cookies after `kill-whole-line'."
-;;   (org-update-parent-cookie))
-;; ;; advise `kill-whole-line'
-;; (advice-add 'kill-whole-line :after #'kill-whole-line--fix-cookies)
+  ;; ;; too slow
+  ;; (defun org-kill-line--fix-cookies (&optional arg)
+  ;;   "Update parent todo cookies after `org-kill-line'."
+  ;;   (org-update-parent-cookie))
+  ;; ;; advise `org-kill-line'
+  ;; (advice-add 'org-kill-line :after #'org-kill-line--fix-cookies)
 
-(defun org-kill-src-buffers (&rest args)
-  "Kill temporary buffers created by `org-src-font-lock-fontify-block'."
-  (dolist (buffer (buffer-list))
-    (let ((buffer-name (buffer-name buffer)))
-      (when (string-prefix-p " org-src-fontification:" buffer-name)
-        (kill-buffer buffer)))))
+  ;; ;; too slow
+  ;; (defun kill-whole-line--fix-cookies (&optional arg)
+  ;;   "Update parent todo cookies after `kill-whole-line'."
+  ;;   (org-update-parent-cookie))
+  ;; ;; advise `kill-whole-line'
+  ;; (advice-add 'kill-whole-line :after #'kill-whole-line--fix-cookies)
 
-(defun org-src-font-lock-fontify-block--kill-src-buffers (lang start end)
-  "Kill temporary buffers created by `org-src-font-lock-fontify-block'."
-  (org-kill-src-buffers))
-;; advise `org-src-font-lock-fontify-block'
-(advice-add 'org-src-font-lock-fontify-block :after #'org-src-font-lock-fontify-block--kill-src-buffers)
+  (defun org-kill-src-buffers (&rest args)
+    "Kill temporary buffers created by `org-src-font-lock-fontify-block'."
+    (dolist (buffer (buffer-list))
+      (let ((buffer-name (buffer-name buffer)))
+        (when (string-prefix-p " org-src-fontification:" buffer-name)
+          (kill-buffer buffer)))))
 
-(defun before-save-hook--update-last-modified-property ()
-  "Hook to update last modified property on save."
-  (when (and buffer-file-name
-             (string= (file-name-extension buffer-file-name) "org"))
-    (org-update-last-modified-property)))
-(add-hook 'before-save-hook #'before-save-hook--update-last-modified-property)
+  (defun org-src-font-lock-fontify-block--kill-src-buffers (lang start end)
+    "Kill temporary buffers created by `org-src-font-lock-fontify-block'."
+    (org-kill-src-buffers))
+  ;; advise `org-src-font-lock-fontify-block'
+  (advice-add 'org-src-font-lock-fontify-block :after #'org-src-font-lock-fontify-block--kill-src-buffers)
 
-(defun after-save-hook--generate-init-emacs-elisp-file ()
-  "Hook to generate init-emacs.el file on save."
-  (when (and buffer-file-name
-             (string= (file-truename buffer-file-name) init-emacs-true-file-name))
-    (org-babel-generate-elisp-file init-emacs-true-file-name nil t)))
-(add-hook 'after-save-hook #'after-save-hook--generate-init-emacs-elisp-file :append)
+  (defun before-save-hook--update-last-modified-property ()
+    "Hook to update last modified property on save."
+    (when (and buffer-file-name
+               (string= (file-name-extension buffer-file-name) "org"))
+      (org-update-last-modified-property)))
+  (add-hook 'before-save-hook #'before-save-hook--update-last-modified-property)
+
+  (defun after-save-hook--generate-init-emacs-elisp-file ()
+    "Hook to generate init-emacs.el file on save."
+    (when (and buffer-file-name
+               (string= (file-truename buffer-file-name) init-emacs-true-file-name))
+      (org-babel-generate-elisp-file init-emacs-true-file-name nil t)))
+  (add-hook 'after-save-hook #'after-save-hook--generate-init-emacs-elisp-file :append))
 ;; Configuration:1 ends here
 
 ;; [[file:init-emacs.org::*Agenda][Agenda:1]]
@@ -2076,70 +2084,72 @@ DATA should have been made by `org-outline-overlay-data'."
 
 (init-message 2 "Org Mode: Agenda")
 
-;; agenda key bindings
-;;(define-key org-agenda-mode-map (kbd "C-n") 'next-line)
-;;(define-key org-agenda-keymap (kbd "C-n") 'next-line)
-;;(define-key org-agenda-mode-map (kbd "C-p") 'previous-line)
-;;(define-key org-agenda-keymap (kbd "C-p") 'previous-line)
+(use-package org
+  :config
+  ;; agenda key bindings
+  ;;(define-key org-agenda-mode-map (kbd "C-n") 'next-line)
+  ;;(define-key org-agenda-keymap (kbd "C-n") 'next-line)
+  ;;(define-key org-agenda-mode-map (kbd "C-p") 'previous-line)
+  ;;(define-key org-agenda-keymap (kbd "C-p") 'previous-line)
 
-;; record time when todo's are marked done
-(setq org-log-done 'time)
+  ;; record time when todo's are marked done
+  (setq org-log-done 'time)
 
-;; agenda files
-(setq org-agenda-file-regexp "agenda.*\\.org\\'"
-      org-agenda-files (mapcar (lambda (x) (expand-file-name x (file-name-as-directory org-directory)))
-                               (cl-remove-if-not (lambda (x) (string-match org-agenda-file-regexp x))
-                                                 (directory-files org-directory))))
+  ;; agenda files
+  (setq org-agenda-file-regexp "agenda.*\\.org\\'"
+        org-agenda-files (mapcar (lambda (x) (expand-file-name x (file-name-as-directory org-directory)))
+                                 (cl-remove-if-not (lambda (x) (string-match org-agenda-file-regexp x))
+                                                   (directory-files org-directory))))
 
-;; show 7 days in agenda view
-(setq org-agenda-span 7)
+  ;; show 7 days in agenda view
+  (setq org-agenda-span 7)
 
-;; show deadlines within 14 days
-(setq org-deadline-warning-days 14)
+  ;; show deadlines within 14 days
+  (setq org-deadline-warning-days 14)
 
-;; show all dates (even empty ones)
-(setq org-agenda-show-all-dates t)
+  ;; show all dates (even empty ones)
+  (setq org-agenda-show-all-dates t)
 
-;; do not show entries marked done
-(setq org-agenda-skip-deadline-if-done t)
-(setq org-agenda-skip-scheduled-if-done t)
+  ;; do not show entries marked done
+  (setq org-agenda-skip-deadline-if-done t)
+  (setq org-agenda-skip-scheduled-if-done t)
 
-;; start agenda view on current day
-(setq org-agenda-start-on-weekday nil)
+  ;; start agenda view on current day
+  (setq org-agenda-start-on-weekday nil)
 
-;; store new notes at the beginning of files
-(setq org-reverse-note-order t)
+  ;; store new notes at the beginning of files
+  (setq org-reverse-note-order t)
 
-;; quick tag selection
-(setq org-fast-tag-selection-single-key 'expert)
+  ;; quick tag selection
+  (setq org-fast-tag-selection-single-key 'expert)
 
-;; quick tag keys
-(setq org-agenda-custom-commands
-      (quote (("d" todo "DONE" nil)
-              ;;("d" todo "DONE|DEFERRED|CANCELLED" nil)
-              ("w" todo "WAITING" nil)
-              ;;("l" todo "DELEGATED" nil)
-              ("W" agenda "" ((org-agenda-ndays 21)))
-              ("A" agenda ""
-               ((org-agenda-skip-function
-                 (lambda ()
-                   (org-agenda-skip-entry-if 'notregexp "\\=.*\\[#A\\]")))
-                (org-agenda-ndays 1)
-                (org-agenda-overriding-header "Today's Priority #A tasks: ")))
-              ("u" alltodo ""
-               ((org-agenda-skip-function
-                 (lambda ()
-                   (org-agenda-skip-entry-if 'scheduled 'deadline 'regexp "<[^>\n]+>")))
-                (org-agenda-overriding-header "Unscheduled TODO entries: "))))))
+  ;; quick tag keys
+  (setq org-agenda-custom-commands
+        (quote (("d" todo "DONE" nil)
+                ;;("d" todo "DONE|DEFERRED|CANCELLED" nil)
+                ("w" todo "WAITING" nil)
+                ;;("l" todo "DELEGATED" nil)
+                ("W" agenda "" ((org-agenda-ndays 21)))
+                ("A" agenda ""
+                 ((org-agenda-skip-function
+                   (lambda ()
+                     (org-agenda-skip-entry-if 'notregexp "\\=.*\\[#A\\]")))
+                  (org-agenda-ndays 1)
+                  (org-agenda-overriding-header "Today's Priority #A tasks: ")))
+                ("u" alltodo ""
+                 ((org-agenda-skip-function
+                   (lambda ()
+                     (org-agenda-skip-entry-if 'scheduled 'deadline 'regexp "<[^>\n]+>")))
+                  (org-agenda-overriding-header "Unscheduled TODO entries: "))))))
 
-;; fix bug
-(when (not (boundp 'org-called-interactively-p))
-  (defalias 'org-called-interactively-p 'called-interactively-p))
+  ;; fix bug
+  (when (not (boundp 'org-called-interactively-p))
+    (defalias 'org-called-interactively-p 'called-interactively-p))
 
-(defun org-agenda-archive-done-tasks ()
-  "Archive DONE tasks."
-  (interactive)
-  (org-map-entries 'org-archive-subtree "/DONE" 'file))
+  (defun org-agenda-archive-done-tasks ()
+    "Archive DONE tasks."
+    (interactive)
+    (org-map-entries 'org-archive-subtree "/DONE" 'file)))
 ;; Agenda:1 ends here
 
 ;; [[file:init-emacs.org::*Modules][Modules:1]]
@@ -2767,67 +2777,69 @@ same directory as the org-buffer and insert a link to this file."
 
 (init-message 2 "Org Mode: Hook")
 
-(defun local-org-mode-hook ()
-  ;; remappings
-  (bind-keys :map org-mode-map
-             ([remap org-metaleft] . org-safe-metaleft)
-             ([remap org-metaright] . org-safe-metaright)
-             ([remap org-metadown] . org-safe-metadown)
-             ([remap org-metaup] . org-safe-metaup)
-             ([remap org-shiftmetaleft] . org-safe-shiftmetaleft)
-             ([remap org-shiftmetaright] . org-safe-shiftmetaright)
-             ([remap org-shiftmetadown] . org-safe-shiftmetadown)
-             ([remap org-shiftmetaup] . org-safe-shiftmetaup))
-  ;; local key bindings
-  (bind-keys :map org-mode-map
-             ("M-n" . scroll-up)
-             ("M-p" . scroll-down)
-             ("M-W" . org-copy-to-clipboard)
-             ("C-M-b" . org-metaleft)
-             ("C-M-f" . org-metaright)
-             ("C-M-n" . org-metadown)
-             ("C-M-p" . org-metaup)
-             ("C-M-S-b" . org-shiftmetaleft)
-             ("C-M-S-f" . org-shiftmetaright)
-             ("C-M-S-n" . org-shiftmetadown)
-             ("C-M-S-p" . org-shiftmetaup)
-             ;;("C-c C-<return>" . org-insert-heading)
-             ("C-c a" . org-agenda)
-             ("C-c l" . org-store-link)
-             ("C-c m" . org-insert-todo-heading)
-             ("C-c p" . org-priority) ; "C-c ," gets overridden by `semantic-complete-analyze-inline'
-             ("C-c s" . org-sort-current) ; sort current level
-             ("C-c z" . org-agenda-archive-done-tasks) ; archive done tasks
-             ("C-c C-g" . org-goto)                    ; goto a location
-             ;;("C-c C-z" . switch-to-lisp) ; defaults to `org-add-note'
-             ("C-c C-z" . geiser-mode-switch-to-repl) ; defaults to `org-add-note'
-             ("C-c C-x C-l" . org-toggle-link-display) ; toggle showing or hiding links
-             ("C-c C-x t" . org-toggle-headline-checkbox) ; toggle between headline and checkbox
-             ("C-c C-x T" . org-toggle-literate-programming-code-block) ; toggle literate programming code block on/off
-             ("C-c C-x F" . org-fix-literate-programming-heading) ; fix literate programming heading of current org section
-             ("C-c C-v q" . org-babel-tangle-block) ; tangle current source block
-             ("C-c C-v C-q" . org-babel-tangle-block)) ; tangle current source block
-  ;; custom movement keys
-  (custom-key-bindings-movement-keys org-mode-map)
+(use-package org
+  :config
+  (defun local-org-mode-hook ()
+    ;; remappings
+    (bind-keys :map org-mode-map
+               ([remap org-metaleft] . org-safe-metaleft)
+               ([remap org-metaright] . org-safe-metaright)
+               ([remap org-metadown] . org-safe-metadown)
+               ([remap org-metaup] . org-safe-metaup)
+               ([remap org-shiftmetaleft] . org-safe-shiftmetaleft)
+               ([remap org-shiftmetaright] . org-safe-shiftmetaright)
+               ([remap org-shiftmetadown] . org-safe-shiftmetadown)
+               ([remap org-shiftmetaup] . org-safe-shiftmetaup))
+    ;; local key bindings
+    (bind-keys :map org-mode-map
+               ("M-n" . scroll-up)
+               ("M-p" . scroll-down)
+               ("M-W" . org-copy-to-clipboard)
+               ("C-M-b" . org-metaleft)
+               ("C-M-f" . org-metaright)
+               ("C-M-n" . org-metadown)
+               ("C-M-p" . org-metaup)
+               ("C-M-S-b" . org-shiftmetaleft)
+               ("C-M-S-f" . org-shiftmetaright)
+               ("C-M-S-n" . org-shiftmetadown)
+               ("C-M-S-p" . org-shiftmetaup)
+               ;;("C-c C-<return>" . org-insert-heading)
+               ("C-c a" . org-agenda)
+               ("C-c l" . org-store-link)
+               ("C-c m" . org-insert-todo-heading)
+               ("C-c p" . org-priority) ; "C-c ," gets overridden by `semantic-complete-analyze-inline'
+               ("C-c s" . org-sort-current) ; sort current level
+               ("C-c z" . org-agenda-archive-done-tasks) ; archive done tasks
+               ("C-c C-g" . org-goto)                    ; goto a location
+               ;;("C-c C-z" . switch-to-lisp) ; defaults to `org-add-note'
+               ("C-c C-z" . geiser-mode-switch-to-repl) ; defaults to `org-add-note'
+               ("C-c C-x C-l" . org-toggle-link-display) ; toggle showing or hiding links
+               ("C-c C-x t" . org-toggle-headline-checkbox) ; toggle between headline and checkbox
+               ("C-c C-x T" . org-toggle-literate-programming-code-block) ; toggle literate programming code block on/off
+               ("C-c C-x F" . org-fix-literate-programming-heading) ; fix literate programming heading of current org section
+               ("C-c C-v q" . org-babel-tangle-block) ; tangle current source block
+               ("C-c C-v C-q" . org-babel-tangle-block)) ; tangle current source block
+    ;; custom movement keys
+    (custom-key-bindings-movement-keys org-mode-map)
 
-  ;; ;; work functions
-  ;; (when (fboundp 'work-linkify-jira-card)
-  ;;   (bind-keys :map org-mode-map ("C-c C-x L" . work-linkify-jira-card)))
+    ;; ;; work functions
+    ;; (when (fboundp 'work-linkify-jira-card)
+    ;;   (bind-keys :map org-mode-map ("C-c C-x L" . work-linkify-jira-card)))
 
-  ;; make sure tabs are not inserted
-  (setq indent-tabs-mode nil)
+    ;; make sure tabs are not inserted
+    (setq indent-tabs-mode nil)
 
-  ;; turn off auto-fill mode
-  (turn-off-auto-fill)
+    ;; turn off auto-fill mode
+    (turn-off-auto-fill)
 
-  ;; turn off auto-save mode
-  (auto-save-mode nil)
+    ;; turn off auto-save mode
+    (auto-save-mode nil)
 
-  ;; turn off flyspell
-  ;; (when (fboundp 'flyspell-mode-off)
-  ;;   (flyspell-mode-off))
-  )
-(add-hook 'org-mode-hook #'local-org-mode-hook)
+    ;; turn off flyspell
+    ;; (when (fboundp 'flyspell-mode-off)
+    ;;   (flyspell-mode-off))
+    )
+  (add-hook 'org-mode-hook #'local-org-mode-hook))
 ;; Hook:1 ends here
 
 ;; [[file:init-emacs.org::*Babel][Babel:1]]
@@ -2950,23 +2962,109 @@ same directory as the org-buffer and insert a link to this file."
 
 (init-message 3 "Org Mode: Babel: Structure Templates")
 
-;; add structure templates templates
-;; (add-to-list 'org-structure-template-alist
-;;              '("n" "#+NAME: ?"))
-;; (add-to-list 'org-structure-template-alist
-;;              '("S" "#+BEGIN_SRC sh :dir /sudo::\n  ?\n#+END_SRC"))
-(add-to-list 'org-structure-template-alist '("S" . "src sh :dir /sudo::"))
+(use-package org-tempo
+  :custom
+  ;; set keyword completion elements
+  (org-tempo-keywords-alist
+   '(
+     ("A" . "ascii")
+     ;;("c" . "call")
+     ("H" . "html")
+     ("i" . "index")
+     ("L" . "latex")
+     ("n" . "name")
+     ))
+  ;; set block types
+  (org-structure-template-alist
+   '(
+     ("c" . "center")
+     ("C" . "comment")
+     ("e" . "example")
+     ("E" . "export")
+     ("ea" . "export ascii")
+     ("eh" . "export html")
+     ("el" . "export latex")
+     ("q" . "quote")
+     ("s" . "src")
+     ("sel" . "src emac-lisp")
+     ("sk" . "src kotlin")
+     ("spy" . "src python")
+     ("sr" . "src racket")
+     ("ssh" . "src sh")
+     ("ssu" . "src sh :dir /sudo::")
+     ("v" . "verse")
+     ))
+  :config
+  ;; custom `org-tempo-add-block' with upcase headers
+  (defun org-tempo-add-block (entry)
+    "Add block entry from `org-structure-template-alist'."
+    (let* ((key (format "<%s" (car entry)))
+           (name (cdr entry))
+           (name-parts (split-string name " "))
+           (upcase-type (upcase (car name-parts)))
+           (upcase-name (mapconcat 'identity (cons upcase-type (cdr name-parts)) " "))
+           (special (member name '("src" "export"))))
+      (tempo-define-template (format "org-%s" (replace-regexp-in-string " " "-" name))
+                             `(,(format "#+BEGIN_%s%s" upcase-name (if special " " ""))
+                               ,(when special 'p) '> n '> ,(unless special 'p) n
+                               ,(format "#+END_%s" upcase-type)
+                               >)
+                             key
+                             (format "Insert a %s block" upcase-name)
+                             'org-tempo-tags)))
 
-;; upcase begin_src and end_src block headers
-(defun org-insert-structure-template--upcase (diff)
-  "Upcase #+begin_src and #+end_src block headers."
-  (save-mark-and-excursion
-    (when (re-search-forward "^#\\+end_[a-z]*" nil :noerror)
-  (replace-match (upcase (match-string 0)))
-  (when (re-search-backward "^#\\+begin_[a-z]*" nil :noerror)
-        (replace-match (upcase (match-string 0)))))))
-;; advise `org-insert-structure-template'
-(advice-add 'org-insert-structure-template :after #'org-insert-structure-template--upcase)
+  ;; custom `org-tempo-add-keyword' with upcase headers
+  (defun org-tempo-add-keyword (entry)
+    "Add keyword entry from `org-tempo-keywords-alist'."
+    (let* ((key (format "<%s" (car entry)))
+           (name (cdr entry))
+           (upcase-name (upcase name)))
+      (tempo-define-template (format "org-%s" (replace-regexp-in-string " " "-" name))
+                             `(,(format "#+%s: " upcase-name) p '>)
+                             key
+                             (format "Insert a %s keyword" upcase-name)
+                             'org-tempo-tags)))
+
+  ;; custom `org-tempo--include-file' with upcase header
+  (defun org-tempo--include-file ()
+    "Add #+include: and a file name."
+    (let ((inhibit-quit t))
+      (unless (with-local-quit
+                (prog1 t
+                  (insert
+                   (format "#+INCLUDE: %S "
+                           (file-relative-name
+                            (read-file-name "Include file: "))))))
+        (insert "<I")
+        (setq quit-flag nil))))
+
+  ;; update templates
+  (org-tempo-add-templates))
+
+  ;; ;; upcase begin_src and end_src block headers
+  ;; (defun org-insert-structure-template--upcase (type)
+  ;;   "Upcase #+begin_src and #+end_src block headers."
+  ;;   (save-mark-and-excursion
+  ;;     (let ((case-fold-search nil))     ; case sensitive search
+  ;;       (forward-line -1)
+  ;;       (when (re-search-forward "^#\\+begin_[a-z]*" (line-end-position) :noerror)
+  ;;         (replace-match (upcase (match-string 0)))
+  ;;         (forward-line 2)
+  ;;         (when (re-search-forward "^#\\+end_[a-z]*" (line-end-position) :noerror)
+  ;;           (replace-match (upcase (match-string 0))))))))
+  ;; ;; advise `org-insert-structure-template'
+  ;; (advice-add 'org-insert-structure-template :after #'org-insert-structure-template--upcase)
+
+  ;; ;; upcase include header
+  ;; (defun org-tempo--include-file--upcase ()
+  ;;   "Upcase #+include: header."
+  ;;   (save-mark-and-excursion
+  ;;     (let ((case-fold-search nil))     ; case sensitive search
+  ;;       (forward-line 0)
+  ;;       (when (re-search-forward "^#\\+include: " (line-end-position) :noerror)
+  ;;         (replace-match (upcase (match-string 0)))))))
+  ;; ;; advise `org-tempo--include-file'
+  ;; (advice-add 'org-tempo--include-file :after #'org-tempo--include-file--upcase))
 ;; Structure Templates:1 ends here
 
 ;; [[file:init-emacs.org::*Edit Source][Edit Source:1]]
@@ -16736,14 +16834,15 @@ and 5 is most favorite.  0 will unset the rating."
      ;; org-mode
      ("on" . org-insert-literate-programming-name)
      ("os" . org-insert-literate-programming-src)
-     ("oss" . org-insert-literate-programming-src-sh)
+     ("ossh" . org-insert-literate-programming-src-sh)
      ("ossu" . org-insert-literate-programming-src-sh-sudo)
      ("osel" . org-insert-literate-programming-src-emacs-lisp)
      ("osr" . org-insert-literate-programming-src-racket)
      ("osk" . org-insert-literate-programming-src-kotlin)
-     ("oieb" . org-insert-literate-programming-init-emacs-block)
-     ("ocb" . org-insert-literate-programming-code-block)
-     ("opeb" . org-insert-literate-programming-project-euler-problem-block)
+     ("ospy" . org-insert-literate-programming-src-python)
+     ("obie" . org-insert-literate-programming-init-emacs-block)
+     ("obc" . org-insert-literate-programming-code-block)
+     ("obpe" . org-insert-literate-programming-project-euler-problem-block)
      ))
   :init
   ;; turn replacer mode on
