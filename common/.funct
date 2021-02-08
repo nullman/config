@@ -1849,6 +1849,7 @@ homeinitialize()
                  done) || (echo "Errors encountered while backing up existing files!" && return 1)
 
             # create stow target directories
+            echo "Creating stow target directories..."
             mkdir -p "${HOME}/.emacs.d"
             mkdir -p "${HOME}/.local/share/applications"
             ls -1 "${HOME}/config/config/.config" | while read dir ; do
@@ -1857,25 +1858,14 @@ homeinitialize()
                 fi
             done
 
-            dirs=("config" "config-private")
-            for dir in ${dirs[@]} ; do
-                if [[ -d "${HOME}/${dir}" ]] ; then
-                    echo "Stowing '${dir}' packages..."
-                    (cd "${HOME}/${dir}" && \
-                         ls -1 | while read file ; do
-                             if [[ -d "${file}" ]] ; then
-                                 echo "  ${file}"
-                                 if [[ "${file}" == "custom" ]] ; then
-                                     (cd "${file}" && stow --stow "$(uname -n)")
-                                 else
-                                     stow --stow "${file}"
-                                 fi
-                             fi
-                         done)
-                else
-                    echo "Skipping '${dir}' packages..."
-                fi
-            done
+            # stow
+            echo "Stowing packages..."
+            (cd "${HOME}" && ln -s -f config/.stow-global-ignore .)
+            stow --dir="${HOME}/config" --target="${HOME}" --stow "common" "emacs"
+            stow --dir="${HOME}/config" --target="${HOME}" --no-folding --stow "config" "local"
+            stow --dir="${HOME}/config/custom" --target="${HOME}" --no-folding --stow "$(uname -n)"
+            stow --dir="${HOME}/config-private" --target="${HOME}" --stow "common" "emacs"
+            stow --dir="${HOME}/config-private" --target="${HOME}" --no-folding --stow "config"
 
             echo "Making other symlinks..."
             (cd "${HOME}" && \
@@ -1892,6 +1882,7 @@ homeinitialize()
 homerestow()
 {
     # create stow target directories
+    echo "Creating stow target directories..."
     mkdir -p "${HOME}/.emacs.d"
     mkdir -p "${HOME}/.local/share/applications"
     ls -1 "${HOME}/config/config/.config" | while read dir ; do
@@ -1900,26 +1891,47 @@ homerestow()
         fi
     done
 
-    dirs=("config" "config-private")
-    for dir in ${dirs[@]} ; do
-        if [[ -d "${HOME}/${dir}" ]] ; then
-            echo "Restowing '${dir}' packages..."
-            (cd "${HOME}/${dir}" && \
-                 ls -1 | while read file ; do
-                     if [[ -d "${file}" ]] ; then
-                         echo "  ${file}"
-                         if [[ "${file}" == "custom" ]] ; then
-                             (cd "${file}" && stow --restow "$(uname -n)")
-                         else
-                             stow --restow "${file}"
-                         fi
-                     fi
-                 done)
-        else
-            echo "Skipping '${dir}' packages..."
-        fi
-    done
+    # restow
+    echo "Restowing packages..."
+    (cd "${HOME}" && ln -s -f config/.stow-global-ignore .)
+    stow --dir="${HOME}/config" --target="${HOME}" --restow "common" "emacs"
+    stow --dir="${HOME}/config" --target="${HOME}" --no-folding --restow "config" "local"
+    stow --dir="${HOME}/config/custom" --target="${HOME}" --no-folding --restow "$(uname -n)"
+    stow --dir="${HOME}/config-private" --target="${HOME}" --restow "common" "emacs"
+    stow --dir="${HOME}/config-private" --target="${HOME}" --no-folding --restow "config"
 }
+#!#        homerestow              restow links from ~/ to ~/config and ~/config-private dirs
+#!homerestow()
+#!{
+#!    # create stow target directories
+#!    mkdir -p "${HOME}/.emacs.d"
+#!    mkdir -p "${HOME}/.local/share/applications"
+#!    ls -1 "${HOME}/config/config/.config" | while read dir ; do
+#!        if [[ -d "${HOME}/config/config/.config/${dir}" ]] ; then
+#!            mkdir -p "${HOME}/.config/${dir}"
+#!        fi
+#!    done
+#!
+#!    dirs=("config" "config-private")
+#!    for dir in ${dirs[@]} ; do
+#!        if [[ -d "${HOME}/${dir}" ]] ; then
+#!            echo "Restowing '${dir}' packages..."
+#!            (cd "${HOME}/${dir}" && \
+#!                 ls -1 | while read file ; do
+#!                     if [[ -d "${file}" ]] ; then
+#!                         echo "  ${file}"
+#!                         if [[ "${file}" == "custom" ]] ; then
+#!                             (cd "${file}" && stow --restow "$(uname -n)")
+#!                         else
+#!                             stow --restow "${file}"
+#!                         fi
+#!                     fi
+#!                 done)
+#!        else
+#!            echo "Skipping '${dir}' packages..."
+#!        fi
+#!    done
+#!}
 #        manjaroinitialize       install manjaro packages and setup system
 manjaroinitialize()
 {
