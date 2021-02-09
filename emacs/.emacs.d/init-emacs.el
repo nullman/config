@@ -1003,6 +1003,209 @@ A fortune is added if FORTUNE is non-nil."
 (setq max-mini-window-height 0.50)
 ;; Buffers and Windows:6 ends here
 
+;; [[file:init-emacs.org::*Tabs][Tabs:1]]
+;;------------------------------------------------------------------------------
+;;; General Settings: Tabs
+;;------------------------------------------------------------------------------
+
+(init-message 2 "General Settings: Tabs")
+;; Tabs:1 ends here
+
+;; [[file:init-emacs.org::*Tabs][Tabs:2]]
+;; regular tab width
+(setq local-tab-width 4)
+
+;; short tab width used for certain modes
+(setq local-short-tab-width 2)
+
+;; set tabs
+(defun set-tabs (enable &optional width)
+  "Set default tab settings.
+
+If ENABLED is non-nil, enable TAB characters.
+Otherwise, disable TAB characters.
+
+If WIDTH is given, it is used to set the TAB width.
+Otherwise, `local-tab-width' is used."
+  (let ((width (or width local-tab-width)))
+    (setq indent-tabs-mode enable       ; do not insert tab characters
+          tab-width width               ; set tab width
+          standard-indent width         ; set margin-changing functions indent
+          tab-always-indent 'complete ; tab key will try to auto-complete after auto-tabbing line
+          tab-stop-list (number-sequence width 180 width) ; set tab stops
+          backward-delete-char-untabify-method 'hungry))) ; backspace will erase tab instead of one space
+
+;; disable tabs
+(defun disable-tabs (&optional width)
+  "Disable TAB character usage, using WIDTH if given."
+  (set-tabs nil width))
+
+;; enable tabs
+(defun enable-tabs (&optional width)
+  "Enable TAB character usage, using WIDTH if given."
+  (set-tabs t width))
+
+;; enable tabs 4
+(defun enable-tabs-4 ()
+  "Enable TAB character usage with a width of 4 spaces."
+  (set-tabs t 4))
+
+;; enable tabs 8
+(defun enable-tabs-8 ()
+  "Enable TAB character usage with a width of 8 spaces."
+  (set-tabs t 8))
+
+;; enable tab mode hooks
+;;(add-hook 'asm-mode-hook #'enable-tabs-8)
+
+;; disable tab mode hooks
+(add-hook 'emacs-lisp-mode-hook #'disable-tabs)
+;;(add-hook 'lisp-mode-hook #'disable-tabs)
+(add-hook 'prog-mode-hook #'enable-tabs)
+;; Tabs:2 ends here
+
+;; [[file:init-emacs.org::*Calendar and Diary][Calendar and Diary:1]]
+;;------------------------------------------------------------------------------
+;;; General Settings: Calendar and Diary
+;;------------------------------------------------------------------------------
+
+(init-message 2 "General Settings: Calendar and Diary")
+;; Calendar and Diary:1 ends here
+
+;; [[file:init-emacs.org::*Calendar and Diary][Calendar and Diary:2]]
+;; turn off diary entries view when calendar is run
+(setq calendar-view-diary-initially-flag nil)
+;; Calendar and Diary:2 ends here
+
+;; [[file:init-emacs.org::*GUI][GUI:1]]
+;;------------------------------------------------------------------------------
+;;; General Settings: GUI
+;;------------------------------------------------------------------------------
+
+(when window-system
+
+  (init-message 2 "General Settings: GUI")
+
+  ;; clipboard
+  (when (string= window-system "x")
+    (setq select-enable-clipboard t                                      ; cutting and pasting uses clipboard
+          select-enable-primary t                                        ; cutting and pasting uses primary selection
+          x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING) ; data-type request for X selection
+          save-interprogram-paste-before-kill t                          ; save clipboard strings into kill ring before replacing them
+          interprogram-paste-function 'x-cut-buffer-or-selection-value   ; function to call to get text cut from other programs
+          mouse-yank-at-point t))                                        ; mouse yank commands yank at point
+
+  ;; inverse video on
+  (setq inverse-video t)
+
+  ;; turn off bell
+  (setq ring-bell-function 'ignore)
+
+  ;; turn off cursor blinking
+  (blink-cursor-mode 0)
+
+  ;; ;; scroll bar on right
+  ;; (setq scroll-bar-mode 'right)
+  ;; (scroll-bar-mode -1)
+  ;; (scroll-bar-mode 1)
+
+  ;; turn off scroll bar
+  (when (and (fboundp 'scroll-bar-mode)
+             scroll-bar-mode)
+    (scroll-bar-mode -1))
+
+  ;; turn off toolbar
+  (when (and (fboundp 'tool-bar-mode)
+             tool-bar-mode)
+    (tool-bar-mode -1))
+
+  ;; visible bell
+  (setq visible-bell t)
+
+  ;; make default frame size fullscreen
+  ;;(add-to-list 'default-frame-alist '(fullscreen . maximized))
+
+  ;; put current buffer name in title bar
+  (setq frame-title-format "%b")
+
+  ;; mouse button one drags the scroll bar
+  (bind-keys* ([vertical-scroll-bar down-mouse-1] . scroll-bar-drag))
+
+  ;; scroll mouse settings
+  (setq mouse-wheel-scroll-amount '(1 ((shift) . 1))
+        mouse-wheel-progressive-speed t)
+
+  ;; set default font
+  (ignore-errors
+    (cl-case window-system
+      (x
+       (condition-case nil
+           (progn
+             ;;(set-frame-font "8x13" nil t)
+             ;;(set-frame-font "9x15" nil t)
+             ;;(set-frame-font "Ubuntu Mono-13" nil t)
+             ;;(set-frame-font "Inconsolata-15" nil t)
+             ;;(set-frame-font "BitstreamVeraSansMono Nerd Font Mono-12" nil t)
+             ;;(set-frame-font "DroidSansMono Nerd Font Mono-12" nil t)
+             (set-frame-font "Hack Nerd Font Mono-12" nil t)
+             ;;(set-face-attribute 'default nil :font "Hack Nerd Font Mono" :height 132)
+             ;;(set-face-attribute 'fixed-pitch nil :font "Hack Nerd Font Mono" :height 156)
+             ;;(set-face-attribute 'variable-pitch nil :font "Hack Nerd Font" :height 168 :weight 'regular)
+             )
+         ('error
+          (set-frame-font "9x15" nil t))))
+      (ns
+       (condition-case nil
+           (progn
+             ;;(set-frame-font "BitstreamVeraSansMono Nerd Font Mono-14" nil t)
+             ;;(set-frame-font "DroidSansMono Nerd Font Mono-14" nil t)
+             (set-frame-font "Hack Nerd Font Mono-14" nil t)
+             )
+         ('error
+          (set-frame-font "Menlo" nil t))))))
+
+  ;; faces
+  ;; green foreground on black background with green cursor
+  (custom-set-faces
+   '(default ((t (:foreground "green" :background "black"))))
+   '(cursor ((t (:background "yellow")))))
+
+  ;; flatland theme (https://github.com/gchp/flatland-emacs)
+  (use-package flatland-theme
+    :quelpa (flatland-theme)
+    :init (load-theme 'flatland t))
+
+  ;; ;; dracula theme (https://draculatheme.com/emacs/)
+  ;; (use-package dracula-theme
+  ;;   :quelpa (dracula-theme)
+  ;;   :init (load-theme 'dracula t))
+
+  ;; ;; material theme (https://github.com/cpaulik/emacs-material-theme)
+  ;; (use-package material-theme
+  ;;   :quelpa (material-theme)
+  ;;   :init (load-theme 'material t))
+
+  ;; transparant background (not on Macs)
+  (defvar background-alpha
+    100
+    "Background transparency alpha percentage.
+
+Common values:
+
+  100 = none
+  90  = 10% transparency
+  85  = 15% transparency
+  80  = 20% transparency")
+  ;;(setq background-alpha (if window-system-mac 100 100)) ; 0% transparency
+  ;;(setq background-alpha (if window-system-mac 100 90)) ; 10% transparency
+  (setq background-alpha (if window-system-mac 100 85)) ; 15% transparency
+  ;;(setq background-alpha (if window-system-mac 100 80)) ; 20% transparency
+  (set-frame-parameter (selected-frame) 'alpha
+                       `(,background-alpha . ,background-alpha))
+  (add-to-list 'default-frame-alist
+               `(alpha . (,background-alpha . ,background-alpha))))
+;; GUI:1 ends here
+
 ;; [[file:init-emacs.org::*Key Bindings][Key Bindings:1]]
 ;;==============================================================================
 ;;; Key Bindings
@@ -12449,216 +12652,29 @@ USING is the remaining peg."
     (towers-move (1- n) using to from)))
 ;; Towers of Hanoi:1 ends here
 
-;; [[file:init-emacs.org::*General Settings][General Settings:1]]
+;; [[file:init-emacs.org::*LSP Mode][LSP Mode:1]]
 ;;==============================================================================
-;;; General Settings
+;;; LSP Mode
 ;;==============================================================================
 
-(init-message 1 "General Settings")
-;; General Settings:1 ends here
+(init-message 1 "LSP Mode")
+;; LSP Mode:1 ends here
 
-;; [[file:init-emacs.org::*Tabs][Tabs:1]]
+;; [[file:init-emacs.org::*Setup][Setup:1]]
 ;;------------------------------------------------------------------------------
-;;; General Settings: Tabs
-;;------------------------------------------------------------------------------
-
-(init-message 2 "General Settings: Tabs")
-;; Tabs:1 ends here
-
-;; [[file:init-emacs.org::*Tabs][Tabs:2]]
-;; regular tab width
-(setq local-tab-width 4)
-
-;; short tab width used for certain modes
-(setq local-short-tab-width 2)
-
-;; set tabs
-(defun set-tabs (enable &optional width)
-  "Set default tab settings.
-
-If ENABLED is non-nil, enable TAB characters.
-Otherwise, disable TAB characters.
-
-If WIDTH is given, it is used to set the TAB width.
-Otherwise, `local-tab-width' is used."
-  (let ((width (or width local-tab-width)))
-    (setq indent-tabs-mode enable       ; do not insert tab characters
-          tab-width width               ; set tab width
-          standard-indent width         ; set margin-changing functions indent
-          tab-always-indent 'complete ; tab key will try to auto-complete after auto-tabbing line
-          tab-stop-list (number-sequence width 180 width) ; set tab stops
-          backward-delete-char-untabify-method 'hungry))) ; backspace will erase tab instead of one space
-
-;; disable tabs
-(defun disable-tabs (&optional width)
-  "Disable TAB character usage, using WIDTH if given."
-  (set-tabs nil width))
-
-;; enable tabs
-(defun enable-tabs (&optional width)
-  "Enable TAB character usage, using WIDTH if given."
-  (set-tabs t width))
-
-;; enable tabs 4
-(defun enable-tabs-4 ()
-  "Enable TAB character usage with a width of 4 spaces."
-  (set-tabs t 4))
-
-;; enable tabs 8
-(defun enable-tabs-8 ()
-  "Enable TAB character usage with a width of 8 spaces."
-  (set-tabs t 8))
-
-;; enable tab mode hooks
-;;(add-hook 'asm-mode-hook #'enable-tabs-8)
-
-;; disable tab mode hooks
-(add-hook 'emacs-lisp-mode-hook #'disable-tabs)
-;;(add-hook 'lisp-mode-hook #'disable-tabs)
-(add-hook 'prog-mode-hook #'enable-tabs)
-;; Tabs:2 ends here
-
-;; [[file:init-emacs.org::*Calendar and Diary][Calendar and Diary:1]]
-;;------------------------------------------------------------------------------
-;;; General Settings: Calendar and Diary
+;;; LSP Mode: Setup
 ;;------------------------------------------------------------------------------
 
-(init-message 2 "General Settings: Calendar and Diary")
-;; Calendar and Diary:1 ends here
+(init-message 2 "LSP Mode: Setup")
 
-;; [[file:init-emacs.org::*Calendar and Diary][Calendar and Diary:2]]
-;; turn off diary entries view when calendar is run
-(setq calendar-view-diary-initially-flag nil)
-;; Calendar and Diary:2 ends here
-
-;; [[file:init-emacs.org::*GUI][GUI:1]]
-;;------------------------------------------------------------------------------
-;;; General Settings: GUI
-;;------------------------------------------------------------------------------
-
-(when window-system
-
-  (init-message 2 "General Settings: GUI")
-
-  ;; clipboard
-  (when (string= window-system "x")
-    (setq select-enable-clipboard t                                      ; cutting and pasting uses clipboard
-          select-enable-primary t                                        ; cutting and pasting uses primary selection
-          x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING) ; data-type request for X selection
-          save-interprogram-paste-before-kill t                          ; save clipboard strings into kill ring before replacing them
-          interprogram-paste-function 'x-cut-buffer-or-selection-value   ; function to call to get text cut from other programs
-          mouse-yank-at-point t))                                        ; mouse yank commands yank at point
-
-  ;; inverse video on
-  (setq inverse-video t)
-
-  ;; turn off bell
-  (setq ring-bell-function 'ignore)
-
-  ;; turn off cursor blinking
-  (blink-cursor-mode 0)
-
-  ;; ;; scroll bar on right
-  ;; (setq scroll-bar-mode 'right)
-  ;; (scroll-bar-mode -1)
-  ;; (scroll-bar-mode 1)
-
-  ;; turn off scroll bar
-  (when (and (fboundp 'scroll-bar-mode)
-             scroll-bar-mode)
-    (scroll-bar-mode -1))
-
-  ;; turn off toolbar
-  (when (and (fboundp 'tool-bar-mode)
-             tool-bar-mode)
-    (tool-bar-mode -1))
-
-  ;; visible bell
-  (setq visible-bell t)
-
-  ;; make default frame size fullscreen
-  ;;(add-to-list 'default-frame-alist '(fullscreen . maximized))
-
-  ;; put current buffer name in title bar
-  (setq frame-title-format "%b")
-
-  ;; mouse button one drags the scroll bar
-  (bind-keys* ([vertical-scroll-bar down-mouse-1] . scroll-bar-drag))
-
-  ;; scroll mouse settings
-  (setq mouse-wheel-scroll-amount '(1 ((shift) . 1))
-        mouse-wheel-progressive-speed t)
-
-  ;; set default font
-  (ignore-errors
-    (cl-case window-system
-      (x
-       (condition-case nil
-           (progn
-             ;;(set-frame-font "8x13" nil t)
-             ;;(set-frame-font "9x15" nil t)
-             ;;(set-frame-font "Ubuntu Mono-13" nil t)
-             ;;(set-frame-font "Inconsolata-15" nil t)
-             ;;(set-frame-font "BitstreamVeraSansMono Nerd Font Mono-12" nil t)
-             ;;(set-frame-font "DroidSansMono Nerd Font Mono-12" nil t)
-             (set-frame-font "Hack Nerd Font Mono-12" nil t)
-             ;;(set-face-attribute 'default nil :font "Hack Nerd Font Mono" :height 132)
-             ;;(set-face-attribute 'fixed-pitch nil :font "Hack Nerd Font Mono" :height 156)
-             ;;(set-face-attribute 'variable-pitch nil :font "Hack Nerd Font" :height 168 :weight 'regular)
-             )
-         ('error
-          (set-frame-font "9x15" nil t))))
-      (ns
-       (condition-case nil
-           (progn
-             ;;(set-frame-font "BitstreamVeraSansMono Nerd Font Mono-14" nil t)
-             ;;(set-frame-font "DroidSansMono Nerd Font Mono-14" nil t)
-             (set-frame-font "Hack Nerd Font Mono-14" nil t)
-             )
-         ('error
-          (set-frame-font "Menlo" nil t))))))
-
-  ;; faces
-  ;; green foreground on black background with green cursor
-  (custom-set-faces
-   '(default ((t (:foreground "green" :background "black"))))
-   '(cursor ((t (:background "yellow")))))
-
-  ;; flatland theme (https://github.com/gchp/flatland-emacs)
-  (use-package flatland-theme
-    :quelpa (flatland-theme)
-    :init (load-theme 'flatland t))
-
-  ;; ;; dracula theme (https://draculatheme.com/emacs/)
-  ;; (use-package dracula-theme
-  ;;   :quelpa (dracula-theme)
-  ;;   :init (load-theme 'dracula t))
-
-  ;; ;; material theme (https://github.com/cpaulik/emacs-material-theme)
-  ;; (use-package material-theme
-  ;;   :quelpa (material-theme)
-  ;;   :init (load-theme 'material t))
-
-  ;; transparant background (not on Macs)
-  (defvar background-alpha
-    100
-    "Background transparency alpha percentage.
-
-Common values:
-
-  100 = none
-  90  = 10% transparency
-  85  = 15% transparency
-  80  = 20% transparency")
-  ;;(setq background-alpha (if window-system-mac 100 100)) ; 0% transparency
-  ;;(setq background-alpha (if window-system-mac 100 90)) ; 10% transparency
-  (setq background-alpha (if window-system-mac 100 85)) ; 15% transparency
-  ;;(setq background-alpha (if window-system-mac 100 80)) ; 20% transparency
-  (set-frame-parameter (selected-frame) 'alpha
-                       `(,background-alpha . ,background-alpha))
-  (add-to-list 'default-frame-alist
-               `(alpha . (,background-alpha . ,background-alpha))))
-;; GUI:1 ends here
+(use-package lsp-mode
+  :quelpa (lsp-mode)
+  :commands (lsp lsp-defered)
+  :init
+  (setq lsp-keymap-prefix "C-x C-l")    ; defaults to `downcase-region'
+  :config
+  (lsp-enable-which-key-integration t))
+;; Setup:1 ends here
 
 ;; [[file:init-emacs.org::*Modes][Modes:1]]
 ;;==============================================================================
@@ -17308,30 +17324,6 @@ otherwise run `find-file-as-root'."
   ;; default language
   (wttrin-default-accept-language '("Accept-Language" . "en-US")))
 ;; wttrin:1 ends here
-
-;; [[file:init-emacs.org::*LSP Mode][LSP Mode:1]]
-;;==============================================================================
-;;; LSP Mode
-;;==============================================================================
-
-(init-message 1 "LSP Mode")
-;; LSP Mode:1 ends here
-
-;; [[file:init-emacs.org::*Setup][Setup:1]]
-;;------------------------------------------------------------------------------
-;;; LSP Mode: Setup
-;;------------------------------------------------------------------------------
-
-(init-message 2 "LSP Mode: Setup")
-
-(use-package lsp-mode
-  :quelpa (lsp-mode)
-  :commands (lsp lsp-defered)
-  :init
-  (setq lsp-keymap-prefix "C-x C-l")    ; defaults to `downcase-region'
-  :config
-  (lsp-enable-which-key-integration t))
-;; Setup:1 ends here
 
 ;; [[file:init-emacs.org::*Menus][Menus:1]]
 ;;==============================================================================

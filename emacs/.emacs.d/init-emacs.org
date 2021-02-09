@@ -1676,6 +1676,428 @@ Increase maximum mini-window height.
   (setq max-mini-window-height 0.50)
 #+END_SRC
 
+*** Tabs
+    :PROPERTIES:
+    :CUSTOM_ID: general-settings-tabs
+    :END:
+
+#+BEGIN_SRC emacs-lisp
+  ;;------------------------------------------------------------------------------
+  ;;; General Settings: Tabs
+  ;;------------------------------------------------------------------------------
+
+  (init-message 2 "General Settings: Tabs")
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  ;; regular tab width
+  (setq local-tab-width 4)
+
+  ;; short tab width used for certain modes
+  (setq local-short-tab-width 2)
+
+  ;; set tabs
+  (defun set-tabs (enable &optional width)
+    "Set default tab settings.
+
+  If ENABLED is non-nil, enable TAB characters.
+  Otherwise, disable TAB characters.
+
+  If WIDTH is given, it is used to set the TAB width.
+  Otherwise, `local-tab-width' is used."
+    (let ((width (or width local-tab-width)))
+      (setq indent-tabs-mode enable       ; do not insert tab characters
+            tab-width width               ; set tab width
+            standard-indent width         ; set margin-changing functions indent
+            tab-always-indent 'complete ; tab key will try to auto-complete after auto-tabbing line
+            tab-stop-list (number-sequence width 180 width) ; set tab stops
+            backward-delete-char-untabify-method 'hungry))) ; backspace will erase tab instead of one space
+
+  ;; disable tabs
+  (defun disable-tabs (&optional width)
+    "Disable TAB character usage, using WIDTH if given."
+    (set-tabs nil width))
+
+  ;; enable tabs
+  (defun enable-tabs (&optional width)
+    "Enable TAB character usage, using WIDTH if given."
+    (set-tabs t width))
+
+  ;; enable tabs 4
+  (defun enable-tabs-4 ()
+    "Enable TAB character usage with a width of 4 spaces."
+    (set-tabs t 4))
+
+  ;; enable tabs 8
+  (defun enable-tabs-8 ()
+    "Enable TAB character usage with a width of 8 spaces."
+    (set-tabs t 8))
+
+  ;; enable tab mode hooks
+  ;;(add-hook 'asm-mode-hook #'enable-tabs-8)
+
+  ;; disable tab mode hooks
+  (add-hook 'emacs-lisp-mode-hook #'disable-tabs)
+  ;;(add-hook 'lisp-mode-hook #'disable-tabs)
+  (add-hook 'prog-mode-hook #'enable-tabs)
+#+END_SRC
+
+*** +Mode Line+
+    :PROPERTIES:
+    :CUSTOM_ID: general-settings-mode-line
+    :END:
+
+#+BEGIN_SRC emacs-lisp :tangle no
+  ;; ;;------------------------------------------------------------------------------
+  ;; ;;; General Settings: Mode Line
+  ;; ;;------------------------------------------------------------------------------
+
+  ;; (init-message 2 "General Settings: Mode Line")
+#+END_SRC
+
+Show the day, date, and time in the mode line.
+
+#+BEGIN_SRC emacs-lisp :tangle no
+  ;; ;; turn on date and time in mode line
+  ;; (setq display-time-day-and-date t)
+  ;; (if (< emacs-major-version 26)
+  ;;     (setq display-time-string-forms
+  ;;           '(" " (format-time-string "%a %Y-%m-%d %H:%M") " "))
+  ;;   (setq display-time-string-forms
+  ;;         '(" " (format-time-string "%a %Y-%m-%d %H:%M" nil (current-time-zone)) " ")))
+  ;; (display-time-mode 1)
+  ;; ;; ;; right-align date and time
+  ;; ;; (display-time-mode 0)
+  ;; ;; (setq global-mode-string (remove 'display-time-string global-mode-string))
+  ;; ;; (setq mode-line-end-spaces
+  ;; ;;       (list (propertize " " 'display '(space :align-to (- right 12)))
+  ;; ;;             'display-time-string))
+#+END_SRC
+
+Show line number in the mode line.
+
+#+BEGIN_SRC emacs-lisp :tangle no
+  ;; ;; show line number in mode line
+  ;; (line-number-mode 1)
+#+END_SRC
+
+Show column number in the mode line.
+
+#+BEGIN_SRC emacs-lisp :tangle no
+  ;; ;; show column number in mode line
+  ;; (column-number-mode 1)
+#+END_SRC
+
+Set mode line format.
+
+#+BEGIN_SRC emacs-lisp :tangle no
+  ;; ;; set `mode-line-format'
+  ;; (setq mode-line-format
+  ;;       '("%e"
+  ;;         mode-line-front-space
+  ;;         #("-" 0 1 (help-echo "mouse-1: select (drag to resize), mouse-2 = C-x 1, mouse-3 = C-x 0"))
+  ;;         mode-line-mule-info             ; coding system, eol style, read-only status
+  ;;         mode-line-modified              ; buffer modified status
+  ;;         mode-line-frame-identification  ; frame name
+  ;;         mode-line-buffer-identification ; buffer name
+  ;;         #("  " 0 2 (help-echo "mouse-1: select (drag to resize), mouse-2 = C-x 1, mouse-3 = C-x 0"))
+  ;;         mode-line-position              ; position in buffer as a percentage, line number, column number
+  ;;         ;; #(" w:" 0 3 (help-echo "mouse-1: select (drag to resize), mouse-2 = C-x 1, mouse-3 = C-x 0"))
+  ;;         ;; (count-words-paragraph count-words-paragraph) ; words in current paragraph
+  ;;         mode-line-projectile            ; project information
+  ;;         (vc-mode vc-mode)               ; version control information
+  ;;         #("  " 0 2 (help-echo "mouse-1: select (drag to resize), mouse-2 = C-x 1, mouse-3 = C-x 0"))
+  ;;         mode-line-modes                 ; major and minor modes
+  ;;         ;; (which-func-mode
+  ;;         ;;  ("" which-func-format
+  ;;         ;;   #("--" 0 2 (help-echo "mouse-1: select (drag to resize), mouse-2 = C-x 1, mouse-3 = C-x 0"))))
+  ;;         ;; (global-mode-string
+  ;;         ;;  (#("--" 0 2 (help-echo "mouse-1: select (drag to resize), mouse-2 = C-x 1, mouse-3 = C-x 0"))
+  ;;         ;;   global-mode-string))
+  ;;         (global-mode-string
+  ;;          (#(" " 0 1 (help-echo "mouse-1: select (drag to resize), mouse-2 = C-x 1, mouse-3 = C-x 0"))
+  ;;           global-mode-string))          ; day, date, time
+  ;;         #("-%-" 0 3 (help-echo "mouse-1: select (drag to resize), mouse-2 = C-x 1, mouse-3 = C-x 0"))
+  ;;         mode-line-end-spaces))
+  ;; (set-default 'mode-line-format mode-line-format)
+#+END_SRC
+
+Set mode line for =projectile-mode=.
+
+#+BEGIN_SRC emacs-lisp :tangle no
+  ;; (defvar mode-line-projectile
+  ;;   '(:eval (when (ignore-errors (projectile-project-root))
+  ;;             (concat " " (projectile-project-name))))
+  ;;   "Mode line format for `projectile'.")
+
+  ;; ;; set mode line for `projectile-mode'
+  ;; (put 'mode-line-projectile 'risky-local-variable t)
+#+END_SRC
+
+Set mode line for =vc-mode=.
+
+#+BEGIN_SRC emacs-lisp :tangle no
+  ;; ;; strip backend name from the version control status information
+  ;; (defvar mode-line-vc-mode
+  ;;   '(" " (:eval (let ((backend (symbol-name (vc-backend (or buffer-file-name (buffer-name))))))
+  ;;                  (substring vc-mode (+ (length backend) 2)))))
+  ;;   "Mode line format for `vc-mode'.")
+
+  ;; ;; set mode line for `vc-mode'
+  ;; (put 'mode-line-vc-mode 'risky-local-variable t)
+#+END_SRC
+
+Set mode line modes.
+
+#+BEGIN_SRC emacs-lisp :tangle no
+  ;; ;; set `mode-line-modes'
+  ;; (setq mode-line-modes
+  ;;       '((#("%[(" 0 3 (help-echo "mouse-1: select (drag to resize), mouse-2 = C-x 1, mouse-3 = C-x 0"))
+  ;;          (:propertize
+  ;;           ("" mode-name)
+  ;;           help-echo "mouse-1: major mode, mouse-2: major mode help, mouse-3: toggle minor modes"
+  ;;           mouse-face mode-line-highlight local-map
+  ;;           (keymap
+  ;;            (mode-line keymap
+  ;;                       (down-mouse-3 . mode-line-mode-menu-1)
+  ;;                       (mouse-2 . describe-mode)
+  ;;                       (down-mouse-1 . mouse-major-mode-menu))))
+  ;;          ("" mode-line-process)
+  ;;          (:propertize
+  ;;           ("" minor-mode-alist)
+  ;;           mouse-face mode-line-highlight
+  ;;           help-echo "mouse-2: minor mode help, mouse-3: toggle minor modes"
+  ;;           local-map
+  ;;           (keymap
+  ;;            (header-line keymap
+  ;;                         (down-mouse-3 . mode-line-mode-menu-1))
+  ;;            (mode-line keymap
+  ;;                       (down-mouse-3 . mode-line-mode-menu-1)
+  ;;                       (mouse-2 . mode-line-minor-mode-help))))
+  ;;          #("%n" 0 2
+  ;;            (help-echo "mouse-2: widen" mouse-face mode-line-highlight local-map
+  ;;                       (keymap
+  ;;                        (mode-line keymap
+  ;;                                   (mouse-2 . mode-line-widen)))))
+  ;;          #(")%]" 0 3
+  ;;            (help-echo "mouse-1: select (drag to resize), mouse-2 = C-x 1, mouse-3 = C-x 0")))))
+  ;; (set-default 'mode-line-modes mode-line-modes)
+
+  ;; ;; (setcar (last (car mode-line-modes))
+  ;; ;;         '#(")%]" 0 3 (help-echo "mouse-1: select (drag to resize), mouse-2 = C-x 1, mouse-3 = C-x 0")))
+#+END_SRC
+
++Add count words paragraph to mode line.+
+
+#+BEGIN_SRC emacs-lisp :tangle no :tangle no
+  ;; ;; ;;------------------------------------------------------------------------------
+  ;; ;; ;;;; Add Count Words Paragraph To Mode Line
+  ;; ;; ;;------------------------------------------------------------------------------
+
+  ;; ;; (init-message 3 "Count Words")
+
+  ;; ;; ;; store count in variable
+  ;; ;; (defvar count-words-paragraph nil
+  ;; ;;   "*Current value returned from `count-words-paragraph' function.")
+
+  ;; ;; ;; only setup timer once
+  ;; ;; (unless count-words-paragraph
+  ;; ;;   ;; seed count-words-paragraph
+  ;; ;;   (setq count-words-paragraph "0  ")
+  ;; ;;   ;; create timer to keep count-words-paragraph updated
+  ;; ;;   (run-with-idle-timer 0.5 t
+  ;; ;;                        (lambda ()
+  ;; ;;                          (let ((count (number-to-string (count-words-paragraph))))
+  ;; ;;                            (while (< (length count) 3)
+  ;; ;;                              (setq count (concat count " ")))
+  ;; ;;                            (setq count-words-paragraph count)))))
+
+  ;; ;; ;; add count words paragraph the mode line
+  ;; ;; (unless (and (listp (nth 8 mode-line-format))
+  ;; ;;              (memq 'count-words-paragraph (nth 8 mode-line-format)))
+  ;; ;;   (push (cons '#(" w:" 0 3 (help-echo "mouse-1: select (drag to resize), mouse-2 = C-x 1, mouse-3 = C-x 0"))
+  ;; ;;               '(count-words-paragraph))
+  ;; ;;         (nthcdr 8 mode-line-format)))
+
+  ;; ;; ;; set mode line
+  ;; ;; (set-default 'mode-line-format mode-line-format)
+#+END_SRC
+
+*** Calendar and Diary
+    :PROPERTIES:
+    :CUSTOM_ID: general-settings-calendar-and-diary
+    :END:
+
+#+BEGIN_SRC emacs-lisp
+  ;;------------------------------------------------------------------------------
+  ;;; General Settings: Calendar and Diary
+  ;;------------------------------------------------------------------------------
+
+  (init-message 2 "General Settings: Calendar and Diary")
+#+END_SRC
+
+Do not show diary entries when =calendar= is run.
+
+#+BEGIN_SRC emacs-lisp
+  ;; turn off diary entries view when calendar is run
+  (setq calendar-view-diary-initially-flag nil)
+#+END_SRC
+
++Set number of diary days to show.+
+
+#+BEGIN_SRC emacs-lisp :tangle no
+  ;; ;; set number of diary days to show
+  ;; (setq diary-number-of-entries 10)
+#+END_SRC
+
++Turn on diary appointments.+
+
+#+BEGIN_SRC emacs-lisp :tangle no
+  ;; ;; turn on diary appointments
+  ;; (add-hook 'diary-hook #'appt-make-list)
+#+END_SRC
+
++Turn on calendar marks for diary entries.+
+
+#+BEGIN_SRC emacs-lisp :tangle no
+  ;; ;; turn on calendar marks for diary entries
+  ;; (setq mark-diary-entries-in-calendar t)
+#+END_SRC
+
+*** GUI
+    :PROPERTIES:
+    :CUSTOM_ID: general-settings-gui
+    :END:
+
+#+BEGIN_SRC emacs-lisp
+  ;;------------------------------------------------------------------------------
+  ;;; General Settings: GUI
+  ;;------------------------------------------------------------------------------
+
+  (when window-system
+
+    (init-message 2 "General Settings: GUI")
+
+    ;; clipboard
+    (when (string= window-system "x")
+      (setq select-enable-clipboard t                                      ; cutting and pasting uses clipboard
+            select-enable-primary t                                        ; cutting and pasting uses primary selection
+            x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING) ; data-type request for X selection
+            save-interprogram-paste-before-kill t                          ; save clipboard strings into kill ring before replacing them
+            interprogram-paste-function 'x-cut-buffer-or-selection-value   ; function to call to get text cut from other programs
+            mouse-yank-at-point t))                                        ; mouse yank commands yank at point
+
+    ;; inverse video on
+    (setq inverse-video t)
+
+    ;; turn off bell
+    (setq ring-bell-function 'ignore)
+
+    ;; turn off cursor blinking
+    (blink-cursor-mode 0)
+
+    ;; ;; scroll bar on right
+    ;; (setq scroll-bar-mode 'right)
+    ;; (scroll-bar-mode -1)
+    ;; (scroll-bar-mode 1)
+
+    ;; turn off scroll bar
+    (when (and (fboundp 'scroll-bar-mode)
+               scroll-bar-mode)
+      (scroll-bar-mode -1))
+
+    ;; turn off toolbar
+    (when (and (fboundp 'tool-bar-mode)
+               tool-bar-mode)
+      (tool-bar-mode -1))
+
+    ;; visible bell
+    (setq visible-bell t)
+
+    ;; make default frame size fullscreen
+    ;;(add-to-list 'default-frame-alist '(fullscreen . maximized))
+
+    ;; put current buffer name in title bar
+    (setq frame-title-format "%b")
+
+    ;; mouse button one drags the scroll bar
+    (bind-keys* ([vertical-scroll-bar down-mouse-1] . scroll-bar-drag))
+
+    ;; scroll mouse settings
+    (setq mouse-wheel-scroll-amount '(1 ((shift) . 1))
+          mouse-wheel-progressive-speed t)
+
+    ;; set default font
+    (ignore-errors
+      (cl-case window-system
+        (x
+         (condition-case nil
+             (progn
+               ;;(set-frame-font "8x13" nil t)
+               ;;(set-frame-font "9x15" nil t)
+               ;;(set-frame-font "Ubuntu Mono-13" nil t)
+               ;;(set-frame-font "Inconsolata-15" nil t)
+               ;;(set-frame-font "BitstreamVeraSansMono Nerd Font Mono-12" nil t)
+               ;;(set-frame-font "DroidSansMono Nerd Font Mono-12" nil t)
+               (set-frame-font "Hack Nerd Font Mono-12" nil t)
+               ;;(set-face-attribute 'default nil :font "Hack Nerd Font Mono" :height 132)
+               ;;(set-face-attribute 'fixed-pitch nil :font "Hack Nerd Font Mono" :height 156)
+               ;;(set-face-attribute 'variable-pitch nil :font "Hack Nerd Font" :height 168 :weight 'regular)
+               )
+           ('error
+            (set-frame-font "9x15" nil t))))
+        (ns
+         (condition-case nil
+             (progn
+               ;;(set-frame-font "BitstreamVeraSansMono Nerd Font Mono-14" nil t)
+               ;;(set-frame-font "DroidSansMono Nerd Font Mono-14" nil t)
+               (set-frame-font "Hack Nerd Font Mono-14" nil t)
+               )
+           ('error
+            (set-frame-font "Menlo" nil t))))))
+
+    ;; faces
+    ;; green foreground on black background with green cursor
+    (custom-set-faces
+     '(default ((t (:foreground "green" :background "black"))))
+     '(cursor ((t (:background "yellow")))))
+
+    ;; flatland theme (https://github.com/gchp/flatland-emacs)
+    (use-package flatland-theme
+      :quelpa (flatland-theme)
+      :init (load-theme 'flatland t))
+
+    ;; ;; dracula theme (https://draculatheme.com/emacs/)
+    ;; (use-package dracula-theme
+    ;;   :quelpa (dracula-theme)
+    ;;   :init (load-theme 'dracula t))
+
+    ;; ;; material theme (https://github.com/cpaulik/emacs-material-theme)
+    ;; (use-package material-theme
+    ;;   :quelpa (material-theme)
+    ;;   :init (load-theme 'material t))
+
+    ;; transparant background (not on Macs)
+    (defvar background-alpha
+      100
+      "Background transparency alpha percentage.
+
+  Common values:
+
+    100 = none
+    90  = 10% transparency
+    85  = 15% transparency
+    80  = 20% transparency")
+    ;;(setq background-alpha (if window-system-mac 100 100)) ; 0% transparency
+    ;;(setq background-alpha (if window-system-mac 100 90)) ; 10% transparency
+    (setq background-alpha (if window-system-mac 100 85)) ; 15% transparency
+    ;;(setq background-alpha (if window-system-mac 100 80)) ; 20% transparency
+    (set-frame-parameter (selected-frame) 'alpha
+                         `(,background-alpha . ,background-alpha))
+    (add-to-list 'default-frame-alist
+                 `(alpha . (,background-alpha . ,background-alpha))))
+#+END_SRC
+
 * Key Bindings
   :PROPERTIES:
   :CUSTOM_ID: key-bindings
@@ -17121,441 +17543,42 @@ solution.
       (towers-move (1- n) using to from)))
 #+END_SRC
 
-* General Settings
+* LSP Mode
   :PROPERTIES:
-  :CUSTOM_ID: general-settings
+  :CUSTOM_ID: lsp-mode
   :END:
 
-General Emacs settings not handled in the Environment Settings section.
+LSP Mode (Language Server Protocol) configuration.
+
+https://emacs-lsp.github.io/lsp-mode/
 
 #+BEGIN_SRC emacs-lisp
   ;;==============================================================================
-  ;;; General Settings
+  ;;; LSP Mode
   ;;==============================================================================
 
-  (init-message 1 "General Settings")
+  (init-message 1 "LSP Mode")
 #+END_SRC
 
-*** Tabs
+*** Setup
     :PROPERTIES:
-    :CUSTOM_ID: general-settings-tabs
+    :CUSTOM_ID: lsp-mode-setup
     :END:
 
 #+BEGIN_SRC emacs-lisp
   ;;------------------------------------------------------------------------------
-  ;;; General Settings: Tabs
+  ;;; LSP Mode: Setup
   ;;------------------------------------------------------------------------------
 
-  (init-message 2 "General Settings: Tabs")
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-  ;; regular tab width
-  (setq local-tab-width 4)
-
-  ;; short tab width used for certain modes
-  (setq local-short-tab-width 2)
-
-  ;; set tabs
-  (defun set-tabs (enable &optional width)
-    "Set default tab settings.
-
-  If ENABLED is non-nil, enable TAB characters.
-  Otherwise, disable TAB characters.
-
-  If WIDTH is given, it is used to set the TAB width.
-  Otherwise, `local-tab-width' is used."
-    (let ((width (or width local-tab-width)))
-      (setq indent-tabs-mode enable       ; do not insert tab characters
-            tab-width width               ; set tab width
-            standard-indent width         ; set margin-changing functions indent
-            tab-always-indent 'complete ; tab key will try to auto-complete after auto-tabbing line
-            tab-stop-list (number-sequence width 180 width) ; set tab stops
-            backward-delete-char-untabify-method 'hungry))) ; backspace will erase tab instead of one space
-
-  ;; disable tabs
-  (defun disable-tabs (&optional width)
-    "Disable TAB character usage, using WIDTH if given."
-    (set-tabs nil width))
-
-  ;; enable tabs
-  (defun enable-tabs (&optional width)
-    "Enable TAB character usage, using WIDTH if given."
-    (set-tabs t width))
-
-  ;; enable tabs 4
-  (defun enable-tabs-4 ()
-    "Enable TAB character usage with a width of 4 spaces."
-    (set-tabs t 4))
-
-  ;; enable tabs 8
-  (defun enable-tabs-8 ()
-    "Enable TAB character usage with a width of 8 spaces."
-    (set-tabs t 8))
-
-  ;; enable tab mode hooks
-  ;;(add-hook 'asm-mode-hook #'enable-tabs-8)
-
-  ;; disable tab mode hooks
-  (add-hook 'emacs-lisp-mode-hook #'disable-tabs)
-  ;;(add-hook 'lisp-mode-hook #'disable-tabs)
-  (add-hook 'prog-mode-hook #'enable-tabs)
-#+END_SRC
-
-*** +Mode Line+
-    :PROPERTIES:
-    :CUSTOM_ID: general-settings-mode-line
-    :END:
-
-#+BEGIN_SRC emacs-lisp :tangle no
-  ;; ;;------------------------------------------------------------------------------
-  ;; ;;; General Settings: Mode Line
-  ;; ;;------------------------------------------------------------------------------
-
-  ;; (init-message 2 "General Settings: Mode Line")
-#+END_SRC
-
-Show the day, date, and time in the mode line.
-
-#+BEGIN_SRC emacs-lisp :tangle no
-  ;; ;; turn on date and time in mode line
-  ;; (setq display-time-day-and-date t)
-  ;; (if (< emacs-major-version 26)
-  ;;     (setq display-time-string-forms
-  ;;           '(" " (format-time-string "%a %Y-%m-%d %H:%M") " "))
-  ;;   (setq display-time-string-forms
-  ;;         '(" " (format-time-string "%a %Y-%m-%d %H:%M" nil (current-time-zone)) " ")))
-  ;; (display-time-mode 1)
-  ;; ;; ;; right-align date and time
-  ;; ;; (display-time-mode 0)
-  ;; ;; (setq global-mode-string (remove 'display-time-string global-mode-string))
-  ;; ;; (setq mode-line-end-spaces
-  ;; ;;       (list (propertize " " 'display '(space :align-to (- right 12)))
-  ;; ;;             'display-time-string))
-#+END_SRC
-
-Show line number in the mode line.
-
-#+BEGIN_SRC emacs-lisp :tangle no
-  ;; ;; show line number in mode line
-  ;; (line-number-mode 1)
-#+END_SRC
-
-Show column number in the mode line.
-
-#+BEGIN_SRC emacs-lisp :tangle no
-  ;; ;; show column number in mode line
-  ;; (column-number-mode 1)
-#+END_SRC
-
-Set mode line format.
-
-#+BEGIN_SRC emacs-lisp :tangle no
-  ;; ;; set `mode-line-format'
-  ;; (setq mode-line-format
-  ;;       '("%e"
-  ;;         mode-line-front-space
-  ;;         #("-" 0 1 (help-echo "mouse-1: select (drag to resize), mouse-2 = C-x 1, mouse-3 = C-x 0"))
-  ;;         mode-line-mule-info             ; coding system, eol style, read-only status
-  ;;         mode-line-modified              ; buffer modified status
-  ;;         mode-line-frame-identification  ; frame name
-  ;;         mode-line-buffer-identification ; buffer name
-  ;;         #("  " 0 2 (help-echo "mouse-1: select (drag to resize), mouse-2 = C-x 1, mouse-3 = C-x 0"))
-  ;;         mode-line-position              ; position in buffer as a percentage, line number, column number
-  ;;         ;; #(" w:" 0 3 (help-echo "mouse-1: select (drag to resize), mouse-2 = C-x 1, mouse-3 = C-x 0"))
-  ;;         ;; (count-words-paragraph count-words-paragraph) ; words in current paragraph
-  ;;         mode-line-projectile            ; project information
-  ;;         (vc-mode vc-mode)               ; version control information
-  ;;         #("  " 0 2 (help-echo "mouse-1: select (drag to resize), mouse-2 = C-x 1, mouse-3 = C-x 0"))
-  ;;         mode-line-modes                 ; major and minor modes
-  ;;         ;; (which-func-mode
-  ;;         ;;  ("" which-func-format
-  ;;         ;;   #("--" 0 2 (help-echo "mouse-1: select (drag to resize), mouse-2 = C-x 1, mouse-3 = C-x 0"))))
-  ;;         ;; (global-mode-string
-  ;;         ;;  (#("--" 0 2 (help-echo "mouse-1: select (drag to resize), mouse-2 = C-x 1, mouse-3 = C-x 0"))
-  ;;         ;;   global-mode-string))
-  ;;         (global-mode-string
-  ;;          (#(" " 0 1 (help-echo "mouse-1: select (drag to resize), mouse-2 = C-x 1, mouse-3 = C-x 0"))
-  ;;           global-mode-string))          ; day, date, time
-  ;;         #("-%-" 0 3 (help-echo "mouse-1: select (drag to resize), mouse-2 = C-x 1, mouse-3 = C-x 0"))
-  ;;         mode-line-end-spaces))
-  ;; (set-default 'mode-line-format mode-line-format)
-#+END_SRC
-
-Set mode line for =projectile-mode=.
-
-#+BEGIN_SRC emacs-lisp :tangle no
-  ;; (defvar mode-line-projectile
-  ;;   '(:eval (when (ignore-errors (projectile-project-root))
-  ;;             (concat " " (projectile-project-name))))
-  ;;   "Mode line format for `projectile'.")
-
-  ;; ;; set mode line for `projectile-mode'
-  ;; (put 'mode-line-projectile 'risky-local-variable t)
-#+END_SRC
-
-Set mode line for =vc-mode=.
-
-#+BEGIN_SRC emacs-lisp :tangle no
-  ;; ;; strip backend name from the version control status information
-  ;; (defvar mode-line-vc-mode
-  ;;   '(" " (:eval (let ((backend (symbol-name (vc-backend (or buffer-file-name (buffer-name))))))
-  ;;                  (substring vc-mode (+ (length backend) 2)))))
-  ;;   "Mode line format for `vc-mode'.")
-
-  ;; ;; set mode line for `vc-mode'
-  ;; (put 'mode-line-vc-mode 'risky-local-variable t)
-#+END_SRC
-
-Set mode line modes.
-
-#+BEGIN_SRC emacs-lisp :tangle no
-  ;; ;; set `mode-line-modes'
-  ;; (setq mode-line-modes
-  ;;       '((#("%[(" 0 3 (help-echo "mouse-1: select (drag to resize), mouse-2 = C-x 1, mouse-3 = C-x 0"))
-  ;;          (:propertize
-  ;;           ("" mode-name)
-  ;;           help-echo "mouse-1: major mode, mouse-2: major mode help, mouse-3: toggle minor modes"
-  ;;           mouse-face mode-line-highlight local-map
-  ;;           (keymap
-  ;;            (mode-line keymap
-  ;;                       (down-mouse-3 . mode-line-mode-menu-1)
-  ;;                       (mouse-2 . describe-mode)
-  ;;                       (down-mouse-1 . mouse-major-mode-menu))))
-  ;;          ("" mode-line-process)
-  ;;          (:propertize
-  ;;           ("" minor-mode-alist)
-  ;;           mouse-face mode-line-highlight
-  ;;           help-echo "mouse-2: minor mode help, mouse-3: toggle minor modes"
-  ;;           local-map
-  ;;           (keymap
-  ;;            (header-line keymap
-  ;;                         (down-mouse-3 . mode-line-mode-menu-1))
-  ;;            (mode-line keymap
-  ;;                       (down-mouse-3 . mode-line-mode-menu-1)
-  ;;                       (mouse-2 . mode-line-minor-mode-help))))
-  ;;          #("%n" 0 2
-  ;;            (help-echo "mouse-2: widen" mouse-face mode-line-highlight local-map
-  ;;                       (keymap
-  ;;                        (mode-line keymap
-  ;;                                   (mouse-2 . mode-line-widen)))))
-  ;;          #(")%]" 0 3
-  ;;            (help-echo "mouse-1: select (drag to resize), mouse-2 = C-x 1, mouse-3 = C-x 0")))))
-  ;; (set-default 'mode-line-modes mode-line-modes)
-
-  ;; ;; (setcar (last (car mode-line-modes))
-  ;; ;;         '#(")%]" 0 3 (help-echo "mouse-1: select (drag to resize), mouse-2 = C-x 1, mouse-3 = C-x 0")))
-#+END_SRC
-
-+Add count words paragraph to mode line.+
-
-#+BEGIN_SRC emacs-lisp :tangle no :tangle no
-  ;; ;; ;;------------------------------------------------------------------------------
-  ;; ;; ;;;; Add Count Words Paragraph To Mode Line
-  ;; ;; ;;------------------------------------------------------------------------------
-
-  ;; ;; (init-message 3 "Count Words")
-
-  ;; ;; ;; store count in variable
-  ;; ;; (defvar count-words-paragraph nil
-  ;; ;;   "*Current value returned from `count-words-paragraph' function.")
-
-  ;; ;; ;; only setup timer once
-  ;; ;; (unless count-words-paragraph
-  ;; ;;   ;; seed count-words-paragraph
-  ;; ;;   (setq count-words-paragraph "0  ")
-  ;; ;;   ;; create timer to keep count-words-paragraph updated
-  ;; ;;   (run-with-idle-timer 0.5 t
-  ;; ;;                        (lambda ()
-  ;; ;;                          (let ((count (number-to-string (count-words-paragraph))))
-  ;; ;;                            (while (< (length count) 3)
-  ;; ;;                              (setq count (concat count " ")))
-  ;; ;;                            (setq count-words-paragraph count)))))
-
-  ;; ;; ;; add count words paragraph the mode line
-  ;; ;; (unless (and (listp (nth 8 mode-line-format))
-  ;; ;;              (memq 'count-words-paragraph (nth 8 mode-line-format)))
-  ;; ;;   (push (cons '#(" w:" 0 3 (help-echo "mouse-1: select (drag to resize), mouse-2 = C-x 1, mouse-3 = C-x 0"))
-  ;; ;;               '(count-words-paragraph))
-  ;; ;;         (nthcdr 8 mode-line-format)))
-
-  ;; ;; ;; set mode line
-  ;; ;; (set-default 'mode-line-format mode-line-format)
-#+END_SRC
-
-*** Calendar and Diary
-    :PROPERTIES:
-    :CUSTOM_ID: general-settings-calendar-and-diary
-    :END:
-
-#+BEGIN_SRC emacs-lisp
-  ;;------------------------------------------------------------------------------
-  ;;; General Settings: Calendar and Diary
-  ;;------------------------------------------------------------------------------
-
-  (init-message 2 "General Settings: Calendar and Diary")
-#+END_SRC
-
-Do not show diary entries when =calendar= is run.
-
-#+BEGIN_SRC emacs-lisp
-  ;; turn off diary entries view when calendar is run
-  (setq calendar-view-diary-initially-flag nil)
-#+END_SRC
-
-+Set number of diary days to show.+
-
-#+BEGIN_SRC emacs-lisp :tangle no
-  ;; ;; set number of diary days to show
-  ;; (setq diary-number-of-entries 10)
-#+END_SRC
-
-+Turn on diary appointments.+
-
-#+BEGIN_SRC emacs-lisp :tangle no
-  ;; ;; turn on diary appointments
-  ;; (add-hook 'diary-hook #'appt-make-list)
-#+END_SRC
-
-+Turn on calendar marks for diary entries.+
-
-#+BEGIN_SRC emacs-lisp :tangle no
-  ;; ;; turn on calendar marks for diary entries
-  ;; (setq mark-diary-entries-in-calendar t)
-#+END_SRC
-
-*** GUI
-    :PROPERTIES:
-    :CUSTOM_ID: general-settings-gui
-    :END:
-
-#+BEGIN_SRC emacs-lisp
-  ;;------------------------------------------------------------------------------
-  ;;; General Settings: GUI
-  ;;------------------------------------------------------------------------------
-
-  (when window-system
-
-    (init-message 2 "General Settings: GUI")
-
-    ;; clipboard
-    (when (string= window-system "x")
-      (setq select-enable-clipboard t                                      ; cutting and pasting uses clipboard
-            select-enable-primary t                                        ; cutting and pasting uses primary selection
-            x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING) ; data-type request for X selection
-            save-interprogram-paste-before-kill t                          ; save clipboard strings into kill ring before replacing them
-            interprogram-paste-function 'x-cut-buffer-or-selection-value   ; function to call to get text cut from other programs
-            mouse-yank-at-point t))                                        ; mouse yank commands yank at point
-
-    ;; inverse video on
-    (setq inverse-video t)
-
-    ;; turn off bell
-    (setq ring-bell-function 'ignore)
-
-    ;; turn off cursor blinking
-    (blink-cursor-mode 0)
-
-    ;; ;; scroll bar on right
-    ;; (setq scroll-bar-mode 'right)
-    ;; (scroll-bar-mode -1)
-    ;; (scroll-bar-mode 1)
-
-    ;; turn off scroll bar
-    (when (and (fboundp 'scroll-bar-mode)
-               scroll-bar-mode)
-      (scroll-bar-mode -1))
-
-    ;; turn off toolbar
-    (when (and (fboundp 'tool-bar-mode)
-               tool-bar-mode)
-      (tool-bar-mode -1))
-
-    ;; visible bell
-    (setq visible-bell t)
-
-    ;; make default frame size fullscreen
-    ;;(add-to-list 'default-frame-alist '(fullscreen . maximized))
-
-    ;; put current buffer name in title bar
-    (setq frame-title-format "%b")
-
-    ;; mouse button one drags the scroll bar
-    (bind-keys* ([vertical-scroll-bar down-mouse-1] . scroll-bar-drag))
-
-    ;; scroll mouse settings
-    (setq mouse-wheel-scroll-amount '(1 ((shift) . 1))
-          mouse-wheel-progressive-speed t)
-
-    ;; set default font
-    (ignore-errors
-      (cl-case window-system
-        (x
-         (condition-case nil
-             (progn
-               ;;(set-frame-font "8x13" nil t)
-               ;;(set-frame-font "9x15" nil t)
-               ;;(set-frame-font "Ubuntu Mono-13" nil t)
-               ;;(set-frame-font "Inconsolata-15" nil t)
-               ;;(set-frame-font "BitstreamVeraSansMono Nerd Font Mono-12" nil t)
-               ;;(set-frame-font "DroidSansMono Nerd Font Mono-12" nil t)
-               (set-frame-font "Hack Nerd Font Mono-12" nil t)
-               ;;(set-face-attribute 'default nil :font "Hack Nerd Font Mono" :height 132)
-               ;;(set-face-attribute 'fixed-pitch nil :font "Hack Nerd Font Mono" :height 156)
-               ;;(set-face-attribute 'variable-pitch nil :font "Hack Nerd Font" :height 168 :weight 'regular)
-               )
-           ('error
-            (set-frame-font "9x15" nil t))))
-        (ns
-         (condition-case nil
-             (progn
-               ;;(set-frame-font "BitstreamVeraSansMono Nerd Font Mono-14" nil t)
-               ;;(set-frame-font "DroidSansMono Nerd Font Mono-14" nil t)
-               (set-frame-font "Hack Nerd Font Mono-14" nil t)
-               )
-           ('error
-            (set-frame-font "Menlo" nil t))))))
-
-    ;; faces
-    ;; green foreground on black background with green cursor
-    (custom-set-faces
-     '(default ((t (:foreground "green" :background "black"))))
-     '(cursor ((t (:background "yellow")))))
-
-    ;; flatland theme (https://github.com/gchp/flatland-emacs)
-    (use-package flatland-theme
-      :quelpa (flatland-theme)
-      :init (load-theme 'flatland t))
-
-    ;; ;; dracula theme (https://draculatheme.com/emacs/)
-    ;; (use-package dracula-theme
-    ;;   :quelpa (dracula-theme)
-    ;;   :init (load-theme 'dracula t))
-
-    ;; ;; material theme (https://github.com/cpaulik/emacs-material-theme)
-    ;; (use-package material-theme
-    ;;   :quelpa (material-theme)
-    ;;   :init (load-theme 'material t))
-
-    ;; transparant background (not on Macs)
-    (defvar background-alpha
-      100
-      "Background transparency alpha percentage.
-
-  Common values:
-
-    100 = none
-    90  = 10% transparency
-    85  = 15% transparency
-    80  = 20% transparency")
-    ;;(setq background-alpha (if window-system-mac 100 100)) ; 0% transparency
-    ;;(setq background-alpha (if window-system-mac 100 90)) ; 10% transparency
-    (setq background-alpha (if window-system-mac 100 85)) ; 15% transparency
-    ;;(setq background-alpha (if window-system-mac 100 80)) ; 20% transparency
-    (set-frame-parameter (selected-frame) 'alpha
-                         `(,background-alpha . ,background-alpha))
-    (add-to-list 'default-frame-alist
-                 `(alpha . (,background-alpha . ,background-alpha))))
+  (init-message 2 "LSP Mode: Setup")
+
+  (use-package lsp-mode
+    :quelpa (lsp-mode)
+    :commands (lsp lsp-defered)
+    :init
+    (setq lsp-keymap-prefix "C-x C-l")    ; defaults to `downcase-region'
+    :config
+    (lsp-enable-which-key-integration t))
 #+END_SRC
 
 * Modes
@@ -26083,44 +26106,6 @@ Yet Another Scroll Bar Mode (yascroll)
 
   ;; (use-package yascroll
   ;;   :init (global-yascroll-bar-mode t))
-#+END_SRC
-
-* LSP Mode
-  :PROPERTIES:
-  :CUSTOM_ID: lsp-mode
-  :END:
-
-LSP Mode (Language Server Protocol) configuration.
-
-https://emacs-lsp.github.io/lsp-mode/
-
-#+BEGIN_SRC emacs-lisp
-  ;;==============================================================================
-  ;;; LSP Mode
-  ;;==============================================================================
-
-  (init-message 1 "LSP Mode")
-#+END_SRC
-
-*** Setup
-    :PROPERTIES:
-    :CUSTOM_ID: lsp-mode-setup
-    :END:
-
-#+BEGIN_SRC emacs-lisp
-  ;;------------------------------------------------------------------------------
-  ;;; LSP Mode: Setup
-  ;;------------------------------------------------------------------------------
-
-  (init-message 2 "LSP Mode: Setup")
-
-  (use-package lsp-mode
-    :quelpa (lsp-mode)
-    :commands (lsp lsp-defered)
-    :init
-    (setq lsp-keymap-prefix "C-x C-l")    ; defaults to `downcase-region'
-    :config
-    (lsp-enable-which-key-integration t))
 #+END_SRC
 
 * Menus
