@@ -17309,6 +17309,30 @@ otherwise run `find-file-as-root'."
   (wttrin-default-accept-language '("Accept-Language" . "en-US")))
 ;; wttrin:1 ends here
 
+;; [[file:init-emacs.org::*LSP Mode][LSP Mode:1]]
+;;==============================================================================
+;;; LSP Mode
+;;==============================================================================
+
+(init-message 1 "LSP Mode")
+;; LSP Mode:1 ends here
+
+;; [[file:init-emacs.org::*Setup][Setup:1]]
+;;------------------------------------------------------------------------------
+;;; LSP Mode: Setup
+;;------------------------------------------------------------------------------
+
+(init-message 2 "LSP Mode: Setup")
+
+(use-package lsp-mode
+  :quelpa (lsp-mode)
+  :commands (lsp lsp-defered)
+  :init
+  (setq lsp-keymap-prefix "C-x C-l")    ; defaults to `downcase-region'
+  :config
+  (lsp-enable-which-key-integration t))
+;; Setup:1 ends here
+
 ;; [[file:init-emacs.org::*Menus][Menus:1]]
 ;;==============================================================================
 ;;; Menus
@@ -17958,12 +17982,6 @@ otherwise run `find-file-as-root'."
   ;;       interprogram-paste-function 'x-cut-buffer-or-selection-value)
   ;; (use-package pc-select
   ;;   :config (pc-selection-mode))
-
-  ;; set upercase region (C-c C-u)
-  ;;(bind-key (kbd "C-c C-u") 'upcase-region)
-
-  ;; set lowercase region (C-c C-l)
-  ;;(bind-key (kbd "C-c C-l") 'downcase-region)
 
   ;; turn on timeclock display (since I'm at work if I'm using Windows)
   (timeclock-mode-line-display)

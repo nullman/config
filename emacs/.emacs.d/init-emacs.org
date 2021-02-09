@@ -2474,6 +2474,12 @@ Increase maximum mini-window height.
 
 Org Mode (advanced outline mode) configuration.
 
+https://orgmode.org/
+https://orgmode.org/manual/
+https://www.emacswiki.org/emacs/OrgMode
+http://doc.norang.ca/org-mode.html
+https://emacsclub.github.io/html/org_tutorial.html
+
 #+BEGIN_SRC emacs-lisp
   ;;==============================================================================
   ;;; Org Mode
@@ -26079,6 +26085,44 @@ Yet Another Scroll Bar Mode (yascroll)
   ;;   :init (global-yascroll-bar-mode t))
 #+END_SRC
 
+* LSP Mode
+  :PROPERTIES:
+  :CUSTOM_ID: lsp-mode
+  :END:
+
+LSP Mode (Language Server Protocol) configuration.
+
+https://emacs-lsp.github.io/lsp-mode/
+
+#+BEGIN_SRC emacs-lisp
+  ;;==============================================================================
+  ;;; LSP Mode
+  ;;==============================================================================
+
+  (init-message 1 "LSP Mode")
+#+END_SRC
+
+*** Setup
+    :PROPERTIES:
+    :CUSTOM_ID: lsp-mode-setup
+    :END:
+
+#+BEGIN_SRC emacs-lisp
+  ;;------------------------------------------------------------------------------
+  ;;; LSP Mode: Setup
+  ;;------------------------------------------------------------------------------
+
+  (init-message 2 "LSP Mode: Setup")
+
+  (use-package lsp-mode
+    :quelpa (lsp-mode)
+    :commands (lsp lsp-defered)
+    :init
+    (setq lsp-keymap-prefix "C-x C-l")    ; defaults to `downcase-region'
+    :config
+    (lsp-enable-which-key-integration t))
+#+END_SRC
+
 * Menus
   :PROPERTIES:
   :CUSTOM_ID: menus
@@ -27099,12 +27143,6 @@ Windows (w32) specific configuration.
     ;;       interprogram-paste-function 'x-cut-buffer-or-selection-value)
     ;; (use-package pc-select
     ;;   :config (pc-selection-mode))
-
-    ;; set upercase region (C-c C-u)
-    ;;(bind-key (kbd "C-c C-u") 'upcase-region)
-
-    ;; set lowercase region (C-c C-l)
-    ;;(bind-key (kbd "C-c C-l") 'downcase-region)
 
     ;; turn on timeclock display (since I'm at work if I'm using Windows)
     (timeclock-mode-line-display)
