@@ -1290,7 +1290,7 @@ gitbranchprompt()
 #        gitsynchome             pull, commit, and push home git repository
 gitsynchome()
 {
-    dirs=("config" "config-private")
+    dirs=("config" "config-private" "dev" "doc" "web")
 
     # output datetime
     date '+%Y-%m-%d %H:%M:%S'
@@ -1298,16 +1298,15 @@ gitsynchome()
     # remove org font files
     echo "Removing org font files..."
     (cd "${HOME}" && \
-         for x in "config" "config-private" "dev" "web" ; do
-             [[ -d "${x}" ]] && find "${x}" -name '*org-src-fontification*' -print | \
+         for dir in ${dirs[@]} ; do
+             [[ -d "${dir}" ]] && find "${dir}" -name '*org-src-fontification*' -print | \
                      xargs rm > /dev/null 2>&1
          done)
 
     # pull (update) home git repository (from origin)
-    for ((x = 1; x <= ${#dirs[@]}; x++)) ; do
-        dir="${HOME}/${dirs[${x}]}"
+    for dir in ${dirs[@]} ; do
         echo "Pulling '${dir}' from origin..."
-        (cd "${dir}" && git pull origin)
+        [[ -d "${dir}" ]] && (cd "${dir}" && git pull origin)
     done
 
     #if [[ -L .cron ]] && [[ -f config-private/custom/$(uname -n)/.cron ]] ; then
@@ -1317,61 +1316,30 @@ gitsynchome()
     # update addressbook
     if [[ -f "${HOME}/.addressbook" ]] && [[ ! -L "${HOME}/.addressbook" ]] ; then
         echo "Update .addressbook..."
-        (cd "${HOME}" && \
+        [[ -d "${dir}" ]] && (cd "${HOME}" && \
              cp .addressbook config-private/common/ && \
              ln -sf config-private/common/.addressbook)
     fi
     # only update xscreensaver preferences on tank
     if [[ -f "${HOME}/.xscreensaver" ]] && [[ ! -L "${HOME}/.xscreensaver" ]] && \
            [[ "$(uname -n)" == "tank" ]] ; then
-            echo "Update .xscreensaver..."
-        (cd "${HOME}" && \
+        echo "Update .xscreensaver..."
+        [[ -d "${dir}" ]] && (cd "${HOME}" && \
              cp .xscreensaver config-private/common/ && \
              ln -sf config-private/common/.xscreensaver)
     fi
 
     # commit (check in) home git repositories (default update)
-    for ((x = 1; x <= ${#dirs[@]}; x++)) ; do
-        dir="${HOME}/${dirs[${x}]}"
+    for dir in ${dirs[@]} ; do
         echo "Committing '${dir}'..."
-        (cd "${dir}" && git commit -a -m "Update")
+        [[ -d "${dir}" ]] && (cd "${dir}" && git commit -a -m "Update")
     done
 
     # push home git repositories (to origin)
-    for ((x = 1; x <= ${#dirs[@]}; x++)) ; do
-        dir="${HOME}/${dirs[${x}]}"
+    for dir in ${dirs[@]} ; do
         echo "Pushing '${dir}' to origin..."
-        (cd "${dir}" && git push origin)
+        [[ -d "${dir}" ]] && (cd "${dir}" && git push origin)
     done
-
-    echo "Done"
-}
-#        gitsyncdoc              pull, commit, and push doc git repository
-gitsyncdoc()
-{
-    dir="${HOME}/doc"
-
-    # output datetime
-    date '+%Y-%m-%d %H:%M:%S'
-
-    # remove org font files
-    echo "Removing org font files..."
-    (cd "${dir}" && \
-         for x in "bbs" ; do
-             [[ -d "${x}" ]] && find "${x}" -name '*org-src-fontification*' -print | \
-                     xargs rm > /dev/null 2>&1
-         done)
-
-    # pull (update) doc git repository (from origin)
-    echo "Pulling '${dir}' from origin..."
-    (cd "${dir}" && git pull origin)
-
-    echo "Committing '${dir}'..."
-    (cd "${dir}" && git commit -a -m "Update")
-
-    # push doc git repository (to origin)
-    echo "Pushing '${dir}' to origin..."
-    (cd "${dir}" && git push origin)
 
     echo "Done"
 }
@@ -1900,38 +1868,6 @@ homerestow()
     stow --dir="${HOME}/config-private" --target="${HOME}" --restow "common" "emacs"
     stow --dir="${HOME}/config-private" --target="${HOME}" --no-folding --restow "config"
 }
-#!#        homerestow              restow links from ~/ to ~/config and ~/config-private dirs
-#!homerestow()
-#!{
-#!    # create stow target directories
-#!    mkdir -p "${HOME}/.emacs.d"
-#!    mkdir -p "${HOME}/.local/share/applications"
-#!    ls -1 "${HOME}/config/config/.config" | while read dir ; do
-#!        if [[ -d "${HOME}/config/config/.config/${dir}" ]] ; then
-#!            mkdir -p "${HOME}/.config/${dir}"
-#!        fi
-#!    done
-#!
-#!    dirs=("config" "config-private")
-#!    for dir in ${dirs[@]} ; do
-#!        if [[ -d "${HOME}/${dir}" ]] ; then
-#!            echo "Restowing '${dir}' packages..."
-#!            (cd "${HOME}/${dir}" && \
-#!                 ls -1 | while read file ; do
-#!                     if [[ -d "${file}" ]] ; then
-#!                         echo "  ${file}"
-#!                         if [[ "${file}" == "custom" ]] ; then
-#!                             (cd "${file}" && stow --restow "$(uname -n)")
-#!                         else
-#!                             stow --restow "${file}"
-#!                         fi
-#!                     fi
-#!                 done)
-#!        else
-#!            echo "Skipping '${dir}' packages..."
-#!        fi
-#!    done
-#!}
 #        manjaroinitialize       install manjaro packages and setup system
 manjaroinitialize()
 {

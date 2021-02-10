@@ -13687,7 +13687,20 @@ Uses `ispell--run-on-word' to spell check word."
           ([remap describe-key] . helpful-key)
           ("C-h C-d" . helpful-at-point) ; defaults to `view-emacs-debugging'
           ("C-h F" . helpful-function) ; defaults to `Info-goto-emacs-command-node'
-          ("C-h C" . helpful-command))) ; defaults to `describe-coding-system'
+          ("C-h C" . helpful-command)) ; defaults to `describe-coding-system'
+  :config
+  (defun helpful-callable--other-buffer (symbol)
+    "Switch back to `other-buffer' after helpful window is displayed and updated."
+    ;; make sure helpful buffer is active
+    (when helpful--sym
+      (other-window 1)))
+  ;; advise helpful functions to switch back to previous buffer
+  (advice-add 'helpful-callable :after #'helpful-callable--other-buffer)
+  (advice-add 'helpful-variable :after #'helpful-callable--other-buffer)
+  (advice-add 'helpful-key :after #'helpful-callable--other-buffer)
+  (advice-add 'helpful-at-point :after #'helpful-callable--other-buffer)
+  (advice-add 'helpful-function :after #'helpful-callable--other-buffer)
+  (advice-add 'helpful-command :after #'helpful-callable--other-buffer))
 ;; helpful:1 ends here
 
 ;; [[file:init-emacs.org::*hippie-exp][hippie-exp:1]]

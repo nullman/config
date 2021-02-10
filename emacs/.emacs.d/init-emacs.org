@@ -8,7 +8,7 @@
 #+LANGUAGE: en
 #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
 #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-#+TIMESTAMP: <2021-02-09 18:25 (kyle)>
+#+TIMESTAMP: <2021-02-10 00:12 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -19355,7 +19355,20 @@ A better help buffer.
             ([remap describe-key] . helpful-key)
             ("C-h C-d" . helpful-at-point) ; defaults to `view-emacs-debugging'
             ("C-h F" . helpful-function) ; defaults to `Info-goto-emacs-command-node'
-            ("C-h C" . helpful-command))) ; defaults to `describe-coding-system'
+            ("C-h C" . helpful-command)) ; defaults to `describe-coding-system'
+    :config
+    (defun helpful-callable--other-buffer (symbol)
+      "Switch back to `other-buffer' after helpful window is displayed and updated."
+      ;; make sure helpful buffer is active
+      (when helpful--sym
+        (other-window 1)))
+    ;; advise helpful functions to switch back to previous buffer
+    (advice-add 'helpful-callable :after #'helpful-callable--other-buffer)
+    (advice-add 'helpful-variable :after #'helpful-callable--other-buffer)
+    (advice-add 'helpful-key :after #'helpful-callable--other-buffer)
+    (advice-add 'helpful-at-point :after #'helpful-callable--other-buffer)
+    (advice-add 'helpful-function :after #'helpful-callable--other-buffer)
+    (advice-add 'helpful-command :after #'helpful-callable--other-buffer))
 #+END_SRC
 
 *** hippie-exp
