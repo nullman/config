@@ -1299,14 +1299,18 @@ gitsynchome()
     echo "Removing org font files..."
     (cd "${HOME}" && \
          for dir in ${dirs[@]} ; do
-             [[ -d "${dir}" ]] && find "${dir}" -name '*org-src-fontification*' -print | \
+             if [[ -d "${dir}" ]] ; then
+                 find "${dir}" -name '*org-src-fontification*' -print | \
                      xargs rm > /dev/null 2>&1
+             fi
          done)
 
     # pull (update) home git repository (from origin)
     for dir in ${dirs[@]} ; do
-        echo "Pulling '${dir}' from origin..."
-        [[ -d "${dir}" ]] && (cd "${dir}" && git pull origin)
+        if [[ -d "${dir}" ]] ; then
+            echo "Pulling '${dir}' from origin..."
+            (cd "${dir}" && git pull origin)
+        fi
     done
 
     #if [[ -L .cron ]] && [[ -f config-private/custom/$(uname -n)/.cron ]] ; then
@@ -1316,7 +1320,7 @@ gitsynchome()
     # update addressbook
     if [[ -f "${HOME}/.addressbook" ]] && [[ ! -L "${HOME}/.addressbook" ]] ; then
         echo "Update .addressbook..."
-        [[ -d "${dir}" ]] && (cd "${HOME}" && \
+        (cd "${HOME}" && \
              cp .addressbook config-private/common/ && \
              ln -sf config-private/common/.addressbook)
     fi
@@ -1324,21 +1328,25 @@ gitsynchome()
     if [[ -f "${HOME}/.xscreensaver" ]] && [[ ! -L "${HOME}/.xscreensaver" ]] && \
            [[ "$(uname -n)" == "tank" ]] ; then
         echo "Update .xscreensaver..."
-        [[ -d "${dir}" ]] && (cd "${HOME}" && \
+        (cd "${HOME}" && \
              cp .xscreensaver config-private/common/ && \
              ln -sf config-private/common/.xscreensaver)
     fi
 
     # commit (check in) home git repositories (default update)
     for dir in ${dirs[@]} ; do
-        echo "Committing '${dir}'..."
-        [[ -d "${dir}" ]] && (cd "${dir}" && git commit -a -m "Update")
+        if [[ -d "${dir}" ]] ; then
+            echo "Committing '${dir}'..."
+            (cd "${dir}" && git commit -a -m "Update")
+        fi
     done
 
     # push home git repositories (to origin)
     for dir in ${dirs[@]} ; do
-        echo "Pushing '${dir}' to origin..."
-        [[ -d "${dir}" ]] && (cd "${dir}" && git push origin)
+        if [[ -d "${dir}" ]] ; then
+            echo "Pushing '${dir}' to origin..."
+            (cd "${dir}" && git push origin)
+        fi
     done
 
     echo "Done"

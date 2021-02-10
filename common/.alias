@@ -2884,16 +2884,13 @@ alias gituoweb="(cd \${HOME}/web && git pull origin)"
 alias gitpoweb="(cd \${HOME}/web && git push origin)"
 #        gituoall                pull (update) all repositories
 alias gituoall="
-    echo 'Pulling config...'
-    (cd \${HOME}/config && git pull origin)
-    echo 'Pulling config-private...'
-    (cd \${HOME}/config-private && git pull origin)
-    echo 'Pulling dev...'
-    (cd \${HOME}/dev && git pull origin)
-    echo 'Pulling doc...'
-    (cd \${HOME}/doc && git pull origin)
-    echo 'Pulling web...'
-    (cd \${HOME}/web && git pull origin)"
+    dirs=('config' 'config-private' 'dev' 'doc' 'web')
+    for dir in \${dirs[@]} ; do
+        if [[ -d \${HOME}/\${dir} ]] ; then
+            echo \"Pulling '\${dir}'...\"
+            (cd \${HOME}/\${dir} && git pull origin)
+        fi
+    done"
 
 #
 # script help
