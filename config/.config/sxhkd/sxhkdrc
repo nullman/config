@@ -185,10 +185,6 @@ super + shift + t
 super + alt + y
     source "${HOME}/.funct" && gitsynchome 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12"
 
-# git synchronize ${HOME}/doc
-super + alt + u
-    source "${HOME}/.funct" && gitsyncdoc 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12"
-
 # start screen saver
 super + alt + s
     xscreensaver-command -activate
