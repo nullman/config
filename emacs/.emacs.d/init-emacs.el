@@ -1064,19 +1064,6 @@ Otherwise, `local-tab-width' is used."
 (add-hook 'prog-mode-hook #'enable-tabs)
 ;; Tabs:2 ends here
 
-;; [[file:init-emacs.org::*Calendar and Diary][Calendar and Diary:1]]
-;;------------------------------------------------------------------------------
-;;; General Settings: Calendar and Diary
-;;------------------------------------------------------------------------------
-
-(init-message 2 "General Settings: Calendar and Diary")
-;; Calendar and Diary:1 ends here
-
-;; [[file:init-emacs.org::*Calendar and Diary][Calendar and Diary:2]]
-;; turn off diary entries view when calendar is run
-(setq calendar-view-diary-initially-flag nil)
-;; Calendar and Diary:2 ends here
-
 ;; [[file:init-emacs.org::*GUI][GUI:1]]
 ;;------------------------------------------------------------------------------
 ;;; General Settings: GUI
@@ -3092,13 +3079,6 @@ same directory as the org-buffer and insert a link to this file."
 
 ;; update images in buffer after evaluation
 (add-hook 'org-babel-after-execute-hook #'org-display-inline-images :append)
-
-;; add structure templates templates
-;; (add-to-list 'org-structure-template-alist
-;;              '("n" "#+NAME: ?"))
-;; (add-to-list 'org-structure-template-alist
-;;              '("S" "#+BEGIN_SRC sh :dir /sudo::\n  ?\n#+END_SRC"))
-(add-to-list 'org-structure-template-alist '("S" . "src sh :dir /sudo::"))
 
 ;; org-eldoc is just too buggy with org-babel
 ;; Examples:
@@ -12652,1747 +12632,6 @@ USING is the remaining peg."
     (towers-move (1- n) using to from)))
 ;; Towers of Hanoi:1 ends here
 
-;; [[file:init-emacs.org::*LSP Mode][LSP Mode:1]]
-;;==============================================================================
-;;; LSP Mode
-;;==============================================================================
-
-(init-message 1 "LSP Mode")
-;; LSP Mode:1 ends here
-
-;; [[file:init-emacs.org::*Setup][Setup:1]]
-;;------------------------------------------------------------------------------
-;;; LSP Mode: Setup
-;;------------------------------------------------------------------------------
-
-(init-message 2 "LSP Mode: Setup")
-
-(use-package lsp-mode
-  :quelpa (lsp-mode)
-  :commands (lsp lsp-defered)
-  :init
-  (setq lsp-keymap-prefix "C-x C-l")    ; defaults to `downcase-region'
-  :config
-  (lsp-enable-which-key-integration t))
-;; Setup:1 ends here
-
-;; [[file:init-emacs.org::*Modes][Modes:1]]
-;;==============================================================================
-;;; Modes
-;;==============================================================================
-
-(init-message 1 "Modes")
-;; Modes:1 ends here
-
-;; [[file:init-emacs.org::*Setup][Setup:1]]
-;;------------------------------------------------------------------------------
-;;; Modes: Setup
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modes: Setup")
-
-;; turn off electric indent for all modes
-(setq-default electric-indent-inhibit t)
-
-;; turn off electric mode for all cc modes
-(setq-default c-electric-flag nil)
-;; Setup:1 ends here
-
-;; [[file:init-emacs.org::*ASM][ASM:1]]
-;;------------------------------------------------------------------------------
-;;; Modes: ASM
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modes: ASM")
-
-(use-package asm-mode
-  :mode ("\\.asm\\'" . asm-mode)
-  :config
-  ;; enable tabs
-  (add-hook 'asm-mode-hook #'enable-tabs-8)
-
-  ;; ;; set tab indentation, width, and do not convert tabs to spaces
-  ;; (setq indent-tabs-mode t          ; do not insert tab characters
-  ;;       tab-width 8                 ; default tab width is four spaces
-  ;;       standard-indent 8           ; default margin-changing functions indent
-  ;;       tab-always-indent nil       ; tab key will insert a tab
-  ;;       tab-stop-list (number-sequence 8 180 8)) ; tab stops set to every 8 spaces
-  )
-;; ASM:1 ends here
-
-;; [[file:init-emacs.org::*Brainfuck][Brainfuck:1]]
-;;------------------------------------------------------------------------------
-;;; Modes: Brainfuck
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modes: Brainfuck")
-
-(use-package brainfuck
-  ;;:quelpa (brainfuck :fetcher file :path (expand-file-name "brainfuck.el" local-modules-dir))
-  :load-path (lambda () (expand-file-name "brainfuck.el" local-modules-dir))
-  :mode ("\\.bf\\'" . brainfuck-mode))
-;; Brainfuck:1 ends here
-
-;; [[file:init-emacs.org::*BASIC][BASIC:1]]
-;;------------------------------------------------------------------------------
-;;; Modes: BASIC
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modes: BASIC")
-
-(use-package basic
-  ;;:quelpa (basic :fetcher file :path (expand-file-name "basic.el" local-modules-dir))
-  :load-path (lambda () (expand-file-name "basic.el" local-modules-dir))
-  :mode ("\\.bas\\'" . basic-mode))
-;; BASIC:1 ends here
-
-;; [[file:init-emacs.org::*C Mode][C Mode:1]]
-;;------------------------------------------------------------------------------
-;;; Modes: C Mode
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modes: C Mode")
-
-(use-package cc-mode
-  :demand t
-  :mode (("\\.c\\'" . c-mode)
-         ("\\.h\\'" . c-mode)
-         ("\\.ice\\'" . c-mode)
-         ("\\.cpp\\'" . c++-mode)
-         ("\\.hpp\\'" . c++-mode)
-         ("\\.c++\\'" . c++-mode)
-         ("\\.h++\\'" . c++-mode))
-  :commands (c-skip-comments-and-strings)
-  :config
-  ;; c style
-  (defvar local-c-style
-    '((c-tab-always-indent . 'complete)
-      (c-basic-offset . 4)
-      (c-comment-only-line-offset . 0)
-      (c-hanging-braces-alist . ((substatement-open after)
-                                 (brace-list-open)))
-      (c-hanging-colons-alist . ((member-init-intro before)
-                                 (inher-intro)
-                                 (case-label after)
-                                 (label after)
-                                 (access-label after)))
-      (c-cleanup-list . (scope-operator
-                         empty-defun-braces
-                         defun-close-semi))
-      (c-offsets-alist . ((arglist-close . c-lineup-arglist)
-                          (substatement-open . 0)
-                          (substatement-label . 0)
-                          (label . 0)
-                          (case-label . +)
-                          (block-open . 0)
-                          (defun-block-intro . +)
-                          (statement-block-intro . +)
-                          (substatement . +)
-                          (knr-argdecl-intro . -)
-                          (inline-open . 0)
-                          (defun-block-intro . 4)))
-      (c-echo-syntactic-information-p . nil)))
-
-  (defun local-c-mode-common-hook ()
-    "Customizations for c-mode, c++-mode, objc-mode, java-mode, and idl-mode."
-    ;; add my personal style and set it for the current buffer
-    (c-add-style "local" local-c-style t)
-    ;;(c-set-style 'stroustrup)
-
-    ;; electric indention turned off
-    (when (fboundp 'c-toggle-electric-state)
-      (c-toggle-electric-state -1))
-
-    ;; auto-newline and hungry-delete turned off
-    (when (fboundp 'c-toggle-auto-hungry-state)
-      (c-toggle-auto-hungry-state -1))
-
-    ;; disable tabs
-    (disable-tabs)
-
-    ;; ;; key bindings for all supported languages
-    ;; ;; can put these in c-mode-base-map because c-mode-map, c++-mode-map,
-    ;; ;; objc-mode-map, java-mode-map, and idl-mode-map inherit from it
-    ;; (define-key c-mode-base-map (kbd "C-<return>") 'newline-and-indent)
-    ;; (define-key c-mode-base-map (kbd "C-c c") 'mode-compile)
-    ;; (define-key c-mode-base-map (kbd "C-c k") 'mode-compile-kill)
-    ;; (define-key c-mode-base-map (kbd "<f7>") 'mode-compile)
-
-    ;; ;; hide/show mode and keys
-    ;; (define-key c-mode-base-map (kbd "C-c <right>") 'hs-show-block)
-    ;; (define-key c-mode-base-map (kbd "C-c <left>") 'hs-hide-block)
-    ;; (define-key c-mode-base-map (kbd "C-c <up>") 'hs-hide-all)
-    ;; (define-key c-mode-base-map (kbd "C-c <down>") 'hs-show-all)
-    ;; (hs-minor-mode 1)
-
-    ;; ;; toggle between header files and code files
-    ;; (define-key c-mode-base-map (kbd "C-c o") 'ff-find-other-file)
-
-    ;; set default fill column for auto-fill mode and fill-paragraph
-    (setq fill-column 78)
-
-    ;; turn on auto-fill
-    ;;(turn-on-auto-fill)
-
-    ;; ;; turn off auto newlines
-    ;; (setq c-auto-newline nil)
-
-    ;; turn on flyspell
-    (when (boundp 'flyspell-prog-mode)
-      (flyspell-prog-mode))
-
-    ;; initialize eldoc
-    (when (boundp 'eldoc-mode)
-      (eldoc-mode 1))
-
-    ;; compilation settings
-    (setq compile-command "make -k"
-          compilation-window-height 10
-          compilation-ask-about-save nil
-          ;;compilation-scroll-output t
-          )
-
-    ;; (defun compile-internal--scroll ()
-    ;;   "Forces compile buffer to scroll."
-    ;;   (let* ((ob (current-buffer))
-    ;;          (obw (get-buffer-window ob t))
-    ;;          win)
-    ;;     (save-mark-and-excursion
-    ;;       (unless (and (setq win (get-buffer-window ad-return-value t))
-    ;;                    obw)
-    ;;         (select-window win)
-    ;;         (goto-char (point-max))
-    ;;         (select-window obw)))))
-    ;; ;; advise `compile-internal'
-    ;; (advice-add 'compile-internal :after #'compile-internal--scroll)
-
-    ;; turn on else minor mode
-    ;;(else-mode)
-    )
-  (add-hook 'c-mode-common-hook #'local-c-mode-common-hook)
-
-  ;; remove trailing blanks
-  ;;(add-hook 'c-mode-hook #'install-remove-trailing-blanks)
-  ;;(add-hook 'c++-mode-hook #'install-remove-trailing-blanks)
-  ;;(add-hook 'c-mode-common-hook #'install-remove-trailing-blanks)
-
-  ;; remove tabs
-  ;;(add-hook 'c-mode-hook #'install-remove-tabs)
-  ;;(add-hook 'c++-mode-hook #'install-remove-tabs)
-  ;;(add-hook 'c-mode-common-hook #'install-remove-tabs)
-  )
-;; C Mode:1 ends here
-
-;; [[file:init-emacs.org::*Calendar][Calendar:1]]
-;;------------------------------------------------------------------------------
-;;; Modes: Calendar
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modes: Calendar")
-
-(use-package calendar
-  :bind* ("C-x c" . calendar)
-  :bind (:map calendar-mode-map
-              ;; scrolling keys
-              (">" . calendar-scroll-left)
-              ("<" . calendar-scroll-right)
-              ("C-x >" . calendar-scroll-left)
-              ("C-x <" . calendar-scroll-right))
-  :config
-  ;; star current date
-  (setq calendar-today-visible-hook 'calendar-star-date)
-  ;; star today's date
-  (setq calendar-today-visible-hook 'calendar-mark-today)
-  ;; mark holidays
-  (setq calendar-mark-holidays-flag t))
-
-;;------------------------------------------------------------------------------
-;;;; calendar-remind
-;;------------------------------------------------------------------------------
-
-(init-message 3 "calendar-remind")
-
-(use-package calendar-remind
-  ;;:quelpa (calendar-remind :fetcher file :path (expand-file-name "calendar-remind.el" local-modules-dir))
-  :load-path (lambda () (expand-file-name "calendar-remind.el" local-modules-dir))
-  :after (calendar)
-  :commands (calendar-remind-lookup
-             calendar-remind-visit
-             calendar-remind-visit-insert)
-  :bind (:map calendar-mode-map
-              ;; remind lookup
-              ("<return>" . calendar-remind-lookup)
-              ("r" . calendar-remind-lookup)
-              ;;("SPC" . calendar-remind-lookup)
-              ;; remind visit
-              ("v" . calendar-remind-visit)
-              ("V" . calendar-remind-visit-insert)))
-;; Calendar:1 ends here
-
-;; [[file:init-emacs.org::*Dired][Dired:1]]
-;;------------------------------------------------------------------------------
-;;; Modes: Dired
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modes: Dired")
-
-(use-package dired
-  :after (dired-single)
-  :commands (dired dired-next-line)
-  :config
-  ;; only prompt once for recursive deletes
-  (setq dired-recursive-deletes 'top)
-  ;; auto-revert buffer upon revisiting
-  (setq dired-auto-revert-buffer t)
-
-  (defun local-dired-mode-hook ()
-    ;; key bindings
-    ;; return and mouse click use same buffer
-    (when (fboundp 'dired-single-buffer)
-      (define-key dired-mode-map (kbd "<return>") 'dired-single-buffer)
-      (define-key dired-mode-map (kbd "^")
-        (lambda () (interactive) (dired-single-buffer ".."))))
-    (when (fboundp 'joc-dired-single-buffer)
-      (define-key dired-mode-map (kbd "<return>") 'joc-dired-single-buffer)
-      (define-key dired-mode-map (kbd "^")
-        (lambda () (interactive) (joc-dired-single-buffer ".."))))
-    (when (fboundp 'dired-single-buffer-mouse)
-      (define-key dired-mode-map (kbd "<mouse-1>") 'dired-single-buffer-mouse))
-    (when (fboundp 'joc-dired-single-buffer-mouse)
-      (define-key dired-mode-map (kbd "<mouse-1>") 'joc-dired-single-buffer-mouse))
-    ;; edit file names within dired
-    (when (fboundp 'wdired-change-to-wdired-mode)
-      (define-key dired-mode-map (kbd "e") 'wdired-change-to-wdired-mode))
-    ;; reset M-o
-    (define-key dired-mode-map (kbd "M-o") 'other-window)
-    (define-key dired-mode-map (kbd "C-c C-z f") 'browse-url-of-dired-file))
-
-  ;; add hook to dired mode
-  (add-hook 'dired-mode-hook #'local-dired-mode-hook)
-
-  (defun dired-move-to-top ()
-    (interactive)
-    (goto-char (point-min))
-    (dired-next-line 4))
-  (define-key dired-mode-map (vector 'remap 'beginning-of-buffer) 'dired-move-to-top)
-
-  (defun dired-move-to-bottom ()
-    (interactive)
-    (goto-char (point-max))
-    (dired-next-line -1))
-  (define-key dired-mode-map (vector 'remap 'end-of-buffer) 'dired-move-to-bottom))
-
-;;------------------------------------------------------------------------------
-;;;; dired-single
-;;------------------------------------------------------------------------------
-
-(init-message 3 "dired-single")
-
-;; make dired use a single buffer
-(use-package dired-single
-  :quelpa (dired-single)
-  :config
-  (defun dired-single-buffer-mouse--ignore-errors (orig-fun &rest args)
-    "Suppress errors when calling `dired-single-buffer-mouse'."
-    (condition-case err
-        (apply orig-fun args)
-      ('error
-       (message "%s" err))))
-  ;; advise `dired-single-buffer-mouse' to suppress errors
-  (advice-add 'dired-single-buffer-mouse :around #'dired-single-buffer-mouse--ignore-errors))
-;; Dired:1 ends here
-
-;; [[file:init-emacs.org::*Ediff][Ediff:1]]
-;;------------------------------------------------------------------------------
-;;; Modes: Ediff
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modes: Ediff")
-
-(use-package ediff
-  :config
-  ;; split windows horizontally
-  (setq ediff-split-window-function 'split-window-horizontally)
-
-  ;; only highlight current diff
-  (setq-default ediff-highlight-all-diffs nil)
-
-  ;; turn off whitespace checking
-  (setq ediff-diff-options "-w")
-
-  ;; place control window in same frame
-  (setq ediff-window-setup-function 'ediff-setup-windows-plain)
-
-  ;; place control window in separate frame
-  ;;(setq ediff-window-setup-function 'ediff-setup-windows-multiframe)
-
-  ;; highlight changes to characters rather than words
-  ;;(setq ediff-forward-word-function 'forward-char)
-  )
-;; Ediff:1 ends here
-
-;; [[file:init-emacs.org::*Erlang Mode][Erlang Mode:1]]
-;;------------------------------------------------------------------------------
-;;; Modes: Erlang Mode
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modes: Erlang Mode")
-
-(use-package erlang
-  :quelpa (erlang)
-  :after (flyspell)
-  :mode ("\\.erl\\'" . erlang-mode)
-  :interpreter ("erlang" . erlang-mode)
-  :commands (erlang-start)
-  :init
-  (add-to-list 'exec-path "/usr/lib/erlang/bin" t)
-  (setq erlang-root-dir "/usr/lib/erlang"
-        erlang-electric-commands nil)
-
-  :config
-  (defun local-erlang-hook ()
-    ;; turn on flyspell
-    (flyspell-prog-mode))
-  (add-hook 'erlang-hook #'local-erlang-hook)
-
-  ;; remove trailing blanks
-  ;;(add-hook 'erlang-mode-hook #'install-remove-trailing-blanks)
-
-  ;; remove tabs
-  ;;(add-hook 'erlang-mode-hook #'install-remove-tabs)
-  )
-;; Erlang Mode:1 ends here
-
-;; [[file:init-emacs.org::*Fundamental Mode][Fundamental Mode:1]]
-;;------------------------------------------------------------------------------
-;;; Modes: Fundamental Mode
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modes: Fundamental Mode")
-
-;; fundamental-mode
-
-;; remove trailing blanks
-;;(add-hook 'fundamental-mode-hook #'install-remove-trailing-blanks)
-
-;; remove tabs
-;;(add-hook 'fundamental-mode-hook #'install-remove-tabs)
-;; Fundamental Mode:1 ends here
-
-;; [[file:init-emacs.org::*Geiser (Racket Scheme REPL)][Geiser (Racket Scheme REPL):1]]
-;;------------------------------------------------------------------------------
-;;; Modes: Geiser (Racket Scheme REPL)
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modes: Geiser (Racket Scheme REPL)")
-
-(use-package geiser
-  :quelpa (geiser)
-  :commands (geiser-mode
-             run-geiser
-             run-gracket
-             run-racket)
-  :init
-  ;; set default scheme program to racket
-  ;;(setq scheme-program-name "racket")
-  ;; set default scheme mode to geiser-mode
-  ;;(add-hook 'scheme-mode-hook #'geiser-mode)
-
-  :config
-  ;; set default geiser implementation to racket
-  (setq geiser-default-implementation 'racket)
-  ;; set active implementations list to just racket
-  (setq geiser-active-implementations '(racket))
-
-  ;; define `insert-char' functions to insert unicode chars
-  (defun geiser-insert-sigma ()
-    "Insert ∑ character."
-    (interactive "*")
-    ;;(insert-char ?Σ))
-    (insert-char ?∑))
-
-  (defun local-geiser-mode-hook ()
-    ;; key bindings
-    (local-set-key (kbd "C-c \\") 'geiser-insert-lambda)
-    (local-set-key (kbd "C-c C-\\") 'geiser-insert-lambda)
-    (local-set-key (kbd "C-c s") 'geiser-insert-sigma)
-    (local-set-key (kbd "C-c C-s") 'geiser-insert-sigma))
-  (add-hook 'geiser-mode-hook #'local-geiser-mode-hook)
-  (add-hook 'geiser-repl-mode-hook #'local-geiser-mode-hook))
-;; Geiser (Racket Scheme REPL):1 ends here
-
-;; [[file:init-emacs.org::*GNU Plot][GNU Plot:1]]
-;;------------------------------------------------------------------------------
-;;; Modes: GNU Plot
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modes: GNU Plot")
-
-(use-package gnuplot
-  :quelpa (gnuplot)
-  :mode ("\\.gp\\'" . gnuplot-mode)
-  :commands (gnuplot-mode gnuplot-make-buffer gnuplot-send-string-to-gnuplot))
-;; GNU Plot:1 ends here
-
-;; [[file:init-emacs.org::*+Go Mode+][+Go Mode+:1]]
-;; ;;------------------------------------------------------------------------------
-;; ;;; Modes: Go Mode
-;; ;;------------------------------------------------------------------------------
-
-;; (init-message 2 "Modes: Go Mode")
-
-;; (use-package go-mode
-;;   :mode (("\\.go\\'" . go-mode))
-;;   :config (progn
-;;             (defun local-go-mode-hook ()
-;;               ;; use goimports instead of gofmt
-;;               (setq gofmt-command "goimports")
-
-;;               ;; call gofmt before saving
-;;               (add-hook 'before-save-hook #'gofmt-before-save)
-
-;;               ;; customize compile command to run go build
-;;               (when (not (string-match "go" compile-command))
-;;                 (setq-local compile-command "go build -v && go test -v && go vet"))
-
-;;               ;; oracle
-;;               (load-file "${GOPATH}/src/golang.org/x/tools/cmd/oracle/oracle.el")
-
-;;               ;; key bindings
-;;               (local-set-key (kbd "M-.") 'godef-jump))
-;;             (add-hook 'go-mode-hook #'local-go-mode-hook)))
-;; +Go Mode+:1 ends here
-
-;; [[file:init-emacs.org::*Graphviz Dot Mode][Graphviz Dot Mode:1]]
-;;------------------------------------------------------------------------------
-;;; Modes: Graphviz Dot Mode
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modes: Graphviz Dot Mode")
-
-(use-package graphviz-dot-mode
-  :quelpa (graphviz-dot-mode)
-  :mode (("\\.dot\\'" . graphviz-dot-mode)
-         ("\\.gv\\'" . graphviz-dot-mode))
-  :commands (graphviz-dot-mode))
-;; Graphviz Dot Mode:1 ends here
-
-;; [[file:init-emacs.org::*INI Mode][INI Mode:1]]
-;;------------------------------------------------------------------------------
-;;; Modes: INI Mode
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modes: INI Mode")
-
-(use-package ini-mode
-  :quelpa (ini-mode)
-  :mode ("\\.ini\\'" . ini-mode))
-;; INI Mode:1 ends here
-
-;; [[file:init-emacs.org::*Javascript: js2 Mode][Javascript: js2 Mode:1]]
-;;------------------------------------------------------------------------------
-;;; Modes: Javascript: js2 Mode
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modes: Javascript: js2 Mode")
-
-(use-package js2-mode
-  :quelpa (js2-mode)
-  :mode (("\\.js\\'" . js2-mode)
-         ("\\.gradle\\'" . js-mode))    ; use js-mode for gradle files
-  :interpreter ("node" . js2-mode)
-  :config
-  ;; set indent offset
-  (setq-local py-indent-offset local-short-tab-width)
-
-  ;; turn on auto indent
-  (setq js2-auto-indent-p t
-        js2-cleanup-whitespace t
-        js2-enter-indents-newline t
-        js2-indent-on-enter-key t
-        js2-bounce-indent-p nil
-        js2-mirror-mode nil
-        js2-mode-escape-quotes nil)
-  ;;js2-electric-keys (quote nil))
-
-  ;; better imenu
-  (add-hook 'js2-mode-hook #'js2-imenu-extras-mode)
-  )
-
-;;------------------------------------------------------------------------------
-;;;; js2-refactor
-;;------------------------------------------------------------------------------
-
-(init-message 3 "js2-refactor")
-
-;; javascript refactoring library
-(use-package js2-refactor
-  :quelpa (js2-refactor)
-  :after (js2-mode)
-  :bind (:map js2-mode-map
-              ("C-k" . js2r-kill)
-              ("M-." . nil))            ; unbind conflicting key
-  :config
-  ;; set prefix key
-  (js2r-add-keybindings-with-prefix "C-c C-r")
-
-  ;; load when `js2-mode' is active
-  (add-hook 'js2-mode-hook #'js2-refactor-mode))
-
-;;------------------------------------------------------------------------------
-;;;; xref-js2
-;;------------------------------------------------------------------------------
-
-(init-message 3 "xref-js2")
-
-;; jump to references and definitions
-(use-package xref-js2
-  :quelpa (xref-js2)
-  :after (js2-mode)
-  :config
-  ;; load when `js2-mode' is active
-  (defun js2-mode-hook--js2-refactor ()
-    (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t)
-  (add-hook 'js2-mode-hook #'js2-mode-hook--js2-refactor)))
-
-;;------------------------------------------------------------------------------
-;;;; js-comint
-;;------------------------------------------------------------------------------
-
-(init-message 3 "js-comint")
-
-;; javascript interpreter repl
-(use-package js-comint
-  :quelpa (js-comint)
-  :after (js2-mode)
-  :commands (js-send-buffer
-             js-send-buffer-and-go
-             js-send-last-sexp
-             js-send-last-sexp-and-go
-             js-load-file-and-go)
-  :bind (:map js2-mode-map
-              ("C-c C-c" . js-eval-sexp-and-go)
-              ("C-x C-e" . js-send-last-sexp)
-              ("C-M-x" . js-eval-sexp-and-go)
-              ("C-c b" . js-send-buffer)
-              ("C-c C-b" . js-send-buffer-and-go)
-              ("C-c C-k" . js-send-buffer-and-go)
-              ("C-c l" . js-load-file-and-go))
-  :config
-  ;;(setq inferior-js-program-command "/usr/bin/java org.mozilla.javascript.tools.shell.Main")
-  ;;(setq inferior-js-program-command "/usr/bin/rhino")
-
-  ;; ;; key bindings
-  ;; (bind-keys :map js2-mode-map
-  ;;            ("C-c C-c" . js-eval-sexp-and-go)
-  ;;            ("C-x C-e" . js-send-last-sexp)
-  ;;            ("C-M-x" . js-eval-sexp-and-go)
-  ;;            ("C-c b" . js-send-buffer)
-  ;;            ("C-c C-b" . js-send-buffer-and-go)
-  ;;            ("C-c C-k" . js-send-buffer-and-go)
-  ;;            ("C-c l" . js-load-file-and-go))
-
-  (defun js-eval-sexp ()
-    "js-comint evaluate current sexp."
-    (interactive)
-    (save-mark-and-excursion
-      (end-of-defun)
-      (js-send-last-sexp)))
-
-  (defun js-eval-sexp-and-go ()
-    "js-comint evaluate current sexp and switch to js buffer."
-    (interactive)
-    (save-mark-and-excursion
-      (end-of-defun)
-      (js-send-last-sexp-and-go)))
-
-  (defun js2-mode-hook--js-comint ()
-    ;; (local-set-key (kbd "C-c C-c") 'js-eval-sexp-and-go)
-    ;; (local-set-key (kbd "C-x C-e") 'js-send-last-sexp)
-    ;; (local-set-key (kbd "C-M-x") 'js-eval-sexp-and-go)
-    ;; (local-set-key (kbd "C-c b") 'js-send-buffer)
-    ;; (local-set-key (kbd "C-c C-b") 'js-send-buffer-and-go)
-    ;; (local-set-key (kbd "C-c C-k") 'js-send-buffer-and-go)
-    ;; (local-set-key (kbd "C-c l") 'js-load-file-and-go)
-    ;; disable skewer-mode as it uses similar key bindings
-    (when (fboundp 'skewer-mode)
-      (skewer-mode -1)))
-  (add-hook 'js2-mode-hook #'js-mode-hook--js-comint))
-;; Javascript: js2 Mode:1 ends here
-
-;; [[file:init-emacs.org::*JSON Mode][JSON Mode:1]]
-;;------------------------------------------------------------------------------
-;;; Modes: JSON Mode
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modes: JSON Mode")
-
-(use-package json-mode
-  :quelpa (json-mode)
-  :mode (("\\.json\\'" . js2-mode))
-  :config
-  ;; set indentation to four spaces
-  (setq json-encoding-default-indentation "    "
-        json-encoding-pretty-print t))
-;; JSON Mode:1 ends here
-
-;; [[file:init-emacs.org::*Kotlin Mode][Kotlin Mode:1]]
-;;------------------------------------------------------------------------------
-;;; Modes: Kotlin Mode
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modes: Kotlin Mode")
-
-;;(use-package kotlin-mode
-(use-package java-mode
-;;:quelpa (kotlin-mode)
-  :quelpa (java-mode)
-  :mode (("\\.kt\\'" . kotlin-mode)
-         ("\\.kts\\'" . kotlin-mode))
-  :commands (java-mode
-             kotlin-mode--syntax-propertize-function)
-  :functions (kotlin-send-buffer)
-  :config
-  ;; add style for kotlin-mode
-  (add-to-list 'c-default-style '(kotlin-mode . "java"))
-
-  ;; add junit lib to classpath when creating a repl (so unit tests work)
-  (add-to-list 'kotlin-args-repl "-classpath" t)
-  (add-to-list 'kotlin-args-repl (expand-file-name "~/dev/kotlin/lib/junit-4.12.jar") t)
-
-  ;; redefine kotlin-mode so that indentation works
-  ;; based on `java-mode'
-  (define-derived-mode kotlin-mode java-mode "Kotlin"
-    "Major mode for editing Kotlin."
-
-    (setq font-lock-defaults '((kotlin-mode--font-lock-keywords) nil nil))
-    (setq-local syntax-propertize-function #'kotlin-mode--syntax-propertize-function)
-    (set (make-local-variable 'comment-start) "//")
-    (set (make-local-variable 'comment-padding) 1)
-    (set (make-local-variable 'comment-start-skip) "\\(//+\\|/\\*+\\)\\s *")
-    (set (make-local-variable 'comment-end) "")
-    (set (make-local-variable 'c-comment-start-regexp) "//")
-    (set (make-local-variable 'c-block-comment-start-regexp) "/\\*")
-    (set (make-local-variable 'indent-line-function) 'kotlin-mode--indent-line)
-
-    :group 'kotlin
-    :syntax-table kotlin-mode-syntax-table)
-
-  ;; redefine send region to remove comments before sending
-  ;; (kotlinc REPL does not currently support comments)
-  (defun kotlin-send-region (beg end)
-    "Send current region to Kotlin interpreter."
-    (interactive "r")
-    (let ((buffer (current-buffer)))
-      (with-temp-buffer
-        (insert-buffer-substring-no-properties buffer beg end)
-        (java-remove-comments)
-        (comint-send-region kotlin-repl-buffer (point-min) (point-max))
-        (comint-send-string kotlin-repl-buffer "\n")))))
-
-;;------------------------------------------------------------------------------
-;;;; flycheck kotlin
-;;------------------------------------------------------------------------------
-
-(use-package flycheck-kotlin
-  :quelpa (flycheck-kotlin)
-  :after (flycheck kotlin-mode)
-  :defines (flycheck-mode)
-  :config
-  (add-hook 'kotlin-mode-hook #'flycheck-mode))
-;; Kotlin Mode:1 ends here
-
-;; [[file:init-emacs.org::*Ledger Mode][Ledger Mode:1]]
-;;------------------------------------------------------------------------------
-;;; Modes: Ledger Mode
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modes: Ledger Mode")
-
-(use-package ledger-mode
-  :quelpa (ledger-mode)
-  :functions (ledger-align-amounts)
-  :config
-  (defun local-ledger-align-amounts ()
-    "Return `ledger-align-amounts' for entire buffer."
-    (save-mark-and-excursion
-      (goto-char (point-min))
-      (ledger-align-amounts 52)))
-
-  (defun local-ledger-mode-hook ()
-    ;; align amounts on save
-    (make-local-variable 'before-save-hook)
-    (add-hook 'before-save-hook #'local-ledger-align-amounts))
-  (add-hook 'ledger-mode-hook #'local-ledger-mode-hook))
-;; Ledger Mode:1 ends here
-
-;; [[file:init-emacs.org::*Lisp Mode][Lisp Mode:1]]
-;;------------------------------------------------------------------------------
-;;; Modes: Lisp Mode
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modes: Lisp Mode")
-
-(use-package lisp-mode
-  :after (flyspell eldoc info-look)
-  :commands (emacs-lisp-mode)
-  :functions (local-lisp-mode-hook)
-  :mode (("\\.el\\'" . emacs-lisp-mode)
-         ("\\.lisp\\'" . lisp-mode)
-         ("\\.clisp\\'" . lisp-mode))
-  :config
-  (defun local-lisp-mode-hook ()
-    ;; disable tabs
-    (add-hook 'lisp-mode-hook #'disable-tabs)
-
-    ;; clear input method
-    ;;(set-input-method nil)
-
-    ;; set indent function for lisp-mode to `lisp-indent-function'
-    ;; (it defaults to `clisp-indent-function')
-    (when (equal major-mode 'lisp-mode)
-      (setq-local lisp-indent-function 'lisp-indent-function))
-
-    ;; add underscore and dash to word boundaries
-    (modify-syntax-entry ?_ "w" lisp-mode-syntax-table)
-    (modify-syntax-entry ?- "w" lisp-mode-syntax-table)
-
-    ;; define keys
-    (local-set-key (kbd "<return>") 'newline-and-indent)
-    (local-set-key (kbd "S-<tab>") 'lisp-complete-symbol)
-
-    ;; turn on flyspell
-    (flyspell-prog-mode)
-
-    ;; initialize eldoc
-    (eldoc-mode 1)
-
-    ;; ;; turn on abbreviation mode
-    ;; (abbrev-mode 1)
-
-    ;; turn on else minor mode
-    ;;(else-mode)
-
-    ;; ;; initialize elisp slime nav mode
-    ;; (when (fboundp 'elisp-slime-nav-mode)
-    ;;   (elisp-slime-nav-mode)
-    ;;   (when (fboundp 'diminish)
-    ;;     (with-eval-after-load "elisp-slime-nav"
-    ;;       (diminish 'elisp-slime-nav-mode))))
-
-    ;; ;; check parenthesis after file save
-    ;; (add-hook 'after-save-hook #'check-parens nil t)
-
-    ;; (use-package aggressive-indent
-    ;;   :config (aggressive-indent-mode 1))
-
-    ;; set outline header regexp
-    (setq-local outline-regexp "\\(;; [*]\\{1,8\\} \\|;;[;]\\{1,8\\} \\)")
-    (setq-local outline-level 'lisp-outline-level))
-
-  ;; add hook to emacs-lisp and lisp modes
-  (add-hook 'emacs-lisp-mode-hook #'local-lisp-mode-hook)
-  (add-hook 'lisp-mode-hook #'local-lisp-mode-hook)
-  (add-hook 'common-lisp-mode-hook #'local-lisp-mode-hook)
-  (add-hook 'ielm-mode-hook #'local-lisp-mode-hook)
-
-  ;; remove trailing blanks
-  ;;(add-hook 'emacs-lisp-mode-hook #'install-remove-trailing-blanks)
-  ;;(add-hook 'lisp-mode-hook #'install-remove-trailing-blanks)
-  ;;(add-hook 'common-lisp-mode-hook #'install-remove-trailing-blanks)
-
-  ;; remove tabs
-  ;;(add-hook 'emacs-lisp-mode-hook #'install-remove-tabs)
-  ;;(add-hook 'lisp-mode-hook #'install-remove-tabs)
-  ;;(add-hook 'common-lisp-mode-hook #'install-remove-tabs)
-  )
-;; Lisp Mode:1 ends here
-
-;; [[file:init-emacs.org::*LUA Mode][LUA Mode:1]]
-;;------------------------------------------------------------------------------
-;;; Modes: LUA Mode
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modes: LUA Mode")
-
-(use-package lua-mode
-  :quelpa (lua-mode)
-  :mode (("\\.lua\\'" . lua-mode)))
-;; LUA Mode:1 ends here
-
-;; [[file:init-emacs.org::*Makefile Mode][Makefile Mode:1]]
-;;------------------------------------------------------------------------------
-;;; Modes: Makefile Mode
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modes: Makefile Mode")
-
-(use-package make-mode
-  :mode ("Makefile" . makefile-mode)
-  :commands (make-mode)
-  :config
-  ;; enable tabs
-  (enable-tabs)
-
-  ;; ;; remove trailing blanks
-  ;; (add-hook 'auto-mode-hook #'install-remove-trailing-blanks)
-  )
-;; Makefile Mode:1 ends here
-
-;; [[file:init-emacs.org::*Markdown Mode][Markdown Mode:1]]
-;;------------------------------------------------------------------------------
-;;; Modes: Markdown Mode
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modes: Markdown Mode")
-
-(use-package markdown-mode
-  :quelpa (markdown-mode)
-  :after (org-table)
-  :mode (("\\.md\\'" . markdown-mode)
-         ("\\.markdown\\'" . markdown-mode))
-  :functions (markdown-mode-fix-org-tables)
-  :config
-  ;; use org table mode for markdown tables
-  (add-hook 'markdown-mode-hook #'orgtbl-mode)
-
-  (defun markdown-mode-fix-org-tables ()
-    "Hook to fix org table format on save."
-    (save-mark-and-excursion
-      (save-match-data
-        (goto-char (point-min))
-        (while (search-forward "-+-" nil :noerror)
-          (replace-match "-|-")))))
-  (add-hook 'markdown-mode-hook
-            (lambda()
-              (add-hook 'before-save-hook #'markdown-mode-fix-org-tables nil 'make-it-local))))
-;; Markdown Mode:1 ends here
-
-;; [[file:init-emacs.org::*Perl Mode][Perl Mode:1]]
-;;------------------------------------------------------------------------------
-;;; Modes: Perl Mode
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modes: Perl Mode")
-
-(use-package perl-mode
-  :after (flyspell)
-  :mode (("\\.\\([pP][Llm]\\|al\\|t\\)\\'" . perl-mode)
-         ("perl" . perl-mode)
-         ("perl5" . perl-mode))
-  :interpreter ("miniperl" . perl-mode)
-  :config
-  (defun local-perl-mode-hook ()
-    ;; configure some options
-    (setq perl-indent-level 4)
-    (setq perl-continued-statement-offset 0)
-
-    ;; turn on flyspell
-    (flyspell-prog-mode))
-  (add-hook 'perl-mode-hook #'local-perl-mode-hook)
-
-  (defun perl-mode-maybe ()
-    "Determine if file is a perl script and switch to perl-mode if it is."
-    (interactive)
-    (save-mark-and-excursion
-      (save-match-data
-        (goto-char (point-min))
-        (when (or
-               (search-forward "#!/usr/bin/perl" (line-end-position) :noerror)
-               (search-forward "#!/usr/bin/env perl" (line-end-position) :noerror))
-          (perl-mode)))))
-
-  ;; run when a file is loaded
-  (add-hook 'find-file-hooks #'perl-mode-maybe)
-
-  ;; remove trailing blanks
-  ;;(add-hook 'perl-mode-hook #'install-remove-trailing-blanks)
-
-  ;; remove tabs
-  ;;(add-hook 'perl-mode-hook #'install-remove-tabs)
-  )
-;; Perl Mode:1 ends here
-
-;; [[file:init-emacs.org::*PlantUML Mode][PlantUML Mode:1]]
-;;------------------------------------------------------------------------------
-;;; Modes: PlantUML Mode
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modes: PlantUML Mode")
-
-(use-package plantuml-mode
-  :quelpa (plantuml-mode))
-;; PlantUML Mode:1 ends here
-
-;; [[file:init-emacs.org::*Python Mode][Python Mode:1]]
-;;------------------------------------------------------------------------------
-;;; Modes: Python Mode
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modes: Python Mode")
-
-(use-package python-mode
-  :quelpa (python-mode)
-  :after (company elpy)
-  :mode (("\\.py\\'" . python-mode)
-         ("\\.python\\'" . python-mode))
-  :commands (py--buffer-filename-remote-maybe)
-  :functions (local-python-mode-hook)
-  :config
-  ;; turn off auto-indent so code pasting works
-  (setq py-python-command-args '("--no-autoindent" "--colors=Linux"))
-
-  ;; switch to interpreter after executing code
-  ;;(setq py-switch-buffers-on-execute-p t)
-
-  ;; split windows
-  ;;(setq py-split-windows-on-execute t)
-  (setq py-keep-windows-configuration 'force)
-
-  ;; try to automatically figure out indentation
-  (setq py-smart-indentation t)
-
-  ;; execute python in source code blocks on 'C-c C-c'
-  ;;(add-to-list 'org-ctrl-c-ctrl-c-hook #'org-babel-async-execute:python)
-
-  ;; increase recursion depth of auto-complete to prevent errors
-  (setq py-max-specpdl-size 999)
-
-  (defun local-python-mode-hook ()
-    ;; override some default keybindings
-    (when (fboundp 'backward-delete-word)
-      (bind-keys* ("C-<backspace>" . backward-delete-word))) ; defaults to `py-hungry-delete-backwards'
-
-    ;; set indent offset
-    (setq-local py-indent-offset local-short-tab-width)
-
-    ;; set outline header regexp
-    (setq-local outline-regexp " *\\(def \\|clas\\|#hea\\)")
-    ;;(hide-sublevels 1)
-
-    ;; remove python-shell-completion-at-point from completion-at-point-functions,
-    ;; if it is not defined
-    (when (and (not (fboundp 'python-shell-completion-at-point))
-               (memq 'python-shell-completion-at-point completion-at-point-functions))
-      (setq completion-at-point-functions
-            (remove 'python-shell-completion-at-point completion-at-point-functions)))
-    )
-  (add-hook 'python-mode-hook #'local-python-mode-hook))
-
-;;------------------------------------------------------------------------------
-;;;; elpy
-;;------------------------------------------------------------------------------
-
-(use-package elpy
-  :quelpa (elpy)
-  :commands (elpy-enable
-             elpy-shell-switch-to-shell)
-  :config
-  ;; turn on elpy mode
-  (elpy-enable)
-
-  ;; hack to fix quote error issue
-  (setq elpy-eldoc-show-current-function nil)
-
-  ;; custom version of `elpy-shell-switch-to-shell' that opens shell in a split window
-  (defun elpy-shell-switch-to-shell ()
-    "Switch to inferior Python process buffer."
-    (interactive)
-    (setq elpy--shell-last-py-buffer (buffer-name))
-    (pop-to-buffer (process-buffer (elpy-shell-get-or-create-process)) t))
-
-  ;; enable flycheck
-  (when (fboundp 'flycheck-mode)
-    (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-    (add-hook 'elpy-mode-hook #'flycheck-mode)))
-
-;;------------------------------------------------------------------------------
-;;;; jedi
-;;------------------------------------------------------------------------------
-
-;; (init-message 3 "jedi")
-
-;; ;; python auto-completion
-;; (use-package jedi
-;;   :quelpa (jedi)
-;;   :after (python-mode)
-;;   :config
-;;   ;; ;; add jedi completions to auto-complete sources
-;;   ;; (add-to-list 'ac-sources 'ac-source-jedi-direct t)
-;;   ;; enable with python mode
-;;   (add-hook 'python-mode-hook #'jedi:setup))
-;; Python Mode:1 ends here
-
-;; [[file:init-emacs.org::*Racket Mode][Racket Mode:1]]
-;;------------------------------------------------------------------------------
-;;; Modes: Racket Mode
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modes: Racket Mode")
-
-;; (use-package racket-mode
-;;   :quelpa (racket-mode)
-;;   :mode ("\\.rkt\\'" . racket-mode)
-;;   :interpreter ("racket" . racket-mode)
-;;   :commands (racket-mode
-;;              racket-repl)
-;;   :config
-;;   (defun local-racket-mode-hook ()
-;;     ;; do not auto-complete on tab
-;;     (setq tab-always-indent t))
-;;   (add-hook 'racket-mode-hook #'local-racket-mode-hook)
-
-;;   ;; turn on support for unicode input
-;;   (add-hook 'racket-mode-hook #'racket-unicode-input-method-enable)
-;;   (add-hook 'racket-repl-mode-hook #'racket-unicode-input-method-enable))
-
-(use-package scheme
-  :after (geiser)
-  :mode ("\\.rkt\\'" . racket-mode)
-  :interpreter ("racket" . racket-mode)
-  :commands (racket-mode
-             scheme-mode)
-  :config
-  ;; create racket mode based on scheme mode
-  (define-derived-mode racket-mode scheme-mode "Scheme"
-    "Major mode for editing Racket Scheme code.  Editing commands
-are similar to those of `lisp-mode'.
-
-In addition, if an inferior Racket Scheme process is running, some additional
-commands will be defined, for evaluating expressions and controlling the
-interpreter, and the state of the process will be displayed in the mode line
-of all Scheme buffers.  The names of commands that interact with the Scheme
-process start with \"xscheme-\" if you use the MIT Scheme-specific `xscheme'
-package; for more information see the documentation for
-`xscheme-interaction-mode'.  Use \\[run-scheme] to start an inferior Scheme
-using the more general `cmuscheme' package.
-
-Commands:
-Delete converts tabs to spaces as it moves back.
-Blank lines separate paragraphs.  Semicolons start comments.
-\\{scheme-mode-map}"
-    ;; turn on geiser-mode
-    (when (fboundp 'geiser-mode)
-      (geiser-mode t)))
-
-  ;; ;; racket files should use racket-mode
-  ;; (add-to-list 'auto-mode-alist '("\\.rkt\\'" . racket-mode))
-  )
-;; Racket Mode:1 ends here
-
-;; [[file:init-emacs.org::*Ruby Mode][Ruby Mode:1]]
-;;------------------------------------------------------------------------------
-;;; Modes: Ruby Mode
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modes: Ruby Mode")
-
-(use-package ruby-mode
-  :after (flyspell)
-  :mode ("\\.rb\\'" . ruby-mode)
-  :config
-  (defun local-ruby-mode-hook ()
-    ;; set indent level
-    ;;(setq ruby-indent-level 4)
-    (setq ruby-indent-level 2)
-
-    ;; define keys
-    (define-key ruby-mode-map (kbd "<return>") 'reindent-then-newline-and-indent)
-    ;; undefine electric keys
-    (define-key ruby-mode-map (kbd "{") 'self-insert-command)
-    (define-key ruby-mode-map (kbd "}") 'self-insert-command)
-
-    ;; turn on flyspell
-    (when (boundp 'flyspell-prog-mode)
-      (flyspell-prog-mode)))
-  (add-hook 'ruby-mode-hook #'local-ruby-mode-hook :append)
-
-  ;; turn on flyspell
-  (flyspell-prog-mode)
-
-  ;; FIXME: No longer works
-  ;; (use-package flymake
-  ;;   :config (progn
-  ;;             (defun flymake-ruby-init ()
-  ;;               (let* ((temp-file (flymake-init-create-temp-buffer-copy 'flymake-create-temp-inplace))
-  ;;                      (local-file (file-relative-name temp-file (file-name-directory buffer-file-name))))
-  ;;                 (list "ruby" (list "-c" local-file))))
-
-  ;;             (defun flymake-ruby-enable ()
-  ;;               (when (and buffer-file-name
-  ;;                          (file-writable-p (file-name-directory buffer-file-name))
-  ;;                          (file-writable-p buffer-file-name)
-  ;;                          (if (fboundp 'tramp-list-remote-buffers)
-  ;;                              (not (cl-subsetp (list (current-buffer)) (tramp-list-remote-buffers)))
-  ;;                            t))
-  ;;                 (local-set-key (kbd "C-c d") 'flymake-display-err-menu-for-current-line)
-  ;;                 (flymake-mode t)))
-
-  ;;             (add-to-list 'flymake-allowed-file-name-masks '(".+\\.rb\\'" flymake-ruby-init) t)
-  ;;             (add-to-list 'flymake-allowed-file-name-masks '("Rakefile\\'" flymake-ruby-init) t)
-  ;;             (add-to-list 'flymake-err-line-patterns '("^\\(.*\\):\\([0-9]+\\): \\(.*\\)$" 1 2 nil 3) t)
-  ;;             (add-hook 'ruby-mode-hook #'flymake-ruby-enable)))
-
-  ;; ;; turn on syntax highlighting (actually turns off syntax highlighting)
-  ;; (add-hook 'ruby-mode-hook #'turn-on-font-lock)
-
-  ;; ;; turn on abbreviation mode
-  ;; (abbrev-mode 1)
-
-  (defun ruby-mode-maybe ()
-    "Determine if file is a ruby script and switch to `ruby-mode' if it is."
-    (interactive)
-    (save-mark-and-excursion
-      (save-match-data
-        (goto-char (point-min))
-        (when (or
-               (search-forward "#!/usr/bin/ruby" (line-end-position) :noerror)
-               (search-forward "#!/usr/bin/env ruby" (line-end-position) :noerror))
-          (ruby-mode)))))
-
-  ;; run when a file is loaded
-  (add-hook 'find-file-hooks #'ruby-mode-maybe)
-
-  ;; remove trailing blanks
-  ;;(add-hook 'ruby-mode-hook #'install-remove-trailing-blanks)
-
-  ;; remove tabs
-  ;;(add-hook 'ruby-mode-hook #'install-remove-tabs)
-  )
-
-;;------------------------------------------------------------------------------
-;;;; robe
-;;------------------------------------------------------------------------------
-
-(init-message 3 "robe")
-
-;; code navigation, documentation lookup, and completion for ruby
-(use-package robe
-  :quelpa (robe)
-  :after (ruby-mode)
-  :commands (robe-mode)
-  :config
-  (add-hook 'ruby-mode-hook #'robe-mode))
-
-;; ;;------------------------------------------------------------------------------
-;; ;;;; inf-ruby
-;; ;;------------------------------------------------------------------------------
-
-;; (init-message 3 "inf-ruby")
-
-;; (use-package inf-ruby
-;;   :quelpa (inf-ruby)
-;;   :after (ruby-mode)
-;;   :interpreter ("ruby" . ruby-mode)
-;;   :commands (run-ruby inf-ruby-keys)
-;;   :config
-;;   (defun local-ruby-mode-hook-inf-ruby-keys ()
-;;     (inf-ruby-keys))
-;;   (add-hook 'ruby-mode-hook #'local-ruby-mode-hook-inf-ruby-keys)
-
-;;   ;; use ruby-robe with inf-ruby
-;;   (defadvice inf-ruby-console-auto (before activate-rvm-for-robe activate)
-;;     (rvm-activate-corresponding-ruby)))
-
-;; ;;------------------------------------------------------------------------------
-;; ;;;; ac-inf-ruby
-;; ;;------------------------------------------------------------------------------
-
-;; (init-message 3 "ac-inf-ruby")
-
-;; ;; auto-complete source for interactive ruby
-;; (use-package ac-inf-ruby
-;;   :quelpa (ac-inf-ruby)
-;;   :config
-;;   (add-to-list 'ac-modes 'inf-ruby-mode t)
-;;   (add-hook 'inf-ruby-mode-hook #'ac-inf-ruby-enable)
-;;   ;; ;; make TAB auto-complete
-;;   ;; (define-key inf-ruby-mode-map (kbd "TAB") 'auto-complete)
-;;   )
-;; Ruby Mode:1 ends here
-
-;; [[file:init-emacs.org::*SH Script][SH Script:1]]
-;;------------------------------------------------------------------------------
-;;; Modes: SH Script
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modes: SH Script")
-
-(use-package sh-script
-  :mode (("\\.sh\\'" . sh-mode)
-         ("\\.shell\\'" . sh-mode)
-         ("\\.bash\\'" . sh-mode)
-         ;; use sh-mode for ldif and schema files
-         ("\\.ldif\\'" . sh-mode)
-         ("\\.schema\\'" . sh-mode)
-         ;; use sh-mode for remind files
-         ("\\.reminders\\'" . sh-mode)
-         ("^reminders_" . sh-mode))
-  :config
-  ;; disable tabs
-  (add-hook 'sh-mode-hook #'disable-tabs)
-
-  ;; make comment lines indent
-  (setq sh-indent-comment t)
-
-  (defun sh-mode-maybe ()
-    "Determine if file is a shell script and switch to sh-mode if it is."
-    (interactive)
-    (save-mark-and-excursion
-      (save-match-data
-        (goto-char (point-min))
-        (when (or
-               (search-forward "#!/bin/sh" (line-end-position) :noerror)
-               (search-forward "#!/bin/bash" (line-end-position) :noerror)
-               (search-forward "#!/bin/csh" (line-end-position) :noerror)
-               (search-forward "#!/bin/tsh" (line-end-position) :noerror)
-               (search-forward "#!/bin/zsh" (line-end-position) :noerror)
-               (search-forward "#!/usr/bin/env sh" (line-end-position) :noerror)
-               (search-forward "#!/usr/bin/env bash" (line-end-position) :noerror)
-               (search-forward "#!/usr/bin/env csh" (line-end-position) :noerror)
-               (search-forward "#!/usr/bin/env tsh" (line-end-position) :noerror)
-               (search-forward "#!/usr/bin/env zsh" (line-end-position) :noerror)
-               (search-forward "#=========" (line-end-position) :noerror)
-               (search-forward "#---------" (line-end-position) :noerror))
-          (sh-mode)))))
-
-  ;; run when a file is loaded
-  (add-hook 'find-file-hooks #'sh-mode-maybe)
-
-  ;; remove trailing blanks
-  ;;(add-hook 'sh-mode-hook #'install-remove-trailing-blanks)
-
-  ;; remove tabs
-  ;;(add-hook 'sh-mode-hook #'install-remove-tabs)
-  )
-;; SH Script:1 ends here
-
-;; [[file:init-emacs.org::*Shell Mode][Shell Mode:1]]
-;;------------------------------------------------------------------------------
-;;; Modes: Shell Mode
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modes: Shell Mode")
-
-(use-package shell
-  :commands (shell-mode)
-  :config
-  ;; disable tabs
-  (add-hook 'shell-mode-hook #'disable-tabs)
-
-  ;; set prompt to read only
-  (setq comint-prompt-read-only t)
-
-  ;; start a shell
-  ;;(shell)
-  )
-
-;;------------------------------------------------------------------------------
-;;;; ansi-color
-;;------------------------------------------------------------------------------
-
-(init-message 3 "ansi-color")
-
-(use-package ansi-color
-  :after (shell)
-  :commands (ansi-color-for-comint-mode-on)
-  :config
-  (add-hook 'shell-mode-hook #'ansi-color-for-comint-mode-on))
-;; Shell Mode:1 ends here
-
-;; [[file:init-emacs.org::*Slime Mode (Common Lisp)][Slime Mode (Common Lisp):1]]
-;;------------------------------------------------------------------------------
-;;; Modes: Slime Mode (Common Lisp)
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modes: Slime Mode (Common Lisp)")
-
-;; superior lisp interaction mode for emacs
-;; if loading slime errors out because swank-loader.lisp is not found, do:
-;;   # cd /usr/share/emacs22/site-lisp/slime
-;;   # for i in $(ls -1 /usr/share/common-lisp/source/slime/) ; do ln -s /usr/share/common-lisp/source/slime/$i ; done
-(use-package slime
-  :quelpa (slime)
-  ;; :load-path (;;(lambda () (expand-file-name "slime" emacs-modules-dir))
-  ;;             ;;(lambda () (expand-file-name "slime/contrib" emacs-modules-dir))
-  ;;             (lambda () (expand-file-name "swank-clojure" emacs-modules-dir)))
-  :commands (slime-autoloads
-             slime
-             slime-eval-buffer
-             slime-eval-last-expression
-             slime-interactive-eval
-             slime-last-expression
-             slime-mode
-             slime-setup
-             clisp
-             clojure
-             swank-clojure-init
-             swank-clojure-slime-mode-hook
-             swank-clojure-cmd
-             swank-clojure-project)
-  :config
-  ;; clojure swank paths
-  (setq swank-clojure-jar-path (expand-file-name "~/.clojure/clojure.jar")
-        swank-clojure-binary (expand-file-name "~/bin/clojure")
-        swank-clojure-extra-classpaths (list (expand-file-name "~/.clojure/clojure.jar")
-                                             (expand-file-name "~/.clojure/jline.jar")
-                                             (expand-file-name "~/.clojure/clojure-contrib.jar")))
-
-  ;; slime setup
-  (slime-setup)
-
-  ;; set lisp program to clisp
-  ;;(setq inferior-lisp-program "clisp -K full")
-
-  (defun slime-eval-sexp ()
-    "Slime evaluate current sexp."
-    (interactive)
-    (save-mark-and-excursion
-      (end-of-defun)
-      (slime-interactive-eval (slime-last-expression))))
-
-  ;; run slime setup (this does too much)
-  ;;(slime-setup)
-
-  ;; redefine `slime-lisp-mode-hook'
-  ;; set indent function for lisp-mode to `lisp-indent-function'
-  ;; (it defaults to `common-lisp-indent-function')
-  (defun slime-lisp-mode-hook ()
-    (slime-mode 1)
-    (setq-local lisp-indent-function 'lisp-indent-function))
-
-  ;; run custom version of slime setup to preserve lisp-indent-function
-  (defun local-slime-lisp-mode-hook ()
-    ;; ;; set lisp program
-    ;; (setq inferior-lisp-program "clisp -K full")
-    ;; (setq inferior-lisp-program "clisp -K base")
-
-    ;; turn on slime mode
-    (slime-mode 1)
-
-    ;; typeout frame
-    ;;(add-hook 'slime-connected-hook #'slime-ensure-typeout-frame)
-    ;; highlight edits
-    ;;(add-hook 'slime-mode-hook #'slime-highlight-edits-mode)
-
-    ;; key bindings
-    (bind-keys :map slime-mode-map
-               ("C-c C-c" . slime-eval-sexp)
-               ("C-x C-e" . slime-eval-last-expression)
-               ("M-C-x" . slime-eval-sexp)
-               ("C-c C-k" . slime-eval-buffer))
-
-    ;; start inferior lisp job
-    ;;(unless (comint-check-proc "*inferior-lisp*")
-    ;;  (let ((buffer (current-buffer)))
-    ;;    (slime)
-    ;;    (switch-to-buffer buffer)))
-
-    ;; ;; auto connect to slime
-    ;; (unless (slime-connected-p)
-    ;;   (save-mark-and-excursion (slime)))
-    )
-  (add-hook 'lisp-mode-hook #'local-slime-lisp-mode-hook)
-  (add-hook 'common-lisp-mode-hook #'local-slime-lisp-mode-hook)
-  (add-hook 'clojure-mode-hook #'local-slime-lisp-mode-hook)
-
-  ;; cldoc (common lisp info in minibuffer)
-  (autoload 'turn-on-cldoc-mode "cldoc" nil t)
-  (add-hook 'common-lisp-mode-hook #'turn-on-cldoc-mode)
-  ;; wait 3 seconds before showing minibuffer docs
-  (setq cldoc-idle-delay 3)
-
-  ;; ;; slime motd warnings
-  ;; (use-package slime-cl-pitfalls)
-
-  ;; add clisp to slime implementations
-  (add-to-list 'slime-lisp-implementations '(clisp ("/usr/bin/clisp" "-K" "base")) t)
-
-  (defun clisp ()
-    "Start Common Lisp in Slime."
-    (interactive)
-    (slime 'clisp))
-
-  ;; initialize clisp: quicklisp
-  ;; $ clisp --load quicklisp.lisp
-  ;; (quicklisp-quickstart:install)
-  ;; (ql:add-to-init-file)
-  ;; (ql:quickload 'restas)
-
-  ;; add sbcl to slime implementations
-  (add-to-list 'slime-lisp-implementations '(sbcl ("/usr/bin/sbcl")) t)
-
-  (defun sbcl ()
-    "Start Steel Bank Common Lisp in Slime."
-    (interactive)
-    (slime 'sbcl))
-
-  ;; initialize sbcl: quicklisp
-  ;; $ sbcl --load quicklisp.lisp
-  ;; (quicklisp-quickstart:install)
-  ;; (ql:add-to-init-file)
-  ;; (ql:quickload 'restas)
-
-  ;; add clojure to slime implementation
-  ;; (add-to-list 'slime-lisp-implementations
-  ;;              `(clojure (,(expand-file-name "~/bin/clojure"))
-  ;;                        :init swank-clojure-init
-  ;;                        :coding-system utf-8-unix) t)
-  (add-to-list 'slime-lisp-implementations `(clojure ("/usr/bin/clojure")) t)
-
-  (defun clojure ()
-    "Start Clojure in Slime."
-    (interactive)
-    (slime 'clojure))
-
-  (defun local-lisp-mode-hook-slime-mode ()
-    "Hook to load slime-mode when lisp-mode is loaded."
-    (slime-mode 1))
-  (add-hook 'lisp-mode-hook #'local-lisp-mode-hook-slime-mode)
-  ;; (defun local-inferior-lisp-mode-hook-inferior-slime-mode ()
-  ;;   (inferior-slime-mode 1))
-  ;; (add-hook 'inferior-lisp-mode-hook #'local-inferior-lisp-mode-hook-inferior-slime-mode)
-  )
-
-;;------------------------------------------------------------------------------
-;;;; ac-slime
-;;------------------------------------------------------------------------------
-
-;; (init-message 3 "ac-slime")
-
-;; ;; auto-complete source for slime
-;; (use-package ac-slime
-;;   :quelpa (ac-slime)
-;;   :after (slime)
-;;   :config
-;;   (add-hook 'slime-mode-hook #'set-up-slime-ac)
-;;   (add-hook 'slime-repl-mode-hook #'set-up-slime-ac)
-;;   (add-to-list 'ac-modes 'slime-repl-mode t))
-
-;;------------------------------------------------------------------------------
-;;;; elisp-slime-nav-mode
-;;------------------------------------------------------------------------------
-
-(init-message 3 "elisp-slime-nav-mode")
-
-(use-package elisp-slime-nav
-  :quelpa (elisp-slime-nav)
-  :after (slime)
-  :diminish elisp-slime-nav-mode
-  :commands (elisp-slime-nav-mode)
-  :config (elisp-slime-nav-mode))
-;; Slime Mode (Common Lisp):1 ends here
-
-;; [[file:init-emacs.org::*SQL Mode][SQL Mode:1]]
-;;------------------------------------------------------------------------------
-;;; Modes: SQL Mode
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modes: SQL Mode")
-
-(use-package sql
-  :mode (("\\.sql\\'" . sql-mode)
-         ("\\.tbl\\'" . sql-mode)
-         ("\\.sp\\'" . sql-mode))
-  :config
-  ;; ;; turn on abbreviation mode
-  ;; (abbrev-mode 1)
-
-  ;; remove trailing blanks
-  ;;(add-hook 'sql-mode-hook #'install-remove-trailing-blanks)
-
-  ;; remove tabs
-  ;;(add-hook 'sql-mode-hook #'install-remove-tabs)
-  )
-
-;; (use-package sql-transform
-;;   :quelpa (sql-transform)
-;;   :config
-;;   (defun local-sql-mode-hook ()
-;;     ;; key bindings
-;;     (bind-keys :map sql-mode-map
-;;                ("C-c s" . sql-to-select)
-;;                ("C-c i" . sql-to-insert)
-;;                ("C-c u" . sql-to-update)
-;;                ("C-c d" . sql-to-delete)))
-;;   (add-hook 'sql-mode-hook #'local-sql-mode-hook))
-
-;; ;;------------------------------------------------------------------------------
-;; ;;;; mysql
-;; ;;------------------------------------------------------------------------------
-
-;; (init-message 3 "mysql")
-
-;; (use-package mysql
-;;   :quelpa (mysql)
-;;   :after (sql)
-;;   :config (setq sql-product 'mysql))
-;; SQL Mode:1 ends here
-
-;; [[file:init-emacs.org::*Text Mode][Text Mode:1]]
-;;------------------------------------------------------------------------------
-;;; Modes: Text Mode
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modes: Text Mode")
-
-(use-package text-mode
-  :after (flyspell)
-  :mode (("\\.txt\\'" . text-mode)
-         ("\\.text\\'" . text-mode)
-         ("README" . text-mode)
-         ("INSTALL" . text-mode)
-         ("CHANGELOG" . text-mode))
-  :config
-  (defun local-text-mode-hook ()
-    ;; set tab
-    (setq tab-width 4)
-    (setq tab-stop-list (number-sequence 4 76 4))
-    ;; (setq tab-width 8)
-    ;; (setq tab-stop-list (number-sequence 8 76 8))
-    (setq indent-tabs-mode t)           ; can insert TAB characters
-    (bind-key "<tab>" 'indent-relative text-mode-map)
-
-    ;; set default fill column for auto-fill mode
-    (setq fill-column 78)
-
-    ;; turn on word wrap
-    (turn-on-auto-fill)
-
-    ;; add underscore and dash to word boundaries
-    (modify-syntax-entry ?_ "w" text-mode-syntax-table)
-    (modify-syntax-entry ?- "w" text-mode-syntax-table)
-
-    ;; turn on flyspell
-    (flyspell-mode 1)
-
-    ;; ;; turn on abbreviation mode
-    ;; (abbrev-mode 1)
-
-    ;; turn on pabbrev mode
-    ;;(pabbrev-mode)
-
-    ;; insert two spaces after a sentence
-    (setq sentence-end-double-space t)
-
-    ;; insert two spaces after a colon
-    (setq colon-double-space t))
-  (add-hook 'text-mode-hook #'local-text-mode-hook)
-
-  ;; remove trailing blanks
-  ;;(add-hook 'text-mode-hook #'install-remove-trailing-blanks)
-
-  ;; remove tabs
-  ;;(add-hook 'text-mode-hook #'install-remove-tabs)
-  )
-;; Text Mode:1 ends here
-
-;; [[file:init-emacs.org::*XML Mode][XML Mode:1]]
-;;------------------------------------------------------------------------------
-;;; Modes: XML Mode
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modes: XML Mode")
-
-(use-package nxml-mode
-  :after (flyspell)
-  :mode (("\\.dtd\\'" . nxml-mode)
-         ("\\.htm\\'" . nxml-mode)
-         ("\\.html\\'" . nxml-mode)
-         ("\\.rdf\\'" . nxml-mode)
-         ("\\.rhtml\\'" . nxml-mode)
-         ("\\.rss\\'" . nxml-mode)
-         ("\\.sgml\\'" . nxml-mode)
-         ("\\.svg\\'" . nxml-mode)
-         ("\\.xhtml\\'" . nxml-mode)
-         ("\\.xml\\'" . nxml-mode)
-         ("\\.xsd\\'" . nxml-mode)
-         ("\\.xsl\\'" . nxml-mode)
-         ("\\.tt\\'" . nxml-mode))
-  :config
-  ;; set magic modes
-  ;;(load "rng-auto")
-  ;;(unify-8859-on-decoding-mode)
-  (add-to-list 'magic-mode-alist '("<\\?xml " . nxml-mode) t)
-
-  (defun local-nxml-mode-hook ()
-    ;; do not use `indent-relative' for tab indenting
-    (bind-key "<tab>" 'indent-for-tab-command nxml-mode-map)
-
-    ;; turn off auto-fill mode
-    (turn-off-auto-fill)
-
-    ;; turn on flyspell
-    (flyspell-prog-mode)
-
-    ;; turn on auto-completion
-    (setq nxml-slash-auto-complete-flag t)
-
-    ;; turn on org minor mode
-    ;; (when (string-match "\\.\\(x?html\\|php[34]?\\)\\'"
-    ;;                     (file-name-sans-versions buffer-file-name))
-    ;;   (local-nxml-mode-org))
-    ;;(local-nxml-mode-org)
-
-    ;; set outline header regexp
-    ;;(setq-local outline-regexp " *<[^/]")
-    (setq-local outline-regexp "\\s *<\\([h][1-6]\\|html\\|body\\|head\\)\\b")
-    ;;(hide-sublevels 1)
-    )
-  (add-hook 'nxml-mode-hook #'local-nxml-mode-hook)
-
-  ;; (defun local-nxml-mode-org ()
-  ;;   ;;(setq-local outline-regexp "\\s *<\\([h][1-6]\\|html\\|body\\|head\\)\\b")
-  ;;   (setq-local outline-regexp "\\s *<")
-  ;;   (setq-local outline-level 'local-nxml-mode-outline-level)
-  ;;   (outline-minor-mode 1)
-  ;;   (hs-minor-mode 1))
-
-  ;; (defun local-nxml-mode-outline-level ()
-  ;;   (save-mark-and-excursion
-  ;;     (save-match-data
-  ;;       (re-search-forward html-outline-level)
-  ;;       (let ((tag (buffer-substring (match-beginning 1) (match-end 1))))
-  ;;         (if (eq (length tag) 2)
-  ;;             (- (aref tag 1) ?0)
-  ;;           0)))))
-
-  ;; (add-to-list 'hs-special-modes-alist
-  ;;              '(nxml-mode
-  ;;                "<!--\\|<[^/>]>\\|<[^/][^>]*[^/]>"
-  ;;                ""
-  ;;                "<!--" ;; won't work on its own; uses syntax table
-  ;;                (lambda (arg) (local-nxml-mode-forward-element))
-  ;;                nil) t)
-
-  ;; (defun local-nxml-mode-forward-element ()
-  ;;   (let ((nxml-sexp-element-flag))
-  ;;     (setq nxml-sexp-element-flag (not (looking-at "<!--")))
-  ;;     (unless (looking-at outline-regexp)
-  ;;       (ignore-errors
-  ;;         (nxml-forward-balanced-item 1)))))
-
-  ;; remove trailing blanks
-  ;;(add-hook 'nxml-mode-hook #'install-remove-trailing-blanks)
-
-  ;; remove tabs
-  ;;(add-hook 'nxml-mode-hook #'install-remove-tabs)
-
-  ;; (use-package flymake
-  ;;   :config (progn
-  ;;             (defun flymake-html-init ()
-  ;;               (let* ((temp-file (flymake-init-create-temp-buffer-copy 'flymake-create-temp-inplace))
-  ;;                      (local-file (file-relative-name temp-file (file-name-directory buffer-file-name))))
-  ;;                 (list "tidy" (list local-file))))
-
-  ;;             (add-to-list 'flymake-allowed-file-name-masks '("\\.html$\\|\\.ctp" flymake-html-init) t)
-  ;;             (add-to-list 'flymake-err-line-patterns '("line \\([0-9]+\\) column \\([0-9]+\\) - \\(Warning\\|Error\\): \\(.*\\)" nil 1 2 4) t)))
-
-  ;; derive xml-mode and html-mode from nxml-mode
-  (fset 'xml-mode 'nxml-mode)
-  (fset 'html-mode 'nxml-mode))
-;; XML Mode:1 ends here
-
 ;; [[file:init-emacs.org::*Modules][Modules:1]]
 ;;==============================================================================
 ;;; Modules
@@ -14997,18 +13236,6 @@ Blank lines separate paragraphs.  Semicolons start comments.
   ;; advise `cycle-buffer`
   (advice-add 'cycle-buffer :around #'cycle-buffer--ignore-errors))
 ;; cycle-buffer:1 ends here
-
-;; [[file:init-emacs.org::*css-mode][css-mode:1]]
-;;------------------------------------------------------------------------------
-;;; Modules: css-mode
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modules: css-mode")
-
-(use-package css-mode
-  :mode ("\\.css\\'" . css-mode)
-  :custom (cssm-indent-function #'cssm-c-style-indenter))
-;; css-mode:1 ends here
 
 ;; [[file:init-emacs.org::*cua][cua:1]]
 ;;------------------------------------------------------------------------------
@@ -17324,6 +15551,1836 @@ otherwise run `find-file-as-root'."
   ;; default language
   (wttrin-default-accept-language '("Accept-Language" . "en-US")))
 ;; wttrin:1 ends here
+
+;; [[file:init-emacs.org::*LSP Mode][LSP Mode:1]]
+;;==============================================================================
+;;; LSP Mode
+;;==============================================================================
+
+(init-message 1 "LSP Mode")
+;; LSP Mode:1 ends here
+
+;; [[file:init-emacs.org::*Setup][Setup:1]]
+;;------------------------------------------------------------------------------
+;;; LSP Mode: Setup
+;;------------------------------------------------------------------------------
+
+(init-message 2 "LSP Mode: Setup")
+
+(use-package lsp-mode
+  :quelpa (lsp-mode)
+  :commands (lsp lsp-defered)
+  :hook (lsp-mode . lsp-enable-which-key-integration)
+  :init
+  (setq lsp-keymap-prefix "C-x C-l")    ; defaults to `downcase-region'
+  :config
+  (lsp-enable-which-key-integration t))
+
+;;------------------------------------------------------------------------------
+;;;; lsp-ui
+;;
+;; Minor mode that contains a series of useful UI integrations.
+;;------------------------------------------------------------------------------
+
+(init-message 3 "lsp-ui")
+
+(use-package lsp-ui
+  :quelpa (lsp-ui)
+  :after (lsp-mode)
+  :commands lsp-ui-mode)
+
+;;------------------------------------------------------------------------------
+;;;; helm-lsp
+;;
+;; LSP helm integration.
+;;------------------------------------------------------------------------------
+
+;; (init-message 3 "helm-lsp")
+
+;; (use-package helm-lsp
+;;   :quelpa (helm-lsp)
+;;   :after (lsp-mode)
+;;   :commands helm-lsp-workspace-symbol)
+
+;;------------------------------------------------------------------------------
+;;;; lsp-ivy
+;;
+;; LSP ivy integration.
+;;------------------------------------------------------------------------------
+
+(init-message 3 "lsp-ivy")
+
+(use-package lsp-ivy
+  :quelpa (lsp-ivy)
+  :after (lsp-mode)
+  :commands lsp-ivy-workspace-symbol)
+
+;;------------------------------------------------------------------------------
+;;;; lsp-treemacs
+;;
+;; LSP treemacs integration.
+;;------------------------------------------------------------------------------
+
+(init-message 3 "lsp-treemacs")
+
+(use-package lsp-treemacs
+  :quelpa (lsp-treemacs)
+  :after (lsp-mode)
+  :commands lsp-treemacs-errors-list)
+;; Setup:1 ends here
+
+;; [[file:init-emacs.org::*Modes][Modes:1]]
+;;==============================================================================
+;;; Modes
+;;==============================================================================
+
+(init-message 1 "Modes")
+;; Modes:1 ends here
+
+;; [[file:init-emacs.org::*Setup][Setup:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Setup
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Setup")
+
+;; turn off electric indent for all modes
+(setq-default electric-indent-inhibit t)
+
+;; turn off electric mode for all cc modes
+(setq-default c-electric-flag nil)
+;; Setup:1 ends here
+
+;; [[file:init-emacs.org::*ASM][ASM:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: ASM
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: ASM")
+
+(use-package asm-mode
+  :mode ("\\.asm\\'" . asm-mode)
+  :config
+  ;; enable tabs
+  (add-hook 'asm-mode-hook #'enable-tabs-8)
+
+  ;; ;; set tab indentation, width, and do not convert tabs to spaces
+  ;; (setq indent-tabs-mode t          ; do not insert tab characters
+  ;;       tab-width 8                 ; default tab width is four spaces
+  ;;       standard-indent 8           ; default margin-changing functions indent
+  ;;       tab-always-indent nil       ; tab key will insert a tab
+  ;;       tab-stop-list (number-sequence 8 180 8)) ; tab stops set to every 8 spaces
+  )
+;; ASM:1 ends here
+
+;; [[file:init-emacs.org::*Brainfuck][Brainfuck:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Brainfuck
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Brainfuck")
+
+(use-package brainfuck
+  ;;:quelpa (brainfuck :fetcher file :path (expand-file-name "brainfuck.el" local-modules-dir))
+  :load-path (lambda () (expand-file-name "brainfuck.el" local-modules-dir))
+  :mode ("\\.bf\\'" . brainfuck-mode))
+;; Brainfuck:1 ends here
+
+;; [[file:init-emacs.org::*BASIC][BASIC:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: BASIC
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: BASIC")
+
+(use-package basic
+  ;;:quelpa (basic :fetcher file :path (expand-file-name "basic.el" local-modules-dir))
+  :load-path (lambda () (expand-file-name "basic.el" local-modules-dir))
+  :mode ("\\.bas\\'" . basic-mode))
+;; BASIC:1 ends here
+
+;; [[file:init-emacs.org::*C Mode][C Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: C Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: C Mode")
+
+(use-package cc-mode
+  :demand t
+  :mode (("\\.c\\'" . c-mode)
+         ("\\.h\\'" . c-mode)
+         ("\\.ice\\'" . c-mode)
+         ("\\.cpp\\'" . c++-mode)
+         ("\\.hpp\\'" . c++-mode)
+         ("\\.c++\\'" . c++-mode)
+         ("\\.h++\\'" . c++-mode))
+  :commands (c-skip-comments-and-strings)
+  :config
+  ;; c style
+  (defvar local-c-style
+    '((c-tab-always-indent . 'complete)
+      (c-basic-offset . 4)
+      (c-comment-only-line-offset . 0)
+      (c-hanging-braces-alist . ((substatement-open after)
+                                 (brace-list-open)))
+      (c-hanging-colons-alist . ((member-init-intro before)
+                                 (inher-intro)
+                                 (case-label after)
+                                 (label after)
+                                 (access-label after)))
+      (c-cleanup-list . (scope-operator
+                         empty-defun-braces
+                         defun-close-semi))
+      (c-offsets-alist . ((arglist-close . c-lineup-arglist)
+                          (substatement-open . 0)
+                          (substatement-label . 0)
+                          (label . 0)
+                          (case-label . +)
+                          (block-open . 0)
+                          (defun-block-intro . +)
+                          (statement-block-intro . +)
+                          (substatement . +)
+                          (knr-argdecl-intro . -)
+                          (inline-open . 0)
+                          (defun-block-intro . 4)))
+      (c-echo-syntactic-information-p . nil)))
+
+  (defun local-c-mode-common-hook ()
+    "Customizations for c-mode, c++-mode, objc-mode, java-mode, and idl-mode."
+    ;; add my personal style and set it for the current buffer
+    (c-add-style "local" local-c-style t)
+    ;;(c-set-style 'stroustrup)
+
+    ;; electric indention turned off
+    (when (fboundp 'c-toggle-electric-state)
+      (c-toggle-electric-state -1))
+
+    ;; auto-newline and hungry-delete turned off
+    (when (fboundp 'c-toggle-auto-hungry-state)
+      (c-toggle-auto-hungry-state -1))
+
+    ;; disable tabs
+    (disable-tabs)
+
+    ;; ;; key bindings for all supported languages
+    ;; ;; can put these in c-mode-base-map because c-mode-map, c++-mode-map,
+    ;; ;; objc-mode-map, java-mode-map, and idl-mode-map inherit from it
+    ;; (define-key c-mode-base-map (kbd "C-<return>") 'newline-and-indent)
+    ;; (define-key c-mode-base-map (kbd "C-c c") 'mode-compile)
+    ;; (define-key c-mode-base-map (kbd "C-c k") 'mode-compile-kill)
+    ;; (define-key c-mode-base-map (kbd "<f7>") 'mode-compile)
+
+    ;; ;; hide/show mode and keys
+    ;; (define-key c-mode-base-map (kbd "C-c <right>") 'hs-show-block)
+    ;; (define-key c-mode-base-map (kbd "C-c <left>") 'hs-hide-block)
+    ;; (define-key c-mode-base-map (kbd "C-c <up>") 'hs-hide-all)
+    ;; (define-key c-mode-base-map (kbd "C-c <down>") 'hs-show-all)
+    ;; (hs-minor-mode 1)
+
+    ;; ;; toggle between header files and code files
+    ;; (define-key c-mode-base-map (kbd "C-c o") 'ff-find-other-file)
+
+    ;; set default fill column for auto-fill mode and fill-paragraph
+    (setq fill-column 78)
+
+    ;; turn on auto-fill
+    ;;(turn-on-auto-fill)
+
+    ;; ;; turn off auto newlines
+    ;; (setq c-auto-newline nil)
+
+    ;; turn on flyspell
+    (when (boundp 'flyspell-prog-mode)
+      (flyspell-prog-mode))
+
+    ;; initialize eldoc
+    (when (boundp 'eldoc-mode)
+      (eldoc-mode 1))
+
+    ;; compilation settings
+    (setq compile-command "make -k"
+          compilation-window-height 10
+          compilation-ask-about-save nil
+          ;;compilation-scroll-output t
+          )
+
+    ;; (defun compile-internal--scroll ()
+    ;;   "Forces compile buffer to scroll."
+    ;;   (let* ((ob (current-buffer))
+    ;;          (obw (get-buffer-window ob t))
+    ;;          win)
+    ;;     (save-mark-and-excursion
+    ;;       (unless (and (setq win (get-buffer-window ad-return-value t))
+    ;;                    obw)
+    ;;         (select-window win)
+    ;;         (goto-char (point-max))
+    ;;         (select-window obw)))))
+    ;; ;; advise `compile-internal'
+    ;; (advice-add 'compile-internal :after #'compile-internal--scroll)
+
+    ;; turn on else minor mode
+    ;;(else-mode)
+    )
+  (add-hook 'c-mode-common-hook #'local-c-mode-common-hook)
+
+  ;; remove trailing blanks
+  ;;(add-hook 'c-mode-hook #'install-remove-trailing-blanks)
+  ;;(add-hook 'c++-mode-hook #'install-remove-trailing-blanks)
+  ;;(add-hook 'c-mode-common-hook #'install-remove-trailing-blanks)
+
+  ;; remove tabs
+  ;;(add-hook 'c-mode-hook #'install-remove-tabs)
+  ;;(add-hook 'c++-mode-hook #'install-remove-tabs)
+  ;;(add-hook 'c-mode-common-hook #'install-remove-tabs)
+  )
+;; C Mode:1 ends here
+
+;; [[file:init-emacs.org::*Calendar][Calendar:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Calendar
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Calendar")
+
+(use-package calendar
+  :bind* ("C-x c" . calendar)
+  :bind (:map calendar-mode-map
+              ;; scrolling keys
+              (">" . calendar-scroll-left)
+              ("<" . calendar-scroll-right)
+              ("C-x >" . calendar-scroll-left)
+              ("C-x <" . calendar-scroll-right))
+  :config
+  ;; turn off diary entries view when calendar is run
+  (setq calendar-view-diary-initially-flag nil)
+  ;; set number of diary days to show
+  (setq diary-number-of-entries 10)
+  ;; turn on calendar marks for diary entries
+  (setq mark-diary-entries-in-calendar t)
+  ;; turn on diary appointments
+  ;;(add-hook 'diary-hook #'appt-make-list)
+  ;; star current date
+  (setq calendar-today-visible-hook 'calendar-star-date)
+  ;; star today's date
+  (setq calendar-today-visible-hook 'calendar-mark-today)
+  ;; mark holidays
+  (setq calendar-mark-holidays-flag t))
+
+;;------------------------------------------------------------------------------
+;;;; calendar-remind
+;;------------------------------------------------------------------------------
+
+(init-message 3 "calendar-remind")
+
+(use-package calendar-remind
+  ;;:quelpa (calendar-remind :fetcher file :path (expand-file-name "calendar-remind.el" local-modules-dir))
+  :load-path (lambda () (expand-file-name "calendar-remind.el" local-modules-dir))
+  :after (calendar)
+  :commands (calendar-remind-lookup
+             calendar-remind-visit
+             calendar-remind-visit-insert)
+  :bind (:map calendar-mode-map
+              ;; remind lookup
+              ("<return>" . calendar-remind-lookup)
+              ("r" . calendar-remind-lookup)
+              ;;("SPC" . calendar-remind-lookup)
+              ;; remind visit
+              ("v" . calendar-remind-visit)
+              ("V" . calendar-remind-visit-insert)))
+;; Calendar:1 ends here
+
+;; [[file:init-emacs.org::*CSS Mode][CSS Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: CSS Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: CSS Mode")
+
+(use-package css-mode
+  :mode (("\\.css\\'" . css-mode)
+         ("\\.scss\\'" . css-mode))
+  :custom (cssm-indent-function #'cssm-c-style-indenter))
+;; CSS Mode:1 ends here
+
+;; [[file:init-emacs.org::*Dired][Dired:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Dired
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Dired")
+
+(use-package dired
+  :after (dired-single)
+  :commands (dired dired-next-line)
+  :config
+  ;; only prompt once for recursive deletes
+  (setq dired-recursive-deletes 'top)
+  ;; auto-revert buffer upon revisiting
+  (setq dired-auto-revert-buffer t)
+
+  (defun local-dired-mode-hook ()
+    ;; key bindings
+    ;; return and mouse click use same buffer
+    (when (fboundp 'dired-single-buffer)
+      (define-key dired-mode-map (kbd "<return>") 'dired-single-buffer)
+      (define-key dired-mode-map (kbd "^")
+        (lambda () (interactive) (dired-single-buffer ".."))))
+    (when (fboundp 'joc-dired-single-buffer)
+      (define-key dired-mode-map (kbd "<return>") 'joc-dired-single-buffer)
+      (define-key dired-mode-map (kbd "^")
+        (lambda () (interactive) (joc-dired-single-buffer ".."))))
+    (when (fboundp 'dired-single-buffer-mouse)
+      (define-key dired-mode-map (kbd "<mouse-1>") 'dired-single-buffer-mouse))
+    (when (fboundp 'joc-dired-single-buffer-mouse)
+      (define-key dired-mode-map (kbd "<mouse-1>") 'joc-dired-single-buffer-mouse))
+    ;; edit file names within dired
+    (when (fboundp 'wdired-change-to-wdired-mode)
+      (define-key dired-mode-map (kbd "e") 'wdired-change-to-wdired-mode))
+    ;; reset M-o
+    (define-key dired-mode-map (kbd "M-o") 'other-window)
+    (define-key dired-mode-map (kbd "C-c C-z f") 'browse-url-of-dired-file))
+
+  ;; add hook to dired mode
+  (add-hook 'dired-mode-hook #'local-dired-mode-hook)
+
+  (defun dired-move-to-top ()
+    (interactive)
+    (goto-char (point-min))
+    (dired-next-line 4))
+  (define-key dired-mode-map (vector 'remap 'beginning-of-buffer) 'dired-move-to-top)
+
+  (defun dired-move-to-bottom ()
+    (interactive)
+    (goto-char (point-max))
+    (dired-next-line -1))
+  (define-key dired-mode-map (vector 'remap 'end-of-buffer) 'dired-move-to-bottom))
+
+;;------------------------------------------------------------------------------
+;;;; dired-single
+;;------------------------------------------------------------------------------
+
+(init-message 3 "dired-single")
+
+;; make dired use a single buffer
+(use-package dired-single
+  :quelpa (dired-single)
+  :config
+  (defun dired-single-buffer-mouse--ignore-errors (orig-fun &rest args)
+    "Suppress errors when calling `dired-single-buffer-mouse'."
+    (condition-case err
+        (apply orig-fun args)
+      ('error
+       (message "%s" err))))
+  ;; advise `dired-single-buffer-mouse' to suppress errors
+  (advice-add 'dired-single-buffer-mouse :around #'dired-single-buffer-mouse--ignore-errors))
+;; Dired:1 ends here
+
+;; [[file:init-emacs.org::*Ediff][Ediff:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Ediff
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Ediff")
+
+(use-package ediff
+  :config
+  ;; split windows horizontally
+  (setq ediff-split-window-function 'split-window-horizontally)
+
+  ;; only highlight current diff
+  (setq-default ediff-highlight-all-diffs nil)
+
+  ;; turn off whitespace checking
+  (setq ediff-diff-options "-w")
+
+  ;; place control window in same frame
+  (setq ediff-window-setup-function 'ediff-setup-windows-plain)
+
+  ;; place control window in separate frame
+  ;;(setq ediff-window-setup-function 'ediff-setup-windows-multiframe)
+
+  ;; highlight changes to characters rather than words
+  ;;(setq ediff-forward-word-function 'forward-char)
+  )
+;; Ediff:1 ends here
+
+;; [[file:init-emacs.org::*Erlang Mode][Erlang Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Erlang Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Erlang Mode")
+
+(use-package erlang
+  :quelpa (erlang)
+  :after (flyspell)
+  :mode ("\\.erl\\'" . erlang-mode)
+  :interpreter ("erlang" . erlang-mode)
+  :commands (erlang-start)
+  :init
+  (add-to-list 'exec-path "/usr/lib/erlang/bin" t)
+  (setq erlang-root-dir "/usr/lib/erlang"
+        erlang-electric-commands nil)
+
+  :config
+  (defun local-erlang-hook ()
+    ;; turn on flyspell
+    (flyspell-prog-mode))
+  (add-hook 'erlang-hook #'local-erlang-hook)
+
+  ;; remove trailing blanks
+  ;;(add-hook 'erlang-mode-hook #'install-remove-trailing-blanks)
+
+  ;; remove tabs
+  ;;(add-hook 'erlang-mode-hook #'install-remove-tabs)
+  )
+;; Erlang Mode:1 ends here
+
+;; [[file:init-emacs.org::*Fundamental Mode][Fundamental Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Fundamental Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Fundamental Mode")
+
+;; fundamental-mode
+
+;; remove trailing blanks
+;;(add-hook 'fundamental-mode-hook #'install-remove-trailing-blanks)
+
+;; remove tabs
+;;(add-hook 'fundamental-mode-hook #'install-remove-tabs)
+;; Fundamental Mode:1 ends here
+
+;; [[file:init-emacs.org::*Geiser (Racket Scheme REPL)][Geiser (Racket Scheme REPL):1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Geiser (Racket Scheme REPL)
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Geiser (Racket Scheme REPL)")
+
+(use-package geiser
+  :quelpa (geiser)
+  :commands (geiser-mode
+             run-geiser
+             run-gracket
+             run-racket)
+  :init
+  ;; set default scheme program to racket
+  ;;(setq scheme-program-name "racket")
+  ;; set default scheme mode to geiser-mode
+  ;;(add-hook 'scheme-mode-hook #'geiser-mode)
+
+  :config
+  ;; set default geiser implementation to racket
+  (setq geiser-default-implementation 'racket)
+  ;; set active implementations list to just racket
+  (setq geiser-active-implementations '(racket))
+
+  ;; define `insert-char' functions to insert unicode chars
+  (defun geiser-insert-sigma ()
+    "Insert ∑ character."
+    (interactive "*")
+    ;;(insert-char ?Σ))
+    (insert-char ?∑))
+
+  (defun local-geiser-mode-hook ()
+    ;; key bindings
+    (local-set-key (kbd "C-c \\") 'geiser-insert-lambda)
+    (local-set-key (kbd "C-c C-\\") 'geiser-insert-lambda)
+    (local-set-key (kbd "C-c s") 'geiser-insert-sigma)
+    (local-set-key (kbd "C-c C-s") 'geiser-insert-sigma))
+  (add-hook 'geiser-mode-hook #'local-geiser-mode-hook)
+  (add-hook 'geiser-repl-mode-hook #'local-geiser-mode-hook))
+;; Geiser (Racket Scheme REPL):1 ends here
+
+;; [[file:init-emacs.org::*GNU Plot][GNU Plot:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: GNU Plot
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: GNU Plot")
+
+(use-package gnuplot
+  :quelpa (gnuplot)
+  :mode ("\\.gp\\'" . gnuplot-mode)
+  :commands (gnuplot-mode gnuplot-make-buffer gnuplot-send-string-to-gnuplot))
+;; GNU Plot:1 ends here
+
+;; [[file:init-emacs.org::*+Go Mode+][+Go Mode+:1]]
+;; ;;------------------------------------------------------------------------------
+;; ;;; Modes: Go Mode
+;; ;;------------------------------------------------------------------------------
+
+;; (init-message 2 "Modes: Go Mode")
+
+;; (use-package go-mode
+;;   :mode (("\\.go\\'" . go-mode))
+;;   :config (progn
+;;             (defun local-go-mode-hook ()
+;;               ;; use goimports instead of gofmt
+;;               (setq gofmt-command "goimports")
+
+;;               ;; call gofmt before saving
+;;               (add-hook 'before-save-hook #'gofmt-before-save)
+
+;;               ;; customize compile command to run go build
+;;               (when (not (string-match "go" compile-command))
+;;                 (setq-local compile-command "go build -v && go test -v && go vet"))
+
+;;               ;; oracle
+;;               (load-file "${GOPATH}/src/golang.org/x/tools/cmd/oracle/oracle.el")
+
+;;               ;; key bindings
+;;               (local-set-key (kbd "M-.") 'godef-jump))
+;;             (add-hook 'go-mode-hook #'local-go-mode-hook)))
+;; +Go Mode+:1 ends here
+
+;; [[file:init-emacs.org::*Graphviz Dot Mode][Graphviz Dot Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Graphviz Dot Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Graphviz Dot Mode")
+
+(use-package graphviz-dot-mode
+  :quelpa (graphviz-dot-mode)
+  :mode (("\\.dot\\'" . graphviz-dot-mode)
+         ("\\.gv\\'" . graphviz-dot-mode))
+  :commands (graphviz-dot-mode))
+;; Graphviz Dot Mode:1 ends here
+
+;; [[file:init-emacs.org::*INI Mode][INI Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: INI Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: INI Mode")
+
+(use-package ini-mode
+  :quelpa (ini-mode)
+  :mode ("\\.ini\\'" . ini-mode))
+;; INI Mode:1 ends here
+
+;; [[file:init-emacs.org::*Javascript: js2 Mode][Javascript: js2 Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Javascript: js2 Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Javascript: js2 Mode")
+
+(use-package js2-mode
+  :quelpa (js2-mode)
+  :mode (("\\.js\\'" . js2-mode)
+         ("\\.gradle\\'" . js-mode))    ; use js-mode for gradle files
+  :interpreter ("node" . js2-mode)
+  :config
+  ;; set indent offset
+  (setq-local py-indent-offset local-short-tab-width)
+
+  ;; turn on auto indent
+  (setq js2-auto-indent-p t
+        js2-cleanup-whitespace t
+        js2-enter-indents-newline t
+        js2-indent-on-enter-key t
+        js2-bounce-indent-p nil
+        js2-mirror-mode nil
+        js2-mode-escape-quotes nil)
+  ;;js2-electric-keys (quote nil))
+
+  ;; better imenu
+  (add-hook 'js2-mode-hook #'js2-imenu-extras-mode)
+  )
+
+;;------------------------------------------------------------------------------
+;;;; js2-refactor
+;;------------------------------------------------------------------------------
+
+(init-message 3 "js2-refactor")
+
+;; javascript refactoring library
+(use-package js2-refactor
+  :quelpa (js2-refactor)
+  :after (js2-mode)
+  :bind (:map js2-mode-map
+              ("C-k" . js2r-kill)
+              ("M-." . nil))            ; unbind conflicting key
+  :config
+  ;; set prefix key
+  (js2r-add-keybindings-with-prefix "C-c C-r")
+
+  ;; load when `js2-mode' is active
+  (add-hook 'js2-mode-hook #'js2-refactor-mode))
+
+;;------------------------------------------------------------------------------
+;;;; xref-js2
+;;------------------------------------------------------------------------------
+
+(init-message 3 "xref-js2")
+
+;; jump to references and definitions
+(use-package xref-js2
+  :quelpa (xref-js2)
+  :after (js2-mode)
+  :config
+  ;; load when `js2-mode' is active
+  (defun js2-mode-hook--js2-refactor ()
+    (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t)
+  (add-hook 'js2-mode-hook #'js2-mode-hook--js2-refactor)))
+
+;;------------------------------------------------------------------------------
+;;;; js-comint
+;;------------------------------------------------------------------------------
+
+(init-message 3 "js-comint")
+
+;; javascript interpreter repl
+(use-package js-comint
+  :quelpa (js-comint)
+  :after (js2-mode)
+  :commands (js-send-buffer
+             js-send-buffer-and-go
+             js-send-last-sexp
+             js-send-last-sexp-and-go
+             js-load-file-and-go)
+  :bind (:map js2-mode-map
+              ("C-c C-c" . js-eval-sexp-and-go)
+              ("C-x C-e" . js-send-last-sexp)
+              ("C-M-x" . js-eval-sexp-and-go)
+              ("C-c b" . js-send-buffer)
+              ("C-c C-b" . js-send-buffer-and-go)
+              ("C-c C-k" . js-send-buffer-and-go)
+              ("C-c l" . js-load-file-and-go))
+  :config
+  ;;(setq inferior-js-program-command "/usr/bin/java org.mozilla.javascript.tools.shell.Main")
+  ;;(setq inferior-js-program-command "/usr/bin/rhino")
+
+  ;; ;; key bindings
+  ;; (bind-keys :map js2-mode-map
+  ;;            ("C-c C-c" . js-eval-sexp-and-go)
+  ;;            ("C-x C-e" . js-send-last-sexp)
+  ;;            ("C-M-x" . js-eval-sexp-and-go)
+  ;;            ("C-c b" . js-send-buffer)
+  ;;            ("C-c C-b" . js-send-buffer-and-go)
+  ;;            ("C-c C-k" . js-send-buffer-and-go)
+  ;;            ("C-c l" . js-load-file-and-go))
+
+  (defun js-eval-sexp ()
+    "js-comint evaluate current sexp."
+    (interactive)
+    (save-mark-and-excursion
+      (end-of-defun)
+      (js-send-last-sexp)))
+
+  (defun js-eval-sexp-and-go ()
+    "js-comint evaluate current sexp and switch to js buffer."
+    (interactive)
+    (save-mark-and-excursion
+      (end-of-defun)
+      (js-send-last-sexp-and-go)))
+
+  (defun js2-mode-hook--js-comint ()
+    ;; (local-set-key (kbd "C-c C-c") 'js-eval-sexp-and-go)
+    ;; (local-set-key (kbd "C-x C-e") 'js-send-last-sexp)
+    ;; (local-set-key (kbd "C-M-x") 'js-eval-sexp-and-go)
+    ;; (local-set-key (kbd "C-c b") 'js-send-buffer)
+    ;; (local-set-key (kbd "C-c C-b") 'js-send-buffer-and-go)
+    ;; (local-set-key (kbd "C-c C-k") 'js-send-buffer-and-go)
+    ;; (local-set-key (kbd "C-c l") 'js-load-file-and-go)
+    ;; disable skewer-mode as it uses similar key bindings
+    (when (fboundp 'skewer-mode)
+      (skewer-mode -1)))
+  (add-hook 'js2-mode-hook #'js-mode-hook--js-comint))
+;; Javascript: js2 Mode:1 ends here
+
+;; [[file:init-emacs.org::*JSON Mode][JSON Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: JSON Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: JSON Mode")
+
+(use-package json-mode
+  :quelpa (json-mode)
+  :mode (("\\.json\\'" . js2-mode))
+  :config
+  ;; set indentation to four spaces
+  (setq json-encoding-default-indentation "    "
+        json-encoding-pretty-print t))
+;; JSON Mode:1 ends here
+
+;; [[file:init-emacs.org::*Kotlin Mode][Kotlin Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Kotlin Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Kotlin Mode")
+
+;;(use-package kotlin-mode
+(use-package java-mode
+;;:quelpa (kotlin-mode)
+  :quelpa (java-mode)
+  :mode (("\\.kt\\'" . kotlin-mode)
+         ("\\.kts\\'" . kotlin-mode))
+  :commands (java-mode
+             kotlin-mode--syntax-propertize-function)
+  :functions (kotlin-send-buffer)
+  :config
+  ;; add style for kotlin-mode
+  (add-to-list 'c-default-style '(kotlin-mode . "java"))
+
+  ;; add junit lib to classpath when creating a repl (so unit tests work)
+  (add-to-list 'kotlin-args-repl "-classpath" t)
+  (add-to-list 'kotlin-args-repl (expand-file-name "~/dev/kotlin/lib/junit-4.12.jar") t)
+
+  ;; redefine kotlin-mode so that indentation works
+  ;; based on `java-mode'
+  (define-derived-mode kotlin-mode java-mode "Kotlin"
+    "Major mode for editing Kotlin."
+
+    (setq font-lock-defaults '((kotlin-mode--font-lock-keywords) nil nil))
+    (setq-local syntax-propertize-function #'kotlin-mode--syntax-propertize-function)
+    (set (make-local-variable 'comment-start) "//")
+    (set (make-local-variable 'comment-padding) 1)
+    (set (make-local-variable 'comment-start-skip) "\\(//+\\|/\\*+\\)\\s *")
+    (set (make-local-variable 'comment-end) "")
+    (set (make-local-variable 'c-comment-start-regexp) "//")
+    (set (make-local-variable 'c-block-comment-start-regexp) "/\\*")
+    (set (make-local-variable 'indent-line-function) 'kotlin-mode--indent-line)
+
+    :group 'kotlin
+    :syntax-table kotlin-mode-syntax-table)
+
+  ;; redefine send region to remove comments before sending
+  ;; (kotlinc REPL does not currently support comments)
+  (defun kotlin-send-region (beg end)
+    "Send current region to Kotlin interpreter."
+    (interactive "r")
+    (let ((buffer (current-buffer)))
+      (with-temp-buffer
+        (insert-buffer-substring-no-properties buffer beg end)
+        (java-remove-comments)
+        (comint-send-region kotlin-repl-buffer (point-min) (point-max))
+        (comint-send-string kotlin-repl-buffer "\n")))))
+
+;;------------------------------------------------------------------------------
+;;;; flycheck kotlin
+;;------------------------------------------------------------------------------
+
+(use-package flycheck-kotlin
+  :quelpa (flycheck-kotlin)
+  :after (flycheck kotlin-mode)
+  :defines (flycheck-mode)
+  :config
+  (add-hook 'kotlin-mode-hook #'flycheck-mode))
+;; Kotlin Mode:1 ends here
+
+;; [[file:init-emacs.org::*Ledger Mode][Ledger Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Ledger Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Ledger Mode")
+
+(use-package ledger-mode
+  :quelpa (ledger-mode)
+  :functions (ledger-align-amounts)
+  :config
+  (defun local-ledger-align-amounts ()
+    "Return `ledger-align-amounts' for entire buffer."
+    (save-mark-and-excursion
+      (goto-char (point-min))
+      (ledger-align-amounts 52)))
+
+  (defun local-ledger-mode-hook ()
+    ;; align amounts on save
+    (make-local-variable 'before-save-hook)
+    (add-hook 'before-save-hook #'local-ledger-align-amounts))
+  (add-hook 'ledger-mode-hook #'local-ledger-mode-hook))
+;; Ledger Mode:1 ends here
+
+;; [[file:init-emacs.org::*Lisp Mode][Lisp Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Lisp Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Lisp Mode")
+
+(use-package lisp-mode
+  :after (flyspell eldoc info-look)
+  :commands (emacs-lisp-mode)
+  :functions (local-lisp-mode-hook)
+  :mode (("\\.el\\'" . emacs-lisp-mode)
+         ("\\.lisp\\'" . lisp-mode)
+         ("\\.clisp\\'" . lisp-mode))
+  :config
+  (defun local-lisp-mode-hook ()
+    ;; disable tabs
+    (add-hook 'lisp-mode-hook #'disable-tabs)
+
+    ;; clear input method
+    ;;(set-input-method nil)
+
+    ;; set indent function for lisp-mode to `lisp-indent-function'
+    ;; (it defaults to `clisp-indent-function')
+    (when (equal major-mode 'lisp-mode)
+      (setq-local lisp-indent-function 'lisp-indent-function))
+
+    ;; add underscore and dash to word boundaries
+    (modify-syntax-entry ?_ "w" lisp-mode-syntax-table)
+    (modify-syntax-entry ?- "w" lisp-mode-syntax-table)
+
+    ;; define keys
+    (local-set-key (kbd "<return>") 'newline-and-indent)
+    (local-set-key (kbd "S-<tab>") 'lisp-complete-symbol)
+
+    ;; turn on flyspell
+    (flyspell-prog-mode)
+
+    ;; initialize eldoc
+    (eldoc-mode 1)
+
+    ;; ;; turn on abbreviation mode
+    ;; (abbrev-mode 1)
+
+    ;; turn on else minor mode
+    ;;(else-mode)
+
+    ;; ;; initialize elisp slime nav mode
+    ;; (when (fboundp 'elisp-slime-nav-mode)
+    ;;   (elisp-slime-nav-mode)
+    ;;   (when (fboundp 'diminish)
+    ;;     (with-eval-after-load "elisp-slime-nav"
+    ;;       (diminish 'elisp-slime-nav-mode))))
+
+    ;; ;; check parenthesis after file save
+    ;; (add-hook 'after-save-hook #'check-parens nil t)
+
+    ;; (use-package aggressive-indent
+    ;;   :config (aggressive-indent-mode 1))
+
+    ;; set outline header regexp
+    (setq-local outline-regexp "\\(;; [*]\\{1,8\\} \\|;;[;]\\{1,8\\} \\)")
+    (setq-local outline-level 'lisp-outline-level))
+
+  ;; add hook to emacs-lisp and lisp modes
+  (add-hook 'emacs-lisp-mode-hook #'local-lisp-mode-hook)
+  (add-hook 'lisp-mode-hook #'local-lisp-mode-hook)
+  (add-hook 'common-lisp-mode-hook #'local-lisp-mode-hook)
+  (add-hook 'ielm-mode-hook #'local-lisp-mode-hook)
+
+  ;; remove trailing blanks
+  ;;(add-hook 'emacs-lisp-mode-hook #'install-remove-trailing-blanks)
+  ;;(add-hook 'lisp-mode-hook #'install-remove-trailing-blanks)
+  ;;(add-hook 'common-lisp-mode-hook #'install-remove-trailing-blanks)
+
+  ;; remove tabs
+  ;;(add-hook 'emacs-lisp-mode-hook #'install-remove-tabs)
+  ;;(add-hook 'lisp-mode-hook #'install-remove-tabs)
+  ;;(add-hook 'common-lisp-mode-hook #'install-remove-tabs)
+  )
+;; Lisp Mode:1 ends here
+
+;; [[file:init-emacs.org::*LUA Mode][LUA Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: LUA Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: LUA Mode")
+
+(use-package lua-mode
+  :quelpa (lua-mode)
+  :mode (("\\.lua\\'" . lua-mode)))
+;; LUA Mode:1 ends here
+
+;; [[file:init-emacs.org::*Makefile Mode][Makefile Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Makefile Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Makefile Mode")
+
+(use-package make-mode
+  :mode ("Makefile" . makefile-mode)
+  :commands (make-mode)
+  :config
+  ;; enable tabs
+  (enable-tabs)
+
+  ;; ;; remove trailing blanks
+  ;; (add-hook 'auto-mode-hook #'install-remove-trailing-blanks)
+  )
+;; Makefile Mode:1 ends here
+
+;; [[file:init-emacs.org::*Markdown Mode][Markdown Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Markdown Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Markdown Mode")
+
+(use-package markdown-mode
+  :quelpa (markdown-mode)
+  :after (org-table)
+  :mode (("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :functions (markdown-mode-fix-org-tables)
+  :config
+  ;; use org table mode for markdown tables
+  (add-hook 'markdown-mode-hook #'orgtbl-mode)
+
+  (defun markdown-mode-fix-org-tables ()
+    "Hook to fix org table format on save."
+    (save-mark-and-excursion
+      (save-match-data
+        (goto-char (point-min))
+        (while (search-forward "-+-" nil :noerror)
+          (replace-match "-|-")))))
+  (add-hook 'markdown-mode-hook
+            (lambda()
+              (add-hook 'before-save-hook #'markdown-mode-fix-org-tables nil 'make-it-local))))
+;; Markdown Mode:1 ends here
+
+;; [[file:init-emacs.org::*Perl Mode][Perl Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Perl Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Perl Mode")
+
+(use-package perl-mode
+  :after (flyspell)
+  :mode (("\\.\\([pP][Llm]\\|al\\|t\\)\\'" . perl-mode)
+         ("perl" . perl-mode)
+         ("perl5" . perl-mode))
+  :interpreter ("miniperl" . perl-mode)
+  :config
+  (defun local-perl-mode-hook ()
+    ;; configure some options
+    (setq perl-indent-level 4)
+    (setq perl-continued-statement-offset 0)
+
+    ;; turn on flyspell
+    (flyspell-prog-mode))
+  (add-hook 'perl-mode-hook #'local-perl-mode-hook)
+
+  (defun perl-mode-maybe ()
+    "Determine if file is a perl script and switch to perl-mode if it is."
+    (interactive)
+    (save-mark-and-excursion
+      (save-match-data
+        (goto-char (point-min))
+        (when (or
+               (search-forward "#!/usr/bin/perl" (line-end-position) :noerror)
+               (search-forward "#!/usr/bin/env perl" (line-end-position) :noerror))
+          (perl-mode)))))
+
+  ;; run when a file is loaded
+  (add-hook 'find-file-hooks #'perl-mode-maybe)
+
+  ;; remove trailing blanks
+  ;;(add-hook 'perl-mode-hook #'install-remove-trailing-blanks)
+
+  ;; remove tabs
+  ;;(add-hook 'perl-mode-hook #'install-remove-tabs)
+  )
+;; Perl Mode:1 ends here
+
+;; [[file:init-emacs.org::*PlantUML Mode][PlantUML Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: PlantUML Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: PlantUML Mode")
+
+(use-package plantuml-mode
+  :quelpa (plantuml-mode))
+;; PlantUML Mode:1 ends here
+
+;; [[file:init-emacs.org::*Python Mode][Python Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Python Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Python Mode")
+
+(use-package python-mode
+  :quelpa (python-mode)
+  :after (company elpy)
+  :mode (("\\.py\\'" . python-mode)
+         ("\\.python\\'" . python-mode))
+  :commands (py--buffer-filename-remote-maybe)
+  :functions (local-python-mode-hook)
+  :config
+  ;; turn off auto-indent so code pasting works
+  (setq py-python-command-args '("--no-autoindent" "--colors=Linux"))
+
+  ;; switch to interpreter after executing code
+  ;;(setq py-switch-buffers-on-execute-p t)
+
+  ;; split windows
+  ;;(setq py-split-windows-on-execute t)
+  (setq py-keep-windows-configuration 'force)
+
+  ;; try to automatically figure out indentation
+  (setq py-smart-indentation t)
+
+  ;; execute python in source code blocks on 'C-c C-c'
+  ;;(add-to-list 'org-ctrl-c-ctrl-c-hook #'org-babel-async-execute:python)
+
+  ;; increase recursion depth of auto-complete to prevent errors
+  (setq py-max-specpdl-size 999)
+
+  (defun local-python-mode-hook ()
+    ;; override some default keybindings
+    (when (fboundp 'backward-delete-word)
+      (bind-keys* ("C-<backspace>" . backward-delete-word))) ; defaults to `py-hungry-delete-backwards'
+
+    ;; set indent offset
+    (setq-local py-indent-offset local-short-tab-width)
+
+    ;; set outline header regexp
+    (setq-local outline-regexp " *\\(def \\|clas\\|#hea\\)")
+    ;;(hide-sublevels 1)
+
+    ;; remove python-shell-completion-at-point from completion-at-point-functions,
+    ;; if it is not defined
+    (when (and (not (fboundp 'python-shell-completion-at-point))
+               (memq 'python-shell-completion-at-point completion-at-point-functions))
+      (setq completion-at-point-functions
+            (remove 'python-shell-completion-at-point completion-at-point-functions)))
+    )
+  (add-hook 'python-mode-hook #'local-python-mode-hook))
+
+;;------------------------------------------------------------------------------
+;;;; elpy
+;;------------------------------------------------------------------------------
+
+(use-package elpy
+  :quelpa (elpy)
+  :commands (elpy-enable
+             elpy-shell-switch-to-shell)
+  :config
+  ;; turn on elpy mode
+  (elpy-enable)
+
+  ;; hack to fix quote error issue
+  (setq elpy-eldoc-show-current-function nil)
+
+  ;; custom version of `elpy-shell-switch-to-shell' that opens shell in a split window
+  (defun elpy-shell-switch-to-shell ()
+    "Switch to inferior Python process buffer."
+    (interactive)
+    (setq elpy--shell-last-py-buffer (buffer-name))
+    (pop-to-buffer (process-buffer (elpy-shell-get-or-create-process)) t))
+
+  ;; enable flycheck
+  (when (fboundp 'flycheck-mode)
+    (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+    (add-hook 'elpy-mode-hook #'flycheck-mode)))
+
+;;------------------------------------------------------------------------------
+;;;; jedi
+;;------------------------------------------------------------------------------
+
+;; (init-message 3 "jedi")
+
+;; ;; python auto-completion
+;; (use-package jedi
+;;   :quelpa (jedi)
+;;   :after (python-mode)
+;;   :config
+;;   ;; ;; add jedi completions to auto-complete sources
+;;   ;; (add-to-list 'ac-sources 'ac-source-jedi-direct t)
+;;   ;; enable with python mode
+;;   (add-hook 'python-mode-hook #'jedi:setup))
+;; Python Mode:1 ends here
+
+;; [[file:init-emacs.org::*Racket Mode][Racket Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Racket Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Racket Mode")
+
+;; (use-package racket-mode
+;;   :quelpa (racket-mode)
+;;   :mode ("\\.rkt\\'" . racket-mode)
+;;   :interpreter ("racket" . racket-mode)
+;;   :commands (racket-mode
+;;              racket-repl)
+;;   :config
+;;   (defun local-racket-mode-hook ()
+;;     ;; do not auto-complete on tab
+;;     (setq tab-always-indent t))
+;;   (add-hook 'racket-mode-hook #'local-racket-mode-hook)
+
+;;   ;; turn on support for unicode input
+;;   (add-hook 'racket-mode-hook #'racket-unicode-input-method-enable)
+;;   (add-hook 'racket-repl-mode-hook #'racket-unicode-input-method-enable))
+
+(use-package scheme
+  :after (geiser)
+  :mode ("\\.rkt\\'" . racket-mode)
+  :interpreter ("racket" . racket-mode)
+  :commands (racket-mode
+             scheme-mode)
+  :config
+  ;; create racket mode based on scheme mode
+  (define-derived-mode racket-mode scheme-mode "Scheme"
+    "Major mode for editing Racket Scheme code.  Editing commands
+are similar to those of `lisp-mode'.
+
+In addition, if an inferior Racket Scheme process is running, some additional
+commands will be defined, for evaluating expressions and controlling the
+interpreter, and the state of the process will be displayed in the mode line
+of all Scheme buffers.  The names of commands that interact with the Scheme
+process start with \"xscheme-\" if you use the MIT Scheme-specific `xscheme'
+package; for more information see the documentation for
+`xscheme-interaction-mode'.  Use \\[run-scheme] to start an inferior Scheme
+using the more general `cmuscheme' package.
+
+Commands:
+Delete converts tabs to spaces as it moves back.
+Blank lines separate paragraphs.  Semicolons start comments.
+\\{scheme-mode-map}"
+    ;; turn on geiser-mode
+    (when (fboundp 'geiser-mode)
+      (geiser-mode t)))
+
+  ;; ;; racket files should use racket-mode
+  ;; (add-to-list 'auto-mode-alist '("\\.rkt\\'" . racket-mode))
+  )
+;; Racket Mode:1 ends here
+
+;; [[file:init-emacs.org::*Ruby Mode][Ruby Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Ruby Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Ruby Mode")
+
+(use-package ruby-mode
+  :after (flyspell)
+  :mode ("\\.rb\\'" . ruby-mode)
+  :config
+  (defun local-ruby-mode-hook ()
+    ;; set indent level
+    ;;(setq ruby-indent-level 4)
+    (setq ruby-indent-level 2)
+
+    ;; define keys
+    (define-key ruby-mode-map (kbd "<return>") 'reindent-then-newline-and-indent)
+    ;; undefine electric keys
+    (define-key ruby-mode-map (kbd "{") 'self-insert-command)
+    (define-key ruby-mode-map (kbd "}") 'self-insert-command)
+
+    ;; turn on flyspell
+    (when (boundp 'flyspell-prog-mode)
+      (flyspell-prog-mode)))
+  (add-hook 'ruby-mode-hook #'local-ruby-mode-hook :append)
+
+  ;; turn on flyspell
+  (flyspell-prog-mode)
+
+  ;; FIXME: No longer works
+  ;; (use-package flymake
+  ;;   :config (progn
+  ;;             (defun flymake-ruby-init ()
+  ;;               (let* ((temp-file (flymake-init-create-temp-buffer-copy 'flymake-create-temp-inplace))
+  ;;                      (local-file (file-relative-name temp-file (file-name-directory buffer-file-name))))
+  ;;                 (list "ruby" (list "-c" local-file))))
+
+  ;;             (defun flymake-ruby-enable ()
+  ;;               (when (and buffer-file-name
+  ;;                          (file-writable-p (file-name-directory buffer-file-name))
+  ;;                          (file-writable-p buffer-file-name)
+  ;;                          (if (fboundp 'tramp-list-remote-buffers)
+  ;;                              (not (cl-subsetp (list (current-buffer)) (tramp-list-remote-buffers)))
+  ;;                            t))
+  ;;                 (local-set-key (kbd "C-c d") 'flymake-display-err-menu-for-current-line)
+  ;;                 (flymake-mode t)))
+
+  ;;             (add-to-list 'flymake-allowed-file-name-masks '(".+\\.rb\\'" flymake-ruby-init) t)
+  ;;             (add-to-list 'flymake-allowed-file-name-masks '("Rakefile\\'" flymake-ruby-init) t)
+  ;;             (add-to-list 'flymake-err-line-patterns '("^\\(.*\\):\\([0-9]+\\): \\(.*\\)$" 1 2 nil 3) t)
+  ;;             (add-hook 'ruby-mode-hook #'flymake-ruby-enable)))
+
+  ;; ;; turn on syntax highlighting (actually turns off syntax highlighting)
+  ;; (add-hook 'ruby-mode-hook #'turn-on-font-lock)
+
+  ;; ;; turn on abbreviation mode
+  ;; (abbrev-mode 1)
+
+  (defun ruby-mode-maybe ()
+    "Determine if file is a ruby script and switch to `ruby-mode' if it is."
+    (interactive)
+    (save-mark-and-excursion
+      (save-match-data
+        (goto-char (point-min))
+        (when (or
+               (search-forward "#!/usr/bin/ruby" (line-end-position) :noerror)
+               (search-forward "#!/usr/bin/env ruby" (line-end-position) :noerror))
+          (ruby-mode)))))
+
+  ;; run when a file is loaded
+  (add-hook 'find-file-hooks #'ruby-mode-maybe)
+
+  ;; remove trailing blanks
+  ;;(add-hook 'ruby-mode-hook #'install-remove-trailing-blanks)
+
+  ;; remove tabs
+  ;;(add-hook 'ruby-mode-hook #'install-remove-tabs)
+  )
+
+;;------------------------------------------------------------------------------
+;;;; robe
+;;------------------------------------------------------------------------------
+
+(init-message 3 "robe")
+
+;; code navigation, documentation lookup, and completion for ruby
+(use-package robe
+  :quelpa (robe)
+  :after (ruby-mode)
+  :commands (robe-mode)
+  :config
+  (add-hook 'ruby-mode-hook #'robe-mode))
+
+;; ;;------------------------------------------------------------------------------
+;; ;;;; inf-ruby
+;; ;;------------------------------------------------------------------------------
+
+;; (init-message 3 "inf-ruby")
+
+;; (use-package inf-ruby
+;;   :quelpa (inf-ruby)
+;;   :after (ruby-mode)
+;;   :interpreter ("ruby" . ruby-mode)
+;;   :commands (run-ruby inf-ruby-keys)
+;;   :config
+;;   (defun local-ruby-mode-hook-inf-ruby-keys ()
+;;     (inf-ruby-keys))
+;;   (add-hook 'ruby-mode-hook #'local-ruby-mode-hook-inf-ruby-keys)
+
+;;   ;; use ruby-robe with inf-ruby
+;;   (defadvice inf-ruby-console-auto (before activate-rvm-for-robe activate)
+;;     (rvm-activate-corresponding-ruby)))
+
+;; ;;------------------------------------------------------------------------------
+;; ;;;; ac-inf-ruby
+;; ;;------------------------------------------------------------------------------
+
+;; (init-message 3 "ac-inf-ruby")
+
+;; ;; auto-complete source for interactive ruby
+;; (use-package ac-inf-ruby
+;;   :quelpa (ac-inf-ruby)
+;;   :config
+;;   (add-to-list 'ac-modes 'inf-ruby-mode t)
+;;   (add-hook 'inf-ruby-mode-hook #'ac-inf-ruby-enable)
+;;   ;; ;; make TAB auto-complete
+;;   ;; (define-key inf-ruby-mode-map (kbd "TAB") 'auto-complete)
+;;   )
+;; Ruby Mode:1 ends here
+
+;; [[file:init-emacs.org::*SH Script][SH Script:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: SH Script
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: SH Script")
+
+(use-package sh-script
+  :mode (("\\.sh\\'" . sh-mode)
+         ("\\.shell\\'" . sh-mode)
+         ("\\.bash\\'" . sh-mode)
+         ;; use sh-mode for ldif and schema files
+         ("\\.ldif\\'" . sh-mode)
+         ("\\.schema\\'" . sh-mode)
+         ;; use sh-mode for remind files
+         ("\\.reminders\\'" . sh-mode)
+         ("^reminders_" . sh-mode))
+  :config
+  ;; disable tabs
+  (add-hook 'sh-mode-hook #'disable-tabs)
+
+  ;; make comment lines indent
+  (setq sh-indent-comment t)
+
+  (defun sh-mode-maybe ()
+    "Determine if file is a shell script and switch to sh-mode if it is."
+    (interactive)
+    (save-mark-and-excursion
+      (save-match-data
+        (goto-char (point-min))
+        (when (or
+               (search-forward "#!/bin/sh" (line-end-position) :noerror)
+               (search-forward "#!/bin/bash" (line-end-position) :noerror)
+               (search-forward "#!/bin/csh" (line-end-position) :noerror)
+               (search-forward "#!/bin/tsh" (line-end-position) :noerror)
+               (search-forward "#!/bin/zsh" (line-end-position) :noerror)
+               (search-forward "#!/usr/bin/env sh" (line-end-position) :noerror)
+               (search-forward "#!/usr/bin/env bash" (line-end-position) :noerror)
+               (search-forward "#!/usr/bin/env csh" (line-end-position) :noerror)
+               (search-forward "#!/usr/bin/env tsh" (line-end-position) :noerror)
+               (search-forward "#!/usr/bin/env zsh" (line-end-position) :noerror)
+               (search-forward "#=========" (line-end-position) :noerror)
+               (search-forward "#---------" (line-end-position) :noerror))
+          (sh-mode)))))
+
+  ;; run when a file is loaded
+  (add-hook 'find-file-hooks #'sh-mode-maybe)
+
+  ;; remove trailing blanks
+  ;;(add-hook 'sh-mode-hook #'install-remove-trailing-blanks)
+
+  ;; remove tabs
+  ;;(add-hook 'sh-mode-hook #'install-remove-tabs)
+  )
+;; SH Script:1 ends here
+
+;; [[file:init-emacs.org::*Shell Mode][Shell Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Shell Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Shell Mode")
+
+(use-package shell
+  :commands (shell-mode)
+  :config
+  ;; disable tabs
+  (add-hook 'shell-mode-hook #'disable-tabs)
+
+  ;; set prompt to read only
+  (setq comint-prompt-read-only t)
+
+  ;; start a shell
+  ;;(shell)
+  )
+
+;;------------------------------------------------------------------------------
+;;;; ansi-color
+;;------------------------------------------------------------------------------
+
+(init-message 3 "ansi-color")
+
+(use-package ansi-color
+  :after (shell)
+  :commands (ansi-color-for-comint-mode-on)
+  :config
+  (add-hook 'shell-mode-hook #'ansi-color-for-comint-mode-on))
+;; Shell Mode:1 ends here
+
+;; [[file:init-emacs.org::*Slime Mode (Common Lisp)][Slime Mode (Common Lisp):1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Slime Mode (Common Lisp)
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Slime Mode (Common Lisp)")
+
+;; superior lisp interaction mode for emacs
+;; if loading slime errors out because swank-loader.lisp is not found, do:
+;;   # cd /usr/share/emacs22/site-lisp/slime
+;;   # for i in $(ls -1 /usr/share/common-lisp/source/slime/) ; do ln -s /usr/share/common-lisp/source/slime/$i ; done
+(use-package slime
+  :quelpa (slime)
+  ;; :load-path (;;(lambda () (expand-file-name "slime" emacs-modules-dir))
+  ;;             ;;(lambda () (expand-file-name "slime/contrib" emacs-modules-dir))
+  ;;             (lambda () (expand-file-name "swank-clojure" emacs-modules-dir)))
+  :commands (slime-autoloads
+             slime
+             slime-eval-buffer
+             slime-eval-last-expression
+             slime-interactive-eval
+             slime-last-expression
+             slime-mode
+             slime-setup
+             clisp
+             clojure
+             swank-clojure-init
+             swank-clojure-slime-mode-hook
+             swank-clojure-cmd
+             swank-clojure-project)
+  :config
+  ;; clojure swank paths
+  (setq swank-clojure-jar-path (expand-file-name "~/.clojure/clojure.jar")
+        swank-clojure-binary (expand-file-name "~/bin/clojure")
+        swank-clojure-extra-classpaths (list (expand-file-name "~/.clojure/clojure.jar")
+                                             (expand-file-name "~/.clojure/jline.jar")
+                                             (expand-file-name "~/.clojure/clojure-contrib.jar")))
+
+  ;; slime setup
+  (slime-setup)
+
+  ;; set lisp program to clisp
+  ;;(setq inferior-lisp-program "clisp -K full")
+
+  (defun slime-eval-sexp ()
+    "Slime evaluate current sexp."
+    (interactive)
+    (save-mark-and-excursion
+      (end-of-defun)
+      (slime-interactive-eval (slime-last-expression))))
+
+  ;; run slime setup (this does too much)
+  ;;(slime-setup)
+
+  ;; redefine `slime-lisp-mode-hook'
+  ;; set indent function for lisp-mode to `lisp-indent-function'
+  ;; (it defaults to `common-lisp-indent-function')
+  (defun slime-lisp-mode-hook ()
+    (slime-mode 1)
+    (setq-local lisp-indent-function 'lisp-indent-function))
+
+  ;; run custom version of slime setup to preserve lisp-indent-function
+  (defun local-slime-lisp-mode-hook ()
+    ;; ;; set lisp program
+    ;; (setq inferior-lisp-program "clisp -K full")
+    ;; (setq inferior-lisp-program "clisp -K base")
+
+    ;; turn on slime mode
+    (slime-mode 1)
+
+    ;; typeout frame
+    ;;(add-hook 'slime-connected-hook #'slime-ensure-typeout-frame)
+    ;; highlight edits
+    ;;(add-hook 'slime-mode-hook #'slime-highlight-edits-mode)
+
+    ;; key bindings
+    (bind-keys :map slime-mode-map
+               ("C-c C-c" . slime-eval-sexp)
+               ("C-x C-e" . slime-eval-last-expression)
+               ("M-C-x" . slime-eval-sexp)
+               ("C-c C-k" . slime-eval-buffer))
+
+    ;; start inferior lisp job
+    ;;(unless (comint-check-proc "*inferior-lisp*")
+    ;;  (let ((buffer (current-buffer)))
+    ;;    (slime)
+    ;;    (switch-to-buffer buffer)))
+
+    ;; ;; auto connect to slime
+    ;; (unless (slime-connected-p)
+    ;;   (save-mark-and-excursion (slime)))
+    )
+  (add-hook 'lisp-mode-hook #'local-slime-lisp-mode-hook)
+  (add-hook 'common-lisp-mode-hook #'local-slime-lisp-mode-hook)
+  (add-hook 'clojure-mode-hook #'local-slime-lisp-mode-hook)
+
+  ;; cldoc (common lisp info in minibuffer)
+  (autoload 'turn-on-cldoc-mode "cldoc" nil t)
+  (add-hook 'common-lisp-mode-hook #'turn-on-cldoc-mode)
+  ;; wait 3 seconds before showing minibuffer docs
+  (setq cldoc-idle-delay 3)
+
+  ;; ;; slime motd warnings
+  ;; (use-package slime-cl-pitfalls)
+
+  ;; add clisp to slime implementations
+  (add-to-list 'slime-lisp-implementations '(clisp ("/usr/bin/clisp" "-K" "base")) t)
+
+  (defun clisp ()
+    "Start Common Lisp in Slime."
+    (interactive)
+    (slime 'clisp))
+
+  ;; initialize clisp: quicklisp
+  ;; $ clisp --load quicklisp.lisp
+  ;; (quicklisp-quickstart:install)
+  ;; (ql:add-to-init-file)
+  ;; (ql:quickload 'restas)
+
+  ;; add sbcl to slime implementations
+  (add-to-list 'slime-lisp-implementations '(sbcl ("/usr/bin/sbcl")) t)
+
+  (defun sbcl ()
+    "Start Steel Bank Common Lisp in Slime."
+    (interactive)
+    (slime 'sbcl))
+
+  ;; initialize sbcl: quicklisp
+  ;; $ sbcl --load quicklisp.lisp
+  ;; (quicklisp-quickstart:install)
+  ;; (ql:add-to-init-file)
+  ;; (ql:quickload 'restas)
+
+  ;; add clojure to slime implementation
+  ;; (add-to-list 'slime-lisp-implementations
+  ;;              `(clojure (,(expand-file-name "~/bin/clojure"))
+  ;;                        :init swank-clojure-init
+  ;;                        :coding-system utf-8-unix) t)
+  (add-to-list 'slime-lisp-implementations `(clojure ("/usr/bin/clojure")) t)
+
+  (defun clojure ()
+    "Start Clojure in Slime."
+    (interactive)
+    (slime 'clojure))
+
+  (defun local-lisp-mode-hook-slime-mode ()
+    "Hook to load slime-mode when lisp-mode is loaded."
+    (slime-mode 1))
+  (add-hook 'lisp-mode-hook #'local-lisp-mode-hook-slime-mode)
+  ;; (defun local-inferior-lisp-mode-hook-inferior-slime-mode ()
+  ;;   (inferior-slime-mode 1))
+  ;; (add-hook 'inferior-lisp-mode-hook #'local-inferior-lisp-mode-hook-inferior-slime-mode)
+  )
+
+;;------------------------------------------------------------------------------
+;;;; ac-slime
+;;------------------------------------------------------------------------------
+
+;; (init-message 3 "ac-slime")
+
+;; ;; auto-complete source for slime
+;; (use-package ac-slime
+;;   :quelpa (ac-slime)
+;;   :after (slime)
+;;   :config
+;;   (add-hook 'slime-mode-hook #'set-up-slime-ac)
+;;   (add-hook 'slime-repl-mode-hook #'set-up-slime-ac)
+;;   (add-to-list 'ac-modes 'slime-repl-mode t))
+
+;;------------------------------------------------------------------------------
+;;;; elisp-slime-nav-mode
+;;------------------------------------------------------------------------------
+
+(init-message 3 "elisp-slime-nav-mode")
+
+(use-package elisp-slime-nav
+  :quelpa (elisp-slime-nav)
+  :after (slime)
+  :diminish elisp-slime-nav-mode
+  :commands (elisp-slime-nav-mode)
+  :config (elisp-slime-nav-mode))
+;; Slime Mode (Common Lisp):1 ends here
+
+;; [[file:init-emacs.org::*SQL Mode][SQL Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: SQL Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: SQL Mode")
+
+(use-package sql
+  :mode (("\\.sql\\'" . sql-mode)
+         ("\\.tbl\\'" . sql-mode)
+         ("\\.sp\\'" . sql-mode))
+  :config
+  ;; ;; turn on abbreviation mode
+  ;; (abbrev-mode 1)
+
+  ;; remove trailing blanks
+  ;;(add-hook 'sql-mode-hook #'install-remove-trailing-blanks)
+
+  ;; remove tabs
+  ;;(add-hook 'sql-mode-hook #'install-remove-tabs)
+  )
+
+;; (use-package sql-transform
+;;   :quelpa (sql-transform)
+;;   :config
+;;   (defun local-sql-mode-hook ()
+;;     ;; key bindings
+;;     (bind-keys :map sql-mode-map
+;;                ("C-c s" . sql-to-select)
+;;                ("C-c i" . sql-to-insert)
+;;                ("C-c u" . sql-to-update)
+;;                ("C-c d" . sql-to-delete)))
+;;   (add-hook 'sql-mode-hook #'local-sql-mode-hook))
+
+;; ;;------------------------------------------------------------------------------
+;; ;;;; mysql
+;; ;;------------------------------------------------------------------------------
+
+;; (init-message 3 "mysql")
+
+;; (use-package mysql
+;;   :quelpa (mysql)
+;;   :after (sql)
+;;   :config (setq sql-product 'mysql))
+;; SQL Mode:1 ends here
+
+;; [[file:init-emacs.org::*Text Mode][Text Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Text Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Text Mode")
+
+(use-package text-mode
+  :after (flyspell)
+  :mode (("\\.txt\\'" . text-mode)
+         ("\\.text\\'" . text-mode)
+         ("README" . text-mode)
+         ("INSTALL" . text-mode)
+         ("CHANGELOG" . text-mode))
+  :config
+  (defun local-text-mode-hook ()
+    ;; set tab
+    (setq tab-width 4)
+    (setq tab-stop-list (number-sequence 4 76 4))
+    ;; (setq tab-width 8)
+    ;; (setq tab-stop-list (number-sequence 8 76 8))
+    (setq indent-tabs-mode t)           ; can insert TAB characters
+    (bind-key "<tab>" 'indent-relative text-mode-map)
+
+    ;; set default fill column for auto-fill mode
+    (setq fill-column 78)
+
+    ;; turn on word wrap
+    (turn-on-auto-fill)
+
+    ;; add underscore and dash to word boundaries
+    (modify-syntax-entry ?_ "w" text-mode-syntax-table)
+    (modify-syntax-entry ?- "w" text-mode-syntax-table)
+
+    ;; turn on flyspell
+    (flyspell-mode 1)
+
+    ;; ;; turn on abbreviation mode
+    ;; (abbrev-mode 1)
+
+    ;; turn on pabbrev mode
+    ;;(pabbrev-mode)
+
+    ;; insert two spaces after a sentence
+    (setq sentence-end-double-space t)
+
+    ;; insert two spaces after a colon
+    (setq colon-double-space t))
+  (add-hook 'text-mode-hook #'local-text-mode-hook)
+
+  ;; remove trailing blanks
+  ;;(add-hook 'text-mode-hook #'install-remove-trailing-blanks)
+
+  ;; remove tabs
+  ;;(add-hook 'text-mode-hook #'install-remove-tabs)
+  )
+;; Text Mode:1 ends here
+
+;; [[file:init-emacs.org::*TypeScript Mode][TypeScript Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: TypeScript Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: TypeScript Mode")
+
+(use-package typescript-mode
+  :quelpa (typescript-mode)
+  :mode ("\\.ts\\'" . typescript-mode)
+  :hook (typescript-mode . lsp-deferred)
+  :config
+  (setq typescript-indent-level 2))
+;; TypeScript Mode:1 ends here
+
+;; [[file:init-emacs.org::*XML Mode][XML Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: XML Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: XML Mode")
+
+(use-package nxml-mode
+  :after (flyspell)
+  :mode (("\\.dtd\\'" . nxml-mode)
+         ("\\.htm\\'" . nxml-mode)
+         ("\\.html\\'" . nxml-mode)
+         ("\\.rdf\\'" . nxml-mode)
+         ("\\.rhtml\\'" . nxml-mode)
+         ("\\.rss\\'" . nxml-mode)
+         ("\\.sgml\\'" . nxml-mode)
+         ("\\.svg\\'" . nxml-mode)
+         ("\\.xhtml\\'" . nxml-mode)
+         ("\\.xml\\'" . nxml-mode)
+         ("\\.xsd\\'" . nxml-mode)
+         ("\\.xsl\\'" . nxml-mode)
+         ("\\.tt\\'" . nxml-mode))
+  :config
+  ;; set magic modes
+  ;;(load "rng-auto")
+  ;;(unify-8859-on-decoding-mode)
+  (add-to-list 'magic-mode-alist '("<\\?xml " . nxml-mode) t)
+
+  (defun local-nxml-mode-hook ()
+    ;; do not use `indent-relative' for tab indenting
+    (bind-key "<tab>" 'indent-for-tab-command nxml-mode-map)
+
+    ;; turn off auto-fill mode
+    (turn-off-auto-fill)
+
+    ;; turn on flyspell
+    (flyspell-prog-mode)
+
+    ;; turn on auto-completion
+    (setq nxml-slash-auto-complete-flag t)
+
+    ;; turn on org minor mode
+    ;; (when (string-match "\\.\\(x?html\\|php[34]?\\)\\'"
+    ;;                     (file-name-sans-versions buffer-file-name))
+    ;;   (local-nxml-mode-org))
+    ;;(local-nxml-mode-org)
+
+    ;; set outline header regexp
+    ;;(setq-local outline-regexp " *<[^/]")
+    (setq-local outline-regexp "\\s *<\\([h][1-6]\\|html\\|body\\|head\\)\\b")
+    ;;(hide-sublevels 1)
+    )
+  (add-hook 'nxml-mode-hook #'local-nxml-mode-hook)
+
+  ;; (defun local-nxml-mode-org ()
+  ;;   ;;(setq-local outline-regexp "\\s *<\\([h][1-6]\\|html\\|body\\|head\\)\\b")
+  ;;   (setq-local outline-regexp "\\s *<")
+  ;;   (setq-local outline-level 'local-nxml-mode-outline-level)
+  ;;   (outline-minor-mode 1)
+  ;;   (hs-minor-mode 1))
+
+  ;; (defun local-nxml-mode-outline-level ()
+  ;;   (save-mark-and-excursion
+  ;;     (save-match-data
+  ;;       (re-search-forward html-outline-level)
+  ;;       (let ((tag (buffer-substring (match-beginning 1) (match-end 1))))
+  ;;         (if (eq (length tag) 2)
+  ;;             (- (aref tag 1) ?0)
+  ;;           0)))))
+
+  ;; (add-to-list 'hs-special-modes-alist
+  ;;              '(nxml-mode
+  ;;                "<!--\\|<[^/>]>\\|<[^/][^>]*[^/]>"
+  ;;                ""
+  ;;                "<!--" ;; won't work on its own; uses syntax table
+  ;;                (lambda (arg) (local-nxml-mode-forward-element))
+  ;;                nil) t)
+
+  ;; (defun local-nxml-mode-forward-element ()
+  ;;   (let ((nxml-sexp-element-flag))
+  ;;     (setq nxml-sexp-element-flag (not (looking-at "<!--")))
+  ;;     (unless (looking-at outline-regexp)
+  ;;       (ignore-errors
+  ;;         (nxml-forward-balanced-item 1)))))
+
+  ;; remove trailing blanks
+  ;;(add-hook 'nxml-mode-hook #'install-remove-trailing-blanks)
+
+  ;; remove tabs
+  ;;(add-hook 'nxml-mode-hook #'install-remove-tabs)
+
+  ;; (use-package flymake
+  ;;   :config (progn
+  ;;             (defun flymake-html-init ()
+  ;;               (let* ((temp-file (flymake-init-create-temp-buffer-copy 'flymake-create-temp-inplace))
+  ;;                      (local-file (file-relative-name temp-file (file-name-directory buffer-file-name))))
+  ;;                 (list "tidy" (list local-file))))
+
+  ;;             (add-to-list 'flymake-allowed-file-name-masks '("\\.html$\\|\\.ctp" flymake-html-init) t)
+  ;;             (add-to-list 'flymake-err-line-patterns '("line \\([0-9]+\\) column \\([0-9]+\\) - \\(Warning\\|Error\\): \\(.*\\)" nil 1 2 4) t)))
+
+  ;; derive xml-mode and html-mode from nxml-mode
+  (fset 'xml-mode 'nxml-mode)
+  (fset 'html-mode 'nxml-mode))
+;; XML Mode:1 ends here
 
 ;; [[file:init-emacs.org::*Menus][Menus:1]]
 ;;==============================================================================
