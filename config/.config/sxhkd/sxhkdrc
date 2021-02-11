@@ -203,6 +203,11 @@ super + ctrl + p
     head --bytes 14 | xclip -selection clipboard && \
     notify-send --expire-time=2000 'Random password generated on clipboard'
 
+# connect to beats headphones via bluetooth
+super + alt + b
+    notify-send --expire-time=2000 'Connecting to Beats Headphones via Bluetooth' && \
+    bluetoothctl connect 04:88:E2:6A:00:6C
+
 #-------------------------------------------------------------------------------
 # Media
 #-------------------------------------------------------------------------------

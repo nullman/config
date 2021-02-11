@@ -140,12 +140,6 @@ alias ifc="ifconfig"
 alias iwc="iwconfig"
 #        dhc-release             release dhch leased ip address
 alias dhc-release="sudo dhclient -r -v"
-#        hidds                   bluetooth search (hidd --search)
-alias hidds="hidd --search"
-#        blue-on                 pon bluetooth
-alias blue-on="pon bluetooth"
-#        blue-off                poff bluetooth
-alias blue-off="poff bluetooth"
 #        dt                      display date and time
 alias dt="date '+%Y-%m-%d %H:%M:%S'"
 #        dt-clock                display updating date and time
@@ -509,6 +503,12 @@ alias systemctl-disable="sudo systemctl disable"
 alias systemctl-user-reload="systemctl --user daemon-reload"
 #        systemctl-restart       restart service
 alias systemctl-restart="sudo systemctl restart"
+
+#
+# bluetooth
+#
+#        bluetoothctl-connect-beats connect to Beats Wireless Headphones
+alias bluetoothctl-connect-beats="bluetoothctl connect 04:88:E2:6A:00:6C"
 
 #
 # web sites
