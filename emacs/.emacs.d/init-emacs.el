@@ -13237,39 +13237,6 @@ USING is the remaining peg."
   (advice-add 'cycle-buffer :around #'cycle-buffer--ignore-errors))
 ;; cycle-buffer:1 ends here
 
-;; [[file:init-emacs.org::*cua][cua:1]]
-;;------------------------------------------------------------------------------
-;;; Modules: cua
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modules: cua")
-
-(use-package cua-base
-  :demand t
-  ;; :bind* ("C-@" . cua-set-mark)
-  :custom
-  ;; do not tabify after rectangle commands
-  (cua-auto-tabify-rectangles nil)
-  ;; ;; standard windows behaviour
-  ;; (cua-keep-region-after-copy nil)
-  ;; use shifted prefix keys to inhitibt C-x/c/v overrides (C-S-x, C-S-c, and C-S-v)
-  (cua-prefix-override-inhibit-delay 0.1) ; defaults to 0.2
-  :init
-  ;; turn on cua mode with C-x/c/v support
-  (cua-mode t)
-
-  :config
-  ;; no region when it is not highlighted
-  (transient-mark-mode t)
-
-  ;; ;; customize keybindings
-  ;; (defun local-cua-rectangle-mark-mode-hook ()
-  ;;   ;; custom movement keys
-  ;;   (custom-key-bindings-movement-keys cua--rectangle-keymap))
-  ;; (add-hook 'cua-rectangle-mark-mode-hook #'local-cua-rectangle-mark-mode-hook)
-  )
-;; cua:1 ends here
-
 ;; [[file:init-emacs.org::*decimation][decimation:1]]
 ;;------------------------------------------------------------------------------
 ;;; Modules: decimation
@@ -15674,16 +15641,28 @@ otherwise run `find-file-as-root'."
 (use-package asm-mode
   :mode ("\\.asm\\'" . asm-mode)
   :config
-  ;; enable tabs
-  (add-hook 'asm-mode-hook #'enable-tabs-8)
+  (defun local-asm-mode-hook ()
+    "Customizations for asm-mode."
+    ;; ;; enable tabs
+    ;; (add-hook 'asm-mode-hook #'enable-tabs-8)
 
-  ;; ;; set tab indentation, width, and do not convert tabs to spaces
-  ;; (setq indent-tabs-mode t          ; do not insert tab characters
-  ;;       tab-width 8                 ; default tab width is four spaces
-  ;;       standard-indent 8           ; default margin-changing functions indent
-  ;;       tab-always-indent nil       ; tab key will insert a tab
-  ;;       tab-stop-list (number-sequence 8 180 8)) ; tab stops set to every 8 spaces
-  )
+    ;; ;; set tab indentation, width, and do not convert tabs to spaces
+    ;; (setq indent-tabs-mode t          ; insert tab characters
+    ;;       tab-width 8                 ; default tab width is four spaces
+    ;;       standard-indent 8           ; default margin-changing functions indent
+    ;;       tab-always-indent nil       ; tab key will insert a tab
+    ;;       tab-stop-list (number-sequence 8 180 8)) ; tab stops set to every 8 spaces
+
+    ;; set tab indentation, width, and convert tabs to spaces
+    (setq indent-tabs-mode nil        ; do not insert tab characters
+          tab-width 8                 ; default tab width is four spaces
+          standard-indent 8           ; default margin-changing functions indent
+          tab-always-indent nil       ; tab key will insert a tab
+          tab-stop-list (number-sequence 8 180 8)) ; tab stops set to every 8 spaces
+
+    ;; disable tabs
+    (disable-tabs))
+    (add-hook 'asm-mode-hook #'local-asm-mode-hook))
 ;; ASM:1 ends here
 
 ;; [[file:init-emacs.org::*Brainfuck][Brainfuck:1]]
@@ -18753,21 +18732,6 @@ to the current ERC buffer."
 
 (custom-key-bindings-set-all)
 ;; Set Key Bindings:1 ends here
-
-;; [[file:init-emacs.org::*Turn on CUA Mode][Turn on CUA Mode:1]]
-;;------------------------------------------------------------------------------
-;;; Final Setup: Turn on CUA Mode
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Final Setup: Turn on CUA Mode")
-
-;; turn on cua-mode
-(cua-mode 1)                            ; with C-x/c/v key bindings
-;;(cua-selection-mode 1)                  ; without C-x/c/v key bindings
-
-;; key bindings
-;;(bind-keys ("C-@" . cua-set-mark)) ; defaults to `set-mark-command'
-;; Turn on CUA Mode:1 ends here
 
 ;; [[file:init-emacs.org::*Compile Personal Modules][Compile Personal Modules:1]]
 ;;------------------------------------------------------------------------------
