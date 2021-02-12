@@ -1215,7 +1215,7 @@ yasi()
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 PACKAGE"
     else
-        yay -Ss "$@" | grep " (Installed)$"
+        yay -Ss "$@" | grep " (Installed"
     fi
 }
 
