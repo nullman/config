@@ -8,14 +8,12 @@
 #=============================================================================
 
 # check if executable command is found in the path
-_command()
-{
+_command() {
     command -v "$1" > /dev/null 2>&1
 }
 
 # check if running in windows os
-_iswindows()
-{
+_iswindows() {
     [[ "${OS}" == "Windows_NT" ]]
 }
 

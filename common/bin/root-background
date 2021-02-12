@@ -55,8 +55,7 @@ if [[ -z "$(ps -ef | grep -v grep | grep ${USER} | grep gnome-session)" ]] ; the
 else
     gnome=yes
 fi
-gnomebg()
-{
+gnomebg() {
     # move gnome background (to get gnome to notice)
     img1="${HOME}/images/background1.png"
     img2="${HOME}/images/background2.png"

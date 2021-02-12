@@ -53,8 +53,7 @@ system("ls -1 ${outdir}/* | xargs -L 1 strfile");
 #-------------------------------------------------------------------------------
 # parse a quotes node
 #-------------------------------------------------------------------------------
-sub ParseQuotes
-{
+sub ParseQuotes {
     my $node = shift;
     my $i = 0;
     while (exists($node->[$i])) {
@@ -64,8 +63,7 @@ sub ParseQuotes
 }
 
 # parse a quotes section
-sub ParseQuotesSection
-{
+sub ParseQuotesSection {
     my $node = shift;
 
     # open output file to write

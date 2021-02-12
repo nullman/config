@@ -43,8 +43,7 @@ print("Logged on to AIM as $un.\n");
 print("Press CTRL-C to disconnect.\n");
 
 my $count = 1;
-while(1)
-{
+while(1) {
     $oscar->do_one_loop();
     $count++;
     # set idle every 5 minutes

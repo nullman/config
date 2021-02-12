@@ -9,14 +9,12 @@
 #===============================================================================
 
 # bspc config
-_bc()
-{
+_bc() {
     bspc config "$@"
 }
 
 # bspc rule --add
-_ba()
-{
+_ba() {
     bspc rule --add "$@"
 }
 
@@ -180,14 +178,12 @@ _ba Yad state=floating center=true
 delay=2
 
 # check if executable command is found in the path
-_command()
-{
+_command() {
     command -v "$1" > /dev/null 2>&1
 }
 
 # delay running a command (SECONDS COMMAND)
-_delay()
-{
+_delay() {
     delay=$1
     shift
     sleep ${delay} && eval "$@"

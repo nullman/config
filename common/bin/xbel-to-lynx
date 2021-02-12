@@ -45,8 +45,7 @@ print(OUTFILE "</head>\n");
 print(OUTFILE "<body>\n");
 
 # writes an &nbsp; $spc number of times
-sub PrintSpacer
-{
+sub PrintSpacer {
     my $spc = shift;
     for (my $i=0; $i<$spc; $i++) {
         print(OUTFILE "&nbsp;");
@@ -54,8 +53,7 @@ sub PrintSpacer
 }
 
 # write the contents of a folder (recursively)
-sub PrintFolder
-{
+sub PrintFolder {
     my $folder = shift;
     my $path = shift;
     my $i;

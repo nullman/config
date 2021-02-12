@@ -20,14 +20,12 @@ export runpath="${runpath}:${HOME}/.shellrc"
 logger "Running: ${HOME}/.shellrc"
 
 # check if executable command is found in the path
-_command()
-{
+_command() {
     command -v "$1" > /dev/null 2>&1
 }
 
 # prevent duplicate path entries
-_pathadd()
-{
+_pathadd() {
     if [[ -d "$1" ]] ; then
         p=$(cd "$1" && pwd)
         q=$(echo "$p" | sed 's/(/\\(/g ; s/)/\\)/g')
@@ -46,8 +44,7 @@ _pathadd()
 }
 
 # prevent duplicate infopath entries
-_infopathadd()
-{
+_infopathadd() {
     if [[ -d "$1" ]] ; then
         p=$(cd "$1" && pwd)
         q=$(echo "$p" | sed 's/(/\\(/g ; s/)/\\)/g')

@@ -23,7 +23,7 @@ for arg in "$@" ; do
         -h|--help)
             cat <<EOF
 Usage: $(basename $0) [OPTIONS]
-Removes missing entries from song ratings files.
+Remove missing entries from song ratings files.
   OPTIONS:
     -h, --help     show this help
     -d, --dry-run  show which songs would be removed
@@ -46,8 +46,7 @@ EOF
     esac
 done
 
-dryrun()
-{
+dryrun() {
     echo "The following songs are not found:"
     echo
     for file in ${files} ; do
@@ -59,8 +58,7 @@ dryrun()
     done
 }
 
-process()
-{
+process() {
     tmpdir=$(mktemp -d)
     for file in ${files} ; do
         ${quiet} || echo "Checking file: ${file}..."

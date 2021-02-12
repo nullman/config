@@ -9,8 +9,7 @@
 # Author: Kyle W T Sherman
 #===============================================================================
 
-prompt_command ()
-{
+prompt_command () {
     # save current position
     tput sc
 

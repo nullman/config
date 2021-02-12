@@ -28,7 +28,7 @@ screen -t shell 9 zsh
 #screen -t news 15 tin -r -q -g news.comcast.net
 ##screen -t news 15 slrn --nntp -n -h news.gmame.org -f .slrn_gmame
 #screen -t rss 16 snownews
-#screen -t stock 17 linuxtrade
+#screen -t stock 17 mop
 #screen -t calendar 18 wyrd
 screen -t calculator 19 orpie
 #screen -t calculator 19 rpncalc

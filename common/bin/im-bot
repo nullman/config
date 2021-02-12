@@ -24,8 +24,7 @@ shift
 msg="$@"
 
 # random
-random()
-{
+random() {
     echo $(($RANDOM % $1))
 }
 

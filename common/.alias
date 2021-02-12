@@ -21,8 +21,7 @@ nullwareip="159.203.165.79"
 #! helper functions
 #!
 #!       _command                check if executable command is found in the path
-_command()
-{
+_command() {
     command -v "$1" > /dev/null 2>&1
 }
 #

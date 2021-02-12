@@ -49,8 +49,7 @@ if [[ ${help} -eq 1 ]] ; then
     exit 1
 fi
 
-get-temp()
-{
+get-temp() {
     sensors ${opts} | grep "^Package id 0:" | sed 's/^Package id 0: \+// ; s/ \+(high.*$//'
     #sensors ${opts} | grep "^Core 0" | sed 's/^Core 0: \+// ; s/ \+(high.*$//'
 }

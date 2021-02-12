@@ -12,8 +12,7 @@ export runpath="${runpath}:${HOME}/.xprofile"
 logger "Running: ${HOME}/.xprofile"
 
 # check if executable command is found in the path
-_command()
-{
+_command() {
     command -v "$1" > /dev/null 2>&1
 }
 

@@ -37,8 +37,7 @@ alias fuhg="
     cat ${HOME}/.funct ${HOME}/.funct-work 2>/dev/null | \
       grep '^#' | grep -v '^#!' | sed 's/^#//' | grep -i"
 #        alfuhg                  alias and funct help with grep
-alfuhg()
-{
+alfuhg() {
     for file in ".alias" ".alias-work" ; do
         [[ -f "${HOME}/${file}" ]] && \
           echo "Aliases (${file}):" && \
@@ -51,26 +50,22 @@ alfuhg()
     done
 }
 #!#        alfuhlg                 alias and funct help (long) with grep
-#!alfuhlg()
-#!{
+#!alfuhlg() {
 #!    echo "Aliases:"
 #!    cat "${HOME}/.alias" | grep -v '^#!' | grep -v '^#  ' | sed 's/^#//' | more | grep -i "$1"
 #!    echo "Functions:"
 #!    cat "${HOME}/.funct" | grep -v '^#!' | grep -v '^#  ' | sed 's/^#//' | more | grep -i "$1"
 #!}
 #        alg                     alias grep
-alg()
-{
+alg() {
     cat "${HOME}/.alias" | sed -n '/^#[[:space:]].*'$1'/,/"$/p'
 }
 #        fug                     funct grep
-fug()
-{
+fug() {
     cat "${HOME}/.funct" | sed -n '/^#[[:space:]].*'$1'/,/^}$/p'
 }
 #        alfug                   alias and funct grep
-alfug()
-{
+alfug() {
     echo "Aliases:"
     cat "${HOME}/.alias" | sed -n '/^#[[:space:]].*'$1'/,/"$/p'
     echo "Functions:"
@@ -81,8 +76,7 @@ alfug()
 # programming
 #
 #        pathcmd                 find path of command
-pathcmd()
-{
+pathcmd() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 COMMAND [PATH...]"
         echo "  COMMAND  command to find"
@@ -108,8 +102,7 @@ pathcmd()
     fi
 }
 #        parentdir               get parent dir
-parentdir()
-{
+parentdir() {
     if [[ $# -gt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 [DIR]"
         echo "  DIR  directory to get the parent directory of (defaults to current dir)."
@@ -135,8 +128,7 @@ parentdir()
     fi
 }
 #        pstest                  test if a user application is currently running
-pstest()
-{
+pstest() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 QUERY"
         echo "Test if a user applicaiton containing QUERY is currently running."
@@ -146,13 +138,11 @@ pstest()
     fi
 }
 # iscommand checks if executable command is found in the path
-iscommand()
-{
+iscommand() {
     command -v "$1" > /dev/null 2>&1
 }
 #        keypress                get a single key press
-keypress()
-{
+keypress() {
     # save current tty settings
     ttysettings=$(stty -g)
     # disable canonical mode and local echo
@@ -165,8 +155,7 @@ keypress()
     echo "${key}"
 }
 #        changelog               add a line to a CHANGELOG file in path
-changelog()
-{
+changelog() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 TEXT..."
     else
@@ -200,13 +189,11 @@ changelog()
 # general
 #
 #!#        which                   version of which that includes aliases and functions
-#!which ()
-#!{
+#!which () {
 #!    (alias ; declare -f) | /usr/bin/which --tty-only --read-alias --read-functions --show-tilde --show-dot "$@"
 #!}
 #!#        cv                      run cdargs and cd to the result
-#!cv()
-#!{
+#!cv() {
 #!    if [[ $# -eq 0 ]] ; then
 #!        dir=
 #!    elif
@@ -219,8 +206,7 @@ changelog()
 #!    fi
 #!}
 #        random                  random number
-random()
-{
+random() {
     if [[ $# -eq 0 ]] ; then
         echo "$((${RANDOM} % 10))"
     else
@@ -228,8 +214,7 @@ random()
     fi
 }
 #        filename                get real file/dir name of running script
-filename()
-{
+filename() {
     orig="$1"
     dir=$(cd $(dirname "${orig}") ; pwd)
     file=$(basename "${orig}")
@@ -251,14 +236,12 @@ filename()
     fi
 }
 #        inscreen                return wether or not terminal is running in screen
-inscreen()
-{
+inscreen() {
     cmd=$(ps -o comm -p $(ps -o ppid -p $$ --no-headers) --no-headers)
     [[ "${cmd}" == "screen" ]] && echo "screen"
 }
 #        termname                return current terminal name or screen
-termname()
-{
+termname() {
     term="unknown"
     screen="$(inscreen)"
     cmd=$(ps -o comm -p $$ --no-headers)
@@ -272,29 +255,24 @@ termname()
     fi
 }
 #        psg                     ps with grep
-psg()
-{
+psg() {
     pids=$(pgrep --ignore-case "$1" | tr '\n' ',' | sed 's/,$//')
     [[ -n "${pids}" ]] && ps --format pid,ppid,user,args --pid ${pids}
 }
 #        grepper                 fancy grep
-grepper()
-{
+grepper() {
     grep -iIHrn --color=always "$1" . | pager
 }
 #        nsg                     netstat -a with grep
-nsg()
-{
+nsg() {
     netstat -a | grep -i "$1" | more
 }
 #        hostping                ping to resolve name to ip address
-hostping()
-{
+hostping() {
     ping -c 1 "$1" | grep PING | sed 's/^[^(]*(\([^)]*\)).*$/\1/'
 }
 #        fnd                     find files
-fnd()
-{
+fnd() {
     if [[ $# -lt 1 ]] || [[ $# -gt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 QUERY [DIR]"
     else
@@ -309,8 +287,7 @@ fnd()
     fi
 }
 #        fndg                    find files with grep
-fndg()
-{
+fndg() {
     if [[ $# -lt 2 ]] || [[ $# -gt 3 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 QUERY GREP [DIR]"
     else
@@ -327,8 +304,7 @@ fndg()
     fi
 }
 #        wcdir                   word (line) count a directory
-wcdir()
-{
+wcdir() {
     if [[ $# -gt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 [DIR]"
     else
@@ -342,8 +318,7 @@ wcdir()
 }
 #        dtloop                  datetime stamp looping
 unalis dtloop > /dev/null 2>&1
-dtloop()
-{
+dtloop() {
     if [[ $# -gt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 [DELAY]"
         echo "Output the current date-time in a loop."
@@ -361,8 +336,7 @@ dtloop()
     fi
 }
 #        dostolinux              convert a dos text file CR+LF to linux LF format
-dostolinux()
-{
+dostolinux() {
     if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 FILE"
         echo "Convert FILE from DOS format to Linux format."
@@ -371,8 +345,7 @@ dostolinux()
     fi
 }
 #        linuxtodos              convert a linux text file LF to dos CR+LF format
-linuxtodos()
-{
+linuxtodos() {
     if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 FILE"
         echo "Convert FILE from Linux format to DOS format."
@@ -381,8 +354,7 @@ linuxtodos()
     fi
 }
 #        kmg                     convert bytes into KB, MB, GB, or TB as appropriate
-kmg()
-{
+kmg() {
     if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 NUM"
     else
@@ -408,13 +380,11 @@ kmg()
     fi
 }
 #        javavnc                 java vncviewer
-javavnc()
-{
+javavnc() {
     java VncViewer HOST $1 PORT 5900
 }
 #        x                       execute with prompt
-x()
-{
+x() {
     echo "$@" | fmt
     echo -n "Execute command line? [Yn] "
     read a
@@ -423,8 +393,7 @@ x()
     esac
 }
 #        lnsdir                  make links to every file in a directory
-lnsdir()
-{
+lnsdir() {
     if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 DIR"
     else
@@ -434,8 +403,7 @@ lnsdir()
     fi
 }
 #        mailfile                mail a file (uuencoded)
-mailfile()
-{
+mailfile() {
     if [[ $# -lt 3 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 FILE SUBJECT ADDRESS..."
     else
@@ -447,8 +415,7 @@ mailfile()
     fi
 }
 #        speakurl                speak a url
-speakurl()
-{
+speakurl() {
     if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 URL"
     else
@@ -458,8 +425,7 @@ speakurl()
     fi
 }
 #        m4vtomp4                convert all m4v videos in current directory to mp4 videos
-m4vtomp4()
-{
+m4vtomp4() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 FILE..."
     else
@@ -472,8 +438,7 @@ m4vtomp4()
     fi
 }
 #        flattendir              flatten directory
-flattendir()
-{
+flattendir() {
     if [[ $# -ne 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 INDIR OUTDIR"
     else
@@ -496,8 +461,7 @@ flattendir()
     fi
 }
 #        longevity               clean out old files
-longevity()
-{
+longevity() {
     if [[ $# -ne 3 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 DIR PATTERN DAYS"
         echo "Delete all files matching PATTERN in DIR older than DAYS."
@@ -520,8 +484,7 @@ longevity()
     fi
 }
 #        seddir                  apply sed to all files in directory
-seddir()
-{
+seddir() {
     tmp=temp$$
     if [[ $# -lt 1 ]] || [[ $# -gt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 SCRIPT [DIR]"
@@ -552,13 +515,11 @@ seddir()
     fi
 }
 #        delete-broken-symlinks  find and delete broken symlinks in given directory
-delete-broken-symlinks()
-{
+delete-broken-symlinks() {
     opts="-maxdepth 0"
     dir=""
 
-    _usage()
-    {
+    _usage() {
         cat <<EOF
 Usage: $0 DIR [OPTIONS]
 Delete broken symlinks in DIR.
@@ -611,13 +572,11 @@ EOF
 # tools
 #
 #        generateqrc             generate QR code from given URL, text, or VCARD
-generateqrc()
-{
+generateqrc() {
     printf "$@" | curl -F-=\<- qrenco.de
 }
 #        colors                  show terminal colors
-colors()
-{
+colors() {
     local fgc bgc vals seq0
 
     printf "Color escapes are %s\n" '\e[${value};...;${value}m'
@@ -644,8 +603,7 @@ colors()
     done
 }
 #        colorscriptslideshow    run all colorscript scripts
-colorscriptslideshow()
-{
+colorscriptslideshow() {
     once=1
     random=0
     delay=2
@@ -657,8 +615,7 @@ colorscriptslideshow()
     length=$((${#list[@]} - 1)) # there is a bug where the last script does not work
     bad=(32 33 34)
 
-    _usage()
-    {
+    _usage() {
         cat <<EOF
 Usage: $1 [OPTIONS]
 Run colorscript scripts.
@@ -670,8 +627,7 @@ OPTIONS:
 EOF
     }
 
-    _show()
-    {
+    _show() {
         num="$1"
         # ignore scripts that never end
         if [[ ! " ${bad[@]} " =~ " ${num} " ]] ; then
@@ -731,8 +687,7 @@ EOF
     fi
 }
 #        ansi                    display an ANSI text graphic file at 1200 baud
-ansi()
-{
+ansi() {
     if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 FILE"
     else
@@ -740,8 +695,7 @@ ansi()
     fi
 }
 #        ansislideshow           display a slideshow of all ANSI text graphic files in given directory
-ansislideshow()
-{
+ansislideshow() {
     if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 DIR"
     else
@@ -756,8 +710,7 @@ ansislideshow()
 # compression
 #
 #        comp                    compress (tar then gzip)
-comp()
-{
+comp() {
     if [[ $# -lt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 ARCHIVE FILE..."
     else
@@ -767,8 +720,7 @@ comp()
     fi
 }
 #        uncomp                  uncompress (ungzip then untar)
-uncomp()
-{
+uncomp() {
     if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 FILE"
     else
@@ -799,8 +751,7 @@ uncomp()
     fi
 }
 #        unparrar                un-par-rar (par2 then unrar)
-unparrar()
-{
+unparrar() {
     if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 FILE"
     else
@@ -813,8 +764,7 @@ unparrar()
 # encryption
 #
 #        encrypt                 encrypt file
-encrypt()
-{
+encrypt() {
     if [[ $# -lt 2 ]] || [[ $# -gt 3 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 INFILE OUTFILE [PASSWORD]"
     else
@@ -833,8 +783,7 @@ encrypt()
     fi
 }
 #        decrypt                 decrypt file
-decrypt()
-{
+decrypt() {
     if [[ $# -lt 2 ]] || [[ $# -gt 3 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 INFILE OUTFILE [PASSWORD]"
     else
@@ -857,20 +806,17 @@ decrypt()
 # kill with grep
 #
 #        ktg                     kill -SIGTERM (friendly) with grep
-ktg()
-{
+ktg() {
     pkill -SIGTERM -i "$1"
 }
 #        kkg                     kill -SIGKILL (forced) with grep
-kkg()
-{
+kkg() {
     pkill -SIGTERM -i "$1"
     sleep 1
     pkill -SIGKILL -i "$1"
 }
 #        khg                     kill -HUP (restart) with grep
-khg()
-{
+khg() {
     pkill -SIGHUP -i "$1"
 }
 
@@ -878,24 +824,20 @@ khg()
 # admin tools
 #
 #        showmem                 show task memory usage
-showmem()
-{
+showmem() {
     # TODO: need to fix this
     ps -aux | sort +5n
 }
 #        showip                  show configured IP address
-showip()
-{
+showip() {
     ifconfig | awk '/inet/ {print $2}' | awk -F : '// {print $2}' | grep -v "^$"
 }
 #        showport                show active network ports
-showport()
-{
+showport() {
     lsof | grep 'COMMAND    PID' && lsof | grep 'inet'
 }
 #        showstats               show system statistics
-showstats()
-{
+showstats() {
     echo "Server Name: $(uname -n)"
     echo "Server IP:   $(net lookup $(hostname))"
     echo "Logins:      $(who | wc | awk '{print $1}')"
@@ -903,8 +845,7 @@ showstats()
     echo "Load:       $(uptime | cut -d, -f4 | cut -d: -f2)"
 }
 #        fsckshutdown            shutdown computer and fsck all drives on next bootup
-fsckshutdown()
-{
+fsckshutdown() {
 
     echo "You are about to reboot the computer and have it fsck the root drive."
     echo -n "Do you wish to proceed? [yN] "
@@ -920,8 +861,7 @@ fsckshutdown()
 # ssh
 #
 #        sshkeycp                copy ssh key to remote server
-sshkeycp()
-{
+sshkeycp() {
     if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 [USER@]SERVER"
     else
@@ -935,8 +875,7 @@ sshkeycp()
     fi
 }
 #!# this version does not work on macos
-#!sshkeycp()
-#!{
+#!sshkeycp() {
 #!    if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
 #!        echo "Usage: $0 [USER@]SERVER"
 #!    else
@@ -945,8 +884,7 @@ sshkeycp()
 #!    fi
 #!}
 #        sshurxvtcp              copy urxvt terminfo data to remote server
-sshurxvtcp()
-{
+sshurxvtcp() {
     if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 [USER@]SERVER"
     else
@@ -960,28 +898,23 @@ sshurxvtcp()
 # disk
 #
 #        hdfast                  speed up hard disk access
-hdfast()
-{
+hdfast() {
     hdparm -c1 -d1 -k1 "/dev/$1"
 }
 #        hdi                     hard disk info
-hdi()
-{
+hdi() {
     hdparm -i "/dev/$1"
 }
 #        hdv                     hard disk settings
-hdv()
-{
+hdv() {
     hdparm -v "/dev/$1"
 }
 #        hdt                     hard disk speed test
-hdt()
-{
+hdt() {
     hdparm -tT "/dev/$1"
 }
 #        diskuuid                print uuids for system disks
-diskuuid()
-{
+diskuuid() {
     output=$(
         (
             unset extendeds
@@ -1020,8 +953,7 @@ diskuuid()
 # edit
 #
 #        emacsed                 launch emacs editor
-emacsed()
-{
+emacsed() {
     # set optional wait state
     if [[ -n "${WAIT}" ]] ; then
         wait=""
@@ -1093,13 +1025,11 @@ emacsed()
     fi
 }
 #        emacsedwait             launch persistent emacs editor and wait
-emacsedwait()
-{
+emacsedwait() {
     WAIT=1 emacsed "$@"
 }
 #        emacsvied               emacs or vi editor
-emacsvied()
-{
+emacsvied() {
     WAIT=1 VI=1 emacsed "$@"
     if [[ -x "$(pathcmd vim)" ]] ; then
         emacsclient --no-wait --alternate-editor "vim" "$@"
@@ -1114,8 +1044,7 @@ emacsvied()
 # web
 #
 #        websearch               google search
-websearch()
-{
+websearch() {
     if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 QUERY"
     else
@@ -1123,8 +1052,7 @@ websearch()
     fi
 }
 #        leach                   leach files from the web
-leach()
-{
+leach() {
     if [[ $# -lt 1 ]] || [[ $# -gt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 URL [PATTERN[,...]]"
     else
@@ -1143,8 +1071,7 @@ leach()
 # ssl certificates
 #
 #        makecert                make ssl certificate
-makecert()
-{
+makecert() {
     if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 NAME"
     else
@@ -1159,8 +1086,7 @@ makecert()
 # convert directory contents
 #
 #        lowerdir                convert dir to lowercase
-lowerdir()
-{
+lowerdir() {
     echo "You are about to convert the contents of the current directory"
     echo "'$(pwd)' to lowercase,"
     echo "overwriting exiting files if needed."
@@ -1179,8 +1105,7 @@ lowerdir()
     esac
 }
 #        uncompressdirtree       uncompress all zip files in given directory tree
-uncompressdirtree()
-{
+uncompressdirtree() {
     echo "You are about to uncompress the contents of the current directory"
     echo "'$(pwd)' and all of its children, and delete the original files."
     echo "Only .zip files are considered."
@@ -1201,8 +1126,7 @@ uncompressdirtree()
 #
 #!#        pmi                     pamac install or build
 #!#
-#!pmi()
-#!{
+#!pmi() {
 #!    if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
 #!        echo "Usage: $0 PACKAGE"
 #!    else
@@ -1210,8 +1134,7 @@ uncompressdirtree()
 #!    fi
 #!}
 #        yasi                    yay search installed packages
-yasi()
-{
+yasi() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 PACKAGE"
     else
@@ -1224,8 +1147,7 @@ yasi()
 #
 #        acsg                    apt-cache search with grep
 #
-acsg()
-{
+acsg() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 QUERY"
     else
@@ -1237,13 +1159,11 @@ acsg()
 # dvd encode
 #
 #        dvdtitles               list dvd titles
-dvdtitles()
-{
+dvdtitles() {
     lsdvd /dev/dvd
 }
 #        dvdencode               encode a dvd track
-dvdencode()
-{
+dvdencode() {
     if [[ $# -lt 1 ]] || [[ $# -gt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 TRACK [FILE]"
     else
@@ -1273,13 +1193,11 @@ dvdencode()
 # git
 #
 #        gitbranch               git branch name
-gitbranch()
-{
+gitbranch() {
     git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
 }
 #        gitbranchprompt         git branch name for terminal prompt
-gitbranchprompt()
-{
+gitbranchprompt() {
     gitbranch=$(gitbranch)
     if [[ -z "${gitbranch}" ]] ; then
         echo ""
@@ -1288,8 +1206,7 @@ gitbranchprompt()
     fi
 }
 #        gitsynchome             pull, commit, and push home git repository
-gitsynchome()
-{
+gitsynchome() {
     dirs=("config" "config-private" "dev" "doc" "web")
 
     # output datetime
@@ -1356,8 +1273,7 @@ gitsynchome()
 # backup / copy
 #
 #        backupfiles             backup a file or directory to /home/backup
-backupfiles()
-{
+backupfiles() {
     if [[ $# -lt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 PREFIX FILE..."
     else
@@ -1373,8 +1289,7 @@ backupfiles()
     fi
 }
 #!#        rsyncbi               rsync backup system (incremental)
-#!rsyncbi()
-#!{
+#!rsyncbi() {
 #!    if [[ $# -gt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
 #!        echo "Usage: $0 [PATH] [DEST]"
 #!        echo "Backup system to server."
@@ -1419,8 +1334,7 @@ backupfiles()
 #!    fi
 #!}
 #        copysystem              copy system files
-copysystem()
-{
+copysystem() {
     if [[ $# -ne 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 SOURCE DEST"
         echo "Copy system to destination path."
@@ -1455,8 +1369,7 @@ copysystem()
     fi
 }
 #        copykyle                copy key files from /home/kyle to ${HOME}
-copykyle()
-{
+copykyle() {
     echo -n "Are you sure you want to copy main files from /home/kyle to ${HOME}? [yN] "
     read a
     case "${a}" in
@@ -1501,8 +1414,7 @@ copykyle()
     esac
 }
 #        copyhome                copy key home files from a remote source to ${HOME}
-copyhome()
-{
+copyhome() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 [USER@]SOURCE [init]"
         echo "Copy key home files from a remote SOURCE to ${HOME}."
@@ -1541,8 +1453,7 @@ copyhome()
     fi
 }
 #        rsynchome               rsync home files from one location with another
-rsynchome()
-{
+rsynchome() {
     if [[ $# -lt 2 ]] || [[ $# -gt 3 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 [USER@]SOURCE [USER@]DEST [init]"
         echo "Synchronize key home files from one location to another."
@@ -1586,8 +1497,7 @@ rsynchome()
     fi
 }
 #        rsynccruzer                     copy ISOs and bundle to sandisk cruzer
-rsynccruzer()
-{
+rsynccruzer() {
     # check destination
     dest="/run/media/${USER}/ventoy/"
     if [[ ! -d ${dest} ]] ; then
@@ -1614,8 +1524,7 @@ rsynccruzer()
     rsyncbundle
 }
 #        rsyncbundle                     generate encrypted bundle and copy it to mounted ventoy usb
-rsyncbundle()
-{
+rsyncbundle() {
     # check destination
     dest="/run/media/${USER}/FILES/"
     if [[ ! -d "${dest}" ]] ; then
@@ -1646,8 +1555,7 @@ rsyncbundle()
 # java
 #
 #        jarversion              display java version used to build jars
-jarversion()
-{
+jarversion() {
     if [[ $# -gt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 [DIR [PATTERN]]"
         echo "Display Java version used to build jar files in DIR matching PATTERN."
@@ -1679,8 +1587,7 @@ jarversion()
 # android
 #
 #        adblogapp               show adb log for specific app
-adblogapp()
-{
+adblogapp() {
     if [[ $# -lt 1 ]] || [[ $# -gt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 [PARAMS] PACKAGE"
         echo "Dump the ADB log for a specific PACKAGE."
@@ -1699,8 +1606,7 @@ adblogapp()
 # howto
 #
 #        howtokernel             howto build the kernel
-howtokernel()
-{
+howtokernel() {
     cat <<EOF
 HowTo Build the Kernel in Gentoo
 
@@ -1719,8 +1625,7 @@ Note:  This will delete the .config file.
 EOF
 }
 #        howtogrub               howto setup grub bootloader
-howtogrub()
-{
+howtogrub() {
     cat <<EOF
 HowTo Setup the Grub Bootloader
 
@@ -1748,8 +1653,7 @@ EOF
 # setup
 #
 #        homehowto               howto setup git home dir on a new machine
-howtohome()
-{
+howtohome() {
     user=${USER}
     cat <<EOF
 Install ccrypt
@@ -1781,8 +1685,7 @@ Install manjaro packages and setup system:
 EOF
 }
 #        homeinitialize          stow links from ~/ to ~/config and ~/config-private dirs
-homeinitialize()
-{
+homeinitialize() {
     backupdir="${HOME}/original-configuration-files-$(date +'%Y%m%d')"
     backupfiles=(
         ".bash_logout"
@@ -1855,8 +1758,7 @@ homeinitialize()
     esac
 }
 #        homerestow              restow links from ~/ to ~/config and ~/config-private dirs
-homerestow()
-{
+homerestow() {
     # create stow target directories
     echo "Creating stow target directories..."
     mkdir -p "${HOME}/.emacs.d"
@@ -1877,10 +1779,8 @@ homerestow()
     stow --dir="${HOME}/config-private" --target="${HOME}" --no-folding --restow "config"
 }
 #        manjaroinitialize       install manjaro packages and setup system
-manjaroinitialize()
-{
-    _getsection()
-    {
+manjaroinitialize() {
+    _getsection() {
         file="${HOME}/org/personal.org"
         regexp="/^#\+NAME: $1\$/,/^#\+END_SRC\$/{print \$0}"
         awk "${regexp}" "${file}" | tail -n +3 | head -n -1 | sed 's/^  //'
