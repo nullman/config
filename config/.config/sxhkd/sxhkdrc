@@ -183,11 +183,11 @@ super + shift + t
 
 # git synchronize config
 super + alt + y
-    source "${HOME}/.funct" && gitsyncconfig 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12" && notify-send --expire-time=2000 'Config repos synced'
+    source "${HOME}/.funct" && (gitsyncconfig && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12"
 
 # git synchronize extra
 super + alt + u
-    source "${HOME}/.funct" && gitsyncextra 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12" && notify-send --expire-time=2000 'doc/dev/web repos synced'
+    source "${HOME}/.funct" && (gitsyncextra && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12"
 
 # start screen saver
 super + alt + s
