@@ -359,6 +359,8 @@ alias tb="nc termbin.com 9999"
 alias starwars="telnet towel.blinkenlights.nl"
 #        rickroll                terminal rick-roll
 alias rickroll="curl -s -L https://raw.githubusercontent.com/keroserene/rickrollrc/master/roll.sh | bash"
+#        rate                    display top crypto currency rates
+alias rate="curl --silent rate.sx"
 
 #
 # general (complex)

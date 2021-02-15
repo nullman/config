@@ -8,7 +8,7 @@
 #+LANGUAGE: en
 #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
 #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-#+TIMESTAMP: <2021-02-12 14:25 (kyle)>
+#+TIMESTAMP: <2021-02-14 11:58 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -1706,7 +1706,7 @@ Increase maximum mini-window height.
   If WIDTH is given, it is used to set the TAB width.
   Otherwise, `local-tab-width' is used."
     (let ((width (or width local-tab-width)))
-      (setq indent-tabs-mode enable       ; do not insert tab characters
+      (setq indent-tabs-mode enable       ; whether to insert tab characters
             tab-width width               ; set tab width
             standard-indent width         ; set margin-changing functions indent
             tab-always-indent 'complete ; tab key will try to auto-complete after auto-tabbing line
@@ -1735,11 +1735,12 @@ Increase maximum mini-window height.
 
   ;; enable tab mode hooks
   ;;(add-hook 'asm-mode-hook #'enable-tabs-8)
+  ;;(add-hook 'prog-mode-hook #'enable-tabs)
 
   ;; disable tab mode hooks
   (add-hook 'emacs-lisp-mode-hook #'disable-tabs)
-  ;;(add-hook 'lisp-mode-hook #'disable-tabs)
-  (add-hook 'prog-mode-hook #'enable-tabs)
+  (add-hook 'lisp-mode-hook #'disable-tabs)
+  (add-hook 'prog-mode-hook #'disable-tabs)
 #+END_SRC
 
 *** +Mode Line+
@@ -24868,14 +24869,11 @@ A major mode for editing makefiles.
 
   (use-package make-mode
     :mode ("Makefile" . makefile-mode)
-    :commands (make-mode)
     :config
-    ;; enable tabs
-    (enable-tabs)
-
-    ;; ;; remove trailing blanks
-    ;; (add-hook 'auto-mode-hook #'install-remove-trailing-blanks)
-    )
+    (defun local-makefile-mode-hook ()
+      ;; enable tabs
+      (enable-tabs))
+    (add-hook 'makefile-mode-hook #'local-makefile-mode-hook))
 #+END_SRC
 
 *** Markdown Mode
@@ -25840,12 +25838,12 @@ Provides the fundamental text mode documented in the Emacs user's manual.
     :config
     (defun local-text-mode-hook ()
       ;; set tab
-      (setq tab-width 4)
-      (setq tab-stop-list (number-sequence 4 76 4))
-      ;; (setq tab-width 8)
-      ;; (setq tab-stop-list (number-sequence 8 76 8))
-      (setq indent-tabs-mode t)           ; can insert TAB characters
-      (bind-key "<tab>" 'indent-relative text-mode-map)
+      ;;(setq tab-width 4)
+      ;;(setq tab-stop-list (number-sequence 4 76 4))
+      (setq tab-width 8)
+      (setq tab-stop-list (number-sequence 8 76 8))
+      ;;(setq indent-tabs-mode t)           ; can insert TAB characters
+      ;;(bind-key "<tab>" 'indent-relative text-mode-map)
 
       ;; set default fill column for auto-fill mode
       (setq fill-column 78)
