@@ -301,13 +301,6 @@ alias monitor-above="
 #!alias alsa-reset="sudo alsa force-reload"
 #        pulse-reset             restart pulseaudio sound
 alias pulse-reset="pkill -x pulseaudio ; sleep 2 ; pulseaudio --daemonize=no &"
-#        mpd-reset               restart mpd
-#!alias mpd-reset="sudo systemctl restart mpd.service"
-alias mpd-reset="(pkill -x mpd ; mpd) > /dev/null 2>&1"
-#        mpc-status              display artist and title of current song
-alias mpc-status="notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' \"\$(mpc | head -n 1)\""
-#        mpc-update              update mpc database
-alias mpc-update="mpc --wait update"
 #        ver                     distribution version
 alias ver="lsb_release -a"
 #        kernel                  kernel version
@@ -2416,10 +2409,24 @@ alias droplet-env-nullware-1="eval \"\$(docker-machine env droplet-nullware-1)\"
 #
 # ckermit
 #
-# ckermit-m100                 ckermit setup to connect to an M100/102/200 connected to ttyUSB0
+#        ckermit-m100            ckermit setup to connect to an M100/102/200 connected to ttyUSB0
 alias ckermit-m100="sudo ckermit \${HOME}/.ckermit_m100_connection"
-# ckermit-hp95lx               ckermit setup to connect to an HP95LX connected to ttyUSB0
+#        ckermit-hp95lx          ckermit setup to connect to an HP95LX connected to ttyUSB0
 alias ckermit-hp95lx="sudo ckermit \${HOME}/.ckermit_hp95lx_connection"
+
+#
+# mpd (Music Player Daemon)
+#
+#        mpd-service-enable      sudo systemctl --user enable/start mpd
+alias mpd-service-enable="sudo systemctl --user enable mpd && sudo systemctl --user start mpd"
+#        mpd-service-disable     sudo systemctl --user disable mpd
+alias mpd-service-disable="sudo systemctl --user disable mpd"
+#        mpd-service-restart     sudo systemctl --user restart mpd
+alias mpd-service-restart="sudo systemctl --user restart mpd"
+#        mpc-status              display artist and title of current song
+alias mpc-status="notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' \"\$(mpc | head -n 1)\""
+#        mpc-update              update mpc database
+alias mpc-update="mpc --wait update"
 
 #
 # pacman (Package Manager)
@@ -3108,8 +3115,6 @@ alias make-ssh-config="
 #!    fi"
 #        make-dict-words                 make /usr/share/dict/words file
 alias make-dict-words="sudo wget https://gist.githubusercontent.com/wchargin/8927565/raw/d9783627c731268fb2935a731a618aa8e95cf465/words -O /usr/share/dict/words"
-#        disable-mpd-service             sudo systemctl disable mpd
-alias disable-mpd-service="sudo systemctl disable mpd"
 #!#        make-run-on-wakeup-script make /etc/pm/sleep.d/50-run-on-wakup
 #!alias make-run-on-wakeup-script="
 #!    o=/etc/pm/sleep.d/50-run-on-wakup

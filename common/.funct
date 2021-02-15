@@ -1205,12 +1205,10 @@ gitbranchprompt() {
         echo " ($(gitbranch))"
     fi
 }
-#        gitsynchome             pull, commit, and push home git repository
-gitsynchome() {
-    dirs=("config" "config-private" "dev" "doc" "web")
-
-    # output datetime
-    date '+%Y-%m-%d %H:%M:%S'
+#        _gitsync                pull, commit, and push given home git repositories
+_gitsync() {
+    dirs=("$@")
+    echo "${dirs[@]}"
 
     # remove org font files
     echo "Removing org font files..."
@@ -1229,6 +1227,30 @@ gitsynchome() {
             (cd "${dir}" && git pull origin)
         fi
     done
+
+    # commit (check in) home git repositories (default update)
+    for dir in ${dirs[@]} ; do
+        if [[ -d "${dir}" ]] ; then
+            echo "Committing '${dir}'..."
+            (cd "${dir}" && git commit -a -m "Update")
+        fi
+    done
+
+    # push home git repositories (to origin)
+    for dir in ${dirs[@]} ; do
+        if [[ -d "${dir}" ]] ; then
+            echo "Pushing '${dir}' to origin..."
+            (cd "${dir}" && git push origin)
+        fi
+    done
+}
+#        gitsyncconfig           pull, commit, and push config git repositories
+gitsyncconfig() {
+    # output datetime
+    date '+%Y-%m-%d %H:%M:%S'
+
+    # sync config repositories
+    _gitsync "config" "config-private"
 
     #if [[ -L .cron ]] && [[ -f config-private/custom/$(uname -n)/.cron ]] ; then
     #    echo "Update crontab..."
@@ -1249,24 +1271,21 @@ gitsynchome() {
              cp .xscreensaver config-private/common/ && \
              ln -sf config-private/common/.xscreensaver)
     fi
+}
+#        gitsyncextra            pull, commit, and push extra home git repositories
+gitsyncextra() {
+    # output datetime
+    date '+%Y-%m-%d %H:%M:%S'
 
-    # commit (check in) home git repositories (default update)
-    for dir in ${dirs[@]} ; do
-        if [[ -d "${dir}" ]] ; then
-            echo "Committing '${dir}'..."
-            (cd "${dir}" && git commit -a -m "Update")
-        fi
-    done
-
-    # push home git repositories (to origin)
-    for dir in ${dirs[@]} ; do
-        if [[ -d "${dir}" ]] ; then
-            echo "Pushing '${dir}' to origin..."
-            (cd "${dir}" && git push origin)
-        fi
-    done
-
-    echo "Done"
+    # sync extra repositories
+    _gitsync "dev" "doc" "web"
+}
+#        gitsynchome             pull, commit, and push all home git repositories
+gitsynchome() {
+    # sync all home repositories
+    gitsyncconfig
+    echo
+    gitsyncextra
 }
 
 #
