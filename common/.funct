@@ -1208,7 +1208,6 @@ gitbranchprompt() {
 #        _gitsync                pull, commit, and push given home git repositories
 _gitsync() {
     dirs=("$@")
-    echo "${dirs[@]}"
 
     # remove org font files
     echo "Removing org font files..."
