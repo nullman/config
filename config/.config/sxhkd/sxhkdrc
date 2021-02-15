@@ -181,9 +181,13 @@ super + shift + r
 super + shift + t
     pkill -SIGUSR1 --exact tint2 && notify-send --expire-time=2000 'Reloading Tint'
 
-# git synchronize home
+# git synchronize config
 super + alt + y
-    source "${HOME}/.funct" && gitsynchome 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12"
+    source "${HOME}/.funct" && gitsyncconfig 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12" && notify-send --expire-time=2000 'Config repos synced'
+
+# git synchronize extra
+super + alt + u
+    source "${HOME}/.funct" && gitsyncextra 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12" && notify-send --expire-time=2000 'doc/dev/web repos synced'
 
 # start screen saver
 super + alt + s
