@@ -15644,6 +15644,9 @@ otherwise run `find-file-as-root'."
   :config
   (defun local-asm-mode-hook ()
     "Customizations for asm-mode."
+    ;; remove using ';' in place of M-; to insert a comment
+    (local-unset-key (vector asm-comment-char))
+
     ;; ;; enable tabs
     ;; (add-hook 'asm-mode-hook #'enable-tabs-8)
 
@@ -15654,16 +15657,28 @@ otherwise run `find-file-as-root'."
     ;;       tab-always-indent nil       ; tab key will insert a tab
     ;;       tab-stop-list (number-sequence 8 180 8)) ; tab stops set to every 8 spaces
 
-    ;; set tab indentation, width, and convert tabs to spaces
-    (setq indent-tabs-mode nil        ; do not insert tab characters
-          tab-width 8                 ; default tab width is four spaces
-          standard-indent 8           ; default margin-changing functions indent
-          tab-always-indent nil       ; tab key will insert a tab
-          tab-stop-list (number-sequence 8 180 8)) ; tab stops set to every 8 spaces
+    ;; ;; set tab indentation, width, and convert tabs to spaces
+    ;; (setq indent-tabs-mode nil        ; do not insert tab characters
+    ;;       tab-width 4                 ; default tab width is four spaces
+    ;;       standard-indent 4           ; default margin-changing functions indent
+    ;;       tab-always-indent complete  ; tab key will insert a tab
+    ;;       tab-stop-list (number-sequence 4 180 4)) ; tab stops set to every 4 spaces
 
     ;; disable tabs
-    (disable-tabs))
-    (add-hook 'asm-mode-hook #'local-asm-mode-hook))
+    ;;(disable-tabs)
+
+    ;; (defun asm-calculate-indentation ()
+    ;;   (or
+    ;;    ;; Flush labels to the left margin.
+    ;;    (and (looking-at "\\(\\sw\\|\\s_\\)+:") 0)
+    ;;    ;; Same thing for `;;;' comments.
+    ;;    (and (looking-at "\\s<\\s<\\s<") 0)
+    ;;    ;; Simple `;' comments go to the comment-column.
+    ;;    (and (looking-at "\\s<\\(\\S<\\|\\'\\)") comment-column)
+    ;;    ;; The rest goes at the first tab stop.
+    ;;    (indent-next-tab-stop 0)))
+    )
+  (add-hook 'asm-mode-hook #'local-asm-mode-hook))
 ;; ASM:1 ends here
 
 ;; [[file:init-emacs.org::*Brainfuck][Brainfuck:1]]
