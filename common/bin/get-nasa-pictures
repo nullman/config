@@ -9,29 +9,28 @@
 # Author: Kyle W T Sherman
 #===============================================================================
 
-urlbase="https://apod.nasa.gov/apod/"
+urlbase="https://apod.nasa.gov/apod"
 archive="${urlbase}/archivepix.html"
-images="${urlbase}/image/"
-dir="/home/data/media/nasa_pictures/apod/"
+dir="/home/data/media/nasa_pictures/apod"
 index="/tmp/nasa-pictures-index"
 
-wget "${archive}" -q -O - | grep 'href="ap' | sed 's/^.*\"ap/ap/ ; s/\".*$//' > ${index}
+wget "${archive}" -q -O - | grep 'href="ap' | sed 's/^.*\"ap/ap/ ; s/\".*$//' > "${index}"
 
 done=0
-for page in $(cat ${index}) ; do
-    image=$(wget "${urlbase}${page}" -q -O - | grep 'href="image/' | sed 's/^.*href="// ; s/".*$//')
-    file="${dir}${image}"
-    mkdir -p $(dirname ${file})
+for page in $(cat "${index}") ; do
+    image=$(wget "${urlbase}/${page}" -q -O - | grep 'href="image/' | sed 's/^.*href="// ; s/".*$//')
+    file="${dir}/${image}"
+    mkdir -p "$(dirname ${file})"
     if [[ -f "${file}" ]] ; then
         echo "All images downloaded"
         break
     fi
     echo "Fetching: ${page}"
-    echo "          ${urlbase}${image}"
+    echo "          ${urlbase}/${image}"
     echo "       => ${file}"
-    wget "${urlbase}${image}" -q -O "${file}"
+    wget "${urlbase}/${image}" -q -O "${file}"
 done
-rm -f ${index}
+rm -f "${index}"
 
 #===============================================================================
 # End of File
