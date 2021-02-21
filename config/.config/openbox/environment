@@ -6,6 +6,11 @@
 # Reference:  http://openbox.org/
 #===============================================================================
 
+# check if executable command is found in the path
+_command() {
+    command -v "$1" > /dev/null 2>&1
+}
+
 # language for displaying messages and time/date formats
 LANG="en_US.UTF-8"
 
@@ -17,7 +22,7 @@ export XDG_CURRENT_DESKTOP="XFCE"
 export DE="xfce"
 
 # dbus with openbox
-if [[ $(_command dbus-launch) ]] && [[ -z "$DBUS_SESSION_BUS_ADDRESS" ]] ; then
+if _command dbus-launch && [[ -z "$DBUS_SESSION_BUS_ADDRESS" ]] ; then
     eval "$(dbus-launch --sh-syntax --exit-with-session)"
 fi
 
