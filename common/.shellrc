@@ -74,6 +74,8 @@ export home="${HOME}"
 export TERMINAL="${TERM}"
 export PAGER="less"
 export LESS="--CLEAR-SCREEN --quit-if-one-screen --ignore-case --jump-target=10 --LONG-PROMPT --RAW-CONTROL-CHARS --no-init --tilde --shift 4"
+export MANPAGER="less"
+#_command bat && export BAT_THEME="ansi-dark" && export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 export PROCESS_SHELL="$(ps -hp $$ | awk '{print $5}')"
 export EDITOR="emacsed"                 # default terminal editor
 export VISUAL="${EDITOR}"               # default GUI editor
