@@ -1054,15 +1054,6 @@ Otherwise, `local-tab-width' is used."
 (defun enable-tabs-8 ()
   "Enable TAB character usage with a width of 8 spaces."
   (set-tabs t 8))
-
-;; enable tab mode hooks
-;;(add-hook 'asm-mode-hook #'enable-tabs-8)
-;;(add-hook 'prog-mode-hook #'enable-tabs)
-
-;; disable tab mode hooks
-(add-hook 'emacs-lisp-mode-hook #'disable-tabs)
-(add-hook 'lisp-mode-hook #'disable-tabs)
-(add-hook 'prog-mode-hook #'disable-tabs)
 ;; Tabs:2 ends here
 
 ;; [[file:init-emacs.org::*GUI][GUI:1]]
@@ -2133,6 +2124,8 @@ DATA should have been made by `org-outline-overlay-data'."
   ;; advise `outline-up-heading' to suppress errors
   (advice-add 'outline-up-heading :around #'outline-up-heading--ignore-errors))
 
+;; (init-message 3 "org-pdfview")
+
 ;; needs pdftools, which annoyingly recompiles on every boot
 ;; (use-package org-pdfview
 ;;   :quelpa (org-pdfview)
@@ -2401,6 +2394,33 @@ DATA should have been made by `org-outline-overlay-data'."
     (interactive)
     (org-map-entries 'org-archive-subtree "/DONE" 'file)))
 ;; Agenda:1 ends here
+
+;; [[file:init-emacs.org::*Alerts][Alerts:1]]
+(init-message 2 "Org Mode: Alerts")
+
+;; (use-package org-alert
+;;   :quelpa (org-alert)
+;;   :after (org)
+;;   :custom (alert-default-style 'notifications)
+;;   :config
+;;   (setq org-alert-interval 300
+;;         org-alert-notification-title "Org Reminder"))
+
+(use-package org-wild-notifier
+  :quelpa (org-wild-notifier)
+  :after (org)
+  :custom
+  (alert-default-style 'notifications)
+  (org-wild-notifier-alert-time '(1 10 30))
+  (org-wild-notifier-keyword-whitelist '("TODO" "NEXT"))
+  (org-wild-notifier-notification-title "Org Reminder")
+  :init (org-wild-notifier-mode 1))
+
+;; (use-package org-notify
+;;   :quelpa (org-notify)
+;;   :after (org)
+;;   :init (org-notify-start))
+;; Alerts:1 ends here
 
 ;; [[file:init-emacs.org::*Modules][Modules:1]]
 ;;------------------------------------------------------------------------------
@@ -3027,69 +3047,69 @@ same directory as the org-buffer and insert a link to this file."
 
 (init-message 2 "Org Mode: Hook")
 
+(defun local-org-mode-hook ()
+  ;; remappings
+  (bind-keys :map org-mode-map
+             ([remap org-metaleft] . org-safe-metaleft)
+             ([remap org-metaright] . org-safe-metaright)
+             ([remap org-metadown] . org-safe-metadown)
+             ([remap org-metaup] . org-safe-metaup)
+             ([remap org-shiftmetaleft] . org-safe-shiftmetaleft)
+             ([remap org-shiftmetaright] . org-safe-shiftmetaright)
+             ([remap org-shiftmetadown] . org-safe-shiftmetadown)
+             ([remap org-shiftmetaup] . org-safe-shiftmetaup))
+  ;; local key bindings
+  (bind-keys :map org-mode-map
+             ("M-n" . scroll-up)
+             ("M-p" . scroll-down)
+             ("M-W" . org-copy-to-clipboard)
+             ("C-M-b" . org-metaleft)
+             ("C-M-f" . org-metaright)
+             ("C-M-n" . org-metadown)
+             ("C-M-p" . org-metaup)
+             ("C-M-S-b" . org-shiftmetaleft)
+             ("C-M-S-f" . org-shiftmetaright)
+             ("C-M-S-n" . org-shiftmetadown)
+             ("C-M-S-p" . org-shiftmetaup)
+             ;;("C-c C-<return>" . org-insert-heading)
+             ("C-c a" . org-agenda)
+             ("C-c l" . org-store-link)
+             ("C-c m" . org-insert-todo-heading)
+             ("C-c p" . org-priority) ; "C-c ," gets overridden by `semantic-complete-analyze-inline'
+             ("C-c s" . org-sort-current) ; sort current level
+             ("C-c z" . org-agenda-archive-done-tasks) ; archive done tasks
+             ("C-c C-g" . org-goto)                    ; goto a location
+             ;;("C-c C-z" . switch-to-lisp) ; defaults to `org-add-note'
+             ("C-c C-z" . geiser-mode-switch-to-repl) ; defaults to `org-add-note'
+             ("C-c C-x C-l" . org-toggle-link-display) ; toggle showing or hiding links
+             ("C-c C-x t" . org-toggle-headline-checkbox) ; toggle between headline and checkbox
+             ("C-c C-x T" . org-toggle-literate-programming-code-block) ; toggle literate programming code block on/off
+             ("C-c C-x F" . org-fix-literate-programming-heading) ; fix literate programming heading of current org section
+             ("C-c C-v q" . org-babel-tangle-block) ; tangle current source block
+             ("C-c C-v C-q" . org-babel-tangle-block)) ; tangle current source block
+  ;; custom movement keys
+  (custom-key-bindings-movement-keys org-mode-map)
+
+  ;; ;; work functions
+  ;; (when (fboundp 'work-linkify-jira-card)
+  ;;   (bind-keys :map org-mode-map ("C-c C-x L" . work-linkify-jira-card)))
+
+  ;; make sure tabs are not inserted
+  (setq indent-tabs-mode nil)
+
+  ;; turn off auto-fill mode
+  (turn-off-auto-fill)
+
+  ;; turn off auto-save mode
+  (auto-save-mode nil)
+
+  ;; turn off flyspell
+  ;; (when (fboundp 'flyspell-mode-off)
+  ;;   (flyspell-mode-off))
+  )
+
 (use-package org
-  :config
-  (defun local-org-mode-hook ()
-    ;; remappings
-    (bind-keys :map org-mode-map
-               ([remap org-metaleft] . org-safe-metaleft)
-               ([remap org-metaright] . org-safe-metaright)
-               ([remap org-metadown] . org-safe-metadown)
-               ([remap org-metaup] . org-safe-metaup)
-               ([remap org-shiftmetaleft] . org-safe-shiftmetaleft)
-               ([remap org-shiftmetaright] . org-safe-shiftmetaright)
-               ([remap org-shiftmetadown] . org-safe-shiftmetadown)
-               ([remap org-shiftmetaup] . org-safe-shiftmetaup))
-    ;; local key bindings
-    (bind-keys :map org-mode-map
-               ("M-n" . scroll-up)
-               ("M-p" . scroll-down)
-               ("M-W" . org-copy-to-clipboard)
-               ("C-M-b" . org-metaleft)
-               ("C-M-f" . org-metaright)
-               ("C-M-n" . org-metadown)
-               ("C-M-p" . org-metaup)
-               ("C-M-S-b" . org-shiftmetaleft)
-               ("C-M-S-f" . org-shiftmetaright)
-               ("C-M-S-n" . org-shiftmetadown)
-               ("C-M-S-p" . org-shiftmetaup)
-               ;;("C-c C-<return>" . org-insert-heading)
-               ("C-c a" . org-agenda)
-               ("C-c l" . org-store-link)
-               ("C-c m" . org-insert-todo-heading)
-               ("C-c p" . org-priority) ; "C-c ," gets overridden by `semantic-complete-analyze-inline'
-               ("C-c s" . org-sort-current) ; sort current level
-               ("C-c z" . org-agenda-archive-done-tasks) ; archive done tasks
-               ("C-c C-g" . org-goto)                    ; goto a location
-               ;;("C-c C-z" . switch-to-lisp) ; defaults to `org-add-note'
-               ("C-c C-z" . geiser-mode-switch-to-repl) ; defaults to `org-add-note'
-               ("C-c C-x C-l" . org-toggle-link-display) ; toggle showing or hiding links
-               ("C-c C-x t" . org-toggle-headline-checkbox) ; toggle between headline and checkbox
-               ("C-c C-x T" . org-toggle-literate-programming-code-block) ; toggle literate programming code block on/off
-               ("C-c C-x F" . org-fix-literate-programming-heading) ; fix literate programming heading of current org section
-               ("C-c C-v q" . org-babel-tangle-block) ; tangle current source block
-               ("C-c C-v C-q" . org-babel-tangle-block)) ; tangle current source block
-    ;; custom movement keys
-    (custom-key-bindings-movement-keys org-mode-map)
-
-    ;; ;; work functions
-    ;; (when (fboundp 'work-linkify-jira-card)
-    ;;   (bind-keys :map org-mode-map ("C-c C-x L" . work-linkify-jira-card)))
-
-    ;; make sure tabs are not inserted
-    (setq indent-tabs-mode nil)
-
-    ;; turn off auto-fill mode
-    (turn-off-auto-fill)
-
-    ;; turn off auto-save mode
-    (auto-save-mode nil)
-
-    ;; turn off flyspell
-    ;; (when (fboundp 'flyspell-mode-off)
-    ;;   (flyspell-mode-off))
-    )
-  (add-hook 'org-mode-hook #'local-org-mode-hook))
+  :hook (org-mode . local-org-mode-hook))
 ;; Hook:1 ends here
 
 ;; [[file:init-emacs.org::*Babel][Babel:1]]
