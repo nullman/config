@@ -104,8 +104,8 @@ _ba Chromium desktop='^4' follow=on
 _ba Google-chrome desktop='^4' follow=on
 _ba gopherus-sdl desktop='^4' follow=on
 _ba Pcmanfm desktop='^5' follow=on
-_ba Org.gnome.Nautilus desktop='^5' follow=on
 _ba Thunar desktop='^5' follow=on
+_ba Org.gnome.Nautilus desktop='^5' follow=on
 _ba Transmission-gtk desktop='^5' follow=on
 _ba balena-etcher-electron desktop='^5' follow=on
 _ba Ghb desktop='^5' follow=on

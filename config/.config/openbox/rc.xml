@@ -1828,7 +1828,7 @@
         <width>50%</width>
       </size>
     </application>
-    <application class="Org.gnome.Nautilus">
+    <application class="Thunar">
       <desktop>5</desktop>
       <position force="no">
         <x>-0</x>
@@ -1839,7 +1839,7 @@
         <width>50%</width>
       </size>
     </application>
-    <application class="Thunar">
+    <application class="Org.gnome.Nautilus">
       <desktop>5</desktop>
       <position force="no">
         <x>-0</x>

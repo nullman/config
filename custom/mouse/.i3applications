@@ -29,6 +29,7 @@ i3-msg "exec alacritty -e ~/bin/run-screen"
 #i3-msg "exec firefox"
 #i3-msg "exec chromium"
 #i3-msg "exec --no-startup-id pcmanfm"
+#i3-msg "exec --no-startup-id thunar"
 #i3-msg "exec idea"
 
 # example using a saved i3 workspace via the i3-save-tree command

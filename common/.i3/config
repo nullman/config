@@ -510,12 +510,14 @@ smart_borders on
 
 # open specific applications in specific windows
 # use xprop to determine application classes
+#assign [class="Alacritty"] $workspace1
 assign [class="Emacs"] $workspace2
 assign [class="Slack"] $workspace3
 assign [class="Thunderbird"] $workspace3
-assign [class="Firefox"] $workspace4
+assign [class="firefox"] $workspace4
 assign [class="Chromium"] $workspace4
 assign [class="pcmanfm"] $workspace5
+assign [class="Thunar"] $workspace5
 assign [class="Org.gnome.Nautilus"] $workspace5
 assign [class="jetbrains-idea-ce"] $workspace6
 assign [class="dosbox"] $workspace6
@@ -570,8 +572,10 @@ bindsym $super+$alt+m exec pavucontrol
 # other
 #bindsym $super+F2 exec palemoon
 #bindsym $super+F3 exec pcmanfm
+#bindsym $super+F3 exec thunar
 #bindsym $super+F3 exec ranger
 #bindsym $super+Shift+F3 exec gksu pcmanfm
+#bindsym $super+Shift+F3 exec gksu thunar
 #bindsym $super+F5 exec terminal -e 'mocp'
 #bindsym $super+t exec --no-startup-id pkill compton
 #bindsym $super+Ctrl+t exec --no-startup-id compton -b

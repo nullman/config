@@ -26,6 +26,7 @@ alacritty -e ~/bin/run-screen &
 #firefox &
 #chromium &
 #pcmanfm &
+#thunar &
 #idea &
 #discord &
 
