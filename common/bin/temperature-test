@@ -17,8 +17,8 @@ opts=
 help=0
 
 # check for prerequisite applicaitons
-[[ $(command -v sensors) ]] || echo "lm_sensors is not installed!" && exit 1
-[[ $(command -v sysbench) ]] || echo "sysbench is not installed!" && exit 1
+[[ $(command -v sensors) ]] || (echo "lm_sensors is not installed" && exit 1)
+[[ $(command -v sysbench) ]] || (echo "sysbench is not installed" && exit 1)
 
 # args
 while [[ $# -gt 0 ]] ; do

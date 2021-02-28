@@ -7,6 +7,11 @@
 # Author: Kyle W T Sherman
 #=============================================================================
 
+# check if executable command is found in the path
+_command() {
+    command -v "$1" > /dev/null 2>&1
+}
+
 # keep original TERM value for scripts to use
 export REAL_TERM="${TERM}"
 # act like xterm with color support
@@ -142,7 +147,7 @@ if [[ "$-" == "*i*" ]] ; then
     #[[ -z "$(greppr erase)" ]] || stty erase $(getpr erase)
 
     # set tabs
-    [[ $(command -v stty) ]] && stty tabs
+    _command stty && stty tabs
 fi
 
 # set umask

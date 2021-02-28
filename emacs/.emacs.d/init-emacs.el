@@ -1152,26 +1152,11 @@ Otherwise, `local-tab-width' is used."
          ('error
           (set-frame-font "Menlo" nil t))))))
 
-  ;; faces
-  ;; green foreground on black background with green cursor
+  ;; set faces
+  ;; green foreground on black background with yellow cursor
   (custom-set-faces
    '(default ((t (:foreground "green" :background "black"))))
    '(cursor ((t (:background "yellow")))))
-
-  ;; flatland theme (https://github.com/gchp/flatland-emacs)
-  (use-package flatland-theme
-    :quelpa (flatland-theme)
-    :init (load-theme 'flatland t))
-
-  ;; ;; dracula theme (https://draculatheme.com/emacs/)
-  ;; (use-package dracula-theme
-  ;;   :quelpa (dracula-theme)
-  ;;   :init (load-theme 'dracula t))
-
-  ;; ;; material theme (https://github.com/cpaulik/emacs-material-theme)
-  ;; (use-package material-theme
-  ;;   :quelpa (material-theme)
-  ;;   :init (load-theme 'material t))
 
   ;; transparant background (not on Macs)
   (defvar background-alpha
@@ -1191,7 +1176,81 @@ Common values:
   (set-frame-parameter (selected-frame) 'alpha
                        `(,background-alpha . ,background-alpha))
   (add-to-list 'default-frame-alist
-               `(alpha . (,background-alpha . ,background-alpha))))
+               `(alpha . (,background-alpha . ,background-alpha)))
+
+  (init-message 3 "General Settings: GUI: Theme")
+
+  ;; flatland theme
+  ;; https://github.com/gchp/flatland-emacs
+  (use-package flatland-theme
+    :quelpa (flatland-theme)
+    :init (load-theme 'flatland t))
+
+  ;; ;; dracula theme
+  ;; ;; https://draculatheme.com/emacs/
+  ;; (use-package dracula-theme
+  ;;   :quelpa (dracula-theme)
+  ;;   :init (load-theme 'dracula t))
+
+  ;; ;; material theme
+  ;; ;; https://github.com/cpaulik/emacs-material-theme
+  ;; (use-package material-theme
+  ;;   :quelpa (material-theme)
+  ;;   :init (load-theme 'material t))
+
+  ;; ;; zenburn theme
+  ;; ;; https://github.com/bbatsov/zenburn-emacs
+  ;; (use-package zenburn-theme
+  ;;   :quelpa (zenburn-theme)
+  ;;   :init
+  ;;   (setq zenburn-override-colors-alist   ; default values
+  ;;         '(("zenburn-bg+05" . "#181818") ; #383838
+  ;;           ("zenburn-bg+1"  . "#1F1F1F") ; #4F4F4F
+  ;;           ("zenburn-bg+2"  . "#2F2F2F") ; #5F5F5F
+  ;;           ("zenburn-bg+3"  . "#3F3F3F"))) ; #6F6F6F
+  ;;   (load-theme 'zenburn t))
+
+  ;; ;; color-theme-sanityinc-tomorrow theme
+  ;; ;; https://github.com/purcell/color-theme-sanityinc-tomorrow
+  ;; (use-package color-theme-sanityinc-tomorrow
+  ;;   :quelpa (color-theme-sanityinc-tomorrow)
+  ;;   :init (load-theme 'sanityinc-tomorrow-night t))
+
+  ;; ;; spacemacs-theme
+  ;; ;; https://github.com/nashamri/spacemacs-theme
+  ;; (use-package spacemacs-theme
+  ;;   :quelpa (spacemacs-theme)
+  ;;   :init (load-theme 'spacemacs-dark t))
+
+  ;; ;; solarized theme
+  ;; ;; https://github.com/bbatsov/solarized-emacs
+  ;; (use-package solarized-theme
+  ;;   :quelpa (solarized-theme)
+  ;;   :init
+  ;;   ;; make the fringe stand out from the background
+  ;;   ;;(setq solarized-distinct-fringe-background t)
+  ;;   ;; do not change the font for some headings and titles
+  ;;   (setq solarized-use-variable-pitch nil)
+  ;;   ;; make the modeline high contrast
+  ;;   ;;(setq solarized-high-contrast-mode-line t)
+  ;;   ;; use less bolding
+  ;;   (setq solarized-use-less-bold t)
+  ;;   ;; use more italics
+  ;;   ;;(setq solarized-use-more-italic t)
+  ;;   ;; use less colors for indicators such as git:gutter, flycheck and similar
+  ;;   ;;(setq solarized-emphasize-indicators nil)
+  ;;   ;; do not change size of org-mode headlines (but keep other size-changes)
+  ;;   (setq solarized-scale-org-headlines nil)
+  ;;   ;; avoid all font-size changes
+  ;;   (setq solarized-height-minus-1 1.0)
+  ;;   (setq solarized-height-plus-1 1.0)
+  ;;   (setq solarized-height-plus-2 1.0)
+  ;;   (setq solarized-height-plus-3 1.0)
+  ;;   (setq solarized-height-plus-4 1.0)
+  ;;   ;; load theme
+  ;;   (load-theme 'solarized-dark t))
+
+  )
 ;; GUI:1 ends here
 
 ;; [[file:init-emacs.org::*Key Bindings][Key Bindings:1]]
@@ -13126,18 +13185,25 @@ USING is the remaining peg."
 
 (use-package company
   :quelpa (company)
+  :after (lsp-mode)
   :diminish company-mode
   :bind (:map company-active-map
+              ("<tab>" . company-complete-selection)
               ("C-n" . company-select-next)
               ("C-p" . company-select-previous)
               ("M-k" . company-select-next)
               ("M-i" . company-select-previous))
+  :bind (:map lsp-mode-map
+              ("<tab>" . company-indent-or-complete-common))
+  :hook (lsp-mode . company-mode)
   :custom
   (company-auto-commit nil)
-  (company-idle-delay 1.0)
+  (company-minimum-prefix-length 1)
+  (company-idle-delay 0.0)
+  ;;(company-idle-delay 1.0)
   :init
-  (global-company-mode 1)
-  (add-hook 'after-init-hook #'global-company-mode)
+  ;; (global-company-mode 1)
+  ;; (add-hook 'after-init-hook #'global-company-mode)
   :config
   ;; backends
   (when (fboundp 'company-dabbrev)
@@ -13155,6 +13221,18 @@ USING is the remaining peg."
 
 ;; ;; remove troublesome backends
 ;; (setq company-backends (remove 'company-capf company-backends)))
+
+;;------------------------------------------------------------------------------
+;;;; company-box
+;;------------------------------------------------------------------------------
+
+(init-message 3 "company-box")
+
+;; company front end with icons
+(use-package company-box
+  :quelpa (company-box)
+  :after (company)
+  :hook (company-mode . company-box-mode))
 
 ;; ;;------------------------------------------------------------------------------
 ;; ;;;; color
@@ -15551,10 +15629,16 @@ otherwise run `find-file-as-root'."
 (use-package lsp-mode
   :quelpa (lsp-mode)
   :commands (lsp lsp-defered)
-  :hook (lsp-mode . lsp-enable-which-key-integration)
   :init
   (setq lsp-keymap-prefix "C-x C-l")    ; defaults to `downcase-region'
   :config
+  (defun local-lsp-mode-hook ()
+    ;; turn on breadcrumbs
+    (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
+    (lsp-headerline-breadcrumb-mode))
+  (add-hook 'lsp-mode-hook #'local-lsp-mode-hook)
+
+  ;; add `which-key-mode' descriptions
   (lsp-enable-which-key-integration t))
 
 ;;------------------------------------------------------------------------------
@@ -15568,7 +15652,8 @@ otherwise run `find-file-as-root'."
 (use-package lsp-ui
   :quelpa (lsp-ui)
   :after (lsp-mode)
-  :commands lsp-ui-mode)
+  :hook (lsp-mode . lsp-ui-mode)
+  :custom (lsp-ui-doc-position 'bottom))
 
 ;;------------------------------------------------------------------------------
 ;;;; helm-lsp
@@ -15580,8 +15665,7 @@ otherwise run `find-file-as-root'."
 
 ;; (use-package helm-lsp
 ;;   :quelpa (helm-lsp)
-;;   :after (lsp-mode)
-;;   :commands helm-lsp-workspace-symbol)
+;;   :after (lsp-mode))
 
 ;;------------------------------------------------------------------------------
 ;;;; lsp-ivy
@@ -15593,8 +15677,7 @@ otherwise run `find-file-as-root'."
 
 (use-package lsp-ivy
   :quelpa (lsp-ivy)
-  :after (lsp-mode)
-  :commands lsp-ivy-workspace-symbol)
+  :after (lsp-mode))
 
 ;;------------------------------------------------------------------------------
 ;;;; lsp-treemacs
@@ -15606,8 +15689,7 @@ otherwise run `find-file-as-root'."
 
 (use-package lsp-treemacs
   :quelpa (lsp-treemacs)
-  :after (lsp-mode)
-  :commands lsp-treemacs-errors-list)
+  :after (lsp-mode))
 ;; Setup:1 ends here
 
 ;; [[file:init-emacs.org::*Modes][Modes:1]]
