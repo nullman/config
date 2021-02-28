@@ -13185,7 +13185,6 @@ USING is the remaining peg."
 
 (use-package company
   :quelpa (company)
-  :after (lsp-mode)
   :diminish company-mode
   :bind (:map company-active-map
               ("<tab>" . company-complete-selection)
@@ -13193,14 +13192,11 @@ USING is the remaining peg."
               ("C-p" . company-select-previous)
               ("M-k" . company-select-next)
               ("M-i" . company-select-previous))
-  :bind (:map lsp-mode-map
-              ("<tab>" . company-indent-or-complete-common))
-  :hook (lsp-mode . company-mode)
+  :hook (prog-mode . company-mode)
   :custom
   (company-auto-commit nil)
   (company-minimum-prefix-length 1)
   (company-idle-delay 0.0)
-  ;;(company-idle-delay 1.0)
   :init
   ;; (global-company-mode 1)
   ;; (add-hook 'after-init-hook #'global-company-mode)
@@ -13222,17 +13218,17 @@ USING is the remaining peg."
 ;; ;; remove troublesome backends
 ;; (setq company-backends (remove 'company-capf company-backends)))
 
-;;------------------------------------------------------------------------------
-;;;; company-box
-;;------------------------------------------------------------------------------
+;; ;;------------------------------------------------------------------------------
+;; ;;;; company-box
+;; ;;------------------------------------------------------------------------------
 
-(init-message 3 "company-box")
+;; (init-message 3 "company-box")
 
-;; company front end with icons
-(use-package company-box
-  :quelpa (company-box)
-  :after (company)
-  :hook (company-mode . company-box-mode))
+;; ;; company front end with icons
+;; (use-package company-box
+;;   :quelpa (company-box)
+;;   :after (company)
+;;   :hook (company-mode . company-box-mode))
 
 ;; ;;------------------------------------------------------------------------------
 ;; ;;;; color
@@ -15626,18 +15622,22 @@ otherwise run `find-file-as-root'."
 
 (init-message 2 "LSP Mode: Setup")
 
+(defun local-lsp-mode-hook ()
+  ;; turn on breadcrumbs
+  (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
+  (lsp-headerline-breadcrumb-mode))
+
 (use-package lsp-mode
   :quelpa (lsp-mode)
-  :commands (lsp lsp-defered)
+  :after (company)
+  :commands (lsp lsp-mode lsp-defered)
+  :bind (:map lsp-mode-map
+              ("<tab>" . company-indent-or-complete-common))
+  :hook ((lsp-mode . local-lsp-mode-hook)
+         (lsp-mode . company-mode))
   :init
   (setq lsp-keymap-prefix "C-x C-l")    ; defaults to `downcase-region'
   :config
-  (defun local-lsp-mode-hook ()
-    ;; turn on breadcrumbs
-    (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
-    (lsp-headerline-breadcrumb-mode))
-  (add-hook 'lsp-mode-hook #'local-lsp-mode-hook)
-
   ;; add `which-key-mode' descriptions
   (lsp-enable-which-key-integration t))
 
@@ -16497,6 +16497,55 @@ otherwise run `find-file-as-root'."
 
 (init-message 2 "Modes: Lisp Mode")
 
+(defun local-lisp-mode-hook ()
+  ;; disable tabs
+  (disable-tabs)
+
+  ;; clear input method
+  ;;(set-input-method nil)
+
+  ;; set indent function for lisp-mode to `lisp-indent-function'
+  ;; (it defaults to `clisp-indent-function')
+  (when (equal major-mode 'lisp-mode)
+    (setq-local lisp-indent-function 'lisp-indent-function))
+
+  ;; add underscore and dash to word boundaries
+  (modify-syntax-entry ?_ "w" lisp-mode-syntax-table)
+  (modify-syntax-entry ?- "w" lisp-mode-syntax-table)
+
+  ;; define keys
+  (local-set-key (kbd "<return>") 'newline-and-indent)
+  (local-set-key (kbd "S-<tab>") 'lisp-complete-symbol)
+
+  ;; turn on flyspell
+  (flyspell-prog-mode)
+
+  ;; initialize eldoc
+  (eldoc-mode 1)
+
+  ;; ;; turn on abbreviation mode
+  ;; (abbrev-mode 1)
+
+  ;; turn on else minor mode
+  ;;(else-mode)
+
+  ;; ;; initialize elisp slime nav mode
+  ;; (when (fboundp 'elisp-slime-nav-mode)
+  ;;   (elisp-slime-nav-mode)
+  ;;   (when (fboundp 'diminish)
+  ;;     (with-eval-after-load "elisp-slime-nav"
+  ;;       (diminish 'elisp-slime-nav-mode))))
+
+  ;; ;; check parenthesis after file save
+  ;; (add-hook 'after-save-hook #'check-parens nil t)
+
+  ;; (use-package aggressive-indent
+  ;;   :config (aggressive-indent-mode 1))
+
+  ;; set outline header regexp
+  (setq-local outline-regexp "\\(;; [*]\\{1,8\\} \\|;;[;]\\{1,8\\} \\)")
+  (setq-local outline-level 'lisp-outline-level))
+
 (use-package lisp-mode
   :after (flyspell eldoc info-look)
   :commands (emacs-lisp-mode)
@@ -16504,62 +16553,10 @@ otherwise run `find-file-as-root'."
   :mode (("\\.el\\'" . emacs-lisp-mode)
          ("\\.lisp\\'" . lisp-mode)
          ("\\.clisp\\'" . lisp-mode))
+  :hook ((emacs-lisp-mode . local-lisp-mode-hook)
+         (lisp-mode . local-lisp-mode-hook)
+         (common-lisp-mode . local-lisp-mode-hook))
   :config
-  (defun local-lisp-mode-hook ()
-    ;; disable tabs
-    (add-hook 'lisp-mode-hook #'disable-tabs)
-
-    ;; clear input method
-    ;;(set-input-method nil)
-
-    ;; set indent function for lisp-mode to `lisp-indent-function'
-    ;; (it defaults to `clisp-indent-function')
-    (when (equal major-mode 'lisp-mode)
-      (setq-local lisp-indent-function 'lisp-indent-function))
-
-    ;; add underscore and dash to word boundaries
-    (modify-syntax-entry ?_ "w" lisp-mode-syntax-table)
-    (modify-syntax-entry ?- "w" lisp-mode-syntax-table)
-
-    ;; define keys
-    (local-set-key (kbd "<return>") 'newline-and-indent)
-    (local-set-key (kbd "S-<tab>") 'lisp-complete-symbol)
-
-    ;; turn on flyspell
-    (flyspell-prog-mode)
-
-    ;; initialize eldoc
-    (eldoc-mode 1)
-
-    ;; ;; turn on abbreviation mode
-    ;; (abbrev-mode 1)
-
-    ;; turn on else minor mode
-    ;;(else-mode)
-
-    ;; ;; initialize elisp slime nav mode
-    ;; (when (fboundp 'elisp-slime-nav-mode)
-    ;;   (elisp-slime-nav-mode)
-    ;;   (when (fboundp 'diminish)
-    ;;     (with-eval-after-load "elisp-slime-nav"
-    ;;       (diminish 'elisp-slime-nav-mode))))
-
-    ;; ;; check parenthesis after file save
-    ;; (add-hook 'after-save-hook #'check-parens nil t)
-
-    ;; (use-package aggressive-indent
-    ;;   :config (aggressive-indent-mode 1))
-
-    ;; set outline header regexp
-    (setq-local outline-regexp "\\(;; [*]\\{1,8\\} \\|;;[;]\\{1,8\\} \\)")
-    (setq-local outline-level 'lisp-outline-level))
-
-  ;; add hook to emacs-lisp and lisp modes
-  (add-hook 'emacs-lisp-mode-hook #'local-lisp-mode-hook)
-  (add-hook 'lisp-mode-hook #'local-lisp-mode-hook)
-  (add-hook 'common-lisp-mode-hook #'local-lisp-mode-hook)
-  (add-hook 'ielm-mode-hook #'local-lisp-mode-hook)
-
   ;; remove trailing blanks
   ;;(add-hook 'emacs-lisp-mode-hook #'install-remove-trailing-blanks)
   ;;(add-hook 'lisp-mode-hook #'install-remove-trailing-blanks)
