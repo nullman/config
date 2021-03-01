@@ -1950,6 +1950,20 @@ KEYMAP defaults to `override-global-map'."
       (safe-load (expand-file-name "init.el" emacs-home-dir)))
     (bind-keys :map space-run-map ("i" . safe-load-init-elisp)))
 
+  ;; terminal commands
+  (bind-keys :map space-map
+             :prefix "t"
+             :prefix-map space-terminal-map
+             :menu-name "Terminal Commands"
+             ("a" . ansi-term)
+             ("e" . eshell)
+             ("s" . shell)
+             ("t" . term))
+  (when (fboundp 'term-bash)
+    (bind-keys :map space-terminal-map ("b" . term-bash)))
+  (when (fboundp 'term-zsh)
+    (bind-keys :map space-terminal-map ("z" . term-zsh)))
+
   ;; browse-url commands
   (bind-keys :map space-map
              :prefix "z"
@@ -7320,6 +7334,32 @@ Source: http://irreal.org/blog/?p=40"
     (maphash (lambda (k v) (push (cons k v) result)) table)
     (nreverse result)))
 ;; hash-table-dump:1 ends here
+
+;; [[file:init-emacs.org::*term-bash][term-bash:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: General Functions: term-bash
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: General Functions: term-bash")
+
+(defun term-bash ()
+  "Start a BASH terminal-emulator in a new buffer."
+  (interactive)
+  (term "/bin/bash"))
+;; term-bash:1 ends here
+
+;; [[file:init-emacs.org::*term-zsh][term-zsh:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: General Functions: term-zsh
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: General Functions: term-zsh")
+
+(defun term-zsh ()
+  "Start a ZSH terminal-emulator in a new buffer."
+  (interactive)
+  (term "/bin/zsh"))
+;; term-zsh:1 ends here
 
 ;; [[file:init-emacs.org::*Emacs Functions][Emacs Functions:1]]
 ;;------------------------------------------------------------------------------
@@ -13740,37 +13780,6 @@ Uses `ispell--run-on-word' to spell check word."
   :commands (turn-on-fuzzy-isearch)
   :init (turn-on-fuzzy-isearch))
 ;; fuzzy:1 ends here
-
-;; [[file:init-emacs.org::*helpful][helpful:1]]
-;;------------------------------------------------------------------------------
-;;; Modules: helpful
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modules: helpful")
-
-(use-package helpful
-  :quelpa (helpful)
-  :demand t
-  :bind* (([remap describe-function] . helpful-callable)
-          ([remap describe-variable] . helpful-variable)
-          ([remap describe-key] . helpful-key)
-          ("C-h C-d" . helpful-at-point) ; defaults to `view-emacs-debugging'
-          ("C-h F" . helpful-function) ; defaults to `Info-goto-emacs-command-node'
-          ("C-h C" . helpful-command)) ; defaults to `describe-coding-system'
-  :config
-  (defun helpful-callable--other-buffer (symbol)
-    "Switch back to `other-buffer' after helpful window is displayed and updated."
-    ;; make sure helpful buffer is active
-    (when helpful--sym
-      (other-window 1)))
-  ;; advise helpful functions to switch back to previous buffer
-  (advice-add 'helpful-callable :after #'helpful-callable--other-buffer)
-  (advice-add 'helpful-variable :after #'helpful-callable--other-buffer)
-  (advice-add 'helpful-key :after #'helpful-callable--other-buffer)
-  (advice-add 'helpful-at-point :after #'helpful-callable--other-buffer)
-  (advice-add 'helpful-function :after #'helpful-callable--other-buffer)
-  (advice-add 'helpful-command :after #'helpful-callable--other-buffer))
-;; helpful:1 ends here
 
 ;; [[file:init-emacs.org::*hippie-exp][hippie-exp:1]]
 ;;------------------------------------------------------------------------------

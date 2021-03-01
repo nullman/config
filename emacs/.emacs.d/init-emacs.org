@@ -2854,6 +2854,20 @@ Set mode line modes.
         (safe-load (expand-file-name "init.el" emacs-home-dir)))
       (bind-keys :map space-run-map ("i" . safe-load-init-elisp)))
 
+    ;; terminal commands
+    (bind-keys :map space-map
+               :prefix "t"
+               :prefix-map space-terminal-map
+               :menu-name "Terminal Commands"
+               ("a" . ansi-term)
+               ("e" . eshell)
+               ("s" . shell)
+               ("t" . term))
+    (when (fboundp 'term-bash)
+      (bind-keys :map space-terminal-map ("b" . term-bash)))
+    (when (fboundp 'term-zsh)
+      (bind-keys :map space-terminal-map ("z" . term-zsh)))
+
     ;; browse-url commands
     (bind-keys :map space-map
                :prefix "z"
@@ -10648,6 +10662,42 @@ Use =string-trim= instead.
     (let (result)
       (maphash (lambda (k v) (push (cons k v) result)) table)
       (nreverse result)))
+#+END_SRC
+
+***** term-bash
+      :PROPERTIES:
+      :CUSTOM_ID: functions-general-functions-term-bash
+      :END:
+
+#+BEGIN_SRC emacs-lisp
+  ;;------------------------------------------------------------------------------
+  ;;;; Functions: General Functions: term-bash
+  ;;------------------------------------------------------------------------------
+
+  (init-message 3 "Functions: General Functions: term-bash")
+
+  (defun term-bash ()
+    "Start a BASH terminal-emulator in a new buffer."
+    (interactive)
+    (term "/bin/bash"))
+#+END_SRC
+
+***** term-zsh
+      :PROPERTIES:
+      :CUSTOM_ID: functions-general-functions-term-zsh
+      :END:
+
+#+BEGIN_SRC emacs-lisp
+  ;;------------------------------------------------------------------------------
+  ;;;; Functions: General Functions: term-zsh
+  ;;------------------------------------------------------------------------------
+
+  (init-message 3 "Functions: General Functions: term-zsh")
+
+  (defun term-zsh ()
+    "Start a ZSH terminal-emulator in a new buffer."
+    (interactive)
+    (term "/bin/zsh"))
 #+END_SRC
 
 *** Emacs Functions
@@ -19114,6 +19164,25 @@ Emacs Lisp Regression Testing (Emacs Testing Tool)
   (use-package ert)
 #+END_SRC
 
+*** +eterm-256color+
+    :PROPERTIES:
+    :CUSTOM_ID: modules-eterm-256color
+    :END:
+
+Throws an error.
+
+#+BEGIN_SRC emacs-lisp :tangle no
+  ;; ;;------------------------------------------------------------------------------
+  ;; ;;; Modules: eterm-256color
+  ;; ;;------------------------------------------------------------------------------
+
+  ;; (init-message 2 "Modules: eterm-256color")
+
+  ;; (use-package eterm-256color
+  ;;   :quelpa (eterm-256color)
+  ;;   :hook (term-mode . eterm-256color-mode))
+#+END_SRC
+
 *** exec-path-from-shell
     :PROPERTIES:
     :CUSTOM_ID: modules-exec-path-from-shell
@@ -19440,42 +19509,42 @@ Swiper search with =isearch= using =helm=.
   ;;   :bind* ("C-'" . swiper))              ; defaults to `org-cycle-agenda-files'
 #+END_SRC
 
-*** helpful
+*** +helpful+
     :PROPERTIES:
     :CUSTOM_ID: modules-helpful
     :END:
 
 A better help buffer.
 
-#+BEGIN_SRC emacs-lisp
-  ;;------------------------------------------------------------------------------
-  ;;; Modules: helpful
-  ;;------------------------------------------------------------------------------
+#+BEGIN_SRC emacs-lisp :tangle no
+  ;; ;;------------------------------------------------------------------------------
+  ;; ;;; Modules: helpful
+  ;; ;;------------------------------------------------------------------------------
 
-  (init-message 2 "Modules: helpful")
+  ;; (init-message 2 "Modules: helpful")
 
-  (use-package helpful
-    :quelpa (helpful)
-    :demand t
-    :bind* (([remap describe-function] . helpful-callable)
-            ([remap describe-variable] . helpful-variable)
-            ([remap describe-key] . helpful-key)
-            ("C-h C-d" . helpful-at-point) ; defaults to `view-emacs-debugging'
-            ("C-h F" . helpful-function) ; defaults to `Info-goto-emacs-command-node'
-            ("C-h C" . helpful-command)) ; defaults to `describe-coding-system'
-    :config
-    (defun helpful-callable--other-buffer (symbol)
-      "Switch back to `other-buffer' after helpful window is displayed and updated."
-      ;; make sure helpful buffer is active
-      (when helpful--sym
-        (other-window 1)))
-    ;; advise helpful functions to switch back to previous buffer
-    (advice-add 'helpful-callable :after #'helpful-callable--other-buffer)
-    (advice-add 'helpful-variable :after #'helpful-callable--other-buffer)
-    (advice-add 'helpful-key :after #'helpful-callable--other-buffer)
-    (advice-add 'helpful-at-point :after #'helpful-callable--other-buffer)
-    (advice-add 'helpful-function :after #'helpful-callable--other-buffer)
-    (advice-add 'helpful-command :after #'helpful-callable--other-buffer))
+  ;; (use-package helpful
+  ;;   :quelpa (helpful)
+  ;;   :demand t
+  ;;   :bind* (([remap describe-function] . helpful-callable)
+  ;;           ([remap describe-variable] . helpful-variable)
+  ;;           ([remap describe-key] . helpful-key)
+  ;;           ("C-h C-d" . helpful-at-point) ; defaults to `view-emacs-debugging'
+  ;;           ("C-h F" . helpful-function) ; defaults to `Info-goto-emacs-command-node'
+  ;;           ("C-h C" . helpful-command)) ; defaults to `describe-coding-system'
+  ;;   :config
+  ;;   (defun helpful-callable--other-buffer (symbol)
+  ;;     "Switch back to `other-buffer' after helpful window is displayed and updated."
+  ;;     ;; make sure helpful buffer is active
+  ;;     (when helpful--sym
+  ;;       (other-window 1)))
+  ;;   ;; advise helpful functions to switch back to previous buffer
+  ;;   (advice-add 'helpful-callable :after #'helpful-callable--other-buffer)
+  ;;   (advice-add 'helpful-variable :after #'helpful-callable--other-buffer)
+  ;;   (advice-add 'helpful-key :after #'helpful-callable--other-buffer)
+  ;;   (advice-add 'helpful-at-point :after #'helpful-callable--other-buffer)
+  ;;   (advice-add 'helpful-function :after #'helpful-callable--other-buffer)
+  ;;   (advice-add 'helpful-command :after #'helpful-callable--other-buffer))
 #+END_SRC
 
 *** hippie-exp
