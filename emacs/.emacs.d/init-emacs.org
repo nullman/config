@@ -2867,6 +2867,8 @@ Set mode line modes.
       (bind-keys :map space-terminal-map ("b" . term-bash)))
     (when (fboundp 'term-zsh)
       (bind-keys :map space-terminal-map ("z" . term-zsh)))
+    (when (fboundp 'vterm)
+      (bind-keys :map space-terminal-map ("v" . vterm)))
 
     ;; browse-url commands
     (bind-keys :map space-map
@@ -22893,6 +22895,25 @@ Better Duplicate Buffer Naming (uniquify)
 
   (use-package vimish-fold
     :quelpa (vimish-fold))
+#+END_SRC
+
+*** vterm
+    :PROPERTIES:
+    :CUSTOM_ID: modules-vterm
+    :END:
+
+#+BEGIN_SRC emacs-lisp
+  ;;------------------------------------------------------------------------------
+  ;;; Modules: vterm
+  ;;------------------------------------------------------------------------------
+
+  (init-message 2 "Modules: vterm")
+
+  (use-package vterm
+    :quelpa (vterm)
+    :commands (vterm)
+    :config
+    (setq vterm-max-scrollback 10000))
 #+END_SRC
 
 *** w3m

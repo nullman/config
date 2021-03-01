@@ -1963,6 +1963,8 @@ KEYMAP defaults to `override-global-map'."
     (bind-keys :map space-terminal-map ("b" . term-bash)))
   (when (fboundp 'term-zsh)
     (bind-keys :map space-terminal-map ("z" . term-zsh)))
+  (when (fboundp 'vterm)
+    (bind-keys :map space-terminal-map ("v" . vterm)))
 
   ;; browse-url commands
   (bind-keys :map space-map
@@ -15456,6 +15458,20 @@ otherwise run `find-file-as-root'."
 (use-package vimish-fold
   :quelpa (vimish-fold))
 ;; vimish-fold:1 ends here
+
+;; [[file:init-emacs.org::*vterm][vterm:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: vterm
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: vterm")
+
+(use-package vterm
+  :quelpa (vterm)
+  :commands (vterm)
+  :config
+  (setq vterm-max-scrollback 10000))
+;; vterm:1 ends here
 
 ;; [[file:init-emacs.org::*w3m][w3m:1]]
 ;;------------------------------------------------------------------------------

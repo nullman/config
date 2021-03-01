@@ -20,7 +20,6 @@ conky.config = {
 }
 
 conky.text = [[
-
 # date and time
 ${voffset 8}${color2}${font Bitstream Vera Sans:size=16}${time %A}${font} \
   ${voffset -8}${alignr}${color}${font Bitstream Vera Sans:size=38}${time %e}${font}
@@ -57,8 +56,6 @@ ${color2}${top_mem name 2}  ${alignr}${top_mem mem_res 2}${color}
 ${color2}${top_mem name 3}  ${alignr}${top_mem mem_res 3}${color}
 ${color2}${top_mem name 4}  ${alignr}${top_mem mem_res 4}${color}
 
-#conky-system-info-swap
-
 # disk
 ${voffset 10}${color}${font Bitstream Vera Sans:bold:size=12}Disk${font}  ${alignc}${fs_used /} / ${fs_size /}  ${alignr}${fs_used_perc /}%
 ${color}${fs_bar /}
@@ -75,10 +72,6 @@ ${color2}Dn:${color}  ${goto 40}${downspeed enp0s25}  ${goto 120}${downspeedgrap
 #${color}${upspeedgraph enp0s25}
 #${color2}Down${color}  ${alignr}${downspeed enp0s25}
 #${color}${downspeedgraph enp0s25}
-
-#conky-system-info-battery
-
-#conky-system-info-cpu-temp
 
 # system information
 ${voffset 10}${color}${font Bitstream Vera Sans:bold:size=12}System${font}
@@ -99,5 +92,4 @@ ${voffset 5}${color2}Entropy:${color}  ${entropy_avail} / ${entropy_poolsize}  $
 # music
 ${voffset 10}${color2}Artist:${color}  ${alignr}${mpd_artist}
 ${color2}Song:${color}  ${alignr}${mpd_title}
-
 ]]
