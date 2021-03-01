@@ -1189,6 +1189,13 @@ Common values:
   ;;   :quelpa (material-theme)
   ;;   :init (load-theme 'material t))
 
+  ;; ;; material theme
+  ;; ;; https://github.com/cpaulik/emacs-material-theme
+  ;; (use-package material-theme
+  ;;   ;; :quelpa (material-theme)
+  ;;   :load-path (lambda () (expand-file-name "material-theme.el" local-modules-dir))
+  ;;   :init (load-theme 'material t))
+
   ;; ;; zenburn theme
   ;; ;; https://github.com/bbatsov/zenburn-emacs
   ;; (use-package zenburn-theme
