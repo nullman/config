@@ -1056,6 +1056,91 @@ Otherwise, `local-tab-width' is used."
   (set-tabs t 8))
 ;; Tabs:2 ends here
 
+;; [[file:init-emacs.org::*No heading][No heading:1]]
+;;------------------------------------------------------------------------------
+;;;; Environment Settings: Terminals: Configuration
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Environment Settings: Terminals: Configuration")
+
+(setq local-terminal-history-size 10000
+      local-terminal-maximum-lines 10000)
+;; No heading:1 ends here
+
+;; [[file:init-emacs.org::*eshell][eshell:1]]
+;;------------------------------------------------------------------------------
+;;;; Environment Settings: Terminals: eshell
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Environment Settings: Terminals: eshell")
+
+(defun local-eshell-first-time-mode-hook ()
+  ;; save command history
+  (add-hook 'eshell-pre-command-hook #'eshell-save-some-history)
+
+  ;; truncate history for performance
+  (add-to-list 'eshell-output-filter-functions #'eshell-truncate-buffer))
+
+(use-package eshell
+  :hook (eshell-first-time-mode . local-eshell-first-time-mode-hook)
+  :custom
+  (eshell-history-size local-terminal-history-size)
+  (eshell-buffer-maximum-lines local-terminal-maximum-lines)
+  (eshell-hist-ignoredups t)
+  (eshell-scroll-to-bottom-on-input t))
+
+(use-package eshell-git-prompt
+  :quelpa (eshell-git-prompt)
+  :after (eshell)
+  :bind (:map eshell-mode-map
+              ([remap beginning-of-line] . eshell-bol)
+              ([remap move-beginning-of-line] . eshell-bol)
+              ("C-c C-h" . counsel-esh-history))
+  :config
+  (eshell-git-prompt-use-theme 'powerline))
+;; eshell:1 ends here
+
+;; [[file:init-emacs.org::*term-bash][term-bash:1]]
+;;------------------------------------------------------------------------------
+;;;; Environment Settings: Terminals: term-bash
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Environment Settings: Terminals: term-bash")
+
+(defun term-bash ()
+  "Start a BASH terminal-emulator in a new buffer."
+  (interactive)
+  (term "/bin/bash"))
+;; term-bash:1 ends here
+
+;; [[file:init-emacs.org::*term-zsh][term-zsh:1]]
+;;------------------------------------------------------------------------------
+;;;; Environment Settings: Terminals: term-zsh
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Environment Settings: Terminals: term-zsh")
+
+(defun term-zsh ()
+  "Start a ZSH terminal-emulator in a new buffer."
+  (interactive)
+  (term "/bin/zsh"))
+;; term-zsh:1 ends here
+
+;; [[file:init-emacs.org::*vterm][vterm:1]]
+;;------------------------------------------------------------------------------
+;;;; Environment Settings: Terminals: vterm
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Environment Settings: Terminals: vterm")
+
+(use-package vterm
+  :quelpa (vterm)
+  :commands (vterm)
+  :custom
+  (vterm-max-scrollback local-terminal-maximum-lines)
+  (vterm-kill-buffer-on-exit nil))
+;; vterm:1 ends here
+
 ;; [[file:init-emacs.org::*GUI][GUI:1]]
 ;;------------------------------------------------------------------------------
 ;;; General Settings: GUI
@@ -2463,7 +2548,7 @@ DATA should have been made by `org-outline-overlay-data'."
 (init-message 2 "Org Mode: Functions")
 ;; Functions:1 ends here
 
-;; [[file:init-emacs.org::*No heading][No heading:1]]
+;; [[file:init-emacs.org::*org-get-property-list][org-get-property-list:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Functions: org-get-property-list
 ;;------------------------------------------------------------------------------
@@ -2485,7 +2570,7 @@ IF BUFFER is nil, current buffer is used."
         (lambda (x) (let ((key (org-element-property :key x)))
                       (when (string-match property key)
                         (cons key (org-element-property :value x)))))))))
-;; No heading:1 ends here
+;; org-get-property-list:1 ends here
 
 ;; [[file:init-emacs.org::*org-get-element-tree][org-get-element-tree:1]]
 ;;------------------------------------------------------------------------------
@@ -7336,32 +7421,6 @@ Source: http://irreal.org/blog/?p=40"
     (maphash (lambda (k v) (push (cons k v) result)) table)
     (nreverse result)))
 ;; hash-table-dump:1 ends here
-
-;; [[file:init-emacs.org::*term-bash][term-bash:1]]
-;;------------------------------------------------------------------------------
-;;;; Functions: General Functions: term-bash
-;;------------------------------------------------------------------------------
-
-(init-message 3 "Functions: General Functions: term-bash")
-
-(defun term-bash ()
-  "Start a BASH terminal-emulator in a new buffer."
-  (interactive)
-  (term "/bin/bash"))
-;; term-bash:1 ends here
-
-;; [[file:init-emacs.org::*term-zsh][term-zsh:1]]
-;;------------------------------------------------------------------------------
-;;;; Functions: General Functions: term-zsh
-;;------------------------------------------------------------------------------
-
-(init-message 3 "Functions: General Functions: term-zsh")
-
-(defun term-zsh ()
-  "Start a ZSH terminal-emulator in a new buffer."
-  (interactive)
-  (term "/bin/zsh"))
-;; term-zsh:1 ends here
 
 ;; [[file:init-emacs.org::*Emacs Functions][Emacs Functions:1]]
 ;;------------------------------------------------------------------------------
@@ -15458,20 +15517,6 @@ otherwise run `find-file-as-root'."
 (use-package vimish-fold
   :quelpa (vimish-fold))
 ;; vimish-fold:1 ends here
-
-;; [[file:init-emacs.org::*vterm][vterm:1]]
-;;------------------------------------------------------------------------------
-;;; Modules: vterm
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modules: vterm")
-
-(use-package vterm
-  :quelpa (vterm)
-  :commands (vterm)
-  :config
-  (setq vterm-max-scrollback 10000))
-;; vterm:1 ends here
 
 ;; [[file:init-emacs.org::*w3m][w3m:1]]
 ;;------------------------------------------------------------------------------

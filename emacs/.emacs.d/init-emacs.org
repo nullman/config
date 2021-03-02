@@ -1915,6 +1915,123 @@ Set mode line modes.
   ;; ;; (set-default 'mode-line-format mode-line-format)
 #+END_SRC
 
+*** Terminals
+    :PROPERTIES:
+    :CUSTOM_ID: environment-settings-terminals
+    :END:
+
+Customizations for the various terminal modes in Emacs.
+
+***** Configuration
+      :PROPERTIES:
+      :CUSTOM_ID: environment-settings-terminals-configuration
+      :END:
+
+#+BEGIN_SRC emacs-lisp
+  ;;------------------------------------------------------------------------------
+  ;;;; Environment Settings: Terminals: Configuration
+  ;;------------------------------------------------------------------------------
+
+  (init-message 3 "Environment Settings: Terminals: Configuration")
+
+  (setq local-terminal-history-size 10000
+        local-terminal-maximum-lines 10000)
+#+END_SRC
+
+***** eshell
+      :PROPERTIES:
+      :CUSTOM_ID: environment-settings-terminals-eshell
+      :END:
+
+#+BEGIN_SRC emacs-lisp
+  ;;------------------------------------------------------------------------------
+  ;;;; Environment Settings: Terminals: eshell
+  ;;------------------------------------------------------------------------------
+
+  (init-message 3 "Environment Settings: Terminals: eshell")
+
+  (defun local-eshell-first-time-mode-hook ()
+    ;; save command history
+    (add-hook 'eshell-pre-command-hook #'eshell-save-some-history)
+
+    ;; truncate history for performance
+    (add-to-list 'eshell-output-filter-functions #'eshell-truncate-buffer))
+
+  (use-package eshell
+    :hook (eshell-first-time-mode . local-eshell-first-time-mode-hook)
+    :custom
+    (eshell-history-size local-terminal-history-size)
+    (eshell-buffer-maximum-lines local-terminal-maximum-lines)
+    (eshell-hist-ignoredups t)
+    (eshell-scroll-to-bottom-on-input t))
+
+  (use-package eshell-git-prompt
+    :quelpa (eshell-git-prompt)
+    :after (eshell)
+    :bind (:map eshell-mode-map
+                ([remap beginning-of-line] . eshell-bol)
+                ([remap move-beginning-of-line] . eshell-bol)
+                ("C-c C-h" . counsel-esh-history))
+    :config
+    (eshell-git-prompt-use-theme 'powerline))
+#+END_SRC
+
+***** term-bash
+      :PROPERTIES:
+      :CUSTOM_ID: environment-settings-terminals-term-bash
+      :END:
+
+#+BEGIN_SRC emacs-lisp
+  ;;------------------------------------------------------------------------------
+  ;;;; Environment Settings: Terminals: term-bash
+  ;;------------------------------------------------------------------------------
+
+  (init-message 3 "Environment Settings: Terminals: term-bash")
+
+  (defun term-bash ()
+    "Start a BASH terminal-emulator in a new buffer."
+    (interactive)
+    (term "/bin/bash"))
+#+END_SRC
+
+***** term-zsh
+      :PROPERTIES:
+      :CUSTOM_ID: environment-settings-terminals-term-zsh
+      :END:
+
+#+BEGIN_SRC emacs-lisp
+  ;;------------------------------------------------------------------------------
+  ;;;; Environment Settings: Terminals: term-zsh
+  ;;------------------------------------------------------------------------------
+
+  (init-message 3 "Environment Settings: Terminals: term-zsh")
+
+  (defun term-zsh ()
+    "Start a ZSH terminal-emulator in a new buffer."
+    (interactive)
+    (term "/bin/zsh"))
+#+END_SRC
+
+***** vterm
+      :PROPERTIES:
+      :CUSTOM_ID: environment-settings-terminals-vterm
+      :END:
+
+#+BEGIN_SRC emacs-lisp
+  ;;------------------------------------------------------------------------------
+  ;;;; Environment Settings: Terminals: vterm
+  ;;------------------------------------------------------------------------------
+
+  (init-message 3 "Environment Settings: Terminals: vterm")
+
+  (use-package vterm
+    :quelpa (vterm)
+    :commands (vterm)
+    :custom
+    (vterm-max-scrollback local-terminal-maximum-lines)
+    (vterm-kill-buffer-on-exit nil))
+#+END_SRC
+
 *** GUI
     :PROPERTIES:
     :CUSTOM_ID: general-settings-gui
@@ -10664,42 +10781,6 @@ Use =string-trim= instead.
     (let (result)
       (maphash (lambda (k v) (push (cons k v) result)) table)
       (nreverse result)))
-#+END_SRC
-
-***** term-bash
-      :PROPERTIES:
-      :CUSTOM_ID: functions-general-functions-term-bash
-      :END:
-
-#+BEGIN_SRC emacs-lisp
-  ;;------------------------------------------------------------------------------
-  ;;;; Functions: General Functions: term-bash
-  ;;------------------------------------------------------------------------------
-
-  (init-message 3 "Functions: General Functions: term-bash")
-
-  (defun term-bash ()
-    "Start a BASH terminal-emulator in a new buffer."
-    (interactive)
-    (term "/bin/bash"))
-#+END_SRC
-
-***** term-zsh
-      :PROPERTIES:
-      :CUSTOM_ID: functions-general-functions-term-zsh
-      :END:
-
-#+BEGIN_SRC emacs-lisp
-  ;;------------------------------------------------------------------------------
-  ;;;; Functions: General Functions: term-zsh
-  ;;------------------------------------------------------------------------------
-
-  (init-message 3 "Functions: General Functions: term-zsh")
-
-  (defun term-zsh ()
-    "Start a ZSH terminal-emulator in a new buffer."
-    (interactive)
-    (term "/bin/zsh"))
 #+END_SRC
 
 *** Emacs Functions
@@ -22895,25 +22976,6 @@ Better Duplicate Buffer Naming (uniquify)
 
   (use-package vimish-fold
     :quelpa (vimish-fold))
-#+END_SRC
-
-*** vterm
-    :PROPERTIES:
-    :CUSTOM_ID: modules-vterm
-    :END:
-
-#+BEGIN_SRC emacs-lisp
-  ;;------------------------------------------------------------------------------
-  ;;; Modules: vterm
-  ;;------------------------------------------------------------------------------
-
-  (init-message 2 "Modules: vterm")
-
-  (use-package vterm
-    :quelpa (vterm)
-    :commands (vterm)
-    :config
-    (setq vterm-max-scrollback 10000))
 #+END_SRC
 
 *** w3m
