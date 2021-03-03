@@ -1083,19 +1083,23 @@ Otherwise, `local-tab-width' is used."
 
 (use-package eshell
   :hook (eshell-first-time-mode . local-eshell-first-time-mode-hook)
+  :bind (:map eshell-mode-map
+              ([remap beginning-of-line] . eshell-bol)
+              ([remap move-beginning-of-line] . eshell-bol)
+              ("C-r" . counsel-esh-history))
   :custom
   (eshell-history-size local-terminal-history-size)
   (eshell-buffer-maximum-lines local-terminal-maximum-lines)
   (eshell-hist-ignoredups t)
-  (eshell-scroll-to-bottom-on-input t))
+  (eshell-scroll-to-bottom-on-input t)
+  :config
+  (with-eval-after-load 'esh-opt
+    (setq eshell-destroy-buffer-when-process-dies t
+          eshell-visual-commands '("htop" "ssh" "vim" "zsh"))))
 
 (use-package eshell-git-prompt
   :quelpa (eshell-git-prompt)
   :after (eshell)
-  :bind (:map eshell-mode-map
-              ([remap beginning-of-line] . eshell-bol)
-              ([remap move-beginning-of-line] . eshell-bol)
-              ("C-c C-h" . counsel-esh-history))
   :config
   (eshell-git-prompt-use-theme 'powerline))
 ;; eshell:1 ends here
