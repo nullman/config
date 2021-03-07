@@ -4792,7 +4792,7 @@ If HTML-FILE is non-nil, then output is returned."
   (org-table-goto-column 5)
   (org-table-blank-field)
   (org-table-recalculate)
-  (org-table-goto-column 8)
+  (org-table-goto-column 7)
   (let* ((invoice (/ (round (* (- (string-to-number (org-table-get-field))
                                   (string-to-number balance))
                                100)) 100.0)))
