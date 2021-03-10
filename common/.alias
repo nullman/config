@@ -289,12 +289,6 @@ alias sm="/etc/squirrelmail/conf.pl"
 alias debug-on="export LD_DEBUG=files"
 #        debug-off               turn off files (library modules) debugging info
 alias debug-off="export LD_DEBUG="
-#        monitor-reset           reset monitors
-alias monitor-reset="xrandr --auto"
-#        monitor-above           turn on external monitor (above laptop screen)
-alias monitor-above="
-    monitors=(\$(xrandr | grep ' connected ' | sed 's/ .*//')) && \
-    xrandr --output \${monitors[1]} --auto --above \${monitors[0]}"
 #!#        alsa-reset            restart alsa sound
 #!alias alsa-reset="sudo pkill -x pulseaudio ; sudo alsa force-reload"
 #!#        alsa-reset            restart alsa sound
@@ -2187,6 +2181,24 @@ alias x2xm2="
         ssh mouse2 'DISPLAY=:0 /usr/X11R6/bin/xhost +\$(uname -n)' ;
         x2x -west -noautoup -resurface -to mouse2:0
     ) &"
+
+#
+# xrandr
+#
+#        xrandr-reset            reset monitors
+alias xrandr-reset="xrandr --auto"
+#        xrandr-above            turn on external monitor (above laptop screen)
+alias xrandr-above="
+    monitors=(\$(xrandr | grep ' connected ' | sed 's/ .*//')) && \
+    xrandr --output \${monitors[1]} --auto --above \${monitors[0]}"
+#        xrandr-normal           rotate display to its normal viewing angle
+alias xrandr-normal="xrandr --output HDMI-1 --rotate normal"
+#        xrandr-inverted         rotate display to its inverted viewing angle
+alias xrandr-inverted="xrandr --output HDMI-1 --rotate inverted"
+#        xrandr-left             rotate display to its left viewing angle
+alias xrandr-left="xrandr --output HDMI-1 --rotate left"
+#        xrandr-right            rotate display to its right viewing angle
+alias xrandr-right="xrandr --output HDMI-1 --rotate right"
 
 #
 # gpg (gnu pgp)

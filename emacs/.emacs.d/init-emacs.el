@@ -2336,7 +2336,7 @@ DATA should have been made by `org-outline-overlay-data'."
 
   ;; ;; add todo state map
   ;; (define-prefix-command 'org-todo-state-map)
-  ;; (define-key org-mode-map (kbd "C-c x" . org-todo-state-map)
+  ;; (define-key org-mode-map (kbd "C-c x") 'org-todo-state-map)
   ;; (define-key org-todo-state-map (kbd "s") (lambda () (interactive) (org-todo "STARTED")))
   ;; (define-key org-todo-state-map (kbd "w") (lambda () (interactive) (org-todo "WAITING")))
   ;; ;;(define-key org-todo-state-map (kbd "f") (lambda () (interactive) (org-todo "DEFERRED")))
@@ -15625,7 +15625,7 @@ otherwise run `find-file-as-root'."
 (init-message 2 "Modules: webjump")
 
 (use-package webjump
-  :bind* ("C-x j" . webjump)
+  ;;:bind* ("C-x j" . webjump)
   :config
   ;; add some sites
   (add-to-list 'webjump-sites '("Urban Dictionary" . [simple-query "www.urbandictionary.com" "http://www.urbandictionary.com/define.php?term=" ""]) t))
@@ -15828,7 +15828,7 @@ otherwise run `find-file-as-root'."
   (defun local-asm-mode-hook ()
     "Customizations for asm-mode."
     ;; remove using ';' in place of M-; to insert a comment
-    (local-unset-key (vector asm-comment-char))
+    (local-unset-key [asm-comment-char])
 
     ;; ;; enable tabs
     ;; (add-hook 'asm-mode-hook #'enable-tabs-8)
@@ -16101,51 +16101,64 @@ otherwise run `find-file-as-root'."
 
 (init-message 2 "Modes: Dired")
 
+(defun local-dired-mode-hook ()
+  ;; key bindings
+  ;; return and mouse click use same buffer
+  (when (fboundp 'dired-single-buffer)
+    (define-key dired-mode-map (kbd "<return>") 'dired-single-buffer)
+    (define-key dired-mode-map (kbd "f") 'dired-single-buffer)
+    (define-key dired-mode-map (kbd "^") 'dired-single-buffer-up)
+    (define-key dired-mode-map (kbd "b") 'dired-single-buffer-up))
+  (when (fboundp 'joc-dired-single-buffer)
+    (define-key dired-mode-map (kbd "<return>") 'joc-dired-single-buffer)
+    (define-key dired-mode-map (kbd "f") 'joc-dired-single-buffer)
+    (define-key dired-mode-map (kbd "^") 'joc-dired-single-buffer-up)
+    (define-key dired-mode-map (kbd "b") 'joc-dired-single-buffer-up))
+  (when (fboundp 'dired-single-buffer-mouse)
+    (define-key dired-mode-map (kbd "<mouse-1>") 'dired-single-buffer-mouse))
+  (when (fboundp 'joc-dired-single-buffer-mouse)
+    (define-key dired-mode-map (kbd "<mouse-1>") 'joc-dired-single-buffer-mouse))
+  ;; edit file names within dired
+  (when (fboundp 'wdired-change-to-wdired-mode)
+    (define-key dired-mode-map (kbd "e") 'wdired-change-to-wdired-mode))
+  ;; reset M-o
+  (define-key dired-mode-map (kbd "M-o") 'other-window)
+  (define-key dired-mode-map (kbd "C-c C-z f") 'browse-url-of-dired-file))
+
 (use-package dired
   :after (dired-single)
-  :commands (dired dired-next-line)
-  :config
+  :commands (dired dired-jump)
+  :hook (dired-mode . local-dired-mode-hook)
+  :bind* ("C-x j" . dired-jump)
+  :custom
   ;; only prompt once for recursive deletes
-  (setq dired-recursive-deletes 'top)
+  (dired-recursive-deletes 'top)
   ;; auto-revert buffer upon revisiting
-  (setq dired-auto-revert-buffer t)
+  (dired-auto-revert-buffer t)
+  ;; list directories first and remove unwanted fields
+  (dired-listing-switches "-alh --group-directories-first")
+  :config
+  (when (fboundp 'dired-single-buffer)
+    (defun dired-single-buffer-up ()
+      (interactive)
+      (dired-single-buffer "..")))
 
-  (defun local-dired-mode-hook ()
-    ;; key bindings
-    ;; return and mouse click use same buffer
-    (when (fboundp 'dired-single-buffer)
-      (define-key dired-mode-map (kbd "<return>") 'dired-single-buffer)
-      (define-key dired-mode-map (kbd "^")
-        (lambda () (interactive) (dired-single-buffer ".."))))
-    (when (fboundp 'joc-dired-single-buffer)
-      (define-key dired-mode-map (kbd "<return>") 'joc-dired-single-buffer)
-      (define-key dired-mode-map (kbd "^")
-        (lambda () (interactive) (joc-dired-single-buffer ".."))))
-    (when (fboundp 'dired-single-buffer-mouse)
-      (define-key dired-mode-map (kbd "<mouse-1>") 'dired-single-buffer-mouse))
-    (when (fboundp 'joc-dired-single-buffer-mouse)
-      (define-key dired-mode-map (kbd "<mouse-1>") 'joc-dired-single-buffer-mouse))
-    ;; edit file names within dired
-    (when (fboundp 'wdired-change-to-wdired-mode)
-      (define-key dired-mode-map (kbd "e") 'wdired-change-to-wdired-mode))
-    ;; reset M-o
-    (define-key dired-mode-map (kbd "M-o") 'other-window)
-    (define-key dired-mode-map (kbd "C-c C-z f") 'browse-url-of-dired-file))
-
-  ;; add hook to dired mode
-  (add-hook 'dired-mode-hook #'local-dired-mode-hook)
+  (when (fboundp 'joc-dired-single-buffer)
+    (defun joc-dired-single-buffer-up ()
+      (interactive)
+      (joc-dired-single-buffer "..")))
 
   (defun dired-move-to-top ()
     (interactive)
     (goto-char (point-min))
     (dired-next-line 4))
-  (define-key dired-mode-map (vector 'remap 'beginning-of-buffer) 'dired-move-to-top)
+  (define-key dired-mode-map [remap beginning-of-buffer] 'dired-move-to-top)
 
   (defun dired-move-to-bottom ()
     (interactive)
     (goto-char (point-max))
     (dired-next-line -1))
-  (define-key dired-mode-map (vector 'remap 'end-of-buffer) 'dired-move-to-bottom))
+  (define-key dired-mode-map [remap end-of-buffer] 'dired-move-to-bottom))
 
 ;;------------------------------------------------------------------------------
 ;;;; dired-single
@@ -17961,6 +17974,7 @@ Blank lines separate paragraphs.  Semicolons start comments.
    ("Visual Line Mode [Toggle]" "visual-line-mode" "Toggle `visual-line-mode' in current buffer.")
    ("Search Case Sensitivity [Toggle]" "toggle-case-fold-search" "Toggle case-fold-search in current buffer.")
    ("Git Status" "(magit-status default-directory)" "Open Subversion status buffer.")
+   ("Web Jump" "webjump" "Jump to a Web site from a programmable hotlist.")
    ("IELM Mode" "ielm" "Open buffer for interactively evaluating Emacs Lisp expressions.")
    ("Evaluate Buffer" "eval-buffer" "Run `eval-buffer' on the current buffer.")
    ("Customize Group" "customize-group" "Run `customize-group' function.")
