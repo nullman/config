@@ -17,12 +17,12 @@ opts=
 help=0
 
 # check for prerequisite applicaitons
-if [[ $(command -v sensors) ]] ; then
+if [[ ! $(command -v sensors) ]] ; then
     echo "lm_sensors is not installed"
     exit 1
 fi
 
-if [[ $(command -v sysbench) ]] ; then
+if [[ ! $(command -v sysbench) ]] ; then
     echo "sysbench is not installed"
     exit 1
 fi
