@@ -72,6 +72,7 @@ for x in $(seq ${count}) ; do
     sysbench --test=cpu --cpu-max-prime=25000 --num-threads=${threads} run > /dev/null 2>&1
 done
 
+echo
 get-temp $1
 
 #===============================================================================
