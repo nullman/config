@@ -1083,16 +1083,18 @@ Otherwise, `local-tab-width' is used."
 
 (use-package eshell
   :hook (eshell-first-time-mode . local-eshell-first-time-mode-hook)
-  :bind (:map eshell-mode-map
-              ([remap beginning-of-line] . eshell-bol)
-              ([remap move-beginning-of-line] . eshell-bol)
-              ("C-r" . counsel-esh-history))
+  ;; :bind (:map eshell-mode-map
+  ;;             ([remap beginning-of-line] . eshell-bol)
+  ;;             ([remap move-beginning-of-line] . eshell-bol)
+  ;;             ("C-r" . counsel-esh-history))
   :custom
   (eshell-history-size local-terminal-history-size)
   (eshell-buffer-maximum-lines local-terminal-maximum-lines)
   (eshell-hist-ignoredups t)
   (eshell-scroll-to-bottom-on-input t)
   :config
+  (setenv "PAGER" "cat")                ; less does not work well inside Emacs
+
   (with-eval-after-load 'esh-opt
     (setq eshell-destroy-buffer-when-process-dies t
           eshell-visual-commands '("htop" "ssh" "vim" "zsh"))))
@@ -1257,6 +1259,10 @@ Common values:
                        `(,background-alpha . ,background-alpha))
   (add-to-list 'default-frame-alist
                `(alpha . (,background-alpha . ,background-alpha)))
+
+  ;;------------------------------------------------------------------------------
+  ;;;; Theme
+  ;;------------------------------------------------------------------------------
 
   (init-message 3 "General Settings: GUI: Theme")
 
@@ -13328,7 +13334,7 @@ USING is the remaining peg."
   :custom
   (company-auto-commit nil)
   (company-minimum-prefix-length 1)
-  (company-idle-delay 0.0)
+  (company-idle-delay 1.0)
   :init
   ;; (global-company-mode 1)
   ;; (add-hook 'after-init-hook #'global-company-mode)
@@ -16101,35 +16107,17 @@ otherwise run `find-file-as-root'."
 
 (init-message 2 "Modes: Dired")
 
-(defun local-dired-mode-hook ()
-  ;; key bindings
-  ;; return and mouse click use same buffer
-  (when (fboundp 'dired-single-buffer)
-    (define-key dired-mode-map (kbd "<return>") 'dired-single-buffer)
-    (define-key dired-mode-map (kbd "f") 'dired-single-buffer)
-    (define-key dired-mode-map (kbd "^") 'dired-single-buffer-up)
-    (define-key dired-mode-map (kbd "b") 'dired-single-buffer-up))
-  (when (fboundp 'joc-dired-single-buffer)
-    (define-key dired-mode-map (kbd "<return>") 'joc-dired-single-buffer)
-    (define-key dired-mode-map (kbd "f") 'joc-dired-single-buffer)
-    (define-key dired-mode-map (kbd "^") 'joc-dired-single-buffer-up)
-    (define-key dired-mode-map (kbd "b") 'joc-dired-single-buffer-up))
-  (when (fboundp 'dired-single-buffer-mouse)
-    (define-key dired-mode-map (kbd "<mouse-1>") 'dired-single-buffer-mouse))
-  (when (fboundp 'joc-dired-single-buffer-mouse)
-    (define-key dired-mode-map (kbd "<mouse-1>") 'joc-dired-single-buffer-mouse))
-  ;; edit file names within dired
-  (when (fboundp 'wdired-change-to-wdired-mode)
-    (define-key dired-mode-map (kbd "e") 'wdired-change-to-wdired-mode))
-  ;; reset M-o
-  (define-key dired-mode-map (kbd "M-o") 'other-window)
-  (define-key dired-mode-map (kbd "C-c C-z f") 'browse-url-of-dired-file))
+(defun local-dired-mode-hook ())
 
 (use-package dired
-  :after (dired-single)
+  ;;:after (dired-single)
   :commands (dired dired-jump)
-  :hook (dired-mode . local-dired-mode-hook)
+  ;;:hook (dired-mode . local-dired-mode-hook)
   :bind* ("C-x j" . dired-jump)
+  :bind (:map dired-mode-map
+              ("e" . wdired-change-to-wdired-mode)
+              ("M-o" . other-window)
+              ("C-c C-z f" . browse-url-of-dired-file))
   :custom
   ;; only prompt once for recursive deletes
   (dired-recursive-deletes 'top)
@@ -16138,15 +16126,15 @@ otherwise run `find-file-as-root'."
   ;; list directories first and remove unwanted fields
   (dired-listing-switches "-alh --group-directories-first")
   :config
-  (when (fboundp 'dired-single-buffer)
-    (defun dired-single-buffer-up ()
-      (interactive)
-      (dired-single-buffer "..")))
-
-  (when (fboundp 'joc-dired-single-buffer)
-    (defun joc-dired-single-buffer-up ()
-      (interactive)
-      (joc-dired-single-buffer "..")))
+  ;; add extra file compression support
+  (setq dired-compress-files-alist
+        '(("\\.tar\\.bz2\\'" . "tar -cf - %i | bzip2 -c9 > %o")
+          ("\\.bz2\\'" . "bzip2 -c9 %i > %o")
+          ("\\.tar\\.xz\\'" . "tar -cf - %i | xz -c9 > %o")
+          ("\\.xz\\'" . "xz -c9 %i > %o")
+          ("\\.tar\\.zst\\'" . "tar -cf - %i | zstd -19 -o %o")
+          ("\\.zst\\'" . "zstd -19 %i -o %o")
+          ("\\.zip\\'" . "zip %o -r --filesync %i")))
 
   (defun dired-move-to-top ()
     (interactive)
@@ -16169,6 +16157,17 @@ otherwise run `find-file-as-root'."
 ;; make dired use a single buffer
 (use-package dired-single
   :quelpa (dired-single)
+  :commands (dired dired-jump)
+  :bind (:map dired-mode-map
+              ("<return>" . dired-single-buffer)
+              ("f" . dired-single-buffer)
+              ("^" . dired-single-buffer-up)
+              ("b" . dired-single-buffer-up)
+              ("<mouse-1>" . dired-single-buffer-mouse))
+  :init
+  (defun dired-single-buffer-up ()
+    (interactive)
+    (dired-single-buffer ".."))
   :config
   (defun dired-single-buffer-mouse--ignore-errors (orig-fun &rest args)
     "Suppress errors when calling `dired-single-buffer-mouse'."
@@ -16178,6 +16177,50 @@ otherwise run `find-file-as-root'."
        (message "%s" err))))
   ;; advise `dired-single-buffer-mouse' to suppress errors
   (advice-add 'dired-single-buffer-mouse :around #'dired-single-buffer-mouse--ignore-errors))
+
+;;------------------------------------------------------------------------------
+;;;; dired-open
+;;------------------------------------------------------------------------------
+
+(init-message 3 "dired-open")
+
+;; open files with external programs
+(use-package dired-open
+  :quelpa (dired-open)
+  :custom
+  (dired-open-extensions
+   '(("png" . "display")
+     ("gif" . "display")
+     ("jpg" . "display")
+     ("jepg" . "display")
+     ("mpg" . "vlc")
+     ("mpeg" . "vlc")
+     ("avi" . "vlc")
+     ("mov" . "vlc"))))
+
+;;------------------------------------------------------------------------------
+;;;; dired-hide-dotfiles
+;;------------------------------------------------------------------------------
+
+(init-message 3 "dired-hide-dotfiles")
+
+(use-package dired-hide-dotfiles
+  :quelpa (dired-hide-dotfiles)
+  :hook (dired-mode . dired-hide-dotfiles-mode)
+  :bind (:map dired-mode-map
+              ("H" . dired-hide-dotfiles-mode)))
+
+;; ;;------------------------------------------------------------------------------
+;; ;;;; all-the-icons-dired
+;; ;;------------------------------------------------------------------------------
+
+;; (init-message 3 "all-the-icons-dired")
+
+;; ;; add icons to file listings
+;; (use-package all-the-icons-dired
+;;   :quelpa (all-the-icons-dired)
+;;   :commands (dired dired-jump)
+;;   :hook (dired-mode . all-the-icons-dired-mode))
 ;; Dired:1 ends here
 
 ;; [[file:init-emacs.org::*Ediff][Ediff:1]]
