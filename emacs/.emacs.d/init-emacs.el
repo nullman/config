@@ -1284,8 +1284,8 @@ Common values:
   ;;   :quelpa (material-theme)
   ;;   :init (load-theme 'material t))
 
-  ;; ;; material theme
-  ;; ;; https://github.com/cpaulik/emacs-material-theme
+  ;; material theme
+  ;; https://github.com/cpaulik/emacs-material-theme
   ;; (use-package material-theme
   ;;   ;; :quelpa (material-theme)
   ;;   :load-path (lambda () (expand-file-name "material-theme.el" local-modules-dir))
@@ -16116,7 +16116,6 @@ otherwise run `find-file-as-root'."
   :bind* ("C-x j" . dired-jump)
   :bind (:map dired-mode-map
               ("e" . wdired-change-to-wdired-mode)
-              ("M-o" . other-window)
               ("C-c C-z f" . browse-url-of-dired-file))
   :custom
   ;; only prompt once for recursive deletes
