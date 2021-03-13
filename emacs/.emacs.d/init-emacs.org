@@ -3224,10 +3224,57 @@ Main Org Mode configuration.
   (init-message 2 "Org Mode: Configuration")
 
   (use-package org
-    :config
+    :custom
     ;; org directory
-    (setq org-directory (expand-file-name "~/org"))
-
+    (org-directory (expand-file-name "~/org"))
+    ;; do not indent blocks to outline node level
+    (org-adapt-indentation nil)
+    ;; remap disputed keys (see `org-disputed-keys')
+    (org-replace-disputed-keys t)
+    ;; display inline images
+    (org-startup-with-inline-images t)
+    ;; do not insert empty lines around headings
+    (org-blank-before-new-entry '((heading . nil) (plain-list-item . nil)))
+    ;; hide leading stars
+    (org-hide-leading-stars t)
+    ;; skip levels
+    (org-odd-levels-only t)
+    ;; use a different ellipsis indicator (than '...')
+    (org-ellipsis "…")
+    ;;(setq org-ellipsis " ⤵")
+    ;;(setq org-ellipsis " ")
+    ;;(setq org-ellipsis " ")
+    ;;(setq org-ellipsis " ")
+    ;;(setq org-ellipsis " ")
+    ;; return follows links
+    ;;(org-return-follows-link t)
+    ;; HOME toggles between header start and line start
+    ;; END toggles between header end and end of tags
+    (org-special-ctrl-a/e t)
+    ;; show and error on invisible edits
+    (org-catch-invisible-edits 'show-and-error)
+    ;; use todo key selection
+    (org-use-fast-todo-selection t)
+    ;; use shift-left/right to change todo status without a state change
+    (org-treat-S-cursor-todo-selection-as-state-change nil)
+    ;; time stamp settings
+    (org-display-custom-times t)
+    (org-time-stamp-custom-formats '("<%Y-%m-%d %a>" . "<%Y-%m-%d %a %H:%M>"))
+    ;; todo keywords
+    (org-todo-keywords '("TODO(t)" "NEXT(n)" "|" "DONE(d!)"))
+    ;; log note settings
+    (org-log-note-headings
+     '((done . "CLOSING NOTE %t")
+       ;;(state . "State %-12s from %-12S %t")
+       (state . "State %-12s %t")
+       (note . "Note taken on %t")
+       (reschedule . "Rescheduled from %S on %t")
+       (delschedule . "Not scheduled, was %S on %t")
+       (redeadline . "New deadline from %S on %t")
+       (deldeadline . "Removed deadline, was %S on %t")
+       (refile . "Refiled on %t")
+       (clock-out . "")))
+    :config
     ;; faces
     (custom-set-faces
      '(org-block ((t (:inherit shadow :foreground "green"))))
@@ -3240,9 +3287,6 @@ Main Org Mode configuration.
      '(org-level-7 ((t (:foreground "spring green"))))
      '(org-level-8 ((t (:foreground "tomato")))))
 
-    ;; remap disputed keys (see `org-disputed-keys')
-    (setq org-replace-disputed-keys t)
-
     ;; set file apps
     (when window-system
       (setq org-file-apps (quote ((auto-mode . emacs)
@@ -3250,59 +3294,13 @@ Main Org Mode configuration.
                                   ("\\.x?html?\\'" . default)
                                   ("\\.pdf\\'" . emacs))))) ; use internal PDF viewer
 
-    ;; display inline images
-    (setq org-startup-with-inline-images t)
-
-    ;; do not insert empty lines around headings
-    (setq org-blank-before-new-entry '((heading . nil) (plain-list-item . nil)))
-
-    ;; hide leading stars
-    (setq org-hide-leading-stars t)
-
-    ;; skip levels
-    (setq org-odd-levels-only t)
-
-    ;; use a different ellipsis indicator (than '...')
-    (setq org-ellipsis "…")
-    ;;(setq org-ellipsis " ⤵")
-    ;;(setq org-ellipsis " ")
-    ;;(setq org-ellipsis " ")
-    ;;(setq org-ellipsis " ")
-    ;;(setq org-ellipsis " ")
-
-    ;; return follows links
-    ;;(setq org-return-follows-link t)
-
-    ;; HOME toggles between header start and line start
-    ;; END toggles between header end and end of tags
-    (setq org-special-ctrl-a/e t)
-
-    ;; show and error on invisible edits
-    (setq org-catch-invisible-edits 'show-and-error)
-
-    ;; use completion with `org-goto'
-    (setq org-goto-interface 'outline-path-completion
-          org-outline-path-complete-in-steps nil
-          org-goto-max-level 10)
-
-    ;; use todo key selection
-    (setq org-use-fast-todo-selection t)
-
-    ;; use shift-left/right to change todo status without a state change
-    (setq org-treat-S-cursor-todo-selection-as-state-change nil)
-
     ;; remember settings
     ;;(setq remember-handler-functions '(org-remember-handler)
     ;;      remember-annotation-functions '(org-remember-annotation))
     ;;(add-hook 'remember-mode-hook #'org-remember-apply-template)
 
-    ;; time stamp settings
-    (setq org-display-custom-times t
-          org-time-stamp-custom-formats '("<%Y-%m-%d %a>" . "<%Y-%m-%d %a %H:%M>"))
-
     ;; todo keywords
-    (setq org-todo-keywords '("TODO(t)" "NEXT(n)" "|" "DONE(d!)"))
-    ;; (setq org-todo-keywords
+    ;; (org-todo-keywords
     ;;       '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!)")
     ;;         (sequence "BACKLOG(b)" "PLAN(p)" "READY(r)" "ACTIVE(a)" "REVIEW(v)" "WAIT(w@/!)" "HOLD(h)" "|" "COMPLETED(c)" "CANCELED(k@)"))
 
@@ -3315,19 +3313,6 @@ Main Org Mode configuration.
     ;; ;;(define-key org-todo-state-map (kbd "l") (lambda () (interactive) (org-todo "DELEGATED")))
     ;; (define-key org-todo-state-map (kbd "d") (lambda () (interactive) (org-todo "DONE")))
     ;; (define-key org-todo-state-map (kbd "c") (lambda () (interactive) (org-todo "CANCELED")))
-
-    ;; log note settings
-    (setq org-log-note-headings
-          '((done . "CLOSING NOTE %t")
-            ;;(state . "State %-12s from %-12S %t")
-            (state . "State %-12s %t")
-            (note . "Note taken on %t")
-            (reschedule . "Rescheduled from %S on %t")
-            (delschedule . "Not scheduled, was %S on %t")
-            (redeadline . "New deadline from %S on %t")
-            (deldeadline . "Removed deadline, was %S on %t")
-            (refile . "Refiled on %t")
-            (clock-out . "")))
 
     ;; save buffers after refile
     (advice-add 'org-refile :after #'org-save-all-org-buffers)
