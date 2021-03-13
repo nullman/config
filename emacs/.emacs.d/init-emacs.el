@@ -2151,46 +2151,46 @@ KEYMAP defaults to `override-global-map'."
   ;; advise `org-insert-heading' to fix extra newline bug
   (advice-add 'org-insert-heading :around #'org-insert-heading--fix-newline-bug)
 
-  (defun org-fixup-indentation--unindent (diff)
-    "Unindent org begin/end blocks, keywords, and paragraphs."
-    (save-window-excursion
-      (save-mark-and-excursion
-        (save-match-data
-          (when (org-with-limited-levels (org-at-heading-p))
-            (org-with-wide-buffer
-             (narrow-to-region (line-beginning-position)
-                               (save-mark-and-excursion
-                                 (org-with-limited-levels (outline-next-heading))
-                                 (point)))
-             (forward-line 0)
-             (org-beginning-of-line)
-             (let* ((case-fold-search t)
-                    (indentation (- (point) (line-beginning-position)))
-                    (spacing (make-string (abs diff) ? ))
-                    (indented-regexp (concat "^" spacing "[ \t]*"))
-                    (text-indent t))
-               (forward-line 1)
-               (while (not (eobp))
-                 (when (re-search-forward indented-regexp (line-end-position) :noerror)
-                   (let ((line-indentation (- (point) (line-beginning-position))))
-                     (forward-line 0)
-                     (case (org-element-type (org-element-at-point))
-                       ('src-block
-                        (when (> diff 0)
-                          (delete-char diff)))
-                       ((paragraph table table-row)
-                        (if (> diff 0)
-                            (when (or (not text-indent)
-                                      (< line-indentation indentation))
-                              (delete-char diff)
-                              (setq text-indent nil))
-                          (if (and text-indent
-                                   (>= line-indentation (- indentation diff)))
-                              (delete-char (abs diff))
-                            (setq text-indent nil)))))))
-                 (forward-line 1)))))))))
-  ;; advise `org-fixup-indentation' to unindent as needed
-  (advice-add 'org-fixup-indentation :after #'org-fixup-indentation--unindent)
+  ;; (defun org-fixup-indentation--unindent (diff)
+  ;;   "Unindent org begin/end blocks, keywords, and paragraphs."
+  ;;   (save-window-excursion
+  ;;     (save-mark-and-excursion
+  ;;       (save-match-data
+  ;;         (when (org-with-limited-levels (org-at-heading-p))
+  ;;           (org-with-wide-buffer
+  ;;            (narrow-to-region (line-beginning-position)
+  ;;                              (save-mark-and-excursion
+  ;;                                (org-with-limited-levels (outline-next-heading))
+  ;;                                (point)))
+  ;;            (forward-line 0)
+  ;;            (org-beginning-of-line)
+  ;;            (let* ((case-fold-search t)
+  ;;                   (indentation (- (point) (line-beginning-position)))
+  ;;                   (spacing (make-string (abs diff) ? ))
+  ;;                   (indented-regexp (concat "^" spacing "[ \t]*"))
+  ;;                   (text-indent t))
+  ;;              (forward-line 1)
+  ;;              (while (not (eobp))
+  ;;                (when (re-search-forward indented-regexp (line-end-position) :noerror)
+  ;;                  (let ((line-indentation (- (point) (line-beginning-position))))
+  ;;                    (forward-line 0)
+  ;;                    (case (org-element-type (org-element-at-point))
+  ;;                      ('src-block
+  ;;                       (when (> diff 0)
+  ;;                         (delete-char diff)))
+  ;;                      ((paragraph table table-row)
+  ;;                       (if (> diff 0)
+  ;;                           (when (or (not text-indent)
+  ;;                                     (< line-indentation indentation))
+  ;;                             (delete-char diff)
+  ;;                             (setq text-indent nil))
+  ;;                         (if (and text-indent
+  ;;                                  (>= line-indentation (- indentation diff)))
+  ;;                             (delete-char (abs diff))
+  ;;                           (setq text-indent nil)))))))
+  ;;                (forward-line 1)))))))))
+  ;; ;; advise `org-fixup-indentation' to unindent as needed
+  ;; (advice-add 'org-fixup-indentation :after #'org-fixup-indentation--unindent)
 
   ;; define some needed, but deprecated functions
 
