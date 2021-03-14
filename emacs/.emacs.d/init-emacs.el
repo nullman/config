@@ -6778,6 +6778,7 @@ init-emacs-website.el to be used with batch commands."
                                 ";;;; Org Mode: Babel: Setup"
                                 ";;;; Org Mode: Babel: Tangle Update Timestamps"
                                 ";;;; Org Mode: Babel: Tangle Case-Sensitive"
+                                ";;;; Functions: Emacs Functions: delete-line"
                                 ";;; Modules: htmlize")
                               (let ((start (progn
                                              (goto-char (point-min))
