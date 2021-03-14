@@ -16,7 +16,9 @@
 ;;==============================================================================
 ;;; Start
 ;;==============================================================================
+;; Start:1 ends here
 
+;; [[file:init-emacs.org::*Start][Start:2]]
 (defun message--with-timestamp (format-string &rest args)
   "Add timestamps to `*Messages*' buffer."
   (when (and (> (length format-string) 0)
@@ -44,12 +46,21 @@ LEVEL is the indentation level."
 
 (init-message 1 "Start")
 
-(defvar emacs-load-start-time nil
-  "Track the time it takes Emacs to start.")
+;; display load time after startup
+(defun emacs-startup-hook--message-startup-time ()
+  "Message the Emacs startup time and number of garbage collections."
+  (message "Emacs startup time: %f seconds"
+           (float-time (time-subtract after-init-time before-init-time)))
+  (message "Emacs startup garbage collections: %d" gcs-done))
+(add-hook 'emacs-startup-hook #'emacs-startup-hook--message-startup-time)
+;; Start:2 ends here
 
-;; set load start time
-(setq emacs-load-start-time (current-time))
+;; [[file:init-emacs.org::*Start][Start:3]]
+;; reduce frequency of garbage collections
+(setq gc-cons-threshold (* 50 1000 1000)) ; defaults to 800000
+;; Start:3 ends here
 
+;; [[file:init-emacs.org::*Start][Start:4]]
 ;; load modules that are used for initialization
 (require 'cl-macs)
 (require 'subr-x)
@@ -57,7 +68,7 @@ LEVEL is the indentation level."
 (require 'org-table)
 (require 'ob-tangle)
 (require 'ox)
-;; Start:1 ends here
+;; Start:4 ends here
 
 ;; [[file:init-emacs.org::*Package Manager][Package Manager:1]]
 ;;==============================================================================
@@ -746,49 +757,42 @@ A fortune is added if FORTUNE is non-nil."
 ;; System:1 ends here
 
 ;; [[file:init-emacs.org::*System][System:2]]
-;; reduce frequency of garbage collections
-(setq gc-cons-threshold 20000000)       ; defaults to 800000
-
-(setq gc-cons-percentage 0.3)           ; defaults to 0.1
+;; set max variable bindings
+(setq max-specpdl-size 10000)           ; defaults to 1300
 ;; System:2 ends here
 
 ;; [[file:init-emacs.org::*System][System:3]]
-;; set max variable bindings
-(setq max-specpdl-size 10000)           ; defaults to 1300
+;; set max eval depth
+(setq max-lisp-eval-depth 10000)        ; defaults to 600
 ;; System:3 ends here
 
 ;; [[file:init-emacs.org::*System][System:4]]
-;; set max eval depth
-(setq max-lisp-eval-depth 10000)        ; defaults to 600
+;; set max message log size
+(setq message-log-max 2048)             ; defaults to 1000
 ;; System:4 ends here
 
 ;; [[file:init-emacs.org::*System][System:5]]
-;; set max message log size
-(setq message-log-max 2048)             ; defaults to 1000
-;; System:5 ends here
-
-;; [[file:init-emacs.org::*System][System:6]]
 ;; set max history list size
 (setq history-length 250)               ; defaults to 30
 
 ;; remove duplicates from history lists
 (setq history-delete-duplicates t)      ; defaults to nil
-;; System:6 ends here
+;; System:5 ends here
 
-;; [[file:init-emacs.org::*System][System:7]]
+;; [[file:init-emacs.org::*System][System:6]]
 ;; set max kill ring size
 (setq kill-ring-max 100)                ; defaults to 60
 
 ;; set max mark ring size
 (setq mark-ring-max 32)                 ; defaults to 16
+;; System:6 ends here
+
+;; [[file:init-emacs.org::*System][System:7]]
+;; change all calls to `yes-or-no-p' to `y-or-n-p'
+(fset 'yes-or-no-p 'y-or-n-p)
 ;; System:7 ends here
 
 ;; [[file:init-emacs.org::*System][System:8]]
-;; change all calls to `yes-or-no-p' to `y-or-n-p'
-(fset 'yes-or-no-p 'y-or-n-p)
-;; System:8 ends here
-
-;; [[file:init-emacs.org::*System][System:9]]
 ;; enable upercase region (C-x C-u)
 (put 'upcase-region 'disabled nil)
 
@@ -800,9 +804,9 @@ A fortune is added if FORTUNE is non-nil."
 
 ;; turn off the disabling of certain commands
 (setq disabled-command-function nil)
-;; System:9 ends here
+;; System:8 ends here
 
-;; [[file:init-emacs.org::*System][System:10]]
+;; [[file:init-emacs.org::*System][System:9]]
 ;; turn off bidirectional paragraph formatting
 (setq-default bidi-paragraph-direction 'left-to-right)
 
@@ -813,7 +817,7 @@ A fortune is added if FORTUNE is non-nil."
 ;; turn on `so-long-mode' for files with long lines to help with performance
 (when (version<= "27.1" emacs-version)
   (global-so-long-mode 1))
-;; System:10 ends here
+;; System:9 ends here
 
 ;; [[file:init-emacs.org::*Files][Files:1]]
 ;;------------------------------------------------------------------------------
@@ -11015,7 +11019,8 @@ point, or line."
   (interactive)
   (let ((case-fold-search t)
         (beg (or beg (if (use-region-p) (region-beginning) nil)))
-        (end (or end (if (use-region-p) (region-end) nil))))
+        (end (or end (if (use-region-p) (region-end) nil)))
+        (eol (line-end-position)))
     (deactivate-mark)
     (save-window-excursion
       (save-mark-and-excursion
@@ -11039,7 +11044,12 @@ point, or line."
               ('error nil))
             (org-babel-do-in-edit-buffer (indent-region (point-min) (point-max))))
            ;; sexp
-           ((beginning-of-defun)
+           ((save-excursion
+              (and (beginning-of-defun)
+                   (progn
+                     (end-of-defun)
+                     (> (point) eol))))
+            (beginning-of-defun)
             (indent-region (line-beginning-position) (line-end-position))
             (let* ((bounds (bounds-of-thing-at-point 'sexp))
                    (beg (car bounds))
@@ -19070,10 +19080,6 @@ to the current ERC buffer."
 ;; Turn off Scroll Bar:1 ends here
 
 ;; [[file:init-emacs.org::*End][End:1]]
-;; display load time
-(message "Emacs startup time: %f seconds"
-         (float-time (time-since emacs-load-start-time)))
-
 (init-message 1 "End")
 
 ;;==============================================================================

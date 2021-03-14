@@ -67,7 +67,7 @@ makes everything else vanish.
 :CUSTOM_ID: init
 :END:
 
-Tangles *init.el* bootstrap file.
+Tangle *init.el* bootstrap file.
 
 Note:  This section is not automatically tangled on save.  If changes are made
 to it, call =org-babel-tangle-block=.
@@ -224,8 +224,7 @@ to it, call =org-babel-tangle-block=.
 :CUSTOM_ID: start
 :END:
 
-Status messages are written to the *\*Messages\** buffer throughout the
-initialization process to help debug loading errors.
+Starting point of tangled *init-emacs.el* file.
 
 #+BEGIN_SRC emacs-lisp
   ;; -*- mode: emacs-lisp; lexical-binding: t; no-byte-compile: t -*-
@@ -245,7 +244,12 @@ initialization process to help debug loading errors.
   ;;==============================================================================
   ;;; Start
   ;;==============================================================================
+#+END_SRC
 
+Status messages are written to the *\*Messages\** buffer throughout the
+initialization process to help debug loading errors.
+
+#+BEGIN_SRC emacs-lisp
   (defun message--with-timestamp (format-string &rest args)
     "Add timestamps to `*Messages*' buffer."
     (when (and (> (length format-string) 0)
@@ -273,12 +277,26 @@ initialization process to help debug loading errors.
 
   (init-message 1 "Start")
 
-  (defvar emacs-load-start-time nil
-    "Track the time it takes Emacs to start.")
+  ;; display load time after startup
+  (defun emacs-startup-hook--message-startup-time ()
+    "Message the Emacs startup time and number of garbage collections."
+    (message "Emacs startup time: %f seconds"
+             (float-time (time-subtract after-init-time before-init-time)))
+    (message "Emacs startup garbage collections: %d" gcs-done))
+  (add-hook 'emacs-startup-hook #'emacs-startup-hook--message-startup-time)
+#+END_SRC
 
-  ;; set load start time
-  (setq emacs-load-start-time (current-time))
+Increase the Emacs Lisp garbage collection threshold to reduce the frequency
+of garbage collections.
 
+#+BEGIN_SRC emacs-lisp
+  ;; reduce frequency of garbage collections
+  (setq gc-cons-threshold (* 50 1000 1000)) ; defaults to 800000
+#+END_SRC
+
+Load modules that are used for initialization.
+
+#+BEGIN_SRC emacs-lisp
   ;; load modules that are used for initialization
   (require 'cl-macs)
   (require 'subr-x)
@@ -1311,14 +1329,13 @@ Set time zones to use for =display-time-world=.
   (init-message 2 "Environment Settings: System")
 #+END_SRC
 
-Increase the Emacs Lisp garbage collection threshold to reduce the frequency
-of garbage collections.
++Increase the Emacs Lisp garbage collection threshold to reduce the frequency+
++of garbage collections.+
 
-#+BEGIN_SRC emacs-lisp
-  ;; reduce frequency of garbage collections
-  (setq gc-cons-threshold 20000000)       ; defaults to 800000
-
-  (setq gc-cons-percentage 0.3)           ; defaults to 0.1
+#+BEGIN_SRC emacs-lisp :tangle no
+  ;; this is handled in the Start section so it can take effect earlier
+  ;; ;; reduce frequency of garbage collections
+  ;; (setq gc-cons-threshold (* 50 1000 1000)) ; defaults to 800000
 #+END_SRC
 
 Allow Emacs to use a larger number of variable bindings and unwind protects.
@@ -15549,7 +15566,8 @@ extra whitespace.
     (interactive)
     (let ((case-fold-search t)
           (beg (or beg (if (use-region-p) (region-beginning) nil)))
-          (end (or end (if (use-region-p) (region-end) nil))))
+          (end (or end (if (use-region-p) (region-end) nil)))
+          (eol (line-end-position)))
       (deactivate-mark)
       (save-window-excursion
         (save-mark-and-excursion
@@ -15573,7 +15591,12 @@ extra whitespace.
                 ('error nil))
               (org-babel-do-in-edit-buffer (indent-region (point-min) (point-max))))
              ;; sexp
-             ((beginning-of-defun)
+             ((save-excursion
+                (and (beginning-of-defun)
+                     (progn
+                       (end-of-defun)
+                       (> (point) eol))))
+              (beginning-of-defun)
               (indent-region (line-beginning-position) (line-end-position))
               (let* ((bounds (bounds-of-thing-at-point 'sexp))
                      (beg (car bounds))
@@ -29104,10 +29127,6 @@ Open *\*Messages\** buffer if there were any errors during initialization.
 :END:
 
 #+BEGIN_SRC emacs-lisp
-  ;; display load time
-  (message "Emacs startup time: %f seconds"
-           (float-time (time-since emacs-load-start-time)))
-
   (init-message 1 "End")
 
   ;;==============================================================================
