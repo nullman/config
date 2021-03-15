@@ -11,7 +11,7 @@
     email = kylewsherman@gmail.com
 
 [pull]
-    rebase = true
+    rebase = false
 
 [checkout]
     defaultRemote = origin
