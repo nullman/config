@@ -27,8 +27,11 @@ _command xmodmap && [[ -f ${HOME}/.Xmodmap ]] && xmodmap ${HOME}/.Xmodmap
 # disable insert key
 _command xkbcomp && xkbcomp ${DISPLAY} - | sed 's/ Insert / NoSymbol /' | xkbcomp - ${DISPLAY} > /dev/null 2>&1
 
-# disable caps_lock key and toggle it via both shift keys
-_command setxkbmap && setxkbmap -option 'shift:both_capslock,caps:ctrl_modifier'
+# setxkbmap key behavior modifications
+#   caps lock  -> control
+#   both shift -> toggle caps lock
+#   shift      -> cancel caps lock
+_command setxkbmap && setxkbmap -option 'shift:both_capslock_cancel,caps:ctrl_modifier'
 
 # # xbindkeys
 # pkill -x xbindkeys > /dev/null 2>&1
