@@ -294,18 +294,6 @@ of garbage collections.
   (setq gc-cons-threshold (* 50 1000 1000)) ; defaults to 800000
 #+END_SRC
 
-Load modules that are used for initialization.
-
-#+BEGIN_SRC emacs-lisp
-  ;; load modules that are used for initialization
-  (require 'cl-macs)
-  (require 'subr-x)
-  (require 'org)
-  (require 'org-table)
-  (require 'ob-tangle)
-  (require 'ox)
-#+END_SRC
-
 * Package Manager
 :PROPERTIES:
 :CUSTOM_ID: package-manager
@@ -521,6 +509,23 @@ errors, so it should not normally be on.
   ;;   "Hook to turn debugging on after init completes."
   ;;   (setq debug-on-error t))
   ;; (add-hook 'after-init-hook #'after-init-hook--debug-on-error)
+#+END_SRC
+
+*** Modules
+:PROPERTIES:
+:CUSTOM_ID: environment-settings-modules
+:END:
+
+Load modules that are used for initialization.
+
+#+BEGIN_SRC emacs-lisp
+  ;; load modules that are used for initialization
+  (require 'cl-macs)
+  (require 'subr-x)
+  (require 'org)
+  (require 'org-table)
+  (require 'ob-tangle)
+  (require 'ox)
 #+END_SRC
 
 *** Environment
@@ -4592,7 +4597,7 @@ Add templates to =org-structure-template-alist= and
        ("el" . "export latex")
        ("q" . "quote")
        ("s" . "src")
-       ("sel" . "src emac-lisp")
+       ("sel" . "src emacs-lisp")
        ("sk" . "src kotlin")
        ("spy" . "src python")
        ("sr" . "src racket")

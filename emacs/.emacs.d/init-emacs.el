@@ -60,16 +60,6 @@ LEVEL is the indentation level."
 (setq gc-cons-threshold (* 50 1000 1000)) ; defaults to 800000
 ;; Start:3 ends here
 
-;; [[file:init-emacs.org::*Start][Start:4]]
-;; load modules that are used for initialization
-(require 'cl-macs)
-(require 'subr-x)
-(require 'org)
-(require 'org-table)
-(require 'ob-tangle)
-(require 'ox)
-;; Start:4 ends here
-
 ;; [[file:init-emacs.org::*Package Manager][Package Manager:1]]
 ;;==============================================================================
 ;;; Package Manager
@@ -154,6 +144,16 @@ LEVEL is the indentation level."
 ;;   (setq debug-on-error t))
 ;; (add-hook 'after-init-hook #'after-init-hook--debug-on-error)
 ;; Debugging:2 ends here
+
+;; [[file:init-emacs.org::*Modules][Modules:1]]
+;; load modules that are used for initialization
+(require 'cl-macs)
+(require 'subr-x)
+(require 'org)
+(require 'org-table)
+(require 'ob-tangle)
+(require 'ox)
+;; Modules:1 ends here
 
 ;; [[file:init-emacs.org::*Environment][Environment:1]]
 ;;------------------------------------------------------------------------------
@@ -3356,7 +3356,7 @@ same directory as the org-buffer and insert a link to this file."
      ("el" . "export latex")
      ("q" . "quote")
      ("s" . "src")
-     ("sel" . "src emac-lisp")
+     ("sel" . "src emacs-lisp")
      ("sk" . "src kotlin")
      ("spy" . "src python")
      ("sr" . "src racket")
