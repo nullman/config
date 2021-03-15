@@ -2852,7 +2852,7 @@ export GIT_REPOSITORY_WEB="git@gitlab.com:kylesherman/web.git"
 #        gitsh                   status home (config, config-private) git repositories
 alias gitsh="
     (echo '~/config status' && cd \${HOME}/config && git status)
-    (echo '~/config-private status' && cd \${HOME}/config-private && git status)"
+    ([[ -d \${HOME}/config-private ]] && echo '~/config-private status' && cd \${HOME}/config-private && git status)"
 #        gitcoh                  clone home (config, config-private) git repositories
 alias gitcoh="
     git clone \${GIT_REPOSITORY_CONFIG} \${HOME}/config
@@ -2862,28 +2862,28 @@ alias gitcihu="
     #if [[ -L \${HOME}/.cron -a -f \${HOME}/config/custom/\$(uname -n)/.cron ]] ; then
     #    crontab -l > \${HOME}/config/custom/\$(uname -n)/.cron
     #fi
-    if [[ -f \${HOME}/.addressbook -a ! -L \${HOME}/.addressbook ]] ; then
+    if [[ -d \${HOME}/config-private ]] && [[ -f \${HOME}/.addressbook ]] && [[ ! -L \${HOME}/.addressbook ]] ; then
         pushd \${HOME}
         cp .addressbook config-private/common/
         ln -sf config-private/common/.addressbook
         popd
     fi
-    if [[ -f \${HOME}/.xscreensaver -a ! -L \${HOME}/.xscreensaver ]] ; then
+    if [[ -d \${HOME}/config-private ]] && [[ -f \${HOME}/.xscreensaver ]] && [[ ! -L \${HOME}/.xscreensaver ]] ; then
         pushd \${HOME}
         cp .xscreensaver config-private/common/
         ln -sf config-private/common/.xscreensaver
         popd
     fi
     (cd \${HOME}/config && git commit -a -m 'Update')
-    (cd \${HOME}/config-private && git commit -a -m 'Update')"
+    ([[ -d \${HOME}/config-private ]] && cd \${HOME}/config-private && git commit -a -m 'Update')"
 #        gituoh                  pull (update) home git repository (from origin)
 alias gituoh="
     (cd \${HOME}/config && git pull origin)
-    (cd \${HOME}/config-private && git pull origin)"
+    ([[ -d \${HOME}/config-private ]] && cd \${HOME}/config-private && git pull origin)"
 #        gitpoh                  push home git repository (to origin)
 alias gitpoh="
     (cd \${HOME}/config && git push origin)
-    (cd \${HOME}/config-private && git push origin)"
+    ([[ -d \${HOME}/config-private ]] && cd \${HOME}/config-private && git push origin)"
 #        gitsdev                 status dev git repository
 alias gitsdev="(cd \${HOME}/dev && removeorgfontfiles && git status)"
 #        gitcodev                clone dev git repository

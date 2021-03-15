@@ -137,7 +137,7 @@ pstest() {
         pgrep --euid ${USER} --ignore-case "$1" > /dev/null
     fi
 }
-# iscommand checks if executable command is found in the path
+#        iscommand               check if executable command is found in the path
 iscommand() {
     command -v "$1" > /dev/null 2>&1
 }
@@ -988,7 +988,7 @@ emacsed() {
     [[ -n "${DEBUG}" ]] && echo "client: ${client}"
     # determine if screen is running under this user and if emacs is running under it
     screen=0
-    if [[ "$(inscreen)" == "t" ]] ; then
+    if [[ "$(inscreen)" == "screen" ]] ; then
         if [[ -n "$(ps -e -o user,args | grep -v grep | grep ${USER} | grep emacs | grep '\-nw')" ]] ; then
             screen=1
         fi
@@ -1256,14 +1256,14 @@ gitsyncconfig() {
     #    crontab -l > config-private/custom/$(uname -n)/.cron
     #fi
     # update addressbook
-    if [[ -f "${HOME}/.addressbook" ]] && [[ ! -L "${HOME}/.addressbook" ]] ; then
+    if [[ -d "${HOME}/config-private" ]] && [[ -f "${HOME}/.addressbook" ]] && [[ ! -L "${HOME}/.addressbook" ]] ; then
         echo "Update .addressbook..."
         (cd "${HOME}" && \
              cp .addressbook config-private/common/ && \
              ln -sf config-private/common/.addressbook)
     fi
     # only update xscreensaver preferences on tank
-    if [[ -f "${HOME}/.xscreensaver" ]] && [[ ! -L "${HOME}/.xscreensaver" ]] && \
+    if [[ -d "${HOME}/config-private" ]] && [[ -f "${HOME}/.xscreensaver" ]] && [[ ! -L "${HOME}/.xscreensaver" ]] && \
            [[ "$(uname -n)" == "tank" ]] ; then
         echo "Update .xscreensaver..."
         (cd "${HOME}" && \
@@ -1674,8 +1674,8 @@ EOF
 howtohome() {
     user=${USER}
     cat <<EOF
-Install ccrypt
-  sudo pacman -S --noconfirm --needed ccrypt
+Install packages
+  sudo pacman -S --noconfirm --needed ccrypt stow
 Copy bundle.tgz.cpt from USB and decrypt it:
   cp /run/media/kyle/Cruzer/bundle.tgz.cpt ~/
   ccrypt -d bundle.tgz.cpt
@@ -1684,7 +1684,9 @@ Checkout config and config-private:
   git clone ${GIT_REPOSITORY_CONFIG} ~/config
   git clone ${GIT_REPOSITORY_CONFIG_PRIVATE} ~/config-private
 Source environment scripts:
-  source ~/config/.funct ~/config/.alias ~/config/.shellrc
+  source ~/config/common/.funct
+  source ~/config/common/.alias
+  source ~/config/common/.shellrc
 Checkout doc repository:
   gitcodoc
 Checkout dev repository:
@@ -1761,8 +1763,8 @@ homeinitialize() {
             stow --dir="${HOME}/config" --target="${HOME}" --stow "common" "emacs"
             stow --dir="${HOME}/config" --target="${HOME}" --no-folding --stow "config" "local"
             stow --dir="${HOME}/config/custom" --target="${HOME}" --no-folding --stow "$(uname -n)"
-            stow --dir="${HOME}/config-private" --target="${HOME}" --stow "common" "emacs"
-            stow --dir="${HOME}/config-private" --target="${HOME}" --no-folding --stow "config"
+            [[ -d "${HOME}/config-private" ]] && stow --dir="${HOME}/config-private" --target="${HOME}" --stow "common" "emacs"
+            [[ -d "${HOME}/config-private" ]] && stow --dir="${HOME}/config-private" --target="${HOME}" --no-folding --stow "config"
 
             echo "Making other symlinks..."
             (cd "${HOME}" && \
@@ -1793,8 +1795,8 @@ homerestow() {
     stow --dir="${HOME}/config" --target="${HOME}" --restow "common" "emacs"
     stow --dir="${HOME}/config" --target="${HOME}" --no-folding --restow "config" "local"
     stow --dir="${HOME}/config/custom" --target="${HOME}" --no-folding --restow "$(uname -n)"
-    stow --dir="${HOME}/config-private" --target="${HOME}" --restow "common" "emacs"
-    stow --dir="${HOME}/config-private" --target="${HOME}" --no-folding --restow "config"
+    [[ -d "${HOME}/config-private" ]] && stow --dir="${HOME}/config-private" --target="${HOME}" --restow "common" "emacs"
+    [[ -d "${HOME}/config-private" ]] && stow --dir="${HOME}/config-private" --target="${HOME}" --no-folding --restow "config"
 }
 #        manjaroinitialize       install manjaro packages and setup system
 manjaroinitialize() {
