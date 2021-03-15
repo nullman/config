@@ -10,8 +10,7 @@
 
 name=$(basename "$0")
 
-_usage()
-{
+_usage() {
     cat <<EOF
 Usage: $(basename "$0") [OPTIONS]
 Present a Window Manager Session Menu using rofi.
