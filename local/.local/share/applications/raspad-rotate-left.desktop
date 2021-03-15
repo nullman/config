@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Raspad Rotate Left
+Comment=Rotate Raspad screen and touchpad to the left position
+Exec=/home/kyle/bin/raspad-rotate --left
+Icon=previous
+Terminal=false
+StartupNotify=false
+Categories=Accessibility;Screen;

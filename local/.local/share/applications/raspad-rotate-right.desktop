@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Raspad Rotate Right
+Comment=Rotate Raspad screen and touchpad to the right position
+Exec=/home/kyle/bin/raspad-rotate --right
+Icon=next
+Terminal=false
+StartupNotify=false
+Categories=Accessibility;Screen;
