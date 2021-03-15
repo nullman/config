@@ -4,18 +4,7 @@ Type=Application
 Name=Rotate HDMI-1 Right
 Comment=Send xrandr command to rotate HDMI-1 screen to the right position
 Exec=sh -c 'xrandr --output HDMI-1 --rotate right'
-Icon=go-next
-Terminal=false
-StartupNotify=false
-Categories=Accessibility;Screen;
-
-[Desktop Entry]
-Version=1.0
-Type=Application
-Name=Rotate HDMI-1 Right
-Comment=Send xrandr command to rotate HDMI-1 screen 90 degrees to the right
-Exec=sh -c 'xrandr --output HDMI-1 --rotate right'
-Icon=object-rotate-right
+Icon=next
 Terminal=false
 StartupNotify=false
 Categories=Accessibility;Screen;
