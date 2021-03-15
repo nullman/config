@@ -41,19 +41,19 @@ fi
 case "$1" in
     -n|--normal)
         xrandr --output ${output} --rotate normal
-        xinput --set-prop "${device}" "${property}" "${value_normal}"
+        xinput --set-prop "${device}" "${property}" ${value_normal}
         ;;
     -i|--inverted)
         xrandr --output ${output} --rotate inverted
-        xinput --set-prop "${device}" "${property}" "${value_inverted}"
+        xinput --set-prop "${device}" "${property}" ${value_inverted}
         ;;
     -l|--left)
         xrandr --output ${output} --rotate left
-        xinput --set-prop "${device}" "${property}" "${value_left}"
+        xinput --set-prop "${device}" "${property}" ${value_left}
         ;;
     -r|--right)
         xrandr --output ${output} --rotate right
-        xinput --set-prop "${device}" "${property}" "${value_right}"
+        xinput --set-prop "${device}" "${property}" ${value_right}
         ;;
     -h|--help)
         _usage
