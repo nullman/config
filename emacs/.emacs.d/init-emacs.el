@@ -4323,6 +4323,11 @@ heading, properties, source block with title comment, and test block."
   :type 'list
   :group 'org-visibility)
 
+;; has buffer been modified since last visibility save
+(defvar-local org-visibility-dirty
+  nil
+  "Non-nil if buffer has been modified since last visibility save.")
+
 (defun buffer-file-checksum (&optional buffer)
   "Return checksum for BUFFER file or nil if file does not exist."
   (let* ((buffer (or buffer (current-buffer)))
@@ -4377,13 +4382,15 @@ and update `org-visibility-state-file' with new state."
         (if (not file-name)
             (unless noerror
               (error "There is no file associated with this buffer: %S" buffer))
-          (save-mark-and-excursion
-            (goto-char (point-min))
-            (while (not (eobp))
-             (when (not (invisible-p (point)))
-                (push (point) visible-lines))
-              (forward-line 1)))
-          (org-visibility-set buffer (nreverse visible-lines)))))))
+          (when org-visibility-dirty
+            (save-mark-and-excursion
+              (goto-char (point-min))
+              (while (not (eobp))
+                (when (not (invisible-p (point)))
+                  (push (point) visible-lines))
+                (forward-line 1)))
+            (org-visibility-set buffer (nreverse visible-lines))
+            (setq org-visibility-dirty nil)))))))
 
 (defun org-visibility-load (&optional buffer noerror)
   "Load visibility snapshot of org BUFFER."
@@ -4402,7 +4409,8 @@ and update `org-visibility-state-file' with new state."
                   (goto-char x)
                   (when (invisible-p (point))
                     (forward-char -1)
-                    (org-cycle)))))))))))
+                    (org-cycle)))))
+            (setq org-visibility-dirty nil)))))))
 
 (defun org-visibility-check-buffer-file-path (buffer)
   "Return whether BUFFER's file is in one of the paths in `org-visibility-paths'."
@@ -4421,6 +4429,7 @@ and update `org-visibility-state-file' with new state."
 
 (defun org-visibility-clean ()
   "Remove any missing files from `org-visibility-state-file'."
+  (interactive)
   (let ((data (and (file-exists-p org-visibility-state-file)
                    (ignore-errors
                      (with-temp-buffer
@@ -4457,6 +4466,13 @@ and update `org-visibility-state-file' with new state."
                (org-visibility-check-buffer-file-path buffer))
       (org-visibility-load buffer t))))
 (add-hook 'org-mode-hook #'org-visibility-load-if-org-file :append)
+
+(defun org-visibility-dirty-if-org-file ()
+  "Hook to set visibility dirty flag if org file."
+  (interactive)
+  (when (org-visibility-check-buffer-file-path (current-buffer))
+    (setq org-visibility-dirty t)))
+(add-hook 'first-change-hook #'org-visibility-dirty-if-org-file :append)
 
 ;; key bindings
 (bind-keys :map org-mode-map
