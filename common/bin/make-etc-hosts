@@ -24,6 +24,8 @@ sudo bash -c "
 192.168.1.42    choi
 192.168.1.44    switch
 192.168.1.50    mouse
+192.168.1.52    raspad
+192.168.1.53    raspadusb
 192.168.1.54    raspberrypi
 192.168.1.55    raspberrypid
 192.168.1.62    colleen

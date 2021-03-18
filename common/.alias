@@ -1606,48 +1606,30 @@ alias sshagent="
 #
 # ssh logons (internal)
 #
-#        sshf                    ssh -p 8022 -l root firewall
-alias sshf="echo 'ssh:firewall:root' ; ssh -p 8022 -l root firewall"
-#        sshm                    ssh morpheus
-alias sshm="echo 'ssh:morpheus' ; ssh morpheus"
-#        sshmk                   ssh morpheus:kyle
-alias sshmk="echo 'ssh:morpheus:kyle' ; ssh -l kyle morpheus"
-#        sshmg                   ssh morpheus:git
-alias sshmg="echo 'ssh:morpheus:git' ; ssh -l git morpheus"
-#        sshn                    ssh neo
-alias sshn="echo 'ssh:neo' ; ssh neo"
-#        sshnr                   ssh neo:root
-alias sshnr="echo 'ssh:neo:root' ; ssh -l root neo"
-#        sshnk                   ssh neo:kyle
-alias sshnk="echo 'ssh:neo:kyle' ; ssh -l kyle neo"
-#        sshs                    ssh switch
-alias sshs="echo 'ssh:switch' ; ssh switch"
-#        ssht                    ssh tank
-alias ssht="echo 'ssh:tank' ; ssh tank"
-#        sshtk                   ssh tank:kyle
-alias sshtk="echo 'ssh:tank:kyle' ; ssh -l kyle tank"
-#        ssht2                   ssh tank (2nd nic)
-alias ssht2="echo 'ssh:tank' ; ssh 192.168.1.61"
-#        sshc                    ssh colleen
-alias sshc="echo 'ssh:colleen' ; ssh -l colleen colleen"
-#        ssha                    ssh apoc
-alias ssha="echo 'ssh:apoc' ; ssh apoc"
-#        sshak                   ssh apoc:kyle
-alias sshak="echo 'ssh:apoc:kyle' ; ssh -l kyle apoc"
-#        sshy                    ssh trinity
-alias sshy="echo 'ssh:trinity' ; ssh trinity"
-#        sshyk                   ssh trinity:kyle
-alias sshyk="echo 'ssh:trinity:kyle' ; ssh -l kyle trinity"
-#        sshm1                   ssh mouse1
-alias sshm1="echo 'ssh:mouse1' ; ssh mouse1"
-#        sshm2                   ssh mouse2
-alias sshm2="echo 'ssh:mouse2' ; ssh mouse2"
-#        sshm3                   ssh mouse3
-alias sshm3="echo 'ssh:mouse3' ; ssh mouse3"
+#        sshapoc                 ssh apoc
+alias sshapoc="echo 'ssh:apoc' ; ssh apoc"
+#        sshcolleen              ssh colleen
+alias sshcolleen="echo 'ssh:colleen@colleen' ; ssh colleen@colleen"
+#        sshfirewall             ssh -p 8022 -l root firewall
+alias sshfirewall="echo 'ssh:admin@firewall' ; ssh -p 8022 admin@firewall"
+#        sshmorpheus             ssh morpheus
+alias sshmorpheus="echo 'ssh:morpheus' ; ssh morpheus"
+#        sshmorpheusgit          ssh morpheus:git
+alias sshmorpheusgit="echo 'ssh:git@morpheus' ; ssh -l git morpheus"
+#        sshneo                  ssh neo
+alias sshneo="echo 'ssh:neo' ; ssh neo"
 #        sshpi                   ssh raspberrypi
-alias sshpi="echo 'ssh:pi@raspberrypi' ; ssh pi@raspberrypi"
-#        sshpid                  ssh raspberrypid
-alias sshpid="echo 'ssh:pi@raspberrypid' ; ssh pi@raspberrypid"
+alias sshpi="echo 'ssh:pi@raspberrypid' ; ssh pi@raspberrypid"
+#        sshraspad               ssh raspad
+alias sshraspadusb="echo 'ssh:raspadusb' ; ssh raspadusb"
+#        sshswitch               ssh switch
+alias sshswitch="echo 'ssh:switch' ; ssh switch"
+#        sshtank                 ssh tank
+alias sshtank="echo 'ssh:tank' ; ssh tank"
+#        sshtank2                ssh tank (2nd nic)
+alias sshtank2="echo 'ssh:tank' ; ssh 192.168.1.61"
+#        sshtrinity              ssh trinity
+alias sshtrinity="echo 'ssh:trinity' ; ssh trinity"
 
 #
 # ssh logons (external)
@@ -1658,38 +1640,22 @@ alias sshpid="echo 'ssh:pi@raspberrypid' ; ssh pi@raspberrypid"
 #!alias sshxr="echo 'ssh:nullware.com:root' ; ssh -l root \${nullwareip}"
 #!#        sshxk                   ssh nullware.com
 #!alias sshxk="echo 'ssh:nullware.com:kyle' ; ssh -l kyle \${nullwareip}"
-#        sshnw                   ssh nullware.com
-alias sshnw="echo 'ssh:nullware.com:kyle' ; ssh -l kyle \${nullwareip}"
+#        sshnullware               ssh nullware.com
+alias sshnullware="echo 'ssh:kyle@nullware.com' ; ssh kyle@\${nullwareip}"
 
 #
 # sftp (internal)
 #
-#        sftpf                   sftp -oPort=222 admin@firewall
-alias sftpf="echo 'sftp:firewall:admin' ; sftp -oPort=222 admin@firewall"
-#        sftpm                   sftp morpheus
-alias sftpm="echo 'sftp:morpheus' ; sftp morpheus"
-#        sftpmr                  sftp root@morpheus
-alias sftpmr="echo 'sftp:morpheus:root' ; sftp root@morpheus"
-#        sftpmk                  sftp kyle@morpheus
-alias sftpmk="echo 'sftp:morpheus:kyle' ; sftp kyle@morpheus"
-#        sftpn                   sftp neo
-alias sftpn="echo 'sftp:neo' ; sftp neo"
-#        sftpnr                  sftp root@neo
-alias sftpnr="echo 'sftp:neo:root' ; sftp root@neo"
-#        sftpnk                  sftp kyle@neo
-alias sftpnk="echo 'sftp:neo:kyle' ; sftp kyle@neo"
-#        sftpt                   sftp tank
-alias sftpt="echo 'sftp:tank' ; sftp tank"
-#        sftptr                  sftp root@tank
-alias sftptr="echo 'sftp:tank:root' ; sftp root@tank"
-#        sftptk                  sftp kyle@tank
-alias sftptk="echo 'sftp:tank:kyle' ; sftp kyle@tank"
-#        sftpa                   sftp apoc
-alias sftpa="echo 'sftp:apoc' ; sftp apoc"
-#        sftpar                  sftp root@apoc
-alias sftpar="echo 'sftp:apoc:root' ; sftp root@apoc"
-#        sftpak                  sftp kyle@apoc
-alias sftpak="echo 'sftp:apoc:kyle' ; sftp kyle@apoc"
+#        sftpapoc                sftp apoc
+alias sftpapoc="echo 'sftp:apoc' ; sftp apoc"
+#        sftpfirewall            sftp -oPort=222 admin@firewall
+alias sftpf="echo 'sftp:admin@firewall' ; sftp -oPort=8022 admin@firewall"
+#        sftpmorpheus            sftp morpheus
+alias sftpmorpheus="echo 'sftp:morpheus' ; sftp morpheus"
+#        sftpneo                 sftp neo
+alias sftpneo="echo 'sftp:neo' ; sftp neo"
+#        sftptank                sftp tank
+alias sftptank="echo 'sftp:tank' ; sftp tank"
 
 #
 # sftp (external)
@@ -1704,8 +1670,8 @@ alias sftpak="echo 'sftp:apoc:kyle' ; sftp kyle@apoc"
 #
 # ssh run commands
 #
-#        sshmiftop               ssh -l root morpheus "TERM=screen iftop"
-alias sshmiftop="ssh -l root morpheus \"TERM=screen iftop\""
+#        sshmorpheusiftop        ssh -l root morpheus "TERM=screen iftop"
+alias sshmorpheusiftop="ssh -l root morpheus \"TERM=screen iftop\""
 
 #
 # file system
