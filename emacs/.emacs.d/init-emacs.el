@@ -147,7 +147,13 @@ LEVEL is the indentation level."
 
 ;; [[file:init-emacs.org::*Modules][Modules:1]]
 ;; load modules that are used for initialization
+(require 'cl-generic)
 (require 'cl-macs)
+(require 'dash)
+(require 'dash-functional)
+(require 'f)
+(require 's)
+(require 'seq)
 (require 'subr-x)
 (require 'org)
 (require 'org-table)
@@ -2496,10 +2502,15 @@ DATA should have been made by `org-outline-overlay-data'."
   (when (not (boundp 'org-called-interactively-p))
     (defalias 'org-called-interactively-p 'called-interactively-p))
 
+  ;; archive done tasks
   (defun org-agenda-archive-done-tasks ()
     "Archive DONE tasks."
     (interactive)
-    (org-map-entries 'org-archive-subtree "/DONE" 'file)))
+    (org-map-entries 'org-archive-subtree "/DONE" 'file))
+
+  ;; auto-save archive files
+  (when (boundp 'org-archive-subtree-save-file-p)
+    (setq org-archive-subtree-save-file-p t)))
 ;; Agenda:1 ends here
 
 ;; [[file:init-emacs.org::*Alerts][Alerts:1]]
@@ -4370,7 +4381,7 @@ and update `org-visibility-state-file' with new state."
           (message "Restored visibility state for %s" file-name)
           (caddr state))))))
 
-(defun org-visibility-save (&optional buffer noerror)
+(defun org-visibility-save-internal (&optional buffer noerror force)
   "Save visibility snapshot of org BUFFER."
   (let ((buffer (or buffer (current-buffer)))
         (file-name (buffer-file-name buffer))
@@ -4382,7 +4393,7 @@ and update `org-visibility-state-file' with new state."
         (if (not file-name)
             (unless noerror
               (error "There is no file associated with this buffer: %S" buffer))
-          (when org-visibility-dirty
+          (when (or force org-visibility-dirty)
             (save-mark-and-excursion
               (goto-char (point-min))
               (while (not (eobp))
@@ -4392,7 +4403,7 @@ and update `org-visibility-state-file' with new state."
             (org-visibility-set buffer (nreverse visible-lines))
             (setq org-visibility-dirty nil)))))))
 
-(defun org-visibility-load (&optional buffer noerror)
+(defun org-visibility-load-internal (&optional buffer noerror)
   "Load visibility snapshot of org BUFFER."
   (let ((buffer (or buffer (current-buffer))))
     (with-current-buffer buffer
@@ -4442,41 +4453,52 @@ and update `org-visibility-state-file' with new state."
       (insert (format "%S\n" data)))
     (message "Visibility state file has been cleaned")))
 
-(defun org-visibility-save-if-org-file ()
-  "Hook to save visibility state if org file."
+(defun org-visibility-save (&optional force)
+  "Hook function to save visibility state."
   (interactive)
   (when (org-visibility-check-buffer-file-path (current-buffer))
-    (org-visibility-save (current-buffer) t)))
-(add-hook 'after-save-hook #'org-visibility-save-if-org-file :append)
-(add-hook 'kill-buffer-hook #'org-visibility-save-if-org-file :append)
+    (org-visibility-save-internal (current-buffer) :noerror force)))
+(add-hook 'after-save-hook #'org-visibility-save :append)
+(add-hook 'kill-buffer-hook #'org-visibility-save :append)
 
-(defun org-visibility-save-all-buffers-if-org-file ()
-  "Hook to save visibility state for all buffers if org file."
+(defun org-visibility-save-all-buffers (&optional force)
+  "Hook function to save visibility state for all buffers."
   (interactive)
   (dolist (buffer (buffer-list))
     (when (org-visibility-check-buffer-file-path buffer)
-      (org-visibility-save buffer t))))
-(add-hook 'kill-emacs-hook #'org-visibility-save-all-buffers-if-org-file :append)
+      (org-visibility-save-internal buffer :noerror force))))
+(add-hook 'kill-emacs-hook #'org-visibility-save-all-buffers :append)
 
-(defun org-visibility-load-if-org-file (&optional file)
-  "Hook to load visibility state if org file."
+(defun org-visibility-load (&optional file)
+  "Hook function to load visibility state."
   (interactive)
   (let ((buffer (if file (get-file-buffer file) (current-buffer))))
-    (when (and buffer
-               (org-visibility-check-buffer-file-path buffer))
-      (org-visibility-load buffer t))))
-(add-hook 'org-mode-hook #'org-visibility-load-if-org-file :append)
+    (when (and buffer (org-visibility-check-buffer-file-path buffer))
+      (org-visibility-load-internal buffer :noerror))))
+(add-hook 'org-mode-hook #'org-visibility-load :append)
 
-(defun org-visibility-dirty-if-org-file ()
-  "Hook to set visibility dirty flag if org file."
+(defun org-visibility-dirty ()
+  "Hook function to set visibility dirty flag."
   (interactive)
-  (when (org-visibility-check-buffer-file-path (current-buffer))
+  (when (and (org-visibility-check-buffer-file-path (current-buffer))
+             (eq major-mode 'org-mode))
     (setq org-visibility-dirty t)))
-(add-hook 'first-change-hook #'org-visibility-dirty-if-org-file :append)
+(add-hook 'first-change-hook #'org-visibility-dirty :append)
+
+(defun org-visibility-dirty-org-cycle (state)
+  "Hook function to set visibility dirty flag when `org-cycle' is called."
+  (interactive)
+  (org-visibility-dirty))
+(add-hook 'org-cycle-hook #'org-visibility-dirty-org-cycle :append)
+
+(defun org-visibility-force-save ()
+  "Helper function to forcefully save visibility state."
+  (interactive)
+  (org-visibility-save :force))
 
 ;; key bindings
 (bind-keys :map org-mode-map
-           ("C-x C-v" . org-visibility-save-if-org-file)) ; defaults to `find-alternative-file'
+           ("C-x C-v" . org-visibility-force-save)) ; defaults to `find-alternative-file'
 ;; Visibility:1 ends here
 
 ;; [[file:init-emacs.org::*org-bookmarks-guid][org-bookmarks-guid:1]]
@@ -13224,7 +13246,9 @@ USING is the remaining peg."
 (use-package bs
   :quelpa (bs)
   :after (cycle-buffer)
-  :bind* ("C-x C-b" . bs-show)           ; defaults to `list-buffers'
+  :commands (bs-show)
+  ;;:bind* ("C-x C-b" . bs-show)            ; defaults to `list-buffers'
+  :bind* ([remap list-buffers] . bs-show) ; defaults to `list-buffers'
   :config
   (defvar local-bs-always-show-regexps '("\\*\\(scratch\\|info\\|grep\\)\\*")
     "*Buffer regexps to always show when buffer switching.")
@@ -14178,7 +14202,7 @@ User is prompted for WORD if none given."
   :bind* (("M-x" . counsel-M-x)
           ;;("C-x b" . counsel-ibuffer)   ; defaults to `ivy-switch-buffer'
           ;;("C-x C-b" . counsel-switch-buffer)   ; defaults to `list-buffers'
-          ([remap list-buffers] . counsel-switch-buffer)
+          ;;([remap list-buffers] . counsel-switch-buffer) ; defaults to `list-buffers'
           ("C-x C-f" . counsel-find-file)
           ;;("C-h f" . counsel-describe-function)
           ;;("C-h v" . counsel-describe-variable)
@@ -14247,11 +14271,11 @@ User is prompted for WORD if none given."
   :init
   (setq ivy-flx-limit 10000))
 
-;;------------------------------------------------------------------------------
-;;;; ivy-hydra
-;;
-;; Additional key bindings for Ivy.
-;;------------------------------------------------------------------------------
+;; ;;------------------------------------------------------------------------------
+;; ;;;; ivy-hydra
+;; ;;
+;; ;; Additional key bindings for Ivy.
+;; ;;------------------------------------------------------------------------------
 
 ;; (init-message 3 "ivy-hydra")
 
