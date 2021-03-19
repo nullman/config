@@ -643,6 +643,8 @@ alias seti="(cd \${HOME}/setiathome ; setiathome -email -nice 19) &"
 #!    sed -i \"s/DD.MM/MM-DD/g\" src/icqface.cc
 #!    echo 'Changing DD-MM-YYYY dates to YYYY-MM-DD...'
 #!    sed -i \"s/DD-MM-YYYY/YYYY-MM-DD/g ; s/\&d, \&m, \&y/\&y, \&m, \&d/g\" src/icqdialogs.cc"
+#          gsettings-reset-app-picker-layout reset application picker
+alias gsettings-reset-app-picker-layout="gsettings reset org.gnome.shell app-picker-layout"
 
 #
 # emacs

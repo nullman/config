@@ -4399,7 +4399,7 @@ and update `org-visibility-state-file' with new state."
               (while (not (eobp))
                 (when (not (invisible-p (point)))
                   (push (point) visible-lines))
-                (forward-line 1)))
+                (forward-visible-line 1)))
             (org-visibility-set buffer (nreverse visible-lines))
             (setq org-visibility-dirty nil)))))))
 
