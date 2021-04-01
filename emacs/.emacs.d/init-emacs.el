@@ -11505,6 +11505,13 @@ Becomes:
 (defun align-comments (&optional beg end)
   "Align a block of commented lines.
 
+If region is not given, one of the following blocks will be
+used (tried in order):
+
+- Org source block
+- Symbolic expression
+- Current line
+
 Example:
 
   // variables
@@ -11522,9 +11529,7 @@ Becomes:
   private Integer i2;           // int 2
   private String s2;            // string 2
   protected Date dte;           // date example"
-  ;; (interactive "*r")
-  ;; (align-regexp beg end comment-start))
-  (interactive)
+  (interactive "*")
   (let ((case-fold-search t)
         (comment-regexp (concat "\\(\\s-*\\)" comment-start))
         (point (point))

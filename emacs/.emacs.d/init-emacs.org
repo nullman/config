@@ -16092,6 +16092,13 @@ extra whitespace.
   (defun align-comments (&optional beg end)
     "Align a block of commented lines.
 
+  If region is not given, one of the following blocks will be
+  used (tried in order):
+
+  - Org source block
+  - Symbolic expression
+  - Current line
+
   Example:
 
     // variables
@@ -16109,9 +16116,7 @@ extra whitespace.
     private Integer i2;           // int 2
     private String s2;            // string 2
     protected Date dte;           // date example"
-    ;; (interactive "*r")
-    ;; (align-regexp beg end comment-start))
-    (interactive)
+    (interactive "*")
     (let ((case-fold-search t)
           (comment-regexp (concat "\\(\\s-*\\)" comment-start))
           (point (point))
@@ -16148,6 +16153,66 @@ extra whitespace.
              (t
               (align-regexp (point-at-bol) (point-at-eol) comment-regexp))))))
       (goto-char point)))
+#+END_SRC
+
+***** +align-whitespace+
+:PROPERTIES:
+:CUSTOM_ID: functions-code-formatting-functions-align-whitespace
+:END:
+
+Not working.
+
+#+BEGIN_SRC emacs-lisp :tangle no
+  ;; ;;------------------------------------------------------------------------------
+  ;; ;;;; Functions: Code Formatting Functions: align-whitespace
+  ;; ;;------------------------------------------------------------------------------
+
+  ;; (init-message 3 "Functions: Code Formatting Functions: align-whitespace")
+
+  ;; (defun align-whitespace (&optional beg end)
+  ;;   "Align a block of lines, delimited by whitespace.
+
+  ;; If region is not given, the currently block (between double
+  ;; newlines) is used.
+
+  ;; Example:
+
+  ;;   // variables
+  ;;   public Integer i; // int example
+  ;;   public String s; // string example
+  ;;   private Integer i2; // int 2
+  ;;   private String s2; // string 2
+  ;;   protected Date dte; // date example
+
+  ;; Becomes:
+
+  ;;   // variables
+  ;;   public    Integer i;          // int example
+  ;;   public    String  s;          // string example
+  ;;   private   Integer i2;         // int 2
+  ;;   private   String  s2;         // string 2
+  ;;   protected Date    dte;        // date example"
+  ;;   (interactive "*")
+  ;;   (let ((case-fold-search t)
+  ;;         (space-regexp "\\(\\s-*\\)\\S-+")
+  ;;         (block-regexp "\n\n")
+  ;;         (beg (or beg (if (use-region-p) (region-beginning) nil)))
+  ;;         (end (or end (if (use-region-p) (region-end) nil))))
+  ;;     (deactivate-mark)
+  ;;     (save-window-excursion
+  ;;       (save-mark-and-excursion
+  ;;         (save-match-data
+  ;;           (unless beg
+  ;;             (save-excursion
+  ;;               (setq beg (or (re-search-backward block-regexp nil :noerror)
+  ;;                             (line-beginning-position)))))
+  ;;           (unless end
+  ;;             (save-excursion
+  ;;               (setq end (or (re-search-forward block-regexp nil :noerror)
+  ;;                             (line-end-position)))))
+  ;;           (if (and beg end)
+  ;;               (align-regexp beg end space-regexp nil nil :repeat)
+  ;;             (error "Could not determine block beginning or end")))))))
 #+END_SRC
 
 ***** java-toggle-comment-type
