@@ -4745,20 +4745,20 @@ If HTML-FILE is non-nil, then output is returned."
             (buffer-substring-no-properties (point-min) (point-max))))))))
 ;; org-bookmarks-export-to-html:1 ends here
 
-;; [[file:init-emacs.org::*Taxes][Taxes:1]]
+;; [[file:init-emacs.org::*Finances][Finances:1]]
 ;;------------------------------------------------------------------------------
-;;; Org Mode: Taxes
+;;; Org Mode: Finances
 ;;------------------------------------------------------------------------------
 
-(init-message 2 "Org Mode: Taxes")
-;; Taxes:1 ends here
+(init-message 2 "Org Mode: Finances")
+;; Finances:1 ends here
 
 ;; [[file:init-emacs.org::*export-taxes][export-taxes:1]]
 ;;------------------------------------------------------------------------------
-;;;; Org Mode: Taxes: export-taxes
+;;;; Org Mode: Finances: export-taxes
 ;;------------------------------------------------------------------------------
 
-(init-message 3 "Org Mode: Taxes: export-taxes")
+(init-message 3 "Org Mode: Finances: export-taxes")
 
 (defun export-taxes ()
   "Export tax information found at current org subtree."
@@ -4814,10 +4814,10 @@ If HTML-FILE is non-nil, then output is returned."
 
 ;; [[file:init-emacs.org::*duluth-hotel-invoiced-expense][duluth-hotel-invoiced-expense:1]]
 ;;------------------------------------------------------------------------------
-;;;; Org Mode: Taxes: duluth-hotel-invoiced-expense
+;;;; Org Mode: Finances: duluth-hotel-invoiced-expense
 ;;------------------------------------------------------------------------------
 
-(init-message 3 "Org Mode: Taxes: duluth-hotel-invoiced-expense")
+(init-message 3 "Org Mode: Finances: duluth-hotel-invoiced-expense")
 
 (defun duluth-hotel-invoiced-expense (balance)
   "Insert Duluth Hotel Invoiced Expense."
@@ -4833,6 +4833,55 @@ If HTML-FILE is non-nil, then output is returned."
     (insert (format "%.2f" invoice))
     (org-table-recalculate)))
 ;; duluth-hotel-invoiced-expense:1 ends here
+
+;; [[file:init-emacs.org::*nwm-add-monthly-account-data][nwm-add-monthly-account-data:1]]
+;;------------------------------------------------------------------------------
+;;;; Org Mode: Finances: nwm-add-monthly-account-data
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Org Mode: Finances: nwm-add-monthly-account-data")
+
+(defun nwm-add-monthly-account-data (data)
+  "Add Northwestern Mutual monthly entries for all accounts found in DATA."
+  (interactive "*sNorthwestern Mutual Account Summary: ")
+  (cl-labels ((date-to-year-month (date)
+                                  (concat
+                                   (substring date 6 10)
+                                   (substring date 3 5))))
+    (let ((buffer (get-buffer "personal-encrypted.org.cpt"))
+          (accounts '("A40-344433"
+                      "A40-344458"
+                      "A40-345190"
+                      "B40-300756"
+                      "B40-300798"))
+          date
+          balances)
+      (with-temp-buffer
+        (insert data)
+        (goto-char (point-min))
+        (re-search-forward "^Period Ending: ")
+        (setq date (date-to-year-month
+                    (buffer-substring-no-properties (point) (line-end-position))))
+        (mapcar (lambda (x)
+                  (re-search-forward "%\\([0-9,]*\.[0-9][0-9]\\)[0-9.]*%")
+                  (push (replace-regexp-in-string "," "" (match-string 1)) balances))
+                accounts))
+      (with-current-buffer buffer
+        (do ((accounts accounts (cdr accounts))
+             (balances (nreverse balances) (cdr balances)))
+            ((nil accounts) nil)
+          (goto-char (point-min))
+          (re-search-forward (format "^#+NAME: NWM_%s$" (car accounts)))
+          (goto-char (org-table-end))
+          (forward-line -4)
+          (org-table-insert-row)
+          (org-table-goto-column 1)
+          (insert "#")
+          (org-table-goto-column 2)
+          (insert date)
+          (org-table-goto-column 4)
+          (insert (car balances)))))))
+;; nwm-add-monthly-account-data:1 ends here
 
 ;; [[file:init-emacs.org::*Magic the Gathering][Magic the Gathering:1]]
 ;;------------------------------------------------------------------------------

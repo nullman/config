@@ -6325,34 +6325,34 @@ Export from an Org Bookmarks file to a Mozilla/Firefox Bookmarks HTML file.
               (buffer-substring-no-properties (point-min) (point-max))))))))
 #+END_SRC
 
-*** Taxes
+*** Finances
 :PROPERTIES:
-:CUSTOM_ID: org-mode-taxes
+:CUSTOM_ID: org-mode-finances
 :END:
 
-Taxes related functions.
+Finance related functions.
 
 #+BEGIN_SRC emacs-lisp
   ;;------------------------------------------------------------------------------
-  ;;; Org Mode: Taxes
+  ;;; Org Mode: Finances
   ;;------------------------------------------------------------------------------
 
-  (init-message 2 "Org Mode: Taxes")
+  (init-message 2 "Org Mode: Finances")
 #+END_SRC
 
 ***** export-taxes
 :PROPERTIES:
-:CUSTOM_ID: org-mode-taxes-export-taxes
+:CUSTOM_ID: org-mode-finances-export-taxes
 :END:
 
 Export yearly tax report.
 
 #+BEGIN_SRC emacs-lisp
   ;;------------------------------------------------------------------------------
-  ;;;; Org Mode: Taxes: export-taxes
+  ;;;; Org Mode: Finances: export-taxes
   ;;------------------------------------------------------------------------------
 
-  (init-message 3 "Org Mode: Taxes: export-taxes")
+  (init-message 3 "Org Mode: Finances: export-taxes")
 
   (defun export-taxes ()
     "Export tax information found at current org subtree."
@@ -6408,17 +6408,17 @@ Export yearly tax report.
 
 ***** duluth-hotel-invoiced-expense
 :PROPERTIES:
-:CUSTOM_ID: org-mode-taxes-duluth-hotel-invoiced-expense
+:CUSTOM_ID: org-mode-finances-duluth-hotel-invoiced-expense
 :END:
 
 Fill in Duluth Hotel invoiced expense based on the balance.
 
 #+BEGIN_SRC emacs-lisp
   ;;------------------------------------------------------------------------------
-  ;;;; Org Mode: Taxes: duluth-hotel-invoiced-expense
+  ;;;; Org Mode: Finances: duluth-hotel-invoiced-expense
   ;;------------------------------------------------------------------------------
 
-  (init-message 3 "Org Mode: Taxes: duluth-hotel-invoiced-expense")
+  (init-message 3 "Org Mode: Finances: duluth-hotel-invoiced-expense")
 
   (defun duluth-hotel-invoiced-expense (balance)
     "Insert Duluth Hotel Invoiced Expense."
@@ -6433,6 +6433,60 @@ Fill in Duluth Hotel invoiced expense based on the balance.
       (org-table-goto-column 5)
       (insert (format "%.2f" invoice))
       (org-table-recalculate)))
+#+END_SRC
+
+***** nwm-add-monthly-account-data
+:PROPERTIES:
+:CUSTOM_ID: org-mode-finances-nwm-add-monthly-account-data
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  ;;------------------------------------------------------------------------------
+  ;;;; Org Mode: Finances: nwm-add-monthly-account-data
+  ;;------------------------------------------------------------------------------
+
+  (init-message 3 "Org Mode: Finances: nwm-add-monthly-account-data")
+
+  (defun nwm-add-monthly-account-data (data)
+    "Add Northwestern Mutual monthly entries for all accounts found in DATA."
+    (interactive "*sNorthwestern Mutual Account Summary: ")
+    (cl-labels ((date-to-year-month (date)
+                                    (concat
+                                     (substring date 6 10)
+                                     (substring date 3 5))))
+      (let ((buffer (get-buffer "personal-encrypted.org.cpt"))
+            (accounts '("A40-344433"
+                        "A40-344458"
+                        "A40-345190"
+                        "B40-300756"
+                        "B40-300798"))
+            date
+            balances)
+        (with-temp-buffer
+          (insert data)
+          (goto-char (point-min))
+          (re-search-forward "^Period Ending: ")
+          (setq date (date-to-year-month
+                      (buffer-substring-no-properties (point) (line-end-position))))
+          (mapcar (lambda (x)
+                    (re-search-forward "%\\([0-9,]*\.[0-9][0-9]\\)[0-9.]*%")
+                    (push (replace-regexp-in-string "," "" (match-string 1)) balances))
+                  accounts))
+        (with-current-buffer buffer
+          (do ((accounts accounts (cdr accounts))
+               (balances (nreverse balances) (cdr balances)))
+              ((nil accounts) nil)
+            (goto-char (point-min))
+            (re-search-forward (format "^#+NAME: NWM_%s$" (car accounts)))
+            (goto-char (org-table-end))
+            (forward-line -4)
+            (org-table-insert-row)
+            (org-table-goto-column 1)
+            (insert "#")
+            (org-table-goto-column 2)
+            (insert date)
+            (org-table-goto-column 4)
+            (insert (car balances)))))))
 #+END_SRC
 
 *** Magic the Gathering
