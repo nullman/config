@@ -4847,13 +4847,13 @@ If HTML-FILE is non-nil, then output is returned."
   (cl-labels ((date-to-year-month (date)
                                   (concat
                                    (substring date 6 10)
-                                   (substring date 3 5))))
+                                   (substring date 0 2))))
     (let ((buffer (get-buffer "personal-encrypted.org.cpt"))
-          (accounts '("A40-344433"
-                      "A40-344458"
-                      "A40-345190"
-                      "B40-300756"
-                      "B40-300798"))
+          (tables '("NWM_A40_344433"
+                    "NWM_A40_344458"
+                    "NWM_A40_345190"
+                    "NWM_B40_300756"
+                    "NWM_B40_300798"))
           date
           balances)
       (with-temp-buffer
@@ -4865,13 +4865,13 @@ If HTML-FILE is non-nil, then output is returned."
         (mapcar (lambda (x)
                   (re-search-forward "%\\([0-9,]*\.[0-9][0-9]\\)[0-9.]*%")
                   (push (replace-regexp-in-string "," "" (match-string 1)) balances))
-                accounts))
+                tables))
       (with-current-buffer buffer
-        (do ((accounts accounts (cdr accounts))
+        (do ((tables tables (cdr tables))
              (balances (nreverse balances) (cdr balances)))
-            ((nil accounts) nil)
+            ((null tables))
           (goto-char (point-min))
-          (re-search-forward (format "^#+NAME: NWM_%s$" (car accounts)))
+          (re-search-forward (concat "^#\\+NAME: " (car tables) "$"))
           (goto-char (org-table-end))
           (forward-line -4)
           (org-table-insert-row)
@@ -4880,7 +4880,12 @@ If HTML-FILE is non-nil, then output is returned."
           (org-table-goto-column 2)
           (insert date)
           (org-table-goto-column 4)
-          (insert (car balances)))))))
+          (insert (car balances))
+          (org-table-recalculate)
+          (re-search-forward (concat "^#\\+NAME: " (car tables) "_STATS$"))
+          (forward-line 1)
+          (org-table-recalculate)
+          (org-table-recalculate))))))
 ;; nwm-add-monthly-account-data:1 ends here
 
 ;; [[file:init-emacs.org::*Magic the Gathering][Magic the Gathering:1]]
