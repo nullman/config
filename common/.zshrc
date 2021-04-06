@@ -33,7 +33,6 @@ export HISTSIZE="10000"
 export SAVEHIST="10000"
 export HISTCONTROL="ignoredups"
 export HISTORY_IGNORE="(ls|pwd|history|h|cd|cd -|cd ..|cdd|exit|reboot|sudo reboot)"
-setopt appendhistory
 
 # use emacs key bindings
 bindkey -e
@@ -41,13 +40,14 @@ bindkey -e
 # set options
 setopt appendhistory       # immediately append history instead of overwriting
 setopt autocd              # if only directory path is entered, cd there
-setopt nocorrect           # do not auto correct mistakes
 setopt extendedglob        # extended globbing; allows using regular expressions with *
 setopt histignorealldups   # if a new command is a duplicate, remove the older one
+setopt histignorespace     # do not add commands starting with a space to the history file
 setopt interactivecomments # use bash style comments
 setopt nobeep              # no beep
 setopt nocaseglob          # case insensitive globbing
 setopt nocheckjobs         # do not warn about running processes when exiting
+setopt nocorrect           # do not auto correct mistakes
 setopt numericglobsort     # sort filenames numerically when it makes sense
 setopt rcexpandparam       # array expension with parameters
 
