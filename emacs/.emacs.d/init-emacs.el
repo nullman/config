@@ -13304,10 +13304,11 @@ USING is the remaining peg."
 ;; original code by Scott Frazer
 (use-package bs
   :quelpa (bs)
+  :demand t
   :after (cycle-buffer)
-  :commands (bs-show)
-  ;;:bind* ("C-x C-b" . bs-show)            ; defaults to `list-buffers'
+  :commands (list-buffers bs-show)
   :bind* ([remap list-buffers] . bs-show) ; defaults to `list-buffers'
+  :bind* ("C-x C-b" . bs-show)            ; defaults to `list-buffers'
   :config
   (defvar local-bs-always-show-regexps '("\\*\\(scratch\\|info\\|grep\\)\\*")
     "*Buffer regexps to always show when buffer switching.")
@@ -13725,6 +13726,7 @@ Uses `ispell--run-on-word' to spell check word."
      ("http://feeds.twit.tv/twit_video_hd.xml" dev)          ; TWIT
      ("https://www.howtogeek.com/feed/" dev)                 ; How-To Geek
      ("http://feeds.feedburner.com/codinghorror?format=xml" dev) ; Coding Horror
+     ("https://www.haiku-os.org/blog/index.xml" dev) ; Haiku
      ("http://lunduke.com/index.xml" dev)            ; Lunduke
      ("https://www.cyberciti.biz/atom/atom.xml" dev) ; nixCraft
      ("https://www.tecmint.com/feed/" dev)           ; TecMint
@@ -13732,6 +13734,7 @@ Uses `ispell--run-on-word' to spell check word."
      ;; Vintage Computing
      ("https://bytecellar.com/feed" vintage) ; BYTE Cellar
      ("https://nerd.fail/feed/" vintage)     ; Nerd Fail
+     ("http://rcrpodcast.com/rcrpodcast.rss" vintage) ; Retro Computing Roundtable
      ;; Games
      ;;("https://robertsspaceindustries.com/comm-link/rss" game) ; Star Citizen
      ("http://bitemyapp.com/atom.xml" dev) ; bitemyapp
