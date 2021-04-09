@@ -14489,17 +14489,17 @@ User is prompted for WORD if none given."
                          "url"))
              (cdr (magit-get-push-branch))))))
 
-  ;;------------------------------------------------------------------------------
-  ;;;; forge
-  ;;
-  ;; Access Git forges from Magit.
-  ;;------------------------------------------------------------------------------
+  ;; ;;------------------------------------------------------------------------------
+  ;; ;;;; forge
+  ;; ;;
+  ;; ;; Access Git forges from Magit.
+  ;; ;;------------------------------------------------------------------------------
 
-  (init-message 3 "forge")
+  ;; (init-message 3 "forge")
 
-  (use-package forge
-    :quelpa (forge)
-    :after (magit))
+  ;; (use-package forge
+  ;;   :quelpa (forge)
+  ;;   :after (magit))
 ;; magit:1 ends here
 
 ;; [[file:init-emacs.org::*mingus][mingus:1]]
