@@ -147,21 +147,22 @@ LEVEL is the indentation level."
 
 ;; [[file:init-emacs.org::*Modules][Modules:1]]
 ;; load modules that are used for initialization
-(require 'cl-generic)
-(require 'cl-macs)
+(use-package cl-generic)
+(use-package cl-macs)
 (use-package dash
   :quelpa (dash)
   :config
   (use-package dash-functional))
 (use-package f
   :quelpa (f))
-(require 's)
-(require 'seq)
-(require 'subr-x)
-(require 'org)
-(require 'org-table)
-(require 'ob-tangle)
-(require 'ox)
+(use-package s
+  :quelpa (s))
+(use-package 'seq)
+(use-package 'subr-x)
+(use-package 'org)
+(use-package 'org-table)
+(use-package 'ob-tangle)
+(use-package 'ox)
 ;; Modules:1 ends here
 
 ;; [[file:init-emacs.org::*Environment][Environment:1]]
