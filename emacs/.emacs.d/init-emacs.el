@@ -152,17 +152,18 @@ LEVEL is the indentation level."
 (use-package dash
   :quelpa (dash)
   :config
-  (use-package dash-functional))
+  (use-package dash-functional
+    :quelpa (dash-functional)))
 (use-package f
   :quelpa (f))
 (use-package s
   :quelpa (s))
-(use-package 'seq)
-(use-package 'subr-x)
-(use-package 'org)
-(use-package 'org-table)
-(use-package 'ob-tangle)
-(use-package 'ox)
+(use-package seq)
+(use-package subr-x)
+(use-package org)
+(use-package org-table)
+(use-package ob-tangle)
+(use-package ox)
 ;; Modules:1 ends here
 
 ;; [[file:init-emacs.org::*Environment][Environment:1]]
