@@ -522,7 +522,12 @@ Load modules that are used for initialization.
   ;; load modules that are used for initialization
   (require 'cl-generic)
   (require 'cl-macs)
-  (require 'f)
+  (use-package dash
+    :quelpa (dash)
+    :config
+    (use-package dash-functional))
+  (use-package f
+    :quelpa (f))
   (require 's)
   (require 'seq)
   (require 'subr-x)
@@ -530,11 +535,6 @@ Load modules that are used for initialization.
   (require 'org-table)
   (require 'ob-tangle)
   (require 'ox)
-
-  (use-package dash
-    :quelpa (dash)
-    :config
-    (use-package dash-functional))
 #+END_SRC
 
 *** Environment
