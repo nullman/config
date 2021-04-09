@@ -149,8 +149,6 @@ LEVEL is the indentation level."
 ;; load modules that are used for initialization
 (require 'cl-generic)
 (require 'cl-macs)
-(require 'dash)
-(require 'dash-functional)
 (require 'f)
 (require 's)
 (require 'seq)
@@ -159,6 +157,11 @@ LEVEL is the indentation level."
 (require 'org-table)
 (require 'ob-tangle)
 (require 'ox)
+
+(use-package dash
+  :quelpa (dash)
+  :config
+  (use-package dash-functional))
 ;; Modules:1 ends here
 
 ;; [[file:init-emacs.org::*Environment][Environment:1]]
@@ -15016,13 +15019,13 @@ by scraping the metrolyrics.com site."
                 (progn
                   (get-buffer-create buffer-name)
                   (set-buffer buffer-name)
-                  (setq buffer-read-only nil)
-                  (erase-buffer)
-                  (insert lyrics)
-                  (delete-trailing-whitespace)
-                  (switch-to-buffer buffer-name)
-                  (goto-char (point-min))
-                  (view-mode))
+                  (let ((buffer-read-only nil))
+                    (erase-buffer)
+                    (insert lyrics)
+                    (delete-trailing-whitespace)
+                    (switch-to-buffer buffer-name)
+                    (goto-char (point-min))
+                    (view-mode)))
               (message "No lyrics found for Artist: %s, Title: %s" artist title)))))))
 
   ;;-----------------------------------------------------------------------
