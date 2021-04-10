@@ -60,6 +60,18 @@ LEVEL is the indentation level."
 (setq gc-cons-threshold (* 50 1000 1000)) ; defaults to 800000
 ;; Start:3 ends here
 
+;; [[file:init-emacs.org::*Start][Start:4]]
+;; generic advice wrapper function to ignore errors
+(defun advice--ignore-errors (orig-fun &rest args)
+  "Ignore errors when interactively calling ORIG-FUN with ARGS."
+  (condition-case err
+      (apply orig-fun args)
+    ('error
+     (if (called-interactively-p 'any)
+         (message "%s" err)
+       (error err)))))
+;; Start:4 ends here
+
 ;; [[file:init-emacs.org::*Package Manager][Package Manager:1]]
 ;;==============================================================================
 ;;; Package Manager
@@ -2246,16 +2258,8 @@ DATA should have been made by `org-outline-overlay-data'."
              outline-forward-same-level
              outline-show-subtree)
   :config
-  (defun outline-up-heading--ignore-errors (orig-fun &rest args)
-    "Ignore errors when interactively calling `outline-up-heading'."
-    (condition-case err
-        (apply orig-fun args)
-      ('error
-       (if (called-interactively-p 'any)
-           (message "%s" err)
-         (error err)))))
   ;; advise `outline-up-heading' to suppress errors
-  (advice-add 'outline-up-heading :around #'outline-up-heading--ignore-errors))
+  (advice-add 'outline-up-heading :around #'advice--ignore-errors))
 
 ;; (init-message 3 "org-pdfview")
 
@@ -13535,6 +13539,7 @@ USING is the remaining peg."
 
 (use-package cycle-buffer
   :quelpa (cycle-buffer :fetcher url :url "https://raw.githubusercontent.com/emacsmirror/emacswiki.org/master/cycle-buffer.el")
+  :demand t
   :bind* (("C-x C-n" . cycle-buffer)          ; defaults to `set-goal-column'
           ("C-x C-p" . cycle-buffer-backward) ; defaults to `mark-page'
           ("<f9>" . cycle-buffer-backward)
@@ -13542,16 +13547,14 @@ USING is the remaining peg."
           ("<f10>" . cycle-buffer)      ; defaults to `tmm-menubar'
           ("S-<f10>" . cycle-buffer-permissive))
   :init
-  (defun cycle-buffer--ignore-errors (orig-fun &rest args)
-    "Ignore errors when interactively calling `cycle-buffer'."
-    (condition-case err
-        (apply orig-fun args)
-      ('error
-       (if (called-interactively-p 'any)
-           (message "%s" err)
-         (error err)))))
   ;; advise `cycle-buffer`
-  (advice-add 'cycle-buffer :around #'cycle-buffer--ignore-errors))
+  (advice-add 'cycle-buffer :around #'advice--ignore-errors)
+  ;; advise `cycle-buffer-permissive`
+  (advice-add 'cycle-buffer-permissive :around #'advice--ignore-errors)
+  ;; advise `cycle-buffer-backward`
+  (advice-add 'cycle-buffer-backward :around #'advice--ignore-errors)
+  ;; advise `cycle-buffer-backward-permissive`
+  (advice-add 'cycle-buffer-backward-permissive :around #'advice--ignore-errors))
 ;; cycle-buffer:1 ends here
 
 ;; [[file:init-emacs.org::*decimation][decimation:1]]
@@ -16274,14 +16277,17 @@ otherwise run `find-file-as-root'."
     (interactive)
     (dired-single-buffer ".."))
   :config
-  (defun dired-single-buffer-mouse--ignore-errors (orig-fun &rest args)
-    "Suppress errors when calling `dired-single-buffer-mouse'."
-    (condition-case err
-        (apply orig-fun args)
-      ('error
-       (message "%s" err))))
+  ;; (defun dired-single-buffer-mouse--ignore-errors (orig-fun &rest args)
+  ;;   "Suppress errors when calling `dired-single-buffer-mouse'."
+  ;;   (condition-case err
+  ;;       (apply orig-fun args)
+  ;;     ('error
+  ;;      (message "%s" err))))
+  ;; ;; advise `dired-single-buffer-mouse' to suppress errors
+  ;;(advice-add 'dired-single-buffer-mouse :around #'dired-single-buffer-mouse--ignore-errors)
+
   ;; advise `dired-single-buffer-mouse' to suppress errors
-  (advice-add 'dired-single-buffer-mouse :around #'dired-single-buffer-mouse--ignore-errors))
+  (advice-add 'dired-single-buffer-mouse :around #'advice--ignore-errors))
 
 ;;------------------------------------------------------------------------------
 ;;;; dired-open
