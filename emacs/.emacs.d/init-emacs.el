@@ -16277,15 +16277,6 @@ otherwise run `find-file-as-root'."
     (interactive)
     (dired-single-buffer ".."))
   :config
-  ;; (defun dired-single-buffer-mouse--ignore-errors (orig-fun &rest args)
-  ;;   "Suppress errors when calling `dired-single-buffer-mouse'."
-  ;;   (condition-case err
-  ;;       (apply orig-fun args)
-  ;;     ('error
-  ;;      (message "%s" err))))
-  ;; ;; advise `dired-single-buffer-mouse' to suppress errors
-  ;;(advice-add 'dired-single-buffer-mouse :around #'dired-single-buffer-mouse--ignore-errors)
-
   ;; advise `dired-single-buffer-mouse' to suppress errors
   (advice-add 'dired-single-buffer-mouse :around #'advice--ignore-errors))
 

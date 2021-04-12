@@ -8,7 +8,7 @@
 #+LANGUAGE: en
 #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
 #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-#+TIMESTAMP: <2021-02-14 11:58 (kyle)>
+#+TIMESTAMP: <2021-04-11 21:26 (kyle)>
 
 * Overview
 :PROPERTIES:
@@ -19331,16 +19331,25 @@ Elpher Gopher and Gemini Client
 
   (("Gopherpedia" "gopher://gopherpedia.com/1")
    ("Gopher Project" "gopher://gopherproject.org/1")
-   ("Floodgap Systems" "gopher://gopher.floodgap.com:70/1")
+   ("Floodgap Systems" "gopher://gopher.floodgap.com/1")
    ("Hacker News" "gopher://hngopher.com/1")
-   ("Weather Forecasts" "gopher://gopher.floodgap.com:70/1/groundhog")
+   ("Weather Forecasts" "gopher://gopher.floodgap.com/1/groundhog")
    ("SDF Public Access UNIX System" "gopher://sdf.org/1")
-   ("Gopher Club" "gopher://gopher.club:70/1/phlogs/")
+   ("Gopher Club" "gopher://gopher.club/1/phlogs/")
    ("Zaibatsu" "gopher://zaibatsu.circumlunar.space/1")
    ("Baud Baby" "gopher://baud.baby/1")
+   ("EyeBlea" "gopher://eyeblea.ch/1")
+   ("Final Zone" "gopher://finalzone.ddns.net/1")
    ("DistroTube" "gopher://distro.tube/1")
    ("Quux" "gopher://quux.org/1")
-   ("Bitreich" "gopher://bitreich.org/1"))
+   ("Bitreich" "gopher://bitreich.org/1")
+   ("Gopherus Author" "gopher://gopher.viste.fr/1")
+   ("System Crafters" "gemini://systemcrafters.cc")
+   ("kurisu (L29)" "gopher://eyeblea.ch/1/~kurisu")
+   ("fluxcap (L29)" "gopher://fluxcap.synchro.net:5070/1")
+   ("nkeck72 (L29)" "gopher://eyeblea.ch/1/~nkeck720")
+   ("MeatLoTioN (Lunduke)" "gopher://gopher.erb.pw/1")
+   ("fputs (Lunduke)" "gopher://fputs.com/1"))
 #+END_SRC
 
 *** +elscreen+
@@ -24110,15 +24119,6 @@ Directory-Browsing Commands
       (interactive)
       (dired-single-buffer ".."))
     :config
-    ;; (defun dired-single-buffer-mouse--ignore-errors (orig-fun &rest args)
-    ;;   "Suppress errors when calling `dired-single-buffer-mouse'."
-    ;;   (condition-case err
-    ;;       (apply orig-fun args)
-    ;;     ('error
-    ;;      (message "%s" err))))
-    ;; ;; advise `dired-single-buffer-mouse' to suppress errors
-    ;;(advice-add 'dired-single-buffer-mouse :around #'dired-single-buffer-mouse--ignore-errors)
-
     ;; advise `dired-single-buffer-mouse' to suppress errors
     (advice-add 'dired-single-buffer-mouse :around #'advice--ignore-errors))
 
