@@ -4424,6 +4424,7 @@ and update `org-visibility-state-file' with new state."
               (error "There is no file associated with this buffer: %S" buffer))
           (let ((visible-lines (org-visibility-get buffer)))
             (save-mark-and-excursion
+              (outline-hide-sublevels 1)
               (dolist (x visible-lines)
                 (ignore-errors
                   (goto-char x)
