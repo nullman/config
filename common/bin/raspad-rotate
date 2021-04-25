@@ -8,6 +8,7 @@
 #===============================================================================
 
 name=$(basename "$0")
+persist_file=${HOME}/.raspad-rotate-restore
 output="HDMI-1"
 device="ILITEK ILITEK-TP"
 property="Coordinate Transformation Matrix"
@@ -32,11 +33,10 @@ EOF
 }
 
 _persist() {
-    out=${HOME}/.raspad-rotate-restore
-    echo "#!/usr/bin/env bash" > ${out}
-    echo "" >> ${out}
-    echo "$0 $1" >> ${out}
-    chmod +x ${out}
+    echo "#!/usr/bin/env bash" > ${persist_file}
+    echo "" >> ${persist_file}
+    echo "$0 $1" >> ${persist_file}
+    chmod +x ${persist_file}
 }
 
 # handle no arguments given
