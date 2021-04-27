@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+#===============================================================================
+# rofi-menu
+#
+# Present a menu of rofi menus.
+#
+# Author: Kyle W T Sherman
+#===============================================================================
+
+name=$(basename "$0")
+
+_usage() {
+    cat <<EOF
+Usage: $(basename "$0") [MENU]
+Present a menu of rofi menus.
+MENU:
+  NONE  menu of menus
+  qemu  qemu menu
+EOF
+}
+
+menu=$1
+sel=$2
+
+# handle no arguments given
+if [[ $# -lt 1 ]] ; then
+    menus=(
+        Qemu
+    )
+    menu=$(echo ${menus[@]} | rofi -dmenu -i -p 'Menu' -hide-scrollbar)
+fi
+
+# handle menu
+menu=$(echo "${menu}" | tr '[:upper:]' '[:lower:]')
+case "${menu}" in
+    qemu)
+        if [[ $# -lt 2 ]] ; then
+            sel=$(ls -1 ~/qemu | rofi -dmenu -i -p 'Qemu' -hide-scrollbar)
+        fi
+        if [[ -n "${sel}" ]] ; then
+            (cd ~/qemu/${sel} && ./run &)
+        fi
+        ;;
+esac
+
+exit 0
+
+#===============================================================================
+# End of File
+#===============================================================================
