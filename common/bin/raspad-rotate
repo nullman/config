@@ -17,8 +17,6 @@ value_inverted="-1 0 1 0 -1 1 0 0 1"
 value_left="0 -1 1 1 0 0 0 0 1"
 value_right="0 1 0 -1 0 1 0 0 1"
 
-xrandr --output HDMI-1 --rotate normal
-
 _usage() {
     cat <<EOF
 Usage: $(basename "$0") [OPTIONS]
