@@ -3205,7 +3205,7 @@ same directory as the org-buffer and insert a link to this file."
              ("C-c p" . org-priority) ; "C-c ," gets overridden by `semantic-complete-analyze-inline'
              ("C-c s" . org-sort-current) ; sort current level
              ("C-c z" . org-agenda-archive-done-tasks) ; archive done tasks
-             ("C-c C-g" . org-goto)                    ; goto a location
+             ("C-c C-j" . counsel-org-goto)            ; defaults to `org-goto'
              ;;("C-c C-z" . switch-to-lisp) ; defaults to `org-add-note'
              ("C-c C-z" . geiser-mode-switch-to-repl) ; defaults to `org-add-note'
              ("C-c C-x C-l" . org-toggle-link-display) ; toggle showing or hiding links
@@ -14274,9 +14274,9 @@ User is prompted for WORD if none given."
   :quelpa (counsel :fetcher github :repo "abo-abo/swiper")
   :after (ivy)
   :bind* (("M-x" . counsel-M-x)
+          ;;([remap list-buffers] . counsel-switch-buffer) ; defaults to `list-buffers'
           ;;("C-x b" . counsel-ibuffer)   ; defaults to `ivy-switch-buffer'
           ;;("C-x C-b" . counsel-switch-buffer)   ; defaults to `list-buffers'
-          ;;([remap list-buffers] . counsel-switch-buffer) ; defaults to `list-buffers'
           ("C-x C-f" . counsel-find-file)
           ;;("C-h f" . counsel-describe-function)
           ;;("C-h v" . counsel-describe-variable)
@@ -14654,7 +14654,7 @@ Concatenate the results for the values with SEPARATOR, where SEPARATOR
   ;; recenter screen after moving to current song
   (defun mingus-goto-current-song--recenter ()
     "Recenter screen after moving to current song."
-    (recenter))
+    (recenter-top-bottom))
   ;; advise `mingus-goto-current-song'
   (advice-add 'mingus-goto-current-song :after #'mingus-goto-current-song--recenter)
 
