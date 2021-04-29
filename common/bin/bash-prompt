@@ -14,7 +14,7 @@ prompt_command () {
     tput sc
 
     # determine dir location
-    x=$(($(tput cols) - $(echo $(pwd) | wc -m) - 2))
+    x=$(($(tput cols) - $(pwd | wc -m) - 2))
 
     # position cursor at Y=0, X=x
     tput cup 0 ${x}
@@ -50,7 +50,7 @@ BLUE="\[$(tput setaf 4 ; tput bold)\]"
 NO_COLOR="\[$(tput sgr0)\]"
 
 case "${TERM}" in
-    xterm*|rxvt*|urxvt*|gnome-terminal&|alacritty*|termite*|terminator*) TITLEBAR='\[\033]0;\h:\u \007\]' ;;
+    xterm*|rxvt*|urxvt*|gnome-terminal*|alacritty*|termite*|terminator*) TITLEBAR='\[\033]0;\h:\u \007\]' ;;
     *) TITLEBAR="" ;;
 esac
 

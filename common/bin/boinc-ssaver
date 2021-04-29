@@ -19,7 +19,7 @@ echo "url: ${url}"
 xhost +local:boinc
 
 # launch screen saver
-boinc_cmd --result ${url} ${name} graphics_fullscreen
+boinc_cmd --result "${url}" "${name}" graphics_fullscreen
 
 # TODO: need to run it in a root window somehow
 
