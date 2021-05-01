@@ -1231,82 +1231,82 @@ alias emacs-debug="emacs --no-site-file -nw --debug-init"
 alias emacs-comp="emacs --no-init-file --no-site-file -batch -f batch-byte-compile"
 #        vi                      vim
 alias vi="vim"
-#!#        edal                    edit ~/.alias
-#!alias edal="edit \${HOME}/.alias"
-#!#        edalw                   edit ~/.alias-work
-#!alias edalw="edit \${HOME}/.alias-work"
-#!#        edba                    edit ~/.bashrc
-#!alias edba="edit \${HOME}/.bashrc"
-#!#        edca                    edit ~/.centericq/actions
-#!alias edca="edit \${HOME}/.centericq/actions"
-#!#        edce                    edit ~/.centericq/external
-#!alias edce="edit \${HOME}/.centericq/external"
-#!#        edfu                    edit ~/.funct
-#!alias edfu="edit \${HOME}/.funct"
-#!#        edfuw                   edit ~/.funct-work
-#!alias edfuw="edit \${HOME}/.funct-work"
-#!#        edemi                   edit ~/.emacs.d/init.el
-#!alias edemi="edit \${HOME}/.emacs.d/init.el"
-#!#        edemim                  edit ~/.emacs.d/init-main.org
-#!alias edemim="edit \${HOME}/.emacs.d/init-main.org"
-#!#        edho                    edit ~/.hosts
-#!alias edho="edit \${HOME}/.hosts"
-#!#        edhos                   edit ~/.hosts_ssmedia
-#!alias edhos="edit \${HOME}/.hosts_ssmedia"
-#!#        edkey                   edit ~/.keylaunchrc
-#!alias edkey="edit \${HOME}/.keylaunchrc"
-#!#        edm                     edit ~/.menu
-#!alias edm="edit \${HOME}/.menu"
-#!#        edmw                    edit ~/.menu_work
-#!alias edmw="edit \${HOME}/.menu_work"
-#!#        edoff                   edit ~/.offlineimaprc
-#!alias edoff="edit \${HOME}/.offlineimaprc"
-#!#        edrp                    edit ~/.ratpoisonrc
-#!alias edrp="edit \${HOME}/.ratpoisonrc"
-#!#        edrpb                   edit ~/.ratpoisonrc-bindings
-#!alias edrpb="edit \${HOME}/.ratpoisonrc-bindings"
-#!#        edsc                    edit ~/.screenrc
-#!alias edsc="edit \${HOME}/.screenrc"
-#!#        edscb                   edit ~/.screenrc-bindings
-#!alias edscb="edit \${HOME}/.screenrc-bindings"
-#!#        edsca                   edit ~/.screenrc-applications
-#!alias edsca="edit \${HOME}/.screenrc-applications"
-#!#        edsh                    edit ~/.shellrc
-#!alias edsh="edit \${HOME}/.shellrc"
-#!#        edshw                   edit ~/.shellrc-work
-#!alias edshw="edit \${HOME}/.shellrc-work"
-#!#        edsshak                 edit ~/.ssh/authorized_keys
-#!alias edsshak="edit \${HOME}/.ssh/authorized_keys"
-#!#        edsshc                  edit ~/.ssh/config
-#!alias edsshc="edit \${HOME}/.ssh/config"
-#!#        edsshkh                 edit ~/.ssh/known_hosts
-#!alias edsshkh="edit \${HOME}/.ssh/known_hosts"
-#!#        edvim                   edit ~/.vimrc
-#!alias edvim="edit \${HOME}/.vimrc"
-#!#        edxi                    edit ~/.xinitrc
-#!alias edxi="edit \${HOME}/.xinitrc"
-#!#        edxbk                   edit ~/.xbindkeysrc
-#!alias edxbk="edit \${HOME}/.xbindkeysrc"
-#!#        edxm                    edit ~/.Xmodmap
-#!alias edxm="edit \${HOME}/.Xmodmap"
-#!#        edpr                    edit ~/.xprofile
-#!alias edpr="edit \${HOME}/.xprofile"
-#!#        edxr                    edit ~/.Xresources
-#!alias edxr="edit \${HOME}/.Xresources"
-#!#        edxmame                 edit ~/.xmame/xmamerc
-#!alias edxmame="edit \${HOME}/.xmame/xmamerc"
-#!#        edxsc                   edit ~/.xscreensaver
-#!alias edxsc="edit \${HOME}/.xscreensaver"
-#!#        edxs                    edit ~/.xsession
-#!alias edxs="edit \${HOME}/.xsession"
-#!#        edsa                    edit ~/bin/screen-app
-#!alias edsa="edit \${HOME}/bin/screen-app"
-#!#        edra                    edit ~/bin/run-app
-#!alias edra="edit \${HOME}/bin/run-app"
-#!#        edrpm                   edit ~/bin/ratpoison-menu
-#!alias edrpm="edit \${HOME}/bin/ratpoison-menu"
-#!#        edrpw                   edit ~/bin/ratpoison-windows
-#!alias edrpw="edit \${HOME}/bin/ratpoison-windows"
+#        edal                    edit ~/.alias
+alias edal="edit \${HOME}/.alias"
+#        edalw                   edit ~/.alias-work
+alias edalw="edit \${HOME}/.alias-work"
+#        edba                    edit ~/.bashrc
+alias edba="edit \${HOME}/.bashrc"
+#        edca                    edit ~/.centericq/actions
+alias edca="edit \${HOME}/.centericq/actions"
+#        edce                    edit ~/.centericq/external
+alias edce="edit \${HOME}/.centericq/external"
+#        edfu                    edit ~/.funct
+alias edfu="edit \${HOME}/.funct"
+#        edfuw                   edit ~/.funct-work
+alias edfuw="edit \${HOME}/.funct-work"
+#        edemi                   edit ~/.emacs.d/init.el
+alias edemi="edit \${HOME}/.emacs.d/init.el"
+#        edemim                  edit ~/.emacs.d/init-main.org
+alias edemim="edit \${HOME}/.emacs.d/init-main.org"
+#        edho                    edit ~/.hosts
+alias edho="edit \${HOME}/.hosts"
+#        edhos                   edit ~/.hosts_ssmedia
+alias edhos="edit \${HOME}/.hosts_ssmedia"
+#        edkey                   edit ~/.keylaunchrc
+alias edkey="edit \${HOME}/.keylaunchrc"
+#        edm                     edit ~/.menu
+alias edm="edit \${HOME}/.menu"
+#        edmw                    edit ~/.menu_work
+alias edmw="edit \${HOME}/.menu_work"
+#        edoff                   edit ~/.offlineimaprc
+alias edoff="edit \${HOME}/.offlineimaprc"
+#        edrp                    edit ~/.ratpoisonrc
+alias edrp="edit \${HOME}/.ratpoisonrc"
+#        edrpb                   edit ~/.ratpoisonrc-bindings
+alias edrpb="edit \${HOME}/.ratpoisonrc-bindings"
+#        edsc                    edit ~/.screenrc
+alias edsc="edit \${HOME}/.screenrc"
+#        edscb                   edit ~/.screenrc-bindings
+alias edscb="edit \${HOME}/.screenrc-bindings"
+#        edsca                   edit ~/.screenrc-applications
+alias edsca="edit \${HOME}/.screenrc-applications"
+#        edsh                    edit ~/.shellrc
+alias edsh="edit \${HOME}/.shellrc"
+#        edshw                   edit ~/.shellrc-work
+alias edshw="edit \${HOME}/.shellrc-work"
+#        edsshak                 edit ~/.ssh/authorized_keys
+alias edsshak="edit \${HOME}/.ssh/authorized_keys"
+#        edsshc                  edit ~/.ssh/config
+alias edsshc="edit \${HOME}/.ssh/config"
+#        edsshkh                 edit ~/.ssh/known_hosts
+alias edsshkh="edit \${HOME}/.ssh/known_hosts"
+#        edvim                   edit ~/.vimrc
+alias edvim="edit \${HOME}/.vimrc"
+#        edxi                    edit ~/.xinitrc
+alias edxi="edit \${HOME}/.xinitrc"
+#        edxbk                   edit ~/.xbindkeysrc
+alias edxbk="edit \${HOME}/.xbindkeysrc"
+#        edxm                    edit ~/.Xmodmap
+alias edxm="edit \${HOME}/.Xmodmap"
+#        edpr                    edit ~/.xprofile
+alias edpr="edit \${HOME}/.xprofile"
+#        edxr                    edit ~/.Xresources
+alias edxr="edit \${HOME}/.Xresources"
+#        edxmame                 edit ~/.xmame/xmamerc
+alias edxmame="edit \${HOME}/.xmame/xmamerc"
+#        edxsc                   edit ~/.xscreensaver
+alias edxsc="edit \${HOME}/.xscreensaver"
+#        edxs                    edit ~/.xsession
+alias edxs="edit \${HOME}/.xsession"
+#        edsa                    edit ~/bin/screen-app
+alias edsa="edit \${HOME}/bin/screen-app"
+#        edra                    edit ~/bin/run-app
+alias edra="edit \${HOME}/bin/run-app"
+#        edrpm                   edit ~/bin/ratpoison-menu
+alias edrpm="edit \${HOME}/bin/ratpoison-menu"
+#        edrpw                   edit ~/bin/ratpoison-windows
+alias edrpw="edit \${HOME}/bin/ratpoison-windows"
 #        edbgc                   edit /boot/grub/grub.conf
 alias edbgc="edit /boot/grub/grub.conf"
 #        edbgm                   edit /boot/grub/menu.lst
@@ -1636,13 +1636,13 @@ alias sshtrinity="echo 'ssh:trinity' ; ssh trinity"
 #
 # ssh logons (external)
 #
-#!#        sshx                    ssh nullware.com
+#!#        sshx                  ssh nullware.com
 #!alias sshx="echo 'ssh:nullware.com' ; ssh \${nullwareip}"
-#!#        sshxr                   ssh nullware.com
+#!#        sshxr                 ssh nullware.com
 #!alias sshxr="echo 'ssh:nullware.com:root' ; ssh -l root \${nullwareip}"
-#!#        sshxk                   ssh nullware.com
+#!#        sshxk                 ssh nullware.com
 #!alias sshxk="echo 'ssh:nullware.com:kyle' ; ssh -l kyle \${nullwareip}"
-#        sshnullware               ssh nullware.com
+#        sshnullware             ssh nullware.com
 alias sshnullware="echo 'ssh:kyle@nullware.com' ; ssh kyle@\${nullwareip}"
 
 #
@@ -2997,7 +2997,7 @@ alias make-cron="
     case \${a} in
         y|Y) crontab \${HOME}/config/custom/\$(uname -n)/.cron ;;
     esac"
-#        mkraw                           make raw character device
+#        mkraw                   make raw character device
 alias mkraw="
   echo -n 'Raw device number: ' ; read a
   mknod --mode=644 /dev/raw/raw\${a} c 162 \${a}"
@@ -3025,7 +3025,7 @@ alias mkraw="
 #!            cp /root/.hosts /etc/hosts
 #!            ;;
 #!    esac"
-#        copy-wall                       copy wallpapers to system
+#        copy-wall               copy wallpapers to system
 alias copy-wall="
     sudo bash -c \"
         mkdir -p /usr/local/share/wallpapers
@@ -3035,20 +3035,20 @@ alias copy-wall="
         cp \${HOME}/wallpapers/* /usr/share/backgrounds/
         chmod 644 /usr/share/backgrounds/*
     \""
-#        copy-fonts                      copy fonts
+#        copy-fonts              copy fonts
 alias copy-fonts="
     mkdir -p \${HOME}/.local/share/fonts
     cp \${HOME}/config/fonts \${HOME}/.local/share/fonts/"
-#!#        copy-skins                      copy mp3 skins to xmms
+#!#        copy-skins              copy mp3 skins to xmms
 #!alias copy-skins="sudo cp -Rp \${HOME}/documents/Skins/* /usr/share/xmms/Skins/"
-#!#        copy-icewm                      copy icewm settings to ~/
+#!#        copy-icewm              copy icewm settings to ~/
 #!alias copy-icewm="
 #!    if [[ ! -e \${HOME}/.icewm ]] ; then
 #!        sudo cp -R /etc/X11/icewm \${HOME}/.icewm
 #!    else
 #!        echo '${HOME}/.icewm already exists'
 #!    fi"
-#!#        make-ssh-config-external        make ~/.ssh/config file (external access)
+#!#        make-ssh-config-external make ~/.ssh/config file (external access)
 #!alias make-ssh-config-external="
 #!    o=\${HOME}/.ssh/config
 #!    if [[ ! -e \${o} ]] ; then
@@ -3076,7 +3076,7 @@ alias copy-fonts="
 #!    else
 #!        echo \"You must first delete '\${o}'\"
 #!    fi"
-#        make-ssh-config                 make ssh config file
+#        make-ssh-config         make ssh config file
 alias make-ssh-config="
     o=\${HOME}/.ssh/config
     echo -n \"Reset your '\${HOME}/.ssh/config' file? [yN] \" ; read a
@@ -3086,7 +3086,7 @@ alias make-ssh-config="
             echo 'ServerAliveInterval 60' >> \${o}
             ;;
     esac"
-#!#        make-linuxlogo                  setup linux logo
+#!#        make-linuxlogo          setup linux logo
 #!alias make-linuxlogo="
 #!    if [[ -x \$(pathcmd linux_logo) ]] ; then
 #!        linux_logo > /etc/motd
@@ -3095,7 +3095,7 @@ alias make-ssh-config="
 #!    else
 #!        echo 'You must first install linuxlogo'
 #!    fi"
-#        make-dict-words                 make /usr/share/dict/words file
+#        make-dict-words         make /usr/share/dict/words file
 alias make-dict-words="sudo wget https://gist.githubusercontent.com/wchargin/8927565/raw/d9783627c731268fb2935a731a618aa8e95cf465/words -O /usr/share/dict/words"
 #!#        make-run-on-wakeup-script make /etc/pm/sleep.d/50-run-on-wakup
 #!alias make-run-on-wakeup-script="
