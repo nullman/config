@@ -7,32 +7,34 @@
 # Author: Kyle W T Sherman
 #===============================================================================
 
+set -euo pipefail
+
 echo "xmmslib.a install issue"
 exit 1
 
 name=xmms
 version=1.2.11
-tmp=${HOME}/tmp/${name}
+tmp="${HOME}/tmp/${name}"
 
 # make working dir
-mkdir -p ${tmp}
+mkdir -p "${tmp}"
 
 # change to working dir
-pushd ${tmp}
+pushd "${tmp}"
 
 # download sources
 echo "Downloading ${name} sources"
-wget http://xmms.org/files/1.2.x/${name}-${version}.tar.gz
+wget "http://xmms.org/files/1.2.x/${name}-${version}.tar.gz"
 
-if [[ -f ${name}-${version}.tar.gz ]] ; then
+if [[ -f "${name}-${version}.tar.gz" ]] ; then
     echo "Unpacking sources"
-    tar xvf ${name}-${version}.tar.gz
+    tar xvf "${name}-${version}.tar.gz"
     # change to source dir
-    pushd ${name}-${version}
+    pushd "${name}-${version}"
     echo "Compiling sources"
     ./configure --prefix=/usr && \
       make && \
-      sudo checkinstall -D --default --pkgname ${name} --pkgversion ${version} make install
+      sudo checkinstall -D --default --pkgname "${name}" --pkgversion "${version}" make install
     popd
 else
     echo "Error downloading ${name} sources"

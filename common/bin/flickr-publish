@@ -29,6 +29,7 @@ BEGIN { $^W = 1; }
 
 use strict;
 use warnings;
+
 use Flickr::API;
 use Flickr::API::Request;
 use Flickr::Upload;

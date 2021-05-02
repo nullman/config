@@ -7,11 +7,13 @@
 # Author: Kyle W T Sherman
 #===============================================================================
 
-dir=${HOME}/.clojure
-elisp=${HOME}/.emacs.d/modules
+set -euo pipefail
 
-mkdir -p ${dir}
-pushd ${dir} && (
+dir="${HOME}/.clojure"
+elisp="${HOME}/.emacs.d/modules"
+
+mkdir -p "${dir}"
+pushd "${dir}" && (
 
     # check for first run
     if [[ ! -d "${dir}/src" ]] ; then
@@ -19,8 +21,8 @@ pushd ${dir} && (
         # install required apps
         sudo apt-get install sun-java6-jdk ant git-core maven2
 
-        mkdir -p ./src
-        pushd ./src
+        mkdir -p "./src"
+        pushd "./src"
         (
             # install clojure from source
             git clone git://github.com/richhickey/clojure.git
@@ -62,9 +64,9 @@ pushd ${dir} && (
 
     # copy emacs files to emacs modules directory
     if [[ -d "${elisp}" ]] ; then
-        cp -rp ./src/clojure-mode/clojure-mode.el ${elisp}/
-        cp -rp ./src/slime/* ${elisp}/slime/
-        cp -rp ./src/swank-clojure/swank-clojure.el ${elisp}/
+        cp -rp ./src/clojure-mode/clojure-mode.el "${elisp}/"
+        cp -rp ./src/slime/* "${elisp}/slime/"
+        cp -rp ./src/swank-clojure/swank-clojure.el "${elisp}/"
     fi
 
     popd

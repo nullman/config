@@ -7,6 +7,8 @@
 # Author: Kyle W T Sherman
 #===============================================================================
 
+set -euo pipefail
+
 if [[ $(command -v audacious) ]] ; then
     audacious --enqueue "$@"
 elif [[ $(command -v audacious2) ]] ; then

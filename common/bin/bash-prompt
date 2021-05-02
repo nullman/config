@@ -9,6 +9,8 @@
 # Author: Kyle W T Sherman
 #===============================================================================
 
+set -euo pipefail
+
 prompt_command () {
     # save current position
     tput sc

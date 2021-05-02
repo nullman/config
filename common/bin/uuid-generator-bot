@@ -11,6 +11,7 @@ BEGIN { $^W = 1; }
 
 use strict;
 use warnings;
+
 use Net::OSCAR qw(:standard);
 use Data::UUID;
 use Data::Dumper;

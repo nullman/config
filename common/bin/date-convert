@@ -7,9 +7,11 @@
 # Author: Kyle W T Sherman
 #===============================================================================
 
-tmp=/tmp/date-convert-$$
+set -euo pipefail
 
-cat > ${tmp} <<EOF
+tmp="/tmp/date-convert-$$"
+
+cat > "${tmp}" <<EOF
 (require 'calendar)
 
 ;; use current date if no date is given on the command line
@@ -30,7 +32,7 @@ cat > ${tmp} <<EOF
   "    Epoch: " (number-to-string (truncate (time-to-seconds (apply (quote encode-time) (append (list 0 0 0) date))))) "\n"))
 EOF
 
-emacs --script ${tmp} 2>/dev/null
+emacs --script "${tmp}" 2>/dev/null
 
 #===============================================================================
 # End of File

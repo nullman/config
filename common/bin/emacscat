@@ -16,6 +16,8 @@
 # Author: Kyle W T Sherman (some minor modifications)
 #===============================================================================
 
+set -euo pipefail
+
 unset DISPLAY
 
 file="$(mktemp)"
@@ -26,9 +28,7 @@ if [[ ! -t 0  ]] ; then
 
     cat > "${file}"
 
-    emacsclient -a emacs -e "${lisp}" ${@} > /dev/null
-
-    if [[ ${?} -ne 0 ]] ; then
+    if (emacsclient -a emacs -e "${lisp}" "${@}" > /dev/null) ; then
         echo "Failed to import your data into Emacs"
     fi
 
@@ -36,8 +36,8 @@ if [[ ! -t 0  ]] ; then
 else
     # nothing from stdin, use parameters
 
-    if [[ -n ${@} ]] ; then
-        emacsclient -n -a emacs ${@} > /dev/null
+    if [[ $# -gt 0 ]] ; then
+        emacsclient -n -a emacs "${@}" > /dev/null
     fi
 fi
 

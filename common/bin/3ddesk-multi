@@ -9,6 +9,8 @@
 # Author: Kyle W T Sherman
 #===============================================================================
 
+set -euo pipefail
+
 3ddeskd --acquire=20 && sleep 2 && 3ddesk
 (sleep 2 && 3ddesk --stop) &
 

@@ -7,9 +7,11 @@
 # Author: Kyle W T Sherman
 #===============================================================================
 
+set -euo pipefail
+
 # return wether or not terminal is running in screen
 inscreen() {
-    cmd=$(ps -o comm -p $(ps -o ppid -p $$ --no-headers) --no-headers)
+    cmd=$(ps -o comm -p $(ps -o ppid -p "$$" --no-headers) --no-headers)
     [[ "${cmd}" == "screen" ]] && echo "screen"
 }
 

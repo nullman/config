@@ -14,7 +14,6 @@
  '(beacon-blink-duration 0.1 nil nil "Customized with use-package beacon")
  '(compilation-scroll-output 'next-error nil nil "Customized with use-package compile")
  '(compilation-skip-threshold 2 nil nil "Customized with use-package compile")
- '(counsel-linux-app-format-function #'counsel-linux-app-format-function-name-only nil nil "Customized with use-package counsel")
  '(cssm-indent-function #'cssm-c-style-indenter nil nil "Customized with use-package css-mode")
  '(doom-modeline-height 30 nil nil "Customized with use-package doom-modeline")
  '(eldoc-idle-delay 0 nil nil "Customized with use-package eldoc")
@@ -67,7 +66,6 @@
  '(ivy-use-virtual-buffers t nil nil "Customized with use-package ivy")
  '(langtool-java-classpath
    (concat "/usr/share/java/languagetool" ":/usr/share/java/languagetool/*" ":/usr/share/languagetool" ":/usr/share/languagetool/*") nil nil "Customized with use-package langtool")
- '(magit-completing-read-function #'ivy-completing-read nil nil "Customized with use-package magit")
  '(neo-smart-open t nil nil "Customized with use-package neotree")
  '(org-agenda-files
    '("~/.common/org/personal.org" "/home/kyle/org/agenda-personal-timeline.org" "/home/kyle/org/agenda-personal.org" "/home/kyle/org/agenda-work.org"))
@@ -98,9 +96,7 @@
  '(org-wild-notifier-keyword-whitelist '("TODO" "NEXT") nil nil "Customized with use-package org-wild-notifier")
  '(org-wild-notifier-notification-title "Org Reminder" nil nil "Customized with use-package org-wild-notifier")
  '(package-selected-packages
-   '(dired-hide-dotfiles dired-open dired-hacks-utils all-the-icons-dired eshell-git-prompt vterm org-notify org-plus-contrib org-wild-notifier org-alert frame-local lsp-treemacs treemacs cfrs posframe pfuture ace-window lsp-ivy lsp-ui typescript-mode lsp-mode ht forge ghub treepy closql emacsql-sqlite emacsql counsel-projectile ivy-prescient prescient wgrep flx ivy-hydra ivy-rich counsel helpful elisp-refs dash-functional multiple-cursors vimish-fold lua-mode doom-modeline shrink-path all-the-icons memoize calendar-remind ox ob-python ob-java org-src command-log-mode ob-shell swiper-helm swiper xterm-color transient dash js2-mode inf-ruby flycheck company bind-key async beacon quelpa yasnippet-snippets xref-js2 wttrin wtf which-key weblogger web-query w3m undo-tree switch-window sudoku split-move spinner sokoban smex slime simple-mpc robe replacer regex-tool quelpa-use-package python-mode ps-ccrypt projectile powerline popwin plantuml-mode pivotal-tracker persistent-scratch org-pdfview openwith omni-quotes ob-kotlin ob-ipython ob-async neotree mingus markdown-mode magit-popup magit ledger-mode langtool kotlin-mode keyfreq key-chord json-mode js2-refactor js-comint jedi ivy ini-mode ini iedit hydra hungry-delete htmlize helm graphviz-dot-mode gnuplot geiser fuzzy flymake-cursor flycheck-kotlin flatland-theme expand-region erlang epoch eperiodic elpy elpher elnode elisp-slime-nav elfeed easy-kill dired-single diminish demo-it define-word decimation cycle-buffer centered-cursor-mode browse-kill-ring brainfuck boxquote bbdb basic bash-completion avy auto-menu auto-compile anzu any-ini-mode analog-clock alert aggressive-indent ag))
- '(projectile-completion-system 'ivy nil nil "Customized with use-package projectile")
- '(projectile-switch-project-action #'projectile-dired nil nil "Customized with use-package projectile")
+   '(ob-tangle org-table subr-x cl-macs geiser dired-hide-dotfiles dired-open dired-hacks-utils all-the-icons-dired eshell-git-prompt vterm org-notify org-plus-contrib org-wild-notifier org-alert frame-local lsp-treemacs treemacs cfrs posframe pfuture ace-window lsp-ivy lsp-ui typescript-mode lsp-mode ht forge ghub treepy closql emacsql-sqlite emacsql counsel-projectile ivy-prescient prescient wgrep flx ivy-hydra ivy-rich counsel helpful elisp-refs dash-functional multiple-cursors vimish-fold lua-mode doom-modeline shrink-path all-the-icons memoize calendar-remind ox ob-python ob-java org-src command-log-mode ob-shell swiper-helm swiper xterm-color transient dash js2-mode inf-ruby flycheck company bind-key async beacon quelpa yasnippet-snippets xref-js2 wttrin wtf which-key weblogger web-query w3m undo-tree switch-window sudoku split-move spinner sokoban smex slime simple-mpc robe replacer regex-tool quelpa-use-package python-mode ps-ccrypt projectile powerline popwin plantuml-mode pivotal-tracker persistent-scratch org-pdfview openwith omni-quotes ob-kotlin ob-ipython ob-async neotree mingus markdown-mode magit-popup magit ledger-mode langtool kotlin-mode keyfreq key-chord json-mode js2-refactor js-comint jedi ivy ini-mode ini iedit hydra hungry-delete htmlize helm graphviz-dot-mode gnuplot fuzzy flymake-cursor flycheck-kotlin flatland-theme expand-region erlang epoch eperiodic elpy elpher elnode elisp-slime-nav elfeed easy-kill dired-single diminish demo-it define-word decimation cycle-buffer centered-cursor-mode browse-kill-ring brainfuck boxquote bbdb basic bash-completion avy auto-menu auto-compile anzu any-ini-mode analog-clock alert aggressive-indent ag))
  '(recentf-max-menu-items 25 nil nil "Customized with use-package recentf")
  '(safe-local-variable-values '((hl-sexp-mode) (rainbow-mode . t)))
  '(save-abbrevs 'silently nil nil "Customized with use-package abbrev")

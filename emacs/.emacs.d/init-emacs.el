@@ -163,13 +163,17 @@ LEVEL is the indentation level."
 (use-package cl-macs)
 (use-package dash
   :quelpa (dash)
+  :demand t
   :config
   (use-package dash-functional
-    :quelpa (dash-functional)))
+    :quelpa (dash-functional)
+    :demand t))
 (use-package f
-  :quelpa (f))
+  :quelpa (f)
+  :demand t)
 (use-package s
-  :quelpa (s))
+  :quelpa (s)
+  :demand t)
 (use-package seq)
 (use-package subr-x)
 (use-package org)
@@ -2533,15 +2537,16 @@ DATA should have been made by `org-outline-overlay-data'."
 ;;   (setq org-alert-interval 300
 ;;         org-alert-notification-title "Org Reminder"))
 
-(use-package org-wild-notifier
-  :quelpa (org-wild-notifier)
-  :after (org)
-  :custom
-  (alert-default-style 'notifications)
-  (org-wild-notifier-alert-time '(1 10 30))
-  (org-wild-notifier-keyword-whitelist '("TODO" "NEXT"))
-  (org-wild-notifier-notification-title "Org Reminder")
-  :init (org-wild-notifier-mode 1))
+;; throws error: void-function -orfn
+;; (use-package org-wild-notifier
+;;   :quelpa (org-wild-notifier)
+;;   :after (org)
+;;   :custom
+;;   (alert-default-style 'notifications)
+;;   (org-wild-notifier-alert-time '(1 10 30))
+;;   (org-wild-notifier-keyword-whitelist '("TODO" "NEXT"))
+;;   (org-wild-notifier-notification-title "Org Reminder")
+;;   :init (org-wild-notifier-mode 1))
 
 ;; (use-package org-notify
 ;;   :quelpa (org-notify)
@@ -16411,7 +16416,7 @@ otherwise run `find-file-as-root'."
 (init-message 2 "Modes: Geiser (Racket Scheme REPL)")
 
 (use-package geiser
-  :quelpa (geiser)
+  :quelpa (geiser :fetcher gitlab :repo "emacs-geiser/geiser")
   :commands (geiser-mode
              run-geiser
              run-gracket
@@ -16443,6 +16448,10 @@ otherwise run `find-file-as-root'."
     (local-set-key (kbd "C-c C-s") 'geiser-insert-sigma))
   (add-hook 'geiser-mode-hook #'local-geiser-mode-hook)
   (add-hook 'geiser-repl-mode-hook #'local-geiser-mode-hook))
+
+(use-package geiser-racket
+  :after (geiser)
+  :quelpa (geiser-racket :fetcher gitlab :repo "emacs-geiser/geiser-racket"))
 ;; Geiser (Racket Scheme REPL):1 ends here
 
 ;; [[file:init-emacs.org::*GNU Plot][GNU Plot:1]]
@@ -17065,7 +17074,7 @@ otherwise run `find-file-as-root'."
 ;;   (add-hook 'racket-repl-mode-hook #'racket-unicode-input-method-enable))
 
 (use-package scheme
-  :after (geiser)
+  :after (geiser geiser-racket)
   :mode ("\\.rkt\\'" . racket-mode)
   :interpreter ("racket" . racket-mode)
   :commands (racket-mode
