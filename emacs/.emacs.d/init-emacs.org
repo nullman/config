@@ -1350,6 +1350,17 @@ Set time zones to use for =display-time-world=.
           ("Asia/Tokyo" "Tokyo")))
 #+END_SRC
 
+Set =safe-local-variable-values=.
+
+#+BEGIN_SRC emacs-lisp
+  (init-message 3 "Set `safe-local-variable-values'.")
+
+  ;; set safe-local-variable-values
+  (setq safe-local-variable-values
+        '((org-babel-noweb-wrap-end . "}}}")
+          (org-babel-noweb-wrap-start . "{{{")))
+#+END_SRC
+
 *** System
 :PROPERTIES:
 :CUSTOM_ID: environment-settings-system

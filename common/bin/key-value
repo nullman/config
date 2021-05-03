@@ -198,8 +198,7 @@ case "${op}" in
         cat "${base}/${file}" | grep "${query}"
         ;;
     insert|i)
-        if [[ -z $(cat "${base}/${file}" | sed 's/: .*$//' |
-                    grep -q "${key}" && echo 1) ]] ; then
+        if $(cat "${base}/${file}" | sed 's/: .*$//' | grep -q "${key}") ; then
             cat "${base}/${file}" > "${base}/${temp}"
             echo "${key}: ${value}" >> "${base}/${temp}"
             sort -t : "${base}/${temp}" > "${base}/${file}"
@@ -210,8 +209,7 @@ case "${op}" in
         fi
         ;;
     update|u)
-        if [[ -z $(cat "${base}/${file}" | sed 's/: .*$//' |
-                    grep -q "${key}" || echo 1) ]] ; then
+        if $(cat "${base}/${file}" | sed 's/: .*$//' | grep -q "${key}") ; then
             cat "${base}/${file}" | sed "/^${key}: .*$/d" > "${base}/${temp}"
             echo "${key}: ${value}" >> "${base}/${temp}"
             sort -t : "${base}/${temp}" > "${base}/${file}"

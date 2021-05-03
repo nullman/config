@@ -24,7 +24,7 @@ shift
 msg="$@"
 
 # if message is not a command, pass it on to eliza-fortune
-if [[ ! $(echo "${cmdlist}" | grep -q "|${cmd}|") ]] ; then
+if ! $(echo "${cmdlist}" | grep -q "|${cmd}|") ; then
     # call im-bot eliza-fortune
     ${bot} eliza-fortune "${cmd}" "${msg[@]}" | head -c -1
 else

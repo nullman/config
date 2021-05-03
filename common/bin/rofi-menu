@@ -7,38 +7,119 @@
 # Author: Kyle W T Sherman
 #===============================================================================
 
-name=$(basename "$0")
+set -euo pipefail
+
+lsopts=("-1" "--group-directories-first")
 
 _usage() {
     cat <<EOF
 Usage: $(basename "$0") [MENU]
 Present a menu of rofi menus.
 MENU:
-  NONE  menu of menus
-  qemu  qemu menu
+  NONE    Menu of menus
+  qemu    Launch QEMU Emulator
+  sounds  Play sounds
 EOF
 }
-
-menu=$1
-sel=$2
 
 # handle no arguments given
 if [[ $# -lt 1 ]] ; then
     menus=(
-        Qemu
+        "Qemu"
+        "Sounds"
     )
-    menu=$(echo ${menus[@]} | rofi -dmenu -i -p 'Menu' -hide-scrollbar)
+    menu=$(printf "%s\n" "${menus[@]}" | rofi -dmenu -i -p 'Menu' -hide-scrollbar)
+else
+    menu=$1
 fi
 
 # handle menu
 menu=$(echo "${menu}" | tr '[:upper:]' '[:lower:]')
 case "${menu}" in
     qemu)
+        # generate and display a list of qemu emulators
         if [[ $# -lt 2 ]] ; then
-            sel=$(ls -1 ~/qemu | rofi -dmenu -i -p 'Qemu' -hide-scrollbar)
+            sel=$(ls "${lsopts[@]}" "${HOME}/qemu" | rofi -dmenu -i -p 'Qemu' -hide-scrollbar)
+        else
+            sel=$2
         fi
+
+        # launch selected qemu emulator
         if [[ -n "${sel}" ]] ; then
-            (cd ~/qemu/${sel} && ./run &)
+            (cd "${HOME}/qemu/${sel}" && ./run &)
+        fi
+        ;;
+
+    sounds)
+        sounddirs=(
+            "${HOME}/Sounds"
+            "${HOME}/sounds"
+        )
+        stop="[Stop Player]"
+        up="[..]"
+
+        # find sound directory
+        sounddir=
+        for dir in "${sounddirs[@]}" ; do
+            [[ -z "${sounddir}" ]] && [[ -d "${dir}" ]] && sounddir="${dir}"
+        done
+        [[ -z "${sounddir}" ]] && exit 1
+
+        # generate and display a list of sound files and directories to choose from
+        if [[ $# -lt 2 ]] ; then
+            opts=("${stop}" "$(ls "${lsopts[@]}" "${sounddir}")")
+            sel=$(printf '%s\n' "${opts[@]}" | rofi -dmenu -i -p 'Sounds' -hide-scrollbar)
+        else
+            sel=$2
+        fi
+
+        # process selection
+        if [[ -n "${sel}" ]] ; then
+            while true ; do
+                #echo "sel: ${sel}"
+
+                if [[ -z "${sel}" ]] ; then
+                    opts=("${stop}" "$(ls "${lsopts[@]}" "${sounddir}")")
+                    sel=$(printf '%s\n' "${opts[@]}" | rofi -dmenu -i -p 'Sounds' -hide-scrollbar)
+                fi
+
+                selpath="${sounddir}/${sel}"
+
+                # stop any currently playing sounds
+                if [[ "${sel}" == "${stop}" ]] ; then
+                    killall ffplay
+                    break
+                fi
+
+                # handle going up a directory
+                if [[ "${sel:0-${#up}}" == "${up}" ]] ; then
+                    dirlen=$((${#selpath}-${#up}-1))
+                    dir="${selpath:0:${dirlen}}"
+                    updir="$(cd "${dir}" && cd .. && pwd)"
+                    sel="${updir:${#sounddir}}"
+                    continue
+                fi
+
+                # handle traversing into a directory
+                if [[ -d "${selpath}" ]] ; then
+                    dir="${sel}"
+                    opts=("${up}" "$(ls "${lsopts[@]}" "${selpath}")")
+                    sel=$(printf '%s\n' "${opts[@]}" | rofi -dmenu -i -p 'Sounds' -hide-scrollbar)
+                    sel="${dir}/${sel}"
+                    continue
+                fi
+
+                # handle playing a sound file
+                selpath="${sounddir}/${sel}"
+                if $(echo "${sel}" | grep -q "Ambient Sound Effects") ; then
+                    echo "Playing: ${sel} (in a loop)"
+                    ffplay -nodisp -loop 0 "${selpath}"
+                else
+                    echo "Playing: ${sel}"
+                    ffplay -nodisp -autoexit "${selpath}"
+                fi
+                break
+            done
         fi
         ;;
 esac

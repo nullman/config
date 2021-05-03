@@ -775,6 +775,15 @@ A fortune is added if FORTUNE is non-nil."
         ("Asia/Tokyo" "Tokyo")))
 ;; General:41 ends here
 
+;; [[file:init-emacs.org::*General][General:42]]
+(init-message 3 "Set `safe-local-variable-values'.")
+
+;; set safe-local-variable-values
+(setq safe-local-variable-values
+      '((org-babel-noweb-wrap-end . "}}}")
+        (org-babel-noweb-wrap-start . "{{{")))
+;; General:42 ends here
+
 ;; [[file:init-emacs.org::*System][System:1]]
 ;;------------------------------------------------------------------------------
 ;;; Environment Settings: System
