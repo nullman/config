@@ -13721,56 +13721,10 @@ Uses `ispell--run-on-word' to spell check word."
   (elfeed-search-filter "-junk +unread")
   ;; custom feed list
   (elfeed-feeds
-   '(
-     ;; Emacs
-     ("http://www.reddit.com/r/emacs.rss" emacs) ; Reddit Emacs Channel
-     ("http://rss.gmane.org/messages/excerpts/gmane.emacs.devel" emacs) ; Emacs Development Newsgroup
-     ("http://planet.emacsen.org/atom.xml" emacs) ; Planet Emacs
-     ("http://emacsredux.com/atom.xml" emacs)     ; Emacs Redux
-     ("http://whattheemacsd.com/atom.xml" emacs)  ; What the .emacs.d?
-     ("http://www.lunaryorn.com/feed.atom" emacs) ; Lunarsite Emacs
-     ("http://endlessparentheses.com/atom.xml" emacs) ; Endless Parentheses
-     ("http://nullprogram.com/feed/" emacs)           ; Null Program
-     ("http://www.masteringemacs.org/feed/" emacs)    ; Mastering Emacs
-     ("http://sachachua.com/blog/feed/" emacs)        ; Sacha Chua
-     ("http://kitchingroup.cheme.cmu.edu/blog/feed/index.xml" emacs) ; Kitchin Group
-     ;; Linux
-     ("http://www.reddit.com/r/linux.rss" linux) ; Reddit Linux Channel
-     ("https://www.linuxjournal.com/node/feed" linux) ; Linux Journal
-     ("https://www.archlinux.org/feeds/news/" linux) ; Arch News
-     ("https://forum.manjaro.org/c/announcements.rss" linux) ; Manjaro News
-     ("http://planet.ubuntu.com/rss20.xml" linux) ; Planet Ubuntu
-     ("http://feeds.feedburner.com/codinghorror?format=xml" linux) ; Planet Gnome
-     ("https://www.linuxfoundation.org/feed/" linux) ; Linux Foundation
-     ("https://www.linux-magazine.com/rss/feed/lmi_news" linux) ; Linux Magazine
-     ("https://linux.softpedia.com/backend.xml" linux)          ; Softpedia Linux
-     ("https://www.distrotube.com/videos/index.xml" linux)      ; DistroTube
-     ;; Computers / Technical
-     ("http://slashdot.org/slashdot.rss" dev) ; Slashdot
-     ("http://news.ycombinator.com/rss" dev)  ; Hacker News
-     ("http://feeds.arstechnica.com/arstechnica/index/" dev) ; Ars Technica
-     ("http://feeds.twit.tv/twit_video_hd.xml" dev)          ; TWIT
-     ("https://www.howtogeek.com/feed/" dev)                 ; How-To Geek
-     ("http://feeds.feedburner.com/codinghorror?format=xml" dev) ; Coding Horror
-     ("https://www.haiku-os.org/blog/index.xml" dev) ; Haiku
-     ("http://lunduke.com/index.xml" dev)            ; Lunduke
-     ("https://www.cyberciti.biz/atom/atom.xml" dev) ; nixCraft
-     ("https://www.tecmint.com/feed/" dev)           ; TecMint
-     ("https://lukesmith.xyz/rss.xml" dev)           ; The Latest from Luke
-     ;; Vintage Computing
-     ("https://bytecellar.com/feed" vintage) ; BYTE Cellar
-     ("https://nerd.fail/feed/" vintage)     ; Nerd Fail
-     ("http://rcrpodcast.com/rcrpodcast.rss" vintage) ; Retro Computing Roundtable
-     ;; Games
-     ;;("https://robertsspaceindustries.com/comm-link/rss" game) ; Star Citizen
-     ("http://bitemyapp.com/atom.xml" dev) ; bitemyapp
-     ;; Other
-     ("http://open.blogs.nytimes.com/feed/" blog) ; New York Times OPEN Blogs
-     ;;("http://www.tjmaynes.com/atom.xml" blog) ; TJ Maynes
-     ("https://xkcd.com/atom.xml" comic)   ; XKCD Comic
-     ;; Personal
-     ("http://nulldot.net/index.rss" dev) ; Nulldot Blog
-     ))
+   (with-temp-buffer
+     (insert-file-contents (locate-user-emacs-file "elfeed-bookmarks"))
+     (goto-char (point-min))
+     (mapcar #'cdr (read (current-buffer)))))
   :config
   ;; increase default text size in `elfeed-show' buffers
   (defun local-elfeed-show-mode-hook ()
@@ -13783,7 +13737,7 @@ Uses `ispell--run-on-word' to spell check word."
     (interactive)
     (find-file (expand-file-name "init-emacs.org" emacs-home-dir))
     (goto-char (point-min))
-    (search-forward "elfeed-feeds")
+    (search-forward ";; Elfeed Bookmarks File\n\n")
     (org-show-entry))
 
   (defun elfeed-search-mode-help ()
@@ -13822,7 +13776,36 @@ Uses `ispell--run-on-word' to spell check word."
                      "q kill buffer, "
                      "s new live search, "
                      "u copy url, "
-                     "y yank"))))
+                     "y yank")))
+
+  (defun elfeed-bookmarks-to-opml ()
+    "Export elfeed bookmarks `elfeed-feeds' to OPML."
+    (interactive)
+    (let ((buffer-name (generate-new-buffer-name "*elfeed-bookmarks-opml*"))
+          (tags
+           (let (temp)
+             (dolist (x (mapcar #'cadr elfeed-feeds))
+               (pushnew x temp))
+             (nreverse temp))))
+      (switch-to-buffer buffer-name)
+      (insert "<opml>")
+      (insert "  <head>Elfeed Bookmarks</head>")
+      (insert "  <body>")
+      (dolist (tag tags)
+        (let ((ctag (capitalize tag)))
+          (insert "    <outlne title=\"" ctag "\" text=\"" ctag "\">")
+          (dolist (item
+                   (mapcar #'car
+                           (remove-if
+                            (lambda (x) (not (string= tag (cadr x))))
+                            elfeed-feeds)))
+            (insert "    <outline title=\"" "\">"))
+          (insert "    </outline>")))
+      (insert "  </body>")
+      (insert "</opml>")
+      ))
+
+  )
 ;; elfeed:1 ends here
 
 ;; [[file:init-emacs.org::*elnode][elnode:1]]
@@ -15846,83 +15829,6 @@ otherwise run `find-file-as-root'."
 (init-message 1 "LSP Mode")
 ;; LSP Mode:1 ends here
 
-;; [[file:init-emacs.org::*Setup][Setup:1]]
-;;------------------------------------------------------------------------------
-;;; LSP Mode: Setup
-;;------------------------------------------------------------------------------
-
-(init-message 2 "LSP Mode: Setup")
-
-(defun local-lsp-mode-hook ()
-  ;; turn on breadcrumbs
-  (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
-  (lsp-headerline-breadcrumb-mode))
-
-(use-package lsp-mode
-  :quelpa (lsp-mode)
-  :after (company)
-  :commands (lsp lsp-mode lsp-defered)
-  :bind (:map lsp-mode-map
-              ("<tab>" . company-indent-or-complete-common))
-  :hook ((lsp-mode . local-lsp-mode-hook)
-         (lsp-mode . company-mode))
-  :init
-  (setq lsp-keymap-prefix "C-x C-l")    ; defaults to `downcase-region'
-  :config
-  ;; add `which-key-mode' descriptions
-  (lsp-enable-which-key-integration t))
-
-;;------------------------------------------------------------------------------
-;;;; lsp-ui
-;;
-;; Minor mode that contains a series of useful UI integrations.
-;;------------------------------------------------------------------------------
-
-(init-message 3 "lsp-ui")
-
-(use-package lsp-ui
-  :quelpa (lsp-ui)
-  :after (lsp-mode)
-  :hook (lsp-mode . lsp-ui-mode)
-  :custom (lsp-ui-doc-position 'bottom))
-
-;;------------------------------------------------------------------------------
-;;;; helm-lsp
-;;
-;; LSP helm integration.
-;;------------------------------------------------------------------------------
-
-;; (init-message 3 "helm-lsp")
-
-;; (use-package helm-lsp
-;;   :quelpa (helm-lsp)
-;;   :after (lsp-mode))
-
-;;------------------------------------------------------------------------------
-;;;; lsp-ivy
-;;
-;; LSP ivy integration.
-;;------------------------------------------------------------------------------
-
-(init-message 3 "lsp-ivy")
-
-(use-package lsp-ivy
-  :quelpa (lsp-ivy)
-  :after (lsp-mode))
-
-;;------------------------------------------------------------------------------
-;;;; lsp-treemacs
-;;
-;; LSP treemacs integration.
-;;------------------------------------------------------------------------------
-
-(init-message 3 "lsp-treemacs")
-
-(use-package lsp-treemacs
-  :quelpa (lsp-treemacs)
-  :after (lsp-mode))
-;; Setup:1 ends here
-
 ;; [[file:init-emacs.org::*Modes][Modes:1]]
 ;;==============================================================================
 ;;; Modes
@@ -16458,9 +16364,9 @@ otherwise run `find-file-as-root'."
   (add-hook 'geiser-mode-hook #'local-geiser-mode-hook)
   (add-hook 'geiser-repl-mode-hook #'local-geiser-mode-hook))
 
-(use-package geiser-racket
-  :after (geiser)
-  :quelpa (geiser-racket :fetcher gitlab :repo "emacs-geiser/geiser-racket"))
+;; (use-package geiser-racket
+;;   :after (geiser)
+;;   :quelpa (geiser-racket :fetcher gitlab :repo "emacs-geiser/geiser-racket"))
 ;; Geiser (Racket Scheme REPL):1 ends here
 
 ;; [[file:init-emacs.org::*GNU Plot][GNU Plot:1]]
@@ -17083,7 +16989,7 @@ otherwise run `find-file-as-root'."
 ;;   (add-hook 'racket-repl-mode-hook #'racket-unicode-input-method-enable))
 
 (use-package scheme
-  :after (geiser geiser-racket)
+  :after (geiser)
   :mode ("\\.rkt\\'" . racket-mode)
   :interpreter ("racket" . racket-mode)
   :commands (racket-mode
