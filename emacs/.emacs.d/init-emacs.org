@@ -19197,7 +19197,9 @@ An Emacs Atom/RSS feed reader.
      (with-temp-buffer
        (insert-file-contents (locate-user-emacs-file "elfeed-bookmarks"))
        (goto-char (point-min))
-       (mapcar #'cdr (read (current-buffer)))))
+       (mapcar
+        (lambda (x) (list (plist-get x :rss) (intern (plist-get :tag))))
+        (read (current-buffer)))))
     :config
     ;; increase default text size in `elfeed-show' buffers
     (defun local-elfeed-show-mode-hook ()
@@ -19205,12 +19207,12 @@ An Emacs Atom/RSS feed reader.
       (text-scale-set 2))
     (add-hook 'elfeed-show-mode-hook #'local-elfeed-show-mode-hook)
 
-    (defun elfeed-feeds-edit ()
-      "Open `init-emacs.org' and move point to `elfeed-feeds' variable for easy editing."
+    (defun elfeed-bookmarks-edit ()
+      "Open `init-emacs.org' and move point to Elfeed Bookmarks File for easy editing."
       (interactive)
       (find-file (expand-file-name "init-emacs.org" emacs-home-dir))
       (goto-char (point-min))
-      (search-forward ";; Elfeed Bookmarks File\n\n")
+      (search-forward ";; Elfeed Bookmarks File\n")
       (org-show-entry))
 
     (defun elfeed-search-mode-help ()
@@ -19252,87 +19254,93 @@ An Emacs Atom/RSS feed reader.
                        "y yank")))
 
     (defun elfeed-bookmarks-to-opml ()
-      "Export elfeed bookmarks `elfeed-feeds' to OPML."
+      "Export Elfeed Bookmarks File to OPML."
       (interactive)
-      (let ((buffer-name (generate-new-buffer-name "*elfeed-bookmarks-opml*"))
-            (tags
-             (let (temp)
-               (dolist (x (mapcar #'cadr elfeed-feeds))
-                 (pushnew x temp))
-               (nreverse temp))))
+      (let* ((buffer-name (generate-new-buffer-name "*elfeed-bookmarks-opml*"))
+             (bookmarks
+              (with-temp-buffer
+                (insert-file-contents (locate-user-emacs-file "elfeed-bookmarks"))
+                (goto-char (point-min))
+                (read (current-buffer))))
+             (tags
+              (let (temp)
+                (dolist (x (mapcar (lambda (x) (plist-get x :tag)) bookmarks))
+                  (pushnew x temp :test #'string=))
+                (nreverse temp))))
         (switch-to-buffer buffer-name)
-        (insert "<opml>")
-        (insert "  <head>Elfeed Bookmarks</head>")
-        (insert "  <body>")
+        (insert "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n")
+        (insert "<opml version=\"1.0\">\n")
+        (insert "  <head>\n")
+        (insert "    <title>Elfeed Bookmarks</title>\n")
+        (insert "  </head>\n")
+        (insert "  <body>\n")
         (dolist (tag tags)
           (let ((ctag (capitalize tag)))
-            (insert "    <outlne title=\"" ctag "\" text=\"" ctag "\">")
+            (insert "    <outline title=\"" ctag "\" text=\"" ctag "\">\n")
             (dolist (item
-                     (mapcar #'car
-                             (remove-if
-                              (lambda (x) (not (string= tag (cadr x))))
-                              elfeed-feeds)))
-              (insert "    <outline title=\"" "\">"))
-            (insert "    </outline>")))
-        (insert "  </body>")
-        (insert "</opml>")
-        ))
-
-    )
+                     (remove-if
+                      (lambda (x) (not (string= tag (plist-get x :tag))))
+                      bookmarks))
+              (let ((name (plist-get item :name))
+                    (html (plist-get item :html))
+                    (rss (plist-get item :rss)))
+            (insert "      <outline title=\"" name "\" text=\"" name "\" type=\"rss\" xmlUrl=\"" rss "\" htmlUrl=\"" html "\"/>\n")))
+            (insert "    </outline>\n")))
+        (insert "  </body>\n")
+        (insert "</opml>\n"))))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp :tangle ~/.emacs.d/elfeed-bookmarks
   ;; Elfeed Bookmarks File
-  ;; Format: (NAME RSS-URL TAG)
+
   (
    ;; Emacs
-   ("Reddit Emacs Channel" "http://www.reddit.com/r/emacs.rss" emacs)
-   ("Emacs Development Newsgroup" "http://rss.gmane.org/messages/excerpts/gmane.emacs.devel" emacs)
-   ("Planet Emacs" "http://planet.emacsen.org/atom.xml" emacs)
-   ("Emacs Redux" "http://emacsredux.com/atom.xml" emacs)
-   ("What the .emacs.d?" "http://whattheemacsd.com/atom.xml" emacs)
-   ("Lunarsite Emacs" "http://www.lunaryorn.com/feed.atom" emacs)
-   ("Endless Parentheses" "http://endlessparentheses.com/atom.xml" emacs)
-   ("Null Program" "http://nullprogram.com/feed/" emacs)
-   ("Mastering Emacs" "http://www.masteringemacs.org/feed/" emacs)
-   ("Sacha Chua" "http://sachachua.com/blog/feed/" emacs)
-   ("Kitchin Group" "http://kitchingroup.cheme.cmu.edu/blog/feed/index.xml" emacs)
+   (:name "Reddit Emacs Channel" :html "http://www.reddit.com/" :rss "http://www.reddit.com/r/emacs.rss" :tag "emacs")
+   (:name "Planet Emacs" :html "http://planet.emacsen.org/" :rss "http://planet.emacsen.org/atom.xml" :tag "emacs")
+   (:name "Emacs Redux" :html "http://emacsredux.com/" :rss "http://emacsredux.com/atom.xml" :tag "emacs")
+   (:name "What the .emacs.d?" :html "http://whattheemacsd.com/" :rss "http://whattheemacsd.com/atom.xml" :tag "emacs")
+   (:name "Lunarsite Emacs" :html "http://www.lunaryorn.com/" :rss "http://www.lunaryorn.com/feed.atom" :tag "emacs")
+   (:name "Endless Parentheses" :html "http://endlessparentheses.com/" :rss "http://endlessparentheses.com/atom.xml" :tag "emacs")
+   (:name "Null Program" :html "http://nullprogram.com/" :rss "http://nullprogram.com/feed/" :tag "emacs")
+   (:name "Mastering Emacs" :html "http://www.masteringemacs.org/" :rss "http://www.masteringemacs.org/feed/" :tag "emacs")
+   (:name "Sacha Chua" :html "http://sachachua.com/blog/" :rss "http://sachachua.com/blog/feed/" :tag "emacs")
+   (:name "Kitchin Group" :html "http://kitchingroup.cheme.cmu.edu/blog/" :rss "http://kitchingroup.cheme.cmu.edu/blog/feed/index.xml" :tag "emacs")
    ;; Linux
-   ("Reddit Linux Channel" "http://www.reddit.com/r/linux.rss" linux)
-   ("Linux Journal" "https://www.linuxjournal.com/node/feed" linux)
-   ("Arch News" "https://www.archlinux.org/feeds/news/" linux)
-   ("Manjaro News" "https://forum.manjaro.org/c/announcements.rss" linux)
-   ("Planet Ubuntu" "http://planet.ubuntu.com/rss20.xml" linux)
-   ("Planet Gnome" "http://feeds.feedburner.com/codinghorror?format=xml" linux)
-   ("Linux Foundation" "https://www.linuxfoundation.org/feed/" linux)
-   ("Linux Magazine" "https://www.linux-magazine.com/rss/feed/lmi_news" linux)
-   ("Softpedia Linux" "https://linux.softpedia.com/backend.xml" linux)
-   ("DistroTube" "https://www.distrotube.com/videos/index.xml" linux)
+   (:name "Reddit Linux Channel" :html "http://www.reddit.com/r/linux." :rss "http://www.reddit.com/r/linux.rss" :tag "linux")
+   (:name "Linux Journal" :html "https://www.linuxjournal.com/news/" :rss "https://www.linuxjournal.com/node/feed" :tag "linux")
+   (:name "Arch News" :html "https://www.archlinux.org/news/" :rss "https://www.archlinux.org/feeds/news/" :tag "linux")
+   (:name "Manjaro News" :html "https://forum.manjaro.org/c/announcements/" :rss "https://forum.manjaro.org/c/announcements.rss" :tag "linux")
+   (:name "Planet Ubuntu" :html "http://planet.ubuntu.com/" :rss "http://planet.ubuntu.com/rss20.xml" :tag "linux")
+   (:name "Planet Gnome" :html "https://planet.gnome.org/" :rss "http://feeds.feedburner.com/codinghorror?format=xml" :tag "linux")
+   (:name "Linux Foundation" :html "https://www.linuxfoundation.org/" :rss "https://www.linuxfoundation.org/feed/" :tag "linux")
+   (:name "Linux Magazine" :html "https://www.linux-magazine.com/" :rss "https://www.linux-magazine.com/rss/feed/lmi_news" :tag "linux")
+   (:name "Softpedia Linux" :html "https://linux.softpedia.com/" :rss "https://linux.softpedia.com/backend.xml" :tag "linux")
+   (:name "DistroTube" :html "https://www.distrotube.com/videos/" :rss "https://www.distrotube.com/videos/index.xml" :tag "linux")
    ;; Computers / Technical
-   ("Slashdot" "http://slashdot.org/slashdot.rss" dev)
-   ("Hacker News" "http://news.ycombinator.com/rss" dev)
-   ("Ars Technica" "http://feeds.arstechnica.com/arstechnica/index/" dev)
-   ("TWIT" "http://feeds.twit.tv/twit_video_hd.xml" dev)
-   ("How-To Geek" "https://www.howtogeek.com/feed/" dev)
-   ("Coding Horror" "http://feeds.feedburner.com/codinghorror?format=xml" dev)
-   ("Haiku" "https://www.haiku-os.org/blog/index.xml" dev)
-   ("Lunduke" "http://lunduke.com/index.xml" dev)
-   ("nixCraft" "https://www.cyberciti.biz/atom/atom.xml" dev)
-   ("TecMint" "https://www.tecmint.com/feed/" dev)
-   ("The Latest from Luke" "https://lukesmith.xyz/rss.xml" dev)
+   (:name "Slashdot" :html "http://slashdot.org/" :rss "http://slashdot.org/slashdot.rss" :tag "dev")
+   (:name "Hacker News" :html "http://news.ycombinator.com/" :rss "http://news.ycombinator.com/rss" :tag "dev")
+   (:name "Ars Technica" :html "http://www.arstechnica.com/" :rss "http://feeds.arstechnica.com/arstechnica/index/" :tag "dev")
+   (:name "TWIT" :html "http://www.twit.tv/" :rss "http://feeds.twit.tv/twit_video_hd.xml" :tag "dev")
+   (:name "How-To Geek" :html "https://www.howtogeek.com/" :rss "https://www.howtogeek.com/feed/" :tag "dev")
+   (:name "Coding Horror" :html "https://blog.codinghorror.com/" :rss "http://feeds.feedburner.com/codinghorror?format=xml" :tag "dev")
+   (:name "Haiku" :html "https://www.haiku-os.org/blog/" :rss "https://www.haiku-os.org/blog/index.xml" :tag "dev")
+   (:name "Lunduke" :html "http://lunduke.com/" :rss "http://lunduke.com/index.xml" :tag "dev")
+   (:name "nixCraft" :html "https://www.cyberciti.biz/" :rss "https://www.cyberciti.biz/atom/atom.xml" :tag "dev")
+   (:name "TecMint" :html "https://www.tecmint.com/" :rss "https://www.tecmint.com/feed/" :tag "dev")
+   (:name "The Latest from Luke" :html "https://lukesmith.xyz/" :rss "https://lukesmith.xyz/rss.xml" :tag "dev")
    ;; Vintage Computing
-   ("BYTE Cellar" "https://bytecellar.com/feed" vintage)
-   ("Nerd Fail" "https://nerd.fail/feed/" vintage)
-   ("Retro Computing Roundtable" "http://rcrpodcast.com/rcrpodcast.rss" vintage)
+   (:name "BYTE Cellar" :html "https://bytecellar.com/" :rss "https://bytecellar.com/feed" :tag "vintage")
+   (:name "Nerd Fail" :html "https://nerd.fail/" :rss "https://nerd.fail/feed/" :tag "vintage")
+   (:name "Retro Computing Roundtable" :html "http://rcrpodcast.com/" :rss "http://rcrpodcast.com/rcrpodcast.rss" :tag "vintage")
    ;; Games
-   ;;("Star Citizen" "https://robertsspaceindustries.com/comm-link/rss" game)
-   ("bitemyapp" "http://bitemyapp.com/atom.xml" dev)
+   ;;(:name "Star Citizen" :html "https://robertsspaceindustries.com/com-link/" :rss "https://robertsspaceindustries.com/comm-link/rss" :tag "game")
+   (:name "bitemyapp" :html "http://bitemyapp.com/" :rss "http://bitemyapp.com/atom.xml" :tag "dev")
    ;; Other
-   ("New York Times OPEN Blogs" "http://open.blogs.nytimes.com/feed/" blog)
-   ;;("TJ Maynes" "http://www.tjmaynes.com/atom.xml" blog)
-   ("XKCD Comic" "https://xkcd.com/atom.xml" comic)
+   (:name "New York Times OPEN Blogs" :html "http://open.blogs.nytimes.com/" :rss "http://open.blogs.nytimes.com/feed/" :tag "blog")
+   ;;(:name "TJ Maynes" :html "http://www.tjmaynes.com/" :rss "http://www.tjmaynes.com/atom.xml" :tag "blog")
+   (:name "XKCD Comic" :html "https://xkcd.com/" :rss "https://xkcd.com/atom.xml" :tag "comic")
    ;; Personal
-   ("Nulldot Blog" "http://nulldot.net/index.rss" dev)
+   (:name "Nulldot Blog" :html "http://nulldot.net/" :rss "http://nulldot.net/index.rss" :tag "dev")
    ))
 #+END_SRC
 
@@ -19373,11 +19381,11 @@ Elpher Gopher and Gemini Client
     :quelpa (elpher)
     :init
     (defun elpher-bookmarks-edit ()
-      "Open `init-emacs.org' and move point to `elpher-bookmarks' file for easy editing."
+      "Open `init-emacs.org' and move point to Elpher Bookmarks File for easy editing."
       (interactive)
       (find-file (expand-file-name "init-emacs.org" emacs-home-dir))
       (goto-char (point-min))
-      (search-forward ";; Elpher Bookmarks File\n\n")
+      (search-forward ";; Elpher Bookmarks File\n")
       (org-show-entry)))
 #+END_SRC
 
@@ -27212,7 +27220,7 @@ A menu of commonly used commands that are not in other menus.
        ("Clear Command Line Buffer" "clm/command-log-clear" "Clear the command log buffer.")))
      ("Edit"
       (("Replacer Replacements Edit" "replacer-replacements-edit" "Edit `replacer-replacements'.")
-       ("Elfeed Feeds Edit" "elfeed-feeds-edit" "Edit `elfeed-feeds'.")
+       ("Elfeed Boookmarks Edit" "elfeed-bookmarks-edit" "Edit Elfeeds bookmarks file.")
        ("Elpher Bookmarks Edit" "elpher-bookmarks-edit" "Edit Elpher bookmarks file.")))
      ("TAGS"
       (("Visit Local TAGS" "(when (find-file-updir \"TAGS\") (visit-tags-table (find-file-updir \"TAGS\") t))" "Visit local tags table.")

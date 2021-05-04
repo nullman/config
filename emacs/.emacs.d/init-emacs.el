@@ -13724,7 +13724,9 @@ Uses `ispell--run-on-word' to spell check word."
    (with-temp-buffer
      (insert-file-contents (locate-user-emacs-file "elfeed-bookmarks"))
      (goto-char (point-min))
-     (mapcar #'cdr (read (current-buffer)))))
+     (mapcar
+      (lambda (x) (list (plist-get x :rss) (intern (plist-get :tag))))
+      (read (current-buffer)))))
   :config
   ;; increase default text size in `elfeed-show' buffers
   (defun local-elfeed-show-mode-hook ()
@@ -13732,12 +13734,12 @@ Uses `ispell--run-on-word' to spell check word."
     (text-scale-set 2))
   (add-hook 'elfeed-show-mode-hook #'local-elfeed-show-mode-hook)
 
-  (defun elfeed-feeds-edit ()
-    "Open `init-emacs.org' and move point to `elfeed-feeds' variable for easy editing."
+  (defun elfeed-bookmarks-edit ()
+    "Open `init-emacs.org' and move point to Elfeed Bookmarks File for easy editing."
     (interactive)
     (find-file (expand-file-name "init-emacs.org" emacs-home-dir))
     (goto-char (point-min))
-    (search-forward ";; Elfeed Bookmarks File\n\n")
+    (search-forward ";; Elfeed Bookmarks File\n")
     (org-show-entry))
 
   (defun elfeed-search-mode-help ()
@@ -13779,33 +13781,40 @@ Uses `ispell--run-on-word' to spell check word."
                      "y yank")))
 
   (defun elfeed-bookmarks-to-opml ()
-    "Export elfeed bookmarks `elfeed-feeds' to OPML."
+    "Export Elfeed Bookmarks File to OPML."
     (interactive)
-    (let ((buffer-name (generate-new-buffer-name "*elfeed-bookmarks-opml*"))
-          (tags
-           (let (temp)
-             (dolist (x (mapcar #'cadr elfeed-feeds))
-               (pushnew x temp))
-             (nreverse temp))))
+    (let* ((buffer-name (generate-new-buffer-name "*elfeed-bookmarks-opml*"))
+           (bookmarks
+            (with-temp-buffer
+              (insert-file-contents (locate-user-emacs-file "elfeed-bookmarks"))
+              (goto-char (point-min))
+              (read (current-buffer))))
+           (tags
+            (let (temp)
+              (dolist (x (mapcar (lambda (x) (plist-get x :tag)) bookmarks))
+                (pushnew x temp :test #'string=))
+              (nreverse temp))))
       (switch-to-buffer buffer-name)
-      (insert "<opml>")
-      (insert "  <head>Elfeed Bookmarks</head>")
-      (insert "  <body>")
+      (insert "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n")
+      (insert "<opml version=\"1.0\">\n")
+      (insert "  <head>\n")
+      (insert "    <title>Elfeed Bookmarks</title>\n")
+      (insert "  </head>\n")
+      (insert "  <body>\n")
       (dolist (tag tags)
         (let ((ctag (capitalize tag)))
-          (insert "    <outlne title=\"" ctag "\" text=\"" ctag "\">")
+          (insert "    <outline title=\"" ctag "\" text=\"" ctag "\">\n")
           (dolist (item
-                   (mapcar #'car
-                           (remove-if
-                            (lambda (x) (not (string= tag (cadr x))))
-                            elfeed-feeds)))
-            (insert "    <outline title=\"" "\">"))
-          (insert "    </outline>")))
-      (insert "  </body>")
-      (insert "</opml>")
-      ))
-
-  )
+                   (remove-if
+                    (lambda (x) (not (string= tag (plist-get x :tag))))
+                    bookmarks))
+            (let ((name (plist-get item :name))
+                  (html (plist-get item :html))
+                  (rss (plist-get item :rss)))
+          (insert "      <outline title=\"" name "\" text=\"" name "\" type=\"rss\" xmlUrl=\"" rss "\" htmlUrl=\"" html "\"/>\n")))
+          (insert "    </outline>\n")))
+      (insert "  </body>\n")
+      (insert "</opml>\n"))))
 ;; elfeed:1 ends here
 
 ;; [[file:init-emacs.org::*elnode][elnode:1]]
@@ -13831,11 +13840,11 @@ Uses `ispell--run-on-word' to spell check word."
   :quelpa (elpher)
   :init
   (defun elpher-bookmarks-edit ()
-    "Open `init-emacs.org' and move point to `elpher-bookmarks' file for easy editing."
+    "Open `init-emacs.org' and move point to Elpher Bookmarks File for easy editing."
     (interactive)
     (find-file (expand-file-name "init-emacs.org" emacs-home-dir))
     (goto-char (point-min))
-    (search-forward ";; Elpher Bookmarks File\n\n")
+    (search-forward ";; Elpher Bookmarks File\n")
     (org-show-entry)))
 ;; elpher:1 ends here
 
@@ -18002,7 +18011,7 @@ Blank lines separate paragraphs.  Semicolons start comments.
      ("Clear Command Line Buffer" "clm/command-log-clear" "Clear the command log buffer.")))
    ("Edit"
     (("Replacer Replacements Edit" "replacer-replacements-edit" "Edit `replacer-replacements'.")
-     ("Elfeed Feeds Edit" "elfeed-feeds-edit" "Edit `elfeed-feeds'.")
+     ("Elfeed Boookmarks Edit" "elfeed-bookmarks-edit" "Edit Elfeeds bookmarks file.")
      ("Elpher Bookmarks Edit" "elpher-bookmarks-edit" "Edit Elpher bookmarks file.")))
    ("TAGS"
     (("Visit Local TAGS" "(when (find-file-updir \"TAGS\") (visit-tags-table (find-file-updir \"TAGS\") t))" "Visit local tags table.")
