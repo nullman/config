@@ -1,8 +1,8 @@
 !!==============================================================================
 !! .Xresources
 !!
-!! List current settings:   xrdb --list
-!! Update current settings: xrdb --merge ~/.Xresources
+!! List current settings:   xrdb -query
+!! Update current settings: xrdb -override ~/.Xresources
 !!==============================================================================
 
 !!------------------------------------------------------------------------------
@@ -142,9 +142,12 @@ rofi.columns:      1
 rofi.font:         FONT_DIALOG
 rofi.show-icons:   true
 !! State:          bg,      fg,      bgalt,   hlbg,    hlfg
-rofi.color-normal: #222D32, #8FA2AB, #323D42, #364046, #CFD8DC
-rofi.color-urgent: #E53935, #8FA2AB, #F54945, #364046, #CFD8DC
-rofi.color-active: #222D32, #CFD8DC, #323D42, #364046, #CFD8DC
+!!rofi.color-normal: #222D32, #8FA2AB, #323D42, #364046, #CFD8DC
+!!rofi.color-urgent: #E53935, #8FA2AB, #F54945, #364046, #CFD8DC
+!!rofi.color-active: #222D32, #CFD8DC, #323D42, #364046, #CFD8DC
+rofi.color-normal: #222D32, #8FA2AB, #222D32, #364046, #CFD8DC
+rofi.color-urgent: #222D32, #8FA2AB, #222D32, #364046, #CFD8DC
+rofi.color-active: #222D32, #CFD8DC, #222D32, #364046, #CFD8DC
 !!                 background, border, separator
 rofi.color-window: #222D32, #002b36, #002b36
 

@@ -9,8 +9,9 @@
 
 set -euo pipefail
 
-lsopts=("-1" "--group-directories-first")
+lsopts=("-1" "--group-directories-first" "--file-type")
 
+# display usage information
 _usage() {
     cat <<EOF
 Usage: $(basename "$0") [MENU]
@@ -58,6 +59,16 @@ case "${menu}" in
         stop="[Stop Player]"
         up="[..]"
 
+        # generate and display a list of sound files and directories to choose from
+        _select() {
+            if [[ -z "${sel}" ]] ; then
+                opts=("${stop}" "$(ls "${lsopts[@]}" "${sounddir}")")
+            else
+                opts=("${up}" "$(ls "${lsopts[@]}" "${selpath}")")
+            fi
+            sel=$(printf '%s\n' "${opts[@]}" | rofi -dmenu -i -p 'Sounds' -hide-scrollbar)
+        }
+
         # find sound directory
         sounddir=
         for dir in "${sounddirs[@]}" ; do
@@ -66,28 +77,32 @@ case "${menu}" in
         [[ -z "${sounddir}" ]] && exit 1
 
         # generate and display a list of sound files and directories to choose from
+        selpath="${sounddir}"
         if [[ $# -lt 2 ]] ; then
-            opts=("${stop}" "$(ls "${lsopts[@]}" "${sounddir}")")
-            sel=$(printf '%s\n' "${opts[@]}" | rofi -dmenu -i -p 'Sounds' -hide-scrollbar)
+            sel=""
+            _select
         else
-            sel=$2
+            sel="$2"
         fi
 
         # process selection
         if [[ -n "${sel}" ]] ; then
             while true ; do
-                #echo "sel: ${sel}"
+                echo "sel: ${sel}"
 
                 if [[ -z "${sel}" ]] ; then
-                    opts=("${stop}" "$(ls "${lsopts[@]}" "${sounddir}")")
-                    sel=$(printf '%s\n' "${opts[@]}" | rofi -dmenu -i -p 'Sounds' -hide-scrollbar)
+                    _select
                 fi
+
+                sel=$(echo "${sel}" | sed 's%/$%%')
+                echo "sel: ${sel}"
 
                 selpath="${sounddir}/${sel}"
 
                 # stop any currently playing sounds
+                # (regardless of selection to prevent sounds from doubling up)
+                killall ffplay
                 if [[ "${sel}" == "${stop}" ]] ; then
-                    killall ffplay
                     break
                 fi
 
@@ -103,8 +118,7 @@ case "${menu}" in
                 # handle traversing into a directory
                 if [[ -d "${selpath}" ]] ; then
                     dir="${sel}"
-                    opts=("${up}" "$(ls "${lsopts[@]}" "${selpath}")")
-                    sel=$(printf '%s\n' "${opts[@]}" | rofi -dmenu -i -p 'Sounds' -hide-scrollbar)
+                    _select
                     sel="${dir}/${sel}"
                     continue
                 fi
