@@ -1,8 +1,8 @@
 [Desktop Entry]
+Type=Application
 Name=Keyboard
 Comment=Virtual Keyboard
-Exec=matchbox-keyboard ; xdotool search --name matchbox-keyboard windowsize 1280 266 windowmove 2 549
-Type=Application
+Exec=matchbox-keyboard & ; xdotool search --name matchbox-keyboard windowsize 1280 266 windowmove 2 549
 Icon=matchbox-keyboard
 Terminal=false
 StartupNotify=false

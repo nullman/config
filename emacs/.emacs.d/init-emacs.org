@@ -19290,7 +19290,7 @@ An Emacs Atom/RSS feed reader.
         (insert "</opml>\n"))))
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp :tangle ~/.emacs.d/elfeed-bookmarks
+#+BEGIN_SRC emacs-lisp :tangle ~/config/emacs/.emacs.d/elfeed-bookmarks
   ;; Elfeed Bookmarks File
 
   (
@@ -19386,7 +19386,7 @@ Elpher Gopher and Gemini Client
       (org-show-entry)))
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp :tangle ~/.emacs.d/elpher-bookmarks
+#+BEGIN_SRC emacs-lisp :tangle ~/config/emacs/.emacs.d/elpher-bookmarks
   ;; Elpher Bookmarks File
 
   (("Gopherpedia" "gopher://gopherpedia.com/1")
