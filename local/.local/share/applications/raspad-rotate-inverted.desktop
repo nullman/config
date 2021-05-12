@@ -1,8 +1,8 @@
 [Desktop Entry]
-Type=Application
 Name=Raspad Rotate Inverted
 Comment=Rotate Raspad screen and touchpad to the inverted position
 Exec=/home/kyle/bin/raspad-rotate --inverted
+Type=Application
 Icon=down
 Terminal=false
 StartupNotify=false

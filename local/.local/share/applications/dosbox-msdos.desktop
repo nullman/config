@@ -1,8 +1,8 @@
 [Desktop Entry]
-Type=Application
 Name=Dosbox MS-DOS
 Comment=Emulator with builtin DOS for running DOS Games
 Exec=sh -c 'dosbox -conf ${HOME}/.dosbox/dosbox-0.74-3.conf -conf ${HOME}/.dosbox/dosbox-msdos.conf'
+Type=Application
 Icon=dosbox
 Terminal=false
 StartupNotify=false

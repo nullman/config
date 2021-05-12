@@ -1,0 +1,50 @@
+;; [[file:init-emacs.org::*elfeed][elfeed:2]]
+;; Elfeed Bookmarks File
+
+(
+ ;; Emacs
+ (:name "Reddit Emacs Channel" :html "https://www.reddit.com/" :rss "https://www.reddit.com/r/emacs.rss" :tag "emacs")
+ (:name "Planet Emacslife" :html "https://planet.emacslife.com/" :rss "https://planet.emacslife.com/atom.xml" :tag "emacs")
+ (:name "Emacs Redux" :html "https://emacsredux.com/" :rss "https://emacsredux.com/atom.xml" :tag "emacs")
+ (:name "What the .emacs.d?" :html "http://whattheemacsd.com/" :rss "http://whattheemacsd.com/atom.xml" :tag "emacs")
+ (:name "Endless Parentheses" :html "http://endlessparentheses.com/" :rss "http://endlessparentheses.com/atom.xml" :tag "emacs")
+ (:name "Null Program" :html "https://nullprogram.com/" :rss "https://nullprogram.com/feed/" :tag "emacs")
+ (:name "Mastering Emacs" :html "https://www.masteringemacs.org/" :rss "https://www.masteringemacs.org/feed/" :tag "emacs")
+ (:name "Sacha Chua" :html "https://sachachua.com/blog/" :rss "https://sachachua.com/blog/feed/" :tag "emacs")
+ (:name "Kitchin Group" :html "https://kitchingroup.cheme.cmu.edu/blog/" :rss "https://kitchingroup.cheme.cmu.edu/blog/feed/index.xml" :tag "emacs")
+ ;; Linux
+ (:name "Reddit Linux Channel" :html "https://www.reddit.com/r/linux." :rss "https://www.reddit.com/r/linux.rss" :tag "linux")
+ (:name "Linux Journal" :html "https://www.linuxjournal.com/news/" :rss "https://www.linuxjournal.com/node/feed" :tag "linux")
+ (:name "Arch News" :html "https://www.archlinux.org/news/" :rss "https://www.archlinux.org/feeds/news/" :tag "linux")
+ (:name "Manjaro News" :html "https://forum.manjaro.org/c/announcements/" :rss "https://forum.manjaro.org/c/announcements.rss" :tag "linux")
+ (:name "Planet Ubuntu" :html "https://planet.ubuntu.com/" :rss "https://planet.ubuntu.com/rss20.xml" :tag "linux")
+ (:name "Planet Gnome" :html "https://planet.gnome.org/" :rss "https://feeds.feedburner.com/codinghorror?format=xml" :tag "linux")
+ (:name "Linux Foundation" :html "https://www.linuxfoundation.org/" :rss "https://www.linuxfoundation.org/feed/" :tag "linux")
+ (:name "Linux Magazine" :html "https://www.linux-magazine.com/" :rss "https://www.linux-magazine.com/rss/feed/lmi_news" :tag "linux")
+ (:name "Softpedia Linux" :html "https://linux.softpedia.com/" :rss "https://linux.softpedia.com/backend.xml" :tag "linux")
+ ;; Computers / Technical
+ (:name "Slashdot" :html "https://slashdot.org/" :rss "https://slashdot.org/slashdot.rss" :tag "dev")
+ (:name "Hacker News" :html "https://news.ycombinator.com/" :rss "https://news.ycombinator.com/rss" :tag "dev")
+ (:name "Ars Technica" :html "https://www.arstechnica.com/" :rss "https://feeds.arstechnica.com/arstechnica/index/" :tag "dev")
+ (:name "TWIT" :html "https://www.twit.tv/" :rss "https://feeds.twit.tv/twit_video_hd.xml" :tag "dev")
+ (:name "How-To Geek" :html "https://www.howtogeek.com/" :rss "https://www.howtogeek.com/feed/" :tag "dev")
+ (:name "Coding Horror" :html "https://blog.codinghorror.com/" :rss "http://feeds.feedburner.com/codinghorror?format=xml" :tag "dev")
+ (:name "Haiku" :html "https://www.haiku-os.org/blog/" :rss "https://www.haiku-os.org/blog/index.xml" :tag "dev")
+ (:name "nixCraft" :html "https://www.cyberciti.biz/" :rss "https://www.cyberciti.biz/atom/atom.xml" :tag "dev")
+ (:name "TecMint" :html "https://www.tecmint.com/" :rss "https://www.tecmint.com/feed/" :tag "dev")
+ (:name "The Latest from Luke" :html "https://lukesmith.xyz/" :rss "https://lukesmith.xyz/rss.xml" :tag "dev")
+ ;; Vintage Computing
+ (:name "BYTE Cellar" :html "https://bytecellar.com/" :rss "https://bytecellar.com/feed" :tag "vintage")
+ (:name "Nerd Fail" :html "https://nerd.fail/" :rss "https://nerd.fail/feed/" :tag "vintage")
+ (:name "Retro Computing Roundtable" :html "http://rcrpodcast.com/" :rss "http://rcrpodcast.com/rcrpodcast.rss" :tag "vintage")
+ ;; Games
+ ;;(:name "Star Citizen" :html "https://robertsspaceindustries.com/com-link/" :rss "https://robertsspaceindustries.com/comm-link/rss" :tag "game")
+ (:name "bitemyapp" :html "https://bitemyapp.com/" :rss "https://bitemyapp.com/atom.xml" :tag "dev")
+ ;; Other
+ (:name "New York Times OPEN Blogs" :html "https://open.blogs.nytimes.com/" :rss "https://open.blogs.nytimes.com/feed/" :tag "blog")
+ ;;(:name "TJ Maynes" :html "https://www.tjmaynes.com/" :rss "https://www.tjmaynes.com/atom.xml" :tag "blog")
+ (:name "XKCD Comic" :html "https://xkcd.com/" :rss "https://xkcd.com/atom.xml" :tag "comic")
+ ;; Personal
+ (:name "Nulldot Blog" :html "http://nulldot.net/" :rss "http://nulldot.net/index.rss" :tag "dev")
+ ))
+;; elfeed:2 ends here
