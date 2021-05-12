@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Raspad Rotate Right
 Comment=Rotate Raspad screen and touchpad to the right position
-Exec=/home/kyle/bin/raspad-rotate --right
+Exec=sh -c "${HOME}/bin/raspad-rotate --right"
 Type=Application
 Icon=go-next
 Terminal=false

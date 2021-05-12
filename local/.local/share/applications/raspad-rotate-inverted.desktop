@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Raspad Rotate Inverted
 Comment=Rotate Raspad screen and touchpad to the inverted position
-Exec=/home/kyle/bin/raspad-rotate --inverted
+Exec=sh -c "${HOME}/bin/raspad-rotate --inverted"
 Type=Application
 Icon=go-down
 Terminal=false

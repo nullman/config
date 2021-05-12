@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Android Studio
 Comment=Android Integrated Development Environment
-Exec=/home/kyle/android-studio/bin/studio.sh
+Exec=sh -c "${HOME}/android-studio/bin/studio.sh"
 Type=Application
 Icon=/home/kyle/android-studio/bin/studio.png
 Terminal=false
