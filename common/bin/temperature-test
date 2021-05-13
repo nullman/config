@@ -57,8 +57,9 @@ if [[ ${help} -eq 1 ]] ; then
 fi
 
 get-temp() {
-    sensors ${opts} | grep "^Package id 0:" | sed 's/^Package id 0: \+// ; s/ \+(high.*$//'
+    #sensors ${opts} | grep "^Package id 0:" | sed 's/^Package id 0: \+// ; s/ \+(high.*$//'
     #sensors ${opts} | grep "^Core 0" | sed 's/^Core 0: \+// ; s/ \+(high.*$//'
+    sensors ${opts} | grep "^temp1:" | sed 's/^temp1: \+//' | head -n 1
 }
 
 threads="$(lscpu -p | grep -v "^#" | wc -l)"
@@ -70,7 +71,7 @@ for x in $(seq ${count}) ; do
     echo -n "[${c: $((-${#count}))}/${count}] "
     get-temp $1
     if [[ $(command -v sysbench) ]] ; then
-        sysbench --test=cpu --cpu-max-prime=25000 --num-threads=${threads} run > /dev/null 2>&1
+        sysbench --test=cpu --num-threads=${threads} --cpu-max-prime=25000 run > /dev/null 2>&1
     else
         stress --cpu ${threads} --timeout 10s > /dev/null 2>&1
     fi
