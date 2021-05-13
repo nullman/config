@@ -7,3 +7,4 @@ Icon=dosbox
 Terminal=false
 StartupNotify=false
 Categories=Application;Game;
+Categories=Emulators;DOS;

@@ -4,7 +4,7 @@
 #
 # Run a temperature test.
 #
-# Dependencies: lm_sensors sysbench
+# Dependencies: lm_sensors sysbench|stress
 #
 # (Based on Christopher Barnatt's version found in his ExplainingComputers
 # videos on Youtube.)
@@ -22,8 +22,8 @@ if [[ ! $(command -v sensors) ]] ; then
     exit 1
 fi
 
-if [[ ! $(command -v sysbench) ]] ; then
-    echo "sysbench is not installed"
+if [[ ! $(command -v sysbench) ]] && [[ ! $(command -v stress) ]] ; then
+    echo "sysbench and stress are not installed"
     exit 1
 fi
 
@@ -69,7 +69,11 @@ for x in $(seq ${count}) ; do
     c="00000${x}"
     echo -n "[${c: $((-${#count}))}/${count}] "
     get-temp $1
-    sysbench --test=cpu --cpu-max-prime=25000 --num-threads=${threads} run > /dev/null 2>&1
+    if [[ $(command -v sysbench) ]] ; then
+        sysbench --test=cpu --cpu-max-prime=25000 --num-threads=${threads} run > /dev/null 2>&1
+    else
+        stress --cpu ${threads} --timeout=10s > /dev/null 2>&1
+    fi
 done
 
 echo
