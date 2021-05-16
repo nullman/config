@@ -7,7 +7,7 @@
 # Author: Kyle W T Sherman
 #===============================================================================
 
-WAIT=1 VI=1 emacsed "$@"
+WAIT=true VI=true emacsed "$@"
 if [[ $(command -v vim) ]] ; then
     emacsclient --no-wait --alternate-editor "vim" "$@"
 elif [[ $(command -v vi) ]] ; then
