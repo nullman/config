@@ -26,7 +26,7 @@
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:/usr/bin:/bin:/usr/bin/X11
 HOME=/home/pi
-DISPLAY=:1
+DISPLAY=:0.0
 #MAILTO=""
 
 # reset display orientation
