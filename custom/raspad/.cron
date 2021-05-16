@@ -1,0 +1,37 @@
+#=============================================================================
+# Crontab: pi@raspad
+#
+# Author: Kyle W T Sherman
+#
+# .--------- Minute (0-59)
+# | .------- Hour (0-23)
+# | | .----- Day of Month (1-31)
+# | | | .--- Month (1 -12)
+# | | | | .- Day of Week (0-6) (Sunday = 0)
+# | | | | |
+# * * * * * COMMAND
+#
+# Output Dumper (put on end of line): > /dev/null 2>&1
+# Multiple Values Use Commas: 3,12,47
+# Do every X intervals: */X -> Eg: */15 * * * * is every 15 minutes
+# Aliases:
+#   @reboot  -> Run once at startup
+#   @hourly  -> 0 * * * *
+#   @daily   -> 0 0 * * *
+#   @weekly  -> 0 0 * * 0
+#   @monthly -> 0 0 1 * *
+#   @yearly  -> 0 0 1 1 *
+#=============================================================================
+
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:/usr/bin:/bin:/usr/bin/X11
+HOME=/home/pi
+DISPLAY=:1
+#MAILTO=""
+
+# reset display orientation
+* * * * * [[ -x ${HOME}/.raspad-rotate-restore ]] && ${HOME}/.raspad-rotate-restore > /dev/null 2>&1
+
+#===============================================================================
+# End of File
+#===============================================================================
