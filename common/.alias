@@ -1858,12 +1858,12 @@ alias rsync-aerial-get-morpheus="rsync -rlptx --progress morpheus:/home/data/med
 #        rsync-win-apps-put-win_apps-sd  rsync /home/data/media/software/Windows*/* /run/media/${USER}/WIN_APPS/Windows*/
 alias rsync-win-apps-put-win_apps-sd="
     rsync -rLtxc --progress --delete --exclude={'Windows OS/','Partitions/'} ${home}/data/media/software/Windows* /run/media/\${USER}/WIN_APPS/ && \
-      rsync -rLtxc --progress --delete ${home}/data/media/repos/DOS ${home}/data/media/repos/FREEDOS /run/media/\${USER}/WIN_APPS/ && \
+      rsync -rLtxc --progress --delete ${home}/data/media/repos/DOS ${home}/data/media/repos/FreeDOS /run/media/\${USER}/WIN_APPS/ && \
       sync"
 #        rsync-windows-put-win_apps-sd   rsync /home/data/media/software/Windows*/* /run/media/${USER}/WINDOWS/Windows*/
 alias rsync-windows-put-win_apps-sd="
     rsync -rLtxc --progress --delete --exclude={'Windows OS/','Partitions/'} ${home}/data/media/software/Windows* /run/media/\${USER}/WINDOWS/ && \
-      rsync -rLtxc --progress --delete ${home}/data/media/repos/DOS ${home}/data/media/repos/FREEDOS /run/media/\${USER}/WINDOWS/ && \
+      rsync -rLtxc --progress --delete ${home}/data/media/repos/DOS ${home}/data/media/repos/FreeDOS /run/media/\${USER}/WINDOWS/ && \
       sync"
 #        rsync-mac-put-mac_apps-sd       rsync /home/data/media/software/Macintosh/* /run/media/${USER}/MAC_APPS/Macintosh/
 alias rsync-mac-put-mac_apps-sd="
