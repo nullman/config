@@ -14,6 +14,7 @@
  (:name "Kitchin Group" :html "https://kitchingroup.cheme.cmu.edu/blog/" :rss "https://kitchingroup.cheme.cmu.edu/blog/feed/index.xml" :tag "emacs")
  ;; Linux
  (:name "Reddit Linux Channel" :html "https://www.reddit.com/r/linux." :rss "https://www.reddit.com/r/linux.rss" :tag "linux")
+ (:name "It's FOSS" :html "https://itsfoss.com/all-blog-posts/" :rss "https://itsfoss.com/feed/" :tag "linux")
  (:name "Linux Journal" :html "https://www.linuxjournal.com/news/" :rss "https://www.linuxjournal.com/node/feed" :tag "linux")
  (:name "Arch News" :html "https://www.archlinux.org/news/" :rss "https://www.archlinux.org/feeds/news/" :tag "linux")
  (:name "Manjaro News" :html "https://forum.manjaro.org/c/announcements/" :rss "https://forum.manjaro.org/c/announcements.rss" :tag "linux")
