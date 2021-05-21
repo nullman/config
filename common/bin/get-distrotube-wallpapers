@@ -16,6 +16,8 @@ baseurl="${domain}/dwt1/wallpapers"
 imageurl="${baseurl}/raw/master"
 dir="/home/data/media/graphic/Backgrounds/DistroTube"
 
+echo "Note:  When fetching all new images, the last one tired will error as it won't exist."
+
 if [[ $# -ne 0 ]] ; then
     # fetch single image
     num=$1
