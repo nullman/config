@@ -2879,7 +2879,7 @@ and X clipboard, indenting and cleaning up links."
           (goto-char (point-min))
           (while (not (eobp))
             (goto-char (line-beginning-position))
-            (when (and (re-search-forward "^ *" (line-end-position) :noerror)
+            (when (and (re-search-forward "^ +" (line-end-position) :noerror)
                        (< (current-column) indent-min))
               (setq indent-min (current-column)))
             (forward-line 1)))
