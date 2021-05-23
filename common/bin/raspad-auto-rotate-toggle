@@ -9,7 +9,7 @@
 
 toggle_file=${HOME}/.raspad-auto-rotate-off
 
-if [[ -x "${toggle_file}" ]] ; then
+if [[ -f "${toggle_file}" ]] ; then
     auto-rotator install
     rm "${toggle_file}"
 else
