@@ -7,13 +7,16 @@
 # Author: Kyle W T Sherman
 #===============================================================================
 
-toggle_file=${HOME}/.raspad-auto-rotate-off
+toggle_file="${HOME}/.raspad-auto-rotate-off"
+persist_file="${HOME}/.raspad-rotate-restore"
 
 if [[ -f "${toggle_file}" ]] ; then
-    auto-rotator install
-    rm "${toggle_file}"
+    #auto-rotator install
+    DISPLAY=:0.0 /usr/bin/python3 /usr/local/bin/auto-rotator &
+    rm "${toggle_file}" "${persist_file}"
 else
-    auto-rotator uninstall
+    #auto-rotator uninstall
+    kill $(pgrep --full auto-rotator)
     touch "${toggle_file}"
 fi
 
