@@ -2293,6 +2293,8 @@ DATA should have been made by `org-outline-overlay-data'."
   :custom
   ;; org directory
   (org-directory (expand-file-name "~/org"))
+  ;; ;; indent blocks to outline node level
+  ;; (org-adapt-indentation t)
   ;; do not indent blocks to outline node level
   (org-adapt-indentation nil)
   ;; remap disputed keys (see `org-disputed-keys')
@@ -2651,7 +2653,7 @@ Format:
      (HEADER32
       (HEADER321 . BODY321)
       (HEADER322 . BODY322)))))"
-  (let* ((property-regexp "^#\\+\\(.*\\): \\(.*\\)$")
+  (let* ((property-regexp "^[ \t]*#\\+\\(.*\\): \\(.*\\)$")
          (headline-regexp "^\\(\*+ \\)\\(.*\\)$")
          (property-alist nil)
          (level 0)
@@ -2948,7 +2950,7 @@ if found and buffer has been modified."
       (save-match-data
         (let ((case-fold-search t))
           (goto-char (point-min))
-          (when (re-search-forward "^#\\+LAST_MODIFIED: \\(.*\\)$" nil :noerror)
+          (when (re-search-forward "^[ \t]*#\\+LAST_MODIFIED: \\(.*\\)$" nil :noerror)
             (replace-match (format-time-string "%Y-%m-%d %H:%M" nil t) t t nil 1)))))))
 ;; org-update-last-modified-property:1 ends here
 
@@ -3451,10 +3453,10 @@ same directory as the org-buffer and insert a link to this file."
   ;;   (save-mark-and-excursion
   ;;     (let ((case-fold-search nil))     ; case sensitive search
   ;;       (forward-line -1)
-  ;;       (when (re-search-forward "^#\\+begin_[a-z]*" (line-end-position) :noerror)
+  ;;       (when (re-search-forward "^[ \t]*#\\+begin_[a-z]*" (line-end-position) :noerror)
   ;;         (replace-match (upcase (match-string 0)))
   ;;         (forward-line 2)
-  ;;         (when (re-search-forward "^#\\+end_[a-z]*" (line-end-position) :noerror)
+  ;;         (when (re-search-forward "^[ \t]*#\\+end_[a-z]*" (line-end-position) :noerror)
   ;;           (replace-match (upcase (match-string 0))))))))
   ;; ;; advise `org-insert-structure-template'
   ;; (advice-add 'org-insert-structure-template :after #'org-insert-structure-template--upcase)
@@ -3465,7 +3467,7 @@ same directory as the org-buffer and insert a link to this file."
   ;;   (save-mark-and-excursion
   ;;     (let ((case-fold-search nil))     ; case sensitive search
   ;;       (forward-line 0)
-  ;;       (when (re-search-forward "^#\\+include: " (line-end-position) :noerror)
+  ;;       (when (re-search-forward "^[ \t]*#\\+include: " (line-end-position) :noerror)
   ;;         (replace-match (upcase (match-string 0)))))))
   ;; ;; advise `org-tempo--include-file'
   ;; (advice-add 'org-tempo--include-file :after #'org-tempo--include-file--upcase))
@@ -3555,7 +3557,7 @@ a property list containing the parameters of the block."
          (if (with-temp-buffer
                (insert (org-babel-expand-body:lisp body params))
                (goto-char (point-min))
-               (re-search-forward "^#lang +\\([^ ]+\\)" nil :noerror))
+               (re-search-forward "^[ \t]*#lang +\\([^ ]+\\)" nil :noerror))
              ;; create temporary racket file and execute it for result
              (let ((src-file (org-babel-src-file "racket-" ".rkt")))
                (with-temp-file src-file
@@ -4830,7 +4832,7 @@ If HTML-FILE is non-nil, then output is returned."
         (newline))
       (goto-char (org-table-end)))
     (goto-char (point-min))
-    (while (re-search-forward "^#\\+TBLFM:.*$" nil :noerror)
+    (while (re-search-forward "^[ \t]*#\\+TBLFM:.*$" nil :noerror)
       (kill-region (line-beginning-position) (1+ (point))))
     (goto-char (point-min))
     (switch-to-buffer target-buffer)))
@@ -4895,7 +4897,7 @@ If HTML-FILE is non-nil, then output is returned."
              (balances (nreverse balances) (cdr balances)))
             ((null tables))
           (goto-char (point-min))
-          (re-search-forward (concat "^#\\+NAME: " (car tables) "$"))
+          (re-search-forward (concat "^[ \t]*#\\+NAME: " (car tables) "$"))
           (goto-char (org-table-end))
           (forward-line -4)
           (org-table-insert-row)
@@ -4906,7 +4908,7 @@ If HTML-FILE is non-nil, then output is returned."
           (org-table-goto-column 4)
           (insert (car balances))
           (org-table-recalculate)
-          (re-search-forward (concat "^#\\+NAME: " (car tables) "_STATS$"))
+          (re-search-forward (concat "^[ \t]*#\\+NAME: " (car tables) "_STATS$"))
           (forward-line 1)
           (org-table-recalculate)
           (org-table-recalculate))))))
@@ -5897,20 +5899,20 @@ INFO is a plist holding export options."
              org-website-menu-list)
            "")
           "\n"
-          "      <!-- google search start -->\n"
+          "      <!-- search start -->\n"
           "\n"
           "      <div class=\"search\">\n"
           "        <form method=\"get\" action=\"http://www.google.com/search\">\n"
           "          <fieldset>\n"
-          "            <input type=\"hidden\" name=\"q\" value=\"site:http://nullman.net/\" />\n"
+          "            <input type=\"hidden\" name=\"q\" value=\"site:http://nullman.net/ OR site:http://nulldot.net/ OR site:http://nullware.com/\" />\n"
           "            <input type=\"hidden\" name=\"hl\" value=\"en\" />\n"
           "            <input type=\"text\" name=\"q\" maxlength=\"2048\" value=\"\" title=\"Search\" style=\"width: 5.5em\" />\n"
-          "            <input type=\"image\" name=\"btnG\" src=\"/img/google.gif\" alt=\"Search\" style=\"height: 100%; vertical-align: middle\" />\n"
+          "            <input type=\"image\" name=\"btnG\" src=\"/img/search.png\" alt=\"Search\" style=\"height: 100%; vertical-align: middle\" />\n"
           "          </fieldset>\n"
           "        </form>\n"
           "      </div>\n"
           "\n"
-          "      <!-- google search end -->\n"
+          "      <!-- search end -->\n"
           "\n"
           "    </div>\n"
           "\n"
@@ -6948,7 +6950,11 @@ init-emacs-website.el to be used with batch commands."
   (shell-command (concat "rsync -rlptx --delete --force"
                          " --exclude=\".git*\""
                          " \"${HOME}/public_gopher/\""
-                         " \"morpheus:${HOME}/public_gopher/\"")))
+                         " \"morpheus:${HOME}/public_gopher/\""))
+  (shell-command (concat "rsync -rlptx --delete --force"
+                         " --exclude=\".git*\""
+                         " \"${HOME}/public_gemini/\""
+                         " \"morpheus:${HOME}/public_gemini/\"")))
 
 (defun org-website-rsync-to-morpheus-async (&optional property-list)
   "Asynchronous version of `org-website-rsync-to-morpheus'."
@@ -6991,20 +6997,27 @@ applicaitons."
                    " --rsh=\"ssh -l kyle\""
                    " \"${HOME}/public_html/sites/nullware/" application "/\""
                    " \"" digitalocean ":/home/kyle/public_html/sites/nullware/" application "/\"")))
-      (shell-command
-       (concat "rsync -rlptx --delete --force"
-               " --exclude=\".git*\""
-               " --exclude=\"nullware/powerhouse/*\""
-               " --exclude=\"nullware/bloodmoon/*\""
-               " --rsh=\"ssh -l kyle\""
-               " \"${HOME}/public_html/sites/\""
-               " \"" digitalocean ":/home/kyle/public_html/sites/\""))
-      (shell-command
-       (concat "rsync -rlptx --delete --force"
-               " --exclude=\".git*\""
-               " --rsh=\"ssh -l kyle\""
-               " \"${HOME}/public_gopher/\""
-               " \"" digitalocean ":/home/kyle/public_gopher/\"")))))
+      (progn
+        (shell-command
+         (concat "rsync -rlptx --delete --force"
+                 " --exclude=\".git*\""
+                 " --exclude=\"nullware/powerhouse/*\""
+                 " --exclude=\"nullware/bloodmoon/*\""
+                 " --rsh=\"ssh -l kyle\""
+                 " \"${HOME}/public_html/sites/\""
+                 " \"" digitalocean ":/home/kyle/public_html/sites/\""))
+        (shell-command
+         (concat "rsync -rlptx --delete --force"
+                 " --exclude=\".git*\""
+                 " --rsh=\"ssh -l kyle\""
+                 " \"${HOME}/public_gopher/\""
+                 " \"" digitalocean ":/home/kyle/public_gopher/\""))
+        (shell-command
+         (concat "rsync -rlptx --delete --force"
+                 " --exclude=\".git*\""
+                 " --rsh=\"ssh -l kyle\""
+                 " \"${HOME}/public_gemini/\""
+                 " \"" digitalocean ":/home/kyle/public_gemini/\""))))))
 
 (defun org-website-rsync-to-digitalocean-async (&optional application force)
   "Asynchronous version of `org-website-rsync-to-digitalocean'."
@@ -12328,7 +12341,7 @@ the form of `attribute::'."
                   (goto-char (line-beginning-position))))
               ;; remove comment lines
               (goto-char (point-min))
-              (while (re-search-forward "^#" (point-max) :noerror)
+              (while (re-search-forward "^[ \t]*#" (point-max) :noerror)
                 (delete-region (line-beginning-position) (line-end-position))
                 (unless (eobp)
                   (delete-char 1)))
