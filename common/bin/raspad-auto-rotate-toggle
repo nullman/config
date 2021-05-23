@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+#===============================================================================
+# raspad-auto-rotate-toggle
+#
+# Toggle auto-rotation of Raspad device.
+#
+# Author: Kyle W T Sherman
+#===============================================================================
+
+toggle_file=${HOME}/.raspad-auto-rotate-off
+
+if [[ -x "${toggle_file}" ]] ; then
+    auto-rotator install
+    rm "${toggle_file}"
+else
+    auto-rotator uninstall
+    touch "${toggle_file}"
+fi
+
+#===============================================================================
+# End of File
+#===============================================================================
