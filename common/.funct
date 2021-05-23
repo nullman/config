@@ -134,7 +134,7 @@ pstest() {
         echo "Test if a user applicaiton containing QUERY is currently running."
         echo "  QUERY  query string to search for"
     else
-        pgrep --euid ${USER} --ignore-case "$1" > /dev/null
+        pgrep --euid ${USER} --full --ignore-case "$1" > /dev/null
     fi
 }
 #        iscommand               check if executable command is found in the path
@@ -256,7 +256,7 @@ termname() {
 }
 #        psg                     ps with grep
 psg() {
-    pids=$(pgrep --ignore-case "$1" | tr '\n' ',' | sed 's/,$//')
+    pids=$(pgrep --full --ignore-case "$1" | tr '\n' ',' | sed 's/,$//')
     [[ -n "${pids}" ]] && ps --format pid,ppid,user,args --pid ${pids}
 }
 #        grepper                 fancy grep
