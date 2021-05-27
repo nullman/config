@@ -27047,11 +27047,12 @@ A menu of commonly run applications.
   ;; applications menu
   (auto-menu
    "Applications"
-   `(("Gnus" "gnus" "Run Gnus (Newsreader)")
+   `(("Bookmarks" "load-bookmarks" "Load bookmarks in w3m.")
+     ("Calc" "calc" "Run Calc (The Emacs Calculator).")
      ("Elfeed" "elfeed" "Run Elfeed (Emacs Atom/RSS feed reader).")
      ("Elpher" "elpher" "Run Elpher (Emacs Gopher Client).")
      ("ERC" "erc" "Run ERC (Emacs Internet Relay Chat client).")
-     ("Bookmarks" "load-bookmarks" "Load bookmarks in w3m.")
+     ("Gnus" "gnus" "Run Gnus (Newsreader)")
      ))
 
   ;; (when (fboundp 'term-ansi)
