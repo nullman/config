@@ -3059,16 +3059,17 @@ Where BEG and END dates are in one of these formats:
   YYYYMMDD
   YYYY-MM
   YYYY-MM-DD"
-  (labels ((convert-date (date)
-                         (calendar-absolute-from-gregorian (org-date-to-gregorian date)))
-           (pad-date (date)
-                     (let ((date (if (stringp date) date (number-to-string date))))
-                       (case (length date)
-                         (4 (concat date "-01-01"))
-                         (6 (concat (substring date 0 4) "-" (substring date 4) "-01"))
-                         (7 (concat date "-01"))
-                         (8 (concat (substring date 0 4) "-" (substring date 4 6) "-" (substring date 6)))
-                         (10 date)))))
+  (cl-labels
+      ((convert-date (date)
+                     (calendar-absolute-from-gregorian (org-date-to-gregorian date)))
+       (pad-date (date)
+                 (let ((date (if (stringp date) date (number-to-string date))))
+                   (case (length date)
+                     (4 (concat date "-01-01"))
+                     (6 (concat (substring date 0 4) "-" (substring date 4) "-01"))
+                     (7 (concat date "-01"))
+                     (8 (concat (substring date 0 4) "-" (substring date 4 6) "-" (substring date 6)))
+                     (10 date)))))
     (let ((beg (convert-date (pad-date beg)))
           (end (convert-date (pad-date end)))
           x)
@@ -4536,15 +4537,16 @@ and update `org-visibility-state-file' with new state."
 
 (defun org-bookmarks-guid ()
   "Return a twelve character GUID."
-  (cl-labels ((random-char ()
-                           (let ((num (random 62)))
-                             (cond
-                               ((< num 10)
-                                (byte-to-string (+ num 48)))
-                               ((< num 36)
-                                (byte-to-string (+ num 55)))
-                               (t
-                                (byte-to-string (+ num 61)))))))
+  (cl-labels
+      ((random-char ()
+                    (let ((num (random 62)))
+                      (cond
+                       ((< num 10)
+                        (byte-to-string (+ num 48)))
+                       ((< num 36)
+                        (byte-to-string (+ num 55)))
+                       (t
+                        (byte-to-string (+ num 61)))))))
     (cl-loop repeat 12
              concat (random-char))))
 ;; org-bookmarks-guid:1 ends here
@@ -4592,32 +4594,33 @@ Example output:
      (:type \"folder\" :title \"Folder 3\")]))
 
 If the first headline is \"Org\", it is ignored."
-  (cl-labels ((loop (bm tree)
-                    (cond
-                     ;; end of branch
-                     ((not bm)
-                      nil)
-                     ;; bookmark
-                     ((and (stringp (car bm)) (stringp (cadr bm)))
-                      (let* ((title (car x))
-                             (uri (cadr x))
-                             (keyword (if (string-match " \\[\\(.*\\)\\]$" title)
-                                          (match-string-no-properties 1 title)
-                                        nil))
-                             (title (replace-regexp-in-string " \\[.*\\]$" "" title))
-                             (entry (list :type "bookmark" :title title :uri uri)))
-                        (when keyword
-                          (setq entry (append entry (list :keyword keyword))))
-                        entry))
-                     ;; nested folder
-                     ((stringp (car bm))
-                      (let* ((title (car bm))
-                             (entry (list :type "folder" :title title)))
-                        (if (cdr bm)
-                            (append entry (list :children (map 'vector (lambda (x)
-                                                                         (loop x tree))
-                                                               (cdr bm))))
-                          entry))))))
+  (cl-labels
+      ((loop (bm tree)
+             (cond
+              ;; end of branch
+              ((not bm)
+               nil)
+              ;; bookmark
+              ((and (stringp (car bm)) (stringp (cadr bm)))
+               (let* ((title (car x))
+                      (uri (cadr x))
+                      (keyword (if (string-match " \\[\\(.*\\)\\]$" title)
+                                   (match-string-no-properties 1 title)
+                                 nil))
+                      (title (replace-regexp-in-string " \\[.*\\]$" "" title))
+                      (entry (list :type "bookmark" :title title :uri uri)))
+                 (when keyword
+                   (setq entry (append entry (list :keyword keyword))))
+                 entry))
+              ;; nested folder
+              ((stringp (car bm))
+               (let* ((title (car bm))
+                      (entry (list :type "folder" :title title)))
+                 (if (cdr bm)
+                     (append entry (list :children (map 'vector (lambda (x)
+                                                                  (loop x tree))
+                                                        (cdr bm))))
+                   entry))))))
     (let ((bm (org-get-data file)))
       (map 'vector (lambda (x)
                      (loop x nil))
@@ -4650,39 +4653,40 @@ If JSON-FILE is non-nil, then output is returned."
                             ("Mobile Bookmarks" . "mobileFolder")))
          (global-id 0)
          (timestamp (org-bookmarks-timestamp)))
-    (cl-labels ((gen-id ()
-                        (incf global-id))
-                (loop (bm tree index)
-                      (let* ((type (plist-get bm :type))
-                             (type-value (cdr (assoc type type-value-list)))
-                             (type-code (cdr (assoc type type-code-list)))
-                             (title (plist-get bm :title))
-                             (uri (plist-get bm :uri))
-                             (keyword (plist-get bm :keyword))
-                             (children (plist-get bm :children))
-                             (guid (org-bookmarks-guid))
-                             (id (gen-id))
-                             (root (cdr (assoc title title-root-list)))
-                             (custom-guid (cdr (assoc title title-guid-list)))
-                             (entry (list
-                                     :guid (or custom-guid guid)
-                                     :title title
-                                     :index index
-                                     :dateAdded timestamp
-                                     :lastModified timestamp
-                                     :id id
-                                     :typeCode type-code
-                                     :type type-value)))
-                        (when uri
-                          (setq entry (append entry (list :uri uri))))
-                        (when keyword
-                          (setq entry (append entry (list :keyword keyword))))
-                        (when root
-                          (setq entry (append entry (list :root root))))
-                        (when children
-                          (let ((idx -1))
-                            (setq entry (append entry (list :children (map 'vector (lambda (x) (loop x tree (incf idx))) children))))))
-                        (append tree entry))))
+    (cl-labels
+        ((gen-id ()
+                 (incf global-id))
+         (loop (bm tree index)
+               (let* ((type (plist-get bm :type))
+                      (type-value (cdr (assoc type type-value-list)))
+                      (type-code (cdr (assoc type type-code-list)))
+                      (title (plist-get bm :title))
+                      (uri (plist-get bm :uri))
+                      (keyword (plist-get bm :keyword))
+                      (children (plist-get bm :children))
+                      (guid (org-bookmarks-guid))
+                      (id (gen-id))
+                      (root (cdr (assoc title title-root-list)))
+                      (custom-guid (cdr (assoc title title-guid-list)))
+                      (entry (list
+                              :guid (or custom-guid guid)
+                              :title title
+                              :index index
+                              :dateAdded timestamp
+                              :lastModified timestamp
+                              :id id
+                              :typeCode type-code
+                              :type type-value)))
+                 (when uri
+                   (setq entry (append entry (list :uri uri))))
+                 (when keyword
+                   (setq entry (append entry (list :keyword keyword))))
+                 (when root
+                   (setq entry (append entry (list :root root))))
+                 (when children
+                   (let ((idx -1))
+                     (setq entry (append entry (list :children (map 'vector (lambda (x) (loop x tree (incf idx))) children))))))
+                 (append tree entry))))
       (let ((json-object-type 'plist)
             (json-array-type 'vector)
             (json-key-type 'string)
@@ -4724,36 +4728,37 @@ If HTML-FILE is non-nil, then output is returned."
          (title-code-list '(("Bookmarks Toolbar" . "PERSONAL_TOOLBAR_FOLDER")
                             ("Other Bookmarks" . "UNFILED_BOOKMARKS_FOLDER")))
          (timestamp (number-to-string (truncate (org-bookmarks-timestamp) 1000000))))
-    (cl-labels ((indent (idt str)
-                        (concat (spaces-string idt) str))
-                (loop (bm str idt)
-                      (let* ((type (plist-get bm :type))
-                             (type-code (cdr (assoc type type-code-list)))
-                             (title (plist-get bm :title))
-                             (title-code (cdr (assoc title title-code-list)))
-                             (uri (url-encode-url (plist-get bm :uri)))
-                             (keyword (plist-get bm :keyword))
-                             (children (plist-get bm :children))
-                             (entry (case type-code
-                                      (2 (concat
-                                          (indent idt "<DT><H3>")
-                                          " ADD_DATE=\"" timestamp "\""
-                                          " LAST_MODIFIED=\"" timestamp "\""
-                                          (if title-code (concat " " title-code "=\"true\"") "")
-                                          ">" title "</H3>"))
-                                      (1 (concat
-                                          (indent idt "<DT>")
-                                          "<A HREF=\"" uri "\""
-                                          " ADD_DATE=\"" timestamp "\""
-                                          " LAST_MODIFIED=\"" timestamp "\""
-                                          (if keyword (concat " SHORTCUTURL=\"" keyword "\"") "")
-                                          ">" title "</A>")))))
-                        (when children
-                          (setq entry (concat entry
-                                              (indent idt "<DL><p>\n")
-                                              (mapconcat (lambda (x) (loop x str (+ idt 4))) children "\n")
-                                              (indent idt "</DL>\n"))))
-                        entry)))
+    (cl-labels
+        ((indent (idt str)
+                 (concat (spaces-string idt) str))
+         (loop (bm str idt)
+               (let* ((type (plist-get bm :type))
+                      (type-code (cdr (assoc type type-code-list)))
+                      (title (plist-get bm :title))
+                      (title-code (cdr (assoc title title-code-list)))
+                      (uri (url-encode-url (plist-get bm :uri)))
+                      (keyword (plist-get bm :keyword))
+                      (children (plist-get bm :children))
+                      (entry (case type-code
+                               (2 (concat
+                                   (indent idt "<DT><H3>")
+                                   " ADD_DATE=\"" timestamp "\""
+                                   " LAST_MODIFIED=\"" timestamp "\""
+                                   (if title-code (concat " " title-code "=\"true\"") "")
+                                   ">" title "</H3>"))
+                               (1 (concat
+                                   (indent idt "<DT>")
+                                   "<A HREF=\"" uri "\""
+                                   " ADD_DATE=\"" timestamp "\""
+                                   " LAST_MODIFIED=\"" timestamp "\""
+                                   (if keyword (concat " SHORTCUTURL=\"" keyword "\"") "")
+                                   ">" title "</A>")))))
+                 (when children
+                   (setq entry (concat entry
+                                       (indent idt "<DL><p>\n")
+                                       (mapconcat (lambda (x) (loop x str (+ idt 4))) children "\n")
+                                       (indent idt "</DL>\n"))))
+                 entry)))
       (let ((bookmarks (org-bookmarks-parse org-file)))
         (with-temp-buffer
           (insert
@@ -4870,10 +4875,11 @@ If HTML-FILE is non-nil, then output is returned."
 (defun nwm-add-monthly-account-data (data)
   "Add Northwestern Mutual monthly entries for all accounts found in DATA."
   (interactive "*sNorthwestern Mutual Account Summary: ")
-  (cl-labels ((date-to-year-month (date)
-                                  (concat
-                                   (substring date 6 10)
-                                   (substring date 0 2))))
+  (cl-labels
+      ((date-to-year-month (date)
+                           (concat
+                            (substring date 6 10)
+                            (substring date 0 2))))
     (let ((buffer (get-buffer "personal-encrypted.org.cpt"))
           (tables '("NWM_A40_344433"
                     "NWM_A40_344458"
@@ -7502,9 +7508,10 @@ Source: http://irreal.org/blog/?p=40"
   (lexical-let (front
                 back)
     (lambda (cmd &optional data)
-      (cl-labels ((exchange ()
-                            (setq front (reverse back))
-                            (setq back '())))
+      (cl-labels
+          ((exchange ()
+                     (setq front (reverse back))
+                     (setq back '())))
         (cl-case cmd
           ((push) (push data back))
           ((pop) (or (pop front)
@@ -9964,31 +9971,33 @@ be automatically capitalized."
           (words-double-regexp (regexp-opt (mapcar #'capitalize words-double) 'words))
           (words-triple-regexp (regexp-opt (mapcar #'capitalize words-triple) 'words))
           (punctuation-word-regexp "\\([^[:blank:]][.?!]['\"”]?[[:blank:]]*\\w+\\)")
+          (abbreviation-word-regexp "\\b[A-Z][.A-Z]+\\b")
           (first-word-regexp "^\\(\\w+\\)")
           (last-word-regexp "\\(\\w+\\)$"))
+      (cl-labels
+          ((get-abbrevs (string)
+                        (let ((pos 0)
+                              abbrevs)
+                          (while (string-match abbreviation-word-regexp
+                        )
+           (set-abbrevs (string abbrevs))
+           (cap (string)
+                (replace-regexp-in-string
+                 punctuation-word-regexp 'capitalize
+                 (replace-regexp-in-string
+                  words-single-regexp 'downcase
+                  (replace-regexp-in-string
+                   words-double-regexp 'downcase
+                   (replace-regexp-in-string
+                    words-triple-regexp 'downcase
+                    (capitalize string) t t) t t) t t) t t))))
       (if do-not-cap-ends
-          (replace-regexp-in-string
-           punctuation-word-regexp 'capitalize
-           (replace-regexp-in-string
-            words-single-regexp 'downcase
-            (replace-regexp-in-string
-             words-double-regexp 'downcase
-             (replace-regexp-in-string
-              words-triple-regexp 'downcase
-              (capitalize string) t t) t t) t t) t t)
+          (cap string)
         (replace-regexp-in-string
          first-word-regexp 'capitalize
          (replace-regexp-in-string
           last-word-regexp 'capitalize
-          (replace-regexp-in-string
-           punctuation-word-regexp 'capitalize
-           (replace-regexp-in-string
-            words-single-regexp 'downcase
-            (replace-regexp-in-string
-             words-double-regexp 'downcase
-             (replace-regexp-in-string
-              words-triple-regexp 'downcase
-              (capitalize string) t t) t t) t t) t t) t t) t t)))))
+          (cap string) t t) t t)))))
 ;; titleize:1 ends here
 
 ;; [[file:init-emacs.org::*titleize-word-enhanced][titleize-word-enhanced:1]]
@@ -10034,8 +10043,22 @@ If a word should be capitalized, `capitalize-word' is called,
 otherwise `downcase-word' is called."
   (interactive "*")
   (let* ((pos (point))
-         (beg (or beg (if (use-region-p) (region-beginning) (progn (beginning-of-line-text) (point)))))
-         (end (or end (if (use-region-p) (region-end) (line-end-position))))
+         (beg (or beg (cond
+                       ((use-region-p)
+                        (region-beginning))
+                       ((eq major-mode 'wdired-mode)
+                        (point))
+                       (t
+                        (beginning-of-line-text) (point)))))
+         (end (or end (cond
+                       ((use-region-p)
+                        (region-end))
+                       ((eq major-mode 'wdired-mode)
+                        (if (re-search-forward "\.[^.]+$" (line-end-position) :noerror)
+                            (match-beginning 0)
+                          (line-end-position)))
+                       (t
+                        (line-end-position)))))
          (col (- pos beg)))
     (let ((syntax-table (copy-syntax-table (syntax-table)))
           (str (buffer-substring-no-properties beg end)))
@@ -10705,25 +10728,26 @@ If FILE is non-nil, use that fortune file."
 (defun insert-arch-package-description (package)
   "Insert Arch OS package description for given PACKAGE."
   (interactive "*")
-  (cl-labels ((command-path (command)
-                            (let ((path (s-trim (shell-command-to-string
-                                                 (format "which %s 2>/dev/null" command)))))
-                          (if (string= path "")
-                                  nil
-                                path))))
+  (cl-labels
+      ((command-path (command)
+                     (let ((path (s-trim (shell-command-to-string
+                                          (format "which %s 2>/dev/null" command)))))
+                       (if (string= path "")
+                           nil
+                         path))))
     (let ((package-manager (or (command-path "pamac")
                                (command-path "yaourt")
                                (command-path "yay")
                                (command-path "pacman"))))
-  (if package-manager
+      (if package-manager
           (let ((cmd (format
-                  "%s %s %s | awk '/^%s / {p=1;next}p' | tr -d '\\n' | tr -s '[:blank:]'"
-                  package-manager
-                  (if (string= (substring package-manager -5) "pamac")
+                      "%s %s %s | awk '/^%s / {p=1;next}p' | tr -d '\\n' | tr -s '[:blank:]'"
+                      package-manager
+                      (if (string= (substring package-manager -5) "pamac")
                           "search -a"
                         "-Ss")
-                  package
-                  package)))
+                      package
+                      package)))
             (message "Searching for Arch package: %s" cmd)
             (insert (s-trim (shell-command-to-string cmd))))
         (error "Neither 'pamac', 'yaourt', 'yay', or 'pacman' where found in path")))))
@@ -12438,47 +12462,48 @@ for 1, 5, 10, 50, 100, 500, and 1,000."
   (when (>= num 5000)
     (error "NUM must be less than 5,000"))
   (let ((roman))
-    (labels ((convert (num)
-                      (cond
-                       ((>= num 1000)
-                        (push "M" roman)
-                        (- num 1000))
-                       ((>= num 900)
-                        (push "CM" roman)
-                        (- num 900))
-                       ((>= num 500)
-                        (push "D" roman)
-                        (- num 500))
-                       ((>= num 400)
-                        (push "CD" roman)
-                        (- num 400))
-                       ((>= num 100)
-                        (push "C" roman)
-                        (- num 100))
-                       ((>= num 90)
-                        (push "XC" roman)
-                        (- num 90))
-                       ((>= num 50)
-                        (push "L" roman)
-                        (- num 50))
-                       ((>= num 40)
-                        (push "XL" roman)
-                        (- num 40))
-                       ((>= num 10)
-                        (push "X" roman)
-                        (- num 10))
-                       ((>= num 9)
-                        (push "IX" roman)
-                        (- num 9))
-                       ((>= num 5)
-                        (push "V" roman)
-                        (- num 5))
-                       ((>= num 4)
-                        (push "IV" roman)
-                        (- num 4))
-                       ((>= num 1)
-                        (push "I" roman)
-                        (- num 1)))))
+    (cl-labels
+        ((convert (num)
+                  (cond
+                   ((>= num 1000)
+                    (push "M" roman)
+                    (- num 1000))
+                   ((>= num 900)
+                    (push "CM" roman)
+                    (- num 900))
+                   ((>= num 500)
+                    (push "D" roman)
+                    (- num 500))
+                   ((>= num 400)
+                    (push "CD" roman)
+                    (- num 400))
+                   ((>= num 100)
+                    (push "C" roman)
+                    (- num 100))
+                   ((>= num 90)
+                    (push "XC" roman)
+                    (- num 90))
+                   ((>= num 50)
+                    (push "L" roman)
+                    (- num 50))
+                   ((>= num 40)
+                    (push "XL" roman)
+                    (- num 40))
+                   ((>= num 10)
+                    (push "X" roman)
+                    (- num 10))
+                   ((>= num 9)
+                    (push "IX" roman)
+                    (- num 9))
+                   ((>= num 5)
+                    (push "V" roman)
+                    (- num 5))
+                   ((>= num 4)
+                    (push "IV" roman)
+                    (- num 4))
+                   ((>= num 1)
+                    (push "I" roman)
+                    (- num 1)))))
       (while (> num 0)
         (setq num (convert num)))
       (mapconcat 'identity (nreverse roman) ""))))
@@ -12569,42 +12594,43 @@ Guidelines:
 The index is a number, usually between 0 and 100, indicating how
 difficult the text is to read."
   (interactive)
-  (cl-labels ((count-words (beg end)
-                           (how-many "\\w+" beg end))
-              (count-sentences (beg end)
-                               (how-many "[\.\:\;\?\!]\\W" beg end))
-              ;; (count-sentences (beg end)
-              ;;                  (save-mark-and-excursion
-              ;;                    (let ((count 0))
-              ;;                      (goto-char beg)
-              ;;                      (while (< (point) end)
-              ;;                        (forward-sentence 1)
-              ;;                        (setq count (1+ count))))))
-              (count-syllables (beg end)
-                               (let ((letter-regexp "[A-Za-z]")
-                                     (vowel-regexp "[AEIOUYaeiouy]")
-                                     (e-end-regexp "[Ee]\\W"))
-                                 (save-mark-and-excursion
-                                   (let ((count 0))
-                                     (goto-char beg)
-                                     (while (< (point) end)
-                                       (while (and (< (point) end)
-                                                   (not (looking-at letter-regexp)))
-                                         (forward-char 1))
-                                       (let ((state (if (looking-at vowel-regexp) 2 1)))
-                                         (when (= state 2)
-                                           (setq count (1+ count)))
-                                         (while (looking-at letter-regexp)
-                                           (if (and (= state 1)
-                                                    (looking-at vowel-regexp)
-                                                    (not (looking-at e-end-regexp)))
-                                               (setq state 2
-                                                     count (1+ count))
-                                             (if (and (= state 2)
-                                                      (not (looking-at vowel-regexp)))
-                                                 (setq state 1)))
-                                           (forward-char 1))))
-                                     count)))))
+  (cl-labels
+      ((count-words (beg end)
+                    (how-many "\\w+" beg end))
+       (count-sentences (beg end)
+                        (how-many "[\.\:\;\?\!]\\W" beg end))
+       ;; (count-sentences (beg end)
+       ;;                  (save-mark-and-excursion
+       ;;                    (let ((count 0))
+       ;;                      (goto-char beg)
+       ;;                      (while (< (point) end)
+       ;;                        (forward-sentence 1)
+       ;;                        (setq count (1+ count))))))
+       (count-syllables (beg end)
+                        (let ((letter-regexp "[A-Za-z]")
+                              (vowel-regexp "[AEIOUYaeiouy]")
+                              (e-end-regexp "[Ee]\\W"))
+                          (save-mark-and-excursion
+                            (let ((count 0))
+                              (goto-char beg)
+                              (while (< (point) end)
+                                (while (and (< (point) end)
+                                            (not (looking-at letter-regexp)))
+                                  (forward-char 1))
+                                (let ((state (if (looking-at vowel-regexp) 2 1)))
+                                  (when (= state 2)
+                                    (setq count (1+ count)))
+                                  (while (looking-at letter-regexp)
+                                    (if (and (= state 1)
+                                             (looking-at vowel-regexp)
+                                             (not (looking-at e-end-regexp)))
+                                        (setq state 2
+                                              count (1+ count))
+                                      (if (and (= state 2)
+                                               (not (looking-at vowel-regexp)))
+                                          (setq state 1)))
+                                    (forward-char 1))))
+                              count)))))
     (let* ((beg (or beg (if (use-region-p) (region-beginning) (point-min))))
            (end (or end (if (use-region-p) (region-end) (point-max))))
            (words (count-words beg end))
