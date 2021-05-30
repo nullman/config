@@ -7,17 +7,15 @@
 # Author: Kyle W T Sherman
 #===============================================================================
 
-toggle_file="${HOME}/.raspad-auto-rotate-off"
 persist_file="${HOME}/.raspad-rotate-restore"
 
-if [[ -f "${toggle_file}" ]] ; then
-    DISPLAY=:0.0 /usr/bin/python3 /usr/local/bin/auto-rotator &
-    rm "${toggle_file}" "${persist_file}"
-    notify-send --expire-time=2000 "Auto-rotation: ON"
-else
-    kill $(pgrep --full auto-rotator)
-    touch "${toggle_file}"
+if [[ $(pgrep --euid ${USER} --full auto-rotator) ]] ; then
+    kill $(pgrep --euid ${USER} --full auto-rotator)
     notify-send --expire-time=2000 "Auto-rotation: OFF"
+else
+    DISPLAY=:0.0 /usr/bin/python3 /usr/local/bin/auto-rotator &
+    rm "${persist_file}"
+    notify-send --expire-time=2000 "Auto-rotation: ON"
 fi
 
 #===============================================================================

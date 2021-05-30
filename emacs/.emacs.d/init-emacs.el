@@ -9976,11 +9976,24 @@ be automatically capitalized."
           (last-word-regexp "\\(\\w+\\)$"))
       (cl-labels
           ((get-abbrevs (string)
-                        (let ((pos 0)
+                        (let ((case-fold-search nil)
+                              (pos 0)
                               abbrevs)
-                          (while (string-match abbreviation-word-regexp
-                        )
-           (set-abbrevs (string abbrevs))
+                          (while (string-match abbreviation-word-regexp string pos)
+                            (push (list (match-beginning 0)
+                                        (match-end 0)
+                                        (match-string 0 string))
+                                  abbrevs)
+                            (setq pos (match-end 0)))
+                          (nreverse abbrevs)))
+           (set-abbrevs (string abbrevs)
+                        (let ((string string))
+                          (dolist (a abbrevs)
+                            (setq string
+                                  (concat (substring string 0 (car a))
+                                          (caddr a)
+                                          (substring string (cadr a)))))
+                          string))
            (cap (string)
                 (replace-regexp-in-string
                  punctuation-word-regexp 'capitalize
@@ -9990,14 +10003,16 @@ be automatically capitalized."
                    words-double-regexp 'downcase
                    (replace-regexp-in-string
                     words-triple-regexp 'downcase
-                    (capitalize string) t t) t t) t t) t t))))
-      (if do-not-cap-ends
-          (cap string)
-        (replace-regexp-in-string
-         first-word-regexp 'capitalize
-         (replace-regexp-in-string
-          last-word-regexp 'capitalize
-          (cap string) t t) t t)))))
+                    (capitalize string) t t) t t) t t) t t)))
+        (let ((abbrevs (get-abbrevs string)))
+          (if do-not-cap-ends
+              (set-abbrevs (cap string) abbrevs)
+            (set-abbrevs
+             (replace-regexp-in-string
+              first-word-regexp 'capitalize
+              (replace-regexp-in-string
+               last-word-regexp 'capitalize
+               (cap string) t t) t t) abbrevs)))))))
 ;; titleize:1 ends here
 
 ;; [[file:init-emacs.org::*titleize-word-enhanced][titleize-word-enhanced:1]]
