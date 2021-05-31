@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=xkill
+Comment=X-Kill Selected Application
+Exec=xkill
+Type=Application
+Icon=xkill
+Terminal=false
+StartupNotify=false
+Categories=System;
