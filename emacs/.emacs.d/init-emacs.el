@@ -9971,7 +9971,7 @@ be automatically capitalized."
           (words-double-regexp (regexp-opt (mapcar #'capitalize words-double) 'words))
           (words-triple-regexp (regexp-opt (mapcar #'capitalize words-triple) 'words))
           (punctuation-word-regexp "\\([^[:blank:]][.?!]['\"”]?[[:blank:]]*\\w+\\)")
-          (abbreviation-word-regexp "\\b[A-Z][.A-Z]+\\b")
+          (abbreviation-word-regexp "\\b[A-Z][.A-Z]+[^ ]*\\b")
           (first-word-regexp "^\\(\\w+\\)")
           (last-word-regexp "\\(\\w+\\)$"))
       (cl-labels
