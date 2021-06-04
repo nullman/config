@@ -17,9 +17,10 @@ _usage() {
 Usage: $(basename "$0") [MENU]
 Present a menu of rofi menus.
 MENU:
-  NONE    Menu of menus
-  qemu    Launch QEMU Emulator
-  sounds  Play sounds
+  NONE    Menu of Menus
+  qemu    QEMU Emulator
+  sounds  Play Sounds
+  ssh     SSH into Systems
 EOF
 }
 
@@ -28,6 +29,7 @@ if [[ $# -lt 1 ]] ; then
     menus=(
         "Qemu"
         "Sounds"
+        "SSH"
     )
     menu=$(printf "%s\n" "${menus[@]}" | rofi -dmenu -i -p 'Menu' -hide-scrollbar)
 else
@@ -134,6 +136,26 @@ case "${menu}" in
                 fi
                 break
             done
+        fi
+        ;;
+
+    ssh)
+        if [[ $# -lt 2 ]] ; then
+            servers=(
+                "morpheus"
+                "raspad"
+                "switch"
+            )
+            sel=$(printf "%s\n" "${servers[@]}" | rofi -dmenu -i -p 'SSH' -hide-scrollbar)
+        else
+            sel=$2
+        fi
+
+        # launch selected ssh connection
+        if [[ -n "${sel}" ]] ; then
+            user="${USER}"
+            [[ "${sel}" == "raspad" ]] && user="pi"
+            (alacritty -t "SSH ${sel}" -e "ssh" "${user}@${sel}" &)
         fi
         ;;
 esac
