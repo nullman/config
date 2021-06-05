@@ -9970,7 +9970,6 @@ be automatically capitalized."
     (let ((words-single-regexp (regexp-opt (mapcar #'capitalize words-single) 'words))
           (words-double-regexp (regexp-opt (mapcar #'capitalize words-double) 'words))
           (words-triple-regexp (regexp-opt (mapcar #'capitalize words-triple) 'words))
-          (punctuation-word-regexp "\\([^[:blank:]][.?!]['\"”]?[[:blank:]]*\\w+\\)")
           (abbreviation-word-regexp "\\b[A-Z][.A-Z]+[^ ]*\\b")
           (first-word-regexp "^\\(\\w+\\)")
           (last-word-regexp "\\(\\w+\\)$"))
@@ -9995,15 +9994,13 @@ be automatically capitalized."
                                           (substring string (cadr a)))))
                           string))
            (cap (string)
-                (replace-regexp-in-string
-                 punctuation-word-regexp 'capitalize
                  (replace-regexp-in-string
                   words-single-regexp 'downcase
                   (replace-regexp-in-string
                    words-double-regexp 'downcase
                    (replace-regexp-in-string
                     words-triple-regexp 'downcase
-                    (capitalize string) t t) t t) t t) t t)))
+                    (capitalize string) t t) t t) t t)))
         (let ((abbrevs (get-abbrevs string)))
           (if do-not-cap-ends
               (set-abbrevs (cap string) abbrevs)

@@ -411,6 +411,14 @@ alias remove-org-font-files="(
             find \${HOME}/\${dir} -name '*org-src-fontification*' -print | \
             xargs rm > /dev/null 2>&1
     done)"
+#        stopwatch                       start stopwatch timer
+alias stopwatch="
+    start=\$(date '+%s')
+    while true ; do
+        ts=\$(date '+%s')
+        date -u -d @\$((ts - start)) '+%H:%M:%S'
+        sleep 1s
+    done"
 
 #
 # wallpaper
