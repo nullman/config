@@ -27309,6 +27309,9 @@ A menu of commonly used commands that are not in other menus.
        ("House of Lunduke BBS Fetch"
         "(progn (find-file (expand-file-name \"house-of-lunduke-bbs.org\" bbs-directory)) (unless (fboundp 'lunduke-fetch-messages-new) (org-babel-execute-buffer)) (lunduke-fetch-messages-new))"
         "Run `lunduke-fetch-messages-new' to fetch new messages from the House of Lunduke BBS into house-of-lunduke-bbs.org.")))
+     ("Export"
+      (("Export Bookmarks to JSON" "(org-bookmarks-export-to-json \"~/org/bookmarks.org\" \"~/Desktop/bookmarks.json\")" "Export bookmarks.org to ~/Desktop/bookmarks.json.")
+       ("Export Bookmarks to HTML" "(org-bookmarks-export-to-html \"~/org/bookmarks.org\" \"~/Desktop/bookmarks.html\")" "Export bookmarks.org to ~/Desktop/bookmarks.html.")))
      ("Revert Buffer" "revert-buffer" "Run `revert-buffer' on current buffer.")
      ("Visual Line Mode [Toggle]" "visual-line-mode" "Toggle `visual-line-mode' in current buffer.")
      ("Search Case Sensitivity [Toggle]" "toggle-case-fold-search" "Toggle case-fold-search in current buffer.")
@@ -27321,8 +27324,6 @@ A menu of commonly used commands that are not in other menus.
      ("World Time" "display-time-world" "Display the time in various time zones.")
      ("Colors Display" "list-colors-display" "List Emacs font colors.")
      ("Faces Display" "list-faces-display" "List Emacs font faces.")
-     ("Export Bookmarks to JSON" "(org-bookmarks-export-to-json \"~/org/bookmarks.org\" \"~/Desktop/bookmarks.json\")" "Export bookmarks.org to ~/Desktop/bookmarks.json.")
-     ("Export Bookmarks to HTML" "(org-bookmarks-export-to-html \"~/org/bookmarks.org\" \"~/Desktop/bookmarks.html\")" "Export bookmarks.org to ~/Desktop/bookmarks.html.")
      ("Restart Emacs Server" "server-start-maybe" "Restart Emacs server.")
      ))
      ;;("Tip of the Day" "totd" "Display a random emacs command.")
