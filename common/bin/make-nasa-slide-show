@@ -26,7 +26,7 @@ mkdir -p "${outdir}"
 #rm -rf "${outdir}/*"
 pushd "${indir}"
 find . -type f | while read src ; do
-    dst=$(echo "${src}" | cut -c 3- | tr [/] [_])
+    dst=$(echo "${src}" | cut -c 3- | tr '[/]' '[_]')
     dst="${outdir}/${dst}"
     cp -u "${src}" "${dst}"
 done

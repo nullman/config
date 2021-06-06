@@ -361,7 +361,7 @@ alias rate="curl --silent rate.sx"
 #!    #rm -rf ${home}/data/media/pictures_slide_show/Nasa/*
 #!    pushd ${home}/data/media/nasa_pictures/apod/image/
 #!    find . -type f | while read file ; do
-#!        o=\$(echo \"\${file}\" | cut -c 3- | tr [/] [_])
+#!        o=\$(echo \"\${file}\" | cut -c 3- | tr '[/]' '[_]')
 #!        o=\"${home}/data/media/pictures_slide_show/Nasa/\${o}\"
 #!        cp \"\${file}\" \"\${o}\"
 #!    done

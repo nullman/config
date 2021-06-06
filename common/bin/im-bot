@@ -154,7 +154,7 @@ case "${cmd}" in
         if [[ "${CONTACT_NICK}" == "" ]] ; then
             nick=${USER}
         else
-            nick=$(echo ${CONTACT_NICK} | tr -c -d /A-Za-z0-9_/ | tr /A-Z/ /a-z/)
+            nick=$(echo ${CONTACT_NICK} | tr --delete --complement '[A-Za-z0-9_]' | tr '[A-Z]' '[a-z]')
         fi
         # create directory to store key/value files in
         mkdir -p "${base}/${nick}"
@@ -194,7 +194,7 @@ case "${cmd}" in
         if [[ "${op}" == "help" ]] ; then
             # show help
             ${HOME}/bin/key-value --help
-        elif [[ "${file}" == "$(echo ${file} | tr -c -d /A-Za-z0-9_/)" ]] ; then
+        elif [[ "${file}" == "$(echo ${file} | tr --delete --complement '[A-Za-z0-9_]')" ]] ; then
             # if valid file name, call key-value script to handle request
             ${HOME}/bin/key-value "${op}" "${file}" "${msg[@]}"
         else

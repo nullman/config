@@ -82,14 +82,16 @@ ${voffset 10}${color}${font Bitstream Vera Sans:bold:size=12}System${font}
 # user
 ${voffset 5}${color2}User:${color}  ${alignr}${execi 1200 whoami}@${nodename}
 # os/distro
-${voffset 5}${color2}OS:${color}  ${alignr}${execi 10000 awk -F= '/TION/ {print $2}' /etc/lsb-release | sed 's/"//g'} \
-  ${execi 10000 awk -F= '/EASE=/ {printf $2" "} /NAME/ {print $2}' /etc/lsb-release}
+${voffset 5}${color2}OS:${color}  ${alignr}${execi 3600 awk -F= '/TION/ {print $2}' /etc/lsb-release | sed 's/"//g'} \
+  ${execi 3600 awk -F= '/EASE=/ {printf $2" "} /NAME/ {print $2}' /etc/lsb-release}
 # kernel
 ${voffset 5}${color2}Kernel:${color}  ${alignr}${kernel}
 # uptime
 ${voffset 5}${color2}Uptime:${color}  ${alignr}${uptime_short}
 # utc time
 ${voffset 5}${color2}UTC:${color}  ${alignr}${utime %H:%M}
+# packages
+${voffset 5}${color2}Packages to Update:${color}  ${alignr}${execi 3600 checkupdates | wc -l}
 # entropy
 ${voffset 5}${color2}Entropy:${color}  ${entropy_avail} / ${entropy_poolsize}  ${entropy_perc}%  ${entropy_bar}
 

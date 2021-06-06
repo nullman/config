@@ -55,8 +55,8 @@ case "${op}" in
 esac
 
 # remove non-alpha-numeric values from keys
-key=$(echo ${key} | tr -c -d /A-Za-z0-9_/)
-newkey=$(echo ${newkey} | tr -c -d /A-Za-z0-9_/)
+key=$(echo ${key} | tr --delete --complement '[A-Za-z0-9_]')
+newkey=$(echo ${newkey} | tr --delete --complement '[A-Za-z0-9_]')
 
 # temp file
 temp="${file}.tmp$$"

@@ -452,7 +452,7 @@ flattendir() {
             outdir=$(cd "${outdir}" ; pwd)
             pushd "${indir}"
             find . -type f | while read f ; do
-                o=$(echo "${f}" | cut -c 3- | tr [/] [_])
+                o=$(echo "${f}" | cut -c 3- | tr '[/]' '[_]')
                 o="${outdir}/${o}"
                 cp -u "${f}" "${o}"
             done
@@ -1087,19 +1087,30 @@ makecert() {
 #
 #        lowerdir                convert dir to lowercase
 lowerdir() {
-    echo "You are about to convert the contents of the current directory"
+    echo "You are about to recursively convert the contents of the current directory"
     echo "'$(pwd)' to lowercase,"
-    echo "overwriting exiting files if needed."
     echo -n "Do you wish to proceed? [yN] "
     read a
     case "${a}" in
         y|Y)
-            $(pathcmd ls) -1 | while read file ; do
-                if [[ -f "${file}" ]] ; then
-                    if [[ "${file}" != $(echo "${file}" | tr A-Z a-z) ]] ; then
-                        mv -fv "${file}" $(echo "${file}" | tr A-Z a-z)
-                    fi
-                fi
+            find . -type f -depth | while read infile ; do
+                outfile="$(echo \"${infile}\" | tr '[:upper:]' '[:lower:]')"
+                mv -fv "${infile}" "${outfile}"
+            done
+            ;;
+    esac
+}
+#        upperdir                convert dir to uppercase
+upperdir() {
+    echo "You are about to recursively convert the contents of the current directory"
+    echo "'$(pwd)' to uppercase,"
+    echo -n "Do you wish to proceed? [yN] "
+    read a
+    case "${a}" in
+        y|Y)
+            find . -type f -depth | while read infile ; do
+                outfile="$(echo \"${infile}\" | tr '[:lower:]' '[:upper:]')"
+                mv -fv "${infile}" "${outfile}"
             done
             ;;
     esac

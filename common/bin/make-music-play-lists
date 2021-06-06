@@ -94,7 +94,7 @@ for i in Albums Singles ; do
                 echo "${i}/${d}/${k}" | sed 's/\%/ /g' >> "${pldir}/${tmpfile}"
             fi
         done
-        n=$(echo "${j}" | tr '[:upper:]' '[:lower:]' | sed "s/\%/_/g;s/_-_/-/g")
+        n=$(echo "${j}" | tr '[:upper:]' '[:lower:]' | sed 's/\%/_/g ; s/_-_/-/g')
         [[ -e "${pldir}/${tmpfile}" ]] && cat "${pldir}/${tmpfile}" | sort > "${pldir}/genre_${n}.m3u"
     done
 done

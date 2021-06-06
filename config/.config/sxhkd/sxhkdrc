@@ -207,7 +207,7 @@ super + alt + x
 
 # generate password
 super + ctrl + p
-    tr --delete --compliment "a-zA-Z0-9!@#$%^&*-_=+;:,<.>/?" < /dev/urandom | \
+    tr --delete --complement 'a-zA-Z0-9!@#$%^&*-_=+;:,<.>/?' < /dev/urandom | \
     head --bytes 14 | xclip -selection clipboard && \
     notify-send --expire-time=2000 'Random password generated on clipboard'
 
