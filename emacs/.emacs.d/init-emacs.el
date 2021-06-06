@@ -4595,35 +4595,35 @@ Example output:
 
 If the first headline is \"Org\", it is ignored."
   (cl-labels
-      ((loop (bm tree)
-             (cond
-              ;; end of branch
-              ((not bm)
-               nil)
-              ;; bookmark
-              ((and (stringp (car bm)) (stringp (cadr bm)))
-               (let* ((title (car x))
-                      (uri (cadr x))
-                      (keyword (if (string-match " \\[\\(.*\\)\\]$" title)
-                                   (match-string-no-properties 1 title)
-                                 nil))
-                      (title (replace-regexp-in-string " \\[.*\\]$" "" title))
-                      (entry (list :type "bookmark" :title title :uri uri)))
-                 (when keyword
-                   (setq entry (append entry (list :keyword keyword))))
-                 entry))
-              ;; nested folder
-              ((stringp (car bm))
-               (let* ((title (car bm))
-                      (entry (list :type "folder" :title title)))
-                 (if (cdr bm)
-                     (append entry (list :children (map 'vector (lambda (x)
-                                                                  (loop x tree))
-                                                        (cdr bm))))
-                   entry))))))
+      ((parse (bm tree)
+              (cond
+               ;; end of branch
+               ((not bm)
+                nil)
+               ;; bookmark
+               ((and (stringp (car bm)) (stringp (cadr bm)))
+                (let* ((title (car x))
+                       (uri (cadr x))
+                       (keyword (if (string-match " \\[\\(.*\\)\\]$" title)
+                                    (match-string-no-properties 1 title)
+                                  nil))
+                       (title (replace-regexp-in-string " \\[.*\\]$" "" title))
+                       (entry (list :type "bookmark" :title title :uri uri)))
+                  (when keyword
+                    (setq entry (append entry (list :keyword keyword))))
+                  entry))
+               ;; nested folder
+               ((stringp (car bm))
+                (let* ((title (car bm))
+                       (entry (list :type "folder" :title title)))
+                  (if (cdr bm)
+                      (append entry (list :children (map 'vector (lambda (x)
+                                                                   (parse x tree))
+                                                         (cdr bm))))
+                    entry))))))
     (let ((bm (org-get-data file)))
       (map 'vector (lambda (x)
-                     (loop x nil))
+                     (parse x nil))
            (if (string= (caadr bm) "Org") (cddr bm) (cdr bm))))))
 ;; org-bookmarks-parse:1 ends here
 
@@ -4656,37 +4656,37 @@ If JSON-FILE is non-nil, then output is returned."
     (cl-labels
         ((gen-id ()
                  (incf global-id))
-         (loop (bm tree index)
-               (let* ((type (plist-get bm :type))
-                      (type-value (cdr (assoc type type-value-list)))
-                      (type-code (cdr (assoc type type-code-list)))
-                      (title (plist-get bm :title))
-                      (uri (plist-get bm :uri))
-                      (keyword (plist-get bm :keyword))
-                      (children (plist-get bm :children))
-                      (guid (org-bookmarks-guid))
-                      (id (gen-id))
-                      (root (cdr (assoc title title-root-list)))
-                      (custom-guid (cdr (assoc title title-guid-list)))
-                      (entry (list
-                              :guid (or custom-guid guid)
-                              :title title
-                              :index index
-                              :dateAdded timestamp
-                              :lastModified timestamp
-                              :id id
-                              :typeCode type-code
-                              :type type-value)))
-                 (when uri
-                   (setq entry (append entry (list :uri uri))))
-                 (when keyword
-                   (setq entry (append entry (list :keyword keyword))))
-                 (when root
-                   (setq entry (append entry (list :root root))))
-                 (when children
-                   (let ((idx -1))
-                     (setq entry (append entry (list :children (map 'vector (lambda (x) (loop x tree (incf idx))) children))))))
-                 (append tree entry))))
+         (parse (bm tree index)
+                (let* ((type (plist-get bm :type))
+                       (type-value (cdr (assoc type type-value-list)))
+                       (type-code (cdr (assoc type type-code-list)))
+                       (title (plist-get bm :title))
+                       (uri (plist-get bm :uri))
+                       (keyword (plist-get bm :keyword))
+                       (children (plist-get bm :children))
+                       (guid (org-bookmarks-guid))
+                       (id (gen-id))
+                       (root (cdr (assoc title title-root-list)))
+                       (custom-guid (cdr (assoc title title-guid-list)))
+                       (entry (list
+                               :guid (or custom-guid guid)
+                               :title title
+                               :index index
+                               :dateAdded timestamp
+                               :lastModified timestamp
+                               :id id
+                               :typeCode type-code
+                               :type type-value)))
+                  (when uri
+                    (setq entry (append entry (list :uri uri))))
+                  (when keyword
+                    (setq entry (append entry (list :keyword keyword))))
+                  (when root
+                    (setq entry (append entry (list :root root))))
+                  (when children
+                    (let ((idx -1))
+                      (setq entry (append entry (list :children (map 'vector (lambda (x) (parse x tree (incf idx))) children))))))
+                  (append tree entry))))
       (let ((json-object-type 'plist)
             (json-array-type 'vector)
             (json-key-type 'string)
@@ -4703,7 +4703,7 @@ If JSON-FILE is non-nil, then output is returned."
                   :typeCode 2
                   :type (cdr (assoc "folder" type-value-list))
                   :root "placesRoot"
-                  :children (map 'vector (lambda (x) (loop x nil 0)) bookmarks))))
+                  :children (map 'vector (lambda (x) (parse x nil 0)) bookmarks))))
           (newline)
           (if json-file
               (write-region (point-min) (point-max) json-file)
@@ -4731,7 +4731,7 @@ If HTML-FILE is non-nil, then output is returned."
     (cl-labels
         ((indent (idt str)
                  (concat (spaces-string idt) str))
-         (loop (bm str idt)
+         (parse (bm str idt)
                (let* ((type (plist-get bm :type))
                       (type-code (cdr (assoc type type-code-list)))
                       (title (plist-get bm :title))
@@ -4756,7 +4756,7 @@ If HTML-FILE is non-nil, then output is returned."
                  (when children
                    (setq entry (concat entry
                                        (indent idt "<DL><p>\n")
-                                       (mapconcat (lambda (x) (loop x str (+ idt 4))) children "\n")
+                                       (mapconcat (lambda (x) (parse x str (+ idt 4))) children "\n")
                                        (indent idt "</DL>\n"))))
                  entry)))
       (let ((bookmarks (org-bookmarks-parse org-file)))
@@ -4769,12 +4769,62 @@ If HTML-FILE is non-nil, then output is returned."
 <H1>Bookmarks Menu</H1>
 
 <DL><p>\n"
-            (mapconcat (lambda (x) (loop x "" 4)) bookmarks "\n"))
+            (mapconcat (lambda (x) (parse x "" 4)) bookmarks "\n"))
            "</DL>\n")
           (if html-file
               (write-region (point-min) (point-max) html-file)
             (buffer-substring-no-properties (point-min) (point-max))))))))
 ;; org-bookmarks-export-to-html:1 ends here
+
+;; [[file:init-emacs.org::*org-bookmarks-export-to-nyxt][org-bookmarks-export-to-nyxt:1]]
+;;------------------------------------------------------------------------------
+;;;; Org Mode: Bookmarks: org-bookmarks-export-to-nyxt
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Org Mode: Bookmarks: org-bookmarks-export-to-nyxt")
+
+(defun org-bookmarks-export-to-nyxt (org-file &optional nyxt-file)
+  "Export from an Org Bookmarks file, ORG-FILE,
+to an NYXT Bookmarks Lisp file, NYXT-FILE.
+
+If NYXT-FILE is non-nil, then output is returned."
+  (let ((timestamp (format-time-string "%FT%T.%6NZ"))
+        (title-root-list '(("Bookmarks Menu" . "bookmarksMenuFolder")
+                           ("Bookmarks Toolbar" . "toolbarFolder")
+                           ("Other Bookmarks" . "unfiledBookmarksFolder")
+                           ("Mobile Bookmarks" . "mobileFolder"))))
+    (cl-labels
+        ((folder? (type)
+                  (string= type "folder"))
+         (tags (name)
+               (split-string name " " :omit-nulls))
+         (parse (bm tags)
+                (let* ((type (plist-get bm :type))
+                       (folder? (folder? type))
+                       (title (plist-get bm :title))
+                       (uri (plist-get bm :uri))
+                       (keyword (plist-get bm :keyword))
+                       (children (plist-get bm :children))
+                       (root? (cdr (assoc title title-root-list)))
+                       (tags tags))
+                  (when (and folder? (not root?))
+                    (setq tags (append tags (tags title))))
+                  (when keyword
+                    (setq tags (append tags (list keyword))))
+                  (when (not folder?)
+                    (insert
+                     (format "%S\n" (list :url uri :title title :date timestamp :tags tags))))
+                  (when children
+                    (map 'vector (lambda (x) (parse x tags)) children)))))
+      (let ((bookmarks (org-bookmarks-parse org-file)))
+        (with-temp-buffer
+          (insert "(\n")
+          (map 'vector (lambda (x) (parse x '())) bookmarks)
+          (insert ")\n")
+          (if nyxt-file
+              (write-region (point-min) (point-max) nyxt-file)
+            (buffer-substring-no-properties (point-min) (point-max))))))))
+;; org-bookmarks-export-to-nyxt:1 ends here
 
 ;; [[file:init-emacs.org::*Finances][Finances:1]]
 ;;------------------------------------------------------------------------------
@@ -18103,7 +18153,8 @@ Blank lines separate paragraphs.  Semicolons start comments.
       "Run `lunduke-fetch-messages-new' to fetch new messages from the House of Lunduke BBS into house-of-lunduke-bbs.org.")))
    ("Export"
     (("Export Bookmarks to JSON" "(org-bookmarks-export-to-json \"~/org/bookmarks.org\" \"~/Desktop/bookmarks.json\")" "Export bookmarks.org to ~/Desktop/bookmarks.json.")
-     ("Export Bookmarks to HTML" "(org-bookmarks-export-to-html \"~/org/bookmarks.org\" \"~/Desktop/bookmarks.html\")" "Export bookmarks.org to ~/Desktop/bookmarks.html.")))
+     ("Export Bookmarks to HTML" "(org-bookmarks-export-to-html \"~/org/bookmarks.org\" \"~/Desktop/bookmarks.html\")" "Export bookmarks.org to ~/Desktop/bookmarks.html.")
+     ("Export Bookmarks to NYXT" "(org-bookmarks-export-to-nyxt \"~/org/bookmarks.org\" \"~/config/local/.local/share/nyxt/bookmarks.lisp\")" "Export bookmarks.org to ~/config/local/.local/share/nyxt/bookmarks.lisp.")))
    ("Revert Buffer" "revert-buffer" "Run `revert-buffer' on current buffer.")
    ("Visual Line Mode [Toggle]" "visual-line-mode" "Toggle `visual-line-mode' in current buffer.")
    ("Search Case Sensitivity [Toggle]" "toggle-case-fold-search" "Toggle case-fold-search in current buffer.")
