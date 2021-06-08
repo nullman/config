@@ -2407,12 +2407,12 @@ alias ckermit-hp95lx="sudo ckermit \${HOME}/.ckermit_hp95lx_connection"
 #
 # mpd (Music Player Daemon)
 #
-#        mpd-service-enable      sudo systemctl --user enable/start mpd
-alias mpd-service-enable="sudo systemctl --user enable mpd && sudo systemctl --user start mpd"
-#        mpd-service-disable     sudo systemctl --user disable mpd
-alias mpd-service-disable="sudo systemctl --user disable mpd"
-#        mpd-service-restart     sudo systemctl --user restart mpd
-alias mpd-service-restart="sudo systemctl --user restart mpd"
+#        mpd-service-enable      systemctl --user enable/start mpd
+alias mpd-service-enable="systemctl --user enable mpd && systemctl --user start mpd"
+#        mpd-service-disable     systemctl --user disable mpd
+alias mpd-service-disable="systemctl --user disable mpd"
+#        mpd-service-restart     systemctl --user restart mpd
+alias mpd-service-restart="systemctl --user restart mpd"
 #        mpc-status              display artist and title of current song
 alias mpc-status="notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' \"\$(mpc | head -n 1)\""
 #        mpc-update              update mpc database
