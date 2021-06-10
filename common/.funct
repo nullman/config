@@ -452,7 +452,7 @@ flattendir() {
             outdir=$(cd "${outdir}" ; pwd)
             pushd "${indir}"
             find . -type f | while read f ; do
-                o=$(echo "${f}" | cut -c 3- | tr '[/]' '[_]')
+                o=$(echo "${f}" | cut -c 3- | tr '/' '_')
                 o="${outdir}/${o}"
                 cp -u "${f}" "${o}"
             done

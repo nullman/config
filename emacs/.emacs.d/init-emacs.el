@@ -968,8 +968,10 @@ A fortune is added if FORTUNE is non-nil."
 
 ;; [[file:init-emacs.org::*Files][Files:15]]
 ;; set DOS file extensions
-(add-to-list 'file-coding-system-alist '("\\.DO\\'" . dos))
 (add-to-list 'file-coding-system-alist '("\\.ASM\\'" . dos))
+(add-to-list 'file-coding-system-alist '("\\.BAT\\'" . dos))
+(add-to-list 'file-coding-system-alist '("\\.DO\\'" . dos))
+(add-to-list 'file-coding-system-alist '("\\.SYS\\'" . dos))
 ;; Files:15 ends here
 
 ;; [[file:init-emacs.org::*Files][Files:16]]

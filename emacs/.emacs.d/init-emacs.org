@@ -1621,8 +1621,10 @@ File extensions for files that should save as DOS files.
 
 #+BEGIN_SRC emacs-lisp
   ;; set DOS file extensions
-  (add-to-list 'file-coding-system-alist '("\\.DO\\'" . dos))
   (add-to-list 'file-coding-system-alist '("\\.ASM\\'" . dos))
+  (add-to-list 'file-coding-system-alist '("\\.BAT\\'" . dos))
+  (add-to-list 'file-coding-system-alist '("\\.DO\\'" . dos))
+  (add-to-list 'file-coding-system-alist '("\\.SYS\\'" . dos))
 #+END_SRC
 
 Save bookmarks file every time it changes.
