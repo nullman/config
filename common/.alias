@@ -1873,6 +1873,11 @@ alias rsync-windows-put-win_apps-sd="
     rsync -rLtxc --progress --delete --exclude={'Windows OS/','Partitions/'} ${home}/data/media/software/Windows* /run/media/\${USER}/WINDOWS/ && \
       rsync -rLtxc --progress --delete ${home}/data/media/repos/DOS ${home}/data/media/repos/FreeDOS /run/media/\${USER}/WINDOWS/ && \
       sync"
+#        rsync-t43-os2-put-t43-os2-sd    rsync /home/data/media/software/(Thinkpad T43|OS2)/* /run/media/${USER}/T43_OS2/(Thinkpad T43|OS2)/
+alias rsync-t43-os2-put-t43-os2-sd="
+    rsync -rLtxc --progress --delete --exclude={'ArcaOS/','CDs/','OS2/'} ${home}/data/media/software/OS2/* /run/media/\${USER}/T43_OS2/OS2/ && \
+      rsync -rLtxc --progress --delete \"${home}/data/media/software/Thinkpad T43\" /run/media/\${USER}/T43_OS2/ && \
+      sync"
 #        rsync-mac-put-mac_apps-sd       rsync /home/data/media/software/Macintosh/* /run/media/${USER}/MAC_APPS/Macintosh/
 alias rsync-mac-put-mac_apps-sd="
     rsync -rLtxc --progress --delete --exclude='FINDER.DAT' ${home}/data/media/software/Macintosh/68000 /run/media/\${USER}/MAC_APPS/Macintosh/ && \
