@@ -18010,9 +18010,7 @@ solution.
       (setq buffer-read-only nil)
       (erase-buffer)
       ;; print header
-      (insert (format "Towers of Hanio puzzle with %d disks" disks))
-      (newline)
-      (newline)
+      (insert (format "Towers of Hanoi puzzle with %d disks\n\n" disks))
       ;; make initial call to towers move
       ;; move from peg 1 to 3 using 2
       (towers-move disks 1 3 2)
@@ -18035,15 +18033,14 @@ solution.
 
   USING is the remaining peg."
     (when (> n 0)
-      ;; in order to move N disks FROM one peg TO another, we first move N-1
-      ;; disks FROM one peg to a USING peg
+      ;; In order to move N disks FROM one peg TO another, we first move N-1
+      ;; disks FROM one peg to the other USING peg.
       (towers-move (1- n) from using to)
-      ;; then we move the one remaining peg FROM the starting peg TO the
-      ;; finishing peg
-      (insert (format "move %d --> %d" from to))
-      (newline)
-      ;; finally we move the N-1 disks now on the USING peg to the TO peg using
-      ;; FROM
+      ;; Then we move the one remaining peg FROM the starting peg TO the
+      ;; finishing peg.
+      (insert (format "Move %d --> %d\n" from to))
+      ;; Finally we move the N-1 disks now on the other USING peg to the TO peg
+      ;; using FROM.
       (towers-move (1- n) using to from)))
 #+END_SRC
 
