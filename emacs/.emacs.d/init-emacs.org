@@ -3936,33 +3936,38 @@ Sort the current org level.
                                 '(?o ?p)
                               '((nil . ?a))))))
         (save-mark-and-excursion
-          (if (equal (car (org-element-at-point)) 'headline)
-              (progn
-                (condition-case nil
-                    (outline-up-heading 1)
-                  ('error (forward-line 0)))
-                (let ((start (point))
-                      end)
-                  (while (and (not (bobp)) (not (eobp)) (<= (point) start))
+          (case (car (org-element-at-point))
+            ('headline
+             (condition-case nil
+                 (outline-up-heading 1)
+               ('error (forward-line 0)))
+             (let ((beg (point)))
+               (while (and (not (bobp)) (not (eobp)) (<= (point) beg))
+                 (condition-case nil
+                     (outline-forward-same-level 1)
+                   ('error
                     (condition-case nil
-                        (outline-forward-same-level 1)
-                      ('error
-                       (condition-case nil
-                           (outline-up-heading 1)
-                         ('error (goto-char (point-max)))))))
-                  (unless (> (point) start)
-                    (goto-char (point-max)))
-                  (setq end (point))
-                  (goto-char start)
-                  (apply #'org-sort-multi sort-types)
-                  (goto-char end)
-                  (when (eobp)
-                    (forward-line -1))
-                  (when (looking-at "^\\s-*$")
-                    (delete-line))
-                  (goto-char start)
-                  (dotimes (x 2) (org-cycle))))
-            (org-sort-list nil ?a))))))
+                        (outline-up-heading 1)
+                      ('error (goto-char (point-max)))))))
+               (unless (> (point) beg)
+                 (goto-char (point-max)))
+               (let ((end (point)))
+                 (goto-char beg)
+                 (apply #'org-sort-multi sort-types)
+                 (goto-char end)
+                 (when (eobp)
+                   (forward-line -1))
+                 (when (looking-at "^\\s-*$")
+                   (delete-line))
+                 (goto-char beg)
+                 (dotimes (x 2) (org-cycle)))))
+            ('paragraph
+             (let* ((plist (cadr (org-element-at-point)))
+                    (beg (plist-get plist :contents-begin))
+                    (end (plist-get plist :contents-end)))
+               (sort-lines nil beg end)))
+            (t
+             (org-sort-list nil ?a)))))))
 #+END_SRC
 
 ***** org-copy-to-clipboard
