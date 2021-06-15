@@ -8,7 +8,7 @@
 #+LANGUAGE: en
 #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
 #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-#+TIMESTAMP: <2021-04-11 21:26 (kyle)>
+#+TIMESTAMP: <2021-06-14 23:14 (kyle)>
 
 * Overview
 :PROPERTIES:
@@ -23171,9 +23171,9 @@ Maintain last change time stamps in files edited by Emacs.
     :custom (time-stamp-active t)
     :init
     (setq time-stamp-line-limit 20
-          time-stamp-start "[Tt][Ii][Mm][Ee][-]?[Ss][Tt][Aa][Mm][Pp]:[    ]+\\\\?[\"<]+"
+          time-stamp-start "[Tt][Ii][Mm][Ee][-]?[Ss][Tt][Aa][Mm][Pp]:[ \t]+\\\\?[\"<]+"
           time-stamp-format "%Y-%02m-%02d %02H:%02M (%u)")
-    (add-hook 'write-contents-functions #'time-stamp))
+    (add-hook 'before-save-hook #'time-stamp))
 #+END_SRC
 
 *** +totd+

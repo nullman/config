@@ -15634,9 +15634,9 @@ Do not perform the search on very large files (to avoid a delay when loaded)."
   :custom (time-stamp-active t)
   :init
   (setq time-stamp-line-limit 20
-        time-stamp-start "[Tt][Ii][Mm][Ee][-]?[Ss][Tt][Aa][Mm][Pp]:[    ]+\\\\?[\"<]+"
+        time-stamp-start "[Tt][Ii][Mm][Ee][-]?[Ss][Tt][Aa][Mm][Pp]:[ \t]+\\\\?[\"<]+"
         time-stamp-format "%Y-%02m-%02d %02H:%02M (%u)")
-  (add-hook 'write-contents-functions #'time-stamp))
+  (add-hook 'before-save-hook #'time-stamp))
 ;; time-stamp:1 ends here
 
 ;; [[file:init-emacs.org::*tramp][tramp:1]]
