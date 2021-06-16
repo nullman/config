@@ -16445,11 +16445,10 @@ otherwise run `find-file-as-root'."
 (init-message 2 "Modes: Geiser (Racket Scheme REPL)")
 
 (use-package geiser
-  :quelpa (geiser :fetcher gitlab :repo "emacs-geiser/geiser")
+  ;;:quelpa (geiser :fetcher gitlab :repo "emacs-geiser/geiser")
+  :quelpa (geiser)
   :commands (geiser-mode
-             run-geiser
-             run-gracket
-             run-racket)
+             run-geiser)
   :init
   ;; set default scheme program to racket
   ;;(setq scheme-program-name "racket")
@@ -16457,10 +16456,10 @@ otherwise run `find-file-as-root'."
   ;;(add-hook 'scheme-mode-hook #'geiser-mode)
 
   :config
-  ;; set default geiser implementation to racket
-  (setq geiser-default-implementation 'racket)
-  ;; set active implementations list to just racket
-  (setq geiser-active-implementations '(racket))
+  ;; ;; set default geiser implementation to racket
+  ;; (setq geiser-default-implementation 'racket)
+  ;; ;; set active implementations list to just racket
+  ;; (setq geiser-active-implementations '(racket))
 
   ;; define `insert-char' functions to insert unicode chars
   (defun geiser-insert-sigma ()
@@ -16478,9 +16477,22 @@ otherwise run `find-file-as-root'."
   (add-hook 'geiser-mode-hook #'local-geiser-mode-hook)
   (add-hook 'geiser-repl-mode-hook #'local-geiser-mode-hook))
 
-;; (use-package geiser-racket
-;;   :after (geiser)
-;;   :quelpa (geiser-racket :fetcher gitlab :repo "emacs-geiser/geiser-racket"))
+(use-package geiser-racket
+  :after (geiser)
+  ;;:quelpa (geiser-racket :fetcher gitlab :repo "emacs-geiser/geiser-racket")
+  :quelpa (geiser-racket)
+  :commands (run-racket)
+  :init
+  ;; set default scheme program to racket
+  ;;(setq scheme-program-name "racket")
+  ;; set default scheme mode to geiser-mode
+  ;;(add-hook 'scheme-mode-hook #'geiser-mode)
+
+  :config
+  ;; set default geiser implementation to racket
+  (setq geiser-default-implementation 'racket)
+  ;; set active implementations list to just racket
+  (setq geiser-active-implementations '(racket)))
 ;; Geiser (Racket Scheme REPL):1 ends here
 
 ;; [[file:init-emacs.org::*GNU Plot][GNU Plot:1]]
@@ -18098,7 +18110,7 @@ Blank lines separate paragraphs.  Semicolons start comments.
 (auto-menu
  "Misc"
  `(("Development"
-    (("Racket REPL" "run-gracket" "Start Racket REPL for interactively evaluating Racket expressions.")
+    (("Racket REPL" "run-racket" "Start Racket REPL for interactively evaluating Racket expressions.")
      ("Kotlin REPL" "kotlin-repl" "Start Kotlin REPL for interactively evaluating Kotlin expressions.")
      ("Common Lisp SLIME Mode" "(slime 'clisp)" "Start SLIME mode for interactively evaluating Common Lisp expressions.")
      ("Steel Bank Common Lisp SLIME Mode" "(slime 'sbcl)" "Start SLIME mode for interactively evaluating Common Lisp expressions.")

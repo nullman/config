@@ -8,7 +8,7 @@
 #+LANGUAGE: en
 #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
 #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-#+TIMESTAMP: <2021-06-14 23:14 (kyle)>
+#+TIMESTAMP: <2021-06-15 11:20 (kyle)>
 
 * Overview
 :PROPERTIES:
@@ -24483,11 +24483,10 @@ Used for Racket Scheme Mode.
   (init-message 2 "Modes: Geiser (Racket Scheme REPL)")
 
   (use-package geiser
-    :quelpa (geiser :fetcher gitlab :repo "emacs-geiser/geiser")
+    ;;:quelpa (geiser :fetcher gitlab :repo "emacs-geiser/geiser")
+    :quelpa (geiser)
     :commands (geiser-mode
-               run-geiser
-               run-gracket
-               run-racket)
+               run-geiser)
     :init
     ;; set default scheme program to racket
     ;;(setq scheme-program-name "racket")
@@ -24495,10 +24494,10 @@ Used for Racket Scheme Mode.
     ;;(add-hook 'scheme-mode-hook #'geiser-mode)
 
     :config
-    ;; set default geiser implementation to racket
-    (setq geiser-default-implementation 'racket)
-    ;; set active implementations list to just racket
-    (setq geiser-active-implementations '(racket))
+    ;; ;; set default geiser implementation to racket
+    ;; (setq geiser-default-implementation 'racket)
+    ;; ;; set active implementations list to just racket
+    ;; (setq geiser-active-implementations '(racket))
 
     ;; define `insert-char' functions to insert unicode chars
     (defun geiser-insert-sigma ()
@@ -24516,9 +24515,22 @@ Used for Racket Scheme Mode.
     (add-hook 'geiser-mode-hook #'local-geiser-mode-hook)
     (add-hook 'geiser-repl-mode-hook #'local-geiser-mode-hook))
 
-  ;; (use-package geiser-racket
-  ;;   :after (geiser)
-  ;;   :quelpa (geiser-racket :fetcher gitlab :repo "emacs-geiser/geiser-racket"))
+  (use-package geiser-racket
+    :after (geiser)
+    ;;:quelpa (geiser-racket :fetcher gitlab :repo "emacs-geiser/geiser-racket")
+    :quelpa (geiser-racket)
+    :commands (run-racket)
+    :init
+    ;; set default scheme program to racket
+    ;;(setq scheme-program-name "racket")
+    ;; set default scheme mode to geiser-mode
+    ;;(add-hook 'scheme-mode-hook #'geiser-mode)
+
+    :config
+    ;; set default geiser implementation to racket
+    (setq geiser-default-implementation 'racket)
+    ;; set active implementations list to just racket
+    (setq geiser-active-implementations '(racket)))
 #+END_SRC
 
 *** GNU Plot
@@ -27313,7 +27325,7 @@ A menu of commonly used commands that are not in other menus.
   (auto-menu
    "Misc"
    `(("Development"
-      (("Racket REPL" "run-gracket" "Start Racket REPL for interactively evaluating Racket expressions.")
+      (("Racket REPL" "run-racket" "Start Racket REPL for interactively evaluating Racket expressions.")
        ("Kotlin REPL" "kotlin-repl" "Start Kotlin REPL for interactively evaluating Kotlin expressions.")
        ("Common Lisp SLIME Mode" "(slime 'clisp)" "Start SLIME mode for interactively evaluating Common Lisp expressions.")
        ("Steel Bank Common Lisp SLIME Mode" "(slime 'sbcl)" "Start SLIME mode for interactively evaluating Common Lisp expressions.")
