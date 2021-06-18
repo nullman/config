@@ -102,6 +102,7 @@ _ba LibreWolf desktop='^4' follow=on
 _ba Brave-browser desktop='^4' follow=on
 _ba Chromium desktop='^4' follow=on
 _ba Google-chrome desktop='^4' follow=on
+_ba vivaldi-stable desktop='^4' follow=on
 _ba gopherus-sdl desktop='^4' follow=on
 _ba Pcmanfm desktop='^5' follow=on
 _ba Thunar desktop='^5' follow=on
