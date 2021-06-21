@@ -1220,37 +1220,28 @@ gitbranchprompt() {
 _gitsync() {
     dirs=("$@")
 
-    # remove org font files
-    echo "Removing org font files..."
-    (cd "${HOME}" && \
-         for dir in ${dirs[@]} ; do
-             if [[ -d "${dir}" ]] ; then
-                 find "${dir}" -name '*org-src-fontification*' -print | \
-                     xargs rm > /dev/null 2>&1
-             fi
-         done)
+    commit=$()
 
-    # pull (update) home git repository (from origin)
     for dir in ${dirs[@]} ; do
-        if [[ -d "${dir}" ]] ; then
+        if [[ -d "${HOME}/${dir}" ]] ; then
+            # remove org font files
+            echo "Removing org font files..."
+            find "${HOME}/${dir}" -name '*org-src-fontification*' -print | \
+                xargs rm > /dev/null 2>&1
+
+            # pull (update) home git repository (from origin)
             echo "Pulling '${dir}' from origin..."
-            (cd "${dir}" && git pull origin)
-        fi
-    done
+            (cd "${HOME}/${dir}" && git pull origin)
 
-    # commit (check in) home git repositories (default update)
-    for dir in ${dirs[@]} ; do
-        if [[ -d "${dir}" ]] ; then
-            echo "Committing '${dir}'..."
-            (cd "${dir}" && git commit -a -m "Update")
-        fi
-    done
+            if $(cd "${HOME}/${dir}" && git config --get remote.origin.url | grep -q "^git@") ; then
+                # commit (check in) home git repositories (default update)
+                echo "Committing '${dir}'..."
+                (cd "${HOME}/${dir}" && git commit -a -m "Update")
 
-    # push home git repositories (to origin)
-    for dir in ${dirs[@]} ; do
-        if [[ -d "${dir}" ]] ; then
-            echo "Pushing '${dir}' to origin..."
-            (cd "${dir}" && git push origin)
+                # push home git repositories (to origin)
+                echo "Pushing '${dir}' to origin..."
+                (cd "${HOME}/${dir}" && git push origin)
+            fi
         fi
     done
 }
@@ -1262,24 +1253,26 @@ gitsyncconfig() {
     # sync config repositories
     _gitsync "config" "config-private"
 
-    #if [[ -L .cron ]] && [[ -f config-private/custom/$(uname -n)/.cron ]] ; then
-    #    echo "Update crontab..."
-    #    crontab -l > config-private/custom/$(uname -n)/.cron
-    #fi
-    # update addressbook
-    if [[ -d "${HOME}/config-private" ]] && [[ -f "${HOME}/.addressbook" ]] && [[ ! -L "${HOME}/.addressbook" ]] ; then
-        echo "Update .addressbook..."
-        (cd "${HOME}" && \
-             cp .addressbook config-private/common/ && \
-             ln -sf config-private/common/.addressbook)
-    fi
-    # only update xscreensaver preferences on tank
-    if [[ -d "${HOME}/config-private" ]] && [[ -f "${HOME}/.xscreensaver" ]] && [[ ! -L "${HOME}/.xscreensaver" ]] && \
-           [[ "$(uname -n)" == "tank" ]] ; then
-        echo "Update .xscreensaver..."
-        (cd "${HOME}" && \
-             cp .xscreensaver config-private/common/ && \
-             ln -sf config-private/common/.xscreensaver)
+    if [[ -d "${HOME}/config-private" ]] ; then
+        #if [[ -L .cron ]] && [[ -f config-private/custom/$(uname -n)/.cron ]] ; then
+        #    echo "Update crontab..."
+        #    crontab -l > config-private/custom/$(uname -n)/.cron
+        #fi
+        # update addressbook
+        if [[ -f "${HOME}/.addressbook" ]] && [[ ! -L "${HOME}/.addressbook" ]] ; then
+            echo "Update .addressbook..."
+            (cd "${HOME}" && \
+                 cp .addressbook config-private/common/ && \
+                 ln -sf config-private/common/.addressbook)
+        fi
+        # only update xscreensaver preferences on tank
+        if [[ -f "${HOME}/.xscreensaver" ]] && [[ ! -L "${HOME}/.xscreensaver" ]] && \
+               [[ "$(uname -n)" == "tank" ]] ; then
+            echo "Update .xscreensaver..."
+            (cd "${HOME}" && \
+                 cp .xscreensaver config-private/common/ && \
+                 ln -sf config-private/common/.xscreensaver)
+        fi
     fi
 }
 #        gitsyncextra            pull, commit, and push extra home git repositories
