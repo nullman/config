@@ -1631,7 +1631,7 @@ alias sshneo="echo 'ssh:neo' ; ssh neo"
 #        sshpi                   ssh raspberrypi
 alias sshpi="echo 'ssh:pi@raspberrypid' ; ssh pi@raspberrypid"
 #        sshraspad               ssh raspad
-alias sshraspadusb="echo 'ssh:raspadusb' ; ssh raspadusb"
+alias sshraspad="echo 'ssh:raspadusb' ; ssh pi@raspadusb"
 #        sshswitch               ssh switch
 alias sshswitch="echo 'ssh:switch' ; ssh switch"
 #        sshtank                 ssh tank

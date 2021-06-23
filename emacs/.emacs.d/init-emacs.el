@@ -16343,7 +16343,7 @@ otherwise run `find-file-as-root'."
 
 (use-package dired-hide-dotfiles
   :quelpa (dired-hide-dotfiles)
-  :hook (dired-mode . dired-hide-dotfiles-mode)
+  ;;:hook (dired-mode . dired-hide-dotfiles-mode)
   :bind (:map dired-mode-map
               ("H" . dired-hide-dotfiles-mode)))
 
@@ -17870,7 +17870,8 @@ Blank lines separate paragraphs.  Semicolons start comments.
                     ;;,(cons "emacs-init" local-init-dir)
                     ;;,(cons "emacs-modules" local-modules-dir)
                     ;;,(cons "emacs-work-modules" local-work-modules-dir)
-                    ("common" . "~/.common")
+                    ("config" . "~/config")
+                    ("config-public" . "~/config-pubic")
                     ("bin" . "~/bin")
                     ("org" . "~/org")
                     ("web" . "~/web")
