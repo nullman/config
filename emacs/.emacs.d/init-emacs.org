@@ -8,7 +8,7 @@
 #+LANGUAGE: en
 #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
 #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-#+TIMESTAMP: <2021-06-22 23:47 (kyle)>
+#+TIMESTAMP: <2021-06-23 15:19 (kyle)>
 
 * Overview
 :PROPERTIES:
@@ -19517,10 +19517,10 @@ Elpher Gopher and Gemini Client
    ("Final Zone" "gopher://finalzone.ddns.net/1")
    ("20 For Beers" "gopher://20ForBeers.com")
    ("kurisu (L29)" "gopher://eyeblea.ch/1/~kurisu")
-   ("fluxcap (L29)" "gopher://fluxcap.synchro.net:5070/1")
-   ("nkeck72 (L29)" "gopher://eyeblea.ch/1/~nkeck720")
+   ("fluxcap (L29) ???" "gopher://fluxcap.synchro.net:5070/1")
+   ("nkeck72 (L29) ???" "gopher://eyeblea.ch/1/~nkeck720")
    ("MeatLoTioN (Lunduke)" "gopher://gopher.erb.pw/1")
-   ("fputs (Lunduke)" "gopher://fputs.com/1")
+   ("fputs (Lunduke) ???" "gopher://fputs.com/1")
    ("Bitreich" "gopher://bitreich.org/1")
    ("Gopherus Author" "gopher://gopher.viste.fr/1")
    ("Project Gemini" "gemini://gemini.circumlunar.space/")
