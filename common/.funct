@@ -1094,7 +1094,7 @@ lowerdir() {
     case "${a}" in
         y|Y)
             find . -type f -depth | while read infile ; do
-                outfile="$(echo \"${infile}\" | tr '[:upper:]' '[:lower:]')"
+                outfile=$(echo "${infile}" | tr '[:upper:]' '[:lower:]')
                 mv -fv "${infile}" "${outfile}"
             done
             ;;
@@ -1109,7 +1109,7 @@ upperdir() {
     case "${a}" in
         y|Y)
             find . -type f -depth | while read infile ; do
-                outfile="$(echo \"${infile}\" | tr '[:lower:]' '[:upper:]')"
+                outfile=$(echo "${infile}" | tr '[:lower:]' '[:upper:]')
                 mv -fv "${infile}" "${outfile}"
             done
             ;;
@@ -1125,8 +1125,8 @@ uncompressdirtree() {
     case "${a}" in
         y|Y)
             find . -iname *".zip" -print | while read file ; do
-                dir=${file:0:-4}
-                mkdir ${dir} && unzip -n -d ${dir} ${file} && rm ${file}
+                dir="${file:0:-4}"
+                mkdir "${dir}" && unzip -n -d "${dir}" "${file}" && rm "${file}"
             done
             ;;
     esac
