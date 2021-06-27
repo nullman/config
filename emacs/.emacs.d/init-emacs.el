@@ -2295,10 +2295,10 @@ DATA should have been made by `org-outline-overlay-data'."
   :custom
   ;; org directory
   (org-directory (expand-file-name "~/org"))
-  ;; ;; indent blocks to outline node level
-  ;; (org-adapt-indentation t)
-  ;; do not indent blocks to outline node level
-  (org-adapt-indentation nil)
+  ;; indent blocks to outline node level
+  (org-adapt-indentation t)
+  ;; ;; do not indent blocks to outline node level
+  ;; (org-adapt-indentation nil)
   ;; remap disputed keys (see `org-disputed-keys')
   (org-replace-disputed-keys t)
   ;; display inline images
@@ -2857,6 +2857,41 @@ sort alphabetically."
            (org-sort-list nil ?a)))))))
 ;; org-sort-current:1 ends here
 
+;; [[file:init-emacs.org::*org-fill-paragraph-adapt-indentation][org-fill-paragraph-adapt-indentation:1]]
+      (defun org-fill-element--adapt-indentation (orig-fun &rest args)
+        "Modify `fill-column' based on current org block indentation."
+        (with-syntax-table org-mode-transpose-word-syntax-table
+          (let* ((element (save-excursion (end-of-line) (org-element-at-point)))
+                 (type (org-element-type element)))
+            (if (or (eq type 'paragraph)
+                    (eq type 'comment-block)
+                    (eq type 'comment))
+                (let ((indent-min fill-column)
+                      (fc fill-column)
+                      (point (point)))
+                  ;; goto start of element block
+                  (while (and (not (bobp))
+                              (eq type (org-element-type (org-element-at-point)))
+                    (forward-line -1)))
+                  (unless (eq type (org-element-type (org-element-at-point)))
+                    (forward-line 1))
+                  ;; find minimum indent of entire element block
+                  (while (and (not (eobp))
+                              (eq type (org-element-type (org-element-at-point))))
+                    (when (and (not (= (point-at-bol) (point-at-eol)))
+                               (re-search-forward "^ *" (line-end-position) :noerror)
+                               (< (current-column) indent-min))
+                      (setq indent-min (current-column)))
+                    (forward-line 1))
+                  (goto-char point)
+                  ;; set temporary `fill-column'
+                  (let ((fill-column (+ fill-column indent-min)))
+                    (apply orig-fun args)))
+              (apply orig-fun args)))))
+      ;; advise `org-fill-element' to set `fill-column' correctly
+      (advice-add 'org-fill-element :around #'org-fill-element--adapt-indentation)
+;; org-fill-paragraph-adapt-indentation:1 ends here
+
 ;; [[file:init-emacs.org::*org-copy-to-clipboard][org-copy-to-clipboard:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Functions: org-copy-to-clipboard
@@ -2887,8 +2922,8 @@ and X clipboard, indenting and cleaning up links."
         (when (= indent-min fill-column)
           (goto-char (point-min))
           (while (not (eobp))
-            (goto-char (line-beginning-position))
-            (when (and (re-search-forward "^ +" (line-end-position) :noerror)
+            (when (and (not (= (point-at-bol) (point-at-eol)))
+                       (re-search-forward "^ *" (line-end-position) :noerror)
                        (< (current-column) indent-min))
               (setq indent-min (current-column)))
             (forward-line 1)))
@@ -15497,6 +15532,17 @@ and 5 is most favorite.  0 will unset the rating."
 (use-package s
   :quelpa (s))
 ;; s:1 ends here
+
+;; [[file:init-emacs.org::*saveplace][saveplace:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: saveplace
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: saveplace")
+
+(use-package saveplace
+  :init (save-place-mode 1))
+;; saveplace:1 ends here
 
 ;; [[file:init-emacs.org::*smerge][smerge:1]]
 ;;------------------------------------------------------------------------------

@@ -33,7 +33,8 @@
  (:name "Haiku" :html "https://www.haiku-os.org/blog/" :rss "https://www.haiku-os.org/blog/index.xml" :tag "dev")
  (:name "nixCraft" :html "https://www.cyberciti.biz/" :rss "https://www.cyberciti.biz/atom/atom.xml" :tag "dev")
  (:name "TecMint" :html "https://www.tecmint.com/" :rss "https://www.tecmint.com/feed/" :tag "dev")
- (:name "The Latest from Luke" :html "https://lukesmith.xyz/" :rss "https://lukesmith.xyz/rss.xml" :tag "dev")
+ (:name "Lunduke Journal" :html "https://www.lunduke.com/" :rss "https://www.lunduke.com/feed/" :tag "dev")
+ (:name "Luke Smith" :html "https://lukesmith.xyz/" :rss "https://lukesmith.xyz/rss.xml" :tag "dev")
  ;; Vintage Computing
  (:name "BYTE Cellar" :html "https://bytecellar.com/" :rss "https://bytecellar.com/feed" :tag "vintage")
  (:name "Nerd Fail" :html "https://nerd.fail/" :rss "https://nerd.fail/feed/" :tag "vintage")
