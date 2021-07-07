@@ -708,22 +708,27 @@
     (init-message 3 "Set Email Sources")
 
     ;; email settings
-    (setq mail-sources `((pop :server "pop.gmail.com" :port 995 :user ,user-mail-address
+    (setq mail-sources `((pop :server "pop.gmail.com" :port 995
+                              :user ,user-mail-address
                               :connection ssl :leave t)))
 ;; General:35 ends here
 
 ;; [[file:init-emacs.org::*General][General:36]]
-    (init-message 3 "Set Default Browser to x-www-browser")
+    (init-message 3 "Set Default Browser")
 
     ;; set default browser
-    (setq browse-url-generic-program "x-www-browser")
-    ;;(setq browse-url-generic-program "mozilla")
+    ;;(setq browse-url-generic-program "x-www-browser")
     ;;(setq browse-url-generic-program "w3m")
+    ;;(setq browse-url-generic-program "mozilla")
     ;;(setq browse-url-browser-function 'browse-url-generic)
+    (setq browse-url-browser-function 'eww-browse-url)
     ;;(setq browse-url-browser-function 'w3m-browse-url)
     ;;(setq browse-url-browser-function 'browse-url-firefox
     ;;      browse-url-new-window-flag  t
     ;;      browse-url-firefox-new-window-is-tab t)
+
+    ;; set secondary browser
+    (setq browse-url-secondary-browser-function 'browse-url-default-browser)
 ;; General:36 ends here
 
 ;; [[file:init-emacs.org::*General][General:37]]
