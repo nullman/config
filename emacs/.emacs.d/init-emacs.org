@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2021-07-08 17:14 (kyle)>
+  #+TIMESTAMP: <2021-07-10 17:06 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -356,53 +356,6 @@
     (init-message 1 "Package Manager")
   #+END_SRC
 
-*** +Straight+
-    :PROPERTIES:
-    :CUSTOM_ID: package-manager-straight
-    :END:
-
-    Build and install Emacs Lisp packages on-the-fly and directly from source.
-
-    #+BEGIN_SRC emacs-lisp :tangle no
-      ;; ;;------------------------------------------------------------------------------
-      ;; ;;; Package Manager: Straight
-      ;; ;;------------------------------------------------------------------------------
-
-      ;; (init-message 2 "Package Manager: Straight")
-
-      ;; ;; settings
-      ;; (setq straight-use-package-by-default t)
-
-      ;; ;; bootstrap
-      ;; (defvar bootstrap-version)
-      ;; (let ((bootstrap-file
-      ;;        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      ;;       (bootstrap-version 5))
-      ;;   (unless (file-exists-p bootstrap-file)
-      ;;     (with-current-buffer
-      ;;         (url-retrieve-synchronously
-      ;;          "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-      ;;          'silent 'inhibit-cookies)
-      ;;       (goto-char (point-max))
-      ;;       (eval-print-last-sexp)))
-      ;;   (load bootstrap-file nil 'nomessage))
-
-      ;; ;; install `bind-key' to help with binding keys in `use-package' blocks
-      ;; (use-package bind-key
-      ;;   :quelpa (bind-key)
-      ;;   :init
-      ;;   ;; extract docstrings from lambdas, closures and keymaps if possible
-      ;;   (setq bind-key-describe-special-forms t))
-
-      ;; ;; install `diminish' to diminish package names on the mode-line in `use-package' blocks
-      ;; (use-package diminish
-      ;;   :quelpa (diminish :fetcher github :repo "myrjola/diminish.el"))
-
-      ;; ;; install `async' as it is used by other functions
-      ;; (use-package async
-      ;;   :quelpa (async))
-    #+END_SRC
-
 *** Quelpa
     :PROPERTIES:
     :CUSTOM_ID: package-manager-quelpa
@@ -459,6 +412,54 @@
       ;; install `async' as it is used by other functions
       (use-package async
         :quelpa (async))
+    #+END_SRC
+
+*** +Straight+
+    :PROPERTIES:
+    :CUSTOM_ID: package-manager-straight
+    :END:
+
+    Build and install Emacs Lisp packages on-the-fly and directly from source.
+
+    #+BEGIN_SRC emacs-lisp :tangle no
+      ;; ;;------------------------------------------------------------------------------
+      ;; ;;; Package Manager: Straight
+      ;; ;;------------------------------------------------------------------------------
+
+      ;; (init-message 2 "Package Manager: Straight")
+
+      ;; ;; bootstrap
+      ;; (defvar bootstrap-version)
+      ;; (let ((bootstrap-file
+      ;;        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      ;;       (bootstrap-version 5))
+      ;;   (unless (file-exists-p bootstrap-file)
+      ;;     (with-current-buffer
+      ;;         (url-retrieve-synchronously
+      ;;          "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+      ;;          'silent 'inhibit-cookies)
+      ;;       (goto-char (point-max))
+      ;;       (eval-print-last-sexp)))
+      ;;   (load bootstrap-file nil 'nomessage))
+
+      ;; ;; use straight with `use-package'
+      ;; (straight-use-package 'use-package)
+
+      ;; ;; use straight by default in `use-package' macros
+      ;; (setq straight-use-package-by-default t)
+
+      ;; ;; install `bind-key' to help with binding keys in `use-package' blocks
+      ;; (use-package bind-key
+      ;;   :init
+      ;;   ;; extract docstrings from lambdas, closures and keymaps if possible
+      ;;   (setq bind-key-describe-special-forms t))
+
+      ;; ;; install `diminish' to diminish package names on the mode-line in `use-package' blocks
+      ;; (use-package diminish
+      ;;   :straight (diminish :type git :host github :repo "myrjola/diminish.el"))
+
+      ;; ;; install `async' as it is used by other functions
+      ;; (use-package async)
     #+END_SRC
 
 *** +ELPA (Emacs Lisp Package Archive)+
