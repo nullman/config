@@ -7,20 +7,22 @@
 # Author: Kyle W T Sherman
 #===============================================================================
 
-dir=/tmp/wine-ie6-install
+dir="/tmp/wine-ie6-install"
 
-# mkdir -p ${dir} && \
-#   cd ${dir} && \
-#   wget http://download.microsoft.com/msdownload/dcom/98/x86/en/dcom98.exe && \
-#   wget http://download.microsoft.com/download/ie6sp1/finrel/6_sp1/W98NT42KMeXP/EN-US/ie6setup.exe && \
-#   wine --dll wininet=builtin ie6setup
+# mkdir -p "${dir}" && \
+    #   cd "${dir}" && \
+    #   wget http://download.microsoft.com/msdownload/dcom/98/x86/en/dcom98.exe && \
+    #   wget http://download.microsoft.com/download/ie6sp1/finrel/6_sp1/W98NT42KMeXP/EN-US/ie6setup.exe && \
+    #   wine --dll wininet=builtin ie6setup
 
-mkdir -p ${dir} && \
-  cd ${dir} && \
-  wget http://www.tatanka.com.br/ies4linux/downloads/ies4linux-latest.tar.gz && \
-  tar zxvf ies4linux-latest.tar.gz && \
-  cd ies4linux-* && \
-  ./ies4linux
+mkdir -p "${dir}" && \
+    cd "${dir}" && \
+    wget http://www.tatanka.com.br/ies4linux/downloads/ies4linux-latest.tar.gz && \
+    tar zxvf ies4linux-latest.tar.gz && \
+    cd ies4linux-* && \
+    ./ies4linux
+
+echo "When finished run: rm -rf ${dir}"
 
 #===============================================================================
 # End of File

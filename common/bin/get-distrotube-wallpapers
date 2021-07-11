@@ -25,7 +25,7 @@ if [[ $# -ne 0 ]] ; then
 else
     # fetch missing images in a loop
     # get highest downloaded image number
-    num=$(("10#$(ls -1 "${dir}" | tail -n 1 | sed 's/\..*$//')" + 1))
+    num=$(("10#$(find "${dir}/" -exec basename {} \; | sort -n | tail -n 1 | sed 's/\..*$//')" + 1))
     loop=1
 fi
 

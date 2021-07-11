@@ -11,12 +11,9 @@
 
 tmpfile="__temp__"
 
-#musicdir="/var/lib/mpd/music"           # music directory
-#pldir="/var/lib/mpd/playlists"          # play list directory
-#pubdir="/_links/music"                  # public directory (for play list copy)
 musicdir="/home/data/media/audio/Music"  # music directory
 pldir="/home/data/media/audio/Playlists" # play list directory
-ratingsdir=${HOME}/.song-ratings         # ratings directory
+ratingsdir="${HOME}/.song-ratings"       # ratings directory
 
 #===============================================================================
 # setup
@@ -33,15 +30,10 @@ pushd "${musicdir}" > /dev/null 2>&1
 #===============================================================================
 
 [[ -f "${pldir}/${tmpfile}" ]] && rm -f "${pldir}/${tmpfile}"
-for i in Albums ; do
-    for j in Classic%Rock Classical%-%Instrumental Country Hard%Rock Pop%-%Dance R\&B Rap Reggae Rock%-%Alternative Techno%-%Electronic ; do
-        d=$(echo "${j}" | sed "s/\%/ /g")
-        for k in $(ls -1 "${i}/${d}/" | sed 's/ /\%/g') ; do
-            e=$(echo "${k}" | sed 's/\%/ /g')
-            for l in $(ls -1 "${i}/${d}/${e}/" | sed 's/ /\%/g') ; do
-                echo "${i}/${d}/${e}/${l}" | sed 's/\%/ /g' >> "${pldir}/${tmpfile}"
-            done
-        done
+for d in Albums ; do
+    for gn in Classic%Rock Classical%-%Instrumental Country Hard%Rock Pop%-%Dance R\&B Rap Reggae Rock%-%Alternative Techno%-%Electronic ; do
+        gd=$(echo "${gn}" | sed "s/\%/ /g")
+        find "${d}/${gd}/" -type f >> "${pldir}/${tmpfile}"
     done
 done
 
@@ -55,12 +47,10 @@ fi
 #===============================================================================
 
 [[ -f "${pldir}/${tmpfile}" ]] && rm -f "${pldir}/${tmpfile}"
-for i in Singles ; do
-    for j in Classic%Rock Classical%-%Instrumental Country Hard%Rock Pop%-%Dance R\&B Rap Reggae Rock%-%Alternative Techno%-%Electronic ; do
-        d=$(echo "${j}" | sed 's/\%/ /g')
-        for k in $(ls -1 "${i}/${d}/" | sed 's/ /\%/g') ; do
-            echo "${i}/${d}/${k}" | sed 's/\%/ /g' >> "${pldir}/${tmpfile}"
-        done
+for d in Singles ; do
+    for gn in Classic%Rock Classical%-%Instrumental Country Hard%Rock Pop%-%Dance R\&B Rap Reggae Rock%-%Alternative Techno%-%Electronic ; do
+        gd=$(echo "${gn}" | sed 's/\%/ /g')
+        find "${d}/${gd}/" -type f >> "${pldir}/${tmpfile}"
     done
 done
 
@@ -80,22 +70,14 @@ mv "${pldir}/${tmpfile}" "${pldir}/raw_all.m3u"
 # genres
 #===============================================================================
 
-for i in Albums Singles ; do
-    for j in $(ls -1 "${i}/" | sed 's/ /\%/g') ; do
+rm "${pldir}/genre_"*.m3u
+for d in Albums Singles ; do
+    for gn in $(find "${d}/" -mindepth 1 -maxdepth 1 -type d | sed 's/^.*\/// ; s/ /\%/g') ; do
         [[ -f "${pldir}/${tmpfile}" ]] && rm -f "${pldir}/${tmpfile}"
-        d=$(echo "${j}" | sed "s/\%/ /g")
-        for k in $(ls -1 "${i}/${d}/" | sed 's/ /\%/g') ; do
-            if [[ "${i}" == "Albums" ]] ; then
-                e=$(echo "${k}" | sed 's/\%/ /g')
-                for l in $(ls -1 "${i}/${d}/${e}/" | sed 's/ /\%/g') ; do
-                    echo "${i}/${d}/${e}/${l}" | sed 's/\%/ /g' >> "${pldir}/${tmpfile}"
-                done
-            else
-                echo "${i}/${d}/${k}" | sed 's/\%/ /g' >> "${pldir}/${tmpfile}"
-            fi
-        done
-        n=$(echo "${j}" | tr '[:upper:]' '[:lower:]' | sed 's/\%/_/g ; s/_-_/-/g')
-        [[ -e "${pldir}/${tmpfile}" ]] && cat "${pldir}/${tmpfile}" | sort > "${pldir}/genre_${n}.m3u"
+        gd=$(echo "${gn}" | sed "s/\%/ /g")
+        find "${d}/${gd}/" -type f >> "${pldir}/${tmpfile}"
+        n=$(echo "${gn}" | tr '[:upper:]' '[:lower:]' | sed 's/\%/_/g ; s/_-_/-/g')
+        [[ -e "${pldir}/${tmpfile}" ]] && cat "${pldir}/${tmpfile}" | sort >> "${pldir}/genre_${n}.m3u"
     done
 done
 
@@ -149,24 +131,24 @@ find Albums -name "*\.mp3" -mtime -730 -print | sort -t / -k 3 >> "${pldir}/rece
 echo -n "" > "${pldir}/rated_normal.m3u"
 echo -n "" > "${pldir}/rated_good.m3u"
 echo -n "" > "${pldir}/rated_all.m3u"
-for i in $(seq 1 5) ; do
-    cp "${ratingsdir}/songs-rated-${i}" "${pldir}/rated_${i}.m3u"
-    [[ ${i} -ge 3 ]] && cat "${ratingsdir}/songs-rated-${i}" | sort --random-sort >> "${pldir}/rated_normal.m3u"
-    [[ ${i} -ge 4 ]] && cat "${ratingsdir}/songs-rated-${i}" | sort --random-sort >> "${pldir}/rated_good.m3u"
-    cat "${ratingsdir}/songs-rated-${i}" | sort --random-sort >> "${pldir}/rated_all.m3u"
+for r in $(seq 1 5) ; do
+    cp "${ratingsdir}/songs-rated-${r}" "${pldir}/rated_${r}.m3u"
+    [[ ${r} -ge 3 ]] && cat "${ratingsdir}/songs-rated-${r}" | sort --random-sort >> "${pldir}/rated_normal.m3u"
+    [[ ${r} -ge 4 ]] && cat "${ratingsdir}/songs-rated-${r}" | sort --random-sort >> "${pldir}/rated_good.m3u"
+    cat "${ratingsdir}/songs-rated-${r}" | sort --random-sort >> "${pldir}/rated_all.m3u"
 done
 
 # unrated list
 echo -n "" > "${pldir}/unrated.m3u"
-while read i ; do
-    d=$(grep -F "${i}" "${pldir}/rated_all.m3u")
-    [[ -z "${d}" ]] && echo "${i}" >> "${pldir}/unrated.m3u"
+while read s ; do
+    d=$(grep -F "${s}" "${pldir}/rated_all.m3u")
+    [[ -z "${d}" ]] && echo "${s}" >> "${pldir}/unrated.m3u"
 done < "${pldir}/sorted_all.m3u"
 
 # randomize some playlists
-for i in "rated_normal.m3u" "rated_good.m3u" "rated_all.m3u" "unrated.m3u" ; do
-    cp "${pldir}/${i}" "${pldir}/${tmpfile}" && \
-      cat "${pldir}/${tmpfile}" | sort --random-sort > "${pldir}/${i}"
+for s in "rated_normal.m3u" "rated_good.m3u" "rated_all.m3u" "unrated.m3u" ; do
+    cp "${pldir}/${s}" "${pldir}/${tmpfile}" && \
+        cat "${pldir}/${tmpfile}" | sort --random-sort > "${pldir}/${s}"
 done
 
 # rated good and unrated interleaved

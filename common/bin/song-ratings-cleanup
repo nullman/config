@@ -12,7 +12,7 @@ oldIFS=${IFS}
 IFS=$'\n'
 
 dir="${HOME}/.song-ratings"
-files="$(ls -1 ${dir})"
+files="$(find ${dir}/ -type f -exec basename {} \;)"
 audiodir="/home/data/media/audio/Music"
 dryrun=false
 yes=false

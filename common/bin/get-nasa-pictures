@@ -12,7 +12,7 @@
 urlbase="https://apod.nasa.gov/apod"
 archive="${urlbase}/archivepix.html"
 dir="/home/data/media/nasa_pictures/apod"
-index="/tmp/nasa-pictures-index"
+index="/tmp/nasa-pictures-index.$$"
 
 wget "${archive}" -q -O - | grep 'href="ap' | sed 's/^.*\"ap/ap/ ; s/\".*$//' > "${index}"
 

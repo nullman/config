@@ -15,7 +15,7 @@
 #! cdargs
 #!
 [[ -f "/usr/share/doc/cdargs/examples/cdargs-bash.sh" ]] && \
-  source "/usr/share/doc/cdargs/examples/cdargs-bash.sh"
+    source "/usr/share/doc/cdargs/examples/cdargs-bash.sh"
 #!
 #===============================================================================
 # Function Definitions
@@ -40,13 +40,13 @@ alias fuhg="
 alfuhg() {
     for file in ".alias" ".alias-work" ; do
         [[ -f "${HOME}/${file}" ]] && \
-          echo "Aliases (${file}):" && \
-          cat "${HOME}/${file}" | grep '^#' | grep -v '^#!' | sed 's/^#//' | grep -i "$1"
+            echo "Aliases (${file}):" && \
+            cat "${HOME}/${file}" | grep '^#' | grep -v '^#!' | sed 's/^#//' | grep -i "$1"
     done
     for file in ".funct" ".funct-work" ; do
         [[ -f "${HOME}/${file}" ]] && \
-          echo "Functions (${file}):" && \
-          cat "${HOME}/${file}" | grep '^#' | grep -v '^#!' | sed 's/^#//' | grep -i "$1"
+            echo "Functions (${file}):" && \
+            cat "${HOME}/${file}" | grep '^#' | grep -v '^#!' | sed 's/^#//' | grep -i "$1"
     done
 }
 #!#        alfuhlg                 alias and funct help (long) with grep
@@ -174,9 +174,9 @@ changelog() {
             else
                 (
                     echo "$(date '+%Y-%m-%d'): $@" > ${tmp} && \
-                      echo "" >> "${tmp}" && \
-                      cat "${file}" >> "${tmp}" && \
-                      mv "${tmp}" "${file}"
+                        echo "" >> "${tmp}" && \
+                        cat "${file}" >> "${tmp}" && \
+                        mv "${tmp}" "${file}"
                 ) || echo "Error adding log entry to file '${file}'"
             fi
         else
@@ -420,8 +420,8 @@ speakurl() {
         echo "Usage: $0 URL"
     else
         lynx --dump "$1" |
-        sed 's/\[.*\]//g ; s/[^0-9a-zA-Z \?\,\.\;\:]//g ; /^References$/,$d' |
-        festival --tts
+            sed 's/\[.*\]//g ; s/[^0-9a-zA-Z \?\,\.\;\:]//g ; /^References$/,$d' |
+            festival --tts
     fi
 }
 #        m4vtomp4                convert all m4v videos in current directory to mp4 videos
@@ -867,10 +867,10 @@ sshkeycp() {
     else
         ssh "$1" '[[ ! -d .ssh ]] && mkdir -p .ssh && chmod 700 .ssh'
         [[ -f "${HOME}/.ssh/id_dsa.pub" ]] && \
-          cat "${HOME}/.ssh/id_dsa.pub" | ssh "$1" '/bin/cat >> .ssh/authorized_keys ; \
+            cat "${HOME}/.ssh/id_dsa.pub" | ssh "$1" '/bin/cat >> .ssh/authorized_keys ; \
           /bin/chmod 600 .ssh/authorized_keys'
         [[ -f "${HOME}/.ssh/id_rsa.pub" ]] && \
-          cat "${HOME}/.ssh/id_rsa.pub" | ssh "$1" '/bin/cat >> .ssh/authorized_keys ; \
+            cat "${HOME}/.ssh/id_rsa.pub" | ssh "$1" '/bin/cat >> .ssh/authorized_keys ; \
           /bin/chmod 600 .ssh/authorized_keys'
     fi
 }
@@ -889,7 +889,7 @@ sshurxvtcp() {
         echo "Usage: $0 [USER@]SERVER"
     else
         infocmp urxvt | \
-          ssh "$1" 'cat > /tmp/terminfo && mkdir -p .terminfo && \
+            ssh "$1" 'cat > /tmp/terminfo && mkdir -p .terminfo && \
               tic /tmp/terminfo && rm -f /tmp/terminfo'
     fi
 }
@@ -940,13 +940,13 @@ diskuuid() {
                     [[ -n "${mount}" ]] && echo "${partition}_REG_${mount}_${uuid}"
                 fi
             done
-            ) | sort)
+        ) | sort)
     (
         echo "PARTITION TYPE MOUNT UUID"
         for line in ${output} ; do
             echo "${line}" | sed 's/_/ /g'
         done
-        ) | column --table
+    ) | column --table
 }
 
 #
@@ -1187,16 +1187,16 @@ dvdencode() {
         fi
         # one pass encode
         mencoder "dvd://${track}" -ovc "lavc" -lavcopts vcodec="mpeg4:vhq:v4mv:vqmin=2:vbitrate=1800" \
-          -oac "mp3lame" -lameopts "abr:br=128" -o "${file}"
+                 -oac "mp3lame" -lameopts "abr:br=128" -o "${file}"
         # # two pass encode
         # # encode audio
         # mencoder dvd://${track} -ovc frameno -o ${file}.audio -oac mp3lame -lameopts abr:br=128
         # # encode video, first pass
         # mencoder dvd://${track} -audiofile ${file}.audio -oac copy -o /dev/null \
-        #   -ovc lavc -lavcopts vcodec=mpeg4:vbitrate=1800:vhq:vpass=1:vqmin=2:vqmax=31
+            #   -ovc lavc -lavcopts vcodec=mpeg4:vbitrate=1800:vhq:vpass=1:vqmin=2:vqmax=31
         # # encode video, second pass
         # mencoder dvd://${track} -audiofile ${file}.audio -oac copy -o ${file} \
-        #   -ovc lavc -lavcopts vcodec=mpeg4:vbitrate=1800:vhq:vpass=2:vqmin=2:vqmax=31
+            #   -ovc lavc -lavcopts vcodec=mpeg4:vbitrate=1800:vhq:vpass=2:vqmin=2:vqmax=31
     fi
 }
 
@@ -1261,17 +1261,21 @@ gitsyncconfig() {
         # update addressbook
         if [[ -f "${HOME}/.addressbook" ]] && [[ ! -L "${HOME}/.addressbook" ]] ; then
             echo "Update .addressbook..."
-            (cd "${HOME}" && \
-                 cp .addressbook config-private/common/ && \
-                 ln -sf config-private/common/.addressbook)
+            (
+                cd "${HOME}" && \
+                    cp .addressbook config-private/common/ && \
+                    ln -sf config-private/common/.addressbook
+            )
         fi
         # only update xscreensaver preferences on tank
         if [[ -f "${HOME}/.xscreensaver" ]] && [[ ! -L "${HOME}/.xscreensaver" ]] && \
                [[ "$(uname -n)" == "tank" ]] ; then
             echo "Update .xscreensaver..."
-            (cd "${HOME}" && \
-                 cp .xscreensaver config-private/common/ && \
-                 ln -sf config-private/common/.xscreensaver)
+            (
+                cd "${HOME}" && \
+                    cp .xscreensaver config-private/common/ && \
+                    ln -sf config-private/common/.xscreensaver
+            )
         fi
     fi
 }
@@ -1537,7 +1541,7 @@ rsynccruzer() {
         "${root}/Plop Boot Manager.iso"
         "${root}/Super Grub2 "*.iso
         "${root}/System Rescue "*.iso
-        )
+    )
     for file in "${files[@]}" ; do
         rsync -rLtxc --progress --delete "${file}" "${dest}"
     done
@@ -1585,23 +1589,20 @@ jarversion() {
         echo "  PATTERN  defaults to '*.jar'"
     else
         dir="$1"
-        shift
         [[ -z "${dir}" ]] && dir="."
-        pattern="$1"
+        pattern="$2"
         [[ -z "${pattern}" ]] && pattern="*.jar"
-        tmp="./tmp$$"
-        pushd "${dir}" > /dev/null && ( \
-            for jar in $(ls -1 "${pattern}") ; do
-                mkdir -p "${tmp}" && \
-                  cp "${jar}" "${tmp}/" && \
-                  pushd "${tmp}" > /dev/null && ( \
-                      unzip "${jar}" > /dev/null && \
-                      echo "${jar} $(cat 'META-INF/MANIFEST.MF' | grep '^Created-By' | sed 's/^Created-By: // ; s/ (Sun.*$//')"
-                  )
-                popd > /dev/null
-                rm -rf "${tmp}"
-            done | column --table
-        )
+        tmp="$(mktemp -d)"
+        find "${dir}" -name "${pattern}" -type f | while read jar ; do
+            mkdir -p "${tmp}"
+            cp "${jar}" "${tmp}/"
+            (
+                cd "${tmp}"
+                unzip "${jar}" > /dev/null
+                echo "${jar} $(grep '^Created-By' 'META-INF/MANIFEST.MF' | sed 's/^Created-By: // ; s/ (Sun.*$//')"
+            )
+            rm -rf "${tmp}"
+        done | column --table
     fi
 }
 
@@ -1742,24 +1743,25 @@ homeinitialize() {
             [[ -d "${HOME}/config" ]] || (echo "Missing config directory!" && return 1)
 
             echo "Moving existing home files to '${backupdir}'..."
-            (cd "${HOME}" && \
-                 mkdir -p "${backupdir}" && \
-                 for file in ${backupfiles[@]} ; do
-                     if [[ -e "${file}" ]] ; then
-                         echo "  ${file} ==> ${backupdir}"
-                         mv "${file}" "${backupdir}/"
-                     fi
-                 done) || (echo "Errors encountered while backing up existing files!" && return 1)
+            (
+                cd "${HOME}" && \
+                    mkdir -p "${backupdir}" && \
+                    for file in ${backupfiles[@]} ; do
+                        if [[ -e "${file}" ]] ; then
+                            echo "  ${file} ==> ${backupdir}"
+                            mv "${file}" "${backupdir}/"
+                        fi
+                    done
+            ) || (echo "Errors encountered while backing up existing files!" && return 1)
 
             # create stow target directories
             echo "Creating stow target directories..."
             mkdir -p "${HOME}/.emacs.d"
             mkdir -p "${HOME}/.local/share/applications"
-            ls -1 "${HOME}/config/config/.config" | while read dir ; do
-                if [[ -d "${HOME}/config/config/.config/${dir}" ]] ; then
-                    mkdir -p "${HOME}/.config/${dir}"
-                fi
-            done
+            find "${HOME}/config/config/.config" -mindepth 1 -maxdepth 1 -type d | \
+                while read dir ; do
+                    mkdir -p "${HOME}/.config/$(basename \"${dir}\")"
+                done
 
             # stow
             echo "Stowing packages..."
@@ -1771,13 +1773,15 @@ homeinitialize() {
             [[ -d "${HOME}/config-private" ]] && stow --dir="${HOME}/config-private" --target="${HOME}" --no-folding --stow "config"
 
             echo "Making other symlinks..."
-            (cd "${HOME}" && \
-                 for file in ${symlinkdirs[@]} ; do
-                     if [[ -d "${file}" ]] ; then
-                         echo "  ${file}"
-                         ln -sf "${file}" .
-                     fi
-                 done)
+            (
+                cd "${HOME}" && \
+                    for file in ${symlinkdirs[@]} ; do
+                        if [[ -d "${file}" ]] ; then
+                            echo "  ${file}"
+                            ln -sf "${file}" .
+                        fi
+                    done
+            )
             ;;
     esac
 }
@@ -1787,11 +1791,10 @@ homerestow() {
     echo "Creating stow target directories..."
     mkdir -p "${HOME}/.emacs.d"
     mkdir -p "${HOME}/.local/share/applications"
-    ls -1 "${HOME}/config/config/.config" | while read dir ; do
-        if [[ -d "${HOME}/config/config/.config/${dir}" ]] ; then
-            mkdir -p "${HOME}/.config/${dir}"
-        fi
-    done
+    find "${HOME}/config/config/.config" -mindepth 1 -maxdepth 1 -type d | \
+        while read dir ; do
+            mkdir -p "${HOME}/.config/$(basename \"${dir}\")"
+        done
 
     # restow
     echo "Restowing packages..."

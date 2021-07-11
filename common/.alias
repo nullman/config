@@ -47,7 +47,7 @@ alias alhg="
 #!#        ahlg                    alias help (long) with grep
 #!alias ahlg="
 #!    cat \${HOME}/.alias \${HOME}/.alias-work 2>/dev/null | \
-#!      grep -v '^#!' | grep -v '^#  ' | sed 's/^#//' | more | grep -i"
+    #!      grep -v '^#!' | grep -v '^#  ' | sed 's/^#//' | more | grep -i"
 
 #
 # source core scripts
@@ -356,18 +356,6 @@ alias rate="curl --silent rate.sx"
 #
 # general (complex)
 #
-#!#        get-nasa-pictures               suck nasa pictures off the web
-#!alias get-nasa-pictures="wget -r -p -L -nc -nH -np -A big.jpg,big.gif,big.png http://antwrp.gsfc.nasa.gov/apod/image/"
-#!#        make-nasa-slideshow             make nasa slide show directory
-#!alias make-nasa-slideshow="
-#!    #rm -rf ${home}/data/media/pictures_slide_show/Nasa/*
-#!    pushd ${home}/data/media/nasa_pictures/apod/image/
-#!    find . -type f | while read file ; do
-#!        o=\$(echo \"\${file}\" | cut -c 3- | tr '/' '_')
-#!        o=\"${home}/data/media/pictures_slide_show/Nasa/\${o}\"
-#!        cp \"\${file}\" \"\${o}\"
-#!    done
-#!    popd"
 #        terminal-width-80               show terminal width grid
 alias terminal-width-80="
     echo 'Terminal width:'
@@ -406,13 +394,15 @@ alias terminal-colors="
     echo -e '\e[30m\e[40m   \e[31m\e[41m   \e[32m\e[42m   \e[33m\e[43m   \e[34m\e[44m   \e[35m\e[45m   \e[36m\e[46m   \e[37m\e[47m   \e[0m'
     echo -e '\e[38;5;8m\e[48;5;8m   \e[38;5;9m\e[48;5;9m   \e[38;5;10m\e[48;5;10m   \e[38;5;11m\e[48;5;11m   \e[38;5;12m\e[48;5;12m   \e[38;5;13m\e[48;5;13m   \e[38;5;14m\e[48;5;14m   \e[38;5;15m\e[48;5;15m   \e[0m'"
 #        remove-org-font-files           remove org-src-fontification files
-alias remove-org-font-files="(
-    cd \${HOME} && \
-    for dir in config dev web ; do
-        [[ -d \${dir} ]] && \
-            find \${HOME}/\${dir} -name '*org-src-fontification*' -print | \
-            xargs rm > /dev/null 2>&1
-    done)"
+alias remove-org-font-files="
+    (
+        cd \${HOME} && \
+            for dir in config dev web ; do
+                [[ -d \${dir} ]] && \
+                    find \${HOME}/\${dir} -name '*org-src-fontification*' -print | \
+                    xargs rm > /dev/null 2>&1
+            done
+    )"
 #        stopwatch                       start stopwatch timer
 alias stopwatch="
     start=\$(date '+%s')
@@ -821,15 +811,15 @@ alias xscl="xscreensaver-command -lock & > /dev/null 2>&1"
 alias sschbg="chbg -randomize -interval 30.00 -R"
 #! add the following to .xscreensaver:
 #!  default-n:        "SlideShow (chbg)" \
-#!                    chbg -xscreensaver -randomize -interval 0.30 \
-#!                    -R /home/data/media/pictures_slide_show/Nasa/     \n\
-#        ssfeh                   slideshow using feh
+    #!                    chbg -xscreensaver -randomize -interval 0.30 \
+    #!                    -R /home/data/media/pictures_slide_show/Nasa/     \n\
+    #        ssfeh                   slideshow using feh
 alias ssfeh="feh --title \"Slideshow\" -F -x -z -D 30.00 -r"
 #! add the following to .xscreensaver:
 #!  default-n:        "SlideShow (feh)" \
-#!                    feh --title "Slideshow" -F -x -D 0.30 \
-#!                    -r /home/data/media/pictures_slide_show/Nasa/     \n\
-#!       ssapp                   slideshow application
+    #!                    feh --title "Slideshow" -F -x -D 0.30 \
+    #!                    -r /home/data/media/pictures_slide_show/Nasa/     \n\
+    #!       ssapp                   slideshow application
 ssapp="feh --title \"Slideshow\" -F -x -z -D 30.00 -r"
 #        sspersonal              personal slideshow
 alias sspersonal="${ssapp} ${home}/data/media/pictures_slide_show/Personal/"
@@ -920,9 +910,9 @@ alias wine-ddo-cp="WINEPREFIX=\${HOME}/.wine-ddocp wine \"C:\Games\DDOCharGen\DD
 #!#        eve-copy-settings       copy eve settings
 #!alias eve-copy-settings="
 #!    cp -r \"\${HOME}/Downloads/EVE/CCP/EVE/c_program_files_ccp_eve_tranquility/settings\" \
-#!      \"\${HOME}/.wine-eve/drive_c/windows/profiles/kyle/Local Settings/Application Data/CCP/EVE/c_program_files_ccp_eve_tranquility/\"
+    #!      \"\${HOME}/.wine-eve/drive_c/windows/profiles/kyle/Local Settings/Application Data/CCP/EVE/c_program_files_ccp_eve_tranquility/\"
 #!    cp -r \"\${HOME}/Downloads/EVE/CCP/EVE/c_users_kyle_program_files_eve_tranquility/settings\" \
-#!      \"\${HOME}/.wine-eve2/drive_c/windows/profiles/kyle/Local Settings/Application Data/CCP/EVE/c_program_files_ccp_eve_tranquility/\""
+    #!      \"\${HOME}/.wine-eve2/drive_c/windows/profiles/kyle/Local Settings/Application Data/CCP/EVE/c_program_files_ccp_eve_tranquility/\""
 #        wine-tta                wine through the ages
 alias wine-tta="WINEPREFIX=\${HOME}/.wine-tta wine \"C:\GOG Games\Through the Ages\ThroughTheAges_gog.exe\""
 
@@ -982,42 +972,44 @@ alias dir="ls_ -l -A | pager"
 # exa
 #
 if _command exa ; then
-#        exa                     (color and group directories first)
-alias exa="exa --color=always --group-directories-first"
-#        la                      exa --color=always --group-directories-first
-alias la="exa"
-#        lsa                     exa -a (almost-all)
-alias lsa="exa -a"
-#        lsd                     exa -D (directories)
-alias lsd="exa -D"
-#        lsr                     exa -R (recursive)
-alias lsr="exa -R"
-#        ls1                     exa -1 (one-file-per-line)
-alias ls1="exa -1"
-#        ll                      exa -l (long-format)
-alias ll="exa -l"
-#        lla                     exa -l -a (long-format, almost-all)
-alias lla="exa -l -a"
-#        lld                     exa -l -D (long-format, directories)
-alias lld="exa -l -D"
-#        llr                     exa -l -R (long-format, recursive)
-alias llr="exa -l -R"
-#        llra                    exa -l -R -a (long-format, recursive, almost-all)
-alias llra="exa -l -R -a"
-#        llrt                    exa -l -r -t (long-format, reverse-order, time-sort)
-alias llrt="exa -l -s newest"
-#        llrta                   exa -l -r -t -a (long-format, reverse-order, time-sort, almost-all)
-alias llrta="exa -l -s newest -a"
-#        llrtadl                 llrta ~/Downloads/
-alias llrtadl="exa -l -s newest -a \${HOME}/Downloads/"
-#        llrtalog                llrta /var/log
-alias llrtalog="exa -l -s newest -a /var/log"
-#        llag                    exa -l -a (long-format, almost-all) with grep -i
-alias llag="exa -l -a | grep -i"
-#        llt                     exa -T (tree)
-alias lst="exa -T -a"
-#        ls.                     exa -a (almost-all), dot files and directories only
-alias ls.="exa -a | egrep '^\.'"
+    #        exa                     (color and group directories first)
+    alias exa="exa --color=always --group-directories-first"
+    #        ls                      exa --color=always --group-directories-first
+    alias ls="exa"
+    #        la                      exa --color=always --group-directories-first
+    alias la="exa"
+    #        lsa                     exa -a (almost-all)
+    alias lsa="exa -a"
+    #        lsd                     exa -D (directories)
+    alias lsd="exa -D"
+    #        lsr                     exa -R (recursive)
+    alias lsr="exa -R"
+    #        ls1                     exa -1 (one-file-per-line)
+    alias ls1="exa -1"
+    #        ll                      exa -l (long-format)
+    alias ll="exa -l"
+    #        lla                     exa -l -a (long-format, almost-all)
+    alias lla="exa -l -a"
+    #        lld                     exa -l -D (long-format, directories)
+    alias lld="exa -l -D"
+    #        llr                     exa -l -R (long-format, recursive)
+    alias llr="exa -l -R"
+    #        llra                    exa -l -R -a (long-format, recursive, almost-all)
+    alias llra="exa -l -R -a"
+    #        llrt                    exa -l -r -t (long-format, reverse-order, time-sort)
+    alias llrt="exa -l -s newest"
+    #        llrta                   exa -l -r -t -a (long-format, reverse-order, time-sort, almost-all)
+    alias llrta="exa -l -s newest -a"
+    #        llrtadl                 llrta ~/Downloads/
+    alias llrtadl="exa -l -s newest -a \${HOME}/Downloads/"
+    #        llrtalog                llrta /var/log
+    alias llrtalog="exa -l -s newest -a /var/log"
+    #        llag                    exa -l -a (long-format, almost-all) with grep -i
+    alias llag="exa -l -a | grep -i"
+    #        llt                     exa -T (tree)
+    alias lst="exa -T -a"
+    #        ls.                     exa -a (almost-all), dot files and directories only
+    alias ls.="exa -a | egrep '^\.'"
 fi
 
 #
@@ -1588,17 +1580,17 @@ alias sshkeygen="ssh-keygen -t rsa -b 4096"
 #!     echo -n 'Host to copy ssh key to: ' ; read a
 #!     ssh \${a} '[[ ! -d .ssh ]] && mkdir -p .ssh && chmod 700 .ssh'
 #!     [[ -f \${HOME}/.ssh/id_dsa.pub ]] && \
-#!       cat \${HOME}/.ssh/id_dsa.pub | ssh \${a} '/bin/cat >> .ssh/authorized_keys ; \
-#!       /bin/chmod 600 .ssh/authorized_keys'
+    #!       cat \${HOME}/.ssh/id_dsa.pub | ssh \${a} '/bin/cat >> .ssh/authorized_keys ; \
+    #!       /bin/chmod 600 .ssh/authorized_keys'
 #!     [[ -f \${HOME}/.ssh/id_rsa.pub ]] && \
-#!       cat \${HOME}/.ssh/id_rsa.pub | ssh \${a} '/bin/cat >> .ssh/authorized_keys ; \
-#!       /bin/chmod 600 .ssh/authorized_keys'"
+    #!       cat \${HOME}/.ssh/id_rsa.pub | ssh \${a} '/bin/cat >> .ssh/authorized_keys ; \
+    #!       /bin/chmod 600 .ssh/authorized_keys'"
 #! #        sshurxvtcp              copy urxvt terminfo data to remote host
 #! alias sshurxvtcp="
 #!     echo -n 'Host to copy urxvt terminfo data to: ' ; read a
 #!     infocmp urxvt | \
-#!       ssh \${a} 'cat > /tmp/terminfo && mkdir -p .terminfo && \
-#!       tic /tmp/terminfo && rm -f /tmp/terminfo'"
+    #!       ssh \${a} 'cat > /tmp/terminfo && mkdir -p .terminfo && \
+    #!       tic /tmp/terminfo && rm -f /tmp/terminfo'"
 #        sshagent                turn on ssh agent
 alias sshagent="
     ssh-agent
@@ -1835,10 +1827,12 @@ alias rsync-music-put-colleen="
 #!    o=/run/media/\${USER}/\$(cd /run/media/\${USER} && \$(pathcmd ls) -1)
 #!    cp \${HOME}/.mpd/playlists/kyle.m3u \${o}/
 #!    cp \${HOME}/.mpd/playlists/rated_good.m3u \${o}/
-#!    (cd \"${home}/data/media/audio/Music/\" &&
-#!    cat \${o}/*.m3u | while read line ; do
-#!        rsync -Rtxc --progress --delete \"\${line}\" \${o}/
-#!    done)"
+#!    (
+#!        cd \"${home}/data/media/audio/Music/\" && \
+#!            cat \${o}/*.m3u | while read line ; do
+#!                rsync -Rtxc --progress --delete \"\${line}\" \${o}/
+#!            done
+#!    )"
 alias rsync-music-put-jeep-sd="
     o=/run/media/\${USER}/JEEP && \
       rsync -rLtxc --progress --delete \${HOME}/.mpd/playlists/kyle.m3u \${o}/ && \
@@ -2019,12 +2013,12 @@ alias sc20="\${HOME}/bin/screen-app 20"
 #!#        sctun                   screen ssh tunnels
 #!alias sctun="
 #!    screen -t shell 31 ssh -C -L 6670:irc.freenode.net:6667 \${nullwareip} && sleep 0.5 && \
-#!      screen -t shell 32 ssh -C -L 8993:imap.gmail.com:993 \${nullwareip} && sleep 0.5 && \
-#!      screen -t shell 33 ssh -C -L 8587:smtp.gmail.com:587 \${nullwareip} && sleep 0.5 && \
-#!      screen -t shell 34 ssh -C -L 8222:crypticspace.com:5222 \${nullwareip}"
+    #!      screen -t shell 32 ssh -C -L 8993:imap.gmail.com:993 \${nullwareip} && sleep 0.5 && \
+    #!      screen -t shell 33 ssh -C -L 8587:smtp.gmail.com:587 \${nullwareip} && sleep 0.5 && \
+    #!      screen -t shell 34 ssh -C -L 8222:crypticspace.com:5222 \${nullwareip}"
 #!    screen -t shell 32 ssh -C -L 8143:morpheus:143 \${nullwareip} && sleep 0.5 && \
-#!      screen -t shell 33 ssh -C -L 8995:pop.gmail.com:995 \${nullwareip} && sleep 0.5 && \
-#!      screen -t shell 35 ssh -C -L 8389:ldap.scheduleworld.com:389 \${nullwareip} && \
+    #!      screen -t shell 33 ssh -C -L 8995:pop.gmail.com:995 \${nullwareip} && sleep 0.5 && \
+    #!      screen -t shell 35 ssh -C -L 8389:ldap.scheduleworld.com:389 \${nullwareip} && \
 
 #
 # startx
@@ -3137,29 +3131,37 @@ alias x16-setup="
     basedir=\${HOME}/code
     cc65dir=\${basedir}/cc65
     x16dir=\${basedir}/commander-x16
-    (cd \${basedir} &&
-      git clone git@github.com:cc65/cc65.git &&
-      echo \"Make sure your path contains: '\${cc65dir}/bin'\")
+    (
+        cd \${basedir} && \
+            git clone git@github.com:cc65/cc65.git && \
+            echo \"Make sure your path contains: '\${cc65dir}/bin'\"
+    )
     mkdir -p \${x16dir}
-    (cd \${x16dir} &&
-      git clone https://github.com/commanderx16/x16-demo.git &&
-      git clone https://github.com/commanderx16/x16-docs.git &&
-      git clone https://github.com/commanderx16/x16-emulator.git &&
-      git clone https://github.com/commanderx16/x16-rom.git &&
-      echo \"Make sure your path contains: '\${x16dir}/x16-emulator'\" &&
-      echo \"Now run x16update to build the repositories\")"
+    (
+        cd \${x16dir} && \
+            git clone https://github.com/commanderx16/x16-demo.git && \
+            git clone https://github.com/commanderx16/x16-docs.git && \
+            git clone https://github.com/commanderx16/x16-emulator.git && \
+            git clone https://github.com/commanderx16/x16-rom.git && \
+            echo \"Make sure your path contains: '\${x16dir}/x16-emulator'\" && \
+            echo \"Now run x16update to build the repositories\"
+    )"
 #        x16-update              git pull commander x-16 repos and make
 alias x16-update="
     basedir=\${HOME}/code
     cc65dir=\${basedir}/cc65
     x16dir=\${basedir}/commander-x16
-    (cd \${cc65dir} &&
-      git pull origin && make)
-    (cd \${x16dir} &&
-      cd x16-demo && git pull origin && cd .. &&
-      cd x16-docs && git pull origin && cd .. &&
-      cd x16-emulator && git pull origin && make && cd .. &&
-      cd x16-rom && git pull origin && make)"
+    (
+        cd \${cc65dir} && \
+            git pull origin && make
+    )
+    (
+        cd \${x16dir} && \
+            cd x16-demo && git pull origin && cd .. && \
+            cd x16-docs && git pull origin && cd .. && \
+            cd x16-emulator && git pull origin && make && cd .. && \
+            cd x16-rom && git pull origin && make
+    )"
 #        x16-emu                 commander x-16 emulator
 #!alias x16-emu="x16emu -rom /usr/share/x16-rom/rom.bin"
 alias x16-emu="x16emu -rom \${HOME}/code/commander-x16/x16-rom/rom.bin"
