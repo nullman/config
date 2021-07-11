@@ -80,56 +80,30 @@
   (init-message 1 "Package Manager")
 ;; Package Manager:1 ends here
 
-;; [[file:init-emacs.org::*Quelpa][Quelpa:1]]
+;; [[file:init-emacs.org::*Straight][Straight:1]]
     ;;------------------------------------------------------------------------------
-    ;;; Package Manager: Quelpa
+    ;;; Package Manager: Straight
     ;;------------------------------------------------------------------------------
 
-    (init-message 2 "Package Manager: Quelpa")
+    (init-message 2 "Package Manager: Straight")
 
-    ;; set package archives (no ELPA)
-    (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-                             ("melpa" . "http://melpa.org/packages/")))
+    ;; bootstrap
+    (defvar bootstrap-version)
+    (let ((bootstrap-file
+           (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+          (bootstrap-version 5))
+      (unless (file-exists-p bootstrap-file)
+        (with-current-buffer
+            (url-retrieve-synchronously
+             "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+             'silent 'inhibit-cookies)
+          (goto-char (point-max))
+          (eval-print-last-sexp)))
+      (load bootstrap-file nil 'nomessage))
 
-    ;; initialize package
-    (package-initialize)
-
-    ;; load package archive, if needed
-    (unless package-archive-contents
-      (package-refresh-contents))
-
-    ;; initialize `quelpa' to fetch and build packages
-    (unless (package-installed-p 'quelpa)
-      (with-temp-buffer
-        (url-insert-file-contents "https://github.com/quelpa/quelpa/raw/master/quelpa.el")
-        (eval-buffer)
-        (quelpa-self-upgrade)))
-
-    ;; do not update Quelpa or MELPA repo on initialization as it slows down launch time
-    (setq quelpa-upgrade-p nil
-          quelpa-update-melpa-p nil)
-
-    ;; install quelpa version of `use-package' to install and load packages
-    (quelpa '(quelpa-use-package :fetcher github :repo "quelpa/quelpa-use-package"))
-    (setq use-package-expand-minimally t)
-    (require 'quelpa-use-package)
-    (setq use-package-always-ensure t)      ; always fetch missing packages
-
-    ;; install `bind-key' to help with binding keys in `use-package' blocks
-    (use-package bind-key
-      :quelpa (bind-key)
-      :init
-      ;; extract docstrings from lambdas, closures and keymaps if possible
-      (setq bind-key-describe-special-forms t))
-
-    ;; install `diminish' to diminish package names on the mode-line in `use-package' blocks
-    (use-package diminish
-      :quelpa (diminish :fetcher github :repo "myrjola/diminish.el"))
-
-    ;; install `async' as it is used by other functions
-    (use-package async
-      :quelpa (async))
-;; Quelpa:1 ends here
+    ;; use straight with `use-package'
+    (straight-use-package 'use-package)
+;; Straight:1 ends here
 
 ;; [[file:init-emacs.org::*Environment Settings][Environment Settings:1]]
   ;;==============================================================================
@@ -159,20 +133,36 @@
 
 ;; [[file:init-emacs.org::*Modules][Modules:1]]
     ;; load modules that are used for initialization
+    (use-package async
+      ;;:quelpa (async))
+      :straight t)
+    (use-package bind-key
+      ;;:quelpa (bind-key)
+      :straight t
+      :init
+      ;; extract docstrings from lambdas, closures and keymaps if possible
+      (setq bind-key-describe-special-forms t))
     (use-package cl-generic)
     (use-package cl-macs)
     (use-package dash
-      :quelpa (dash)
+      ;;:quelpa (dash)
+      :straight t
       :demand t
       :config
       (use-package dash-functional
-        :quelpa (dash-functional)
+        ;;:quelpa (dash-functional)
+        :straight t
         :demand t))
+    (use-package diminish
+      ;;:quelpa (diminish :fetcher github :repo "myrjola/diminish.el"))
+      :straight (diminish :type git :host github :repo "myrjola/diminish.el"))
     (use-package f
-      :quelpa (f)
+      ;;:quelpa (f)
+      :straight t
       :demand t)
     (use-package s
-      :quelpa (s)
+      ;;:quelpa (s)
+      :straight t
       :demand t)
     (use-package seq)
     (use-package subr-x)
@@ -1010,12 +1000,6 @@
                                             regexp-search-ring)))
 ;; Files:18 ends here
 
-;; [[file:init-emacs.org::*Files][Files:19]]
-    ;; save place in files
-    (setq save-place t)
-    (setq-default save-place save-place)
-;; Files:19 ends here
-
 ;; [[file:init-emacs.org::*Buffers and Windows][Buffers and Windows:1]]
     ;;------------------------------------------------------------------------------
     ;;; Environment Settings: Buffers and Windows
@@ -1147,7 +1131,8 @@
                 eshell-visual-commands '("htop" "ssh" "vim" "zsh"))))
 
       (use-package eshell-git-prompt
-        :quelpa (eshell-git-prompt)
+        ;;:quelpa (eshell-git-prompt)
+        :straight t
         :after (eshell)
         :config
         (eshell-git-prompt-use-theme 'powerline))
@@ -1187,7 +1172,8 @@
       (init-message 3 "Environment Settings: Terminals: vterm")
 
       (use-package vterm
-        :quelpa (vterm)
+        ;;:quelpa (vterm)
+        :straight t
         :commands (vterm)
         :custom
         (vterm-max-scrollback local-terminal-maximum-lines)
@@ -1316,19 +1302,22 @@
       ;; flatland theme
       ;; https://github.com/gchp/flatland-emacs
       (use-package flatland-theme
-        :quelpa (flatland-theme)
+        ;;:quelpa (flatland-theme)
+        :straight t
         :init (load-theme 'flatland t))
 
       ;; ;; dracula theme
       ;; ;; https://draculatheme.com/emacs/
       ;; (use-package dracula-theme
-      ;;   :quelpa (dracula-theme)
+      ;;   ;;:quelpa (dracula-theme)
+      ;;   :straight t
       ;;   :init (load-theme 'dracula t))
 
       ;; ;; material theme
       ;; ;; https://github.com/cpaulik/emacs-material-theme
       ;; (use-package material-theme
-      ;;   :quelpa (material-theme)
+      ;;   ;;:quelpa (material-theme)
+      ;;   :straight t
       ;;   :init (load-theme 'material t))
 
       ;; material theme
@@ -1341,7 +1330,8 @@
       ;; ;; zenburn theme
       ;; ;; https://github.com/bbatsov/zenburn-emacs
       ;; (use-package zenburn-theme
-      ;;   :quelpa (zenburn-theme)
+      ;;   ;;:quelpa (zenburn-theme)
+      ;;   :straight t
       ;;   :init
       ;;   (setq zenburn-override-colors-alist   ; default values
       ;;         '(("zenburn-bg+05" . "#181818") ; #383838
@@ -1353,19 +1343,22 @@
       ;; ;; color-theme-sanityinc-tomorrow theme
       ;; ;; https://github.com/purcell/color-theme-sanityinc-tomorrow
       ;; (use-package color-theme-sanityinc-tomorrow
-      ;;   :quelpa (color-theme-sanityinc-tomorrow)
+      ;;   ;;:quelpa (color-theme-sanityinc-tomorrow)
+      ;;   :straight t
       ;;   :init (load-theme 'sanityinc-tomorrow-night t))
 
       ;; ;; spacemacs-theme
       ;; ;; https://github.com/nashamri/spacemacs-theme
       ;; (use-package spacemacs-theme
-      ;;   :quelpa (spacemacs-theme)
+      ;;   ;;:quelpa (spacemacs-theme)
+      ;;   :straight t
       ;;   :init (load-theme 'spacemacs-dark t))
 
       ;; ;; solarized theme
       ;; ;; https://github.com/bbatsov/solarized-emacs
       ;; (use-package solarized-theme
-      ;;   :quelpa (solarized-theme)
+      ;;   ;;:quelpa (solarized-theme)
+      ;;   :straight t
       ;;   :init
       ;;   ;; make the fringe stand out from the background
       ;;   ;;(setq solarized-distinct-fringe-background t)
@@ -2285,7 +2278,8 @@
 
     ;; needs pdftools, which annoyingly recompiles on every boot
     ;; (use-package org-pdfview
-    ;;   :quelpa (org-pdfview)
+    ;;   ;;:quelpa (org-pdfview)
+    ;;   :straight t
     ;;   :after (org))
 ;; Setup:1 ends here
 
@@ -2548,7 +2542,8 @@
     (init-message 2 "Org Mode: Alerts")
 
     ;; (use-package org-alert
-    ;;   :quelpa (org-alert)
+    ;;   ;;:quelpa (org-alert)
+    ;;   :straight t
     ;;   :after (org)
     ;;   :custom (alert-default-style 'notifications)
     ;;   :config
@@ -2557,7 +2552,8 @@
 
     ;; throws error: void-function -orfn
     ;; (use-package org-wild-notifier
-    ;;   :quelpa (org-wild-notifier)
+    ;;   ;;:quelpa (org-wild-notifier)
+    ;;   :straight t
     ;;   :after (org)
     ;;   :custom
     ;;   (alert-default-style 'notifications)
@@ -2567,7 +2563,8 @@
     ;;   :init (org-wild-notifier-mode 1))
 
     ;; (use-package org-notify
-    ;;   :quelpa (org-notify)
+    ;;   ;;:quelpa (org-notify)
+    ;;   :straight t
     ;;   :after (org)
     ;;   :init (org-notify-start))
 ;; Alerts:1 ends here
@@ -3325,7 +3322,8 @@
 
       ;; load ob-async
       (use-package ob-async
-        :quelpa (ob-async)
+        ;;:quelpa (ob-async)
+        :straight t
         :after (org))
 
       ;; babel settings
@@ -3758,7 +3756,8 @@
       (init-message 3 "Org Mode: Babel: Kotlin")
 
       (use-package ob-kotlin
-        :quelpa (ob-kotlin)
+        ;;:quelpa (ob-kotlin)
+        :straight t
         :after (org kotlin-mode)
         :commands (org-babel-execute:kotlin)
         :functions (flycheck-mode
@@ -6996,7 +6995,8 @@
         (save-match-data
           (let ((source-file (expand-file-name "init-emacs.el" emacs-home-dir))
                 (target-file (expand-file-name "init-emacs-website.el" "~/web/bin"))
-                (sections (append '(";;; Package Manager: Quelpa"
+                (sections (append '(;;";;; Package Manager: Quelpa"
+                                    ";;; Package Manager: Straight"
                                     ";; set emacs home directory"
                                     ";; do not make backup files"
                                     ";;;; Org Mode: Functions: org-get-data"
@@ -13137,7 +13137,8 @@
     (init-message 2 "Modules: ag")
 
     (use-package ag
-      :quelpa (ag)
+      ;;:quelpa (ag)
+      :straight t
       :commands (ag)
       :custom (ag-arguments (list "--smart-case" "--stats")))
 ;; ag:1 ends here
@@ -13150,7 +13151,8 @@
     (init-message 2 "Modules: alert")
 
     (use-package alert
-      :quelpa (alert)
+      ;;:quelpa (alert)
+      :straight t
       :commands (alert)
       :custom (alert-default-style 'libnotify))
 ;; alert:1 ends here
@@ -13163,7 +13165,8 @@
     (init-message 2 "Modules: analog-clock")
 
     (use-package analog-clock
-      :quelpa (analog-clock :fetcher url :url "http://yrk.nfshost.com/repos/analog-clock/analog-clock.el")
+      ;;:quelpa (analog-clock :fetcher url :url "http://yrk.nfshost.com/repos/analog-clock/analog-clock.el")
+      :load-path (lambda () (expand-file-name "analog-clock.el" emacs-modules-dir))
       :commands (analog-clock analog-clock-draw-analog)
       :custom
       ;; draw an analog clock
@@ -13184,7 +13187,8 @@
     (init-message 2 "Modules: any-ini-mode")
 
     (use-package any-ini-mode
-      :quelpa (any-ini-mode :fetcher url :url "https://www.emacswiki.org/emacs/download/any-ini-mode.el"))
+      ;;:quelpa (any-ini-mode :fetcher url :url "https://www.emacswiki.org/emacs/download/any-ini-mode.el"))
+      :load-path (lambda () (expand-file-name "any-ini-mode.el" emacs-modules-dir)))
 ;; any-ini-mode:1 ends here
 
 ;; [[file:init-emacs.org::*async][async:1]]
@@ -13194,7 +13198,8 @@
 
     (init-message 2 "Modules: async")
 
-    (use-package async)
+    (use-package async
+      :straight t)
 ;; async:1 ends here
 
 ;; [[file:init-emacs.org::*auto-compile][auto-compile:1]]
@@ -13205,7 +13210,8 @@
     (init-message 2 "Modules: auto-compile")
 
     (use-package auto-compile
-      :quelpa (auto-compile)
+      ;;:quelpa (auto-compile)
+      :straight t
       :custom
       (load-prefer-newer t)
       :init
@@ -13221,7 +13227,8 @@
     (init-message 2 "Modules: avy")
 
     (use-package avy
-      :quelpa (avy)
+      ;;:quelpa (avy)
+      :straight t
       :bind* (("C-;" . avy-goto-char)
               ("C-M-;" . pop-to-mark-command)
               ("C-x ." . avy-goto-word-or-subword-1)
@@ -13236,7 +13243,8 @@
     (init-message 2 "Modules: bash-completion")
 
     (use-package bash-completion
-      :quelpa (bash-completion)
+      ;;:quelpa (bash-completion)
+      :straight t
       :init (bash-completion-setup))
 ;; bash-completion:1 ends here
 
@@ -13248,7 +13256,8 @@
     (init-message 2 "Modules: bbdb")
 
     (use-package bbdb
-      :quelpa (bbdb)
+      ;;:quelpa (bbdb)
+      :straight t
       :init
       ;;(bbdb-initialize)
       ;;(bbdb-initialize 'gnus 'message 'sc 'w3)
@@ -13417,7 +13426,8 @@
     (init-message 2 "Modules: beacon")
 
     (use-package beacon
-      :quelpa (beacon)
+      ;;:quelpa (beacon)
+      :straight t
       :demand t
       :custom
       ;; speed up duration (defaults to 0.3)
@@ -13435,7 +13445,8 @@
     (init-message 2 "Modules: boxquote")
 
     (use-package boxquote
-      :quelpa (boxquote)
+      ;;:quelpa (boxquote)
+      :straight t
       :init (unbind-key "C-c b")
       :bind (("C-c by" . boxquote-yank)
              ("C-c br" . boxquote-region)
@@ -13461,7 +13472,8 @@
     (init-message 2 "Modules: browse-kill-ring")
 
     (use-package browse-kill-ring
-      :quelpa (browse-kill-ring)
+      ;;:quelpa (browse-kill-ring)
+      :straight t
       :bind* (("M-y" . browse-kill-ring)
               ("C-M-_" . browse-kill-ring)))
 ;; browse-kill-ring:1 ends here
@@ -13475,7 +13487,8 @@
 
     ;; original code by Scott Frazer
     (use-package bs
-      :quelpa (bs)
+      ;;:quelpa (bs)
+      :straight t
       :demand t
       :after (cycle-buffer)
       :commands (list-buffers bs-show)
@@ -13565,7 +13578,8 @@
     (init-message 2 "Modules: command-log")
 
     (use-package command-log-mode
-      :quelpa (command-log-mode)
+      ;;:quelpa (command-log-mode)
+      :straight t
       :init
       (defun command-line-mode-on ()
         "Turn on `command-line-mode' and open the log buffer."
@@ -13590,7 +13604,8 @@
     (init-message 2 "Modules: company")
 
     (use-package company
-      :quelpa (company)
+      ;;:quelpa (company)
+      :straight t
       :diminish company-mode
       :bind (:map company-active-map
                   ("<tab>" . company-complete-selection)
@@ -13632,7 +13647,8 @@
 
     ;; ;; company front end with icons
     ;; (use-package company-box
-    ;;   :quelpa (company-box)
+    ;;   ;;:quelpa (company-box)
+    ;;   :straight t
     ;;   :after (company)
     ;;   :hook (company-mode . company-box-mode))
 
@@ -13644,7 +13660,8 @@
 
     ;; ;; set colors for a dark background
     ;; (use-package color
-    ;;   :quelpa (color)
+    ;;   ;;:quelpa (color)
+    ;;   :straight t
     ;;   :after (company)
     ;;   :commands (color-lighten-name)
     ;;   :config
@@ -13698,7 +13715,8 @@
     (init-message 2 "Modules: cycle-buffer")
 
     (use-package cycle-buffer
-      :quelpa (cycle-buffer :fetcher url :url "https://raw.githubusercontent.com/emacsmirror/emacswiki.org/master/cycle-buffer.el")
+      ;;:quelpa (cycle-buffer :fetcher url :url "https://raw.githubusercontent.com/emacsmirror/emacswiki.org/master/cycle-buffer.el")
+      :load-path (lambda () (expand-file-name "cycle-buffer.el" emacs-modules-dir))
       :demand t
       :bind* (("C-x C-n" . cycle-buffer)          ; defaults to `set-goal-column'
               ("C-x C-p" . cycle-buffer-backward) ; defaults to `mark-page'
@@ -13717,19 +13735,6 @@
       (advice-add 'cycle-buffer-backward-permissive :around #'advice--ignore-errors))
 ;; cycle-buffer:1 ends here
 
-;; [[file:init-emacs.org::*decimation][decimation:1]]
-    ;;------------------------------------------------------------------------------
-    ;;; Modules: decimation
-    ;;------------------------------------------------------------------------------
-
-    (init-message 2 "Modules: decimation")
-
-    (use-package decimation
-      ;;:quelpa (decimation :fetcher file :path (expand-file-name "decimation.el" local-modules-dir))
-      :load-path (lambda () (expand-file-name "decimation.el" local-modules-dir))
-      :commands (decimation))
-;; decimation:1 ends here
-
 ;; [[file:init-emacs.org::*define-word][define-word:1]]
     ;;------------------------------------------------------------------------------
     ;;; Modules: define-word
@@ -13738,7 +13743,8 @@
     (init-message 2 "Modules: define-word")
 
     (use-package define-word
-      :quelpa (define-word)
+      ;;:quelpa (define-word)
+      :straight t
       :bind (("<f5>" . define-word-after-spell-check)
              ("S-<f5>" . define-word-at-point))
       :config
@@ -13776,7 +13782,8 @@
     (init-message 2 "Modules: demo-it")
 
     (use-package demo-it
-      :quelpa (demo-it))
+      ;;:quelpa (demo-it))
+      :straight t)
 ;; demo-it:1 ends here
 
 ;; [[file:init-emacs.org::*doom-modeline][doom-modeline:1]]
@@ -13787,7 +13794,8 @@
     (init-message 2 "Modules: doom-modeline")
 
     (use-package doom-modeline
-      :quelpa (doom-modeline)
+      ;;:quelpa (doom-modeline)
+      :straight t
       :after (all-the-icons)
       :demand t
       :custom
@@ -13808,7 +13816,8 @@
     (init-message 3 "all-the-icons")
 
     (use-package all-the-icons
-      :quelpa (all-the-icons)
+      ;;:quelpa (all-the-icons)
+      :straight t
       :config
       ;; install fonts, if needed
       (let ((font-dest (cl-case window-system
@@ -13827,7 +13836,8 @@
     ;;------------------------------------------------------------------------------
 
     (use-package easy-kill
-      :quelpa (easy-kill)
+      ;;:quelpa (easy-kill)
+      :straight t
       :demand t
       :bind* (([remap kill-ring-save] . easy-kill)
               ([remap mark-sexp] . easy-mark)))
@@ -13854,7 +13864,8 @@
     (init-message 2 "Modules: elfeed")
 
     (use-package elfeed
-      :quelpa (elfeed)
+      ;;:quelpa (elfeed)
+      :straight t
       :bind (:map elfeed-search-mode-map
                   ("h" . elfeed-search-mode-help)
                   ("?" . elfeed-search-mode-help))
@@ -13970,7 +13981,8 @@
     (init-message 2 "Modules: elnode")
 
     (use-package elnode
-      :quelpa (elnode)
+      ;;:quelpa (elnode)
+      :straight t
       :commands (elnode))
 ;; elnode:1 ends here
 
@@ -13982,7 +13994,8 @@
     (init-message 2 "Modules: elpher")
 
     (use-package elpher
-      :quelpa (elpher)
+      ;;:quelpa (elpher)
+      :straight t
       :init
       (defun elpher-bookmarks-edit ()
         "Open `init-emacs.org' and move point to Elpher Bookmarks File for easy editing."
@@ -14001,7 +14014,8 @@
     (init-message 2 "Modules: eperiodic")
 
     (use-package eperiodic
-      :quelpa (eperiodic :fetcher url :url "https://raw.githubusercontent.com/emacsmirror/emacswiki.org/master/eperiodic.el")
+      ;;:quelpa (eperiodic :fetcher url :url "https://raw.githubusercontent.com/emacsmirror/emacswiki.org/master/eperiodic.el")
+      :load-path (lambda () (expand-file-name "eperiodic.el" emacs-modules-dir))
       :commands (eperiodic))
 ;; eperiodic:1 ends here
 
@@ -14037,7 +14051,8 @@
 
     (use-package exec-path-from-shell
       :when window-system-mac
-      :quelpa (exec-path-from-shell)
+      ;;:quelpa (exec-path-from-shell)
+      :straight t
       :init (exec-path-from-shell-initialize))
 ;; exec-path-from-shell:1 ends here
 
@@ -14049,7 +14064,8 @@
     (init-message 2 "Modules: expand-region")
 
     (use-package expand-region
-      :quelpa (expand-region)
+      ;;:quelpa (expand-region)
+      :straight t
       :bind* (("C-=" . er/expand-region)     ; defaults to `count-lines-region'
               ("C--" . er/contract-region))) ; defaults to `negative-argument'
 ;; expand-region:1 ends here
@@ -14062,7 +14078,8 @@
     (init-message 2 "Modules: flycheck")
 
     (use-package flycheck
-      :quelpa (flycheck)
+      ;;:quelpa (flycheck)
+      :straight t
       :commands (flycheck-mod
                  global-flycheck-mode)
       :init
@@ -14079,7 +14096,8 @@
     (init-message 2 "Modules: flymake-cursor")
 
     (use-package flymake-cursor
-      :quelpa (flymake-cursor))
+      ;;:quelpa (flymake-cursor))
+      :straight t)
 ;; flymake-cursor:1 ends here
 
 ;; [[file:init-emacs.org::*flyspell][flyspell:1]]
@@ -14108,7 +14126,8 @@
     (init-message 2 "Modules: fuzzy")
 
     (use-package fuzzy
-      :quelpa (fuzzy)
+      ;;:quelpa (fuzzy)
+      :straight t
       :commands (turn-on-fuzzy-isearch)
       :init (turn-on-fuzzy-isearch))
 ;; fuzzy:1 ends here
@@ -14145,7 +14164,8 @@
     (init-message 2 "Modules: htmlize")
 
     (use-package htmlize
-      :quelpa (htmlize)
+      ;;:quelpa (htmlize)
+      :straight t
       :commands (htmlize-buffer
                  htmlize-region
                  htmlize-file
@@ -14189,7 +14209,8 @@
     (init-message 2 "Modules: hungry-delete")
 
     (use-package hungry-delete
-      :quelpa (hungry-delete)
+      ;;:quelpa (hungry-delete)
+      :straight t
       :demand t
       :commands (global-hungry-delete-mode
                  hungry-delete-skip-ws-forward
@@ -14305,7 +14326,8 @@
     (init-message 2 "Modules: iedit")
 
     (use-package iedit
-      :quelpa (iedit)
+      ;;:quelpa (iedit)
+      :straight t
       :commands (iedit-mode)
       :bind* ("C-x ;" . iedit-mode))
 ;; iedit:1 ends here
@@ -14328,7 +14350,8 @@
     (init-message 2 "Modules: ini")
 
     (use-package ini
-      :quelpa (ini :fetcher github :repo "daniel-ness/ini.el")
+      ;;:quelpa (ini :fetcher github :repo "daniel-ness/ini.el")
+      :straight (ini :type git :host github :repo "daniel-ness/ini.el")
       :commands (ini-decode
                  ini-encode))
 ;; ini:1 ends here
@@ -14341,12 +14364,13 @@
     (init-message 2 "Modules: ispell")
 
     (use-package ispell
-      :quelpa (ispell)
+      ;;:quelpa (ispell)
+      ;;:straight t
       :commands (ispell-buffer
-                 ispell-change-dictionary
-                 ispell-complete-word
+                 ispell-change-dictionary-hook
+                 ispell-complete-word-dict
                  ispell-message
-                 ispell-region
+                 ispell-region-end
                  ispell-word)
       :bind (("<f6>" . ispell-word)
              ("S-<f6>" . ispell-word-then-define-word)
@@ -14377,7 +14401,8 @@
     (init-message 2 "Modules: ivy (counsel/swiper)")
 
     (use-package ivy
-      :quelpa (ivy :fetcher github :repo "abo-abo/swiper")
+      ;;:quelpa (ivy :fetcher github :repo "abo-abo/swiper")
+      :straight (ivy :type git :host github :repo "abo-abo/swiper")
       :demand t
       :diminish ivy-mode
       :commands (ivy-mode)
@@ -14422,7 +14447,8 @@
     (init-message 3 "counsel")
 
     (use-package counsel
-      :quelpa (counsel :fetcher github :repo "abo-abo/swiper")
+      ;;:quelpa (counsel :fetcher github :repo "abo-abo/swiper")
+      :straight (counsel :type git :host github :repo "abo-abo/swiper")
       :after (ivy)
       :bind* (("M-x" . counsel-M-x)
               ;;([remap list-buffers] . counsel-switch-buffer) ; defaults to `list-buffers'
@@ -14452,7 +14478,8 @@
     (init-message 3 "swiper")
 
     (use-package swiper
-      :quelpa (swiper :fetcher github :repo "abo-abo/swiper")
+      ;;:quelpa (swiper :fetcher github :repo "abo-abo/swiper")
+      :straight (swiper :type git :host github :repo "abo-abo/swiper")
       :after (ivy)
       :bind* ("C-'" . swiper))            ; defaults to `isearch-forward-regexp'
 
@@ -14465,7 +14492,8 @@
     (init-message 3 "ivy-rich")
 
     (use-package ivy-rich
-      :quelpa (ivy-rich)
+      ;;:quelpa (ivy-rich)
+      :straight t
       :after (ivy counsel)
       :init (ivy-rich-mode 1)
       :config
@@ -14491,7 +14519,8 @@
     (init-message 3 "flx")
 
     (use-package flx
-      :quelpa (flx)
+      ;;:quelpa (flx)
+      :straight t
       :after (ivy)
       :init
       (setq ivy-flx-limit 10000))
@@ -14505,7 +14534,8 @@
     ;; (init-message 3 "ivy-hydra")
 
     ;; (use-package ivy-hydra
-    ;;   :quelpa (ivy-hydra)
+    ;;   ;;:quelpa (ivy-hydra)
+    ;;   :straight t
     ;;   :after (ivy hydra))
 ;; ivy (counsel/swiper):1 ends here
 
@@ -14527,7 +14557,8 @@
     (init-message 2 "Modules: key-chord")
 
     (use-package key-chord
-      :quelpa (key-chord)
+      ;;:quelpa (key-chord)
+      :straight t
       :demand t
       :init
       ;; turn on `key-chord-mode'
@@ -14559,7 +14590,8 @@
     (init-message 2 "Modules: keyfreq")
 
     (use-package keyfreq
-      :quelpa (keyfreq)
+      ;;:quelpa (keyfreq)
+      :straight t
       :demand t
       :init
       ;; turn on `keyfreq-mode'
@@ -14578,7 +14610,8 @@
 
     (use-package langtool
       :when (executable-find "languagetool") ; only use if binary is available on system
-      :quelpa (langtool)
+      ;;:quelpa (langtool)
+      :straight t
       :bind* (("C-x 4 w" . langtool-check)
               ("C-x 4 W" . langtool-check-done)
               ("C-x 4 l" . langtool-switch-default-language)
@@ -14600,7 +14633,8 @@
     (init-message 2 "Modules: magit")
 
     (use-package magit
-      :quelpa (magit)
+      ;;:quelpa (magit)
+      :straight t
       :after (ivy)
       :diminish magit-auto-revert-mode
       :bind* (("C-x g" . magit-status)
@@ -14653,7 +14687,8 @@
     ;; (init-message 3 "forge")
 
     ;; (use-package forge
-    ;;   :quelpa (forge)
+    ;;   ;;:quelpa (forge)
+    ;;   :straight t
     ;;   :after (magit))
 ;; magit:1 ends here
 
@@ -14665,7 +14700,8 @@
     (init-message 2 "Modules: mingus")
 
     (use-package mingus
-      :quelpa (mingus)
+      ;;:quelpa (mingus)
+      :straight t
       :commands (mingus
                  mingus-create-NP-mark
                  mingus-get-details
@@ -15320,7 +15356,8 @@
     (init-message 2 "Modules: multiple-cursors")
 
     (use-package multiple-cursors
-      :quelpa (multiple-cursors)
+      ;;:quelpa (multiple-cursors)
+      :straight t
       :bind* (("C-c C->" . mc/edit-lines)
               ("C-c C-<" . mc/mark-all-like-this)
               ("C->" . mc/mark-next-like-this)
@@ -15337,7 +15374,8 @@
     (init-message 2 "Modules: neotree")
 
     (use-package neotree
-      :quelpa (neotree)
+      ;;:quelpa (neotree)
+      :straight t
       :commands (neo-global--select-window
                  neo-global--window-exists-p
                  neotree-toggle)
@@ -15365,7 +15403,8 @@
     (init-message 2 "Modules: persistent-scratch")
 
     (use-package persistent-scratch
-      :quelpa (persistent-scratch)
+      ;;:quelpa (persistent-scratch)
+      :straight t
       :demand t
       :init
       ;; enable autosave and restore last saved state
@@ -15380,7 +15419,8 @@
     (init-message 2 "Modules: proced")
 
     (use-package proced
-      :quelpa (proced)
+      ;;:quelpa (proced)
+      :straight t
       :commands (proced))
 ;; proced:1 ends here
 
@@ -15395,7 +15435,8 @@
     (init-message 2 "Modules: projectile")
 
     (use-package projectile
-      :quelpa (projectile)
+      ;;:quelpa (projectile)
+      :straight t
       :after (ivy)
       :diminish (projectile-mode . "Proj")
       :bind* ("C-x p" . projectile-command-map)
@@ -15422,7 +15463,8 @@
     (init-message 3 "counsel-projectile")
 
     (use-package counsel-projectile
-      :quelpa (counsel-projectile)
+      ;;:quelpa (counsel-projectile)
+      :straight t
       :after (ivy counsel projectile)
       :init (counsel-projectile-mode))
 ;; projectile:1 ends here
@@ -15436,9 +15478,7 @@
 
     (use-package ps-ccrypt
       :when (executable-find "ccrypt") ; only use if binary is available on system
-      ;; this does not work as the file does not have the proper package end line
-      ;;:quelpa (ps-ccrypt :fetcher url :url "http://ccrypt.sourceforge.net/ps-ccrypt.el"))
-      ;; so we use a local copy with a bug fix instead
+      ;; local copy with a bug fix
       ;;:quelpa (ps-ccrypt :fetcher file :path (expand-file-name "ps-ccrypt.el" emacs-modules-dir))
       :load-path (lambda () (expand-file-name "ps-ccrypt.el" emacs-modules-dir)))
 ;; ps-ccrypt:1 ends here
@@ -15466,7 +15506,8 @@
     (init-message 2 "Modules: regex-tool")
 
     (use-package regex-tool
-      :quelpa (regex-tool)
+      ;;:quelpa (regex-tool)
+      :straight t
       :commands (regex-tool))
 ;; regex-tool:1 ends here
 
@@ -15535,7 +15576,8 @@
     (init-message 2 "Modules: s")
 
     (use-package s
-      :quelpa (s))
+      ;;:quelpa (s))
+      :straight t)
 ;; s:1 ends here
 
 ;; [[file:init-emacs.org::*saveplace][saveplace:1]]
@@ -15606,7 +15648,8 @@
     (init-message 2 "Modules: spinner")
 
     (use-package spinner
-      :quelpa (spinner :fetcher github :repo "Malabarba/spinner.el"))
+      ;;:quelpa (spinner :fetcher github :repo "Malabarba/spinner.el"))
+      :straight (spinner :type git :host github :repo "Malabarba/spinner.el"))
 ;; spinner:1 ends here
 
 ;; [[file:init-emacs.org::*sudoku][sudoku:1]]
@@ -15617,7 +15660,8 @@
     (init-message 2 "Modules: sudoku")
 
     (use-package sudoku
-      :quelpa (sudoku :fetcher github :repo "zevlg/sudoku.el")
+      ;;:quelpa (sudoku :fetcher github :repo "zevlg/sudoku.el")
+      :straight (sudoku :type git :host github :repo "zevlg/sudoku.el")
       :commands (sudoku))
 ;; sudoku:1 ends here
 
@@ -15629,7 +15673,8 @@
     (init-message 2 "Modules: switch-window")
 
     (use-package switch-window
-      :quelpa (switch-window)
+      ;;:quelpa (switch-window)
+      :straight t
       :demand t
       :commands (switch-window switch-window-then-delete)
       :custom
@@ -15779,7 +15824,8 @@
     (init-message 2 "Modules: undo-tree")
 
     (use-package undo-tree
-      :quelpa (undo-tree :fetcher github :repo "apchamberlain/undo-tree.el")
+      ;;:quelpa (undo-tree :fetcher github :repo "apchamberlain/undo-tree.el")
+      :straight (undo-tree :type git :host github :repo "apchamberlain/undo-tree.el")
       :demand t
       :diminish undo-tree-mode
       :bind* (("<M-mouse-5>" . undo-tree-redo)
@@ -15797,80 +15843,9 @@
     (init-message 2 "Modules: vimish-fold")
 
     (use-package vimish-fold
-      :quelpa (vimish-fold))
+      ;;:quelpa (vimish-fold))
+      :straight t)
 ;; vimish-fold:1 ends here
-
-;; [[file:init-emacs.org::*w3m][w3m:1]]
-    ;;------------------------------------------------------------------------------
-    ;;; Modules: w3m
-    ;;------------------------------------------------------------------------------
-
-    (init-message 2 "Modules: w3m")
-
-    (use-package w3m
-      :when (executable-find "w3m") ; only use if binary is available on system
-      :quelpa (w3m)
-      :commands (w3m
-                 w3m-antenna
-                 w3m-browse-url
-                 w3m-encode-specials-string
-                 w3m-find-file
-                 w3m-namazu
-                 w3m-next-buffer
-                 w3m-previous-buffer
-                 w3m-region
-                 w3m-search
-                 w3m-weather)
-      :defines (w3m-use-tab-line)
-      :bind (:map w3m-mode-map
-                  ("," . w3m-previous-buffer)
-                  ("." . w3m-next-buffer))
-      :custom
-      ;; directory of icon files
-      (w3m-icon-directory "/usr/share/emacs-w3m/icon")
-      ;; turn on cookies
-      (w3m-use-cookies t)
-      :config
-      ;; add new functionality not in this version
-      (defun w3m-buffer (&optional buffer)
-        "Render the current buffer or BUFFER if given."
-        (interactive)
-        (when buffer
-          (switch-to-buffer buffer))
-        (w3m-region (point-min) (point-max)))
-
-      (defun w3m-display-local-hook (url)
-        "Hook to auto-rename buffers to page title or url."
-        (rename-buffer
-         (format "*w3m: %s*" (or w3m-current-title w3m-current-url)) t))
-      (add-hook 'w3m-display-hook #'w3m-display-local-hook))
-
-    ;;------------------------------------------------------------------------------
-    ;;;; Modules: w3m-session
-    ;;------------------------------------------------------------------------------
-
-    (init-message 3 "w3m-session")
-
-    ;; persistent sessions
-    (use-package w3m-session
-      :when (executable-find "w3m") ; only use if w3m command is available on system
-      :quelpa (w3m-session)
-      :after (w3m)
-      :commands (w3m-session-load
-                 w3m-session-load-always
-                 w3m-session-save
-                 w3m-session-save-always)
-      :bind (:map w3m-mode-map
-                  ("S" . w3m-session-save)
-                  ("L" . w3m-session-load))
-      ;;:config
-      ;;(setq w3m-session-file "~/.w3m-session")
-      ;;(setq w3m-session-save-always nil)
-      ;;(setq w3m-session-load-always nil)
-      ;;(setq w3m-session-show-titles t)
-      ;;(setq w3m-session-duplicate-tabs 'ask) ; 'never, 'always, 'ask
-      )
-;; w3m:1 ends here
 
 ;; [[file:init-emacs.org::*web-query][web-query:1]]
     ;;------------------------------------------------------------------------------
@@ -15917,7 +15892,8 @@
     (init-message 2 "Modules: weblogger")
 
     (use-package weblogger
-      :quelpa (weblogger)
+      ;;:quelpa (weblogger)
+      :straight t
       :commands (weblogger-select-configuration
                  weblogger-setup-weblog
                  weblogger-start-entry)
@@ -15936,7 +15912,8 @@
     (init-message 2 "Modules: wgrep")
 
     (use-package wgrep
-      :quelpa (wgrep)
+      ;;:quelpa (wgrep)
+      :straight t
       :bind (:map grep-mode-map
                   ("C-x C-q" . wgrep-change-to-wgrep-mode))) ; same keybinding as `wdired-mode'
 ;; wgrep:1 ends here
@@ -15949,7 +15926,8 @@
     (init-message 2 "Modules: which-key")
 
     (use-package which-key
-      :quelpa (which-key)
+      ;;:quelpa (which-key)
+      :straight t
       :demand t
       :init (which-key-mode))
 ;; which-key:1 ends here
@@ -15962,7 +15940,8 @@
     (init-message 2 "Modules: wtf")
 
     (use-package wtf
-      :quelpa (wtf :fetcher url :url "http://mwolson.org/static/dist/elisp/wtf.el")
+      ;;:quelpa (wtf :fetcher url :url "http://mwolson.org/static/dist/elisp/wtf.el")
+      :load-path (lambda () (expand-file-name "wtf.el" emacs-modules-dir))
       :commands (wtf-is wtf-get-term-at-point))
 ;; wtf:1 ends here
 
@@ -15974,7 +15953,8 @@
     (init-message 2 "Modules: wttrin")
 
     (use-package wttrin
-      :quelpa (wttrin)
+      ;;:quelpa (wttrin)
+      :straight t
       :custom
       ;; default cities
       (wttrin-default-cities '("Austin"
@@ -16350,7 +16330,8 @@
 
     ;; make dired use a single buffer
     (use-package dired-single
-      :quelpa (dired-single)
+      ;;:quelpa (dired-single)
+      :straight t
       :commands (dired dired-jump)
       :bind (:map dired-mode-map
                   ("<return>" . dired-single-buffer)
@@ -16374,7 +16355,8 @@
 
     ;; open files with external programs
     (use-package dired-open
-      :quelpa (dired-open)
+      ;;:quelpa (dired-open)
+      :straight t
       :custom
       (dired-open-extensions
        '(("png" . "display")
@@ -16393,7 +16375,8 @@
     (init-message 3 "dired-hide-dotfiles")
 
     (use-package dired-hide-dotfiles
-      :quelpa (dired-hide-dotfiles)
+      ;;:quelpa (dired-hide-dotfiles)
+      :straight t
       ;;:hook (dired-mode . dired-hide-dotfiles-mode)
       :bind (:map dired-mode-map
                   ("H" . dired-hide-dotfiles-mode)))
@@ -16406,7 +16389,8 @@
 
     ;; ;; add icons to file listings
     ;; (use-package all-the-icons-dired
-    ;;   :quelpa (all-the-icons-dired)
+    ;;   ;;:quelpa (all-the-icons-dired)
+    ;;   :straight t
     ;;   :commands (dired dired-jump)
     ;;   :hook (dired-mode . all-the-icons-dired-mode))
 ;; Dired:1 ends here
@@ -16448,7 +16432,8 @@
     (init-message 2 "Modes: Erlang Mode")
 
     (use-package erlang
-      :quelpa (erlang)
+      ;;:quelpa (erlang)
+      :straight t
       :after (flyspell)
       :mode ("\\.erl\\'" . erlang-mode)
       :interpreter ("erlang" . erlang-mode)
@@ -16496,8 +16481,9 @@
     (init-message 2 "Modes: Geiser (Racket Scheme REPL)")
 
     (use-package geiser
+      ;;:quelpa (geiser)
+      :straight t
       ;;:quelpa (geiser :fetcher gitlab :repo "emacs-geiser/geiser")
-      :quelpa (geiser)
       :commands (geiser-mode
                  run-geiser)
       :init
@@ -16530,8 +16516,9 @@
 
     (use-package geiser-racket
       :after (geiser)
+      ;;:quelpa (geiser-racket)
+      :straight t
       ;;:quelpa (geiser-racket :fetcher gitlab :repo "emacs-geiser/geiser-racket")
-      :quelpa (geiser-racket)
       :commands (run-racket)
       :init
       ;; set default scheme program to racket
@@ -16554,7 +16541,8 @@
     (init-message 2 "Modes: GNU Plot")
 
     (use-package gnuplot
-      :quelpa (gnuplot)
+      ;;:quelpa (gnuplot)
+      :straight t
       :mode ("\\.gp\\'" . gnuplot-mode)
       :commands (gnuplot-mode gnuplot-make-buffer gnuplot-send-string-to-gnuplot))
 ;; GNU Plot:1 ends here
@@ -16596,7 +16584,8 @@
     (init-message 2 "Modes: Graphviz Dot Mode")
 
     (use-package graphviz-dot-mode
-      :quelpa (graphviz-dot-mode)
+      ;;:quelpa (graphviz-dot-mode)
+      :straight t
       :mode (("\\.dot\\'" . graphviz-dot-mode)
              ("\\.gv\\'" . graphviz-dot-mode))
       :commands (graphviz-dot-mode))
@@ -16610,7 +16599,8 @@
     (init-message 2 "Modes: INI Mode")
 
     (use-package ini-mode
-      :quelpa (ini-mode)
+      ;;:quelpa (ini-mode)
+      :straight t
       :mode ("\\.ini\\'" . ini-mode))
 ;; INI Mode:1 ends here
 
@@ -16622,7 +16612,8 @@
     (init-message 2 "Modes: Javascript: js2 Mode")
 
     (use-package js2-mode
-      :quelpa (js2-mode)
+      ;;:quelpa (js2-mode)
+      :straight t
       :mode (("\\.js\\'" . js2-mode)
              ("\\.gradle\\'" . js-mode))    ; use js-mode for gradle files
       :interpreter ("node" . js2-mode)
@@ -16652,7 +16643,8 @@
 
     ;; javascript refactoring library
     (use-package js2-refactor
-      :quelpa (js2-refactor)
+      ;;:quelpa (js2-refactor)
+      :straight t
       :after (js2-mode)
       :bind (:map js2-mode-map
                   ("C-k" . js2r-kill)
@@ -16672,7 +16664,8 @@
 
     ;; jump to references and definitions
     (use-package xref-js2
-      :quelpa (xref-js2)
+      ;;:quelpa (xref-js2)
+      :straight t
       :after (js2-mode)
       :config
       ;; load when `js2-mode' is active
@@ -16688,7 +16681,8 @@
 
     ;; javascript interpreter repl
     (use-package js-comint
-      :quelpa (js-comint)
+      ;;:quelpa (js-comint)
+      :straight t
       :after (js2-mode)
       :commands (js-send-buffer
                  js-send-buffer-and-go
@@ -16753,79 +16747,14 @@
     (init-message 2 "Modes: JSON Mode")
 
     (use-package json-mode
-      :quelpa (json-mode)
+      ;;:quelpa (json-mode)
+      :straight t
       :mode (("\\.json\\'" . js2-mode))
       :config
       ;; set indentation to four spaces
       (setq json-encoding-default-indentation "    "
             json-encoding-pretty-print t))
 ;; JSON Mode:1 ends here
-
-;; [[file:init-emacs.org::*Kotlin Mode][Kotlin Mode:1]]
-    ;;------------------------------------------------------------------------------
-    ;;; Modes: Kotlin Mode
-    ;;------------------------------------------------------------------------------
-
-    (init-message 2 "Modes: Kotlin Mode")
-
-    ;;(use-package kotlin-mode
-    (use-package java-mode
-      ;;:quelpa (kotlin-mode)
-      :quelpa (java-mode)
-      :mode (("\\.kt\\'" . kotlin-mode)
-             ("\\.kts\\'" . kotlin-mode))
-      :commands (java-mode
-                 kotlin-mode--syntax-propertize-function)
-      :functions (kotlin-send-buffer)
-      :config
-      ;; add style for kotlin-mode
-      (add-to-list 'c-default-style '(kotlin-mode . "java"))
-
-      ;; add junit lib to classpath when creating a repl (so unit tests work)
-      (add-to-list 'kotlin-args-repl "-classpath" t)
-      (add-to-list 'kotlin-args-repl (expand-file-name "~/dev/kotlin/lib/junit-4.12.jar") t)
-
-      ;; redefine kotlin-mode so that indentation works
-      ;; based on `java-mode'
-      (define-derived-mode kotlin-mode java-mode "Kotlin"
-        "Major mode for editing Kotlin."
-
-        (setq font-lock-defaults '((kotlin-mode--font-lock-keywords) nil nil))
-        (setq-local syntax-propertize-function #'kotlin-mode--syntax-propertize-function)
-        (set (make-local-variable 'comment-start) "//")
-        (set (make-local-variable 'comment-padding) 1)
-        (set (make-local-variable 'comment-start-skip) "\\(//+\\|/\\*+\\)\\s *")
-        (set (make-local-variable 'comment-end) "")
-        (set (make-local-variable 'c-comment-start-regexp) "//")
-        (set (make-local-variable 'c-block-comment-start-regexp) "/\\*")
-        (set (make-local-variable 'indent-line-function) 'kotlin-mode--indent-line)
-
-        :group 'kotlin
-        :syntax-table kotlin-mode-syntax-table)
-
-      ;; redefine send region to remove comments before sending
-      ;; (kotlinc REPL does not currently support comments)
-      (defun kotlin-send-region (beg end)
-        "Send current region to Kotlin interpreter."
-        (interactive "r")
-        (let ((buffer (current-buffer)))
-          (with-temp-buffer
-            (insert-buffer-substring-no-properties buffer beg end)
-            (java-remove-comments)
-            (comint-send-region kotlin-repl-buffer (point-min) (point-max))
-            (comint-send-string kotlin-repl-buffer "\n")))))
-
-    ;;------------------------------------------------------------------------------
-    ;;;; flycheck kotlin
-    ;;------------------------------------------------------------------------------
-
-    (use-package flycheck-kotlin
-      :quelpa (flycheck-kotlin)
-      :after (flycheck kotlin-mode)
-      :defines (flycheck-mode)
-      :config
-      (add-hook 'kotlin-mode-hook #'flycheck-mode))
-;; Kotlin Mode:1 ends here
 
 ;; [[file:init-emacs.org::*Ledger Mode][Ledger Mode:1]]
     ;;------------------------------------------------------------------------------
@@ -16835,7 +16764,8 @@
     (init-message 2 "Modes: Ledger Mode")
 
     (use-package ledger-mode
-      :quelpa (ledger-mode)
+      ;;:quelpa (ledger-mode)
+      :straight t
       :functions (ledger-align-amounts)
       :config
       (defun local-ledger-align-amounts ()
@@ -16938,7 +16868,8 @@
     (init-message 2 "Modes: LUA Mode")
 
     (use-package lua-mode
-      :quelpa (lua-mode)
+      ;;:quelpa (lua-mode)
+      :straight t
       :mode (("\\.lua\\'" . lua-mode)))
 ;; LUA Mode:1 ends here
 
@@ -16966,7 +16897,8 @@
     (init-message 2 "Modes: Markdown Mode")
 
     (use-package markdown-mode
-      :quelpa (markdown-mode)
+      ;;:quelpa (markdown-mode)
+      :straight t
       :after (org-table)
       :mode (("\\.md\\'" . markdown-mode)
              ("\\.markdown\\'" . markdown-mode))
@@ -17040,7 +16972,8 @@
     (init-message 2 "Modes: PlantUML Mode")
 
     (use-package plantuml-mode
-      :quelpa (plantuml-mode))
+      ;;:quelpa (plantuml-mode))
+      :straight t)
 ;; PlantUML Mode:1 ends here
 
 ;; [[file:init-emacs.org::*Python Mode][Python Mode:1]]
@@ -17051,7 +16984,8 @@
     (init-message 2 "Modes: Python Mode")
 
     (use-package python-mode
-      :quelpa (python-mode)
+      ;;:quelpa (python-mode)
+      :straight t
       :after (company elpy)
       :mode (("\\.py\\'" . python-mode)
              ("\\.python\\'" . python-mode))
@@ -17103,7 +17037,8 @@
     ;;------------------------------------------------------------------------------
 
     (use-package elpy
-      :quelpa (elpy)
+      ;;:quelpa (elpy)
+      :straight t
       :commands (elpy-enable
                  elpy-shell-switch-to-shell)
       :config
@@ -17133,7 +17068,8 @@
 
     ;; ;; python auto-completion
     ;; (use-package jedi
-    ;;   :quelpa (jedi)
+    ;;   ;;:quelpa (jedi)
+    ;;   :straight t
     ;;   :after (python-mode)
     ;;   :config
     ;;   ;; ;; add jedi completions to auto-complete sources
@@ -17150,7 +17086,8 @@
     (init-message 2 "Modes: Racket Mode")
 
     ;; (use-package racket-mode
-    ;;   :quelpa (racket-mode)
+    ;;   ;;:quelpa (racket-mode)
+    ;;   :straight t
     ;;   :mode ("\\.rkt\\'" . racket-mode)
     ;;   :interpreter ("racket" . racket-mode)
     ;;   :commands (racket-mode
@@ -17287,7 +17224,8 @@
 
     ;; code navigation, documentation lookup, and completion for ruby
     (use-package robe
-      :quelpa (robe)
+      ;;:quelpa (robe)
+      :straight t
       :after (ruby-mode)
       :commands (robe-mode)
       :config
@@ -17300,7 +17238,8 @@
     ;; (init-message 3 "inf-ruby")
 
     ;; (use-package inf-ruby
-    ;;   :quelpa (inf-ruby)
+    ;;   ;;:quelpa (inf-ruby)
+    ;;   :straight t
     ;;   :after (ruby-mode)
     ;;   :interpreter ("ruby" . ruby-mode)
     ;;   :commands (run-ruby inf-ruby-keys)
@@ -17321,7 +17260,8 @@
 
     ;; ;; auto-complete source for interactive ruby
     ;; (use-package ac-inf-ruby
-    ;;   :quelpa (ac-inf-ruby)
+    ;;   ;;:quelpa (ac-inf-ruby)
+    ;;   :straight t
     ;;   :config
     ;;   (add-to-list 'ac-modes 'inf-ruby-mode t)
     ;;   (add-hook 'inf-ruby-mode-hook #'ac-inf-ruby-enable)
@@ -17431,7 +17371,8 @@
     ;;   # cd /usr/share/emacs22/site-lisp/slime
     ;;   # for i in $(ls -1 /usr/share/common-lisp/source/slime/) ; do ln -s /usr/share/common-lisp/source/slime/$i ; done
     (use-package slime
-      :quelpa (slime)
+      ;;:quelpa (slime)
+      :straight t
       ;; :load-path (;;(lambda () (expand-file-name "slime" emacs-modules-dir))
       ;;             ;;(lambda () (expand-file-name "slime/contrib" emacs-modules-dir))
       ;;             (lambda () (expand-file-name "swank-clojure" emacs-modules-dir)))
@@ -17581,7 +17522,8 @@
 
     ;; ;; auto-complete source for slime
     ;; (use-package ac-slime
-    ;;   :quelpa (ac-slime)
+    ;;   ;;:quelpa (ac-slime)
+    ;;   :straight t
     ;;   :after (slime)
     ;;   :config
     ;;   (add-hook 'slime-mode-hook #'set-up-slime-ac)
@@ -17595,7 +17537,8 @@
     (init-message 3 "elisp-slime-nav-mode")
 
     (use-package elisp-slime-nav
-      :quelpa (elisp-slime-nav)
+      ;;:quelpa (elisp-slime-nav)
+      :straight t
       :after (slime)
       :diminish elisp-slime-nav-mode
       :commands (elisp-slime-nav-mode)
@@ -17625,7 +17568,8 @@
       )
 
     ;; (use-package sql-transform
-    ;;   :quelpa (sql-transform)
+    ;;   ;;:quelpa (sql-transform)
+    ;;   :straight t
     ;;   :config
     ;;   (defun local-sql-mode-hook ()
     ;;     ;; key bindings
@@ -17643,7 +17587,8 @@
     ;; (init-message 3 "mysql")
 
     ;; (use-package mysql
-    ;;   :quelpa (mysql)
+    ;;   ;;:quelpa (mysql)
+    ;;   :straight t
     ;;   :after (sql)
     ;;   :config (setq sql-product 'mysql))
 ;; SQL Mode:1 ends here
@@ -17714,7 +17659,8 @@
     (init-message 2 "Modes: TypeScript Mode")
 
     (use-package typescript-mode
-      :quelpa (typescript-mode)
+      ;;:quelpa (typescript-mode)
+      :straight t
       :mode ("\\.ts\\'" . typescript-mode)
       :hook (typescript-mode . lsp-deferred)
       :config
@@ -18395,7 +18341,8 @@
     (init-message 3 "yasnippet")
 
     (use-package yasnippet
-      :quelpa (yasnippet)
+      ;;:quelpa (yasnippet)
+      :straight t
       :diminish yas-minor-mode
       :config
       ;; turn on globally
@@ -18416,7 +18363,8 @@
     (init-message 3 "yasnippet-snippets")
 
     (use-package yasnippet-snippets
-      :quelpa (yasnippet-snippets)
+      ;;:quelpa (yasnippet-snippets)
+      :straight t
       :after (yasnippet))
 ;; Setup:1 ends here
 
@@ -18447,7 +18395,8 @@
 
     ;; hydra
     (use-package hydra
-      :quelpa (hydra))
+      ;;:quelpa (hydra))
+      :straight t)
 ;; Setup:1 ends here
 
 ;; [[file:init-emacs.org::*Windows OS][Windows OS:1]]
@@ -18611,7 +18560,8 @@
 
   ;; use supercite for quoting
   (use-package supercite
-    :quelpa (supercite)
+    ;;:quelpa (supercite)
+    :straight t
     :after (gnus)
     :commands (sc-cite-original)
     :config
@@ -19209,22 +19159,6 @@
               (when (not (file-directory-p file))
                 (compile-file-if-needed file))))))))
 ;; Compile Personal Modules:1 ends here
-
-;; [[file:init-emacs.org::*Upgrade Quelpa Asynchronously][Upgrade Quelpa Asynchronously:1]]
-    ;;------------------------------------------------------------------------------
-    ;;; Final Setup: Upgrade Quelpa Asynchronously
-    ;;------------------------------------------------------------------------------
-
-    (init-message 2 "Final Setup: Upgrade Quelpa Asynchronously")
-
-    ;; call `quelpa-self-upgrade' asynchronously
-    (async-start
-     (lambda ()
-       (when (require 'quelpa nil :no-error)
-         (quelpa-self-upgrade)))
-     (lambda (result)
-       (message "Quelpa upgrade finished")))
-;; Upgrade Quelpa Asynchronously:1 ends here
 
 ;; [[file:init-emacs.org::*Start Emacs Server][Start Emacs Server:1]]
     ;;------------------------------------------------------------------------------
