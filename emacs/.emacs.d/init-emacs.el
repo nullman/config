@@ -7004,7 +7004,8 @@
                                     ";;;; Org Mode: Babel: Tangle Update Timestamps"
                                     ";;;; Org Mode: Babel: Tangle Case-Sensitive"
                                     ";;;; Functions: Emacs Functions: delete-line"
-                                    ";;; Modules: htmlize")
+                                    ";;; Modules: htmlize"
+                                    ";;; Modules: w3m")
                                   (let ((start (progn
                                                  (goto-char (point-min))
                                                  (re-search-forward "^[ \t]*:CUSTOM_ID: org-website$")))
@@ -9118,7 +9119,8 @@
       FILE defaults to `~/lynx_bookmarks.html'."
         (interactive)
         (let ((file (or file "~/lynx_bookmarks.html")))
-          (w3m-browse-url (expand-file-name file))))
+          ;;(w3m-browse-url (expand-file-name file))))
+          (eww-open-in-new-buffer (expand-file-name file))))
 ;; load-bookmarks:1 ends here
 
 ;; [[file:init-emacs.org::*find-file-updir][find-file-updir:1]]
@@ -15847,6 +15849,80 @@
       :straight t)
 ;; vimish-fold:1 ends here
 
+;; [[file:init-emacs.org::*w3m][w3m:1]]
+    ;;------------------------------------------------------------------------------
+    ;;; Modules: w3m
+    ;;------------------------------------------------------------------------------
+
+    (init-message 2 "Modules: w3m")
+
+    (use-package w3m
+      :when (executable-find "w3m") ; only use if binary is available on system
+      ;;:quelpa (w3m)
+      :straight t
+      :commands (w3m
+                 w3m-antenna
+                 w3m-browse-url
+                 w3m-encode-specials-string
+                 w3m-find-file
+                 w3m-namazu
+                 w3m-next-buffer
+                 w3m-previous-buffer
+                 w3m-region
+                 w3m-search
+                 w3m-weather)
+      :defines (w3m-use-tab-line)
+      :bind (:map w3m-mode-map
+                  ("," . w3m-previous-buffer)
+                  ("." . w3m-next-buffer))
+      :custom
+      ;; directory of icon files
+      (w3m-icon-directory "/usr/share/emacs-w3m/icon")
+      ;; turn on cookies
+      (w3m-use-cookies t)
+      :config
+      ;; add new functionality not in this version
+      (defun w3m-buffer (&optional buffer)
+        "Render the current buffer or BUFFER if given."
+        (interactive)
+        (when buffer
+          (switch-to-buffer buffer))
+        (w3m-region (point-min) (point-max)))
+
+      (defun w3m-display-local-hook (url)
+        "Hook to auto-rename buffers to page title or url."
+        (rename-buffer
+         (format "*w3m: %s*" (or w3m-current-title w3m-current-url)) t))
+      (add-hook 'w3m-display-hook #'w3m-display-local-hook))
+
+    ;; ;;------------------------------------------------------------------------------
+    ;; ;;;; Modules: w3m-session
+    ;; ;;------------------------------------------------------------------------------
+
+    ;; (init-message 3 "w3m-session")
+
+    ;; ;; persistent sessions
+    ;; (use-package w3m-session
+    ;;   :when (executable-find "w3m") ; only use if w3m command is available on system
+    ;;   ;;:quelpa (w3m-session)
+    ;;   :straight t
+    ;;   :after (w3m)
+    ;;   :commands (w3m-session-load
+    ;;              w3m-session-load-always
+    ;;              w3m-session-save
+    ;;              w3m-session-save-always)
+    ;;   :bind (:map w3m-mode-map
+    ;;               ("S" . w3m-session-save)
+    ;;               ("L" . w3m-session-load))
+    ;;   ;;:config
+    ;;   ;;(setq w3m-session-file "~/.w3m-session")
+    ;;   ;;(setq w3m-session-save-always nil)
+    ;;   ;;(setq w3m-session-load-always nil)
+    ;;   ;;(setq w3m-session-show-titles t)
+    ;;   ;;(setq w3m-session-duplicate-tabs 'ask) ; 'never, 'always, 'ask
+    ;;   )
+;; w3m:1 ends here
+
 ;; [[file:init-emacs.org::*web-query][web-query:1]]
     ;;------------------------------------------------------------------------------
     ;;; Modules: web-query
@@ -15855,8 +15931,8 @@
     (init-message 2 "Modules: web-query")
 
     (use-package web-query
-      :when (executable-find "w3m")
-      :after (w3m)
+      ;; :when (executable-find "w3m")
+      ;; :after (w3m)
       ;;:quelpa (web-query :fetcher file :path (expand-file-name "web-query.el" local-modules-dir))
       :load-path (lambda () (expand-file-name "web-query.el" local-modules-dir))
       :commands (web-query
@@ -17970,7 +18046,7 @@
     ;; applications menu
     (auto-menu
      "Applications"
-     `(("Bookmarks" "load-bookmarks" "Load bookmarks in w3m.")
+     `(("Bookmarks" "load-bookmarks" "Load bookmarks.")
        ("Calc" "calc" "Run Calc (The Emacs Calculator).")
        ("Elfeed" "elfeed" "Run Elfeed (Emacs Atom/RSS feed reader).")
        ("Elpher" "elpher" "Run Elpher (Emacs Gopher Client).")

@@ -30,8 +30,13 @@ _command xkbcomp && xkbcomp ${DISPLAY} - | sed 's/ Insert / NoSymbol /' | xkbcom
 # setxkbmap key behavior modifications
 #   caps lock  -> control
 #   both shift -> toggle caps lock
-#   shift      -> cancel caps lock
-_command setxkbmap && setxkbmap -option 'shift:both_capslock_cancel,caps:ctrl_modifier'
+_command setxkbmap && setxkbmap -option 'shift:both_capslock,caps:ctrl_modifier'
+
+# # setxkbmap key behavior modifications
+# #   caps lock  -> control
+# #   both shift -> toggle caps lock
+# #   shift      -> cancel caps lock
+# _command setxkbmap && setxkbmap -option 'shift:both_capslock_cancel,caps:ctrl_modifier'
 
 # # xbindkeys
 # pkill -x xbindkeys > /dev/null 2>&1
