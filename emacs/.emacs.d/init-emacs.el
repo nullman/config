@@ -13827,21 +13827,21 @@
 
     (use-package all-the-icons
       ;;:quelpa (all-the-icons)
-      :straight t
-      :config
-      ;; install fonts, if needed
-      (let ((font-dest (cl-case window-system
-                         (x  (concat (or (getenv "XDG_DATA_HOME")
-                                         (concat (getenv "HOME") "/.local/share"))
-                                     "/fonts/"))
-                         (mac (concat (getenv "HOME") "/Library/Fonts/"))
-                         (w32 (concat (getenv "WINDIR") "/Fonts/"))
-                         (ns (concat (getenv "HOME") "/Library/Fonts/"))))
-            (font-name (cl-case window-system
-                         (w32 "AllTheIcons.ttf")
-                         (t "all-the-icons.ttf"))))
-        (or (file-exists-p (expand-file-name font-name font-dest))
-            (all-the-icons-install-fonts :noconfirm))))
+      :straight t)
+      ;; :config
+      ;; ;; install fonts, if needed
+      ;; (let ((font-dest (cl-case window-system
+      ;;                    (x  (concat (or (getenv "XDG_DATA_HOME")
+      ;;                                    (concat (getenv "HOME") "/.local/share"))
+      ;;                                "/fonts/"))
+      ;;                    (mac (concat (getenv "HOME") "/Library/Fonts/"))
+      ;;                    (w32 (concat (getenv "WINDIR") "/Fonts/"))
+      ;;                    (ns (concat (getenv "HOME") "/Library/Fonts/"))))
+      ;;       (font-name (cl-case window-system
+      ;;                    (w32 "AllTheIcons.ttf")
+      ;;                    (t "all-the-icons.ttf"))))
+      ;;   (or (file-exists-p (expand-file-name font-name font-dest))
+      ;;       (all-the-icons-install-fonts :noconfirm))))
 ;; doom-modeline:1 ends here
 
 ;; [[file:init-emacs.org::*easy-kill][easy-kill:1]]
