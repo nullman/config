@@ -1257,6 +1257,11 @@
                  )
              ('error
               (set-frame-font "9x15" nil t))))
+          (w32
+           (condition-case nil
+               (set-frame-font "Hack Nerd Font Mono-12" nil t)
+             ('error
+              nil)))
           (ns
            (condition-case nil
                (progn
@@ -13831,8 +13836,11 @@
                                      "/fonts/"))
                          (mac (concat (getenv "HOME") "/Library/Fonts/"))
                          (w32 (concat (getenv "WINDIR") "/Fonts/"))
-                         (ns (concat (getenv "HOME") "/Library/Fonts/")))))
-        (or (file-exists-p (expand-file-name "all-the-icons.ttf" font-dest))
+                         (ns (concat (getenv "HOME") "/Library/Fonts/"))))
+            (font-name (cl-case window-system
+                         (w32 "AllTheIcons.ttf")
+                         (t "all-the-icons.ttf"))))
+        (or (file-exists-p (expand-file-name font-name font-dest))
             (all-the-icons-install-fonts :noconfirm))))
 ;; doom-modeline:1 ends here
 
