@@ -2466,6 +2466,7 @@
     (init-message 2 "Org Mode: Agenda")
 
     (use-package org
+      :when (file-exists-p org-directory)
       :config
       ;; agenda key bindings
       ;;(define-key org-agenda-mode-map (kbd "C-n") 'next-line)

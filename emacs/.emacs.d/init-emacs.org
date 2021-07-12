@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2021-07-11 22:57 (kyle)>
+  #+TIMESTAMP: <2021-07-12 11:30 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -3535,6 +3535,7 @@
       (init-message 2 "Org Mode: Agenda")
 
       (use-package org
+        :when (file-exists-p org-directory)
         :config
         ;; agenda key bindings
         ;;(define-key org-agenda-mode-map (kbd "C-n") 'next-line)
