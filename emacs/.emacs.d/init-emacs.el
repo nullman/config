@@ -13829,8 +13829,9 @@
                          (x  (concat (or (getenv "XDG_DATA_HOME")
                                          (concat (getenv "HOME") "/.local/share"))
                                      "/fonts/"))
-                         (mac (concat (getenv "HOME") "/Library/Fonts/" ))
-                         (ns (concat (getenv "HOME") "/Library/Fonts/" )))))
+                         (mac (concat (getenv "HOME") "/Library/Fonts/"))
+                         (windows (concat (getenv "WINDIR") "/Fonts/"))
+                         (ns (concat (getenv "HOME") "/Library/Fonts/")))))
         (or (file-exists-p (expand-file-name "all-the-icons.ttf" font-dest))
             (all-the-icons-install-fonts :noconfirm))))
 ;; doom-modeline:1 ends here
