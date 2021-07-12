@@ -13122,7 +13122,7 @@
         (expand-file-name "~/.abbrev_defs")
         "Abbreviations file used by `abbrev-mode'.")
       (unless (file-exists-p abbrev-file)
-        (call-process "touch" nil nil nil abbrev-file))
+        (with-temp-buffer (write-file abbrev-file)))
       (abbrev-mode 1)
       :config
       (setq dabbrev-case-replace nil) ; preserve case when replacing abbreviations

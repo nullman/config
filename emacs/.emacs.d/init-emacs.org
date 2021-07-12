@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2021-07-12 11:30 (kyle)>
+  #+TIMESTAMP: <2021-07-12 12:18 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -18251,7 +18251,7 @@
           (expand-file-name "~/.abbrev_defs")
           "Abbreviations file used by `abbrev-mode'.")
         (unless (file-exists-p abbrev-file)
-          (call-process "touch" nil nil nil abbrev-file))
+          (with-temp-buffer (write-file abbrev-file)))
         (abbrev-mode 1)
         :config
         (setq dabbrev-case-replace nil) ; preserve case when replacing abbreviations
