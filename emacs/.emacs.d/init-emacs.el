@@ -13830,7 +13830,7 @@
                                          (concat (getenv "HOME") "/.local/share"))
                                      "/fonts/"))
                          (mac (concat (getenv "HOME") "/Library/Fonts/"))
-                         (windows (concat (getenv "WINDIR") "/Fonts/"))
+                         (w32 (concat (getenv "WINDIR") "/Fonts/"))
                          (ns (concat (getenv "HOME") "/Library/Fonts/")))))
         (or (file-exists-p (expand-file-name "all-the-icons.ttf" font-dest))
             (all-the-icons-install-fonts :noconfirm))))
