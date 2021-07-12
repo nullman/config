@@ -1286,7 +1286,9 @@
       80  = 20% transparency")
       ;;(setq background-alpha (if window-system-mac 100 100)) ; 0% transparency
       ;;(setq background-alpha (if window-system-mac 100 90)) ; 10% transparency
-      (setq background-alpha (if window-system-mac 100 85)) ; 15% transparency
+      (setq background-alpha (if (or window-system-mac window-system-windows)
+                                 100        ; 0% transparency
+                               85))         ; 15% transparency
       ;;(setq background-alpha (if window-system-mac 100 80)) ; 20% transparency
       (set-frame-parameter (selected-frame) 'alpha
                            `(,background-alpha . ,background-alpha))
@@ -18484,8 +18486,8 @@
   (when window-system-windows
     (init-message 1 "Windows OS")
 
-    ;; turn on the menubar
-    (menu-bar-mode t)
+    ;; ;; turn on the menubar
+    ;;(menu-bar-mode t)
 
     ;; ;; w32-feeling
     ;; (use-package w32-feeling
@@ -18508,8 +18510,8 @@
     ;; (use-package pc-select
     ;;   :config (pc-selection-mode))
 
-    ;; turn on timeclock display (since I'm at work if I'm using Windows)
-    (timeclock-mode-line-display)
+    ;; ;; turn on timeclock display (since I'm at work if I'm using Windows)
+    ;; (timeclock-mode-line-display)
 
     ;; set page-up and page-down keys (again)
     (bind-keys ("<next>" . scroll-up-enhanced)
