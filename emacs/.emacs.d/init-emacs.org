@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2021-07-12 14:40 (kyle)>
+  #+TIMESTAMP: <2021-07-13 21:25 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -21333,11 +21333,16 @@
                   val))))
 
         ;; recenter screen after moving to current song
-        (defun mingus-goto-current-song--recenter ()
+        (defun mingus-goto-current-song--recenter (orig-fun &rest args)
           "Recenter screen after moving to current song."
-          (recenter-top-bottom))
+          (let ((bol (point-at-bol))
+                (eol (point-at-eol)))
+            (apply orig-fun args)
+            (unless (or (< (point) bol)
+                        (> (point) eol))
+              (recenter-top-bottom))))
         ;; advise `mingus-goto-current-song'
-        (advice-add 'mingus-goto-current-song :after #'mingus-goto-current-song--recenter)
+        (advice-add 'mingus-goto-current-song :around #'mingus-goto-current-song--recenter)
 
         (defun mingus-display-song-rating (highlight)
           "Display song rating of currently selected mingus song.
