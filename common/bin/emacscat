@@ -20,19 +20,19 @@ set -euo pipefail
 
 unset DISPLAY
 
-file="$(mktemp)"
-lisp="(progn (switch-to-buffer (generate-new-buffer \"*stdin*\")) (insert-file \"${file}\") (end-of-buffer) (normal-mode))"
+tmpfile="$(mktemp)"
+lisp="(progn (switch-to-buffer (generate-new-buffer \"*stdin*\")) (insert-file \"${tmpfile}\") (end-of-buffer) (normal-mode))"
 
 if [[ ! -t 0  ]] ; then
     # data from stdin
 
-    cat > "${file}"
+    cat > "${tmpfile}"
 
     if (emacsclient -a emacs -e "${lisp}" "${@}" > /dev/null) ; then
         echo "Failed to import your data into Emacs"
     fi
 
-    rm -f "${file}"
+    rm -f "${tmpfile}"
 else
     # nothing from stdin, use parameters
 

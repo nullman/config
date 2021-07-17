@@ -317,7 +317,6 @@ wcdir() {
     fi
 }
 #        dtloop                  datetime stamp looping
-unalis dtloop > /dev/null 2>&1
 dtloop() {
     if [[ $# -gt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 [DELAY]"
@@ -566,6 +565,21 @@ EOF
             rm "${file}"
         fi
     done
+}
+#        make-terminfo-trs100    make terminfo file for trs-80 model 100
+make-terminfo-trs100() {
+    tmpfile="$(mktemp)"
+    cat > "${tmpfile}" <<EOF
+trs100|Radio Shack Model 100:\
+:am:bs:xt:\
+:co#40:li#8:\
+:al=\EL:bl=^G:cd=\EJ:ce=\EK:cl=\EE:cm=\EY%+ %+ :\
+:cr=^M:dl=\EM:do=^J:ho=\EH:kb=^H:kd=^_:kl=^]:kr=^\:\
+:ku=^^:le=^H:nd=34:se=\Eq:sf=^J:so=\Ep:up=\EA:\
+:ve=\EP:vi=\EQ:
+EOF
+    sudo tic "${tmpfile}"
+    rm "${tmpfile}"
 }
 
 #
@@ -1592,16 +1606,16 @@ jarversion() {
         [[ -z "${dir}" ]] && dir="."
         pattern="$2"
         [[ -z "${pattern}" ]] && pattern="*.jar"
-        tmp="$(mktemp -d)"
+        tmpdir="$(mktemp -d)"
         find "${dir}" -name "${pattern}" -type f | while read jar ; do
-            mkdir -p "${tmp}"
-            cp "${jar}" "${tmp}/"
+            mkdir -p "${tmpdir}"
+            cp "${jar}" "${tmpdir}/"
             (
-                cd "${tmp}"
+                cd "${tmpdir}"
                 unzip "${jar}" > /dev/null
                 echo "${jar} $(grep '^Created-By' 'META-INF/MANIFEST.MF' | sed 's/^Created-By: // ; s/ (Sun.*$//')"
             )
-            rm -rf "${tmp}"
+            rm -rf "${tmpdir}"
         done | column --table
     fi
 }

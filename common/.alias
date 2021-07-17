@@ -356,7 +356,7 @@ alias rate="curl --silent rate.sx"
 #
 # general (complex)
 #
-#        terminal-width-80               show terminal width grid
+#        terminal-width-80       show terminal width grid
 alias terminal-width-80="
     echo 'Terminal width:'
     echo '                                                                                                   1         1         1         1         1         1         1         1         1         1         2'
@@ -367,7 +367,7 @@ alias terminal-width-80="
     for x in \$(seq 80 -1 2) ; do
         echo \${x}
     done"
-#        terminal-width-144              show terminal width grid
+#        terminal-width-144      show terminal width grid
 alias terminal-width-144="
     echo 'Terminal width:'
     echo '                                                                                                   1         1         1         1         1'
@@ -378,7 +378,7 @@ alias terminal-width-144="
     for x in \$(seq 144 -1 2) ; do
         echo \${x}
     done"
-#        terminal-width-200              show terminal width grid
+#        terminal-width-200      show terminal width grid
 alias terminal-width-200="
     echo 'Terminal width:'
     echo '                                                                                                   1         1         1         1         1         1         1         1         1         1         2'
@@ -389,7 +389,7 @@ alias terminal-width-200="
     for x in \$(seq 200 -1 2) ; do
         echo \${x}
     done"
-#        terminal-colors                 show terminal colors
+#        terminal-colors         show terminal colors
 alias terminal-colors="
     echo -e '\e[30m\e[40m   \e[31m\e[41m   \e[32m\e[42m   \e[33m\e[43m   \e[34m\e[44m   \e[35m\e[45m   \e[36m\e[46m   \e[37m\e[47m   \e[0m'
     echo -e '\e[38;5;8m\e[48;5;8m   \e[38;5;9m\e[48;5;9m   \e[38;5;10m\e[48;5;10m   \e[38;5;11m\e[48;5;11m   \e[38;5;12m\e[48;5;12m   \e[38;5;13m\e[48;5;13m   \e[38;5;14m\e[48;5;14m   \e[38;5;15m\e[48;5;15m   \e[0m'"
@@ -403,7 +403,7 @@ alias remove-org-font-files="
                     xargs rm > /dev/null 2>&1
             done
     )"
-#        stopwatch                       start stopwatch timer
+#        stopwatch               start stopwatch timer
 alias stopwatch="
     start=\$(date '+%s')
     while true ; do

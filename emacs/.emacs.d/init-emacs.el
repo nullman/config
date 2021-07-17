@@ -710,8 +710,9 @@
     ;;(setq browse-url-generic-program "x-www-browser")
     ;;(setq browse-url-generic-program "w3m")
     ;;(setq browse-url-generic-program "mozilla")
+    (setq browse-url-browser-function 'browse-url-default-browser)
     ;;(setq browse-url-browser-function 'browse-url-generic)
-    (setq browse-url-browser-function 'eww-browse-url)
+    ;;(setq browse-url-browser-function 'eww-browse-url)
     ;;(setq browse-url-browser-function 'w3m-browse-url)
     ;;(setq browse-url-browser-function 'browse-url-firefox
     ;;      browse-url-new-window-flag  t
