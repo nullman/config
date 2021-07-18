@@ -43,7 +43,7 @@ _command pcmanfm && _delay 1 pcmanfm &
 #_command idea && _delay 10 idea &
 _command discord && _delay 1 discord &
 #_command pidgin && _delay 1 pidgin &
-_command dino && _delay 1 dino &
+_command org.gajim.Gajim && _delay 1 org.gajim.Gajim &
 #_command tootle && _delay 10 tootle &
 #_command com.github.bleakgrey.tootle && _delay 10 com.github.bleakgrey.tootle &
 #_command lbry && _delay 1 lbry &

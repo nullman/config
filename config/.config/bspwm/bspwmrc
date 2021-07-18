@@ -119,7 +119,8 @@ _ba 'VirtualBox Manager' desktop='^6' follow=on
 _ba 'VirtualBox Machine' desktop='^6' follow=on
 _ba discord desktop='^7' follow=on
 _ba Pidgin desktop='^7' follow=on
-_ba org.gajim.Gajim desktop='^7' follow=on
+#_ba org.gajim.Gajim desktop='^7' follow=on
+_ba Gajim desktop='^7' follow=on
 _ba 'Hyperspace Desktop' desktop='^7' follow=on
 _ba Tootle desktop='^7' follow=on
 _ba Com.github.bleakgrey.tootle desktop='^7' follow=on
