@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2021-07-17 00:28 (kyle)>
+  #+TIMESTAMP: <2021-07-19 00:16 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -4656,6 +4656,7 @@
         (setq org-use-property-inheritance t
               org-babel-use-quick-and-dirty-noweb-expansion t
               org-src-tab-acts-natively t
+              org-src-preserve-indentation nil
               ;;org-src-fontify-natively t
               org-src-ask-before-returning-to-edit-buffer nil
               org-src-strip-leading-and-trailing-blank-lines t

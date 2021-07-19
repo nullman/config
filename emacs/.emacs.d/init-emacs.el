@@ -3340,6 +3340,7 @@
       (setq org-use-property-inheritance t
             org-babel-use-quick-and-dirty-noweb-expansion t
             org-src-tab-acts-natively t
+            org-src-preserve-indentation nil
             ;;org-src-fontify-natively t
             org-src-ask-before-returning-to-edit-buffer nil
             org-src-strip-leading-and-trailing-blank-lines t
