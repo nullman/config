@@ -17,16 +17,16 @@ fi
 pat1="$1"
 pat2="$2"
 
-ls -A1 | while read file1 ; do
+find . -mindepth 1 -maxdepth 1 -printf '%P\n' | while read file1 ; do
     file2=$(echo "${file1}" | sed "s/${pat1}/${pat2}/g")
     if [[ "${file1}" != "${file2}" ]] ; then
-       echo "${file1} => ${file2}"
-       git=$(git ls-files "${file1}" 2>/dev/null)
-       if [[ -n "${git}" ]] ; then
-           git mv "${file1}" "${file2}"
-       else
-           mv "${file1}" "${file2}"
-       fi
+        echo "${file1} => ${file2}"
+        git=$(git ls-files "${file1}" 2>/dev/null)
+        if [[ -n "${git}" ]] ; then
+            git mv "${file1}" "${file2}"
+        else
+            mv "${file1}" "${file2}"
+        fi
     fi
 done
 

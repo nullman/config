@@ -503,12 +503,13 @@ seddir() {
         read a
         case "${a}" in
             y|Y)
-                for file in $(ls -A1 "${dir}/") ; do
-                    test -f "${file}" && (
-                        echo "${file}"
-                        sed -i "${script}" "${file}"
-                    )
-                done
+                (
+                    cd "${dir}" && \
+                        find . -mindepth 1 -maxdepth 1 -type f | while read file ; do
+                            echo "${file}"
+                            sed -i "${script}" "${file}"
+                        done
+                )
                 ;;
         esac
     fi
