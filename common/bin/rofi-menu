@@ -64,9 +64,9 @@ case "${menu}" in
         # generate and display a list of sound files and directories to choose from
         _select() {
             if [[ -z "${sel}" ]] ; then
-                opts=("${stop}" "$(ls "${lsopts[@]}" "${sounddir}")")
+                local opts=("${stop}" "$(ls "${lsopts[@]}" "${sounddir}")")
             else
-                opts=("${up}" "$(ls "${lsopts[@]}" "${selpath}")")
+                local opts=("${up}" "$(ls "${lsopts[@]}" "${selpath}")")
             fi
             sel=$(printf '%s\n' "${opts[@]}" | rofi -dmenu -i -p 'Sounds' -hide-scrollbar)
         }

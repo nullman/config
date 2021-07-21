@@ -56,7 +56,7 @@ if [[ ${help} -eq 1 ]] ; then
     exit 1
 fi
 
-get-temp() {
+_get_temp() {
     #sensors ${opts} | grep "^Package id 0:" | sed 's/^Package id 0: \+// ; s/ \+(high.*$//'
     #sensors ${opts} | grep "^Core 0" | sed 's/^Core 0: \+// ; s/ \+(high.*$//'
     sensors ${opts} | grep "^temp1:" | sed 's/^temp1: \+//' | head -n 1
@@ -69,7 +69,7 @@ echo "Performing CPU temperature test on ${threads} threads..."
 for x in $(seq ${count}) ; do
     c="00000${x}"
     echo -n "[${c: $((-${#count}))}/${count}] "
-    get-temp $1
+    _get_temp $1
     if [[ $(command -v sysbench) ]] ; then
         sysbench --test=cpu --num-threads=${threads} --cpu-max-prime=25000 run > /dev/null 2>&1
     else
@@ -78,7 +78,7 @@ for x in $(seq ${count}) ; do
 done
 
 echo
-get-temp $1
+_get_temp $1
 
 #===============================================================================
 # End of File

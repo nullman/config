@@ -9,26 +9,86 @@
 # Author: Kyle W T Sherman
 #===============================================================================
 
-if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-    echo "Usage: $(basename $0) SOURCE_PATTERN DEST_PATTERN"
+set -euo pipefail
+
+recursive=0
+pat1=""
+pat2=""
+
+_usage() {
+    cat <<EOF
+Usage: $(basename $0) [OPTIONS] SOURCE_PATTERN DEST_PATTERN
+
+Perform a move (rename) of all files in the current directory using a search
+and replace of a regular expression string.  If a file is under git
+tracking, then a git move is performed instead.
+
+OPTIONS:
+  SOURCE_PATTERN   regexp pattern to search for
+  DEST_PATTERN     regexp pattern to replace with
+  -h, --help       show this help
+  -r, --recursive  recurse into sub-directories
+EOF
+}
+
+_loop() {
+    local basedir="$1"
+
+    # traverse directories
+    if [[ ${recursive} -eq 1 ]] ; then
+        find . -mindepth 1 -maxdepth 1 -type d -printf '%P\n' | while read dir ; do
+            echo "${basedir}/${dir}"
+            (cd "${dir}" && _loop "${basedir}/${dir}")
+        done
+    fi
+
+    # handle files
+    find . -mindepth 1 -maxdepth 1 -printf '%P\n' | while read file1 ; do
+        local file2=$(echo "${file1}" | sed "s/${pat1}/${pat2}/g")
+        if [[ "${file1}" != "${file2}" ]] ; then
+            echo "${basedir}/${file1} => ${basedir}/${file2}"
+            local git=$(git ls-files "${file1}" 2>/dev/null)
+            if [[ -n "${git}" ]] ; then
+                git mv "${file1}" "${file2}"
+            else
+                mv "${file1}" "${file2}"
+            fi
+        fi
+    done
+}
+
+while [[ $# -gt 0 ]] ; do
+    opt="$1"
+    case "${opt}" in
+        -r|--recursive)
+            recursive=1
+            shift
+            ;;
+        -h|--help)
+            _usage $0
+            exit 0
+            ;;
+        *)
+            if [[ -z "${pat1}" ]] ; then
+                pat1="${opt}"
+                shift
+            elif [[ -z "${pat2}" ]] ; then
+                pat2="${opt}"
+                shift
+            else
+                _usage $0
+                exit 1
+            fi
+            ;;
+    esac
+done
+
+if [[ -z "${pat1}" ]] || [[ -z "${pat2}" ]] ; then
+    _usage $0
     exit 1
 fi
 
-pat1="$1"
-pat2="$2"
-
-find . -mindepth 1 -maxdepth 1 -printf '%P\n' | while read file1 ; do
-    file2=$(echo "${file1}" | sed "s/${pat1}/${pat2}/g")
-    if [[ "${file1}" != "${file2}" ]] ; then
-        echo "${file1} => ${file2}"
-        git=$(git ls-files "${file1}" 2>/dev/null)
-        if [[ -n "${git}" ]] ; then
-            git mv "${file1}" "${file2}"
-        else
-            mv "${file1}" "${file2}"
-        fi
-    fi
-done
+_loop "."
 
 #===============================================================================
 # End of File

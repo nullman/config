@@ -24,7 +24,7 @@ shift
 msg="$@"
 
 # random
-random() {
+_random() {
     echo $(($RANDOM % $1))
 }
 
@@ -38,8 +38,8 @@ case "${cmd}" in
     eliza-fortune|ef)
         echo "${msg}" | elizatalk
         # random chance to add a fortune (based on seconds)
-        if [[ $(random 10) -eq 0 ]] ; then
-            case "$(random 18)" in
+        if [[ $(_random 10) -eq 0 ]] ; then
+            case "$(_random 18)" in
                 0) echo "Here's a quote for you..." ;;
                 1) echo "What do you think of this quote?" ;;
                 2) echo "Have a quote on me..." ;;
@@ -211,7 +211,7 @@ Commands:
   eliza   (e)   chat with elizatalk <text>
   today   (y)   today in history <MMM DD YYYY>
   fortune (f)   fortune teller <query>
-  quote   (q)   random quote <query>
+  quote   (q)   randomn quote <query>
   google  (g)   google search <search>
   calc    (c)   google calculator <expression>
   date    (d)   date/time in default format

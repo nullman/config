@@ -11,12 +11,12 @@
 
 set -euo pipefail
 
-prompt_command () {
+prompt_command() {
     # save current position
     tput sc
 
     # determine dir location
-    x=$(($(tput cols) - $(pwd | wc -m) - 2))
+    local x=$(($(tput cols) - $(pwd | wc -m) - 2))
 
     # position cursor at Y=0, X=x
     tput cup 0 ${x}

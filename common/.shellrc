@@ -27,8 +27,8 @@ _command() {
 # prevent duplicate path entries
 _pathadd() {
     if [[ -d "$1" ]] ; then
-        p=$(cd "$1" && pwd)
-        q=$(echo "$p" | sed 's/(/\\(/g ; s/)/\\)/g')
+        local p=$(cd "$1" && pwd)
+        local q=$(echo "$p" | sed 's/(/\\(/g ; s/)/\\)/g')
         if ! echo "${PATH}" | egrep -q "(^|:)$q($|:)" ; then
             if [[ -z "${PATH}" ]] ; then
                 PATH="${p}"
@@ -46,8 +46,8 @@ _pathadd() {
 # prevent duplicate infopath entries
 _infopathadd() {
     if [[ -d "$1" ]] ; then
-        p=$(cd "$1" && pwd)
-        q=$(echo "$p" | sed 's/(/\\(/g ; s/)/\\)/g')
+        local p=$(cd "$1" && pwd)
+        local q=$(echo "$p" | sed 's/(/\\(/g ; s/)/\\)/g')
         if ! echo "${INFOPATH}" | egrep -q "(^|:)$q($|:)" ; then
             if [[ -z "${INFOPATH}" ]] ; then
                 INFOPATH="${p}"

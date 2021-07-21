@@ -10,8 +10,8 @@
 set -euo pipefail
 
 # return wether or not terminal is running in screen
-inscreen() {
-    cmd=$(ps -o comm -p $(ps -o ppid -p "$$" --no-headers) --no-headers)
+in_screen() {
+    local cmd=$(ps -o comm -p $(ps -o ppid -p "$$" --no-headers) --no-headers)
     [[ "${cmd}" == "screen" ]] && echo "screen"
 }
 
@@ -53,7 +53,7 @@ fi
 
 # determine if screen is running under this user and if emacs is running under it
 screen=0
-if [[ "$(inscreen)" == "screen" ]] ; then
+if [[ "$(in_screen)" == "screen" ]] ; then
     if [[ -n "$(ps -e --format pid,ppid,user,args | grep -v grep | grep ${USER} | grep -i screen)" ]] ; then
         if [[ -n "$(ps -e --format pid,ppid,user,args | grep -v grep | grep ${USER} | grep emacs | grep '\-nw')" ]] ; then
             screen=1

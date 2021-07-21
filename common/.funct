@@ -643,7 +643,7 @@ EOF
     }
 
     _show() {
-        num="$1"
+        local num="$1"
         # ignore scripts that never end
         if [[ ! " ${bad[@]} " =~ " ${num} " ]] ; then
             clear
@@ -1823,8 +1823,8 @@ homerestow() {
 #        manjaroinitialize       install manjaro packages and setup system
 manjaroinitialize() {
     _getsection() {
-        file="${HOME}/org/personal.org"
-        regexp="/^#\+NAME: $1\$/,/^#\+END_SRC\$/{print \$0}"
+        local file="${HOME}/org/personal.org"
+        local regexp="/^#\+NAME: $1\$/,/^#\+END_SRC\$/{print \$0}"
         awk "${regexp}" "${file}" | tail -n +3 | head -n -1 | sed 's/^  //'
     }
 

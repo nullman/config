@@ -188,7 +188,7 @@ _command() {
 
 # delay running a command (SECONDS COMMAND)
 _delay() {
-    delay=$1
+    local delay=$1
     shift
     sleep ${delay} && eval "$@"
 }

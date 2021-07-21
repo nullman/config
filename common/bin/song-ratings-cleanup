@@ -46,7 +46,7 @@ EOF
     esac
 done
 
-dryrun() {
+_dryrun() {
     echo "The following songs are not found:"
     echo
     for file in ${files} ; do
@@ -58,11 +58,11 @@ dryrun() {
     done
 }
 
-process() {
-    tmpdir=$(mktemp -d)
+_process() {
+    local tmpdir=$(mktemp -d)
     for file in ${files} ; do
         ${quiet} || echo "Checking file: ${file}..."
-        tmpfile="${tmpdir}/${file}"
+        local tmpfile="${tmpdir}/${file}"
         touch ${tmpfile}
         for song in $(cat "${dir}/${file}") ; do
             if [[ -e "${audiodir}/${song}" ]] ; then
@@ -78,19 +78,19 @@ process() {
 
 # dry run
 if [[ ${quiet} = false ]] && ([[ ${dryrun} = true ]] || [[ ${yes} = false ]]) ; then
-    dryrun
+    _dryrun
 fi
 
 # remove bad songs
 if [[ ${dryrun} = false ]] ; then
     if [[ ${yes} = true ]] ; then
-        process
+        _process
     else
         echo
         echo -n "Do you want to remove all missing files? [yN] " ; read a
         case "${a}" in
             y|Y)
-                process
+                _process
                 ;;
         esac
     fi

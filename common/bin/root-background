@@ -55,21 +55,21 @@ if [[ -z "$(ps -ef | grep -v grep | grep ${USER} | grep gnome-session)" ]] ; the
 else
     gnome=yes
 fi
-gnomebg() {
+_gnomebg() {
     # move gnome background (to get gnome to notice)
-    img1="${HOME}/images/background1.png"
-    img2="${HOME}/images/background2.png"
-    geometry=1280x1024
+    local img1="${HOME}/images/background1.png"
+    local img2="${HOME}/images/background2.png"
+    local geometry=1280x1024
     if [[ -e "${img1}" ]] ; then
-        imgo="${img1}"
-        img="${img2}"
+        local imgo="${img1}"
+        local img="${img2}"
     else
-        imgo="${img2}"
-        img="${img1}"
+        local imgo="${img2}"
+        local img="${img1}"
     fi
     # create new background
-    numtimes=1
-    gaddons="-output \"${img}\" -geometry=${geometry}"
+    local numtimes=1
+    local gaddons="-output \"${img}\" -geometry=${geometry}"
     eval ${cmd} -num_times ${numtimes} ${addons} ${gaddons} "$@"
     # set gnome background
     gconftool -t str -s /desktop/gnome/background/picture_filename "${img}"
@@ -155,20 +155,20 @@ if [[ "${app}" == "xplanet" ]] ; then
                     if [[ -z "${gnome}" ]] ; then
                         eval "${cmd} -num_times ${numtimes} ${addons} $@"
                     else
-                        gnomebg
+                        _gnomebg
                     fi
                 done
             done
-            ) & > /dev/null 2>&1
+        ) & > /dev/null 2>&1
     else
         # just run normal modes
         (
             if [[ -z "${gnome}" ]] ; then
                 eval "${cmd} -num_times ${numtimes} ${addons} $@"
             else
-                gnomebg
+                _gnomebg
             fi
-            ) & > /dev/null 2>&1
+        ) & > /dev/null 2>&1
     fi
 else
     eval "${cmd} $@"
