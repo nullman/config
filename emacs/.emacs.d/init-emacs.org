@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2021-07-19 00:16 (kyle)>
+  #+TIMESTAMP: <2021-07-21 13:14 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -16475,9 +16475,7 @@
                           (forward-line 0)
                           (unless (looking-at re)
                             (re-search-backward re))
-                          (replace-match "" nil nil nil 1)
-                          (re-search-forward (concat "^\\([ \t]*\\)#\\+END_" (match-string 2)))
-                          (replace-match "" nil nil nil 1))
+                          (re-search-forward (concat "^\\([ \t]*\\)#\\+END_" (match-string 2))))
                       ('error nil))
                     (org-babel-do-in-edit-buffer (align-regexp (point-min) (point-max) comment-regexp)))
                    ;; sexp

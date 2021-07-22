@@ -11791,9 +11791,7 @@
                         (forward-line 0)
                         (unless (looking-at re)
                           (re-search-backward re))
-                        (replace-match "" nil nil nil 1)
-                        (re-search-forward (concat "^\\([ \t]*\\)#\\+END_" (match-string 2)))
-                        (replace-match "" nil nil nil 1))
+                        (re-search-forward (concat "^\\([ \t]*\\)#\\+END_" (match-string 2))))
                     ('error nil))
                   (org-babel-do-in-edit-buffer (align-regexp (point-min) (point-max) comment-regexp)))
                  ;; sexp
