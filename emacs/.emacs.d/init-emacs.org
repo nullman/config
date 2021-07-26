@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2021-07-21 13:14 (kyle)>
+  #+TIMESTAMP: <2021-07-26 00:01 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -3336,6 +3336,8 @@
         :config
         ;; advise `outline-up-heading' to suppress errors
         (advice-add 'outline-up-heading :around #'advice--ignore-errors))
+
+      (init-message 3 "org-clock")
 
       ;; (init-message 3 "org-pdfview")
 
@@ -19689,6 +19691,7 @@
        ("fputs (Lunduke) ???" "gopher://fputs.com/1")
        ("Bitreich" "gopher://bitreich.org/1")
        ("Gopherus Author" "gopher://gopher.viste.fr/1")
+       ("Elpher" "gopher://thelambdalab.xyz/1/projects/elpher/")
        ("Project Gemini" "gemini://gemini.circumlunar.space/")
        ("DistroTube" "gemini://distro.tube")
        ("System Crafters" "gemini://systemcrafters.cc"))
@@ -21846,6 +21849,25 @@
           (interactive)
           (mingus-set-song-rating 0)))
     #+END_SRC
+
+*** minions
+    :PROPERTIES:
+    :CUSTOM_ID: modules-minions
+    :END:
+
+#+BEGIN_SRC emacs-lisp
+  ;;------------------------------------------------------------------------------
+  ;;; Modules: minions
+  ;;------------------------------------------------------------------------------
+
+  (init-message 2 "Modules: minions")
+
+  (use-package minions
+    ;;:quelpa (mingus)
+    :straight t
+    :config
+    (minions-mode 1))
+#+END_SRC
 
 *** +msf-abbrev+
     :PROPERTIES:

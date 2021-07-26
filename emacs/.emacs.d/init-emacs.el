@@ -2282,6 +2282,8 @@
       ;; advise `outline-up-heading' to suppress errors
       (advice-add 'outline-up-heading :around #'advice--ignore-errors))
 
+    (init-message 3 "org-clock")
+
     ;; (init-message 3 "org-pdfview")
 
     ;; needs pdftools, which annoyingly recompiles on every boot
@@ -15366,6 +15368,20 @@
         (interactive)
         (mingus-set-song-rating 0)))
 ;; mingus:1 ends here
+
+;; [[file:init-emacs.org::*minions][minions:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: minions
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: minions")
+
+(use-package minions
+  ;;:quelpa (mingus)
+  :straight t
+  :config
+  (minions-mode 1))
+;; minions:1 ends here
 
 ;; [[file:init-emacs.org::*multiple-cursors][multiple-cursors:1]]
     ;;------------------------------------------------------------------------------
