@@ -7,8 +7,6 @@
 # Author: Kyle W T Sherman
 #===============================================================================
 
-set -euo pipefail
-
 lsopts=("-1" "--group-directories-first" "--file-type")
 
 # display usage information
@@ -71,6 +69,12 @@ case "${menu}" in
             sel=$(printf '%s\n' "${opts[@]}" | rofi -dmenu -i -p 'Sounds' -hide-scrollbar)
         }
 
+        _kill_ffplay() {
+            # stop any currently playing sounds
+            # (regardless of selection to prevent sounds from doubling up)
+            [[ -n "$(pgrep ffplay)" ]] && pkill ffplay
+        }
+
         # find sound directory
         sounddir=
         for dir in "${sounddirs[@]}" ; do
@@ -90,21 +94,16 @@ case "${menu}" in
         # process selection
         if [[ -n "${sel}" ]] ; then
             while true ; do
-                echo "sel: ${sel}"
-
                 if [[ -z "${sel}" ]] ; then
                     _select
                 fi
 
                 sel=$(echo "${sel}" | sed 's%/$%%')
-                echo "sel: ${sel}"
-
                 selpath="${sounddir}/${sel}"
+                echo "selpath: ${selpath}"
 
-                # stop any currently playing sounds
-                # (regardless of selection to prevent sounds from doubling up)
-                killall ffplay
                 if [[ "${sel}" == "${stop}" ]] ; then
+                    _kill_ffplay
                     break
                 fi
 
@@ -126,7 +125,7 @@ case "${menu}" in
                 fi
 
                 # handle playing a sound file
-                selpath="${sounddir}/${sel}"
+                _kill_ffplay
                 if $(echo "${sel}" | grep -q "Ambient Sound Effects") ; then
                     echo "Playing: ${sel} (in a loop)"
                     ffplay -nodisp -loop 0 "${selpath}"
