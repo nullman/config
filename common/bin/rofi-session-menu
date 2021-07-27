@@ -8,6 +8,8 @@
 # Original Author:  manjaro-openbox-scripts:rofr.sh
 #===============================================================================
 
+set -euo pipefail
+
 name=$(basename "$0")
 
 _usage() {
@@ -18,7 +20,6 @@ OPTIONS:
   -d  show drun menu
   -r  show run menu
   -w  show window switcher
-  -r  launcher dialog
   -s  session choices
   -h  show help (this message)
 EOF

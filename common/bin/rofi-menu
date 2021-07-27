@@ -7,6 +7,8 @@
 # Author: Kyle W T Sherman
 #===============================================================================
 
+set -euo pipefail
+
 lsopts=("-1" "--group-directories-first" "--file-type")
 
 # display usage information
@@ -72,7 +74,7 @@ case "${menu}" in
         _kill_ffplay() {
             # stop any currently playing sounds
             # (regardless of selection to prevent sounds from doubling up)
-            [[ -n "$(pgrep ffplay)" ]] && pkill ffplay
+            [[ -n "$(pgrep ffplay)" ]] && pkill ffplay || true
         }
 
         # find sound directory
