@@ -6,6 +6,8 @@
 # and replace of a regular expression string.  If a file is under git
 # tracking, then a git move is performed instead.
 #
+# The name mvs is a combination of mv (move) and the s command in sed.
+#
 # Author: Kyle W T Sherman
 #===============================================================================
 
