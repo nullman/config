@@ -1231,6 +1231,16 @@ gitbranchprompt() {
         echo " ($(gitbranch))"
     fi
 }
+#        gitcouo                 git checkout BRANCH and pull origin BRANCH
+gitcouo() {
+    if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+        echo "Usage: $0 BRANCH"
+        echo "  BRANCH  branch to checkout and pull"
+    else
+        branch="$1"
+        git checkout "${branch}" && git pull origin "${branch}"
+    fi
+}
 #        _gitsync                pull, commit, and push given home git repositories
 _gitsync() {
     dirs=("$@")
