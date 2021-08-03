@@ -14855,16 +14855,11 @@
                 val))))
 
       ;; recenter screen after moving to current song
-      (defun mingus-goto-current-song--recenter (orig-fun &rest args)
+      (defun mingus-goto-current-song--recenter ()
         "Recenter screen after moving to current song."
-        (let ((bol (point-at-bol))
-              (eol (point-at-eol)))
-          (apply orig-fun args)
-          (when (or (< (point) bol)
-                      (> (point) eol))
-            (recenter-top-bottom))))
+        (recenter-top-bottom))
       ;; advise `mingus-goto-current-song'
-      (advice-add 'mingus-goto-current-song :around #'mingus-goto-current-song--recenter)
+      (advice-add 'mingus-goto-current-song :after #'mingus-goto-current-song--recenter)
 
       (defun mingus-display-song-rating (highlight)
         "Display song rating of currently selected mingus song.
