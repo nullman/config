@@ -14860,7 +14860,7 @@
         (let ((bol (point-at-bol))
               (eol (point-at-eol)))
           (apply orig-fun args)
-          (unless (or (< (point) bol)
+          (when (or (< (point) bol)
                       (> (point) eol))
             (recenter-top-bottom))))
       ;; advise `mingus-goto-current-song'

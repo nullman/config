@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2021-07-26 00:01 (kyle)>
+  #+TIMESTAMP: <2021-08-03 14:17 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -21341,7 +21341,7 @@
           (let ((bol (point-at-bol))
                 (eol (point-at-eol)))
             (apply orig-fun args)
-            (unless (or (< (point) bol)
+            (when (or (< (point) bol)
                         (> (point) eol))
               (recenter-top-bottom))))
         ;; advise `mingus-goto-current-song'
