@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2021-08-03 14:29 (kyle)>
+  #+TIMESTAMP: <2021-08-08 22:23 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -5944,7 +5944,7 @@
     :CUSTOM_ID: org-mode-visibility
     :END:
 
-    Save and load visibility snapshot of org files.
+    Persist visibility snapshot of org files.
 
     File must have a local variable called =org-visibility= set to =t= for
     visibility to be automatically persisted.
@@ -5957,7 +5957,7 @@
       (init-message 2 "Org Mode: Visibility")
 
       ;; file to store org visibility state
-      (defcustom org-visibility-state-file `,(expand-file-name "~/.org-visibility")
+      (defcustom org-visibility-state-file `,(expand-file-name ".org-visibility" user-emacs-directory)
         "File used to store org visibility state."
         :type 'string
         :group 'org-visibility)

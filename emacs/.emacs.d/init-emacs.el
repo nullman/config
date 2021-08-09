@@ -4402,7 +4402,7 @@
     (init-message 2 "Org Mode: Visibility")
 
     ;; file to store org visibility state
-    (defcustom org-visibility-state-file `,(expand-file-name "~/.org-visibility")
+    (defcustom org-visibility-state-file `,(expand-file-name ".org-visibility" user-emacs-directory)
       "File used to store org visibility state."
       :type 'string
       :group 'org-visibility)
