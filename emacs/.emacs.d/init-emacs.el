@@ -4401,189 +4401,20 @@
 
     (init-message 2 "Org Mode: Visibility")
 
-    ;; file to store org visibility state
-    (defcustom org-visibility-state-file `,(expand-file-name ".org-visibility" user-emacs-directory)
-      "File used to store org visibility state."
-      :type 'string
-      :group 'org-visibility)
+    (use-package org-visibility
+      ;;:quelpa (org-visibility)
+      ;;:straight t
+      :load-path (lambda () (expand-file-name "org-visibility" local-modules-dir))
+      :bind (:map org-mode-map
+                  ("C-x C-v" . org-visibility-force-save)) ; defaults to `find-alternative-file'
 
-    ;; list of directories and files to automatically persist and
-    ;; restore visibility state
-    (defcustom org-visibility-paths `(,(file-truename "~/.emacs.d/init-emacs.org")
-                                      ,(file-truename "~/dev")
-                                      ,(file-truename "~/doc/bbs")
-                                      ,(file-truename "~/org")
-                                      ,(file-truename "~/web/org"))
-      "List of directories and files to automatically persist and restore visibility state."
-      :type 'list
-      :group 'org-visibility)
-
-    ;; has buffer been modified since last visibility save
-    (defvar-local org-visibility-dirty
-      nil
-      "Non-nil if buffer has been modified since last visibility save.")
-
-    (defun buffer-file-checksum (&optional buffer)
-      "Return checksum for BUFFER file or nil if file does not exist."
-      (let* ((buffer (or buffer (current-buffer)))
-             (file-name (buffer-file-name buffer)))
-        (ignore-errors
-          (car (split-string
-                (if window-system-mac
-                    (shell-command-to-string (concat "md5 -r " file-name))
-                  (shell-command-to-string (concat "md5sum " file-name))))))))
-
-    (defun org-visibility-set (buffer visible-lines)
-      "Set visibility state for BUFFER to VISIBLE-LINES
-    and update `org-visibility-state-file' with new state."
-      (let ((data (and (file-exists-p org-visibility-state-file)
-                       (ignore-errors
-                         (with-temp-buffer
-                           (insert-file-contents org-visibility-state-file)
-                           (read (buffer-substring-no-properties (point-min) (point-max)))))))
-            (file-name (buffer-file-name buffer))
-            (checksum (buffer-file-checksum buffer)))
-        (when file-name
-          (setq data (delq (assoc file-name data) data)) ; remove previous value
-          (setq data (append (list (list file-name checksum visible-lines)) data)) ; add new value
-          (with-temp-file org-visibility-state-file
-            (insert (format "%S\n" data)))
-          (message "Set visibility state for %s" file-name))))
-
-    (defun org-visibility-get (buffer)
-      "Return visibility state for BUFFER if found in `org-visibility-state-file'."
-      (let ((data (and (file-exists-p org-visibility-state-file)
-                       (ignore-errors
-                         (with-temp-buffer
-                           (insert-file-contents org-visibility-state-file)
-                           (read (buffer-substring-no-properties (point-min) (point-max)))))))
-            (file-name (buffer-file-name buffer))
-            (checksum (buffer-file-checksum buffer)))
-        (when file-name
-          (let ((state (assoc file-name data)))
-            (when (string= (cadr state) checksum)
-              (message "Restored visibility state for %s" file-name)
-              (caddr state))))))
-
-    (defun org-visibility-save-internal (&optional buffer noerror force)
-      "Save visibility snapshot of org BUFFER."
-      (let ((buffer (or buffer (current-buffer)))
-            (file-name (buffer-file-name buffer))
-            (visible-lines '()))
-        (with-current-buffer buffer
-          (if (not (eq major-mode 'org-mode))
-              (unless noerror
-                (error "This function only works with `org-mode' files"))
-            (if (not file-name)
-                (unless noerror
-                  (error "There is no file associated with this buffer: %S" buffer))
-              (when (or force org-visibility-dirty)
-                (save-mark-and-excursion
-                  (goto-char (point-min))
-                  (while (not (eobp))
-                    (when (not (invisible-p (point)))
-                      (push (point) visible-lines))
-                    (forward-visible-line 1)))
-                (org-visibility-set buffer (nreverse visible-lines))
-                (setq org-visibility-dirty nil)))))))
-
-    (defun org-visibility-load-internal (&optional buffer noerror)
-      "Load visibility snapshot of org BUFFER."
-      (let ((buffer (or buffer (current-buffer))))
-        (with-current-buffer buffer
-          (if (not (eq major-mode 'org-mode))
-              (unless noerror
-                (error "This function only works with `org-mode' files"))
-            (if (not (buffer-file-name buffer))
-                (unless noerror
-                  (error "There is no file associated with this buffer: %S" buffer))
-              (let ((visible-lines (org-visibility-get buffer)))
-                (save-mark-and-excursion
-                  (outline-hide-sublevels 1)
-                  (dolist (x visible-lines)
-                    (ignore-errors
-                      (goto-char x)
-                      (when (invisible-p (point))
-                        (forward-char -1)
-                        (org-cycle)))))
-                (setq org-visibility-dirty nil)))))))
-
-    (defun org-visibility-check-buffer-file-path (buffer)
-      "Return whether BUFFER's file is in one of the paths in `org-visibility-paths'."
-      (let ((file (buffer-file-name buffer)))
-        (if file
-            (cl-do ((paths org-visibility-paths (cdr paths))
-                    (match nil))
-                ((or (null paths) match) match)
-              (let ((path (car paths))
-                    (file (file-truename file)))
-                (when (>= (length file) (length path))
-                  (let ((part (substring file 0 (length path))))
-                    (when (string= part path)
-                      (setq match t))))))
-          nil)))
-
-    (defun org-visibility-clean ()
-      "Remove any missing files from `org-visibility-state-file'."
-      (interactive)
-      (let ((data (and (file-exists-p org-visibility-state-file)
-                       (ignore-errors
-                         (with-temp-buffer
-                           (insert-file-contents org-visibility-state-file)
-                           (read (buffer-substring-no-properties (point-min) (point-max))))))))
-        (setq data (remove-if-not
-                    (lambda (x) (file-exists-p (car x)))
-                    data))
-        (with-temp-file org-visibility-state-file
-          (insert (format "%S\n" data)))
-        (message "Visibility state file has been cleaned")))
-
-    (defun org-visibility-save (&optional force)
-      "Hook function to save visibility state."
-      (interactive)
-      (when (org-visibility-check-buffer-file-path (current-buffer))
-        (org-visibility-save-internal (current-buffer) :noerror force)))
-    (add-hook 'after-save-hook #'org-visibility-save :append)
-    (add-hook 'kill-buffer-hook #'org-visibility-save :append)
-
-    (defun org-visibility-save-all-buffers (&optional force)
-      "Hook function to save visibility state for all buffers."
-      (interactive)
-      (dolist (buffer (buffer-list))
-        (when (org-visibility-check-buffer-file-path buffer)
-          (org-visibility-save-internal buffer :noerror force))))
-    (add-hook 'kill-emacs-hook #'org-visibility-save-all-buffers :append)
-
-    (defun org-visibility-load (&optional file)
-      "Hook function to load visibility state."
-      (interactive)
-      (let ((buffer (if file (get-file-buffer file) (current-buffer))))
-        (when (and buffer (org-visibility-check-buffer-file-path buffer))
-          (org-visibility-load-internal buffer :noerror))))
-    (add-hook 'org-mode-hook #'org-visibility-load :append)
-
-    (defun org-visibility-dirty ()
-      "Hook function to set visibility dirty flag."
-      (interactive)
-      (when (and (org-visibility-check-buffer-file-path (current-buffer))
-                 (eq major-mode 'org-mode))
-        (setq org-visibility-dirty t)))
-    (add-hook 'first-change-hook #'org-visibility-dirty :append)
-
-    (defun org-visibility-dirty-org-cycle (state)
-      "Hook function to set visibility dirty flag when `org-cycle' is called."
-      (interactive)
-      (org-visibility-dirty))
-    (add-hook 'org-cycle-hook #'org-visibility-dirty-org-cycle :append)
-
-    (defun org-visibility-force-save ()
-      "Helper function to forcefully save visibility state."
-      (interactive)
-      (org-visibility-save :force))
-
-    ;; key bindings
-    (bind-keys :map org-mode-map
-               ("C-x C-v" . org-visibility-force-save)) ; defaults to `find-alternative-file'
+      :custom
+      ;; list of directories and files to automatically persist and restore visibility state
+      (org-visibility-paths `(,(file-truename "~/.emacs.d/init-emacs.org")
+                              ,(file-truename "~/dev")
+                              ,(file-truename "~/doc/bbs")
+                              ,(file-truename "~/org")
+                              ,(file-truename "~/web/org"))))
 ;; Visibility:1 ends here
 
 ;; [[file:init-emacs.org::*org-bookmarks-guid][org-bookmarks-guid:1]]
