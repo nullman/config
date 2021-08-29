@@ -215,19 +215,23 @@ automatically persisted and restored.")
                     (org-cycle)))))
             (setq org-visibility-dirty nil)))))))
 
+(defun org-visibility-check-file-path (file)
+  "Return whether FILE is in one of the paths in `org-visibility-paths'."
+  (cl-do ((paths org-visibility-paths (cdr paths))
+          (match nil))
+      ((or (null paths) match) match)
+    (let ((path (car paths))
+          (file (file-truename file)))
+      (when (>= (length file) (length path))
+        (let ((part (substring file 0 (length path))))
+          (when (string= part path)
+            (setq match t)))))))
+
 (defun org-visibility-check-buffer-file-path (buffer)
   "Return whether BUFFER's file is in one of the paths in `org-visibility-paths'."
   (let ((file (buffer-file-name buffer)))
     (if file
-        (cl-do ((paths org-visibility-paths (cdr paths))
-                (match nil))
-            ((or (null paths) match) match)
-          (let ((path (car paths))
-                (file (file-truename file)))
-            (when (>= (length file) (length path))
-              (let ((part (substring file 0 (length path))))
-                (when (string= part path)
-                  (setq match t))))))
+        (org-visibility-check-file-path file)
       nil)))
 
 (defun org-visibility-check-buffer-file-persistance (buffer)
@@ -235,7 +239,7 @@ automatically persisted and restored.")
 and restored."
   (or
    (bound-and-true-p org-visibility)
-   (org-visibility-check-buffer-file-path (current-buffer))))
+   (org-visibility-check-buffer-file-path buffer)))
 
 ;;;###autoload
 (defun org-visibility-clean ()
@@ -246,9 +250,13 @@ and restored."
                      (with-temp-buffer
                        (insert-file-contents org-visibility-state-file)
                        (read (buffer-substring-no-properties (point-min) (point-max))))))))
-    (setq data (remove-if-not
-                (lambda (x) (file-exists-p (car x)))
+    (setq data (cl-remove-if-not
+                (lambda (x)
+                  (let ((file (car x)))
+                    (and (file-exists-p file)
+                         (org-visibility-check-file-path file))))
                 data))
+
     (with-temp-file org-visibility-state-file
       (insert (format "%S\n" data)))
     (message "Visibility state file has been cleaned")))
@@ -289,7 +297,7 @@ and restored."
              (eq major-mode 'org-mode))
     (setq org-visibility-dirty t)))
 
-(defun org-visibility-dirty-org-cycle (state)
+ (defun org-visibility-dirty-org-cycle (state)
   "Set visibility dirty flag when `org-cycle' is called."
   ;;(interactive)
   (org-visibility-dirty))

@@ -2282,8 +2282,6 @@
       ;; advise `outline-up-heading' to suppress errors
       (advice-add 'outline-up-heading :around #'advice--ignore-errors))
 
-    (init-message 3 "org-clock")
-
     ;; (init-message 3 "org-pdfview")
 
     ;; needs pdftools, which annoyingly recompiles on every boot
