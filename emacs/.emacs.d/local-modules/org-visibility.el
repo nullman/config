@@ -94,8 +94,8 @@
 ;; state if it either has local variable `org-visibility' set to t or is in
 ;; one of the `org-visibility-paths' paths.
 ;;
-;; The `org-visibility-clean' function removes any missing files from
-;; `org-visibility-state-file'.
+;; The `org-visibility-clean' function removes all missing or untracked files
+;; from `org-visibility-state-file'.
 ;;
 ;; The `org-visibility-enable-hooks' function enables all `org-visibility'
 ;; hooks so that it works automatically.
@@ -112,9 +112,22 @@
   :type 'string
   :group 'org-visibility)
 
+(defcustom org-visibility-state-file-max-count 0
+  "Maximum number of entries kept in `org-visibility-state-file'.
+If this value is 0, then all entries are kept."
+  :type 'number
+  :group 'org-visibility)
+
+(defcustom org-visibility-state-file-max-longevity 0
+  "Maximum number of days to keep an unused file in `org-visibility-state-file'.
+If this value is 0, then entries are never expired."
+  :type 'number
+  :group 'org-visibility)
+
 ;; list of directories and files to automatically persist and restore visibility state
-(defcustom org-visibility-paths `()
-  "List of directories and files to automatically persist and restore visibility state."
+(defcustom org-visibility-paths '()
+  "List of directories and files to automatically persist and
+restore visibility state."
   :type 'list
   :group 'org-visibility)
 
@@ -292,15 +305,15 @@ and restored."
 
 (defun org-visibility-dirty ()
   "Set visibility dirty flag."
-  ;;(interactive)
   (when (and (org-visibility-check-buffer-file-persistance (current-buffer))
              (eq major-mode 'org-mode))
     (setq org-visibility-dirty t)))
 
- (defun org-visibility-dirty-org-cycle (state)
+(defun org-visibility-dirty-org-cycle (state)
   "Set visibility dirty flag when `org-cycle' is called."
-  ;;(interactive)
-  (org-visibility-dirty))
+  ;; dummy check to prevent compiler warning
+  (when (not (eq state 'INVALID-STATE))
+    (org-visibility-dirty)))
 
 ;;;###autoload
 (defun org-visibility-enable-hooks ()

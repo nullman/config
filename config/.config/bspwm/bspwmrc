@@ -107,6 +107,7 @@ _ba gopherus-sdl desktop='^4' follow=on
 _ba Pcmanfm desktop='^5' follow=on
 _ba Thunar desktop='^5' follow=on
 _ba Org.gnome.Nautilus desktop='^5' follow=on
+_ba Filezilla desktop='^5' follow=on
 _ba Transmission-gtk desktop='^5' follow=on
 _ba balena-etcher-electron desktop='^5' follow=on
 _ba Ghb desktop='^5' follow=on
@@ -136,6 +137,7 @@ _ba Emacs state=tiled
 
 # fullscreen applications
 _ba bluejeans-v2 state=fullscreen
+_ba Evince state=fullscreen
 _ba Ghb state=fullscreen
 _ba Gimp-2.10 state=fullscreen
 _ba jetbrains-idea state=fullscreen
