@@ -63,7 +63,6 @@
 ;;   (use-package org-visibility
 ;;     :bind (:map org-mode-map
 ;;                 ("C-x C-v" . org-visibility-force-save)) ; defaults to `find-alternative-file'
-;;
 ;;     :custom
 ;;     ;; list of directories and files to automatically persist and restore visibility state
 ;;     (org-visibility-paths `(,(file-truename "~/.emacs.d/init-emacs.org")
@@ -71,10 +70,11 @@
 ;;
 ;;; Usage:
 ;;
-;; Visibiliy state is automatically persisted on file save and restored when
-;; loaded.  No user intervention is needed.  The user can, however, call
-;; `org-visibility-force-save' to save the current visibiliy state of a buffer
-;; before a file save or kill would automatically trigger it next.
+;; Visibiliy state is automatically persisted on file save or kill, and
+;; restored when loaded.  No user intervention is needed.  The user can,
+;; however, call `org-visibility-force-save' to save the current visibiliy
+;; state of a buffer before a file save or kill would automatically trigger it
+;; next.
 ;;
 ;; Interactive commands:
 ;;
@@ -118,9 +118,9 @@ If this value is 0, then all entries are kept."
   :type 'number
   :group 'org-visibility)
 
-(defcustom org-visibility-state-file-max-longevity 0
-  "Maximum number of days to keep an unused file in `org-visibility-state-file'.
-If this value is 0, then entries are never expired."
+(defcustom org-visibility-state-file-longevity 0
+  "Number of days to keep an unused record in `org-visibility-state-file'.
+If this value is 0, then records are never expired."
   :type 'number
   :group 'org-visibility)
 
@@ -142,6 +142,13 @@ automatically persisted and restored.")
 (defvar-local org-visibility-dirty
   nil
   "Non-nil if buffer has been modified since last visibility save.")
+
+;; ;; structure to hold a single visibility record
+;; (cl-defstruct visibility-record
+;;   (file-name "" :read-only t :type 'string :documentation "Full file path.")
+;;   (date "" :type 'string :documentation "Last update date in ??? format.")
+;;   (checksum "" :type 'string :documentation "MD5 checksum.")
+;;   (data '() :type 'list :documentation "List of visible file positions."))
 
 (defun buffer-file-checksum (&optional buffer)
   "Return checksum for BUFFER file or nil if file does not exist."

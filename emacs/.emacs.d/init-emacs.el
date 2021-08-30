@@ -2306,16 +2306,18 @@
       (org-adapt-indentation t)
       ;; ;; do not indent blocks to outline node level
       ;; (org-adapt-indentation nil)
+      ;; startup in "overview" (folded) by default
+      (org-startup-folded :overview)
+      ;; skip levels
+      (org-odd-levels-only t)
+      ;; hide leading stars
+      (org-hide-leading-stars t)
       ;; remap disputed keys (see `org-disputed-keys')
       (org-replace-disputed-keys t)
       ;; display inline images
       (org-startup-with-inline-images t)
       ;; do not insert empty lines around headings
       (org-blank-before-new-entry '((heading . nil) (plain-list-item . nil)))
-      ;; hide leading stars
-      (org-hide-leading-stars t)
-      ;; skip levels
-      (org-odd-levels-only t)
       ;; use a different ellipsis indicator (than '...')
       (org-ellipsis "…")
       ;;(setq org-ellipsis " ⤵")
@@ -4405,7 +4407,6 @@
       :load-path (lambda () (expand-file-name "org-visibility" local-modules-dir))
       :bind (:map org-mode-map
                   ("C-x C-v" . org-visibility-force-save)) ; defaults to `find-alternative-file'
-
       :custom
       ;; list of directories and files to automatically persist and restore visibility state
       (org-visibility-paths `(,(file-truename "~/.emacs.d/init-emacs.org")
