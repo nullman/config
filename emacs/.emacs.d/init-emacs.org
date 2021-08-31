@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2021-08-30 00:55 (kyle)>
+  #+TIMESTAMP: <2021-08-31 00:54 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -20404,8 +20404,8 @@
       ;;   ;; ;; fix ido-ubiquitous for newer packages
       ;;   ;; (defmacro ido-ubiquitous-use-new-completing-read (cmd package)
       ;;   ;;   `(with-eval-after-load ,package
-      ;;   ;;      (let ((fun (inern (concat (symbol-name ,cmd) "--new"))))
-      ;;   ;;        (defun fun (orig-fun &rest args)
+      ;;   ;;      (let ((funct (inern (concat (symbol-name ,cmd) "--new"))))
+      ;;   ;;        (defun funct (orig-fun &rest args)
       ;;   ;;          (let ((ido-ubiquitous-enable-compatibility nil))
       ;;   ;;            (apply orig-fun args)))
       ;;   ;;        (advice-add ,cmd :around fun))))
