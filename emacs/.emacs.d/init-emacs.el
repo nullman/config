@@ -113,24 +113,6 @@
   (init-message 1 "Environment Settings")
 ;; Environment Settings:1 ends here
 
-;; [[file:init-emacs.org::*Debugging][Debugging:1]]
-    ;;------------------------------------------------------------------------------
-    ;;; Environment Settings: Debugging
-    ;;------------------------------------------------------------------------------
-
-    (init-message 2 "Environment Settings: Debugging")
-;; Debugging:1 ends here
-
-;; [[file:init-emacs.org::*Debugging][Debugging:2]]
-    ;; turn debugging on when errors occur
-    (setq debug-on-error t)
-
-    ;; (defun after-init-hook--debug-on-error ()
-    ;;   "Hook to turn debugging on after init completes."
-    ;;   (setq debug-on-error t))
-    ;; (add-hook 'after-init-hook #'after-init-hook--debug-on-error)
-;; Debugging:2 ends here
-
 ;; [[file:init-emacs.org::*Modules][Modules:1]]
     ;; load modules that are used for initialization
     (use-package async

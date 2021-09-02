@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2021-08-31 00:54 (kyle)>
+  #+TIMESTAMP: <2021-09-01 16:50 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -549,30 +549,30 @@
     (init-message 1 "Environment Settings")
   #+END_SRC
 
-*** Debugging
+*** +Debugging+
     :PROPERTIES:
     :CUSTOM_ID: environment-settings-debugging
     :END:
 
-    #+BEGIN_SRC emacs-lisp
-      ;;------------------------------------------------------------------------------
-      ;;; Environment Settings: Debugging
-      ;;------------------------------------------------------------------------------
+    #+BEGIN_SRC emacs-lisp :tangle no
+      ;; ;;------------------------------------------------------------------------------
+      ;; ;;; Environment Settings: Debugging
+      ;; ;;------------------------------------------------------------------------------
 
-      (init-message 2 "Environment Settings: Debugging")
+      ;; (init-message 2 "Environment Settings: Debugging")
     #+END_SRC
 
     Turn debugging on when errors occur.  This will also trap normal (expected)
     errors, so it should not normally be on.
 
-    #+BEGIN_SRC emacs-lisp
-      ;; turn debugging on when errors occur
-      (setq debug-on-error t)
+    #+BEGIN_SRC emacs-lisp :tangle no
+      ;; ;; turn debugging on when errors occur
+      ;; (setq debug-on-error t)
 
-      ;; (defun after-init-hook--debug-on-error ()
-      ;;   "Hook to turn debugging on after init completes."
-      ;;   (setq debug-on-error t))
-      ;; (add-hook 'after-init-hook #'after-init-hook--debug-on-error)
+      ;; ;; (defun after-init-hook--debug-on-error ()
+      ;; ;;   "Hook to turn debugging on after init completes."
+      ;; ;;   (setq debug-on-error t))
+      ;; ;; (add-hook 'after-init-hook #'after-init-hook--debug-on-error)
     #+END_SRC
 
 *** Modules
