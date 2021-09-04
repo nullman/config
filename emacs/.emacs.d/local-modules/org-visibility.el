@@ -304,7 +304,7 @@ and restored."
 
 ;;;###autoload
 (defun org-visibility-load (&optional file)
-  "Load FILE and restore its visibility state."
+  "Load FILE or `current-buffer' and restore its visibility state."
   (interactive)
   (let ((buffer (if file (get-file-buffer file) (current-buffer))))
     (when (and buffer (org-visibility-check-buffer-file-persistance buffer))
