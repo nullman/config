@@ -1,4 +1,4 @@
-;;; org-visibility-test.el --- Test org-visibility.el -*- lexical-binding: t; -*-
+;;; org-visibility-test.el --- Test org-visibility.el -*- lexical-binding: t; no-byte-compile: t; -*-
 ;;
 ;;; Copyright (C) 2021 Kyle W T Sherman
 ;;
@@ -20,53 +20,38 @@
 ;; You should have received a copy of the GNU General Public License along
 ;; with GNU Emacs.  If not, see <https://www.gnu.org/licenses/>.
 
+;;; Code:
+
 (require 'org-visibility)
 
-;; (defun wrap-assert (test &optional clean-up)
-;;   (let ((debug-on-error nil))
-;;     (unwind-protect
-;;         (condition-case err
-;;             (funcall test)
-;;           ('error
-;;            (message (format "Assert error: %s" err))))
-;;       (when clean-up (funcall clean-up)))))
-
-;; (defun wrap-assert (test &optional clean-up)
-;;   (condition-case err
-;;       (funcall test)
-;;     ('error
-;;      (message (format "Assert error: %s" err))
-;;      (when clean-up (funcall clean-up))))
-;;   (when clean-up (funcall clean-up)))
-
-(defun run-test (test)
+(defun org-visibility-test-run-test (test)
   "Setup test environment, run TEST, then restore environment."
   (let ((org-startup-folded 'showeverything)
         (org-odd-levels-only t)
         (enable-local-variables :all)
         (enable-local-eval t)
         (state-file org-visibility-state-file)
-        (state-file-max-count org-visibility-state-file-max-count)
-        (state-file-longevity org-visibility-state-file-longevity)
-        (paths org-visibility-paths)
+        (include-paths org-visibility-include-paths)
+        (exclude-paths org-visibility-exclude-paths)
         (temp-state-file (make-temp-file "org-visibility-test-state-file-"))
         errors)
     (setq org-visibility-state-file temp-state-file
-          org-visibility-state-file-max-count 0
-          org-visibility-state-file-longevity 0
-          org-visibility-paths '())
+          org-visibility-include-paths '()
+          org-visibility-exclude-paths '())
     (unwind-protect
-        (setq errors (funcall test temp-state-file))
+        (setq errors (remove nil (apply #'append (nreverse (funcall test temp-state-file)))))
       (progn
         (setq org-visibility-state-file state-file
-              org-visibility-state-file-max-count state-file-max-count
-              org-visibility-state-file-longevity state-file-longevity
-              org-visibility-paths paths)
+              org-visibility-include-paths include-paths
+              org-visibility-exclude-paths exclude-paths)
         (delete-file temp-state-file)))
     (assert (not errors) :show-args)))
 
-(defun create-org-file (&optional with-local-var)
-  "Create temporary `org-mode' file to test with."
+(defun org-visibility-test-create-org-file (&optional local-var-visbility)
+  "Create temporary `org-mode' file to test with.
+
+If LOCAL-VAR-VISBILITY is non-nil, set local variable
+`org-visibility' to LOCAL-VAR-VISBILITY."
   (let ((file (make-temp-file "org-visibility-test-" nil ".org")))
     (with-temp-file file
       (insert "* Heading 1")
@@ -93,12 +78,12 @@
       (newline)
       (insert "Body text 3")
       (newline)
-      (when with-local-var
+      (when local-var-visbility
         (newline)
         ;; concat is used to prevent emacs from trying to set local variables on this file
         (insert (concat ";; Local " "Variables:"))
         (newline)
-        (insert ";; org-visibility: t")
+        (insert (format ";; org-visibility: %s" local-var-visbility))
         (newline)
         (insert ";; eval: (org-visibility-load)")
         (newline)
@@ -106,7 +91,7 @@
         (newline)))
     file))
 
-(defun check-visible-lines (lines)
+(defun org-visibility-test-check-visible-lines (lines)
   "Test that all LINES are visible, and no others, in current
 buffer.
 
@@ -123,42 +108,94 @@ Return list of errors, or nil, if none."
         (forward-line 1)))
     (nreverse errors)))
 
-(defun test-no-persistence ()
+;;; Tests
+
+(defun org-visibility-test-test-no-persistence ()
   "Test no visibility persistence."
   (let (errors)
-    (run-test
+    (org-visibility-test-run-test
      (lambda (state-file)
-       (let ((file (create-org-file)))
+       (let ((file (org-visibility-test-create-org-file)))
          (find-file file)
-         (org-global-cycle)
-         (forward-line 3)
+         (outline-hide-sublevels 1)
+         (forward-line 4)
          (org-cycle)
          (save-buffer)
          (kill-buffer (current-buffer))
          (find-file file)
-         (push (check-visible-lines '(1 2 3 4 5 6 7 8 9 10 11 12)) errors)
+         (push (org-visibility-test-check-visible-lines '(1 2 3 4 5 6 7 8 9 10 11 12)) errors)
          (kill-buffer (current-buffer))
-         (delete-file file))))
-    (nreverse errors)))
+         (delete-file file))
+       errors))))
 
-(defun test-persistence ()
-  "Test general visibility persistence."
+(defun org-visibility-test-test-persistence-with-local-var-t ()
+  "Test general visibility persistence using local var
+`org-visibility' set to t."
   (let (errors)
-    (run-test
+    (org-visibility-test-run-test
      (lambda (state-file)
-       (let ((file (create-org-file :with-local-var)))
+       (let ((file (org-visibility-test-create-org-file t)))
          (find-file file)
-         (org-global-cycle)
-         (push (check-visible-lines '(1 5 11)) errors)
+         (outline-hide-sublevels 1)
+         (push (org-visibility-test-check-visible-lines '(1 5 11)) errors)
          (goto-char (point-min))
          (forward-line 4)
          (org-cycle)
-         (push (check-visible-lines '(1 5 6 9 11)) errors)
+         (push (org-visibility-test-check-visible-lines '(1 5 6 9 11)) errors)
          (kill-buffer (current-buffer))
          (find-file file)
-         (push (check-visible-lines '(1 5 6 9 11)) errors)
+         (push (org-visibility-test-check-visible-lines '(1 5 6 9 11)) errors)
          (kill-buffer (current-buffer))
-         (delete-file file))))
-    (nreverse errors)))
+         (delete-file file))
+       errors))))
+
+(defun org-visibility-test-test-persistence-with-local-var-never ()
+  "Test general visibility persistence using local var
+`org-visibility' set to never."
+  (let (errors)
+    (org-visibility-test-run-test
+     (lambda (state-file)
+       (let* ((file (org-visibility-test-create-org-file 'never))
+              (org-visibility-include-paths (list file)))
+         (find-file file)
+         (outline-hide-sublevels 1)
+         (forward-line 4)
+         (org-cycle)
+         (save-buffer)
+         (kill-buffer (current-buffer))
+         (find-file file)
+         (push (org-visibility-test-check-visible-lines '(1 5 11)) errors)
+         (kill-buffer (current-buffer))
+         (delete-file file))
+       errors))))
+
+(defun org-visibility-test-test-persistence-with-include-paths ()
+  "Test general visibility persistence using include paths."
+  (let (errors)
+    (org-visibility-test-run-test
+     (lambda (state-file)
+       (let* ((file (org-visibility-test-create-org-file))
+              (org-visibility-include-paths (list file)))
+         (find-file file)
+         (outline-hide-sublevels 1)
+         (push (org-visibility-test-check-visible-lines '(1 5 11)) errors)
+         (goto-char (point-min))
+         (forward-line 4)
+         (org-cycle)
+         (push (org-visibility-test-check-visible-lines '(1 5 6 9 11)) errors)
+         (kill-buffer (current-buffer))
+         (find-file file)
+         (push (org-visibility-test-check-visible-lines '(1 5 6 9 11)) errors)
+         (kill-buffer (current-buffer))
+         (delete-file file))
+       errors))))
+
+(defun org-visibility-test-run-all-tests ()
+  "Run all org-visibility unit tests."
+  (interactive)
+  (org-visibility-test-test-no-persistence)
+  (org-visibility-test-test-persistence-with-local-var-t)
+  (org-visibility-test-test-persistence-with-local-var-never)
+  (org-visibility-test-test-persistence-with-include-paths))
 
 ;;; org-visibility-test.el ends here

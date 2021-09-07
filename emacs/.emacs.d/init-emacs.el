@@ -4391,11 +4391,11 @@
                   ("C-x C-v" . org-visibility-force-save)) ; defaults to `find-alternative-file'
       :custom
       ;; list of directories and files to automatically persist and restore visibility state
-      (org-visibility-paths `(,(file-truename "~/.emacs.d/init-emacs.org")
-                              ,(file-truename "~/dev")
-                              ,(file-truename "~/doc/bbs")
-                              ,(file-truename "~/org")
-                              ,(file-truename "~/web/org"))))
+      (org-visibility-include-paths `(,(file-truename "~/.emacs.d/init-emacs.org")
+                                      ,(file-truename "~/dev")
+                                      ,(file-truename "~/doc/bbs")
+                                      ,(file-truename "~/org")
+                                      ,(file-truename "~/web/org"))))
 ;; Visibility:1 ends here
 
 ;; [[file:init-emacs.org::*org-bookmarks-guid][org-bookmarks-guid:1]]

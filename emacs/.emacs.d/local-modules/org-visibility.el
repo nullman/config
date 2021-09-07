@@ -31,7 +31,21 @@
 ;; - They have the buffer local variable `org-visibility' set to t.
 ;;
 ;; - They are contained within one of the directories listed in
-;;   `org-visibility-paths'.
+;;   `org-visibility-include-paths'.
+;;
+;; - They match one of the regular expressions listed in
+;;   `org-visibility-include-regexps'.
+;;
+;; Files are removed from consideration if they meet one of the following
+;; requirements (overriding the above include logic):
+;;
+;; - They have the buffer local variable `org-visibility' set to never.
+;;
+;; - They are contained within one of the directories listed in
+;;   `org-visibility-exclude-paths'.
+;;
+;; - They match one of the regular expressions listed in
+;;   `org-visibility-exclude-regexps'.
 ;;
 ;; Provides the following interactive functions:
 ;;
@@ -51,8 +65,10 @@
 ;;   ;; optionally change the location of the state file (not recommended)
 ;;   ;;(setq org-visibility-state-file `,(expand-file-name "/some/path/.org-visibility"))
 ;;   ;; list of directories and files to automatically persist and restore visibility state
-;;   (setq org-visibility-paths `(,(file-truename "~/.emacs.d/init-emacs.org")
+;;   (setq org-visibility-include-paths `(,(file-truename "~/.emacs.d/init-emacs.org")
 ;;                                ,(file-truename "~/org"))
+;;   ;; list
+;;   (setq org-visibility-include-paths `(,(file-truename "~/.emacs.d/init-emacs.org")
 ;;   (require 'org-visibility)
 ;;   ;; optionally set a keybinding to force save
 ;;   (bind-keys :map org-mode-map
@@ -65,7 +81,7 @@
 ;;                 ("C-x C-v" . org-visibility-force-save)) ; defaults to `find-alternative-file'
 ;;     :custom
 ;;     ;; list of directories and files to automatically persist and restore visibility state
-;;     (org-visibility-paths `(,(file-truename "~/.emacs.d/init-emacs.org")
+;;     (org-visibility-include-paths `(,(file-truename "~/.emacs.d/init-emacs.org")
 ;;                             ,(file-truename "~/org"))))
 ;;
 ;;; Usage:
@@ -80,19 +96,20 @@
 ;;
 ;; The `org-visibility-save' function saves the current buffer's visibility
 ;; state if it has been modified or had an `org-cycle' change, and either has
-;; local variable `org-visibility' set to t or is in one of the
-;; `org-visibility-paths' paths.
+;; local variable `org-visibility' set to t, is in one of the
+;; `org-visibility-include-paths' paths, or matches one of the
+;; `org-visibility-include-regexps' regular expressions.
 ;;
 ;; The `org-visibility-force-save' function saves the current buffer's
 ;; visibility state if it either has local variable `org-visibility' set to t
-;; or is in one of the `org-visibility-paths' paths.
+;; or is in one of the `org-visibility-include-paths' paths.
 ;;
 ;; The `org-visibility-save-all-buffers' function saves the visibility state
 ;; for any modified buffers.
 ;;
 ;; The `org-visibility-load' function loads a file and restores its visibility
 ;; state if it either has local variable `org-visibility' set to t or is in
-;; one of the `org-visibility-paths' paths.
+;; one of the `org-visibility-include-paths' paths.
 ;;
 ;; The `org-visibility-clean' function removes all missing or untracked files
 ;; from `org-visibility-state-file'.
@@ -106,49 +123,56 @@
 
 ;;; Code:
 
-;; file to store org visibility state
 (defcustom org-visibility-state-file `,(expand-file-name ".org-visibility" user-emacs-directory)
   "File used to store org visibility state."
   :type 'string
   :group 'org-visibility)
 
-(defcustom org-visibility-state-file-max-count 0
-  "Maximum number of entries kept in `org-visibility-state-file'.
-If this value is 0, then all entries are kept."
-  :type 'number
-  :group 'org-visibility)
-
-(defcustom org-visibility-state-file-longevity 0
-  "Number of days to keep an unused record in `org-visibility-state-file'.
-If this value is 0, then records are never expired."
-  :type 'number
-  :group 'org-visibility)
-
-;; list of directories and files to automatically persist and restore visibility state
-(defcustom org-visibility-paths '()
+(defcustom org-visibility-include-paths '()
   "List of directories and files to automatically persist and
-restore visibility state."
+restore visibility state of when saved and loaded."
   :type 'list
   :group 'org-visibility)
 
-;; should file visibility be automatically persisted and restored for current buffer file
-;; used for files not listed in `org-visibility-paths'
+(defcustom org-visibility-exclude-paths '()
+  "List of directories and files to not persist and restore
+visibility state of when saved and loaded."
+  :type 'list
+  :group 'org-visibility)
+
+(defcustom org-visibility-include-regexps '()
+  "List of regular expressions that, when matched, will
+automatically persist and restore visibility state of matching
+directories and files when saved and loaded."
+  :type 'list
+  :group 'org-visibility)
+
+(defcustom org-visibility-include-regexps '()
+  "List of regular expressions that, when matched, will
+automatically persist and restore visibility state of matching
+directories and files when saved and loaded."
+  :type 'list
+  :group 'org-visibility)
+
 (defvar-local org-visibility
   nil
-  "Non-nil if buffer file should have its visibility
-automatically persisted and restored.")
+  "File local varible to determine if buffer file visibility
+state should be automatically persisted and restored.
 
-;; has buffer been modified since last visibility save
+If nil, this setting has no effect on determining buffer file
+visibility state persistence.
+
+If t, buffer file should have its visibility state automatically
+persisted and restored.
+
+If 'never, buffer file should never have its visibility state
+automatically persisted and restored.  (This overrides the
+behavior of `org-visibility-include-paths' and
+`org-visibility-include-regexps'.)")
+
 (defvar-local org-visibility-dirty
   nil
   "Non-nil if buffer has been modified since last visibility save.")
-
-;; ;; structure to hold a single visibility record
-;; (cl-defstruct visibility-record
-;;   (file-name "" :read-only t :type 'string :documentation "Full file path.")
-;;   (date "" :type 'string :documentation "Last update date in ??? format.")
-;;   (checksum "" :type 'string :documentation "MD5 checksum.")
-;;   (data '() :type 'list :documentation "List of visible file positions."))
 
 (defun buffer-file-checksum (&optional buffer)
   "Return checksum for BUFFER file or nil if file does not exist."
@@ -193,7 +217,11 @@ automatically persisted and restored.")
           (caddr state))))))
 
 (defun org-visibility-save-internal (&optional buffer noerror force)
-  "Save visibility snapshot of org BUFFER."
+  "Save visibility snapshot of org BUFFER.
+
+If NOERROR is non-nil, do not throw errors.
+
+If FORCE is non-nil, save even if file is not marked as dirty."
   (let ((buffer (or buffer (current-buffer)))
         (file-name (buffer-file-name buffer))
         (visible-lines '()))
@@ -215,7 +243,9 @@ automatically persisted and restored.")
             (setq org-visibility-dirty nil)))))))
 
 (defun org-visibility-load-internal (&optional buffer noerror)
-  "Load visibility snapshot of org BUFFER."
+  "Load visibility snapshot of org BUFFER.
+
+If NOERROR is non-nil, do not throw errors."
   (let ((buffer (or buffer (current-buffer))))
     (with-current-buffer buffer
       (if (not (eq major-mode 'org-mode))
@@ -235,9 +265,9 @@ automatically persisted and restored.")
                     (org-cycle)))))
             (setq org-visibility-dirty nil)))))))
 
-(defun org-visibility-check-file-path (file)
-  "Return whether FILE is in one of the paths in `org-visibility-paths'."
-  (cl-do ((paths org-visibility-paths (cdr paths))
+(defun org-visibility-check-file-path (file paths)
+  "Return whether FILE is in one of the PATHS."
+  (cl-do ((paths paths (cdr paths))
           (match nil))
       ((or (null paths) match) match)
     (let ((path (car paths))
@@ -247,19 +277,30 @@ automatically persisted and restored.")
           (when (string= part path)
             (setq match t)))))))
 
+(defun org-visibility-check-file-include-exclude-paths (file)
+  "Return whether FILE is in one of the paths in
+`org-visibility-include-paths' and not in one of the paths in
+`org-visibility-exclude-paths'."
+  (and (org-visibility-check-file-path file org-visibility-include-paths)
+       (not (org-visibility-check-file-path file org-visibility-exclude-paths))))
+
 (defun org-visibility-check-buffer-file-path (buffer)
-  "Return whether BUFFER's file is in one of the paths in `org-visibility-paths'."
+  "Return whether BUFFER's file is in one of the paths in
+`org-visibility-include-paths' and not in one of the paths in
+`org-visibility-exclude-paths'."
   (let ((file (buffer-file-name buffer)))
     (if file
-        (org-visibility-check-file-path file)
+        (org-visibility-check-file-include-exclude-paths file)
       nil)))
 
 (defun org-visibility-check-buffer-file-persistance (buffer)
   "Return whether BUFFER's file's visibility should be persisted
 and restored."
-  (or
-   (bound-and-true-p org-visibility)
-   (org-visibility-check-buffer-file-path buffer)))
+  (with-current-buffer buffer
+    (case (if (boundp 'org-visibility) org-visibility nil)
+      ('nil (org-visibility-check-buffer-file-path buffer))
+      ('never nil)
+      (t t))))
 
 ;;;###autoload
 (defun org-visibility-clean ()
@@ -274,7 +315,7 @@ and restored."
                 (lambda (x)
                   (let ((file (car x)))
                     (and (file-exists-p file)
-                         (org-visibility-check-file-path file))))
+                         (org-visibility-check-file-include-exclude-paths file))))
                 data))
 
     (with-temp-file org-visibility-state-file
