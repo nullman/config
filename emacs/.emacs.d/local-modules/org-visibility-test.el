@@ -128,6 +128,45 @@ Return list of errors, or nil, if none."
          (delete-file file))
        errors))))
 
+(defun org-visibility-test-test-no-persistence-with-local-var-nil ()
+  "Test no visibility persistence using local var
+`org-visibility' set to nil."
+  (let (errors)
+    (org-visibility-test-run-test
+     (lambda (state-file)
+       (let ((file (org-visibility-test-create-org-file nil)))
+         (find-file file)
+         (outline-hide-sublevels 1)
+         (forward-line 4)
+         (org-cycle)
+         (save-buffer)
+         (kill-buffer (current-buffer))
+         (find-file file)
+         (push (org-visibility-test-check-visible-lines '(1 2 3 4 5 6 7 8 9 10 11 12)) errors)
+         (kill-buffer (current-buffer))
+         (delete-file file))
+       errors))))
+
+(defun org-visibility-test-test-no-persistence-with-local-var-never ()
+  "Test no visibility persistence using local var
+`org-visibility' set to never."
+  (let (errors)
+    (org-visibility-test-run-test
+     (lambda (state-file)
+       (let* ((file (org-visibility-test-create-org-file 'never))
+              (org-visibility-include-paths (list file)))
+         (find-file file)
+         (outline-hide-sublevels 1)
+         (forward-line 4)
+         (org-cycle)
+         (save-buffer)
+         (kill-buffer (current-buffer))
+         (find-file file)
+         (push (org-visibility-test-check-visible-lines '(1 2 3 4 5 6 7 8 9 10 11 12)) errors)
+         (kill-buffer (current-buffer))
+         (delete-file file))
+       errors))))
+
 (defun org-visibility-test-test-persistence-with-local-var-t ()
   "Test general visibility persistence using local var
 `org-visibility' set to t."
@@ -145,26 +184,6 @@ Return list of errors, or nil, if none."
          (kill-buffer (current-buffer))
          (find-file file)
          (push (org-visibility-test-check-visible-lines '(1 5 6 9 11)) errors)
-         (kill-buffer (current-buffer))
-         (delete-file file))
-       errors))))
-
-(defun org-visibility-test-test-persistence-with-local-var-never ()
-  "Test general visibility persistence using local var
-`org-visibility' set to never."
-  (let (errors)
-    (org-visibility-test-run-test
-     (lambda (state-file)
-       (let* ((file (org-visibility-test-create-org-file 'never))
-              (org-visibility-include-paths (list file)))
-         (find-file file)
-         (outline-hide-sublevels 1)
-         (forward-line 4)
-         (org-cycle)
-         (save-buffer)
-         (kill-buffer (current-buffer))
-         (find-file file)
-         (push (org-visibility-test-check-visible-lines '(1 5 11)) errors)
          (kill-buffer (current-buffer))
          (delete-file file))
        errors))))
@@ -190,12 +209,17 @@ Return list of errors, or nil, if none."
          (delete-file file))
        errors))))
 
+;;; Run Tests
+
 (defun org-visibility-test-run-all-tests ()
   "Run all org-visibility unit tests."
   (interactive)
   (org-visibility-test-test-no-persistence)
+  (org-visibility-test-test-no-persistence-with-local-var-nil)
+  (org-visibility-test-test-no-persistence-with-local-var-never)
   (org-visibility-test-test-persistence-with-local-var-t)
-  (org-visibility-test-test-persistence-with-local-var-never)
   (org-visibility-test-test-persistence-with-include-paths))
+
+(org-visibility-test-run-all-tests)
 
 ;;; org-visibility-test.el ends here
