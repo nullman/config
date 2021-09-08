@@ -39,7 +39,7 @@
           org-visibility-include-paths '()
           org-visibility-exclude-paths '())
     (unwind-protect
-        (setq errors (remove nil (apply #'append (nreverse (funcall test temp-state-file)))))
+        (setq errors (remove nil (apply #'append (nreverse (funcall test)))))
       (progn
         (setq org-visibility-state-file state-file
               org-visibility-include-paths include-paths
@@ -85,8 +85,6 @@ If LOCAL-VAR-VISBILITY is non-nil, set local variable
         (newline)
         (insert (format ";; org-visibility: %s" local-var-visbility))
         (newline)
-        (insert ";; eval: (org-visibility-load)")
-        (newline)
         (insert ";; End:")
         (newline)))
     file))
@@ -102,11 +100,21 @@ Return list of errors, or nil, if none."
       (let ((line (buffer-substring-no-properties (point-at-bol) (point-at-eol))))
         (if (member (line-number-at-pos) lines)
             (unless (not (invisible-p (point)))
-              (push (concat "Line not visible: " line) errors))
+              (push (format "Line not visible: %s" line) errors))
           (unless (invisible-p (point))
-            (push (concat "Line visible: " line) errors)))
+            (push (format "Line visible: %s" line) errors)))
         (forward-line 1)))
     (nreverse errors)))
+
+(defun org-visibility-test-check-state-file-lines (count)
+  "Test that `org-visibility-state-file' has COUNT lines.
+
+Return a list of one error, or nil, if correct."
+  (with-temp-buffer
+    (insert-file-contents org-visibility-state-file)
+    (if (= (line-number-at-pos) count)
+        nil
+      (list (format "State file has incorrect count: %s" count)))))
 
 ;;; Tests
 
@@ -114,7 +122,7 @@ Return list of errors, or nil, if none."
   "Test no visibility persistence."
   (let (errors)
     (org-visibility-test-run-test
-     (lambda (state-file)
+     (lambda ()
        (let ((file (org-visibility-test-create-org-file)))
          (find-file file)
          (outline-hide-sublevels 1)
@@ -133,8 +141,8 @@ Return list of errors, or nil, if none."
 `org-visibility' set to nil."
   (let (errors)
     (org-visibility-test-run-test
-     (lambda (state-file)
-       (let ((file (org-visibility-test-create-org-file nil)))
+     (lambda ()
+       (let ((file (org-visibility-test-create-org-file "nil")))
          (find-file file)
          (outline-hide-sublevels 1)
          (forward-line 4)
@@ -142,7 +150,7 @@ Return list of errors, or nil, if none."
          (save-buffer)
          (kill-buffer (current-buffer))
          (find-file file)
-         (push (org-visibility-test-check-visible-lines '(1 2 3 4 5 6 7 8 9 10 11 12)) errors)
+         (push (org-visibility-test-check-visible-lines '(1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18)) errors)
          (kill-buffer (current-buffer))
          (delete-file file))
        errors))))
@@ -152,8 +160,8 @@ Return list of errors, or nil, if none."
 `org-visibility' set to never."
   (let (errors)
     (org-visibility-test-run-test
-     (lambda (state-file)
-       (let* ((file (org-visibility-test-create-org-file 'never))
+     (lambda ()
+       (let* ((file (org-visibility-test-create-org-file "never"))
               (org-visibility-include-paths (list file)))
          (find-file file)
          (outline-hide-sublevels 1)
@@ -162,18 +170,18 @@ Return list of errors, or nil, if none."
          (save-buffer)
          (kill-buffer (current-buffer))
          (find-file file)
-         (push (org-visibility-test-check-visible-lines '(1 2 3 4 5 6 7 8 9 10 11 12)) errors)
+         (push (org-visibility-test-check-visible-lines '(1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18)) errors)
          (kill-buffer (current-buffer))
          (delete-file file))
        errors))))
 
 (defun org-visibility-test-test-persistence-with-local-var-t ()
-  "Test general visibility persistence using local var
-`org-visibility' set to t."
+  "Test visibility persistence using local var `org-visibility'
+set to t."
   (let (errors)
     (org-visibility-test-run-test
-     (lambda (state-file)
-       (let ((file (org-visibility-test-create-org-file t)))
+     (lambda ()
+       (let ((file (org-visibility-test-create-org-file "t")))
          (find-file file)
          (outline-hide-sublevels 1)
          (push (org-visibility-test-check-visible-lines '(1 5 11)) errors)
@@ -189,10 +197,10 @@ Return list of errors, or nil, if none."
        errors))))
 
 (defun org-visibility-test-test-persistence-with-include-paths ()
-  "Test general visibility persistence using include paths."
+  "Test visibility persistence using include paths."
   (let (errors)
     (org-visibility-test-run-test
-     (lambda (state-file)
+     (lambda ()
        (let* ((file (org-visibility-test-create-org-file))
               (org-visibility-include-paths (list file)))
          (find-file file)
@@ -209,6 +217,61 @@ Return list of errors, or nil, if none."
          (delete-file file))
        errors))))
 
+(defun org-visibility-test-test-no-persistence-with-include-exclude-paths ()
+  "Test no visibility persistence using include and exclude paths."
+  (let (errors)
+    (org-visibility-test-run-test
+     (lambda ()
+       (let* ((file (org-visibility-test-create-org-file))
+              (org-visibility-include-paths (list (file-name-directory file)))
+              (org-visibility-exclude-paths (list file)))
+         (find-file file)
+         (outline-hide-sublevels 1)
+         (forward-line 4)
+         (org-cycle)
+         (save-buffer)
+         (kill-buffer (current-buffer))
+         (find-file file)
+         (push (org-visibility-test-check-visible-lines '(1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18)) errors)
+         (kill-buffer (current-buffer))
+         (delete-file file))
+       errors))))
+
+(defun org-visibility-test-test-clean ()
+  "Test `org-visibility-clean'."
+  (let (errors)
+    (org-visibility-test-run-test
+     (lambda ()
+       (let* ((file1 (org-visibility-test-create-org-file))
+              (file2 (org-visibility-test-create-org-file))
+              (org-visibility-include-paths (list (file-name-directory file1))))
+         (find-file file1)
+         (kill-buffer (current-buffer))
+         (find-file file2)
+         (kill-buffer (current-buffer))
+         (org-visibility-test-check-state-file-lines 2)
+         (delete-file file1)
+         (org-visibility-clean)
+         (org-visibility-test-check-state-file-lines 1)
+         (delete-file file2))
+       errors))))
+
+(defun org-visibility-test-test-force-save ()
+  "Test `org-visibility-force-save'."
+  )
+
+(defun org-visibility-test-test-save-all-buffers ()
+  "Test `org-visibility-save-all-buffers'."
+  )
+
+(defun org-visibility-test-test-dirty ()
+  "Test file dirty state from change."
+  )
+
+(defun org-visibility-test-test-dirty-org-cycle ()
+  "Test file dirty state from `org-cycle'."
+  )
+
 ;;; Run Tests
 
 (defun org-visibility-test-run-all-tests ()
@@ -218,7 +281,9 @@ Return list of errors, or nil, if none."
   (org-visibility-test-test-no-persistence-with-local-var-nil)
   (org-visibility-test-test-no-persistence-with-local-var-never)
   (org-visibility-test-test-persistence-with-local-var-t)
-  (org-visibility-test-test-persistence-with-include-paths))
+  (org-visibility-test-test-persistence-with-include-paths)
+  (org-visibility-test-test-no-persistence-with-include-exclude-paths)
+  (org-visibility-test-test-clean))
 
 (org-visibility-test-run-all-tests)
 

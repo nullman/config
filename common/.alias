@@ -2732,8 +2732,8 @@ alias gitb="git branch"
 alias gitba="git branch -a"
 #        gitbal                  git branch -a (local only)
 alias gitbal="git branch -a | grep -v remotes"
-#        gitbag                  git branch -a | grep
-alias gitbag="git branch -a | grep"
+#        gitbag                  git branch -a | grep -i
+alias gitbag="git branch -a | grep -i"
 #        gitbd                   git branch -d
 alias gitbd="git branch -d"
 #        gitbD                   git branch -D

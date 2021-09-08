@@ -66,7 +66,7 @@
 ;;   ;;(setq org-visibility-state-file `,(expand-file-name "/some/path/.org-visibility"))
 ;;   ;; list of directories and files to automatically persist and restore visibility state
 ;;   (setq org-visibility-include-paths `(,(file-truename "~/.emacs.d/init-emacs.org")
-;;                                ,(file-truename "~/org"))
+;;                                        ,(file-truename "~/org"))
 ;;   ;; list
 ;;   (setq org-visibility-include-paths `(,(file-truename "~/.emacs.d/init-emacs.org")
 ;;   (require 'org-visibility)
@@ -82,7 +82,7 @@
 ;;     :custom
 ;;     ;; list of directories and files to automatically persist and restore visibility state
 ;;     (org-visibility-include-paths `(,(file-truename "~/.emacs.d/init-emacs.org")
-;;                             ,(file-truename "~/org"))))
+;;                                     ,(file-truename "~/org"))))
 ;;
 ;;; Usage:
 ;;
@@ -327,7 +327,7 @@ and restored."
   "Save visibility state if buffer has been modified."
   (interactive)
   (when (org-visibility-check-buffer-file-persistance (current-buffer))
-    (org-visibility-save-internal (current-buffer) :noerror force)))
+    (org-visibility-save-internal (current-buffer) nil force)))
 
 ;;;###autoload
 (defun org-visibility-force-save ()
@@ -370,7 +370,7 @@ and restored."
   (add-hook 'after-save-hook #'org-visibility-save :append)
   (add-hook 'kill-buffer-hook #'org-visibility-save :append)
   (add-hook 'kill-emacs-hook #'org-visibility-save-all-buffers :append)
-  (add-hook 'org-mode-hook #'org-visibility-load :append)
+  (add-hook 'find-file-hook #'org-visibility-load :append)
   (add-hook 'first-change-hook #'org-visibility-dirty :append)
   (add-hook 'org-cycle-hook #'org-visibility-dirty-org-cycle :append))
 
@@ -381,7 +381,7 @@ and restored."
   (remove-hook 'after-save-hook #'org-visibility-save)
   (remove-hook 'kill-buffer-hook #'org-visibility-save)
   (remove-hook 'kill-emacs-hook #'org-visibility-save-all-buffers)
-  (remove-hook 'org-mode-hook #'org-visibility-load)
+  (remove-hook 'find-file-hook #'org-visibility-load)
   (remove-hook 'first-change-hook #'org-visibility-dirty)
   (remove-hook 'org-cycle-hook #'org-visibility-dirty-org-cycle))
 
