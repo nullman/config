@@ -115,7 +115,15 @@ Return a list of one error, or nil, if correct."
     (let ((entries (length (read (buffer-string)))))
       (if (= entries count)
           nil
-        (list (format "State file has incorrect entry count: %s (expected %s)" entries count))))))
+        (list (format "State file entry count: %s (expected %s)" entries count))))))
+
+(defun org-visibility-test-check-dirty-status (is-dirty)
+  "Test that `org-visibility-dirty' is IS-DIRTY.
+
+Return a list of one error, or nil, if correct."
+  (if (eq org-visibility-dirty is-dirty)
+      nil
+    (list (format "Dirty flag: %s (expect %s)" org-visibility-dirty is-dirty))))
 
 ;;; Tests
 
@@ -185,8 +193,6 @@ set to t."
        (let ((file (org-visibility-test-create-org-file "t")))
          (find-file file)
          (outline-hide-sublevels 1)
-         (push (org-visibility-test-check-visible-lines '(1 5 11)) errors)
-         (goto-char (point-min))
          (forward-line 4)
          (org-cycle)
          (push (org-visibility-test-check-visible-lines '(1 5 6 9 11)) errors)
@@ -206,8 +212,6 @@ set to t."
               (org-visibility-include-paths (list file)))
          (find-file file)
          (outline-hide-sublevels 1)
-         (push (org-visibility-test-check-visible-lines '(1 5 11)) errors)
-         (goto-char (point-min))
          (forward-line 4)
          (org-cycle)
          (push (org-visibility-test-check-visible-lines '(1 5 6 9 11)) errors)
@@ -295,19 +299,101 @@ set to t."
 
 (defun org-visibility-test-test-force-save ()
   "Test `org-visibility-force-save'."
-  )
+  (let (errors)
+    (org-visibility-test-run-test
+     (lambda ()
+       (let* ((file1 (org-visibility-test-create-org-file))
+              (file2 (org-visibility-test-create-org-file))
+              (org-visibility-include-paths (list file1 file2)))
+         (find-file file1)
+         (outline-hide-sublevels 1)
+         (forward-line 4)
+         (org-cycle)
+         (save-buffer)
+         (kill-buffer (current-buffer))
+         (push (org-visibility-test-check-state-file-lines 1) errors)
+         (find-file file2)
+         (org-visibility-force-save)
+         (push (org-visibility-test-check-state-file-lines 2) errors)
+         (kill-buffer (current-buffer))
+         (delete-file file1)
+         (delete-file file2))
+       errors))))
 
 (defun org-visibility-test-test-save-all-buffers ()
   "Test `org-visibility-save-all-buffers'."
-  )
+  (let (errors)
+    (org-visibility-test-run-test
+     (lambda ()
+       (let* ((file1 (org-visibility-test-create-org-file))
+              (file2 (org-visibility-test-create-org-file))
+              (org-visibility-include-paths (list file1 file2)))
+         (find-file file1)
+         (outline-hide-sublevels 1)
+         (forward-line 4)
+         (org-cycle)
+         (push (org-visibility-test-check-visible-lines '(1 5 6 9 11)) errors)
+         (find-file file2)
+         (outline-hide-sublevels 1)
+         (forward-line 4)
+         (org-cycle)
+         (push (org-visibility-test-check-visible-lines '(1 5 6 9 11)) errors)
+         (org-visibility-save-all-buffers)
+         (push (org-visibility-test-check-state-file-lines 2) errors)
+         (find-file file1)
+         (kill-buffer (current-buffer))
+         (find-file file2)
+         (kill-buffer (current-buffer))
+         (find-file file1)
+         (push (org-visibility-test-check-visible-lines '(1 5 6 9 11)) errors)
+         (kill-buffer (current-buffer))
+         (find-file file2)
+         (push (org-visibility-test-check-visible-lines '(1 5 6 9 11)) errors)
+         (kill-buffer (current-buffer))
+         (delete-file file1)
+         (delete-file file2))
+       errors))))
 
 (defun org-visibility-test-test-dirty ()
   "Test file dirty state from change."
-  )
+  (let (errors)
+    (org-visibility-test-run-test
+     (lambda ()
+       (let* ((file (org-visibility-test-create-org-file))
+              (org-visibility-include-paths (list file)))
+         (find-file file)
+         (push (org-visibility-test-check-dirty-status nil) errors)
+         (goto-char (point-at-eol))
+         (push (org-visibility-test-check-dirty-status nil) errors)
+         (insert "A")
+         (push (org-visibility-test-check-dirty-status t) errors)
+         (save-buffer)
+         (kill-buffer (current-buffer))
+         (delete-file file))
+       errors))))
 
 (defun org-visibility-test-test-dirty-org-cycle ()
   "Test file dirty state from `org-cycle'."
-  )
+  (let (errors)
+    (org-visibility-test-run-test
+     (lambda ()
+       (let* ((file (org-visibility-test-create-org-file))
+              (org-visibility-include-paths (list file)))
+         (find-file file)
+         (push (org-visibility-test-check-dirty-status nil) errors)
+         (outline-hide-sublevels 1)
+         (push (org-visibility-test-check-dirty-status nil) errors)
+         (forward-line 4)
+         (push (org-visibility-test-check-dirty-status nil) errors)
+         (org-cycle)
+         (push (org-visibility-test-check-dirty-status t) errors)
+         (save-buffer)
+         (kill-buffer (current-buffer))
+         (find-file file)
+         (push (org-visibility-test-check-visible-lines '(1 5 6 9 11)) errors)
+         (kill-buffer (current-buffer))
+         (delete-file file))
+       errors))))
 
 ;;; Run Tests
 
@@ -321,7 +407,11 @@ set to t."
   (org-visibility-test-test-persistence-with-include-paths)
   (org-visibility-test-test-no-persistence-with-include-exclude-paths)
   (org-visibility-test-test-clean-remove-file)
-  (org-visibility-test-test-clean-remove-include-path))
+  (org-visibility-test-test-clean-remove-include-path)
+  (org-visibility-test-test-force-save)
+  (org-visibility-test-test-save-all-buffers)
+  (org-visibility-test-test-dirty)
+  (org-visibility-test-test-dirty-org-cycle))
 
 (org-visibility-test-run-all-tests)
 
