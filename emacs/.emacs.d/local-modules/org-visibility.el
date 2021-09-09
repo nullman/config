@@ -64,12 +64,16 @@
 ;;
 ;;   ;; optionally change the location of the state file (not recommended)
 ;;   ;;(setq org-visibility-state-file `,(expand-file-name "/some/path/.org-visibility"))
-;;   ;; list of directories and files to automatically persist and restore visibility state
+;;
+;;   ;; list of directories and files to automatically persist and restore visibility state of
 ;;   (setq org-visibility-include-paths `(,(file-truename "~/.emacs.d/init-emacs.org")
 ;;                                        ,(file-truename "~/org"))
-;;   ;; list
-;;   (setq org-visibility-include-paths `(,(file-truename "~/.emacs.d/init-emacs.org")
+;;
+;;   ;; list of directories and files to not persist and restore visibility state of
+;;   (org-visibility-exclude-paths `(,(file-truename "~/org/old")))
+;;
 ;;   (require 'org-visibility)
+;;
 ;;   ;; optionally set a keybinding to force save
 ;;   (bind-keys :map org-mode-map
 ;;                   ("C-x C-v" . org-visibility-force-save)) ; defaults to `find-alternative-file'
@@ -80,9 +84,11 @@
 ;;     :bind (:map org-mode-map
 ;;                 ("C-x C-v" . org-visibility-force-save)) ; defaults to `find-alternative-file'
 ;;     :custom
-;;     ;; list of directories and files to automatically persist and restore visibility state
+;;     ;; list of directories and files to automatically persist and restore visibility state of
 ;;     (org-visibility-include-paths `(,(file-truename "~/.emacs.d/init-emacs.org")
 ;;                                     ,(file-truename "~/org"))))
+;;     ;; list of directories and files to not persist and restore visibility state of
+;;     (org-visibility-exclude-paths `(,(file-truename "~/org/old")))
 ;;
 ;;; Usage:
 ;;
@@ -323,17 +329,17 @@ and restored."
     (message "Visibility state file has been cleaned")))
 
 ;;;###autoload
-(defun org-visibility-save (&optional force)
+(defun org-visibility-save (&optional noerror force)
   "Save visibility state if buffer has been modified."
   (interactive)
   (when (org-visibility-check-buffer-file-persistance (current-buffer))
-    (org-visibility-save-internal (current-buffer) nil force)))
+    (org-visibility-save-internal (current-buffer) noerror force)))
 
 ;;;###autoload
 (defun org-visibility-force-save ()
   "Save visibility state even if buffer has not been modified."
   (interactive)
-  (org-visibility-save :force))
+  (org-visibility-save nil :force))
 
 ;;;###autoload
 (defun org-visibility-save-all-buffers (&optional force)
