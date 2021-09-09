@@ -107,14 +107,15 @@ Return list of errors, or nil, if none."
     (nreverse errors)))
 
 (defun org-visibility-test-check-state-file-lines (count)
-  "Test that `org-visibility-state-file' has COUNT lines.
+  "Test that `org-visibility-state-file' has COUNT entries.
 
 Return a list of one error, or nil, if correct."
   (with-temp-buffer
     (insert-file-contents org-visibility-state-file)
-    (if (= (line-number-at-pos) count)
-        nil
-      (list (format "State file has incorrect count: %s" count)))))
+    (let ((entries (length (read (buffer-string)))))
+      (if (= entries count)
+          nil
+        (list (format "State file has incorrect entry count: %s (expected %s)" entries count))))))
 
 ;;; Tests
 
@@ -237,22 +238,58 @@ set to t."
          (delete-file file))
        errors))))
 
-(defun org-visibility-test-test-clean ()
+(defun org-visibility-test-test-clean-remove-file ()
   "Test `org-visibility-clean'."
   (let (errors)
     (org-visibility-test-run-test
      (lambda ()
        (let* ((file1 (org-visibility-test-create-org-file))
               (file2 (org-visibility-test-create-org-file))
-              (org-visibility-include-paths (list (file-name-directory file1))))
+              (org-visibility-include-paths (list file1 file2)))
          (find-file file1)
+         (outline-hide-sublevels 1)
+         (forward-line 4)
+         (org-cycle)
+         (save-buffer)
          (kill-buffer (current-buffer))
          (find-file file2)
+         (outline-hide-sublevels 1)
+         (forward-line 4)
+         (org-cycle)
+         (save-buffer)
          (kill-buffer (current-buffer))
-         (org-visibility-test-check-state-file-lines 2)
+         (push (org-visibility-test-check-state-file-lines 2) errors)
          (delete-file file1)
          (org-visibility-clean)
-         (org-visibility-test-check-state-file-lines 1)
+         (push (org-visibility-test-check-state-file-lines 1) errors)
+         (delete-file file2))
+       errors))))
+
+(defun org-visibility-test-test-clean-remove-include-path ()
+  "Test `org-visibility-clean'."
+  (let (errors)
+    (org-visibility-test-run-test
+     (lambda ()
+       (let* ((file1 (org-visibility-test-create-org-file))
+              (file2 (org-visibility-test-create-org-file))
+              (org-visibility-include-paths (list file1 file2)))
+         (find-file file1)
+         (outline-hide-sublevels 1)
+         (forward-line 4)
+         (org-cycle)
+         (save-buffer)
+         (kill-buffer (current-buffer))
+         (find-file file2)
+         (outline-hide-sublevels 1)
+         (forward-line 4)
+         (org-cycle)
+         (save-buffer)
+         (kill-buffer (current-buffer))
+         (push (org-visibility-test-check-state-file-lines 2) errors)
+         (setq org-visibility-include-paths (list file1))
+         (org-visibility-clean)
+         (push (org-visibility-test-check-state-file-lines 1) errors)
+         (delete-file file1)
          (delete-file file2))
        errors))))
 
@@ -283,7 +320,8 @@ set to t."
   (org-visibility-test-test-persistence-with-local-var-t)
   (org-visibility-test-test-persistence-with-include-paths)
   (org-visibility-test-test-no-persistence-with-include-exclude-paths)
-  (org-visibility-test-test-clean))
+  (org-visibility-test-test-clean-remove-file)
+  (org-visibility-test-test-clean-remove-include-path))
 
 (org-visibility-test-run-all-tests)
 
