@@ -10247,26 +10247,32 @@
 
       (init-message 3 "Functions: Text Inserting Functions: insert-incrementing-vertical-numbers")
 
-      (defun insert-incrementing-vertical-numbers (end &optional start)
+      (defun insert-incrementing-vertical-numbers (bound1 &optional bound2 repeat)
         "Insert incrementing numbers vertically in the current column.
 
-      Start with 1 or START (if non-nil) up to and including END."
-        (interactive "*nMax integer: ")
-        (let ((start (or start 1))
+      If BOUND2 is nil, number from 1 to BOUND1, inclusive.
+      If BOUND2 is non-nil, number from BOUND1 to BOUND2, inclusive.
+      If REPEAT is non-nil, repeat each number that many times."
+        (interactive "*nMaximum number: ")
+        (let ((start (if bound2 bound1 1))
+              (end (if bound2 bound2 bound1))
+              (repeat (or repeat 1))
               (col (- (point) (line-beginning-position))))
           (cl-do ((x start (1+ x)))
               ((> x end))
-            (insert (number-to-string x))
-            (when (< x end)
-              (or (zerop (forward-line 1))
-                  (progn
-                    (goto-char (line-end-position))
-                    (newline)))
-              (let ((pos (+ (line-beginning-position) col)))
-                (while (< (point) pos)
-                  (if (eobp)
-                      (insert " ")
-                    (forward-char 1))))))))
+            (cl-do ((y 1 (1+ y)))
+                ((> y repeat))
+              (insert (number-to-string x))
+              (when (or (< x end) (< y repeat))
+                (or (zerop (forward-line 1))
+                    (progn
+                      (goto-char (line-end-position))
+                      (newline)))
+                (let ((pos (+ (line-beginning-position) col)))
+                  (while (< (point) pos)
+                    (if (eobp)
+                        (insert " ")
+                      (forward-char 1)))))))))
 ;; insert-incrementing-vertical-numbers:1 ends here
 
 ;; [[file:init-emacs.org::*append-char-to-column][append-char-to-column:1]]
