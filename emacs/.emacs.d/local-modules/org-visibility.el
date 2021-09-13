@@ -1,4 +1,4 @@
-;;; org-visibility.el --- Persist visibility snapshot of org files -*- lexical-binding: t; -*-
+;;; org-visibility.el --- Persistent org tree visibility -*- lexical-binding: t; -*-
 ;;
 ;;; Copyright (C) 2021 Kyle W T Sherman
 ;;

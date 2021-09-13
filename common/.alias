@@ -45,9 +45,9 @@ alias alhg="
     cat \${HOME}/.alias \${HOME}/.alias-work 2>/dev/null | \
       grep '^#' | grep -v '^#!' | sed 's/^#//' | grep -i"
 #!#        ahlg                    alias help (long) with grep
-#!alias ahlg="
+#!alias alhlg="
 #!    cat \${HOME}/.alias \${HOME}/.alias-work 2>/dev/null | \
-    #!      grep -v '^#!' | grep -v '^#  ' | sed 's/^#//' | more | grep -i"
+#!      grep -v '^#!' | grep -v '^#  ' | sed 's/^#//' | more | grep -i"
 
 #
 # source core scripts
@@ -73,6 +73,8 @@ alias sxp="[[ -f \${HOME}/.xprofile ]] && source \${HOME}/.xprofile"
 alias a="alias"
 #        ua                      unalias
 alias ua="unalias"
+#        f                       declare -f (show function definition)
+alias f="declare -f"
 #        z                       exit shell
 alias z="exit"
 #        c                       clear shell buffer
