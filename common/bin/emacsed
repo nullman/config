@@ -16,20 +16,20 @@ in_screen() {
 }
 
 # set optional wait state
-if [[ -n "${WAIT:-''}" ]] ; then
+if [[ -v WAIT ]] ; then
     wait=""
 else
     wait="--no-wait"
 fi
-[[ -n "${DEBUG:-''}" ]] && echo "wait: ${wait}"
+[[ -v DEBUG ]] && echo "wait: ${wait}"
 
 # set optional vi fallback state
-if [[ -n "${VI:-''}" ]] ; then
+if [[ -v VI ]] ; then
     vi=true
 else
     vi=false
 fi
-[[ -n "${DEBUG}" ]] && echo "vi: ${vi}"
+[[ -v DEBUG ]] && echo "vi: ${vi}"
 
 # determine if emacs client is running under this user
 client=0
@@ -44,12 +44,12 @@ if [[ ${client} -eq 0 ]] ; then
             # stat client file
             if [[ -e "${name}" ]] && [[ -n "$(stat ${name} | grep ${USER})" ]] ; then
                 client=1
-                [[ -n "${DEBUG:-''}" ]] && echo "client file: ${name}, client: ${client}"
+                [[ -v DEBUG ]] && echo "client file: ${name}, client: ${client}"
             fi
         fi
     done
 fi
-[[ -n "${DEBUG:-''}" ]] && echo "client: ${client}"
+[[ -v DEBUG ]] && echo "client: ${client}"
 
 # determine if screen is running under this user and if emacs is running under it
 screen=0
@@ -60,10 +60,10 @@ if [[ "$(in_screen)" == "screen" ]] ; then
         fi
     fi
 fi
-[[ -n "${DEBUG:-''}" ]] && echo "screen: ${screen}"
+[[ -v DEBUG ]] && echo "screen: ${screen}"
 
 # pause if debugging
-if [[ -n "${DEBUG:-''}" ]] ; then
+if [[ -v DEBUG ]] ; then
     echo "Press return to start editor"
     read a
 fi

@@ -24,6 +24,11 @@
 ;;
 ;;; Commentary:
 ;;
+;; Org Visibility is an Emacs package that adds the ability to persist (save
+;; and load) the state of the visible sections of `org-mode' files.  The state
+;; is saved when the file is saved or killed, and restored when the file is
+;; loaded.
+;;
 ;; Hooks are used to persist and restore org tree visibility upon loading and
 ;; saving org files.  Files are only considered if they meet one of the
 ;; following requirements:

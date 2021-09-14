@@ -4386,7 +4386,8 @@
     (use-package org-visibility
       ;;:quelpa (org-visibility)
       ;;:straight t
-      :load-path (lambda () (expand-file-name "org-visibility" local-modules-dir))
+      ;;:load-path (lambda () (expand-file-name "org-visibility" local-modules-dir))
+      :load-path (lambda () (expand-file-name "org-visibility" "~/code/nullman/org-visibility"))
       :bind (:map org-mode-map
                   ("C-x C-v" . org-visibility-force-save)) ; defaults to `find-alternative-file'
       :custom
@@ -17529,9 +17530,9 @@
       :after (flyspell)
       :mode (("\\.txt\\'" . text-mode)
              ("\\.text\\'" . text-mode)
-             ("README" . text-mode)
-             ("INSTALL" . text-mode)
-             ("CHANGELOG" . text-mode))
+             ("\\'README\\'" . text-mode)
+             ("\\'INSTALL\\'" . text-mode)
+             ("\\'CHANGELOG\\'" . text-mode))
       :config
       (defun local-text-mode-hook ()
         ;; set tab
