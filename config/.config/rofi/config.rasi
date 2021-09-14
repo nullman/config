@@ -1,0 +1,33 @@
+configuration {
+    modi: "window,drun,ssh,combi";
+    combi-modi: "window,drun,ssh";
+    lines: 15;
+    columns: 1;
+    font: "System San Francisco Display 24";
+    show-icons: true;
+}
+
+* {
+    background:                      #222d32;
+    foreground:                      #8fa2ab;
+    bordercolor:                     #002b36;
+    separatorcolor:                  @bordercolor;
+    normal-background:               @background;
+    normal-foreground:               @foreground;
+    alternate-normal-background:     @normal-background;
+    alternate-normal-foreground:     @normal-foreground;
+    selected-normal-background:      #364046;
+    selected-normal-foreground:      #cfd8dc;
+    active-background:               @background;
+    active-foreground:               @foreground;
+    alternate-active-background:     @active-background;
+    alternate-active-foreground:     @active-foreground;
+    selected-active-background:      @selected-normal-background;
+    selected-active-foreground:      @selected-normal-foreground;
+    urgent-background:               @background;
+    urgent-foreground:               @foreground;
+    alternate-urgent-background:     @urgent-background;
+    alternate-urgent-foreground:     @urgent-foreground;
+    selected-urgent-background:      @selected-normal-background;
+    selected-urgent-foreground:      @selected-normal-foreground;
+}
