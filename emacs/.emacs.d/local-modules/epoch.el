@@ -144,7 +144,7 @@ consistent time."
                      result)
                  ((not time) (nreverse result))
                (push (or (car time) (car current-time)) result))))
-        (truncate (float-time (apply 'encode-time time)))))
+        (truncate (float-time (apply #'encode-time time)))))
      (t nil)))
    ;; if time is a number...
    ((numberp time)

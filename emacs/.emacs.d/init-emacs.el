@@ -14668,9 +14668,9 @@
           (or (and mingus-use-caching
                    (gethash id mingus-song-strings))
               (let ((val
-                     (let* ((filestring (and file (file-name-nondirectory file)))
+                     (let* ((file-name (and file (file-name-nondirectory file)))
                             (short (remove nil (list (or artist albumartist)
-                                                     (or title filestring)))))
+                                                     (or title file-name)))))
                        (mapconcat 'identity short separator))))
                 (and mingus-use-caching
                      (puthash id val mingus-song-strings))

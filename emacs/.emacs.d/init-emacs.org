@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2021-09-13 11:08 (kyle)>
+  #+TIMESTAMP: <2021-09-19 20:17 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -21164,9 +21164,9 @@
             (or (and mingus-use-caching
                      (gethash id mingus-song-strings))
                 (let ((val
-                       (let* ((filestring (and file (file-name-nondirectory file)))
+                       (let* ((file-name (and file (file-name-nondirectory file)))
                               (short (remove nil (list (or artist albumartist)
-                                                       (or title filestring)))))
+                                                       (or title file-name)))))
                          (mapconcat 'identity short separator))))
                   (and mingus-use-caching
                        (puthash id val mingus-song-strings))
