@@ -1461,19 +1461,19 @@
       (when (fboundp 'kmacro-end-or-call-macro)
         (bind-keys ("<f4>" . kmacro-end-or-call-macro))) ; defaults to `kmacro-end-or-call-macro'
       (when (fboundp 'define-word)
-        (bind-keys ("<f5>" . define-word)))
-      (when (fboundp 'define-word-at-point)
-        (bind-keys ("S-<f5>" . define-word-at-point)))
-      (when (fboundp 'web-query-word-at-point)
-        (bind-keys ("S-<f5>" . web-query-word-at-point)))
-      (when (fboundp 'ispell-word)
-        (bind-keys ("<f6>" . ispell-word)))
+      ;;   (bind-keys ("<f5>" . define-word)))
+      ;; (when (fboundp 'define-word-at-point)
+      ;;   (bind-keys ("S-<f5>" . define-word-at-point)))
+      ;; (when (fboundp 'ispell-word)
+      ;;   (bind-keys ("<f6>" . ispell-word)))
+      ;; (when (fboundp 'ispell)
+      ;;   (bind-keys ("<S-f6>" . ispell)))
       (when (fboundp 'web-query)
-        (bind-keys ("S-<f6>" . web-query)))
-      (when (fboundp 'ispell)
-        (bind-keys ("<f7>" . ispell)))
+        (bind-keys ("<f7>" . web-query)))
       (when (fboundp 'web-query-symbol-by-mode-at-point)
         (bind-keys ("<S-f7>" . web-query-symbol-by-mode-at-point)))
+      ;; (when (fboundp 'web-query-word-at-point)
+      ;;   (bind-keys ("S-<f7>" . web-query-word-at-point)))
       (when (fboundp 'neotree)
         (bind-keys ("<f8>" . neotree)))
       (when (fboundp 'cycle-buffer-backward)
@@ -14211,21 +14211,9 @@
                  ispell-region-end
                  ispell-word)
       :bind (("<f6>" . ispell-word)
-             ("S-<f6>" . ispell-word-then-define-word)
-             ("<f7>" . ispell))
+             ("<S-f6>" . ispell))
       :config
-      (setq ispell-enable-tex-parser t)
-
-      (defun ispell-word-then-define-word (word)
-        "Call `ispell-send-string' on WORD then call `define-word' on result.
-
-    User is prompted for WORD if none given."
-        (interactive "sWord: ")
-        (define-word
-          (with-temp-buffer
-            (insert word)
-            (ispell-word)
-            (buffer-substring-no-properties)))))
+      (setq ispell-enable-tex-parser t))
 ;; ispell:1 ends here
 
 ;; [[file:init-emacs.org::*ivy (counsel/swiper)][ivy (counsel/swiper):1]]
