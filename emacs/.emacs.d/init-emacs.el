@@ -253,8 +253,7 @@
 ;; [[file:init-emacs.org::*Global Variables][Global Variables:2]]
     ;; set emacs home directory
     (defconst emacs-home-dir
-      ;;(file-truename "~/.emacs.d")
-      (expand-file-name "~/.emacs.d")
+      (file-truename (expand-file-name "~/.emacs.d"))
       "Emacs configuration home directory.")
 ;; Global Variables:2 ends here
 
@@ -263,9 +262,10 @@
       "Return expanded directory name of DIR if found as a
     sub-directory of `emacs-home-dir', or just `emacs-home-dir'
     otherwise."
-      `(or (and (file-exists-p (expand-file-name ,dir emacs-home-dir))
-                (expand-file-name ,dir emacs-home-dir))
-           emacs-home-dir))
+      `(let ((file (file-truename (expand-file-name ,dir emacs-home-dir))))
+         (if (file-exists-p file)
+             file
+           emacs-home-dir)))
 ;; Global Variables:3 ends here
 
 ;; [[file:init-emacs.org::*Global Variables][Global Variables:4]]
@@ -292,7 +292,7 @@
 ;; [[file:init-emacs.org::*Global Variables][Global Variables:7]]
     ;; set customization file
     (defconst customization-file
-      (expand-file-name "customization.el" emacs-home-dir)
+      (file-truename (expand-file-name "customization.el" temporary-file-directory))
       "Emacs customization file.")
     (setq custom-file customization-file)
 ;; Global Variables:7 ends here
@@ -375,9 +375,9 @@
 
     ;; ;; org-mode directory
     ;; (when (file-exists-p (expand-file-name "org-mode/contrib/lisp" emacs-modules-dir))
-    ;;   (add-to-list 'load-path (expand-file-name "org-mode/contrib/lisp" emacs-modules-dir)))
+    ;;   (add-to-list 'load-path (file-truename (expand-file-name "org-mode/contrib/lisp" emacs-modules-dir))))
     ;; (when (file-exists-p (expand-file-name "org-mode/lisp" emacs-modules-dir))
-    ;;   (add-to-list 'load-path (expand-file-name "org-mode/lisp" emacs-modules-dir)))
+    ;;   (add-to-list 'load-path (file-truename (expand-file-name "org-mode/lisp" emacs-modules-dir))))
 ;; Load Path:1 ends here
 
 ;; [[file:init-emacs.org::*General][General:1]]
@@ -1314,7 +1314,7 @@
       ;; https://github.com/cpaulik/emacs-material-theme
       ;; (use-package material-theme
       ;;   ;; :quelpa (material-theme)
-      ;;   :load-path (lambda () (expand-file-name "material-theme.el" local-modules-dir))
+      ;;   :load-path (lambda () (file-truename (expand-file-name "material-theme.el" local-modules-dir)))
       ;;   :init (load-theme 'material t))
 
       ;; ;; zenburn theme
@@ -1460,7 +1460,7 @@
         (bind-keys ("<f3>" . kmacro-start-macro-or-insert-counter))) ; defaults to `kmacro-start-macro-or-insert-counter'
       (when (fboundp 'kmacro-end-or-call-macro)
         (bind-keys ("<f4>" . kmacro-end-or-call-macro))) ; defaults to `kmacro-end-or-call-macro'
-      (when (fboundp 'define-word)
+      ;; (when (fboundp 'define-word)
       ;;   (bind-keys ("<f5>" . define-word)))
       ;; (when (fboundp 'define-word-at-point)
       ;;   (bind-keys ("S-<f5>" . define-word-at-point)))
@@ -2072,7 +2072,7 @@
                  :menu-name "Run Commands")
       (when (and (fboundp 'safe-load) (boundp 'emacs-home-dir))
         (defun safe-load-init-elisp ()
-          (safe-load (expand-file-name "init.el" emacs-home-dir)))
+          (safe-load (file-truename (expand-file-name "init.el" emacs-home-dir))))
         (bind-keys :map space-run-map ("i" . safe-load-init-elisp)))
 
       ;; terminal commands
@@ -2283,7 +2283,7 @@
     (use-package org
       :custom
       ;; org directory
-      (org-directory (expand-file-name "~/org"))
+      (org-directory (file-truename (expand-file-name "~/org")))
       ;; indent blocks to outline node level
       (org-adapt-indentation t)
       ;; ;; do not indent blocks to outline node level
@@ -2392,8 +2392,8 @@
       (add-hook 'org-shiftright-final-hook #'windmove-right)
 
       ;; mobile org settings
-      (setq org-mobile-directory (expand-file-name "~/Dropbox/MobileOrg"))
-      (setq org-mobile-inbox-for-pull (expand-file-name "index.org" org-mobile-directory))
+      (setq org-mobile-directory (file-truename (expand-file-name "~/Dropbox/MobileOrg")))
+      (setq org-mobile-inbox-for-pull (file-truename (expand-file-name "index.org" org-mobile-directory)))
 
       ;; ;; latex settings
       ;; ;; (minted is installed with the Ubuntu texlive-latex-extra package)
@@ -4386,8 +4386,10 @@
     (use-package org-visibility
       ;;:quelpa (org-visibility)
       ;;:straight t
-      ;;:load-path (lambda () (expand-file-name "org-visibility" local-modules-dir))
-      :load-path (lambda () (expand-file-name "org-visibility" "~/code/nullman/org-visibility"))
+      ;;:load-path (lambda () (file-truename (expand-file-name "org-visibility" local-modules-dir)))
+      :load-path (lambda () (file-truename (expand-file-name "org-visibility" "~/code/nullman/org-visibility")))
+      :after (org)
+      :demand t
       :bind (:map org-mode-map
                   ("C-x C-v" . org-visibility-force-save)) ; defaults to `find-alternative-file'
       :custom
@@ -4853,7 +4855,7 @@
 ;; Magic the Gathering:1 ends here
 
 ;; [[file:init-emacs.org::*mtg-cards-owned-file-name][mtg-cards-owned-file-name:1]]
-      (defconst mtg-cards-owned-file-name (expand-file-name "~/org/magic-the-gathering-cards-owned.org"))
+      (defconst mtg-cards-owned-file-name (file-truename (expand-file-name "~/org/magic-the-gathering-cards-owned.org")))
 ;; mtg-cards-owned-file-name:1 ends here
 
 ;; [[file:init-emacs.org::*mtg-card-list][mtg-card-list:1]]
@@ -8762,7 +8764,7 @@
 
       (defun expand-relative-file-name (file-name)
         "Expand FILE-NAME found in current directory."
-        (expand-file-name file-name (file-name-directory (or load-file-name buffer-file-name))))
+        (file-truename (expand-file-name file-name (file-name-directory (or load-file-name buffer-file-name)))))
 ;; expand-relative-file-name:1 ends here
 
 ;; [[file:init-emacs.org::*remove-trailing-blanks][remove-trailing-blanks:1]]
@@ -8947,8 +8949,8 @@
       FILE defaults to `~/lynx_bookmarks.html'."
         (interactive)
         (let ((file (or file "~/lynx_bookmarks.html")))
-          ;;(w3m-browse-url (expand-file-name file))))
-          (eww-open-in-new-buffer (expand-file-name file))))
+          ;;(w3m-browse-url (file-truename (expand-file-name file)))))
+          (eww-open-in-new-buffer (file-truename (expand-file-name file)))))
 ;; load-bookmarks:1 ends here
 
 ;; [[file:init-emacs.org::*find-file-updir][find-file-updir:1]]
@@ -8964,14 +8966,14 @@
 
       If DIRECTORY is non-nil, then it is used instead of the current
       buffer's default directory."
-        (let ((name (expand-file-name name directory)))
+        (let ((name (file-truename (expand-file-name name directory))))
           (while (and
                   (not (file-exists-p name))
                   (not (string= name (concat "/" (file-name-nondirectory name)))))
-            (setq name (expand-file-name (concat
-                                          (file-name-directory name)
-                                          "../"
-                                          (file-name-nondirectory name)))))
+            (setq name (file-truename (expand-file-name (concat
+                                                         (file-name-directory name)
+                                                         "../"
+                                                         (file-name-nondirectory name))))))
           (when (file-exists-p name) name)))
 ;; find-file-updir:1 ends here
 
@@ -10821,7 +10823,7 @@
                 (push local-modules-dir paths))))
           ;; loop through paths
           (while paths
-            (setq path (expand-file-name (car paths)))
+            (setq path (file-truename (expand-file-name (car paths))))
             (setq paths (cdr paths))
             ;; traverse directories
             (if (file-directory-p path)
@@ -10880,7 +10882,7 @@
                  files)
              ;; loop through paths
              (while paths
-               (setq path (expand-file-name (car paths)))
+               (setq path (file-truename (expand-file-name (car paths))))
                (setq paths (cdr paths))
                ;; traverse directories
                (if (file-directory-p path)
@@ -11073,7 +11075,7 @@
         (interactive)
         (let ((file (or (find-file-updir "TAGS")
                         (when (find-file-updir "src")
-                          (expand-file-name (concat (find-file-updir "src") "/../TAGS")))
+                          (file-truename (expand-file-name (concat (find-file-updir "src") "/../TAGS"))))
                         ;; ask for TAGS directory if not found
                         (concat (read-directory-name "Top of source tree: " default-directory) "/TAGS")))
               (extension (or (file-name-extension buffer-file-name)
@@ -12950,7 +12952,7 @@
       (save-abbrevs 'silently)
       :init
       (defconst abbrev-file
-        (expand-file-name "~/.abbrev_defs")
+        (file-truename (expand-file-name "~/.abbrev_defs"))
         "Abbreviations file used by `abbrev-mode'.")
       (unless (file-exists-p abbrev-file)
         (with-temp-buffer (write-file abbrev-file)))
@@ -13000,7 +13002,7 @@
 
     (use-package analog-clock
       ;;:quelpa (analog-clock :fetcher url :url "http://yrk.nfshost.com/repos/analog-clock/analog-clock.el")
-      :load-path (lambda () (expand-file-name "analog-clock.el" emacs-modules-dir))
+      :load-path (lambda () (file-truename (expand-file-name "analog-clock.el" emacs-modules-dir)))
       :commands (analog-clock analog-clock-draw-analog)
       :custom
       ;; draw an analog clock
@@ -13022,7 +13024,7 @@
 
     (use-package any-ini-mode
       ;;:quelpa (any-ini-mode :fetcher url :url "https://www.emacswiki.org/emacs/download/any-ini-mode.el"))
-      :load-path (lambda () (expand-file-name "any-ini-mode.el" emacs-modules-dir)))
+      :load-path (lambda () (file-truename (expand-file-name "any-ini-mode.el" emacs-modules-dir))))
 ;; any-ini-mode:1 ends here
 
 ;; [[file:init-emacs.org::*async][async:1]]
@@ -13550,7 +13552,7 @@
 
     (use-package cycle-buffer
       ;;:quelpa (cycle-buffer :fetcher url :url "https://raw.githubusercontent.com/emacsmirror/emacswiki.org/master/cycle-buffer.el")
-      :load-path (lambda () (expand-file-name "cycle-buffer.el" emacs-modules-dir))
+      :load-path (lambda () (file-truename (expand-file-name "cycle-buffer.el" emacs-modules-dir)))
       :demand t
       :bind* (("C-x C-n" . cycle-buffer)          ; defaults to `set-goal-column'
               ("C-x C-p" . cycle-buffer-backward) ; defaults to `mark-page'
@@ -13731,7 +13733,7 @@
       (defun elfeed-bookmarks-edit ()
         "Open `init-emacs.org' and move point to Elfeed Bookmarks File for easy editing."
         (interactive)
-        (find-file (expand-file-name "init-emacs.org" emacs-home-dir))
+        (find-file (file-truename (expand-file-name "init-emacs.org" emacs-home-dir)))
         (goto-char (point-min))
         (search-forward ";; Elfeed Bookmarks File\n")
         (org-show-entry))
@@ -13838,7 +13840,7 @@
       (defun elpher-bookmarks-edit ()
         "Open `init-emacs.org' and move point to Elpher Bookmarks File for easy editing."
         (interactive)
-        (find-file (expand-file-name "init-emacs.org" emacs-home-dir))
+        (find-file (file-truename (expand-file-name "init-emacs.org" emacs-home-dir)))
         (goto-char (point-min))
         (search-forward ";; Elpher Bookmarks File\n")
         (org-show-entry)))
@@ -13853,7 +13855,7 @@
 
     (use-package eperiodic
       ;;:quelpa (eperiodic :fetcher url :url "https://raw.githubusercontent.com/emacsmirror/emacswiki.org/master/eperiodic.el")
-      :load-path (lambda () (expand-file-name "eperiodic.el" emacs-modules-dir))
+      :load-path (lambda () (file-truename (expand-file-name "eperiodic.el" emacs-modules-dir)))
       :commands (eperiodic))
 ;; eperiodic:1 ends here
 
@@ -13865,8 +13867,8 @@
     (init-message 2 "Modules: epoch")
 
     (use-package epoch
-      ;;:quelpa (epoch :fetcher file :path (expand-file-name "epoch.el" local-modules-dir))
-      :load-path (lambda () (expand-file-name "epoch.el" local-modules-dir))
+      ;;:quelpa (epoch :fetcher file :path (file-truename (expand-file-name "epoch.el" local-modules-dir)))
+      :load-path (lambda () (file-truename (expand-file-name "epoch.el" local-modules-dir)))
       :commands (epoch-menu time-to-epoch epoch-to-time))
 ;; epoch:1 ends here
 
@@ -14717,9 +14719,10 @@
         (let ((ratings (make-hash-table :test 'equal)))
           (dotimes (x 5)
             (let* ((rating (1+ x))
-                   (file (expand-file-name
-                          (concat mingus-ratings-prefix (number-to-string rating))
-                          mingus-ratings-directory)))
+                   (file (file-truename
+                          (expand-file-name
+                           (concat mingus-ratings-prefix (number-to-string rating))
+                           mingus-ratings-directory))))
               (with-temp-buffer
                 (insert-file-contents file)
                 (goto-char (point-min))
@@ -15054,7 +15057,7 @@
       (init-message 3 "Mingus Song Rating System")
 
       ;; directory to store rating play lists
-      (defcustom mingus-ratings-directory `,(expand-file-name "~/.song-ratings")
+      (defcustom mingus-ratings-directory `,(file-truename (expand-file-name "~/.song-ratings"))
         "Directory to store rating play lists."
         :type 'string
         :group 'mingus)
@@ -15319,8 +15322,8 @@
     (use-package ps-ccrypt
       :when (executable-find "ccrypt") ; only use if binary is available on system
       ;; local copy with a bug fix
-      ;;:quelpa (ps-ccrypt :fetcher file :path (expand-file-name "ps-ccrypt.el" emacs-modules-dir))
-      :load-path (lambda () (expand-file-name "ps-ccrypt.el" emacs-modules-dir)))
+      ;;:quelpa (ps-ccrypt :fetcher file :path (file-truename (expand-file-name "ps-ccrypt.el" emacs-modules-dir)))
+      :load-path (lambda () (file-truename (expand-file-name "ps-ccrypt.el" emacs-modules-dir))))
 ;; ps-ccrypt:1 ends here
 
 ;; [[file:init-emacs.org::*recentf][recentf:1]]
@@ -15359,8 +15362,8 @@
     (init-message 2 "Modules: replacer")
 
     (use-package replacer
-      ;;:quelpa (replacer :fetcher file :path (expand-file-name "replacer.el" local-modules-dir))
-      :load-path (lambda () (expand-file-name "replacer.el" local-modules-dir))
+      ;;:quelpa (replacer :fetcher file :path (file-truename (expand-file-name "replacer.el" local-modules-dir)))
+      :load-path (lambda () (file-truename (expand-file-name "replacer.el" local-modules-dir)))
       :after (company)
       :commands (replacer-mode company-replacer-backend)
       :custom
@@ -15460,11 +15463,11 @@
     (init-message 2 "Modules: sokoban")
 
     (use-package sokoban
-      ;;:quelpa (sokoban :fetcher file :path (expand-file-name "sokoban/sokoban.el" emacs-modules-dir))
-      :load-path (lambda () (expand-file-name "sokoban/sokoban.el" emacs-modules-dir))
+      ;;:quelpa (sokoban :fetcher file :path (file-truename (expand-file-name "sokoban/sokoban.el" emacs-modules-dir)))
+      :load-path (lambda () (file-truename (expand-file-name "sokoban/sokoban.el" emacs-modules-dir)))
       :commands (sokoban sokoban-mode)
       :custom
-      (sokoban-levels-dir (expand-file-name "sokoban/sokoban-levels" emacs-modules-dir)))
+      (sokoban-levels-dir (file-truename (expand-file-name "sokoban/sokoban-levels" emacs-modules-dir))))
 ;; sokoban:1 ends here
 
 ;; [[file:init-emacs.org::*split-move][split-move:1]]
@@ -15475,8 +15478,8 @@
     (init-message 2 "Modules: split-move")
 
     (use-package split-move
-      ;;:quelpa (split-move :fetcher file :path (expand-file-name "split-move.el" local-modules-dir))
-      :load-path (lambda () (expand-file-name "split-move.el" local-modules-dir))
+      ;;:quelpa (split-move :fetcher file :path (file-truename (expand-file-name "split-move.el" local-modules-dir)))
+      :load-path (lambda () (file-truename (expand-file-name "split-move.el" local-modules-dir)))
       :commands (split-move-up split-move-down))
 ;; split-move:1 ends here
 
@@ -15771,8 +15774,8 @@
     (use-package web-query
       ;; :when (executable-find "w3m")
       ;; :after (w3m)
-      ;;:quelpa (web-query :fetcher file :path (expand-file-name "web-query.el" local-modules-dir))
-      :load-path (lambda () (expand-file-name "web-query.el" local-modules-dir))
+      ;;:quelpa (web-query :fetcher file :path (file-truename (expand-file-name "web-query.el" local-modules-dir)))
+      :load-path (lambda () (file-truename (expand-file-name "web-query.el" local-modules-dir)))
       :commands (web-query
                  web-query-word
                  web-query-word-at-point
@@ -15855,7 +15858,7 @@
 
     (use-package wtf
       ;;:quelpa (wtf :fetcher url :url "http://mwolson.org/static/dist/elisp/wtf.el")
-      :load-path (lambda () (expand-file-name "wtf.el" emacs-modules-dir))
+      :load-path (lambda () (file-truename (expand-file-name "wtf.el" emacs-modules-dir)))
       :commands (wtf-is wtf-get-term-at-point))
 ;; wtf:1 ends here
 
@@ -15967,8 +15970,8 @@
     (init-message 2 "Modes: Brainfuck")
 
     (use-package brainfuck
-      ;;:quelpa (brainfuck :fetcher file :path (expand-file-name "brainfuck.el" local-modules-dir))
-      :load-path (lambda () (expand-file-name "brainfuck.el" local-modules-dir))
+      ;;:quelpa (brainfuck :fetcher file :path (file-truename (expand-file-name "brainfuck.el" local-modules-dir)))
+      :load-path (lambda () (file-truename (expand-file-name "brainfuck.el" local-modules-dir)))
       :mode ("\\.bf\\'" . brainfuck-mode))
 ;; Brainfuck:1 ends here
 
@@ -15980,8 +15983,8 @@
     (init-message 2 "Modes: BASIC")
 
     (use-package basic
-      ;;:quelpa (basic :fetcher file :path (expand-file-name "basic.el" local-modules-dir))
-      :load-path (lambda () (expand-file-name "basic.el" local-modules-dir))
+      ;;:quelpa (basic :fetcher file :path (file-truename (expand-file-name "basic.el" local-modules-dir)))
+      :load-path (lambda () (file-truename (expand-file-name "basic.el" local-modules-dir)))
       :mode ("\\.bas\\'" . basic-mode))
 ;; BASIC:1 ends here
 
@@ -16160,8 +16163,8 @@
     (init-message 3 "calendar-remind")
 
     (use-package calendar-remind
-      ;;:quelpa (calendar-remind :fetcher file :path (expand-file-name "calendar-remind.el" local-modules-dir))
-      :load-path (lambda () (expand-file-name "calendar-remind.el" local-modules-dir))
+      ;;:quelpa (calendar-remind :fetcher file :path (file-truename (expand-file-name "calendar-remind.el" local-modules-dir)))
+      :load-path (lambda () (file-truename (expand-file-name "calendar-remind.el" local-modules-dir)))
       :after (calendar)
       :commands (calendar-remind-lookup
                  calendar-remind-visit
@@ -17287,9 +17290,9 @@
     (use-package slime
       ;;:quelpa (slime)
       :straight t
-      ;; :load-path (;;(lambda () (expand-file-name "slime" emacs-modules-dir))
-      ;;             ;;(lambda () (expand-file-name "slime/contrib" emacs-modules-dir))
-      ;;             (lambda () (expand-file-name "swank-clojure" emacs-modules-dir)))
+      ;; :load-path (;;(lambda () (file-truename (expand-file-name "slime" emacs-modules-dir)))
+      ;;             ;;(lambda () (file-truename (expand-file-name "slime/contrib" emacs-modules-dir)))
+      ;;             (lambda () (file-truename (expand-file-name "swank-clojure" emacs-modules-dir))))
       :commands (slime-autoloads
                  slime
                  slime-eval-buffer
@@ -17306,11 +17309,12 @@
                  swank-clojure-project)
       :config
       ;; clojure swank paths
-      (setq swank-clojure-jar-path (expand-file-name "~/.clojure/clojure.jar")
-            swank-clojure-binary (expand-file-name "~/bin/clojure")
-            swank-clojure-extra-classpaths (list (expand-file-name "~/.clojure/clojure.jar")
-                                                 (expand-file-name "~/.clojure/jline.jar")
-                                                 (expand-file-name "~/.clojure/clojure-contrib.jar")))
+      (setq swank-clojure-jar-path (file-truename (expand-file-name "~/.clojure/clojure.jar"))
+            swank-clojure-binary (file-truename (expand-file-name "~/bin/clojure"))
+            swank-clojure-extra-classpaths
+            (list (file-truename (expand-file-name "~/.clojure/clojure.jar"))
+                  (file-truename (expand-file-name "~/.clojure/jline.jar"))
+                  (file-truename (expand-file-name "~/.clojure/clojure-contrib.jar"))))
 
       ;; slime setup
       (slime-setup)
@@ -17409,7 +17413,7 @@
 
       ;; add clojure to slime implementation
       ;; (add-to-list 'slime-lisp-implementations
-      ;;              `(clojure (,(expand-file-name "~/bin/clojure"))
+      ;;              `(clojure (,(file-truename (expand-file-name "~/bin/clojure")))
       ;;                        :init swank-clojure-init
       ;;                        :coding-system utf-8-unix) t)
       (add-to-list 'slime-lisp-implementations `(clojure ("/usr/bin/clojure")) t)
@@ -17723,8 +17727,8 @@
 
       ;; auto-menu
       (use-package auto-menu
-        ;;:quelpa (auto-menu :fetcher file :path (expand-file-name "auto-menu.el" local-modules-dir))
-        :load-path (lambda () (expand-file-name "auto-menu.el" local-modules-dir))
+        ;;:quelpa (auto-menu :fetcher file :path (file-truename (expand-file-name "auto-menu.el" local-modules-dir)))
+        :load-path (lambda () (file-truename (expand-file-name "auto-menu.el" local-modules-dir)))
         :commands (auto-menu
                    auto-menu-dired
                    auto-menu-file
@@ -17740,7 +17744,7 @@
 
       (defun find-or-browse-file (file)
         "Based on file type either open FILE or browse FILE."
-        (let ((file (expand-file-name file)))
+        (let ((file (file-truename (expand-file-name file))))
           (if (string= (file-name-extension file) "html")
               (browse-url (concat "file://" file))
             (find-file file))))
@@ -17841,8 +17845,8 @@
                            (".profile_run" . "~/.profile_run")
                            (".xbindkeysrc" . "~/.xbindkeysrc"))))
        ("Emacs Initialization..."
-        ,(auto-menu-file `(("init-emacs.org" . ,(expand-file-name "init-emacs.org" emacs-home-dir))
-                           ("customization.el" . ,(expand-file-name "customization.el" emacs-home-dir)))))
+        ,(auto-menu-file `(("init-emacs.org" . ,(file-truename (expand-file-name "init-emacs.org" emacs-home-dir)))
+                           ("customization.el" . ,(file-truename (expand-file-name "customization.el" emacs-home-dir))))))
        ;; ("Emacs Initialization..."
        ;;  ,(auto-menu-file-dir local-init-dir "\\.el\\'" "find-file"))
        ("Emacs Personal Modules..."
@@ -17923,10 +17927,10 @@
     ;; run-file menu
     (auto-menu
      "Run-File"
-     `(("init.el" ,(concat "(safe-load \"" (expand-file-name "init.el" emacs-home-dir) "\")") "Run init.el to re-initialize Emacs.")
+     `(("init.el" ,(concat "(safe-load \"" (file-truename (expand-file-name "init.el" emacs-home-dir)) "\")") "Run init.el to re-initialize Emacs.")
        ;; ("Emacs Initialization..."
-       ;;  ,(auto-menu-file `(("init.el" ,(concat "(safe-load \"" (expand-file-name "init.el" emacs-home-dir) "\")") "Run init.el to re-initialize Emacs.")
-       ;;                     ("init-emacs.el" ,(concat "(safe-load \"" (expand-file-name "init-emacs.el" emacs-home-dir) "\")") "Run init-emacs.el to re-initialize Emacs."))))
+       ;;  ,(auto-menu-file `(("init.el" ,(concat "(safe-load \"" (file-truename (expand-file-name "init.el" emacs-home-dir)) "\")") "Run init.el to re-initialize Emacs.")
+       ;;                     ("init-emacs.el" ,(concat "(safe-load \"" (file-truename (expand-file-name "init-emacs.el" emacs-home-dir)) "\")") "Run init-emacs.el to re-initialize Emacs."))))
        ;; ("Emacs Initialization..."
        ;;  ,(auto-menu-file-dir local-init-dir "\\.el\\'" "safe-load-compile"))
        ("Emacs Personal Modules..."
@@ -18016,7 +18020,7 @@
     (init-message 2 "Menus: Miscellaneous Menu")
 
     ;; bbs directory
-    (setq bbs-directory (expand-file-name "~/doc/bbs"))
+    (setq bbs-directory (file-truename (expand-file-name "~/doc/bbs")))
 
     ;; miscellaneous menu
     (auto-menu
@@ -18048,10 +18052,10 @@
          ("Create Local TAGS" "etags-create" "Create local tags table.")))
        ("Byte-Compile"
         (("Generate `init-emacs.el'"
-          "(org-babel-generate-elisp-file (expand-file-name \"init-emacs.org\" emacs-home-dir))"
+          "(org-babel-generate-elisp-file (file-truename (expand-file-name \"init-emacs.org\" emacs-home-dir)))"
           "Run `org-babel-generate-elisp-file' on init-emacs.org to produce init-emacs.el.")
          ("Generate and Byte-Compile `init-emacs.el'"
-          "(org-babel-generate-elisp-file (expand-file-name \"init-emacs.org\" emacs-home-dir) t t)"
+          "(org-babel-generate-elisp-file (file-truename (expand-file-name \"init-emacs.org\" emacs-home-dir)) t t)"
           "Run `org-babel-generate-elisp-file' on init-emacs.org to produce init-emacs.el and init-emacs.elc.")
          ,(list (concat "Compile Personal Modules Directory")
                 (concat "(compile-elisp \"" local-modules-dir "\")")
@@ -18074,10 +18078,10 @@
          ("Mac Coding System" "(set-coding-system 'mac)" "Call `set-coding-system' to set the coding system to Mac.")))
        ("BBS"
         (("Level 29 BBS Fetch"
-          "(progn (find-file (expand-file-name \"level-29-bbs.org\" bbs-directory)) (unless (fboundp 'l29-fetch-messages-new) (org-babel-execute-buffer)) (l29-fetch-messages-new))"
+          "(progn (find-file (file-truename (expand-file-name \"level-29-bbs.org\" bbs-directory))) (unless (fboundp 'l29-fetch-messages-new) (org-babel-execute-buffer)) (l29-fetch-messages-new))"
           "Run `l29-fetch-messages-new' to fetch new messages from the Level 29 BBS into level-29-bbs.org.")
          ("House of Lunduke BBS Fetch"
-          "(progn (find-file (expand-file-name \"house-of-lunduke-bbs.org\" bbs-directory)) (unless (fboundp 'lunduke-fetch-messages-new) (org-babel-execute-buffer)) (lunduke-fetch-messages-new))"
+          "(progn (find-file (file-truename (expand-file-name \"house-of-lunduke-bbs.org\" bbs-directory))) (unless (fboundp 'lunduke-fetch-messages-new) (org-babel-execute-buffer)) (lunduke-fetch-messages-new))"
           "Run `lunduke-fetch-messages-new' to fetch new messages from the House of Lunduke BBS into house-of-lunduke-bbs.org.")))
        ("Export"
         (("Export Bookmarks to JSON" "(org-bookmarks-export-to-json \"~/org/bookmarks.org\" \"~/Desktop/bookmarks.json\")" "Export bookmarks.org to ~/Desktop/bookmarks.json.")
@@ -18584,7 +18588,7 @@
       ;;        ))
 
       ;; load nickserv authentication file
-      (defconst erc-auth-file-name (expand-file-name "~/.erc-auth"))
+      (defconst erc-auth-file-name (file-truename (expand-file-name "~/.erc-auth")))
       (when (file-exists-p erc-auth-file-name)
         (setq erc-prompt-for-nickserv-password nil)
         (load erc-auth-file-name)))
@@ -18979,19 +18983,6 @@
 
   (init-message 1 "Other")
 ;; Other:1 ends here
-
-;; [[file:init-emacs.org::*Load Customization File][Load Customization File:1]]
-    ;;------------------------------------------------------------------------------
-    ;;; Other: Load Customization File
-    ;;------------------------------------------------------------------------------
-
-    (init-message 2 "Other: Load Customization File")
-
-    ;; load customization file
-    (when (and custom-file (file-exists-p custom-file))
-      ;;(safe-load custom-file))
-      (load custom-file :noerror))
-;; Load Customization File:1 ends here
 
 ;; [[file:init-emacs.org::*Apply Advice][Apply Advice:1]]
     ;;------------------------------------------------------------------------------
