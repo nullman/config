@@ -4387,7 +4387,7 @@
       ;;:quelpa (org-visibility)
       ;;:straight t
       ;;:load-path (lambda () (file-truename (expand-file-name "org-visibility" local-modules-dir)))
-      :load-path (lambda () (file-truename (expand-file-name "org-visibility" "~/code/nullman/org-visibility")))
+      :load-path (lambda () (file-truename (expand-file-name "~/code/nullman/org-visibility")))
       :after (org)
       :demand t
       :bind (:map org-mode-map

@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2021-10-05 13:39 (kyle)>
+  #+TIMESTAMP: <2021-10-10 13:26 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -5958,7 +5958,7 @@
         ;;:quelpa (org-visibility)
         ;;:straight t
         ;;:load-path (lambda () (file-truename (expand-file-name "org-visibility" local-modules-dir)))
-        :load-path (lambda () (file-truename (expand-file-name "org-visibility" "~/code/nullman/org-visibility")))
+        :load-path (lambda () (file-truename (expand-file-name "~/code/nullman/org-visibility")))
         :after (org)
         :demand t
         :bind (:map org-mode-map
