@@ -3278,7 +3278,7 @@
         ;;                (when (re-search-forward indented-regexp (line-end-position) :noerror)
         ;;                  (let ((line-indentation (- (point) (line-beginning-position))))
         ;;                    (forward-line 0)
-        ;;                    (case (org-element-type (org-element-at-point))
+        ;;                    (cl-case (org-element-type (org-element-at-point))
         ;;                      ('src-block
         ;;                       (when (> diff 0)
         ;;                         (delete-char diff)))
@@ -4024,7 +4024,7 @@
                                       '(?o ?p)
                                     '((nil . ?a))))))
               (save-mark-and-excursion
-                (case (car (org-element-at-point))
+                (cl-case (car (org-element-at-point))
                   ('headline
                    (condition-case nil
                        (outline-up-heading 1)
@@ -4359,7 +4359,7 @@
                              (calendar-absolute-from-gregorian (org-date-to-gregorian date)))
                (pad-date (date)
                          (let ((date (if (stringp date) date (number-to-string date))))
-                           (case (length date)
+                           (cl-case (length date)
                              (4 (concat date "-01-01"))
                              (6 (concat (substring date 0 4) "-" (substring date 4) "-01"))
                              (7 (concat date "-01"))
@@ -6296,7 +6296,7 @@
                                (uri (url-encode-url (plist-get bm :uri)))
                                (keyword (plist-get bm :keyword))
                                (children (plist-get bm :children))
-                               (entry (case type-code
+                               (entry (cl-case type-code
                                         (2 (concat
                                             (indent idt "<DT><H3>")
                                             " ADD_DATE=\"" timestamp "\""
