@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2021-10-10 13:26 (kyle)>
+  #+TIMESTAMP: <2021-10-12 16:33 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -19315,7 +19315,7 @@
            (insert-file-contents (locate-user-emacs-file "elfeed-bookmarks"))
            (goto-char (point-min))
            (mapcar
-            (lambda (x) (list (plist-get x :rss) (intern (plist-get :tag))))
+            (lambda (x) (list (plist-get x :rss) (intern (plist-get x :tag))))
             (read (current-buffer)))))
         :config
         ;; increase default text size in `elfeed-show' buffers

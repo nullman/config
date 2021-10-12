@@ -1444,13 +1444,12 @@ alias fuvmk="fuser -v -m -k"
 #
 # chmod
 #
-#        chmodx                  chmod +x
-alias chmodx="chmod +x"
-#        chmodd                  chmod u=rwx,g=rx,o=
-alias chmodd="chmod u=rwx,g=rx,o="
+#        chmodx                  chmod +X
+alias chmodx="chmod +X"
+#        chmodd                  chmod u=rwX,g=rX,o=
+alias chmodd="chmod u=rwX,g=rX,o="
 #        chmoddo                 chmod u=rwx,g=rx,o=rx
-alias chmoddo="chmod u=rwx,g=rx,o=rx"
-
+alias chmoddo="chmod u=rwX,g=rX,o=rX"
 #
 # chmod all
 #
@@ -1458,11 +1457,10 @@ alias chmoddo="chmod u=rwx,g=rx,o=rx"
 alias chmoda="chmod u=r,g=r,o=r"
 #        chmodarw                chmod u=rw,g=rw,o=rw
 alias chmodarw="chmod u=rw,g=rw,o=rw"
-#        chmodarx                chmod u=rx,g=rx,o=rx
-alias chmodarx="chmod u=rx,g=rx,o=rx"
-#        chmodaa                 chmod u=rwx,g=rwx,o=rwx
-alias chmodaa="chmod u=rwx,g=rwx,o=rwx"
-
+#        chmodarx                chmod u=rX,g=rX,o=rX
+alias chmodarx="chmod u=rX,g=rX,o=rX"
+#        chmodaa                 chmod u=rwX,g=rwX,o=rwX
+alias chmodaa="chmod u=rwX,g=rwX,o=rwX"
 #
 # chmod user
 #
@@ -1470,11 +1468,10 @@ alias chmodaa="chmod u=rwx,g=rwx,o=rwx"
 alias chmodur="chmod u=r,g=,o="
 #        chmodurw                chmod u=rw,g=,o=
 alias chmodurw="chmod u=rw,g=,o="
-#        chmodurx                chmod u=rx,g=,o=
-alias chmodurx="chmod u=rx,g=,o="
-#        chmodua                 chmod u=rwx,g=,o=
-alias chmodua="chmod u=rwx,g=,o="
-
+#        chmodurx                chmod u=rX,g=,o=
+alias chmodurx="chmod u=rX,g=,o="
+#        chmodua                 chmod u=rwX,g=,o=
+alias chmodua="chmod u=rwX,g=,o="
 #
 # chmod group
 #
@@ -1482,10 +1479,10 @@ alias chmodua="chmod u=rwx,g=,o="
 alias chmodgr="chmod u=r,g=r,o="
 #        chmodgrw                chmod u=rw,g=rw,o=
 alias chmodgrw="chmod u=rw,g=rw,o="
-#        chmodgrx                chmod u=rx,g=rx,o=
-alias chmodgrx="chmod u=rx,g=rx,o="
-#        chmodga                 chmod u=rwx,g=rwx,o=
-alias chmodga="chmod u=rwx,g=rwx,o="
+#        chmodgrx                chmod u=rX,g=rX,o=
+alias chmodgrx="chmod u=rX,g=rX,o="
+#        chmodga                 chmod u=rwX,g=rwX,o=
+alias chmodga="chmod u=rwX,g=rwX,o="
 
 #
 # chown
@@ -1618,6 +1615,8 @@ alias sshapoc="echo 'ssh:apoc' ; ssh apoc"
 alias sshcolleen="echo 'ssh:colleen@colleen' ; ssh colleen@colleen"
 #        sshfirewall             ssh -p 8022 -l root firewall
 alias sshfirewall="echo 'ssh:admin@firewall' ; ssh -p 8022 admin@firewall"
+#        sshgemini               ssh gemini
+alias sshgemini="echo 'ssh:gemini' ; ssh gemini"
 #        sshmorpheus             ssh morpheus
 alias sshmorpheus="echo 'ssh:morpheus' ; ssh morpheus"
 #        sshmorpheusgit          ssh morpheus:git
@@ -2728,6 +2727,8 @@ alias gitpof="git push origin --force"
 alias gitpod="git push origin develop"
 #        gitpom                  git push origin master
 alias gitpom="git push origin master"
+#        gitpob                  git push origin (current branch)
+alias gitpob="git push origin \$(gitbranch)"
 #        gitb                    git branch
 alias gitb="git branch"
 #        gitba                   git branch -a

@@ -13721,7 +13721,7 @@
          (insert-file-contents (locate-user-emacs-file "elfeed-bookmarks"))
          (goto-char (point-min))
          (mapcar
-          (lambda (x) (list (plist-get x :rss) (intern (plist-get :tag))))
+          (lambda (x) (list (plist-get x :rss) (intern (plist-get x :tag))))
           (read (current-buffer)))))
       :config
       ;; increase default text size in `elfeed-show' buffers
