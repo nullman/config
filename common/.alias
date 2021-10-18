@@ -2541,8 +2541,8 @@ alias agrp="sudo apt-get --purge remove"
 alias agp="sudo apt-get purge"
 #        agar                    apt-get autoremove
 alias agar="sudo apt-get autoremove"
-#        agitu                   apt-get --target-release unstable install
-alias agitu="sudo apt-get --target-release unstable install"
+#!#        agitu                   apt-get --target-release unstable install
+#!alias agitu="sudo apt-get --target-release unstable install"
 #        acp                     apt-cache policy
 alias acp="apt-cache policy"
 #        acs                     apt-cache search
