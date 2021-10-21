@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2021-10-12 16:33 (kyle)>
+  #+TIMESTAMP: <2021-10-20 19:36 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -4024,6 +4024,7 @@
                                       '(?o ?p)
                                     '((nil . ?a))))))
               (save-mark-and-excursion
+                (goto-char (line-beginning-position))
                 (cl-case (car (org-element-at-point))
                   ('headline
                    (condition-case nil

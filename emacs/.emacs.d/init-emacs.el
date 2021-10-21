@@ -2818,6 +2818,7 @@
                                     '(?o ?p)
                                   '((nil . ?a))))))
             (save-mark-and-excursion
+              (goto-char (line-beginning-position))
               (cl-case (car (org-element-at-point))
                 ('headline
                  (condition-case nil
