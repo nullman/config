@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Temperature Test
 Comment=Run Temperature Test Script
-Exec=sh -c "${HOME}/bin/temperature-test"
+Exec=sh -c "${HOME}/bin/temperature-test -c 100"
 Type=Application
 Icon=psensor
 Terminal=true
