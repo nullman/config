@@ -5,5 +5,5 @@ Exec=sh -c 'dosbox -conf ${HOME}/.dosbox/dosbox-0.74-3.conf -conf ${HOME}/.dosbo
 Type=Application
 Icon=dosbox
 Terminal=false
-StartupNotify=false
+StartupNotify=true
 Categories=Emulators;DOS;
