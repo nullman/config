@@ -915,6 +915,16 @@ alias wine-ddo-cp="WINEPREFIX=\${HOME}/.wine-ddocp wine \"C:\Games\DDOCharGen\DD
     #!      \"\${HOME}/.wine-eve/drive_c/windows/profiles/kyle/Local Settings/Application Data/CCP/EVE/c_program_files_ccp_eve_tranquility/\"
 #!    cp -r \"\${HOME}/Downloads/EVE/CCP/EVE/c_users_kyle_program_files_eve_tranquility/settings\" \
     #!      \"\${HOME}/.wine-eve2/drive_c/windows/profiles/kyle/Local Settings/Application Data/CCP/EVE/c_program_files_ccp_eve_tranquility/\""
+#        wine-fallout            wine fallout
+alias wine-fallout="WINEPREFIX=\${HOME}/.wine-fallout wine \"C:\GOG Games\Games\\Fallout\FalloutLauncher.exe\""
+#        wine-fallout-setup      configure fallout.cfg file
+alias wine-fallout-setup="
+    file=\"\${HOME}/.wine-fallout/drive_c/GOG Games/Fallout/fallout.cfg\"
+    sed -i 's/^critter_dat=.*$/critter_dat=C:\\\\GOG Games\\\\Fallout\\\\CRITTER.DAT\r/' \"\${file}\"
+    sed -i 's/^critter_patches=.*$/critter_patches=C:\\\\GOG Games\\\\Fallout\\\\DATA\r/' \"\${file}\"
+    sed -i 's/^master_dat=.*$/master_dat=C:\\\\GOG Games\\\\Fallout\\\\MASTER.DAT\r/' \"\${file}\"
+    sed -i 's/^master_patches=.*$/master_patches=C:\\\\GOG Games\\\\Fallout\\\\DATA\r/' \"\${file}\"
+    "
 #        wine-tta                wine through the ages
 alias wine-tta="WINEPREFIX=\${HOME}/.wine-tta wine \"C:\GOG Games\Through the Ages\ThroughTheAges_gog.exe\""
 
