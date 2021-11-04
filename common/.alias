@@ -2959,7 +2959,7 @@ rsyncexclusions='{"/cdrom/*","/dev/*","/lost+found","/media/*","/mnt/*","/proc/*
 alias rsbid="
     dir=/run/media/\${USER}
     if [[ -d \${dir} ]] ; then
-        sudo rsync -aAXv --delete --exclude=${rsyncexclusions} / \${dir}/\$(cd \${dir} && \$(pathcmd ls) -1)/\$(uname -n)
+        sudo rsync -aAXv --delete-before --exclude=${rsyncexclusions} / \${dir}/\$(cd \${dir} && \$(pathcmd ls) -1)/\$(uname -n)
     else
         echo \"Cannot find backup directory: \${dir}\"
         echo \"Make sure the backup drive is mounted\"
@@ -2972,7 +2972,7 @@ alias rsbidsome="
         o=\${dir}/\$(cd \${dir} && \$(pathcmd ls) -1)/\$(uname -n)
         for d in \"etc\" \"home\" \"root\" \"opt\" ; do
             echo \"  /\${d} => \${o}/\"
-            sudo rsync -aAXv --exclude=${rsyncexclusions} /\${d} \${o}/
+            sudo rsync -aAXv --delete-before --exclude=${rsyncexclusions} /\${d} \${o}/
         done
     else
         echo \"Cannot find back directory: \${dir}\"
