@@ -4010,6 +4010,7 @@
                                    (plantuml . t)
                                    (python . t)
                                    (ruby . t)
+                                   ;;(rust . t)
                                    (scheme . t)
                                    (shell . t)
                                    (sql . t)))
@@ -17187,6 +17188,98 @@
     ;;   ;; (define-key inf-ruby-mode-map (kbd "TAB") 'auto-complete)
     ;;   )
 ;; Ruby Mode:1 ends here
+
+;; [[file:init-emacs.org::*Rust Mode][Rust Mode:1]]
+    ;;------------------------------------------------------------------------------
+    ;;; Modes: Rust Mode
+    ;;------------------------------------------------------------------------------
+
+    (init-message 2 "Modes: Rust Mode")
+
+    (use-package rust-mode
+      :straight t
+      :after (flyspell)
+      :mode ("\\.rs\\'" . rust-mode)
+      :bind (:map rust-mode-map
+                  ("C-c C-c" . rust-run)
+                  ("C-c C-d" . rust-dbg-wrap-or-unwrap)
+                  ("C-c C-f" . rust-format-buffer)
+                  ("C-c C-n" . rust-goto-format-problem))
+      :config
+      (defun local-rust-mode-hook ()
+        ;; use spaces for tabs
+        (setq indent-tabs-mode nil)
+
+        ;; set indent level
+        (setq rust-indent-level 4)
+
+        ;; format code on save
+        (setq rust-format-on-save t)
+
+        ;; ;; define keys
+        ;; (define-key rust-mode-map (kbd "<return>") 'reindent-then-newline-and-indent)
+        ;; ;; undefine electric keys
+        ;; (define-key rust-mode-map (kbd "{") 'self-insert-command)
+        ;; (define-key rust-mode-map (kbd "}") 'self-insert-command)
+
+        ;; turn on flyspell
+        (when (boundp 'flyspell-prog-mode)
+          (flyspell-prog-mode)))
+      (add-hook 'rust-mode-hook #'local-rust-mode-hook :append)
+
+      ;; turn on flyspell
+      (flyspell-prog-mode)
+
+      ;; FIXME: No longer works
+      ;; (use-package flymake
+      ;;   :config (progn
+      ;;             (defun flymake-rust-init ()
+      ;;               (let* ((temp-file (flymake-init-create-temp-buffer-copy 'flymake-create-temp-inplace))
+      ;;                      (local-file (file-relative-name temp-file (file-name-directory buffer-file-name))))
+      ;;                 (list "rust" (list "-c" local-file))))
+
+      ;;             (defun flymake-rust-enable ()
+      ;;               (when (and buffer-file-name
+      ;;                          (file-writable-p (file-name-directory buffer-file-name))
+      ;;                          (file-writable-p buffer-file-name)
+      ;;                          (if (fboundp 'tramp-list-remote-buffers)
+      ;;                              (not (cl-subsetp (list (current-buffer)) (tramp-list-remote-buffers)))
+      ;;                            t))
+      ;;                 (local-set-key (kbd "C-c d") 'flymake-display-err-menu-for-current-line)
+      ;;                 (flymake-mode t)))
+
+      ;;             (add-to-list 'flymake-allowed-file-name-masks '(".+\\.rb\\'" flymake-rust-init) t)
+      ;;             (add-to-list 'flymake-allowed-file-name-masks '("Rakefile\\'" flymake-rust-init) t)
+      ;;             (add-to-list 'flymake-err-line-patterns '("^\\(.*\\):\\([0-9]+\\): \\(.*\\)$" 1 2 nil 3) t)
+      ;;             (add-hook 'rust-mode-hook #'flymake-rust-enable)))
+
+      ;; ;; turn on syntax highlighting (actually turns off syntax highlighting)
+      ;; (add-hook 'rust-mode-hook #'turn-on-font-lock)
+
+      ;; ;; turn on abbreviation mode
+      ;; (abbrev-mode 1)
+
+      (defun rust-mode-maybe ()
+        "Determine if file is a rust script and switch to `rust-mode' if it is."
+        (interactive)
+        (save-mark-and-excursion
+          (save-match-data
+            (goto-char (point-min))
+            (when (or
+                   (search-forward "#!/usr/bin/rust" (line-end-position) :noerror)
+                   (search-forward "#!/usr/bin/env rust" (line-end-position) :noerror))
+              (rust-mode)))))
+
+      ;; run when a file is loaded
+      (add-hook 'find-file-hooks #'rust-mode-maybe)
+
+      ;; remove trailing blanks
+      ;;(add-hook 'rust-mode-hook #'install-remove-trailing-blanks)
+
+      ;; remove tabs
+      ;;(add-hook 'rust-mode-hook #'install-remove-tabs)
+      )
+;; Rust Mode:1 ends here
 
 ;; [[file:init-emacs.org::*SH Script][SH Script:1]]
     ;;------------------------------------------------------------------------------
