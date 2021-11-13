@@ -53,14 +53,14 @@
     <name>Adapta-Openbox-Nokto-Maia</name>
     <titleLayout>NLIMC</titleLayout>
     <!--
-      Available characters are NDSLIMC, each can occur at most once.
-      N: window icon
-      L: window label (AKA title).
-      I: iconify
-      M: maximize
-      C: close
-      S: shade (roll up/down)
-      D: omnipresent (on all desktops).
+        Available characters are NDSLIMC, each can occur at most once.
+        N: window icon
+        L: window label (AKA title).
+        I: iconify
+        M: maximize
+        C: close
+        S: shade (roll up/down)
+        D: omnipresent (on all desktops).
     -->
     <keepBorder>yes</keepBorder>
     <animateIconify>yes</animateIconify>
@@ -123,11 +123,11 @@
     <!-- This stuff is only used at startup, pagers allow you to change them
          during a session.
 
-         These are default values to use when other ones are not already set
-         by other applications, or saved in your session.
+These are default values to use when other ones are not already set
+by other applications, or saved in your session.
 
-         Use obconf if you want to change these without having to log out and
-         back in. -->
+Use obconf if you want to change these without having to log out and
+back in. -->
     <number>10</number>
     <firstdesk>1</firstdesk>
     <names>
@@ -206,36 +206,36 @@
   <keyboard>
     <!--  Key combination
 
-          KEY-COMBINATION is the key combination which you want to bind to the
-          actions.  The format for the KEY-COMBINATION is:
-          Modifier-Modifier-Key.  Any number of modifiers (0 or more) can be
-          used together, and they are each separated by a "-".  Multiple
-          KEY-COMBINATION can be specified in one keybind by separating them
-          with spaces.  This is useful if you use multiple keybinds for a
-          thing that is quite complicated to specify.
+KEY-COMBINATION is the key combination which you want to bind to the
+actions.  The format for the KEY-COMBINATION is:
+Modifier-Modifier-Key.  Any number of modifiers (0 or more) can be
+used together, and they are each separated by a "-".  Multiple
+KEY-COMBINATION can be specified in one keybind by separating them
+with spaces.  This is useful if you use multiple keybinds for a
+thing that is quite complicated to specify.
 
-          Modifier keys
+Modifier keys
 
-          S  Shift key
-          C  Control key
-          A  Alt key
-          W  Super key (Usually bound to the Windows key on keyboards which have one)
-          M  Meta key
-          H  Hyper key (If it is bound to something)
+S  Shift key
+C  Control key
+A  Alt key
+W  Super key (Usually bound to the Windows key on keyboards which have one)
+M  Meta key
+H  Hyper key (If it is bound to something)
 
-          You can also use Mod1 through Mod5 as the modifiers to directly
-          select a modifier mask (e.g. Mod1 to select Mod1Mask), but this is
-          for advanced users who have customized their modifier mapping with
-          xmodmap.
+You can also use Mod1 through Mod5 as the modifiers to directly
+select a modifier mask (e.g. Mod1 to select Mod1Mask), but this is
+for advanced users who have customized their modifier mapping with
+xmodmap.
 
-          Keys
+Keys
 
-          The Key is the name of the key, such as "a", "space", "Escape",
-          "less", or "F1".  You can find the name of any key by using the xev
-          command in a terminal, pressing the desired key, and watching the
-          output from xev in the terminal.  For example, the following xev
-          output indicates, on the third line, that the Menu key was
-          pressed. -->
+The Key is the name of the key, such as "a", "space", "Escape",
+"less", or "F1".  You can find the name of any key by using the xev
+command in a terminal, pressing the desired key, and watching the
+output from xev in the terminal.  For example, the following xev
+output indicates, on the third line, that the Menu key was
+pressed. -->
     <chainQuitKey>C-g</chainQuitKey>
     <!-- Turn on chroot mode when using Openbox in VMs -->
     <keybind key="W-S-c" chroot="true">
@@ -1828,6 +1828,17 @@
         <width>50%</width>
       </size>
     </application>
+    <application class="Spacefm">
+      <desktop>5</desktop>
+      <position force="no">
+        <x>0</x>
+        <y>0</y>
+      </position>
+      <size>
+        <height>100%</height>
+        <width>50%</width>
+      </size>
+    </application>
     <application class="Thunar">
       <desktop>5</desktop>
       <position force="no">
@@ -1959,103 +1970,103 @@
       </size>
     </application>
     <!--
-  # This is an example with comments through out.  Use these to make your
-  # own rules, but without the comments of course.
-  #
-  # You may use one or more of the name/class/role/title/type rules to specify
-  # windows to match.
+        # This is an example with comments through out.  Use these to make your
+        # own rules, but without the comments of course.
+        #
+        # You may use one or more of the name/class/role/title/type rules to specify
+        # windows to match.
 
-  <application name="the window's _OB_APP_NAME property (see obxprop)"
-              class="the window's _OB_APP_CLASS property (see obxprop)"
-          groupname="the window's _OB_APP_GROUP_NAME property (see obxprop)"
-         groupclass="the window's _OB_APP_GROUP_CLASS property (see obxprop)"
-               role="the window's _OB_APP_ROLE property (see obxprop)"
-              title="the window's _OB_APP_TITLE property (see obxprop)"
-               type="the window's _OB_APP_TYPE property (see obxprob)..
-                      (if unspecified, then it is 'dialog' for child windows)">
-    # You may set only one of name/class/role/title/type, or you may use more
-    # than one together to restrict your matches.
+<application name="the window's _OB_APP_NAME property (see obxprop)"
+class="the window's _OB_APP_CLASS property (see obxprop)"
+groupname="the window's _OB_APP_GROUP_NAME property (see obxprop)"
+groupclass="the window's _OB_APP_GROUP_CLASS property (see obxprop)"
+role="the window's _OB_APP_ROLE property (see obxprop)"
+title="the window's _OB_APP_TITLE property (see obxprop)"
+type="the window's _OB_APP_TYPE property (see obxprob)..
+(if unspecified, then it is 'dialog' for child windows)">
+# You may set only one of name/class/role/title/type, or you may use more
+# than one together to restrict your matches.
 
-    # The name, class, role, and title use simple wildcard matching such as those
-    # used by a shell.  You can use * to match any characters and ? to match
-    # any single character.
+# The name, class, role, and title use simple wildcard matching such as those
+# used by a shell.  You can use * to match any characters and ? to match
+# any single character.
 
-    # The type is one of: normal, dialog, splash, utility, menu, toolbar, dock,
-    # or desktop.
+# The type is one of: normal, dialog, splash, utility, menu, toolbar, dock,
+# or desktop.
 
-    # When multiple rules match a window, they will all be applied, in the
-    # order that they appear in this list.
+# When multiple rules match a window, they will all be applied, in the
+# order that they appear in this list.
 
-    # Each rule element can be left out or set to 'default' to specify to not
-    # change that attribute of the window.
+# Each rule element can be left out or set to 'default' to specify to not
+# change that attribute of the window.
 
-    <decor>yes</decor>
-    # Enable or disable window decorations
+<decor>yes</decor>
+# Enable or disable window decorations
 
-    <shade>no</shade>
-    # Make the window shaded when it appears, or not
+<shade>no</shade>
+# Make the window shaded when it appears, or not
 
-    <position force="no">
-      # The position is only used if both an x and y coordinate are provided
-      # (and not set to 'default').
-      # When force is "yes", then the window will be placed here even if it
-      # says you want it placed elsewhere.  This is to override buggy
-      # applications who refuse to behave.
-      <x>center</x>
-      # A number like 50, or 'center' to center on screen.  Use a negative number
-      # to start from the right (or bottom for <y>), ie -50 is 50 pixels from
-      # the right edge (or bottom).  Use 'default' to specify using value
-      # provided by the application, or chosen by openbox, instead.
-      <y>200</y>
-      <monitor>1</monitor>
-      # Specifies the monitor in a xinerama setup
-      # 1 is the first head, or 'mouse' for wherever the mouse is
-    </position>
+<position force="no">
+# The position is only used if both an x and y coordinate are provided
+# (and not set to 'default').
+# When force is "yes", then the window will be placed here even if it
+# says you want it placed elsewhere.  This is to override buggy
+# applications who refuse to behave.
+<x>center</x>
+# A number like 50, or 'center' to center on screen.  Use a negative number
+# to start from the right (or bottom for <y>), ie -50 is 50 pixels from
+# the right edge (or bottom).  Use 'default' to specify using value
+# provided by the application, or chosen by openbox, instead.
+<y>200</y>
+<monitor>1</monitor>
+# Specifies the monitor in a xinerama setup
+# 1 is the first head, or 'mouse' for wherever the mouse is
+</position>
 
-    <size>
-      # The size to make the window.
-      <width>20</width>
-      # A number like 20, or 'default' to use the size given by the application.
-      # You can use fractions such as 1/2 or percentages such as 75% in which
-      # case the value is relative to the size of the monitor that the window
-      # appears on.
-      <height>30%</height>
-    </size>
+<size>
+# The size to make the window.
+<width>20</width>
+# A number like 20, or 'default' to use the size given by the application.
+# You can use fractions such as 1/2 or percentages such as 75% in which
+# case the value is relative to the size of the monitor that the window
+# appears on.
+<height>30%</height>
+</size>
 
-    <focus>yes</focus>
-    # If the window should try be given focus when it appears.  If this is set
-    # to yes it doesn't guarantee the window will be given focus.  Some
-    # restrictions may apply, but Openbox will try to.
+<focus>yes</focus>
+# If the window should try be given focus when it appears.  If this is set
+# to yes it doesn't guarantee the window will be given focus.  Some
+# restrictions may apply, but Openbox will try to.
 
-    <desktop>1</desktop>
-    # 1 is the first desktop, 'all' for all desktops
+<desktop>1</desktop>
+# 1 is the first desktop, 'all' for all desktops
 
-    <layer>normal</layer>
-    # 'above', 'normal', or 'below'
+<layer>normal</layer>
+# 'above', 'normal', or 'below'
 
-    <iconic>no</iconic>
-    # Make the window iconified when it appears, or not
+<iconic>no</iconic>
+# Make the window iconified when it appears, or not
 
-    <skip_pager>no</skip_pager>
-    # Asks to not be shown in pagers
+<skip_pager>no</skip_pager>
+# Asks to not be shown in pagers
 
-    <skip_taskbar>no</skip_taskbar>
-    # Asks to not be shown in taskbars. window cycling actions will also
-    # skip past such windows
+<skip_taskbar>no</skip_taskbar>
+# Asks to not be shown in taskbars. window cycling actions will also
+# skip past such windows
 
-    <fullscreen>yes</fullscreen>
-    # Make the window in fullscreen mode when it appears
+<fullscreen>yes</fullscreen>
+# Make the window in fullscreen mode when it appears
 
-    <maximized>true</maximized>
-    # 'Horizontal', 'Vertical' or boolean (yes/no)
-  </application>
+<maximized>true</maximized>
+# 'Horizontal', 'Vertical' or boolean (yes/no)
+</application>
 
-  # end of the example
--->
+# end of the example
+    -->
   </applications>
 </openbox_config>
 <!--
-#===============================================================================
-# End of File
-#===============================================================================
+    #===============================================================================
+    # End of File
+    #===============================================================================
 -->
