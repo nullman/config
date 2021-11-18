@@ -17279,6 +17279,16 @@
       ;; remove tabs
       ;;(add-hook 'rust-mode-hook #'install-remove-tabs)
       )
+
+    ;;------------------------------------------------------------------------------
+    ;;;; Rustic
+    ;;------------------------------------------------------------------------------
+
+    (init-message 3 "Rustic")
+
+    (use-package rustic
+      :straight t
+      :after (rust-mode))
 ;; Rust Mode:1 ends here
 
 ;; [[file:init-emacs.org::*SH Script][SH Script:1]]
