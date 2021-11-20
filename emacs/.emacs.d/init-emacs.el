@@ -10575,6 +10575,61 @@
           (error "Could not find figlet command")))
 ;; insert-figlet:1 ends here
 
+;; [[file:init-emacs.org::*insert-password][insert-password:1]]
+      ;;------------------------------------------------------------------------------
+      ;;;; Functions: Text Inserting Functions: insert-password
+      ;;------------------------------------------------------------------------------
+
+      (init-message 3 "Functions: Text Inserting Functions: insert-password")
+
+      (defun insert-password (length)
+        "Insert generated password of LENGTH characters."
+        (interactive "*nLength: ")
+        (cl-labels
+            ((string-to-list (string) (cl-loop for x across string collect x))
+             (list-to-string (list) (mapconcat 'string list "")))
+          (let* ((upper (string-to-list "ABCDEFGHIJKLMNOPQRSTUVWXYZ"))
+                 (lower (string-to-list "abcdefghijklmnopqrstuvwxyz"))
+                 (numbers (string-to-list "0123456789")) ; 0 is omitted to prevent confusion with O
+                 (symbols (string-to-list "!@#$%^&*"))
+                 (letters (append upper lower numbers symbols))
+                 (letters-size (length letters))
+                 (bookends (append upper lower numbers))
+                 (bookends-size (length bookends))
+                 (min-numbers 1)
+                 (min-symbols 1)
+                 (number-count 0)
+                 (symbol-count 0)
+                 password
+                 valid)
+            (when (< length 6)
+              (error "Password LENGTH must be at least 6."))
+            (while (or (< (length password) length)
+                       (not valid))
+              (when (= (length password) length)
+                ;; password is invalid, so clear it and try again
+                (setq password nil))
+              ;; password will start and end with a non-symbol
+              (let ((char (if (and (> (length password) 0)
+                                   (< (length password) (1- length)))
+                              (elt letters (random letters-size))
+                              (elt bookends (random bookends-size)))))
+                (push char password)
+                (when (member char numbers)
+                  (incf number-count))
+                (when (member char symbols)
+                  (incf symbol-count))
+                (when (and (> number-count 0)
+                           (> symbol-count 0))
+                  (setq valid t))))
+            (insert (list-to-string password)))))
+
+      (defun insert-password-14 ()
+        "Call `insert-password' with a LENGTH of 14"
+        (interactive "*")
+        (insert-password 14))
+;; insert-password:1 ends here
+
 ;; [[file:init-emacs.org::*insert-password-phrase][insert-password-phrase:1]]
       ;;------------------------------------------------------------------------------
       ;;;; Functions: Text Inserting Functions: insert-password-phrase
@@ -10588,8 +10643,8 @@
       OUTPUT (defaults to 'phrase):
 
         'phrase   \"threewordphrase\"
-        'spaces   \"three word phrase\"
-        'hyphens  \"three-word-phrase\"
+        'space    \"three word phrase\"
+        'hyphen   \"three-word-phrase\"
         'list     (\"three\" \"word\" \"phrase\")"
         (interactive "*nCount: ")
         (let* ((words
@@ -10807,9 +10862,15 @@
             (pushnew (elt words (random size)) phrase))
           (cl-case output
             ('list (insert (format "%S" phrase)))
-            ('spaces (insert (cl-reduce (lambda (x y) (concat x " " y)) phrase)))
-            ('hyphens (insert (cl-reduce (lambda (x y) (concat x "-" y)) phrase)))
+            ('space (insert (cl-reduce (lambda (x y) (concat x " " y)) phrase)))
+            ('hyphen (insert (cl-reduce (lambda (x y) (concat x "-" y)) phrase)))
             (t (insert (cl-reduce (lambda (x y) (concat x y)) phrase))))))
+
+      (defun insert-password-phrase-three-hyphen ()
+        "Call `insert-password-phrase' with a COUNT of 3 and an OUTPUT
+      of 'hyphen."
+        (interactive "*")
+        (insert-password-phrase 3 'hyphen))
 ;; insert-password-phrase:1 ends here
 
 ;; [[file:init-emacs.org::*External Program Functions][External Program Functions:1]]
@@ -15619,7 +15680,14 @@
          ;; insert
          ("id" . insert-date)
          ("idt" . insert-datetime)
-         ("its" . insert-timestamp)
+         ("it" . insert-time)
+         ("iuuid" . insert-uuid)
+         ("iguid" . insert-guid)
+         ("ipw" . insert-password-14)
+         ("ipp" . insert-password-phrase-three-hyphen)
+         ("i=" . append-equal-to-column-80)
+         ("i-" . append-dash-to-column-80)
+         ("i*" . append-asterisk-to-column-80)
          ;; org-mode
          ("on" . org-insert-literate-programming-name)
          ("os" . org-insert-literate-programming-src)
@@ -18522,6 +18590,9 @@
        ("Time HH:MM:SS" "insert-time" "Insert time in HH:MM:SS format.")
        ("UUID" "insert-uuid" "Insert a UUID.")
        ("GUID" "insert-guid" "Insert a GUID.")
+       ("Password" "insert-password-14" "Insert a random password (length 14).")
+       ("Password Phrase" "insert-password-phrase-three-hyphen" "Insert a random password phrase (three words, hyphenated).")
+       ("Figlet" "insert-figlet" "Insert figlet text.")
        ("Equals" "append-equal-to-column-80" "Append `=' characters up to column 80.")
        ("Dashes" "append-dash-to-column-80" "Append `-' characters up to column 80.")
        ("Asterisks" "append-asterisk-to-column-80" "Append `*' characters up to column 80.")
@@ -18531,7 +18602,6 @@
        ("Capture Table" "(table-capture (mark) (point) \"  \" \"\n\" 'left 20)" "Capture table from selected text.")
        ("Apostrophe" "(insert \"’\")" "Insert a fancy apostrophe `’'.")
        ("Lexical Binding" "insert-lexical-binding" "Insert elisp lexical binding header.")
-       ("Figlet" "insert-figlet" "Insert figlet text.")
        ))
     ;; ("Muse"
     ;;  ("Muse Header" "muse-header" "Insert Muse standard header line.")
