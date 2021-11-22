@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2021-11-19 15:36 (kyle)>
+  #+TIMESTAMP: <2021-11-21 22:54 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -5335,6 +5335,70 @@
                                       (cdr (assq :rownames params))))))))
       #+END_SRC
 
+***** Rust
+      :PROPERTIES:
+      :CUSTOM_ID: org-mode-babel-rust
+      :END:
+
+      Customize Org/Babel for Rust so it works.
+
+#+BEGIN_SRC emacs-lisp
+  ;;------------------------------------------------------------------------------
+  ;;;; Org Mode: Babel: Rust
+  ;;------------------------------------------------------------------------------
+
+  (init-message 3 "Org Mode: Babel: Rust")
+
+  (use-package ob-rust
+    ;;:quelpa (ob-rust)
+    :straight t
+    :after (org rust-mode)
+    :commands (org-babel-execute:rust)
+    :functions (flycheck-mode
+                rust-send-buffer
+                org-babel-rust-command)
+    :config
+    (when (require 'ob-rust nil :no-error)
+      (defun org-babel-execute:rust (body params)
+        "Execute a block of Rust code with Babel.
+  BODY is the contents of the block, as a string.  PARAMS is
+  a property list containing the parameters of the block.
+
+  This function is called by `org-babel-execute-src-block'."
+        (let* ((tmp-src-file (org-babel-temp-file "rust-src-" ".rs"))
+               (tmp-run-file (org-babel-temp-file "rust-run-"))
+               (processed-params (org-babel-process-params params))
+               (_flags (cdr (assoc :flags processed-params)))
+               (_args (cdr (assoc :args processed-params)))
+               (coding-system-for-read 'utf-8) ;; use utf-8 with subprocesses
+               (coding-system-for-write 'utf-8)
+               (wrapped-body
+                (save-match-data
+                  (if (string-match "fn main()" body)
+                      body
+                    (if (string-match "fn \\(.*_test\\)()" body)
+                        (concat body "\n\nfn main() {\n" (match-string 1 body) "();\n}")
+                      (concat "fn main() {\n" body "\n}"))))))
+          (message "body: %s" wrapped-body)
+          (with-temp-file tmp-src-file (insert wrapped-body))
+          (let ((result
+                 (org-babel-eval
+                  (format "rustc -o %s %s && %s" tmp-run-file tmp-src-file tmp-run-file)
+                  "")))
+            (when result
+              (org-babel-reassemble-table
+               (if (or (member "table" (cdr (assoc :result-params processed-params)))
+                       (member "vector" (cdr (assoc :result-params processed-params))))
+                   (let ((tmp-file (org-babel-temp-file "rust-")))
+                     (with-temp-file tmp-file (insert (org-babel-trim result)))
+                     (org-babel-import-elisp-from-file tmp-file))
+                 (org-babel-read (org-babel-trim result) t))
+               (org-babel-pick-name
+                (cdr (assoc :colname-names params)) (cdr (assoc :colnames params)))
+               (org-babel-pick-name
+                (cdr (assoc :rowname-names params)) (cdr (assoc :rownames params))))))))))
+#+END_SRC
+
 ***** Basic (Commander X16)
       :PROPERTIES:
       :CUSTOM_ID: org-mode-babel-basic-commander-x16
@@ -5520,7 +5584,7 @@
                                      (plantuml . t)
                                      (python . t)
                                      (ruby . t)
-                                     ;;(rust . t)
+                                     (rust . t)
                                      (scheme . t)
                                      (shell . t)
                                      (sql . t)))
@@ -26640,6 +26704,7 @@
       (init-message 2 "Modes: Rust Mode")
 
       (use-package rust-mode
+        ;;:quelpa (rust-mode)
         :straight t
         :after (flyspell)
         :mode ("\\.rs\\'" . rust-mode)
@@ -26648,6 +26713,7 @@
                     ("C-c C-d" . rust-dbg-wrap-or-unwrap)
                     ("C-c C-f" . rust-format-buffer)
                     ("C-c C-n" . rust-goto-format-problem))
+        :custom (rustic-lsp-client nil)
         :config
         (defun local-rust-mode-hook ()
           ;; use spaces for tabs
@@ -26730,6 +26796,7 @@
       (init-message 3 "Rustic")
 
       (use-package rustic
+        ;;:quelpa (rustic)
         :straight t
         :after (rust-mode))
     #+END_SRC
