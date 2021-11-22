@@ -74,7 +74,7 @@ case "${menu}" in
         _kill_ffplay() {
             # stop any currently playing sounds
             # (regardless of selection to prevent sounds from doubling up)
-            [[ -n "$(pgrep ffplay)" ]] && pkill ffplay || true
+            pgrep --exact ffplay && pkill --exact ffplay || true
         }
 
         # find sound directory

@@ -1187,7 +1187,7 @@ pressed. -->
         <command>notify-send --expire-time=2000 'Reconfiguring Tint'</command>
       </action>
       <action name="Execute">
-        <command>pkill -SIGUSR1 -x tint2</command>
+        <command>pkill --signal SIGUSR1 --exact tint2</command>
       </action>
     </keybind>
     <keybind key="mod5-S-t">
@@ -1195,7 +1195,7 @@ pressed. -->
         <command>notify-send --expire-time=2000 'Reconfiguring Tint'</command>
       </action>
       <action name="Execute">
-        <command>pkill -SIGUSR1 -x tint2</command>
+        <command>pkill --signal SIGUSR1 --exact tint2</command>
       </action>
     </keybind>
     <!-- Exit Menu -->

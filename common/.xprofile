@@ -39,11 +39,11 @@ _command setxkbmap && setxkbmap -option 'shift:both_capslock,caps:ctrl_modifier'
 # _command setxkbmap && setxkbmap -option 'shift:both_capslock_cancel,caps:ctrl_modifier'
 
 # # xbindkeys
-# pkill -x xbindkeys > /dev/null 2>&1
+# pkill --exact xbindkeys > /dev/null 2>&1
 # _command xbindkeys && [[ -f ${HOME}/.xbindkeysrc ]] && xbindkeys > /dev/null 2>&1
 
 # sxhkd
-pkill -x sxhkd > /dev/null 2>&1
+pkill --exact sxhkd > /dev/null 2>&1
 if _command sxhkd && [[ -f ${HOME}/.config/sxhkd/sxhkdrc ]] ; then
     if [[ "${XDG_SESSION_DESKTOP}" == "bspwm" ]] ; then
         (sxhkd -c "${HOME}"/.config/sxhkd/sxhkdrc{,-bspwm} > /dev/null 2>&1) &

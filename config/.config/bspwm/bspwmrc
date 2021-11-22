@@ -198,7 +198,7 @@ _delay() {
 
 # simple x hotkey daemon (both standard and bspwm key bindings)
 # (might have been run already by .xprofile)
-_command sxhkd && ptest sxhkd || sxhkd -c "${HOME}"/.config/sxhkd/sxhkdrc{,-bspwm} &
+_command sxhkd && pgrep --exact sxhkd || sxhkd -c "${HOME}"/.config/sxhkd/sxhkdrc{,-bspwm} &
 
 # xfce settings
 #_command xfsettingsd && xfsettingsd &
