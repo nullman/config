@@ -17,16 +17,16 @@ xkbcomp ${DISPLAY} - | sed 's/ Insert / NoSymbol /' | xkbcomp - ${DISPLAY} > /de
 xset -display ${DISPLAY} -dpms s off b off m 2/1 4 r rate 500 35 > /dev/null 2>&1
 
 # # reload xbindkeys
-# [[ -f ${HOME}/.xbindkeysrc ]] && pkill -SIGHUP -x xbindkeys --display ${DISPLAY} > /dev/null 2>&1
+# [[ -f ${HOME}/.xbindkeysrc ]] && pkill --signal SIGHUP --exact xbindkeys --euid ${USER} --display ${DISPLAY} > /dev/null 2>&1
 
 # # disable insert key and set ctrl+alt arrows to pgup/pgdn/home/end
 # xkbcomp ${DISPLAY} - | sed \
-#   's/ Insert / NoSymbol / ;
+    #   's/ Insert / NoSymbol / ;
 #       s/ \[ *Up \] / type= "CTRL+ALT", symbols\[Group1\]= \[ Up, Up, Up, Up, Prior \] / ;
 #       s/ \[ *Down \] / type= "CTRL+ALT", symbols\[Group1\]= \[ Down, Down, Down, Down, Next \] / ;
 #       s/ \[ *Left \] / type= "CTRL+ALT", symbols\[Group1\]= \[ Left, Left, Left, Left, Home \] / ;
 #       s/ \[ *Right \] / type= "CTRL+ALT", symbols\[Group1\]= \[ Right, Right, Right, Right, End \] /' \
-#   | xkbcomp - ${DISPLAY} > /dev/null 2>&1
+    #   | xkbcomp - ${DISPLAY} > /dev/null 2>&1
 
 #===============================================================================
 # End of File
