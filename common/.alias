@@ -1834,9 +1834,9 @@ alias rsync-music-put-morpheus="
 alias rsync-music-put-colleen="
     rsync -rlptx --progress ${home}/data/media/audio/Music/ colleen:${home}/data/media/audio/Music/ &&
     rsync -rlptx --progress ${home}/data/media/audio/Playlists/ colleen:${home}/data/media/audio/Playlists/"
-#        rsync-music-put-jeep            rsync /home/data/media/audio/Music /media/${USER}/jeep
-#!alias rsync-music-put-jeep-sd="
-#!    echo 'Copying muisc files and playlists to Jeep USB:'
+#!#        rsync-music-put-music           rsync /home/data/media/audio/Music /media/${USER}/MUSIC
+#!alias rsync-music-put-music-sd="
+#!    echo 'Copying muisc files and playlists to Music USB:'
 #!    o=/run/media/\${USER}/\$(cd /run/media/\${USER} && \$(pathcmd ls) -1)
 #!    cp \${HOME}/.mpd/playlists/kyle.m3u \${o}/
 #!    cp \${HOME}/.mpd/playlists/rated_good.m3u \${o}/
@@ -1846,8 +1846,9 @@ alias rsync-music-put-colleen="
 #!                rsync -Rtxc --progress --delete \"\${line}\" \${o}/
 #!            done
 #!    )"
-alias rsync-music-put-jeep-sd="
-    o=/run/media/\${USER}/JEEP && \
+#        rsync-music-put-music           rsync /home/data/media/audio/Music /media/${USER}/MUSIC
+alias rsync-music-put-music-sd="
+    o=/run/media/\${USER}/MUSIC && \
       rsync -rLtxc --progress --delete \${HOME}/.mpd/playlists/kyle.m3u \${o}/ && \
       rsync -rLtxc --progress --delete \${HOME}/.mpd/playlists/rated_good.m3u \${o}/ && \
       rsync -rLtxc --progress --delete ${home}/data/media/audio/Music/* \${o}/ && \
