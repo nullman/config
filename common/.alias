@@ -2768,6 +2768,8 @@ alias git-submodule-update="
 alias gitprune="git remote prune origin"
 #        gitresethead            git reset --hard HEAD
 alias gitresethead="git reset --hard HEAD"
+#        gitcloned1              git clone --depth=1
+alias gitcloned1="git clone --depth=1"
 #        gitgc                   git gc
 alias gitgc="git gc"
 #        gitgca                  git gc --aggressive
