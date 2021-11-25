@@ -1852,6 +1852,7 @@ alias rsync-music-put-music-sd="
       rsync -rLtxc --progress --delete \${HOME}/.mpd/playlists/kyle.m3u \${o}/ && \
       rsync -rLtxc --progress --delete \${HOME}/.mpd/playlists/rated_good.m3u \${o}/ && \
       rsync -rLtxc --progress --delete ${home}/data/media/audio/Music/* \${o}/ && \
+      rsync -rLtxc --progress --delete ${home}/data/media/audio/MODs \${o}/ && \
       sync"
 #        rsync-video-get-morpheus        rsync morpheus:/home/data/media/video /home/data/media/video
 alias rsync-video-get-morpheus="rsync -rlptx --progress morpheus:/home/data/media/video/ ${home}/data/media/video/"
@@ -2462,6 +2463,8 @@ alias mpc-update="mpc --wait update"
 #!alias pmls="pacman -Qs"
 #!#        pmlsi                   pacman -Qsi (search installed packages with info)
 #!alias pmlsi="pacman -Qsi"
+#        pacman-rm-old           remove old pacman packages
+alias pacman-rm-old="sudo pacman -Sc"
 #        pacman-rm-orphans       remove orphaned pacman packages
 alias pacman-rm-orphans="sudo pacman -Rns \$(pacman -Qtdq)"
 #        pacman-rm-lock          delete pacman db lock

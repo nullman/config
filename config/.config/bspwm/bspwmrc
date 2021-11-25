@@ -127,8 +127,11 @@ _ba 'Hyperspace Desktop' desktop='^7' follow=on
 _ba Tootle desktop='^7' follow=on
 _ba Com.github.bleakgrey.tootle desktop='^7' follow=on
 _ba Gimp-2.10 desktop='^8' follow=on
-_ba Lollypop desktop='^8' follow=on
+_ba Qmmp desktop='^9' follow=on
+_ba mplayer2 desktop='^9' follow=on
+_ba Lollypop desktop='^9' follow=on
 _ba LBRY desktop='^9' follow=on
+_ba spotify desktop='^9' follow=on
 _ba bluejeans-v2 desktop='^9' follow=on
 _ba 'Microsoft Teams' desktop='^9' follow=on
 _ba syncterm desktop='^10' follow=on
@@ -144,7 +147,7 @@ _ba Gimp-2.10 state=fullscreen
 _ba jetbrains-idea state=fullscreen
 _ba jetbrains-idea-ce state=fullscreen
 _ba jetbrains-studio state=fullscreen
-#_ba lbry state=fullscreen
+#_ba LBRY state=fullscreen
 #_ba 'Microsoft Teams' state=fullscreen
 _ba mplayer2 state=fullscreen
 #_ba spotify state=fullscreen
@@ -171,6 +174,7 @@ _ba oblogout state=floating center=true
 _ba Pamac-manager state=floating center=true
 _ba Paprefs state=floating center=true
 _ba Pavucontrol state=floating center=true
+_ba Qmmp state=floating center=true
 _ba syncterm state=floating center=true
 _ba Tint2conf state=floating center=true
 _ba X48 state=floating center=true
@@ -229,8 +233,8 @@ _command ${HOME}/bin/system-bar &
 # # old system bar
 # #_command manjaro-tint2-session && manjaro-tint2-session &
 # #_command polybar && polybar -c ${HOME}/.config/polybar/config openbox-bar &
-# #_command tint2 && (tint2 && xdo above -t $(xdo id -n root) $(xdo id)) &
-# _command tint2 && tint2 &
+# #_command tint2 && tint2 &
+#_command tint2 && (tint2 && xdo above -t $(xdo id -n root) $(xdo id -N Tint2)) & # status bar hidden when fullscreen
 
 # # old system bar applets
 # _command clipit && (_delay ${delay} pgrep --exact --euid ${USER} clipit > /dev/null || clipit) &

@@ -1,9 +1,9 @@
 [Desktop Entry]
 Name=Dosbox MS-DOS X
 Comment=Emulator with builtin DOS for running DOS Games
-Exec=sh -c 'dosbox -conf ${HOME}/.dosbox/dosbox-0.74-3.conf -conf ${HOME}/.dosbox/dosbox-msdos-x.conf'
+Exec=sh -c "dosbox -conf \\${HOME}/.dosbox/dosbox-0.74-3.conf -conf \\${HOME}/.dosbox/dosbox-msdos-x.conf"
 Type=Application
 Icon=dosbox
 Terminal=false
 StartupNotify=true
-Categories=Emulators;DOS;
+Categories=Game;X-Emulators;X-DOS;

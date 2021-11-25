@@ -1,9 +1,9 @@
 [Desktop Entry]
 Name=Raspad Rotate Left
 Comment=Rotate Raspad screen and touchpad to the left position
-Exec=sh -c "${HOME}/bin/raspad-rotate --left"
+Exec=sh -c "\\${HOME}/bin/raspad-rotate --left"
 Type=Application
 Icon=go-previous
 Terminal=false
 StartupNotify=false
-Categories=Accessibility;Screen;
+Categories=System;X-Accessibility;X-Screen;

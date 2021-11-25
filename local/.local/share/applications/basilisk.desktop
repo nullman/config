@@ -5,4 +5,4 @@ Exec=BasiliskII
 Type=Application
 Terminal=false
 StartupNotify=true
-Categories=Emulators;Macintosh;
+Categories=Utility;X-Emulators;X-Macintosh;

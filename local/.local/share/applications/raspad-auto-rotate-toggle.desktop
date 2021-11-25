@@ -1,9 +1,9 @@
 [Desktop Entry]
 Name=Raspad Auto-Rotate Toggle
 Comment=Toggle auto-rotation of Raspad screen and touchpad
-Exec=sh -c "${HOME}/bin/raspad-auto-rotate-toggle"
+Exec=sh -c "\\${HOME}/bin/raspad-auto-rotate-toggle"
 Type=Application
 Icon=window-close
 Terminal=false
 StartupNotify=false
-Categories=Accessibility;Screen;
+Categories=System;X-Accessibility;X-Screen;

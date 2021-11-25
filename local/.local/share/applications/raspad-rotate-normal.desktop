@@ -1,9 +1,9 @@
 [Desktop Entry]
 Name=Raspad Rotate Normal
 Comment=Rotate Raspad screen and touchpad to the normal position
-Exec=sh -c "${HOME}/bin/raspad-rotate --normal"
+Exec=sh -c "\\${HOME}/bin/raspad-rotate --normal"
 Type=Application
 Icon=go-up
 Terminal=false
 StartupNotify=false
-Categories=Accessibility;Screen;
+Categories=System;X-Accessibility;X-Screen;
