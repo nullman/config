@@ -338,6 +338,8 @@ alias find-duplicate-files="
 alias fortune-cowsay-lolcat="fortune | cowsay | lolcat"
 #        find-ls                 find like ls -1
 alias find-ls="find . -maxdepth 1 -not -regex '^\.+$'"
+#        update-desktop-apps     update-desktop-database ~/.local/share/applications
+alias update-desktop-apps="update-desktop-database \${HOME}/.local/share/applications"
 
 #
 # general (external)
