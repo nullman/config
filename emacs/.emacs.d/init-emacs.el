@@ -116,10 +116,8 @@
 ;; [[file:init-emacs.org::*Modules][Modules:1]]
     ;; load modules that are used for initialization
     (use-package async
-      ;;:quelpa (async))
       :straight t)
     (use-package bind-key
-      ;;:quelpa (bind-key)
       :straight t
       :init
       ;; extract docstrings from lambdas, closures and keymaps if possible
@@ -127,23 +125,18 @@
     (use-package cl-generic)
     (use-package cl-macs)
     (use-package dash
-      ;;:quelpa (dash)
       :straight t
       :demand t
       :config
       (use-package dash-functional
-        ;;:quelpa (dash-functional)
         :straight t
         :demand t))
     (use-package diminish
-      ;;:quelpa (diminish :fetcher github :repo "myrjola/diminish.el"))
       :straight (diminish :type git :host github :repo "myrjola/diminish.el"))
     (use-package f
-      ;;:quelpa (f)
       :straight t
       :demand t)
     (use-package s
-      ;;:quelpa (s)
       :straight t
       :demand t)
     (use-package seq)
@@ -1114,7 +1107,6 @@
                 eshell-visual-commands '("htop" "ssh" "vim" "zsh"))))
 
       (use-package eshell-git-prompt
-        ;;:quelpa (eshell-git-prompt)
         :straight t
         :after (eshell)
         :config
@@ -1155,7 +1147,6 @@
       (init-message 3 "Environment Settings: Terminals: vterm")
 
       (use-package vterm
-        ;;:quelpa (vterm)
         :straight t
         :commands (vterm)
         :custom
@@ -1258,7 +1249,8 @@
       ;; set faces
       ;; green foreground on black background with yellow cursor
       (custom-set-faces
-       '(default ((t (:foreground "green" :background "black"))))
+       ;;'(default ((t (:foreground "green" :background "black"))))
+       '(default ((t (:foreground "#41FF41" :background "black"))))
        '(cursor ((t (:background "yellow")))))
 
       ;; transparant background (not on Macs)
@@ -1292,35 +1284,30 @@
       ;; flatland theme
       ;; https://github.com/gchp/flatland-emacs
       (use-package flatland-theme
-        ;;:quelpa (flatland-theme)
         :straight t
         :init (load-theme 'flatland t))
 
       ;; ;; dracula theme
       ;; ;; https://draculatheme.com/emacs/
       ;; (use-package dracula-theme
-      ;;   ;;:quelpa (dracula-theme)
       ;;   :straight t
       ;;   :init (load-theme 'dracula t))
 
       ;; ;; material theme
       ;; ;; https://github.com/cpaulik/emacs-material-theme
       ;; (use-package material-theme
-      ;;   ;;:quelpa (material-theme)
       ;;   :straight t
       ;;   :init (load-theme 'material t))
 
       ;; material theme
       ;; https://github.com/cpaulik/emacs-material-theme
       ;; (use-package material-theme
-      ;;   ;; :quelpa (material-theme)
       ;;   :load-path (lambda () (file-truename (expand-file-name "material-theme.el" local-modules-dir)))
       ;;   :init (load-theme 'material t))
 
       ;; ;; zenburn theme
       ;; ;; https://github.com/bbatsov/zenburn-emacs
       ;; (use-package zenburn-theme
-      ;;   ;;:quelpa (zenburn-theme)
       ;;   :straight t
       ;;   :init
       ;;   (setq zenburn-override-colors-alist   ; default values
@@ -1333,21 +1320,18 @@
       ;; ;; color-theme-sanityinc-tomorrow theme
       ;; ;; https://github.com/purcell/color-theme-sanityinc-tomorrow
       ;; (use-package color-theme-sanityinc-tomorrow
-      ;;   ;;:quelpa (color-theme-sanityinc-tomorrow)
       ;;   :straight t
       ;;   :init (load-theme 'sanityinc-tomorrow-night t))
 
       ;; ;; spacemacs-theme
       ;; ;; https://github.com/nashamri/spacemacs-theme
       ;; (use-package spacemacs-theme
-      ;;   ;;:quelpa (spacemacs-theme)
       ;;   :straight t
       ;;   :init (load-theme 'spacemacs-dark t))
 
       ;; ;; solarized theme
       ;; ;; https://github.com/bbatsov/solarized-emacs
       ;; (use-package solarized-theme
-      ;;   ;;:quelpa (solarized-theme)
       ;;   :straight t
       ;;   :init
       ;;   ;; make the fringe stand out from the background
@@ -2268,7 +2252,6 @@
 
     ;; needs pdftools, which annoyingly recompiles on every boot
     ;; (use-package org-pdfview
-    ;;   ;;:quelpa (org-pdfview)
     ;;   :straight t
     ;;   :after (org))
 ;; Setup:1 ends here
@@ -2535,7 +2518,6 @@
     (init-message 2 "Org Mode: Alerts")
 
     ;; (use-package org-alert
-    ;;   ;;:quelpa (org-alert)
     ;;   :straight t
     ;;   :after (org)
     ;;   :custom (alert-default-style 'notifications)
@@ -2545,7 +2527,6 @@
 
     ;; throws error: void-function -orfn
     ;; (use-package org-wild-notifier
-    ;;   ;;:quelpa (org-wild-notifier)
     ;;   :straight t
     ;;   :after (org)
     ;;   :custom
@@ -2556,7 +2537,6 @@
     ;;   :init (org-wild-notifier-mode 1))
 
     ;; (use-package org-notify
-    ;;   ;;:quelpa (org-notify)
     ;;   :straight t
     ;;   :after (org)
     ;;   :init (org-notify-start))
@@ -3316,7 +3296,6 @@
 
       ;; load ob-async
       (use-package ob-async
-        ;;:quelpa (ob-async)
         :straight t
         :after (org))
 
@@ -3592,7 +3571,9 @@
       (defun org-babel-execute:racket (body params)
         "Execute a block of Racket Scheme code with Babel.
       BODY is the contents of the block, as a string.  PARAMS is
-      a property list containing the parameters of the block."
+      a property list containing the parameters of the block.
+
+      This function is called by `org-babel-execute-src-block'."
         (let ((result
                ;; if there is a #lang line then geiser racket session wont work
                (if (with-temp-buffer
@@ -3751,7 +3732,6 @@
       (init-message 3 "Org Mode: Babel: Kotlin")
 
       (use-package ob-kotlin
-        ;;:quelpa (ob-kotlin)
         :straight t
         :after (org kotlin-mode)
         :commands (org-babel-execute:kotlin)
@@ -3856,61 +3836,121 @@
 ;; Python:1 ends here
 
 ;; [[file:init-emacs.org::*Rust][Rust:1]]
-;;------------------------------------------------------------------------------
-;;;; Org Mode: Babel: Rust
-;;------------------------------------------------------------------------------
+      ;;------------------------------------------------------------------------------
+      ;;;; Org Mode: Babel: Rust
+      ;;------------------------------------------------------------------------------
 
-(init-message 3 "Org Mode: Babel: Rust")
+      (init-message 3 "Org Mode: Babel: Rust")
 
-(use-package ob-rust
-  ;;:quelpa (ob-rust)
-  :straight t
-  :after (org rust-mode)
-  :commands (org-babel-execute:rust)
-  :functions (flycheck-mode
-              rust-send-buffer
-              org-babel-rust-command)
-  :config
-  (when (require 'ob-rust nil :no-error)
-    (defun org-babel-execute:rust (body params)
-      "Execute a block of Rust code with Babel.
-BODY is the contents of the block, as a string.  PARAMS is
-a property list containing the parameters of the block.
+      (use-package ob-rust
+        :straight t
+        :after (org rust-mode)
+        :commands (org-babel-execute:rust)
+        :functions (flycheck-mode
+                    rust-send-buffer
+                    org-babel-rust-command)
+        :config
+        (when (require 'ob-rust nil :no-error)
+          (defun org-babel-execute:rust (body params)
+            "Execute a block of Rust code with Babel.
+      BODY is the contents of the block, as a string.  PARAMS is
+      a property list containing the parameters of the block.
 
-This function is called by `org-babel-execute-src-block'."
-      (let* ((tmp-src-file (org-babel-temp-file "rust-src-" ".rs"))
-             (tmp-run-file (org-babel-temp-file "rust-run-"))
-             (processed-params (org-babel-process-params params))
-             (_flags (cdr (assoc :flags processed-params)))
-             (_args (cdr (assoc :args processed-params)))
-             (coding-system-for-read 'utf-8) ;; use utf-8 with subprocesses
-             (coding-system-for-write 'utf-8)
-             (wrapped-body
-              (save-match-data
-                (if (string-match "fn main()" body)
-                    body
-                  (if (string-match "fn \\(.*_test\\)()" body)
-                      (concat body "\n\nfn main() {\n" (match-string 1 body) "();\n}")
-                    (concat "fn main() {\n" body "\n}"))))))
-        (message "body: %s" wrapped-body)
-        (with-temp-file tmp-src-file (insert wrapped-body))
-        (let ((result
-               (org-babel-eval
-                (format "rustc -o %s %s && %s" tmp-run-file tmp-src-file tmp-run-file)
-                "")))
-          (when result
-            (org-babel-reassemble-table
-             (if (or (member "table" (cdr (assoc :result-params processed-params)))
-                     (member "vector" (cdr (assoc :result-params processed-params))))
-                 (let ((tmp-file (org-babel-temp-file "rust-")))
-                   (with-temp-file tmp-file (insert (org-babel-trim result)))
-                   (org-babel-import-elisp-from-file tmp-file))
-               (org-babel-read (org-babel-trim result) t))
-             (org-babel-pick-name
-              (cdr (assoc :colname-names params)) (cdr (assoc :colnames params)))
-             (org-babel-pick-name
-              (cdr (assoc :rowname-names params)) (cdr (assoc :rownames params))))))))))
+      This function is called by `org-babel-execute-src-block'."
+            (let* ((tmp-src-file (org-babel-temp-file "rust-src-" ".rs"))
+                   (tmp-run-file (org-babel-temp-file "rust-run-"))
+                   (processed-params (org-babel-process-params params))
+                   (_flags (cdr (assoc :flags processed-params)))
+                   (_args (cdr (assoc :args processed-params)))
+                   (coding-system-for-read 'utf-8) ;; use utf-8 with subprocesses
+                   (coding-system-for-write 'utf-8)
+                   (wrapped-body
+                    (save-match-data
+                      (if (string-match "fn main()" body)
+                          body
+                        (if (string-match "fn \\(.*_test\\)()" body)
+                            (concat body "\n\nfn main() {\n" (match-string 1 body) "();\n}")
+                          (concat "fn main() {\n" body "\n}"))))))
+              (with-temp-file tmp-src-file (insert wrapped-body))
+              (let ((result
+                     (org-babel-eval
+                      (format "rustc -o %s %s && %s" tmp-run-file tmp-src-file tmp-run-file)
+                      "")))
+                (when result
+                  (org-babel-reassemble-table
+                   (if (or (member "table" (cdr (assoc :result-params processed-params)))
+                           (member "vector" (cdr (assoc :result-params processed-params))))
+                       (let ((tmp-file (org-babel-temp-file "rust-")))
+                         (with-temp-file tmp-file (insert (org-babel-trim result)))
+                         (org-babel-import-elisp-from-file tmp-file))
+                     (org-babel-read (org-babel-trim result) t))
+                   (org-babel-pick-name
+                    (cdr (assoc :colname-names params)) (cdr (assoc :colnames params)))
+                   (org-babel-pick-name
+                    (cdr (assoc :rowname-names params)) (cdr (assoc :rownames params))))))))))
 ;; Rust:1 ends here
+
+;; [[file:init-emacs.org::*V][V:1]]
+      ;;------------------------------------------------------------------------------
+      ;;;; Org Mode: Babel: V
+      ;;------------------------------------------------------------------------------
+
+      (init-message 3 "Org Mode: Babel: V")
+
+      ;; default to v-mode for v files
+      (defvar org-babel-tangle-lang-exts)
+      (add-to-list 'org-babel-tangle-lang-exts '("v" . "v"))
+
+      (defvar org-babel-v-command "v")
+      (defvar org-babel-default-header-args:v '())
+      (defvar org-babel-header-args:v '((package . :any)))
+
+      (defun org-babel-execute:v (body params)
+        "Execute a block of V code with Babel.
+      BODY is the contents of the block, as a string.  PARAMS is
+      a property list containing the parameters of the block.
+
+      This function is called by `org-babel-execute-src-block'."
+        (let* ((tmp-src-file (org-babel-temp-file "v-src-" ".v"))
+               (tmp-run-file (org-babel-temp-file "v-run-"))
+               (processed-params (org-babel-process-params params))
+               (_flags (cdr (assoc :flags processed-params)))
+               (_args (cdr (assoc :args processed-params)))
+               (coding-system-for-read 'utf-8) ;; use utf-8 with subprocesses
+               (coding-system-for-write 'utf-8)
+               (wrapped-body
+                (save-match-data
+                  (if (string-match "fn main()" body)
+                      body
+                    (if (string-match "fn \\(test_.*\\)()" body)
+                        (let ((start 0)
+                              tests)
+                          (while (string-match "fn \\(test_.*\\)()" body start)
+                            (push (match-string 1 body) tests)
+                            (setq start (match-end 0)))
+                          (concat body
+                                  "\n\nfn main() {\n"
+                                  (apply #'concat (nreverse tests))
+                                  "()\n}"))
+                      body)))))
+          (with-temp-file tmp-src-file (insert wrapped-body))
+          (let ((result
+                 (org-babel-eval
+                  (format "v -o %s %s && %s" tmp-run-file tmp-src-file tmp-run-file)
+                  "")))
+            (when result
+              (org-babel-reassemble-table
+               (if (or (member "table" (cdr (assoc :result-params processed-params)))
+                       (member "vector" (cdr (assoc :result-params processed-params))))
+                   (let ((tmp-file (org-babel-temp-file "v-")))
+                     (with-temp-file tmp-file (insert (org-babel-trim result)))
+                     (org-babel-import-elisp-from-file tmp-file))
+                 (org-babel-read (org-babel-trim result) t))
+               (org-babel-pick-name
+                (cdr (assoc :colname-names params)) (cdr (assoc :colnames params)))
+               (org-babel-pick-name
+                (cdr (assoc :rowname-names params)) (cdr (assoc :rownames params))))))))
+;; V:1 ends here
 
 ;; [[file:init-emacs.org::*Basic (Commander X16)][Basic (Commander X16):1]]
       ;;------------------------------------------------------------------------------
@@ -4443,7 +4483,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Org Mode: Visibility")
 
     (use-package org-visibility
-      ;;:quelpa (org-visibility)
       ;;:straight t
       ;;:load-path (lambda () (file-truename (expand-file-name "org-visibility" local-modules-dir)))
       :load-path (lambda () (file-truename (expand-file-name "~/code/nullman/org-visibility")))
@@ -13330,7 +13369,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: ag")
 
     (use-package ag
-      ;;:quelpa (ag)
       :straight t
       :commands (ag)
       :custom (ag-arguments (list "--smart-case" "--stats")))
@@ -13344,7 +13382,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: alert")
 
     (use-package alert
-      ;;:quelpa (alert)
       :straight t
       :commands (alert)
       :custom (alert-default-style 'libnotify))
@@ -13358,7 +13395,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: analog-clock")
 
     (use-package analog-clock
-      ;;:quelpa (analog-clock :fetcher url :url "http://yrk.nfshost.com/repos/analog-clock/analog-clock.el")
       :load-path (lambda () (file-truename (expand-file-name "analog-clock.el" emacs-modules-dir)))
       :commands (analog-clock analog-clock-draw-analog)
       :custom
@@ -13380,7 +13416,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: any-ini-mode")
 
     (use-package any-ini-mode
-      ;;:quelpa (any-ini-mode :fetcher url :url "https://www.emacswiki.org/emacs/download/any-ini-mode.el"))
       :load-path (lambda () (file-truename (expand-file-name "any-ini-mode.el" emacs-modules-dir))))
 ;; any-ini-mode:1 ends here
 
@@ -13403,7 +13438,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: auto-compile")
 
     (use-package auto-compile
-      ;;:quelpa (auto-compile)
       :straight t
       :custom
       (load-prefer-newer t)
@@ -13420,7 +13454,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: avy")
 
     (use-package avy
-      ;;:quelpa (avy)
       :straight t
       :bind* (("C-;" . avy-goto-char)
               ("C-M-;" . pop-to-mark-command)
@@ -13436,7 +13469,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: bash-completion")
 
     (use-package bash-completion
-      ;;:quelpa (bash-completion)
       :straight t
       :init (bash-completion-setup))
 ;; bash-completion:1 ends here
@@ -13449,7 +13481,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: bbdb")
 
     (use-package bbdb
-      ;;:quelpa (bbdb)
       :straight t
       :init
       ;;(bbdb-initialize)
@@ -13619,7 +13650,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: beacon")
 
     (use-package beacon
-      ;;:quelpa (beacon)
       :straight t
       :demand t
       :custom
@@ -13638,7 +13668,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: boxquote")
 
     (use-package boxquote
-      ;;:quelpa (boxquote)
       :straight t
       :init (unbind-key "C-c b")
       :bind (("C-c by" . boxquote-yank)
@@ -13665,7 +13694,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: browse-kill-ring")
 
     (use-package browse-kill-ring
-      ;;:quelpa (browse-kill-ring)
       :straight t
       :bind* (("M-y" . browse-kill-ring)
               ("C-M-_" . browse-kill-ring)))
@@ -13680,7 +13708,6 @@ This function is called by `org-babel-execute-src-block'."
 
     ;; original code by Scott Frazer
     (use-package bs
-      ;;:quelpa (bs)
       :straight t
       :demand t
       :after (cycle-buffer)
@@ -13771,7 +13798,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: command-log")
 
     (use-package command-log-mode
-      ;;:quelpa (command-log-mode)
       :straight t
       :init
       (defun command-line-mode-on ()
@@ -13797,7 +13823,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: company")
 
     (use-package company
-      ;;:quelpa (company)
       :straight t
       :diminish company-mode
       :bind (:map company-active-map
@@ -13840,7 +13865,6 @@ This function is called by `org-babel-execute-src-block'."
 
     ;; ;; company front end with icons
     ;; (use-package company-box
-    ;;   ;;:quelpa (company-box)
     ;;   :straight t
     ;;   :after (company)
     ;;   :hook (company-mode . company-box-mode))
@@ -13853,7 +13877,6 @@ This function is called by `org-babel-execute-src-block'."
 
     ;; ;; set colors for a dark background
     ;; (use-package color
-    ;;   ;;:quelpa (color)
     ;;   :straight t
     ;;   :after (company)
     ;;   :commands (color-lighten-name)
@@ -13908,7 +13931,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: cycle-buffer")
 
     (use-package cycle-buffer
-      ;;:quelpa (cycle-buffer :fetcher url :url "https://raw.githubusercontent.com/emacsmirror/emacswiki.org/master/cycle-buffer.el")
       :load-path (lambda () (file-truename (expand-file-name "cycle-buffer.el" emacs-modules-dir)))
       :demand t
       :bind* (("C-x C-n" . cycle-buffer)          ; defaults to `set-goal-column'
@@ -13936,7 +13958,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: define-word")
 
     (use-package define-word
-      ;;:quelpa (define-word)
       :straight t
       :bind (("<f5>" . define-word-after-spell-check)
              ("S-<f5>" . define-word-at-point))
@@ -13975,7 +13996,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: demo-it")
 
     (use-package demo-it
-      ;;:quelpa (demo-it))
       :straight t)
 ;; demo-it:1 ends here
 
@@ -13987,7 +14007,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: doom-modeline")
 
     (use-package doom-modeline
-      ;;:quelpa (doom-modeline)
       :straight t
       :after (all-the-icons)
       :demand t
@@ -14009,7 +14028,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 3 "all-the-icons")
 
     (use-package all-the-icons
-      ;;:quelpa (all-the-icons)
       :straight t)
       ;; :config
       ;; ;; install fonts, if needed
@@ -14033,7 +14051,6 @@ This function is called by `org-babel-execute-src-block'."
     ;;------------------------------------------------------------------------------
 
     (use-package easy-kill
-      ;;:quelpa (easy-kill)
       :straight t
       :demand t
       :bind* (([remap kill-ring-save] . easy-kill)
@@ -14061,7 +14078,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: elfeed")
 
     (use-package elfeed
-      ;;:quelpa (elfeed)
       :straight t
       :bind (:map elfeed-search-mode-map
                   ("h" . elfeed-search-mode-help)
@@ -14178,7 +14194,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: elnode")
 
     (use-package elnode
-      ;;:quelpa (elnode)
       :straight t
       :commands (elnode))
 ;; elnode:1 ends here
@@ -14191,7 +14206,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: elpher")
 
     (use-package elpher
-      ;;:quelpa (elpher)
       :straight t
       :init
       (defun elpher-bookmarks-edit ()
@@ -14211,7 +14225,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: eperiodic")
 
     (use-package eperiodic
-      ;;:quelpa (eperiodic :fetcher url :url "https://raw.githubusercontent.com/emacsmirror/emacswiki.org/master/eperiodic.el")
       :load-path (lambda () (file-truename (expand-file-name "eperiodic.el" emacs-modules-dir)))
       :commands (eperiodic))
 ;; eperiodic:1 ends here
@@ -14224,7 +14237,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: epoch")
 
     (use-package epoch
-      ;;:quelpa (epoch :fetcher file :path (file-truename (expand-file-name "epoch.el" local-modules-dir)))
       :load-path (lambda () (file-truename (expand-file-name "epoch.el" local-modules-dir)))
       :commands (epoch-menu time-to-epoch epoch-to-time))
 ;; epoch:1 ends here
@@ -14248,7 +14260,6 @@ This function is called by `org-babel-execute-src-block'."
 
     (use-package exec-path-from-shell
       :when window-system-mac
-      ;;:quelpa (exec-path-from-shell)
       :straight t
       :init (exec-path-from-shell-initialize))
 ;; exec-path-from-shell:1 ends here
@@ -14261,7 +14272,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: expand-region")
 
     (use-package expand-region
-      ;;:quelpa (expand-region)
       :straight t
       :bind* (("C-=" . er/expand-region)     ; defaults to `count-lines-region'
               ("C--" . er/contract-region))) ; defaults to `negative-argument'
@@ -14275,7 +14285,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: flycheck")
 
     (use-package flycheck
-      ;;:quelpa (flycheck)
       :straight t
       :commands (flycheck-mod
                  global-flycheck-mode)
@@ -14293,7 +14302,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: flymake-cursor")
 
     (use-package flymake-cursor
-      ;;:quelpa (flymake-cursor))
       :straight t)
 ;; flymake-cursor:1 ends here
 
@@ -14323,7 +14331,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: fuzzy")
 
     (use-package fuzzy
-      ;;:quelpa (fuzzy)
       :straight t
       :commands (turn-on-fuzzy-isearch)
       :init (turn-on-fuzzy-isearch))
@@ -14361,7 +14368,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: htmlize")
 
     (use-package htmlize
-      ;;:quelpa (htmlize)
       :straight t
       :commands (htmlize-buffer
                  htmlize-region
@@ -14406,7 +14412,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: hungry-delete")
 
     (use-package hungry-delete
-      ;;:quelpa (hungry-delete)
       :straight t
       :demand t
       :commands (global-hungry-delete-mode
@@ -14523,7 +14528,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: iedit")
 
     (use-package iedit
-      ;;:quelpa (iedit)
       :straight t
       :commands (iedit-mode)
       :bind* ("C-x ;" . iedit-mode))
@@ -14547,7 +14551,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: ini")
 
     (use-package ini
-      ;;:quelpa (ini :fetcher github :repo "daniel-ness/ini.el")
       :straight (ini :type git :host github :repo "daniel-ness/ini.el")
       :commands (ini-decode
                  ini-encode))
@@ -14561,7 +14564,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: ispell")
 
     (use-package ispell
-      ;;:quelpa (ispell)
       ;;:straight t
       :commands (ispell-buffer
                  ispell-change-dictionary-hook
@@ -14586,7 +14588,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: ivy (counsel/swiper)")
 
     (use-package ivy
-      ;;:quelpa (ivy :fetcher github :repo "abo-abo/swiper")
       :straight (ivy :type git :host github :repo "abo-abo/swiper")
       :demand t
       :diminish ivy-mode
@@ -14594,6 +14595,8 @@ This function is called by `org-babel-execute-src-block'."
       :bind* (("C-x C-r" . ivy-resume)      ; defaults to `find-file-read-only'
               ("C-x b" . ivy-switch-buffer) ; defaults to `switch-to-buffer'
               ("C-x O" . ivy-switch-buffer-other-window)) ; defaults to `other-window'
+      :bind (:map ivy-mode-map
+                  ("C-<return>" . ivy-immediate-done))
       :custom
       ;; add recent files and bookmarks to `ivy-switch-buffer'
       (ivy-use-virtual-buffers t)
@@ -14632,7 +14635,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 3 "counsel")
 
     (use-package counsel
-      ;;:quelpa (counsel :fetcher github :repo "abo-abo/swiper")
       :straight (counsel :type git :host github :repo "abo-abo/swiper")
       :after (ivy)
       :bind* (("M-x" . counsel-M-x)
@@ -14663,7 +14665,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 3 "swiper")
 
     (use-package swiper
-      ;;:quelpa (swiper :fetcher github :repo "abo-abo/swiper")
       :straight (swiper :type git :host github :repo "abo-abo/swiper")
       :after (ivy)
       :bind* ("C-'" . swiper))            ; defaults to `isearch-forward-regexp'
@@ -14677,7 +14678,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 3 "ivy-rich")
 
     (use-package ivy-rich
-      ;;:quelpa (ivy-rich)
       :straight t
       :after (ivy counsel)
       :init (ivy-rich-mode 1)
@@ -14704,7 +14704,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 3 "flx")
 
     (use-package flx
-      ;;:quelpa (flx)
       :straight t
       :after (ivy)
       :init
@@ -14719,7 +14718,6 @@ This function is called by `org-babel-execute-src-block'."
     ;; (init-message 3 "ivy-hydra")
 
     ;; (use-package ivy-hydra
-    ;;   ;;:quelpa (ivy-hydra)
     ;;   :straight t
     ;;   :after (ivy hydra))
 ;; ivy (counsel/swiper):1 ends here
@@ -14742,7 +14740,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: key-chord")
 
     (use-package key-chord
-      ;;:quelpa (key-chord)
       :straight t
       :demand t
       :init
@@ -14775,7 +14772,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: keyfreq")
 
     (use-package keyfreq
-      ;;:quelpa (keyfreq)
       :straight t
       :demand t
       :init
@@ -14795,7 +14791,6 @@ This function is called by `org-babel-execute-src-block'."
 
     (use-package langtool
       :when (executable-find "languagetool") ; only use if binary is available on system
-      ;;:quelpa (langtool)
       :straight t
       :bind* (("C-x 4 w" . langtool-check)
               ("C-x 4 W" . langtool-check-done)
@@ -14818,7 +14813,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: magit")
 
     (use-package magit
-      ;;:quelpa (magit)
       :straight t
       :after (ivy)
       :diminish magit-auto-revert-mode
@@ -14872,7 +14866,6 @@ This function is called by `org-babel-execute-src-block'."
     ;; (init-message 3 "forge")
 
     ;; (use-package forge
-    ;;   ;;:quelpa (forge)
     ;;   :straight t
     ;;   :after (magit))
 ;; magit:1 ends here
@@ -14885,7 +14878,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: mingus")
 
     (use-package mingus
-      ;;:quelpa (mingus)
       :straight t
       :commands (mingus
                  mingus-create-NP-mark
@@ -15542,7 +15534,6 @@ This function is called by `org-babel-execute-src-block'."
 (init-message 2 "Modules: minions")
 
 (use-package minions
-  ;;:quelpa (mingus)
   :straight t
   :config
   (minions-mode 1))
@@ -15556,7 +15547,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: multiple-cursors")
 
     (use-package multiple-cursors
-      ;;:quelpa (multiple-cursors)
       :straight t
       :bind* (("C-c C->" . mc/edit-lines)
               ("C-c C-<" . mc/mark-all-like-this)
@@ -15574,7 +15564,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: neotree")
 
     (use-package neotree
-      ;;:quelpa (neotree)
       :straight t
       :commands (neo-global--select-window
                  neo-global--window-exists-p
@@ -15603,7 +15592,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: persistent-scratch")
 
     (use-package persistent-scratch
-      ;;:quelpa (persistent-scratch)
       :straight t
       :demand t
       :init
@@ -15619,7 +15607,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: proced")
 
     (use-package proced
-      ;;:quelpa (proced)
       :straight t
       :commands (proced))
 ;; proced:1 ends here
@@ -15635,7 +15622,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: projectile")
 
     (use-package projectile
-      ;;:quelpa (projectile)
       :straight t
       :after (ivy)
       :diminish (projectile-mode . "Proj")
@@ -15663,7 +15649,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 3 "counsel-projectile")
 
     (use-package counsel-projectile
-      ;;:quelpa (counsel-projectile)
       :straight t
       :after (ivy counsel projectile)
       :init (counsel-projectile-mode))
@@ -15679,7 +15664,6 @@ This function is called by `org-babel-execute-src-block'."
     (use-package ps-ccrypt
       :when (executable-find "ccrypt") ; only use if binary is available on system
       ;; local copy with a bug fix
-      ;;:quelpa (ps-ccrypt :fetcher file :path (file-truename (expand-file-name "ps-ccrypt.el" emacs-modules-dir)))
       :load-path (lambda () (file-truename (expand-file-name "ps-ccrypt.el" emacs-modules-dir))))
 ;; ps-ccrypt:1 ends here
 
@@ -15706,7 +15690,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: regex-tool")
 
     (use-package regex-tool
-      ;;:quelpa (regex-tool)
       :straight t
       :commands (regex-tool))
 ;; regex-tool:1 ends here
@@ -15719,7 +15702,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: replacer")
 
     (use-package replacer
-      ;;:quelpa (replacer :fetcher file :path (file-truename (expand-file-name "replacer.el" local-modules-dir)))
       :load-path (lambda () (file-truename (expand-file-name "replacer.el" local-modules-dir)))
       :after (company)
       :commands (replacer-mode company-replacer-backend)
@@ -15783,7 +15765,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: s")
 
     (use-package s
-      ;;:quelpa (s))
       :straight t)
 ;; s:1 ends here
 
@@ -15827,7 +15808,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: sokoban")
 
     (use-package sokoban
-      ;;:quelpa (sokoban :fetcher file :path (file-truename (expand-file-name "sokoban/sokoban.el" emacs-modules-dir)))
       :load-path (lambda () (file-truename (expand-file-name "sokoban/sokoban.el" emacs-modules-dir)))
       :commands (sokoban sokoban-mode)
       :custom
@@ -15842,7 +15822,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: split-move")
 
     (use-package split-move
-      ;;:quelpa (split-move :fetcher file :path (file-truename (expand-file-name "split-move.el" local-modules-dir)))
       :load-path (lambda () (file-truename (expand-file-name "split-move.el" local-modules-dir)))
       :commands (split-move-up split-move-down))
 ;; split-move:1 ends here
@@ -15855,7 +15834,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: spinner")
 
     (use-package spinner
-      ;;:quelpa (spinner :fetcher github :repo "Malabarba/spinner.el"))
       :straight (spinner :type git :host github :repo "Malabarba/spinner.el"))
 ;; spinner:1 ends here
 
@@ -15867,7 +15845,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: sudoku")
 
     (use-package sudoku
-      ;;:quelpa (sudoku :fetcher github :repo "zevlg/sudoku.el")
       :straight (sudoku :type git :host github :repo "zevlg/sudoku.el")
       :commands (sudoku))
 ;; sudoku:1 ends here
@@ -15880,7 +15857,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: switch-window")
 
     (use-package switch-window
-      ;;:quelpa (switch-window)
       :straight t
       :demand t
       :commands (switch-window switch-window-then-delete)
@@ -16031,7 +16007,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: undo-tree")
 
     (use-package undo-tree
-      ;;:quelpa (undo-tree :fetcher github :repo "apchamberlain/undo-tree.el")
       :straight (undo-tree :type git :host github :repo "apchamberlain/undo-tree.el")
       :demand t
       :diminish undo-tree-mode
@@ -16050,7 +16025,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: vimish-fold")
 
     (use-package vimish-fold
-      ;;:quelpa (vimish-fold))
       :straight t)
 ;; vimish-fold:1 ends here
 
@@ -16063,7 +16037,6 @@ This function is called by `org-babel-execute-src-block'."
 
     (use-package w3m
       :when (executable-find "w3m") ; only use if binary is available on system
-      ;;:quelpa (w3m)
       :straight t
       :commands (w3m
                  w3m-antenna
@@ -16109,7 +16082,6 @@ This function is called by `org-babel-execute-src-block'."
     ;; ;; persistent sessions
     ;; (use-package w3m-session
     ;;   :when (executable-find "w3m") ; only use if w3m command is available on system
-    ;;   ;;:quelpa (w3m-session)
     ;;   :straight t
     ;;   :after (w3m)
     ;;   :commands (w3m-session-load
@@ -16138,7 +16110,6 @@ This function is called by `org-babel-execute-src-block'."
     (use-package web-query
       ;; :when (executable-find "w3m")
       ;; :after (w3m)
-      ;;:quelpa (web-query :fetcher file :path (file-truename (expand-file-name "web-query.el" local-modules-dir)))
       :load-path (lambda () (file-truename (expand-file-name "web-query.el" local-modules-dir)))
       :commands (web-query
                  web-query-word
@@ -16173,7 +16144,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: weblogger")
 
     (use-package weblogger
-      ;;:quelpa (weblogger)
       :straight t
       :commands (weblogger-select-configuration
                  weblogger-setup-weblog
@@ -16193,7 +16163,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: wgrep")
 
     (use-package wgrep
-      ;;:quelpa (wgrep)
       :straight t
       :bind (:map grep-mode-map
                   ("C-x C-q" . wgrep-change-to-wgrep-mode))) ; same keybinding as `wdired-mode'
@@ -16207,7 +16176,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: which-key")
 
     (use-package which-key
-      ;;:quelpa (which-key)
       :straight t
       :demand t
       :init (which-key-mode))
@@ -16221,7 +16189,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: wtf")
 
     (use-package wtf
-      ;;:quelpa (wtf :fetcher url :url "http://mwolson.org/static/dist/elisp/wtf.el")
       :load-path (lambda () (file-truename (expand-file-name "wtf.el" emacs-modules-dir)))
       :commands (wtf-is wtf-get-term-at-point))
 ;; wtf:1 ends here
@@ -16234,7 +16201,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modules: wttrin")
 
     (use-package wttrin
-      ;;:quelpa (wttrin)
       :straight t
       :custom
       ;; default cities
@@ -16334,7 +16300,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modes: Brainfuck")
 
     (use-package brainfuck
-      ;;:quelpa (brainfuck :fetcher file :path (file-truename (expand-file-name "brainfuck.el" local-modules-dir)))
       :load-path (lambda () (file-truename (expand-file-name "brainfuck.el" local-modules-dir)))
       :mode ("\\.bf\\'" . brainfuck-mode))
 ;; Brainfuck:1 ends here
@@ -16347,7 +16312,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modes: BASIC")
 
     (use-package basic
-      ;;:quelpa (basic :fetcher file :path (file-truename (expand-file-name "basic.el" local-modules-dir)))
       :load-path (lambda () (file-truename (expand-file-name "basic.el" local-modules-dir)))
       :mode ("\\.bas\\'" . basic-mode))
 ;; BASIC:1 ends here
@@ -16527,7 +16491,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 3 "calendar-remind")
 
     (use-package calendar-remind
-      ;;:quelpa (calendar-remind :fetcher file :path (file-truename (expand-file-name "calendar-remind.el" local-modules-dir)))
       :load-path (lambda () (file-truename (expand-file-name "calendar-remind.el" local-modules-dir)))
       :after (calendar)
       :commands (calendar-remind-lookup
@@ -16611,7 +16574,6 @@ This function is called by `org-babel-execute-src-block'."
 
     ;; make dired use a single buffer
     (use-package dired-single
-      ;;:quelpa (dired-single)
       :straight t
       :commands (dired dired-jump)
       :bind (:map dired-mode-map
@@ -16636,7 +16598,6 @@ This function is called by `org-babel-execute-src-block'."
 
     ;; open files with external programs
     (use-package dired-open
-      ;;:quelpa (dired-open)
       :straight t
       :custom
       (dired-open-extensions
@@ -16656,7 +16617,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 3 "dired-hide-dotfiles")
 
     (use-package dired-hide-dotfiles
-      ;;:quelpa (dired-hide-dotfiles)
       :straight t
       ;;:hook (dired-mode . dired-hide-dotfiles-mode)
       :bind (:map dired-mode-map
@@ -16670,7 +16630,6 @@ This function is called by `org-babel-execute-src-block'."
 
     ;; ;; add icons to file listings
     ;; (use-package all-the-icons-dired
-    ;;   ;;:quelpa (all-the-icons-dired)
     ;;   :straight t
     ;;   :commands (dired dired-jump)
     ;;   :hook (dired-mode . all-the-icons-dired-mode))
@@ -16713,7 +16672,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modes: Erlang Mode")
 
     (use-package erlang
-      ;;:quelpa (erlang)
       :straight t
       :after (flyspell)
       :mode ("\\.erl\\'" . erlang-mode)
@@ -16762,9 +16720,7 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modes: Geiser (Racket Scheme REPL)")
 
     (use-package geiser
-      ;;:quelpa (geiser)
       :straight t
-      ;;:quelpa (geiser :fetcher gitlab :repo "emacs-geiser/geiser")
       :commands (geiser-mode
                  run-geiser)
       :init
@@ -16797,9 +16753,7 @@ This function is called by `org-babel-execute-src-block'."
 
     (use-package geiser-racket
       :after (geiser)
-      ;;:quelpa (geiser-racket)
       :straight t
-      ;;:quelpa (geiser-racket :fetcher gitlab :repo "emacs-geiser/geiser-racket")
       :commands (run-racket)
       :init
       ;; set default scheme program to racket
@@ -16822,7 +16776,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modes: GNU Plot")
 
     (use-package gnuplot
-      ;;:quelpa (gnuplot)
       :straight t
       :mode ("\\.gp\\'" . gnuplot-mode)
       :commands (gnuplot-mode gnuplot-make-buffer gnuplot-send-string-to-gnuplot))
@@ -16865,7 +16818,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modes: Graphviz Dot Mode")
 
     (use-package graphviz-dot-mode
-      ;;:quelpa (graphviz-dot-mode)
       :straight t
       :mode (("\\.dot\\'" . graphviz-dot-mode)
              ("\\.gv\\'" . graphviz-dot-mode))
@@ -16880,7 +16832,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modes: INI Mode")
 
     (use-package ini-mode
-      ;;:quelpa (ini-mode)
       :straight t
       :mode ("\\.ini\\'" . ini-mode))
 ;; INI Mode:1 ends here
@@ -16893,7 +16844,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modes: Javascript: js2 Mode")
 
     (use-package js2-mode
-      ;;:quelpa (js2-mode)
       :straight t
       :mode (("\\.js\\'" . js2-mode)
              ("\\.gradle\\'" . js-mode))    ; use js-mode for gradle files
@@ -16924,7 +16874,6 @@ This function is called by `org-babel-execute-src-block'."
 
     ;; javascript refactoring library
     (use-package js2-refactor
-      ;;:quelpa (js2-refactor)
       :straight t
       :after (js2-mode)
       :bind (:map js2-mode-map
@@ -16945,7 +16894,6 @@ This function is called by `org-babel-execute-src-block'."
 
     ;; jump to references and definitions
     (use-package xref-js2
-      ;;:quelpa (xref-js2)
       :straight t
       :after (js2-mode)
       :config
@@ -16962,7 +16910,6 @@ This function is called by `org-babel-execute-src-block'."
 
     ;; javascript interpreter repl
     (use-package js-comint
-      ;;:quelpa (js-comint)
       :straight t
       :after (js2-mode)
       :commands (js-send-buffer
@@ -17028,7 +16975,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modes: JSON Mode")
 
     (use-package json-mode
-      ;;:quelpa (json-mode)
       :straight t
       :mode (("\\.json\\'" . js2-mode))
       :config
@@ -17045,7 +16991,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modes: Ledger Mode")
 
     (use-package ledger-mode
-      ;;:quelpa (ledger-mode)
       :straight t
       :functions (ledger-align-amounts)
       :config
@@ -17149,7 +17094,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modes: LUA Mode")
 
     (use-package lua-mode
-      ;;:quelpa (lua-mode)
       :straight t
       :mode (("\\.lua\\'" . lua-mode)))
 ;; LUA Mode:1 ends here
@@ -17178,7 +17122,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modes: Markdown Mode")
 
     (use-package markdown-mode
-      ;;:quelpa (markdown-mode)
       :straight t
       :after (org-table)
       :mode (("\\.md\\'" . markdown-mode)
@@ -17253,7 +17196,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modes: PlantUML Mode")
 
     (use-package plantuml-mode
-      ;;:quelpa (plantuml-mode))
       :straight t)
 ;; PlantUML Mode:1 ends here
 
@@ -17265,7 +17207,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modes: Python Mode")
 
     (use-package python-mode
-      ;;:quelpa (python-mode)
       :straight t
       :after (company elpy)
       :mode (("\\.py\\'" . python-mode)
@@ -17318,7 +17259,6 @@ This function is called by `org-babel-execute-src-block'."
     ;;------------------------------------------------------------------------------
 
     (use-package elpy
-      ;;:quelpa (elpy)
       :straight t
       :commands (elpy-enable
                  elpy-shell-switch-to-shell)
@@ -17349,7 +17289,6 @@ This function is called by `org-babel-execute-src-block'."
 
     ;; ;; python auto-completion
     ;; (use-package jedi
-    ;;   ;;:quelpa (jedi)
     ;;   :straight t
     ;;   :after (python-mode)
     ;;   :config
@@ -17367,7 +17306,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modes: Racket Mode")
 
     ;; (use-package racket-mode
-    ;;   ;;:quelpa (racket-mode)
     ;;   :straight t
     ;;   :mode ("\\.rkt\\'" . racket-mode)
     ;;   :interpreter ("racket" . racket-mode)
@@ -17505,7 +17443,6 @@ This function is called by `org-babel-execute-src-block'."
 
     ;; code navigation, documentation lookup, and completion for ruby
     (use-package robe
-      ;;:quelpa (robe)
       :straight t
       :after (ruby-mode)
       :commands (robe-mode)
@@ -17519,7 +17456,6 @@ This function is called by `org-babel-execute-src-block'."
     ;; (init-message 3 "inf-ruby")
 
     ;; (use-package inf-ruby
-    ;;   ;;:quelpa (inf-ruby)
     ;;   :straight t
     ;;   :after (ruby-mode)
     ;;   :interpreter ("ruby" . ruby-mode)
@@ -17541,7 +17477,6 @@ This function is called by `org-babel-execute-src-block'."
 
     ;; ;; auto-complete source for interactive ruby
     ;; (use-package ac-inf-ruby
-    ;;   ;;:quelpa (ac-inf-ruby)
     ;;   :straight t
     ;;   :config
     ;;   (add-to-list 'ac-modes 'inf-ruby-mode t)
@@ -17559,7 +17494,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modes: Rust Mode")
 
     (use-package rust-mode
-      ;;:quelpa (rust-mode)
       :straight t
       :after (flyspell)
       :mode ("\\.rs\\'" . rust-mode)
@@ -17651,7 +17585,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 3 "Rustic")
 
     (use-package rustic
-      ;;:quelpa (rustic)
       :straight t
       :after (rust-mode))
 ;; Rust Mode:1 ends here
@@ -17757,7 +17690,6 @@ This function is called by `org-babel-execute-src-block'."
     ;;   # cd /usr/share/emacs22/site-lisp/slime
     ;;   # for i in $(ls -1 /usr/share/common-lisp/source/slime/) ; do ln -s /usr/share/common-lisp/source/slime/$i ; done
     (use-package slime
-      ;;:quelpa (slime)
       :straight t
       ;; :load-path (;;(lambda () (file-truename (expand-file-name "slime" emacs-modules-dir)))
       ;;             ;;(lambda () (file-truename (expand-file-name "slime/contrib" emacs-modules-dir)))
@@ -17909,7 +17841,6 @@ This function is called by `org-babel-execute-src-block'."
 
     ;; ;; auto-complete source for slime
     ;; (use-package ac-slime
-    ;;   ;;:quelpa (ac-slime)
     ;;   :straight t
     ;;   :after (slime)
     ;;   :config
@@ -17924,7 +17855,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 3 "elisp-slime-nav-mode")
 
     (use-package elisp-slime-nav
-      ;;:quelpa (elisp-slime-nav)
       :straight t
       :after (slime)
       :diminish elisp-slime-nav-mode
@@ -17955,7 +17885,6 @@ This function is called by `org-babel-execute-src-block'."
       )
 
     ;; (use-package sql-transform
-    ;;   ;;:quelpa (sql-transform)
     ;;   :straight t
     ;;   :config
     ;;   (defun local-sql-mode-hook ()
@@ -17974,7 +17903,6 @@ This function is called by `org-babel-execute-src-block'."
     ;; (init-message 3 "mysql")
 
     ;; (use-package mysql
-    ;;   ;;:quelpa (mysql)
     ;;   :straight t
     ;;   :after (sql)
     ;;   :config (setq sql-product 'mysql))
@@ -18046,13 +17974,108 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 2 "Modes: TypeScript Mode")
 
     (use-package typescript-mode
-      ;;:quelpa (typescript-mode)
       :straight t
       :mode ("\\.ts\\'" . typescript-mode)
       :hook (typescript-mode . lsp-deferred)
       :config
       (setq typescript-indent-level 2))
 ;; TypeScript Mode:1 ends here
+
+;; [[file:init-emacs.org::*V Mode][V Mode:1]]
+    ;;------------------------------------------------------------------------------
+    ;;; Modes: V Mode
+    ;;------------------------------------------------------------------------------
+
+    (init-message 2 "Modes: V Mode")
+
+    (use-package v-mode
+      :straight (v-mode
+                 :type git
+                 :host github
+                 :repo "damon-kwok/v-mode"
+                 :files ("tokens" "v-mode.el"))
+      :after (flyspell)
+      :mode ("\\.v?v\\.vsh\\'" . v-mode)
+      :bind (:map v-mode-map
+                  ("C-c C-b" . v-project-build)
+                  ("C-c C-c" . v-project-run)
+                  ("C-c C-f" . v-format-buffer)
+                  ("C-c C-f" . v-menu))
+      :config
+      (defun local-v-mode-hook ()
+        ;; use spaces for tabs
+        (setq indent-tabs-mode nil)
+
+        ;; set indent level
+        ;;(setq v-indent-level 4)
+
+        ;; format code on save
+        ;;(setq v-format-on-save t)
+
+        ;; ;; define keys
+        ;; (define-key v-mode-map (kbd "<return>") 'reindent-then-newline-and-indent)
+        ;; ;; undefine electric keys
+        ;; (define-key v-mode-map (kbd "{") 'self-insert-command)
+        ;; (define-key v-mode-map (kbd "}") 'self-insert-command)
+
+        ;; turn on flyspell
+        (when (boundp 'flyspell-prog-mode)
+          (flyspell-prog-mode)))
+      (add-hook 'v-mode-hook #'local-v-mode-hook :append)
+
+      ;; turn on flyspell
+      (flyspell-prog-mode)
+
+      ;; FIXME: No longer works
+      ;; (use-package flymake
+      ;;   :config (progn
+      ;;             (defun flymake-v-init ()
+      ;;               (let* ((temp-file (flymake-init-create-temp-buffer-copy 'flymake-create-temp-inplace))
+      ;;                      (local-file (file-relative-name temp-file (file-name-directory buffer-file-name))))
+      ;;                 (list "v" (list "-c" local-file))))
+
+      ;;             (defun flymake-v-enable ()
+      ;;               (when (and buffer-file-name
+      ;;                          (file-writable-p (file-name-directory buffer-file-name))
+      ;;                          (file-writable-p buffer-file-name)
+      ;;                          (if (fboundp 'tramp-list-remote-buffers)
+      ;;                              (not (cl-subsetp (list (current-buffer)) (tramp-list-remote-buffers)))
+      ;;                            t))
+      ;;                 (local-set-key (kbd "C-c d") 'flymake-display-err-menu-for-current-line)
+      ;;                 (flymake-mode t)))
+
+      ;;             (add-to-list 'flymake-allowed-file-name-masks '(".+\\.rb\\'" flymake-v-init) t)
+      ;;             (add-to-list 'flymake-allowed-file-name-masks '("Rakefile\\'" flymake-v-init) t)
+      ;;             (add-to-list 'flymake-err-line-patterns '("^\\(.*\\):\\([0-9]+\\): \\(.*\\)$" 1 2 nil 3) t)
+      ;;             (add-hook 'v-mode-hook #'flymake-v-enable)))
+
+      ;; ;; turn on syntax highlighting (actually turns off syntax highlighting)
+      ;; (add-hook 'v-mode-hook #'turn-on-font-lock)
+
+      ;; ;; turn on abbreviation mode
+      ;; (abbrev-mode 1)
+
+      (defun v-mode-maybe ()
+        "Determine if file is a v script and switch to `v-mode' if it is."
+        (interactive)
+        (save-mark-and-excursion
+          (save-match-data
+            (goto-char (point-min))
+            (when (or
+                   (search-forward "#!/usr/bin/v" (line-end-position) :noerror)
+                   (search-forward "#!/usr/bin/env v" (line-end-position) :noerror))
+              (v-mode)))))
+
+      ;; run when a file is loaded
+      (add-hook 'find-file-hooks #'v-mode-maybe)
+
+      ;; remove trailing blanks
+      ;;(add-hook 'v-mode-hook #'install-remove-trailing-blanks)
+
+      ;; remove tabs
+      ;;(add-hook 'v-mode-hook #'install-remove-tabs)
+      )
+;; V Mode:1 ends here
 
 ;; [[file:init-emacs.org::*XML Mode][XML Mode:1]]
     ;;------------------------------------------------------------------------------
@@ -18196,7 +18219,6 @@ This function is called by `org-babel-execute-src-block'."
 
       ;; auto-menu
       (use-package auto-menu
-        ;;:quelpa (auto-menu :fetcher file :path (file-truename (expand-file-name "auto-menu.el" local-modules-dir)))
         :load-path (lambda () (file-truename (expand-file-name "auto-menu.el" local-modules-dir)))
         :commands (auto-menu
                    auto-menu-dired
@@ -18730,7 +18752,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 3 "yasnippet")
 
     (use-package yasnippet
-      ;;:quelpa (yasnippet)
       :straight t
       :diminish yas-minor-mode
       :config
@@ -18752,7 +18773,6 @@ This function is called by `org-babel-execute-src-block'."
     (init-message 3 "yasnippet-snippets")
 
     (use-package yasnippet-snippets
-      ;;:quelpa (yasnippet-snippets)
       :straight t
       :after (yasnippet))
 ;; Setup:1 ends here
@@ -18784,7 +18804,6 @@ This function is called by `org-babel-execute-src-block'."
 
     ;; hydra
     (use-package hydra
-      ;;:quelpa (hydra))
       :straight t)
 ;; Setup:1 ends here
 
@@ -18949,7 +18968,6 @@ This function is called by `org-babel-execute-src-block'."
 
   ;; use supercite for quoting
   (use-package supercite
-    ;;:quelpa (supercite)
     :straight t
     :after (gnus)
     :commands (sc-cite-original)
