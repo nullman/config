@@ -1458,8 +1458,8 @@ alias fuvmk="fuser -v -m -k"
 #
 # chmod
 #
-#        chmodx                  chmod +X
-alias chmodx="chmod +X"
+#        chmodx                  chmod +x
+alias chmodx="chmod +x"
 #        chmodd                  chmod u=rwX,g=rX,o=
 alias chmodd="chmod u=rwX,g=rX,o="
 #        chmoddo                 chmod u=rwx,g=rx,o=rx

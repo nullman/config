@@ -79,13 +79,6 @@ _bc focused_border_color  "#5e81ac"
 _bc presel_feedback_color "#5e81ac"
 
 #-------------------------------------------------------------------------------
-# Status Bar
-#-------------------------------------------------------------------------------
-
-# status bar hidden when fullscreen
-#xdo above -t $(xdo id -n root) $(xdo id)
-
-#-------------------------------------------------------------------------------
 # Application Rules
 #-------------------------------------------------------------------------------
 
@@ -154,6 +147,7 @@ _ba mplayer2 state=fullscreen
 _ba vlc state=fullscreen
 _ba 'VirtualBox Manager' state=fullscreen
 _ba 'VirtualBox Machine' state=fullscreen
+_ba w40k.exe state=fullscreen
 
 # floating applications
 _ba arandr state=floating center=true
