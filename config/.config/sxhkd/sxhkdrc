@@ -221,8 +221,12 @@ super + alt + b
 #-------------------------------------------------------------------------------
 
 # volume control
-super + alt + ctrl + {Left,Right}
-    pactl -- set-sink-volume 0 {-,+}10% && aplay "${HOME}/sounds/test.wav"
+# super + alt + ctrl + {Left,Right}
+#     pactl -- set-sink-volume 0 {-,+}10% && aplay "${HOME}/sounds/test.wav"
+super + alt + ctrl + Left
+    pactl -- set-sink-volume 0 -10% && notify-send --expire-time=2000 'Volume Down 10%' && aplay "${HOME}/sounds/test.wav"
+super + alt + ctrl + Right
+    pactl -- set-sink-volume 0 +10% && notify-send --expire-time=2000 'Volume Up 10%' && aplay "${HOME}/sounds/test.wav"
 
 # mpc control
 super + alt + ctrl + m
