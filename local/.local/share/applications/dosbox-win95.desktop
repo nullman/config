@@ -1,5 +1,5 @@
 [Desktop Entry]
-Name=Dosbox Windows 95
+Name=DOSBox Windows 95
 Comment=Emulator with builtin DOS for running DOS Games
 Exec=sh -c "dosbox -conf \\${HOME}/.dosbox/dosbox-0.74-3.conf -conf \\${HOME}/.dosbox/dosbox-win95.conf"
 Type=Application

@@ -1,7 +1,7 @@
 [Desktop Entry]
-Name=Dosbox Windows 98
+Name=DOSBox Windows 98
 Comment=Emulator with builtin DOS for running DOS Games
-Exec=sh -c "dosbox -conf \\${HOME}/.dosbox/dosbox-0.74-3.conf -conf \\${HOME}/i.dosbox/dosbox-win98.conf"
+Exec=sh -c "dosbox -conf \\${HOME}/.dosbox/dosbox-0.74-3.conf -conf \\${HOME}/.dosbox/dosbox-win98.conf"
 Type=Application
 Icon=dosbox
 Terminal=false

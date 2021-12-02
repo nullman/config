@@ -1,5 +1,5 @@
 [Desktop Entry]
-Name=Dosbox M100
+Name=DOSBox M100
 Comment=Emulator with builtin DOS for transferring files to and from a TRS-80 Model 100/102/200 via a serial cable
 Exec=sh -c "dosbox -conf \\${HOME}/.dosbox/dosbox-0.74-3.conf -conf \\${HOME}/.dosbox/dosbox-m100.conf"
 Type=Application

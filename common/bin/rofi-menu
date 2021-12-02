@@ -9,8 +9,6 @@
 
 set -euo pipefail
 
-lsopts=("-1" "--group-directories-first" "--file-type")
-
 # display usage information
 _usage() {
     cat <<EOF
@@ -18,6 +16,7 @@ Usage: $(basename "$0") [MENU]
 Present a menu of rofi menus.
 MENU:
   NONE    Menu of Menus
+  dosbox  DOSBox Emulator
   qemu    QEMU Emulator
   sounds  Play Sounds
   ssh     SSH into Systems
@@ -27,6 +26,7 @@ EOF
 # handle no arguments given
 if [[ $# -lt 1 ]] ; then
     menus=(
+        "DOSBox"
         "Qemu"
         "Sounds"
         "SSH"
@@ -39,10 +39,24 @@ fi
 # handle menu
 menu=$(echo "${menu}" | tr '[:upper:]' '[:lower:]')
 case "${menu}" in
+    dosbox)
+        # generate and display a list of dosbox emulators
+        if [[ $# -lt 2 ]] ; then
+            sel=$(cd "${HOME}/.dosbox" && find -maxdepth 1 -name 'dosbox-*' -not -regex '\./dosbox-0.*' | sed 's%^\./dosbox-\(.*\)\.conf%\1%' | rofi -dmenu -i -p 'DOSBox' -hide-scrollbar)
+        else
+            sel=$2
+        fi
+
+        # launch selected dosbox emulator
+        if [[ -n "${sel}" ]] ; then
+            (dosbox -conf "${HOME}/.dosbox/dosbox-0.74-3.conf" -conf "${HOME}/.dosbox/dosbox-${sel}.conf" &)
+        fi
+        ;;
+
     qemu)
         # generate and display a list of qemu emulators
         if [[ $# -lt 2 ]] ; then
-            sel=$(ls "${lsopts[@]}" "${HOME}/qemu" | rofi -dmenu -i -p 'Qemu' -hide-scrollbar)
+            sel=$(cd ~/qemu && find . -maxdepth 1 -type d -not -regex '^\.+$' | sed 's%\./%%' | sort | rofi -dmenu -i -p 'Qemu' -hide-scrollbar)
         else
             sel=$2
         fi
@@ -64,9 +78,13 @@ case "${menu}" in
         # generate and display a list of sound files and directories to choose from
         _select() {
             if [[ -z "${sel}" ]] ; then
-                local opts=("${stop}" "$(ls "${lsopts[@]}" "${sounddir}")")
+                local opts=(
+                    "${stop}"
+                    "$(cd "${sounddir}" && find . -maxdepth 1 -type d -not -regex '^\.+$' | sed 's%^\./\(.*\)$%[\1]%' | sort)"
+                    "$(cd "${sounddir}" && find . -maxdepth 1 -type f -not -regex '^\.+$' | sed 's%^\./%%' | sort)"
+                )
             else
-                local opts=("${up}" "$(ls "${lsopts[@]}" "${selpath}")")
+                local opts=("${up}" "$(cd "${selpath}" && find . -maxdepth 1 -type f -not -regex '^\.+$' | sed 's%./%%' | sort)")
             fi
             sel=$(printf '%s\n' "${opts[@]}" | rofi -dmenu -i -p 'Sounds' -hide-scrollbar)
         }
@@ -100,7 +118,7 @@ case "${menu}" in
                     _select
                 fi
 
-                sel=$(echo "${sel}" | sed 's%/$%%')
+                sel=$(echo "${sel}" | sed 's%^\[%% ; s%\]$%%')
                 selpath="${sounddir}/${sel}"
                 echo "selpath: ${selpath}"
 

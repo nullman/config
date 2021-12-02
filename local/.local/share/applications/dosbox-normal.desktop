@@ -1,5 +1,5 @@
 [Desktop Entry]
-Name=Dosbox Normal
+Name=DOSBox Normal
 Comment=Emulator with builtin DOS
 Exec=sh -c "dosbox -conf \\${HOME}/.dosbox/dosbox-0.74-3.conf -conf \\${HOME}/.dosbox/dosbox-normal.conf"
 Type=Application
