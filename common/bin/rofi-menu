@@ -31,6 +31,7 @@ if [[ $# -lt 1 ]] ; then
         "DOSBox"
         "Git"
         "Qemu"
+        "Rsync"
         "Sounds"
         "SSH"
     )
@@ -59,30 +60,14 @@ case "${menu}" in
     git)
         # display git repositories
         if [[ $# -lt 2 ]] ; then
-            opts=(
-                "Config"
-                "Extra"
-                "Home"
-            )
-            sel=$(printf '%s\n' "${opts[@]}" | rofi -dmenu -i -p 'Git Synch' -hide-scrollbar)
+            sel=$(grep "#        gitsync" "${HOME}/.funct" | cut -d " " -f 9 | rofi -dmenu -i -p 'Git' -hide-scrollbar)
         else
             sel=$2
         fi
 
         # synchronize with selected git repository
         if [[ -n "${sel}" ]] ; then
-            echo "${sel}"
-            case "${sel}" in
-                Config)
-                    source "${HOME}/.funct" && (gitsyncconfig && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12"
-                    ;;
-                Extra)
-                    source "${HOME}/.funct" && (gitsyncextra && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12"
-                    ;;
-                Home)
-                    source "${HOME}/.funct" && (gitsynchome && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12"
-                    ;;
-            esac
+            source "${HOME}/.funct" && (eval "${sel}" && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12"
         fi
         ;;
 
@@ -97,6 +82,22 @@ case "${menu}" in
         # launch selected qemu emulator
         if [[ -n "${sel}" ]] ; then
             (cd "${HOME}/qemu/${sel}" && ./run &)
+        fi
+        ;;
+
+    rsync)
+        # display rsync targets
+        if [[ $# -lt 2 ]] ; then
+            sel=$(grep "#        rsync-" ~/.alias | cut -d " " -f 9 | rofi -dmenu -i -p 'Rsync' -hide-scrollbar)
+        else
+            sel=$2
+        fi
+
+        # synchronize with selected rsync targets
+        if [[ -n "${sel}" ]] ; then
+            home="$(cd ${HOME} ; cd .. ; pwd)"
+            cmd=$(cat "${HOME}/.alias" | sed ':a;N;$!ba;s/\\\n//g' | sed -n '/alias '"${sel}"'/p' | sed 's/^alias '"${sel}"'="// ; s/"$//')
+            (eval "${cmd}" && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12"
         fi
         ;;
 
