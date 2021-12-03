@@ -4,10 +4,12 @@
 #
 # Make singles and ablums music play lists.
 #
-# A cron entry should execute this script every n minutes.
+# It should be run from a cron job.
 #
 # Author: Kyle W T Sherman
 #===============================================================================
+
+genres=("Classic%Rock" "Classical%-%Instrumental" "Country" "Hard%Rock" "Pop%-%Dance" "R&B" "Rap" "Reggae" "Rock%-%Alternative" "Techno%-%Electronic")
 
 tmpfile="__temp__"
 
@@ -31,7 +33,7 @@ pushd "${musicdir}" > /dev/null 2>&1
 
 [[ -f "${pldir}/${tmpfile}" ]] && rm -f "${pldir}/${tmpfile}"
 for d in Albums ; do
-    for gn in Classic%Rock Classical%-%Instrumental Country Hard%Rock Pop%-%Dance R\&B Rap Reggae Rock%-%Alternative Techno%-%Electronic ; do
+    for gn in ${genres[@]} ; do
         gd=$(echo "${gn}" | sed "s/\%/ /g")
         find "${d}/${gd}/" -type f >> "${pldir}/${tmpfile}"
     done
@@ -48,7 +50,7 @@ fi
 
 [[ -f "${pldir}/${tmpfile}" ]] && rm -f "${pldir}/${tmpfile}"
 for d in Singles ; do
-    for gn in Classic%Rock Classical%-%Instrumental Country Hard%Rock Pop%-%Dance R\&B Rap Reggae Rock%-%Alternative Techno%-%Electronic ; do
+    for gn in ${genres[@]} ; do
         gd=$(echo "${gn}" | sed 's/\%/ /g')
         find "${d}/${gd}/" -type f >> "${pldir}/${tmpfile}"
     done
@@ -72,7 +74,7 @@ mv "${pldir}/${tmpfile}" "${pldir}/raw_all.m3u"
 
 rm "${pldir}/genre_"*.m3u
 for d in Albums Singles ; do
-    for gn in $(find "${d}/" -mindepth 1 -maxdepth 1 -type d | sed 's/^.*\/// ; s/ /\%/g') ; do
+    for gn in $(find "${d}/" -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | sed 's/ /\%/g') ; do
         [[ -f "${pldir}/${tmpfile}" ]] && rm -f "${pldir}/${tmpfile}"
         gd=$(echo "${gn}" | sed "s/\%/ /g")
         find "${d}/${gd}/" -type f >> "${pldir}/${tmpfile}"

@@ -5,7 +5,7 @@
 # Make a nasa picture slide show directory from an existing pull from nasa's
 # pictures of the day.
 #
-# It should be called from a cron job.
+# It should be run from a cron job.
 #
 # It should be run after 'get-nasa-pictures' is run in a cron task like so:
 #   nice -n 10 /root/bin/get-nasa-pictures ; nice -n 19 /root/bin/make-nasa-slide-show
