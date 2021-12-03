@@ -17,7 +17,9 @@ Present a menu of rofi menus.
 MENU:
   NONE    Menu of Menus
   dosbox  DOSBox Emulator
+  git     Synchronize Repositories
   qemu    QEMU Emulator
+  rsync   Synchronize Files
   sounds  Play Sounds
   ssh     SSH into Systems
 EOF
@@ -27,6 +29,7 @@ EOF
 if [[ $# -lt 1 ]] ; then
     menus=(
         "DOSBox"
+        "Git"
         "Qemu"
         "Sounds"
         "SSH"
@@ -50,6 +53,36 @@ case "${menu}" in
         # launch selected dosbox emulator
         if [[ -n "${sel}" ]] ; then
             (dosbox -conf "${HOME}/.dosbox/dosbox-0.74-3.conf" -conf "${HOME}/.dosbox/dosbox-${sel}.conf" &)
+        fi
+        ;;
+
+    git)
+        # display git repositories
+        if [[ $# -lt 2 ]] ; then
+            opts=(
+                "Config"
+                "Extras"
+                "Home"
+            )
+            sel=$(printf '%s\n' "${opts[@]}" | rofi -dmenu -i -p 'Git Synch' -hide-scrollbar)
+        else
+            sel=$2
+        fi
+
+        # synchronize with selected git repository
+        if [[ -n "${sel}" ]] ; then
+            echo "${sel}"
+            case "${sel}" in
+                Config)
+                    source "${HOME}/.funct" && (gitsyncconfig && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12"
+                    ;;
+                Extras)
+                    source "${HOME}/.funct" && (gitsyncextras && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12"
+                    ;;
+                Home)
+                    source "${HOME}/.funct" && (gitsynchome && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12"
+                    ;;
+            esac
         fi
         ;;
 
