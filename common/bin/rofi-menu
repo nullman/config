@@ -61,7 +61,7 @@ case "${menu}" in
         if [[ $# -lt 2 ]] ; then
             opts=(
                 "Config"
-                "Extras"
+                "Extra"
                 "Home"
             )
             sel=$(printf '%s\n' "${opts[@]}" | rofi -dmenu -i -p 'Git Synch' -hide-scrollbar)
@@ -76,8 +76,8 @@ case "${menu}" in
                 Config)
                     source "${HOME}/.funct" && (gitsyncconfig && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12"
                     ;;
-                Extras)
-                    source "${HOME}/.funct" && (gitsyncextras && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12"
+                Extra)
+                    source "${HOME}/.funct" && (gitsyncextra && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12"
                     ;;
                 Home)
                     source "${HOME}/.funct" && (gitsynchome && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12"
