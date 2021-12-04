@@ -68,11 +68,11 @@
 
 # display sxhkd-bspwm keybindings
 super + ctrl + h
-    yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12" --filename="${HOME}/.config/sxhkd/sxhkdrc-bspwm-help"
+    yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12" --tail --filename="${HOME}/.config/sxhkd/sxhkdrc-bspwm-help"
 
 # display bspwm manual
 super + shift + h
-    man bspwm | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12"
+    man bspwm | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12" --tail
 
 # close/kill active program
 super + shift + {w,q}

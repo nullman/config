@@ -67,7 +67,7 @@ case "${menu}" in
 
         # synchronize with selected git repository
         if [[ -n "${sel}" ]] ; then
-            source "${HOME}/.funct" && (eval "${sel}" && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12"
+            source "${HOME}/.funct" && (eval "${sel}" && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12" --tail
         fi
         ;;
 
@@ -97,7 +97,7 @@ case "${menu}" in
         if [[ -n "${sel}" ]] ; then
             home="$(cd ${HOME} ; cd .. ; pwd)"
             cmd=$(cat "${HOME}/.alias" | sed ':a;N;$!ba;s/\\\n//g' | sed -n '/alias '"${sel}"'/p' | sed 's/^alias '"${sel}"'="// ; s/"$//')
-            (eval "${cmd}" && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12"
+            (eval "${cmd}" && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12" --tail
         fi
         ;;
 

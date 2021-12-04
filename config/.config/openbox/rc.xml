@@ -1223,12 +1223,12 @@ pressed. -->
     <!-- XProp -->
     <keybind key="W-S-p">
       <action name="Execute">
-        <command>sh -c "xprop | grep '^WM_CLASS' | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12""</command>
+        <command>sh -c "xprop | grep '^WM_CLASS' | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12" --tail"</command>
       </action>
     </keybind>
     <keybind key="mod5-S-p">
       <action name="Execute">
-        <command>sh -c "xprop | grep '^WM_CLASS' | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12""</command>
+        <command>sh -c "xprop | grep '^WM_CLASS' | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12" --tail"</command>
       </action>
     </keybind>
     <!-- Key bindings for running applications -->
