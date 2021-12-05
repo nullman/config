@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2021-11-28 19:42 (kyle)>
+  #+TIMESTAMP: <2021-12-03 19:50 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -2260,9 +2260,8 @@
         ;; set faces
         ;; green foreground on black background with yellow cursor
         (custom-set-faces
-         ;;'(default ((t (:foreground "green" :background "black"))))
-         '(default ((t (:foreground "#41FF41" :background "black"))))
-         '(cursor ((t (:background "yellow")))))
+         '(default ((t (:foreground "#41FF41" :background "black")))) ; green
+         '(cursor ((t (:background "#FFFF33")))))                     ; yellow
 
         ;; transparant background (not on Macs)
         (defvar background-alpha

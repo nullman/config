@@ -1249,9 +1249,8 @@
       ;; set faces
       ;; green foreground on black background with yellow cursor
       (custom-set-faces
-       ;;'(default ((t (:foreground "green" :background "black"))))
-       '(default ((t (:foreground "#41FF41" :background "black"))))
-       '(cursor ((t (:background "yellow")))))
+       '(default ((t (:foreground "#41FF41" :background "black")))) ; green
+       '(cursor ((t (:background "#FFFF33")))))                     ; yellow
 
       ;; transparant background (not on Macs)
       (defvar background-alpha

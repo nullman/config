@@ -206,8 +206,8 @@ colors:
   #  background: '0x000000'
   #  foreground: '0xeaeaea'
   primary:
-    background: '0x000000'
-    foreground: '0x33ff33'
+    background: '0x000000'              # black
+    foreground: '0x41ff41'              # green
 
     # Bright and dim foreground colors
     #
@@ -227,8 +227,8 @@ colors:
   #  text: '0x000000'
   #  cursor: '0xffffff'
   cursor:
-    text: '0x000000'
-    cursor: '0xffff33'
+    text: '0x000000'                    # black
+    cursor: '0xffff33'                  # yellow
 
   # Selection colors
   #

@@ -705,6 +705,7 @@ EOF
 ansi() {
     if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 FILE"
+        echo "Display an ANSI text graphic file at 1200 baud."
     else
         iconv -f 437 "$1" | pv --quiet --rate-limit 1200
     fi
@@ -713,11 +714,23 @@ ansi() {
 ansislideshow() {
     if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 DIR"
+        echo "Display a slideshow of all ANSI text graphic files in given directory."
     else
         find "$1" -iname *".ANS" -print | sort --random-sort | while read file ; do
             iconv -f 437 "${file}" | pv --quiet --rate-limit 1200
             sleep 10
         done
+    fi
+}
+#        convertvideotomp3       convert video file to audio mp3
+convertvideotomp3() {
+    if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+        echo "Usage: $0 FILE"
+        echo "Convert a video file to an audio mp3 with 192K bitrate."
+    else
+        in="$1"
+        out=$(echo "${in}" | sed 's/\..*$/.mp3/')
+        ffmpeg -i "${in}" -b:a 192K -vn "${out}"
     fi
 }
 
