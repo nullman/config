@@ -1255,7 +1255,7 @@
       ;; green foreground on black background with yellow cursor
       (custom-set-faces
        '(default ((t (:foreground "#41FF41" :background "black")))) ; green
-       '(cursor ((t (:background "#FFFF33")))))                     ; yellow
+       '(cursor ((t (:foreground "black" :background "#FFFF33"))))) ; yellow
 
       ;; transparant background (not on Macs)
       (defvar background-alpha
@@ -15031,7 +15031,7 @@
 
       (defun mingus-insert-song-rating (rating)
         "Insert song rating at current position."
-        (insert (concat "  [" rating "]")))
+        (insert (format "  [%s]" rating)))
 
       (defun mingus-display-song-rating (highlight)
         "Display song rating of currently selected mingus song.
@@ -15047,8 +15047,7 @@
                 (when (re-search-forward "  \\[[0-9]\\]$" (line-end-position) :noerror)
                   (replace-match ""))
                 (goto-char (line-end-position))
-                (let ((rating (mingus-get-song-rating)))
-                  (mingus-insert-song-rating (or rating 0)))
+                (mingus-insert-song-rating (or (mingus-get-song-rating) 0))
                 (when highlight
                   (put-text-property (line-beginning-position) (line-end-position) 'face 'font-lock-keyword-face)))))))
 
@@ -15473,7 +15472,7 @@
                    (playlist (concat mingus-ratings-prefix (number-to-string rating)))
                    (clear-cmd (concat
                                "cd " mingus-ratings-directory " && "
-                               "(for x in $(ls " mingus-ratings-prefix "*) ; do grep -v -F \""
+                               "(for x in $(find . -name '" mingus-ratings-prefix "*') ; do grep -v -F \""
                                (replace-regexp-in-string "\"" "\"" file)
                                "\" \"${x}\" > tmp ; mv tmp \"${x}\" ; done)"))
                    (set-cmd (concat
