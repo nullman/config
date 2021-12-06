@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2021-12-06 12:21 (kyle)>
+  #+TIMESTAMP: <2021-12-06 15:57 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -1542,6 +1542,13 @@
       ;;------------------------------------------------------------------------------
 
       (init-message 2 "Environment Settings: Files")
+    #+END_SRC
+
+    Increase maximum size of file above which a confirmation is requested.
+
+    #+BEGIN_SRC emacs-lisp
+      ;; increase maximum size before confirmation is requested
+      (setq large-file-warning-threshold 50000000)
     #+END_SRC
 
     Enable file local variables, but prompt before running =eval= on any of them.
@@ -21458,6 +21465,9 @@
           (if (get-buffer "*Mingus*")
               (switch-to-buffer "*Mingus*")
             (mingus)))
+
+        (defun mingus-truncate-string (string length)
+          (truncate-string-to-width string (max 1 length) nil 32 "..."))
 
         (defun mingus-format-song-custom-columns (plist)
           "Custom column playlist song format."
