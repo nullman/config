@@ -176,6 +176,9 @@ export XDG_DATA_DIRS="/usr/local/share/:/usr/share/"
 # add flatpak support
 export XDG_DATA_DIRS="${XDG_DATA_DIRS}:${HOME}/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share"
 
+# set java home
+_command java && export JAVA_HOME="$(java -XshowSettings:properties -version 2>&1 > /dev/null | grep 'java.home' | sed 's/^.* = //')"
+
 # # set oracle environment
 # source /etc/.oracle_profile
 
