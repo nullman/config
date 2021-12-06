@@ -18286,6 +18286,7 @@
                         ("reminders" . "~/reminders")
                         ;;("wiki" . "~/wiki")
                         ("doc" . "~/doc")
+                        ("bbs" . "~/doc/bbs")
                         ("dev" . "~/dev")
                         ("prj" . "~/prj")
                         ("code" . "~/code")
