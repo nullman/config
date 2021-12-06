@@ -14953,13 +14953,13 @@
       (defun mingus-format-song-custom-columns (plist)
         "Custom column playlist song format."
         (let* ((show-albums (>= (window-text-width) 140))
-               (available-width (- (window-text-width) 13))
+               (available-width (- (window-text-width) 19))
                (song-width (/ available-width (if show-albums 3 2)))
                (artist-width (/ available-width (if show-albums 3 2)))
                (album-width (/ available-width 3))
                (string
                 (concat
-                 (format "%02d.%.2d  "
+                 (format "% 4d.%.2d  "
                          (/ (or (plist-get plist 'Time) 0) 60)
                          (mod (or (plist-get plist 'Time) 0) 60))
                  (mingus-truncate-string
@@ -14967,14 +14967,14 @@
                       (plist-get plist 'Name)
                       (plist-get plist 'file))
                   song-width)
-                 (concat " "
+                 (concat "  "
                          (mingus-truncate-string
                           (or (plist-get plist 'Artist)
                               (plist-get plist 'AlbumArtist)
                               "")
                           artist-width))
                  (if show-albums
-                     (concat " "
+                     (concat "  "
                              (mingus-truncate-string
                               (or (plist-get plist 'Album) "")
                               album-width))
@@ -15021,6 +15021,10 @@
       ;; advise `mingus-goto-current-song'
       (advice-add 'mingus-goto-current-song :after #'mingus-goto-current-song--recenter)
 
+      (defun mingus-insert-song-rating (rating)
+        "Insert song rating at current position."
+        (insert (concat "  [" rating "]")))
+
       (defun mingus-display-song-rating (highlight)
         "Display song rating of currently selected mingus song.
 
@@ -15032,14 +15036,11 @@
             (save-mark-and-excursion
               (save-match-data
                 (goto-char (line-beginning-position))
-                (when (re-search-forward " \\[[0-9]\\]$" (line-end-position) :noerror)
+                (when (re-search-forward "  \\[[0-9]\\]$" (line-end-position) :noerror)
                   (replace-match ""))
                 (goto-char (line-end-position))
                 (let ((rating (mingus-get-song-rating)))
-                  (when rating
-                    (insert (concat " ["
-                                    (number-to-string (mingus-get-song-rating))
-                                    "]"))))
+                  (mingus-insert-song-rating (or rating 0)))
                 (when highlight
                   (put-text-property (line-beginning-position) (line-end-position) 'face 'font-lock-keyword-face)))))))
 
@@ -15100,9 +15101,7 @@
                             (let* ((file (plist-get details 'file))
                                    (rating (gethash file ratings)))
                               (goto-char (line-end-position))
-                              (if rating
-                                  (insert (concat " [" (number-to-string rating) "]"))
-                                (insert " [0]"))))))))
+                              (mingus-insert-song-rating (number-to-string (or rating 0)))))))))
                   (forward-line 1)))))))
       ;; advise `mingus-switch-to-playlist'
       (advice-add 'mingus-switch-to-playlist :after #'mingus-display-all-song-ratings)
