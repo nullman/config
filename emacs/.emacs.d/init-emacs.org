@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2021-12-06 16:37 (kyle)>
+  #+TIMESTAMP: <2021-12-08 13:38 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -25896,6 +25896,11 @@
       (init-message 2 "Modes: Lisp Mode")
 
       (defun local-lisp-mode-hook ()
+        ;; double-space punctuation
+        (when (fboundp 'double-space-punctuation)
+          (bind-keys :map lisp-mode-map
+                     ("C-M-q" . double-space-punctuation)))
+
         ;; disable tabs
         (disable-tabs)
 
@@ -26453,6 +26458,11 @@
       Delete converts tabs to spaces as it moves back.
       Blank lines separate paragraphs.  Semicolons start comments.
       \\{scheme-mode-map}"
+          ;; double-space punctuation
+          (when (fboundp 'double-space-punctuation)
+            (bind-keys :map racket-mode-map
+                       ("C-M-q" . double-space-punctuation)))
+
           ;; turn on geiser-mode
           (when (fboundp 'geiser-mode)
             (geiser-mode t)))

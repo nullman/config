@@ -17020,6 +17020,11 @@
     (init-message 2 "Modes: Lisp Mode")
 
     (defun local-lisp-mode-hook ()
+      ;; double-space punctuation
+      (when (fboundp 'double-space-punctuation)
+        (bind-keys :map lisp-mode-map
+                   ("C-M-q" . double-space-punctuation)))
+
       ;; disable tabs
       (disable-tabs)
 
@@ -17351,6 +17356,11 @@
     Delete converts tabs to spaces as it moves back.
     Blank lines separate paragraphs.  Semicolons start comments.
     \\{scheme-mode-map}"
+        ;; double-space punctuation
+        (when (fboundp 'double-space-punctuation)
+          (bind-keys :map racket-mode-map
+                     ("C-M-q" . double-space-punctuation)))
+
         ;; turn on geiser-mode
         (when (fboundp 'geiser-mode)
           (geiser-mode t)))
