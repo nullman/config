@@ -1045,7 +1045,9 @@
               standard-indent width         ; set margin-changing functions indent
               tab-always-indent 'complete ; tab key will try to auto-complete after auto-tabbing line
               tab-stop-list (number-sequence width 180 width) ; set tab stops
-              backward-delete-char-untabify-method 'hungry))) ; backspace will erase tab instead of one space
+              backward-delete-char-untabify-method nil))) ; backspace will just delete one character
+              ;; backward-delete-char-untabify-method 'untabify))) ; backspace will turn a tab to many spaces, then delete one space
+              ;; backward-delete-char-untabify-method 'hungry))) ; backspace will delete all whitespace, both tabs and spaces
 
     ;; disable tabs
     (defun disable-tabs (&optional width)
@@ -10151,7 +10153,7 @@
                       end (mark-marker)))
               (goto-char beg)
               (while (and (< (point) end)
-                          (re-search-forward "\\([^[:blank:]][.?!]['\"”]?\\)[[:blank:]]\\([^[:blank:]]\\)" end :noerror))
+                          (re-search-forward "\\([^[:blank:]][.?!]['\"”)]?\\)[[:blank:]]\\([^[:blank:]]\\)" end :noerror))
                 (replace-match "\\1  \\2"))))))
 ;; double-space-punctuation:1 ends here
 
@@ -10176,7 +10178,7 @@
                       end (mark-marker)))
               (goto-char beg)
               (while (and (< (point) end)
-                          (re-search-forward "\\([^[:blank:]][.?!]['\"”]?\\)[[:blank:]]\\([^[:blank:]]\\)" end :noerror))
+                          (re-search-forward "\\([^[:blank:]][.?!]['\"”)]?\\)[[:blank:]]\\([^[:blank:]]\\)" end :noerror))
                 (replace-match "\\1 \\2"))))))
 ;; single-space-punctuation:1 ends here
 

@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2021-12-08 13:38 (kyle)>
+  #+TIMESTAMP: <2021-12-08 18:59 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -1840,7 +1840,9 @@
                 standard-indent width         ; set margin-changing functions indent
                 tab-always-indent 'complete ; tab key will try to auto-complete after auto-tabbing line
                 tab-stop-list (number-sequence width 180 width) ; set tab stops
-                backward-delete-char-untabify-method 'hungry))) ; backspace will erase tab instead of one space
+                backward-delete-char-untabify-method nil))) ; backspace will just delete one character
+                ;; backward-delete-char-untabify-method 'untabify))) ; backspace will turn a tab to many spaces, then delete one space
+                ;; backward-delete-char-untabify-method 'hungry))) ; backspace will delete all whitespace, both tabs and spaces
 
       ;; disable tabs
       (defun disable-tabs (&optional width)
@@ -14541,7 +14543,7 @@
                         end (mark-marker)))
                 (goto-char beg)
                 (while (and (< (point) end)
-                            (re-search-forward "\\([^[:blank:]][.?!]['\"”]?\\)[[:blank:]]\\([^[:blank:]]\\)" end :noerror))
+                            (re-search-forward "\\([^[:blank:]][.?!]['\"”)]?\\)[[:blank:]]\\([^[:blank:]]\\)" end :noerror))
                   (replace-match "\\1  \\2"))))))
       #+END_SRC
 
@@ -14571,7 +14573,7 @@
                         end (mark-marker)))
                 (goto-char beg)
                 (while (and (< (point) end)
-                            (re-search-forward "\\([^[:blank:]][.?!]['\"”]?\\)[[:blank:]]\\([^[:blank:]]\\)" end :noerror))
+                            (re-search-forward "\\([^[:blank:]][.?!]['\"”)]?\\)[[:blank:]]\\([^[:blank:]]\\)" end :noerror))
                   (replace-match "\\1 \\2"))))))
       #+END_SRC
 
