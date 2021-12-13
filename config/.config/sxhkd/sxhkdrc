@@ -138,7 +138,7 @@ super + alt + d
     rofi -modi run -show run
 
 # menu launcher
-super + alt + m
+super + alt + Return
     ${HOME}/bin/rofi-menu
 
 # window selector
@@ -156,6 +156,10 @@ super + alt + p
 # session menu
 super + shift + e
     ${HOME}/bin/rofi-session-menu -s
+
+# display time
+super + alt + backslash
+    echo "$(date '+%Y-%m-%d')\n $(date '+%H:%M:%S')" | yad --text-info --width=520 --height=240 --no-buttons --timeout=3 --fontname="Droid Sans Mono 64"
 
 # get xprop class name
 super + shift + p
@@ -285,8 +289,6 @@ super + alt + ctrl + apostrophe
 
 # terminal
 super + alt + t
-    alacritty
-super + alt + Return
     alacritty
 
 #===============================================================================

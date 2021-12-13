@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2021-12-08 18:59 (kyle)>
+  #+TIMESTAMP: <2021-12-11 17:29 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -2523,8 +2523,8 @@
       (defun custom-key-bindings-extended-keys ()
         "Set custom extended key bindings."
 
-        ;; turn off insert key
-        (unbind-key "<insert>")               ; defaults to `overwrite-mode'
+        ;; ;; turn off insert key
+        ;; (unbind-key "<insert>")               ; defaults to `overwrite-mode'
 
         ;; ;; window move
         ;; (when (fboundp 'windmove-left)

@@ -1490,8 +1490,8 @@
     (defun custom-key-bindings-extended-keys ()
       "Set custom extended key bindings."
 
-      ;; turn off insert key
-      (unbind-key "<insert>")               ; defaults to `overwrite-mode'
+      ;; ;; turn off insert key
+      ;; (unbind-key "<insert>")               ; defaults to `overwrite-mode'
 
       ;; ;; window move
       ;; (when (fboundp 'windmove-left)
