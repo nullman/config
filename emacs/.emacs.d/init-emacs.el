@@ -13967,6 +13967,8 @@
       :straight t
       :bind (("<f5>" . define-word-after-spell-check)
              ("S-<f5>" . define-word-at-point))
+      :custom
+      (define-word-default-service 'webster)
       :config
       (defun define-word-after-spell-check (word service &optional choose-service)
         "Define WORD using various services after spell checking WORD.

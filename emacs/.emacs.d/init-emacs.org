@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2021-12-11 17:29 (kyle)>
+  #+TIMESTAMP: <2021-12-15 22:54 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -19547,6 +19547,8 @@
         :straight t
         :bind (("<f5>" . define-word-after-spell-check)
                ("S-<f5>" . define-word-at-point))
+        :custom
+        (define-word-default-service 'webster)
         :config
         (defun define-word-after-spell-check (word service &optional choose-service)
           "Define WORD using various services after spell checking WORD.
