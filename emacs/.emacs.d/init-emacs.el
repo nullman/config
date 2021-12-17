@@ -2261,7 +2261,7 @@
       (custom-set-faces
        '(outline-1 ((t (:foreground "#f6aa11"))))
        '(outline-2 ((t (:foreground "#b9d977"))))
-       '(outline-3 ((t (:foreground "#8996a8"))))
+       '(outline-3 ((t (:foreground "#db7093"))))
        '(outline-4 ((t (:foreground "#f1e94b"))))
        '(outline-5 ((t (:foreground "#ffa07a"))))
        '(outline-6 ((t (:foreground "#93e0e3"))))
@@ -2347,7 +2347,7 @@
        '(org-block ((t (:inherit shadow :foreground "green"))))
        '(org-level-1 ((t (:foreground "#f6aa11"))))
        '(org-level-2 ((t (:foreground "#b9d977"))))
-       '(org-level-3 ((t (:foreground "#8996a8"))))
+       '(org-level-3 ((t (:foreground "#db7093"))))
        '(org-level-4 ((t (:foreground "#f1e94b"))))
        '(org-level-5 ((t (:foreground "#ffa07a"))))
        '(org-level-6 ((t (:foreground "#93e0e3"))))
