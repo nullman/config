@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2021-12-16 23:38 (kyle)>
+  #+TIMESTAMP: <2021-12-17 10:00 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -1084,6 +1084,15 @@
 
       ;; use curly arrows to indicate a visual line wrap
       (setq visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
+    #+END_SRC
+
+    Set line number mode to *relative* as the default behavior.
+
+    #+BEGIN_SRC emacs-lisp
+      (init-message 3 "Set `display-line-numbers-type' to relative")
+
+      ;; when `display-line-numbers-mode' is on use relative numbering
+      (setq display-line-numbers-type 'relative)
     #+END_SRC
 
     Prevent =next-line= from inserting newlines.  (This stops the cursor at the

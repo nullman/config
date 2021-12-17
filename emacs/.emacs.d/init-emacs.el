@@ -487,20 +487,27 @@
 ;; General:14 ends here
 
 ;; [[file:init-emacs.org::*General][General:15]]
+    (init-message 3 "Set `display-line-numbers-type' to relative")
+
+    ;; when `display-line-numbers-mode' is on use relative numbering
+    (setq display-line-numbers-type 'relative)
+;; General:15 ends here
+
+;; [[file:init-emacs.org::*General][General:16]]
     (init-message 3 "Prevent `next-line' from Inserting Newlines")
 
     ;; stop cursor at the end of the file
     (setq next-line-add-newlines nil)
-;; General:15 ends here
+;; General:16 ends here
 
-;; [[file:init-emacs.org::*General][General:16]]
+;; [[file:init-emacs.org::*General][General:17]]
     (init-message 3 "Keep the Cursor in the Same Column When Using Page-Up and Page-Down")
 
     ;; keep screen position when using page-up and page-down
     (setq scroll-preserve-screen-position 'keep)
-;; General:16 ends here
+;; General:17 ends here
 
-;; [[file:init-emacs.org::*General][General:17]]
+;; [[file:init-emacs.org::*General][General:18]]
     (init-message 3 "Scroll Conservatively")
 
     ;; scroll one line at a time
@@ -509,33 +516,33 @@
     (setq scroll-conservatively 101)
     ;; turn off vertical auto-scroll
     (setq auto-window-vscroll nil)
-;; General:17 ends here
+;; General:18 ends here
 
-;; [[file:init-emacs.org::*General][General:18]]
+;; [[file:init-emacs.org::*General][General:19]]
     (init-message 3 "Ignore Case on Search Matches")
 
     ;; make searches case-insensitive
     (setq case-fold-search t)
-;; General:18 ends here
+;; General:19 ends here
 
-;; [[file:init-emacs.org::*General][General:19]]
+;; [[file:init-emacs.org::*General][General:20]]
     (init-message 3 "Highlight Search Matches")
 
     ;; highlight search matches
     (setq search-highlight t
           ;;isearch-highlight t
           query-replace-highlight t)
-;; General:19 ends here
+;; General:20 ends here
 
-;; [[file:init-emacs.org::*General][General:20]]
+;; [[file:init-emacs.org::*General][General:21]]
     (init-message 3 "Hightlight Marked Regions")
 
     ;; make current selection visible
     (transient-mark-mode 1)
     (setq-default transient-mark-mode t)
-;; General:20 ends here
+;; General:21 ends here
 
-;; [[file:init-emacs.org::*General][General:21]]
+;; [[file:init-emacs.org::*General][General:22]]
     (init-message 3 "Set Default Tab Indentation to Four Spaces and Turn on Auto-Complete")
 
     ;; set tab indentation, width, and convert tabs to spaces
@@ -549,17 +556,17 @@
                   standard-indent standard-indent
                   tab-always-indent tab-always-indent
                   tab-stop-list tab-stop-list)
-;; General:21 ends here
+;; General:22 ends here
 
-;; [[file:init-emacs.org::*General][General:22]]
+;; [[file:init-emacs.org::*General][General:23]]
     (init-message 3 "Set Default Line-Wrapping Column to 78")
 
     ;; set default fill column for `auto-fill-mode' mode and `fill-paragraph'
     (setq fill-column 78)
     (setq-default fill-column fill-column)
-;; General:22 ends here
+;; General:23 ends here
 
-;; [[file:init-emacs.org::*General][General:23]]
+;; [[file:init-emacs.org::*General][General:24]]
     (init-message 3 "Set Default Right-Margin Comment Indent Column to 40")
 
     ;; set default comment column for in-line comments
@@ -568,40 +575,40 @@
     ;; set default comment fill column for in-line comments
     (setq comment-fill-column nil)
     (setq-default comment-fill-column comment-fill-column)
-;; General:23 ends here
+;; General:24 ends here
 
-;; [[file:init-emacs.org::*General][General:24]]
+;; [[file:init-emacs.org::*General][General:25]]
     (init-message 3 "Have Cursor Movements Attempt to Keep Point on Original Column")
 
     ;; turn on goal column support
     (put 'set-goal-column 'disabled nil)
-;; General:24 ends here
+;; General:25 ends here
 
-;; [[file:init-emacs.org::*General][General:25]]
+;; [[file:init-emacs.org::*General][General:26]]
     (init-message 3 "Sentences and Colons Should Have Two Spaces after Them")
 
     ;; insert two spaces after a sentence when filling text
     (setq sentence-end-double-space t)
     ;; insert two spaces after a colon when filling text
     (setq colon-double-space t)
-;; General:25 ends here
+;; General:26 ends here
 
-;; [[file:init-emacs.org::*General][General:26]]
+;; [[file:init-emacs.org::*General][General:27]]
     (init-message 3 "Highlight Matching Parenthesis")
 
     ;; highlight matching parenthesis
     (show-paren-mode 1)
-;; General:26 ends here
+;; General:27 ends here
 
-;; [[file:init-emacs.org::*General][General:27]]
+;; [[file:init-emacs.org::*General][General:28]]
     (init-message 3 "Highlight TABs")
 
     ;; highlight tabs
     (setq highlight-tabs t)
     (setq-default highlight-tabs highlight-tabs)
-;; General:27 ends here
+;; General:28 ends here
 
-;; [[file:init-emacs.org::*General][General:28]]
+;; [[file:init-emacs.org::*General][General:29]]
     (init-message 3 "Highlight Tabs and Trailing Whitespace")
 
     ;; ;; highlight trailing white spaces
@@ -616,32 +623,32 @@
             (newline-mark 10 [182 10]) ; 10 linefeed '\n', 182 ??? '¶'
             (tab-mark 9 [9655 9] [92 9])))    ; 9 tab '\t', 9655 '▷', 92 backslash '\'
     (global-whitespace-mode)              ; enable whitespace mode everywhere
-;; General:28 ends here
+;; General:29 ends here
 
-;; [[file:init-emacs.org::*General][General:29]]
+;; [[file:init-emacs.org::*General][General:30]]
     (init-message 3 "Highlight Current Line")
 
     ;; highlight current line
     (hl-line-mode 1)
     (global-hl-line-mode 1)
-;; General:29 ends here
+;; General:30 ends here
 
-;; [[file:init-emacs.org::*General][General:30]]
+;; [[file:init-emacs.org::*General][General:31]]
     (init-message 3 "Turn on Syntax Highlighting")
 
     ;; turn on global font lock mode and syntax highlighting
     (global-font-lock-mode 1)
     (setq font-lock-maximum-decoration t)
-;; General:30 ends here
+;; General:31 ends here
 
-;; [[file:init-emacs.org::*General][General:31]]
+;; [[file:init-emacs.org::*General][General:32]]
     (init-message 3 "Typing Replaces Highlighted Text")
 
     ;; replace highlighted text with typed text
     (delete-selection-mode t)
-;; General:31 ends here
+;; General:32 ends here
 
-;; [[file:init-emacs.org::*General][General:32]]
+;; [[file:init-emacs.org::*General][General:33]]
     (init-message 3 "Set Commenting Style to Indent")
 
     ;; ;; set comment start (default) and padding
@@ -649,9 +656,9 @@
     ;;       comment-padding " ")
     ;; set comment style
     (setq comment-style 'indent)
-;; General:32 ends here
+;; General:33 ends here
 
-;; [[file:init-emacs.org::*General][General:33]]
+;; [[file:init-emacs.org::*General][General:34]]
     (init-message 3 "Have `apropos' Search All Symbols and Order by Relevance")
 
     ;; make apropos command search all symbols
@@ -660,25 +667,25 @@
     ;; make apropos command list results by relevance
     (setq apropos-sort-by-scores t
           apropos-documentation-sort-by-scores t)
-;; General:33 ends here
+;; General:34 ends here
 
-;; [[file:init-emacs.org::*General][General:34]]
+;; [[file:init-emacs.org::*General][General:35]]
     (init-message 3 "Set Default `grep' Command")
 
     ;; set grep command
     (setq grep-command "grep -n -H -i -r -e ")
-;; General:34 ends here
+;; General:35 ends here
 
-;; [[file:init-emacs.org::*General][General:35]]
+;; [[file:init-emacs.org::*General][General:36]]
     (init-message 3 "Set Email Sources")
 
     ;; email settings
     (setq mail-sources `((pop :server "pop.gmail.com" :port 995
                               :user ,user-mail-address
                               :connection ssl :leave t)))
-;; General:35 ends here
+;; General:36 ends here
 
-;; [[file:init-emacs.org::*General][General:36]]
+;; [[file:init-emacs.org::*General][General:37]]
     (init-message 3 "Set Default Browser")
 
     ;; set default browser
@@ -695,32 +702,32 @@
 
     ;; set secondary browser
     (setq browse-url-secondary-browser-function 'browse-url-default-browser)
-;; General:36 ends here
+;; General:37 ends here
 
-;; [[file:init-emacs.org::*General][General:37]]
+;; [[file:init-emacs.org::*General][General:38]]
     (init-message 3 "Single Character Deletion Commands Delete Active Regions Without Saving to the Kill Ring")
 
     ;; when deleting an active region via single character deletion command,
     ;; do not save to kill ring
     (setq delete-active-region t)
-;; General:37 ends here
+;; General:38 ends here
 
-;; [[file:init-emacs.org::*General][General:38]]
+;; [[file:init-emacs.org::*General][General:39]]
     (init-message 3 "Disable `vc-git'.")
 
     ;; disable vc-git
     (setq vc-handled-backends nil)
-;; General:38 ends here
+;; General:39 ends here
 
-;; [[file:init-emacs.org::*General][General:39]]
+;; [[file:init-emacs.org::*General][General:40]]
     ;; (init-message 3 "Recenter window after `next-error'.")
 
     ;; ;; always recenter after `next-error'
     ;; (setq next-error-recenter '(4))
     ;; ;;(add-hook 'next-error-hook #'recenter :append)
-;; General:39 ends here
+;; General:40 ends here
 
-;; [[file:init-emacs.org::*General][General:40]]
+;; [[file:init-emacs.org::*General][General:41]]
     (init-message 3 "Recenter window after `occur-mode-goto-occurrence'.")
 
     ;; always recenter after `occur-mode-goto-occurrence'
@@ -729,9 +736,9 @@
       (recenter))
     ;; advise `occur-mode-goto-occurrence'
     (advice-add 'occur-mode-goto-occurrence :after #'occur-mode-goto-occurrence--recenter)
-;; General:40 ends here
+;; General:41 ends here
 
-;; [[file:init-emacs.org::*General][General:41]]
+;; [[file:init-emacs.org::*General][General:42]]
     (init-message 3 "Set time zones to use for `display-time-world'.")
 
     ;; set display-time-world time zones
@@ -744,16 +751,16 @@
             ("Europe/London" "London")
             ("Europe/Paris" "Paris")
             ("Asia/Tokyo" "Tokyo")))
-;; General:41 ends here
+;; General:42 ends here
 
-;; [[file:init-emacs.org::*General][General:42]]
+;; [[file:init-emacs.org::*General][General:43]]
     (init-message 3 "Set `safe-local-variable-values'.")
 
     ;; set safe-local-variable-values
     (setq safe-local-variable-values
           '((org-babel-noweb-wrap-end . "}}}")
             (org-babel-noweb-wrap-start . "{{{")))
-;; General:42 ends here
+;; General:43 ends here
 
 ;; [[file:init-emacs.org::*System][System:1]]
     ;;------------------------------------------------------------------------------
