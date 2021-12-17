@@ -1293,6 +1293,12 @@
         :straight t
         :init (load-theme 'flatland t))
 
+      ;; ;; gruber-darker theme
+      ;; ;; https://github.com/rexim/gruber-darker-theme
+      ;; (use-package gruber-darker-theme
+      ;;   :straight t
+      ;;   :init (load-theme 'gruber-darker t))
+
       ;; ;; dracula theme
       ;; ;; https://draculatheme.com/emacs/
       ;; (use-package dracula-theme
@@ -2224,10 +2230,10 @@
           (let (beg end)
             (org-with-wide-buffer
              (delq nil
-                   (mapcar (lambda (o)
-                             (when (eq (overlay-get o 'invisible) 'outline)
-                               (setq beg (overlay-start o)
-                                     end (overlay-end o))
+                   (mapcar (lambda (x)
+                             (when (eq (overlay-get x 'invisible) 'outline)
+                               (setq beg (overlay-start x)
+                                     end (overlay-end x))
                                (and beg end (> end beg)
                                     (if use-markers
                                         (cons (copy-marker beg)
@@ -2251,6 +2257,17 @@
                  outline-forward-same-level
                  outline-show-subtree)
       :config
+      ;; faces
+      (custom-set-faces
+       '(outline-1 ((t (:foreground "#f6aa11"))))
+       '(outline-2 ((t (:foreground "#b9d977"))))
+       '(outline-3 ((t (:foreground "#8996a8"))))
+       '(outline-4 ((t (:foreground "#f1e94b"))))
+       '(outline-5 ((t (:foreground "#ffa07a"))))
+       '(outline-6 ((t (:foreground "#93e0e3"))))
+       '(outline-7 ((t (:foreground "#9acd32"))))
+       '(outline-8 ((t (:foreground "#ffb6c1")))))
+
       ;; advise `outline-up-heading' to suppress errors
       (advice-add 'outline-up-heading :around #'advice--ignore-errors))
 
@@ -2328,14 +2345,14 @@
       ;; faces
       (custom-set-faces
        '(org-block ((t (:inherit shadow :foreground "green"))))
-       '(org-level-1 ((t (:foreground "orange"))))
-       '(org-level-2 ((t (:foreground "deep sky blue"))))
-       '(org-level-3 ((t (:foreground "yellow green"))))
-       '(org-level-4 ((t (:foreground "salmon"))))
-       '(org-level-5 ((t (:foreground "orchid"))))
-       '(org-level-6 ((t (:foreground "cyan"))))
-       '(org-level-7 ((t (:foreground "spring green"))))
-       '(org-level-8 ((t (:foreground "tomato")))))
+       '(org-level-1 ((t (:foreground "#f6aa11"))))
+       '(org-level-2 ((t (:foreground "#b9d977"))))
+       '(org-level-3 ((t (:foreground "#8996a8"))))
+       '(org-level-4 ((t (:foreground "#f1e94b"))))
+       '(org-level-5 ((t (:foreground "#ffa07a"))))
+       '(org-level-6 ((t (:foreground "#93e0e3"))))
+       '(org-level-7 ((t (:foreground "#9acd32"))))
+       '(org-level-8 ((t (:foreground "#ffb6c1")))))
 
       ;; set file apps
       (when window-system
@@ -3566,59 +3583,69 @@
 
       (init-message 3 "Org Mode: Babel: Racket")
 
-      ;; default to racket-mode for racket files
-      (defvar org-babel-tangle-lang-exts)
-      (add-to-list 'org-babel-tangle-lang-exts '("racket" . "rkt"))
 
-      (defvar org-babel-racket-command "racket")
-      (defvar org-babel-default-header-args:racket '())
-      (defvar org-babel-header-args:racket '((package . :any)))
+      (use-package ob-racket
+        :straight (ob-racket
+                   :type git :host github :repo "hasu/emacs-ob-racket"
+                   :files ("*.el" "*.rkt"))
+        :config
+        :after org
+        (add-hook 'ob-racket-pre-runtime-library-load-hook
+                  #'ob-racket-raco-make-runtime-library)
 
-      (defun org-babel-execute:racket (body params)
-        "Execute a block of Racket Scheme code with Babel.
+        ;; ;; default to racket-mode for racket files
+        ;; (defvar org-babel-tangle-lang-exts)
+        ;; (add-to-list 'org-babel-tangle-lang-exts '("racket" . "rkt"))
+
+        (defvar org-babel-racket-command "racket")
+        (defvar org-babel-default-header-args:racket '())
+        (defvar org-babel-header-args:racket '((package . :any)))
+
+        (defun org-babel-execute:racket (body params)
+          "Execute a block of Racket Scheme code with Babel.
       BODY is the contents of the block, as a string.  PARAMS is
       a property list containing the parameters of the block.
 
       This function is called by `org-babel-execute-src-block'."
-        (let ((result
-               ;; if there is a #lang line then geiser racket session wont work
-               (if (with-temp-buffer
-                     (insert (org-babel-expand-body:lisp body params))
-                     (goto-char (point-min))
-                     (re-search-forward "^[ \t]*#lang +\\([^ ]+\\)" nil :noerror))
-                   ;; create temporary racket file and execute it for result
-                   (let ((src-file (org-babel-src-file "racket-" ".rkt")))
-                     (with-temp-file src-file
-                       (insert (org-babel-expand-body:lisp body params)))
-                     (org-babel-eval (concat org-babel-racket-command " " src-file) ""))
-                 ;; otherwise, eval body in geiser racket session for result
-                 (funcall (if (member "output" (cdr (assq :result-params params)))
-                              (lambda (x) (cdr (assq (intern "output") x)))
-                            (lambda (x) (cdr (assq (intern "result") x))))
-                          (with-temp-buffer
-                            (insert (org-babel-expand-body:lisp body params))
-                            (racket-mode)
-                            ;; check for non-comment lines
-                            (goto-char (point-min))
-                            (while (and (not (eobp))
-                                        (looking-at "^[ \t]*\\(;\\|$\\)"))
-                              (forward-line 1))
-                            ;; only continue if there are non-comment lines
-                            ;; (otherwise geiser eval commands hang)
-                            (unless (eobp)
-                              (if (fboundp 'geiser-eval-region)
-                                  (geiser-eval-region (point-min) (point-max) nil :raw)
-                                (error "geiser-eval-region not defined"))))))))
-          (org-babel-reassemble-table
-           (org-babel-result-cond (cdr (assq :result-params params))
-             result
-             (condition-case nil
-                 (read (org-babel-lisp-vector-to-list result))
-               (error result)))
-           (org-babel-pick-name (cdr (assq :colname-names params))
-                                (cdr (assq :colnames params)))
-           (org-babel-pick-name (cdr (assq :rowname-names params))
-                                (cdr (assq :rownames params))))))
+          (let ((result
+                 ;; if there is a #lang line then geiser racket session wont work
+                 (if (with-temp-buffer
+                       (insert (org-babel-expand-body:lisp body params))
+                       (goto-char (point-min))
+                       (re-search-forward "^[ \t]*#lang +\\([^ ]+\\)" nil :noerror))
+                     ;; create temporary racket file and execute it for result
+                     (let ((src-file (org-babel-src-file "racket-" ".rkt")))
+                       (with-temp-file src-file
+                         (insert (org-babel-expand-body:lisp body params)))
+                       (org-babel-eval (concat org-babel-racket-command " " src-file) ""))
+                   ;; otherwise, eval body in geiser racket session for result
+                   (funcall (if (member "output" (cdr (assq :result-params params)))
+                                (lambda (x) (cdr (assq (intern "output") x)))
+                              (lambda (x) (cdr (assq (intern "result") x))))
+                            (with-temp-buffer
+                              (insert (org-babel-expand-body:lisp body params))
+                              (racket-mode)
+                              ;; check for non-comment lines
+                              (goto-char (point-min))
+                              (while (and (not (eobp))
+                                          (looking-at "^[ \t]*\\(;\\|$\\)"))
+                                (forward-line 1))
+                              ;; only continue if there are non-comment lines
+                              ;; (otherwise geiser eval commands hang)
+                              (unless (eobp)
+                                (if (fboundp 'geiser-eval-region)
+                                    (geiser-eval-region (point-min) (point-max) nil :raw)
+                                  (error "geiser-eval-region not defined"))))))))
+            (org-babel-reassemble-table
+             (org-babel-result-cond (cdr (assq :result-params params))
+               result
+               (condition-case nil
+                   (read (org-babel-lisp-vector-to-list result))
+                 (error result)))
+             (org-babel-pick-name (cdr (assq :colname-names params))
+                                  (cdr (assq :colnames params)))
+             (org-babel-pick-name (cdr (assq :rowname-names params))
+                                  (cdr (assq :rownames params)))))))
 
       ;; (use-package ob-scheme
       ;;   :config (progn
@@ -4112,6 +4139,7 @@
                                    (perl . t)
                                    (plantuml . t)
                                    (python . t)
+                                   (racket . t)
                                    (ruby . t)
                                    (rust . t)
                                    (scheme . t)
@@ -4122,6 +4150,7 @@
       ;; (only needed if the mode name is not LANG-mode)
       ;;(add-to-list 'org-src-lang-modes '("java" . jdee))
       (add-to-list 'org-src-lang-modes '("dot" . graphviz-dot))
+      (add-to-list 'org-src-lang-modes '("racket" . scheme))
 ;; Load Languages:1 ends here
 
 ;; [[file:init-emacs.org::*Babel Functions][Babel Functions:1]]
@@ -10975,6 +11004,99 @@
         (insert-password-phrase 3 'hyphen))
 ;; insert-password-phrase:1 ends here
 
+;; [[file:init-emacs.org::*insert-license-gpl][insert-license-gpl:1]]
+      ;;------------------------------------------------------------------------------
+      ;;;; Functions: Text Inserting Functions: insert-license-gpl
+      ;;------------------------------------------------------------------------------
+
+      (init-message 3 "Functions: Text Inserting Functions: insert-license-gpl")
+
+      (defun insert-license-gpl ()
+        "Insert GPL2 license block to be used at the top of code files."
+        (interactive "*")
+        (let ((text
+               '("This program is free software; you can redistribute it and/or modify"
+                 "it under the terms of the GNU General Public License as published by"
+                 "the Free Software Foundation; either version 2 of the License, or"
+                 "(at your option) any later version."
+                 ""
+                 "This program is distributed in the hope that it will be useful,"
+                 "but WITHOUT ANY WARRANTY; without even the implied warranty of"
+                 "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the"
+                 "GNU General Public License for more details."
+                 ""
+                 "You should have received a copy of the GNU General Public License along"
+                 "with this program; if not, write to the Free Software Foundation, Inc.,"
+                 "51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.")))
+          (dolist (x text)
+            (call-interactively #'comment-dwim)
+            (insert x)
+            (newline))))
+;; insert-license-gpl:1 ends here
+
+;; [[file:init-emacs.org::*insert-license-mit][insert-license-mit:1]]
+      ;;------------------------------------------------------------------------------
+      ;;;; Functions: Text Inserting Functions: insert-license-mit
+      ;;------------------------------------------------------------------------------
+
+      (init-message 3 "Functions: Text Inserting Functions: insert-license-mit")
+
+      (defun insert-license-mit ()
+        "Insert MIT license block to be used at the top of code files."
+        (interactive "*")
+        (let ((text
+               '("Permission is hereby granted, free of charge, to any person obtaining"
+                 "a copy of this software and associated documentation files (the"
+                 "\"Software\"), to deal in the Software without restriction, including"
+                 "without limitation the rights to use, copy, modify, merge, publish,"
+                 "distribute, sublicense, and/or sell copies of the Software, and to"
+                 "permit persons to whom the Software is furnished to do so, subject to"
+                 "the following conditions:"
+                 ""
+                 "The above copyright notice and this permission notice shall be"
+                 "included in all copies or substantial portions of the Software."
+                 ""
+                 "THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND,"
+                 "EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF"
+                 "MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND"
+                 "NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE"
+                 "LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION"
+                 "OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION"
+                 "WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.")))
+          (dolist (x text)
+            (call-interactively #'comment-dwim)
+            (insert x)
+            (newline))))
+;; insert-license-mit:1 ends here
+
+;; [[file:init-emacs.org::*insert-license-apache][insert-license-apache:1]]
+      ;;------------------------------------------------------------------------------
+      ;;;; Functions: Text Inserting Functions: insert-license-apache
+      ;;------------------------------------------------------------------------------
+
+      (init-message 3 "Functions: Text Inserting Functions: insert-license-apache")
+
+      (defun insert-license-apache ()
+        "Insert Apache license block to be used at the top of code files."
+        (interactive "*")
+        (let ((text
+               '("Licensed under the Apache License, Version 2.0 (the "License");"
+                 "you may not use this file except in compliance with the License."
+                 "You may obtain a copy of the License at"
+                 ""
+                 "    http://www.apache.org/licenses/LICENSE-2.0"
+                 ""
+                 "Unless required by applicable law or agreed to in writing, software"
+                 "distributed under the License is distributed on an \"AS IS\" BASIS,"
+                 "WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied."
+                 "See the License for the specific language governing permissions and"
+                 "limitations under the License.")))
+          (dolist (x text)
+            (call-interactively #'comment-dwim)
+            (insert x)
+            (newline))))
+;; insert-license-apache:1 ends here
+
 ;; [[file:init-emacs.org::*External Program Functions][External Program Functions:1]]
     ;;------------------------------------------------------------------------------
     ;;; Functions: External Program Functions
@@ -15736,6 +15858,9 @@
          ("i=" . append-equal-to-column-80)
          ("i-" . append-dash-to-column-80)
          ("i*" . append-asterisk-to-column-80)
+         ("ilgpl" . insert-license-gpl)
+         ("ilmit" . insert-license-mit)
+         ("ilapache" . insert-license-apache)
          ;; org-mode
          ("on" . org-insert-literate-programming-name)
          ("os" . org-insert-literate-programming-src)
