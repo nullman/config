@@ -1,3 +1,23 @@
+;; [[file:init-emacs.org::*Colors][Colors:1]]
+    ;;------------------------------------------------------------------------------
+    ;;; Constants: Colors
+    ;;------------------------------------------------------------------------------
+
+    (init-message 2 "Constants: Colors")
+
+    (setq color-foreground "green"
+          color-background "black"
+          color-cursor "#FFFF33"            ; yellow
+          color-1 "goldenrod"
+          color-2 "light goldenrod"
+          color-3 "yellow green"
+          color-4 "light salmon"
+          color-5 "tan"
+          color-6 "light green"
+          color-7 "coral"
+          color-8 "wheat")
+;; Colors:1 ends here
+
 ;; [[file:init-emacs.org::*Start][Start:1]]
   ;; -*- mode: emacs-lisp; lexical-binding: t; no-byte-compile: t -*-
   ;;==============================================================================
@@ -617,7 +637,7 @@
 
     ;; highlight tabs and trailing white spaces
     (setq whitespace-style '(face trailing tab-mark))
-    (custom-set-faces '(whitespace-tab ((t (:foreground "green" :background "black")))))
+    (custom-set-faces `(whitespace-tab ((t (:foreground ,color-foreground :background ,color-background)))))
     (setq whitespace-display-mappings
           '((space-mark 32 [183] [46]) ; 32 space ' ', 183 middle dot '·', 46 full stop '.'
             (newline-mark 10 [182 10]) ; 10 linefeed '\n', 182 ??? '¶'
@@ -1263,8 +1283,8 @@
       ;; set faces
       ;; green foreground on black background with yellow cursor
       (custom-set-faces
-       '(default ((t (:foreground "#41FF41" :background "black")))) ; green
-       '(cursor ((t (:foreground "black" :background "#FFFF33"))))) ; yellow
+       `(default ((t (:foreground ,color-foreground :background ,color-background)))) ; green
+       `(cursor ((t (:foreground ,color-background :background ,color-cursor))))) ; yellow
 
       ;; transparant background (not on Macs)
       (defvar background-alpha
@@ -2266,14 +2286,14 @@
       :config
       ;; faces
       (custom-set-faces
-       '(outline-1 ((t (:foreground "#f6aa11"))))
-       '(outline-2 ((t (:foreground "#b9d977"))))
-       '(outline-3 ((t (:foreground "#db7093"))))
-       '(outline-4 ((t (:foreground "#f1e94b"))))
-       '(outline-5 ((t (:foreground "#ffa07a"))))
-       '(outline-6 ((t (:foreground "#93e0e3"))))
-       '(outline-7 ((t (:foreground "#9acd32"))))
-       '(outline-8 ((t (:foreground "#ffb6c1")))))
+       `(outline-1 ((t (:foreground ,color-1))))
+       `(outline-2 ((t (:foreground ,color-2))))
+       `(outline-3 ((t (:foreground ,color-3))))
+       `(outline-4 ((t (:foreground ,color-4))))
+       `(outline-5 ((t (:foreground ,color-5))))
+       `(outline-6 ((t (:foreground ,color-6))))
+       `(outline-7 ((t (:foreground ,color-7))))
+       `(outline-8 ((t (:foreground ,color-8)))))
 
       ;; advise `outline-up-heading' to suppress errors
       (advice-add 'outline-up-heading :around #'advice--ignore-errors))
@@ -2351,15 +2371,15 @@
       :config
       ;; faces
       (custom-set-faces
-       '(org-block ((t (:inherit shadow :foreground "green"))))
-       '(org-level-1 ((t (:foreground "#f6aa11"))))
-       '(org-level-2 ((t (:foreground "#b9d977"))))
-       '(org-level-3 ((t (:foreground "#db7093"))))
-       '(org-level-4 ((t (:foreground "#f1e94b"))))
-       '(org-level-5 ((t (:foreground "#ffa07a"))))
-       '(org-level-6 ((t (:foreground "#93e0e3"))))
-       '(org-level-7 ((t (:foreground "#9acd32"))))
-       '(org-level-8 ((t (:foreground "#ffb6c1")))))
+       `(org-block ((t (:inherit shadow :foreground ,color-foreground))))
+       `(org-level-1 ((t (:foreground ,color-1))))
+       `(org-level-2 ((t (:foreground ,color-2))))
+       `(org-level-3 ((t (:foreground ,color-3))))
+       `(org-level-4 ((t (:foreground ,color-4))))
+       `(org-level-5 ((t (:foreground ,color-5))))
+       `(org-level-6 ((t (:foreground ,color-6))))
+       `(org-level-7 ((t (:foreground ,color-7))))
+       `(org-level-8 ((t (:foreground ,color-8)))))
 
       ;; set file apps
       (when window-system
