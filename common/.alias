@@ -1953,6 +1953,8 @@ alias scmon="\${HOME}/bin/screen-app mon"
 alias sctop="\${HOME}/bin/screen-app top"
 #        schtop                  screen-app htop
 alias schtop="\${HOME}/bin/screen-app htop"
+#        sczenith                screen-app zenith
+alias schzenith="\${HOME}/bin/screen-app zenith"
 #        scifmon                 screen-app ifmon
 alias scifmon="\${HOME}/bin/screen-app ifmon"
 #        sciftop                 screen-app iftop
