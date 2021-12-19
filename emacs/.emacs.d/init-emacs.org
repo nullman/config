@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2021-12-19 11:01 (kyle)>
+  #+TIMESTAMP: <2021-12-19 11:02 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -5003,8 +5003,8 @@
           :straight (ob-racket
                      :type git :host github :repo "hasu/emacs-ob-racket"
                      :files ("*.el" "*.rkt"))
-          :config
           :after org
+          :config
           (add-hook 'ob-racket-pre-runtime-library-load-hook
                     #'ob-racket-raco-make-runtime-library)
 

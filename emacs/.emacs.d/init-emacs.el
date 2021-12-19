@@ -3613,8 +3613,8 @@
         :straight (ob-racket
                    :type git :host github :repo "hasu/emacs-ob-racket"
                    :files ("*.el" "*.rkt"))
-        :config
         :after org
+        :config
         (add-hook 'ob-racket-pre-runtime-library-load-hook
                   #'ob-racket-raco-make-runtime-library)
 
