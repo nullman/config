@@ -3,8 +3,6 @@
     ;;; Constants: Colors
     ;;------------------------------------------------------------------------------
 
-    (init-message 2 "Constants: Colors")
-
     (setq color-foreground "green"
           color-background "black"
           color-cursor "#FFFF33"            ; yellow
