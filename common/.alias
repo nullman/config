@@ -2252,6 +2252,22 @@ alias gsetting-gnome-keybindings="
 alias mcm="make clean && make"
 
 #
+# java
+#
+#        java-set-env-java8      set java environment to java 8
+alias java-set-env-java8="
+    sudo archlinux-java set java-8-openjdk && \
+    export JAVA_HOME=\"\$(java -XshowSettings:properties -version 2>&1 > /dev/null | grep 'java.home' | sed 's/^.* = //')\""
+#        java-set-env-java11     set java environment to java 11
+alias java-set-env-java11="
+    sudo archlinux-java set java-11-openjdk && \
+    export JAVA_HOME=\"\$(java -XshowSettings:properties -version 2>&1 > /dev/null | grep 'java.home' | sed 's/^.* = //')\""
+#        java-set-env-java17     set java environment to java 17
+alias java-set-env-java17="
+    sudo archlinux-java set java-17-openjdk && \
+    export JAVA_HOME=\"\$(java -XshowSettings:properties -version 2>&1 > /dev/null | grep 'java.home' | sed 's/^.* = //')\""
+
+#
 # perl
 #
 #        cpan                    run perl in CPAN mode (use default answers to prompts)
