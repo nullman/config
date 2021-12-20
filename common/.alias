@@ -931,6 +931,8 @@ alias wine-fallout-setup="
     "
 #        wine-tta                wine through the ages
 alias wine-tta="WINEPREFIX=\${HOME}/.wine-tta wine \"C:\GOG Games\Through the Ages\ThroughTheAges_gog.exe\""
+#        wine-winamp             winamp
+alias wine-winamp="WINEPREFIX=\${HOME}/.wine-winamp wine \"C:\Program Files (x86)\Winamp\winamp.exe\""
 
 #
 # dosbox applications

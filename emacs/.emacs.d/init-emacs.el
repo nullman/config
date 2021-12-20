@@ -11040,7 +11040,11 @@
         "Insert GPL2 license block to be used at the top of code files."
         (interactive "*")
         (let ((text
-               '("This program is free software; you can redistribute it and/or modify"
+               `("General Public License (Version 2)"
+                 ""
+                 ,(concat "Copyright © " (format-time-string "%Y" nil t) " " user-full-name)
+                 ""
+                 "This program is free software; you can redistribute it and/or modify"
                  "it under the terms of the GNU General Public License as published by"
                  "the Free Software Foundation; either version 2 of the License, or"
                  "(at your option) any later version."
@@ -11070,7 +11074,11 @@
         "Insert MIT license block to be used at the top of code files."
         (interactive "*")
         (let ((text
-               '("Permission is hereby granted, free of charge, to any person obtaining"
+               `("MIT License"
+                 ""
+                 ,(concat "Copyright © " (format-time-string "%Y" nil t) " " user-full-name)
+                 ""
+                 "Permission is hereby granted, free of charge, to any person obtaining"
                  "a copy of this software and associated documentation files (the"
                  "\"Software\"), to deal in the Software without restriction, including"
                  "without limitation the rights to use, copy, modify, merge, publish,"
@@ -11105,7 +11113,11 @@
         "Insert Apache license block to be used at the top of code files."
         (interactive "*")
         (let ((text
-               '("Licensed under the Apache License, Version 2.0 (the "License");"
+               `("Apache License"
+                 ""
+                 ,(concat "Copyright © " (format-time-string "%Y" nil t) " " user-full-name)
+                 ""
+                 "Licensed under the Apache License, Version 2.0 (the \"License\");"
                  "you may not use this file except in compliance with the License."
                  "You may obtain a copy of the License at"
                  ""
