@@ -51,8 +51,8 @@ _bc merge_overlapping_monitors true
 # monitor and desktop settings
 _bc top_padding                0
 _bc right_padding              0
-_bc bottom_padding             0
-#_bc bottom_padding             30       # if system bar is visible
+#_bc bottom_padding             0
+_bc bottom_padding             30       # room for system bar
 _bc left_padding               0
 
 # desktop settings

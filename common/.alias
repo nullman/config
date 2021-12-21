@@ -265,8 +265,6 @@ alias terminal-dimensions="
 alias bookmarks-check="wget --spider --force-html -i \${HOME}/bookmarks.html"
 #        count                   count lines
 alias count="wc -l"
-#        geometry                current screen geometry
-alias geometry="xwininfo -root | grep geometry"
 #        rmkvm                   remove kvm kernel module (so virtualbox can run)
 alias rmkvm="sudo modprobe -r kvm_intel kvm"
 #        touchpad-reset          reset touchpad
@@ -320,7 +318,7 @@ alias dd-sync="sudo dd conv=fdatasync status=progress"
 #        sxhkdrs                 sxhkd restart
 alias sxhkdrs="pkill --signal SIGUSR1 --exact sxhkd --euid \${USER}"
 #        tint2rs                 tint2 restart
-alias tint2rs="pkill --signal SIGUSR1 --exact tint2 --euid \${USER}"
+alias tint2rs="pkill --signal SIGUSR1 --exact tint2 --euid \${USER} || \${HOME}/bin/system-bar"
 #        xrdb-list               list custom .Xresource settings
 alias xrdb-list="xrdb -query -all"
 #        xrdb-merge-home         merge ~/.Xresource settings into xrdb
@@ -2152,6 +2150,10 @@ alias vncsk="vncserver -kill :1"
 alias xwi="xwininfo"
 #        xwir                    xwininfo -root
 alias xwir="xwininfo -root"
+#        xwit                    xwininfo -tree -root
+alias xwit="xwininfo -tree -root"
+#        geometry                current screen geometry
+alias geometry="xwininfo -root | grep geometry"
 
 #
 # x2x
@@ -2855,16 +2857,18 @@ alias git-clone-powerlevel10k="git clone --depth=1 https://github.com/romkatv/po
 #
 # git respository
 #
-#!       GIT_REPOSITORY_CONFIG   git repository (config)
+#!       GIT_REPOSITORY_CONFIG   git repository: config
 export GIT_REPOSITORY_CONFIG="git@gitlab.com:kylesherman/config.git"
-#!       GIT_REPOSITORY_CONFIG_PRIVATE git repository (config-private)
+#!       GIT_REPOSITORY_CONFIG_PRIVATE git repository: config-private
 export GIT_REPOSITORY_CONFIG_PRIVATE="git@gitlab.com:kylesherman/config-private.git"
-#!       GIT_REPOSITORY_DOC      git repository (doc)
+#!       GIT_REPOSITORY_DOC      git repository: doc
 export GIT_REPOSITORY_DOC="git@gitlab.com:kylesherman/doc.git"
-#!       GIT_REPOSITORY_DEV      git repository (dev)
+#!       GIT_REPOSITORY_DEV      git repository: dev
 export GIT_REPOSITORY_DEV="git@gitlab.com:kylesherman/dev.git"
-#!       GIT_REPOSITORY_WEB      git repository (web)
+#!       GIT_REPOSITORY_WEB      git repository: web
 export GIT_REPOSITORY_WEB="git@gitlab.com:kylesherman/web.git"
+#!       GIT_REPOSITORY_HAIKU    git repository: haiku
+export GIT_REPOSITORY_HAIKU="git@gitlab.com:kylesherman/haiku.git"
 #        gitsh                   status home (config, config-private) git repositories
 alias gitsh="
     (echo '~/config status' && cd \${HOME}/config && git status)
@@ -2933,6 +2937,12 @@ alias gituoall="
             (cd \${HOME}/\${dir} && git pull origin)
         fi
     done"
+#        gitcohaiku                clone haiku git repository
+alias gitcohaiku="git clone \${GIT_REPOSITORY_HAIKU} \${HOME}/haiku"
+#        gituohaiku                pull (update) haiku git repository
+alias gituohaiku="(cd \${HOME}/haiku && git pull origin)"
+#        gitpohaiku                push haiku git repository (to origin)
+alias gitpohaiku="(cd \${HOME}/haiku && git push origin)"
 
 #
 # script help

@@ -3613,7 +3613,7 @@
         :straight (ob-racket
                    :type git :host github :repo "hasu/emacs-ob-racket"
                    :files ("*.el" "*.rkt"))
-        :after org
+        :after (org)
         :config
         (add-hook 'ob-racket-pre-runtime-library-load-hook
                   #'ob-racket-raco-make-runtime-library)
@@ -4545,7 +4545,7 @@
     (use-package org-visibility
       ;;:straight t
       ;;:load-path (lambda () (file-truename (expand-file-name "org-visibility" local-modules-dir)))
-      :load-path (lambda () (file-truename (expand-file-name "~/code/nullman/org-visibility")))
+      :load-path (lambda () (file-truename (expand-file-name "~/code/gitlab-kylesherman/emacs-org-visibility")))
       :after (org)
       :demand t
       :bind (:map org-mode-map
@@ -4559,7 +4559,10 @@
                                       ,(file-truename "~/web/org")))
       ;; list of directories and files to not persist and restore visibility state of
       (org-visibility-exclude-paths `(,(file-truename "~/org/old")
-                                      ,(file-truename "~/org/test"))))
+                                      ,(file-truename "~/org/test")))
+      :config
+      ;; enable all hooks
+      (org-visibility-enable-hooks))
 ;; Visibility:1 ends here
 
 ;; [[file:init-emacs.org::*org-bookmarks-guid][org-bookmarks-guid:1]]
@@ -15751,6 +15754,17 @@
             (neo-global--select-window)
           (neotree-toggle))))
 ;; neotree:1 ends here
+
+;; [[file:init-emacs.org::*package-lint][package-lint:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: package-lint
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: package-lint")
+
+(use-package package-lint
+  :straight t)
+;; package-lint:1 ends here
 
 ;; [[file:init-emacs.org::*persistent-scratch][persistent-scratch:1]]
     ;;------------------------------------------------------------------------------
