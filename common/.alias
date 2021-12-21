@@ -318,7 +318,8 @@ alias dd-sync="sudo dd conv=fdatasync status=progress"
 #        sxhkdrs                 sxhkd restart
 alias sxhkdrs="pkill --signal SIGUSR1 --exact sxhkd --euid \${USER}"
 #        tint2rs                 tint2 restart
-alias tint2rs="pkill --signal SIGUSR1 --exact tint2 --euid \${USER} || \${HOME}/bin/system-bar"
+alias tint2rs="(pkill --signal SIGUSR1 --exact tint2 --euid \${USER} && \
+    xdo below -t \$(xdo id -N Bspwm) \$(xdo id -N Tint2)) || \${HOME}/bin/system-bar"
 #        xrdb-list               list custom .Xresource settings
 alias xrdb-list="xrdb -query -all"
 #        xrdb-merge-home         merge ~/.Xresource settings into xrdb
