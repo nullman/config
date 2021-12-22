@@ -3601,13 +3601,27 @@
       (advice-add 'org-babel-tangle-collect-blocks :around #'org-babel-tangle-collect-blocks--case-sensitive)
 ;; Tangle Case-Sensitive:1 ends here
 
+;; [[file:init-emacs.org::*Tangle Makefile Tabs][Tangle Makefile Tabs:1]]
+      ;;------------------------------------------------------------------------------
+      ;;;; Org Mode: Babel: Tangle Makefile Tabs
+      ;;------------------------------------------------------------------------------
+
+      (init-message 3 "Org Mode: Babel: Tangle Makefile Tabs")
+
+      (defun org-babel-tangle-body-hook--makefile-tabs ()
+        "Convert spaces to tabs when tanging Makefiles."
+        (goto-char (point-min))
+        (while (re-search-forward "    " nil :noerror)
+          (replace-match "	")))
+      (add-hook 'org-babel-tangle-body-hook #'org-babel-tangle-body-hook--makefile-tabs)
+;; Tangle Makefile Tabs:1 ends here
+
 ;; [[file:init-emacs.org::*Racket][Racket:1]]
       ;;------------------------------------------------------------------------------
       ;;;; Org Mode: Babel: Racket
       ;;------------------------------------------------------------------------------
 
       (init-message 3 "Org Mode: Babel: Racket")
-
 
       (use-package ob-racket
         :straight (ob-racket
@@ -11701,15 +11715,12 @@
                        (eq (org-element-type (org-element-at-point)) 'src-block))
                   (condition-case nil
                       (let ((case-fold-search t)
-                            (re "^\\([ \t]*\\)#\\+BEGIN_\\(\\sw+\\)"))
+                            (re "^[ \t]*#\\+BEGIN_\\(\\sw+\\)"))
                         (forward-line 0)
                         (unless (looking-at re)
                           (re-search-backward re))
-                        (replace-match "" nil nil nil 1)
-                        (re-search-forward (concat "^\\([ \t]*\\)#\\+END_" (match-string 2)))
-                        (replace-match "" nil nil nil 1))
-                    ('error nil))
-                  (org-babel-do-in-edit-buffer (indent-region (point-min) (point-max))))
+                        (org-indent-block))
+                    ('error nil)))
                  ;; sexp
                  ((save-excursion
                     (and (beginning-of-defun)
@@ -14459,8 +14470,9 @@
       :commands (flycheck-mod
                  global-flycheck-mode)
       :init
-      ;; initialize globally
-      (add-hook 'after-init-hook #'global-flycheck-mode))
+      ;; ;; initialize globally
+      ;; (add-hook 'after-init-hook #'global-flycheck-mode)
+      )
 
     ;;------------------------------------------------------------------------------
     ;;;; flycheck-package
