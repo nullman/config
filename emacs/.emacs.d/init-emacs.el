@@ -14459,9 +14459,21 @@
       :commands (flycheck-mod
                  global-flycheck-mode)
       :init
-      ;; ;; initialize globally
-      ;; (add-hook 'after-init-hook #'global-flycheck-mode)
-      )
+      ;; initialize globally
+      (add-hook 'after-init-hook #'global-flycheck-mode))
+
+    ;;------------------------------------------------------------------------------
+    ;;;; flycheck-package
+    ;;------------------------------------------------------------------------------
+
+    (init-message 3 "flycheck-package")
+
+    ;; flycheck checker for elisp packages
+    (use-package flycheck-package
+      :straight t
+      :after (flycheck)
+      :config
+      (flycheck-package-setup))
 ;; flycheck:1 ends here
 
 ;; [[file:init-emacs.org::*flymake-cursor][flymake-cursor:1]]
