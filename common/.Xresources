@@ -10,76 +10,76 @@
 !!------------------------------------------------------------------------------
 
 !! Custom Colors
-#define COLOR_BLACK_DARK    #000000
+#define COLOR_BLACK_DARK	#000000
 #define COLOR_BLACK_LIGHT   #555555
-#define COLOR_RED_DARK      #B40000
-#define COLOR_RED_LIGHT     #FF0000
-#define COLOR_GREEN_DARK    #00AA00
+#define COLOR_RED_DARK	  #B40000
+#define COLOR_RED_LIGHT	 #FF0000
+#define COLOR_GREEN_DARK	#00AA00
 #define COLOR_GREEN_LIGHT   #00FF00
 #define COLOR_YELLOW_DARK   #AAAA00
 #define COLOR_YELLOW_LIGHT  #FFFF00
-#define COLOR_BLUE_DARK     #5555AA
-#define COLOR_BLUE_LIGHT    #6464FF
+#define COLOR_BLUE_DARK	 #5555AA
+#define COLOR_BLUE_LIGHT	#6464FF
 #define COLOR_MAGENTA_DARK  #AA00AA
 #define COLOR_MAGENTA_LIGHT #FF00FF
-#define COLOR_CYAN_DARK     #00AAAA
-#define COLOR_CYAN_LIGHT    #00FFFF
-#define COLOR_WHITE_DARK    #AAAAAA
+#define COLOR_CYAN_DARK	 #00AAAA
+#define COLOR_CYAN_LIGHT	#00FFFF
+#define COLOR_WHITE_DARK	#AAAAAA
 #define COLOR_WHITE_LIGHT   #FFFFFF
-#define COLOR_PRIMARY       #33FF33
-#define COLOR_SECONDARY     #16A085
-#define COLOR_BACKGROUND    #000000
+#define COLOR_PRIMARY	   #33FF33
+#define COLOR_SECONDARY	 #16A085
+#define COLOR_BACKGROUND	#000000
 #define COLOR_BACKGROUND_TR [85]#000000
 #define COLOR_BACKGROUND_HI #2B2C2B
-#define COLOR_EMPHASIZED    #FFFF33
+#define COLOR_EMPHASIZED	#FFFF33
 
 !! Alternate Colors
-!#define COLOR_BLACK_DARK    #232423
+!#define COLOR_BLACK_DARK	#232423
 !#define COLOR_BLACK_LIGHT   #282928
-!#define COLOR_RED_DARK      #BA2922
-!#define COLOR_RED_LIGHT     #CC372C
-!#define COLOR_GREEN_DARK    #7E807E
+!#define COLOR_RED_DARK	  #BA2922
+!#define COLOR_RED_LIGHT	 #CC372C
+!#define COLOR_GREEN_DARK	#7E807E
 !#define COLOR_GREEN_LIGHT   #8D8F8D
 !#define COLOR_YELLOW_DARK   #4C4F4D
 !#define COLOR_YELLOW_LIGHT  #4E524F
-!#define COLOR_BLUE_DARK     #16A085
-!#define COLOR_BLUE_LIGHT    #13BF9D
+!#define COLOR_BLUE_DARK	 #16A085
+!#define COLOR_BLUE_LIGHT	#13BF9D
 !#define COLOR_MAGENTA_DARK  #43746A
 !#define COLOR_MAGENTA_LIGHT #487D72
-!#define COLOR_CYAN_DARK     #00CCCC
-!#define COLOR_CYAN_LIGHT    #00D1D1
-!#define COLOR_WHITE_DARK    #E0E0E0
+!#define COLOR_CYAN_DARK	 #00CCCC
+!#define COLOR_CYAN_LIGHT	#00D1D1
+!#define COLOR_WHITE_DARK	#E0E0E0
 !#define COLOR_WHITE_LIGHT   #E8E8E8
-!#define COLOR_PRIMARY       #33FF33
-!#define COLOR_SECONDARY     #16A085
-!#define COLOR_BACKGROUND    #000000
+!#define COLOR_PRIMARY	   #33FF33
+!#define COLOR_SECONDARY	 #16A085
+!#define COLOR_BACKGROUND	#000000
 !#define COLOR_BACKGROUND_TR [85]#000000
 !#define COLOR_BACKGROUND_HI #2B2C2B
-!#define COLOR_EMPHASIZED    #33FF33
+!#define COLOR_EMPHASIZED	#33FF33
 
 !! DistroTube Colors
-!#define COLOR_BLACK_DARK    #1C1F24
+!#define COLOR_BLACK_DARK	#1C1F24
 !#define COLOR_BLACK_LIGHT   #5B6268
-!#define COLOR_RED_DARK      #FF6C6B
-!#define COLOR_RED_LIGHT     #DA8548
-!#define COLOR_GREEN_DARK    #98BE65
+!#define COLOR_RED_DARK	  #FF6C6B
+!#define COLOR_RED_LIGHT	 #DA8548
+!#define COLOR_GREEN_DARK	#98BE65
 !#define COLOR_GREEN_LIGHT   #4DB5BD
 !#define COLOR_YELLOW_DARK   #DA8548
 !#define COLOR_YELLOW_LIGHT  #ECBE7B
-!#define COLOR_BLUE_DARK     #51AFEF
-!#define COLOR_BLUE_LIGHT    #3071DB
+!#define COLOR_BLUE_DARK	 #51AFEF
+!#define COLOR_BLUE_LIGHT	#3071DB
 !#define COLOR_MAGENTA_DARK  #C678DD
 !#define COLOR_MAGENTA_LIGHT #A9A1E1
-!#define COLOR_CYAN_DARK     #5699AF
-!#define COLOR_CYAN_LIGHT    #46D9FF
-!#define COLOR_WHITE_DARK    #202328
+!#define COLOR_CYAN_DARK	 #5699AF
+!#define COLOR_CYAN_LIGHT	#46D9FF
+!#define COLOR_WHITE_DARK	#202328
 !#define COLOR_WHITE_LIGHT   #DFDFDF
-!#define COLOR_PRIMARY       #BBC2CF
-!#define COLOR_SECONDARY     #BBC2CF
-!#define COLOR_BACKGROUND    #282C34
+!#define COLOR_PRIMARY	   #BBC2CF
+!#define COLOR_SECONDARY	 #BBC2CF
+!#define COLOR_BACKGROUND	#282C34
 !#define COLOR_BACKGROUND_TR [85]#282C34
 !#define COLOR_BACKGROUND_HI #282C34
-!#define COLOR_EMPHASIZED    #BBC2CF
+!#define COLOR_EMPHASIZED	#BBC2CF
 
 !! Set Colors
 !! black dark/light
@@ -137,18 +137,18 @@ Emacs.scrollBar: false
 Emacs.toolBar: false
 
 !! Rofi
-rofi.lines:        15
-rofi.columns:      1
-rofi.font:         FONT_DIALOG
+rofi.lines:		15
+rofi.columns:	  1
+rofi.font:		 FONT_DIALOG
 rofi.show-icons:   true
-!! State:          bg,      fg,      bgalt,   hlbg,    hlfg
+!! State:		  bg,	  fg,	  bgalt,   hlbg,	hlfg
 !!rofi.color-normal: #222D32, #8FA2AB, #323D42, #364046, #CFD8DC
 !!rofi.color-urgent: #E53935, #8FA2AB, #F54945, #364046, #CFD8DC
 !!rofi.color-active: #222D32, #CFD8DC, #323D42, #364046, #CFD8DC
 rofi.color-normal: #222D32, #8FA2AB, #222D32, #364046, #CFD8DC
 rofi.color-urgent: #222D32, #8FA2AB, #222D32, #364046, #CFD8DC
 rofi.color-active: #222D32, #CFD8DC, #222D32, #364046, #CFD8DC
-!!                 background, border, separator
+!!				 background, border, separator
 rofi.color-window: #222D32, #002b36, #002b36
 
 !! Xcursor
@@ -157,10 +157,10 @@ Xcursor.size:  0
 !Xcursor.size: 32
 
 !! Xft
-Xft.dpi:       96
+Xft.dpi:	   96
 Xft.antialias: true
 Xft.hinting:   true
-Xft.rgba:      rgb
+Xft.rgba:	  rgb
 Xft.autohint:  false
 !Xft.hintstyle: hintslight
 Xft.hintstyle: hintfull
@@ -168,36 +168,36 @@ Xft.hintstyle: hintfull
 Xft.lcdfilter: lcdfilter
 
 !! XTerm
-XTerm*background:        COLOR_BACKGROUND_TR
-XTerm*foreground:        COLOR_PRIMARY
-XTerm.borderColor:       COLOR_BACKGROUND
-XTerm.borderWidth:       0
+XTerm*background:		COLOR_BACKGROUND_TR
+XTerm*foreground:		COLOR_PRIMARY
+XTerm.borderColor:	   COLOR_BACKGROUND
+XTerm.borderWidth:	   0
 XTerm.allowSendEvents:   true
-XTerm.internalBorder:    0
-XTerm.multiScroll:       true
-XTerm.utmpInhibit:       false
-XTerm.jumpScroll:        true
-XTerm.loginShell:        true
-XTerm.visualBell:        false
-XTerm.waitForMap:        true
-XTerm.saveLines:         16384
-XTerm.scrollBar:         false
-XTerm*faceName:          FONT_TERMINAL_REGULAR, xft:Monospace:style=Medium:size=14, xft:JoyPixels:size=14, xft:Mononoki Nerd Font:size=14, 9x15
-XTerm*faceSize:          14
-XTerm*renderFont:        true
-XTerm*utf8:              2
-XTerm*locale:            true
-XTerm.title:             xterm
-XTerm.geometry:          144x68
+XTerm.internalBorder:	0
+XTerm.multiScroll:	   true
+XTerm.utmpInhibit:	   false
+XTerm.jumpScroll:		true
+XTerm.loginShell:		true
+XTerm.visualBell:		false
+XTerm.waitForMap:		true
+XTerm.saveLines:		 16384
+XTerm.scrollBar:		 false
+XTerm*faceName:		  FONT_TERMINAL_REGULAR, xft:Monospace:style=Medium:size=14, xft:JoyPixels:size=14, xft:Mononoki Nerd Font:size=14, 9x15
+XTerm*faceSize:		  14
+XTerm*renderFont:		true
+XTerm*utf8:			  2
+XTerm*locale:			true
+XTerm.title:			 xterm
+XTerm.geometry:		  144x68
 XTerm.metaSendsEscape:   true
 XTerm.selectToClipboard: true
-XTerm*loginshell:        true
-XTerm*charClass:         33:48,36-47:48,58-59:48,61:48,63-64:48,95:48,126:48
+XTerm*loginshell:		true
+XTerm*charClass:		 33:48,36-47:48,58-59:48,61:48,63-64:48,95:48,126:48
 XTerm.vt100.translations: #override \n\
-  Ctrl <Key> -: smaller-vt-font() \n\
-  Ctrl <Key> =: larger-vt-font() \n\
-  Ctrl <Key> _: smaller-vt-font() \n\
-  Ctrl <Key> +: larger-vt-font()
+Ctrl <Key> -: smaller-vt-font() \n\
+Ctrl <Key> =: larger-vt-font() \n\
+Ctrl <Key> _: smaller-vt-font() \n\
+Ctrl <Key> +: larger-vt-font()
 
 !!! XTerm configuration to reproduce DOS colors
 !!! Author: Emil Mikulic (http://dmr.ath.cx/notes/xterm.html)
@@ -224,63 +224,63 @@ XTerm.vt100.translations: #override \n\
 !XTerm.colorBD: rgb:fc/fc/fc
 
 !! URxvt
-URxvt*depth:                 32
-URxvt*imLocale:              en_US.UTF-8
-URxvt*termName:              rxvt-unicode-256color
-URxvt*buffered:              false
-URxvt*background:            COLOR_BACKGROUND
-URxvt*foreground:            COLOR_PRIMARY
-URxvt.borderColor:           COLOR_BACKGROUND
-URxvt.highlightColor:        COLOR_BACKGROUND_HI
-URxvt.cursorColor:           COLOR_EMPHASIZED
-URxvt.colorIT:               COLOR_MAGENTA_LIGHT
-URxvt.colorBD:               COLOR_GREEN_LIGHT
-URxvt.colorUL:               COLOR_BLUE_LIGHT
-URxvt.borderWidth:           0
-URxvt.jumpScroll:            true
-URxvt.scrollBar:             false
-URxvt.cursorBlink:           false
-URxvt.pointerBlank:          true
-URxvt*font:                  FONT_TERMINAL_REGULAR, xft:Monospace:style=Medium:size=14, xft:JoyPixels:size=14, xft:Mononoki Nerd Font:size=14, 9x15
-URxvt*boldFont:              FONT_TERMINAL_BOLD
-URxvt*italicFont:            FONT_TERMINAL_ITALIC
-URxvt.intensityStyles:       false
+URxvt*depth:				 32
+URxvt*imLocale:			  en_US.UTF-8
+URxvt*termName:			  rxvt-unicode-256color
+URxvt*buffered:			  false
+URxvt*background:			COLOR_BACKGROUND
+URxvt*foreground:			COLOR_PRIMARY
+URxvt.borderColor:		   COLOR_BACKGROUND
+URxvt.highlightColor:		COLOR_BACKGROUND_HI
+URxvt.cursorColor:		   COLOR_EMPHASIZED
+URxvt.colorIT:			   COLOR_MAGENTA_LIGHT
+URxvt.colorBD:			   COLOR_GREEN_LIGHT
+URxvt.colorUL:			   COLOR_BLUE_LIGHT
+URxvt.borderWidth:		   0
+URxvt.jumpScroll:			true
+URxvt.scrollBar:			 false
+URxvt.cursorBlink:		   false
+URxvt.pointerBlank:		  true
+URxvt*font:				  FONT_TERMINAL_REGULAR, xft:Monospace:style=Medium:size=14, xft:JoyPixels:size=14, xft:Mononoki Nerd Font:size=14, 9x15
+URxvt*boldFont:			  FONT_TERMINAL_BOLD
+URxvt*italicFont:			FONT_TERMINAL_ITALIC
+URxvt.intensityStyles:	   false
 URxvt.searchable-scrollback: CM-s
-URxvt.print-pipe:            cat > $(TMPDIR=$HOME mktemp urxvt.XXXXXX)
-URxvt.iso14755_52:           false
-URxvt.insecure:              false
-URxvt.geometry:              144x68
-URxvt.saveLines:             16384
+URxvt.print-pipe:			cat > $(TMPDIR=$HOME mktemp urxvt.XXXXXX)
+URxvt.iso14755_52:		   false
+URxvt.insecure:			  false
+URxvt.geometry:			  144x68
+URxvt.saveLines:			 16384
 !! Extensions
-URxvt.perl-ext-common:       default,matcher,resize-font,url-select,keyboard-select,clipboard
+URxvt.perl-ext-common:	   default,matcher,resize-font,url-select,keyboard-select,clipboard
 !! URL Select
-URxvt.keysym.M-u:            perl:url-select:select_next
-URxvt.url-select.launcher:   urxvt -e lynx -cfg=~/.lynxrc
+URxvt.keysym.M-u:			perl:url-select:select_next
+URxvt.url-select.launcher:   urxvt -e lynx -cfg=${HOME}/.lynxrc
 URxvt.url-select.underline:  true
 !! Keyboard Select
-URxvt.keysym.M-Escape:       perl:keyboard-select:activate
+URxvt.keysym.M-Escape:	   perl:keyboard-select:activate
 !! Resize Font
-URxvt.keysym.C--:            font-size:decrease
-URxvt.keysym.C-=:            font-size:increase
-URxvt.keysym.C-_:            font-size:decrease
-URxvt.keysym.C-+:            font-size:increase
+URxvt.keysym.C--:			font-size:decrease
+URxvt.keysym.C-=:			font-size:increase
+URxvt.keysym.C-_:			font-size:decrease
+URxvt.keysym.C-+:			font-size:increase
 !! Matcher
-URxvt.url-launcher:	         urxvt -e lynx -cfg=~/.lynxrc
-URxvt.matcher.button:        1
+URxvt.url-launcher:			 urxvt -e lynx -cfg=${HOME}/.lynxrc
+URxvt.matcher.button:		1
 !! Clipboard
-URxvt.keysym.M-c:            perl:clipboard:copy
-URxvt.keysym.M-v:            perl:clipboard:paste
+URxvt.keysym.M-c:			perl:clipboard:copy
+URxvt.keysym.M-v:			perl:clipboard:paste
 
 !!! XScreenSaver
 !XScreenSaver.captureStderr: false
 !!! font settings
-!XScreenSaver.font:               *-medium-r-*-140-*-m-*
+!XScreenSaver.font:			   *-medium-r-*-140-*-m-*
 !XScreenSaver.Dialog.headingFont: -*-helvetica-bold-r-*-*-*-180-*-*-*-*-iso8859-1
-!XScreenSaver.Dialog.bodyFont:    -*-helvetica-bold-r-*-*-*-140-*-*-*-*-iso8859-1
+!XScreenSaver.Dialog.bodyFont:	-*-helvetica-bold-r-*-*-*-140-*-*-*-*-iso8859-1
 !XScreenSaver.Dialog.labelFont:   -*-helvetica-bold-r-*-*-*-140-*-*-*-*-iso8859-1
 !XScreenSaver.Dialog.unameFont:   -*-helvetica-bold-r-*-*-*-120-*-*-*-*-iso8859-1
 !XScreenSaver.Dialog.buttonFont:  -*-helvetica-bold-r-*-*-*-140-*-*-*-*-iso8859-1
-!XScreenSaver.Dialog.dateFont:    -*-helvetica-medium-r-*-*-*-80-*-*-*-*-iso8859-1
+!XScreenSaver.Dialog.dateFont:	-*-helvetica-medium-r-*-*-*-80-*-*-*-*-iso8859-1
 !XScreenSaver.passwd.passwdFont:  -*-courier-bold-r-*-*-*-140-*-*-*-iso8859-1
 !!! general dialog box
 !XScreenSaver.Dialog.foreground: COLOR_PRIMARY

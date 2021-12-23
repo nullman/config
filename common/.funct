@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#!       1         2         3         4         5         6         7         8
+#!	   1		 2		 3		 4		 5		 6		 7		 8
 #!345678901234567890123456789012345678901234567890123456789012345678901234567890
 #!==============================================================================
 #! .funct
@@ -15,7 +15,7 @@
 #! cdargs
 #!
 [[ -f "/usr/share/doc/cdargs/examples/cdargs-bash.sh" ]] && \
-    source "/usr/share/doc/cdargs/examples/cdargs-bash.sh"
+	source "/usr/share/doc/cdargs/examples/cdargs-bash.sh"
 #!
 #===============================================================================
 # Function Definitions
@@ -24,553 +24,553 @@
 #
 # help
 #
-#        fuh                     funct help
+#		fuh					 funct help
 alias fuh="
-    cat ${HOME}/.funct ${HOME}/.funct-work 2>/dev/null | \
-      grep '^#' | grep -v '^#!' | sed 's/^#//' | more"
-#        fuhl                    funct help (long)
+	cat ${HOME}/.funct ${HOME}/.funct-work 2>/dev/null | \
+	  grep '^#' | grep -v '^#!' | sed 's/^#//' | more"
+#		fuhl					funct help (long)
 alias fuhl="
-    cat ${HOME}/.funct ${HOME}/.funct-work 2>/dev/null | \
-      grep -v '^#!' | grep -v '^#  ' | sed s/^#// | more"
-#        fuhg                    funct help with grep
+	cat ${HOME}/.funct ${HOME}/.funct-work 2>/dev/null | \
+	  grep -v '^#!' | grep -v '^#  ' | sed s/^#// | more"
+#		fuhg					funct help with grep
 alias fuhg="
-    cat ${HOME}/.funct ${HOME}/.funct-work 2>/dev/null | \
-      grep '^#' | grep -v '^#!' | sed 's/^#//' | grep -i"
-#        alfuhg                  alias and funct help with grep
+	cat ${HOME}/.funct ${HOME}/.funct-work 2>/dev/null | \
+	  grep '^#' | grep -v '^#!' | sed 's/^#//' | grep -i"
+#		alfuhg				  alias and funct help with grep
 alfuhg() {
-    for file in ".alias" ".alias-work" ; do
-        [[ -f "${HOME}/${file}" ]] && \
-            echo "Aliases (${file}):" && \
-            cat "${HOME}/${file}" | grep '^#' | grep -v '^#!' | sed 's/^#//' | grep -i "$1"
-    done
-    for file in ".funct" ".funct-work" ; do
-        [[ -f "${HOME}/${file}" ]] && \
-            echo "Functions (${file}):" && \
-            cat "${HOME}/${file}" | grep '^#' | grep -v '^#!' | sed 's/^#//' | grep -i "$1"
-    done
+	for file in ".alias" ".alias-work" ; do
+		[[ -f "${HOME}/${file}" ]] && \
+			echo "Aliases (${file}):" && \
+			cat "${HOME}/${file}" | grep '^#' | grep -v '^#!' | sed 's/^#//' | grep -i "$1"
+	done
+	for file in ".funct" ".funct-work" ; do
+		[[ -f "${HOME}/${file}" ]] && \
+			echo "Functions (${file}):" && \
+			cat "${HOME}/${file}" | grep '^#' | grep -v '^#!' | sed 's/^#//' | grep -i "$1"
+	done
 }
-#!#        alfuhlg                 alias and funct help (long) with grep
+#!#		alfuhlg				 alias and funct help (long) with grep
 #!alfuhlg() {
-#!    echo "Aliases:"
-#!    cat "${HOME}/.alias" | grep -v '^#!' | grep -v '^#  ' | sed 's/^#//' | more | grep -i "$1"
-#!    echo "Functions:"
-#!    cat "${HOME}/.funct" | grep -v '^#!' | grep -v '^#  ' | sed 's/^#//' | more | grep -i "$1"
+#!	echo "Aliases:"
+#!	cat "${HOME}/.alias" | grep -v '^#!' | grep -v '^#  ' | sed 's/^#//' | more | grep -i "$1"
+#!	echo "Functions:"
+#!	cat "${HOME}/.funct" | grep -v '^#!' | grep -v '^#  ' | sed 's/^#//' | more | grep -i "$1"
 #!}
-#        alg                     alias grep
+#		alg					 alias grep
 alg() {
-    cat "${HOME}/.alias" | sed -n '/^#[[:space:]].*'$1'/,/"$/p'
+	cat "${HOME}/.alias" | sed -n '/^#[[:space:]].*'$1'/,/"$/p'
 }
-#        fug                     funct grep
+#		fug					 funct grep
 fug() {
-    cat "${HOME}/.funct" | sed -n '/^#[[:space:]].*'$1'/,/^}$/p'
+	cat "${HOME}/.funct" | sed -n '/^#[[:space:]].*'$1'/,/^}$/p'
 }
-#        alfug                   alias and funct grep
+#		alfug				   alias and funct grep
 alfug() {
-    echo "Aliases:"
-    cat "${HOME}/.alias" | sed -n '/^#[[:space:]].*'$1'/,/"$/p'
-    echo "Functions:"
-    cat "${HOME}/.funct" | sed -n '/^#[[:space:]].*'$1'/,/^}$/p'
+	echo "Aliases:"
+	cat "${HOME}/.alias" | sed -n '/^#[[:space:]].*'$1'/,/"$/p'
+	echo "Functions:"
+	cat "${HOME}/.funct" | sed -n '/^#[[:space:]].*'$1'/,/^}$/p'
 }
 
 #
 # programming
 #
-#        pathcmd                 find path of command
+#		pathcmd				 find path of command
 pathcmd() {
-    if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 COMMAND [PATH...]"
-        echo "  COMMAND  command to find"
-        echo "  PATH     additional path locations to search"
-    else
-        cmd="$1"
-        shift
-        if [[ $# -eq 0 ]] ; then
-            paths="${PATH}"
-        else
-            for path in "$@" ; do
-                paths="${path}:${PATH}"
-            done
-        fi
-        loc=
-        echo "${paths}" | sed 's/:/\n/g' | while read dir ; do
-            if [[ -x "${dir}/${cmd}" ]] && [[ -z "${loc}" ]] ; then
-                loc="${dir}/${cmd}"
-            fi
-        done
-        echo "${loc}"
-        return $(test -z "${loc}")
-    fi
+	if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+		echo "Usage: $0 COMMAND [PATH...]"
+		echo "  COMMAND  command to find"
+		echo "  PATH	 additional path locations to search"
+	else
+		cmd="$1"
+		shift
+		if [[ $# -eq 0 ]] ; then
+			paths="${PATH}"
+		else
+			for path in "$@" ; do
+				paths="${path}:${PATH}"
+			done
+		fi
+		loc=
+		echo "${paths}" | sed 's/:/\n/g' | while read dir ; do
+			if [[ -x "${dir}/${cmd}" ]] && [[ -z "${loc}" ]] ; then
+				loc="${dir}/${cmd}"
+			fi
+		done
+		echo "${loc}"
+		return $(test -z "${loc}")
+	fi
 }
-#        parentdir               get parent dir
+#		parentdir			   get parent dir
 parentdir() {
-    if [[ $# -gt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 [DIR]"
-        echo "  DIR  directory to get the parent directory of (defaults to current dir)."
-    else
-        if [[ $# -eq 0 ]] ; then
-            pd="$1"
-        else
-            pd="$(pwd)"
-        fi
-        # remove any trailing /'s
-        while [[ ${#pd} -gt 0 ]] && [[ "${pd: -1}" == "/" ]] ; do
-            pd=${pd:0:$((${#pd} - 1))}
-        done
-        # remove ending characters until a / is reached
-        while [[ ${#pd} -gt 0 ]] && [[ "${pd: -1}" != "/" ]] ; do
-            pd=${pd:0:$((${#pd} - 1))}
-        done
-        # remove final /
-        if [[ ${#pd} -gt 1 ]] ; then
-            pd=${pd:0:$((${#pd} - 1))}
-        fi
-        echo ${pd}
-    fi
+	if [[ $# -gt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+		echo "Usage: $0 [DIR]"
+		echo "  DIR  directory to get the parent directory of (defaults to current dir)."
+	else
+		if [[ $# -eq 0 ]] ; then
+			pd="$1"
+		else
+			pd="$(pwd)"
+		fi
+		# remove any trailing /'s
+		while [[ ${#pd} -gt 0 ]] && [[ "${pd: -1}" == "/" ]] ; do
+			pd=${pd:0:$((${#pd} - 1))}
+		done
+		# remove ending characters until a / is reached
+		while [[ ${#pd} -gt 0 ]] && [[ "${pd: -1}" != "/" ]] ; do
+			pd=${pd:0:$((${#pd} - 1))}
+		done
+		# remove final /
+		if [[ ${#pd} -gt 1 ]] ; then
+			pd=${pd:0:$((${#pd} - 1))}
+		fi
+		echo ${pd}
+	fi
 }
-#        pstest                  test if a user application is currently running
+#		pstest				  test if a user application is currently running
 pstest() {
-    if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 QUERY"
-        echo "Test if a user applicaiton containing QUERY is currently running."
-        echo "  QUERY  query string to search for"
-    else
-        pgrep --euid ${USER} --full --ignore-case "$1" > /dev/null
-    fi
+	if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+		echo "Usage: $0 QUERY"
+		echo "Test if a user applicaiton containing QUERY is currently running."
+		echo "  QUERY  query string to search for"
+	else
+		pgrep --euid ${USER} --full --ignore-case "$1" > /dev/null
+	fi
 }
-#        iscommand               check if executable command is found in the path
+#		iscommand			   check if executable command is found in the path
 iscommand() {
-    command -v "$1" > /dev/null 2>&1
+	command -v "$1" > /dev/null 2>&1
 }
-#        keypress                get a single key press
+#		keypress				get a single key press
 keypress() {
-    # save current tty settings
-    ttysettings=$(stty -g)
-    # disable canonical mode and local echo
-    stty -icanon -echo
-    # get key
-    key=$(dd bs=1 count=1 2> /dev/null)
-    # restore tty settings
-    stty "${ttysettings}"
-    # return key pressed
-    echo "${key}"
+	# save current tty settings
+	ttysettings=$(stty -g)
+	# disable canonical mode and local echo
+	stty -icanon -echo
+	# get key
+	key=$(dd bs=1 count=1 2> /dev/null)
+	# restore tty settings
+	stty "${ttysettings}"
+	# return key pressed
+	echo "${key}"
 }
-#        changelog               add a line to a CHANGELOG file in path
+#		changelog			   add a line to a CHANGELOG file in path
 changelog() {
-    if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 TEXT..."
-    else
-        file="CHANGELOG"
-        # find changelog file
-        dir="$(pwd)"
-        while [[ ! -e "${dir}/${file}" ]] && [[ "${dir}" != "/" ]] ; do
-            dir=$(parentdir "${dir}")
-        done
-        # if CHANGELOG found, then add comment
-        if [[ -e "${dir}/${file}" ]] ; then
-            tmp="${dir}/${file}.tmp$$"
-            file="${dir}/${file}"
-            if [[ -e "${tmp}" ]] ; then
-                echo "Temp file '${tmp}' exists"
-            else
-                (
-                    echo "$(date '+%Y-%m-%d'): $@" > ${tmp} && \
-                        echo "" >> "${tmp}" && \
-                        cat "${file}" >> "${tmp}" && \
-                        mv "${tmp}" "${file}"
-                ) || echo "Error adding log entry to file '${file}'"
-            fi
-        else
-            echo "File '${file}' not found in path"
-        fi
-    fi
+	if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+		echo "Usage: $0 TEXT..."
+	else
+		file="CHANGELOG"
+		# find changelog file
+		dir="$(pwd)"
+		while [[ ! -e "${dir}/${file}" ]] && [[ "${dir}" != "/" ]] ; do
+			dir=$(parentdir "${dir}")
+		done
+		# if CHANGELOG found, then add comment
+		if [[ -e "${dir}/${file}" ]] ; then
+			tmp="${dir}/${file}.tmp$$"
+			file="${dir}/${file}"
+			if [[ -e "${tmp}" ]] ; then
+				echo "Temp file '${tmp}' exists"
+			else
+				(
+					echo "$(date '+%Y-%m-%d'): $@" > ${tmp} && \
+						echo "" >> "${tmp}" && \
+						cat "${file}" >> "${tmp}" && \
+						mv "${tmp}" "${file}"
+				) || echo "Error adding log entry to file '${file}'"
+			fi
+		else
+			echo "File '${file}' not found in path"
+		fi
+	fi
 }
 
 #
 # general
 #
-#!#        which                   version of which that includes aliases and functions
+#!#		which				   version of which that includes aliases and functions
 #!which () {
-#!    (alias ; declare -f) | /usr/bin/which --tty-only --read-alias --read-functions --show-tilde --show-dot "$@"
+#!	(alias ; declare -f) | /usr/bin/which --tty-only --read-alias --read-functions --show-tilde --show-dot "$@"
 #!}
-#!#        cv                      run cdargs and cd to the result
+#!#		cv					  run cdargs and cd to the result
 #!cv() {
-#!    if [[ $# -eq 0 ]] ; then
-#!        dir=
-#!    elif
-#!        dir=$(grep "^$1 " "$HOME/.cdargs" | cut -d " " -f 2)
-#!    fi
-#!    if [[ -n "${dir}" ]] ; then
-#!        cd "${dir}"
-#!    else
-#!        cdargs "$1" && cd "$(cat "$HOME/.cdargsresult")"
-#!    fi
+#!	if [[ $# -eq 0 ]] ; then
+#!		dir=
+#!	elif
+#!		dir=$(grep "^$1 " "$HOME/.cdargs" | cut -d " " -f 2)
+#!	fi
+#!	if [[ -n "${dir}" ]] ; then
+#!		cd "${dir}"
+#!	else
+#!		cdargs "$1" && cd "$(cat "$HOME/.cdargsresult")"
+#!	fi
 #!}
-#        random                  random number
+#		random				  random number
 random() {
-    if [[ $# -eq 0 ]] ; then
-        echo "$((${RANDOM} % 10))"
-    else
-        echo "$((${RANDOM} % $1))"
-    fi
+	if [[ $# -eq 0 ]] ; then
+		echo "$((${RANDOM} % 10))"
+	else
+		echo "$((${RANDOM} % $1))"
+	fi
 }
-#        filename                get real file/dir name of running script
+#		filename				get real file/dir name of running script
 filename() {
-    orig="$1"
-    dir=$(cd $(dirname "${orig}") ; pwd)
-    file=$(basename "${orig}")
-    full="${dir}/${file}"
-    realfull=$(realpath "${orig}")
-    realdir=$(realpath "${dir}")
-    if [[ "${full}" != "${realfull}" ]] ; then
-        echo "Orig:      ${orig}"
-        echo "Full:      ${full}"
-        echo "Dir:       ${dir}"
-        echo "Real Full: ${realfull}"
-        echo "Real Dir:  ${realdir}"
-        echo "File:      ${file}"
-    else
-        echo "Orig: ${orig}"
-        echo "Full: ${full}"
-        echo "Dir:  ${dir}"
-        echo "File: ${file}"
-    fi
+	orig="$1"
+	dir=$(cd $(dirname "${orig}") ; pwd)
+	file=$(basename "${orig}")
+	full="${dir}/${file}"
+	realfull=$(realpath "${orig}")
+	realdir=$(realpath "${dir}")
+	if [[ "${full}" != "${realfull}" ]] ; then
+		echo "Orig:	  ${orig}"
+		echo "Full:	  ${full}"
+		echo "Dir:	   ${dir}"
+		echo "Real Full: ${realfull}"
+		echo "Real Dir:  ${realdir}"
+		echo "File:	  ${file}"
+	else
+		echo "Orig: ${orig}"
+		echo "Full: ${full}"
+		echo "Dir:  ${dir}"
+		echo "File: ${file}"
+	fi
 }
-#        inscreen                return wether or not terminal is running in screen
+#		inscreen				return wether or not terminal is running in screen
 inscreen() {
-    cmd=$(ps -o comm -p $(ps -o ppid -p $$ --no-headers) --no-headers)
-    [[ "${cmd}" == "screen" ]] && echo "screen"
+	cmd=$(ps -o comm -p $(ps -o ppid -p $$ --no-headers) --no-headers)
+	[[ "${cmd}" == "screen" ]] && echo "screen"
 }
-#        termname                return current terminal name or screen
+#		termname				return current terminal name or screen
 termname() {
-    term="unknown"
-    screen="$(inscreen)"
-    cmd=$(ps -o comm -p $$ --no-headers)
-    case "${cmd}" in
-        bash|tsh|csh|zsh|fish) term="${cmd}" ;;
-    esac
-    if [[ -n "${screen}" ]] ; then
-        echo "${screen}|${term}"
-    else
-        echo "${term}"
-    fi
+	term="unknown"
+	screen="$(inscreen)"
+	cmd=$(ps -o comm -p $$ --no-headers)
+	case "${cmd}" in
+		bash|tsh|csh|zsh|fish) term="${cmd}" ;;
+	esac
+	if [[ -n "${screen}" ]] ; then
+		echo "${screen}|${term}"
+	else
+		echo "${term}"
+	fi
 }
-#        psg                     ps with grep
+#		psg					 ps with grep
 psg() {
-    pids=$(pgrep --full --ignore-case "$1" | tr '\n' ',' | sed 's/,$//')
-    [[ -n "${pids}" ]] && ps --format pid,ppid,user,args --pid ${pids}
+	pids=$(pgrep --full --ignore-case "$1" | tr '\n' ',' | sed 's/,$//')
+	[[ -n "${pids}" ]] && ps --format pid,ppid,user,args --pid ${pids}
 }
-#        grepper                 fancy grep
+#		grepper				 fancy grep
 grepper() {
-    grep -iIHrn --color=always "$1" . | pager
+	grep -iIHrn --color=always "$1" . | pager
 }
-#        nsg                     netstat -a with grep
+#		nsg					 netstat -a with grep
 nsg() {
-    netstat -a | grep -i "$1" | more
+	netstat -a | grep -i "$1" | more
 }
-#        hostping                ping to resolve name to ip address
+#		hostping				ping to resolve name to ip address
 hostping() {
-    ping -c 1 "$1" | grep PING | sed 's/^[^(]*(\([^)]*\)).*$/\1/'
+	ping -c 1 "$1" | grep PING | sed 's/^[^(]*(\([^)]*\)).*$/\1/'
 }
-#        fnd                     find files
+#		fnd					 find files
 fnd() {
-    if [[ $# -lt 1 ]] || [[ $# -gt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 QUERY [DIR]"
-    else
-        query="$1"
-        shift
-        if [[ $# -eq 0 ]] ; then
-            dir="."
-        else
-            dir="$1"
-        fi
-        find "${dir}" -iname "*${query}*" -print
-    fi
+	if [[ $# -lt 1 ]] || [[ $# -gt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+		echo "Usage: $0 QUERY [DIR]"
+	else
+		query="$1"
+		shift
+		if [[ $# -eq 0 ]] ; then
+			dir="."
+		else
+			dir="$1"
+		fi
+		find "${dir}" -iname "*${query}*" -print
+	fi
 }
-#        fndg                    find files with grep
+#		fndg					find files with grep
 fndg() {
-    if [[ $# -lt 2 ]] || [[ $# -gt 3 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 QUERY GREP [DIR]"
-    else
-        query="$1"
-        shift
-        grep="$1"
-        shift
-        if [[ $# -eq 0 ]] ; then
-            dir="."
-        else
-            dir="$1"
-        fi
-        find "${dir}" -iname "*${query}*" -print | grep "${grep}"
-    fi
+	if [[ $# -lt 2 ]] || [[ $# -gt 3 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+		echo "Usage: $0 QUERY GREP [DIR]"
+	else
+		query="$1"
+		shift
+		grep="$1"
+		shift
+		if [[ $# -eq 0 ]] ; then
+			dir="."
+		else
+			dir="$1"
+		fi
+		find "${dir}" -iname "*${query}*" -print | grep "${grep}"
+	fi
 }
-#        wcdir                   word (line) count a directory
+#		wcdir				   word (line) count a directory
 wcdir() {
-    if [[ $# -gt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 [DIR]"
-    else
-        if [[ $# -eq 0 ]] ; then
-            dir="."
-        else
-            dir="$1"
-        fi
-        $(pathcmd ls) -1 "${dir}" | wc -l
-    fi
+	if [[ $# -gt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+		echo "Usage: $0 [DIR]"
+	else
+		if [[ $# -eq 0 ]] ; then
+			dir="."
+		else
+			dir="$1"
+		fi
+		$(pathcmd ls) -1 "${dir}" | wc -l
+	fi
 }
-#        dtloop                  datetime stamp looping
+#		dtloop				  datetime stamp looping
 dtloop() {
-    if [[ $# -gt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 [DELAY]"
-        echo "Output the current date-time in a loop."
-        echo "  DELAY  time between outputs (defaults to 5s)"
-    else
-        if [[ $# -eq 0 ]] ; then
-            delay="5s"
-        else
-            delay="$1"
-        fi
-        while true ; do
-            date '+%Y-%m-%d %H:%M:%S'
-            sleep ${delay}
-        done
-    fi
+	if [[ $# -gt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+		echo "Usage: $0 [DELAY]"
+		echo "Output the current date-time in a loop."
+		echo "  DELAY  time between outputs (defaults to 5s)"
+	else
+		if [[ $# -eq 0 ]] ; then
+			delay="5s"
+		else
+			delay="$1"
+		fi
+		while true ; do
+			date '+%Y-%m-%d %H:%M:%S'
+			sleep ${delay}
+		done
+	fi
 }
-#        dostolinux              convert a dos text file CR+LF to linux LF format
+#		dostolinux			  convert a dos text file CR+LF to linux LF format
 dostolinux() {
-    if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 FILE"
-        echo "Convert FILE from DOS format to Linux format."
-    else
-        sed -i 's/\r$//' "$1"
-    fi
+	if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+		echo "Usage: $0 FILE"
+		echo "Convert FILE from DOS format to Linux format."
+	else
+		sed -i 's/\r$//' "$1"
+	fi
 }
-#        linuxtodos              convert a linux text file LF to dos CR+LF format
+#		linuxtodos			  convert a linux text file LF to dos CR+LF format
 linuxtodos() {
-    if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 FILE"
-        echo "Convert FILE from Linux format to DOS format."
-    else
-        sed -i 's/$/\r/' "$1"
-    fi
+	if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+		echo "Usage: $0 FILE"
+		echo "Convert FILE from Linux format to DOS format."
+	else
+		sed -i 's/$/\r/' "$1"
+	fi
 }
-#        kmg                     convert bytes into KB, MB, GB, or TB as appropriate
+#		kmg					 convert bytes into KB, MB, GB, or TB as appropriate
 kmg() {
-    if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 NUM"
-    else
-        k=$(echo "scale=2; $1 / 1024" | bc)
-        kf=$(echo "$1 / 1024" | bc)
-        m=$(echo "scale=2; ${k} / 1024" | bc)
-        mf=$(echo "${k} / 1024" | bc)
-        g=$(echo "scale=2; ${m} / 1024" | bc)
-        gf=$(echo "${m} / 1024" | bc)
-        t=$(echo "scale=2; ${g} / 1024" | bc)
-        tf=$(echo "${g} / 1024" | bc)
-        if [[ ${kf} -lt 1 ]] ; then
-            echo "$1B"
-        elif [[ ${mf} -lt 1 ]] ; then
-            echo "${k}KB"
-        elif [[ ${gf} -lt 1 ]] ; then
-            echo "${m}MB"
-        elif [[ ${tf} -lt 1 ]] ; then
-            echo "${g}GB"
-        else
-            echo "${t}TB"
-        fi
-    fi
+	if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+		echo "Usage: $0 NUM"
+	else
+		k=$(echo "scale=2; $1 / 1024" | bc)
+		kf=$(echo "$1 / 1024" | bc)
+		m=$(echo "scale=2; ${k} / 1024" | bc)
+		mf=$(echo "${k} / 1024" | bc)
+		g=$(echo "scale=2; ${m} / 1024" | bc)
+		gf=$(echo "${m} / 1024" | bc)
+		t=$(echo "scale=2; ${g} / 1024" | bc)
+		tf=$(echo "${g} / 1024" | bc)
+		if [[ ${kf} -lt 1 ]] ; then
+			echo "$1B"
+		elif [[ ${mf} -lt 1 ]] ; then
+			echo "${k}KB"
+		elif [[ ${gf} -lt 1 ]] ; then
+			echo "${m}MB"
+		elif [[ ${tf} -lt 1 ]] ; then
+			echo "${g}GB"
+		else
+			echo "${t}TB"
+		fi
+	fi
 }
-#        javavnc                 java vncviewer
+#		javavnc				 java vncviewer
 javavnc() {
-    java VncViewer HOST $1 PORT 5900
+	java VncViewer HOST $1 PORT 5900
 }
-#        x                       execute with prompt
+#		x					   execute with prompt
 x() {
-    echo "$@" | fmt
-    echo -n "Execute command line? [Yn] "
-    read a
-    case "${a}" in
-        y|Y|"") ("$@") ;;
-    esac
+	echo "$@" | fmt
+	echo -n "Execute command line? [Yn] "
+	read a
+	case "${a}" in
+		y|Y|"") ("$@") ;;
+	esac
 }
-#        lnsdir                  make links to every file in a directory
+#		lnsdir				  make links to every file in a directory
 lnsdir() {
-    if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 DIR"
-    else
-        $(pathcmd ls) -1 "$1" | while read a ; do
-            ln -s "$1/${a}" ${a}
-        done
-    fi
+	if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+		echo "Usage: $0 DIR"
+	else
+		$(pathcmd ls) -1 "$1" | while read a ; do
+			ln -s "$1/${a}" ${a}
+		done
+	fi
 }
-#        mailfile                mail a file (uuencoded)
+#		mailfile				mail a file (uuencoded)
 mailfile() {
-    if [[ $# -lt 3 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 FILE SUBJECT ADDRESS..."
-    else
-        file="$1"
-        shift
-        sub="$1"
-        shift
-        (uuencode "${file}" "${file}") | mailx -s "${sub}" "$@"
-    fi
+	if [[ $# -lt 3 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+		echo "Usage: $0 FILE SUBJECT ADDRESS..."
+	else
+		file="$1"
+		shift
+		sub="$1"
+		shift
+		(uuencode "${file}" "${file}") | mailx -s "${sub}" "$@"
+	fi
 }
-#        speakurl                speak a url
+#		speakurl				speak a url
 speakurl() {
-    if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 URL"
-    else
-        lynx --dump "$1" |
-            sed 's/\[.*\]//g ; s/[^0-9a-zA-Z \?\,\.\;\:]//g ; /^References$/,$d' |
-            festival --tts
-    fi
+	if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+		echo "Usage: $0 URL"
+	else
+		lynx --dump "$1" |
+			sed 's/\[.*\]//g ; s/[^0-9a-zA-Z \?\,\.\;\:]//g ; /^References$/,$d' |
+			festival --tts
+	fi
 }
-#        m4vtomp4                convert all m4v videos in current directory to mp4 videos
+#		m4vtomp4				convert all m4v videos in current directory to mp4 videos
 m4vtomp4() {
-    if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 FILE..."
-    else
-        files=("$@")
-        for infile in "${files[@]}" ; do
-            outfile="${infile:0:-4}.mp4"
-            echo "${infile} -> ${outfile}"
-            ffmpeg -i "${infile}" -codec copy "${outfile}" && rm "${infile}"
-        done
-    fi
+	if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+		echo "Usage: $0 FILE..."
+	else
+		files=("$@")
+		for infile in "${files[@]}" ; do
+			outfile="${infile:0:-4}.mp4"
+			echo "${infile} -> ${outfile}"
+			ffmpeg -i "${infile}" -codec copy "${outfile}" && rm "${infile}"
+		done
+	fi
 }
-#        flattendir              flatten directory
+#		flattendir			  flatten directory
 flattendir() {
-    if [[ $# -ne 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 INDIR OUTDIR"
-    else
-        indir="$1"
-        outdir="$2"
-        if [[ ! -d "${indir}" ]] ; then
-            echo "Error finding '${indir}' directory"
-        elif [[ ! -d "${outdir}" ]] ; then
-            echo "Error finding '${outdir}' directory"
-        else
-            outdir=$(cd "${outdir}" ; pwd)
-            pushd "${indir}"
-            find . -type f | while read f ; do
-                o=$(echo "${f}" | cut -c 3- | tr '/' '_')
-                o="${outdir}/${o}"
-                cp -u "${f}" "${o}"
-            done
-            popd
-        fi
-    fi
+	if [[ $# -ne 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+		echo "Usage: $0 INDIR OUTDIR"
+	else
+		indir="$1"
+		outdir="$2"
+		if [[ ! -d "${indir}" ]] ; then
+			echo "Error finding '${indir}' directory"
+		elif [[ ! -d "${outdir}" ]] ; then
+			echo "Error finding '${outdir}' directory"
+		else
+			outdir=$(cd "${outdir}" ; pwd)
+			pushd "${indir}"
+			find . -type f | while read f ; do
+				o=$(echo "${f}" | cut -c 3- | tr '/' '_')
+				o="${outdir}/${o}"
+				cp -u "${f}" "${o}"
+			done
+			popd
+		fi
+	fi
 }
-#        longevity               clean out old files
+#		longevity			   clean out old files
 longevity() {
-    if [[ $# -ne 3 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 DIR PATTERN DAYS"
-        echo "Delete all files matching PATTERN in DIR older than DAYS."
-        echo "  DIR      top level directory to search"
-        echo "  PATTERN  file pattern to match on"
-        echo "  DAYS     number of days to keep"
-    else
-        dir="$1"
-        pattern="$2"
-        days="$3"
-        echo "You are about to delete all files matching pattern '${pattern}'"
-        echo "in ${dir} that are older than ${days} days."
-        echo -n "Do you wish to proceed? [yN] "
-        read a
-        case "${a}" in
-            y|Y)
-                find ${dir} -mtime +${days} -type f -iname '${pattern}' -exec rm {} \;
-                ;;
-        esac
-    fi
+	if [[ $# -ne 3 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+		echo "Usage: $0 DIR PATTERN DAYS"
+		echo "Delete all files matching PATTERN in DIR older than DAYS."
+		echo "  DIR	  top level directory to search"
+		echo "  PATTERN  file pattern to match on"
+		echo "  DAYS	 number of days to keep"
+	else
+		dir="$1"
+		pattern="$2"
+		days="$3"
+		echo "You are about to delete all files matching pattern '${pattern}'"
+		echo "in ${dir} that are older than ${days} days."
+		echo -n "Do you wish to proceed? [yN] "
+		read a
+		case "${a}" in
+			y|Y)
+				find ${dir} -mtime +${days} -type f -iname '${pattern}' -exec rm {} \;
+				;;
+		esac
+	fi
 }
-#        seddir                  apply sed to all files in directory
+#		seddir				  apply sed to all files in directory
 seddir() {
-    tmp=temp$$
-    if [[ $# -lt 1 ]] || [[ $# -gt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 SCRIPT [DIR]"
-        echo "Apply sed SCRIPT to all files in current directory or DIR."
-    else
-        script="$1"
-        shift
-        if [[ $# -eq 0 ]] ; then
-            dir="."
-        else
-            dir="$1"
-        fi
-        dir=$(cd "${dir}" ; pwd)
-        echo "You are about to apply SED script '$1'"
-        echo "to all files in directory '${dir}'."
-        echo -n "Do you wish to proceed? [yN] "
-        read a
-        case "${a}" in
-            y|Y)
-                (
-                    cd "${dir}" && \
-                        find . -mindepth 1 -maxdepth 1 -type f | while read file ; do
-                            echo "${file}"
-                            sed -i "${script}" "${file}"
-                        done
-                )
-                ;;
-        esac
-    fi
+	tmp=temp$$
+	if [[ $# -lt 1 ]] || [[ $# -gt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+		echo "Usage: $0 SCRIPT [DIR]"
+		echo "Apply sed SCRIPT to all files in current directory or DIR."
+	else
+		script="$1"
+		shift
+		if [[ $# -eq 0 ]] ; then
+			dir="."
+		else
+			dir="$1"
+		fi
+		dir=$(cd "${dir}" ; pwd)
+		echo "You are about to apply SED script '$1'"
+		echo "to all files in directory '${dir}'."
+		echo -n "Do you wish to proceed? [yN] "
+		read a
+		case "${a}" in
+			y|Y)
+				(
+					cd "${dir}" && \
+						find . -mindepth 1 -maxdepth 1 -type f | while read file ; do
+							echo "${file}"
+							sed -i "${script}" "${file}"
+						done
+				)
+				;;
+		esac
+	fi
 }
-#        delete-broken-symlinks  find and delete broken symlinks in given directory
+#		delete-broken-symlinks  find and delete broken symlinks in given directory
 delete-broken-symlinks() {
-    opts="-maxdepth 0"
-    dir=""
+	opts="-maxdepth 0"
+	dir=""
 
-    _usage() {
-        cat <<EOF
+	_usage() {
+		cat <<EOF
 Usage: $0 DIR [OPTIONS]
 Delete broken symlinks in DIR.
 OPTIONS:
-  DIR              directory to search in
-  -h, --help       show this help
+  DIR			  directory to search in
+  -h, --help	   show this help
   -r, --recursive  recurse into sub-directories
 EOF
-    }
+	}
 
-    while [[ $# -gt 0 ]] ; do
-        opt="$1"
-        case "${opt}" in
-            -r|--recursive)
-                opts=""
-                shift
-                ;;
-            -h|--help)
-                _usage $0
-                return 0
-                ;;
-            *)
-                if [[ -z "${dir}" ]] ; then
-                    dir="${opt}"
-                    shift
-                else
-                    _usage $0
-                    return 1
-                fi
-                ;;
-        esac
-    done
+	while [[ $# -gt 0 ]] ; do
+		opt="$1"
+		case "${opt}" in
+			-r|--recursive)
+				opts=""
+				shift
+				;;
+			-h|--help)
+				_usage $0
+				return 0
+				;;
+			*)
+				if [[ -z "${dir}" ]] ; then
+					dir="${opt}"
+					shift
+				else
+					_usage $0
+					return 1
+				fi
+				;;
+		esac
+	done
 
-    if [[ -z "${dir}" ]] ; then
-        _usage $0
-        return 1
-    fi
+	if [[ -z "${dir}" ]] ; then
+		_usage $0
+		return 1
+	fi
 
-    echo "Deleting broken symlinks in '${dir}'..."
-    cmd="find -L \"${dir}\" ${opts} -name . -o -type l -print"
-    eval "${cmd}" | while read file ; do
-        if [[ -L "${file}" ]] && [[ ! -e "${file}" ]] ; then
-            echo "  ${file}"
-            rm "${file}"
-        fi
-    done
+	echo "Deleting broken symlinks in '${dir}'..."
+	cmd="find -L \"${dir}\" ${opts} -name . -o -type l -print"
+	eval "${cmd}" | while read file ; do
+		if [[ -L "${file}" ]] && [[ ! -e "${file}" ]] ; then
+			echo "  ${file}"
+			rm "${file}"
+		fi
+	done
 }
-#        make-terminfo-trs100    make terminfo file for trs-80 model 100
+#		make-terminfo-trs100	make terminfo file for trs-80 model 100
 make-terminfo-trs100() {
-    tmpfile="$(mktemp)"
-    cat > "${tmpfile}" <<EOF
+	tmpfile="$(mktemp)"
+	cat > "${tmpfile}" <<EOF
 trs100|Radio Shack Model 100:\
 :am:bs:xt:\
 :co#40:li#8:\
@@ -579,1096 +579,1096 @@ trs100|Radio Shack Model 100:\
 :ku=^^:le=^H:nd=34:se=\Eq:sf=^J:so=\Ep:up=\EA:\
 :ve=\EP:vi=\EQ:
 EOF
-    sudo tic "${tmpfile}"
-    rm "${tmpfile}"
+	sudo tic "${tmpfile}"
+	rm "${tmpfile}"
 }
 
 #
 # tools
 #
-#        generateqrc             generate QR code from given URL, text, or VCARD
+#		generateqrc			 generate QR code from given URL, text, or VCARD
 generateqrc() {
-    printf "$@" | curl -F-=\<- qrenco.de
+	printf "$@" | curl -F-=\<- qrenco.de
 }
-#        colors                  show terminal colors
+#		colors				  show terminal colors
 colors() {
-    local fgc bgc vals seq0
+	local fgc bgc vals seq0
 
-    printf "Color escapes are %s\n" '\e[${value};...;${value}m'
-    printf "Values 30..37 are \e[33mforeground colors\e[m\n"
-    printf "Values 40..47 are \e[43mbackground colors\e[m\n"
-    printf "Value  1 gives a  \e[1mbold-faced look\e[m\n\n"
+	printf "Color escapes are %s\n" '\e[${value};...;${value}m'
+	printf "Values 30..37 are \e[33mforeground colors\e[m\n"
+	printf "Values 40..47 are \e[43mbackground colors\e[m\n"
+	printf "Value  1 gives a  \e[1mbold-faced look\e[m\n\n"
 
-    # foreground colors
-    for fgc in {30..37} ; do
-        # background colors
-        for bgc in {40..47} ; do
-            fgc=${fgc#37} # white
-            bgc=${bgc#40} # black
+	# foreground colors
+	for fgc in {30..37} ; do
+		# background colors
+		for bgc in {40..47} ; do
+			fgc=${fgc#37} # white
+			bgc=${bgc#40} # black
 
-            vals="${fgc:+$fgc;}${bgc}"
-            vals=${vals%%;}
+			vals="${fgc:+$fgc;}${bgc}"
+			vals=${vals%%;}
 
-            seq0="${vals:+\e[${vals}m}"
-            printf "  %-9s" "${seq0:-(default)}"
-            printf " ${seq0}TEXT\e[m"
-            printf " \e[${vals:+${vals+$vals;}}1mBOLD\e[m"
-        done
-        echo; echo
-    done
+			seq0="${vals:+\e[${vals}m}"
+			printf "  %-9s" "${seq0:-(default)}"
+			printf " ${seq0}TEXT\e[m"
+			printf " \e[${vals:+${vals+$vals;}}1mBOLD\e[m"
+		done
+		echo; echo
+	done
 }
-#        colorscriptslideshow    run all colorscript scripts
+#		colorscriptslideshow	run all colorscript scripts
 colorscriptslideshow() {
-    once=1
-    random=0
-    delay=2
+	once=1
+	random=0
+	delay=2
 
-    oldIFS=${IFS}
-    IFS=$'\n'
-    list=($(colorscript --list | tail -n +2))
-    IFS=${oldIFS}
-    length=$((${#list[@]} - 1)) # there is a bug where the last script does not work
-    bad=(32 33 34)
+	oldIFS=${IFS}
+	IFS=$'\n'
+	list=($(colorscript --list | tail -n +2))
+	IFS=${oldIFS}
+	length=$((${#list[@]} - 1)) # there is a bug where the last script does not work
+	bad=(32 33 34)
 
-    _usage() {
-        cat <<EOF
+	_usage() {
+		cat <<EOF
 Usage: $1 [OPTIONS]
 Run colorscript scripts.
 OPTIONS:
-  -o, --once        run each script one time
+  -o, --once		run each script one time
   -c, --continuous  run all scripts in a continuous loop
-  -r, --random      run scripts randomly
-  -d, --delay       time to pause between scripts (defaults to 2s)
+  -r, --random	  run scripts randomly
+  -d, --delay	   time to pause between scripts (defaults to 2s)
 EOF
-    }
+	}
 
-    _show() {
-        local num="$1"
-        # ignore scripts that never end
-        if [[ ! " ${bad[@]} " =~ " ${num} " ]] ; then
-            clear
-            echo
-            echo "${list[${num}]}"
-            echo
-            colorscript exec ${num}
-            sleep ${delay}
-        fi
-    }
+	_show() {
+		local num="$1"
+		# ignore scripts that never end
+		if [[ ! " ${bad[@]} " =~ " ${num} " ]] ; then
+			clear
+			echo
+			echo "${list[${num}]}"
+			echo
+			colorscript exec ${num}
+			sleep ${delay}
+		fi
+	}
 
-    while [[ $# -gt 0 ]] ; do
-        opt="$1"
+	while [[ $# -gt 0 ]] ; do
+		opt="$1"
 
-        case "${opt}" in
-            -o|--once)
-                once=1
-                shift
-                ;;
-            -c|--continuous)
-                once=0
-                shift
-                ;;
-            -r|--random)
-                random=1
-                shift
-                ;;
-            -d|--delay)
-                delay="$2"
-                shift
-                shift
-                ;;
-            -h|--help)
-                _usage $0
-                shift
-                return 0
-                ;;
-            *)
-                printf "%s: unrecognized option '%s'\n\n" "$(basename $0)" "$1"
-                _usage $0
-                return 1
-                ;;
-        esac
-    done
+		case "${opt}" in
+			-o|--once)
+				once=1
+				shift
+				;;
+			-c|--continuous)
+				once=0
+				shift
+				;;
+			-r|--random)
+				random=1
+				shift
+				;;
+			-d|--delay)
+				delay="$2"
+				shift
+				shift
+				;;
+			-h|--help)
+				_usage $0
+				shift
+				return 0
+				;;
+			*)
+				printf "%s: unrecognized option '%s'\n\n" "$(basename $0)" "$1"
+				_usage $0
+				return 1
+				;;
+		esac
+	done
 
-    if [[ ${random} -eq 1 ]] ; then
-        while true ; do
-            _show $((${RANDOM} % length + 1))
-        done
-    elif [[ ${once} -eq 1 ]] ; then
-        for x in $(seq ${length}) ; do _show ${x} ; done
-    else
-        while true ; do
-            for x in $(seq ${length}) ; do _show ${x} ; done
-        done
-    fi
+	if [[ ${random} -eq 1 ]] ; then
+		while true ; do
+			_show $((${RANDOM} % length + 1))
+		done
+	elif [[ ${once} -eq 1 ]] ; then
+		for x in $(seq ${length}) ; do _show ${x} ; done
+	else
+		while true ; do
+			for x in $(seq ${length}) ; do _show ${x} ; done
+		done
+	fi
 }
-#        ansi                    display an ANSI text graphic file at 1200 baud
+#		ansi					display an ANSI text graphic file at 1200 baud
 ansi() {
-    if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 FILE"
-        echo "Display an ANSI text graphic file at 1200 baud."
-    else
-        iconv -f 437 "$1" | pv --quiet --rate-limit 1200
-    fi
+	if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+		echo "Usage: $0 FILE"
+		echo "Display an ANSI text graphic file at 1200 baud."
+	else
+		iconv -f 437 "$1" | pv --quiet --rate-limit 1200
+	fi
 }
-#        ansislideshow           display a slideshow of all ANSI text graphic files in given directory
+#		ansislideshow		   display a slideshow of all ANSI text graphic files in given directory
 ansislideshow() {
-    if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 DIR"
-        echo "Display a slideshow of all ANSI text graphic files in given directory."
-    else
-        find "$1" -iname *".ANS" -print | sort --random-sort | while read file ; do
-            iconv -f 437 "${file}" | pv --quiet --rate-limit 1200
-            sleep 10
-        done
-    fi
+	if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+		echo "Usage: $0 DIR"
+		echo "Display a slideshow of all ANSI text graphic files in given directory."
+	else
+		find "$1" -iname *".ANS" -print | sort --random-sort | while read file ; do
+			iconv -f 437 "${file}" | pv --quiet --rate-limit 1200
+			sleep 10
+		done
+	fi
 }
-#        convertvideotomp3       convert video file to audio mp3
+#		convertvideotomp3	   convert video file to audio mp3
 convertvideotomp3() {
-    if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 FILE"
-        echo "Convert a video file to an audio mp3 with 192K bitrate."
-    else
-        in="$1"
-        out=$(echo "${in}" | sed 's/\..*$/.mp3/')
-        ffmpeg -i "${in}" -b:a 192K -vn "${out}"
-    fi
+	if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+		echo "Usage: $0 FILE"
+		echo "Convert a video file to an audio mp3 with 192K bitrate."
+	else
+		in="$1"
+		out=$(echo "${in}" | sed 's/\..*$/.mp3/')
+		ffmpeg -i "${in}" -b:a 192K -vn "${out}"
+	fi
 }
 
 #
 # compression
 #
-#        comp                    compress (tar then gzip)
+#		comp					compress (tar then gzip)
 comp() {
-    if [[ $# -lt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 ARCHIVE FILE..."
-    else
-        arch="$1"
-        shift
-        tar cvfz "${arch}" "$@"
-    fi
+	if [[ $# -lt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+		echo "Usage: $0 ARCHIVE FILE..."
+	else
+		arch="$1"
+		shift
+		tar cvfz "${arch}" "$@"
+	fi
 }
-#        uncomp                  uncompress (ungzip then untar)
+#		uncomp				  uncompress (ungzip then untar)
 uncomp() {
-    if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 FILE"
-    else
-        file="$1"
-        if [[ -f "${file}" ]] ; then
-            case "${file}" in
-                *.tar.bz2)   tar xjf ${file}    ;;
-                *.tar.gz)    tar xzf ${file}    ;;
-                *.tar.xz)    tar xJf ${file}    ;;
-                *.tar.zst)   unzstd ${file}     ;;
-                *.bz2)       bunzip2 ${file}    ;;
-                *.rar)       unrar x ${file}    ;;
-                *.gz)        gunzip ${file}     ;;
-                *.xz)        unxz ${file}       ;;
-                *.zst)       unzstd ${file}     ;;
-                *.tar)       tar xf ${file}     ;;
-                *.tbz2)      tar xjf ${file}    ;;
-                *.tgz)       tar xzf ${file}    ;;
-                *.zip)       unzip ${file}      ;;
-                *.Z)         uncompress ${file} ;;
-                *.7z)        7z x ${file}       ;;
-                *.deb)       ar x ${file}       ;;
-                *)           echo "'${file}' cannot be uncompressed by uncomp" ;;
-            esac
-        else
-            echo "'${file}' is not a valid file"
-        fi
-    fi
+	if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+		echo "Usage: $0 FILE"
+	else
+		file="$1"
+		if [[ -f "${file}" ]] ; then
+			case "${file}" in
+				*.tar.bz2)   tar xjf ${file}	;;
+				*.tar.gz)	tar xzf ${file}	;;
+				*.tar.xz)	tar xJf ${file}	;;
+				*.tar.zst)   unzstd ${file}	 ;;
+				*.bz2)	   bunzip2 ${file}	;;
+				*.rar)	   unrar x ${file}	;;
+				*.gz)		gunzip ${file}	 ;;
+				*.xz)		unxz ${file}	   ;;
+				*.zst)	   unzstd ${file}	 ;;
+				*.tar)	   tar xf ${file}	 ;;
+				*.tbz2)	  tar xjf ${file}	;;
+				*.tgz)	   tar xzf ${file}	;;
+				*.zip)	   unzip ${file}	  ;;
+				*.Z)		 uncompress ${file} ;;
+				*.7z)		7z x ${file}	   ;;
+				*.deb)	   ar x ${file}	   ;;
+				*)		   echo "'${file}' cannot be uncompressed by uncomp" ;;
+			esac
+		else
+			echo "'${file}' is not a valid file"
+		fi
+	fi
 }
-#        unparrar                un-par-rar (par2 then unrar)
+#		unparrar				un-par-rar (par2 then unrar)
 unparrar() {
-    if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 FILE"
-    else
-        par2 r "$1."*".PAR2"
-        unrar e "$1.part"*".rar"
-    fi
+	if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+		echo "Usage: $0 FILE"
+	else
+		par2 r "$1."*".PAR2"
+		unrar e "$1.part"*".rar"
+	fi
 }
 
 #
 # encryption
 #
-#        encrypt                 encrypt file
+#		encrypt				 encrypt file
 encrypt() {
-    if [[ $# -lt 2 ]] || [[ $# -gt 3 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 INFILE OUTFILE [PASSWORD]"
-    else
-        infile="$1"
-        shift
-        outfile="$1"
-        shift
-        if [[ $# -eq 0 ]] ; then
-            echo -n "Password: "
-            read pw
-        else
-            pw="$1"
-        fi
-        #aes -e -f ${infile} -o ${outfile} -p ${pw}
-        openssl enc -aes256 -pbkdf2 -in ${infile} -out ${outfile} -pass ${pw}
-    fi
+	if [[ $# -lt 2 ]] || [[ $# -gt 3 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+		echo "Usage: $0 INFILE OUTFILE [PASSWORD]"
+	else
+		infile="$1"
+		shift
+		outfile="$1"
+		shift
+		if [[ $# -eq 0 ]] ; then
+			echo -n "Password: "
+			read pw
+		else
+			pw="$1"
+		fi
+		#aes -e -f ${infile} -o ${outfile} -p ${pw}
+		openssl enc -aes256 -pbkdf2 -in ${infile} -out ${outfile} -pass ${pw}
+	fi
 }
-#        decrypt                 decrypt file
+#		decrypt				 decrypt file
 decrypt() {
-    if [[ $# -lt 2 ]] || [[ $# -gt 3 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 INFILE OUTFILE [PASSWORD]"
-    else
-        infile="$1"
-        shift
-        outfile="$1"
-        shift
-        if [[ $# -eq 0 ]] ; then
-            echo -n "Password: "
-            read pw
-        else
-            pw="$1"
-        fi
-        #aes -d -f ${infile} -o ${outfile} -p ${pw}
-        openssl enc -aes256 -pbkdf2 -d -in ${infile} -out ${outfile} -pass ${pw}
-    fi
+	if [[ $# -lt 2 ]] || [[ $# -gt 3 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+		echo "Usage: $0 INFILE OUTFILE [PASSWORD]"
+	else
+		infile="$1"
+		shift
+		outfile="$1"
+		shift
+		if [[ $# -eq 0 ]] ; then
+			echo -n "Password: "
+			read pw
+		else
+			pw="$1"
+		fi
+		#aes -d -f ${infile} -o ${outfile} -p ${pw}
+		openssl enc -aes256 -pbkdf2 -d -in ${infile} -out ${outfile} -pass ${pw}
+	fi
 }
 
 #
 # kill with grep
 #
-#        ktg                     kill -SIGTERM (friendly) with grep
+#		ktg					 kill -SIGTERM (friendly) with grep
 ktg() {
-    pkill --signal SIGTERM --ignore-case "$1"
+	pkill --signal SIGTERM --ignore-case "$1"
 }
-#        kkg                     kill -SIGKILL (forced) with grep
+#		kkg					 kill -SIGKILL (forced) with grep
 kkg() {
-    pkill --signal SIGTERM --ignore-case "$1"
-    sleep 1
-    pkill --signal SIGKILL --ignore-case "$1"
+	pkill --signal SIGTERM --ignore-case "$1"
+	sleep 1
+	pkill --signal SIGKILL --ignore-case "$1"
 }
-#        khg                     kill -HUP (restart) with grep
+#		khg					 kill -HUP (restart) with grep
 khg() {
-    pkill --signal SIGHUP --ignore-case "$1"
+	pkill --signal SIGHUP --ignore-case "$1"
 }
 
 #
 # admin tools
 #
-#        showmem                 show task memory usage
+#		showmem				 show task memory usage
 showmem() {
-    # TODO: need to fix this
-    ps -aux | sort +5n
+	# TODO: need to fix this
+	ps -aux | sort +5n
 }
-#        showip                  show configured IP address
+#		showip				  show configured IP address
 showip() {
-    ifconfig | awk '/inet/ {print $2}' | awk -F : '// {print $2}' | grep -v "^$"
+	ifconfig | awk '/inet/ {print $2}' | awk -F : '// {print $2}' | grep -v "^$"
 }
-#        showport                show active network ports
+#		showport				show active network ports
 showport() {
-    lsof | grep 'COMMAND    PID' && lsof | grep 'inet'
+	lsof | grep 'COMMAND	PID' && lsof | grep 'inet'
 }
-#        showstats               show system statistics
+#		showstats			   show system statistics
 showstats() {
-    echo "Server Name: $(uname -n)"
-    echo "Server IP:   $(net lookup $(hostname))"
-    echo "Logins:      $(who | wc | awk '{print $1}')"
-    echo "Users:       $(who | sort | awk '{print $1}' | uniq | wc | awk '{print $1}')"
-    echo "Load:       $(uptime | cut -d, -f4 | cut -d: -f2)"
+	echo "Server Name: $(uname -n)"
+	echo "Server IP:   $(net lookup $(hostname))"
+	echo "Logins:	  $(who | wc | awk '{print $1}')"
+	echo "Users:	   $(who | sort | awk '{print $1}' | uniq | wc | awk '{print $1}')"
+	echo "Load:	   $(uptime | cut -d, -f4 | cut -d: -f2)"
 }
-#        fsckshutdown            shutdown computer and fsck all drives on next bootup
+#		fsckshutdown			shutdown computer and fsck all drives on next bootup
 fsckshutdown() {
 
-    echo "You are about to reboot the computer and have it fsck the root drive."
-    echo -n "Do you wish to proceed? [yN] "
-    read a
-    case "${a}" in
-        y|Y)
-            sudo touch /forcefsck && sudo reboot
-            ;;
-    esac
+	echo "You are about to reboot the computer and have it fsck the root drive."
+	echo -n "Do you wish to proceed? [yN] "
+	read a
+	case "${a}" in
+		y|Y)
+			sudo touch /forcefsck && sudo reboot
+			;;
+	esac
 }
 
 #
 # ssh
 #
-#        sshkeycp                copy ssh key to remote server
+#		sshkeycp				copy ssh key to remote server
 sshkeycp() {
-    if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 [USER@]SERVER"
-    else
-        ssh "$1" '[[ ! -d .ssh ]] && mkdir -p .ssh && chmod 700 .ssh'
-        [[ -f "${HOME}/.ssh/id_dsa.pub" ]] && \
-            cat "${HOME}/.ssh/id_dsa.pub" | ssh "$1" '/bin/cat >> .ssh/authorized_keys ; \
-          /bin/chmod 600 .ssh/authorized_keys'
-        [[ -f "${HOME}/.ssh/id_rsa.pub" ]] && \
-            cat "${HOME}/.ssh/id_rsa.pub" | ssh "$1" '/bin/cat >> .ssh/authorized_keys ; \
-          /bin/chmod 600 .ssh/authorized_keys'
-    fi
+	if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+		echo "Usage: $0 [USER@]SERVER"
+	else
+		ssh "$1" '[[ ! -d .ssh ]] && mkdir -p .ssh && chmod 700 .ssh'
+		[[ -f "${HOME}/.ssh/id_dsa.pub" ]] && \
+			cat "${HOME}/.ssh/id_dsa.pub" | ssh "$1" '/bin/cat >> .ssh/authorized_keys ; \
+		  /bin/chmod 600 .ssh/authorized_keys'
+		[[ -f "${HOME}/.ssh/id_rsa.pub" ]] && \
+			cat "${HOME}/.ssh/id_rsa.pub" | ssh "$1" '/bin/cat >> .ssh/authorized_keys ; \
+		  /bin/chmod 600 .ssh/authorized_keys'
+	fi
 }
 #!# this version does not work on macos
 #!sshkeycp() {
-#!    if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-#!        echo "Usage: $0 [USER@]SERVER"
-#!    else
-#!        ssh-copy-id -i "${HOME}/.ssh/id_dsa.pub" "$1"
-#!        ssh-copy-id -i "${HOME}/.ssh/id_rsa.pub" "$1"
-#!    fi
+#!	if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+#!		echo "Usage: $0 [USER@]SERVER"
+#!	else
+#!		ssh-copy-id -i "${HOME}/.ssh/id_dsa.pub" "$1"
+#!		ssh-copy-id -i "${HOME}/.ssh/id_rsa.pub" "$1"
+#!	fi
 #!}
-#        sshurxvtcp              copy urxvt terminfo data to remote server
+#		sshurxvtcp			  copy urxvt terminfo data to remote server
 sshurxvtcp() {
-    if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 [USER@]SERVER"
-    else
-        infocmp urxvt | \
-            ssh "$1" 'cat > /tmp/terminfo && mkdir -p .terminfo && \
-              tic /tmp/terminfo && rm -f /tmp/terminfo'
-    fi
+	if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+		echo "Usage: $0 [USER@]SERVER"
+	else
+		infocmp urxvt | \
+			ssh "$1" 'cat > /tmp/terminfo && mkdir -p .terminfo && \
+			  tic /tmp/terminfo && rm -f /tmp/terminfo'
+	fi
 }
 
 #
 # disk
 #
-#        hdfast                  speed up hard disk access
+#		hdfast				  speed up hard disk access
 hdfast() {
-    hdparm -c1 -d1 -k1 "/dev/$1"
+	hdparm -c1 -d1 -k1 "/dev/$1"
 }
-#        hdi                     hard disk info
+#		hdi					 hard disk info
 hdi() {
-    hdparm -i "/dev/$1"
+	hdparm -i "/dev/$1"
 }
-#        hdv                     hard disk settings
+#		hdv					 hard disk settings
 hdv() {
-    hdparm -v "/dev/$1"
+	hdparm -v "/dev/$1"
 }
-#        hdt                     hard disk speed test
+#		hdt					 hard disk speed test
 hdt() {
-    hdparm -tT "/dev/$1"
+	hdparm -tT "/dev/$1"
 }
-#        diskuuid                print uuids for system disks
+#		diskuuid				print uuids for system disks
 diskuuid() {
-    output=$(
-        (
-            unset extendeds
-            for extended in $(cat /proc/partitions | grep -v '[0-9]$' | awk '{print $4}' | grep '^[sh]d') ; do
-                id=$(parted /dev/${extended} print | grep extended | awk '{print $1}' 2>/dev/null)
-                if [[ -n "${id}" ]] ; then
-                    echo "${extended}${id}_EXT_none_none"
-                    extendeds="${extendeds} ${extended}${id}"
-                fi
-            done
-            for swap in $(cat /proc/swaps | grep [0-9] | awk '{print $1}') ; do
-                drive=$(echo $swap | cut -d/ -f 3)
-                id=$(vol_id -u $swaps 2>/dev/nul)
-                echo "${drive}_SWAP_none_${uuid}"
-            done
-            for partition in $(cat /proc/partitions | grep '[0-9]$' | awk '{print $4}') ; do
-                for extended in ${extendeds} ; do
-                    [[ "${partition}" == "${extended}" ]] && unset partition
-                done
-                if [[ -n "${partition}" ]] ; then
-                    mount=$(df -l -x tmpfs -x usbfs | grep -w ${partition} | awk '{print $6}')
-                    uuid=$(vol_id -u /dev/${partition} 2>/dev/nul)
-                    [[ -n "${mount}" ]] && echo "${partition}_REG_${mount}_${uuid}"
-                fi
-            done
-        ) | sort)
-    (
-        echo "PARTITION TYPE MOUNT UUID"
-        for line in ${output} ; do
-            echo "${line}" | sed 's/_/ /g'
-        done
-    ) | column --table
+	output=$(
+		(
+			unset extendeds
+			for extended in $(cat /proc/partitions | grep -v '[0-9]$' | awk '{print $4}' | grep '^[sh]d') ; do
+				id=$(parted /dev/${extended} print | grep extended | awk '{print $1}' 2>/dev/null)
+				if [[ -n "${id}" ]] ; then
+					echo "${extended}${id}_EXT_none_none"
+					extendeds="${extendeds} ${extended}${id}"
+				fi
+			done
+			for swap in $(cat /proc/swaps | grep [0-9] | awk '{print $1}') ; do
+				drive=$(echo $swap | cut -d/ -f 3)
+				id=$(vol_id -u $swaps 2>/dev/nul)
+				echo "${drive}_SWAP_none_${uuid}"
+			done
+			for partition in $(cat /proc/partitions | grep '[0-9]$' | awk '{print $4}') ; do
+				for extended in ${extendeds} ; do
+					[[ "${partition}" == "${extended}" ]] && unset partition
+				done
+				if [[ -n "${partition}" ]] ; then
+					mount=$(df -l -x tmpfs -x usbfs | grep -w ${partition} | awk '{print $6}')
+					uuid=$(vol_id -u /dev/${partition} 2>/dev/nul)
+					[[ -n "${mount}" ]] && echo "${partition}_REG_${mount}_${uuid}"
+				fi
+			done
+		) | sort)
+	(
+		echo "PARTITION TYPE MOUNT UUID"
+		for line in ${output} ; do
+			echo "${line}" | sed 's/_/ /g'
+		done
+	) | column --table
 }
 
 #
 # edit
 #
-#        emacsed                 launch emacs editor
+#		emacsed				 launch emacs editor
 emacsed() {
-    # set optional wait state
-    if [[ -n "${WAIT}" ]] ; then
-        wait=""
-    else
-        wait="--no-wait"
-    fi
-    [[ -n "${DEBUG}" ]] && echo "wait: ${wait}"
-    # set optional vi fallback state
-    if [[ -n "${VI}" ]] ; then
-        vi=1
-    else
-        vi=0
-    fi
-    [[ -n "${DEBUG}" ]] && echo "vi: ${vi}"
-    # determine if emacs client is running under this user
-    client=0
-    if [[ "$(emacsclient -e t 2>&1)" == "t" ]] ; then
-        client=1
-    fi
-    # for older versions look for emacs server socket
-    if [[ ${client} -eq 0 ]] ; then
-        for name in "/tmp/emacs$(id -u)" "/tmp/esrv$(id -u)-$(hostname)" ; do
-            if [[ ${client} -eq 0 ]] ; then
-                # stat client file
-                if [[ -e "${name}" ]] && [[ -n "$(stat ${name} | grep ${USER})" ]] ; then
-                    client=1
-                    [[ -n "${DEBUG}" ]] && echo "client file: ${name}, client: ${client}"
-                fi
-            fi
-        done
-    fi
-    [[ -n "${DEBUG}" ]] && echo "client: ${client}"
-    # determine if screen is running under this user and if emacs is running under it
-    screen=0
-    if [[ "$(inscreen)" == "screen" ]] ; then
-        if [[ -n "$(ps -e -o user,args | grep -v grep | grep ${USER} | grep emacs | grep '\-nw')" ]] ; then
-            screen=1
-        fi
-    fi
-    [[ -n "${DEBUG}" ]] && echo "screen: ${screen}"
-    # pause if debugging
-    if [[ -n "${DEBUG}" ]] ; then
-        echo "Press return to start editor"
-        read a
-    fi
-    # if emacs client is running...
-    if [[ ${client} -eq 1 ]] ; then
-        # if screen is running, switch to emacs window
-        if [[ ${screen} -eq 1 ]] ; then
-            screen -X select emacs
-        fi
-        # run emacsclient
-        emacsclient ${wait} --alternate-editor=vi "$@"
-    else
-        if [[ ${vi} -eq 1 ]] ; then
-            if [[ -x $(pathcmd vim) ]] ; then
-                # launch vim
-                vim "$@"
-            elif [[ -x $(pathcmd vi) ]] ; then
-                # launch vi
-                vi "$@"
-            else
-                echo "Could not find an editor"
-            fi
-        else
-            # launch a quick local emacs
-            emacs --no-site-file --no-init-file -nw "$@"
-        fi
-    fi
+	# set optional wait state
+	if [[ -n "${WAIT}" ]] ; then
+		wait=""
+	else
+		wait="--no-wait"
+	fi
+	[[ -n "${DEBUG}" ]] && echo "wait: ${wait}"
+	# set optional vi fallback state
+	if [[ -n "${VI}" ]] ; then
+		vi=1
+	else
+		vi=0
+	fi
+	[[ -n "${DEBUG}" ]] && echo "vi: ${vi}"
+	# determine if emacs client is running under this user
+	client=0
+	if [[ "$(emacsclient -e t 2>&1)" == "t" ]] ; then
+		client=1
+	fi
+	# for older versions look for emacs server socket
+	if [[ ${client} -eq 0 ]] ; then
+		for name in "/tmp/emacs$(id -u)" "/tmp/esrv$(id -u)-$(hostname)" ; do
+			if [[ ${client} -eq 0 ]] ; then
+				# stat client file
+				if [[ -e "${name}" ]] && [[ -n "$(stat ${name} | grep ${USER})" ]] ; then
+					client=1
+					[[ -n "${DEBUG}" ]] && echo "client file: ${name}, client: ${client}"
+				fi
+			fi
+		done
+	fi
+	[[ -n "${DEBUG}" ]] && echo "client: ${client}"
+	# determine if screen is running under this user and if emacs is running under it
+	screen=0
+	if [[ "$(inscreen)" == "screen" ]] ; then
+		if [[ -n "$(ps -e -o user,args | grep -v grep | grep ${USER} | grep emacs | grep '\-nw')" ]] ; then
+			screen=1
+		fi
+	fi
+	[[ -n "${DEBUG}" ]] && echo "screen: ${screen}"
+	# pause if debugging
+	if [[ -n "${DEBUG}" ]] ; then
+		echo "Press return to start editor"
+		read a
+	fi
+	# if emacs client is running...
+	if [[ ${client} -eq 1 ]] ; then
+		# if screen is running, switch to emacs window
+		if [[ ${screen} -eq 1 ]] ; then
+			screen -X select emacs
+		fi
+		# run emacsclient
+		emacsclient ${wait} --alternate-editor=vi "$@"
+	else
+		if [[ ${vi} -eq 1 ]] ; then
+			if [[ -x $(pathcmd vim) ]] ; then
+				# launch vim
+				vim "$@"
+			elif [[ -x $(pathcmd vi) ]] ; then
+				# launch vi
+				vi "$@"
+			else
+				echo "Could not find an editor"
+			fi
+		else
+			# launch a quick local emacs
+			emacs --no-site-file --no-init-file -nw "$@"
+		fi
+	fi
 }
-#        emacsedwait             launch persistent emacs editor and wait
+#		emacsedwait			 launch persistent emacs editor and wait
 emacsedwait() {
-    WAIT=1 emacsed "$@"
+	WAIT=1 emacsed "$@"
 }
-#        emacsvied               emacs or vi editor
+#		emacsvied			   emacs or vi editor
 emacsvied() {
-    WAIT=1 VI=1 emacsed "$@"
-    if [[ -x "$(pathcmd vim)" ]] ; then
-        emacsclient --no-wait --alternate-editor "vim" "$@"
-    elif [[ -x "$(pathcmd vi)" ]] ; then
-        emacsclient --no-wait --alternate-editor "vi" "$@"
-    else
-        echo "Could not find an editor"
-    fi
+	WAIT=1 VI=1 emacsed "$@"
+	if [[ -x "$(pathcmd vim)" ]] ; then
+		emacsclient --no-wait --alternate-editor "vim" "$@"
+	elif [[ -x "$(pathcmd vi)" ]] ; then
+		emacsclient --no-wait --alternate-editor "vi" "$@"
+	else
+		echo "Could not find an editor"
+	fi
 }
 
 #
 # web
 #
-#        websearch               google search
+#		websearch			   google search
 websearch() {
-    if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 QUERY"
-    else
-        web "http://www.google.com/search?num=50&q=$1"
-    fi
+	if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+		echo "Usage: $0 QUERY"
+	else
+		web "http://www.google.com/search?num=50&q=$1"
+	fi
 }
-#        leach                   leach files from the web
+#		leach				   leach files from the web
 leach() {
-    if [[ $# -lt 1 ]] || [[ $# -gt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 URL [PATTERN[,...]]"
-    else
-        url="$1"
-        shift
-        if [[ $# -eq 0 ]] ; then
-            pattern=
-        else
-            pattern="-A $1"
-        fi
-        wget -r -p -L -nc -nH -np -q "${url}" "${pattern}"
-    fi
+	if [[ $# -lt 1 ]] || [[ $# -gt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+		echo "Usage: $0 URL [PATTERN[,...]]"
+	else
+		url="$1"
+		shift
+		if [[ $# -eq 0 ]] ; then
+			pattern=
+		else
+			pattern="-A $1"
+		fi
+		wget -r -p -L -nc -nH -np -q "${url}" "${pattern}"
+	fi
 }
 
 #
 # ssl certificates
 #
-#        makecert                make ssl certificate
+#		makecert				make ssl certificate
 makecert() {
-    if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 NAME"
-    else
-        name="$1"
-        openssl req -new > "${name}.cert.csr"
-        openssl rsa -in privkey.pem -out "${name}.cert.key"
-        openssl x509 -in "${name}.cert.csr" -out "${name}.cert.cert" -req -signkey "${name}.cert.key" -days 365
-    fi
+	if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+		echo "Usage: $0 NAME"
+	else
+		name="$1"
+		openssl req -new > "${name}.cert.csr"
+		openssl rsa -in privkey.pem -out "${name}.cert.key"
+		openssl x509 -in "${name}.cert.csr" -out "${name}.cert.cert" -req -signkey "${name}.cert.key" -days 365
+	fi
 }
 
 #
 # convert directory contents
 #
-#        lowerdir                convert dir to lowercase
+#		lowerdir				convert dir to lowercase
 lowerdir() {
-    echo "You are about to recursively convert the contents of the current directory"
-    echo "'$(pwd)' to lowercase,"
-    echo -n "Do you wish to proceed? [yN] "
-    read a
-    case "${a}" in
-        y|Y)
-            find . -type f -depth | while read infile ; do
-                outfile=$(echo "${infile}" | tr '[:upper:]' '[:lower:]')
-                mv -fv "${infile}" "${outfile}"
-            done
-            ;;
-    esac
+	echo "You are about to recursively convert the contents of the current directory"
+	echo "'$(pwd)' to lowercase,"
+	echo -n "Do you wish to proceed? [yN] "
+	read a
+	case "${a}" in
+		y|Y)
+			find . -type f -depth | while read infile ; do
+				outfile=$(echo "${infile}" | tr '[:upper:]' '[:lower:]')
+				mv -fv "${infile}" "${outfile}"
+			done
+			;;
+	esac
 }
-#        upperdir                convert dir to uppercase
+#		upperdir				convert dir to uppercase
 upperdir() {
-    echo "You are about to recursively convert the contents of the current directory"
-    echo "'$(pwd)' to uppercase,"
-    echo -n "Do you wish to proceed? [yN] "
-    read a
-    case "${a}" in
-        y|Y)
-            find . -type f -depth | while read infile ; do
-                outfile=$(echo "${infile}" | tr '[:lower:]' '[:upper:]')
-                mv -fv "${infile}" "${outfile}"
-            done
-            ;;
-    esac
+	echo "You are about to recursively convert the contents of the current directory"
+	echo "'$(pwd)' to uppercase,"
+	echo -n "Do you wish to proceed? [yN] "
+	read a
+	case "${a}" in
+		y|Y)
+			find . -type f -depth | while read infile ; do
+				outfile=$(echo "${infile}" | tr '[:lower:]' '[:upper:]')
+				mv -fv "${infile}" "${outfile}"
+			done
+			;;
+	esac
 }
-#        uncompressdirtree       uncompress all zip files in given directory tree
+#		uncompressdirtree	   uncompress all zip files in given directory tree
 uncompressdirtree() {
-    echo "You are about to uncompress the contents of the current directory"
-    echo "'$(pwd)' and all of its children, and delete the original files."
-    echo "Only .zip files are considered."
-    echo -n "Do you wish to proceed? [yN] "
-    read a
-    case "${a}" in
-        y|Y)
-            find . -iname *".zip" -print | while read file ; do
-                dir="${file:0:-4}"
-                mkdir "${dir}" && unzip -n -d "${dir}" "${file}" && rm "${file}"
-            done
-            ;;
-    esac
+	echo "You are about to uncompress the contents of the current directory"
+	echo "'$(pwd)' and all of its children, and delete the original files."
+	echo "Only .zip files are considered."
+	echo -n "Do you wish to proceed? [yN] "
+	read a
+	case "${a}" in
+		y|Y)
+			find . -iname *".zip" -print | while read file ; do
+				dir="${file:0:-4}"
+				mkdir "${dir}" && unzip -n -d "${dir}" "${file}" && rm "${file}"
+			done
+			;;
+	esac
 }
 
 #
 # manjaro
 #
-#!#        pmi                     pamac install or build
+#!#		pmi					 pamac install or build
 #!#
 #!pmi() {
-#!    if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-#!        echo "Usage: $0 PACKAGE"
-#!    else
-#!        pamac install --no-confirm "$1" || pamac build --no-confirm "$1"
-#!    fi
+#!	if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+#!		echo "Usage: $0 PACKAGE"
+#!	else
+#!		pamac install --no-confirm "$1" || pamac build --no-confirm "$1"
+#!	fi
 #!}
-#        yasi                    yay search installed packages
+#		yasi					yay search installed packages
 yasi() {
-    if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 PACKAGE"
-    else
-        yay -Ss "$@" | grep " (Installed"
-    fi
+	if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+		echo "Usage: $0 PACKAGE"
+	else
+		yay -Ss "$@" | grep " (Installed"
+	fi
 }
 
 #
 # debian
 #
-#        acsg                    apt-cache search with grep
+#		acsg					apt-cache search with grep
 #
 acsg() {
-    if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 QUERY"
-    else
-        apt-cache search "$1" | grep -i "^$1"
-    fi
+	if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+		echo "Usage: $0 QUERY"
+	else
+		apt-cache search "$1" | grep -i "^$1"
+	fi
 }
 
 #
 # dvd encode
 #
-#        dvdtitles               list dvd titles
+#		dvdtitles			   list dvd titles
 dvdtitles() {
-    lsdvd /dev/dvd
+	lsdvd /dev/dvd
 }
-#        dvdencode               encode a dvd track
+#		dvdencode			   encode a dvd track
 dvdencode() {
-    if [[ $# -lt 1 ]] || [[ $# -gt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 TRACK [FILE]"
-    else
-        track="$1"
-        unshift
-        if [[ $# -eq 0 ]] ; then
-            file="dvdvideo.avi"
-        else
-            file="$1"
-        fi
-        # one pass encode
-        mencoder "dvd://${track}" -ovc "lavc" -lavcopts vcodec="mpeg4:vhq:v4mv:vqmin=2:vbitrate=1800" \
-                 -oac "mp3lame" -lameopts "abr:br=128" -o "${file}"
-        # # two pass encode
-        # # encode audio
-        # mencoder dvd://${track} -ovc frameno -o ${file}.audio -oac mp3lame -lameopts abr:br=128
-        # # encode video, first pass
-        # mencoder dvd://${track} -audiofile ${file}.audio -oac copy -o /dev/null \
-            #   -ovc lavc -lavcopts vcodec=mpeg4:vbitrate=1800:vhq:vpass=1:vqmin=2:vqmax=31
-        # # encode video, second pass
-        # mencoder dvd://${track} -audiofile ${file}.audio -oac copy -o ${file} \
-            #   -ovc lavc -lavcopts vcodec=mpeg4:vbitrate=1800:vhq:vpass=2:vqmin=2:vqmax=31
-    fi
+	if [[ $# -lt 1 ]] || [[ $# -gt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+		echo "Usage: $0 TRACK [FILE]"
+	else
+		track="$1"
+		unshift
+		if [[ $# -eq 0 ]] ; then
+			file="dvdvideo.avi"
+		else
+			file="$1"
+		fi
+		# one pass encode
+		mencoder "dvd://${track}" -ovc "lavc" -lavcopts vcodec="mpeg4:vhq:v4mv:vqmin=2:vbitrate=1800" \
+				 -oac "mp3lame" -lameopts "abr:br=128" -o "${file}"
+		# # two pass encode
+		# # encode audio
+		# mencoder dvd://${track} -ovc frameno -o ${file}.audio -oac mp3lame -lameopts abr:br=128
+		# # encode video, first pass
+		# mencoder dvd://${track} -audiofile ${file}.audio -oac copy -o /dev/null \
+			#   -ovc lavc -lavcopts vcodec=mpeg4:vbitrate=1800:vhq:vpass=1:vqmin=2:vqmax=31
+		# # encode video, second pass
+		# mencoder dvd://${track} -audiofile ${file}.audio -oac copy -o ${file} \
+			#   -ovc lavc -lavcopts vcodec=mpeg4:vbitrate=1800:vhq:vpass=2:vqmin=2:vqmax=31
+	fi
 }
 
 #
 # git
 #
-#        gitbranch               git branch name
+#		gitbranch			   git branch name
 gitbranch() {
-    git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
+	git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
 }
-#        gitbranchprompt         git branch name for terminal prompt
+#		gitbranchprompt		 git branch name for terminal prompt
 gitbranchprompt() {
-    gitbranch=$(gitbranch)
-    if [[ -z "${gitbranch}" ]] ; then
-        echo ""
-    else
-        echo " ($(gitbranch))"
-    fi
+	gitbranch=$(gitbranch)
+	if [[ -z "${gitbranch}" ]] ; then
+		echo ""
+	else
+		echo " ($(gitbranch))"
+	fi
 }
-#        gitcouo                 git checkout BRANCH and pull origin BRANCH
+#		gitcouo				 git checkout BRANCH and pull origin BRANCH
 gitcouo() {
-    if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 BRANCH"
-        echo "  BRANCH  branch to checkout and pull"
-    else
-        branch="$1"
-        git checkout "${branch}" && git pull origin "${branch}"
-    fi
+	if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+		echo "Usage: $0 BRANCH"
+		echo "  BRANCH  branch to checkout and pull"
+	else
+		branch="$1"
+		git checkout "${branch}" && git pull origin "${branch}"
+	fi
 }
-#        _gitsync                pull, commit, and push given home git repositories
+#		_gitsync				pull, commit, and push given home git repositories
 _gitsync() {
-    dirs=("$@")
+	dirs=("$@")
 
-    commit=$()
+	commit=$()
 
-    for dir in ${dirs[@]} ; do
-        if [[ -d "${HOME}/${dir}" ]] ; then
-            # remove org font files
-            echo "Removing org font files..."
-            find "${HOME}/${dir}" -name '*org-src-fontification*' -print | \
-                xargs rm > /dev/null 2>&1
+	for dir in ${dirs[@]} ; do
+		if [[ -d "${HOME}/${dir}" ]] ; then
+			# remove org font files
+			echo "Removing org font files..."
+			find "${HOME}/${dir}" -name '*org-src-fontification*' -print | \
+				xargs rm > /dev/null 2>&1
 
-            # pull (update) home git repository (from origin)
-            echo "Pulling '${dir}' from origin..."
-            (cd "${HOME}/${dir}" && git pull origin)
+			# pull (update) home git repository (from origin)
+			echo "Pulling '${dir}' from origin..."
+			(cd "${HOME}/${dir}" && git pull origin)
 
-            if $(cd "${HOME}/${dir}" && git config --get remote.origin.url | grep -q "^git@") ; then
-                # commit (check in) home git repositories (default update)
-                echo "Committing '${dir}'..."
-                (cd "${HOME}/${dir}" && git commit -a -m "Update")
+			if $(cd "${HOME}/${dir}" && git config --get remote.origin.url | grep -q "^git@") ; then
+				# commit (check in) home git repositories (default update)
+				echo "Committing '${dir}'..."
+				(cd "${HOME}/${dir}" && git commit -a -m "Update")
 
-                # push home git repositories (to origin)
-                echo "Pushing '${dir}' to origin..."
-                (cd "${HOME}/${dir}" && git push origin)
-            fi
-        fi
-    done
+				# push home git repositories (to origin)
+				echo "Pushing '${dir}' to origin..."
+				(cd "${HOME}/${dir}" && git push origin)
+			fi
+		fi
+	done
 }
-#        gitsyncconfig           pull, commit, and push config git repositories
+#		gitsyncconfig		   pull, commit, and push config git repositories
 gitsyncconfig() {
-    # output datetime
-    date '+%Y-%m-%d %H:%M:%S'
+	# output datetime
+	date '+%Y-%m-%d %H:%M:%S'
 
-    # sync config repositories
-    _gitsync "config" "config-private"
+	# sync config repositories
+	_gitsync "config" "config-private"
 
-    if [[ -d "${HOME}/config-private" ]] ; then
-        #if [[ -L .cron ]] && [[ -f config-private/custom/$(uname -n)/.cron ]] ; then
-        #    echo "Update crontab..."
-        #    crontab -l > config-private/custom/$(uname -n)/.cron
-        #fi
-        # update addressbook
-        if [[ -f "${HOME}/.addressbook" ]] && [[ ! -L "${HOME}/.addressbook" ]] ; then
-            echo "Update .addressbook..."
-            (
-                cd "${HOME}" && \
-                    cp .addressbook config-private/common/ && \
-                    ln -sf config-private/common/.addressbook
-            )
-        fi
-        # only update xscreensaver preferences on tank
-        if [[ -f "${HOME}/.xscreensaver" ]] && [[ ! -L "${HOME}/.xscreensaver" ]] && \
-               [[ "$(uname -n)" == "tank" ]] ; then
-            echo "Update .xscreensaver..."
-            (
-                cd "${HOME}" && \
-                    cp .xscreensaver config-private/common/ && \
-                    ln -sf config-private/common/.xscreensaver
-            )
-        fi
-    fi
+	if [[ -d "${HOME}/config-private" ]] ; then
+		#if [[ -L .cron ]] && [[ -f config-private/custom/$(uname -n)/.cron ]] ; then
+		#	echo "Update crontab..."
+		#	crontab -l > config-private/custom/$(uname -n)/.cron
+		#fi
+		# update addressbook
+		if [[ -f "${HOME}/.addressbook" ]] && [[ ! -L "${HOME}/.addressbook" ]] ; then
+			echo "Update .addressbook..."
+			(
+				cd "${HOME}" && \
+					cp .addressbook config-private/common/ && \
+					ln -sf config-private/common/.addressbook
+			)
+		fi
+		# only update xscreensaver preferences on tank
+		if [[ -f "${HOME}/.xscreensaver" ]] && [[ ! -L "${HOME}/.xscreensaver" ]] && \
+			   [[ "$(uname -n)" == "tank" ]] ; then
+			echo "Update .xscreensaver..."
+			(
+				cd "${HOME}" && \
+					cp .xscreensaver config-private/common/ && \
+					ln -sf config-private/common/.xscreensaver
+			)
+		fi
+	fi
 }
-#        gitsyncextra            pull, commit, and push extra home git repositories
+#		gitsyncextra			pull, commit, and push extra home git repositories
 gitsyncextra() {
-    # output datetime
-    date '+%Y-%m-%d %H:%M:%S'
+	# output datetime
+	date '+%Y-%m-%d %H:%M:%S'
 
-    # sync extra repositories
-    _gitsync "dev" "doc" "web"
+	# sync extra repositories
+	_gitsync "dev" "doc" "web"
 }
-#        gitsynchome             pull, commit, and push all home git repositories
+#		gitsynchome			 pull, commit, and push all home git repositories
 gitsynchome() {
-    # sync all home repositories
-    gitsyncconfig
-    echo
-    gitsyncextra
+	# sync all home repositories
+	gitsyncconfig
+	echo
+	gitsyncextra
 }
 
 #
 # backup / copy
 #
-#        backupfiles             backup a file or directory to /home/backup
+#		backupfiles			 backup a file or directory to /home/backup
 backupfiles() {
-    if [[ $# -lt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 PREFIX FILE..."
-    else
-        # get parameters
-        pre="$1"
-        shift
-        arch="${pre}_$(date +'%Y-%m-%d_%H%M%S').tgz"
-        # create gziped tar backup file
-        tar cvzplf "${arch}" "$@"
-        # move backup file to backup directory
-        mkdir -p "/home/backup/${pre}"
-        mv "${arch}" "/home/backup/${pre}"
-    fi
+	if [[ $# -lt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+		echo "Usage: $0 PREFIX FILE..."
+	else
+		# get parameters
+		pre="$1"
+		shift
+		arch="${pre}_$(date +'%Y-%m-%d_%H%M%S').tgz"
+		# create gziped tar backup file
+		tar cvzplf "${arch}" "$@"
+		# move backup file to backup directory
+		mkdir -p "/home/backup/${pre}"
+		mv "${arch}" "/home/backup/${pre}"
+	fi
 }
-#!#        rsyncbi               rsync backup system (incremental)
+#!#		rsyncbi			   rsync backup system (incremental)
 #!rsyncbi() {
-#!    if [[ $# -gt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-#!        echo "Usage: $0 [PATH] [DEST]"
-#!        echo "Backup system to server."
-#!        echo "  PATH  local path to backup (defaults to '/')."
-#!        echo "  DEST  path to destination directory or:"
-#!        echo "    disk      /media/disk (default)"
-#!        echo "    morpheus  morpheus:/mnt/morpheus/data2/backup/$(uname -n)/"
-#!    else
-#!        hn=$(uname -n)
-#!        rs="-ax --delete-before --delete-excluded --force --progress --ignore-errors ${rsyncexclusions}"
+#!	if [[ $# -gt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+#!		echo "Usage: $0 [PATH] [DEST]"
+#!		echo "Backup system to server."
+#!		echo "  PATH  local path to backup (defaults to '/')."
+#!		echo "  DEST  path to destination directory or:"
+#!		echo "	disk	  /media/disk (default)"
+#!		echo "	morpheus  morpheus:/mnt/morpheus/data2/backup/$(uname -n)/"
+#!	else
+#!		hn=$(uname -n)
+#!		rs="-ax --delete-before --delete-excluded --force --progress --ignore-errors ${rsyncexclusions}"
 #!
-#!        if [[ $# -eq 0 ]] ; then
-#!            src="/"
-#!        else
-#!            src="$1"
-#!        fi
-#!        if [[ $# -eq 1 ]] ; then
-#!            dest="disk"
-#!        else
-#!            dest="$2"
-#!        fi
-#!        [[ "${dest}" == "disk" ]] && t="/media/disk/backup/$(uname -n)"
-#!        [[ "${dest}" == "morpheus" ]] && t="morpheus:/mnt/morpheus/data2/backup/${hn}/"
-#!        echo "Backup (rsync) ${hn}:${src} to ${dest}"
-#!        if [[ "${src}" == "/" ]] ; then
-#!            for sp in $($(pathcmd ls) -A "${src}") ; do
-#!                sp="${src}${sp}"
-#!                echo "  ${sp}"
-#!                if [[ "${sp}" == "/usr" ]] ; then
-#!                    for spp in $($(pathcmd ls) -A "${sp}") ; do
-#!                        spp="${sp}/${spp}"
-#!                        echo "  ${spp}"
-#!                        rsync ${rs} "${spp}" "${dest}"
-#!                    done
-#!                else
-#!                    rsync ${rs} "${sp}" "${dest}"
-#!                fi
-#!            done
-#!        else
-#!            rsync ${rs} "${src}" "${dest}"
-#!        fi
-#!    fi
+#!		if [[ $# -eq 0 ]] ; then
+#!			src="/"
+#!		else
+#!			src="$1"
+#!		fi
+#!		if [[ $# -eq 1 ]] ; then
+#!			dest="disk"
+#!		else
+#!			dest="$2"
+#!		fi
+#!		[[ "${dest}" == "disk" ]] && t="/media/disk/backup/$(uname -n)"
+#!		[[ "${dest}" == "morpheus" ]] && t="morpheus:/mnt/morpheus/data2/backup/${hn}/"
+#!		echo "Backup (rsync) ${hn}:${src} to ${dest}"
+#!		if [[ "${src}" == "/" ]] ; then
+#!			for sp in $($(pathcmd ls) -A "${src}") ; do
+#!				sp="${src}${sp}"
+#!				echo "  ${sp}"
+#!				if [[ "${sp}" == "/usr" ]] ; then
+#!					for spp in $($(pathcmd ls) -A "${sp}") ; do
+#!						spp="${sp}/${spp}"
+#!						echo "  ${spp}"
+#!						rsync ${rs} "${spp}" "${dest}"
+#!					done
+#!				else
+#!					rsync ${rs} "${sp}" "${dest}"
+#!				fi
+#!			done
+#!		else
+#!			rsync ${rs} "${src}" "${dest}"
+#!		fi
+#!	fi
 #!}
-#!#        copysystem              copy system files
+#!#		copysystem			  copy system files
 #!copysystem() {
-#!    if [[ $# -ne 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-#!        echo "Usage: $0 SOURCE DEST"
-#!        echo "Copy system to destination path."
-#!        echo "  SOURCE  source path for system directories"
-#!        echo "  DEST    destination path"
-#!        echo "Example: $0 / /mnt/dest"
-#!    else
-#!        src="$1"
-#!        shift
-#!        dest="$1"
-#!        shift
-#!        echo "Are you sure you want to copy all system directories"
-#!        echo -n "from '${src}' to '${dest}'? [yN] "
-#!        read a
-#!        case "${a}" in
-#!            y|Y)
-#!                cp -Rpdux "${src}/bin" "${dest}/bin"
-#!                cp -Rpdux "${src}/boot" "${dest}/dev"
-#!                cp -Rpdux "${src}/etc" "${dest}/etc"
-#!                cp -Rpdux "${src}/home" "${dest}/home"
-#!                cp -Rpdux "${src}/lib" "${dest}/lib"
-#!                cp -Rpdux "${src}/mnt" "${dest}/mnt"
-#!                cp -Rpdux "${src}/opt" "${dest}/opt"
-#!                cp -Rpdux "${src}/root" "${dest}/root"
-#!                cp -Rpdux "${src}/sbin" "${dest}/sbin"
-#!                cp -Rpdux "${src}/tmp" "${dest}/tmp"
-#!                cp -Rpdux "${src}/usr" "${dest}/usr"
-#!                cp -Rpdux "${src}/var" "${dest}/var"
-#!                mkdir -p "${dest}/proc"
-#!                ;;
-#!        esac
-#!    fi
+#!	if [[ $# -ne 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+#!		echo "Usage: $0 SOURCE DEST"
+#!		echo "Copy system to destination path."
+#!		echo "  SOURCE  source path for system directories"
+#!		echo "  DEST	destination path"
+#!		echo "Example: $0 / /mnt/dest"
+#!	else
+#!		src="$1"
+#!		shift
+#!		dest="$1"
+#!		shift
+#!		echo "Are you sure you want to copy all system directories"
+#!		echo -n "from '${src}' to '${dest}'? [yN] "
+#!		read a
+#!		case "${a}" in
+#!			y|Y)
+#!				cp -Rpdux "${src}/bin" "${dest}/bin"
+#!				cp -Rpdux "${src}/boot" "${dest}/dev"
+#!				cp -Rpdux "${src}/etc" "${dest}/etc"
+#!				cp -Rpdux "${src}/home" "${dest}/home"
+#!				cp -Rpdux "${src}/lib" "${dest}/lib"
+#!				cp -Rpdux "${src}/mnt" "${dest}/mnt"
+#!				cp -Rpdux "${src}/opt" "${dest}/opt"
+#!				cp -Rpdux "${src}/root" "${dest}/root"
+#!				cp -Rpdux "${src}/sbin" "${dest}/sbin"
+#!				cp -Rpdux "${src}/tmp" "${dest}/tmp"
+#!				cp -Rpdux "${src}/usr" "${dest}/usr"
+#!				cp -Rpdux "${src}/var" "${dest}/var"
+#!				mkdir -p "${dest}/proc"
+#!				;;
+#!		esac
+#!	fi
 #!}
-#!#        copykyle                copy key files from /home/kyle to ${HOME}
+#!#		copykyle				copy key files from /home/kyle to ${HOME}
 #!copykyle() {
-#!    echo -n "Are you sure you want to copy main files from /home/kyle to ${HOME}? [yN] "
-#!    read a
-#!    case "${a}" in
-#!        y|Y)
-#!            src=/home/kyle
-#!            # copy config files
-#!            files=".alias .bashrc .funct .menu .screenrc .screenrc-bindings .shellrc .zshrc"
-#!            for file in ${files} ; do
-#!                cp --preserve=mode,timestamps "${src}/config/common/${file}" "${HOME}/"
-#!            done
-#!            # copy config work files
-#!            files=".alias-work .funct-work .shellrc-work"
-#!            for file in ${files} ; do
-#!                cp --preserve=mode,timestamps "${src}/config-private/common/${file}" "${HOME}/"
-#!            done
-#!            # copy initial files, if init parameter given
-#!            if [[ "$1" == "init" ]] ; then
-#!                files=".screenrc-applications"
-#!                for file in ${files} ; do
-#!                    cp --preserve=mode,timestamps "${src}/config/custom/$(uname -n)/${file}" "${HOME}/"
-#!                done
-#!            fi
-#!            # copy bin
-#!            rm -rf "${HOME}/bin_bak"
-#!            mv "${HOME}/bin" "${HOME}/bin_bak" > /dev/null 2>&1
-#!            cp -R --preserve=mode,timestamps "${src}/config/common/bin" "${HOME}/"
-#!            # copy emacs
-#!            rm -rf "${HOME}/.emacs.d_bak"
-#!            mv "${HOME}/.emacs.d" "${HOME}/.emacs.d_bak" > /dev/null 2>&1
-#!            cp -R --preserve=mode,timestamps "${src}/config/.emacs.d" "${HOME}/"
-#!            # sync other dirs
-#!            # (just link to these)
-#!            #rsync -rlptx --delete "${src}/sounds" "${HOME}/"
-#!            #rsync -rlptx --delete "${src}/config/.elisp" "${HOME}/"
-#!            # link to other dirs
-#!            ln -s -f "${src}/Downloads"
-#!            ln -s -f "${src}/installed-packages"
-#!            ln -s -f "${src}/sounds"
-#!            ln -s -f "${src}/temp"
-#!            ln -s -f "${src}/config/wallpapers"
-#!            ;;
-#!    esac
+#!	echo -n "Are you sure you want to copy main files from /home/kyle to ${HOME}? [yN] "
+#!	read a
+#!	case "${a}" in
+#!		y|Y)
+#!			src=/home/kyle
+#!			# copy config files
+#!			files=".alias .bashrc .funct .menu .screenrc .screenrc-bindings .shellrc .zshrc"
+#!			for file in ${files} ; do
+#!				cp --preserve=mode,timestamps "${src}/config/common/${file}" "${HOME}/"
+#!			done
+#!			# copy config work files
+#!			files=".alias-work .funct-work .shellrc-work"
+#!			for file in ${files} ; do
+#!				cp --preserve=mode,timestamps "${src}/config-private/common/${file}" "${HOME}/"
+#!			done
+#!			# copy initial files, if init parameter given
+#!			if [[ "$1" == "init" ]] ; then
+#!				files=".screenrc-applications"
+#!				for file in ${files} ; do
+#!					cp --preserve=mode,timestamps "${src}/config/custom/$(uname -n)/${file}" "${HOME}/"
+#!				done
+#!			fi
+#!			# copy bin
+#!			rm -rf "${HOME}/bin_bak"
+#!			mv "${HOME}/bin" "${HOME}/bin_bak" > /dev/null 2>&1
+#!			cp -R --preserve=mode,timestamps "${src}/config/common/bin" "${HOME}/"
+#!			# copy emacs
+#!			rm -rf "${HOME}/.emacs.d_bak"
+#!			mv "${HOME}/.emacs.d" "${HOME}/.emacs.d_bak" > /dev/null 2>&1
+#!			cp -R --preserve=mode,timestamps "${src}/config/.emacs.d" "${HOME}/"
+#!			# sync other dirs
+#!			# (just link to these)
+#!			#rsync -rlptx --delete "${src}/sounds" "${HOME}/"
+#!			#rsync -rlptx --delete "${src}/config/.elisp" "${HOME}/"
+#!			# link to other dirs
+#!			ln -s -f "${src}/Downloads"
+#!			ln -s -f "${src}/installed-packages"
+#!			ln -s -f "${src}/sounds"
+#!			ln -s -f "${src}/temp"
+#!			ln -s -f "${src}/config/wallpapers"
+#!			;;
+#!	esac
 #!}
-#!#        copyhome                copy key home files from a remote source to ${HOME}
+#!#		copyhome				copy key home files from a remote source to ${HOME}
 #!copyhome() {
-#!    if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-#!        echo "Usage: $0 [USER@]SOURCE [init]"
-#!        echo "Copy key home files from a remote SOURCE to ${HOME}."
-#!        echo "  USER    optional user to connect with using ssh"
-#!        echo "  SOURCE  source IP address"
-#!        echo "  'init'  optional keyword to copy one-time config files"
-#!        echo "Example: copyhome name@server:/path/to/home init"
-#!        echo "         copyhome kyle@192.168.1.10:/home/kyle init"
-#!    else
-#!        echo -n "Are you sure you want to copy home files from '$1' to '${HOME}'? [yN] "
-#!        read a
-#!        case "${a}" in
-#!            y|Y)
-#!                src="$1"
-#!                # copy config files
-#!                files=".alias .bashrc .funct .menu .screenrc .screenrc-bindings .shellrc .zshrc"
-#!                for file in ${files} ; do
-#!                    scp "${src}/config/${file}" "${HOME}/"
-#!                done
-#!                # copy initial files, if init parameter given
-#!                if [[ "$2" == "init" ]] ; then
-#!                    files=".screenrc-applications"
-#!                    for file in ${files} ; do
-#!                        scp "${src}/config/custom/$(uname -n)/${file}" "${HOME}/"
-#!                    done
-#!                fi
-#!                # copy bin
-#!                rm -rf "${HOME}/bin_bak"
-#!                mv "${HOME}/bin" "${HOME}/bin_bak" > /dev/null 2>&1
-#!                scp -r "${src}/config/bin" "${HOME}/"
-#!                # sync other dirs
-#!                #rsync -rlptx --delete "${src}/sounds" "${HOME}/"
-#!                rsync -rlptx --delete --exclude='*.elc' "${src}/config/.emacs.d" "${HOME}/"
-#!                ;;
-#!        esac
-#!    fi
+#!	if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+#!		echo "Usage: $0 [USER@]SOURCE [init]"
+#!		echo "Copy key home files from a remote SOURCE to ${HOME}."
+#!		echo "  USER	optional user to connect with using ssh"
+#!		echo "  SOURCE  source IP address"
+#!		echo "  'init'  optional keyword to copy one-time config files"
+#!		echo "Example: copyhome name@server:/path/to/home init"
+#!		echo "		 copyhome kyle@192.168.1.10:/home/kyle init"
+#!	else
+#!		echo -n "Are you sure you want to copy home files from '$1' to '${HOME}'? [yN] "
+#!		read a
+#!		case "${a}" in
+#!			y|Y)
+#!				src="$1"
+#!				# copy config files
+#!				files=".alias .bashrc .funct .menu .screenrc .screenrc-bindings .shellrc .zshrc"
+#!				for file in ${files} ; do
+#!					scp "${src}/config/${file}" "${HOME}/"
+#!				done
+#!				# copy initial files, if init parameter given
+#!				if [[ "$2" == "init" ]] ; then
+#!					files=".screenrc-applications"
+#!					for file in ${files} ; do
+#!						scp "${src}/config/custom/$(uname -n)/${file}" "${HOME}/"
+#!					done
+#!				fi
+#!				# copy bin
+#!				rm -rf "${HOME}/bin_bak"
+#!				mv "${HOME}/bin" "${HOME}/bin_bak" > /dev/null 2>&1
+#!				scp -r "${src}/config/bin" "${HOME}/"
+#!				# sync other dirs
+#!				#rsync -rlptx --delete "${src}/sounds" "${HOME}/"
+#!				rsync -rlptx --delete --exclude='*.elc' "${src}/config/.emacs.d" "${HOME}/"
+#!				;;
+#!		esac
+#!	fi
 #!}
-#!#        rsynchome               rsync home files from one location with another
+#!#		rsynchome			   rsync home files from one location with another
 #!rsynchome() {
-#!    if [[ $# -lt 2 ]] || [[ $# -gt 3 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-#!        echo "Usage: $0 [USER@]SOURCE [USER@]DEST [init]"
-#!        echo "Synchronize key home files from one location to another."
-#!        echo "  USER    optional user to connect with using ssh"
-#!        echo "  SOURCE  source location"
-#!        echo "  DEST    destination location"
-#!        echo "  'init'  optional keyword to copy one-time config files"
-#!        echo "Example: rsynchome name@server:/path/to/home . init"
-#!        echo "         rsynchome /home/name name@server:/path/to/home init"
-#!        echo "         rsynchome kyle@192.168.1.10:/home/kyle . init"
-#!        echo "         rsynchome /home/kyle kyle@192.168.1.10:/home/kyle init"
-#!    else
-#!        echo -n "Are you sure you want to sync home files from '$1' to '$2'? [yN] "
-#!        read a
-#!        case "${a}" in
-#!            y|Y)
-#!                src="$1"
-#!                dest="$2"
-#!                # rsync config files
-#!                files=".alias .alias-work .bashrc .funct .funct-work .menu .menu_work .screenrc .screenrc-bindings .shellrc .shellrc-work .zshrc"
-#!                filelist=""
-#!                for file in ${files} ; do
-#!                    filelist="${filelist} ${src}/config/${file}"
-#!                done
-#!                rsync -rlptx --delete ${filelist} ${dest}/
-#!                # rsync initial files, if init parameter given
-#!                if [[ "$3" == "init" ]] ; then
-#!                    files=".screenrc-applications"
-#!                    filelist=""
-#!                    for file in ${files} ; do
-#!                        filelist="${filelist} ${src}/config/local/$(uname -n)/${file}"
-#!                    done
-#!                    rsync -rlptx --delete "${filelist}" "${dest}/"
-#!                fi
-#!                # rsync bin
-#!                rsync -rlptx --delete "${src}/config/bin" "${dest}/"
-#!                # rsync .emacs.d
-#!                rsync -rlptx --delete --exclude='*.elc' "${src}/config/.emacs.d" "${dest}/"
-#!                ;;
-#!        esac
-#!    fi
+#!	if [[ $# -lt 2 ]] || [[ $# -gt 3 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+#!		echo "Usage: $0 [USER@]SOURCE [USER@]DEST [init]"
+#!		echo "Synchronize key home files from one location to another."
+#!		echo "  USER	optional user to connect with using ssh"
+#!		echo "  SOURCE  source location"
+#!		echo "  DEST	destination location"
+#!		echo "  'init'  optional keyword to copy one-time config files"
+#!		echo "Example: rsynchome name@server:/path/to/home . init"
+#!		echo "		 rsynchome /home/name name@server:/path/to/home init"
+#!		echo "		 rsynchome kyle@192.168.1.10:/home/kyle . init"
+#!		echo "		 rsynchome /home/kyle kyle@192.168.1.10:/home/kyle init"
+#!	else
+#!		echo -n "Are you sure you want to sync home files from '$1' to '$2'? [yN] "
+#!		read a
+#!		case "${a}" in
+#!			y|Y)
+#!				src="$1"
+#!				dest="$2"
+#!				# rsync config files
+#!				files=".alias .alias-work .bashrc .funct .funct-work .menu .menu_work .screenrc .screenrc-bindings .shellrc .shellrc-work .zshrc"
+#!				filelist=""
+#!				for file in ${files} ; do
+#!					filelist="${filelist} ${src}/config/${file}"
+#!				done
+#!				rsync -rlptx --delete ${filelist} ${dest}/
+#!				# rsync initial files, if init parameter given
+#!				if [[ "$3" == "init" ]] ; then
+#!					files=".screenrc-applications"
+#!					filelist=""
+#!					for file in ${files} ; do
+#!						filelist="${filelist} ${src}/config/local/$(uname -n)/${file}"
+#!					done
+#!					rsync -rlptx --delete "${filelist}" "${dest}/"
+#!				fi
+#!				# rsync bin
+#!				rsync -rlptx --delete "${src}/config/bin" "${dest}/"
+#!				# rsync .emacs.d
+#!				rsync -rlptx --delete --exclude='*.elc' "${src}/config/.emacs.d" "${dest}/"
+#!				;;
+#!		esac
+#!	fi
 #!}
-#        rsynccruzer                     copy ISOs and bundle to sandisk cruzer
+#		rsynccruzer					 copy ISOs and bundle to sandisk cruzer
 rsynccruzer() {
-    # check destination
-    dest="/run/media/${USER}/ventoy/"
-    if [[ ! -d ${dest} ]] ; then
-        echo "Could not find mounted USB at ${dest}"
-        exit 1
-    fi
+	# check destination
+	dest="/run/media/${USER}/ventoy/"
+	if [[ ! -d ${dest} ]] ; then
+		echo "Could not find mounted USB at ${dest}"
+		exit 1
+	fi
 
-    # sync ISOs
-    root="/home/data/media/software/Boot Tools"
-    files=(
-        "${root}/Clonezilla Live "*.iso
-        "${root}/Darik's Boot and Nuke "*.iso
-        "${root}/GParted Live "*.iso
-        "${root}/MasterBooter "*.iso
-        "${root}/Plop Boot Manager.iso"
-        "${root}/Super Grub2 "*.iso
-        "${root}/System Rescue "*.iso
-    )
-    for file in "${files[@]}" ; do
-        rsync -rLtxc --progress --delete "${file}" "${dest}"
-    done
+	# sync ISOs
+	root="/home/data/media/software/Boot Tools"
+	files=(
+		"${root}/Clonezilla Live "*.iso
+		"${root}/Darik's Boot and Nuke "*.iso
+		"${root}/GParted Live "*.iso
+		"${root}/MasterBooter "*.iso
+		"${root}/Plop Boot Manager.iso"
+		"${root}/Super Grub2 "*.iso
+		"${root}/System Rescue "*.iso
+	)
+	for file in "${files[@]}" ; do
+		rsync -rLtxc --progress --delete "${file}" "${dest}"
+	done
 
-    # create and copy bundle
-    rsyncbundle
+	# create and copy bundle
+	rsyncbundle
 }
-#        rsyncbundle                     generate encrypted bundle and copy it to mounted ventoy usb
+#		rsyncbundle					 generate encrypted bundle and copy it to mounted ventoy usb
 rsyncbundle() {
-    # check destination
-    dest="/run/media/${USER}/FILES/"
-    if [[ ! -d "${dest}" ]] ; then
-        echo "Could not find mounted USB at '${dest}'"
-        exit 1
-    fi
+	# check destination
+	dest="/run/media/${USER}/FILES/"
+	if [[ ! -d "${dest}" ]] ; then
+		echo "Could not find mounted USB at '${dest}'"
+		exit 1
+	fi
 
-    # create bundle
-    root="/tmp/bundle-$$"
-    tmp="${root}/bundle"
-    mkdir -p "${tmp}"
-    # add ~/.ssh
-    mkdir -p "${tmp}/.ssh" && chmod 700 "${tmp}/.ssh"
-    cp -p "${HOME}/.ssh/id_"* "${tmp}/.ssh/"
-    # add make-etc-hosts
-    cp "${HOME}/bin/make-etc-hosts" "${tmp}/"
-    # package and encrypt bundle directory
-    pushd "${root}"
-    tar cvfz "bundle.tgz" "bundle"
-    ccrypt -e "bundle.tgz"
-    # sync bundle to usb
-    rsync -rLtxc --progress --delete "bundle.tgz.cpt" "${dest}"
-    popd
-    rm -rf "${root}"
+	# create bundle
+	root="/tmp/bundle-$$"
+	tmp="${root}/bundle"
+	mkdir -p "${tmp}"
+	# add ~/.ssh
+	mkdir -p "${tmp}/.ssh" && chmod 700 "${tmp}/.ssh"
+	cp -p "${HOME}/.ssh/id_"* "${tmp}/.ssh/"
+	# add make-etc-hosts
+	cp "${HOME}/bin/make-etc-hosts" "${tmp}/"
+	# package and encrypt bundle directory
+	pushd "${root}"
+	tar cvfz "bundle.tgz" "bundle"
+	ccrypt -e "bundle.tgz"
+	# sync bundle to usb
+	rsync -rLtxc --progress --delete "bundle.tgz.cpt" "${dest}"
+	popd
+	rm -rf "${root}"
 }
 
 #
 # java
 #
-#        jarversion              display java version used to build jars
+#		jarversion			  display java version used to build jars
 jarversion() {
-    if [[ $# -gt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 [DIR [PATTERN]]"
-        echo "Display Java version used to build jar files in DIR matching PATTERN."
-        echo "  DIR      defaults to '.'"
-        echo "  PATTERN  defaults to '*.jar'"
-    else
-        dir="$1"
-        [[ -z "${dir}" ]] && dir="."
-        pattern="$2"
-        [[ -z "${pattern}" ]] && pattern="*.jar"
-        tmpdir="$(mktemp -d)"
-        find "${dir}" -name "${pattern}" -type f | while read jar ; do
-            mkdir -p "${tmpdir}"
-            cp "${jar}" "${tmpdir}/"
-            (
-                cd "${tmpdir}"
-                unzip "${jar}" > /dev/null
-                echo "${jar} $(grep '^Created-By' 'META-INF/MANIFEST.MF' | sed 's/^Created-By: // ; s/ (Sun.*$//')"
-            )
-            rm -rf "${tmpdir}"
-        done | column --table
-    fi
+	if [[ $# -gt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+		echo "Usage: $0 [DIR [PATTERN]]"
+		echo "Display Java version used to build jar files in DIR matching PATTERN."
+		echo "  DIR	  defaults to '.'"
+		echo "  PATTERN  defaults to '*.jar'"
+	else
+		dir="$1"
+		[[ -z "${dir}" ]] && dir="."
+		pattern="$2"
+		[[ -z "${pattern}" ]] && pattern="*.jar"
+		tmpdir="$(mktemp -d)"
+		find "${dir}" -name "${pattern}" -type f | while read jar ; do
+			mkdir -p "${tmpdir}"
+			cp "${jar}" "${tmpdir}/"
+			(
+				cd "${tmpdir}"
+				unzip "${jar}" > /dev/null
+				echo "${jar} $(grep '^Created-By' 'META-INF/MANIFEST.MF' | sed 's/^Created-By: // ; s/ (Sun.*$//')"
+			)
+			rm -rf "${tmpdir}"
+		done | column --table
+	fi
 }
 
 #
 # android
 #
-#        adblogapp               show adb log for specific app
+#		adblogapp			   show adb log for specific app
 adblogapp() {
-    if [[ $# -lt 1 ]] || [[ $# -gt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 [PARAMS] PACKAGE"
-        echo "Dump the ADB log for a specific PACKAGE."
-        echo "Optional PARAMS can be any ADB params, such as:"
-        echo "  -e         emulator"
-        echo "  -d         device"
-        echo "  -s DEVICE  specific device"
-    elif [[ $# -eq 1 ]] ; then
-        adb logcat | grep $(adb shell ps | grep "$1" | cut -c10-15)
-    else
-        adb ${*:1:$#-1} logcat | grep $(adb ${*:1:$#-1} shell ps | grep "${*: -1}" | cut -c10-15)
-    fi
+	if [[ $# -lt 1 ]] || [[ $# -gt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+		echo "Usage: $0 [PARAMS] PACKAGE"
+		echo "Dump the ADB log for a specific PACKAGE."
+		echo "Optional PARAMS can be any ADB params, such as:"
+		echo "  -e		 emulator"
+		echo "  -d		 device"
+		echo "  -s DEVICE  specific device"
+	elif [[ $# -eq 1 ]] ; then
+		adb logcat | grep $(adb shell ps | grep "$1" | cut -c10-15)
+	else
+		adb ${*:1:$#-1} logcat | grep $(adb ${*:1:$#-1} shell ps | grep "${*: -1}" | cut -c10-15)
+	fi
 }
 
 #
 # howto
 #
-#        howtokernel             howto build the kernel
+#		howtokernel			 howto build the kernel
 howtokernel() {
-    cat <<EOF
+	cat <<EOF
 HowTo Build the Kernel in Gentoo
 
 # cd /usr/src/linux
@@ -1685,9 +1685,9 @@ Note:  This will delete the .config file.
 (Cross your fingers and reboot.)
 EOF
 }
-#        howtogrub               howto setup grub bootloader
+#		howtogrub			   howto setup grub bootloader
 howtogrub() {
-    cat <<EOF
+	cat <<EOF
 HowTo Setup the Grub Bootloader
 
 # mount /boot
@@ -1713,10 +1713,10 @@ EOF
 #
 # setup
 #
-#        homehowto               howto setup git home dir on a new machine
+#		homehowto			   howto setup git home dir on a new machine
 howtohome() {
-    user=${USER}
-    cat <<EOF
+	user=${USER}
+	cat <<EOF
 Install packages
   sudo pacman -S --noconfirm --needed ccrypt stow
 Copy bundle.tgz.cpt from USB and decrypt it:
@@ -1747,249 +1747,249 @@ Install manjaro packages and setup system:
   manjaroinitialize
 EOF
 }
-#        homeinitialize          stow links from ~/ to ~/config and ~/config-private dirs
+#		homeinitialize		  stow links from ~/ to ~/config and ~/config-private dirs
 homeinitialize() {
-    backupdir="${HOME}/original-configuration-files-$(date +'%Y%m%d')"
-    backupfiles=(
-        ".bash_logout"
-        ".bash_profile"
-        ".bashrc"
-        ".i3"
-        ".profile"
-        ".xinitrc"
-        ".xprofile"
-        ".Xresources"
-    )
-    symlinkdirs=(
-        "doc/avatars"
-        "doc/icons"
-        "doc/images"
-        "doc/sounds"
-        "/home/data/media/audio/Sounds"
-        "/home/data/media/repos/C64"
-        "/home/data/media/repos/DOS"
-    )
+	backupdir="${HOME}/original-configuration-files-$(date +'%Y%m%d')"
+	backupfiles=(
+		".bash_logout"
+		".bash_profile"
+		".bashrc"
+		".i3"
+		".profile"
+		".xinitrc"
+		".xprofile"
+		".Xresources"
+	)
+	symlinkdirs=(
+		"doc/avatars"
+		"doc/icons"
+		"doc/images"
+		"doc/sounds"
+		"/home/data/media/audio/Sounds"
+		"/home/data/media/repos/C64"
+		"/home/data/media/repos/DOS"
+	)
 
-    echo "You are about to setup links from '${HOME}' to '${HOME}/config' and '${HOME}/config-private'."
-    echo "All files and directories replaced will be moved to '${backupdir}'."
-    echo "This command should only be run once for a given HOME directory."
-    [[ -e "${HOME}/.alias" ]] && echo "It looks like stow initialization has already occurred" && return 1
-    echo -n "Do you wish to proceed? [yN] " ; read a
+	echo "You are about to setup links from '${HOME}' to '${HOME}/config' and '${HOME}/config-private'."
+	echo "All files and directories replaced will be moved to '${backupdir}'."
+	echo "This command should only be run once for a given HOME directory."
+	[[ -e "${HOME}/.alias" ]] && echo "It looks like stow initialization has already occurred" && return 1
+	echo -n "Do you wish to proceed? [yN] " ; read a
 
-    case "${a}" in
-        y|Y)
-            [[ -d "${HOME}/config" ]] || (echo "Missing config directory!" && return 1)
+	case "${a}" in
+		y|Y)
+			[[ -d "${HOME}/config" ]] || (echo "Missing config directory!" && return 1)
 
-            echo "Moving existing home files to '${backupdir}'..."
-            (
-                cd "${HOME}" && \
-                    mkdir -p "${backupdir}" && \
-                    for file in ${backupfiles[@]} ; do
-                        if [[ -e "${file}" ]] ; then
-                            echo "  ${file} ==> ${backupdir}"
-                            mv "${file}" "${backupdir}/"
-                        fi
-                    done
-            ) || (echo "Errors encountered while backing up existing files!" && return 1)
+			echo "Moving existing home files to '${backupdir}'..."
+			(
+				cd "${HOME}" && \
+					mkdir -p "${backupdir}" && \
+					for file in ${backupfiles[@]} ; do
+						if [[ -e "${file}" ]] ; then
+							echo "  ${file} ==> ${backupdir}"
+							mv "${file}" "${backupdir}/"
+						fi
+					done
+			) || (echo "Errors encountered while backing up existing files!" && return 1)
 
-            # create stow target directories
-            echo "Creating stow target directories..."
-            mkdir -p "${HOME}/.emacs.d"
-            mkdir -p "${HOME}/.local/share/applications"
-            find "${HOME}/config/config/.config" -mindepth 1 -maxdepth 1 -type d | \
-                while read dir ; do
-                    mkdir -p "${HOME}/.config/$(basename \"${dir}\")"
-                done
+			# create stow target directories
+			echo "Creating stow target directories..."
+			mkdir -p "${HOME}/.emacs.d"
+			mkdir -p "${HOME}/.local/share/applications"
+			find "${HOME}/config/config/.config" -mindepth 1 -maxdepth 1 -type d | \
+				while read dir ; do
+					mkdir -p "${HOME}/.config/$(basename \"${dir}\")"
+				done
 
-            # stow
-            echo "Stowing packages..."
-            (cd "${HOME}" && ln -s -f config/.stow-global-ignore .)
-            stow --dir="${HOME}/config" --target="${HOME}" --stow "common" "emacs"
-            stow --dir="${HOME}/config" --target="${HOME}" --no-folding --stow "config" "local"
-            stow --dir="${HOME}/config/custom" --target="${HOME}" --no-folding --stow "$(uname -n)"
-            [[ -d "${HOME}/config-private" ]] && stow --dir="${HOME}/config-private" --target="${HOME}" --stow "common" "emacs"
-            [[ -d "${HOME}/config-private" ]] && stow --dir="${HOME}/config-private" --target="${HOME}" --no-folding --stow "config"
+			# stow
+			echo "Stowing packages..."
+			(cd "${HOME}" && ln -s -f config/.stow-global-ignore .)
+			stow --dir="${HOME}/config" --target="${HOME}" --stow "common" "emacs"
+			stow --dir="${HOME}/config" --target="${HOME}" --no-folding --stow "config" "local"
+			stow --dir="${HOME}/config/custom" --target="${HOME}" --no-folding --stow "$(uname -n)"
+			[[ -d "${HOME}/config-private" ]] && stow --dir="${HOME}/config-private" --target="${HOME}" --stow "common" "emacs"
+			[[ -d "${HOME}/config-private" ]] && stow --dir="${HOME}/config-private" --target="${HOME}" --no-folding --stow "config"
 
-            echo "Making other symlinks..."
-            (
-                cd "${HOME}" && \
-                    for file in ${symlinkdirs[@]} ; do
-                        if [[ -d "${file}" ]] ; then
-                            echo "  ${file}"
-                            ln -sf "${file}" .
-                        fi
-                    done
-            )
-            ;;
-    esac
+			echo "Making other symlinks..."
+			(
+				cd "${HOME}" && \
+					for file in ${symlinkdirs[@]} ; do
+						if [[ -d "${file}" ]] ; then
+							echo "  ${file}"
+							ln -sf "${file}" .
+						fi
+					done
+			)
+			;;
+	esac
 }
-#        homerestow              restow links from ~/ to ~/config and ~/config-private dirs
+#		homerestow			  restow links from ~/ to ~/config and ~/config-private dirs
 homerestow() {
-    # create stow target directories
-    echo "Creating stow target directories..."
-    mkdir -p "${HOME}/.emacs.d"
-    mkdir -p "${HOME}/.local/share/applications"
-    find "${HOME}/config/config/.config" -mindepth 1 -maxdepth 1 -type d | \
-        while read dir ; do
-            bn=$(basename "${dir}")
-            mkdir -p "${HOME}/.config/${bn}"
-        done
+	# create stow target directories
+	echo "Creating stow target directories..."
+	mkdir -p "${HOME}/.emacs.d"
+	mkdir -p "${HOME}/.local/share/applications"
+	find "${HOME}/config/config/.config" -mindepth 1 -maxdepth 1 -type d | \
+		while read dir ; do
+			bn=$(basename "${dir}")
+			mkdir -p "${HOME}/.config/${bn}"
+		done
 
-    # restow
-    echo "Restowing packages..."
-    (cd "${HOME}" && ln -s -f config/.stow-global-ignore .)
-    stow --dir="${HOME}/config" --target="${HOME}" --restow "common" "emacs"
-    stow --dir="${HOME}/config" --target="${HOME}" --no-folding --restow "config" "local"
-    stow --dir="${HOME}/config/custom" --target="${HOME}" --no-folding --restow "$(uname -n)"
-    [[ -d "${HOME}/config-private" ]] && stow --dir="${HOME}/config-private" --target="${HOME}" --restow "common" "emacs"
-    [[ -d "${HOME}/config-private" ]] && stow --dir="${HOME}/config-private" --target="${HOME}" --no-folding --restow "config"
+	# restow
+	echo "Restowing packages..."
+	(cd "${HOME}" && ln -s -f config/.stow-global-ignore .)
+	stow --dir="${HOME}/config" --target="${HOME}" --restow "common" "emacs"
+	stow --dir="${HOME}/config" --target="${HOME}" --no-folding --restow "config" "local"
+	stow --dir="${HOME}/config/custom" --target="${HOME}" --no-folding --restow "$(uname -n)"
+	[[ -d "${HOME}/config-private" ]] && stow --dir="${HOME}/config-private" --target="${HOME}" --restow "common" "emacs"
+	[[ -d "${HOME}/config-private" ]] && stow --dir="${HOME}/config-private" --target="${HOME}" --no-folding --restow "config"
 }
-#        manjaroinitialize       install manjaro packages and setup system
+#		manjaroinitialize	   install manjaro packages and setup system
 manjaroinitialize() {
-    _getsection() {
-        local file="${HOME}/org/personal.org"
-        local regexp="/^#\+NAME: $1\$/,/^#\+END_SRC\$/{print \$0}"
-        awk "${regexp}" "${file}" | tail -n +3 | head -n -1 | sed 's/^  //'
-    }
+	_getsection() {
+		local file="${HOME}/org/personal.org"
+		local regexp="/^#\+NAME: $1\$/,/^#\+END_SRC\$/{print \$0}"
+		awk "${regexp}" "${file}" | tail -n +3 | head -n -1 | sed 's/^  //'
+	}
 
-    standard=(
-        "manjaro-group"
-        "manjaro-sudoers"
-        "manjaro-locale"
-        "manjaro-upgrade"
-        "manjaro-initial-applications"
-        "manjaro-lightdm"
-        "manjaro-lightdm-conf"
-        "manjaro-lightdm-gtk-greeter-conf"
-        "manjaro-lightdm-slick-greeter-conf"
-        "manjaro-wm"
-        "manjaro-bspwm"
-        "manjaro-pkgfile"
-        "manjaro-copy-wallpapers"
-        "manjaro-fix-backgrounds"
-        "manjaro-set-background-image"
-        "manjaro-fonts"
-        "manjaro-font-cache"
-        "manjaro-networkmanager"
-        "manjaro-packages-system"
-        "manjaro-packages-system-zsh"
-        "manjaro-packages-applications"
-        "manjaro-packages-applications-orpie"
-        "manjaro-packages-applications-irssi"
-        "manjaro-packages-applications-xscreensaver"
-        "manjaro-packages-applications-xscreensaver-aerial"
-        "manjaro-packages-applications-x48"
-        "manjaro-packages-tools"
-        "manjaro-packages-tools-bitwarden"
-        "manjaro-packages-network"
-        "manjaro-packages-development"
-        "manjaro-packages-graphical"
-        "manjaro-packages-audio"
-        "manjaro-packages-video"
-        "manjaro-packages-wine"
-        "manjaro-packages-emulators"
-        "manjaro-packages-other-cli-hacks"
-        "manjaro-configure-zsh"
-        "manjaro-configure-pcmanfm"
-        "manjaro-configure-java-8-openjdk"
-        "manjaro-service-pulseaudio"
-        "manjaro-service-mpd"
-        "manjaro-service-mpdris"
-        #"manjaro-service-docker"
-        #"manjaro-service-fstrim"
-        "manjaro-printer-cannon"
-    )
+	standard=(
+		"manjaro-group"
+		"manjaro-sudoers"
+		"manjaro-locale"
+		"manjaro-upgrade"
+		"manjaro-initial-applications"
+		"manjaro-lightdm"
+		"manjaro-lightdm-conf"
+		"manjaro-lightdm-gtk-greeter-conf"
+		"manjaro-lightdm-slick-greeter-conf"
+		"manjaro-wm"
+		"manjaro-bspwm"
+		"manjaro-pkgfile"
+		"manjaro-copy-wallpapers"
+		"manjaro-fix-backgrounds"
+		"manjaro-set-background-image"
+		"manjaro-fonts"
+		"manjaro-font-cache"
+		"manjaro-networkmanager"
+		"manjaro-packages-system"
+		"manjaro-packages-system-zsh"
+		"manjaro-packages-applications"
+		"manjaro-packages-applications-orpie"
+		"manjaro-packages-applications-irssi"
+		"manjaro-packages-applications-xscreensaver"
+		"manjaro-packages-applications-xscreensaver-aerial"
+		"manjaro-packages-applications-x48"
+		"manjaro-packages-tools"
+		"manjaro-packages-tools-bitwarden"
+		"manjaro-packages-network"
+		"manjaro-packages-development"
+		"manjaro-packages-graphical"
+		"manjaro-packages-audio"
+		"manjaro-packages-video"
+		"manjaro-packages-wine"
+		"manjaro-packages-emulators"
+		"manjaro-packages-other-cli-hacks"
+		"manjaro-configure-zsh"
+		"manjaro-configure-pcmanfm"
+		"manjaro-configure-java-8-openjdk"
+		"manjaro-service-pulseaudio"
+		"manjaro-service-mpd"
+		"manjaro-service-mpdris"
+		#"manjaro-service-docker"
+		#"manjaro-service-fstrim"
+		"manjaro-printer-cannon"
+	)
 
-    optional=(
-        "manjaro-packages-optional-applications"
-        "manjaro-packages-optional-tools"
-        "manjaro-packages-optional-network"
-        "manjaro-packages-optional-development"
-        "manjaro-packages-optional-development-commander-x-16"
-        "manjaro-packages-optional-graphical"
-        "manjaro-packages-optional-audio"
-        "manjaro-packages-optional-audio-grip"
-        "manjaro-packages-optional-video"
-        "manjaro-packages-optional-video-dvd"
-        "manjaro-packages-optional-video-editors"
-        "manjaro-packages-optional-emulators"
-        "manjaro-packages-optional-emulators-virtualbox"
-        "manjaro-packages-optional-emulators-virtual-t"
-        "manjaro-packages-optional-games"
-        "manjaro-packages-optional-games-proton"
-        "manjaro-packages-optional-games-marathon"
-        "manjaro-packages-optional-other"
-        "manjaro-packages-optional-other-nvidia"
-    )
+	optional=(
+		"manjaro-packages-optional-applications"
+		"manjaro-packages-optional-tools"
+		"manjaro-packages-optional-network"
+		"manjaro-packages-optional-development"
+		"manjaro-packages-optional-development-commander-x-16"
+		"manjaro-packages-optional-graphical"
+		"manjaro-packages-optional-audio"
+		"manjaro-packages-optional-audio-grip"
+		"manjaro-packages-optional-video"
+		"manjaro-packages-optional-video-dvd"
+		"manjaro-packages-optional-video-editors"
+		"manjaro-packages-optional-emulators"
+		"manjaro-packages-optional-emulators-virtualbox"
+		"manjaro-packages-optional-emulators-virtual-t"
+		"manjaro-packages-optional-games"
+		"manjaro-packages-optional-games-proton"
+		"manjaro-packages-optional-games-marathon"
+		"manjaro-packages-optional-other"
+		"manjaro-packages-optional-other-nvidia"
+	)
 
-    if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 [--optional]"
-        echo "  -o,--optional  install optional packages instead"
-        return 1
-    fi
+	if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+		echo "Usage: $0 [--optional]"
+		echo "  -o,--optional  install optional packages instead"
+		return 1
+	fi
 
-    if [[ "$1" == "-o" ]] || [[ "$1" == "--optional" ]] ; then
-        opt=1
-        sections=${optional}
-    else
-        opt=0
-        sections=${standard}
-    fi
+	if [[ "$1" == "-o" ]] || [[ "$1" == "--optional" ]] ; then
+		opt=1
+		sections=${optional}
+	else
+		opt=0
+		sections=${standard}
+	fi
 
-    echo "You are about to install a curated set of Manjaro packages and setup this system."
-    echo "This command is normally run once for a given system installation, but it is"
-    echo "safe to run multiple times to pick up new packages or configuration changes."
-    [[ ${opt} -eq 1 ]] && echo "The OPTIONAL parameter was given, so (only) optional packages will be installed."
-    echo -n "Do you wish to proceed? [yN] " ; read a
+	echo "You are about to install a curated set of Manjaro packages and setup this system."
+	echo "This command is normally run once for a given system installation, but it is"
+	echo "safe to run multiple times to pick up new packages or configuration changes."
+	[[ ${opt} -eq 1 ]] && echo "The OPTIONAL parameter was given, so (only) optional packages will be installed."
+	echo -n "Do you wish to proceed? [yN] " ; read a
 
-    case "${a}" in
-        y|Y)
-            echo
-            echo "========== Manjaro Initialization Script =========="
-            echo
+	case "${a}" in
+		y|Y)
+			echo
+			echo "========== Manjaro Initialization Script =========="
+			echo
 
-            for ((x = 1; x <= ${#sections[@]}; x++)) ; do
-                section=${sections[${x}]}
-                echo
-                echo "========== ${section} =========="
-                echo
-                eval "$(_getsection ${section})"
-            done
+			for ((x = 1; x <= ${#sections[@]}; x++)) ; do
+				section=${sections[${x}]}
+				echo
+				echo "========== ${section} =========="
+				echo
+				eval "$(_getsection ${section})"
+			done
 
-            echo
-            echo "========== Manjaro Initialization Complete =========="
-            echo
-            echo "Optional setup:"
-            echo
-            echo "SSH Daemon"
-            echo
-            echo "1) Edit /etc/ssh/sshd_config:"
-            echo
-            echo "------------------------------------------------------------------------------"
-            echo "# do not allow root logins"
-            echo "PermitRootLogin no"
-            echo
-            echo "# do not allow password logins (public key must be in authorized hosts file)"
-            echo "PasswordAuthentication no"
-            echo
-            echo "# allow X11 connections [optional]"
-            echo "X11Forwarding yes"
-            echo "------------------------------------------------------------------------------"
-            echo
-            echo "2) Enable sshd service:"
-            echo
-            echo "  sudo systemctl enable sshd.service"
-            echo "  sudo systemctl start sshd.service"
-            echo "  sudo systemctl status sshd.service"
-            echo
-            echo "Aerial Screensaver (xscreensaver)"
-            echo
-            echo "Run the following command to install the Aerial Screensaver Videos (very long install):"
-            echo "  mkdir -p ~/tmp && yaourt -S --noconfirm --needed xscreensaver-aerial-videos-4k --tmp ~/tmp && rm -r ~/tmp/yaourt-tmp-$(id -un)"
-            echo
-            echo "End of Manjaro Installation Script"
-            ;;
-    esac
+			echo
+			echo "========== Manjaro Initialization Complete =========="
+			echo
+			echo "Optional setup:"
+			echo
+			echo "SSH Daemon"
+			echo
+			echo "1) Edit /etc/ssh/sshd_config:"
+			echo
+			echo "------------------------------------------------------------------------------"
+			echo "# do not allow root logins"
+			echo "PermitRootLogin no"
+			echo
+			echo "# do not allow password logins (public key must be in authorized hosts file)"
+			echo "PasswordAuthentication no"
+			echo
+			echo "# allow X11 connections [optional]"
+			echo "X11Forwarding yes"
+			echo "------------------------------------------------------------------------------"
+			echo
+			echo "2) Enable sshd service:"
+			echo
+			echo "  sudo systemctl enable sshd.service"
+			echo "  sudo systemctl start sshd.service"
+			echo "  sudo systemctl status sshd.service"
+			echo
+			echo "Aerial Screensaver (xscreensaver)"
+			echo
+			echo "Run the following command to install the Aerial Screensaver Videos (very long install):"
+			echo "  mkdir -p ~/tmp && yaourt -S --noconfirm --needed xscreensaver-aerial-videos-4k --tmp ~/tmp && rm -r ~/tmp/yaourt-tmp-$(id -un)"
+			echo
+			echo "End of Manjaro Installation Script"
+			;;
+	esac
 }
 
 #!

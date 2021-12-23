@@ -265,12 +265,12 @@ bindsym $super+Shift+r restart
 bindsym $super+Shift+e mode "$mode_exit"
 set $mode_exit Really exit i3 X session?  (y)es  (n)o
 mode "$mode_exit" {
-    bindsym y exit
+bindsym y exit
 
-    # cancel with "n", Enter, or Escape
-    bindsym n mode "default"
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
+# cancel with "n", Enter, or Escape
+bindsym n mode "default"
+bindsym Return mode "default"
+bindsym Escape mode "default"
 }
 
 # lock screen
@@ -280,17 +280,17 @@ bindsym $super+$alt+x exec sh -c "[[ -n \"$(ps aux | grep -v grep | grep xscreen
 bindsym $super+Shift+x mode "$mode_system"
 set $mode_system (l)ock  (e)xit  switch_(u)ser  (s)uspend  (h)ibernate  (r)eboot  (Shift+s)hutdown
 mode "$mode_system" {
-    bindsym l exec --no-startup-id i3exit lock, mode "default"
-    bindsym s exec --no-startup-id i3exit suspend, mode "default"
-    bindsym u exec --no-startup-id i3exit switch_user, mode "default"
-    bindsym e exec --no-startup-id i3exit logout, mode "default"
-    bindsym h exec --no-startup-id i3exit hibernate, mode "default"
-    bindsym r exec --no-startup-id i3exit reboot, mode "default"
-    bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
+bindsym l exec --no-startup-id i3exit lock, mode "default"
+bindsym s exec --no-startup-id i3exit suspend, mode "default"
+bindsym u exec --no-startup-id i3exit switch_user, mode "default"
+bindsym e exec --no-startup-id i3exit logout, mode "default"
+bindsym h exec --no-startup-id i3exit hibernate, mode "default"
+bindsym r exec --no-startup-id i3exit reboot, mode "default"
+bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
 
-    # exit with Enter or Escape
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
+# exit with Enter or Escape
+bindsym Return mode "default"
+bindsym Escape mode "default"
 }
 
 #-------------------------------------------------------------------------------
@@ -300,24 +300,24 @@ mode "$mode_system" {
 # resize window (you can also use the mouse for that)
 bindsym $super+Control+r mode "resize"
 mode "resize" {
-    # these bindings trigger as soon as you enter the resize mode
+# these bindings trigger as soon as you enter the resize mode
 
-    # left to decrypt window width
-    bindsym Left resize shrink width 10 px or 10 ppt
-    bindsym $left resize shrink width 10 px or 10 ppt
-    # down to increase window height
-    bindsym Down resize grow height 10 px or 10 ppt
-    bindsym $down resize grow height 10 px or 10 ppt
-    # up to decrease window height
-    bindsym Up resize shrink height 10 px or 10 ppt
-    bindsym $up resize shrink height 10 px or 10 ppt
-    # right to increase window width
-    bindsym Right resize grow width 10 px or 10 ppt
-    bindsym $right resize grow width 10 px or 10 ppt
+# left to decrypt window width
+bindsym Left resize shrink width 10 px or 10 ppt
+bindsym $left resize shrink width 10 px or 10 ppt
+# down to increase window height
+bindsym Down resize grow height 10 px or 10 ppt
+bindsym $down resize grow height 10 px or 10 ppt
+# up to decrease window height
+bindsym Up resize shrink height 10 px or 10 ppt
+bindsym $up resize shrink height 10 px or 10 ppt
+# right to increase window width
+bindsym Right resize grow width 10 px or 10 ppt
+bindsym $right resize grow width 10 px or 10 ppt
 
-    # exit with Enter or Escape
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
+# exit with Enter or Escape
+bindsym Return mode "default"
+bindsym Escape mode "default"
 }
 
 #-------------------------------------------------------------------------------
@@ -325,22 +325,22 @@ mode "resize" {
 #-------------------------------------------------------------------------------
 
 # pulse audio controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume $(pactl info | grep '^Default Sink: ' | sed 's/^Default Sink: //') +5% ; exec notify-send 'Volume Up'     # increase sound volume
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume $(pactl info | grep '^Default Sink: ' | sed 's/^Default Sink: //') +5% ; exec notify-send 'Volume Up'	 # increase sound volume
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume $(pactl info | grep '^Default Sink: ' | sed 's/^Default Sink: //') -5% ; exec notify-send 'Volume Down'   # decrease sound volume
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute $(pactl info | grep "^Default Sink: " | sed 's/^Default Sink: //') toggle ; exec notify-send 'Toggle Mute'         # mute sound
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute $(pactl info | grep "^Default Sink: " | sed 's/^Default Sink: //') toggle ; exec notify-send 'Toggle Mute'		 # mute sound
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute $(pactl info | grep "^Default Source: " | sed 's/^Default Source: //') toggle ; exec notify-send 'Toggle Mic' # mute mic
 
 # sreen brightness controls
-bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 10 ; exec notify-send 'Brightness Up'     # increase screen brightness
+bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 10 ; exec notify-send 'Brightness Up'	 # increase screen brightness
 bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10 ; exec notify-send 'Brightness Down' # decrease screen brightness
 
 # touchpad controls
 bindsym XF86TouchpadToggle exec --no-startup-id touchpad-toggle ; exec notify-send 'Toggle Touchpad' # toggle touchpad
 
 # media player controls
-bindsym XF86AudioPlay exec --no-startup-id playerctl play ; exec notify-send 'Play Audio'        # play audio
-bindsym XF86AudioPause exec --no-startup-id playerctl pause ; exec notify-send 'Pause Audio'     # pause audio
-bindsym XF86AudioNext exec --no-startup-id playerctl next ; exec notify-send 'Next Song'         # jump to next song
+bindsym XF86AudioPlay exec --no-startup-id playerctl play ; exec notify-send 'Play Audio'		# play audio
+bindsym XF86AudioPause exec --no-startup-id playerctl pause ; exec notify-send 'Pause Audio'	 # pause audio
+bindsym XF86AudioNext exec --no-startup-id playerctl next ; exec notify-send 'Next Song'		 # jump to next song
 bindsym XF86AudioPrev exec --no-startup-id playerctl previous ; exec notify-send 'Previous Song' # jump to previous song
 
 #-------------------------------------------------------------------------------
@@ -351,31 +351,31 @@ bindsym XF86AudioPrev exec --no-startup-id playerctl previous ; exec notify-send
 set_from_resource $term_background  background
 set_from_resource $term_foreground  foreground
 set_from_resource $term_cursorColor cursorColor
-set_from_resource $term_color0      color0
-set_from_resource $term_color1      color1
-set_from_resource $term_color2      color2
-set_from_resource $term_color3      color3
-set_from_resource $term_color4      color4
-set_from_resource $term_color5      color5
-set_from_resource $term_color6      color6
-set_from_resource $term_color7      color7
-set_from_resource $term_color8      color8
-set_from_resource $term_color9      color9
-set_from_resource $term_color10     color10
-set_from_resource $term_color11     color11
-set_from_resource $term_color12     color12
-set_from_resource $term_color13     color13
-set_from_resource $term_color14     color14
-set_from_resource $term_color15     color15
+set_from_resource $term_color0	  color0
+set_from_resource $term_color1	  color1
+set_from_resource $term_color2	  color2
+set_from_resource $term_color3	  color3
+set_from_resource $term_color4	  color4
+set_from_resource $term_color5	  color5
+set_from_resource $term_color6	  color6
+set_from_resource $term_color7	  color7
+set_from_resource $term_color8	  color8
+set_from_resource $term_color9	  color9
+set_from_resource $term_color10	 color10
+set_from_resource $term_color11	 color11
+set_from_resource $term_color12	 color12
+set_from_resource $term_color13	 color13
+set_from_resource $term_color14	 color14
+set_from_resource $term_color15	 color15
 
 # # theme colors
-# # class                 border  backgr  text    indic   child_border
-# client.focused          #556064 #556064 #80FFF9 #FDF6E3
+# # class				 border  backgr  text	indic   child_border
+# client.focused		  #556064 #556064 #80FFF9 #FDF6E3
 # client.focused_inactive #2F3D44 #2F3D44 #1ABC9C #454948
-# client.unfocused        #2F3D44 #2F3D44 #1ABC9C #454948
-# client.urgent           #CB4B16 #FDF6E3 #1ABC9C #268BD2
-# client.placeholder      #000000 #0C0C0C #FFFFFF #000000
-# client.background       #2B2C2B
+# client.unfocused		#2F3D44 #2F3D44 #1ABC9C #454948
+# client.urgent		   #CB4B16 #FDF6E3 #1ABC9C #268BD2
+# client.placeholder	  #000000 #0C0C0C #FFFFFF #000000
+# client.background	   #2B2C2B
 
 # adapta-nokto-eta-maia theme
 # https://github.com/adapta-project/adapta-gtk-theme
@@ -383,19 +383,19 @@ set $focused_bg   #364046
 set $focused_fg   #CFD8DC
 set $unfocused_bg #222D32
 set $unfocused_fg #8FA2AB
-set $urgent_bg    #E53935
-set $place_bg     #0C0C0C
-set $place_fg     #8FA2AB
-set $accent       #009688
-set $separator    #454947
+set $urgent_bg	#E53935
+set $place_bg	 #0C0C0C
+set $place_fg	 #8FA2AB
+set $accent	   #009688
+set $separator	#454947
 
-# class                 border          background      text            indicator       child_border
-client.focused          $focused_bg     $focused_bg     $focused_fg
+# class				 border		  background	  text			indicator	   child_border
+client.focused		  $focused_bg	 $focused_bg	 $focused_fg
 client.focused_inactive $unfocused_bg   $unfocused_bg   $unfocused_fg
-client.unfocused        $unfocused_bg   $unfocused_bg   $unfocused_fg
-client.urgent           $urgent_bg      $urgent_bg      $focused_fg
-client.placeholder      #000000         $place_bg       $place_fg
-client.background       #000000
+client.unfocused		$unfocused_bg   $unfocused_bg   $unfocused_fg
+client.urgent		   $urgent_bg	  $urgent_bg	  $focused_fg
+client.placeholder	  #000000		 $place_bg	   $place_fg
+client.background	   #000000
 
 #-------------------------------------------------------------------------------
 # i3 Bar / i3 Status Bar
@@ -403,40 +403,40 @@ client.background       #000000
 
 # start i3bar to display workspace bar (plus system information)
 bar {
-    i3bar_command i3bar
-    #status_command i3status
-    status_command i3blocks -c ~/.i3/i3blocks.conf
-    position bottom
+i3bar_command i3bar
+#status_command i3status
+status_command i3blocks -c ${HOME}/.i3/i3blocks.conf
+position bottom
 
-    # set primary output first (ex: 'xrandr --output eDP1 --primary')
-    #tray_output primary
+# set primary output first (ex: 'xrandr --output eDP1 --primary')
+#tray_output primary
 
-    bindsym button4 nop
-    bindsym button5 nop
-    #font xft:URWGothic-Book 11
+bindsym button4 nop
+bindsym button5 nop
+#font xft:URWGothic-Book 11
 
-    colors {
-        # background #283339
-        # statusline #F9FAF9
-        # separator  #454947
+colors {
+# background #283339
+# statusline #F9FAF9
+# separator  #454947
 
-        # #                  border  backgr  text
-        # focused_workspace  #F9FAF9 #16A085 #292F34
-        # active_workspace   #595B5B #353836 #FDF6E3
-        # inactive_workspace #595B5B #283339 #EEE8D5
-        # binding_mode       #16A085 #2C2C2C #F9FAF9
-        # urgent_workspace   #16A085 #FDF6E3 #E5201D
+# #				  border  backgr  text
+# focused_workspace  #F9FAF9 #16A085 #292F34
+# active_workspace   #595B5B #353836 #FDF6E3
+# inactive_workspace #595B5B #283339 #EEE8D5
+# binding_mode	   #16A085 #2C2C2C #F9FAF9
+# urgent_workspace   #16A085 #FDF6E3 #E5201D
 
-        background $focused_bg
-        statusline $focused_fg
-        separator  $separator
+background $focused_bg
+statusline $focused_fg
+separator  $separator
 
-        #                  border          background       text
-        focused_workspace  $focused_bg     $focused_bg      $focused_fg
-        active_workspace   $unfocused_bg   $unfocused_bg    $unfocused_fg
-        inactive_workspace $unfocused_bg   $unfocused_bg    $unfocused_fg
-        urgent_workspace   $urgent_bg      $urgent_bg       $focused_fg
-    }
+#				  border		  background	   text
+focused_workspace  $focused_bg	 $focused_bg	  $focused_fg
+active_workspace   $unfocused_bg   $unfocused_bg	$unfocused_fg
+inactive_workspace $unfocused_bg   $unfocused_bg	$unfocused_fg
+urgent_workspace   $urgent_bg	  $urgent_bg	   $focused_fg
+}
 }
 
 # toggle i3status bar
@@ -474,34 +474,34 @@ smart_borders on
 # bindsym $super+Shift+g mode "$mode_gaps"
 
 # mode "$mode_gaps" {
-#     bindsym o      mode "$mode_gaps_outer"
-#     bindsym i      mode "$mode_gaps_inner"
-#     bindsym Return mode "default"
-#     bindsym Escape mode "default"
+#	 bindsym o	  mode "$mode_gaps_outer"
+#	 bindsym i	  mode "$mode_gaps_inner"
+#	 bindsym Return mode "default"
+#	 bindsym Escape mode "default"
 # }
 # mode "$mode_gaps_inner" {
-#     bindsym plus  gaps inner current plus 5
-#     bindsym minus gaps inner current minus 5
-#     bindsym 0     gaps inner current set 0
+#	 bindsym plus  gaps inner current plus 5
+#	 bindsym minus gaps inner current minus 5
+#	 bindsym 0	 gaps inner current set 0
 
-#     bindsym Shift+plus  gaps inner all plus 5
-#     bindsym Shift+minus gaps inner all minus 5
-#     bindsym Shift+0     gaps inner all set 0
+#	 bindsym Shift+plus  gaps inner all plus 5
+#	 bindsym Shift+minus gaps inner all minus 5
+#	 bindsym Shift+0	 gaps inner all set 0
 
-#     bindsym Return mode "default"
-#     bindsym Escape mode "default"
+#	 bindsym Return mode "default"
+#	 bindsym Escape mode "default"
 # }
 # mode "$mode_gaps_outer" {
-#     bindsym plus  gaps outer current plus 5
-#     bindsym minus gaps outer current minus 5
-#     bindsym 0     gaps outer current set 0
+#	 bindsym plus  gaps outer current plus 5
+#	 bindsym minus gaps outer current minus 5
+#	 bindsym 0	 gaps outer current set 0
 
-#     bindsym Shift+plus  gaps outer all plus 5
-#     bindsym Shift+minus gaps outer all minus 5
-#     bindsym Shift+0     gaps outer all set 0
+#	 bindsym Shift+plus  gaps outer all plus 5
+#	 bindsym Shift+minus gaps outer all minus 5
+#	 bindsym Shift+0	 gaps outer all set 0
 
-#     bindsym Return mode "default"
-#     bindsym Escape mode "default"
+#	 bindsym Return mode "default"
+#	 bindsym Escape mode "default"
 # }
 
 #-------------------------------------------------------------------------------
@@ -577,9 +577,9 @@ bindsym $super+$alt+m exec pavucontrol
 #bindsym $super+Shift+F3 exec gksu pcmanfm
 #bindsym $super+Shift+F3 exec gksu thunar
 #bindsym $super+F5 exec terminal -e 'mocp'
-#bindsym $super+t exec --no-startup-id pkill compton
+#bindsym $super+t exec --no-startup-id pkill --exact compton --euid ${USER}
 #bindsym $super+Ctrl+t exec --no-startup-id compton -b
-#bindsym $super+Shift+d --release exec "pkill -x dunst && exec notify-send 'Reconfiguring Dunst'"
+#bindsym $super+Shift+d --release exec "pkill --exact dunst --euid ${USER} && exec notify-send 'Reconfiguring Dunst'"
 
 # screen snapshots
 bindsym Print exec --no-startup-id i3-scrot # full screen snapshot
@@ -627,7 +627,7 @@ exec_always --no-startup-id fix_xcursor
 exec --no-startup-id i3-msg "workspace $workspace1"
 
 # autostart custom applications
-exec --no-startup-id "source ~/.i3applications"
+exec --no-startup-id "source ${HOME}/.i3applications"
 
 #===============================================================================
 # End of File

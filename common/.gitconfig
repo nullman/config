@@ -7,14 +7,14 @@
 #=============================================================================
 
 [user]
-    name = Kyle Sherman
-    email = kylewsherman@gmail.com
+	name = Kyle Sherman
+	email = kylewsherman@gmail.com
 
 [pull]
-    rebase = false
+	rebase = false
 
 [checkout]
-    defaultRemote = origin
+	defaultRemote = origin
 
 #===============================================================================
 # End of File

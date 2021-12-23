@@ -46,27 +46,27 @@ key=""
 # get parameters
 while [[ -n "$1" ]] ; do
 
-    case "$1" in
+	case "$1" in
 
-        -h|--help)
-            # usage
-            cat <<EOF
+		-h|--help)
+			# usage
+			cat <<EOF
 Usage: $(basename $0) [OPTION] [FILE]
 Present user with a menu of commands to run.
   OPTION is one of:
-    -c, --create   create an initial menu file
-    -s, --section  start in a specific section
-    -h, --help     this help info
-    -l, --license  licensing info
+	-c, --create   create an initial menu file
+	-s, --section  start in a specific section
+	-h, --help	 this help info
+	-l, --license  licensing info
   FILE  menu definitions file (defaults to '~/.menu').
 EOF
-            exit 1
-            ;;
+			exit 1
+			;;
 
-        -l|--license)
-            # usage
-            echo "License:"
-            cat <<EOF
+		-l|--license)
+			# usage
+			echo "License:"
+			cat <<EOF
   Copyright (C) 2006 Kyle W T Sherman
 
   This program is free software; you can redistribute it and/or
@@ -83,21 +83,21 @@ EOF
   along with this program; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 EOF
-            exit 0
-            ;;
+			exit 0
+			;;
 
-        -c|--create)
-            shift
-            # create new menu file
-            if [[ $# -gt 0 ]] ; then
-                menufile="$1"
-                shift
-            fi
-            if [[ -e "${menufile}" ]] ; then
-                echo "Cannot create '${menufile}' because that file already exists"
-                exit 1
-            fi
-            cat > ${menufile} <<EOF
+		-c|--create)
+			shift
+			# create new menu file
+			if [[ $# -gt 0 ]] ; then
+				menufile="$1"
+				shift
+			fi
+			if [[ -e "${menufile}" ]] ; then
+				echo "Cannot create '${menufile}' because that file already exists"
+				exit 1
+			fi
+			cat > ${menufile} <<EOF
 # menu file
 
 # Sections start with a name that ends with a colon and end with an empty
@@ -108,18 +108,18 @@ EOF
 # another menu file to load starting with an explaination point.
 
 main:
-  Browsers          ->|:browser
-  Email             ->|:email
-  Messagers         ->|:im
-  IRC               ->|:irc
-  Editors           ->|:edit
-  Applications      ->|:app
-  Utilities         ->|:util
-  Media             ->|:media
-  Games             ->|:game
-  Games (MAME)      ->|:mame
-  Terminals         ->|:term
-  Screen Saver      ->|:ssaver
+  Browsers		  ->|:browser
+  Email			 ->|:email
+  Messagers		 ->|:im
+  IRC			   ->|:irc
+  Editors		   ->|:edit
+  Applications	  ->|:app
+  Utilities		 ->|:util
+  Media			 ->|:media
+  Games			 ->|:game
+  Games (MAME)	  ->|:mame
+  Terminals		 ->|:term
+  Screen Saver	  ->|:ssaver
 
 browser:
   Firefox|firefox
@@ -188,26 +188,26 @@ ssaver:
   xscreensaver off|touch ${HOME}/.noscreensaver ; fuser -k -SIGTERM /home/kyle/bin/ssaver ; fuser -k -SIGTERM /usr/bin/xscreensaver ; fuser -k -SIGTERM /usr/bin/xlock ; fuser -k -SIGTERM /usr/bin/electricsheep ; fuser -k -SIGKILL /home/kyle/bin/ssaver ; fuser -k -SIGKILL /usr/bin/xscreensaver ; fuser -k -SIGKILL /usr/bin/xlock ; fuser -k -SIGKILL /usr/bin/electricsheep
   xlock|xlock -mode flame
 EOF
-            exit 0
-            ;;
+			exit 0
+			;;
 
-        -s|--section)
-            shift
-            # get section name from parameter if one is given
-            if [[ $# -gt 0 ]] ; then
-                section="$1"
-                shift
-            fi
-            ;;
+		-s|--section)
+			shift
+			# get section name from parameter if one is given
+			if [[ $# -gt 0 ]] ; then
+				section="$1"
+				shift
+			fi
+			;;
 
-        *)
-            # set menu file
-            if [[ $# -gt 0 ]] ; then
-                menufile="$1"
-                shift
-            fi
-            ;;
-    esac
+		*)
+			# set menu file
+			if [[ $# -gt 0 ]] ; then
+				menufile="$1"
+				shift
+			fi
+			;;
+	esac
 
 done
 
@@ -215,8 +215,8 @@ done
 
 # check that menufile exists
 if [[ ! -e ${menufile} ]] ; then
-    echo "Could not find menu file '${menufile}'"
-    exit 1
+	echo "Could not find menu file '${menufile}'"
+	exit 1
 fi
 
 # load section display and commands into arrays
@@ -256,31 +256,31 @@ sedparse+=':$/!d
 block=$(cat ${menufile} | sed -e '$a\\n' | sed -n "${sedparse}")
 
 #for line in ${block} ; do
-#    echo "${line}"
+#	echo "${line}"
 #done
 
 # create display array
 x=0
 for line in ${block} ; do
-    # set display to the part before the pipe and convert @@ to spaces
-    display[${x}]=$(echo "${line}" | sed 's/^\([^|]*\)|\(.*\)$/\1/ ; s/@@/ /g')
-    x=$((${x} + 1))
+	# set display to the part before the pipe and convert @@ to spaces
+	display[${x}]=$(echo "${line}" | sed 's/^\([^|]*\)|\(.*\)$/\1/ ; s/@@/ /g')
+	x=$((${x} + 1))
 done
 
 #for ((x = 0; x < ${#display[*]}; x++)) ; do
-#    echo "${display[$x]}"
+#	echo "${display[$x]}"
 #done
 
 # create command array
 x=0
 for line in ${block} ; do
-    # set command to the part after the pipe and convert @@ to spaces
-    command[${x}]=$(echo "${line}" | sed 's/^\([^|]*\)|\(.*\)$/\2/ ; s/@@/ /g')
-    x=$((${x} + 1))
+	# set command to the part after the pipe and convert @@ to spaces
+	command[${x}]=$(echo "${line}" | sed 's/^\([^|]*\)|\(.*\)$/\2/ ; s/@@/ /g')
+	x=$((${x} + 1))
 done
 
 #for ((x = 0; x < ${#display[*]}; x += 1)) ; do
-#    echo "${command[${x}]}"
+#	echo "${command[${x}]}"
 #done
 
 # update maxrow
@@ -288,15 +288,15 @@ maxrow=$((${x} - 1))
 
 # if no rows found then exit
 if [[ ${maxrow} -lt ${row} ]] ; then
-    exit 1
+	exit 1
 fi
 
 # get offset for centering
 len=0
 for ((x = 0; x < ${#display[*]}; x += 1)) ; do
-    if [[ ${#display[${x}]} -gt ${len} ]] ; then
-        len=${#display[${x}]}
-    fi
+	if [[ ${#display[${x}]} -gt ${len} ]] ; then
+		len=${#display[${x}]}
+	fi
 done
 offset=$(((${cols} - ${len}) / 2))
 if [[ ${offset} -lt 0 ]] ; then offset=0 ; fi
@@ -314,11 +314,11 @@ tput cup 1 0
 
 # print display
 for ((x = 0; x < ${#display[*]}; x += 1)) ; do
-    if [[ "${row}" == "${x}" ]] ; then
-        echo -n "${spc}" ; tput ${boldon} ; echo "${display[${x}]}" ; tput ${boldoff}
-    else
-        echo -n "${spc}" ; echo "${display[${x}]}"
-    fi
+	if [[ "${row}" == "${x}" ]] ; then
+		echo -n "${spc}" ; tput ${boldon} ; echo "${display[${x}]}" ; tput ${boldoff}
+	else
+		echo -n "${spc}" ; echo "${display[${x}]}"
+	fi
 done
 
 # print info
@@ -332,61 +332,61 @@ echo "q=quit  up/down=movement  enter=select  u=up"
 
 # main section
 while [[ "${key}" != "q" ]] ; do
-    oldrow=${row}
-    # get keypress
-    read -n 1 -s key
-    case "${key}" in
-        A)
-            # up arrow
-            row=$((${row} - 1))
-            ;;
-        B)
-            # down arrow
-            row=$((${row} + 1))
-            ;;
-        D|u|U)
-            # left arrow or U
-            exec $0 "${menufile}"
-            ;;
-        ""|C)
-            # return or right arrow
-            clear
-            case "${command[${row}]:0:1}" in
-                :)
-                    # if command starts with a colon then we switch to a new section
-                    exec $0 --section "${command[$row]:1}" "${menufile}"
-                    ;;
-                !)
-                    # if command starts with an explaination point then we run
-                    # a new instance of menu
-                    if [[ "${command[${row}]:1:2}" == "/" ]] ; then
-                        exec $0 "${command[$row]:1}"
-                    else
-                        exec $0 "${HOME}/${command[$row]:1}"
-                    fi
-                    ;;
-                *)
-                    # otherwise, run the command
-                    echo
-                    echo "Running: ${command[${row}]}"
-                    echo
-                    eval ${command[${row}]} ; exit 0
-                    ;;
-            esac
-            ;;
-    esac
+	oldrow=${row}
+	# get keypress
+	read -n 1 -s key
+	case "${key}" in
+		A)
+			# up arrow
+			row=$((${row} - 1))
+			;;
+		B)
+			# down arrow
+			row=$((${row} + 1))
+			;;
+		D|u|U)
+			# left arrow or U
+			exec $0 "${menufile}"
+			;;
+		""|C)
+			# return or right arrow
+			clear
+			case "${command[${row}]:0:1}" in
+				:)
+					# if command starts with a colon then we switch to a new section
+					exec $0 --section "${command[$row]:1}" "${menufile}"
+					;;
+				!)
+					# if command starts with an explaination point then we run
+					# a new instance of menu
+					if [[ "${command[${row}]:1:2}" == "/" ]] ; then
+						exec $0 "${command[$row]:1}"
+					else
+						exec $0 "${HOME}/${command[$row]:1}"
+					fi
+					;;
+				*)
+					# otherwise, run the command
+					echo
+					echo "Running: ${command[${row}]}"
+					echo
+					eval ${command[${row}]} ; exit 0
+					;;
+			esac
+			;;
+	esac
 
-    # fix row
-    if [[ ${row} -lt 0 ]] ; then row=0 ; fi
-    if [[ ${row} -gt ${maxrow} ]] ; then row=${maxrow} ; fi
+	# fix row
+	if [[ ${row} -lt 0 ]] ; then row=0 ; fi
+	if [[ ${row} -gt ${maxrow} ]] ; then row=${maxrow} ; fi
 
-    # redraw if necessary
-    if [[ ${row} -ne ${oldrow} ]] ; then
-        tput cup $((${oldrow} + 1)) 0
-        echo -n "${spc}" ; echo "${display[$oldrow]}"
-        tput cup $((${row} + 1)) 0
-        echo -n "${spc}" ; tput ${boldon} ; echo "${display[$row]}" ; tput ${boldoff}
-    fi
+	# redraw if necessary
+	if [[ ${row} -ne ${oldrow} ]] ; then
+		tput cup $((${oldrow} + 1)) 0
+		echo -n "${spc}" ; echo "${display[$oldrow]}"
+		tput cup $((${row} + 1)) 0
+		echo -n "${spc}" ; tput ${boldon} ; echo "${display[$row]}" ; tput ${boldoff}
+	fi
 done
 
 # clear screen

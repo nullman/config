@@ -79,15 +79,15 @@ border_color_pressed = #000000 100
 #
 # pannel_items
 #
-# L    Shows the Launcher
-# T    Shows the Taskbar
-# S    Shows the Systray (also called notification area)
-# B    Shows the Battery status
-# C    Shows the Clock
-# F    Adds an extensible spacer (freespace). You can specify more than one. Has no effect if `T` is also present.
-# E    Adds an executor plugin. You can specify more than one.
-# P    Adds a push button. You can specify more than one.
-# :    Adds a separator. You can specify more than one.
+# L	Shows the Launcher
+# T	Shows the Taskbar
+# S	Shows the Systray (also called notification area)
+# B	Shows the Battery status
+# C	Shows the Clock
+# F	Adds an extensible spacer (freespace). You can specify more than one. Has no effect if `T` is also present.
+# E	Adds an executor plugin. You can specify more than one.
+# P	Adds a push button. You can specify more than one.
+# :	Adds a separator. You can specify more than one.
 #-------------------------------------
 
 #panel_items = TFBCS
@@ -99,8 +99,8 @@ panel_background_id = 1
 wm_menu = 1
 panel_dock = 1
 panel_position = bottom center horizontal
-#panel_layer = top                       # top/bottom/normal
-panel_layer = botton                    # top/bottom/normal
+#panel_layer = top					   # top/bottom/normal
+panel_layer = botton					# top/bottom/normal
 panel_monitor = all
 panel_shrink = 0
 autohide = 0
@@ -111,8 +111,8 @@ autohide_height = 2
 # autohide_show_timeout = 0.3
 # autohide_hide_timeout = 0.5
 # autohide_height = 2
-#strut_policy = follow_size              # follow_size/minimum/none
-strut_policy = none                     # follow_size/minimum/none
+#strut_policy = follow_size			  # follow_size/minimum/none
+strut_policy = none					 # follow_size/minimum/none
 panel_window_name = tint2
 disable_transparency = 1
 mouse_effects = 1
@@ -262,7 +262,7 @@ tooltip_font_color = #dddddd 100
 #-------------------------------------
 
 execp = new
-execp_command = ~/.config/tint2/weather 55433
+execp_command = ${HOME}/.config/tint2/weather 55433
 execp_interval = 300
 execp_has_icon = 0
 execp_cache_icon = 0

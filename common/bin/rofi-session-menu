@@ -13,7 +13,7 @@ set -euo pipefail
 name=$(basename "$0")
 
 _usage() {
-    cat <<EOF
+	cat <<EOF
 Usage: $(basename "$0") [OPTIONS]
 Present a Window Manager Session Menu using rofi.
 OPTIONS:
@@ -27,42 +27,42 @@ EOF
 
 # handle no arguments given
 if [[ $# -lt 1 ]] ; then
-    _usage
-    exit 1
+	_usage
+	exit 1
 fi
 
 # handle command line arguments
 while getopts ":drwsh" opt ; do
-    case "${opt}" in
-        d)
-            rofi -modi drun -show drun
-            ;;
-        r)
-            rofi -modi run -show run
-            ;;
-        w)
-            rofi -modi window -show window
-            ;;
-        s)
-            sel=$(echo " Lock| Logout| Reboot| Shutdown" | \
-                      rofi -sep "|" -dmenu -i -p 'System ' -hide-scrollbar \
-                           -width 20 -padding 20 -lines 4)
-            case "${sel}" in
-                *Lock) lockscreen -- scrot ;;
-                *Logout) loginctl terminate-session $(loginctl session-status | head -n 1 | awk '{print $1}') ;;
-                *Reboot) systemctl reboot ;;
-                *Shutdown) systemctl poweroff ;;
-            esac
-            ;;
-        h)
-            _usage
-            exit 0
-            ;;
-        *)
-            echo -e "Invalid option: -$OPTARG"
-            _usage
-            exit 1
-    esac
+	case "${opt}" in
+		d)
+			rofi -modi drun -show drun
+			;;
+		r)
+			rofi -modi run -show run
+			;;
+		w)
+			rofi -modi window -show window
+			;;
+		s)
+			sel=$(echo " Lock| Logout| Reboot| Shutdown" | \
+					  rofi -sep "|" -dmenu -i -p 'System ' -hide-scrollbar \
+						   -width 20 -padding 20 -lines 4)
+			case "${sel}" in
+				*Lock) lockscreen -- scrot ;;
+				*Logout) loginctl terminate-session $(loginctl session-status | head -n 1 | awk '{print $1}') ;;
+				*Reboot) systemctl reboot ;;
+				*Shutdown) systemctl poweroff ;;
+			esac
+			;;
+		h)
+			_usage
+			exit 0
+			;;
+		*)
+			echo -e "Invalid option: -$OPTARG"
+			_usage
+			exit 1
+	esac
 done
 
 shift $((OPTIND - 1))

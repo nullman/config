@@ -24,13 +24,13 @@ my $quotes = $ARGV[2];
 
 # set default file/dir names if not given
 if (!defined($infile)) {
-    $infile = $ENV{HOME} . '/org/quotes.org';
+	$infile = $ENV{HOME} . '/org/quotes.org';
 }
 if (!defined($outdir)) {
-    $outdir = $ENV{HOME} . '/quotes';
+	$outdir = $ENV{HOME} . '/quotes';
 }
 if (!defined($quotes)) {
-    $quotes = 'quotes';
+	$quotes = 'quotes';
 }
 
 # create the outdir directory if needed
@@ -42,10 +42,10 @@ open(INFILE, "<$infile") || die("ERROR: Input file \'" . $infile . "\' could not
 # look for top level quotes node
 my $i = 0;
 while (exists($xbel->{node}->[$i])) {
-    if ($xbel->{node}->[$i]->{data}->[0] eq $quotes) {
-        ParseQuotes($xbel->{node}->[$i]->{node});
+	if ($xbel->{node}->[$i]->{data}->[0] eq $quotes) {
+		ParseQuotes($xbel->{node}->[$i]->{node});
 }
-    $i++;
+	$i++;
 }
 
 # create fortune dat files
@@ -56,86 +56,86 @@ system("find \"${outdir}\" -type f | xargs -L 1 strfile");
 # parse a quotes node
 #-------------------------------------------------------------------------------
 sub ParseQuotes {
-    my $node = shift;
-    my $i = 0;
-    while (exists($node->[$i])) {
-        ParseQuotesSection($node->[$i]);
-        $i++;
+	my $node = shift;
+	my $i = 0;
+	while (exists($node->[$i])) {
+		ParseQuotesSection($node->[$i]);
+		$i++;
 }
 }
 
 # parse a quotes section
 sub ParseQuotesSection {
-    my $node = shift;
+	my $node = shift;
 
-    # open output file to write
-    my $outfile;
-    if (exists($node->{data}->[0])) {
-        $outfile = $outdir . "/" . $node->{data}->[0];
+	# open output file to write
+	my $outfile;
+	if (exists($node->{data}->[0])) {
+		$outfile = $outdir . "/" . $node->{data}->[0];
 } else {
-    exit;
+	exit;
 }
-    open(OUTFILE, ">$outfile") || die("ERROR: Output file \'" . $outfile . "\' could not be opened\n");
+	open(OUTFILE, ">$outfile") || die("ERROR: Output file \'" . $outfile . "\' could not be opened\n");
 
-    # write quotes to output file
-    my $i = 0;
-    while(exists($node->{node}->[$i]->{data}->[0])) {
-        my $line = $node->{node}->[$i]->{data}->[0];
-        #print(Dumper($line));
-        my @quote = split(/\|/, $line);
-        #print(Dumper(@quote));
-        # check that there is an author part and a quote part
-        if (!(exists($quote[1])) || exists($quote[2])) {
-            print("ERROR: Bad quote line found: $line\n");
-    } else {
-        # if no errors, then continue
-        my $quote = $quote[1];
-        my $author = $quote[0];
-        # convert "\\n" to "\n"
-        $quote =~ s/\\n/\n/g;
-        $author =~ s/\\n/\n/g;
-        # format quote (78 characters per line)
-        my $tmpfile = system("mktemp");
-        open(PIPE, "|fmt --width=78 --split-only > $tmpfile");
-        print(PIPE $quote);
-        close(PIPE);
-        open(PIPE, "$tmpfile");
-        $quote = "";
-        while(<PIPE>) { $quote .= $_; }
-        chomp($quote);
-        close(PIPE);
-        unlink("$tmpfile");
-        # print quote
-        print(OUTFILE "$quote\n");
-        # author
-        if (length($author) > 0) {
-            # format author (59 characters per line)
-            $tmpfile = system("mktemp");
-            open(PIPE, "|fmt --width=59 --split-only > $tmpfile");
-            print(PIPE $author);
-            close(PIPE);
-            open(PIPE, "$tmpfile");
-            $author = "";
-            while(<PIPE>) { $author .= $_; }
-            chomp($author);
-            close(PIPE);
-            unlink("$tmpfile");
-            # format author
-            $author = "\t\t-- " . $author;
-            $author =~ s/\n/\n\t\t   /g;
-            # print author
-            print(OUTFILE "$author\n");
-    }
-        # print spacer
-        print(OUTFILE "%\n");
-    }
-        $i++;
+	# write quotes to output file
+	my $i = 0;
+	while(exists($node->{node}->[$i]->{data}->[0])) {
+		my $line = $node->{node}->[$i]->{data}->[0];
+		#print(Dumper($line));
+		my @quote = split(/\|/, $line);
+		#print(Dumper(@quote));
+		# check that there is an author part and a quote part
+		if (!(exists($quote[1])) || exists($quote[2])) {
+			print("ERROR: Bad quote line found: $line\n");
+	} else {
+		# if no errors, then continue
+		my $quote = $quote[1];
+		my $author = $quote[0];
+		# convert "\\n" to "\n"
+		$quote =~ s/\\n/\n/g;
+		$author =~ s/\\n/\n/g;
+		# format quote (78 characters per line)
+		my $tmpfile = system("mktemp");
+		open(PIPE, "|fmt --width=78 --split-only > $tmpfile");
+		print(PIPE $quote);
+		close(PIPE);
+		open(PIPE, "$tmpfile");
+		$quote = "";
+		while(<PIPE>) { $quote .= $_; }
+		chomp($quote);
+		close(PIPE);
+		unlink("$tmpfile");
+		# print quote
+		print(OUTFILE "$quote\n");
+		# author
+		if (length($author) > 0) {
+			# format author (59 characters per line)
+			$tmpfile = system("mktemp");
+			open(PIPE, "|fmt --width=59 --split-only > $tmpfile");
+			print(PIPE $author);
+			close(PIPE);
+			open(PIPE, "$tmpfile");
+			$author = "";
+			while(<PIPE>) { $author .= $_; }
+			chomp($author);
+			close(PIPE);
+			unlink("$tmpfile");
+			# format author
+			$author = "\t\t-- " . $author;
+			$author =~ s/\n/\n\t\t   /g;
+			# print author
+			print(OUTFILE "$author\n");
+	}
+		# print spacer
+		print(OUTFILE "%\n");
+	}
+		$i++;
 }
 
-    #print(Dumper($node));
+	#print(Dumper($node));
 
-    # close output file
-    close(OUTFILE);
+	# close output file
+	close(OUTFILE);
 }
 
 #===============================================================================
