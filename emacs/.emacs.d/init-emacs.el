@@ -3608,12 +3608,13 @@
 
       (init-message 3 "Org Mode: Babel: Tangle Makefile Tabs")
 
-      (defun org-babel-tangle-body-hook--makefile-tabs ()
+      (defun org-babel-post-tangle-hook--makefile-tabs ()
         "Convert spaces to tabs when tanging Makefiles."
-        (goto-char (point-min))
-        (while (re-search-forward "    " nil :noerror)
-          (replace-match "	")))
-      (add-hook 'org-babel-tangle-body-hook #'org-babel-tangle-body-hook--makefile-tabs)
+        (when (eq major-mode 'makefile-mode)
+          (goto-char (point-min))
+          (while (re-search-forward "    " nil :noerror)
+            (replace-match "	"))))
+      (add-hook 'org-babel-post-tangle-hook #'org-babel-post-tangle-hook--makefile-tabs)
 ;; Tangle Makefile Tabs:1 ends here
 
 ;; [[file:init-emacs.org::*Racket][Racket:1]]

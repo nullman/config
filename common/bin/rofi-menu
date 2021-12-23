@@ -11,233 +11,233 @@ set -euo pipefail
 
 # display usage information
 _usage() {
-	cat <<EOF
+    cat <<EOF
 Usage: $(basename "$0") [MENU]
 Present a menu of rofi menus.
 MENU:
-  NONE	Menu of Menus
-  crt	 Cool Retro Term
+  NONE    Menu of Menus
+  crt     Cool Retro Term
   dosbox  DOSBox Emulator
-  git	 Synchronize Repositories
-  qemu	QEMU Emulator
+  git     Synchronize Repositories
+  qemu    QEMU Emulator
   rsync   Synchronize Files
   sounds  Play Sounds
-  ssh	 SSH into Systems
+  ssh     SSH into Systems
 EOF
 }
 
 # handle no arguments given
 if [[ $# -lt 1 ]] ; then
-	menus=(
-		"Cool-Retro-Term"
-		"DOSBox"
-		"Git"
-		"Qemu"
-		"Rsync"
-		"Sounds"
-		"SSH"
-	)
-	menu=$(printf "%s\n" "${menus[@]}" | rofi -dmenu -i -p 'Menu' -hide-scrollbar)
+    menus=(
+        "CRT"
+        "DOSBox"
+        "Git"
+        "Qemu"
+        "Rsync"
+        "Sounds"
+        "SSH"
+    )
+    menu=$(printf "%s\n" "${menus[@]}" | rofi -dmenu -i -p 'Menu' -hide-scrollbar)
 else
-	menu=$1
+    menu=$1
 fi
 
 # handle menu
 menu=$(echo "${menu}" | tr '[:upper:]' '[:lower:]')
 case "${menu}" in
-	cool-retro-term)
-		profiles=(
-			"Default Amber"
-			"Monochrome Green"
-			"Green Scanlines"
-			"Default Pixelated"
-			"Apple ]["
-			"Vintage"
-			"IBM DOS"
-			"IBM 3278"
-			"Futuristic"
-		)
-		# display a list of cool-retro-term profiles
-		if [[ $# -lt 2 ]] ; then
-			sel=$(printf '%s\n' "${profiles[@]}" | rofi -dmenu -i -p 'Cool-Retro-Term' -hide-scrollbar)
-		else
-			sel=$2
-		fi
+    crt)
+        profiles=(
+            "Default Amber"
+            "Monochrome Green"
+            "Green Scanlines"
+            "Default Pixelated"
+            "Apple ]["
+            "Vintage"
+            "IBM DOS"
+            "IBM 3278"
+            "Futuristic"
+        )
+        # display a list of cool-retro-term profiles
+        if [[ $# -lt 2 ]] ; then
+            sel=$(printf '%s\n' "${profiles[@]}" | rofi -dmenu -i -p 'Cool Retro Term' -hide-scrollbar)
+        else
+            sel=$2
+        fi
 
-		# launch cool-retro-term using selected profile
-		if [[ -n "${sel}" ]] ; then
-			(cool-retro-term --profile "${sel}" &)
-		fi
-		;;
+        # launch cool-retro-term using selected profile
+        if [[ -n "${sel}" ]] ; then
+            (cool-retro-term --profile "${sel}" &)
+        fi
+        ;;
 
-	dosbox)
-		# generate and display a list of dosbox emulators
-		if [[ $# -lt 2 ]] ; then
-			sel=$(cd "${HOME}/.dosbox" && find -maxdepth 1 -name 'dosbox-*' -not -regex '\./dosbox-0.*' | sed 's%^\./dosbox-\(.*\)\.conf%\1%' | rofi -dmenu -i -p 'DOSBox' -hide-scrollbar)
-		else
-			sel=$2
-		fi
+    dosbox)
+        # generate and display a list of dosbox emulators
+        if [[ $# -lt 2 ]] ; then
+            sel=$(cd "${HOME}/.dosbox" && find -maxdepth 1 -name 'dosbox-*' -not -regex '\./dosbox-0.*' | sed 's%^\./dosbox-\(.*\)\.conf%\1%' | rofi -dmenu -i -p 'DOSBox' -hide-scrollbar)
+        else
+            sel=$2
+        fi
 
-		# launch selected dosbox emulator
-		if [[ -n "${sel}" ]] ; then
-			(dosbox -conf "${HOME}/.dosbox/dosbox-0.74-3.conf" -conf "${HOME}/.dosbox/dosbox-${sel}.conf" &)
-		fi
-		;;
+        # launch selected dosbox emulator
+        if [[ -n "${sel}" ]] ; then
+            (dosbox -conf "${HOME}/.dosbox/dosbox-0.74-3.conf" -conf "${HOME}/.dosbox/dosbox-${sel}.conf" &)
+        fi
+        ;;
 
-	git)
-		# display git repositories
-		if [[ $# -lt 2 ]] ; then
-			sel=$(grep "#		gitsync" "${HOME}/.funct" | cut -d " " -f 9 | rofi -dmenu -i -p 'Git' -hide-scrollbar)
-		else
-			sel=$2
-		fi
+    git)
+        # display git repositories
+        if [[ $# -lt 2 ]] ; then
+            sel=$(grep "#        gitsync" "${HOME}/.funct" | cut -d " " -f 9 | rofi -dmenu -i -p 'Git' -hide-scrollbar)
+        else
+            sel=$2
+        fi
 
-		# synchronize with selected git repository
-		if [[ -n "${sel}" ]] ; then
-			source "${HOME}/.funct" && (eval "${sel}" && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12" --tail
-		fi
-		;;
+        # synchronize with selected git repository
+        if [[ -n "${sel}" ]] ; then
+            source "${HOME}/.funct" && (eval "${sel}" && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12" --tail
+        fi
+        ;;
 
-	qemu)
-		# generate and display a list of qemu emulators
-		if [[ $# -lt 2 ]] ; then
-			sel=$(cd ${HOME}/qemu && find . -maxdepth 1 -type d -not -regex '^\.+$' | sed 's%\./%%' | sort | rofi -dmenu -i -p 'Qemu' -hide-scrollbar)
-		else
-			sel=$2
-		fi
+    qemu)
+        # generate and display a list of qemu emulators
+        if [[ $# -lt 2 ]] ; then
+            sel=$(cd ${HOME}/qemu && find . -maxdepth 1 -type d -not -regex '^\.+$' | sed 's%\./%%' | sort | rofi -dmenu -i -p 'Qemu' -hide-scrollbar)
+        else
+            sel=$2
+        fi
 
-		# launch selected qemu emulator
-		if [[ -n "${sel}" ]] ; then
-			(cd "${HOME}/qemu/${sel}" && ./run &)
-		fi
-		;;
+        # launch selected qemu emulator
+        if [[ -n "${sel}" ]] ; then
+            (cd "${HOME}/qemu/${sel}" && ./run &)
+        fi
+        ;;
 
-	rsync)
-		# display rsync targets
-		if [[ $# -lt 2 ]] ; then
-			sel=$(grep "#		rsync-" ${HOME}/.alias | cut -d " " -f 9 | rofi -dmenu -i -p 'Rsync' -hide-scrollbar)
-		else
-			sel=$2
-		fi
+    rsync)
+        # display rsync targets
+        if [[ $# -lt 2 ]] ; then
+            sel=$(grep "^#        rsync-" ${HOME}/.alias | cut -d " " -f 9 | rofi -dmenu -i -p 'Rsync' -hide-scrollbar)
+        else
+            sel=$2
+        fi
 
-		# synchronize with selected rsync targets
-		if [[ -n "${sel}" ]] ; then
-			home="$(cd ${HOME} ; cd .. ; pwd)"
-			cmd=$(cat "${HOME}/.alias" | sed ':a;N;$!ba;s/\\\n//g' | sed -n '/alias '"${sel}"'/p' | sed 's/^alias '"${sel}"'="// ; s/"$//')
-			(eval "${cmd}" && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12" --tail
-		fi
-		;;
+        # synchronize with selected rsync targets
+        if [[ -n "${sel}" ]] ; then
+            home="$(cd ${HOME} ; cd .. ; pwd)"
+            cmd=$(cat "${HOME}/.alias" | sed ':a;N;$!ba;s/\\\n//g' | sed -n '/alias '"${sel}"'/p' | sed 's/^alias '"${sel}"'="// ; s/"$//')
+            (eval "${cmd}" && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12" --tail
+        fi
+        ;;
 
-	sounds)
-		sounddirs=(
-			"${HOME}/Sounds"
-			"${HOME}/sounds"
-		)
-		stop="[Stop Player]"
-		up="[..]"
+    sounds)
+        sounddirs=(
+            "${HOME}/Sounds"
+            "${HOME}/sounds"
+        )
+        stop="[Stop Player]"
+        up="[..]"
 
-		# generate and display a list of sound files and directories to choose from
-		_select() {
-			if [[ -z "${sel}" ]] ; then
-				local opts=(
-					"${stop}"
-					"$(cd "${sounddir}" && find . -maxdepth 1 -type d -not -regex '^\.+$' | sed 's%^\./\(.*\)$%[\1]%' | sort)"
-					"$(cd "${sounddir}" && find . -maxdepth 1 -type f -not -regex '^\.+$' | sed 's%^\./%%' | sort)"
-				)
-			else
-				local opts=("${up}" "$(cd "${selpath}" && find . -maxdepth 1 -type f -not -regex '^\.+$' | sed 's%./%%' | sort)")
-			fi
-			sel=$(printf '%s\n' "${opts[@]}" | rofi -dmenu -i -p 'Sounds' -hide-scrollbar)
-		}
+        # generate and display a list of sound files and directories to choose from
+        _select() {
+            if [[ -z "${sel}" ]] ; then
+                local opts=(
+                    "${stop}"
+                    "$(cd "${sounddir}" && find . -maxdepth 1 -type d -not -regex '^\.+$' | sed 's%^\./\(.*\)$%[\1]%' | sort)"
+                    "$(cd "${sounddir}" && find . -maxdepth 1 -type f -not -regex '^\.+$' | sed 's%^\./%%' | sort)"
+                )
+            else
+                local opts=("${up}" "$(cd "${selpath}" && find . -maxdepth 1 -type f -not -regex '^\.+$' | sed 's%./%%' | sort)")
+            fi
+            sel=$(printf '%s\n' "${opts[@]}" | rofi -dmenu -i -p 'Sounds' -hide-scrollbar)
+        }
 
-		_kill_ffplay() {
-			# stop any currently playing sounds
-			# (regardless of selection to prevent sounds from doubling up)
-			pkill --exact ffplay --euid ${USER} || true
-		}
+        _kill_ffplay() {
+            # stop any currently playing sounds
+            # (regardless of selection to prevent sounds from doubling up)
+            pkill --exact ffplay --euid ${USER} || true
+        }
 
-		# find sound directory
-		sounddir=
-		for dir in "${sounddirs[@]}" ; do
-			[[ -z "${sounddir}" ]] && [[ -d "${dir}" ]] && sounddir="${dir}"
-		done
-		[[ -z "${sounddir}" ]] && exit 1
+        # find sound directory
+        sounddir=
+        for dir in "${sounddirs[@]}" ; do
+            [[ -z "${sounddir}" ]] && [[ -d "${dir}" ]] && sounddir="${dir}"
+        done
+        [[ -z "${sounddir}" ]] && exit 1
 
-		# generate and display a list of sound files and directories to choose from
-		selpath="${sounddir}"
-		if [[ $# -lt 2 ]] ; then
-			sel=""
-			_select
-		else
-			sel="$2"
-		fi
+        # generate and display a list of sound files and directories to choose from
+        selpath="${sounddir}"
+        if [[ $# -lt 2 ]] ; then
+            sel=""
+            _select
+        else
+            sel="$2"
+        fi
 
-		# process selection
-		if [[ -n "${sel}" ]] ; then
-			while true ; do
-				if [[ -z "${sel}" ]] ; then
-					_select
-				fi
+        # process selection
+        if [[ -n "${sel}" ]] ; then
+            while true ; do
+                if [[ -z "${sel}" ]] ; then
+                    _select
+                fi
 
-				sel=$(echo "${sel}" | sed 's%^\[%% ; s%\]$%%')
-				selpath="${sounddir}/${sel}"
-				echo "selpath: ${selpath}"
+                sel=$(echo "${sel}" | sed 's%^\[%% ; s%\]$%%')
+                selpath="${sounddir}/${sel}"
+                echo "selpath: ${selpath}"
 
-				if [[ "${sel}" == "${stop}" ]] ; then
-					_kill_ffplay
-					break
-				fi
+                if [[ "${sel}" == "${stop}" ]] ; then
+                    _kill_ffplay
+                    break
+                fi
 
-				# handle going up a directory
-				if [[ "${sel:0-${#up}}" == "${up}" ]] ; then
-					dirlen=$((${#selpath}-${#up}-1))
-					dir="${selpath:0:${dirlen}}"
-					updir="$(cd "${dir}" && cd .. && pwd)"
-					sel="${updir:${#sounddir}}"
-					continue
-				fi
+                # handle going up a directory
+                if [[ "${sel:0-${#up}}" == "${up}" ]] ; then
+                    dirlen=$((${#selpath}-${#up}-1))
+                    dir="${selpath:0:${dirlen}}"
+                    updir="$(cd "${dir}" && cd .. && pwd)"
+                    sel="${updir:${#sounddir}}"
+                    continue
+                fi
 
-				# handle traversing into a directory
-				if [[ -d "${selpath}" ]] ; then
-					dir="${sel}"
-					_select
-					sel="${dir}/${sel}"
-					continue
-				fi
+                # handle traversing into a directory
+                if [[ -d "${selpath}" ]] ; then
+                    dir="${sel}"
+                    _select
+                    sel="${dir}/${sel}"
+                    continue
+                fi
 
-				# handle playing a sound file
-				_kill_ffplay
-				if $(echo "${sel}" | grep -q "Ambient Sound Effects") ; then
-					echo "Playing: ${sel} (in a loop)"
-					ffplay -nodisp -loop 0 "${selpath}"
-				else
-					echo "Playing: ${sel}"
-					ffplay -nodisp -autoexit "${selpath}"
-				fi
-				break
-			done
-		fi
-		;;
+                # handle playing a sound file
+                _kill_ffplay
+                if $(echo "${sel}" | grep -q "Ambient Sound Effects") ; then
+                    echo "Playing: ${sel} (in a loop)"
+                    ffplay -nodisp -loop 0 "${selpath}"
+                else
+                    echo "Playing: ${sel}"
+                    ffplay -nodisp -autoexit "${selpath}"
+                fi
+                break
+            done
+        fi
+        ;;
 
-	ssh)
-		if [[ $# -lt 2 ]] ; then
-			servers=(
-				"morpheus"
-				"raspad"
-				"switch"
-			)
-			sel=$(printf "%s\n" "${servers[@]}" | rofi -dmenu -i -p 'SSH' -hide-scrollbar)
-		else
-			sel=$2
-		fi
+    ssh)
+        if [[ $# -lt 2 ]] ; then
+            servers=(
+                "morpheus"
+                "raspad"
+                "switch"
+            )
+            sel=$(printf "%s\n" "${servers[@]}" | rofi -dmenu -i -p 'SSH' -hide-scrollbar)
+        else
+            sel=$2
+        fi
 
-		# launch selected ssh connection
-		if [[ -n "${sel}" ]] ; then
-			user="${USER}"
-			[[ "${sel}" == "raspad" ]] && user="pi"
-			(alacritty -t "SSH ${sel}" -e "ssh" "${user}@${sel}" &)
-		fi
-		;;
+        # launch selected ssh connection
+        if [[ -n "${sel}" ]] ; then
+            user="${USER}"
+            [[ "${sel}" == "raspad" ]] && user="pi"
+            (alacritty -t "SSH ${sel}" -e "ssh" "${user}@${sel}" &)
+        fi
+        ;;
 esac
 
 exit 0

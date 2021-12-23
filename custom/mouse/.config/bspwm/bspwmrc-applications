@@ -10,14 +10,14 @@
 
 # check if executable command is found in the path
 _command() {
-	command -v "$1" > /dev/null 2>&1
+    command -v "$1" > /dev/null 2>&1
 }
 
 # delay running a command (SECONDS COMMAND)
 _delay() {
-	local delay=$1
-	shift
-	sleep ${delay} && eval "$@"
+    local delay=$1
+    shift
+    sleep ${delay} && eval "$@"
 }
 
 # initialize background applications and services

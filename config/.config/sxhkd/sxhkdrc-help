@@ -3,46 +3,46 @@ Simple X Hotkey Daemon Key Bindings
 
 System Tools
 
-| Super | Alt | Ctrl | Shift | Key	| Description					|
+| Super | Alt | Ctrl | Shift | Key    | Description                    |
 |-------+-----+------+-------+--------+--------------------------------|
-| Super | Alt |	  |	   | h	  | Display key bindings		   |
-| Super | Alt |	  |	   | space  | Application launcher		   |
-| Super | Alt |	  |	   | d	  | Program launcher			   |
-| Super | Alt |	  |	   | m	  | Menu launcher				  |
-| Super | Alt |	  |	   | w	  | Window selector				|
-| Super | Alt |	  |	   | e	  | Emoji selector				 |
-| Super | Alt |	  |	   | p	  | Bitwarden selector			 |
-| Super |	 |	  | Shift | e	  | Lock, Logout, Reboot, Shutdown |
-| Super |	 |	  | Shift | p	  | Get XProp class name		   |
-| Super |	 |	  | Shift | Delete | Kill process clicked		   |
-| Super | Alt |	  |	   | Print  | Screen snapshot				|
-| Super |	 | Ctrl |	   | Print  | Window snapshot				|
-| Super |	 |	  | Shift | Print  | Region snapshot				|
-| Super |	 |	  | Shift | r	  | Reload SXHKD				   |
-| Super |	 |	  | Shift | t	  | Reload Tint					|
-| Super | Alt |	  |	   | y	  | Git sync home				  |
-| Super | Alt |	  |	   | u	  | Git sync doc				   |
-| Super | Alt |	  |	   | s	  | Start screensaver			  |
-| Super | Alt |	  |	   | x	  | Lock screensaver			   |
+| Super | Alt |      |       | h      | Display key bindings           |
+| Super | Alt |      |       | space  | Application launcher           |
+| Super | Alt |      |       | d      | Program launcher               |
+| Super | Alt |      |       | m      | Menu launcher                  |
+| Super | Alt |      |       | w      | Window selector                |
+| Super | Alt |      |       | e      | Emoji selector                 |
+| Super | Alt |      |       | p      | Bitwarden selector             |
+| Super |     |      | Shift | e      | Lock, Logout, Reboot, Shutdown |
+| Super |     |      | Shift | p      | Get XProp class name           |
+| Super |     |      | Shift | Delete | Kill process clicked           |
+| Super | Alt |      |       | Print  | Screen snapshot                |
+| Super |     | Ctrl |       | Print  | Window snapshot                |
+| Super |     |      | Shift | Print  | Region snapshot                |
+| Super |     |      | Shift | r      | Reload SXHKD                   |
+| Super |     |      | Shift | t      | Reload Tint                    |
+| Super | Alt |      |       | y      | Git sync home                  |
+| Super | Alt |      |       | u      | Git sync doc                   |
+| Super | Alt |      |       | s      | Start screensaver              |
+| Super | Alt |      |       | x      | Lock screensaver               |
 
 Media
 
-| Super | Alt | Ctrl | Shift | Key	| Description			   |
+| Super | Alt | Ctrl | Shift | Key    | Description               |
 |-------+-----+------+-------+--------+---------------------------|
-| Super | Alt | Ctrl |	   | Left   | Volume down 10%		   |
-| Super | Alt | Ctrl |	   | Right  | Volume up 10%			 |
-| Super | Alt | Ctrl |	   | m	  | MPD: Play/pause song	  |
-| Super | Alt | Ctrl |	   | comma  | MPD: Play previous song   |
-| Super | Alt | Ctrl |	   | period | MPD: Play next song	   |
-| Super | Alt | Ctrl |	   | slash  | MPD: Display current song |
-| Super | Alt | Ctrl |	   | z	  | MP2: Play previous song   |
-| Super | Alt | Ctrl |	   | c	  | MP2: Play/pause song	  |
-| Super | Alt | Ctrl |	   | x	  | MP2: Stop player		  |
-| Super | Alt | Ctrl |	   | b	  | MP2: Play next song	   |
-| Super | Alt | Ctrl |	   | "	  | MP2: Display current song |
+| Super | Alt | Ctrl |       | Left   | Volume down 10%           |
+| Super | Alt | Ctrl |       | Right  | Volume up 10%             |
+| Super | Alt | Ctrl |       | m      | MPD: Play/pause song      |
+| Super | Alt | Ctrl |       | comma  | MPD: Play previous song   |
+| Super | Alt | Ctrl |       | period | MPD: Play next song       |
+| Super | Alt | Ctrl |       | slash  | MPD: Display current song |
+| Super | Alt | Ctrl |       | z      | MP2: Play previous song   |
+| Super | Alt | Ctrl |       | c      | MP2: Play/pause song      |
+| Super | Alt | Ctrl |       | x      | MP2: Stop player          |
+| Super | Alt | Ctrl |       | b      | MP2: Play next song       |
+| Super | Alt | Ctrl |       | "      | MP2: Display current song |
 
 Applications
 
-| Super | Alt | Ctrl | Shift | Key	  | Description   |
+| Super | Alt | Ctrl | Shift | Key      | Description   |
 |-------+-----+------+-------+----------+---------------|
-| Super | Alt |	  |	   | t,Return | Open terminal |
+| Super | Alt |      |       | t,Return | Open terminal |

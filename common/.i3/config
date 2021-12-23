@@ -325,22 +325,22 @@ bindsym Escape mode "default"
 #-------------------------------------------------------------------------------
 
 # pulse audio controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume $(pactl info | grep '^Default Sink: ' | sed 's/^Default Sink: //') +5% ; exec notify-send 'Volume Up'	 # increase sound volume
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume $(pactl info | grep '^Default Sink: ' | sed 's/^Default Sink: //') +5% ; exec notify-send 'Volume Up'     # increase sound volume
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume $(pactl info | grep '^Default Sink: ' | sed 's/^Default Sink: //') -5% ; exec notify-send 'Volume Down'   # decrease sound volume
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute $(pactl info | grep "^Default Sink: " | sed 's/^Default Sink: //') toggle ; exec notify-send 'Toggle Mute'		 # mute sound
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute $(pactl info | grep "^Default Sink: " | sed 's/^Default Sink: //') toggle ; exec notify-send 'Toggle Mute'         # mute sound
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute $(pactl info | grep "^Default Source: " | sed 's/^Default Source: //') toggle ; exec notify-send 'Toggle Mic' # mute mic
 
 # sreen brightness controls
-bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 10 ; exec notify-send 'Brightness Up'	 # increase screen brightness
+bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 10 ; exec notify-send 'Brightness Up'     # increase screen brightness
 bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10 ; exec notify-send 'Brightness Down' # decrease screen brightness
 
 # touchpad controls
 bindsym XF86TouchpadToggle exec --no-startup-id touchpad-toggle ; exec notify-send 'Toggle Touchpad' # toggle touchpad
 
 # media player controls
-bindsym XF86AudioPlay exec --no-startup-id playerctl play ; exec notify-send 'Play Audio'		# play audio
-bindsym XF86AudioPause exec --no-startup-id playerctl pause ; exec notify-send 'Pause Audio'	 # pause audio
-bindsym XF86AudioNext exec --no-startup-id playerctl next ; exec notify-send 'Next Song'		 # jump to next song
+bindsym XF86AudioPlay exec --no-startup-id playerctl play ; exec notify-send 'Play Audio'        # play audio
+bindsym XF86AudioPause exec --no-startup-id playerctl pause ; exec notify-send 'Pause Audio'     # pause audio
+bindsym XF86AudioNext exec --no-startup-id playerctl next ; exec notify-send 'Next Song'         # jump to next song
 bindsym XF86AudioPrev exec --no-startup-id playerctl previous ; exec notify-send 'Previous Song' # jump to previous song
 
 #-------------------------------------------------------------------------------
@@ -351,31 +351,31 @@ bindsym XF86AudioPrev exec --no-startup-id playerctl previous ; exec notify-send
 set_from_resource $term_background  background
 set_from_resource $term_foreground  foreground
 set_from_resource $term_cursorColor cursorColor
-set_from_resource $term_color0	  color0
-set_from_resource $term_color1	  color1
-set_from_resource $term_color2	  color2
-set_from_resource $term_color3	  color3
-set_from_resource $term_color4	  color4
-set_from_resource $term_color5	  color5
-set_from_resource $term_color6	  color6
-set_from_resource $term_color7	  color7
-set_from_resource $term_color8	  color8
-set_from_resource $term_color9	  color9
-set_from_resource $term_color10	 color10
-set_from_resource $term_color11	 color11
-set_from_resource $term_color12	 color12
-set_from_resource $term_color13	 color13
-set_from_resource $term_color14	 color14
-set_from_resource $term_color15	 color15
+set_from_resource $term_color0      color0
+set_from_resource $term_color1      color1
+set_from_resource $term_color2      color2
+set_from_resource $term_color3      color3
+set_from_resource $term_color4      color4
+set_from_resource $term_color5      color5
+set_from_resource $term_color6      color6
+set_from_resource $term_color7      color7
+set_from_resource $term_color8      color8
+set_from_resource $term_color9      color9
+set_from_resource $term_color10     color10
+set_from_resource $term_color11     color11
+set_from_resource $term_color12     color12
+set_from_resource $term_color13     color13
+set_from_resource $term_color14     color14
+set_from_resource $term_color15     color15
 
 # # theme colors
-# # class				 border  backgr  text	indic   child_border
-# client.focused		  #556064 #556064 #80FFF9 #FDF6E3
+# # class                 border  backgr  text    indic   child_border
+# client.focused          #556064 #556064 #80FFF9 #FDF6E3
 # client.focused_inactive #2F3D44 #2F3D44 #1ABC9C #454948
-# client.unfocused		#2F3D44 #2F3D44 #1ABC9C #454948
-# client.urgent		   #CB4B16 #FDF6E3 #1ABC9C #268BD2
-# client.placeholder	  #000000 #0C0C0C #FFFFFF #000000
-# client.background	   #2B2C2B
+# client.unfocused        #2F3D44 #2F3D44 #1ABC9C #454948
+# client.urgent           #CB4B16 #FDF6E3 #1ABC9C #268BD2
+# client.placeholder      #000000 #0C0C0C #FFFFFF #000000
+# client.background       #2B2C2B
 
 # adapta-nokto-eta-maia theme
 # https://github.com/adapta-project/adapta-gtk-theme
@@ -383,19 +383,19 @@ set $focused_bg   #364046
 set $focused_fg   #CFD8DC
 set $unfocused_bg #222D32
 set $unfocused_fg #8FA2AB
-set $urgent_bg	#E53935
-set $place_bg	 #0C0C0C
-set $place_fg	 #8FA2AB
-set $accent	   #009688
-set $separator	#454947
+set $urgent_bg    #E53935
+set $place_bg     #0C0C0C
+set $place_fg     #8FA2AB
+set $accent       #009688
+set $separator    #454947
 
-# class				 border		  background	  text			indicator	   child_border
-client.focused		  $focused_bg	 $focused_bg	 $focused_fg
+# class                 border          background      text            indicator       child_border
+client.focused          $focused_bg     $focused_bg     $focused_fg
 client.focused_inactive $unfocused_bg   $unfocused_bg   $unfocused_fg
-client.unfocused		$unfocused_bg   $unfocused_bg   $unfocused_fg
-client.urgent		   $urgent_bg	  $urgent_bg	  $focused_fg
-client.placeholder	  #000000		 $place_bg	   $place_fg
-client.background	   #000000
+client.unfocused        $unfocused_bg   $unfocused_bg   $unfocused_fg
+client.urgent           $urgent_bg      $urgent_bg      $focused_fg
+client.placeholder      #000000         $place_bg       $place_fg
+client.background       #000000
 
 #-------------------------------------------------------------------------------
 # i3 Bar / i3 Status Bar
@@ -420,22 +420,22 @@ colors {
 # statusline #F9FAF9
 # separator  #454947
 
-# #				  border  backgr  text
+# #                  border  backgr  text
 # focused_workspace  #F9FAF9 #16A085 #292F34
 # active_workspace   #595B5B #353836 #FDF6E3
 # inactive_workspace #595B5B #283339 #EEE8D5
-# binding_mode	   #16A085 #2C2C2C #F9FAF9
+# binding_mode       #16A085 #2C2C2C #F9FAF9
 # urgent_workspace   #16A085 #FDF6E3 #E5201D
 
 background $focused_bg
 statusline $focused_fg
 separator  $separator
 
-#				  border		  background	   text
-focused_workspace  $focused_bg	 $focused_bg	  $focused_fg
-active_workspace   $unfocused_bg   $unfocused_bg	$unfocused_fg
-inactive_workspace $unfocused_bg   $unfocused_bg	$unfocused_fg
-urgent_workspace   $urgent_bg	  $urgent_bg	   $focused_fg
+#                  border          background       text
+focused_workspace  $focused_bg     $focused_bg      $focused_fg
+active_workspace   $unfocused_bg   $unfocused_bg    $unfocused_fg
+inactive_workspace $unfocused_bg   $unfocused_bg    $unfocused_fg
+urgent_workspace   $urgent_bg      $urgent_bg       $focused_fg
 }
 }
 
@@ -474,34 +474,34 @@ smart_borders on
 # bindsym $super+Shift+g mode "$mode_gaps"
 
 # mode "$mode_gaps" {
-#	 bindsym o	  mode "$mode_gaps_outer"
-#	 bindsym i	  mode "$mode_gaps_inner"
-#	 bindsym Return mode "default"
-#	 bindsym Escape mode "default"
+#     bindsym o      mode "$mode_gaps_outer"
+#     bindsym i      mode "$mode_gaps_inner"
+#     bindsym Return mode "default"
+#     bindsym Escape mode "default"
 # }
 # mode "$mode_gaps_inner" {
-#	 bindsym plus  gaps inner current plus 5
-#	 bindsym minus gaps inner current minus 5
-#	 bindsym 0	 gaps inner current set 0
+#     bindsym plus  gaps inner current plus 5
+#     bindsym minus gaps inner current minus 5
+#     bindsym 0     gaps inner current set 0
 
-#	 bindsym Shift+plus  gaps inner all plus 5
-#	 bindsym Shift+minus gaps inner all minus 5
-#	 bindsym Shift+0	 gaps inner all set 0
+#     bindsym Shift+plus  gaps inner all plus 5
+#     bindsym Shift+minus gaps inner all minus 5
+#     bindsym Shift+0     gaps inner all set 0
 
-#	 bindsym Return mode "default"
-#	 bindsym Escape mode "default"
+#     bindsym Return mode "default"
+#     bindsym Escape mode "default"
 # }
 # mode "$mode_gaps_outer" {
-#	 bindsym plus  gaps outer current plus 5
-#	 bindsym minus gaps outer current minus 5
-#	 bindsym 0	 gaps outer current set 0
+#     bindsym plus  gaps outer current plus 5
+#     bindsym minus gaps outer current minus 5
+#     bindsym 0     gaps outer current set 0
 
-#	 bindsym Shift+plus  gaps outer all plus 5
-#	 bindsym Shift+minus gaps outer all minus 5
-#	 bindsym Shift+0	 gaps outer all set 0
+#     bindsym Shift+plus  gaps outer all plus 5
+#     bindsym Shift+minus gaps outer all minus 5
+#     bindsym Shift+0     gaps outer all set 0
 
-#	 bindsym Return mode "default"
-#	 bindsym Escape mode "default"
+#     bindsym Return mode "default"
+#     bindsym Escape mode "default"
 # }
 
 #-------------------------------------------------------------------------------

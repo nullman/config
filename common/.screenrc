@@ -154,56 +154,56 @@ termcapinfo linux*|xterm*|rxvt*|urxvt*|gnome-terminal*|alacritty*|termite*|termi
 #
 # The following list shows the default bindings:
 #
-# break	   ^B b
-# clear	   C
-# colon	   :
-# copy		^[ [
-# detach	  ^D d
-# digraph	 ^V
-# displays	*
+# break       ^B b
+# clear       C
+# colon       :
+# copy        ^[ [
+# detach      ^D d
+# digraph     ^V
+# displays    *
 # dumptermcap .
-# fit		 F
-# flow		^F f
-# focus	   ^I
-# hardcopy	h
-# help		?
-# history	 { }
-# info		i
-# kill		K k
-# lastmsg	 ^M m
-# license	 ,
-# log		 H
-# login	   L
-# meta		x
-# monitor	 M
-# next		^@ ^N sp n
-# number	  N
-# only		Q
-# other	   ^X
+# fit         F
+# flow        ^F f
+# focus       ^I
+# hardcopy    h
+# help        ?
+# history     { }
+# info        i
+# kill        K k
+# lastmsg     ^M m
+# license     ,
+# log         H
+# login       L
+# meta        x
+# monitor     M
+# next        ^@ ^N sp n
+# number      N
+# only        Q
+# other       ^X
 # pow_break   B
 # pow_detach  D
-# prev		^H ^P p ^?
-# quit		\
-# readbuf	 <
+# prev        ^H ^P p ^?
+# quit        \
+# readbuf     <
 # redisplay   ^L l
-# remove	  X
+# remove      X
 # removebuf   =
-# reset	   Z
-# screen	  ^C c
-# select	  " '
-# silence	 _
-# split	   S
-# suspend	 ^Z z
-# time		^T t
-# title	   A
-# vbell	   ^G
-# version	 v
-# width	   W
-# windows	 ^W w
-# wrap		^R r
-# writebuf	>
-# xoff		^S s
-# xon		 ^Q q
+# reset       Z
+# screen      ^C c
+# select      " '
+# silence     _
+# split       S
+# suspend     ^Z z
+# time        ^T t
+# title       A
+# vbell       ^G
+# version     v
+# width       W
+# windows     ^W w
+# wrap        ^R r
+# writebuf    >
+# xoff        ^S s
+# xon         ^Q q
 # ^]  paste .
 # -   select -
 # 0   select 0
@@ -245,13 +245,13 @@ termcapinfo linux*|xterm*|rxvt*|urxvt*|gnome-terminal*|alacritty*|termite*|termi
 #  bind ^k
 # bind .  dumptermcap # default
 #  bind .
-# bind ^\ quit		# default
+# bind ^\ quit        # default
 #  bind ^\
-# bind \\ quit		# default
+# bind \\ quit        # default
 #  bind \\
-# bind ^h ???		 # default
+# bind ^h ???         # default
 bind ^h
-# bind h  hardcopy	# default
+# bind h  hardcopy    # default
 bind h
 
 # custom key bindings

@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2021-12-22 19:04 (kyle)>
+  #+TIMESTAMP: <2021-12-23 00:49 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -4998,12 +4998,13 @@
 
         (init-message 3 "Org Mode: Babel: Tangle Makefile Tabs")
 
-        (defun org-babel-tangle-body-hook--makefile-tabs ()
+        (defun org-babel-post-tangle-hook--makefile-tabs ()
           "Convert spaces to tabs when tanging Makefiles."
-          (goto-char (point-min))
-          (while (re-search-forward "    " nil :noerror)
-            (replace-match "	")))
-        (add-hook 'org-babel-tangle-body-hook #'org-babel-tangle-body-hook--makefile-tabs)
+          (when (eq major-mode 'makefile-mode)
+            (goto-char (point-min))
+            (while (re-search-forward "    " nil :noerror)
+              (replace-match "	"))))
+        (add-hook 'org-babel-post-tangle-hook #'org-babel-post-tangle-hook--makefile-tabs)
       #+END_SRC
 
 ***** Racket

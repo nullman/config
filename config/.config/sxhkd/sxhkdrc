@@ -10,10 +10,10 @@
 # General syntax:
 #
 #   HOTKEY
-#	   [;]COMMAND
+#       [;]COMMAND
 #
-#   HOTKEY	  := CHORD_1 ; CHORD_2 ; ... ; CHORD_n
-#   CHORD_i	 := [MODIFIERS_i +] [~][@]KEYSYM_i
+#   HOTKEY      := CHORD_1 ; CHORD_2 ; ... ; CHORD_n
+#   CHORD_i     := [MODIFIERS_i +] [~][@]KEYSYM_i
 #   MODIFIERS_i := MODIFIER_i1 + MODIFIER_i2 + ... + MODIFIER_ik
 #
 # The valid modifier names are: super, hyper, meta, alt, control, ctrl, shift,
@@ -68,7 +68,7 @@
 
 # arrow keys for page-up, page-down, home, and end
 control + alt + {Up,Down,Left,Right}
-	xvkbd -xsendevent -text '\[{Prior,Next,Home,End}]'
+    xvkbd -xsendevent -text '\[{Prior,Next,Home,End}]'
 
 #-------------------------------------------------------------------------------
 # Mouse
@@ -76,7 +76,7 @@ control + alt + {Up,Down,Left,Right}
 
 # mouse for page-up and page-down
 {button9,button8}
-	xvkbd -xsendevent -text '\[{Prior,Next}]'
+    xvkbd -xsendevent -text '\[{Prior,Next}]'
 
 #-------------------------------------------------------------------------------
 # Media Keys
@@ -91,10 +91,10 @@ control + alt + {Up,Down,Left,Right}
 # XF86AudioMicMute
 
 XF86MonBrightnessUp
-	xbacklight -inc 10 && notify-send --expire-time=2000 'Brightness Up'
+    xbacklight -inc 10 && notify-send --expire-time=2000 'Brightness Up'
 
 XF86MonBrightnessDown
-	xbacklight -dec 10 && notify-send --expire-time=2000 'Brightness Down'
+    xbacklight -dec 10 && notify-send --expire-time=2000 'Brightness Down'
 
 # XF86Display
 
@@ -107,19 +107,19 @@ XF86MonBrightnessDown
 # XF86Favorites
 
 XF86TouchpadToggle
-	touchpad-toggle && notify-send --expire-time=2000 'Toggle Touchpad'
+    touchpad-toggle && notify-send --expire-time=2000 'Toggle Touchpad'
 
 # XF86AudioPlay
-#	 playerctl play && notify-send --expire-time=2000 'Play Audio'
+#     playerctl play && notify-send --expire-time=2000 'Play Audio'
 
 # XF86AudioPause
-#	 playerctl pause && notify-send --expire-time=2000 'Pause Audio'
+#     playerctl pause && notify-send --expire-time=2000 'Pause Audio'
 
 # XF86AudioNext
-#	 playerctl next && notify-send --expire-time=2000 'Next Song'
+#     playerctl next && notify-send --expire-time=2000 'Next Song'
 
 # XF86AudioPrev
-#	 playerctl previous && notify-send --expire-time=2000 'Previous Song'
+#     playerctl previous && notify-send --expire-time=2000 'Previous Song'
 
 #-------------------------------------------------------------------------------
 # System Tools
@@ -127,98 +127,98 @@ XF86TouchpadToggle
 
 # display sxhkd keybindings
 super + alt + h
-	yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12" --tail --filename="${HOME}/.config/sxhkd/sxhkdrc-help"
+    yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12" --tail --filename="${HOME}/.config/sxhkd/sxhkdrc-help"
 
 # desktop application launcher
 super + alt + space
-	rofi -modi drun -show drun
+    rofi -modi drun -show drun
 
 # program launcher
 super + alt + d
-	rofi -modi run -show run
+    rofi -modi run -show run
 
 # menu launcher
 super + alt + Return
-	${HOME}/bin/rofi-menu
+    ${HOME}/bin/rofi-menu
 
 # window selector
 super + alt + w
-	rofi -modi window -show window
+    rofi -modi window -show window
 
 # emoji selector
 super + alt + e
-	rofi -modi emoji -show emoji
+    rofi -modi emoji -show emoji
 
 # bitwarden selector (clear clipboard after 30 seconds)
 super + alt + p
-	bwmenu -c 30
+    bwmenu -c 30
 
 # session menu
 super + shift + e
-	${HOME}/bin/rofi-session-menu -s
+    ${HOME}/bin/rofi-session-menu -s
 
 # display time
 super + alt + backslash
-	echo "$(date '+%Y-%m-%d')\n $(date '+%H:%M:%S')" | yad --text-info --width=520 --height=240 --no-buttons --timeout=3 --fontname="Droid Sans Mono 64"
+    echo "$(date '+%Y-%m-%d')\n $(date '+%H:%M:%S')" | yad --text-info --width=520 --height=240 --no-buttons --timeout=3 --fontname="Droid Sans Mono 64"
 
 # get xprop class name
 super + shift + p
-	xprop | grep '^WM_CLASS' | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12" --tail
+    xprop | grep '^WM_CLASS' | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12" --tail
 
 # kill process clicked
 super + shift + Delete
-	xkill
+    xkill
 
 # snapshot of entire screen
 super + alt + Print
-	scrot --exec 'mv $f ${HOME}/Pictures/' && notify-send --expire-time=2000 'Screen snapshot saved'
+    scrot --exec 'mv $f ${HOME}/Pictures/' && notify-send --expire-time=2000 'Screen snapshot saved'
 
 # snapshot of active window
 super + ctrl + Print
-	scrot --focused --exec 'mv $f ${HOME}/Pictures/' && notify-send --expire-time=2000 'Window snapshot saved'
+    scrot --focused --exec 'mv $f ${HOME}/Pictures/' && notify-send --expire-time=2000 'Window snapshot saved'
 
 # snapshot of selected region
 super + shift + Print
-	scrot --select --freeze --exec 'mv $f ${HOME}/Pictures/' && notify-send --expire-time=2000 'Region snapshot saved'
+    scrot --select --freeze --exec 'mv $f ${HOME}/Pictures/' && notify-send --expire-time=2000 'Region snapshot saved'
 
 # reload sxhkd
 super + shift + r
-	pkill --signal SIGUSR1 --exact sxhkd --euid ${USER} && notify-send --expire-time=2000 'Reloading sxhkd'
+    pkill --signal SIGUSR1 --exact sxhkd --euid ${USER} && notify-send --expire-time=2000 'Reloading sxhkd'
 
 # reload tint2
 super + shift + t
-	((pkill --signal SIGUSR1 --exact tint2 --euid ${USER} && xdo below -t $(xdo id -N Bspwm) $(xdo id -N Tint2)) || ${HOME}/bin/system-bar &) && notify-send --expire-time=2000 'Reloading Tint'
+    ((pkill --signal SIGUSR1 --exact tint2 --euid ${USER} && xdo below -t $(xdo id -N Bspwm) $(xdo id -N Tint2)) || ${HOME}/bin/system-bar &) && notify-send --expire-time=2000 'Reloading Tint'
 
 # git synchronize config
 super + alt + y
-	source "${HOME}/.funct" && (gitsyncconfig && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12" --tail
+    source "${HOME}/.funct" && (gitsyncconfig && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12" --tail
 
 # git synchronize extra
 super + alt + u
-	source "${HOME}/.funct" && (gitsyncextra && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12" --tail
+    source "${HOME}/.funct" && (gitsyncextra && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12" --tail
 
 # start screen saver
 super + alt + s
-	xscreensaver-command -activate
+    xscreensaver-command -activate
 
 # start screen saver in lock mode
 super + alt + x
-	xscreensaver-command -lock
-#	xlock
-#	xlock -mode flame
-#	ssaverauto --lock
-#	xscreensaver-command -lock
+    xscreensaver-command -lock
+#    xlock
+#    xlock -mode flame
+#    ssaverauto --lock
+#    xscreensaver-command -lock
 
 # generate password
 super + ctrl + p
-	tr --delete --complement 'a-zA-Z0-9!@#$%^&*-_=+;:,<.>/?' < /dev/urandom | \
-	head --bytes 14 | xclip -selection clipboard && \
-	notify-send --expire-time=2000 'Random password generated on clipboard'
+    tr --delete --complement 'a-zA-Z0-9!@#$%^&*-_=+;:,<.>/?' < /dev/urandom | \
+    head --bytes 14 | xclip -selection clipboard && \
+    notify-send --expire-time=2000 'Random password generated on clipboard'
 
 # connect to beats headphones via bluetooth
 super + alt + b
-	notify-send --expire-time=2000 'Connecting to Beats Headphones via Bluetooth' && \
-	bluetoothctl connect 04:88:E2:6A:00:6C
+    notify-send --expire-time=2000 'Connecting to Beats Headphones via Bluetooth' && \
+    bluetoothctl connect 04:88:E2:6A:00:6C
 
 #-------------------------------------------------------------------------------
 # Media
@@ -226,62 +226,62 @@ super + alt + b
 
 # volume control
 # super + alt + ctrl + {Left,Right}
-#	 pactl -- set-sink-volume 0 {-,+}10% && aplay "${HOME}/sounds/test.wav"
+#     pactl -- set-sink-volume 0 {-,+}10% && aplay "${HOME}/sounds/test.wav"
 super + alt + ctrl + Left
-	pactl -- set-sink-volume 0 -10% && notify-send --expire-time=2000 'Volume Down 10%' && aplay "${HOME}/sounds/test.wav"
+    pactl -- set-sink-volume 0 -10% && notify-send --expire-time=2000 'Volume Down 10%' && aplay "${HOME}/sounds/test.wav"
 super + alt + ctrl + Right
-	pactl -- set-sink-volume 0 +10% && notify-send --expire-time=2000 'Volume Up 10%' && aplay "${HOME}/sounds/test.wav"
+    pactl -- set-sink-volume 0 +10% && notify-send --expire-time=2000 'Volume Up 10%' && aplay "${HOME}/sounds/test.wav"
 
 # mpc control
 super + alt + ctrl + m
-	mpc toggle && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' "$(${HOME}/bin/mpc-playing)"
+    mpc toggle && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' "$(${HOME}/bin/mpc-playing)"
 super + alt + ctrl + comma
-	mpc prev && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' "$(${HOME}/bin/mpc-playing)"
+    mpc prev && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' "$(${HOME}/bin/mpc-playing)"
 super + alt + ctrl + period
-	mpc next && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' "$(${HOME}/bin/mpc-playing)"
+    mpc next && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' "$(${HOME}/bin/mpc-playing)"
 super + alt + ctrl + slash
-	notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' "$(${HOME}/bin/mpc-playing)"
+    notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' "$(${HOME}/bin/mpc-playing)"
 
 # mpc control (media keys)
 XF86AudioPrev
-	mpc prev && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' "$(${HOME}/bin/mpc-playing)"
+    mpc prev && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' "$(${HOME}/bin/mpc-playing)"
 XF86AudioPlay
-	mpc play && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' "$(${HOME}/bin/mpc-playing)"
+    mpc play && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' "$(${HOME}/bin/mpc-playing)"
 XF86AudioStop
-	mpc stop && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' "$(${HOME}/bin/mpc-playing)"
+    mpc stop && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' "$(${HOME}/bin/mpc-playing)"
 XF86AudioNext
-	mpc next && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' "$(${HOME}/bin/mpc-playing)"
+    mpc next && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' "$(${HOME}/bin/mpc-playing)"
 
 # # spotify control
 # Shift+Alt + a
-#	 dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' "$(${HOME}/bin/spotify-playing)
+#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' "$(${HOME}/bin/spotify-playing)
 # Shift+Alt + s
-#	 dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' "$(${HOME}/bin/spotify-playing)
+#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' "$(${HOME}/bin/spotify-playing)
 # Shift+Alt + d
-#	 dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' "$(${HOME}/bin/spotify-playing)"
+#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' "$(${HOME}/bin/spotify-playing)"
 # Shift+Alt + f
-#	 dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' "$(${HOME}/bin/spotify-playing)"
+#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' "$(${HOME}/bin/spotify-playing)"
 # XF86AudioPrevious
-#	 dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' "$(${HOME}/bin/spotify-playing)"
+#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' "$(${HOME}/bin/spotify-playing)"
 # XF86AudioPlay
-#	 dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' "$(${HOME}/bin/spotify-playing)"
+#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' "$(${HOME}/bin/spotify-playing)"
 # XF86AudioStop
-#	 dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' "$(${HOME}/bin/spotify-playing)"
+#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' "$(${HOME}/bin/spotify-playing)"
 # XF86AudioNext
-#	 dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' "$(${HOME}/bin/spotify-playing)"
+#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' "$(${HOME}/bin/spotify-playing)"
 #  dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' "$(${HOME}/bin/spotify-playing)"
 
 # media player control
 super + alt + ctrl + z
-	qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' "$(${HOME}/bin/spotify-playing)"
+    qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' "$(${HOME}/bin/spotify-playing)"
 super + alt + ctrl + c
-	qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' "$(${HOME}/bin/spotify-playing)"
+    qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' "$(${HOME}/bin/spotify-playing)"
 super + alt + ctrl + x
-	qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' "$(${HOME}/bin/spotify-playing)"
+    qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' "$(${HOME}/bin/spotify-playing)"
 super + alt + ctrl + b
-	qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' "$(${HOME}/bin/spotify-playing)"
+    qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' "$(${HOME}/bin/spotify-playing)"
 super + alt + ctrl + apostrophe
-	notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' "$(${HOME}/bin/spotify-playing)"
+    notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' "$(${HOME}/bin/spotify-playing)"
 
 #-------------------------------------------------------------------------------
 # Applications
@@ -289,7 +289,7 @@ super + alt + ctrl + apostrophe
 
 # terminal
 super + alt + t
-	alacritty
+    alacritty
 
 #===============================================================================
 # End of File
