@@ -2320,7 +2320,7 @@
       ;; ;; do not indent blocks to outline node level
       ;; (org-adapt-indentation nil)
       ;; startup in "overview" (folded) by default
-      (org-startup-folded :overview)
+      (org-startup-folded t)
       ;; skip levels
       (org-odd-levels-only t)
       ;; hide leading stars
@@ -3446,8 +3446,7 @@
            ("H" . "html")
            ("i" . "index")
            ("L" . "latex")
-           ("n" . "name")
-           ))
+           ("n" . "name")))
         ;; set block types
         (org-structure-template-alist
          '(
@@ -3458,6 +3457,7 @@
            ("ea" . "export ascii")
            ("eh" . "export html")
            ("el" . "export latex")
+           ("o" . "src org")
            ("q" . "quote")
            ("s" . "src")
            ("sel" . "src emacs-lisp")
@@ -3466,8 +3466,8 @@
            ("sr" . "src racket")
            ("ssh" . "src sh")
            ("ssu" . "src sh :dir /sudo::")
-           ("v" . "verse")
-           ))
+           ("t" . "src text")
+           ("v" . "verse")))
         :config
         ;; custom `org-tempo-add-block' with upcase headers
         (defun org-tempo-add-block (entry)
@@ -3572,20 +3572,6 @@
         (advice-add 'org-edit-src-exit :after #'org-edit-src--recenter))
 ;; Edit Source:1 ends here
 
-;; [[file:init-emacs.org::*Tangle Update Timestamps][Tangle Update Timestamps:1]]
-      ;;------------------------------------------------------------------------------
-      ;;;; Org Mode: Babel: Tangle Update Timestamps
-      ;;------------------------------------------------------------------------------
-
-      (init-message 3 "Org Mode: Babel: Tangle Update Timestamps")
-
-      (defun org-babel-post-tangle-hook--time-stamp ()
-        "Update timestamps on tangled files."
-        (time-stamp)
-        (save-buffer))
-      (add-hook 'org-babel-post-tangle-hook #'org-babel-post-tangle-hook--time-stamp)
-;; Tangle Update Timestamps:1 ends here
-
 ;; [[file:init-emacs.org::*Tangle Case-Sensitive][Tangle Case-Sensitive:1]]
       ;;------------------------------------------------------------------------------
       ;;;; Org Mode: Babel: Tangle Case-Sensitive
@@ -3601,21 +3587,33 @@
       (advice-add 'org-babel-tangle-collect-blocks :around #'org-babel-tangle-collect-blocks--case-sensitive)
 ;; Tangle Case-Sensitive:1 ends here
 
-;; [[file:init-emacs.org::*Tangle Makefile Tabs][Tangle Makefile Tabs:1]]
+;; [[file:init-emacs.org::*Tangle Update Timestamps][Tangle Update Timestamps:1]]
       ;;------------------------------------------------------------------------------
-      ;;;; Org Mode: Babel: Tangle Makefile Tabs
+      ;;;; Org Mode: Babel: Tangle Update Timestamps
       ;;------------------------------------------------------------------------------
 
-      (init-message 3 "Org Mode: Babel: Tangle Makefile Tabs")
+      (init-message 3 "Org Mode: Babel: Tangle Update Timestamps")
 
-      (defun org-babel-post-tangle-hook--makefile-tabs ()
-        "Convert spaces to tabs when tanging Makefiles."
-        (when (eq major-mode 'makefile-mode)
-          (goto-char (point-min))
-          (while (re-search-forward "    " nil :noerror)
-            (replace-match "	"))))
-      (add-hook 'org-babel-post-tangle-hook #'org-babel-post-tangle-hook--makefile-tabs)
-;; Tangle Makefile Tabs:1 ends here
+      (defun org-babel-post-tangle-hook--time-stamp ()
+        "Update timestamps in tangled files."
+        (time-stamp)
+        (save-buffer))
+      (add-hook 'org-babel-post-tangle-hook #'org-babel-post-tangle-hook--time-stamp)
+;; Tangle Update Timestamps:1 ends here
+
+;; [[file:init-emacs.org::*Tangle Delete Trailing Whitespace][Tangle Delete Trailing Whitespace:1]]
+      ;;------------------------------------------------------------------------------
+      ;;;; Org Mode: Babel: Tangle Delete Trailing Whitespace
+      ;;------------------------------------------------------------------------------
+
+      (init-message 3 "Org Mode: Babel: Tangle Delete Trailing Whitespace")
+
+      (defun org-babel-post-tangle-hook--delete-trailing-whitespace ()
+        "Delete trailing whitespace in tangled files."
+        (delete-trailing-whitespace (point-min) (point-max))
+        (save-buffer))
+      (add-hook 'org-babel-post-tangle-hook #'org-babel-post-tangle-hook--delete-trailing-whitespace)
+;; Tangle Delete Trailing Whitespace:1 ends here
 
 ;; [[file:init-emacs.org::*Racket][Racket:1]]
       ;;------------------------------------------------------------------------------
@@ -4560,7 +4558,7 @@
     (use-package org-visibility
       ;;:straight t
       ;;:load-path (lambda () (file-truename (expand-file-name "org-visibility" local-modules-dir)))
-      :load-path (lambda () (file-truename (expand-file-name "~/code/gitlab-kylesherman/emacs-org-visibility")))
+      :load-path (lambda () (file-truename (expand-file-name "~/code/github-nullman/emacs-org-visibility")))
       :after (org)
       :demand t
       :bind (:map org-mode-map
@@ -4568,6 +4566,8 @@
       :custom
       ;; list of directories and files to automatically persist and restore visibility state of
       (org-visibility-include-paths `(,(file-truename "~/.emacs.d/init-emacs.org")
+                                      ;;,(file-truename "~/code/github-nullman")
+                                      ;;,(file-truename "~/code/gitlab-kylesherman")
                                       ,(file-truename "~/dev")
                                       ,(file-truename "~/doc/bbs")
                                       ,(file-truename "~/org")
@@ -6781,7 +6781,7 @@
       If FORCE is non-nil, force publish all files in project."
         (interactive)
         (let ((files (directory-files "~/web/org/" nil "\.org\\'"))
-              (org-html-htmlize-output-type 'font))
+              (org-html-htmlize-output-type 'inline-css))
           (when (member "styles.org" files)
             (setq files (append "styles.org" (remove "styles.org" files))))
           (dolist (file files)
@@ -14570,7 +14570,9 @@
                  htmlize-many-file
                  htmlize-many-files-dired
                  htmlize-region-for-paste
-                 htmlize-region-for-paste-font-type))
+                 htmlize-region-for-paste-font-type)
+      :custom
+      (org-html-htmlize-output-type 'inline-css))
     ;;   :config
     ;;   (defun org-html-htmlize-region-for-paste (beg end)
     ;;     "Convert the region between BEG and END to HTML, using htmlize.el.
