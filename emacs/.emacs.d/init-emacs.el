@@ -1393,7 +1393,6 @@
       ;;   (setq solarized-height-plus-4 1.0)
       ;;   ;; load theme
       ;;   (load-theme 'solarized-dark t))
-
       )
 ;; GUI:1 ends here
 
@@ -1679,9 +1678,11 @@
 
       ;; bury buffer
       (bind-keys ("C-c y" . bury-buffer))
+      (bind-keys ("C-c C-y" . bury-buffer)) ; defaults to `org-evaluate-time-range'
 
       ;; revert buffer
       (bind-keys ("C-c r" . revert-buffer))
+      (bind-keys ("C-c C-r" . revert-buffer))
 
       ;; diff buffer
       (bind-keys ("C-c d" . diff-current-buffer))
@@ -6781,7 +6782,7 @@
       If FORCE is non-nil, force publish all files in project."
         (interactive)
         (let ((files (directory-files "~/web/org/" nil "\.org\\'"))
-              (org-html-htmlize-output-type 'inline-css))
+              (org-html-htmlize-output-type 'css))
           (when (member "styles.org" files)
             (setq files (append "styles.org" (remove "styles.org" files))))
           (dolist (file files)
@@ -14572,33 +14573,21 @@
                  htmlize-region-for-paste
                  htmlize-region-for-paste-font-type)
       :custom
-      (org-html-htmlize-output-type 'inline-css))
-    ;;   :config
-    ;;   (defun org-html-htmlize-region-for-paste (beg end)
-    ;;     "Convert the region between BEG and END to HTML, using htmlize.el.
-    ;; This is much like `htmlize-region-for-paste', only that it uses
-    ;; the settings defined in the org-... variables."
-    ;;     (let* ((htmlize-output-type org-html-htmlize-output-type)
-    ;;            (htmlize-css-name-prefix org-html-htmlize-font-prefix)
-    ;;            (htmlbuf (htmlize-region beg end)))
-    ;;       (unwind-protect
-    ;;           (with-current-buffer htmlbuf
-    ;;             (buffer-substring (plist-get htmlize-buffer-places 'content-start)
-    ;;                               (plist-get htmlize-buffer-places 'content-end)))
-    ;;         (kill-buffer htmlbuf)))))
-
-    ;;   (defun htmlize-region-for-paste-font-type (beg end)
-    ;;     "Htmlize the region and return just the HTML as a string.
-    ;; This forces the `font' style and only returns the HTML body,
-    ;; but without the BODY tag.  This should make it useful for inserting
-    ;; the text to another HTML buffer."
-    ;;     (let* ((htmlize-output-type 'font)
-    ;;            (htmlbuf (htmlize-region beg end)))
-    ;;       (unwind-protect
-    ;;           (with-current-buffer htmlbuf
-    ;;             (buffer-substring (plist-get htmlize-buffer-places 'content-start)
-    ;;                               (plist-get htmlize-buffer-places 'content-end)))
-    ;;         (kill-buffer htmlbuf)))))
+      (htmlize-output-type 'inline-css)
+      :config
+      ;; flatland theme
+      (setq htmlize-face-overrides
+            '(
+              font-lock-comment-face (:foreground "#798188")
+              font-lock-string-face (:foreground "#cfe2f2")
+              font-lock-keyword-face (:foreground "#fa9a4b" :weight bold)
+              font-lock-builtin-face (:foreground "#fa9a4b" :weight bold)
+              font-lock-function-name-face (:foreground "#72aaca")
+              font-lock-variable-name-face (:foreground "#f6f080")
+              font-lock-type-face (:foreground "#72aaca")
+              font-lock-constant-face (:foreground "#b9d977")
+              font-lock-warning-face (:foreground "#f1e94b" :weight bold)
+              default (:foreground "green" :background "black"))))
 ;; htmlize:1 ends here
 
 ;; [[file:init-emacs.org::*hungry-delete][hungry-delete:1]]
@@ -15782,6 +15771,21 @@
           (neotree-toggle))))
 ;; neotree:1 ends here
 
+;; [[file:init-emacs.org::*occur][occur:1]]
+    ;;------------------------------------------------------------------------------
+    ;;; Modules: occur
+    ;;------------------------------------------------------------------------------
+
+    (init-message 2 "Modules: occur")
+
+    (use-package replace
+      :config
+      (when (fboundp 'occur-inverse)
+          (bind-keys* :map occur-mode-map ("C-c C-i" . occur-inverse)))
+      (when (fboundp 'occur-remove)
+          (bind-keys* :map occur-mode-map ("C-c C-r" . occur-remove))))
+;; occur:1 ends here
+
 ;; [[file:init-emacs.org::*package-lint][package-lint:1]]
 ;;------------------------------------------------------------------------------
 ;;; Modules: package-lint
@@ -16158,7 +16162,7 @@
                  tramp-dissect-file-name
                  tramp-file-name-localname
                  tramp-tramp-file-p)
-      :bind* ("C-c C-r" . find-alternative-file-as-root)
+      :bind ("C-c M-r" . find-alternative-file-as-root)
       :config
       (defvar find-file-as-root-prefix "/sudo:root@localhost:"
         "*The file name prefix used to open a file with `find-file-as-root'.")
