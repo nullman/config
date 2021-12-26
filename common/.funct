@@ -1879,8 +1879,8 @@ manjaroinitialize() {
         "manjaro-packages-applications-xscreensaver"
         "manjaro-packages-applications-xscreensaver-aerial"
         "manjaro-packages-applications-x48"
-        "manjaro-packages-tools"
-        "manjaro-packages-tools-bitwarden"
+        "manjaro-packages-utilities"
+        "manjaro-packages-utilities-bitwarden"
         "manjaro-packages-network"
         "manjaro-packages-development"
         "manjaro-packages-graphical"
@@ -1902,7 +1902,7 @@ manjaroinitialize() {
 
     optional=(
         "manjaro-packages-optional-applications"
-        "manjaro-packages-optional-tools"
+        "manjaro-packages-optional-utilities"
         "manjaro-packages-optional-network"
         "manjaro-packages-optional-development"
         "manjaro-packages-optional-development-commander-x-16"
