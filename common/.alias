@@ -2859,17 +2859,17 @@ alias git-clone-powerlevel10k="git clone --depth=1 https://github.com/romkatv/po
 # git respository
 #
 #!       GIT_REPOSITORY_CONFIG   git repository: config
-export GIT_REPOSITORY_CONFIG="git@gitlab.com:kylesherman/config.git"
+export GIT_REPOSITORY_CONFIG="git@github.com:nullman/config.git"
 #!       GIT_REPOSITORY_CONFIG_PRIVATE git repository: config-private
-export GIT_REPOSITORY_CONFIG_PRIVATE="git@gitlab.com:kylesherman/config-private.git"
+export GIT_REPOSITORY_CONFIG_PRIVATE="git@github.com:nullman/config-private.git"
 #!       GIT_REPOSITORY_DOC      git repository: doc
-export GIT_REPOSITORY_DOC="git@gitlab.com:kylesherman/doc.git"
+export GIT_REPOSITORY_DOC="git@github.com:nullman/doc.git"
 #!       GIT_REPOSITORY_DEV      git repository: dev
-export GIT_REPOSITORY_DEV="git@gitlab.com:kylesherman/dev.git"
+export GIT_REPOSITORY_DEV="git@github.com:nullman/dev.git"
 #!       GIT_REPOSITORY_WEB      git repository: web
-export GIT_REPOSITORY_WEB="git@gitlab.com:kylesherman/web.git"
+export GIT_REPOSITORY_WEB="git@github.com:nullman/web.git"
 #!       GIT_REPOSITORY_HAIKU    git repository: haiku
-export GIT_REPOSITORY_HAIKU="git@gitlab.com:kylesherman/haiku.git"
+export GIT_REPOSITORY_HAIKU="git@github.com:nullman/haiku.git"
 #        gitsh                   status home (config, config-private) git repositories
 alias gitsh="
     (echo '~/config status' && cd \${HOME}/config && git status)
