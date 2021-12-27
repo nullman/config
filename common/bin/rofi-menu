@@ -15,7 +15,8 @@ _usage() {
 Usage: $(basename "$0") [MENU]
 Present a menu of rofi menus.
 MENU:
-  NONE    Menu of Menus
+  NONE    Menu of Selections
+  term    Terminal
   crt     Cool Retro Term
   dosbox  DOSBox Emulator
   git     Synchronize Repositories
@@ -29,6 +30,7 @@ EOF
 # handle no arguments given
 if [[ $# -lt 1 ]] ; then
     menus=(
+        "Term"
         "CRT"
         "DOSBox"
         "Git"
@@ -45,6 +47,10 @@ fi
 # handle menu
 menu=$(echo "${menu}" | tr '[:upper:]' '[:lower:]')
 case "${menu}" in
+    term)
+        (alacritty &)
+        ;;
+
     crt)
         profiles=(
             "Default Amber"
