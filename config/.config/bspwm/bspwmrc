@@ -261,6 +261,9 @@ _command conky && [[ -f "${HOME}/.config/conky/bspwm-keybindings.conkyrc" ]] && 
 # tell firefox to match theme
 #_command ff-theme-util && ff-theme-util &
 
+# clipmenu
+_command clipmenud && clipmenud &
+
 # set cursor theme
 _command fix_xcursor && fix_xcursor &
 

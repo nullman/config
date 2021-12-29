@@ -145,13 +145,17 @@ super + alt + Return
 super + alt + w
     rofi -modi window -show window
 
+# clipmenu selector
+super + alt + c
+    CM_LAUNCHER=rofi clipmenu
+
 # emoji selector
 super + alt + e
     rofi -modi emoji -show emoji
 
 # bitwarden selector (clear clipboard after 30 seconds)
 super + alt + p
-    bwmenu -c 30
+    bwmenu --clear 30
 
 # session menu
 super + shift + e
