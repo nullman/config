@@ -8,13 +8,14 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TOC: headlines 3 :target #table-of-contents
-  #+TIMESTAMP: <2021-12-30 13:55 (kyle)>
+  #+TIMESTAMP: <2021-12-30 15:10 (kyle)>
 
 * Table of Contents
   :PROPERTIES:
   :CUSTOM_ID: table-of-contents
   :END:
+
+  #+TOC: headlines 3
 
 * Overview
   :PROPERTIES:
@@ -625,8 +626,10 @@
         :init
         ;; extract docstrings from lambdas, closures and keymaps if possible
         (setq bind-key-describe-special-forms t))
-      (use-package cl-generic)
-      (use-package cl-macs)
+      (use-package cl-generic
+        :straight (:type built-in))
+      (use-package cl-macs
+        :straight (:type built-in))
       (use-package dash
         :straight t
         :demand t
@@ -642,12 +645,18 @@
       (use-package s
         :straight t
         :demand t)
-      (use-package seq)
-      (use-package subr-x)
-      (use-package org)
-      (use-package org-table)
-      (use-package ob-tangle)
-      (use-package ox)
+      (use-package seq
+        :straight (:type built-in))
+      (use-package subr-x
+        :straight (:type built-in))
+      (use-package org
+        :straight (:type built-in))
+      (use-package org-table
+        :straight (:type built-in))
+      (use-package ob-tangle
+        :straight (:type built-in))
+      (use-package ox
+        :straight (:type built-in))
     #+END_SRC
 
 *** Environment
@@ -2132,6 +2141,7 @@
           (add-to-list 'eshell-output-filter-functions #'eshell-truncate-buffer))
 
         (use-package eshell
+          :straight (:type built-in)
           :hook (eshell-first-time-mode . local-eshell-first-time-mode-hook)
           ;; :bind (:map eshell-mode-map
           ;;             ([remap beginning-of-line] . eshell-bol)
@@ -3272,6 +3282,7 @@
       (init-message 3 "org")
 
       (use-package org
+        :straight (:type built-in)
         :demand t
         :mode (("\\.org\\'" . org-mode)
                ("\\.org_archive\\'" . org-mode)
@@ -3372,6 +3383,7 @@
       (init-message 3 "outline")
 
       (use-package outline
+        :straight (:type built-in)
         :after (org)
         :commands (outline-up-heading
                    outline-forward-same-level
@@ -3414,6 +3426,7 @@
       (init-message 2 "Org Mode: Configuration")
 
       (use-package org
+        :straight (:type built-in)
         :custom
         ;; org directory
         (org-directory (file-truename (expand-file-name "~/org")))
@@ -3599,6 +3612,7 @@
 
       (use-package org
         :when (file-exists-p org-directory)
+        :straight (:type built-in)
         :config
         ;; agenda key bindings
         ;;(define-key org-agenda-mode-map (kbd "C-n") 'next-line)
@@ -3719,6 +3733,7 @@
       ;; (init-message 2 "Org Mode: Remember")
 
       ;; (use-package remember
+      ;;   :straight (:type built-in)
       ;;   :commands (remember remember-region)
       ;;   :config
       ;;   ;; key bindings
@@ -3756,6 +3771,7 @@
       ;; (init-message 3 "remember-planner")
 
       ;; (use-package remember-planner
+      ;;   :straight (:type built-in)
       ;;   :after (remember)
       ;;   :config
       ;;   (setq remember-handler-functions '(remember-planner-append)
@@ -4287,6 +4303,7 @@
 
         ;; adapted from https://github.com/mattduck/org-toggl-py/blob/master/org-export-json.el
         (use-package json
+          :straight (:type built-in)
           :commands (json-encode)
           :config
           (defun org-export-to-json (&optional output beg end)
@@ -4661,6 +4678,7 @@
         )
 
       (use-package org
+        :straight (:type built-in)
         :hook (org-mode . local-org-mode-hook))
     #+END_SRC
 
@@ -4695,6 +4713,7 @@
 
         ;; load ob-shell
         (use-package org
+          :straight (:type built-in)
           :config
           (require 'ob-shell nil :no-error))
 
@@ -4733,6 +4752,7 @@
         ;;   "#+BEGIN_SRC org" goes into an infinite loop
 
         ;; (use-package org-eldoc
+        ;;   :straight (:type built-in)
         ;;   :commands (global-eldoc-mode)
         ;;   :config (progn
         ;;             ;; turn off eldoc mode
@@ -4740,6 +4760,7 @@
 
         ;; ;; FIXME: temporary fix for org-eldoc-documentation-function
         ;; (use-package org-eldoc
+        ;;   :straight (:type built-in)
         ;;   :commands (org-eldoc-get-breadcrumb
         ;;               org-eldoc-get-mode-local-documentation-function
         ;;               org-eldoc-get-src-header
@@ -4801,6 +4822,7 @@
         (init-message 3 "Org Mode: Babel: Structure Templates")
 
         (use-package org-tempo
+          :straight (:type built-in)
           :custom
           ;; set keyword completion elements
           (org-tempo-keywords-alist
@@ -4923,6 +4945,7 @@
         (init-message 3 "Org Mode: Babel: Edit Source")
 
         (use-package org
+          :straight (:type built-in)
           :commands (org-edit-src-code
                      org-edit-src-exit)
           :config
@@ -5113,6 +5136,7 @@
                                     (cdr (assq :rownames params)))))))
 
         ;; (use-package ob-scheme
+        ;;   :straight (:type built-in)
         ;;   :config (progn
         ;;             ;; customize org/babel for scheme/racket so it works
         ;;             (defcustom org-babel-scheme-command "racket -f"
@@ -5192,6 +5216,7 @@
         (init-message 3 "Org Mode: Babel: Java")
 
         (use-package org
+          :straight (:type built-in)
           :commands (org-babel-execute:java)
           :config
           (when (require 'ob-java nil :no-error)
@@ -5307,6 +5332,7 @@
         ;; (init-message 3 "Org Mode: Babel: Python (iPython Version)")
 
         ;; (use-package ob-python
+        ;;   :straight (:type built-in)
         ;;   :after (org python-mode)
         ;;   :commands (org-babel-execute:python)
         ;;   :config
@@ -5387,6 +5413,7 @@
         (init-message 3 "Org Mode: Babel: Python")
 
         (use-package org
+          :straight (:type built-in)
           :after (python-mode)
           :commands (org-babel-execute:python)
           :config
@@ -6251,6 +6278,7 @@
       ;; (init-message 2 "Org Mode: Jira")
 
       ;; (use-package org-jira
+      ;;   :straight (:type built-in)
       ;;   :after (org soap-client)
       ;;   :commands (org-jira org-jira-mode org-jira-get-projects)
       ;;   :config
@@ -6258,7 +6286,8 @@
       ;;   (setq jiralib-url "https://buzzfeed.atlassian.net"))
 
       ;; ;; requires soap client
-      ;; (use-package soap-client)
+      ;; (use-package soap-client
+      ;;   :straight (:type built-in))
     #+END_SRC
 
 *** Bookmarks
@@ -7194,6 +7223,7 @@
         (init-message 3 "Org Website: Configuration: Publish Configuration")
 
         (use-package org
+          :straight (:type built-in)
           :commands (org-export-as
                      org-export-to-buffer
                      org-export-to-file)
@@ -18754,6 +18784,7 @@
       (init-message 2 "Modules: abbrev-mode")
 
       (use-package abbrev
+        :straight (:type built-in)
         :diminish abbrev-mode
         :custom
         (save-abbrevs 'silently)
@@ -18787,6 +18818,7 @@
       ;; (init-message 2 "Modules: ace-jump-mode")
 
       ;; (use-package ace-jump-mode
+      ;;   :straight (:type built-in)
       ;;   :commands (ace-jump-mode ace-jump-mode-pop-mark)
       ;;   :bind* (("C-;" . ace-jump-mode)
       ;;           ("C-A-;" . ace-jump-mode-pop-mark)
@@ -18810,6 +18842,7 @@
       ;; (init-message 2 "Modules: ace-window")
 
       ;; (use-package ace-window
+      ;;   :straight (:type built-in)
       ;;   :commands (ace-window)
       ;;   :bind* (("C-x o" . ace-window)        ; defaults to `facemenu-keymap'
       ;;           ("M-o" . ace-window))         ; defaults to `facemenu-keymap'
@@ -19030,6 +19063,7 @@
       ;; (init-message 2 "Modules: auto-complete")
 
       ;; (use-package auto-complete
+      ;;   :straight (:type built-in)
       ;;   :diminish auto-complete-mode
       ;;   :bind* (:map ac-complete-mode-map
       ;;                ("C-n" . ac-next)
@@ -19162,6 +19196,7 @@
 
       ;; ;; setup lookout for CSV import/export
       ;; (use-package lookout
+      ;;   :straight (:type built-in)
       ;;   :after (bbdb)
       ;;   :config
       ;;   (progn
@@ -19452,6 +19487,7 @@
       (init-message 2 "Modules: calc")
 
       (use-package calc
+        :straight (:type built-in)
         :commands (calc calc-dispatch)
         :bind* ("M-#" . calc-dispatch))
     #+END_SRC
@@ -19472,9 +19508,11 @@
 
       (init-message 2 "Modules: cedet/semantic")
 
-      (use-package cedet)
+      (use-package cedet
+        :straight (:type built-in))
 
       (use-package semantic
+        :straight (:type built-in)
         :after (cedet)
         :init (semantic-mode 1))
     #+END_SRC
@@ -19513,6 +19551,7 @@
       ;; (init-message 2 "Modules: color-theme")
 
       ;; (use-package color-theme
+      ;;   :straight (:type built-in)
       ;;   :commands (color-theme))
     #+END_SRC
 
@@ -19648,6 +19687,7 @@
       (init-message 2 "Modules: compile")
 
       (use-package compile
+        :straight (:type built-in)
         :custom
         ;; auto save all modified buffers without asking
         (compilation-ask-about-save nil)
@@ -19722,6 +19762,7 @@
       ;; (init-message 2 "Modules: cua")
 
       ;; (use-package cua-base
+      ;;   :straight (:type built-in)
       ;;   :demand t
       ;;   ;; :bind* ("C-@" . cua-set-mark)
       ;;   :custom
@@ -19916,6 +19957,7 @@
       (init-message 2 "Modules: eldoc")
 
       (use-package eldoc
+        :straight (:type built-in)
         :custom
         ;; no idle delay before showing contextual information
         (eldoc-idle-delay 0))
@@ -20189,6 +20231,7 @@
       ;; (init-message 2 "Modules: elscreen")
 
       ;; (use-package elscreen
+      ;;   :straight (:type built-in)
       ;;   :init (unbind-key "M-a")
       ;;   :bind* (("M-a b" . elscreen-split)
       ;;           ("M-a l" . elscreen-link)
@@ -20278,7 +20321,8 @@
 
       (init-message 2 "Modules: ert")
 
-      (use-package ert)
+      (use-package ert
+        :straight (:type built-in))
     #+END_SRC
 
 *** +eterm-256color+
@@ -20355,6 +20399,7 @@
       ;; (init-message 2 "Modules: flash-paren")
 
       ;; (use-package flash-paren
+      ;;   :straight (:type built-in)
       ;;   :init (flash-paren-mode 1))
     #+END_SRC
 
@@ -20428,6 +20473,7 @@
       (init-message 2 "Modules: flyspell")
 
       (use-package flyspell
+        :straight (:type built-in)
         :commands (flyspell-mode
                    flyspell-mode-off
                    flyspell-prog-mode)
@@ -20474,6 +20520,7 @@
       ;; (init-message 2 "Modules: git-gutter")
 
       ;; (use-package git-gutter
+      ;;   :straight (:type built-in)
       ;;   :diminish (git-gutter-mode . "GG")
       ;;   :commands (git-gutter
       ;;              global-git-gutter-mode)
@@ -20692,6 +20739,7 @@
       (init-message 2 "Modules: hippie-exp")
 
       (use-package hippie-exp
+        :straight (:type built-in)
         :bind* ("M-/" . hippie-expand)
         :custom
         (hippie-expand-try-functions-list
@@ -20821,6 +20869,7 @@
       (init-message 2 "Modules: ibuffer")
 
       (use-package ibuffer
+        :straight (:type built-in)
         :bind* ("C-x i" . ibuffer)            ; defaults to `insert-file'
         :commands (ibuffer)
         :config
@@ -20895,6 +20944,7 @@
       ;; (init-message 2 "Modules: identica")
 
       ;; (use-package identica-mode
+      ;;   :straight (:type built-in)
       ;;   :commands (identica-mode)
       ;;   :config
       ;;   (setq identica-username "nullman")
@@ -20943,6 +20993,7 @@
       ;; (init-message 2 "Modules: ido")
 
       ;; (use-package ido
+      ;;   :straight (:type built-in)
       ;;   :bind* (("C-x C-f" . ido-find-file))   ; defaults to `find-file'
       ;;   :init
       ;;   ;; use for both buffers and files
@@ -20957,11 +21008,14 @@
       ;;   :config
       ;;   ;; use vertical mode
       ;;   (use-package ido-vertical-mode
+      ;;     :straight (:type built-in)
       ;;     :init (ido-vertical-mode 1))
 
       ;;   ;; flx fuzzy matching
-      ;;   (use-package flx)
+      ;;   (use-package flx
+      ;;     :straight (:type built-in))
       ;;   (use-package flx-ido
+      ;;     :straight (:type built-in)
       ;;     :after (flx)
       ;;     :init
       ;;     (flx-ido-mode)
@@ -21038,6 +21092,7 @@
 
       ;;   ;; use ido everywhere
       ;;   (use-package ido-ubiquitous
+      ;;     :straight (:type built-in)
       ;;     :config (ido-ubiquitous-mode 1))
 
       ;;   ;; ;; ERROR: the code below throws an error
@@ -21090,6 +21145,7 @@
       ;; (init-message 2 "Modules: igrep")
 
       ;; (use-package igrep
+      ;;   :straight (:type built-in)
       ;;   :commands (Buffer-menu-igrep
       ;;              agrep
       ;;              agrep-find
@@ -21121,7 +21177,8 @@
 
       ;; (init-message 2 "Modules: imdb")
 
-      ;; (use-package imdb)
+      ;; (use-package imdb
+      ;;   :straight (:type built-in))
     #+END_SRC
 
 *** +info-look+
@@ -21192,7 +21249,7 @@
       (init-message 2 "Modules: ispell")
 
       (use-package ispell
-        ;;:straight t
+        :straight (:type built-in)
         :commands (ispell-buffer
                    ispell-change-dictionary-hook
                    ispell-complete-word-dict
@@ -21373,7 +21430,8 @@
 
       (init-message 2 "Modules: json")
 
-      (use-package json)
+      (use-package json
+        :straight (:type built-in))
     #+END_SRC
 
 *** +keats+
@@ -21391,6 +21449,7 @@
       ;; (init-message 2 "Modules: keats")
 
       ;; (use-package keats-interactive
+      ;;   :straight (:type built-in)
       ;;   :commands (keats-interactive)
       ;;   :init (keats-mode 1))
     #+END_SRC
@@ -21512,6 +21571,7 @@
       ;; (init-message 2 "Modules: longlines")
 
       ;; (use-package longlines-mode
+      ;;   :straight (:type built-in)
       ;;   :commands (longlines-mode))
     #+END_SRC
 
@@ -21620,6 +21680,7 @@
       ;; (init-message 2 "Modules: magpie")
 
       ;; (use-package magpie
+      ;;   :straight (:type built-in)
       ;;   :commands (magpie))
     #+END_SRC
 
@@ -22320,6 +22381,7 @@
       ;; (init-message 2 "Modules: msf-abbrev")
 
       ;; (use-package msf-abbrev
+      ;;   :straight (:type built-in)
       ;;   :bind (("C-c C-a" . msf-abbrev-define-new-abbrev-this-mode)
       ;;          ;;("C-c l" . msf-abbrev-goto-root)
       ;;          ;;("C-c a" . msf-abbrev-define-new-abbrev-this-mode)
@@ -22412,6 +22474,7 @@
       (init-message 2 "Modules: occur")
 
       (use-package replace
+        :straight (:type built-in)
         :config
         (when (fboundp 'occur-inverse)
             (bind-keys* :map occur-mode-map ("C-c C-i" . occur-inverse)))
@@ -22489,6 +22552,7 @@
       ;; (init-message 2 "Modules: outline")
 
       ;; (use-package outline
+      ;;   :straight (:type built-in)
       ;;   :init
       ;;   ;; use outline for all programming buffers
       ;;   (add-hook 'prog-mode-hook #'outline-minor-mode)
@@ -22505,6 +22569,7 @@
 
       ;;   ;; outshine (org-mode like behavior in outline-mode)
       ;;   (use-package outshine
+      ;;     :straight (:type built-in)
       ;;     :functions (outshine-comment-region
       ;;                 outshine-mimic-org-log-note-marker)
       ;;     :init
@@ -22527,6 +22592,7 @@
       ;; (init-message 2 "Modules: pabbrev")
 
       ;; (use-package pabbrev
+      ;;   :straight (:type built-in)
       ;;   :init (setq global-pabbrev-mode t))
     #+END_SRC
 
@@ -22561,6 +22627,7 @@
       ;; (init-message 2 "Modules: paredit")
 
       ;; (use-package paredit
+      ;;   :straight (:type built-in)
       ;;   :commands (paredit-mode)
       ;;   :init
       ;;   ;; turn on paredit mode for various modes
@@ -22664,8 +22731,10 @@
       ;;   :load-path (lambda () (file-truename (expand-file-name "planner" emacs-modules-dir)))
       ;;   :bind* ("C-x p" . plan)
       ;;   :config
-      ;;   (use-package planner-multi)
+      ;;   (use-package planner-multi
+      ;;     :straight (:type built-in))
       ;;   (use-package planner-publish
+      ;;     :straight (:type built-in)
       ;;     :bind (:map planner-publish-map
       ;;                 ("n" . planner-goto-today))
       ;;     :config
@@ -22681,10 +22750,13 @@
       ;; (init-message 3 "planner-calendar")
 
       ;; (use-package calendar
+      ;;   :straight (:type built-in)
       ;;   :init
       ;;   (use-package planner-calendar
+      ;;     :straight (:type built-in)
       ;;     :init
       ;;     (use-package cal-desk-calendar
+      ;;       :straight (:type built-in)
       ;;       :init
       ;;       (add-hook 'diary-display-hook #'sort-diary-entries)
       ;;       (add-hook 'diary-display-hook #'fancy-schedule-display-desk-calendar :append))))
@@ -22744,6 +22816,7 @@
       ;; (init-message 2 "Modules: project")
 
       ;; (use-package project
+      ;;   :straight (:type built-in)
       ;;   :commands (project))
     #+END_SRC
 
@@ -22840,6 +22913,7 @@
       ;; (init-message 2 "Modules: psvn")
 
       ;; (use-package psvn
+      ;;   :straight (:type built-in)
       ;;   :commands (psvn svn-checkout svn-examine svn-status)
       ;;   :config
       ;;   ;; ignore whitespace with diff command
@@ -22864,6 +22938,7 @@
       (init-message 2 "Modules: recentf")
 
       (use-package recentf
+        :straight (:type built-in)
         :commands (recentf-mode)
         :custom
         (recentf-max-menu-items 25)
@@ -22886,6 +22961,7 @@
       ;; (init-message 2 "Modules: rect-mark")
 
       ;; (use-package rect-mark
+      ;;   :straight (:type built-in)
       ;;   :commands (rm-set-mark
       ;;              rm-exchange-point-and-mark
       ;;              rm-kill-region
@@ -23046,6 +23122,7 @@
       (init-message 2 "Modules: saveplace")
 
       (use-package saveplace
+        :straight (:type built-in)
         :init (save-place-mode 1))
     #+END_SRC
 
@@ -23066,6 +23143,7 @@
       ;; (init-message 2 "Modules: selected")
 
       ;; (use-package selected
+      ;;   :straight (:type built-in)
       ;;   :commands (selected-minor-mode)
       ;;   :defines (selected-org-mode-map)
       ;;   :bind (:map select-keymap
@@ -23095,6 +23173,7 @@
       ;; (init-message 2 "Modules: session")
 
       ;; (use-package session
+      ;;   :straight (:type built-in)
       ;;   :init (add-hook 'after-init-hook #'session-initialize))
     #+END_SRC
 
@@ -23559,6 +23638,7 @@
       ;; (init-message 2 "Modules: slack")
 
       ;; (use-package slack
+      ;;   :straight (:type built-in)
       ;;   :commands (slack-start)
       ;;   :bind (:map slack-mode-map)
       ;;   :bind (:map slack-info-mode-map)
@@ -23592,6 +23672,7 @@
       (init-message 2 "Modules: smerge")
 
       (use-package smerge-mode
+        :straight (:type built-in)
         :init
         (defun smerge-mode-maybe ()
           "Auto turn on smerge mode when a file with merge conflicts is loaded.
@@ -23745,6 +23826,7 @@
       ;; (init-message 2 "Modules: sunrise")
 
       ;; (use-package sunrise-commander
+      ;;   :straight (:type built-in)
       ;;   :commands (sunrise-commander))
     #+END_SRC
 
@@ -23769,6 +23851,7 @@
       ;; (init-message 2 "Modules: table")
 
       ;; (use-package table
+      ;;   :straight (:type built-in)
       ;;   :commands (table-recognize)
       ;;   :init
       ;;   (add-hook 'text-mode-hook #'table-recognize)
@@ -23791,7 +23874,8 @@
 
       (init-message 2 "Modules: telnet")
 
-      (use-package telnet)
+      (use-package telnet
+        :straight (:type built-in))
     #+END_SRC
 
 *** +template+
@@ -23809,6 +23893,7 @@
       ;; (init-message 2 "Modules: template")
 
       ;; (use-package template
+      ;;   :straight (:type built-in)
       ;;   :init (template-initialize))
     #+END_SRC
 
@@ -23827,6 +23912,7 @@
       (init-message 2 "Modules: timeclock")
 
       (use-package timeclock
+        :straight (:type built-in)
         :bind (("C-c ti" . timeclock-in)
                ("C-c to" . timeclock-out)
                ("C-c tc" . timeclock-change)
@@ -23860,6 +23946,7 @@
       (init-message 2 "Modules: time-stamp")
 
       (use-package time-stamp
+        :straight (:type built-in)
         :commands (time-stamp)
         :custom (time-stamp-active t)
         :init
@@ -23884,6 +23971,7 @@
       ;; (init-message 2 "Modules: totd")
 
       ;; (use-package totd
+      ;;   :straight (:type built-in)
       ;;   :defer 20
       ;;   :init
       ;;   (add-to-list 'totd-keymaps 'org-mode-map t) ; add org-mode keys
@@ -23906,6 +23994,7 @@
       (init-message 2 "Modules: tramp")
 
       (use-package tramp
+        :straight (:type built-in)
         :commands (tramp)
         :custom
         (tramp-default-method "ssh")
@@ -23919,6 +24008,7 @@
       (init-message 3 "Find File as Root")
 
       (use-package tramp
+        :straight (:type built-in)
         :commands (find-alternative-file-as-root
                    find-file-as-root
                    find-file-as-root-or-find-alternative-file-as-root
@@ -23994,6 +24084,7 @@
       ;; (init-message 2 "Modules: twit")
 
       ;; (use-package twit
+      ;;   :straight (:type built-in)
       ;;   :commands (twit))
     #+END_SRC
 
@@ -24037,6 +24128,7 @@
       ;; (init-message 2 "Modules: uniquify")
 
       ;; (use-package uniquify
+      ;;   :straight (:type built-in)
       ;;   :config
       ;;   (setq uniquify-buffer-name-style 'forward
       ;;         uniquify-separator "/"
@@ -24161,6 +24253,7 @@
       ;; (init-message 2 "Modules: wanderlust")
 
       ;; (use-package wl
+      ;;   :straight (:type built-in)
       ;;   :command wl
       ;;   :config
       ;;   (setq elmo-maildir-folder-path "~/Maildir"   ;; mailstorage location
@@ -24242,6 +24335,7 @@
       (init-message 2 "Modules: webjump")
 
       (use-package webjump
+        :straight (:type built-in)
         ;;:bind* ("C-x j" . webjump)
         :config
         ;; add some sites
@@ -24377,6 +24471,7 @@
       ;; (init-message 2 "Modules: yascroll")
 
       ;; (use-package yascroll
+      ;;   :straight (:type built-in)
       ;;   :init (global-yascroll-bar-mode t))
     #+END_SRC
 
@@ -24528,6 +24623,7 @@
       (init-message 2 "Modes: ASM")
 
       (use-package asm-mode
+        :straight (:type built-in)
         :mode ("\\.asm\\'" . asm-mode)
         :config
         (defun local-asm-mode-hook ()
@@ -24645,6 +24741,7 @@
       (init-message 2 "Modes: C Mode")
 
       (use-package cc-mode
+        :straight (:type built-in)
         :demand t
         :mode (("\\.c\\'" . c-mode)
                ("\\.h\\'" . c-mode)
@@ -24789,6 +24886,7 @@
       (init-message 2 "Modes: Calendar")
 
       (use-package calendar
+        :straight (:type built-in)
         :bind* ("C-x c" . calendar)
         :bind (:map calendar-mode-map
                     ;; scrolling keys
@@ -24849,6 +24947,7 @@
       ;; (init-message 2 "Modes: Clojure Mode")
 
       ;; (use-package clojure-mode
+      ;;   :straight (:type built-in)
       ;;   :load-path (lambda () (file-truename (expand-file-name "clojure-mode" emacs-modules-dir)))
       ;;   :mode (("\\.clj\\'" . clojure-mode)
       ;;          ("\\.clojure\\'" . clojure-mode))
@@ -24875,7 +24974,8 @@
       ;;                                (file-truename (expand-file-name "~/.clojure/clojure.jar"))
       ;;                                " clojure.main"))
 
-      ;;   ;;(use-package clojure-paredit)
+      ;;   ;;(use-package clojure-paredit
+      ;;   ;;  :straight (:type built-in))
 
       ;;   ;; remove trailing blanks
       ;;   ;;(add-hook 'clojure-mode-hook #'install-remove-trailing-blanks)
@@ -24904,6 +25004,7 @@
       (init-message 2 "Modes: CSS Mode")
 
       (use-package css-mode
+        :straight (:type built-in)
         :mode (("\\.css\\'" . css-mode)
                ("\\.scss\\'" . css-mode))
         :custom (cssm-indent-function #'cssm-c-style-indenter))
@@ -24926,6 +25027,7 @@
       (defun local-dired-mode-hook ())
 
       (use-package dired
+        :straight (:type built-in)
         ;;:after (dired-single)
         :commands (dired dired-jump)
         ;;:hook (dired-mode . local-dired-mode-hook)
@@ -25048,6 +25150,7 @@
       (init-message 2 "Modes: Ediff")
 
       (use-package ediff
+        :straight (:type built-in)
         :config
         ;; split windows horizontally
         (setq ediff-split-window-function 'split-window-horizontally)
@@ -25204,8 +25307,8 @@
         (add-hook 'geiser-repl-mode-hook #'local-geiser-mode-hook))
 
       (use-package geiser-racket
-        :after (geiser)
         :straight t
+        :after (geiser)
         :commands (run-racket)
         :init
         ;; set default scheme program to racket
@@ -25255,6 +25358,7 @@
       ;; (init-message 2 "Modes: Go Mode")
 
       ;; (use-package go-mode
+      ;;   :straight (:type built-in)
       ;;   :mode (("\\.go\\'" . go-mode))
       ;;   :config (progn
       ;;             (defun local-go-mode-hook ()
@@ -25291,6 +25395,7 @@
       ;; (init-message 2 "Modes: GPG Mode")
 
       ;; (use-package gpg
+      ;;   :straight (:type built-in)
       ;;   :commands (pgg-make-temp-file pgg-gpg-decrypt-region)
       ;;   :init (progn
       ;;           (defvar pgg-gpg-user-id "kyle"))
@@ -25356,6 +25461,7 @@
       ;; (init-message 2 "Modes: HTML Mode")
 
       ;; (use-package html-mode
+      ;;   :straight (:type built-in)
       ;;   :mode (("\\.html\\#'" . html-mode)
       ;;          ("\\.htm\\'" . html-mode)
       ;;          ;;("\\.xhtml\\'" . html-mode)
@@ -25374,6 +25480,7 @@
       ;;             ))
 
       ;; (use-package html-helper-mode
+      ;;   :straight (:type built-in)
       ;;   :mode (("\\.html\\'" . html-helper-mode)
       ;;          ("\\.htm\\'" . html-helper-mode)
       ;;          ;;("\\.xhtml\\'" . html-helper-mode)
@@ -25442,6 +25549,7 @@
       ;; (init-message 2 "Modes: Java Mode")
 
       ;; (use-package java-mode
+      ;;   :straight (:type built-in)
       ;;   :commands (java-mode)
       ;;   :mode (("\\.java\\'" . java-mode)
       ;;          ("\\.jml\\'" . java-mode)
@@ -25451,9 +25559,11 @@
       ;;             ;;(setq debug-on-error t)
 
       ;;             ;; pretty formatting
-      ;;             (use-package hilit-java)
+      ;;             (use-package hilit-java
+      ;;               :straight (:type built-in))
 
       ;;             (use-package camelCase
+      ;;               :straight (:type built-in)
       ;;               :commands (camelCase)
       ;;               :config (progn
       ;;                         (defun local-jde-mode-hook ()
@@ -25461,28 +25571,34 @@
       ;;                           (local-set-key (kbd "M-<backspace>") 'camelCase-backward-kill-word))
       ;;                         (add-hook 'jde-mode-hook #'local-jde-mode-hook :append)))
 
-      ;;             (use-package cedet)
+      ;;             (use-package cedet
+      ;;               :straight (:type built-in))
 
       ;;             (use-package semantic-load
+      ;;               :straight (:type built-in)
       ;;               :config (progn
       ;;                         (global-semanticdb-minor-mode -1)
       ;;                         ;;(setq semantic-load-turn-useful-things-on t)
       ;;                         ))
 
-      ;;             (use-package eldoc)
+      ;;             (use-package eldoc
+      ;;               :straight (:type built-in))
 
       ;;             ;; increase the limit on number of lisp variable bindings and
       ;;             ;; unwind-protects; allows semantic to parse more complex java files
       ;;             ;;(setq max-specpdl-size 1080)
 
       ;;             ;; (use-package flyspell
+      ;;             ;;   :straight (:type built-in)
       ;;             ;;   :commands (flyspell-prog-mode)
       ;;             ;;   :config (add-hook 'java-mode-hook #'flyspell-prog-mode))
 
       ;;             ;; (use-package flymake
+      ;;             ;;   :straight (:type built-in)
       ;;             ;;   :config (flymake-mode 1))
 
       ;;             ;; (use-package flyspell
+      ;;             ;;   :straight (:type built-in)
       ;;             ;;   :commands (flyspell-prog-mode)
       ;;             ;;   :config (progn
       ;;             ;;             (defun local-java-mode-hook ()
@@ -25568,6 +25684,7 @@
 
       ;; ;; in Ubuntu install with 'apt-get install cedet-common cedet-contrib cogre ede eieio semantic speedbar elib jde'
       ;; (use-package jde
+      ;;   :straight (:type built-in)
       ;;   :commands (jde-mode)
       ;;   :mode (("\\.java\\'" . jde-mode)
       ;;          ("\\.jml\\'" . jde-mode)
@@ -25577,9 +25694,11 @@
       ;;             ;;(setq debug-on-error t)
 
       ;;             ;; pretty formatting
-      ;;             (use-package hilit-java)
+      ;;             (use-package hilit-java
+      ;;               :straight (:type built-in))
 
       ;;             (use-package camelCase
+      ;;               :straight (:type built-in)
       ;;               :commands (camelCase)
       ;;               :config (progn
       ;;                         (defun local-jde-mode-hook ()
@@ -25587,15 +25706,18 @@
       ;;                           (local-set-key (kbd "M-<backspace>") 'camelCase-backward-kill-word))
       ;;                         (add-hook 'jde-mode-hook #'local-jde-mode-hook :append)))
 
-      ;;             (use-package cedet)
+      ;;             (use-package cedet
+      ;;               :straight (:type built-in))
 
       ;;             (use-package semantic-load
+      ;;               :straight (:type built-in)
       ;;               :config (progn
       ;;                         (global-semanticdb-minor-mode -1)
       ;;                         ;;(setq semantic-load-turn-useful-things-on t)
       ;;                         ))
 
-      ;;             (use-package javadoc-help)
+      ;;             (use-package javadoc-help
+      ;;               :straight (:type built-in))
 
       ;;             (use-package jdibug
       ;;               :load-path (lambda () (file-truename (expand-file-name "jdibug" emacs-modules-dir))))
@@ -25606,13 +25728,16 @@
 
       ;;             (defun local-java-mode-hook ()
       ;;               (use-package flyspell
+      ;;                 :straight (:type built-in)
       ;;                 :commands (flyspell-prog-mode)
       ;;                 :config (flyspell-prog-mode))
 
       ;;               (use-package flymake
-      ;;                 :config (flymake-mode 1))
+      ;;                 :straight (:type built-in)
+      ;;                 :Config (flymake-mode 1))
 
       ;;               (use-package eldoc
+      ;;                 :straight (:type built-in)
       ;;                 :config (eldoc-mode 1))
 
       ;;               ;; key bindings
@@ -25694,6 +25819,7 @@
       ;; ;; flymake-mode for java
       ;; (with-eval-after-load "jde"
       ;;   (use-package jde-eclipse-compiler-server
+      ;;     :straight (:type built-in)
       ;;     :commands (jde-ecj-flymake-init)
       ;;     :config (progn
       ;;               (setq jde-compiler `(("eclipse java compiler server" ,(file-truename (expand-file-name "~/.common/.emacs.d/modules/ecj.jar")))))
@@ -25734,6 +25860,7 @@
       ;;                                                  (file-truename (expand-file-name (int-to-string (random)) (flymake-get-temp-dir))))))
 
       ;;               (use-package flymake
+      ;;                 :straight (:type built-in)
       ;;                 :config (progn
       ;;                           ;; initialize flymake
       ;;                           (add-to-list 'flymake-allowed-file-name-masks '(".+\\.java\\'" flymake-java-ecj-init flymake-java-ecj-cleanup) t)
@@ -25756,6 +25883,7 @@
       ;; (init-message 2 "Modes: Java: JDEE Mode")
 
       ;; (use-package jdee
+      ;;   :straight (:type built-in)
       ;;   ;;:load-path (lambda () (file-truename (expand-file-name "jdee" emacs-modules-dir)))
       ;;   :mode (("\\.java\\'" . jdee-mode)
       ;;          ("\\.jml\\'" . jdee-mode)
@@ -25800,6 +25928,7 @@
       ;; (init-message 2 "Modes: Java: Meghanada Mode")
 
       ;; (use-package meghanada
+      ;;   :straight (:type built-in)
       ;;   :config (progn
       ;;             (defun local-java-mode-hook ()
       ;;               ;; turn meghanada-mode on
@@ -25851,6 +25980,7 @@
       ;; (init-message 2 "Modes: Javascript Mode")
 
       ;; (use-package javascript
+      ;;   :straight (:type built-in)
       ;;   :mode (("\\.js\\'" . js-mode))
       ;;   :commands (javascript-mode js-mode)
       ;;   :config (progn
@@ -25860,7 +25990,8 @@
       ;;             ;;             (setq lintnode-location dir
       ;;             ;;                   lintnode-jslint-excludes (list 'nomen 'plusplus 'onevar 'white)) ; 'nomen 'undef 'plusplus 'onevar 'white
       ;;             ;;             (add-hook 'js-mode-hook (lambda () (lintnode-hook)))
-      ;;             ;;             (use-package flymake-cursor)))
+      ;;             ;;             (use-package flymake-cursor
+      ;;             ;;               :straight (:type built-in))))
 
       ;;             (use-package flymake-jslint
       ;;               :load-path (lambda () (file-truename (expand-file-name "jslint-v8" emacs-home-dir)))
@@ -25869,7 +26000,8 @@
       ;;                               lintnode-jslint-excludes (list #'nomen 'plusplus 'onevar 'white)) ; 'nomen 'undef 'plusplus 'onevar 'white
       ;;                         ;;(add-hook 'js-mode-hook (lambda () (lintnode-hook)))
       ;;                         (add-hook 'js-mode-hook (lambda () (flymake-mode 1)))
-      ;;                         (use-package flymake-cursor)
+      ;;                         (use-package flymake-cursor
+      ;;                           :straight (:type built-in))
     #+END_SRC
 
 *** Javascript: js2 Mode
@@ -26025,6 +26157,7 @@
       ;; (init-message 2 "Modes: Javascript: js3 Mode")
 
       ;; (use-package js3-mode
+      ;;   :straight (:type built-in)
       ;;   :mode ("\\.js\\'" . js3-mode)
       ;;   :interpreter ("node" . js3-mode)
       ;;   :commands (js3-mode)
@@ -26222,6 +26355,7 @@
         ;; (add-hook 'after-save-hook #'check-parens nil t)
 
         ;; (use-package aggressive-indent
+        ;;   :straight (:type built-in)
         ;;   :config (aggressive-indent-mode 1))
 
         ;; set outline header regexp
@@ -26229,6 +26363,7 @@
         (setq-local outline-level 'lisp-outline-level))
 
       (use-package lisp-mode
+        :straight (:type built-in)
         :after (flyspell eldoc info-look)
         :commands (emacs-lisp-mode)
         :functions (local-lisp-mode-hook)
@@ -26285,6 +26420,7 @@
       (init-message 2 "Modes: Makefile Mode")
 
       (use-package make-mode
+        :straight (:type built-in)
         :mode ("Makefile" . makefile-mode)
         :config
         (defun local-makefile-mode-hook ()
@@ -26370,6 +26506,7 @@
       (init-message 2 "Modes: Perl Mode")
 
       (use-package perl-mode
+        :straight (:type built-in)
         :after (flyspell)
         :mode (("\\.\\([pP][Llm]\\|al\\|t\\)\\'" . perl-mode)
                ("perl" . perl-mode)
@@ -26713,6 +26850,7 @@
       ;;   (add-hook 'racket-repl-mode-hook #'racket-unicode-input-method-enable))
 
       (use-package scheme
+        :straight (:type built-in)
         :after (geiser)
         :mode ("\\.rkt\\'" . racket-mode)
         :interpreter ("racket" . racket-mode)
@@ -26767,6 +26905,7 @@
       (init-message 2 "Modes: Ruby Mode")
 
       (use-package ruby-mode
+        :straight (:type built-in)
         :after (flyspell)
         :mode ("\\.rb\\'" . ruby-mode)
         :config
@@ -26791,6 +26930,7 @@
 
         ;; FIXME: No longer works
         ;; (use-package flymake
+        ;;   :straight (:type built-in)
         ;;   :config (progn
         ;;             (defun flymake-ruby-init ()
         ;;               (let* ((temp-file (flymake-init-create-temp-buffer-copy 'flymake-create-temp-inplace))
@@ -26941,6 +27081,7 @@
 
         ;; FIXME: No longer works
         ;; (use-package flymake
+        ;;   :straight (:type built-in)
         ;;   :config (progn
         ;;             (defun flymake-rust-init ()
         ;;               (let* ((temp-file (flymake-init-create-temp-buffer-copy 'flymake-create-temp-inplace))
@@ -27015,6 +27156,7 @@
       (init-message 2 "Modes: SH Script")
 
       (use-package sh-script
+        :straight (:type built-in)
         :mode (("\\.sh\\'" . sh-mode)
                ("\\.shell\\'" . sh-mode)
                ("\\.bash\\'" . sh-mode)
@@ -27078,6 +27220,7 @@
       (init-message 2 "Modes: Shell Mode")
 
       (use-package shell
+        :straight (:type built-in)
         :commands (shell-mode)
         :config
         ;; disable tabs
@@ -27097,6 +27240,7 @@
       (init-message 3 "ansi-color")
 
       (use-package ansi-color
+        :straight (:type built-in)
         :after (shell)
         :commands (ansi-color-for-comint-mode-on)
         :config
@@ -27214,7 +27358,8 @@
         (setq cldoc-idle-delay 3)
 
         ;; ;; slime motd warnings
-        ;; (use-package slime-cl-pitfalls)
+        ;; (use-package slime-cl-pitfalls
+        ;;   :straight (:type built-in))
 
         ;; add clisp to slime implementations
         (add-to-list 'slime-lisp-implementations '(clisp ("/usr/bin/clisp" "-K" "base")) t)
@@ -27309,6 +27454,7 @@
       (init-message 2 "Modes: SQL Mode")
 
       (use-package sql
+        :straight (:type built-in)
         :mode (("\\.sql\\'" . sql-mode)
                ("\\.tbl\\'" . sql-mode)
                ("\\.sp\\'" . sql-mode))
@@ -27362,6 +27508,7 @@
       (init-message 2 "Modes: Text Mode")
 
       (use-package text-mode
+        :straight (:type built-in)
         :after (flyspell)
         :mode (("\\.txt\\'" . text-mode)
                ("\\.text\\'" . text-mode)
@@ -27456,9 +27603,7 @@
 
       (use-package v-mode
         :straight (v-mode
-                   :type git
-                   :host github
-                   :repo "damon-kwok/v-mode"
+                   :type git :host github :repo "damon-kwok/v-mode"
                    :files ("tokens" "v-mode.el"))
         :after (flyspell)
         :mode ("\\.v?v\\.vsh\\'" . v-mode)
@@ -27494,6 +27639,7 @@
 
         ;; FIXME: No longer works
         ;; (use-package flymake
+        ;;   :straight (:type built-in)
         ;;   :config (progn
         ;;             (defun flymake-v-init ()
         ;;               (let* ((temp-file (flymake-init-create-temp-buffer-copy 'flymake-create-temp-inplace))
@@ -27558,14 +27704,15 @@
       ;; (init-message 2 "Modes: Workgroups Mode")
 
       ;; (use-package workgroups
-      ;;   :config (progn
-      ;;             ;;(setq wg-prefix-key (kbd "C-z"))
-      ;;             (setq wg-prefix-key (kbd "C-c w"))
-      ;;             (workgroups-mode 1)
-      ;;             (let ((file (file-truename (expand-file-name "workgroups" emacs-home-dir))))
-      ;;               (when (file-exists-p file)
-      ;;                 (wg-load file)))
-      ;;             (setq wg-switch-on-load nil)))
+      ;;   :straight (:type built-in)
+      ;;   :config
+      ;;   ;;(setq wg-prefix-key (kbd "C-z"))
+      ;;   (setq wg-prefix-key (kbd "C-c w"))
+      ;;   (workgroups-mode 1)
+      ;;   (let ((file (file-truename (expand-file-name "workgroups" emacs-home-dir))))
+      ;;     (when (file-exists-p file)
+      ;;       (wg-load file)))
+      ;;   (setq wg-switch-on-load nil))
     #+END_SRC
 
 *** +XML/SGML Mode+
@@ -27583,6 +27730,7 @@
       ;; (init-message 2 "Modes: XML/SGML Mode")
 
       ;; (use-package psgml
+      ;;   :straight (:type built-in)
       ;;   :load-path (lambda () (file-truename (expand-file-name "psgml" emacs-modules-dir)))
       ;;   :commands (sgml-mode xml-mode)
       ;;   :mode (("\\.sgml\\'" . sgml-mode)
@@ -27596,72 +27744,72 @@
       ;;          ("\\.fo\\'" . xml-mode)
       ;;          ("\\.rdf\\'" . xml-mode)
       ;;          ("\\.rss\\'" . xml-mode))
-      ;;   :config (progn
-      ;;             ;; setup catalog files
-      ;;             (setq sgml-catalog-files nil)
-      ;;             (add-to-list 'sgml-catalog-files (file-truename (expand-file-name "~/dtd/xhtml1/xhtml1.soc")) t)
-      ;;             (add-to-list 'sgml-catalog-files (file-truename (expand-file-name "~/dtd/dita/dtd/dita.soc")) t)
-      ;;             (add-to-list 'sgml-catalog-files (file-truename (expand-file-name "~/dtd/hodmacro/hodmacro.soc")) t)
+      ;;   :config
+      ;;   ;; setup catalog files
+      ;;   (setq sgml-catalog-files nil)
+      ;;   (add-to-list 'sgml-catalog-files (file-truename (expand-file-name "~/dtd/xhtml1/xhtml1.soc")) t)
+      ;;   (add-to-list 'sgml-catalog-files (file-truename (expand-file-name "~/dtd/dita/dtd/dita.soc")) t)
+      ;;   (add-to-list 'sgml-catalog-files (file-truename (expand-file-name "~/dtd/hodmacro/hodmacro.soc")) t)
 
-      ;;             (defun sgml-delete-tag--reindent (orig-fun &rest args)
-      ;;               "Indent after deleting a tag."
-      ;;               (dotimes (a args)
-      ;;                 (apply orig-fun 1)
-      ;;                 (indent-region (point-min) (point-max))))
-      ;;             ;; advise `sgml-delete-tag'
-      ;;             (advice-add 'sgml-delete-tag :around #'(sgml-delete-tag--reindent))
+      ;;   (defun sgml-delete-tag--reindent (orig-fun &rest args)
+      ;;     "Indent after deleting a tag."
+      ;;     (dotimes (a args)
+      ;;       (apply orig-fun 1)
+      ;;       (indent-region (point-min) (point-max))))
+      ;;   ;; advise `sgml-delete-tag'
+      ;;   (advice-add 'sgml-delete-tag :around #'(sgml-delete-tag--reindent))
 
-      ;;             (defun local-sgml-mode-hook ()
-      ;;               ;; create faces to assign to markup categories
-      ;;               (make-face 'sgml-comment-face)
-      ;;               (make-face 'sgml-start-tag-face)
-      ;;               (make-face 'sgml-end-tag-face)
-      ;;               ;; assign attributes to faces
-      ;;               (set-face-foreground 'sgml-comment-face "SeaGreen")
-      ;;               (set-face-foreground 'sgml-start-tag-face "OrangeRed")
-      ;;               (set-face-foreground 'sgml-end-tag-face "OrangeRed")
-      ;;               ;; assign faces to markup categories
-      ;;               (setq sgml-markup-faces
-      ;;                     '((comment . sgml-comment-face)
-      ;;                       (start-tag . sgml-start-tag-face)
-      ;;                       (end-tag . sgml-end-tag-face)))
-      ;;               ;; use the face settings
-      ;;               (setq sgml-set-face t)
-      ;;               ;; only allow valid elements to be inserted
-      ;;               (setq sgml-omittag-transparent t)
-      ;;               ;; automatically insert required elements
-      ;;               (setq sgml-auto-insert-required-elements t)
-      ;;               ;; enable abbreviations
-      ;;               ;;(setq abbrev-mode t)
-      ;;               ;;(read-abbrev-file (file-truename (expand-file-name "~/.abbrev_defs")))
-      ;;               ;;(setq save-abbrevs t)
-      ;;               )
-      ;;             (add-hook 'sgml-mode-hook #'local-sgml-mode-hook)
+      ;;   (defun local-sgml-mode-hook ()
+      ;;     ;; create faces to assign to markup categories
+      ;;     (make-face 'sgml-comment-face)
+      ;;     (make-face 'sgml-start-tag-face)
+      ;;     (make-face 'sgml-end-tag-face)
+      ;;     ;; assign attributes to faces
+      ;;     (set-face-foreground 'sgml-comment-face "SeaGreen")
+      ;;     (set-face-foreground 'sgml-start-tag-face "OrangeRed")
+      ;;     (set-face-foreground 'sgml-end-tag-face "OrangeRed")
+      ;;     ;; assign faces to markup categories
+      ;;     (setq sgml-markup-faces
+      ;;           '((comment . sgml-comment-face)
+      ;;             (start-tag . sgml-start-tag-face)
+      ;;             (end-tag . sgml-end-tag-face)))
+      ;;     ;; use the face settings
+      ;;     (setq sgml-set-face t)
+      ;;     ;; only allow valid elements to be inserted
+      ;;     (setq sgml-omittag-transparent t)
+      ;;     ;; automatically insert required elements
+      ;;     (setq sgml-auto-insert-required-elements t)
+      ;;     ;; enable abbreviations
+      ;;     ;;(setq abbrev-mode t)
+      ;;     ;;(read-abbrev-file (file-truename (expand-file-name "~/.abbrev_defs")))
+      ;;     ;;(setq save-abbrevs t)
+      ;;     )
+      ;;   (add-hook 'sgml-mode-hook #'local-sgml-mode-hook)
 
-      ;;             ;;(make-face 'sgml-comment-face)
-      ;;             ;;(make-face 'sgml-start-tag-face)
-      ;;             ;;(make-face 'sgml-end-tag-face)
-      ;;             ;;(make-face 'sgml-entity-face)
-      ;;             ;;(make-face 'sgml-doctype-face)
+      ;;   ;;(make-face 'sgml-comment-face)
+      ;;   ;;(make-face 'sgml-start-tag-face)
+      ;;   ;;(make-face 'sgml-end-tag-face)
+      ;;   ;;(make-face 'sgml-entity-face)
+      ;;   ;;(make-face 'sgml-doctype-face)
 
-      ;;             ;;(set-face-foreground 'sgml-comment-face "FireBrick")
-      ;;             ;;(set-face-foreground 'sgml-start-tag-face "SlateBlue")
-      ;;             ;;(set-face-foreground 'sgml-end-tag-face "SlateBlue")
-      ;;             ;;(set-face-background 'sgml-entity-face "SlateBlue")
-      ;;             ;;(set-face-foreground 'sgml-entity-face "Red")
-      ;;             ;;(set-face-foreground 'sgml-doctype-face "FireBrick")
+      ;;   ;;(set-face-foreground 'sgml-comment-face "FireBrick")
+      ;;   ;;(set-face-foreground 'sgml-start-tag-face "SlateBlue")
+      ;;   ;;(set-face-foreground 'sgml-end-tag-face "SlateBlue")
+      ;;   ;;(set-face-background 'sgml-entity-face "SlateBlue")
+      ;;   ;;(set-face-foreground 'sgml-entity-face "Red")
+      ;;   ;;(set-face-foreground 'sgml-doctype-face "FireBrick")
 
-      ;;             ;;(setq sgml-set-face t)
-      ;;             ;;(setq sgml-markup-faces
-      ;;             ;;        '((comment . sgml-comment-face)
-      ;;             ;;        (start-tag . sgml-start-tag-face)
-      ;;             ;;        (end-tag . sgml-end-tag-face)
-      ;;             ;;        (doctype . sgml-doctype-face)
-      ;;             ;;        (entity . sgml-entity-face)))
+      ;;   ;;(setq sgml-set-face t)
+      ;;   ;;(setq sgml-markup-faces
+      ;;   ;;        '((comment . sgml-comment-face)
+      ;;   ;;        (start-tag . sgml-start-tag-face)
+      ;;   ;;        (end-tag . sgml-end-tag-face)
+      ;;   ;;        (doctype . sgml-doctype-face)
+      ;;   ;;        (entity . sgml-entity-face)))
 
-      ;;             ;; ;; turn on abbreviation mode
-      ;;             ;; (abbrev-mode 1)
-      ;;             ))
+      ;;   ;; ;; turn on abbreviation mode
+      ;;   ;; (abbrev-mode 1)
+      ;;   )
     #+END_SRC
 
 *** XML Mode
@@ -27679,6 +27827,7 @@
       (init-message 2 "Modes: XML Mode")
 
       (use-package nxml-mode
+        :straight (:type built-in)
         :after (flyspell)
         :mode (("\\.dtd\\'" . nxml-mode)
                ("\\.htm\\'" . nxml-mode)
@@ -27763,6 +27912,7 @@
         ;;(add-hook 'nxml-mode-hook #'install-remove-tabs)
 
         ;; (use-package flymake
+        ;;   :straight (:type built-in)
         ;;   :config (progn
         ;;             (defun flymake-html-init ()
         ;;               (let* ((temp-file (flymake-init-create-temp-buffer-copy 'flymake-create-temp-inplace))
@@ -27854,7 +28004,8 @@
         (init-message 3 "Menus: Setup: Easy Menu")
 
         ;; easymenu
-        (use-package easymenu)
+        (use-package easymenu
+          :straight (:type built-in))
       #+END_SRC
 
 ***** Auto-Menu
@@ -28615,7 +28766,8 @@
 
         (init-message 3 "Snippets: Org-Mode: Literate Block Init Emacs (lbie)")
 
-        (use-package ${1:$(downcase yas-text)})
+        (use-package ${1:$(downcase yas-text)}
+          :straight t)
         ,#+END_SRC
         $0
       #+END_SRC
@@ -28819,6 +28971,7 @@
 
       ;; ;; w32-feeling
       ;; (use-package w32-feeling
+      ;;   :straight (:type built-in)
       ;;   :config (w32-feeling-maximize-frame))
 
       ;; set temp directories
@@ -28836,6 +28989,7 @@
       ;; (setq select-enable-clipboard t
       ;;       interprogram-paste-function 'x-cut-buffer-or-selection-value)
       ;; (use-package pc-select
+      ;;   :straight (:type built-in)
       ;;   :config (pc-selection-mode))
 
       ;; ;; turn on timeclock display (since I'm at work if I'm using Windows)
@@ -28862,6 +29016,7 @@
 
     ;; gnus (newsreader)
     (use-package gnus
+      :straight (:type built-in)
       :defines (gnus-subscribe-newsgroup-method
                 sendmail-program mail-envelope-from
                 smtpmail-smtp-server
@@ -29011,6 +29166,7 @@
       (init-message 2 "ERC: Setup")
 
       (use-package erc
+        :straight (:type built-in)
         :config
         (erc-button-mode 1)
         (erc-completion-mode 1)
@@ -29030,12 +29186,16 @@
         )
 
       (use-package erc-imenu
+        :straight (:type built-in)
         :after (erc))
       (use-package erc-menu
+        :straight (:type built-in)
         :after (erc))
       (use-package erc-notify
+        :straight (:type built-in)
         :after (erc))
       (use-package erc-ring
+        :straight (:type built-in)
         :after (erc))
     #+END_SRC
 
@@ -29055,6 +29215,7 @@
 
       ;; erc customization
       (use-package erc
+        :straight (:type built-in)
         :config
         ;; create a seperate buffer for private messages
         (setq erc-auto-query t)
@@ -29136,6 +29297,7 @@
         (init-message 3 "ERC: Functions: Nick from System Name")
 
         (use-package erc
+          :straight (:type built-in)
           :config
           (defun erc-nick-from-system-name ()
             "Return a nickname based on machine name.
@@ -29168,6 +29330,7 @@
         (init-message 3 "ERC: Functions: Localhost")
 
         (use-package erc
+          :straight (:type built-in)
           :commands (erc)
           :config
           (defun erc-localhost ()
@@ -29192,6 +29355,7 @@
         (init-message 3 "ERC: Functions: Localhost Bitlbee")
 
         (use-package erc
+          :straight (:type built-in)
           ;; :bind* ("C-c eb" . erc-localhost-bitlbee)
           :config
           (defun erc-localhost-bitlbee ()
@@ -29215,6 +29379,7 @@
         (init-message 3 "ERC: Functions: Freenode")
 
         (use-package erc
+          :straight (:type built-in)
           ;; :bind* ("C-c ef" . erc-freenode)
           :config
           (defun erc-freenode ()
@@ -29238,6 +29403,7 @@
         (init-message 3 "ERC: Functions: Work")
 
         (use-package erc
+          :straight (:type built-in)
           :config
           (defun erc-work ()
             "Connect to work IRC server."
@@ -29276,6 +29442,7 @@
         (init-message 3 "ERC: Commands: UPTIME")
 
         (use-package erc
+          :straight (:type built-in)
           :commands (erc-send-message)
           :config
           (defun erc-cmd-UPTIME (&rest ignore)
@@ -29308,6 +29475,7 @@
         (init-message 3 "ERC: Commands: WI")
 
         (use-package erc
+          :straight (:type built-in)
           :config
           (defun erc-cmd-WI (nick &rest ignore)
             "`/WHOIS' command with extra user information."
@@ -29327,6 +29495,7 @@
         (init-message 3 "ERC: Commands: IDENTIFY")
 
         (use-package erc
+          :straight (:type built-in)
           :commands (erc-server-send)
           :config
           (defun erc-cmd-IDENTIFY (password &rest ignore)
@@ -29416,6 +29585,7 @@
         ;;   (init-message 3 "Work: Functions: work-export-buzzfeed-analytics")
 
         ;;   (use-package org
+        ;;     :straight (:type built-in)
         ;;     :commands (org-copy-subtree
         ;;                org-paste-subtree)
         ;;     :config (progn
@@ -29792,6 +29962,7 @@
         ;; (init-message 3 "Work: Functions: work-time-tracking-report")
 
         ;; (use-package org
+        ;;   :straight (:type built-in)
         ;;   :commands (org-paste-subtree)
         ;;   :config (progn
         ;;             (defun work-time-tracking-report ()
@@ -30311,6 +30482,7 @@
 
       ;; ;; restore buffers
       ;; (use-package desktop
+      ;;   :straight (:type built-in)
       ;;   :config (progn
       ;;             (desktop-load-default)
       ;;             (desktop-read)))
