@@ -2604,6 +2604,18 @@
     ;;   :init (org-notify-start))
 ;; Alerts:1 ends here
 
+;; [[file:init-emacs.org::*TOC][TOC:1]]
+;;------------------------------------------------------------------------------
+;;; ORG MODE: TOC
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Org Mode: TOC")
+
+(use-package org-make-toc
+  :straight t
+  :hook (org-mode . org-make-toc-mode))
+;; TOC:1 ends here
+
 ;; [[file:init-emacs.org::*Modules][Modules:1]]
     ;;------------------------------------------------------------------------------
     ;;; Org Mode: Modules
@@ -4581,12 +4593,12 @@
 
     (use-package org-visibility
       ;;:straight t
-      ;;:load-path (lambda () (file-truename (expand-file-name "org-visibility" local-modules-dir)))
       :load-path (lambda () (file-truename (expand-file-name "~/code/github-nullman/emacs-org-visibility")))
       :after (org)
       :demand t
-      :bind (:map org-mode-map
-                  ("C-x C-v" . org-visibility-force-save)) ; defaults to `find-alternative-file'
+      :bind (:map org-visibility-mode-map
+                  ("C-x C-v" . org-visibility-force-save) ; defaults to `find-alternative-file'
+                  ("C-x M-v" . org-visibility-remove))    ; defaults to undefined
       :custom
       ;; list of directories and files to automatically persist and restore visibility state of
       (org-visibility-include-paths `(,(file-truename "~/.emacs.d/init-emacs.org")
@@ -4598,10 +4610,7 @@
                                       ,(file-truename "~/web/org")))
       ;; list of directories and files to not persist and restore visibility state of
       (org-visibility-exclude-paths `(,(file-truename "~/org/old")
-                                      ,(file-truename "~/org/test")))
-      :config
-      ;; enable all hooks
-      (org-visibility-enable-hooks))
+                                      ,(file-truename "~/org/test"))))
 ;; Visibility:1 ends here
 
 ;; [[file:init-emacs.org::*org-bookmarks-guid][org-bookmarks-guid:1]]
@@ -14293,6 +14302,7 @@
 
     (use-package elfeed
       :straight t
+      :commands (elfeed-bookmarks-edit)
       :bind (:map elfeed-search-mode-map
                   ("h" . elfeed-search-mode-help)
                   ("?" . elfeed-search-mode-help))
@@ -15849,6 +15859,30 @@
       ;; enable autosave and restore last saved state
       (persistent-scratch-setup-default))
 ;; persistent-scratch:1 ends here
+
+;; [[file:init-emacs.org::*popper][popper:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: popper
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: popper")
+
+(use-package popper
+  :straight t
+  :bind (("C-`" . popper-toggle-latest)
+         ("C-M-`" . popper-cycle)
+         ("C-x C-`" . popper-toggle-type))
+  :custom
+  (popper-reference-buffers
+        '("\\*Messages\\*"
+          "Output\\*$"
+          "\\*Async Shell Command\\*"
+          help-mode
+          compilation-mode))
+  :init
+  (popper-mode +1)
+  (popper-echo-mode +1))
+;; popper:1 ends here
 
 ;; [[file:init-emacs.org::*proced][proced:1]]
     ;;------------------------------------------------------------------------------

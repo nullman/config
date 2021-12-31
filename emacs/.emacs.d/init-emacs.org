@@ -8,14 +8,726 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2021-12-30 15:10 (kyle)>
+  #+TIMESTAMP: <2021-12-31 15:09 (kyle)>
 
 * Table of Contents
   :PROPERTIES:
   :CUSTOM_ID: table-of-contents
+  :TOC: :include all
   :END:
 
-  #+TOC: headlines 3
+:CONTENTS:
+- [[#org][Org]]
+- [[#table-of-contents][Table of Contents]]
+- [[#overview][Overview]]
+- [[#information][Information]]
+  - [[#font-lock-faces][Font-Lock Faces]]
+- [[#constants][Constants]]
+  - [[#colors][Colors]]
+- [[#early-init][Early Init]]
+- [[#init][Init]]
+- [[#start][Start]]
+- [[#package-manager][Package Manager]]
+  - [[#straight][Straight]]
+  - [[#quelpa][Quelpa]]
+  - [[#elpa-emacs-lisp-package-archive][ELPA (Emacs Lisp Package Archive)]]
+  - [[#paradox][Paradox]]
+- [[#environment-settings][Environment Settings]]
+  - [[#debugging][Debugging]]
+  - [[#modules][Modules]]
+  - [[#environment][Environment]]
+  - [[#global-variables][Global Variables]]
+  - [[#load-path][Load Path]]
+  - [[#general][General]]
+  - [[#system][System]]
+  - [[#files][Files]]
+  - [[#buffers-and-windows][Buffers and Windows]]
+  - [[#tabs][Tabs]]
+  - [[#mode-line][Mode Line]]
+  - [[#terminals][Terminals]]
+    - [[#configuration][Configuration]]
+    - [[#eshell][eshell]]
+    - [[#term-bash][term-bash]]
+    - [[#term-zsh][term-zsh]]
+    - [[#vterm][vterm]]
+  - [[#gui][GUI]]
+- [[#key-bindings][Key Bindings]]
+  - [[#system-keys][System Keys]]
+  - [[#function-keys][Function Keys]]
+  - [[#extended-keys][Extended Keys]]
+  - [[#movement-keys][Movement Keys]]
+  - [[#standard-keys][Standard Keys]]
+  - [[#modes-and-module-keys][Modes and Module Keys]]
+  - [[#grouped-prefix-keys][Grouped Prefix Keys]]
+  - [[#set-all-custom-key-bindings][Set All Custom Key Bindings]]
+- [[#org-mode][Org Mode]]
+  - [[#setup][Setup]]
+  - [[#configuration][Configuration]]
+  - [[#agenda][Agenda]]
+  - [[#alerts][Alerts]]
+  - [[#remember][Remember]]
+  - [[#toc][TOC]]
+  - [[#modules][Modules]]
+  - [[#functions][Functions]]
+    - [[#org-get-property-list][org-get-property-list]]
+    - [[#org-get-element-tree][org-get-element-tree]]
+    - [[#org-get-data][org-get-data]]
+    - [[#org-safe-meta][org-safe-meta]]
+    - [[#org-sort-multi][org-sort-multi]]
+    - [[#org-sort-current][org-sort-current]]
+    - [[#org-fill-element--adapt-indentation][org-fill-element--adapt-indentation]]
+    - [[#org-copy-to-clipboard][org-copy-to-clipboard]]
+    - [[#org-fix-custom-ids][org-fix-custom-ids]]
+    - [[#org-update-last-modified-property][org-update-last-modified-property]]
+    - [[#org-export-to-json][org-export-to-json]]
+    - [[#org-toggle-headline-checkbox][org-toggle-headline-checkbox]]
+    - [[#org-table-remove-commas][org-table-remove-commas]]
+    - [[#org-days-between-dates][org-days-between-dates]]
+    - [[#org-babel-send-region-to-process][org-babel-send-region-to-process]]
+    - [[#org-babel-tangle-block][org-babel-tangle-block]]
+    - [[#org-copy-tangled-sections][org-copy-tangled-sections]]
+    - [[#org-screenshot][org-screenshot]]
+  - [[#hook][Hook]]
+  - [[#babel][Babel]]
+    - [[#setup][Setup]]
+    - [[#structure-templates][Structure Templates]]
+    - [[#edit-source][Edit Source]]
+    - [[#tangle-case-sensitive][Tangle Case-Sensitive]]
+    - [[#tangle-update-timestamps][Tangle Update Timestamps]]
+    - [[#tangle-delete-trailing-whitespace][Tangle Delete Trailing Whitespace]]
+    - [[#tangle-makefile-tabs][Tangle Makefile Tabs]]
+    - [[#racket][Racket]]
+    - [[#java][Java]]
+    - [[#kotlin][Kotlin]]
+    - [[#python-ipython-version][Python (iPython Version)]]
+    - [[#python][Python]]
+    - [[#rust][Rust]]
+    - [[#v][V]]
+    - [[#basic-commander-x16][Basic (Commander X16)]]
+    - [[#assembly-language-commander-x16][Assembly Language (Commander X16)]]
+    - [[#plantuml][PlantUML]]
+    - [[#load-languages][Load Languages]]
+  - [[#babel-functions][Babel Functions]]
+    - [[#org-generate-custom-id-from-title][org-generate-custom-id-from-title]]
+    - [[#org-fix-literate-programming-heading][org-fix-literate-programming-heading]]
+    - [[#org-fix-literate-programming-heading-region][org-fix-literate-programming-heading-region]]
+    - [[#org-toggle-literate-programming-code-block][org-toggle-literate-programming-code-block]]
+    - [[#org-insert-literate-programming-statics][org-insert-literate-programming-statics]]
+    - [[#org-insert-literate-programming-init-emacs-block][org-insert-literate-programming-init-emacs-block]]
+    - [[#org-insert-literate-programming-code-block][org-insert-literate-programming-code-block]]
+    - [[#org-insert-literate-programming-project-euler-problem-block][org-insert-literate-programming-project-euler-problem-block]]
+  - [[#visibility][Visibility]]
+  - [[#visibility][Visibility]]
+  - [[#reveal][Reveal]]
+  - [[#jira][Jira]]
+  - [[#bookmarks][Bookmarks]]
+    - [[#org-bookmarks-guid][org-bookmarks-guid]]
+    - [[#org-bookmarks-timestamp][org-bookmarks-timestamp]]
+    - [[#org-bookmarks-parse][org-bookmarks-parse]]
+    - [[#org-bookmarks-export-to-json][org-bookmarks-export-to-json]]
+    - [[#org-bookmarks-export-to-html][org-bookmarks-export-to-html]]
+    - [[#org-bookmarks-export-to-nyxt][org-bookmarks-export-to-nyxt]]
+  - [[#finances][Finances]]
+    - [[#export-taxes][export-taxes]]
+    - [[#duluth-hotel-invoiced-expense][duluth-hotel-invoiced-expense]]
+    - [[#nwm-add-monthly-account-data][nwm-add-monthly-account-data]]
+  - [[#magic-the-gathering][Magic the Gathering]]
+    - [[#mtg-cards-owned-file-name][mtg-cards-owned-file-name]]
+    - [[#mtg-card-list][mtg-card-list]]
+    - [[#mtg-deck-search][mtg-deck-search]]
+    - [[#mtg-set-to-table][mtg-set-to-table]]
+    - [[#mtg-modify-owned-count][mtg-modify-owned-count]]
+  - [[#mechwarrior-online][MechWarrior Online]]
+    - [[#mwo-export-mech][mwo-export-mech]]
+  - [[#dungeons-and-dragons-online][Dungeons and Dragons Online]]
+    - [[#ddo-get-item-info][ddo-get-item-info]]
+    - [[#ddo-fix-wiki-description][ddo-fix-wiki-description]]
+- [[#org-website][Org Website]]
+  - [[#configuration][Configuration]]
+    - [[#publish-configuration][Publish Configuration]]
+    - [[#menu-lists][Menu Lists]]
+    - [[#gopher-configuration][Gopher Configuration]]
+  - [[#functions][Functions]]
+    - [[#get-content-property-list][Get Content Property List]]
+    - [[#get-property-list][Get Property List]]
+    - [[#get-property-element][Get Property Element]]
+    - [[#get-data][Get Data]]
+    - [[#get-url][Get URL]]
+    - [[#blog-url][Blog URL]]
+    - [[#is-blog-post][Is Blog Post]]
+    - [[#get-level][Get Level]]
+    - [[#format-headline][Format Headline]]
+    - [[#get-gopher-selector-hostname-port][Get Gopher Selector Hostname Port]]
+    - [[#convert-url-to-gopher-selector-hostname-port][Convert URL to Gopher Selector Hostname Port]]
+    - [[#gopher-justify-lines][Gopher Justify Lines]]
+  - [[#publish-html][Publish HTML]]
+    - [[#derived-backend][Derived Backend]]
+    - [[#publish-to-html][Publish to HTML]]
+    - [[#template][Template]]
+    - [[#blog-contents-template][Blog Contents Template]]
+    - [[#inner-template][Inner Template]]
+    - [[#headline][Headline]]
+    - [[#section][Section]]
+    - [[#footnote-reference][Footnote Reference]]
+    - [[#footnote-section][Footnote Section]]
+  - [[#publish-rss][Publish RSS]]
+    - [[#derived-backend][Derived Backend]]
+    - [[#publish-to-rss][Publish to RSS]]
+    - [[#template][Template]]
+    - [[#inner-template][Inner Template]]
+  - [[#publish-gopher][Publish Gopher]]
+    - [[#derived-backend][Derived Backend]]
+    - [[#publish-to-gopher][Publish to Gopher]]
+    - [[#template][Template]]
+    - [[#inner-template][Inner Template]]
+    - [[#headline][Headline]]
+    - [[#section][Section]]
+    - [[#footnote-reference][Footnote Reference]]
+    - [[#footnote-section][Footnote Section]]
+  - [[#helper-functions][Helper Functions]]
+    - [[#publish][Publish]]
+    - [[#tangle-publish][Tangle Publish]]
+    - [[#tangle-publish-asynchronously][Tangle Publish Asynchronously]]
+    - [[#blog-post-create][Blog Post Create]]
+    - [[#blog-post-update-posted][Blog Post Update Posted]]
+    - [[#unflatten][Unflatten]]
+  - [[#generate-website-emacs-initialization-file][Generate Website Emacs Initialization File]]
+  - [[#tangle-and-publish-script][Tangle and Publish Script]]
+  - [[#remote-synchronization][Remote Synchronization]]
+    - [[#rsync-to-localhost][Rsync to localhost]]
+    - [[#rsync-to-morpheus][Rsync to Morpheus]]
+    - [[#rsync-to-localhost-and-morpheus][Rsync to localhost and Morpheus]]
+    - [[#rsync-to-digitalocean][Rsync to DigitalOcean]]
+  - [[#deployment][Deployment]]
+    - [[#generate-docker-container][Generate Docker Container]]
+- [[#functions][Functions]]
+  - [[#initialization-functions][Initialization Functions]]
+    - [[#require-if-available][require-if-available]]
+    - [[#load-file-if-available][load-file-if-available]]
+    - [[#compile-file-if-needed][compile-file-if-needed]]
+    - [[#with-eval-after-load][with-eval-after-load]]
+    - [[#eval-after-load-with-byte-compile][eval-after-load-with-byte-compile]]
+    - [[#safe-load][safe-load]]
+    - [[#save-mark-and-excursion][save-mark-and-excursion]]
+  - [[#advice-functions][Advice Functions]]
+    - [[#compile-goto-error-org][Compile Goto Error Org]]
+    - [[#find-tag-refresh-etags][Find Tag Refresh ETags]]
+  - [[#general-functions][General Functions]]
+    - [[#list-to-string][list-to-string]]
+    - [[#string-to-list][string-to-list]]
+    - [[#join-strings][join-strings]]
+    - [[#file-to-string][file-to-string]]
+    - [[#safe-substring][safe-substring]]
+    - [[#chomp][chomp]]
+    - [[#trim][trim]]
+    - [[#for-each][for-each]]
+    - [[#is-single][is-single]]
+    - [[#append-element][append-element]]
+    - [[#map-integer][map-integer]]
+    - [[#filter][filter]]
+    - [[#most][most]]
+    - [[#queue][queue]]
+    - [[#quicksort][quicksort]]
+    - [[#hash-table-dump][hash-table-dump]]
+  - [[#emacs-functions][Emacs Functions]]
+    - [[#inside-string][inside-string]]
+    - [[#inside-comment][inside-comment]]
+    - [[#try-finally][try-finally]]
+    - [[#save-buffer-always][save-buffer-always]]
+    - [[#save-buffer-always-maybe][save-buffer-always-maybe]]
+    - [[#describe-function-or-variable-at-point][describe-function-or-variable-at-point]]
+    - [[#mode-line-add][mode-line-add]]
+    - [[#insert-line-below][insert-line-below]]
+    - [[#insert-line-above][insert-line-above]]
+    - [[#move-line-down][move-line-down]]
+    - [[#move-line-up][move-line-up]]
+    - [[#kill-word-enhanced][kill-word-enhanced]]
+    - [[#kill-region-or-word][kill-region-or-word]]
+    - [[#kill-duplicate-lines][kill-duplicate-lines]]
+    - [[#indent-or-expand][indent-or-expand]]
+    - [[#swap-windows][swap-windows]]
+    - [[#toggle-window-split][toggle-window-split]]
+    - [[#enlarge-window-5][enlarge-window-5]]
+    - [[#shrink-window-5][shrink-window-5]]
+    - [[#compile-elisp][compile-elisp]]
+    - [[#join-next-line][join-next-line]]
+    - [[#sort-all-lines][sort-all-lines]]
+    - [[#delete-word][delete-word]]
+    - [[#backward-delete-word][backward-delete-word]]
+    - [[#copy-line][copy-line]]
+    - [[#cut-line][cut-line]]
+    - [[#delete-line][delete-line]]
+    - [[#delete-to-end-of-line][delete-to-end-of-line]]
+    - [[#duplicate-line][duplicate-line]]
+    - [[#duplicate-line-inc][duplicate-line-inc]]
+    - [[#duplicate-sexp][duplicate-sexp]]
+    - [[#display-line-numbers-type-toggle][display-line-numbers-type-toggle]]
+    - [[#goto-line-query][goto-line-query]]
+    - [[#goto-line-enhanced][goto-line-enhanced]]
+    - [[#forward-word-enhanced][forward-word-enhanced]]
+    - [[#backword-word-enhanced][backword-word-enhanced]]
+    - [[#forward-sexp-enhanced][forward-sexp-enhanced]]
+    - [[#backward-sexp-enhanced][backward-sexp-enhanced]]
+    - [[#scroll-up-enhanced][scroll-up-enhanced]]
+    - [[#scroll-down-enhanced][scroll-down-enhanced]]
+    - [[#scroll-up-command-enhanced][scroll-up-command-enhanced]]
+    - [[#scroll-down-command-enhanced][scroll-down-command-enhanced]]
+    - [[#downcase-word-enhanced][downcase-word-enhanced]]
+    - [[#upcase-word-enhanced][upcase-word-enhanced]]
+    - [[#capitalize-word-enhanced][capitalize-word-enhanced]]
+    - [[#toggle-word-case][toggle-word-case]]
+    - [[#eval-current-sexp][eval-current-sexp]]
+    - [[#eval-sexp-buffer][eval-sexp-buffer]]
+    - [[#eval-and-replace-last-sexp][eval-and-replace-last-sexp]]
+    - [[#eval-and-replace-current-sexp][eval-and-replace-current-sexp]]
+    - [[#macroexpand-and-replace][macroexpand-and-replace]]
+    - [[#calc-eval-and-replace-region][calc-eval-and-replace-region]]
+    - [[#calc-eval-and-replace-line][calc-eval-and-replace-line]]
+    - [[#indent-current-sexp][indent-current-sexp]]
+    - [[#indent-sexp-buffer][indent-sexp-buffer]]
+    - [[#comment-or-uncomment-sexp][comment-or-uncomment-sexp]]
+    - [[#rename-buffer-and-file][rename-buffer-and-file]]
+    - [[#move-buffer-and-file][move-buffer-and-file]]
+    - [[#delete-buffer-and-file][delete-buffer-and-file]]
+    - [[#expand-relative-file-name][expand-relative-file-name]]
+    - [[#remove-trailing-blanks][remove-trailing-blanks]]
+    - [[#remove-tabs][remove-tabs]]
+    - [[#indent-down][indent-down]]
+    - [[#server-start-maybe][server-start-maybe]]
+    - [[#load-bookmarks][load-bookmarks]]
+    - [[#find-file-updir][find-file-updir]]
+    - [[#find-file-eof][find-file-eof]]
+    - [[#mark-full-word][mark-full-word]]
+    - [[#term-buffer][term-buffer]]
+    - [[#term-ansi][term-ansi]]
+    - [[#pop-up-shell][pop-up-shell]]
+    - [[#pop-up-shell-toggle][pop-up-shell-toggle]]
+    - [[#switch-to-scratch][switch-to-scratch]]
+    - [[#switch-to-scratch-for-current-mode][switch-to-scratch-for-current-mode]]
+    - [[#new-scratch][new-scratch]]
+    - [[#new-emacs-lisp-scratch][new-emacs-lisp-scratch]]
+    - [[#recreate-scratch-when-killed][recreate-scratch-when-killed]]
+    - [[#switch-to-messages][switch-to-messages]]
+    - [[#diff-current-buffer][diff-current-buffer]]
+    - [[#get-char-property-here][get-char-property-here]]
+    - [[#comments-in-buffer][comments-in-buffer]]
+    - [[#count-words][count-words]]
+    - [[#count-words-paragraph][count-words-paragraph]]
+    - [[#date-offset][date-offset]]
+    - [[#ascii-table][ascii-table]]
+    - [[#powers-of-two-table][powers-of-two-table]]
+    - [[#match-paren][match-paren]]
+    - [[#memory-use-counts-pretty][memory-use-counts-pretty]]
+    - [[#git-paste-cleanup][git-paste-cleanup]]
+    - [[#execute-buffer][execute-buffer]]
+    - [[#file-in-exec-path][file-in-exec-path]]
+    - [[#resolve-file-link][resolve-file-link]]
+    - [[#unicode-shell][unicode-shell]]
+    - [[#async-spinner][async-spinner]]
+    - [[#time][time]]
+    - [[#package-desc-summary-to-kill-ring][package-desc-summary-to-kill-ring]]
+    - [[#toggle-case-fold-search][toggle-case-fold-search]]
+  - [[#emacs-grouped-functions][Emacs Grouped Functions]]
+    - [[#buffer-kill][Buffer Kill]]
+      - [[#kill-buffer][kill-buffer]]
+      - [[#kill-buffer-query-functions-maybe-bury][kill-buffer-query-functions-maybe-bury]]
+      - [[#kill-or-bury-buffer][kill-or-bury-buffer]]
+      - [[#kill-other-window-buffer][kill-other-window-buffer]]
+      - [[#kill-other-window-buffer-and-delete-window][kill-other-window-buffer-and-delete-window]]
+    - [[#clipboard][Clipboard]]
+    - [[#automatic-indent-on-yank][Automatic Indent on Yank]]
+    - [[#occur][Occur]]
+      - [[#occur-inverse][occur-inverse]]
+      - [[#occur-remove][occur-remove]]
+  - [[#text-conversion-functions][Text Conversion Functions]]
+    - [[#set-coding-system][set-coding-system]]
+    - [[#escape-xml][escape-xml]]
+    - [[#unescape-xml][unescape-xml]]
+    - [[#titleize][titleize]]
+    - [[#titleize-word-enhanced][titleize-word-enhanced]]
+    - [[#titleize-line-or-region][titleize-line-or-region]]
+    - [[#unfill-paragraph][unfill-paragraph]]
+    - [[#double-space-punctuation][double-space-punctuation]]
+    - [[#single-space-punctuation][single-space-punctuation]]
+  - [[#text-inserting-functions][Text Inserting Functions]]
+    - [[#insert-timestamp][insert-timestamp]]
+    - [[#insert-path][insert-path]]
+    - [[#uuid][uuid]]
+    - [[#insert-uuid][insert-uuid]]
+    - [[#uuid-xml][uuid-xml]]
+    - [[#insert-uuid-xml][insert-uuid-xml]]
+    - [[#insert-incrementing-vertical-numbers][insert-incrementing-vertical-numbers]]
+    - [[#append-char-to-column][append-char-to-column]]
+    - [[#append-equal-to-column-80][append-equal-to-column-80]]
+    - [[#append-dash-to-column-80][append-dash-to-column-80]]
+    - [[#append-asterisk-to-column-80][append-asterisk-to-column-80]]
+    - [[#insert-lisp-comment-block-equal][insert-lisp-comment-block-equal]]
+    - [[#insert-lisp-comment-block-dash][insert-lisp-comment-block-dash]]
+    - [[#insert-center-lisp-comment][insert-center-lisp-comment]]
+    - [[#insert-c-comment-block][insert-c-comment-block]]
+    - [[#insert-c-comment-stub][insert-c-comment-stub]]
+    - [[#insert-db-change-log-template-line][insert-db-change-log-template-line]]
+    - [[#insert-db-change-log-template-line-legacy][insert-db-change-log-template-line-legacy]]
+    - [[#insert-xml-header][insert-xml-header]]
+    - [[#insert-lexical-binding][insert-lexical-binding]]
+    - [[#insert-figlet][insert-figlet]]
+    - [[#insert-password][insert-password]]
+    - [[#insert-password-phrase][insert-password-phrase]]
+    - [[#insert-license-gpl][insert-license-gpl]]
+    - [[#insert-license-mit][insert-license-mit]]
+    - [[#insert-license-apache][insert-license-apache]]
+  - [[#external-program-functions][External Program Functions]]
+    - [[#insert-date][insert-date]]
+    - [[#insert-datetime][insert-datetime]]
+    - [[#insert-time][insert-time]]
+    - [[#insert-date-stamp][insert-date-stamp]]
+    - [[#insert-fortune][insert-fortune]]
+    - [[#insert-quote][insert-quote]]
+    - [[#insert-arch-package-description][insert-arch-package-description]]
+    - [[#set-arch-package-description][set-arch-package-description]]
+  - [[#newer-emacs-functionality-functions][Newer Emacs Functionality Functions]]
+    - [[#line-number-at-pos][line-number-at-pos]]
+    - [[#save-mark-and-excursion][save-mark-and-excursion]]
+  - [[#grep-search-functions][Grep Search Functions]]
+    - [[#grep-elisp][grep-elisp]]
+    - [[#grep-elisp-extended][grep-elisp-extended]]
+    - [[#grep-custom][grep-custom]]
+    - [[#grep-custom-generate][grep-custom-generate]]
+    - [[#grep-bin][grep-bin]]
+    - [[#grep-clojure][grep-clojure]]
+    - [[#grep-clisp][grep-clisp]]
+    - [[#grep-emacs-init][grep-emacs-init]]
+    - [[#grep-home][grep-home]]
+    - [[#grep-home-init][grep-home-init]]
+    - [[#grep-org][grep-org]]
+    - [[#grep-python][grep-python]]
+    - [[#grep-racket][grep-racket]]
+    - [[#grep-web][grep-web]]
+  - [[#tags-file-functions][TAGS File Functions]]
+    - [[#etags-create][etags-create]]
+  - [[#code-formatting-functions][Code Formatting Functions]]
+    - [[#indent-region-or-thing][indent-region-or-thing]]
+    - [[#indent-buffer][indent-buffer]]
+    - [[#find-code-block][find-code-block]]
+    - [[#align-assignment-commands][align-assignment-commands]]
+    - [[#align-assignment-commands-indent][align-assignment-commands-indent]]
+    - [[#align-declaration-commands][align-declaration-commands]]
+    - [[#align-declaration-commands-indent][align-declaration-commands-indent]]
+    - [[#align-comments][align-comments]]
+    - [[#align-whitespace][align-whitespace]]
+    - [[#java-toggle-comment-type][java-toggle-comment-type]]
+    - [[#java-remove-comments][java-remove-comments]]
+    - [[#java-remove-comments][java-remove-comments]]
+    - [[#lisp-to-camel-case][lisp-to-camel-case]]
+    - [[#camel-case-to-lisp][camel-case-to-lisp]]
+    - [[#c-pretty-print-buffer][c-pretty-print-buffer]]
+    - [[#ruby-pretty-print-buffer][ruby-pretty-print-buffer]]
+    - [[#java-pretty-print-buffer][java-pretty-print-buffer]]
+    - [[#json-pretty-print-buffer][json-pretty-print-buffer]]
+    - [[#xml-format][xml-format]]
+  - [[#code-inserting-functions][Code Inserting Functions]]
+    - [[#project-euler-insert-template][project-euler-insert-template]]
+    - [[#insert-tree][insert-tree]]
+  - [[#parsers][Parsers]]
+  - [[#esoteric-functions][Esoteric Functions]]
+    - [[#fahrenheitcelsius-conversions][Fahrenheit/Celsius Conversions]]
+      - [[#fahrenheit-to-celsius][fahrenheit-to-celsius]]
+      - [[#fahrenheit-to-celsius-query][fahrenheit-to-celsius-query]]
+      - [[#celsius-to-fahrenheit][celsius-to-fahrenheit]]
+      - [[#celsius-to-fahrenheit-query][celsius-to-fahrenheit-query]]
+    - [[#base-conversion][base-conversion]]
+    - [[#ldif-update-xml][ldif-update-xml]]
+    - [[#lisp-to-racket-conversion][lisp-to-racket-conversion]]
+    - [[#integer-to-roman-numerals][integer-to-roman-numerals]]
+  - [[#programs][Programs]]
+    - [[#national-debt][National Debt]]
+    - [[#flesch-readability-index][Flesch Readability Index]]
+    - [[#phone-number-words][Phone Number Words]]
+    - [[#keyboard-cat-mode][Keyboard Cat Mode]]
+    - [[#keyboard-display-mode][Keyboard Display Mode]]
+    - [[#star-wars-scroll][Star Wars Scroll]]
+  - [[#games][Games]]
+    - [[#towers-of-hanoi][Towers of Hanoi]]
+- [[#modules][Modules]]
+  - [[#2048][2048]]
+  - [[#abook][abook]]
+  - [[#abbrev-mode][abbrev-mode]]
+  - [[#ace-jump-mode][ace-jump-mode]]
+  - [[#ace-window][ace-window]]
+  - [[#ag][ag]]
+  - [[#aggressive-indent][aggressive-indent]]
+  - [[#alert][alert]]
+  - [[#analog-clock][analog-clock]]
+  - [[#any-ini-mode][any-ini-mode]]
+  - [[#anzu][anzu]]
+  - [[#async][async]]
+  - [[#auto-compile][auto-compile]]
+  - [[#auto-complete][auto-complete]]
+  - [[#avy][avy]]
+  - [[#bash-completion][bash-completion]]
+  - [[#bbdb][bbdb]]
+  - [[#beacon][beacon]]
+  - [[#boxquote][boxquote]]
+  - [[#browse-kill-ring][browse-kill-ring]]
+  - [[#bs][bs]]
+  - [[#calc][calc]]
+  - [[#cedetsemantic][cedet/semantic]]
+  - [[#centered-cursor-mode][centered-cursor-mode]]
+  - [[#color-theme][color-theme]]
+  - [[#command-log][command-log]]
+  - [[#company][company]]
+  - [[#compile][compile]]
+  - [[#cycle-buffer][cycle-buffer]]
+  - [[#cua][cua]]
+  - [[#decimation][decimation]]
+  - [[#define-word][define-word]]
+  - [[#demo-it][demo-it]]
+  - [[#doom-modeline][doom-modeline]]
+  - [[#easy-kill][easy-kill]]
+  - [[#eldoc][eldoc]]
+  - [[#elfeed][elfeed]]
+  - [[#elnode][elnode]]
+  - [[#elpher][elpher]]
+  - [[#elscreen][elscreen]]
+  - [[#eperiodic][eperiodic]]
+  - [[#epoch][epoch]]
+  - [[#ert][ert]]
+  - [[#eterm-256color][eterm-256color]]
+  - [[#exec-path-from-shell][exec-path-from-shell]]
+  - [[#expand-region][expand-region]]
+  - [[#flash-paren][flash-paren]]
+  - [[#flycheck][flycheck]]
+  - [[#flymake-cursor][flymake-cursor]]
+  - [[#flyspell][flyspell]]
+  - [[#fuzzy][fuzzy]]
+  - [[#git-gutter][git-gutter]]
+  - [[#helm-swiper][helm (swiper)]]
+  - [[#helpful][helpful]]
+  - [[#hippie-exp][hippie-exp]]
+  - [[#htmlize][htmlize]]
+  - [[#hungry-delete][hungry-delete]]
+  - [[#ibuffer][ibuffer]]
+  - [[#identica][identica]]
+  - [[#ido][ido]]
+  - [[#iedit][iedit]]
+  - [[#igrep][igrep]]
+  - [[#imdb][imdb]]
+  - [[#info-look][info-look]]
+  - [[#ini][ini]]
+  - [[#ispell][ispell]]
+  - [[#ivy-counselswiper][ivy (counsel/swiper)]]
+  - [[#json][json]]
+  - [[#keats][keats]]
+  - [[#key-chord][key-chord]]
+  - [[#keyfreq][keyfreq]]
+  - [[#langtool][langtool]]
+  - [[#longlines][longlines]]
+  - [[#lusty-explorer][lusty-explorer]]
+  - [[#magit][magit]]
+  - [[#magpie][magpie]]
+  - [[#mingus][mingus]]
+  - [[#minions][minions]]
+  - [[#msf-abbrev][msf-abbrev]]
+  - [[#multiple-cursors][multiple-cursors]]
+  - [[#neotree][neotree]]
+  - [[#occur][occur]]
+  - [[#openwith][openwith]]
+  - [[#outline][outline]]
+  - [[#pabbrev][pabbrev]]
+  - [[#package-lint][package-lint]]
+  - [[#paredit][paredit]]
+  - [[#pdf-tools][pdf-tools]]
+  - [[#persistent-scratch][persistent-scratch]]
+  - [[#pivotal-tracker][pivotal-tracker]]
+  - [[#planner][planner]]
+  - [[#popper][popper]]
+  - [[#powerline][powerline]]
+  - [[#proced][proced]]
+  - [[#project][project]]
+  - [[#projectile][projectile]]
+  - [[#ps-ccrypt][ps-ccrypt]]
+  - [[#psvn][psvn]]
+  - [[#recentf][recentf]]
+  - [[#rect-mark][rect-mark]]
+  - [[#regex-tool][regex-tool]]
+  - [[#remind-bindings][remind-bindings]]
+  - [[#replacer][replacer]]
+  - [[#s][s]]
+  - [[#saveplace][saveplace]]
+  - [[#selected][selected]]
+  - [[#session][session]]
+  - [[#simple-mpc][simple-mpc]]
+  - [[#slack][slack]]
+  - [[#smerge][smerge]]
+  - [[#smex][smex]]
+  - [[#sokoban][sokoban]]
+  - [[#split-move][split-move]]
+  - [[#spinner][spinner]]
+  - [[#sudoku][sudoku]]
+  - [[#switch-window][switch-window]]
+  - [[#sunrise][sunrise]]
+  - [[#table][table]]
+  - [[#telnet][telnet]]
+  - [[#template][template]]
+  - [[#timeclock][timeclock]]
+  - [[#time-stamp][time-stamp]]
+  - [[#totd][totd]]
+  - [[#tramp][tramp]]
+  - [[#twit][twit]]
+  - [[#undo-tree][undo-tree]]
+  - [[#uniquify][uniquify]]
+  - [[#vimish-fold][vimish-fold]]
+  - [[#w3m][w3m]]
+  - [[#wanderlust][wanderlust]]
+  - [[#web-query][web-query]]
+  - [[#webjump][webjump]]
+  - [[#weblogger][weblogger]]
+  - [[#wgrep][wgrep]]
+  - [[#which-key][which-key]]
+  - [[#wtf][wtf]]
+  - [[#wttrin][wttrin]]
+  - [[#yascroll][yascroll]]
+- [[#lsp-mode][LSP Mode]]
+  - [[#setup][Setup]]
+- [[#modes][Modes]]
+  - [[#setup][Setup]]
+  - [[#asm][ASM]]
+  - [[#auto-indent-mode][Auto-Indent Mode]]
+  - [[#brainfuck][Brainfuck]]
+  - [[#basic][BASIC]]
+  - [[#c-mode][C Mode]]
+  - [[#calendar][Calendar]]
+  - [[#clojure-mode][Clojure Mode]]
+  - [[#css-mode][CSS Mode]]
+  - [[#dired][Dired]]
+  - [[#ediff][Ediff]]
+  - [[#ergoemacs-mode][Ergoemacs Mode]]
+  - [[#erlang-mode][Erlang Mode]]
+  - [[#fundamental-mode][Fundamental Mode]]
+  - [[#geiser-racket-scheme-repl][Geiser (Racket Scheme REPL)]]
+  - [[#gnu-plot][GNU Plot]]
+  - [[#go-mode][Go Mode]]
+  - [[#gpg-mode][GPG Mode]]
+  - [[#graphviz-dot-mode][Graphviz Dot Mode]]
+  - [[#html-mode][HTML Mode]]
+  - [[#ini-mode][INI Mode]]
+  - [[#java-mode][Java Mode]]
+  - [[#java-jde-mode][Java: JDE Mode]]
+  - [[#java-flymake-mode-for-jde][Java: Flymake Mode for JDE]]
+  - [[#java-jdee-mode][Java: JDEE Mode]]
+  - [[#java-meghanada-mode][Java: Meghanada Mode]]
+  - [[#java-android-mode][Java: Android Mode]]
+  - [[#javascript-mode][Javascript Mode]]
+  - [[#javascript-js2-mode][Javascript: js2 Mode]]
+  - [[#javascript-js3-mode][Javascript: js3 Mode]]
+  - [[#json-mode][JSON Mode]]
+  - [[#kotlin-mode][Kotlin Mode]]
+  - [[#ledger-mode][Ledger Mode]]
+  - [[#lisp-mode][Lisp Mode]]
+  - [[#lua-mode][LUA Mode]]
+  - [[#makefile-mode][Makefile Mode]]
+  - [[#markdown-mode][Markdown Mode]]
+  - [[#muse-mode][Muse Mode]]
+  - [[#perl-mode][Perl Mode]]
+  - [[#plantuml-mode][PlantUML Mode]]
+  - [[#prolog-mode][Prolog Mode]]
+  - [[#python-mode-ipython-version][Python Mode (iPython Version)]]
+  - [[#python-mode][Python Mode]]
+  - [[#racket-mode][Racket Mode]]
+  - [[#ruby-mode][Ruby Mode]]
+  - [[#rust-mode][Rust Mode]]
+  - [[#sh-script][SH Script]]
+  - [[#shell-mode][Shell Mode]]
+  - [[#slime-mode-common-lisp][Slime Mode (Common Lisp)]]
+  - [[#sql-mode][SQL Mode]]
+  - [[#text-mode][Text Mode]]
+  - [[#typescript-mode][TypeScript Mode]]
+  - [[#v-mode][V Mode]]
+  - [[#workgroups-mode][Workgroups Mode]]
+  - [[#xmlsgml-mode][XML/SGML Mode]]
+  - [[#xml-mode][XML Mode]]
+  - [[#global-mode][Global Mode]]
+- [[#menus][Menus]]
+  - [[#setup][Setup]]
+    - [[#easy-menu][Easy Menu]]
+    - [[#auto-menu][Auto-Menu]]
+    - [[#find-or-browse-file][Find or Browse File]]
+  - [[#buffer-switch-menu][Buffer-Switch Menu]]
+  - [[#dired-menu][Dired Menu]]
+  - [[#load-menu][Load Menu]]
+  - [[#application-menu][Application Menu]]
+  - [[#run-file-menu][Run-File Menu]]
+  - [[#website-menu][Website Menu]]
+  - [[#package-manager-menu][Package Manager Menu]]
+  - [[#miscellaneous-menu][Miscellaneous Menu]]
+  - [[#manuals-menu][Manuals Menu]]
+  - [[#web-menu][Web Menu]]
+  - [[#insert-menu][Insert Menu]]
+  - [[#yank-menu][Yank Menu]]
+  - [[#weather-menu][Weather Menu]]
+  - [[#games-menu][Games Menu]]
+- [[#snippets][Snippets]]
+  - [[#setup][Setup]]
+  - [[#org-mode][Org-Mode]]
+    - [[#literate-block-init-emacs-lbie][Literate Block Init Emacs (lbie)]]
+    - [[#literate-block-emacs-lisp-lbel][Literate Block Emacs Lisp (lbel)]]
+    - [[#literate-block-shell-lbsh][Literate Block Shell (lbsh)]]
+    - [[#literate-block-racket-lbr][Literate Block Racket (lbr)]]
+    - [[#literate-block-kotlin-lbk][Literate Block Kotlin (lbk)]]
+- [[#hydras][Hydras]]
+  - [[#setup][Setup]]
+- [[#windows-os][Windows OS]]
+- [[#gnus][Gnus]]
+- [[#erc][ERC]]
+  - [[#setup][Setup]]
+  - [[#customization][Customization]]
+  - [[#functions][Functions]]
+    - [[#nick-from-system-name][Nick from System Name]]
+    - [[#localhost][Localhost]]
+    - [[#localhost-bitlbee][Localhost Bitlbee]]
+    - [[#freenode][Freenode]]
+    - [[#work][Work]]
+  - [[#commands][Commands]]
+    - [[#uptime][UPTIME]]
+    - [[#wi][WI]]
+    - [[#identify][IDENTIFY]]
+- [[#work][Work]]
+  - [[#modules][Modules]]
+  - [[#settings][Settings]]
+  - [[#functions][Functions]]
+    - [[#work-export-buzzfeed-analytics][work-export-buzzfeed-analytics]]
+    - [[#work-update-buzzfeed-analytics-dates][work-update-buzzfeed-analytics-dates]]
+    - [[#work-linkify-jira-card][work-linkify-jira-card]]
+    - [[#work-git-commit-start-end-log][work-git-commit-start-end-log]]
+    - [[#work-insert-release-pr-list][work-insert-release-pr-list]]
+    - [[#work-insert-release-experiment-changes][work-insert-release-experiment-changes]]
+    - [[#work-time-tracking-report][work-time-tracking-report]]
+  - [[#menu][Menu]]
+- [[#other][Other]]
+  - [[#load-other-configuration-files][Load Other Configuration Files]]
+  - [[#load-work-configuration-files][Load Work Configuration Files]]
+  - [[#load-customization-file][Load Customization File]]
+  - [[#apply-advice][Apply Advice]]
+  - [[#apply-patches][Apply Patches]]
+- [[#aliases][Aliases]]
+  - [[#general][General]]
+- [[#final-setup][Final Setup]]
+  - [[#set-key-bindings][Set Key Bindings]]
+  - [[#turn-on-cua-mode][Turn on CUA Mode]]
+  - [[#turn-on-menu-bar][Turn on Menu-Bar]]
+  - [[#compile-personal-modules][Compile Personal Modules]]
+  - [[#upgrade-quelpa-asynchronously][Upgrade Quelpa Asynchronously]]
+  - [[#start-emacs-server][Start Emacs Server]]
+  - [[#move-to-current-desktop][Move to Current Desktop]]
+  - [[#clear-mark][Clear Mark]]
+  - [[#restore-open-buffers][Restore Open Buffers]]
+  - [[#remove-logging-buffers][Remove Logging Buffers]]
+  - [[#fix-info-directory-list][Fix Info-Directory-List]]
+  - [[#turn-off-scroll-bar][Turn off Scroll Bar]]
+  - [[#turn-off-debugging][Turn off Debugging]]
+  - [[#open-messages-buffer-on-error][Open Messages Buffer on Error]]
+- [[#end][End]]
+:END:
 
 * Overview
   :PROPERTIES:
@@ -3778,6 +4490,23 @@
       ;;         remember-annotation-functions planner-annotation-functions))
     #+END_SRC
 
+*** TOC
+    :PROPERTIES:
+    :CUSTOM_ID: org-mode-toc
+    :END:
+
+#+BEGIN_SRC emacs-lisp
+  ;;------------------------------------------------------------------------------
+  ;;; ORG MODE: TOC
+  ;;------------------------------------------------------------------------------
+
+  (init-message 2 "Org Mode: TOC")
+
+  (use-package org-make-toc
+    :straight t
+    :hook (org-mode . org-make-toc-mode))
+#+END_SRC
+
 *** Modules
     :PROPERTIES:
     :CUSTOM_ID: org-mode-modules
@@ -6202,6 +6931,45 @@
             (org-fix-literate-programming-heading)))
       #+END_SRC
 
+*** +Visibility+
+    :PROPERTIES:
+    :CUSTOM_ID: org-mode-visibility
+    :END:
+
+    Persist visibility snapshot of org files.
+
+    #+BEGIN_SRC emacs-lisp :tangle no
+      ;; ;;------------------------------------------------------------------------------
+      ;; ;;; Org Mode: Visibility
+      ;; ;;------------------------------------------------------------------------------
+
+      ;; (init-message 2 "Org Mode: Visibility")
+
+      ;; (use-package org-visibility
+      ;;   ;;:straight t
+      ;;   :load-path (lambda () (file-truename (expand-file-name "~/code/github-nullman/emacs-org-visibility")))
+      ;;   :after (org)
+      ;;   :demand t
+      ;;   :bind (:map org-mode-map
+      ;;               ("C-x C-v" . org-visibility-force-save) ; defaults to `find-alternative-file'
+      ;;               ("C-x M-v" . org-visibility-remove))    ; defaults to undefined
+      ;;   :custom
+      ;;   ;; list of directories and files to automatically persist and restore visibility state of
+      ;;   (org-visibility-include-paths `(,(file-truename "~/.emacs.d/init-emacs.org")
+      ;;                                   ;;,(file-truename "~/code/github-nullman")
+      ;;                                   ;;,(file-truename "~/code/gitlab-kylesherman")
+      ;;                                   ,(file-truename "~/dev")
+      ;;                                   ,(file-truename "~/doc/bbs")
+      ;;                                   ,(file-truename "~/org")
+      ;;                                   ,(file-truename "~/web/org")))
+      ;;   ;; list of directories and files to not persist and restore visibility state of
+      ;;   (org-visibility-exclude-paths `(,(file-truename "~/org/old")
+      ;;                                   ,(file-truename "~/org/test")))
+      ;;   :config
+      ;;   ;; enable all hooks
+      ;;   (org-visibility-enable-hooks))
+    #+END_SRC
+
 *** Visibility
     :PROPERTIES:
     :CUSTOM_ID: org-mode-visibility
@@ -6218,12 +6986,12 @@
 
       (use-package org-visibility
         ;;:straight t
-        ;;:load-path (lambda () (file-truename (expand-file-name "org-visibility" local-modules-dir)))
         :load-path (lambda () (file-truename (expand-file-name "~/code/github-nullman/emacs-org-visibility")))
         :after (org)
         :demand t
-        :bind (:map org-mode-map
-                    ("C-x C-v" . org-visibility-force-save)) ; defaults to `find-alternative-file'
+        :bind (:map org-visibility-mode-map
+                    ("C-x C-v" . org-visibility-force-save) ; defaults to `find-alternative-file'
+                    ("C-x M-v" . org-visibility-remove))    ; defaults to undefined
         :custom
         ;; list of directories and files to automatically persist and restore visibility state of
         (org-visibility-include-paths `(,(file-truename "~/.emacs.d/init-emacs.org")
@@ -6235,10 +7003,7 @@
                                         ,(file-truename "~/web/org")))
         ;; list of directories and files to not persist and restore visibility state of
         (org-visibility-exclude-paths `(,(file-truename "~/org/old")
-                                        ,(file-truename "~/org/test")))
-        :config
-        ;; enable all hooks
-        (org-visibility-enable-hooks))
+                                        ,(file-truename "~/org/test"))))
     #+END_SRC
 
 *** +Reveal+
@@ -19979,6 +20744,7 @@
 
       (use-package elfeed
         :straight t
+        :commands (elfeed-bookmarks-edit)
         :bind (:map elfeed-search-mode-map
                     ("h" . elfeed-search-mode-help)
                     ("?" . elfeed-search-mode-help))
@@ -20088,7 +20854,6 @@
 
     #+BEGIN_SRC emacs-lisp :tangle ~/config/emacs/.emacs.d/elfeed-bookmarks
       ;; Elfeed Bookmarks File
-
       (
        ;; Emacs
        (:name "Reddit Emacs Channel" :html "https://www.reddit.com/" :rss "https://www.reddit.com/r/emacs.rss" :tag "emacs")
@@ -20100,6 +20865,7 @@
        (:name "Mastering Emacs" :html "https://www.masteringemacs.org/" :rss "https://www.masteringemacs.org/feed/" :tag "emacs")
        (:name "Sacha Chua" :html "https://sachachua.com/blog/" :rss "https://sachachua.com/blog/feed/" :tag "emacs")
        (:name "Kitchin Group" :html "https://kitchingroup.cheme.cmu.edu/blog/" :rss "https://kitchingroup.cheme.cmu.edu/blog/feed/index.xml" :tag "emacs")
+       (:name "Karthinks" :html "https://karthinks.com/" :rss "https://karthinks.com/index.xml" :tag "emacs")
        ;; Linux
        (:name "Reddit Linux Channel" :html "https://www.reddit.com/r/linux." :rss "https://www.reddit.com/r/linux.rss" :tag "linux")
        (:name "It's FOSS" :html "https://itsfoss.com/all-blog-posts/" :rss "https://itsfoss.com/feed/" :tag "linux")
@@ -20187,7 +20953,6 @@
 
     #+BEGIN_SRC emacs-lisp :tangle ~/config/emacs/.emacs.d/elpher-bookmarks
       ;; Elpher Bookmarks File
-
       (("Gopherpedia" "gopher://gopherpedia.com/1")
        ("Gopher Project" "gopher://gopherproject.org/1")
        ("Floodgap Systems" "gopher://gopher.floodgap.com/1")
@@ -22761,6 +23526,35 @@
       ;;       (add-hook 'diary-display-hook #'sort-diary-entries)
       ;;       (add-hook 'diary-display-hook #'fancy-schedule-display-desk-calendar :append))))
     #+END_SRC
+
+*** popper
+    :PROPERTIES:
+    :CUSTOM_ID: modules-popper
+    :END:
+
+#+BEGIN_SRC emacs-lisp
+  ;;------------------------------------------------------------------------------
+  ;;; Modules: popper
+  ;;------------------------------------------------------------------------------
+
+  (init-message 2 "Modules: popper")
+
+  (use-package popper
+    :straight t
+    :bind (("C-`" . popper-toggle-latest)
+           ("C-M-`" . popper-cycle)
+           ("C-x C-`" . popper-toggle-type))
+    :custom
+    (popper-reference-buffers
+          '("\\*Messages\\*"
+            "Output\\*$"
+            "\\*Async Shell Command\\*"
+            help-mode
+            compilation-mode))
+    :init
+    (popper-mode +1)
+    (popper-echo-mode +1))
+#+END_SRC
 
 *** +powerline+
     :PROPERTIES:
