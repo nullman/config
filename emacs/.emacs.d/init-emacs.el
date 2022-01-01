@@ -2612,7 +2612,12 @@
 (init-message 2 "Org Mode: TOC")
 
 (use-package org-make-toc
-  :straight t
+  ;; original author is not maintaining the code
+  ;; :straight (org-make-toc :type git :host github :repo "alphapapa/org-make-toc")
+  ;; forked branch fixes a bug
+  :straight (org-make-toc :type git :host github
+                          :repo "nullman/org-make-toc"
+                          :branch "fix/drawer-end-regexp")
   :hook (org-mode . org-make-toc-mode))
 ;; TOC:1 ends here
 
@@ -10767,6 +10772,31 @@
                   (insert " lexical-binding: t;")))
             (insert ";; -*- lexical-binding: t; -*-\n;;\n"))))
 ;; insert-lexical-binding:1 ends here
+
+;; [[file:init-emacs.org::*insert-toc-header][insert-toc-header:1]]
+      ;;------------------------------------------------------------------------------
+      ;;;; Functions: Text Inserting Functions: insert-toc-header
+      ;;------------------------------------------------------------------------------
+
+      (init-message 3 "Functions: Text Inserting Functions: insert-toc-header")
+
+      (defun insert-toc-header ()
+        "Insert `org-mode' table of contents (TOC) header."
+        (interactive "*")
+        (let ((text
+               `("* Table of Contents"
+                 "  :PROPERTIES:"
+                 "  :CUSTOM_ID: table-of-contents"
+                 "  :TOC: :include all"
+                 "  :END:"
+                 ""
+                 "  :CONTENTS:"
+                 "  :END:"
+                 "")))
+          (dolist (x text)
+            (insert x)
+            (newline))))
+;; insert-toc-header:1 ends here
 
 ;; [[file:init-emacs.org::*insert-figlet][insert-figlet:1]]
       ;;------------------------------------------------------------------------------
@@ -19017,6 +19047,7 @@
        ("Capture Table" "(table-capture (mark) (point) \"  \" \"\n\" 'left 20)" "Capture table from selected text.")
        ("Apostrophe" "(insert \"’\")" "Insert a fancy apostrophe `’'.")
        ("Lexical Binding" "insert-lexical-binding" "Insert elisp lexical binding header.")
+       ("TOC Header" "insert-toc-header" "Insert org-mode table of contents header.")
        ))
     ;; ("Muse"
     ;;  ("Muse Header" "muse-header" "Insert Muse standard header line.")
