@@ -4615,7 +4615,10 @@
                                       ,(file-truename "~/web/org")))
       ;; list of directories and files to not persist and restore visibility state of
       (org-visibility-exclude-paths `(,(file-truename "~/org/old")
-                                      ,(file-truename "~/org/test"))))
+                                      ,(file-truename "~/org/test")))
+      :config
+      ;; enable org-visibility-mode
+      (org-visibility-mode 1))
 ;; Visibility:1 ends here
 
 ;; [[file:init-emacs.org::*org-bookmarks-guid][org-bookmarks-guid:1]]

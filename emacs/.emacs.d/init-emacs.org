@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-01-01 14:37 (kyle)>
+  #+TIMESTAMP: <2022-01-03 00:14 (kyle)>
 
 * Table of Contents
   :PROPERTIES:
@@ -7011,7 +7011,10 @@
                                         ,(file-truename "~/web/org")))
         ;; list of directories and files to not persist and restore visibility state of
         (org-visibility-exclude-paths `(,(file-truename "~/org/old")
-                                        ,(file-truename "~/org/test"))))
+                                        ,(file-truename "~/org/test")))
+        :config
+        ;; enable org-visibility-mode
+        (org-visibility-mode 1))
     #+END_SRC
 
 *** +Reveal+
