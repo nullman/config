@@ -849,7 +849,7 @@ alias dprll="dpkg-reconfigure linuxlogo"
 #        linuxlogo-setup         setup linuxlogo config
 alias linuxlogo-setup="
     \$(cat /etc/linux_logo.conf | grep -q '^-l ubuntu$') || \
-    echo '-l ubuntu' >> /etc/linux_logo.conf"
+    echo '-l ubuntu' | sudo tee -a /etc/linux_logo.conf"
 #        llmotd                  update /etc/motd with linuxlogo
 alias llmotd="
     linuxlogo > /etc/motd

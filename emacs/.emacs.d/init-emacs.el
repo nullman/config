@@ -14203,6 +14203,17 @@
       (advice-add 'cycle-buffer-backward-permissive :around #'advice--ignore-errors))
 ;; cycle-buffer:1 ends here
 
+;; [[file:init-emacs.org::*decide][decide:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: decide
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: decide")
+
+(use-package decide
+  :straight t)
+;; decide:1 ends here
+
 ;; [[file:init-emacs.org::*define-word][define-word:1]]
     ;;------------------------------------------------------------------------------
     ;;; Modules: define-word

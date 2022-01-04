@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-01-03 00:14 (kyle)>
+  #+TIMESTAMP: <2022-01-03 23:33 (kyle)>
 
 * Table of Contents
   :PROPERTIES:
@@ -480,6 +480,7 @@
   - [[#compile][compile]]
   - [[#cycle-buffer][cycle-buffer]]
   - [[#cua][cua]]
+  - [[#decide][decide]]
   - [[#decimation][decimation]]
   - [[#define-word][define-word]]
   - [[#demo-it][demo-it]]
@@ -20593,6 +20594,24 @@
       ;;   ;; (add-hook 'cua-rectangle-mark-mode-hook #'local-cua-rectangle-mark-mode-hook)
       ;;   )
     #+END_SRC
+
+*** decide
+    :PROPERTIES:
+    :CUSTOM_ID: modules-decide
+    :END:
+
+Dice rolls and other random generated results.
+
+#+BEGIN_SRC emacs-lisp
+  ;;------------------------------------------------------------------------------
+  ;;; Modules: decide
+  ;;------------------------------------------------------------------------------
+
+  (init-message 2 "Modules: decide")
+
+  (use-package decide
+    :straight t)
+#+END_SRC
 
 *** +decimation+
     :PROPERTIES:
