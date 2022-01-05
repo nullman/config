@@ -4598,12 +4598,10 @@
 
     (use-package org-visibility
       :straight t
-      ;;:load-path (lambda () (file-truename (expand-file-name "~/code/github-nullman/emacs-org-visibility")))
       :after (org)
       :demand t
       :bind (:map org-visibility-mode-map
-                  ("C-x C-v" . org-visibility-force-save) ; defaults to `find-alternative-file'
-                  ("C-x M-v" . org-visibility-remove))    ; defaults to undefined
+                  ("C-x C-v" . org-visibility-force-save)) ; defaults to `find-alternative-file'
       :custom
       ;; list of directories and files to automatically persist and restore visibility state of
       (org-visibility-include-paths `(,(file-truename "~/.emacs.d/init-emacs.org")
@@ -4618,7 +4616,7 @@
                                       ,(file-truename "~/org/test")))
       :config
       ;; enable org-visibility-mode
-      (org-visibility-mode 1))
+      (org-visibility-enable-hooks))
 
     (when (string-equal system-name "tank")
       (use-package org-visibility
