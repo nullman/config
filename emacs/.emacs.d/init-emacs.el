@@ -4600,7 +4600,7 @@
       :straight t
       :after (org)
       :demand t
-      :bind (:map org-visibility-mode-map
+      :bind (:map org-mode-map
                   ("C-x C-v" . org-visibility-force-save)) ; defaults to `find-alternative-file'
       :custom
       ;; list of directories and files to automatically persist and restore visibility state of
