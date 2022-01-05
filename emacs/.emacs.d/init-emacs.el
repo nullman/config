@@ -4597,8 +4597,8 @@
     (init-message 2 "Org Mode: Visibility")
 
     (use-package org-visibility
-      ;;:straight t
-      :load-path (lambda () (file-truename (expand-file-name "~/code/github-nullman/emacs-org-visibility")))
+      :straight t
+      ;;:load-path (lambda () (file-truename (expand-file-name "~/code/github-nullman/emacs-org-visibility")))
       :after (org)
       :demand t
       :bind (:map org-visibility-mode-map
@@ -4619,6 +4619,31 @@
       :config
       ;; enable org-visibility-mode
       (org-visibility-mode 1))
+
+    (when (string-equal system-name "tank")
+      (use-package org-visibility
+        ;;:straight t
+        :load-path (lambda () (file-truename (expand-file-name "~/code/github-nullman/emacs-org-visibility")))
+        :after (org)
+        :demand t
+        :bind (:map org-visibility-mode-map
+                    ("C-x C-v" . org-visibility-force-save) ; defaults to `find-alternative-file'
+                    ("C-x M-v" . org-visibility-remove))    ; defaults to undefined
+        :custom
+        ;; list of directories and files to automatically persist and restore visibility state of
+        (org-visibility-include-paths `(,(file-truename "~/.emacs.d/init-emacs.org")
+                                        ;;,(file-truename "~/code/github-nullman")
+                                        ;;,(file-truename "~/code/gitlab-kylesherman")
+                                        ,(file-truename "~/dev")
+                                        ,(file-truename "~/doc/bbs")
+                                        ,(file-truename "~/org")
+                                        ,(file-truename "~/web/org")))
+        ;; list of directories and files to not persist and restore visibility state of
+        (org-visibility-exclude-paths `(,(file-truename "~/org/old")
+                                        ,(file-truename "~/org/test")))
+        :config
+        ;; enable org-visibility-mode
+        (org-visibility-mode 1)))
 ;; Visibility:1 ends here
 
 ;; [[file:init-emacs.org::*org-bookmarks-guid][org-bookmarks-guid:1]]
