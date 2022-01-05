@@ -1,4 +1,4 @@
-;; [[file:~/.common/.emacs.d/init-emacs.org::*Init][Init:1]]
+;; [[file:init-emacs.org::*Init][Init:1]]
 ;; -*- mode: emacs-lisp; lexical-binding: t; no-byte-compile: t -*-
 ;;==============================================================================
 ;;; init.el
@@ -26,7 +26,7 @@ non-nil.
 Process file even if timestamp is not newer than target if FORCE
 is non-nil."
   (let* ((case-fold-search t)
-         (file-base (expand-file-name (file-name-sans-extension file)))
+         (file-base (file-truename (expand-file-name (file-name-sans-extension file))))
          (file-org (concat (file-name-base file) ".org"))
          (file-elisp (concat file-base ".el"))
          (file-comp (concat file-base ".elc"))
@@ -111,7 +111,7 @@ is non-nil."
       (byte-compile-file file-elisp))))
 
 ;; generate and load main init file
-(let* ((file-base (expand-file-name "~/.emacs.d/init-emacs"))
+(let* ((file-base (file-truename (expand-file-name "~/.emacs.d/init-emacs")))
        (file-org (concat file-base ".org"))
        (file-elisp (concat file-base ".el"))
        (file-comp (concat file-base ".elc")))
@@ -128,10 +128,10 @@ is non-nil."
 ;;; Slow Bootstrap (Org/Babel)
 ;;------------------------------------------------------------------------------
 
-;; (let* ((emacs-dir (expand-file-name (file-name-directory (or load-file-name buffer-file-name (buffer-name)))))
-;;        (modules-dir (expand-file-name "modules" emacs-dir)))
-;;   (add-to-list 'load-path (expand-file-name "org-mode/lisp" modules-dir))
-;;   (add-to-list 'load-path (expand-file-name "org-mode/contrib/lisp" modules-dir))
+;; (let* ((emacs-dir (file-truename (expand-file-name (file-name-directory (or load-file-name buffer-file-name (buffer-name))))))
+;;        (modules-dir (file-truename (expand-file-name "modules" emacs-dir))))
+;;   (add-to-list 'load-path (file-truename (expand-file-name "org-mode/lisp" modules-dir)))
+;;   (add-to-list 'load-path (file-truename (expand-file-name "org-mode/contrib/lisp" modules-dir)))
 
 ;;   ;; load org-mode and org-babel
 ;;   (require 'org)

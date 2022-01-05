@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-01-05 14:14 (kyle)>
+  #+TIMESTAMP: <2022-01-05 15:19 (kyle)>
 
 * Table of Contents
   :PROPERTIES:
@@ -324,7 +324,7 @@
     - [[#resolve-file-link][resolve-file-link]]
     - [[#unicode-shell][unicode-shell]]
     - [[#async-spinner][async-spinner]]
-    - [[#time][time]]
+    - [[#with-time][with-time]]
     - [[#package-desc-summary-to-kill-ring][package-desc-summary-to-kill-ring]]
     - [[#toggle-case-fold-search][toggle-case-fold-search]]
   - [[#emacs-grouped-functions][Emacs Grouped Functions]]
@@ -6993,27 +6993,27 @@
 
       (init-message 2 "Org Mode: Visibility")
 
-      (use-package org-visibility
-        :straight t
-        :after (org)
-        :demand t
-        :bind (:map org-mode-map
-                    ("C-x C-v" . org-visibility-force-save)) ; defaults to `find-alternative-file'
-        :custom
-        ;; list of directories and files to automatically persist and restore visibility state of
-        (org-visibility-include-paths `(,(file-truename "~/.emacs.d/init-emacs.org")
-                                        ;;,(file-truename "~/code/github-nullman")
-                                        ;;,(file-truename "~/code/gitlab-kylesherman")
-                                        ,(file-truename "~/dev")
-                                        ,(file-truename "~/doc/bbs")
-                                        ,(file-truename "~/org")
-                                        ,(file-truename "~/web/org")))
-        ;; list of directories and files to not persist and restore visibility state of
-        (org-visibility-exclude-paths `(,(file-truename "~/org/old")
-                                        ,(file-truename "~/org/test")))
-        :config
-        ;; enable org-visibility-mode
-        (org-visibility-enable-hooks))
+      (unless (string-equal system-name "tank")
+        (use-package org-visibility
+          :straight t
+          :after (org)
+          :demand t
+          :bind (:map org-mode-map
+                      ("C-x C-v" . org-visibility-force-save)) ; defaults to `find-alternative-file'
+          :custom
+          ;; list of directories and files to automatically persist and restore visibility state of
+          (org-visibility-include-paths `(,(file-truename "~/.emacs.d/init-emacs.org")
+                                          ,(file-truename "~/code/github-nullman")
+                                          ,(file-truename "~/dev")
+                                          ,(file-truename "~/doc/bbs")
+                                          ,(file-truename "~/org")
+                                          ,(file-truename "~/web/org")))
+          ;; list of directories and files to not persist and restore visibility state of
+          (org-visibility-exclude-paths `(,(file-truename "~/org/old")
+                                          ,(file-truename "~/org/test")))
+          :config
+          ;; enable org-visibility-mode
+          (org-visibility-enable-hooks)))
 
       (when (string-equal system-name "tank")
         (use-package org-visibility
@@ -7027,8 +7027,7 @@
           :custom
           ;; list of directories and files to automatically persist and restore visibility state of
           (org-visibility-include-paths `(,(file-truename "~/.emacs.d/init-emacs.org")
-                                          ;;,(file-truename "~/code/github-nullman")
-                                          ;;,(file-truename "~/code/gitlab-kylesherman")
+                                          ,(file-truename "~/code/github-nullman")
                                           ,(file-truename "~/dev")
                                           ,(file-truename "~/doc/bbs")
                                           ,(file-truename "~/org")
@@ -14690,19 +14689,19 @@
                 (funcall ,finish-func ,result)))))
       #+END_SRC
 
-***** time
+***** with-time
       :PROPERTIES:
-      :CUSTOM_ID: functions-emacs-functions-time
+      :CUSTOM_ID: functions-emacs-functions-with-time
       :END:
 
       #+BEGIN_SRC emacs-lisp
         ;;------------------------------------------------------------------------------
-        ;;;; Functions: Emacs Functions: time
+        ;;;; Functions: Emacs Functions: with-time
         ;;------------------------------------------------------------------------------
 
-        (init-message 3 "Functions: Emacs Functions: time")
+        (init-message 3 "Functions: Emacs Functions: with-time")
 
-        (defmacro time (&rest body)
+        (defmacro with-time (&rest body)
           "Return the time it takes to evaluate BODY."
           `(let ((time (current-time)))
              ,@body
@@ -20536,7 +20535,7 @@
         (add-hook 'compilation-start-hook #'local-compilation-start-hook)
 
         (defun local-compilation-finish-function (buf why)
-          (let* ((elapsed  (time-subtract nil local-compilation-start-time))
+          (let* ((elapsed (time-subtract nil local-compilation-start-time))
                  (msg (format "Compilation took: %s" (format-time-string "%T.%N" elapsed t))))
             (save-excursion (goto-char (point-max)) (insert msg))
             (message "Compilation %s: %s" (string-trim-right why) msg)))
