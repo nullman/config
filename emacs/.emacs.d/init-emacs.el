@@ -90,6 +90,22 @@
          (error err)))))
 ;; Start:4 ends here
 
+;; [[file:init-emacs.org::*Start][Start:5]]
+  ;; lockfile wrapper macro to evaluate code blocks only once
+  ;; author: https://www.reddit.com/user/7890yuiop/
+  (defmacro when-lockfile-acquired (lockfile &rest body)
+    "Evaluate BODY unless another running Emacs instance has done so.
+
+  LOCKFILE is a file name to be used as a lock for this BODY code."
+    (declare (indent defun))
+    (let ((procdir (gensym "procdir")))
+      `(let ((,procdir (format "/proc/%d" (emacs-pid))))
+         (unless (file-exists-p ,lockfile)
+           (make-symbolic-link ,procdir ,lockfile t))
+         (when (file-equal-p ,lockfile ,procdir)
+           ,@body))))
+;; Start:5 ends here
+
 ;; [[file:init-emacs.org::*Package Manager][Package Manager:1]]
   ;;==============================================================================
   ;;; Package Manager
@@ -105,10 +121,16 @@
 
     (init-message 2 "Package Manager: Straight")
 
+    ;; initialize package system
+    (require 'package)
+    (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+                             ("melpa" . "http://melpa.org/packages/")))
+
     ;; bootstrap
     (defvar bootstrap-version)
     (let ((bootstrap-file
-           (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+           (file-truename
+            (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory)))
           (bootstrap-version 5))
       (unless (file-exists-p bootstrap-file)
         (with-current-buffer
@@ -121,6 +143,9 @@
 
     ;; use straight with `use-package'
     (straight-use-package 'use-package)
+
+    ;; update recipe repositories
+    ;;(straight-pull-recipe-repositories)
 ;; Straight:1 ends here
 
 ;; [[file:init-emacs.org::*Environment Settings][Environment Settings:1]]
@@ -859,6 +884,12 @@
       (global-so-long-mode 1))
 ;; System:9 ends here
 
+;; [[file:init-emacs.org::*System][System:10]]
+    ;; optional org-babel noweb start and end patterns
+    (add-to-list 'safe-local-variable-values '(org-babel-noweb-wrap-start . "{{"))
+    (add-to-list 'safe-local-variable-values '(org-babel-noweb-wrap-end . "}}"))
+;; System:10 ends here
+
 ;; [[file:init-emacs.org::*Files][Files:1]]
     ;;------------------------------------------------------------------------------
     ;;; Environment Settings: Files
@@ -990,28 +1021,31 @@
 
 ;; [[file:init-emacs.org::*Files][Files:18]]
     ;; desktop history
-    (desktop-save-mode 1)
-    (setq desktop-save 'ask-if-new
-          desktop-load-locked-desktop t
-          desktop-restore-eager 0 ; do not restore any buffers until all modules and modes have loaded
-          desktop-buffers-not-to-save (concat "\\("
-                                              "\\.log\\|(ftp)\\|^tags\\|^TAGS"
-                                              "\\.diary\\|\\diary\\|\\.bbdb"
-                                              "\\)$"))
-    (add-to-list 'desktop-globals-to-save 'file-name-history t)
-    (add-to-list 'desktop-modes-not-to-save 'Info-mode t)
-    (add-to-list 'desktop-modes-not-to-save 'info-lookup-mode t)
-    ;;(add-to-list 'desktop-modes-not-to-save 'dired-mode t)
-    ;;(add-to-list 'desktop-modes-not-to-save 'fundamental-mode t)
+    (when-lockfile-acquired "/tmp/emacs-desktop-history-lockfile"
+      (desktop-save-mode 1)
+      (setq desktop-save 'ask-if-new
+            desktop-load-locked-desktop t
+            desktop-restore-eager 0 ; do not restore any buffers until all modules and modes have loaded
+            desktop-buffers-not-to-save (concat "\\("
+                                                "\\.log\\|(ftp)\\|^tags\\|^TAGS"
+                                                "\\.diary\\|\\diary\\|\\.bbdb"
+                                                "\\)$"))
+      (add-to-list 'desktop-globals-to-save 'file-name-history t)
+      (add-to-list 'desktop-modes-not-to-save 'Info-mode t)
+      (add-to-list 'desktop-modes-not-to-save 'info-lookup-mode t)
+      ;;(add-to-list 'desktop-modes-not-to-save 'dired-mode t)
+      ;;(add-to-list 'desktop-modes-not-to-save 'fundamental-mode t)
+      )
 ;; Files:18 ends here
 
 ;; [[file:init-emacs.org::*Files][Files:19]]
     ;; save minibuffer history
     (when (fboundp 'savehist-mode)
-      (savehist-mode 1)
-      (setq savehist-save-minibuffer-history 1
-            savehist-additional-variables '(search-ring
-                                            regexp-search-ring)))
+      (when-lockfile-acquired "/tmp/emacs-minibuffer-history-lockfile"
+        (savehist-mode 1)
+        (setq savehist-save-minibuffer-history 1
+              savehist-additional-variables '(search-ring
+                                              regexp-search-ring))))
 ;; Files:19 ends here
 
 ;; [[file:init-emacs.org::*Buffers and Windows][Buffers and Windows:1]]
@@ -19980,7 +20014,8 @@
 
     ;; start emacs server
     (when (fboundp 'server-start-maybe)
-      (server-start-maybe))
+      (when-lockfile-acquired "/tmp/emacs-server-lockfile"
+        (server-start-maybe)))
 ;; Start Emacs Server:1 ends here
 
 ;; [[file:init-emacs.org::*Clear Mark][Clear Mark:1]]
