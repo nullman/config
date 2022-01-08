@@ -52,7 +52,7 @@ cursor_blink = off
 #foreground = #dcdccc
 #foreground_bold = #ffffff
 #background = #3f3f3f
-foreground = #BBC2CF
+foreground = #bbc2cf
 #background = #000000
 
 # 20% background transparency (requires a compositor)
@@ -85,22 +85,22 @@ background = rgba(25, 37, 43, 0.90)
 
 # regular colors
 color0  = #000000 # black
-color1  = #B40000 # red
-color2  = #00AA00 # green
-color3  = #AAAA00 # yellow
-color4  = #5555AA # blue
-color5  = #AA00AA # magenta
-color6  = #00AAAA # cyan
-color7  = #AAAAAA # white
+color1  = #b40000 # red
+color2  = #00aa00 # green
+color3  = #aaaa00 # yellow
+color4  = #5555aa # blue
+color5  = #aa00aa # magenta
+color6  = #00aaaa # cyan
+color7  = #aaaaaa # white
 # bright colors
 color8  = #555555 # black
-color9  = #FF0000 # red
-color10 = #00FF00 # green
-color11 = #FFFF00 # yellow
-color12 = #6464FF # blue
-color13 = #FF00FF # magenta
-color14 = #00FFFF # cyan
-color15 = #FFFFFF # white
+color9  = #ff0000 # red
+color10 = #00ff00 # green
+color11 = #ffff00 # yellow
+color12 = #6464ff # blue
+color13 = #ff00ff # magenta
+color14 = #00ffff # cyan
+color15 = #ffffff # white
 
 [hints]
 #font = Monospace 12

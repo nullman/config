@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-01-08 01:02 (kyle)>
+  #+TIMESTAMP: <2022-01-08 11:02 (kyle)>
 
 * Table of Contents
   :PROPERTIES:
@@ -548,6 +548,7 @@
   - [[#projectile][projectile]]
   - [[#ps-ccrypt][ps-ccrypt]]
   - [[#psvn][psvn]]
+  - [[#rainbow-mode][rainbow-mode]]
   - [[#recentf][recentf]]
   - [[#rect-mark][rect-mark]]
   - [[#regex-tool][regex-tool]]
@@ -787,6 +788,27 @@
   :CUSTOM_ID: constants
   :END:
 
+  |------------------------------------+-----------------+----------|
+  | Color                              | Name            | Hex Code |
+  |------------------------------------+-----------------+----------|
+  | Adwaita Dark Background (Original) |                 | #29353b  |
+  | Adwaita Dark Background (Darker)   |                 | #19252b  |
+  | Adwaita Dark Background (Darkest)  |                 | #09151b  |
+  | White Foreground                   |                 | #bbc2cf  |
+  | White Foreground Accent            |                 | #798188  |
+  | Yellow Cursor                      |                 | #eeee22  |
+  | Bright Yellow Highlight            |                 | #ffff33  |
+  |------------------------------------+-----------------+----------|
+  | Outline Level 1                    | goldenrod       | #daa520  |
+  | Outline Level 2                    | light goldenrod | #eedd82  |
+  | Outline Level 3                    | yellow green    | #9acd32  |
+  | Outline Level 4                    | light salmon    | #ffa07a  |
+  | Outline Level 5                    | tan             | #d2b48c  |
+  | Outline Level 6                    | light green     | #90ee90  |
+  | Outline Level 7                    | coral           | #ff7f50  |
+  | Outline Level 8                    | wheat           | #f5deb3  |
+  |------------------------------------+-----------------+----------|
+
 *** Colors
     :PROPERTIES:
     :CUSTOM_ID: constants-colors
@@ -798,10 +820,10 @@
       ;;------------------------------------------------------------------------------
 
       ;; custom
-      (setq color-foreground "#BBC2CF"        ; white
-            color-background "#19252B"        ; dark gray
-            color-cursor "#EEEE00"            ; yellow
-            color-paren "#FFFF33"             ; bright yellow
+      (setq color-foreground "#bbc2cf"        ; white
+            color-background "#09151b"        ; dark gray
+            color-cursor "#eeee22"            ; yellow
+            color-paren "#ffff33"             ; bright yellow
             color-1 "goldenrod"
             color-2 "light goldenrod"
             color-3 "yellow green"
@@ -810,20 +832,6 @@
             color-6 "light green"
             color-7 "coral"
             color-8 "wheat")
-
-      ;; ;; adwaita-dark like
-      ;; (setq color-foreground "#B9C3C7"        ; white
-      ;;       color-background "#29353B"        ; dark gray
-      ;;       color-cursor "#EEEE00"            ; yellow
-      ;;       color-paren "#FFFF33"             ; bright yellow
-      ;;       color-1 "goldenrod"
-      ;;       color-2 "light goldenrod"
-      ;;       color-3 "yellow green"
-      ;;       color-4 "light salmon"
-      ;;       color-5 "tan"
-      ;;       color-6 "light green"
-      ;;       color-7 "coral"
-      ;;       color-8 "wheat")
     #+END_SRC
 
 * Early Init
@@ -1834,7 +1842,7 @@
         80  = 20% transparency")
         (setq background-alpha (if (or window-system-mac window-system-windows)
                                    100        ; 0% transparency
-                                 90))         ; 10% transparency
+                                 85))         ; 10% transparency
         (set-frame-parameter (selected-frame) 'alpha
                              `(,background-alpha . ,background-alpha))
         (add-to-list 'default-frame-alist
@@ -1883,9 +1891,9 @@
         ;;   :init
         ;;   (setq zenburn-override-colors-alist   ; default values
         ;;         '(("zenburn-bg+05" . "#181818") ; #383838
-        ;;           ("zenburn-bg+1"  . "#1F1F1F") ; #4F4F4F
-        ;;           ("zenburn-bg+2"  . "#2F2F2F") ; #5F5F5F
-        ;;           ("zenburn-bg+3"  . "#3F3F3F"))) ; #6F6F6F
+        ;;           ("zenburn-bg+1"  . "#1f1f1f") ; #4f4f4f
+        ;;           ("zenburn-bg+2"  . "#2f2f2f") ; #5f5f5f
+        ;;           ("zenburn-bg+3"  . "#3f3f3f"))) ; #6f6f6f
         ;;   (load-theme 'zenburn t))
 
         ;; ;; color-theme-sanityinc-tomorrow theme
@@ -23868,6 +23876,24 @@ Dice rolls and other random generated results.
       ;;   ;; ignore whitespace with diff command
       ;;   ;;(setq svn-status-default-diff-arguments '("--diff-cmd" "diff" "-x" "-wbBu")))
       ;;   (setq svn-status-default-diff-arguments '("--diff-cmd" "diff" "-x" "-wu")))
+    #+END_SRC
+
+*** rainbow-mode
+    :PROPERTIES:
+    :CUSTOM_ID: modules-rainbow-mode
+    :END:
+
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Modules: rainbow-mode
+      ;;------------------------------------------------------------------------------
+
+      (init-message 2 "Modules: rainbow-mode")
+
+      (use-package rainbow-mode
+        :straight t
+        :init
+        (rainbow-mode 1))
     #+END_SRC
 
 *** recentf

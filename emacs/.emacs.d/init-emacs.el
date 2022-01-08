@@ -4,10 +4,10 @@
     ;;------------------------------------------------------------------------------
 
     ;; custom
-    (setq color-foreground "#BBC2CF"        ; white
-          color-background "#19252B"        ; dark gray
-          color-cursor "#EEEE00"            ; yellow
-          color-paren "#FFFF33"             ; bright yellow
+    (setq color-foreground "#bbc2cf"        ; white
+          color-background "#09151b"        ; dark gray
+          color-cursor "#eeee22"            ; yellow
+          color-paren "#ffff33"             ; bright yellow
           color-1 "goldenrod"
           color-2 "light goldenrod"
           color-3 "yellow green"
@@ -16,20 +16,6 @@
           color-6 "light green"
           color-7 "coral"
           color-8 "wheat")
-
-    ;; ;; adwaita-dark like
-    ;; (setq color-foreground "#B9C3C7"        ; white
-    ;;       color-background "#29353B"        ; dark gray
-    ;;       color-cursor "#EEEE00"            ; yellow
-    ;;       color-paren "#FFFF33"             ; bright yellow
-    ;;       color-1 "goldenrod"
-    ;;       color-2 "light goldenrod"
-    ;;       color-3 "yellow green"
-    ;;       color-4 "light salmon"
-    ;;       color-5 "tan"
-    ;;       color-6 "light green"
-    ;;       color-7 "coral"
-    ;;       color-8 "wheat")
 ;; Colors:1 ends here
 
 ;; [[file:init-emacs.org::*Start][Start:1]]
@@ -557,7 +543,7 @@
       80  = 20% transparency")
       (setq background-alpha (if (or window-system-mac window-system-windows)
                                  100        ; 0% transparency
-                               90))         ; 10% transparency
+                               85))         ; 10% transparency
       (set-frame-parameter (selected-frame) 'alpha
                            `(,background-alpha . ,background-alpha))
       (add-to-list 'default-frame-alist
@@ -606,9 +592,9 @@
       ;;   :init
       ;;   (setq zenburn-override-colors-alist   ; default values
       ;;         '(("zenburn-bg+05" . "#181818") ; #383838
-      ;;           ("zenburn-bg+1"  . "#1F1F1F") ; #4F4F4F
-      ;;           ("zenburn-bg+2"  . "#2F2F2F") ; #5F5F5F
-      ;;           ("zenburn-bg+3"  . "#3F3F3F"))) ; #6F6F6F
+      ;;           ("zenburn-bg+1"  . "#1f1f1f") ; #4f4f4f
+      ;;           ("zenburn-bg+2"  . "#2f2f2f") ; #5f5f5f
+      ;;           ("zenburn-bg+3"  . "#3f3f3f"))) ; #6f6f6f
       ;;   (load-theme 'zenburn t))
 
       ;; ;; color-theme-sanityinc-tomorrow theme
@@ -16106,6 +16092,19 @@
       ;; local copy with a bug fix
       :load-path (lambda () (file-truename (expand-file-name "ps-ccrypt.el" emacs-modules-dir))))
 ;; ps-ccrypt:1 ends here
+
+;; [[file:init-emacs.org::*rainbow-mode][rainbow-mode:1]]
+    ;;------------------------------------------------------------------------------
+    ;;; Modules: rainbow-mode
+    ;;------------------------------------------------------------------------------
+
+    (init-message 2 "Modules: rainbow-mode")
+
+    (use-package rainbow-mode
+      :straight t
+      :init
+      (rainbow-mode 1))
+;; rainbow-mode:1 ends here
 
 ;; [[file:init-emacs.org::*recentf][recentf:1]]
     ;;------------------------------------------------------------------------------

@@ -211,7 +211,7 @@ colors:
   #  foreground: '0x41ff41'              # green
 
   primary:
-    background: '0x19252B'              # dark gray
+    background: '0x09151B'              # dark gray
     foreground: '0xBBC2CF'              # white
 
     # Bright and dim foreground colors
@@ -235,8 +235,8 @@ colors:
   #  cursor: '0xffff33'                  # yellow
 
   cursor:
-    text: '0x19252B'                    # dark gray
-    cursor: '0xffff33'                  # yellow
+    text: '0x09151B'                    # dark gray
+    cursor: '0xeeee22'                  # yellow
 
   # Selection colors
   #
@@ -246,9 +246,6 @@ colors:
   #selection:
   #  text: '0xeaeaea'
   #  background: '0x404040'
-  selection:
-    text: '0xeaeaea'
-    background: '0x404040'
 
   # Normal colors
   #normal:
