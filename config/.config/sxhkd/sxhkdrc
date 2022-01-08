@@ -175,15 +175,15 @@ super + shift + Delete
 
 # snapshot of entire screen
 super + alt + Print
-    scrot --exec 'mv $f ${HOME}/Pictures/' && notify-send --expire-time=2000 'Screen snapshot saved'
+    scrot --exec 'mv $f ~/Pictures/' && notify-send --expire-time=2000 'Screen snapshot saved'
 
 # snapshot of active window
 super + ctrl + Print
-    scrot --focused --exec 'mv $f ${HOME}/Pictures/' && notify-send --expire-time=2000 'Window snapshot saved'
+    scrot --focused --exec 'mv $f ~/Pictures/' && notify-send --expire-time=2000 'Window snapshot saved'
 
 # snapshot of selected region
 super + shift + Print
-    scrot --select --freeze --exec 'mv $f ${HOME}/Pictures/' && notify-send --expire-time=2000 'Region snapshot saved'
+    scrot --select --freeze --exec 'mv $f ~/Pictures/' && notify-send --expire-time=2000 'Region snapshot saved'
 
 # reload sxhkd
 super + shift + r

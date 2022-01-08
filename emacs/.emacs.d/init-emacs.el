@@ -3,9 +3,25 @@
     ;;; Constants: Colors
     ;;------------------------------------------------------------------------------
 
-    (setq color-foreground "green"
-          color-background "black"
+    ;; ;; custom
+    ;; (setq color-foreground "#BBC2CF"        ; white
+    ;;       color-background "#000000"        ; black
+    ;;       color-cursor "#FFFF33"            ; yellow
+    ;;       color-paren "#FFFF33"             ; yellow
+    ;;       color-1 "goldenrod"
+    ;;       color-2 "light goldenrod"
+    ;;       color-3 "yellow green"
+    ;;       color-4 "light salmon"
+    ;;       color-5 "tan"
+    ;;       color-6 "light green"
+    ;;       color-7 "coral"
+    ;;       color-8 "wheat")
+
+    ;; adwaita-dark like
+    (setq color-foreground "#B9C3C7"        ; white
+          color-background "#29353B"        ; black
           color-cursor "#FFFF33"            ; yellow
+          color-paren "#FFFF33"             ; yellow
           color-1 "goldenrod"
           color-2 "light goldenrod"
           color-3 "yellow green"
@@ -649,6 +665,8 @@
 
     ;; highlight matching parenthesis
     (show-paren-mode 1)
+
+    (set-face-foreground 'show-paren-match color-paren)
 ;; General:27 ends here
 
 ;; [[file:init-emacs.org::*General][General:28]]
@@ -1321,11 +1339,17 @@
              ('error
               (set-frame-font "Menlo" nil t))))))
 
+      ;; ;; set faces
+      ;; ;; green foreground on black background with yellow cursor
+      ;; (custom-set-faces
+      ;;  `(default ((t (:foreground ,color-foreground :background ,color-background)))) ; green
+      ;;  `(cursor ((t (:foreground ,color-background :background ,color-cursor))))) ; yellow
+
       ;; set faces
-      ;; green foreground on black background with yellow cursor
+      ;; white foreground on black background with yellow cursor
       (custom-set-faces
-       `(default ((t (:foreground ,color-foreground :background ,color-background)))) ; green
-       `(cursor ((t (:foreground ,color-background :background ,color-cursor))))) ; yellow
+       `(default ((t (:foreground ,color-foreground :background ,color-background))))
+       `(cursor ((t (:foreground ,color-background :background ,color-cursor)))))
 
       ;; transparant background (not on Macs)
       (defvar background-alpha
@@ -1338,12 +1362,9 @@
       90  = 10% transparency
       85  = 15% transparency
       80  = 20% transparency")
-      ;;(setq background-alpha (if window-system-mac 100 100)) ; 0% transparency
-      ;;(setq background-alpha (if window-system-mac 100 90)) ; 10% transparency
       (setq background-alpha (if (or window-system-mac window-system-windows)
                                  100        ; 0% transparency
-                               85))         ; 15% transparency
-      ;;(setq background-alpha (if window-system-mac 100 80)) ; 20% transparency
+                               90))         ; 10% transparency
       (set-frame-parameter (selected-frame) 'alpha
                            `(,background-alpha . ,background-alpha))
       (add-to-list 'default-frame-alist
@@ -1436,6 +1457,25 @@
       ;;   (setq solarized-height-plus-4 1.0)
       ;;   ;; load theme
       ;;   (load-theme 'solarized-dark t))
+
+      ;; ;; doom themes
+      ;; (use-package doom-themes
+      ;;   :straight t
+      ;;   :custom
+      ;;   (doom-themes-enable-bold t)      ; if nil, bold is universally disabled
+      ;;   (doom-themes-enable-italic t)    ; if nil, italics is universally disabled
+      ;;   (doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
+      ;;   :config
+      ;;   (load-theme 'doom-one t)
+      ;;   ;;(load-theme 'doom-dracula t)
+      ;;   ;; enable flashing mode-line on errors
+      ;;   (doom-themes-visual-bell-config)
+      ;;   ;; enable custom neotree theme (all-the-icons must be installed)
+      ;;   (doom-themes-neotree-config)
+      ;;   ;; or for treemacs users
+      ;;   (doom-themes-treemacs-config)
+      ;;   ;; correct (and improve) org-mode's native fontification
+      ;;   (doom-themes-org-config))
       )
 ;; GUI:1 ends here
 
@@ -4458,43 +4498,48 @@
       (defun org-insert-literate-programming-name ()
         "Insert `org-babel' block NAME"
         (interactive "*")
+        (org-indent-line)
         (insert "#+NAME: "))
 
-      (defun org-insert-literate-programming-src ()
-        "Insert `org-babel' source block"
-        (interactive "*")
-        (insert "#+BEGIN_SRC\n\n#+END_SRC\n")
-        (forward-line -2))
+      (defmacro org-insert-literate-programming-src-gen (name &optional lang)
+        "Generate org babel insert function from NAME and optional LANG.
 
-      (defun org-insert-literate-programming-src-sh ()
-        "Insert `org-babel' sh source block"
-        (interactive "*")
-        (insert "#+BEGIN_SRC sh\n\n#+END_SRC\n")
-        (forward-line -2))
+      LANG is only needed if the language section of the block is
+      different from NAME."
+        (let* ((lang (or lang name))
+               (funct (intern (concat "org-insert-literate-programming-src"
+                                      (if name (concat "-" name) ""))))
+               (doc (concat "Insert `org-babel'"
+                            (if lang (concat " " name) "")
+                            " source block"))
+               (block (concat "#+BEGIN_SRC"
+                              (if lang (concat " " lang) "")
+                              "\n\n#+END_SRC\n")))
+          `(defun ,funct ()
+             ,doc
+             (interactive "*")
+             (let ((point (point)))
+               (insert ,block)
+               (indent-region point (point))
+               (forward-line -2)))))
 
-      (defun org-insert-literate-programming-src-sh-sudo ()
-        "Insert `org-babel' sh (sudo) source block"
-        (interactive "*")
-        (insert "#+BEGIN_SRC sh :dir /sudo::\n\n#+END_SRC\n")
-        (forward-line -2))
+      ;; org-insert-literate-programming-src
+      (org-insert-literate-programming-src-gen nil)
 
-      (defun org-insert-literate-programming-src-emacs-lisp ()
-        "Insert `org-babel' emacs-lisp source block"
-        (interactive "*")
-        (insert "#+BEGIN_SRC emacs-lisp\n\n#+END_SRC\n")
-        (forward-line -2))
+      ;; org-insert-literate-programming-src-sh
+      (org-insert-literate-programming-src-gen "sh")
 
-      (defun org-insert-literate-programming-src-racket ()
-        "Insert `org-babel' racket source block"
-        (interactive "*")
-        (insert "#+BEGIN_SRC racket\n\n#+END_SRC\n")
-        (forward-line -2))
+      ;; org-insert-literate-programming-src-sh-sudo
+      (org-insert-literate-programming-src-gen "sh-sudo" "sh :dir /sudo::")
 
-      (defun org-insert-literate-programming-src-kotlin ()
-        "Insert `org-babel' kotlin source block"
-        (interactive "*")
-        (insert "#+BEGIN_SRC kotlin\n\n#+END_SRC\n")
-        (forward-line -2))
+      ;; org-insert-literate-programming-src-emacs-lisp
+      (org-insert-literate-programming-src-gen "emacs-lisp")
+
+      ;; org-insert-literate-programming-src-racket
+      (org-insert-literate-programming-src-gen "racket")
+
+      ;; org-insert-literate-programming-src-kotlin
+      (org-insert-literate-programming-src-gen "kotlin")
 ;; org-insert-literate-programming-statics:1 ends here
 
 ;; [[file:init-emacs.org::*org-insert-literate-programming-init-emacs-block][org-insert-literate-programming-init-emacs-block:1]]
@@ -4509,6 +4554,7 @@
       properties, source block, title comment, and `init-message'."
         (interactive "*")
         (let* ((case-fold-search t)
+               (point (point))
                (title (or title (read-string "Block title: ")))
                (tag (org-generate-custom-id-from-title title)))
           (org-insert-heading)
@@ -4524,10 +4570,13 @@
           (newline)
           (insert "  (init-message 2 \"" title "\")\n")
           (newline)
+          (newline)
           (insert "#+END_SRC\n")
+          (indent-region point (point))
           (org-previous-visible-heading 1)
           (goto-char (line-end-position))
-          (org-fix-literate-programming-heading)))
+          (org-fix-literate-programming-heading)
+          (forward-line 12)))
 ;; org-insert-literate-programming-init-emacs-block:1 ends here
 
 ;; [[file:init-emacs.org::*org-insert-literate-programming-code-block][org-insert-literate-programming-code-block:1]]
@@ -4542,6 +4591,7 @@
       properties, source block, and title comment."
         (interactive "*")
         (let* ((case-fold-search t)
+               (point (point))
                (title (read-string "Block title: "))
                (funct (org-generate-custom-id-from-title title))
                (lang (save-mark-and-excursion
@@ -4569,9 +4619,11 @@
           (insert "    (check-equal? (" funct " ) )\n")
           (insert "    )\n")
           (insert "#+END_SRC\n")
+          (indent-region point (point))
           (org-previous-visible-heading 1)
           (goto-char (line-end-position))
-          (org-fix-literate-programming-heading)))
+          (org-fix-literate-programming-heading)
+          (forward-line 10)))
 ;; org-insert-literate-programming-code-block:1 ends here
 
 ;; [[file:init-emacs.org::*org-insert-literate-programming-project-euler-problem-block][org-insert-literate-programming-project-euler-problem-block:1]]
@@ -4586,9 +4638,10 @@
       heading, properties, source block with title comment, and test block."
         (interactive "*")
         (let* ((case-fold-search t)
+               (point (point))
                (num (read-string "Problem number: "))
                (title (concat "Problem " num))
-               (funct (format "project-euler-%03d" num))
+               (funct (format "project-euler-%03d" (string-to-number num)))
                (lang (save-mark-and-excursion
                        (if (re-search-backward "^[ \t]*#\\+BEGIN_SRC \\([^ \t\n]*\\)" nil :noerror)
                            (match-string 1)
@@ -4618,9 +4671,11 @@
           (insert "    (check-equal? (" funct " ) )\n")
           (insert "    )\n")
           (insert "#+END_SRC\n")
+          (indent-region point (point))
           (org-previous-visible-heading 1)
           (goto-char (line-end-position))
-          (org-fix-literate-programming-heading)))
+          (org-fix-literate-programming-heading)
+          (forward-line 9)))
 ;; org-insert-literate-programming-project-euler-problem-block:1 ends here
 
 ;; [[file:init-emacs.org::*Visibility][Visibility:1]]
