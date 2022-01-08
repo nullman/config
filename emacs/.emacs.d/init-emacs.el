@@ -3,23 +3,9 @@
     ;;; Constants: Colors
     ;;------------------------------------------------------------------------------
 
-    ;; ;; custom
-    ;; (setq color-foreground "#BBC2CF"        ; white
-    ;;       color-background "#000000"        ; black
-    ;;       color-cursor "#FFFF33"            ; yellow
-    ;;       color-paren "#FFFF33"             ; yellow
-    ;;       color-1 "goldenrod"
-    ;;       color-2 "light goldenrod"
-    ;;       color-3 "yellow green"
-    ;;       color-4 "light salmon"
-    ;;       color-5 "tan"
-    ;;       color-6 "light green"
-    ;;       color-7 "coral"
-    ;;       color-8 "wheat")
-
-    ;; adwaita-dark like
-    (setq color-foreground "#B9C3C7"        ; white
-          color-background "#29353B"        ; black
+    ;; custom
+    (setq color-foreground "#BBC2CF"        ; white
+          color-background "#19252B"        ; dark gray
           color-cursor "#FFFF33"            ; yellow
           color-paren "#FFFF33"             ; yellow
           color-1 "goldenrod"
@@ -30,6 +16,20 @@
           color-6 "light green"
           color-7 "coral"
           color-8 "wheat")
+
+    ;; ;; adwaita-dark like
+    ;; (setq color-foreground "#B9C3C7"        ; white
+    ;;       color-background "#29353B"        ; black
+    ;;       color-cursor "#FFFF33"            ; yellow
+    ;;       color-paren "#FFFF33"             ; yellow
+    ;;       color-1 "goldenrod"
+    ;;       color-2 "light goldenrod"
+    ;;       color-3 "yellow green"
+    ;;       color-4 "light salmon"
+    ;;       color-5 "tan"
+    ;;       color-6 "light green"
+    ;;       color-7 "coral"
+    ;;       color-8 "wheat")
 ;; Colors:1 ends here
 
 ;; [[file:init-emacs.org::*Start][Start:1]]
@@ -440,6 +440,238 @@
     ;;   (add-to-list 'load-path (file-truename (expand-file-name "org-mode/lisp" emacs-modules-dir))))
 ;; Load Path:1 ends here
 
+;; [[file:init-emacs.org::*GUI][GUI:1]]
+    ;;------------------------------------------------------------------------------
+    ;;; General Settings: GUI
+    ;;------------------------------------------------------------------------------
+
+    (when window-system
+
+      (init-message 2 "General Settings: GUI")
+
+      ;; clipboard
+      (when (string= window-system "x")
+        (setq select-enable-clipboard t                                      ; cutting and pasting uses clipboard
+              select-enable-primary t                                        ; cutting and pasting uses primary selection
+              x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING) ; data-type request for X selection
+              save-interprogram-paste-before-kill t                          ; save clipboard strings into kill ring before replacing them
+              interprogram-paste-function 'x-cut-buffer-or-selection-value   ; function to call to get text cut from other programs
+              mouse-yank-at-point t))                                        ; mouse yank commands yank at point
+
+      ;; inverse video on
+      (setq inverse-video t)
+
+      ;; turn off bell
+      (setq ring-bell-function 'ignore)
+
+      ;; turn off cursor blinking
+      (blink-cursor-mode 0)
+
+      ;; ;; scroll bar on right
+      ;; (setq scroll-bar-mode 'right)
+      ;; (scroll-bar-mode -1)
+      ;; (scroll-bar-mode 1)
+
+      ;; turn off scroll bar
+      (when (and (fboundp 'scroll-bar-mode)
+                 scroll-bar-mode)
+        (scroll-bar-mode -1))
+
+      ;; turn off toolbar
+      (when (and (fboundp 'tool-bar-mode)
+                 tool-bar-mode)
+        (tool-bar-mode -1))
+
+      ;; visible bell
+      (setq visible-bell t)
+
+      ;; make default frame size fullscreen
+      ;;(add-to-list 'default-frame-alist '(fullscreen . maximized))
+
+      ;; put current buffer name in title bar
+      (setq frame-title-format "%b")
+
+      ;; mouse button one drags the scroll bar
+      (bind-keys* ([vertical-scroll-bar down-mouse-1] . scroll-bar-drag))
+
+      ;; scroll mouse settings
+      (setq mouse-wheel-scroll-amount '(1 ((shift) . 1))
+            mouse-wheel-progressive-speed t)
+
+      ;; set default font
+      (ignore-errors
+        (cl-case window-system
+          (x
+           (condition-case nil
+               (progn
+                 ;;(set-frame-font "8x13" nil t)
+                 ;;(set-frame-font "9x15" nil t)
+                 ;;(set-frame-font "Ubuntu Mono-13" nil t)
+                 ;;(set-frame-font "Inconsolata-15" nil t)
+                 ;;(set-frame-font "BitstreamVeraSansMono Nerd Font Mono-12" nil t)
+                 ;;(set-frame-font "DroidSansMono Nerd Font Mono-12" nil t)
+                 (set-frame-font "Hack Nerd Font Mono-12" nil t)
+                 ;;(set-face-attribute 'default nil :font "Hack Nerd Font Mono" :height 132)
+                 ;;(set-face-attribute 'fixed-pitch nil :font "Hack Nerd Font Mono" :height 156)
+                 ;;(set-face-attribute 'variable-pitch nil :font "Hack Nerd Font" :height 168 :weight 'regular)
+                 )
+             ('error
+              (set-frame-font "9x15" nil t))))
+          (w32
+           (condition-case nil
+               (set-frame-font "Hack Nerd Font Mono-12" nil t)
+             ('error
+              nil)))
+          (ns
+           (condition-case nil
+               (progn
+                 ;;(set-frame-font "BitstreamVeraSansMono Nerd Font Mono-14" nil t)
+                 ;;(set-frame-font "DroidSansMono Nerd Font Mono-14" nil t)
+                 (set-frame-font "Hack Nerd Font Mono-14" nil t)
+                 )
+             ('error
+              (set-frame-font "Menlo" nil t))))))
+
+      ;; ;; set faces
+      ;; ;; green foreground on black background with yellow cursor
+      ;; (custom-set-faces
+      ;;  `(default ((t (:foreground ,color-foreground :background ,color-background)))) ; green
+      ;;  `(cursor ((t (:foreground ,color-background :background ,color-cursor))))) ; yellow
+
+      ;; set faces
+      ;; white foreground on black background with yellow cursor
+      (custom-set-faces
+       `(default ((t (:foreground ,color-foreground :background ,color-background))))
+       `(cursor ((t (:foreground ,color-background :background ,color-cursor)))))
+
+      ;; transparant background (not on Macs)
+      (defvar background-alpha
+        100
+        "Background transparency alpha percentage.
+
+    Common values:
+
+      100 = none
+      90  = 10% transparency
+      85  = 15% transparency
+      80  = 20% transparency")
+      (setq background-alpha (if (or window-system-mac window-system-windows)
+                                 100        ; 0% transparency
+                               90))         ; 10% transparency
+      (set-frame-parameter (selected-frame) 'alpha
+                           `(,background-alpha . ,background-alpha))
+      (add-to-list 'default-frame-alist
+                   `(alpha . (,background-alpha . ,background-alpha)))
+
+      ;;------------------------------------------------------------------------------
+      ;;;; Theme
+      ;;------------------------------------------------------------------------------
+
+      (init-message 3 "General Settings: GUI: Theme")
+
+      ;; flatland theme
+      ;; https://github.com/gchp/flatland-emacs
+      (use-package flatland-theme
+        :straight t
+        :init (load-theme 'flatland t))
+
+      ;; ;; gruber-darker theme
+      ;; ;; https://github.com/rexim/gruber-darker-theme
+      ;; (use-package gruber-darker-theme
+      ;;   :straight t
+      ;;   :init (load-theme 'gruber-darker t))
+
+      ;; ;; dracula theme
+      ;; ;; https://draculatheme.com/emacs/
+      ;; (use-package dracula-theme
+      ;;   :straight t
+      ;;   :init (load-theme 'dracula t))
+
+      ;; ;; material theme
+      ;; ;; https://github.com/cpaulik/emacs-material-theme
+      ;; (use-package material-theme
+      ;;   :straight t
+      ;;   :init (load-theme 'material t))
+
+      ;; material theme
+      ;; https://github.com/cpaulik/emacs-material-theme
+      ;; (use-package material-theme
+      ;;   :load-path (lambda () (file-truename (expand-file-name "material-theme.el" local-modules-dir)))
+      ;;   :init (load-theme 'material t))
+
+      ;; ;; zenburn theme
+      ;; ;; https://github.com/bbatsov/zenburn-emacs
+      ;; (use-package zenburn-theme
+      ;;   :straight t
+      ;;   :init
+      ;;   (setq zenburn-override-colors-alist   ; default values
+      ;;         '(("zenburn-bg+05" . "#181818") ; #383838
+      ;;           ("zenburn-bg+1"  . "#1F1F1F") ; #4F4F4F
+      ;;           ("zenburn-bg+2"  . "#2F2F2F") ; #5F5F5F
+      ;;           ("zenburn-bg+3"  . "#3F3F3F"))) ; #6F6F6F
+      ;;   (load-theme 'zenburn t))
+
+      ;; ;; color-theme-sanityinc-tomorrow theme
+      ;; ;; https://github.com/purcell/color-theme-sanityinc-tomorrow
+      ;; (use-package color-theme-sanityinc-tomorrow
+      ;;   :straight t
+      ;;   :init (load-theme 'sanityinc-tomorrow-night t))
+
+      ;; ;; spacemacs-theme
+      ;; ;; https://github.com/nashamri/spacemacs-theme
+      ;; (use-package spacemacs-theme
+      ;;   :straight t
+      ;;   :init (load-theme 'spacemacs-dark t))
+
+      ;; ;; solarized theme
+      ;; ;; https://github.com/bbatsov/solarized-emacs
+      ;; (use-package solarized-theme
+      ;;   :straight t
+      ;;   :init
+      ;;   ;; make the fringe stand out from the background
+      ;;   ;;(setq solarized-distinct-fringe-background t)
+      ;;   ;; do not change the font for some headings and titles
+      ;;   (setq solarized-use-variable-pitch nil)
+      ;;   ;; make the modeline high contrast
+      ;;   ;;(setq solarized-high-contrast-mode-line t)
+      ;;   ;; use less bolding
+      ;;   (setq solarized-use-less-bold t)
+      ;;   ;; use more italics
+      ;;   ;;(setq solarized-use-more-italic t)
+      ;;   ;; use less colors for indicators such as git:gutter, flycheck and similar
+      ;;   ;;(setq solarized-emphasize-indicators nil)
+      ;;   ;; do not change size of org-mode headlines (but keep other size-changes)
+      ;;   (setq solarized-scale-org-headlines nil)
+      ;;   ;; avoid all font-size changes
+      ;;   (setq solarized-height-minus-1 1.0)
+      ;;   (setq solarized-height-plus-1 1.0)
+      ;;   (setq solarized-height-plus-2 1.0)
+      ;;   (setq solarized-height-plus-3 1.0)
+      ;;   (setq solarized-height-plus-4 1.0)
+      ;;   ;; load theme
+      ;;   (load-theme 'solarized-dark t))
+
+      ;; ;; doom themes
+      ;; (use-package doom-themes
+      ;;   :straight t
+      ;;   :custom
+      ;;   (doom-themes-enable-bold t)      ; if nil, bold is universally disabled
+      ;;   (doom-themes-enable-italic t)    ; if nil, italics is universally disabled
+      ;;   (doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
+      ;;   :config
+      ;;   (load-theme 'doom-one t)
+      ;;   ;;(load-theme 'doom-dracula t)
+      ;;   ;; enable flashing mode-line on errors
+      ;;   (doom-themes-visual-bell-config)
+      ;;   ;; enable custom neotree theme (all-the-icons must be installed)
+      ;;   (doom-themes-neotree-config)
+      ;;   ;; or for treemacs users
+      ;;   (doom-themes-treemacs-config)
+      ;;   ;; correct (and improve) org-mode's native fontification
+      ;;   (doom-themes-org-config))
+      )
+;; GUI:1 ends here
+
 ;; [[file:init-emacs.org::*General][General:1]]
     ;;------------------------------------------------------------------------------
     ;;; Environment Settings: General
@@ -665,8 +897,8 @@
 
     ;; highlight matching parenthesis
     (show-paren-mode 1)
-
     (set-face-foreground 'show-paren-match color-paren)
+    (set-face-attribute 'show-paren-match nil :weight 'extra-bold)
 ;; General:27 ends here
 
 ;; [[file:init-emacs.org::*General][General:28]]
@@ -1246,238 +1478,6 @@
         (vterm-max-scrollback local-terminal-maximum-lines)
         (vterm-kill-buffer-on-exit nil))
 ;; vterm:1 ends here
-
-;; [[file:init-emacs.org::*GUI][GUI:1]]
-    ;;------------------------------------------------------------------------------
-    ;;; General Settings: GUI
-    ;;------------------------------------------------------------------------------
-
-    (when window-system
-
-      (init-message 2 "General Settings: GUI")
-
-      ;; clipboard
-      (when (string= window-system "x")
-        (setq select-enable-clipboard t                                      ; cutting and pasting uses clipboard
-              select-enable-primary t                                        ; cutting and pasting uses primary selection
-              x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING) ; data-type request for X selection
-              save-interprogram-paste-before-kill t                          ; save clipboard strings into kill ring before replacing them
-              interprogram-paste-function 'x-cut-buffer-or-selection-value   ; function to call to get text cut from other programs
-              mouse-yank-at-point t))                                        ; mouse yank commands yank at point
-
-      ;; inverse video on
-      (setq inverse-video t)
-
-      ;; turn off bell
-      (setq ring-bell-function 'ignore)
-
-      ;; turn off cursor blinking
-      (blink-cursor-mode 0)
-
-      ;; ;; scroll bar on right
-      ;; (setq scroll-bar-mode 'right)
-      ;; (scroll-bar-mode -1)
-      ;; (scroll-bar-mode 1)
-
-      ;; turn off scroll bar
-      (when (and (fboundp 'scroll-bar-mode)
-                 scroll-bar-mode)
-        (scroll-bar-mode -1))
-
-      ;; turn off toolbar
-      (when (and (fboundp 'tool-bar-mode)
-                 tool-bar-mode)
-        (tool-bar-mode -1))
-
-      ;; visible bell
-      (setq visible-bell t)
-
-      ;; make default frame size fullscreen
-      ;;(add-to-list 'default-frame-alist '(fullscreen . maximized))
-
-      ;; put current buffer name in title bar
-      (setq frame-title-format "%b")
-
-      ;; mouse button one drags the scroll bar
-      (bind-keys* ([vertical-scroll-bar down-mouse-1] . scroll-bar-drag))
-
-      ;; scroll mouse settings
-      (setq mouse-wheel-scroll-amount '(1 ((shift) . 1))
-            mouse-wheel-progressive-speed t)
-
-      ;; set default font
-      (ignore-errors
-        (cl-case window-system
-          (x
-           (condition-case nil
-               (progn
-                 ;;(set-frame-font "8x13" nil t)
-                 ;;(set-frame-font "9x15" nil t)
-                 ;;(set-frame-font "Ubuntu Mono-13" nil t)
-                 ;;(set-frame-font "Inconsolata-15" nil t)
-                 ;;(set-frame-font "BitstreamVeraSansMono Nerd Font Mono-12" nil t)
-                 ;;(set-frame-font "DroidSansMono Nerd Font Mono-12" nil t)
-                 (set-frame-font "Hack Nerd Font Mono-12" nil t)
-                 ;;(set-face-attribute 'default nil :font "Hack Nerd Font Mono" :height 132)
-                 ;;(set-face-attribute 'fixed-pitch nil :font "Hack Nerd Font Mono" :height 156)
-                 ;;(set-face-attribute 'variable-pitch nil :font "Hack Nerd Font" :height 168 :weight 'regular)
-                 )
-             ('error
-              (set-frame-font "9x15" nil t))))
-          (w32
-           (condition-case nil
-               (set-frame-font "Hack Nerd Font Mono-12" nil t)
-             ('error
-              nil)))
-          (ns
-           (condition-case nil
-               (progn
-                 ;;(set-frame-font "BitstreamVeraSansMono Nerd Font Mono-14" nil t)
-                 ;;(set-frame-font "DroidSansMono Nerd Font Mono-14" nil t)
-                 (set-frame-font "Hack Nerd Font Mono-14" nil t)
-                 )
-             ('error
-              (set-frame-font "Menlo" nil t))))))
-
-      ;; ;; set faces
-      ;; ;; green foreground on black background with yellow cursor
-      ;; (custom-set-faces
-      ;;  `(default ((t (:foreground ,color-foreground :background ,color-background)))) ; green
-      ;;  `(cursor ((t (:foreground ,color-background :background ,color-cursor))))) ; yellow
-
-      ;; set faces
-      ;; white foreground on black background with yellow cursor
-      (custom-set-faces
-       `(default ((t (:foreground ,color-foreground :background ,color-background))))
-       `(cursor ((t (:foreground ,color-background :background ,color-cursor)))))
-
-      ;; transparant background (not on Macs)
-      (defvar background-alpha
-        100
-        "Background transparency alpha percentage.
-
-    Common values:
-
-      100 = none
-      90  = 10% transparency
-      85  = 15% transparency
-      80  = 20% transparency")
-      (setq background-alpha (if (or window-system-mac window-system-windows)
-                                 100        ; 0% transparency
-                               90))         ; 10% transparency
-      (set-frame-parameter (selected-frame) 'alpha
-                           `(,background-alpha . ,background-alpha))
-      (add-to-list 'default-frame-alist
-                   `(alpha . (,background-alpha . ,background-alpha)))
-
-      ;;------------------------------------------------------------------------------
-      ;;;; Theme
-      ;;------------------------------------------------------------------------------
-
-      (init-message 3 "General Settings: GUI: Theme")
-
-      ;; flatland theme
-      ;; https://github.com/gchp/flatland-emacs
-      (use-package flatland-theme
-        :straight t
-        :init (load-theme 'flatland t))
-
-      ;; ;; gruber-darker theme
-      ;; ;; https://github.com/rexim/gruber-darker-theme
-      ;; (use-package gruber-darker-theme
-      ;;   :straight t
-      ;;   :init (load-theme 'gruber-darker t))
-
-      ;; ;; dracula theme
-      ;; ;; https://draculatheme.com/emacs/
-      ;; (use-package dracula-theme
-      ;;   :straight t
-      ;;   :init (load-theme 'dracula t))
-
-      ;; ;; material theme
-      ;; ;; https://github.com/cpaulik/emacs-material-theme
-      ;; (use-package material-theme
-      ;;   :straight t
-      ;;   :init (load-theme 'material t))
-
-      ;; material theme
-      ;; https://github.com/cpaulik/emacs-material-theme
-      ;; (use-package material-theme
-      ;;   :load-path (lambda () (file-truename (expand-file-name "material-theme.el" local-modules-dir)))
-      ;;   :init (load-theme 'material t))
-
-      ;; ;; zenburn theme
-      ;; ;; https://github.com/bbatsov/zenburn-emacs
-      ;; (use-package zenburn-theme
-      ;;   :straight t
-      ;;   :init
-      ;;   (setq zenburn-override-colors-alist   ; default values
-      ;;         '(("zenburn-bg+05" . "#181818") ; #383838
-      ;;           ("zenburn-bg+1"  . "#1F1F1F") ; #4F4F4F
-      ;;           ("zenburn-bg+2"  . "#2F2F2F") ; #5F5F5F
-      ;;           ("zenburn-bg+3"  . "#3F3F3F"))) ; #6F6F6F
-      ;;   (load-theme 'zenburn t))
-
-      ;; ;; color-theme-sanityinc-tomorrow theme
-      ;; ;; https://github.com/purcell/color-theme-sanityinc-tomorrow
-      ;; (use-package color-theme-sanityinc-tomorrow
-      ;;   :straight t
-      ;;   :init (load-theme 'sanityinc-tomorrow-night t))
-
-      ;; ;; spacemacs-theme
-      ;; ;; https://github.com/nashamri/spacemacs-theme
-      ;; (use-package spacemacs-theme
-      ;;   :straight t
-      ;;   :init (load-theme 'spacemacs-dark t))
-
-      ;; ;; solarized theme
-      ;; ;; https://github.com/bbatsov/solarized-emacs
-      ;; (use-package solarized-theme
-      ;;   :straight t
-      ;;   :init
-      ;;   ;; make the fringe stand out from the background
-      ;;   ;;(setq solarized-distinct-fringe-background t)
-      ;;   ;; do not change the font for some headings and titles
-      ;;   (setq solarized-use-variable-pitch nil)
-      ;;   ;; make the modeline high contrast
-      ;;   ;;(setq solarized-high-contrast-mode-line t)
-      ;;   ;; use less bolding
-      ;;   (setq solarized-use-less-bold t)
-      ;;   ;; use more italics
-      ;;   ;;(setq solarized-use-more-italic t)
-      ;;   ;; use less colors for indicators such as git:gutter, flycheck and similar
-      ;;   ;;(setq solarized-emphasize-indicators nil)
-      ;;   ;; do not change size of org-mode headlines (but keep other size-changes)
-      ;;   (setq solarized-scale-org-headlines nil)
-      ;;   ;; avoid all font-size changes
-      ;;   (setq solarized-height-minus-1 1.0)
-      ;;   (setq solarized-height-plus-1 1.0)
-      ;;   (setq solarized-height-plus-2 1.0)
-      ;;   (setq solarized-height-plus-3 1.0)
-      ;;   (setq solarized-height-plus-4 1.0)
-      ;;   ;; load theme
-      ;;   (load-theme 'solarized-dark t))
-
-      ;; ;; doom themes
-      ;; (use-package doom-themes
-      ;;   :straight t
-      ;;   :custom
-      ;;   (doom-themes-enable-bold t)      ; if nil, bold is universally disabled
-      ;;   (doom-themes-enable-italic t)    ; if nil, italics is universally disabled
-      ;;   (doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
-      ;;   :config
-      ;;   (load-theme 'doom-one t)
-      ;;   ;;(load-theme 'doom-dracula t)
-      ;;   ;; enable flashing mode-line on errors
-      ;;   (doom-themes-visual-bell-config)
-      ;;   ;; enable custom neotree theme (all-the-icons must be installed)
-      ;;   (doom-themes-neotree-config)
-      ;;   ;; or for treemacs users
-      ;;   (doom-themes-treemacs-config)
-      ;;   ;; correct (and improve) org-mode's native fontification
-      ;;   (doom-themes-org-config))
-      )
-;; GUI:1 ends here
 
 ;; [[file:init-emacs.org::*Key Bindings][Key Bindings:1]]
   ;;==============================================================================
