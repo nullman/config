@@ -2154,7 +2154,8 @@
                  :menu-name "Package Commands"
                  ("i" . package-install)
                  ("l" . package-list-packages-no-fetch)
-                 ("L" . package-list-packages))
+                 ("L" . package-list-packages)
+                 ("P" . straight-pull-recipe-repositories))
 
       ;; run commands
       (bind-keys :map space-map
@@ -18978,11 +18979,13 @@
     ;; package manager menu
     (auto-menu
      "Package Manager"
-     `(("List Packages" "(package-list-packages t)" "List ELPA packages.")
-       ("List Packages (Refresh)" "package-list-packages" "List ELPA packages (after refresh).")
-       ("Auto-Remove Packages" "package-autoremove" "Remove packages that are no more needed.")
-       ("Quelpa Upgrade" "quelpa-upgrade" "Upgrade one Quelpa package.")
-       ("Quelpa Upgrade All" "quelpa-upgrade-all" "Upgrade all Quelpa packages.")
+     `(("List Packages" "(package-list-packages :nofetch)" "List packages.")
+       ("List Packages (Refresh)" "package-list-packages" "List packages (after refresh).")
+       ("Install Package" "package-install" "Install package.")
+       ("Straight Refresh" "straight-pull-recipe-repositories" "Refresh straight recipe repositories.")
+       ;;("Auto-Remove Packages" "package-autoremove" "Remove packages that are no more needed.")
+       ;;("Quelpa Upgrade" "quelpa-upgrade" "Upgrade one Quelpa package.")
+       ;;("Quelpa Upgrade All" "quelpa-upgrade-all" "Upgrade all Quelpa packages.")
        ;; ("Update Package List" "package-list-update" "Update `package-list' from currently installed packages.")
        ;; ("Install Missing Packages" "package-list-install-missing" "Install all missing packages in `package-list'.")
        ;; ("List Unaccounted Packages" "package-list-unaccounted-packages" "List installed ELPA packages that are not in `package-list'.")
@@ -19068,7 +19071,7 @@
        ("Revert Buffer" "revert-buffer" "Run `revert-buffer' on current buffer.")
        ("Visual Line Mode [Toggle]" "visual-line-mode" "Toggle `visual-line-mode' in current buffer.")
        ("Search Case Sensitivity [Toggle]" "toggle-case-fold-search" "Toggle case-fold-search in current buffer.")
-       ("Git Status" "(magit-status default-directory)" "Open Subversion status buffer.")
+       ("Git Status" "(magit-status default-directory)" "Open Git Status buffer.")
        ("Web Jump" "webjump" "Jump to a Web site from a programmable hotlist.")
        ("IELM Mode" "ielm" "Open buffer for interactively evaluating Emacs Lisp expressions.")
        ("Evaluate Buffer" "eval-buffer" "Run `eval-buffer' on the current buffer.")
