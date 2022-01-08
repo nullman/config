@@ -6,8 +6,8 @@
     ;; custom
     (setq color-foreground "#BBC2CF"        ; white
           color-background "#19252B"        ; dark gray
-          color-cursor "#FFFF33"            ; yellow
-          color-paren "#FFFF33"             ; yellow
+          color-cursor "#EEEE00"            ; yellow
+          color-paren "#FFFF33"             ; bright yellow
           color-1 "goldenrod"
           color-2 "light goldenrod"
           color-3 "yellow green"
@@ -19,9 +19,9 @@
 
     ;; ;; adwaita-dark like
     ;; (setq color-foreground "#B9C3C7"        ; white
-    ;;       color-background "#29353B"        ; black
-    ;;       color-cursor "#FFFF33"            ; yellow
-    ;;       color-paren "#FFFF33"             ; yellow
+    ;;       color-background "#29353B"        ; dark gray
+    ;;       color-cursor "#EEEE00"            ; yellow
+    ;;       color-paren "#FFFF33"             ; bright yellow
     ;;       color-1 "goldenrod"
     ;;       color-2 "light goldenrod"
     ;;       color-3 "yellow green"

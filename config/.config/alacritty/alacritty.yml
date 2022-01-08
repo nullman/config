@@ -201,13 +201,18 @@ font:
 # Colors (Tomorrow Night Bright)
 #colors:
 colors:
-  # Default colors
+  # # Default colors
   #primary:
   #  background: '0x000000'
   #  foreground: '0xeaeaea'
+  # # Green on Black
+  #primary:
+  #  background: '0x000000'              # black
+  #  foreground: '0x41ff41'              # green
+
   primary:
-    background: '0x000000'              # black
-    foreground: '0x41ff41'              # green
+    background: '0x19252B'              # dark gray
+    foreground: '0xBBC2CF'              # white
 
     # Bright and dim foreground colors
     #
@@ -216,8 +221,6 @@ colors:
     # is `false`, the normal foreground color will be used.
     #dim_foreground: '0x9a9a9a'
     #bright_foreground: '0xffffff'
-    dim_foreground: '0x9a9a9a'
-    bright_foreground: '0xffffff'
 
   # Cursor colors
   #
@@ -226,8 +229,13 @@ colors:
   #cursor:
   #  text: '0x000000'
   #  cursor: '0xffffff'
+  # Black on Green
+  #cursor:
+  #  text: '0x000000'                    # black
+  #  cursor: '0xffff33'                  # yellow
+
   cursor:
-    text: '0x000000'                    # black
+    text: '0x19252B'                    # dark gray
     cursor: '0xffff33'                  # yellow
 
   # Selection colors

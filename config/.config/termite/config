@@ -52,13 +52,15 @@ cursor_blink = off
 #foreground = #dcdccc
 #foreground_bold = #ffffff
 #background = #3f3f3f
-foreground = #33FF33
-background = #000000
+foreground = #BBC2CF
+#background = #000000
 
 # 20% background transparency (requires a compositor)
 #background = rgba(63, 63, 63, 0.8)
 # 15% background transparency (requires a compositor)
-background = rgba(0, 0, 0, 0.85)
+#background = rgba(0, 0, 0, 0.85)
+# 10% background transparency (requires a compositor)
+background = rgba(25, 37, 43, 0.90)
 
 # If unset, will reverse foreground and background
 #highlight = #2f2f2f

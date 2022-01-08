@@ -14,97 +14,97 @@
 #===============================================================================
 
 main:
-  Browsers          ->|:browser
-  Email             ->|:email
-  Messagers         ->|:im
-  IRC               ->|:irc
-  Editors           ->|:edit
-  Applications      ->|:app
-  Utilities         ->|:util
-  Media             ->|:media
-  Slideshow         ->|:slideshow
-  Games             ->|:game
-  Games (MAME)      ->|:mame
-  Terminals         ->|:term
-  Screen Saver      ->|:ssaver
+Browsers          ->|:browser
+Email             ->|:email
+Messagers         ->|:im
+IRC               ->|:irc
+Editors           ->|:edit
+Applications      ->|:app
+Utilities         ->|:util
+Media             ->|:media
+Slideshow         ->|:slideshow
+Games             ->|:game
+Games (MAME)      ->|:mame
+Terminals         ->|:term
+Screen Saver      ->|:ssaver
 
 browser:
-  Firefox|firefox
-  Galeon|galeon
-  Opera|opera
-  Mozilla|mozilla
-  Epiphany|epiphany
-  Konqueror|konqueror
-  Dillo|dillo
-  Lynx|xterm -e lynx
-  Links|xterm -e links
+Firefox|firefox
+Galeon|galeon
+Opera|opera
+Mozilla|mozilla
+Epiphany|epiphany
+Konqueror|konqueror
+Dillo|dillo
+Lynx|xterm -e lynx
+Links|xterm -e links
 
 email:
-  Pine|pine
-  Thunderbird|thunderbird
-  Mutt|mutt
-  Mail|mail
+Pine|pine
+Thunderbird|thunderbird
+Mutt|mutt
+Mail|mail
 
 im:
-  CenterICQ|centericq
-  Gaim|gaim
+CenterICQ|centericq
+Gaim|gaim
 
 irc:
-  CenterICQ|centericq
-  Gaim|gaim
+CenterICQ|centericq
+Gaim|gaim
 
 edit:
-  Emacs|xterm -e emacs
-  Vim|xterm -e vim
-  Vi|xterm -e vi
+Emacs|xterm -e emacs
+Vim|xterm -e vim
+Vi|xterm -e vi
 
 app:
-  OpenOffice|ooffice
-  FreeMind|freemind
+OpenOffice|ooffice
+FreeMind|freemind
 
 util:
-  clockywock (clock)|xterm -e clockywock
-  #orpie (rpn calculator)|xterm -e orpie
-  rpncalc (rpn calculator)|xterm -e rpncalc
-  curscpu (cpu monitor)|xterm -e curscpu
-  top (cpu monitor)|xterm -e top
-  slmon (cpu monitor)|xterm -e slmon
+clockywock (clock)|xterm -e clockywock
+#orpie (rpn calculator)|xterm -e orpie
+rpncalc (rpn calculator)|xterm -e rpncalc
+curscpu (cpu monitor)|xterm -e curscpu
+top (cpu monitor)|xterm -e top
+slmon (cpu monitor)|xterm -e slmon
 
 media:
-  mp3blaster|mp3blaster
+mp3blaster|mp3blaster
 
 slideshow:
-  Personal Slideshow|feh --title "Personal Slideshow" -F -x -z -D 30.00 -r /home/data/media/pictures_slide_show/Personal/
-  Nasa Slideshow|feh --title "Nasa Slideshow" -F -x -z -D 30.00 -r /home/data/media/pictures_slide_show/Nasa/
-  Nerve Slideshow|feh --title "Nerve Slideshow" -F -x -z -D 30.00 -r "/home/data/media/pictures_slide_show/Nerve Magazine/"
-  Duluth Webcam 1024x768|arora \$(xwininfo -root | grep geometry) http://nullman.org/interesting/duluth-webcam-1024x768.html
-  Duluth Webcam 800x600|arora \$(xwininfo -root | grep geometry) http://nullman.org/interesting/duluth-webcam-800x600.html
+Personal Slideshow|feh --title "Personal Slideshow" -F -x -z -D 30.00 -r /home/data/media/pictures_slide_show/Personal/
+Nasa Slideshow|feh --title "Nasa Slideshow" -F -x -z -D 30.00 -r /home/data/media/pictures_slide_show/Nasa/
+Nerve Slideshow|feh --title "Nerve Slideshow" -F -x -z -D 30.00 -r "/home/data/media/pictures_slide_show/Nerve Magazine/"
+Duluth Webcam 1024x768|arora \$(xwininfo -root | grep geometry) http://nullman.org/interesting/duluth-webcam-1024x768.html
+Duluth Webcam 800x600|arora \$(xwininfo -root | grep geometry) http://nullman.org/interesting/duluth-webcam-800x600.html
 
 game:
-  CXMAME|cxmame
-  PySol (solitare)|pysol
-  Frozen Bubble|froxen-bubble
-  Solar Wolf|solarwolf
-  Ice Breaker|icebreaker
-  cboard (chess)|xterm -e cboard
+CXMAME|cxmame
+PySol (solitare)|pysol
+Frozen Bubble|froxen-bubble
+Solar Wolf|solarwolf
+Ice Breaker|icebreaker
+cboard (chess)|xterm -e cboard
 
 mame:
-  CXMAME|cxmame
-  Ms Pacman|xmame.x11 mspacman
+CXMAME|cxmame
+Ms Pacman|xmame.x11 mspacman
 
 term:
-  XTerm|xterm -bg #000000 -fg #33FF33 -fn xft:hack +sb -rightbar -geometry 88x39
-  Screen (connect)|xterm -bg #000000 -fg #33FF33 -fn xft:hack +sb -rightbar -geometry 88x39
+XTerm|xterm -bg #000000 -fg #33FF33 -fn xft:hack +sb -rightbar -geometry 88x39
+Screen (connect)|xterm -bg #000000 -fg #33FF33 -fn xft:hack +sb -rightbar -geometry 88x39
 -e screen -x
-  Screen (restart)|xterm -bg #000000 -fg #33FF33 -fn xft:hack +sb -rightbar -geometry 88x39
+Screen (restart)|xterm -bg #000000 -fg #33FF33 -fn xft:hack +sb -rightbar -geometry 88x39
 -e screen -A -D -RR
 
 ssaver:
-  xscreensaver|xscreensaver-command -lock
-  xscreensaver setup|xscreensaver-demo
-  xscreensaver on|rm -f /home/kyle/.noscreensaver ; source /home/kyle/bin/ssaverauto
-  xscreensaver off|touch /home/kyle/.noscreensaver ; fuser -k /home/kyle/bin/ssaver ; fuser -k /usr/bin/xscreensaver ; fuser -k /usr/bin/xlock ; fuser -k /usr/bin/electricsheep
-  xlock|xlock -mode flame
+xscreensaver|xscreensaver-command -lock
+xscreensaver setup|xscreensaver-demo
+xscreensaver on|rm -f /home/kyle/.noscreensaver ; source /home/kyle/bin/ssaverauto
+xscreensaver off|touch /home/kyle/.noscreensaver ; fuser -k /home/kyle/bin/ssaver ; fuser -k /usr/bin/xscreensaver ; fuser -k /usr/bin/xlock ; fuser -k /usr/bin/electricsheep
+xlock|xlock -mode flame
 
 #===============================================================================
 # End of File
