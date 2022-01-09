@@ -2666,20 +2666,33 @@
 ;; Alerts:1 ends here
 
 ;; [[file:init-emacs.org::*TOC][TOC:1]]
-;;------------------------------------------------------------------------------
-;;; ORG MODE: TOC
-;;------------------------------------------------------------------------------
+    ;;------------------------------------------------------------------------------
+    ;;; ORG MODE: TOC
+    ;;------------------------------------------------------------------------------
 
-(init-message 2 "Org Mode: TOC")
+    (init-message 2 "Org Mode: TOC")
 
-(use-package org-make-toc
-  ;; original author is not maintaining the code
-  ;; :straight (org-make-toc :type git :host github :repo "alphapapa/org-make-toc")
-  ;; forked branch fixes a bug
-  :straight (org-make-toc :type git :host github
-                          :repo "nullman/org-make-toc"
-                          :branch "fix/drawer-end-regexp")
-  :hook (org-mode . org-make-toc-mode))
+    (use-package org-make-toc
+      ;; original author is not maintaining the code
+      ;; :straight (org-make-toc :type git :host github :repo "alphapapa/org-make-toc")
+      ;; forked branch fixes a bug
+      :straight (org-make-toc :type git :host github
+                              :repo "nullman/org-make-toc"
+                              :branch "fix/drawer-end-regexp")
+      :hook (org-mode . org-make-toc-mode)
+      :custom
+      (org-make-toc-link-type-fn #'org-make-toc--link-entry-custom)
+      :config
+      ;; custom link entry generator
+      (defun org-make-toc--link-entry-custom ()
+        "Return text for ENTRY converted to ID link."
+        (-when-let* ((id (cdr (assoc "CUSTOM_ID" (org-entry-properties))))
+                     (title (cdr (assoc "ITEM" (org-entry-properties))))
+                     (filename (if org-make-toc-filename-prefix
+                                   (file-name-nondirectory (buffer-file-name))
+                                 "")))
+          (org-make-link-string (concat filename "#" id)
+                                (org-make-toc--visible-text title)))))
 ;; TOC:1 ends here
 
 ;; [[file:init-emacs.org::*Modules][Modules:1]]
@@ -4672,51 +4685,25 @@
 
     (init-message 2 "Org Mode: Visibility")
 
-    (unless (string-equal system-name "tank")
-      (use-package org-visibility
-        :straight t
-        :after (org)
-        :demand t
-        :bind (:map org-mode-map
-                    ("C-x C-v" . org-visibility-force-save)) ; defaults to `find-alternative-file'
-        :custom
-        ;; list of directories and files to automatically persist and restore visibility state of
-        (org-visibility-include-paths `(,(file-truename "~/.emacs.d/init-emacs.org")
-                                        ,(file-truename "~/code/github-nullman")
-                                        ,(file-truename "~/dev")
-                                        ,(file-truename "~/doc/bbs")
-                                        ,(file-truename "~/org")
-                                        ,(file-truename "~/web/org")))
-        ;; list of directories and files to not persist and restore visibility state of
-        (org-visibility-exclude-paths `(,(file-truename "~/org/old")
-                                        ,(file-truename "~/org/test")))
-        :config
-        ;; enable org-visibility-mode
-        (org-visibility-enable-hooks)))
-
-    (when (string-equal system-name "tank")
-      (use-package org-visibility
-        ;;:straight t
-        :load-path (lambda () (file-truename (expand-file-name "~/code/github-nullman/emacs-org-visibility")))
-        :after (org)
-        :demand t
-        :bind (:map org-visibility-mode-map
-                    ("C-x C-v" . org-visibility-force-save) ; defaults to `find-alternative-file'
-                    ("C-x M-v" . org-visibility-remove))    ; defaults to undefined
-        :custom
-        ;; list of directories and files to automatically persist and restore visibility state of
-        (org-visibility-include-paths `(,(file-truename "~/.emacs.d/init-emacs.org")
-                                        ,(file-truename "~/code/github-nullman")
-                                        ,(file-truename "~/dev")
-                                        ,(file-truename "~/doc/bbs")
-                                        ,(file-truename "~/org")
-                                        ,(file-truename "~/web/org")))
-        ;; list of directories and files to not persist and restore visibility state of
-        (org-visibility-exclude-paths `(,(file-truename "~/org/old")
-                                        ,(file-truename "~/org/test")))
-        :config
-        ;; enable org-visibility-mode
-        (org-visibility-mode 1)))
+    (use-package org-visibility
+      :straight t
+      :after (org)
+      :demand t
+      :bind (:map org-visibility-mode-map
+                  ("C-x C-v" . org-visibility-force-save) ; defaults to `find-alternative-file'
+                  ("C-x M-v" . org-visibility-remove))    ; defaults to undefined
+      :hook (org-mode . org-visibility-mode)
+      :custom
+      ;; list of directories and files to automatically persist and restore visibility state of
+      (org-visibility-include-paths `(,(file-truename "~/.emacs.d/init-emacs.org")
+                                      ,(file-truename "~/code/github-nullman")
+                                      ,(file-truename "~/dev")
+                                      ,(file-truename "~/doc/bbs")
+                                      ,(file-truename "~/org")
+                                      ,(file-truename "~/web/org")))
+      ;; list of directories and files to not persist and restore visibility state of
+      (org-visibility-exclude-paths `(,(file-truename "~/org/old")
+                                      ,(file-truename "~/org/test"))))
 ;; Visibility:1 ends here
 
 ;; [[file:init-emacs.org::*org-bookmarks-guid][org-bookmarks-guid:1]]
@@ -6386,10 +6373,13 @@
       INFO is a plist holding contextual information."
         (let ((level (+ (org-export-get-relative-level headline info)
                         (1- (or (plist-get info :html-toplevel-hlevel) 1))))
-              (text (org-export-data (org-element-property :title headline) info))
+              (id (org-export-data (org-element-property :CUSTOM_ID headline) info))
+              (title (org-export-data (org-element-property :title headline) info))
               (contents (or contents "")))
           (concat
-           (format "\n<h%d>%s</h%d>\n" level text level)
+           (if id
+               (format "\n<h%d id=\"%s\">%s</h%d>\n" level id title level)
+             (format "\n<h%d>%s</h%d>\n" level title level))
            contents)))
 ;; Headline:1 ends here
 
@@ -14302,14 +14292,14 @@
 ;; cycle-buffer:1 ends here
 
 ;; [[file:init-emacs.org::*decide][decide:1]]
-;;------------------------------------------------------------------------------
-;;; Modules: decide
-;;------------------------------------------------------------------------------
+    ;;------------------------------------------------------------------------------
+    ;;; Modules: decide
+    ;;------------------------------------------------------------------------------
 
-(init-message 2 "Modules: decide")
+    (init-message 2 "Modules: decide")
 
-(use-package decide
-  :straight t)
+    (use-package decide
+      :straight t)
 ;; decide:1 ends here
 
 ;; [[file:init-emacs.org::*define-word][define-word:1]]
@@ -15903,16 +15893,16 @@
 ;; mingus:1 ends here
 
 ;; [[file:init-emacs.org::*minions][minions:1]]
-;;------------------------------------------------------------------------------
-;;; Modules: minions
-;;------------------------------------------------------------------------------
+    ;;------------------------------------------------------------------------------
+    ;;; Modules: minions
+    ;;------------------------------------------------------------------------------
 
-(init-message 2 "Modules: minions")
+    (init-message 2 "Modules: minions")
 
-(use-package minions
-  :straight t
-  :config
-  (minions-mode 1))
+    (use-package minions
+      :straight t
+      :config
+      (minions-mode 1))
 ;; minions:1 ends here
 
 ;; [[file:init-emacs.org::*multiple-cursors][multiple-cursors:1]]
@@ -15977,14 +15967,14 @@
 ;; occur:1 ends here
 
 ;; [[file:init-emacs.org::*package-lint][package-lint:1]]
-;;------------------------------------------------------------------------------
-;;; Modules: package-lint
-;;------------------------------------------------------------------------------
+    ;;------------------------------------------------------------------------------
+    ;;; Modules: package-lint
+    ;;------------------------------------------------------------------------------
 
-(init-message 2 "Modules: package-lint")
+    (init-message 2 "Modules: package-lint")
 
-(use-package package-lint
-  :straight t)
+    (use-package package-lint
+      :straight t)
 ;; package-lint:1 ends here
 
 ;; [[file:init-emacs.org::*persistent-scratch][persistent-scratch:1]]
@@ -16003,27 +15993,27 @@
 ;; persistent-scratch:1 ends here
 
 ;; [[file:init-emacs.org::*popper][popper:1]]
-;;------------------------------------------------------------------------------
-;;; Modules: popper
-;;------------------------------------------------------------------------------
+    ;;------------------------------------------------------------------------------
+    ;;; Modules: popper
+    ;;------------------------------------------------------------------------------
 
-(init-message 2 "Modules: popper")
+    (init-message 2 "Modules: popper")
 
-(use-package popper
-  :straight t
-  :bind (("C-`" . popper-toggle-latest)
-         ("C-M-`" . popper-cycle)
-         ("C-x C-`" . popper-toggle-type))
-  :custom
-  (popper-reference-buffers
-        '("\\*Messages\\*"
-          "Output\\*$"
-          "\\*Async Shell Command\\*"
-          help-mode
-          compilation-mode))
-  :init
-  (popper-mode +1)
-  (popper-echo-mode +1))
+    (use-package popper
+      :straight t
+      :bind (("C-`" . popper-toggle-latest)
+             ("C-M-`" . popper-cycle)
+             ("C-x C-`" . popper-toggle-type))
+      :custom
+      (popper-reference-buffers
+       '("\\*Messages\\*"
+         "Output\\*$"
+         "\\*Async Shell Command\\*"
+         help-mode
+         compilation-mode))
+      :init
+      (popper-mode +1)
+      (popper-echo-mode +1))
 ;; popper:1 ends here
 
 ;; [[file:init-emacs.org::*proced][proced:1]]
