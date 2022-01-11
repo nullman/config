@@ -3,7 +3,6 @@
     ;;; Constants: Colors
     ;;------------------------------------------------------------------------------
 
-    ;; custom
     (setq color-foreground "#bbc2cf"        ; white
           color-background "#09151b"        ; dark gray
           color-cursor "#eeee22"            ; yellow

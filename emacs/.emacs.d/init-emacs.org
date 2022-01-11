@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:("CONTENTS") tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-01-09 17:40 (kyle)>
+  #+TIMESTAMP: <2022-01-10 10:27 (kyle)>
 
 * Table of Contents
   :PROPERTIES:
@@ -820,7 +820,6 @@
       ;;; Constants: Colors
       ;;------------------------------------------------------------------------------
 
-      ;; custom
       (setq color-foreground "#bbc2cf"        ; white
             color-background "#09151b"        ; dark gray
             color-cursor "#eeee22"            ; yellow
