@@ -7,7 +7,7 @@
           color-background "#09151b"        ; dark gray
           color-cursor "#eeee22"            ; yellow
           color-paren "#ffff33"             ; bright yellow
-          color-mouse "#eeee22"             ; yellow
+          color-mouse "#ffffff"             ; white
           color-1 "goldenrod"
           color-2 "light goldenrod"
           color-3 "yellow green"

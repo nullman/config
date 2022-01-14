@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:("CONTENTS") tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-01-13 21:21 (kyle)>
+  #+TIMESTAMP: <2022-01-13 21:28 (kyle)>
 
 * Table of Contents
   :PROPERTIES:
@@ -802,8 +802,9 @@
     | Adwaita Dark Background (Darkest)  |                 | #09151b  |
     | White Foreground                   |                 | #bbc2cf  |
     | White Foreground Accent            |                 | #798188  |
-    | Yellow Cursor / Mouse              |                 | #eeee22  |
+    | Yellow Cursor                      |                 | #eeee22  |
     | Bright Yellow Highlight            |                 | #ffff33  |
+    | White Mouse                        |                 | #ffffff  |
     |------------------------------------+-----------------+----------|
     | Outline Level 1                    | goldenrod       | #daa520  |
     | Outline Level 2                    | light goldenrod | #eedd82  |
@@ -824,7 +825,7 @@
             color-background "#09151b"        ; dark gray
             color-cursor "#eeee22"            ; yellow
             color-paren "#ffff33"             ; bright yellow
-            color-mouse "#eeee22"             ; yellow
+            color-mouse "#ffffff"             ; white
             color-1 "goldenrod"
             color-2 "light goldenrod"
             color-3 "yellow green"
