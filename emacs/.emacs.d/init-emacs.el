@@ -564,6 +564,12 @@
         :straight t
         :init (load-theme 'flatland t))
 
+      ;; ;; darcula theme
+      ;; ;; https://github.com/ianyepan/jetbrains-darcula-emacs-theme
+      ;; (use-package jetbrains-darcula-theme
+      ;;   :straight t
+      ;;   :init (load-theme 'jetbrains-darcula t))
+
       ;; ;; gruber-darker theme
       ;; ;; https://github.com/rexim/gruber-darker-theme
       ;; (use-package gruber-darker-theme
@@ -2012,7 +2018,7 @@
     (defun custom-key-bindings-grouped-prefix-keys ()
       "Set custom grouped prefix key bindings."
 
-      ;; help commands
+      ;; help find commands
       ;; "C-h e" defaults to `view-echo-area-messages'
       (unbind-key "C-h e")
       (define-prefix-command 'help-find-map nil "Help Find Commands")
@@ -2052,6 +2058,15 @@
         (bind-keys :map space-buffer-map ("s" . switch-to-scratch)))
       (when (fboundp 'switch-to-scratch-for-current-mode)
         (bind-keys :map space-buffer-map ("c" . switch-to-scratch-for-current-mode)))
+
+      ;; command log commands
+      (bind-keys :map space-map
+                 :prefix "c"
+                 :prefix-map space-command-log-map
+                 :menu-name "Command Log Commands"
+                 ("c" . command-log-mode-on)
+                 ("k" . command-log-mode-off)
+                 ("l" . clm/command-log-clear))
 
       ;; git commands
       (bind-keys :map space-map
@@ -14144,20 +14159,22 @@
 
     (use-package command-log-mode
       :straight t
-      :init
-      (defun command-line-mode-on ()
-        "Turn on `command-line-mode' and open the log buffer."
+      :demand t
+      :custom
+      (command-log-mode-auto-show t)
+      (command-log-mode-key-binding-open-log nil)
+      (command-log-mode-open-log-turns-on-mode t)
+      (command-log-mode-is-global t)
+      :config
+      (defun command-log-mode-on ()
+        "Turn on `command-log-mode' and open the log buffer."
         (interactive)
-        (command-log-mode 1)
-        (global-command-log-mode 1)
-        (clm/open-command-log-buffer))
+        (global-command-log-mode 1))
 
-      (defun command-line-mode-off ()
-        "Turn off `command-line-mode' and close the log buffer."
+      (defun command-log-mode-off ()
+        "Turn off `command-log-mode' and close the log buffer."
         (interactive)
-        (global-command-log-mode -1)
-        (command-log-mode -1)
-        (clm/close-command-log-buffer)))
+        (global-command-log-mode -1)))
 ;; command-log:1 ends here
 
 ;; [[file:init-emacs.org::*company][company:1]]
@@ -19016,10 +19033,10 @@
          ("Java Reformat" "java-pretty-print-buffer" "Reformat Java code in current buffer.")
          ("Ruby Reformat" "ruby-pretty-print-buffer" "Reformat Ruby code in current buffer.")
          ("C Reformat" "c-pretty-print-buffer" "Reformat C code in current buffer.")))
-       ("Command-Line"
-        (("Command Line Mode ON" "command-line-mode-on" "Turn on ‘command-line-mode’ and open the log buffer.")
-         ("Command Line Mode OFF" "command-line-mode-off" "Turn off ‘command-line-mode’ and close the log buffer.")
-         ("Clear Command Line Buffer" "clm/command-log-clear" "Clear the command log buffer.")))
+       ("Command Log"
+        (("Command Log Mode ON" "command-log-mode-on" "Turn on ‘command-log-mode’ and open the log buffer.")
+         ("Command Log Mode OFF" "command-log-mode-off" "Turn off ‘command-log-mode’ and close the log buffer.")
+         ("Clear Command Log Buffer" "clm/command-log-clear" "Clear the command log buffer.")))
        ("Edit"
         (("Replacer Replacements Edit" "replacer-replacements-edit" "Edit `replacer-replacements'.")
          ("Elfeed Boookmarks Edit" "elfeed-bookmarks-edit" "Edit Elfeeds bookmarks file.")
