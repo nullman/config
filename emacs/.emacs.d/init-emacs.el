@@ -7,6 +7,7 @@
           color-background "#09151b"        ; dark gray
           color-cursor "#eeee22"            ; yellow
           color-paren "#ffff33"             ; bright yellow
+          color-mouse "#eeee22"             ; yellow
           color-1 "goldenrod"
           color-2 "light goldenrod"
           color-3 "yellow green"
@@ -446,6 +447,9 @@
       ;; inverse video on
       (setq inverse-video t)
 
+      ;; visible bell
+      (setq visible-bell t)
+
       ;; turn off bell
       (setq ring-bell-function 'ignore)
 
@@ -466,9 +470,6 @@
       (when (and (fboundp 'tool-bar-mode)
                  tool-bar-mode)
         (tool-bar-mode -1))
-
-      ;; visible bell
-      (setq visible-bell t)
 
       ;; make default frame size fullscreen
       ;;(add-to-list 'default-frame-alist '(fullscreen . maximized))
@@ -547,6 +548,9 @@
                            `(,background-alpha . ,background-alpha))
       (add-to-list 'default-frame-alist
                    `(alpha . (,background-alpha . ,background-alpha)))
+
+      ;; set mouse color
+      (set-mouse-color color-mouse)
 
       ;;------------------------------------------------------------------------------
       ;;;; Theme
