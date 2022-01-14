@@ -2154,7 +2154,8 @@
                  ("i" . package-install)
                  ("l" . package-list-packages-no-fetch)
                  ("L" . package-list-packages)
-                 ("P" . straight-pull-recipe-repositories))
+                 ("P" . straight-pull-recipe-repositories)
+                 ("F" . straight-fetch-all))
 
       ;; run commands
       (bind-keys :map space-map
@@ -4686,6 +4687,7 @@
 
     (use-package org-visibility
       :straight t
+      ;;:load-path (lambda () (file-truename (expand-file-name "~/code/github-nullman/emacs-org-visibility")))
       :after (org)
       :demand t
       :bind (:map org-visibility-mode-map
@@ -11881,7 +11883,7 @@
                     (and (beginning-of-defun)
                          (progn
                            (end-of-defun)
-                           (> (point) eol))))
+                           (>= (point) eol))))
                   (beginning-of-defun)
                   (indent-region (line-beginning-position) (line-end-position))
                   (let* ((bounds (bounds-of-thing-at-point 'sexp))
@@ -18971,7 +18973,8 @@
      `(("List Packages" "(package-list-packages :nofetch)" "List packages.")
        ("List Packages (Refresh)" "package-list-packages" "List packages (after refresh).")
        ("Install Package" "package-install" "Install package.")
-       ("Straight Refresh" "straight-pull-recipe-repositories" "Refresh straight recipe repositories.")
+       ("Straight Refresh" "straight-pull-recipe-repositories" "Refresh recipe repositories.")
+       ("Straight Fetch All" "straight-fetch-all" "Fetch all packages.")
        ;;("Auto-Remove Packages" "package-autoremove" "Remove packages that are no more needed.")
        ;;("Quelpa Upgrade" "quelpa-upgrade" "Upgrade one Quelpa package.")
        ;;("Quelpa Upgrade All" "quelpa-upgrade-all" "Upgrade all Quelpa packages.")
