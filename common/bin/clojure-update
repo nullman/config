@@ -39,7 +39,7 @@ pushd "${dir}" && (
             # insatll jline
             cvs -d :pserver:anonymous@jline.cvs.sourceforge.net:/cvsroot/jline login
             cvs -z3 -d :pserver:anonymous@jline.cvs.sourceforge.net:/cvsroot/jline co jline
-            )
+        )
         popd
 
     else
@@ -53,7 +53,7 @@ pushd "${dir}" && (
             (cd slime && git pull)
             (cd swank-clojure && git pull)
             (cd jline && cvs update)
-            )
+        )
         popd
 
     fi
@@ -64,13 +64,13 @@ pushd "${dir}" && (
 
     # copy emacs files to emacs modules directory
     if [[ -d "${elisp}" ]] ; then
-        cp -rp ./src/clojure-mode/clojure-mode.el "${elisp}/"
-        cp -rp ./src/slime/* "${elisp}/slime/"
-        cp -rp ./src/swank-clojure/swank-clojure.el "${elisp}/"
+        cp -Rp ./src/clojure-mode/clojure-mode.el "${elisp}/"
+        cp -Rp ./src/slime/* "${elisp}/slime/"
+        cp -Rp ./src/swank-clojure/swank-clojure.el "${elisp}/"
     fi
 
     popd
-    )
+)
 
 #===============================================================================
 # End of File

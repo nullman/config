@@ -2705,13 +2705,14 @@
       ;; custom link entry generator
       (defun org-make-toc--link-entry-custom ()
         "Return text for ENTRY converted to ID link."
-        (-when-let* ((id (cdr (assoc "CUSTOM_ID" (org-entry-properties))))
-                     (title (cdr (assoc "ITEM" (org-entry-properties))))
-                     (filename (if org-make-toc-filename-prefix
-                                   (file-name-nondirectory (buffer-file-name))
-                                 "")))
-          (org-make-link-string (concat filename "#" id)
-                                (org-make-toc--visible-text title)))))
+        (or (-when-let* ((id (cdr (assoc "CUSTOM_ID" (org-entry-properties))))
+                         (title (cdr (assoc "ITEM" (org-entry-properties))))
+                         (filename (if org-make-toc-filename-prefix
+                                       (file-name-nondirectory (buffer-file-name))
+                                     "")))
+              (org-link-make-string (concat filename "#" id)
+                                    (org-make-toc--visible-text title)))
+            (org-make-toc--link-entry-github))))
 ;; TOC:1 ends here
 
 ;; [[file:init-emacs.org::*Modules][Modules:1]]

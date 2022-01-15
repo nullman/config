@@ -23,7 +23,7 @@ mkdir -pv ${OUT}/usr/share/doc/kotlin
 cp -v ${IN}/bin/* ${OUT}/usr/bin/
 rm -v ${OUT}/usr/bin/*.bat
 cp -v ${IN}/lib/* ${OUT}/usr/lib/kotlin/
-cp -rv ${IN}/license/* ${OUT}/usr/share/doc/kotlin/
+cp -Rv ${IN}/license/* ${OUT}/usr/share/doc/kotlin/
 
 # make deb control file
 mkdir -v ${OUT}/DEBIAN

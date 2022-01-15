@@ -914,9 +914,9 @@ alias wine-ddo-cp="WINEPREFIX=\${HOME}/.wine-ddocp wine \"C:\Games\DDOCharGen\DD
 #!alias wine-eve-mon="WINEPREFIX=\${HOME}/.wine-eve-tools wine \"C:\Program Files (x86)\EVEMon\EVEMon.exe\""
 #!#        eve-copy-settings       copy eve settings
 #!alias eve-copy-settings="
-#!    cp -r \"\${HOME}/Downloads/EVE/CCP/EVE/c_program_files_ccp_eve_tranquility/settings\" \
+#!    cp -R \"\${HOME}/Downloads/EVE/CCP/EVE/c_program_files_ccp_eve_tranquility/settings\" \
     #!      \"\${HOME}/.wine-eve/drive_c/windows/profiles/kyle/Local Settings/Application Data/CCP/EVE/c_program_files_ccp_eve_tranquility/\"
-#!    cp -r \"\${HOME}/Downloads/EVE/CCP/EVE/c_users_kyle_program_files_eve_tranquility/settings\" \
+#!    cp -R \"\${HOME}/Downloads/EVE/CCP/EVE/c_users_kyle_program_files_eve_tranquility/settings\" \
     #!      \"\${HOME}/.wine-eve2/drive_c/windows/profiles/kyle/Local Settings/Application Data/CCP/EVE/c_program_files_ccp_eve_tranquility/\""
 #        wine-fallout            wine fallout
 alias wine-fallout="WINEPREFIX=\${HOME}/.wine-fallout wine \"C:\GOG Games\Games\\Fallout\FalloutLauncher.exe\""
@@ -1194,6 +1194,8 @@ alias cdvl="cd /var/log"
 alias cdrh="cd /root"
 #        cdc                     cd ~/config
 alias cdc="cd \${HOME}/config"
+#        cdcc                    cd ~/config/custom/HOSTNAME
+alias cdcc="cd \${HOME}/config/custom/\$(uname -n)"
 #        cdcp                    cd ~/config-private
 alias cdcp="cd \${HOME}/config-private"
 #        cdem                    cd ~/.emacs.d
@@ -1204,12 +1206,16 @@ alias cdemlm="cd \${HOME}/.emacs.d/local-modules"
 alias cdemwm="cd \${HOME}/.emacs.d/local-work-modules"
 #        cdemm                   cd ~/.emacs.d/modules
 alias cdemm="cd \${HOME}/.emacs.d/modules"
-#        cdcc                    cd ~/config/custom/HOSTNAME
-alias cdcc="cd \${HOME}/config/custom/\$(uname -n)"
 #        cddl                    cd ~/Downloads
 alias cddl="cd \${HOME}/Downloads"
 #        cdb                     cd ~/bin
 alias cdb="cd \${HOME}/bin"
+#        cdcode                  cd ~/code
+alias cdcode="cd \${HOME}/code"
+#        cdgithub                cd ~/code/github-nullman
+alias cdgithub="cd \${HOME}/code/github-nullman"
+#        cdgitlab                cd ~/code/gitlab-kylesherman
+alias cdgitlab="cd \${HOME}/code/gitlab-kylesherman"
 #        cddoc                   cd ~/doc
 alias cddoc="cd \${HOME}/doc"
 #        cddev                   cd ~/dev

@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:("CONTENTS") tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-01-14 14:18 (kyle)>
+  #+TIMESTAMP: <2022-01-14 21:50 (kyle)>
 
 * Table of Contents
   :PROPERTIES:
@@ -4627,13 +4627,14 @@
         ;; custom link entry generator
         (defun org-make-toc--link-entry-custom ()
           "Return text for ENTRY converted to ID link."
-          (-when-let* ((id (cdr (assoc "CUSTOM_ID" (org-entry-properties))))
-                       (title (cdr (assoc "ITEM" (org-entry-properties))))
-                       (filename (if org-make-toc-filename-prefix
-                                     (file-name-nondirectory (buffer-file-name))
-                                   "")))
-            (org-make-link-string (concat filename "#" id)
-                                  (org-make-toc--visible-text title)))))
+          (or (-when-let* ((id (cdr (assoc "CUSTOM_ID" (org-entry-properties))))
+                           (title (cdr (assoc "ITEM" (org-entry-properties))))
+                           (filename (if org-make-toc-filename-prefix
+                                         (file-name-nondirectory (buffer-file-name))
+                                       "")))
+                (org-link-make-string (concat filename "#" id)
+                                      (org-make-toc--visible-text title)))
+              (org-make-toc--link-entry-github))))
     #+END_SRC
 
 *** Modules
