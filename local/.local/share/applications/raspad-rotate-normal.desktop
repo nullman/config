@@ -6,4 +6,4 @@ Type=Application
 Icon=go-up
 Terminal=false
 StartupNotify=false
-Categories=System;X-Accessibility;X-Screen;
+Categories=Accessibility;X-Accessibility;X-Screen;
