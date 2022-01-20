@@ -21,6 +21,7 @@
 
 (let ((home "C:\\msys64\\home\\kyle.sherman"))
   (setenv "HOME" home)
+  (setq temporary-file-directory (getenv "%TMP%"))
   (load (expand-file-name ".emacs.d\\init.el" home)))
 
 ;;==============================================================================

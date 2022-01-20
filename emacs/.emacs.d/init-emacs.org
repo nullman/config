@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:("CONTENTS") tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-01-20 16:33 (kyle)>
+  #+TIMESTAMP: <2022-01-20 17:00 (kyle)>
 
 * Table of Contents
   :PROPERTIES:
@@ -1064,6 +1064,7 @@
 
       (let ((home "C:\\msys64\\home\\kyle.sherman"))
         (setenv "HOME" home)
+        (setq temporary-file-directory (getenv "%TMP%"))
         (load (expand-file-name ".emacs.d\\init.el" home)))
 
       ;;==============================================================================
@@ -1168,13 +1169,17 @@
     (defmacro when-lockfile-acquired (lockfile &rest body)
       "Evaluate BODY unless another running Emacs instance has done so.
 
-    LOCKFILE is a file name to be used as a lock for this BODY code."
+    LOCKFILE is a file name to be used as a lock for this BODY code.
+
+    Skips checks if run on Windows."
       (declare (indent defun))
       (let ((procdir (gensym "procdir")))
         `(let ((,procdir (format "/proc/%d" (emacs-pid))))
-           (unless (file-exists-p ,lockfile)
+           (unless (or (string= system-type "windows-nt")
+                    (file-exists-p ,lockfile))
              (make-symbolic-link ,procdir ,lockfile t))
-           (when (file-equal-p ,lockfile ,procdir)
+           (when (or (string= system-type "windows-nt")
+                     (file-equal-p ,lockfile ,procdir))
              ,@body))))
   #+END_SRC
 

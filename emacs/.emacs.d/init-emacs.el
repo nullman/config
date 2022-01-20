@@ -98,13 +98,17 @@
   (defmacro when-lockfile-acquired (lockfile &rest body)
     "Evaluate BODY unless another running Emacs instance has done so.
 
-  LOCKFILE is a file name to be used as a lock for this BODY code."
+  LOCKFILE is a file name to be used as a lock for this BODY code.
+
+  Skips checks if run on Windows."
     (declare (indent defun))
     (let ((procdir (gensym "procdir")))
       `(let ((,procdir (format "/proc/%d" (emacs-pid))))
-         (unless (file-exists-p ,lockfile)
+         (unless (or (string= system-type "windows-nt")
+                  (file-exists-p ,lockfile))
            (make-symbolic-link ,procdir ,lockfile t))
-         (when (file-equal-p ,lockfile ,procdir)
+         (when (or (string= system-type "windows-nt")
+                   (file-equal-p ,lockfile ,procdir))
            ,@body))))
 ;; Start:5 ends here
 
