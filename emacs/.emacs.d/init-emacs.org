@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:("CONTENTS") tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-01-20 17:00 (kyle)>
+  #+TIMESTAMP: <2022-01-20 17:39 (kyle)>
 
 * Table of Contents
   :PROPERTIES:
@@ -1064,7 +1064,6 @@
 
       (let ((home "C:\\msys64\\home\\kyle.sherman"))
         (setenv "HOME" home)
-        (setq temporary-file-directory (getenv "%TMP%"))
         (load (expand-file-name ".emacs.d\\init.el" home)))
 
       ;;==============================================================================
@@ -1667,7 +1666,7 @@
     #+BEGIN_SRC emacs-lisp
       ;; set customization file
       (defconst customization-file
-        (file-truename (expand-file-name "customization.el" temporary-file-directory))
+        (file-truename (expand-file-name "customization.el" emacs-home-dir))
         "Emacs customization file.")
       (setq custom-file customization-file)
     #+END_SRC
@@ -2680,15 +2679,6 @@
       ;; enable file variables
       (setq enable-local-variables t
             enable-local-eval 'maybe)
-    #+END_SRC
-
-    Set temporary files directory to '/tmp' so any temporary files do not clutter
-    the file system and get cleaned up.
-
-    #+BEGIN_SRC emacs-lisp
-      ;; set temporary files dir to '/tmp/'
-      (unless (string= system-type "windows-nt")
-        (setq temporary-file-directory "/tmp/"))
     #+END_SRC
 
     Turn off auto-save files.

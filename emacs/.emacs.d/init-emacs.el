@@ -341,7 +341,7 @@
 ;; [[file:init-emacs.org::*Global Variables][Global Variables:7]]
     ;; set customization file
     (defconst customization-file
-      (file-truename (expand-file-name "customization.el" temporary-file-directory))
+      (file-truename (expand-file-name "customization.el" emacs-home-dir))
       "Emacs customization file.")
     (setq custom-file customization-file)
 ;; Global Variables:7 ends here
@@ -1158,12 +1158,6 @@
 ;; Files:3 ends here
 
 ;; [[file:init-emacs.org::*Files][Files:4]]
-    ;; set temporary files dir to '/tmp/'
-    (unless (string= system-type "windows-nt")
-      (setq temporary-file-directory "/tmp/"))
-;; Files:4 ends here
-
-;; [[file:init-emacs.org::*Files][Files:5]]
     ;; delete auto-save files
     (setq delete-auto-save-files t)
 
@@ -1174,9 +1168,9 @@
           auto-save-list-file-prefix temporary-file-directory
           auto-save-list-file-name nil
           auto-save-default nil)
-;; Files:5 ends here
+;; Files:4 ends here
 
-;; [[file:init-emacs.org::*Files][Files:6]]
+;; [[file:init-emacs.org::*Files][Files:5]]
     ;; do not make backup files
     (setq make-backup-files nil)
     (setq-default make-backup-files nil)
@@ -1185,44 +1179,44 @@
           backup-by-copying t
           version-control nil
           delete-old-versions t)
-;; Files:6 ends here
+;; Files:5 ends here
 
-;; [[file:init-emacs.org::*Files][Files:7]]
+;; [[file:init-emacs.org::*Files][Files:6]]
     ;; do not make lock files
     (setq create-lockfiles nil)
     (setq-default create-lockfiles nil)
-;; Files:7 ends here
+;; Files:6 ends here
 
-;; [[file:init-emacs.org::*Files][Files:8]]
+;; [[file:init-emacs.org::*Files][Files:7]]
     ;; follow symlinks to version control files without asking or warning
     (setq vc-follow-symlinks t)
     (setq-default vc-follow-symlinks vc-follow-symlinks)
+;; Files:7 ends here
+
+;; [[file:init-emacs.org::*Files][Files:8]]
+    ;; handle gzip/zip/jar/tar files
+    (auto-compression-mode t)
 ;; Files:8 ends here
 
 ;; [[file:init-emacs.org::*Files][Files:9]]
-    ;; handle gzip/zip/jar/tar files
-    (auto-compression-mode t)
+    ;; reuse existing buffers, following file links
+    (setq find-file-existing-other-name t)
 ;; Files:9 ends here
 
 ;; [[file:init-emacs.org::*Files][Files:10]]
-    ;; reuse existing buffers, following file links
-    (setq find-file-existing-other-name t)
+    ;; end files with a newline
+    (setq require-final-newline t)
 ;; Files:10 ends here
 
 ;; [[file:init-emacs.org::*Files][Files:11]]
-    ;; end files with a newline
-    (setq require-final-newline t)
-;; Files:11 ends here
-
-;; [[file:init-emacs.org::*Files][Files:12]]
     ;; turn on auto buffer revert mode
     (global-auto-revert-mode 1)
     ;; this is currently bugged and will cause the buffer to re-center vertically every couple of seconds
     ;; (setq global-auto-revert-non-file-buffers t ; auto refresh dired too
     ;;       auto-revert-verbose nil)              ; but, be quiet about it
-;; Files:12 ends here
+;; Files:11 ends here
 
-;; [[file:init-emacs.org::*Files][Files:13]]
+;; [[file:init-emacs.org::*Files][Files:12]]
     (defun create-buffer-file-name-directory-if-needed ()
       "Create `buffer-file-name' directory if it does not already exist."
       (when (and buffer-file-name
@@ -1231,9 +1225,9 @@
 
     ;; create directories if needed on file save
     (add-hook 'before-save-hook #'create-buffer-file-name-directory-if-needed)
-;; Files:13 ends here
+;; Files:12 ends here
 
-;; [[file:init-emacs.org::*Files][Files:14]]
+;; [[file:init-emacs.org::*Files][Files:13]]
     ;; delete trailing lines on call to `delete-trailing-whitespace'
     (setq delete-trailing-lines t)
 
@@ -1247,28 +1241,28 @@
 
     ;; delete trailing whitespace on save
     (add-hook 'before-save-hook #'delete-trailing-whitespace-if-not-read-only)
-;; Files:14 ends here
+;; Files:13 ends here
 
-;; [[file:init-emacs.org::*Files][Files:15]]
+;; [[file:init-emacs.org::*Files][Files:14]]
     ;; make shell scripts executable when saving (and reset the buffer mode)
     (when (fboundp 'executable-make-buffer-file-executable-if-script-p)
       (add-hook 'after-save-hook #'executable-make-buffer-file-executable-if-script-p))
-;; Files:15 ends here
+;; Files:14 ends here
 
-;; [[file:init-emacs.org::*Files][Files:16]]
+;; [[file:init-emacs.org::*Files][Files:15]]
     ;; set DOS file extensions
     (add-to-list 'file-coding-system-alist '("\\.ASM\\'" . dos))
     (add-to-list 'file-coding-system-alist '("\\.BAT\\'" . dos))
     (add-to-list 'file-coding-system-alist '("\\.DO\\'" . dos))
     (add-to-list 'file-coding-system-alist '("\\.SYS\\'" . dos))
+;; Files:15 ends here
+
+;; [[file:init-emacs.org::*Files][Files:16]]
+    ;; auto-save bookmarks
+    (setq bookmark-save-flag 1)
 ;; Files:16 ends here
 
 ;; [[file:init-emacs.org::*Files][Files:17]]
-    ;; auto-save bookmarks
-    (setq bookmark-save-flag 1)
-;; Files:17 ends here
-
-;; [[file:init-emacs.org::*Files][Files:18]]
     ;; desktop history
     (when-lockfile-acquired (expand-file-name "emacs-desktop-history-lockfile"
                                               temporary-file-directory)
@@ -1286,9 +1280,9 @@
       ;;(add-to-list 'desktop-modes-not-to-save 'dired-mode t)
       ;;(add-to-list 'desktop-modes-not-to-save 'fundamental-mode t)
       )
-;; Files:18 ends here
+;; Files:17 ends here
 
-;; [[file:init-emacs.org::*Files][Files:19]]
+;; [[file:init-emacs.org::*Files][Files:18]]
     ;; save minibuffer history
     (when (fboundp 'savehist-mode)
       (when-lockfile-acquired (expand-file-name "emacs-minibuffer-history-lockfile"
@@ -1297,7 +1291,7 @@
         (setq savehist-save-minibuffer-history 1
               savehist-additional-variables '(search-ring
                                               regexp-search-ring))))
-;; Files:19 ends here
+;; Files:18 ends here
 
 ;; [[file:init-emacs.org::*Buffers and Windows][Buffers and Windows:1]]
     ;;------------------------------------------------------------------------------
