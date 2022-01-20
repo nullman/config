@@ -11,12 +11,6 @@
 #!
 #! set variables
 #!
-#!       home
-home="$(cd ${HOME} ; cd .. ; pwd)"
-#!       terminal
-terminal="alacritty"
-#!       nullwareip
-nullwareip="159.203.165.79"
 #!
 #! helper functions
 #!
@@ -25,6 +19,14 @@ _command() {
     command -v "$1" > /dev/null 2>&1
 }
 #
+#!       home
+home="$(cd ${HOME} ; cd .. ; pwd)"
+#!       terminal
+terminal="alacritty"
+#!       network device
+networkdevice="$(_command ip && ip route get 1.1.1.1 | awk '{print $5}')"
+#!       nullwareip
+nullwareip="159.203.165.79"
 #===============================================================================
 # Alias Definitions
 #===============================================================================
@@ -1712,13 +1714,10 @@ alias ext-dump="dumpe2fs -h"
 #
 # networking (general)
 #
-export networkdevice="$(ip route get 1.1.1.1 | awk '{print $5}')"
 #        netdev                  network device
-alias netdev="echo \"$(ip route get 1.1.1.1 | awk '{print $5}')\""
+alias netdev="echo \"\$(ip route get 1.1.1.1 | awk '{print \$5}')\""
 #        netip                   show ip address of main network device
-alias netip="
-    ifconfig \${networkdevice} | grep 'inet addr:[0-9]' | \
-    cut -d \":\" -f2 | cut -d \" \" -f1"
+alias netip="ifconfig ${networkdevice} | grep 'inet [0-9]' | sed 's/^.*inet // ; s/ .*$//'"
 #        netdns                  show dns routers of main network device
 alias netdns="nmcli dev list iface \${networkdevice} | grep IP4"
 #        ns                      netstat
