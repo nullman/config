@@ -131,8 +131,7 @@
     ;; bootstrap
     (defvar bootstrap-version)
     (let ((bootstrap-file
-           (file-truename
-            (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory)))
+           (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
           (bootstrap-version 5))
       (unless (file-exists-p bootstrap-file)
         (with-current-buffer
@@ -308,9 +307,9 @@
       "Return expanded directory name of DIR if found as a
     sub-directory of `emacs-home-dir', or just `emacs-home-dir'
     otherwise."
-      `(let ((file (file-truename (expand-file-name ,dir emacs-home-dir))))
+      `(let ((file (expand-file-name ,dir emacs-home-dir)))
          (if (file-exists-p file)
-             file
+             (file-truename file)
            emacs-home-dir)))
 ;; Global Variables:3 ends here
 

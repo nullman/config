@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:("CONTENTS") tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-01-14 21:50 (kyle)>
+  #+TIMESTAMP: <2022-01-20 13:27 (kyle)>
 
 * Table of Contents
   :PROPERTIES:
@@ -17,6 +17,7 @@
   :END:
 
   :CONTENTS:
+- [[#org][Org]]
 - [[#table-of-contents][Table of Contents]]
 - [[#overview][Overview]]
 - [[#information][Information]]
@@ -1170,8 +1171,7 @@
       ;; bootstrap
       (defvar bootstrap-version)
       (let ((bootstrap-file
-             (file-truename
-              (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory)))
+             (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
             (bootstrap-version 5))
         (unless (file-exists-p bootstrap-file)
           (with-current-buffer
@@ -1565,9 +1565,9 @@
         "Return expanded directory name of DIR if found as a
       sub-directory of `emacs-home-dir', or just `emacs-home-dir'
       otherwise."
-        `(let ((file (file-truename (expand-file-name ,dir emacs-home-dir))))
+        `(let ((file (expand-file-name ,dir emacs-home-dir)))
            (if (file-exists-p file)
-               file
+               (file-truename file)
              emacs-home-dir)))
     #+END_SRC
 
