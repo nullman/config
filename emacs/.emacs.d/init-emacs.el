@@ -1155,7 +1155,8 @@
 
 ;; [[file:init-emacs.org::*Files][Files:4]]
     ;; set temporary files dir to '/tmp/'
-    (setq temporary-file-directory "/tmp/")
+    (unless (string= system-type "windows-nt")
+      (setq temporary-file-directory "/tmp/"))
 ;; Files:4 ends here
 
 ;; [[file:init-emacs.org::*Files][Files:5]]
@@ -1265,7 +1266,8 @@
 
 ;; [[file:init-emacs.org::*Files][Files:18]]
     ;; desktop history
-    (when-lockfile-acquired "/tmp/emacs-desktop-history-lockfile"
+    (when-lockfile-acquired (expand-file-name "emacs-desktop-history-lockfile"
+                                              temporary-file-directory)
       (desktop-save-mode 1)
       (setq desktop-save 'ask-if-new
             desktop-load-locked-desktop t
@@ -1285,7 +1287,8 @@
 ;; [[file:init-emacs.org::*Files][Files:19]]
     ;; save minibuffer history
     (when (fboundp 'savehist-mode)
-      (when-lockfile-acquired "/tmp/emacs-minibuffer-history-lockfile"
+      (when-lockfile-acquired (expand-file-name "emacs-minibuffer-history-lockfile"
+                                                temporary-file-directory)
         (savehist-mode 1)
         (setq savehist-save-minibuffer-history 1
               savehist-additional-variables '(search-ring
@@ -20084,7 +20087,8 @@
 
     ;; start emacs server
     (when (fboundp 'server-start-maybe)
-      (when-lockfile-acquired "/tmp/emacs-server-lockfile"
+      (when-lockfile-acquired (expand-file-name "emacs-server-lockfile"
+                                                temporary-file-directory)
         (server-start-maybe)))
 ;; Start Emacs Server:1 ends here
 
