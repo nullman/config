@@ -2425,12 +2425,12 @@
       ;; do not insert empty lines around headings
       (org-blank-before-new-entry '((heading . nil) (plain-list-item . nil)))
       ;; use a different ellipsis indicator (than '...')
-      (org-ellipsis "…")
-      ;;(setq org-ellipsis " ⤵")
-      ;;(setq org-ellipsis " ")
-      ;;(setq org-ellipsis " ")
-      ;;(setq org-ellipsis " ")
-      ;;(setq org-ellipsis " ")
+      ;;(org-ellipsis "…")
+      ;;(org-ellipsis " ⤵")
+      ;;(org-ellipsis " ")
+      ;;(org-ellipsis " ")
+      ;;(org-ellipsis " ")
+      (org-ellipsis " ")
       ;; return follows links
       ;;(org-return-follows-link t)
       ;; HOME toggles between header start and line start
@@ -2446,7 +2446,7 @@
       (org-display-custom-times t)
       (org-time-stamp-custom-formats '("<%Y-%m-%d %a>" . "<%Y-%m-%d %a %H:%M>"))
       ;; todo keywords
-      (org-todo-keywords '("TODO(t)" "NEXT(n)" "|" "DONE(d!)"))
+      ;;(org-todo-keywords '("TODO(t)" "NEXT(n)" "|" "DONE(d!)"))
       ;; log note settings
       (org-log-note-headings
        '((done . "CLOSING NOTE %t")
@@ -2462,6 +2462,7 @@
       :config
       ;; faces
       (custom-set-faces
+       `(org-ellipsis ((t (:underline nil))))
        `(org-block ((t (:inherit shadow :foreground ,color-foreground))))
        `(org-level-1 ((t (:foreground ,color-1))))
        `(org-level-2 ((t (:foreground ,color-2))))
