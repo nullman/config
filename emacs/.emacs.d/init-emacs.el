@@ -13783,9 +13783,8 @@
     (use-package avy
       :straight t
       :bind* (("C-;" . avy-goto-char)
-              ("C-M-;" . pop-to-mark-command)
-              ("C-x ." . avy-goto-word-or-subword-1)
-              ("C-x C-." . avy-goto-word-or-subword-1)))
+              ("C-:" . avy-goto-word-or-subword-1)
+              ("C-M-;" . pop-to-mark-command)))
 ;; avy:1 ends here
 
 ;; [[file:init-emacs.org::*bash-completion][bash-completion:1]]

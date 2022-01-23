@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-01-22 19:24 (kyle)>
+  #+TIMESTAMP: <2022-01-22 23:31 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -19369,9 +19369,8 @@
       (use-package avy
         :straight t
         :bind* (("C-;" . avy-goto-char)
-                ("C-M-;" . pop-to-mark-command)
-                ("C-x ." . avy-goto-word-or-subword-1)
-                ("C-x C-." . avy-goto-word-or-subword-1)))
+                ("C-:" . avy-goto-word-or-subword-1)
+                ("C-M-;" . pop-to-mark-command)))
     #+END_SRC
 
 *** bash-completion
@@ -20414,7 +20413,6 @@
        (:name "Retro Computing Roundtable" :html "http://rcrpodcast.com/" :rss "http://rcrpodcast.com/rcrpodcast.rss" :tag "vintage")
        ;; Games
        ;;(:name "Star Citizen" :html "https://robertsspaceindustries.com/com-link/" :rss "https://robertsspaceindustries.com/comm-link/rss" :tag "game")
-       (:name "bitemyapp" :html "https://bitemyapp.com/" :rss "https://bitemyapp.com/atom.xml" :tag "dev")
        ;; Other
        (:name "New York Times OPEN Blogs" :html "https://open.blogs.nytimes.com/" :rss "https://open.blogs.nytimes.com/feed/" :tag "blog")
        ;;(:name "TJ Maynes" :html "https://www.tjmaynes.com/" :rss "https://www.tjmaynes.com/atom.xml" :tag "blog")
@@ -23424,7 +23422,7 @@
     :CUSTOM_ID: modules-saveplace
     :END:
 
-    Save Position in Files Edited (saveplace)
+    Automatically save place in files.
 
     #+BEGIN_SRC emacs-lisp
       ;;------------------------------------------------------------------------------
