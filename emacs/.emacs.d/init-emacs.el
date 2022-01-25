@@ -772,12 +772,13 @@
     (init-message 3 "Turn On `global-visual-line-mode'")
 
     ;; visually break lines that are longer than the screen width
-    ;;(global-visual-line-mode 1)
-    (defun buffer-menu-mode-hook--visual-line-mode()
-      "Hook to turn on `visual-line-mode' in most buffers."
-      (when (not (string= (substring (buffer-name) 0 1) "*"))
-        (visual-line-mode 1)))
-    (add-hook 'buffer-menu-mode-hook #'buffer-menu-mode-hook--visual-line-mode)
+    (global-visual-line-mode 1)
+
+    ;; (defun buffer-menu-mode-hook--visual-line-mode()
+    ;;   "Hook to turn on `visual-line-mode' in most buffers."
+    ;;   (when (not (string= (substring (buffer-name) 0 1) "*"))
+    ;;     (visual-line-mode 1)))
+    ;; (add-hook 'buffer-menu-mode-hook #'buffer-menu-mode-hook--visual-line-mode)
 
     ;; use curly arrows to indicate a visual line wrap
     (setq visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
