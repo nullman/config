@@ -12,15 +12,15 @@ screen -t mon 0 nice htop
 #screen -t mon 0 nice zenith
 ##screen -t mon 0 nice slmon
 #screen -t emacs 1 emacs --no-site-file -nw
-screen -t shell 1 zsh
-screen -t shell 2 zsh
-screen -t shell 3 zsh
-screen -t shell 4 zsh
-screen -t shell 5 zsh
-screen -t shell 6 zsh
-screen -t shell 7 zsh
-screen -t shell 8 zsh
-screen -t shell 9 zsh
+screen -t shell 1 bash
+screen -t shell 2 bash
+screen -t shell 3 bash
+screen -t shell 4 bash
+screen -t shell 5 bash
+screen -t shell 6 bash
+screen -t shell 7 bash
+screen -t shell 8 bash
+screen -t shell 9 bash
 #screen -t ifmon 10 nice iftop
 #screen -t mail 11 pine
 #screen -t im 12 centericq -a
