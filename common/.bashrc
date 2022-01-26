@@ -56,7 +56,7 @@ else
     # set terminal prompt to: host:user path $
     #export PS1="${COLOR_YELLOW}\h:\u ${COLOR_LIGHT_BLUE}\w ${COLOR_YELLOW}\\$ ${COLOR_DEFAULT}"
     # set terminal prompt to: host:user path git-branch $
-    export PS1="${COLOR_YELLOW}\h:\u ${COLOR_LIGHT_BLUE}\w${COLOR_CYAN}\$(gitbranchprompt) ${COLOR_YELLOW}\\$ ${COLOR_DEFAULT}"
+    export PS1="${COLOR_YELLOW}\h:\u ${COLOR_LIGHT_BLUE}\w${COLOR_GREEN}\$(gitbranchprompt) ${COLOR_YELLOW}\\$ ${COLOR_DEFAULT}"
 fi
 
 # other prompts
