@@ -1338,10 +1338,12 @@
 
 ;; [[file:init-emacs.org::*Tabs][Tabs:2]]
     ;; regular tab width
-    (setq local-tab-width 4)
+    (defvar custom-tab-width 4
+      "Regular tab width.")
 
     ;; short tab width used for certain modes
-    (setq local-short-tab-width 2)
+    (defvar custom-short-tab-width 2
+      "Short tab width used for certain modes.")
 
     ;; set tabs
     (defun set-tabs (enable &optional width)
@@ -1351,8 +1353,8 @@
     Otherwise, disable TAB characters.
 
     If WIDTH is given, it is used to set the TAB width.
-    Otherwise, `local-tab-width' is used."
-      (let ((width (or width local-tab-width)))
+    Otherwise, `custom-tab-width' is used."
+      (let ((width (or width custom-tab-width)))
         (setq indent-tabs-mode enable       ; whether to insert tab characters
               tab-width width               ; set tab width
               standard-indent width         ; set margin-changing functions indent
@@ -1390,8 +1392,8 @@
 
       (init-message 3 "Environment Settings: Terminals: Configuration")
 
-      (setq local-terminal-history-size 10000
-            local-terminal-maximum-lines 10000)
+      (setq custom-terminal-history-size 10000
+            custom-terminal-maximum-lines 10000)
 ;; No heading:1 ends here
 
 ;; [[file:init-emacs.org::*eshell][eshell:1]]
@@ -1401,7 +1403,7 @@
 
       (init-message 3 "Environment Settings: Terminals: eshell")
 
-      (defun local-eshell-first-time-mode-hook ()
+      (defun custom-eshell-first-time-mode-hook ()
         ;; save command history
         (add-hook 'eshell-pre-command-hook #'eshell-save-some-history)
 
@@ -1410,14 +1412,14 @@
 
       (use-package eshell
         :straight (:type built-in)
-        :hook (eshell-first-time-mode . local-eshell-first-time-mode-hook)
+        :hook (eshell-first-time-mode . custom-eshell-first-time-mode-hook)
         ;; :bind (:map eshell-mode-map
         ;;             ([remap beginning-of-line] . eshell-bol)
         ;;             ([remap move-beginning-of-line] . eshell-bol)
         ;;             ("C-r" . counsel-esh-history))
         :custom
-        (eshell-history-size local-terminal-history-size)
-        (eshell-buffer-maximum-lines local-terminal-maximum-lines)
+        (eshell-history-size custom-terminal-history-size)
+        (eshell-buffer-maximum-lines custom-terminal-maximum-lines)
         (eshell-hist-ignoredups t)
         (eshell-scroll-to-bottom-on-input t)
         :config
@@ -1471,7 +1473,7 @@
         :straight t
         :commands (vterm)
         :custom
-        (vterm-max-scrollback local-terminal-maximum-lines)
+        (vterm-max-scrollback custom-terminal-maximum-lines)
         (vterm-kill-buffer-on-exit nil))
 ;; vterm:1 ends here
 
@@ -3354,7 +3356,7 @@
 
     (init-message 2 "Org Mode: Hook")
 
-    (defun local-org-mode-hook ()
+    (defun custom-org-mode-hook ()
       ;; remappings
       (bind-keys :map org-mode-map
                  ([remap org-metaleft] . org-safe-metaleft)
@@ -3417,7 +3419,7 @@
 
     (use-package org
       :straight (:type built-in)
-      :hook (org-mode . local-org-mode-hook))
+      :hook (org-mode . custom-org-mode-hook))
 ;; Hook:1 ends here
 
 ;; [[file:init-emacs.org::*Babel][Babel:1]]
@@ -3486,48 +3488,48 @@
       ;; (use-package org-eldoc
       ;;   :straight (:type built-in)
       ;;   :commands (org-eldoc-get-breadcrumb
-      ;;               org-eldoc-get-mode-local-documentation-function
-      ;;               org-eldoc-get-src-header
-      ;;               org-eldoc-get-src-lang)
+      ;;              org-eldoc-get-mode-local-documentation-function
+      ;;              org-eldoc-get-src-header
+      ;;              org-eldoc-get-src-lang)
       ;;   :functions (c-eldoc-print-current-symbol-info
       ;;               css-eldoc-function
       ;;               eldoc-print-current-symbol-info
       ;;               go-eldoc--documentation-function
       ;;               org-eldoc-documentation-function
       ;;               php-eldoc-function)
-      ;;   :config (progn
-      ;;             ;; fix `org-eldoc-documentation-function' so it does not recursively call in org lang babel blocks
-      ;;             (defun org-eldoc-documentation-function ()
-      ;;               "Return breadcrumbs when on a headline, args for src block header-line,
+      ;;   :config
+      ;;   ;; fix `org-eldoc-documentation-function' so it does not recursively call in org lang babel blocks
+      ;;   (defun org-eldoc-documentation-function ()
+      ;;     "Return breadcrumbs when on a headline, args for src block header-line,
       ;;   calls other documentation functions depending on lang when inside src body.
       ;;   [Custom fix for recursive bug]"
-      ;;               (or
-      ;;                (org-eldoc-get-breadcrumb)
-      ;;                (org-eldoc-get-src-header)
-      ;;                (let ((lang (org-eldoc-get-src-lang)))
-      ;;                  (cond ((or
-      ;;                          (string= lang "emacs-lisp")
-      ;;                          (string= lang "elisp")) (if (fboundp 'elisp-eldoc-documentation-function)
-      ;;                          (elisp-eldoc-documentation-function)
-      ;;                          (let (eldoc-documentation-function)
-      ;;                            (eldoc-print-current-symbol-info))))
-      ;;                        ((or
-      ;;                          (string= lang "c") ;; http://github.com/nflath/c-eldoc
-      ;;                          (string= lang "C")) (when (require 'c-eldoc nil :no-error)
-      ;;                          (c-eldoc-print-current-symbol-info)))
-      ;;                        ;; https://github.com/zenozeng/css-eldoc
-      ;;                        ((string= lang "css") (when (require 'css-eldoc nil :no-error)
-      ;;                                                (css-eldoc-function)))
-      ;;                        ;; https://github.com/zenozeng/php-eldoc
-      ;;                        ((string= lang "php") (when (require 'php-eldoc nil :no-error)
-      ;;                                                (php-eldoc-function)))
-      ;;                        ((or
-      ;;                          (string= lang "go")
-      ;;                          (string= lang "golang")) (when (require 'go-eldoc nil :no-error)
-      ;;                          (go-eldoc--documentation-function)))
-      ;;                        (t (let ((doc-fun (org-eldoc-get-mode-local-documentation-function lang)))
-      ;;                             (when (and (functionp doc-fun) (not (string= doc-fun "org-eldoc-documentation-function")))
-      ;;                             (funcall doc-fun)))))))))
+      ;;     (or
+      ;;      (org-eldoc-get-breadcrumb)
+      ;;      (org-eldoc-get-src-header)
+      ;;      (let ((lang (org-eldoc-get-src-lang)))
+      ;;        (cond ((or
+      ;;                (string= lang "emacs-lisp")
+      ;;                (string= lang "elisp")) (if (fboundp 'elisp-eldoc-documentation-function)
+      ;;                (elisp-eldoc-documentation-function)
+      ;;                (let (eldoc-documentation-function)
+      ;;                  (eldoc-print-current-symbol-info))))
+      ;;              ((or
+      ;;                (string= lang "c") ;; http://github.com/nflath/c-eldoc
+      ;;                (string= lang "C")) (when (require 'c-eldoc nil :no-error)
+      ;;                (c-eldoc-print-current-symbol-info)))
+      ;;              ;; https://github.com/zenozeng/css-eldoc
+      ;;              ((string= lang "css") (when (require 'css-eldoc nil :no-error)
+      ;;                                      (css-eldoc-function)))
+      ;;              ;; https://github.com/zenozeng/php-eldoc
+      ;;              ((string= lang "php") (when (require 'php-eldoc nil :no-error)
+      ;;                                      (php-eldoc-function)))
+      ;;              ((or
+      ;;                (string= lang "go")
+      ;;                (string= lang "golang")) (when (require 'go-eldoc nil :no-error)
+      ;;                (go-eldoc--documentation-function)))
+      ;;              (t (let ((doc-fun (org-eldoc-get-mode-local-documentation-function lang)))
+      ;;                   (when (and (functionp doc-fun) (not (string= doc-fun "org-eldoc-documentation-function")))
+      ;;                     (funcall doc-fun)))))))))
 ;; Setup:1 ends here
 
 ;; [[file:init-emacs.org::*Structure Templates][Structure Templates:1]]
@@ -13684,9 +13686,9 @@
       :config
       (setq dabbrev-case-replace nil) ; preserve case when replacing abbreviations
       (quietly-read-abbrev-file abbrev-file)
-      (defun local-kill-emacs-hook-write-abbrev-file ()
+      (defun custom-kill-emacs-hook-write-abbrev-file ()
         (write-abbrev-file abbrev-file))
-      (add-hook 'kill-emacs-hook #'local-kill-emacs-hook-write-abbrev-file))
+      (add-hook 'kill-emacs-hook #'custom-kill-emacs-hook-write-abbrev-file))
 ;; abbrev-mode:1 ends here
 
 ;; [[file:init-emacs.org::*ag][ag:1]]
@@ -14043,14 +14045,14 @@
       :bind* ([remap list-buffers] . bs-show) ; defaults to `list-buffers'
       :bind* ("C-x C-b" . bs-show)            ; defaults to `list-buffers'
       :config
-      (defvar local-bs-always-show-regexps '("\\*\\(scratch\\|info\\|grep\\)\\*")
+      (defvar custom-bs-always-show-regexps '("\\*\\(scratch\\|info\\|grep\\)\\*")
         "*Buffer regexps to always show when buffer switching.")
-      (defvar local-bs-never-show-regexps '("^\\s-" "^\\*" "TAGS$" "^Map_Sym.txt$" "^magit")
+      (defvar custom-bs-never-show-regexps '("^\\s-" "^\\*" "TAGS$" "^Map_Sym.txt$" "^magit")
         "*Buffer regexps to never show when buffer switching.")
-      (defvar local-ido-ignore-dired-buffers nil
+      (defvar custom-ido-ignore-dired-buffers nil
         "*If non-nil, buffer switching should ignore dired buffers.")
 
-      (defun local-bs-string-in-regexps (string regexps)
+      (defun custom-bs-string-in-regexps (string regexps)
         "Return non-nil if STRING matches anything in REGEXPS list."
         (let ((case-fold-search nil))
           (catch 'done
@@ -14058,11 +14060,11 @@
               (when (string-match regexp string)
                 (throw 'done t))))))
 
-      (defun local-bs-ignore-buffer (buffer)
+      (defun custom-bs-ignore-buffer (buffer)
         "Return non-nil if BUFFER should be ignored."
-        (or (and (not (local-bs-string-in-regexps buffer local-bs-always-show-regexps))
-                 (local-bs-string-in-regexps buffer local-bs-never-show-regexps))
-            (and local-ido-ignore-dired-buffers
+        (or (and (not (custom-bs-string-in-regexps buffer custom-bs-always-show-regexps))
+                 (custom-bs-string-in-regexps buffer custom-bs-never-show-regexps))
+            (and custom-ido-ignore-dired-buffers
                  (with-current-buffer buffer
                    (equal major-mode 'dired-mode)))))
 
@@ -14080,16 +14082,16 @@
       ;; config bs
       (setq bs-configurations
             '(("all" nil nil nil nil nil)
-              ("files" nil nil nil (lambda (buffer) (local-bs-ignore-buffer (buffer-name buffer))) nil))
+              ("files" nil nil nil (lambda (buffer) (custom-bs-ignore-buffer (buffer-name buffer))) nil))
             bs-cycle-configuration-name "files")
 
       ;; ;; add ignore rules to ido
-      ;; (setq ido-ignore-buffers '(local-bs-ignore-buffer))
+      ;; (setq ido-ignore-buffers '(custom-bs-ignore-buffer))
 
-      (defun local-bs-cycle-buffer-filter-extra ()
+      (defun custom-bs-cycle-buffer-filter-extra ()
         "Add ignore rules to `cycle-buffer'."
-        (not (local-bs-ignore-buffer (buffer-name))))
-      (add-to-list 'cycle-buffer-filter-extra '(local-bs-cycle-buffer-filter-extra) t))
+        (not (custom-bs-ignore-buffer (buffer-name))))
+      (add-to-list 'cycle-buffer-filter-extra '(custom-bs-cycle-buffer-filter-extra) t))
 ;; bs:1 ends here
 
 ;; [[file:init-emacs.org::*calc][calc:1]]
@@ -14243,18 +14245,18 @@
       ;; display compilation time in compile log
       ;; source: https://emacs.stackexchange.com/questions/31493/print-elapsed-time-in-compilation-buffer/56130#56130
 
-      (make-variable-buffer-local 'local-compilation-start-time)
+      (make-variable-buffer-local 'custom-compilation-start-time)
 
-      (defun local-compilation-start-hook (proc)
-        (setq local-compilation-start-time (current-time)))
-      (add-hook 'compilation-start-hook #'local-compilation-start-hook)
+      (defun custom-compilation-start-hook (proc)
+        (setq custom-compilation-start-time (current-time)))
+      (add-hook 'compilation-start-hook #'custom-compilation-start-hook)
 
-      (defun local-compilation-finish-function (buf why)
-        (let* ((elapsed (time-subtract nil local-compilation-start-time))
+      (defun custom-compilation-finish-function (buf why)
+        (let* ((elapsed (time-subtract nil custom-compilation-start-time))
                (msg (format "Compilation took: %s" (format-time-string "%T.%N" elapsed t))))
           (save-excursion (goto-char (point-max)) (insert msg))
           (message "Compilation %s: %s" (string-trim-right why) msg)))
-      (add-hook 'compilation-finish-functions #'local-compilation-finish-function))
+      (add-hook 'compilation-finish-functions #'custom-compilation-finish-function))
 ;; compile:1 ends here
 
 ;; [[file:init-emacs.org::*cycle-buffer][cycle-buffer:1]]
@@ -14447,10 +14449,10 @@
           (read (current-buffer)))))
       :config
       ;; increase default text size in `elfeed-show' buffers
-      (defun local-elfeed-show-mode-hook ()
+      (defun custom-elfeed-show-mode-hook ()
         ;; increase default text size
         (text-scale-set 2))
-      (add-hook 'elfeed-show-mode-hook #'local-elfeed-show-mode-hook)
+      (add-hook 'elfeed-show-mode-hook #'custom-elfeed-show-mode-hook)
 
       (defun elfeed-bookmarks-edit ()
         "Open `init-emacs.org' and move point to Elfeed Bookmarks File for easy editing."
@@ -14871,9 +14873,9 @@
                ("racket" (mode . racket-mode))
                ("ruby" (mode . ruby-mode)))))
 
-      (defun local-ibuffer-mode-hook ()
+      (defun custom-ibuffer-mode-hook ()
         (ibuffer-switch-to-saved-filter-groups "default"))
-      (add-hook 'ibuffer-mode-hook #'local-ibuffer-mode-hook))
+      (add-hook 'ibuffer-mode-hook #'custom-ibuffer-mode-hook))
 ;; ibuffer:1 ends here
 
 ;; [[file:init-emacs.org::*iedit][iedit:1]]
@@ -15274,7 +15276,7 @@
                   ("<f5>" . mingus-set-song-rating-5)
                   ("<f6>" . mingus-set-song-rating-0))
       :config
-      (defun local-mingus-hook-custom-settings ()
+      (defun custom-mingus-hook-custom-settings ()
         ;; disable undo
         (buffer-disable-undo)
 
@@ -15284,8 +15286,8 @@
         ;; ;; highlight current line
         ;; (hl-line-mode 1)
         )
-      (add-hook 'mingus-playlist-hooks #'local-mingus-hook-custom-settings)
-      (add-hook 'mingus-browse-hook #'local-mingus-hook-custom-settings)
+      (add-hook 'mingus-playlist-hooks #'custom-mingus-hook-custom-settings)
+      (add-hook 'mingus-browse-hook #'custom-mingus-hook-custom-settings)
 
       ;; set mpd config file location
       (setq mingus-mpd-config-file "~/.mpd/mpd.conf")
@@ -16501,11 +16503,11 @@
           (switch-to-buffer buffer))
         (w3m-region (point-min) (point-max)))
 
-      (defun w3m-display-local-hook (url)
+      (defun custom-w3m-display-hook (url)
         "Hook to auto-rename buffers to page title or url."
         (rename-buffer
          (format "*w3m: %s*" (or w3m-current-title w3m-current-url)) t))
-      (add-hook 'w3m-display-hook #'w3m-display-local-hook))
+      (add-hook 'w3m-display-hook #'custom-w3m-display-hook))
 
     ;; ;;------------------------------------------------------------------------------
     ;; ;;;; Modules: w3m-session
@@ -16689,7 +16691,7 @@
       :straight (:type built-in)
       :mode ("\\.asm\\'" . asm-mode)
       :config
-      (defun local-asm-mode-hook ()
+      (defun custom-asm-mode-hook ()
         "Customizations for asm-mode."
         ;; remove using ';' in place of M-; to insert a comment
         (local-unset-key [asm-comment-char])
@@ -16725,7 +16727,7 @@
         ;;    ;; The rest goes at the first tab stop.
         ;;    (indent-next-tab-stop 0)))
         )
-      (add-hook 'asm-mode-hook #'local-asm-mode-hook))
+      (add-hook 'asm-mode-hook #'custom-asm-mode-hook))
 ;; ASM:1 ends here
 
 ;; [[file:init-emacs.org::*Brainfuck][Brainfuck:1]]
@@ -16772,7 +16774,7 @@
       :commands (c-skip-comments-and-strings)
       :config
       ;; c style
-      (defvar local-c-style
+      (defvar custom-c-style
         '((c-tab-always-indent . 'complete)
           (c-basic-offset . 4)
           (c-comment-only-line-offset . 0)
@@ -16800,10 +16802,10 @@
                               (defun-block-intro . 4)))
           (c-echo-syntactic-information-p . nil)))
 
-      (defun local-c-mode-common-hook ()
+      (defun custom-c-mode-common-hook ()
         "Customizations for c-mode, c++-mode, objc-mode, java-mode, and idl-mode."
         ;; add my personal style and set it for the current buffer
-        (c-add-style "local" local-c-style t)
+        (c-add-style "local" custom-c-style t)
         ;;(c-set-style 'stroustrup)
 
         ;; electric indention turned off
@@ -16876,7 +16878,7 @@
         ;; turn on else minor mode
         ;;(else-mode)
         )
-      (add-hook 'c-mode-common-hook #'local-c-mode-common-hook)
+      (add-hook 'c-mode-common-hook #'custom-c-mode-common-hook)
 
       ;; remove trailing blanks
       ;;(add-hook 'c-mode-hook #'install-remove-trailing-blanks)
@@ -16965,13 +16967,13 @@
 
     (init-message 2 "Modes: Dired")
 
-    (defun local-dired-mode-hook ())
+    (defun custom-dired-mode-hook ())
 
     (use-package dired
       :straight (:type built-in)
       ;;:after (dired-single)
       :commands (dired dired-jump)
-      ;;:hook (dired-mode . local-dired-mode-hook)
+      ;;:hook (dired-mode . custom-dired-mode-hook)
       :bind* ("C-x j" . dired-jump)
       :bind (:map dired-mode-map
                   ("e" . wdired-change-to-wdired-mode)
@@ -17124,10 +17126,10 @@
             erlang-electric-commands nil)
 
       :config
-      (defun local-erlang-hook ()
+      (defun custom-erlang-hook ()
         ;; turn on flyspell
         (flyspell-prog-mode))
-      (add-hook 'erlang-hook #'local-erlang-hook)
+      (add-hook 'erlang-hook #'custom-erlang-hook)
 
       ;; remove trailing blanks
       ;;(add-hook 'erlang-mode-hook #'install-remove-trailing-blanks)
@@ -17183,14 +17185,14 @@
         ;;(insert-char ?Σ))
         (insert-char ?∑))
 
-      (defun local-geiser-mode-hook ()
+      (defun custom-geiser-mode-hook ()
         ;; key bindings
         (local-set-key (kbd "C-c \\") 'geiser-insert-lambda)
         (local-set-key (kbd "C-c C-\\") 'geiser-insert-lambda)
         (local-set-key (kbd "C-c s") 'geiser-insert-sigma)
         (local-set-key (kbd "C-c C-s") 'geiser-insert-sigma))
-      (add-hook 'geiser-mode-hook #'local-geiser-mode-hook)
-      (add-hook 'geiser-repl-mode-hook #'local-geiser-mode-hook))
+      (add-hook 'geiser-mode-hook #'custom-geiser-mode-hook)
+      (add-hook 'geiser-repl-mode-hook #'custom-geiser-mode-hook))
 
     (use-package geiser-racket
       :straight t
@@ -17233,7 +17235,7 @@
     ;;   :straight (:type built-in)
     ;;   :mode (("\\.go\\'" . go-mode))
     ;;   :config (progn
-    ;;             (defun local-go-mode-hook ()
+    ;;             (defun custom-go-mode-hook ()
     ;;               ;; use goimports instead of gofmt
     ;;               (setq gofmt-command "goimports")
 
@@ -17249,7 +17251,7 @@
 
     ;;               ;; key bindings
     ;;               (local-set-key (kbd "M-.") 'godef-jump))
-    ;;             (add-hook 'go-mode-hook #'local-go-mode-hook)))
+    ;;             (add-hook 'go-mode-hook #'custom-go-mode-hook)))
 ;; +Go Mode+:1 ends here
 
 ;; [[file:init-emacs.org::*Graphviz Dot Mode][Graphviz Dot Mode:1]]
@@ -17292,7 +17294,7 @@
       :interpreter ("node" . js2-mode)
       :config
       ;; set indent offset
-      (setq-local py-indent-offset local-short-tab-width)
+      (setq-local py-indent-offset custom-short-tab-width)
 
       ;; turn on auto indent
       (setq js2-auto-indent-p t
@@ -17436,17 +17438,17 @@
       :straight t
       :functions (ledger-align-amounts)
       :config
-      (defun local-ledger-align-amounts ()
+      (defun custom-ledger-align-amounts ()
         "Return `ledger-align-amounts' for entire buffer."
         (save-mark-and-excursion
           (goto-char (point-min))
           (ledger-align-amounts 52)))
 
-      (defun local-ledger-mode-hook ()
+      (defun custom-ledger-mode-hook ()
         ;; align amounts on save
         (make-local-variable 'before-save-hook)
-        (add-hook 'before-save-hook #'local-ledger-align-amounts))
-      (add-hook 'ledger-mode-hook #'local-ledger-mode-hook))
+        (add-hook 'before-save-hook #'custom-ledger-align-amounts))
+      (add-hook 'ledger-mode-hook #'custom-ledger-mode-hook))
 ;; Ledger Mode:1 ends here
 
 ;; [[file:init-emacs.org::*Lisp Mode][Lisp Mode:1]]
@@ -17456,7 +17458,7 @@
 
     (init-message 2 "Modes: Lisp Mode")
 
-    (defun local-lisp-mode-hook ()
+    (defun custom-lisp-mode-hook ()
       ;; double-space punctuation
       (when (fboundp 'double-space-punctuation)
         (bind-keys :map lisp-mode-map
@@ -17515,13 +17517,13 @@
       :straight (:type built-in)
       :after (flyspell eldoc info-look)
       :commands (emacs-lisp-mode)
-      :functions (local-lisp-mode-hook)
+      :functions (custom-lisp-mode-hook)
       :mode (("\\.el\\'" . emacs-lisp-mode)
              ("\\.lisp\\'" . lisp-mode)
              ("\\.clisp\\'" . lisp-mode))
-      :hook ((emacs-lisp-mode . local-lisp-mode-hook)
-             (lisp-mode . local-lisp-mode-hook)
-             (common-lisp-mode . local-lisp-mode-hook))
+      :hook ((emacs-lisp-mode . custom-lisp-mode-hook)
+             (lisp-mode . custom-lisp-mode-hook)
+             (common-lisp-mode . custom-lisp-mode-hook))
       :config
       ;; remove trailing blanks
       ;;(add-hook 'emacs-lisp-mode-hook #'install-remove-trailing-blanks)
@@ -17558,10 +17560,10 @@
       :straight (:type built-in)
       :mode ("Makefile" . makefile-mode)
       :config
-      (defun local-makefile-mode-hook ()
+      (defun custom-makefile-mode-hook ()
         ;; enable tabs
         (enable-tabs))
-      (add-hook 'makefile-mode-hook #'local-makefile-mode-hook))
+      (add-hook 'makefile-mode-hook #'custom-makefile-mode-hook))
 ;; Makefile Mode:1 ends here
 
 ;; [[file:init-emacs.org::*Markdown Mode][Markdown Mode:1]]
@@ -17608,14 +17610,14 @@
              ("perl5" . perl-mode))
       :interpreter ("miniperl" . perl-mode)
       :config
-      (defun local-perl-mode-hook ()
+      (defun custom-perl-mode-hook ()
         ;; configure some options
         (setq perl-indent-level 4)
         (setq perl-continued-statement-offset 0)
 
         ;; turn on flyspell
         (flyspell-prog-mode))
-      (add-hook 'perl-mode-hook #'local-perl-mode-hook)
+      (add-hook 'perl-mode-hook #'custom-perl-mode-hook)
 
       (defun perl-mode-maybe ()
         "Determine if file is a perl script and switch to perl-mode if it is."
@@ -17663,7 +17665,7 @@
       :mode (("\\.py\\'" . python-mode)
              ("\\.python\\'" . python-mode))
       :commands (py--buffer-filename-remote-maybe)
-      :functions (local-python-mode-hook)
+      :functions (custom-python-mode-hook)
       :config
       ;; turn off auto-indent so code pasting works
       (setq py-python-command-args '("--no-autoindent" "--colors=Linux"))
@@ -17684,13 +17686,13 @@
       ;; increase recursion depth of auto-complete to prevent errors
       (setq py-max-specpdl-size 999)
 
-      (defun local-python-mode-hook ()
+      (defun custom-python-mode-hook ()
         ;; override some default keybindings
         (when (fboundp 'backward-delete-word)
           (bind-keys* ("C-<backspace>" . backward-delete-word))) ; defaults to `py-hungry-delete-backwards'
 
         ;; set indent offset
-        (setq-local py-indent-offset local-short-tab-width)
+        (setq-local py-indent-offset custom-short-tab-width)
 
         ;; set outline header regexp
         (setq-local outline-regexp " *\\(def \\|clas\\|#hea\\)")
@@ -17703,7 +17705,7 @@
           (setq completion-at-point-functions
                 (remove 'python-shell-completion-at-point completion-at-point-functions)))
         )
-      (add-hook 'python-mode-hook #'local-python-mode-hook))
+      (add-hook 'python-mode-hook #'custom-python-mode-hook))
 
     ;;------------------------------------------------------------------------------
     ;;;; elpy
@@ -17763,10 +17765,10 @@
     ;;   :commands (racket-mode
     ;;              racket-repl)
     ;;   :config
-    ;;   (defun local-racket-mode-hook ()
+    ;;   (defun custom-racket-mode-hook ()
     ;;     ;; do not auto-complete on tab
     ;;     (setq tab-always-indent t))
-    ;;   (add-hook 'racket-mode-hook #'local-racket-mode-hook)
+    ;;   (add-hook 'racket-mode-hook #'custom-racket-mode-hook)
 
     ;;   ;; turn on support for unicode input
     ;;   (add-hook 'racket-mode-hook #'racket-unicode-input-method-enable)
@@ -17824,7 +17826,7 @@
       :after (flyspell)
       :mode ("\\.rb\\'" . ruby-mode)
       :config
-      (defun local-ruby-mode-hook ()
+      (defun custom-ruby-mode-hook ()
         ;; set indent level
         ;;(setq ruby-indent-level 4)
         (setq ruby-indent-level 2)
@@ -17838,7 +17840,7 @@
         ;; turn on flyspell
         (when (boundp 'flyspell-prog-mode)
           (flyspell-prog-mode)))
-      (add-hook 'ruby-mode-hook #'local-ruby-mode-hook :append)
+      (add-hook 'ruby-mode-hook #'custom-ruby-mode-hook :append)
 
       ;; turn on flyspell
       (flyspell-prog-mode)
@@ -17920,9 +17922,9 @@
     ;;   :interpreter ("ruby" . ruby-mode)
     ;;   :commands (run-ruby inf-ruby-keys)
     ;;   :config
-    ;;   (defun local-ruby-mode-hook-inf-ruby-keys ()
+    ;;   (defun custom-ruby-mode-hook-inf-ruby-keys ()
     ;;     (inf-ruby-keys))
-    ;;   (add-hook 'ruby-mode-hook #'local-ruby-mode-hook-inf-ruby-keys)
+    ;;   (add-hook 'ruby-mode-hook #'custom-ruby-mode-hook-inf-ruby-keys)
 
     ;;   ;; use ruby-robe with inf-ruby
     ;;   (defadvice inf-ruby-console-auto (before activate-rvm-for-robe activate)
@@ -17963,7 +17965,7 @@
                   ("C-c C-n" . rust-goto-format-problem))
       :custom (rustic-lsp-client nil)
       :config
-      (defun local-rust-mode-hook ()
+      (defun custom-rust-mode-hook ()
         ;; use spaces for tabs
         (setq indent-tabs-mode nil)
 
@@ -17982,7 +17984,7 @@
         ;; turn on flyspell
         (when (boundp 'flyspell-prog-mode)
           (flyspell-prog-mode)))
-      (add-hook 'rust-mode-hook #'local-rust-mode-hook :append)
+      (add-hook 'rust-mode-hook #'custom-rust-mode-hook :append)
 
       ;; turn on flyspell
       (flyspell-prog-mode)
@@ -18204,7 +18206,7 @@
         (setq-local lisp-indent-function 'lisp-indent-function))
 
       ;; run custom version of slime setup to preserve lisp-indent-function
-      (defun local-slime-lisp-mode-hook ()
+      (defun custom-slime-lisp-mode-hook ()
         ;; ;; set lisp program
         ;; (setq inferior-lisp-program "clisp -K full")
         ;; (setq inferior-lisp-program "clisp -K base")
@@ -18234,9 +18236,9 @@
         ;; (unless (slime-connected-p)
         ;;   (save-mark-and-excursion (slime)))
         )
-      (add-hook 'lisp-mode-hook #'local-slime-lisp-mode-hook)
-      (add-hook 'common-lisp-mode-hook #'local-slime-lisp-mode-hook)
-      (add-hook 'clojure-mode-hook #'local-slime-lisp-mode-hook)
+      (add-hook 'lisp-mode-hook #'custom-slime-lisp-mode-hook)
+      (add-hook 'common-lisp-mode-hook #'custom-slime-lisp-mode-hook)
+      (add-hook 'clojure-mode-hook #'custom-slime-lisp-mode-hook)
 
       ;; cldoc (common lisp info in minibuffer)
       (autoload 'turn-on-cldoc-mode "cldoc" nil t)
@@ -18288,13 +18290,13 @@
         (interactive)
         (slime 'clojure))
 
-      (defun local-lisp-mode-hook-slime-mode ()
+      (defun custom-lisp-mode-hook-slime-mode ()
         "Hook to load slime-mode when lisp-mode is loaded."
         (slime-mode 1))
-      (add-hook 'lisp-mode-hook #'local-lisp-mode-hook-slime-mode)
-      ;; (defun local-inferior-lisp-mode-hook-inferior-slime-mode ()
+      (add-hook 'lisp-mode-hook #'custom-lisp-mode-hook-slime-mode)
+      ;; (defun custom-inferior-lisp-mode-hook-inferior-slime-mode ()
       ;;   (inferior-slime-mode 1))
-      ;; (add-hook 'inferior-lisp-mode-hook #'local-inferior-lisp-mode-hook-inferior-slime-mode)
+      ;; (add-hook 'inferior-lisp-mode-hook #'custom-inferior-lisp-mode-hook-inferior-slime-mode)
       )
 
     ;;------------------------------------------------------------------------------
@@ -18352,14 +18354,14 @@
     ;; (use-package sql-transform
     ;;   :straight t
     ;;   :config
-    ;;   (defun local-sql-mode-hook ()
+    ;;   (defun custom-sql-mode-hook ()
     ;;     ;; key bindings
     ;;     (bind-keys :map sql-mode-map
     ;;                ("C-c s" . sql-to-select)
     ;;                ("C-c i" . sql-to-insert)
     ;;                ("C-c u" . sql-to-update)
     ;;                ("C-c d" . sql-to-delete)))
-    ;;   (add-hook 'sql-mode-hook #'local-sql-mode-hook))
+    ;;   (add-hook 'sql-mode-hook #'custom-sql-mode-hook))
 
     ;; ;;------------------------------------------------------------------------------
     ;; ;;;; mysql
@@ -18389,7 +18391,7 @@
              ("\\'INSTALL\\'" . text-mode)
              ("\\'CHANGELOG\\'" . text-mode))
       :config
-      (defun local-text-mode-hook ()
+      (defun custom-text-mode-hook ()
         ;; set tab
         ;;(setq tab-width 4)
         ;;(setq tab-stop-list (number-sequence 4 76 4))
@@ -18422,7 +18424,7 @@
 
         ;; insert two spaces after a colon
         (setq colon-double-space t))
-      (add-hook 'text-mode-hook #'local-text-mode-hook)
+      (add-hook 'text-mode-hook #'custom-text-mode-hook)
 
       ;; remove trailing blanks
       ;;(add-hook 'text-mode-hook #'install-remove-trailing-blanks)
@@ -18466,7 +18468,7 @@
                   ("C-c C-f" . v-format-buffer)
                   ("C-c C-f" . v-menu))
       :config
-      (defun local-v-mode-hook ()
+      (defun custom-v-mode-hook ()
         ;; use spaces for tabs
         (setq indent-tabs-mode nil)
 
@@ -18485,7 +18487,7 @@
         ;; turn on flyspell
         (when (boundp 'flyspell-prog-mode)
           (flyspell-prog-mode)))
-      (add-hook 'v-mode-hook #'local-v-mode-hook :append)
+      (add-hook 'v-mode-hook #'custom-v-mode-hook :append)
 
       ;; turn on flyspell
       (flyspell-prog-mode)
@@ -18571,7 +18573,7 @@
       ;;(unify-8859-on-decoding-mode)
       (add-to-list 'magic-mode-alist '("<\\?xml " . nxml-mode) t)
 
-      (defun local-nxml-mode-hook ()
+      (defun custom-nxml-mode-hook ()
         ;; do not use `indent-relative' for tab indenting
         (bind-key "<tab>" 'indent-for-tab-command nxml-mode-map)
 
@@ -18587,24 +18589,24 @@
         ;; turn on org minor mode
         ;; (when (string-match "\\.\\(x?html\\|php[34]?\\)\\'"
         ;;                     (file-name-sans-versions buffer-file-name))
-        ;;   (local-nxml-mode-org))
-        ;;(local-nxml-mode-org)
+        ;;   (custom-nxml-mode-org))
+        ;;(custom-nxml-mode-org)
 
         ;; set outline header regexp
         ;;(setq-local outline-regexp " *<[^/]")
         (setq-local outline-regexp "\\s *<\\([h][1-6]\\|html\\|body\\|head\\)\\b")
         ;;(hide-sublevels 1)
         )
-      (add-hook 'nxml-mode-hook #'local-nxml-mode-hook)
+      (add-hook 'nxml-mode-hook #'custom-nxml-mode-hook)
 
-      ;; (defun local-nxml-mode-org ()
+      ;; (defun custom-nxml-mode-org ()
       ;;   ;;(setq-local outline-regexp "\\s *<\\([h][1-6]\\|html\\|body\\|head\\)\\b")
       ;;   (setq-local outline-regexp "\\s *<")
-      ;;   (setq-local outline-level 'local-nxml-mode-outline-level)
+      ;;   (setq-local outline-level 'custom-nxml-mode-outline-level)
       ;;   (outline-minor-mode 1)
       ;;   (hs-minor-mode 1))
 
-      ;; (defun local-nxml-mode-outline-level ()
+      ;; (defun custom-nxml-mode-outline-level ()
       ;;   (save-mark-and-excursion
       ;;     (save-match-data
       ;;       (re-search-forward html-outline-level)
@@ -18618,10 +18620,10 @@
       ;;                "<!--\\|<[^/>]>\\|<[^/][^>]*[^/]>"
       ;;                ""
       ;;                "<!--" ;; won't work on its own; uses syntax table
-      ;;                (lambda (arg) (local-nxml-mode-forward-element))
+      ;;                (lambda (arg) (custom-nxml-mode-forward-element))
       ;;                nil) t)
 
-      ;; (defun local-nxml-mode-forward-element ()
+      ;; (defun custom-nxml-mode-forward-element ()
       ;;   (let ((nxml-sexp-element-flag))
       ;;     (setq nxml-sexp-element-flag (not (looking-at "<!--")))
       ;;     (unless (looking-at outline-regexp)
