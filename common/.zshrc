@@ -67,7 +67,8 @@ zmodload zsh/terminfo
 #[[ -f "/usr/share/autojump/autojump.zsh" ]] && source /usr/share/autojump/autojump.zsh 2>&1
 
 # source powerlevel10k theme
-[[ -f "${HOME}/powerlevel10k/powerlevel10k.zsh-theme" ]] && source ${HOME}/powerlevel10k/powerlevel10k.zsh-theme 2>&1
+#[[ -f "${HOME}/powerlevel10k/powerlevel10k.zsh-theme" ]] && source ${HOME}/powerlevel10k/powerlevel10k.zsh-theme 2>&1
+[[ -f "/usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme" ]] && source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme 2>&1
 
 # fix home/end keys in screen/tmux
 if [[ -n "${STY}" ]] || [[ -n "${TMUX}" ]] ; then
@@ -162,9 +163,3 @@ typeset -g POWERLEVEL9K_INSTANT_PROMPT="quiet"
 #===============================================================================
 # End of File
 #===============================================================================
-
-PATH="/home/kyle/perl5/bin${PATH:+:${PATH}}"; export PATH;
-PERL5LIB="/home/kyle/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-PERL_LOCAL_LIB_ROOT="/home/kyle/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-PERL_MB_OPT="--install_base \"/home/kyle/perl5\""; export PERL_MB_OPT;
-PERL_MM_OPT="INSTALL_BASE=/home/kyle/perl5"; export PERL_MM_OPT;
