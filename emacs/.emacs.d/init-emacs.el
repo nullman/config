@@ -8667,37 +8667,38 @@
         - capitalized
         - uppercase"
         (interactive "*P")
-        (let ((syntax-table (copy-syntax-table (syntax-table))))
-          (modify-syntax-entry ?- "." syntax-table)
-          (with-syntax-table syntax-table
-            (let ((p (point))
-                  (arg (or arg 1)))
-              (forward-word 1)
-              (let ((w (point)))
-                ;; count hyphens as part of the word
-                (while (= (char-after) ?-)
-                  (forward-word 1))
-                (let ((eow (point)))
-                  (goto-char w)
-                  (when (> (point) p)
-                    (forward-word -1))
-                  (let ((bow (point))
-                        (word (buffer-substring-no-properties (point) eow)))
-                    (goto-char bow)
-                    (while (and (< (point) eow)
-                                (or (= (point) bow)
-                                    (= (char-after) ?-)))
-                      (cond
-                       ;; lowercase -> capitalized
-                       ((s-lowercase-p word)
-                        (capitalize-word arg))
-                       ;; uppercase -> lowercase
-                       ((s-uppercase-p word)
-                        (downcase-word arg))
-                       ;; other -> uppercase
-                       (t
-                        (upcase-word arg))))
-                    (goto-char p))))))))
+        (save-mark-and-excursion
+          (let ((syntax-table (copy-syntax-table (syntax-table))))
+            (modify-syntax-entry ?- "." syntax-table)
+            (with-syntax-table syntax-table
+              (let ((p (point))
+                    (arg (or arg 1)))
+                (forward-word 1)
+                (let ((w (point)))
+                  ;; count hyphens as part of the word
+                  (while (and (char-after)
+                              (= (char-after) ?-))
+                    (forward-word 1))
+                  (let ((eow (point)))
+                    (goto-char w)
+                    (when (> (point) p)
+                      (forward-word -1))
+                    (let ((bow (point))
+                          (word (buffer-substring-no-properties (point) eow)))
+                      (goto-char bow)
+                      (while (and (< (point) eow)
+                                  (or (= (point) bow)
+                                      (= (char-after) ?-)))
+                        (cond
+                         ;; lowercase -> capitalized
+                         ((s-lowercase-p word)
+                          (capitalize-word arg))
+                         ;; uppercase -> lowercase
+                         ((s-uppercase-p word)
+                          (downcase-word arg))
+                         ;; other -> uppercase
+                         (t
+                          (upcase-word arg))))))))))))
       (bind-keys* ("M-c" . toggle-word-case))
 ;; toggle-word-case:1 ends here
 
