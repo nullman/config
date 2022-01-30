@@ -14703,6 +14703,18 @@
       :init (turn-on-fuzzy-isearch))
 ;; fuzzy:1 ends here
 
+;; [[file:init-emacs.org::*git-timemachine][git-timemachine:1]]
+    ;;------------------------------------------------------------------------------
+    ;;; Modules: git-timemachine
+    ;;------------------------------------------------------------------------------
+
+    (init-message 2 "Modules: git-timemachine")
+
+    (use-package git-timemachine
+      :straight t
+      :bind* ("C-x C-g" . git-timemachine))
+;; git-timemachine:1 ends here
+
 ;; [[file:init-emacs.org::*hippie-exp][hippie-exp:1]]
     ;;------------------------------------------------------------------------------
     ;;; Modules: hippie-exp

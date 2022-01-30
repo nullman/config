@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-01-29 11:00 (kyle)>
+  #+TIMESTAMP: <2022-01-30 15:43 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -20820,6 +20820,25 @@
       ;;   (set-face-background 'git-gutter:modified "purple")
       ;;   (set-face-background 'git-gutter:added "green")
       ;;   (set-face-background 'git-gutter:deleted "red"))
+    #+END_SRC
+
+*** git-timemachine
+    :PROPERTIES:
+    :CUSTOM_ID: modules-git-timemachine
+    :END:
+
+    Walk through git revisions of a file.
+
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Modules: git-timemachine
+      ;;------------------------------------------------------------------------------
+
+      (init-message 2 "Modules: git-timemachine")
+
+      (use-package git-timemachine
+        :straight t
+        :bind* ("C-x C-g" . git-timemachine))
     #+END_SRC
 
 *** +helm (swiper)+
