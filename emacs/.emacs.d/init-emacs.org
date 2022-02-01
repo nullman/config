@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-01-31 23:32 (kyle)>
+  #+TIMESTAMP: <2022-02-01 11:42 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -14755,8 +14755,8 @@
                   (words-double-regexp (regexp-opt (mapcar #'capitalize words-double) 'words))
                   (words-triple-regexp (regexp-opt (mapcar #'capitalize words-triple) 'words))
                   (abbreviation-word-regexp "\\b[A-Z][.A-Z]+[^ ]*\\b")
-                  (first-word-regexp "^\\(\\w+\\)")
-                  (last-word-regexp "\\(\\w+\\)$"))
+                  (first-word-regexp "\\(^[ \t]*\\(\\w+\\)\\|[\.!:,;&\*()][ \t]*\\(\\w+\\)\\)")
+                  (last-word-regexp "\\(\\(\\w+\\)[ \t]*$\\|\\(\\w+\\)[ \t]*[\.!:,;&\*()\[]\\)"))
               (cl-labels
                   ((get-abbrevs (string)
                                 (let ((case-fold-search nil)
