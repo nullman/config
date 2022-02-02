@@ -1,6 +1,5 @@
 ;; [[file:init-emacs.org::*elpher][elpher:2]]
 ;; Elpher Bookmarks File
-
 (("Gopherpedia" "gopher://gopherpedia.com/1")
  ("Gopher Project" "gopher://gopherproject.org/1")
  ("Floodgap Systems" "gopher://gopher.floodgap.com/1")
@@ -17,7 +16,7 @@
  ("20 For Beers" "gopher://20ForBeers.com")
  ("kurisu (L29)" "gopher://eyeblea.ch/1/~kurisu")
  ("fluxcap (L29) ???" "gopher://fluxcap.synchro.net:5070/1")
- ("nkeck72 (L29) ???" "gopher://eyeblea.ch/1/~nkeck720")
+ ("nkeck72 (L29)" "gopher://gopher.nkeck72.xyz/1")
  ("MeatLoTioN (Lunduke)" "gopher://gopher.erb.pw/1")
  ("fputs (Lunduke) ???" "gopher://fputs.com/1")
  ("Bitreich" "gopher://bitreich.org/1")
