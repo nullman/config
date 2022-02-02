@@ -10435,6 +10435,11 @@
           `(replace-regexp-in-string
             "^ +\\|[ \n]+$" ""
             (shell-command-to-string "uuid")))
+         ;; otherwise, use uuidgen command if found
+         ((executable-find "uuidgen")
+          `(replace-regexp-in-string
+            "^ +\\|[ \n]+$" ""
+            (shell-command-to-string "uuidgen")))
          ;; otherwise, use linux mcookie command if found
          ((executable-find "mcookie")
           `(let ((uuid (replace-regexp-in-string
@@ -10445,38 +10450,10 @@
                      "-" (substring uuid 12 16)
                      "-" (substring uuid 16 20)
                      "-" (substring uuid 20 32))))
-         ;; else error
+         ;; else, error
          (t
           `(error "Could not find a suitable system command to produce a UUID"))))
       (defalias 'guid 'uuid)
-
-      ;; old versions
-
-      ;; (defun uuid ()
-      ;;   "Insert a UUID at point.
-      ;;
-      ;; Example: 5ac55464-24e6-419c-99cf-5e1682bb3819"
-      ;;   (interactive "*")
-      ;;   (insert (substring (shell-command-to-string "${HOME}/bin/uuid") 0 -1)))
-
-      ;; (defun uuid ()
-      ;;   "Insert a UUID at point.
-      ;;
-      ;; Example: 4524044b2c41310701d09e8678bbc64e"
-      ;;   (interactive "*")
-      ;;   (insert (substring (shell-command-to-string "mcookie") 0 -1)))
-
-      ;; (defun guid ()
-      ;;   "Insert a GUID at point.
-      ;;
-      ;; Example: ed812ddb-87c5-a1e0-3377-ed40a632e6ed"
-      ;;   (interactive "*")
-      ;;   (let ((uuid (substring (shell-command-to-string "mcookie") 0 -1)))
-      ;;     (insert (substring uuid 0 8)
-      ;;             "-" (substring uuid 8 12)
-      ;;             "-" (substring uuid 12 16)
-      ;;             "-" (substring uuid 16 20)
-      ;;             "-" (substring uuid 20 32))))
 ;; uuid:1 ends here
 
 ;; [[file:init-emacs.org::*insert-uuid][insert-uuid:1]]
@@ -10494,6 +10471,57 @@
         (insert (uuid)))
       (defalias 'insert-guid 'insert-uuid)
 ;; insert-uuid:1 ends here
+
+;; [[file:init-emacs.org::*uuid-decimal][uuid-decimal:1]]
+      ;;------------------------------------------------------------------------------
+      ;;;; Functions: Text Inserting Functions: uuid-decimal
+      ;;------------------------------------------------------------------------------
+
+      (init-message 3 "Functions: Text Inserting Functions: uuid-decimal")
+
+      ;; uuid-decimal
+      (defun uuid-decimal ()
+        "Return a UUID as a 128-bit decimal number.
+
+      Example: 206479166935211742515584900341856848185"
+        (string-to-number (replace-regexp-in-string "-" "" (uuid)) 16))
+
+      (defalias 'guid-decimal 'uuid-decimal)
+;; uuid-decimal:1 ends here
+
+;; [[file:init-emacs.org::*uuid-string][uuid-string:1]]
+      ;;------------------------------------------------------------------------------
+      ;;;; Functions: Text Inserting Functions: uuid-string
+      ;;------------------------------------------------------------------------------
+
+      (init-message 3 "Functions: Text Inserting Functions: uuid-string")
+
+      ;; uuid-string
+      (defun uuid-string ()
+        "Return a UUID as a 21 character ASCII string.
+
+      Example: 23MNvqBpz7dP53kZVeGmvR"
+        (cl-labels
+            (;; convert a number from 0 to 63 to an ASCII string
+             (n-to-s (num)
+                     (cond
+                      ((< num 10)
+                       (byte-to-string (+ num 48))) ; 0-9
+                      ((< num 36)
+                       (byte-to-string (+ num 55))) ; A-Z
+                      ((< num 62)
+                       (byte-to-string (+ num 61))) ; a-z
+                      ((< num 63)
+                       (byte-to-string 43))   ; +
+                      ((< num 64)
+                       (byte-to-string 45))))) ; -
+          (do* ((n 0 (mod u 64))
+                (s "" (concat (n-to-s n) s))
+                (u (uuid-decimal) (/ u 64)))
+              ((= u 0) s))))
+
+      (defalias 'guid-decimal 'uuid-string)
+;; uuid-string:1 ends here
 
 ;; [[file:init-emacs.org::*uuid-xml][uuid-xml:1]]
       ;;------------------------------------------------------------------------------
