@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-02-02 22:01 (kyle)>
+  #+TIMESTAMP: <2022-02-05 20:32 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -24946,6 +24946,24 @@
       ;; (use-package lsp-treemacs
       ;;   :straight t
       ;;   :after (lsp-mode))
+    #+END_SRC
+
+*** eglot
+    :PROPERTIES:
+    :CUSTOM_ID: eglot
+    :END:
+
+    Client for Language Server Protocol (LSP) servers.
+
+    #+BEGIN_SRC emacs-lisp
+      ;;==============================================================================
+      ;;; eglot
+      ;;==============================================================================
+
+      (init-message 1 "eglot")
+
+      (use-package eglot
+        :straight t)
     #+END_SRC
 
 * Modes

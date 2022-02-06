@@ -16699,6 +16699,17 @@
   (init-message 1 "LSP Mode")
 ;; LSP Mode:1 ends here
 
+;; [[file:init-emacs.org::*eglot][eglot:1]]
+    ;;==============================================================================
+    ;;; eglot
+    ;;==============================================================================
+
+    (init-message 1 "eglot")
+
+    (use-package eglot
+      :straight t)
+;; eglot:1 ends here
+
 ;; [[file:init-emacs.org::*Modes][Modes:1]]
   ;;==============================================================================
   ;;; Modes
