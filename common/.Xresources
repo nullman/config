@@ -12,7 +12,7 @@
 !! Custom Colors
 #define COLOR_BLACK_DARK    #000000
 #define COLOR_BLACK_LIGHT   #555555
-#define COLOR_RED_DARK      #B40000
+#define COLOR_RED_DARK      #b40000
 #define COLOR_RED_LIGHT     #ff0000
 #define COLOR_GREEN_DARK    #00aa00
 #define COLOR_GREEN_LIGHT   #00ff00
