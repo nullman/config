@@ -9865,6 +9865,20 @@
         (message "case-fold-search: %s" (if case-fold-search "ON" "OFF")))
 ;; toggle-case-fold-search:1 ends here
 
+;; [[file:init-emacs.org::*time][time:1]]
+      ;;------------------------------------------------------------------------------
+      ;;; Functions: time
+      ;;------------------------------------------------------------------------------
+
+      (init-message 2 "Functions: time")
+
+      (defmacro time (&rest body)
+        "Return the time it takes (in seconds) to evaluate BODY."
+        `(let ((time (current-time)))
+           ,@body
+           (format "%.06f" (float-time (time-since time)))))
+;; time:1 ends here
+
 ;; [[file:init-emacs.org::*Emacs Grouped Functions][Emacs Grouped Functions:1]]
     ;;------------------------------------------------------------------------------
     ;;; Functions: Emacs Grouped Functions

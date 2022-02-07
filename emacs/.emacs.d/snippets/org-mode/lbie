@@ -9,17 +9,17 @@ $>:CUSTOM_ID: ${1:$(org-generate-custom-id-from-title yas-text)}
 $>:END:
 
 #+BEGIN_SRC emacs-lisp
-  `(if (> (org-reduced-level (org-current-level)) 1)
-     "  ;;------------------------------------------------------------------------------"
-     "  ;;==============================================================================")`
-  ;;;`(if (> (org-reduced-level (org-current-level)) 2) ";" "")` $1
-  `(if (> (org-reduced-level (org-current-level)) 1)
-     "  ;;------------------------------------------------------------------------------"
-     "  ;;==============================================================================")`
+`(if (> (org-reduced-level (org-current-level)) 1)
+"  ;;------------------------------------------------------------------------------"
+"  ;;==============================================================================")`
+;;;`(if (> (org-reduced-level (org-current-level)) 2) ";" "")` $1
+`(if (> (org-reduced-level (org-current-level)) 1)
+"  ;;------------------------------------------------------------------------------"
+"  ;;==============================================================================")`
 
-  (init-message `(org-reduced-level (org-current-level))` "$1")
+(init-message 3 "Snippets: Org-Mode: Literate Block Init Emacs (lbie)")
 
-  (use-package ${1:$(downcase yas-text)}
-    :quelpa (${1:$(downcase yas-text)}))
+(use-package ${1:$(downcase yas-text)}
+  :straight t)
 #+END_SRC
 $0

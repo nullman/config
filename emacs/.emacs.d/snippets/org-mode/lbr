@@ -9,21 +9,21 @@ $>:CUSTOM_ID: ${1:$(org-generate-custom-id-from-title yas-text)}
 $>:END:
 
 #+BEGIN_SRC racket
-  `(if (> (org-reduced-level (org-current-level)) 1)
-     "  ;;------------------------------------------------------------------------------"
-     "  ;;==============================================================================")`
-  ;;;`(if (> (org-reduced-level (org-current-level)) 2) ";" "")` $1
-  `(if (> (org-reduced-level (org-current-level)) 1)
-     "  ;;------------------------------------------------------------------------------"
-     "  ;;==============================================================================")`
+`(if (> (org-reduced-level (org-current-level)) 1)
+"  ;;------------------------------------------------------------------------------"
+"  ;;==============================================================================")`
+;;;`(if (> (org-reduced-level (org-current-level)) 2) ";" "")` $1
+`(if (> (org-reduced-level (org-current-level)) 1)
+"  ;;------------------------------------------------------------------------------"
+"  ;;==============================================================================")`
 
-  (define (${1:$(downcase yas-text)})
-    )
+(define (${1:$(downcase yas-text)})
+)
 #+END_SRC
 
 #+BEGIN_SRC racket :tangle no
-  (define (${1:$(downcase yas-text)}-test)
-    (check-equal? (${1:$(downcase yas-text)}) )
-    )
+(define (${1:$(downcase yas-text)}-test)
+(check-equal? (${1:$(downcase yas-text)}) )
+)
 #+END_SRC
 $0
