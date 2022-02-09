@@ -102,7 +102,7 @@ _ba Pcmanfm desktop='^5' follow=on
 _ba Spacefm desktop='^5' follow=on
 _ba Thunar desktop='^5' follow=on
 _ba Org.gnome.Nautilus desktop='^5' follow=on
-_ba Filezilla desktop='^5' follow=on
+#_ba Filezilla desktop='^5' follow=on
 _ba Transmission-gtk desktop='^5' follow=on
 _ba balena-etcher-electron desktop='^5' follow=on
 _ba Ghb desktop='^5' follow=on
