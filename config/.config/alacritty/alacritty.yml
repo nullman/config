@@ -81,6 +81,12 @@ window:
   # Set this to `None` to use the default theme variant.
   #gtk_theme_variant: None
 
+  # Background opacity
+  #
+  # Window opacity as a floating point number from `0.0` to `1.0`.
+  # The value `0.0` is completely transparent and `1.0` is opaque.
+  opacity: 0.85
+
 #scrolling:
 scrolling:
   # Maximum number of lines in the scrollback buffer.
@@ -211,8 +217,8 @@ colors:
   #  foreground: '0x41ff41'              # green
 
   primary:
-    background: '0x09151B'              # dark gray
-    foreground: '0xBBC2CF'              # white
+    background: '0x09151b'              # dark gray
+    foreground: '0xbbc2cf'              # white
 
     # Bright and dim foreground colors
     #
@@ -235,7 +241,7 @@ colors:
   #  cursor: '0xffff33'                  # yellow
 
   cursor:
-    text: '0x09151B'                    # dark gray
+    text: '0x09151b'                    # dark gray
     cursor: '0xeeee22'                  # yellow
 
   # Selection colors
@@ -342,7 +348,7 @@ colors:
 # Window opacity as a floating point number from `0.0` to `1.0`.
 # The value `0.0` is completely transparent and `1.0` is opaque.
 #background_opacity: 0.85
-background_opacity: 0.85
+#background_opacity: 0.85
 
 #selection:
   #semantic_escape_chars: ",│`|:\"' ()[]{}<>\t"

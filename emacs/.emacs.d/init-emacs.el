@@ -14247,6 +14247,23 @@
     ;;   :after (company)
     ;;   :hook (company-mode . company-box-mode))
 
+    ;;------------------------------------------------------------------------------
+    ;;;; company-quickhelp
+    ;;------------------------------------------------------------------------------
+
+    (init-message 3 "company-quickhelp")
+
+    ;; popup documentation for completion candidates
+    (use-package company-quickhelp
+      :straight t
+      :after (company)
+      :hook (company-mode . company-quickhelp-mode)
+      :custom
+      (company-quickhelp-delay 0.5)
+      (company-quickhelp-max-lines nil)
+      (company-quickhelp-color-foreground "white")
+      (company-quickhelp-color-background "dim gray"))
+
     ;; ;;------------------------------------------------------------------------------
     ;; ;;;; color
     ;; ;;------------------------------------------------------------------------------
