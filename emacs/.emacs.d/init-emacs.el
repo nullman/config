@@ -129,8 +129,8 @@
 
     ;; initialize package system
     (require 'package)
-    (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-                             ("melpa" . "http://melpa.org/packages/")))
+    (setq package-archives '(("melpa" . "http://melpa.org/packages/")
+                             ("elpa" . "http://elpa.gnu.org/packages/")))
 
     ;; bootstrap
     (defvar bootstrap-version)
