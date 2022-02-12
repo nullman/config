@@ -16886,7 +16886,7 @@
           (c-echo-syntactic-information-p . nil)))
 
       (defun custom-c-mode-common-hook ()
-        "Customizations for c-mode, c++-mode, objc-mode, java-mode, and idl-mode."
+        "Customizations for `c-mode', `c++-mode', `objc-mode', `java-mode', and `idl-mode'."
         ;; add my personal style and set it for the current buffer
         (c-add-style "local" custom-c-style t)
         ;;(c-set-style 'stroustrup)

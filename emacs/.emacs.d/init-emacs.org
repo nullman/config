@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-02-08 11:16 (kyle)>
+  #+TIMESTAMP: <2022-02-11 13:42 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -6472,6 +6472,38 @@
         ;; list of directories and files to not persist and restore visibility state of
         (org-visibility-exclude-paths `(,(file-truename "~/org/old")
                                         ,(file-truename "~/org/test"))))
+    #+END_SRC
+
+*** +Present+
+    :PROPERTIES:
+    :CUSTOM_ID: org-mode-present
+    :END:
+
+    #+BEGIN_SRC emacs-lisp :tangle no
+      ;; ;;------------------------------------------------------------------------------
+      ;; ;;; Org Mode: Present
+      ;; ;;------------------------------------------------------------------------------
+
+      ;; (init-message 2 "Org Mode: Present")
+
+      ;; (use-package org-present
+      ;;   :straight t
+      ;;   :config
+      ;;   (defun custom-org-present-mode-hook ()
+      ;;     "Customizations for entering `org-present-mode'."
+      ;;     (org-present-big)
+      ;;     (org-display-inline-images)
+      ;;     (org-present-hide-cursor)
+      ;;     (org-present-read-only))
+      ;;   (add-hook 'org-present-mode-hook #'custom-org-present-mode-hook)
+
+      ;;   (defun custom-org-present-mode-quit-hook ()
+      ;;     "Customizations for exiting `org-present-mode'."
+      ;;     (org-present-small)
+      ;;     (org-remove-inline-images)
+      ;;     (org-present-show-cursor)
+      ;;     (org-present-read-write))
+      ;;   (add-hook 'org-present-mode-quit-hook #'custom-org-present-mode-quit-hook))
     #+END_SRC
 
 *** +Reveal+
@@ -25210,7 +25242,7 @@
             (c-echo-syntactic-information-p . nil)))
 
         (defun custom-c-mode-common-hook ()
-          "Customizations for c-mode, c++-mode, objc-mode, java-mode, and idl-mode."
+          "Customizations for `c-mode', `c++-mode', `objc-mode', `java-mode', and `idl-mode'."
           ;; add my personal style and set it for the current buffer
           (c-add-style "local" custom-c-style t)
           ;;(c-set-style 'stroustrup)
