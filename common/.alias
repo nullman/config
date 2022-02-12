@@ -2504,10 +2504,7 @@ alias pacman-reset-mirrors="sudo pacman-mirrors --geoip"
 #        pacman-reset-repository reset and rebuild pacman repository (used to recover from an invalid state)
 alias pacman-reset-repository="
     # reset mirrors
-    sudo pacman-mirrors -c all
-
-    # update mirrors
-    #sudo pacman-mirrors -g
+    sudo pacman-mirrors --geoip
 
     # update keyring
     sudo pacman -Sy archlinux-keyring manjaro-keyring
