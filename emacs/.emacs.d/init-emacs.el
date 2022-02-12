@@ -20145,17 +20145,6 @@
         (server-start-maybe)))
 ;; Start Emacs Server:1 ends here
 
-;; [[file:init-emacs.org::*Clear Mark][Clear Mark:1]]
-    ;;------------------------------------------------------------------------------
-    ;;; Final Setup: Clear Mark
-    ;;------------------------------------------------------------------------------
-
-    (init-message 2 "Final Setup: Clear Mark")
-
-    ;; clear mark
-    (set-mark-command nil)
-;; Clear Mark:1 ends here
-
 ;; [[file:init-emacs.org::*Remove Logging Buffers][Remove Logging Buffers:1]]
     ;;------------------------------------------------------------------------------
     ;;; Final Setup: Remove Logging Buffers
@@ -20196,8 +20185,29 @@
     (when (and (fboundp 'scroll-bar-mode)
                scroll-bar-mode)
       (scroll-bar-mode -1))
-
 ;; Turn off Scroll Bar:1 ends here
+
+;; [[file:init-emacs.org::*Clear Mark][Clear Mark:1]]
+    ;;------------------------------------------------------------------------------
+    ;;; Final Setup: Clear Mark
+    ;;------------------------------------------------------------------------------
+
+    (init-message 2 "Final Setup: Clear Mark")
+
+    ;; clear mark
+    (set-mark-command nil)
+;; Clear Mark:1 ends here
+
+;; [[file:init-emacs.org::*Reset Emacs Lisp Garbage Collection Threshold][Reset Emacs Lisp Garbage Collection Threshold:1]]
+    ;;------------------------------------------------------------------------------
+    ;;; Final Setup: Reset Emacs Lisp Garbage Collection Threshold
+    ;;------------------------------------------------------------------------------
+
+    (init-message 2 "Final Setup: Reset Emacs Lisp Garbage Collection Threshold")
+
+    ;; reset frequency of garbage collections
+    (setq gc-cons-threshold (car (get 'gc-cons-threshold 'standard-value)))
+;; Reset Emacs Lisp Garbage Collection Threshold:1 ends here
 
 ;; [[file:init-emacs.org::*End][End:1]]
   (init-message 1 "End")
