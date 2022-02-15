@@ -5,62 +5,62 @@ General
 
 | Super | Alt | Ctrl | Shift | Key | Description           |
 |-------+-----+------+-------+-----+-----------------------|
-| Super |     |      | Shift | w   | Close node            |
-| Super |     |      | Shift | q   | Kill node             |
-| Super |     | Ctrl |       | m   | Toggle monocle layout |
+| Super |     |      | Shift | w   | Close Node            |
+| Super |     |      | Shift | q   | Kill Node             |
+| Super |     | Ctrl |       | m   | Toggle Monocle Layout |
 
 
 State and Flags
 
 | Super | Alt | Ctrl | Shift | Key | Description         |
 |-------+-----+------+-------+-----+---------------------|
-| Super |     | Ctrl |       | t   | Tiled layout        |
-| Super |     | Ctrl | Shift | t   | Pseudo-tiled layout |
-| Super |     | Ctrl |       | f   | Fullscreen layout   |
-| Super |     | Ctrl | Shift | f   | Floating layout     |
-| Super |     | Ctrl |       | m   | Marked flag         |
-| Super |     | Ctrl |       | x   | Locked flag         |
-| Super |     | Ctrl |       | y   | Sticky flag         |
-| Super |     | Ctrl |       | z   | Private flag        |
+| Super |     | Ctrl |       | t   | Tiled Layout        |
+| Super |     | Ctrl | Shift | t   | Pseudo-Tiled Layout |
+| Super |     | Ctrl |       | f   | Fullscreen Layout   |
+| Super |     | Ctrl | Shift | f   | Floating Layout     |
+| Super |     | Ctrl |       | m   | Marked Flag         |
+| Super |     | Ctrl |       | x   | Locked Flag         |
+| Super |     | Ctrl |       | y   | Sticky Flag         |
+| Super |     | Ctrl |       | z   | Private Flag        |
 
 Focus and Swap
 
 | Super | Alt | Ctrl | Shift | Key     | Description                    |
 |-------+-----+------+-------+---------+--------------------------------|
-| Super |     |      |       | i,Up    | Focus up node                  |
-| Super |     |      |       | k,Down  | Focus down node                |
-| Super |     |      |       | j,Left  | Focus left node                |
-| Super |     |      |       | l,Right | Focus right node               |
-| Super |     |      | Shift | i,Up    | Swap node up                   |
-| Super |     |      | Shift | k,Down  | Swap node down                 |
-| Super |     |      | Shift | j,Left  | Swap node right                |
-| Super |     |      | Shift | l,Right | Swap node left                 |
-| Super |     |      |       | period  | Circulate nodes forward        |
-| Super |     |      | Shift | period  | Swap node forward              |
-| Super |     |      |       | comma   | Circulate nodes backward       |
-| Super |     |      | Shift | comma   | Swap node backward             |
-| Super |     |      | Shift | g       | Swap node with first child     |
-| Super | Alt |      |       | l,Right | Focus next desktop             |
-| Super | Alt |      |       | j,Left  | Focus previous desktop         |
-| Super | Alt |      |       | i,Up    | Focus next monitor             |
-| Super | Alt |      |       | k,Down  | Focus previous monitor         |
-|       | Alt |      |       | Tab     | Focus next node in desktop     |
-|       | Alt |      | Shift | Tab     | Focus previous node in desktop |
-| Super |     |      |       | Tab     | Focus older node               |
-| Super |     |      | Shift | Tab     | Focus newer node               |
-|       | Alt |      |       | grave   | Focus last node                |
-| Super |     |      |       | grave   | Focus last desktop             |
-| Super |     |      |       | 1-9,0   | Focus given desktop            |
-| Super |     |      | Shift | 1-9,0   | Move node to given desktop     |
+| Super |     |      |       | i,Up    | Focus Up Node                  |
+| Super |     |      |       | k,Down  | Focus Down Node                |
+| Super |     |      |       | j,Left  | Focus Left Node                |
+| Super |     |      |       | l,Right | Focus Right Node               |
+| Super |     |      | Shift | i,Up    | Swap Node Up                   |
+| Super |     |      | Shift | k,Down  | Swap Node Down                 |
+| Super |     |      | Shift | j,Left  | Swap Node Right                |
+| Super |     |      | Shift | l,Right | Swap Node Left                 |
+| Super |     |      |       | period  | Circulate Nodes Forward        |
+| Super |     |      | Shift | period  | Swap Node Forward              |
+| Super |     |      |       | comma   | Circulate Nodes Backward       |
+| Super |     |      | Shift | comma   | Swap Node Backward             |
+| Super |     |      | Shift | g       | Swap Node with First Child     |
+| Super | Alt |      |       | l,Right | Focus Next Desktop             |
+| Super | Alt |      |       | j,Left  | Focus Previous Desktop         |
+| Super | Alt |      |       | i,Up    | Focus Next Monitor             |
+| Super | Alt |      |       | k,Down  | Focus Previous Monitor         |
+|       | Alt |      |       | Tab     | Focus Next Node in Desktop     |
+|       | Alt |      | Shift | Tab     | Focus Previous Node in Desktop |
+| Super |     |      |       | Tab     | Focus Older Node               |
+| Super |     |      | Shift | Tab     | Focus Newer Node               |
+|       | Alt |      |       | grave   | Focus Last Node                |
+| Super |     |      |       | grave   | Focus Last Desktop             |
+| Super |     |      |       | 1-9,0   | Focus given Desktop            |
+| Super |     |      | Shift | 1-9,0   | Move Node to given Desktop     |
 
 Move and Resize
 
-| Super | Alt | Ctrl | Shift | Key    | Description               |
-|-------+-----+------+-------+--------+---------------------------|
-| Super |     | Ctrl |       | s      | Resize/move node mode [1] |
-| Super |     | Ctrl |       | b      | Balance nodes             |
-| Super |     | Ctrl |       | e      | Equalize nodes            |
+| Super | Alt | Ctrl | Shift | Key | Description               |
+|-------+-----+------+-------+-----+---------------------------|
+| Super |     | Ctrl |       | s   | Resize/Move Node Mode [1] |
+| Super |     | Ctrl |       | b   | Balance Nodes             |
+| Super |     | Ctrl |       | e   | Equalize Nodes            |
 
 [1] After entering expand/contract/move window mode, use I, K, J, and L to
-    expand/contract the current window, and use Up, Down, Left, and Right
-    arrow keys to move a floating window around.  Press Esc to exit mode.
+expand/contract the current window, and use Up, Down, Left, and Right
+arrow keys to move a floating window around.  Press Esc to exit mode.

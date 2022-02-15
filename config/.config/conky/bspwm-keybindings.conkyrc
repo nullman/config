@@ -1,22 +1,22 @@
 conky.config = {
-        alignment = 'bottom_left',
-        background = true,
-        color2 = '2ECC71',
-        cpu_avg_samples = 2,
-        default_color = 'E0E2E3',
-        double_buffer = true,
-        font = 'Bitstream Vera Sans:size=12',
-        gap_x = 25,
-        gap_y = 45,
-        minimum_width = 400,
-        no_buffers = true,
-        own_window = true,
-        own_window_class = 'Conky',
-        own_window_type = 'desktop',
-        own_window_transparent = true,
-        update_interval = 2.0,
-        update_interval_on_battery = 10.0,
-        use_xft = true,
+alignment = 'bottom_left',
+background = true,
+color2 = '2ECC71',
+cpu_avg_samples = 2,
+default_color = 'E0E2E3',
+double_buffer = true,
+font = 'Bitstream Vera Sans:size=12',
+gap_x = 25,
+gap_y = 45,
+minimum_width = 400,
+no_buffers = true,
+own_window = true,
+own_window_class = 'Conky',
+own_window_type = 'desktop',
+own_window_transparent = true,
+update_interval = 2.0,
+update_interval_on_battery = 10.0,
+use_xft = true,
 }
 conky.text = [[
 ${alignc}${font Bitstream Vera Sans:bold:size=16}K E Y   B I N D I N G S${font}
@@ -51,12 +51,12 @@ ${color2}${hr}${color}
 [Super + Control] + Print  ${alignr}Window Shapshot
 [Super + Shift] + Print  ${alignr}Region Shapshot
 [Super + Shift] + R  ${alignr}Reload Key Bindings
-[Super + Shift] + T  ${alignr}Reload Tint
 [Super + Alt] + Y/U  ${alignr}Git Sync Home/Doc
 [Super + Alt] + S/X  ${alignr}Start/Lock Screensaver
 [Super + Control + Alt] + L/R  ${alignr}Volume Down/Up 10%
 [Super + Control + Alt] + M  ${alignr}MPD Play/Pause
 [Super + Control + Alt] + ,/.  ${alignr}MPD Prev/Next
 [Super + Control + Alt] + /  ${alignr}MPD Playing
-[Super + Alt] + T/Return  ${alignr}Open Terminal
+[Super + Alt] + T  ${alignr}Terminal
+[Super + Alt] + Return  ${alignr}Rofi Menu
 ]]

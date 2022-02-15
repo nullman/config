@@ -5,44 +5,44 @@ System Tools
 
 | Super | Alt | Ctrl | Shift | Key    | Description                    |
 |-------+-----+------+-------+--------+--------------------------------|
-| Super | Alt |      |       | h      | Display key bindings           |
-| Super | Alt |      |       | space  | Application launcher           |
-| Super | Alt |      |       | d      | Program launcher               |
-| Super | Alt |      |       | m      | Menu launcher                  |
-| Super | Alt |      |       | w      | Window selector                |
-| Super | Alt |      |       | e      | Emoji selector                 |
-| Super | Alt |      |       | p      | Bitwarden selector             |
+| Super | Alt |      |       | h      | Display Key Bindings           |
+| Super | Alt |      |       | Space  | Application Launcher           |
+| Super | Alt |      |       | d      | Program Launcher               |
+| Super | Alt |      |       | m      | Menu Launcher                  |
+| Super | Alt |      |       | w      | Window Selector                |
+| Super | Alt |      |       | e      | Emoji Selector                 |
+| Super | Alt |      |       | p      | Bitwarden Selector             |
 | Super |     |      | Shift | e      | Lock, Logout, Reboot, Shutdown |
-| Super |     |      | Shift | p      | Get XProp class name           |
-| Super |     |      | Shift | Delete | Kill process clicked           |
-| Super | Alt |      |       | Print  | Screen snapshot                |
-| Super |     | Ctrl |       | Print  | Window snapshot                |
-| Super |     |      | Shift | Print  | Region snapshot                |
+| Super |     |      | Shift | p      | Get XProp Class Name           |
+| Super |     |      | Shift | Delete | Kill Process Clicked           |
+| Super | Alt |      |       | Print  | Screen Snapshot                |
+| Super |     | Ctrl |       | Print  | Window Snapshot                |
+| Super |     |      | Shift | Print  | Region Snapshot                |
 | Super |     |      | Shift | r      | Reload SXHKD                   |
-| Super |     |      | Shift | t      | Reload Tint                    |
-| Super | Alt |      |       | y      | Git sync home                  |
-| Super | Alt |      |       | u      | Git sync doc                   |
-| Super | Alt |      |       | s      | Start screensaver              |
-| Super | Alt |      |       | x      | Lock screensaver               |
+| Super | Alt |      |       | y      | Git Sync Home                  |
+| Super | Alt |      |       | u      | Git Sync Doc                   |
+| Super | Alt |      |       | s      | Start Screensaver              |
+| Super | Alt |      |       | x      | Lock Screensaver               |
 
 Media
 
 | Super | Alt | Ctrl | Shift | Key    | Description               |
 |-------+-----+------+-------+--------+---------------------------|
-| Super | Alt | Ctrl |       | Left   | Volume down 10%           |
-| Super | Alt | Ctrl |       | Right  | Volume up 10%             |
-| Super | Alt | Ctrl |       | m      | MPD: Play/pause song      |
-| Super | Alt | Ctrl |       | comma  | MPD: Play previous song   |
-| Super | Alt | Ctrl |       | period | MPD: Play next song       |
-| Super | Alt | Ctrl |       | slash  | MPD: Display current song |
-| Super | Alt | Ctrl |       | z      | MP2: Play previous song   |
-| Super | Alt | Ctrl |       | c      | MP2: Play/pause song      |
-| Super | Alt | Ctrl |       | x      | MP2: Stop player          |
-| Super | Alt | Ctrl |       | b      | MP2: Play next song       |
-| Super | Alt | Ctrl |       | "      | MP2: Display current song |
+| Super | Alt | Ctrl |       | Left   | Volume Down 10%           |
+| Super | Alt | Ctrl |       | Right  | Volume Up 10%             |
+| Super | Alt | Ctrl |       | m      | MPD: Play/Pause Song      |
+| Super | Alt | Ctrl |       | Comma  | MPD: Play Previous Song   |
+| Super | Alt | Ctrl |       | Period | MPD: Play Next Song       |
+| Super | Alt | Ctrl |       | Slash  | MPD: Display Current Song |
+| Super | Alt | Ctrl |       | z      | MP2: Play Previous Song   |
+| Super | Alt | Ctrl |       | c      | MP2: Play/Pause Song      |
+| Super | Alt | Ctrl |       | x      | MP2: Stop Player          |
+| Super | Alt | Ctrl |       | b      | MP2: Play Next Song       |
+| Super | Alt | Ctrl |       | "      | MP2: Display Current Song |
 
 Applications
 
-| Super | Alt | Ctrl | Shift | Key      | Description   |
-|-------+-----+------+-------+----------+---------------|
-| Super | Alt |      |       | t,Return | Open terminal |
+| Super | Alt | Ctrl | Shift | Key    | Description |
+|-------+-----+------+-------+--------+-------------|
+| Super | Alt |      |       | t      | Terminal    |
+| Super | Alt |      |       | Return | Rofi Menu   |
