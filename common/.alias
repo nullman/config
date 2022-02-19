@@ -107,6 +107,8 @@ alias ln-remove-broken="
 alias envs="env | sort"
 #        envg                    sorted env with grep
 alias envg="env | sort | grep -i"
+#        lsmodg                  lsmod with grep
+alias lsmodg="lsmod | grep -i"
 #        seba                    source /etc/bash.bashrc
 alias seba="source /etc/bash.bashrc"
 #        sepr                    source /etc/profile

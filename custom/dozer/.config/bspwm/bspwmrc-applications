@@ -37,19 +37,19 @@ _delay 10
 _command alacritty && alacritty -e ${HOME}/bin/run-screen &
 _command emacs && _delay 1 emacs &
 #_command slack && _delay 1 slack &
-#_command thunderbird && _delay 20 thunderbird &
+#_command thunderbird && _delay 10 thunderbird &
 _command firefox && _delay 1 firefox &
 #_command vivaldi && _delay 1 vivaldi &
 #_command chromium && _delay 1 chromium &
 #_command pcmanfm && _delay 1 pcmanfm &
 _command spacefm && _delay 1 spacefm &
 #_command thunar && _delay 1 thunar &
-#_command idea && _delay 20 idea &
+#_command idea && _delay 10 idea &
 #_command discord && _delay 1 discord &
 #_command pidgin && _delay 1 pidgin &
-#_command gajim && _delay 20 gajim &
-#_command tootle && _delay 20 tootle &
-#_command com.github.bleakgrey.tootle && _delay 20 com.github.bleakgrey.tootle &
+#_command gajim && _delay 10 gajim &
+#_command tootle && _delay 10 tootle &
+#_command com.github.bleakgrey.tootle && _delay 10 com.github.bleakgrey.tootle &
 #_command lbry && _delay 1 lbry &
 #_command syncterm && _delay 1 syncterm &
 

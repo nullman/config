@@ -1560,7 +1560,7 @@ backupfiles() {
 #!        esac
 #!    fi
 #!}
-#        rsynccruzer                     copy ISOs and bundle to sandisk cruzer
+#        rsynccruzer                     rsync ISOs and bundle to sandisk cruzer
 rsynccruzer() {
     # check destination
     dest="/run/media/${USER}/ventoy/"
@@ -1587,7 +1587,7 @@ rsynccruzer() {
     # create and copy bundle
     rsyncbundle
 }
-#        rsyncbundle                     generate encrypted bundle and copy it to mounted ventoy usb
+#        rsyncbundle                     generate encrypted bundle and rsync it to mounted ventoy usb
 rsyncbundle() {
     # check destination
     dest="/run/media/${USER}/FILES/"
@@ -1613,6 +1613,34 @@ rsyncbundle() {
     rsync -rLtxc --progress --delete "bundle.tgz.cpt" "${dest}"
     popd
     rm -rf "${root}"
+}
+#        rsyncisos                       rsync software ISOs to mounted ventoy usb
+rsyncisos() {
+    sync() {
+        local sdir="$1"
+        local ddir="$2"
+        local query="$3"
+        mkdir -p "/run/media/${USER}/Ventoy/${ddir}"
+        (
+            cd "/home/data/media/software/${sdir}"
+            find . -mindepth 1 -maxdepth 1 -name "${query}" -printf '%P\n' | while read src ; do
+                local dst=$(echo "${src}" | sed "s/ /-/g")
+                echo "Syncing \"/home/data/media/software/${sdir}/${src}\" \"/run/media/${USER}/Ventoy/${ddir}/${dst}\""
+                rsync -rLtxc "/home/data/media/software/${sdir}/${src}" "/run/media/${USER}/Ventoy/${ddir}/${dst}"
+            done
+        )
+    }
+
+    sync 'Boot Tools' 'Boot-Tools' '*.iso'
+    sync 'DOSBox/DOSBox' 'DOS' '*.iso'
+    sync 'Hypervisor/OpenIndiana' 'Hypervisor' '*.iso'
+    sync 'Hypervisor/SmartOS' 'Hypervisor' '*.iso'
+    sync 'Hypervisor/VMware ESXi (vSphere Hypervisor)' 'Hypervisor' '*.iso'
+    sync 'Hypervisor/XCP NG' 'Hypervisor' '*.iso'
+    sync 'Linux/Linux OS' 'Linux' '*.iso'
+    sync 'Linux/Manjaro OS' 'Manjaro' '*.iso'
+    sync 'OS2/ArcaOS/ArcaOS-5.0.5' 'Other' '*.iso'
+    sync 'Windows XP, 7, 10/Windows OS' 'Windows' '*.iso'
 }
 
 #
