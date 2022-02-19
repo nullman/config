@@ -1908,7 +1908,7 @@ alias rsync-c64-put-sd16="rsync -rLtxc --progress --delete --exclude='TOSEC/' \$
 #        rsync-c64-put-sd128             rsync ${HOME}/C64/* /run/media/${USER}/C64/
 alias rsync-c64-put-sd128="rsync -rLtxc --progress --delete \${HOME}/C64/* /run/media/\${USER}/C64/ && sync"
 #        rsync-adult-put-adult-sd        rsync /home/data/media/video/Adult/* /run/media/${USER}/ADULT/
-alias rsync-adult-put-adult-sd="rsync -rLtxc --progress --delete ${home}/data/media/video/Adult/ /run/media/\${USER}/ADULT/ && sync"
+alias rsync-adult-put-adult-sd="rsync -rLtxc --progress --delete --exclude='White Boxxx Compilation' ${home}/data/media/video/Adult/ /run/media/\${USER}/ADULT/ && sync"
 #        rsync-common-put-media          rsync ${HOME}/config/icons/ and ${HOME}/config/images/ to /home/data/media/graphic/
 alias rsync-common-put-media=" \
     rsync -rlptx --progress --delete \${HOME}/config/icons/ ${home}/data/media/graphic/Icons/Common/ && \
