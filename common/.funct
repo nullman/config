@@ -1616,7 +1616,7 @@ rsyncbundle() {
 }
 #        rsyncisos                       rsync software ISOs to mounted ventoy usb
 rsyncisos() {
-    sync() {
+    syncdir() {
         local sdir="$1"
         local ddir="$2"
         local query="$3"
@@ -1631,16 +1631,17 @@ rsyncisos() {
         )
     }
 
-    sync 'Boot Tools' 'Boot-Tools' '*.iso'
-    sync 'DOSBox/DOSBox' 'DOS' '*.iso'
-    sync 'Hypervisor/OpenIndiana' 'Hypervisor' '*.iso'
-    sync 'Hypervisor/SmartOS' 'Hypervisor' '*.iso'
-    sync 'Hypervisor/VMware ESXi (vSphere Hypervisor)' 'Hypervisor' '*.iso'
-    sync 'Hypervisor/XCP NG' 'Hypervisor' '*.iso'
-    sync 'Linux/Linux OS' 'Linux' '*.iso'
-    sync 'Linux/Manjaro OS' 'Manjaro' '*.iso'
-    sync 'OS2/ArcaOS/ArcaOS-5.0.5' 'Other' '*.iso'
-    sync 'Windows XP, 7, 10/Windows OS' 'Windows' '*.iso'
+    syncdir 'Boot Tools' 'Boot-Tools' '*.iso'
+    syncdir 'DOSBox/DOSBox' 'DOS' '*.iso'
+    syncdir 'Hypervisor/OpenIndiana' 'Hypervisor' '*.iso'
+    syncdir 'Hypervisor/SmartOS' 'Hypervisor' '*.iso'
+    syncdir 'Hypervisor/VMware ESXi (vSphere Hypervisor)' 'Hypervisor' '*.iso'
+    syncdir 'Hypervisor/XCP NG' 'Hypervisor' '*.iso'
+    syncdir 'Linux/Linux OS' 'Linux' '*.iso'
+    syncdir 'Linux/Manjaro OS' 'Manjaro' '*.iso'
+    syncdir 'OS2/ArcaOS/ArcaOS-5.0.5' 'Other' '*.iso'
+    syncdir 'Windows XP, 7, 10/Windows OS' 'Windows' '*.iso'
+    sync
 }
 
 #
