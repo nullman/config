@@ -20,6 +20,7 @@ MENU:
   crt     Cool Retro Term
   dosbox  DOSBox Emulator
   git     Synchronize Repositories
+  paste   Paste Strings
   qemu    QEMU Emulator
   rsync   Synchronize Files
   sounds  Play Sounds
@@ -34,6 +35,7 @@ if [[ $# -lt 1 ]] ; then
         "CRT"
         "DOSBox"
         "Git"
+        "Paste"
         "Qemu"
         "Rsync"
         "Sounds"
@@ -101,6 +103,20 @@ case "${menu}" in
         # synchronize with selected git repository
         if [[ -n "${sel}" ]] ; then
             source "${HOME}/.funct" && (eval "${sel}" && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12" --tail
+        fi
+        ;;
+
+    paste)
+        # display paste options
+        if [[ $# -lt 2 ]] ; then
+            sel=$(cat ${HOME}/.paste-strings | rofi -dmenu -i -p 'Paste' -hide-scrollbar)
+        else
+            sel=$2
+        fi
+
+        # copy paste selection to the clipboard
+        if [[ -n "${sel}" ]] ; then
+            echo -n "${sel}" | xsel && xsel --output | xsel --clipboard
         fi
         ;;
 

@@ -221,6 +221,12 @@ alias gdmrs="sudo systemctl restart gdm.service"
 alias gnome-shell-restart="DISPLAY=:0 gnome-shell --replace"
 #        lightdm-restart         lightdm restart
 alias lightdm-resetart="sudo systemctl restart lightdm.service"
+#        networkrs               network restart
+alias networkrs="
+    sudo systemctl stop NetworkManager
+    sudo systemctl stop iwd
+    sudo systemctl start iwd
+    sudo systemctl start NetworkManager"
 #        menuw                   menu ~/.menu_work
 alias menuw="menu \${HOME}/.menu_work"
 #        mw                      menu ~/.menu_work
@@ -491,7 +497,9 @@ alias dev="cat /proc/devices"
 #        systemctl-list          list all services
 alias systemctl-list="systemctl list-unit-files && systemctl --user list-unit-files"
 #        systemctl-list-enabled  list enabled services
-alias systemctl-list-enabled="(systemctl list-unit-files && systemctl --user list-unit-files) | grep enabled"
+alias systemctl-list-enabled="
+    systemctl list-unit-files --state enabled && \
+    systemctl --user list-unit-files --state enabled"
 #        systemctl-list-grep     list all services with grep
 alias systemctl-list-grep="(systemctl list-unit-files && systemctl --user list-unit-files) | grep -i"
 #        systemctl-enable        enable service
