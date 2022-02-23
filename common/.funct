@@ -1744,10 +1744,15 @@ EOF
 #
 #        homehowto               howto setup git home dir on a new machine
 howtohome() {
-    user=${USER}
     cat <<EOF
-Install packages
-  sudo pacman -S --noconfirm --needed ccrypt stow
+Update Packages
+  sudo pacman -Syyu --noconfirm --needed
+Install yay
+  sudo pacman -S --noconfirm --needed yay
+Refresh File Search Database
+  yay -Fy
+Install Needed Packages
+  yay -S --noconfirm --needed ccrypt stow
 Copy bundle.tgz.cpt from USB and decrypt it:
   cp /run/media/kyle/Cruzer/bundle.tgz.cpt ~/
   ccrypt -d bundle.tgz.cpt
@@ -1788,6 +1793,7 @@ homeinitialize() {
         ".xinitrc"
         ".xprofile"
         ".Xresources"
+        ".zshrc"
     )
     symlinkdirs=(
         "doc/avatars"
@@ -1827,7 +1833,8 @@ homeinitialize() {
             mkdir -p "${HOME}/.local/share/applications"
             find "${HOME}/config/config/.config" -mindepth 1 -maxdepth 1 -type d | \
                 while read dir ; do
-                    mkdir -p "${HOME}/.config/$(basename \"${dir}\")"
+                    bn=$(basename "${dir}")
+                    mkdir -p "${HOME}/.config/${bn}"
                 done
 
             # stow
@@ -1877,8 +1884,8 @@ homerestow() {
 manjaroinitialize() {
     _getsection() {
         local file="${HOME}/org/personal.org"
-        local regexp="/^#\+NAME: $1\$/,/^#\+END_SRC\$/{print \$0}"
-        awk "${regexp}" "${file}" | tail -n +3 | head -n -1 | sed 's/^  //'
+        local regexp="/^[ \t]*#\+NAME: $1\$/,/^[ \t]*#\+END_SRC\$/{print \$0}"
+        awk "${regexp}" "${file}" | tail -n +3 | head -n -1 | sed 's/^[ \t]*//'
     }
 
     standard=(
@@ -1959,10 +1966,10 @@ manjaroinitialize() {
 
     if [[ "$1" == "-o" ]] || [[ "$1" == "--optional" ]] ; then
         opt=1
-        sections=${optional}
+        sections=(${optional[@]})
     else
         opt=0
-        sections=${standard}
+        sections=(${standard[@]})
     fi
 
     echo "You are about to install a curated set of Manjaro packages and setup this system."
@@ -1977,8 +1984,7 @@ manjaroinitialize() {
             echo "========== Manjaro Initialization Script =========="
             echo
 
-            for ((x = 1; x <= ${#sections[@]}; x++)) ; do
-                section=${sections[${x}]}
+            for section in ${sections[@]} ; do
                 echo
                 echo "========== ${section} =========="
                 echo
