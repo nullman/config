@@ -1627,7 +1627,7 @@ alias sshkeygen="ssh-keygen -t rsa -b 4096"
     #!       tic /tmp/terminfo && rm -f /tmp/terminfo'"
 #        sshagent                turn on ssh agent
 alias sshagent="
-    ssh-agent
+    eval \$(ssh-agent)
     ssh-add
     ssh-add -l"
 #!#        sshtunirc               ssh tunnel irc (freenode.net)
