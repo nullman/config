@@ -15295,6 +15295,9 @@
     (use-package keyfreq
       :straight t
       :demand t
+      :custom
+      (keyfreq-file (expand-file-name ".emacs.keyfreq" user-emacs-directory))
+      (keyfreq-file-lock (expand-file-name ".emacs.keyfreq.lock" user-emacs-directory))
       :init
       ;; turn on `keyfreq-mode'
       (keyfreq-mode 1)
