@@ -10304,7 +10304,7 @@
                 (words-double-regexp (regexp-opt (mapcar #'capitalize words-double) 'words))
                 (words-triple-regexp (regexp-opt (mapcar #'capitalize words-triple) 'words))
                 (abbreviation-word-regexp "\\b[A-Z][.A-Z]+[^ ]*\\b")
-                (first-word-regexp "\\(^[ \t]*\\(\\w+\\)\\|[\.!:&\*()][ \t]*\\(\\w+\\)\\)")
+                (first-word-regexp "\\(^[ \t]*\\(\\w+\\)\\|[\.!:&\*()/][ \t]*\\(\\w+\\)\\)")
                 (last-word-regexp "\\(\\(\\w+\\)[ \t]*$\\|\\(\\w+\\)[ \t]*[\.!:&\*()\[]\\)"))
             (cl-labels
                 ((get-abbrevs (string)
