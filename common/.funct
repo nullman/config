@@ -334,24 +334,6 @@ dtloop() {
         done
     fi
 }
-#        dostolinux              convert a dos text file CR+LF to linux LF format
-dostolinux() {
-    if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 FILE"
-        echo "Convert FILE from DOS format to Linux format."
-    else
-        sed -i 's/\r$//' "$1"
-    fi
-}
-#        linuxtodos              convert a linux text file LF to dos CR+LF format
-linuxtodos() {
-    if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 FILE"
-        echo "Convert FILE from Linux format to DOS format."
-    else
-        sed -i 's/$/\r/' "$1"
-    fi
-}
 #        kmg                     convert bytes into KB, MB, GB, or TB as appropriate
 kmg() {
     if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
@@ -391,16 +373,6 @@ x() {
         y|Y|"") ("$@") ;;
     esac
 }
-#        lnsdir                  make links to every file in a directory
-lnsdir() {
-    if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 DIR"
-    else
-        $(pathcmd ls) -1 "$1" | while read a ; do
-            ln -s "$1/${a}" ${a}
-        done
-    fi
-}
 #        mailfile                mail a file (uuencoded)
 mailfile() {
     if [[ $# -lt 3 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
@@ -423,169 +395,6 @@ speakurl() {
             festival --tts
     fi
 }
-#        m4vtomp4                convert all m4v videos in current directory to mp4 videos
-m4vtomp4() {
-    if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 FILE..."
-    else
-        files=("$@")
-        for infile in "${files[@]}" ; do
-            outfile="${infile:0:-4}.mp4"
-            echo "${infile} -> ${outfile}"
-            ffmpeg -i "${infile}" -codec copy "${outfile}" && rm "${infile}"
-        done
-    fi
-}
-#        flattendir              flatten directory
-flattendir() {
-    if [[ $# -ne 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 INDIR OUTDIR"
-    else
-        indir="$1"
-        outdir="$2"
-        if [[ ! -d "${indir}" ]] ; then
-            echo "Error finding '${indir}' directory"
-        elif [[ ! -d "${outdir}" ]] ; then
-            echo "Error finding '${outdir}' directory"
-        else
-            outdir=$(cd "${outdir}" ; pwd)
-            pushd "${indir}"
-            find . -type f | while read f ; do
-                o=$(echo "${f}" | cut -c 3- | tr '/' '_')
-                o="${outdir}/${o}"
-                cp -u "${f}" "${o}"
-            done
-            popd
-        fi
-    fi
-}
-#        longevity               clean out old files
-longevity() {
-    if [[ $# -ne 3 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 DIR PATTERN DAYS"
-        echo "Delete all files matching PATTERN in DIR older than DAYS."
-        echo "  DIR      top level directory to search"
-        echo "  PATTERN  file pattern to match on"
-        echo "  DAYS     number of days to keep"
-    else
-        dir="$1"
-        pattern="$2"
-        days="$3"
-        echo "You are about to delete all files matching pattern '${pattern}'"
-        echo "in ${dir} that are older than ${days} days."
-        echo -n "Do you wish to proceed? [yN] "
-        read a
-        case "${a}" in
-            y|Y)
-                find ${dir} -mtime +${days} -type f -iname '${pattern}' -exec rm {} \;
-                ;;
-        esac
-    fi
-}
-#        seddir                  apply sed to all files in directory
-seddir() {
-    tmp=temp$$
-    if [[ $# -lt 1 ]] || [[ $# -gt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 SCRIPT [DIR]"
-        echo "Apply sed SCRIPT to all files in current directory or DIR."
-    else
-        script="$1"
-        shift
-        if [[ $# -eq 0 ]] ; then
-            dir="."
-        else
-            dir="$1"
-        fi
-        dir=$(cd "${dir}" ; pwd)
-        echo "You are about to apply SED script '$1'"
-        echo "to all files in directory '${dir}'."
-        echo -n "Do you wish to proceed? [yN] "
-        read a
-        case "${a}" in
-            y|Y)
-                (
-                    cd "${dir}" && \
-                        find . -mindepth 1 -maxdepth 1 -type f | while read file ; do
-                            echo "${file}"
-                            sed -i "${script}" "${file}"
-                        done
-                )
-                ;;
-        esac
-    fi
-}
-#        delete-broken-symlinks  find and delete broken symlinks in given directory
-delete-broken-symlinks() {
-    opts="-maxdepth 0"
-    dir=""
-
-    _usage() {
-        cat <<EOF
-Usage: $0 DIR [OPTIONS]
-Delete broken symlinks in DIR.
-OPTIONS:
-  DIR              directory to search in
-  -h, --help       show this help
-  -r, --recursive  recurse into sub-directories
-EOF
-    }
-
-    while [[ $# -gt 0 ]] ; do
-        opt="$1"
-        case "${opt}" in
-            -r|--recursive)
-                opts=""
-                shift
-                ;;
-            -h|--help)
-                _usage $0
-                return 0
-                ;;
-            *)
-                if [[ -z "${dir}" ]] ; then
-                    dir="${opt}"
-                    shift
-                else
-                    _usage $0
-                    return 1
-                fi
-                ;;
-        esac
-    done
-
-    if [[ -z "${dir}" ]] ; then
-        _usage $0
-        return 1
-    fi
-
-    echo "Deleting broken symlinks in '${dir}'..."
-    cmd="find -L \"${dir}\" ${opts} -name . -o -type l -print"
-    eval "${cmd}" | while read file ; do
-        if [[ -L "${file}" ]] && [[ ! -e "${file}" ]] ; then
-            echo "  ${file}"
-            rm "${file}"
-        fi
-    done
-}
-#        make-terminfo-trs100    make terminfo file for trs-80 model 100
-make-terminfo-trs100() {
-    tmpfile="$(mktemp)"
-    cat > "${tmpfile}" <<EOF
-trs100|Radio Shack Model 100:\
-:am:bs:xt:\
-:co#40:li#8:\
-:al=\EL:bl=^G:cd=\EJ:ce=\EK:cl=\EE:cm=\EY%+ %+ :\
-:cr=^M:dl=\EM:do=^J:ho=\EH:kb=^H:kd=^_:kl=^]:kr=^\:\
-:ku=^^:le=^H:nd=34:se=\Eq:sf=^J:so=\Ep:up=\EA:\
-:ve=\EP:vi=\EQ:
-EOF
-    sudo tic "${tmpfile}"
-    rm "${tmpfile}"
-}
-
-#
-# tools
-#
 #        generateqrc             generate QR code from given URL, text, or VCARD
 generateqrc() {
     printf "$@" | curl -F-=\<- qrenco.de
@@ -719,6 +528,172 @@ ansislideshow() {
         find "$1" -iname *".ANS" -print | sort --random-sort | while read file ; do
             iconv -f 437 "${file}" | pv --quiet --rate-limit 1200
             sleep 10
+        done
+    fi
+}
+#        wordlematch             list wordle words matching given pattern
+wordlematch() {
+    if [[ $# -ne 3 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+        echo "Usage: $0 INCLUDE EXCLUDE MATCH"
+        echo "Search for Wordle words matching given pattern."
+        echo "  INCLUDE  letters to include"
+        echo "  EXCLUDE  letters to exclude"
+        echo "  MATCH    letters and positions to match (regexp)"
+        echo "Example: $0 abc def ...gh"
+    else
+        cmd="cat ~/doc/information/words.txt | grep '^.\{5\}$' | tr 'A-Z' 'a-z'"
+        cmd="${cmd} | grep -v '[$2]'"
+        cmd="${cmd} | grep '$3'"
+        for x in $(echo "$1" | grep -o '.') ; do
+            cmd="${cmd} | grep '${x}'"
+        done
+        #echo "${cmd}"
+        eval "${cmd}"
+    fi
+}
+
+#
+# conversion
+#
+#        dostolinux              convert a dos text file CR+LF to linux LF format
+dostolinux() {
+    if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+        echo "Usage: $0 FILE"
+        echo "Convert FILE from DOS format to Linux format."
+    else
+        sed -i 's/\r$//' "$1"
+    fi
+}
+#        linuxtodos              convert a linux text file LF to dos CR+LF format
+linuxtodos() {
+    if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+        echo "Usage: $0 FILE"
+        echo "Convert FILE from Linux format to DOS format."
+    else
+        sed -i 's/$/\r/' "$1"
+    fi
+}
+#        lowerdir                convert dir to lowercase
+lowerdir() {
+    echo "You are about to recursively convert the contents of the current directory"
+    echo "'$(pwd)' to lowercase,"
+    echo -n "Do you wish to proceed? [yN] "
+    read a
+    case "${a}" in
+        y|Y)
+            find . -type f -depth | while read infile ; do
+                outfile=$(echo "${infile}" | tr '[:upper:]' '[:lower:]')
+                mv -fv "${infile}" "${outfile}"
+            done
+            ;;
+    esac
+}
+#        upperdir                convert dir to uppercase
+upperdir() {
+    echo "You are about to recursively convert the contents of the current directory"
+    echo "'$(pwd)' to uppercase,"
+    echo -n "Do you wish to proceed? [yN] "
+    read a
+    case "${a}" in
+        y|Y)
+            find . -type f -depth | while read infile ; do
+                outfile=$(echo "${infile}" | tr '[:lower:]' '[:upper:]')
+                mv -fv "${infile}" "${outfile}"
+            done
+            ;;
+    esac
+}
+#        uncompressdirtree       uncompress all zip files in given directory tree
+uncompressdirtree() {
+    echo "You are about to uncompress the contents of the current directory"
+    echo "'$(pwd)' and all of its children, and delete the original files."
+    echo "Only .zip files are considered."
+    echo -n "Do you wish to proceed? [yN] "
+    read a
+    case "${a}" in
+        y|Y)
+            find . -iname *".zip" -print | while read file ; do
+                dir="${file:0:-4}"
+                mkdir "${dir}" && unzip -n -d "${dir}" "${file}" && rm "${file}"
+            done
+            ;;
+    esac
+}
+#        lnsdir                  make links to every file in a directory
+lnsdir() {
+    if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+        echo "Usage: $0 DIR"
+    else
+        $(pathcmd ls) -1 "$1" | while read a ; do
+            ln -s "$1/${a}" ${a}
+        done
+    fi
+}
+#        flattendir              flatten directory
+flattendir() {
+    if [[ $# -ne 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+        echo "Usage: $0 INDIR OUTDIR"
+    else
+        indir="$1"
+        outdir="$2"
+        if [[ ! -d "${indir}" ]] ; then
+            echo "Error finding '${indir}' directory"
+        elif [[ ! -d "${outdir}" ]] ; then
+            echo "Error finding '${outdir}' directory"
+        else
+            outdir=$(cd "${outdir}" ; pwd)
+            pushd "${indir}"
+            find . -type f | while read f ; do
+                o=$(echo "${f}" | cut -c 3- | tr '/' '_')
+                o="${outdir}/${o}"
+                cp -u "${f}" "${o}"
+            done
+            popd
+        fi
+    fi
+}
+#        seddir                  apply sed to all files in directory
+seddir() {
+    tmp=temp$$
+    if [[ $# -lt 1 ]] || [[ $# -gt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+        echo "Usage: $0 SCRIPT [DIR]"
+        echo "Apply sed SCRIPT to all files in current directory or DIR."
+    else
+        script="$1"
+        shift
+        if [[ $# -eq 0 ]] ; then
+            dir="."
+        else
+            dir="$1"
+        fi
+        dir=$(cd "${dir}" ; pwd)
+        echo "You are about to apply SED script '$1'"
+        echo "to all files in directory '${dir}'."
+        echo -n "Do you wish to proceed? [yN] "
+        read a
+        case "${a}" in
+            y|Y)
+                (
+                    cd "${dir}" && \
+                        find . -mindepth 1 -maxdepth 1 -type f | while read file ; do
+                            echo "${file}"
+                            sed -i "${script}" "${file}"
+                        done
+                )
+                ;;
+        esac
+    fi
+}
+#        m4vtomp4                convert all m4v videos in current directory to mp4 videos
+m4vtomp4() {
+    if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+        echo "Usage: $0 FILE..."
+    else
+        files=("$@")
+        for infile in "${files[@]}" ; do
+            outfile="${infile:0:-4}.mp4"
+            echo "${infile} -> ${outfile}"
+            ffmpeg -i "${infile}" -codec copy "${outfile}" && rm "${infile}"
         done
     fi
 }
@@ -883,6 +858,97 @@ fsckshutdown() {
             sudo touch /forcefsck && sudo reboot
             ;;
     esac
+}
+#        delete-broken-symlinks  find and delete broken symlinks in given directory
+delete-broken-symlinks() {
+    opts="-maxdepth 0"
+    dir=""
+
+    _usage() {
+        cat <<EOF
+Usage: $0 DIR [OPTIONS]
+Delete broken symlinks in DIR.
+OPTIONS:
+  DIR              directory to search in
+  -h, --help       show this help
+  -r, --recursive  recurse into sub-directories
+EOF
+    }
+
+    while [[ $# -gt 0 ]] ; do
+        opt="$1"
+        case "${opt}" in
+            -r|--recursive)
+                opts=""
+                shift
+                ;;
+            -h|--help)
+                _usage $0
+                return 0
+                ;;
+            *)
+                if [[ -z "${dir}" ]] ; then
+                    dir="${opt}"
+                    shift
+                else
+                    _usage $0
+                    return 1
+                fi
+                ;;
+        esac
+    done
+
+    if [[ -z "${dir}" ]] ; then
+        _usage $0
+        return 1
+    fi
+
+    echo "Deleting broken symlinks in '${dir}'..."
+    cmd="find -L \"${dir}\" ${opts} -name . -o -type l -print"
+    eval "${cmd}" | while read file ; do
+        if [[ -L "${file}" ]] && [[ ! -e "${file}" ]] ; then
+            echo "  ${file}"
+            rm "${file}"
+        fi
+    done
+}
+#        longevity               clean out old files
+longevity() {
+    if [[ $# -ne 3 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+        echo "Usage: $0 DIR PATTERN DAYS"
+        echo "Delete all files matching PATTERN in DIR older than DAYS."
+        echo "  DIR      top level directory to search"
+        echo "  PATTERN  file pattern to match on"
+        echo "  DAYS     number of days to keep"
+    else
+        dir="$1"
+        pattern="$2"
+        days="$3"
+        echo "You are about to delete all files matching pattern '${pattern}'"
+        echo "in ${dir} that are older than ${days} days."
+        echo -n "Do you wish to proceed? [yN] "
+        read a
+        case "${a}" in
+            y|Y)
+                find ${dir} -mtime +${days} -type f -iname '${pattern}' -exec rm {} \;
+                ;;
+        esac
+    fi
+}
+#        make-terminfo-trs100    make terminfo file for trs-80 model 100
+make-terminfo-trs100() {
+    tmpfile="$(mktemp)"
+    cat > "${tmpfile}" <<EOF
+trs100|Radio Shack Model 100:\
+:am:bs:xt:\
+:co#40:li#8:\
+:al=\EL:bl=^G:cd=\EJ:ce=\EK:cl=\EE:cm=\EY%+ %+ :\
+:cr=^M:dl=\EM:do=^J:ho=\EH:kb=^H:kd=^_:kl=^]:kr=^\:\
+:ku=^^:le=^H:nd=34:se=\Eq:sf=^J:so=\Ep:up=\EA:\
+:ve=\EP:vi=\EQ:
+EOF
+    sudo tic "${tmpfile}"
+    rm "${tmpfile}"
 }
 
 #
@@ -1108,56 +1174,6 @@ makecert() {
         openssl rsa -in privkey.pem -out "${name}.cert.key"
         openssl x509 -in "${name}.cert.csr" -out "${name}.cert.cert" -req -signkey "${name}.cert.key" -days 365
     fi
-}
-
-#
-# convert directory contents
-#
-#        lowerdir                convert dir to lowercase
-lowerdir() {
-    echo "You are about to recursively convert the contents of the current directory"
-    echo "'$(pwd)' to lowercase,"
-    echo -n "Do you wish to proceed? [yN] "
-    read a
-    case "${a}" in
-        y|Y)
-            find . -type f -depth | while read infile ; do
-                outfile=$(echo "${infile}" | tr '[:upper:]' '[:lower:]')
-                mv -fv "${infile}" "${outfile}"
-            done
-            ;;
-    esac
-}
-#        upperdir                convert dir to uppercase
-upperdir() {
-    echo "You are about to recursively convert the contents of the current directory"
-    echo "'$(pwd)' to uppercase,"
-    echo -n "Do you wish to proceed? [yN] "
-    read a
-    case "${a}" in
-        y|Y)
-            find . -type f -depth | while read infile ; do
-                outfile=$(echo "${infile}" | tr '[:lower:]' '[:upper:]')
-                mv -fv "${infile}" "${outfile}"
-            done
-            ;;
-    esac
-}
-#        uncompressdirtree       uncompress all zip files in given directory tree
-uncompressdirtree() {
-    echo "You are about to uncompress the contents of the current directory"
-    echo "'$(pwd)' and all of its children, and delete the original files."
-    echo "Only .zip files are considered."
-    echo -n "Do you wish to proceed? [yN] "
-    read a
-    case "${a}" in
-        y|Y)
-            find . -iname *".zip" -print | while read file ; do
-                dir="${file:0:-4}"
-                mkdir "${dir}" && unzip -n -d "${dir}" "${file}" && rm "${file}"
-            done
-            ;;
-    esac
 }
 
 #
