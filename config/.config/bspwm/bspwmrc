@@ -138,9 +138,9 @@ _ba bluejeans-v2 state=fullscreen
 _ba Evince state=fullscreen
 _ba Ghb state=fullscreen
 _ba Gimp-2.10 state=fullscreen
-_ba jetbrains-idea state=fullscreen
-_ba jetbrains-idea-ce state=fullscreen
-_ba jetbrains-studio state=fullscreen
+#_ba jetbrains-idea state=fullscreen
+#_ba jetbrains-idea-ce state=fullscreen
+#_ba jetbrains-studio state=fullscreen
 #_ba LBRY state=fullscreen
 #_ba 'Microsoft Teams' state=fullscreen
 _ba mplayer2 state=fullscreen
@@ -161,6 +161,9 @@ _ba Font-viewer state=floating center=true
 _ba Gnome-disks state=floating center=true
 _ba GParted state=floating center=true
 _ba Gxmessage state=floating center=true
+#_ba jetbrains-idea state=floating center=true
+#_ba jetbrains-idea-ce state=floating center=true
+#_ba jetbrains-studio state=floating center=true
 _ba Lxappearance state=floating center=true
 _ba 'Manjaro Settings Manager' state=floating center=true
 _ba mpv state=floating center=true sticky=on
@@ -179,6 +182,12 @@ _ba Yad state=floating center=true
 #-------------------------------------------------------------------------------
 # Auto-Start Standard Applications
 #-------------------------------------------------------------------------------
+
+# https://wiki.archlinux.org/title/bspwm#Problems_with_Java_applications
+# set window manager name so that java applications work
+wmname LG3D
+# fix java app not refreshing issue in tiling window managers
+export _JAVA_AWT_WM_NONREPARENTING=1
 
 # # delay before launching applets
 # delay=2

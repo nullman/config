@@ -90,9 +90,9 @@ super + ctrl + m
 super + ctrl + {t,shift + t,f,shift + f}
     bspc node --state {tiled,pseudo_tiled,fullscreen,floating}
 
-# set node flags
-super + ctrl + {m,x,y,z}
-    bspc node --flag {marked,locked,sticky,private}
+# # set node flags
+# super + ctrl + {m,x,y,z}
+#     bspc node --flag {marked,locked,sticky,private}
 
 #-------------------------------------------------------------------------------
 # Focus and Swap
@@ -194,19 +194,28 @@ super + ctrl + space
 # Move and Resize
 #-------------------------------------------------------------------------------
 
-# resize window by moving one of its sides outward/inward
+# resize window by moving one of its sides outward
 # move floating window with arrow keys
 super + ctrl + s : {i,k,j,l,Up,Down,Left,Right}
     n=20 ; \
-    { c='resize'; d1='top';    d2='bottom'; dx=0;   dy=-$n; , \
-      c='resize'; d1='bottom'; d2='top';    dx=0;   dy=$n;  , \
-      c='resize'; d1='left';   d2='right';  dx=-$n; dy=0;   , \
-      c='resize'; d1='right';  d2='left';   dx=$n;  dy=0;   , \
-      c='move';   d1='';       d2='';       dx=0;   dy=-$n; , \
-      c='move';   d1='';       d2='';       dx=0;   dy=$n;  , \
-      c='move';   d1='';       d2='';       dx=-$n; dy=0;   , \
-      c='move';   d1='';       d2='';       dx=$n;  dy=0;   } \
-    bspc node --$c $d1 $dx $dy || bspc node --$c $d2 $dx $dy
+    bspc node \
+    { --resize top      0 -$n , \
+      --resize bottom   0  $n , \
+      --resize left   -$n   0 , \
+      --resize right   $n   0 , \
+      --move            0 -$n , \
+      --move            0  $n , \
+      --move          -$n   0 , \
+      --move           $n   0 }
+
+# resize window by moving one of its sides inward
+super + ctrl + s : shift + {i,k,j,l}
+    n=20 ; \
+    bspc node \
+    { --resize bottom   0 -$n , \
+      --resize top      0  $n , \
+      --resize right  -$n   0 , \
+      --resize left    $n   0 }
 
 # balance windows in current desktop
 super + ctrl + b

@@ -10,7 +10,7 @@ General
 | Super |     | Ctrl |       | m   | Toggle Monocle Layout |
 
 
-State and Flags
+State
 
 | Super | Alt | Ctrl | Shift | Key | Description         |
 |-------+-----+------+-------+-----+---------------------|
@@ -18,10 +18,6 @@ State and Flags
 | Super |     | Ctrl | Shift | t   | Pseudo-Tiled Layout |
 | Super |     | Ctrl |       | f   | Fullscreen Layout   |
 | Super |     | Ctrl | Shift | f   | Floating Layout     |
-| Super |     | Ctrl |       | m   | Marked Flag         |
-| Super |     | Ctrl |       | x   | Locked Flag         |
-| Super |     | Ctrl |       | y   | Sticky Flag         |
-| Super |     | Ctrl |       | z   | Private Flag        |
 
 Focus and Swap
 
