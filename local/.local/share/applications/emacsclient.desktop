@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Emacs Client
+Generic Name=Text Editor
+Comment=Edit text in running Emacs instance
+Exec=emacsclient %F
+Icon=emacs
+Type=Application
+Terminal=false
+StartupNotify=true
+Categories=Development;TextEditor;
+StartupWMClass=Emacs
+Keywords=Text;Editor;
