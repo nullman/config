@@ -4682,7 +4682,7 @@
       :straight t
       ;;:load-path (lambda () (file-truename (expand-file-name "~/code/github-nullman/emacs-org-visibility")))
       :after (org)
-      :demand t
+      ;;:demand t
       :bind (:map org-visibility-mode-map
                   ("C-x C-v" . org-visibility-force-save) ; defaults to `find-alternative-file'
                   ("C-x M-v" . org-visibility-remove))    ; defaults to undefined
