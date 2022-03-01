@@ -410,7 +410,7 @@ alias terminal-width-200="
 alias terminal-colors="
     echo -e '\e[30m\e[40m   \e[31m\e[41m   \e[32m\e[42m   \e[33m\e[43m   \e[34m\e[44m   \e[35m\e[45m   \e[36m\e[46m   \e[37m\e[47m   \e[0m'
     echo -e '\e[38;5;8m\e[48;5;8m   \e[38;5;9m\e[48;5;9m   \e[38;5;10m\e[48;5;10m   \e[38;5;11m\e[48;5;11m   \e[38;5;12m\e[48;5;12m   \e[38;5;13m\e[48;5;13m   \e[38;5;14m\e[48;5;14m   \e[38;5;15m\e[48;5;15m   \e[0m'"
-#        remove-org-font-files           remove org-src-fontification files
+#        remove-org-font-files   remove org-src-fontification files
 alias remove-org-font-files="
     (
         cd \${HOME} && \
@@ -516,7 +516,7 @@ alias systemctl-restart="sudo systemctl restart"
 #
 # bluetooth
 #
-#        bluetoothctl-connect-beats connect to Beats Wireless Headphones
+# bluetoothctl-connect-beats     connect to Beats Wireless Headphones
 alias bluetoothctl-connect-beats="bluetoothctl connect 04:88:E2:6A:00:6C"
 
 #
@@ -566,7 +566,7 @@ alias scrs="sudo systemctl restart"
 #
 # ubuntu
 #
-#        dpkg-make-installed-packages make ~/installed-packages file
+#        dpkg-make-installed-packages  make ~/installed-packages file
 alias dpkg-make-installed-packages="dpkg --get-selections > \${HOME}/installed-packages"
 #        dpkg-install-packages   install all deb packages in ~/installed-packages
 alias dpkg-install-packages="cat \${HOME}/installed-packages | xargs apt-get install -y"
@@ -662,7 +662,7 @@ alias seti="(cd \${HOME}/setiathome ; setiathome -email -nice 19) &"
 #!    sed -i \"s/DD.MM/MM-DD/g\" src/icqface.cc
 #!    echo 'Changing DD-MM-YYYY dates to YYYY-MM-DD...'
 #!    sed -i \"s/DD-MM-YYYY/YYYY-MM-DD/g ; s/\&d, \&m, \&y/\&y, \&m, \&d/g\" src/icqdialogs.cc"
-#          gsettings-reset-app-picker-layout reset application picker
+#        gsettings-reset-app-picker-layout  reset application picker
 alias gsettings-reset-app-picker-layout="gsettings reset org.gnome.shell app-picker-layout"
 
 #
@@ -956,7 +956,7 @@ alias dosbox-wc3="(cd \${HOME}/.dosbox-wc3 && dosbox -conf .dosboxrc)"
 #
 # googlecl
 #
-#        google-contacts-to-abook import google contacts to abook
+#        google-contacts-to-abook  import google contacts to abook
 alias google-contacts-to-abook="data=name,email,phone,address,im,company,notes; (echo $data; google contacts list $data) | abook --convert --informat csv --outformat abook --outfile \${HOME}/.abook/addressbook"
 
 #
@@ -1812,13 +1812,13 @@ alias truswest="traceroute uswest.net"
 #
 # rsync
 #
-#        rsync-rlptx                     rsync -rlptx --progress
+#        rsync-rlptx             rsync -rlptx --progress
 alias rsync-rlptx="rsync -rlptx --progress"
-#        rsync-media-get-morpheus        rsync morpheus:/home/data/media /home/data/media
+#        rsync-media-get-morpheus  rsync morpheus:/home/data/media /home/data/media
 alias rsync-media-get-morpheus="rsync -rlptx --progress morpheus:/home/data/media/ ${home}/data/media/"
-#        rsync-media-get-morpheus-gemini rsync morpheus:/home/data/media /home/data/media (minus software directory)
+#        rsync-media-get-morpheus-gemini  rsync morpheus:/home/data/media /home/data/media (minus software directory)
 alias rsync-media-get-morpheus-gemini="rsync -rlptx --progress --exclude='/software' morpheus:/home/data/media/ ${home}/data/media/"
-#        rsync-media-get-morpheus-mouse-delete rsync morpheus:/home/data/media /home/data/media (specific sub-directories)
+#        rsync-media-get-morpheus-mouse-delete  rsync morpheus:/home/data/media /home/data/media (specific sub-directories)
 alias rsync-media-get-morpheus-mouse-delete=" \
     rsync -rlptx --progress --delete --exclude={'/Humor/','/iTunes/','/Other/'} morpheus:/home/data/media/audio/ ${home}/data/media/audio/ && \
     rsync -rlptx --progress --delete morpheus:/home/data/media/music/ ${home}/data/media/music/ && \
@@ -1826,35 +1826,35 @@ alias rsync-media-get-morpheus-mouse-delete=" \
     #rsync -rlptx --progress --delete morpheus:/home/data/media/repos/ ${home}/data/media/repos/ && \
     rsync -rlptx --progress --delete morpheus:/home/data/media/text/ ${home}/data/media/text/ && \
     rsync -rlptx --progress --delete --exclude={'/Adult/','/Development/'} morpheus:/home/data/media/video/ ${home}/data/media/video/"
-#        rsync-media-put-morpheus        rsync /home/data/media morpheus:/home/data/media
+#        rsync-media-put-morpheus  rsync /home/data/media morpheus:/home/data/media
 alias rsync-media-put-morpheus="rsync -rlptx --progress ${home}/data/media/ morpheus:/home/data/media/"
-#        rsync-media-put-morpheus-delete rsync /home/data/media morpheus:/home/data/media
+#        rsync-media-put-morpheus-delete  rsync /home/data/media morpheus:/home/data/media
 alias rsync-media-put-morpheus-delete="rsync -rlptx --progress --delete ${home}/data/media/ morpheus:/home/data/media/"
-#        rsync-text-get-morpheus         rsync morpheus:/home/data/media/text /home/data/media/text
+#        rsync-text-get-morpheus  rsync morpheus:/home/data/media/text /home/data/media/text
 alias rsync-text-get-morpheus="rsync -rlptx --progress morpheus:/home/data/media/text/ ${home}/data/media/text/"
-#        rsync-text-put-morpheus         rsync /home/data/media/text morpheus:/home/data/media/text
+#        rsync-text-put-morpheus  rsync /home/data/media/text morpheus:/home/data/media/text
 alias rsync-text-put-morpheus="rsync -rlptx --progress ${home}/data/media/text/ morpheus:/home/data/media/text/"
-#        rsync-books-get-morpheus        rsync morpheus:/home/data/media/text/Books /home/data/media/text/Books
+#        rsync-books-get-morpheus  rsync morpheus:/home/data/media/text/Books /home/data/media/text/Books
 alias rsync-books-get-morpheus=" \
     mkdir -p ${home}/data/media/text/Books && \
     rsync -rlptx --progress morpheus:/home/data/media/text/Books/ ${home}/data/media/text/Books/"
-#        rsync-audio-get-morpheus        rsync morpheus:/home/data/media/audio /home/data/media/audio
+#        rsync-audio-get-morpheus  rsync morpheus:/home/data/media/audio /home/data/media/audio
 alias rsync-audio-get-morpheus="rsync -rlptx --progress morpheus:/home/data/media/audio/ ${home}/data/media/audio/"
-#        rsync-audio-put-morpheus        rsync morpheus:/home/data/media/audio /home/data/media/audio
+#        rsync-audio-put-morpheus  rsync morpheus:/home/data/media/audio /home/data/media/audio
 alias rsync-audio-put-morpheus="rsync -rlptx --progress morpheus:/home/data/media/audio/ ${home}/data/media/audio/"
-#        rsync-music-get-morpheus        rsync morpheus:/home/data/media/audio/Music /home/data/media/audio/Music
+#        rsync-music-get-morpheus  rsync morpheus:/home/data/media/audio/Music /home/data/media/audio/Music
 alias rsync-music-get-morpheus=" \
     rsync -rlptx --progress morpheus:/home/data/media/audio/Music/ ${home}/data/media/audio/Music/ && \
     rsync -rlptx --progress morpheus:/home/data/media/audio/Playlists/ ${home}/data/media/audio/Playlists/"
-#        rsync-music-put-morpheus        rsync /home/data/media/audio/Music morpheus:/home/data/media/audio/Music
+#        rsync-music-put-morpheus  rsync /home/data/media/audio/Music morpheus:/home/data/media/audio/Music
 alias rsync-music-put-morpheus=" \
     rsync -rlptx --progress ${home}/data/media/audio/Music/ morpheus:${home}/data/media/audio/Music/ && \
     rsync -rlptx --progress ${home}/data/media/audio/Playlists/ morpheus:${home}/data/media/audio/Playlists/"
-#        rsync-music-put-colleen         rsync /home/data/media/audio/Music colleen:/home/data/media/audio/Music
+#        rsync-music-put-colleen  rsync /home/data/media/audio/Music colleen:/home/data/media/audio/Music
 alias rsync-music-put-colleen=" \
     rsync -rlptx --progress ${home}/data/media/audio/Music/ colleen:${home}/data/media/audio/Music/ && \
     rsync -rlptx --progress ${home}/data/media/audio/Playlists/ colleen:${home}/data/media/audio/Playlists/"
-#!#        rsync-music-put-music           rsync /home/data/media/audio/Music /media/${USER}/MUSIC
+#!#        rsync-music-put-music  rsync /home/data/media/audio/Music /media/${USER}/MUSIC
 #!alias rsync-music-put-music-sd="
 #!    echo 'Copying muisc files and playlists to Music USB:'
 #!    o=/run/media/\${USER}/\$(cd /run/media/\${USER} && \$(pathcmd ls) -1)
@@ -1866,7 +1866,7 @@ alias rsync-music-put-colleen=" \
 #!                rsync -Rtxc --progress --delete \"\${line}\" \${o}/
 #!            done
 #!    )"
-#        rsync-music-put-music           rsync /home/data/media/audio/Music /media/${USER}/MUSIC
+#        rsync-music-put-music   rsync /home/data/media/audio/Music /media/${USER}/MUSIC
 alias rsync-music-put-music-sd=" \
     o=/run/media/\${USER}/MUSIC && \
     rsync -rLtxc --progress --delete \${HOME}/.mpd/playlists/kyle.m3u \${o}/ && \
@@ -1874,54 +1874,54 @@ alias rsync-music-put-music-sd=" \
     rsync -rLtxc --progress --delete ${home}/data/media/audio/Music/* \${o}/ && \
     rsync -rLtxc --progress --delete ${home}/data/media/audio/MODs \${o}/ && \
     sync"
-#        rsync-video-get-morpheus        rsync morpheus:/home/data/media/video /home/data/media/video
+#        rsync-video-get-morpheus  rsync morpheus:/home/data/media/video /home/data/media/video
 alias rsync-video-get-morpheus="rsync -rlptx --progress morpheus:/home/data/media/video/ ${home}/data/media/video/"
-#        rsync-video-put-morpheus        rsync morpheus:/home/data/media/video /home/data/media/video
+#        rsync-video-put-morpheus  rsync morpheus:/home/data/media/video /home/data/media/video
 alias rsync-video-put-morpheus="rsync -rlptx --progress morpheus:/home/data/media/video/ ${home}/data/media/video/"
-#        rsync-amazon-get-morpheus       rsync "morpheus:/home/data/media/incoming/Music/Amazon MP3" "${HOME}/Music/Amazon MP3"
+#        rsync-amazon-get-morpheus  rsync "morpheus:/home/data/media/incoming/Music/Amazon MP3" "${HOME}/Music/Amazon MP3"
 alias rsync-amazon-get-morpheus="rsync -rlptx --progress \"morpheus:/home/data/media/incoming/Music/Amazon MP3\" \"\${HOME}/Music/\""
-#        rsync-amazon-put-morpheus       rsync "${HOME}/Music/Amazon MP3" "morpheus:/home/data/media/incoming/Music/Amazon MP3"
+#        rsync-amazon-put-morpheus  rsync "${HOME}/Music/Amazon MP3" "morpheus:/home/data/media/incoming/Music/Amazon MP3"
 alias rsync-amazon-put-morpheus="rsync -rlptx --progress \"\${HOME}/Music/Amazon MP3\" \"morpheus:${home}/data/media/incoming/Music\""
-#        rsync-repos-get-morpheus        rsync morpheus:/home/data/media/repos /home/data/media/repos
+#        rsync-repos-get-morpheus  rsync morpheus:/home/data/media/repos /home/data/media/repos
 alias rsync-repos-get-morpheus="rsync -rlptx --progress morpheus:/home/data/media/repos/ ${home}/data/media/repos/"
-#        rsync-repos-put-morpheus        rsync /home/data/media/repos morpheus:/home/data/media/repos
+#        rsync-repos-put-morpheus  rsync /home/data/media/repos morpheus:/home/data/media/repos
 alias rsync-repos-put-morpheus="rsync -rlptx --progress ${home}/data/media/repos/ morpheus:${home}/data/media/repos/"
-#        rsync-repos-put-colleen         rsync /home/data/media/repos colleen:/home/data/media/repos
+#        rsync-repos-put-colleen  rsync /home/data/media/repos colleen:/home/data/media/repos
 alias rsync-repos-put-colleen="rsync -rlptx --progress ${home}/data/media/repos/ colleen:${home}/data/media/repos/"
-#!#        rsync-playlists-put-pi          rsync /home/data/media/audio/Playlists raspberrypi:/media/playlists
+#!#        rsync-playlists-put-pi  rsync /home/data/media/audio/Playlists raspberrypi:/media/playlists
 #!alias rsync-playlists-put-pi="rsync -rlptx --progress ${home}/data/media/audio/Playlists/ pi@raspberrypi:/media/playlists/"
-#!#        rsync-org-put-dropbox           rsync ${HOME}/org/* ${HOME}/Dropbox/Org/
+#!#        rsync-org-put-dropbox  rsync ${HOME}/org/* ${HOME}/Dropbox/Org/
 #!alias rsync-org-put-dropbox="[[ -d \${HOME}/Dropbox/Org ]] && rsync -aAXv --delete \${HOME}/org/* \${HOME}/Dropbox/Org/"
-#        rsync-aerial-get-morpheus       rsync morpheus:/home/data/media/aerial /home/data/media/aerial
+#        rsync-aerial-get-morpheus  rsync morpheus:/home/data/media/aerial /home/data/media/aerial
 alias rsync-aerial-get-morpheus="rsync -rlptx --progress morpheus:/home/data/media/aerial/ ${home}/data/media/aerial/"
 #        rsync-win-apps-put-win_apps-sd  rsync /home/data/media/software/Windows*/* /run/media/${USER}/WIN_APPS/Windows*/
 alias rsync-win-apps-put-win_apps-sd="
     rsync -rLtxc --progress --delete --exclude={'Windows OS/','Partitions/'} ${home}/data/media/software/Windows* /run/media/\${USER}/WIN_APPS/ && \
     rsync -rLtxc --progress --delete ${home}/data/media/repos/DOS ${home}/data/media/repos/FreeDOS /run/media/\${USER}/WIN_APPS/ && \
     sync"
-#        rsync-windows-put-win_apps-sd   rsync /home/data/media/software/Windows*/* /run/media/${USER}/WINDOWS/Windows*/
+#        rsync-windows-put-win_apps-sd  rsync /home/data/media/software/Windows*/* /run/media/${USER}/WINDOWS/Windows*/
 alias rsync-windows-put-win_apps-sd="
     rsync -rLtxc --progress --delete --exclude={'Windows OS/','Partitions/'} ${home}/data/media/software/Windows* /run/media/\${USER}/WINDOWS/ && \
     rsync -rLtxc --progress --delete ${home}/data/media/repos/DOS ${home}/data/media/repos/FreeDOS /run/media/\${USER}/WINDOWS/ && \
     sync"
-#        rsync-t43-os2-put-t43-os2-sd    rsync /home/data/media/software/(Thinkpad T43|OS2)/* /run/media/${USER}/T43_OS2/(Thinkpad T43|OS2)/
+#        rsync-t43-os2-put-t43-os2-sd  rsync /home/data/media/software/(Thinkpad T43|OS2)/* /run/media/${USER}/T43_OS2/(Thinkpad T43|OS2)/
 alias rsync-t43-os2-put-t43-os2-sd=" \
     rsync -rLtxc --progress --delete --exclude={'ArcaOS/','CDs/','OS2/'} ${home}/data/media/software/OS2/* /run/media/\${USER}/T43_OS2/OS2/ && \
     rsync -rLtxc --progress --delete \"${home}/data/media/software/Thinkpad T43\" /run/media/\${USER}/T43_OS2/ && \
     sync"
-#        rsync-mac-put-mac_apps-sd       rsync /home/data/media/software/Macintosh/* /run/media/${USER}/MAC_APPS/Macintosh/
+#        rsync-mac-put-mac_apps-sd  rsync /home/data/media/software/Macintosh/* /run/media/${USER}/MAC_APPS/Macintosh/
 alias rsync-mac-put-mac_apps-sd=" \
     rsync -rLtxc --progress --delete --exclude='FINDER.DAT' ${home}/data/media/software/Macintosh/68000 /run/media/\${USER}/MAC_APPS/Macintosh/ && \
     rsync -rLtxc --progress --delete --exclude='FINDER.DAT' ${home}/data/media/software/Macintosh/OS\ X /run/media/\${USER}/MAC_APPS/Macintosh/ && \
     rsync -rLtxc --progress --delete --exclude='FINDER.DAT' ${home}/data/media/software/Macintosh/PPC /run/media/\${USER}/MAC_APPS/Macintosh/ && \
     sync"
-#        rsync-c64-put-sd16              rsync ${HOME}/C64/* /run/media/${USER}/C64/
+#        rsync-c64-put-sd16      rsync ${HOME}/C64/* /run/media/${USER}/C64/
 alias rsync-c64-put-sd16="rsync -rLtxc --progress --delete --exclude='TOSEC/' \${HOME}/C64/* /run/media/\${USER}/C64/ && sync"
-#        rsync-c64-put-sd128             rsync ${HOME}/C64/* /run/media/${USER}/C64/
+#        rsync-c64-put-sd128     rsync ${HOME}/C64/* /run/media/${USER}/C64/
 alias rsync-c64-put-sd128="rsync -rLtxc --progress --delete \${HOME}/C64/* /run/media/\${USER}/C64/ && sync"
-#        rsync-adult-put-adult-sd        rsync /home/data/media/video/Adult/* /run/media/${USER}/ADULT/
+#        rsync-adult-put-adult-sd  rsync /home/data/media/video/Adult/* /run/media/${USER}/ADULT/
 alias rsync-adult-put-adult-sd="rsync -rLtxc --progress --delete --exclude='White Boxxx Compilation' ${home}/data/media/video/Adult/ /run/media/\${USER}/ADULT/ && sync"
-#        rsync-common-put-media          rsync ${HOME}/config/icons/ and ${HOME}/config/images/ to /home/data/media/graphic/
+#        rsync-common-put-media  rsync ${HOME}/config/icons/ and ${HOME}/config/images/ to /home/data/media/graphic/
 alias rsync-common-put-media=" \
     rsync -rlptx --progress --delete \${HOME}/config/icons/ ${home}/data/media/graphic/Icons/Common/ && \
     rsync -rlptx --progress --delete \${HOME}/config/images/ ${home}/data/media/graphic/Images/Common/"
@@ -1929,11 +1929,11 @@ alias rsync-common-put-media=" \
 #
 # update-alternatives
 #
-#        update-alternatives-x-session-manager   change default x session manager
+#        update-alternatives-x-session-manager  change default x session manager
 alias update-alternatives-x-session-manager="sudo update-alternatives --config x-session-manager"
-#        update-alternatives-x-window-manager    change default x window manager
+#        update-alternatives-x-window-manager  change default x window manager
 alias update-alternatives-x-window-manager="sudo update-alternatives --config x-window-manager"
-#        update-alternatives-java change default java implementation
+#        update-alternatives-java  change default java implementation
 alias update-alternatives-java="sudo update-alternatives --config java"
 
 #
@@ -2241,23 +2241,23 @@ alias lprn2="lpr -o number-up=2 -o page-border=single"
 #
 # GNOME
 #
-#        gnome-gdm-setup                 gksu gdmsetup
+#        gnome-gdm-setup         gksu gdmsetup
 alias gnome-gdm-setup="gksu gdmsetup"
-#        gsetting-values                 dump all keybindings
+#        gsetting-values         dump all keybindings
 alias gsetting-values="
     for schema in \$(gsettings list-schemas | sort) ; do
         for key in \$(gsettings list-keys \${schema} | sort) ; do
             echo \"\${schema}|\${key}|\$(gsettings get \${schema} \${key})\"
         done
     done | column --table --separator '|' --table-columns SCHEMA,KEY,VALUE"
-#        gsetting-ranges                 dump all keybindings
+#        gsetting-ranges         dump all keybindings
 alias gsetting-ranges="
     for schema in \$(gsettings list-schemas | sort) ; do
         for key in \$(gsettings list-keys \${schema} | sort) ; do
             echo \"\${schema}|\${key}|\$(gsettings range \${schema} \${key} |  tr '\n' ' ')\"
         done
     done | column --table --separator '|' --table-columns SCHEMA,KEY,RANGE"
-#        gsetting-gnome-keybindings      dump gnome keybindings
+#        gsetting-gnome-keybindings  dump gnome keybindings
 alias gsetting-gnome-keybindings="
     for key in \$(gsettings list-keys org.gnome.desktop.wm.keybindings | sort) ; do
         echo \"\${key}|\$(gsettings get org.gnome.desktop.wm.keybindings \${key})\"
@@ -2314,70 +2314,70 @@ alias clj="clojure"
 #
 # android
 #
-#        adbd                            adb devices
+#        adbd                    adb devices
 alias adbd="adb devices"
-#        adblog                          adb logcat (no verboase logs)
+#        adblog                  adb logcat (no verboase logs)
 alias adblog="adb logcat | grep -v ' V '"
-#        adbloge                         adb -e logcat (no verboase logs)
+#        adbloge                 adb -e logcat (no verboase logs)
 alias adbloge="adb -e logcat | grep -v ' V '"
-#        adblogd                         adb -d logcat (no verboase logs)
+#        adblogd                 adb -d logcat (no verboase logs)
 alias adblogd="adb -d logcat | grep -v ' V '"
-#        adbi                            adb install
+#        adbi                    adb install
 alias adbi="adb install"
-#        adbie                           adb -e install
+#        adbie                   adb -e install
 alias adbie="adb -e install"
-#        adbid                           adb -d install
+#        adbid                   adb -d install
 alias adbid="adb -d install"
-#        adbir                           adb install -r
+#        adbir                   adb install -r
 alias adbir="adb install -r"
-#        adbire                          adb -e install -r
+#        adbire                  adb -e install -r
 alias adbire="adb -e install -r"
-#        adbird                          adb -d install -r
+#        adbird                  adb -d install -r
 alias adbird="adb -d install -r"
-#        adbdeeplink                     adb shell am start
+#        adbdeeplink             adb shell am start
 alias adbdeeplink="adb shell am start"
-#        adbdate                         adb set date on device
+#        adbdate                 adb set date on device
 alias adbdate="adb shell date \$(date +%m%d%H%M%Y.%S)"
-#        adbdatee                        adb set date on emulator
+#        adbdatee                adb set date on emulator
 alias adbdatee="adb -e shell date \$(date +%m%d%H%M%Y.%S)"
-#        adbdated                        adb set date on attached device
+#        adbdated                adb set date on attached device
 alias adbdated="adb -d shell date \$(date +%m%d%H%M%Y.%S)"
-#        adbrs                           restart adb
+#        adbrs                   restart adb
 alias adbrs="
     sudo \${HOME}/android-sdk/platform-tools/adb kill-server && \
       sudo \${HOME}/android-sdk/platform-tools/adb start-server"
-#        adb-usb-setup                   setup adb usb device
+#        adb-usb-setup           setup adb usb device
 alias adb-usb-setup="
     sudo bash -c \"
         echo 'SUBSYSTEM==\\\"usb\\\", SYSFS{idVendor}==\\\"04e8\\\", MODE=\\\"0666\\\"' \
           > /etc/udev/rules.d/51-android.rules && \
           chmod a+r /etc/udev/rules.d/51-android.rules
     \""
-#        adb-screenshot                  abd screenshot (portrait)
+#        adb-screenshot          abd screenshot (portrait)
 alias adb-screenshot="
     adb shell screencap -p /sdcard/screen.png &&
     adb pull /sdcard/screen.png android-device-screenshot-\$(date '+%Y-%m-%d-%H%M%S').png"
-#        adb-screenshot-landscape        abd screenshot (landscape)
+#        adb-screenshot-landscape  abd screenshot (landscape)
 alias adb-screenshot-landscape="(
     name=android-device-screenshot-\$(date '+%Y-%m-%d-%H%M%S').png
     adb shell screencap -p /sdcard/screen.png &&
     adb pull /sdcard/screen.png \${name} &&
     convert \${name} -rotate 270 \${name}.tmp && mv \${name}.tmp \${name}"
-#!#        adb-animation                   abd animation
+#!#        adb-animation         abd animation
 #!alias adb-animation="
 #!    adb shell screenrecord /sdcard/animation.mp4 &&
 #!    adb pull /sdcard/animation.mp4 android-device-screenshot-\$(date '+%Y-%m-%d-%H%M%S').mp4"
-#        adb-video-record                record a video
+#        adb-video-record        record a video
 alias adb-video-record="adb shell screenrecord /sdcard/animation.mp4"
-#        adb-video-copy                  copy a recorded video off of device
+#        adb-video-copy          copy a recorded video off of device
 alias adb-video-copy="adb pull /sdcard/animation.mp4 android-device-screenshot-\$(date '+%Y-%m-%d-%H%M%S').mp4"
-#        ibus-sync                       put ibus into sync mode to prevent keyboard issue in Android Studio
+#        ibus-sync               put ibus into sync mode to prevent keyboard issue in Android Studio
 alias ibus-sync="IBUS_ENABLE_SYNC_MODE=1 ibus-daemon -xrd"
-#        set-android-studio-stable       set android studio path to stable
+#        set-android-studio-stable  set android studio path to stable
 alias set-android-studio-stable="(cd \${HOME} && rm android-studio && ln -s android-studio-stable android-studio)"
-#        set-android-studio-beta         set android studio path to beta
+#        set-android-studio-beta  set android studio path to beta
 alias set-android-studio-beta="(cd \${HOME} && rm android-studio && ln -s android-studio-beta android-studio)"
-#        set-android-studio-canary       set android studio path to canary
+#        set-android-studio-canary  set android studio path to canary
 alias set-android-studio-canary="(cd \${HOME} && rm android-studio && ln -s android-studio-canary android-studio)"
 
 #
@@ -2864,7 +2864,7 @@ alias gitrm="
             git status | grep '^#' | grep -v 'modified:' | tail -n +5 | sed 's/^#//' | xargs rm
         ;;
     esac"
-#        git-commit-to-clipboard copy HEAD git commit to clipboard
+#        git-commit-to-clipboard  copy HEAD git commit to clipboard
 alias git-commit-to-clipboard="git rev-parse HEAD | tr -d '\n' | xsel && xsel --output | xsel --clipboard"
 #!#        git-clone-powerlevel10k= git clone powerlevel10k to ~/powerlevel10k
 #!alias git-clone-powerlevel10k="git clone --depth=1 https://github.com/romkatv/powerlevel10k.git \${HOME}/powerlevel10k"
@@ -2952,11 +2952,11 @@ alias gituoall="
             (cd \${HOME}/\${dir} && git pull origin)
         fi
     done"
-#        gitcohaiku                clone haiku git repository
+#        gitcohaiku              clone haiku git repository
 alias gitcohaiku="git clone \${GIT_REPOSITORY_HAIKU} \${HOME}/haiku"
-#        gituohaiku                pull (update) haiku git repository
+#        gituohaiku              pull (update) haiku git repository
 alias gituohaiku="(cd \${HOME}/haiku && git pull origin)"
-#        gitpohaiku                push haiku git repository (to origin)
+#        gitpohaiku              push haiku git repository (to origin)
 alias gitpohaiku="(cd \${HOME}/haiku && git push origin)"
 
 #
