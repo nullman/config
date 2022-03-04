@@ -810,17 +810,17 @@ decrypt() {
 #
 #        ktg                     kill -SIGTERM (friendly) with grep
 ktg() {
-    pkill --signal SIGTERM --ignore-case "$1"
+    pkill --signal SIGTERM --full --ignore-case "$1"
 }
 #        kkg                     kill -SIGKILL (forced) with grep
 kkg() {
-    pkill --signal SIGTERM --ignore-case "$1"
+    pkill --signal SIGTERM --full --ignore-case "$1"
     sleep 1
-    pkill --signal SIGKILL --ignore-case "$1"
+    pkill --signal SIGKILL --full --ignore-case "$1"
 }
 #        khg                     kill -HUP (restart) with grep
 khg() {
-    pkill --signal SIGHUP --ignore-case "$1"
+    pkill --signal SIGHUP --full --ignore-case "$1"
 }
 
 #
