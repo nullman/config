@@ -22,9 +22,9 @@ conky.config = {
 conky.text = [[
 # date and time
 ${voffset 8}${color2}${font Bitstream Vera Sans:size=16}${time %A}${font} \
-            ${voffset -8}${alignr}${color}${font Bitstream Vera Sans:size=38}${time %e}${font}
+${voffset -8}${alignr}${color}${font Bitstream Vera Sans:size=38}${time %e}${font}
 ${voffset -30}${color}${font Bitstream Vera Sans:size=18}${time %b}${font} \
-              ${voffset -3} ${color}${font Bitstream Vera Sans:size=20}${time %Y}${font}${color2}${hr}
+${voffset -3} ${color}${font Bitstream Vera Sans:size=20}${time %Y}${font}${color2}${hr}
 
 # cpu
 #${voffset 10}${color}${font Bitstream Vera Sans:bold:size=12}CPU${font}  ${alignc}${freq_g} GHz  ${alignr}${cpu}%
@@ -65,13 +65,13 @@ ${color2}I/O:${color}  ${diskio}  ${goto 120}${diskiograph /dev/dm-0 15}
 #${color2}W:${color} ${goto 40}${diskio_write}  ${goto 120}${diskiograph_write /dev/dm-0 15}
 
 # network
-${voffset 10}${color}${font Bitstream Vera Sans:bold:size=12}Network${font}  ${alignr}${color2}Up:${color} ${totalup wlp0s20f3}  ${color2}Dn:${color} ${totaldown wlp0s20f3}
-${color2}Up:${color}  ${goto 40}${upspeed wlp0s20f3}  ${goto 120}${upspeedgraph wlp0s20f3 15}
-${color2}Dn:${color}  ${goto 40}${downspeed wlp0s20f3}  ${goto 120}${downspeedgraph wlp0s20f3 15}
-#${color2}Up${color}  ${alignr}${upspeed wlp0s20f3}
-#${color}${upspeedgraph wlp0s20f3}
-#${color2}Down${color}  ${alignr}${downspeed wlp0s20f3}
-#${color}${downspeedgraph wlp0s20f3}
+${voffset 10}${color}${font Bitstream Vera Sans:bold:size=12}Network${font}  ${alignr}${color2}Up:${color} ${totalup wlan0}  ${color2}Dn:${color} ${totaldown wlan0}
+${color2}Up:${color}  ${goto 40}${upspeed wlan0}  ${goto 120}${upspeedgraph wlan0 15}
+${color2}Dn:${color}  ${goto 40}${downspeed wlan0}  ${goto 120}${downspeedgraph wlan0 15}
+#${color2}Up${color}  ${alignr}${upspeed wlan0}
+#${color}${upspeedgraph wlan0}
+#${color2}Down${color}  ${alignr}${downspeed wlan0}
+#${color}${downspeedgraph wlan0}
 
 # battery
 ${voffset 10}${color}${font Bitstream Vera Sans:bold:size=12}Battery${font}  ${alignc}${battery_time}  ${alignr}${battery_short}
@@ -83,7 +83,7 @@ ${voffset 10}${color}${font Bitstream Vera Sans:bold:size=12}System${font}
 ${voffset 5}${color2}User:${color}  ${alignr}${execi 1200 whoami}@${nodename}
 # os/distro
 ${voffset 5}${color2}OS:${color}  ${alignr}${execi 3600 awk -F= '/TION/ {print $2}' /etc/lsb-release | sed 's/"//g'} \
-            ${execi 3600 awk -F= '/EASE=/ {printf $2" "} /NAME/ {print $2}' /etc/lsb-release}
+${execi 3600 awk -F= '/EASE=/ {printf $2" "} /NAME/ {print $2}' /etc/lsb-release}
 # kernel
 ${voffset 5}${color2}Kernel:${color}  ${alignr}${kernel}
 # uptime

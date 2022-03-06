@@ -534,22 +534,25 @@ ansislideshow() {
 #        wordlematch             list wordle words matching given pattern
 wordlematch() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 EXCLUDE INCLUDE MATCH"
+        echo "Usage: $0 LENGTH EXCLUDE INCLUDE MATCH"
         echo "Search for Wordle words matching given pattern."
+        echo "  LENGTH   length of words to consider"
         echo "  EXCLUDE  letters to exclude"
         echo "  INCLUDE  letters to include"
         echo "  MATCH    letters and positions to match (regexp)"
-        echo "Example: $0 abc def ...gh"
+        echo "Example: $0 5 abc def ...gh"
     else
-        cmd="cat ~/doc/information/words.txt | grep '^.\{5\}$' | tr 'A-Z' 'a-z'"
-        cmd="${cmd} | grep -v '[$1]'"
-        if [[ $# -gt 2 ]] ; then
-            cmd="${cmd} | grep '$3'"
-        fi
+        cmd="cat ~/doc/information/words.txt | grep '^.\{$1\}$' | tr 'A-Z' 'a-z'"
         if [[ $# -gt 1 ]] ; then
-            for x in $(echo "$2" | grep -o '.') ; do
+            cmd="${cmd} | grep -v '[$2]'"
+        fi
+        if [[ $# -gt 2 ]] ; then
+            for x in $(echo "$3" | grep -o '.') ; do
                 cmd="${cmd} | grep '${x}'"
             done
+        fi
+        if [[ $# -gt 3 ]] ; then
+            cmd="${cmd} | grep '$4'"
         fi
         #echo "${cmd}"
         eval "${cmd}"
