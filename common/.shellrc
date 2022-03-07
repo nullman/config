@@ -172,8 +172,11 @@ export SCREENDIR="${HOME}/.screendir"
 # # run keychain for one-time entry of ssh passphrase
 # [[ -d "${HOME}/.ssh" ]] && eval "$(keychain --quiet --eval id_rsa)"
 
+# set XDG_DOWNLOAD_DIR
+export XDG_DOWNLOAD_DIR="${HOME}/Downloads"
+
 # set XDG_DATA_DIRS
-export XDG_DATA_DIRS="/usr/local/share/:/usr/share/"
+export XDG_DATA_DIRS="/usr/local/share:/usr/share"
 # add flatpak support
 export XDG_DATA_DIRS="${XDG_DATA_DIRS}:${HOME}/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share"
 
