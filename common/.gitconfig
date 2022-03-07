@@ -10,6 +10,9 @@
     name = Kyle Sherman
     email = kylewsherman@gmail.com
 
+[core]
+    autocrlf = input
+
 [init]
     defaultBranch = master
 
