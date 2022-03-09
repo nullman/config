@@ -2152,7 +2152,10 @@
                  ("c" . emacs-lisp-byte-compile)
                  ("d" . toggle-debug-on-error)
                  ("m" . macrostep-mode)
-                 ("x" . regexp-builder))
+                 ("s" . toggle-case-fold-search)
+                 ("t" . toggle-truncate-lines)
+                 ("x" . regexp-builder)
+                 ("v" . visual-line-mode))
       ;; miscellaneous eval commands
       (bind-keys :map space-miscellaneous-map
                  :prefix "e"
@@ -18515,6 +18518,13 @@
       :mode (("\\.sql\\'" . sql-mode)
              ("\\.tbl\\'" . sql-mode)
              ("\\.sp\\'" . sql-mode))
+      :hook (sql-interactive-mode-hook . truncate-lines-off)
+      :commands (truncate-lines-off)
+      :custom
+      ;; sql-ms
+      (sql-ms-program "sqlcmd")
+      (sql-ms-options '("-w" "10000" "-y" "79" "-s" "|" "-k" "-I"))
+      ;;(sql-ms-login-params '(user password server database))
       :config
       ;; ;; turn on abbreviation mode
       ;; (abbrev-mode 1)
@@ -18524,6 +18534,60 @@
 
       ;; remove tabs
       ;;(add-hook 'sql-mode-hook #'install-remove-tabs)
+
+      ;; (setf (alist-get 'ms sql-product-alist)
+      ;;       '(:name "Microsoft"
+      ;;         :font-lock sql-mode-ms-font-lock-keywords
+      ;;         :sqli-program sql-ms-program
+      ;;         :sqli-options sql-ms-options
+      ;;         :sqli-login sql-ms-login-params
+      ;;         :sqli-comint-func sql-comint-ms
+      ;;         :prompt-regexp "^"
+      ;;         :prompt-cont-regexp "^"
+      ;;         :prompt-length 0
+      ;;         :syntax-alist ((?@ . "_"))
+      ;;         :terminator ("^go" . "go")))
+
+      ;; do not wrap lines
+      (defun truncate-lines-off ()
+        "Do not wrap lines."
+        (interactive)
+        (toggle-truncate-lines t))
+      ;;(add-hook 'sql-interactive-mode-hook #'truncate-lines-off)
+
+      ;; (defun does-line-have-comint-prompt ()
+      ;;   "Return whether or not current line has a comint prompt."
+      ;;   (= (point-at-bol)
+      ;;      (let ((inhibit-field-text-motion t)) (point-at-bol))))
+
+      ;;   ;; newline before query results
+      ;;   (defvar sql-last-prompt-pos 1
+      ;;     "Position of last prompt when added recording started.")
+      ;;   (make-variable-buffer-local 'sql-last-prompt-pos)
+      ;;   (put 'sql-last-prompt-pos 'permanent-local t)
+      ;;   (defun sql-add-newline-first (output)
+      ;;     "Add newline to beginning of OUTPUT for `comint-preoutput-filter-functions'.
+
+      ;; This fixes up the display of queries sent to the inferior buffer
+      ;; programatically."
+      ;;     (let ((begin-of-prompt
+      ;;            (or (and comint-last-prompt-overlay
+      ;;                     ;; sometimes this overlay is not on prompt
+      ;;                     (save-excursion
+      ;;                       (goto-char (overlay-start comint-last-prompt-overlay))
+      ;;                       (looking-at-p comint-prompt-regexp)
+      ;;                       (point)))
+      ;;                1)))
+      ;;       (if (> begin-of-prompt sql-last-prompt-pos)
+      ;;           (progn
+      ;;             (setq sql-last-prompt-pos begin-of-prompt)
+      ;;             (concat "\n" output))
+      ;;         output)))
+
+      ;;   (defun sql-interactive-mode--add-hooks ()
+      ;;     "Add hooks to `sql-interactive-mode-hook'."
+      ;;     (add-hook 'comint-preoutput-filter-functions #'sql-add-newline-first))
+      ;;   ;;(add-hook 'sql-interactive-mode-hook #'sql-interactive-mode--add-hooks)
       )
 
     ;; (use-package sql-transform
@@ -18537,6 +18601,22 @@
     ;;                ("C-c u" . sql-to-update)
     ;;                ("C-c d" . sql-to-delete)))
     ;;   (add-hook 'sql-mode-hook #'custom-sql-mode-hook))
+
+    ;;------------------------------------------------------------------------------
+    ;;;; sqlup-mode
+    ;;------------------------------------------------------------------------------
+
+    (use-package sqlup-mode
+      :straight t
+      :after (sql)
+      :bind (:map sql-mode-map
+                  ("C-c b" . sqlup-capitalize-keywords-in-buffer)
+                  ("C-c u" . sqlup-capitalize-keywords-in-region))
+      :bind (:map sql-interactive-mode-map
+                  ("C-c b" . sqlup-capitalize-keywords-in-buffer)
+                  ("C-c u" . sqlup-capitalize-keywords-in-region))
+      :hook (sql-mode . sqlup-mode)
+      :hook (sql-interactive-mode . sqlup-mode))
 
     ;; ;;------------------------------------------------------------------------------
     ;; ;;;; mysql
@@ -19230,6 +19310,8 @@
          ("Export Bookmarks to HTML" "(org-bookmarks-export-to-html \"~/org/bookmarks.org\" \"~/Desktop/bookmarks.html\")" "Export bookmarks.org to ~/Desktop/bookmarks.html.")
          ("Export Bookmarks to NYXT" "(org-bookmarks-export-to-nyxt \"~/org/bookmarks.org\" \"~/config/local/.local/share/nyxt/bookmarks.lisp\")" "Export bookmarks.org to ~/config/local/.local/share/nyxt/bookmarks.lisp.")))
        ("Revert Buffer" "revert-buffer" "Run `revert-buffer' on current buffer.")
+       ("Debug On Error Mode [Toggle]" "toggle-debug-on-error" "Toggle `debug-on-error'.")
+       ("Truncate Line Mode [Toggle]" "toggle-truncate-lines" "Toggle `truncate-lines' in current buffer.")
        ("Visual Line Mode [Toggle]" "visual-line-mode" "Toggle `visual-line-mode' in current buffer.")
        ("Search Case Sensitivity [Toggle]" "toggle-case-fold-search" "Toggle case-fold-search in current buffer.")
        ("Git Status" "(magit-status default-directory)" "Open Git Status buffer.")
