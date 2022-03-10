@@ -18518,13 +18518,7 @@
       :mode (("\\.sql\\'" . sql-mode)
              ("\\.tbl\\'" . sql-mode)
              ("\\.sp\\'" . sql-mode))
-      :hook (sql-interactive-mode-hook . truncate-lines-off)
-      :commands (truncate-lines-off)
-      :custom
-      ;; sql-ms
-      (sql-ms-program "sqlcmd")
-      (sql-ms-options '("-w" "10000" "-y" "79" "-s" "|" "-k" "-I"))
-      ;;(sql-ms-login-params '(user password server database))
+      :hook (sql-interactive-mode . custom-sql-interactive-hook)
       :config
       ;; ;; turn on abbreviation mode
       ;; (abbrev-mode 1)
@@ -18535,60 +18529,52 @@
       ;; remove tabs
       ;;(add-hook 'sql-mode-hook #'install-remove-tabs)
 
-      ;; (setf (alist-get 'ms sql-product-alist)
-      ;;       '(:name "Microsoft"
-      ;;         :font-lock sql-mode-ms-font-lock-keywords
-      ;;         :sqli-program sql-ms-program
-      ;;         :sqli-options sql-ms-options
-      ;;         :sqli-login sql-ms-login-params
-      ;;         :sqli-comint-func sql-comint-ms
-      ;;         :prompt-regexp "^"
-      ;;         :prompt-cont-regexp "^"
-      ;;         :prompt-length 0
-      ;;         :syntax-alist ((?@ . "_"))
-      ;;         :terminator ("^go" . "go")))
+      ;; ;; newline before query results
+      ;; (defvar sql-last-prompt-pos 1
+      ;;   "Position of last prompt when added recording started.")
+      ;; (make-variable-buffer-local 'sql-last-prompt-pos)
+      ;; (put 'sql-last-prompt-pos 'permanent-local t)
+      ;; (defun sql-add-newline-before-output (output)
+      ;;   "Add newline to beginning of OUTPUT for `comint-preoutput-filter-functions'.
 
-      ;; do not wrap lines
-      (defun truncate-lines-off ()
-        "Do not wrap lines."
-        (interactive)
-        (toggle-truncate-lines t))
-      ;;(add-hook 'sql-interactive-mode-hook #'truncate-lines-off)
-
-      ;; (defun does-line-have-comint-prompt ()
-      ;;   "Return whether or not current line has a comint prompt."
-      ;;   (= (point-at-bol)
-      ;;      (let ((inhibit-field-text-motion t)) (point-at-bol))))
-
-      ;;   ;; newline before query results
-      ;;   (defvar sql-last-prompt-pos 1
-      ;;     "Position of last prompt when added recording started.")
-      ;;   (make-variable-buffer-local 'sql-last-prompt-pos)
-      ;;   (put 'sql-last-prompt-pos 'permanent-local t)
-      ;;   (defun sql-add-newline-first (output)
-      ;;     "Add newline to beginning of OUTPUT for `comint-preoutput-filter-functions'.
-
-      ;; This fixes up the display of queries sent to the inferior buffer
-      ;; programatically."
-      ;;     (let ((begin-of-prompt
-      ;;            (or (and comint-last-prompt-overlay
-      ;;                     ;; sometimes this overlay is not on prompt
-      ;;                     (save-excursion
-      ;;                       (goto-char (overlay-start comint-last-prompt-overlay))
-      ;;                       (looking-at-p comint-prompt-regexp)
-      ;;                       (point)))
-      ;;                1)))
-      ;;       (if (> begin-of-prompt sql-last-prompt-pos)
+      ;; This fixes up the display of queries sent to the inferior
+      ;; buffer programatically."
+      ;;   (let ((prompt (or (and (bound-and-true-p comint-last-prompt)
+      ;;                          (marker-position (car comint-last-prompt)))
+      ;;                     1)))
+      ;;       (if (> prompt sql-last-prompt-pos)
       ;;           (progn
-      ;;             (setq sql-last-prompt-pos begin-of-prompt)
+      ;;             (setq sql-last-prompt-pos prompt)
       ;;             (concat "\n" output))
       ;;         output)))
 
-      ;;   (defun sql-interactive-mode--add-hooks ()
-      ;;     "Add hooks to `sql-interactive-mode-hook'."
-      ;;     (add-hook 'comint-preoutput-filter-functions #'sql-add-newline-first))
-      ;;   ;;(add-hook 'sql-interactive-mode-hook #'sql-interactive-mode--add-hooks)
-      )
+      ;; remove prompt
+      (defun sql-remove-prompt (output)
+        "Remove prompt so output lines up correctly."
+        (save-mark-and-excursion
+          (let ((inhibit-read-only t))
+            (forward-line 0)
+            (while (and (not (bobp))
+                        (not (looking-at "^GO$")))
+              (forward-line -1)
+              (while (re-search-forward (concat sql-prompt-regexp "[ \t]*") (point-at-eol) :noerror)
+                (replace-match "")))))
+        output)
+
+      ;; custom hook
+      (defun custom-sql-interactive-hook ()
+        ;; turn off line wrapping
+        (toggle-truncate-lines 1)
+
+        ;; turn on sql history
+        (set (make-local-variable 'sql-input-ring-file-name)
+             (expand-file-name "history-sql" user-emacs-directory))
+
+        ;; remove prompt on output
+        (add-hook 'comint-preoutput-filter-functions #'sql-remove-prompt)))
+
+        ;; ;; add newline before output
+        ;; (add-hook 'comint-preoutput-filter-functions #'sql-add-newline-before-output)))
 
     ;; (use-package sql-transform
     ;;   :straight t
@@ -18615,8 +18601,8 @@
       :bind (:map sql-interactive-mode-map
                   ("C-c b" . sqlup-capitalize-keywords-in-buffer)
                   ("C-c u" . sqlup-capitalize-keywords-in-region))
-      :hook (sql-mode . sqlup-mode)
-      :hook (sql-interactive-mode . sqlup-mode))
+      :hook ((sql-mode . sqlup-mode)
+             (sql-interactive-mode . sqlup-mode)))
 
     ;; ;;------------------------------------------------------------------------------
     ;; ;;;; mysql
@@ -20040,7 +20026,43 @@
       ;; add perl files to remove-tabs-exceptions
       (add-to-list 'remove-tabs-exceptions '(:file . "\\.t\\'") t)
       (add-to-list 'remove-tabs-exceptions '(:file . "\\.tt\\'") t)
-      (add-to-list 'remove-tabs-exceptions '(:file . "\\.pm\\'") t))
+      (add-to-list 'remove-tabs-exceptions '(:file . "\\.pm\\'") t)
+
+      ;; sql setup
+      (setq sql-product 'ms)
+      (setq sql-ms-program "sqlcmd")
+      ;; https://docs.microsoft.com/en-us/sql/tools/sqlcmd-utility?view=sql-server-ver15
+      ;; -I (enable quoted identifiers)
+      ;; -k[1 | 2] (remove or replace control characters)
+      ;; -s col_separator
+      ;; -w column_width
+      ;; -y variable_length_type_display_width
+      (setq sql-ms-options '("-I" "-k" "-s" "|"))
+
+      ;; database connections
+      (setq sql-connection-alist
+            '((dev (sql-product 'ms)
+                   (sql-server "wk8683.infinitecampus.com")
+                   (sql-port 1344)
+                   (sql-database "CampusMasterMN")
+                   (sql-user "dev")
+                   (sql-password "devTest"))
+              (issuetest (sql-product 'ms)
+                         (sql-server "issuetest81153.infinitecampus.com")
+                         (sql-port 1344)
+                         (sql-database "exceptionalslittleton-20210801_2101")
+                         (sql-user "dev")
+                         (sql-password "devTest"))))
+
+      (defun sql-ms-dev ()
+        "Connect to local dev database."
+        (interactive)
+        (sql-connect 'dev))
+
+      (defun sql-ms-issuetest ()
+        "Connect to issuetest database."
+        (interactive)
+        (sql-connect 'issuetest)))
 ;; Settings:1 ends here
 
 ;; [[file:init-emacs.org::*Functions][Functions:1]]
@@ -20203,17 +20225,15 @@
        "Work"
        `(("Dired..."
           ,(auto-menu-dired '(("work" . "~/work")
-                              ("builds" . "~/work/builds")
-                              ("buzzfeed/android" . "~/buzzfeed/android")
-                              ("buzzfeed/android/buzzfeed" . "~/buzzfeed/android/buzzfeed")
-                              ("buzzfeed/android-ab-framework" . "~/buzzfeed/android-ab-framework"))))
+                              ("Tomcat" . "~/ICAS-DEV-999.2.29/INFINITECAMPUS/tomcat/tigger-999.2.29")
+                              ("exceptionals-campus" . "~/work/exceptionals-campus")
+                              ("exceptionals-tl-ui" . "~/work/exceptionals-tl-ui")
+                              ("campus-5.0-apps" . "~/work/campus-5.0-apps"))))
          ("org-copy-to-clipboard" "org-copy-to-clipboard" "Reformat and copy org region to clipboard.")
          ("org-toggle-link-display" "org-toggle-link-display" "Toggle the literal or descriptive display of links.")
          ("org-toggle-headline-checkbox" "org-toggle-headline-checkbox" "Toggle between an Org headline and checkbox on current line.")
          ("org-table-remove-commas" "org-table-remove-commas" "Remove all commas in current Org table.")
-         ("org-table-convert-region" "org-table-convert-region" "Convert region to a table.")
-         ;; ("update-analytics-dates" "work-update-buzzfeed-analytics-dates" "Update analytics dates on current line.")
-         ("export-analytics" "work-export-buzzfeed-analytics" "Export current analytics table."))))
+         ("org-table-convert-region" "org-table-convert-region" "Convert region to a table."))))
 ;; Menu:1 ends here
 
 ;; [[file:init-emacs.org::*Other][Other:1]]
