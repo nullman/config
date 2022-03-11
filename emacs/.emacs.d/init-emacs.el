@@ -18563,10 +18563,10 @@
       :after (sql)
       :bind (:map sql-mode-map
                   ("C-c b" . sqlup-capitalize-keywords-in-buffer)
-                  ("C-c u" . sqlup-capitalize-keywords-in-region))
+                  ("C-c r" . sqlup-capitalize-keywords-in-region))
       :bind (:map sql-interactive-mode-map
                   ("C-c b" . sqlup-capitalize-keywords-in-buffer)
-                  ("C-c u" . sqlup-capitalize-keywords-in-region))
+                  ("C-c r" . sqlup-capitalize-keywords-in-region))
       :hook ((sql-mode . sqlup-mode)
              (sql-interactive-mode . sqlup-mode)))
 
@@ -18574,17 +18574,19 @@
     ;;;; sql-transform
     ;;------------------------------------------------------------------------------
 
-    ;; (use-package sql-transform
-    ;;   :straight t
-    ;;   :config
-    ;;   (defun custom-sql-mode-hook ()
-    ;;     ;; key bindings
-    ;;     (bind-keys :map sql-mode-map
-    ;;                ("C-c s" . sql-to-select)
-    ;;                ("C-c i" . sql-to-insert)
-    ;;                ("C-c u" . sql-to-update)
-    ;;                ("C-c d" . sql-to-delete)))
-    ;;   (add-hook 'sql-mode-hook #'custom-sql-mode-hook))
+    (use-package sql-transform
+      :straight t
+      :after (sql)
+      :bind (:map sql-mode-map
+                  ("C-c s" . sql-to-select)
+                  ("C-c i" . sql-to-insert)
+                  ("C-c u" . sql-to-update)
+                  ("C-c d" . sql-to-delete))
+      :bind (:map sql-interactive-mode-map
+                  ("C-c s" . sql-to-select)
+                  ("C-c i" . sql-to-insert)
+                  ("C-c u" . sql-to-update)
+                  ("C-c d" . sql-to-delete)))
 
     ;; ;;------------------------------------------------------------------------------
     ;; ;;;; mysql

@@ -68,16 +68,16 @@ _bc pointer_action2            resize_side
 _bc pointer_action3            resize_corner
 
 # default colors
-#_bc normal_border_color   "#30302f"
-#_bc active_border_color   "#474645"
-#_bc focused_border_color  "#817f7f"
-#_bc presel_feedback_color "#f4d775"
+#_bc normal_border_color        "#30302f"
+#_bc active_border_color        "#474645"
+#_bc focused_border_color       "#817f7f"
+#_bc presel_feedback_color      "#f4d775"
 
 # custom colors
-_bc normal_border_color   "#4c566a"
-_bc active_border_color   "#1e1e1e"
-_bc focused_border_color  "#5e81ac"
-_bc presel_feedback_color "#5e81ac"
+_bc normal_border_color        "#4c566a"
+_bc active_border_color        "#1e1e1e"
+_bc focused_border_color       "#5e81ac"
+_bc presel_feedback_color      "#5e81ac"
 
 #-------------------------------------------------------------------------------
 # Application Rules
@@ -152,6 +152,7 @@ _ba w40k.exe state=fullscreen
 
 # floating applications
 _ba arandr state=floating center=true
+_ba Audacious state=floating sticky=true
 _ba balena-etcher-electron state=floating center=true
 _ba BasiliskII state=floating center=true
 _ba dosbox state=floating center=true
@@ -172,7 +173,7 @@ _ba oblogout state=floating center=true
 _ba Pamac-manager state=floating center=true
 _ba Paprefs state=floating center=true
 _ba Pavucontrol state=floating center=true
-_ba Qmmp state=floating center=true
+_ba Qmmp state=floating sticky=true
 _ba syncterm state=floating center=true
 _ba Tint2conf state=floating center=true
 _ba X48 state=floating center=true
