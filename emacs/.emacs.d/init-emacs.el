@@ -18529,25 +18529,6 @@
       ;; remove tabs
       ;;(add-hook 'sql-mode-hook #'install-remove-tabs)
 
-      ;; ;; newline before query results
-      ;; (defvar sql-last-prompt-pos 1
-      ;;   "Position of last prompt when added recording started.")
-      ;; (make-variable-buffer-local 'sql-last-prompt-pos)
-      ;; (put 'sql-last-prompt-pos 'permanent-local t)
-      ;; (defun sql-add-newline-before-output (output)
-      ;;   "Add newline to beginning of OUTPUT for `comint-preoutput-filter-functions'.
-
-      ;; This fixes up the display of queries sent to the inferior
-      ;; buffer programatically."
-      ;;   (let ((prompt (or (and (bound-and-true-p comint-last-prompt)
-      ;;                          (marker-position (car comint-last-prompt)))
-      ;;                     1)))
-      ;;       (if (> prompt sql-last-prompt-pos)
-      ;;           (progn
-      ;;             (setq sql-last-prompt-pos prompt)
-      ;;             (concat "\n" output))
-      ;;         output)))
-
       ;; remove prompt
       (defun sql-remove-prompt (output)
         "Remove prompt so output lines up correctly."
@@ -18556,9 +18537,9 @@
             (forward-line 0)
             (while (and (not (bobp))
                         (not (looking-at "^GO$")))
-              (forward-line -1)
               (while (re-search-forward (concat sql-prompt-regexp "[ \t]*") (point-at-eol) :noerror)
-                (replace-match "")))))
+                (replace-match ""))
+              (forward-line -1))))
         output)
 
       ;; custom hook
@@ -18572,21 +18553,6 @@
 
         ;; remove prompt on output
         (add-hook 'comint-preoutput-filter-functions #'sql-remove-prompt)))
-
-        ;; ;; add newline before output
-        ;; (add-hook 'comint-preoutput-filter-functions #'sql-add-newline-before-output)))
-
-    ;; (use-package sql-transform
-    ;;   :straight t
-    ;;   :config
-    ;;   (defun custom-sql-mode-hook ()
-    ;;     ;; key bindings
-    ;;     (bind-keys :map sql-mode-map
-    ;;                ("C-c s" . sql-to-select)
-    ;;                ("C-c i" . sql-to-insert)
-    ;;                ("C-c u" . sql-to-update)
-    ;;                ("C-c d" . sql-to-delete)))
-    ;;   (add-hook 'sql-mode-hook #'custom-sql-mode-hook))
 
     ;;------------------------------------------------------------------------------
     ;;;; sqlup-mode
@@ -18603,6 +18569,22 @@
                   ("C-c u" . sqlup-capitalize-keywords-in-region))
       :hook ((sql-mode . sqlup-mode)
              (sql-interactive-mode . sqlup-mode)))
+
+    ;;------------------------------------------------------------------------------
+    ;;;; sql-transform
+    ;;------------------------------------------------------------------------------
+
+    ;; (use-package sql-transform
+    ;;   :straight t
+    ;;   :config
+    ;;   (defun custom-sql-mode-hook ()
+    ;;     ;; key bindings
+    ;;     (bind-keys :map sql-mode-map
+    ;;                ("C-c s" . sql-to-select)
+    ;;                ("C-c i" . sql-to-insert)
+    ;;                ("C-c u" . sql-to-update)
+    ;;                ("C-c d" . sql-to-delete)))
+    ;;   (add-hook 'sql-mode-hook #'custom-sql-mode-hook))
 
     ;; ;;------------------------------------------------------------------------------
     ;; ;;;; mysql
