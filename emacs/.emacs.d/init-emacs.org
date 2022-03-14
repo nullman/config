@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-03-11 09:35 (kyle)>
+  #+TIMESTAMP: <2022-03-13 16:07 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -30938,24 +30938,20 @@
     General aliases for functions that do not have bindings or hard to remember
     ones.
 
-    #+BEGIN_SRC emacs-lisp
+    #+BEGIN_SRC emacs-lisp :var data=aliases-general
       ;;------------------------------------------------------------------------------
       ;;; Aliases: General
       ;;------------------------------------------------------------------------------
 
       (init-message 2 "Aliases: General")
 
-      ;; revert buffer
-      (defalias 'rb 'revert-buffer)
-
-      ;; query replace regexp
-      (defalias 'qrr 'query-replace-regexp)
-
-      ;; list matching lines
-      (defalias 'lml 'list-matching-lines)
-
-      ;; regexp builder
-      (defalias 'rxb 'regexp-builder)
+      (let ((aliases '(
+                       (lml . list-matching-lines)
+                       (qrr . query-replace-regexp)
+                       (rb . revert-buffer)
+                       (rxb . regexp-builder)
+                       )))
+        (mapc (lambda (x) (defalias (car x) (cdr x))) aliases))
     #+END_SRC
 
 * Final Setup

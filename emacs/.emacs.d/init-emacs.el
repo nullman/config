@@ -20259,17 +20259,13 @@
 
     (init-message 2 "Aliases: General")
 
-    ;; revert buffer
-    (defalias 'rb 'revert-buffer)
-
-    ;; query replace regexp
-    (defalias 'qrr 'query-replace-regexp)
-
-    ;; list matching lines
-    (defalias 'lml 'list-matching-lines)
-
-    ;; regexp builder
-    (defalias 'rxb 'regexp-builder)
+    (let ((aliases '(
+                     (lml . list-matching-lines)
+                     (qrr . query-replace-regexp)
+                     (rb . revert-buffer)
+                     (rxb . regexp-builder)
+                     )))
+      (mapc (lambda (x) (defalias (car x) (cdr x))) aliases))
 ;; General:1 ends here
 
 ;; [[file:init-emacs.org::*Final Setup][Final Setup:1]]
