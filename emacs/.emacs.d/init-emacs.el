@@ -77,7 +77,7 @@
 
 ;; [[file:init-emacs.org::*Start][Start:3]]
   ;; reduce frequency of garbage collections
-  (setq gc-cons-threshold (* 50 1000 1000)) ; defaults to 800000
+  (setq gc-cons-threshold (* 50 1000 1000)) ; default: 800000
 ;; Start:3 ends here
 
 ;; [[file:init-emacs.org::*Start][Start:4]]
@@ -735,8 +735,8 @@
     ;; add underscore to word boundaries
     (modify-syntax-entry ?_ "w")
 
-    ;; ;; add dash to word boundaries
-    ;; (modify-syntax-entry ?- "w")
+    ;; add dash to word boundaries
+    (modify-syntax-entry ?- "w")
 ;; General:9 ends here
 
 ;; [[file:init-emacs.org::*General][General:10]]
@@ -959,6 +959,11 @@
 ;; General:33 ends here
 
 ;; [[file:init-emacs.org::*General][General:34]]
+    (setq enable-recursive-minibuffers t)
+    (minibuffer-depth-indicate-mode 1)
+;; General:34 ends here
+
+;; [[file:init-emacs.org::*General][General:35]]
     (init-message 3 "Have `apropos' Search All Symbols and Order by Relevance")
 
     ;; make apropos command search all symbols
@@ -967,25 +972,25 @@
     ;; make apropos command list results by relevance
     (setq apropos-sort-by-scores t
           apropos-documentation-sort-by-scores t)
-;; General:34 ends here
+;; General:35 ends here
 
-;; [[file:init-emacs.org::*General][General:35]]
+;; [[file:init-emacs.org::*General][General:36]]
     (init-message 3 "Set Default `grep' Command")
 
     ;; set grep command
     (setq grep-command "grep -n -H -i -r -e ")
-;; General:35 ends here
+;; General:36 ends here
 
-;; [[file:init-emacs.org::*General][General:36]]
+;; [[file:init-emacs.org::*General][General:37]]
     (init-message 3 "Set Email Sources")
 
     ;; email settings
     (setq mail-sources `((pop :server "pop.gmail.com" :port 995
                               :user ,user-mail-address
                               :connection ssl :leave t)))
-;; General:36 ends here
+;; General:37 ends here
 
-;; [[file:init-emacs.org::*General][General:37]]
+;; [[file:init-emacs.org::*General][General:38]]
     (init-message 3 "Set Default Browser")
 
     ;; set default browser
@@ -1002,32 +1007,32 @@
 
     ;; set secondary browser
     (setq browse-url-secondary-browser-function 'browse-url-default-browser)
-;; General:37 ends here
+;; General:38 ends here
 
-;; [[file:init-emacs.org::*General][General:38]]
+;; [[file:init-emacs.org::*General][General:39]]
     (init-message 3 "Single Character Deletion Commands Delete Active Regions Without Saving to the Kill Ring")
 
     ;; when deleting an active region via single character deletion command,
     ;; do not save to kill ring
     (setq delete-active-region t)
-;; General:38 ends here
+;; General:39 ends here
 
-;; [[file:init-emacs.org::*General][General:39]]
+;; [[file:init-emacs.org::*General][General:40]]
     (init-message 3 "Disable `vc-git'.")
 
     ;; disable vc-git
     (setq vc-handled-backends nil)
-;; General:39 ends here
+;; General:40 ends here
 
-;; [[file:init-emacs.org::*General][General:40]]
+;; [[file:init-emacs.org::*General][General:41]]
     ;; (init-message 3 "Recenter window after `next-error'.")
 
     ;; ;; always recenter after `next-error'
     ;; (setq next-error-recenter '(4))
     ;; ;;(add-hook 'next-error-hook #'recenter :append)
-;; General:40 ends here
+;; General:41 ends here
 
-;; [[file:init-emacs.org::*General][General:41]]
+;; [[file:init-emacs.org::*General][General:42]]
     (init-message 3 "Recenter window after `occur-mode-goto-occurrence'.")
 
     ;; always recenter after `occur-mode-goto-occurrence'
@@ -1036,9 +1041,9 @@
       (recenter))
     ;; advise `occur-mode-goto-occurrence'
     (advice-add 'occur-mode-goto-occurrence :after #'occur-mode-goto-occurrence--recenter)
-;; General:41 ends here
+;; General:42 ends here
 
-;; [[file:init-emacs.org::*General][General:42]]
+;; [[file:init-emacs.org::*General][General:43]]
     (init-message 3 "Set time zones to use for `display-time-world'.")
 
     ;; set display-time-world time zones
@@ -1051,16 +1056,16 @@
             ("Europe/London" "London")
             ("Europe/Paris" "Paris")
             ("Asia/Tokyo" "Tokyo")))
-;; General:42 ends here
+;; General:43 ends here
 
-;; [[file:init-emacs.org::*General][General:43]]
+;; [[file:init-emacs.org::*General][General:44]]
     (init-message 3 "Set `safe-local-variable-values'.")
 
     ;; set safe-local-variable-values
     (setq safe-local-variable-values
           '((org-babel-noweb-wrap-end . "}}}")
             (org-babel-noweb-wrap-start . "{{{")))
-;; General:43 ends here
+;; General:44 ends here
 
 ;; [[file:init-emacs.org::*System][System:1]]
     ;;------------------------------------------------------------------------------
@@ -1072,33 +1077,33 @@
 
 ;; [[file:init-emacs.org::*System][System:2]]
     ;; set max variable bindings
-    (setq max-specpdl-size 10000)           ; defaults to 1300
+    (setq max-specpdl-size 10000)           ; default: 1300
 ;; System:2 ends here
 
 ;; [[file:init-emacs.org::*System][System:3]]
     ;; set max eval depth
-    (setq max-lisp-eval-depth 10000)        ; defaults to 600
+    (setq max-lisp-eval-depth 10000)        ; default: 600
 ;; System:3 ends here
 
 ;; [[file:init-emacs.org::*System][System:4]]
     ;; set max message log size
-    (setq message-log-max 2048)             ; defaults to 1000
+    (setq message-log-max 2048)             ; default: 1000
 ;; System:4 ends here
 
 ;; [[file:init-emacs.org::*System][System:5]]
     ;; set max history list size
-    (setq history-length 250)               ; defaults to 30
+    (setq history-length 250)               ; default: 30
 
     ;; remove duplicates from history lists
-    (setq history-delete-duplicates t)      ; defaults to nil
+    (setq history-delete-duplicates t)      ; default: nil
 ;; System:5 ends here
 
 ;; [[file:init-emacs.org::*System][System:6]]
     ;; set max kill ring size
-    (setq kill-ring-max 100)                ; defaults to 60
+    (setq kill-ring-max 100)                ; default: 60
 
     ;; set max mark ring size
-    (setq mark-ring-max 32)                 ; defaults to 16
+    (setq mark-ring-max 32)                 ; default: 16
 ;; System:6 ends here
 
 ;; [[file:init-emacs.org::*System][System:7]]
@@ -1552,15 +1557,15 @@
     (defun custom-key-bindings-function-keys ()
       "Set custom function key bindings."
       (when (fboundp 'help)
-        (bind-keys ("<f1>" . help)))        ; defaults to `help-for-help'
+        (bind-keys ("<f1>" . help)))        ; default: `help-for-help'
       (when (fboundp 'help-for-help)
         (bind-keys ("S-<f1>" . help-for-help)))
       (when (fboundp 'help-command)
-        (bind-keys ("<f2>" . help-command))) ; defaults to Prefix Command
+        (bind-keys ("<f2>" . help-command))) ; default: Prefix Command
       (when (fboundp 'kmacro-start-macro-or-insert-counter)
-        (bind-keys ("<f3>" . kmacro-start-macro-or-insert-counter))) ; defaults to `kmacro-start-macro-or-insert-counter'
+        (bind-keys ("<f3>" . kmacro-start-macro-or-insert-counter))) ; default: `kmacro-start-macro-or-insert-counter'
       (when (fboundp 'kmacro-end-or-call-macro)
-        (bind-keys ("<f4>" . kmacro-end-or-call-macro))) ; defaults to `kmacro-end-or-call-macro'
+        (bind-keys ("<f4>" . kmacro-end-or-call-macro))) ; default: `kmacro-end-or-call-macro'
       ;; (when (fboundp 'define-word)
       ;;   (bind-keys ("<f5>" . define-word)))
       ;; (when (fboundp 'define-word-at-point)
@@ -1582,7 +1587,7 @@
       (when (fboundp 'cycle-buffer-backward-permissive)
         (bind-keys ("S-<f9>" . cycle-buffer-backward-permissive)))
       (when (fboundp 'cycle-buffer)
-        (bind-keys ("<f10>" . cycle-buffer))) ; defaults to `tmm-menubar'
+        (bind-keys ("<f10>" . cycle-buffer))) ; default: `tmm-menubar'
       (when (fboundp 'cycle-buffer-permissive)
         (bind-keys ("S-<f10>" . cycle-buffer-permissive)))
       )
@@ -1602,7 +1607,7 @@
       "Set custom extended key bindings."
 
       ;; ;; turn off insert key
-      ;; (unbind-key "<insert>")               ; defaults to `overwrite-mode'
+      ;; (unbind-key "<insert>")               ; default: `overwrite-mode'
 
       ;; ;; window move
       ;; (when (fboundp 'windmove-left)
@@ -1613,10 +1618,10 @@
       ;;              ("S-<down>" . windmove-down)))
 
       ;; beginning of line
-      (bind-keys* ("<home>" . beginning-of-line)) ; defaults to `move-beginning-of-line'
+      (bind-keys* ("<home>" . beginning-of-line)) ; default: `move-beginning-of-line'
 
       ;; end of line
-      (bind-keys* ("<end>" . end-of-line)) ; defaults to `move-end-of-line'
+      (bind-keys* ("<end>" . end-of-line)) ; default: `move-end-of-line'
 
       ;; beginning of buffer
       (bind-keys* ("C-<home>" . beginning-of-buffer))
@@ -1641,47 +1646,47 @@
       (let ((keymap (or keymap override-global-map)))
         ;; cursor movement keys (short, single character)
         (bind-keys* :map keymap
-                    ("<up>" . previous-line) ; defaults to `previous-line'
-                    ("<down>" . next-line)   ; defaults to `next-line'
-                    ("<left>" . left-char)   ; defaults to `left-char'
-                    ("<right>" . right-char) ; defaults to `right-char'
-                    ("M-i" . previous-line)  ; defaults to `tab-to-tab-stop' ("C-p")
-                    ("M-k" . next-line)      ; defaults to `kill-sentence' ("C-n")
-                    ("M-j" . left-char)      ; defaults to `indent-new-comment-line' ("C-f")
-                    ("M-l" . right-char))    ; defaults to `downcase-word' ("C-b")
+                    ("<up>" . previous-line) ; default: `previous-line'
+                    ("<down>" . next-line)   ; default: `next-line'
+                    ("<left>" . left-char)   ; default: `left-char'
+                    ("<right>" . right-char) ; default: `right-char'
+                    ("M-i" . previous-line)  ; default: `tab-to-tab-stop' ("C-p")
+                    ("M-k" . next-line)      ; default: `kill-sentence' ("C-n")
+                    ("M-j" . left-char)      ; default: `indent-new-comment-line' ("C-f")
+                    ("M-l" . right-char))    ; default: `downcase-word' ("C-b")
 
         ;; cursor movement keys (medium, multi-character)
         (bind-keys* :map keymap
-                    ("C-<up>" . backward-paragraph) ; defaults to `backward-paragraph'
-                    ("C-<down>" . forward-paragraph) ; defaults to `forward-paragraph'
-                    ("C-<left>" . left-word)         ; defaults to `left-word'
-                    ("C-<right>" . right-word)       ; defaults to `right-word'
-                    ("C-M-u" . backward-paragraph) ; defaults to `backward-up-list'
-                    ("C-M-o" . forward-paragraph)  ; defaults to `split-line'
-                    ("M-u" . left-word)            ; defaults to `upcase-word'
-                    ("M-o" . right-word))          ; defaults to `facemenu-keymap'
+                    ("C-<up>" . backward-paragraph) ; default: `backward-paragraph'
+                    ("C-<down>" . forward-paragraph) ; default: `forward-paragraph'
+                    ("C-<left>" . left-word)         ; default: `left-word'
+                    ("C-<right>" . right-word)       ; default: `right-word'
+                    ("C-M-u" . backward-paragraph) ; default: `backward-up-list'
+                    ("C-M-o" . forward-paragraph)  ; default: `split-line'
+                    ("M-u" . left-word)            ; default: `upcase-word'
+                    ("M-o" . right-word))          ; default: `facemenu-keymap'
 
         ;; cursor movement keys (long, multi-character)
         (bind-keys* :map keymap
-                    ("C-M-<up>" . scroll-down-command) ; defaults to `scroll-down-command'
-                    ("C-M-<down>" . scroll-up-command) ; defaults to `scroll-up-command'
-                    ("C-M-<left>" . move-beginning-of-line) ; defaults to `move-beginning-of-line'
-                    ("C-M-<right>" . move-end-of-line) ; defaults to `move-end-of-line'
-                    ("C-M-i" . scroll-down-command) ; defaults to `completion-at-point' ("<prior>")
-                    ("C-M-k" . scroll-up-command)   ; defaults to `kill-whole-line' ("<next>")
-                    ("C-M-j" . move-beginning-of-line) ; defaults to `comment-indent-new-line' ("C-a")
-                    ("C-M-l" . move-end-of-line)) ; defaults to `reposition-window' ("C-e")
+                    ("C-M-<up>" . scroll-down-command) ; default: `scroll-down-command'
+                    ("C-M-<down>" . scroll-up-command) ; default: `scroll-up-command'
+                    ("C-M-<left>" . move-beginning-of-line) ; default: `move-beginning-of-line'
+                    ("C-M-<right>" . move-end-of-line) ; default: `move-end-of-line'
+                    ("C-M-i" . scroll-down-command) ; default: `completion-at-point' ("<prior>")
+                    ("C-M-k" . scroll-up-command)   ; default: `kill-whole-line' ("<next>")
+                    ("C-M-j" . move-beginning-of-line) ; default: `comment-indent-new-line' ("C-a")
+                    ("C-M-l" . move-end-of-line)) ; default: `reposition-window' ("C-e")
 
         ;; window movement keys
         (bind-keys* :map keymap
                     ("C-x <up>" . windmove-up)
                     ("C-x <down>" . windmove-down)
-                    ("C-x <left>" . windmove-left) ; defaults to `previous-buffer'
-                    ("C-x <right>" . windmove-right) ; defaults to `next-buffer'
+                    ("C-x <left>" . windmove-left) ; default: `previous-buffer'
+                    ("C-x <right>" . windmove-right) ; default: `next-buffer'
                     ("C-x C-<up>" . windmove-up)
                     ("C-x C-<down>" . windmove-down)
-                    ("C-x C-<left>" . windmove-left) ; defaults to `previous-buffer'
-                    ("C-x C-<right>" . windmove-right) ; defaults to `next-buffer'
+                    ("C-x C-<left>" . windmove-left) ; default: `previous-buffer'
+                    ("C-x C-<right>" . windmove-right) ; default: `next-buffer'
                     ("C-x M-i" . windmove-up)
                     ("C-x M-k" . windmove-down)
                     ("C-x M-j" . windmove-left)
@@ -1716,16 +1721,16 @@
         (bind-keys ("C-M-<return>" . insert-line-below)))
 
       ;; set mark
-      (bind-keys ("C-SPC" . set-mark-command)) ; defaults to `set-mark-command'
+      (bind-keys ("C-SPC" . set-mark-command)) ; default: `set-mark-command'
 
       ;; set rectangle mark
       (when (fboundp 'cua-set-rectangle-mark)
         (bind-keys ("C-x rm" . cua-set-rectangle-mark)
-                   ("C-M-SPC" . cua-set-rectangle-mark))) ; defaults to `mark-sexp'
+                   ("C-M-SPC" . cua-set-rectangle-mark))) ; default: `mark-sexp'
 
       ;; just one space
       (when (fboundp 'just-one-space)
-        (bind-keys ("C-x C-SPC" . just-one-space))) ; defaults to `pop-global-mark'
+        (bind-keys ("C-x C-SPC" . just-one-space))) ; default: `pop-global-mark'
 
       ;; help
       (bind-keys ("C-x C-h" . help-command)
@@ -1738,12 +1743,12 @@
 
       ;; ;; smart M-x
       ;; (when (fboundp 'smex)
-      ;;   (bind-keys ("M-x" . smex))) ; defaults to `execute-extended-command'
+      ;;   (bind-keys ("M-x" . smex))) ; default: `execute-extended-command'
       ;; (when (fboundp 'smex-major-mode-commands)
-      ;;   (bind-keys ("M-X" . smex-major-mode-commands))) ; defaults to `execute-extended-command'
+      ;;   (bind-keys ("M-X" . smex-major-mode-commands))) ; default: `execute-extended-command'
 
       ;; ;; alternates for M-x
-      ;; (bind-keys ("C-x C-m" . execute-extended-command)) ; defaults to Prefix Command
+      ;; (bind-keys ("C-x C-m" . execute-extended-command)) ; default: Prefix Command
 
       ;; menubar
       (when (fboundp 'tmm-menubar)
@@ -1751,15 +1756,15 @@
 
       ;; force save maybe
       (when (fboundp 'save-buffer-always-maybe)
-        (bind-keys ("C-x C-s" . save-buffer-always-maybe))) ; defaults to `save-buffer'
+        (bind-keys ("C-x C-s" . save-buffer-always-maybe))) ; default: `save-buffer'
 
       ;; ;; bs-show (buffer select)
       ;; (when (fboundp 'bs-show)
-      ;;   (bind-keys ("C-x C-b" . bs-show))) ; defaults to `list-buffers'
+      ;;   (bind-keys ("C-x C-b" . bs-show))) ; default: `list-buffers'
 
       ;; bury buffer
       (bind-keys ("C-c y" . bury-buffer))
-      (bind-keys ("C-c C-y" . bury-buffer)) ; defaults to `org-evaluate-time-range'
+      (bind-keys ("C-c C-y" . bury-buffer)) ; default: `org-evaluate-time-range'
 
       ;; revert buffer
       (bind-keys ("C-c r" . revert-buffer))
@@ -1770,72 +1775,72 @@
 
       ;; mark full word
       (when (fboundp 'mark-full-word)
-        (bind-keys ("M-@" . mark-full-word))) ; defaults to `mark-word'
+        (bind-keys ("M-@" . mark-full-word))) ; default: `mark-word'
 
       ;; ;; expand region
       ;; (when (fboundp 'er/expand-region)
-      ;;   (bind-keys ("M-=" . er/expand-region)   ; defaults to `count-lines-region'
-      ;;              ("C-=" . er/contract-region) ; defaults to `count-lines-region'
-      ;;              ("C-M-SPC" . er/expand-region) ; defaults to `mark-sexp'
+      ;;   (bind-keys ("M-=" . er/expand-region)   ; default: `count-lines-region'
+      ;;              ("C-=" . er/contract-region) ; default: `count-lines-region'
+      ;;              ("C-M-SPC" . er/expand-region) ; default: `mark-sexp'
       ;;              ("C-M-S-SPC" . er/contract-region)))
 
       ;; regexp replace
-      (bind-keys ("M-&" . replace-regexp)) ; defaults to `async-shell-command'
+      (bind-keys ("M-&" . replace-regexp)) ; default: `async-shell-command'
 
       ;; insert menu prompt
       (when (fboundp 'insert-menu-prompt)
-        (bind-keys ("C-x i" . insert-menu-prompt))) ; defaults to `insert-file'
+        (bind-keys ("C-x i" . insert-menu-prompt))) ; default: `insert-file'
 
       ;; split windows
-      (bind-keys ("M-1" . delete-other-windows)) ; defaults to `digit-argument'
-      (bind-keys ("M-2" . split-window-horizontally)) ; defaults to `digit-argument'
-      (bind-keys ("M-3" . split-window-vertically)) ; defaults to `digit-argument'
-      (unbind-key "M-4")                          ; defaults to `digit-argument'
+      (bind-keys ("M-1" . delete-other-windows)) ; default: `digit-argument'
+      (bind-keys ("M-2" . split-window-horizontally)) ; default: `digit-argument'
+      (bind-keys ("M-3" . split-window-vertically)) ; default: `digit-argument'
+      (unbind-key "M-4")                          ; default: `digit-argument'
       (if (fboundp 'swap-windows)
-          (bind-keys ("M-4" . swap-windows))) ; defaults to `digit-argument'
-      (unbind-key "M-5")                    ; defaults to `digit-argument'
+          (bind-keys ("M-4" . swap-windows))) ; default: `digit-argument'
+      (unbind-key "M-5")                    ; default: `digit-argument'
       (when (fboundp 'toggle-window-split)
-        (bind-keys ("M-5" . toggle-window-split))) ; defaults to `split-line'
-      (bind-keys ("M-6" . switch-to-buffer-other-window)) ; defaults to `digit-argument'
-      (unbind-key "M-7")                    ; defaults to `digit-argument'
-      (unbind-key "M-8")                    ; defaults to `digit-argument'
-      (unbind-key "M-8")                    ; defaults to `digit-argument'
+        (bind-keys ("M-5" . toggle-window-split))) ; default: `split-line'
+      (bind-keys ("M-6" . switch-to-buffer-other-window)) ; default: `digit-argument'
+      (unbind-key "M-7")                    ; default: `digit-argument'
+      (unbind-key "M-8")                    ; default: `digit-argument'
+      (unbind-key "M-8")                    ; default: `digit-argument'
       (when (fboundp 'kill-other-window-buffer)
-        (bind-keys ("M-8" . kill-other-window-buffer))) ; defaults to `digit-argument'
-      (unbind-key "M-9")                    ; defaults to `digit-argument'
+        (bind-keys ("M-8" . kill-other-window-buffer))) ; default: `digit-argument'
+      (unbind-key "M-9")                    ; default: `digit-argument'
       (when (fboundp 'kill-other-window-buffer-and-delete-window)
-        (bind-keys ("M-9" . kill-other-window-buffer-and-delete-window))) ; defaults to `digit-argument'
-      (bind-keys ("M-0" . delete-window)) ; defaults to `digit-argument'
+        (bind-keys ("M-9" . kill-other-window-buffer-and-delete-window))) ; default: `digit-argument'
+      (bind-keys ("M-0" . delete-window)) ; default: `digit-argument'
 
       ;; switch windows
-      ;; (bind-keys ("M-o" . other-window)) ; defaults to `facemenu-keymap'
+      ;; (bind-keys ("M-o" . other-window)) ; default: `facemenu-keymap'
       (when (fboundp 'ace-window)
-        (bind-keys ("C-x o" . ace-window))) ; defaults to `other-window'
+        (bind-keys ("C-x o" . ace-window))) ; default: `other-window'
 
       ;; swap windows
       (when (fboundp 'swap-windows)
-        (bind-keys ("C-x C-o" . swap-windows))) ; defaults to `delete-blank-lines'
+        (bind-keys ("C-x C-o" . swap-windows))) ; default: `delete-blank-lines'
 
       ;; toggle window split
       (when (fboundp 'toggle-window-split)
-        (bind-keys ("C-x M-o" . toggle-window-split))) ; defaults to `split-line'
+        (bind-keys ("C-x M-o" . toggle-window-split))) ; default: `split-line'
 
       ;; kill current buffer
-      (bind-keys ("C-x C-k" . kill-current-buffer)) ; defaults to `kmacro-keymap'
+      (bind-keys ("C-x C-k" . kill-current-buffer)) ; default: `kmacro-keymap'
 
       ;; delete to end of line
       (when (fboundp 'delete-to-end-of-line)
-        (bind-keys ("C-k" . delete-to-end-of-line))) ; defaults to `kill-line'
+        (bind-keys ("C-k" . delete-to-end-of-line))) ; default: `kill-line'
 
       ;; delete line
       (when (fboundp 'delete-line)
-        (bind-keys ("C-M-d" . delete-line))) ; defaults to `down-list'
+        (bind-keys ("C-M-d" . delete-line))) ; default: `down-list'
 
       ;; delete word
       (when (fboundp 'delete-word)
-        (bind-keys ("M-d" . delete-word))) ; defaults to `kill-word'
+        (bind-keys ("M-d" . delete-word))) ; default: `kill-word'
       (when (fboundp 'backward-delete-word)
-        (bind-keys ("C-<backspace>" . backward-delete-word))) ; defaults to `backward-kill-word'
+        (bind-keys ("C-<backspace>" . backward-delete-word))) ; default: `backward-kill-word'
 
       ;; copy line
       (when (fboundp 'copy-line)
@@ -1847,24 +1852,24 @@
 
       ;; duplicate line
       (when (fboundp 'duplicate-line)
-        (bind-keys ("C-x C-d" . duplicate-line))) ; defaults to `list-directory'
+        (bind-keys ("C-x C-d" . duplicate-line))) ; default: `list-directory'
 
       ;; kill ring browser
       (when (fboundp 'browse-kill-ring)
         (bind-keys ("C-M-y" . browse-kill-ring)))
 
       ;; join line
-      ;;(bind-keys ("C-M-j" . join-line))  ; defaults to `comment-indent-new-line'
+      ;;(bind-keys ("C-M-j" . join-line))  ; default: `comment-indent-new-line'
       (bind-keys ("C-x C-j" . join-line))
 
       ;; join next line
       (when (fboundp 'join-next-line)
-        ;;(bind-keys ("M-j" . join-next-line))) ; defaults to `indent-new-comment-line'
+        ;;(bind-keys ("M-j" . join-next-line))) ; default: `indent-new-comment-line'
         (bind-keys ("C-x C-S-j" . join-next-line)))
 
       ;; enhanced titleize-word
       (when (fboundp 'titleize-word-enhanced)
-        (bind-keys ("M-t" . titleize-word-enhanced)) ; defaults to `transpose-words'
+        (bind-keys ("M-t" . titleize-word-enhanced)) ; default: `transpose-words'
         (bind-keys ("M-T" . titleize-line-or-region)))
 
       ;; enlarge window by 5
@@ -1873,7 +1878,7 @@
 
       ;; shrink window by 5
       (when (fboundp 'shrink-window-5)
-        (bind-keys ("C-x %" . shrink-window-5))) ; defaults to `View-goto-percent'
+        (bind-keys ("C-x %" . shrink-window-5))) ; default: `View-goto-percent'
 
       ;; describe text properties
       (bind-keys ("C-x M-p" . describe-text-properties))
@@ -1887,7 +1892,7 @@
         (bind-keys ("M-(" . match-paren)))
 
       ;; evaluate current sexp
-      (bind-keys ("C-x C-e" . eval-current-sexp)) ; defaults to `eval-last-sexp'
+      (bind-keys ("C-x C-e" . eval-current-sexp)) ; default: `eval-last-sexp'
       ;; \C-\M-x defaults to `eval-defun'
 
       ;; evaluate all sexp's in current buffer
@@ -1895,7 +1900,7 @@
         (bind-keys ("C-x M-e" . eval-sexp-buffer)))
 
       ;; ;; indent current sexp
-      ;; (bind-keys ("C-M-q" . indent-current-sexp)) ; defaults to `indent-sexp' or `indent-pp-sexp'
+      ;; (bind-keys ("C-M-q" . indent-current-sexp)) ; default: `indent-sexp' or `indent-pp-sexp'
 
       ;; ;; indent all sexp's in current buffer
       ;; (when (fboundp 'indent-sexp-buffer)
@@ -1907,7 +1912,7 @@
 
       ;; indent region or thing
       (when (fboundp 'indent-region-or-thing)
-        (bind-keys ("C-M-\\" . indent-region-or-thing))) ; defaults to `indent-region'
+        (bind-keys ("C-M-\\" . indent-region-or-thing))) ; default: `indent-region'
 
       ;; append equal characters up to column 80
       (when (fboundp 'append-equal-to-column-80)
@@ -1935,14 +1940,14 @@
 
       ;; ;; hippie expand
       ;; (when (fboundp 'hippie-expand)
-      ;;   (bind-keys ("M-/" . hippie-expand))) ; defaults to `dabbrev-expand'
+      ;;   (bind-keys ("M-/" . hippie-expand))) ; default: `dabbrev-expand'
 
       ;; complete tag
       (when (fboundp 'complete-tag)
         (bind-keys ("M-C-/" . complete-tag)))
 
       ;; unset set-fill-column
-      (unbind-key "C-x f")                  ; defaults to `set-fill-column'
+      (unbind-key "C-x f")                  ; default: `set-fill-column'
 
       ;; compare windows
       (when (fboundp 'compare-windows)
@@ -1950,7 +1955,7 @@
 
       ;; unfill paragraph
       (when (fboundp 'unfill-paragraph)
-        (bind-keys ("M-Q" . unfill-paragraph))) ; defaults to `fill-paragraph'
+        (bind-keys ("M-Q" . unfill-paragraph))) ; default: `fill-paragraph'
 
       ;; double-space punctuation
       (when (fboundp 'double-space-punctuation)
@@ -1984,9 +1989,9 @@
       ;; isearch
       ;; regular expression searches
       (when (fboundp 'isearch-forward-regexp)
-        (bind-keys ("M-s" . isearch-forward-regexp)))
+        (bind-keys ("C-S" . isearch-forward-regexp)))
       (when (fboundp 'isearch-backward-regexp)
-        (bind-keys ("M-r" . isearch-backward-regexp))) ; defaults to `move-to-window-line'
+        (bind-keys ("C-R" . isearch-backward-regexp)))
       ;; activate `occur' from isearch
       (define-key isearch-mode-map (kbd "C-o")
         (lambda ()
@@ -2001,7 +2006,7 @@
 
       ;; occur
       (when (fboundp 'occur)
-        ;;(bind-keys ("C-x u" . occur)) ; defaults to `undo'
+        ;;(bind-keys ("C-x u" . occur)) ; default: `undo'
         (bind-keys ("C-c o" . occur)))
 
       ;; shell
@@ -3390,9 +3395,10 @@
                  ("C-c p" . org-priority) ; "C-c ," gets overridden by `semantic-complete-analyze-inline'
                  ("C-c s" . org-sort-current) ; sort current level
                  ("C-c z" . org-agenda-archive-done-tasks) ; archive done tasks
-                 ("C-c C-j" . counsel-org-goto)            ; defaults to `org-goto'
-                 ;;("C-c C-z" . switch-to-lisp) ; defaults to `org-add-note'
-                 ("C-c C-z" . geiser-mode-switch-to-repl) ; defaults to `org-add-note'
+                 ;;("C-c C-j" . counsel-org-goto)            ; default: `org-goto'
+                 ("C-c C-j" . consult-outline)             ; default: `org-goto'
+                 ;;("C-c C-z" . switch-to-lisp) ; default: `org-add-note'
+                 ("C-c C-z" . geiser-mode-switch-to-repl) ; default: `org-add-note'
                  ("C-c C-x C-l" . org-toggle-link-display) ; toggle showing or hiding links
                  ("C-c C-x t" . org-toggle-headline-checkbox) ; toggle between headline and checkbox
                  ("C-c C-x T" . org-toggle-literate-programming-code-block) ; toggle literate programming code block on/off
@@ -4687,8 +4693,8 @@
       :after (org)
       ;;:demand t
       :bind (:map org-visibility-mode-map
-                  ("C-x C-v" . org-visibility-force-save) ; defaults to `find-alternative-file'
-                  ("C-x M-v" . org-visibility-remove))    ; defaults to undefined
+                  ("C-x C-v" . org-visibility-force-save) ; default: `find-alternative-file'
+                  ("C-x M-v" . org-visibility-remove))    ; default: undefined
       :hook (org-mode . org-visibility-mode)
       :custom
       ;; list of directories and files to automatically persist and restore visibility state of
@@ -13791,13 +13797,212 @@
           (towers-move (1- n) using to from)))
 ;; Towers of Hanoi:1 ends here
 
-;; [[file:init-emacs.org::*Modules][Modules:1]]
+;; [[file:init-emacs.org::*Completions][Completions:1]]
   ;;==============================================================================
-  ;;; Modules
+  ;;; Completions
   ;;==============================================================================
 
-  (init-message 1 "Modules")
-;; Modules:1 ends here
+  (init-message 1 "Completions")
+;; Completions:1 ends here
+
+;; [[file:init-emacs.org::*+ido+][+ido+:1]]
+    ;;------------------------------------------------------------------------------
+    ;;; Completions: ido
+    ;;------------------------------------------------------------------------------
+
+    (init-message 2 "Completions: ido")
+;; +ido+:1 ends here
+
+;; [[file:init-emacs.org::*+auto-complete+][+auto-complete+:1]]
+    ;;------------------------------------------------------------------------------
+    ;;; Completions: auto-complete
+    ;;------------------------------------------------------------------------------
+
+    (init-message 2 "Completions: auto-complete")
+;; +auto-complete+:1 ends here
+
+;; [[file:init-emacs.org::*+company/ivy+][+company/ivy+:1]]
+    ;;------------------------------------------------------------------------------
+    ;;; Completions: company/ivy
+    ;;------------------------------------------------------------------------------
+
+    (init-message 2 "Completions: company/ivy")
+;; +company/ivy+:1 ends here
+
+;; [[file:init-emacs.org::*+helm (swiper)+][+helm (swiper)+:1]]
+    ;;------------------------------------------------------------------------------
+    ;;; Completions: helm (swiper)
+    ;;------------------------------------------------------------------------------
+
+    (init-message 2 "Completions: helm (swiper)")
+;; +helm (swiper)+:1 ends here
+
+;; [[file:init-emacs.org::*vertico/consult][vertico/consult:1]]
+    ;;------------------------------------------------------------------------------
+    ;;; Completions: vertico/consult
+    ;;------------------------------------------------------------------------------
+
+    (init-message 2 "Completions: vertico/consult")
+;; vertico/consult:1 ends here
+
+;; [[file:init-emacs.org::*vertico][vertico:1]]
+      ;;------------------------------------------------------------------------------
+      ;;; Modules: vertico
+      ;;
+      ;; URL: https://github.com/minad/vertico
+      ;;------------------------------------------------------------------------------
+
+      (init-message 3 "Completions: vertico/consult: vertico")
+
+      (use-package vertico
+        :straight t
+        :demand t
+        :init
+        (vertico-mode))
+;; vertico:1 ends here
+
+;; [[file:init-emacs.org::*orderless][orderless:1]]
+      ;;------------------------------------------------------------------------------
+      ;;; Modules: orderless
+      ;;
+      ;; URL: https://github.com/oantolin/orderless
+      ;;------------------------------------------------------------------------------
+
+      (use-package orderless
+        :straight t
+        :after (vertico)
+        :custom
+        (completion-styles '(orderless))
+        (completion-category-overrides '((file (styles partial-completion)))))
+;; orderless:1 ends here
+
+;; [[file:init-emacs.org::*marginalia][marginalia:1]]
+      ;;------------------------------------------------------------------------------
+      ;;; Modules: marginalia
+      ;;
+      ;; URL: https://github.com/minad/marginalia
+      ;;------------------------------------------------------------------------------
+
+      (use-package marginalia
+        :straight t
+        :after (vertico)
+        :init
+        (marginalia-mode))
+;; marginalia:1 ends here
+
+;; [[file:init-emacs.org::*consult][consult:1]]
+      ;;------------------------------------------------------------------------------
+      ;;; Modules: consult
+      ;;
+      ;; URL: https://github.com/minad/consult
+      ;;------------------------------------------------------------------------------
+
+      (init-message 3 "Completions: vertico/consult: consult")
+
+      (use-package consult
+        :straight t
+        :after (vertico)
+        :bind (;; C-c bindings (mode-specific-map)
+               ("C-c h" . consult-history)
+               ("C-c m" . consult-mode-command)
+               ("C-c k" . consult-kmacro)
+               ;; C-x bindings (ctl-x-map)
+               ("C-x M-:" . consult-complex-command)      ; default: `repeat-complex-command'
+               ("C-x b" . consult-buffer)                 ; default: `switch-to-buffer'
+               ("C-x 4 b" . consult-buffer-other-window)  ; default: `switch-to-buffer-other-window'
+               ("C-x 5 b" . consult-buffer-other-frame)   ; default: `switch-to-buffer-other-frame'
+               ("C-x r b" . consult-bookmark)             ; default: `bookmark-jump'
+               ("C-x p b" . consult-project-buffer)       ; default: `project-switch-to-buffer'
+               ;; custom M-# bindings for fast register access
+               ("M-#" . consult-register-load)            ; default: `calc-dispatch'
+               ("M-'" . consult-register-store)           ; default: `abbrev-prefix-mark'
+               ("C-M-#" . consult-register)
+               ;; other custom bindings
+               ("M-y" . consult-yank-pop)                 ; default: `yank-pop'
+               ("<help> a" . consult-apropos)             ; default: `apropos-command'
+               ;; M-g bindings (goto-map)
+               ("M-g e" . consult-compile-error)
+               ("M-g f" . consult-flycheck)
+               ("M-g F" . consult-flymake)
+               ("M-g g" . consult-goto-line)              ; default: `goto-line'
+               ("M-g M-g" . consult-goto-line)            ; default: `goto-line'
+               ("M-g o" . consult-outline)                ; alternative: `consult-org-heading'
+               ("M-g m" . consult-mark)
+               ("M-g k" . consult-global-mark)
+               ("M-g i" . consult-imenu)
+               ("M-g I" . consult-imenu-multi)
+               ;; M-s bindings (search-map)
+               ("M-s d" . consult-find)
+               ("M-s D" . consult-locate)
+               ("M-s g" . consult-grep)
+               ("M-s G" . consult-git-grep)
+               ("M-s r" . consult-ripgrep)
+               ("M-s l" . consult-line)
+               ("M-s L" . consult-line-multi)
+               ("M-s m" . consult-multi-occur)
+               ("M-s k" . consult-keep-lines)
+               ("M-s u" . consult-focus-lines)
+               ;; Isearch integration
+               ("M-s e" . consult-isearch-history)
+               :map isearch-mode-map
+               ("M-e" . consult-isearch-history)          ; default: `isearch-edit-string'
+               ("M-s e" . consult-isearch-history)        ; default: `isearch-edit-string'
+               ("M-s l" . consult-line)                   ; needed by `consult-line' to detect isearch
+               ("M-s L" . consult-line-multi)             ; needed by `consult-line' to detect isearch
+               ;; minibuffer history
+               :map minibuffer-local-map
+               ("M-s" . consult-history)                  ; default: `next-matching-history-element'
+               ("M-r" . consult-history))                 ; default: `previous-matching-history-element'
+        ;; enable automatic preview at point in the *Completions* buffer
+        :hook (completion-list-mode . consult-preview-at-point-mode)
+        :init
+        ;; improve the register preview for `consult-register' and the Emacs built-ins
+        (setq register-preview-delay 0.5
+              register-preview-function #'consult-register-format)
+        ;; add thin lines, sorting, and hide the mode line of the register preview window
+        (advice-add #'register-preview :override #'consult-register-window)
+        ;; replace `completing-read-multiple' with an enhanced version
+        (advice-add #'completing-read-multiple :override #'consult-completing-read-multiple)
+        ;; select xref locations with preview
+        (setq xref-show-xrefs-function #'consult-xref
+              xref-show-definitions-function #'consult-xref)
+        :config
+        ;; configure preview key
+        (consult-customize
+         consult-theme
+         :preview-key '(:debounce 0.2 any)
+         consult-ripgrep consult-git-grep consult-grep
+         consult-bookmark consult-recent-file consult-xref
+         consult--source-bookmark consult--source-recent-file
+         consult--source-project-recent-file
+         :preview-key (kbd "M-."))
+        ;; configure narrowing key
+        (setq consult-narrow-key "<") ;; (kbd "C-+")
+        ;; make narrowing help available in the minibuffer
+        ;; (define-key consult-narrow-map (vconcat consult-narrow-key "?") #'consult-narrow-help)
+
+        ;; By default `consult-project-function' uses `project-root' from project.el.
+        ;; Optionally configure a different project root function.
+        ;; There are multiple reasonable alternatives to chose from.
+        ;;;; 1. project.el (the default)
+        ;; (setq consult-project-function #'consult--default-project--function)
+        ;;;; 2. projectile.el (projectile-project-root)
+        ;; (autoload 'projectile-project-root "projectile")
+        ;; (setq consult-project-function (lambda (_) (projectile-project-root)))
+        ;;;; 3. vc.el (vc-root-dir)
+        ;; (setq consult-project-function (lambda (_) (vc-root-dir)))
+        ;;;; 4. locate-dominating-file
+        ;; (setq consult-project-function (lambda (_) (locate-dominating-file "." ".git")))
+        )
+;; consult:1 ends here
+
+;; [[file:init-emacs.org::*Packages][Packages:1]]
+  ;;==============================================================================
+  ;;; Packages
+  ;;==============================================================================
+
+  (init-message 1 "Packages")
+;; Packages:1 ends here
 
 ;; [[file:init-emacs.org::*abbrev-mode][abbrev-mode:1]]
     ;;------------------------------------------------------------------------------
@@ -14177,8 +14382,8 @@
       :demand t
       :after (cycle-buffer)
       :commands (list-buffers bs-show)
-      :bind* ([remap list-buffers] . bs-show) ; defaults to `list-buffers'
-      :bind* ("C-x C-b" . bs-show)            ; defaults to `list-buffers'
+      :bind* (([remap list-buffers] . bs-show) ; default: `list-buffers'
+              ("C-x C-b" . bs-show))           ; default: `list-buffers'
       :config
       (defvar custom-bs-always-show-regexps '("\\*\\(scratch\\|info\\|grep\\)\\*")
         "*Buffer regexps to always show when buffer switching.")
@@ -14285,98 +14490,6 @@
         (global-command-log-mode -1)))
 ;; command-log:1 ends here
 
-;; [[file:init-emacs.org::*company][company:1]]
-    ;;------------------------------------------------------------------------------
-    ;;; Modules: company
-    ;;------------------------------------------------------------------------------
-
-    (init-message 2 "Modules: company")
-
-    (use-package company
-      :straight t
-      :diminish company-mode
-      :bind (:map company-active-map
-                  ("<tab>" . company-complete-selection)
-                  ("C-n" . company-select-next)
-                  ("C-p" . company-select-previous)
-                  ("M-k" . company-select-next)
-                  ("M-i" . company-select-previous))
-      :hook (prog-mode . company-mode)
-      :custom
-      (company-auto-commit nil)
-      (company-minimum-prefix-length 1)
-      (company-idle-delay 1.0)
-      :init
-      ;; (global-company-mode 1)
-      ;; (add-hook 'after-init-hook #'global-company-mode)
-      :config
-      ;; backends
-      (when (fboundp 'company-dabbrev)
-        (add-to-list 'company-backends #'company-dabbrev t))
-      (when (fboundp 'company-emacs-eclim)
-        (add-to-list 'company-backends #'company-emacs-eclim t))
-      (when (fboundp 'company-elisp)
-        (add-to-list 'company-backends #'company-elisp t))
-      (when (fboundp 'company-files)
-        (add-to-list 'company-backends #'company-files t))
-      (when (fboundp 'company-ispell)
-        (add-to-list 'company-backends #'company-ispell t))
-      (when (fboundp 'company-robe)
-        (add-to-list 'company-backends #'company-robe t)))
-
-    ;; ;; remove troublesome backends
-    ;; (setq company-backends (remove 'company-capf company-backends)))
-
-    ;; ;;------------------------------------------------------------------------------
-    ;; ;;;; company-box
-    ;; ;;------------------------------------------------------------------------------
-
-    ;; (init-message 3 "company-box")
-
-    ;; ;; company front end with icons
-    ;; (use-package company-box
-    ;;   :straight t
-    ;;   :after (company)
-    ;;   :hook (company-mode . company-box-mode))
-
-    ;;------------------------------------------------------------------------------
-    ;;;; company-quickhelp
-    ;;------------------------------------------------------------------------------
-
-    (init-message 3 "company-quickhelp")
-
-    ;; popup documentation for completion candidates
-    (use-package company-quickhelp
-      :straight t
-      :after (company)
-      :hook (company-mode . company-quickhelp-mode)
-      :custom
-      (company-quickhelp-delay 0.5)
-      (company-quickhelp-max-lines nil)
-      (company-quickhelp-color-foreground "white")
-      (company-quickhelp-color-background "dim gray"))
-
-    ;; ;;------------------------------------------------------------------------------
-    ;; ;;;; color
-    ;; ;;------------------------------------------------------------------------------
-
-    ;; (init-message 3 "color")
-
-    ;; ;; set colors for a dark background
-    ;; (use-package color
-    ;;   :straight t
-    ;;   :after (company)
-    ;;   :commands (color-lighten-name)
-    ;;   :config
-    ;;   (let ((bg (face-attribute 'default :background)))
-    ;;     (custom-set-faces
-    ;;      `(company-tooltip ((t (:inherit default :background ,(color-lighten-name bg 10)))))
-    ;;      `(company-scrollbar-bg ((t (:background ,(color-lighten-name bg 15)))))
-    ;;      `(company-scrollbar-fg ((t (:background ,(color-lighten-name bg 20)))))
-    ;;      `(company-tooltip-selection ((t (:inherit font-lock-function-name-face))))
-    ;;      `(company-tooltip-common ((t (:inherit font-lock-constant-face)))))))
-;; company:1 ends here
-
 ;; [[file:init-emacs.org::*compile][compile:1]]
     ;;------------------------------------------------------------------------------
     ;;; Modules: compile
@@ -14421,11 +14534,11 @@
     (use-package cycle-buffer
       :load-path (lambda () (file-truename (expand-file-name "cycle-buffer.el" emacs-modules-dir)))
       :demand t
-      :bind* (("C-x C-n" . cycle-buffer)          ; defaults to `set-goal-column'
-              ("C-x C-p" . cycle-buffer-backward) ; defaults to `mark-page'
+      :bind* (("C-x C-n" . cycle-buffer)          ; default: `set-goal-column'
+              ("C-x C-p" . cycle-buffer-backward) ; default: `mark-page'
               ("<f9>" . cycle-buffer-backward)
               ("S-<f9>" . cycle-buffer-backward-permissive)
-              ("<f10>" . cycle-buffer)      ; defaults to `tmm-menubar'
+              ("<f10>" . cycle-buffer)      ; default: `tmm-menubar'
               ("S-<f10>" . cycle-buffer-permissive))
       :init
       ;; advise `cycle-buffer`
@@ -14777,8 +14890,8 @@
 
     (use-package expand-region
       :straight t
-      :bind* (("C-=" . er/expand-region)     ; defaults to `count-lines-region'
-              ("C--" . er/contract-region))) ; defaults to `negative-argument'
+      :bind* (("C-=" . er/expand-region)     ; default: `count-lines-region'
+              ("C--" . er/contract-region))) ; default: `negative-argument'
 ;; expand-region:1 ends here
 
 ;; [[file:init-emacs.org::*flycheck][flycheck:1]]
@@ -14983,7 +15096,7 @@
 
     (use-package ibuffer
       :straight (:type built-in)
-      :bind* ("C-x i" . ibuffer)            ; defaults to `insert-file'
+      :bind* ("C-x i" . ibuffer)            ; default: `insert-file'
       :commands (ibuffer)
       :config
       ;; (add-to-list 'ibuffer-never-show-regexps "^\\*Apropos\\*$" t)
@@ -15099,151 +15212,6 @@
       :config
       (setq ispell-enable-tex-parser t))
 ;; ispell:1 ends here
-
-;; [[file:init-emacs.org::*ivy (counsel/swiper)][ivy (counsel/swiper):1]]
-    ;;------------------------------------------------------------------------------
-    ;;; Modules: ivy
-    ;;
-    ;; Add wildcard name completion to common tasks.
-    ;; Replace `completing-read-function' with `ivy-completing-read'.
-    ;;------------------------------------------------------------------------------
-
-    (init-message 2 "Modules: ivy (counsel/swiper)")
-
-    (use-package ivy
-      :straight (ivy :type git :host github :repo "abo-abo/swiper")
-      :demand t
-      :diminish ivy-mode
-      :commands (ivy-mode)
-      :bind* (("C-x C-r" . ivy-resume)      ; defaults to `find-file-read-only'
-              ("C-x b" . ivy-switch-buffer) ; defaults to `switch-to-buffer'
-              ("C-x O" . ivy-switch-buffer-other-window)) ; defaults to `other-window'
-      :bind (:map ivy-mode-map
-                  ("C-<return>" . ivy-immediate-done))
-      :custom
-      ;; add recent files and bookmarks to `ivy-switch-buffer'
-      (ivy-use-virtual-buffers t)
-      ;; allow minibuffer commands to work in the minibuffer
-      (enable-recursive-minibuffers t)
-      ;; style to use for displaying the current candidate count
-      (ivy-count-format "(%d/%d) ")
-      ;; ;; wrap around when at first/last candidate positions
-      ;; (ivy-wrap t)
-      :init
-      ;; turn on `ivy-mode'
-      (ivy-mode 1)
-      :config
-      ;; ;; set minibuffer height (number of lines) for various callers
-      ;; (setf (alist-get 'counsel-projectile-ag ivy-height-alist) 15)
-      ;; (setf (alist-get 'counsel-projectile-rg ivy-height-alist) 15)
-      ;; (setf (alist-get 'swiper ivy-height-alist) 15)
-      ;; (setf (alist-get 'counsel-switch-buffer ivy-height-alist) 7))
-
-      ;; turn off ivy mode in incompatable modes
-      (defun force-completing-read-default (orig-fun &rest args)
-        "Force a function to use `completing-read-default'."
-        (let ((completing-read-function 'completing-read-default))
-          (apply orig-fun args)))
-      ;; advise `tmm-prompt'
-      (advice-add 'tmm-prompt :around #'force-completing-read-default)
-      ;; advise `yas-expand-snippet'
-      (advice-add 'yas-expand-snippet :around #'force-completing-read-default))
-
-    ;;------------------------------------------------------------------------------
-    ;;;; counsel
-    ;;
-    ;; Various completion functions using ivy.
-    ;;------------------------------------------------------------------------------
-
-    (init-message 3 "counsel")
-
-    (use-package counsel
-      :straight (counsel :type git :host github :repo "abo-abo/swiper")
-      :after (ivy)
-      :bind* (("M-x" . counsel-M-x)
-              ;;([remap list-buffers] . counsel-switch-buffer) ; defaults to `list-buffers'
-              ;;("C-x b" . counsel-ibuffer)   ; defaults to `ivy-switch-buffer'
-              ;;("C-x C-b" . counsel-switch-buffer)   ; defaults to `list-buffers'
-              ("C-x C-f" . counsel-find-file)
-              ;;("C-h f" . counsel-describe-function)
-              ;;("C-h v" . counsel-describe-variable)
-              ("C-h l" . counsel-find-library)
-              ("C-h C-i" . counsel-info-lookup-symbol)
-              ("C-h u" . counsel-unicode-char))
-      :bind (:map minibuffer-local-map
-                  ("C-r" . counsel-minibuffer-history))
-      :custom
-      ;; format linux application names with name and comment only
-      (counsel-linux-app-format-function #'counsel-linux-app-format-function-name-only)
-      :config
-      ;; do not start searches with ^
-      (setq ivy-initial-inputs-alist nil))
-
-    ;;------------------------------------------------------------------------------
-    ;;;; swiper
-    ;;
-    ;; Isearch with an overview.
-    ;;------------------------------------------------------------------------------
-
-    (init-message 3 "swiper")
-
-    (use-package swiper
-      :straight (swiper :type git :host github :repo "abo-abo/swiper")
-      :after (ivy)
-      :bind* ("C-'" . swiper))            ; defaults to `isearch-forward-regexp'
-
-    ;;------------------------------------------------------------------------------
-    ;;;; ivy-rich
-    ;;
-    ;; More friendly display transformer for ivy.
-    ;;------------------------------------------------------------------------------
-
-    (init-message 3 "ivy-rich")
-
-    (use-package ivy-rich
-      :straight t
-      :after (ivy counsel)
-      :init (ivy-rich-mode 1)
-      :config
-      ;; ignore exvm buffers
-      (let ((predicate (plist-get ivy-rich-display-transformers-list 'ivy-switch-buffer)))
-        (setq ivy-rich-display-transformers-list
-              (plist-put ivy-rich-display-transformers-list
-                         'ivy-switch-buffer
-                         `(:columns
-                           ,(plist-get predicate :columns)
-                           :predicate
-                           (lambda (cand)
-                             (if-let ((buffer (get-buffer cand)))
-                                 (with-current-buffer buffer
-                                   (not (derived-mode-p 'exwm-mode))))))))))
-
-    ;;------------------------------------------------------------------------------
-    ;;;; flx
-    ;;
-    ;; Improve sorting for fuzzy-matched results.
-    ;;------------------------------------------------------------------------------
-
-    (init-message 3 "flx")
-
-    (use-package flx
-      :straight t
-      :after (ivy)
-      :init
-      (setq ivy-flx-limit 10000))
-
-    ;; ;;------------------------------------------------------------------------------
-    ;; ;;;; ivy-hydra
-    ;; ;;
-    ;; ;; Additional key bindings for Ivy.
-    ;; ;;------------------------------------------------------------------------------
-
-    ;; (init-message 3 "ivy-hydra")
-
-    ;; (use-package ivy-hydra
-    ;;   :straight t
-    ;;   :after (ivy hydra))
-;; ivy (counsel/swiper):1 ends here
 
 ;; [[file:init-emacs.org::*json][json:1]]
     ;;------------------------------------------------------------------------------
@@ -17867,7 +17835,7 @@
       (defun custom-python-mode-hook ()
         ;; override some default keybindings
         (when (fboundp 'backward-delete-word)
-          (bind-keys* ("C-<backspace>" . backward-delete-word))) ; defaults to `py-hungry-delete-backwards'
+          (bind-keys* ("C-<backspace>" . backward-delete-word))) ; default: `py-hungry-delete-backwards'
 
         ;; set indent offset
         (setq-local py-indent-offset custom-short-tab-width)
