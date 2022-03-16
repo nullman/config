@@ -1325,6 +1325,11 @@ Common values:
 (setq max-mini-window-height 0.50)
 ;; Buffers and Windows:7 ends here
 
+;; [[file:init-emacs.org::*Buffers and Windows][Buffers and Windows:8]]
+;; turn off line wrapping
+(toggle-truncate-lines 1)
+;; Buffers and Windows:8 ends here
+
 ;; [[file:init-emacs.org::*Tabs][Tabs:1]]
 ;;------------------------------------------------------------------------------
 ;;; General Settings: Tabs
@@ -9956,13 +9961,11 @@ others appropriately."
 (init-message 3 "Functions: Emacs Functions: with-time")
 
 (defmacro with-time (&rest body)
-  "Return the time it takes to evaluate BODY."
+  "Return the time it takes (in seconds) to evaluate BODY."
   (declare (indent 0))
   `(let ((time (current-time)))
      ,@body
-     (let ((duration (float-time (time-since time))))
-       (message "%.06f" duration)
-       duration)))
+     (float-time (time-since time))))
 ;; with-time:1 ends here
 
 ;; [[file:init-emacs.org::*package-desc-summary-to-kill-ring][package-desc-summary-to-kill-ring:1]]
@@ -9999,21 +10002,6 @@ others appropriately."
   (setq case-fold-search (not case-fold-search))
   (message "case-fold-search: %s" (if case-fold-search "ON" "OFF")))
 ;; toggle-case-fold-search:1 ends here
-
-;; [[file:init-emacs.org::*time][time:1]]
-;;------------------------------------------------------------------------------
-;;; Functions: time
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Functions: time")
-
-(defmacro time (&rest body)
-  "Return the time it takes (in seconds) to evaluate BODY."
-  (declare (indent 0))
-  `(let ((time (current-time)))
-     ,@body
-     (format "%.06f" (float-time (time-since time)))))
-;; time:1 ends here
 
 ;; [[file:init-emacs.org::*Emacs Grouped Functions][Emacs Grouped Functions:1]]
 ;;------------------------------------------------------------------------------
@@ -13997,10 +13985,10 @@ USING is the remaining peg."
   (setq xref-show-xrefs-function #'consult-xref
         xref-show-definitions-function #'consult-xref)
   :config
-  ;; ;; configure preview key
-  ;; (consult-customize
-  ;;  consult-theme
-  ;;  :preview-key '(:debounce 0.2 any)
+  ;; configure preview key
+  (consult-customize
+   consult-theme
+   :preview-key '(:debounce 0.2 any))
   ;;  consult-ripgrep consult-git-grep consult-grep
   ;;  consult-bookmark consult-recent-file consult-xref
   ;;  consult--source-bookmark consult--source-recent-file
@@ -14025,6 +14013,108 @@ USING is the remaining peg."
   ;; (setq consult-project-function (lambda (_) (locate-dominating-file "." ".git")))
   )
 ;; consult:1 ends here
+
+;; [[file:init-emacs.org::*company][company:1]]
+;;------------------------------------------------------------------------------
+;;;; Completions: vertico/consult: company
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Completions: vertico/consult: company")
+
+(use-package company
+  :straight t
+  :diminish company-mode
+  :bind (:map company-active-map
+              ("<tab>" . company-complete-selection)
+              ("C-n" . company-select-next)
+              ("C-p" . company-select-previous)
+              ("M-k" . company-select-next)
+              ("M-i" . company-select-previous))
+  :hook (prog-mode . company-mode)
+  :custom
+  (company-auto-commit nil)
+  (company-minimum-prefix-length 1)
+  (company-idle-delay 1.0)
+  :init
+  ;; (global-company-mode 1)
+  ;; (add-hook 'after-init-hook #'global-company-mode)
+  :config
+  ;; backends
+  (when (fboundp 'company-dabbrev)
+    (add-to-list 'company-backends #'company-dabbrev t))
+  (when (fboundp 'company-emacs-eclim)
+    (add-to-list 'company-backends #'company-emacs-eclim t))
+  (when (fboundp 'company-elisp)
+    (add-to-list 'company-backends #'company-elisp t))
+  (when (fboundp 'company-files)
+    (add-to-list 'company-backends #'company-files t))
+  (when (fboundp 'company-ispell)
+    (add-to-list 'company-backends #'company-ispell t))
+  (when (fboundp 'company-robe)
+    (add-to-list 'company-backends #'company-robe t)))
+
+;; ;; remove troublesome backends
+;; (setq company-backends (remove 'company-capf company-backends)))
+
+;;------------------------------------------------------------------------------
+;;;; consult-company
+;;------------------------------------------------------------------------------
+
+(use-package consult-company
+  :straight t
+  :after (company)
+  :bind (:map company-active-map
+              ([remap completion-at-point] . consult-company)))
+
+;; ;;------------------------------------------------------------------------------
+;; ;;;; company-box
+;; ;;------------------------------------------------------------------------------
+
+;; (init-message 3 "company-box")
+
+;; ;; company front end with icons
+;; (use-package company-box
+;;   :straight t
+;;   :after (company)
+;;   :hook (company-mode . company-box-mode))
+
+;;------------------------------------------------------------------------------
+;;;; company-quickhelp
+;;------------------------------------------------------------------------------
+
+(init-message 3 "company-quickhelp")
+
+;; popup documentation for completion candidates
+(use-package company-quickhelp
+  :straight t
+  :after (company)
+  :hook (company-mode . company-quickhelp-mode)
+  :custom
+  (company-quickhelp-delay 0.5)
+  (company-quickhelp-max-lines nil)
+  (company-quickhelp-color-foreground "white")
+  (company-quickhelp-color-background "dim gray"))
+
+;; ;;------------------------------------------------------------------------------
+;; ;;;; color
+;; ;;------------------------------------------------------------------------------
+
+;; (init-message 3 "color")
+
+;; ;; set colors for a dark background
+;; (use-package color
+;;   :straight t
+;;   :after (company)
+;;   :commands (color-lighten-name)
+;;   :config
+;;   (let ((bg (face-attribute 'default :background)))
+;;     (custom-set-faces
+;;      `(company-tooltip ((t (:inherit default :background ,(color-lighten-name bg 10)))))
+;;      `(company-scrollbar-bg ((t (:background ,(color-lighten-name bg 15)))))
+;;      `(company-scrollbar-fg ((t (:background ,(color-lighten-name bg 20)))))
+;;      `(company-tooltip-selection ((t (:inherit font-lock-function-name-face))))
+;;      `(company-tooltip-common ((t (:inherit font-lock-constant-face)))))))
+;; company:1 ends here
 
 ;; [[file:init-emacs.org::*Packages][Packages:1]]
 ;;==============================================================================
