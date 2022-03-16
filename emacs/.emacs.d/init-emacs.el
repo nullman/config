@@ -1057,15 +1057,6 @@ Common values:
         ("Asia/Tokyo" "Tokyo")))
 ;; General:47 ends here
 
-;; [[file:init-emacs.org::*General][General:48]]
-(init-message 3 "Set `safe-local-variable-values'.")
-
-;; set safe-local-variable-values
-(setq safe-local-variable-values
-      '((org-babel-noweb-wrap-end . "}}}")
-        (org-babel-noweb-wrap-start . "{{{")))
-;; General:48 ends here
-
 ;; [[file:init-emacs.org::*System][System:1]]
 ;;------------------------------------------------------------------------------
 ;;; Environment Settings: System
@@ -1138,7 +1129,9 @@ Common values:
 ;; System:10 ends here
 
 ;; [[file:init-emacs.org::*System][System:11]]
-;; optional org-babel noweb start and end patterns
+(init-message 3 "Set `safe-local-variable-values'.")
+
+;; org-babel noweb start and end patterns
 (add-to-list 'safe-local-variable-values '(org-babel-noweb-wrap-start . "{{"))
 (add-to-list 'safe-local-variable-values '(org-babel-noweb-wrap-end . "}}"))
 ;; System:11 ends here

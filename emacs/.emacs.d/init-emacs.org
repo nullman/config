@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-03-16 15:39 (kyle)>
+  #+TIMESTAMP: <2022-03-16 16:01 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -122,9 +122,6 @@
 
     Tangle *early-init.el* file.
 
-    Note:  This section is not automatically tangled on save.  If changes are made
-    to it, call =org-babel-tangle-block=.
-
     #+BEGIN_SRC emacs-lisp :tangle early-init.el
       ;; -*- mode: emacs-lisp; lexical-binding: t; no-byte-compile: t -*-
       ;;==============================================================================
@@ -154,9 +151,6 @@
     :END:
 
     Tangle *init.el* bootstrap file.
-
-    Note:  This section is not automatically tangled on save.  If changes are made
-    to it, call =org-babel-tangle-block=.
 
     #+BEGIN_SRC emacs-lisp :tangle init.el
       ;; -*- mode: emacs-lisp; lexical-binding: t; no-byte-compile: t -*-
@@ -1819,17 +1813,6 @@
               ("Asia/Tokyo" "Tokyo")))
     #+END_SRC
 
-    Set =safe-local-variable-values=.
-
-    #+BEGIN_SRC emacs-lisp
-      (init-message 3 "Set `safe-local-variable-values'.")
-
-      ;; set safe-local-variable-values
-      (setq safe-local-variable-values
-            '((org-babel-noweb-wrap-end . "}}}")
-              (org-babel-noweb-wrap-start . "{{{")))
-    #+END_SRC
-
 *** System
     :PROPERTIES:
     :CUSTOM_ID: environment-settings-system
@@ -1934,10 +1917,12 @@
         (global-so-long-mode 1))
     #+END_SRC
 
-    Add some safe local variable values to prevent the pop-up warning on file load.
+    Set =safe-local-variable-values=.
 
     #+BEGIN_SRC emacs-lisp
-      ;; optional org-babel noweb start and end patterns
+      (init-message 3 "Set `safe-local-variable-values'.")
+
+      ;; org-babel noweb start and end patterns
       (add-to-list 'safe-local-variable-values '(org-babel-noweb-wrap-start . "{{"))
       (add-to-list 'safe-local-variable-values '(org-babel-noweb-wrap-end . "}}"))
     #+END_SRC
