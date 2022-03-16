@@ -128,8 +128,23 @@
 ;;; Org/Babel Bootstrap: Normal Tangle
 ;;------------------------------------------------------------------------------
 
-;; load literate org-mode emacs init file
-(org-babel-load-file (expand-file-name "init-emacs.org" user-emacs-directory))
+(require 'ob-tangle)
+(setq vc-follow-symlinks t)
+
+;; generate (if needed) and load main init file
+(let* ((file-base (file-truename (expand-file-name "~/.emacs.d/init-emacs")))
+       (file-org (concat file-base ".org"))
+       (file-elisp (concat file-base ".el"))
+       (file-comp (concat file-base ".elc")))
+  ;; do not try to byte compile the generated file as it will fail since our environment is not setup
+  (when (file-newer-than-file-p file-org file-elisp)
+    (org-babel-tangle-file file-org))
+  ;; delete any existing byte compiled init file to prevent an outdated version from loading
+  (when (file-exists-p file-comp)
+    (delete-file file-comp))
+  (if (file-exists-p file-elisp)
+      (load file-elisp)
+    (message "Error loading %s" file-elisp)))
 
 ;;==============================================================================
 ;;; init.el ends here

@@ -1,21 +1,16 @@
 ;; [[file:init-emacs.org::*Colors][Colors:1]]
+(let ((data '(("Color" "Name" "Symbol" "Hex Code") ("Adwaita Dark Background (Original)" "" "" "#29353b") ("Adwaita Dark Background (Darker)" "" "" "#19252b") ("Adwaita Dark Background (Darkest)" "" "color-background" "#09151b") ("White Foreground" "" "color-foreground" "#bbc2cf") ("White Foreground Accent" "" "" "#798188") ("Yellow Cursor" "" "color-cursor" "#eeee22") ("Bright Yellow Highlight" "" "color-paren" "#ffff33") ("White Mouse" "" "color-mouse" "#ffffff") ("Outline Level 1" "goldenrod" "color-1" "#daa520") ("Outline Level 2" "light goldenrod" "color-2" "#eedd82") ("Outline Level 3" "yellow green" "color-3" "#9acd32") ("Outline Level 4" "light salmon" "color-4" "#ffa07a") ("Outline Level 5" "tan" "color-5" "#d2b48c") ("Outline Level 6" "light green" "color-6" "#90ee90") ("Outline Level 7" "coral" "color-7" "#ff7f50") ("Outline Level 8" "wheat" "color-8" "#f5deb3"))))
 ;;------------------------------------------------------------------------------
 ;;; Constants: Colors
 ;;------------------------------------------------------------------------------
 
-(setq color-foreground "#bbc2cf"        ; white
-      color-background "#09151b"        ; dark gray
-      color-cursor "#eeee22"            ; yellow
-      color-paren "#ffff33"             ; bright yellow
-      color-mouse "#ffffff"             ; white
-      color-1 "goldenrod"
-      color-2 "light goldenrod"
-      color-3 "yellow green"
-      color-4 "light salmon"
-      color-5 "tan"
-      color-6 "light green"
-      color-7 "coral"
-      color-8 "wheat")
+(mapc (lambda (x)
+        (let ((color (caddr x))
+              (value (cadddr x)))
+          (when (> (length color) 0)
+            (set (intern color) value))))
+      (cdr data))
+)
 ;; Colors:1 ends here
 
 ;; [[file:init-emacs.org::*Start][Start:1]]
@@ -93,22 +88,22 @@ LEVEL is the indentation level."
 ;; Start:4 ends here
 
 ;; [[file:init-emacs.org::*Start][Start:5]]
-;; lockfile wrapper macro to evaluate code blocks only once
+;; lock-file wrapper macro to evaluate code blocks only once per emacs session
 ;; author: https://www.reddit.com/user/7890yuiop/
-(defmacro when-lockfile-acquired (lockfile &rest body)
+(defmacro when-lock-file-acquired (lock-file &rest body)
   "Evaluate BODY unless another running Emacs instance has done so.
 
-LOCKFILE is a file name to be used as a lock for this BODY code.
+LOCK-FILE is a file name to be used as a lock for this BODY code.
 
 Skips checks if run on Windows."
-  (declare (indent defun))
+  (declare (indent 1))
   (let ((procdir (gensym "procdir")))
     `(let ((,procdir (format "/proc/%d" (emacs-pid))))
        (unless (or (string= system-type "windows-nt")
-                (file-exists-p ,lockfile))
-         (make-symbolic-link ,procdir ,lockfile t))
+                (file-exists-p ,lock-file))
+         (make-symbolic-link ,procdir ,lock-file t))
        (when (or (string= system-type "windows-nt")
-                 (file-equal-p ,lockfile ,procdir))
+                 (file-equal-p ,lock-file ,procdir))
          ,@body))))
 ;; Start:5 ends here
 
@@ -1192,9 +1187,9 @@ Common values:
 ;; Files:5 ends here
 
 ;; [[file:init-emacs.org::*Files][Files:6]]
-;; do not make lock files
-(setq create-lockfiles nil)
-(setq-default create-lockfiles nil)
+;; ;; do not make lock files
+;; (setq create-lock-files nil)
+;; (setq-default create-lock-files nil)
 ;; Files:6 ends here
 
 ;; [[file:init-emacs.org::*Files][Files:7]]
@@ -1274,7 +1269,7 @@ Common values:
 
 ;; [[file:init-emacs.org::*Files][Files:18]]
 ;; desktop history
-(when-lockfile-acquired (expand-file-name "emacs-desktop-history-lockfile"
+(when-lock-file-acquired (expand-file-name "emacs-desktop-history-lock-file"
                                           temporary-file-directory)
   (desktop-save-mode 1)
   (setq desktop-save 'ask-if-new
@@ -1295,7 +1290,7 @@ Common values:
 ;; [[file:init-emacs.org::*Files][Files:19]]
 ;; save minibuffer history
 (when (fboundp 'savehist-mode)
-  (when-lockfile-acquired (expand-file-name "emacs-minibuffer-history-lockfile"
+  (when-lock-file-acquired (expand-file-name "emacs-minibuffer-history-lock-file"
                                             temporary-file-directory)
     (savehist-mode 1)
     (setq savehist-save-minibuffer-history 1
@@ -2582,12 +2577,15 @@ DATA should have been made by `org-outline-overlay-data'."
       (org-update-last-modified-property)))
   (add-hook 'before-save-hook #'before-save-hook--update-last-modified-property)
 
-  ;; (defun after-save-hook--generate-init-emacs-elisp-file ()
-  ;;   "Hook to generate init-emacs.el file on save."
-  ;;   (when (and buffer-file-name
-  ;;              (string= (file-truename buffer-file-name) init-emacs-true-file-name))
-  ;;     (org-babel-generate-elisp-file init-emacs-true-file-name nil t)))
-  ;; (add-hook 'after-save-hook #'after-save-hook--generate-init-emacs-elisp-file :append))
+  (defun after-save-hook--generate-init-emacs-elisp-file ()
+    "Hook to generate init-emacs.el file on save."
+    (when (and buffer-file-name
+               (string= (file-truename buffer-file-name) init-emacs-true-file-name))
+      ;;(org-babel-generate-elisp-file init-emacs-true-file-name nil t)
+      (if (fboundp 'org-babel-tangle-file-async)
+          (org-babel-tangle-file-async init-emacs-true-file-name)
+        (org-babel-tangle-file init-emacs-true-file-name))))
+  (add-hook 'after-save-hook #'after-save-hook--generate-init-emacs-elisp-file :append))
 ;; Configuration:1 ends here
 
 ;; [[file:init-emacs.org::*Agenda][Agenda:1]]
@@ -3269,6 +3267,45 @@ Where BEG and END dates are in one of these formats:
   (interactive)
   (org-babel-tangle '(16)))
 ;; org-babel-tangle-block:1 ends here
+
+;; [[file:init-emacs.org::*org-babel-tangle-file-async][org-babel-tangle-file-async:1]]
+;;------------------------------------------------------------------------------
+;;;; Org Mode: Functions: org-babel-tangle-file-async
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Org Mode: Functions: org-babel-tangle-file-async")
+
+(defun org-babel-tangle-file-async (file &optional target-file lang-re attempt)
+  "Asynchronous version of `org-babel-tangle-file'.
+
+ATTEMPT is used internally to determine how many tangle attempts have been made."
+  (interactive)
+  (let ((attempt (if attempt (1+ attempt) 1))
+        (lock-file (expand-file-name "emacs-tangle-file-async-lock-file"
+                                     temporary-file-directory))
+        (run-file (expand-file-name "emacs-tangle-file-async-run-file"
+                                    temporary-file-directory)))
+    (if (file-exists-p lock-file)
+        (progn
+          (message "Tangle running: %s" file)
+          (when (not (file-exists-p run-file))
+            (make-empty-file run-file)))
+      (progn
+        (message "Tangle started: %s" file)
+        (make-empty-file lock-file)
+        (eval
+         `(async-spinner
+           (lambda ()
+             (require 'ob-tangle)
+             (when (not (file-exists-p ,run-file))
+               (make-empty-file ,run-file))
+             (while (file-exists-p ,run-file)
+               (delete-file ,run-file)
+               (org-babel-tangle-file ,file ,target-file ,lang-re)))
+           (lambda (result)
+             (message "Tangle finished: %s" ,file)
+             (delete-file ,lock-file))))))))
+;; org-babel-tangle-file-async:1 ends here
 
 ;; [[file:init-emacs.org::*org-copy-tangled-sections][org-copy-tangled-sections:1]]
 ;;------------------------------------------------------------------------------
@@ -7387,6 +7424,7 @@ Fails quietly if file does not exist."
 
 (unless (fboundp 'with-eval-after-load)
   (defmacro with-eval-after-load (file &rest body)
+    (declare (indent 1))
     `(eval-after-load ,file
        `(funcall (function ,(lambda () ,@body))))))
 ;; with-eval-after-load:1 ends here
@@ -7498,6 +7536,7 @@ If an error occurs when loading, report it and add FILE to
     "Like `save-excursion', but also save and restore the mark state.
 
 This macro does what `save-excursion' did before Emacs 25.1."
+    (declare (indent 0))
     (let ((saved-marker-sym (make-symbol "saved-marker")))
       `(let ((,saved-marker-sym (save-mark-and-excursion--save)))
          (unwind-protect
@@ -9925,6 +9964,7 @@ others appropriately."
 
 (defmacro with-time (&rest body)
   "Return the time it takes to evaluate BODY."
+  (declare (indent 0))
   `(let ((time (current-time)))
      ,@body
      (let ((duration (float-time (time-since time))))
@@ -9976,6 +10016,7 @@ others appropriately."
 
 (defmacro time (&rest body)
   "Return the time it takes (in seconds) to evaluate BODY."
+  (declare (indent 0))
   `(let ((time (current-time)))
      ,@body
      (format "%.06f" (float-time (time-since time)))))
@@ -14094,6 +14135,27 @@ USING is the remaining peg."
 
 (use-package async
   :straight t)
+  ;; :config
+  ;; ;; lock-file wrapper macro to evaluate code blocks synchronously using an async task
+  ;; (defmacro async-start-with-lock-file (lock-file start-func &optional finish-func)
+  ;;   "Evaluate BODY using LOCK-FILE to prevent simultaneous calls.
+
+  ;;   LOCK-FILE is a file name to be used as a lock.  If another
+  ;;   process is currently using the lock, this process will wait
+  ;;   until it is released before running."
+  ;;   (declare (indent 1))
+  ;;   (eval
+  ;;    `(async-start
+  ;;      (lambda ()
+  ;;        (while (file-exists-p ,lock-file)
+  ;;          (message "Sleeping")
+  ;;          (sleep-for 1))
+  ;;        (make-empty-file ,lock-file)
+  ;;        (condition-case nil
+  ;;            (funcall ,start-func)
+  ;;          (t
+  ;;           (delete-file ,lock-file))))
+  ;;      ,finish-func))))
 ;; async:1 ends here
 
 ;; [[file:init-emacs.org::*auto-compile][auto-compile:1]]
@@ -20223,39 +20285,14 @@ to the current ERC buffer."
 ;; Aliases:1 ends here
 
 ;; [[file:init-emacs.org::*General][General:1]]
-(let ((data '#("
-    General aliases for functions that do not have bindings or hard to remember
-    ones.
-
-    #+BEGIN_SRC emacs-lisp :var data=aliases-general
-      ;;------------------------------------------------------------------------------
-      ;;; Aliases: General
-      ;;------------------------------------------------------------------------------
-
-      (init-message 2 \"Aliases: General\")
-
-      (let ((aliases '(
-                       (lml . list-matching-lines)
-                       (qrr . query-replace-regexp)
-                       (rb . revert-buffer)
-                       (rxb . regexp-builder)
-                       )))
-        (mapc (lambda (x) (defalias (car x) (cdr x))) aliases))
-    #+END_SRC
-" 0 92 (fontified t) 92 116 (fontified t font-lock-fontified t font-lock-multiline t face org-block-begin-line) 116 144 (fontified t font-lock-fontified t font-lock-multiline t face org-block-begin-line) 144 145 (fontified t font-lock-fontified t font-lock-multiline t face org-block-begin-line help-echo nil) 145 151 (fontified t font-lock-fontified t font-lock-multiline t face (org-block) help-echo nil src-block t) 151 153 (fontified t font-lock-fontified t font-lock-multiline t face (font-lock-comment-delimiter-face org-block) help-echo nil src-block t) 153 232 (fontified t font-lock-fontified t font-lock-multiline t face (font-lock-comment-face org-block) help-echo nil src-block t) 232 238 (fontified t font-lock-fontified t font-lock-multiline t face (org-block) help-echo nil src-block t) 238 242 (fontified t font-lock-fontified t font-lock-multiline t face (font-lock-comment-delimiter-face org-block) help-echo nil src-block t) 242 259 (fontified t font-lock-fontified t font-lock-multiline t face (font-lock-comment-face org-block) help-echo nil src-block t) 259 265 (fontified t font-lock-fontified t font-lock-multiline t face (org-block) help-echo nil src-block t) 265 267 (fontified t font-lock-fontified t font-lock-multiline t face (font-lock-comment-delimiter-face org-block) help-echo nil src-block t) 267 346 (fontified t font-lock-fontified t font-lock-multiline t face (font-lock-comment-face org-block) help-echo nil src-block t) 346 369 (fontified t font-lock-fontified t font-lock-multiline t face (org-block) help-echo nil src-block t) 369 387 (fontified t font-lock-fontified t font-lock-multiline t face (font-lock-string-face org-block) help-echo nil src-block t) 387 397 (fontified t font-lock-fontified t font-lock-multiline t face (org-block) help-echo nil src-block t) 397 400 (fontified t font-lock-fontified t font-lock-multiline t face (font-lock-keyword-face org-block) help-echo nil src-block t) 400 649 (fontified t font-lock-fontified t font-lock-multiline t face (org-block) help-echo nil src-block t) 649 655 (fontified t font-lock-fontified t font-lock-multiline t face (font-lock-keyword-face org-block) help-echo nil src-block t) 655 661 (fontified t font-lock-fontified t font-lock-multiline t face (org-block) help-echo nil src-block t) 661 669 (fontified t font-lock-fontified t font-lock-multiline t face (font-lock-keyword-face org-block) help-echo nil src-block t) 669 698 (fontified t font-lock-fontified t font-lock-multiline t face (org-block) src-block t) 698 711 (fontified nil font-lock-fontified t font-lock-multiline t face org-block-end-line) 711 712 (fontified nil face org-block-end-line))))
+(let ((data '(("Alias" "Function") ("lml" "list-matching-lines") ("qrr" "query-replace-regexp") ("rb" "revert-buffer") ("rxb" "regexp-builder"))))
 ;;------------------------------------------------------------------------------
 ;;; Aliases: General
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Aliases: General")
 
-(let ((aliases '(
-                 (lml . list-matching-lines)
-                 (qrr . query-replace-regexp)
-                 (rb . revert-buffer)
-                 (rxb . regexp-builder)
-                 )))
-  (mapc (lambda (x) (defalias (car x) (cdr x))) aliases))
+(mapc (lambda (x) (defalias (intern (car x)) (intern (cadr x)))) (cdr data))
 )
 ;; General:1 ends here
 
@@ -20305,7 +20342,7 @@ to the current ERC buffer."
 
 ;; start emacs server
 (when (fboundp 'server-start-maybe)
-  (when-lockfile-acquired (expand-file-name "emacs-server-lockfile"
+  (when-lock-file-acquired (expand-file-name "emacs-server-lock-file"
                                             temporary-file-directory)
     (server-start-maybe)))
 ;; Start Emacs Server:1 ends here
