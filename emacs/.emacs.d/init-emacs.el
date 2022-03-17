@@ -25,7 +25,7 @@
 ;; This file was generated from init-emacs.org and should not be edited
 ;; manually.
 ;;
-;; init-emacs.org => init-emacs.el => init-emacs.elc (optionally)
+;; init-emacs.org => init-emacs.el
 ;;==============================================================================
 
 ;;==============================================================================

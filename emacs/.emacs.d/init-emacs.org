@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-03-16 17:03 (kyle)>
+  #+TIMESTAMP: <2022-03-16 20:00 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -361,7 +361,7 @@
     ;; This file was generated from init-emacs.org and should not be edited
     ;; manually.
     ;;
-    ;; init-emacs.org => init-emacs.el => init-emacs.elc (optionally)
+    ;; init-emacs.org => init-emacs.el
     ;;==============================================================================
 
     ;;==============================================================================

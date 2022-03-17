@@ -1210,6 +1210,8 @@ alias cdrh="cd /root"
 alias cdc="cd \${HOME}/config"
 #        cdcc                    cd ~/config/custom/HOSTNAME
 alias cdcc="cd \${HOME}/config/custom/\$(uname -n)"
+#        cdcem                   cd ~/config/emacs/.emacs.d
+alias cdcem="cd \${HOME}/config/emacs/.emacs.d"
 #        cdcp                    cd ~/config-private
 alias cdcp="cd \${HOME}/config-private"
 #        cdem                    cd ~/.emacs.d
