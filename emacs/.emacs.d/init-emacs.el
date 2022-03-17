@@ -16263,6 +16263,19 @@ and 5 is most favorite.  0 will unset the rating."
   (persistent-scratch-setup-default))
 ;; persistent-scratch:1 ends here
 
+;; [[file:init-emacs.org::*pocket-reader][pocket-reader:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: pocket-reader
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Packages: pocket-reader")
+
+(use-package pocket-reader
+  :straight t
+  :custom
+  (pocket-reader-archive-on-open nil))
+;; pocket-reader:1 ends here
+
 ;; [[file:init-emacs.org::*popper][popper:1]]
 ;;------------------------------------------------------------------------------
 ;;; Modules: popper

@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-03-16 20:00 (kyle)>
+  #+TIMESTAMP: <2022-03-17 17:16 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -23682,6 +23682,24 @@
       ;;       :init
       ;;       (add-hook 'diary-display-hook #'sort-diary-entries)
       ;;       (add-hook 'diary-display-hook #'fancy-schedule-display-desk-calendar :append))))
+    #+END_SRC
+
+*** pocket-reader
+    :PROPERTIES:
+    :CUSTOM_ID: packages-pocket-reader
+    :END:
+
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Packages: pocket-reader
+      ;;------------------------------------------------------------------------------
+
+      (init-message 2 "Packages: pocket-reader")
+
+      (use-package pocket-reader
+        :straight t
+        :custom
+        (pocket-reader-archive-on-open nil))
     #+END_SRC
 
 *** popper
