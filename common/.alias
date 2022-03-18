@@ -1609,8 +1609,10 @@ alias rddf="rdesktop -u kyle -f -z -a16 dozer"
 #
 # ssh
 #
-#        sshkeygen               generate rsa ssh keys
-alias sshkeygen="ssh-keygen -t rsa -b 4096"
+#        sshkeygenrsa            generate rsa ssh keys
+alias sshkeygenrsa="ssh-keygen -t rsa -b 4096"
+#        sshkeygened             generate rsa ssh keys
+alias sshkeygened="ssh-keygen -t ed25519"
 #! #        sshkeycp                copy ssh key to remote host
 #! alias sshkeycp="
 #!     echo -n 'Host to copy ssh key to: ' ; read a
