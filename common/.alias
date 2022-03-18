@@ -1766,6 +1766,8 @@ alias pingairave="ping 192.168.17.1"
 alias pingfirewall="ping 192.168.1.1"
 #        pingbridge              ping bridge
 alias pingbridge="ping 192.168.1.2"
+#        pingsynology            ping synology
+alias pingsynology="ping 192.168.1.6"
 #        pingmorpheus            ping morpheus
 alias pingmorpheus="ping 192.168.1.10"
 #        pingneo                 ping neo
