@@ -8679,6 +8679,40 @@ If less than a page away, jump to the beginning of the buffer."
 (bind-keys* ([remap scroll-down-command] . scroll-down-command-enhanced))
 ;; scroll-down-command-enhanced:1 ends here
 
+;; [[file:init-emacs.org::*downcase-region-enhanced][downcase-region-enhanced:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Emacs Functions: downcase-region-enhanced
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Emacs Functions: downcase-region-enhanced")
+
+(defun downcase-region-enhanced (&optional beg end)
+  "Convert region, or current line, to lower case."
+  (interactive "*")
+  (let ((beg (or beg (if (use-region-p) (region-beginning) (line-beginning-position))))
+        (end (or end (if (use-region-p) (region-end) (line-end-position)))))
+    (deactivate-mark)
+    (downcase-region beg end)))
+(bind-keys* ("C-x C-l" . downcase-region-enhanced))
+;; downcase-region-enhanced:1 ends here
+
+;; [[file:init-emacs.org::*upcase-region-enhanced][upcase-region-enhanced:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Emacs Functions: upcase-region-enhanced
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Emacs Functions: upcase-region-enhanced")
+
+(defun upcase-region-enhanced (&optional beg end)
+  "Convert region, or current line, to upper case."
+  (interactive "*")
+  (let ((beg (or beg (if (use-region-p) (region-beginning) (line-beginning-position))))
+        (end (or end (if (use-region-p) (region-end) (line-end-position)))))
+    (deactivate-mark)
+    (upcase-region beg end)))
+(bind-keys* ("C-x C-u" . upcase-region-enhanced))
+;; upcase-region-enhanced:1 ends here
+
 ;; [[file:init-emacs.org::*downcase-word-enhanced][downcase-word-enhanced:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: downcase-word-enhanced

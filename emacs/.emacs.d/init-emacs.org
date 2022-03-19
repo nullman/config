@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-03-19 12:50 (kyle)>
+  #+TIMESTAMP: <2022-03-19 17:05 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -12723,6 +12723,50 @@
                (goto-char (point-min))))
             (move-to-column col)))
         (bind-keys* ([remap scroll-down-command] . scroll-down-command-enhanced))
+      #+END_SRC
+
+***** downcase-region-enhanced
+      :PROPERTIES:
+      :CUSTOM_ID: functions-emacs-functions-downcase-region-enhanced
+      :END:
+
+      #+BEGIN_SRC emacs-lisp
+        ;;------------------------------------------------------------------------------
+        ;;;; Functions: Emacs Functions: downcase-region-enhanced
+        ;;------------------------------------------------------------------------------
+
+        (init-message 3 "Functions: Emacs Functions: downcase-region-enhanced")
+
+        (defun downcase-region-enhanced (&optional beg end)
+          "Convert region, or current line, to lower case."
+          (interactive "*")
+          (let ((beg (or beg (if (use-region-p) (region-beginning) (line-beginning-position))))
+                (end (or end (if (use-region-p) (region-end) (line-end-position)))))
+            (deactivate-mark)
+            (downcase-region beg end)))
+        (bind-keys* ("C-x C-l" . downcase-region-enhanced))
+      #+END_SRC
+
+***** upcase-region-enhanced
+      :PROPERTIES:
+      :CUSTOM_ID: functions-emacs-functions-upcase-region-enhanced
+      :END:
+
+      #+BEGIN_SRC emacs-lisp
+        ;;------------------------------------------------------------------------------
+        ;;;; Functions: Emacs Functions: upcase-region-enhanced
+        ;;------------------------------------------------------------------------------
+
+        (init-message 3 "Functions: Emacs Functions: upcase-region-enhanced")
+
+        (defun upcase-region-enhanced (&optional beg end)
+          "Convert region, or current line, to upper case."
+          (interactive "*")
+          (let ((beg (or beg (if (use-region-p) (region-beginning) (line-beginning-position))))
+                (end (or end (if (use-region-p) (region-end) (line-end-position)))))
+            (deactivate-mark)
+            (upcase-region beg end)))
+        (bind-keys* ("C-x C-u" . upcase-region-enhanced))
       #+END_SRC
 
 ***** downcase-word-enhanced
