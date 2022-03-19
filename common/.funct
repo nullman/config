@@ -967,12 +967,10 @@ sshkeycp() {
         echo "Usage: $0 [USER@]SERVER"
     else
         ssh "$1" '[[ ! -d .ssh ]] && mkdir -p .ssh && chmod 700 .ssh'
-        [[ -f "${HOME}/.ssh/id_dsa.pub" ]] && \
-            cat "${HOME}/.ssh/id_dsa.pub" | ssh "$1" '/bin/cat >> .ssh/authorized_keys ; \
-          /bin/chmod 600 .ssh/authorized_keys'
-        [[ -f "${HOME}/.ssh/id_rsa.pub" ]] && \
-            cat "${HOME}/.ssh/id_rsa.pub" | ssh "$1" '/bin/cat >> .ssh/authorized_keys ; \
-          /bin/chmod 600 .ssh/authorized_keys'
+        find "${HOME}/.ssh/" -name "*.pub" | while read file ; do
+            cat "${file}" | ssh "$1" '/bin/cat >> .ssh/authorized_keys ; \
+                /bin/chmod 600 .ssh/authorized_keys'
+        done
     fi
 }
 #!# this version does not work on macos

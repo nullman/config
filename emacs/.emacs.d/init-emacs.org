@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-03-17 17:16 (kyle)>
+  #+TIMESTAMP: <2022-03-19 12:50 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -12078,11 +12078,48 @@
 
         (init-message 3 "Functions: Emacs Functions: sort-all-lines")
 
-        (defun sort-all-lines ()
-          "Sort all lines in current buffer."
+        (defun sort-all-lines (&optional reverse)
+          "Sort all lines in current buffer.
+
+        If REVERSE is non-nil, then sort in reverse order."
           (interactive "*")
           (save-mark-and-excursion
-            (sort-lines nil (point-min) (point-max))))
+            (sort-lines reverse (point-min) (point-max))))
+      #+END_SRC
+
+***** sort-lines-removing-duplicates
+      :PROPERTIES:
+      :CUSTOM_ID: functions-emacs-functions-sort-lines-removing-duplicates
+      :END:
+
+      #+BEGIN_SRC emacs-lisp
+        ;;------------------------------------------------------------------------------
+        ;;;; Functions: Emacs Functions: sort-lines-removing-duplicates
+        ;;------------------------------------------------------------------------------
+
+        (init-message 3 "Functions: Emacs Functions: sort-lines-removing-duplicates")
+
+        (defun sort-lines-removing-duplicates (&optional reverse beg end)
+          "Call `sort-lines' to sort lines in region or between BEG and END,
+        then remove all duplicate lines.
+
+        If REVERSE is non-nil, then sort in reverse order."
+          (interactive "*P\nr")
+          (sort-lines reverse beg end)
+          (save-mark-and-excursion
+            (goto-char end)
+            (let ((prev (buffer-substring-no-properties
+                             (line-beginning-position)
+                             (line-end-position))))
+              (while (and (not (bobp))
+                          (>= (point) beg))
+                (forward-line -1)
+                (let ((line (buffer-substring-no-properties
+                             (line-beginning-position)
+                             (line-end-position))))
+                  (when (string= prev line)
+                    (delete-region (line-beginning-position) (1+ (line-end-position))))
+                  (setq prev line))))))
       #+END_SRC
 
 ***** delete-word

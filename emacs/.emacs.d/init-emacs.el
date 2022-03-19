@@ -8230,12 +8230,44 @@ DIR defaults to `emacs-home-dir' or `~/.emacs.d'."
 
 (init-message 3 "Functions: Emacs Functions: sort-all-lines")
 
-(defun sort-all-lines ()
-  "Sort all lines in current buffer."
+(defun sort-all-lines (&optional reverse)
+  "Sort all lines in current buffer.
+
+If REVERSE is non-nil, then sort in reverse order."
   (interactive "*")
   (save-mark-and-excursion
-    (sort-lines nil (point-min) (point-max))))
+    (sort-lines reverse (point-min) (point-max))))
 ;; sort-all-lines:1 ends here
+
+;; [[file:init-emacs.org::*sort-lines-removing-duplicates][sort-lines-removing-duplicates:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Emacs Functions: sort-lines-removing-duplicates
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Emacs Functions: sort-lines-removing-duplicates")
+
+(defun sort-lines-removing-duplicates (&optional reverse beg end)
+  "Call `sort-lines' to sort lines in region or between BEG and END,
+then remove all duplicate lines.
+
+If REVERSE is non-nil, then sort in reverse order."
+  (interactive "*P\nr")
+  (sort-lines reverse beg end)
+  (save-mark-and-excursion
+    (goto-char end)
+    (let ((prev (buffer-substring-no-properties
+                     (line-beginning-position)
+                     (line-end-position))))
+      (while (and (not (bobp))
+                  (>= (point) beg))
+        (forward-line -1)
+        (let ((line (buffer-substring-no-properties
+                     (line-beginning-position)
+                     (line-end-position))))
+          (when (string= prev line)
+            (delete-region (line-beginning-position) (1+ (line-end-position))))
+          (setq prev line))))))
+;; sort-lines-removing-duplicates:1 ends here
 
 ;; [[file:init-emacs.org::*delete-word][delete-word:1]]
 ;;------------------------------------------------------------------------------
