@@ -14218,7 +14218,7 @@ USING is the remaining peg."
   (add-hook 'kill-emacs-hook #'custom-kill-emacs-hook-write-abbrev-file))
 ;; abbrev-mode:1 ends here
 
-;; [[file:init-emacs.org::*ag][ag:1]]
+;; [[file:init-emacs.org::*ag==========================================================================][ag==========================================================================:1]]
 ;;------------------------------------------------------------------------------
 ;;; Modules: ag
 ;;------------------------------------------------------------------------------
@@ -14229,7 +14229,7 @@ USING is the remaining peg."
   :straight t
   :commands (ag)
   :custom (ag-arguments (list "--smart-case" "--stats")))
-;; ag:1 ends here
+;; ag==========================================================================:1 ends here
 
 ;; [[file:init-emacs.org::*alert][alert:1]]
 ;;------------------------------------------------------------------------------
@@ -14323,6 +14323,22 @@ USING is the remaining peg."
   (auto-compile-on-load-mode 1)
   (auto-compile-on-save-mode 1))
 ;; auto-compile:1 ends here
+
+;; [[file:init-emacs.org::*auto-dictionary][auto-dictionary:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: auto-dictionary
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Packages: auto-dictionary")
+
+(use-package auto-dictionary
+  :straight t
+  :hook (flyspell-mode . auto-dictionary-mode-hook)
+  :config
+  (defun auto-dictionary-mode-hook ()
+    "Turn on `auto-dictionary-mode'."
+    (auto-dictionary-mode 1)))
+;; auto-dictionary:1 ends here
 
 ;; [[file:init-emacs.org::*avy][avy:1]]
 ;;------------------------------------------------------------------------------

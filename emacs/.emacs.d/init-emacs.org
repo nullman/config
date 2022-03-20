@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-03-19 23:31 (kyle)>
+  #+TIMESTAMP: <2022-03-20 13:59 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -20378,7 +20378,7 @@
       ;;   (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
     #+END_SRC
 
-*** ag
+*** ag==========================================================================
     :PROPERTIES:
     :CUSTOM_ID: modules-ag
     :END:
@@ -20592,6 +20592,27 @@
         :init
         (auto-compile-on-load-mode 1)
         (auto-compile-on-save-mode 1))
+    #+END_SRC
+
+*** auto-dictionary
+    :PROPERTIES:
+    :CUSTOM_ID: packages-auto-dictionary
+    :END:
+
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Packages: auto-dictionary
+      ;;------------------------------------------------------------------------------
+
+      (init-message 2 "Packages: auto-dictionary")
+
+      (use-package auto-dictionary
+        :straight t
+        :hook (flyspell-mode . auto-dictionary-mode-hook)
+        :config
+        (defun auto-dictionary-mode-hook ()
+          "Turn on `auto-dictionary-mode'."
+          (auto-dictionary-mode 1)))
     #+END_SRC
 
 *** avy
@@ -27366,6 +27387,81 @@
       ;;   :defines (flycheck-mode)
       ;;   :config
       ;;   (add-hook 'kotlin-mode-hook #'flycheck-mode))
+    #+END_SRC
+
+*** +LaTeX+
+    :PROPERTIES:
+    :CUSTOM_ID: modes-latex
+    :END:
+
+    #+BEGIN_SRC emacs-lisp :tangle no
+      ;; ;;------------------------------------------------------------------------------
+      ;; ;;; Modes: LaTeX
+      ;; ;;------------------------------------------------------------------------------
+
+      ;; (init-message 2 "Modes: LaTeX")
+
+      ;; ;;------------------------------------------------------------------------------
+      ;; ;;; Packages: pdf-tools
+      ;; ;;------------------------------------------------------------------------------
+
+      ;; (init-message 3 "Packages: pdf-tools")
+
+      ;; (use-package pdf-tools
+      ;;   :straight t
+      ;;   :bind (:map pdf-view-mode-map
+      ;;               ("C-s" . isearch-forward-regexp)
+      ;;               ("C-r" . isearch-backward-regexp))
+      ;;   ;; :hook (pdf-view-mode . bms/pdf-midnite-amber) ; turn on midnight-mode for pdfs
+      ;;   :config
+      ;;   (pdf-tools-install))
+
+      ;; ;;------------------------------------------------------------------------------
+      ;; ;;; Packages: auctex-latexmk
+      ;; ;;------------------------------------------------------------------------------
+
+      ;; (init-message 3 "Packages: auctex-latexmk")
+
+      ;; (use-package auctex-latexmk
+      ;;   :straight t
+      ;;   :custom
+      ;;   (auctex-latexmk-inherit-TeX-PDF-mode t)
+      ;;   :config
+      ;;   ;;(setq-default TeX-master nil)
+      ;;   (auctex-latexmk-setup))
+
+      ;; ;;------------------------------------------------------------------------------
+      ;; ;;; Packages: company-acutex
+      ;; ;;------------------------------------------------------------------------------
+
+      ;; (init-message 3 "Packages: company-acutex")
+
+      ;; (use-package company-auctex
+      ;;   :straight t
+      ;;   :after (company)
+      ;;   :init (company-auctex-init))
+
+      ;; ;;------------------------------------------------------------------------------
+      ;; ;;; Packages: tex
+      ;; ;;------------------------------------------------------------------------------
+
+      ;; (init-message 3 "Packages: tex")
+
+      ;; (use-package tex
+      ;;   :straight (:type built-in)
+      ;;   :mode ("\\.tex\\'" . latex-mode)
+      ;;   :custom
+      ;;   (TeX-auto-save t)
+      ;;   (TeX-parse-self t)
+      ;;   (TeX-source-correlate-mode t)
+      ;;   (TeX-source-correlate-method 'synctex)
+      ;;   (reftex-plug-into-AUCTeX t)
+      ;;   (TeX-view-program-selection '((output-pdf "PDF Tools")))
+      ;;   (TeX-source-correlate-start-server t)
+      ;;   :config
+      ;;   ;;(setq-default TeX-master "paper.tex")
+      ;;   ;; update PDF buffers after successful LaTeX run
+      ;;   (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer))
     #+END_SRC
 
 *** Ledger Mode
