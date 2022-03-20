@@ -1327,6 +1327,7 @@ Common values:
 
 ;; [[file:init-emacs.org::*Buffers and Windows][Buffers and Windows:8]]
 ;; turn off line wrapping
+(setq-default truncate-lines t)
 (toggle-truncate-lines 1)
 ;; Buffers and Windows:8 ends here
 
