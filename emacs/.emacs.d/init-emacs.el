@@ -16276,7 +16276,21 @@ and 5 is most favorite.  0 will unset the rating."
           ("C-M-<" . mc/unmark-previous-like-this)))
 ;; multiple-cursors:1 ends here
 
-;; [[file:init-emacs.org::*neotree][neotree:1]]
+;; [[file:init-emacs.org::*mwim][mwim:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: mwim
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Packages: mwim")
+
+(use-package mwim
+  :straight t
+  :bind* (([remap move-beginning-of-line] . mwim-beginning-of-line-or-code)
+          ([remap move-end-of-line] . mwim-end-of-line-or-code)
+          ("<C-tab>" . mwim)))
+;; mwim:1 ends here
+
+;; [[file:init-emacs.org::*neotree=====================================================================][neotree=====================================================================:1]]
 ;;------------------------------------------------------------------------------
 ;;; Modules: neotree
 ;;------------------------------------------------------------------------------
@@ -16302,7 +16316,7 @@ and 5 is most favorite.  0 will unset the rating."
              (not (eq (current-buffer) (get-buffer neo-buffer-name))))
         (neo-global--select-window)
       (neotree-toggle))))
-;; neotree:1 ends here
+;; neotree=====================================================================:1 ends here
 
 ;; [[file:init-emacs.org::*occur][occur:1]]
 ;;------------------------------------------------------------------------------

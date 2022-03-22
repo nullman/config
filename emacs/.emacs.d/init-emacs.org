@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-03-21 20:07 (kyle)>
+  #+TIMESTAMP: <2022-03-22 15:05 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -23450,7 +23450,30 @@
                 ("C-M-<" . mc/unmark-previous-like-this)))
     #+END_SRC
 
-*** neotree
+*** mwim
+    :PROPERTIES:
+    :CUSTOM_ID: packages-mwim
+    :END:
+
+    Move Where I Mean
+
+    Switch between the beginning/end of line or code.
+
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Packages: mwim
+      ;;------------------------------------------------------------------------------
+
+      (init-message 2 "Packages: mwim")
+
+      (use-package mwim
+        :straight t
+        :bind* (([remap move-beginning-of-line] . mwim-beginning-of-line-or-code)
+                ([remap move-end-of-line] . mwim-end-of-line-or-code)
+                ("<C-tab>" . mwim)))
+    #+END_SRC
+
+*** neotree=====================================================================
     :PROPERTIES:
     :CUSTOM_ID: modules-neotree
     :END:
