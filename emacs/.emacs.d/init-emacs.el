@@ -15078,7 +15078,7 @@ Uses `ispell--run-on-word' to spell check word."
 
 (use-package epoch
   :load-path (lambda () (file-truename (expand-file-name "epoch.el" local-modules-dir)))
-  :commands (epoch-menu time-to-epoch epoch-to-time))
+  :commands (epoch time-to-epoch epoch-to-time))
 ;; epoch:1 ends here
 
 ;; [[file:init-emacs.org::*ert][ert:1]]
