@@ -2442,9 +2442,10 @@ DATA should have been made by `org-outline-overlay-data'."
   (org-ellipsis " ")
   ;; return follows links
   ;;(org-return-follows-link t)
-  ;; HOME toggles between header start and line start
-  ;; END toggles between header end and end of tags
-  (org-special-ctrl-a/e t)
+  ;; reverse `org-beginning-of-line' and `org-end-of-line' toggle order
+  ;; HOME toggles between line start and header start
+  ;; END toggles between end of tags and header end
+  (org-special-ctrl-a/e 'reversed)
   ;; show and error on invisible edits
   (org-catch-invisible-edits 'show-and-error)
   ;; use todo key selection
@@ -14323,22 +14324,6 @@ USING is the remaining peg."
   (auto-compile-on-load-mode 1)
   (auto-compile-on-save-mode 1))
 ;; auto-compile:1 ends here
-
-;; [[file:init-emacs.org::*auto-dictionary][auto-dictionary:1]]
-;;------------------------------------------------------------------------------
-;;; Packages: auto-dictionary
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Packages: auto-dictionary")
-
-(use-package auto-dictionary
-  :straight t
-  :hook (flyspell-mode . auto-dictionary-mode-hook)
-  :config
-  (defun auto-dictionary-mode-hook ()
-    "Turn on `auto-dictionary-mode'."
-    (auto-dictionary-mode 1)))
-;; auto-dictionary:1 ends here
 
 ;; [[file:init-emacs.org::*avy][avy:1]]
 ;;------------------------------------------------------------------------------

@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-03-22 15:05 (kyle)>
+  #+TIMESTAMP: <2022-03-22 22:00 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -3604,9 +3604,10 @@
         (org-ellipsis " ")
         ;; return follows links
         ;;(org-return-follows-link t)
-        ;; HOME toggles between header start and line start
-        ;; END toggles between header end and end of tags
-        (org-special-ctrl-a/e t)
+        ;; reverse `org-beginning-of-line' and `org-end-of-line' toggle order
+        ;; HOME toggles between line start and header start
+        ;; END toggles between end of tags and header end
+        (org-special-ctrl-a/e 'reversed)
         ;; show and error on invisible edits
         (org-catch-invisible-edits 'show-and-error)
         ;; use todo key selection
@@ -20594,25 +20595,27 @@
         (auto-compile-on-save-mode 1))
     #+END_SRC
 
-*** auto-dictionary
+*** +auto-dictionary+
     :PROPERTIES:
     :CUSTOM_ID: packages-auto-dictionary
     :END:
 
-    #+BEGIN_SRC emacs-lisp
-      ;;------------------------------------------------------------------------------
-      ;;; Packages: auto-dictionary
-      ;;------------------------------------------------------------------------------
+    Automatic dictionary switcher for flyspell.
 
-      (init-message 2 "Packages: auto-dictionary")
+    #+BEGIN_SRC emacs-lisp :tangle no
+      ;; ;;------------------------------------------------------------------------------
+      ;; ;;; Packages: auto-dictionary
+      ;; ;;------------------------------------------------------------------------------
 
-      (use-package auto-dictionary
-        :straight t
-        :hook (flyspell-mode . auto-dictionary-mode-hook)
-        :config
-        (defun auto-dictionary-mode-hook ()
-          "Turn on `auto-dictionary-mode'."
-          (auto-dictionary-mode 1)))
+      ;; (init-message 2 "Packages: auto-dictionary")
+
+      ;; (use-package auto-dictionary
+      ;;   :straight t
+      ;;   :hook (flyspell-mode . auto-dictionary-mode-hook)
+      ;;   :config
+      ;;   (defun auto-dictionary-mode-hook ()
+      ;;     "Turn on `auto-dictionary-mode'."
+      ;;     (auto-dictionary-mode 1)))
     #+END_SRC
 
 *** avy
