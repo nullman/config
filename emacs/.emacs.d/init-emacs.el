@@ -1985,11 +1985,11 @@ KEYMAP defaults to `override-global-map'."
   (bind-keys ("C-M-'" . imenu))
 
   ;; isearch
-  ;; regular expression searches
-  (when (fboundp 'isearch-forward-regexp)
-    (bind-keys ("C-S" . isearch-forward-regexp)))
-  (when (fboundp 'isearch-backward-regexp)
-    (bind-keys ("C-R" . isearch-backward-regexp)))
+  ;; ;; regular expression searches
+  ;; (when (fboundp 'isearch-forward-regexp)
+  ;;   (bind-keys ("C-S" . isearch-forward-regexp)))
+  ;; (when (fboundp 'isearch-backward-regexp)
+  ;;   (bind-keys ("C-R" . isearch-backward-regexp)))
   ;; activate `occur' from isearch
   (define-key isearch-mode-map (kbd "C-o")
     (lambda ()

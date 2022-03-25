@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-03-22 22:00 (kyle)>
+  #+TIMESTAMP: <2022-03-25 00:24 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -3112,11 +3112,11 @@
         (bind-keys ("C-M-'" . imenu))
 
         ;; isearch
-        ;; regular expression searches
-        (when (fboundp 'isearch-forward-regexp)
-          (bind-keys ("C-S" . isearch-forward-regexp)))
-        (when (fboundp 'isearch-backward-regexp)
-          (bind-keys ("C-R" . isearch-backward-regexp)))
+        ;; ;; regular expression searches
+        ;; (when (fboundp 'isearch-forward-regexp)
+        ;;   (bind-keys ("C-S" . isearch-forward-regexp)))
+        ;; (when (fboundp 'isearch-backward-regexp)
+        ;;   (bind-keys ("C-R" . isearch-backward-regexp)))
         ;; activate `occur' from isearch
         (define-key isearch-mode-map (kbd "C-o")
           (lambda ()
@@ -27436,8 +27436,8 @@
       ;; (use-package pdf-tools
       ;;   :straight t
       ;;   :bind (:map pdf-view-mode-map
-      ;;               ("C-s" . isearch-forward-regexp)
-      ;;               ("C-r" . isearch-backward-regexp))
+      ;;               ("C-s" . isearch-forward)
+      ;;               ("C-r" . isearch-backward))
       ;;   ;; :hook (pdf-view-mode . bms/pdf-midnite-amber) ; turn on midnight-mode for pdfs
       ;;   :config
       ;;   (pdf-tools-install))
