@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-03-25 00:24 (kyle)>
+  #+TIMESTAMP: <2022-03-25 22:47 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -2848,6 +2848,11 @@
           (bind-keys ("C-x rm" . cua-set-rectangle-mark)
                      ("C-M-SPC" . cua-set-rectangle-mark))) ; default: `mark-sexp'
 
+        ;; yank as rectangle
+        (when (fboundp 'yank-as-rectangle)
+          (bind-keys ("C-x r C-y" . yank-as-rectangle)
+                     ("C-M-y" . yank-as-rectangle)))
+
         ;; just one space
         (when (fboundp 'just-one-space)
           (bind-keys ("C-x C-SPC" . just-one-space))) ; default: `pop-global-mark'
@@ -2974,9 +2979,9 @@
         (when (fboundp 'duplicate-line)
           (bind-keys ("C-x C-d" . duplicate-line))) ; default: `list-directory'
 
-        ;; kill ring browser
-        (when (fboundp 'browse-kill-ring)
-          (bind-keys ("C-M-y" . browse-kill-ring)))
+        ;; ;; kill ring browser
+        ;; (when (fboundp 'browse-kill-ring)
+        ;;   (bind-keys ("C-M-y" . browse-kill-ring)))
 
         ;; join line
         ;;(bind-keys ("C-M-j" . join-line))  ; default: `comment-indent-new-line'
@@ -12442,6 +12447,37 @@
         ;;      (paredit-newline)
         ;;      (yank)
         ;;      (exchange-point-and-mark))))
+      #+END_SRC
+
+***** yank-as-rectangle
+      :PROPERTIES:
+      :CUSTOM_ID: functions-emacs-functions-yank-as-rectangle
+      :END:
+
+      #+BEGIN_SRC emacs-lisp :tangle no
+        ;;------------------------------------------------------------------------------
+        ;;;; Functions: Emacs Functions: yank-as-rectangle
+        ;;------------------------------------------------------------------------------
+
+        (init-message 3 "Functions: Emacs Functions: yank-as-rectangle")
+
+        (defun yank-as-rectangle ()
+          "Yank the most recently killed text as a rectangle with upper left corner at point."
+          (interactive "*")
+          (with-temp-buffer
+            (yank)
+            (goto-char (point-min))
+            (rectangle-mark-mode 1)
+            (let ((width 0))
+              (while (not (eobp))
+                (end-of-line)
+                (when (> (current-column) width)
+                  (setq width (current-column)))
+                (forward-line 1))
+              (forward-line 0)
+              (rectangle-right-char width))
+            (kill-rectangle (point-min) (point)))
+          (yank-rectangle))
       #+END_SRC
 
 ***** display-line-numbers-type-toggle

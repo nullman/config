@@ -1726,6 +1726,11 @@ KEYMAP defaults to `override-global-map'."
     (bind-keys ("C-x rm" . cua-set-rectangle-mark)
                ("C-M-SPC" . cua-set-rectangle-mark))) ; default: `mark-sexp'
 
+  ;; yank as rectangle
+  (when (fboundp 'yank-as-rectangle)
+    (bind-keys ("C-x r C-y" . yank-as-rectangle)
+               ("C-M-y" . yank-as-rectangle)))
+
   ;; just one space
   (when (fboundp 'just-one-space)
     (bind-keys ("C-x C-SPC" . just-one-space))) ; default: `pop-global-mark'
@@ -1852,9 +1857,9 @@ KEYMAP defaults to `override-global-map'."
   (when (fboundp 'duplicate-line)
     (bind-keys ("C-x C-d" . duplicate-line))) ; default: `list-directory'
 
-  ;; kill ring browser
-  (when (fboundp 'browse-kill-ring)
-    (bind-keys ("C-M-y" . browse-kill-ring)))
+  ;; ;; kill ring browser
+  ;; (when (fboundp 'browse-kill-ring)
+  ;;   (bind-keys ("C-M-y" . browse-kill-ring)))
 
   ;; join line
   ;;(bind-keys ("C-M-j" . join-line))  ; default: `comment-indent-new-line'
