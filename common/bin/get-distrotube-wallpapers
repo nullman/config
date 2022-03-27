@@ -4,7 +4,7 @@
 #
 # Get images from DistroTube's wallpaper collection.
 #
-# Reference:  https://gitlab.com/dwt1/wallpapers
+# Reference: https://gitlab.com/dwt1/wallpapers
 #
 # Author: Kyle W T Sherman
 #===============================================================================
@@ -16,7 +16,7 @@ baseurl="${domain}/dwt1/wallpapers"
 imageurl="${baseurl}/raw/master"
 dir="/home/data/media/graphic/Backgrounds/DistroTube"
 
-echo "Note:  When fetching all new images, the last one tried will error as it won't exist."
+echo "Note: When fetching all new images, the last one tried will error as it won't exist."
 
 if [[ $# -ne 0 ]] ; then
     # fetch single image

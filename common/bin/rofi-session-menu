@@ -5,7 +5,7 @@
 # Present a Window Manager Session Menu using rofi.
 #
 # Author: Kyle W T Sherman
-# Original Author:  manjaro-openbox-scripts:rofr.sh
+# Original Author: manjaro-openbox-scripts:rofr.sh
 #===============================================================================
 
 set -euo pipefail

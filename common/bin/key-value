@@ -27,8 +27,8 @@ newkey=
 help=0
 case "${op}" in
     select|s|grep|g)
-        query="$@"
-        ;;
+              query="$@"
+              ;;
     insert|i|update|u|replace|p)
         key="$1"
         shift
