@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-03-25 22:47 (kyle)>
+  #+TIMESTAMP: <2022-03-27 08:57 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -1588,15 +1588,26 @@
       (put 'set-goal-column 'disabled nil)
     #+END_SRC
 
-    Sentences and colons should have two spaces after them.
+    Sentences and colons should have one space after them.
 
     #+BEGIN_SRC emacs-lisp
-      (init-message 3 "Sentences and Colons Should Have Two Spaces after Them")
+      (init-message 3 "Sentences and Colons Should Have One Space after Them")
 
-      ;; insert two spaces after a sentence when filling text
-      (setq sentence-end-double-space t)
-      ;; insert two spaces after a colon when filling text
-      (setq colon-double-space t)
+      ;; insert one space after a sentence when filling text
+      (setq sentence-end-double-space nil)
+      ;; insert one space after a colon when filling text
+      (setq colon-double-space nil)
+    #+END_SRC
+
+    +Sentences and colons should have two spaces after them.+
+
+    #+BEGIN_SRC emacs-lisp
+      ;; (init-message 3 "Sentences and Colons Should Have Two Spaces after Them")
+
+      ;; ;; insert two spaces after a sentence when filling text
+      ;; (setq sentence-end-double-space t)
+      ;; ;; insert two spaces after a colon when filling text
+      ;; (setq colon-double-space t)
     #+END_SRC
 
     Highlight matching parenthesis when the cursor is on one of them.
@@ -3082,9 +3093,9 @@
         (when (fboundp 'unfill-paragraph)
           (bind-keys ("M-Q" . unfill-paragraph))) ; default: `fill-paragraph'
 
-        ;; double-space punctuation
-        (when (fboundp 'double-space-punctuation)
-          (bind-keys ("C-M-q" . double-space-punctuation)))
+        ;; ;; double-space punctuation
+        ;; (when (fboundp 'double-space-punctuation)
+        ;;   (bind-keys ("C-M-q" . double-space-punctuation)))
 
         ;; toggle pop-up shell
         (when (and (fboundp 'pop-up-shell) (fboundp 'pop-up-shell-toggle))
@@ -15205,36 +15216,6 @@
             (fill-paragraph nil)))
       #+END_SRC
 
-***** double-space-punctuation
-      :PROPERTIES:
-      :CUSTOM_ID: functions-text-conversion-functions-double-space-punctuation
-      :END:
-
-      #+BEGIN_SRC emacs-lisp
-        ;;------------------------------------------------------------------------------
-        ;;;; Functions: Text Conversion Functions: double-space-punctuation
-        ;;------------------------------------------------------------------------------
-
-        (init-message 3 "Functions: Text Conversion Functions: double-space-punctuation")
-
-        (defun double-space-punctuation (&optional beg end)
-          "Double-space sentence ending punctuation in the current
-        paragraph or selected region."
-          (interactive "*")
-          (save-mark-and-excursion
-            (save-match-data
-              (let ((beg (or beg (and (use-region-p) (region-beginning))))
-                    (end (or end (and (use-region-p) (region-end)))))
-                (unless (and beg end)
-                  (mark-paragraph)
-                  (setq beg (point)
-                        end (mark-marker)))
-                (goto-char beg)
-                (while (and (< (point) end)
-                            (re-search-forward "\\([^[:blank:]][.?!]['\"”)]?\\)[[:blank:]]\\([^[:blank:]]\\)" end :noerror))
-                  (replace-match "\\1  \\2"))))))
-      #+END_SRC
-
 ***** single-space-punctuation
       :PROPERTIES:
       :CUSTOM_ID: functions-text-conversion-functions-single-space-punctuation
@@ -15263,6 +15244,36 @@
                 (while (and (< (point) end)
                             (re-search-forward "\\([^[:blank:]][.?!]['\"”)]?\\)[[:blank:]]\\([^[:blank:]]\\)" end :noerror))
                   (replace-match "\\1 \\2"))))))
+      #+END_SRC
+
+***** double-space-punctuation
+      :PROPERTIES:
+      :CUSTOM_ID: functions-text-conversion-functions-double-space-punctuation
+      :END:
+
+      #+BEGIN_SRC emacs-lisp
+        ;;------------------------------------------------------------------------------
+        ;;;; Functions: Text Conversion Functions: double-space-punctuation
+        ;;------------------------------------------------------------------------------
+
+        (init-message 3 "Functions: Text Conversion Functions: double-space-punctuation")
+
+        (defun double-space-punctuation (&optional beg end)
+          "Double-space sentence ending punctuation in the current
+        paragraph or selected region."
+          (interactive "*")
+          (save-mark-and-excursion
+            (save-match-data
+              (let ((beg (or beg (and (use-region-p) (region-beginning))))
+                    (end (or end (and (use-region-p) (region-end)))))
+                (unless (and beg end)
+                  (mark-paragraph)
+                  (setq beg (point)
+                        end (mark-marker)))
+                (goto-char beg)
+                (while (and (< (point) end)
+                            (re-search-forward "\\([^[:blank:]][.?!]['\"”)]?\\)[[:blank:]]\\([^[:blank:]]\\)" end :noerror))
+                  (replace-match "\\1  \\2"))))))
       #+END_SRC
 
 *** Text Inserting Functions
@@ -27572,11 +27583,6 @@
       (init-message 2 "Modes: Lisp Mode")
 
       (defun custom-lisp-mode-hook ()
-        ;; double-space punctuation
-        (when (fboundp 'double-space-punctuation)
-          (bind-keys :map lisp-mode-map
-                     ("C-M-q" . double-space-punctuation)))
-
         ;; disable tabs
         (disable-tabs)
 
@@ -28139,11 +28145,6 @@
       Delete converts tabs to spaces as it moves back.
       Blank lines separate paragraphs.  Semicolons start comments.
       \\{scheme-mode-map}"
-          ;; double-space punctuation
-          (when (fboundp 'double-space-punctuation)
-            (bind-keys :map racket-mode-map
-                       ("C-M-q" . double-space-punctuation)))
-
           ;; turn on geiser-mode
           (when (fboundp 'geiser-mode)
             (geiser-mode t)))
@@ -28857,11 +28858,18 @@
           ;; turn on pabbrev mode
           ;;(pabbrev-mode)
 
-          ;; insert two spaces after a sentence
-          (setq sentence-end-double-space t)
+          ;; insert one space after a sentence
+          (setq sentence-end-double-space nil)
 
-          ;; insert two spaces after a colon
-          (setq colon-double-space t))
+          ;; insert one space after a colon
+          (setq colon-double-space nil)
+
+          ;; ;; insert two spaces after a sentence
+          ;; (setq sentence-end-double-space t)
+
+          ;; ;; insert two spaces after a colon
+          ;; (setq colon-double-space t)
+          )
         (add-hook 'text-mode-hook #'custom-text-mode-hook)
 
         ;; remove trailing blanks

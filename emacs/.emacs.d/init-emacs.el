@@ -882,32 +882,41 @@ Common values:
 ;; General:28 ends here
 
 ;; [[file:init-emacs.org::*General][General:29]]
-(init-message 3 "Sentences and Colons Should Have Two Spaces after Them")
+(init-message 3 "Sentences and Colons Should Have One Space after Them")
 
-;; insert two spaces after a sentence when filling text
-(setq sentence-end-double-space t)
-;; insert two spaces after a colon when filling text
-(setq colon-double-space t)
+;; insert one space after a sentence when filling text
+(setq sentence-end-double-space nil)
+;; insert one space after a colon when filling text
+(setq colon-double-space nil)
 ;; General:29 ends here
 
 ;; [[file:init-emacs.org::*General][General:30]]
+;; (init-message 3 "Sentences and Colons Should Have Two Spaces after Them")
+
+;; ;; insert two spaces after a sentence when filling text
+;; (setq sentence-end-double-space t)
+;; ;; insert two spaces after a colon when filling text
+;; (setq colon-double-space t)
+;; General:30 ends here
+
+;; [[file:init-emacs.org::*General][General:31]]
 (init-message 3 "Highlight Matching Parenthesis")
 
 ;; highlight matching parenthesis
 (show-paren-mode 1)
 (set-face-foreground 'show-paren-match color-paren)
 (set-face-attribute 'show-paren-match nil :weight 'extra-bold)
-;; General:30 ends here
+;; General:31 ends here
 
-;; [[file:init-emacs.org::*General][General:31]]
+;; [[file:init-emacs.org::*General][General:32]]
 (init-message 3 "Highlight TABs")
 
 ;; highlight tabs
 (setq highlight-tabs t)
 (setq-default highlight-tabs highlight-tabs)
-;; General:31 ends here
+;; General:32 ends here
 
-;; [[file:init-emacs.org::*General][General:32]]
+;; [[file:init-emacs.org::*General][General:33]]
 (init-message 3 "Highlight Tabs and Trailing Whitespace")
 
 ;; ;; highlight trailing white spaces
@@ -922,32 +931,32 @@ Common values:
         (newline-mark 10 [182 10]) ; 10 linefeed '\n', 182 ??? '¶'
         (tab-mark 9 [9655 9] [92 9])))    ; 9 tab '\t', 9655 '▷', 92 backslash '\'
 (global-whitespace-mode)              ; enable whitespace mode everywhere
-;; General:32 ends here
+;; General:33 ends here
 
-;; [[file:init-emacs.org::*General][General:33]]
+;; [[file:init-emacs.org::*General][General:34]]
 (init-message 3 "Highlight Current Line")
 
 ;; highlight current line
 (hl-line-mode 1)
 (global-hl-line-mode 1)
-;; General:33 ends here
+;; General:34 ends here
 
-;; [[file:init-emacs.org::*General][General:34]]
+;; [[file:init-emacs.org::*General][General:35]]
 (init-message 3 "Turn on Syntax Highlighting")
 
 ;; turn on global font lock mode and syntax highlighting
 (global-font-lock-mode 1)
 (setq font-lock-maximum-decoration t)
-;; General:34 ends here
+;; General:35 ends here
 
-;; [[file:init-emacs.org::*General][General:35]]
+;; [[file:init-emacs.org::*General][General:36]]
 (init-message 3 "Typing Replaces Highlighted Text")
 
 ;; replace highlighted text with typed text
 (delete-selection-mode t)
-;; General:35 ends here
+;; General:36 ends here
 
-;; [[file:init-emacs.org::*General][General:36]]
+;; [[file:init-emacs.org::*General][General:37]]
 (init-message 3 "Set Commenting Style to Indent")
 
 ;; ;; set comment start (default) and padding
@@ -955,14 +964,14 @@ Common values:
 ;;       comment-padding " ")
 ;; set comment style
 (setq comment-style 'indent)
-;; General:36 ends here
-
-;; [[file:init-emacs.org::*General][General:37]]
-(setq enable-recursive-minibuffers t)
-(minibuffer-depth-indicate-mode 1)
 ;; General:37 ends here
 
-;; [[file:init-emacs.org::*General][General:39]]
+;; [[file:init-emacs.org::*General][General:38]]
+(setq enable-recursive-minibuffers t)
+(minibuffer-depth-indicate-mode 1)
+;; General:38 ends here
+
+;; [[file:init-emacs.org::*General][General:40]]
 (init-message 3 "Have `apropos' Search All Symbols and Order by Relevance")
 
 ;; make apropos command search all symbols
@@ -971,25 +980,25 @@ Common values:
 ;; make apropos command list results by relevance
 (setq apropos-sort-by-scores t
       apropos-documentation-sort-by-scores t)
-;; General:39 ends here
+;; General:40 ends here
 
-;; [[file:init-emacs.org::*General][General:40]]
+;; [[file:init-emacs.org::*General][General:41]]
 (init-message 3 "Set Default `grep' Command")
 
 ;; set grep command
 (setq grep-command "grep -n -H -i -r -e ")
-;; General:40 ends here
+;; General:41 ends here
 
-;; [[file:init-emacs.org::*General][General:41]]
+;; [[file:init-emacs.org::*General][General:42]]
 (init-message 3 "Set Email Sources")
 
 ;; email settings
 (setq mail-sources `((pop :server "pop.gmail.com" :port 995
                           :user ,user-mail-address
                           :connection ssl :leave t)))
-;; General:41 ends here
+;; General:42 ends here
 
-;; [[file:init-emacs.org::*General][General:42]]
+;; [[file:init-emacs.org::*General][General:43]]
 (init-message 3 "Set Default Browser")
 
 ;; set default browser
@@ -1006,32 +1015,32 @@ Common values:
 
 ;; set secondary browser
 (setq browse-url-secondary-browser-function 'browse-url-default-browser)
-;; General:42 ends here
+;; General:43 ends here
 
-;; [[file:init-emacs.org::*General][General:43]]
+;; [[file:init-emacs.org::*General][General:44]]
 (init-message 3 "Single Character Deletion Commands Delete Active Regions Without Saving to the Kill Ring")
 
 ;; when deleting an active region via single character deletion command,
 ;; do not save to kill ring
 (setq delete-active-region t)
-;; General:43 ends here
+;; General:44 ends here
 
-;; [[file:init-emacs.org::*General][General:44]]
+;; [[file:init-emacs.org::*General][General:45]]
 (init-message 3 "Disable `vc-git'.")
 
 ;; disable vc-git
 (setq vc-handled-backends nil)
-;; General:44 ends here
+;; General:45 ends here
 
-;; [[file:init-emacs.org::*General][General:45]]
+;; [[file:init-emacs.org::*General][General:46]]
 ;; (init-message 3 "Recenter window after `next-error'.")
 
 ;; ;; always recenter after `next-error'
 ;; (setq next-error-recenter '(4))
 ;; ;;(add-hook 'next-error-hook #'recenter :append)
-;; General:45 ends here
+;; General:46 ends here
 
-;; [[file:init-emacs.org::*General][General:46]]
+;; [[file:init-emacs.org::*General][General:47]]
 (init-message 3 "Recenter window after `occur-mode-goto-occurrence'.")
 
 ;; always recenter after `occur-mode-goto-occurrence'
@@ -1040,9 +1049,9 @@ Common values:
   (recenter))
 ;; advise `occur-mode-goto-occurrence'
 (advice-add 'occur-mode-goto-occurrence :after #'occur-mode-goto-occurrence--recenter)
-;; General:46 ends here
+;; General:47 ends here
 
-;; [[file:init-emacs.org::*General][General:47]]
+;; [[file:init-emacs.org::*General][General:48]]
 (init-message 3 "Set time zones to use for `display-time-world'.")
 
 ;; set display-time-world time zones
@@ -1055,7 +1064,7 @@ Common values:
         ("Europe/London" "London")
         ("Europe/Paris" "Paris")
         ("Asia/Tokyo" "Tokyo")))
-;; General:47 ends here
+;; General:48 ends here
 
 ;; [[file:init-emacs.org::*System][System:1]]
 ;;------------------------------------------------------------------------------
@@ -1960,9 +1969,9 @@ KEYMAP defaults to `override-global-map'."
   (when (fboundp 'unfill-paragraph)
     (bind-keys ("M-Q" . unfill-paragraph))) ; default: `fill-paragraph'
 
-  ;; double-space punctuation
-  (when (fboundp 'double-space-punctuation)
-    (bind-keys ("C-M-q" . double-space-punctuation)))
+  ;; ;; double-space punctuation
+  ;; (when (fboundp 'double-space-punctuation)
+  ;;   (bind-keys ("C-M-q" . double-space-punctuation)))
 
   ;; toggle pop-up shell
   (when (and (fboundp 'pop-up-shell) (fboundp 'pop-up-shell-toggle))
@@ -10540,31 +10549,6 @@ otherwise `downcase-word' is called."
     (fill-paragraph nil)))
 ;; unfill-paragraph:1 ends here
 
-;; [[file:init-emacs.org::*double-space-punctuation][double-space-punctuation:1]]
-;;------------------------------------------------------------------------------
-;;;; Functions: Text Conversion Functions: double-space-punctuation
-;;------------------------------------------------------------------------------
-
-(init-message 3 "Functions: Text Conversion Functions: double-space-punctuation")
-
-(defun double-space-punctuation (&optional beg end)
-  "Double-space sentence ending punctuation in the current
-paragraph or selected region."
-  (interactive "*")
-  (save-mark-and-excursion
-    (save-match-data
-      (let ((beg (or beg (and (use-region-p) (region-beginning))))
-            (end (or end (and (use-region-p) (region-end)))))
-        (unless (and beg end)
-          (mark-paragraph)
-          (setq beg (point)
-                end (mark-marker)))
-        (goto-char beg)
-        (while (and (< (point) end)
-                    (re-search-forward "\\([^[:blank:]][.?!]['\"”)]?\\)[[:blank:]]\\([^[:blank:]]\\)" end :noerror))
-          (replace-match "\\1  \\2"))))))
-;; double-space-punctuation:1 ends here
-
 ;; [[file:init-emacs.org::*single-space-punctuation][single-space-punctuation:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Text Conversion Functions: single-space-punctuation
@@ -10589,6 +10573,31 @@ paragraph or selected region."
                     (re-search-forward "\\([^[:blank:]][.?!]['\"”)]?\\)[[:blank:]]\\([^[:blank:]]\\)" end :noerror))
           (replace-match "\\1 \\2"))))))
 ;; single-space-punctuation:1 ends here
+
+;; [[file:init-emacs.org::*double-space-punctuation][double-space-punctuation:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Text Conversion Functions: double-space-punctuation
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Text Conversion Functions: double-space-punctuation")
+
+(defun double-space-punctuation (&optional beg end)
+  "Double-space sentence ending punctuation in the current
+paragraph or selected region."
+  (interactive "*")
+  (save-mark-and-excursion
+    (save-match-data
+      (let ((beg (or beg (and (use-region-p) (region-beginning))))
+            (end (or end (and (use-region-p) (region-end)))))
+        (unless (and beg end)
+          (mark-paragraph)
+          (setq beg (point)
+                end (mark-marker)))
+        (goto-char beg)
+        (while (and (< (point) end)
+                    (re-search-forward "\\([^[:blank:]][.?!]['\"”)]?\\)[[:blank:]]\\([^[:blank:]]\\)" end :noerror))
+          (replace-match "\\1  \\2"))))))
+;; double-space-punctuation:1 ends here
 
 ;; [[file:init-emacs.org::*Text Inserting Functions][Text Inserting Functions:1]]
 ;;------------------------------------------------------------------------------
@@ -17858,11 +17867,6 @@ otherwise run `find-file-as-root'."
 (init-message 2 "Modes: Lisp Mode")
 
 (defun custom-lisp-mode-hook ()
-  ;; double-space punctuation
-  (when (fboundp 'double-space-punctuation)
-    (bind-keys :map lisp-mode-map
-               ("C-M-q" . double-space-punctuation)))
-
   ;; disable tabs
   (disable-tabs)
 
@@ -18199,11 +18203,6 @@ Commands:
 Delete converts tabs to spaces as it moves back.
 Blank lines separate paragraphs.  Semicolons start comments.
 \\{scheme-mode-map}"
-    ;; double-space punctuation
-    (when (fboundp 'double-space-punctuation)
-      (bind-keys :map racket-mode-map
-                 ("C-M-q" . double-space-punctuation)))
-
     ;; turn on geiser-mode
     (when (fboundp 'geiser-mode)
       (geiser-mode t)))
@@ -18865,11 +18864,18 @@ Blank lines separate paragraphs.  Semicolons start comments.
     ;; turn on pabbrev mode
     ;;(pabbrev-mode)
 
-    ;; insert two spaces after a sentence
-    (setq sentence-end-double-space t)
+    ;; insert one space after a sentence
+    (setq sentence-end-double-space nil)
 
-    ;; insert two spaces after a colon
-    (setq colon-double-space t))
+    ;; insert one space after a colon
+    (setq colon-double-space nil)
+
+    ;; ;; insert two spaces after a sentence
+    ;; (setq sentence-end-double-space t)
+
+    ;; ;; insert two spaces after a colon
+    ;; (setq colon-double-space t)
+    )
   (add-hook 'text-mode-hook #'custom-text-mode-hook)
 
   ;; remove trailing blanks
