@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-03-28 11:09 (kyle)>
+  #+TIMESTAMP: <2022-03-28 13:23 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -7514,6 +7514,21 @@
           (goto-char (line-end-position))
           (insert ")"))
       #+END_SRC
+
+*** Ironsworn
+    :PROPERTIES:
+    :CUSTOM_ID: org-mode-ironsworn
+    :END:
+
+    Ironsworn related functions.
+
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Org Mode: Ironsworn
+      ;;------------------------------------------------------------------------------
+
+      (init-message 2 "Org Mode: Ironsworn")
+    #+END_SRC
 
 * Org Website
   :PROPERTIES:

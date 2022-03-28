@@ -5464,6 +5464,14 @@ If OWNED is non-nil, add an Owned column to the table."
   (insert ")"))
 ;; ddo-fix-wiki-description:1 ends here
 
+;; [[file:init-emacs.org::*Ironsworn][Ironsworn:1]]
+;;------------------------------------------------------------------------------
+;;; Org Mode: Ironsworn
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Org Mode: Ironsworn")
+;; Ironsworn:1 ends here
+
 ;; [[file:init-emacs.org::*Org Website][Org Website:1]]
 ;;==============================================================================
 ;;; Org Website
