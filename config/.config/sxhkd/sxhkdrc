@@ -4,7 +4,7 @@
 # Simple X Hotkey Daemon Configuration
 #
 # To specify a key, you can use 'xbindkeys --key' or 'xbindkeys --multikey'
-# and put one of the two lines in this file.  Or use 'xev -event keyboard' to
+# and put one of the two lines in this file. Or use 'xev -event keyboard' to
 # get the keysym names.
 #
 # General syntax:
@@ -56,10 +56,10 @@
 #
 # Author: Kyle W T Sherman
 #
-# Reference:  https://github.com/baskerville/sxhkd
-# Reference:  https://gitlab.com/protesilaos/dotfiles/-/blob/v2.2.0/bspwm/.config/sxhkd/sxhkdrc
-# Reference:  https://gitlab.com/protesilaos/dotfiles/-/blob/v2.2.0/bspwm/.config/sxhkd/sxhkdrc_bspc
-# Reference:  https://my-take-on.tech/2020/07/03/some-tricks-for-sxhkd-and-bspwm/
+# Reference: https://github.com/baskerville/sxhkd
+# Reference: https://gitlab.com/protesilaos/dotfiles/-/blob/v2.2.0/bspwm/.config/sxhkd/sxhkdrc
+# Reference: https://gitlab.com/protesilaos/dotfiles/-/blob/v2.2.0/bspwm/.config/sxhkd/sxhkdrc_bspc
+# Reference: https://my-take-on.tech/2020/07/03/some-tricks-for-sxhkd-and-bspwm/
 #===============================================================================
 
 #-------------------------------------------------------------------------------
@@ -156,6 +156,10 @@ super + alt + e
 # bitwarden selector (clear clipboard after 30 seconds)
 super + alt + p
     bwmenu --clear 30
+
+# paste selector
+super + alt + apostrophe
+    ${HOME}/bin/rofi-menu paste
 
 # session menu
 super + shift + e
