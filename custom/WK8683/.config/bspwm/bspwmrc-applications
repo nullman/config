@@ -5,7 +5,7 @@
 # Binary Space Partitioning Window Manager (bspwm) auto-start applications
 # script.
 #
-# Reference:  https://github.com/baskerville/bspwm
+# Reference: https://github.com/baskerville/bspwm
 #===============================================================================
 
 # check if executable command is found in the path
@@ -36,7 +36,7 @@ _delay 10
 # initialize foreground applications
 _command alacritty && alacritty -e ${HOME}/bin/run-screen &
 _command emacs && _delay 1 emacs &
-#_command slack && _delay 1 slack &
+_command slack && _delay 1 slack &
 #_command thunderbird && _delay 10 thunderbird &
 _command firefox && _delay 1 firefox &
 #_command vivaldi && _delay 1 vivaldi &
@@ -45,7 +45,7 @@ _command firefox && _delay 1 firefox &
 _command spacefm && _delay 1 spacefm &
 #_command thunar && _delay 1 thunar &
 #_command idea && _delay 10 idea &
-#_command discord && _delay 1 discord &
+_command discord && _delay 1 discord &
 #_command pidgin && _delay 1 pidgin &
 #_command gajim && _delay 10 gajim &
 #_command tootle && _delay 10 tootle &
