@@ -1681,7 +1681,7 @@ KEYMAP defaults to `override-global-map'."
                 ("C-M-<right>" . move-end-of-line) ; default: `move-end-of-line'
                 ("C-M-i" . scroll-down-command) ; default: `completion-at-point' ("<prior>")
                 ("C-M-k" . scroll-up-command)   ; default: `kill-whole-line' ("<next>")
-                ("C-M-j" . move-beginning-of-line) ; default: `comment-indent-new-line' ("C-a")
+                ("C-M-j" . move-beginning-of-line) ; default: `default-indent-new-line' ("C-a")
                 ("C-M-l" . move-end-of-line)) ; default: `reposition-window' ("C-e")
 
     ;; window movement keys
@@ -14007,26 +14007,26 @@ USING is the remaining peg."
          ("C-c m" . consult-mode-command)
          ("C-c k" . consult-kmacro))
   :bind* (;; C-x bindings (ctl-x-map)
-          ("C-x M-:" . consult-complex-command)      ; default: `repeat-complex-command'
-          ("C-x b" . consult-buffer)                 ; default: `switch-to-buffer'
-          ("C-x 4 b" . consult-buffer-other-window)  ; default: `switch-to-buffer-other-window'
-          ("C-x 5 b" . consult-buffer-other-frame)   ; default: `switch-to-buffer-other-frame'
-          ("C-x r b" . consult-bookmark)             ; default: `bookmark-jump'
-          ("C-x p b" . consult-project-buffer)       ; default: `project-switch-to-buffer'
-          ;; custom M-# bindings for fast register access
-          ("M-#" . consult-register-load)            ; default: `calc-dispatch'
-          ("M-'" . consult-register-store)           ; default: `abbrev-prefix-mark'
+          ("C-x M-:" . consult-complex-command)         ; default: `repeat-complex-command'
+          ("C-x b" . consult-buffer)                    ; default: `switch-to-buffer'
+          ("C-x 4 b" . consult-buffer-other-window)     ; default: `switch-to-buffer-other-window'
+          ("C-x 5 b" . consult-buffer-other-frame)      ; default: `switch-to-buffer-other-frame'
+          ("C-x r b" . consult-bookmark)                ; default: `bookmark-jump'
+          ("C-x p b" . consult-project-buffer)          ; default: `project-switch-to-buffer'
+          ;; M-# bindings for fast register access
+          ("M-#" . consult-register-load)               ; default: `calc-dispatch'
+          ("M-'" . consult-register-store)              ; default: `abbrev-prefix-mark'
           ("C-M-#" . consult-register)
-          ;; other custom bindings
-          ("M-y" . consult-yank-pop)                 ; default: `yank-pop'
-          ("<help> a" . consult-apropos)             ; default: `apropos-command'
+          ;; other bindings
+          ("M-y" . consult-yank-pop)                    ; default: `yank-pop'
+          ("<help> a" . consult-apropos)                ; default: `apropos-command'
           ;; M-g bindings (goto-map)
           ("M-g e" . consult-compile-error)
           ("M-g f" . consult-flycheck)
           ("M-g F" . consult-flymake)
-          ("M-g g" . consult-goto-line)              ; default: `goto-line'
-          ("M-g M-g" . consult-goto-line)            ; default: `goto-line'
-          ("M-g o" . consult-outline)                ; alternative: `consult-org-heading'
+          ("M-g g" . consult-goto-line)                 ; default: `goto-line'
+          ("M-g M-g" . consult-goto-line)               ; default: `goto-line'
+          ("M-g o" . consult-outline)                   ; alternative: `consult-org-heading'
           ("M-g m" . consult-mark)
           ("M-g k" . consult-global-mark)
           ("M-g i" . consult-imenu)
@@ -14042,17 +14042,18 @@ USING is the remaining peg."
           ("M-s m" . consult-multi-occur)
           ("M-s k" . consult-keep-lines)
           ("M-s u" . consult-focus-lines)
-          ;; Isearch integration
+          ;; isearch integration
           ("M-s e" . consult-isearch-history)
           :map isearch-mode-map
-          ("M-e" . consult-isearch-history)          ; default: `isearch-edit-string'
-          ("M-s e" . consult-isearch-history)        ; default: `isearch-edit-string'
-          ("M-s l" . consult-line)                   ; needed by `consult-line' to detect isearch
-          ("M-s L" . consult-line-multi)             ; needed by `consult-line' to detect isearch
-          ;; minibuffer history
+          ("M-e" . consult-isearch-history)             ; default: `isearch-edit-string'
+          ("M-s e" . consult-isearch-history)           ; default: `isearch-edit-string'
+          ("M-s l" . consult-line)                      ; needed by `consult-line' to detect isearch
+          ("M-s L" . consult-line-multi)                ; needed by `consult-line' to detect isearch
+          ;; minibuffer bindings
           :map minibuffer-local-map
-          ("M-s" . consult-history)                  ; default: `next-matching-history-element'
-          ("M-r" . consult-history))                 ; default: `previous-matching-history-element'
+          ("M-<return>" . minibuffer-complete-and-exit) ; default: `back-to-indentation'
+          ("M-s" . consult-history)                     ; default: `next-matching-history-element'
+          ("M-r" . consult-history))                    ; default: `previous-matching-history-element'
   ;; enable automatic preview at point in the *Completions* buffer
   :hook (completion-list-mode . consult-preview-at-point-mode)
   :init
@@ -14079,7 +14080,7 @@ USING is the remaining peg."
   ;; configure narrowing key
   (setq consult-narrow-key "<") ;; (kbd "C-+")
   ;; make narrowing help available in the minibuffer
-  ;; (define-key consult-narrow-map (vconcat consult-narrow-key "?") #'consult-narrow-help)
+  (define-key consult-narrow-map (vconcat consult-narrow-key "?") #'consult-narrow-help)
 
   ;; By default `consult-project-function' uses `project-root' from project.el.
   ;; Optionally configure a different project root function.
@@ -14093,7 +14094,16 @@ USING is the remaining peg."
   ;; (setq consult-project-function (lambda (_) (vc-root-dir)))
   ;;;; 4. locate-dominating-file
   ;; (setq consult-project-function (lambda (_) (locate-dominating-file "." ".git")))
-  )
+
+  ;; turn off consult mode in incompatable modes
+  (defun force-completing-read-default (orig-fun &rest args)
+    "Force a function to use `completing-read-default'."
+    (let ((completing-read-function 'completing-read-default))
+      (apply orig-fun args)))
+  ;; advise `tmm-prompt'
+  (advice-add 'tmm-prompt :around #'force-completing-read-default)
+  ;; advise `yas-expand-snippet'
+  (advice-add 'yas-expand-snippet :around #'force-completing-read-default))
 ;; consult:1 ends here
 
 ;; [[file:init-emacs.org::*company][company:1]]
