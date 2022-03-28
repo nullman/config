@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-03-27 08:57 (kyle)>
+  #+TIMESTAMP: <2022-03-27 19:11 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -21337,7 +21337,7 @@
       (use-package define-word
         :straight t
         :bind (("<f5>" . define-word-after-spell-check)
-               ("S-<f5>" . define-word-at-point))
+               ("S-<f5>" . define-word-at-point-after-spell-check))
         :custom
         (define-word-default-service 'webster)
         :config
@@ -21364,7 +21364,28 @@
                 (let ((checked-word (buffer-substring-no-properties (point-min) (point-max))))
                   (when (string= buffer (buffer-name))
                     (kill-buffer (current-buffer)))
-                  (define-word checked-word service choose-service))))))))
+                  (define-word checked-word service choose-service)))))))
+
+        (defun define-word-at-point-after-spell-check (arg &optional service)
+          "Use `define-word-after-spell-check' to define word at point.
+
+      When the region is active, define the marked phrase.
+      Prefix ARG lets you choose service.
+
+      In a non-interactive call SERVICE can be passed."
+          (interactive "P")
+          (let ((word
+                 (cond
+                  ((eq major-mode 'pdf-view-mode)
+                   (car (pdf-view-active-region-text)))
+                  ((use-region-p)
+                   (buffer-substring-no-properties
+                    (region-beginning)
+                    (region-end)))
+                  (t
+                   (substring-no-properties
+                    (thing-at-point 'word))))))
+            (define-word-after-spell-check word service arg))))
     #+END_SRC
 
 *** demo-it

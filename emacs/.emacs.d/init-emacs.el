@@ -14795,7 +14795,7 @@ USING is the remaining peg."
 (use-package define-word
   :straight t
   :bind (("<f5>" . define-word-after-spell-check)
-         ("S-<f5>" . define-word-at-point))
+         ("S-<f5>" . define-word-at-point-after-spell-check))
   :custom
   (define-word-default-service 'webster)
   :config
@@ -14822,7 +14822,28 @@ Uses `ispell--run-on-word' to spell check word."
           (let ((checked-word (buffer-substring-no-properties (point-min) (point-max))))
             (when (string= buffer (buffer-name))
               (kill-buffer (current-buffer)))
-            (define-word checked-word service choose-service))))))))
+            (define-word checked-word service choose-service)))))))
+
+  (defun define-word-at-point-after-spell-check (arg &optional service)
+    "Use `define-word-after-spell-check' to define word at point.
+
+When the region is active, define the marked phrase.
+Prefix ARG lets you choose service.
+
+In a non-interactive call SERVICE can be passed."
+    (interactive "P")
+    (let ((word
+           (cond
+            ((eq major-mode 'pdf-view-mode)
+             (car (pdf-view-active-region-text)))
+            ((use-region-p)
+             (buffer-substring-no-properties
+              (region-beginning)
+              (region-end)))
+            (t
+             (substring-no-properties
+              (thing-at-point 'word))))))
+      (define-word-after-spell-check word service arg))))
 ;; define-word:1 ends here
 
 ;; [[file:init-emacs.org::*demo-it][demo-it:1]]
