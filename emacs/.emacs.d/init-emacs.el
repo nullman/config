@@ -14051,7 +14051,7 @@ USING is the remaining peg."
           ("M-s L" . consult-line-multi)                ; needed by `consult-line' to detect isearch
           ;; minibuffer bindings
           :map minibuffer-local-map
-          ("M-<return>" . minibuffer-complete-and-exit) ; default: `back-to-indentation'
+          ("M-<return>" . minibuffer-complete-and-exit) ; default: `vertico-exit'
           ("M-s" . consult-history)                     ; default: `next-matching-history-element'
           ("M-r" . consult-history))                    ; default: `previous-matching-history-element'
   ;; enable automatic preview at point in the *Completions* buffer
