@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #===============================================================================
-# mod-www
+# chmod-www
 #
 # Modify the file permissions and ownership of various www dirs.
 #

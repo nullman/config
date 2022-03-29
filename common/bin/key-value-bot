@@ -7,7 +7,7 @@
 # Author: Kyle W T Sherman
 #===============================================================================
 
-# TODO: Add help
+# TODO: add help
 
 BEGIN { $^W = 1; }
 
@@ -83,23 +83,23 @@ sub im_in {
     if ($msg =~ /^[^ \t]+:/) {
         $file = ($msg =~ s/:.*$//);
         $msg =~ s/^[^ \t]+://;
-    } else {
-        $file = "main";
-    }
+} else {
+    $file = "main";
+}
 
     # remove operation from msg
     my $op = $msg;
     if ($msg =~ /[ \t]/) {
         $op =~ s/[ \t].*$//;
         $msg =~ s/^[^ \t]+[ \t]+//;
-    } else {
-        $msg = "";
-    }
+} else {
+    $msg = "";
+}
 
     # check for help request
     if ($op eq "help" or $op eq "-h" or $op eq "--help" or $op eq "") {
         $op = "--help";
-    }
+}
 
     # set full file name
     $file = "$nick/$file";
@@ -107,7 +107,7 @@ sub im_in {
     # if operation is list, make file nick directory
     if ($op eq "list") {
         $file = "$nick";
-    }
+}
 
     #print("op: $op\n");
     #print("file: $file\n");
@@ -117,7 +117,7 @@ sub im_in {
     # other files must be manually created
     if ($file eq "$nick/main") {
         system("touch $base/$file");
-    }
+}
 
     # call key-value script to handle request
     open(CMD, "$ENV{HOME}/bin/key-value $op $file $msg |");
@@ -125,7 +125,7 @@ sub im_in {
     # add output to response
     while(<CMD>) {
         $response .= $_;
-    }
+}
 
     # close cmd
     close(CMD);
@@ -180,13 +180,13 @@ Command Syntax: <b>[file:]</b><b>operation</b> <b>arguments</b>
     or an update if it already exists.
     The drop command requires the keyword 'drop' to be given as a precaution.
 END
-    }
+}
 
     # send response
     chomp($response);
     if ($response ne "") {
         $oscar->send_im($from, $response);
-    }
+}
 
     # print response
     print("response: $response\n");
@@ -204,14 +204,14 @@ END
         $msg .= "from: $from\tmessage: $msg\tresponse: ";
         if ($help) {
             $msg .= "<help>";
-        } else {
-            $msg .= $response;
-        }
+    } else {
+        $msg .= $response;
+    }
         # write to log
         open(LOG, ">>$log") or die("ERROR: Cannot write to log file: $log");
         print(LOG "$msg\n");
         close(LOG);
-    }
+}
 }
 
 #===============================================================================

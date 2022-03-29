@@ -58,580 +58,580 @@ my $tag;
 
 # usage
 if ($#ARGV >= 0 && ($ARGV[0] eq '-h' || $ARGV[0] eq '--help')) {
-    print("Usage: flickr-publish [PATH]\n");
-    print("Publish pictures in PATH to flickr service.\n");
-    print("  PATH  (defaults to current directory)\n");
-    exit;
-}
-
-# set debug state
-my $debug = 0;
-if (defined($ENV{DEBUG}) && $ENV{DEBUG} == 1) { $debug = 1; }
-
-# new flickr api
-my $api = Flickr::API->new({'key' => $key, 'secret' => $secret,});
-
-# new flicker upload api
-my $upload = Flickr::Upload->new({'key' => $key, 'secret' => $secret,});
-
-# test api
-#if ($debug) {
-#    $response = $api->execute_method('flickr.test.echo',
-#                                     {'foo' => 'bar',
-#                                      'baz' => 'quux', });
-#    print("Test API\n");
-#    print("Success: $response->{success}\n");
-#    print("Error code: $response->{error_code}\n");
-#    print(Dumper($response));
-#}
-
-# test user
-#if ($debug) {
-#    $response = $api->execute_method('flickr.urls.findByUsername',
-#                                     {'username' => $username,});
-#    print("Test User\n");
-#    print("Success: $response->{success}\n");
-#    print("Error code: $response->{error_code}\n");
-#    print(Dumper($response));
-#}
-
-# create config dir
-if (opendir(DIR, $confdir)) {
-    closedir(DIR);
-} else {
-    system('/bin/mkdir', $confdir) or die("Failed to create \'$confdir\' directory\n");
-    system('/bin/chmod', '700', $confdir) or die("Failed to set permissions on \'$confdir\' directory");
-}
-
-# get token
-$token = &GetToken($key, $secret, $perms);
-
-# path defaults to current directory
-my $path = '.';
-if ($#ARGV >= 0) { $path = $ARGV[0]; }
-
-# convert "." into full directory path
-if ($path eq ".") { $path = $ENV{PWD}; }
-
-# load tag and nontag files into lists
-my @taglist = ();
-my @nontaglist = ();
-my $tagfile = $confdir . '/' . $conftags;
-my $nontagfile = $confdir . '/' . $confnontags;
-if (open(TAGFILE, "<$tagfile")) {
-    foreach $tag (<TAGFILE>) {
-        chomp($tag);
-        push(@taglist, $tag);
-    }
-    close(TAGFILE);
-}
-if (open(TAGFILE, "<$nontagfile")) {
-    foreach $tag (<TAGFILE>) {
-        chomp($tag);
-        push(@nontaglist, $tag);
-    }
-    close(TAGFILE);
-}
-# set strings of all the tags
-my $tagstr = ' ' . join(' ', @taglist) . ' ';
-my $nontagstr = ' ' . join(' ', @nontaglist) . ' ';
-my $alltagstr = $tagstr . $nontagstr;
-$alltagstr =~ s/  / /g;
-# load multi-word tag list and string
-my @multiwordtaglist = ();
-foreach $tag (@taglist) {
-    if ($tag =~ m/_/) {
-        my $mwtag = $tag;
-        $mwtag =~ s/_/ /g;
-        push(@multiwordtaglist, $mwtag);
-    }
-}
-foreach $tag (@nontaglist) {
-    if ($tag =~ m/_/) {
-        my $mwtag = $tag;
-        $mwtag =~ s/_/ /g;
-        push(@multiwordtaglist, $mwtag);
-    }
-}
-#my $multiwordtagstr = '|' . join('|', @multiwordtaglist) . '|';
-
-# output tags and nontags lists and strings
-if ($debug) {
-    print("Tag List:\n");
-    print(Dumper(@taglist));
-    print("Tag String:\n");
-    print("$tagstr\n");
-    print("NonTag List:\n");
-    print(Dumper(@nontaglist));
-    print("NonTag String:\n");
-    print("$nontagstr\n");
-    print("MultiWordTag List:\n");
-    print(Dumper(@multiwordtaglist));
-    print("AllTag String:\n");
-    print("$alltagstr\n");
-#    print("MultiWordTag String:\n");
-#    print("$multiwordtagstr\n");
-}
-
-# use the directory name as the set name
-my $set = '';
-if (opendir(DIR, "$path")) {
-    closedir(DIR);
-    # get set name
-    $set = $path;
-    # remove any trailing /
-    $set =~ s%/+$%%;
-    # remove path part
-    $set =~ s%.*/(.*)%$1%;
-    # output set name
-    #print("Set: $set\n");
-}
-
-# list of missing tags
-my @missingtaglist = ();
-
-# list of created photo ids
-my @photos = ();
-
-# start scanning from $path
-print("Set: $set \n");
-my $tags = &GetTags($set, ' ', 'tags');
-
-# spacer
-if ($debug) {
-    print("--------------------------------------------------------------------------------\n");
-}
-
-# first scan is a test (and looks for missing tags)
-my $mtags = &GetTags($set, ' ', 'missingtags');
-$mtags .= &ScanDir($path, ' ', $set, 'test');
-$mtags = &TrimStr($mtags);
-
-# if no missing tags, then upload for real
-if ($mtags eq '') {
-    # upload all images
-    &ScanDir($path, $tags, $set, 'upload');
-    # if any images were uploaded, handle the set
-    if ($#photos >= 0) {
-        &CreateSet($set, @photos);
-    }
-} else {
-    print("Missing tags:\n");
-    foreach $tag (sort(split(' ', $mtags))) {
-        print("$tag\n");
-    }
-}
-
-# output photo ids
-if ($debug) {
-    print("Photo IDs:\n");
-    print(Dumper(@photos));
-}
-
-#===============================================================================
-# GetTags
-# convert a string into tags
-# parameters: string, mode (tags, nontags, missingtags)
-#===============================================================================
-
-sub GetTags {
-    my ($str, $tags, $mode) = @_;
-    my $tag;
-
-    # check for excluded files
-    if ($str =~ m/_x$/) {
-        # output info
-        if ($debug) {
-            print("Mode: $mode\n");
-            print("Skipping excluded file: $str\n");
-        }
-    } else {
-        # remove date, except for year
-        $str =~ s/^([\d-]+ )([\d\:]|[\d\.])+ /$1/;
-        $str =~ s/^(\d\d\d\d)[\d-]* /$1 /;
-        # remove extension
-        $str =~ s/\.(jpg|jpeg|gif|png|bmp|tif|txt)$//;
-        # remove ending picture number (#)
-        $str =~ s/ \(\d+\)$//;
-        # remove 's
-        $str =~ s/\'s / /g;
-        # remove non alpha-numberic characters
-        $str =~ s/[^A-Za-z0-9 ]//g;
-        # lower case
-        $str = lc($str);
-        # add spaces to the ends
-        $str = ' ' . $str . ' ';
-        # remove double spaces
-        $str =~ s/  / /g;
-
-        # replace state abbreviations with full name
-        $str =~ s/ ca / california /g;
-        $str =~ s/ mn / minnesota /g;
-        $str =~ s/ il / illinois /g;
-
-        # other replacements
-        $str =~ s/ richard / dick /g;
-
-        # merge words that make up mutli-word tags
-        my @multiwordnontaglist = ();
-        foreach my $mwtag (@multiwordtaglist) {
-            if ($str =~ m/ $mwtag /) {
-                my $newtag = $mwtag;
-                $newtag =~ s/ /_/g;
-                #$str =~ s/ $mwtag / $newtag /g;
-                $str .= $newtag . ' ';
-                # # add single words to the string if they exist in tags
-                # foreach $tag (split(' ', $mwtag)) {
-                #     if ($tagstr =~ m/ $tag /) {
-                #         $str .= $tag . ' ';
-                #     }
-                # }
-                # add single words to temporary no-tag-list
-                foreach $tag (split(' ', $mwtag)) {
-                    push(@multiwordnontaglist, $tag);
-                }
-            }
-        }
-
-        if ($mode eq 'tags') {
-            # loop though valid tags and match against string
-            foreach $tag (@taglist) {
-                if ($str =~ m/ $tag / && !($tags =~ m/ $tag /)) {
-                    $tags .= $tag . ' ';
-                }
-            }
-        } elsif ($mode eq 'nontags') {
-            # loop though non-tags and match against string
-            foreach $tag (@nontaglist) {
-                if ($str =~ m/ $tag / && !($tags =~ m/ $tag /)) {
-                    $tags .= $tag . ' ';
-                }
-            }
-        } elsif ($mode eq 'missingtags') {
-            my $alltagstrplus = $alltagstr . join(' ', @multiwordnontaglist) . ' ';
-            # loop though string and track non-matches
-            foreach $tag (split(' ', $str)) {
-                if (!($alltagstrplus =~ m/ $tag /) && !($tags =~ m/ $tag /)) {
-                    $tags .= $tag . ' ';
-                }
-            }
-        }
-
-        # output tags
-        if ($debug) {
-            print("Mode: $mode\n");
-            print("String: $str\n");
-            print("Tags: $tags\n");
-        }
-    }
-
-    return($tags);
-}
-
-#===============================================================================
-# ScanDir
-# traverses directories adding text to key words
-# parameters: path, tags, set, mode (test, upload)
-#===============================================================================
-
-sub ScanDir {
-    my ($path, $tags, $set, $mode) = @_;
-    my $alltags = $tags;
-
-    # if $path is a directory
-    if (opendir(DIR, "$path")) {
-        # get files
-        my @files = sort(grep(!/^\.\.?$/, readdir(DIR)));
-        closedir(DIR);
-        # recursively call this procedure for every file/directory
-        foreach my $file (@files) {
-            # add new tags
-            my $newtags;
-            if ($mode eq 'test') {
-                $newtags = &GetTags($file, $tags, 'missingtags');
-                $alltags = &GetTags($file, $alltags, 'missingtags');
-            } else {
-                $newtags = &GetTags($file, $tags, 'tags');
-                $alltags = &GetTags($file, $alltags, 'tags');
-            }
-            # recursively call this procedure
-            if ($mode eq 'test') {
-                $alltags = &ScanDir($path . '/' . $file, $alltags, $set, $mode);
-            } else {
-                &ScanDir($path . '/' . $file, $newtags, $set, $mode);
-            }
-        }
-    }
-
-    # if $path is an image, then upload and tag it
-    elsif ($path =~ m/\.(jpg|jpeg|gif|png|bmp)$/) {
-
-        # get title
-        my $title = $path;
-        $title =~ s/^.*\/([^\/]+)$/$1/;
-        $title =~ s/\.[^\.]*$//;
-
-        # get description from text comment file, if one exists
-        my $textfile = $path;
-        $textfile =~ s/\.[^\.]*$/\.txt/;
-        my $text = '';
-        if (open(TEXT, "<$textfile")) {
-            $text = <TEXT>;
-            close(TEXT);
-        }
-
-        # trim tags
-        $tags = &TrimStr($tags);
-
-        # set date
-        my $date = $title;
-        if ($title =~ m/^\d\d\d\d-\d\d-\d\d \d\d[\:|\.]\d\d[\:|\.]\d\d /) {
-            $date =~ s/^(\d\d\d\d-\d\d-\d\d \d\d[\:|\.]\d\d[\:|\.]\d\d) .*$/$1/;
-        } elsif ($title =~ m/^\d\d\d\d-\d\d-\d\d \d\d[\:|\.]\d\d /) {
-            $date =~ s/^(\d\d\d\d-\d\d-\d\d \d\d[\:|\.]\d\d) .*$/$1/;
-        } elsif ($title =~ m/^\d\d\d\d-\d\d-\d\d \d\d /) {
-            $date =~ s/^(\d\d\d\d-\d\d-\d\d \d\d) .*$/$1/;
-        } elsif ($title =~ m/^\d\d\d\d-\d\d-\d\d /) {
-            $date =~ s/^(\d\d\d\d-\d\d-\d\d) .*$/$1/;
-        } elsif ($title =~ m/^\d\d\d\d-\d\d /) {
-            $date =~ s/^(\d\d\d\d-\d\d) .*$/$1/;
-        } elsif ($title =~ m/^\d\d\d\d /) {
-            $date =~ s/^(\d\d\d\d) .*$/$1/;
-        } else {
-            $date = '';
-        }
-
-        # test mode
-        if ($mode eq 'test') {
-            if ($tags ne '') {
-                print("File: \'$path\'\n");
-                print("Missing tags: $tags\n");
-            }
-        }
-
-        # upload mode
-        if ($mode eq 'upload') {
-            # upload image
-            my $photoid = $upload->upload('photo' => $path,
-                                      'auth_token' => $token,
-                                      'tags' => $tags,
-                                      'is_public' => 0,
-                                      'is_friend' => 1,
-                                      'is_family' => 1,
-                                      'async' => 0
-                                      ) or die("Failed to upload \'$path\'\n");
-            #print(Dumper($upload));
-
-            # add photoid to list
-            push(@photos, $photoid);
-
-            # set title and description
-            $response = $api->execute_method('flickr.photos.setMeta',
-                                             {'api_key' => $key,
-                                              'auth_token' => $token,
-                                              'photo_id' => $photoid,
-                                              'title' => $title,
-                                              'description' => $text});
-            #print(Dumper($response));
-
-            # set date
-            if ($date ne '') {
-                $response = $api->execute_method('flickr.photos.setDates',
-                                                 {'api_key' => $key,
-                                                  'auth_token' => $token,
-                                                  'photo_id' => $photoid,
-                                                  'date_taken' => $date});
-                #print(Dumper($response));
-            }
-
-            # add tags
-            $response = $api->execute_method('flickr.photos.setTags',
-                                             {'api_key' => $key,
-                                              'auth_token' => $token,
-                                              'photo_id' => $photoid,
-                                              'tags' => $tags});
-            #print(Dumper($response));
-        }
-
-        # output image info
-        if ($debug) {
-            print("Set: $set\n");
-            print("Path: $path\n");
-            print("Title: $title\n");
-            print("Tags: $tags\n");
-            print("Textfile: $textfile\n");
-            print("Text: $text\n");
-            print("Date: $date\n");
-            print("--------------------------------------------------------------------------------\n");
-        } elsif ($mode eq 'upload') {
-            print("Title: $title\n");
-            print("-Tags: $tags\n");
-        }
-    }
-
-    return($alltags);
-}
-
-#===============================================================================
-# CreateSet
-# create photo set and add photo ids to it
-# parameters: set, photos
-#===============================================================================
-
-sub CreateSet {
-    my ($set, @photos) = @_;
-    my $content;
-
-    # create the set
-    # add description option from .txt file ???
-    print("Creating set: $set\n");
-    my $photoset;
-    my $photosetid;
-    $response = $api->execute_method('flickr.photosets.create',
-                                     {'api_key' => $key,
-                                      'auth_token' => $token,
-                                      'title' => $set,
-                                      'primary_photo_id' => $photos[0]});
-    #print(Dumper($response));
-    $content = $response->{tree};
-    #print(Dumper($content));
-    $photoset = &FindNodeType($content->{children}, 'element');
-    #print(Dumper($photoset));
-    $photosetid = $photoset->{attributes}->{id};
-    #print(Dumper($photosetid));
-
-    # old method
-    # $content = XML::Parser::Lite::Tree::instance()->parse($response->{_content});
-    # print(Dumper($content));
-    # $photosetid = &FindNodeType($content->{children}, 'tag');
-    # print(Dumper($photosetid));
-    # $photosetid = &FindNodeType($photosetid->{children}, 'tag');
-    # print(Dumper($photosetid));
-    # $photosetid = $photosetid->{attributes}->{id};
-    # print(Dumper($photosetid));
-
-    # add all images to the set
-    print("Adding images to set ");
-    foreach my $photoid (@photos) {
-        print(".");
-        $response = $api->execute_method('flickr.photosets.addPhoto',
-                                         {'api_key' => $key,
-                                          'auth_token' => $token,
-                                          'photoset_id' => $photosetid,
-                                          'photo_id' => $photoid});
-    }
-    print("\n");
-}
-
-#===============================================================================
-# GetToken
-# get flickr authorization token
-# parameters: key, secret, perms
-#===============================================================================
-
-sub GetToken {
-    my ($key, $secret, $perms) = @_;
-    my $content;
-    my $frob;
-    my $url;
-
-    # see if we already have a token
-    my $tokenfile = $confdir . '/' . $conftoken;
-    if (open(TOKENFILE, "<$tokenfile")) {
-        $token = <TOKENFILE>;
-        close(TOKENFILE);
-    } else {
-        # else authenticate and get one
-
-        # get frob
-        $response = $api->execute_method('flickr.auth.getFrob',
-                                         {'api_key' => $key,
-                                          'api_secret' => $secret});
-        #print(Dumper($response));
-        $content = XML::Parser::Lite::Tree::instance()->parse($response->{_content});
-        #print(Dumper($content));
-        $frob = &FindNodeType($content->{children}, 'tag');
-        #print(Dumper($frob));
-        $frob = &FindNodeType($frob->{children}, 'tag');
-        #print(Dumper($frob));
-        $frob = &FindNodeType($frob->{children}, 'data');
-        #print(Dumper($frob));
-        $frob = $frob->{content};
-        #print(Dumper($frob));
-        if ($debug) {
-            print("Frob: $frob\n");
-        }
-
-        # get authorization url
-        $url = $api->request_auth_url($perms, $frob);
-        if ($debug) {
-            print("Auth URL: $url\n");
-        }
-
-        # pause while user authenticates
-        print("Please authenticate using this url:\n");
-        print("  $url\n");
-        print("Press enter when done.\n");
-        my $input = <STDIN>;
-
-        # get token
-        $response = $api->execute_method('flickr.auth.getToken',
-                                         {'api_key' => $key,
-                                          'frob' => $frob});
-        #print(Dumper($response));
-        $content = XML::Parser::Lite::Tree::instance()->parse($response->{_content});
-        #print(Dumper($content));
-        $token = &FindNodeType($content->{children}, 'tag');
-        #print(Dumper($token));
-        $token = &FindNodeType($token->{children}, 'tag');
-        #print(Dumper($token));
-        $token = &FindNodeType($token->{children}, 'tag');
-        #print(Dumper($token));
-        $token = &FindNodeType($token->{children}, 'data');
-        #print(Dumper($token));
-        $token = $token->{content};
-        #print(Dumper($token));
-
-        # write token to file
-        open(TOKENFILE, ">$tokenfile") or die("Failed to write to \'$tokenfile\'\n");
-        print(TOKENFILE $token);
-        close(TOKENFILE);
-    }
-
-    if ($debug) {
-        print("Token: $token\n");
-    }
-
-    return($token);
-}
-
-#===============================================================================
-# TrimStr
-# trims whitespace from the ends of a string
-# parameters: str
-#===============================================================================
-
-sub TrimStr {
-    my $str = shift;
-    $str =~ s/^\s+//;
-    $str =~ s/\s+$//;
-    return($str);
-}
-
-#===============================================================================
-# FindNodeType
-# finds an xml node of a given type
-# parameters: xml, type
-#===============================================================================
-
-sub FindNodeType {
-    my ($xml, $type) = @_;
-    for my $node (@{$xml}) {
-        if ($node->{type} eq $type) { return($node); }
-    }
-    return({});
-}
-
-#===============================================================================
-# End of File
-#===============================================================================
+       print("Usage: flickr-publish [PATH]\n");
+       print("Publish pictures in PATH to flickr service.\n");
+       print("  PATH  (defaults to current directory)\n");
+       exit;
+   }
+
+   # set debug state
+   my $debug = 0;
+   if (defined($ENV{DEBUG}) && $ENV{DEBUG} == 1) { $debug = 1; }
+
+      # new flickr api
+      my $api = Flickr::API->new({'key' => $key, 'secret' => $secret,});
+
+      # new flicker upload api
+      my $upload = Flickr::Upload->new({'key' => $key, 'secret' => $secret,});
+
+      # test api
+      #if ($debug) {
+      #    $response = $api->execute_method('flickr.test.echo',
+      #                                     {'foo' => 'bar',
+      #                                      'baz' => 'quux', });
+      #    print("Test API\n");
+      #    print("Success: $response->{success}\n");
+      #    print("Error code: $response->{error_code}\n");
+      #    print(Dumper($response));
+      #}
+
+      # test user
+      #if ($debug) {
+      #    $response = $api->execute_method('flickr.urls.findByUsername',
+      #                                     {'username' => $username,});
+      #    print("Test User\n");
+      #    print("Success: $response->{success}\n");
+      #    print("Error code: $response->{error_code}\n");
+      #    print(Dumper($response));
+      #}
+
+      # create config dir
+      if (opendir(DIR, $confdir)) {
+             closedir(DIR);
+         } else {
+             system('/bin/mkdir', $confdir) or die("Failed to create \'$confdir\' directory\n");
+             system('/bin/chmod', '700', $confdir) or die("Failed to set permissions on \'$confdir\' directory");
+         }
+
+         # get token
+         $token = &GetToken($key, $secret, $perms);
+
+         # path defaults to current directory
+         my $path = '.';
+         if ($#ARGV >= 0) { $path = $ARGV[0]; }
+
+            # convert "." into full directory path
+            if ($path eq ".") { $path = $ENV{PWD}; }
+
+               # load tag and nontag files into lists
+               my @taglist = ();
+               my @nontaglist = ();
+               my $tagfile = $confdir . '/' . $conftags;
+               my $nontagfile = $confdir . '/' . $confnontags;
+               if (open(TAGFILE, "<$tagfile")) {
+                      foreach $tag (<TAGFILE>) {
+                          chomp($tag);
+                          push(@taglist, $tag);
+                      }
+                      close(TAGFILE);
+                  }
+                  if (open(TAGFILE, "<$nontagfile")) {
+                         foreach $tag (<TAGFILE>) {
+                             chomp($tag);
+                             push(@nontaglist, $tag);
+                         }
+                         close(TAGFILE);
+                     }
+                     # set strings of all the tags
+                     my $tagstr = ' ' . join(' ', @taglist) . ' ';
+                     my $nontagstr = ' ' . join(' ', @nontaglist) . ' ';
+                     my $alltagstr = $tagstr . $nontagstr;
+                     $alltagstr =~ s/  / /g;
+                     # load multi-word tag list and string
+                     my @multiwordtaglist = ();
+                     foreach $tag (@taglist) {
+                         if ($tag =~ m/_/) {
+                                my $mwtag = $tag;
+                                $mwtag =~ s/_/ /g;
+                                push(@multiwordtaglist, $mwtag);
+                            }
+                     }
+                     foreach $tag (@nontaglist) {
+                         if ($tag =~ m/_/) {
+                                my $mwtag = $tag;
+                                $mwtag =~ s/_/ /g;
+                                push(@multiwordtaglist, $mwtag);
+                            }
+                     }
+                     #my $multiwordtagstr = '|' . join('|', @multiwordtaglist) . '|';
+
+                     # output tags and nontags lists and strings
+                     if ($debug) {
+                            print("Tag List:\n");
+                            print(Dumper(@taglist));
+                            print("Tag String:\n");
+                            print("$tagstr\n");
+                            print("NonTag List:\n");
+                            print(Dumper(@nontaglist));
+                            print("NonTag String:\n");
+                            print("$nontagstr\n");
+                            print("MultiWordTag List:\n");
+                            print(Dumper(@multiwordtaglist));
+                            print("AllTag String:\n");
+                            print("$alltagstr\n");
+                            #    print("MultiWordTag String:\n");
+                            #    print("$multiwordtagstr\n");
+                        }
+
+                        # use the directory name as the set name
+                        my $set = '';
+                        if (opendir(DIR, "$path")) {
+                               closedir(DIR);
+                               # get set name
+                               $set = $path;
+                               # remove any trailing /
+                               $set =~ s%/+$%%;
+                               # remove path part
+                               $set =~ s%.*/(.*)%$1%;
+                               # output set name
+                               #print("Set: $set\n");
+                           }
+
+                           # list of missing tags
+                           my @missingtaglist = ();
+
+                           # list of created photo ids
+                           my @photos = ();
+
+                           # start scanning from $path
+                           print("Set: $set \n");
+                           my $tags = &GetTags($set, ' ', 'tags');
+
+                           # spacer
+                           if ($debug) {
+                                  print("--------------------------------------------------------------------------------\n");
+                              }
+
+                              # first scan is a test (and looks for missing tags)
+                              my $mtags = &GetTags($set, ' ', 'missingtags');
+                              $mtags .= &ScanDir($path, ' ', $set, 'test');
+                              $mtags = &TrimStr($mtags);
+
+                              # if no missing tags, then upload for real
+                              if ($mtags eq '') {
+                                     # upload all images
+                                     &ScanDir($path, $tags, $set, 'upload');
+                                     # if any images were uploaded, handle the set
+                                     if ($#photos >= 0) {
+                                            &CreateSet($set, @photos);
+                                        }
+                                 } else {
+                                     print("Missing tags:\n");
+                                     foreach $tag (sort(split(' ', $mtags))) {
+                                         print("$tag\n");
+                                     }
+                                 }
+
+                                 # output photo ids
+                                 if ($debug) {
+                                        print("Photo IDs:\n");
+                                        print(Dumper(@photos));
+                                    }
+
+                                    #===============================================================================
+                                    # GetTags
+                                    # convert a string into tags
+                                    # parameters: string, mode (tags, nontags, missingtags)
+                                    #===============================================================================
+
+                                    sub GetTags {
+                                        my ($str, $tags, $mode) = @_;
+                                        my $tag;
+
+                                        # check for excluded files
+                                        if ($str =~ m/_x$/) {
+                                               # output info
+                                               if ($debug) {
+                                                      print("Mode: $mode\n");
+                                                      print("Skipping excluded file: $str\n");
+                                                  }
+                                           } else {
+                                               # remove date, except for year
+                                               $str =~ s/^([\d-]+ )([\d\:]|[\d\.])+ /$1/;
+                                               $str =~ s/^(\d\d\d\d)[\d-]* /$1 /;
+                                               # remove extension
+                                               $str =~ s/\.(jpg|jpeg|gif|png|bmp|tif|txt)$//;
+                                               # remove ending picture number (#)
+                                               $str =~ s/ \(\d+\)$//;
+                                               # remove 's
+                                               $str =~ s/\'s / /g;
+                                               # remove non alpha-numberic characters
+                                               $str =~ s/[^A-Za-z0-9 ]//g;
+                                               # lower case
+                                               $str = lc($str);
+                                               # add spaces to the ends
+                                               $str = ' ' . $str . ' ';
+                                               # remove double spaces
+                                               $str =~ s/  / /g;
+
+                                               # replace state abbreviations with full name
+                                               $str =~ s/ ca / california /g;
+                                               $str =~ s/ mn / minnesota /g;
+                                               $str =~ s/ il / illinois /g;
+
+                                               # other replacements
+                                               $str =~ s/ richard / dick /g;
+
+                                               # merge words that make up mutli-word tags
+                                               my @multiwordnontaglist = ();
+                                               foreach my $mwtag (@multiwordtaglist) {
+                                                   if ($str =~ m/ $mwtag /) {
+                                                          my $newtag = $mwtag;
+                                                          $newtag =~ s/ /_/g;
+                                                          #$str =~ s/ $mwtag / $newtag /g;
+                                                          $str .= $newtag . ' ';
+                                                          # # add single words to the string if they exist in tags
+                                                          # foreach $tag (split(' ', $mwtag)) {
+                                                          #     if ($tagstr =~ m/ $tag /) {
+                                                          #         $str .= $tag . ' ';
+                                                          #     }
+                                                          # }
+                                                          # add single words to temporary no-tag-list
+                                                          foreach $tag (split(' ', $mwtag)) {
+                                                              push(@multiwordnontaglist, $tag);
+                                                          }
+                                                      }
+                                               }
+
+                                               if ($mode eq 'tags') {
+                                                      # loop though valid tags and match against string
+                                                      foreach $tag (@taglist) {
+                                                          if ($str =~ m/ $tag / && !($tags =~ m/ $tag /)) {
+                                                                 $tags .= $tag . ' ';
+                                                             }
+                                                      }
+                                                  } elsif ($mode eq 'nontags') {
+                                                      # loop though non-tags and match against string
+                                                      foreach $tag (@nontaglist) {
+                                                          if ($str =~ m/ $tag / && !($tags =~ m/ $tag /)) {
+                                                                 $tags .= $tag . ' ';
+                                                             }
+                                                      }
+                                                  } elsif ($mode eq 'missingtags') {
+                                                      my $alltagstrplus = $alltagstr . join(' ', @multiwordnontaglist) . ' ';
+                                                      # loop though string and track non-matches
+                                                      foreach $tag (split(' ', $str)) {
+                                                          if (!($alltagstrplus =~ m/ $tag /) && !($tags =~ m/ $tag /)) {
+                                                                 $tags .= $tag . ' ';
+                                                             }
+                                                      }
+                                                  }
+
+                                                  # output tags
+                                                  if ($debug) {
+                                                         print("Mode: $mode\n");
+                                                         print("String: $str\n");
+                                                         print("Tags: $tags\n");
+                                                     }
+                                           }
+
+                                           return($tags);
+                                    }
+
+                                    #===============================================================================
+                                    # ScanDir
+                                    # traverses directories adding text to key words
+                                    # parameters: path, tags, set, mode (test, upload)
+                                    #===============================================================================
+
+                                    sub ScanDir {
+                                        my ($path, $tags, $set, $mode) = @_;
+                                        my $alltags = $tags;
+
+                                        # if $path is a directory
+                                        if (opendir(DIR, "$path")) {
+                                               # get files
+                                               my @files = sort(grep(!/^\.\.?$/, readdir(DIR)));
+                                               closedir(DIR);
+                                               # recursively call this procedure for every file/directory
+                                               foreach my $file (@files) {
+                                                   # add new tags
+                                                   my $newtags;
+                                                   if ($mode eq 'test') {
+                                                          $newtags = &GetTags($file, $tags, 'missingtags');
+                                                          $alltags = &GetTags($file, $alltags, 'missingtags');
+                                                      } else {
+                                                          $newtags = &GetTags($file, $tags, 'tags');
+                                                          $alltags = &GetTags($file, $alltags, 'tags');
+                                                      }
+                                                      # recursively call this procedure
+                                                      if ($mode eq 'test') {
+                                                             $alltags = &ScanDir($path . '/' . $file, $alltags, $set, $mode);
+                                                         } else {
+                                                             &ScanDir($path . '/' . $file, $newtags, $set, $mode);
+                                                         }
+                                               }
+                                           }
+
+                                           # if $path is an image, then upload and tag it
+                                           elsif ($path =~ m/\.(jpg|jpeg|gif|png|bmp)$/) {
+
+                                               # get title
+                                               my $title = $path;
+                                               $title =~ s/^.*\/([^\/]+)$/$1/;
+                                               $title =~ s/\.[^\.]*$//;
+
+                                               # get description from text comment file, if one exists
+                                               my $textfile = $path;
+                                               $textfile =~ s/\.[^\.]*$/\.txt/;
+                                               my $text = '';
+                                               if (open(TEXT, "<$textfile")) {
+                                                      $text = <TEXT>;
+                                                      close(TEXT);
+                                                  }
+
+                                                  # trim tags
+                                                  $tags = &TrimStr($tags);
+
+                                                  # set date
+                                                  my $date = $title;
+                                                  if ($title =~ m/^\d\d\d\d-\d\d-\d\d \d\d[\:|\.]\d\d[\:|\.]\d\d /) {
+                                                         $date =~ s/^(\d\d\d\d-\d\d-\d\d \d\d[\:|\.]\d\d[\:|\.]\d\d) .*$/$1/;
+                                                     } elsif ($title =~ m/^\d\d\d\d-\d\d-\d\d \d\d[\:|\.]\d\d /) {
+                                                         $date =~ s/^(\d\d\d\d-\d\d-\d\d \d\d[\:|\.]\d\d) .*$/$1/;
+                                                     } elsif ($title =~ m/^\d\d\d\d-\d\d-\d\d \d\d /) {
+                                                         $date =~ s/^(\d\d\d\d-\d\d-\d\d \d\d) .*$/$1/;
+                                                     } elsif ($title =~ m/^\d\d\d\d-\d\d-\d\d /) {
+                                                         $date =~ s/^(\d\d\d\d-\d\d-\d\d) .*$/$1/;
+                                                     } elsif ($title =~ m/^\d\d\d\d-\d\d /) {
+                                                         $date =~ s/^(\d\d\d\d-\d\d) .*$/$1/;
+                                                     } elsif ($title =~ m/^\d\d\d\d /) {
+                                                         $date =~ s/^(\d\d\d\d) .*$/$1/;
+                                                     } else {
+                                                         $date = '';
+                                                     }
+
+                                                     # test mode
+                                                     if ($mode eq 'test') {
+                                                            if ($tags ne '') {
+                                                                   print("File: \'$path\'\n");
+                                                                   print("Missing tags: $tags\n");
+                                                               }
+                                                        }
+
+                                                        # upload mode
+                                                        if ($mode eq 'upload') {
+                                                               # upload image
+                                                               my $photoid = $upload->upload('photo' => $path,
+                                                                                             'auth_token' => $token,
+                                                                                             'tags' => $tags,
+                                                                                             'is_public' => 0,
+                                                                                             'is_friend' => 1,
+                                                                                             'is_family' => 1,
+                                                                                             'async' => 0
+                                                                                            ) or die("Failed to upload \'$path\'\n");
+                                                               #print(Dumper($upload));
+
+                                                               # add photoid to list
+                                                               push(@photos, $photoid);
+
+                                                               # set title and description
+                                                               $response = $api->execute_method('flickr.photos.setMeta',
+                                                                                                {'api_key' => $key,
+                                                                                                 'auth_token' => $token,
+                                                                                                 'photo_id' => $photoid,
+                                                                                                 'title' => $title,
+                                                                                                 'description' => $text});
+                                                               #print(Dumper($response));
+
+                                                               # set date
+                                                               if ($date ne '') {
+                                                                      $response = $api->execute_method('flickr.photos.setDates',
+                                                                                                       {'api_key' => $key,
+                                                                                                        'auth_token' => $token,
+                                                                                                        'photo_id' => $photoid,
+                                                                                                        'date_taken' => $date});
+                                                                      #print(Dumper($response));
+                                                                  }
+
+                                                                  # add tags
+                                                                  $response = $api->execute_method('flickr.photos.setTags',
+                                                                                                   {'api_key' => $key,
+                                                                                                    'auth_token' => $token,
+                                                                                                    'photo_id' => $photoid,
+                                                                                                    'tags' => $tags});
+                                                                  #print(Dumper($response));
+                                                           }
+
+                                                           # output image info
+                                                           if ($debug) {
+                                                                  print("Set: $set\n");
+                                                                  print("Path: $path\n");
+                                                                  print("Title: $title\n");
+                                                                  print("Tags: $tags\n");
+                                                                  print("Textfile: $textfile\n");
+                                                                  print("Text: $text\n");
+                                                                  print("Date: $date\n");
+                                                                  print("--------------------------------------------------------------------------------\n");
+                                                              } elsif ($mode eq 'upload') {
+                                                                  print("Title: $title\n");
+                                                                  print("-Tags: $tags\n");
+                                                              }
+                                           }
+
+                                           return($alltags);
+                                    }
+
+                                    #===============================================================================
+                                    # CreateSet
+                                    # create photo set and add photo ids to it
+                                    # parameters: set, photos
+                                    #===============================================================================
+
+                                    sub CreateSet {
+                                        my ($set, @photos) = @_;
+                                        my $content;
+
+                                        # create the set
+                                        # add description option from .txt file ???
+                                        print("Creating set: $set\n");
+                                        my $photoset;
+                                        my $photosetid;
+                                        $response = $api->execute_method('flickr.photosets.create',
+                                                                         {'api_key' => $key,
+                                                                          'auth_token' => $token,
+                                                                          'title' => $set,
+                                                                          'primary_photo_id' => $photos[0]});
+                                        #print(Dumper($response));
+                                        $content = $response->{tree};
+                                        #print(Dumper($content));
+                                        $photoset = &FindNodeType($content->{children}, 'element');
+                                        #print(Dumper($photoset));
+                                        $photosetid = $photoset->{attributes}->{id};
+                                        #print(Dumper($photosetid));
+
+                                        # old method
+                                        # $content = XML::Parser::Lite::Tree::instance()->parse($response->{_content});
+                                        # print(Dumper($content));
+                                        # $photosetid = &FindNodeType($content->{children}, 'tag');
+                                        # print(Dumper($photosetid));
+                                        # $photosetid = &FindNodeType($photosetid->{children}, 'tag');
+                                        # print(Dumper($photosetid));
+                                        # $photosetid = $photosetid->{attributes}->{id};
+                                        # print(Dumper($photosetid));
+
+                                        # add all images to the set
+                                        print("Adding images to set ");
+                                        foreach my $photoid (@photos) {
+                                            print(".");
+                                            $response = $api->execute_method('flickr.photosets.addPhoto',
+                                                                             {'api_key' => $key,
+                                                                              'auth_token' => $token,
+                                                                              'photoset_id' => $photosetid,
+                                                                              'photo_id' => $photoid});
+                                        }
+                                        print("\n");
+                                    }
+
+                                    #===============================================================================
+                                    # GetToken
+                                    # get flickr authorization token
+                                    # parameters: key, secret, perms
+                                    #===============================================================================
+
+                                    sub GetToken {
+                                        my ($key, $secret, $perms) = @_;
+                                        my $content;
+                                        my $frob;
+                                        my $url;
+
+                                        # see if we already have a token
+                                        my $tokenfile = $confdir . '/' . $conftoken;
+                                        if (open(TOKENFILE, "<$tokenfile")) {
+                                               $token = <TOKENFILE>;
+                                               close(TOKENFILE);
+                                           } else {
+                                               # else authenticate and get one
+
+                                               # get frob
+                                               $response = $api->execute_method('flickr.auth.getFrob',
+                                                                                {'api_key' => $key,
+                                                                                 'api_secret' => $secret});
+                                               #print(Dumper($response));
+                                               $content = XML::Parser::Lite::Tree::instance()->parse($response->{_content});
+                                               #print(Dumper($content));
+                                               $frob = &FindNodeType($content->{children}, 'tag');
+                                               #print(Dumper($frob));
+                                               $frob = &FindNodeType($frob->{children}, 'tag');
+                                               #print(Dumper($frob));
+                                               $frob = &FindNodeType($frob->{children}, 'data');
+                                               #print(Dumper($frob));
+                                               $frob = $frob->{content};
+                                               #print(Dumper($frob));
+                                               if ($debug) {
+                                                      print("Frob: $frob\n");
+                                                  }
+
+                                                  # get authorization url
+                                                  $url = $api->request_auth_url($perms, $frob);
+                                                  if ($debug) {
+                                                         print("Auth URL: $url\n");
+                                                     }
+
+                                                     # pause while user authenticates
+                                                     print("Please authenticate using this url:\n");
+                                                     print("  $url\n");
+                                                     print("Press enter when done.\n");
+                                                     my $input = <STDIN>;
+
+                                                     # get token
+                                                     $response = $api->execute_method('flickr.auth.getToken',
+                                                                                      {'api_key' => $key,
+                                                                                       'frob' => $frob});
+                                                     #print(Dumper($response));
+                                                     $content = XML::Parser::Lite::Tree::instance()->parse($response->{_content});
+                                                     #print(Dumper($content));
+                                                     $token = &FindNodeType($content->{children}, 'tag');
+                                                     #print(Dumper($token));
+                                                     $token = &FindNodeType($token->{children}, 'tag');
+                                                     #print(Dumper($token));
+                                                     $token = &FindNodeType($token->{children}, 'tag');
+                                                     #print(Dumper($token));
+                                                     $token = &FindNodeType($token->{children}, 'data');
+                                                     #print(Dumper($token));
+                                                     $token = $token->{content};
+                                                     #print(Dumper($token));
+
+                                                     # write token to file
+                                                     open(TOKENFILE, ">$tokenfile") or die("Failed to write to \'$tokenfile\'\n");
+                                                     print(TOKENFILE $token);
+                                                     close(TOKENFILE);
+                                           }
+
+                                           if ($debug) {
+                                                  print("Token: $token\n");
+                                              }
+
+                                              return($token);
+                                    }
+
+                                    #===============================================================================
+                                    # TrimStr
+                                    # trims whitespace from the ends of a string
+                                    # parameters: str
+                                    #===============================================================================
+
+                                    sub TrimStr {
+                                        my $str = shift;
+                                        $str =~ s/^\s+//;
+                                        $str =~ s/\s+$//;
+                                        return($str);
+                                    }
+
+                                    #===============================================================================
+                                    # FindNodeType
+                                    # finds an xml node of a given type
+                                    # parameters: xml, type
+                                    #===============================================================================
+
+                                    sub FindNodeType {
+                                        my ($xml, $type) = @_;
+                                        for my $node (@{$xml}) {
+                                                if ($node->{type} eq $type) { return($node); }
+                                            }
+                                            return({});
+                                    }
+
+                                    #===============================================================================
+                                    # End of File
+                                    #===============================================================================

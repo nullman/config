@@ -51,7 +51,7 @@ for arg in ${args} ; do
                 fi
                 # check for recursion
                 if [[ "${arg}" == "-r" ]] || [[ "${arg}" == "-R" ]] || [[ "${arg}" == "--recursive" ]] \
-                        || [[ "${arg}" == "-d" ]] || [[ "${arg}" == "--directory" ]] ; then
+                       || [[ "${arg}" == "-d" ]] || [[ "${arg}" == "--directory" ]] ; then
                     [[ "${DEBUG}" != "" ]] && echo "DEBUG: recursion has been requested"
                     recurse=1
                 fi

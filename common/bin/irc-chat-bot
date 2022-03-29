@@ -169,7 +169,7 @@ sub join_channel {
     $conn->join($channel);
     if (!defined($quiet)) {
         $conn->privmsg($channel, "Hello, $irc_nick here");
-    }
+}
 }
 
 # part_channel
@@ -179,7 +179,7 @@ sub part_channel {
     # part channel
     if (!defined($quiet)) {
         $conn->privmsg($channel, "I'm leaving now, goodbye");
-    }
+}
     $conn->part($channel);
 }
 
@@ -192,7 +192,7 @@ sub on_connect {
     # join channel
     foreach my $channel (@irc_channels) {
         join_channel($conn, $channel);
-    }
+}
     $conn->{connected} = 1;
 }
 
@@ -208,7 +208,7 @@ sub on_join {
     # say hello to the nick in public
     if (!defined($quiet)) {
         $conn->privmsg($conn->{channel}, "Hello, $nick");
-    }
+}
 }
 
 # on_part
@@ -223,7 +223,7 @@ sub on_part {
     # say goodbye to the nick in public
     if (!defined($quiet)) {
         $conn->privmsg($conn->{channel}, "Goodbye, $nick");
-    }
+}
 }
 
 # on_public
@@ -253,13 +253,13 @@ sub on_public {
         $conn->{chatmode} = 0;
         $conn->{status} = 0;
         $chatmode = 0;
-    }
+}
 
     # if in status 1 and more than one person speaks, clear status
     if ($status == 1 && $lastnick ne $nick && $lastnick ne "") {
         if ($debug == 1) { print("on_public: setting status to 0 (normal)\n"); }
         $conn->{status} = 0;
-    }
+}
 
     # update lastnick
     $conn->{lastnick} = $nick;
@@ -268,7 +268,7 @@ sub on_public {
     my $ignore = 0;
     foreach my $item (@ignore_nick_list) {
         if ($nick =~ $item) { $ignore = 1; last; }
-    }
+}
     if ($debug == 1 && $ignore == 1) { print("on_public: ignore was set\n"); }
 
     # only continue if not ignoring
@@ -277,7 +277,7 @@ sub on_public {
         my $notice = 0;
         foreach my $item (@notice_list) {
             if ($msg =~ $item) { $notice = 1; last; }
-        }
+    }
         if ($debug == 1 && $notice == 1) { print("on_public: notice was set\n"); }
 
         # get command portion of message
@@ -289,32 +289,32 @@ sub on_public {
         if ($msg eq "help" || $msg eq ".h") {
             if ($debug == 1) { print("on_public: calling bot (help)\n"); }
             call_bot($conn, $nick, $msg);
-        }
+    }
         # else if control command given, handle control
         elsif (exists($controlcmdlist{$cmd})) {
             if ($debug == 1) { print("on_public: handling control (command): $msg\n"); }
             handle_control($conn, $to, $msg);
-        }
+    }
         # else if bot command given, call bot
         elsif (exists($botcmdlist{$cmd})) {
             if ($debug == 1) { print("on_public: calling bot (command): $msg\n"); }
             call_bot($conn, $to, $msg);
-        }
+    }
         # else if notice expression given, call bot
         elsif ($notice == 1) {
             if ($debug == 1) { print("on_public: calling bot (notice)\n"); }
             call_bot($conn, $to, $msg);
-        }
+    }
         # else if in chatmode, call bot
         elsif ($chatmode == 1) {
             if ($debug == 1) { print("on_public: calling bot (chat mode)\n"); }
             call_bot($conn, $to, $msg);
-        }
-        # else, do nothing
     }
+        # else, do nothing
+}
     else {
         if ($debug == 1) { print("on_public: ignoring nick: $nick\n"); }
-    }
+}
 
     # reset wait time
     $conn->{waittime} = 0;
@@ -379,8 +379,8 @@ sub call_bot {
             $conn->privmsg($to, $response);
             # delay to prevent flood issues
             #sleep 0.2;
-        }
     }
+}
     close(OUT);
     # if help was requested, add irc-chat-bot commands
     if ($msg eq "help" || $msg eq ".h") {
@@ -395,8 +395,8 @@ sub call_bot {
             $conn->privmsg($to, $response);
             # delay to prevent flood issues
             #sleep 0.2;
-        }
     }
+}
 }
 
 # handle_control
@@ -412,21 +412,21 @@ sub handle_control {
         if ($msg eq "chat" || $msg eq "chatmode") {
             if ($chatmode == -1) {
                 $response = "chatmode is currently disabled; type \"chatmode on\" to enable it";
-            }
+        }
             else {
                 $response = "chatmode is currently enabled; type \"chatmode off\" to disable it";
-            }
         }
+    }
         # turn on chatmode
         elsif ($msg eq "chat on" || $msg eq "chatmode on") {
             $chatmode = 1;
             $response = "chatmode enabled";
-        }
+    }
         # turn off chatmode
         elsif ($msg eq "chat off" || $msg eq "chatmode off") {
             $chatmode = -1;
             $response = "chatmode disabled";
-        }
+    }
 
         # set connection chatmode
         $conn->{chatmode} = $chatmode;
@@ -434,7 +434,7 @@ sub handle_control {
         # respond with current chatmode status
         if ($debug == 1) { print("handle_control: response: $response\n"); }
         $conn->privmsg($to, $response);
-    }
+}
 }
 
 # handle_eliza
@@ -469,7 +469,7 @@ sub handle_eliza {
             $conn->{waittime} = 0;
             # clear lastnick
             $conn->{lastnick} = "";
-        }
+    }
         # if status is 1 (no activity) and one person has spoken, check if
         # response delay has passed
         elsif ($status == 1 && $lastnick ne "" && $waittime >= $response_delay) {
@@ -479,8 +479,8 @@ sub handle_eliza {
             # call bot with last to and last message
             if ($debug == 1) { print("handle_eliza: calling bot\n"); }
             call_bot($conn, $conn->{lastto}, $conn->{lastmsg})
-        }
     }
+}
 }
 
 # while forever, handle eliza check, then do an irc loop

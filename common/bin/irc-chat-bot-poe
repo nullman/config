@@ -110,7 +110,7 @@ sub irc_001 {
     foreach my $channel (@channels) {
         print(Dumper($channel));
         $kernel->post($sender => join => $channel);
-    }
+}
     undef;
 }
 
@@ -123,11 +123,11 @@ sub irc_public {
     if (my ($rot13) = $what =~ /^rot13 (.+)/) {
         $rot13 =~ tr[a-zA-Z][n-za-mN-ZA-M];
         $kernel->post($sender => privmsg => $channel => "$nick: $rot13");
-    }
+}
     undef;
 }
 
-  # We registered for all events, this will produce some debug info.
+# We registered for all events, this will produce some debug info.
 sub _default {
     my ($event, $args) = @_[ARG0 .. $#_];
     my @output = ("$event: ");
@@ -135,10 +135,10 @@ sub _default {
     foreach my $arg (@$args) {
         if (ref($arg) eq 'ARRAY') {
             push(@output, "[" . join(" ,", @$arg) . "]");
-        } else {
-            push (@output, "'$arg'");
-        }
+    } else {
+        push (@output, "'$arg'");
     }
+}
     print STDOUT join ' ', @output, "\n";
     return 0;
 }

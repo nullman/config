@@ -25,8 +25,8 @@ if [[ ! -f ${HOME}/.noofflineimap ]] ; then
         fi
         #logger -i -t offlineimap "Done offlineimap..."
     else
-        #logger -i -t offlineimap "Another instance of offlineimap is running.  Exiting."
-        echo "Another instance of offlineimap is running.  Exiting." > ${log} 2>&1
+        #logger -i -t offlineimap "Another instance of offlineimap is running. Exiting."
+        echo "Another instance of offlineimap is running. Exiting." > ${log} 2>&1
         exit 1
     fi
 fi

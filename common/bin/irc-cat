@@ -26,17 +26,17 @@ bot = IRC.new($nick, $server, $port, $nick)
 
 # add callback on connect
 IRCEvent.add_callback('endofmotd') { |event|
-    # join channels
-    $channels.each do |channel|
-        bot.add_channel(channel)
-    end
-    # start talking
-    bot.send_message('build', "Test")
+  # join channels
+  $channels.each do |channel|
+    bot.add_channel(channel)
+  end
+  # start talking
+  bot.send_message('build', "Test")
 }
 
 # add callback to say hello when user joins (for testing)
 IRCEvent.add_callback('join') { |event|
-    bot.send_message(event.channel, "Hello #{event.from}")
+  bot.send_message(event.channel, "Hello #{event.from}")
 }
 
 # connect to server

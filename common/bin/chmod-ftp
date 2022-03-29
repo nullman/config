@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #===============================================================================
-# mod-ftp
+# chmod-ftp
 #
 # Modify the file permissions and ownership of various ftp dirs.
 #

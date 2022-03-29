@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #===============================================================================
-# mod-data
+# chmod-data
 #
 # Modify the file permissions and ownership of various data dirs.
 #

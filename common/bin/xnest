@@ -56,7 +56,7 @@ case "$1" in
     fvwm2) window_manager="fvwm2 -display ${display}" ;;
     gnome) window_manager="gnome-session --display ${display}" ;;
     ion) window_manager="ion -display ${display}" ;;
-#    kde) window_manager="xterm -display ${display} -e \"kdm\"" ;;
+    #    kde) window_manager="xterm -display ${display} -e \"kdm\"" ;;
     kde) window_manager="kde -display ${display}" ;;
     mwm) window_manager="mwm -display ${display}" ;;
     openbox) window_manager="openbox --sm-client-id ${display}" ;;

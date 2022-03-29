@@ -3,7 +3,7 @@
 # ssh-agent-prime
 #
 # Create an ssh-agent, write ssh agent info to the file
-# '~/.ssh-agent-info-HOSTNAME' and then prompt the user for keys.  Then any
+# '~/.ssh-agent-info-HOSTNAME' and then prompt the user for keys. Then any
 # shell can use the agent by sourcing the contents of that file.
 #
 # Author: Ted Dustman

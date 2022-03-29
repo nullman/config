@@ -30,102 +30,102 @@ my @infiles = [];
 # get parameters
 GetOptions('help|h' => \$help, 'directory|d=s' => \$dir, 'verbose|v' => \$verbose, 'retries|r=i' => \$retries, 'timeout|t=i' => \$timeout);
 if ($help or !@ARGV) { usage() };
-@infiles = @ARGV;
+   @infiles = @ARGV;
 
-# cd to root path
-chdir($dir) || die("ERROR: Could not change to \'" . $dir . "\' directory\n");
+   # cd to root path
+   chdir($dir) || die("ERROR: Could not change to \'" . $dir . "\' directory\n");
 
-# loop through input files
-while (my $infile = pop(@infiles)) {
-    # get xml object from opml file
-    my $opml = XMLin($infile, keyattr => [], ForceArray => 1) ||
-      die("ERROR: Input file \'$infile\' could not be opened\n");
+   # loop through input files
+   while (my $infile = pop(@infiles)) {
+             # get xml object from opml file
+             my $opml = XMLin($infile, keyattr => [], ForceArray => 1) ||
+                 die("ERROR: Input file \'$infile\' could not be opened\n");
 
-    # get outline nodes
-    my $nodes = $opml->{body}->[0]->{outline}->[0];
-#print(Dumper($nodes));
+             # get outline nodes
+             my $nodes = $opml->{body}->[0]->{outline}->[0];
+             #print(Dumper($nodes));
 
-    # loop through each outline node
-    my $i = 0;
-    while (exists($nodes->{outline}->[$i])) {
-        # get title and url
-        my $title = $nodes->{outline}->[$i]->{title};
-        (my $dirtitle = $title) =~ s/[^a-zA-Z0-9_ \-\!\@\$\(\)\;\,]//g;
-        my $url = $nodes->{outline}->[$i]->{xmlUrl};
+             # loop through each outline node
+             my $i = 0;
+             while (exists($nodes->{outline}->[$i])) {
+                       # get title and url
+                       my $title = $nodes->{outline}->[$i]->{title};
+                       (my $dirtitle = $title) =~ s/[^a-zA-Z0-9_ \-\!\@\$\(\)\;\,]//g;
+                       my $url = $nodes->{outline}->[$i]->{xmlUrl};
 
-        # make sure subdirectory exists
-        mkdir("$dirtitle", 0755);
-        chdir($dirtitle) || die("ERROR: Could not change to \'" . $dirtitle . "\' directory\n");
+                       # make sure subdirectory exists
+                       mkdir("$dirtitle", 0755);
+                       chdir($dirtitle) || die("ERROR: Could not change to \'" . $dirtitle . "\' directory\n");
 
-        # verbose mode output
-        if ($verbose) {
-            print("Title: $title  URL: $url\n");
-        }
+                       # verbose mode output
+                       if ($verbose) {
+                              print("Title: $title  URL: $url\n");
+                          }
 
-        # open url
-        my $rsspage = get($url);
+                          # open url
+                          my $rsspage = get($url);
 
-        # continue if rss page is valid
-        if (!defined($rsspage)) {
-            if ($verbose) {
-                print("ERROR: Could not get \'" . $url . "\'\n");
-            }
-        } else {
-            # get xml object from rss page
-            my $rss = XMLin($rsspage,  keyattr => [], ForceArray => 1);
+                          # continue if rss page is valid
+                          if (!defined($rsspage)) {
+                                 if ($verbose) {
+                                        print("ERROR: Could not get \'" . $url . "\'\n");
+                                    }
+                             } else {
+                                 # get xml object from rss page
+                                 my $rss = XMLin($rsspage,  keyattr => [], ForceArray => 1);
 
-            # continue if rss xml is valid
-            if (!defined($rss)) {
-                if ($verbose) {
-                    print("ERROR: Could not parse \'" . $url . "\'\n");
-                }
-            } else {
-                # get rss items
-                my $items = $rss->{channel}->[0]->{item};
-#print(Dumper($items->[0]->{enclosure}->[0]->{url}));
+                                 # continue if rss xml is valid
+                                 if (!defined($rss)) {
+                                        if ($verbose) {
+                                               print("ERROR: Could not parse \'" . $url . "\'\n");
+                                           }
+                                    } else {
+                                        # get rss items
+                                        my $items = $rss->{channel}->[0]->{item};
+                                        #print(Dumper($items->[0]->{enclosure}->[0]->{url}));
 
-                # loop through each rss item
-                my $j = 0;
-                while (exists($items->[$j]->{enclosure}->[0]->{url})) {
-                    # get enclosure url
-                    my $urlenc = $items->[$j]->{enclosure}->[0]->{url};
+                                        # loop through each rss item
+                                        my $j = 0;
+                                        while (exists($items->[$j]->{enclosure}->[0]->{url})) {
+                                                  # get enclosure url
+                                                  my $urlenc = $items->[$j]->{enclosure}->[0]->{url};
 
-                    # verbose mode output
-                    if ($verbose) {
-                        print("Fetching: " . $urlenc . "\n");
-                    }
+                                                  # verbose mode output
+                                                  if ($verbose) {
+                                                         print("Fetching: " . $urlenc . "\n");
+                                                     }
 
-                    # fetch enclosure using wget
-                    system("wget", "-nc", "--tries=" . $retries, "--timeout=" . $timeout, $urlenc);
+                                                     # fetch enclosure using wget
+                                                     system("wget", "-nc", "--tries=" . $retries, "--timeout=" . $timeout, $urlenc);
 
-                    $j++;
-                }
-            }
-        }
+                                                     $j++;
+                                              }
+                                    }
+                             }
 
-        # change up one directory
-        chdir("..") || die("ERROR: Could not change to \'..\' directory\n");
+                             # change up one directory
+                             chdir("..") || die("ERROR: Could not change to \'..\' directory\n");
 
-        $i++;
-    }
-}
+                             $i++;
+                   }
+         }
 
-#===============================================================================
-# usage
-#===============================================================================
+         #===============================================================================
+         # usage
+         #===============================================================================
 
-sub usage {
-    print("Usage: fetch-podcasts [OPTIONS] FILE...\n");
-    print("Fetch podcasts in RSS feeds, contained in an OPML FILE.\n");
-    print("  OPTIONS:\n");
-    print("    -h, --help       this help\n");
-    print("    -v, --verbose    verbose output\n");
-    print("    -d, --directory  root path for downloads\n");
-    print("    -r, --retries    number of retries to download a file\n");
-    print("    -t, --timeout    request timeouts in seconds\n");
-    exit(1);
-}
+         sub usage {
+             print("Usage: fetch-podcasts [OPTIONS] FILE...\n");
+             print("Fetch podcasts in RSS feeds, contained in an OPML FILE.\n");
+             print("  OPTIONS:\n");
+             print("    -h, --help       this help\n");
+             print("    -v, --verbose    verbose output\n");
+             print("    -d, --directory  root path for downloads\n");
+             print("    -r, --retries    number of retries to download a file\n");
+             print("    -t, --timeout    request timeouts in seconds\n");
+             exit(1);
+         }
 
-#===============================================================================
-# End of File
-#===============================================================================
+         #===============================================================================
+         # End of File
+         #===============================================================================

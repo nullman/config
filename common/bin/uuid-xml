@@ -11,7 +11,7 @@ class=UuidXml
 
 # class must be in local directory
 (cd $(dirname $0) && java ${class}) || \
-  echo "Could not find ${class}.class; it must be in the same directory as $(basename $0)"
+    echo "Could not find ${class}.class; it must be in the same directory as $(basename $0)"
 
 #===============================================================================
 # End of File

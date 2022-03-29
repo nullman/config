@@ -3,8 +3,8 @@
 # org-quotes-to-fortune
 #
 # Convert an org file containing a quotes section to fortune formatted files
-# in an ouput directory.  Infile defaults to ~/org/quotes.org, outdir defaults
-# to ~/quotes, and node name defaults to quotes.  Only the top level nodes are
+# in an ouput directory. Infile defaults to ~/org/quotes.org, outdir defaults
+# to ~/quotes, and node name defaults to quotes. Only the top level nodes are
 # searched for a match on the node name.
 #
 # Author: Kyle W T Sherman

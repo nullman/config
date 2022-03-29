@@ -33,8 +33,8 @@ if [[ -f "${name}-${version}.tar.gz" ]] ; then
     pushd "${name}-${version}"
     echo "Compiling sources"
     ./configure --prefix=/usr && \
-      make && \
-      sudo checkinstall -D --default --pkgname "${name}" --pkgversion "${version}" make install
+        make && \
+        sudo checkinstall -D --default --pkgname "${name}" --pkgversion "${version}" make install
     popd
 else
     echo "Error downloading ${name} sources"

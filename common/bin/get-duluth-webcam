@@ -3,8 +3,8 @@
 # get-duluth-webcam
 #
 # Grab the latest image of Duluth's Army Corps of Engineer's webcam twice
-# every minute.  Then after the end time convert them into a video and email
-# the resulting file out.  And finally, quit.
+# every minute. Then after the end time convert them into a video and email
+# the resulting file out. And finally, quit.
 #
 # It should be run every weekday from a cron job.
 #
@@ -48,7 +48,7 @@ while [[ ${done} -eq 0 ]] ; do
         # create video of all pictures
         for x in $(seq -f "%003.0f" $((${starttime} / 60 * 10)) $((${endtime} / 60 * 10))) ; do
             MAGICK_TMPDIR=${HOME}/tmp \
-              convert -delay ${delay} -quality ${quality} "${prefix}_${date}_${x}*.jpg" ${basename}_${x}.mpg
+                         convert -delay ${delay} -quality ${quality} "${prefix}_${date}_${x}*.jpg" ${basename}_${x}.mpg
             if [[ -e ${basename}_${x}.mpg ]] ; then
                 cat ${basename}_${x}.mpg >> ${basename}.mpg
                 rm -f ${basename}_${x}.mpg

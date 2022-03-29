@@ -5,7 +5,7 @@
 # Set up a tunneled bridged network for use with VirtualBox.
 #
 # Select "Host Interface" and set "Interface Name" to "tap0" in VirtualBox
-# settings.  Run this script as root before launching the virtual machine.
+# settings. Run this script as root before launching the virtual machine.
 #
 # Requirements:
 #   apt-get install uml-utilities bridge-utils

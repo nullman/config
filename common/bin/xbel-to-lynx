@@ -51,7 +51,7 @@ sub PrintSpacer {
     my $spc = shift;
     for (my $i=0; $i<$spc; $i++) {
         print(OUTFILE "&nbsp;");
-    }
+}
 }
 
 # write the contents of a folder (recursively)
@@ -75,7 +75,7 @@ sub PrintFolder {
         PrintSpacer($spc+1);
         print(OUTFILE "<a href=\"#" . $path . "_" . $title . "_" . "\">[ " . $title . " ]</a><br />\n");
         $i++;
-    }
+}
 
     # write bookmarks
     $i = 0;
@@ -84,11 +84,11 @@ sub PrintFolder {
         PrintSpacer($spc+3);
         print(OUTFILE "<a href=\"" . $bookmark->{href} . "\">" . $bookmark->{title}->[0] . "</a><br />\n");
         $i++;
-    }
+}
     # add blank line if bookmarks where written
     if ($i > 0) {
         print(OUTFILE "&nbsp;<br />\n");
-    }
+}
 
     # recurse folders
     $i = 0;
@@ -97,7 +97,7 @@ sub PrintFolder {
         PrintFolder($folder->{folder}->[$i], $path);
         $spc -= 3;
         $i++;
-    }
+}
 }
 
 #print(Dumper($xbel));
