@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #===============================================================================
-# emacsed
+# emacs-edit
 #
 # Launch an emacs editor, using emacs server if found.
 #
@@ -10,7 +10,7 @@
 set -euo pipefail
 
 # return wether or not terminal is running in screen
-in_screen() {
+inscreen() {
     local cmd=$(ps -o comm -p $(ps -o ppid -p "$$" --no-headers) --no-headers)
     [[ "${cmd}" == "screen" ]] && echo "screen"
 }
@@ -53,7 +53,7 @@ fi
 
 # determine if screen is running under this user and if emacs is running under it
 screen=0
-if [[ "$(in_screen)" == "screen" ]] ; then
+if [[ "$(inscreen)" == "screen" ]] ; then
     if [[ -n "$(ps -e --format pid,ppid,user,args | grep -v grep | grep ${USER} | grep -i screen)" ]] ; then
         if [[ -n "$(ps -e --format pid,ppid,user,args | grep -v grep | grep ${USER} | grep emacs | grep '\-nw')" ]] ; then
             screen=1

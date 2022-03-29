@@ -142,7 +142,7 @@ termcapinfo linux*|xterm*|rxvt*|urxvt*|gnome-terminal*|alacritty*|termite*|termi
 # SCREEN checks all the keys you type; you type the key
 # which is known as the "command character" then SCREEN
 # eats this key, too, and checks whether this key is
-# "bound" to a command.  If so then SCREEN will execute it.
+# "bound" to a command. If so then SCREEN will execute it.
 #
 # The command "bind" allows you to chose which keys
 # will be assigned to the commands.

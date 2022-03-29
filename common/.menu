@@ -4,11 +4,11 @@
 # Menu Configuration
 #
 # Sections start with a name that ends with a colon and end with an empty
-# line.  Leading whitespace is ignored for both section names are items.
-# The main section must always exist and builds the main (first) menu.
-# Menu items consist of display text, folowed by a pipe delimiter, folowed by
-# either a command to execute or another section name starting with a colon or
-# another menu file to load starting with an explaination point.
+# line. Leading whitespace is ignored for both section names are items. The
+# main section must always exist and builds the main (first) menu. Menu items
+# consist of display text, folowed by a pipe delimiter, folowed by either a
+# command to execute or another section name starting with a colon or another
+# menu file to load starting with an explaination point.
 #
 # Author: Kyle W T Sherman
 #===============================================================================

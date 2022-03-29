@@ -1,14 +1,20 @@
 #!/usr/bin/env bash
 #===============================================================================
-# emacsedwait
+# emacs-vi-edit
 #
-# Launch an emacs editor, using emacs server if found, and wait for the file
-# to be closed.
+# Run emacs if the emacs server is running or vi editor otherwise.
 #
 # Author: Kyle W T Sherman
 #===============================================================================
 
-WAIT=1 emacsed "$@"
+WAIT=true VI=true emacs-edit "$@"
+if [[ $(command -v vim) ]] ; then
+    emacsclient --no-wait --alternate-editor "vim" "$@"
+elif [[ $(command -v vi) ]] ; then
+    emacsclient --no-wait --alternate-editor "vi" "$@"
+else
+    echo "Could not find an editor"
+fi
 
 #===============================================================================
 # End of File

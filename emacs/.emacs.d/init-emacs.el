@@ -19238,7 +19238,7 @@ Blank lines separate paragraphs.  Semicolons start comments.
                     ;;,(cons "emacs-modules" local-modules-dir)
                     ;;,(cons "emacs-work-modules" local-work-modules-dir)
                     ("config" . "~/config")
-                    ("config-public" . "~/config-pubic")
+                    ("config-private" . "~/config-private")
                     ("bin" . "~/bin")
                     ("org" . "~/org")
                     ("web" . "~/web")

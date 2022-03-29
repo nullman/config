@@ -172,7 +172,7 @@ case "${menu}" in
             sel=$(printf '%s\n' "${opts[@]}" | rofi -dmenu -i -p 'Sounds' -hide-scrollbar)
         }
 
-        _kill_ffplay() {
+        _killffplay() {
             # stop any currently playing sounds
             # (regardless of selection to prevent sounds from doubling up)
             pkill --exact ffplay --euid ${USER} || true
@@ -206,7 +206,7 @@ case "${menu}" in
                 echo "selpath: ${selpath}"
 
                 if [[ "${sel}" == "${stop}" ]] ; then
-                    _kill_ffplay
+                    _killffplay
                     break
                 fi
 
@@ -228,7 +228,7 @@ case "${menu}" in
                 fi
 
                 # handle playing a sound file
-                _kill_ffplay
+                _killffplay
                 if $(echo "${sel}" | grep -q "Ambient Sound Effects") ; then
                     echo "Playing: ${sel} (in a loop)"
                     ffplay -nodisp -loop 0 "${selpath}"

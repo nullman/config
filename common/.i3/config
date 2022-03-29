@@ -5,7 +5,7 @@
 #
 # i3 config file (v4)
 #
-# Reference:  http://i3wm.org/docs/userguide.html
+# Reference: http://i3wm.org/docs/userguide.html
 #===============================================================================
 
 #-------------------------------------------------------------------------------
@@ -464,9 +464,9 @@ smart_gaps on
 # the edge of the screen is 0)
 smart_borders on
 
-# # Press $super+Shift+g to enter the gap mode.  Choose o or i for modifying
-# # outer/inner gaps.  Press one of + / - (in-/decrement for current workspace)
-# # or 0 (remove gaps for current workspace).  If you also press Shift with
+# # Press $super+Shift+g to enter the gap mode. Choose o or i for modifying
+# # outer/inner gaps. Press one of + / - (in-/decrement for current workspace)
+# # or 0 (remove gaps for current workspace). If you also press Shift with
 # # these keys, the change will be global for all workspaces.
 # set $mode_gaps Gaps: (o) outer, (i) inner
 # set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)

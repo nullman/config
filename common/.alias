@@ -1609,71 +1609,55 @@ alias rddf="rdesktop -u kyle -f -z -a16 dozer"
 #
 # ssh
 #
-#        sshkeygenrsa            generate rsa ssh keys
-alias sshkeygenrsa="ssh-keygen -t rsa -b 4096"
-#        sshkeygened             generate rsa ssh keys
-alias sshkeygened="ssh-keygen -t ed25519"
-#! #        sshkeycp                copy ssh key to remote host
-#! alias sshkeycp="
-#!     echo -n 'Host to copy ssh key to: ' ; read a
-#!     ssh \${a} '[[ ! -d .ssh ]] && mkdir -p .ssh && chmod 700 .ssh'
-#!     [[ -f \${HOME}/.ssh/id_dsa.pub ]] && \
-    #!       cat \${HOME}/.ssh/id_dsa.pub | ssh \${a} '/bin/cat >> .ssh/authorized_keys ; \
-    #!       /bin/chmod 600 .ssh/authorized_keys'
-#!     [[ -f \${HOME}/.ssh/id_rsa.pub ]] && \
-    #!       cat \${HOME}/.ssh/id_rsa.pub | ssh \${a} '/bin/cat >> .ssh/authorized_keys ; \
-    #!       /bin/chmod 600 .ssh/authorized_keys'"
-#! #        sshurxvtcp              copy urxvt terminfo data to remote host
-#! alias sshurxvtcp="
-#!     echo -n 'Host to copy urxvt terminfo data to: ' ; read a
-#!     infocmp urxvt | \
-    #!       ssh \${a} 'cat > /tmp/terminfo && mkdir -p .terminfo && \
-    #!       tic /tmp/terminfo && rm -f /tmp/terminfo'"
-#        sshagent                turn on ssh agent
-alias sshagent="
+#        ssh-key-gen-rsa         generate rsa ssh keys
+alias ssh-key-gen-rsa="ssh-keygen -t rsa -b 4096"
+#        ssh-key-gen-ed          generate ed25519 ssh keys
+alias ssh-key-gen-ed="ssh-keygen -t ed25519"
+#        ssh-agent               turn on ssh agent
+alias ssh-agent="
     eval \$(ssh-agent)
     ssh-add
     ssh-add -l"
-#!#        sshtunirc               ssh tunnel irc (freenode.net)
-#!alias sshtunirc="ssh -L 6670:irc.freenode.net:6667 \${nullwareip}"
-#!#!alias sshtunirc="ssh -L 6667:irc.freenode.net:6667 \${nullwareip}"
-#!#        sshtunimap              ssh tunnel imap (home)
-#!alias sshtunimap="ssh -L 8143:morpheus:143 \${nullwareip}"
-#!#        sshtungmail             ssh tunnel gmail pop
-#!alias sshtungmail="ssh -L 8995:pop.gmail.com:995 \${nullwareip}"
-#!#        sshtunldap              ssh tunnel scheduleworld ldap
-#!alias sshtunldap="ssh -L 8389:ldap.scheduleworld.com:389 \${nullwareip}"
-#!#        sshtunsshw              ssh tunnel ssh through work pc
-#!alias sshtunsshw="ssh -L 2222:\${nullwareip}:22 kyle-work"
+#!#        ssh-tunnel-irc          ssh tunnel irc (freenode.net)
+#!alias ssh-tunnel-irc="ssh -L 6670:irc.freenode.net:6667 \${nullwareip}"
+#!#!alias ssh-tunnel-irc="ssh -L 6667:irc.freenode.net:6667 \${nullwareip}"
+#!#        ssh-tunnel-imap         ssh tunnel imap (home)
+#!alias ssh-tunnel-imap="ssh -L 8143:morpheus:143 \${nullwareip}"
+#!#        ssh-tunnel-gmail        ssh tunnel gmail pop
+#!alias ssh-tunnel-gmail="ssh -L 8995:pop.gmail.com:995 \${nullwareip}"
+#!#        ssh-tunnel-ldap         ssh tunnel scheduleworld ldap
+#!alias ssh-tunnel-ldap="ssh -L 8389:ldap.scheduleworld.com:389 \${nullwareip}"
+#!#        ssh-tunnel-sshw         ssh tunnel ssh through work pc
+#!alias ssh-tunnel-sshw="ssh -L 2222:\${nullwareip}:22 kyle-work"
 #
 # ssh logons (internal)
 #
-#        sshapoc                 ssh apoc
-alias sshapoc="echo 'ssh:apoc' ; ssh apoc"
-#        sshcolleen              ssh colleen
-alias sshcolleen="echo 'ssh:colleen@colleen' ; ssh colleen@colleen"
-#        sshfirewall             ssh -p 8022 -l root firewall
-alias sshfirewall="echo 'ssh:admin@firewall' ; ssh -p 8022 admin@firewall"
-#        sshgemini               ssh gemini
-alias sshgemini="echo 'ssh:gemini' ; ssh gemini"
-#        sshmorpheus             ssh morpheus
-alias sshmorpheus="echo 'ssh:morpheus' ; ssh morpheus"
-#        sshmorpheusgit          ssh morpheus:git
-alias sshmorpheusgit="echo 'ssh:git@morpheus' ; ssh -l git morpheus"
-#        sshneo                  ssh neo
-alias sshneo="echo 'ssh:neo' ; ssh neo"
-#        sshpi                   ssh raspberrypi
-alias sshpi="echo 'ssh:pi@raspberrypid' ; ssh pi@raspberrypid"
-#        sshraspad               ssh raspad
-alias sshraspad="echo 'ssh:raspadusb' ; ssh pi@raspadusb"
-#        sshswitch               ssh switch
-alias sshswitch="echo 'ssh:switch' ; ssh switch"
-#        sshtank                 ssh tank
-alias sshtank="echo 'ssh:tank' ; ssh tank"
-#        sshtank2                ssh tank (2nd nic)
-alias sshtank2="echo 'ssh:tank' ; ssh 192.168.1.61"
-#        sshtrinity              ssh trinity
-alias sshtrinity="echo 'ssh:trinity' ; ssh trinity"
+#        ssh-apoc                ssh apoc
+alias ssh-apoc="echo 'ssh:apoc' ; ssh apoc"
+#        ssh-colleen             ssh colleen
+alias ssh-colleen="echo 'ssh:colleen@colleen' ; ssh colleen@colleen"
+#        ssh-firewall            ssh -p 8022 -l root firewall
+alias ssh-firewall="echo 'ssh:admin@firewall' ; ssh -p 8022 admin@firewall"
+#        ssh-gemini              ssh gemini
+alias ssh-gemini="echo 'ssh:gemini' ; ssh gemini"
+#        ssh-morpheus            ssh morpheus
+alias ssh-morpheus="echo 'ssh:morpheus' ; ssh morpheus"
+#        ssh-morpheusgit         ssh morpheus:git
+alias ssh-morpheusgit="echo 'ssh:git@morpheus' ; ssh -l git morpheus"
+#        ssh-neo                 ssh neo
+alias ssh-neo="echo 'ssh:neo' ; ssh neo"
+#        ssh-pi                  ssh raspberrypi
+alias ssh-pi="echo 'ssh:pi@raspberrypid' ; ssh pi@raspberrypid"
+#        ssh-raspad              ssh raspad
+alias ssh-raspad="echo 'ssh:raspadusb' ; ssh pi@raspadusb"
+#        ssh-switch              ssh switch
+alias ssh-switch="echo 'ssh:switch' ; ssh switch"
+#        ssh-tank                ssh tank
+alias ssh-tank="echo 'ssh:tank' ; ssh tank"
+#        ssh-tank2               ssh tank (2nd nic)
+alias ssh-tank2="echo 'ssh:tank' ; ssh 192.168.1.61"
+#        ssh-trinity             ssh trinity
+alias ssh-trinity="echo 'ssh:trinity' ; ssh trinity"
 
 #
 # ssh logons (external)
@@ -1684,8 +1668,8 @@ alias sshtrinity="echo 'ssh:trinity' ; ssh trinity"
 #!alias sshxr="echo 'ssh:nullware.com:root' ; ssh -l root \${nullwareip}"
 #!#        sshxk                 ssh nullware.com
 #!alias sshxk="echo 'ssh:nullware.com:kyle' ; ssh -l kyle \${nullwareip}"
-#        sshnullware             ssh nullware.com
-alias sshnullware="echo 'ssh:kyle@nullware.com' ; ssh kyle@\${nullwareip}"
+#        ssh-nullware            ssh nullware.com
+alias ssh-nullware="echo 'ssh:kyle@nullware.com' ; ssh kyle@\${nullwareip}"
 
 #
 # sftp (internal)

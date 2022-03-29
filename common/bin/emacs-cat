@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #===============================================================================
-# emacscat
+# emacs-cat
 #
 # Pipe data from STDIN or a file into an emacs buffer.
 #
@@ -24,21 +24,21 @@ tmpfile="$(mktemp)"
 lisp="(progn (switch-to-buffer (generate-new-buffer \"*stdin*\")) (insert-file \"${tmpfile}\") (end-of-buffer) (normal-mode))"
 
 if [[ ! -t 0  ]] ; then
-	# data from stdin
+    # data from stdin
 
-	cat > "${tmpfile}"
+    cat > "${tmpfile}"
 
-	if (emacsclient -a emacs -e "${lisp}" "${@}" > /dev/null) ; then
-		echo "Failed to import your data into Emacs"
-	fi
+    if (emacsclient -a emacs -e "${lisp}" "${@}" > /dev/null) ; then
+        echo "Failed to import your data into Emacs"
+    fi
 
-	rm -f "${tmpfile}"
+    rm -f "${tmpfile}"
 else
-	# nothing from stdin, use parameters
+    # nothing from stdin, use parameters
 
-	if [[ $# -gt 0 ]] ; then
-		emacsclient -n -a emacs "${@}" > /dev/null
-	fi
+    if [[ $# -gt 0 ]] ; then
+        emacsclient -n -a emacs "${@}" > /dev/null
+    fi
 fi
 
 #===============================================================================

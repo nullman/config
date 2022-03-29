@@ -77,11 +77,11 @@ export LESS="--CLEAR-SCREEN --quit-if-one-screen --ignore-case --jump-target=10 
 export MANPAGER="less"
 #_command bat && export BAT_THEME="ansi-dark" && export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 export PROCESS_SHELL="$(ps -hp $$ | awk '{print $5}')"
-export EDITOR="emacsed"                 # default terminal editor
+export EDITOR="emacs-edit"                 # default terminal editor
 export VISUAL="${EDITOR}"               # default GUI editor
 #export EDITOR="emacsclient -t -a ''"    # default terminal editor
 #export VISUAL="emacsclient -c -a emacs" # default GUI editor
-export GIT_EDITOR="emacsedwait"
+export GIT_EDITOR="emacs-editwait"
 export BROWSER="firefox"
 export NNTPSERVER="netnews.comcast.net"
 #export NNTPSERVER="news.usenetserver.com"

@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-03-28 13:23 (kyle)>
+  #+TIMESTAMP: <2022-03-29 13:02 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -29472,7 +29472,7 @@
                           ;;,(cons "emacs-modules" local-modules-dir)
                           ;;,(cons "emacs-work-modules" local-work-modules-dir)
                           ("config" . "~/config")
-                          ("config-public" . "~/config-pubic")
+                          ("config-private" . "~/config-private")
                           ("bin" . "~/bin")
                           ("org" . "~/org")
                           ("web" . "~/web")

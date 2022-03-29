@@ -1,27 +1,26 @@
 This repository contains my public Linux HOME directory configuration files
-(i.e. dot-files).  I've had a collection of home files since 1996 and used
+(i.e. dot-files). I've had a collection of home files since 1996 and used
 various source backup and control systems over the years to keep from loosing
 any, as well as to keep track of changes made over time, with the ability to
-view or restore files from previous versions.  I moved everything to a Git
+view or restore files from previous versions. I moved everything to a Git
 repository (in February of 2012), but had it on private servers until now
-(January 2021).  I've started with a fresh history, as at times passwords and
+(January 2021). I've started with a fresh history, as at times passwords and
 other sensitive information have been committed.
 
 The purpose of making this repository public is for me to be able to easily
-share my current configuration files with others.  It is not expected that
-anyone would use these files verbatim.  I update files frequently, often
-multiple times per day, and at any given point, some files might be broken.  I
+share my current configuration files with others. It is not expected that
+anyone would use these files verbatim. I update files frequently, often
+multiple times per day, and at any given point, some files might be broken. I
 often push commits just so I can easily move files from one computer to
-another to continue working on them.  I will make tags when I think my setup
-is stable enough for others to use.
+another to continue working on them. I will make tags when I think my setup is
+stable enough for others to use.
 
 While the majority of the code contained within this repository is my own,
 many one-liners, snippets, or even complete scripts have been copied from
-others.  I've tried to give original author credit, however, I've been
-tweaking my configuration for over 20 years now and many sources of code or
-ideas have been lost or never known.  If you find something here that you
-think should be attributed to someone else, let me know and I'll give credit
-where it is due.
+others. I've tried to give original author credit, however, I've been tweaking
+my configuration for over 20 years now and many sources of code or ideas have
+been lost or never known. If you find something here that you think should be
+attributed to someone else, let me know and I'll give credit where it is due.
 
 For any code found here that is not written by someone else and/or does not
 have a specific license, you can assume it is licensed under the MIT License.
