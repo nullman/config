@@ -199,11 +199,11 @@ super + shift + r
 
 # git synchronize config
 super + alt + y
-    source "${HOME}/.funct" && (gitsyncconfig && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12" --tail
+    source "${HOME}/.funct" && (git-sync-config && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12" --tail
 
 # git synchronize extra
 super + alt + u
-    source "${HOME}/.funct" && (gitsyncextra && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12" --tail
+    source "${HOME}/.funct" && (git-sync-extra && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12" --tail
 
 # start screen saver
 super + alt + s
