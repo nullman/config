@@ -3,7 +3,7 @@
 #
 # Configuration for gsimplecal calendar application.
 #
-# Reference:  http://manpages.ubuntu.com/manpages/bionic/man1/gsimplecal.1.html
+# Reference: http://manpages.ubuntu.com/manpages/bionic/man1/gsimplecal.1.html
 #===============================================================================
 
 #show_calendar=1

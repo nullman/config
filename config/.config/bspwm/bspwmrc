@@ -4,8 +4,8 @@
 #
 # Configuration Binary Space Partitioning Window Manager (bspwm).
 #
-# Reference:  https://github.com/baskerville/bspwm
-# Reference:  https://gitlab.com/protesilaos/dotfiles/-/blob/v2.2.0/bspwm/.config/bspwm/bspwmrc
+# Reference: https://github.com/baskerville/bspwm
+# Reference: https://gitlab.com/protesilaos/dotfiles/-/blob/v2.2.0/bspwm/.config/bspwm/bspwmrc
 #===============================================================================
 
 # bspc config

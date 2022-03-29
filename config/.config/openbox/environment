@@ -3,7 +3,7 @@
 #
 # Openbox Window Manager environment setup script.
 #
-# Reference:  http://openbox.org/
+# Reference: http://openbox.org/
 #===============================================================================
 
 # check if executable command is found in the path

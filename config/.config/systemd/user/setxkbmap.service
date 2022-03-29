@@ -8,7 +8,7 @@
 # Stop:     systemctl --user stop setxkbmap.service
 # Disable:  systemctl --user disable setxkbmap.service
 #
-# Reference:  https://wiki.archlinux.org/index.php/Systemd/User
+# Reference: https://wiki.archlinux.org/index.php/Systemd/User
 #===============================================================================
 
 [Unit]

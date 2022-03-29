@@ -5,7 +5,7 @@
 # Binary Space Partitioning Window Manager (bspwm) auto-start applications
 # script.
 #
-# Reference:  https://github.com/baskerville/bspwm
+# Reference: https://github.com/baskerville/bspwm
 #===============================================================================
 
 # check if executable command is found in the path

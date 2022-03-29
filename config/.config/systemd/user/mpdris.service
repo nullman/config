@@ -8,7 +8,7 @@
 # Stop:     systemctl --user stop mpdris.service
 # Disable:  systemctl --user disable mpdris.service
 #
-# Reference:  https://wiki.archlinux.org/index.php/Systemd/User
+# Reference: https://wiki.archlinux.org/index.php/Systemd/User
 #===============================================================================
 
 [Unit]

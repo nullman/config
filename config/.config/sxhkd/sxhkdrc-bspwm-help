@@ -59,4 +59,4 @@ Move and Resize
 
 [1] After entering expand/contract/move window mode, use I, K, J, and L to
 expand/contract the current window, and use Up, Down, Left, and Right
-arrow keys to move a floating window around.  Press Esc to exit mode.
+arrow keys to move a floating window around. Press Esc to exit mode.
