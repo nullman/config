@@ -754,20 +754,29 @@ Common values:
 ;; General:13 ends here
 
 ;; [[file:init-emacs.org::*General][General:14]]
-(init-message 3 "Wrap Lines by Default")
+;; (init-message 3 "Wrap Lines by Default")
 
-;; wrap lines
-(setq truncate-lines nil)
+;; ;; wrap lines
+;; (setq truncate-lines nil)
 ;; General:14 ends here
 
-;; [[file:init-emacs.org::*General][General:16]]
+;; [[file:init-emacs.org::*General][General:15]]
+(init-message 3 "Do Not Wrap Lines by Default")
+
+;; turn off line wrapping
+(setq truncate-lines t)
+(setq-default truncate-lines t)
+(toggle-truncate-lines 1)
+;; General:15 ends here
+
+;; [[file:init-emacs.org::*General][General:17]]
 (init-message 3 "Turn Off `auto-fill-mode'")
 
 ;; do not automatically break lines by inserting newlines
 (turn-off-auto-fill)
-;; General:16 ends here
+;; General:17 ends here
 
-;; [[file:init-emacs.org::*General][General:17]]
+;; [[file:init-emacs.org::*General][General:18]]
 (init-message 3 "Turn On `global-visual-line-mode'")
 
 ;; visually break lines that are longer than the screen width
@@ -781,30 +790,30 @@ Common values:
 
 ;; use curly arrows to indicate a visual line wrap
 (setq visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
-;; General:17 ends here
+;; General:18 ends here
 
-;; [[file:init-emacs.org::*General][General:18]]
+;; [[file:init-emacs.org::*General][General:19]]
 (init-message 3 "Set `display-line-numbers-type' to relative")
 
 ;; when `display-line-numbers-mode' is on use relative numbering
 (setq display-line-numbers-type 'relative)
-;; General:18 ends here
+;; General:19 ends here
 
-;; [[file:init-emacs.org::*General][General:19]]
+;; [[file:init-emacs.org::*General][General:20]]
 (init-message 3 "Prevent `next-line' from Inserting Newlines")
 
 ;; stop cursor at the end of the file
 (setq next-line-add-newlines nil)
-;; General:19 ends here
+;; General:20 ends here
 
-;; [[file:init-emacs.org::*General][General:20]]
+;; [[file:init-emacs.org::*General][General:21]]
 (init-message 3 "Keep the Cursor in the Same Column When Using Page-Up and Page-Down")
 
 ;; keep screen position when using page-up and page-down
 (setq scroll-preserve-screen-position 'keep)
-;; General:20 ends here
+;; General:21 ends here
 
-;; [[file:init-emacs.org::*General][General:21]]
+;; [[file:init-emacs.org::*General][General:22]]
 (init-message 3 "Scroll Conservatively")
 
 ;; scroll one line at a time
@@ -813,33 +822,33 @@ Common values:
 (setq scroll-conservatively 101)
 ;; turn off vertical auto-scroll
 (setq auto-window-vscroll nil)
-;; General:21 ends here
+;; General:22 ends here
 
-;; [[file:init-emacs.org::*General][General:22]]
+;; [[file:init-emacs.org::*General][General:23]]
 (init-message 3 "Ignore Case on Search Matches")
 
 ;; make searches case-insensitive
 (setq case-fold-search t)
-;; General:22 ends here
+;; General:23 ends here
 
-;; [[file:init-emacs.org::*General][General:23]]
+;; [[file:init-emacs.org::*General][General:24]]
 (init-message 3 "Highlight Search Matches")
 
 ;; highlight search matches
 (setq search-highlight t
       ;;isearch-highlight t
       query-replace-highlight t)
-;; General:23 ends here
+;; General:24 ends here
 
-;; [[file:init-emacs.org::*General][General:24]]
+;; [[file:init-emacs.org::*General][General:25]]
 (init-message 3 "Hightlight Marked Regions")
 
 ;; make current selection visible
 (transient-mark-mode 1)
 (setq-default transient-mark-mode t)
-;; General:24 ends here
+;; General:25 ends here
 
-;; [[file:init-emacs.org::*General][General:25]]
+;; [[file:init-emacs.org::*General][General:26]]
 (init-message 3 "Set Default Tab Indentation to Four Spaces and Turn on Auto-Complete")
 
 ;; set tab indentation, width, and convert tabs to spaces
@@ -853,17 +862,17 @@ Common values:
               standard-indent standard-indent
               tab-always-indent tab-always-indent
               tab-stop-list tab-stop-list)
-;; General:25 ends here
+;; General:26 ends here
 
-;; [[file:init-emacs.org::*General][General:26]]
+;; [[file:init-emacs.org::*General][General:27]]
 (init-message 3 "Set Default Line-Wrapping Column to 78")
 
 ;; set default fill column for `auto-fill-mode' mode and `fill-paragraph'
 (setq fill-column 78)
 (setq-default fill-column fill-column)
-;; General:26 ends here
+;; General:27 ends here
 
-;; [[file:init-emacs.org::*General][General:27]]
+;; [[file:init-emacs.org::*General][General:28]]
 (init-message 3 "Set Default Right-Margin Comment Indent Column to 40")
 
 ;; set default comment column for in-line comments
@@ -872,51 +881,51 @@ Common values:
 ;; set default comment fill column for in-line comments
 (setq comment-fill-column nil)
 (setq-default comment-fill-column comment-fill-column)
-;; General:27 ends here
+;; General:28 ends here
 
-;; [[file:init-emacs.org::*General][General:28]]
+;; [[file:init-emacs.org::*General][General:29]]
 (init-message 3 "Have Cursor Movements Attempt to Keep Point on Original Column")
 
 ;; turn on goal column support
 (put 'set-goal-column 'disabled nil)
-;; General:28 ends here
+;; General:29 ends here
 
-;; [[file:init-emacs.org::*General][General:29]]
+;; [[file:init-emacs.org::*General][General:30]]
 (init-message 3 "Sentences and Colons Should Have One Space after Them")
 
 ;; insert one space after a sentence when filling text
 (setq sentence-end-double-space nil)
 ;; insert one space after a colon when filling text
 (setq colon-double-space nil)
-;; General:29 ends here
+;; General:30 ends here
 
-;; [[file:init-emacs.org::*General][General:30]]
+;; [[file:init-emacs.org::*General][General:31]]
 ;; (init-message 3 "Sentences and Colons Should Have Two Spaces after Them")
 
 ;; ;; insert two spaces after a sentence when filling text
 ;; (setq sentence-end-double-space t)
 ;; ;; insert two spaces after a colon when filling text
 ;; (setq colon-double-space t)
-;; General:30 ends here
+;; General:31 ends here
 
-;; [[file:init-emacs.org::*General][General:31]]
+;; [[file:init-emacs.org::*General][General:32]]
 (init-message 3 "Highlight Matching Parenthesis")
 
 ;; highlight matching parenthesis
 (show-paren-mode 1)
 (set-face-foreground 'show-paren-match color-paren)
 (set-face-attribute 'show-paren-match nil :weight 'extra-bold)
-;; General:31 ends here
+;; General:32 ends here
 
-;; [[file:init-emacs.org::*General][General:32]]
+;; [[file:init-emacs.org::*General][General:33]]
 (init-message 3 "Highlight TABs")
 
 ;; highlight tabs
 (setq highlight-tabs t)
 (setq-default highlight-tabs highlight-tabs)
-;; General:32 ends here
+;; General:33 ends here
 
-;; [[file:init-emacs.org::*General][General:33]]
+;; [[file:init-emacs.org::*General][General:34]]
 (init-message 3 "Highlight Tabs and Trailing Whitespace")
 
 ;; ;; highlight trailing white spaces
@@ -931,32 +940,32 @@ Common values:
         (newline-mark 10 [182 10]) ; 10 linefeed '\n', 182 ??? '¶'
         (tab-mark 9 [9655 9] [92 9])))    ; 9 tab '\t', 9655 '▷', 92 backslash '\'
 (global-whitespace-mode)              ; enable whitespace mode everywhere
-;; General:33 ends here
+;; General:34 ends here
 
-;; [[file:init-emacs.org::*General][General:34]]
+;; [[file:init-emacs.org::*General][General:35]]
 (init-message 3 "Highlight Current Line")
 
 ;; highlight current line
 (hl-line-mode 1)
 (global-hl-line-mode 1)
-;; General:34 ends here
+;; General:35 ends here
 
-;; [[file:init-emacs.org::*General][General:35]]
+;; [[file:init-emacs.org::*General][General:36]]
 (init-message 3 "Turn on Syntax Highlighting")
 
 ;; turn on global font lock mode and syntax highlighting
 (global-font-lock-mode 1)
 (setq font-lock-maximum-decoration t)
-;; General:35 ends here
+;; General:36 ends here
 
-;; [[file:init-emacs.org::*General][General:36]]
+;; [[file:init-emacs.org::*General][General:37]]
 (init-message 3 "Typing Replaces Highlighted Text")
 
 ;; replace highlighted text with typed text
 (delete-selection-mode t)
-;; General:36 ends here
+;; General:37 ends here
 
-;; [[file:init-emacs.org::*General][General:37]]
+;; [[file:init-emacs.org::*General][General:38]]
 (init-message 3 "Set Commenting Style to Indent")
 
 ;; ;; set comment start (default) and padding
@@ -964,14 +973,14 @@ Common values:
 ;;       comment-padding " ")
 ;; set comment style
 (setq comment-style 'indent)
-;; General:37 ends here
-
-;; [[file:init-emacs.org::*General][General:38]]
-(setq enable-recursive-minibuffers t)
-(minibuffer-depth-indicate-mode 1)
 ;; General:38 ends here
 
-;; [[file:init-emacs.org::*General][General:40]]
+;; [[file:init-emacs.org::*General][General:39]]
+(setq enable-recursive-minibuffers t)
+(minibuffer-depth-indicate-mode 1)
+;; General:39 ends here
+
+;; [[file:init-emacs.org::*General][General:41]]
 (init-message 3 "Have `apropos' Search All Symbols and Order by Relevance")
 
 ;; make apropos command search all symbols
@@ -980,25 +989,25 @@ Common values:
 ;; make apropos command list results by relevance
 (setq apropos-sort-by-scores t
       apropos-documentation-sort-by-scores t)
-;; General:40 ends here
+;; General:41 ends here
 
-;; [[file:init-emacs.org::*General][General:41]]
+;; [[file:init-emacs.org::*General][General:42]]
 (init-message 3 "Set Default `grep' Command")
 
 ;; set grep command
 (setq grep-command "grep -n -H -i -r -e ")
-;; General:41 ends here
+;; General:42 ends here
 
-;; [[file:init-emacs.org::*General][General:42]]
+;; [[file:init-emacs.org::*General][General:43]]
 (init-message 3 "Set Email Sources")
 
 ;; email settings
 (setq mail-sources `((pop :server "pop.gmail.com" :port 995
                           :user ,user-mail-address
                           :connection ssl :leave t)))
-;; General:42 ends here
+;; General:43 ends here
 
-;; [[file:init-emacs.org::*General][General:43]]
+;; [[file:init-emacs.org::*General][General:44]]
 (init-message 3 "Set Default Browser")
 
 ;; set default browser
@@ -1015,32 +1024,32 @@ Common values:
 
 ;; set secondary browser
 (setq browse-url-secondary-browser-function 'browse-url-default-browser)
-;; General:43 ends here
+;; General:44 ends here
 
-;; [[file:init-emacs.org::*General][General:44]]
+;; [[file:init-emacs.org::*General][General:45]]
 (init-message 3 "Single Character Deletion Commands Delete Active Regions Without Saving to the Kill Ring")
 
 ;; when deleting an active region via single character deletion command,
 ;; do not save to kill ring
 (setq delete-active-region t)
-;; General:44 ends here
+;; General:45 ends here
 
-;; [[file:init-emacs.org::*General][General:45]]
+;; [[file:init-emacs.org::*General][General:46]]
 (init-message 3 "Disable `vc-git'.")
 
 ;; disable vc-git
 (setq vc-handled-backends nil)
-;; General:45 ends here
+;; General:46 ends here
 
-;; [[file:init-emacs.org::*General][General:46]]
+;; [[file:init-emacs.org::*General][General:47]]
 ;; (init-message 3 "Recenter window after `next-error'.")
 
 ;; ;; always recenter after `next-error'
 ;; (setq next-error-recenter '(4))
 ;; ;;(add-hook 'next-error-hook #'recenter :append)
-;; General:46 ends here
+;; General:47 ends here
 
-;; [[file:init-emacs.org::*General][General:47]]
+;; [[file:init-emacs.org::*General][General:48]]
 (init-message 3 "Recenter window after `occur-mode-goto-occurrence'.")
 
 ;; always recenter after `occur-mode-goto-occurrence'
@@ -1049,9 +1058,9 @@ Common values:
   (recenter))
 ;; advise `occur-mode-goto-occurrence'
 (advice-add 'occur-mode-goto-occurrence :after #'occur-mode-goto-occurrence--recenter)
-;; General:47 ends here
+;; General:48 ends here
 
-;; [[file:init-emacs.org::*General][General:48]]
+;; [[file:init-emacs.org::*General][General:49]]
 (init-message 3 "Set time zones to use for `display-time-world'.")
 
 ;; set display-time-world time zones
@@ -1064,7 +1073,7 @@ Common values:
         ("Europe/London" "London")
         ("Europe/Paris" "Paris")
         ("Asia/Tokyo" "Tokyo")))
-;; General:48 ends here
+;; General:49 ends here
 
 ;; [[file:init-emacs.org::*System][System:1]]
 ;;------------------------------------------------------------------------------
@@ -1333,12 +1342,6 @@ Common values:
 ;; increase maximum mini-window height
 (setq max-mini-window-height 0.50)
 ;; Buffers and Windows:7 ends here
-
-;; [[file:init-emacs.org::*Buffers and Windows][Buffers and Windows:8]]
-;; turn off line wrapping
-(setq-default truncate-lines t)
-(toggle-truncate-lines 1)
-;; Buffers and Windows:8 ends here
 
 ;; [[file:init-emacs.org::*Tabs][Tabs:1]]
 ;;------------------------------------------------------------------------------
@@ -2457,8 +2460,8 @@ DATA should have been made by `org-outline-overlay-data'."
   ;; return follows links
   ;;(org-return-follows-link t)
   ;; reverse `org-beginning-of-line' and `org-end-of-line' toggle order
-  ;; HOME toggles between line start and header start
-  ;; END toggles between end of tags and header end
+  ;; HOME toggles between line start and headline start
+  ;; END toggles between end of tags and headline end
   (org-special-ctrl-a/e 'reversed)
   ;; show and error on invisible edits
   (org-catch-invisible-edits 'show-and-error)
@@ -2677,7 +2680,7 @@ DATA should have been made by `org-outline-overlay-data'."
   (defun org-agenda-archive-done-tasks ()
     "Archive DONE tasks."
     (interactive)
-    (org-map-entries 'org-archive-subtree "/DONE" 'file))
+    (org-map-entries #'org-archive-subtree "/DONE" 'file))
 
   ;; auto-save archive files
   (when (boundp 'org-archive-subtree-save-file-p)
@@ -2741,9 +2744,9 @@ DATA should have been made by `org-outline-overlay-data'."
   "Return an association list of org properties matching PROPERTY in BUFFER.
 
 PROPERTY is used to `string-match' for properties to
-return (defaults to \"PROPERTY\").  Multiple properties can be
-queried in one call by using a regular
-expression.  (E.g. \"\\(AUTHOR\\|EMAIL\\|TITLE\\)\")
+return (defaults to \"PROPERTY\"). Multiple properties can be
+queried in one call by using a regular expression. (E.g.
+\"\\(AUTHOR\\|EMAIL\\|TITLE\\)\")
 
 IF BUFFER is nil, current buffer is used."
   (let ((property (or property "PROPERTY")))
@@ -2790,16 +2793,16 @@ Format:
   (((\"KEY1\" . VALUE1)
     (\"KEY2\" . VALUE2)
     (\"KEY3\" . VALUE3))
-   ((HEADER1)
-    (HEADER2
-     (HEADER21 . BODY21))
-    (HEADER3
-     (HEADER31
-      (HEADER311 . BODY311)
-      (HEADER312 . BODY312))
-     (HEADER32
-      (HEADER321 . BODY321)
-      (HEADER322 . BODY322)))))"
+   ((HEADLINE1)
+    (HEADLINE2
+     (HEADLINE21 . BODY21))
+    (HEADLINE3
+     (HEADLINE31
+      (HEADLINE311 . BODY311)
+      (HEADLINE312 . BODY312))
+     (HEADLINE32
+      (HEADLINE321 . BODY321)
+      (HEADLINE322 . BODY322)))))"
   (let* ((property-regexp "^[ \t]*#\\+\\(.*\\): \\(.*\\)$")
          (headline-regexp "^\\(\*+ \\)\\(.*\\)$")
          (property-alist nil)
@@ -2924,10 +2927,10 @@ Format:
 SORT-TYPES is a list where each entry is either a character or a
 cons pair (BOOL . CHAR), where BOOL is whether or not to sort
 case-sensitively, and CHAR is one of the characters defined in
-`org-sort-entries-or-items'.  Entries are applied in back to
-front order.
+`org-sort-entries-or-items'. Entries are applied in back to front
+order.
 
-Example:  To sort first by TODO status, then by priority, then by
+Example: To sort first by TODO status, then by priority, then by
 date, then alphabetically (case-sensitive) use the following
 call:
 
@@ -2953,13 +2956,13 @@ call:
 SORT-TYPES is a list where each entry is either a character or a
 cons pair (BOOL . CHAR), where BOOL is whether or not to sort
 case-sensitively, and CHAR is one of the characters defined in
-`org-sort-entries-or-items'.  Entries are applied in back to
-front order.
+`org-sort-entries-or-items'. Entries are applied in back to front
+order.
 
 If entry at point has TODO and PRIORITY tags, then default
 SORT-TYPE is \"?o ?p\" which is to sort by TODO status, then by
-priority.  Otherwise, default SORT-TYPE is \"?a\" which is to
-sort alphabetically."
+priority. Otherwise, default SORT-TYPE is \"?a\" which is to sort
+alphabetically."
   (interactive)
   (when (string= mode-name "Org")
     (let ((sort-types (or sort-types
@@ -3810,8 +3813,8 @@ same directory as the org-buffer and insert a link to this file."
 
   (defun org-babel-execute:racket (body params)
     "Execute a block of Racket Scheme code with Babel.
-BODY is the contents of the block, as a string.  PARAMS is
-a property list containing the parameters of the block.
+BODY is the contents of the block, as a string. PARAMS is a
+property list containing the parameters of the block.
 
 This function is called by `org-babel-execute-src-block'."
     (let ((result
@@ -3935,8 +3938,8 @@ This function is called by `org-babel-execute-src-block'."
     ;; customize org/babel for java so it will handle packages correctly
     (defun org-babel-execute:java (body params)
       "Execute a block of Java code with Babel.
-BODY is the contents of the block, as a string.  PARAMS is
-a property list containing the parameters of the block."
+BODY is the contents of the block, as a string. PARAMS is a
+property list containing the parameters of the block."
       (let* ((classname (or (cdr (assoc :classname params))
                             (error ":classname parameter is required")))
              (packagename (file-name-directory classname))
@@ -4036,13 +4039,13 @@ otherwise, run code in `kotlin-repl'."
   (when (require 'ob-python nil :no-error)
     (defun org-babel-execute:python (body params)
       "Execute a block of Python code with Babel.
-BODY is the contents of the block, as a string.  PARAMS is
-a property list containing the parameters of the block.
+BODY is the contents of the block, as a string. PARAMS is a
+property list containing the parameters of the block.
 
 This function is called by `org-babel-execute-src-block'.
 
-Note:  This function only works with an iPython shell if it has
-the autoindent feature turned off.  Add '--no-autoindent' to
+Note: This function only works with an iPython shell if it has
+the autoindent feature turned off. Add '--no-autoindent' to
 `py-ipython-command-args' to set this when an iPython process is
 created."
       (let* ((org-babel-python-command (or (cdr (assq :python params))
@@ -4096,8 +4099,8 @@ created."
   (when (require 'ob-rust nil :no-error)
     (defun org-babel-execute:rust (body params)
       "Execute a block of Rust code with Babel.
-BODY is the contents of the block, as a string.  PARAMS is
-a property list containing the parameters of the block.
+BODY is the contents of the block, as a string. PARAMS is a
+property list containing the parameters of the block.
 
 This function is called by `org-babel-execute-src-block'."
       (let* ((tmp-src-file (org-babel-temp-file "rust-src-" ".rs"))
@@ -4150,8 +4153,8 @@ This function is called by `org-babel-execute-src-block'."
 
 (defun org-babel-execute:v (body params)
   "Execute a block of V code with Babel.
-BODY is the contents of the block, as a string.  PARAMS is
-a property list containing the parameters of the block.
+BODY is the contents of the block, as a string. PARAMS is a
+property list containing the parameters of the block.
 
 This function is called by `org-babel-execute-src-block'."
   (let* ((tmp-src-file (org-babel-temp-file "v-src-" ".v"))
@@ -4212,8 +4215,8 @@ This function is called by `org-babel-execute-src-block'."
 
 (defun org-babel-execute:basic (body params)
   "Execute a block of BASIC code with Babel.
-BODY is the contents of the block, as a string.  PARAMS is
-a property list containing the parameters of the block."
+BODY is the contents of the block, as a string. PARAMS is a
+property list containing the parameters of the block."
   (let ((src-file (org-babel-temp-file "basic-" ".bas")))
     (with-temp-file src-file
       (insert (org-babel-expand-body:generic body params)))
@@ -4238,7 +4241,7 @@ a property list containing the parameters of the block."
 
 ;; (defun org-babel-execute:asm (body params)
 ;;   "Execute a block of Assembly Language code with Babel.
-;; BODY is the contents of the block, as a string.  PARAMS is
+;; BODY is the contents of the block, as a string. PARAMS is
 ;; a property list containing the parameters of the block."
 ;;   (let* ((base-file (org-babel-temp-file "asm-"))
 ;;          (src-file (concat base-file ".asm"))
@@ -4258,8 +4261,8 @@ a property list containing the parameters of the block."
 ;; acme version
 (defun org-babel-execute:asm (body params)
   "Execute a block of Assembly Language code with Babel.
-BODY is the contents of the block, as a string.  PARAMS is
-a property list containing the parameters of the block."
+BODY is the contents of the block, as a string. PARAMS is a
+property list containing the parameters of the block."
   (let* ((base-file (org-babel-temp-file "asm-"))
          (src-file (concat base-file ".asm"))
          (list-file (concat base-file ".lst"))
@@ -4293,7 +4296,7 @@ a property list containing the parameters of the block."
 
 ;; (defun org-babel-execute:asm (body params)
 ;;   "Execute a block of Assembly Language code with Babel.
-;; BODY is the contents of the block, as a string.  PARAMS is
+;; BODY is the contents of the block, as a string. PARAMS is
 ;; a property list containing the parameters of the block."
 ;;   (let* ((base-file (org-babel-temp-file "asm-"))
 ;;          (src-file (concat base-file ".asm"))
@@ -5778,7 +5781,7 @@ If OWNED is non-nil, add an Owned column to the table."
     (:about . (:name "About" :title "About This Site and Its Author" :url "http://nullman.net/about/")))
   "Website standard menu list.
 
-Format:  ((TAG . (:name NAME :title TITLE :url URL)) ... )")
+Format: ((TAG . (:name NAME :title TITLE :url URL)) ... )")
 
 ;; shermanwest menu list
 (defconst org-website-shermanwest-menu-list
@@ -5793,7 +5796,7 @@ Format:  ((TAG . (:name NAME :title TITLE :url URL)) ... )")
     (:guestbook . (:name "Guestbook" :title "Guestbook" :url "http://shermanwest.com/guestbook.html")))
   "Website Sherman West menu list.
 
-Format:  ((TAG . (:name NAME :title TITLE :url URL)) ... )")
+Format: ((TAG . (:name NAME :title TITLE :url URL)) ... )")
 
 ;; gopher menu list
 (defconst org-website-gopher-menu-list
@@ -5815,7 +5818,7 @@ Format:  ((TAG . (:name NAME :title TITLE :url URL)) ... )")
     (:about . (:name "About" :title "About This Site and Its Author" :selector "/nullman/about/index.gopher")))
   "Website Gopher menu list.
 
-Format:  ((TAG . (:name NAME :title TITLE :selector SELECTOR)) ... )")
+Format: ((TAG . (:name NAME :title TITLE :selector SELECTOR)) ... )")
 ;; Menu Lists:1 ends here
 
 ;; [[file:init-emacs.org::*Gopher Configuration][Gopher Configuration:1]]
@@ -7152,7 +7155,7 @@ Set blog timestamp to `current-time' or DATE, if non-nil."
   "Unflatten a list XS into a tree, e.g. (1 2 3 1) => (1 (2 (3)) 1).
 FN-VALUE specifies how to extract the values from each element,
 which are included in the output tree, FN-LEVEL tells how to
-extract the level of each element.  By default these are the
+extract the level of each element. By default these are the
 `identity' function so it will work on a list of numbers."
   (let* ((level 1)
          (tree (cons nil nil))
@@ -7284,8 +7287,8 @@ init-emacs-website.el to be used with batch commands."
 (defun org-website-rsync-to-digitalocean (&optional application force)
   "Synchronize published site with digitalocean server.
 
-Normally, applications are not synced.  If APPLICATION is
-non-nil, sync it instead.  Supported applications:
+Normally, applications are not synced. If APPLICATION is non-nil,
+sync it instead. Supported applications:
 
   \"powerhouse\"
   \"bloodmoon\"
@@ -7455,7 +7458,7 @@ Fails quietly if file does not exist."
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Initialization Functions: eval-after-load-with-byte-compile
 ;;
-;; Byte compile the body.  If the feature is not available, ignore warnings.
+;; Byte compile the body. If the feature is not available, ignore warnings.
 ;;------------------------------------------------------------------------------
 
 (init-message 3 "Functions: Initialization Functions: eval-after-load-with-byte-compile")
@@ -7682,7 +7685,7 @@ Use optional DELIM as a delimiter."
   "Calls the `substring' function safely.
 
 No errors will be returned for out of range values of FROM and
-TO.  Instead an empty string is returned."
+TO. Instead an empty string is returned."
   (let* ((len (length string))
          (to (or to len)))
     (when (< from 0)
@@ -8302,7 +8305,7 @@ If REVERSE is non-nil, then sort in reverse order."
 
 (defun delete-word (arg)
   "Delete characters forward until encountering the end of the
-type of character on point.  Types are: whitespace, alphanumeric,
+type of character on point. Types are: whitespace, alphanumeric,
 and symbol/other.
 With argument ARG, do this that many times."
   (interactive "p")
@@ -8335,7 +8338,7 @@ With argument ARG, do this that many times."
 
 (defun backward-delete-word (arg)
   "Delete characters backward until encountering the end of the
-type of character on point.  Types are: whitespace, alphanumeric,
+type of character on point. Types are: whitespace, alphanumeric,
 and symbol/other.
 With argument ARG, do this that many times."
   (interactive "p")
@@ -8467,7 +8470,7 @@ With argument ARG, do this that many times."
 If COMMENT is non-nil, also comment out the original line.
 If LINE is non-nil, duplicate that line instead.
 
-Handles duplicating `org-table' lines correctly.  Also fixes
+Handles duplicating `org-table' lines correctly. Also fixes
 closing s-expressions properly.
 
 Cursor is left at current column in newly created line."
@@ -10173,7 +10176,7 @@ When DELETE-WINDOW is non-nil, also delete the window."
 
 (defun kill-other-window-buffer-and-delete-window ()
   "Kill buffer in other window, prompting user to select a window
-if there are more than two.  Then delete that window."
+if there are more than two. Then delete that window."
   (interactive)
   (kill-other-window-buffer t))
 ;; kill-other-window-buffer-and-delete-window:1 ends here
@@ -10186,7 +10189,7 @@ if there are more than two.  Then delete that window."
 (init-message 3 "Functions: Emacs Grouped Functions: Clipboard")
 
 ;; Modified versions of the similarly named functions `clipboard-kill-region',
-;; `clipboard-kill-ring-save', and `clipboard-yank'.  These functions use the
+;; `clipboard-kill-ring-save', and `clipboard-yank'. These functions use the
 ;; Linux command line tool `xsel' (which must be installed) to get the same
 ;; functionality when running Emacs in command line mode.
 ;; In Ubuntu/Debian run:
@@ -11475,7 +11478,7 @@ of 'hyphen."
            ""
            "This program is distributed in the hope that it will be useful,"
            "but WITHOUT ANY WARRANTY; without even the implied warranty of"
-           "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the"
+           "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the"
            "GNU General Public License for more details."
            ""
            "You should have received a copy of the GNU General Public License along"
@@ -12054,9 +12057,9 @@ MATCH is the file pattern to match."
 If LOCAL is non-nil, visit the new TAGS file locally only.
 
 First an existing TAGS file is searched for going up the
-directory path.  If none is found, a \"src\" directory is
-searched for and, if found, its parent directory is used.
-Failing that the user is prompted for the location."
+directory path. If none is found, a \"src\" directory is searched
+for and, if found, its parent directory is used. Failing that the
+user is prompted for the location."
   (interactive)
   (let ((file (or (find-file-updir "TAGS")
                   (when (find-file-updir "src")
@@ -12167,11 +12170,11 @@ point, or line."
   "Find the begin and end of code block containing point.
 
 When run interactively, then begin and end points of the block
-are printed in the minibuffer.  Otherwise, a list containing them
+are printed in the minibuffer. Otherwise, a list containing them
 is returned.
 
 A code block is defined as contiguous lines of text having the
-same indentation.  So a code block ends when either the
+same indentation. So a code block ends when either the
 indentation changes or a blank line is reached.
 
 The begin point will be at the start of a line and the end point
@@ -12179,7 +12182,7 @@ will be at the end of a line, unless point is not in a code block
 in which case nil is returned for both.
 
 The optional parameter REGEXP is an additional regular expression
-to match on.  If non-nil, every line in the code block must also
+to match on. If non-nil, every line in the code block must also
 match REGEXP.
 
 If optional parameter INDENT is non-nil then each line will be
@@ -13494,27 +13497,27 @@ This function provides that index following the guidelines presented here:
 
 Guidelines:
 
-  - Count all words in the text.  A word is any sequence of
+  - Count all words in the text. A word is any sequence of
     characters delimited by white space, whether or not it is an
     actual English word.
 
-  - Count all syllables in each word.  To make this simple, use
-    the following rules.  Each group of adjacent
+  - Count all syllables in each word. To make this simple, use
+    the following rules. Each group of adjacent
     vowels (a,e,i,o,u,y) counts as one syllable (for example, the
     \"ea\" in \"real\" contributes one syllable, but the \"e..a\"
-    in \"regal\" count as two syllables).  However, an \"e\" at
-    the end of a word doesn't count as a syllable.  For example,
+    in \"regal\" count as two syllables). However, an \"e\" at
+    the end of a word doesn't count as a syllable. For example,
     the word \"eagle\" would be one syllable by Flesch's rules.
     However, the word \"intrigue\" is three syllables (since the
-    e is preceded by a vowel).  Also, each word has at least one
+    e is preceded by a vowel). Also, each word has at least one
     syllable, even if the previous rules give a count of zero.
 
-  - Count all sentences.  A sentence is ended by a period, colon,
+  - Count all sentences. A sentence is ended by a period, colon,
     semicolon, questions mark, or exclamation mark.
 
   - The index is computed by:
 
-    index = 206.835  - (1.015 * words / sentences) - (84.6 * syllables / words)
+    index = 206.835 - (1.015 * words / sentences) - (84.6 * syllables / words)
 
   - Index should be rounded to the nearest integer.
 
@@ -13757,8 +13760,8 @@ WORD-FILE defaults to `/usr/share/dict/words'."
 the character we want to delete and cdr equal to how many
 characters we want to move the point forward before actually
 deleting a character (useful in the case of space after a
-punctuation).  We begin with the substitutions we want to perform
-first.  If more than one regex matches, the last one is valid, so
+punctuation). We begin with the substitutions we want to perform
+first. If more than one regex matches, the last one is valid, so
 it is probably a good idea to begin with \".\".")
 
 (defun star-wars-scroll-center-line-no-tabs ()
@@ -13832,7 +13835,7 @@ be touched by character deletion.")
 (defun star-wars-scroll ()
   "Do Star-Wars-like scroll of the region, or the whole buffer if
   no region is active, in a temporary buffer, and delete it
-  afterwards.  Special care is taken to make the lines more or
+  afterwards. Special care is taken to make the lines more or
   less legible as long as possible, for example spaces after
   punctuation are deleted before vowels, vowels are deleted
   before consonants etc."
@@ -14323,7 +14326,7 @@ USING is the remaining peg."
   ;; (defmacro async-start-with-lock-file (lock-file start-func &optional finish-func)
   ;;   "Evaluate BODY using LOCK-FILE to prevent simultaneous calls.
 
-  ;;   LOCK-FILE is a file name to be used as a lock.  If another
+  ;;   LOCK-FILE is a file name to be used as a lock. If another
   ;;   process is currently using the lock, this process will wait
   ;;   until it is released before running."
   ;;   (declare (indent 1))
@@ -15321,8 +15324,8 @@ In a non-interactive call SERVICE can be passed."
   ;; at point unless it is the last one
 
   (defun hungry-delete-forward ()
-    "Delete the following character or all following whitespace up
-to the next non-whitespace character.  See
+    "Delete the following character or all following whitespace
+up to the next non-whitespace character. See
 \\[c-hungry-delete-backward]."
     (interactive)
     (let ((here (point)))
@@ -15336,7 +15339,7 @@ to the next non-whitespace character.  See
 
   (defun hungry-delete-backward ()
     "Delete the preceding character or all preceding whitespace
-back to the previous non-whitespace character.  See also
+back to the previous non-whitespace character. See also
 \\[c-hungry-delete-forward]."
     (interactive)
     (let ((here (point)))
@@ -16209,8 +16212,8 @@ by scraping the metrolyrics.com site."
   (defun mingus-set-song-rating (rating)
     "Set song rating of the selected song.
 
-RATING may be a number from 0 to 5, where 1 is least favorite
-and 5 is most favorite.  0 will unset the rating."
+RATING may be a number from 0 to 5, where 1 is least favorite and
+5 is most favorite. 0 will unset the rating."
     (interactive)
     (unless (and (>= rating 0) (<= rating 5))
       (error "Rating must be a number from 0 through 5"))
@@ -18226,21 +18229,25 @@ otherwise run `find-file-as-root'."
   :config
   ;; create racket mode based on scheme mode
   (define-derived-mode racket-mode scheme-mode "Scheme"
-    "Major mode for editing Racket Scheme code.  Editing commands
+    "Major mode for editing Racket Scheme code. Editing commands
 are similar to those of `lisp-mode'.
 
-In addition, if an inferior Racket Scheme process is running, some additional
-commands will be defined, for evaluating expressions and controlling the
-interpreter, and the state of the process will be displayed in the mode line
-of all Scheme buffers.  The names of commands that interact with the Scheme
-process start with \"xscheme-\" if you use the MIT Scheme-specific `xscheme'
+In addition, if an inferior Racket Scheme process is running,
+some additional commands will be defined, for evaluating
+expressions and controlling the interpreter, and the state of the
+process will be displayed in the mode line of all Scheme buffers.
+The names of commands that interact with the Scheme process start
+with \"xscheme-\" if you use the MIT Scheme-specific `xscheme'
 package; for more information see the documentation for
-`xscheme-interaction-mode'.  Use \\[run-scheme] to start an inferior Scheme
-using the more general `cmuscheme' package.
+`xscheme-interaction-mode'. Use \\[run-scheme] to start an
+inferior Scheme using the more general `cmuscheme' package.
 
 Commands:
-Delete converts tabs to spaces as it moves back.
-Blank lines separate paragraphs.  Semicolons start comments.
+
+  - Delete converts tabs to spaces as it moves back.
+  - Blank lines separate paragraphs.
+  - Semicolons start comments.
+
 \\{scheme-mode-map}"
     ;; turn on geiser-mode
     (when (fboundp 'geiser-mode)

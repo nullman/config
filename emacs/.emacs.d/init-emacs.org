@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-03-29 13:02 (kyle)>
+  #+TIMESTAMP: <2022-03-30 15:08 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -26,13 +26,13 @@
   defines key methods like =org-babel-generate-elisp= and runs *init-emacs.el*.
 
   It was inspired and influenced by the [[http://eschulte.github.io/emacs24-starter-kit/][Emacs Starter Kit]] and Grant Rettke's
-  [[https://github.com/grettke/home][Creation and Conservation of Computer Files (C3F)]] Emacs setup.  Grant's post
-  on [[http://www.reddit.com/r/emacs/comments/2a29au/creation_and_conservation_of_computer_files_c3f/][reddit]] motivated me to convert my (over 10 years old and over 10K lines
-  long) Emacs configuration system to an [[http://orgmode.org/][Org]]/[[http://orgmode.org/worg/org-contrib/babel/][Babel]] based one.
+  [[https://github.com/grettke/home][Creation and Conservation of Computer Files (C3F)]] Emacs setup. Grant's post on
+  [[http://www.reddit.com/r/emacs/comments/2a29au/creation_and_conservation_of_computer_files_c3f/][reddit]] motivated me to convert my (over 10 years old and over 10K lines long)
+  Emacs configuration system to an [[http://orgmode.org/][Org]]/[[http://orgmode.org/worg/org-contrib/babel/][Babel]] based one.
 
   #+BEGIN_QUOTE
   Emacs outshines all other editing software in approximately the same way that
-  the noonday sun does the stars.  It is not just bigger and brighter; it simply
+  the noonday sun does the stars. It is not just bigger and brighter; it simply
   makes everything else vanish.
 
   -- Neal Stephenson, "In the Beginning was the Command Line"
@@ -686,7 +686,7 @@
       ;; (init-message 2 "Environment Settings: Debugging")
     #+END_SRC
 
-    Turn debugging on when errors occur.  This will also trap normal (expected)
+    Turn debugging on when errors occur. This will also trap normal (expected)
     errors, so it should not normally be on.
 
     #+BEGIN_SRC emacs-lisp :tangle no
@@ -894,7 +894,7 @@
              emacs-home-dir)))
     #+END_SRC
 
-    Set Emacs modules directory.  This is used for non-ELPA modules that are
+    Set Emacs modules directory. This is used for non-ELPA modules that are
     manually installed.
 
     #+BEGIN_SRC emacs-lisp
@@ -904,7 +904,7 @@
         "Emacs modules directory.")
     #+END_SRC
 
-    +Set local initialization directory.  This is not currently used.+
+    +Set local initialization directory. This is not currently used.+
 
     #+BEGIN_SRC emacs-lisp :tangle no
       ;; ;; set local init directory
@@ -913,7 +913,7 @@
       ;;   "Emacs local initialization directory.")
     #+END_SRC
 
-    Set local modules directory.  This is used for custom modules that I've
+    Set local modules directory. This is used for custom modules that I've
     written.
 
     #+BEGIN_SRC emacs-lisp
@@ -923,7 +923,7 @@
         "Emacs local modules directory.")
     #+END_SRC
 
-    Set local work modules directory.  This is used for custom modules that I use
+    Set local work modules directory. This is used for custom modules that I use
     for work.
 
     #+BEGIN_SRC emacs-lisp
@@ -933,9 +933,9 @@
         "Emacs local work modules directory.")
     #+END_SRC
 
-    Set Emacs customizations file.  Used to save customizations made with the
-    *customize* command.  This file is not loaded and is stored in a system
-    temporary directory so it does not persist.  Any desired customizations should
+    Set Emacs customizations file. Used to save customizations made with the
+    *customize* command. This file is not loaded and is stored in a system
+    temporary directory so it does not persist. Any desired customizations should
     be moved into this init file instead of the temporary customization file.
 
     #+BEGIN_SRC emacs-lisp
@@ -1320,7 +1320,7 @@
       (setq load-prefer-newer t)
     #+END_SRC
 
-    Hide the menu-bar.  Use *C-M-z* to activate it.
+    Hide the menu-bar. Use *C-M-z* to activate it.
 
     #+BEGIN_SRC emacs-lisp
       (init-message 3 "Hide Menu Bar")
@@ -1419,13 +1419,24 @@
       (setq-default parse-sexp-ignore-comments parse-sexp-ignore-comments)
     #+END_SRC
 
-    Wrap lines by default.
+    +Wrap lines by default.+
 
     #+BEGIN_SRC emacs-lisp
-      (init-message 3 "Wrap Lines by Default")
+      ;; (init-message 3 "Wrap Lines by Default")
 
-      ;; wrap lines
-      (setq truncate-lines nil)
+      ;; ;; wrap lines
+      ;; (setq truncate-lines nil)
+    #+END_SRC
+
+    Do not wrap lines by default.
+
+    #+BEGIN_SRC emacs-lisp
+      (init-message 3 "Do Not Wrap Lines by Default")
+
+      ;; turn off line wrapping
+      (setq truncate-lines t)
+      (setq-default truncate-lines t)
+      (toggle-truncate-lines 1)
     #+END_SRC
 
     +Auto-wrap longlines and show hard newlines.+
@@ -1474,8 +1485,8 @@
       (setq display-line-numbers-type 'relative)
     #+END_SRC
 
-    Prevent =next-line= from inserting newlines.  (This stops the cursor at the
-    end of the file.)
+    Prevent =next-line= from inserting newlines. (This stops the cursor at the end
+    of the file.)
 
     #+BEGIN_SRC emacs-lisp
       (init-message 3 "Prevent `next-line' from Inserting Newlines")
@@ -1536,7 +1547,7 @@
       (setq-default transient-mark-mode t)
     #+END_SRC
 
-    Set default tab indentation and width to 4.  Turn on auto-complete.
+    Set default tab indentation and width to 4. Turn on auto-complete.
 
     #+BEGIN_SRC emacs-lisp
       (init-message 3 "Set Default Tab Indentation to Four Spaces and Turn on Auto-Complete")
@@ -1554,7 +1565,7 @@
                     tab-stop-list tab-stop-list)
     #+END_SRC
 
-    Set default automatic line-wrapping column to 78.  This is used with
+    Set default automatic line-wrapping column to 78. This is used with
     =auto-fill-mode= and the =fill-paragraph= command.
 
     #+BEGIN_SRC emacs-lisp
@@ -1565,7 +1576,7 @@
       (setq-default fill-column fill-column)
     #+END_SRC
 
-    Set default right-margin comment indent column to 40.  Have
+    Set default right-margin comment indent column to 40. Have
     =comment-fill-column= use the value of =fill-column=.
 
     #+BEGIN_SRC emacs-lisp
@@ -1913,7 +1924,7 @@
 
     Turn off support for bidirectional languages to speed up screen drawing times.
 
-    Note:  This breaks support for Arabic, Farsi, and Hebrew languages.
+    Note: This breaks support for Arabic, Farsi, and Hebrew languages.
 
     #+BEGIN_SRC emacs-lisp
       ;; turn off bidirectional paragraph formatting
@@ -2170,11 +2181,11 @@
         (winner-mode 1))
     #+END_SRC
 
-    +Turn on =imenu= indexes.  This parses the current buffer and adds an *Index*
+    +Turn on =imenu= indexes. This parses the current buffer and adds an *Index*
     menu item that has links to sections based on the buffer type.+
 
-    TODO:  This needs to be added to major mode hooks for modes where we want this
-    feature.  However, this can cause a loading delay.
+    TODO: This needs to be added to major mode hooks for modes where we want this
+    feature. However, this can cause a loading delay.
 
     #+BEGIN_SRC emacs-lisp :tangle no
       ;; ;; turn on imenu bar index
@@ -2207,13 +2218,6 @@
     #+BEGIN_SRC emacs-lisp
       ;; increase maximum mini-window height
       (setq max-mini-window-height 0.50)
-    #+END_SRC
-
-    Turn off line wrapping.
-    #+BEGIN_SRC emacs-lisp
-      ;; turn off line wrapping
-      (setq-default truncate-lines t)
-      (toggle-truncate-lines 1)
     #+END_SRC
 
 *** Tabs
@@ -3621,8 +3625,8 @@
         ;; return follows links
         ;;(org-return-follows-link t)
         ;; reverse `org-beginning-of-line' and `org-end-of-line' toggle order
-        ;; HOME toggles between line start and header start
-        ;; END toggles between end of tags and header end
+        ;; HOME toggles between line start and headline start
+        ;; END toggles between end of tags and headline end
         (org-special-ctrl-a/e 'reversed)
         ;; show and error on invisible edits
         (org-catch-invisible-edits 'show-and-error)
@@ -3848,7 +3852,7 @@
         (defun org-agenda-archive-done-tasks ()
           "Archive DONE tasks."
           (interactive)
-          (org-map-entries 'org-archive-subtree "/DONE" 'file))
+          (org-map-entries #'org-archive-subtree "/DONE" 'file))
 
         ;; auto-save archive files
         (when (boundp 'org-archive-subtree-save-file-p)
@@ -4036,9 +4040,9 @@
           "Return an association list of org properties matching PROPERTY in BUFFER.
 
         PROPERTY is used to `string-match' for properties to
-        return (defaults to \"PROPERTY\").  Multiple properties can be
-        queried in one call by using a regular
-        expression.  (E.g. \"\\(AUTHOR\\|EMAIL\\|TITLE\\)\")
+        return (defaults to \"PROPERTY\"). Multiple properties can be
+        queried in one call by using a regular expression. (E.g.
+        \"\\(AUTHOR\\|EMAIL\\|TITLE\\)\")
 
         IF BUFFER is nil, current buffer is used."
           (let ((property (or property "PROPERTY")))
@@ -4097,16 +4101,16 @@
           (((\"KEY1\" . VALUE1)
             (\"KEY2\" . VALUE2)
             (\"KEY3\" . VALUE3))
-           ((HEADER1)
-            (HEADER2
-             (HEADER21 . BODY21))
-            (HEADER3
-             (HEADER31
-              (HEADER311 . BODY311)
-              (HEADER312 . BODY312))
-             (HEADER32
-              (HEADER321 . BODY321)
-              (HEADER322 . BODY322)))))"
+           ((HEADLINE1)
+            (HEADLINE2
+             (HEADLINE21 . BODY21))
+            (HEADLINE3
+             (HEADLINE31
+              (HEADLINE311 . BODY311)
+              (HEADLINE312 . BODY312))
+             (HEADLINE32
+              (HEADLINE321 . BODY321)
+              (HEADLINE322 . BODY322)))))"
           (let* ((property-regexp "^[ \t]*#\\+\\(.*\\): \\(.*\\)$")
                  (headline-regexp "^\\(\*+ \\)\\(.*\\)$")
                  (property-alist nil)
@@ -4181,7 +4185,7 @@
       :CUSTOM_ID: org-mode-functions-org-safe-meta
       :END:
 
-      Macros to create "safe meta" functions for =org-mode=.  They wrap the meta
+      Macros to create "safe meta" functions for =org-mode=. They wrap the meta
       calls with error checking and ignore any errors thrown.
 
       #+BEGIN_SRC emacs-lisp
@@ -4246,10 +4250,10 @@
         SORT-TYPES is a list where each entry is either a character or a
         cons pair (BOOL . CHAR), where BOOL is whether or not to sort
         case-sensitively, and CHAR is one of the characters defined in
-        `org-sort-entries-or-items'.  Entries are applied in back to
-        front order.
+        `org-sort-entries-or-items'. Entries are applied in back to front
+        order.
 
-        Example:  To sort first by TODO status, then by priority, then by
+        Example: To sort first by TODO status, then by priority, then by
         date, then alphabetically (case-sensitive) use the following
         call:
 
@@ -4282,13 +4286,13 @@
         SORT-TYPES is a list where each entry is either a character or a
         cons pair (BOOL . CHAR), where BOOL is whether or not to sort
         case-sensitively, and CHAR is one of the characters defined in
-        `org-sort-entries-or-items'.  Entries are applied in back to
-        front order.
+        `org-sort-entries-or-items'. Entries are applied in back to front
+        order.
 
         If entry at point has TODO and PRIORITY tags, then default
         SORT-TYPE is \"?o ?p\" which is to sort by TODO status, then by
-        priority.  Otherwise, default SORT-TYPE is \"?a\" which is to
-        sort alphabetically."
+        priority. Otherwise, default SORT-TYPE is \"?a\" which is to sort
+        alphabetically."
           (interactive)
           (when (string= mode-name "Org")
             (let ((sort-types (or sort-types
@@ -4754,7 +4758,7 @@
       :CUSTOM_ID: org-mode-functions-org-copy-tangled-sections
       :END:
 
-      Copy section blocks from a tangled file to another generated file.  This is
+      Copy section blocks from a tangled file to another generated file. This is
       used to generate Emacs initialization files consisting of only the needed
       configurations for specific batch processing tasks.
 
@@ -5065,7 +5069,7 @@
       :END:
 
       Add templates to =org-structure-template-alist= and
-      =org-tempo-keywords-alist=.  Customize =org-temp= so headers are in uppercase.
+      =org-tempo-keywords-alist=. Customize =org-temp= so headers are in uppercase.
 
       #+BEGIN_SRC emacs-lisp
         ;;------------------------------------------------------------------------------
@@ -5228,7 +5232,7 @@
       :END:
 
       Customize Org/Babel =org-babel-tangle-collect-blocks= so it will use
-      case-sensitive string matches.  (This is to insure that headers starting with
+      case-sensitive string matches. (This is to insure that headlines starting with
       "Comment" do not act like "COMMENT".)
 
       #+BEGIN_SRC emacs-lisp
@@ -5344,8 +5348,8 @@
 
           (defun org-babel-execute:racket (body params)
             "Execute a block of Racket Scheme code with Babel.
-        BODY is the contents of the block, as a string.  PARAMS is
-        a property list containing the parameters of the block.
+        BODY is the contents of the block, as a string. PARAMS is a
+        property list containing the parameters of the block.
 
         This function is called by `org-babel-execute-src-block'."
             (let ((result
@@ -5476,8 +5480,8 @@
             ;; customize org/babel for java so it will handle packages correctly
             (defun org-babel-execute:java (body params)
               "Execute a block of Java code with Babel.
-        BODY is the contents of the block, as a string.  PARAMS is
-        a property list containing the parameters of the block."
+        BODY is the contents of the block, as a string. PARAMS is a
+        property list containing the parameters of the block."
               (let* ((classname (or (cdr (assoc :classname params))
                                     (error ":classname parameter is required")))
                      (packagename (file-name-directory classname))
@@ -5512,7 +5516,7 @@
       :CUSTOM_ID: org-mode-babel-kotlin
       :END:
 
-      Customize Org/Babel for Kotlin so it works.  Specifically, if main function
+      Customize Org/Babel for Kotlin so it works. Specifically, if main function
       exists, then compile code and run jar otherwise, run code in =kotlin-repl=.
 
       #+BEGIN_SRC emacs-lisp
@@ -5591,13 +5595,13 @@
         ;;   :config
         ;;   (defun org-babel-execute:python (body params)
         ;;     "Execute a block of Python code with Babel.
-        ;; BODY is the contents of the block, as a string.  PARAMS is
+        ;; BODY is the contents of the block, as a string. PARAMS is
         ;; a property list containing the parameters of the block.
 
         ;; This function is called by `org-babel-execute-src-block'.
 
-        ;; Note:  This function only works with an iPython shell if it has
-        ;; the autoindent feature turned off.  Add '--no-autoindent' to
+        ;; Note: This function only works with an iPython shell if it has
+        ;; the autoindent feature turned off. Add '--no-autoindent' to
         ;; `py-ipython-command-args' to set this when an iPython process is
         ;; created."
         ;;     (let* ((org-babel-python-command (or (cdr (assq :python params))
@@ -5673,13 +5677,13 @@
           (when (require 'ob-python nil :no-error)
             (defun org-babel-execute:python (body params)
               "Execute a block of Python code with Babel.
-        BODY is the contents of the block, as a string.  PARAMS is
-        a property list containing the parameters of the block.
+        BODY is the contents of the block, as a string. PARAMS is a
+        property list containing the parameters of the block.
 
         This function is called by `org-babel-execute-src-block'.
 
-        Note:  This function only works with an iPython shell if it has
-        the autoindent feature turned off.  Add '--no-autoindent' to
+        Note: This function only works with an iPython shell if it has
+        the autoindent feature turned off. Add '--no-autoindent' to
         `py-ipython-command-args' to set this when an iPython process is
         created."
               (let* ((org-babel-python-command (or (cdr (assq :python params))
@@ -5740,8 +5744,8 @@
           (when (require 'ob-rust nil :no-error)
             (defun org-babel-execute:rust (body params)
               "Execute a block of Rust code with Babel.
-        BODY is the contents of the block, as a string.  PARAMS is
-        a property list containing the parameters of the block.
+        BODY is the contents of the block, as a string. PARAMS is a
+        property list containing the parameters of the block.
 
         This function is called by `org-babel-execute-src-block'."
               (let* ((tmp-src-file (org-babel-temp-file "rust-src-" ".rs"))
@@ -5801,8 +5805,8 @@
 
         (defun org-babel-execute:v (body params)
           "Execute a block of V code with Babel.
-        BODY is the contents of the block, as a string.  PARAMS is
-        a property list containing the parameters of the block.
+        BODY is the contents of the block, as a string. PARAMS is a
+        property list containing the parameters of the block.
 
         This function is called by `org-babel-execute-src-block'."
           (let* ((tmp-src-file (org-babel-temp-file "v-src-" ".v"))
@@ -5870,8 +5874,8 @@
 
         (defun org-babel-execute:basic (body params)
           "Execute a block of BASIC code with Babel.
-        BODY is the contents of the block, as a string.  PARAMS is
-        a property list containing the parameters of the block."
+        BODY is the contents of the block, as a string. PARAMS is a
+        property list containing the parameters of the block."
           (let ((src-file (org-babel-temp-file "basic-" ".bas")))
             (with-temp-file src-file
               (insert (org-babel-expand-body:generic body params)))
@@ -5903,7 +5907,7 @@
 
         ;; (defun org-babel-execute:asm (body params)
         ;;   "Execute a block of Assembly Language code with Babel.
-        ;; BODY is the contents of the block, as a string.  PARAMS is
+        ;; BODY is the contents of the block, as a string. PARAMS is
         ;; a property list containing the parameters of the block."
         ;;   (let* ((base-file (org-babel-temp-file "asm-"))
         ;;          (src-file (concat base-file ".asm"))
@@ -5923,8 +5927,8 @@
         ;; acme version
         (defun org-babel-execute:asm (body params)
           "Execute a block of Assembly Language code with Babel.
-        BODY is the contents of the block, as a string.  PARAMS is
-        a property list containing the parameters of the block."
+        BODY is the contents of the block, as a string. PARAMS is a
+        property list containing the parameters of the block."
           (let* ((base-file (org-babel-temp-file "asm-"))
                  (src-file (concat base-file ".asm"))
                  (list-file (concat base-file ".lst"))
@@ -5958,7 +5962,7 @@
 
         ;; (defun org-babel-execute:asm (body params)
         ;;   "Execute a block of Assembly Language code with Babel.
-        ;; BODY is the contents of the block, as a string.  PARAMS is
+        ;; BODY is the contents of the block, as a string. PARAMS is
         ;; a property list containing the parameters of the block."
         ;;   (let* ((base-file (org-babel-temp-file "asm-"))
         ;;          (src-file (concat base-file ".asm"))
@@ -7520,7 +7524,7 @@
     :CUSTOM_ID: org-mode-ironsworn
     :END:
 
-    Ironsworn related functions.
+    Ironsworn RPG related functions.
 
     #+BEGIN_SRC emacs-lisp
       ;;------------------------------------------------------------------------------
@@ -7861,7 +7865,7 @@
             (:about . (:name "About" :title "About This Site and Its Author" :url "http://nullman.net/about/")))
           "Website standard menu list.
 
-        Format:  ((TAG . (:name NAME :title TITLE :url URL)) ... )")
+        Format: ((TAG . (:name NAME :title TITLE :url URL)) ... )")
 
         ;; shermanwest menu list
         (defconst org-website-shermanwest-menu-list
@@ -7876,7 +7880,7 @@
             (:guestbook . (:name "Guestbook" :title "Guestbook" :url "http://shermanwest.com/guestbook.html")))
           "Website Sherman West menu list.
 
-        Format:  ((TAG . (:name NAME :title TITLE :url URL)) ... )")
+        Format: ((TAG . (:name NAME :title TITLE :url URL)) ... )")
 
         ;; gopher menu list
         (defconst org-website-gopher-menu-list
@@ -7898,7 +7902,7 @@
             (:about . (:name "About" :title "About This Site and Its Author" :selector "/nullman/about/index.gopher")))
           "Website Gopher menu list.
 
-        Format:  ((TAG . (:name NAME :title TITLE :selector SELECTOR)) ... )")
+        Format: ((TAG . (:name NAME :title TITLE :selector SELECTOR)) ... )")
       #+END_SRC
 
 ***** Gopher Configuration
@@ -8031,16 +8035,16 @@
         ;;   (((\"TIMESTAMP\" . TIMESTAMP)
         ;;     (\"DESCRIPTION\" . DESCRIPTION)
         ;;     (\"TITLE\" . TITLE))
-        ;;    ((HEADER1)
-        ;;     (HEADER2
-        ;;      (HEADER21 . BODY21))
-        ;;     (HEADER3
-        ;;      (HEADER31
-        ;;       (HEADER311 . BODY311)
-        ;;       (HEADER312 . BODY312))
-        ;;      (HEADER32
-        ;;       (HEADER321 . BODY321)
-        ;;       (HEADER322 . BODY322)))))"
+        ;;    ((HEADLINE1)
+        ;;     (HEADLINE2
+        ;;      (HEADLINE21 . BODY21))
+        ;;     (HEADLINE3
+        ;;      (HEADLINE31
+        ;;       (HEADLINE311 . BODY311)
+        ;;       (HEADLINE312 . BODY312))
+        ;;      (HEADLINE32
+        ;;       (HEADLINE321 . BODY321)
+        ;;       (HEADLINE322 . BODY322)))))"
         ;;   (let* ((property-regexp "^[ \t]*#\\+\\(.*\\): \\(.*\\)$")
         ;;          (property-names '("TITLE" "DESCRIPTION" "TIMESTAMP"))
         ;;          (headline-regexp "^\\(\*+ \\)\\(.*\\)$")
@@ -9329,7 +9333,7 @@
       :CUSTOM_ID: org-website-helper-functions-publish
       :END:
 
-      Publish all or some Org Website projects.  Optionally force a full re-publish.
+      Publish all or some Org Website projects. Optionally force a full re-publish.
 
       #+BEGIN_SRC emacs-lisp
         ;;------------------------------------------------------------------------------
@@ -9372,7 +9376,7 @@
       :CUSTOM_ID: org-website-helper-functions-tangle-publish
       :END:
 
-      Tangle and publish all or some Org Website projects.  Optionally force a full
+      Tangle and publish all or some Org Website projects. Optionally force a full
       re-publish.
 
       #+BEGIN_SRC emacs-lisp
@@ -9590,7 +9594,7 @@
           "Unflatten a list XS into a tree, e.g. (1 2 3 1) => (1 (2 (3)) 1).
         FN-VALUE specifies how to extract the values from each element,
         which are included in the output tree, FN-LEVEL tells how to
-        extract the level of each element.  By default these are the
+        extract the level of each element. By default these are the
         `identity' function so it will work on a list of numbers."
           (let* ((level 1)
                  (tree (cons nil nil))
@@ -9682,7 +9686,7 @@
     :CUSTOM_ID: org-website-tangle-and-publish-script
     :END:
 
-    Shell script to asynchronously run =org-website-tangle-publish=.  This process
+    Shell script to asynchronously run =org-website-tangle-publish=. This process
     can be started by running =org-website-tangle-publish-async=.
 
     #+BEGIN_SRC sh :tangle ~/web/bin/website-tangle-publish :shebang "#!/usr/bin/env bash"
@@ -9855,8 +9859,8 @@
         (defun org-website-rsync-to-digitalocean (&optional application force)
           "Synchronize published site with digitalocean server.
 
-        Normally, applications are not synced.  If APPLICATION is
-        non-nil, sync it instead.  Supported applications:
+        Normally, applications are not synced. If APPLICATION is non-nil,
+        sync it instead. Supported applications:
 
           \"powerhouse\"
           \"bloodmoon\"
@@ -9958,9 +9962,9 @@
         # # ServerRoot: The top of the directory tree under which the server's
         # # configuration, error, and log files are kept.
         # #
-        # # Do not add a slash at the end of the directory path.  If you point
+        # # Do not add a slash at the end of the directory path. If you point
         # # ServerRoot at a non-local disk, be sure to specify a local disk on the
-        # # Mutex directive, if file-based mutexes are used.  If you wish to share the
+        # # Mutex directive, if file-based mutexes are used. If you wish to share the
         # # same ServerRoot for multiple httpd daemons, you will need to change at
         # # least PidFile.
         # #
@@ -10141,7 +10145,7 @@
         # #
         # # The directives in this section set up the values used by the 'main'
         # # server, which responds to any requests that aren't handled by a
-        # # <VirtualHost> definition.  These values also provide defaults for
+        # # <VirtualHost> definition. These values also provide defaults for
         # # any <VirtualHost> containers you may define later in the file.
         # #
         # # All of these directives may appear inside <VirtualHost> containers,
@@ -10151,8 +10155,8 @@
 
         # #
         # # ServerAdmin: Your address, where problems with the server should be
-        # # e-mailed.  This address appears on some server-generated pages, such
-        # # as error documents.  e.g. admin@your-domain.com
+        # # e-mailed. This address appears on some server-generated pages, such
+        # # as error documents. e.g. admin@your-domain.com
         # #
         # ServerAdmin kylewsherman@gmail.com
 
@@ -10197,7 +10201,7 @@
         #     # Note that "MultiViews" must be named *explicitly* --- "Options All"
         #     # doesn't give it to you.
         #     #
-        #     # The Options directive is both complicated and important.  Please see
+        #     # The Options directive is both complicated and important. Please see
         #     # http://httpd.apache.org/docs/2.4/mod/core.html#options
         #     # for more information.
         #     #
@@ -10236,7 +10240,7 @@
         # # ErrorLog: The location of the error log file.
         # # If you do not specify an ErrorLog directive within a <VirtualHost>
         # # container, error messages relating to that virtual host will be
-        # # logged here.  If you *do* define an error logfile for a <VirtualHost>
+        # # logged here. If you *do* define an error logfile for a <VirtualHost>
         # # container, that host's errors will be logged there and not here.
         # #
         # ErrorLog "/usr/local/apache2/logs/error_log"
@@ -10264,7 +10268,7 @@
         #     #
         #     # The location and format of the access logfile (Common Logfile Format).
         #     # If you do not define any access logfiles within a <VirtualHost>
-        #     # container, they will be logged here.  Contrariwise, if you *do*
+        #     # container, they will be logged here. Contrariwise, if you *do*
         #     # define per-<VirtualHost> access logfiles, transactions will be
         #     # logged therein and *not* in this file.
         #     #
@@ -10292,7 +10296,7 @@
         #     # Alias /webpath /full/filesystem/path
         #     #
         #     # If you include a trailing / on /webpath then the server will
-        #     # require it to be present in the URL.  You will also likely
+        #     # require it to be present in the URL. You will also likely
         #     # need to provide a <Directory> section to allow access to
         #     # the filesystem path.
 
@@ -10301,7 +10305,7 @@
         #     # ScriptAliases are essentially the same as Aliases, except that
         #     # documents in the target directory are treated as applications and
         #     # run by the server when requested rather than as documents sent to the
-        #     # client.  The same rules about trailing "/" apply to ScriptAlias
+        #     # client. The same rules about trailing "/" apply to ScriptAlias
         #     # directives as to Alias.
         #     #
         #     ScriptAlias /cgi-bin/ "/usr/local/apache2/cgi-bin/"
@@ -10384,7 +10388,7 @@
 
         # #
         # # The mod_mime_magic module allows the server to use various hints from the
-        # # contents of the file itself to determine its type.  The MIMEMagicFile
+        # # contents of the file itself to determine its type. The MIMEMagicFile
         # # directive tells the module where the hint definitions are located.
         # #
         # #MIMEMagicFile conf/magic
@@ -10410,7 +10414,7 @@
         # #
         # # EnableMMAP and EnableSendfile: On systems that support it,
         # # memory-mapping or the sendfile syscall may be used to deliver
-        # # files.  This usually improves server performance, but must
+        # # files. This usually improves server performance, but must
         # # be turned off when serving from networked-mounted
         # # filesystems or if support for these functions is otherwise
         # # broken on your system.
@@ -10832,7 +10836,7 @@
   :CUSTOM_ID: functions
   :END:
 
-  Custom functions:  Standard functions, Emacs extending/helper functions,
+  Custom functions: Standard functions, Emacs extending/helper functions,
   complex functions, esoteric functions, games, and mini-programs.
 
   #+BEGIN_SRC emacs-lisp
@@ -10894,7 +10898,7 @@
       :CUSTOM_ID: functions-initialization-functions-load-file-if-available
       :END:
 
-      Load elisp file if it exists.  Does not throw an error if it does not exist.
+      Load elisp file if it exists. Does not throw an error if it does not exist.
 
       #+BEGIN_SRC emacs-lisp
         ;;------------------------------------------------------------------------------
@@ -10988,7 +10992,7 @@
         ;;------------------------------------------------------------------------------
         ;;;; Functions: Initialization Functions: eval-after-load-with-byte-compile
         ;;
-        ;; Byte compile the body.  If the feature is not available, ignore warnings.
+        ;; Byte compile the body. If the feature is not available, ignore warnings.
         ;;------------------------------------------------------------------------------
 
         (init-message 3 "Functions: Initialization Functions: eval-after-load-with-byte-compile")
@@ -11062,7 +11066,7 @@
       :END:
 
       This macro is like `save-excursion', but also saves and restores the mark
-      location and `mark-active'.  This macro does what `save-excursion' did before
+      location and `mark-active'. This macro does what `save-excursion' did before
       Emacs 25.1.
 
       Author: Daniel Colascione <dancol@dancol.org>
@@ -11332,7 +11336,7 @@
           "Calls the `substring' function safely.
 
         No errors will be returned for out of range values of FROM and
-        TO.  Instead an empty string is returned."
+        TO. Instead an empty string is returned."
           (let* ((len (length string))
                  (to (or to len)))
             (when (< from 0)
@@ -12169,7 +12173,7 @@
 
         (defun delete-word (arg)
           "Delete characters forward until encountering the end of the
-        type of character on point.  Types are: whitespace, alphanumeric,
+        type of character on point. Types are: whitespace, alphanumeric,
         and symbol/other.
         With argument ARG, do this that many times."
           (interactive "p")
@@ -12207,7 +12211,7 @@
 
         (defun backward-delete-word (arg)
           "Delete characters backward until encountering the end of the
-        type of character on point.  Types are: whitespace, alphanumeric,
+        type of character on point. Types are: whitespace, alphanumeric,
         and symbol/other.
         With argument ARG, do this that many times."
           (interactive "p")
@@ -12364,7 +12368,7 @@
         If COMMENT is non-nil, also comment out the original line.
         If LINE is non-nil, duplicate that line instead.
 
-        Handles duplicating `org-table' lines correctly.  Also fixes
+        Handles duplicating `org-table' lines correctly. Also fixes
         closing s-expressions properly.
 
         Cursor is left at current column in newly created line."
@@ -14714,7 +14718,7 @@
 
           (defun kill-other-window-buffer-and-delete-window ()
             "Kill buffer in other window, prompting user to select a window
-          if there are more than two.  Then delete that window."
+          if there are more than two. Then delete that window."
             (interactive)
             (kill-other-window-buffer t))
         #+END_SRC
@@ -14727,7 +14731,7 @@
       X clipboard cut and paste functions.
 
       Modified versions of the similarly named functions =clipboard-kill-region=,
-      =clipboard-kill-ring-save=, and =clipboard-yank=.  These functions use the
+      =clipboard-kill-ring-save=, and =clipboard-yank=. These functions use the
       Linux command line tool *xsel* (which must be installed) to get the same
       functionality when running Emacs in command line mode.
 
@@ -14739,7 +14743,7 @@
         (init-message 3 "Functions: Emacs Grouped Functions: Clipboard")
 
         ;; Modified versions of the similarly named functions `clipboard-kill-region',
-        ;; `clipboard-kill-ring-save', and `clipboard-yank'.  These functions use the
+        ;; `clipboard-kill-ring-save', and `clipboard-yank'. These functions use the
         ;; Linux command line tool `xsel' (which must be installed) to get the same
         ;; functionality when running Emacs in command line mode.
         ;; In Ubuntu/Debian run:
@@ -16299,7 +16303,7 @@
                    ""
                    "This program is distributed in the hope that it will be useful,"
                    "but WITHOUT ANY WARRANTY; without even the implied warranty of"
-                   "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the"
+                   "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the"
                    "GNU General Public License for more details."
                    ""
                    "You should have received a copy of the GNU General Public License along"
@@ -17052,9 +17056,9 @@
         If LOCAL is non-nil, visit the new TAGS file locally only.
 
         First an existing TAGS file is searched for going up the
-        directory path.  If none is found, a \"src\" directory is
-        searched for and, if found, its parent directory is used.
-        Failing that the user is prompted for the location."
+        directory path. If none is found, a \"src\" directory is searched
+        for and, if found, its parent directory is used. Failing that the
+        user is prompted for the location."
           (interactive)
           (let ((file (or (find-file-updir "TAGS")
                           (when (find-file-updir "src")
@@ -17185,11 +17189,11 @@
           "Find the begin and end of code block containing point.
 
         When run interactively, then begin and end points of the block
-        are printed in the minibuffer.  Otherwise, a list containing them
+        are printed in the minibuffer. Otherwise, a list containing them
         is returned.
 
         A code block is defined as contiguous lines of text having the
-        same indentation.  So a code block ends when either the
+        same indentation. So a code block ends when either the
         indentation changes or a blank line is reached.
 
         The begin point will be at the start of a line and the end point
@@ -17197,7 +17201,7 @@
         in which case nil is returned for both.
 
         The optional parameter REGEXP is an additional regular expression
-        to match on.  If non-nil, every line in the code block must also
+        to match on. If non-nil, every line in the code block must also
         match REGEXP.
 
         If optional parameter INDENT is non-nil then each line will be
@@ -18883,27 +18887,27 @@
 
         Guidelines:
 
-          - Count all words in the text.  A word is any sequence of
+          - Count all words in the text. A word is any sequence of
             characters delimited by white space, whether or not it is an
             actual English word.
 
-          - Count all syllables in each word.  To make this simple, use
-            the following rules.  Each group of adjacent
+          - Count all syllables in each word. To make this simple, use
+            the following rules. Each group of adjacent
             vowels (a,e,i,o,u,y) counts as one syllable (for example, the
             \"ea\" in \"real\" contributes one syllable, but the \"e..a\"
-            in \"regal\" count as two syllables).  However, an \"e\" at
-            the end of a word doesn't count as a syllable.  For example,
+            in \"regal\" count as two syllables). However, an \"e\" at
+            the end of a word doesn't count as a syllable. For example,
             the word \"eagle\" would be one syllable by Flesch's rules.
             However, the word \"intrigue\" is three syllables (since the
-            e is preceded by a vowel).  Also, each word has at least one
+            e is preceded by a vowel). Also, each word has at least one
             syllable, even if the previous rules give a count of zero.
 
-          - Count all sentences.  A sentence is ended by a period, colon,
+          - Count all sentences. A sentence is ended by a period, colon,
             semicolon, questions mark, or exclamation mark.
 
           - The index is computed by:
 
-            index = 206.835  - (1.015 * words / sentences) - (84.6 * syllables / words)
+            index = 206.835 - (1.015 * words / sentences) - (84.6 * syllables / words)
 
           - Index should be rounded to the nearest integer.
 
@@ -19178,8 +19182,8 @@
         the character we want to delete and cdr equal to how many
         characters we want to move the point forward before actually
         deleting a character (useful in the case of space after a
-        punctuation).  We begin with the substitutions we want to perform
-        first.  If more than one regex matches, the last one is valid, so
+        punctuation). We begin with the substitutions we want to perform
+        first. If more than one regex matches, the last one is valid, so
         it is probably a good idea to begin with \".\".")
 
         (defun star-wars-scroll-center-line-no-tabs ()
@@ -19253,7 +19257,7 @@
         (defun star-wars-scroll ()
           "Do Star-Wars-like scroll of the region, or the whole buffer if
           no region is active, in a temporary buffer, and delete it
-          afterwards.  Special care is taken to make the lines more or
+          afterwards. Special care is taken to make the lines more or
           less legible as long as possible, for example spaces after
           punctuation are deleted before vowels, vowels are deleted
           before consonants etc."
@@ -19293,7 +19297,7 @@
       :CUSTOM_ID: functions-games-towers-of-hanoi
       :END:
 
-      This game is built-in as `hanoi'.  This version just outputs the moves for the
+      This game is built-in as `hanoi'. This version just outputs the moves for the
       solution.
 
       #+BEGIN_SRC emacs-lisp
@@ -19407,7 +19411,7 @@
         ;; ;; I do not like this feature for `find-file' -- too hard to open normal/new
         ;; ;; files.
         ;; ;;
-        ;; ;; Replaced by `ivy-mode'.  Supporting packages:
+        ;; ;; Replaced by `ivy-mode'. Supporting packages:
         ;; ;;   flx-ido
         ;; ;;   ido-completing-read+
         ;; ;;   ido-ubiquitous
@@ -19607,7 +19611,7 @@
       :CUSTOM_ID: completions-company-ivy-company
       :END:
 
-      Modular text completion framework.  Only turned on in programming modes.
+      Modular text completion framework. Only turned on in programming modes.
 
       #+BEGIN_SRC emacs-lisp :tangle no
         ;; ;;------------------------------------------------------------------------------
@@ -20017,7 +20021,7 @@
       :CUSTOM_ID: completions-vertico-consult-vertico
       :END:
 
-      VERTical Interactive COmpletion:  A performant and minimalistic vertical
+      VERTical Interactive COmpletion: A performant and minimalistic vertical
       completion UI based on the default completion system.
 
       https://github.com/minad/vertico
@@ -20066,7 +20070,7 @@
       :END:
 
       Provides =marginalia-mode= which adds marginalia to the minibuffer
-      completions.  Marginalia are marks or annotations placed at the margin of the
+      completions. Marginalia are marks or annotations placed at the margin of the
       page of a book or in this case helpful colorful annotations placed at the
       margin of the minibuffer for your completion candidates.
 
@@ -20090,7 +20094,7 @@
       :END:
 
       Consult provides practical commands based on the Emacs completion function
-      completing-read.  Completion allows you to quickly select an item from a list
+      completing-read. Completion allows you to quickly select an item from a list
       of candidates.
 
       https://github.com/minad/consult
@@ -20214,7 +20218,7 @@
       :CUSTOM_ID: completions-vertico-consult-company
       :END:
 
-      Modular text completion framework.  Only turned on in programming modes.
+      Modular text completion framework. Only turned on in programming modes.
 
       #+BEGIN_SRC emacs-lisp
         ;;------------------------------------------------------------------------------
@@ -20507,8 +20511,8 @@
 
     Growl-style notification system for Emacs.
 
-    Set to use *libnotify* for the alerts.  The command =notify-send= must exist
-    in the user's *PATH*.
+    Set to use *libnotify* for the alerts. The command =notify-send= must exist in
+    the user's *PATH*.
 
     https://github.com/jwiegley/alert
 
@@ -20626,7 +20630,7 @@
         ;; (defmacro async-start-with-lock-file (lock-file start-func &optional finish-func)
         ;;   "Evaluate BODY using LOCK-FILE to prevent simultaneous calls.
 
-        ;;   LOCK-FILE is a file name to be used as a lock.  If another
+        ;;   LOCK-FILE is a file name to be used as a lock. If another
         ;;   process is currently using the lock, this process will wait
         ;;   until it is released before running."
         ;;   (declare (indent 1))
@@ -21420,7 +21424,7 @@
     :CUSTOM_ID: modules-demo-it
     :END:
 
-    Pragmatically create demonstrations.  [[http://github.com/howardabrams/demo-it][See the web page for examples.]]
+    Pragmatically create demonstrations. [[http://github.com/howardabrams/demo-it][See the web page for examples.]]
 
     #+BEGIN_SRC emacs-lisp
       ;;------------------------------------------------------------------------------
@@ -22031,8 +22035,8 @@
     :CUSTOM_ID: modules-fuzzy
     :END:
 
-    Fuzzy matching utilities.  Adds a fuzzy pattern search to =isearch= if no
-    exact match is found.
+    Fuzzy matching utilities. Adds a fuzzy pattern search to =isearch= if no exact
+    match is found.
 
     #+BEGIN_SRC emacs-lisp
       ;;------------------------------------------------------------------------------
@@ -22257,8 +22261,8 @@
         ;; at point unless it is the last one
 
         (defun hungry-delete-forward ()
-          "Delete the following character or all following whitespace up
-      to the next non-whitespace character.  See
+          "Delete the following character or all following whitespace
+      up to the next non-whitespace character. See
       \\[c-hungry-delete-backward]."
           (interactive)
           (let ((here (point)))
@@ -22272,7 +22276,7 @@
 
         (defun hungry-delete-backward ()
           "Delete the preceding character or all preceding whitespace
-      back to the previous non-whitespace character.  See also
+      back to the previous non-whitespace character. See also
       \\[c-hungry-delete-forward]."
           (interactive)
           (let ((here (point)))
@@ -23395,8 +23399,8 @@
         (defun mingus-set-song-rating (rating)
           "Set song rating of the selected song.
 
-      RATING may be a number from 0 to 5, where 1 is least favorite
-      and 5 is most favorite.  0 will unset the rating."
+      RATING may be a number from 0 to 5, where 1 is least favorite and
+      5 is most favorite. 0 will unset the rating."
           (interactive)
           (unless (and (>= rating 0) (<= rating 5))
             (error "Rating must be a number from 0 through 5"))
@@ -24538,7 +24542,7 @@
 
       ;;   (defun simple-mpc-set-song-details ()
       ;;     "Set song details for each song in simple-mpc playlist buffer.
-      ;; \nProperties:  album, artist, date, file, genre, modified,
+      ;; \nProperties: album, artist, date, file, genre, modified,
       ;; position, time, and title."
       ;;     (save-mark-and-excursion
       ;;       (with-current-buffer simple-mpc-current-playlist-buffer-name
@@ -24651,7 +24655,7 @@
       ;;     "Set song rating of the selected song.
       ;;
       ;;   RATING may be a number from 0 to 5, where 1 is least favorite
-      ;;   and 5 is most favorite.  0 will unset the rating."
+      ;;   and 5 is most favorite. 0 will unset the rating."
       ;;     (interactive)
       ;;     (unless (and (>= rating 0) (<= rating 5))
       ;;       (error "Rating must be a number from 0 through 5"))
@@ -28177,21 +28181,25 @@
         :config
         ;; create racket mode based on scheme mode
         (define-derived-mode racket-mode scheme-mode "Scheme"
-          "Major mode for editing Racket Scheme code.  Editing commands
+          "Major mode for editing Racket Scheme code. Editing commands
       are similar to those of `lisp-mode'.
 
-      In addition, if an inferior Racket Scheme process is running, some additional
-      commands will be defined, for evaluating expressions and controlling the
-      interpreter, and the state of the process will be displayed in the mode line
-      of all Scheme buffers.  The names of commands that interact with the Scheme
-      process start with \"xscheme-\" if you use the MIT Scheme-specific `xscheme'
+      In addition, if an inferior Racket Scheme process is running,
+      some additional commands will be defined, for evaluating
+      expressions and controlling the interpreter, and the state of the
+      process will be displayed in the mode line of all Scheme buffers.
+      The names of commands that interact with the Scheme process start
+      with \"xscheme-\" if you use the MIT Scheme-specific `xscheme'
       package; for more information see the documentation for
-      `xscheme-interaction-mode'.  Use \\[run-scheme] to start an inferior Scheme
-      using the more general `cmuscheme' package.
+      `xscheme-interaction-mode'. Use \\[run-scheme] to start an
+      inferior Scheme using the more general `cmuscheme' package.
 
       Commands:
-      Delete converts tabs to spaces as it moves back.
-      Blank lines separate paragraphs.  Semicolons start comments.
+
+        - Delete converts tabs to spaces as it moves back.
+        - Blank lines separate paragraphs.
+        - Semicolons start comments.
+
       \\{scheme-mode-map}"
           ;; turn on geiser-mode
           (when (fboundp 'geiser-mode)
@@ -28207,8 +28215,8 @@
     :CUSTOM_ID: modes-ruby-mode
     :END:
 
-    Major mode for editing Ruby files.  Provides font-locking, indentation
-    support, and navigation for Ruby code.
+    Major mode for editing Ruby files. Provides font-locking, indentation support,
+    and navigation for Ruby code.
 
     #+BEGIN_SRC emacs-lisp
       ;;------------------------------------------------------------------------------
@@ -29657,8 +29665,8 @@
     :CUSTOM_ID: menus-website-menu
     :END:
 
-    A menu of commonly used *Org Website* commands.  *Org Website* is my
-    customized org code that I use to build and deploy my website.
+    A menu of commonly used *Org Website* commands. *Org Website* is my customized
+    org code that I use to build and deploy my website.
 
     #+BEGIN_SRC emacs-lisp
       ;;------------------------------------------------------------------------------
@@ -31955,7 +31963,7 @@
     :CUSTOM_ID: final-setup-turn-off-scroll-bar
     :END:
 
-    For some reason this is getting turned back on.  So this turns it off for the
+    For some reason this is getting turned back on. So this turns it off for the
     second time.
 
     #+BEGIN_SRC emacs-lisp
