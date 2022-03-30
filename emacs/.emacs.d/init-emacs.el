@@ -2748,7 +2748,7 @@ return (defaults to \"PROPERTY\"). Multiple properties can be
 queried in one call by using a regular expression. (E.g.
 \"\\(AUTHOR\\|EMAIL\\|TITLE\\)\")
 
-IF BUFFER is nil, current buffer is used."
+If BUFFER is nil, current buffer is used."
   (let ((property (or property "PROPERTY")))
     (with-current-buffer (or buffer (current-buffer))
       (org-element-map (org-element-parse-buffer) 'keyword
@@ -2771,7 +2771,7 @@ BUFFER for given TYPES.
 TYPES is the same symbol or list of symbols used with
 `org-element-map'.
 
-IF BUFFER is nil, current buffer is used."
+If BUFFER is nil, current buffer is used."
   (with-current-buffer (or buffer (current-buffer))
     (org-element-map (org-element-parse-buffer) types
       (lambda (x) (cons (org-element-property :level x)
