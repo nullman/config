@@ -1,4 +1,4 @@
-;;; ironsworn.el --- Ironsworn RPG assistant -*- lexical-binding: t; -*-
+;;; ironsworn.el --- Ironsworn RPG Assistant -*- lexical-binding: t; -*-
 ;;
 ;;; Copyright (C) 2022 Kyle W T Sherman
 ;;
@@ -53,71 +53,106 @@
 ;; widget
 (require 'widget)
 
+;; customize group
+(defgroup ironsworn nil
+  "Ironsworn RPG Assistant."
+  :prefix "ironsworn-"
+  :group 'games)
+
+;; level 1 title
+(defcustom ironsworn-title-level-1
+  "Ironsworn"
+  "First level headline title."
+  :type 'string
+  :group 'ironsworn)
+
+;; level 2 title
+(defcustom ironsworn-title-level-2
+  "Characters"
+  "Second level headline title."
+  :type 'string
+  :group 'ironsworn)
+
 ;; character list
-(defun ironsworn-character-list (&optional buffer)
+(defun ironsworn-character-list (&optional name buffer)
   "Return a list of character names and positions in BUFFER.
 
+If NAME is non-nil, return only characters having that name.
 If BUFFER is nil, current buffer is used."
   (cl-labels
       ((headline-data ()
-                      (let ((headline (org-element-headline-parser (point) :raw-secondary-p)))
-                        (cons
-                         (org-element-property :level headline)
-                         (cons (org-element-property :raw-value headline)
-                               (point))))))
+                      (let ((headline (org-element-headline-parser (point))))
+                        (list
+                         :title (org-element-property :raw-value headline)
+                         :level (org-element-property :level headline)
+                         :point-marker (point-marker)))))
     (with-current-buffer (or buffer (current-buffer))
       (save-mark-and-excursion
-        (let ((title (headline-data)))
-          (while (and (not (string= title "Ironsworn"))
+        (goto-char (point-min))
+        (let ((title-l1 "Ironsworn")
+              (title-l2 "Characters")
+              (data (headline-data))
+              characters)
+          (while (and (not (and (string= (plist-get data :title) ironsworn-title-level-1)
+                                (= (plist-get data :level) 1)))
                       (org-get-next-sibling))
-            (setq title (headline-data)))
-          (when (string= title "Ironsworn")
-            (org-next-visible-heading)
-            (setq title (headline-data))
-            (while (and (not (string= title "Characters"))
+            (setq data (headline-data)))
+          (when (string= (plist-get data :title) ironsworn-title-level-1)
+            (outline-next-heading)
+            (setq data (headline-data))
+            (while (and (not (and (string= (plist-get data :title) ironsworn-title-level-2)
+                                  (= (plist-get data :level) 2)))
                         (org-get-next-sibling))
-              (setq title (headline-data)))
-
-
-            ))))))
-
-      ;; (org-element-map (org-element-parse-buffer) 'headline
-      ;;   (lambda (x) (cons (org-element-parse-buffer :level x)
-      ;;                     (org-element-parse-buffer :raw-value x)))))))
+              (setq data (headline-data)))
+            (when (string= (plist-get data :title) ironsworn-title-level-2)
+              (outline-next-heading)
+              (setq data (headline-data))
+              (while (and data (= (plist-get data :level) 3))
+                (unless (and name (not (string= (plist-get data :title) name)))
+                  (push (cons (plist-get data :title)
+                              (plist-get data :point-marker)) characters))
+                (if (org-get-next-sibling)
+                    (setq data (headline-data))
+                  (setq data nil)))))
+          (nreverse characters))))))
 
 ;; character information
 (defun ironsworn-character-info (&optional name buffer)
-  "Return character information of character at current position,
-or character NAME, if given."
-  (let ((tree (list
-               (cons
-                (org-element-property :raw-value (org-element-headline-parser (point)))
-                (point))))
-        characters)
-    (save-mark-and-excursion
-      (while (org-up-heading-safe)
-        (push
-         (cons
-          (org-element-property :raw-value (org-element-headline-parser (point)))
-          (point))
-         tree)))
-    (unless (and (string= (caar tree) "Ironsworn")
-                 (string= (caadr tree) "Characters"))
-      (error "Expected 'Ironsworn' -> 'Characters' healines not found"))
-    (setq tree (seq-subseq tree 0 3))
-    ;; (save-mark-and-excursion
-    ;;   (when (> (length outline-path) 3)
-    ;;     (while (> (org-up-heading-safe) 2)))
-    ;; (when (> (length tree) 2)
-    ;;     (goto-char (cdadr tree))
-    ;;     (org-next-visible-heading)
-    ;;     (org-map-entries
-    ;;      (lambda () (org-element-property :title (org-element-headline-parser (point) :raw-secondary-p)))
-    ;;      nil
-    ;;      'tree)))
-    tree
-    ))
+  "Return Ironsworn character information of character at current position,
+or character NAME, if given.
 
+If BUFFER is nil, current buffer is used."
+  (when (and buffer
+             (not name)
+             (not (string=
+                   (if (stringp buffer) buffer (buffer-name buffer))
+                   (buffer-name (current-buffer)))))
+    (error "If BUFFER is given, either NAME must be given or BUFFER must be selected"))
+  (cl-labels
+      ((headline-data ()
+                      (let ((headline (org-element-headline-parser (point))))
+                        (list
+                         :title (org-element-property :raw-value headline)
+                         :level (org-element-property :level headline)
+                         :point-marker (point-marker)))))
+    (let ((characters (ironsworn-character-list name buffer))
+          character
+          character-data)
+      (with-current-buffer (or buffer (current-buffer))
+        (save-mark-and-excursion
+          (if name
+              (setq character (car characters))
+            (dolist (x characters)
+              (when (<= (cdr x) (point))
+                (setq character x))))
+          (when character
+            (goto-char (cdr character))
+            (org-map-tree
+             (lambda ()
+               (let ((data (headline-data)))
+                 (push (cons (plist-get data :title)
+                             (plist-get data :point-marker)) character-data))))
+            (nreverse character-data)))))))
 
 (defun ironsworn-character-assistant ()
   "Launch an Ironsworn character assistant.
