@@ -2785,10 +2785,14 @@ If BUFFER is nil, current buffer is used."
 
 (init-message 3 "Org Mode: Functions: org-get-data")
 
-(defun org-get-data (file)
+(defun org-get-data (file &optional path)
   "Return tree structure version of given Org FILE.
 
-Format:
+If PATH is non-nil, limit result to matching paths.
+
+PATH is a list of headlines to match starting from the top level.
+
+Output format:
 
   (((\"KEY1\" . VALUE1)
     (\"KEY2\" . VALUE2)
@@ -2809,7 +2813,9 @@ Format:
          (level 0)
          (tree (cons nil nil))
          (start tree)
-         (stack nil))
+         (stack nil)
+         (matches path)
+         (path-level (length path)))
     (with-temp-buffer
       (insert-file-contents file)
       (goto-char (point-min))
@@ -2817,7 +2823,9 @@ Format:
         ;;(message "%S" tree)
         (cond
          ;; add properties
-         ((looking-at property-regexp)
+         ((and (not matches)
+               (>= level path-level)
+               (looking-at property-regexp))
           (let ((key (match-string-no-properties 1))
                 (value (match-string-no-properties 2)))
             (push (cons key value) property-alist)))
@@ -2825,32 +2833,43 @@ Format:
          ((looking-at headline-regexp)
           (let ((headline-level (/ (length (match-string-no-properties 1))
                                    (if org-odd-levels-only 2 1)))
-                (headline-value (match-string-no-properties 2)))
-            (cond
-             ((> headline-level level)
-              (setcdr tree (cons (cons headline-value nil) nil))
-              (setq tree (cdr tree))
-              (push tree stack)
-              (setq tree (car tree))
-              (setq level headline-level))
-             ((= headline-level level)
-              (setq tree (pop stack))
-              (setcdr tree (cons (cons headline-value nil) nil))
-              (setq tree (cdr tree))
-              (push tree stack)
-              (setq tree (car tree)))
-             ((< headline-level level)
-              (while (< headline-level level)
+                (headline-value (match-string-no-properties 2))
+                (segment (car path)))
+            (when (and path
+                       (not matches)
+                       (>= path-level headline-level))
+              (setq matches path))
+            (when (or (and (not matches)
+                           (> headline-level path-level))
+                      (string= headline-value (car matches)))
+              (when (string= headline-value (car matches))
+                (setq matches (cdr matches)))
+              (cond
+               ((> headline-level level)
+                (setcdr tree (cons (cons headline-value nil) nil))
+                (setq tree (cdr tree))
+                (push tree stack)
+                (setq tree (car tree))
+                (setq level headline-level))
+               ((= headline-level level)
                 (setq tree (pop stack))
-                (setq level (1- level)))
-              (setq tree (pop stack))
-              (setcdr tree (cons (cons headline-value nil) nil))
-              (setq tree (cdr tree))
-              (push tree stack)
-              (setq tree (car tree))
-              (setq level headline-level)))))
+                (setcdr tree (cons (cons headline-value nil) nil))
+                (setq tree (cdr tree))
+                (push tree stack)
+                (setq tree (car tree)))
+               ((< headline-level level)
+                (while (< headline-level level)
+                  (setq tree (pop stack))
+                  (setq level (1- level)))
+                (setq tree (pop stack))
+                (setcdr tree (cons (cons headline-value nil) nil))
+                (setq tree (cdr tree))
+                (push tree stack)
+                (setq tree (car tree))
+                (setq level headline-level))))))
          ;; add body sections
-         (t
+         ((and (not matches)
+               (>= level path-level))
           (when (> (length start) 1)
             (let ((body ""))
               (while (and (not (eobp))
