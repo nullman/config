@@ -1744,60 +1744,58 @@ alias nmu="nmap -sS -sU"
 #
 # networking (ping)
 #
-#        pingairave              ping airave
-alias pingairave="ping 192.168.17.1"
-#        pingfirewall            ping firewall
-alias pingfirewall="ping 192.168.1.1"
-#        pingbridge              ping bridge
-alias pingbridge="ping 192.168.1.2"
-#        pingsynology            ping synology
-alias pingsynology="ping 192.168.1.6"
-#        pingmorpheus            ping morpheus
-alias pingmorpheus="ping 192.168.1.10"
-#        pingneo                 ping neo
-alias pingneo="ping 192.168.1.30"
-#        pingtank                ping tank
-alias pingtank="ping 192.168.1.32"
-#        pingapoc                ping apoc
-alias pingapoc="ping 192.168.1.34"
-#        pingtrinity             ping trinity
-alias pingtrinity="ping 192.168.1.36"
-#        pingdozer               ping dozer
-alias pingdozer="ping 192.168.1.40"
-#        pingchoi                ping choi
-alias pingchoi="ping 192.168.1.42"
-#        pingswitch              ping switch
-alias pingswitch="ping 192.168.1.44"
-#        pingmouse               ping mouse
-alias pingmouse="ping 192.168.1.51"
-#        pingraspberrypi         ping raspberrypi
-alias pingraspberrypi="ping 192.168.1.54"
-#        pingraspberrypid        ping raspberrypid
-alias pingraspberrypid="ping 192.168.1.55"
-#        pingcolleen             ping colleen
-alias pingcolleen="ping 192.168.1.62"
-#        pingdns1                ping dns server 1
-alias pingdns1="ping 24.31.3.8"
-#        pingdns2                ping dns server 2
-alias pingdns2="ping 24.31.3.9"
-#        pinggateway             ping gateway
-alias pinggateway="ping 24.31.20.1"
-#        pingnullware            ping nullware
-alias pingnullware="ping \${nullwareip}"
-#        pingwork                ping work
-alias pingwork="ping kyle-work"
-#        pinggoogle              ping google.com
-alias pinggoogle="ping google.com"
-#        pinggoogleip            ping google.com by ip address
-alias pinggoogleip="ping 172.217.15.110"
+#        ping-firewall           ping firewall
+alias ping-firewall="ping 192.168.1.1"
+#        ping-bridge             ping bridge
+alias ping-bridge="ping 192.168.1.2"
+#        ping-synology           ping synology
+alias ping-synology="ping 192.168.1.6"
+#        ping-morpheus           ping morpheus
+alias ping-morpheus="ping 192.168.1.10"
+#        ping-neo                ping neo
+alias ping-neo="ping 192.168.1.30"
+#        ping-tank               ping tank
+alias ping-tank="ping 192.168.1.32"
+#        ping-apoc               ping apoc
+alias ping-apoc="ping 192.168.1.34"
+#        ping-trinity            ping trinity
+alias ping-trinity="ping 192.168.1.36"
+#        ping-dozer              ping dozer
+alias ping-dozer="ping 192.168.1.40"
+#        ping-choi               ping choi
+alias ping-choi="ping 192.168.1.42"
+#        ping-switch             ping switch
+alias ping-switch="ping 192.168.1.44"
+#        ping-mouse              ping mouse
+alias ping-mouse="ping 192.168.1.51"
+#        ping-raspberrypi        ping raspberrypi
+alias ping-raspberrypi="ping 192.168.1.54"
+#        ping-raspberrypid       ping raspberrypid
+alias ping-raspberrypid="ping 192.168.1.55"
+#        ping-colleen            ping colleen
+alias ping-colleen="ping 192.168.1.62"
+#        ping-dns1               ping dns server 1
+alias ping-dns1="ping 24.31.3.8"
+#        ping-dns2               ping dns server 2
+alias ping-dns2="ping 24.31.3.9"
+#        ping-gateway            ping gateway
+alias ping-gateway="ping 24.31.20.1"
+#        ping-nullware           ping nullware
+alias ping-nullware="ping \${nullwareip}"
+#        ping-work               ping work
+alias ping-work="ping kyle-work"
+#        ping-google             ping google.com
+alias ping-google="ping google.com"
+#        ping-googleip           ping google.com by ip address
+alias ping-googleip="ping 172.217.15.110"
 #        trgoogle                traceroute google.com
 alias trgoogle="traceroute google.com"
-#        pinguswest              ping uswest.net
-alias pinguswest="ping uswest.net"
-#        pinguswestip            ping uswest.net by ip address
-alias pinguswestip="ping 204.147.80.81"
-#        truswest                traceroute uswest.net
-alias truswest="traceroute uswest.net"
+#        ping-uswest             ping uswest.net
+alias ping-uswest="ping uswest.net"
+#        ping-uswestip           ping uswest.net by ip address
+alias ping-uswestip="ping 204.147.80.81"
+#        traceroute-uswest       traceroute uswest.net
+alias traceroute-uswest="traceroute uswest.net"
 
 #
 # rsync

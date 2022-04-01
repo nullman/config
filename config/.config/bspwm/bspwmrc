@@ -155,6 +155,7 @@ _ba arandr state=floating center=true
 _ba Audacious state=floating sticky=true
 _ba balena-etcher-electron state=floating center=true
 _ba BasiliskII state=floating center=true
+_ba 'Cisco AnyConnect Secure Mobility Client' state=floating center=true
 _ba dosbox state=floating center=true
 _ba feh state=floating center=true
 _ba Font-manager state=floating center=true
