@@ -15,11 +15,11 @@
 ;;
 ;; This is distributed in the hope that it will be useful, but WITHOUT ANY
 ;; WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-;; FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+;; FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
 ;; details.
 ;;
 ;; You should have received a copy of the GNU General Public License along
-;; with GNU Emacs; see the file COPYING.  If not, write to the Free Software
+;; with GNU Emacs; see the file COPYING. If not, write to the Free Software
 ;; Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 ;;
 ;;; Commentary:
@@ -28,9 +28,9 @@
 ;;
 ;; When focus is on a calendar day, `calendar-remind-lookup' will renender the
 ;; results of running `remind' for that day. `calendar-remind-visit' will
-;; visit the remind source file.  `calendar-remind-visit-insert' will visit
-;; the remind source file and insert a template entry for the day.  These
-;; functions should be mapped to keys as explained below.
+;; visit the remind source file. `calendar-remind-visit-insert' will visit the
+;; remind source file and insert a template entry for the day. These functions
+;; should be mapped to keys as explained below.
 ;;
 ;;; Installation:
 ;;
@@ -48,7 +48,7 @@
 ;;
 ;; I've mapped the `return' key and the `r' key to remind lookup, the `v' key
 ;; to visit the `~/.reminders' file, and the `V' key to visit and insert a new
-;; entry at the end of the `~/.reminders' file.  Change the key mappings to
+;; entry at the end of the `~/.reminders' file. Change the key mappings to
 ;; what ever you would like to use.
 ;;
 ;; Can be customized with the following command:

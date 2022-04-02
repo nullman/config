@@ -15,11 +15,11 @@
 ;;
 ;; This is distributed in the hope that it will be useful, but WITHOUT ANY
 ;; WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-;; FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+;; FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
 ;; details.
 ;;
 ;; You should have received a copy of the GNU General Public License along
-;; with GNU Emacs; see the file COPYING.  If not, write to the Free Software
+;; with GNU Emacs; see the file COPYING. If not, write to the Free Software
 ;; Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 ;;
 ;;; Commentary:
@@ -37,30 +37,30 @@
 ;;
 ;;; Usage:
 ;;
-;; The `auto-menu' function creates a new menu.  You pass it a name and a list
-;; of items.  Each item is either: 1) a list contianing a name, function, and
-;; help text, or 2) a sub-menu containing a name and a list of items.  This
+;; The `auto-menu' function creates a new menu. You pass it a name and a list
+;; of items. Each item is either: 1) a list contianing a name, function, and
+;; help text, or 2) a sub-menu containing a name and a list of items. This
 ;; functionality recurses so you can have n-depth sub-menus.
 ;;
 ;; The `auto-menu-select' function is similar to `auto-menu' except that it
-;; opens the menu in a buffer and prompts the user to select an item.  It also
-;; does not use keymaps and can handle lambda functions.  This function is
-;; good to use in other functions that need to prompt the user with a list of
+;; opens the menu in a buffer and prompts the user to select an item. It also
+;; does not use keymaps and can handle lambda functions. This function is good
+;; to use in other functions that need to prompt the user with a list of
 ;; options to select from.
 ;;
 ;; The `auto-menu-file-dir' function creates a new menu based on a given
-;; directory.  It creates an entry for every file matching a pattern (defaults
-;; to `.*') and applies a function to it (defaults to `find-file').  There is
+;; directory. It creates an entry for every file matching a pattern (defaults
+;; to `.*') and applies a function to it (defaults to `find-file'). There is
 ;; also an option to recurse through sub-directories or not (defaults to no).
 ;;
 ;; The `auto-menu-file' function creates a new menu of `find-file' commands.
 ;; It creates an entry for every file given.
 ;;
-;; The `auto-menu-dired' function creates a new menu of `dired' commands.  It
+;; The `auto-menu-dired' function creates a new menu of `dired' commands. It
 ;; creates an entry for every directory given.
 ;;
 ;; The `auto-menu-dired-remote' function creates a new menu of `dired'
-;; commands to connect with remote servers.  It takes a list of servers and
+;; commands to connect with remote servers. It takes a list of servers and
 ;; users and creates a menu of servers that each lead to sub-menus of users
 ;; that when selected will open a dired buffer at that location.
 ;;
@@ -140,8 +140,8 @@ abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-"
 (defun auto-menu (name items &optional submenu)
   "Create a menu called NAME consisting of ITEMS and add it to the menu bar.
 
-ITEMS is a list of items.  An ITEM is either a list containing
-the following elements that define a menu item:
+ITEMS is a list of items. An ITEM is either a list containing the
+following elements that define a menu item:
 
   NAME     is the menu item name.
   FUNCTION is a string containing a function name or a function
@@ -312,8 +312,8 @@ SUBMENU is for internal use."
 ;;   "Create a menu called NAME consisting of ITEMS and prompt the
 ;; user to select one.
 
-;; ITEMS is a list of items.  An ITEM is either a list containing
-;; the following elements that define a menu item:
+;; ITEMS is a list of items. An ITEM is either a list containing the following
+;; elements that define a menu item:
 
 ;;   NAME     is the menu item name.
 ;;   SYMBOL   either a VARIABLE, FUNCTION, or STRING.
@@ -383,8 +383,8 @@ SUBMENU is for internal use."
   "Create a menu called NAME consisting of ITEMS,
 and prompt the user to select one.
 
-ITEMS is a list of items.  An ITEM is either a list containing
-the following elements that define a menu item:
+ITEMS is a list of items. An ITEM is either a list containing the
+following elements that define a menu item:
 
   NAME   is the menu item name.
   SYMBOL either a VARIABLE, FUNCTION, or STRING.

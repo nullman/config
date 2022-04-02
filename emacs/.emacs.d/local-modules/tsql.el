@@ -9,60 +9,54 @@
 ;;
 ;; This file is not part of GNU Emacs.
 ;;
-;; This is free software; you can redistribute it and/or modify
-;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation; either version 2, or (at your option)
-;; any later version.
+;; This is free software; you can redistribute it and/or modify it under the
+;; terms of the GNU General Public License as published by the Free Software
+;; Foundation; either version 2, or (at your option) any later version.
 ;;
-;; This is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
+;; This is distributed in the hope that it will be useful, but WITHOUT ANY
+;; WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+;; FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+;; details.
 ;;
-;; You should have received a copy of the GNU General Public License
-;; along with GNU Emacs; see the file COPYING.  If not, write to the
-;; Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-;; Boston, MA 02111-1307, USA.
+;; You should have received a copy of the GNU General Public License along
+;; with GNU Emacs; see the file COPYING. If not, write to the Free Software
+;; Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 ;;
 ;;; Commentary:
 ;;
-;; sql-indent indents SQL statements and was specifically written to
-;; indent Microsoft Transact SQL code.  Indentation of the current
-;; line is based upon indentation of previous lines and looking
-;; backward through the code for indentation hints.
+;; sql-indent indents SQL statements and was specifically written to indent
+;; Microsoft Transact SQL code. Indentation of the current line is based upon
+;; indentation of previous lines and looking backward through the code for
+;; indentation hints.
 ;;
-;; Lines will be indented to the same indentation level of the
-;; previous line unless the previous line is a begin, is part of a
-;; DML statement, or the current line is an end statement.  If the
-;; previous line is a begin statement, the current line will be
-;; indented to the right compared to the begin statement.  If the
-;; previous line is part of a DML statement, the statement
-;; is indented so that all portions of the statement line up to
-;; the same tab stop.  If the current line is an end statement, then
-;; it will be outdented compared to the previous line.
+;; Lines will be indented to the same indentation level of the previous line
+;; unless the previous line is a begin, is part of a DML statement, or the
+;; current line is an end statement. If the previous line is a begin
+;; statement, the current line will be indented to the right compared to the
+;; begin statement. If the previous line is part of a DML statement, the
+;; statement is indented so that all portions of the statement line up to the
+;; same tab stop. If the current line is an end statement, then it will be
+;; outdented compared to the previous line.
 ;;
-;; Code inspection is performed via one of several regular
-;; expressions.  These regular expressions are defined in
-;; customization variables.
+;; Code inspection is performed via one of several regular expressions. These
+;; regular expressions are defined in customization variables.
 ;;
 ;;; Installation:
 ;;
-;; This library should be loaded once SQL mode has finished loading.
-;; One way to accomplish this is to add the following to your .emacs
-;; file:
+;; This library should be loaded once SQL mode has finished loading. One way
+;; to accomplish this is to add the following to your .emacs file:
 ;;
 ;; (eval-after-load "sql"
 ;;   '(load-library "tsql"))
 ;;
-;; Once the library is loaded, all SQL mode buffers from that point
-;; forward will use this indentation function.
+;; Once the library is loaded, all SQL mode buffers from that point forward
+;; will use this indentation function.
 ;;
 ;;; Inspiration:
 ;;
-;; The inspiration for this code came from "sql-indent" by Alex
-;; Schroeder (http://www.emacswiki.org/cgi-bin/wiki.pl?SqlIndent).
-;; Also, an excellent tutorial on indenation in "An Emacs language
-;; mode creation tutorial"
+;; The inspiration for this code came from "sql-indent" by Alex Schroeder
+;; (http://www.emacswiki.org/cgi-bin/wiki.pl?SqlIndent). Also, an excellent
+;; tutorial on indenation in "An Emacs language mode creation tutorial"
 ;; (http://two-wugs.net/emacs/mode-tutorial.html).
 
 ;;; Code:
@@ -373,28 +367,33 @@ Ones that start with `select', `insert', `update', or `delete'.")
 ;;;###autoload
 (defun sql-indent-line-get-info ()
   "Get info about statement on current line.
-Returns a list containing the following:
-  type:     type of SQL statement
-  keyword:  starting SQL keyword (lowercased)
-  indent:   column number of indentation
-Moves point to start of statement.  If in a comment block, will move point
-to the start of the comment block.
-You may call it again after doing `forward-word -1' to get info on the
-previous statement.
+
+Return a list containing the following:
+
+  type:     Type of SQL statement
+  keyword:  Starting SQL keyword (lowercased)
+  indent:   Column number of indentation
+
+Move point to start of statement. If in a comment block, will
+move point to the start of the comment block. You may call it
+again after doing `forward-word -1' to get info on the previous
+statement.
+
 Possible types are:
-  bob:                   beginning of block
+
+  bob:                   Beginning of block
   comment-line:          -- type of comment
   comment-block-begin:   /* */ type of comment (first line)
   comment-block-end:     /* */ type of comment (last line)
   comment-block-middle:  /* */ type of comment (a middle line)
-  blank:                 blank line
-  begin:                 begin statement (block begin)
-  end:                   end statement (block end)
-  if-else:               if or else statement
-  comment:               (should never happend; should get a more specific type, above)
-  statement:             other sql statement
-  statement-select:      an sql statement that may be followed by a select
-  continue:              continuation of an sql statement"
+  blank:                 Blank line
+  begin:                 Begin statement (block begin)
+  end:                   End statement (block end)
+  if-else:               If or else statement
+  comment:               (Should never happend; should get a more specific type, above)
+  statement:             Other sql statement
+  statement-select:      An sql statement that may be followed by a select
+  continue:              Continuation of an sql statement"
   (interactive)                         ; remove this after debugging
 
   ;; init variables

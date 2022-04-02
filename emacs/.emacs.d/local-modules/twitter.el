@@ -15,11 +15,11 @@
 ;;
 ;; This is distributed in the hope that it will be useful, but WITHOUT ANY
 ;; WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-;; FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+;; FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
 ;; details.
 ;;
 ;; You should have received a copy of the GNU General Public License along
-;; with GNU Emacs; see the file COPYING.  If not, write to the Free Software
+;; with GNU Emacs; see the file COPYING. If not, write to the Free Software
 ;; Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 ;;
 ;;; Commentary:
@@ -57,14 +57,14 @@
 ;; username
 (defcustom twitter-username
   nil
-  "Twitter username.  Will prompt if not set."
+  "Twitter username. Will prompt if not set."
   :type 'string
   :group 'twitter)
 
 ;; password
 (defcustom twitter-password
   nil
-  "Twitter password.  Will prompt if not set"
+  "Twitter password. Will prompt if not set"
   :type 'string
   :group 'twitter)
 

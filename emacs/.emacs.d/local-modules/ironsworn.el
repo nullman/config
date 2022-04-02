@@ -15,11 +15,11 @@
 ;;
 ;; This is distributed in the hope that it will be useful, but WITHOUT ANY
 ;; WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-;; FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+;; FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
 ;; details.
 ;;
 ;; You should have received a copy of the GNU General Public License along
-;; with GNU Emacs; see the file COPYING.  If not, write to the Free Software
+;; with GNU Emacs; see the file COPYING. If not, write to the Free Software
 ;; Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 ;;
 ;;; Commentary:
@@ -41,8 +41,8 @@
 ;;; Usage:
 ;;
 ;; Create an org file with an "Ironsworn" headline and a "Characters"
-;; sub-headline.  Then call `ironsworn-create-character' to generate
-;; a new character sheet template.
+;; sub-headline. Then call `ironsworn-create-character' to generate a new
+;; character sheet template.
 ;;
 ;; When point is somewhere on a character sheet, call
 ;; `ironsworn-character-assistant' to start the interactive character
@@ -222,7 +222,7 @@ will be used. Otherwise, a list will be presented to pick from."
                                 (kill-buffer nil)
                                 (ironsworn ,times))))
     (widget-insert "\n\n")
-    (widget-insert (propertize "Time:  " 'face 'font-lock-keyword-face))
+    (widget-insert (propertize "Time: " 'face 'font-lock-keyword-face))
     (setq widget-time-string
           (widget-create
            'editable-field

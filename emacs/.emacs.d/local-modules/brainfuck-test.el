@@ -15,11 +15,11 @@
 ;;
 ;; This is distributed in the hope that it will be useful, but WITHOUT ANY
 ;; WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-;; FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+;; FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
 ;; details.
 ;;
 ;; You should have received a copy of the GNU General Public License along
-;; with GNU Emacs; see the file COPYING.  If not, write to the Free Software
+;; with GNU Emacs; see the file COPYING. If not, write to the Free Software
 ;; Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 ;;
 ;;; Commentary:
@@ -112,7 +112,7 @@
     This loop is a 'comment loop', a simple way of adding a comment to a BF
     program such that you don't have to worry about any command characters.
     Any '.', ',', '+', '-', '<' and '>' characters are simply ignored, the '['
-    and ']' characters just have to be balanced.  This loop and the commands
+    and ']' characters just have to be balanced. This loop and the commands
     it contains are ignored because the current cell defaults to a value of 0;
     the 0 value causes this loop to be skipped.
 ]
@@ -159,17 +159,17 @@ Pointer :   ^
 (brainfuck-test
  "
 [
-    This program enciphers its input with the ROT13 cipher.  To do this, it
+    This program enciphers its input with the ROT13 cipher. To do this, it
     must map characters A-M (ASCII 65-77) to N-Z (78-90), and vice versa.
-    Also it must map a-m (97-109) to n-z (110-122) and vice versa.  It must
+    Also it must map a-m (97-109) to n-z (110-122) and vice versa. It must
     map all other characters to themselves ; it reads characters one at a time
     and outputs their enciphered equivalents until it reads an EOF (here
     assumed to be represented as either -1 or 'no change'), at which point the
     program terminates.
 
-    The basic approach used is as follows.  Calling the input character x,
-    divide x-1 by 32, keeping quotient and remainder.  Unless the quotient is
-    2 or 3, just output x, having kept a copy of it during the division.  If
+    The basic approach used is as follows. Calling the input character x,
+    divide x-1 by 32, keeping quotient and remainder. Unless the quotient is
+    2 or 3, just output x, having kept a copy of it during the division. If
     the quotient is 2 or 3, divide the remainder ((x-1) modulo 32) by 13; if
     the quotient here is 0, output x+13; if 1, output x-13; if 2, output x.
 
@@ -177,11 +177,11 @@ Pointer :   ^
     and remainder r, there is an outer loop which sets q and r first to the
     quotient and remainder of 1/z, then to those of 2/z, and so on; after it
     has executed y times, this outer loop terminates, leaving q and r set to
-    the quotient and remainder of y/z.  (The dividend y is used as a
+    the quotient and remainder of y/z. (The dividend y is used as a
     diminishing counter that controls how many times this loop is executed.)
     Within the loop, there is code to increment r and decrement y, which is
     usually sufficient; however, every zth time through the outer loop, it is
-    necessary to zero r and increment q.  This is done with a diminishing
+    necessary to zero r and increment q. This is done with a diminishing
     counter set to the divisor z; each time through the outer loop, this
     counter is decremented, and when it reaches zero, it is refilled by moving
     the value from r back into it.

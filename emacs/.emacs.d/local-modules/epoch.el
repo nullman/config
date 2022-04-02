@@ -15,11 +15,11 @@
 ;;
 ;; This is distributed in the hope that it will be useful, but WITHOUT ANY
 ;; WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-;; FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+;; FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
 ;; details.
 ;;
 ;; You should have received a copy of the GNU General Public License along
-;; with GNU Emacs; see the file COPYING.  If not, write to the Free Software
+;; with GNU Emacs; see the file COPYING. If not, write to the Free Software
 ;; Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 ;;
 ;;; Commentary:
@@ -124,7 +124,7 @@ For decoded type any values may be nil and will be replaced with
 those from the current time.
 
 If CURRENT-TIME is non-nil, it is used in place of
-`current-time'.  This allows for making multiple calls using a
+`current-time'. This allows for making multiple calls using a
 consistent time."
   (if current-time
       (setq current-time (seconds-to-time (epoch-parse-time current-time)))
@@ -193,11 +193,11 @@ definition."
     (,(* -1 60 60 24 28) (0 0 9 nil nil nil nil nil nil)))
   "Initial list of times to query.
 
-List of tuples that are used for a two phase parse.  The first
+List of tuples that are used for a two phase parse. The first
 element of the tuple is used to call `epoch-parse-time' using a
-fixed value for CURRENT-TIME based on `current-time'.  The result
+fixed value for CURRENT-TIME based on `current-time'. The result
 of that call is then passed in as CURRENT-TIME for a second call
-to `epoch-parse-time', using the second value in the tuple.  This
+to `epoch-parse-time', using the second value in the tuple. This
 allows for time addition as well as time filtering.
 
 Supported types:
@@ -302,7 +302,7 @@ those from the current time."
                                 (kill-buffer nil)
                                 (epoch ,times))))
     (widget-insert "\n\n")
-    (widget-insert (propertize "Time:  " 'face 'font-lock-keyword-face))
+    (widget-insert (propertize "Time: " 'face 'font-lock-keyword-face))
     (setq widget-time-string
           (widget-create
            'editable-field

@@ -15,11 +15,11 @@
 ;;
 ;; This is distributed in the hope that it will be useful, but WITHOUT ANY
 ;; WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-;; FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+;; FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
 ;; details.
 ;;
 ;; You should have received a copy of the GNU General Public License along
-;; with GNU Emacs; see the file COPYING.  If not, write to the Free Software
+;; with GNU Emacs; see the file COPYING. If not, write to the Free Software
 ;; Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 ;;
 ;;; Commentary:
@@ -39,30 +39,30 @@
 ;;; Usage:
 ;;
 ;; ???
-;; The `bbs-fetch' function creates a new menu.  You pass it a name and a list
-;; of items.  Each item is either: 1) a list contianing a name, function, and
-;; help text, or 2) a sub-menu containing a name and a list of items.  This
+;; The `bbs-fetch' function creates a new menu. You pass it a name and a list
+;; of items. Each item is either: 1) a list contianing a name, function, and
+;; help text, or 2) a sub-menu containing a name and a list of items. This
 ;; functionality recurses so you can have n-depth sub-menus.
 ;;
 ;; The `bbs-fetch-select' function is similar to `bbs-fetch' except that it
-;; opens the menu in a buffer and prompts the user to select an item.  It also
-;; does not use keymaps and can handle lambda functions.  This function is
-;; good to use in other functions that need to prompt the user with a list of
+;; opens the menu in a buffer and prompts the user to select an item. It also
+;; does not use keymaps and can handle lambda functions. This function is good
+;; to use in other functions that need to prompt the user with a list of
 ;; options to select from.
 ;;
 ;; The `bbs-fetch-file-dir' function creates a new menu based on a given
-;; directory.  It creates an entry for every file matching a pattern (defaults
-;; to `.*') and applies a function to it (defaults to `find-file').  There is
+;; directory. It creates an entry for every file matching a pattern (defaults
+;; to `.*') and applies a function to it (defaults to `find-file'). There is
 ;; also an option to recurse through sub-directories or not (defaults to no).
 ;;
 ;; The `bbs-fetch-file' function creates a new menu of `find-file' commands.
 ;; It creates an entry for every file given.
 ;;
-;; The `bbs-fetch-dired' function creates a new menu of `dired' commands.  It
+;; The `bbs-fetch-dired' function creates a new menu of `dired' commands. It
 ;; creates an entry for every directory given.
 ;;
 ;; The `bbs-fetch-dired-remote' function creates a new menu of `dired'
-;; commands to connect with remote servers.  It takes a list of servers and
+;; commands to connect with remote servers. It takes a list of servers and
 ;; users and creates a menu of servers that each lead to sub-menus of users
 ;; that when selected will open a dired buffer at that location.
 ;;
@@ -417,7 +417,7 @@
 
 (defun l29-fetch-messages-new ()
   "Call `l29-fetch-messages' in init mode to pull down all linked
-  messages.  This should only be run once."
+  messages. This should only be run once."
   (interactive)
   (l29-fetch-messages :init))
 
