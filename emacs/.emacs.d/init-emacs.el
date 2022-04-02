@@ -2883,7 +2883,7 @@ Output format:
                                                               (line-beginning-position)
                                                               (line-end-position)))))
                 (forward-line 1))
-              (setcdr tree (cons (replace-regexp-in-string "[ \t\n]*$" "" body) nil))
+              (setcdr tree (cons (replace-regexp-in-string "[ \t]*$" "" body) nil))
               (setq tree (cdr tree))
               (goto-char (line-beginning-position))
               (forward-line -1)))))
