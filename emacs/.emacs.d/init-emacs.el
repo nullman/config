@@ -2807,9 +2807,11 @@ Output format:
      (HEADLINE32
       (HEADLINE321 . BODY321)
       (HEADLINE322 . BODY322)))))"
-  (let* ((property-regexp "^[ \t]*#\\+\\(.*\\): \\(.*\\)$")
+  (let* ((property-folder-regexp "^[ \t]*\\** Org$")
+         (property-regexp "^[ \t]*#\\+\\(.*\\): \\(.*\\)$")
          (headline-regexp "^\\(\*+ \\)\\(.*\\)$")
          (property-alist nil)
+         (property-section t)
          (level 0)
          (tree (cons nil nil))
          (start tree)
@@ -2822,15 +2824,19 @@ Output format:
       (while (not (eobp))
         ;;(message "%S" tree)
         (cond
+         ;; ignore property folder
+         ((and (bobp)
+               (looking-at property-folder-regexp))
+          nil)
          ;; add properties
-         ((and (not matches)
-               (>= level path-level)
+         ((and property-section
                (looking-at property-regexp))
           (let ((key (match-string-no-properties 1))
                 (value (match-string-no-properties 2)))
             (push (cons key value) property-alist)))
          ;; add folders
          ((looking-at headline-regexp)
+          (setq property-section nil)
           (let ((headline-level (/ (length (match-string-no-properties 1))
                                    (if org-odd-levels-only 2 1)))
                 (headline-value (match-string-no-properties 2))
@@ -2870,8 +2876,10 @@ Output format:
          ;; add body sections
          ((and (not matches)
                (>= level path-level))
+          (setq property-section nil)
           (when (> (length start) 1)
-            (let ((body ""))
+            (let ((body "")
+                  (point (point)))
               (while (and (not (eobp))
                           (not (looking-at property-regexp))
                           (not (looking-at headline-regexp)))
@@ -2885,8 +2893,11 @@ Output format:
                 (forward-line 1))
               (setcdr tree (cons (replace-regexp-in-string "[ \t]*$" "" body) nil))
               (setq tree (cdr tree))
-              (goto-char (line-beginning-position))
-              (forward-line -1)))))
+              (forward-line 0)
+              (when (> (point) point)
+                (forward-line -1)))))
+         (t
+          (setq property-section nil)))
         (forward-line 1))
       (cons property-alist (cdr start)))))
 ;; org-get-data:1 ends here
@@ -4882,7 +4893,7 @@ If the first headline is \"Org\", it is ignored."
     (let ((bm (org-get-data file)))
       (map 'vector (lambda (x)
                      (parse x nil))
-           (if (string= (caadr bm) "Org") (cddr bm) (cdr bm))))))
+           (cdr bm)))))
 ;; org-bookmarks-parse:1 ends here
 
 ;; [[file:init-emacs.org::*org-bookmarks-export-to-json][org-bookmarks-export-to-json:1]]

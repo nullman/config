@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-04-01 22:52 (kyle)>
+  #+TIMESTAMP: <2022-04-02 10:15 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -4115,9 +4115,11 @@
              (HEADLINE32
               (HEADLINE321 . BODY321)
               (HEADLINE322 . BODY322)))))"
-          (let* ((property-regexp "^[ \t]*#\\+\\(.*\\): \\(.*\\)$")
+          (let* ((property-folder-regexp "^[ \t]*\\** Org$")
+                 (property-regexp "^[ \t]*#\\+\\(.*\\): \\(.*\\)$")
                  (headline-regexp "^\\(\*+ \\)\\(.*\\)$")
                  (property-alist nil)
+                 (property-section t)
                  (level 0)
                  (tree (cons nil nil))
                  (start tree)
@@ -4130,15 +4132,19 @@
               (while (not (eobp))
                 ;;(message "%S" tree)
                 (cond
+                 ;; ignore property folder
+                 ((and (bobp)
+                       (looking-at property-folder-regexp))
+                  nil)
                  ;; add properties
-                 ((and (not matches)
-                       (>= level path-level)
+                 ((and property-section
                        (looking-at property-regexp))
                   (let ((key (match-string-no-properties 1))
                         (value (match-string-no-properties 2)))
                     (push (cons key value) property-alist)))
                  ;; add folders
                  ((looking-at headline-regexp)
+                  (setq property-section nil)
                   (let ((headline-level (/ (length (match-string-no-properties 1))
                                            (if org-odd-levels-only 2 1)))
                         (headline-value (match-string-no-properties 2))
@@ -4178,8 +4184,10 @@
                  ;; add body sections
                  ((and (not matches)
                        (>= level path-level))
+                  (setq property-section nil)
                   (when (> (length start) 1)
-                    (let ((body ""))
+                    (let ((body "")
+                          (point (point)))
                       (while (and (not (eobp))
                                   (not (looking-at property-regexp))
                                   (not (looking-at headline-regexp)))
@@ -4193,8 +4201,11 @@
                         (forward-line 1))
                       (setcdr tree (cons (replace-regexp-in-string "[ \t]*$" "" body) nil))
                       (setq tree (cdr tree))
-                      (goto-char (line-beginning-position))
-                      (forward-line -1)))))
+                      (forward-line 0)
+                      (when (> (point) point)
+                        (forward-line -1)))))
+                 (t
+                  (setq property-section nil)))
                 (forward-line 1))
               (cons property-alist (cdr start)))))
       #+END_SRC
@@ -6793,7 +6804,7 @@
             (let ((bm (org-get-data file)))
               (map 'vector (lambda (x)
                              (parse x nil))
-                   (if (string= (caadr bm) "Org") (cddr bm) (cdr bm))))))
+                   (cdr bm)))))
       #+END_SRC
 
 ***** org-bookmarks-export-to-json
