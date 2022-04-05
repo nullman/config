@@ -1840,6 +1840,9 @@ KEYMAP defaults to `override-global-map'."
   (when (fboundp 'toggle-window-split)
     (bind-keys ("C-x M-o" . toggle-window-split))) ; default: `split-line'
 
+  ;; toggle truncate lines
+  (bind-keys ("C-$" . toggle-truncate-lines))
+
   ;; kill current buffer
   (bind-keys ("C-x C-k" . kill-current-buffer)) ; default: `kmacro-keymap'
 
@@ -1880,7 +1883,7 @@ KEYMAP defaults to `override-global-map'."
   ;; join next line
   (when (fboundp 'join-next-line)
     ;;(bind-keys ("M-j" . join-next-line))) ; default: `indent-new-comment-line'
-    (bind-keys ("C-x C-S-j" . join-next-line)))
+    (bind-keys ("C-x C-J" . join-next-line)))
 
   ;; enhanced titleize-word
   (when (fboundp 'titleize-word-enhanced)
@@ -3618,10 +3621,10 @@ same directory as the org-buffer and insert a link to this file."
              ("C-M-f" . org-metaright)
              ("C-M-n" . org-metadown)
              ("C-M-p" . org-metaup)
-             ("C-M-S-b" . org-shiftmetaleft)
-             ("C-M-S-f" . org-shiftmetaright)
-             ("C-M-S-n" . org-shiftmetadown)
-             ("C-M-S-p" . org-shiftmetaup)
+             ("C-M-B" . org-shiftmetaleft)
+             ("C-M-F" . org-shiftmetaright)
+             ("C-M-N" . org-shiftmetadown)
+             ("C-M-P" . org-shiftmetaup)
              ;;("C-c C-<return>" . org-insert-heading)
              ("C-c a" . org-agenda)
              ("C-c l" . org-store-link)
@@ -14785,7 +14788,7 @@ USING is the remaining peg."
 
 (use-package browse-kill-ring
   :straight t
-  :bind* (("M-Y" . browse-kill-ring)
+  :bind* (("C-M-y" . browse-kill-ring)
           ("C-M-_" . browse-kill-ring)))
 ;; browse-kill-ring:1 ends here
 
