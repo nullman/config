@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-04-04 22:49 (kyle)>
+  #+TIMESTAMP: <2022-04-05 00:31 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -4166,7 +4166,7 @@
                         (setq level headline-level))
                        ((= headline-level level)
                         (setq tree (pop stack))
-                        (setcdr tree (cons (cons (cons headline-value nil) nil)))
+                        (setcdr tree (cons (cons headline-value nil) nil))
                         (setq tree (cdr tree))
                         (push tree stack)
                         (setq tree (car tree)))

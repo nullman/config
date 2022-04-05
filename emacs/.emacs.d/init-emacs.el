@@ -2858,7 +2858,7 @@ Output format:
                 (setq level headline-level))
                ((= headline-level level)
                 (setq tree (pop stack))
-                (setcdr tree (cons (cons (cons headline-value nil) nil)))
+                (setcdr tree (cons (cons headline-value nil) nil))
                 (setq tree (cdr tree))
                 (push tree stack)
                 (setq tree (car tree)))
