@@ -18218,3 +18218,2617 @@ otherwise run `find-file-as-root'."
             (lambda()
               (add-hook 'before-save-hook #'markdown-mode-fix-org-tables nil 'make-it-local))))
 ;; Markdown Mode:1 ends here
+
+;; [[file:init-emacs.org::*Perl Mode][Perl Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Perl Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Perl Mode")
+
+(use-package perl-mode
+  :straight (:type built-in)
+  :after (flyspell)
+  :mode (("\\.\\([pP][Llm]\\|al\\|t\\)\\'" . perl-mode)
+         ("perl" . perl-mode)
+         ("perl5" . perl-mode))
+  :interpreter ("miniperl" . perl-mode)
+  :config
+  (defun custom-perl-mode-hook ()
+    ;; configure some options
+    (setq perl-indent-level 4)
+    (setq perl-continued-statement-offset 0)
+
+    ;; turn on flyspell
+    (flyspell-prog-mode))
+  (add-hook 'perl-mode-hook #'custom-perl-mode-hook)
+
+  (defun perl-mode-maybe ()
+    "Determine if file is a perl script and switch to perl-mode if it is."
+    (interactive)
+    (save-mark-and-excursion
+      (save-match-data
+        (goto-char (point-min))
+        (when (or
+               (search-forward "#!/usr/bin/perl" (line-end-position) :noerror)
+               (search-forward "#!/usr/bin/env perl" (line-end-position) :noerror))
+          (perl-mode)))))
+
+  ;; run when a file is loaded
+  (add-hook 'find-file-hooks #'perl-mode-maybe)
+
+  ;; remove trailing blanks
+  ;;(add-hook 'perl-mode-hook #'install-remove-trailing-blanks)
+
+  ;; remove tabs
+  ;;(add-hook 'perl-mode-hook #'install-remove-tabs)
+  )
+;; Perl Mode:1 ends here
+
+;; [[file:init-emacs.org::*PlantUML Mode][PlantUML Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: PlantUML Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: PlantUML Mode")
+
+(use-package plantuml-mode
+  :straight t)
+;; PlantUML Mode:1 ends here
+
+;; [[file:init-emacs.org::*Python Mode][Python Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Python Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Python Mode")
+
+(use-package python-mode
+  :straight t
+  :after (company elpy)
+  :mode (("\\.py\\'" . python-mode)
+         ("\\.python\\'" . python-mode))
+  :commands (py--buffer-filename-remote-maybe)
+  :functions (custom-python-mode-hook)
+  :config
+  ;; turn off auto-indent so code pasting works
+  (setq py-python-command-args '("--no-autoindent" "--colors=Linux"))
+
+  ;; switch to interpreter after executing code
+  ;;(setq py-switch-buffers-on-execute-p t)
+
+  ;; split windows
+  ;;(setq py-split-windows-on-execute t)
+  (setq py-keep-windows-configuration 'force)
+
+  ;; try to automatically figure out indentation
+  (setq py-smart-indentation t)
+
+  ;; execute python in source code blocks on 'C-c C-c'
+  ;;(add-to-list 'org-ctrl-c-ctrl-c-hook #'org-babel-async-execute:python)
+
+  ;; increase recursion depth of auto-complete to prevent errors
+  (setq py-max-specpdl-size 999)
+
+  (defun custom-python-mode-hook ()
+    ;; override some default keybindings
+    (when (fboundp 'backward-delete-word)
+      (bind-keys* ("C-<backspace>" . backward-delete-word))) ; default: `py-hungry-delete-backwards'
+
+    ;; set indent offset
+    (setq-local py-indent-offset custom-short-tab-width)
+
+    ;; set outline header regexp
+    (setq-local outline-regexp " *\\(def \\|clas\\|#hea\\)")
+    ;;(hide-sublevels 1)
+
+    ;; remove python-shell-completion-at-point from completion-at-point-functions,
+    ;; if it is not defined
+    (when (and (not (fboundp 'python-shell-completion-at-point))
+               (memq 'python-shell-completion-at-point completion-at-point-functions))
+      (setq completion-at-point-functions
+            (remove 'python-shell-completion-at-point completion-at-point-functions)))
+    )
+  (add-hook 'python-mode-hook #'custom-python-mode-hook))
+
+;;------------------------------------------------------------------------------
+;;;; elpy
+;;------------------------------------------------------------------------------
+
+(use-package elpy
+  :straight t
+  :commands (elpy-enable
+             elpy-shell-switch-to-shell)
+  :config
+  ;; turn on elpy mode
+  (elpy-enable)
+
+  ;; hack to fix quote error issue
+  (setq elpy-eldoc-show-current-function nil)
+
+  ;; custom version of `elpy-shell-switch-to-shell' that opens shell in a split window
+  (defun elpy-shell-switch-to-shell ()
+    "Switch to inferior Python process buffer."
+    (interactive)
+    (setq elpy--shell-last-py-buffer (buffer-name))
+    (pop-to-buffer (process-buffer (elpy-shell-get-or-create-process)) t))
+
+  ;; enable flycheck
+  (when (fboundp 'flycheck-mode)
+    (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+    (add-hook 'elpy-mode-hook #'flycheck-mode)))
+
+;;------------------------------------------------------------------------------
+;;;; jedi
+;;------------------------------------------------------------------------------
+
+;; (init-message 3 "jedi")
+
+;; ;; python auto-completion
+;; (use-package jedi
+;;   :straight t
+;;   :after (python-mode)
+;;   :config
+;;   ;; ;; add jedi completions to auto-complete sources
+;;   ;; (add-to-list 'ac-sources 'ac-source-jedi-direct t)
+;;   ;; enable with python mode
+;;   (add-hook 'python-mode-hook #'jedi:setup))
+;; Python Mode:1 ends here
+
+;; [[file:init-emacs.org::*Racket Mode][Racket Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Racket Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Racket Mode")
+
+;; (use-package racket-mode
+;;   :straight t
+;;   :mode ("\\.rkt\\'" . racket-mode)
+;;   :interpreter ("racket" . racket-mode)
+;;   :commands (racket-mode
+;;              racket-repl)
+;;   :config
+;;   (defun custom-racket-mode-hook ()
+;;     ;; do not auto-complete on tab
+;;     (setq tab-always-indent t))
+;;   (add-hook 'racket-mode-hook #'custom-racket-mode-hook)
+
+;;   ;; turn on support for unicode input
+;;   (add-hook 'racket-mode-hook #'racket-unicode-input-method-enable)
+;;   (add-hook 'racket-repl-mode-hook #'racket-unicode-input-method-enable))
+
+(use-package scheme
+  :straight (:type built-in)
+  :after (geiser)
+  :mode ("\\.rkt\\'" . racket-mode)
+  :interpreter ("racket" . racket-mode)
+  :commands (racket-mode
+             scheme-mode)
+  :config
+  ;; create racket mode based on scheme mode
+  (define-derived-mode racket-mode scheme-mode "Scheme"
+    "Major mode for editing Racket Scheme code. Editing commands
+are similar to those of `lisp-mode'.
+
+In addition, if an inferior Racket Scheme process is running,
+some additional commands will be defined, for evaluating
+expressions and controlling the interpreter, and the state of the
+process will be displayed in the mode line of all Scheme buffers.
+The names of commands that interact with the Scheme process start
+with \"xscheme-\" if you use the MIT Scheme-specific `xscheme'
+package; for more information see the documentation for
+`xscheme-interaction-mode'. Use \\[run-scheme] to start an
+inferior Scheme using the more general `cmuscheme' package.
+
+Commands:
+
+  - Delete converts tabs to spaces as it moves back.
+  - Blank lines separate paragraphs.
+  - Semicolons start comments.
+
+\\{scheme-mode-map}"
+    ;; turn on geiser-mode
+    (when (fboundp 'geiser-mode)
+      (geiser-mode t)))
+
+  ;; ;; racket files should use racket-mode
+  ;; (add-to-list 'auto-mode-alist '("\\.rkt\\'" . racket-mode))
+  )
+;; Racket Mode:1 ends here
+
+;; [[file:init-emacs.org::*Ruby Mode][Ruby Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Ruby Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Ruby Mode")
+
+(use-package ruby-mode
+  :straight (:type built-in)
+  :after (flyspell)
+  :mode ("\\.rb\\'" . ruby-mode)
+  :config
+  (defun custom-ruby-mode-hook ()
+    ;; set indent level
+    ;;(setq ruby-indent-level 4)
+    (setq ruby-indent-level 2)
+
+    ;; define keys
+    (define-key ruby-mode-map (kbd "<return>") 'reindent-then-newline-and-indent)
+    ;; undefine electric keys
+    (define-key ruby-mode-map (kbd "{") 'self-insert-command)
+    (define-key ruby-mode-map (kbd "}") 'self-insert-command)
+
+    ;; turn on flyspell
+    (when (boundp 'flyspell-prog-mode)
+      (flyspell-prog-mode)))
+  (add-hook 'ruby-mode-hook #'custom-ruby-mode-hook :append)
+
+  ;; turn on flyspell
+  (flyspell-prog-mode)
+
+  ;; FIXME: No longer works
+  ;; (use-package flymake
+  ;;   :straight (:type built-in)
+  ;;   :config (progn
+  ;;             (defun flymake-ruby-init ()
+  ;;               (let* ((temp-file (flymake-init-create-temp-buffer-copy 'flymake-create-temp-inplace))
+  ;;                      (local-file (file-relative-name temp-file (file-name-directory buffer-file-name))))
+  ;;                 (list "ruby" (list "-c" local-file))))
+
+  ;;             (defun flymake-ruby-enable ()
+  ;;               (when (and buffer-file-name
+  ;;                          (file-writable-p (file-name-directory buffer-file-name))
+  ;;                          (file-writable-p buffer-file-name)
+  ;;                          (if (fboundp 'tramp-list-remote-buffers)
+  ;;                              (not (cl-subsetp (list (current-buffer)) (tramp-list-remote-buffers)))
+  ;;                            t))
+  ;;                 (local-set-key (kbd "C-c d") 'flymake-display-err-menu-for-current-line)
+  ;;                 (flymake-mode t)))
+
+  ;;             (add-to-list 'flymake-allowed-file-name-masks '(".+\\.rb\\'" flymake-ruby-init) t)
+  ;;             (add-to-list 'flymake-allowed-file-name-masks '("Rakefile\\'" flymake-ruby-init) t)
+  ;;             (add-to-list 'flymake-err-line-patterns '("^\\(.*\\):\\([0-9]+\\): \\(.*\\)$" 1 2 nil 3) t)
+  ;;             (add-hook 'ruby-mode-hook #'flymake-ruby-enable)))
+
+  ;; ;; turn on syntax highlighting (actually turns off syntax highlighting)
+  ;; (add-hook 'ruby-mode-hook #'turn-on-font-lock)
+
+  ;; ;; turn on abbreviation mode
+  ;; (abbrev-mode 1)
+
+  (defun ruby-mode-maybe ()
+    "Determine if file is a ruby script and switch to `ruby-mode' if it is."
+    (interactive)
+    (save-mark-and-excursion
+      (save-match-data
+        (goto-char (point-min))
+        (when (or
+               (search-forward "#!/usr/bin/ruby" (line-end-position) :noerror)
+               (search-forward "#!/usr/bin/env ruby" (line-end-position) :noerror))
+          (ruby-mode)))))
+
+  ;; run when a file is loaded
+  (add-hook 'find-file-hooks #'ruby-mode-maybe)
+
+  ;; remove trailing blanks
+  ;;(add-hook 'ruby-mode-hook #'install-remove-trailing-blanks)
+
+  ;; remove tabs
+  ;;(add-hook 'ruby-mode-hook #'install-remove-tabs)
+  )
+
+;;------------------------------------------------------------------------------
+;;;; robe
+;;------------------------------------------------------------------------------
+
+(init-message 3 "robe")
+
+;; code navigation, documentation lookup, and completion for ruby
+(use-package robe
+  :straight t
+  :after (ruby-mode)
+  :commands (robe-mode)
+  :config
+  (add-hook 'ruby-mode-hook #'robe-mode))
+
+;; ;;------------------------------------------------------------------------------
+;; ;;;; inf-ruby
+;; ;;------------------------------------------------------------------------------
+
+;; (init-message 3 "inf-ruby")
+
+;; (use-package inf-ruby
+;;   :straight t
+;;   :after (ruby-mode)
+;;   :interpreter ("ruby" . ruby-mode)
+;;   :commands (run-ruby inf-ruby-keys)
+;;   :config
+;;   (defun custom-ruby-mode-hook-inf-ruby-keys ()
+;;     (inf-ruby-keys))
+;;   (add-hook 'ruby-mode-hook #'custom-ruby-mode-hook-inf-ruby-keys)
+
+;;   ;; use ruby-robe with inf-ruby
+;;   (defadvice inf-ruby-console-auto (before activate-rvm-for-robe activate)
+;;     (rvm-activate-corresponding-ruby)))
+
+;; ;;------------------------------------------------------------------------------
+;; ;;;; ac-inf-ruby
+;; ;;------------------------------------------------------------------------------
+
+;; (init-message 3 "ac-inf-ruby")
+
+;; ;; auto-complete source for interactive ruby
+;; (use-package ac-inf-ruby
+;;   :straight t
+;;   :config
+;;   (add-to-list 'ac-modes 'inf-ruby-mode t)
+;;   (add-hook 'inf-ruby-mode-hook #'ac-inf-ruby-enable)
+;;   ;; ;; make TAB auto-complete
+;;   ;; (define-key inf-ruby-mode-map (kbd "TAB") 'auto-complete)
+;;   )
+;; Ruby Mode:1 ends here
+
+;; [[file:init-emacs.org::*Rust Mode][Rust Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Rust Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Rust Mode")
+
+(use-package rust-mode
+  :straight t
+  :after (flyspell)
+  :mode ("\\.rs\\'" . rust-mode)
+  :bind (:map rust-mode-map
+              ("C-c C-c" . rust-run)
+              ("C-c C-d" . rust-dbg-wrap-or-unwrap)
+              ("C-c C-f" . rust-format-buffer)
+              ("C-c C-n" . rust-goto-format-problem))
+  :custom (rustic-lsp-client nil)
+  :config
+  (defun custom-rust-mode-hook ()
+    ;; use spaces for tabs
+    (setq indent-tabs-mode nil)
+
+    ;; set indent level
+    (setq rust-indent-level 4)
+
+    ;; format code on save
+    (setq rust-format-on-save t)
+
+    ;; ;; define keys
+    ;; (define-key rust-mode-map (kbd "<return>") 'reindent-then-newline-and-indent)
+    ;; ;; undefine electric keys
+    ;; (define-key rust-mode-map (kbd "{") 'self-insert-command)
+    ;; (define-key rust-mode-map (kbd "}") 'self-insert-command)
+
+    ;; turn on flyspell
+    (when (boundp 'flyspell-prog-mode)
+      (flyspell-prog-mode)))
+  (add-hook 'rust-mode-hook #'custom-rust-mode-hook :append)
+
+  ;; turn on flyspell
+  (flyspell-prog-mode)
+
+  ;; FIXME: No longer works
+  ;; (use-package flymake
+  ;;   :straight (:type built-in)
+  ;;   :config (progn
+  ;;             (defun flymake-rust-init ()
+  ;;               (let* ((temp-file (flymake-init-create-temp-buffer-copy 'flymake-create-temp-inplace))
+  ;;                      (local-file (file-relative-name temp-file (file-name-directory buffer-file-name))))
+  ;;                 (list "rust" (list "-c" local-file))))
+
+  ;;             (defun flymake-rust-enable ()
+  ;;               (when (and buffer-file-name
+  ;;                          (file-writable-p (file-name-directory buffer-file-name))
+  ;;                          (file-writable-p buffer-file-name)
+  ;;                          (if (fboundp 'tramp-list-remote-buffers)
+  ;;                              (not (cl-subsetp (list (current-buffer)) (tramp-list-remote-buffers)))
+  ;;                            t))
+  ;;                 (local-set-key (kbd "C-c d") 'flymake-display-err-menu-for-current-line)
+  ;;                 (flymake-mode t)))
+
+  ;;             (add-to-list 'flymake-allowed-file-name-masks '(".+\\.rb\\'" flymake-rust-init) t)
+  ;;             (add-to-list 'flymake-allowed-file-name-masks '("Rakefile\\'" flymake-rust-init) t)
+  ;;             (add-to-list 'flymake-err-line-patterns '("^\\(.*\\):\\([0-9]+\\): \\(.*\\)$" 1 2 nil 3) t)
+  ;;             (add-hook 'rust-mode-hook #'flymake-rust-enable)))
+
+  ;; ;; turn on syntax highlighting (actually turns off syntax highlighting)
+  ;; (add-hook 'rust-mode-hook #'turn-on-font-lock)
+
+  ;; ;; turn on abbreviation mode
+  ;; (abbrev-mode 1)
+
+  (defun rust-mode-maybe ()
+    "Determine if file is a rust script and switch to `rust-mode' if it is."
+    (interactive)
+    (save-mark-and-excursion
+      (save-match-data
+        (goto-char (point-min))
+        (when (or
+               (search-forward "#!/usr/bin/rust" (line-end-position) :noerror)
+               (search-forward "#!/usr/bin/env rust" (line-end-position) :noerror))
+          (rust-mode)))))
+
+  ;; run when a file is loaded
+  (add-hook 'find-file-hooks #'rust-mode-maybe)
+
+  ;; remove trailing blanks
+  ;;(add-hook 'rust-mode-hook #'install-remove-trailing-blanks)
+
+  ;; remove tabs
+  ;;(add-hook 'rust-mode-hook #'install-remove-tabs)
+  )
+
+;;------------------------------------------------------------------------------
+;;;; Rustic
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Rustic")
+
+(use-package rustic
+  :straight t
+  :after (rust-mode))
+;; Rust Mode:1 ends here
+
+;; [[file:init-emacs.org::*SH Script][SH Script:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: SH Script
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: SH Script")
+
+(use-package sh-script
+  :straight (:type built-in)
+  :mode (("\\.sh\\'" . sh-mode)
+         ("\\.shell\\'" . sh-mode)
+         ("\\.bash\\'" . sh-mode)
+         ;; use sh-mode for ldif and schema files
+         ("\\.ldif\\'" . sh-mode)
+         ("\\.schema\\'" . sh-mode)
+         ;; use sh-mode for remind files
+         ("\\.reminders\\'" . sh-mode)
+         ("^reminders_" . sh-mode))
+  :config
+  ;; disable tabs
+  (add-hook 'sh-mode-hook #'disable-tabs)
+
+  ;; make comment lines indent
+  (setq sh-indent-comment t)
+
+  (defun sh-mode-maybe ()
+    "Determine if file is a shell script and switch to sh-mode if it is."
+    (interactive)
+    (save-mark-and-excursion
+      (save-match-data
+        (goto-char (point-min))
+        (when (or
+               (search-forward "#!/bin/sh" (line-end-position) :noerror)
+               (search-forward "#!/bin/bash" (line-end-position) :noerror)
+               (search-forward "#!/bin/csh" (line-end-position) :noerror)
+               (search-forward "#!/bin/tsh" (line-end-position) :noerror)
+               (search-forward "#!/bin/zsh" (line-end-position) :noerror)
+               (search-forward "#!/usr/bin/env sh" (line-end-position) :noerror)
+               (search-forward "#!/usr/bin/env bash" (line-end-position) :noerror)
+               (search-forward "#!/usr/bin/env csh" (line-end-position) :noerror)
+               (search-forward "#!/usr/bin/env tsh" (line-end-position) :noerror)
+               (search-forward "#!/usr/bin/env zsh" (line-end-position) :noerror)
+               (search-forward "#=========" (line-end-position) :noerror)
+               (search-forward "#---------" (line-end-position) :noerror))
+          (sh-mode)))))
+
+  ;; run when a file is loaded
+  (add-hook 'find-file-hooks #'sh-mode-maybe)
+
+  ;; remove trailing blanks
+  ;;(add-hook 'sh-mode-hook #'install-remove-trailing-blanks)
+
+  ;; remove tabs
+  ;;(add-hook 'sh-mode-hook #'install-remove-tabs)
+  )
+;; SH Script:1 ends here
+
+;; [[file:init-emacs.org::*Shell Mode][Shell Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Shell Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Shell Mode")
+
+(use-package shell
+  :straight (:type built-in)
+  :commands (shell-mode)
+  :config
+  ;; disable tabs
+  (add-hook 'shell-mode-hook #'disable-tabs)
+
+  ;; set prompt to read only
+  (setq comint-prompt-read-only t)
+
+  ;; start a shell
+  ;;(shell)
+  )
+
+;;------------------------------------------------------------------------------
+;;;; ansi-color
+;;------------------------------------------------------------------------------
+
+(init-message 3 "ansi-color")
+
+(use-package ansi-color
+  :straight (:type built-in)
+  :after (shell)
+  :commands (ansi-color-for-comint-mode-on)
+  :config
+  (add-hook 'shell-mode-hook #'ansi-color-for-comint-mode-on))
+;; Shell Mode:1 ends here
+
+;; [[file:init-emacs.org::*Slime Mode (Common Lisp)][Slime Mode (Common Lisp):1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Slime Mode (Common Lisp)
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Slime Mode (Common Lisp)")
+
+;; superior lisp interaction mode for emacs
+;; if loading slime errors out because swank-loader.lisp is not found, do:
+;;   # cd /usr/share/emacs22/site-lisp/slime
+;;   # for i in $(ls -1 /usr/share/common-lisp/source/slime/) ; do ln -s /usr/share/common-lisp/source/slime/$i ; done
+(use-package slime
+  :straight t
+  ;; :load-path (;;(lambda () (file-truename (expand-file-name "slime" emacs-modules-dir)))
+  ;;             ;;(lambda () (file-truename (expand-file-name "slime/contrib" emacs-modules-dir)))
+  ;;             (lambda () (file-truename (expand-file-name "swank-clojure" emacs-modules-dir))))
+  :commands (slime-autoloads
+             slime
+             slime-eval-buffer
+             slime-eval-last-expression
+             slime-interactive-eval
+             slime-last-expression
+             slime-mode
+             slime-setup
+             clisp
+             clojure
+             swank-clojure-init
+             swank-clojure-slime-mode-hook
+             swank-clojure-cmd
+             swank-clojure-project)
+  :config
+  ;; clojure swank paths
+  (setq swank-clojure-jar-path (file-truename (expand-file-name "~/.clojure/clojure.jar"))
+        swank-clojure-binary (file-truename (expand-file-name "~/bin/clojure"))
+        swank-clojure-extra-classpaths
+        (list (file-truename (expand-file-name "~/.clojure/clojure.jar"))
+              (file-truename (expand-file-name "~/.clojure/jline.jar"))
+              (file-truename (expand-file-name "~/.clojure/clojure-contrib.jar"))))
+
+  ;; slime setup
+  (slime-setup)
+
+  ;; set lisp program to clisp
+  ;;(setq inferior-lisp-program "clisp -K full")
+
+  (defun slime-eval-sexp ()
+    "Slime evaluate current sexp."
+    (interactive)
+    (save-mark-and-excursion
+      (end-of-defun)
+      (slime-interactive-eval (slime-last-expression))))
+
+  ;; run slime setup (this does too much)
+  ;;(slime-setup)
+
+  ;; redefine `slime-lisp-mode-hook'
+  ;; set indent function for lisp-mode to `lisp-indent-function'
+  ;; (it defaults to `common-lisp-indent-function')
+  (defun slime-lisp-mode-hook ()
+    (slime-mode 1)
+    (setq-local lisp-indent-function 'lisp-indent-function))
+
+  ;; run custom version of slime setup to preserve lisp-indent-function
+  (defun custom-slime-lisp-mode-hook ()
+    ;; ;; set lisp program
+    ;; (setq inferior-lisp-program "clisp -K full")
+    ;; (setq inferior-lisp-program "clisp -K base")
+
+    ;; turn on slime mode
+    (slime-mode 1)
+
+    ;; typeout frame
+    ;;(add-hook 'slime-connected-hook #'slime-ensure-typeout-frame)
+    ;; highlight edits
+    ;;(add-hook 'slime-mode-hook #'slime-highlight-edits-mode)
+
+    ;; key bindings
+    (bind-keys :map slime-mode-map
+               ("C-c C-c" . slime-eval-sexp)
+               ("C-x C-e" . slime-eval-last-expression)
+               ("M-C-x" . slime-eval-sexp)
+               ("C-c C-k" . slime-eval-buffer))
+
+    ;; start inferior lisp job
+    ;;(unless (comint-check-proc "*inferior-lisp*")
+    ;;  (let ((buffer (current-buffer)))
+    ;;    (slime)
+    ;;    (switch-to-buffer buffer)))
+
+    ;; ;; auto connect to slime
+    ;; (unless (slime-connected-p)
+    ;;   (save-mark-and-excursion (slime)))
+    )
+  (add-hook 'lisp-mode-hook #'custom-slime-lisp-mode-hook)
+  (add-hook 'common-lisp-mode-hook #'custom-slime-lisp-mode-hook)
+  (add-hook 'clojure-mode-hook #'custom-slime-lisp-mode-hook)
+
+  ;; cldoc (common lisp info in minibuffer)
+  (autoload 'turn-on-cldoc-mode "cldoc" nil t)
+  (add-hook 'common-lisp-mode-hook #'turn-on-cldoc-mode)
+  ;; wait 3 seconds before showing minibuffer docs
+  (setq cldoc-idle-delay 3)
+
+  ;; ;; slime motd warnings
+  ;; (use-package slime-cl-pitfalls
+  ;;   :straight (:type built-in))
+
+  ;; add clisp to slime implementations
+  (add-to-list 'slime-lisp-implementations '(clisp ("/usr/bin/clisp" "-K" "base")) t)
+
+  (defun clisp ()
+    "Start Common Lisp in Slime."
+    (interactive)
+    (slime 'clisp))
+
+  ;; initialize clisp: quicklisp
+  ;; $ clisp --load quicklisp.lisp
+  ;; (quicklisp-quickstart:install)
+  ;; (ql:add-to-init-file)
+  ;; (ql:quickload 'restas)
+
+  ;; add sbcl to slime implementations
+  (add-to-list 'slime-lisp-implementations '(sbcl ("/usr/bin/sbcl")) t)
+
+  (defun sbcl ()
+    "Start Steel Bank Common Lisp in Slime."
+    (interactive)
+    (slime 'sbcl))
+
+  ;; initialize sbcl: quicklisp
+  ;; $ sbcl --load quicklisp.lisp
+  ;; (quicklisp-quickstart:install)
+  ;; (ql:add-to-init-file)
+  ;; (ql:quickload 'restas)
+
+  ;; add clojure to slime implementation
+  ;; (add-to-list 'slime-lisp-implementations
+  ;;              `(clojure (,(file-truename (expand-file-name "~/bin/clojure")))
+  ;;                        :init swank-clojure-init
+  ;;                        :coding-system utf-8-unix) t)
+  (add-to-list 'slime-lisp-implementations `(clojure ("/usr/bin/clojure")) t)
+
+  (defun clojure ()
+    "Start Clojure in Slime."
+    (interactive)
+    (slime 'clojure))
+
+  (defun custom-lisp-mode-hook-slime-mode ()
+    "Hook to load slime-mode when lisp-mode is loaded."
+    (slime-mode 1))
+  (add-hook 'lisp-mode-hook #'custom-lisp-mode-hook-slime-mode)
+  ;; (defun custom-inferior-lisp-mode-hook-inferior-slime-mode ()
+  ;;   (inferior-slime-mode 1))
+  ;; (add-hook 'inferior-lisp-mode-hook #'custom-inferior-lisp-mode-hook-inferior-slime-mode)
+  )
+
+;;------------------------------------------------------------------------------
+;;;; ac-slime
+;;------------------------------------------------------------------------------
+
+;; (init-message 3 "ac-slime")
+
+;; ;; auto-complete source for slime
+;; (use-package ac-slime
+;;   :straight t
+;;   :after (slime)
+;;   :config
+;;   (add-hook 'slime-mode-hook #'set-up-slime-ac)
+;;   (add-hook 'slime-repl-mode-hook #'set-up-slime-ac)
+;;   (add-to-list 'ac-modes 'slime-repl-mode t))
+
+;;------------------------------------------------------------------------------
+;;;; elisp-slime-nav-mode
+;;------------------------------------------------------------------------------
+
+(init-message 3 "elisp-slime-nav-mode")
+
+(use-package elisp-slime-nav
+  :straight t
+  :after (slime)
+  :diminish elisp-slime-nav-mode
+  :commands (elisp-slime-nav-mode)
+  :config (elisp-slime-nav-mode))
+;; Slime Mode (Common Lisp):1 ends here
+
+;; [[file:init-emacs.org::*SQL Mode][SQL Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: SQL Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: SQL Mode")
+
+(use-package sql
+  :straight (:type built-in)
+  :mode (("\\.sql\\'" . sql-mode)
+         ("\\.tbl\\'" . sql-mode)
+         ("\\.sp\\'" . sql-mode))
+  :hook (sql-interactive-mode . custom-sql-interactive-hook)
+  :config
+  ;; ;; turn on abbreviation mode
+  ;; (abbrev-mode 1)
+
+  ;; remove trailing blanks
+  ;;(add-hook 'sql-mode-hook #'install-remove-trailing-blanks)
+
+  ;; remove tabs
+  ;;(add-hook 'sql-mode-hook #'install-remove-tabs)
+
+  ;; remove prompt
+  (defun sql-remove-prompt (output)
+    "Remove prompt so output lines up correctly."
+    (save-mark-and-excursion
+      (let ((inhibit-read-only t))
+        (forward-line 0)
+        (while (and (not (bobp))
+                    (not (looking-at "^GO$")))
+          (while (re-search-forward (concat sql-prompt-regexp "[ \t]*") (point-at-eol) :noerror)
+            (replace-match ""))
+          (forward-line -1))))
+    output)
+
+  ;; custom hook
+  (defun custom-sql-interactive-hook ()
+    ;; turn off line wrapping
+    (toggle-truncate-lines 1)
+
+    ;; turn on sql history
+    (set (make-local-variable 'sql-input-ring-file-name)
+         (expand-file-name "history-sql" user-emacs-directory))
+
+    ;; remove prompt on output
+    (add-hook 'comint-preoutput-filter-functions #'sql-remove-prompt)))
+
+;;------------------------------------------------------------------------------
+;;;; sqlup-mode
+;;------------------------------------------------------------------------------
+
+(use-package sqlup-mode
+  :straight t
+  :after (sql)
+  :bind (:map sql-mode-map
+              ("C-c b" . sqlup-capitalize-keywords-in-buffer)
+              ("C-c r" . sqlup-capitalize-keywords-in-region))
+  :bind (:map sql-interactive-mode-map
+              ("C-c b" . sqlup-capitalize-keywords-in-buffer)
+              ("C-c r" . sqlup-capitalize-keywords-in-region))
+  :hook ((sql-mode . sqlup-mode)
+         (sql-interactive-mode . sqlup-mode)))
+
+;;------------------------------------------------------------------------------
+;;;; sql-transform
+;;------------------------------------------------------------------------------
+
+(use-package sql-transform
+  :straight t
+  :after (sql)
+  :bind (:map sql-mode-map
+              ("C-c s" . sql-to-select)
+              ("C-c i" . sql-to-insert)
+              ("C-c u" . sql-to-update)
+              ("C-c d" . sql-to-delete))
+  :bind (:map sql-interactive-mode-map
+              ("C-c s" . sql-to-select)
+              ("C-c i" . sql-to-insert)
+              ("C-c u" . sql-to-update)
+              ("C-c d" . sql-to-delete)))
+
+;; ;;------------------------------------------------------------------------------
+;; ;;;; mysql
+;; ;;------------------------------------------------------------------------------
+
+;; (init-message 3 "mysql")
+
+;; (use-package mysql
+;;   :straight t
+;;   :after (sql)
+;;   :config (setq sql-product 'mysql))
+;; SQL Mode:1 ends here
+
+;; [[file:init-emacs.org::*Text Mode][Text Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Text Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Text Mode")
+
+(use-package text-mode
+  :straight (:type built-in)
+  :after (flyspell)
+  :mode (("\\.txt\\'" . text-mode)
+         ("\\.text\\'" . text-mode)
+         ("\\'README\\'" . text-mode)
+         ("\\'INSTALL\\'" . text-mode)
+         ("\\'CHANGELOG\\'" . text-mode))
+  :config
+  (defun custom-text-mode-hook ()
+    ;; set tab
+    ;;(setq tab-width 4)
+    ;;(setq tab-stop-list (number-sequence 4 76 4))
+    (setq tab-width 8)
+    (setq tab-stop-list (number-sequence 8 76 8))
+    ;;(setq indent-tabs-mode t)           ; can insert TAB characters
+    ;;(bind-key "<tab>" 'indent-relative text-mode-map)
+
+    ;; set default fill column for auto-fill mode
+    (setq fill-column 78)
+
+    ;; turn on word wrap
+    (turn-on-auto-fill)
+
+    ;; add underscore and dash to word boundaries
+    (modify-syntax-entry ?_ "w" text-mode-syntax-table)
+    (modify-syntax-entry ?- "w" text-mode-syntax-table)
+
+    ;; turn on flyspell
+    (flyspell-mode 1)
+
+    ;; ;; turn on abbreviation mode
+    ;; (abbrev-mode 1)
+
+    ;; turn on pabbrev mode
+    ;;(pabbrev-mode)
+
+    ;; insert one space after a sentence
+    (setq sentence-end-double-space nil)
+
+    ;; insert one space after a colon
+    (setq colon-double-space nil)
+
+    ;; ;; insert two spaces after a sentence
+    ;; (setq sentence-end-double-space t)
+
+    ;; ;; insert two spaces after a colon
+    ;; (setq colon-double-space t)
+    )
+  (add-hook 'text-mode-hook #'custom-text-mode-hook)
+
+  ;; remove trailing blanks
+  ;;(add-hook 'text-mode-hook #'install-remove-trailing-blanks)
+
+  ;; remove tabs
+  ;;(add-hook 'text-mode-hook #'install-remove-tabs)
+  )
+;; Text Mode:1 ends here
+
+;; [[file:init-emacs.org::*TypeScript Mode][TypeScript Mode:2]]
+;;------------------------------------------------------------------------------
+;;; Modes: TypeScript Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: TypeScript Mode")
+
+(use-package typescript-mode
+  :straight t
+  :mode ("\\.ts\\'" . typescript-mode)
+  :hook (typescript-mode . lsp-deferred)
+  :config
+  (setq typescript-indent-level 2))
+;; TypeScript Mode:2 ends here
+
+;; [[file:init-emacs.org::*V Mode][V Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: V Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: V Mode")
+
+(use-package v-mode
+  :straight (v-mode
+             :type git :host github :repo "damon-kwok/v-mode"
+             :files ("tokens" "v-mode.el"))
+  :after (flyspell)
+  :mode ("\\.v?v\\.vsh\\'" . v-mode)
+  :bind (:map v-mode-map
+              ("C-c C-b" . v-project-build)
+              ("C-c C-c" . v-project-run)
+              ("C-c C-f" . v-format-buffer)
+              ("C-c C-f" . v-menu))
+  :config
+  (defun custom-v-mode-hook ()
+    ;; use spaces for tabs
+    (setq indent-tabs-mode nil)
+
+    ;; set indent level
+    ;;(setq v-indent-level 4)
+
+    ;; format code on save
+    ;;(setq v-format-on-save t)
+
+    ;; ;; define keys
+    ;; (define-key v-mode-map (kbd "<return>") 'reindent-then-newline-and-indent)
+    ;; ;; undefine electric keys
+    ;; (define-key v-mode-map (kbd "{") 'self-insert-command)
+    ;; (define-key v-mode-map (kbd "}") 'self-insert-command)
+
+    ;; turn on flyspell
+    (when (boundp 'flyspell-prog-mode)
+      (flyspell-prog-mode)))
+  (add-hook 'v-mode-hook #'custom-v-mode-hook :append)
+
+  ;; turn on flyspell
+  (flyspell-prog-mode)
+
+  ;; FIXME: No longer works
+  ;; (use-package flymake
+  ;;   :straight (:type built-in)
+  ;;   :config (progn
+  ;;             (defun flymake-v-init ()
+  ;;               (let* ((temp-file (flymake-init-create-temp-buffer-copy 'flymake-create-temp-inplace))
+  ;;                      (local-file (file-relative-name temp-file (file-name-directory buffer-file-name))))
+  ;;                 (list "v" (list "-c" local-file))))
+
+  ;;             (defun flymake-v-enable ()
+  ;;               (when (and buffer-file-name
+  ;;                          (file-writable-p (file-name-directory buffer-file-name))
+  ;;                          (file-writable-p buffer-file-name)
+  ;;                          (if (fboundp 'tramp-list-remote-buffers)
+  ;;                              (not (cl-subsetp (list (current-buffer)) (tramp-list-remote-buffers)))
+  ;;                            t))
+  ;;                 (local-set-key (kbd "C-c d") 'flymake-display-err-menu-for-current-line)
+  ;;                 (flymake-mode t)))
+
+  ;;             (add-to-list 'flymake-allowed-file-name-masks '(".+\\.rb\\'" flymake-v-init) t)
+  ;;             (add-to-list 'flymake-allowed-file-name-masks '("Rakefile\\'" flymake-v-init) t)
+  ;;             (add-to-list 'flymake-err-line-patterns '("^\\(.*\\):\\([0-9]+\\): \\(.*\\)$" 1 2 nil 3) t)
+  ;;             (add-hook 'v-mode-hook #'flymake-v-enable)))
+
+  ;; ;; turn on syntax highlighting (actually turns off syntax highlighting)
+  ;; (add-hook 'v-mode-hook #'turn-on-font-lock)
+
+  ;; ;; turn on abbreviation mode
+  ;; (abbrev-mode 1)
+
+  (defun v-mode-maybe ()
+    "Determine if file is a v script and switch to `v-mode' if it is."
+    (interactive)
+    (save-mark-and-excursion
+      (save-match-data
+        (goto-char (point-min))
+        (when (or
+               (search-forward "#!/usr/bin/v" (line-end-position) :noerror)
+               (search-forward "#!/usr/bin/env v" (line-end-position) :noerror))
+          (v-mode)))))
+
+  ;; run when a file is loaded
+  (add-hook 'find-file-hooks #'v-mode-maybe)
+
+  ;; remove trailing blanks
+  ;;(add-hook 'v-mode-hook #'install-remove-trailing-blanks)
+
+  ;; remove tabs
+  ;;(add-hook 'v-mode-hook #'install-remove-tabs)
+  )
+;; V Mode:1 ends here
+
+;; [[file:init-emacs.org::*XML Mode][XML Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: XML Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: XML Mode")
+
+(use-package nxml-mode
+  :straight (:type built-in)
+  :after (flyspell)
+  :mode (("\\.dtd\\'" . nxml-mode)
+         ("\\.htm\\'" . nxml-mode)
+         ("\\.html\\'" . nxml-mode)
+         ("\\.rdf\\'" . nxml-mode)
+         ("\\.rhtml\\'" . nxml-mode)
+         ("\\.rss\\'" . nxml-mode)
+         ("\\.sgml\\'" . nxml-mode)
+         ("\\.svg\\'" . nxml-mode)
+         ("\\.xhtml\\'" . nxml-mode)
+         ("\\.xml\\'" . nxml-mode)
+         ("\\.xsd\\'" . nxml-mode)
+         ("\\.xsl\\'" . nxml-mode)
+         ("\\.tt\\'" . nxml-mode))
+  :config
+  ;; set magic modes
+  ;;(load "rng-auto")
+  ;;(unify-8859-on-decoding-mode)
+  (add-to-list 'magic-mode-alist '("<\\?xml " . nxml-mode) t)
+
+  (defun custom-nxml-mode-hook ()
+    ;; do not use `indent-relative' for tab indenting
+    (bind-key "<tab>" 'indent-for-tab-command nxml-mode-map)
+
+    ;; turn off auto-fill mode
+    (turn-off-auto-fill)
+
+    ;; turn on flyspell
+    (flyspell-prog-mode)
+
+    ;; turn on auto-completion
+    (setq nxml-slash-auto-complete-flag t)
+
+    ;; turn on org minor mode
+    ;; (when (string-match "\\.\\(x?html\\|php[34]?\\)\\'"
+    ;;                     (file-name-sans-versions buffer-file-name))
+    ;;   (custom-nxml-mode-org))
+    ;;(custom-nxml-mode-org)
+
+    ;; set outline header regexp
+    ;;(setq-local outline-regexp " *<[^/]")
+    (setq-local outline-regexp "\\s *<\\([h][1-6]\\|html\\|body\\|head\\)\\b")
+    ;;(hide-sublevels 1)
+    )
+  (add-hook 'nxml-mode-hook #'custom-nxml-mode-hook)
+
+  ;; (defun custom-nxml-mode-org ()
+  ;;   ;;(setq-local outline-regexp "\\s *<\\([h][1-6]\\|html\\|body\\|head\\)\\b")
+  ;;   (setq-local outline-regexp "\\s *<")
+  ;;   (setq-local outline-level 'custom-nxml-mode-outline-level)
+  ;;   (outline-minor-mode 1)
+  ;;   (hs-minor-mode 1))
+
+  ;; (defun custom-nxml-mode-outline-level ()
+  ;;   (save-mark-and-excursion
+  ;;     (save-match-data
+  ;;       (re-search-forward html-outline-level)
+  ;;       (let ((tag (buffer-substring (match-beginning 1) (match-end 1))))
+  ;;         (if (eq (length tag) 2)
+  ;;             (- (aref tag 1) ?0)
+  ;;           0)))))
+
+  ;; (add-to-list 'hs-special-modes-alist
+  ;;              '(nxml-mode
+  ;;                "<!--\\|<[^/>]>\\|<[^/][^>]*[^/]>"
+  ;;                ""
+  ;;                "<!--" ;; won't work on its own; uses syntax table
+  ;;                (lambda (arg) (custom-nxml-mode-forward-element))
+  ;;                nil) t)
+
+  ;; (defun custom-nxml-mode-forward-element ()
+  ;;   (let ((nxml-sexp-element-flag))
+  ;;     (setq nxml-sexp-element-flag (not (looking-at "<!--")))
+  ;;     (unless (looking-at outline-regexp)
+  ;;       (ignore-errors
+  ;;         (nxml-forward-balanced-item 1)))))
+
+  ;; remove trailing blanks
+  ;;(add-hook 'nxml-mode-hook #'install-remove-trailing-blanks)
+
+  ;; remove tabs
+  ;;(add-hook 'nxml-mode-hook #'install-remove-tabs)
+
+  ;; (use-package flymake
+  ;;   :straight (:type built-in)
+  ;;   :config (progn
+  ;;             (defun flymake-html-init ()
+  ;;               (let* ((temp-file (flymake-init-create-temp-buffer-copy 'flymake-create-temp-inplace))
+  ;;                      (local-file (file-relative-name temp-file (file-name-directory buffer-file-name))))
+  ;;                 (list "tidy" (list local-file))))
+
+  ;;             (add-to-list 'flymake-allowed-file-name-masks '("\\.html$\\|\\.ctp" flymake-html-init) t)
+  ;;             (add-to-list 'flymake-err-line-patterns '("line \\([0-9]+\\) column \\([0-9]+\\) - \\(Warning\\|Error\\): \\(.*\\)" nil 1 2 4) t)))
+
+  ;; derive xml-mode and html-mode from nxml-mode
+  (fset 'xml-mode 'nxml-mode)
+  (fset 'html-mode 'nxml-mode))
+;; XML Mode:1 ends here
+
+;; [[file:init-emacs.org::*Menus][Menus:1]]
+;;==============================================================================
+;;; Menus
+;;==============================================================================
+
+(init-message 1 "Menus")
+;; Menus:1 ends here
+
+;; [[file:init-emacs.org::*Setup][Setup:1]]
+;;------------------------------------------------------------------------------
+;;; Menus: Setup
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Menus: Setup")
+;; Setup:1 ends here
+
+;; [[file:init-emacs.org::*Easy Menu][Easy Menu:1]]
+;;------------------------------------------------------------------------------
+;;;; Menus: Setup: Easy Menu
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Menus: Setup: Easy Menu")
+
+;; easymenu
+(use-package easymenu
+  :straight (:type built-in))
+;; Easy Menu:1 ends here
+
+;; [[file:init-emacs.org::*Auto-Menu][Auto-Menu:1]]
+;;------------------------------------------------------------------------------
+;;;; Menus: Setup: Auto-Menu
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Menus: Setup: Auto-Menu")
+
+;; auto-menu
+(use-package auto-menu
+  :load-path (lambda () (file-truename (expand-file-name "auto-menu.el" local-modules-dir)))
+  :commands (auto-menu
+             auto-menu-dired
+             auto-menu-file
+             auto-menu-file-dir))
+;; Auto-Menu:1 ends here
+
+;; [[file:init-emacs.org::*Find or Browse File][Find or Browse File:1]]
+;;------------------------------------------------------------------------------
+;;;; Menus: Setup: Find or Browse File
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Menus: Setup: Find or Browse File")
+
+(defun find-or-browse-file (file)
+  "Based on file type either open FILE or browse FILE."
+  (let ((file (file-truename (expand-file-name file))))
+    (if (string= (file-name-extension file) "html")
+        (browse-url (concat "file://" file))
+      (find-file file))))
+;; Find or Browse File:1 ends here
+
+;; [[file:init-emacs.org::*Buffer-Switch Menu][Buffer-Switch Menu:1]]
+;;------------------------------------------------------------------------------
+;;; Menus: Buffer-Switch Menu
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Menus: Buffer-Switch Menu")
+
+;; buffer-switch menu
+(auto-menu
+ "Buffer-Switch"
+ `(("*scratch*" "(switch-to-buffer \"*scratch*\")" "Switch to '*scratch*' buffer.")
+   ("New *scratch*" "(switch-to-buffer (generate-new-buffer-name \"*scratch*\"))" "Create and switch to a '*scratch*' buffer.")
+   ("Current Mode *scratch*" "(switch-to-scratch-for-current-mode)" "Switch to '*scratch-MODE*' buffer.")
+   ("Emacs Lisp Mode *scratch*" "(new-emacs-lisp-scratch)" "Create and switch to '*scratch-emacs-lisp-mode*' buffer.")
+   ("*messages*" "(switch-to-buffer \"*Messages*\")" "Switch to '*Messages*' buffer.")))
+;; Buffer-Switch Menu:1 ends here
+
+;; [[file:init-emacs.org::*Dired Menu][Dired Menu:1]]
+;;------------------------------------------------------------------------------
+;;; Menus: Dired Menu
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Menus: Dired Menu")
+
+;; dired menu
+(auto-menu
+ "Dired"
+ ;;(append '(("recent" "context-dired" "Run `cdired' to list recent files.")) ; no longer installed
+ (auto-menu-dired `(("home" . "~/")
+                    ,(cons "emacs" emacs-home-dir)
+                    ;;,(cons "emacs-modules" (concat emacs-home-dir "/modules"))
+                    ;;,(cons "emacs-mode-abbrevs" (concat emacs-home-dir "/mode-abbrevs"))
+                    ;;,(cons "emacs-init" local-init-dir)
+                    ;;,(cons "emacs-modules" local-modules-dir)
+                    ;;,(cons "emacs-work-modules" local-work-modules-dir)
+                    ("config" . "~/config")
+                    ("config-private" . "~/config-private")
+                    ("bin" . "~/bin")
+                    ("org" . "~/org")
+                    ("web" . "~/web")
+                    ("web/org" . "~/web/org")
+                    ("public_html" . "~/public_html")
+                    ;;("plans" . "~/plans")
+                    ("reminders" . "~/reminders")
+                    ;;("wiki" . "~/wiki")
+                    ("doc" . "~/doc")
+                    ("bbs" . "~/doc/bbs")
+                    ("dev" . "~/dev")
+                    ("prj" . "~/prj")
+                    ("code" . "~/code")
+                    ("github" . "~/code/github-nullman")
+                    ("gitlab" . "~/code/gitlab-kylesherman")
+                    ("media" . "/home/data/media")
+                    ("music" . "/home/data/media/audio/Music")
+                    ("text" . "/home/data/media/text")
+                    ("softwre" . "/home/data/media/software")
+                    ("repos" . "/home/data/media/repos")
+                    ("Downloads" . "~/Downloads")
+                    ("Documents" . "~/Documents")
+                    ("clisp" . "~/dev/clisp")
+                    ;;("clojure" . "~/dev/clojure")
+                    ("racket" . "~/dev/racket")
+                    ("erlang" . "~/dev/erlang")
+                    ("basic" . "~/dev/basic")
+                    ("java" . "~/dev/java")
+                    ("javascript" . "~/dev/javascript")
+                    ("kotlin" . "~/dev/kotlin")
+                    ,(cons "emacs-help" (concat emacs-home-dir "/help")))))
+;;)
+;; Dired Menu:1 ends here
+
+;; [[file:init-emacs.org::*Load Menu][Load Menu:1]]
+;;------------------------------------------------------------------------------
+;;; Menus: Load Menu
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Menus: Load Menu")
+
+;; load menu
+(auto-menu
+ "Load"
+ `(("Restore Context" "context-restore" "Restore previous context save.")
+   ("Home Files..."
+    ,(auto-menu-file '((".alias" . "~/.alias")
+                       (".alias-local" . "~/.alias-local")
+                       (".alias-work" . "~/.alias-work")
+                       (".aspell.en.pws" . "~/.aspell.en.pws")
+                       (".bashrc" . "~/.bashrc")
+                       (".funct" . "~/.funct")
+                       (".funct-local" . "~/.funct-local")
+                       (".funct-work" . "~/.funct-work")
+                       (".gopherus.bookmarks" . "~/.gopherus.bookmarks")
+                       (".profile" . "~/.profile")
+                       (".profile-local" . "~/.profile-local")
+                       (".profile-work" . "~/.profile-work")
+                       (".profile_run" . "~/.profile_run")
+                       (".xbindkeysrc" . "~/.xbindkeysrc"))))
+   ("Emacs Initialization..."
+    ,(auto-menu-file `(("init-emacs.org" . ,(file-truename (expand-file-name "init-emacs.org" emacs-home-dir)))
+                       ("customization.el" . ,(file-truename (expand-file-name "customization.el" emacs-home-dir))))))
+   ;; ("Emacs Initialization..."
+   ;;  ,(auto-menu-file-dir local-init-dir "\\.el\\'" "find-file"))
+   ("Emacs Personal Modules..."
+    ,(auto-menu-file-dir local-modules-dir "\\.el\\'" "find-file" t))
+   ("Bin Files..."
+    ;;,(auto-menu-file-dir "~/bin" nil "find-file" t))
+    ,(auto-menu-file '(("get-emacs-modules" . "~/bin/get-emacs-modules"))))
+   ("Web Org Files..."
+    ,(auto-menu-file-dir "~/web/org" "\\.org\\'" "find-file" t))
+   ("Org Files..."
+    ,(cl-remove-if (lambda (x) (string-prefix-p "agenda-" (car x)))
+                   (auto-menu-file-dir "~/org" "\\.\\(org\\|org\\.cpt\\)\\'" "find-file" t)))
+   ("Agenda Files..."
+    ,(cl-remove-if (lambda (x) (not (string-prefix-p "agenda-" (car x))))
+                   (auto-menu-file-dir "~/org" "\\.\\(org\\|org\\.cpt\\)\\'" "find-file" t)))
+   ("Bookmarks" "load-bookmarks" "Load `~/lynx_bookmarks.html' file.")
+   ("Emacs Work Modules..."
+    ,(auto-menu-file-dir local-work-modules-dir "\\.el\\'" "find-file" t))
+   ("Clojure Files..."
+    ,(auto-menu-file-dir "~/dev/clojure" "\\.clj\\'" "find-file" t))
+   ("CLisp Files..."
+    ,(auto-menu-file-dir "~/dev/clisp" "\\.lisp\\'" "find-file" t))
+   ("Erlang Files..."
+    ,(auto-menu-file-dir "~/dev/erlang" "\\.erl\\'" "find-file" t))
+   ("BASIC Files..."
+    ,(auto-menu-file-dir "~/dev/basic" "\\.bas\\'" "find-file" t))
+   ("Javascript Files..."
+    ,(auto-menu-file-dir "~/dev/javascript" "\\.js\\'" "find-file" t))
+   ))
+;; Load Menu:1 ends here
+
+;; [[file:init-emacs.org::*Application Menu][Application Menu:1]]
+;;------------------------------------------------------------------------------
+;;; Menus: Application Menu
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Menus: Application Menu")
+
+;; applications menu
+(auto-menu
+ "Applications"
+ `(("Bookmarks" "load-bookmarks" "Load bookmarks.")
+   ("Calc" "calc" "Run Calc (The Emacs Calculator).")
+   ("Elfeed" "elfeed" "Run Elfeed (Emacs Atom/RSS feed reader).")
+   ("Elpher" "elpher" "Run Elpher (Emacs Gopher Client).")
+   ("ERC" "erc" "Run ERC (Emacs Internet Relay Chat client).")
+   ("Gnus" "gnus" "Run Gnus (Newsreader)")
+   ))
+
+;; (when (fboundp 'term-ansi)
+
+;;   (init-message 2 "Applications Menu")
+
+;;   ;; applications menu
+;;   (auto-menu
+;;    "Applications"
+;;    `(("ispell" "(term-ansi \"ispell\" \"ispell\" \"-a\")" "Run ispell spell checker.")
+;;      ("mutt" "(term-ansi \"mutt\" \"mutt\")" "Run mutt email client.")
+;;      ("pine" "(term-ansi \"pine\" \"pine\")" "Run pine email client.")
+;;      ("centerim" "(term-ansi \"centerim\" \"centerim\" \"-a\")" "Run centerim instant messaging client.")
+;;      ("tin" "(term-ansi \"tin\" \"tin\")" "Run tin news client.")
+;;      ("slrn" "(term-ansi \"slrn\" \"slrn\")" "Run slrn news client.")
+;;      ("irssi" "(term-ansi \"irssi\" \"irssi\")" "Run irssi irc client.")
+;;      ("snownews" "(term-ansi \"snownews\" \"snownews\")" "Run snownews rss client.")
+;;      ("lynx" "(term-ansi \"lynx\" \"lynx\" \"-book -useragent=\\\"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)\\\"\")" "Run lynx web browser.")
+;;      ("orpie" "(term-ansi \"orpie\" \"orpie\")" "Run orpie calculator.")
+;;      ("linuxtrade" "(term-ansi \"linuxtrade\" \"linuxtrade\")" "Run linuxtrade stock client.")
+;;      )))
+;; Application Menu:1 ends here
+
+;; [[file:init-emacs.org::*Run-File Menu][Run-File Menu:1]]
+;;------------------------------------------------------------------------------
+;;; Menus: Run-File Menu
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Menus: Run-File Menu")
+
+;; run-file menu
+(auto-menu
+ "Run-File"
+ `(("init.el" ,(concat "(safe-load \"" (file-truename (expand-file-name "init.el" emacs-home-dir)) "\")") "Run init.el to re-initialize Emacs.")
+   ;; ("Emacs Initialization..."
+   ;;  ,(auto-menu-file `(("init.el" ,(concat "(safe-load \"" (file-truename (expand-file-name "init.el" emacs-home-dir)) "\")") "Run init.el to re-initialize Emacs.")
+   ;;                     ("init-emacs.el" ,(concat "(safe-load \"" (file-truename (expand-file-name "init-emacs.el" emacs-home-dir)) "\")") "Run init-emacs.el to re-initialize Emacs."))))
+   ;; ("Emacs Initialization..."
+   ;;  ,(auto-menu-file-dir local-init-dir "\\.el\\'" "safe-load-compile"))
+   ("Emacs Personal Modules..."
+    ,(auto-menu-file-dir local-modules-dir "\\.el\\'" "safe-load-compile" t))
+   ("Clojure Files..."
+    ,(auto-menu-file-dir "~/dev/clojure" "\\.clj\\'" "slime-load-file" t))
+   ("CLisp Files..."
+    ,(auto-menu-file-dir "~/dev/clisp" "\\.lisp\\'" "slime-load-file" t))
+   ))
+;; Run-File Menu:1 ends here
+
+;; [[file:init-emacs.org::*Website Menu][Website Menu:1]]
+;;------------------------------------------------------------------------------
+;;; Menus: Website Menu
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Menus: Website Menu")
+
+;; website menu
+(auto-menu
+ "Website"
+ `(("Blog"
+    (("Blog Post" "org-website-blog-post-create" "Create a new blog post.")
+     ("Update Blog Post Timestamp" "org-website-blog-post-update-posted" "Update blog post timestamp.")))
+   ("Publish"
+    (("Publish" "org-website-publish-async" "Publish entire website.")
+     ("Force Publish" "(org-website-publish-async nil t)" "Force publish entire website.")
+     ("nullman" "(org-website-publish-async \"nullman\")" "Publish nullman website.")
+     ("nullman (Force)" "(org-website-publish-async \"nullman\" t)" "Force publish nullman website.")
+     ("nulldot" "(org-website-publish-async \"nulldot\")" "Publish nulldot website.")
+     ("nulldot (Force)" "(org-website-publish-async \"nulldot\" t)" "Force publish nulldot website.")
+     ("nullware" "(org-website-publish-async \"nullware\")" "Publish nullware website.")
+     ("nullware (Force)" "(org-website-publish-async \"nullware\" t)" "Force publish nullware website.")
+     ("kylesherman" "(org-website-publish-async \"kylesherman\")" "Publish kylesherman website.")
+     ("kylesherman (Force)" "(org-website-publish-async \"kylesherman\" t)" "Force publish kylesherman website.")
+     ("shermanwest" "(org-website-publish-async \"shermanwest\")" "Publish shermanwest website.")
+     ("shermanwest (Force)" "(org-website-publish-async \"shermanwest\" t)" "Force publish shermanwest website.")))
+   ("Tangle and Publish"
+    (("All" "org-website-tangle-publish-async" "Tangle and publish entire website.")
+     ("Force All" "(org-website-tangle-publish-async nil t)" "Force tangle and publish entire website asynchronously.")
+     ("nullman" "(org-website-tangle-publish-async \"nullman\")" "Tangle and publish nullman website.")
+     ("nullman (Force)" "(org-website-tangle-publish-async \"nullman\" t)" "Force tangle and publish nullman website.")
+     ("nulldot" "(org-website-tangle-publish-async \"nulldot\")" "Tangle and publish nulldot website.")
+     ("nulldot (Force)" "(org-website-tangle-publish-async \"nulldot\" t)" "Force tangle and publish nulldot website.")
+     ("nullware" "(org-website-tangle-publish-async \"nullware\")" "Tangle and publish nullware website.")
+     ("nullware (Force)" "(org-website-tangle-publish-async \"nullware\" t)" "Force tangle and publish nullware website.")
+     ("kylesherman" "(org-website-tangle-publish-async \"kylesherman\")" "Tangle and publish kylesherman website.")
+     ("kylesherman (Force)" "(org-website-tangle-publish-async \"kylesherman\" t)" "Force tangle and publish kylesherman website.")
+     ("shermanwest" "(org-website-tangle-publish-async \"shermanwest\")" "Tangle and publish shermanwest website.")
+     ("shermanwest (Force)" "(org-website-tangle-publish-async \"shermanwest\" t)" "Force tangle and publish shermanwest website.")))
+   ("Remote Synchronization"
+    (;;("Website to localhost" "org-website-rsync-to-localhost" "Rsync website to localhost server.")
+     ("Website to Morpheus" "org-website-rsync-to-morpheus-async" "Rsync website to morpheus server.")
+     ("Website to DigitalOcean" "org-website-rsync-to-digitalocean-async" "Rsync website to DigitalOcean server.")
+     ("Powerhouse to DigitalOcean" "(org-website-rsync-to-digitalocean-async \"powerhouse\")" "Rsync Powerhouse to DigitalOcean server.")
+     ("Bloodmoon to DigitalOcean" "(org-website-rsync-to-digitalocean-async \"bloodmoon\")" "Rsync Bloodmoon to DigitalOcean server.")))
+   ))
+;; Website Menu:1 ends here
+
+;; [[file:init-emacs.org::*Package Manager Menu][Package Manager Menu:1]]
+;;------------------------------------------------------------------------------
+;;; Menus: Package Manager Menu
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Menus: Package Manager Menu")
+
+;; package manager menu
+(auto-menu
+ "Package Manager"
+ `(("List Packages" "(package-list-packages :nofetch)" "List packages.")
+   ("List Packages (Refresh)" "package-list-packages" "List packages (after refresh).")
+   ("Install Package" "package-install" "Install package.")
+   ("Straight Refresh" "straight-pull-recipe-repositories" "Refresh recipe repositories.")
+   ("Straight Fetch All" "straight-fetch-all" "Fetch all packages.")
+   ;;("Auto-Remove Packages" "package-autoremove" "Remove packages that are no more needed.")
+   ;;("Quelpa Upgrade" "quelpa-upgrade" "Upgrade one Quelpa package.")
+   ;;("Quelpa Upgrade All" "quelpa-upgrade-all" "Upgrade all Quelpa packages.")
+   ;; ("Update Package List" "package-list-update" "Update `package-list' from currently installed packages.")
+   ;; ("Install Missing Packages" "package-list-install-missing" "Install all missing packages in `package-list'.")
+   ;; ("List Unaccounted Packages" "package-list-unaccounted-packages" "List installed ELPA packages that are not in `package-list'.")
+   ;;("Compile Packages" "(byte-recompile-directory emacs-package-dir 0)" "Byte-compile ELPA packages.")
+   ))
+;; Package Manager Menu:1 ends here
+
+;; [[file:init-emacs.org::*Miscellaneous Menu][Miscellaneous Menu:1]]
+;;------------------------------------------------------------------------------
+;;; Menus: Miscellaneous Menu
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Menus: Miscellaneous Menu")
+
+;; bbs directory
+(setq bbs-directory (file-truename (expand-file-name "~/doc/bbs")))
+
+;; miscellaneous menu
+(auto-menu
+ "Misc"
+ `(("Development"
+    (("Racket REPL" "run-racket" "Start Racket REPL for interactively evaluating Racket expressions.")
+     ("Kotlin REPL" "kotlin-repl" "Start Kotlin REPL for interactively evaluating Kotlin expressions.")
+     ("Common Lisp SLIME Mode" "(slime 'clisp)" "Start SLIME mode for interactively evaluating Common Lisp expressions.")
+     ("Steel Bank Common Lisp SLIME Mode" "(slime 'sbcl)" "Start SLIME mode for interactively evaluating Common Lisp expressions.")
+     ("Clojure SLIME Mode" "(slime 'clojure)" "Start SLIME mode for interactively evaluating Clojure expressions.")
+     ("Evaluate SLIME Buffer" "slime-eval-buffer" "Run `slime-eval-buffer' on the current buffer.")
+     ("Python REPL" "elpy-shell-switch-to-shell" "Start Python REPL for interactively evaluating Python expressions.")))
+   ("Reformat"
+    (("JSON Reformat" "json-pretty-print-buffer" "Reformat JSON in current buffer.")
+     ("XML Reformat" "xml-format" "Reformat XML in current buffer.")
+     ("Java Reformat" "java-pretty-print-buffer" "Reformat Java code in current buffer.")
+     ("Ruby Reformat" "ruby-pretty-print-buffer" "Reformat Ruby code in current buffer.")
+     ("C Reformat" "c-pretty-print-buffer" "Reformat C code in current buffer.")))
+   ("Command Log"
+    (("Command Log Mode ON" "command-log-mode-on" "Turn on ‘command-log-mode’ and open the log buffer.")
+     ("Command Log Mode OFF" "command-log-mode-off" "Turn off ‘command-log-mode’ and close the log buffer.")
+     ("Clear Command Log Buffer" "clm/command-log-clear" "Clear the command log buffer.")))
+   ("Edit"
+    (("Replacer Replacements Edit" "replacer-replacements-edit" "Edit `replacer-replacements'.")
+     ("Elfeed Boookmarks Edit" "elfeed-bookmarks-edit" "Edit Elfeeds bookmarks file.")
+     ("Elpher Bookmarks Edit" "elpher-bookmarks-edit" "Edit Elpher bookmarks file.")))
+   ("TAGS"
+    (("Visit Local TAGS" "(when (find-file-updir \"TAGS\") (visit-tags-table (find-file-updir \"TAGS\") t))" "Visit local tags table.")
+     ("Create Local TAGS" "etags-create" "Create local tags table.")))
+   ("Byte-Compile"
+    (("Generate `init-emacs.el'"
+      "(org-babel-generate-elisp-file (file-truename (expand-file-name \"init-emacs.org\" emacs-home-dir)))"
+      "Run `org-babel-generate-elisp-file' on init-emacs.org to produce init-emacs.el.")
+     ("Generate and Byte-Compile `init-emacs.el'"
+      "(org-babel-generate-elisp-file (file-truename (expand-file-name \"init-emacs.org\" emacs-home-dir)) t t)"
+      "Run `org-babel-generate-elisp-file' on init-emacs.org to produce init-emacs.el and init-emacs.elc.")
+     ,(list (concat "Compile Personal Modules Directory")
+            (concat "(compile-elisp \"" local-modules-dir "\")")
+            (concat "Byte-Compile `" local-modules-dir "' directory."))
+     ;; ,(list (concat "Compile Emacs Modules Directory")
+     ;;        (concat "(compile-elisp \"" emacs-modules-dir "\")")
+     ;;        (concat "Byte-Compile `" emacs-modules-dir "' directory."))
+     ))
+   ("Fonts"
+    (("Hack Nerd Font Mono-12" "(set-frame-font \"Hack Nerd Font Mono-12\" nil t)" "Call `set-frame-font` to set the font to 'Hack Nerd Font Mono-12'.")
+     ("Hack Nerd Font Mono-14" "(set-frame-font \"Hack Nerd Font Mono-14\" nil t)" "Call `set-frame-font` to set the font to 'Hack Nerd Font Mono-14'.")
+     ("BitstreamVeraSansMono Nerd Font Mono-12" "(set-frame-font \"BitstreamVeraSansMono Nerd Font Mono-12\" nil t)" "Call `set-frame-font` to set the font to 'BitstreamVeraSansMono Nerd Font Mono-12'.")
+     ("BitstreamVeraSansMono Nerd Font Mono-14" "(set-frame-font \"BitstreamVeraSansMono Nerd Font Mono-14\" nil t)" "Call `set-frame-font` to set the font to 'BitstreamVeraSansMono Nerd Font Mono-14'.")
+     ("DroidSansMono Nerd Font Mono-12" "(set-frame-font \"DroidSansMono Nerd Font Mono-12\" nil t)" "Call `set-frame-font` to set the font to 'DroidSansMono Nerd Font Mono-12'.")
+     ("DroidSansMono Nerd Font Mono-14" "(set-frame-font \"DroidSansMono Nerd Font Mono-14\" nil t)" "Call `set-frame-font` to set the font to 'DroidSansMono Nerd Font Mono-14'.")
+     ("9x15" "(set-frame-font \"9x15\" nil t)" "Call `set-frame-font` to set the font to '9x15'.")))
+   ("Coding System"
+    (("UNIX Coding System" "(set-coding-system 'unix)" "Call `set-coding-system' to set the coding system to UNIX.")
+     ("DOS Coding System" "(set-coding-system 'dos)" "Call `set-coding-system' to set the coding system to DOS.")
+     ("Mac Coding System" "(set-coding-system 'mac)" "Call `set-coding-system' to set the coding system to Mac.")))
+   ("BBS"
+    (("Level 29 BBS Fetch"
+      "(progn (find-file (file-truename (expand-file-name \"level-29-bbs.org\" bbs-directory))) (unless (fboundp 'l29-fetch-messages-new) (org-babel-execute-buffer)) (l29-fetch-messages-new))"
+      "Run `l29-fetch-messages-new' to fetch new messages from the Level 29 BBS into level-29-bbs.org.")
+     ("House of Lunduke BBS Fetch"
+      "(progn (find-file (file-truename (expand-file-name \"house-of-lunduke-bbs.org\" bbs-directory))) (unless (fboundp 'lunduke-fetch-messages-new) (org-babel-execute-buffer)) (lunduke-fetch-messages-new))"
+      "Run `lunduke-fetch-messages-new' to fetch new messages from the House of Lunduke BBS into house-of-lunduke-bbs.org.")))
+   ("Export"
+    (("Export Bookmarks to JSON" "(org-bookmarks-export-to-json \"~/org/bookmarks.org\" \"~/Desktop/bookmarks.json\")" "Export bookmarks.org to ~/Desktop/bookmarks.json.")
+     ("Export Bookmarks to HTML" "(org-bookmarks-export-to-html \"~/org/bookmarks.org\" \"~/Desktop/bookmarks.html\")" "Export bookmarks.org to ~/Desktop/bookmarks.html.")
+     ("Export Bookmarks to NYXT" "(org-bookmarks-export-to-nyxt \"~/org/bookmarks.org\" \"~/config/local/.local/share/nyxt/bookmarks.lisp\")" "Export bookmarks.org to ~/config/local/.local/share/nyxt/bookmarks.lisp.")))
+   ("Revert Buffer" "revert-buffer" "Run `revert-buffer' on current buffer.")
+   ("Debug On Error Mode [Toggle]" "toggle-debug-on-error" "Toggle `debug-on-error'.")
+   ("Truncate Line Mode [Toggle]" "toggle-truncate-lines" "Toggle `truncate-lines' in current buffer.")
+   ("Visual Line Mode [Toggle]" "visual-line-mode" "Toggle `visual-line-mode' in current buffer.")
+   ("Search Case Sensitivity [Toggle]" "toggle-case-fold-search" "Toggle case-fold-search in current buffer.")
+   ("Git Status" "(magit-status default-directory)" "Open Git Status buffer.")
+   ("Web Jump" "webjump" "Jump to a Web site from a programmable hotlist.")
+   ("IELM Mode" "ielm" "Open buffer for interactively evaluating Emacs Lisp expressions.")
+   ("Evaluate Buffer" "eval-buffer" "Run `eval-buffer' on the current buffer.")
+   ("Customize Group" "customize-group" "Run `customize-group' function.")
+   ("Regular Expression Builder" "regexp-builder" "Start Regular Expression Builder in current buffer.")
+   ("World Time" "display-time-world" "Display the time in various time zones.")
+   ("Colors Display" "list-colors-display" "List Emacs font colors.")
+   ("Faces Display" "list-faces-display" "List Emacs font faces.")
+   ("Restart Emacs Server" "server-start-maybe" "Restart Emacs server.")
+   ))
+;;("Tip of the Day" "totd" "Display a random emacs command.")
+;;("Visit Local TAGS" "(when (file-exists-p \"TAGS\") (visit-tags-table \"TAGS\" t))" "Visit local tags table.")
+;;("Visit Home TAGS" "(when (file-exists-p \"~/TAGS\") (visit-tags-table \"~/TAGS\"))" "Visit home tags table.")
+;;("MySQL" "sql-mysql" "Launch SQL-MySQL.")
+;;("MS-SQL" "sql-ms" "Launch SQL-MS.")
+;;("Common Lisp Doc Mode" "(add-hook 'lisp-mode-hook #'turn-on-cldoc-mode)" "Turn on auto docs in CLisp mode.")
+;; Miscellaneous Menu:1 ends here
+
+;; [[file:init-emacs.org::*Manuals Menu][Manuals Menu:1]]
+;;------------------------------------------------------------------------------
+;;; Menus: Manuals Menu
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Menus: Manuals Menu")
+
+;; manual menu
+(auto-menu
+ "Manuals"
+ `(("Help Files" ,(auto-menu-file-dir (concat emacs-home-dir "/help") ".*" "find-or-browse-file" t))
+   ("Man Pages" "woman" "Browse man pages.")
+   ("Emacs Manual" "(info \"emacs-24/emacs\")" "Open Emacs manual.")
+   ("Elisp Manual" "(info \"emacs-24/elisp\")" "Open Elisp manual.")
+   ("Org Mode Manual" "(info \"/usr/share/info/org.gz\")" "Open Org Mode manual.")
+   ("Screen Manual" "(info \"screen\")" "Open Screen manual.")
+   ("SED Manual" "(info \"sed\")" "Open SED manual.")
+   ("Grep Manual" "(info \"grep\")" "Open Grep pattern matching manual.")
+   ("DC Manual" "(info \"dc\")" "Open arbitrary precision RPN Desktop Calculator manual.")
+   ("Wget Manual" "(info \"wget\")" "Open Wget manual.")))
+;;("Help Files" ,(auto-menu-file-dir (concat emacs-home-dir "/help") ".*" "find-file" t))
+;; Manuals Menu:1 ends here
+
+;; [[file:init-emacs.org::*Web Menu][Web Menu:1]]
+;;------------------------------------------------------------------------------
+;;; Menus: Web Menu
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Menus: Web Menu")
+
+;; web menu
+(when (boundp 'web-query-list)
+  (auto-menu
+   "Web"
+   (mapcar (lambda (x)
+             (list (car x)
+                   (concat "(web-query \"" (car x) "\")")
+                   (concat "Query web for \\\"" (car x) "\\\".")))
+           web-query-list)))
+;; Web Menu:1 ends here
+
+;; [[file:init-emacs.org::*Insert Menu][Insert Menu:1]]
+;;------------------------------------------------------------------------------
+;;; Menus: Insert Menu
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Menus: Insert Menu")
+
+;; insert menu
+(auto-menu
+ "Insert"
+ '(("Org-Babel Inserts"
+    (("Name" "org-insert-literate-programming-name" "Insert #+NAME.")
+     ("Emacs Init Block" "org-insert-literate-programming-init-emacs-block" "Insert Emacs Init block.")
+     ("Code Block" "org-insert-literate-programming-code-block" "Insert Code block.")
+     ("Project Euler Block" "org-insert-literate-programming-project-euler-problem-block" "Insert Project Euler block.")
+     ("Source Block" "org-insert-literate-programming-src" "Insert #+BEGIN_SRC ... #+END_SRC block.")
+     ("Shell Block" "org-insert-literate-programming-src-sh" "Insert #+BEGIN_SRC sh ... #+END_SRC block.")
+     ("Emacs Lisp Source Block" "org-insert-literate-programming-src-emacs-lisp" "Insert #+BEGIN_SRC emacs-lisp ... #+END_SRC block.")
+     ("Racket Source Block" "org-insert-literate-programming-src-racket" "Insert #+BEGIN_SRC racket ... #+END_SRC block.")
+     ("Kotlin Source Block" "org-insert-literate-programming-src-kotlin" "Insert #+BEGIN_SRC kotlin ... #+END_SRC block.")))
+   ("Lisp Inserts"
+    (("Lisp Comment Block (Equal)" "insert-lisp-comment-block-equal" "Insert Lisp style comment block using equals.")
+     ("Lisp Comment Block (Dash)" "insert-lisp-comment-block-dash" "Insert Lisp style comment block using dashes.")))
+   ("C Inserts"
+    (("C Comment Block" "insert-c-comment-block" "Insert C/C++/Java style comment block.")
+     ("C Comment Stub" "insert-c-comment-stub" "Insert C/C++/Java style comment stub.")))
+   ("Date YYYY-MM-DD" "insert-date" "Insert date in YYYY-MM-DD format.")
+   ("Date/Time YYYY-MM-DD HH:MM:SS" "insert-datetime" "Insert date/time in YYYY-MM-DD HH:MM:SS format.")
+   ("Time HH:MM:SS" "insert-time" "Insert time in HH:MM:SS format.")
+   ("UUID" "insert-uuid" "Insert a UUID.")
+   ("GUID" "insert-guid" "Insert a GUID.")
+   ("Password" "insert-password-14" "Insert a random password (length 14).")
+   ("Password Phrase" "insert-password-phrase-three-hyphen" "Insert a random password phrase (three words, hyphenated).")
+   ("Figlet" "insert-figlet" "Insert figlet text.")
+   ("Equals" "append-equal-to-column-80" "Append `=' characters up to column 80.")
+   ("Dashes" "append-dash-to-column-80" "Append `-' characters up to column 80.")
+   ("Asterisks" "append-asterisk-to-column-80" "Append `*' characters up to column 80.")
+   ("XML Header" "insert-xml-header" "Insert XML header line.")
+   ("DB Change Log" "insert-db-change-log-template-line" "Insert template line for DB change log.")
+   ("DB Change Log Legacy" "insert-db-change-log-template-line-legacy" "Insert template line for legacy DB change log.")
+   ("Capture Table" "(table-capture (mark) (point) \"  \" \"\n\" 'left 20)" "Capture table from selected text.")
+   ("Apostrophe" "(insert \"’\")" "Insert a fancy apostrophe `’'.")
+   ("Lexical Binding" "insert-lexical-binding" "Insert elisp lexical binding header.")
+   ("TOC Header" "insert-toc-header" "Insert org-mode table of contents header.")
+   ))
+;; ("Muse"
+;;  ("Muse Header" "muse-header" "Insert Muse standard header line.")
+;;  ("Muse Blog Header" "muse-blog-header" "Insert Muse blog header line."))
+;; Insert Menu:1 ends here
+
+;; [[file:init-emacs.org::*Weather Menu][Weather Menu:1]]
+;;------------------------------------------------------------------------------
+;;; Menus: Weather Menu
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Menus: Weather Menu")
+
+;; weather menu
+(when (and (functionp 'wttrin-query)
+           (boundp 'wttrin-default-cities))
+  (auto-menu
+   "Weather"
+   (mapcar (lambda (x)
+             (list x
+                   (concat "(wttrin-query \"" x "\")")
+                   (concat "Show weather report for \\\"" x "\\\".")))
+           wttrin-default-cities)))
+;; Weather Menu:1 ends here
+
+;; [[file:init-emacs.org::*Games Menu][Games Menu:1]]
+;;------------------------------------------------------------------------------
+;;; Menus: Games Menu
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Menus: Games Menu")
+
+;; manual menu
+(auto-menu
+ "Games"
+ `(("5x5" "5x5" "Simple little puzzle game.")
+   ("Blackbox" "blackbox" "Blackbox is a game of hide and seek.")
+   ("Bubbles" "bubbles" "Remove all bubbles with as few moves as possible.")
+   ("Doctor" "doctor" "Psychological help for frustrated users.")
+   ("Dunnet" "dunnet" "Text adventure game.")
+   ("Gomoku" "gomoku" "Gomoku game between you and Emacs.")
+   ("Hanoi" "hanoi" "Towers of Hanoi diversion.")
+   ("Life" "life" "John Horton Conway's game of Life.")
+   ("Mpuz" "mpuz" "Multiplication puzzle.")
+   ("Pong" "pong" "Classical implementation of pong.")
+   ("Snake" "snake" "Implementation of the Snake game.")
+   ("Solitaire" "solitaire" "Game of solitaire.")
+   ("Tetris" "tetris" "Implementation of Tetris.")))
+;; Games Menu:1 ends here
+
+;;==============================================================================
+;;; Snippets
+;;==============================================================================
+
+(init-message 1 "Snippets")
+
+;;------------------------------------------------------------------------------
+;;; Snippets: Setup
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Snippets: Setup")
+
+(init-message 3 "yasnippet")
+
+(use-package yasnippet
+  :straight t
+  :diminish yas-minor-mode
+  :config
+  ;; turn on globally
+  (yas-global-mode 1)
+
+  ;; turn off yas-expand on tab (all three are needed it seems)
+  (define-key yas-minor-mode-map [(tab)] nil)
+  (define-key yas-minor-mode-map (kbd "TAB") nil)
+  (define-key yas-minor-mode-map (kbd "<tab>") nil)
+
+  ;; (defun flyspell-incorrect-hook--inhibbit-when-yasnippet-active (beg end corrections)
+  ;;   "Inhibbit flyspell mode as it interferes with yasnippet."
+  ;;   (and yas-active-field-overlay
+  ;;        (overlay-buffer yas-active-field-overlay)))
+  ;; (add-hook 'flyspell-incorrect-hook #'flyspell-incorrect-hook--inhibbit-when-yasnippet-active)))
+  )
+
+(init-message 3 "yasnippet-snippets")
+
+(use-package yasnippet-snippets
+  :straight t
+  :after (yasnippet))
+
+;;------------------------------------------------------------------------------
+;;; Snippets: Org-Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Snippets: Org-Mode")
+
+;; [[file:init-emacs.org::*Hydras][Hydras:1]]
+;;==============================================================================
+;;; Hydras
+;;==============================================================================
+
+(init-message 1 "Hydras")
+;; Hydras:1 ends here
+
+;; [[file:init-emacs.org::*Setup][Setup:1]]
+;;------------------------------------------------------------------------------
+;;; Hydras: Setup
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Hydras: Setup")
+
+(init-message 3 "hydra")
+
+;; hydra
+(use-package hydra
+  :straight t)
+;; Setup:1 ends here
+
+;; [[file:init-emacs.org::*Windows OS][Windows OS:1]]
+;;==============================================================================
+;;; Windows OS
+;;==============================================================================
+
+(when window-system-windows
+  (init-message 1 "Windows OS")
+
+  ;; ;; turn on the menubar
+  ;;(menu-bar-mode t)
+
+  ;; ;; w32-feeling
+  ;; (use-package w32-feeling
+  ;;   :straight (:type built-in)
+  ;;   :config (w32-feeling-maximize-frame))
+
+  ;; set temp directories
+  (setenv "TEMP" "c:/windows/temp")
+  (setenv "TMP" "c:/windows/temp")
+
+  ;; ;; cua
+  ;; (cua-mode 1)           ; with C-x/c/v key bindings
+  ;; ;;(cua-selection-mode 1) ; without C-x/c/v key bindings
+  ;; (setq cua-delete-copy-to-register-0 t)
+  ;; ;; key bindings
+  ;; (bind-keys ("C-@" . cua-set-mark))
+
+  ;; ;; clipboard
+  ;; (setq select-enable-clipboard t
+  ;;       interprogram-paste-function 'x-cut-buffer-or-selection-value)
+  ;; (use-package pc-select
+  ;;   :straight (:type built-in)
+  ;;   :config (pc-selection-mode))
+
+  ;; ;; turn on timeclock display (since I'm at work if I'm using Windows)
+  ;; (timeclock-mode-line-display)
+
+  ;; set page-up and page-down keys (again)
+  (bind-keys ("<next>" . scroll-up-enhanced)
+             ("<prior>" . scroll-down-enhanced)))
+;; Windows OS:1 ends here
+
+;; [[file:init-emacs.org::*Gnus][Gnus:1]]
+;;==============================================================================
+;;; Gnus
+;;==============================================================================
+
+(init-message 1 "Gnus")
+
+;; gnus (newsreader)
+(use-package gnus
+  :straight (:type built-in)
+  :defines (gnus-subscribe-newsgroup-method
+            sendmail-program mail-envelope-from
+            smtpmail-smtp-server
+            smtpmail-smtp-service)
+  :config
+  ;; newsserver
+  ;;(setq gnus-select-method '(nntp "news.gmane.org"))
+
+  ;; gmail imap server
+  (setq gnus-select-method '(nnimap "gmail"
+                                    (nnimap-address "imap.gmail.com")
+                                    (nnimap-server-port 993)
+                                    (nnimap-stream ssl)))
+
+  ;; ;; localhost imap server
+  ;; (setq gnus-select-method '(nnnil "")
+  ;;       gnus-secondary-select-methods
+  ;;       '((nnimap "localhost"
+  ;;                 (nnimap-address "localhost")
+  ;;                 (nnimap-stream network)
+  ;;                 (nnimap-authenticator login))))
+
+  ;; gmail smtp server
+  (setq smtpmail-smtp-server "smtp.gmail.com"
+        smtpmail-smtp-service 587
+        gnus-ignored-newsgroups "^to\\.\\|^[0-9. ]+\\( \\|$\\)\\|^[\"]\"[#'()]")
+
+  ;; do not fetch mail
+  (setq mail-sources nil)
+
+  ;; use gnus to send mail
+  (setq mail-user-agent 'gnus-user-agent)
+
+  ;; ;; store sent mail on local imap server
+  ;; (setq gnus-message-archive-method '(nnimap "localhost"))
+  ;; ;;(setq gnus-message-archive-group "nnimap+localhost:Sent")
+  ;; (setq gnus-message-archive-group
+  ;;       '((if (message-news-p)
+  ;;             "nnimap+localhost:SentNews"
+  ;;           "nnimap+localhost:Sent")))
+
+  ;; fetch all messages and never expire them
+  (setq gnus-agent-cache t)
+
+  ;; expire certain directories
+  (setq gnus-auto-expirable-newsgroups "Trash")
+  ;;      "Trash\\|")
+
+  ;; do not prompt when accessing large folders
+  (setq gnus-large-newsgroup nil)
+
+  ;; summary line format
+  ;; default: "%U%R%z%I%(%[%4L: %-23,23f%]%) %s\n"
+  (setq gnus-summary-line-format "%U%R%z %o %I%(%[%-25,25n%]%) %s\n")
+
+  ;; automatically subscribe to new groups
+  ;;(setq gnus-subscribe-newsgroup-method #'gnus-subscribe-alphabetically)
+
+  ;; ;; article sort order
+  ;; (setq gnus-article-sort-functions
+  ;;       '(gnus-article-sort-by-number
+  ;;         (lambda (t1 t2)
+  ;;           (gnus-article-sort-by-date t2 t1))))
+
+  ;; ;; thread sort order
+  ;; (setq gnus-thread-sort-functions
+  ;;       '(gnus-thread-sort-by-most-recent-number
+  ;;     (lambda (t1 t2)
+  ;;       (gnus-thread-sort-by-most-recent-date t1 t2))))
+
+  ;; ;; use threads
+  ;; (setq gnus-show-threads t)
+  ;; (setq gnus-thread-hide-subtree nil)
+
+  ;; set return address depending on folder
+  ;; (setq gnus-posting-styles
+  ;;       '((".*"
+  ;;          (name user-full-name)
+  ;;          ("X-URL" "http://nulldot.org/"))
+  ;;         ("work"
+  ;;          (address "kyle.sherman@dowjones.com"))))
+
+  ;; send mail function
+  ;; (setq send-mail-function #'sendmail-send-it
+  ;;       message-send-mail-function #'sendmail-send-it)
+
+  ;; msmtp setup
+  (setq sendmail-program "/usr/bin/msmtp"
+        mail-specify-envelope-from t
+        mail-envelope-from 'header)
+
+  ;; default from address
+  (setq mail-from-style 'angles
+        ;;mail-host-address "bofh.bofh"
+        mail-host-address user-mail-address
+        mail-interactive t)
+
+  ;; add signature
+  ;;(setq message-signature t)
+  (setq message-signature #'signature)
+
+  ;; spell check before sending mail
+  (add-hook 'message-send-hook #'ispell-message))
+
+;;------------------------------------------------------------------------------
+;;;; supercite
+;;------------------------------------------------------------------------------
+
+(init-message 3 "supercite")
+
+;; use supercite for quoting
+(use-package supercite
+  :straight t
+  :after (gnus)
+  :commands (sc-cite-original)
+  :config
+  (setq sc-citation-leader "")
+  (setq message-cite-function 'sc-cite-original)
+  (add-hook 'mail-yank-hooks #'sc-cite-original))
+;; Gnus:1 ends here
+
+;; [[file:init-emacs.org::*ERC][ERC:1]]
+;;==============================================================================
+;;; ERC
+;;==============================================================================
+
+(init-message 1 "ERC")
+;; ERC:1 ends here
+
+;; [[file:init-emacs.org::*Setup][Setup:1]]
+;;------------------------------------------------------------------------------
+;;; ERC: Setup
+;;------------------------------------------------------------------------------
+
+(init-message 2 "ERC: Setup")
+
+(use-package erc
+  :straight (:type built-in)
+  :config
+  (erc-button-mode 1)
+  (erc-completion-mode 1)
+  (erc-fill-mode 1)
+  (erc-match-mode 1)
+  (erc-netsplit-mode 1)
+  (erc-services-mode 1)
+  (erc-timestamp-mode 1)
+  (erc-track-mode 1)
+  (add-hook 'erc-mode-hook #'erc-add-scroll-to-bottom)
+  ;; (add-to-list 'erc-nick-popup-alist
+  ;;              '("DebianDB" .
+  ;;                (shell-command
+  ;;                 (format
+  ;;                  "ldapsearch -x -P 2 -h db.debian.org -b dc=debian,dc=org ircnick=%s"
+  ;;                  nick))) t)
+  )
+
+(use-package erc-imenu
+  :straight (:type built-in)
+  :after (erc))
+(use-package erc-menu
+  :straight (:type built-in)
+  :after (erc))
+(use-package erc-notify
+  :straight (:type built-in)
+  :after (erc))
+(use-package erc-ring
+  :straight (:type built-in)
+  :after (erc))
+;; Setup:1 ends here
+
+;; [[file:init-emacs.org::*Customization][Customization:1]]
+;;------------------------------------------------------------------------------
+;;; ERC: Customization
+;;------------------------------------------------------------------------------
+
+(init-message 2 "ERC: Customization")
+
+;; erc customization
+(use-package erc
+  :straight (:type built-in)
+  :config
+  ;; create a seperate buffer for private messages
+  (setq erc-auto-query t)
+  ;; have noticies appear in minibuffer
+  (setq erc-echo-notices-in-minibuffer-flag t)
+  ;; add users to bbdb
+  ;;(setq erc-bbdb-auto-create-on-whois-p t)
+  ;; wrap text at edge of window
+  (setq erc-fill-column (- (window-width) 2))
+  (setq erc-fill-function 'erc-fill-static)
+  ;; interpret mIRC color codes
+  (setq erc-interpret-mirc-color t)
+  ;; hide certain types of messages
+  (setq erc-hide-list '("JOIN" "PART" "QUIT"))
+  ;; default nick
+  (setq erc-nick "nullman")
+  ;; friends list for notifications
+  (setq erc-pals '("jam" "dmitri" "peter" "glenn" "vin"))
+  (setq erc-notify-list erc-pals)
+  ;; channels to auto-join
+  (setq erc-autojoin-channels-alist '((".*freenode\.net" . ("#emacs"
+                                                            ;;"#elisp"
+                                                            ;;"#erc"
+                                                            "#lisp"
+                                                            ;;"#clojure"
+                                                            ))
+                                      (".*dowjones\.net" . ("#dev"))
+                                      ("sbkdevtick11" . ("#dev"))
+                                      ("localhost" . ("#collab"))))
+  ;; modules to load
+  (mapc (lambda (x) (add-to-list 'erc-modules x t))
+        '(autojoin button completion fill identd irccontrols list match menu
+                   move-to-prompt netsplit networks noncommands readonly ring
+                   scrolltobottom services stamp spelling track))
+  ;; C-RET (or C-c RET or C-c C-RET) sends messages, insteasd of RET
+  ;; (define-key erc-mode-map (kbd "RET") nil)
+  ;; (define-key erc-mode-map (kbd "C-RET") 'erc-send-current-line)
+  ;; (define-key erc-mode-map (kbd "C-c RET") 'erc-send-current-line)
+  ;; (define-key erc-mode-map (kbd "C-c C-RET") 'erc-send-current-line)
+
+  ;; ~/.erc-auth should contain the following:
+  ;;
+  ;; (setq erc-nickserv-passwords
+  ;;      '((freenode (("nullman" . "PASSWORD")))
+  ;;        ))
+
+  ;; load nickserv authentication file
+  (defconst erc-auth-file-name (file-truename (expand-file-name "~/.erc-auth")))
+  (when (file-exists-p erc-auth-file-name)
+    (setq erc-prompt-for-nickserv-password nil)
+    (load erc-auth-file-name)))
+;; Customization:1 ends here
+
+;; [[file:init-emacs.org::*Functions][Functions:1]]
+;;------------------------------------------------------------------------------
+;;; ERC: Functions
+;;------------------------------------------------------------------------------
+
+(init-message 2 "ERC: Functions")
+;; Functions:1 ends here
+
+;; [[file:init-emacs.org::*Nick from System Name][Nick from System Name:1]]
+;;------------------------------------------------------------------------------
+;;;; ERC: Functions: Nick from System Name
+;;------------------------------------------------------------------------------
+
+(init-message 3 "ERC: Functions: Nick from System Name")
+
+(use-package erc
+  :straight (:type built-in)
+  :config
+  (defun erc-nick-from-system-name ()
+    "Return a nickname based on machine name.
+
+Defaults to \"nullman\" if no match is found."
+    (let* ((server-nick '(
+                          ;;("tank.nullware.com" . "nulltank")
+                          ;;("tank" . "nulltank")
+                          ;;("neo.nullware.com" . "nullhome")
+                          ;;("neo" . "nullhome")
+                          ;;("mouse1.nullware.com" . "nullman")
+                          ;;("mouse1" . "nullman")
+                          ;;("min-kyle-linux.production.bigcharts.com" . "nullwork")
+                          ;;("min-kyle-linux" . "nullwork")
+                          ))
+           (nick (cdr (assoc (system-name) server-nick))))
+      (or nick erc-nick))))
+;; Nick from System Name:1 ends here
+
+;; [[file:init-emacs.org::*Localhost][Localhost:1]]
+;;------------------------------------------------------------------------------
+;;;; ERC: Functions: Localhost
+;;------------------------------------------------------------------------------
+
+(init-message 3 "ERC: Functions: Localhost")
+
+(use-package erc
+  :straight (:type built-in)
+  :commands (erc)
+  :config
+  (defun erc-localhost ()
+    "Connect to localhost irc server."
+    (interactive)
+    (let ((nick (erc-nick-from-system-name)))
+      (erc-services-disable)
+      (erc :server "localhost" :port "6667" :nick nick :password nil :full-name "Kyle Sherman"))))
+;;(bind-keys ("C-c el" . erc-localhost)))
+;; Localhost:1 ends here
+
+;; [[file:init-emacs.org::*Localhost Bitlbee][Localhost Bitlbee:1]]
+;;------------------------------------------------------------------------------
+;;;; ERC: Functions: Localhost Bitlbee
+;;------------------------------------------------------------------------------
+
+(init-message 3 "ERC: Functions: Localhost Bitlbee")
+
+(use-package erc
+  :straight (:type built-in)
+  ;; :bind* ("C-c eb" . erc-localhost-bitlbee)
+  :config
+  (defun erc-localhost-bitlbee ()
+    "Connect to localhost bitlbee server."
+    (interactive)
+    (let ((nick (erc-nick-from-system-name)))
+      (erc-services-disable)
+      (erc :server "localhost" :port "6668" :nick nick :password nil :full-name "Kyle Sherman"))))
+;; Localhost Bitlbee:1 ends here
+
+;; [[file:init-emacs.org::*Freenode][Freenode:1]]
+;;------------------------------------------------------------------------------
+;;;; ERC: Functions: Freenode
+;;------------------------------------------------------------------------------
+
+(init-message 3 "ERC: Functions: Freenode")
+
+(use-package erc
+  :straight (:type built-in)
+  ;; :bind* ("C-c ef" . erc-freenode)
+  :config
+  (defun erc-freenode ()
+    "Connect to irc.freenode.net irc server."
+    (interactive)
+    (let ((nick (erc-nick-from-system-name)))
+      (erc-services-enable)
+      (erc :server "irc.freenode.net" :port "6667" :nick nick :password nil :full-name "Kyle Sherman"))))
+;; Freenode:1 ends here
+
+;; [[file:init-emacs.org::*Work][Work:1]]
+;;------------------------------------------------------------------------------
+;;;; ERC: Functions: Work
+;;------------------------------------------------------------------------------
+
+(init-message 3 "ERC: Functions: Work")
+
+(use-package erc
+  :straight (:type built-in)
+  :config
+  (defun erc-work ()
+    "Connect to work IRC server."
+    (interactive)
+    "Connect to irc.win.dowjones.net IRC server."
+    (erc-services-disable)
+    (erc :server "irc.win.dowjones.net" :port "6667" :nick "kyle" :password nil :full-name "Kyle Sherman")))
+;;(bind-keys ("C-c ew" . erc-work)))
+;; Work:1 ends here
+
+;; [[file:init-emacs.org::*Commands][Commands:1]]
+;;------------------------------------------------------------------------------
+;;; ERC: Commands
+;;------------------------------------------------------------------------------
+
+(init-message 2 "ERC: Commands")
+;; Commands:1 ends here
+
+;; [[file:init-emacs.org::*UPTIME][UPTIME:1]]
+;;------------------------------------------------------------------------------
+;;;; ERC: Commands: UPTIME
+;;------------------------------------------------------------------------------
+
+(init-message 3 "ERC: Commands: UPTIME")
+
+(use-package erc
+  :straight (:type built-in)
+  :commands (erc-send-message)
+  :config
+  (defun erc-cmd-UPTIME (&rest ignore)
+    "Display the uptime of the system, as well as some load-related stuff,
+to the current ERC buffer."
+    (let ((uname-output
+           (replace-regexp-in-string
+            ", load average: " "] {Load average} ["
+            ;; collapse spaces
+            (replace-regexp-in-string
+             " +" " "
+             ;; remove beginning and trailing whitespace
+             (replace-regexp-in-string
+              "^ +\\|[ \n]+$" ""
+              (shell-command-to-string "uptime"))))))
+      (erc-send-message
+       (concat "{Uptime} [" uname-output "]")))))
+;; UPTIME:1 ends here
+
+;; [[file:init-emacs.org::*WI][WI:1]]
+;;------------------------------------------------------------------------------
+;;;; ERC: Commands: WI
+;;------------------------------------------------------------------------------
+
+(init-message 3 "ERC: Commands: WI")
+
+(use-package erc
+  :straight (:type built-in)
+  :config
+  (defun erc-cmd-WI (nick &rest ignore)
+    "`/WHOIS' command with extra user information."
+    (erc-server-send (mapconcat #'identity (list "WHOIS" nick nick) " "))))
+;; WI:1 ends here
+
+;; [[file:init-emacs.org::*IDENTIFY][IDENTIFY:1]]
+;;------------------------------------------------------------------------------
+;;;; ERC: Commands: IDENTIFY
+;;------------------------------------------------------------------------------
+
+(init-message 3 "ERC: Commands: IDENTIFY")
+
+(use-package erc
+  :straight (:type built-in)
+  :commands (erc-server-send)
+  :config
+  (defun erc-cmd-IDENTIFY (password &rest ignore)
+    "Send PASSWORD to NickServ, `/msg NickServ identify PASSWORD'."
+    (erc-server-send (mapconcat #'identity (list "identify" password) " "))))
+;; IDENTIFY:1 ends here
+
+;; [[file:init-emacs.org::*Work][Work:1]]
+;;==============================================================================
+;;; Work
+;;==============================================================================
+
+(when work-system
+  (init-message 1 "Work"))
+;; Work:1 ends here
+
+;; [[file:init-emacs.org::*Modules][Modules:1]]
+;;------------------------------------------------------------------------------
+;;; Work: Modules
+;;------------------------------------------------------------------------------
+
+(when work-system
+  (init-message 2 "Work: Modules")
+
+  ;; local paths
+  ;; (when local-work-modules-dir
+  ;;   (add-to-list 'load-path local-work-modules-dir t)) ; work elisp projects
+  )
+;; Modules:1 ends here
+
+;; [[file:init-emacs.org::*Settings][Settings:1]]
+;;------------------------------------------------------------------------------
+;;; Work: Settings
+;;------------------------------------------------------------------------------
+
+(when work-system
+  (init-message 2 "Work: Settings")
+
+  ;; add perl files to remove-tabs-exceptions
+  (add-to-list 'remove-tabs-exceptions '(:file . "\\.t\\'") t)
+  (add-to-list 'remove-tabs-exceptions '(:file . "\\.tt\\'") t)
+  (add-to-list 'remove-tabs-exceptions '(:file . "\\.pm\\'") t)
+
+  ;; sql setup
+  (setq sql-product 'ms)
+  (setq sql-ms-program "sqlcmd")
+  ;; https://docs.microsoft.com/en-us/sql/tools/sqlcmd-utility?view=sql-server-ver15
+  ;; -I (enable quoted identifiers)
+  ;; -k[1 | 2] (remove or replace control characters)
+  ;; -s col_separator
+  ;; -w column_width
+  ;; -y variable_length_type_display_width
+  (setq sql-ms-options '("-I" "-k" "-s" "|"))
+
+  ;; database connections
+  (setq sql-connection-alist
+        '((dev (sql-product 'ms)
+               (sql-server "wk8683.infinitecampus.com")
+               (sql-port 1344)
+               (sql-database "CampusMasterMN")
+               (sql-user "dev")
+               (sql-password "devTest"))
+          (issuetest (sql-product 'ms)
+                     (sql-server "issuetest81153.infinitecampus.com")
+                     (sql-port 1344)
+                     (sql-database "exceptionalslittleton-20210801_2101")
+                     (sql-user "dev")
+                     (sql-password "devTest"))))
+
+  (defun sql-ms-dev ()
+    "Connect to local dev database."
+    (interactive)
+    (sql-connect 'dev))
+
+  (defun sql-ms-issuetest ()
+    "Connect to issuetest database."
+    (interactive)
+    (sql-connect 'issuetest)))
+;; Settings:1 ends here
+
+;; [[file:init-emacs.org::*Functions][Functions:1]]
+;;------------------------------------------------------------------------------
+;;; Work: Functions
+;;------------------------------------------------------------------------------
+
+(when work-system
+  (init-message 2 "Work: Functions"))
+;; Functions:1 ends here
+
+;; [[file:init-emacs.org::*+work-linkify-jira-card+][+work-linkify-jira-card+:1]]
+;;------------------------------------------------------------------------------
+;;;; Work: Functions: work-linkify-jira-card
+;;------------------------------------------------------------------------------
+
+(when work-system
+  (init-message 3 "Work: Functions: work-linkify-jira-card")
+
+  (defun work-linkify-jira-card ()
+    "Add Jira URL link to Android Jira card."
+    (interactive)
+    (cl-labels
+        ;; clean up branch name
+        ((fix-branch ()
+                     ;; convert spaces to dashes
+                     (save-mark-and-excursion
+                       (save-match-data
+                         (while (re-search-forward " " (line-end-position) :noerror)
+                           (replace-match "-" t))))
+                     ;; remove brackets
+                     (save-mark-and-excursion
+                       (save-match-data
+                         (while (re-search-forward "\\(\\[\\|\\]\\)" (line-end-position) :noerror)
+                           (replace-match "" t))))))
+      (save-mark-and-excursion
+        (save-match-data
+          ;; remove leading "feature/" text
+          (goto-char (line-beginning-position))
+          (while (re-search-forward "\\bfeature/" (line-end-position) :noerror)
+            (replace-match ""))
+          ;; handle different project names
+          (cond
+           ((re-search-forward "\\[?\\b[Aa][Nn][Dd][Rr][Oo][Ii][Dd]-" (line-end-position) :noerror)
+            (replace-match "ANDROID-" t)
+            (fix-branch)
+            (goto-char (line-beginning-position))
+            (when (re-search-forward "\\b\\(ANDROID-[[:digit:]]+\\)\\([a-zA-Z0-9-_\.]*\\)\\b" (line-end-position) :noerror)
+              (replace-match (concat "[[https://buzzfeed.atlassian.net/browse/" (match-string 1) "][" (match-string 0) "]]") t)))
+           ((re-search-forward "\\[?\\b[Aa][Dd][Ss][Gg][Rr][Oo][Uu][Pp]-" (line-end-position) :noerror)
+            (replace-match "ADSGROUP-" t)
+            (fix-branch)
+            (goto-char (line-beginning-position))
+            (when (re-search-forward "\\b\\(ADSGROUP-[[:digit:]]+\\)\\([a-zA-Z0-9-_\.]*\\)\\b" (line-end-position) :noerror)
+              (replace-match (concat "[[https://buzzfeed.atlassian.net/browse/" (match-string 1) "][" (match-string 0) "]]") t)))
+           ((re-search-forward "\\[?\\b[Bb][Ff][Oo]-" (line-end-position) :noerror)
+            (replace-match "BFO-" t)
+            (fix-branch)
+            (goto-char (line-beginning-position))
+            (when (re-search-forward "\\b\\(BFO-[[:digit:]]+\\)\\([a-zA-Z0-9-_\.]*\\)\\b" (line-end-position) :noerror)
+              (replace-match (concat "[[https://buzzfeed.atlassian.net/browse/" (match-string 1) "][" (match-string 0) "]]") t)))
+           ((re-search-forward "\\[?\\b[Qq][Uu][Ii][Zz]-" (line-end-position) :noerror)
+            (replace-match "QUIZ-" t)
+            (fix-branch)
+            (goto-char (line-beginning-position))
+            (when (re-search-forward "\\b\\(QUIZ-[[:digit:]]+\\)\\([a-zA-Z0-9-_\.]*\\)\\b" (line-end-position) :noerror)
+              (replace-match (concat "[[https://buzzfeed.atlassian.net/browse/" (match-string 1) "][" (match-string 0) "]]") t)))))))))
+;; +work-linkify-jira-card+:1 ends here
+
+;; [[file:init-emacs.org::*+work-insert-release-pr-list+][+work-insert-release-pr-list+:1]]
+;;------------------------------------------------------------------------------
+;;;; Work: Functions: work-insert-release-pr-list
+;;------------------------------------------------------------------------------
+
+(when (and work-system
+           (fboundp 'work-git-commit-start-end-log)
+           (fboundp 'work-linkify-jira-card))
+  (init-message 3 "Work: Functions: work-insert-release-pr-list")
+
+  (defun work-insert-release-pr-list (&optional commit-start commit-end)
+    "Insert a list of pull requests between COMMIT-START and COMMIT-END."
+    (interactive)
+    (cl-labels
+        ;; clean up branch name
+        ((fix-branch ()
+                     ;; convert spaces to dashes
+                     (save-mark-and-excursion
+                       (save-match-data
+                         (while (re-search-forward " " (line-end-position) :noerror)
+                           (replace-match "-" t))))
+                     ;; remove brackets
+                     (save-mark-and-excursion
+                       (save-match-data
+                         (while (re-search-forward "\\(\\[\\|\\]\\)" (line-end-position) :noerror)
+                           (replace-match "" t))))))
+      (multiple-value-bind (commit-start commit-end log)
+          (work-git-commit-start-end-log commit-start commit-end)
+        (let (prs)
+          (with-temp-buffer
+            (insert log)
+            ;; remove leading "feature/" text
+            (goto-char (point-min))
+            (while (re-search-forward "\\bfeature/" nil :noerror)
+              (replace-match ""))
+            ;; handle different project names
+            (goto-char (point-min))
+            (while (re-search-forward "\\[?\\b[Aa][Nn][Dd][Rr][Oo][Ii][Dd]-" nil :noerror)
+              (replace-match "ANDROID-" t)
+              (fix-branch)
+              (goto-char (line-beginning-position))
+              (when (re-search-forward "\\b\\(ANDROID-[[:digit:]]+\\)\\([a-zA-Z0-9-_\.]*\\)\\b" nil :noerror)
+                (pushnew (match-string 0) prs :test 'string=))
+              (goto-char (line-end-position)))
+            (goto-char (point-min))
+            (while (re-search-forward "\\[?\\b[Aa][Dd][Ss][Gg][Rr][Oo][Uu][Pp]-" nil :noerror)
+              (replace-match "ADSGROUP-" t)
+              (fix-branch)
+              (goto-char (line-beginning-position))
+              (when (re-search-forward "\\b\\(ADSGROUP-[[:digit:]]+\\)\\([a-zA-Z0-9-_\.]*\\)\\b" nil :noerror)
+                (pushnew (match-string 0) prs :test 'string=))
+              (goto-char (line-end-position)))
+            (goto-char (point-min))
+            (while (re-search-forward "\\[?\\b[Bb][Ff][Oo]-" nil :noerror)
+              (replace-match "BFO-" t)
+              (fix-branch)
+              (goto-char (line-beginning-position))
+              (when (re-search-forward "\\b\\(BFO-[[:digit:]]+\\)\\([a-zA-Z0-9-_\.]*\\)\\b" nil :noerror)
+                (pushnew (match-string 0) prs :test 'string=))
+              (goto-char (line-end-position)))
+            (goto-char (point-min))
+            (while (re-search-forward "\\[?\\b[Qq][Uu][Ii][Zz]-" nil :noerror)
+              (replace-match "QUIZ-" t)
+              (fix-branch)
+              (goto-char (line-beginning-position))
+              (when (re-search-forward "\\b\\(QUIZ-[[:digit:]]+\\)\\([a-zA-Z0-9-_\.]*\\)\\b" nil :noerror)
+                (pushnew (match-string 0) prs :test 'string=))
+              (goto-char (line-end-position))))
+          ;; output list
+          (when prs
+            (insert
+             (with-temp-buffer
+               (dolist (pr prs)
+                 (insert
+                  (concat "- " pr))
+                 (work-linkify-jira-card)
+                 (newline))
+               (buffer-string)))))))))
+;; +work-insert-release-pr-list+:1 ends here
+
+;; [[file:init-emacs.org::*Menu][Menu:1]]
+;;------------------------------------------------------------------------------
+;;; Work: Menu
+;;------------------------------------------------------------------------------
+
+(when work-system
+  (init-message 2 "Work: Menu")
+
+  ;; work menu
+  (auto-menu
+   "Work"
+   `(("Dired..."
+      ,(auto-menu-dired '(("work" . "~/work")
+                          ("Tomcat" . "~/ICAS-DEV-999.2.29/INFINITECAMPUS/tomcat/tigger-999.2.29")
+                          ("exceptionals-campus" . "~/work/exceptionals-campus")
+                          ("exceptionals-tl-ui" . "~/work/exceptionals-tl-ui")
+                          ("campus-5.0-apps" . "~/work/campus-5.0-apps"))))
+     ("org-copy-to-clipboard" "org-copy-to-clipboard" "Reformat and copy org region to clipboard.")
+     ("org-toggle-link-display" "org-toggle-link-display" "Toggle the literal or descriptive display of links.")
+     ("org-toggle-headline-checkbox" "org-toggle-headline-checkbox" "Toggle between an Org headline and checkbox on current line.")
+     ("org-table-remove-commas" "org-table-remove-commas" "Remove all commas in current Org table.")
+     ("org-table-convert-region" "org-table-convert-region" "Convert region to a table."))))
+;; Menu:1 ends here
+
+;; [[file:init-emacs.org::*Other][Other:1]]
+;;==============================================================================
+;;; Other
+;;==============================================================================
+
+(init-message 1 "Other")
+;; Other:1 ends here
+
+;; [[file:init-emacs.org::*Apply Advice][Apply Advice:1]]
+;;------------------------------------------------------------------------------
+;;; Other: Apply Advice
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Other: Apply Advice")
+;; Apply Advice:1 ends here
+
+;; [[file:init-emacs.org::*Apply Patches][Apply Patches:1]]
+;;------------------------------------------------------------------------------
+;;; Other: Apply Patches
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Other: Apply Patches")
+;; Apply Patches:1 ends here
+
+;; [[file:init-emacs.org::*Aliases][Aliases:1]]
+;;==============================================================================
+;;; Aliases
+;;==============================================================================
+
+(init-message 1 "Aliases")
+;; Aliases:1 ends here
+
+;; [[file:init-emacs.org::*General][General:1]]
+(let ((data '(("Alias" "Function") ("lml" "list-matching-lines") ("qrr" "query-replace-regexp") ("rb" "revert-buffer") ("rxb" "regexp-builder"))))
+;;------------------------------------------------------------------------------
+;;; Aliases: General
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Aliases: General")
+
+(mapc (lambda (x) (defalias (intern (car x)) (intern (cadr x)))) (cdr data))
+)
+;; General:1 ends here
+
+;; [[file:init-emacs.org::*Final Setup][Final Setup:1]]
+;;==============================================================================
+;;; Final Setup
+;;==============================================================================
+
+(init-message 1 "Final Setup")
+;; Final Setup:1 ends here
+
+;; [[file:init-emacs.org::*Set Key Bindings][Set Key Bindings:1]]
+;;------------------------------------------------------------------------------
+;;; Final Setup: Set Key Bindings
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Final Setup: Set Key Bindings")
+
+(custom-key-bindings-set-all)
+;; Set Key Bindings:1 ends here
+
+;; [[file:init-emacs.org::*Compile Personal Modules][Compile Personal Modules:1]]
+;;------------------------------------------------------------------------------
+;;; Final Setup: Compile Personal Modules
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Final Setup: Compile Personal Modules")
+
+;; compile personal modules if needed
+(let ((dir local-modules-dir))
+  (when (file-exists-p dir)
+    (dolist (file (directory-files dir t))
+      (when (file-readable-p file)
+        (cond
+         ((string-match "^\\.\\.?$" (file-name-nondirectory file)))
+         ((string-match ".*\\.el\\'" file)
+          (when (not (file-directory-p file))
+            (compile-file-if-needed file))))))))
+;; Compile Personal Modules:1 ends here
+
+;; [[file:init-emacs.org::*Start Emacs Server][Start Emacs Server:1]]
+;;------------------------------------------------------------------------------
+;;; Final Setup: Start Emacs Server
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Final Setup: Start Emacs Server")
+
+;; start emacs server
+(when (fboundp 'server-start-maybe)
+  (when-lock-file-acquired (expand-file-name "emacs-server-lock-file"
+                                            temporary-file-directory)
+    (server-start-maybe)))
+;; Start Emacs Server:1 ends here
+
+;; [[file:init-emacs.org::*Remove Logging Buffers][Remove Logging Buffers:1]]
+;;------------------------------------------------------------------------------
+;;; Final Setup: Remove Logging Buffers
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Final Setup: Remove Logging Buffers")
+
+;; ;; remove compile log buffer
+;; (when (get-buffer "*Compile-Log*")
+;;   (kill-buffer "*Compile-Log*"))
+
+;; remove symbol mapping buffer
+(when (get-buffer "Map_Sym.txt")
+  (kill-buffer "Map_Sym.txt"))
+;; Remove Logging Buffers:1 ends here
+
+;; [[file:init-emacs.org::*Fix Info-Directory-List][Fix Info-Directory-List:1]]
+;;------------------------------------------------------------------------------
+;;; Final Setup: Fix Info-Directory-List
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Final Setup: Fix Info-Directory-List")
+
+;; make sure Info-default-directory-list is added to Info-directory-list
+(when (boundp 'Info-directory-list)
+  (mapc (lambda (x) (add-to-list 'Info-directory-list x t))
+        Info-default-directory-list))
+;; Fix Info-Directory-List:1 ends here
+
+;; [[file:init-emacs.org::*Turn off Scroll Bar][Turn off Scroll Bar:1]]
+;;------------------------------------------------------------------------------
+;;; Final Setup: Turn off Scroll Bar
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Final Setup: Turn off Scroll Bar")
+
+;; turn off scroll bar
+(when (and (fboundp 'scroll-bar-mode)
+           scroll-bar-mode)
+  (scroll-bar-mode -1))
+;; Turn off Scroll Bar:1 ends here
+
+;; [[file:init-emacs.org::*Clear Mark][Clear Mark:1]]
+;;------------------------------------------------------------------------------
+;;; Final Setup: Clear Mark
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Final Setup: Clear Mark")
+
+;; clear mark
+(set-mark-command nil)
+;; Clear Mark:1 ends here
+
+;; [[file:init-emacs.org::*Reset Emacs Lisp Garbage Collection Threshold][Reset Emacs Lisp Garbage Collection Threshold:1]]
+;;------------------------------------------------------------------------------
+;;; Final Setup: Reset Emacs Lisp Garbage Collection Threshold
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Final Setup: Reset Emacs Lisp Garbage Collection Threshold")
+
+;; reset frequency of garbage collections
+(setq gc-cons-threshold (car (get 'gc-cons-threshold 'standard-value)))
+;; Reset Emacs Lisp Garbage Collection Threshold:1 ends here
+
+;; [[file:init-emacs.org::*End][End:1]]
+(init-message 1 "End")
+
+;;==============================================================================
+;;; init-emacs.el ends here
+;;==============================================================================
+;; End:1 ends here
