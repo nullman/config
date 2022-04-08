@@ -15,17 +15,17 @@
 ;;
 ;; This is distributed in the hope that it will be useful, but WITHOUT ANY
 ;; WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-;; FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+;; FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
 ;; details.
 ;;
 ;; You should have received a copy of the GNU General Public License along
-;; with GNU Emacs; see the file COPYING.  If not, write to the Free Software
+;; with GNU Emacs; see the file COPYING. If not, write to the Free Software
 ;; Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 ;;
 ;;; Commentary:
 ;;
 ;; `split-move' moves up or down a buffer in diminishing chunks to hone in on
-;; a location.  It it similiar to what `chop' does, but it works on buffers
+;; a location. It it similiar to what `chop' does, but it works on buffers
 ;; instead of windows and it does not require `cl'.
 ;;
 ;; The `chop' module that `split-move' is based on was written by Luke Gorrie

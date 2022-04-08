@@ -15,11 +15,11 @@
 ;;
 ;; This is distributed in the hope that it will be useful, but WITHOUT ANY
 ;; WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-;; FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+;; FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
 ;; details.
 ;;
 ;; You should have received a copy of the GNU General Public License along
-;; with GNU Emacs; see the file COPYING.  If not, write to the Free Software
+;; with GNU Emacs; see the file COPYING. If not, write to the Free Software
 ;; Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 ;;
 ;;; Commentary:
@@ -52,8 +52,8 @@
 ;;
 ;; Once the above is setup and the mode is enabled, just type the trigger
 ;; start key(s) followed by one of the defined replacement keys followed by
-;; the trigger end key(s).  For example (using the above setup and "_"
-;; denoting a space):
+;; the trigger end key(s). For example (using the above setup and "_" denoting
+;; a space):
 ;;
 ;;   ;a_ -> "abc"
 ;;   ;d_ -> (dired)
@@ -187,12 +187,12 @@ possible replacements."
 (define-minor-mode replacer-mode
   "Minor mode for as-you-type string replacements.
 
-When called interactively, toggle `replacer-mode'.  With prefix
+When called interactively, toggle `replacer-mode'. With prefix
 ARG, enable `replacer-mode' if ARG is positive, otherwise disable
 it.
 
 When called from Lisp, enable `replacer-mode' if ARG is omitted,
-nil or positive.  If ARG is `toggle', toggle `replacer-mode'.
+nil or positive. If ARG is `toggle', toggle `replacer-mode'.
 Otherwise behave as if called interactively."
   :init-value nil
   :lighter nil

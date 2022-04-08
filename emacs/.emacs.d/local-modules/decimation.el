@@ -10,33 +10,31 @@
 ;;
 ;; This file is not part of GNU Emacs.
 ;;
-;; This is free software; you can redistribute it and/or modify
-;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation; either version 2, or (at your option)
-;; any later version.
+;; This is free software; you can redistribute it and/or modify it under the
+;; terms of the GNU General Public License as published by the Free Software
+;; Foundation; either version 2, or (at your option) any later version.
 ;;
-;; This is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
+;; This is distributed in the hope that it will be useful, but WITHOUT ANY
+;; WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+;; FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+;; details.
 ;;
-;; You should have received a copy of the GNU General Public License
-;; along with GNU Emacs; see the file COPYING.  If not, write to the
-;; Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-;; Boston, MA 02111-1307, USA.
+;; You should have received a copy of the GNU General Public License along
+;; with GNU Emacs; see the file COPYING. If not, write to the Free Software
+;; Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 ;;
 ;;; Commentary:
 ;;
 ;; This is a port of Ed Kolis' game Decimation that he wrote for the 7DRL
-;; competion.  More information and the original C# code can be found on his
+;; competion. More information and the original C# code can be found on his
 ;; website:
 ;;
 ;;   http://edkolis.exofire.net/decimation.php
 ;;
-;; > Decimation is my entry for the 2009 7DRL Competition.  It's a roguelike
+;; > Decimation is my entry for the 2009 7DRL Competition. It's a roguelike
 ;; > game where you're the number zero and your goal, in zero's naturally
-;; > nihilistic fashion, is to wipe out all the other numbers!  But you have
-;; > to use mathematical operations in order to make them equal zero...
+;; > nihilistic fashion, is to wipe out all the other numbers! But you have to
+;; > use mathematical operations in order to make them equal zero...
 ;;
 ;;; Installation:
 ;;
@@ -463,7 +461,7 @@ RATIONALITY is the hero's maximum hit points, defaults to `decimation-rationalit
 
 ;; move monster and attack
 (defun decimation-move-monster (monster pos can-see)
-  "Move monster to POS if it is empty.  Attack hero if he is at POS.
+  "Move monster to POS if it is empty. Attack hero if he is at POS.
 \nIf CAN-SEE is non-nil, then monster can see hero."
   (cond
    ;; monster attacks hero

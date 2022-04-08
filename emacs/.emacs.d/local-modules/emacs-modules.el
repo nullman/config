@@ -15,11 +15,11 @@
 ;;
 ;; This is distributed in the hope that it will be useful, but WITHOUT ANY
 ;; WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-;; FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+;; FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
 ;; details.
 ;;
 ;; You should have received a copy of the GNU General Public License along
-;; with GNU Emacs; see the file COPYING.  If not, write to the Free Software
+;; with GNU Emacs; see the file COPYING. If not, write to the Free Software
 ;; Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 ;;
 ;;; Commentary:
@@ -44,15 +44,15 @@
 ;;   (emacs-modules "ibuffer")
 
 ;;; TODO Outline:
-;; - write background fetching apps to get lists of available el packages for download
-;; - check list versions against installed versions and highlight ones that are outdated
-;; - put this one at the top of the list if it is outdated
-;; - list modules from local saved data file
-;; - background loader updates saved data file
-;; - store code to download, unpack, install, compile, etc in lisp data object
+;; - Write background fetching apps to get lists of available el packages for download
+;; - Check list versions against installed versions and highlight ones that are outdated
+;; - Put this one at the top of the list if it is outdated
+;; - List modules from local saved data file
+;; - Background loader updates saved data file
+;; - Store code to download, unpack, install, compile, etc in lisp data object
 ;;   (list), so no new functions need to be made/altered with new package
 ;;   logic
-;; - after loading a new version of this modules, you should be able to exec
+;; - After loading a new version of this modules, you should be able to exec
 ;;   it and run the main function
 
 ;;; Code:

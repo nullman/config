@@ -15,17 +15,17 @@
 ;;
 ;; This is distributed in the hope that it will be useful, but WITHOUT ANY
 ;; WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-;; FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+;; FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
 ;; details.
 ;;
 ;; You should have received a copy of the GNU General Public License along
-;; with GNU Emacs; see the file COPYING.  If not, write to the Free Software
+;; with GNU Emacs; see the file COPYING. If not, write to the Free Software
 ;; Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 ;;
 ;;; Commentary:
 ;;
 ;; Provides `web-query' and `web-query-google-define' functions to query
-;; specific sites using the appropriate method.  Most of the code for the
+;; specific sites using the appropriate method. Most of the code for the
 ;; `web-query-google-define' function came from Rodrigo Lazo.
 ;;
 ;;; Installation:
@@ -48,7 +48,7 @@
 ;;
 ;;; Usage:
 ;;
-;; Simply call `web-query' with or without parameters.  If neither NAME or
+;; Simply call `web-query' with or without parameters. If neither NAME or
 ;; QUERY parameters are provided you will be prompted for them (with history).
 ;; The history for NAME is seeded from `web-query-list'.
 ;;

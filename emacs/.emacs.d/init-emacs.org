@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-04-01 17:48 (kyle)>
+  #+TIMESTAMP: <2022-04-05 13:24 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -2965,6 +2965,9 @@
         (when (fboundp 'toggle-window-split)
           (bind-keys ("C-x M-o" . toggle-window-split))) ; default: `split-line'
 
+        ;; toggle truncate lines
+        (bind-keys ("C-$" . toggle-truncate-lines))
+
         ;; kill current buffer
         (bind-keys ("C-x C-k" . kill-current-buffer)) ; default: `kmacro-keymap'
 
@@ -3005,7 +3008,7 @@
         ;; join next line
         (when (fboundp 'join-next-line)
           ;;(bind-keys ("M-j" . join-next-line))) ; default: `indent-new-comment-line'
-          (bind-keys ("C-x C-S-j" . join-next-line)))
+          (bind-keys ("C-x C-J" . join-next-line)))
 
         ;; enhanced titleize-word
         (when (fboundp 'titleize-word-enhanced)
@@ -4081,24 +4084,23 @@
                                 (org-element-property :raw-value x))))))
       #+END_SRC
 
-***** org-get-data
+***** org-get-file-data
       :PROPERTIES:
-      :CUSTOM_ID: org-mode-functions-org-get-data
+      :CUSTOM_ID: org-mode-functions-org-get-file-data
       :END:
 
       #+BEGIN_SRC emacs-lisp
         ;;------------------------------------------------------------------------------
-        ;;;; Org Mode: Functions: org-get-data
+        ;;;; Org Mode: Functions: org-get-file-data
         ;;------------------------------------------------------------------------------
 
-        (init-message 3 "Org Mode: Functions: org-get-data")
+        (init-message 3 "Org Mode: Functions: org-get-file-data")
 
-        (defun org-get-data (file &optional path)
+        (defun org-get-file-data (file &optional path)
           "Return tree structure version of given Org FILE.
 
-        If PATH is non-nil, limit result to matching paths.
-
-        PATH is a list of headlines to match starting from the top level.
+        PATH is an optional list of headlines to match starting from the
+        top level.
 
         Output format:
 
@@ -4115,9 +4117,11 @@
              (HEADLINE32
               (HEADLINE321 . BODY321)
               (HEADLINE322 . BODY322)))))"
-          (let* ((property-regexp "^[ \t]*#\\+\\(.*\\): \\(.*\\)$")
+          (let* ((property-folder-regexp "^[ \t]*\\** Org$")
+                 (property-regexp "^[ \t]*#\\+\\(.*\\): \\(.*\\)$")
                  (headline-regexp "^\\(\*+ \\)\\(.*\\)$")
                  (property-alist nil)
+                 (property-section t)
                  (level 0)
                  (tree (cons nil nil))
                  (start tree)
@@ -4130,15 +4134,19 @@
               (while (not (eobp))
                 ;;(message "%S" tree)
                 (cond
+                 ;; ignore property folder
+                 ((and (bobp)
+                       (looking-at property-folder-regexp))
+                  nil)
                  ;; add properties
-                 ((and (not matches)
-                       (>= level path-level)
+                 ((and property-section
                        (looking-at property-regexp))
                   (let ((key (match-string-no-properties 1))
                         (value (match-string-no-properties 2)))
                     (push (cons key value) property-alist)))
                  ;; add folders
                  ((looking-at headline-regexp)
+                  (setq property-section nil)
                   (let ((headline-level (/ (length (match-string-no-properties 1))
                                            (if org-odd-levels-only 2 1)))
                         (headline-value (match-string-no-properties 2))
@@ -4178,8 +4186,10 @@
                  ;; add body sections
                  ((and (not matches)
                        (>= level path-level))
+                  (setq property-section nil)
                   (when (> (length start) 1)
-                    (let ((body ""))
+                    (let ((body "")
+                          (point (point)))
                       (while (and (not (eobp))
                                   (not (looking-at property-regexp))
                                   (not (looking-at headline-regexp)))
@@ -4191,10 +4201,165 @@
                                                                       (line-beginning-position)
                                                                       (line-end-position)))))
                         (forward-line 1))
-                      (setcdr tree (cons (replace-regexp-in-string "[ \t\n]*$" "" body) nil))
+                      (setcdr tree (cons (replace-regexp-in-string "[ \t]*$" "" body) nil))
                       (setq tree (cdr tree))
-                      (goto-char (line-beginning-position))
-                      (forward-line -1)))))
+                      (forward-line 0)
+                      (when (> (point) point)
+                        (forward-line -1)))))
+                 (t
+                  (setq property-section nil)))
+                (forward-line 1))
+              (cons property-alist (cdr start)))))
+      #+END_SRC
+
+***** org-get-buffer-data
+      :PROPERTIES:
+      :CUSTOM_ID: org-mode-functions-org-get-buffer-data
+      :END:
+
+      #+BEGIN_SRC emacs-lisp
+        ;;------------------------------------------------------------------------------
+        ;;;; Org Mode: Functions: org-get-buffer-data
+        ;;------------------------------------------------------------------------------
+
+        (init-message 3 "Org Mode: Functions: org-get-buffer-data")
+
+        (defun org-get-buffer-data (buffer &optional path with-markers)
+          "Return tree structure version of given Org BUFFER.
+
+        PATH is an optional list of headlines to match starting from the
+        top level.
+
+        If WITH-MARKERS is non-nil, include `point-marker' after HEADLINE
+        values in output.
+
+        Output format:
+
+          (((\"KEY1\" . VALUE1)
+            (\"KEY2\" . VALUE2)
+            (\"KEY3\" . VALUE3))
+           ((HEADLINE1)
+            (HEADLINE2
+             (HEADLINE21 . BODY21))
+            (HEADLINE3
+             (HEADLINE31
+              (HEADLINE311 . BODY311)
+              (HEADLINE312 . BODY312))
+             (HEADLINE32
+              (HEADLINE321 . BODY321)
+              (HEADLINE322 . BODY322)))))
+
+        Output format if WITH-MARKERS is non-nil:
+
+          (((\"KEY1\" . VALUE1)
+            (\"KEY2\" . VALUE2)
+            (\"KEY3\" . VALUE3))
+           ((HEADLINE1 . MARKER1)
+            (HEADLINE2 . MARKER2
+             (HEADLINE21 . MARKER21 . BODY21))
+            (HEADLINE3 . MARKER3
+             (HEADLINE31 . MARKER31
+              (HEADLINE311 . MARKER311 . BODY311)
+              (HEADLINE312 . MARKER312 . BODY312))
+             (HEADLINE32 . MARKER32
+              (HEADLINE321 . MARKER321 . BODY321)
+              (HEADLINE322 . MARKER322 . BODY322)))))"
+          (let* ((property-folder-regexp "^[ \t]*\\** Org$")
+                 (property-regexp "^[ \t]*#\\+\\(.*\\): \\(.*\\)$")
+                 (headline-regexp "^\\(\*+ \\)\\(.*\\)$")
+                 (property-alist nil)
+                 (property-section t)
+                 (level 0)
+                 (tree (cons nil nil))
+                 (start tree)
+                 (stack nil)
+                 (matches path)
+                 (path-level (length path)))
+            (with-current-buffer buffer
+              (goto-char (point-min))
+              (while (not (eobp))
+                ;;(message "%S" tree)
+                (cond
+                 ;; ignore property folder
+                 ((and (bobp)
+                       (looking-at property-folder-regexp))
+                  nil)
+                 ;; add properties
+                 ((and property-section
+                       (looking-at property-regexp))
+                  (let ((key (match-string-no-properties 1))
+                        (value (match-string-no-properties 2)))
+                    (push (cons key value) property-alist)))
+                 ;; add folders
+                 ((looking-at headline-regexp)
+                  (setq property-section nil)
+                  (let ((headline-level (/ (length (match-string-no-properties 1))
+                                           (if org-odd-levels-only 2 1)))
+                        (headline-value (match-string-no-properties 2))
+                        (segment (car path)))
+                    (when (and path
+                               (not matches)
+                               (>= path-level headline-level))
+                      (setq matches path))
+                    (when (or (and (not matches)
+                                   (> headline-level path-level))
+                              (string= headline-value (car matches)))
+                      (when (string= headline-value (car matches))
+                        (setq matches (cdr matches)))
+                      (cond
+                       ((> headline-level level)
+                        (if with-markers
+                            (setcdr tree (cons (cons (cons headline-value (point-marker)) nil) nil))
+                          (setcdr tree (cons (cons headline-value nil) nil)))
+                        (setq tree (cdr tree))
+                        (push tree stack)
+                        (setq tree (car tree))
+                        (setq level headline-level))
+                       ((= headline-level level)
+                        (setq tree (pop stack))
+                        (if with-markers
+                            (setcdr tree (cons (cons (cons headline-value (point-marker)) nil) nil))
+                          (setcdr tree (cons (cons (cons headline-value nil) nil))))
+                        (setq tree (cdr tree))
+                        (push tree stack)
+                        (setq tree (car tree)))
+                       ((< headline-level level)
+                        (while (< headline-level level)
+                          (setq tree (pop stack))
+                          (setq level (1- level)))
+                        (setq tree (pop stack))
+                        (if with-markers
+                            (setcdr tree (cons (cons (cons headline-value (point-marker)) nil) nil))
+                          (setcdr tree (cons (cons headline-value nil) nil)))
+                        (setq tree (cdr tree))
+                        (push tree stack)
+                        (setq tree (car tree))
+                        (setq level headline-level))))))
+                 ;; add body sections
+                 ((and (not matches)
+                       (>= level path-level))
+                  (setq property-section nil)
+                  (when (> (length start) 1)
+                    (let ((body "")
+                          (point (point)))
+                      (while (and (not (eobp))
+                                  (not (looking-at property-regexp))
+                                  (not (looking-at headline-regexp)))
+                        (when (> (length body) 0)
+                          (setq body (concat body "\n")))
+                        (setq body (concat body
+                                           (replace-regexp-in-string "^[ \t\n]*" ""
+                                                                     (buffer-substring-no-properties
+                                                                      (line-beginning-position)
+                                                                      (line-end-position)))))
+                        (forward-line 1))
+                      (setcdr tree (cons (replace-regexp-in-string "[ \t]*$" "" body) nil))
+                      (setq tree (cdr tree))
+                      (forward-line 0)
+                      (when (> (point) point)
+                        (forward-line -1)))))
+                 (t
+                  (setq property-section nil)))
                 (forward-line 1))
               (cons property-alist (cdr start)))))
       #+END_SRC
@@ -4911,10 +5076,10 @@
                    ("C-M-f" . org-metaright)
                    ("C-M-n" . org-metadown)
                    ("C-M-p" . org-metaup)
-                   ("C-M-S-b" . org-shiftmetaleft)
-                   ("C-M-S-f" . org-shiftmetaright)
-                   ("C-M-S-n" . org-shiftmetadown)
-                   ("C-M-S-p" . org-shiftmetaup)
+                   ("C-M-B" . org-shiftmetaleft)
+                   ("C-M-F" . org-shiftmetaright)
+                   ("C-M-N" . org-shiftmetadown)
+                   ("C-M-P" . org-shiftmetaup)
                    ;;("C-c C-<return>" . org-insert-heading)
                    ("C-c a" . org-agenda)
                    ("C-c l" . org-store-link)
@@ -6790,10 +6955,10 @@
                                                                            (parse x tree))
                                                                  (cdr bm))))
                             entry))))))
-            (let ((bm (org-get-data file)))
+            (let ((bm (org-get-file-data file)))
               (map 'vector (lambda (x)
                              (parse x nil))
-                   (if (string= (caadr bm) "Org") (cddr bm) (cdr bm))))))
+                   (cdr bm)))))
       #+END_SRC
 
 ***** org-bookmarks-export-to-json
@@ -9670,7 +9835,7 @@
                                       ";;; Package Manager: Straight"
                                       ";; set emacs home directory"
                                       ";; do not make backup files"
-                                      ";;;; Org Mode: Functions: org-get-data"
+                                      ";;;; Org Mode: Functions: org-get-file-data"
                                       ";;;; Org Mode: Babel: Setup"
                                       ";;;; Org Mode: Babel: Tangle Update Timestamps"
                                       ";;;; Org Mode: Babel: Tangle Case-Sensitive"
@@ -21019,7 +21184,7 @@
 
       (use-package browse-kill-ring
         :straight t
-        :bind* (("M-Y" . browse-kill-ring)
+        :bind* (("C-M-y" . browse-kill-ring)
                 ("C-M-_" . browse-kill-ring)))
     #+END_SRC
 

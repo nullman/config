@@ -15,11 +15,11 @@
 ;;
 ;; This is distributed in the hope that it will be useful, but WITHOUT ANY
 ;; WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-;; FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+;; FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
 ;; details.
 ;;
 ;; You should have received a copy of the GNU General Public License along
-;; with GNU Emacs; see the file COPYING.  If not, write to the Free Software
+;; with GNU Emacs; see the file COPYING. If not, write to the Free Software
 ;; Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 ;;
 ;;; Commentary:
@@ -28,7 +28,7 @@
 ;;
 ;;; Installation:
 ;;
-;; This library should be loaded once SQL mode has finished loading.  One way
+;; This library should be loaded once SQL mode has finished loading. One way
 ;; to accomplish this is to add the following to your .emacs file:
 ;;
 ;; (eval-after-load "sql"
@@ -40,7 +40,7 @@
 ;;; Inspiration:
 ;;
 ;; The inspiration for this code came from "sql-indent" by Alex Schroeder
-;; (http://www.emacswiki.org/cgi-bin/wiki.pl?SqlIndent).  Also, an excellent
+;; (http://www.emacswiki.org/cgi-bin/wiki.pl?SqlIndent). Also, an excellent
 ;; tutorial on indenation in "An Emacs language mode creation tutorial"
 ;; (http://two-wugs.net/emacs/mode-tutorial.html).
 
@@ -130,10 +130,10 @@
 
 ;;   "MySQL SQL keywords used by font-lock.
 
-;; This variable is used by `sql-mode' and `sql-interactive-mode'.  The
-;; regular expressions are created during compilation by calling the
-;; function `regexp-opt'.  Therefore, take a look at the source before
-;; you define your own sql-mode-mysql-font-lock-keywords.")
+;; This variable is used by `sql-mode' and `sql-interactive-mode'. The regular
+;; expressions are created during compilation by calling the function
+;; `regexp-opt'. Therefore, take a look at the source before you define your
+;; own sql-mode-mysql-font-lock-keywords.")
 
 (defvar sql-mode-mysql-font-lock-keywords nil
   "MySQL keywords used by font-lock.")
@@ -448,31 +448,33 @@ true.")
 (defun sql-indent-line-get-info ()
   "Get info about statement on current line.
 
-Returns a list containing the following:
-  type:     type of SQL statement
-  keyword:  starting SQL keyword (lowercased)
-  indent:   column number of indentation
+Return a list containing the following:
 
-Moves point to start of statement.  If in a comment block, will
+  type:     Type of SQL statement
+  keyword:  Starting SQL keyword (lowercased)
+  indent:   Column number of indentation
+
+Move point to start of statement. If in a comment block, will
 move point to the start of the comment block.
 
 You may call it again after doing `forward-word -1' to get info
 on the previous statement.
 
 Possible types are:
-  bob:                   beginning of block
+
+  bob:                   Beginning of block
   comment-line:          -- type of comment
   comment-block-begin:   /* */ type of comment (first line)
   comment-block-end:     /* */ type of comment (last line)
   comment-block-middle:  /* */ type of comment (a middle line)
-  blank:                 blank line
-  begin:                 begin statement (block begin)
-  end:                   end statement (block end)
-  if-else:               if or else statement
-  comment:               (should never happend; should get a more specific type, above)
-  statement:             other sql statement
-  statement-select:      an sql statement that may be followed by a select
-  continue:              continuation of an sql statement"
+  blank:                 Blank line
+  begin:                 Begin statement (block begin)
+  end:                   End statement (block end)
+  if-else:               If or else statement
+  comment:               (Should never happend; should get a more specific type, above)
+  statement:             Other sql statement
+  statement-select:      An sql statement that may be followed by a select
+  continue:              Continuation of an sql statement"
   (interactive)                         ; remove this after debugging
 
   ;; init variables

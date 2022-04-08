@@ -1840,6 +1840,9 @@ KEYMAP defaults to `override-global-map'."
   (when (fboundp 'toggle-window-split)
     (bind-keys ("C-x M-o" . toggle-window-split))) ; default: `split-line'
 
+  ;; toggle truncate lines
+  (bind-keys ("C-$" . toggle-truncate-lines))
+
   ;; kill current buffer
   (bind-keys ("C-x C-k" . kill-current-buffer)) ; default: `kmacro-keymap'
 
@@ -1880,7 +1883,7 @@ KEYMAP defaults to `override-global-map'."
   ;; join next line
   (when (fboundp 'join-next-line)
     ;;(bind-keys ("M-j" . join-next-line))) ; default: `indent-new-comment-line'
-    (bind-keys ("C-x C-S-j" . join-next-line)))
+    (bind-keys ("C-x C-J" . join-next-line)))
 
   ;; enhanced titleize-word
   (when (fboundp 'titleize-word-enhanced)
@@ -2778,19 +2781,18 @@ If BUFFER is nil, current buffer is used."
                         (org-element-property :raw-value x))))))
 ;; org-get-element-tree:1 ends here
 
-;; [[file:init-emacs.org::*org-get-data][org-get-data:1]]
+;; [[file:init-emacs.org::*org-get-file-data][org-get-file-data:1]]
 ;;------------------------------------------------------------------------------
-;;;; Org Mode: Functions: org-get-data
+;;;; Org Mode: Functions: org-get-file-data
 ;;------------------------------------------------------------------------------
 
-(init-message 3 "Org Mode: Functions: org-get-data")
+(init-message 3 "Org Mode: Functions: org-get-file-data")
 
-(defun org-get-data (file &optional path)
+(defun org-get-file-data (file &optional path)
   "Return tree structure version of given Org FILE.
 
-If PATH is non-nil, limit result to matching paths.
-
-PATH is a list of headlines to match starting from the top level.
+PATH is an optional list of headlines to match starting from the
+top level.
 
 Output format:
 
@@ -2807,9 +2809,11 @@ Output format:
      (HEADLINE32
       (HEADLINE321 . BODY321)
       (HEADLINE322 . BODY322)))))"
-  (let* ((property-regexp "^[ \t]*#\\+\\(.*\\): \\(.*\\)$")
+  (let* ((property-folder-regexp "^[ \t]*\\** Org$")
+         (property-regexp "^[ \t]*#\\+\\(.*\\): \\(.*\\)$")
          (headline-regexp "^\\(\*+ \\)\\(.*\\)$")
          (property-alist nil)
+         (property-section t)
          (level 0)
          (tree (cons nil nil))
          (start tree)
@@ -2822,15 +2826,19 @@ Output format:
       (while (not (eobp))
         ;;(message "%S" tree)
         (cond
+         ;; ignore property folder
+         ((and (bobp)
+               (looking-at property-folder-regexp))
+          nil)
          ;; add properties
-         ((and (not matches)
-               (>= level path-level)
+         ((and property-section
                (looking-at property-regexp))
           (let ((key (match-string-no-properties 1))
                 (value (match-string-no-properties 2)))
             (push (cons key value) property-alist)))
          ;; add folders
          ((looking-at headline-regexp)
+          (setq property-section nil)
           (let ((headline-level (/ (length (match-string-no-properties 1))
                                    (if org-odd-levels-only 2 1)))
                 (headline-value (match-string-no-properties 2))
@@ -2870,8 +2878,10 @@ Output format:
          ;; add body sections
          ((and (not matches)
                (>= level path-level))
+          (setq property-section nil)
           (when (> (length start) 1)
-            (let ((body ""))
+            (let ((body "")
+                  (point (point)))
               (while (and (not (eobp))
                           (not (looking-at property-regexp))
                           (not (looking-at headline-regexp)))
@@ -2883,13 +2893,163 @@ Output format:
                                                               (line-beginning-position)
                                                               (line-end-position)))))
                 (forward-line 1))
-              (setcdr tree (cons (replace-regexp-in-string "[ \t\n]*$" "" body) nil))
+              (setcdr tree (cons (replace-regexp-in-string "[ \t]*$" "" body) nil))
               (setq tree (cdr tree))
-              (goto-char (line-beginning-position))
-              (forward-line -1)))))
+              (forward-line 0)
+              (when (> (point) point)
+                (forward-line -1)))))
+         (t
+          (setq property-section nil)))
         (forward-line 1))
       (cons property-alist (cdr start)))))
-;; org-get-data:1 ends here
+;; org-get-file-data:1 ends here
+
+;; [[file:init-emacs.org::*org-get-buffer-data][org-get-buffer-data:1]]
+;;------------------------------------------------------------------------------
+;;;; Org Mode: Functions: org-get-buffer-data
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Org Mode: Functions: org-get-buffer-data")
+
+(defun org-get-buffer-data (buffer &optional path with-markers)
+  "Return tree structure version of given Org BUFFER.
+
+PATH is an optional list of headlines to match starting from the
+top level.
+
+If WITH-MARKERS is non-nil, include `point-marker' after HEADLINE
+values in output.
+
+Output format:
+
+  (((\"KEY1\" . VALUE1)
+    (\"KEY2\" . VALUE2)
+    (\"KEY3\" . VALUE3))
+   ((HEADLINE1)
+    (HEADLINE2
+     (HEADLINE21 . BODY21))
+    (HEADLINE3
+     (HEADLINE31
+      (HEADLINE311 . BODY311)
+      (HEADLINE312 . BODY312))
+     (HEADLINE32
+      (HEADLINE321 . BODY321)
+      (HEADLINE322 . BODY322)))))
+
+Output format if WITH-MARKERS is non-nil:
+
+  (((\"KEY1\" . VALUE1)
+    (\"KEY2\" . VALUE2)
+    (\"KEY3\" . VALUE3))
+   ((HEADLINE1 . MARKER1)
+    (HEADLINE2 . MARKER2
+     (HEADLINE21 . MARKER21 . BODY21))
+    (HEADLINE3 . MARKER3
+     (HEADLINE31 . MARKER31
+      (HEADLINE311 . MARKER311 . BODY311)
+      (HEADLINE312 . MARKER312 . BODY312))
+     (HEADLINE32 . MARKER32
+      (HEADLINE321 . MARKER321 . BODY321)
+      (HEADLINE322 . MARKER322 . BODY322)))))"
+  (let* ((property-folder-regexp "^[ \t]*\\** Org$")
+         (property-regexp "^[ \t]*#\\+\\(.*\\): \\(.*\\)$")
+         (headline-regexp "^\\(\*+ \\)\\(.*\\)$")
+         (property-alist nil)
+         (property-section t)
+         (level 0)
+         (tree (cons nil nil))
+         (start tree)
+         (stack nil)
+         (matches path)
+         (path-level (length path)))
+    (with-current-buffer buffer
+      (goto-char (point-min))
+      (while (not (eobp))
+        ;;(message "%S" tree)
+        (cond
+         ;; ignore property folder
+         ((and (bobp)
+               (looking-at property-folder-regexp))
+          nil)
+         ;; add properties
+         ((and property-section
+               (looking-at property-regexp))
+          (let ((key (match-string-no-properties 1))
+                (value (match-string-no-properties 2)))
+            (push (cons key value) property-alist)))
+         ;; add folders
+         ((looking-at headline-regexp)
+          (setq property-section nil)
+          (let ((headline-level (/ (length (match-string-no-properties 1))
+                                   (if org-odd-levels-only 2 1)))
+                (headline-value (match-string-no-properties 2))
+                (segment (car path)))
+            (when (and path
+                       (not matches)
+                       (>= path-level headline-level))
+              (setq matches path))
+            (when (or (and (not matches)
+                           (> headline-level path-level))
+                      (string= headline-value (car matches)))
+              (when (string= headline-value (car matches))
+                (setq matches (cdr matches)))
+              (cond
+               ((> headline-level level)
+                (if with-markers
+                    (setcdr tree (cons (cons (cons headline-value (point-marker)) nil) nil))
+                  (setcdr tree (cons (cons headline-value nil) nil)))
+                (setq tree (cdr tree))
+                (push tree stack)
+                (setq tree (car tree))
+                (setq level headline-level))
+               ((= headline-level level)
+                (setq tree (pop stack))
+                (if with-markers
+                    (setcdr tree (cons (cons (cons headline-value (point-marker)) nil) nil))
+                  (setcdr tree (cons (cons (cons headline-value nil) nil))))
+                (setq tree (cdr tree))
+                (push tree stack)
+                (setq tree (car tree)))
+               ((< headline-level level)
+                (while (< headline-level level)
+                  (setq tree (pop stack))
+                  (setq level (1- level)))
+                (setq tree (pop stack))
+                (if with-markers
+                    (setcdr tree (cons (cons (cons headline-value (point-marker)) nil) nil))
+                  (setcdr tree (cons (cons headline-value nil) nil)))
+                (setq tree (cdr tree))
+                (push tree stack)
+                (setq tree (car tree))
+                (setq level headline-level))))))
+         ;; add body sections
+         ((and (not matches)
+               (>= level path-level))
+          (setq property-section nil)
+          (when (> (length start) 1)
+            (let ((body "")
+                  (point (point)))
+              (while (and (not (eobp))
+                          (not (looking-at property-regexp))
+                          (not (looking-at headline-regexp)))
+                (when (> (length body) 0)
+                  (setq body (concat body "\n")))
+                (setq body (concat body
+                                   (replace-regexp-in-string "^[ \t\n]*" ""
+                                                             (buffer-substring-no-properties
+                                                              (line-beginning-position)
+                                                              (line-end-position)))))
+                (forward-line 1))
+              (setcdr tree (cons (replace-regexp-in-string "[ \t]*$" "" body) nil))
+              (setq tree (cdr tree))
+              (forward-line 0)
+              (when (> (point) point)
+                (forward-line -1)))))
+         (t
+          (setq property-section nil)))
+        (forward-line 1))
+      (cons property-alist (cdr start)))))
+;; org-get-buffer-data:1 ends here
 
 ;; [[file:init-emacs.org::*org-safe-meta][org-safe-meta:1]]
 ;;------------------------------------------------------------------------------
@@ -3461,10 +3621,10 @@ same directory as the org-buffer and insert a link to this file."
              ("C-M-f" . org-metaright)
              ("C-M-n" . org-metadown)
              ("C-M-p" . org-metaup)
-             ("C-M-S-b" . org-shiftmetaleft)
-             ("C-M-S-f" . org-shiftmetaright)
-             ("C-M-S-n" . org-shiftmetadown)
-             ("C-M-S-p" . org-shiftmetaup)
+             ("C-M-B" . org-shiftmetaleft)
+             ("C-M-F" . org-shiftmetaright)
+             ("C-M-N" . org-shiftmetadown)
+             ("C-M-P" . org-shiftmetaup)
              ;;("C-c C-<return>" . org-insert-heading)
              ("C-c a" . org-agenda)
              ("C-c l" . org-store-link)
@@ -4879,10 +5039,10 @@ If the first headline is \"Org\", it is ignored."
                                                                    (parse x tree))
                                                          (cdr bm))))
                     entry))))))
-    (let ((bm (org-get-data file)))
+    (let ((bm (org-get-file-data file)))
       (map 'vector (lambda (x)
                      (parse x nil))
-           (if (string= (caadr bm) "Org") (cddr bm) (cdr bm))))))
+           (cdr bm)))))
 ;; org-bookmarks-parse:1 ends here
 
 ;; [[file:init-emacs.org::*org-bookmarks-export-to-json][org-bookmarks-export-to-json:1]]
@@ -7223,7 +7383,7 @@ init-emacs-website.el to be used with batch commands."
                                 ";;; Package Manager: Straight"
                                 ";; set emacs home directory"
                                 ";; do not make backup files"
-                                ";;;; Org Mode: Functions: org-get-data"
+                                ";;;; Org Mode: Functions: org-get-file-data"
                                 ";;;; Org Mode: Babel: Setup"
                                 ";;;; Org Mode: Babel: Tangle Update Timestamps"
                                 ";;;; Org Mode: Babel: Tangle Case-Sensitive"
@@ -14628,7 +14788,7 @@ USING is the remaining peg."
 
 (use-package browse-kill-ring
   :straight t
-  :bind* (("M-Y" . browse-kill-ring)
+  :bind* (("C-M-y" . browse-kill-ring)
           ("C-M-_" . browse-kill-ring)))
 ;; browse-kill-ring:1 ends here
 

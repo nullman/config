@@ -15,24 +15,23 @@
 ;;
 ;; This is distributed in the hope that it will be useful, but WITHOUT ANY
 ;; WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-;; FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+;; FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
 ;; details.
 ;;
 ;; You should have received a copy of the GNU General Public License along
-;; with GNU Emacs; see the file COPYING.  If not, write to the Free Software
+;; with GNU Emacs; see the file COPYING. If not, write to the Free Software
 ;; Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 ;;
 ;;; Commentary:
 ;;
 ;; I've use hnb (http://hnb.sourceforge.net/) on my various underpowered text
-;; only laptops for a long time now.  It's a great program for storing all of
-;; my outliner type information.  However, it's not Emacs, and I've longed for
-;; the day when I could have my hnb and Emacs too.  So I wrote this elisp
-;; mode.
+;; only laptops for a long time now. It's a great program for storing all of
+;; my outliner type information. However, it's not Emacs, and I've longed for
+;; the day when I could have my hnb and Emacs too. So I wrote this elisp mode.
 ;;
-;; If you currently use hnb, you can use your existing hnb files directly.
-;; The same file format is supported.  Please backup your existing files first!
-;; I will not be responsible for any data loss (see above legalese).
+;; If you currently use hnb, you can use your existing hnb files directly. The
+;; same file format is supported. Please backup your existing files first! I
+;; will not be responsible for any data loss (see above legalese).
 ;;
 ;;; Installation:
 ;;
