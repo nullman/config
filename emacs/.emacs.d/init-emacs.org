@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-04-08 13:43 (kyle)>
+  #+TIMESTAMP: <2022-04-08 15:48 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -1292,7 +1292,7 @@
         )
     #+END_SRC
 
-*** General
+*** COMMENT General
     :PROPERTIES:
     :CUSTOM_ID: environment-settings-general
     :END:
@@ -1459,18 +1459,36 @@
       (turn-off-auto-fill)
     #+END_SRC
 
-    Turn on =visual-line-mode= as the default behavior.
+    +Turn on =visual-line-mode= as the default behavior.+
+
+    #+BEGIN_SRC emacs-lisp
+      ;; (init-message 3 "Turn On `global-visual-line-mode'")
+
+      ;; ;; visually break lines that are longer than the screen width
+      ;; (global-visual-line-mode 1)
+
+      ;; ;; (defun buffer-menu-mode-hook--visual-line-mode()
+      ;; ;;   "Hook to turn on `visual-line-mode' in most buffers."
+      ;; ;;   (when (not (string= (substring (buffer-name) 0 1) "*"))
+      ;; ;;     (visual-line-mode 1)))
+      ;; ;; (add-hook 'buffer-menu-mode-hook #'buffer-menu-mode-hook--visual-line-mode)
+
+      ;; ;; use curly arrows to indicate a visual line wrap
+      ;; (setq visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
+    #+END_SRC
+
+    Turn off =visual-line-mode= as the default behavior.
 
     #+BEGIN_SRC emacs-lisp
       (init-message 3 "Turn On `global-visual-line-mode'")
 
-      ;; visually break lines that are longer than the screen width
-      (global-visual-line-mode 1)
+      ;; do not visually break lines that are longer than the screen width
+      (global-visual-line-mode -1)
 
       ;; (defun buffer-menu-mode-hook--visual-line-mode()
-      ;;   "Hook to turn on `visual-line-mode' in most buffers."
+      ;;   "Hook to turn off `visual-line-mode' in most buffers."
       ;;   (when (not (string= (substring (buffer-name) 0 1) "*"))
-      ;;     (visual-line-mode 1)))
+      ;;     (visual-line-mode -1)))
       ;; (add-hook 'buffer-menu-mode-hook #'buffer-menu-mode-hook--visual-line-mode)
 
       ;; use curly arrows to indicate a visual line wrap
