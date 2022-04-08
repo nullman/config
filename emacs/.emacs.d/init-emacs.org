@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-04-05 13:24 (kyle)>
+  #+TIMESTAMP: <2022-04-08 13:39 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -433,9 +433,10 @@
 
   Lock-file wrapper macro to evaluate code blocks only once per emacs session.
 
+  Author: https://www.reddit.com/user/7890yuiop/
+
   #+BEGIN_SRC emacs-lisp
     ;; lock-file wrapper macro to evaluate code blocks only once per emacs session
-    ;; author: https://www.reddit.com/user/7890yuiop/
     (defmacro when-lock-file-acquired (lock-file &rest body)
       "Evaluate BODY unless another running Emacs instance has done so.
 
@@ -3008,7 +3009,7 @@
         ;; join next line
         (when (fboundp 'join-next-line)
           ;;(bind-keys ("M-j" . join-next-line))) ; default: `indent-new-comment-line'
-          (bind-keys ("C-x C-J" . join-next-line)))
+          (bind-keys ("C-x j" . join-next-line))) ; also: `dired-jump'
 
         ;; enhanced titleize-word
         (when (fboundp 'titleize-word-enhanced)
@@ -14709,6 +14710,29 @@
           (interactive)
           (setq case-fold-search (not case-fold-search))
           (message "case-fold-search: %s" (if case-fold-search "ON" "OFF")))
+      #+END_SRC
+
+***** derived-modes
+      :PROPERTIES:
+      :CUSTOM_ID: functions-derived-modes
+      :END:
+
+      #+BEGIN_SRC emacs-lisp
+        ;;------------------------------------------------------------------------------
+        ;;; Functions: derived-modes
+        ;;------------------------------------------------------------------------------
+
+        (init-message 2 "Functions: derived-modes")
+
+        (defun derived-modes (&optional mode)
+          "Return a list of the ancestor modes that MODE is derived from.
+
+        MODE defaults to `major-mode'."
+          (let* ((mode (or mode major-mode))
+                 (mode-list (list mode)))
+            (while (setq mode (get mode 'derived-mode-parent))
+              (push mode mode-list))
+            (nreverse mode-list)))
       #+END_SRC
 
 *** Emacs Grouped Functions
@@ -26467,7 +26491,7 @@
         ;;:after (dired-single)
         :commands (dired dired-jump)
         ;;:hook (dired-mode . custom-dired-mode-hook)
-        :bind* ("C-x j" . dired-jump)
+        ;;:bind* ("C-x j" . dired-jump)
         :bind (:map dired-mode-map
                     ("e" . wdired-change-to-wdired-mode)
                     ("C-c C-z f" . browse-url-of-dired-file))

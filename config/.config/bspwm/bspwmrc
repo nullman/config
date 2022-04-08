@@ -91,6 +91,8 @@ _ba Emacs desktop='^2' follow=on
 _ba Slack desktop='^3' follow=on
 _ba Thunderbird desktop='^3' follow=on
 _ba android-messages-desktop desktop='^3' follow=on
+_ba teams* desktop='^3' follow=on
+_ba msoutlook* desktop='^3' follow=on
 _ba firefox desktop='^4' follow=on
 _ba LibreWolf desktop='^4' follow=on
 _ba Brave-browser desktop='^4' follow=on
@@ -127,7 +129,6 @@ _ba Lollypop desktop='^9' follow=on
 _ba LBRY desktop='^9' follow=on
 _ba spotify desktop='^9' follow=on
 _ba bluejeans-v2 desktop='^9' follow=on
-_ba 'Microsoft Teams' desktop='^9' follow=on
 _ba syncterm desktop='^10' follow=on
 
 # tiled applications
