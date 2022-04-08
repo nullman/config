@@ -19117,10 +19117,7 @@ Commands:
 
     ;; ;; insert two spaces after a colon
     ;; (setq colon-double-space t)
-
-    ;; turn off line wrapping
-    (setq truncate-lines t)
-    (toggle-truncate-lines 1))
+    )
   (add-hook 'text-mode-hook #'custom-text-mode-hook)
 
   ;; remove trailing blanks
