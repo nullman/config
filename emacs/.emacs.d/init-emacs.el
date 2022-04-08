@@ -89,7 +89,6 @@ LEVEL is the indentation level."
 
 ;; [[file:init-emacs.org::*Start][Start:5]]
 ;; lock-file wrapper macro to evaluate code blocks only once per emacs session
-;; author: https://www.reddit.com/user/7890yuiop/
 (defmacro when-lock-file-acquired (lock-file &rest body)
   "Evaluate BODY unless another running Emacs instance has done so.
 
@@ -1883,7 +1882,7 @@ KEYMAP defaults to `override-global-map'."
   ;; join next line
   (when (fboundp 'join-next-line)
     ;;(bind-keys ("M-j" . join-next-line))) ; default: `indent-new-comment-line'
-    (bind-keys ("C-x C-J" . join-next-line)))
+    (bind-keys ("C-x j" . join-next-line))) ; also: `dired-jump'
 
   ;; enhanced titleize-word
   (when (fboundp 'titleize-word-enhanced)
@@ -10275,6 +10274,24 @@ others appropriately."
   (message "case-fold-search: %s" (if case-fold-search "ON" "OFF")))
 ;; toggle-case-fold-search:1 ends here
 
+;; [[file:init-emacs.org::*derived-modes][derived-modes:1]]
+;;------------------------------------------------------------------------------
+;;; Functions: derived-modes
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Functions: derived-modes")
+
+(defun derived-modes (&optional mode)
+  "Return a list of the ancestor modes that MODE is derived from.
+
+MODE defaults to `major-mode'."
+  (let* ((mode (or mode major-mode))
+         (mode-list (list mode)))
+    (while (setq mode (get mode 'derived-mode-parent))
+      (push mode mode-list))
+    (nreverse mode-list)))
+;; derived-modes:1 ends here
+
 ;; [[file:init-emacs.org::*Emacs Grouped Functions][Emacs Grouped Functions:1]]
 ;;------------------------------------------------------------------------------
 ;;; Functions: Emacs Grouped Functions
@@ -17603,7 +17620,7 @@ otherwise run `find-file-as-root'."
   ;;:after (dired-single)
   :commands (dired dired-jump)
   ;;:hook (dired-mode . custom-dired-mode-hook)
-  :bind* ("C-x j" . dired-jump)
+  ;;:bind* ("C-x j" . dired-jump)
   :bind (:map dired-mode-map
               ("e" . wdired-change-to-wdired-mode)
               ("C-c C-z f" . browse-url-of-dired-file))
