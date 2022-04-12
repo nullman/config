@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-04-12 13:44 (kyle)>
+  #+TIMESTAMP: <2022-04-12 15:05 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -1661,25 +1661,25 @@
       (setq-default highlight-tabs highlight-tabs)
     #+END_SRC
 
-    Highlight tabs and trailing whitespace.
+    +Highlight tabs and trailing whitespace.+
 
     (Can be anoying in buffers that have them on purpose.)
 
     #+BEGIN_SRC emacs-lisp
-      (init-message 3 "Highlight Tabs and Trailing Whitespace")
+      ;; (init-message 3 "Highlight Tabs and Trailing Whitespace")
 
-      ;; ;; highlight trailing white spaces
-      ;; (setq show-trailing-whitespace t)
-      ;; (setq-default show-trailing-whitespace show-trailing-whitespace)
+      ;; ;; ;; highlight trailing white spaces
+      ;; ;; (setq show-trailing-whitespace t)
+      ;; ;; (setq-default show-trailing-whitespace show-trailing-whitespace)
 
-      ;; highlight tabs and trailing white spaces
-      (setq whitespace-style '(face trailing tab-mark))
-      (custom-set-faces `(whitespace-tab ((t (:foreground ,color-foreground :background ,color-background)))))
-      (setq whitespace-display-mappings
-            '((space-mark 32 [183] [46]) ; 32 space ' ', 183 middle dot '·', 46 full stop '.'
-              (newline-mark 10 [182 10]) ; 10 linefeed '\n', 182 ??? '¶'
-              (tab-mark 9 [9655 9] [92 9])))    ; 9 tab '\t', 9655 '▷', 92 backslash '\'
-      (global-whitespace-mode)              ; enable whitespace mode everywhere
+      ;; ;; highlight tabs and trailing white spaces
+      ;; (setq whitespace-style '(face trailing tab-mark))
+      ;; (custom-set-faces `(whitespace-tab ((t (:foreground ,color-foreground :background ,color-background)))))
+      ;; (setq whitespace-display-mappings
+      ;;       '((space-mark 32 [183] [46]) ; 32 space ' ', 183 middle dot '·', 46 full stop '.'
+      ;;         (newline-mark 10 [182 10]) ; 10 linefeed '\n', 182 ??? '¶'
+      ;;         (tab-mark 9 [9655 9] [92 9])))    ; 9 tab '\t', 9655 '▷', 92 backslash '\'
+      ;; (global-whitespace-mode)              ; enable whitespace mode everywhere
     #+END_SRC
 
     Highlight current line.
