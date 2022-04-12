@@ -668,6 +668,428 @@ Common values:
   )
 ;; GUI:1 ends here
 
+;; [[file:init-emacs.org::*General][General:1]]
+;;------------------------------------------------------------------------------
+;;; Environment Settings: General
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Environment Settings: General")
+;; General:1 ends here
+
+;; [[file:init-emacs.org::*General][General:2]]
+(init-message 3 "Disable Splash Screen")
+
+;; disable splash screen
+(setq inhibit-startup-screen t)
+;; General:2 ends here
+
+;; [[file:init-emacs.org::*General][General:3]]
+;; prefer newer el files over elc
+(setq load-prefer-newer t)
+;; General:3 ends here
+
+;; [[file:init-emacs.org::*General][General:4]]
+(init-message 3 "Hide Menu Bar")
+
+;; hide menu-bar (use C-M-z to activate)
+(when (and (fboundp 'menu-bar-mode)
+           menu-bar-mode)
+  (menu-bar-mode -1))
+;; General:4 ends here
+
+;; [[file:init-emacs.org::*General][General:6]]
+(init-message 3 "Set Default Buffer Mode to `org-mode'")
+
+;; set default buffer mode to `org-mode'
+(setq initial-major-mode 'org-mode)
+;; General:6 ends here
+
+;; [[file:init-emacs.org::*General][General:7]]
+(init-message 3 "Start with Empty Scratch Buffer")
+
+;; clear scratch buffer
+(setq initial-scratch-message nil)
+;; General:7 ends here
+
+;; [[file:init-emacs.org::*General][General:9]]
+(init-message 3 "Ask before Closing Emacs")
+
+;; ask before closing emacs
+(setq kill-emacs-query-functions
+      (cons (lambda () (yes-or-no-p "Really kill Emacs? "))
+            kill-emacs-query-functions))
+;; General:9 ends here
+
+;; [[file:init-emacs.org::*General][General:10]]
+(init-message 3 "Make Backspace Key Work Correctly")
+
+;; make baskspace key work
+(normal-erase-is-backspace-mode 1)
+;; General:10 ends here
+
+;; [[file:init-emacs.org::*General][General:11]]
+(init-message 3 "Add Some Characters to Word Boundaries")
+
+;; add underscore to word boundaries
+(modify-syntax-entry ?_ "w")
+
+;; add dash to word boundaries
+(modify-syntax-entry ?- "w")
+;; General:11 ends here
+
+;; [[file:init-emacs.org::*General][General:12]]
+(init-message 3 "Beginning of Defun is Outermost Level Open-Paren.")
+
+(setq open-paren-in-column-0-is-defun-start nil
+      defun-prompt-regexp nil)
+;; General:12 ends here
+
+;; [[file:init-emacs.org::*General][General:13]]
+(init-message 3 "Ignore Comments when Parsing S-Expressions")
+
+;; do not parse comments in sexp's
+(setq parse-sexp-ignore-comments t)
+(setq-default parse-sexp-ignore-comments parse-sexp-ignore-comments)
+;; General:13 ends here
+
+;; [[file:init-emacs.org::*General][General:14]]
+;; (init-message 3 "Wrap Lines by Default")
+
+;; ;; wrap lines
+;; (setq truncate-lines nil)
+;; General:14 ends here
+
+;; [[file:init-emacs.org::*General][General:15]]
+(init-message 3 "Do Not Wrap Lines by Default")
+
+;; turn off line wrapping
+(setq truncate-lines t)
+(setq-default truncate-lines t)
+(toggle-truncate-lines 1)
+;; General:15 ends here
+
+;; [[file:init-emacs.org::*General][General:17]]
+(init-message 3 "Turn Off `auto-fill-mode'")
+
+;; do not automatically break lines by inserting newlines
+(turn-off-auto-fill)
+;; General:17 ends here
+
+;; [[file:init-emacs.org::*General][General:18]]
+;; (init-message 3 "Turn On `global-visual-line-mode'")
+
+;; ;; visually break lines that are longer than the screen width
+;; (global-visual-line-mode 1)
+
+;; ;; (defun buffer-menu-mode-hook--visual-line-mode()
+;; ;;   "Hook to turn on `visual-line-mode' in most buffers."
+;; ;;   (when (not (string= (substring (buffer-name) 0 1) "*"))
+;; ;;     (visual-line-mode 1)))
+;; ;; (add-hook 'buffer-menu-mode-hook #'buffer-menu-mode-hook--visual-line-mode)
+
+;; ;; use curly arrows to indicate a visual line wrap
+;; (setq visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
+;; General:18 ends here
+
+;; [[file:init-emacs.org::*General][General:19]]
+(init-message 3 "Turn On `global-visual-line-mode'")
+
+;; do not visually break lines that are longer than the screen width
+(global-visual-line-mode -1)
+
+;; (defun buffer-menu-mode-hook--visual-line-mode()
+;;   "Hook to turn off `visual-line-mode' in most buffers."
+;;   (when (not (string= (substring (buffer-name) 0 1) "*"))
+;;     (visual-line-mode -1)))
+;; (add-hook 'buffer-menu-mode-hook #'buffer-menu-mode-hook--visual-line-mode)
+
+;; use curly arrows to indicate a visual line wrap
+(setq visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
+;; General:19 ends here
+
+;; [[file:init-emacs.org::*General][General:20]]
+(init-message 3 "Set `display-line-numbers-type' to relative")
+
+;; when `display-line-numbers-mode' is on use relative numbering
+(setq display-line-numbers-type 'relative)
+;; General:20 ends here
+
+;; [[file:init-emacs.org::*General][General:21]]
+(init-message 3 "Prevent `next-line' from Inserting Newlines")
+
+;; stop cursor at the end of the file
+(setq next-line-add-newlines nil)
+;; General:21 ends here
+
+;; [[file:init-emacs.org::*General][General:22]]
+(init-message 3 "Keep the Cursor in the Same Column When Using Page-Up and Page-Down")
+
+;; keep screen position when using page-up and page-down
+(setq scroll-preserve-screen-position 'keep)
+;; General:22 ends here
+
+;; [[file:init-emacs.org::*General][General:23]]
+(init-message 3 "Scroll Conservatively")
+
+;; scroll one line at a time
+(setq scroll-step 1)
+;; scroll fewer lines
+(setq scroll-conservatively 101)
+;; turn off vertical auto-scroll
+(setq auto-window-vscroll nil)
+;; General:23 ends here
+
+;; [[file:init-emacs.org::*General][General:24]]
+(init-message 3 "Ignore Case on Search Matches")
+
+;; make searches case-insensitive
+(setq case-fold-search t)
+;; General:24 ends here
+
+;; [[file:init-emacs.org::*General][General:25]]
+(init-message 3 "Highlight Search Matches")
+
+;; highlight search matches
+(setq search-highlight t
+      ;;isearch-highlight t
+      query-replace-highlight t)
+;; General:25 ends here
+
+;; [[file:init-emacs.org::*General][General:26]]
+(init-message 3 "Hightlight Marked Regions")
+
+;; make current selection visible
+(transient-mark-mode 1)
+(setq-default transient-mark-mode t)
+;; General:26 ends here
+
+;; [[file:init-emacs.org::*General][General:27]]
+(init-message 3 "Set Default Tab Indentation to Four Spaces and Turn on Auto-Complete")
+
+;; set tab indentation, width, and convert tabs to spaces
+(setq indent-tabs-mode nil              ; do not insert tab characters
+      tab-width 4                       ; default tab width is four spaces
+      standard-indent 4                 ; default margin-changing functions indent
+      tab-always-indent 'complete       ; tab key will try to auto-complete after auto-tabbing line
+      tab-stop-list (number-sequence 4 180 4)) ; tab stops set to every 4 spaces
+(setq-default indent-tabs-mode indent-tabs-mode
+              tab-width tab-width
+              standard-indent standard-indent
+              tab-always-indent tab-always-indent
+              tab-stop-list tab-stop-list)
+;; General:27 ends here
+
+;; [[file:init-emacs.org::*General][General:28]]
+(init-message 3 "Set Default Line-Wrapping Column to 78")
+
+;; set default fill column for `auto-fill-mode' mode and `fill-paragraph'
+(setq fill-column 78)
+(setq-default fill-column fill-column)
+;; General:28 ends here
+
+;; [[file:init-emacs.org::*General][General:29]]
+(init-message 3 "Set Default Right-Margin Comment Indent Column to 40")
+
+;; set default comment column for in-line comments
+(setq comment-column 40)
+(setq-default comment-column comment-column)
+;; set default comment fill column for in-line comments
+(setq comment-fill-column nil)
+(setq-default comment-fill-column comment-fill-column)
+;; General:29 ends here
+
+;; [[file:init-emacs.org::*General][General:30]]
+(init-message 3 "Have Cursor Movements Attempt to Keep Point on Original Column")
+
+;; turn on goal column support
+(put 'set-goal-column 'disabled nil)
+;; General:30 ends here
+
+;; [[file:init-emacs.org::*General][General:31]]
+(init-message 3 "Sentences and Colons Should Have One Space after Them")
+
+;; insert one space after a sentence when filling text
+(setq sentence-end-double-space nil)
+;; insert one space after a colon when filling text
+(setq colon-double-space nil)
+;; General:31 ends here
+
+;; [[file:init-emacs.org::*General][General:32]]
+;; (init-message 3 "Sentences and Colons Should Have Two Spaces after Them")
+
+;; ;; insert two spaces after a sentence when filling text
+;; (setq sentence-end-double-space t)
+;; ;; insert two spaces after a colon when filling text
+;; (setq colon-double-space t)
+;; General:32 ends here
+
+;; [[file:init-emacs.org::*General][General:33]]
+(init-message 3 "Highlight Matching Parenthesis")
+
+;; highlight matching parenthesis
+(show-paren-mode 1)
+(set-face-foreground 'show-paren-match color-paren)
+(set-face-attribute 'show-paren-match nil :weight 'extra-bold)
+;; General:33 ends here
+
+;; [[file:init-emacs.org::*General][General:34]]
+(init-message 3 "Highlight TABs")
+
+;; highlight tabs
+(setq highlight-tabs t)
+(setq-default highlight-tabs highlight-tabs)
+;; General:34 ends here
+
+;; [[file:init-emacs.org::*General][General:35]]
+(init-message 3 "Highlight Tabs and Trailing Whitespace")
+
+;; ;; highlight trailing white spaces
+;; (setq show-trailing-whitespace t)
+;; (setq-default show-trailing-whitespace show-trailing-whitespace)
+
+;; highlight tabs and trailing white spaces
+(setq whitespace-style '(face trailing tab-mark))
+(custom-set-faces `(whitespace-tab ((t (:foreground ,color-foreground :background ,color-background)))))
+(setq whitespace-display-mappings
+      '((space-mark 32 [183] [46]) ; 32 space ' ', 183 middle dot '·', 46 full stop '.'
+        (newline-mark 10 [182 10]) ; 10 linefeed '\n', 182 ??? '¶'
+        (tab-mark 9 [9655 9] [92 9])))    ; 9 tab '\t', 9655 '▷', 92 backslash '\'
+(global-whitespace-mode)              ; enable whitespace mode everywhere
+;; General:35 ends here
+
+;; [[file:init-emacs.org::*General][General:36]]
+(init-message 3 "Highlight Current Line")
+
+;; highlight current line
+(hl-line-mode 1)
+(global-hl-line-mode 1)
+;; General:36 ends here
+
+;; [[file:init-emacs.org::*General][General:37]]
+(init-message 3 "Turn on Syntax Highlighting")
+
+;; turn on global font lock mode and syntax highlighting
+(global-font-lock-mode 1)
+(setq font-lock-maximum-decoration t)
+;; General:37 ends here
+
+;; [[file:init-emacs.org::*General][General:38]]
+(init-message 3 "Typing Replaces Highlighted Text")
+
+;; replace highlighted text with typed text
+(delete-selection-mode t)
+;; General:38 ends here
+
+;; [[file:init-emacs.org::*General][General:39]]
+(init-message 3 "Set Commenting Style to Indent")
+
+;; ;; set comment start (default) and padding
+;; (setq comment-start "#"
+;;       comment-padding " ")
+;; set comment style
+(setq comment-style 'indent)
+;; General:39 ends here
+
+;; [[file:init-emacs.org::*General][General:40]]
+(setq enable-recursive-minibuffers t)
+(minibuffer-depth-indicate-mode 1)
+;; General:40 ends here
+
+;; [[file:init-emacs.org::*General][General:42]]
+(init-message 3 "Have `apropos' Search All Symbols and Order by Relevance")
+
+;; make apropos command search all symbols
+(setq apropos-do-all t)
+
+;; make apropos command list results by relevance
+(setq apropos-sort-by-scores t
+      apropos-documentation-sort-by-scores t)
+;; General:42 ends here
+
+;; [[file:init-emacs.org::*General][General:43]]
+(init-message 3 "Set Default `grep' Command")
+
+;; set grep command
+(setq grep-command "grep -n -H -i -r -e ")
+;; General:43 ends here
+
+;; [[file:init-emacs.org::*General][General:44]]
+(init-message 3 "Set Email Sources")
+
+;; email settings
+(setq mail-sources `((pop :server "pop.gmail.com" :port 995
+                          :user ,user-mail-address
+                          :connection ssl :leave t)))
+;; General:44 ends here
+
+;; [[file:init-emacs.org::*General][General:45]]
+(init-message 3 "Set Default Browser")
+
+;; set default browser
+;;(setq browse-url-generic-program "x-www-browser")
+;;(setq browse-url-generic-program "w3m")
+;;(setq browse-url-generic-program "mozilla")
+(setq browse-url-browser-function 'browse-url-default-browser)
+;;(setq browse-url-browser-function 'browse-url-generic)
+;;(setq browse-url-browser-function 'eww-browse-url)
+;;(setq browse-url-browser-function 'w3m-browse-url)
+;;(setq browse-url-browser-function 'browse-url-firefox
+;;      browse-url-new-window-flag  t
+;;      browse-url-firefox-new-window-is-tab t)
+
+;; set secondary browser
+(setq browse-url-secondary-browser-function 'browse-url-default-browser)
+;; General:45 ends here
+
+;; [[file:init-emacs.org::*General][General:46]]
+(init-message 3 "Single Character Deletion Commands Delete Active Regions Without Saving to the Kill Ring")
+
+;; when deleting an active region via single character deletion command,
+;; do not save to kill ring
+(setq delete-active-region t)
+;; General:46 ends here
+
+;; [[file:init-emacs.org::*General][General:47]]
+(init-message 3 "Disable `vc-git'.")
+
+;; disable vc-git
+(setq vc-handled-backends nil)
+;; General:47 ends here
+
+;; [[file:init-emacs.org::*General][General:48]]
+;; (init-message 3 "Recenter window after `next-error'.")
+
+;; ;; always recenter after `next-error'
+;; (setq next-error-recenter '(4))
+;; ;;(add-hook 'next-error-hook #'recenter :append)
+;; General:48 ends here
+
+;; [[file:init-emacs.org::*General][General:49]]
+(init-message 3 "Recenter window after `occur-mode-goto-occurrence'.")
+
+;; always recenter after `occur-mode-goto-occurrence'
+(defun occur-mode-goto-occurrence--recenter (&optional arg)
+  "Recenter when an `occur' result is selected."
+  (recenter))
+;; advise `occur-mode-goto-occurrence'
+(advice-add 'occur-mode-goto-occurrence :after #'occur-mode-goto-occurrence--recenter)
+;; General:49 ends here
+
+;; [[file:init-emacs.org::*General][General:50]]
+(init-message 3 "Set time zones to use for `display-time-world'.")
+
+;; set display-time-world time zones
+(setq display-time-world-list
+      '(("Etc/UTC" "UTC")
+        ("America/Los_Angeles" "San Diego")
+        ("America/Chicago" "Minneapolis")
+        ("America/New_York" "New York")
+        ("Etc/GMT" "GMT")
+        ("Europe/London" "London")
+        ("Europe/Paris" "Paris")
+        ("Asia/Tokyo" "Tokyo")))
+;; General:50 ends here
+
 ;; [[file:init-emacs.org::*System][System:1]]
 ;;------------------------------------------------------------------------------
 ;;; Environment Settings: System
