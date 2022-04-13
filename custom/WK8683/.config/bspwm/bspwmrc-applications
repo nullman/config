@@ -47,7 +47,8 @@ _command firefox && _delay 1 firefox &
 _command spacefm && _delay 1 spacefm &
 #_command thunar && _delay 1 thunar &
 #_command idea && _delay 10 idea &
-_command discord && _delay 1 discord &
+#_command discord && _delay 1 discord &
+_command discord-development && _delay 1 discord-development &
 #_command pidgin && _delay 1 pidgin &
 #_command gajim && _delay 10 gajim &
 #_command tootle && _delay 10 tootle &

@@ -91,8 +91,7 @@ _ba Emacs desktop='^2' follow=on
 _ba Slack desktop='^3' follow=on
 _ba Thunderbird desktop='^3' follow=on
 _ba android-messages-desktop desktop='^3' follow=on
-_ba teams* desktop='^3' follow=on
-_ba msoutlook* desktop='^3' follow=on
+_ba teams-for-linux desktop='^3' follow=on
 _ba firefox desktop='^4' follow=on
 _ba LibreWolf desktop='^4' follow=on
 _ba Brave-browser desktop='^4' follow=on
@@ -116,6 +115,7 @@ _ba BasiliskII desktop='^6' follow=on
 _ba 'VirtualBox Manager' desktop='^6' follow=on
 _ba 'VirtualBox Machine' desktop='^6' follow=on
 _ba discord desktop='^7' follow=on
+_ba discord-development desktop='^7' follow=on
 _ba Pidgin desktop='^7' follow=on
 #_ba org.gajim.Gajim desktop='^7' follow=on
 _ba Gajim desktop='^7' follow=on
@@ -123,6 +123,7 @@ _ba 'Hyperspace Desktop' desktop='^7' follow=on
 _ba Tootle desktop='^7' follow=on
 _ba Com.github.bleakgrey.tootle desktop='^7' follow=on
 _ba Gimp-2.10 desktop='^8' follow=on
+_ba ms-outlook-nativefier desktop='^8' follow=on
 _ba Qmmp desktop='^9' follow=on
 _ba mplayer2 desktop='^9' follow=on
 _ba Lollypop desktop='^9' follow=on
