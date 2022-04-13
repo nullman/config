@@ -37,7 +37,9 @@ _delay 10
 _command alacritty && alacritty -e ${HOME}/bin/run-screen &
 _command emacs && _delay 1 emacs &
 _command slack && _delay 1 slack &
+_command teams-for-linux && _delay 1 teams-for-linux &
 #_command thunderbird && _delay 10 thunderbird &
+_command ms-outlook-nativefier && _delay 10 ms-outlook-nativefier &
 _command firefox && _delay 1 firefox &
 #_command vivaldi && _delay 1 vivaldi &
 #_command chromium && _delay 1 chromium &
