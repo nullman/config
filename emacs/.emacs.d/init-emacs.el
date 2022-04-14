@@ -3021,7 +3021,7 @@ Output format if WITH-MARKERS is non-nil:
                 (setq tree (pop stack))
                 (if with-markers
                     (setcdr tree (cons (cons (cons headline-value (point-marker)) nil) nil))
-                  (setcdr tree (cons (cons (cons headline-value nil) nil))))
+                  (setcdr tree (cons (cons headline-value nil) nil)))
                 (setq tree (cdr tree))
                 (push tree stack)
                 (setq tree (car tree)))
