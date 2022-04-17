@@ -1752,6 +1752,8 @@ alias ping-bridge="ping 192.168.1.2"
 alias ping-synology="ping 192.168.1.6"
 #        ping-morpheus           ping morpheus
 alias ping-morpheus="ping 192.168.1.10"
+#        ping-printer            ping printer
+alias ping-printer="ping 192.168.1.16"
 #        ping-neo                ping neo
 alias ping-neo="ping 192.168.1.30"
 #        ping-tank               ping tank
@@ -2795,12 +2797,12 @@ alias git-submodule-update="
     git submodule update --init --recursive --checkout
     git submodule foreach --recursive git checkout master
     git submodule foreach --recursive git pull origin master"
-#        gitprune                git remote prune origin
-alias gitprune="git remote prune origin"
-#        gitresethead            git reset --hard HEAD
-alias gitresethead="git reset --hard HEAD"
-#        gitcloned1              git clone --depth=1
-alias gitcloned1="git clone --depth=1"
+#        git-prune               git remote prune origin
+alias git-prune="git remote prune origin"
+#        git-reset-head          git reset --hard HEAD
+alias git-reset-head="git reset --hard HEAD"
+#        git-clone-d1            git clone --depth=1
+alias git-clone-d1="git clone --depth=1"
 #        gitgc                   git gc
 alias gitgc="git gc"
 #        gitgca                  git gc --aggressive
