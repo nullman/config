@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-04-14 12:56 (kyle)>
+  #+TIMESTAMP: <2022-04-18 10:04 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -4136,8 +4136,9 @@
              (HEADLINE32
               (HEADLINE321 . BODY321)
               (HEADLINE322 . BODY322)))))"
-          (let* ((property-folder-regexp "^[ \t]*\\** Org$")
+          (let* ((property-headline-regexp "^[ \t]*\\** Org$")
                  (property-regexp "^[ \t]*#\\+\\(.*\\): \\(.*\\)$")
+                 (property-drawer-regexp "[ \t]*:PROPERTIES:.*:END:[ \t]*")
                  (headline-regexp "^\\(\*+ \\)\\(.*\\)$")
                  (property-alist nil)
                  (property-section t)
@@ -4155,7 +4156,7 @@
                 (cond
                  ;; ignore property folder
                  ((and (bobp)
-                       (looking-at property-folder-regexp))
+                       (looking-at property-headline-regexp))
                   nil)
                  ;; add properties
                  ((and property-section
@@ -4220,8 +4221,14 @@
                                                                       (line-beginning-position)
                                                                       (line-end-position)))))
                         (forward-line 1))
-                      (setcdr tree (cons (replace-regexp-in-string "[ \t]*$" "" body) nil))
-                      (setq tree (cdr tree))
+                      ;; add unless body is drawer properties
+                      (when (>
+                             (length
+                              (replace-regexp-in-string property-drawer-regexp ""
+                                                        (replace-regexp-in-string "\n" "" body)))
+                             0)
+                        (setcdr tree (cons (replace-regexp-in-string "[ \t]*$" "" body) nil))
+                        (setq tree (cdr tree)))
                       (forward-line 0)
                       (when (> (point) point)
                         (forward-line -1)))))
@@ -4235,6 +4242,11 @@
       :PROPERTIES:
       :CUSTOM_ID: org-mode-functions-org-get-buffer-data
       :END:
+
+    :PROPERTIES:
+    :CUSTOM_ID: pages-home
+    :END:
+
 
       #+BEGIN_SRC emacs-lisp
         ;;------------------------------------------------------------------------------
@@ -4283,8 +4295,9 @@
              (HEADLINE32 . MARKER32
               (HEADLINE321 . MARKER321 . BODY321)
               (HEADLINE322 . MARKER322 . BODY322)))))"
-          (let* ((property-folder-regexp "^[ \t]*\\** Org$")
+          (let* ((property-headline-regexp "^[ \t]*\\** Org$")
                  (property-regexp "^[ \t]*#\\+\\(.*\\): \\(.*\\)$")
+                 (property-drawer-regexp "[ \t]*:PROPERTIES:.*:END:[ \t]*")
                  (headline-regexp "^\\(\*+ \\)\\(.*\\)$")
                  (property-alist nil)
                  (property-section t)
@@ -4301,7 +4314,7 @@
                 (cond
                  ;; ignore property folder
                  ((and (bobp)
-                       (looking-at property-folder-regexp))
+                       (looking-at property-headline-regexp))
                   nil)
                  ;; add properties
                  ((and property-section
@@ -4372,8 +4385,14 @@
                                                                       (line-beginning-position)
                                                                       (line-end-position)))))
                         (forward-line 1))
-                      (setcdr tree (cons (replace-regexp-in-string "[ \t]*$" "" body) nil))
-                      (setq tree (cdr tree))
+                      ;; add unless body is drawer properties
+                      (when (>
+                               (length
+                                (replace-regexp-in-string property-drawer-regexp ""
+                                                          (replace-regexp-in-string "\n" "" body)))
+                               0)
+                        (setcdr tree (cons (replace-regexp-in-string "[ \t]*$" "" body) nil))
+                        (setq tree (cdr tree)))
                       (forward-line 0)
                       (when (> (point) point)
                         (forward-line -1)))))
