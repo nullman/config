@@ -459,9 +459,9 @@ alias chsh-bash="
 #!#        set-prompt-no-color     set terminal prompt to: host:user path $ (no color)
 #!alias set-prompt-no-color="export PS1=\"\h:\u \w \\$ \""
 #        set-prompt              set terminal prompt to: host:user path (git-branch) $
-alias set-prompt="export PS1=\"${COLOR_LIGHT_GREEN}\h:\u ${COLOR_LIGHT_BLUE}\w${COLOR_CYAN}\$(gitbranchprompt) ${COLOR_YELLOW}\\$ ${COLOR_DEFAULT}\""
+alias set-prompt="export PS1=\"${COLOR_LIGHT_GREEN}\h:\u ${COLOR_LIGHT_BLUE}\w${COLOR_CYAN}\$(git-branch-prompt) ${COLOR_YELLOW}\\$ ${COLOR_DEFAULT}\""
 #        set-prompt-emacs        set emacs prompt to: [host:user path (git-branch)]$
-alias set-prompt-emacs="export PS1=\"[\h:\u \w\$(gitbranchprompt)]\\$ \""
+alias set-prompt-emacs="export PS1=\"[\h:\u \w\$(git-branch-prompt)]\\$ \""
 #        set-prompt-dos          set terminal prompt to look like a DOS prompt
 alias set-prompt-dos="export PS1=\"C:{PWD////\\\\}> \""
 
@@ -2697,11 +2697,11 @@ alias qdu="qubes-dom0-update --enablerepo=qubes-dom0-current-testing"
 #
 # git
 #
-#        gitprompt               show git branch name in terminal prompt
-#!alias gitprompt="export PS1=\"${COLOR_YELLOW}\\\$(gitbranch) ${COLOR_LIGHT_BLUE}\w \\$ ${COLOR_DEFAULT}\""
-#!alias gitprompt="export PS1=\"${COLOR_LIGHT_BLUE}\w ${COLOR_YELLOW}[\\\$(gitbranch)] ${COLOR_LIGHT_BLUE}\\$ ${COLOR_DEFAULT}\""
-#!alias gitprompt="export PS1=\"[${COLOR_LIGHT_GREEN}\h:\u ${COLOR_LIGHT_BLUE}\w ${COLOR_YELLOW}[\\\$(gitbranch)] ${COLOR_LIGHT_BLUE}\\$ ${COLOR_DEFAULT}\""
-alias gitprompt="export PS1=\"${COLOR_LIGHT_GREEN}\h:\u ${COLOR_LIGHT_BLUE}\w${COLOR_CYAN}\\\$(gitbranchprompt) ${COLOR_YELLOW}\\$ ${COLOR_DEFAULT}\""
+#        git-prompt              show git branch name in terminal prompt
+#!alias git-prompt="export PS1=\"${COLOR_YELLOW}\\\$(git-branch) ${COLOR_LIGHT_BLUE}\w \\$ ${COLOR_DEFAULT}\""
+#!alias git-prompt="export PS1=\"${COLOR_LIGHT_BLUE}\w ${COLOR_YELLOW}[\\\$(git-branch)] ${COLOR_LIGHT_BLUE}\\$ ${COLOR_DEFAULT}\""
+#!alias git-prompt="export PS1=\"[${COLOR_LIGHT_GREEN}\h:\u ${COLOR_LIGHT_BLUE}\w ${COLOR_YELLOW}[\\\$(git-branch)] ${COLOR_LIGHT_BLUE}\\$ ${COLOR_DEFAULT}\""
+alias git-prompt="export PS1=\"${COLOR_LIGHT_GREEN}\h:\u ${COLOR_LIGHT_BLUE}\w${COLOR_CYAN}\\\$(git-branch-prompt) ${COLOR_YELLOW}\\$ ${COLOR_DEFAULT}\""
 #        gith                    git help
 alias gith="git help"
 #        gits                    git status
@@ -2757,7 +2757,7 @@ alias gitu="git pull"
 #        gituo                   git pull origin
 alias gituo="git pull origin"
 #        gituob                  git pull origin (current branch)
-alias gituob="git pull origin \$(gitbranch)"
+alias gituob="git pull origin \$(git-branch)"
 #        gituod                  git pull origin develop
 alias gituod="git pull origin develop"
 #        gituom                  git pull origin master
@@ -2773,7 +2773,7 @@ alias gitpod="git push origin develop"
 #        gitpom                  git push origin master
 alias gitpom="git push origin master"
 #        gitpob                  git push origin (current branch)
-alias gitpob="git push origin \$(gitbranch)"
+alias gitpob="git push origin \$(git-branch)"
 #        gitb                    git branch
 alias gitb="git branch"
 #        gitba                   git branch -a

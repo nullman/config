@@ -3842,6 +3842,7 @@ same directory as the org-buffer and insert a link to this file."
      ("sel" . "src emacs-lisp")
      ("sk" . "src kotlin")
      ("spy" . "src python")
+     ("sql" . "src sql")
      ("sr" . "src racket")
      ("ssh" . "src sh")
      ("ssu" . "src sh :dir /sudo::")
@@ -20525,11 +20526,11 @@ to the current ERC buffer."
                (sql-user "dev")
                (sql-password "devTest"))
           (issuetest (sql-product 'ms)
-                     (sql-server "issuetest81153.infinitecampus.com")
+                     (sql-server "b4660797-app001.infinitecampus.com")
                      (sql-port 1344)
-                     (sql-database "exceptionalslittleton-20210801_2101")
-                     (sql-user "dev")
-                     (sql-password "devTest"))))
+                     (sql-database "3384-littleton-20210801_2101")
+                     (sql-user "IssueTestUser-3384-littleton-20210801_2101-962")
+                     (sql-password "h*cjFmVd9S0Hoqui7GQpiZ%chEit@y"))))
 
   (defun sql-ms-dev ()
     "Connect to local dev database."

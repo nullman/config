@@ -49,14 +49,14 @@ fi
 # set prompt
 if [[ -n "${INSIDE_EMACS}" ]] ; then
     # set emacs prompt to: host:user path git-branch $
-    #export PS1="\h:\u \w\$(gitbranchprompt)\\$ "
+    #export PS1="\h:\u \w\$(git-branch-prompt)\\$ "
     # set emacs prompt to: path git-branch $
-    export PS1="\w\$(gitbranchprompt) \\$ "
+    export PS1="\w\$(git-branch-prompt) \\$ "
 else
     # set terminal prompt to: host:user path $
     #export PS1="${COLOR_YELLOW}\h:\u ${COLOR_LIGHT_BLUE}\w ${COLOR_YELLOW}\\$ ${COLOR_DEFAULT}"
     # set terminal prompt to: host:user path git-branch $
-    export PS1="${COLOR_YELLOW}\h:\u ${COLOR_LIGHT_BLUE}\w${COLOR_GREEN}\$(gitbranchprompt) ${COLOR_YELLOW}\\$ ${COLOR_DEFAULT}"
+    export PS1="${COLOR_YELLOW}\h:\u ${COLOR_LIGHT_BLUE}\w${COLOR_GREEN}\$(git-branch-prompt) ${COLOR_YELLOW}\\$ ${COLOR_DEFAULT}"
 fi
 
 # other prompts
