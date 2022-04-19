@@ -2824,8 +2824,9 @@ Output format:
      (HEADLINE32
       (HEADLINE321 . BODY321)
       (HEADLINE322 . BODY322)))))"
-  (let* ((property-folder-regexp "^[ \t]*\\** Org$")
+  (let* ((property-headline-regexp "^[ \t]*\\** Org$")
          (property-regexp "^[ \t]*#\\+\\(.*\\): \\(.*\\)$")
+         (property-drawer-regexp "[ \t]*:PROPERTIES:.*:END:[ \t]*")
          (headline-regexp "^\\(\*+ \\)\\(.*\\)$")
          (property-alist nil)
          (property-section t)
@@ -2843,7 +2844,7 @@ Output format:
         (cond
          ;; ignore property folder
          ((and (bobp)
-               (looking-at property-folder-regexp))
+               (looking-at property-headline-regexp))
           nil)
          ;; add properties
          ((and property-section
@@ -2908,8 +2909,14 @@ Output format:
                                                               (line-beginning-position)
                                                               (line-end-position)))))
                 (forward-line 1))
-              (setcdr tree (cons (replace-regexp-in-string "[ \t]*$" "" body) nil))
-              (setq tree (cdr tree))
+              ;; add unless body is drawer properties
+              (when (>
+                     (length
+                      (replace-regexp-in-string property-drawer-regexp ""
+                                                (replace-regexp-in-string "\n" "" body)))
+                     0)
+                (setcdr tree (cons (replace-regexp-in-string "[ \t]*$" "" body) nil))
+                (setq tree (cdr tree)))
               (forward-line 0)
               (when (> (point) point)
                 (forward-line -1)))))
@@ -2966,8 +2973,9 @@ Output format if WITH-MARKERS is non-nil:
      (HEADLINE32 . MARKER32
       (HEADLINE321 . MARKER321 . BODY321)
       (HEADLINE322 . MARKER322 . BODY322)))))"
-  (let* ((property-folder-regexp "^[ \t]*\\** Org$")
+  (let* ((property-headline-regexp "^[ \t]*\\** Org$")
          (property-regexp "^[ \t]*#\\+\\(.*\\): \\(.*\\)$")
+         (property-drawer-regexp "[ \t]*:PROPERTIES:.*:END:[ \t]*")
          (headline-regexp "^\\(\*+ \\)\\(.*\\)$")
          (property-alist nil)
          (property-section t)
@@ -2984,7 +2992,7 @@ Output format if WITH-MARKERS is non-nil:
         (cond
          ;; ignore property folder
          ((and (bobp)
-               (looking-at property-folder-regexp))
+               (looking-at property-headline-regexp))
           nil)
          ;; add properties
          ((and property-section
@@ -3055,8 +3063,14 @@ Output format if WITH-MARKERS is non-nil:
                                                               (line-beginning-position)
                                                               (line-end-position)))))
                 (forward-line 1))
-              (setcdr tree (cons (replace-regexp-in-string "[ \t]*$" "" body) nil))
-              (setq tree (cdr tree))
+              ;; add unless body is drawer properties
+              (when (>
+                       (length
+                        (replace-regexp-in-string property-drawer-regexp ""
+                                                  (replace-regexp-in-string "\n" "" body)))
+                       0)
+                (setcdr tree (cons (replace-regexp-in-string "[ \t]*$" "" body) nil))
+                (setq tree (cdr tree)))
               (forward-line 0)
               (when (> (point) point)
                 (forward-line -1)))))
