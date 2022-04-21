@@ -50,6 +50,7 @@ setopt nocheckjobs         # do not warn about running processes when exiting
 setopt nocorrect           # do not auto correct mistakes
 setopt numericglobsort     # sort filenames numerically when it makes sense
 setopt rcexpandparam       # array expension with parameters
+setopt rmstarsilent        # do not prompt to confirm when deleting using *
 
 # load terminfo
 zmodload zsh/terminfo
