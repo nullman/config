@@ -1792,14 +1792,14 @@ Checkout dev repository:
 Checkout web repository:
   gitcoweb
 Create the initial links from ~ to ~/config and ~/config-private:
-  homeinitialize
-(Run 'homerestow' to recreate the links in the future.)
+  home-initialize
+(Run 'home-restow' to recreate the links in the future.)
 Setup /home/data directory:
   sudo mkdir -p /home/data && sudo chown \${USER}:\${USER} /home/data
 Optionally install the default crontab:
   make-cron
 Install manjaro packages and setup system:
-  manjaroinitialize
+  manjaro-initialize
 EOF
 }
 #        home-initialize         stow links from ~/ to ~/config and ~/config-private dirs

@@ -95,7 +95,7 @@ case "${menu}" in
     git)
         # display git repositories
         if [[ $# -lt 2 ]] ; then
-            sel=$(grep "#        gitsync" "${HOME}/.funct" | cut -d " " -f 9 | rofi -dmenu -i -p 'Git' -hide-scrollbar)
+            sel=$(grep "# *git-sync" "${HOME}/.funct" | cut -d " " -f 9 | rofi -dmenu -i -p 'Git' -hide-scrollbar)
         else
             sel=$2
         fi
@@ -137,7 +137,7 @@ case "${menu}" in
     rsync)
         # display rsync targets
         if [[ $# -lt 2 ]] ; then
-            sel=$(grep "^#        rsync-" ${HOME}/.alias | cut -d " " -f 9 | rofi -dmenu -i -p 'Rsync' -hide-scrollbar)
+            sel=$(grep "^# *rsync-" ${HOME}/.alias | cut -d " " -f 9 | rofi -dmenu -i -p 'Rsync' -hide-scrollbar)
         else
             sel=$2
         fi
