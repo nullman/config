@@ -1806,8 +1806,8 @@ alias traceroute-uswest="traceroute uswest.net"
 alias rsync-rlptx="rsync -rlptx --progress"
 #        rsync-media-get-morpheus  rsync morpheus:/home/data/media /home/data/media
 alias rsync-media-get-morpheus="rsync -rlptx --progress morpheus:/home/data/media/ ${home}/data/media/"
-#        rsync-media-get-morpheus-gemini  rsync morpheus:/home/data/media /home/data/media (minus software directory)
-alias rsync-media-get-morpheus-gemini="rsync -rlptx --progress --exclude='/software' morpheus:/home/data/media/ ${home}/data/media/"
+#        rsync-media-get-morpheus-exclude  rsync morpheus:/home/data/media /home/data/media (minus software and video directories)
+alias rsync-media-get-morpheus-exclude="rsync -rlptx --progress --exclude={'/software/','/video/'} morpheus:/home/data/media/ ${home}/data/media/"
 #        rsync-media-get-morpheus-mouse-delete  rsync morpheus:/home/data/media /home/data/media (specific sub-directories)
 alias rsync-media-get-morpheus-mouse-delete=" \
     rsync -rlptx --progress --delete --exclude={'/Humor/','/iTunes/','/Other/'} morpheus:/home/data/media/audio/ ${home}/data/media/audio/ && \
