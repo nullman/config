@@ -11065,6 +11065,23 @@ If REPEAT is non-nil, repeat each number that many times."
                 (forward-char 1)))))))))
 ;; insert-incrementing-vertical-numbers:1 ends here
 
+;; [[file:init-emacs.org::#functions-text-inserting-functions-insert-column-position-ruler][insert-column-position-ruler:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Text Inserting Functions: insert-column-position-ruler
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Text Inserting Functions: insert-column-position-ruler")
+
+(defun insert-column-position-ruler (&optional tens)
+  "Insert a column poisition ruler.
+If TENS is non-nil, insert that many ruler segments of ten digits.
+TENS defaults to 12."
+  (interactive "*")
+  (let ((tens (or tens 12)))
+    (dotimes (x tens)
+      (insert "1234567890"))))
+;; insert-column-position-ruler:1 ends here
+
 ;; [[file:init-emacs.org::#functions-text-inserting-functions-append-char-to-column][append-char-to-column:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Text Inserting Functions: append-char-to-column
