@@ -1755,8 +1755,9 @@ KEYMAP defaults to `override-global-map'."
 
   ;; yank as rectangle
   (when (fboundp 'yank-as-rectangle)
-    (bind-keys ("C-x r C-y" . yank-as-rectangle)
-               ("C-M-y" . yank-as-rectangle)))
+    (bind-keys ("C-x r C-y" . yank-as-rectangle)))
+    ;; (bind-keys ("C-x r C-y" . yank-as-rectangle)
+    ;;            ("C-M-y" . yank-as-rectangle)))
 
   ;; just one space
   (when (fboundp 'just-one-space)
