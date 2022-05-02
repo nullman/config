@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-04-30 14:45 (kyle)>
+  #+TIMESTAMP: <2022-05-01 23:05 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -24516,6 +24516,33 @@
            ("obie" . org-insert-literate-programming-init-emacs-block)
            ("obc" . org-insert-literate-programming-code-block)
            ("obpe" . org-insert-literate-programming-project-euler-problem-block)
+           ;; ;; ironsworn
+           ;; ("isfd" . "Face Danger")
+           ;; ("issa" . "Secure an Advantage")
+           ;; ("isgi" . "Gather Information")
+           ;; ("ish" . "Heal")
+           ;; ("isr" . "Resupply")
+           ;; ("ismc" . "Make Camp")
+           ;; ("isuj" . "Undertake a Journey")
+           ;; ("isrd" . "Reach Your Destination")
+           ;; ("isp" . "Compel")
+           ;; ("isj" . "Sojourn")
+           ;; ("isdc" . "Draw the Circle")
+           ;; ("isfb" . "Forge a Bond")
+           ;; ("istb" . "Test Your Bond")
+           ;; ("isaa" . "Aid Your Ally")
+           ;; ("iswe" . "Write Your Epilogue")
+           ;; ("isef" . "Enter the Fray")
+           ;; ("iss" . "Strike")
+           ;; ("isc" . "Clash")
+           ;; ("istt" . "Turn the Tide")
+           ;; ("isef" . "End the Fight")
+           ;; ("isb" . "Battle")
+           ;; ("iseh" . "Endure Harm")
+           ;; ("isfd" . "Face Death")
+           ;; ("isceh" . "Companion Endure Harm")
+           ;; ("ises" . "Endure Stress")
+           ;; ("" . "")
            ))
         :init
         ;; turn replacer mode on
