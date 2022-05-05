@@ -19,6 +19,9 @@
 export runpath="${runpath}:${HOME}/.shellrc"
 logger "Running: ${HOME}/.shellrc"
 
+# operating system
+os=$(uname -s)
+
 # check if executable command is found in the path
 _command() {
     command -v "$1" > /dev/null 2>&1
@@ -181,7 +184,8 @@ export XDG_DATA_DIRS="/usr/local/share:/usr/share"
 export XDG_DATA_DIRS="${XDG_DATA_DIRS}:${HOME}/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share"
 
 # set java home
-_command java && export JAVA_HOME="$(java -XshowSettings:properties -version 2>&1 > /dev/null | grep 'java.home' | sed 's/^.* = //')"
+[[ "${os}" == "Linux" ]] && _command java && export JAVA_HOME="$(java -XshowSettings:properties -version 2>&1 > /dev/null | grep 'java.home' | sed 's/^.* = //')"
+[[ "${os}" == "Darwin" ]] && [[ -x /usr/libexec/java_home ]] && export JAVA_HOME="$(/usr/libexec/java_home)"
 
 # # set oracle environment
 # source /etc/.oracle_profile
