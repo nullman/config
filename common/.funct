@@ -9,13 +9,17 @@
 #! Author: Kyle W T Sherman
 #!==============================================================================
 #!
-#! default rsync exclusions
-#!rsyncexclusions='{"/cdrom/*","/dev/*","/lost+found","/media/*","/mnt/*","/proc/*","/run/*","/sys/*","/tmp/*","/var/tmp/*","/home/*/.cache/*","/home/*/.ccache/*","/home/*/.gvfs","/home/*/.local/share/Trash/*","/home/*/.thumbnails/*"}'
-#!
 #! cdargs
 #!
 [[ -f "/usr/share/doc/cdargs/examples/cdargs-bash.sh" ]] && \
     source "/usr/share/doc/cdargs/examples/cdargs-bash.sh"
+#!
+#! set variables
+#!
+#!       operating system
+os=$(uname -s)
+#!       default rsync exclusions
+#!rsyncexclusions='{"/cdrom/*","/dev/*","/lost+found","/media/*","/mnt/*","/proc/*","/run/*","/sys/*","/tmp/*","/var/tmp/*","/home/*/.cache/*","/home/*/.ccache/*","/home/*/.gvfs","/home/*/.local/share/Trash/*","/home/*/.thumbnails/*"}'
 #!
 #===============================================================================
 # Function Definitions

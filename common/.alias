@@ -9,18 +9,19 @@
 #! Author: Kyle W T Sherman
 #!==============================================================================
 #!
-#! set variables
-#!
-#!
 #! helper functions
 #!
 #!       _command                check if executable command is found in the path
 _command() {
     command -v "$1" > /dev/null 2>&1
 }
-#
+#!
+#! set variables
+#!
 #!       home
 home="$(cd ${HOME} ; cd .. ; pwd)"
+#!       operating system
+os=$(uname -s)
 #!       terminal
 terminal="alacritty"
 #!       network device
@@ -964,6 +965,7 @@ alias google-contacts-to-abook="data=name,email,phone,address,im,company,notes; 
 #
 #        ls_                     ls (classify, columns, literal, human-readable, auto-color)
 alias ls_="ls -F -C -N -h --color=auto"
+[[ "${os}" == "Darwin" ]] && alias ls_="ls -F -C -G -h"
 #        la                      ls -F -C -N -h --color=auto
 alias la="ls_"
 #        lsa                     ls -A (allmost-all)
