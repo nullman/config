@@ -19,6 +19,9 @@
 export runpath="${runpath}:${HOME}/.shellrc"
 logger "Running: ${HOME}/.shellrc"
 
+# operating system
+os="$(uname -s)"
+
 # check if executable command is found in the path
 _command() {
     command -v "$1" > /dev/null 2>&1
@@ -120,14 +123,15 @@ export COLOR_WHITE="\[\033[1;37m\]"
 
 # path additions
 # path addition "befores" in reverse order
-[[ -L /usr/games ]] || _pathadd /usr/games before
-[[ -L /usr/local/games ]] || _pathadd /usr/local/games before
-[[ -L /bin ]] || _pathadd /bin before
-[[ -L /usr/bin ]] || _pathadd /usr/bin before
-[[ -L /usr/local/bin ]] || _pathadd /usr/local/bin before
-[[ -L /sbin ]] || _pathadd /sbin before
-[[ -L /usr/sbin ]] || _pathadd /usr/sbin before
-[[ -L /usr/local/sbin ]] || _pathadd /usr/local/sbin before
+[[ -d "/usr/games" ]] || _pathadd "/usr/games" before
+[[ -d "/usr/local/games" ]] || _pathadd "/usr/local/games" before
+[[ "${os}" == "Darwin" ]] && [[ -d "/usr/local/opt/coreutils/libexec/gnubin" ]] || _pathadd "/usr/local/opt/coreutils/libexec/gnubin" before
+[[ -d "/bin" ]] || _pathadd "/bin" before
+[[ -d "/usr/bin" ]] || _pathadd "/usr/bin" before
+[[ -d "/usr/local/bin" ]] || _pathadd "/usr/local/bin" before
+[[ -d "/sbin" ]] || _pathadd "/sbin" before
+[[ -d "/usr/sbin" ]] || _pathadd "/usr/sbin" before
+[[ -d "/usr/local/sbin" ]] || _pathadd "/usr/local/sbin" before
 # path addition "afters" in order
 _pathadd "${HOME}/bin"
 _pathadd "${HOME}/bin/vendor"
@@ -181,7 +185,8 @@ export XDG_DATA_DIRS="/usr/local/share:/usr/share"
 export XDG_DATA_DIRS="${XDG_DATA_DIRS}:${HOME}/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share"
 
 # set java home
-_command java && export JAVA_HOME="$(java -XshowSettings:properties -version 2>&1 > /dev/null | grep 'java.home' | sed 's/^.* = //')"
+[[ "${os}" == "Linux" ]] && _command java && export JAVA_HOME="$(java -XshowSettings:properties -version 2>&1 > /dev/null | grep 'java.home' | sed 's/^.* = //')"
+[[ "${os}" == "Darwin" ]] && [[ -x /usr/libexec/java_home ]] && export JAVA_HOME="$(/usr/libexec/java_home)"
 
 # # set oracle environment
 # source /etc/.oracle_profile

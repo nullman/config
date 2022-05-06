@@ -24,6 +24,9 @@ export TERM="xterm-256color"
 export runpath="${runpath}:${HOME}/.zshrc"
 logger "Running: ${HOME}/.zshrc"
 
+# operating system
+os="$(uname -s)"
+
 # set environmental vars
 export SHELL="/bin/zsh"
 
@@ -55,21 +58,32 @@ setopt rmstarsilent        # do not prompt to confirm when deleting using *
 # load terminfo
 zmodload zsh/terminfo
 
-# source auto-suggestions
-[[ -f "/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh 2>&1
+if [[ "${os}" == "Darwin" ]] ; then
+    # source auto-suggestions
+    [[ -f "/usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh 2>&1
 
-# source syntax highlighting
-[[ -f "/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>&1
+    # source syntax highlighting
+    [[ -f "source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>&1
 
-# source history substring
-[[ -f "/usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh" ]] && source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh 2>&1
+    # source powerlevel10k theme
+    [[ -f "/usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme" ]] && source /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme 2>&1
+else
+    # source auto-suggestions
+    [[ -f "/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh 2>&1
 
-# source autojump
-#[[ -f "/usr/share/autojump/autojump.zsh" ]] && source /usr/share/autojump/autojump.zsh 2>&1
+    # source syntax highlighting
+    [[ -f "/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>&1
 
-# source powerlevel10k theme
-#[[ -f "${HOME}/powerlevel10k/powerlevel10k.zsh-theme" ]] && source ${HOME}/powerlevel10k/powerlevel10k.zsh-theme 2>&1
-[[ -f "/usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme" ]] && source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme 2>&1
+    # source history substring
+    [[ -f "/usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh" ]] && source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh 2>&1
+
+    # source autojump
+    #[[ -f "/usr/share/autojump/autojump.zsh" ]] && source /usr/share/autojump/autojump.zsh 2>&1
+
+    # source powerlevel10k theme
+    #[[ -f "${HOME}/powerlevel10k/powerlevel10k.zsh-theme" ]] && source ${HOME}/powerlevel10k/powerlevel10k.zsh-theme 2>&1
+    [[ -f "/usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme" ]] && source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme 2>&1
+fi
 
 # fix home/end keys in screen/tmux
 if [[ -n "${STY}" ]] || [[ -n "${TMUX}" ]] ; then
@@ -129,17 +143,19 @@ bindkey '^[[1;5C' forward-word    # ctrl+down key to move forward one word
 bindkey '^H' backward-kill-word   # ctrl+backspace key to delete previous word
 bindkey '^[[Z' undo               # shift+tab key to undo
 
-## bind up and down arrow keys to history substring search
-#[[ -n "${terminfo[kcuu1]}" ]] && bindkey "${terminfo[kcuu1]}" history-substring-search-up # [up] to search substring history backwards
-#[[ -n "${terminfo[kcud1]}" ]] && bindkey "${terminfo[kcud1]}" history-substring-search-down # [down] to search substring history forwards
-#bindkey '^[[A' history-substring-search-up # up key to search substring history backwards
-#bindkey '^[[B' history-substring-search-down # down to search substring history forwards
+if [[ "${os}" == "Linux" ]] ; then
+    ## bind up and down arrow keys to history substring search
+    #[[ -n "${terminfo[kcuu1]}" ]] && bindkey "${terminfo[kcuu1]}" history-substring-search-up # [up] to search substring history backwards
+    #[[ -n "${terminfo[kcud1]}" ]] && bindkey "${terminfo[kcud1]}" history-substring-search-down # [down] to search substring history forwards
+    #bindkey '^[[A' history-substring-search-up # up key to search substring history backwards
+    #bindkey '^[[B' history-substring-search-down # down to search substring history forwards
 
-# bind page up and page down to history substring search
-bindkey '^[[5~' history-substring-search-up # page up key to search history backwards
-bindkey '^[[6~' history-substring-search-down # page down key to search history forwards
-bindkey -M emacs '^P' history-substring-search-up # ctrl+p key to search history backwards
-bindkey -M emacs '^N' history-substring-search-down # ctrl+n key to search history backwards
+    # bind page up and page down to history substring search
+    bindkey '^[[5~' history-substring-search-up # page up key to search history backwards
+    bindkey '^[[6~' history-substring-search-down # page down key to search history forwards
+    bindkey -M emacs '^P' history-substring-search-up # ctrl+p key to search history backwards
+    bindkey -M emacs '^N' history-substring-search-down # ctrl+n key to search history backwards
+fi
 
 # stty commands should only run on interactive terminals
 if [[ "$-" == "*i*" ]] ; then

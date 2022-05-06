@@ -1755,8 +1755,9 @@ KEYMAP defaults to `override-global-map'."
 
   ;; yank as rectangle
   (when (fboundp 'yank-as-rectangle)
-    (bind-keys ("C-x r C-y" . yank-as-rectangle)
-               ("C-M-y" . yank-as-rectangle)))
+    (bind-keys ("C-x r C-y" . yank-as-rectangle)))
+    ;; (bind-keys ("C-x r C-y" . yank-as-rectangle)
+    ;;            ("C-M-y" . yank-as-rectangle)))
 
   ;; just one space
   (when (fboundp 'just-one-space)
@@ -10973,9 +10974,9 @@ Example: 23MNvqBpz7dP53kZVeGmvR"
                  (byte-to-string 43))   ; +
                 ((< num 64)
                  (byte-to-string 45))))) ; -
-    (do* ((n 0 (mod u 64))
-          (s "" (concat (n-to-s n) s))
-          (u (uuid-decimal) (/ u 64)))
+    (cl-do* ((n 0 (mod u 64))
+             (s "" (concat (n-to-s n) s))
+             (u (uuid-decimal) (/ u 64)))
         ((= u 0) s))))
 
 (defalias 'guid-decimal 'uuid-string)
@@ -11686,7 +11687,7 @@ OUTPUT (defaults to 'phrase):
          (size (length words))
          phrase)
     (while (< (length phrase) count)
-      (pushnew (elt words (random size)) phrase))
+      (cl-pushnew (elt words (random size)) phrase))
     (cl-case output
       ('list (insert (format "%S" phrase)))
       ('space (insert (cl-reduce (lambda (x y) (concat x " " y)) phrase)))
@@ -13321,8 +13322,8 @@ If optional COUNT is given, repeat up to NUM+COUNT-1."
 (defun insert-tree (leaves padding)
   "Insert binary tree with LEAVES at the bottom and PADDING on the left."
   (let ((size (* 3 (expt 2 leaves)))
-        (pad (do* ((l 1 (1+ l))
-                   (pad 0 (+ pad (* 3 (expt 2 l)))))
+        (pad (cl-do* ((l 1 (1+ l))
+                      (pad 0 (+ pad (* 3 (expt 2 l)))))
                  ((> l leaves) pad))))
     (cl-do ((s size (1- s)))
         ((zerop s))
@@ -13467,16 +13468,16 @@ If optional COUNT is given, repeat up to NUM+COUNT-1."
   (interactive)
   ;; first get base 10 number
   (let ((num
-         (do* ((n (mod num 10) (mod num 10))
-               (num (/ num 10) (/ num 10))
-               (pos 1 (* pos base-from))
-               (result (* pos n) (+ result (* pos n))))
+         (cl-do* ((n (mod num 10) (mod num 10))
+                  (num (/ num 10) (/ num 10))
+                  (pos 1 (* pos base-from))
+                  (result (* pos n) (+ result (* pos n))))
              ((zerop num) result))))
     ;; now convert to base-to
-    (do* ((n (mod num base-to) (mod num base-to))
-          (num (/ num base-to) (/ num base-to))
-          (pos 1 (* pos base-to))
-          (result (* pos n) (+ result (* pos n))))
+    (cl-do* ((n (mod num base-to) (mod num base-to))
+             (num (/ num base-to) (/ num base-to))
+             (pos 1 (* pos base-to))
+             (result (* pos n) (+ result (* pos n))))
         ((zerop num) result))))
 ;; base-conversion:1 ends here
 
@@ -15286,7 +15287,7 @@ In a non-interactive call SERVICE can be passed."
            (tags
             (let (temp)
               (dolist (x (mapcar (lambda (x) (plist-get x :tag)) bookmarks))
-                (pushnew x temp :test #'string=))
+                (cl-pushnew x temp :test #'string=))
               (nreverse temp))))
       (switch-to-buffer buffer-name)
       (insert "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n")
@@ -16839,6 +16840,33 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
      ("obie" . org-insert-literate-programming-init-emacs-block)
      ("obc" . org-insert-literate-programming-code-block)
      ("obpe" . org-insert-literate-programming-project-euler-problem-block)
+     ;; ;; ironsworn
+     ;; ("isfd" . "Face Danger")
+     ;; ("issa" . "Secure an Advantage")
+     ;; ("isgi" . "Gather Information")
+     ;; ("ish" . "Heal")
+     ;; ("isr" . "Resupply")
+     ;; ("ismc" . "Make Camp")
+     ;; ("isuj" . "Undertake a Journey")
+     ;; ("isrd" . "Reach Your Destination")
+     ;; ("isp" . "Compel")
+     ;; ("isj" . "Sojourn")
+     ;; ("isdc" . "Draw the Circle")
+     ;; ("isfb" . "Forge a Bond")
+     ;; ("istb" . "Test Your Bond")
+     ;; ("isaa" . "Aid Your Ally")
+     ;; ("iswe" . "Write Your Epilogue")
+     ;; ("isef" . "Enter the Fray")
+     ;; ("iss" . "Strike")
+     ;; ("isc" . "Clash")
+     ;; ("istt" . "Turn the Tide")
+     ;; ("isef" . "End the Fight")
+     ;; ("isb" . "Battle")
+     ;; ("iseh" . "Endure Harm")
+     ;; ("isfd" . "Face Death")
+     ;; ("isceh" . "Companion Endure Harm")
+     ;; ("ises" . "Endure Stress")
+     ;; ("" . "")
      ))
   :init
   ;; turn replacer mode on
@@ -17680,6 +17708,11 @@ otherwise run `find-file-as-root'."
   ;; list directories first and remove unwanted fields
   (dired-listing-switches "-alh --group-directories-first")
   :config
+  ;; mac support
+  (when window-system-mac
+    (setq insert-directory-program "gls"
+          dired-use-ls-dired t))
+
   ;; add extra file compression support
   (setq dired-compress-files-alist
         '(("\\.tar\\.bz2\\'" . "tar -cf - %i | bzip2 -c9 > %o")
@@ -20653,7 +20686,7 @@ to the current ERC buffer."
                        (save-match-data
                          (while (re-search-forward "\\(\\[\\|\\]\\)" (line-end-position) :noerror)
                            (replace-match "" t))))))
-      (multiple-value-bind (commit-start commit-end log)
+      (cl-multiple-value-bind (commit-start commit-end log)
           (work-git-commit-start-end-log commit-start commit-end)
         (let (prs)
           (with-temp-buffer
@@ -20669,7 +20702,7 @@ to the current ERC buffer."
               (fix-branch)
               (goto-char (line-beginning-position))
               (when (re-search-forward "\\b\\(ANDROID-[[:digit:]]+\\)\\([a-zA-Z0-9-_\.]*\\)\\b" nil :noerror)
-                (pushnew (match-string 0) prs :test 'string=))
+                (cl-pushnew (match-string 0) prs :test 'string=))
               (goto-char (line-end-position)))
             (goto-char (point-min))
             (while (re-search-forward "\\[?\\b[Aa][Dd][Ss][Gg][Rr][Oo][Uu][Pp]-" nil :noerror)
@@ -20677,7 +20710,7 @@ to the current ERC buffer."
               (fix-branch)
               (goto-char (line-beginning-position))
               (when (re-search-forward "\\b\\(ADSGROUP-[[:digit:]]+\\)\\([a-zA-Z0-9-_\.]*\\)\\b" nil :noerror)
-                (pushnew (match-string 0) prs :test 'string=))
+                (cl-pushnew (match-string 0) prs :test 'string=))
               (goto-char (line-end-position)))
             (goto-char (point-min))
             (while (re-search-forward "\\[?\\b[Bb][Ff][Oo]-" nil :noerror)
@@ -20685,7 +20718,7 @@ to the current ERC buffer."
               (fix-branch)
               (goto-char (line-beginning-position))
               (when (re-search-forward "\\b\\(BFO-[[:digit:]]+\\)\\([a-zA-Z0-9-_\.]*\\)\\b" nil :noerror)
-                (pushnew (match-string 0) prs :test 'string=))
+                (cl-pushnew (match-string 0) prs :test 'string=))
               (goto-char (line-end-position)))
             (goto-char (point-min))
             (while (re-search-forward "\\[?\\b[Qq][Uu][Ii][Zz]-" nil :noerror)
@@ -20693,7 +20726,7 @@ to the current ERC buffer."
               (fix-branch)
               (goto-char (line-beginning-position))
               (when (re-search-forward "\\b\\(QUIZ-[[:digit:]]+\\)\\([a-zA-Z0-9-_\.]*\\)\\b" nil :noerror)
-                (pushnew (match-string 0) prs :test 'string=))
+                (cl-pushnew (match-string 0) prs :test 'string=))
               (goto-char (line-end-position))))
           ;; output list
           (when prs

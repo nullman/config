@@ -246,7 +246,7 @@
                (when (= data-pointer (length data))
                  (setq data (vconcat data (make-vector brainfuck-data-size 0)))))
               ((eq token :less-than)      ; '<'
-               (decf data-pointer)
+               (cl-decf data-pointer)
                (when (minusp data-pointer)
                  (error "Data pointer cannot go below zero")))
               ((eq token :plus)           ; '+'
@@ -254,7 +254,7 @@
                (cl-incf (aref data data-pointer)))
               ((eq token :minus)          ; '-'
                ;;(aset data data-pointer (1- (aref data data-pointer))))
-               (decf (aref data data-pointer)))
+               (cl-decf (aref data data-pointer)))
               ((eq token :period)         ; '.'
                (push (aref data data-pointer) output))
               ((eq token :comma)          ; ','
@@ -274,7 +274,7 @@
                        (cond ((eq token :left-bracket)
                               (cl-incf js))
                              ((eq token :right-bracket)
-                              (decf js)))))
+                              (cl-decf js)))))
                  ;; otherwise, loop through code block
                  (push (cons token tokens) jump-stack)))
               ((eq token :right-bracket)  ; ']'
@@ -359,7 +359,7 @@
                   (setq data (vconcat data (make-vector brainfuck-data-size 0))))))
              (data-pointer-decr         ; '<'
               (lambda ()
-                (decf data-pointer)
+                (cl-decf data-pointer)
                 (when (minusp data-pointer)
                   (error "Data pointer cannot go below zero"))))
              (data-incr                 ; '+'
@@ -367,7 +367,7 @@
                 (cl-incf (aref data data-pointer))))
              (data-decr                 ; '-'
               (lambda ()
-                (decf (aref data data-pointer))))
+                (cl-decf (aref data data-pointer))))
              (data-output               ; '.'
               (lambda ()
                 (push (aref data data-pointer) output)))
