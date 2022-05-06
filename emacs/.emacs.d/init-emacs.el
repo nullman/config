@@ -1,4 +1,4 @@
-;; [[file:init-emacs.org::*Colors][Colors:1]]
+;; [[file:init-emacs.org::#constants-colors][Colors:1]]
 (let ((data '(("Color" "Name" "Symbol" "Hex Code") ("Adwaita Dark Background (Original)" "" "" "#29353b") ("Adwaita Dark Background (Darker)" "" "" "#19252b") ("Adwaita Dark Background (Darkest)" "" "color-background" "#09151b") ("White Foreground" "" "color-foreground" "#bbc2cf") ("White Foreground Accent" "" "" "#798188") ("Yellow Cursor" "" "color-cursor" "#eeee22") ("Bright Yellow Highlight" "" "color-paren" "#ffff33") ("White Mouse" "" "color-mouse" "#ffffff") ("Outline Level 1" "goldenrod" "color-1" "#daa520") ("Outline Level 2" "light goldenrod" "color-2" "#eedd82") ("Outline Level 3" "yellow green" "color-3" "#9acd32") ("Outline Level 4" "light salmon" "color-4" "#ffa07a") ("Outline Level 5" "tan" "color-5" "#d2b48c") ("Outline Level 6" "light green" "color-6" "#90ee90") ("Outline Level 7" "coral" "color-7" "#ff7f50") ("Outline Level 8" "wheat" "color-8" "#f5deb3"))))
 ;;------------------------------------------------------------------------------
 ;;; Constants: Colors
@@ -13,7 +13,7 @@
 )
 ;; Colors:1 ends here
 
-;; [[file:init-emacs.org::*Start][Start:1]]
+;; [[file:init-emacs.org::#start][Start:1]]
 ;; -*- mode: emacs-lisp; lexical-binding: t; no-byte-compile: t -*-
 ;;==============================================================================
 ;;; init-emacs.el
@@ -33,7 +33,7 @@
 ;;==============================================================================
 ;; Start:1 ends here
 
-;; [[file:init-emacs.org::*Start][Start:2]]
+;; [[file:init-emacs.org::#start][Start:2]]
 (defun message--with-timestamp (format-string &rest args)
   "Add timestamps to `*Messages*' buffer."
   (when (and (> (length format-string) 0)
@@ -70,12 +70,12 @@ LEVEL is the indentation level."
 (add-hook 'emacs-startup-hook #'emacs-startup-hook--message-startup-time)
 ;; Start:2 ends here
 
-;; [[file:init-emacs.org::*Start][Start:3]]
+;; [[file:init-emacs.org::#start][Start:3]]
 ;; reduce frequency of garbage collections
 (setq gc-cons-threshold (* 50 1000 1000)) ; default: 800000
 ;; Start:3 ends here
 
-;; [[file:init-emacs.org::*Start][Start:4]]
+;; [[file:init-emacs.org::#start][Start:4]]
 ;; generic advice wrapper function to ignore errors
 (defun advice--ignore-errors (orig-fun &rest args)
   "Ignore errors when interactively calling ORIG-FUN with ARGS."
@@ -87,7 +87,7 @@ LEVEL is the indentation level."
        (error err)))))
 ;; Start:4 ends here
 
-;; [[file:init-emacs.org::*Start][Start:5]]
+;; [[file:init-emacs.org::#start][Start:5]]
 ;; lock-file wrapper macro to evaluate code blocks only once per emacs session
 (defmacro when-lock-file-acquired (lock-file &rest body)
   "Evaluate BODY unless another running Emacs instance has done so.
@@ -106,7 +106,7 @@ Skips checks if run on Windows."
          ,@body))))
 ;; Start:5 ends here
 
-;; [[file:init-emacs.org::*Package Manager][Package Manager:1]]
+;; [[file:init-emacs.org::#package-manager][Package Manager:1]]
 ;;==============================================================================
 ;;; Package Manager
 ;;==============================================================================
@@ -114,7 +114,7 @@ Skips checks if run on Windows."
 (init-message 1 "Package Manager")
 ;; Package Manager:1 ends here
 
-;; [[file:init-emacs.org::*Straight][Straight:1]]
+;; [[file:init-emacs.org::#package-manager-straight][Straight:1]]
 ;;------------------------------------------------------------------------------
 ;;; Package Manager: Straight
 ;;------------------------------------------------------------------------------
@@ -151,7 +151,7 @@ Skips checks if run on Windows."
 ;;(straight-pull-recipe-repositories)
 ;; Straight:1 ends here
 
-;; [[file:init-emacs.org::*Environment Settings][Environment Settings:1]]
+;; [[file:init-emacs.org::#environment-settings][Environment Settings:1]]
 ;;==============================================================================
 ;;; Environment Settings
 ;;==============================================================================
@@ -159,7 +159,7 @@ Skips checks if run on Windows."
 (init-message 1 "Environment Settings")
 ;; Environment Settings:1 ends here
 
-;; [[file:init-emacs.org::*Modules][Modules:1]]
+;; [[file:init-emacs.org::#environment-settings-modules][Modules:1]]
 ;; load modules that are used for initialization
 (use-package async
   :straight t)
@@ -201,7 +201,7 @@ Skips checks if run on Windows."
   :straight (:type built-in))
 ;; Modules:1 ends here
 
-;; [[file:init-emacs.org::*Environment][Environment:1]]
+;; [[file:init-emacs.org::#environment-settings-environment][Environment:1]]
 ;;------------------------------------------------------------------------------
 ;;; Environment Settings: Environment
 ;;------------------------------------------------------------------------------
@@ -209,7 +209,7 @@ Skips checks if run on Windows."
 (init-message 2 "Environment Settings: Environment")
 ;; Environment:1 ends here
 
-;; [[file:init-emacs.org::*Environment][Environment:2]]
+;; [[file:init-emacs.org::#environment-settings-environment][Environment:2]]
 ;; set coding system to UTF-8
 (setq current-language-environment "UTF-8"
       locale-coding-system 'utf-8)
@@ -220,13 +220,13 @@ Skips checks if run on Windows."
 (prefer-coding-system 'utf-8)
 ;; Environment:2 ends here
 
-;; [[file:init-emacs.org::*Environment][Environment:3]]
+;; [[file:init-emacs.org::#environment-settings-environment][Environment:3]]
 ;; set timezone to CST
 ;;(setenv "TZ" "CDT+6")
 (setenv "TZ" "America/Chicago")
 ;; Environment:3 ends here
 
-;; [[file:init-emacs.org::*Environment][Environment:4]]
+;; [[file:init-emacs.org::#environment-settings-environment][Environment:4]]
 ;; determine if running on a MS-Windows display
 (defconst window-system-windows
   ;;(memq system-type '(emx win32 w32 mswindows ms-dos windows-nt))
@@ -234,33 +234,33 @@ Skips checks if run on Windows."
   "Non-nil if running on a MS-Windows display.")
 ;; Environment:4 ends here
 
-;; [[file:init-emacs.org::*Environment][Environment:5]]
+;; [[file:init-emacs.org::#environment-settings-environment][Environment:5]]
 ;; determine if running on a macintosh gnustep or cocoa display
 (defconst window-system-mac
   (string= window-system "ns")
   "Non-nil if running on a Macintosh GNUstep or Cocoa display.")
 ;; Environment:5 ends here
 
-;; [[file:init-emacs.org::*Environment][Environment:6]]
+;; [[file:init-emacs.org::#environment-settings-environment][Environment:6]]
 ;; determine if running on a Linux X display
 (defconst window-system-linux
   (string= window-system "x")
   "Non-nil if running on a Linux X display.")
 ;; Environment:6 ends here
 
-;; [[file:init-emacs.org::*Environment][Environment:7]]
+;; [[file:init-emacs.org::#environment-settings-environment][Environment:7]]
 ;; determine if running on a work system
 (defconst work-system
   (file-exists-p "~/.work")
   "Non-nil if running on a work system.")
 ;; Environment:7 ends here
 
-;; [[file:init-emacs.org::*Environment][Environment:8]]
+;; [[file:init-emacs.org::#environment-settings-environment][Environment:8]]
 ;; cd to home
 (cd "~")
 ;; Environment:8 ends here
 
-;; [[file:init-emacs.org::*Environment][Environment:9]]
+;; [[file:init-emacs.org::#environment-settings-environment][Environment:9]]
 ;; shell environment
 (setq shell-file-name (or (getenv "SHELL") "/bin/bash")
       shell-command-switch "-c"
@@ -278,7 +278,7 @@ Skips checks if run on Windows."
   (add-to-list 'exec-path "/usr/local/bin"))
 ;; Environment:9 ends here
 
-;; [[file:init-emacs.org::*Environment][Environment:10]]
+;; [[file:init-emacs.org::#environment-settings-environment][Environment:10]]
 ;; set object print depth (do not abbreviate printed objects)
 (setq print-length nil
       print-level nil
@@ -289,7 +289,7 @@ Skips checks if run on Windows."
 ;; (setq ps-print-header nil)
 ;; Environment:10 ends here
 
-;; [[file:init-emacs.org::*Global Variables][Global Variables:1]]
+;; [[file:init-emacs.org::#environment-settings-global-variables][Global Variables:1]]
 ;;------------------------------------------------------------------------------
 ;;; Environment Settings: Global Variables
 ;;------------------------------------------------------------------------------
@@ -297,14 +297,14 @@ Skips checks if run on Windows."
 (init-message 2 "Environment Settings: Global Variables")
 ;; Global Variables:1 ends here
 
-;; [[file:init-emacs.org::*Global Variables][Global Variables:2]]
+;; [[file:init-emacs.org::#environment-settings-global-variables][Global Variables:2]]
 ;; set emacs home directory
 (defconst emacs-home-dir
   (file-truename (expand-file-name "~/.emacs.d"))
   "Emacs configuration home directory.")
 ;; Global Variables:2 ends here
 
-;; [[file:init-emacs.org::*Global Variables][Global Variables:3]]
+;; [[file:init-emacs.org::#environment-settings-global-variables][Global Variables:3]]
 (defmacro emacs-home-sub-dir (dir)
   "Return expanded directory name of DIR if found as a
 sub-directory of `emacs-home-dir', or just `emacs-home-dir'
@@ -315,28 +315,28 @@ otherwise."
        emacs-home-dir)))
 ;; Global Variables:3 ends here
 
-;; [[file:init-emacs.org::*Global Variables][Global Variables:4]]
+;; [[file:init-emacs.org::#environment-settings-global-variables][Global Variables:4]]
 ;; set emacs modules directory
 (defconst emacs-modules-dir
   (emacs-home-sub-dir "modules")
   "Emacs modules directory.")
 ;; Global Variables:4 ends here
 
-;; [[file:init-emacs.org::*Global Variables][Global Variables:6]]
+;; [[file:init-emacs.org::#environment-settings-global-variables][Global Variables:6]]
 ;; set local modules directory
 (defconst local-modules-dir
   (emacs-home-sub-dir "local-modules")
   "Emacs local modules directory.")
 ;; Global Variables:6 ends here
 
-;; [[file:init-emacs.org::*Global Variables][Global Variables:7]]
+;; [[file:init-emacs.org::#environment-settings-global-variables][Global Variables:7]]
 ;; set local work modules directory
 (defconst local-work-modules-dir
   (emacs-home-sub-dir "local-work-modules")
   "Emacs local work modules directory.")
 ;; Global Variables:7 ends here
 
-;; [[file:init-emacs.org::*Global Variables][Global Variables:8]]
+;; [[file:init-emacs.org::#environment-settings-global-variables][Global Variables:8]]
 ;; set customization file
 (defconst customization-file
   (file-truename (expand-file-name "customization.el" emacs-home-dir))
@@ -344,14 +344,14 @@ otherwise."
 (setq custom-file customization-file)
 ;; Global Variables:8 ends here
 
-;; [[file:init-emacs.org::*Global Variables][Global Variables:9]]
+;; [[file:init-emacs.org::#environment-settings-global-variables][Global Variables:9]]
 ;; set init-emacs.org true file name
 (defconst init-emacs-true-file-name
   (file-truename (expand-file-name "init-emacs.org" emacs-home-dir))
   "The true file name of this buffer.")
 ;; Global Variables:9 ends here
 
-;; [[file:init-emacs.org::*Global Variables][Global Variables:10]]
+;; [[file:init-emacs.org::#environment-settings-global-variables][Global Variables:10]]
 ;; set user name
 (defconst user-name "kyle")
 (defconst user-full-name "Kyle W T Sherman")
@@ -360,7 +360,7 @@ otherwise."
 (defconst user-last-name "Sherman")
 ;; Global Variables:10 ends here
 
-;; [[file:init-emacs.org::*Global Variables][Global Variables:11]]
+;; [[file:init-emacs.org::#environment-settings-global-variables][Global Variables:11]]
 ;; set email address
 (defconst user-mail-address
   (if (getenv "EMAIL")
@@ -369,7 +369,7 @@ otherwise."
   "User email address.")
 ;; Global Variables:11 ends here
 
-;; [[file:init-emacs.org::*Global Variables][Global Variables:12]]
+;; [[file:init-emacs.org::#environment-settings-global-variables][Global Variables:12]]
 ;; set no-spam email address
 (defconst user-mail-address-nospam
   (replace-regexp-in-string "\\." " dot "
@@ -377,7 +377,7 @@ otherwise."
   "Slightly obfuscated user email address.")
 ;; Global Variables:12 ends here
 
-;; [[file:init-emacs.org::*Global Variables][Global Variables:13]]
+;; [[file:init-emacs.org::#environment-settings-global-variables][Global Variables:13]]
 (defun signature (&optional fortune)
   "Return a signature.
 
@@ -399,7 +399,7 @@ A fortune is added if FORTUNE is non-nil."
                 "")))))
 ;; Global Variables:13 ends here
 
-;; [[file:init-emacs.org::*Load Path][Load Path:1]]
+;; [[file:init-emacs.org::#environment-settings-load-path][Load Path:1]]
 (init-message 2 "Environment Settings: Load Path")
 
 ;; add paths to the head of `load-path' in reverse order.
@@ -427,7 +427,7 @@ A fortune is added if FORTUNE is non-nil."
 ;;   (add-to-list 'load-path (file-truename (expand-file-name "org-mode/lisp" emacs-modules-dir))))
 ;; Load Path:1 ends here
 
-;; [[file:init-emacs.org::*GUI][GUI:1]]
+;; [[file:init-emacs.org::#general-settings-gui][GUI:1]]
 ;;------------------------------------------------------------------------------
 ;;; General Settings: GUI
 ;;------------------------------------------------------------------------------
@@ -668,7 +668,7 @@ Common values:
   )
 ;; GUI:1 ends here
 
-;; [[file:init-emacs.org::*General][General:1]]
+;; [[file:init-emacs.org::#environment-settings-general][General:1]]
 ;;------------------------------------------------------------------------------
 ;;; Environment Settings: General
 ;;------------------------------------------------------------------------------
@@ -676,19 +676,19 @@ Common values:
 (init-message 2 "Environment Settings: General")
 ;; General:1 ends here
 
-;; [[file:init-emacs.org::*General][General:2]]
+;; [[file:init-emacs.org::#environment-settings-general][General:2]]
 (init-message 3 "Disable Splash Screen")
 
 ;; disable splash screen
 (setq inhibit-startup-screen t)
 ;; General:2 ends here
 
-;; [[file:init-emacs.org::*General][General:3]]
+;; [[file:init-emacs.org::#environment-settings-general][General:3]]
 ;; prefer newer el files over elc
 (setq load-prefer-newer t)
 ;; General:3 ends here
 
-;; [[file:init-emacs.org::*General][General:4]]
+;; [[file:init-emacs.org::#environment-settings-general][General:4]]
 (init-message 3 "Hide Menu Bar")
 
 ;; hide menu-bar (use C-M-z to activate)
@@ -697,21 +697,21 @@ Common values:
   (menu-bar-mode -1))
 ;; General:4 ends here
 
-;; [[file:init-emacs.org::*General][General:6]]
+;; [[file:init-emacs.org::#environment-settings-general][General:6]]
 (init-message 3 "Set Default Buffer Mode to `org-mode'")
 
 ;; set default buffer mode to `org-mode'
 (setq initial-major-mode 'org-mode)
 ;; General:6 ends here
 
-;; [[file:init-emacs.org::*General][General:7]]
+;; [[file:init-emacs.org::#environment-settings-general][General:7]]
 (init-message 3 "Start with Empty Scratch Buffer")
 
 ;; clear scratch buffer
 (setq initial-scratch-message nil)
 ;; General:7 ends here
 
-;; [[file:init-emacs.org::*General][General:9]]
+;; [[file:init-emacs.org::#environment-settings-general][General:9]]
 (init-message 3 "Ask before Closing Emacs")
 
 ;; ask before closing emacs
@@ -720,14 +720,14 @@ Common values:
             kill-emacs-query-functions))
 ;; General:9 ends here
 
-;; [[file:init-emacs.org::*General][General:10]]
+;; [[file:init-emacs.org::#environment-settings-general][General:10]]
 (init-message 3 "Make Backspace Key Work Correctly")
 
 ;; make baskspace key work
 (normal-erase-is-backspace-mode 1)
 ;; General:10 ends here
 
-;; [[file:init-emacs.org::*General][General:11]]
+;; [[file:init-emacs.org::#environment-settings-general][General:11]]
 (init-message 3 "Add Some Characters to Word Boundaries")
 
 ;; add underscore to word boundaries
@@ -737,14 +737,14 @@ Common values:
 (modify-syntax-entry ?- "w")
 ;; General:11 ends here
 
-;; [[file:init-emacs.org::*General][General:12]]
+;; [[file:init-emacs.org::#environment-settings-general][General:12]]
 (init-message 3 "Beginning of Defun is Outermost Level Open-Paren.")
 
 (setq open-paren-in-column-0-is-defun-start nil
       defun-prompt-regexp nil)
 ;; General:12 ends here
 
-;; [[file:init-emacs.org::*General][General:13]]
+;; [[file:init-emacs.org::#environment-settings-general][General:13]]
 (init-message 3 "Ignore Comments when Parsing S-Expressions")
 
 ;; do not parse comments in sexp's
@@ -752,14 +752,14 @@ Common values:
 (setq-default parse-sexp-ignore-comments parse-sexp-ignore-comments)
 ;; General:13 ends here
 
-;; [[file:init-emacs.org::*General][General:14]]
+;; [[file:init-emacs.org::#environment-settings-general][General:14]]
 ;; (init-message 3 "Wrap Lines by Default")
 
 ;; ;; wrap lines
 ;; (setq truncate-lines nil)
 ;; General:14 ends here
 
-;; [[file:init-emacs.org::*General][General:15]]
+;; [[file:init-emacs.org::#environment-settings-general][General:15]]
 (init-message 3 "Do Not Wrap Lines by Default")
 
 ;; turn off line wrapping
@@ -768,14 +768,14 @@ Common values:
 (toggle-truncate-lines 1)
 ;; General:15 ends here
 
-;; [[file:init-emacs.org::*General][General:17]]
+;; [[file:init-emacs.org::#environment-settings-general][General:17]]
 (init-message 3 "Turn Off `auto-fill-mode'")
 
 ;; do not automatically break lines by inserting newlines
 (turn-off-auto-fill)
 ;; General:17 ends here
 
-;; [[file:init-emacs.org::*General][General:18]]
+;; [[file:init-emacs.org::#environment-settings-general][General:18]]
 ;; (init-message 3 "Turn On `global-visual-line-mode'")
 
 ;; ;; visually break lines that are longer than the screen width
@@ -791,7 +791,7 @@ Common values:
 ;; (setq visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
 ;; General:18 ends here
 
-;; [[file:init-emacs.org::*General][General:19]]
+;; [[file:init-emacs.org::#environment-settings-general][General:19]]
 (init-message 3 "Turn On `global-visual-line-mode'")
 
 ;; do not visually break lines that are longer than the screen width
@@ -807,28 +807,28 @@ Common values:
 (setq visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
 ;; General:19 ends here
 
-;; [[file:init-emacs.org::*General][General:20]]
+;; [[file:init-emacs.org::#environment-settings-general][General:20]]
 (init-message 3 "Set `display-line-numbers-type' to relative")
 
 ;; when `display-line-numbers-mode' is on use relative numbering
 (setq display-line-numbers-type 'relative)
 ;; General:20 ends here
 
-;; [[file:init-emacs.org::*General][General:21]]
+;; [[file:init-emacs.org::#environment-settings-general][General:21]]
 (init-message 3 "Prevent `next-line' from Inserting Newlines")
 
 ;; stop cursor at the end of the file
 (setq next-line-add-newlines nil)
 ;; General:21 ends here
 
-;; [[file:init-emacs.org::*General][General:22]]
+;; [[file:init-emacs.org::#environment-settings-general][General:22]]
 (init-message 3 "Keep the Cursor in the Same Column When Using Page-Up and Page-Down")
 
 ;; keep screen position when using page-up and page-down
 (setq scroll-preserve-screen-position 'keep)
 ;; General:22 ends here
 
-;; [[file:init-emacs.org::*General][General:23]]
+;; [[file:init-emacs.org::#environment-settings-general][General:23]]
 (init-message 3 "Scroll Conservatively")
 
 ;; scroll one line at a time
@@ -839,14 +839,14 @@ Common values:
 (setq auto-window-vscroll nil)
 ;; General:23 ends here
 
-;; [[file:init-emacs.org::*General][General:24]]
+;; [[file:init-emacs.org::#environment-settings-general][General:24]]
 (init-message 3 "Ignore Case on Search Matches")
 
 ;; make searches case-insensitive
 (setq case-fold-search t)
 ;; General:24 ends here
 
-;; [[file:init-emacs.org::*General][General:25]]
+;; [[file:init-emacs.org::#environment-settings-general][General:25]]
 (init-message 3 "Highlight Search Matches")
 
 ;; highlight search matches
@@ -855,7 +855,7 @@ Common values:
       query-replace-highlight t)
 ;; General:25 ends here
 
-;; [[file:init-emacs.org::*General][General:26]]
+;; [[file:init-emacs.org::#environment-settings-general][General:26]]
 (init-message 3 "Hightlight Marked Regions")
 
 ;; make current selection visible
@@ -863,7 +863,7 @@ Common values:
 (setq-default transient-mark-mode t)
 ;; General:26 ends here
 
-;; [[file:init-emacs.org::*General][General:27]]
+;; [[file:init-emacs.org::#environment-settings-general][General:27]]
 (init-message 3 "Set Default Tab Indentation to Four Spaces and Turn on Auto-Complete")
 
 ;; set tab indentation, width, and convert tabs to spaces
@@ -879,7 +879,7 @@ Common values:
               tab-stop-list tab-stop-list)
 ;; General:27 ends here
 
-;; [[file:init-emacs.org::*General][General:28]]
+;; [[file:init-emacs.org::#environment-settings-general][General:28]]
 (init-message 3 "Set Default Line-Wrapping Column to 78")
 
 ;; set default fill column for `auto-fill-mode' mode and `fill-paragraph'
@@ -887,7 +887,7 @@ Common values:
 (setq-default fill-column fill-column)
 ;; General:28 ends here
 
-;; [[file:init-emacs.org::*General][General:29]]
+;; [[file:init-emacs.org::#environment-settings-general][General:29]]
 (init-message 3 "Set Default Right-Margin Comment Indent Column to 40")
 
 ;; set default comment column for in-line comments
@@ -898,14 +898,14 @@ Common values:
 (setq-default comment-fill-column comment-fill-column)
 ;; General:29 ends here
 
-;; [[file:init-emacs.org::*General][General:30]]
+;; [[file:init-emacs.org::#environment-settings-general][General:30]]
 (init-message 3 "Have Cursor Movements Attempt to Keep Point on Original Column")
 
 ;; turn on goal column support
 (put 'set-goal-column 'disabled nil)
 ;; General:30 ends here
 
-;; [[file:init-emacs.org::*General][General:31]]
+;; [[file:init-emacs.org::#environment-settings-general][General:31]]
 (init-message 3 "Sentences and Colons Should Have One Space after Them")
 
 ;; insert one space after a sentence when filling text
@@ -914,7 +914,7 @@ Common values:
 (setq colon-double-space nil)
 ;; General:31 ends here
 
-;; [[file:init-emacs.org::*General][General:32]]
+;; [[file:init-emacs.org::#environment-settings-general][General:32]]
 ;; (init-message 3 "Sentences and Colons Should Have Two Spaces after Them")
 
 ;; ;; insert two spaces after a sentence when filling text
@@ -923,7 +923,7 @@ Common values:
 ;; (setq colon-double-space t)
 ;; General:32 ends here
 
-;; [[file:init-emacs.org::*General][General:33]]
+;; [[file:init-emacs.org::#environment-settings-general][General:33]]
 (init-message 3 "Highlight Matching Parenthesis")
 
 ;; highlight matching parenthesis
@@ -932,7 +932,7 @@ Common values:
 (set-face-attribute 'show-paren-match nil :weight 'extra-bold)
 ;; General:33 ends here
 
-;; [[file:init-emacs.org::*General][General:34]]
+;; [[file:init-emacs.org::#environment-settings-general][General:34]]
 (init-message 3 "Highlight TABs")
 
 ;; highlight tabs
@@ -940,7 +940,7 @@ Common values:
 (setq-default highlight-tabs highlight-tabs)
 ;; General:34 ends here
 
-;; [[file:init-emacs.org::*General][General:35]]
+;; [[file:init-emacs.org::#environment-settings-general][General:35]]
 (init-message 3 "Highlight Tabs and Trailing Whitespace")
 
 ;; ;; highlight trailing white spaces
@@ -957,7 +957,7 @@ Common values:
 (global-whitespace-mode)              ; enable whitespace mode everywhere
 ;; General:35 ends here
 
-;; [[file:init-emacs.org::*General][General:36]]
+;; [[file:init-emacs.org::#environment-settings-general][General:36]]
 (init-message 3 "Highlight Current Line")
 
 ;; highlight current line
@@ -965,7 +965,7 @@ Common values:
 (global-hl-line-mode 1)
 ;; General:36 ends here
 
-;; [[file:init-emacs.org::*General][General:37]]
+;; [[file:init-emacs.org::#environment-settings-general][General:37]]
 (init-message 3 "Turn on Syntax Highlighting")
 
 ;; turn on global font lock mode and syntax highlighting
@@ -973,14 +973,14 @@ Common values:
 (setq font-lock-maximum-decoration t)
 ;; General:37 ends here
 
-;; [[file:init-emacs.org::*General][General:38]]
+;; [[file:init-emacs.org::#environment-settings-general][General:38]]
 (init-message 3 "Typing Replaces Highlighted Text")
 
 ;; replace highlighted text with typed text
 (delete-selection-mode t)
 ;; General:38 ends here
 
-;; [[file:init-emacs.org::*General][General:39]]
+;; [[file:init-emacs.org::#environment-settings-general][General:39]]
 (init-message 3 "Set Commenting Style to Indent")
 
 ;; ;; set comment start (default) and padding
@@ -990,12 +990,12 @@ Common values:
 (setq comment-style 'indent)
 ;; General:39 ends here
 
-;; [[file:init-emacs.org::*General][General:40]]
+;; [[file:init-emacs.org::#environment-settings-general][General:40]]
 (setq enable-recursive-minibuffers t)
 (minibuffer-depth-indicate-mode 1)
 ;; General:40 ends here
 
-;; [[file:init-emacs.org::*General][General:42]]
+;; [[file:init-emacs.org::#environment-settings-general][General:42]]
 (init-message 3 "Have `apropos' Search All Symbols and Order by Relevance")
 
 ;; make apropos command search all symbols
@@ -1006,14 +1006,14 @@ Common values:
       apropos-documentation-sort-by-scores t)
 ;; General:42 ends here
 
-;; [[file:init-emacs.org::*General][General:43]]
+;; [[file:init-emacs.org::#environment-settings-general][General:43]]
 (init-message 3 "Set Default `grep' Command")
 
 ;; set grep command
 (setq grep-command "grep -n -H -i -r -e ")
 ;; General:43 ends here
 
-;; [[file:init-emacs.org::*General][General:44]]
+;; [[file:init-emacs.org::#environment-settings-general][General:44]]
 (init-message 3 "Set Email Sources")
 
 ;; email settings
@@ -1022,7 +1022,7 @@ Common values:
                           :connection ssl :leave t)))
 ;; General:44 ends here
 
-;; [[file:init-emacs.org::*General][General:45]]
+;; [[file:init-emacs.org::#environment-settings-general][General:45]]
 (init-message 3 "Set Default Browser")
 
 ;; set default browser
@@ -1041,7 +1041,7 @@ Common values:
 (setq browse-url-secondary-browser-function 'browse-url-default-browser)
 ;; General:45 ends here
 
-;; [[file:init-emacs.org::*General][General:46]]
+;; [[file:init-emacs.org::#environment-settings-general][General:46]]
 (init-message 3 "Single Character Deletion Commands Delete Active Regions Without Saving to the Kill Ring")
 
 ;; when deleting an active region via single character deletion command,
@@ -1049,14 +1049,14 @@ Common values:
 (setq delete-active-region t)
 ;; General:46 ends here
 
-;; [[file:init-emacs.org::*General][General:47]]
+;; [[file:init-emacs.org::#environment-settings-general][General:47]]
 (init-message 3 "Disable `vc-git'.")
 
 ;; disable vc-git
 (setq vc-handled-backends nil)
 ;; General:47 ends here
 
-;; [[file:init-emacs.org::*General][General:48]]
+;; [[file:init-emacs.org::#environment-settings-general][General:48]]
 ;; (init-message 3 "Recenter window after `next-error'.")
 
 ;; ;; always recenter after `next-error'
@@ -1064,7 +1064,7 @@ Common values:
 ;; ;;(add-hook 'next-error-hook #'recenter :append)
 ;; General:48 ends here
 
-;; [[file:init-emacs.org::*General][General:49]]
+;; [[file:init-emacs.org::#environment-settings-general][General:49]]
 (init-message 3 "Recenter window after `occur-mode-goto-occurrence'.")
 
 ;; always recenter after `occur-mode-goto-occurrence'
@@ -1075,7 +1075,7 @@ Common values:
 (advice-add 'occur-mode-goto-occurrence :after #'occur-mode-goto-occurrence--recenter)
 ;; General:49 ends here
 
-;; [[file:init-emacs.org::*General][General:50]]
+;; [[file:init-emacs.org::#environment-settings-general][General:50]]
 (init-message 3 "Set time zones to use for `display-time-world'.")
 
 ;; set display-time-world time zones
@@ -1090,7 +1090,7 @@ Common values:
         ("Asia/Tokyo" "Tokyo")))
 ;; General:50 ends here
 
-;; [[file:init-emacs.org::*System][System:1]]
+;; [[file:init-emacs.org::#environment-settings-system][System:1]]
 ;;------------------------------------------------------------------------------
 ;;; Environment Settings: System
 ;;------------------------------------------------------------------------------
@@ -1098,22 +1098,22 @@ Common values:
 (init-message 2 "Environment Settings: System")
 ;; System:1 ends here
 
-;; [[file:init-emacs.org::*System][System:3]]
+;; [[file:init-emacs.org::#environment-settings-system][System:3]]
 ;; set max variable bindings
 (setq max-specpdl-size 10000)           ; default: 1300
 ;; System:3 ends here
 
-;; [[file:init-emacs.org::*System][System:4]]
+;; [[file:init-emacs.org::#environment-settings-system][System:4]]
 ;; set max eval depth
 (setq max-lisp-eval-depth 10000)        ; default: 600
 ;; System:4 ends here
 
-;; [[file:init-emacs.org::*System][System:5]]
+;; [[file:init-emacs.org::#environment-settings-system][System:5]]
 ;; set max message log size
 (setq message-log-max 2048)             ; default: 1000
 ;; System:5 ends here
 
-;; [[file:init-emacs.org::*System][System:6]]
+;; [[file:init-emacs.org::#environment-settings-system][System:6]]
 ;; set max history list size
 (setq history-length 250)               ; default: 30
 
@@ -1121,7 +1121,7 @@ Common values:
 (setq history-delete-duplicates t)      ; default: nil
 ;; System:6 ends here
 
-;; [[file:init-emacs.org::*System][System:7]]
+;; [[file:init-emacs.org::#environment-settings-system][System:7]]
 ;; set max kill ring size
 (setq kill-ring-max 100)                ; default: 60
 
@@ -1129,12 +1129,12 @@ Common values:
 (setq mark-ring-max 32)                 ; default: 16
 ;; System:7 ends here
 
-;; [[file:init-emacs.org::*System][System:8]]
+;; [[file:init-emacs.org::#environment-settings-system][System:8]]
 ;; change all calls to `yes-or-no-p' to `y-or-n-p'
 (fset 'yes-or-no-p 'y-or-n-p)
 ;; System:8 ends here
 
-;; [[file:init-emacs.org::*System][System:9]]
+;; [[file:init-emacs.org::#environment-settings-system][System:9]]
 ;; enable upercase region (C-x C-u)
 (put 'upcase-region 'disabled nil)
 
@@ -1148,7 +1148,7 @@ Common values:
 (setq disabled-command-function nil)
 ;; System:9 ends here
 
-;; [[file:init-emacs.org::*System][System:10]]
+;; [[file:init-emacs.org::#environment-settings-system][System:10]]
 ;; turn off bidirectional paragraph formatting
 (setq-default bidi-paragraph-direction 'left-to-right)
 
@@ -1161,7 +1161,7 @@ Common values:
   (global-so-long-mode 1))
 ;; System:10 ends here
 
-;; [[file:init-emacs.org::*System][System:11]]
+;; [[file:init-emacs.org::#environment-settings-system][System:11]]
 (init-message 3 "Set `safe-local-variable-values'.")
 
 ;; org-babel noweb start and end patterns
@@ -1169,7 +1169,7 @@ Common values:
 (add-to-list 'safe-local-variable-values '(org-babel-noweb-wrap-end . "}}"))
 ;; System:11 ends here
 
-;; [[file:init-emacs.org::*Files][Files:1]]
+;; [[file:init-emacs.org::#environment-settings-files][Files:1]]
 ;;------------------------------------------------------------------------------
 ;;; Environment Settings: Files
 ;;------------------------------------------------------------------------------
@@ -1177,18 +1177,18 @@ Common values:
 (init-message 2 "Environment Settings: Files")
 ;; Files:1 ends here
 
-;; [[file:init-emacs.org::*Files][Files:2]]
+;; [[file:init-emacs.org::#environment-settings-files][Files:2]]
 ;; increase maximum size before confirmation is requested
 (setq large-file-warning-threshold 50000000)
 ;; Files:2 ends here
 
-;; [[file:init-emacs.org::*Files][Files:3]]
+;; [[file:init-emacs.org::#environment-settings-files][Files:3]]
 ;; enable file variables
 (setq enable-local-variables t
       enable-local-eval 'maybe)
 ;; Files:3 ends here
 
-;; [[file:init-emacs.org::*Files][Files:4]]
+;; [[file:init-emacs.org::#environment-settings-files][Files:4]]
 ;; delete auto-save files
 (setq delete-auto-save-files t)
 
@@ -1201,7 +1201,7 @@ Common values:
       auto-save-default nil)
 ;; Files:4 ends here
 
-;; [[file:init-emacs.org::*Files][Files:5]]
+;; [[file:init-emacs.org::#environment-settings-files][Files:5]]
 ;; do not make backup files
 (setq make-backup-files nil)
 (setq-default make-backup-files nil)
@@ -1212,34 +1212,34 @@ Common values:
       delete-old-versions t)
 ;; Files:5 ends here
 
-;; [[file:init-emacs.org::*Files][Files:6]]
+;; [[file:init-emacs.org::#environment-settings-files][Files:6]]
 ;; ;; do not make lock files
 ;; (setq create-lock-files nil)
 ;; (setq-default create-lock-files nil)
 ;; Files:6 ends here
 
-;; [[file:init-emacs.org::*Files][Files:7]]
+;; [[file:init-emacs.org::#environment-settings-files][Files:7]]
 ;; follow symlinks to version control files without asking or warning
 (setq vc-follow-symlinks t)
 (setq-default vc-follow-symlinks vc-follow-symlinks)
 ;; Files:7 ends here
 
-;; [[file:init-emacs.org::*Files][Files:8]]
+;; [[file:init-emacs.org::#environment-settings-files][Files:8]]
 ;; handle gzip/zip/jar/tar files
 (auto-compression-mode t)
 ;; Files:8 ends here
 
-;; [[file:init-emacs.org::*Files][Files:9]]
+;; [[file:init-emacs.org::#environment-settings-files][Files:9]]
 ;; reuse existing buffers, following file links
 (setq find-file-existing-other-name t)
 ;; Files:9 ends here
 
-;; [[file:init-emacs.org::*Files][Files:10]]
+;; [[file:init-emacs.org::#environment-settings-files][Files:10]]
 ;; end files with a newline
 (setq require-final-newline t)
 ;; Files:10 ends here
 
-;; [[file:init-emacs.org::*Files][Files:12]]
+;; [[file:init-emacs.org::#environment-settings-files][Files:12]]
 ;; turn on auto buffer revert mode
 (global-auto-revert-mode 1)
 ;; this is currently bugged and will cause the buffer to re-center vertically every couple of seconds
@@ -1247,7 +1247,7 @@ Common values:
 ;;       auto-revert-verbose nil)              ; but, be quiet about it
 ;; Files:12 ends here
 
-;; [[file:init-emacs.org::*Files][Files:13]]
+;; [[file:init-emacs.org::#environment-settings-files][Files:13]]
 (defun create-buffer-file-name-directory-if-needed ()
   "Create `buffer-file-name' directory if it does not already exist."
   (when (and buffer-file-name
@@ -1258,7 +1258,7 @@ Common values:
 (add-hook 'before-save-hook #'create-buffer-file-name-directory-if-needed)
 ;; Files:13 ends here
 
-;; [[file:init-emacs.org::*Files][Files:14]]
+;; [[file:init-emacs.org::#environment-settings-files][Files:14]]
 ;; delete trailing lines on call to `delete-trailing-whitespace'
 (setq delete-trailing-lines t)
 
@@ -1274,13 +1274,13 @@ Common values:
 (add-hook 'before-save-hook #'delete-trailing-whitespace-if-not-read-only)
 ;; Files:14 ends here
 
-;; [[file:init-emacs.org::*Files][Files:15]]
+;; [[file:init-emacs.org::#environment-settings-files][Files:15]]
 ;; make shell scripts executable when saving (and reset the buffer mode)
 (when (fboundp 'executable-make-buffer-file-executable-if-script-p)
   (add-hook 'after-save-hook #'executable-make-buffer-file-executable-if-script-p))
 ;; Files:15 ends here
 
-;; [[file:init-emacs.org::*Files][Files:16]]
+;; [[file:init-emacs.org::#environment-settings-files][Files:16]]
 ;; set DOS file extensions
 (add-to-list 'file-coding-system-alist '("\\.ASM\\'" . dos))
 (add-to-list 'file-coding-system-alist '("\\.BAT\\'" . dos))
@@ -1288,12 +1288,12 @@ Common values:
 (add-to-list 'file-coding-system-alist '("\\.SYS\\'" . dos))
 ;; Files:16 ends here
 
-;; [[file:init-emacs.org::*Files][Files:17]]
+;; [[file:init-emacs.org::#environment-settings-files][Files:17]]
 ;; auto-save bookmarks
 (setq bookmark-save-flag 1)
 ;; Files:17 ends here
 
-;; [[file:init-emacs.org::*Files][Files:18]]
+;; [[file:init-emacs.org::#environment-settings-files][Files:18]]
 ;; desktop history
 (when-lock-file-acquired (expand-file-name "emacs-desktop-history-lock-file"
                                           temporary-file-directory)
@@ -1313,7 +1313,7 @@ Common values:
   )
 ;; Files:18 ends here
 
-;; [[file:init-emacs.org::*Files][Files:19]]
+;; [[file:init-emacs.org::#environment-settings-files][Files:19]]
 ;; save minibuffer history
 (when (fboundp 'savehist-mode)
   (when-lock-file-acquired (expand-file-name "emacs-minibuffer-history-lock-file"
@@ -1324,7 +1324,7 @@ Common values:
                                           regexp-search-ring))))
 ;; Files:19 ends here
 
-;; [[file:init-emacs.org::*Buffers and Windows][Buffers and Windows:1]]
+;; [[file:init-emacs.org::#environment-settings-buffers-and-windows][Buffers and Windows:1]]
 ;;------------------------------------------------------------------------------
 ;;; Environment Settings: Buffers and Windows
 ;;------------------------------------------------------------------------------
@@ -1332,33 +1332,33 @@ Common values:
 (init-message 2 "Environment Settings: Buffers and Windows")
 ;; Buffers and Windows:1 ends here
 
-;; [[file:init-emacs.org::*Buffers and Windows][Buffers and Windows:2]]
+;; [[file:init-emacs.org::#environment-settings-buffers-and-windows][Buffers and Windows:2]]
 ;; allow undo/redo of window settings
 (when (fboundp 'winner-mode)
   (winner-mode 1))
 ;; Buffers and Windows:2 ends here
 
-;; [[file:init-emacs.org::*Buffers and Windows][Buffers and Windows:4]]
+;; [[file:init-emacs.org::#environment-settings-buffers-and-windows][Buffers and Windows:4]]
 ;; delay buffer fontification to increase scroll speed
 (setq jit-lock-defer-time 0.05)
 ;; Buffers and Windows:4 ends here
 
-;; [[file:init-emacs.org::*Buffers and Windows][Buffers and Windows:5]]
+;; [[file:init-emacs.org::#environment-settings-buffers-and-windows][Buffers and Windows:5]]
 ;; preserve buffer point for each window
 (setq switch-to-buffer-preserve-window-point t)
 ;; Buffers and Windows:5 ends here
 
-;; [[file:init-emacs.org::*Buffers and Windows][Buffers and Windows:6]]
+;; [[file:init-emacs.org::#environment-settings-buffers-and-windows][Buffers and Windows:6]]
 ;; smoother mouse movement
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 5) ((control))))
 ;; Buffers and Windows:6 ends here
 
-;; [[file:init-emacs.org::*Buffers and Windows][Buffers and Windows:7]]
+;; [[file:init-emacs.org::#environment-settings-buffers-and-windows][Buffers and Windows:7]]
 ;; increase maximum mini-window height
 (setq max-mini-window-height 0.50)
 ;; Buffers and Windows:7 ends here
 
-;; [[file:init-emacs.org::*Tabs][Tabs:1]]
+;; [[file:init-emacs.org::#general-settings-tabs][Tabs:1]]
 ;;------------------------------------------------------------------------------
 ;;; General Settings: Tabs
 ;;------------------------------------------------------------------------------
@@ -1366,7 +1366,7 @@ Common values:
 (init-message 2 "General Settings: Tabs")
 ;; Tabs:1 ends here
 
-;; [[file:init-emacs.org::*Tabs][Tabs:2]]
+;; [[file:init-emacs.org::#general-settings-tabs][Tabs:2]]
 ;; regular tab width
 (defvar custom-tab-width 4
   "Regular tab width.")
@@ -1415,7 +1415,7 @@ Otherwise, `custom-tab-width' is used."
   (set-tabs t 8))
 ;; Tabs:2 ends here
 
-;; [[file:init-emacs.org::*Configuration][Configuration:1]]
+;; [[file:init-emacs.org::#environment-settings-terminals-configuration][Configuration:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Environment Settings: Terminals: Configuration
 ;;------------------------------------------------------------------------------
@@ -1426,7 +1426,7 @@ Otherwise, `custom-tab-width' is used."
       custom-terminal-maximum-lines 10000)
 ;; Configuration:1 ends here
 
-;; [[file:init-emacs.org::*eshell][eshell:1]]
+;; [[file:init-emacs.org::#environment-settings-terminals-eshell][eshell:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Environment Settings: Terminals: eshell
 ;;------------------------------------------------------------------------------
@@ -1466,7 +1466,7 @@ Otherwise, `custom-tab-width' is used."
   (eshell-git-prompt-use-theme 'powerline))
 ;; eshell:1 ends here
 
-;; [[file:init-emacs.org::*term-bash][term-bash:1]]
+;; [[file:init-emacs.org::#environment-settings-terminals-term-bash][term-bash:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Environment Settings: Terminals: term-bash
 ;;------------------------------------------------------------------------------
@@ -1479,7 +1479,7 @@ Otherwise, `custom-tab-width' is used."
   (term "/bin/bash"))
 ;; term-bash:1 ends here
 
-;; [[file:init-emacs.org::*term-zsh][term-zsh:1]]
+;; [[file:init-emacs.org::#environment-settings-terminals-term-zsh][term-zsh:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Environment Settings: Terminals: term-zsh
 ;;------------------------------------------------------------------------------
@@ -1492,7 +1492,7 @@ Otherwise, `custom-tab-width' is used."
   (term "/bin/zsh"))
 ;; term-zsh:1 ends here
 
-;; [[file:init-emacs.org::*vterm][vterm:1]]
+;; [[file:init-emacs.org::#environment-settings-terminals-vterm][vterm:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Environment Settings: Terminals: vterm
 ;;------------------------------------------------------------------------------
@@ -1507,7 +1507,7 @@ Otherwise, `custom-tab-width' is used."
   (vterm-kill-buffer-on-exit nil))
 ;; vterm:1 ends here
 
-;; [[file:init-emacs.org::*Key Bindings][Key Bindings:1]]
+;; [[file:init-emacs.org::#key-bindings][Key Bindings:1]]
 ;;==============================================================================
 ;;; Key Bindings
 ;;==============================================================================
@@ -1515,7 +1515,7 @@ Otherwise, `custom-tab-width' is used."
 (init-message 1 "Key Bindings")
 ;; Key Bindings:1 ends here
 
-;; [[file:init-emacs.org::*System Keys][System Keys:1]]
+;; [[file:init-emacs.org::#key-bindings-system-keys][System Keys:1]]
 ;;------------------------------------------------------------------------------
 ;;; Key Bindings: System Keys
 ;;------------------------------------------------------------------------------
@@ -1572,7 +1572,7 @@ Otherwise, `custom-tab-width' is used."
 (custom-key-bindings-system-keys)
 ;; System Keys:1 ends here
 
-;; [[file:init-emacs.org::*Function Keys][Function Keys:1]]
+;; [[file:init-emacs.org::#key-bindings-function-keys][Function Keys:1]]
 ;;------------------------------------------------------------------------------
 ;;; Key Bindings: Function Keys
 ;;------------------------------------------------------------------------------
@@ -1621,7 +1621,7 @@ Otherwise, `custom-tab-width' is used."
 (custom-key-bindings-function-keys)
 ;; Function Keys:1 ends here
 
-;; [[file:init-emacs.org::*Extended Keys][Extended Keys:1]]
+;; [[file:init-emacs.org::#key-bindings-extended-keys][Extended Keys:1]]
 ;;------------------------------------------------------------------------------
 ;;; Key Bindings: Extended Keys
 ;;------------------------------------------------------------------------------
@@ -1658,7 +1658,7 @@ Otherwise, `custom-tab-width' is used."
 (custom-key-bindings-extended-keys)
 ;; Extended Keys:1 ends here
 
-;; [[file:init-emacs.org::*Movement Keys][Movement Keys:1]]
+;; [[file:init-emacs.org::#key-bindings-movement-keys][Movement Keys:1]]
 ;;------------------------------------------------------------------------------
 ;;; Key Bindings: Movement Keys
 ;;------------------------------------------------------------------------------
@@ -1731,7 +1731,7 @@ KEYMAP defaults to `override-global-map'."
 (custom-key-bindings-movement-keys)
 ;; Movement Keys:1 ends here
 
-;; [[file:init-emacs.org::*Standard Keys][Standard Keys:1]]
+;; [[file:init-emacs.org::#key-bindings-standard-keys][Standard Keys:1]]
 ;;------------------------------------------------------------------------------
 ;;; Key Bindings: Standard Keys
 ;;------------------------------------------------------------------------------
@@ -2002,7 +2002,7 @@ KEYMAP defaults to `override-global-map'."
 (custom-key-bindings-standard-keys)
 ;; Standard Keys:1 ends here
 
-;; [[file:init-emacs.org::*Modes and Module Keys][Modes and Module Keys:1]]
+;; [[file:init-emacs.org::#key-bindings-modes-and-module-keys][Modes and Module Keys:1]]
 ;;------------------------------------------------------------------------------
 ;;; Key Bindings: Modes and Module Keys
 ;;------------------------------------------------------------------------------
@@ -2049,7 +2049,7 @@ KEYMAP defaults to `override-global-map'."
 (custom-key-bindings-modes-and-modules-keys)
 ;; Modes and Module Keys:1 ends here
 
-;; [[file:init-emacs.org::*Grouped Prefix Keys][Grouped Prefix Keys:1]]
+;; [[file:init-emacs.org::#key-bindings-grouped-prefix-keys][Grouped Prefix Keys:1]]
 ;;------------------------------------------------------------------------------
 ;;; Key Bindings: Grouped Prefix Keys
 ;;------------------------------------------------------------------------------
@@ -2261,7 +2261,7 @@ KEYMAP defaults to `override-global-map'."
 (custom-key-bindings-grouped-prefix-keys)
 ;; Grouped Prefix Keys:1 ends here
 
-;; [[file:init-emacs.org::*Set All Custom Key Bindings][Set All Custom Key Bindings:1]]
+;; [[file:init-emacs.org::#key-bindings-set-all-custom-key-bindings][Set All Custom Key Bindings:1]]
 ;;------------------------------------------------------------------------------
 ;;; Key Bindings: Set All Custom Key Bindings
 ;;------------------------------------------------------------------------------
@@ -2293,7 +2293,7 @@ KEYMAP defaults to `override-global-map'."
   (custom-key-bindings-grouped-prefix-keys))
 ;; Set All Custom Key Bindings:1 ends here
 
-;; [[file:init-emacs.org::*Org Mode][Org Mode:1]]
+;; [[file:init-emacs.org::#org-mode][Org Mode:1]]
 ;;==============================================================================
 ;;; Org Mode
 ;;==============================================================================
@@ -2301,7 +2301,7 @@ KEYMAP defaults to `override-global-map'."
 (init-message 1 "Org Mode")
 ;; Org Mode:1 ends here
 
-;; [[file:init-emacs.org::*Setup][Setup:1]]
+;; [[file:init-emacs.org::#org-mode-setup][Setup:1]]
 ;;------------------------------------------------------------------------------
 ;;; Org Mode: Setup
 ;;------------------------------------------------------------------------------
@@ -2440,7 +2440,7 @@ DATA should have been made by `org-outline-overlay-data'."
 ;;   :after (org))
 ;; Setup:1 ends here
 
-;; [[file:init-emacs.org::*Configuration][Configuration:1]]
+;; [[file:init-emacs.org::#org-mode-configuration][Configuration:1]]
 ;;------------------------------------------------------------------------------
 ;;; Org Mode: Configuration
 ;;------------------------------------------------------------------------------
@@ -2623,7 +2623,7 @@ DATA should have been made by `org-outline-overlay-data'."
   (add-hook 'after-save-hook #'after-save-hook--generate-init-emacs-elisp-file :append))
 ;; Configuration:1 ends here
 
-;; [[file:init-emacs.org::*Agenda][Agenda:1]]
+;; [[file:init-emacs.org::#org-mode-agenda][Agenda:1]]
 ;;------------------------------------------------------------------------------
 ;;; Org Mode: Agenda
 ;;------------------------------------------------------------------------------
@@ -2705,7 +2705,7 @@ DATA should have been made by `org-outline-overlay-data'."
     (setq org-archive-subtree-save-file-p t)))
 ;; Agenda:1 ends here
 
-;; [[file:init-emacs.org::*Alerts][Alerts:1]]
+;; [[file:init-emacs.org::#org-mode-alerts][Alerts:1]]
 (init-message 2 "Org Mode: Alerts")
 
 ;; (use-package org-alert
@@ -2733,7 +2733,7 @@ DATA should have been made by `org-outline-overlay-data'."
 ;;   :init (org-notify-start))
 ;; Alerts:1 ends here
 
-;; [[file:init-emacs.org::*Modules][Modules:1]]
+;; [[file:init-emacs.org::#org-mode-modules][Modules:1]]
 ;;------------------------------------------------------------------------------
 ;;; Org Mode: Modules
 ;;------------------------------------------------------------------------------
@@ -2743,7 +2743,7 @@ DATA should have been made by `org-outline-overlay-data'."
 (org-load-modules-maybe t)
 ;; Modules:1 ends here
 
-;; [[file:init-emacs.org::*Functions][Functions:1]]
+;; [[file:init-emacs.org::#org-mode-functions][Functions:1]]
 ;;------------------------------------------------------------------------------
 ;;; Org Mode: Functions
 ;;------------------------------------------------------------------------------
@@ -2751,7 +2751,7 @@ DATA should have been made by `org-outline-overlay-data'."
 (init-message 2 "Org Mode: Functions")
 ;; Functions:1 ends here
 
-;; [[file:init-emacs.org::*org-get-property-list][org-get-property-list:1]]
+;; [[file:init-emacs.org::#org-mode-functions-org-get-property-list][org-get-property-list:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Functions: org-get-property-list
 ;;------------------------------------------------------------------------------
@@ -2775,7 +2775,7 @@ If BUFFER is nil, current buffer is used."
                         (cons key (org-element-property :value x)))))))))
 ;; org-get-property-list:1 ends here
 
-;; [[file:init-emacs.org::*org-get-element-tree][org-get-element-tree:1]]
+;; [[file:init-emacs.org::#org-mode-functions-org-get-element-tree][org-get-element-tree:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Functions: org-get-element-tree
 ;;------------------------------------------------------------------------------
@@ -2796,7 +2796,7 @@ If BUFFER is nil, current buffer is used."
                         (org-element-property :raw-value x))))))
 ;; org-get-element-tree:1 ends here
 
-;; [[file:init-emacs.org::*org-get-file-data][org-get-file-data:1]]
+;; [[file:init-emacs.org::#org-mode-functions-org-get-file-data][org-get-file-data:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Functions: org-get-file-data
 ;;------------------------------------------------------------------------------
@@ -2926,7 +2926,7 @@ Output format:
       (cons property-alist (cdr start)))))
 ;; org-get-file-data:1 ends here
 
-;; [[file:init-emacs.org::*org-get-buffer-data][org-get-buffer-data:1]]
+;; [[file:init-emacs.org::#org-mode-functions-org-get-buffer-data][org-get-buffer-data:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Functions: org-get-buffer-data
 ;;------------------------------------------------------------------------------
@@ -3080,7 +3080,7 @@ Output format if WITH-MARKERS is non-nil:
       (cons property-alist (cdr start)))))
 ;; org-get-buffer-data:1 ends here
 
-;; [[file:init-emacs.org::*org-safe-meta][org-safe-meta:1]]
+;; [[file:init-emacs.org::#org-mode-functions-org-safe-meta][org-safe-meta:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Functions: org-safe-meta
 ;;------------------------------------------------------------------------------
@@ -3122,7 +3122,7 @@ Output format if WITH-MARKERS is non-nil:
 (org-safe-shiftmeta-function "org-shiftmetaup" "org-safe-shiftmetaup")
 ;; org-safe-meta:1 ends here
 
-;; [[file:init-emacs.org::*org-sort-multi][org-sort-multi:1]]
+;; [[file:init-emacs.org::#org-mode-functions-org-sort-multi][org-sort-multi:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Functions: org-sort-multi
 ;;------------------------------------------------------------------------------
@@ -3151,7 +3151,7 @@ call:
       (org-sort-entries (car x) (cdr x)))))
 ;; org-sort-multi:1 ends here
 
-;; [[file:init-emacs.org::*org-sort-current][org-sort-current:1]]
+;; [[file:init-emacs.org::#org-mode-functions-org-sort-current][org-sort-current:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Functions: org-sort-current
 ;;------------------------------------------------------------------------------
@@ -3214,7 +3214,7 @@ alphabetically."
            (org-sort-list nil ?a)))))))
 ;; org-sort-current:1 ends here
 
-;; [[file:init-emacs.org::*org-fill-element--adapt-indentation][org-fill-element--adapt-indentation:1]]
+;; [[file:init-emacs.org::#org-mode-functions-org-fill-element-adapt-indentation][org-fill-element--adapt-indentation:1]]
 (defun org-fill-element--adapt-indentation (orig-fun &rest args)
   "Modify `fill-column' based on current org block indentation."
   (with-syntax-table org-mode-transpose-word-syntax-table
@@ -3249,7 +3249,7 @@ alphabetically."
 (advice-add 'org-fill-element :around #'org-fill-element--adapt-indentation)
 ;; org-fill-element--adapt-indentation:1 ends here
 
-;; [[file:init-emacs.org::*org-copy-to-clipboard][org-copy-to-clipboard:1]]
+;; [[file:init-emacs.org::#org-mode-functions-org-copy-to-clipboard][org-copy-to-clipboard:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Functions: org-copy-to-clipboard
 ;;------------------------------------------------------------------------------
@@ -3297,7 +3297,7 @@ and X clipboard, indenting and cleaning up links."
         (clipboard-kill-region (point-min) (point-max))))))
 ;; org-copy-to-clipboard:1 ends here
 
-;; [[file:init-emacs.org::*org-fix-custom-ids][org-fix-custom-ids:1]]
+;; [[file:init-emacs.org::#org-mode-functions-org-fix-custom-ids][org-fix-custom-ids:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Functions: org-fix-custom-ids
 ;;------------------------------------------------------------------------------
@@ -3334,7 +3334,7 @@ replacing spaces with dashes."
                 (forward-line 1)))))))))
 ;; org-fix-custom-ids:1 ends here
 
-;; [[file:init-emacs.org::*org-update-last-modified-property][org-update-last-modified-property:1]]
+;; [[file:init-emacs.org::#org-mode-functions-org-update-last-modified-property][org-update-last-modified-property:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Functions: org-update-last-modified-property
 ;;------------------------------------------------------------------------------
@@ -3353,7 +3353,7 @@ if found and buffer has been modified."
             (replace-match (format-time-string "%Y-%m-%d %H:%M" nil t) t t nil 1)))))))
 ;; org-update-last-modified-property:1 ends here
 
-;; [[file:init-emacs.org::*org-export-to-json][org-export-to-json:1]]
+;; [[file:init-emacs.org::#org-mode-functions-org-export-to-json][org-export-to-json:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Functions: org-export-to-json
 ;;------------------------------------------------------------------------------
@@ -3396,7 +3396,7 @@ If BEG and END are given, only that region is exported."
                 (switch-to-buffer buffer)))))))))
 ;; org-export-to-json:1 ends here
 
-;; [[file:init-emacs.org::*org-toggle-headline-checkbox][org-toggle-headline-checkbox:1]]
+;; [[file:init-emacs.org::#org-mode-functions-org-toggle-headline-checkbox][org-toggle-headline-checkbox:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Functions: org-toggle-headline-checkbox
 ;;------------------------------------------------------------------------------
@@ -3425,7 +3425,7 @@ If BEG and END are given, only that region is exported."
           (forward-line 1))))))
 ;; org-toggle-headline-checkbox:1 ends here
 
-;; [[file:init-emacs.org::*org-table-remove-commas][org-table-remove-commas:1]]
+;; [[file:init-emacs.org::#org-mode-functions-org-table-remove-commas][org-table-remove-commas:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Functions: org-table-remove-commas
 ;;------------------------------------------------------------------------------
@@ -3442,7 +3442,7 @@ If BEG and END are given, only that region is exported."
         (replace-match "")))))
 ;; org-table-remove-commas:1 ends here
 
-;; [[file:init-emacs.org::*org-days-between-dates][org-days-between-dates:1]]
+;; [[file:init-emacs.org::#org-mode-functions-org-days-between-dates][org-days-between-dates:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Functions: org-days-between-dates
 ;;------------------------------------------------------------------------------
@@ -3480,7 +3480,7 @@ Where BEG and END dates are in one of these formats:
       (- end beg))))
 ;; org-days-between-dates:1 ends here
 
-;; [[file:init-emacs.org::*org-babel-tangle-block][org-babel-tangle-block:1]]
+;; [[file:init-emacs.org::#org-mode-functions-org-babel-tangle-block][org-babel-tangle-block:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Functions: org-babel-tangle-block
 ;;------------------------------------------------------------------------------
@@ -3493,7 +3493,7 @@ Where BEG and END dates are in one of these formats:
   (org-babel-tangle '(16)))
 ;; org-babel-tangle-block:1 ends here
 
-;; [[file:init-emacs.org::*org-babel-tangle-file-async][org-babel-tangle-file-async:1]]
+;; [[file:init-emacs.org::#org-mode-functions-org-babel-tangle-file-async][org-babel-tangle-file-async:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Functions: org-babel-tangle-file-async
 ;;------------------------------------------------------------------------------
@@ -3532,7 +3532,7 @@ ATTEMPT is used internally to determine how many tangle attempts have been made.
              (delete-file ,lock-file))))))))
 ;; org-babel-tangle-file-async:1 ends here
 
-;; [[file:init-emacs.org::*org-copy-tangled-sections][org-copy-tangled-sections:1]]
+;; [[file:init-emacs.org::#org-mode-functions-org-copy-tangled-sections][org-copy-tangled-sections:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Functions: org-copy-tangled-sections
 ;;------------------------------------------------------------------------------
@@ -3595,7 +3595,7 @@ TARGET-FILE."
     (kill-buffer buffer)))
 ;; org-copy-tangled-sections:1 ends here
 
-;; [[file:init-emacs.org::*org-screenshot][org-screenshot:1]]
+;; [[file:init-emacs.org::#org-mode-functions-org-screenshot][org-screenshot:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Functions: org-screenshot
 ;;------------------------------------------------------------------------------
@@ -3623,7 +3623,7 @@ same directory as the org-buffer and insert a link to this file."
     (insert (concat "[[" file-name "]]\n"))))
 ;; org-screenshot:1 ends here
 
-;; [[file:init-emacs.org::*Hook][Hook:1]]
+;; [[file:init-emacs.org::#org-mode-hook][Hook:1]]
 ;;------------------------------------------------------------------------------
 ;;; Org Mode: Hook
 ;;------------------------------------------------------------------------------
@@ -3697,7 +3697,7 @@ same directory as the org-buffer and insert a link to this file."
   :hook (org-mode . custom-org-mode-hook))
 ;; Hook:1 ends here
 
-;; [[file:init-emacs.org::*Babel][Babel:1]]
+;; [[file:init-emacs.org::#org-mode-babel][Babel:1]]
 ;;------------------------------------------------------------------------------
 ;;; Org Mode: Babel
 ;;------------------------------------------------------------------------------
@@ -3705,7 +3705,7 @@ same directory as the org-buffer and insert a link to this file."
 (init-message 2 "Org Mode: Babel")
 ;; Babel:1 ends here
 
-;; [[file:init-emacs.org::*Setup][Setup:1]]
+;; [[file:init-emacs.org::#org-mode-babel-setup][Setup:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Babel: Setup
 ;;------------------------------------------------------------------------------
@@ -3807,7 +3807,7 @@ same directory as the org-buffer and insert a link to this file."
 ;;                     (funcall doc-fun)))))))))
 ;; Setup:1 ends here
 
-;; [[file:init-emacs.org::*Structure Templates][Structure Templates:1]]
+;; [[file:init-emacs.org::#org-mode-babel-structure-templates][Structure Templates:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Babel: Structure Templates
 ;;------------------------------------------------------------------------------
@@ -3921,7 +3921,7 @@ same directory as the org-buffer and insert a link to this file."
 ;; (advice-add 'org-tempo--include-file :after #'org-tempo--include-file--upcase))
 ;; Structure Templates:1 ends here
 
-;; [[file:init-emacs.org::*Edit Source][Edit Source:1]]
+;; [[file:init-emacs.org::#org-mode-babel-edit-source][Edit Source:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Babel: Edit Source
 ;;------------------------------------------------------------------------------
@@ -3953,7 +3953,7 @@ same directory as the org-buffer and insert a link to this file."
   (advice-add 'org-edit-src-exit :after #'org-edit-src--recenter))
 ;; Edit Source:1 ends here
 
-;; [[file:init-emacs.org::*Tangle Case-Sensitive][Tangle Case-Sensitive:1]]
+;; [[file:init-emacs.org::#org-mode-babel-tangle-case-sensitive][Tangle Case-Sensitive:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Babel: Tangle Case-Sensitive
 ;;------------------------------------------------------------------------------
@@ -3968,7 +3968,7 @@ same directory as the org-buffer and insert a link to this file."
 (advice-add 'org-babel-tangle-collect-blocks :around #'org-babel-tangle-collect-blocks--case-sensitive)
 ;; Tangle Case-Sensitive:1 ends here
 
-;; [[file:init-emacs.org::*Tangle Update Timestamps][Tangle Update Timestamps:1]]
+;; [[file:init-emacs.org::#org-mode-babel-tangle-update-timestamps][Tangle Update Timestamps:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Babel: Tangle Update Timestamps
 ;;------------------------------------------------------------------------------
@@ -3982,7 +3982,7 @@ same directory as the org-buffer and insert a link to this file."
 (add-hook 'org-babel-post-tangle-hook #'org-babel-post-tangle-hook--time-stamp)
 ;; Tangle Update Timestamps:1 ends here
 
-;; [[file:init-emacs.org::*Tangle Delete Trailing Whitespace][Tangle Delete Trailing Whitespace:1]]
+;; [[file:init-emacs.org::#org-mode-babel-tangle-delete-trailing-whitespace][Tangle Delete Trailing Whitespace:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Babel: Tangle Delete Trailing Whitespace
 ;;------------------------------------------------------------------------------
@@ -3996,7 +3996,7 @@ same directory as the org-buffer and insert a link to this file."
 (add-hook 'org-babel-post-tangle-hook #'org-babel-post-tangle-hook--delete-trailing-whitespace)
 ;; Tangle Delete Trailing Whitespace:1 ends here
 
-;; [[file:init-emacs.org::*Racket][Racket:1]]
+;; [[file:init-emacs.org::#org-mode-babel-racket][Racket:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Babel: Racket
 ;;------------------------------------------------------------------------------
@@ -4132,7 +4132,7 @@ This function is called by `org-babel-execute-src-block'."
 ;;             ;; (advice-add 'org-babel-scheme-get-session-buffer :before #'org-babel-scheme-get-session-buffer--add-geiser-repl)))
 ;; Racket:1 ends here
 
-;; [[file:init-emacs.org::*Java][Java:1]]
+;; [[file:init-emacs.org::#org-mode-babel-java][Java:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Babel: Java
 ;;------------------------------------------------------------------------------
@@ -4178,7 +4178,7 @@ property list containing the parameters of the block."
                                 (cdr (assoc :rownames params)))))))))
 ;; Java:1 ends here
 
-;; [[file:init-emacs.org::*Kotlin][Kotlin:1]]
+;; [[file:init-emacs.org::#org-mode-babel-kotlin][Kotlin:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Babel: Kotlin
 ;;------------------------------------------------------------------------------
@@ -4233,7 +4233,7 @@ otherwise, run code in `kotlin-repl'."
           (kotlin-send-buffer))))))
 ;; Kotlin:1 ends here
 
-;; [[file:init-emacs.org::*Python][Python:1]]
+;; [[file:init-emacs.org::#org-mode-babel-python][Python:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Babel: Python
 ;;------------------------------------------------------------------------------
@@ -4290,7 +4290,7 @@ created."
                               (cdr (assq :rownames params))))))))
 ;; Python:1 ends here
 
-;; [[file:init-emacs.org::*Rust][Rust:1]]
+;; [[file:init-emacs.org::#org-mode-babel-rust][Rust:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Babel: Rust
 ;;------------------------------------------------------------------------------
@@ -4345,7 +4345,7 @@ This function is called by `org-babel-execute-src-block'."
               (cdr (assoc :rowname-names params)) (cdr (assoc :rownames params))))))))))
 ;; Rust:1 ends here
 
-;; [[file:init-emacs.org::*V][V:1]]
+;; [[file:init-emacs.org::#org-mode-babel-v][V:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Babel: V
 ;;------------------------------------------------------------------------------
@@ -4407,7 +4407,7 @@ This function is called by `org-babel-execute-src-block'."
           (cdr (assoc :rowname-names params)) (cdr (assoc :rownames params))))))))
 ;; V:1 ends here
 
-;; [[file:init-emacs.org::*Basic (Commander X16)][Basic (Commander X16):1]]
+;; [[file:init-emacs.org::#org-mode-babel-basic-commander-x16][Basic (Commander X16):1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Babel: Basic (Commander X16)
 ;;------------------------------------------------------------------------------
@@ -4432,7 +4432,7 @@ property list containing the parameters of the block."
     (org-babel-eval (concat org-babel-basic-command " -bas " src-file " -run &") "")))
 ;; Basic (Commander X16):1 ends here
 
-;; [[file:init-emacs.org::*Assembly Language (Commander X16)][Assembly Language (Commander X16):1]]
+;; [[file:init-emacs.org::#org-mode-babel-assembly-language-commander-x16][Assembly Language (Commander X16):1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Babel: Assembly Language (Commander X16)
 ;;------------------------------------------------------------------------------
@@ -4523,7 +4523,7 @@ property list containing the parameters of the block."
 ;;     (org-babel-eval (concat org-babel-asm-command " -prg " output-file " -run &") "")))
 ;; Assembly Language (Commander X16):1 ends here
 
-;; [[file:init-emacs.org::*PlantUML][PlantUML:1]]
+;; [[file:init-emacs.org::#org-mode-babel-plantuml][PlantUML:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Babel: PlantUML
 ;;------------------------------------------------------------------------------
@@ -4534,7 +4534,7 @@ property list containing the parameters of the block."
 (setq org-plantuml-jar-path "~/dev/java/lib/plantuml.jar")
 ;; PlantUML:1 ends here
 
-;; [[file:init-emacs.org::*Load Languages][Load Languages:1]]
+;; [[file:init-emacs.org::#org-mode-babel-load-languages][Load Languages:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Babel: Load Languages
 ;;------------------------------------------------------------------------------
@@ -4575,7 +4575,7 @@ property list containing the parameters of the block."
 (add-to-list 'org-src-lang-modes '("racket" . scheme))
 ;; Load Languages:1 ends here
 
-;; [[file:init-emacs.org::*Babel Functions][Babel Functions:1]]
+;; [[file:init-emacs.org::#org-mode-babel-functions][Babel Functions:1]]
 ;;------------------------------------------------------------------------------
 ;;; Org Mode: Babel Functions
 ;;------------------------------------------------------------------------------
@@ -4583,7 +4583,7 @@ property list containing the parameters of the block."
 (init-message 2 "Org Mode: Babel Functions")
 ;; Babel Functions:1 ends here
 
-;; [[file:init-emacs.org::*org-generate-custom-id-from-title][org-generate-custom-id-from-title:1]]
+;; [[file:init-emacs.org::#org-mode-babel-functions-org-generate-custom-id-from-title][org-generate-custom-id-from-title:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Babel Functions: org-generate-custom-id-from-title
 ;;------------------------------------------------------------------------------
@@ -4607,7 +4607,7 @@ property list containing the parameters of the block."
         (downcase title))))))))
 ;; org-generate-custom-id-from-title:1 ends here
 
-;; [[file:init-emacs.org::*org-fix-literate-programming-heading][org-fix-literate-programming-heading:1]]
+;; [[file:init-emacs.org::#org-mode-babel-functions-org-fix-literate-programming-heading][org-fix-literate-programming-heading:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Babel Functions: org-fix-literate-programming-heading
 ;;------------------------------------------------------------------------------
@@ -4679,7 +4679,7 @@ Reset the CUSTOM_ID property, title comment, and `init-message'."
                     (replace-match (concat "(init-message " (number-to-string level) " \"" title "\")")))))))))))))
 ;; org-fix-literate-programming-heading:1 ends here
 
-;; [[file:init-emacs.org::*org-fix-literate-programming-heading-region][org-fix-literate-programming-heading-region:1]]
+;; [[file:init-emacs.org::#org-mode-babel-functions-org-fix-literate-programming-heading-region][org-fix-literate-programming-heading-region:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Babel Functions: org-fix-literate-programming-heading-region
 ;;------------------------------------------------------------------------------
@@ -4705,7 +4705,7 @@ Reset the CUSTOM_ID property, title comment, and `init-message'."
              (forward-line 1))))))))
 ;; org-fix-literate-programming-heading-region:1 ends here
 
-;; [[file:init-emacs.org::*org-toggle-literate-programming-code-block][org-toggle-literate-programming-code-block:1]]
+;; [[file:init-emacs.org::#org-mode-babel-functions-org-toggle-literate-programming-code-block][org-toggle-literate-programming-code-block:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Babel Functions: org-toggle-literate-programming-code-block
 ;;------------------------------------------------------------------------------
@@ -4757,7 +4757,7 @@ Reset the CUSTOM_ID property, title comment, and `init-message'."
                  (insert "+"))))))))))
 ;; org-toggle-literate-programming-code-block:1 ends here
 
-;; [[file:init-emacs.org::*org-insert-literate-programming-statics][org-insert-literate-programming-statics:1]]
+;; [[file:init-emacs.org::#org-mode-babel-functions-org-insert-literate-programming-statics][org-insert-literate-programming-statics:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Babel Functions: org-insert-literate-programming-statics
 ;;------------------------------------------------------------------------------
@@ -4811,7 +4811,7 @@ different from NAME."
 (org-insert-literate-programming-src-gen "kotlin")
 ;; org-insert-literate-programming-statics:1 ends here
 
-;; [[file:init-emacs.org::*org-insert-literate-programming-init-emacs-block][org-insert-literate-programming-init-emacs-block:1]]
+;; [[file:init-emacs.org::#org-mode-babel-functions-org-insert-literate-programming-init-emacs-block][org-insert-literate-programming-init-emacs-block:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Babel Functions: org-insert-literate-programming-init-emacs-block
 ;;------------------------------------------------------------------------------
@@ -4848,7 +4848,7 @@ properties, source block, title comment, and `init-message'."
     (forward-line 12)))
 ;; org-insert-literate-programming-init-emacs-block:1 ends here
 
-;; [[file:init-emacs.org::*org-insert-literate-programming-code-block][org-insert-literate-programming-code-block:1]]
+;; [[file:init-emacs.org::#org-mode-babel-functions-org-insert-literate-programming-code-block][org-insert-literate-programming-code-block:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Babel Functions: org-insert-literate-programming-code-block
 ;;------------------------------------------------------------------------------
@@ -4895,7 +4895,7 @@ properties, source block, and title comment."
     (forward-line 10)))
 ;; org-insert-literate-programming-code-block:1 ends here
 
-;; [[file:init-emacs.org::*org-insert-literate-programming-project-euler-problem-block][org-insert-literate-programming-project-euler-problem-block:1]]
+;; [[file:init-emacs.org::#org-mode-babel-functions-org-insert-literate-programming-project-euler-problem-block][org-insert-literate-programming-project-euler-problem-block:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Babel Functions: org-insert-literate-programming-project-euler-problem-block
 ;;------------------------------------------------------------------------------
@@ -4947,7 +4947,7 @@ heading, properties, source block with title comment, and test block."
     (forward-line 9)))
 ;; org-insert-literate-programming-project-euler-problem-block:1 ends here
 
-;; [[file:init-emacs.org::*Visibility][Visibility:1]]
+;; [[file:init-emacs.org::#org-mode-visibility][Visibility:1]]
 ;;------------------------------------------------------------------------------
 ;;; Org Mode: Visibility
 ;;------------------------------------------------------------------------------
@@ -4976,7 +4976,7 @@ heading, properties, source block with title comment, and test block."
                                   ,(file-truename "~/org/test"))))
 ;; Visibility:1 ends here
 
-;; [[file:init-emacs.org::*org-bookmarks-guid][org-bookmarks-guid:1]]
+;; [[file:init-emacs.org::#org-mode-bookmarks-org-bookmarks-guid][org-bookmarks-guid:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Bookmarks: org-bookmarks-guid
 ;;------------------------------------------------------------------------------
@@ -4999,7 +4999,7 @@ heading, properties, source block with title comment, and test block."
              concat (random-char))))
 ;; org-bookmarks-guid:1 ends here
 
-;; [[file:init-emacs.org::*org-bookmarks-timestamp][org-bookmarks-timestamp:1]]
+;; [[file:init-emacs.org::#org-mode-bookmarks-org-bookmarks-timestamp][org-bookmarks-timestamp:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Bookmarks: org-bookmarks-timestamp
 ;;------------------------------------------------------------------------------
@@ -5011,7 +5011,7 @@ heading, properties, source block with title comment, and test block."
   (floor (* (float-time (current-time)) 1000000)))
 ;; org-bookmarks-timestamp:1 ends here
 
-;; [[file:init-emacs.org::*org-bookmarks-parse][org-bookmarks-parse:1]]
+;; [[file:init-emacs.org::#org-mode-bookmarks-org-bookmarks-parse][org-bookmarks-parse:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Bookmarks: org-bookmarks-parse
 ;;------------------------------------------------------------------------------
@@ -5075,7 +5075,7 @@ If the first headline is \"Org\", it is ignored."
            (cdr bm)))))
 ;; org-bookmarks-parse:1 ends here
 
-;; [[file:init-emacs.org::*org-bookmarks-export-to-json][org-bookmarks-export-to-json:1]]
+;; [[file:init-emacs.org::#org-mode-bookmarks-org-bookmarks-export-to-json][org-bookmarks-export-to-json:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Bookmarks: org-bookmarks-export-to-json
 ;;------------------------------------------------------------------------------
@@ -5158,7 +5158,7 @@ If JSON-FILE is non-nil, then output is returned."
             (buffer-substring-no-properties (point-min) (point-max))))))))
 ;; org-bookmarks-export-to-json:1 ends here
 
-;; [[file:init-emacs.org::*org-bookmarks-export-to-html][org-bookmarks-export-to-html:1]]
+;; [[file:init-emacs.org::#org-mode-bookmarks-org-bookmarks-export-to-html][org-bookmarks-export-to-html:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Bookmarks: org-bookmarks-export-to-html
 ;;------------------------------------------------------------------------------
@@ -5224,7 +5224,7 @@ If HTML-FILE is non-nil, then output is returned."
             (buffer-substring-no-properties (point-min) (point-max))))))))
 ;; org-bookmarks-export-to-html:1 ends here
 
-;; [[file:init-emacs.org::*org-bookmarks-export-to-nyxt][org-bookmarks-export-to-nyxt:1]]
+;; [[file:init-emacs.org::#org-mode-bookmarks-org-bookmarks-export-to-nyxt][org-bookmarks-export-to-nyxt:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Bookmarks: org-bookmarks-export-to-nyxt
 ;;------------------------------------------------------------------------------
@@ -5274,7 +5274,7 @@ If NYXT-FILE is non-nil, then output is returned."
             (buffer-substring-no-properties (point-min) (point-max))))))))
 ;; org-bookmarks-export-to-nyxt:1 ends here
 
-;; [[file:init-emacs.org::*Finances][Finances:1]]
+;; [[file:init-emacs.org::#org-mode-finances][Finances:1]]
 ;;------------------------------------------------------------------------------
 ;;; Org Mode: Finances
 ;;------------------------------------------------------------------------------
@@ -5282,7 +5282,7 @@ If NYXT-FILE is non-nil, then output is returned."
 (init-message 2 "Org Mode: Finances")
 ;; Finances:1 ends here
 
-;; [[file:init-emacs.org::*export-taxes][export-taxes:1]]
+;; [[file:init-emacs.org::#org-mode-finances-export-taxes][export-taxes:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Finances: export-taxes
 ;;------------------------------------------------------------------------------
@@ -5341,7 +5341,7 @@ If NYXT-FILE is non-nil, then output is returned."
     (switch-to-buffer target-buffer)))
 ;; export-taxes:1 ends here
 
-;; [[file:init-emacs.org::*duluth-hotel-invoiced-expense][duluth-hotel-invoiced-expense:1]]
+;; [[file:init-emacs.org::#org-mode-finances-duluth-hotel-invoiced-expense][duluth-hotel-invoiced-expense:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Finances: duluth-hotel-invoiced-expense
 ;;------------------------------------------------------------------------------
@@ -5363,7 +5363,7 @@ If NYXT-FILE is non-nil, then output is returned."
     (org-table-recalculate)))
 ;; duluth-hotel-invoiced-expense:1 ends here
 
-;; [[file:init-emacs.org::*nwm-add-monthly-account-data][nwm-add-monthly-account-data:1]]
+;; [[file:init-emacs.org::#org-mode-finances-nwm-add-monthly-account-data][nwm-add-monthly-account-data:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Finances: nwm-add-monthly-account-data
 ;;------------------------------------------------------------------------------
@@ -5418,7 +5418,7 @@ If NYXT-FILE is non-nil, then output is returned."
           (org-table-recalculate))))))
 ;; nwm-add-monthly-account-data:1 ends here
 
-;; [[file:init-emacs.org::*Magic the Gathering][Magic the Gathering:1]]
+;; [[file:init-emacs.org::#org-mode-magic-the-gathering][Magic the Gathering:1]]
 ;;------------------------------------------------------------------------------
 ;;; Org Mode: Magic the Gathering
 ;;------------------------------------------------------------------------------
@@ -5426,11 +5426,11 @@ If NYXT-FILE is non-nil, then output is returned."
 (init-message 2 "Org Mode: Magic the Gathering")
 ;; Magic the Gathering:1 ends here
 
-;; [[file:init-emacs.org::*mtg-cards-owned-file-name][mtg-cards-owned-file-name:1]]
+;; [[file:init-emacs.org::#org-mode-magic-the-gathering-mtg-cards-owned-file-name][mtg-cards-owned-file-name:1]]
 (defconst mtg-cards-owned-file-name (file-truename (expand-file-name "~/org/magic-the-gathering-cards-owned.org")))
 ;; mtg-cards-owned-file-name:1 ends here
 
-;; [[file:init-emacs.org::*mtg-card-list][mtg-card-list:1]]
+;; [[file:init-emacs.org::#org-mode-magic-the-gathering-mtg-card-list][mtg-card-list:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Magic the Gathering: mtg-card-list
 ;;------------------------------------------------------------------------------
@@ -5468,7 +5468,7 @@ If NYXT-FILE is non-nil, then output is returned."
     (switch-to-buffer target-buffer)))
 ;; mtg-card-list:1 ends here
 
-;; [[file:init-emacs.org::*mtg-deck-search][mtg-deck-search:1]]
+;; [[file:init-emacs.org::#org-mode-magic-the-gathering-mtg-deck-search][mtg-deck-search:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Magic the Gathering: mtg-deck-search
 ;;------------------------------------------------------------------------------
@@ -5500,7 +5500,7 @@ followed by the card name."
     (switch-to-buffer buffer)))
 ;; mtg-deck-search:1 ends here
 
-;; [[file:init-emacs.org::*mtg-set-to-table][mtg-set-to-table:1]]
+;; [[file:init-emacs.org::#org-mode-magic-the-gathering-mtg-set-to-table][mtg-set-to-table:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Magic the Gathering: mtg-set-to-table
 ;;------------------------------------------------------------------------------
@@ -5561,7 +5561,7 @@ If OWNED is non-nil, add an Owned column to the table."
     (switch-to-buffer target-buffer)))
 ;; mtg-set-to-table:1 ends here
 
-;; [[file:init-emacs.org::*MechWarrior Online][MechWarrior Online:1]]
+;; [[file:init-emacs.org::#org-mode-mechwarrior-online][MechWarrior Online:1]]
 ;;------------------------------------------------------------------------------
 ;;; Org Mode: MechWarrior Online
 ;;------------------------------------------------------------------------------
@@ -5569,7 +5569,7 @@ If OWNED is non-nil, add an Owned column to the table."
 (init-message 2 "Org Mode: MechWarrior Online")
 ;; MechWarrior Online:1 ends here
 
-;; [[file:init-emacs.org::*mwo-export-mech][mwo-export-mech:1]]
+;; [[file:init-emacs.org::#org-mode-mechwarrior-online-mwo-export-mech][mwo-export-mech:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: MechWarrior Online: mwo-export-mech
 ;;------------------------------------------------------------------------------
@@ -5598,7 +5598,7 @@ If OWNED is non-nil, add an Owned column to the table."
     (goto-char (point-min))))
 ;; mwo-export-mech:1 ends here
 
-;; [[file:init-emacs.org::*Dungeons and Dragons Online][Dungeons and Dragons Online:1]]
+;; [[file:init-emacs.org::#org-mode-dungeons-and-dragons-online][Dungeons and Dragons Online:1]]
 ;;------------------------------------------------------------------------------
 ;;; Org Mode: Dungeons and Dragons Online
 ;;------------------------------------------------------------------------------
@@ -5606,7 +5606,7 @@ If OWNED is non-nil, add an Owned column to the table."
 (init-message 2 "Org Mode: Dungeons and Dragons Online")
 ;; Dungeons and Dragons Online:1 ends here
 
-;; [[file:init-emacs.org::*ddo-get-item-info][ddo-get-item-info:1]]
+;; [[file:init-emacs.org::#org-mode-dungeons-and-dragons-online-ddo-get-item-info][ddo-get-item-info:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Dungeons and Dragons Online: ddo-get-item-info
 ;;------------------------------------------------------------------------------
@@ -5642,7 +5642,7 @@ If OWNED is non-nil, add an Owned column to the table."
         (concat item " (" enchantments  ")\n" url)))))
 ;; ddo-get-item-info:1 ends here
 
-;; [[file:init-emacs.org::*ddo-fix-wiki-description][ddo-fix-wiki-description:1]]
+;; [[file:init-emacs.org::#org-mode-dungeons-and-dragons-online-ddo-fix-wiki-description][ddo-fix-wiki-description:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Dungeons and Dragons Online: ddo-fix-wiki-description
 ;;------------------------------------------------------------------------------
@@ -5676,7 +5676,7 @@ If OWNED is non-nil, add an Owned column to the table."
   (insert ")"))
 ;; ddo-fix-wiki-description:1 ends here
 
-;; [[file:init-emacs.org::*Ironsworn][Ironsworn:1]]
+;; [[file:init-emacs.org::#org-mode-ironsworn][Ironsworn:1]]
 ;;------------------------------------------------------------------------------
 ;;; Org Mode: Ironsworn
 ;;------------------------------------------------------------------------------
@@ -5684,7 +5684,7 @@ If OWNED is non-nil, add an Owned column to the table."
 (init-message 2 "Org Mode: Ironsworn")
 ;; Ironsworn:1 ends here
 
-;; [[file:init-emacs.org::*Org Website][Org Website:1]]
+;; [[file:init-emacs.org::#org-website][Org Website:1]]
 ;;==============================================================================
 ;;; Org Website
 ;;==============================================================================
@@ -5692,7 +5692,7 @@ If OWNED is non-nil, add an Owned column to the table."
 (init-message 1 "Org Website")
 ;; Org Website:1 ends here
 
-;; [[file:init-emacs.org::*Configuration][Configuration:1]]
+;; [[file:init-emacs.org::#org-website-configuration][Configuration:1]]
 ;;------------------------------------------------------------------------------
 ;;; Org Website: Configuration
 ;;------------------------------------------------------------------------------
@@ -5700,7 +5700,7 @@ If OWNED is non-nil, add an Owned column to the table."
 (init-message 2 "Org Website: Configuration")
 ;; Configuration:1 ends here
 
-;; [[file:init-emacs.org::*Publish Configuration][Publish Configuration:1]]
+;; [[file:init-emacs.org::#org-website-configuration-publish-configuration][Publish Configuration:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Website: Configuration: Publish Configuration
 ;;------------------------------------------------------------------------------
@@ -5963,7 +5963,7 @@ If OWNED is non-nil, add an Owned column to the table."
       )))
 ;; Publish Configuration:1 ends here
 
-;; [[file:init-emacs.org::*Menu Lists][Menu Lists:1]]
+;; [[file:init-emacs.org::#org-website-configuration-menu-lists][Menu Lists:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Website: Configuration: Menu Lists
 ;;------------------------------------------------------------------------------
@@ -6030,7 +6030,7 @@ Format: ((TAG . (:name NAME :title TITLE :url URL)) ... )")
 Format: ((TAG . (:name NAME :title TITLE :selector SELECTOR)) ... )")
 ;; Menu Lists:1 ends here
 
-;; [[file:init-emacs.org::*Gopher Configuration][Gopher Configuration:1]]
+;; [[file:init-emacs.org::#org-website-configuration-gopher-configuration][Gopher Configuration:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Website: Configuration: Gopher Configuration
 ;;------------------------------------------------------------------------------
@@ -6056,7 +6056,7 @@ Format: ((TAG . (:name NAME :title TITLE :selector SELECTOR)) ... )")
 (defconst gopher-type-sound-file "s")
 ;; Gopher Configuration:1 ends here
 
-;; [[file:init-emacs.org::*Functions][Functions:1]]
+;; [[file:init-emacs.org::#org-website-functions][Functions:1]]
 ;;------------------------------------------------------------------------------
 ;;; Org Website: Functions
 ;;------------------------------------------------------------------------------
@@ -6064,7 +6064,7 @@ Format: ((TAG . (:name NAME :title TITLE :selector SELECTOR)) ... )")
 (init-message 2 "Org Website: Functions")
 ;; Functions:1 ends here
 
-;; [[file:init-emacs.org::*Get Property List][Get Property List:1]]
+;; [[file:init-emacs.org::#org-website-functions-get-property-list][Get Property List:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Website: Functions: Get Property List
 ;;------------------------------------------------------------------------------
@@ -6079,7 +6079,7 @@ Format: ((TAG . (:name NAME :title TITLE :selector SELECTOR)) ... )")
         (cons key (org-element-property :value x))))))
 ;; Get Property List:1 ends here
 
-;; [[file:init-emacs.org::*Get Property Element][Get Property Element:1]]
+;; [[file:init-emacs.org::#org-website-functions-get-property-element][Get Property Element:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Website: Functions: Get Property Element
 ;;------------------------------------------------------------------------------
@@ -6091,7 +6091,7 @@ Format: ((TAG . (:name NAME :title TITLE :selector SELECTOR)) ... )")
   (or (cdr (assoc element property-list)) ""))
 ;; Get Property Element:1 ends here
 
-;; [[file:init-emacs.org::*Get URL][Get URL:1]]
+;; [[file:init-emacs.org::#org-website-functions-get-url][Get URL:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Website: Functions: Get URL
 ;;------------------------------------------------------------------------------
@@ -6108,7 +6108,7 @@ Format: ((TAG . (:name NAME :title TITLE :selector SELECTOR)) ... )")
    ".html"))
 ;; Get URL:1 ends here
 
-;; [[file:init-emacs.org::*Blog URL][Blog URL:1]]
+;; [[file:init-emacs.org::#org-website-functions-blog-url][Blog URL:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Website: Functions: Blog URL
 ;;------------------------------------------------------------------------------
@@ -6125,7 +6125,7 @@ Format: ((TAG . (:name NAME :title TITLE :selector SELECTOR)) ... )")
      name ".html")))
 ;; Blog URL:1 ends here
 
-;; [[file:init-emacs.org::*Is Blog Post][Is Blog Post:1]]
+;; [[file:init-emacs.org::#org-website-functions-is-blog-post][Is Blog Post:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Website: Functions: Is Blog Post
 ;;------------------------------------------------------------------------------
@@ -6140,7 +6140,7 @@ Format: ((TAG . (:name NAME :title TITLE :selector SELECTOR)) ... )")
                   buffer-file-name))))
 ;; Is Blog Post:1 ends here
 
-;; [[file:init-emacs.org::*Get Level][Get Level:1]]
+;; [[file:init-emacs.org::#org-website-functions-get-level][Get Level:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Website: Functions: Get Level
 ;;------------------------------------------------------------------------------
@@ -6152,7 +6152,7 @@ Format: ((TAG . (:name NAME :title TITLE :selector SELECTOR)) ... )")
   (- (length (split-string (org-website-get-url property-list) "/")) 3))
 ;; Get Level:1 ends here
 
-;; [[file:init-emacs.org::*Format Headline][Format Headline:1]]
+;; [[file:init-emacs.org::#org-website-functions-format-headline][Format Headline:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Website: Functions: Format Headline
 ;;------------------------------------------------------------------------------
@@ -6181,7 +6181,7 @@ Format: ((TAG . (:name NAME :title TITLE :selector SELECTOR)) ... )")
      (split-string headline "\n") "\n")))
 ;; Format Headline:1 ends here
 
-;; [[file:init-emacs.org::*Get Gopher Selector Hostname Port][Get Gopher Selector Hostname Port:1]]
+;; [[file:init-emacs.org::#org-website-functions-get-gopher-selector-hostname-port][Get Gopher Selector Hostname Port:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Website: Functions: Get Gopher Selector Hostname Port
 ;;------------------------------------------------------------------------------
@@ -6195,7 +6195,7 @@ Format: ((TAG . (:name NAME :title TITLE :selector SELECTOR)) ... )")
     (concat selector "\t" hostname "\t" (int-to-string port))))
 ;; Get Gopher Selector Hostname Port:1 ends here
 
-;; [[file:init-emacs.org::*Convert URL to Gopher Selector Hostname Port][Convert URL to Gopher Selector Hostname Port:1]]
+;; [[file:init-emacs.org::#org-website-functions-convert-url-to-gopher-selector-hostname-port][Convert URL to Gopher Selector Hostname Port:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Website: Functions: Convert URL to Gopher Selector Hostname Port
 ;;------------------------------------------------------------------------------
@@ -6211,7 +6211,7 @@ Format: ((TAG . (:name NAME :title TITLE :selector SELECTOR)) ... )")
     (concat selector "\t" hostname "\t" (int-to-string port))))
 ;; Convert URL to Gopher Selector Hostname Port:1 ends here
 
-;; [[file:init-emacs.org::*Gopher Justify Lines][Gopher Justify Lines:1]]
+;; [[file:init-emacs.org::#org-website-functions-gopher-justify-lines][Gopher Justify Lines:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Website: Functions: Gopher Justify Lines
 ;;------------------------------------------------------------------------------
@@ -6257,7 +6257,7 @@ JUSTIFY determines the type of justification: `left', `right',
       (buffer-string))))
 ;; Gopher Justify Lines:1 ends here
 
-;; [[file:init-emacs.org::*Publish HTML][Publish HTML:1]]
+;; [[file:init-emacs.org::#org-website-publish-html][Publish HTML:1]]
 ;;------------------------------------------------------------------------------
 ;;; Org Website: Publish HTML
 ;;------------------------------------------------------------------------------
@@ -6265,7 +6265,7 @@ JUSTIFY determines the type of justification: `left', `right',
 (init-message 2 "Org Website: Publish HTML")
 ;; Publish HTML:1 ends here
 
-;; [[file:init-emacs.org::*Derived Backend][Derived Backend:1]]
+;; [[file:init-emacs.org::#org-website-publish-html-derived-backend][Derived Backend:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Website: Publish HTML: Derived Backend
 ;;------------------------------------------------------------------------------
@@ -6280,7 +6280,7 @@ JUSTIFY determines the type of justification: `left', `right',
                      (section . org-website-html-section)))
 ;; Derived Backend:1 ends here
 
-;; [[file:init-emacs.org::*Publish to HTML][Publish to HTML:1]]
+;; [[file:init-emacs.org::#org-website-publish-html-publish-to-html][Publish to HTML:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Website: Publish HTML: Publish to HTML
 ;;------------------------------------------------------------------------------
@@ -6302,7 +6302,7 @@ PUB-DIR is the publishing directory."
                       plist pub-dir))
 ;; Publish to HTML:1 ends here
 
-;; [[file:init-emacs.org::*Template][Template:1]]
+;; [[file:init-emacs.org::#org-website-publish-html-template][Template:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Website: Publish HTML: Template
 ;;------------------------------------------------------------------------------
@@ -6521,7 +6521,7 @@ INFO is a plist holding export options."
      "</html>\n")))
 ;; Template:1 ends here
 
-;; [[file:init-emacs.org::*Blog Contents Template][Blog Contents Template:1]]
+;; [[file:init-emacs.org::#org-website-publish-html-blog-contents-template][Blog Contents Template:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Website: Publish HTML: Blog Contents Template
 ;;------------------------------------------------------------------------------
@@ -6607,7 +6607,7 @@ PROPERTY-LIST is the list of org properties found in INFO."
      "\n")))
 ;; Blog Contents Template:1 ends here
 
-;; [[file:init-emacs.org::*Inner Template][Inner Template:1]]
+;; [[file:init-emacs.org::#org-website-publish-html-inner-template][Inner Template:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Website: Publish HTML: Inner Template
 ;;------------------------------------------------------------------------------
@@ -6635,7 +6635,7 @@ INFO is a plist holding export options."
    (org-website-html-footnote-section info)))
 ;; Inner Template:1 ends here
 
-;; [[file:init-emacs.org::*Headline][Headline:1]]
+;; [[file:init-emacs.org::#org-website-publish-html-headline][Headline:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Website: Publish HTML: Headline
 ;;------------------------------------------------------------------------------
@@ -6661,7 +6661,7 @@ INFO is a plist holding contextual information."
      contents)))
 ;; Headline:1 ends here
 
-;; [[file:init-emacs.org::*Section][Section:1]]
+;; [[file:init-emacs.org::#org-website-publish-html-section][Section:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Website: Publish HTML: Section
 ;;------------------------------------------------------------------------------
@@ -6678,7 +6678,7 @@ INFO is a plist holding contextual information."
   (or contents ""))
 ;; Section:1 ends here
 
-;; [[file:init-emacs.org::*Footnote Reference][Footnote Reference:1]]
+;; [[file:init-emacs.org::#org-website-publish-html-footnote-reference][Footnote Reference:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Website: Publish HTML: Footnote Reference
 ;;------------------------------------------------------------------------------
@@ -6710,7 +6710,7 @@ INFO is a plist holding contextual information."
        id n (format " class=\"footnote-reference\" href=\"#fn.%d\"" n) info)))))
 ;; Footnote Reference:1 ends here
 
-;; [[file:init-emacs.org::*Footnote Section][Footnote Section:1]]
+;; [[file:init-emacs.org::#org-website-publish-html-footnote-section][Footnote Section:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Website: Publish HTML: Footnote Section
 ;;------------------------------------------------------------------------------
@@ -6748,7 +6748,7 @@ INFO is a plist used as a communication channel."
         fn-alist "\n")))))
 ;; Footnote Section:1 ends here
 
-;; [[file:init-emacs.org::*Publish RSS][Publish RSS:1]]
+;; [[file:init-emacs.org::#org-website-publish-rss][Publish RSS:1]]
 ;;------------------------------------------------------------------------------
 ;;; Org Website: Publish RSS
 ;;------------------------------------------------------------------------------
@@ -6756,7 +6756,7 @@ INFO is a plist used as a communication channel."
 (init-message 2 "Org Website: Publish RSS")
 ;; Publish RSS:1 ends here
 
-;; [[file:init-emacs.org::*Derived Backend][Derived Backend:1]]
+;; [[file:init-emacs.org::#org-website-publish-rss-derived-backend][Derived Backend:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Website: Publish RSS: Derived Backend
 ;;------------------------------------------------------------------------------
@@ -6769,7 +6769,7 @@ INFO is a plist used as a communication channel."
                      (inner-template . org-website-rss-inner-template)))
 ;; Derived Backend:1 ends here
 
-;; [[file:init-emacs.org::*Publish to RSS][Publish to RSS:1]]
+;; [[file:init-emacs.org::#org-website-publish-rss-publish-to-rss][Publish to RSS:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Website: Publish RSS: Publish to RSS
 ;;------------------------------------------------------------------------------
@@ -6787,7 +6787,7 @@ PUB-DIR is the publishing directory."
   (org-publish-org-to 'org-website-rss file-name ".rss" plist pub-dir))
 ;; Publish to RSS:1 ends here
 
-;; [[file:init-emacs.org::*Template][Template:1]]
+;; [[file:init-emacs.org::#org-website-publish-rss-template][Template:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Website: Publish RSS: Template
 ;;------------------------------------------------------------------------------
@@ -6859,7 +6859,7 @@ INFO is a plist holding export options."
      "</rdf:RDF>\n")))
 ;; Template:1 ends here
 
-;; [[file:init-emacs.org::*Inner Template][Inner Template:1]]
+;; [[file:init-emacs.org::#org-website-publish-rss-inner-template][Inner Template:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Website: Publish RSS: Inner Template
 ;;------------------------------------------------------------------------------
@@ -6895,7 +6895,7 @@ INFO is a plist holding export options."
      (org-website-html-footnote-section info))))
 ;; Inner Template:1 ends here
 
-;; [[file:init-emacs.org::*Publish Gopher][Publish Gopher:1]]
+;; [[file:init-emacs.org::#org-website-publish-gopher][Publish Gopher:1]]
 ;;------------------------------------------------------------------------------
 ;;; Org Website: Publish Gopher
 ;;------------------------------------------------------------------------------
@@ -6903,7 +6903,7 @@ INFO is a plist holding export options."
 (init-message 2 "Org Website: Publish Gopher")
 ;; Publish Gopher:1 ends here
 
-;; [[file:init-emacs.org::*Derived Backend][Derived Backend:1]]
+;; [[file:init-emacs.org::#org-website-publish-gopher-derived-backend][Derived Backend:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Website: Publish Gopher: Derived Backend
 ;;------------------------------------------------------------------------------
@@ -6921,7 +6921,7 @@ INFO is a plist holding export options."
 ;;(link . org-website-gopher-link)))
 ;; Derived Backend:1 ends here
 
-;; [[file:init-emacs.org::*Publish to Gopher][Publish to Gopher:1]]
+;; [[file:init-emacs.org::#org-website-publish-gopher-publish-to-gopher][Publish to Gopher:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Website: Publish Gopher: Publish to Gopher
 ;;------------------------------------------------------------------------------
@@ -6939,7 +6939,7 @@ PUB-DIR is the publishing directory."
   (org-publish-org-to 'gopher file-name ".gopher" plist pub-dir))
 ;; Publish to Gopher:1 ends here
 
-;; [[file:init-emacs.org::*Template][Template:1]]
+;; [[file:init-emacs.org::#org-website-publish-gopher-template][Template:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Website: Publish Gopher: Template
 ;;------------------------------------------------------------------------------
@@ -7001,7 +7001,7 @@ INFO is a plist holding export options."
      )))
 ;; Template:1 ends here
 
-;; [[file:init-emacs.org::*Inner Template][Inner Template:1]]
+;; [[file:init-emacs.org::#org-website-publish-gopher-inner-template][Inner Template:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Website: Publish Gopher: Inner Template
 ;;------------------------------------------------------------------------------
@@ -7029,7 +7029,7 @@ INFO is a plist holding export options."
    (org-website-gopher-footnote-section info)))
 ;; Inner Template:1 ends here
 
-;; [[file:init-emacs.org::*Headline][Headline:1]]
+;; [[file:init-emacs.org::#org-website-publish-gopher-headline][Headline:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Website: Publish Gopher: Headline
 ;;------------------------------------------------------------------------------
@@ -7054,7 +7054,7 @@ INFO is a plist holding contextual information."
      contents)))
 ;; Headline:1 ends here
 
-;; [[file:init-emacs.org::*Section][Section:1]]
+;; [[file:init-emacs.org::#org-website-publish-gopher-section][Section:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Website: Publish Gopher: Section
 ;;------------------------------------------------------------------------------
@@ -7071,7 +7071,7 @@ INFO is a plist holding contextual information."
   (or contents ""))
 ;; Section:1 ends here
 
-;; [[file:init-emacs.org::*Footnote Reference][Footnote Reference:1]]
+;; [[file:init-emacs.org::#org-website-publish-gopher-footnote-reference][Footnote Reference:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Website: Publish Gopher: Footnote Reference
 ;;------------------------------------------------------------------------------
@@ -7096,7 +7096,7 @@ INFO is a plist holding contextual information."
       (format "%d" n)))))
 ;; Footnote Reference:1 ends here
 
-;; [[file:init-emacs.org::*Footnote Section][Footnote Section:1]]
+;; [[file:init-emacs.org::#org-website-publish-gopher-footnote-section][Footnote Section:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Website: Publish Gopher: Footnote Section
 ;;------------------------------------------------------------------------------
@@ -7130,7 +7130,7 @@ INFO is a plist used as a communication channel."
         fn-alist "\n")))))
 ;; Footnote Section:1 ends here
 
-;; [[file:init-emacs.org::*Helper Functions][Helper Functions:1]]
+;; [[file:init-emacs.org::#org-website-helper-functions][Helper Functions:1]]
 ;;------------------------------------------------------------------------------
 ;;; Org Website: Helper Functions
 ;;------------------------------------------------------------------------------
@@ -7138,7 +7138,7 @@ INFO is a plist used as a communication channel."
 (init-message 2 "Org Website: Helper Functions")
 ;; Helper Functions:1 ends here
 
-;; [[file:init-emacs.org::*Publish][Publish:1]]
+;; [[file:init-emacs.org::#org-website-helper-functions-publish][Publish:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Website: Helper Functions: Publish
 ;;------------------------------------------------------------------------------
@@ -7174,7 +7174,7 @@ If FORCE is non-nil, force publish all files in project."
        (message "Website publish finished")))))
 ;; Publish:1 ends here
 
-;; [[file:init-emacs.org::*Tangle Publish][Tangle Publish:1]]
+;; [[file:init-emacs.org::#org-website-helper-functions-tangle-publish][Tangle Publish:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Website: Helper Functions: Tangle Publish
 ;;------------------------------------------------------------------------------
@@ -7213,7 +7213,7 @@ If FORCE is non-nil, force publish all files in project."
        (message "Website tangle/publish finished")))))
 ;; Tangle Publish:1 ends here
 
-;; [[file:init-emacs.org::*+Tangle Publish Asynchronously+][+Tangle Publish Asynchronously+:1]]
+;; [[file:init-emacs.org::#org-website-helper-functions-tangle-publish-asynchronously][+Tangle Publish Asynchronously+:1]]
 ;; ;;------------------------------------------------------------------------------
 ;; ;;;; Org Website: Helper Functions: Tangle Publish Asynchronously
 ;; ;;------------------------------------------------------------------------------
@@ -7249,7 +7249,7 @@ If FORCE is non-nil, force publish all files in project."
 ;; ;;         ,@args)))))
 ;; +Tangle Publish Asynchronously+:1 ends here
 
-;; [[file:init-emacs.org::*Blog Post Create][Blog Post Create:1]]
+;; [[file:init-emacs.org::#org-website-helper-functions-blog-post-create][Blog Post Create:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Website: Helper Functions: Blog Post Create
 ;;------------------------------------------------------------------------------
@@ -7304,7 +7304,7 @@ If TITLE is nil, caller is prompted for one."
       (goto-char (line-end-position)))))
 ;; Blog Post Create:1 ends here
 
-;; [[file:init-emacs.org::*Blog Post Update Posted][Blog Post Update Posted:1]]
+;; [[file:init-emacs.org::#org-website-helper-functions-blog-post-update-posted][Blog Post Update Posted:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Website: Helper Functions: Blog Post Update Posted
 ;;------------------------------------------------------------------------------
@@ -7353,7 +7353,7 @@ Set blog timestamp to `current-time' or DATE, if non-nil."
           (replace-match posted nil nil nil 1))))))
 ;; Blog Post Update Posted:1 ends here
 
-;; [[file:init-emacs.org::*Unflatten][Unflatten:1]]
+;; [[file:init-emacs.org::#org-website-helper-functions-unflatten][Unflatten:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Website: Helper Functions: Unflatten
 ;;------------------------------------------------------------------------------
@@ -7395,7 +7395,7 @@ extract the level of each element. By default these are the
     (cdr start)))
 ;; Unflatten:1 ends here
 
-;; [[file:init-emacs.org::*Generate Website Emacs Initialization File][Generate Website Emacs Initialization File:1]]
+;; [[file:init-emacs.org::#org-website-generate-website-emacs-initialization-file][Generate Website Emacs Initialization File:1]]
 ;;------------------------------------------------------------------------------
 ;;; Org Website: Generate Website Emacs Initialization File
 ;;------------------------------------------------------------------------------
@@ -7443,7 +7443,7 @@ init-emacs-website.el to be used with batch commands."
 (add-hook 'after-save-hook #'after-save-hook--generate-init-emacs-website-elisp-file :append)
 ;; Generate Website Emacs Initialization File:1 ends here
 
-;; [[file:init-emacs.org::*Remote Synchronization][Remote Synchronization:1]]
+;; [[file:init-emacs.org::#org-website-remote-synchronization][Remote Synchronization:1]]
 ;;------------------------------------------------------------------------------
 ;;; Org Website: Remote Synchronization
 ;;------------------------------------------------------------------------------
@@ -7451,7 +7451,7 @@ init-emacs-website.el to be used with batch commands."
 (init-message 2 "Org Website: Remote Synchronization")
 ;; Remote Synchronization:1 ends here
 
-;; [[file:init-emacs.org::*Rsync to Morpheus][Rsync to Morpheus:1]]
+;; [[file:init-emacs.org::#org-website-remote-synchronization-rsync-to-morpheus][Rsync to Morpheus:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Website: Remote Synchronization: Rsync to Morpheus
 ;;------------------------------------------------------------------------------
@@ -7486,7 +7486,7 @@ init-emacs-website.el to be used with batch commands."
        (message "Website rsync to morpheus finished")))))
 ;; Rsync to Morpheus:1 ends here
 
-;; [[file:init-emacs.org::*Rsync to DigitalOcean][Rsync to DigitalOcean:1]]
+;; [[file:init-emacs.org::#org-website-remote-synchronization-rsync-to-digitalocean][Rsync to DigitalOcean:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Website: Remote Synchronization: Rsync to DigitalOcean
 ;;------------------------------------------------------------------------------
@@ -7552,7 +7552,7 @@ applicaitons."
          (message "Website rsync to DigitalOcean finished"))))))
 ;; Rsync to DigitalOcean:1 ends here
 
-;; [[file:init-emacs.org::*Deployment][Deployment:1]]
+;; [[file:init-emacs.org::#org-website-deployment][Deployment:1]]
 ;;------------------------------------------------------------------------------
 ;;; Org Website: Deployment
 ;;------------------------------------------------------------------------------
@@ -7560,7 +7560,7 @@ applicaitons."
 (init-message 2 "Org Website: Deployment")
 ;; Deployment:1 ends here
 
-;; [[file:init-emacs.org::*Functions][Functions:1]]
+;; [[file:init-emacs.org::#functions][Functions:1]]
 ;;==============================================================================
 ;;; Functions
 ;;==============================================================================
@@ -7568,7 +7568,7 @@ applicaitons."
 (init-message 1 "Functions")
 ;; Functions:1 ends here
 
-;; [[file:init-emacs.org::*Initialization Functions][Initialization Functions:1]]
+;; [[file:init-emacs.org::#functions-initialization-functions][Initialization Functions:1]]
 ;;------------------------------------------------------------------------------
 ;;; Functions: Initialization Functions
 ;;------------------------------------------------------------------------------
@@ -7576,7 +7576,7 @@ applicaitons."
 (init-message 2 "Functions: Initialization Functions")
 ;; Initialization Functions:1 ends here
 
-;; [[file:init-emacs.org::*require-if-available][require-if-available:1]]
+;; [[file:init-emacs.org::#functions-initialization-functions-require-if-available][require-if-available:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Initialization Functions: require-if-available
 ;;------------------------------------------------------------------------------
@@ -7600,7 +7600,7 @@ Fails quietly if some are not available."
        (progn (message "Could not load extension: %s" lib) nil)))))
 ;; require-if-available:1 ends here
 
-;; [[file:init-emacs.org::*load-file-if-available][load-file-if-available:1]]
+;; [[file:init-emacs.org::#functions-initialization-functions-load-file-if-available][load-file-if-available:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Initialization Functions: load-file-if-available
 ;;------------------------------------------------------------------------------
@@ -7615,7 +7615,7 @@ Fails quietly if file does not exist."
     (load-file file)))
 ;; load-file-if-available:1 ends here
 
-;; [[file:init-emacs.org::*compile-file-if-needed][compile-file-if-needed:1]]
+;; [[file:init-emacs.org::#functions-initialization-functions-compile-file-if-needed][compile-file-if-needed:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Initialization Functions: compile-file-if-needed
 ;;------------------------------------------------------------------------------
@@ -7649,7 +7649,7 @@ Fails quietly if file does not exist."
     (delete-other-windows)))
 ;; compile-file-if-needed:1 ends here
 
-;; [[file:init-emacs.org::*with-eval-after-load][with-eval-after-load:1]]
+;; [[file:init-emacs.org::#functions-initialization-functions-with-eval-after-load][with-eval-after-load:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Initialization Functions: with-eval-after-load
 ;;------------------------------------------------------------------------------
@@ -7663,7 +7663,7 @@ Fails quietly if file does not exist."
        `(funcall (function ,(lambda () ,@body))))))
 ;; with-eval-after-load:1 ends here
 
-;; [[file:init-emacs.org::*eval-after-load-with-byte-compile][eval-after-load-with-byte-compile:1]]
+;; [[file:init-emacs.org::#functions-initialization-functions-eval-after-load-with-byte-compile][eval-after-load-with-byte-compile:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Initialization Functions: eval-after-load-with-byte-compile
 ;;
@@ -7691,7 +7691,7 @@ for details."
     (with-eval-after-load ',file ,@body)))
 ;; eval-after-load-with-byte-compile:1 ends here
 
-;; [[file:init-emacs.org::*safe-load][safe-load:1]]
+;; [[file:init-emacs.org::#functions-initialization-functions-safe-load][safe-load:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Initialization Functions: safe-load
 ;;------------------------------------------------------------------------------
@@ -7728,7 +7728,7 @@ If an error occurs when loading, report it and add FILE to
   (safe-load file noerror nomessage nosuffix))
 ;; safe-load:1 ends here
 
-;; [[file:init-emacs.org::*save-mark-and-excursion][save-mark-and-excursion:1]]
+;; [[file:init-emacs.org::#functions-initialization-functions-save-mark-and-excursion][save-mark-and-excursion:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Initialization Functions: save-mark-and-excursion
 ;;------------------------------------------------------------------------------
@@ -7778,7 +7778,7 @@ This macro does what `save-excursion' did before Emacs 25.1."
            (save-mark-and-excursion--restore ,saved-marker-sym))))))
 ;; save-mark-and-excursion:1 ends here
 
-;; [[file:init-emacs.org::*Advice Functions][Advice Functions:1]]
+;; [[file:init-emacs.org::#functions-advice-functions][Advice Functions:1]]
 ;;------------------------------------------------------------------------------
 ;;; Functions: Advice Functions
 ;;------------------------------------------------------------------------------
@@ -7786,7 +7786,7 @@ This macro does what `save-excursion' did before Emacs 25.1."
 (init-message 2 "Functions: Advice Functions")
 ;; Advice Functions:1 ends here
 
-;; [[file:init-emacs.org::*Compile Goto Error Org][Compile Goto Error Org:1]]
+;; [[file:init-emacs.org::#functions-advice-functions-compile-goto-error-org][Compile Goto Error Org:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Advice Functions: Compile Goto Error Org
 ;;------------------------------------------------------------------------------
@@ -7804,7 +7804,7 @@ This macro does what `save-excursion' did before Emacs 25.1."
 (add-hook 'compilation-mode-hook #'compilation-mode-hook--compile-goto-error)
 ;; Compile Goto Error Org:1 ends here
 
-;; [[file:init-emacs.org::*General Functions][General Functions:1]]
+;; [[file:init-emacs.org::#functions-general-functions][General Functions:1]]
 ;;------------------------------------------------------------------------------
 ;;; Functions: General Functions
 ;;------------------------------------------------------------------------------
@@ -7812,7 +7812,7 @@ This macro does what `save-excursion' did before Emacs 25.1."
 (init-message 2 "Functions: General Functions")
 ;; General Functions:1 ends here
 
-;; [[file:init-emacs.org::*list-to-string][list-to-string:1]]
+;; [[file:init-emacs.org::#functions-general-functions-list-to-string][list-to-string:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: General Functions: list-to-string
 ;;------------------------------------------------------------------------------
@@ -7825,7 +7825,7 @@ This macro does what `save-excursion' did before Emacs 25.1."
     (mapconcat 'string list delimiter)))
 ;; list-to-string:1 ends here
 
-;; [[file:init-emacs.org::*string-to-list][string-to-list:1]]
+;; [[file:init-emacs.org::#functions-general-functions-string-to-list][string-to-list:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: General Functions: string-to-list
 ;;------------------------------------------------------------------------------
@@ -7851,7 +7851,7 @@ This macro does what `save-excursion' did before Emacs 25.1."
   (cl-loop for x across string collect x))
 ;; string-to-list:1 ends here
 
-;; [[file:init-emacs.org::*join-strings][join-strings:1]]
+;; [[file:init-emacs.org::#functions-general-functions-join-strings][join-strings:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: General Functions: join-strings
 ;;------------------------------------------------------------------------------
@@ -7867,7 +7867,7 @@ Use optional DELIM as a delimiter."
     (cl-reduce (lambda (x y) (concat x y)) list)))
 ;; join-strings:1 ends here
 
-;; [[file:init-emacs.org::*file-to-string][file-to-string:1]]
+;; [[file:init-emacs.org::#functions-general-functions-file-to-string][file-to-string:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: General Functions: file-to-string
 ;;------------------------------------------------------------------------------
@@ -7883,7 +7883,7 @@ Use optional DELIM as a delimiter."
     nil))
 ;; file-to-string:1 ends here
 
-;; [[file:init-emacs.org::*safe-substring][safe-substring:1]]
+;; [[file:init-emacs.org::#functions-general-functions-safe-substring][safe-substring:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: General Functions: safe-substring
 ;;------------------------------------------------------------------------------
@@ -7908,7 +7908,7 @@ TO. Instead an empty string is returned."
       (substring string from to))))
 ;; safe-substring:1 ends here
 
-;; [[file:init-emacs.org::*for-each][for-each:1]]
+;; [[file:init-emacs.org::#functions-general-functions-for-each][for-each:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: General Functions: for-each
 ;;------------------------------------------------------------------------------
@@ -7922,7 +7922,7 @@ TO. Instead an empty string is returned."
     (for-each fn (cdr list))))
 ;; for-each:1 ends here
 
-;; [[file:init-emacs.org::*is-single][is-single:1]]
+;; [[file:init-emacs.org::#functions-general-functions-is-single][is-single:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: General Functions: is-single
 ;;------------------------------------------------------------------------------
@@ -7934,7 +7934,7 @@ TO. Instead an empty string is returned."
   (and (consp list) (null (cdr list))))
 ;; is-single:1 ends here
 
-;; [[file:init-emacs.org::*append-element][append-element:1]]
+;; [[file:init-emacs.org::#functions-general-functions-append-element][append-element:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: General Functions: append-element
 ;;------------------------------------------------------------------------------
@@ -7946,7 +7946,7 @@ TO. Instead an empty string is returned."
   (append list (list elm)))
 ;; append-element:1 ends here
 
-;; [[file:init-emacs.org::*map-integer][map-integer:1]]
+;; [[file:init-emacs.org::#functions-general-functions-map-integer][map-integer:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: General Functions: map-integer
 ;;------------------------------------------------------------------------------
@@ -7961,7 +7961,7 @@ TO. Instead an empty string is returned."
     (nreverse acc)))
 ;; map-integer:1 ends here
 
-;; [[file:init-emacs.org::*filter][filter:1]]
+;; [[file:init-emacs.org::#functions-general-functions-filter][filter:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: General Functions: filter
 ;;------------------------------------------------------------------------------
@@ -7976,7 +7976,7 @@ TO. Instead an empty string is returned."
         (when val (push val acc))))))
 ;; filter:1 ends here
 
-;; [[file:init-emacs.org::*most][most:1]]
+;; [[file:init-emacs.org::#functions-general-functions-most][most:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: General Functions: most
 ;;------------------------------------------------------------------------------
@@ -8000,7 +8000,7 @@ The element with the highest result is returned with its score."
       (list wins max))))
 ;; most:1 ends here
 
-;; [[file:init-emacs.org::*queue][queue:1]]
+;; [[file:init-emacs.org::#functions-general-functions-queue][queue:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: General Functions: queue
 ;;------------------------------------------------------------------------------
@@ -8040,7 +8040,7 @@ Source: http://irreal.org/blog/?p=40"
           (t (error "Illegal command given to queue object: %s" cmd)))))))
 ;; queue:1 ends here
 
-;; [[file:init-emacs.org::*quicksort][quicksort:1]]
+;; [[file:init-emacs.org::#functions-general-functions-quicksort][quicksort:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: General Functions: quicksort
 ;;------------------------------------------------------------------------------
@@ -8058,7 +8058,7 @@ Source: http://irreal.org/blog/?p=40"
               (quicksort (cl-remove-if left-p rst))))))
 ;; quicksort:1 ends here
 
-;; [[file:init-emacs.org::*hash-table-dump][hash-table-dump:1]]
+;; [[file:init-emacs.org::#functions-general-functions-hash-table-dump][hash-table-dump:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: General Functions: hash-table-dump
 ;;------------------------------------------------------------------------------
@@ -8072,7 +8072,7 @@ Source: http://irreal.org/blog/?p=40"
     (nreverse result)))
 ;; hash-table-dump:1 ends here
 
-;; [[file:init-emacs.org::*Emacs Functions][Emacs Functions:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions][Emacs Functions:1]]
 ;;------------------------------------------------------------------------------
 ;;; Functions: Emacs Functions
 ;;------------------------------------------------------------------------------
@@ -8080,7 +8080,7 @@ Source: http://irreal.org/blog/?p=40"
 (init-message 2 "Functions: Emacs Functions")
 ;; Emacs Functions:1 ends here
 
-;; [[file:init-emacs.org::*inside-string][inside-string:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-inside-string][inside-string:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: inside-string
 ;;------------------------------------------------------------------------------
@@ -8092,7 +8092,7 @@ Source: http://irreal.org/blog/?p=40"
   (not (not (nth 3 (syntax-ppss)))))
 ;; inside-string:1 ends here
 
-;; [[file:init-emacs.org::*inside-comment][inside-comment:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-inside-comment][inside-comment:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: inside-comment
 ;;------------------------------------------------------------------------------
@@ -8104,7 +8104,7 @@ Source: http://irreal.org/blog/?p=40"
   (nth 4 (syntax-ppss)))
 ;; inside-comment:1 ends here
 
-;; [[file:init-emacs.org::*try-finally][try-finally:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-try-finally][try-finally:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: try-finally
 ;;------------------------------------------------------------------------------
@@ -8126,7 +8126,7 @@ evaluated."
      ,@finally))
 ;; try-finally:1 ends here
 
-;; [[file:init-emacs.org::*save-buffer-always][save-buffer-always:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-save-buffer-always][save-buffer-always:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: save-buffer-always
 ;;------------------------------------------------------------------------------
@@ -8140,7 +8140,7 @@ evaluated."
   (save-buffer))
 ;; save-buffer-always:1 ends here
 
-;; [[file:init-emacs.org::*save-buffer-always-maybe][save-buffer-always-maybe:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-save-buffer-always-maybe][save-buffer-always-maybe:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: save-buffer-always-maybe
 ;;------------------------------------------------------------------------------
@@ -8157,7 +8157,7 @@ evaluated."
     (save-buffer)))
 ;; save-buffer-always-maybe:1 ends here
 
-;; [[file:init-emacs.org::*describe-function-or-variable-at-point][describe-function-or-variable-at-point:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-describe-function-or-variable-at-point][describe-function-or-variable-at-point:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: describe-function-or-variable-at-point
 ;;------------------------------------------------------------------------------
@@ -8177,7 +8177,7 @@ Use `describe-function' or `describe-variable' as appropriate."
         (call-interactively 'describe-variable)))))
 ;; describe-function-or-variable-at-point:1 ends here
 
-;; [[file:init-emacs.org::*mode-line-add][mode-line-add:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-mode-line-add][mode-line-add:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: mode-line-add
 ;;------------------------------------------------------------------------------
@@ -8190,7 +8190,7 @@ Use `describe-function' or `describe-variable' as appropriate."
   (add-to-list 'global-mode-string item t))
 ;; mode-line-add:1 ends here
 
-;; [[file:init-emacs.org::*insert-line-below][insert-line-below:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-insert-line-below][insert-line-below:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: insert-line-below
 ;;------------------------------------------------------------------------------
@@ -8205,7 +8205,7 @@ Use `describe-function' or `describe-variable' as appropriate."
   (indent-for-tab-command))
 ;; insert-line-below:1 ends here
 
-;; [[file:init-emacs.org::*insert-line-above][insert-line-above:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-insert-line-above][insert-line-above:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: insert-line-above
 ;;------------------------------------------------------------------------------
@@ -8221,7 +8221,7 @@ Use `describe-function' or `describe-variable' as appropriate."
   (indent-for-tab-command))
 ;; insert-line-above:1 ends here
 
-;; [[file:init-emacs.org::*move-line-down][move-line-down:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-move-line-down][move-line-down:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: move-line-down
 ;;------------------------------------------------------------------------------
@@ -8241,7 +8241,7 @@ Use `describe-function' or `describe-variable' as appropriate."
     (move-to-column col)))
 ;; move-line-down:1 ends here
 
-;; [[file:init-emacs.org::*move-line-up][move-line-up:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-move-line-up][move-line-up:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: move-line-up
 ;;------------------------------------------------------------------------------
@@ -8261,7 +8261,7 @@ Use `describe-function' or `describe-variable' as appropriate."
     (move-to-column col)))
 ;; move-line-up:1 ends here
 
-;; [[file:init-emacs.org::*kill-word-enhanced][kill-word-enhanced:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-kill-word-enhanced][kill-word-enhanced:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: kill-word-enhanced
 ;;------------------------------------------------------------------------------
@@ -8281,7 +8281,7 @@ Use `describe-function' or `describe-variable' as appropriate."
       (delete-char 1))))
 ;; kill-word-enhanced:1 ends here
 
-;; [[file:init-emacs.org::*kill-region-or-word][kill-region-or-word:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-kill-region-or-word][kill-region-or-word:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: kill-region-or-word
 ;;------------------------------------------------------------------------------
@@ -8297,7 +8297,7 @@ whether or not a region is selected."
     (backward-kill-word 1)))
 ;; kill-region-or-word:1 ends here
 
-;; [[file:init-emacs.org::*kill-duplicate-lines][kill-duplicate-lines:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-kill-duplicate-lines][kill-duplicate-lines:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: kill-duplicate-lines
 ;;------------------------------------------------------------------------------
@@ -8322,7 +8322,7 @@ whether or not a region is selected."
             (goto-char next-line)))))))
 ;; kill-duplicate-lines:1 ends here
 
-;; [[file:init-emacs.org::*indent-or-expand][indent-or-expand:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-indent-or-expand][indent-or-expand:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: indent-or-expand
 ;;------------------------------------------------------------------------------
@@ -8341,7 +8341,7 @@ whether or not a region is selected."
     (indent-according-to-mode)))
 ;; indent-or-expand:1 ends here
 
-;; [[file:init-emacs.org::*swap-windows][swap-windows:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-swap-windows][swap-windows:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: swap-windows
 ;;------------------------------------------------------------------------------
@@ -8365,7 +8365,7 @@ whether or not a region is selected."
       (set-window-start w2 s1))))
 ;; swap-windows:1 ends here
 
-;; [[file:init-emacs.org::*toggle-window-split][toggle-window-split:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-toggle-window-split][toggle-window-split:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: toggle-window-split
 ;;------------------------------------------------------------------------------
@@ -8400,7 +8400,7 @@ whether or not a region is selected."
       (when win-2nd (other-window 1)))))
 ;; toggle-window-split:1 ends here
 
-;; [[file:init-emacs.org::*enlarge-window-5][enlarge-window-5:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-enlarge-window-5][enlarge-window-5:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: enlarge-window-5
 ;;------------------------------------------------------------------------------
@@ -8415,7 +8415,7 @@ whether or not a region is selected."
     (enlarge-window 5)))
 ;; enlarge-window-5:1 ends here
 
-;; [[file:init-emacs.org::*shrink-window-5][shrink-window-5:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-shrink-window-5][shrink-window-5:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: shrink-window-5
 ;;------------------------------------------------------------------------------
@@ -8430,7 +8430,7 @@ whether or not a region is selected."
     (enlarge-window -5)))
 ;; shrink-window-5:1 ends here
 
-;; [[file:init-emacs.org::*compile-elisp][compile-elisp:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-compile-elisp][compile-elisp:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: compile-elisp
 ;;------------------------------------------------------------------------------
@@ -8445,7 +8445,7 @@ DIR defaults to `emacs-home-dir' or `~/.emacs.d'."
   (byte-recompile-directory (or dir emacs-home-dir "~/.emacs.d") 0))
 ;; compile-elisp:1 ends here
 
-;; [[file:init-emacs.org::*join-next-line][join-next-line:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-join-next-line][join-next-line:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: join-next-line
 ;;------------------------------------------------------------------------------
@@ -8459,7 +8459,7 @@ DIR defaults to `emacs-home-dir' or `~/.emacs.d'."
     (join-line -1)))
 ;; join-next-line:1 ends here
 
-;; [[file:init-emacs.org::*sort-all-lines][sort-all-lines:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-sort-all-lines][sort-all-lines:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: sort-all-lines
 ;;------------------------------------------------------------------------------
@@ -8475,7 +8475,7 @@ If REVERSE is non-nil, then sort in reverse order."
     (sort-lines reverse (point-min) (point-max))))
 ;; sort-all-lines:1 ends here
 
-;; [[file:init-emacs.org::*sort-lines-removing-duplicates][sort-lines-removing-duplicates:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-sort-lines-removing-duplicates][sort-lines-removing-duplicates:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: sort-lines-removing-duplicates
 ;;------------------------------------------------------------------------------
@@ -8505,7 +8505,7 @@ If REVERSE is non-nil, then sort in reverse order."
           (setq prev line))))))
 ;; sort-lines-removing-duplicates:1 ends here
 
-;; [[file:init-emacs.org::*delete-word][delete-word:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-delete-word][delete-word:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: delete-word
 ;;------------------------------------------------------------------------------
@@ -8538,7 +8538,7 @@ With argument ARG, do this that many times."
            (point)))))))
 ;; delete-word:1 ends here
 
-;; [[file:init-emacs.org::*backward-delete-word][backward-delete-word:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-backward-delete-word][backward-delete-word:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: backward-delete-word
 ;;------------------------------------------------------------------------------
@@ -8578,7 +8578,7 @@ With argument ARG, do this that many times."
        (point)))))
 ;; backward-delete-word:1 ends here
 
-;; [[file:init-emacs.org::*copy-line][copy-line:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-copy-line][copy-line:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: copy-line
 ;;------------------------------------------------------------------------------
@@ -8600,7 +8600,7 @@ With argument ARG, do this that many times."
       (copy-region-as-kill beg (point)))))
 ;; copy-line:1 ends here
 
-;; [[file:init-emacs.org::*cut-line][cut-line:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-cut-line][cut-line:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: cut-line
 ;;------------------------------------------------------------------------------
@@ -8622,7 +8622,7 @@ With argument ARG, do this that many times."
       (kill-region beg (point)))))
 ;; cut-line:1 ends here
 
-;; [[file:init-emacs.org::*delete-line][delete-line:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-delete-line][delete-line:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: delete-line
 ;;------------------------------------------------------------------------------
@@ -8646,7 +8646,7 @@ With argument ARG, do this that many times."
       (goto-char (line-end-position)))))
 ;; delete-line:1 ends here
 
-;; [[file:init-emacs.org::*delete-to-end-of-line][delete-to-end-of-line:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-delete-to-end-of-line][delete-to-end-of-line:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: delete-to-end-of-line
 ;;------------------------------------------------------------------------------
@@ -8666,7 +8666,7 @@ With argument ARG, do this that many times."
                    (point))))
 ;; delete-to-end-of-line:1 ends here
 
-;; [[file:init-emacs.org::*duplicate-line][duplicate-line:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-duplicate-line][duplicate-line:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: duplicate-line
 ;;------------------------------------------------------------------------------
@@ -8712,7 +8712,7 @@ Cursor is left at current column in newly created line."
             (forward-line 1)))))))
 ;; duplicate-line:1 ends here
 
-;; [[file:init-emacs.org::*duplicate-line-inc][duplicate-line-inc:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-duplicate-line-inc][duplicate-line-inc:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: duplicate-line-inc
 ;;------------------------------------------------------------------------------
@@ -8742,7 +8742,7 @@ Cursor is left at current column in newly created line."
     (move-to-column col)))
 ;; duplicate-line-inc:1 ends here
 
-;; [[file:init-emacs.org::*display-line-numbers-type-toggle][display-line-numbers-type-toggle:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-display-line-numbers-type-toggle][display-line-numbers-type-toggle:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: display-line-numbers-type-toggle
 ;;------------------------------------------------------------------------------
@@ -8758,7 +8758,7 @@ Cursor is left at current column in newly created line."
           'relative)))
 ;; display-line-numbers-type-toggle:1 ends here
 
-;; [[file:init-emacs.org::*goto-line-enhanced][goto-line-enhanced:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-goto-line-enhanced][goto-line-enhanced:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: goto-line-enhanced
 ;;------------------------------------------------------------------------------
@@ -8780,7 +8780,7 @@ Cursor is left at current column in newly created line."
 (bind-keys* ([remap goto-line] . goto-line-enhanced))
 ;; goto-line-enhanced:1 ends here
 
-;; [[file:init-emacs.org::*forward-sexp-enhanced][forward-sexp-enhanced:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-forward-sexp-enhanced][forward-sexp-enhanced:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: forward-sexp-enhanced
 ;;------------------------------------------------------------------------------
@@ -8808,7 +8808,7 @@ Cursor is left at current column in newly created line."
 (bind-keys* ([remap forward-sexp] . forward-sexp-enhanced))
 ;; forward-sexp-enhanced:1 ends here
 
-;; [[file:init-emacs.org::*backward-sexp-enhanced][backward-sexp-enhanced:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-backward-sexp-enhanced][backward-sexp-enhanced:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: backward-sexp-enhanced
 ;;------------------------------------------------------------------------------
@@ -8823,7 +8823,7 @@ Cursor is left at current column in newly created line."
 (bind-keys* ([remap backward-sexp] . backward-sexp-enhanced))
 ;; backward-sexp-enhanced:1 ends here
 
-;; [[file:init-emacs.org::*scroll-up-enhanced][scroll-up-enhanced:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-scroll-up-enhanced][scroll-up-enhanced:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: scroll-up-enhanced
 ;;------------------------------------------------------------------------------
@@ -8846,7 +8846,7 @@ If less than a page away, jump to the end of the buffer."
 (bind-keys* ([remap scroll-up] . scroll-up-enhanced))
 ;; scroll-up-enhanced:1 ends here
 
-;; [[file:init-emacs.org::*scroll-down-enhanced][scroll-down-enhanced:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-scroll-down-enhanced][scroll-down-enhanced:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: scroll-down-enhanced
 ;;------------------------------------------------------------------------------
@@ -8869,7 +8869,7 @@ If less than a page away, jump to the beginning of the buffer."
 (bind-keys* ([remap scroll-down] . scroll-down-enhanced))
 ;; scroll-down-enhanced:1 ends here
 
-;; [[file:init-emacs.org::*scroll-up-command-enhanced][scroll-up-command-enhanced:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-scroll-up-command-enhanced][scroll-up-command-enhanced:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: scroll-up-command-enhanced
 ;;------------------------------------------------------------------------------
@@ -8892,7 +8892,7 @@ If less than a page away, jump to the end of the buffer."
 (bind-keys* ([remap scroll-up-command] . scroll-up-command-enhanced))
 ;; scroll-up-command-enhanced:1 ends here
 
-;; [[file:init-emacs.org::*scroll-down-command-enhanced][scroll-down-command-enhanced:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-scroll-down-command-enhanced][scroll-down-command-enhanced:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: scroll-down-command-enhanced
 ;;------------------------------------------------------------------------------
@@ -8915,7 +8915,7 @@ If less than a page away, jump to the beginning of the buffer."
 (bind-keys* ([remap scroll-down-command] . scroll-down-command-enhanced))
 ;; scroll-down-command-enhanced:1 ends here
 
-;; [[file:init-emacs.org::*downcase-region-enhanced][downcase-region-enhanced:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-downcase-region-enhanced][downcase-region-enhanced:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: downcase-region-enhanced
 ;;------------------------------------------------------------------------------
@@ -8932,7 +8932,7 @@ If less than a page away, jump to the beginning of the buffer."
 (bind-keys* ("C-x C-l" . downcase-region-enhanced))
 ;; downcase-region-enhanced:1 ends here
 
-;; [[file:init-emacs.org::*upcase-region-enhanced][upcase-region-enhanced:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-upcase-region-enhanced][upcase-region-enhanced:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: upcase-region-enhanced
 ;;------------------------------------------------------------------------------
@@ -8949,7 +8949,7 @@ If less than a page away, jump to the beginning of the buffer."
 (bind-keys* ("C-x C-u" . upcase-region-enhanced))
 ;; upcase-region-enhanced:1 ends here
 
-;; [[file:init-emacs.org::*downcase-word-enhanced][downcase-word-enhanced:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-downcase-word-enhanced][downcase-word-enhanced:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: downcase-word-enhanced
 ;;------------------------------------------------------------------------------
@@ -8967,7 +8967,7 @@ If less than a page away, jump to the beginning of the buffer."
 (bind-keys* ([remap downcase-word] . downcase-word-enhanced))
 ;; downcase-word-enhanced:1 ends here
 
-;; [[file:init-emacs.org::*upcase-word-enhanced][upcase-word-enhanced:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-upcase-word-enhanced][upcase-word-enhanced:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: upcase-word-enhanced
 ;;------------------------------------------------------------------------------
@@ -8985,7 +8985,7 @@ If less than a page away, jump to the beginning of the buffer."
 (bind-keys* ([remap upcase-word] . upcase-word-enhanced))
 ;; upcase-word-enhanced:1 ends here
 
-;; [[file:init-emacs.org::*capitalize-word-enhanced][capitalize-word-enhanced:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-capitalize-word-enhanced][capitalize-word-enhanced:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: capitalize-word-enhanced
 ;;------------------------------------------------------------------------------
@@ -9006,7 +9006,7 @@ If less than a page away, jump to the beginning of the buffer."
 (bind-keys* ([remap capitalize-word] . capitalize-word-enhanced))
 ;; capitalize-word-enhanced:1 ends here
 
-;; [[file:init-emacs.org::*toggle-word-case][toggle-word-case:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-toggle-word-case][toggle-word-case:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: toggle-word-case
 ;;------------------------------------------------------------------------------
@@ -9054,7 +9054,7 @@ If less than a page away, jump to the beginning of the buffer."
 (bind-keys* ("M-c" . toggle-word-case))
 ;; toggle-word-case:1 ends here
 
-;; [[file:init-emacs.org::*eval-current-sexp][eval-current-sexp:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-eval-current-sexp][eval-current-sexp:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: eval-current-sexp
 ;;------------------------------------------------------------------------------
@@ -9071,7 +9071,7 @@ Calls `eval-last-sexp' to handle eval."
     (eval-last-sexp eval-last-sexp-arg-internal)))
 ;; eval-current-sexp:1 ends here
 
-;; [[file:init-emacs.org::*eval-sexp-buffer][eval-sexp-buffer:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-eval-sexp-buffer][eval-sexp-buffer:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: eval-sexp-buffer
 ;;------------------------------------------------------------------------------
@@ -9095,7 +9095,7 @@ BUFFER defaults to the current buffer."
       (message (format "Evaluated %d expressions." count)))))
 ;; eval-sexp-buffer:1 ends here
 
-;; [[file:init-emacs.org::*eval-and-replace-last-sexp][eval-and-replace-last-sexp:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-eval-and-replace-last-sexp][eval-and-replace-last-sexp:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: eval-and-replace-last-sexp
 ;;------------------------------------------------------------------------------
@@ -9114,7 +9114,7 @@ BUFFER defaults to the current buffer."
      (insert (current-kill 0)))))
 ;; eval-and-replace-last-sexp:1 ends here
 
-;; [[file:init-emacs.org::*eval-and-replace-current-sexp][eval-and-replace-current-sexp:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-eval-and-replace-current-sexp][eval-and-replace-current-sexp:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: eval-and-replace-current-sexp
 ;;------------------------------------------------------------------------------
@@ -9129,7 +9129,7 @@ BUFFER defaults to the current buffer."
     (eval-and-replace-last-sexp)))
 ;; eval-and-replace-current-sexp:1 ends here
 
-;; [[file:init-emacs.org::*macroexpand-and-replace][macroexpand-and-replace:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-macroexpand-and-replace][macroexpand-and-replace:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: macroexpand-and-replace
 ;;------------------------------------------------------------------------------
@@ -9148,7 +9148,7 @@ BUFFER defaults to the current buffer."
      (insert (current-kill 0)))))
 ;; macroexpand-and-replace:1 ends here
 
-;; [[file:init-emacs.org::*calc-eval-and-replace-region][calc-eval-and-replace-region:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-calc-eval-and-replace-region][calc-eval-and-replace-region:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: calc-eval-and-replace-region
 ;;------------------------------------------------------------------------------
@@ -9163,7 +9163,7 @@ BUFFER defaults to the current buffer."
     (insert result)))
 ;; calc-eval-and-replace-region:1 ends here
 
-;; [[file:init-emacs.org::*calc-eval-and-replace-line][calc-eval-and-replace-line:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-calc-eval-and-replace-line][calc-eval-and-replace-line:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: calc-eval-and-replace-line
 ;;------------------------------------------------------------------------------
@@ -9176,7 +9176,7 @@ BUFFER defaults to the current buffer."
   (calc-eval-and-replace-region (line-beginning-position) (line-end-position)))
 ;; calc-eval-and-replace-line:1 ends here
 
-;; [[file:init-emacs.org::*indent-current-sexp][indent-current-sexp:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-indent-current-sexp][indent-current-sexp:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: indent-current-sexp
 ;;------------------------------------------------------------------------------
@@ -9201,7 +9201,7 @@ BUFFER defaults to the current buffer."
         (forward-line 1)))))
 ;; indent-current-sexp:1 ends here
 
-;; [[file:init-emacs.org::*indent-sexp-buffer][indent-sexp-buffer:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-indent-sexp-buffer][indent-sexp-buffer:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: indent-sexp-buffer
 ;;------------------------------------------------------------------------------
@@ -9225,7 +9225,7 @@ BUFFER defaults to the current buffer."
       (message (format "Indented %d expressions." count)))))
 ;; indent-sexp-buffer:1 ends here
 
-;; [[file:init-emacs.org::*comment-or-uncomment-sexp][comment-or-uncomment-sexp:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-comment-or-uncomment-sexp][comment-or-uncomment-sexp:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: comment-or-uncomment-sexp
 ;;------------------------------------------------------------------------------
@@ -9324,7 +9324,7 @@ With a prefix argument N, (un)comment that many sexps."
          (skip-chars-forward "\r\n[:blank:]"))))))
 ;; comment-or-uncomment-sexp:1 ends here
 
-;; [[file:init-emacs.org::*rename-buffer-and-file][rename-buffer-and-file:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-rename-buffer-and-file][rename-buffer-and-file:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: rename-buffer-and-file
 ;;------------------------------------------------------------------------------
@@ -9347,7 +9347,7 @@ With a prefix argument N, (un)comment that many sexps."
           (delete-file source-file-name)))))
 ;; rename-buffer-and-file:1 ends here
 
-;; [[file:init-emacs.org::*move-buffer-and-file][move-buffer-and-file:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-move-buffer-and-file][move-buffer-and-file:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: move-buffer-and-file
 ;;------------------------------------------------------------------------------
@@ -9382,7 +9382,7 @@ With a prefix argument N, (un)comment that many sexps."
           (vc-refresh-state))))))
 ;; move-buffer-and-file:1 ends here
 
-;; [[file:init-emacs.org::*delete-buffer-and-file][delete-buffer-and-file:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-delete-buffer-and-file][delete-buffer-and-file:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: delete-buffer-and-file
 ;;------------------------------------------------------------------------------
@@ -9408,7 +9408,7 @@ BUFFER defaults to the current buffer."
         (message "File '%s' successfully deleted" file-name)))))
 ;; delete-buffer-and-file:1 ends here
 
-;; [[file:init-emacs.org::*expand-relative-file-name][expand-relative-file-name:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-expand-relative-file-name][expand-relative-file-name:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: expand-relative-file-name
 ;;------------------------------------------------------------------------------
@@ -9420,7 +9420,7 @@ BUFFER defaults to the current buffer."
   (file-truename (expand-file-name file-name (file-name-directory (or load-file-name buffer-file-name)))))
 ;; expand-relative-file-name:1 ends here
 
-;; [[file:init-emacs.org::*remove-trailing-blanks][remove-trailing-blanks:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-remove-trailing-blanks][remove-trailing-blanks:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: remove-trailing-blanks
 ;;------------------------------------------------------------------------------
@@ -9477,7 +9477,7 @@ If ASK is non-nil, ask for confirmation."
 ;;(add-hook 'write-contents-functions #'remove-trailing-blanks)
 ;; remove-trailing-blanks:1 ends here
 
-;; [[file:init-emacs.org::*remove-tabs][remove-tabs:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-remove-tabs][remove-tabs:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: remove-tabs
 ;;------------------------------------------------------------------------------
@@ -9559,7 +9559,7 @@ from tab removal on file save."
 (add-hook 'write-contents-functions #'remove-tabs-with-exceptions)
 ;; remove-tabs:1 ends here
 
-;; [[file:init-emacs.org::*indent-down][indent-down:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-indent-down][indent-down:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: indent-down
 ;;------------------------------------------------------------------------------
@@ -9573,7 +9573,7 @@ from tab removal on file save."
   (forward-line 1))
 ;; indent-down:1 ends here
 
-;; [[file:init-emacs.org::*server-start-maybe][server-start-maybe:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-server-start-maybe][server-start-maybe:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: server-start-maybe
 ;;------------------------------------------------------------------------------
@@ -9589,7 +9589,7 @@ from tab removal on file save."
     (server-start)))
 ;; server-start-maybe:1 ends here
 
-;; [[file:init-emacs.org::*load-bookmarks][load-bookmarks:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-load-bookmarks][load-bookmarks:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: load-bookmarks
 ;;------------------------------------------------------------------------------
@@ -9606,7 +9606,7 @@ FILE defaults to `~/lynx_bookmarks.html'."
     (eww-open-in-new-buffer (file-truename (expand-file-name file)))))
 ;; load-bookmarks:1 ends here
 
-;; [[file:init-emacs.org::*find-file-updir][find-file-updir:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-find-file-updir][find-file-updir:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: find-file-updir
 ;;------------------------------------------------------------------------------
@@ -9630,7 +9630,7 @@ buffer's default directory."
     (when (file-exists-p name) name)))
 ;; find-file-updir:1 ends here
 
-;; [[file:init-emacs.org::*find-file-eof][find-file-eof:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-find-file-eof][find-file-eof:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: find-file-eof
 ;;------------------------------------------------------------------------------
@@ -9643,7 +9643,7 @@ buffer's default directory."
   (goto-char (point-max)))
 ;; find-file-eof:1 ends here
 
-;; [[file:init-emacs.org::*mark-full-word][mark-full-word:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-mark-full-word][mark-full-word:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: mark-full-word
 ;;------------------------------------------------------------------------------
@@ -9660,7 +9660,7 @@ Point is moved to the beginning of the word at point, then
   (mark-word arg allow-extend))
 ;; mark-full-word:1 ends here
 
-;; [[file:init-emacs.org::*term-buffer][term-buffer:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-term-buffer][term-buffer:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: term-buffer
 ;;------------------------------------------------------------------------------
@@ -9679,7 +9679,7 @@ Point is moved to the beginning of the word at point, then
       (switch-to-buffer-other-window name))))
 ;; term-buffer:1 ends here
 
-;; [[file:init-emacs.org::*term-ansi][term-ansi:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-term-ansi][term-ansi:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: term-ansi
 ;;------------------------------------------------------------------------------
@@ -9699,7 +9699,7 @@ Point is moved to the beginning of the word at point, then
       (switch-to-buffer buffer))))
 ;; term-ansi:1 ends here
 
-;; [[file:init-emacs.org::*pop-up-shell][pop-up-shell:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-pop-up-shell][pop-up-shell:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: pop-up-shell
 ;;------------------------------------------------------------------------------
@@ -9718,7 +9718,7 @@ Point is moved to the beginning of the word at point, then
     '((side . bottom)))))
 ;; pop-up-shell:1 ends here
 
-;; [[file:init-emacs.org::*pop-up-shell-toggle][pop-up-shell-toggle:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-pop-up-shell-toggle][pop-up-shell-toggle:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: pop-up-shell-toggle
 ;;------------------------------------------------------------------------------
@@ -9735,7 +9735,7 @@ ARG is passed along if shell is being toggled on."
       (pop-up-shell arg))))
 ;; pop-up-shell-toggle:1 ends here
 
-;; [[file:init-emacs.org::*switch-to-scratch][switch-to-scratch:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-switch-to-scratch][switch-to-scratch:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: switch-to-scratch
 ;;------------------------------------------------------------------------------
@@ -9748,7 +9748,7 @@ ARG is passed along if shell is being toggled on."
   (switch-to-buffer "*scratch*"))
 ;; switch-to-scratch:1 ends here
 
-;; [[file:init-emacs.org::*switch-to-scratch-for-current-mode][switch-to-scratch-for-current-mode:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-switch-to-scratch-for-current-mode][switch-to-scratch-for-current-mode:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: switch-to-scratch-for-current-mode
 ;;------------------------------------------------------------------------------
@@ -9764,7 +9764,7 @@ ARG is passed along if shell is being toggled on."
     (funcall mode)))
 ;; switch-to-scratch-for-current-mode:1 ends here
 
-;; [[file:init-emacs.org::*new-scratch][new-scratch:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-new-scratch][new-scratch:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: new-scratch
 ;;------------------------------------------------------------------------------
@@ -9777,7 +9777,7 @@ ARG is passed along if shell is being toggled on."
   (switch-to-buffer (generate-new-buffer-name "*scratch*")))
 ;; new-scratch:1 ends here
 
-;; [[file:init-emacs.org::*new-emacs-lisp-scratch][new-emacs-lisp-scratch:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-new-emacs-lisp-scratch][new-emacs-lisp-scratch:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: new-emacs-lisp-scratch
 ;;------------------------------------------------------------------------------
@@ -9791,7 +9791,7 @@ ARG is passed along if shell is being toggled on."
   (emacs-lisp-mode))
 ;; new-emacs-lisp-scratch:1 ends here
 
-;; [[file:init-emacs.org::*recreate-scratch-when-killed][recreate-scratch-when-killed:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-recreate-scratch-when-killed][recreate-scratch-when-killed:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: recreate-scratch-when-killed
 ;;------------------------------------------------------------------------------
@@ -9817,7 +9817,7 @@ Add the following to your init.el file for this to work:
 (add-hook 'kill-buffer-query-functions #'recreate-scratch-when-killed)
 ;; recreate-scratch-when-killed:1 ends here
 
-;; [[file:init-emacs.org::*switch-to-messages][switch-to-messages:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-switch-to-messages][switch-to-messages:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: switch-to-messages
 ;;------------------------------------------------------------------------------
@@ -9830,7 +9830,7 @@ Add the following to your init.el file for this to work:
   (switch-to-buffer "*Messages*"))
 ;; switch-to-messages:1 ends here
 
-;; [[file:init-emacs.org::*diff-current-buffer][diff-current-buffer:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-diff-current-buffer][diff-current-buffer:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: diff-current-buffer
 ;;------------------------------------------------------------------------------
@@ -9843,7 +9843,7 @@ Add the following to your init.el file for this to work:
   (diff-buffer-with-file (current-buffer)))
 ;; diff-current-buffer:1 ends here
 
-;; [[file:init-emacs.org::*get-char-property-here][get-char-property-here:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-get-char-property-here][get-char-property-here:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: get-char-property-here
 ;;------------------------------------------------------------------------------
@@ -9860,7 +9860,7 @@ Add the following to your init.el file for this to work:
     face))
 ;; get-char-property-here:1 ends here
 
-;; [[file:init-emacs.org::*comments-in-buffer][comments-in-buffer:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-comments-in-buffer][comments-in-buffer:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: comments-in-buffer
 ;;------------------------------------------------------------------------------
@@ -9885,7 +9885,7 @@ Optional START and END parameters will limit the search to a region."
       (nreverse comments))))
 ;; comments-in-buffer:1 ends here
 
-;; [[file:init-emacs.org::*count-words][count-words:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-count-words][count-words:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: count-words
 ;;------------------------------------------------------------------------------
@@ -9903,7 +9903,7 @@ Optional START and END parameters will limit the search to a region."
     count))
 ;; count-words:1 ends here
 
-;; [[file:init-emacs.org::*count-words-paragraph][count-words-paragraph:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-count-words-paragraph][count-words-paragraph:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: count-words-paragraph
 ;;------------------------------------------------------------------------------
@@ -9925,7 +9925,7 @@ Optional START and END parameters will limit the search to a region."
       count)))
 ;; count-words-paragraph:1 ends here
 
-;; [[file:init-emacs.org::*date-offset][date-offset:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-date-offset][date-offset:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: date-offset
 ;;------------------------------------------------------------------------------
@@ -9959,7 +9959,7 @@ FORMAT is a 'date' format string (defaults to
     date))
 ;; date-offset:1 ends here
 
-;; [[file:init-emacs.org::*ascii-table][ascii-table:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-ascii-table][ascii-table:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: ascii-table
 ;;------------------------------------------------------------------------------
@@ -10011,7 +10011,7 @@ FORMAT is a 'date' format string (defaults to
 ;;   (goto-char (point-min)))
 ;; ascii-table:1 ends here
 
-;; [[file:init-emacs.org::*http-status-code-table][http-status-code-table:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-http-status-code-table][http-status-code-table:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: http-status-code-table
 ;;------------------------------------------------------------------------------
@@ -10100,7 +10100,7 @@ FORMAT is a 'date' format string (defaults to
     (goto-char (point-min))))
 ;; http-status-code-table:1 ends here
 
-;; [[file:init-emacs.org::*powers-of-two-table][powers-of-two-table:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-powers-of-two-table][powers-of-two-table:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: powers-of-two-table
 ;;------------------------------------------------------------------------------
@@ -10129,7 +10129,7 @@ FORMAT is a 'date' format string (defaults to
   (goto-char (point-min)))
 ;; powers-of-two-table:1 ends here
 
-;; [[file:init-emacs.org::*memory-use-counts-pretty][memory-use-counts-pretty:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-memory-use-counts-pretty][memory-use-counts-pretty:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: memory-use-counts-pretty
 ;;------------------------------------------------------------------------------
@@ -10148,7 +10148,7 @@ FORMAT is a 'date' format string (defaults to
     str))
 ;; memory-use-counts-pretty:1 ends here
 
-;; [[file:init-emacs.org::*git-paste-cleanup][git-paste-cleanup:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-git-paste-cleanup][git-paste-cleanup:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: git-paste-cleanup
 ;;------------------------------------------------------------------------------
@@ -10169,7 +10169,7 @@ FORMAT is a 'date' format string (defaults to
       (forward-line 1))))
 ;; git-paste-cleanup:1 ends here
 
-;; [[file:init-emacs.org::*execute-buffer][execute-buffer:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-execute-buffer][execute-buffer:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: execute-buffer
 ;;------------------------------------------------------------------------------
@@ -10199,7 +10199,7 @@ FORMAT is a 'date' format string (defaults to
     (shell-command (concat cmd " " file-name))))
 ;; execute-buffer:1 ends here
 
-;; [[file:init-emacs.org::*file-in-exec-path][file-in-exec-path:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-file-in-exec-path][file-in-exec-path:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: file-in-exec-path
 ;;------------------------------------------------------------------------------
@@ -10215,7 +10215,7 @@ FORMAT is a 'date' format string (defaults to
     nil))
 ;; file-in-exec-path:1 ends here
 
-;; [[file:init-emacs.org::*unicode-shell][unicode-shell:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-unicode-shell][unicode-shell:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: unicode-shell
 ;;------------------------------------------------------------------------------
@@ -10234,7 +10234,7 @@ others appropriately."
     (call-interactively 'shell)))
 ;; unicode-shell:1 ends here
 
-;; [[file:init-emacs.org::*async-spinner][async-spinner:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-async-spinner][async-spinner:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: async-spinner
 ;;------------------------------------------------------------------------------
@@ -10255,7 +10255,7 @@ others appropriately."
         (funcall ,finish-func ,result)))))
 ;; async-spinner:1 ends here
 
-;; [[file:init-emacs.org::*with-time][with-time:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-with-time][with-time:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: with-time
 ;;------------------------------------------------------------------------------
@@ -10270,7 +10270,7 @@ others appropriately."
      (float-time (time-since time))))
 ;; with-time:1 ends here
 
-;; [[file:init-emacs.org::*package-desc-summary-to-kill-ring][package-desc-summary-to-kill-ring:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-package-desc-summary-to-kill-ring][package-desc-summary-to-kill-ring:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: package-desc-summary-to-kill-ring
 ;;------------------------------------------------------------------------------
@@ -10291,7 +10291,7 @@ others appropriately."
     (message "%s: %s" name summary)))
 ;; package-desc-summary-to-kill-ring:1 ends here
 
-;; [[file:init-emacs.org::*toggle-case-fold-search][toggle-case-fold-search:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-toggle-case-fold-search][toggle-case-fold-search:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: toggle-case-fold-search
 ;;------------------------------------------------------------------------------
@@ -10305,7 +10305,7 @@ others appropriately."
   (message "case-fold-search: %s" (if case-fold-search "ON" "OFF")))
 ;; toggle-case-fold-search:1 ends here
 
-;; [[file:init-emacs.org::*derived-modes][derived-modes:1]]
+;; [[file:init-emacs.org::#functions-derived-modes][derived-modes:1]]
 ;;------------------------------------------------------------------------------
 ;;; Functions: derived-modes
 ;;------------------------------------------------------------------------------
@@ -10323,7 +10323,7 @@ MODE defaults to `major-mode'."
     (nreverse mode-list)))
 ;; derived-modes:1 ends here
 
-;; [[file:init-emacs.org::*Emacs Grouped Functions][Emacs Grouped Functions:1]]
+;; [[file:init-emacs.org::#functions-emacs-grouped-functions][Emacs Grouped Functions:1]]
 ;;------------------------------------------------------------------------------
 ;;; Functions: Emacs Grouped Functions
 ;;------------------------------------------------------------------------------
@@ -10331,7 +10331,7 @@ MODE defaults to `major-mode'."
 (init-message 2 "Functions: Emacs Grouped Functions")
 ;; Emacs Grouped Functions:1 ends here
 
-;; [[file:init-emacs.org::*Buffer Kill][Buffer Kill:1]]
+;; [[file:init-emacs.org::#functions-emacs-grouped-functions-buffer-kill][Buffer Kill:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Grouped Functions: Buffer Kill
 ;;------------------------------------------------------------------------------
@@ -10339,7 +10339,7 @@ MODE defaults to `major-mode'."
 (init-message 3 "Functions: Emacs Grouped Functions: Buffer Kill")
 ;; Buffer Kill:1 ends here
 
-;; [[file:init-emacs.org::*kill-buffer-query-functions-maybe-bury][kill-buffer-query-functions-maybe-bury:1]]
+;; [[file:init-emacs.org::#functions-emacs-grouped-functions-buffer-kill-kill-buffer-query-functions-maybe-bury][kill-buffer-query-functions-maybe-bury:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Grouped Functions: Buffer Kill: kill-buffer-query-functions-maybe-bury
 ;;------------------------------------------------------------------------------
@@ -10362,7 +10362,7 @@ Used as a `kill-buffer-query-functions' hook."
 (add-hook 'kill-buffer-query-functions #'kill-buffer-query-functions-maybe-bury)
 ;; kill-buffer-query-functions-maybe-bury:1 ends here
 
-;; [[file:init-emacs.org::*kill-other-window-buffer][kill-other-window-buffer:1]]
+;; [[file:init-emacs.org::#functions-emacs-grouped-functions-buffer-kill-kill-other-window-buffer][kill-other-window-buffer:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Grouped Functions: Buffer Kill: kill-other-window-buffer
 ;;------------------------------------------------------------------------------
@@ -10394,7 +10394,7 @@ When DELETE-WINDOW is non-nil, also delete the window."
       (message "No other window to kill")))))
 ;; kill-other-window-buffer:1 ends here
 
-;; [[file:init-emacs.org::*kill-other-window-buffer-and-delete-window][kill-other-window-buffer-and-delete-window:1]]
+;; [[file:init-emacs.org::#functions-emacs-grouped-functions-buffer-kill-kill-other-window-buffer-and-delete-window][kill-other-window-buffer-and-delete-window:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Grouped Functions: Buffer Kill: kill-other-window-buffer-and-delete-window
 ;;------------------------------------------------------------------------------
@@ -10408,7 +10408,7 @@ if there are more than two. Then delete that window."
   (kill-other-window-buffer t))
 ;; kill-other-window-buffer-and-delete-window:1 ends here
 
-;; [[file:init-emacs.org::*Clipboard][Clipboard:1]]
+;; [[file:init-emacs.org::#functions-emacs-grouped-functions-clipboard][Clipboard:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Grouped Functions: Clipboard
 ;;------------------------------------------------------------------------------
@@ -10455,7 +10455,7 @@ if there are more than two. Then delete that window."
     (insert (shell-command-to-string "xsel -o"))))
 ;; Clipboard:1 ends here
 
-;; [[file:init-emacs.org::*Occur][Occur:1]]
+;; [[file:init-emacs.org::#functions-emacs-grouped-functions-occur][Occur:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Grouped Functions: Occur
 ;;------------------------------------------------------------------------------
@@ -10463,7 +10463,7 @@ if there are more than two. Then delete that window."
 (init-message 3 "Functions: Emacs Grouped Functions: Occur")
 ;; Occur:1 ends here
 
-;; [[file:init-emacs.org::*occur-inverse][occur-inverse:1]]
+;; [[file:init-emacs.org::#functions-emacs-grouped-functions-occur-occur-inverse][occur-inverse:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Grouped Functions: Occur: occur-inverse
 ;;------------------------------------------------------------------------------
@@ -10489,7 +10489,7 @@ Otherwise, behaves the same as `occur'."
       (occur ".+"))))
 ;; occur-inverse:1 ends here
 
-;; [[file:init-emacs.org::*occur-remove][occur-remove:1]]
+;; [[file:init-emacs.org::#functions-emacs-grouped-functions-occur-occur-remove][occur-remove:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Grouped Functions: Occur: occur-remove
 ;;------------------------------------------------------------------------------
@@ -10511,7 +10511,7 @@ Otherwise, behaves the same as `occur'."
           (forward-line 1))))))
 ;; occur-remove:1 ends here
 
-;; [[file:init-emacs.org::*Text Conversion Functions][Text Conversion Functions:1]]
+;; [[file:init-emacs.org::#functions-text-conversion-functions][Text Conversion Functions:1]]
 ;;------------------------------------------------------------------------------
 ;;; Functions: Text Conversion Functions
 ;;------------------------------------------------------------------------------
@@ -10519,7 +10519,7 @@ Otherwise, behaves the same as `occur'."
 (init-message 2 "Functions: Text Conversion Functions")
 ;; Text Conversion Functions:1 ends here
 
-;; [[file:init-emacs.org::*set-coding-system][set-coding-system:1]]
+;; [[file:init-emacs.org::#functions-text-conversion-functions-set-coding-system][set-coding-system:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Text Conversion Functions: set-coding-system
 ;;------------------------------------------------------------------------------
@@ -10539,7 +10539,7 @@ Or any coding system returned by `list-coding-systems'."
   (set-buffer-file-coding-system coding-system :force))
 ;; set-coding-system:1 ends here
 
-;; [[file:init-emacs.org::*escape-xml][escape-xml:1]]
+;; [[file:init-emacs.org::#functions-text-conversion-functions-escape-xml][escape-xml:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Text Conversion Functions: escape-xml
 ;;------------------------------------------------------------------------------
@@ -10570,7 +10570,7 @@ Or any coding system returned by `list-coding-systems'."
   string)
 ;; escape-xml:1 ends here
 
-;; [[file:init-emacs.org::*unescape-xml][unescape-xml:1]]
+;; [[file:init-emacs.org::#functions-text-conversion-functions-unescape-xml][unescape-xml:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Text Conversion Functions: unescape-xml
 ;;------------------------------------------------------------------------------
@@ -10601,7 +10601,7 @@ Or any coding system returned by `list-coding-systems'."
   string)
 ;; unescape-xml:1 ends here
 
-;; [[file:init-emacs.org::*titleize][titleize:1]]
+;; [[file:init-emacs.org::#functions-text-conversion-functions-titleize][titleize:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Text Conversion Functions: titleize
 ;;------------------------------------------------------------------------------
@@ -10700,7 +10700,7 @@ be automatically capitalized."
                (cap string) t t) t t) abbrevs)))))))
 ;; titleize:1 ends here
 
-;; [[file:init-emacs.org::*titleize-word-enhanced][titleize-word-enhanced:1]]
+;; [[file:init-emacs.org::#functions-text-conversion-functions-titleize-word-enhanced][titleize-word-enhanced:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Text Conversion Functions: titleize-word-enhanced
 ;;------------------------------------------------------------------------------
@@ -10728,7 +10728,7 @@ be automatically capitalized."
             (replace-match (titleize (match-string 0) t) t)))))))
 ;; titleize-word-enhanced:1 ends here
 
-;; [[file:init-emacs.org::*titleize-line-or-region][titleize-line-or-region:1]]
+;; [[file:init-emacs.org::#functions-text-conversion-functions-titleize-line-or-region][titleize-line-or-region:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Text Conversion Functions: titleize-line-or-region
 ;;------------------------------------------------------------------------------
@@ -10772,7 +10772,7 @@ otherwise `downcase-word' is called."
         (goto-char (+ beg col))))))
 ;; titleize-line-or-region:1 ends here
 
-;; [[file:init-emacs.org::*unfill-paragraph][unfill-paragraph:1]]
+;; [[file:init-emacs.org::#functions-text-conversion-functions-unfill-paragraph][unfill-paragraph:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Text Conversion Functions: unfill-paragraph
 ;;------------------------------------------------------------------------------
@@ -10787,7 +10787,7 @@ otherwise `downcase-word' is called."
     (fill-paragraph nil)))
 ;; unfill-paragraph:1 ends here
 
-;; [[file:init-emacs.org::*single-space-punctuation][single-space-punctuation:1]]
+;; [[file:init-emacs.org::#functions-text-conversion-functions-single-space-punctuation][single-space-punctuation:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Text Conversion Functions: single-space-punctuation
 ;;------------------------------------------------------------------------------
@@ -10812,7 +10812,7 @@ paragraph or selected region."
           (replace-match "\\1 \\2"))))))
 ;; single-space-punctuation:1 ends here
 
-;; [[file:init-emacs.org::*double-space-punctuation][double-space-punctuation:1]]
+;; [[file:init-emacs.org::#functions-text-conversion-functions-double-space-punctuation][double-space-punctuation:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Text Conversion Functions: double-space-punctuation
 ;;------------------------------------------------------------------------------
@@ -10837,7 +10837,7 @@ paragraph or selected region."
           (replace-match "\\1  \\2"))))))
 ;; double-space-punctuation:1 ends here
 
-;; [[file:init-emacs.org::*Text Inserting Functions][Text Inserting Functions:1]]
+;; [[file:init-emacs.org::#functions-text-inserting-functions][Text Inserting Functions:1]]
 ;;------------------------------------------------------------------------------
 ;;; Functions: Text Inserting Functions
 ;;------------------------------------------------------------------------------
@@ -10845,7 +10845,7 @@ paragraph or selected region."
 (init-message 2 "Functions: Text Inserting Functions")
 ;; Text Inserting Functions:1 ends here
 
-;; [[file:init-emacs.org::*insert-timestamp][insert-timestamp:1]]
+;; [[file:init-emacs.org::#functions-text-inserting-functions-insert-timestamp][insert-timestamp:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Text Inserting Functions: insert-timestamp
 ;;------------------------------------------------------------------------------
@@ -10862,7 +10862,7 @@ paragraph or selected region."
     (insert (format-time-string "%Y-%m-%d %H:%M:%S"))))
 ;; insert-timestamp:1 ends here
 
-;; [[file:init-emacs.org::*insert-path][insert-path:1]]
+;; [[file:init-emacs.org::#functions-text-inserting-functions-insert-path][insert-path:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Text Inserting Functions: insert-path
 ;;------------------------------------------------------------------------------
@@ -10875,7 +10875,7 @@ paragraph or selected region."
   (insert (expand-file-name path)))
 ;; insert-path:1 ends here
 
-;; [[file:init-emacs.org::*uuid][uuid:1]]
+;; [[file:init-emacs.org::#functions-text-inserting-functions-uuid][uuid:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Text Inserting Functions: uuid
 ;;------------------------------------------------------------------------------
@@ -10914,7 +10914,7 @@ Example: 5ac55464-24e6-419c-99cf-5e1682bb3819"
 (defalias 'guid 'uuid)
 ;; uuid:1 ends here
 
-;; [[file:init-emacs.org::*insert-uuid][insert-uuid:1]]
+;; [[file:init-emacs.org::#functions-text-inserting-functions-insert-uuid][insert-uuid:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Text Inserting Functions: insert-uuid
 ;;------------------------------------------------------------------------------
@@ -10930,7 +10930,7 @@ Example: 5ac55464-24e6-419c-99cf-5e1682bb3819"
 (defalias 'insert-guid 'insert-uuid)
 ;; insert-uuid:1 ends here
 
-;; [[file:init-emacs.org::*uuid-decimal][uuid-decimal:1]]
+;; [[file:init-emacs.org::#functions-text-inserting-functions-uuid-decimal][uuid-decimal:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Text Inserting Functions: uuid-decimal
 ;;------------------------------------------------------------------------------
@@ -10947,7 +10947,7 @@ Example: 206479166935211742515584900341856848185"
 (defalias 'guid-decimal 'uuid-decimal)
 ;; uuid-decimal:1 ends here
 
-;; [[file:init-emacs.org::*uuid-string][uuid-string:1]]
+;; [[file:init-emacs.org::#functions-text-inserting-functions-uuid-string][uuid-string:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Text Inserting Functions: uuid-string
 ;;------------------------------------------------------------------------------
@@ -10981,7 +10981,7 @@ Example: 23MNvqBpz7dP53kZVeGmvR"
 (defalias 'guid-decimal 'uuid-string)
 ;; uuid-string:1 ends here
 
-;; [[file:init-emacs.org::*uuid-xml][uuid-xml:1]]
+;; [[file:init-emacs.org::#functions-text-inserting-functions-uuid-xml][uuid-xml:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Text Inserting Functions: uuid-xml
 ;;------------------------------------------------------------------------------
@@ -11008,7 +11008,7 @@ Example:
       `(error "Could not find %s command" ,cmd))))
 ;; uuid-xml:1 ends here
 
-;; [[file:init-emacs.org::*insert-uuid-xml][insert-uuid-xml:1]]
+;; [[file:init-emacs.org::#functions-text-inserting-functions-insert-uuid-xml][insert-uuid-xml:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Text Inserting Functions: insert-uuid-xml
 ;;------------------------------------------------------------------------------
@@ -11030,7 +11030,7 @@ Example:
   (insert (uuid-xml)))
 ;; insert-uuid-xml:1 ends here
 
-;; [[file:init-emacs.org::*insert-incrementing-vertical-numbers][insert-incrementing-vertical-numbers:1]]
+;; [[file:init-emacs.org::#functions-text-inserting-functions-insert-incrementing-vertical-numbers][insert-incrementing-vertical-numbers:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Text Inserting Functions: insert-incrementing-vertical-numbers
 ;;------------------------------------------------------------------------------
@@ -11064,3 +11064,9836 @@ If REPEAT is non-nil, repeat each number that many times."
                   (insert " ")
                 (forward-char 1)))))))))
 ;; insert-incrementing-vertical-numbers:1 ends here
+
+;; [[file:init-emacs.org::#functions-text-inserting-functions-insert-column-position-ruler][insert-column-position-ruler:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Text Inserting Functions: insert-column-position-ruler
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Text Inserting Functions: insert-column-position-ruler")
+
+(defun insert-column-position-ruler (&optional tens)
+  "Insert a column poisition ruler.
+If TENS is non-nil, insert that many ruler segments of ten digits.
+TENS defaults to 12."
+  (interactive "*")
+  (let ((tens (or tens 12)))
+    (dotimes (x tens)
+      (insert "1234567890"))))
+;; insert-column-position-ruler:1 ends here
+
+;; [[file:init-emacs.org::#functions-text-inserting-functions-append-char-to-column][append-char-to-column:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Text Inserting Functions: append-char-to-column
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Text Inserting Functions: append-char-to-column")
+
+(defun append-char-to-column (char col)
+  "Append character CHAR up to column COL and delete any past that point."
+  (save-mark-and-excursion
+    (goto-char (line-end-position))
+    (while (< (- (point) (line-beginning-position)) col)
+      (insert char))
+    (goto-char (+ (line-beginning-position) col))
+    (while (and
+            (char-after)
+            (char-equal (char-after) (string-to-char char)))
+      (delete-char 1))))
+;; append-char-to-column:1 ends here
+
+;; [[file:init-emacs.org::#functions-text-inserting-functions-append-equal-to-column-80][append-equal-to-column-80:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Text Inserting Functions: append-equal-to-column-80
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Text Inserting Functions: append-equal-to-column-80")
+
+(defun append-equal-to-column-80 ()
+  "Insert equal characters up to column 80."
+  (interactive "*")
+  (append-char-to-column "=" 80))
+;; append-equal-to-column-80:1 ends here
+
+;; [[file:init-emacs.org::#functions-text-inserting-functions-append-dash-to-column-80][append-dash-to-column-80:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Text Inserting Functions: append-dash-to-column-80
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Text Inserting Functions: append-dash-to-column-80")
+
+(defun append-dash-to-column-80 ()
+  "Insert dash characters up to column 80."
+  (interactive "*")
+  (append-char-to-column "-" 80))
+;; append-dash-to-column-80:1 ends here
+
+;; [[file:init-emacs.org::#functions-text-inserting-functions-append-asterisk-to-column-80][append-asterisk-to-column-80:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Text Inserting Functions: append-asterisk-to-column-80
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Text Inserting Functions: append-asterisk-to-column-80")
+
+(defun append-asterisk-to-column-80 ()
+  "Insert asterisk characters up to column 80."
+  (interactive "*")
+  (append-char-to-column "*" 80))
+;; append-asterisk-to-column-80:1 ends here
+
+;; [[file:init-emacs.org::#functions-text-inserting-functions-insert-lisp-comment-block-equal][insert-lisp-comment-block-equal:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Text Inserting Functions: insert-lisp-comment-block-equal
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Text Inserting Functions: insert-lisp-comment-block-equal")
+
+(defun insert-lisp-comment-block-equal ()
+  "Insert lisp comment block (equal)."
+  (interactive "*")
+  (indent-according-to-mode)
+  (insert ";;")
+  (append-equal-to-column-80)
+  (end-of-line)
+  (newline-and-indent)
+  (insert ";;")
+  (newline-and-indent)
+  (insert ";;")
+  (append-equal-to-column-80)
+  (end-of-line)
+  (newline)
+  (forward-line -2)
+  (end-of-line)
+  (insert " "))
+;; insert-lisp-comment-block-equal:1 ends here
+
+;; [[file:init-emacs.org::#functions-text-inserting-functions-insert-lisp-comment-block-dash][insert-lisp-comment-block-dash:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Text Inserting Functions: insert-lisp-comment-block-dash
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Text Inserting Functions: insert-lisp-comment-block-dash")
+
+(defun insert-lisp-comment-block-dash ()
+  "Insert lisp comment block (dash)."
+  (interactive "*")
+  (indent-according-to-mode)
+  (insert ";;")
+  (append-dash-to-column-80)
+  (end-of-line)
+  (newline-and-indent)
+  (insert ";;")
+  (newline-and-indent)
+  (insert ";;")
+  (append-dash-to-column-80)
+  (end-of-line)
+  (newline)
+  (forward-line -2)
+  (end-of-line)
+  (insert " "))
+;; insert-lisp-comment-block-dash:1 ends here
+
+;; [[file:init-emacs.org::#functions-text-inserting-functions-insert-center-lisp-comment][insert-center-lisp-comment:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Text Inserting Functions: insert-center-lisp-comment
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Text Inserting Functions: insert-center-lisp-comment")
+
+(defun insert-center-lisp-comment ()
+  "Insert center lisp comment (in comment block)."
+  (interactive "*")
+  (save-mark-and-excursion
+    (save-match-data
+      (goto-char (line-beginning-position))
+      (while (looking-at " +") (forward-char 1))
+      (while (looking-at ";+") (forward-char 1))
+      (let ((start (point)))
+        (forward-line -1)
+        (let ((len (- (line-end-position) (line-beginning-position)))
+              (spacer (char-before (line-end-position))))
+          (forward-line 1)
+          (while (search-forward (char-to-string spacer) (line-end-position) :noerror)
+            (replace-match ""))
+          (goto-char start)
+          (while (looking-at " ")
+            (delete-char 1 t))
+          (goto-char (line-end-position))
+          (while (eq (char-before (point)) ? )
+            (delete-char -1 t))
+          (let ((spacers (- (floor (/ (- len (- (point) start)) 2)) 4)))
+            (goto-char start)
+            (insert " " (make-string spacers spacer) " ")
+            (goto-char (line-end-position))
+            (insert " ")
+            (insert (make-string (- len (- (point) (line-beginning-position))) ?=))))))))
+;; insert-center-lisp-comment:1 ends here
+
+;; [[file:init-emacs.org::#functions-text-inserting-functions-insert-c-comment-block][insert-c-comment-block:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Text Inserting Functions: insert-c-comment-block
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Text Inserting Functions: insert-c-comment-block")
+
+(defun insert-c-comment-block ()
+  "Insert c/c++/java comment block."
+  (interactive "*")
+  (indent-according-to-mode)
+  (insert "/")
+  (append-asterisk-to-column-80)
+  (end-of-line)
+  (newline-and-indent)
+  (insert "*")
+  (indent-according-to-mode)
+  (newline-and-indent)
+  (insert "*")
+  (indent-according-to-mode)
+  (append-asterisk-to-column-80)
+  (end-of-line)
+  (delete-char -1)
+  (insert "/")
+  (newline)
+  (forward-line -2)
+  (end-of-line)
+  (insert " "))
+;; insert-c-comment-block:1 ends here
+
+;; [[file:init-emacs.org::#functions-text-inserting-functions-insert-c-comment-stub][insert-c-comment-stub:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Text Inserting Functions: insert-c-comment-stub
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Text Inserting Functions: insert-c-comment-stub")
+
+(defun insert-c-comment-stub ()
+  "Insert c/c++/java comment stub."
+  (interactive "*")
+  (end-of-line)
+  (indent-according-to-mode)
+  (insert "/**")
+  (newline-and-indent)
+  (insert "*")
+  (indent-according-to-mode)
+  (newline-and-indent)
+  (insert "*/")
+  (indent-according-to-mode)
+  (newline)
+  (forward-line -2)
+  (end-of-line)
+  (insert " "))
+;; insert-c-comment-stub:1 ends here
+
+;; [[file:init-emacs.org::#functions-text-inserting-functions-insert-db-change-log-template-line][insert-db-change-log-template-line:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Text Inserting Functions: insert-db-change-log-template-line
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Text Inserting Functions: insert-db-change-log-template-line")
+
+(defun insert-db-change-log-template-line ()
+  "Insert Everest DB Change Log template line at point."
+  (interactive "*")
+  ;;(insert (cons '(format-time-string "%m/%d" (current-time)) " | | | E_ | .D.Q.S.T.P. | yes\n"))
+  (insert (format-time-string "%m/%d" (current-time)))
+  (insert " |  |  | E_ | .D.Q.S.T.P. | yes")
+  (newline)
+  (forward-line -1)
+  (forward-char 8))
+;; insert-db-change-log-template-line:1 ends here
+
+;; [[file:init-emacs.org::#functions-text-inserting-functions-insert-db-change-log-template-line-legacy][insert-db-change-log-template-line-legacy:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Text Inserting Functions: insert-db-change-log-template-line-legacy
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Text Inserting Functions: insert-db-change-log-template-line-legacy")
+
+(defun insert-db-change-log-template-line-legacy ()
+  "Insert Legacy DB Change Log template line at point."
+  (interactive "*")
+  (insert (format-time-string "%m/%d" (current-time)))
+  (insert " |  |  | AwardCafe_Client | .D.S.P. | yes")
+  (newline)
+  (forward-line -1)
+  (forward-char 8))
+;; insert-db-change-log-template-line-legacy:1 ends here
+
+;; [[file:init-emacs.org::#functions-text-inserting-functions-insert-xml-header][insert-xml-header:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Text Inserting Functions: insert-xml-header
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Text Inserting Functions: insert-xml-header")
+
+(defun insert-xml-header ()
+  "Insert standard XML header.
+
+Specifically: <?xml version=\"1.0\" encoding=\"utf-8\"?>"
+  (interactive "*")
+  (insert "<?xml version=\"1.0\" encoding=\"utf-8\"?>"))
+;; insert-xml-header:1 ends here
+
+;; [[file:init-emacs.org::#functions-text-inserting-functions-insert-lexical-binding][insert-lexical-binding:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Text Inserting Functions: insert-lexical-binding
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Text Inserting Functions: insert-lexical-binding")
+
+(defun insert-lexical-binding ()
+  "Insert file local variable `lexical-binding' in the first line
+of the current buffer."
+  (interactive "*")
+  (save-mark-and-excursion
+    (goto-char (point-min))
+    (if (looking-at ";; -\\*-.*-\\*-")
+        (unless (looking-at ";; -\\*-.*lexical-binding:.*-\\*-")
+          (goto-char (line-end-position))
+          (forward-char -4)
+          (when (looking-at " -\\*-")
+            (forward-char -1)
+            (if (looking-at ";")
+                (forward-char 1)
+              (progn
+                (forward-char 1)
+                (insert ";")))
+            (insert " lexical-binding: t;")))
+      (insert ";; -*- lexical-binding: t; -*-\n;;\n"))))
+;; insert-lexical-binding:1 ends here
+
+;; [[file:init-emacs.org::#functions-text-inserting-functions-insert-toc-header][insert-toc-header:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Text Inserting Functions: insert-toc-header
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Text Inserting Functions: insert-toc-header")
+
+(defun insert-toc-header ()
+  "Insert `org-mode' table of contents (TOC) header."
+  (interactive "*")
+  (let ((text
+         `("* Table of Contents"
+           "  :PROPERTIES:"
+           "  :CUSTOM_ID: table-of-contents"
+           "  :TOC: :include all"
+           "  :END:"
+           ""
+           "  :CONTENTS:"
+           "  :END:"
+           "")))
+    (dolist (x text)
+      (insert x)
+      (newline))))
+;; insert-toc-header:1 ends here
+
+;; [[file:init-emacs.org::#functions-text-inserting-functions-insert-figlet][insert-figlet:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Text Inserting Functions: insert-figlet
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Text Inserting Functions: insert-figlet")
+
+(defun insert-figlet (text)
+  "Insert figlet version of TEXT, if figlet is installed."
+  (interactive "*sText: ")
+  (if (executable-find "figlet")
+      (insert (shell-command-to-string (concat "figlet " text)))
+    (error "Could not find figlet command")))
+;; insert-figlet:1 ends here
+
+;; [[file:init-emacs.org::#functions-text-inserting-functions-insert-password][insert-password:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Text Inserting Functions: insert-password
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Text Inserting Functions: insert-password")
+
+(defun insert-password (length)
+  "Insert generated password of LENGTH characters."
+  (interactive "*nLength: ")
+  (cl-labels
+      ((string-to-list (string) (cl-loop for x across string collect x))
+       (list-to-string (list) (mapconcat 'string list "")))
+    (let* ((upper (string-to-list "ABCDEFGHIJKLMNOPQRSTUVWXYZ"))
+           (lower (string-to-list "abcdefghijklmnopqrstuvwxyz"))
+           (numbers (string-to-list "0123456789")) ; 0 is omitted to prevent confusion with O
+           (symbols (string-to-list "!@#$%^&*"))
+           (letters (append upper lower numbers symbols))
+           (letters-size (length letters))
+           (bookends (append upper lower numbers))
+           (bookends-size (length bookends))
+           (min-numbers 1)
+           (min-symbols 1)
+           (number-count 0)
+           (symbol-count 0)
+           password
+           valid)
+      (when (< length 6)
+        (error "Password LENGTH must be at least 6."))
+      (while (or (< (length password) length)
+                 (not valid))
+        (when (= (length password) length)
+          ;; password is invalid, so clear it and try again
+          (setq password nil))
+        ;; password will start and end with a non-symbol
+        (let ((char (if (and (> (length password) 0)
+                             (< (length password) (1- length)))
+                        (elt letters (random letters-size))
+                        (elt bookends (random bookends-size)))))
+          (push char password)
+          (when (member char numbers)
+            (incf number-count))
+          (when (member char symbols)
+            (incf symbol-count))
+          (when (and (> number-count 0)
+                     (> symbol-count 0))
+            (setq valid t))))
+      (insert (list-to-string password)))))
+
+(defun insert-password-14 ()
+  "Call `insert-password' with a LENGTH of 14"
+  (interactive "*")
+  (insert-password 14))
+;; insert-password:1 ends here
+
+;; [[file:init-emacs.org::#functions-text-inserting-functions-insert-password-phrase][insert-password-phrase:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Text Inserting Functions: insert-password-phrase
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Text Inserting Functions: insert-password-phrase")
+
+(defun insert-password-phrase (count &optional output)
+  "Insert generated password phrase containing COUNT words.
+
+OUTPUT (defaults to 'phrase):
+
+  'phrase   \"threewordphrase\"
+  'space    \"three word phrase\"
+  'hyphen   \"three-word-phrase\"
+  'list     (\"three\" \"word\" \"phrase\")"
+  (interactive "*nCount: ")
+  (let* ((words
+          '("abandon" "ability" "able" "about" "above" "absent" "absorb" "abstract" "absurd"
+            "abuse" "access" "accident" "account" "accuse" "achieve" "acid" "acoustic"
+            "acquire" "across" "act" "action" "actor" "actress" "actual" "adapt" "add" "addict"
+            "address" "adjust" "admit" "adult" "advance" "advice" "aerobic" "affair" "afford"
+            "afraid" "again" "age" "agent" "agree" "ahead" "aim" "air" "airport" "aisle" "alarm"
+            "album" "alcohol" "alert" "alien" "all" "alley" "allow" "almost" "alone" "alpha"
+            "already" "also" "alter" "always" "amateur" "amazing" "among" "amount" "amused"
+            "analyst" "anchor" "ancient" "anger" "angle" "angry" "animal" "ankle" "announce"
+            "annual" "another" "answer" "antenna" "antique" "anxiety" "any" "apart" "apology"
+            "appear" "apple" "approve" "april" "arch" "arctic" "area" "arena" "argue" "arm" "armed"
+            "armor" "army" "around" "arrange" "arrest" "arrive" "arrow" "art" "artefact" "artist"
+            "artwork" "ask" "aspect" "assault" "asset" "assist" "assume" "asthma" "athlete"
+            "atom" "attack" "attend" "attitude" "attract" "auction" "audit" "august" "aunt"
+            "author" "auto" "autumn" "average" "avocado" "avoid" "awake" "aware" "away" "awesome"
+            "awful" "awkward" "axis" "baby" "bachelor" "bacon" "badge" "bag" "balance" "balcony"
+            "ball" "bamboo" "banana" "banner" "bar" "barely" "bargain" "barrel" "base" "basic"
+            "basket" "battle" "beach" "bean" "beauty" "because" "become" "beef" "before" "begin"
+            "behave" "behind" "believe" "below" "belt" "bench" "benefit" "best" "betray" "better"
+            "between" "beyond" "bicycle" "bid" "bike" "bind" "biology" "bird" "birth" "bitter"
+            "black" "blade" "blame" "blanket" "blast" "bleak" "bless" "blind" "blood" "blossom"
+            "blouse" "blue" "blur" "blush" "board" "boat" "body" "boil" "bomb" "bone" "bonus" "book"
+            "boost" "border" "boring" "borrow" "boss" "bottom" "bounce" "box" "boy" "bracket"
+            "brain" "brand" "brass" "brave" "bread" "breeze" "brick" "bridge" "brief" "bright"
+            "bring" "brisk" "broccoli" "broken" "bronze" "broom" "brother" "brown" "brush"
+            "bubble" "buddy" "budget" "buffalo" "build" "bulb" "bulk" "bullet" "bundle" "bunker"
+            "burden" "burger" "burst" "bus" "business" "busy" "butter" "buyer" "buzz" "cabbage"
+            "cabin" "cable" "cactus" "cage" "cake" "call" "calm" "camera" "camp" "can" "canal"
+            "cancel" "candy" "cannon" "canoe" "canvas" "canyon" "capable" "capital" "captain"
+            "car" "carbon" "card" "cargo" "carpet" "carry" "cart" "case" "cash" "casino" "castle"
+            "casual" "cat" "catalog" "catch" "category" "cattle" "caught" "cause" "caution"
+            "cave" "ceiling" "celery" "cement" "census" "century" "cereal" "certain" "chair"
+            "chalk" "champion" "change" "chaos" "chapter" "charge" "chase" "chat" "cheap" "check"
+            "cheese" "chef" "cherry" "chest" "chicken" "chief" "child" "chimney" "choice"
+            "choose" "chronic" "chuckle" "chunk" "churn" "cigar" "cinnamon" "circle" "citizen"
+            "city" "civil" "claim" "clap" "clarify" "claw" "clay" "clean" "clerk" "clever" "click"
+            "client" "cliff" "climb" "clinic" "clip" "clock" "clog" "close" "cloth" "cloud" "clown"
+            "club" "clump" "cluster" "clutch" "coach" "coast" "coconut" "code" "coffee" "coil"
+            "coin" "collect" "color" "column" "combine" "come" "comfort" "comic" "common"
+            "company" "concert" "conduct" "confirm" "congress" "connect" "consider" "control"
+            "convince" "cook" "cool" "copper" "copy" "coral" "core" "corn" "correct" "cost"
+            "cotton" "couch" "country" "couple" "course" "cousin" "cover" "coyote" "crack"
+            "cradle" "craft" "cram" "crane" "crash" "crater" "crawl" "crazy" "cream" "credit"
+            "creek" "crew" "cricket" "crime" "crisp" "critic" "crop" "cross" "crouch" "crowd"
+            "crucial" "cruel" "cruise" "crumble" "crunch" "crush" "cry" "crystal" "cube"
+            "culture" "cup" "cupboard" "curious" "current" "curtain" "curve" "cushion" "custom"
+            "cute" "cycle" "dad" "damage" "damp" "dance" "danger" "daring" "dash" "daughter" "dawn"
+            "day" "deal" "debate" "debris" "decade" "december" "decide" "decline" "decorate"
+            "decrease" "deer" "defense" "define" "defy" "degree" "delay" "deliver" "demand"
+            "demise" "denial" "dentist" "deny" "depart" "depend" "deposit" "depth" "deputy"
+            "derive" "describe" "desert" "design" "desk" "despair" "destroy" "detail" "detect"
+            "develop" "device" "devote" "diagram" "dial" "diamond" "diary" "dice" "diesel" "diet"
+            "differ" "digital" "dignity" "dilemma" "dinner" "dinosaur" "direct" "dirt"
+            "disagree" "discover" "disease" "dish" "dismiss" "disorder" "display" "distance"
+            "divert" "divide" "divorce" "dizzy" "doctor" "document" "dog" "doll" "dolphin"
+            "domain" "donate" "donkey" "donor" "door" "dose" "double" "dove" "draft" "dragon"
+            "drama" "drastic" "draw" "dream" "dress" "drift" "drill" "drink" "drip" "drive" "drop"
+            "drum" "dry" "duck" "dumb" "dune" "during" "dust" "dutch" "duty" "dwarf" "dynamic"
+            "eager" "eagle" "early" "earn" "earth" "easily" "east" "easy" "echo" "ecology"
+            "economy" "edge" "edit" "educate" "effort" "egg" "eight" "either" "elbow" "elder"
+            "electric" "elegant" "element" "elephant" "elevator" "elite" "else" "embark"
+            "embody" "embrace" "emerge" "emotion" "employ" "empower" "empty" "enable" "enact"
+            "end" "endless" "endorse" "enemy" "energy" "enforce" "engage" "engine" "enhance"
+            "enjoy" "enlist" "enough" "enrich" "enroll" "ensure" "enter" "entire" "entry"
+            "envelope" "episode" "equal" "equip" "era" "erase" "erode" "erosion" "error" "erupt"
+            "escape" "essay" "essence" "estate" "eternal" "ethics" "evidence" "evil" "evoke"
+            "evolve" "exact" "example" "excess" "exchange" "excite" "exclude" "excuse"
+            "execute" "exercise" "exhaust" "exhibit" "exile" "exist" "exit" "exotic" "expand"
+            "expect" "expire" "explain" "expose" "express" "extend" "extra" "eye" "eyebrow"
+            "fabric" "face" "faculty" "fade" "faint" "faith" "fall" "false" "fame" "family"
+            "famous" "fan" "fancy" "fantasy" "farm" "fashion" "fat" "fatal" "father" "fatigue"
+            "fault" "favorite" "feature" "february" "federal" "fee" "feed" "feel" "female"
+            "fence" "festival" "fetch" "fever" "few" "fiber" "fiction" "field" "figure" "file"
+            "film" "filter" "final" "find" "fine" "finger" "finish" "fire" "firm" "first" "fiscal"
+            "fish" "fit" "fitness" "fix" "flag" "flame" "flash" "flat" "flavor" "flee" "flight"
+            "flip" "float" "flock" "floor" "flower" "fluid" "flush" "fly" "foam" "focus" "fog" "foil"
+            "fold" "follow" "food" "foot" "force" "forest" "forget" "fork" "fortune" "forum"
+            "forward" "fossil" "foster" "found" "fox" "fragile" "frame" "frequent" "fresh"
+            "friend" "fringe" "frog" "front" "frost" "frown" "frozen" "fruit" "fuel" "fun" "funny"
+            "furnace" "fury" "future" "gadget" "gain" "galaxy" "gallery" "game" "gap" "garage"
+            "garbage" "garden" "garlic" "garment" "gas" "gasp" "gate" "gather" "gauge" "gaze"
+            "general" "genius" "genre" "gentle" "genuine" "gesture" "ghost" "giant" "gift"
+            "giggle" "ginger" "giraffe" "girl" "give" "glad" "glance" "glare" "glass" "glide"
+            "glimpse" "globe" "gloom" "glory" "glove" "glow" "glue" "goat" "goddess" "gold" "good"
+            "goose" "gorilla" "gospel" "gossip" "govern" "gown" "grab" "grace" "grain" "grant"
+            "grape" "grass" "gravity" "great" "green" "grid" "grief" "grit" "grocery" "group"
+            "grow" "grunt" "guard" "guess" "guide" "guilt" "guitar" "gun" "gym" "habit" "hair" "half"
+            "hammer" "hamster" "hand" "happy" "harbor" "hard" "harsh" "harvest" "hat" "have" "hawk"
+            "hazard" "head" "health" "heart" "heavy" "hedgehog" "height" "hello" "helmet" "help"
+            "hen" "hero" "hidden" "high" "hill" "hint" "hip" "hire" "history" "hobby" "hockey" "hold"
+            "hole" "holiday" "hollow" "home" "honey" "hood" "hope" "horn" "horror" "horse"
+            "hospital" "host" "hotel" "hour" "hover" "hub" "huge" "human" "humble" "humor"
+            "hundred" "hungry" "hunt" "hurdle" "hurry" "hurt" "husband" "hybrid" "ice" "icon"
+            "idea" "identify" "idle" "ignore" "ill" "illegal" "illness" "image" "imitate"
+            "immense" "immune" "impact" "impose" "improve" "impulse" "inch" "include" "income"
+            "increase" "index" "indicate" "indoor" "industry" "infant" "inflict" "inform"
+            "inhale" "inherit" "initial" "inject" "injury" "inmate" "inner" "innocent" "input"
+            "inquiry" "insane" "insect" "inside" "inspire" "install" "intact" "interest" "into"
+            "invest" "invite" "involve" "iron" "island" "isolate" "issue" "item" "ivory" "jacket"
+            "jaguar" "jar" "jazz" "jealous" "jeans" "jelly" "jewel" "job" "join" "joke" "journey"
+            "joy" "judge" "juice" "jump" "jungle" "junior" "junk" "just" "kangaroo" "keen" "keep"
+            "ketchup" "key" "kick" "kid" "kidney" "kind" "kingdom" "kiss" "kit" "kitchen" "kite"
+            "kitten" "kiwi" "knee" "knife" "knock" "know" "lab" "label" "labor" "ladder" "lady"
+            "lake" "lamp" "language" "laptop" "large" "later" "latin" "laugh" "laundry" "lava"
+            "law" "lawn" "lawsuit" "layer" "lazy" "leader" "leaf" "learn" "leave" "lecture" "left"
+            "leg" "legal" "legend" "leisure" "lemon" "lend" "length" "lens" "leopard" "lesson"
+            "letter" "level" "liar" "liberty" "library" "license" "life" "lift" "light" "like"
+            "limb" "limit" "link" "lion" "liquid" "list" "little" "live" "lizard" "load" "loan"
+            "lobster" "local" "lock" "logic" "lonely" "long" "loop" "lottery" "loud" "lounge"
+            "love" "loyal" "lucky" "luggage" "lumber" "lunar" "lunch" "luxury" "lyrics" "machine"
+            "mad" "magic" "magnet" "maid" "mail" "main" "major" "make" "mammal" "man" "manage"
+            "mandate" "mango" "mansion" "manual" "maple" "marble" "march" "margin" "marine"
+            "market" "marriage" "mask" "mass" "master" "match" "material" "math" "matrix"
+            "matter" "maximum" "maze" "meadow" "mean" "measure" "meat" "mechanic" "medal" "media"
+            "melody" "melt" "member" "memory" "mention" "menu" "mercy" "merge" "merit" "merry"
+            "mesh" "message" "metal" "method" "middle" "midnight" "milk" "million" "mimic" "mind"
+            "minimum" "minor" "minute" "miracle" "mirror" "misery" "miss" "mistake" "mix" "mixed"
+            "mixture" "mobile" "model" "modify" "mom" "moment" "monitor" "monkey" "monster"
+            "month" "moon" "moral" "more" "morning" "mosquito" "mother" "motion" "motor"
+            "mountain" "mouse" "move" "movie" "much" "muffin" "mule" "multiply" "muscle" "museum"
+            "mushroom" "music" "must" "mutual" "myself" "mystery" "myth" "naive" "name" "napkin"
+            "narrow" "nasty" "nation" "nature" "near" "neck" "need" "negative" "neglect"
+            "neither" "nephew" "nerve" "nest" "net" "network" "neutral" "never" "news" "next"
+            "nice" "night" "noble" "noise" "nominee" "noodle" "normal" "north" "nose" "notable"
+            "note" "nothing" "notice" "novel" "now" "nuclear" "number" "nurse" "nut" "oak" "obey"
+            "object" "oblige" "obscure" "observe" "obtain" "obvious" "occur" "ocean" "october"
+            "odor" "off" "offer" "office" "often" "oil" "okay" "old" "olive" "olympic" "omit" "once"
+            "one" "onion" "online" "only" "open" "opera" "opinion" "oppose" "option" "orange"
+            "orbit" "orchard" "order" "ordinary" "organ" "orient" "original" "orphan" "ostrich"
+            "other" "outdoor" "outer" "output" "outside" "oval" "oven" "over" "own" "owner"
+            "oxygen" "oyster" "ozone" "pact" "paddle" "page" "pair" "palace" "palm" "panda" "panel"
+            "panic" "panther" "paper" "parade" "parent" "park" "parrot" "party" "pass" "patch"
+            "path" "patient" "patrol" "pattern" "pause" "pave" "payment" "peace" "peanut" "pear"
+            "peasant" "pelican" "pen" "penalty" "pencil" "people" "pepper" "perfect" "permit"
+            "person" "pet" "phone" "photo" "phrase" "physical" "piano" "picnic" "picture" "piece"
+            "pig" "pigeon" "pill" "pilot" "pink" "pioneer" "pipe" "pistol" "pitch" "pizza" "place"
+            "planet" "plastic" "plate" "play" "please" "pledge" "pluck" "plug" "plunge" "poem"
+            "poet" "point" "polar" "pole" "police" "pond" "pony" "pool" "popular" "portion"
+            "position" "possible" "post" "potato" "pottery" "poverty" "powder" "power"
+            "practice" "praise" "predict" "prefer" "prepare" "present" "pretty" "prevent"
+            "price" "pride" "primary" "print" "priority" "prison" "private" "prize" "problem"
+            "process" "produce" "profit" "program" "project" "promote" "proof" "property"
+            "prosper" "protect" "proud" "provide" "public" "pudding" "pull" "pulp" "pulse"
+            "pumpkin" "punch" "pupil" "puppy" "purchase" "purity" "purpose" "purse" "push" "put"
+            "puzzle" "pyramid" "quality" "quantum" "quarter" "question" "quick" "quit" "quiz"
+            "quote" "rabbit" "raccoon" "race" "rack" "radar" "radio" "rail" "rain" "raise" "rally"
+            "ramp" "ranch" "random" "range" "rapid" "rare" "rate" "rather" "raven" "raw" "razor"
+            "ready" "real" "reason" "rebel" "rebuild" "recall" "receive" "recipe" "record"
+            "recycle" "reduce" "reflect" "reform" "refuse" "region" "regret" "regular" "reject"
+            "relax" "release" "relief" "rely" "remain" "remember" "remind" "remove" "render"
+            "renew" "rent" "reopen" "repair" "repeat" "replace" "report" "require" "rescue"
+            "resemble" "resist" "resource" "response" "result" "retire" "retreat" "return"
+            "reunion" "reveal" "review" "reward" "rhythm" "rib" "ribbon" "rice" "rich" "ride"
+            "ridge" "rifle" "right" "rigid" "ring" "riot" "ripple" "risk" "ritual" "rival" "river"
+            "road" "roast" "robot" "robust" "rocket" "romance" "roof" "rookie" "room" "rose"
+            "rotate" "rough" "round" "route" "royal" "rubber" "rude" "rug" "rule" "run" "runway"
+            "rural" "sad" "saddle" "sadness" "safe" "sail" "salad" "salmon" "salon" "salt" "salute"
+            "same" "sample" "sand" "satisfy" "satoshi" "sauce" "sausage" "save" "say" "scale"
+            "scan" "scare" "scatter" "scene" "scheme" "school" "science" "scissors" "scorpion"
+            "scout" "scrap" "screen" "script" "scrub" "sea" "search" "season" "seat" "second"
+            "secret" "section" "security" "seed" "seek" "segment" "select" "sell" "seminar"
+            "senior" "sense" "sentence" "series" "service" "session" "settle" "setup" "seven"
+            "shadow" "shaft" "shallow" "share" "shed" "shell" "sheriff" "shield" "shift" "shine"
+            "ship" "shiver" "shock" "shoe" "shoot" "shop" "short" "shoulder" "shove" "shrimp"
+            "shrug" "shuffle" "shy" "sibling" "sick" "side" "siege" "sight" "sign" "silent" "silk"
+            "silly" "silver" "similar" "simple" "since" "sing" "siren" "sister" "situate" "six"
+            "size" "skate" "sketch" "ski" "skill" "skin" "skirt" "skull" "slab" "slam" "sleep"
+            "slender" "slice" "slide" "slight" "slim" "slogan" "slot" "slow" "slush" "small"
+            "smart" "smile" "smoke" "smooth" "snack" "snake" "snap" "sniff" "snow" "soap" "soccer"
+            "social" "sock" "soda" "soft" "solar" "soldier" "solid" "solution" "solve" "someone"
+            "song" "soon" "sorry" "sort" "soul" "sound" "soup" "source" "south" "space" "spare"
+            "spatial" "spawn" "speak" "special" "speed" "spell" "spend" "sphere" "spice" "spider"
+            "spike" "spin" "spirit" "split" "spoil" "sponsor" "spoon" "sport" "spot" "spray"
+            "spread" "spring" "spy" "square" "squeeze" "squirrel" "stable" "stadium" "staff"
+            "stage" "stairs" "stamp" "stand" "start" "state" "stay" "steak" "steel" "stem" "step"
+            "stereo" "stick" "still" "sting" "stock" "stomach" "stone" "stool" "story" "stove"
+            "strategy" "street" "strike" "strong" "struggle" "student" "stuff" "stumble"
+            "style" "subject" "submit" "subway" "success" "such" "sudden" "suffer" "sugar"
+            "suggest" "suit" "summer" "sun" "sunny" "sunset" "super" "supply" "supreme" "sure"
+            "surface" "surge" "surprise" "surround" "survey" "suspect" "sustain" "swallow"
+            "swamp" "swap" "swarm" "swear" "sweet" "swift" "swim" "swing" "switch" "sword" "symbol"
+            "symptom" "syrup" "system" "table" "tackle" "tag" "tail" "talent" "talk" "tank" "tape"
+            "target" "task" "taste" "tattoo" "taxi" "teach" "team" "tell" "ten" "tenant" "tennis"
+            "tent" "term" "test" "text" "thank" "that" "theme" "then" "theory" "there" "they" "thing"
+            "this" "thought" "three" "thrive" "throw" "thumb" "thunder" "ticket" "tide" "tiger"
+            "tilt" "timber" "time" "tiny" "tip" "tired" "tissue" "title" "toast" "tobacco" "today"
+            "toddler" "toe" "together" "toilet" "token" "tomato" "tomorrow" "tone" "tongue"
+            "tonight" "tool" "tooth" "top" "topic" "topple" "torch" "tornado" "tortoise" "toss"
+            "total" "tourist" "toward" "tower" "town" "toy" "track" "trade" "traffic" "tragic"
+            "train" "transfer" "trap" "trash" "travel" "tray" "treat" "tree" "trend" "trial"
+            "tribe" "trick" "trigger" "trim" "trip" "trophy" "trouble" "truck" "true" "truly"
+            "trumpet" "trust" "truth" "try" "tube" "tuition" "tumble" "tuna" "tunnel" "turkey"
+            "turn" "turtle" "twelve" "twenty" "twice" "twin" "twist" "two" "type" "typical" "ugly"
+            "umbrella" "unable" "unaware" "uncle" "uncover" "under" "undo" "unfair" "unfold"
+            "unhappy" "uniform" "unique" "unit" "universe" "unknown" "unlock" "until" "unusual"
+            "unveil" "update" "upgrade" "uphold" "upon" "upper" "upset" "urban" "urge" "usage"
+            "use" "used" "useful" "useless" "usual" "utility" "vacant" "vacuum" "vague" "valid"
+            "valley" "valve" "van" "vanish" "vapor" "various" "vast" "vault" "vehicle" "velvet"
+            "vendor" "venture" "venue" "verb" "verify" "version" "very" "vessel" "veteran"
+            "viable" "vibrant" "vicious" "victory" "video" "view" "village" "vintage" "violin"
+            "virtual" "virus" "visa" "visit" "visual" "vital" "vivid" "vocal" "voice" "void"
+            "volcano" "volume" "vote" "voyage" "wage" "wagon" "wait" "walk" "wall" "walnut" "want"
+            "warfare" "warm" "warrior" "wash" "wasp" "waste" "water" "wave" "way" "wealth" "weapon"
+            "wear" "weasel" "weather" "web" "wedding" "weekend" "weird" "welcome" "west" "wet"
+            "whale" "what" "wheat" "wheel" "when" "where" "whip" "whisper" "wide" "width" "wife"
+            "wild" "will" "win" "window" "wine" "wing" "wink" "winner" "winter" "wire" "wisdom"
+            "wise" "wish" "witness" "wolf" "woman" "wonder" "wood" "wool" "word" "work" "world"
+            "worry" "worth" "wrap" "wreck" "wrestle" "wrist" "write" "wrong" "yard" "year" "yellow"
+            "you" "young" "youth" "zebra" "zero" "zone" "zoo"))
+         (size (length words))
+         phrase)
+    (while (< (length phrase) count)
+      (pushnew (elt words (random size)) phrase))
+    (cl-case output
+      ('list (insert (format "%S" phrase)))
+      ('space (insert (cl-reduce (lambda (x y) (concat x " " y)) phrase)))
+      ('hyphen (insert (cl-reduce (lambda (x y) (concat x "-" y)) phrase)))
+      (t (insert (cl-reduce (lambda (x y) (concat x y)) phrase))))))
+
+(defun insert-password-phrase-three-hyphen ()
+  "Call `insert-password-phrase' with a COUNT of 3 and an OUTPUT
+of 'hyphen."
+  (interactive "*")
+  (insert-password-phrase 3 'hyphen))
+;; insert-password-phrase:1 ends here
+
+;; [[file:init-emacs.org::#functions-text-inserting-functions-insert-license-gpl][insert-license-gpl:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Text Inserting Functions: insert-license-gpl
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Text Inserting Functions: insert-license-gpl")
+
+(defun insert-license-gpl ()
+  "Insert GPL2 license block to be used at the top of code files."
+  (interactive "*")
+  (let ((text
+         `("General Public License (Version 2)"
+           ""
+           ,(concat "Copyright © " (format-time-string "%Y" nil t) " " user-full-name)
+           ""
+           "This program is free software; you can redistribute it and/or modify"
+           "it under the terms of the GNU General Public License as published by"
+           "the Free Software Foundation; either version 2 of the License, or"
+           "(at your option) any later version."
+           ""
+           "This program is distributed in the hope that it will be useful,"
+           "but WITHOUT ANY WARRANTY; without even the implied warranty of"
+           "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the"
+           "GNU General Public License for more details."
+           ""
+           "You should have received a copy of the GNU General Public License along"
+           "with this program; if not, write to the Free Software Foundation, Inc.,"
+           "51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.")))
+    (dolist (x text)
+      (call-interactively #'comment-dwim)
+      (insert x)
+      (newline))))
+;; insert-license-gpl:1 ends here
+
+;; [[file:init-emacs.org::#functions-text-inserting-functions-insert-license-mit][insert-license-mit:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Text Inserting Functions: insert-license-mit
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Text Inserting Functions: insert-license-mit")
+
+(defun insert-license-mit ()
+  "Insert MIT license block to be used at the top of code files."
+  (interactive "*")
+  (let ((text
+         `("MIT License"
+           ""
+           ,(concat "Copyright © " (format-time-string "%Y" nil t) " " user-full-name)
+           ""
+           "Permission is hereby granted, free of charge, to any person obtaining"
+           "a copy of this software and associated documentation files (the"
+           "\"Software\"), to deal in the Software without restriction, including"
+           "without limitation the rights to use, copy, modify, merge, publish,"
+           "distribute, sublicense, and/or sell copies of the Software, and to"
+           "permit persons to whom the Software is furnished to do so, subject to"
+           "the following conditions:"
+           ""
+           "The above copyright notice and this permission notice shall be"
+           "included in all copies or substantial portions of the Software."
+           ""
+           "THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND,"
+           "EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF"
+           "MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND"
+           "NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE"
+           "LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION"
+           "OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION"
+           "WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.")))
+    (dolist (x text)
+      (call-interactively #'comment-dwim)
+      (insert x)
+      (newline))))
+;; insert-license-mit:1 ends here
+
+;; [[file:init-emacs.org::#functions-text-inserting-functions-insert-license-apache][insert-license-apache:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Text Inserting Functions: insert-license-apache
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Text Inserting Functions: insert-license-apache")
+
+(defun insert-license-apache ()
+  "Insert Apache license block to be used at the top of code files."
+  (interactive "*")
+  (let ((text
+         `("Apache License"
+           ""
+           ,(concat "Copyright © " (format-time-string "%Y" nil t) " " user-full-name)
+           ""
+           "Licensed under the Apache License, Version 2.0 (the \"License\");"
+           "you may not use this file except in compliance with the License."
+           "You may obtain a copy of the License at"
+           ""
+           "    http://www.apache.org/licenses/LICENSE-2.0"
+           ""
+           "Unless required by applicable law or agreed to in writing, software"
+           "distributed under the License is distributed on an \"AS IS\" BASIS,"
+           "WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied."
+           "See the License for the specific language governing permissions and"
+           "limitations under the License.")))
+    (dolist (x text)
+      (call-interactively #'comment-dwim)
+      (insert x)
+      (newline))))
+;; insert-license-apache:1 ends here
+
+;; [[file:init-emacs.org::#functions-external-program-functions][External Program Functions:1]]
+;;------------------------------------------------------------------------------
+;;; Functions: External Program Functions
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Functions: External Program Functions")
+;; External Program Functions:1 ends here
+
+;; [[file:init-emacs.org::#functions-external-program-functions-insert-date][insert-date:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: External Program Functions: insert-date
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: External Program Functions: insert-date")
+
+(defun insert-date ()
+  "Insert current date in YYYY-MM-DD format."
+  (interactive "*")
+  (call-process "date" nil t nil "+%Y-%m-%d")
+  (delete-char -1))
+;; insert-date:1 ends here
+
+;; [[file:init-emacs.org::#functions-external-program-functions-insert-datetime][insert-datetime:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: External Program Functions: insert-datetime
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: External Program Functions: insert-datetime")
+
+(defun insert-datetime ()
+  "Insert current date and time in YYYY-MM-DD HH:MM:SS format."
+  (interactive "*")
+  (call-process "date" nil t nil "+%Y-%m-%d %H:%M:%S")
+  (delete-char -1))
+;; insert-datetime:1 ends here
+
+;; [[file:init-emacs.org::#functions-external-program-functions-insert-time][insert-time:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: External Program Functions: insert-time
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: External Program Functions: insert-time")
+
+(defun insert-time ()
+  "Insert current time in HH:MM:SS format."
+  (interactive "*")
+  (call-process "date" nil t nil "+%H:%M:%S")
+  (delete-char -1))
+;; insert-time:1 ends here
+
+;; [[file:init-emacs.org::#functions-external-program-functions-insert-date-stamp][insert-date-stamp:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: External Program Functions: insert-date-stamp
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: External Program Functions: insert-date-stamp")
+
+(defun insert-date-stamp ()
+  "Insert current date in YYYYMMDD format."
+  (interactive "*")
+  (call-process "date" nil t nil "+%Y%m%d")
+  (delete-char -1))
+;; insert-date-stamp:1 ends here
+
+;; [[file:init-emacs.org::#functions-external-program-functions-insert-fortune][insert-fortune:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: External Program Functions: insert-fortune
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: External Program Functions: insert-fortune")
+
+(defun insert-fortune (&optional file)
+  "Insert a random fortune.
+
+If FILE is non-nil, use that fortune file."
+  (interactive "*")
+  (call-process "fortune" nil t nil "-a" (if file (shell-quote-argument file) "")))
+;; insert-fortune:1 ends here
+
+;; [[file:init-emacs.org::#functions-external-program-functions-insert-quote][insert-quote:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: External Program Functions: insert-quote
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: External Program Functions: insert-quote")
+
+(defun insert-quote ()
+  "Insert a random quote."
+  (interactive "*")
+  (insert-fortune (expand-file-name "~/quotes")))
+;; insert-quote:1 ends here
+
+;; [[file:init-emacs.org::#functions-external-program-functions-insert-arch-package-description][insert-arch-package-description:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: External Program Functions: insert-arch-package-description
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: External Program Functions: insert-arch-package-description")
+
+(defun insert-arch-package-description (package)
+  "Insert Arch OS package description for given PACKAGE."
+  (interactive "*")
+  (cl-labels
+      ((command-path (command)
+                     (let ((path (s-trim (shell-command-to-string
+                                          (format "which %s 2>/dev/null" command)))))
+                       (if (string= path "")
+                           nil
+                         path))))
+    (let ((package-manager (or (command-path "pamac")
+                               (command-path "yaourt")
+                               (command-path "yay")
+                               (command-path "pacman"))))
+      (if package-manager
+          (let ((cmd (format
+                      "%s %s %s | awk '/^%s / {p=1;next}p' | tr -d '\\n' | tr -s '[:blank:]'"
+                      package-manager
+                      (if (string= (substring package-manager -5) "pamac")
+                          "search -a"
+                        "-Ss")
+                      package
+                      package)))
+            (message "Searching for Arch package: %s" cmd)
+            (insert (s-trim (shell-command-to-string cmd))))
+        (error "Neither 'pamac', 'yaourt', 'yay', or 'pacman' where found in path")))))
+;; insert-arch-package-description:1 ends here
+
+;; [[file:init-emacs.org::#functions-external-program-functions-set-arch-package-description][set-arch-package-description:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: External Program Functions: set-arch-package-description
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: External Program Functions: set-arch-package-description")
+
+(defun set-arch-package-description ()
+  "Set Arch OS package description for package install command found on current line."
+  (interactive "*")
+  (save-mark-and-excursion
+    (forward-line 0)
+    (when (and
+           (re-search-forward "\\b\\(pacman\\|yaourt\\|yay\\|pamac\\)\\([ \t]+\\(-S\\|install\\|build\\)\\)\\([ \t]+-[^ \t]*\\)*" (point-at-eol) :noerror)
+           (re-search-forward "[ \t]*\\b\\([^ \t]+\\)\\b" (point-at-eol) :noerror))
+      (let ((package (match-string-no-properties 1)))
+        ;; remove any existing description
+        (if (re-search-forward "#" (point-at-eol) :noerror)
+            (progn
+              (delete-region (point) (line-end-position))
+              (insert " "))
+          (progn
+            (end-of-line)
+            (insert " # ")))
+        (insert-arch-package-description package)
+        (align-comments)))))
+;; set-arch-package-description:1 ends here
+
+;; [[file:init-emacs.org::#functions-newer-emacs-functionality-functions][Newer Emacs Functionality Functions:1]]
+;;------------------------------------------------------------------------------
+;;; Functions: Newer Emacs Functionality Functions
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Functions: Newer Emacs Functionality Functions")
+;; Newer Emacs Functionality Functions:1 ends here
+
+;; [[file:init-emacs.org::#functions-newer-emacs-functionality-functions-line-number-at-pos][line-number-at-pos:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Newer Emacs Functionality Functions: line-number-at-pos
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Newer Emacs Functionality Functions: line-number-at-pos")
+
+(unless (fboundp 'line-number-at-pos)
+  (defun line-number-at-pos (&optional pos)
+    "Return (narrowed) buffer line number at position POS.
+
+If POS is nil, use current buffer location."
+    (save-mark-and-excursion
+      (when pos
+        (goto-char pos))
+      (1+ (count-lines (point-min) (line-beginning-position))))))
+;; line-number-at-pos:1 ends here
+
+;; [[file:init-emacs.org::#functions-newer-emacs-functionality-functions-save-mark-and-excursion][save-mark-and-excursion:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Newer Emacs Functionality Functions: save-mark-and-excursion
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Newer Emacs Functionality Functions: save-mark-and-excursion")
+
+(unless (fboundp 'save-mark-and-excursion)
+  (defmacro save-mark-and-excursion (&rest body)
+    "Like `save-excursion', but also save and restore the mark state.
+This macro does what `save-excursion' did before Emacs 25.1."
+    (declare (indent 0) (debug t))
+    (let ((saved-marker-sym (make-symbol "saved-marker")))
+      `(let ((,saved-marker-sym (save-mark-and-excursion--save)))
+         (unwind-protect
+             (save-excursion ,@body)
+           (save-mark-and-excursion--restore ,saved-marker-sym))))))
+;; save-mark-and-excursion:1 ends here
+
+;; [[file:init-emacs.org::#functions-grep-search-functions][Grep Search Functions:1]]
+;;------------------------------------------------------------------------------
+;;; Functions: Grep Search Functions
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Functions: Grep Search Functions")
+;; Grep Search Functions:1 ends here
+
+;; [[file:init-emacs.org::#functions-grep-search-functions-grep-elisp][grep-elisp:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Grep Search Functions: grep-elisp
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Grep Search Functions: grep-elisp")
+
+(defun grep-elisp (query &optional extended)
+  "Grep custom elisp directories for QUERY.
+
+Run `grep' COMMAND, where COMMAND is:
+
+  `grep-default-command' QUERY FILES
+
+FILES is a list of files generated from the following
+files/directories:
+
+  `emacs-home-dir' or ~/.emacs.d (if EXTENDED is t)
+  `local-init-dir' if it exists
+  `local-modules-dir' if it exists
+
+A file matching pattern of `*.el$' is used."
+  (interactive "sGrep custom elisp files: ")
+  (let (paths
+        path
+        files)
+    (if extended
+        (if (and (boundp 'emacs-home-dir)
+                 (file-exists-p emacs-home-dir))
+            (push emacs-home-dir paths)
+          "~/.emacs.d")
+      (progn
+        (when (and (boundp 'local-init-dir)
+                   local-init-dir
+                   (file-exists-p local-init-dir))
+          (push local-init-dir paths))
+        (when (and (boundp 'local-modules-dir)
+                   local-modules-dir
+                   (file-exists-p local-modules-dir))
+          (push local-modules-dir paths))))
+    ;; loop through paths
+    (while paths
+      (setq path (file-truename (expand-file-name (car paths))))
+      (setq paths (cdr paths))
+      ;; traverse directories
+      (if (file-directory-p path)
+          ;; loop through files
+          (dolist (file (nreverse (directory-files path t)))
+            ;; ignore `.' and `..'
+            (unless (string-match "^\\.\\.?$" (file-name-nondirectory file))
+              ;; add directories to paths
+              (if (file-directory-p file)
+                  (push file paths)
+                ;; add elisp file
+                (when (string-match "\\.el\\'" file)
+                  (push file files)))))
+        ;; add file
+        (push path files)))
+    ;; build command
+    (let ((cmd (or grep-command "grep -n -H -i -r -e ")))
+      ;; add query
+      (setq cmd (concat cmd " \"" query "\""))
+      ;; add files
+      (dolist (file files)
+        (setq cmd (concat cmd " \"" file "\"")))
+      ;; execute command using `grep' command
+      (grep cmd))))
+;; grep-elisp:1 ends here
+
+;; [[file:init-emacs.org::#functions-grep-search-functions-grep-elisp-extended][grep-elisp-extended:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Grep Search Functions: grep-elisp-extended
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Grep Search Functions: grep-elisp-extended")
+
+(defun grep-elisp-extended (query)
+  "Call `grep-elisp' with QUERY and EXTENDED set to t."
+  (interactive "sGrep custom elisp files (extended): ")
+  (grep-elisp query t))
+;; grep-elisp-extended:1 ends here
+
+;; [[file:init-emacs.org::#functions-grep-search-functions-grep-custom][grep-custom:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Grep Search Functions: grep-custom
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Grep Search Functions: grep-custom")
+
+;; grep custom macro
+(defmacro grep-custom (dirs match)
+  "Return a custom grep function.
+DIRS is a list of the directories to search.
+MATCH is the file pattern to match."
+  `(lambda (query)
+     (let ((paths (reverse (quote ,dirs)))
+           (match ,match)
+           path
+           files)
+       ;; loop through paths
+       (while paths
+         (setq path (file-truename (expand-file-name (car paths))))
+         (setq paths (cdr paths))
+         ;; traverse directories
+         (if (file-directory-p path)
+             ;; loop through files
+             (dolist (file (nreverse (directory-files path t)))
+               ;; ignore `.' and `..' and svn directories
+               (unless (or (string-match "^\\.\\.?$" (file-name-nondirectory file))
+                           (string-match "\\.svn" (file-name-nondirectory file)))
+                 ;; add directories to paths
+                 (if (file-directory-p file)
+                     (push file paths)
+                   ;; add files in directories to files
+                   (when (or (not match)
+                             (string-match match file))
+                     (push file files)))))
+           ;; add file
+           (push path files)))
+       ;; build command
+       (let ((cmd (or grep-command "grep -n -H -i -e")))
+         ;; add query
+         (setq cmd (concat cmd " \"" query "\""))
+         ;; add files
+         (dolist (file files)
+           (setq cmd (concat cmd " \"" file "\"")))
+         ;; execute command using `grep' command
+         (grep cmd)))))
+;; examples:
+;; (funcall (grep-custom ("~/.profile") ".*") "path")
+;; grep-custom:1 ends here
+
+;; [[file:init-emacs.org::#functions-grep-search-functions-grep-custom-generate][grep-custom-generate:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Grep Search Functions: grep-custom-generate
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Grep Search Functions: grep-custom-generate")
+
+(defmacro grep-custom-generate (name prompt dirs match)
+  "Generate a custom grep function.
+
+NAME is the function name.
+
+PROMPT is displayed if no query is given.
+
+DIRS is a list of the directories to search.
+
+MATCH is the file pattern to match."
+  (let ((dirs dirs)
+        (match match))
+    `(defun ,name (query)
+       ,(concat "Grep custom directories for QUERY.\n\n"
+                "Run `grep' COMMAND, where COMMAND is:\n\n"
+                "`grep-default-command' QUERY FILES\n\n"
+                "FILES is a list of files generated from the following\n"
+                "files/directories:\n\n"
+                (concat "  " (cl-reduce (lambda (x y) (concat x "\n  " y)) dirs) "\n\n")
+                "A file matching pattern of `" match "' is used.")
+       (interactive ,(concat "s" prompt))
+       (funcall (grep-custom ,dirs ,match) query))))
+;; grep-custom-generate:1 ends here
+
+;; [[file:init-emacs.org::#functions-grep-search-functions-grep-bin][grep-bin:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Grep Search Functions: grep-bin
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Grep Search Functions: grep-bin")
+
+;; grep bin
+(grep-custom-generate grep-bin "Grep HOME bin files: " ("~/bin") nil)
+;; grep-bin:1 ends here
+
+;; [[file:init-emacs.org::#functions-grep-search-functions-grep-clojure][grep-clojure:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Grep Search Functions: grep-clojure
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Grep Search Functions: grep-clojure")
+
+;; grep clojure
+(grep-custom-generate grep-clojure "Grep Clojure files: " ("~/dev/clojure") "\\(\\.org$\\|\\.clj$\\)")
+;; grep-clojure:1 ends here
+
+;; [[file:init-emacs.org::#functions-grep-search-functions-grep-clisp][grep-clisp:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Grep Search Functions: grep-clisp
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Grep Search Functions: grep-clisp")
+
+;; grep clisp
+(grep-custom-generate grep-clisp "Grep CLISP files: " ("~/dev/clisp")  "\\(\\.org$\\|\\.lisp$\\)")
+;; grep-clisp:1 ends here
+
+;; [[file:init-emacs.org::#functions-grep-search-functions-grep-emacs-init][grep-emacs-init:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Grep Search Functions: grep-emacs-init
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Grep Search Functions: grep-emacs-init")
+
+;; grep emacs initialization
+(grep-custom-generate grep-emacs-init "Grep Emacs Initialization files: "
+                      ("~/.emacs.d/init.el"
+                       "~/.emacs.d/init-emacs.org"
+                       "~/.emacs.d/customization.el")
+                      "\\(\\.org$\\|\\.el$\\)")
+;; grep-emacs-init:1 ends here
+
+;; [[file:init-emacs.org::#functions-grep-search-functions-grep-home-init][grep-home-init:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Grep Search Functions: grep-home-init
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Grep Search Functions: grep-home-init")
+
+;; grep home
+(grep-custom-generate grep-home-init "Grep Home Initialization files: "
+                      ("~/org/init-home.org") "\\.org\\'")
+;; grep-home-init:1 ends here
+
+;; [[file:init-emacs.org::#functions-grep-search-functions-grep-org][grep-org:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Grep Search Functions: grep-org
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Grep Search Functions: grep-org")
+
+;; grep org
+(grep-custom-generate grep-org "Grep org files: " ("~/org") "\\.org\\'")
+;; grep-org:1 ends here
+
+;; [[file:init-emacs.org::#functions-grep-search-functions-grep-python][grep-python:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Grep Search Functions: grep-python
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Grep Search Functions: grep-python")
+
+;; grep python
+(grep-custom-generate grep-python "Grep Python files: " ("~/dev/python")  "\\(\\.org$\\|\\.py$\\)")
+;; grep-python:1 ends here
+
+;; [[file:init-emacs.org::#functions-grep-search-functions-grep-racket][grep-racket:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Grep Search Functions: grep-racket
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Grep Search Functions: grep-racket")
+
+;; grep racket
+(grep-custom-generate grep-racket "Grep Racket files: " ("~/dev/racket") "\\.rkt\\'")
+;; grep-racket:1 ends here
+
+;; [[file:init-emacs.org::#functions-grep-search-functions-grep-web][grep-web:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Grep Search Functions: grep-web
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Grep Search Functions: grep-web")
+
+;; grep web
+(grep-custom-generate grep-web "Grep web files: " ("~/web/org") "\\.org\\'")
+;; grep-web:1 ends here
+
+;; [[file:init-emacs.org::#functions-tags-file-functions][TAGS File Functions:1]]
+;;------------------------------------------------------------------------------
+;;; Functions: TAGS File Functions
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Functions: TAGS File Functions")
+;; TAGS File Functions:1 ends here
+
+;; [[file:init-emacs.org::#functions-tags-file-functions-etags-create][etags-create:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: TAGS File Functions: etags-create
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: TAGS File Functions: etags-create")
+
+(defun etags-create (&optional local)
+  "Create local TAGS file.
+
+If LOCAL is non-nil, visit the new TAGS file locally only.
+
+First an existing TAGS file is searched for going up the
+directory path. If none is found, a \"src\" directory is searched
+for and, if found, its parent directory is used. Failing that the
+user is prompted for the location."
+  (interactive)
+  (let ((file (or (find-file-updir "TAGS")
+                  (when (find-file-updir "src")
+                    (file-truename (expand-file-name (concat (find-file-updir "src") "/../TAGS"))))
+                  ;; ask for TAGS directory if not found
+                  (concat (read-directory-name "Top of source tree: " default-directory) "/TAGS")))
+        (extension (or (file-name-extension buffer-file-name)
+                       ;; extension defaults to `el'
+                       "el"))
+        query)
+    ;; generate find command parameters
+    ;; for c/c++ files, add extra extensions
+    (if (member extension '("h" "c" "hpp" "cpp"))
+        (setq query "-name \"*.h\" -o -name \"*.c\" -o -name \"*.hpp\" -o -name \"*.cpp\"")
+      (setq query (concat "-name \"*." extension "\"")))
+    (let ((cmd (concat "find " (file-name-directory file) " " query " -print0 | "
+                       "grep -zZv \"/.svn/\" | "
+                       "xargs -0 etags -o " file " && "
+                       "echo 'Created TAGS file'")))
+      (message (format "Running command: %s" cmd))
+      ;; create tags file
+      (shell-command cmd)
+      ;; kill TAGS buffer
+      (when (get-buffer "TAGS")
+        (kill-buffer "TAGS"))
+      ;; set tags file
+      (visit-tags-table file local))))
+;; etags-create:1 ends here
+
+;; [[file:init-emacs.org::#functions-code-formatting-functions][Code Formatting Functions:1]]
+;;------------------------------------------------------------------------------
+;;; Functions: Code Formatting Functions
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Functions: Code Formatting Functions")
+;; Code Formatting Functions:1 ends here
+
+;; [[file:init-emacs.org::#functions-code-formatting-functions-indent-region-or-thing][indent-region-or-thing:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Code Formatting Functions: indent-region-or-thing
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Code Formatting Functions: indent-region-or-thing")
+
+(defun indent-region-or-thing (&optional beg end)
+  "Indent selected region, or org code block, or sexp surrounding
+point, or line."
+  (interactive)
+  (let ((case-fold-search t)
+        (beg (or beg (if (use-region-p) (region-beginning) nil)))
+        (end (or end (if (use-region-p) (region-end) nil)))
+        (eol (line-end-position)))
+    (deactivate-mark)
+    (save-window-excursion
+      (save-mark-and-excursion
+        (save-match-data
+          (cond
+           ;; region
+           ((and beg end)
+            (indent-region beg end))
+           ;; org code block
+           ((and (eq major-mode 'org-mode)
+                 (eq (org-element-type (org-element-at-point)) 'src-block))
+            (condition-case nil
+                (let ((case-fold-search t)
+                      (re "^[ \t]*#\\+BEGIN_\\(\\sw+\\)"))
+                  (forward-line 0)
+                  (unless (looking-at re)
+                    (re-search-backward re))
+                  (org-indent-block))
+              ('error nil)))
+           ;; sexp
+           ((save-excursion
+              (and (beginning-of-defun)
+                   (progn
+                     (end-of-defun)
+                     (>= (point) eol))))
+            (beginning-of-defun)
+            (indent-region (line-beginning-position) (line-end-position))
+            (let* ((bounds (bounds-of-thing-at-point 'sexp))
+                   (beg (car bounds))
+                   (end (cdr bounds)))
+              (indent-region beg end)))
+           (t
+            (indent-according-to-mode))))))))
+;; indent-region-or-thing:1 ends here
+
+;; [[file:init-emacs.org::#functions-code-formatting-functions-indent-buffer][indent-buffer:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Code Formatting Functions: indent-buffer
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Code Formatting Functions: indent-buffer")
+
+(defun indent-buffer ()
+  "Indent current buffer."
+  (indent-region (point-min) (point-max)))
+;; indent-buffer:1 ends here
+
+;; [[file:init-emacs.org::#functions-code-formatting-functions-find-code-block][find-code-block:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Code Formatting Functions: find-code-block
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Code Formatting Functions: find-code-block")
+
+(defun find-code-block (&optional regexp indent)
+  "Find the begin and end of code block containing point.
+
+When run interactively, then begin and end points of the block
+are printed in the minibuffer. Otherwise, a list containing them
+is returned.
+
+A code block is defined as contiguous lines of text having the
+same indentation. So a code block ends when either the
+indentation changes or a blank line is reached.
+
+The begin point will be at the start of a line and the end point
+will be at the end of a line, unless point is not in a code block
+in which case nil is returned for both.
+
+The optional parameter REGEXP is an additional regular expression
+to match on. If non-nil, every line in the code block must also
+match REGEXP.
+
+If optional parameter INDENT is non-nil then each line will be
+indented via `indent-according-to-mode'."
+  (interactive "*")
+  (let (beg
+        end
+        (ind 0)
+        (blank-line-regexp "^[ \t]*$"))
+    (save-mark-and-excursion
+      ;; indent if INDENT is t
+      ;;(when indent
+      ;;  (indent-according-to-mode))
+      (setq ind (current-indentation))
+      (goto-char (line-beginning-position))
+      ;; continue if we are in a code block
+      (unless (or
+               (looking-at blank-line-regexp)
+               (if regexp
+                   (not (looking-at regexp))
+                 nil))
+        ;; move up to first line in block
+        (while (and
+                (not (bobp))
+                (not (looking-at blank-line-regexp))
+                (= ind (current-indentation))
+                (if regexp
+                    (looking-at regexp)
+                  t))
+          (forward-line -1)
+          ;; indent if INDENT is t
+          ;;(when indent
+          ;;  (indent-according-to-mode))
+          (goto-char (line-beginning-position)))
+        ;; if current line is not part of range, then move down
+        (unless (and
+                 (not (looking-at blank-line-regexp))
+                 (= ind (current-indentation))
+                 (if regexp
+                     (looking-at regexp)
+                   t))
+          (forward-line 1))
+        (goto-char (line-beginning-position))
+        (setq beg (point))
+        ;; indent if INDENT is t
+        (when indent
+          (indent-according-to-mode))
+        (setq ind (current-indentation))
+        ;; move down to last line in block
+        (while (and
+                (not (eobp))
+                (not (looking-at blank-line-regexp))
+                (= ind (current-indentation))
+                (if regexp
+                    (looking-at regexp)
+                  t))
+          (forward-line 1)
+          ;; indent if INDENT is t
+          (when indent
+            (indent-according-to-mode))
+          (goto-char (line-beginning-position)))
+        (unless (and
+                 (not (looking-at blank-line-regexp))
+                 (= ind (current-indentation))
+                 (if regexp
+                     (looking-at regexp)
+                   t))
+          (forward-line -1))
+        (end-of-line)
+        (setq end (point))))
+    (if (called-interactively-p 'any)
+        (message "%s %s" beg end)
+      (list beg end))))
+;; find-code-block:1 ends here
+
+;; [[file:init-emacs.org::#functions-code-formatting-functions-align-assignment-commands][align-assignment-commands:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Code Formatting Functions: align-assignment-commands
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Code Formatting Functions: align-assignment-commands")
+
+;; TODO: look at `align' and `align-regexp' functions to help with this
+(defun align-assignment-commands (&optional indent)
+  "Align a block of variable assignment commands.
+
+Match any contiguous block of code (presumably assignment
+commands) and align the equal signs.
+
+If optional parameter INDENT is non-nil then each line will be
+indented via `indent-according-to-mode'.
+
+Example:
+
+  // assignments
+  var1 = value1; // var1
+  variable2 = value2; // var2
+
+Becomes:
+
+  // assignments
+  var1      = value1;             // var1
+  variable2 = value2;             // var2"
+  (interactive "*")
+  (let* ((range (find-code-block nil indent)) ; range
+         (beg (car range))                    ; beginning of range
+         (end (cadr range))                   ; end of range
+         (pos 0)
+         (equal-regexp "[ \t]*=[ \t]*"))
+    (save-mark-and-excursion
+      ;; if there are lines in range, continue
+      (when (> end beg)
+        ;; preserve block range
+        (save-restriction
+          (narrow-to-region beg end)
+          ;; preserve search data
+          (save-match-data
+            ;; move down code block
+            (goto-char (point-min))
+            (while (< (point) (point-max))
+              ;; store farthest equal sign that is not in a comment
+              (when (and
+                     (re-search-forward equal-regexp (line-end-position) :noerror)
+                     (not (equal (get-char-property (point) 'face)
+                                 'font-lock-comment-face)))
+                ;; remove extra whitespace
+                (goto-char (line-beginning-position))
+                (re-search-forward equal-regexp (line-end-position))
+                (replace-match " = ")
+                ;; put point before the equal sign
+                (backward-char 2)
+                ;; store point if larger than others
+                (when (> (- (point) (line-beginning-position)) pos)
+                  (setq pos (- (point) (line-beginning-position)))))
+              (goto-char (line-beginning-position))
+              (forward-line 1))
+            ;; move through the block, padding as needed
+            (goto-char (point-min))
+            (while (< (point) (point-max))
+              (when (and
+                     (re-search-forward equal-regexp (line-end-position) :noerror)
+                     (not (equal (get-char-property (point) 'face)
+                                 'font-lock-comment-face)))
+                (backward-char 2)
+                ;; pad as needed
+                (while (< (- (point) (line-beginning-position)) pos)
+                  (insert " ")))
+              (goto-char (line-beginning-position))
+              (forward-line 1))
+            ;; handle lines that ends in a comment
+            (goto-char (point-min))
+            (while (< (point) (point-max))
+              (goto-char (line-beginning-position))
+              (forward-char (current-indentation))
+              ;; if line is not a comment line and line ends in a comment, then
+              ;; call comment-indent
+              (when (and
+                     (not (equal (get-char-property (line-end-position) 'face)
+                                 'font-lock-comment-face))
+                     (equal (get-char-property (line-end-position) 'face)
+                            'font-lock-comment-face))
+                (comment-indent))
+              (forward-line 1))))))))
+;; align-assignment-commands:1 ends here
+
+;; [[file:init-emacs.org::#functions-code-formatting-functions-align-assignment-commands-indent][align-assignment-commands-indent:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Code Formatting Functions: align-assignment-commands-indent
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Code Formatting Functions: align-assignment-commands-indent")
+
+(defun align-assignment-commands-indent ()
+  (interactive "*")
+  (align-assignment-commands t))
+;; align-assignment-commands-indent:1 ends here
+
+;; [[file:init-emacs.org::#functions-code-formatting-functions-align-declaration-commands][align-declaration-commands:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Code Formatting Functions: align-declaration-commands
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Code Formatting Functions: align-declaration-commands")
+
+;; TODO: fix removal of extra whitespace in block
+;; TODO: fix adding whitespace where needed in block
+(defun align-declaration-commands (&optional indent)
+  "Align a block of variable declaration commands.
+
+If optional parameter INDENT is non-nil then each line will be
+indented via `indent-according-to-mode'.
+
+Example:
+
+  // variables
+  public Integer i; // int example
+  public String s; // string example
+  private Integer i2; // int 2
+  private String s2; // string 2
+  protected Date dte; // date example
+
+Becomes:
+
+  // variables
+  public    Integer i;            // int example
+  public    String  s;            // string example
+  private   Integer i2;           // int 2
+  private   String  s2;           // string 2
+  protected Date    dte;          // date example"
+  (interactive "*")
+  (let* ((range (find-code-block nil indent)) ; range
+         (beg (car range))                    ; beginning of range
+         (end (cadr range))                   ; end of range
+         face                                 ; current font face
+         face-prev                            ; previous font face
+         face-change                          ; has face changed
+         (change -1)                          ; current column to align on
+         (change-prev -2)                     ; previous column to align on
+         (whitespace-regexp "[ \t]+"))        ; regexp to match whitespace
+    (save-mark-and-excursion
+      ;; if there are lines in range, continue
+      (when (> end beg)
+        ;; preserve block range
+        (save-restriction
+          (narrow-to-region beg end)
+          ;; preserve search data
+          (save-match-data
+            ;; remove extra whitespace
+            (goto-char (point-min))
+            (while (< (point) (point-max))
+              (forward-char (current-indentation))
+              (while (re-search-forward whitespace-regexp (line-end-position) :noerror)
+                (replace-match " "))
+              (goto-char (line-beginning-position))
+              (forward-line 1))
+            ;; loop until all face changes have been analyzed
+            (while (> change change-prev)
+              ;; update change-prev
+              (setq change-prev change)
+              ;; set change-prev to indent on first pass
+              (when (< change-prev 0)
+                (setq change-prev (current-indentation)))
+              ;; clear face
+              (setq face nil)
+              ;; clear face-prev
+              (setq face-prev nil)
+              ;; goto start of range
+              (goto-char (point-min))
+              ;; loop through all lines in range
+              (while (< (point) (point-max))
+                ;; goto start of line + indentation
+                (goto-char (line-beginning-position))
+                (forward-char (current-indentation))
+                ;; ignore comment lines
+                (unless (member (get-char-property (point) 'face)
+                                (list 'font-lock-comment-face
+                                      'nxml-comment-delimiter-face
+                                      'nxml-comment-content-face))
+                  ;; goto start of line + change-prev
+                  (goto-char (line-beginning-position))
+                  (forward-char change-prev)
+                  ;; get face-prev of first non-whitespace character
+                  (unless face-prev
+                    (save-mark-and-excursion
+                      (while (and (< (point) (line-end-position))
+                                  (looking-at whitespace-regexp))
+                        (forward-char 1))
+                      (when (< (point) (line-end-position))
+                        (setq face-prev (get-char-property (point) 'face)))))
+                  ;; move forward until we hit whitespace, tracking any face change
+                  (setq face-change nil)
+                  (while (and (< (point) (line-end-position))
+                              (not (looking-at whitespace-regexp)))
+                    (when (not (equal face-prev (get-char-property (point) 'face)))
+                      (setq face-change t))
+                    (forward-char 1))
+                  ;; move forward until a non-whitespace character is reached that
+                  ;; changes the face
+                  (while (and (< (point) (line-end-position))
+                              (or
+                               (looking-at whitespace-regexp)
+                               (and (not face-change)
+                                    (equal face-prev (get-char-property (point) 'face)))))
+                    (forward-char 1))
+                  ;; if the face changed and it is farther than the current
+                  ;; change, set the face and change value; face is set on the
+                  ;; first pass after which a match is expected
+                  (when (and (< (point) (line-end-position))
+                             (< change (- (point) (line-beginning-position)))
+                             (if face
+                                 (equal face (get-char-property (point) 'face))
+                               t))
+                    ;; only set face on first pass
+                    (unless face
+                      (setq face (get-char-property (point) 'face)))
+                    (setq change (- (point) (line-beginning-position)))))
+                ;; move to next line and continue
+                (forward-line 1))
+              ;; if a face change is found, align lines
+              (when (> change change-prev)
+                ;; goto start of range
+                (goto-char (point-min))
+                ;; loop through all lines in range
+                (while (< (point) (point-max))
+                  ;; goto start of line + indentation
+                  (goto-char (line-beginning-position))
+                  (forward-char (current-indentation))
+                  ;; ignore comment lines
+                  (unless (member (get-char-property (point) 'face)
+                                  (list 'font-lock-comment-face
+                                        'nxml-comment-delimiter-face
+                                        'nxml-comment-content-face))
+                    ;; goto start of line + change-prev
+                    (goto-char (line-beginning-position))
+                    (forward-char change-prev)
+                    ;; find start of face change
+                    ;; move forward until whitespace is reached
+                    (while (and (< (point) (line-end-position))
+                                (not (looking-at whitespace-regexp)))
+                      (forward-char 1))
+                    ;; move forward until a non-whitespace character is reached
+                    ;; that matches the face change
+                    (while (and (< (point) (line-end-position))
+                                (or
+                                 (looking-at whitespace-regexp)
+                                 (not (equal face (get-char-property (point) 'face)))))
+                      (forward-char 1))
+                    ;; space as needed
+                    (while (< (- (point) (line-beginning-position)) change)
+                      ;; TODO: as a precaution check that previous character is
+                      ;; whitespace
+                      (insert " ")))
+                  ;; move to next line and continue
+                  (forward-line 1))))
+            ;; handle lines that ends in a comment
+            (goto-char (point-min))
+            (while (< (point) (point-max))
+              (goto-char (line-beginning-position))
+              (forward-char (current-indentation))
+              ;; if line is not a comment line and line ends in a comment, then
+              ;; call comment-indent
+              (when (and
+                     (not (equal (get-char-property (line-end-position) 'face)
+                                 'font-lock-comment-face))
+                     (equal (get-char-property (line-end-position) 'face)
+                            'font-lock-comment-face))
+                (comment-indent))
+              (forward-line 1))))))))
+;; align-declaration-commands:1 ends here
+
+;; [[file:init-emacs.org::#functions-code-formatting-functions-align-declaration-commands-indent][align-declaration-commands-indent:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Code Formatting Functions: align-declaration-commands-indent
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Code Formatting Functions: align-declaration-commands-indent")
+
+(defun align-declaration-commands-indent ()
+  (interactive "*")
+  (align-declaration-commands t))
+;; align-declaration-commands-indent:1 ends here
+
+;; [[file:init-emacs.org::#functions-code-formatting-functions-align-comments][align-comments:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Code Formatting Functions: align-comments
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Code Formatting Functions: align-comments")
+
+(defun align-comments (&optional beg end)
+  "Align a block of commented lines.
+
+If region is not given, one of the following blocks will be
+used (tried in order):
+
+- Org source block
+- Symbolic expression
+- Current line
+
+Example:
+
+  // variables
+  public Integer i; // int example
+  public String s; // string example
+  private Integer i2; // int 2
+  private String s2; // string 2
+  protected Date dte; // date example
+
+Becomes:
+
+  // variables
+  public Integer i;             // int example
+  public String s;              // string example
+  private Integer i2;           // int 2
+  private String s2;            // string 2
+  protected Date dte;           // date example"
+  (interactive "*")
+  (let ((case-fold-search t)
+        (comment-regexp (concat "\\(\\s-*\\)" comment-start))
+        (point (point))
+        (beg (or beg (if (use-region-p) (region-beginning) nil)))
+        (end (or end (if (use-region-p) (region-end) nil))))
+    (deactivate-mark)
+    (save-window-excursion
+      (save-mark-and-excursion
+        (save-match-data
+          (cond
+           ;; region
+           ((and beg end)
+            (align-regexp beg end comment-regexp))
+           ;; org code block
+           ((and (eq major-mode 'org-mode)
+                 (eq (org-element-type (org-element-at-point)) 'src-block))
+            (condition-case nil
+                (let ((case-fold-search t)
+                      (re "^\\([ \t]*\\)#\\+BEGIN_\\(\\sw+\\)"))
+                  (forward-line 0)
+                  (unless (looking-at re)
+                    (re-search-backward re))
+                  (re-search-forward (concat "^\\([ \t]*\\)#\\+END_" (match-string 2))))
+              ('error nil))
+            (org-babel-do-in-edit-buffer (align-regexp (point-min) (point-max) comment-regexp)))
+           ;; sexp
+           ((beginning-of-defun)
+            (let* ((bounds (bounds-of-thing-at-point 'sexp))
+                   (beg (car bounds))
+                   (end (cdr bounds)))
+              (align-regexp beg end comment-regexp)))
+           (t
+            (align-regexp (point-at-bol) (point-at-eol) comment-regexp))))))
+    (goto-char point)))
+;; align-comments:1 ends here
+
+;; [[file:init-emacs.org::#functions-code-formatting-functions-java-toggle-comment-type][java-toggle-comment-type:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Code Formatting Functions: java-toggle-comment-type
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Code Formatting Functions: java-toggle-comment-type")
+
+(defun java-toggle-comment-type ()
+  "Toggle between single and multi-line Java/C comments.
+
+Examples:
+
+                  /*
+  // comment  =>   * comment
+                   */
+
+  /*
+   * comment  =>  // comment
+   */"
+  (interactive "*")
+  (let ((indentation-regexp "^[ \t]*")
+        (empty-line-regexp "^[ \t]*$")
+        (single-line-comment-regexp "^[ \t]*// ")
+        (multi-line-comment-regexp "^[ \t]*\\* ")
+        (multi-line-comment-begin-regexp "^[ \t]*/\\*")
+        (multi-line-comment-end-regexp "^[ \t]*\\*/")
+        (class-regexp "\\bclass\\b"))
+    (save-mark-and-excursion
+      (save-match-data
+        (goto-char (line-beginning-position))
+        (if (looking-at single-line-comment-regexp)
+            ;; convert single line comments into a multi-line comment
+            (let ((beg (progn
+                         (while (and (not (bobp))
+                                     (looking-at single-line-comment-regexp))
+                           (forward-line -1))
+                         (when (not (looking-at single-line-comment-regexp))
+                           (forward-line 1))
+                         (line-beginning-position)))
+                  (end (progn
+                         (while (and (not (eobp))
+                                     (looking-at single-line-comment-regexp))
+                           (forward-line 1))
+                         (when (not (looking-at single-line-comment-regexp))
+                           (forward-line -1))
+                         (line-end-position)))
+                  (space (make-string (- (re-search-forward indentation-regexp) (line-beginning-position)) ? ))
+                  (class (progn
+                           (goto-char (line-beginning-position))
+                           (forward-line 1)
+                           (while (looking-at empty-line-regexp)
+                             (forward-line 1))
+                           (looking-at class-regexp))))
+              (goto-char beg)
+              ;;(insert (concat space "/*" (if class "*" "")))
+              (insert (concat space "/*"))
+              (newline)
+              (while (re-search-forward single-line-comment-regexp end :noerror)
+                (replace-match (concat space " * ")))
+              (goto-char (line-end-position))
+              (newline)
+              (insert (concat space " */")))
+          ;; convert multi-line comment to single line comments
+          (let ((beg (progn
+                       (while (and (not (bobp))
+                                   (or (looking-at multi-line-comment-regexp)
+                                       (looking-at multi-line-comment-end-regexp)))
+                         (forward-line -1))
+                       (if (looking-at multi-line-comment-begin-regexp)
+                           (line-beginning-position)
+                         nil)))
+                (end (progn
+                       (while (and (not (eobp))
+                                   (or (looking-at multi-line-comment-regexp)
+                                       (looking-at multi-line-comment-begin-regexp)))
+                         (forward-line 1))
+                       (if (looking-at multi-line-comment-end-regexp)
+                           (line-end-position)
+                         nil)))
+                (space (make-string (- (re-search-forward indentation-regexp) (line-beginning-position) 1) ? )))
+            (when (and beg end)
+              (goto-char beg)
+              (delete-region (point) (progn (forward-line 1) (point)))
+              (while (re-search-forward multi-line-comment-regexp end :noerror)
+                (replace-match (concat space "// ")))
+              (goto-char (line-end-position))
+              (delete-region (point) (progn (forward-line 1) (goto-char (line-end-position)) (point))))))))))
+
+(init-message 3 "Functions: Code Formatting Functions: c-toggle-comment-type")
+
+(defalias 'c-toggle-comment-type 'java-toggle-comment-type)
+;; java-toggle-comment-type:1 ends here
+
+;; [[file:init-emacs.org::#functions-code-formatting-functions-java-remove-comments][java-remove-comments:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Code Formatting Functions: java-remove-comments
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Code Formatting Functions: java-remove-comments")
+
+(defun java-remove-comments (&optional beg end)
+  "Remove all Java comments from buffer or region."
+  (interactive "*")
+  (let ((beg (or beg (if (use-region-p) (region-beginning) (point-min))))
+        (end (or end (if (use-region-p) (region-end) (point-max)))))
+    (save-mark-and-excursion
+      (save-restriction
+        (narrow-to-region beg end)
+        (let (quote                     ; whether inside a quote
+              escape                    ; whether inside an escape
+              comment)                  ; whether inside a block comment
+          (goto-char (point-min))
+          (while (not (eobp))
+            (forward-char 1)
+            (let ((char (preceding-char))
+                  (next-char (following-char)))
+              (cl-case char
+                (?\"                    ; quote
+                 (unless (or comment escape)
+                   (setq quote (not quote))))
+                (?\\                    ; escape
+                 (unless comment
+                   (setq escape (not escape))))
+                (t
+                 (if comment            ; inside block comment
+                     (when (and (char-equal char ?*) (char-equal next-char ?/)) ; check for comment end
+                       (forward-char 1)
+                       (when (and (eolp) (not (eobp)))
+                         (forward-char 1))
+                       (delete-region comment (point))
+                       (setq comment nil))
+                   (unless (or quote escape) ; check for comment start
+                     (cond
+                      ;; inline comment
+                      ((and (char-equal char ?/) (char-equal next-char ?/))
+                       (forward-char -1)
+                       (while (and (not (bolp))
+                                   (or (char-equal (preceding-char) ? )
+                                       (char-equal (preceding-char) ?\t)))
+                         (forward-char -1))
+                       (let ((mark (point)))
+                         (goto-char (line-end-position))
+                         (when (not (eobp))
+                           (forward-char 1))
+                         (delete-region mark (point))))
+                      ;; block comment
+                      ((and (char-equal char ?/) (char-equal next-char ?*))
+                       (setq comment (1- (point))))))))))))))))
+;; java-remove-comments:1 ends here
+
+;; [[file:init-emacs.org::#functions-code-formatting-functions-lisp-to-camel-case][lisp-to-camel-case:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Code Formatting Functions: lisp-to-camel-case
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Code Formatting Functions: lisp-to-camel-case")
+
+(defun lisp-to-camel-case ()
+  "Convert word under point from lisp notation to camel case notation."
+  (interactive "*")
+  (let* ((bounds (bounds-of-thing-at-point 'word))
+         (beg (car bounds))
+         (end (cdr bounds)))
+    (save-mark-and-excursion
+      (save-restriction
+        (save-match-data
+          (narrow-to-region beg end)
+          (goto-char (point-min))
+          (while (re-search-forward "-" nil :noerror)
+            (let ((p (point)))
+              (capitalize-word 1)
+              (goto-char p)))
+          (goto-char (point-min))
+          (while (re-search-forward "-" nil :noerror)
+            (replace-match "")))))))
+;; lisp-to-camel-case:1 ends here
+
+;; [[file:init-emacs.org::#functions-code-formatting-functions-camel-case-to-lisp][camel-case-to-lisp:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Code Formatting Functions: camel-case-to-lisp
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Code Formatting Functions: camel-case-to-lisp")
+
+(defun camel-case-to-lisp ()
+  "Convert word under point from camel case notation to lisp notation."
+  (interactive "*")
+  (let* ((bounds (bounds-of-thing-at-point 'word))
+         (beg (car bounds))
+         (end (cdr bounds))
+         (case-fold-search nil))
+    (save-mark-and-excursion
+      (save-restriction
+        (save-match-data
+          (narrow-to-region beg end)
+          (goto-char (point-min))
+          (while (re-search-forward "[A-Z]" nil :noerror)
+            (forward-char -1)
+            (insert "-")
+            (forward-char 1))
+          (goto-char (point-min))
+          (downcase-word 1))))))
+;; camel-case-to-lisp:1 ends here
+
+;; [[file:init-emacs.org::#functions-code-formatting-functions-c-pretty-print-buffer][c-pretty-print-buffer:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Code Formatting Functions: c-pretty-print-buffer
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Code Formatting Functions: c-pretty-print-buffer")
+
+(defun c-pretty-print-buffer (&optional beg end)
+  "Clean up c/c++ code."
+  (interactive "*")
+  (let ((beg (or beg (if (use-region-p) (region-beginning) (point-min))))
+        (end (or end (if (use-region-p) (region-end) (point-max)))))
+    (save-mark-and-excursion
+      (save-restriction
+        (save-match-data
+          (narrow-to-region beg end)
+          ;; remove tabs
+          (remove-tabs)
+          ;; remove trailing blanks
+          (remove-trailing-blanks)
+          ;; remove extra spaces from functions
+          (goto-char (point-min))
+          (while (re-search-forward "([ \t]*" nil :noerror)
+            (replace-match "("))
+          (goto-char (point-min))
+          (while (re-search-forward "[ \t]*)" nil :noerror)
+            (replace-match ")"))
+          ;; remove extra spaces from template references
+          ;;(goto-char (point-min))
+          ;;(while (re-search-forward "<[ \t]*\\(.*?\\)[ \t]*>" nil :noerror)
+          ;;  (replace-match "<\\1>"))
+          ;; add spaces after commas
+          (goto-char (point-min))
+          (while (re-search-forward "\\,\\([^ ]\\)" nil :noerror)
+            (replace-match ", \\1"))
+          ;; remove double or more spaces
+          (goto-char (point-min))
+          (while (re-search-forward "\\([^ \.]\\)  +" nil :noerror)
+            (replace-match "\\1 "))
+          ;; remove double or more blank lines
+          (goto-char (point-min))
+          (while (re-search-forward "\n\n\n+" nil :noerror)
+            (replace-match "\n\n"))
+          ;; remove blank line before block start
+          (goto-char (point-min))
+          (while (re-search-forward "\n\n[ \t]*{" nil :noerror)
+            (replace-match "\n{")
+            (indent-according-to-mode))
+          ;; indent buffer
+          (indent-region (point-min) (point-max) nil))))))
+;; c-pretty-print-buffer:1 ends here
+
+;; [[file:init-emacs.org::#functions-code-formatting-functions-ruby-pretty-print-buffer][ruby-pretty-print-buffer:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Code Formatting Functions: ruby-pretty-print-buffer
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Code Formatting Functions: ruby-pretty-print-buffer")
+
+(defun ruby-pretty-print-buffer (&optional beg end)
+  "Clean up ruby code."
+  (interactive "*")
+  (let ((beg (or beg (if (use-region-p) (region-beginning) (point-min))))
+        (end (or end (if (use-region-p) (region-end) (point-max)))))
+    (save-mark-and-excursion
+      (save-restriction
+        (save-match-data
+          (narrow-to-region beg end)
+          ;; remove tabs
+          (remove-tabs)
+          ;; remove trailing blanks
+          (remove-trailing-blanks)
+          ;; remove extra spaces from functions
+          (goto-char (point-min))
+          (while (re-search-forward "([ \t]*\\(.*?\\)[ \t]*)" nil :noerror)
+            (replace-match "(\\1)"))
+          ;; remove extra spaces from variable references
+          (goto-char (point-min))
+          (while (re-search-forward "#{[ \t]*\\(.*?\\)[ \t]*}" nil :noerror)
+            (replace-match "#{\\1}"))
+          ;; remove extra spaces from hash references
+          (goto-char (point-min))
+          (while (re-search-forward "\\[[ \t]*\\(.*?\\)[ \t]*\\]" nil :noerror)
+            (replace-match "[\\1]"))
+          ;; remove extra spaces from each clauses
+          (goto-char (point-min))
+          (while (re-search-forward "|[ \t]*\\(.*?\\)[ \t]*|" nil :noerror)
+            (replace-match "|\\1|"))
+          ;; add spaces after commas
+          (goto-char (point-min))
+          (while (re-search-forward "\\,\\([^ ]\\)" nil :noerror)
+            (replace-match ", \\1"))
+          ;; remove double or more spaces
+          (goto-char (point-min))
+          (while (re-search-forward "\\([^ \.]\\)  +" nil :noerror)
+            (replace-match "\\1 "))
+          ;; remove double or more blank lines
+          (goto-char (point-min))
+          (while (re-search-forward "\n\n\n+" nil :noerror)
+            (replace-match "\n\n"))
+          ;; indent buffer
+          (indent-region (point-min) (point-max) nil))))))
+;; ruby-pretty-print-buffer:1 ends here
+
+;; [[file:init-emacs.org::#functions-code-formatting-functions-java-pretty-print-buffer][java-pretty-print-buffer:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Code Formatting Functions: java-pretty-print-buffer
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Code Formatting Functions: java-pretty-print-buffer")
+
+(defun java-pretty-print-buffer (&optional beg end)
+  "Clean up Java code."
+  (interactive "*")
+  (let ((beg (or beg (if (use-region-p) (region-beginning) (point-min))))
+        (end (or end (if (use-region-p) (region-end) (point-max)))))
+    (save-mark-and-excursion
+      (save-restriction
+        (save-match-data
+          (narrow-to-region beg end)
+          ;; remove tabs
+          (remove-tabs)
+          ;; remove trailing blanks
+          (remove-trailing-blanks)
+          ;; remove extra spaces from functions
+          (goto-char (point-min))
+          (while (re-search-forward "([ \t]*" nil :noerror)
+            (replace-match "("))
+          (goto-char (point-min))
+          (while (re-search-forward "[ \t]*)" nil :noerror)
+            (replace-match ")"))
+          ;; add spaces after commas
+          (goto-char (point-min))
+          (while (re-search-forward "\\,\\([^ ]\\)" nil :noerror)
+            (replace-match ", \\1"))
+          ;; add spaces after special forms keywords names
+          (dolist (name '("catch" "else" "for" "if" "return" "switch" "while"))
+            (goto-char (point-min))
+            (while (re-search-forward (concat name "(") nil :noerror)
+              (replace-match (concat name " ("))))
+          ;; join "} CONNECTOR {" into one line
+          (dolist (name '("catch" "else"))
+            (goto-char (point-min))
+            (while (re-search-forward (concat "}[ \t\n]*" name) nil :noerror)
+              (replace-match (concat "} " name))
+              (indent-according-to-mode)))
+          ;; remove double or more spaces
+          (goto-char (point-min))
+          (while (re-search-forward "\\([^ \.]\\)  +" nil :noerror)
+            (replace-match "\\1 "))
+          ;; remove double or more blank lines
+          (goto-char (point-min))
+          (while (re-search-forward "\n\n\n+" nil :noerror)
+            (replace-match "\n\n"))
+          ;; remove blank line before block start
+          (goto-char (point-min))
+          (while (re-search-forward "\n\n[ \t]*{" nil :noerror)
+            (replace-match "\n{")
+            (indent-according-to-mode))
+          ;; indent buffer
+          (indent-region (point-min) (point-max) nil))))))
+;; java-pretty-print-buffer:1 ends here
+
+;; [[file:init-emacs.org::#functions-code-formatting-functions-xml-format][xml-format:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Code Formatting Functions: xml-format
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Code Formatting Functions: xml-format")
+
+(defun xml-format (&optional beg end)
+  "Format XML buffer.
+
+Convert poorly formatted XML into something better."
+  (interactive "*")
+  (let ((beg (or beg (if (use-region-p) (region-beginning) (point-min))))
+        (end (or end (if (use-region-p) (region-end) (point-max))))
+        (mode major-mode))
+    (save-mark-and-excursion
+      (save-restriction
+        (save-match-data
+          (narrow-to-region beg end)
+          (xml-mode)
+          (let ((xml-eol "[ \t]*\n[ \t]*")
+                (xml-tag-end-regexp ">")
+                (xml-close-tag-regexp "</")
+                (xml-block-regexp "<[^>]*>[^<]*</[^>]*>"))
+            ;; remove all existing EOL characters
+            (goto-char (point-min))
+            (while (re-search-forward xml-eol nil :noerror)
+              (replace-match ""))
+            ;; move down code adding newlines were needed
+            (goto-char (point-min))
+            (while (re-search-forward xml-tag-end-regexp nil :noerror)
+              (insert "\n")
+              (when (and
+                     (looking-at xml-block-regexp)
+                     (not (looking-at xml-close-tag-regexp)))
+                (re-search-forward xml-block-regexp nil :noerror)
+                (forward-char -1)))
+            ;; indent buffer
+            (indent-region (point-min) (point-max)))
+          (funcall mode))))))
+;; xml-format:1 ends here
+
+;; [[file:init-emacs.org::#functions-code-inserting-functions][Code Inserting Functions:1]]
+;;------------------------------------------------------------------------------
+;;; Functions: Code Inserting Functions
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Functions: Code Inserting Functions")
+;; Code Inserting Functions:1 ends here
+
+;; [[file:init-emacs.org::#functions-code-inserting-functions-project-euler-insert-template][project-euler-insert-template:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Code Inserting Functions: project-euler-insert-template
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Code Inserting Functions: project-euler-insert-template")
+
+(defun project-euler-insert-template (num &optional count)
+  "Insert a Project Euler template for NUM.
+
+If optional COUNT is given, repeat up to NUM+COUNT-1."
+  (let ((buffer-name "project-euler.lisp"))
+    (unless (string= (buffer-name) buffer-name)
+      (error "Buffer is not '%s'" buffer-name))
+    (dotimes (x (or count 1))
+      (let ((strnum (format "%03d" (+ num x))))
+        (save-mark-and-excursion
+          (save-match-data
+            (goto-char (point-min))
+            (re-search-forward "^;;; Template")
+            (goto-char (line-beginning-position))
+            (forward-line 3)
+            (let ((beg (point)))
+              (forward-sexp 2)
+              (goto-char (line-beginning-position))
+              (forward-line 2)
+              (let ((template (replace-regexp-in-string
+                               "\\?" strnum
+                               (buffer-substring-no-properties beg (point)))))
+                (search-backward-regexp "^;;; New Problems")
+                (forward-line -1)
+                (insert template)))))))))
+;; project-euler-insert-template:1 ends here
+
+;; [[file:init-emacs.org::#functions-code-inserting-functions-insert-tree][insert-tree:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Code Inserting Functions: insert-tree
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Code Inserting Functions: insert-tree")
+
+(defun insert-tree (leaves padding)
+  "Insert binary tree with LEAVES at the bottom and PADDING on the left."
+  (let ((size (* 3 (expt 2 leaves)))
+        (pad (do* ((l 1 (1+ l))
+                   (pad 0 (+ pad (* 3 (expt 2 l)))))
+                 ((> l leaves) pad))))
+    (cl-do ((s size (1- s)))
+        ((zerop s))
+      (let ((i ""))
+        (dotimes (x (+ padding s))
+          (setq i (concat i " ")))
+        (setq i (concat i "/"))
+        (dotimes (x (* (- size s) 2))
+          (setq i (concat i " ")))
+        (setq i (concat i "\\"))
+        (insert i)
+        (newline)))))
+
+;;                                              /\
+;;                                             /  \
+;;                                            /    \
+;;                                           /      \
+;;                                          /        \
+;;                                         /          \
+;;                                        /            \
+;;                                       /              \
+;;                                      /                \
+;;                                     /                  \
+;;                                    /                    \
+;;                                 1 /                      \ 1
+;;                                  /                        \
+;;                                 /                          \
+;;                                /                            \
+;;                               /                              \
+;;                              /                                \
+;;                             /                                  \
+;;                            /                                    \
+;;                           /                                      \
+;;                          /                                        \
+;;                         /                                          \
+;;                        /                                            \
+;;                       /                                              \
+;;                      /\                                              /\
+;;                     /  \                                            /  \
+;;                    /    \                                          /    \
+;;                   /      \                                        /      \
+;;                  /        \                                      /        \
+;;               1 /          \ 2                                1 /          \ 2
+;;                /            \                                  /            \
+;;               /              \                                /              \
+;;              /                \                              /                \
+;;             /                  \                            /                  \
+;;            /                    \                          /                    \
+;;           /                      \                        /                      \
+;;          /\                      /\                      /\                      /\
+;;         /  \                    /  \                    /  \                    /  \
+;;      1 /    \ 3              2 /    \ 6              1 /    \ 3              2 /    \ 6
+;;       /      \                /      \                /      \                /      \
+;;      /        \              /        \              /        \              /        \
+;;     /          \            /          \            /          \            /          \
+;;    /\          /\          /\          /\          /\          /\          /\          /\
+;; 1 /  \ 4    3 /  \ 12   2 /  \ 8    6 /  \ 24   1 /  \ 4    3 /  \ 12   2 /  \ 8    6 /  \ 24
+;;  /    \      /    \      /    \      /    \      /    \      /    \      /    \      /    \
+;; insert-tree:1 ends here
+
+;; [[file:init-emacs.org::#functions-esoteric-functions][Esoteric Functions:1]]
+;;------------------------------------------------------------------------------
+;;; Functions: Esoteric Functions
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Functions: Esoteric Functions")
+;; Esoteric Functions:1 ends here
+
+;; [[file:init-emacs.org::#functions-esoteric-functions-fahrenheit-celsius-conversions][Fahrenheit/Celsius Conversions:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Esoteric Functions: Fahrenheit/Celsius Conversions
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Esoteric Functions: Fahrenheit/Celsius Conversions")
+;; Fahrenheit/Celsius Conversions:1 ends here
+
+;; [[file:init-emacs.org::#functions-esoteric-functions-fahrenheit-celsius-conversions-fahrenheit-to-celsius][fahrenheit-to-celsius:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Esoteric Functions: Fahrenheit/Celsius Conversions: fahrenheit-to-celsius
+;;------------------------------------------------------------------------------
+
+(init-message 4 "Functions: Esoteric Functions: Fahrenheit/Celsius Conversions: fahrenheit-to-celsius")
+
+(defun fahrenheit-to-celsius (deg)
+  "Convert fahrenheit degrees to celsius."
+  (/ (* (- deg 32.0) 5.0) 9.0))
+;; fahrenheit-to-celsius:1 ends here
+
+;; [[file:init-emacs.org::#functions-esoteric-functions-fahrenheit-celsius-conversions-fahrenheit-to-celsius-query][fahrenheit-to-celsius-query:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Esoteric Functions: Fahrenheit/Celsius Conversions: fahrenheit-to-celsius-query
+;;------------------------------------------------------------------------------
+
+(init-message 4 "Functions: Esoteric Functions: Fahrenheit/Celsius Conversions: fahrenheit-to-celsius-query")
+
+(defun fahrenheit-to-celsius-query (deg)
+  "Prompt user for fahrenheit degrees to convert to celsius."
+  (interactive "nFahrenheit degrees: ")
+  (let ((cel (fahrenheit-to-celsius deg)))
+    (when (called-interactively-p 'any)
+      (message "Celsius degrees: %s" cel))
+    cel))
+;; fahrenheit-to-celsius-query:1 ends here
+
+;; [[file:init-emacs.org::#functions-esoteric-functions-fahrenheit-celsius-conversions-celsius-to-fahrenheit][celsius-to-fahrenheit:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Esoteric Functions: Fahrenheit/Celsius Conversions: celsius-to-fahrenheit
+;;------------------------------------------------------------------------------
+
+(init-message 4 "Functions: Esoteric Functions: Fahrenheit/Celsius Conversions: celsius-to-fahrenheit")
+
+(defun celsius-to-fahrenheit (deg)
+  "Convert celsius degrees to fahrenheit."
+  (+ (* (/ deg 5.0) 9.0) 32.0))
+;; celsius-to-fahrenheit:1 ends here
+
+;; [[file:init-emacs.org::#functions-esoteric-functions-fahrenheit-celsius-conversions-celsius-to-fahrenheit-query][celsius-to-fahrenheit-query:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Esoteric Functions: Fahrenheit/Celsius Conversions: celsius-to-fahrenheit-query
+;;------------------------------------------------------------------------------
+
+(init-message 4 "Functions: Esoteric Functions: Fahrenheit/Celsius Conversions: celsius-to-fahrenheit-query")
+
+(defun celsius-to-fahrenheit-query (deg)
+  "Prompt user for celsius degrees to convert to fahrenheit."
+  (interactive "nCelsius degrees: ")
+  (let ((cel (celsius-to-fahrenheit deg)))
+    (when (called-interactively-p 'any)
+      (message "Fahrenheit degrees: %s" cel))
+    cel))
+;; celsius-to-fahrenheit-query:1 ends here
+
+;; [[file:init-emacs.org::#functions-esoteric-functions-base-conversion][base-conversion:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Esoteric Functions: base-conversion
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Esoteric Functions: base-conversion")
+
+(defun base-conversion (base-from base-to num)
+  "Convert NUM from BASE-FROM to BASE-TO."
+  (interactive)
+  ;; first get base 10 number
+  (let ((num
+         (do* ((n (mod num 10) (mod num 10))
+               (num (/ num 10) (/ num 10))
+               (pos 1 (* pos base-from))
+               (result (* pos n) (+ result (* pos n))))
+             ((zerop num) result))))
+    ;; now convert to base-to
+    (do* ((n (mod num base-to) (mod num base-to))
+          (num (/ num base-to) (/ num base-to))
+          (pos 1 (* pos base-to))
+          (result (* pos n) (+ result (* pos n))))
+        ((zerop num) result))))
+;; base-conversion:1 ends here
+
+;; [[file:init-emacs.org::#functions-esoteric-functions-ldif-update-xml][ldif-update-xml:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Esoteric Functions: ldif-update-xml
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Esoteric Functions: ldif-update-xml")
+
+(defun ldif-update-xml ()
+  "Update an LDIF node with the base64 encoded value of an XML block.
+
+Must be run from the attribute being updated, which must be in
+the form of `attribute::'."
+  (interactive "*")
+  (let (beg
+        end
+        attr
+        block
+        (blank-line-regexp "^[ \t]*$"))
+    (save-mark-and-excursion
+      (save-match-data
+        ;; save attr position
+        (goto-char (line-beginning-position))
+        (when (search-forward "::" (line-end-position) :noerror)
+          (setq attr (point))
+          ;; find xml block
+          (when (search-forward "<?xml" nil :noerror)
+            ;; get xml block range (fron starting <?xml to first blank line)
+            ;; TODO: make this better by search for starting and ending xml
+            ;; nodes
+            (setq beg (line-beginning-position))
+            (while (and
+                    (not (eobp))
+                    (not (looking-at blank-line-regexp)))
+              (forward-line 1))
+            (forward-line -1)
+            (end-of-line)
+            (setq end (point))
+            ;; copy block to temp buffer
+            (setq block (buffer-substring beg end))
+            ;; following two lines used for debugging
+            ;;(save-current-buffer
+            ;;  (set-buffer (get-buffer-create "*temp*"))
+            (with-temp-buffer
+              (insert block)
+              (goto-char (point-min))
+              ;; if block is commented out, then uncomment
+              (search-forward "<?xml")
+              (goto-char (line-beginning-position))
+              (when (char-equal (char-after (point)) ?#)
+                (while (char-equal (char-after (point)) ?#)
+                  ;; remove leading #
+                  (delete-char 1)
+                  ;; remove single space if exists
+                  (when (char-equal (char-after (point)) ? )
+                    (delete-char 1))
+                  (forward-line 1)
+                  (goto-char (line-beginning-position))))
+              ;; remove comment lines
+              (goto-char (point-min))
+              (while (re-search-forward "^[ \t]*#" (point-max) :noerror)
+                (delete-region (line-beginning-position) (line-end-position))
+                (unless (eobp)
+                  (delete-char 1)))
+              ;; base64 encode block
+              (base64-encode-region (point-min) (point-max))
+              ;; append every line with a space
+              (goto-char (point-min))
+              (while (not (eobp))
+                (goto-char (line-beginning-position))
+                (insert " ")
+                (forward-line 1))
+              ;; copy encoded block
+              (setq block (buffer-substring (point-min) (point-max))))
+            ;; delete attr data
+            (goto-char attr)
+            (delete-region (point) (line-end-position))
+            (forward-line 1)
+            (goto-char (line-beginning-position))
+            (while (char-equal (char-after (point)) ? )
+              (delete-region (line-beginning-position) (line-end-position))
+              (delete-char 1))
+            ;; paste encoded block
+            (goto-char attr)
+            (insert block)))))))
+;; ldif-update-xml:1 ends here
+
+;; [[file:init-emacs.org::#functions-esoteric-functions-lisp-to-racket-conversion][lisp-to-racket-conversion:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Esoteric Functions: lisp-to-racket-conversion
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Esoteric Functions: lisp-to-racket-conversion")
+
+(defun lisp-to-racket-conversion ()
+  "Find and convert next Lisp function header into Racket format."
+  (interactive "*")
+  (re-search-forward "^[ \t]*\(\\(defun\\)")
+  (backward-kill-word 1)
+  (let ((indent (buffer-substring-no-properties (line-beginning-position) (1- (point)))))
+    (insert "define")
+    (forward-char 1)
+    (insert "(")
+    (let ((fn-name-start (point)))
+      (re-search-forward " ")
+      (let ((fn-name
+             (replace-regexp-in-string
+              "-" " "
+              (buffer-substring-no-properties fn-name-start (1- (point))))))
+        (delete-char 1)
+        (forward-line 0)
+        (forward-line 1)
+        (let ((start (point)))
+          (re-search-forward "^[ \t]*\"" (line-end-position))
+          (let ((str-start (point))
+                (escape nil))
+            ;; find end of quoted string
+            (while (not (and (not escape) (char-equal (char-after) ?\")))
+              (when (char-equal (char-after) ?\\)
+                (setq escape (not escape)))
+              (forward-char 1))
+            (let ((str (replace-regexp-in-string
+                        (concat "\n" indent)
+                        (concat "\n" indent ";; ")
+                        (buffer-substring-no-properties str-start (point)))))
+              (forward-line 0)
+              (forward-line 1)
+              (delete-region start (point))
+              (forward-line -2)
+              (end-of-line)
+              (insert (concat "\n" indent ";;------------------------------------------------------------------------------\n"))
+              (insert (concat indent ";;;; " fn-name))
+              (titleize-line-or-region)
+              (insert (concat "\n" indent ";;\n" indent ";; " str "\n"))
+              (insert (concat indent ";;------------------------------------------------------------------------------\n\n"))
+              (forward-line 0)
+              (forward-line 2))))))))
+;; lisp-to-racket-conversion:1 ends here
+
+;; [[file:init-emacs.org::#functions-esoteric-functions-integer-to-roman-numerals][integer-to-roman-numerals:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Esoteric Functions: integer-to-roman-numerals
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Esoteric Functions: integer-to-roman-numerals")
+
+(defun integer-to-roman-numerals (num)
+  "Return romain numeral version of given integer NUM.
+
+Roman numerals use I, V, X, L, C, D, and M, standing respectively
+for 1, 5, 10, 50, 100, 500, and 1,000."
+  (interactive "NInteger number: ")
+  (when (< num 0)
+    (error "NUM must be 1 or greater"))
+  (when (>= num 5000)
+    (error "NUM must be less than 5,000"))
+  (let ((roman))
+    (cl-labels
+        ((convert (num)
+                  (cond
+                   ((>= num 1000)
+                    (push "M" roman)
+                    (- num 1000))
+                   ((>= num 900)
+                    (push "CM" roman)
+                    (- num 900))
+                   ((>= num 500)
+                    (push "D" roman)
+                    (- num 500))
+                   ((>= num 400)
+                    (push "CD" roman)
+                    (- num 400))
+                   ((>= num 100)
+                    (push "C" roman)
+                    (- num 100))
+                   ((>= num 90)
+                    (push "XC" roman)
+                    (- num 90))
+                   ((>= num 50)
+                    (push "L" roman)
+                    (- num 50))
+                   ((>= num 40)
+                    (push "XL" roman)
+                    (- num 40))
+                   ((>= num 10)
+                    (push "X" roman)
+                    (- num 10))
+                   ((>= num 9)
+                    (push "IX" roman)
+                    (- num 9))
+                   ((>= num 5)
+                    (push "V" roman)
+                    (- num 5))
+                   ((>= num 4)
+                    (push "IV" roman)
+                    (- num 4))
+                   ((>= num 1)
+                    (push "I" roman)
+                    (- num 1)))))
+      (while (> num 0)
+        (setq num (convert num)))
+      (mapconcat 'identity (nreverse roman) ""))))
+;; integer-to-roman-numerals:1 ends here
+
+;; [[file:init-emacs.org::#functions-programs][Programs:1]]
+;;------------------------------------------------------------------------------
+;;; Functions: Programs
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Functions: Programs")
+;; Programs:1 ends here
+
+;; [[file:init-emacs.org::#functions-programs-national-debt][National Debt:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Programs: National Debt
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Programs: National Debt")
+
+(defun national-debt ()
+  "Return the current US national debt."
+  (interactive)
+  (save-current-buffer
+    (let ((buffer (url-retrieve-synchronously "http://brillig.com/debt_clock/"))
+          result)
+      (when buffer
+        (with-current-buffer buffer
+          (goto-char (point-min))
+          (when (re-search-forward "debtiv\.gif.*[Aa][Ll][Tt]=\"\\([^\"]*\\)" nil :noerror)
+            (setq result
+                  (replace-regexp-in-string
+                   "\s+" ""
+                   (buffer-substring-no-properties (match-beginning 1) (match-end 1)))))))
+      (if result
+          (if (called-interactively-p 'any)
+              (message result)
+            (string-to-number
+             (replace-regexp-in-string "," ""
+                                       (replace-regexp-in-string "\\$" "" result))))
+        (message "Error fetching the national debt")))))
+;; National Debt:1 ends here
+
+;; [[file:init-emacs.org::#functions-programs-flesch-readability-index][Flesch Readability Index:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Programs: Flesch Readability Index
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Programs: Flesch Readability Index")
+
+(defun flesch-readability-index (&optional beg end)
+  "Compute the Flesch Readability Index of the current region or entire buffer.
+
+The Flesch Readability Index is defined on wikipedia here:
+
+  http://en.wikipedia.org/wiki/Flesch-Kincaid_Readability_Test
+
+This function provides that index following the guidelines presented here:
+
+  http://cs.boisestate.edu/~amit/teaching/125/lab/p4.html
+
+Guidelines:
+
+  - Count all words in the text. A word is any sequence of
+    characters delimited by white space, whether or not it is an
+    actual English word.
+
+  - Count all syllables in each word. To make this simple, use
+    the following rules. Each group of adjacent
+    vowels (a,e,i,o,u,y) counts as one syllable (for example, the
+    \"ea\" in \"real\" contributes one syllable, but the \"e..a\"
+    in \"regal\" count as two syllables). However, an \"e\" at
+    the end of a word doesn't count as a syllable. For example,
+    the word \"eagle\" would be one syllable by Flesch's rules.
+    However, the word \"intrigue\" is three syllables (since the
+    e is preceded by a vowel). Also, each word has at least one
+    syllable, even if the previous rules give a count of zero.
+
+  - Count all sentences. A sentence is ended by a period, colon,
+    semicolon, questions mark, or exclamation mark.
+
+  - The index is computed by:
+
+    index = 206.835 - (1.015 * words / sentences) - (84.6 * syllables / words)
+
+  - Index should be rounded to the nearest integer.
+
+The index is a number, usually between 0 and 100, indicating how
+difficult the text is to read."
+  (interactive)
+  (cl-labels
+      ((count-words (beg end)
+                    (how-many "\\w+" beg end))
+       (count-sentences (beg end)
+                        (how-many "[\.\:\;\?\!]\\W" beg end))
+       ;; (count-sentences (beg end)
+       ;;                  (save-mark-and-excursion
+       ;;                    (let ((count 0))
+       ;;                      (goto-char beg)
+       ;;                      (while (< (point) end)
+       ;;                        (forward-sentence 1)
+       ;;                        (setq count (1+ count))))))
+       (count-syllables (beg end)
+                        (let ((letter-regexp "[A-Za-z]")
+                              (vowel-regexp "[AEIOUYaeiouy]")
+                              (e-end-regexp "[Ee]\\W"))
+                          (save-mark-and-excursion
+                            (let ((count 0))
+                              (goto-char beg)
+                              (while (< (point) end)
+                                (while (and (< (point) end)
+                                            (not (looking-at letter-regexp)))
+                                  (forward-char 1))
+                                (let ((state (if (looking-at vowel-regexp) 2 1)))
+                                  (when (= state 2)
+                                    (setq count (1+ count)))
+                                  (while (looking-at letter-regexp)
+                                    (if (and (= state 1)
+                                             (looking-at vowel-regexp)
+                                             (not (looking-at e-end-regexp)))
+                                        (setq state 2
+                                              count (1+ count))
+                                      (if (and (= state 2)
+                                               (not (looking-at vowel-regexp)))
+                                          (setq state 1)))
+                                    (forward-char 1))))
+                              count)))))
+    (let* ((beg (or beg (if (use-region-p) (region-beginning) (point-min))))
+           (end (or end (if (use-region-p) (region-end) (point-max))))
+           (words (count-words beg end))
+           (sentences (count-sentences beg end))
+           (syllables (count-syllables beg end))
+           (index (round (- 206.835
+                            (/ (* 1.015 words) (if (> sentences 0) sentences 1))
+                            (/ (* 84.6 syllables) (if (> words 0) words 1)))))
+           (index-desc
+            (cond
+             ((> index 90) "5th grader")
+             ((> index 80) "6th grader")
+             ((> index 70) "7th grader")
+             ((> index 65) "8th grader")
+             ((> index 60) "9th grader")
+             ((> index 50) "High school student")
+             ((> index 30) "College student")
+             ((>= index 0) "College graduate")
+             (t "Law school graduate"))))
+      (message "Words: %s, Sentences: %s, Syllables %s, Flesch Readability Index: %s (%s)"
+               words sentences syllables index index-desc)
+      index)))
+;; Flesch Readability Index:1 ends here
+
+;; [[file:init-emacs.org::#functions-programs-phone-number-words][Phone Number Words:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Programs: Phone Number Words
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Programs: Phone Number Words")
+
+;; TODO: finish this
+(defun phone-number-words (num &optional word-file)
+  "Convert phone number NUM into word strings that may be used instead.
+
+Single digits may appear between words.
+WORD-FILE defaults to `/usr/share/dict/words'."
+  (interactive "sPhone number: ")
+  (let ((word-file (or word-file "/usr/share/dict/words")))
+    (defun file-to-string (file)
+      (with-temp-buffer
+        (insert-file-contents file)
+        (buffer-string)))
+    (defun string-to-list (string)
+      (cl-loop for x across string collect x))
+    (defun list-to-string (list)
+      (mapconcat 'string list ""))
+    ;;(setq word-file "~/tw")
+    (unless (file-exists-p word-file)
+      (error "Word file `%s' does not exist" word-file))
+    ;; load word file
+    (let* ((words (split-string (file-to-string word-file))) ; word list
+           (word-hash (make-hash-table :size (length words))) ; number to word hash
+           (letter-digit '((?A . ?2) (?B . ?2) (?C . ?2)
+                           (?D . ?3) (?E . ?3) (?F . ?3)
+                           (?G . ?4) (?H . ?4) (?I . ?4)
+                           (?J . ?5) (?K . ?5) (?L . ?5)
+                           (?M . ?6) (?N . ?6) (?O . ?6)
+                           (?P . ?7) (?Q . ?7) (?R . ?7) (?S . ?7)
+                           (?T . ?8) (?U . ?8) (?V . ?8)
+                           (?W . ?9) (?X . ?9) (?Y . ?9) (?Z . ?9)))) ; letter to digit mappings
+      ;; build word hash
+      (dolist (word words)
+        (let* ((letters (string-to-list (upcase word)))
+               (number (list-to-string (mapcar (lambda (x) (char-to-string (cdr (assoc x letter-digit)))) letters))))
+          ;;(message "letters: %S, number: %S" letters number)
+          (setf (gethash number word-hash) word))))))
+;; Phone Number Words:1 ends here
+
+;; [[file:init-emacs.org::#functions-programs-keyboard-cat-mode][Keyboard Cat Mode:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Programs: Keyboard Cat Mode
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Programs: Keyboard Cat Mode")
+
+(defvar keyboard-cat-overlay nil)
+
+(defun keyboard-cat-next ()
+  (interactive)
+  (move-overlay keyboard-cat-overlay
+                (goto-char (min (1+ (overlay-start keyboard-cat-overlay))
+                                (point-max)))
+                (overlay-end keyboard-cat-overlay)))
+
+(defvar keyboard-cat-mode-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map [remap self-insert-command] 'keyboard-cat-next)
+    (define-key map [remap keyboard-quit] 'keyboard-cat-mode)
+    map))
+
+(define-minor-mode keyboard-cat-mode
+  "Minor mode that slowly exposes current buffer as keys are pressed."
+  :init nil
+  :keymap keyboard-cat-mode-map
+  (if keyboard-cat-mode
+      (overlay-put
+       (setq-local keyboard-cat-overlay
+                   (make-overlay (point-min) (point-max)))
+       'invisible t)
+    (delete-overlay keyboard-cat-overlay)))
+;; Keyboard Cat Mode:1 ends here
+
+;; [[file:init-emacs.org::#functions-programs-keyboard-display-mode][Keyboard Display Mode:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Programs: Keyboard Display Mode
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Programs: Keyboard Display Mode")
+
+(defvar keyboard-display-process-name "gxmessage")
+
+(defvar keyboard-display-key-log nil)
+
+(defvar keyboard-display-key-log-width 0)
+
+(defvar keyboard-display-key-log-size 10
+  "Maximum number of key presses to keep in the log.")
+
+(defvar keyboard-display-key-log-duration 5
+  "Number of seconds to keep key presses in the key log.")
+
+(defvar keyboard-display-message-duration 5
+  "Number of seconds to keep key press display showing.")
+
+(defvar keyboard-display-last-key "")
+(defvar keyboard-display-last-key-count 1)
+
+(defun keyboard-display-key-press ()
+  "Display current key press using gxmessage."
+  (let ((key (concat (if current-prefix-arg
+                         (concat current-prefix-arg " ")
+                       "")
+                     (symbol-name this-command))))
+    (when keyboard-display-key-log
+      (if (< (caar (reverse keyboard-display-key-log))
+             (- (float-time (current-time)) keyboard-display-key-log-duration))
+          (setq keyboard-display-key-log nil
+                keyboard-display-key-log-width 0
+                keyboard-display-last-key ""
+                keyboard-display-last-key-count 1)
+        (when (>= (length keyboard-display-key-log) keyboard-display-key-log-size)
+          (pop keyboard-display-key-log))))
+    (if (string= keyboard-display-last-key key)
+        (setq key (concat key " x " (number-to-string (cl-incf keyboard-display-last-key-count))))
+      (setq keyboard-display-last-key key
+            keyboard-display-last-key-count 1))
+    (when (> (length key) keyboard-display-key-log-width)
+      (setq keyboard-display-key-log-width (length key)))
+    (setq key (substring (concat key (make-string keyboard-display-key-log-width ? ))
+                         0 keyboard-display-key-log-width))
+    (if (> keyboard-display-last-key-count 1)
+        (setcdr (car (last keyboard-display-key-log)) key)
+      (setq keyboard-display-key-log (append keyboard-display-key-log
+                                             (list (cons (float-time (current-time)) key)))))
+    (let ((msg (mapconcat (lambda (x) (cdr x)) keyboard-display-key-log "\n")))
+      (start-process keyboard-display-process-name nil
+                     "gxmessage" "-borderless" "-nofocus" "-center"
+                     "-timeout" (int-to-string keyboard-display-message-duration)
+                     "-buttons" "" "-fn" "mono 32" msg))))
+
+(defvar keyboard-display-mode-map
+  (let ((map (make-sparse-keymap)))
+    map))
+
+(define-minor-mode keyboard-display-mode
+  "Minor mode that displays every key press in a pop-up message."
+  :init nil
+  :keymap keyboard-display-mode-map
+  (if keyboard-display-mode
+      (add-hook 'pre-command-hook #'keyboard-display-key-press)
+    (remove-hook 'pre-command-hook 'keyboard-display-key-press)))
+;; Keyboard Display Mode:1 ends here
+
+;; [[file:init-emacs.org::#functions-programs-star-wars-scroll][Star Wars Scroll:1]]
+;;------------------------------------------------------------------------------
+;; Star Wars Scroll (scroll current text buffer like Star Wars opening text)
+;;
+;; http://mbork.pl/2015-12-18_Star_Wars_crawl_in_Emacs
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Programs: Star Wars Scroll")
+
+(defvar star-wars-scroll-substitution-list
+  '(("." . 0)
+    (" " . 0)
+    ("[.,;:!?] " . 1)
+    ("\\B[aeiou]\\B" . 0)
+    ("\\B[bcdfghjklmnpqrstvwxyz]\\B" . 0)
+    ("\\w\\b" . 0)
+    ("[.,;:!?]" . 0)
+    ("[^.,;:!?] " . 1)
+    ("\\b\\w" . 0)
+    (".$" . 0)
+    ("^." . 0))
+  "A list of dotted pairs with car equal to the regex matching
+the character we want to delete and cdr equal to how many
+characters we want to move the point forward before actually
+deleting a character (useful in the case of space after a
+punctuation). We begin with the substitutions we want to perform
+first. If more than one regex matches, the last one is valid, so
+it is probably a good idea to begin with \".\".")
+
+(defun star-wars-scroll-center-line-no-tabs ()
+  "A simplified version of center-line, using no tabs (and not
+taking into account leading/trailing whitespace."
+  (save-mark-and-excursion
+    (let ((length (progn (end-of-line)
+                         (current-column))))
+      (goto-char (line-beginning-position))
+      (insert (make-string (max 0 (/ (- fill-column length) 2)) ?\s)))))
+
+(defun star-wars-scroll-scroll-prepare-marker-list ()
+  "Prepare (and return) a list of markers pointing at characters
+to delete from the current line, in the \"right\" order."
+  (save-mark-and-excursion
+    (save-match-data
+      (let ((limit (progn
+                     (star-wars-scroll-center-line-no-tabs) ; this may use tabs
+                     (back-to-indentation)
+                     (point)))
+            (subst-list star-wars-scroll-substitution-list)
+            (marker-list nil))
+        (while subst-list
+          (end-of-line)
+          (while (search-backward-regexp (caar subst-list) limit :noerror)
+            (forward-char (cdar subst-list))
+            (push (point-marker) marker-list))
+          (setq subst-list (cdr subst-list)))
+        (delete-dups marker-list)
+        (setq marker-list (nreverse marker-list))))))
+
+(defvar star-wars-scroll-untouched-lines 3
+  "Number of lines at the bottom of the window which should not
+be touched by character deletion.")
+
+(defvar star-wars-scroll-delay .5
+  "Delay (in seconds) between frames of animation.")
+
+(defun star-wars-scroll-scroll-current-buffer ()
+  "Actually do SW-like scroll in the current buffer."
+  (let (marker-list-list)
+    (goto-char (point-min))
+    (open-line (window-height))
+    (goto-char (point-max))
+    (move-beginning-of-line 0)
+    (while (progn
+             (push (star-wars-scroll-scroll-prepare-marker-list) marker-list-list)
+             (> (point) (+ (point-min) (window-height))))
+      (forward-line -1))
+    (while (< (point-min) (point-max)) ; here the actual scroll begins
+      (goto-char (point-min))
+      (kill-line 1)
+      (redisplay t)
+      (sleep-for star-wars-scroll-delay)
+      (let ((walker marker-list-list))
+        (while (progn
+                 (goto-char (or (caar walker) (point-min)))
+                 (and walker (< (line-number-at-pos) (- (window-height) star-wars-scroll-untouched-lines))))
+          (when (car walker)
+            (goto-char (caar walker))
+            (delete-char 1)
+            (setf (car walker) (cdar walker)))
+          (when (car walker)
+            (goto-char (caar walker))
+            (delete-char 1)
+            (setf (car walker) (cdar walker))
+            (goto-char (line-beginning-position))
+            (insert " "))
+          (setq walker (cdr walker)))))))
+
+(defun star-wars-scroll ()
+  "Do Star-Wars-like scroll of the region, or the whole buffer if
+  no region is active, in a temporary buffer, and delete it
+  afterwards. Special care is taken to make the lines more or
+  less legible as long as possible, for example spaces after
+  punctuation are deleted before vowels, vowels are deleted
+  before consonants etc."
+  (interactive)
+  (save-mark-and-excursion
+    (let ((begin (point-min)) (end (point-max)))
+      (when (region-active-p)
+        (setq beg (region-beginning))
+        (setq end (region-end)))
+      (copy-region-as-kill beg end)
+      (with-temp-buffer
+        (switch-to-buffer (current-buffer))
+        (rename-buffer "*Star Wars Scroll*")
+        (buffer-disable-undo (current-buffer))
+        (untabify (point-min) (point-max))
+        (save-window-excursion
+          (delete-other-windows)
+          (yank)
+          (star-wars-scroll-scroll-current-buffer))))))
+;; Star Wars Scroll:1 ends here
+
+;; [[file:init-emacs.org::#functions-games][Games:1]]
+;;------------------------------------------------------------------------------
+;;; Functions: Games
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Functions: Games")
+;; Games:1 ends here
+
+;; [[file:init-emacs.org::#functions-games-towers-of-hanoi][Towers of Hanoi:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Games: Towers of Hanoi
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Games: Towers of Hanoi")
+
+(defun towers (disks)
+  "Solve the clasical Towers of Hanoi problem for given number of DISKS."
+  (interactive "NNumber of disks: ")
+  (let ((buffer "*Towers*"))
+    ;; setup buffer
+    (get-buffer-create buffer)
+    (set-buffer buffer)
+    (setq buffer-read-only nil)
+    (erase-buffer)
+    ;; print header
+    (insert (format "Towers of Hanoi puzzle with %d disks\n\n" disks))
+    ;; make initial call to towers move
+    ;; move from peg 1 to 3 using 2
+    (towers-move disks 1 3 2)
+    ;; set buffer to read-only
+    (setq buffer-read-only t)
+    ;; switch to buffer
+    (switch-to-buffer buffer)
+    (goto-char (point-min)))
+  ;; no return value
+  (values))
+
+(defun towers-move (n from to using)
+  "Make one Towers of Hanoi move.
+
+N is the number of disks to move.
+
+FROM is the source peg.
+
+TO is the target peg.
+
+USING is the remaining peg."
+  (when (> n 0)
+    ;; In order to move N disks FROM one peg TO another, we first move N-1
+    ;; disks FROM one peg to the other USING peg.
+    (towers-move (1- n) from using to)
+    ;; Then we move the one remaining peg FROM the starting peg TO the
+    ;; finishing peg.
+    (insert (format "Move %d --> %d\n" from to))
+    ;; Finally we move the N-1 disks now on the other USING peg to the TO peg
+    ;; using FROM.
+    (towers-move (1- n) using to from)))
+;; Towers of Hanoi:1 ends here
+
+;; [[file:init-emacs.org::#completions][Completions:1]]
+;;==============================================================================
+;;; Completions
+;;==============================================================================
+
+(init-message 1 "Completions")
+;; Completions:1 ends here
+
+;; [[file:init-emacs.org::#completions-ido][+ido+:1]]
+;;------------------------------------------------------------------------------
+;;; Completions: ido
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Completions: ido")
+;; +ido+:1 ends here
+
+;; [[file:init-emacs.org::#completions-auto-complete][+auto-complete+:1]]
+;;------------------------------------------------------------------------------
+;;; Completions: auto-complete
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Completions: auto-complete")
+;; +auto-complete+:1 ends here
+
+;; [[file:init-emacs.org::#completions-company-ivy][+company/ivy+:1]]
+;;------------------------------------------------------------------------------
+;;; Completions: company/ivy
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Completions: company/ivy")
+;; +company/ivy+:1 ends here
+
+;; [[file:init-emacs.org::#completions-helm-swiper][+helm (swiper)+:1]]
+;;------------------------------------------------------------------------------
+;;; Completions: helm (swiper)
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Completions: helm (swiper)")
+;; +helm (swiper)+:1 ends here
+
+;; [[file:init-emacs.org::#completions-vertico-consult][vertico/consult:1]]
+;;------------------------------------------------------------------------------
+;;; Completions: vertico/consult
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Completions: vertico/consult")
+;; vertico/consult:1 ends here
+
+;; [[file:init-emacs.org::#completions-vertico-consult-vertico][vertico:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: vertico
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Completions: vertico/consult: vertico")
+
+(use-package vertico
+  :straight t
+  :demand t
+  :init
+  (vertico-mode))
+;; vertico:1 ends here
+
+;; [[file:init-emacs.org::#completions-vertico-consult-orderless][orderless:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: orderless
+;;------------------------------------------------------------------------------
+
+(use-package orderless
+  :straight t
+  :after (vertico)
+  :custom
+  (completion-styles '(orderless))
+  (completion-category-overrides '((file (styles partial-completion)))))
+;; orderless:1 ends here
+
+;; [[file:init-emacs.org::#completions-vertico-consult-marginalia][marginalia:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: marginalia
+;;------------------------------------------------------------------------------
+
+(use-package marginalia
+  :straight t
+  :after (vertico)
+  :init
+  (marginalia-mode))
+;; marginalia:1 ends here
+
+;; [[file:init-emacs.org::#completions-vertico-consult-consult][consult:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: consult
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Completions: vertico/consult: consult")
+
+(use-package consult
+  :straight t
+  :after (vertico)
+  :bind (;; C-c bindings (mode-specific-map)
+         ("C-c h" . consult-history)
+         ("C-c m" . consult-mode-command)
+         ("C-c k" . consult-kmacro))
+  :bind* (;; C-x bindings (ctl-x-map)
+          ("C-x M-:" . consult-complex-command)         ; default: `repeat-complex-command'
+          ("C-x b" . consult-buffer)                    ; default: `switch-to-buffer'
+          ("C-x 4 b" . consult-buffer-other-window)     ; default: `switch-to-buffer-other-window'
+          ("C-x 5 b" . consult-buffer-other-frame)      ; default: `switch-to-buffer-other-frame'
+          ("C-x r b" . consult-bookmark)                ; default: `bookmark-jump'
+          ("C-x p b" . consult-project-buffer)          ; default: `project-switch-to-buffer'
+          ;; M-# bindings for fast register access
+          ("M-#" . consult-register-load)               ; default: `calc-dispatch'
+          ("M-'" . consult-register-store)              ; default: `abbrev-prefix-mark'
+          ("C-M-#" . consult-register)
+          ;; other bindings
+          ("M-y" . consult-yank-pop)                    ; default: `yank-pop'
+          ("<help> a" . consult-apropos)                ; default: `apropos-command'
+          ;; M-g bindings (goto-map)
+          ("M-g e" . consult-compile-error)
+          ("M-g f" . consult-flycheck)
+          ("M-g F" . consult-flymake)
+          ("M-g g" . consult-goto-line)                 ; default: `goto-line'
+          ("M-g M-g" . consult-goto-line)               ; default: `goto-line'
+          ("M-g o" . consult-outline)                   ; alternative: `consult-org-heading'
+          ("M-g m" . consult-mark)
+          ("M-g k" . consult-global-mark)
+          ("M-g i" . consult-imenu)
+          ("M-g I" . consult-imenu-multi)
+          ;; M-s bindings (search-map)
+          ("M-s d" . consult-find)
+          ("M-s D" . consult-locate)
+          ("M-s g" . consult-grep)
+          ("M-s G" . consult-git-grep)
+          ("M-s r" . consult-ripgrep)
+          ("M-s l" . consult-line)
+          ("M-s L" . consult-line-multi)
+          ("M-s m" . consult-multi-occur)
+          ("M-s k" . consult-keep-lines)
+          ("M-s u" . consult-focus-lines)
+          ;; isearch integration
+          ("M-s e" . consult-isearch-history)
+          :map isearch-mode-map
+          ("M-e" . consult-isearch-history)             ; default: `isearch-edit-string'
+          ("M-s e" . consult-isearch-history)           ; default: `isearch-edit-string'
+          ("M-s l" . consult-line)                      ; needed by `consult-line' to detect isearch
+          ("M-s L" . consult-line-multi)                ; needed by `consult-line' to detect isearch
+          ;; minibuffer bindings
+          :map minibuffer-local-map
+          ("M-<return>" . minibuffer-complete-and-exit) ; default: `vertico-exit'
+          ("M-s" . consult-history)                     ; default: `next-matching-history-element'
+          ("M-r" . consult-history))                    ; default: `previous-matching-history-element'
+  ;; enable automatic preview at point in the *Completions* buffer
+  :hook (completion-list-mode . consult-preview-at-point-mode)
+  :init
+  ;; improve the register preview for `consult-register' and the emacs built-ins
+  (setq register-preview-delay 0.5
+        register-preview-function #'consult-register-format)
+  ;; add thin lines, sorting, and hide the mode line of the register preview window
+  (advice-add #'register-preview :override #'consult-register-window)
+  ;; replace `completing-read-multiple' with an enhanced version
+  (advice-add #'completing-read-multiple :override #'consult-completing-read-multiple)
+  ;; select xref locations with preview
+  (setq xref-show-xrefs-function #'consult-xref
+        xref-show-definitions-function #'consult-xref)
+  :config
+  ;; configure preview key
+  (consult-customize
+   consult-theme
+   :preview-key '(:debounce 0.2 any))
+  ;;  consult-ripgrep consult-git-grep consult-grep
+  ;;  consult-bookmark consult-recent-file consult-xref
+  ;;  consult--source-bookmark consult--source-recent-file
+  ;;  consult--source-project-recent-file
+  ;;  :preview-key (kbd "M-."))
+  ;; configure narrowing key
+  (setq consult-narrow-key "<") ;; (kbd "C-+")
+  ;; make narrowing help available in the minibuffer
+  (define-key consult-narrow-map (vconcat consult-narrow-key "?") #'consult-narrow-help)
+
+  ;; By default `consult-project-function' uses `project-root' from project.el.
+  ;; Optionally configure a different project root function.
+  ;; There are multiple reasonable alternatives to chose from.
+  ;;;; 1. project.el (the default)
+  ;; (setq consult-project-function #'consult--default-project--function)
+  ;;;; 2. projectile.el (projectile-project-root)
+  ;; (autoload 'projectile-project-root "projectile")
+  ;; (setq consult-project-function (lambda (_) (projectile-project-root)))
+  ;;;; 3. vc.el (vc-root-dir)
+  ;; (setq consult-project-function (lambda (_) (vc-root-dir)))
+  ;;;; 4. locate-dominating-file
+  ;; (setq consult-project-function (lambda (_) (locate-dominating-file "." ".git")))
+
+  ;; turn off consult mode in incompatable modes
+  (defun force-completing-read-default (orig-fun &rest args)
+    "Force a function to use `completing-read-default'."
+    (let ((completing-read-function 'completing-read-default))
+      (apply orig-fun args)))
+  ;; advise `tmm-prompt'
+  (advice-add 'tmm-prompt :around #'force-completing-read-default)
+  ;; advise `yas-expand-snippet'
+  (advice-add 'yas-expand-snippet :around #'force-completing-read-default))
+;; consult:1 ends here
+
+;; [[file:init-emacs.org::#completions-vertico-consult-company][company:1]]
+;;------------------------------------------------------------------------------
+;;;; Completions: vertico/consult: company
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Completions: vertico/consult: company")
+
+(use-package company
+  :straight t
+  :diminish company-mode
+  :bind (:map company-active-map
+              ("<tab>" . company-complete-selection)
+              ("C-n" . company-select-next)
+              ("C-p" . company-select-previous)
+              ("M-k" . company-select-next)
+              ("M-i" . company-select-previous))
+  :hook (prog-mode . company-mode)
+  :custom
+  (company-auto-commit nil)
+  (company-minimum-prefix-length 1)
+  (company-idle-delay 1.0)
+  :init
+  ;; (global-company-mode 1)
+  ;; (add-hook 'after-init-hook #'global-company-mode)
+  :config
+  ;; backends
+  (when (fboundp 'company-dabbrev)
+    (add-to-list 'company-backends #'company-dabbrev t))
+  (when (fboundp 'company-emacs-eclim)
+    (add-to-list 'company-backends #'company-emacs-eclim t))
+  (when (fboundp 'company-elisp)
+    (add-to-list 'company-backends #'company-elisp t))
+  (when (fboundp 'company-files)
+    (add-to-list 'company-backends #'company-files t))
+  (when (fboundp 'company-ispell)
+    (add-to-list 'company-backends #'company-ispell t))
+  (when (fboundp 'company-robe)
+    (add-to-list 'company-backends #'company-robe t)))
+
+;; ;; remove troublesome backends
+;; (setq company-backends (remove 'company-capf company-backends)))
+
+;;------------------------------------------------------------------------------
+;;;; consult-company
+;;------------------------------------------------------------------------------
+
+(use-package consult-company
+  :straight t
+  :after (company)
+  :bind (:map company-active-map
+              ([remap completion-at-point] . consult-company)))
+
+;; ;;------------------------------------------------------------------------------
+;; ;;;; company-box
+;; ;;------------------------------------------------------------------------------
+
+;; (init-message 3 "company-box")
+
+;; ;; company front end with icons
+;; (use-package company-box
+;;   :straight t
+;;   :after (company)
+;;   :hook (company-mode . company-box-mode))
+
+;;------------------------------------------------------------------------------
+;;;; company-quickhelp
+;;------------------------------------------------------------------------------
+
+(init-message 3 "company-quickhelp")
+
+;; popup documentation for completion candidates
+(use-package company-quickhelp
+  :straight t
+  :after (company)
+  :hook (company-mode . company-quickhelp-mode)
+  :custom
+  (company-quickhelp-delay 0.5)
+  (company-quickhelp-max-lines nil)
+  (company-quickhelp-color-foreground "white")
+  (company-quickhelp-color-background "dim gray"))
+
+;; ;;------------------------------------------------------------------------------
+;; ;;;; color
+;; ;;------------------------------------------------------------------------------
+
+;; (init-message 3 "color")
+
+;; ;; set colors for a dark background
+;; (use-package color
+;;   :straight t
+;;   :after (company)
+;;   :commands (color-lighten-name)
+;;   :config
+;;   (let ((bg (face-attribute 'default :background)))
+;;     (custom-set-faces
+;;      `(company-tooltip ((t (:inherit default :background ,(color-lighten-name bg 10)))))
+;;      `(company-scrollbar-bg ((t (:background ,(color-lighten-name bg 15)))))
+;;      `(company-scrollbar-fg ((t (:background ,(color-lighten-name bg 20)))))
+;;      `(company-tooltip-selection ((t (:inherit font-lock-function-name-face))))
+;;      `(company-tooltip-common ((t (:inherit font-lock-constant-face)))))))
+;; company:1 ends here
+
+;; [[file:init-emacs.org::#packages][Packages:1]]
+;;==============================================================================
+;;; Packages
+;;==============================================================================
+
+(init-message 1 "Packages")
+;; Packages:1 ends here
+
+;; [[file:init-emacs.org::#modules-abbrev-mode][abbrev-mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: abbrev-mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: abbrev-mode")
+
+(use-package abbrev
+  :straight (:type built-in)
+  :diminish abbrev-mode
+  :custom
+  (save-abbrevs 'silently)
+  :init
+  (defconst abbrev-file
+    (file-truename (expand-file-name "~/.abbrev_defs"))
+    "Abbreviations file used by `abbrev-mode'.")
+  (unless (file-exists-p abbrev-file)
+    (with-temp-buffer (write-file abbrev-file)))
+  (abbrev-mode 1)
+  :config
+  (setq dabbrev-case-replace nil) ; preserve case when replacing abbreviations
+  (quietly-read-abbrev-file abbrev-file)
+  (defun custom-kill-emacs-hook-write-abbrev-file ()
+    (write-abbrev-file abbrev-file))
+  (add-hook 'kill-emacs-hook #'custom-kill-emacs-hook-write-abbrev-file))
+;; abbrev-mode:1 ends here
+
+;; [[file:init-emacs.org::#modules-ag][ag==========================================================================:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: ag
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: ag")
+
+(use-package ag
+  :straight t
+  :commands (ag)
+  :custom (ag-arguments (list "--smart-case" "--stats")))
+;; ag==========================================================================:1 ends here
+
+;; [[file:init-emacs.org::#modules-alert][alert:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: alert
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: alert")
+
+(use-package alert
+  :straight t
+  :commands (alert)
+  :custom (alert-default-style 'libnotify))
+;; alert:1 ends here
+
+;; [[file:init-emacs.org::#modules-analog-clock][analog-clock:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: analog-clock
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: analog-clock")
+
+(use-package analog-clock
+  :load-path (lambda () (file-truename (expand-file-name "analog-clock.el" emacs-modules-dir)))
+  :commands (analog-clock analog-clock-draw-analog)
+  :custom
+  ;; draw an analog clock
+  (analog-clock-draw-function #'analog-clock-draw-analog)
+  ;; draw a digital clock
+  ;;(analog-clock-draw-function #'analog-clock-draw-ssd)
+  :init
+  ;; screen saver mode (sort of)
+  ;;(run-with-idle-timer 600 t #'analog-clock)
+  )
+;; analog-clock:1 ends here
+
+;; [[file:init-emacs.org::#modules-any-ini-mode][any-ini-mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: any-ini-mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: any-ini-mode")
+
+(use-package any-ini-mode
+  :load-path (lambda () (file-truename (expand-file-name "any-ini-mode.el" emacs-modules-dir))))
+;; any-ini-mode:1 ends here
+
+;; [[file:init-emacs.org::#modules-async][async:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: async
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: async")
+
+(use-package async
+  :straight t)
+  ;; :config
+  ;; ;; lock-file wrapper macro to evaluate code blocks synchronously using an async task
+  ;; (defmacro async-start-with-lock-file (lock-file start-func &optional finish-func)
+  ;;   "Evaluate BODY using LOCK-FILE to prevent simultaneous calls.
+
+  ;;   LOCK-FILE is a file name to be used as a lock. If another
+  ;;   process is currently using the lock, this process will wait
+  ;;   until it is released before running."
+  ;;   (declare (indent 1))
+  ;;   (eval
+  ;;    `(async-start
+  ;;      (lambda ()
+  ;;        (while (file-exists-p ,lock-file)
+  ;;          (message "Sleeping")
+  ;;          (sleep-for 1))
+  ;;        (make-empty-file ,lock-file)
+  ;;        (condition-case nil
+  ;;            (funcall ,start-func)
+  ;;          (t
+  ;;           (delete-file ,lock-file))))
+  ;;      ,finish-func))))
+;; async:1 ends here
+
+;; [[file:init-emacs.org::#modules-auto-compile][auto-compile:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: auto-compile
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: auto-compile")
+
+(use-package auto-compile
+  :straight t
+  :custom
+  (load-prefer-newer t)
+  :init
+  (auto-compile-on-load-mode 1)
+  (auto-compile-on-save-mode 1))
+;; auto-compile:1 ends here
+
+;; [[file:init-emacs.org::#modules-avy][avy:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: avy
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: avy")
+
+(use-package avy
+  :straight t
+  :bind* (("C-;" . avy-goto-char)
+          ("C-:" . avy-goto-word-or-subword-1)
+          ("C-M-;" . pop-to-mark-command)))
+;; avy:1 ends here
+
+;; [[file:init-emacs.org::#modules-bash-completion][bash-completion:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: bash-completion
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: bash-completion")
+
+(use-package bash-completion
+  :straight t
+  :init (bash-completion-setup))
+;; bash-completion:1 ends here
+
+;; [[file:init-emacs.org::#modules-bbdb][bbdb:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: bbdb
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: bbdb")
+
+(use-package bbdb
+  :straight t
+  :init
+  ;;(bbdb-initialize)
+  ;;(bbdb-initialize 'gnus 'message 'sc 'w3)
+  (bbdb-initialize 'gnus 'message 'sc)
+  :config
+  ;; the following settings were copied from here:
+  ;; http://emacs-fu.blogspot.com/2009/08/managing-e-mail-addresses-with-bbdb.html
+  ;; TODO: look at these settings
+  (setq bbdb-offer-save 1 ;; 1 means save-without-asking
+
+        bbdb-use-pop-up t      ;; allow popups for addresses
+        bbdb-electric-p t      ;; be disposable with SPC
+        bbdb-popup-target-lines 1 ;; very small
+
+        bbdb-dwim-net-address-allow-redundancy t ;; always use full name
+        bbdb-quiet-about-name-mismatches 2 ;; show name-mismatches 2 secs
+
+        bbdb-always-add-address t ;; add new addresses to existing contacts automatically
+        bbdb-canonicalize-redundant-nets-p t ;; x@foo.bar.cx => x@bar.cx
+
+        bbdb-completion-type nil ;; complete on anything
+
+        bbdb-complete-name-allow-cycling t ;; cycle through matches (only partially works)
+
+        bbbd-message-caching-enabled t ;; be fast
+        bbdb-use-alternate-names t     ;; use AKA
+
+        bbdb-elided-display t ;; single-line addresses
+
+        ;; auto-create addresses from mail
+        bbdb/mail-auto-create-p 'bbdb-ignore-some-messages-hook
+        bbdb-ignore-some-messages-alist ;; don't ask about fake addresses
+        ;; NOTE: there can be only one entry per header (such as To, From)
+        ;; http://flex.ee.uec.ac.jp/texi/bbdb/bbdb_11.html
+
+        '(("From" . "no.?reply\\|DAEMON\\|daemon\\|facebookmail\\|twitter"))))
+
+;; ;;------------------------------------------------------------------------------
+;; ;;;; lookout
+;; ;;------------------------------------------------------------------------------
+
+;; (init-message 3 "lookout")
+
+;; ;; setup lookout for CSV import/export
+;; (use-package lookout
+;;   :straight (:type built-in)
+;;   :after (bbdb)
+;;   :config
+;;   (progn
+;;     ;; Thunderbird CSV fields:
+;;     ;;
+;;     ;; First Name, Last Name, Display Name, Nickname, Primary Email, Secondary
+;;     ;; Email, Work Phone, Home Phone, Fax Number, Pager Number, Mobile Number,
+;;     ;; Home Address, Home Address 2, Home City, Home State, Home ZipCode, Home
+;;     ;; Country, Work Address, Work Address 2, Work City, Work State, Work
+;;     ;; ZipCode, Work Country, Job Title, Department, Organization, Web Page 1,
+;;     ;; Web Page 2, Birth Year, Birth Month, Birth Day, Custom 1, Custom 2,
+;;     ;; Custom 3, Custom 4, Notes
+
+;;     (defconst lookout-bbdb-mapping-table-thunderbird-english
+;;       '(("lastname" "Last Name")
+;;         ("firstname" "First Name")
+;;         ("company" "Organization" "Department" "Job Title")
+;;         ("net" "Primary Email" "Secondary Email")
+;;         ("phones" "Mobile Number" "Work Phone" "Home Phone")
+;;         ("addr1" "Home Address" "Home Address 2" "Home City" "Home State" "Home ZipCode" "Home Country")
+;;         ("addr2" "Work Address" "Work Address 2" "Work City" "Work State" "Work ZipCode" "Work Country")
+;;         ("addr3" "addr3")
+;;         ("notes" "Notes")
+;;         ("otherfields" "" ""))
+;;       ;; ("otherfields"
+;;       ;;  "group" "group"))
+;;       "Mapping table, usable for input from Thunderbird CSV export.")
+;;     (setq lookout-bbdb-mapping-table 'lookout-bbdb-mapping-table-thunderbird-english)
+
+;;     ;; Outlook CSV fields:
+;;     ;;
+;;     ;; Title, First Name, Middle Name, Last Name, Suffix, Company, Department,
+;;     ;; Job Title, Business Street, Business Street 2, Business Street 3,
+;;     ;; Business City, Business State, Business Postal Code, Business Country,
+;;     ;; Home Street, Home Street 2, Home Street 3, Home City, Home State, Home
+;;     ;; Postal Code, Home Country, Other Street, Other Street 2, Other Street
+;;     ;; 3, Other City, Other State, Other Postal Code, Other Country,
+;;     ;; Assistant's Phone, Business Fax, Business Phone, Business Phone 2,
+;;     ;; Callback, Car Phone, Company Main Phone, Home Fax, Home Phone, Home
+;;     ;; Phone 2, ISDN, Mobile Phone, Other Fax, Other Phone, Pager, Primary
+;;     ;; Phone, Radio Phone, TTY/TDD Phone, Telex, Account, Anniversary,
+;;     ;; Assistant's Name, Billing Information, Birthday, Business Address PO
+;;     ;; Box, Categories, Children, Directory Server, E-mail Address, E-mail
+;;     ;; Type, E-mail Display Name, E-mail 2 Address, E-mail 2 Type, E-mail 2
+;;     ;; Display Name, E-mail 3 Address, E-mail 3 Type, E-mail 3 Display Name,
+;;     ;; Gender, Government ID Number, Hobby, Home Address PO Box, Initials,
+;;     ;; Internet Free Busy, Keywords, Language, Location, Manager's Name,
+;;     ;; Mileage, Notes, Office Location, Organizational ID Number, Other
+;;     ;; Address PO Box, Priority, Private, Profession, Referred By,
+;;     ;; Sensitivity, Spouse, User 1, User 2, User 3, User 4, Web Page
+
+;;     (defconst lookout-bbdb-mapping-table-outlook-english
+;;       '(("lastname" "Last Name" "Suffix")
+;;         ("firstname" "Title" "First Name" "Middle Name")
+;;         ("company" "Company" "Department" "Job Title")
+;;         ("net" "E-mail Address" "E-mail 2 Address" "E-mail 3 Address")
+;;         ("phones" "Business Phone" "Business Phone 2"
+;;          "Home Phone" "Home Phone 2" "Mobile Phone" "Other Phone"
+;;          "Assistant's Phone" "Business Fax" "Car Phone" "Callback"
+;;          "Home Fax" "Other Fax" "Pager" "Primary Phone" "Radio Phone"
+;;          "TTY/TDD Phone" "Telex")
+;;         ("addr1" "Business Street" "Business Address PO Box" "Business Street 2" "Business Street 3"
+;;          "Business City" "Business State" "Business Postal Code" "Business Country")
+;;         ("addr2" "Home Street" "Home Address PO Box" "Home Street 2" "Home Street 3"
+;;          "Home City" "Home State" "Home Postal Code" "Home Country")
+;;         ("addr3" "Other Street" "Other Address PO Box" "Other Street 2" "Other Street 3"
+;;          "Other City" "Other State" "Other Postal Code" "Other Country")
+;;         ("notes" "Notes")
+;;         ("otherfields" "" ""))
+;;       ;; ("otherfields"
+;;       ;;  "Account" "Anniversary" "Assistant's Name" "Billing Information"
+;;       ;;  "Birthday" "Categories" "Children" "Directory Server" "Gender"
+;;       ;;  "Government ID Number" "Hobby" "Initials" "Internet Free Busy"
+;;       ;;  "Keywords" "Language" "Location" "Manager's Name" "Mileage"
+;;       ;;  "Office Location" "Organizational ID Number" "Priority" "Private"
+;;       ;;  "Profession" "Referred By" "Sensitivity" "Spouse"
+;;       ;;  "User 1" "User 2" "User 3" "User 4" "Web Page"))
+;;       "Mapping table, usable for input from Outlook CSV export.")
+;;     (setq lookout-bbdb-mapping-table 'lookout-bbdb-mapping-table-outlook-english)
+
+;;     ;; (defconst lookout-bbdb-mapping-table-outlook-german
+;;     ;;   '(("lastname" "Nachname" "Suffix")
+;;     ;;     ("firstname" "Vorname" "Weitere Vornamen")
+;;     ;;     ("company" "Firma" "Abteilung" "Position")
+;;     ;;     ("net" "E-Mail-Adresse" "E-Mail 2: Adresse" "E-Mail 3: Adresse")
+;;     ;;     ("phones" "Telefon geschäftlich" "Telefon geschäftlich 2"
+;;     ;;      "Telefon privat" "Telefon privat 2" "Mobiltelefon" "Weiteres Telefon"
+;;     ;;      "Telefon Assistent" "Fax geschäftlich" "Autotelefon" "Telefon Firma"
+;;     ;;      "Fax privat" "Weiteres Fax" "Pager" "Haupttelefon" "Mobiltelefon 2"
+;;     ;;      "Telefon für Hörbehinderte" "Telex")
+;;     ;;     ("addr1" "Straße geschäftlich" "Straße geschäftlich 2"
+;;     ;;      "Straße geschäftlich 3" "Postleitzahl geschäftlich" "Ort geschäftlich"
+;;     ;;      "Region geschäftlich" "Land geschäftlich")
+;;     ;;     ("addr2" "Straße privat" "Straße privat 2" "Straße privat 3"
+;;     ;;      "Postleitzahl privat" "Ort privat" "Region privat" "Land privat")
+;;     ;;     ("addr3" "Weitere Straße" "Weitere Straße 2" "Weitere Straße 3"
+;;     ;;      "Weitere Postleitzahl" "Weiterer Ort" "Weitere Region" "Weiteres Land")
+;;     ;;     ("aka" "FIXME")
+;;     ;;     ("notes" "Notizen")
+;;     ;;     ("otherfields"
+;;     ;;      "Rückmeldung" "Abrechnungsinformation" "Benutzer 1"
+;;     ;;      "Benutzer 2" "Benutzer 3" "Benutzer 4" "Beruf" "Büro"
+;;     ;;      "Empfohlen von" "Geburtstag" "Geschlecht" "Hobby" "Initialen"
+;;     ;;      "Internet-Frei/Gebucht" "Jahrestag" "Kategorien" "Kinder" "Konto"
+;;     ;;      "Name Assistent" "Name des/der Vorgesetzten"
+;;     ;;      "Organisations-Nr." "Ort" "Partner" "Postfach" "Priorität" "Privat"
+;;     ;;      "Regierungs-Nr." "Reisekilometer" "Sprache" "Stichwörter"
+;;     ;;      "Vertraulichkeit" "Verzeichnisserver" "Webseite"))
+;;     ;;   "Sample mapping table, usable for input from German M$ Outlook.")
+
+;;     ;; alias for compatibility
+;;     ;;(defalias 'bbdb-add-new-field 'bbdb-insert-new-field)
+;;     ))
+;; bbdb:1 ends here
+
+;; [[file:init-emacs.org::#modules-beacon][beacon:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: beacon
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: beacon")
+
+(use-package beacon
+  :straight t
+  :demand t
+  :custom
+  ;; speed up duration (defaults to 0.3)
+  (beacon-blink-duration 0.1)
+  ;; speed up delay (defaults to 0.3)
+  (beacon-blink-delay 0.1)
+  :init (beacon-mode 1))
+;; beacon:1 ends here
+
+;; [[file:init-emacs.org::#modules-boxquote][boxquote:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: boxquote
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: boxquote")
+
+(use-package boxquote
+  :straight t
+  :init (unbind-key "C-c b")
+  :bind (("C-c by" . boxquote-yank)
+         ("C-c br" . boxquote-region)
+         ("C-c bu" . boxquote-unbox-region)
+         ("C-c bt" . boxquote-title)
+         ("C-c bi" . boxquote-insert-file)
+         ("C-c bk" . boxquote-kill)
+         ("C-c bs" . boxquote-shell-command)
+         ("C-c bb" . boxquote-buffer)
+         ("C-c bp" . boxquote-paragraph)
+         ("C-c bn" . boxquote-narrow-to-boxquote)
+         ("C-c bw" . boxquote-where-is)
+         ("C-c bdf" . boxquote-describe-function)
+         ("C-c bdk" . boxquote-describe-key)
+         ("C-c bdv" . boxquote-describe-variable)))
+;; boxquote:1 ends here
+
+;; [[file:init-emacs.org::#modules-browse-kill-ring][browse-kill-ring:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: browse-kill-ring
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: browse-kill-ring")
+
+(use-package browse-kill-ring
+  :straight t
+  :bind* (("C-M-y" . browse-kill-ring)
+          ("C-M-_" . browse-kill-ring)))
+;; browse-kill-ring:1 ends here
+
+;; [[file:init-emacs.org::#modules-bs][bs:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: bs
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: bs")
+
+;; original code by Scott Frazer
+(use-package bs
+  :straight t
+  :demand t
+  :after (cycle-buffer)
+  :commands (list-buffers bs-show)
+  :bind* (([remap list-buffers] . bs-show) ; default: `list-buffers'
+          ("C-x C-b" . bs-show))           ; default: `list-buffers'
+  :config
+  (defvar custom-bs-always-show-regexps '("\\*\\(scratch\\|info\\|grep\\)\\*")
+    "*Buffer regexps to always show when buffer switching.")
+  (defvar custom-bs-never-show-regexps '("^\\s-" "^\\*" "TAGS$" "^Map_Sym.txt$" "^magit")
+    "*Buffer regexps to never show when buffer switching.")
+  (defvar custom-ido-ignore-dired-buffers nil
+    "*If non-nil, buffer switching should ignore dired buffers.")
+
+  (defun custom-bs-string-in-regexps (string regexps)
+    "Return non-nil if STRING matches anything in REGEXPS list."
+    (let ((case-fold-search nil))
+      (catch 'done
+        (dolist (regexp regexps)
+          (when (string-match regexp string)
+            (throw 'done t))))))
+
+  (defun custom-bs-ignore-buffer (buffer)
+    "Return non-nil if BUFFER should be ignored."
+    (or (and (not (custom-bs-string-in-regexps buffer custom-bs-always-show-regexps))
+             (custom-bs-string-in-regexps buffer custom-bs-never-show-regexps))
+        (and custom-ido-ignore-dired-buffers
+             (with-current-buffer buffer
+               (equal major-mode 'dired-mode)))))
+
+  (defun bs-toggle-recent ()
+    "Toggle most recently visited buffers, ignoring certain ones."
+    (interactive)
+    (catch 'done
+      (dolist (buffer (buffer-list))
+        (unless (or (equal (current-buffer) buffer)
+                    (and (fboundp 'my-bs-ignore-buffer)
+                         (my-bs-ignore-buffer (buffer-name buffer))))
+          (switch-to-buffer buffer)
+          (throw 'done t)))))
+
+  ;; config bs
+  (setq bs-configurations
+        '(("all" nil nil nil nil nil)
+          ("files" nil nil nil (lambda (buffer) (custom-bs-ignore-buffer (buffer-name buffer))) nil))
+        bs-cycle-configuration-name "files")
+
+  ;; ;; add ignore rules to ido
+  ;; (setq ido-ignore-buffers '(custom-bs-ignore-buffer))
+
+  (defun custom-bs-cycle-buffer-filter-extra ()
+    "Add ignore rules to `cycle-buffer'."
+    (not (custom-bs-ignore-buffer (buffer-name))))
+  (add-to-list 'cycle-buffer-filter-extra '(custom-bs-cycle-buffer-filter-extra) t))
+;; bs:1 ends here
+
+;; [[file:init-emacs.org::#modules-calc][calc:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: calc
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: calc")
+
+(use-package calc
+  :straight (:type built-in)
+  :commands (calc calc-dispatch)
+  :bind* ("M-#" . calc-dispatch))
+;; calc:1 ends here
+
+;; [[file:init-emacs.org::#modules-cedet-semantic][cedet/semantic:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: cedet/semantic
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: cedet/semantic")
+
+(use-package cedet
+  :straight (:type built-in))
+
+(use-package semantic
+  :straight (:type built-in)
+  :after (cedet)
+  :init (semantic-mode 1))
+;; cedet/semantic:1 ends here
+
+;; [[file:init-emacs.org::#modules-command-log][command-log:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: command-log
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: command-log")
+
+(use-package command-log-mode
+  :straight t
+  :demand t
+  :custom
+  (command-log-mode-auto-show t)
+  (command-log-mode-key-binding-open-log nil)
+  (command-log-mode-open-log-turns-on-mode t)
+  (command-log-mode-is-global t)
+  :config
+  (defun command-log-mode-on ()
+    "Turn on `command-log-mode' and open the log buffer."
+    (interactive)
+    (global-command-log-mode 1))
+
+  (defun command-log-mode-off ()
+    "Turn off `command-log-mode' and close the log buffer."
+    (interactive)
+    (global-command-log-mode -1)))
+;; command-log:1 ends here
+
+;; [[file:init-emacs.org::#modules-compile][compile:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: compile
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: compile")
+
+(use-package compile
+  :straight (:type built-in)
+  :custom
+  ;; auto save all modified buffers without asking
+  (compilation-ask-about-save nil)
+  ;; auto scroll compilation buffer
+  (compilation-scroll-output 'next-error)
+  ;; skip info and warnings
+  (compilation-skip-threshold 2)
+  :config
+  ;; display compilation time in compile log
+  ;; source: https://emacs.stackexchange.com/questions/31493/print-elapsed-time-in-compilation-buffer/56130#56130
+
+  (make-variable-buffer-local 'custom-compilation-start-time)
+
+  (defun custom-compilation-start-hook (proc)
+    (setq custom-compilation-start-time (current-time)))
+  (add-hook 'compilation-start-hook #'custom-compilation-start-hook)
+
+  (defun custom-compilation-finish-function (buf why)
+    (let* ((elapsed (time-subtract nil custom-compilation-start-time))
+           (msg (format "Compilation took: %s" (format-time-string "%T.%N" elapsed t))))
+      (save-excursion (goto-char (point-max)) (insert msg))
+      (message "Compilation %s: %s" (string-trim-right why) msg)))
+  (add-hook 'compilation-finish-functions #'custom-compilation-finish-function))
+;; compile:1 ends here
+
+;; [[file:init-emacs.org::#modules-cycle-buffer][cycle-buffer:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: cycle-buffer
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: cycle-buffer")
+
+(use-package cycle-buffer
+  :load-path (lambda () (file-truename (expand-file-name "cycle-buffer.el" emacs-modules-dir)))
+  :demand t
+  :bind* (("C-x C-n" . cycle-buffer)          ; default: `set-goal-column'
+          ("C-x C-p" . cycle-buffer-backward) ; default: `mark-page'
+          ("<f9>" . cycle-buffer-backward)
+          ("S-<f9>" . cycle-buffer-backward-permissive)
+          ("<f10>" . cycle-buffer)      ; default: `tmm-menubar'
+          ("S-<f10>" . cycle-buffer-permissive))
+  :init
+  ;; advise `cycle-buffer`
+  (advice-add 'cycle-buffer :around #'advice--ignore-errors)
+  ;; advise `cycle-buffer-permissive`
+  (advice-add 'cycle-buffer-permissive :around #'advice--ignore-errors)
+  ;; advise `cycle-buffer-backward`
+  (advice-add 'cycle-buffer-backward :around #'advice--ignore-errors)
+  ;; advise `cycle-buffer-backward-permissive`
+  (advice-add 'cycle-buffer-backward-permissive :around #'advice--ignore-errors))
+;; cycle-buffer:1 ends here
+
+;; [[file:init-emacs.org::#modules-decide][decide:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: decide
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: decide")
+
+(use-package decide
+  :straight t)
+;; decide:1 ends here
+
+;; [[file:init-emacs.org::#modules-define-word][define-word:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: define-word
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: define-word")
+
+(use-package define-word
+  :straight t
+  :bind (("<f5>" . define-word-after-spell-check)
+         ("S-<f5>" . define-word-at-point-after-spell-check))
+  :custom
+  (define-word-default-service 'webster)
+  :config
+  (defun define-word-after-spell-check (word service &optional choose-service)
+    "Define WORD using various services after spell checking WORD.
+
+By default uses `define-word-default-service', but a prefix arg
+lets the user choose service.
+
+Uses `ispell--run-on-word' to spell check word."
+    (interactive "MWord: \ni\nP")
+    (ispell-set-spellchecker-params)
+    (ispell-accept-buffer-local-defs)
+    (let ((check (ispell--run-on-word word)))
+      (cond
+       ((or (eq check t)
+            (stringp check))
+        (define-word word service choose-service))
+       (t
+        (let ((buffer (generate-new-buffer-name "*define-word-after-spell-check*")))
+          (switch-to-buffer (get-buffer-create buffer))
+          (insert word)
+          (ispell-word)
+          (let ((checked-word (buffer-substring-no-properties (point-min) (point-max))))
+            (when (string= buffer (buffer-name))
+              (kill-buffer (current-buffer)))
+            (define-word checked-word service choose-service)))))))
+
+  (defun define-word-at-point-after-spell-check (arg &optional service)
+    "Use `define-word-after-spell-check' to define word at point.
+
+When the region is active, define the marked phrase.
+Prefix ARG lets you choose service.
+
+In a non-interactive call SERVICE can be passed."
+    (interactive "P")
+    (let ((word
+           (cond
+            ((eq major-mode 'pdf-view-mode)
+             (car (pdf-view-active-region-text)))
+            ((use-region-p)
+             (buffer-substring-no-properties
+              (region-beginning)
+              (region-end)))
+            (t
+             (substring-no-properties
+              (thing-at-point 'word))))))
+      (define-word-after-spell-check word service arg))))
+;; define-word:1 ends here
+
+;; [[file:init-emacs.org::#modules-demo-it][demo-it:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: demo-it
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: demo-it")
+
+(use-package demo-it
+  :straight t)
+;; demo-it:1 ends here
+
+;; [[file:init-emacs.org::#modules-doom-modeline][doom-modeline:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: doom-modeline
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: doom-modeline")
+
+(use-package doom-modeline
+  :straight t
+  :after (all-the-icons)
+  :demand t
+  :custom
+  ;; customizations
+  (doom-modeline-height 30)
+  :init (doom-modeline-mode 1)
+  :config
+  ;; show line number in modeline
+  (line-number-mode 1)
+
+  ;; show column number in modeline
+  (column-number-mode 1))
+
+;;------------------------------------------------------------------------------
+;;;; all-the-icons
+;;------------------------------------------------------------------------------
+
+(init-message 3 "all-the-icons")
+
+(use-package all-the-icons
+  :straight t)
+  ;; :config
+  ;; ;; install fonts, if needed
+  ;; (let ((font-dest (cl-case window-system
+  ;;                    (x  (concat (or (getenv "XDG_DATA_HOME")
+  ;;                                    (concat (getenv "HOME") "/.local/share"))
+  ;;                                "/fonts/"))
+  ;;                    (mac (concat (getenv "HOME") "/Library/Fonts/"))
+  ;;                    (w32 (concat (getenv "WINDIR") "/Fonts/"))
+  ;;                    (ns (concat (getenv "HOME") "/Library/Fonts/"))))
+  ;;       (font-name (cl-case window-system
+  ;;                    (w32 "AllTheIcons.ttf")
+  ;;                    (t "all-the-icons.ttf"))))
+  ;;   (or (file-exists-p (expand-file-name font-name font-dest))
+  ;;       (all-the-icons-install-fonts :noconfirm))))
+;; doom-modeline:1 ends here
+
+;; [[file:init-emacs.org::#modules-easy-kill][easy-kill:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: easy-kill
+;;------------------------------------------------------------------------------
+
+(use-package easy-kill
+  :straight t
+  :demand t
+  :bind* (([remap kill-ring-save] . easy-kill)
+          ([remap mark-sexp] . easy-mark)))
+;; easy-kill:1 ends here
+
+;; [[file:init-emacs.org::#modules-eldoc][eldoc:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: eldoc
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: eldoc")
+
+(use-package eldoc
+  :straight (:type built-in)
+  :custom
+  ;; no idle delay before showing contextual information
+  (eldoc-idle-delay 0))
+;; eldoc:1 ends here
+
+;; [[file:init-emacs.org::#modules-elfeed][elfeed:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: elfeed
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: elfeed")
+
+(use-package elfeed
+  :straight t
+  :commands (elfeed-bookmarks-edit)
+  :bind (:map elfeed-search-mode-map
+              ("h" . elfeed-search-mode-help)
+              ("?" . elfeed-search-mode-help))
+  :bind (:map elfeed-show-mode-map
+              ("h" . elfeed-show-mode-help)
+              ("?" . elfeed-show-mode-help))
+  :custom
+  ;; standard filters
+  (elfeed-search-filter "-junk +unread")
+  ;; custom feed list
+  (elfeed-feeds
+   (with-temp-buffer
+     (insert-file-contents (locate-user-emacs-file "elfeed-bookmarks"))
+     (goto-char (point-min))
+     (mapcar
+      (lambda (x) (list (plist-get x :rss) (intern (plist-get x :tag))))
+      (read (current-buffer)))))
+  :config
+  ;; increase default text size in `elfeed-show' buffers
+  (defun custom-elfeed-show-mode-hook ()
+    ;; increase default text size
+    (text-scale-set 2))
+  (add-hook 'elfeed-show-mode-hook #'custom-elfeed-show-mode-hook)
+
+  (defun elfeed-bookmarks-edit ()
+    "Open `init-emacs.org' and move point to Elfeed Bookmarks File for easy editing."
+    (interactive)
+    (find-file (file-truename (expand-file-name "init-emacs.org" emacs-home-dir)))
+    (goto-char (point-min))
+    (search-forward ";; Elfeed Bookmarks File\n")
+    (org-show-entry))
+
+  (defun elfeed-search-mode-help ()
+    "Display `elfeed-search-mode' commands in mini-buffer."
+    (interactive)
+    (message (concat "RET show entry, "
+                     "+ tag all, "
+                     "- untag all, "
+                     "G fetch, "
+                     "S set filter, "
+                     "b browse url, "
+                     "g update, "
+                     "n next line, "
+                     "p prev line, "
+                     "q quit, "
+                     "r untag unread, "
+                     "s live filter, "
+                     "u tag unread, "
+                     "y yank")))
+
+  (defun elfeed-show-mode-help ()
+    "Display `elfeed-show-mode' commands in mini-buffer."
+    (interactive)
+    (message (concat "TAB next link, "
+                     "BACKTAB previous link, "
+                     "SPC scroll down, "
+                     "BACKSPACE scroll up,"
+                     "+ tag, "
+                     "- untag, "
+                     "P play enclosure, "
+                     "b visit, "
+                     "d save enclosure, "
+                     "g refresh, "
+                     "n next, "
+                     "p prev, "
+                     "q kill buffer, "
+                     "s new live search, "
+                     "u copy url, "
+                     "y yank")))
+
+  (defun elfeed-bookmarks-to-opml ()
+    "Export Elfeed Bookmarks File to OPML."
+    (interactive)
+    (let* ((buffer-name (generate-new-buffer-name "*elfeed-bookmarks-opml*"))
+           (bookmarks
+            (with-temp-buffer
+              (insert-file-contents (locate-user-emacs-file "elfeed-bookmarks"))
+              (goto-char (point-min))
+              (read (current-buffer))))
+           (tags
+            (let (temp)
+              (dolist (x (mapcar (lambda (x) (plist-get x :tag)) bookmarks))
+                (pushnew x temp :test #'string=))
+              (nreverse temp))))
+      (switch-to-buffer buffer-name)
+      (insert "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n")
+      (insert "<opml version=\"1.0\">\n")
+      (insert "  <head>\n")
+      (insert "    <title>Elfeed Bookmarks</title>\n")
+      (insert "  </head>\n")
+      (insert "  <body>\n")
+      (dolist (tag tags)
+        (let ((ctag (capitalize tag)))
+          (insert "    <outline title=\"" ctag "\" text=\"" ctag "\">\n")
+          (dolist (item
+                   (remove-if
+                    (lambda (x) (not (string= tag (plist-get x :tag))))
+                    bookmarks))
+            (let ((name (plist-get item :name))
+                  (html (plist-get item :html))
+                  (rss (plist-get item :rss)))
+              (insert "      <outline title=\"" name "\" text=\"" name "\" type=\"rss\" xmlUrl=\"" rss "\" htmlUrl=\"" html "\"/>\n")))
+          (insert "    </outline>\n")))
+      (insert "  </body>\n")
+      (insert "</opml>\n"))))
+;; elfeed:1 ends here
+
+;; [[file:init-emacs.org::#modules-elnode][elnode:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: elnode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: elnode")
+
+(use-package elnode
+  :straight t
+  :commands (elnode))
+;; elnode:1 ends here
+
+;; [[file:init-emacs.org::#modules-elpher][elpher:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: elpher
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: elpher")
+
+(use-package elpher
+  :straight t
+  :init
+  (defun elpher-bookmarks-edit ()
+    "Open `init-emacs.org' and move point to Elpher Bookmarks File for easy editing."
+    (interactive)
+    (find-file (file-truename (expand-file-name "init-emacs.org" emacs-home-dir)))
+    (goto-char (point-min))
+    (search-forward ";; Elpher Bookmarks File\n")
+    (org-show-entry)))
+;; elpher:1 ends here
+
+;; [[file:init-emacs.org::#modules-eperiodic][eperiodic:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: eperiodic
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: eperiodic")
+
+(use-package eperiodic
+  :load-path (lambda () (file-truename (expand-file-name "eperiodic.el" emacs-modules-dir)))
+  :commands (eperiodic))
+;; eperiodic:1 ends here
+
+;; [[file:init-emacs.org::#modules-epoch][epoch:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: epoch
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: epoch")
+
+(use-package epoch
+  :load-path (lambda () (file-truename (expand-file-name "epoch.el" local-modules-dir)))
+  :commands (epoch time-to-epoch epoch-to-time))
+;; epoch:1 ends here
+
+;; [[file:init-emacs.org::#modules-ert][ert:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: ert
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: ert")
+
+(use-package ert
+  :straight (:type built-in))
+;; ert:1 ends here
+
+;; [[file:init-emacs.org::#modules-exec-path-from-shell][exec-path-from-shell:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: exec-path-from-shell
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: exec-path-from-shell")
+
+(use-package exec-path-from-shell
+  :when window-system-mac
+  :straight t
+  :init (exec-path-from-shell-initialize))
+;; exec-path-from-shell:1 ends here
+
+;; [[file:init-emacs.org::#modules-expand-region][expand-region:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: expand-region
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: expand-region")
+
+(use-package expand-region
+  :straight t
+  :bind* (("C-=" . er/expand-region)     ; default: `count-lines-region'
+          ("C--" . er/contract-region))) ; default: `negative-argument'
+;; expand-region:1 ends here
+
+;; [[file:init-emacs.org::#modules-flycheck][flycheck:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: flycheck
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: flycheck")
+
+(use-package flycheck
+  :straight t
+  :commands (flycheck-mod
+             global-flycheck-mode)
+  :init
+  ;; ;; initialize globally
+  ;; (add-hook 'after-init-hook #'global-flycheck-mode)
+  )
+
+;;------------------------------------------------------------------------------
+;;;; flycheck-package
+;;------------------------------------------------------------------------------
+
+(init-message 3 "flycheck-package")
+
+;; flycheck checker for elisp packages
+(use-package flycheck-package
+  :straight t
+  :after (flycheck)
+  :config
+  (flycheck-package-setup))
+;; flycheck:1 ends here
+
+;; [[file:init-emacs.org::#modules-flymake-cursor][flymake-cursor:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: flymake-cursor
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: flymake-cursor")
+
+(use-package flymake-cursor
+  :straight t)
+;; flymake-cursor:1 ends here
+
+;; [[file:init-emacs.org::#modules-flyspell][flyspell:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: flyspell
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: flyspell")
+
+(use-package flyspell
+  :straight (:type built-in)
+  :commands (flyspell-mode
+             flyspell-mode-off
+             flyspell-prog-mode)
+  :custom
+  ;; this fixes the "enabling flyspell mode gave an error" bug
+  (flyspell-issue-welcome-flag nil)
+  (flyspell-sort-corrections nil)
+  (flyspell-use-meta-tab nil))
+;; flyspell:1 ends here
+
+;; [[file:init-emacs.org::#modules-fuzzy][fuzzy:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: fuzzy
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: fuzzy")
+
+(use-package fuzzy
+  :straight t
+  :commands (turn-on-fuzzy-isearch)
+  :init (turn-on-fuzzy-isearch))
+;; fuzzy:1 ends here
+
+;; [[file:init-emacs.org::#modules-git-timemachine][git-timemachine:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: git-timemachine
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: git-timemachine")
+
+(use-package git-timemachine
+  :straight t
+  :bind* ("C-x C-g" . git-timemachine))
+;; git-timemachine:1 ends here
+
+;; [[file:init-emacs.org::#modules-hippie-exp][hippie-exp:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: hippie-exp
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: hippie-exp")
+
+(use-package hippie-exp
+  :straight (:type built-in)
+  :bind* ("M-/" . hippie-expand)
+  :custom
+  (hippie-expand-try-functions-list
+   '(try-expand-dabbrev
+     try-expand-dabbrev-all-buffers
+     try-expand-dabbrev-from-kill
+     try-complete-file-name-partially
+     try-complete-file-name
+     try-expand-all-abbrevs
+     try-expand-list
+     try-expand-line
+     try-complete-lisp-symbol-partially
+     try-complete-lisp-symbol
+     yas-hippie-try-expand)))
+;; hippie-exp:1 ends here
+
+;; [[file:init-emacs.org::#modules-htmlize][htmlize:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: htmlize
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: htmlize")
+
+(use-package htmlize
+  :straight t
+  :commands (htmlize-buffer
+             htmlize-region
+             htmlize-file
+             htmlize-many-file
+             htmlize-many-files-dired
+             htmlize-region-for-paste
+             htmlize-region-for-paste-font-type)
+  :custom
+  (htmlize-output-type 'inline-css)
+  :config
+  ;; flatland theme
+  (setq htmlize-face-overrides
+        '(
+          font-lock-comment-face (:foreground "#798188")
+          font-lock-string-face (:foreground "#cfe2f2")
+          font-lock-keyword-face (:foreground "#fa9a4b" :weight bold)
+          font-lock-builtin-face (:foreground "#fa9a4b" :weight bold)
+          font-lock-function-name-face (:foreground "#72aaca")
+          font-lock-variable-name-face (:foreground "#f6f080")
+          font-lock-type-face (:foreground "#72aaca")
+          font-lock-constant-face (:foreground "#b9d977")
+          font-lock-warning-face (:foreground "#f1e94b" :weight bold)
+          default (:foreground "green" :background "black"))))
+;; htmlize:1 ends here
+
+;; [[file:init-emacs.org::#modules-hungry-delete][hungry-delete:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: hungry-delete
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: hungry-delete")
+
+(use-package hungry-delete
+  :straight t
+  :demand t
+  :commands (global-hungry-delete-mode
+             hungry-delete-skip-ws-forward
+             hungry-delete-skip-ws-backward)
+  :init
+  ;; disable hungry delete mode globally
+  (global-hungry-delete-mode -1)
+
+  ;; custom versions of hungry delete functions that do not delete the space
+  ;; at point unless it is the last one
+
+  (defun hungry-delete-forward ()
+    "Delete the following character or all following whitespace
+up to the next non-whitespace character. See
+\\[c-hungry-delete-backward]."
+    (interactive)
+    (let ((here (point)))
+      (hungry-delete-skip-ws-forward)
+      (when (> (point) here)
+        (forward-char -1))
+      (if (/= (point) here)
+          (delete-region (point) here)
+        (let ((hungry-delete-mode nil))
+          (delete-char 1)))))
+
+  (defun hungry-delete-backward ()
+    "Delete the preceding character or all preceding whitespace
+back to the previous non-whitespace character. See also
+\\[c-hungry-delete-forward]."
+    (interactive)
+    (let ((here (point)))
+      (hungry-delete-skip-ws-backward)
+      (when (< (point) here)
+        (forward-char 1))
+      (if (/= (point) here)
+          (delete-region (point) here)
+        (let ((hungry-delete-mode nil))
+          (delete-char -1))))))
+;; hungry-delete:1 ends here
+
+;; [[file:init-emacs.org::#modules-ibuffer][ibuffer:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: ibuffer
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: ibuffer")
+
+(use-package ibuffer
+  :straight (:type built-in)
+  :bind* ("C-x i" . ibuffer)            ; default: `insert-file'
+  :commands (ibuffer)
+  :config
+  ;; (add-to-list 'ibuffer-never-show-regexps "^\\*Apropos\\*$" t)
+  ;; (add-to-list 'ibuffer-never-show-regexps "^\\*Compile-Log\\*$" t)
+  ;; (add-to-list 'ibuffer-never-show-regexps "^\\*Completions\\*$" t)
+  ;; (add-to-list 'ibuffer-never-show-regexps "^\\*ftp .*\\*$" t)
+  ;; (add-to-list 'ibuffer-never-show-regexps "^\\*grep\\*$" t)
+  ;; (add-to-list 'ibuffer-never-show-regexps "^\\*Help\\*$" t)
+  ;; (add-to-list 'ibuffer-never-show-regexps "^\\*IBuffer\\*$" t)
+  ;; (add-to-list 'ibuffer-never-show-regexps "^\\*inferior-lisp\\*$" t)
+  ;; (add-to-list 'ibuffer-never-show-regexps "^\\*JDEE bsh\\*$" t)
+  ;; (add-to-list 'ibuffer-never-show-regexps "^\\*Messages\\*$" t)
+  ;; (add-to-list 'ibuffer-never-show-regexps "^\\*Occur\\*$" t)
+  ;; (add-to-list 'ibuffer-never-show-regexps "^\\*RE-Builder\\*$" t)
+  ;; (add-to-list 'ibuffer-never-show-regexps "^\\*Shell Command Output\\*$" t)
+  ;; (add-to-list 'ibuffer-never-show-regexps "^\\*slime-events\\*$" t)
+  ;; (add-to-list 'ibuffer-never-show-regexps "^\\*tramp/.*\\*$" t)
+  ;; (add-to-list 'ibuffer-never-show-regexps "^\\*WoMan-Log*\\*$" t)
+
+  ;; default groups for ibuffer
+  (setq ibuffer-saved-filters
+        '(("default"
+           ("c" (mode . c-mode))
+           ("calendar" (or
+                        (name . "^\\*Calendar\\*$")
+                        (name . "^\\*Remind\\*$")
+                        (name . "^diary$")))
+           ("dired" (mode . dired-mode))
+           ("elisp" (mode . emacs-lisp-mode))
+           ("emacs" (or
+                     (name . "^\\*scratch\\*$")
+                     (name . "^\\*Messages\\*$")))
+           ("erc" (mode . erc-mode))
+           ("gnus" (or
+                    (mode . message-mode)
+                    (mode . bbdb-mode)
+                    (mode . mail-mode)
+                    (mode . gnus-group-mode)
+                    (mode . gnus-summary-mode)
+                    (mode . gnus-article-mode)
+                    (name . "^\\.bbdb$")
+                    (name . "^\\.newsrc-dribble")))
+           ("java" (or
+                    (mode . java-mode)
+                    (mode . jde-mode)))
+           ("kotlin" (mode . kotlin-mode))
+           ("lisp" (mode . lisp-mode))
+           ("org" (mode . org-mode))
+           ("perl" (mode . perl-mode))
+           ("python" (mode . python-mode))
+           ("racket" (mode . racket-mode))
+           ("ruby" (mode . ruby-mode)))))
+
+  (defun custom-ibuffer-mode-hook ()
+    (ibuffer-switch-to-saved-filter-groups "default"))
+  (add-hook 'ibuffer-mode-hook #'custom-ibuffer-mode-hook))
+;; ibuffer:1 ends here
+
+;; [[file:init-emacs.org::#modules-iedit][iedit:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: iedit
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: iedit")
+
+(use-package iedit
+  :straight t
+  :commands (iedit-mode)
+  :bind* ("C-x ;" . iedit-mode))
+;; iedit:1 ends here
+
+;; [[file:init-emacs.org::#modules-imdb][+imdb+:1]]
+;; ;;------------------------------------------------------------------------------
+;; ;;; Modules: imdb
+;; ;;------------------------------------------------------------------------------
+
+;; (init-message 2 "Modules: imdb")
+
+;; (use-package imdb
+;;   :straight (:type built-in))
+;; +imdb+:1 ends here
+
+;; [[file:init-emacs.org::#modules-ini][ini:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: ini
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: ini")
+
+(use-package ini
+  :straight (ini :type git :host github :repo "daniel-ness/ini.el")
+  :commands (ini-decode
+             ini-encode))
+;; ini:1 ends here
+
+;; [[file:init-emacs.org::#modules-ispell][ispell:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: ispell
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: ispell")
+
+(use-package ispell
+  :straight (:type built-in)
+  :commands (ispell-buffer
+             ispell-change-dictionary-hook
+             ispell-complete-word-dict
+             ispell-message
+             ispell-region-end
+             ispell-word)
+  :bind (("<f6>" . ispell-word)
+         ("<S-f6>" . ispell))
+  :config
+  (setq ispell-enable-tex-parser t))
+;; ispell:1 ends here
+
+;; [[file:init-emacs.org::#modules-json][json:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: json
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: json")
+
+(use-package json
+  :straight (:type built-in))
+;; json:1 ends here
+
+;; [[file:init-emacs.org::#modules-key-chord][key-chord:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: key-chord
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: key-chord")
+
+(use-package key-chord
+  :straight t
+  :demand t
+  :init
+  ;; turn on `key-chord-mode'
+  (key-chord-mode 1)
+  :config
+  ;; key chords
+  (key-chord-define-global ",." "<>\C-b")
+  (key-chord-define-global "hj" 'undo)
+  (key-chord-define-global "fg" 'undo-tree-redo)
+  (key-chord-define-global "jk" 'dabbrev-expand)
+  (key-chord-define-global "cv" 'reindent-then-newline-and-indent)
+  (key-chord-define-global "1q" "!")
+  (key-chord-define-global "2w" "@")
+  (key-chord-define-global "3e" "#")
+  (key-chord-define-global "4r" "$")
+  (key-chord-define-global "5t" "%")
+  (key-chord-define-global "6y" "^")
+  (key-chord-define-global "7y" "&")
+  (key-chord-define-global "8u" "*")
+  (key-chord-define-global "9i" "(")
+  (key-chord-define-global "0o" ")"))
+;; key-chord:1 ends here
+
+;; [[file:init-emacs.org::#modules-keyfreq][keyfreq:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: keyfreq
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: keyfreq")
+
+(use-package keyfreq
+  :straight t
+  :demand t
+  :custom
+  (keyfreq-file (expand-file-name ".emacs.keyfreq" user-emacs-directory))
+  (keyfreq-file-lock (expand-file-name ".emacs.keyfreq.lock" user-emacs-directory))
+  :init
+  ;; turn on `keyfreq-mode'
+  (keyfreq-mode 1)
+  :config
+  ;; auto-save stats
+  (keyfreq-autosave-mode 1))
+;; keyfreq:1 ends here
+
+;; [[file:init-emacs.org::#modules-langtool][langtool:2]]
+;;------------------------------------------------------------------------------
+;;; Modules: langtool
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: langtool")
+
+(use-package langtool
+  :when (executable-find "languagetool") ; only use if binary is available on system
+  :straight t
+  :bind* (("C-x 4 w" . langtool-check)
+          ("C-x 4 W" . langtool-check-done)
+          ("C-x 4 l" . langtool-switch-default-language)
+          ("C-x 4 4" . langtool-show-message-at-point)
+          ("C-x 4 c" . langtool-correct-buffer))
+  :custom
+  (langtool-java-classpath
+   (concat "/usr/share/java/languagetool"
+           ":/usr/share/java/languagetool/*"
+           ":/usr/share/languagetool"
+           ":/usr/share/languagetool/*")))
+;; langtool:2 ends here
+
+;; [[file:init-emacs.org::#modules-magit][magit:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: magit
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: magit")
+
+(use-package magit
+  :straight t
+  :after (ivy)
+  :diminish magit-auto-revert-mode
+  :bind* (("C-x g" . magit-status)
+          ("C-x M-g" . magit-dispatch))
+  :bind (:map magit-status-mode-map
+              ("W" . magit-toggle-whitespace)
+              ("C-c C-a" . magit-commit-amend-without-prompt))
+  :bind (:map magit-mode-map
+              ("v" . magit-visit-pull-request-url))
+  :custom
+  ;; use ivy
+  (magit-completing-read-function #'ivy-completing-read)
+  :init (setq magit-last-seen-setup-instructions "1.4.0")
+  :config
+  (defun magit-toggle-whitespace ()
+    "Toggle whitespace ignoring."
+    (interactive)
+    (let ((ws "--ignore-all-space"))
+      (if (member ws magit-diff-arguments)
+          (setq magit-diff-arguments (remove ws magit-diff-arguments))
+        (add-to-list 'magit-diff-arguments ws t))
+      (magit-refresh)))
+
+  (defun magit-commit-amend-without-prompt ()
+    "Amend without any prompt."
+    (interactive)
+    (save-window-excursion
+      (shell-command "git --no-pager commit --amend --reuse-message=HEAD")
+      (magit-refresh)))
+
+  ;; Author: http://endlessparentheses.com/create-github-prs-from-emacs-with-magit.html
+  (defun magit-visit-pull-request-url ()
+    "Visit the current branch's pull request on Github."
+    (interactive)
+    (browse-url
+     (format "https://github.com/%s/pull/new/%s"
+             (replace-regexp-in-string
+              "^.+github\\.com:\\(.+\\)\\.git$" "\\1"
+              (magit-get "remote"
+                         (magit-get-remote nil)
+                         "url"))
+             (cdr (magit-get-push-branch))))))
+
+;; ;;------------------------------------------------------------------------------
+;; ;;;; forge
+;; ;;
+;; ;; Access Git forges from Magit.
+;; ;;------------------------------------------------------------------------------
+
+;; (init-message 3 "forge")
+
+;; (use-package forge
+;;   :straight t
+;;   :after (magit))
+;; magit:1 ends here
+
+;; [[file:init-emacs.org::#modules-mingus][mingus:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: mingus
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: mingus")
+
+(use-package mingus
+  :straight t
+  :commands (mingus
+             mingus-create-NP-mark
+             mingus-get-details
+             mingus-get-insertion-number
+             mingus-get-new-playlist-version
+             mingus-goto-line
+             mingus-set-insertion-point
+             mingus-move
+             mingus-move-NP-mark
+             mingus-playlist-length
+             mingus-set-song-pos
+             mingus-switch-to-playlist
+             mingus-truncate-string
+             mpd-execute-command
+             mpd-get-status)
+  :bind* ("C-x /" . mingus-switch-to-buffer)
+  :bind (:map mingus-global-map
+              ("<left>" . backward-char)
+              ("<right>" . forward-char)
+              ("<home>" . beginning-of-line)
+              ("<end>" . end-of-line)
+              ("C-c C-u" . mingus-mpc-update))
+  :bind (:map mingus-playlist-map
+              ("SPC" . mingus-pause)
+              ("<left>" . backward-char)
+              ("<right>" . forward-char)
+              ("<home>" . beginning-of-line)
+              ("<end>" . end-of-line)
+              ("C-c C-u" . mingus-mpc-update)
+              ("C-c C-l" . mingus-get-lyrics)
+              ("<f1>" . mingus-set-song-rating-1)
+              ("<f2>" . mingus-set-song-rating-2)
+              ("<f3>" . mingus-set-song-rating-3)
+              ("<f4>" . mingus-set-song-rating-4)
+              ("<f5>" . mingus-set-song-rating-5)
+              ("<f6>" . mingus-set-song-rating-0))
+  :config
+  (defun custom-mingus-hook-custom-settings ()
+    ;; disable undo
+    (buffer-disable-undo)
+
+    ;; turn off the display of trailing whitespace
+    (setq show-trailing-whitespace nil)
+
+    ;; ;; highlight current line
+    ;; (hl-line-mode 1)
+    )
+  (add-hook 'mingus-playlist-hooks #'custom-mingus-hook-custom-settings)
+  (add-hook 'mingus-browse-hook #'custom-mingus-hook-custom-settings)
+
+  ;; set mpd config file location
+  (setq mingus-mpd-config-file "~/.mpd/mpd.conf")
+
+  ;; sort case-insensitive
+  (setq mingus-fold-case t)
+
+  ;; use ido-mode for searching
+  (setq mingus-use-ido-mode-p t)
+
+  ;; do not use the mouse
+  (setq mingus-use-mouse-p nil)
+
+  ;; custom playlist song format
+  (setq mingus-format-song-function 'mingus-format-song-custom-columns)
+
+  (defun mingus-switch-to-buffer ()
+    "Start mingus or switch to it if already running."
+    (interactive)
+    (if (get-buffer "*Mingus*")
+        (switch-to-buffer "*Mingus*")
+      (mingus)))
+
+  (defun mingus-truncate-string (string length)
+    (truncate-string-to-width string (max 1 length) nil 32 "..."))
+
+  (defun mingus-format-song-custom-columns (plist)
+    "Custom column playlist song format."
+    (let* ((show-albums (>= (window-text-width) 140))
+           (available-width (- (window-text-width) 19))
+           (song-width (/ available-width (if show-albums 3 2)))
+           (artist-width (/ available-width (if show-albums 3 2)))
+           (album-width (/ available-width 3))
+           (string
+            (concat
+             (format "% 4d.%.2d  "
+                     (/ (or (plist-get plist 'Time) 0) 60)
+                     (mod (or (plist-get plist 'Time) 0) 60))
+             (mingus-truncate-string
+              (or (plist-get plist 'Title)
+                  (plist-get plist 'Name)
+                  (plist-get plist 'file))
+              song-width)
+             (concat "  "
+                     (mingus-truncate-string
+                      (or (plist-get plist 'Artist)
+                          (plist-get plist 'AlbumArtist)
+                          "")
+                      artist-width))
+             (if show-albums
+                 (concat "  "
+                         (mingus-truncate-string
+                          (or (plist-get plist 'Album) "")
+                          album-width))
+               ""))))
+      string))
+
+  (defun mingus-format-song-custom-simple (plist &optional separator)
+    "Make a string from PLIST.
+
+Concatenate the results for the values with SEPARATOR, where SEPARATOR
+ defaults to the string \" - \"."
+    (let ((artist (cl-getf plist 'Artist))
+          (album (cl-getf plist 'Album))
+          (title (cl-getf plist 'Title))
+          (albumartist (cl-getf plist 'Albumartist))
+          (track (cl-getf plist 'Track))
+          (name (cl-getf plist 'Name))
+          (genre (cl-getf plist 'Genre))
+          (date (cl-getf plist 'Date))
+          (composer (cl-getf plist 'Composer))
+          (performer (cl-getf plist 'Performer))
+          (comment (cl-getf plist 'Comment))
+          (disc (cl-getf plist 'Disc))
+          (time (cl-getf plist 'Time))
+          (pos (cl-getf plist 'Pos))
+          (id (cl-getf plist 'Id))
+          (file (cl-getf plist 'file))
+          (separator (or separator " - ")))
+      (or (and mingus-use-caching
+               (gethash id mingus-song-strings))
+          (let ((val
+                 (let* ((file-name (and file (file-name-nondirectory file)))
+                        (short (remove nil (list (or artist albumartist)
+                                                 (or title file-name)))))
+                   (mapconcat 'identity short separator))))
+            (and mingus-use-caching
+                 (puthash id val mingus-song-strings))
+            val))))
+
+  ;; recenter screen after moving to current song
+  (defun mingus-goto-current-song--recenter ()
+    "Recenter screen after moving to current song."
+    (recenter-top-bottom))
+  ;; advise `mingus-goto-current-song'
+  (advice-add 'mingus-goto-current-song :after #'mingus-goto-current-song--recenter)
+
+  (defun mingus-insert-song-rating (rating)
+    "Insert song rating at current position."
+    (insert (format "  [%s]" rating)))
+
+  (defun mingus-display-song-rating (highlight)
+    "Display song rating of currently selected mingus song.
+
+If HIGHLIGHT is non-nil, highlight song."
+    (let ((buffer-name "*Mingus*"))
+      (unless (string= (buffer-name) buffer-name)
+        (error "Buffer is not `%s'" buffer-name))
+      (let (buffer-read-only)
+        (save-mark-and-excursion
+          (save-match-data
+            (goto-char (line-beginning-position))
+            (when (re-search-forward "  \\[[0-9]\\]$" (line-end-position) :noerror)
+              (replace-match ""))
+            (goto-char (line-end-position))
+            (mingus-insert-song-rating (or (mingus-get-song-rating) 0))
+            (when highlight
+              (put-text-property (line-beginning-position) (line-end-position) 'face 'font-lock-keyword-face)))))))
+
+  (defun mingus-set-NP-mark--highlight-current-song (orig-fun &rest args)
+    "Mark entire line of currently playing song.
+
+Use text properties to mark the line then call `mingus-set-NP-mark'."
+    (when (string= (buffer-name) "*Mingus*")
+      (ignore-errors
+        (let ((pos (or (and (> (length args) 1) (cadr args))
+                       (cl-getf (mpd-get-status mpd-inter-conn) 'song)))
+              buffer-read-only)
+          (when pos
+            (save-mark-and-excursion
+              (save-window-excursion
+                (remove-text-properties (point-min) (point-max) '(face nil))
+                (mingus-goto-line (1+ pos))
+                (mingus-display-song-rating t)))))))
+    (apply orig-fun args))
+  ;; advise `mingus-set-NP-mark'
+  (advice-add 'mingus-set-NP-mark :around #'mingus-set-NP-mark--highlight-current-song)
+
+  (defun mingus-get-all-song-ratings ()
+    "Return all song ratings as a hash table of songs to ratings."
+    (let ((ratings (make-hash-table :test 'equal)))
+      (dotimes (x 5)
+        (let* ((rating (1+ x))
+               (file (file-truename
+                      (expand-file-name
+                       (concat mingus-ratings-prefix (number-to-string rating))
+                       mingus-ratings-directory))))
+          (with-temp-buffer
+            (insert-file-contents file)
+            (goto-char (point-min))
+            (while (not (eobp))
+              (puthash (buffer-substring-no-properties (line-beginning-position) (line-end-position)) rating ratings)
+              (forward-line 1)))))
+      ratings))
+
+  (defun mingus-display-all-song-ratings ()
+    "Display all song ratings in mingus playlist buffer."
+    (when (string= (buffer-name) "*Mingus*")
+      (save-mark-and-excursion
+        (save-window-excursion
+          (let ((ratings (mingus-get-all-song-ratings))
+                buffer-read-only)
+            (buffer-disable-undo)
+            (goto-char (point-min))
+            (while (not (eobp))
+              (ignore-errors
+                (let ((rating (get-byte (- (line-end-position) 2))))
+                  (unless (and (= (get-byte (- (line-end-position) 1)) 93)
+                               (= (get-byte (- (line-end-position) 3)) 91)
+                               (>= rating 48)
+                               (<= rating 53))
+                    (let ((details (mingus-get-details)))
+                      (when details
+                        (let* ((file (plist-get details 'file))
+                               (rating (gethash file ratings)))
+                          (goto-char (line-end-position))
+                          (mingus-insert-song-rating (number-to-string (or rating 0)))))))))
+              (forward-line 1)))))))
+  ;; advise `mingus-switch-to-playlist'
+  (advice-add 'mingus-switch-to-playlist :after #'mingus-display-all-song-ratings)
+  ;; advise `mingus-redraw-buffer'
+  (advice-add 'mingus-redraw-buffer :after #'mingus-display-all-song-ratings)
+
+  (defun mingus-mpc-update ()
+    "Update (refresh) mpc (Music Player Client)"
+    (interactive)
+    (message "Updating mpc (Music Player Client)...")
+    (shell-command "mpc --wait update > /dev/null 2>&1"))
+
+  ;;-----------------------------------------------------------------------
+  ;;;; Mingus Fetch Lyrics Commands
+  ;;-----------------------------------------------------------------------
+
+  (init-message 3 "Mingus Fetch Lyrics Commands")
+
+  ;; ;; TODO: add ability to query multiple lyric sites when a result is not found on one
+  ;; (defun mingus-get-lyrics ()
+  ;;   "Get lyrics (original non-api version)."
+  ;;   (interactive)
+  ;;   (let ((details (mingus-get-details)))
+  ;;     (when details
+  ;;       (let ((artist (plist-get details 'Artist))
+  ;;             (title (plist-get details 'Title))
+  ;;             (site "azlyrics.com")
+  ;;             ;;(site "allthelyrics.com")
+  ;;             ;;(site "lyricwiki.org")
+  ;;             ;;(site "lyrics.wikia.com")
+  ;;             (user-agent "Mozilla/4.0 (MSIE 6.0; Windows NT 5.0)")
+  ;;             (referer "http://www.google.com/")
+  ;;             (file (shell-command-to-string "echo -n /tmp/mingus-lyrics-$$.html")))
+  ;;         ;; remove ", The" from artist
+  ;;         (setq artist (replace-regexp-in-string artist ", The$" ""))
+  ;;         ;; remove anything in parenthesis from title
+  ;;         (setq title (replace-regexp-in-string title " ?([^)]*)" ""))
+  ;;         (let ((query (concat "http://www.google.com/search?q="
+  ;;                              "lyrics "
+  ;;                              "\"" artist "\" "
+  ;;                              "\"" title "\" "
+  ;;                              "site:" site
+  ;;                              "&btnI=Search")))
+  ;;           (call-process "wget" nil nil nil
+  ;;                         "--no-verbose"
+  ;;                         "--convert-links"
+  ;;                         (concat "--user-agent=" user-agent)
+  ;;                         (concat "--referer=" referer)
+  ;;                         "-O" file
+  ;;                         query)
+  ;;           (browse-url (concat "file://" file))
+  ;;           ;; clean up response
+  ;;           (fundamental-mode)
+  ;;           (setq buffer-read-only nil)
+  ;;           (buffer-disable-undo)
+  ;;           (when (re-search-forward "You must enable javascript to view this page." nil :noerror)
+  ;;             (goto-char (line-end-position))
+  ;;             (forward-line 1)
+  ;;             (delete-region (point-min) (point)))
+  ;;           (when (re-search-forward "External links" nil :noerror)
+  ;;             (goto-char (line-beginning-position))
+  ;;             (delete-region (point) (point-max)))
+  ;;           (goto-char (point-min))
+  ;;           (while (re-search-forward "phone Send" nil :noerror)
+  ;;             (delete-region (line-beginning-position) (1+ (line-end-position))))
+  ;;           (setq buffer-read-only nil)
+  ;;           (goto-char (point-min))
+  ;;           )))))
+
+  (defun mingus-get-lyrics-azlyrics (artist title)
+    "Return the lyrics for a song matching ARTIST and TITLE
+by scraping the azlyrics.com site."
+    (interactive)
+    (message "artist: %s, title: %s" artist title)
+    (let* ((start-regexp "<!-- Usage of azlyrics.com")
+           (end-regexp "<!-- MxM banner -->")
+           (ret-regexp "")
+           (bracket-regexp " *\\[[^\]].*\\]")
+           (starting-spaces-regexp "^ +")
+           (ending-spaces-regexp " +$")
+           (feat-regexp "<span class=\"feat\">\\(.*\\)</span>")
+           (site "azlyrics.com")
+           ;;(user-agent "Mozilla/4.0 (MSIE 6.0; Windows NT 5.0)")
+           (user-agent "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0; WOW64; Trident/4.0; SLCC1)")
+           (referer "http://www.google.com/")
+           (search-file (shell-command-to-string "echo -n /tmp/mingus-search-$$.html"))
+           (lyrics-file (shell-command-to-string "echo -n /tmp/mingus-lyrics-$$.html"))
+           (parsed-title
+            (replace-regexp-in-string ending-spaces-regexp ""
+                                      (replace-regexp-in-string starting-spaces-regexp ""
+                                                                (replace-regexp-in-string bracket-regexp "" title))))
+           (query (concat "http://www.google.com/search?q="
+                          "lyrics "
+                          (if artist (concat "\"" artist "\" ") "")
+                          "\"" parsed-title "\" "
+                          "site:" site
+                          "&btnI=Search"))
+           url
+           lyrics
+           error)
+      ;; TODO: make this call asynchronous (using `start-process')
+      (call-process "wget" nil nil nil
+                    "--no-verbose"
+                    "--convert-links"
+                    (concat "--user-agent=" user-agent)
+                    (concat "--referer=" referer)
+                    "-O" search-file
+                    query)
+      (message "query: %s" query)
+      (message "wget call: wget --no-verbose --convert-links --user-agent=\"%s\" --referer=%s -O %s %s" user-agent referer search-file query)
+      (with-temp-buffer
+        (buffer-disable-undo)
+        (condition-case err
+            (progn
+              (insert-file-contents search-file)
+              (goto-char (point-min))
+              (re-search-forward (concat "https://www." site "[^\"]*"))
+              (setq url (match-string-no-properties 0)))
+          ('error
+           (message "Error trying to find lyrics url: %s" err)
+           (setq error t))))
+      (if (and error artist)
+          ;; on error, try again without artist
+          (mingus-get-lyrics-azlyrics nil title)
+        (progn
+          ;; no error, so continue
+          (call-process "wget" nil nil nil
+                        "--no-verbose"
+                        "--convert-links"
+                        (concat "--user-agent=" user-agent)
+                        (concat "--referer=" referer)
+                        "-O" lyrics-file
+                        url)
+          (with-temp-buffer
+            (buffer-disable-undo)
+            (condition-case err
+                (progn
+                  (insert-file-contents lyrics-file)
+                  ;; clean up response
+                  (fundamental-mode)
+                  (goto-char (point-min))
+                  (when (re-search-forward start-regexp nil :noerror)
+                    (goto-char (line-beginning-position))
+                    (forward-line 1)
+                    (let ((pos (point)))
+                      (forward-line -3)
+                      (delete-region (point) pos))
+                    (forward-line -2)
+                    (delete-region (point-min) (point)))
+                  (when (re-search-forward end-regexp nil :noerror)
+                    (delete-region (line-beginning-position) (point-max)))
+                  (goto-char (point-min))
+                  (while (re-search-forward ret-regexp nil :noerror)
+                    (replace-match ""))
+                  (goto-char (point-min))
+                  (while (re-search-forward feat-regexp nil :noerror)
+                    (replace-match "\\1"))
+                  (shr-render-region (point-min) (point-max))
+                  (goto-char (point-max))
+                  (delete-blank-lines)
+                  (goto-char (point-min))
+                  (insert (upcase artist) ": " (upcase title))
+                  (newline)
+                  (newline)
+                  (setq lyrics (buffer-substring-no-properties (point-min) (point-max))))
+              ('error
+               (message "Error trying to format lyrics result: %s" err)))
+            lyrics)))))
+
+  ;; this site seems to be no longer working (2010-04-06)
+  (defun mingus-get-lyrics-leoslyrics (artist title)
+    "Return the lyrics for a song matching ARTIST and TITLE
+using the api.leoslyrics.com site."
+    (interactive)
+    (let ((query (concat "wget -q \"http://api.leoslyrics.com/api_search.php?auth=emacs"
+                         (if artist (concat "&artist=" (url-hexify-string artist)) "")
+                         "&songtitle=" (url-hexify-string title)
+                         "\" -O - | xmlstarlet sel -t -v \"/leoslyrics/searchResults/result/@hid\"")))
+      ;;(message "hid query: %s" query)
+      (let ((hid (shell-command-to-string query)))
+        (when hid
+          ;;(message "hid: %s" (url-hexify-string hid))
+          (let ((query (concat "wget -q \"http://api.leoslyrics.com/api_lyrics.php?auth=emacs&hid="
+                               (url-hexify-string hid)
+                               "\" -O - | xmlstarlet sel -t -v \"/leoslyrics/lyric/text/text()\""
+                               " | xmlstarlet unesc | tr -d '\r'")))
+            ;;(message "lyrics query: %s" query)
+            (let ((lyrics (shell-command-to-string query)))
+              lyrics))))))
+
+  (defun mingus-get-lyrics-metrolyrics (artist title)
+    "Return the lyrics for a song matching ARTIST and TITLE
+by scraping the metrolyrics.com site."
+    (interactive)
+    (let* ((start-regexp "<div id=\"lyrics-body-text\">")
+           (end-regexp "</div>")
+           (ret-regexp "")
+           (bracket-regexp " *\\[[^\]].*\\]")
+           (starting-spaces-regexp "^ +")
+           (ending-spaces-regexp " +$")
+           (site "metrolyrics.com")
+           ;;(user-agent "Mozilla/4.0 (MSIE 6.0; Windows NT 5.0)")
+           (user-agent "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0; WOW64; Trident/4.0; SLCC1)")
+           (referer "http://www.google.com/")
+           (file (shell-command-to-string "echo -n /tmp/mingus-lyrics-$$.html"))
+           (parsed-title
+            (replace-regexp-in-string ending-spaces-regexp ""
+                                      (replace-regexp-in-string starting-spaces-regexp ""
+                                                                (replace-regexp-in-string bracket-regexp "" title))))
+           (query (concat "http://www.google.com/search?q="
+                          "lyrics "
+                          (if artist "\"" artist "\" " "")
+                          "\"" parsed-title "\" "
+                          "site:" site
+                          "&btnI=Search"))
+           (lyrics))
+      ;; TODO: make this call asynchronous (using `start-process')
+      (call-process "wget" nil nil nil
+                    "--no-verbose"
+                    "--convert-links"
+                    (concat "--user-agent=" user-agent)
+                    (concat "--referer=" referer)
+                    "-O" file
+                    query)
+      (message "query: %s" query)
+      (message "wget call: wget --no-verbose --convert-links --user-agent=\"%s\" --referer=%s -O %s %s" user-agent referer file query)
+      (with-temp-buffer
+        (buffer-disable-undo)
+        (condition-case err
+            (progn
+              (insert-file-contents file)
+              ;; clean up response
+              (fundamental-mode)
+              (goto-char (point-min))
+              (when (re-search-forward start-regexp nil :noerror)
+                (goto-char (line-beginning-position))
+                (forward-line 1)
+                (let ((pos (point)))
+                  (forward-line -3)
+                  (delete-region (point) pos))
+                (forward-line -2)
+                (delete-region (point-min) (point)))
+              (when (re-search-forward end-regexp nil :noerror)
+                (delete-region (line-beginning-position) (point-max)))
+              (goto-char (point-min))
+              (while (re-search-forward ret-regexp nil :noerror)
+                (replace-match ""))
+              (shr-render-region (point-min) (point-max))
+              (goto-char (point-max))
+              (delete-blank-lines)
+              (goto-char (point-min))
+              (insert (upcase artist) ": " (upcase title))
+              (newline)
+              (newline)
+              (setq lyrics (buffer-substring-no-properties (point-min) (point-max))))
+          ('error
+           (message "Error trying to format lyrics result: %s" err)))
+        lyrics)))
+
+  ;; TODO: add ability to query multiple lyric sites when a result is not found on one
+  (defun mingus-get-lyrics ()
+    "Display lyrics for the selected song."
+    (interactive)
+    (let ((details (mingus-get-details)))
+      (when details
+        (let ((artist (plist-get details 'Artist))
+              (title (plist-get details 'Title))
+              (funct 'mingus-get-lyrics-azlyrics))
+          ;;(funct 'mingus-get-lyrics-leoslyrics))
+          ;;(funct 'mingus-get-lyrics-metrolyrics))
+          ;; remove ", The" from artist
+          (setq artist (replace-regexp-in-string ", The$" "" artist))
+          ;; remove anything in parenthesis from title
+          (setq title (replace-regexp-in-string " ?([^)]*)" "" title))
+          ;; call lyrics api
+          (let ((buffer-name (concat "*" artist ": " title "*"))
+                (lyrics (funcall funct artist title)))
+            ;; if no lyrics returned, try again with song title only (helps with covers)
+            (when (or (not lyrics)
+                      (zerop (length lyrics)))
+              (setq lyrics (funcall funct nil title)))
+            (if (and lyrics
+                     (> (length lyrics) 0))
+                (progn
+                  (get-buffer-create buffer-name)
+                  (set-buffer buffer-name)
+                  (let ((buffer-read-only nil))
+                    (erase-buffer)
+                    (insert lyrics)
+                    (delete-trailing-whitespace)
+                    (switch-to-buffer buffer-name)
+                    (goto-char (point-min))
+                    (view-mode)))
+              (message "No lyrics found for Artist: %s, Title: %s" artist title)))))))
+
+  ;;-----------------------------------------------------------------------
+  ;;;; Mingus Song Rating System
+  ;;-----------------------------------------------------------------------
+
+  (init-message 3 "Mingus Song Rating System")
+
+  ;; directory to store rating play lists
+  (defcustom mingus-ratings-directory `,(file-truename (expand-file-name "~/.song-ratings"))
+    "Directory to store rating play lists."
+    :type 'string
+    :group 'mingus)
+
+  ;; rating play list prefix
+  (defcustom mingus-ratings-prefix "songs-rated-"
+    "Ratings play list files prefix."
+    :type 'string
+    :group 'mingus)
+
+  (defun mingus-get-song-rating ()
+    "Return song rating of the selected song."
+    (interactive)
+    (let ((details (mingus-get-details)))
+      (when details
+        (let* ((file (plist-get details 'file))
+               (song-name (propertize
+                           (replace-regexp-in-string "^.*/\\([^/]+\\)\\..*$" "\\1" file)
+                           'face
+                           'font-lock-keyword-face))
+               (get-cmd (concat
+                         "cd " mingus-ratings-directory " && "
+                         "(for x in $(ls " mingus-ratings-prefix "*) ; do grep -q -F \""
+                         (replace-regexp-in-string "\"" "\"" file)
+                         "\" \"${x}\" && echo ${x: -1}; done)")))
+          ;;(message "get-cmd: %s" get-cmd)
+          ;; make sure ratings directory exists
+          (unless (file-exists-p mingus-ratings-directory)
+            (make-directory mingus-ratings-directory))
+          ;; get rating, if there is one
+          (let ((rating (shell-command-to-string get-cmd)))
+            (when (string-match "\r?\n$" rating)
+              (setq rating (replace-match "" t nil rating)))
+            (when (zerop (length rating))
+              (setq rating "0"))
+            (let ((rating-name (propertize rating 'face 'font-lock-keyword-face)))
+              ;; print or return rating
+              (if (called-interactively-p 'any)
+                  (message "Rating for %s is %s" song-name rating-name)
+                (string-to-number rating))))))))
+
+  (defun mingus-set-song-rating (rating)
+    "Set song rating of the selected song.
+
+RATING may be a number from 0 to 5, where 1 is least favorite and
+5 is most favorite. 0 will unset the rating."
+    (interactive)
+    (unless (and (>= rating 0) (<= rating 5))
+      (error "Rating must be a number from 0 through 5"))
+    (let ((details (mingus-get-details)))
+      (when details
+        (let* ((file (plist-get details 'file))
+               (song-name (propertize
+                           (replace-regexp-in-string "^.*/\\([^/]+\\)\\..*$" "\\1" file)
+                           'face
+                           'font-lock-keyword-face))
+               (rating-name (propertize (number-to-string rating) 'face 'font-lock-keyword-face))
+               (playlist (concat mingus-ratings-prefix (number-to-string rating)))
+               (clear-cmd (concat
+                           "cd " mingus-ratings-directory " && "
+                           "(for x in $(find . -name '" mingus-ratings-prefix "*') ; do grep -v -F \""
+                           (replace-regexp-in-string "\"" "\"" file)
+                           "\" \"${x}\" > tmp ; mv tmp \"${x}\" ; done)"))
+               (set-cmd (concat
+                         "cd " mingus-ratings-directory " && "
+                         "(echo \""
+                         (replace-regexp-in-string "\"" "\"" file)
+                         "\" >> " playlist ") && "
+                         "(cat " playlist " | sort > tmp ; mv tmp " playlist ")")))
+          ;;(message "clear-cmd: %s" clear-cmd)
+          ;;(message "set-cmd: %s" set-cmd)
+          ;; make sure ratings directory exists
+          (unless (file-exists-p mingus-ratings-directory)
+            (make-directory mingus-ratings-directory))
+          ;; clear song from any play lists
+          (shell-command clear-cmd)
+          ;; if rating > 0, add song to corresponding ratings play list
+          (if (> rating 0)
+              ;; set rating
+              (if (> (shell-command set-cmd) 0)
+                  (error "Could not set rating for %s" song-name)
+                (message "%s rating was set to %s" song-name rating-name))
+            ;; rating was cleared
+            (message "%s rating was cleared" song-name))
+          (let (buffer-read-only)
+            (buffer-disable-undo)
+            (mingus-display-song-rating nil))))))
+
+  (defun mingus-set-song-rating-1 ()
+    "Call `mingus-set-song-rating' with a rating of 1."
+    (interactive)
+    (mingus-set-song-rating 1))
+
+  (defun mingus-set-song-rating-2 ()
+    "Call `mingus-set-song-rating' with a rating of 2."
+    (interactive)
+    (mingus-set-song-rating 2))
+
+  (defun mingus-set-song-rating-3 ()
+    "Call `mingus-set-song-rating' with a rating of 3."
+    (interactive)
+    (mingus-set-song-rating 3))
+
+  (defun mingus-set-song-rating-4 ()
+    "Call `mingus-set-song-rating' with a rating of 4."
+    (interactive)
+    (mingus-set-song-rating 4))
+
+  (defun mingus-set-song-rating-5 ()
+    "Call `mingus-set-song-rating' with a rating of 5."
+    (interactive)
+    (mingus-set-song-rating 5))
+
+  (defun mingus-set-song-rating-0 ()
+    "Call `mingus-set-song-rating' with a rating of 0."
+    (interactive)
+    (mingus-set-song-rating 0)))
+;; mingus:1 ends here
+
+;; [[file:init-emacs.org::#modules-minions][minions:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: minions
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: minions")
+
+(use-package minions
+  :straight t
+  :config
+  (minions-mode 1))
+;; minions:1 ends here
+
+;; [[file:init-emacs.org::#modules-multiple-cursors][multiple-cursors:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: multiple-cursors
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: multiple-cursors")
+
+(use-package multiple-cursors
+  :straight t
+  :bind* (("C-c C->" . mc/edit-lines)
+          ("C-c C-<" . mc/mark-all-like-this)
+          ("C->" . mc/mark-next-like-this)
+          ("C-<" . mc/mark-previous-like-this)
+          ("C-M->" . mc/unmark-next-like-this)
+          ("C-M-<" . mc/unmark-previous-like-this)))
+;; multiple-cursors:1 ends here
+
+;; [[file:init-emacs.org::#packages-mwim][mwim:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: mwim
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Packages: mwim")
+
+(use-package mwim
+  :straight t
+  :bind* (([remap move-beginning-of-line] . mwim-beginning-of-line-or-code)
+          ([remap move-end-of-line] . mwim-end-of-line-or-code)
+          ("<C-tab>" . mwim)))
+;; mwim:1 ends here
+
+;; [[file:init-emacs.org::#modules-neotree][neotree=====================================================================:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: neotree
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: neotree")
+
+(use-package neotree
+  :straight t
+  :commands (neo-global--select-window
+             neo-global--window-exists-p
+             neotree-toggle)
+  :bind ("<f8>" . neotree-select-or-toggle)
+  :custom
+  ;; open tree at current file node
+  (neo-smart-open t)
+  ;; work with projectile
+  (projectile-switch-project-action #'neotree-projectile-action)
+  :config
+  (defun neotree-select-or-toggle ()
+    "Make an existing neotree window active or toggle it on/off."
+    (interactive)
+    (if (and (neo-global--window-exists-p)
+             (not (eq (current-buffer) (get-buffer neo-buffer-name))))
+        (neo-global--select-window)
+      (neotree-toggle))))
+;; neotree=====================================================================:1 ends here
+
+;; [[file:init-emacs.org::#modules-occur][occur:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: occur
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: occur")
+
+(use-package replace
+  :straight (:type built-in)
+  :config
+  (when (fboundp 'occur-inverse)
+      (bind-keys* :map occur-mode-map ("C-c C-i" . occur-inverse)))
+  (when (fboundp 'occur-remove)
+      (bind-keys* :map occur-mode-map ("C-c C-r" . occur-remove))))
+;; occur:1 ends here
+
+;; [[file:init-emacs.org::#modules-package-lint][package-lint:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: package-lint
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: package-lint")
+
+(use-package package-lint
+  :straight t)
+;; package-lint:1 ends here
+
+;; [[file:init-emacs.org::#modules-persistent-scratch][persistent-scratch:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: persistent-scratch
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: persistent-scratch")
+
+(use-package persistent-scratch
+  :straight t
+  :demand t
+  :init
+  ;; enable autosave and restore last saved state
+  (persistent-scratch-setup-default))
+;; persistent-scratch:1 ends here
+
+;; [[file:init-emacs.org::#packages-pocket-reader][pocket-reader:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: pocket-reader
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Packages: pocket-reader")
+
+(use-package pocket-reader
+  :straight t
+  :custom
+  (pocket-reader-archive-on-open nil))
+;; pocket-reader:1 ends here
+
+;; [[file:init-emacs.org::#modules-popper][popper:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: popper
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: popper")
+
+(use-package popper
+  :straight t
+  :bind (("C-`" . popper-toggle-latest)
+         ("C-M-`" . popper-cycle)
+         ("C-x C-`" . popper-toggle-type))
+  :custom
+  (popper-reference-buffers
+   '("\\*Messages\\*"
+     "Output\\*$"
+     "\\*Async Shell Command\\*"
+     help-mode
+     compilation-mode))
+  :init
+  (popper-mode +1)
+  (popper-echo-mode +1))
+;; popper:1 ends here
+
+;; [[file:init-emacs.org::#modules-proced][proced:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: proced
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: proced")
+
+(use-package proced
+  :straight t
+  :commands (proced))
+;; proced:1 ends here
+
+;; [[file:init-emacs.org::#modules-projectile][projectile:1]]
+;;------------------------------------------------------------------------------
+;;; projectile (project interaction library)
+;;
+;; Install `ack-grep' and `exuberant-ctags' system packages for more
+;; projectile functionality.
+;; ------------------------------------------------------------------------------
+
+(init-message 2 "Modules: projectile")
+
+(use-package projectile
+  :straight t
+  :after (ivy)
+  :diminish (projectile-mode . "Proj")
+  :bind* ("C-x p" . projectile-command-map)
+  :bind-keymap ("C-c p" . projectile-command-map)
+  :custom
+  ;; open the root directory when switching projects
+  (projectile-switch-project-action #'projectile-dired)
+  ;; use ivy
+  (projectile-completion-system 'ivy)
+  :init
+  ;; enable projectile globally
+  (projectile-mode)
+  :config
+  (dolist (x '("~/dev" "~/code" "~/web"))
+    (when (file-directory-p x)
+      (add-to-list 'projectile-project-search-path x))))
+
+;;------------------------------------------------------------------------------
+;;;; counsel-projectile
+;;
+;; Ivy integration for Projectile.
+;;------------------------------------------------------------------------------
+
+(init-message 3 "counsel-projectile")
+
+(use-package counsel-projectile
+  :straight t
+  :after (ivy counsel projectile)
+  :init (counsel-projectile-mode))
+;; projectile:1 ends here
+
+;; [[file:init-emacs.org::#modules-ps-ccrypt][ps-ccrypt:2]]
+;;------------------------------------------------------------------------------
+;;; Modules: ps-ccrypt
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: ps-ccrypt")
+
+(use-package ps-ccrypt
+  :when (executable-find "ccrypt") ; only use if binary is available on system
+  ;; local copy with a bug fix
+  :load-path (lambda () (file-truename (expand-file-name "ps-ccrypt.el" emacs-modules-dir))))
+;; ps-ccrypt:2 ends here
+
+;; [[file:init-emacs.org::#modules-rainbow-mode][rainbow-mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: rainbow-mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: rainbow-mode")
+
+(use-package rainbow-mode
+  :straight t
+  :init
+  (rainbow-mode 1))
+;; rainbow-mode:1 ends here
+
+;; [[file:init-emacs.org::#modules-recentf][recentf:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: recentf
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: recentf")
+
+(use-package recentf
+  :straight (:type built-in)
+  :commands (recentf-mode)
+  :custom
+  (recentf-max-menu-items 25)
+  :init
+  (recentf-mode 1))
+;; recentf:1 ends here
+
+;; [[file:init-emacs.org::#modules-regex-tool][regex-tool:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: regex-tool
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: regex-tool")
+
+(use-package regex-tool
+  :straight t
+  :commands (regex-tool))
+;; regex-tool:1 ends here
+
+;; [[file:init-emacs.org::#modules-replacer][replacer:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: replacer
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: replacer")
+
+(use-package replacer
+  :load-path (lambda () (file-truename (expand-file-name "replacer.el" local-modules-dir)))
+  :after (company)
+  :commands (replacer-mode company-replacer-backend)
+  :custom
+  ;; set trigger start
+  (replacer-trigger-start ";")
+  ;; set trigger end
+  (replacer-trigger-end " ")
+  ;; set trigger keys and replacements
+  (replacer-replacements
+   '(
+     ;; help
+     ("h" . replacer-help)
+     ("help" . replacer-help)
+     ;; insert
+     ("id" . insert-date)
+     ("idt" . insert-datetime)
+     ("it" . insert-time)
+     ("iuuid" . insert-uuid)
+     ("iguid" . insert-guid)
+     ("ipw" . insert-password-14)
+     ("ipp" . insert-password-phrase-three-hyphen)
+     ("i=" . append-equal-to-column-80)
+     ("i-" . append-dash-to-column-80)
+     ("i*" . append-asterisk-to-column-80)
+     ("ilgpl" . insert-license-gpl)
+     ("ilmit" . insert-license-mit)
+     ("ilapache" . insert-license-apache)
+     ;; org-mode
+     ("on" . org-insert-literate-programming-name)
+     ("os" . org-insert-literate-programming-src)
+     ("ossh" . org-insert-literate-programming-src-sh)
+     ("ossu" . org-insert-literate-programming-src-sh-sudo)
+     ("osel" . org-insert-literate-programming-src-emacs-lisp)
+     ("osr" . org-insert-literate-programming-src-racket)
+     ("osk" . org-insert-literate-programming-src-kotlin)
+     ("ospy" . org-insert-literate-programming-src-python)
+     ("obie" . org-insert-literate-programming-init-emacs-block)
+     ("obc" . org-insert-literate-programming-code-block)
+     ("obpe" . org-insert-literate-programming-project-euler-problem-block)
+     ))
+  :init
+  ;; turn replacer mode on
+  (replacer-mode 1)
+  :config
+  (defun replacer-replacements-edit ()
+    "Open `init-emacs.org' and move point to `replacer-replacements' variable for easy editing."
+    (interactive)
+    (find-file (expand-file-name "init-emacs.org" emacs-home-dir))
+    (goto-char (point-min))
+    (search-forward "replacer-replacements")
+    (org-show-entry))
+
+  (defun replacer-help ()
+    "Show list of `replacer-replacements'."
+    (describe-variable 'replacer-replacements)))
+;; replacer:1 ends here
+
+;; [[file:init-emacs.org::#modules-s][s:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: s
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: s")
+
+(use-package s
+  :straight t)
+;; s:1 ends here
+
+;; [[file:init-emacs.org::#modules-saveplace][saveplace:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: saveplace
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: saveplace")
+
+(use-package saveplace
+  :straight (:type built-in)
+  :init (save-place-mode 1))
+;; saveplace:1 ends here
+
+;; [[file:init-emacs.org::#modules-smerge][smerge:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: smerge
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: smerge")
+
+(use-package smerge-mode
+  :straight (:type built-in)
+  :init
+  (defun smerge-mode-maybe ()
+    "Auto turn on smerge mode when a file with merge conflicts is loaded.
+Do not perform the search on very large files (to avoid a delay when loaded)."
+    (when (<= (buffer-size) 10000)
+      (save-mark-and-excursion
+        (save-match-data
+          (goto-char (point-min))
+          (when (re-search-forward "^<<<<<<< " nil :noerror)
+            (smerge-mode 1))))))
+  (add-hook 'find-file-hook #'smerge-mode-maybe :append))
+;; smerge:1 ends here
+
+;; [[file:init-emacs.org::#modules-sokoban][sokoban:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: sokoban
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: sokoban")
+
+(use-package sokoban
+  :load-path (lambda () (file-truename (expand-file-name "sokoban/sokoban.el" emacs-modules-dir)))
+  :commands (sokoban sokoban-mode)
+  :custom
+  (sokoban-levels-dir (file-truename (expand-file-name "sokoban/sokoban-levels" emacs-modules-dir))))
+;; sokoban:1 ends here
+
+;; [[file:init-emacs.org::#modules-split-move][split-move:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: split-move
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: split-move")
+
+(use-package split-move
+  :load-path (lambda () (file-truename (expand-file-name "split-move.el" local-modules-dir)))
+  :commands (split-move-up split-move-down))
+;; split-move:1 ends here
+
+;; [[file:init-emacs.org::#modules-spinner][spinner:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: spinner
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: spinner")
+
+(use-package spinner
+  :straight (spinner :type git :host github :repo "Malabarba/spinner.el"))
+;; spinner:1 ends here
+
+;; [[file:init-emacs.org::#modules-sudoku][sudoku:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: sudoku
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: sudoku")
+
+(use-package sudoku
+  :straight (sudoku :type git :host github :repo "zevlg/sudoku.el")
+  :commands (sudoku))
+;; sudoku:1 ends here
+
+;; [[file:init-emacs.org::#packages-swiper][swiper:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: swiper
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Packages: swiper")
+
+(use-package swiper
+  :straight (swiper :type git :host github :repo "abo-abo/swiper")
+  :bind* ("C-'" . swiper))              ; default: `isearch-forward-regexp'
+;; swiper:1 ends here
+
+;; [[file:init-emacs.org::#modules-switch-window][switch-window:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: switch-window
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: switch-window")
+
+(use-package switch-window
+  :straight t
+  :demand t
+  :commands (switch-window switch-window-then-delete)
+  :custom
+  ;; use home keys to select windows
+  (switch-window-shortcut-style 'qwerty))
+;; switch-window:1 ends here
+
+;; [[file:init-emacs.org::#modules-telnet][telnet:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: telnet
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: telnet")
+
+(use-package telnet
+  :straight (:type built-in))
+;; telnet:1 ends here
+
+;; [[file:init-emacs.org::#modules-timeclock][timeclock:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: timeclock
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: timeclock")
+
+(use-package timeclock
+  :straight (:type built-in)
+  :bind (("C-c ti" . timeclock-in)
+         ("C-c to" . timeclock-out)
+         ("C-c tc" . timeclock-change)
+         ("C-c tr" . timeclock-reread-log)
+         ("C-c tu" . timeclock-update-mode-line)
+         ("C-c tw" . timeclock-when-to-leave-string)
+         ("C-c tv" . timeclock-visit-timelog)
+         ("C-c ts" . timeclock-status-string)
+         ("C-c td" . timeclock-mode-line-display)
+         ("C-c tg" . timeclock-generate-report))
+  ;;:init (timeclock-mode-line-display)
+  )
+;; timeclock:1 ends here
+
+;; [[file:init-emacs.org::#modules-time-stamp][time-stamp:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: time-stamp
+;;
+;; When there is a "Timestamp: <>" in the first 20 lines of a file,
+;; emacs will write the time-stamp there when saving the file.
+;; Timestamp is case insensitive and a dash is optional (e.g. Time-stamp).
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: time-stamp")
+
+(use-package time-stamp
+  :straight (:type built-in)
+  :commands (time-stamp)
+  :custom (time-stamp-active t)
+  :init
+  (setq time-stamp-line-limit 20
+        time-stamp-start "[Tt][Ii][Mm][Ee][-]?[Ss][Tt][Aa][Mm][Pp]:[ \t]+\\\\?[\"<]+"
+        time-stamp-format "%Y-%02m-%02d %02H:%02M (%u)")
+  (add-hook 'before-save-hook #'time-stamp))
+;; time-stamp:1 ends here
+
+;; [[file:init-emacs.org::#modules-tramp][tramp:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: tramp
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: tramp")
+
+(use-package tramp
+  :straight (:type built-in)
+  :commands (tramp)
+  :custom
+  (tramp-default-method "ssh")
+  :config
+  (add-to-list 'tramp-default-method-alist '("^localhost$" "^root$" "su") t))
+
+;;------------------------------------------------------------------------------
+;;; Find File as Root
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Find File as Root")
+
+(use-package tramp
+  :straight (:type built-in)
+  :commands (find-alternative-file-as-root
+             find-file-as-root
+             find-file-as-root-or-find-alternative-file-as-root
+             tramp
+             tramp-dissect-file-name
+             tramp-file-name-localname
+             tramp-tramp-file-p)
+  :bind ("C-c M-r" . find-alternative-file-as-root)
+  :config
+  (defvar find-file-as-root-prefix "/sudo:root@localhost:"
+    "*The file name prefix used to open a file with `find-file-as-root'.")
+
+  (defvar find-file-as-root-history nil
+    "History list for files found using `find-file-as-root'.")
+
+  (defvar find-file-as-root-hook nil
+    "Normal hook for functions to run after finding files with `find-file-as-root'.")
+
+  (defun find-file-as-root ()
+    "*Open a file as the root user.
+
+Prepends `find-file-as-root-prefix' to the selected file name so
+that it maybe accessed via the corresponding tramp method."
+    (interactive)
+    (require 'tramp)
+    ;; bind the variable `file-name-history' locally so there is a separate
+    ;; history list for files found using `find-file-as-root'
+    (let* ((file-name-history find-file-as-root-history)
+           (name (or buffer-file-name default-directory))
+           (tramp (and (tramp-tramp-file-p name) (tramp-dissect-file-name name)))
+           path dir file)
+      ;; when called from a file opened with tramp, fix up the path
+      (when tramp
+        (setq path (tramp-file-name-localname tramp)
+              dir (file-name-directory path)))
+      ;; ask for file name
+      (when (setq file (read-file-name "Find file as root: " dir path))
+        (find-file (concat find-file-as-root-prefix file))
+        ;; if this all succeeded, save our new history list
+        (setq find-file-as-root-history file-name-history)
+        ;; allow some user customization
+        (run-hooks 'find-file-as-root-hook))))
+
+  (defun find-alternative-file-as-root ()
+    "Find alternative file as root."
+    (interactive)
+    (when buffer-file-name
+      (find-alternate-file
+       (concat "/sudo:root@localhost:"
+               buffer-file-name))))
+
+  (defun find-file-as-root-or-find-alternative-file-as-root ()
+    "If current buffer is read-only, run `file-alternative-file-as-root',
+otherwise run `find-file-as-root'."
+    (interactive)
+    (if buffer-read-only
+        (find-alternative-file-as-root)
+      (find-file-as-root))))
+;; tramp:1 ends here
+
+;; [[file:init-emacs.org::#modules-undo-tree][undo-tree:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: undo-tree
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: undo-tree")
+
+(use-package undo-tree
+  :straight (undo-tree :type git :host github :repo "apchamberlain/undo-tree.el")
+  :demand t
+  :diminish undo-tree-mode
+  :bind* (("<M-mouse-5>" . undo-tree-redo)
+          ("<M-mouse-4>" . undo-tree-undo))
+  :init
+  ;; turn on undo-tree globally
+  (global-undo-tree-mode 1))
+;; undo-tree:1 ends here
+
+;; [[file:init-emacs.org::#modules-vimish-fold][vimish-fold:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: vimish-fold
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: vimish-fold")
+
+(use-package vimish-fold
+  :straight t)
+;; vimish-fold:1 ends here
+
+;; [[file:init-emacs.org::#modules-w3m][w3m:2]]
+;;------------------------------------------------------------------------------
+;;; Modules: w3m
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: w3m")
+
+(use-package w3m
+  :when (executable-find "w3m") ; only use if binary is available on system
+  :straight t
+  :commands (w3m
+             w3m-antenna
+             w3m-browse-url
+             w3m-encode-specials-string
+             w3m-find-file
+             w3m-namazu
+             w3m-next-buffer
+             w3m-previous-buffer
+             w3m-region
+             w3m-search
+             w3m-weather)
+  :defines (w3m-use-tab-line)
+  :bind (:map w3m-mode-map
+              ("," . w3m-previous-buffer)
+              ("." . w3m-next-buffer))
+  :custom
+  ;; directory of icon files
+  (w3m-icon-directory "/usr/share/emacs-w3m/icon")
+  ;; turn on cookies
+  (w3m-use-cookies t)
+  :config
+  ;; add new functionality not in this version
+  (defun w3m-buffer (&optional buffer)
+    "Render the current buffer or BUFFER if given."
+    (interactive)
+    (when buffer
+      (switch-to-buffer buffer))
+    (w3m-region (point-min) (point-max)))
+
+  (defun custom-w3m-display-hook (url)
+    "Hook to auto-rename buffers to page title or url."
+    (rename-buffer
+     (format "*w3m: %s*" (or w3m-current-title w3m-current-url)) t))
+  (add-hook 'w3m-display-hook #'custom-w3m-display-hook))
+
+;; ;;------------------------------------------------------------------------------
+;; ;;;; Modules: w3m-session
+;; ;;------------------------------------------------------------------------------
+
+;; (init-message 3 "w3m-session")
+
+;; ;; persistent sessions
+;; (use-package w3m-session
+;;   :when (executable-find "w3m") ; only use if w3m command is available on system
+;;   :straight t
+;;   :after (w3m)
+;;   :commands (w3m-session-load
+;;              w3m-session-load-always
+;;              w3m-session-save
+;;              w3m-session-save-always)
+;;   :bind (:map w3m-mode-map
+;;               ("S" . w3m-session-save)
+;;               ("L" . w3m-session-load))
+;;   ;;:config
+;;   ;;(setq w3m-session-file "~/.w3m-session")
+;;   ;;(setq w3m-session-save-always nil)
+;;   ;;(setq w3m-session-load-always nil)
+;;   ;;(setq w3m-session-show-titles t)
+;;   ;;(setq w3m-session-duplicate-tabs 'ask) ; 'never, 'always, 'ask
+;;   )
+;; w3m:2 ends here
+
+;; [[file:init-emacs.org::#modules-web-query][web-query:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: web-query
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: web-query")
+
+(use-package web-query
+  ;; :when (executable-find "w3m")
+  ;; :after (w3m)
+  :load-path (lambda () (file-truename (expand-file-name "web-query.el" local-modules-dir)))
+  :commands (web-query
+             web-query-word
+             web-query-word-at-point
+             web-query-symbol-by-mode
+             web-query-symbol-by-mode-at-point)
+  :bind (;;("S-<f5>" . web-query-word-at-point)
+         ("S-<f6>" . web-query)
+         ("S-<f7>" . web-query-symbol-by-mode-at-point)
+         ("C-c w" . web-query)))
+;; web-query:1 ends here
+
+;; [[file:init-emacs.org::#modules-webjump][webjump:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: webjump
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: webjump")
+
+(use-package webjump
+  :straight (:type built-in)
+  ;;:bind* ("C-x j" . webjump)
+  :config
+  ;; add some sites
+  (add-to-list 'webjump-sites '("Urban Dictionary" . [simple-query "www.urbandictionary.com" "http://www.urbandictionary.com/define.php?term=" ""]) t))
+;; webjump:1 ends here
+
+;; [[file:init-emacs.org::#modules-weblogger][weblogger:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: weblogger
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: weblogger")
+
+(use-package weblogger
+  :straight t
+  :commands (weblogger-select-configuration
+             weblogger-setup-weblog
+             weblogger-start-entry)
+  :custom
+  ;; add weblog sites
+  (weblogger-config-alist
+   `(("nullman" "http://www.blogger.com/api" ,user-mail-address "" "6007591")
+     ("Nullman on Life" "http://www2.blogger.com/api" ,user-mail-address "" "6007591"))))
+;; weblogger:1 ends here
+
+;; [[file:init-emacs.org::#modules-wgrep][wgrep:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: wgrep
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: wgrep")
+
+(use-package wgrep
+  :straight t
+  :bind (:map grep-mode-map
+              ("C-x C-q" . wgrep-change-to-wgrep-mode))) ; same keybinding as `wdired-mode'
+;; wgrep:1 ends here
+
+;; [[file:init-emacs.org::#modules-which-key][which-key:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: which-key
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: which-key")
+
+(use-package which-key
+  :straight t
+  :demand t
+  :init (which-key-mode))
+;; which-key:1 ends here
+
+;; [[file:init-emacs.org::#modules-wtf][wtf:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: wtf
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: wtf")
+
+(use-package wtf
+  :load-path (lambda () (file-truename (expand-file-name "wtf.el" emacs-modules-dir)))
+  :commands (wtf-is wtf-get-term-at-point))
+;; wtf:1 ends here
+
+;; [[file:init-emacs.org::#modules-wttrin][wttrin:1]]
+;;------------------------------------------------------------------------------
+;;; Modules: wttrin
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: wttrin")
+
+(use-package wttrin
+  :straight t
+  :custom
+  ;; default cities
+  (wttrin-default-cities '("Austin"
+                           "London"
+                           "Minneapolis"
+                           "New York"
+                           "San Diego"))
+  ;; default language
+  (wttrin-default-accept-language '("Accept-Language" . "en-US")))
+;; wttrin:1 ends here
+
+;; [[file:init-emacs.org::#lsp-mode][LSP Mode:1]]
+;;==============================================================================
+;;; LSP Mode
+;;==============================================================================
+
+(init-message 1 "LSP Mode")
+;; LSP Mode:1 ends here
+
+;; [[file:init-emacs.org::#eglot][eglot:1]]
+;;==============================================================================
+;;; eglot
+;;==============================================================================
+
+(init-message 1 "eglot")
+
+(use-package eglot
+  :straight t)
+;; eglot:1 ends here
+
+;; [[file:init-emacs.org::#modes][Modes:1]]
+;;==============================================================================
+;;; Modes
+;;==============================================================================
+
+(init-message 1 "Modes")
+;; Modes:1 ends here
+
+;; [[file:init-emacs.org::#modes-setup][Setup:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Setup
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Setup")
+
+;; turn off electric indent for all modes
+(setq-default electric-indent-inhibit t)
+
+;; turn off electric mode for all cc modes
+(setq-default c-electric-flag nil)
+;; Setup:1 ends here
+
+;; [[file:init-emacs.org::#modes-asm][ASM:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: ASM
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: ASM")
+
+(use-package asm-mode
+  :straight (:type built-in)
+  :mode ("\\.asm\\'" . asm-mode)
+  :config
+  (defun custom-asm-mode-hook ()
+    "Customizations for asm-mode."
+    ;; remove using ';' in place of M-; to insert a comment
+    (local-unset-key [asm-comment-char])
+
+    ;; ;; enable tabs
+    ;; (add-hook 'asm-mode-hook #'enable-tabs-8)
+
+    ;; ;; set tab indentation, width, and do not convert tabs to spaces
+    ;; (setq indent-tabs-mode t          ; insert tab characters
+    ;;       tab-width 8                 ; default tab width is four spaces
+    ;;       standard-indent 8           ; default margin-changing functions indent
+    ;;       tab-always-indent nil       ; tab key will insert a tab
+    ;;       tab-stop-list (number-sequence 8 180 8)) ; tab stops set to every 8 spaces
+
+    ;; ;; set tab indentation, width, and convert tabs to spaces
+    ;; (setq indent-tabs-mode nil        ; do not insert tab characters
+    ;;       tab-width 4                 ; default tab width is four spaces
+    ;;       standard-indent 4           ; default margin-changing functions indent
+    ;;       tab-always-indent complete  ; tab key will insert a tab
+    ;;       tab-stop-list (number-sequence 4 180 4)) ; tab stops set to every 4 spaces
+
+    ;; disable tabs
+    ;;(disable-tabs)
+
+    ;; (defun asm-calculate-indentation ()
+    ;;   (or
+    ;;    ;; Flush labels to the left margin.
+    ;;    (and (looking-at "\\(\\sw\\|\\s_\\)+:") 0)
+    ;;    ;; Same thing for `;;;' comments.
+    ;;    (and (looking-at "\\s<\\s<\\s<") 0)
+    ;;    ;; Simple `;' comments go to the comment-column.
+    ;;    (and (looking-at "\\s<\\(\\S<\\|\\'\\)") comment-column)
+    ;;    ;; The rest goes at the first tab stop.
+    ;;    (indent-next-tab-stop 0)))
+    )
+  (add-hook 'asm-mode-hook #'custom-asm-mode-hook))
+;; ASM:1 ends here
+
+;; [[file:init-emacs.org::#modes-brainfuck][Brainfuck:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Brainfuck
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Brainfuck")
+
+(use-package brainfuck
+  :load-path (lambda () (file-truename (expand-file-name "brainfuck.el" local-modules-dir)))
+  :mode ("\\.bf\\'" . brainfuck-mode))
+;; Brainfuck:1 ends here
+
+;; [[file:init-emacs.org::#modes-basic][BASIC:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: BASIC
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: BASIC")
+
+(use-package basic
+  :load-path (lambda () (file-truename (expand-file-name "basic.el" local-modules-dir)))
+  :mode ("\\.bas\\'" . basic-mode))
+;; BASIC:1 ends here
+
+;; [[file:init-emacs.org::#modes-c-mode][C Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: C Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: C Mode")
+
+(use-package cc-mode
+  :straight (:type built-in)
+  :demand t
+  :mode (("\\.c\\'" . c-mode)
+         ("\\.h\\'" . c-mode)
+         ("\\.ice\\'" . c-mode)
+         ("\\.cpp\\'" . c++-mode)
+         ("\\.hpp\\'" . c++-mode)
+         ("\\.c++\\'" . c++-mode)
+         ("\\.h++\\'" . c++-mode))
+  :commands (c-skip-comments-and-strings)
+  :config
+  ;; c style
+  (defvar custom-c-style
+    '((c-tab-always-indent . 'complete)
+      (c-basic-offset . 4)
+      (c-comment-only-line-offset . 0)
+      (c-hanging-braces-alist . ((substatement-open after)
+                                 (brace-list-open)))
+      (c-hanging-colons-alist . ((member-init-intro before)
+                                 (inher-intro)
+                                 (case-label after)
+                                 (label after)
+                                 (access-label after)))
+      (c-cleanup-list . (scope-operator
+                         empty-defun-braces
+                         defun-close-semi))
+      (c-offsets-alist . ((arglist-close . c-lineup-arglist)
+                          (substatement-open . 0)
+                          (substatement-label . 0)
+                          (label . 0)
+                          (case-label . +)
+                          (block-open . 0)
+                          (defun-block-intro . +)
+                          (statement-block-intro . +)
+                          (substatement . +)
+                          (knr-argdecl-intro . -)
+                          (inline-open . 0)
+                          (defun-block-intro . 4)))
+      (c-echo-syntactic-information-p . nil)))
+
+  (defun custom-c-mode-common-hook ()
+    "Customizations for `c-mode', `c++-mode', `objc-mode', `java-mode', and `idl-mode'."
+    ;; add my personal style and set it for the current buffer
+    (c-add-style "local" custom-c-style t)
+    ;;(c-set-style 'stroustrup)
+
+    ;; electric indention turned off
+    (when (fboundp 'c-toggle-electric-state)
+      (c-toggle-electric-state -1))
+
+    ;; auto-newline and hungry-delete turned off
+    (when (fboundp 'c-toggle-auto-hungry-state)
+      (c-toggle-auto-hungry-state -1))
+
+    ;; disable tabs
+    (disable-tabs)
+
+    ;; ;; key bindings for all supported languages
+    ;; ;; can put these in c-mode-base-map because c-mode-map, c++-mode-map,
+    ;; ;; objc-mode-map, java-mode-map, and idl-mode-map inherit from it
+    ;; (define-key c-mode-base-map (kbd "C-<return>") 'newline-and-indent)
+    ;; (define-key c-mode-base-map (kbd "C-c c") 'mode-compile)
+    ;; (define-key c-mode-base-map (kbd "C-c k") 'mode-compile-kill)
+    ;; (define-key c-mode-base-map (kbd "<f7>") 'mode-compile)
+
+    ;; ;; hide/show mode and keys
+    ;; (define-key c-mode-base-map (kbd "C-c <right>") 'hs-show-block)
+    ;; (define-key c-mode-base-map (kbd "C-c <left>") 'hs-hide-block)
+    ;; (define-key c-mode-base-map (kbd "C-c <up>") 'hs-hide-all)
+    ;; (define-key c-mode-base-map (kbd "C-c <down>") 'hs-show-all)
+    ;; (hs-minor-mode 1)
+
+    ;; ;; toggle between header files and code files
+    ;; (define-key c-mode-base-map (kbd "C-c o") 'ff-find-other-file)
+
+    ;; set default fill column for auto-fill mode and fill-paragraph
+    (setq fill-column 78)
+
+    ;; turn on auto-fill
+    ;;(turn-on-auto-fill)
+
+    ;; ;; turn off auto newlines
+    ;; (setq c-auto-newline nil)
+
+    ;; turn on flyspell
+    (when (boundp 'flyspell-prog-mode)
+      (flyspell-prog-mode))
+
+    ;; initialize eldoc
+    (when (boundp 'eldoc-mode)
+      (eldoc-mode 1))
+
+    ;; compilation settings
+    (setq compile-command "make -k"
+          compilation-window-height 10
+          compilation-ask-about-save nil
+          ;;compilation-scroll-output t
+          )
+
+    ;; (defun compile-internal--scroll ()
+    ;;   "Forces compile buffer to scroll."
+    ;;   (let* ((ob (current-buffer))
+    ;;          (obw (get-buffer-window ob t))
+    ;;          win)
+    ;;     (save-mark-and-excursion
+    ;;       (unless (and (setq win (get-buffer-window ad-return-value t))
+    ;;                    obw)
+    ;;         (select-window win)
+    ;;         (goto-char (point-max))
+    ;;         (select-window obw)))))
+    ;; ;; advise `compile-internal'
+    ;; (advice-add 'compile-internal :after #'compile-internal--scroll)
+
+    ;; turn on else minor mode
+    ;;(else-mode)
+    )
+  (add-hook 'c-mode-common-hook #'custom-c-mode-common-hook)
+
+  ;; remove trailing blanks
+  ;;(add-hook 'c-mode-hook #'install-remove-trailing-blanks)
+  ;;(add-hook 'c++-mode-hook #'install-remove-trailing-blanks)
+  ;;(add-hook 'c-mode-common-hook #'install-remove-trailing-blanks)
+
+  ;; remove tabs
+  ;;(add-hook 'c-mode-hook #'install-remove-tabs)
+  ;;(add-hook 'c++-mode-hook #'install-remove-tabs)
+  ;;(add-hook 'c-mode-common-hook #'install-remove-tabs)
+  )
+;; C Mode:1 ends here
+
+;; [[file:init-emacs.org::#modes-calendar][Calendar:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Calendar
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Calendar")
+
+(use-package calendar
+  :straight (:type built-in)
+  :bind* ("C-x c" . calendar)
+  :bind (:map calendar-mode-map
+              ;; scrolling keys
+              (">" . calendar-scroll-left)
+              ("<" . calendar-scroll-right)
+              ("C-x >" . calendar-scroll-left)
+              ("C-x <" . calendar-scroll-right))
+  :config
+  ;; turn off diary entries view when calendar is run
+  (setq calendar-view-diary-initially-flag nil)
+  ;; set number of diary days to show
+  (setq diary-number-of-entries 10)
+  ;; turn on calendar marks for diary entries
+  (setq mark-diary-entries-in-calendar t)
+  ;; turn on diary appointments
+  ;;(add-hook 'diary-hook #'appt-make-list)
+  ;; star current date
+  (setq calendar-today-visible-hook 'calendar-star-date)
+  ;; star today's date
+  (setq calendar-today-visible-hook 'calendar-mark-today)
+  ;; mark holidays
+  (setq calendar-mark-holidays-flag t))
+
+;;------------------------------------------------------------------------------
+;;;; calendar-remind
+;;------------------------------------------------------------------------------
+
+(init-message 3 "calendar-remind")
+
+(use-package calendar-remind
+  :load-path (lambda () (file-truename (expand-file-name "calendar-remind.el" local-modules-dir)))
+  :after (calendar)
+  :commands (calendar-remind-lookup
+             calendar-remind-visit
+             calendar-remind-visit-insert)
+  :bind (:map calendar-mode-map
+              ;; remind lookup
+              ("<return>" . calendar-remind-lookup)
+              ("r" . calendar-remind-lookup)
+              ;;("SPC" . calendar-remind-lookup)
+              ;; remind visit
+              ("v" . calendar-remind-visit)
+              ("V" . calendar-remind-visit-insert)))
+;; Calendar:1 ends here
+
+;; [[file:init-emacs.org::#modes-css-mode][CSS Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: CSS Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: CSS Mode")
+
+(use-package css-mode
+  :straight (:type built-in)
+  :mode (("\\.css\\'" . css-mode)
+         ("\\.scss\\'" . css-mode))
+  :custom (cssm-indent-function #'cssm-c-style-indenter))
+;; CSS Mode:1 ends here
+
+;; [[file:init-emacs.org::#modes-dired][Dired:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Dired
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Dired")
+
+(defun custom-dired-mode-hook ())
+
+(use-package dired
+  :straight (:type built-in)
+  ;;:after (dired-single)
+  :commands (dired dired-jump)
+  ;;:hook (dired-mode . custom-dired-mode-hook)
+  ;;:bind* ("C-x j" . dired-jump)
+  :bind (:map dired-mode-map
+              ("e" . wdired-change-to-wdired-mode)
+              ("C-c C-z f" . browse-url-of-dired-file))
+  :custom
+  ;; only prompt once for recursive deletes
+  (dired-recursive-deletes 'top)
+  ;; auto-revert buffer upon revisiting
+  (dired-auto-revert-buffer t)
+  ;; list directories first and remove unwanted fields
+  (dired-listing-switches "-alh --group-directories-first")
+  :config
+  ;; add extra file compression support
+  (setq dired-compress-files-alist
+        '(("\\.tar\\.bz2\\'" . "tar -cf - %i | bzip2 -c9 > %o")
+          ("\\.bz2\\'" . "bzip2 -c9 %i > %o")
+          ("\\.tar\\.xz\\'" . "tar -cf - %i | xz -c9 > %o")
+          ("\\.xz\\'" . "xz -c9 %i > %o")
+          ("\\.tar\\.zst\\'" . "tar -cf - %i | zstd -19 -o %o")
+          ("\\.zst\\'" . "zstd -19 %i -o %o")
+          ("\\.zip\\'" . "zip %o -r --filesync %i")))
+
+  (defun dired-move-to-top ()
+    (interactive)
+    (goto-char (point-min))
+    (dired-next-line 4))
+  (define-key dired-mode-map [remap beginning-of-buffer] 'dired-move-to-top)
+
+  (defun dired-move-to-bottom ()
+    (interactive)
+    (goto-char (point-max))
+    (dired-next-line -1))
+  (define-key dired-mode-map [remap end-of-buffer] 'dired-move-to-bottom))
+
+;;------------------------------------------------------------------------------
+;;;; dired-single
+;;------------------------------------------------------------------------------
+
+(init-message 3 "dired-single")
+
+;; make dired use a single buffer
+(use-package dired-single
+  :straight t
+  :commands (dired dired-jump)
+  :bind (:map dired-mode-map
+              ("<return>" . dired-single-buffer)
+              ("f" . dired-single-buffer)
+              ("^" . dired-single-buffer-up)
+              ("b" . dired-single-buffer-up)
+              ("<mouse-1>" . dired-single-buffer-mouse))
+  :init
+  (defun dired-single-buffer-up ()
+    (interactive)
+    (dired-single-buffer ".."))
+  :config
+  ;; advise `dired-single-buffer-mouse' to suppress errors
+  (advice-add 'dired-single-buffer-mouse :around #'advice--ignore-errors))
+
+;;------------------------------------------------------------------------------
+;;;; dired-open
+;;------------------------------------------------------------------------------
+
+(init-message 3 "dired-open")
+
+;; open files with external programs
+(use-package dired-open
+  :straight t
+  :custom
+  (dired-open-extensions
+   '(("png" . "display")
+     ("gif" . "display")
+     ("jpg" . "display")
+     ("jepg" . "display")
+     ("mpg" . "vlc")
+     ("mpeg" . "vlc")
+     ("avi" . "vlc")
+     ("mov" . "vlc"))))
+
+;;------------------------------------------------------------------------------
+;;;; dired-hide-dotfiles
+;;------------------------------------------------------------------------------
+
+(init-message 3 "dired-hide-dotfiles")
+
+(use-package dired-hide-dotfiles
+  :straight t
+  ;;:hook (dired-mode . dired-hide-dotfiles-mode)
+  :bind (:map dired-mode-map
+              ("H" . dired-hide-dotfiles-mode)))
+
+;; ;;------------------------------------------------------------------------------
+;; ;;;; all-the-icons-dired
+;; ;;------------------------------------------------------------------------------
+
+;; (init-message 3 "all-the-icons-dired")
+
+;; ;; add icons to file listings
+;; (use-package all-the-icons-dired
+;;   :straight t
+;;   :commands (dired dired-jump)
+;;   :hook (dired-mode . all-the-icons-dired-mode))
+;; Dired:1 ends here
+
+;; [[file:init-emacs.org::#modes-ediff][Ediff:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Ediff
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Ediff")
+
+(use-package ediff
+  :straight (:type built-in)
+  :config
+  ;; split windows horizontally
+  (setq ediff-split-window-function 'split-window-horizontally)
+
+  ;; only highlight current diff
+  (setq-default ediff-highlight-all-diffs nil)
+
+  ;; turn off whitespace checking
+  (setq ediff-diff-options "-w")
+
+  ;; place control window in same frame
+  (setq ediff-window-setup-function 'ediff-setup-windows-plain)
+
+  ;; place control window in separate frame
+  ;;(setq ediff-window-setup-function 'ediff-setup-windows-multiframe)
+
+  ;; highlight changes to characters rather than words
+  ;;(setq ediff-forward-word-function 'forward-char)
+  )
+;; Ediff:1 ends here
+
+;; [[file:init-emacs.org::#modes-erlang-mode][Erlang Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Erlang Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Erlang Mode")
+
+(use-package erlang
+  :straight t
+  :after (flyspell)
+  :mode ("\\.erl\\'" . erlang-mode)
+  :interpreter ("erlang" . erlang-mode)
+  :commands (erlang-start)
+  :init
+  (add-to-list 'exec-path "/usr/lib/erlang/bin" t)
+  (setq erlang-root-dir "/usr/lib/erlang"
+        erlang-electric-commands nil)
+
+  :config
+  (defun custom-erlang-hook ()
+    ;; turn on flyspell
+    (flyspell-prog-mode))
+  (add-hook 'erlang-hook #'custom-erlang-hook)
+
+  ;; remove trailing blanks
+  ;;(add-hook 'erlang-mode-hook #'install-remove-trailing-blanks)
+
+  ;; remove tabs
+  ;;(add-hook 'erlang-mode-hook #'install-remove-tabs)
+  )
+;; Erlang Mode:1 ends here
+
+;; [[file:init-emacs.org::#modes-fundamental-mode][Fundamental Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Fundamental Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Fundamental Mode")
+
+;; fundamental-mode
+
+;; remove trailing blanks
+;;(add-hook 'fundamental-mode-hook #'install-remove-trailing-blanks)
+
+;; remove tabs
+;;(add-hook 'fundamental-mode-hook #'install-remove-tabs)
+;; Fundamental Mode:1 ends here
+
+;; [[file:init-emacs.org::#modes-geiser-racket-scheme-repl][Geiser (Racket Scheme REPL):1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Geiser (Racket Scheme REPL)
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Geiser (Racket Scheme REPL)")
+
+(use-package geiser
+  :straight t
+  :commands (geiser-mode
+             run-geiser)
+  :init
+  ;; set default scheme program to racket
+  ;;(setq scheme-program-name "racket")
+  ;; set default scheme mode to geiser-mode
+  ;;(add-hook 'scheme-mode-hook #'geiser-mode)
+
+  :config
+  ;; ;; set default geiser implementation to racket
+  ;; (setq geiser-default-implementation 'racket)
+  ;; ;; set active implementations list to just racket
+  ;; (setq geiser-active-implementations '(racket))
+
+  ;; define `insert-char' functions to insert unicode chars
+  (defun geiser-insert-sigma ()
+    "Insert ∑ character."
+    (interactive "*")
+    ;;(insert-char ?Σ))
+    (insert-char ?∑))
+
+  (defun custom-geiser-mode-hook ()
+    ;; key bindings
+    (local-set-key (kbd "C-c \\") 'geiser-insert-lambda)
+    (local-set-key (kbd "C-c C-\\") 'geiser-insert-lambda)
+    (local-set-key (kbd "C-c s") 'geiser-insert-sigma)
+    (local-set-key (kbd "C-c C-s") 'geiser-insert-sigma))
+  (add-hook 'geiser-mode-hook #'custom-geiser-mode-hook)
+  (add-hook 'geiser-repl-mode-hook #'custom-geiser-mode-hook))
+
+(use-package geiser-racket
+  :straight t
+  :after (geiser)
+  :commands (run-racket)
+  :init
+  ;; set default scheme program to racket
+  ;;(setq scheme-program-name "racket")
+  ;; set default scheme mode to geiser-mode
+  ;;(add-hook 'scheme-mode-hook #'geiser-mode)
+
+  :config
+  ;; set default geiser implementation to racket
+  (setq geiser-default-implementation 'racket)
+  ;; set active implementations list to just racket
+  (setq geiser-active-implementations '(racket)))
+;; Geiser (Racket Scheme REPL):1 ends here
+
+;; [[file:init-emacs.org::#modes-gnu-plot][GNU Plot:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: GNU Plot
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: GNU Plot")
+
+(use-package gnuplot
+  :straight t
+  :mode ("\\.gp\\'" . gnuplot-mode)
+  :commands (gnuplot-mode gnuplot-make-buffer gnuplot-send-string-to-gnuplot))
+;; GNU Plot:1 ends here
+
+;; [[file:init-emacs.org::#modes-go-mode][+Go Mode+:1]]
+;; ;;------------------------------------------------------------------------------
+;; ;;; Modes: Go Mode
+;; ;;------------------------------------------------------------------------------
+
+;; (init-message 2 "Modes: Go Mode")
+
+;; (use-package go-mode
+;;   :straight (:type built-in)
+;;   :mode (("\\.go\\'" . go-mode))
+;;   :config (progn
+;;             (defun custom-go-mode-hook ()
+;;               ;; use goimports instead of gofmt
+;;               (setq gofmt-command "goimports")
+
+;;               ;; call gofmt before saving
+;;               (add-hook 'before-save-hook #'gofmt-before-save)
+
+;;               ;; customize compile command to run go build
+;;               (when (not (string-match "go" compile-command))
+;;                 (setq-local compile-command "go build -v && go test -v && go vet"))
+
+;;               ;; oracle
+;;               (load-file "${GOPATH}/src/golang.org/x/tools/cmd/oracle/oracle.el")
+
+;;               ;; key bindings
+;;               (local-set-key (kbd "M-.") 'godef-jump))
+;;             (add-hook 'go-mode-hook #'custom-go-mode-hook)))
+;; +Go Mode+:1 ends here
+
+;; [[file:init-emacs.org::#modes-graphviz-dot-mode][Graphviz Dot Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Graphviz Dot Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Graphviz Dot Mode")
+
+(use-package graphviz-dot-mode
+  :straight t
+  :mode (("\\.dot\\'" . graphviz-dot-mode)
+         ("\\.gv\\'" . graphviz-dot-mode))
+  :commands (graphviz-dot-mode))
+;; Graphviz Dot Mode:1 ends here
+
+;; [[file:init-emacs.org::#modes-ini-mode][INI Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: INI Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: INI Mode")
+
+(use-package ini-mode
+  :straight t
+  :mode ("\\.ini\\'" . ini-mode))
+;; INI Mode:1 ends here
+
+;; [[file:init-emacs.org::#modes-javascript-js2-mode][Javascript: js2 Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Javascript: js2 Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Javascript: js2 Mode")
+
+(use-package js2-mode
+  :straight t
+  :mode (("\\.js\\'" . js2-mode)
+         ("\\.gradle\\'" . js-mode))    ; use js-mode for gradle files
+  :interpreter ("node" . js2-mode)
+  :config
+  ;; set indent offset
+  (setq-local py-indent-offset custom-short-tab-width)
+
+  ;; turn on auto indent
+  (setq js2-auto-indent-p t
+        js2-cleanup-whitespace t
+        js2-enter-indents-newline t
+        js2-indent-on-enter-key t
+        js2-bounce-indent-p nil
+        js2-mirror-mode nil
+        js2-mode-escape-quotes nil)
+  ;;js2-electric-keys (quote nil))
+
+  ;; better imenu
+  (add-hook 'js2-mode-hook #'js2-imenu-extras-mode)
+  )
+
+;;------------------------------------------------------------------------------
+;;;; js2-refactor
+;;------------------------------------------------------------------------------
+
+(init-message 3 "js2-refactor")
+
+;; javascript refactoring library
+(use-package js2-refactor
+  :straight t
+  :after (js2-mode)
+  :bind (:map js2-mode-map
+              ("C-k" . js2r-kill)
+              ("M-." . nil))            ; unbind conflicting key
+  :config
+  ;; set prefix key
+  (js2r-add-keybindings-with-prefix "C-c C-r")
+
+  ;; load when `js2-mode' is active
+  (add-hook 'js2-mode-hook #'js2-refactor-mode))
+
+;;------------------------------------------------------------------------------
+;;;; xref-js2
+;;------------------------------------------------------------------------------
+
+(init-message 3 "xref-js2")
+
+;; jump to references and definitions
+(use-package xref-js2
+  :straight t
+  :after (js2-mode)
+  :config
+  ;; load when `js2-mode' is active
+  (defun js2-mode-hook--js2-refactor ()
+    (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t)
+    (add-hook 'js2-mode-hook #'js2-mode-hook--js2-refactor)))
+
+;;------------------------------------------------------------------------------
+;;;; js-comint
+;;------------------------------------------------------------------------------
+
+(init-message 3 "js-comint")
+
+;; javascript interpreter repl
+(use-package js-comint
+  :straight t
+  :after (js2-mode)
+  :commands (js-send-buffer
+             js-send-buffer-and-go
+             js-send-last-sexp
+             js-send-last-sexp-and-go
+             js-load-file-and-go)
+  :bind (:map js2-mode-map
+              ("C-c C-c" . js-eval-sexp-and-go)
+              ("C-x C-e" . js-send-last-sexp)
+              ("C-M-x" . js-eval-sexp-and-go)
+              ("C-c b" . js-send-buffer)
+              ("C-c C-b" . js-send-buffer-and-go)
+              ("C-c C-k" . js-send-buffer-and-go)
+              ("C-c l" . js-load-file-and-go))
+  :config
+  ;;(setq inferior-js-program-command "/usr/bin/java org.mozilla.javascript.tools.shell.Main")
+  ;;(setq inferior-js-program-command "/usr/bin/rhino")
+
+  ;; ;; key bindings
+  ;; (bind-keys :map js2-mode-map
+  ;;            ("C-c C-c" . js-eval-sexp-and-go)
+  ;;            ("C-x C-e" . js-send-last-sexp)
+  ;;            ("C-M-x" . js-eval-sexp-and-go)
+  ;;            ("C-c b" . js-send-buffer)
+  ;;            ("C-c C-b" . js-send-buffer-and-go)
+  ;;            ("C-c C-k" . js-send-buffer-and-go)
+  ;;            ("C-c l" . js-load-file-and-go))
+
+  (defun js-eval-sexp ()
+    "js-comint evaluate current sexp."
+    (interactive)
+    (save-mark-and-excursion
+      (end-of-defun)
+      (js-send-last-sexp)))
+
+  (defun js-eval-sexp-and-go ()
+    "js-comint evaluate current sexp and switch to js buffer."
+    (interactive)
+    (save-mark-and-excursion
+      (end-of-defun)
+      (js-send-last-sexp-and-go)))
+
+  (defun js2-mode-hook--js-comint ()
+    ;; (local-set-key (kbd "C-c C-c") 'js-eval-sexp-and-go)
+    ;; (local-set-key (kbd "C-x C-e") 'js-send-last-sexp)
+    ;; (local-set-key (kbd "C-M-x") 'js-eval-sexp-and-go)
+    ;; (local-set-key (kbd "C-c b") 'js-send-buffer)
+    ;; (local-set-key (kbd "C-c C-b") 'js-send-buffer-and-go)
+    ;; (local-set-key (kbd "C-c C-k") 'js-send-buffer-and-go)
+    ;; (local-set-key (kbd "C-c l") 'js-load-file-and-go)
+    ;; disable skewer-mode as it uses similar key bindings
+    (when (fboundp 'skewer-mode)
+      (skewer-mode -1)))
+  (add-hook 'js2-mode-hook #'js-mode-hook--js-comint))
+;; Javascript: js2 Mode:1 ends here
+
+;; [[file:init-emacs.org::#modes-json-mode][JSON Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: JSON Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: JSON Mode")
+
+(use-package json-mode
+  :straight t
+  :mode (("\\.json\\'" . js2-mode))
+  :config
+  ;; set indentation to four spaces
+  (setq json-encoding-default-indentation "    "
+        json-encoding-pretty-print t))
+;; JSON Mode:1 ends here
+
+;; [[file:init-emacs.org::#modes-ledger-mode][Ledger Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Ledger Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Ledger Mode")
+
+(use-package ledger-mode
+  :straight t
+  :functions (ledger-align-amounts)
+  :config
+  (defun custom-ledger-align-amounts ()
+    "Return `ledger-align-amounts' for entire buffer."
+    (save-mark-and-excursion
+      (goto-char (point-min))
+      (ledger-align-amounts 52)))
+
+  (defun custom-ledger-mode-hook ()
+    ;; align amounts on save
+    (make-local-variable 'before-save-hook)
+    (add-hook 'before-save-hook #'custom-ledger-align-amounts))
+  (add-hook 'ledger-mode-hook #'custom-ledger-mode-hook))
+;; Ledger Mode:1 ends here
+
+;; [[file:init-emacs.org::#modes-lisp-mode][Lisp Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Lisp Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Lisp Mode")
+
+(defun custom-lisp-mode-hook ()
+  ;; disable tabs
+  (disable-tabs)
+
+  ;; clear input method
+  ;;(set-input-method nil)
+
+  ;; set indent function for lisp-mode to `lisp-indent-function'
+  ;; (it defaults to `clisp-indent-function')
+  (when (equal major-mode 'lisp-mode)
+    (setq-local lisp-indent-function 'lisp-indent-function))
+
+  ;; add underscore and dash to word boundaries
+  (modify-syntax-entry ?_ "w" lisp-mode-syntax-table)
+  (modify-syntax-entry ?- "w" lisp-mode-syntax-table)
+
+  ;; define keys
+  (local-set-key (kbd "<return>") 'newline-and-indent)
+  (local-set-key (kbd "S-<tab>") 'lisp-complete-symbol)
+
+  ;; turn on flyspell
+  (flyspell-prog-mode)
+
+  ;; initialize eldoc
+  (eldoc-mode 1)
+
+  ;; ;; turn on abbreviation mode
+  ;; (abbrev-mode 1)
+
+  ;; turn on else minor mode
+  ;;(else-mode)
+
+  ;; ;; initialize elisp slime nav mode
+  ;; (when (fboundp 'elisp-slime-nav-mode)
+  ;;   (elisp-slime-nav-mode)
+  ;;   (when (fboundp 'diminish)
+  ;;     (with-eval-after-load "elisp-slime-nav"
+  ;;       (diminish 'elisp-slime-nav-mode))))
+
+  ;; ;; check parenthesis after file save
+  ;; (add-hook 'after-save-hook #'check-parens nil t)
+
+  ;; (use-package aggressive-indent
+  ;;   :straight (:type built-in)
+  ;;   :config (aggressive-indent-mode 1))
+
+  ;; set outline header regexp
+  (setq-local outline-regexp "\\(;; [*]\\{1,8\\} \\|;;[;]\\{1,8\\} \\)")
+  (setq-local outline-level 'lisp-outline-level))
+
+(use-package lisp-mode
+  :straight (:type built-in)
+  :after (flyspell eldoc info-look)
+  :commands (emacs-lisp-mode)
+  :functions (custom-lisp-mode-hook)
+  :mode (("\\.el\\'" . emacs-lisp-mode)
+         ("\\.lisp\\'" . lisp-mode)
+         ("\\.clisp\\'" . lisp-mode))
+  :hook ((emacs-lisp-mode . custom-lisp-mode-hook)
+         (lisp-mode . custom-lisp-mode-hook)
+         (common-lisp-mode . custom-lisp-mode-hook))
+  :config
+  ;; remove trailing blanks
+  ;;(add-hook 'emacs-lisp-mode-hook #'install-remove-trailing-blanks)
+  ;;(add-hook 'lisp-mode-hook #'install-remove-trailing-blanks)
+  ;;(add-hook 'common-lisp-mode-hook #'install-remove-trailing-blanks)
+
+  ;; remove tabs
+  ;;(add-hook 'emacs-lisp-mode-hook #'install-remove-tabs)
+  ;;(add-hook 'lisp-mode-hook #'install-remove-tabs)
+  ;;(add-hook 'common-lisp-mode-hook #'install-remove-tabs)
+  )
+;; Lisp Mode:1 ends here
+
+;; [[file:init-emacs.org::#modes-lua-mode][LUA Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: LUA Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: LUA Mode")
+
+(use-package lua-mode
+  :straight t
+  :mode (("\\.lua\\'" . lua-mode)))
+;; LUA Mode:1 ends here
+
+;; [[file:init-emacs.org::#modes-makefile-mode][Makefile Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Makefile Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Makefile Mode")
+
+(use-package make-mode
+  :straight (:type built-in)
+  :mode ("Makefile" . makefile-mode)
+  :config
+  (defun custom-makefile-mode-hook ()
+    ;; enable tabs
+    (enable-tabs))
+  (add-hook 'makefile-mode-hook #'custom-makefile-mode-hook))
+;; Makefile Mode:1 ends here
+
+;; [[file:init-emacs.org::#modes-markdown-mode][Markdown Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Markdown Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Markdown Mode")
+
+(use-package markdown-mode
+  :straight t
+  :after (org-table)
+  :mode (("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :functions (markdown-mode-fix-org-tables)
+  :config
+  ;; use org table mode for markdown tables
+  (add-hook 'markdown-mode-hook #'orgtbl-mode)
+
+  (defun markdown-mode-fix-org-tables ()
+    "Hook to fix org table format on save."
+    (save-mark-and-excursion
+      (save-match-data
+        (goto-char (point-min))
+        (while (search-forward "-+-" nil :noerror)
+          (replace-match "-|-")))))
+  (add-hook 'markdown-mode-hook
+            (lambda()
+              (add-hook 'before-save-hook #'markdown-mode-fix-org-tables nil 'make-it-local))))
+;; Markdown Mode:1 ends here
+
+;; [[file:init-emacs.org::#modes-perl-mode][Perl Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Perl Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Perl Mode")
+
+(use-package perl-mode
+  :straight (:type built-in)
+  :after (flyspell)
+  :mode (("\\.\\([pP][Llm]\\|al\\|t\\)\\'" . perl-mode)
+         ("perl" . perl-mode)
+         ("perl5" . perl-mode))
+  :interpreter ("miniperl" . perl-mode)
+  :config
+  (defun custom-perl-mode-hook ()
+    ;; configure some options
+    (setq perl-indent-level 4)
+    (setq perl-continued-statement-offset 0)
+
+    ;; turn on flyspell
+    (flyspell-prog-mode))
+  (add-hook 'perl-mode-hook #'custom-perl-mode-hook)
+
+  (defun perl-mode-maybe ()
+    "Determine if file is a perl script and switch to perl-mode if it is."
+    (interactive)
+    (save-mark-and-excursion
+      (save-match-data
+        (goto-char (point-min))
+        (when (or
+               (search-forward "#!/usr/bin/perl" (line-end-position) :noerror)
+               (search-forward "#!/usr/bin/env perl" (line-end-position) :noerror))
+          (perl-mode)))))
+
+  ;; run when a file is loaded
+  (add-hook 'find-file-hooks #'perl-mode-maybe)
+
+  ;; remove trailing blanks
+  ;;(add-hook 'perl-mode-hook #'install-remove-trailing-blanks)
+
+  ;; remove tabs
+  ;;(add-hook 'perl-mode-hook #'install-remove-tabs)
+  )
+;; Perl Mode:1 ends here
+
+;; [[file:init-emacs.org::#modes-plantuml-mode][PlantUML Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: PlantUML Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: PlantUML Mode")
+
+(use-package plantuml-mode
+  :straight t)
+;; PlantUML Mode:1 ends here
+
+;; [[file:init-emacs.org::#modes-python-mode][Python Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Python Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Python Mode")
+
+(use-package python-mode
+  :straight t
+  :after (company elpy)
+  :mode (("\\.py\\'" . python-mode)
+         ("\\.python\\'" . python-mode))
+  :commands (py--buffer-filename-remote-maybe)
+  :functions (custom-python-mode-hook)
+  :config
+  ;; turn off auto-indent so code pasting works
+  (setq py-python-command-args '("--no-autoindent" "--colors=Linux"))
+
+  ;; switch to interpreter after executing code
+  ;;(setq py-switch-buffers-on-execute-p t)
+
+  ;; split windows
+  ;;(setq py-split-windows-on-execute t)
+  (setq py-keep-windows-configuration 'force)
+
+  ;; try to automatically figure out indentation
+  (setq py-smart-indentation t)
+
+  ;; execute python in source code blocks on 'C-c C-c'
+  ;;(add-to-list 'org-ctrl-c-ctrl-c-hook #'org-babel-async-execute:python)
+
+  ;; increase recursion depth of auto-complete to prevent errors
+  (setq py-max-specpdl-size 999)
+
+  (defun custom-python-mode-hook ()
+    ;; override some default keybindings
+    (when (fboundp 'backward-delete-word)
+      (bind-keys* ("C-<backspace>" . backward-delete-word))) ; default: `py-hungry-delete-backwards'
+
+    ;; set indent offset
+    (setq-local py-indent-offset custom-short-tab-width)
+
+    ;; set outline header regexp
+    (setq-local outline-regexp " *\\(def \\|clas\\|#hea\\)")
+    ;;(hide-sublevels 1)
+
+    ;; remove python-shell-completion-at-point from completion-at-point-functions,
+    ;; if it is not defined
+    (when (and (not (fboundp 'python-shell-completion-at-point))
+               (memq 'python-shell-completion-at-point completion-at-point-functions))
+      (setq completion-at-point-functions
+            (remove 'python-shell-completion-at-point completion-at-point-functions)))
+    )
+  (add-hook 'python-mode-hook #'custom-python-mode-hook))
+
+;;------------------------------------------------------------------------------
+;;;; elpy
+;;------------------------------------------------------------------------------
+
+(use-package elpy
+  :straight t
+  :commands (elpy-enable
+             elpy-shell-switch-to-shell)
+  :config
+  ;; turn on elpy mode
+  (elpy-enable)
+
+  ;; hack to fix quote error issue
+  (setq elpy-eldoc-show-current-function nil)
+
+  ;; custom version of `elpy-shell-switch-to-shell' that opens shell in a split window
+  (defun elpy-shell-switch-to-shell ()
+    "Switch to inferior Python process buffer."
+    (interactive)
+    (setq elpy--shell-last-py-buffer (buffer-name))
+    (pop-to-buffer (process-buffer (elpy-shell-get-or-create-process)) t))
+
+  ;; enable flycheck
+  (when (fboundp 'flycheck-mode)
+    (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+    (add-hook 'elpy-mode-hook #'flycheck-mode)))
+
+;;------------------------------------------------------------------------------
+;;;; jedi
+;;------------------------------------------------------------------------------
+
+;; (init-message 3 "jedi")
+
+;; ;; python auto-completion
+;; (use-package jedi
+;;   :straight t
+;;   :after (python-mode)
+;;   :config
+;;   ;; ;; add jedi completions to auto-complete sources
+;;   ;; (add-to-list 'ac-sources 'ac-source-jedi-direct t)
+;;   ;; enable with python mode
+;;   (add-hook 'python-mode-hook #'jedi:setup))
+;; Python Mode:1 ends here
+
+;; [[file:init-emacs.org::#modes-racket-mode][Racket Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Racket Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Racket Mode")
+
+;; (use-package racket-mode
+;;   :straight t
+;;   :mode ("\\.rkt\\'" . racket-mode)
+;;   :interpreter ("racket" . racket-mode)
+;;   :commands (racket-mode
+;;              racket-repl)
+;;   :config
+;;   (defun custom-racket-mode-hook ()
+;;     ;; do not auto-complete on tab
+;;     (setq tab-always-indent t))
+;;   (add-hook 'racket-mode-hook #'custom-racket-mode-hook)
+
+;;   ;; turn on support for unicode input
+;;   (add-hook 'racket-mode-hook #'racket-unicode-input-method-enable)
+;;   (add-hook 'racket-repl-mode-hook #'racket-unicode-input-method-enable))
+
+(use-package scheme
+  :straight (:type built-in)
+  :after (geiser)
+  :mode ("\\.rkt\\'" . racket-mode)
+  :interpreter ("racket" . racket-mode)
+  :commands (racket-mode
+             scheme-mode)
+  :config
+  ;; create racket mode based on scheme mode
+  (define-derived-mode racket-mode scheme-mode "Scheme"
+    "Major mode for editing Racket Scheme code. Editing commands
+are similar to those of `lisp-mode'.
+
+In addition, if an inferior Racket Scheme process is running,
+some additional commands will be defined, for evaluating
+expressions and controlling the interpreter, and the state of the
+process will be displayed in the mode line of all Scheme buffers.
+The names of commands that interact with the Scheme process start
+with \"xscheme-\" if you use the MIT Scheme-specific `xscheme'
+package; for more information see the documentation for
+`xscheme-interaction-mode'. Use \\[run-scheme] to start an
+inferior Scheme using the more general `cmuscheme' package.
+
+Commands:
+
+  - Delete converts tabs to spaces as it moves back.
+  - Blank lines separate paragraphs.
+  - Semicolons start comments.
+
+\\{scheme-mode-map}"
+    ;; turn on geiser-mode
+    (when (fboundp 'geiser-mode)
+      (geiser-mode t)))
+
+  ;; ;; racket files should use racket-mode
+  ;; (add-to-list 'auto-mode-alist '("\\.rkt\\'" . racket-mode))
+  )
+;; Racket Mode:1 ends here
+
+;; [[file:init-emacs.org::#modes-ruby-mode][Ruby Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Ruby Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Ruby Mode")
+
+(use-package ruby-mode
+  :straight (:type built-in)
+  :after (flyspell)
+  :mode ("\\.rb\\'" . ruby-mode)
+  :config
+  (defun custom-ruby-mode-hook ()
+    ;; set indent level
+    ;;(setq ruby-indent-level 4)
+    (setq ruby-indent-level 2)
+
+    ;; define keys
+    (define-key ruby-mode-map (kbd "<return>") 'reindent-then-newline-and-indent)
+    ;; undefine electric keys
+    (define-key ruby-mode-map (kbd "{") 'self-insert-command)
+    (define-key ruby-mode-map (kbd "}") 'self-insert-command)
+
+    ;; turn on flyspell
+    (when (boundp 'flyspell-prog-mode)
+      (flyspell-prog-mode)))
+  (add-hook 'ruby-mode-hook #'custom-ruby-mode-hook :append)
+
+  ;; turn on flyspell
+  (flyspell-prog-mode)
+
+  ;; FIXME: No longer works
+  ;; (use-package flymake
+  ;;   :straight (:type built-in)
+  ;;   :config (progn
+  ;;             (defun flymake-ruby-init ()
+  ;;               (let* ((temp-file (flymake-init-create-temp-buffer-copy 'flymake-create-temp-inplace))
+  ;;                      (local-file (file-relative-name temp-file (file-name-directory buffer-file-name))))
+  ;;                 (list "ruby" (list "-c" local-file))))
+
+  ;;             (defun flymake-ruby-enable ()
+  ;;               (when (and buffer-file-name
+  ;;                          (file-writable-p (file-name-directory buffer-file-name))
+  ;;                          (file-writable-p buffer-file-name)
+  ;;                          (if (fboundp 'tramp-list-remote-buffers)
+  ;;                              (not (cl-subsetp (list (current-buffer)) (tramp-list-remote-buffers)))
+  ;;                            t))
+  ;;                 (local-set-key (kbd "C-c d") 'flymake-display-err-menu-for-current-line)
+  ;;                 (flymake-mode t)))
+
+  ;;             (add-to-list 'flymake-allowed-file-name-masks '(".+\\.rb\\'" flymake-ruby-init) t)
+  ;;             (add-to-list 'flymake-allowed-file-name-masks '("Rakefile\\'" flymake-ruby-init) t)
+  ;;             (add-to-list 'flymake-err-line-patterns '("^\\(.*\\):\\([0-9]+\\): \\(.*\\)$" 1 2 nil 3) t)
+  ;;             (add-hook 'ruby-mode-hook #'flymake-ruby-enable)))
+
+  ;; ;; turn on syntax highlighting (actually turns off syntax highlighting)
+  ;; (add-hook 'ruby-mode-hook #'turn-on-font-lock)
+
+  ;; ;; turn on abbreviation mode
+  ;; (abbrev-mode 1)
+
+  (defun ruby-mode-maybe ()
+    "Determine if file is a ruby script and switch to `ruby-mode' if it is."
+    (interactive)
+    (save-mark-and-excursion
+      (save-match-data
+        (goto-char (point-min))
+        (when (or
+               (search-forward "#!/usr/bin/ruby" (line-end-position) :noerror)
+               (search-forward "#!/usr/bin/env ruby" (line-end-position) :noerror))
+          (ruby-mode)))))
+
+  ;; run when a file is loaded
+  (add-hook 'find-file-hooks #'ruby-mode-maybe)
+
+  ;; remove trailing blanks
+  ;;(add-hook 'ruby-mode-hook #'install-remove-trailing-blanks)
+
+  ;; remove tabs
+  ;;(add-hook 'ruby-mode-hook #'install-remove-tabs)
+  )
+
+;;------------------------------------------------------------------------------
+;;;; robe
+;;------------------------------------------------------------------------------
+
+(init-message 3 "robe")
+
+;; code navigation, documentation lookup, and completion for ruby
+(use-package robe
+  :straight t
+  :after (ruby-mode)
+  :commands (robe-mode)
+  :config
+  (add-hook 'ruby-mode-hook #'robe-mode))
+
+;; ;;------------------------------------------------------------------------------
+;; ;;;; inf-ruby
+;; ;;------------------------------------------------------------------------------
+
+;; (init-message 3 "inf-ruby")
+
+;; (use-package inf-ruby
+;;   :straight t
+;;   :after (ruby-mode)
+;;   :interpreter ("ruby" . ruby-mode)
+;;   :commands (run-ruby inf-ruby-keys)
+;;   :config
+;;   (defun custom-ruby-mode-hook-inf-ruby-keys ()
+;;     (inf-ruby-keys))
+;;   (add-hook 'ruby-mode-hook #'custom-ruby-mode-hook-inf-ruby-keys)
+
+;;   ;; use ruby-robe with inf-ruby
+;;   (defadvice inf-ruby-console-auto (before activate-rvm-for-robe activate)
+;;     (rvm-activate-corresponding-ruby)))
+
+;; ;;------------------------------------------------------------------------------
+;; ;;;; ac-inf-ruby
+;; ;;------------------------------------------------------------------------------
+
+;; (init-message 3 "ac-inf-ruby")
+
+;; ;; auto-complete source for interactive ruby
+;; (use-package ac-inf-ruby
+;;   :straight t
+;;   :config
+;;   (add-to-list 'ac-modes 'inf-ruby-mode t)
+;;   (add-hook 'inf-ruby-mode-hook #'ac-inf-ruby-enable)
+;;   ;; ;; make TAB auto-complete
+;;   ;; (define-key inf-ruby-mode-map (kbd "TAB") 'auto-complete)
+;;   )
+;; Ruby Mode:1 ends here
+
+;; [[file:init-emacs.org::#modes-rust-mode][Rust Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Rust Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Rust Mode")
+
+(use-package rust-mode
+  :straight t
+  :after (flyspell)
+  :mode ("\\.rs\\'" . rust-mode)
+  :bind (:map rust-mode-map
+              ("C-c C-c" . rust-run)
+              ("C-c C-d" . rust-dbg-wrap-or-unwrap)
+              ("C-c C-f" . rust-format-buffer)
+              ("C-c C-n" . rust-goto-format-problem))
+  :custom (rustic-lsp-client nil)
+  :config
+  (defun custom-rust-mode-hook ()
+    ;; use spaces for tabs
+    (setq indent-tabs-mode nil)
+
+    ;; set indent level
+    (setq rust-indent-level 4)
+
+    ;; format code on save
+    (setq rust-format-on-save t)
+
+    ;; ;; define keys
+    ;; (define-key rust-mode-map (kbd "<return>") 'reindent-then-newline-and-indent)
+    ;; ;; undefine electric keys
+    ;; (define-key rust-mode-map (kbd "{") 'self-insert-command)
+    ;; (define-key rust-mode-map (kbd "}") 'self-insert-command)
+
+    ;; turn on flyspell
+    (when (boundp 'flyspell-prog-mode)
+      (flyspell-prog-mode)))
+  (add-hook 'rust-mode-hook #'custom-rust-mode-hook :append)
+
+  ;; turn on flyspell
+  (flyspell-prog-mode)
+
+  ;; FIXME: No longer works
+  ;; (use-package flymake
+  ;;   :straight (:type built-in)
+  ;;   :config (progn
+  ;;             (defun flymake-rust-init ()
+  ;;               (let* ((temp-file (flymake-init-create-temp-buffer-copy 'flymake-create-temp-inplace))
+  ;;                      (local-file (file-relative-name temp-file (file-name-directory buffer-file-name))))
+  ;;                 (list "rust" (list "-c" local-file))))
+
+  ;;             (defun flymake-rust-enable ()
+  ;;               (when (and buffer-file-name
+  ;;                          (file-writable-p (file-name-directory buffer-file-name))
+  ;;                          (file-writable-p buffer-file-name)
+  ;;                          (if (fboundp 'tramp-list-remote-buffers)
+  ;;                              (not (cl-subsetp (list (current-buffer)) (tramp-list-remote-buffers)))
+  ;;                            t))
+  ;;                 (local-set-key (kbd "C-c d") 'flymake-display-err-menu-for-current-line)
+  ;;                 (flymake-mode t)))
+
+  ;;             (add-to-list 'flymake-allowed-file-name-masks '(".+\\.rb\\'" flymake-rust-init) t)
+  ;;             (add-to-list 'flymake-allowed-file-name-masks '("Rakefile\\'" flymake-rust-init) t)
+  ;;             (add-to-list 'flymake-err-line-patterns '("^\\(.*\\):\\([0-9]+\\): \\(.*\\)$" 1 2 nil 3) t)
+  ;;             (add-hook 'rust-mode-hook #'flymake-rust-enable)))
+
+  ;; ;; turn on syntax highlighting (actually turns off syntax highlighting)
+  ;; (add-hook 'rust-mode-hook #'turn-on-font-lock)
+
+  ;; ;; turn on abbreviation mode
+  ;; (abbrev-mode 1)
+
+  (defun rust-mode-maybe ()
+    "Determine if file is a rust script and switch to `rust-mode' if it is."
+    (interactive)
+    (save-mark-and-excursion
+      (save-match-data
+        (goto-char (point-min))
+        (when (or
+               (search-forward "#!/usr/bin/rust" (line-end-position) :noerror)
+               (search-forward "#!/usr/bin/env rust" (line-end-position) :noerror))
+          (rust-mode)))))
+
+  ;; run when a file is loaded
+  (add-hook 'find-file-hooks #'rust-mode-maybe)
+
+  ;; remove trailing blanks
+  ;;(add-hook 'rust-mode-hook #'install-remove-trailing-blanks)
+
+  ;; remove tabs
+  ;;(add-hook 'rust-mode-hook #'install-remove-tabs)
+  )
+
+;;------------------------------------------------------------------------------
+;;;; Rustic
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Rustic")
+
+(use-package rustic
+  :straight t
+  :after (rust-mode))
+;; Rust Mode:1 ends here
+
+;; [[file:init-emacs.org::#modes-sh-script][SH Script:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: SH Script
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: SH Script")
+
+(use-package sh-script
+  :straight (:type built-in)
+  :mode (("\\.sh\\'" . sh-mode)
+         ("\\.shell\\'" . sh-mode)
+         ("\\.bash\\'" . sh-mode)
+         ;; use sh-mode for ldif and schema files
+         ("\\.ldif\\'" . sh-mode)
+         ("\\.schema\\'" . sh-mode)
+         ;; use sh-mode for remind files
+         ("\\.reminders\\'" . sh-mode)
+         ("^reminders_" . sh-mode))
+  :config
+  ;; disable tabs
+  (add-hook 'sh-mode-hook #'disable-tabs)
+
+  ;; make comment lines indent
+  (setq sh-indent-comment t)
+
+  (defun sh-mode-maybe ()
+    "Determine if file is a shell script and switch to sh-mode if it is."
+    (interactive)
+    (save-mark-and-excursion
+      (save-match-data
+        (goto-char (point-min))
+        (when (or
+               (search-forward "#!/bin/sh" (line-end-position) :noerror)
+               (search-forward "#!/bin/bash" (line-end-position) :noerror)
+               (search-forward "#!/bin/csh" (line-end-position) :noerror)
+               (search-forward "#!/bin/tsh" (line-end-position) :noerror)
+               (search-forward "#!/bin/zsh" (line-end-position) :noerror)
+               (search-forward "#!/usr/bin/env sh" (line-end-position) :noerror)
+               (search-forward "#!/usr/bin/env bash" (line-end-position) :noerror)
+               (search-forward "#!/usr/bin/env csh" (line-end-position) :noerror)
+               (search-forward "#!/usr/bin/env tsh" (line-end-position) :noerror)
+               (search-forward "#!/usr/bin/env zsh" (line-end-position) :noerror)
+               (search-forward "#=========" (line-end-position) :noerror)
+               (search-forward "#---------" (line-end-position) :noerror))
+          (sh-mode)))))
+
+  ;; run when a file is loaded
+  (add-hook 'find-file-hooks #'sh-mode-maybe)
+
+  ;; remove trailing blanks
+  ;;(add-hook 'sh-mode-hook #'install-remove-trailing-blanks)
+
+  ;; remove tabs
+  ;;(add-hook 'sh-mode-hook #'install-remove-tabs)
+  )
+;; SH Script:1 ends here
+
+;; [[file:init-emacs.org::#modes-shell-mode][Shell Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Shell Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Shell Mode")
+
+(use-package shell
+  :straight (:type built-in)
+  :commands (shell-mode)
+  :config
+  ;; disable tabs
+  (add-hook 'shell-mode-hook #'disable-tabs)
+
+  ;; set prompt to read only
+  (setq comint-prompt-read-only t)
+
+  ;; start a shell
+  ;;(shell)
+  )
+
+;;------------------------------------------------------------------------------
+;;;; ansi-color
+;;------------------------------------------------------------------------------
+
+(init-message 3 "ansi-color")
+
+(use-package ansi-color
+  :straight (:type built-in)
+  :after (shell)
+  :commands (ansi-color-for-comint-mode-on)
+  :config
+  (add-hook 'shell-mode-hook #'ansi-color-for-comint-mode-on))
+;; Shell Mode:1 ends here
+
+;; [[file:init-emacs.org::#modes-slime-mode-common-lisp][Slime Mode (Common Lisp):1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Slime Mode (Common Lisp)
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Slime Mode (Common Lisp)")
+
+;; superior lisp interaction mode for emacs
+;; if loading slime errors out because swank-loader.lisp is not found, do:
+;;   # cd /usr/share/emacs22/site-lisp/slime
+;;   # for i in $(ls -1 /usr/share/common-lisp/source/slime/) ; do ln -s /usr/share/common-lisp/source/slime/$i ; done
+(use-package slime
+  :straight t
+  ;; :load-path (;;(lambda () (file-truename (expand-file-name "slime" emacs-modules-dir)))
+  ;;             ;;(lambda () (file-truename (expand-file-name "slime/contrib" emacs-modules-dir)))
+  ;;             (lambda () (file-truename (expand-file-name "swank-clojure" emacs-modules-dir))))
+  :commands (slime-autoloads
+             slime
+             slime-eval-buffer
+             slime-eval-last-expression
+             slime-interactive-eval
+             slime-last-expression
+             slime-mode
+             slime-setup
+             clisp
+             clojure
+             swank-clojure-init
+             swank-clojure-slime-mode-hook
+             swank-clojure-cmd
+             swank-clojure-project)
+  :config
+  ;; clojure swank paths
+  (setq swank-clojure-jar-path (file-truename (expand-file-name "~/.clojure/clojure.jar"))
+        swank-clojure-binary (file-truename (expand-file-name "~/bin/clojure"))
+        swank-clojure-extra-classpaths
+        (list (file-truename (expand-file-name "~/.clojure/clojure.jar"))
+              (file-truename (expand-file-name "~/.clojure/jline.jar"))
+              (file-truename (expand-file-name "~/.clojure/clojure-contrib.jar"))))
+
+  ;; slime setup
+  (slime-setup)
+
+  ;; set lisp program to clisp
+  ;;(setq inferior-lisp-program "clisp -K full")
+
+  (defun slime-eval-sexp ()
+    "Slime evaluate current sexp."
+    (interactive)
+    (save-mark-and-excursion
+      (end-of-defun)
+      (slime-interactive-eval (slime-last-expression))))
+
+  ;; run slime setup (this does too much)
+  ;;(slime-setup)
+
+  ;; redefine `slime-lisp-mode-hook'
+  ;; set indent function for lisp-mode to `lisp-indent-function'
+  ;; (it defaults to `common-lisp-indent-function')
+  (defun slime-lisp-mode-hook ()
+    (slime-mode 1)
+    (setq-local lisp-indent-function 'lisp-indent-function))
+
+  ;; run custom version of slime setup to preserve lisp-indent-function
+  (defun custom-slime-lisp-mode-hook ()
+    ;; ;; set lisp program
+    ;; (setq inferior-lisp-program "clisp -K full")
+    ;; (setq inferior-lisp-program "clisp -K base")
+
+    ;; turn on slime mode
+    (slime-mode 1)
+
+    ;; typeout frame
+    ;;(add-hook 'slime-connected-hook #'slime-ensure-typeout-frame)
+    ;; highlight edits
+    ;;(add-hook 'slime-mode-hook #'slime-highlight-edits-mode)
+
+    ;; key bindings
+    (bind-keys :map slime-mode-map
+               ("C-c C-c" . slime-eval-sexp)
+               ("C-x C-e" . slime-eval-last-expression)
+               ("M-C-x" . slime-eval-sexp)
+               ("C-c C-k" . slime-eval-buffer))
+
+    ;; start inferior lisp job
+    ;;(unless (comint-check-proc "*inferior-lisp*")
+    ;;  (let ((buffer (current-buffer)))
+    ;;    (slime)
+    ;;    (switch-to-buffer buffer)))
+
+    ;; ;; auto connect to slime
+    ;; (unless (slime-connected-p)
+    ;;   (save-mark-and-excursion (slime)))
+    )
+  (add-hook 'lisp-mode-hook #'custom-slime-lisp-mode-hook)
+  (add-hook 'common-lisp-mode-hook #'custom-slime-lisp-mode-hook)
+  (add-hook 'clojure-mode-hook #'custom-slime-lisp-mode-hook)
+
+  ;; cldoc (common lisp info in minibuffer)
+  (autoload 'turn-on-cldoc-mode "cldoc" nil t)
+  (add-hook 'common-lisp-mode-hook #'turn-on-cldoc-mode)
+  ;; wait 3 seconds before showing minibuffer docs
+  (setq cldoc-idle-delay 3)
+
+  ;; ;; slime motd warnings
+  ;; (use-package slime-cl-pitfalls
+  ;;   :straight (:type built-in))
+
+  ;; add clisp to slime implementations
+  (add-to-list 'slime-lisp-implementations '(clisp ("/usr/bin/clisp" "-K" "base")) t)
+
+  (defun clisp ()
+    "Start Common Lisp in Slime."
+    (interactive)
+    (slime 'clisp))
+
+  ;; initialize clisp: quicklisp
+  ;; $ clisp --load quicklisp.lisp
+  ;; (quicklisp-quickstart:install)
+  ;; (ql:add-to-init-file)
+  ;; (ql:quickload 'restas)
+
+  ;; add sbcl to slime implementations
+  (add-to-list 'slime-lisp-implementations '(sbcl ("/usr/bin/sbcl")) t)
+
+  (defun sbcl ()
+    "Start Steel Bank Common Lisp in Slime."
+    (interactive)
+    (slime 'sbcl))
+
+  ;; initialize sbcl: quicklisp
+  ;; $ sbcl --load quicklisp.lisp
+  ;; (quicklisp-quickstart:install)
+  ;; (ql:add-to-init-file)
+  ;; (ql:quickload 'restas)
+
+  ;; add clojure to slime implementation
+  ;; (add-to-list 'slime-lisp-implementations
+  ;;              `(clojure (,(file-truename (expand-file-name "~/bin/clojure")))
+  ;;                        :init swank-clojure-init
+  ;;                        :coding-system utf-8-unix) t)
+  (add-to-list 'slime-lisp-implementations `(clojure ("/usr/bin/clojure")) t)
+
+  (defun clojure ()
+    "Start Clojure in Slime."
+    (interactive)
+    (slime 'clojure))
+
+  (defun custom-lisp-mode-hook-slime-mode ()
+    "Hook to load slime-mode when lisp-mode is loaded."
+    (slime-mode 1))
+  (add-hook 'lisp-mode-hook #'custom-lisp-mode-hook-slime-mode)
+  ;; (defun custom-inferior-lisp-mode-hook-inferior-slime-mode ()
+  ;;   (inferior-slime-mode 1))
+  ;; (add-hook 'inferior-lisp-mode-hook #'custom-inferior-lisp-mode-hook-inferior-slime-mode)
+  )
+
+;;------------------------------------------------------------------------------
+;;;; ac-slime
+;;------------------------------------------------------------------------------
+
+;; (init-message 3 "ac-slime")
+
+;; ;; auto-complete source for slime
+;; (use-package ac-slime
+;;   :straight t
+;;   :after (slime)
+;;   :config
+;;   (add-hook 'slime-mode-hook #'set-up-slime-ac)
+;;   (add-hook 'slime-repl-mode-hook #'set-up-slime-ac)
+;;   (add-to-list 'ac-modes 'slime-repl-mode t))
+
+;;------------------------------------------------------------------------------
+;;;; elisp-slime-nav-mode
+;;------------------------------------------------------------------------------
+
+(init-message 3 "elisp-slime-nav-mode")
+
+(use-package elisp-slime-nav
+  :straight t
+  :after (slime)
+  :diminish elisp-slime-nav-mode
+  :commands (elisp-slime-nav-mode)
+  :config (elisp-slime-nav-mode))
+;; Slime Mode (Common Lisp):1 ends here
+
+;; [[file:init-emacs.org::#modes-sql-mode][SQL Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: SQL Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: SQL Mode")
+
+(use-package sql
+  :straight (:type built-in)
+  :mode (("\\.sql\\'" . sql-mode)
+         ("\\.tbl\\'" . sql-mode)
+         ("\\.sp\\'" . sql-mode))
+  :hook (sql-interactive-mode . custom-sql-interactive-hook)
+  :config
+  ;; ;; turn on abbreviation mode
+  ;; (abbrev-mode 1)
+
+  ;; remove trailing blanks
+  ;;(add-hook 'sql-mode-hook #'install-remove-trailing-blanks)
+
+  ;; remove tabs
+  ;;(add-hook 'sql-mode-hook #'install-remove-tabs)
+
+  ;; remove prompt
+  (defun sql-remove-prompt (output)
+    "Remove prompt so output lines up correctly."
+    (save-mark-and-excursion
+      (let ((inhibit-read-only t))
+        (forward-line 0)
+        (while (and (not (bobp))
+                    (not (looking-at "^GO$")))
+          (while (re-search-forward (concat sql-prompt-regexp "[ \t]*") (point-at-eol) :noerror)
+            (replace-match ""))
+          (forward-line -1))))
+    output)
+
+  ;; custom hook
+  (defun custom-sql-interactive-hook ()
+    ;; turn off line wrapping
+    (toggle-truncate-lines 1)
+
+    ;; turn on sql history
+    (set (make-local-variable 'sql-input-ring-file-name)
+         (expand-file-name "history-sql" user-emacs-directory))
+
+    ;; remove prompt on output
+    (add-hook 'comint-preoutput-filter-functions #'sql-remove-prompt)))
+
+;;------------------------------------------------------------------------------
+;;;; sqlup-mode
+;;------------------------------------------------------------------------------
+
+(use-package sqlup-mode
+  :straight t
+  :after (sql)
+  :bind (:map sql-mode-map
+              ("C-c b" . sqlup-capitalize-keywords-in-buffer)
+              ("C-c r" . sqlup-capitalize-keywords-in-region))
+  :bind (:map sql-interactive-mode-map
+              ("C-c b" . sqlup-capitalize-keywords-in-buffer)
+              ("C-c r" . sqlup-capitalize-keywords-in-region))
+  :hook ((sql-mode . sqlup-mode)
+         (sql-interactive-mode . sqlup-mode)))
+
+;;------------------------------------------------------------------------------
+;;;; sql-transform
+;;------------------------------------------------------------------------------
+
+(use-package sql-transform
+  :straight t
+  :after (sql)
+  :bind (:map sql-mode-map
+              ("C-c s" . sql-to-select)
+              ("C-c i" . sql-to-insert)
+              ("C-c u" . sql-to-update)
+              ("C-c d" . sql-to-delete))
+  :bind (:map sql-interactive-mode-map
+              ("C-c s" . sql-to-select)
+              ("C-c i" . sql-to-insert)
+              ("C-c u" . sql-to-update)
+              ("C-c d" . sql-to-delete)))
+
+;; ;;------------------------------------------------------------------------------
+;; ;;;; mysql
+;; ;;------------------------------------------------------------------------------
+
+;; (init-message 3 "mysql")
+
+;; (use-package mysql
+;;   :straight t
+;;   :after (sql)
+;;   :config (setq sql-product 'mysql))
+;; SQL Mode:1 ends here
+
+;; [[file:init-emacs.org::#modes-text-mode][Text Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Text Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Text Mode")
+
+(use-package text-mode
+  :straight (:type built-in)
+  :after (flyspell)
+  :mode (("\\.txt\\'" . text-mode)
+         ("\\.text\\'" . text-mode)
+         ("\\'README\\'" . text-mode)
+         ("\\'INSTALL\\'" . text-mode)
+         ("\\'CHANGELOG\\'" . text-mode))
+  :config
+  (defun custom-text-mode-hook ()
+    ;; set tab
+    ;;(setq tab-width 4)
+    ;;(setq tab-stop-list (number-sequence 4 76 4))
+    (setq tab-width 8)
+    (setq tab-stop-list (number-sequence 8 76 8))
+    ;;(setq indent-tabs-mode t)           ; can insert TAB characters
+    ;;(bind-key "<tab>" 'indent-relative text-mode-map)
+
+    ;; set default fill column for auto-fill mode
+    (setq fill-column 78)
+
+    ;; turn on word wrap
+    (turn-on-auto-fill)
+
+    ;; add underscore and dash to word boundaries
+    (modify-syntax-entry ?_ "w" text-mode-syntax-table)
+    (modify-syntax-entry ?- "w" text-mode-syntax-table)
+
+    ;; turn on flyspell
+    (flyspell-mode 1)
+
+    ;; ;; turn on abbreviation mode
+    ;; (abbrev-mode 1)
+
+    ;; turn on pabbrev mode
+    ;;(pabbrev-mode)
+
+    ;; insert one space after a sentence
+    (setq sentence-end-double-space nil)
+
+    ;; insert one space after a colon
+    (setq colon-double-space nil)
+
+    ;; ;; insert two spaces after a sentence
+    ;; (setq sentence-end-double-space t)
+
+    ;; ;; insert two spaces after a colon
+    ;; (setq colon-double-space t)
+    )
+  (add-hook 'text-mode-hook #'custom-text-mode-hook)
+
+  ;; remove trailing blanks
+  ;;(add-hook 'text-mode-hook #'install-remove-trailing-blanks)
+
+  ;; remove tabs
+  ;;(add-hook 'text-mode-hook #'install-remove-tabs)
+  )
+;; Text Mode:1 ends here
+
+;; [[file:init-emacs.org::#modes-typescript-mode][TypeScript Mode:2]]
+;;------------------------------------------------------------------------------
+;;; Modes: TypeScript Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: TypeScript Mode")
+
+(use-package typescript-mode
+  :straight t
+  :mode ("\\.ts\\'" . typescript-mode)
+  :hook (typescript-mode . lsp-deferred)
+  :config
+  (setq typescript-indent-level 2))
+;; TypeScript Mode:2 ends here
+
+;; [[file:init-emacs.org::#modes-v-mode][V Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: V Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: V Mode")
+
+(use-package v-mode
+  :straight (v-mode
+             :type git :host github :repo "damon-kwok/v-mode"
+             :files ("tokens" "v-mode.el"))
+  :after (flyspell)
+  :mode ("\\.v?v\\.vsh\\'" . v-mode)
+  :bind (:map v-mode-map
+              ("C-c C-b" . v-project-build)
+              ("C-c C-c" . v-project-run)
+              ("C-c C-f" . v-format-buffer)
+              ("C-c C-f" . v-menu))
+  :config
+  (defun custom-v-mode-hook ()
+    ;; use spaces for tabs
+    (setq indent-tabs-mode nil)
+
+    ;; set indent level
+    ;;(setq v-indent-level 4)
+
+    ;; format code on save
+    ;;(setq v-format-on-save t)
+
+    ;; ;; define keys
+    ;; (define-key v-mode-map (kbd "<return>") 'reindent-then-newline-and-indent)
+    ;; ;; undefine electric keys
+    ;; (define-key v-mode-map (kbd "{") 'self-insert-command)
+    ;; (define-key v-mode-map (kbd "}") 'self-insert-command)
+
+    ;; turn on flyspell
+    (when (boundp 'flyspell-prog-mode)
+      (flyspell-prog-mode)))
+  (add-hook 'v-mode-hook #'custom-v-mode-hook :append)
+
+  ;; turn on flyspell
+  (flyspell-prog-mode)
+
+  ;; FIXME: No longer works
+  ;; (use-package flymake
+  ;;   :straight (:type built-in)
+  ;;   :config (progn
+  ;;             (defun flymake-v-init ()
+  ;;               (let* ((temp-file (flymake-init-create-temp-buffer-copy 'flymake-create-temp-inplace))
+  ;;                      (local-file (file-relative-name temp-file (file-name-directory buffer-file-name))))
+  ;;                 (list "v" (list "-c" local-file))))
+
+  ;;             (defun flymake-v-enable ()
+  ;;               (when (and buffer-file-name
+  ;;                          (file-writable-p (file-name-directory buffer-file-name))
+  ;;                          (file-writable-p buffer-file-name)
+  ;;                          (if (fboundp 'tramp-list-remote-buffers)
+  ;;                              (not (cl-subsetp (list (current-buffer)) (tramp-list-remote-buffers)))
+  ;;                            t))
+  ;;                 (local-set-key (kbd "C-c d") 'flymake-display-err-menu-for-current-line)
+  ;;                 (flymake-mode t)))
+
+  ;;             (add-to-list 'flymake-allowed-file-name-masks '(".+\\.rb\\'" flymake-v-init) t)
+  ;;             (add-to-list 'flymake-allowed-file-name-masks '("Rakefile\\'" flymake-v-init) t)
+  ;;             (add-to-list 'flymake-err-line-patterns '("^\\(.*\\):\\([0-9]+\\): \\(.*\\)$" 1 2 nil 3) t)
+  ;;             (add-hook 'v-mode-hook #'flymake-v-enable)))
+
+  ;; ;; turn on syntax highlighting (actually turns off syntax highlighting)
+  ;; (add-hook 'v-mode-hook #'turn-on-font-lock)
+
+  ;; ;; turn on abbreviation mode
+  ;; (abbrev-mode 1)
+
+  (defun v-mode-maybe ()
+    "Determine if file is a v script and switch to `v-mode' if it is."
+    (interactive)
+    (save-mark-and-excursion
+      (save-match-data
+        (goto-char (point-min))
+        (when (or
+               (search-forward "#!/usr/bin/v" (line-end-position) :noerror)
+               (search-forward "#!/usr/bin/env v" (line-end-position) :noerror))
+          (v-mode)))))
+
+  ;; run when a file is loaded
+  (add-hook 'find-file-hooks #'v-mode-maybe)
+
+  ;; remove trailing blanks
+  ;;(add-hook 'v-mode-hook #'install-remove-trailing-blanks)
+
+  ;; remove tabs
+  ;;(add-hook 'v-mode-hook #'install-remove-tabs)
+  )
+;; V Mode:1 ends here
+
+;; [[file:init-emacs.org::#modes-xml-mode][XML Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: XML Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: XML Mode")
+
+(use-package nxml-mode
+  :straight (:type built-in)
+  :after (flyspell)
+  :mode (("\\.dtd\\'" . nxml-mode)
+         ("\\.htm\\'" . nxml-mode)
+         ("\\.html\\'" . nxml-mode)
+         ("\\.rdf\\'" . nxml-mode)
+         ("\\.rhtml\\'" . nxml-mode)
+         ("\\.rss\\'" . nxml-mode)
+         ("\\.sgml\\'" . nxml-mode)
+         ("\\.svg\\'" . nxml-mode)
+         ("\\.xhtml\\'" . nxml-mode)
+         ("\\.xml\\'" . nxml-mode)
+         ("\\.xsd\\'" . nxml-mode)
+         ("\\.xsl\\'" . nxml-mode)
+         ("\\.tt\\'" . nxml-mode))
+  :config
+  ;; set magic modes
+  ;;(load "rng-auto")
+  ;;(unify-8859-on-decoding-mode)
+  (add-to-list 'magic-mode-alist '("<\\?xml " . nxml-mode) t)
+
+  (defun custom-nxml-mode-hook ()
+    ;; do not use `indent-relative' for tab indenting
+    (bind-key "<tab>" 'indent-for-tab-command nxml-mode-map)
+
+    ;; turn off auto-fill mode
+    (turn-off-auto-fill)
+
+    ;; turn on flyspell
+    (flyspell-prog-mode)
+
+    ;; turn on auto-completion
+    (setq nxml-slash-auto-complete-flag t)
+
+    ;; turn on org minor mode
+    ;; (when (string-match "\\.\\(x?html\\|php[34]?\\)\\'"
+    ;;                     (file-name-sans-versions buffer-file-name))
+    ;;   (custom-nxml-mode-org))
+    ;;(custom-nxml-mode-org)
+
+    ;; set outline header regexp
+    ;;(setq-local outline-regexp " *<[^/]")
+    (setq-local outline-regexp "\\s *<\\([h][1-6]\\|html\\|body\\|head\\)\\b")
+    ;;(hide-sublevels 1)
+    )
+  (add-hook 'nxml-mode-hook #'custom-nxml-mode-hook)
+
+  ;; (defun custom-nxml-mode-org ()
+  ;;   ;;(setq-local outline-regexp "\\s *<\\([h][1-6]\\|html\\|body\\|head\\)\\b")
+  ;;   (setq-local outline-regexp "\\s *<")
+  ;;   (setq-local outline-level 'custom-nxml-mode-outline-level)
+  ;;   (outline-minor-mode 1)
+  ;;   (hs-minor-mode 1))
+
+  ;; (defun custom-nxml-mode-outline-level ()
+  ;;   (save-mark-and-excursion
+  ;;     (save-match-data
+  ;;       (re-search-forward html-outline-level)
+  ;;       (let ((tag (buffer-substring (match-beginning 1) (match-end 1))))
+  ;;         (if (eq (length tag) 2)
+  ;;             (- (aref tag 1) ?0)
+  ;;           0)))))
+
+  ;; (add-to-list 'hs-special-modes-alist
+  ;;              '(nxml-mode
+  ;;                "<!--\\|<[^/>]>\\|<[^/][^>]*[^/]>"
+  ;;                ""
+  ;;                "<!--" ;; won't work on its own; uses syntax table
+  ;;                (lambda (arg) (custom-nxml-mode-forward-element))
+  ;;                nil) t)
+
+  ;; (defun custom-nxml-mode-forward-element ()
+  ;;   (let ((nxml-sexp-element-flag))
+  ;;     (setq nxml-sexp-element-flag (not (looking-at "<!--")))
+  ;;     (unless (looking-at outline-regexp)
+  ;;       (ignore-errors
+  ;;         (nxml-forward-balanced-item 1)))))
+
+  ;; remove trailing blanks
+  ;;(add-hook 'nxml-mode-hook #'install-remove-trailing-blanks)
+
+  ;; remove tabs
+  ;;(add-hook 'nxml-mode-hook #'install-remove-tabs)
+
+  ;; (use-package flymake
+  ;;   :straight (:type built-in)
+  ;;   :config (progn
+  ;;             (defun flymake-html-init ()
+  ;;               (let* ((temp-file (flymake-init-create-temp-buffer-copy 'flymake-create-temp-inplace))
+  ;;                      (local-file (file-relative-name temp-file (file-name-directory buffer-file-name))))
+  ;;                 (list "tidy" (list local-file))))
+
+  ;;             (add-to-list 'flymake-allowed-file-name-masks '("\\.html$\\|\\.ctp" flymake-html-init) t)
+  ;;             (add-to-list 'flymake-err-line-patterns '("line \\([0-9]+\\) column \\([0-9]+\\) - \\(Warning\\|Error\\): \\(.*\\)" nil 1 2 4) t)))
+
+  ;; derive xml-mode and html-mode from nxml-mode
+  (fset 'xml-mode 'nxml-mode)
+  (fset 'html-mode 'nxml-mode))
+;; XML Mode:1 ends here
+
+;; [[file:init-emacs.org::#menus][Menus:1]]
+;;==============================================================================
+;;; Menus
+;;==============================================================================
+
+(init-message 1 "Menus")
+;; Menus:1 ends here
+
+;; [[file:init-emacs.org::#menus-setup][Setup:1]]
+;;------------------------------------------------------------------------------
+;;; Menus: Setup
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Menus: Setup")
+;; Setup:1 ends here
+
+;; [[file:init-emacs.org::#menus-setup-easy-menu][Easy Menu:1]]
+;;------------------------------------------------------------------------------
+;;;; Menus: Setup: Easy Menu
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Menus: Setup: Easy Menu")
+
+;; easymenu
+(use-package easymenu
+  :straight (:type built-in))
+;; Easy Menu:1 ends here
+
+;; [[file:init-emacs.org::#menus-setup-auto-menu][Auto-Menu:1]]
+;;------------------------------------------------------------------------------
+;;;; Menus: Setup: Auto-Menu
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Menus: Setup: Auto-Menu")
+
+;; auto-menu
+(use-package auto-menu
+  :load-path (lambda () (file-truename (expand-file-name "auto-menu.el" local-modules-dir)))
+  :commands (auto-menu
+             auto-menu-dired
+             auto-menu-file
+             auto-menu-file-dir))
+;; Auto-Menu:1 ends here
+
+;; [[file:init-emacs.org::#menus-setup-find-or-browse-file][Find or Browse File:1]]
+;;------------------------------------------------------------------------------
+;;;; Menus: Setup: Find or Browse File
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Menus: Setup: Find or Browse File")
+
+(defun find-or-browse-file (file)
+  "Based on file type either open FILE or browse FILE."
+  (let ((file (file-truename (expand-file-name file))))
+    (if (string= (file-name-extension file) "html")
+        (browse-url (concat "file://" file))
+      (find-file file))))
+;; Find or Browse File:1 ends here
+
+;; [[file:init-emacs.org::#menus-buffer-switch-menu][Buffer-Switch Menu:1]]
+;;------------------------------------------------------------------------------
+;;; Menus: Buffer-Switch Menu
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Menus: Buffer-Switch Menu")
+
+;; buffer-switch menu
+(auto-menu
+ "Buffer-Switch"
+ `(("*scratch*" "(switch-to-buffer \"*scratch*\")" "Switch to '*scratch*' buffer.")
+   ("New *scratch*" "(switch-to-buffer (generate-new-buffer-name \"*scratch*\"))" "Create and switch to a '*scratch*' buffer.")
+   ("Current Mode *scratch*" "(switch-to-scratch-for-current-mode)" "Switch to '*scratch-MODE*' buffer.")
+   ("Emacs Lisp Mode *scratch*" "(new-emacs-lisp-scratch)" "Create and switch to '*scratch-emacs-lisp-mode*' buffer.")
+   ("*messages*" "(switch-to-buffer \"*Messages*\")" "Switch to '*Messages*' buffer.")))
+;; Buffer-Switch Menu:1 ends here
+
+;; [[file:init-emacs.org::#menus-dired-menu][Dired Menu:1]]
+;;------------------------------------------------------------------------------
+;;; Menus: Dired Menu
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Menus: Dired Menu")
+
+;; dired menu
+(auto-menu
+ "Dired"
+ ;;(append '(("recent" "context-dired" "Run `cdired' to list recent files.")) ; no longer installed
+ (auto-menu-dired `(("home" . "~/")
+                    ,(cons "emacs" emacs-home-dir)
+                    ;;,(cons "emacs-modules" (concat emacs-home-dir "/modules"))
+                    ;;,(cons "emacs-mode-abbrevs" (concat emacs-home-dir "/mode-abbrevs"))
+                    ;;,(cons "emacs-init" local-init-dir)
+                    ;;,(cons "emacs-modules" local-modules-dir)
+                    ;;,(cons "emacs-work-modules" local-work-modules-dir)
+                    ("config" . "~/config")
+                    ("config-private" . "~/config-private")
+                    ("bin" . "~/bin")
+                    ("org" . "~/org")
+                    ("web" . "~/web")
+                    ("web/org" . "~/web/org")
+                    ("public_html" . "~/public_html")
+                    ;;("plans" . "~/plans")
+                    ("reminders" . "~/reminders")
+                    ;;("wiki" . "~/wiki")
+                    ("doc" . "~/doc")
+                    ("bbs" . "~/doc/bbs")
+                    ("dev" . "~/dev")
+                    ("prj" . "~/prj")
+                    ("code" . "~/code")
+                    ("github" . "~/code/github-nullman")
+                    ("gitlab" . "~/code/gitlab-kylesherman")
+                    ("media" . "/home/data/media")
+                    ("music" . "/home/data/media/audio/Music")
+                    ("text" . "/home/data/media/text")
+                    ("softwre" . "/home/data/media/software")
+                    ("repos" . "/home/data/media/repos")
+                    ("Downloads" . "~/Downloads")
+                    ("Documents" . "~/Documents")
+                    ("clisp" . "~/dev/clisp")
+                    ;;("clojure" . "~/dev/clojure")
+                    ("racket" . "~/dev/racket")
+                    ("erlang" . "~/dev/erlang")
+                    ("basic" . "~/dev/basic")
+                    ("java" . "~/dev/java")
+                    ("javascript" . "~/dev/javascript")
+                    ("kotlin" . "~/dev/kotlin")
+                    ,(cons "emacs-help" (concat emacs-home-dir "/help")))))
+;;)
+;; Dired Menu:1 ends here
+
+;; [[file:init-emacs.org::#menus-load-menu][Load Menu:1]]
+;;------------------------------------------------------------------------------
+;;; Menus: Load Menu
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Menus: Load Menu")
+
+;; load menu
+(auto-menu
+ "Load"
+ `(("Restore Context" "context-restore" "Restore previous context save.")
+   ("Home Files..."
+    ,(auto-menu-file '((".alias" . "~/.alias")
+                       (".alias-local" . "~/.alias-local")
+                       (".alias-work" . "~/.alias-work")
+                       (".aspell.en.pws" . "~/.aspell.en.pws")
+                       (".bashrc" . "~/.bashrc")
+                       (".funct" . "~/.funct")
+                       (".funct-local" . "~/.funct-local")
+                       (".funct-work" . "~/.funct-work")
+                       (".gopherus.bookmarks" . "~/.gopherus.bookmarks")
+                       (".profile" . "~/.profile")
+                       (".profile-local" . "~/.profile-local")
+                       (".profile-work" . "~/.profile-work")
+                       (".profile_run" . "~/.profile_run")
+                       (".xbindkeysrc" . "~/.xbindkeysrc"))))
+   ("Emacs Initialization..."
+    ,(auto-menu-file `(("init-emacs.org" . ,(file-truename (expand-file-name "init-emacs.org" emacs-home-dir)))
+                       ("customization.el" . ,(file-truename (expand-file-name "customization.el" emacs-home-dir))))))
+   ;; ("Emacs Initialization..."
+   ;;  ,(auto-menu-file-dir local-init-dir "\\.el\\'" "find-file"))
+   ("Emacs Personal Modules..."
+    ,(auto-menu-file-dir local-modules-dir "\\.el\\'" "find-file" t))
+   ("Bin Files..."
+    ;;,(auto-menu-file-dir "~/bin" nil "find-file" t))
+    ,(auto-menu-file '(("get-emacs-modules" . "~/bin/get-emacs-modules"))))
+   ("Web Org Files..."
+    ,(auto-menu-file-dir "~/web/org" "\\.org\\'" "find-file" t))
+   ("Org Files..."
+    ,(cl-remove-if (lambda (x) (string-prefix-p "agenda-" (car x)))
+                   (auto-menu-file-dir "~/org" "\\.\\(org\\|org\\.cpt\\)\\'" "find-file" t)))
+   ("Agenda Files..."
+    ,(cl-remove-if (lambda (x) (not (string-prefix-p "agenda-" (car x))))
+                   (auto-menu-file-dir "~/org" "\\.\\(org\\|org\\.cpt\\)\\'" "find-file" t)))
+   ("Bookmarks" "load-bookmarks" "Load `~/lynx_bookmarks.html' file.")
+   ("Emacs Work Modules..."
+    ,(auto-menu-file-dir local-work-modules-dir "\\.el\\'" "find-file" t))
+   ("Clojure Files..."
+    ,(auto-menu-file-dir "~/dev/clojure" "\\.clj\\'" "find-file" t))
+   ("CLisp Files..."
+    ,(auto-menu-file-dir "~/dev/clisp" "\\.lisp\\'" "find-file" t))
+   ("Erlang Files..."
+    ,(auto-menu-file-dir "~/dev/erlang" "\\.erl\\'" "find-file" t))
+   ("BASIC Files..."
+    ,(auto-menu-file-dir "~/dev/basic" "\\.bas\\'" "find-file" t))
+   ("Javascript Files..."
+    ,(auto-menu-file-dir "~/dev/javascript" "\\.js\\'" "find-file" t))
+   ))
+;; Load Menu:1 ends here
+
+;; [[file:init-emacs.org::#menus-application-menu][Application Menu:1]]
+;;------------------------------------------------------------------------------
+;;; Menus: Application Menu
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Menus: Application Menu")
+
+;; applications menu
+(auto-menu
+ "Applications"
+ `(("Bookmarks" "load-bookmarks" "Load bookmarks.")
+   ("Calc" "calc" "Run Calc (The Emacs Calculator).")
+   ("Elfeed" "elfeed" "Run Elfeed (Emacs Atom/RSS feed reader).")
+   ("Elpher" "elpher" "Run Elpher (Emacs Gopher Client).")
+   ("ERC" "erc" "Run ERC (Emacs Internet Relay Chat client).")
+   ("Gnus" "gnus" "Run Gnus (Newsreader)")
+   ))
+
+;; (when (fboundp 'term-ansi)
+
+;;   (init-message 2 "Applications Menu")
+
+;;   ;; applications menu
+;;   (auto-menu
+;;    "Applications"
+;;    `(("ispell" "(term-ansi \"ispell\" \"ispell\" \"-a\")" "Run ispell spell checker.")
+;;      ("mutt" "(term-ansi \"mutt\" \"mutt\")" "Run mutt email client.")
+;;      ("pine" "(term-ansi \"pine\" \"pine\")" "Run pine email client.")
+;;      ("centerim" "(term-ansi \"centerim\" \"centerim\" \"-a\")" "Run centerim instant messaging client.")
+;;      ("tin" "(term-ansi \"tin\" \"tin\")" "Run tin news client.")
+;;      ("slrn" "(term-ansi \"slrn\" \"slrn\")" "Run slrn news client.")
+;;      ("irssi" "(term-ansi \"irssi\" \"irssi\")" "Run irssi irc client.")
+;;      ("snownews" "(term-ansi \"snownews\" \"snownews\")" "Run snownews rss client.")
+;;      ("lynx" "(term-ansi \"lynx\" \"lynx\" \"-book -useragent=\\\"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)\\\"\")" "Run lynx web browser.")
+;;      ("orpie" "(term-ansi \"orpie\" \"orpie\")" "Run orpie calculator.")
+;;      ("linuxtrade" "(term-ansi \"linuxtrade\" \"linuxtrade\")" "Run linuxtrade stock client.")
+;;      )))
+;; Application Menu:1 ends here
+
+;; [[file:init-emacs.org::#menus-run-file-menu][Run-File Menu:1]]
+;;------------------------------------------------------------------------------
+;;; Menus: Run-File Menu
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Menus: Run-File Menu")
+
+;; run-file menu
+(auto-menu
+ "Run-File"
+ `(("init.el" ,(concat "(safe-load \"" (file-truename (expand-file-name "init.el" emacs-home-dir)) "\")") "Run init.el to re-initialize Emacs.")
+   ;; ("Emacs Initialization..."
+   ;;  ,(auto-menu-file `(("init.el" ,(concat "(safe-load \"" (file-truename (expand-file-name "init.el" emacs-home-dir)) "\")") "Run init.el to re-initialize Emacs.")
+   ;;                     ("init-emacs.el" ,(concat "(safe-load \"" (file-truename (expand-file-name "init-emacs.el" emacs-home-dir)) "\")") "Run init-emacs.el to re-initialize Emacs."))))
+   ;; ("Emacs Initialization..."
+   ;;  ,(auto-menu-file-dir local-init-dir "\\.el\\'" "safe-load-compile"))
+   ("Emacs Personal Modules..."
+    ,(auto-menu-file-dir local-modules-dir "\\.el\\'" "safe-load-compile" t))
+   ("Clojure Files..."
+    ,(auto-menu-file-dir "~/dev/clojure" "\\.clj\\'" "slime-load-file" t))
+   ("CLisp Files..."
+    ,(auto-menu-file-dir "~/dev/clisp" "\\.lisp\\'" "slime-load-file" t))
+   ))
+;; Run-File Menu:1 ends here
+
+;; [[file:init-emacs.org::#menus-website-menu][Website Menu:1]]
+;;------------------------------------------------------------------------------
+;;; Menus: Website Menu
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Menus: Website Menu")
+
+;; website menu
+(auto-menu
+ "Website"
+ `(("Blog"
+    (("Blog Post" "org-website-blog-post-create" "Create a new blog post.")
+     ("Update Blog Post Timestamp" "org-website-blog-post-update-posted" "Update blog post timestamp.")))
+   ("Publish"
+    (("Publish" "org-website-publish-async" "Publish entire website.")
+     ("Force Publish" "(org-website-publish-async nil t)" "Force publish entire website.")
+     ("nullman" "(org-website-publish-async \"nullman\")" "Publish nullman website.")
+     ("nullman (Force)" "(org-website-publish-async \"nullman\" t)" "Force publish nullman website.")
+     ("nulldot" "(org-website-publish-async \"nulldot\")" "Publish nulldot website.")
+     ("nulldot (Force)" "(org-website-publish-async \"nulldot\" t)" "Force publish nulldot website.")
+     ("nullware" "(org-website-publish-async \"nullware\")" "Publish nullware website.")
+     ("nullware (Force)" "(org-website-publish-async \"nullware\" t)" "Force publish nullware website.")
+     ("kylesherman" "(org-website-publish-async \"kylesherman\")" "Publish kylesherman website.")
+     ("kylesherman (Force)" "(org-website-publish-async \"kylesherman\" t)" "Force publish kylesherman website.")
+     ("shermanwest" "(org-website-publish-async \"shermanwest\")" "Publish shermanwest website.")
+     ("shermanwest (Force)" "(org-website-publish-async \"shermanwest\" t)" "Force publish shermanwest website.")))
+   ("Tangle and Publish"
+    (("All" "org-website-tangle-publish-async" "Tangle and publish entire website.")
+     ("Force All" "(org-website-tangle-publish-async nil t)" "Force tangle and publish entire website asynchronously.")
+     ("nullman" "(org-website-tangle-publish-async \"nullman\")" "Tangle and publish nullman website.")
+     ("nullman (Force)" "(org-website-tangle-publish-async \"nullman\" t)" "Force tangle and publish nullman website.")
+     ("nulldot" "(org-website-tangle-publish-async \"nulldot\")" "Tangle and publish nulldot website.")
+     ("nulldot (Force)" "(org-website-tangle-publish-async \"nulldot\" t)" "Force tangle and publish nulldot website.")
+     ("nullware" "(org-website-tangle-publish-async \"nullware\")" "Tangle and publish nullware website.")
+     ("nullware (Force)" "(org-website-tangle-publish-async \"nullware\" t)" "Force tangle and publish nullware website.")
+     ("kylesherman" "(org-website-tangle-publish-async \"kylesherman\")" "Tangle and publish kylesherman website.")
+     ("kylesherman (Force)" "(org-website-tangle-publish-async \"kylesherman\" t)" "Force tangle and publish kylesherman website.")
+     ("shermanwest" "(org-website-tangle-publish-async \"shermanwest\")" "Tangle and publish shermanwest website.")
+     ("shermanwest (Force)" "(org-website-tangle-publish-async \"shermanwest\" t)" "Force tangle and publish shermanwest website.")))
+   ("Remote Synchronization"
+    (;;("Website to localhost" "org-website-rsync-to-localhost" "Rsync website to localhost server.")
+     ("Website to Morpheus" "org-website-rsync-to-morpheus-async" "Rsync website to morpheus server.")
+     ("Website to DigitalOcean" "org-website-rsync-to-digitalocean-async" "Rsync website to DigitalOcean server.")
+     ("Powerhouse to DigitalOcean" "(org-website-rsync-to-digitalocean-async \"powerhouse\")" "Rsync Powerhouse to DigitalOcean server.")
+     ("Bloodmoon to DigitalOcean" "(org-website-rsync-to-digitalocean-async \"bloodmoon\")" "Rsync Bloodmoon to DigitalOcean server.")))
+   ))
+;; Website Menu:1 ends here
+
+;; [[file:init-emacs.org::#menus-package-manager-menu][Package Manager Menu:1]]
+;;------------------------------------------------------------------------------
+;;; Menus: Package Manager Menu
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Menus: Package Manager Menu")
+
+;; package manager menu
+(auto-menu
+ "Package Manager"
+ `(("List Packages" "(package-list-packages :nofetch)" "List packages.")
+   ("List Packages (Refresh)" "package-list-packages" "List packages (after refresh).")
+   ("Install Package" "package-install" "Install package.")
+   ("Straight Refresh" "straight-pull-recipe-repositories" "Refresh recipe repositories.")
+   ("Straight Fetch All" "straight-fetch-all" "Fetch all packages.")
+   ;;("Auto-Remove Packages" "package-autoremove" "Remove packages that are no more needed.")
+   ;;("Quelpa Upgrade" "quelpa-upgrade" "Upgrade one Quelpa package.")
+   ;;("Quelpa Upgrade All" "quelpa-upgrade-all" "Upgrade all Quelpa packages.")
+   ;; ("Update Package List" "package-list-update" "Update `package-list' from currently installed packages.")
+   ;; ("Install Missing Packages" "package-list-install-missing" "Install all missing packages in `package-list'.")
+   ;; ("List Unaccounted Packages" "package-list-unaccounted-packages" "List installed ELPA packages that are not in `package-list'.")
+   ;;("Compile Packages" "(byte-recompile-directory emacs-package-dir 0)" "Byte-compile ELPA packages.")
+   ))
+;; Package Manager Menu:1 ends here
+
+;; [[file:init-emacs.org::#menus-miscellaneous-menu][Miscellaneous Menu:1]]
+;;------------------------------------------------------------------------------
+;;; Menus: Miscellaneous Menu
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Menus: Miscellaneous Menu")
+
+;; bbs directory
+(setq bbs-directory (file-truename (expand-file-name "~/doc/bbs")))
+
+;; miscellaneous menu
+(auto-menu
+ "Misc"
+ `(("Development"
+    (("Racket REPL" "run-racket" "Start Racket REPL for interactively evaluating Racket expressions.")
+     ("Kotlin REPL" "kotlin-repl" "Start Kotlin REPL for interactively evaluating Kotlin expressions.")
+     ("Common Lisp SLIME Mode" "(slime 'clisp)" "Start SLIME mode for interactively evaluating Common Lisp expressions.")
+     ("Steel Bank Common Lisp SLIME Mode" "(slime 'sbcl)" "Start SLIME mode for interactively evaluating Common Lisp expressions.")
+     ("Clojure SLIME Mode" "(slime 'clojure)" "Start SLIME mode for interactively evaluating Clojure expressions.")
+     ("Evaluate SLIME Buffer" "slime-eval-buffer" "Run `slime-eval-buffer' on the current buffer.")
+     ("Python REPL" "elpy-shell-switch-to-shell" "Start Python REPL for interactively evaluating Python expressions.")))
+   ("Reformat"
+    (("JSON Reformat" "json-pretty-print-buffer" "Reformat JSON in current buffer.")
+     ("XML Reformat" "xml-format" "Reformat XML in current buffer.")
+     ("Java Reformat" "java-pretty-print-buffer" "Reformat Java code in current buffer.")
+     ("Ruby Reformat" "ruby-pretty-print-buffer" "Reformat Ruby code in current buffer.")
+     ("C Reformat" "c-pretty-print-buffer" "Reformat C code in current buffer.")))
+   ("Command Log"
+    (("Command Log Mode ON" "command-log-mode-on" "Turn on ‘command-log-mode’ and open the log buffer.")
+     ("Command Log Mode OFF" "command-log-mode-off" "Turn off ‘command-log-mode’ and close the log buffer.")
+     ("Clear Command Log Buffer" "clm/command-log-clear" "Clear the command log buffer.")))
+   ("Edit"
+    (("Replacer Replacements Edit" "replacer-replacements-edit" "Edit `replacer-replacements'.")
+     ("Elfeed Boookmarks Edit" "elfeed-bookmarks-edit" "Edit Elfeeds bookmarks file.")
+     ("Elpher Bookmarks Edit" "elpher-bookmarks-edit" "Edit Elpher bookmarks file.")))
+   ("TAGS"
+    (("Visit Local TAGS" "(when (find-file-updir \"TAGS\") (visit-tags-table (find-file-updir \"TAGS\") t))" "Visit local tags table.")
+     ("Create Local TAGS" "etags-create" "Create local tags table.")))
+   ("Byte-Compile"
+    (("Generate `init-emacs.el'"
+      "(org-babel-generate-elisp-file (file-truename (expand-file-name \"init-emacs.org\" emacs-home-dir)))"
+      "Run `org-babel-generate-elisp-file' on init-emacs.org to produce init-emacs.el.")
+     ("Generate and Byte-Compile `init-emacs.el'"
+      "(org-babel-generate-elisp-file (file-truename (expand-file-name \"init-emacs.org\" emacs-home-dir)) t t)"
+      "Run `org-babel-generate-elisp-file' on init-emacs.org to produce init-emacs.el and init-emacs.elc.")
+     ,(list (concat "Compile Personal Modules Directory")
+            (concat "(compile-elisp \"" local-modules-dir "\")")
+            (concat "Byte-Compile `" local-modules-dir "' directory."))
+     ;; ,(list (concat "Compile Emacs Modules Directory")
+     ;;        (concat "(compile-elisp \"" emacs-modules-dir "\")")
+     ;;        (concat "Byte-Compile `" emacs-modules-dir "' directory."))
+     ))
+   ("Fonts"
+    (("Hack Nerd Font Mono-12" "(set-frame-font \"Hack Nerd Font Mono-12\" nil t)" "Call `set-frame-font` to set the font to 'Hack Nerd Font Mono-12'.")
+     ("Hack Nerd Font Mono-14" "(set-frame-font \"Hack Nerd Font Mono-14\" nil t)" "Call `set-frame-font` to set the font to 'Hack Nerd Font Mono-14'.")
+     ("BitstreamVeraSansMono Nerd Font Mono-12" "(set-frame-font \"BitstreamVeraSansMono Nerd Font Mono-12\" nil t)" "Call `set-frame-font` to set the font to 'BitstreamVeraSansMono Nerd Font Mono-12'.")
+     ("BitstreamVeraSansMono Nerd Font Mono-14" "(set-frame-font \"BitstreamVeraSansMono Nerd Font Mono-14\" nil t)" "Call `set-frame-font` to set the font to 'BitstreamVeraSansMono Nerd Font Mono-14'.")
+     ("DroidSansMono Nerd Font Mono-12" "(set-frame-font \"DroidSansMono Nerd Font Mono-12\" nil t)" "Call `set-frame-font` to set the font to 'DroidSansMono Nerd Font Mono-12'.")
+     ("DroidSansMono Nerd Font Mono-14" "(set-frame-font \"DroidSansMono Nerd Font Mono-14\" nil t)" "Call `set-frame-font` to set the font to 'DroidSansMono Nerd Font Mono-14'.")
+     ("9x15" "(set-frame-font \"9x15\" nil t)" "Call `set-frame-font` to set the font to '9x15'.")))
+   ("Coding System"
+    (("UNIX Coding System" "(set-coding-system 'unix)" "Call `set-coding-system' to set the coding system to UNIX.")
+     ("DOS Coding System" "(set-coding-system 'dos)" "Call `set-coding-system' to set the coding system to DOS.")
+     ("Mac Coding System" "(set-coding-system 'mac)" "Call `set-coding-system' to set the coding system to Mac.")))
+   ("BBS"
+    (("Level 29 BBS Fetch"
+      "(progn (find-file (file-truename (expand-file-name \"level-29-bbs.org\" bbs-directory))) (unless (fboundp 'l29-fetch-messages-new) (org-babel-execute-buffer)) (l29-fetch-messages-new))"
+      "Run `l29-fetch-messages-new' to fetch new messages from the Level 29 BBS into level-29-bbs.org.")
+     ("House of Lunduke BBS Fetch"
+      "(progn (find-file (file-truename (expand-file-name \"house-of-lunduke-bbs.org\" bbs-directory))) (unless (fboundp 'lunduke-fetch-messages-new) (org-babel-execute-buffer)) (lunduke-fetch-messages-new))"
+      "Run `lunduke-fetch-messages-new' to fetch new messages from the House of Lunduke BBS into house-of-lunduke-bbs.org.")))
+   ("Export"
+    (("Export Bookmarks to JSON" "(org-bookmarks-export-to-json \"~/org/bookmarks.org\" \"~/Desktop/bookmarks.json\")" "Export bookmarks.org to ~/Desktop/bookmarks.json.")
+     ("Export Bookmarks to HTML" "(org-bookmarks-export-to-html \"~/org/bookmarks.org\" \"~/Desktop/bookmarks.html\")" "Export bookmarks.org to ~/Desktop/bookmarks.html.")
+     ("Export Bookmarks to NYXT" "(org-bookmarks-export-to-nyxt \"~/org/bookmarks.org\" \"~/config/local/.local/share/nyxt/bookmarks.lisp\")" "Export bookmarks.org to ~/config/local/.local/share/nyxt/bookmarks.lisp.")))
+   ("Revert Buffer" "revert-buffer" "Run `revert-buffer' on current buffer.")
+   ("Debug On Error Mode [Toggle]" "toggle-debug-on-error" "Toggle `debug-on-error'.")
+   ("Truncate Line Mode [Toggle]" "toggle-truncate-lines" "Toggle `truncate-lines' in current buffer.")
+   ("Visual Line Mode [Toggle]" "visual-line-mode" "Toggle `visual-line-mode' in current buffer.")
+   ("Search Case Sensitivity [Toggle]" "toggle-case-fold-search" "Toggle case-fold-search in current buffer.")
+   ("Git Status" "(magit-status default-directory)" "Open Git Status buffer.")
+   ("Web Jump" "webjump" "Jump to a Web site from a programmable hotlist.")
+   ("IELM Mode" "ielm" "Open buffer for interactively evaluating Emacs Lisp expressions.")
+   ("Evaluate Buffer" "eval-buffer" "Run `eval-buffer' on the current buffer.")
+   ("Customize Group" "customize-group" "Run `customize-group' function.")
+   ("Regular Expression Builder" "regexp-builder" "Start Regular Expression Builder in current buffer.")
+   ("World Time" "display-time-world" "Display the time in various time zones.")
+   ("Colors Display" "list-colors-display" "List Emacs font colors.")
+   ("Faces Display" "list-faces-display" "List Emacs font faces.")
+   ("Restart Emacs Server" "server-start-maybe" "Restart Emacs server.")
+   ))
+;;("Tip of the Day" "totd" "Display a random emacs command.")
+;;("Visit Local TAGS" "(when (file-exists-p \"TAGS\") (visit-tags-table \"TAGS\" t))" "Visit local tags table.")
+;;("Visit Home TAGS" "(when (file-exists-p \"~/TAGS\") (visit-tags-table \"~/TAGS\"))" "Visit home tags table.")
+;;("MySQL" "sql-mysql" "Launch SQL-MySQL.")
+;;("MS-SQL" "sql-ms" "Launch SQL-MS.")
+;;("Common Lisp Doc Mode" "(add-hook 'lisp-mode-hook #'turn-on-cldoc-mode)" "Turn on auto docs in CLisp mode.")
+;; Miscellaneous Menu:1 ends here
+
+;; [[file:init-emacs.org::#menus-manuals-menu][Manuals Menu:1]]
+;;------------------------------------------------------------------------------
+;;; Menus: Manuals Menu
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Menus: Manuals Menu")
+
+;; manual menu
+(auto-menu
+ "Manuals"
+ `(("Help Files" ,(auto-menu-file-dir (concat emacs-home-dir "/help") ".*" "find-or-browse-file" t))
+   ("Man Pages" "woman" "Browse man pages.")
+   ("Emacs Manual" "(info \"emacs-24/emacs\")" "Open Emacs manual.")
+   ("Elisp Manual" "(info \"emacs-24/elisp\")" "Open Elisp manual.")
+   ("Org Mode Manual" "(info \"/usr/share/info/org.gz\")" "Open Org Mode manual.")
+   ("Screen Manual" "(info \"screen\")" "Open Screen manual.")
+   ("SED Manual" "(info \"sed\")" "Open SED manual.")
+   ("Grep Manual" "(info \"grep\")" "Open Grep pattern matching manual.")
+   ("DC Manual" "(info \"dc\")" "Open arbitrary precision RPN Desktop Calculator manual.")
+   ("Wget Manual" "(info \"wget\")" "Open Wget manual.")))
+;;("Help Files" ,(auto-menu-file-dir (concat emacs-home-dir "/help") ".*" "find-file" t))
+;; Manuals Menu:1 ends here
+
+;; [[file:init-emacs.org::#menus-web-menu][Web Menu:1]]
+;;------------------------------------------------------------------------------
+;;; Menus: Web Menu
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Menus: Web Menu")
+
+;; web menu
+(when (boundp 'web-query-list)
+  (auto-menu
+   "Web"
+   (mapcar (lambda (x)
+             (list (car x)
+                   (concat "(web-query \"" (car x) "\")")
+                   (concat "Query web for \\\"" (car x) "\\\".")))
+           web-query-list)))
+;; Web Menu:1 ends here
+
+;; [[file:init-emacs.org::#menus-insert-menu][Insert Menu:1]]
+;;------------------------------------------------------------------------------
+;;; Menus: Insert Menu
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Menus: Insert Menu")
+
+;; insert menu
+(auto-menu
+ "Insert"
+ '(("Org-Babel Inserts"
+    (("Name" "org-insert-literate-programming-name" "Insert #+NAME.")
+     ("Emacs Init Block" "org-insert-literate-programming-init-emacs-block" "Insert Emacs Init block.")
+     ("Code Block" "org-insert-literate-programming-code-block" "Insert Code block.")
+     ("Project Euler Block" "org-insert-literate-programming-project-euler-problem-block" "Insert Project Euler block.")
+     ("Source Block" "org-insert-literate-programming-src" "Insert #+BEGIN_SRC ... #+END_SRC block.")
+     ("Shell Block" "org-insert-literate-programming-src-sh" "Insert #+BEGIN_SRC sh ... #+END_SRC block.")
+     ("Emacs Lisp Source Block" "org-insert-literate-programming-src-emacs-lisp" "Insert #+BEGIN_SRC emacs-lisp ... #+END_SRC block.")
+     ("Racket Source Block" "org-insert-literate-programming-src-racket" "Insert #+BEGIN_SRC racket ... #+END_SRC block.")
+     ("Kotlin Source Block" "org-insert-literate-programming-src-kotlin" "Insert #+BEGIN_SRC kotlin ... #+END_SRC block.")))
+   ("Lisp Inserts"
+    (("Lisp Comment Block (Equal)" "insert-lisp-comment-block-equal" "Insert Lisp style comment block using equals.")
+     ("Lisp Comment Block (Dash)" "insert-lisp-comment-block-dash" "Insert Lisp style comment block using dashes.")))
+   ("C Inserts"
+    (("C Comment Block" "insert-c-comment-block" "Insert C/C++/Java style comment block.")
+     ("C Comment Stub" "insert-c-comment-stub" "Insert C/C++/Java style comment stub.")))
+   ("Date YYYY-MM-DD" "insert-date" "Insert date in YYYY-MM-DD format.")
+   ("Date/Time YYYY-MM-DD HH:MM:SS" "insert-datetime" "Insert date/time in YYYY-MM-DD HH:MM:SS format.")
+   ("Time HH:MM:SS" "insert-time" "Insert time in HH:MM:SS format.")
+   ("UUID" "insert-uuid" "Insert a UUID.")
+   ("GUID" "insert-guid" "Insert a GUID.")
+   ("Password" "insert-password-14" "Insert a random password (length 14).")
+   ("Password Phrase" "insert-password-phrase-three-hyphen" "Insert a random password phrase (three words, hyphenated).")
+   ("Figlet" "insert-figlet" "Insert figlet text.")
+   ("Equals" "append-equal-to-column-80" "Append `=' characters up to column 80.")
+   ("Dashes" "append-dash-to-column-80" "Append `-' characters up to column 80.")
+   ("Asterisks" "append-asterisk-to-column-80" "Append `*' characters up to column 80.")
+   ("XML Header" "insert-xml-header" "Insert XML header line.")
+   ("DB Change Log" "insert-db-change-log-template-line" "Insert template line for DB change log.")
+   ("DB Change Log Legacy" "insert-db-change-log-template-line-legacy" "Insert template line for legacy DB change log.")
+   ("Capture Table" "(table-capture (mark) (point) \"  \" \"\n\" 'left 20)" "Capture table from selected text.")
+   ("Apostrophe" "(insert \"’\")" "Insert a fancy apostrophe `’'.")
+   ("Lexical Binding" "insert-lexical-binding" "Insert elisp lexical binding header.")
+   ("TOC Header" "insert-toc-header" "Insert org-mode table of contents header.")
+   ))
+;; ("Muse"
+;;  ("Muse Header" "muse-header" "Insert Muse standard header line.")
+;;  ("Muse Blog Header" "muse-blog-header" "Insert Muse blog header line."))
+;; Insert Menu:1 ends here
+
+;; [[file:init-emacs.org::#menus-weather-menu][Weather Menu:1]]
+;;------------------------------------------------------------------------------
+;;; Menus: Weather Menu
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Menus: Weather Menu")
+
+;; weather menu
+(when (and (functionp 'wttrin-query)
+           (boundp 'wttrin-default-cities))
+  (auto-menu
+   "Weather"
+   (mapcar (lambda (x)
+             (list x
+                   (concat "(wttrin-query \"" x "\")")
+                   (concat "Show weather report for \\\"" x "\\\".")))
+           wttrin-default-cities)))
+;; Weather Menu:1 ends here
+
+;; [[file:init-emacs.org::#menus-games-menu][Games Menu:1]]
+;;------------------------------------------------------------------------------
+;;; Menus: Games Menu
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Menus: Games Menu")
+
+;; manual menu
+(auto-menu
+ "Games"
+ `(("5x5" "5x5" "Simple little puzzle game.")
+   ("Blackbox" "blackbox" "Blackbox is a game of hide and seek.")
+   ("Bubbles" "bubbles" "Remove all bubbles with as few moves as possible.")
+   ("Doctor" "doctor" "Psychological help for frustrated users.")
+   ("Dunnet" "dunnet" "Text adventure game.")
+   ("Gomoku" "gomoku" "Gomoku game between you and Emacs.")
+   ("Hanoi" "hanoi" "Towers of Hanoi diversion.")
+   ("Life" "life" "John Horton Conway's game of Life.")
+   ("Mpuz" "mpuz" "Multiplication puzzle.")
+   ("Pong" "pong" "Classical implementation of pong.")
+   ("Snake" "snake" "Implementation of the Snake game.")
+   ("Solitaire" "solitaire" "Game of solitaire.")
+   ("Tetris" "tetris" "Implementation of Tetris.")))
+;; Games Menu:1 ends here
+
+;;==============================================================================
+;;; Snippets
+;;==============================================================================
+
+(init-message 1 "Snippets")
+
+;;------------------------------------------------------------------------------
+;;; Snippets: Setup
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Snippets: Setup")
+
+(init-message 3 "yasnippet")
+
+(use-package yasnippet
+  :straight t
+  :diminish yas-minor-mode
+  :config
+  ;; turn on globally
+  (yas-global-mode 1)
+
+  ;; turn off yas-expand on tab (all three are needed it seems)
+  (define-key yas-minor-mode-map [(tab)] nil)
+  (define-key yas-minor-mode-map (kbd "TAB") nil)
+  (define-key yas-minor-mode-map (kbd "<tab>") nil)
+
+  ;; (defun flyspell-incorrect-hook--inhibbit-when-yasnippet-active (beg end corrections)
+  ;;   "Inhibbit flyspell mode as it interferes with yasnippet."
+  ;;   (and yas-active-field-overlay
+  ;;        (overlay-buffer yas-active-field-overlay)))
+  ;; (add-hook 'flyspell-incorrect-hook #'flyspell-incorrect-hook--inhibbit-when-yasnippet-active)))
+  )
+
+(init-message 3 "yasnippet-snippets")
+
+(use-package yasnippet-snippets
+  :straight t
+  :after (yasnippet))
+
+;;------------------------------------------------------------------------------
+;;; Snippets: Org-Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Snippets: Org-Mode")
+
+;; [[file:init-emacs.org::#hydras][Hydras:1]]
+;;==============================================================================
+;;; Hydras
+;;==============================================================================
+
+(init-message 1 "Hydras")
+;; Hydras:1 ends here
+
+;; [[file:init-emacs.org::#hydras-setup][Setup:1]]
+;;------------------------------------------------------------------------------
+;;; Hydras: Setup
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Hydras: Setup")
+
+(init-message 3 "hydra")
+
+;; hydra
+(use-package hydra
+  :straight t)
+;; Setup:1 ends here
+
+;; [[file:init-emacs.org::#windows-os][Windows OS:1]]
+;;==============================================================================
+;;; Windows OS
+;;==============================================================================
+
+(when window-system-windows
+  (init-message 1 "Windows OS")
+
+  ;; ;; turn on the menubar
+  ;;(menu-bar-mode t)
+
+  ;; ;; w32-feeling
+  ;; (use-package w32-feeling
+  ;;   :straight (:type built-in)
+  ;;   :config (w32-feeling-maximize-frame))
+
+  ;; set temp directories
+  (setenv "TEMP" "c:/windows/temp")
+  (setenv "TMP" "c:/windows/temp")
+
+  ;; ;; cua
+  ;; (cua-mode 1)           ; with C-x/c/v key bindings
+  ;; ;;(cua-selection-mode 1) ; without C-x/c/v key bindings
+  ;; (setq cua-delete-copy-to-register-0 t)
+  ;; ;; key bindings
+  ;; (bind-keys ("C-@" . cua-set-mark))
+
+  ;; ;; clipboard
+  ;; (setq select-enable-clipboard t
+  ;;       interprogram-paste-function 'x-cut-buffer-or-selection-value)
+  ;; (use-package pc-select
+  ;;   :straight (:type built-in)
+  ;;   :config (pc-selection-mode))
+
+  ;; ;; turn on timeclock display (since I'm at work if I'm using Windows)
+  ;; (timeclock-mode-line-display)
+
+  ;; set page-up and page-down keys (again)
+  (bind-keys ("<next>" . scroll-up-enhanced)
+             ("<prior>" . scroll-down-enhanced)))
+;; Windows OS:1 ends here
+
+;; [[file:init-emacs.org::#gnus][Gnus:1]]
+;;==============================================================================
+;;; Gnus
+;;==============================================================================
+
+(init-message 1 "Gnus")
+
+;; gnus (newsreader)
+(use-package gnus
+  :straight (:type built-in)
+  :defines (gnus-subscribe-newsgroup-method
+            sendmail-program mail-envelope-from
+            smtpmail-smtp-server
+            smtpmail-smtp-service)
+  :config
+  ;; newsserver
+  ;;(setq gnus-select-method '(nntp "news.gmane.org"))
+
+  ;; gmail imap server
+  (setq gnus-select-method '(nnimap "gmail"
+                                    (nnimap-address "imap.gmail.com")
+                                    (nnimap-server-port 993)
+                                    (nnimap-stream ssl)))
+
+  ;; ;; localhost imap server
+  ;; (setq gnus-select-method '(nnnil "")
+  ;;       gnus-secondary-select-methods
+  ;;       '((nnimap "localhost"
+  ;;                 (nnimap-address "localhost")
+  ;;                 (nnimap-stream network)
+  ;;                 (nnimap-authenticator login))))
+
+  ;; gmail smtp server
+  (setq smtpmail-smtp-server "smtp.gmail.com"
+        smtpmail-smtp-service 587
+        gnus-ignored-newsgroups "^to\\.\\|^[0-9. ]+\\( \\|$\\)\\|^[\"]\"[#'()]")
+
+  ;; do not fetch mail
+  (setq mail-sources nil)
+
+  ;; use gnus to send mail
+  (setq mail-user-agent 'gnus-user-agent)
+
+  ;; ;; store sent mail on local imap server
+  ;; (setq gnus-message-archive-method '(nnimap "localhost"))
+  ;; ;;(setq gnus-message-archive-group "nnimap+localhost:Sent")
+  ;; (setq gnus-message-archive-group
+  ;;       '((if (message-news-p)
+  ;;             "nnimap+localhost:SentNews"
+  ;;           "nnimap+localhost:Sent")))
+
+  ;; fetch all messages and never expire them
+  (setq gnus-agent-cache t)
+
+  ;; expire certain directories
+  (setq gnus-auto-expirable-newsgroups "Trash")
+  ;;      "Trash\\|")
+
+  ;; do not prompt when accessing large folders
+  (setq gnus-large-newsgroup nil)
+
+  ;; summary line format
+  ;; default: "%U%R%z%I%(%[%4L: %-23,23f%]%) %s\n"
+  (setq gnus-summary-line-format "%U%R%z %o %I%(%[%-25,25n%]%) %s\n")
+
+  ;; automatically subscribe to new groups
+  ;;(setq gnus-subscribe-newsgroup-method #'gnus-subscribe-alphabetically)
+
+  ;; ;; article sort order
+  ;; (setq gnus-article-sort-functions
+  ;;       '(gnus-article-sort-by-number
+  ;;         (lambda (t1 t2)
+  ;;           (gnus-article-sort-by-date t2 t1))))
+
+  ;; ;; thread sort order
+  ;; (setq gnus-thread-sort-functions
+  ;;       '(gnus-thread-sort-by-most-recent-number
+  ;;     (lambda (t1 t2)
+  ;;       (gnus-thread-sort-by-most-recent-date t1 t2))))
+
+  ;; ;; use threads
+  ;; (setq gnus-show-threads t)
+  ;; (setq gnus-thread-hide-subtree nil)
+
+  ;; set return address depending on folder
+  ;; (setq gnus-posting-styles
+  ;;       '((".*"
+  ;;          (name user-full-name)
+  ;;          ("X-URL" "http://nulldot.org/"))
+  ;;         ("work"
+  ;;          (address "kyle.sherman@dowjones.com"))))
+
+  ;; send mail function
+  ;; (setq send-mail-function #'sendmail-send-it
+  ;;       message-send-mail-function #'sendmail-send-it)
+
+  ;; msmtp setup
+  (setq sendmail-program "/usr/bin/msmtp"
+        mail-specify-envelope-from t
+        mail-envelope-from 'header)
+
+  ;; default from address
+  (setq mail-from-style 'angles
+        ;;mail-host-address "bofh.bofh"
+        mail-host-address user-mail-address
+        mail-interactive t)
+
+  ;; add signature
+  ;;(setq message-signature t)
+  (setq message-signature #'signature)
+
+  ;; spell check before sending mail
+  (add-hook 'message-send-hook #'ispell-message))
+
+;;------------------------------------------------------------------------------
+;;;; supercite
+;;------------------------------------------------------------------------------
+
+(init-message 3 "supercite")
+
+;; use supercite for quoting
+(use-package supercite
+  :straight t
+  :after (gnus)
+  :commands (sc-cite-original)
+  :config
+  (setq sc-citation-leader "")
+  (setq message-cite-function 'sc-cite-original)
+  (add-hook 'mail-yank-hooks #'sc-cite-original))
+;; Gnus:1 ends here
+
+;; [[file:init-emacs.org::#erc][ERC:1]]
+;;==============================================================================
+;;; ERC
+;;==============================================================================
+
+(init-message 1 "ERC")
+;; ERC:1 ends here
+
+;; [[file:init-emacs.org::#erc-setup][Setup:1]]
+;;------------------------------------------------------------------------------
+;;; ERC: Setup
+;;------------------------------------------------------------------------------
+
+(init-message 2 "ERC: Setup")
+
+(use-package erc
+  :straight (:type built-in)
+  :config
+  (erc-button-mode 1)
+  (erc-completion-mode 1)
+  (erc-fill-mode 1)
+  (erc-match-mode 1)
+  (erc-netsplit-mode 1)
+  (erc-services-mode 1)
+  (erc-timestamp-mode 1)
+  (erc-track-mode 1)
+  (add-hook 'erc-mode-hook #'erc-add-scroll-to-bottom)
+  ;; (add-to-list 'erc-nick-popup-alist
+  ;;              '("DebianDB" .
+  ;;                (shell-command
+  ;;                 (format
+  ;;                  "ldapsearch -x -P 2 -h db.debian.org -b dc=debian,dc=org ircnick=%s"
+  ;;                  nick))) t)
+  )
+
+(use-package erc-imenu
+  :straight (:type built-in)
+  :after (erc))
+(use-package erc-menu
+  :straight (:type built-in)
+  :after (erc))
+(use-package erc-notify
+  :straight (:type built-in)
+  :after (erc))
+(use-package erc-ring
+  :straight (:type built-in)
+  :after (erc))
+;; Setup:1 ends here
+
+;; [[file:init-emacs.org::#erc-customization][Customization:1]]
+;;------------------------------------------------------------------------------
+;;; ERC: Customization
+;;------------------------------------------------------------------------------
+
+(init-message 2 "ERC: Customization")
+
+;; erc customization
+(use-package erc
+  :straight (:type built-in)
+  :config
+  ;; create a seperate buffer for private messages
+  (setq erc-auto-query t)
+  ;; have noticies appear in minibuffer
+  (setq erc-echo-notices-in-minibuffer-flag t)
+  ;; add users to bbdb
+  ;;(setq erc-bbdb-auto-create-on-whois-p t)
+  ;; wrap text at edge of window
+  (setq erc-fill-column (- (window-width) 2))
+  (setq erc-fill-function 'erc-fill-static)
+  ;; interpret mIRC color codes
+  (setq erc-interpret-mirc-color t)
+  ;; hide certain types of messages
+  (setq erc-hide-list '("JOIN" "PART" "QUIT"))
+  ;; default nick
+  (setq erc-nick "nullman")
+  ;; friends list for notifications
+  (setq erc-pals '("jam" "dmitri" "peter" "glenn" "vin"))
+  (setq erc-notify-list erc-pals)
+  ;; channels to auto-join
+  (setq erc-autojoin-channels-alist '((".*freenode\.net" . ("#emacs"
+                                                            ;;"#elisp"
+                                                            ;;"#erc"
+                                                            "#lisp"
+                                                            ;;"#clojure"
+                                                            ))
+                                      (".*dowjones\.net" . ("#dev"))
+                                      ("sbkdevtick11" . ("#dev"))
+                                      ("localhost" . ("#collab"))))
+  ;; modules to load
+  (mapc (lambda (x) (add-to-list 'erc-modules x t))
+        '(autojoin button completion fill identd irccontrols list match menu
+                   move-to-prompt netsplit networks noncommands readonly ring
+                   scrolltobottom services stamp spelling track))
+  ;; C-RET (or C-c RET or C-c C-RET) sends messages, insteasd of RET
+  ;; (define-key erc-mode-map (kbd "RET") nil)
+  ;; (define-key erc-mode-map (kbd "C-RET") 'erc-send-current-line)
+  ;; (define-key erc-mode-map (kbd "C-c RET") 'erc-send-current-line)
+  ;; (define-key erc-mode-map (kbd "C-c C-RET") 'erc-send-current-line)
+
+  ;; ~/.erc-auth should contain the following:
+  ;;
+  ;; (setq erc-nickserv-passwords
+  ;;      '((freenode (("nullman" . "PASSWORD")))
+  ;;        ))
+
+  ;; load nickserv authentication file
+  (defconst erc-auth-file-name (file-truename (expand-file-name "~/.erc-auth")))
+  (when (file-exists-p erc-auth-file-name)
+    (setq erc-prompt-for-nickserv-password nil)
+    (load erc-auth-file-name)))
+;; Customization:1 ends here
+
+;; [[file:init-emacs.org::#erc-functions][Functions:1]]
+;;------------------------------------------------------------------------------
+;;; ERC: Functions
+;;------------------------------------------------------------------------------
+
+(init-message 2 "ERC: Functions")
+;; Functions:1 ends here
+
+;; [[file:init-emacs.org::#erc-functions-nick-from-system-name][Nick from System Name:1]]
+;;------------------------------------------------------------------------------
+;;;; ERC: Functions: Nick from System Name
+;;------------------------------------------------------------------------------
+
+(init-message 3 "ERC: Functions: Nick from System Name")
+
+(use-package erc
+  :straight (:type built-in)
+  :config
+  (defun erc-nick-from-system-name ()
+    "Return a nickname based on machine name.
+
+Defaults to \"nullman\" if no match is found."
+    (let* ((server-nick '(
+                          ;;("tank.nullware.com" . "nulltank")
+                          ;;("tank" . "nulltank")
+                          ;;("neo.nullware.com" . "nullhome")
+                          ;;("neo" . "nullhome")
+                          ;;("mouse1.nullware.com" . "nullman")
+                          ;;("mouse1" . "nullman")
+                          ;;("min-kyle-linux.production.bigcharts.com" . "nullwork")
+                          ;;("min-kyle-linux" . "nullwork")
+                          ))
+           (nick (cdr (assoc (system-name) server-nick))))
+      (or nick erc-nick))))
+;; Nick from System Name:1 ends here
+
+;; [[file:init-emacs.org::#erc-functions-localhost][Localhost:1]]
+;;------------------------------------------------------------------------------
+;;;; ERC: Functions: Localhost
+;;------------------------------------------------------------------------------
+
+(init-message 3 "ERC: Functions: Localhost")
+
+(use-package erc
+  :straight (:type built-in)
+  :commands (erc)
+  :config
+  (defun erc-localhost ()
+    "Connect to localhost irc server."
+    (interactive)
+    (let ((nick (erc-nick-from-system-name)))
+      (erc-services-disable)
+      (erc :server "localhost" :port "6667" :nick nick :password nil :full-name "Kyle Sherman"))))
+;;(bind-keys ("C-c el" . erc-localhost)))
+;; Localhost:1 ends here
+
+;; [[file:init-emacs.org::#erc-functions-localhost-bitlbee][Localhost Bitlbee:1]]
+;;------------------------------------------------------------------------------
+;;;; ERC: Functions: Localhost Bitlbee
+;;------------------------------------------------------------------------------
+
+(init-message 3 "ERC: Functions: Localhost Bitlbee")
+
+(use-package erc
+  :straight (:type built-in)
+  ;; :bind* ("C-c eb" . erc-localhost-bitlbee)
+  :config
+  (defun erc-localhost-bitlbee ()
+    "Connect to localhost bitlbee server."
+    (interactive)
+    (let ((nick (erc-nick-from-system-name)))
+      (erc-services-disable)
+      (erc :server "localhost" :port "6668" :nick nick :password nil :full-name "Kyle Sherman"))))
+;; Localhost Bitlbee:1 ends here
+
+;; [[file:init-emacs.org::#erc-functions-freenode][Freenode:1]]
+;;------------------------------------------------------------------------------
+;;;; ERC: Functions: Freenode
+;;------------------------------------------------------------------------------
+
+(init-message 3 "ERC: Functions: Freenode")
+
+(use-package erc
+  :straight (:type built-in)
+  ;; :bind* ("C-c ef" . erc-freenode)
+  :config
+  (defun erc-freenode ()
+    "Connect to irc.freenode.net irc server."
+    (interactive)
+    (let ((nick (erc-nick-from-system-name)))
+      (erc-services-enable)
+      (erc :server "irc.freenode.net" :port "6667" :nick nick :password nil :full-name "Kyle Sherman"))))
+;; Freenode:1 ends here
+
+;; [[file:init-emacs.org::#erc-functions-work][Work:1]]
+;;------------------------------------------------------------------------------
+;;;; ERC: Functions: Work
+;;------------------------------------------------------------------------------
+
+(init-message 3 "ERC: Functions: Work")
+
+(use-package erc
+  :straight (:type built-in)
+  :config
+  (defun erc-work ()
+    "Connect to work IRC server."
+    (interactive)
+    "Connect to irc.win.dowjones.net IRC server."
+    (erc-services-disable)
+    (erc :server "irc.win.dowjones.net" :port "6667" :nick "kyle" :password nil :full-name "Kyle Sherman")))
+;;(bind-keys ("C-c ew" . erc-work)))
+;; Work:1 ends here
+
+;; [[file:init-emacs.org::#erc-commands][Commands:1]]
+;;------------------------------------------------------------------------------
+;;; ERC: Commands
+;;------------------------------------------------------------------------------
+
+(init-message 2 "ERC: Commands")
+;; Commands:1 ends here
+
+;; [[file:init-emacs.org::#erc-commands-uptime][UPTIME:1]]
+;;------------------------------------------------------------------------------
+;;;; ERC: Commands: UPTIME
+;;------------------------------------------------------------------------------
+
+(init-message 3 "ERC: Commands: UPTIME")
+
+(use-package erc
+  :straight (:type built-in)
+  :commands (erc-send-message)
+  :config
+  (defun erc-cmd-UPTIME (&rest ignore)
+    "Display the uptime of the system, as well as some load-related stuff,
+to the current ERC buffer."
+    (let ((uname-output
+           (replace-regexp-in-string
+            ", load average: " "] {Load average} ["
+            ;; collapse spaces
+            (replace-regexp-in-string
+             " +" " "
+             ;; remove beginning and trailing whitespace
+             (replace-regexp-in-string
+              "^ +\\|[ \n]+$" ""
+              (shell-command-to-string "uptime"))))))
+      (erc-send-message
+       (concat "{Uptime} [" uname-output "]")))))
+;; UPTIME:1 ends here
+
+;; [[file:init-emacs.org::#erc-commands-wi][WI:1]]
+;;------------------------------------------------------------------------------
+;;;; ERC: Commands: WI
+;;------------------------------------------------------------------------------
+
+(init-message 3 "ERC: Commands: WI")
+
+(use-package erc
+  :straight (:type built-in)
+  :config
+  (defun erc-cmd-WI (nick &rest ignore)
+    "`/WHOIS' command with extra user information."
+    (erc-server-send (mapconcat #'identity (list "WHOIS" nick nick) " "))))
+;; WI:1 ends here
+
+;; [[file:init-emacs.org::#erc-commands-identify][IDENTIFY:1]]
+;;------------------------------------------------------------------------------
+;;;; ERC: Commands: IDENTIFY
+;;------------------------------------------------------------------------------
+
+(init-message 3 "ERC: Commands: IDENTIFY")
+
+(use-package erc
+  :straight (:type built-in)
+  :commands (erc-server-send)
+  :config
+  (defun erc-cmd-IDENTIFY (password &rest ignore)
+    "Send PASSWORD to NickServ, `/msg NickServ identify PASSWORD'."
+    (erc-server-send (mapconcat #'identity (list "identify" password) " "))))
+;; IDENTIFY:1 ends here
+
+;; [[file:init-emacs.org::#work][Work:1]]
+;;==============================================================================
+;;; Work
+;;==============================================================================
+
+(when work-system
+  (init-message 1 "Work"))
+;; Work:1 ends here
+
+;; [[file:init-emacs.org::#work-modules][Modules:1]]
+;;------------------------------------------------------------------------------
+;;; Work: Modules
+;;------------------------------------------------------------------------------
+
+(when work-system
+  (init-message 2 "Work: Modules")
+
+  ;; local paths
+  ;; (when local-work-modules-dir
+  ;;   (add-to-list 'load-path local-work-modules-dir t)) ; work elisp projects
+  )
+;; Modules:1 ends here
+
+;; [[file:init-emacs.org::#work-settings][Settings:1]]
+;;------------------------------------------------------------------------------
+;;; Work: Settings
+;;------------------------------------------------------------------------------
+
+(when work-system
+  (init-message 2 "Work: Settings")
+
+  ;; add perl files to remove-tabs-exceptions
+  (add-to-list 'remove-tabs-exceptions '(:file . "\\.t\\'") t)
+  (add-to-list 'remove-tabs-exceptions '(:file . "\\.tt\\'") t)
+  (add-to-list 'remove-tabs-exceptions '(:file . "\\.pm\\'") t)
+
+  ;; sql setup
+  (setq sql-product 'ms)
+  (setq sql-ms-program "sqlcmd")
+  ;; https://docs.microsoft.com/en-us/sql/tools/sqlcmd-utility?view=sql-server-ver15
+  ;; -I (enable quoted identifiers)
+  ;; -k[1 | 2] (remove or replace control characters)
+  ;; -s col_separator
+  ;; -w column_width
+  ;; -y variable_length_type_display_width
+  (setq sql-ms-options '("-I" "-k" "-s" "|"))
+
+  ;; database connections
+  (setq sql-connection-alist
+        '((dev (sql-product 'ms)
+               (sql-server "wk8683.infinitecampus.com")
+               (sql-port 1344)
+               (sql-database "CampusMasterMN")
+               (sql-user "dev")
+               (sql-password "devTest"))
+          (issuetest (sql-product 'ms)
+                     (sql-server "b4660797-app001.infinitecampus.com")
+                     (sql-port 1344)
+                     (sql-database "3384-littleton-20210801_2101")
+                     (sql-user "IssueTestUser-3384-littleton-20210801_2101-962")
+                     (sql-password "h*cjFmVd9S0Hoqui7GQpiZ%chEit@y"))))
+
+  (defun sql-ms-dev ()
+    "Connect to local dev database."
+    (interactive)
+    (sql-connect 'dev))
+
+  (defun sql-ms-issuetest ()
+    "Connect to issuetest database."
+    (interactive)
+    (sql-connect 'issuetest)))
+;; Settings:1 ends here
+
+;; [[file:init-emacs.org::#work-functions][Functions:1]]
+;;------------------------------------------------------------------------------
+;;; Work: Functions
+;;------------------------------------------------------------------------------
+
+(when work-system
+  (init-message 2 "Work: Functions"))
+;; Functions:1 ends here
+
+;; [[file:init-emacs.org::#work-functions-work-linkify-jira-card][+work-linkify-jira-card+:1]]
+;;------------------------------------------------------------------------------
+;;;; Work: Functions: work-linkify-jira-card
+;;------------------------------------------------------------------------------
+
+(when work-system
+  (init-message 3 "Work: Functions: work-linkify-jira-card")
+
+  (defun work-linkify-jira-card ()
+    "Add Jira URL link to Android Jira card."
+    (interactive)
+    (cl-labels
+        ;; clean up branch name
+        ((fix-branch ()
+                     ;; convert spaces to dashes
+                     (save-mark-and-excursion
+                       (save-match-data
+                         (while (re-search-forward " " (line-end-position) :noerror)
+                           (replace-match "-" t))))
+                     ;; remove brackets
+                     (save-mark-and-excursion
+                       (save-match-data
+                         (while (re-search-forward "\\(\\[\\|\\]\\)" (line-end-position) :noerror)
+                           (replace-match "" t))))))
+      (save-mark-and-excursion
+        (save-match-data
+          ;; remove leading "feature/" text
+          (goto-char (line-beginning-position))
+          (while (re-search-forward "\\bfeature/" (line-end-position) :noerror)
+            (replace-match ""))
+          ;; handle different project names
+          (cond
+           ((re-search-forward "\\[?\\b[Aa][Nn][Dd][Rr][Oo][Ii][Dd]-" (line-end-position) :noerror)
+            (replace-match "ANDROID-" t)
+            (fix-branch)
+            (goto-char (line-beginning-position))
+            (when (re-search-forward "\\b\\(ANDROID-[[:digit:]]+\\)\\([a-zA-Z0-9-_\.]*\\)\\b" (line-end-position) :noerror)
+              (replace-match (concat "[[https://buzzfeed.atlassian.net/browse/" (match-string 1) "][" (match-string 0) "]]") t)))
+           ((re-search-forward "\\[?\\b[Aa][Dd][Ss][Gg][Rr][Oo][Uu][Pp]-" (line-end-position) :noerror)
+            (replace-match "ADSGROUP-" t)
+            (fix-branch)
+            (goto-char (line-beginning-position))
+            (when (re-search-forward "\\b\\(ADSGROUP-[[:digit:]]+\\)\\([a-zA-Z0-9-_\.]*\\)\\b" (line-end-position) :noerror)
+              (replace-match (concat "[[https://buzzfeed.atlassian.net/browse/" (match-string 1) "][" (match-string 0) "]]") t)))
+           ((re-search-forward "\\[?\\b[Bb][Ff][Oo]-" (line-end-position) :noerror)
+            (replace-match "BFO-" t)
+            (fix-branch)
+            (goto-char (line-beginning-position))
+            (when (re-search-forward "\\b\\(BFO-[[:digit:]]+\\)\\([a-zA-Z0-9-_\.]*\\)\\b" (line-end-position) :noerror)
+              (replace-match (concat "[[https://buzzfeed.atlassian.net/browse/" (match-string 1) "][" (match-string 0) "]]") t)))
+           ((re-search-forward "\\[?\\b[Qq][Uu][Ii][Zz]-" (line-end-position) :noerror)
+            (replace-match "QUIZ-" t)
+            (fix-branch)
+            (goto-char (line-beginning-position))
+            (when (re-search-forward "\\b\\(QUIZ-[[:digit:]]+\\)\\([a-zA-Z0-9-_\.]*\\)\\b" (line-end-position) :noerror)
+              (replace-match (concat "[[https://buzzfeed.atlassian.net/browse/" (match-string 1) "][" (match-string 0) "]]") t)))))))))
+;; +work-linkify-jira-card+:1 ends here
+
+;; [[file:init-emacs.org::#work-functions-work-insert-release-pr-list][+work-insert-release-pr-list+:1]]
+;;------------------------------------------------------------------------------
+;;;; Work: Functions: work-insert-release-pr-list
+;;------------------------------------------------------------------------------
+
+(when (and work-system
+           (fboundp 'work-git-commit-start-end-log)
+           (fboundp 'work-linkify-jira-card))
+  (init-message 3 "Work: Functions: work-insert-release-pr-list")
+
+  (defun work-insert-release-pr-list (&optional commit-start commit-end)
+    "Insert a list of pull requests between COMMIT-START and COMMIT-END."
+    (interactive)
+    (cl-labels
+        ;; clean up branch name
+        ((fix-branch ()
+                     ;; convert spaces to dashes
+                     (save-mark-and-excursion
+                       (save-match-data
+                         (while (re-search-forward " " (line-end-position) :noerror)
+                           (replace-match "-" t))))
+                     ;; remove brackets
+                     (save-mark-and-excursion
+                       (save-match-data
+                         (while (re-search-forward "\\(\\[\\|\\]\\)" (line-end-position) :noerror)
+                           (replace-match "" t))))))
+      (multiple-value-bind (commit-start commit-end log)
+          (work-git-commit-start-end-log commit-start commit-end)
+        (let (prs)
+          (with-temp-buffer
+            (insert log)
+            ;; remove leading "feature/" text
+            (goto-char (point-min))
+            (while (re-search-forward "\\bfeature/" nil :noerror)
+              (replace-match ""))
+            ;; handle different project names
+            (goto-char (point-min))
+            (while (re-search-forward "\\[?\\b[Aa][Nn][Dd][Rr][Oo][Ii][Dd]-" nil :noerror)
+              (replace-match "ANDROID-" t)
+              (fix-branch)
+              (goto-char (line-beginning-position))
+              (when (re-search-forward "\\b\\(ANDROID-[[:digit:]]+\\)\\([a-zA-Z0-9-_\.]*\\)\\b" nil :noerror)
+                (pushnew (match-string 0) prs :test 'string=))
+              (goto-char (line-end-position)))
+            (goto-char (point-min))
+            (while (re-search-forward "\\[?\\b[Aa][Dd][Ss][Gg][Rr][Oo][Uu][Pp]-" nil :noerror)
+              (replace-match "ADSGROUP-" t)
+              (fix-branch)
+              (goto-char (line-beginning-position))
+              (when (re-search-forward "\\b\\(ADSGROUP-[[:digit:]]+\\)\\([a-zA-Z0-9-_\.]*\\)\\b" nil :noerror)
+                (pushnew (match-string 0) prs :test 'string=))
+              (goto-char (line-end-position)))
+            (goto-char (point-min))
+            (while (re-search-forward "\\[?\\b[Bb][Ff][Oo]-" nil :noerror)
+              (replace-match "BFO-" t)
+              (fix-branch)
+              (goto-char (line-beginning-position))
+              (when (re-search-forward "\\b\\(BFO-[[:digit:]]+\\)\\([a-zA-Z0-9-_\.]*\\)\\b" nil :noerror)
+                (pushnew (match-string 0) prs :test 'string=))
+              (goto-char (line-end-position)))
+            (goto-char (point-min))
+            (while (re-search-forward "\\[?\\b[Qq][Uu][Ii][Zz]-" nil :noerror)
+              (replace-match "QUIZ-" t)
+              (fix-branch)
+              (goto-char (line-beginning-position))
+              (when (re-search-forward "\\b\\(QUIZ-[[:digit:]]+\\)\\([a-zA-Z0-9-_\.]*\\)\\b" nil :noerror)
+                (pushnew (match-string 0) prs :test 'string=))
+              (goto-char (line-end-position))))
+          ;; output list
+          (when prs
+            (insert
+             (with-temp-buffer
+               (dolist (pr prs)
+                 (insert
+                  (concat "- " pr))
+                 (work-linkify-jira-card)
+                 (newline))
+               (buffer-string)))))))))
+;; +work-insert-release-pr-list+:1 ends here
+
+;; [[file:init-emacs.org::#work-menu][Menu:1]]
+;;------------------------------------------------------------------------------
+;;; Work: Menu
+;;------------------------------------------------------------------------------
+
+(when work-system
+  (init-message 2 "Work: Menu")
+
+  ;; work menu
+  (auto-menu
+   "Work"
+   `(("Dired..."
+      ,(auto-menu-dired '(("work" . "~/work")
+                          ("Tomcat" . "~/ICAS-DEV-999.2.29/INFINITECAMPUS/tomcat/tigger-999.2.29")
+                          ("exceptionals-campus" . "~/work/exceptionals-campus")
+                          ("exceptionals-tl-ui" . "~/work/exceptionals-tl-ui")
+                          ("campus-5.0-apps" . "~/work/campus-5.0-apps"))))
+     ("org-copy-to-clipboard" "org-copy-to-clipboard" "Reformat and copy org region to clipboard.")
+     ("org-toggle-link-display" "org-toggle-link-display" "Toggle the literal or descriptive display of links.")
+     ("org-toggle-headline-checkbox" "org-toggle-headline-checkbox" "Toggle between an Org headline and checkbox on current line.")
+     ("org-table-remove-commas" "org-table-remove-commas" "Remove all commas in current Org table.")
+     ("org-table-convert-region" "org-table-convert-region" "Convert region to a table."))))
+;; Menu:1 ends here
+
+;; [[file:init-emacs.org::#other][Other:1]]
+;;==============================================================================
+;;; Other
+;;==============================================================================
+
+(init-message 1 "Other")
+;; Other:1 ends here
+
+;; [[file:init-emacs.org::#other-apply-advice][Apply Advice:1]]
+;;------------------------------------------------------------------------------
+;;; Other: Apply Advice
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Other: Apply Advice")
+;; Apply Advice:1 ends here
+
+;; [[file:init-emacs.org::#other-apply-patches][Apply Patches:1]]
+;;------------------------------------------------------------------------------
+;;; Other: Apply Patches
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Other: Apply Patches")
+;; Apply Patches:1 ends here
+
+;; [[file:init-emacs.org::#aliases][Aliases:1]]
+;;==============================================================================
+;;; Aliases
+;;==============================================================================
+
+(init-message 1 "Aliases")
+;; Aliases:1 ends here
+
+;; [[file:init-emacs.org::#aliases-general][General:1]]
+(let ((data '(("Alias" "Function") ("lml" "list-matching-lines") ("qrr" "query-replace-regexp") ("rb" "revert-buffer") ("rxb" "regexp-builder"))))
+;;------------------------------------------------------------------------------
+;;; Aliases: General
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Aliases: General")
+
+(mapc (lambda (x) (defalias (intern (car x)) (intern (cadr x)))) (cdr data))
+)
+;; General:1 ends here
+
+;; [[file:init-emacs.org::#final-setup][Final Setup:1]]
+;;==============================================================================
+;;; Final Setup
+;;==============================================================================
+
+(init-message 1 "Final Setup")
+;; Final Setup:1 ends here
+
+;; [[file:init-emacs.org::#final-setup-set-key-bindings][Set Key Bindings:1]]
+;;------------------------------------------------------------------------------
+;;; Final Setup: Set Key Bindings
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Final Setup: Set Key Bindings")
+
+(custom-key-bindings-set-all)
+;; Set Key Bindings:1 ends here
+
+;; [[file:init-emacs.org::#final-setup-compile-personal-modules][Compile Personal Modules:1]]
+;;------------------------------------------------------------------------------
+;;; Final Setup: Compile Personal Modules
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Final Setup: Compile Personal Modules")
+
+;; compile personal modules if needed
+(let ((dir local-modules-dir))
+  (when (file-exists-p dir)
+    (dolist (file (directory-files dir t))
+      (when (file-readable-p file)
+        (cond
+         ((string-match "^\\.\\.?$" (file-name-nondirectory file)))
+         ((string-match ".*\\.el\\'" file)
+          (when (not (file-directory-p file))
+            (compile-file-if-needed file))))))))
+;; Compile Personal Modules:1 ends here
+
+;; [[file:init-emacs.org::#final-setup-start-emacs-server][Start Emacs Server:1]]
+;;------------------------------------------------------------------------------
+;;; Final Setup: Start Emacs Server
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Final Setup: Start Emacs Server")
+
+;; start emacs server
+(when (fboundp 'server-start-maybe)
+  (when-lock-file-acquired (expand-file-name "emacs-server-lock-file"
+                                            temporary-file-directory)
+    (server-start-maybe)))
+;; Start Emacs Server:1 ends here
+
+;; [[file:init-emacs.org::#final-setup-remove-logging-buffers][Remove Logging Buffers:1]]
+;;------------------------------------------------------------------------------
+;;; Final Setup: Remove Logging Buffers
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Final Setup: Remove Logging Buffers")
+
+;; ;; remove compile log buffer
+;; (when (get-buffer "*Compile-Log*")
+;;   (kill-buffer "*Compile-Log*"))
+
+;; remove symbol mapping buffer
+(when (get-buffer "Map_Sym.txt")
+  (kill-buffer "Map_Sym.txt"))
+;; Remove Logging Buffers:1 ends here
+
+;; [[file:init-emacs.org::#final-setup-fix-info-directory-list][Fix Info-Directory-List:1]]
+;;------------------------------------------------------------------------------
+;;; Final Setup: Fix Info-Directory-List
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Final Setup: Fix Info-Directory-List")
+
+;; make sure Info-default-directory-list is added to Info-directory-list
+(when (boundp 'Info-directory-list)
+  (mapc (lambda (x) (add-to-list 'Info-directory-list x t))
+        Info-default-directory-list))
+;; Fix Info-Directory-List:1 ends here
+
+;; [[file:init-emacs.org::#final-setup-turn-off-scroll-bar][Turn off Scroll Bar:1]]
+;;------------------------------------------------------------------------------
+;;; Final Setup: Turn off Scroll Bar
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Final Setup: Turn off Scroll Bar")
+
+;; turn off scroll bar
+(when (and (fboundp 'scroll-bar-mode)
+           scroll-bar-mode)
+  (scroll-bar-mode -1))
+;; Turn off Scroll Bar:1 ends here
+
+;; [[file:init-emacs.org::#final-setup-clear-mark][Clear Mark:1]]
+;;------------------------------------------------------------------------------
+;;; Final Setup: Clear Mark
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Final Setup: Clear Mark")
+
+;; clear mark
+(set-mark-command nil)
+;; Clear Mark:1 ends here
+
+;; [[file:init-emacs.org::#final-setup-reset-emacs-lisp-garbage-collection-threshold][Reset Emacs Lisp Garbage Collection Threshold:1]]
+;;------------------------------------------------------------------------------
+;;; Final Setup: Reset Emacs Lisp Garbage Collection Threshold
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Final Setup: Reset Emacs Lisp Garbage Collection Threshold")
+
+;; reset frequency of garbage collections
+(setq gc-cons-threshold (car (get 'gc-cons-threshold 'standard-value)))
+;; Reset Emacs Lisp Garbage Collection Threshold:1 ends here
+
+;; [[file:init-emacs.org::#end][End:1]]
+(init-message 1 "End")
+
+;;==============================================================================
+;;; init-emacs.el ends here
+;;==============================================================================
+;; End:1 ends here
