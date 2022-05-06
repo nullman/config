@@ -2805,6 +2805,11 @@ alias git-prune="git remote prune origin"
 alias git-reset-head="git reset --hard HEAD"
 #        git-clone-d1            git clone --depth=1
 alias git-clone-d1="git clone --depth=1"
+#        git-deepen-full         git fetch --unshallow and fetch branches
+alias git-deepen-full="
+    git fetch --unshallow
+    git config remote.origin.fetch \"+refs/heads/*:refs/remotes/origin/*\"
+    git fetch origin"
 #        gitgc                   git gc
 alias gitgc="git gc"
 #        gitgca                  git gc --aggressive
