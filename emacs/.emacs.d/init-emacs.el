@@ -17708,6 +17708,11 @@ otherwise run `find-file-as-root'."
   ;; list directories first and remove unwanted fields
   (dired-listing-switches "-alh --group-directories-first")
   :config
+  ;; mac support
+  (when window-system-mac
+    (setq insert-directory-program "gls"
+          dired-use-ls-dired t))
+
   ;; add extra file compression support
   (setq dired-compress-files-alist
         '(("\\.tar\\.bz2\\'" . "tar -cf - %i | bzip2 -c9 > %o")

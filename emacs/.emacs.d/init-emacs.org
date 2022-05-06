@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-05-04 16:44 (kyle)>
+  #+TIMESTAMP: <2022-05-06 09:07 (kyle.sherman)>
 
 * Overview
   :PROPERTIES:
@@ -26552,6 +26552,11 @@
         ;; list directories first and remove unwanted fields
         (dired-listing-switches "-alh --group-directories-first")
         :config
+        ;; mac support
+        (when window-system-mac
+          (setq insert-directory-program "gls"
+                dired-use-ls-dired t))
+
         ;; add extra file compression support
         (setq dired-compress-files-alist
               '(("\\.tar\\.bz2\\'" . "tar -cf - %i | bzip2 -c9 > %o")

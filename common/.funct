@@ -17,7 +17,7 @@
 #! set variables
 #!
 #!       operating system
-os=$(uname -s)
+os="$(uname -s)"
 #!       default rsync exclusions
 #!rsyncexclusions='{"/cdrom/*","/dev/*","/lost+found","/media/*","/mnt/*","/proc/*","/run/*","/sys/*","/tmp/*","/var/tmp/*","/home/*/.cache/*","/home/*/.ccache/*","/home/*/.gvfs","/home/*/.local/share/Trash/*","/home/*/.thumbnails/*"}'
 #!

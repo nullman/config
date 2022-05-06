@@ -25,7 +25,7 @@ export runpath="${runpath}:${HOME}/.zshrc"
 logger "Running: ${HOME}/.zshrc"
 
 # operating system
-os=$(uname -s)
+os="$(uname -s)"
 
 # set environmental vars
 export SHELL="/bin/zsh"
