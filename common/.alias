@@ -1812,12 +1812,14 @@ alias rsync-media-get-morpheus="rsync -rlptx --progress morpheus:/home/data/medi
 alias rsync-media-get-morpheus-exclude="rsync -rlptx --progress --exclude={'/software/','/video/'} morpheus:/home/data/media/ ${home}/data/media/"
 #        rsync-media-get-morpheus-mouse-delete  rsync morpheus:/home/data/media /home/data/media (specific sub-directories)
 alias rsync-media-get-morpheus-mouse-delete=" \
-    rsync -rlptx --progress --delete --exclude={'/Humor/','/iTunes/','/Other/'} morpheus:/home/data/media/audio/ ${home}/data/media/audio/ && \
-    rsync -rlptx --progress --delete morpheus:/home/data/media/music/ ${home}/data/media/music/ && \
-    rsync -rlptx --progress --delete morpheus:/home/data/media/pictures_slide_show/ ${home}/data/media/pictures_slide_show/ && \
-    #rsync -rlptx --progress --delete morpheus:/home/data/media/repos/ ${home}/data/media/repos/ && \
-    rsync -rlptx --progress --delete morpheus:/home/data/media/text/ ${home}/data/media/text/ && \
-    rsync -rlptx --progress --delete --exclude={'/Adult/','/Development/'} morpheus:/home/data/media/video/ ${home}/data/media/video/"
+    if [[ "$(uname -n)" == "mouse" ]] ; then
+        rsync -rlptx --progress --delete --exclude={'/Humor/','/iTunes/','/Other/'} morpheus:/home/data/media/audio/ ${home}/data/media/audio/ && \
+        rsync -rlptx --progress --delete morpheus:/home/data/media/music/ ${home}/data/media/music/ && \
+        rsync -rlptx --progress --delete morpheus:/home/data/media/pictures_slide_show/ ${home}/data/media/pictures_slide_show/ && \
+        #rsync -rlptx --progress --delete morpheus:/home/data/media/repos/ ${home}/data/media/repos/ && \
+        rsync -rlptx --progress --delete morpheus:/home/data/media/text/ ${home}/data/media/text/ && \
+        rsync -rlptx --progress --delete --exclude={'/Adult/','/Development/'} morpheus:/home/data/media/video/ ${home}/data/media/video/
+    fi"
 #        rsync-media-put-morpheus  rsync /home/data/media morpheus:/home/data/media
 alias rsync-media-put-morpheus="rsync -rlptx --progress ${home}/data/media/ morpheus:/home/data/media/"
 #        rsync-media-put-morpheus-delete  rsync /home/data/media morpheus:/home/data/media
@@ -1913,8 +1915,8 @@ alias rsync-c64-put-sd16="rsync -rLtxc --progress --delete --exclude='TOSEC/' \$
 alias rsync-c64-put-sd128="rsync -rLtxc --progress --delete \${HOME}/C64/* /run/media/\${USER}/C64/ && sync"
 #        rsync-adult-put-adult-sd  rsync /home/data/media/video/Adult/* /run/media/${USER}/ADULT/
 alias rsync-adult-put-adult-sd="rsync -rLtxc --progress --delete --exclude='White Boxxx Compilation' ${home}/data/media/video/Adult/ /run/media/\${USER}/ADULT/ && sync"
-#        rsync-common-put-media  rsync ${HOME}/config/icons/ and ${HOME}/config/images/ to /home/data/media/graphic/
-alias rsync-common-put-media=" \
+#        rsync-common-put-media-delete rsync ${HOME}/config/icons/ and ${HOME}/config/images/ to /home/data/media/graphic/
+alias rsync-common-put-media-delete=" \
     rsync -rlptx --progress --delete \${HOME}/config/icons/ ${home}/data/media/graphic/Icons/Common/ && \
     rsync -rlptx --progress --delete \${HOME}/config/images/ ${home}/data/media/graphic/Images/Common/"
 
