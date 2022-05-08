@@ -1591,10 +1591,10 @@ Otherwise, `custom-tab-width' is used."
     (bind-keys ("<f3>" . kmacro-start-macro-or-insert-counter))) ; default: `kmacro-start-macro-or-insert-counter'
   (when (fboundp 'kmacro-end-or-call-macro)
     (bind-keys ("<f4>" . kmacro-end-or-call-macro))) ; default: `kmacro-end-or-call-macro'
-  ;; (when (fboundp 'define-word)
-  ;;   (bind-keys ("<f5>" . define-word)))
-  ;; (when (fboundp 'define-word-at-point)
-  ;;   (bind-keys ("S-<f5>" . define-word-at-point)))
+  (when (fboundp 'define-word-after-spell-check)
+    (bind-keys ("<f5>" . define-word-after-spell-check)))
+  (when (fboundp 'define-word-at-point-after-spell-check)
+    (bind-keys ("S-<f5>" . define-word-at-point-after-spell-check)))
   ;; (when (fboundp 'ispell-word)
   ;;   (bind-keys ("<f6>" . ispell-word)))
   ;; (when (fboundp 'ispell)
@@ -11961,6 +11961,66 @@ If FILE is non-nil, use that fortune file."
         (align-comments)))))
 ;; set-arch-package-description:1 ends here
 
+;; [[file:init-emacs.org::#functions-external-program-functions-define-word][define-word:2]]
+;;------------------------------------------------------------------------------
+;;;; Functions: External Program Functions: define-word
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: External Program Functions: define-word")
+
+(defun define-word (&optional word)
+  "Return definition of WORD and put it on the `kill-ring'."
+  (interactive "MWord: ")
+  (message
+   (kill-new
+    (with-temp-buffer
+      (call-process "trans" nil t nil (shell-quote-argument word))
+      (goto-char (point-min))
+      (when (re-search-forward "^Examples" nil :noerror)
+        (delete-region (1- (line-beginning-position)) (point-max)))
+      (buffer-string)))))
+
+(defun define-word-after-spell-check (word)
+  "Define WORD after spell checking.
+
+Uses `ispell--run-on-word' to spell check word."
+  (interactive "MWord: ")
+  (ispell-set-spellchecker-params)
+  (ispell-accept-buffer-local-defs)
+  (let ((check (ispell--run-on-word word)))
+    (cond
+     ((or (eq check t)
+          (stringp check))
+      (define-word word))
+     (t
+      (let ((buffer (generate-new-buffer-name "*define-word-after-spell-check*")))
+        (switch-to-buffer (get-buffer-create buffer))
+        (insert word)
+        (ispell-word)
+        (let ((checked-word (buffer-substring-no-properties (point-min) (point-max))))
+          (when (string= buffer (buffer-name))
+            (kill-buffer (current-buffer)))
+          (define-word checked-word)))))))
+
+(defun define-word-at-point-after-spell-check ()
+  "Use `define-word-after-spell-check' to define word at point.
+
+When the region is active, define the marked phrase."
+  (interactive)
+  (let ((word
+         (cond
+          ((eq major-mode 'pdf-view-mode)
+           (car (pdf-view-active-region-text)))
+          ((use-region-p)
+           (buffer-substring-no-properties
+            (region-beginning)
+            (region-end)))
+          (t
+           (substring-no-properties
+            (thing-at-point 'word))))))
+    (define-word-after-spell-check word)))
+;; define-word:2 ends here
+
 ;; [[file:init-emacs.org::#functions-newer-emacs-functionality-functions][Newer Emacs Functionality Functions:1]]
 ;;------------------------------------------------------------------------------
 ;;; Functions: Newer Emacs Functionality Functions
@@ -15050,67 +15110,6 @@ USING is the remaining peg."
 (use-package decide
   :straight t)
 ;; decide:1 ends here
-
-;; [[file:init-emacs.org::#modules-define-word][define-word:1]]
-;;------------------------------------------------------------------------------
-;;; Modules: define-word
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modules: define-word")
-
-(use-package define-word
-  :straight t
-  :bind (("<f5>" . define-word-after-spell-check)
-         ("S-<f5>" . define-word-at-point-after-spell-check))
-  :custom
-  (define-word-default-service 'webster)
-  :config
-  (defun define-word-after-spell-check (word service &optional choose-service)
-    "Define WORD using various services after spell checking WORD.
-
-By default uses `define-word-default-service', but a prefix arg
-lets the user choose service.
-
-Uses `ispell--run-on-word' to spell check word."
-    (interactive "MWord: \ni\nP")
-    (ispell-set-spellchecker-params)
-    (ispell-accept-buffer-local-defs)
-    (let ((check (ispell--run-on-word word)))
-      (cond
-       ((or (eq check t)
-            (stringp check))
-        (define-word word service choose-service))
-       (t
-        (let ((buffer (generate-new-buffer-name "*define-word-after-spell-check*")))
-          (switch-to-buffer (get-buffer-create buffer))
-          (insert word)
-          (ispell-word)
-          (let ((checked-word (buffer-substring-no-properties (point-min) (point-max))))
-            (when (string= buffer (buffer-name))
-              (kill-buffer (current-buffer)))
-            (define-word checked-word service choose-service)))))))
-
-  (defun define-word-at-point-after-spell-check (arg &optional service)
-    "Use `define-word-after-spell-check' to define word at point.
-
-When the region is active, define the marked phrase.
-Prefix ARG lets you choose service.
-
-In a non-interactive call SERVICE can be passed."
-    (interactive "P")
-    (let ((word
-           (cond
-            ((eq major-mode 'pdf-view-mode)
-             (car (pdf-view-active-region-text)))
-            ((use-region-p)
-             (buffer-substring-no-properties
-              (region-beginning)
-              (region-end)))
-            (t
-             (substring-no-properties
-              (thing-at-point 'word))))))
-      (define-word-after-spell-check word service arg))))
-;; define-word:1 ends here
 
 ;; [[file:init-emacs.org::#modules-demo-it][demo-it:1]]
 ;;------------------------------------------------------------------------------

@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-05-06 09:07 (kyle.sherman)>
+  #+TIMESTAMP: <2022-05-08 13:33 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -2705,10 +2705,10 @@
           (bind-keys ("<f3>" . kmacro-start-macro-or-insert-counter))) ; default: `kmacro-start-macro-or-insert-counter'
         (when (fboundp 'kmacro-end-or-call-macro)
           (bind-keys ("<f4>" . kmacro-end-or-call-macro))) ; default: `kmacro-end-or-call-macro'
-        ;; (when (fboundp 'define-word)
-        ;;   (bind-keys ("<f5>" . define-word)))
-        ;; (when (fboundp 'define-word-at-point)
-        ;;   (bind-keys ("S-<f5>" . define-word-at-point)))
+        (when (fboundp 'define-word-after-spell-check)
+          (bind-keys ("<f5>" . define-word-after-spell-check)))
+        (when (fboundp 'define-word-at-point-after-spell-check)
+          (bind-keys ("S-<f5>" . define-word-at-point-after-spell-check)))
         ;; (when (fboundp 'ispell-word)
         ;;   (bind-keys ("<f6>" . ispell-word)))
         ;; (when (fboundp 'ispell)
@@ -16829,6 +16829,79 @@
                 (align-comments)))))
       #+END_SRC
 
+***** define-word
+      :PROPERTIES:
+      :CUSTOM_ID: functions-external-program-functions-define-word
+      :END:
+
+      You need to have the *trans* command installed on your system for this to
+      work.
+
+      #+BEGIN_SRC sh :dir /sudo:: :tangle no
+        # install trans on Manjaro/Arch system
+        sudo pacman -S install translate-shell
+      #+END_SRC
+
+      #+BEGIN_SRC emacs-lisp
+        ;;------------------------------------------------------------------------------
+        ;;;; Functions: External Program Functions: define-word
+        ;;------------------------------------------------------------------------------
+
+        (init-message 3 "Functions: External Program Functions: define-word")
+
+        (defun define-word (&optional word)
+          "Return definition of WORD and put it on the `kill-ring'."
+          (interactive "MWord: ")
+          (message
+           (kill-new
+            (with-temp-buffer
+              (call-process "trans" nil t nil (shell-quote-argument word))
+              (goto-char (point-min))
+              (when (re-search-forward "^Examples" nil :noerror)
+                (delete-region (1- (line-beginning-position)) (point-max)))
+              (buffer-string)))))
+
+        (defun define-word-after-spell-check (word)
+          "Define WORD after spell checking.
+
+        Uses `ispell--run-on-word' to spell check word."
+          (interactive "MWord: ")
+          (ispell-set-spellchecker-params)
+          (ispell-accept-buffer-local-defs)
+          (let ((check (ispell--run-on-word word)))
+            (cond
+             ((or (eq check t)
+                  (stringp check))
+              (define-word word))
+             (t
+              (let ((buffer (generate-new-buffer-name "*define-word-after-spell-check*")))
+                (switch-to-buffer (get-buffer-create buffer))
+                (insert word)
+                (ispell-word)
+                (let ((checked-word (buffer-substring-no-properties (point-min) (point-max))))
+                  (when (string= buffer (buffer-name))
+                    (kill-buffer (current-buffer)))
+                  (define-word checked-word)))))))
+
+        (defun define-word-at-point-after-spell-check ()
+          "Use `define-word-after-spell-check' to define word at point.
+
+        When the region is active, define the marked phrase."
+          (interactive)
+          (let ((word
+                 (cond
+                  ((eq major-mode 'pdf-view-mode)
+                   (car (pdf-view-active-region-text)))
+                  ((use-region-p)
+                   (buffer-substring-no-properties
+                    (region-beginning)
+                    (region-end)))
+                  (t
+                   (substring-no-properties
+                    (thing-at-point 'word))))))
+            (define-word-after-spell-check word)))
+      #+END_SRC
+
 *** Newer Emacs Functionality Functions
     :PROPERTIES:
     :CUSTOM_ID: functions-newer-emacs-functionality-functions
@@ -21581,72 +21654,72 @@
       ;;   :commands (decimation))
     #+END_SRC
 
-*** define-word
+*** +define-word+
     :PROPERTIES:
     :CUSTOM_ID: modules-define-word
     :END:
 
     Display the definition of word at point.
 
-    #+BEGIN_SRC emacs-lisp
-      ;;------------------------------------------------------------------------------
-      ;;; Modules: define-word
-      ;;------------------------------------------------------------------------------
+    #+BEGIN_SRC emacs-lisp :tangle no
+      ;; ;;------------------------------------------------------------------------------
+      ;; ;;; Modules: define-word
+      ;; ;;------------------------------------------------------------------------------
 
-      (init-message 2 "Modules: define-word")
+      ;; (init-message 2 "Modules: define-word")
 
-      (use-package define-word
-        :straight t
-        :bind (("<f5>" . define-word-after-spell-check)
-               ("S-<f5>" . define-word-at-point-after-spell-check))
-        :custom
-        (define-word-default-service 'webster)
-        :config
-        (defun define-word-after-spell-check (word service &optional choose-service)
-          "Define WORD using various services after spell checking WORD.
+      ;; (use-package define-word
+      ;;   :straight t
+      ;;   :bind (("<f5>" . define-word-after-spell-check)
+      ;;          ("S-<f5>" . define-word-at-point-after-spell-check))
+      ;;   :custom
+      ;;   (define-word-default-service 'wordnik)
+      ;;   :config
+      ;;   (defun define-word-after-spell-check (word service &optional choose-service)
+      ;;     "Define WORD using various services after spell checking WORD.
 
-      By default uses `define-word-default-service', but a prefix arg
-      lets the user choose service.
+      ;; By default uses `define-word-default-service', but a prefix arg
+      ;; lets the user choose service.
 
-      Uses `ispell--run-on-word' to spell check word."
-          (interactive "MWord: \ni\nP")
-          (ispell-set-spellchecker-params)
-          (ispell-accept-buffer-local-defs)
-          (let ((check (ispell--run-on-word word)))
-            (cond
-             ((or (eq check t)
-                  (stringp check))
-              (define-word word service choose-service))
-             (t
-              (let ((buffer (generate-new-buffer-name "*define-word-after-spell-check*")))
-                (switch-to-buffer (get-buffer-create buffer))
-                (insert word)
-                (ispell-word)
-                (let ((checked-word (buffer-substring-no-properties (point-min) (point-max))))
-                  (when (string= buffer (buffer-name))
-                    (kill-buffer (current-buffer)))
-                  (define-word checked-word service choose-service)))))))
+      ;; Uses `ispell--run-on-word' to spell check word."
+      ;;     (interactive "MWord: \ni\nP")
+      ;;     (ispell-set-spellchecker-params)
+      ;;     (ispell-accept-buffer-local-defs)
+      ;;     (let ((check (ispell--run-on-word word)))
+      ;;       (cond
+      ;;        ((or (eq check t)
+      ;;             (stringp check))
+      ;;         (define-word word service choose-service))
+      ;;        (t
+      ;;         (let ((buffer (generate-new-buffer-name "*define-word-after-spell-check*")))
+      ;;           (switch-to-buffer (get-buffer-create buffer))
+      ;;           (insert word)
+      ;;           (ispell-word)
+      ;;           (let ((checked-word (buffer-substring-no-properties (point-min) (point-max))))
+      ;;             (when (string= buffer (buffer-name))
+      ;;               (kill-buffer (current-buffer)))
+      ;;             (define-word checked-word service choose-service)))))))
 
-        (defun define-word-at-point-after-spell-check (arg &optional service)
-          "Use `define-word-after-spell-check' to define word at point.
+      ;;   (defun define-word-at-point-after-spell-check (arg &optional service)
+      ;;     "Use `define-word-after-spell-check' to define word at point.
 
-      When the region is active, define the marked phrase.
-      Prefix ARG lets you choose service.
+      ;; When the region is active, define the marked phrase.
+      ;; Prefix ARG lets you choose service.
 
-      In a non-interactive call SERVICE can be passed."
-          (interactive "P")
-          (let ((word
-                 (cond
-                  ((eq major-mode 'pdf-view-mode)
-                   (car (pdf-view-active-region-text)))
-                  ((use-region-p)
-                   (buffer-substring-no-properties
-                    (region-beginning)
-                    (region-end)))
-                  (t
-                   (substring-no-properties
-                    (thing-at-point 'word))))))
-            (define-word-after-spell-check word service arg))))
+      ;; In a non-interactive call SERVICE can be passed."
+      ;;     (interactive "P")
+      ;;     (let ((word
+      ;;            (cond
+      ;;             ((eq major-mode 'pdf-view-mode)
+      ;;              (car (pdf-view-active-region-text)))
+      ;;             ((use-region-p)
+      ;;              (buffer-substring-no-properties
+      ;;               (region-beginning)
+      ;;               (region-end)))
+      ;;             (t
+      ;;              (substring-no-properties
+      ;;               (thing-at-point 'word))))))
+      ;;       (define-word-after-spell-check word service arg))))
     #+END_SRC
 
 *** demo-it
