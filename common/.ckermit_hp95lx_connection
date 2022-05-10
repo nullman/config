@@ -1,0 +1,8 @@
+set modem type none
+set line /dev/ttyUSB0
+set carrier-watch off
+set speed 19200
+set stop-bits 1
+set parity none
+set duplex full
+set flow none

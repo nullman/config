@@ -94,12 +94,18 @@ unset MAIL
 #export MAILDIR="${HOME}/.maildir"
 #export MAILDIR="imap://morpheus.nullware.com/kyle"
 export LEDGER_FILE="${HOME}/ledger/checking-kyle.dat"
-export ANDROID_SDK="${HOME}/android-sdk"
-export ANDROID_NDK="${HOME}/android-sdk/ndk-bundle"
 export GOROOT="/usr/lib/go"
 export GOPATH="${HOME}/gocode"
 export SDKMAN_DIR="${HOME}/.sdkman"
 export GEM_HOME="$(_command ruby && ruby -e 'print Gem.user_dir')"
+
+# android
+[[ -d "/usr/local/share/android-sdk" ]] && export ANDROID_SDK="/usr/local/share/android-sdk"
+[[ -d "${HOME}/android-sdk" ]] && export ANDROID_SDK="${HOME}/android-sdk"
+export ANDROID_SDK_ROOT="${ANDROID_SDK}"
+[[ -d "/usr/local/share/android-ndk" ]] && export ANDROID_NDK="/usr/local/share/android-ndk"
+[[ -d "${HOME}/android-sdk/ndk-bundle" ]] && export ANDROID_NDK="${HOME}/android-sdk/ndk-bundle"
+export ANDROID_NDK_HOME="${ANDROID_NDK}"
 
 # shell colors
 export COLOR_DEFAULT="\[\033[0m\]"      # light yellow
