@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-05-08 13:33 (kyle)>
+  #+TIMESTAMP: <2022-05-10 20:37 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -23878,7 +23878,7 @@
                 ("<C-tab>" . mwim)))
     #+END_SRC
 
-*** neotree=====================================================================
+*** neotree
     :PROPERTIES:
     :CUSTOM_ID: modules-neotree
     :END:
@@ -23911,6 +23911,25 @@
                    (not (eq (current-buffer) (get-buffer neo-buffer-name))))
               (neo-global--select-window)
             (neotree-toggle))))
+    #+END_SRC
+
+*** nov
+    :PROPERTIES:
+    :CUSTOM_ID: packages-nov
+    :END:
+
+    Major mode for reading EPUBs in Emacs.
+
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Packages: nov
+      ;;------------------------------------------------------------------------------
+
+      (init-message 2 "Packages: nov")
+
+      (use-package nov
+        :straight t
+        :mode (("\\.epub\\'" . nov-mode)))
     #+END_SRC
 
 *** occur

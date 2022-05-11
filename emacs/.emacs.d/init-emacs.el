@@ -16575,7 +16575,7 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
           ("<C-tab>" . mwim)))
 ;; mwim:1 ends here
 
-;; [[file:init-emacs.org::#modules-neotree][neotree=====================================================================:1]]
+;; [[file:init-emacs.org::#modules-neotree][neotree:1]]
 ;;------------------------------------------------------------------------------
 ;;; Modules: neotree
 ;;------------------------------------------------------------------------------
@@ -16601,7 +16601,19 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
              (not (eq (current-buffer) (get-buffer neo-buffer-name))))
         (neo-global--select-window)
       (neotree-toggle))))
-;; neotree=====================================================================:1 ends here
+;; neotree:1 ends here
+
+;; [[file:init-emacs.org::#packages-nov][nov:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: nov
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Packages: nov")
+
+(use-package nov
+  :straight t
+  :mode (("\\.epub\\'" . nov-mode)))
+;; nov:1 ends here
 
 ;; [[file:init-emacs.org::#modules-occur][occur:1]]
 ;;------------------------------------------------------------------------------
