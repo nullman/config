@@ -7,8 +7,6 @@
 # Author: Kyle W T Sherman
 #===============================================================================
 
-set -euo pipefail
-
 echo "xmmslib.a install issue"
 exit 1
 

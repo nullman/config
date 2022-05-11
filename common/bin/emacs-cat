@@ -16,14 +16,12 @@
 # Author: Kyle W T Sherman (some minor modifications)
 #===============================================================================
 
-set -euo pipefail
-
 unset DISPLAY
 
 tmpfile="$(mktemp)"
 lisp="(progn (switch-to-buffer (generate-new-buffer \"*stdin*\")) (insert-file \"${tmpfile}\") (end-of-buffer) (normal-mode))"
 
-if [[ ! -t 0  ]] ; then
+if [[ ! -t 0 ]] ; then
     # data from stdin
 
     cat > "${tmpfile}"

@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-05-10 20:37 (kyle)>
+  #+TIMESTAMP: <2022-05-11 10:25 (kyle.sherman)>
 
 * Overview
   :PROPERTIES:
@@ -349,110 +349,153 @@
 
   Starting point of tangled *init-emacs.el* file.
 
-  #+BEGIN_SRC emacs-lisp
-    ;; -*- mode: emacs-lisp; lexical-binding: t; no-byte-compile: t -*-
-    ;;==============================================================================
-    ;;; init-emacs.el
-    ;;
-    ;;; Main Emacs Settings File
-    ;;
-    ;; Author: Kyle W T Sherman
-    ;;
-    ;; This file was generated from init-emacs.org and should not be edited
-    ;; manually.
-    ;;
-    ;; init-emacs.org => init-emacs.el
-    ;;==============================================================================
+*** Header
+    :PROPERTIES:
+    :CUSTOM_ID: start-header
+    :END:
 
-    ;;==============================================================================
-    ;;; Start
-    ;;==============================================================================
-  #+END_SRC
+    #+BEGIN_SRC emacs-lisp
+      ;; -*- mode: emacs-lisp; lexical-binding: t; no-byte-compile: t -*-
+      ;;==============================================================================
+      ;;; init-emacs.el
+      ;;
+      ;;; Main Emacs Settings File
+      ;;
+      ;; Author: Kyle W T Sherman
+      ;;
+      ;; This file was generated from init-emacs.org and should not be edited
+      ;; manually.
+      ;;
+      ;; init-emacs.org => init-emacs.el
+      ;;==============================================================================
 
-  Status messages are written to the *\*Messages\** buffer throughout the
-  initialization process to help debug loading errors.
+      ;;==============================================================================
+      ;;; Start
+      ;;==============================================================================
+    #+END_SRC
 
-  #+BEGIN_SRC emacs-lisp
-    (defun message--with-timestamp (format-string &rest args)
-      "Add timestamps to `*Messages*' buffer."
-      (when (and (> (length format-string) 0)
-                 (not (string= format-string " ")))
-        (let ((deactivate-mark nil))
-          (save-mark-and-excursion
-            (with-current-buffer "*Messages*"
-              (let ((inhibit-read-only t))
-                (goto-char (point-max))
-                (when (not (bolp)) (newline))
-                (insert (format-time-string "[%T] " (current-time)))))))))
-    ;; advise `message'
-    (advice-add 'message :before #'message--with-timestamp)
+    Status messages are written to the *\*Messages\** buffer throughout the
+    initialization process to help debug loading errors.
 
-    (defun init-message (level format-string &rest args)
-      "Custom version of `message' to log messages during Emacs initialization.
+*** Status Messages
+    :PROPERTIES:
+    :CUSTOM_ID: start-status-messages
+    :END:
 
-    LEVEL is the indentation level."
-      (let ((file (file-name-sans-extension
-                   (file-name-nondirectory
-                    (or load-file-name buffer-file-name (buffer-name))))))
-        (message (concat ";;; " file " "
-                         (make-string (* 2 level) ?-)
-                         "> " format-string) args)))
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Start: Status Messages
+      ;;------------------------------------------------------------------------------
 
-    (init-message 1 "Start")
+      (defun message--with-timestamp (format-string &rest args)
+        "Add timestamps to `*Messages*' buffer."
+        (when (and (> (length format-string) 0)
+                   (not (string= format-string " ")))
+          (let ((deactivate-mark nil))
+            (save-mark-and-excursion
+              (with-current-buffer "*Messages*"
+                (let ((inhibit-read-only t))
+                  (goto-char (point-max))
+                  (when (not (bolp)) (newline))
+                  (insert (format-time-string "[%T] " (current-time)))))))))
+      ;; advise `message'
+      (advice-add 'message :before #'message--with-timestamp)
 
-    ;; display load time after startup
-    (defun emacs-startup-hook--message-startup-time ()
-      "Message the Emacs startup time and number of garbage collections."
-      (message "Emacs startup time: %f seconds"
-               (float-time (time-subtract after-init-time before-init-time)))
-      (message "Emacs startup garbage collections: %d" gcs-done))
-    (add-hook 'emacs-startup-hook #'emacs-startup-hook--message-startup-time)
-  #+END_SRC
+      (defun init-message (level format-string &rest args)
+        "Custom version of `message' to log messages during Emacs initialization.
 
-  Increase the Emacs Lisp garbage collection threshold to reduce the frequency
-  of garbage collections.
+      LEVEL is the indentation level."
+        (let ((file (file-name-sans-extension
+                     (file-name-nondirectory
+                      (or load-file-name buffer-file-name (buffer-name))))))
+          (message (concat ";;; " file " "
+                           (make-string (* 2 level) ?-)
+                           "> " format-string) args)))
 
-  #+BEGIN_SRC emacs-lisp
-    ;; reduce frequency of garbage collections
-    (setq gc-cons-threshold (* 50 1000 1000)) ; default: 800000
-  #+END_SRC
+      (init-message 2 "Start: Status Messages")
 
-  Generic advice wrapper function to ignore errors.
+      ;; display load time after startup
+      (defun emacs-startup-hook--message-startup-time ()
+        "Message the Emacs startup time and number of garbage collections."
+        (message "Emacs startup time: %f seconds"
+                 (float-time (time-subtract after-init-time before-init-time)))
+        (message "Emacs startup garbage collections: %d" gcs-done))
+      (add-hook 'emacs-startup-hook #'emacs-startup-hook--message-startup-time)
+    #+END_SRC
 
-  #+BEGIN_SRC emacs-lisp
-    ;; generic advice wrapper function to ignore errors
-    (defun advice--ignore-errors (orig-fun &rest args)
-      "Ignore errors when interactively calling ORIG-FUN with ARGS."
-      (condition-case err
-          (apply orig-fun args)
-        ('error
-         (if (called-interactively-p 'any)
-             (message "%s" err)
-           (error err)))))
-  #+END_SRC
+*** Set Emacs Lisp Garbage Collection Threshold
+    :PROPERTIES:
+    :CUSTOM_ID: start-set-emacs-lisp-garbage-collection-threshold
+    :END:
 
-  Lock-file wrapper macro to evaluate code blocks only once per emacs session.
+    Increase the Emacs Lisp garbage collection threshold to reduce the frequency
+    of garbage collections.
 
-  Author: https://www.reddit.com/user/7890yuiop/
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Start: Set Emacs Lisp Garbage Collection Threshold
+      ;;------------------------------------------------------------------------------
 
-  #+BEGIN_SRC emacs-lisp
-    ;; lock-file wrapper macro to evaluate code blocks only once per emacs session
-    (defmacro when-lock-file-acquired (lock-file &rest body)
-      "Evaluate BODY unless another running Emacs instance has done so.
+      ;; reduce frequency of garbage collections
+      (setq gc-cons-threshold (* 50 1000 1000)) ; default: 800000
+    #+END_SRC
 
-    LOCK-FILE is a file name to be used as a lock for this BODY code.
+*** Ignore Errors Advice Wrapper
+    :PROPERTIES:
+    :CUSTOM_ID: start-ignore-errors-advice-wrapper
+    :END:
 
-    Skips checks if run on Windows."
-      (declare (indent 1))
-      (let ((procdir (gensym "procdir")))
-        `(let ((,procdir (format "/proc/%d" (emacs-pid))))
-           (unless (or (string= system-type "windows-nt")
-                    (file-exists-p ,lock-file))
-             (make-symbolic-link ,procdir ,lock-file t))
-           (when (or (string= system-type "windows-nt")
-                     (file-equal-p ,lock-file ,procdir))
-             ,@body))))
-  #+END_SRC
+    Generic advice wrapper function to ignore errors.
+
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Start: Ignore Errors Advice Wrapper
+      ;;------------------------------------------------------------------------------
+
+      ;; generic advice wrapper function to ignore errors
+      (defun advice--ignore-errors (orig-fun &rest args)
+        "Ignore errors when interactively calling ORIG-FUN with ARGS."
+        (condition-case err
+            (apply orig-fun args)
+          ('error
+           (if (called-interactively-p 'any)
+               (message "%s" err)
+             (error err)))))
+    #+END_SRC
+
+*** Lock-File Macro Wrapper
+    :PROPERTIES:
+    :CUSTOM_ID: start-lock-file-macro-wrapper
+    :END:
+
+    Lock-file wrapper macro to evaluate code blocks only once per emacs session.
+
+    Author: https://www.reddit.com/user/7890yuiop/
+
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Start: Lock-File Macro Wrapper
+      ;;------------------------------------------------------------------------------
+
+      ;; lock-file wrapper macro to evaluate code blocks only once per emacs session
+      (defmacro when-lock-file-acquired (lock-file &rest body)
+        "Evaluate BODY unless another running Emacs instance has done so.
+
+      LOCK-FILE is a file name to be used as a lock for this BODY code.
+
+      Skips checks if run on Windows or Mac."
+        (declare (indent 1))
+        (let ((procdir (gensym "procdir")))
+          `(let ((,procdir (format "/proc/%d" (emacs-pid))))
+             (unless (or (string= system-type "windows-nt")
+                         (string= system-type "darwin")
+                         (file-exists-p ,lock-file))
+               (make-symbolic-link ,procdir ,lock-file t))
+             (when (or (string= system-type "windows-nt")
+                       (string= system-type "darwin")
+                       (file-equal-p ,lock-file ,procdir))
+               ,@body))))
+    #+END_SRC
 
 * Package Manager
   :PROPERTIES:

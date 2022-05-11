@@ -8,8 +8,6 @@
 # Original PNG by Zeal <http://bbs.archlinux.org/profile.php?id=24422>
 #===============================================================================
 
-set -euo pipefail
-
 L="$(tput sgr0; tput setaf 0)"
 LB="$(tput sgr0; tput setab 0)"
 l="$(tput bold ; tput setaf 0)"

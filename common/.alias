@@ -1290,8 +1290,8 @@ alias edfu="edit \${HOME}/.funct"
 alias edfuw="edit \${HOME}/.funct-work"
 #        edemi                   edit ~/.emacs.d/init.el
 alias edemi="edit \${HOME}/.emacs.d/init.el"
-#        edemim                  edit ~/.emacs.d/init-main.org
-alias edemim="edit \${HOME}/.emacs.d/init-main.org"
+#        edemie                  edit ~/.emacs.d/init-emacs.org
+alias edemie="edit \${HOME}/.emacs.d/init-emacs.org"
 #        edho                    edit ~/.hosts
 alias edho="edit \${HOME}/.hosts"
 #        edhos                   edit ~/.hosts_ssmedia

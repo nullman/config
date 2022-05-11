@@ -2,19 +2,12 @@
 #===============================================================================
 # emacs-vi-edit
 #
-# Run emacs if the emacs server is running or vi editor otherwise.
+# Run emacs if the emacs server is running or vim/vi editor otherwise.
 #
 # Author: Kyle W T Sherman
 #===============================================================================
 
 WAIT=true VI=true emacs-edit "$@"
-if [[ $(command -v vim) ]] ; then
-    emacsclient --no-wait --alternate-editor "vim" "$@"
-elif [[ $(command -v vi) ]] ; then
-    emacsclient --no-wait --alternate-editor "vi" "$@"
-else
-    echo "Could not find an editor"
-fi
 
 #===============================================================================
 # End of File

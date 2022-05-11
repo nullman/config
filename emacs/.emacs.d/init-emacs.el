@@ -13,7 +13,7 @@
 )
 ;; Colors:1 ends here
 
-;; [[file:init-emacs.org::#start][Start:1]]
+;; [[file:init-emacs.org::#start-header][Header:1]]
 ;; -*- mode: emacs-lisp; lexical-binding: t; no-byte-compile: t -*-
 ;;==============================================================================
 ;;; init-emacs.el
@@ -31,9 +31,13 @@
 ;;==============================================================================
 ;;; Start
 ;;==============================================================================
-;; Start:1 ends here
+;; Header:1 ends here
 
-;; [[file:init-emacs.org::#start][Start:2]]
+;; [[file:init-emacs.org::#start-status-messages][Status Messages:1]]
+;;------------------------------------------------------------------------------
+;;; Start: Status Messages
+;;------------------------------------------------------------------------------
+
 (defun message--with-timestamp (format-string &rest args)
   "Add timestamps to `*Messages*' buffer."
   (when (and (> (length format-string) 0)
@@ -59,7 +63,7 @@ LEVEL is the indentation level."
                      (make-string (* 2 level) ?-)
                      "> " format-string) args)))
 
-(init-message 1 "Start")
+(init-message 2 "Start: Status Messages")
 
 ;; display load time after startup
 (defun emacs-startup-hook--message-startup-time ()
@@ -68,14 +72,22 @@ LEVEL is the indentation level."
            (float-time (time-subtract after-init-time before-init-time)))
   (message "Emacs startup garbage collections: %d" gcs-done))
 (add-hook 'emacs-startup-hook #'emacs-startup-hook--message-startup-time)
-;; Start:2 ends here
+;; Status Messages:1 ends here
 
-;; [[file:init-emacs.org::#start][Start:3]]
+;; [[file:init-emacs.org::#start-set-emacs-lisp-garbage-collection-threshold][Set Emacs Lisp Garbage Collection Threshold:1]]
+;;------------------------------------------------------------------------------
+;;; Start: Set Emacs Lisp Garbage Collection Threshold
+;;------------------------------------------------------------------------------
+
 ;; reduce frequency of garbage collections
 (setq gc-cons-threshold (* 50 1000 1000)) ; default: 800000
-;; Start:3 ends here
+;; Set Emacs Lisp Garbage Collection Threshold:1 ends here
 
-;; [[file:init-emacs.org::#start][Start:4]]
+;; [[file:init-emacs.org::#start-ignore-errors-advice-wrapper][Ignore Errors Advice Wrapper:1]]
+;;------------------------------------------------------------------------------
+;;; Start: Ignore Errors Advice Wrapper
+;;------------------------------------------------------------------------------
+
 ;; generic advice wrapper function to ignore errors
 (defun advice--ignore-errors (orig-fun &rest args)
   "Ignore errors when interactively calling ORIG-FUN with ARGS."
@@ -85,26 +97,32 @@ LEVEL is the indentation level."
      (if (called-interactively-p 'any)
          (message "%s" err)
        (error err)))))
-;; Start:4 ends here
+;; Ignore Errors Advice Wrapper:1 ends here
 
-;; [[file:init-emacs.org::#start][Start:5]]
+;; [[file:init-emacs.org::#start-lock-file-macro-wrapper][Lock-File Macro Wrapper:1]]
+;;------------------------------------------------------------------------------
+;;; Start: Lock-File Macro Wrapper
+;;------------------------------------------------------------------------------
+
 ;; lock-file wrapper macro to evaluate code blocks only once per emacs session
 (defmacro when-lock-file-acquired (lock-file &rest body)
   "Evaluate BODY unless another running Emacs instance has done so.
 
 LOCK-FILE is a file name to be used as a lock for this BODY code.
 
-Skips checks if run on Windows."
+Skips checks if run on Windows or Mac."
   (declare (indent 1))
   (let ((procdir (gensym "procdir")))
     `(let ((,procdir (format "/proc/%d" (emacs-pid))))
        (unless (or (string= system-type "windows-nt")
-                (file-exists-p ,lock-file))
+                   (string= system-type "darwin")
+                   (file-exists-p ,lock-file))
          (make-symbolic-link ,procdir ,lock-file t))
        (when (or (string= system-type "windows-nt")
+                 (string= system-type "darwin")
                  (file-equal-p ,lock-file ,procdir))
          ,@body))))
-;; Start:5 ends here
+;; Lock-File Macro Wrapper:1 ends here
 
 ;; [[file:init-emacs.org::#package-manager][Package Manager:1]]
 ;;==============================================================================

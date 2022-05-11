@@ -9,8 +9,6 @@
 # Author: Kyle W T Sherman
 #===============================================================================
 
-set -eu
-
 IN="${HOME}/.sdkman/candidates/kotlin/current"
 OUT="${HOME}/tmp/kotlin-deb"
 VERSION=$(cat ${IN}/build.txt | sed 's/-.*$//')

@@ -7,8 +7,6 @@
 # Author: Kyle W T Sherman
 #===============================================================================
 
-set -euo pipefail
-
 dir="${HOME}/.clojure"
 elisp="${HOME}/.emacs.d/modules"
 
