@@ -33,9 +33,9 @@ fi
 
 # get emacsclient socket name
 if [[ "$(uname -s)" == "Darwin" ]] ; then
-    socketname=$(lsof -c /emacs/i | grep server | tr -s ' ' | cut -d' ' -f8)
+    socketname=$(lsof -c /emacs/i | grep server | tr -s ' ' | cut -d' ' -f8 | head -n 1)
 else
-    socketname=$(lsof -c /emacs/i | grep server | tr -s ' ' | cut -d' ' -f9)
+    socketname=$(lsof -c /emacs/i | grep server | tr -s ' ' | cut -d' ' -f9 | head -n 1)
 fi
 [[ -n "${DEBUG}" ]] && echo "socketname: ${socketname}"
 
