@@ -2724,6 +2724,8 @@ alias gitgf="git log --pretty=format:\"%h %ad %s\" --date=short --all"
 alias gitgfg="git log --pretty=format:\"%h %ad %s\" --date=short --all | grep"
 #        gitd                    git diff (ignore white-space)
 alias gitd="git diff -w"
+#        gitdh                   git diff HEAD~ (ignore white-space)
+alias gitdh="git diff -w HEAD~"
 #        gitco                   git checkout
 alias gitco="git checkout"
 #        gitcod                  git checkout develop
