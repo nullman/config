@@ -1855,6 +1855,7 @@ manjaro-initialize() {
         "manjaro-packages-development"
         "manjaro-packages-graphical"
         "manjaro-packages-audio"
+        "manjaro-packages-audio-audacious-winamp-classic-skin"
         "manjaro-packages-video"
         "manjaro-packages-wine"
         "manjaro-packages-emulators"
