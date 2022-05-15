@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-05-11 10:25 (kyle.sherman)>
+  #+TIMESTAMP: <2022-05-15 08:48 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -23209,6 +23209,28 @@
                     ("<f5>" . mingus-set-song-rating-5)
                     ("<f6>" . mingus-set-song-rating-0))
         :config
+        ;; for some reason these are not being defined in libmpdee.el
+        (defmacro _mpdgv () `(aref conn 0))
+        (defmacro _mpdsv (val) `(aset conn 0 ,val))
+        (defmacro _mpdgo () `(aref conn 1))
+        (defmacro _mpdso (val) `(aset conn 1 ,val))
+        (defmacro _mpdgb () `(aref conn 2))
+        (defmacro _mpdsb (val) `(aset conn 2 ,val))
+        (defmacro _mpdgl () `(aref conn 3))
+        (defmacro _mpdsl (val) `(aset conn 3 ,val))
+        (defmacro _mpdgs () `(aref conn 4))
+        (defmacro _mpdss (val) `(aset conn 4 ,val))
+        (defmacro _mpdgf () `(aref conn 5))
+        (defmacro _mpdsf (val) `(aset conn 5 ,val))
+        (defmacro _mpdgt () `(aref conn 6))
+        (defmacro _mpdst (val) `(aset conn 6 ,val))
+        (defmacro _mpdgh () `(aref conn 7))
+        (defmacro _mpdsh (val) `(aset conn 7 ,val))
+        (defmacro _mpdgp () `(aref conn 8))
+        (defmacro _mpdsp (val) `(aset conn 8 ,val))
+        (defmacro _mpdga () `(aref conn 9))
+        (defmacro _mpdsa (val) `(aset conn 9 ,val))
+
         (defun custom-mingus-hook-custom-settings ()
           ;; disable undo
           (buffer-disable-undo)
@@ -23282,7 +23304,7 @@
           "Make a string from PLIST.
 
       Concatenate the results for the values with SEPARATOR, where SEPARATOR
-       defaults to the string \" - \"."
+      defaults to the string \" - \"."
           (let ((artist (cl-getf plist 'Artist))
                 (album (cl-getf plist 'Album))
                 (title (cl-getf plist 'Title))
