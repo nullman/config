@@ -1680,13 +1680,13 @@ EOF
 howto-home() {
     cat <<EOF
 Update Packages
-  sudo pacman -Syyu --noconfirm --needed
+  sudo pacman -Syyu --needed
 Install yay
-  sudo pacman -S --noconfirm --needed yay
+  sudo pacman -S --needed yay
 Refresh File Search Database
   yay -Fy
 Install Needed Packages
-  yay -S --noconfirm --needed ccrypt stow
+  yay -S --needed ccrypt stow
 Copy bundle.tgz.cpt from USB and decrypt it:
   cp /run/media/kyle/Cruzer/bundle.tgz.cpt ~/
   ccrypt -d bundle.tgz.cpt
@@ -1955,7 +1955,7 @@ manjaro-initialize() {
             echo "Aerial Screensaver (xscreensaver)"
             echo
             echo "Run the following command to install the Aerial Screensaver Videos (very long install):"
-            echo "  mkdir -p ~/tmp && yaourt -S --noconfirm --needed xscreensaver-aerial-videos-4k --tmp ~/tmp && rm -r ~/tmp/yaourt-tmp-$(id -un)"
+            echo "  mkdir -p ~/tmp && yaourt -S --needed xscreensaver-aerial-videos-4k --tmp ~/tmp && rm -r ~/tmp/yaourt-tmp-$(id -un)"
             echo
             echo "End of Manjaro Installation Script"
             ;;

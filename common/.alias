@@ -2537,15 +2537,15 @@ alias pacman-reset-repository="
 # yay (Package Manager)
 #
 #        yau                     yay -Syu (update packages with refresh)
-alias yau="yay -Syu --noconfirm"
+alias yau="yay -Syu"
 #        yauf                    yay -Syyu (update packages with forced refresh)
-alias yauf="yay -Syyu --noconfirm"
+alias yauf="yay -Syyu"
 #        yai                     yay -S (install package)
-alias yai="yay -S --noconfirm --needed"
+alias yai="yay -S --needed"
 #        yair                    yay -S (reinstall package)
-alias yair="yay -S --noconfirm"
+alias yair="yay -S"
 #        yar                     yay -R (remove package and configuration files)
-alias yar="yay -R --noconfirm --nosave"
+alias yar="yay -R --nosave"
 #        yas                     yay -Ss (search packages)
 alias yas="yay -Ss"
 #        yaf                     yay -F (search files)
