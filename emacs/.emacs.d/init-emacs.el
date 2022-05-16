@@ -20952,17 +20952,6 @@ to the current ERC buffer."
   (scroll-bar-mode -1))
 ;; Turn off Scroll Bar:1 ends here
 
-;; [[file:init-emacs.org::#final-setup-clear-mark][Clear Mark:1]]
-;;------------------------------------------------------------------------------
-;;; Final Setup: Clear Mark
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Final Setup: Clear Mark")
-
-;; clear mark
-(set-mark-command nil)
-;; Clear Mark:1 ends here
-
 ;; [[file:init-emacs.org::#final-setup-reset-emacs-lisp-garbage-collection-threshold][Reset Emacs Lisp Garbage Collection Threshold:1]]
 ;;------------------------------------------------------------------------------
 ;;; Final Setup: Reset Emacs Lisp Garbage Collection Threshold
