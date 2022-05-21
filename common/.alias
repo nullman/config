@@ -352,6 +352,23 @@ alias fortune-cowsay-lolcat="fortune | cowsay | lolcat"
 alias find-ls="find . -maxdepth 1 -not -regex '^\.+$'"
 #        update-desktop-apps     update-desktop-database ~/.local/share/applications
 alias update-desktop-apps="update-desktop-database \${HOME}/.local/share/applications"
+#        mount-synology          mount synology drives
+alias mount-synology="
+    sudo mkdir -p /mnt/synology
+    sudo mkdir -p /mnt/synology/music
+    sudo mkdir -p /mnt/synology/photo
+    sudo mkdir -p /mnt/synology/video
+    #sudo chown -R \${USER}:\${USER} /mnt/synology
+    sudo sh -c \"mount -t cifs //synology/music /mnt/synology/music -o \$(cat \${HOME}/.synology-mount-parameters)\"
+    sleep 0.2
+    sudo sh -c \"mount -t cifs //synology/photo /mnt/synology/photo -o \$(cat \${HOME}/.synology-mount-parameters)\"
+    sleep 0.2
+    sudo sh -c \"mount -t cifs //synology/video /mnt/synology/video -o \$(cat \${HOME}/.synology-mount-parameters)\""
+#        umount-synology         umount synology drives
+alias umount-synology="
+    sudo umount /mnt/synology/music
+    sudo umount /mnt/synology/photo
+    sudo umount /mnt/synology/video"
 
 #
 # general (external)
@@ -447,7 +464,7 @@ alias nitrogen-metcalfe-green="nitrogen --save --set-tiled /usr/share/background
 #
 #        chsh-bash               set default shell to BASH
 alias chsh-bash="
-    sudo chsh ${USER} -s /bin/bash && \
+    sudo chsh \${USER} -s /bin/bash && \
     echo 'Default shell is now BASH.  Logout out for it to take effect.'"
 #!#        set-prompt              set terminal prompt to: [host:user:path]$
 #!alias set-prompt="export PS1=\"[\h:\u:\w]\\$ \""
@@ -471,7 +488,7 @@ alias set-prompt-dos="export PS1=\"C:{PWD////\\\\}> \""
 #
 #        chsh-zsh                set default shell to ZSH
 alias chsh-zsh="
-    sudo chsh ${USER} -s /bin/zsh && \
+    sudo chsh \${USER} -s /bin/zsh && \
     echo 'Default shell is now ZSH.  Logout out for it to take effect.'"
 
 #
@@ -667,383 +684,109 @@ alias seti="(cd \${HOME}/setiathome ; setiathome -email -nice 19) &"
 alias gsettings-reset-app-picker-layout="gsettings reset org.gnome.shell app-picker-layout"
 
 #
-# emacs
+# android
 #
-#        emacs-cvs-co            emacs cvs source check-out
-alias emacs-cvs-co="
-    echo 'You are about to check-out emacs source tree to current directory.'
-    echo -n 'Do you wish to proceed? [yN] ' ; read a
+#        adbd                    adb devices
+alias adbd="adb devices"
+#        adblog                  adb logcat (no verboase logs)
+alias adblog="adb logcat | grep -v ' V '"
+#        adbloge                 adb -e logcat (no verboase logs)
+alias adbloge="adb -e logcat | grep -v ' V '"
+#        adblogd                 adb -d logcat (no verboase logs)
+alias adblogd="adb -d logcat | grep -v ' V '"
+#        adbi                    adb install
+alias adbi="adb install"
+#        adbie                   adb -e install
+alias adbie="adb -e install"
+#        adbid                   adb -d install
+alias adbid="adb -d install"
+#        adbir                   adb install -r
+alias adbir="adb install -r"
+#        adbire                  adb -e install -r
+alias adbire="adb -e install -r"
+#        adbird                  adb -d install -r
+alias adbird="adb -d install -r"
+#        adbdeeplink             adb shell am start
+alias adbdeeplink="adb shell am start"
+#        adbdate                 adb set date on device
+alias adbdate="adb shell date \$(date +%m%d%H%M%Y.%S)"
+#        adbdatee                adb set date on emulator
+alias adbdatee="adb -e shell date \$(date +%m%d%H%M%Y.%S)"
+#        adbdated                adb set date on attached device
+alias adbdated="adb -d shell date \$(date +%m%d%H%M%Y.%S)"
+#        adbrs                   restart adb
+alias adbrs="
+    sudo \${HOME}/android-sdk/platform-tools/adb kill-server && \
+      sudo \${HOME}/android-sdk/platform-tools/adb start-server"
+#        adb-usb-setup           setup adb usb device
+alias adb-usb-setup="
+    sudo bash -c \"
+        echo 'SUBSYSTEM==\\\"usb\\\", SYSFS{idVendor}==\\\"04e8\\\", MODE=\\\"0666\\\"' \
+          > /etc/udev/rules.d/51-android.rules && \
+          chmod a+r /etc/udev/rules.d/51-android.rules
+    \""
+#        adb-screenshot          abd screenshot (portrait)
+alias adb-screenshot="
+    adb shell screencap -p /sdcard/screen.png &&
+    adb pull /sdcard/screen.png android-device-screenshot-\$(date '+%Y-%m-%d-%H%M%S').png"
+#        adb-screenshot-landscape  abd screenshot (landscape)
+alias adb-screenshot-landscape="(
+    name=android-device-screenshot-\$(date '+%Y-%m-%d-%H%M%S').png
+    adb shell screencap -p /sdcard/screen.png &&
+    adb pull /sdcard/screen.png \${name} &&
+    convert \${name} -rotate 270 \${name}.tmp && mv \${name}.tmp \${name}"
+#!#        adb-animation         abd animation
+#!alias adb-animation="
+#!    adb shell screenrecord /sdcard/animation.mp4 &&
+#!    adb pull /sdcard/animation.mp4 android-device-screenshot-\$(date '+%Y-%m-%d-%H%M%S').mp4"
+#        adb-video-record        record a video
+alias adb-video-record="adb shell screenrecord /sdcard/animation.mp4"
+#        adb-video-copy          copy a recorded video off of device
+alias adb-video-copy="adb pull /sdcard/animation.mp4 android-device-screenshot-\$(date '+%Y-%m-%d-%H%M%S').mp4"
+#        ibus-sync               put ibus into sync mode to prevent keyboard issue in Android Studio
+alias ibus-sync="IBUS_ENABLE_SYNC_MODE=1 ibus-daemon -xrd"
+#        set-android-studio-stable  set android studio path to stable
+alias set-android-studio-stable="(cd \${HOME} && rm android-studio && ln -s android-studio-stable android-studio)"
+#        set-android-studio-beta  set android studio path to beta
+alias set-android-studio-beta="(cd \${HOME} && rm android-studio && ln -s android-studio-beta android-studio)"
+#        set-android-studio-canary  set android studio path to canary
+alias set-android-studio-canary="(cd \${HOME} && rm android-studio && ln -s android-studio-canary android-studio)"
+
+#
+# apache
+#
+#        aprs                    apache restart
+alias aprs="sudo systemctl restart httpd.service"
+#        aprl                    apache reload
+alias aprl="sudo systemctl reload httpd.service"
+#        aps                     apache status
+alias aps="sudo systemctl status httpd.service"
+#        edeac                   edit /etc/httpd/conf/httpd.conf
+alias edeac="ed /etc/httpd/conf/httpd.conf"
+#        apal                    tail -f -n 100 /var/log/httpd/access_log
+alias apal="tail -f -n 100 /var/log/httpd/access_log"
+#        apel                    tail -f -n 100 /var/log/httpd/error_log
+alias apel="tail -f -n 100 /var/log/httpd/error_log"
+#        aptop                   apachetop -f /var/log/httpd/access_log
+alias aptop="apachetop -f /var/log/httpd/access_log"
+
+#
+# apache-ssl
+#
+#        apsrs                   restart apache-ssl
+alias apsrs="sudo systemctl restart https.service"
+#        sslcert                 build apache-ssl ssl certificate
+alias sslcert="
+    echo -n 'Build apache-ssl certificate? [yN] ' ; read a
     case \${a} in
-        y|Y) cvs -z3 -d:pserver:anonymous@cvs.savannah.gnu.org:/sources/emacs co emacs ;;
+        y|Y) \$(pathcmd ssl-certificate) --force ;;
     esac"
-#        emacs-cvs-build         emacs cvs source build
-alias emacs-cvs-build="
-    ./configure --with-xpm --with-jpeg --with-tiff --with-png --with-x
-    make bootstrap
-    make install"
-#        emacs-install-v8        install v8 under .emacs.d dir
-alias emacs-install-v8="
-    dir=v8-tmp
-    pushd \${HOME}/.emacs.d/
-    if [[ -d \${dir} ]] ; then
-        svn checkout http://v8.googlecode.com/svn/trunk/ \${dir}
-    else
-        svn update \${dir}
-    fi
-    (cd \${dir} && make dependencies && make native)
-    [[ -d \${dir}/out/native/ ]] && mv \${dir}/out/native v8
-    rm -rf \${dir}
-    popd"
 
 #
-# etags
+# c/c++
 #
-#        etags-emacs             make TAGS for emacs files
-alias etags-emacs="
-    o=\${HOME}/.emacs.d/TAGS
-    find \${HOME}/.emacs.d/ -name \"*.el\" -print0 | grep -zZv \"/.svn/\" | \
-      xargs -0 etags -a -o \${o} > /dev/null 2>&1
-    find /usr/share/emacs* -name \"*.el\" -print0 | grep -zZv \"/.svn/\" | \
-      xargs -0 etags -a -o \${o} > /dev/null 2>&1
-    cp \${o} \${HOME}/.emacs.d/TAGS"
-#        etags-c                 make TAGS for c/c++ files
-alias etags-c="
-    find . -name \"*.h\" -o -name \"*.c\" -o -name \"*.hpp\" -o -name \"*.cpp\" -print0 | \
-      grep -zZv \"/.svn/\" | xargs -0 etags > /dev/null 2>&1"
-#        etags-java              make TAGS for java files
-alias etags-java="
-    find . -name \"*.java\" -print0 | \
-      grep -zZv \"/.svn/\" | xargs -0 etags > /dev/null 2>&1"
-
-#
-# remind
-#
-#        rem                     remind
-alias rem="remind \${HOME}/.reminders"
-#        rembot                  remind bot
-alias rembot="remind \${HOME}/.reminders_bot"
-#        today                   today in history
-alias today="
-    remind \${HOME}/.reminders_bot | head -c -1 | \
-      sed 's/^Reminders for/Today in history: / ; s/ (today):$// ; /^$/d'"
-#        edrem                   edit .reminder file
-alias edrem="\${EDITOR} \${HOME}/.reminders"
-#        edreminders             edit reminder files
-alias edreminders="
-    \${EDITOR} \${HOME}/.reminders
-    pushd \${HOME}/reminders
-    \$(pathcmd ls) -1 | while read file ; do \${EDITOR} \"\${file}\" ; done
-    popd"
-
-#
-# xmms
-#
-#        xmmsdi                  xmms streaming digitally imported (trance 56k)
-alias xmmsdi="xmms http://205.188.209.193:80/stream/1007 &"
-#        xmmsall                 xmms playing all
-alias xmmsall="xmms ${home}/data/media/audio/Playlists/all.m3u &"
-#        xmmss                   xmms playing singles
-alias xmmss="xmms ${home}/data/media/audio/Playlists/singles.m3u &"
-#        xmmsa                   xmms playing albums
-alias xmmsa="xmms ${home}/data/media/audio/Playlists/albums.m3u &"
-
-#
-# mp3blaster
-#
-#        mpb                     mp3blaster
-alias mpb="nice -n -5 mp3blaster -2"
-#        mpbdi                   mp3blaster streaming digitally imported (trance 56k)
-alias mpbdi="nice -n -5 mp3blaster -2 http://205.188.209.193:80/stream/1007"
-#        mpball                  mp3blaster playing all (random)
-alias mpball="nice -n -5 mp3blaster -2 -l ${home}/data/media/audio/Playlists/sorted_all.m3u"
-#        mpbs                    mp3blaster playing singles (random)
-alias mpbs="nice -n -5 mp3blaster -2 -l ${home}/data/media/audio/Playlists/sorted_singles.m3u"
-#        mpba                    mp3blaster playing albums (random)
-alias mpba="nice -n -5 mp3blaster -2 -l ${home}/data/media/audio/Playlists/sorted_albums.m3u"
-
-#
-# mpg123
-#
-#        mpgdi                   mpg123 streaming digitally imported (trance 56k)
-alias mpgdi="mpg123 -b 5000 http://205.188.209.193:80/stream/1007"
-#        mpgall                  mpg123 playing all (random)
-alias mpgall="mpg123 -b 5000 -z -@ ${home}/data/media/audio/Playlists/all.m3u"
-#        mpgs                    mpg123 playing singles (random)
-alias mpgs="mpg123 -b 5000 -z -@ ${home}/data/media/audio/Playlists/singles.m3u"
-#        mpga                    mpg123 playing albums (random)
-alias mpga="mpg123 -b 5000 -z -@ ${home}/data/media/audio/Playlists/albums.m3u"
-
-#
-# xscreensaver
-#
-#        sson                    turn screensaver on
-alias sson="
-    rm -f \${HOME}/.noscreensaver
-    \${HOME}/bin/ssaverauto > /dev/null 2>&1"
-#        ssoff                   turn screensaver off
-alias ssoff="
-    touch \${HOME}/.noscreensaver
-    fuser -k -SIGTERM \${HOME}/bin/ssaver > /dev/null 2>&1
-    fuser -k -SIGTERM /usr/bin/xscreensaver > /dev/null 2>&1
-    fuser -k -SIGTERM /usr/bin/xlock > /dev/null 2>&1
-    fuser -k -SIGTERM /usr/bin/electricsheep > /dev/null 2>&1
-    fuser -k -SIGTERM /usr/bin/xautolock > /dev/null 2>&1
-    fuser -k -SIGKILL \${HOME}/bin/ssaver > /dev/null 2>&1
-    fuser -k -SIGKILL /usr/bin/xscreensaver > /dev/null 2>&1
-    fuser -k -SIGKILL /usr/bin/xlock > /dev/null 2>&1
-    fuser -k -SIGKILL /usr/bin/electricsheep > /dev/null 2>&1
-    fuser -k -SIGKILL /usr/bin/xautolock > /dev/null 2>&1"
-#        ssrs                    restart screensaver
-alias ssrs="
-    fuser -k -SIGTERM \${HOME}/bin/ssaver > /dev/null 2>&1
-    fuser -k -SIGTERM /usr/bin/xscreensaver > /dev/null 2>&1
-    fuser -k -SIGTERM /usr/bin/xlock > /dev/null 2>&1
-    fuser -k -SIGTERM /usr/bin/electricsheep > /dev/null 2>&1
-    fuser -k -SIGTERM /usr/bin/xautolock > /dev/null 2>&1
-    fuser -k -SIGKILL \${HOME}/bin/ssaver > /dev/null 2>&1
-    fuser -k -SIGKILL /usr/bin/xscreensaver > /dev/null 2>&1
-    fuser -k -SIGKILL /usr/bin/xlock > /dev/null 2>&1
-    fuser -k -SIGKILL /usr/bin/electricsheep > /dev/null 2>&1
-    fuser -k -SIGKILL /usr/bin/xautolock > /dev/null 2>&1
-    rm -f \${HOME}/.noscreensaver
-    \${HOME}/bin/ssaverauto > /dev/null 2>&1"
-#        xsc                     run xscreensaver in the background
-alias xsc="xscreensaver -no-splash & > /dev/null 2>&1"
-#        xscrs                   restart xscreensaver
-alias xscrs="
-    fuser -k -SIGTERM \$(pathcmd xscreensaver)
-    fuser -k -SIGKILL \$(pathcmd xscreensaver)
-    xscreensaver -no-splash & > /dev/null 2>&1"
-#        xscd                    run xscreensaver-demo
-alias xscd="xscreensaver-demo"
-#        xscl                    xscreensaver lock display
-alias xscl="xscreensaver-command -lock & > /dev/null 2>&1"
-#!#        cpxsc                   copy .xscreensaver to nobody and root
-#!alias cpxsc="
-#!    cp -p ${home}/somebody/.xscreensaver /
-#!    cp -p ${home}/somebody/.xscreensaver /root
-#!    chown nobody:nobody /.xscreensaver
-#!    chown root:root /root/.xscreensaver"
-#
-# slideshows and webcams
-#
-#        sschbg                  slideshow using chbg
-alias sschbg="chbg -randomize -interval 30.00 -R"
-#! add the following to .xscreensaver:
-#!  default-n:        "SlideShow (chbg)" \
-    #!                    chbg -xscreensaver -randomize -interval 0.30 \
-    #!                    -R /home/data/media/pictures_slide_show/Nasa/     \n\
-    #        ssfeh                   slideshow using feh
-alias ssfeh="feh --title \"Slideshow\" -F -x -z -D 30.00 -r"
-#! add the following to .xscreensaver:
-#!  default-n:        "SlideShow (feh)" \
-    #!                    feh --title "Slideshow" -F -x -D 0.30 \
-    #!                    -r /home/data/media/pictures_slide_show/Nasa/     \n\
-    #!       ssapp                   slideshow application
-ssapp="feh --title \"Slideshow\" -F -x -z -D 30.00 -r"
-#        sspersonal              personal slideshow
-alias sspersonal="${ssapp} ${home}/data/media/pictures_slide_show/Personal/"
-#        ssnasa                  nasa slideshow
-alias ssnasa="${ssapp} ${home}/data/media/pictures_slide_show/Nasa/"
-#        ssnerve                 nerve slideshow
-alias ssnerve="${ssapp} \"${home}/data/media/pictures_slide_show/Nerve Magazine/\""
-#        duluth-webcam-800       duluth webcam (800x640)
-alias duluth-webcam-800="arora \$(xwininfo -root | grep geometry) http://nullman.org/interesting/duluth-webcam-800x600.html"
-#        duluth-webcam-1024      duluth webcam (1024x768)
-alias duluth-webcam-1024="arora \$(xwininfo -root | grep geometry) http://nullman.org/interesting/duluth-webcam-1024x768.html"
-
-#
-# linuxlogo
-#
-#        dprll                   dpkg-reconfigure linuxlogo
-alias dprll="dpkg-reconfigure linuxlogo"
-#!#        llinit                  update /etc/inittab for linuxlogo
-#!alias llinit="
-#!    cp /etc/inittab /etc/inittab.old
-#!    sed inittab.old -e 's/getty 38400/getty -f \/etc\/issue.linuxlogo 38400/' > /etc/inittab"
-#        linuxlogo-setup         setup linuxlogo config
-alias linuxlogo-setup="
-    \$(cat /etc/linux_logo.conf | grep -q '^-l ubuntu$') || \
-    echo '-l ubuntu' | sudo tee -a /etc/linux_logo.conf"
-#        llmotd                  update /etc/motd with linuxlogo
-alias llmotd="
-    linuxlogo > /etc/motd
-    linuxlogo > /etc/motd.tail"
-
-#
-# offlineimap
-#
-#        imap-on                 turn offlineimap on
-alias imap-on="rm -f \${HOME}/.noofflineimap > /dev/null 2>&1"
-#! alias imap-on="
-#!     rm -f \${HOME}/.noofflineimap
-#!     \${HOME}/bin/run-app > /dev/null 2>&1"
-#        imap-off                turn offlineimap off
-alias imap-off="
-    touch \${HOME}/.noofflineimap
-    sudo pkill --signal SIGTERM --exact offlineimap"
-#! alias imap-off="touch \${HOME}/.noofflineimap > /dev/null 2>&1"
-#        imap-restart            restart offlineimap
-alias imap-restart="sudo pkill --signal SIGTERM --exact offlineimap"
-#        offlineimap-once        sync normal imap accounts once
-alias offlineimap-once="offlineimap -o -u ttyui"
-#        offlineimap-home        sync home imap account
-alias offlineimap-home="offlineimap -o -u ttyui -a Home"
-#        offlineimap-work        sync work imap account
-alias offlineimap-work="offlineimap -o -u ttyui -a Work"
-#        offlineimap-gmail       sync gmail imap accounts
-alias offlineimap-gmail="offlineimap -o -u ttyui -a Gmail"
-
-#
-# jpegtran
-#
-#        jpegtranleft            jpegtran -copy all -rotate 270
-alias jpegtranleft="jpegtran -copy all -rotate 270"
-#        jpegtranright           jpegtran -copy all -rotate 90
-alias jpegtranright="jpegtran -copy all -rotate 90"
-
-#
-# wine applications
-#
-#        winetricks-update       download latest version of winetricks
-alias winetricks-update="wget http://www.kegel.com/wine/winetricks -O \${HOME}/bin/vendor/winetricks"
-#        wine-bookshelf          wine microsoft bookshelf 2000
-alias wine-bookshelf="WINEPREFIX=${HOME}/.wine-bookshelf2000 wine \"C:\Program Files (x86)\Microsoft Reference\Bookshelf 2000\bshelf2k.exe\""
-#        wine-civ                wine civilization
-#!alias wine-civ="WINEPREFIX=\${HOME}/.wine-civ4 wine explorer /desktop=civ,1280x800 \"C:\Program Files\Firaxis Games\Sid Meier's Civilization 4\Beyond the Sword\Civ4BeyondSword.exe\""
-alias wine-civ="WINEPREFIX=\${HOME}/.wine-civ4 wine explorer /desktop=civ,1920x1080 \"C:\Program Files\Firaxis Games\Sid Meier's Civilization 4\Beyond the Sword\Civ4BeyondSword.exe\""
-#        wine-ddo                wine ddo
-alias wine-ddo="WINEPREFIX=\${HOME}/.wine-ddo wine \"C:\Program Files (x86)\StandingStoneGames\Dungeons & Dragons Online\TurbineLauncher.exe\""
-#        wine-ddo-cp             wine ddo character planner
-alias wine-ddo-cp="WINEPREFIX=\${HOME}/.wine-ddocp wine \"C:\Games\DDOCharGen\DDOCharGen.exe\""
-#!#        wine-eve                wine eve online
-#!#!alias wine-eve="WINEPREFIX=\${HOME}/.wine-eve wine explorer /desktop=eve,1280x800 \"C:\Program Files (x86)\CCP\EVE\eve.exe\""
-#!alias wine-eve="WINEPREFIX=\${HOME}/.wine-eve wine explorer /desktop=eve,1920x1080 \"C:\Program Files (x86)\CCP\EVE\eve.exe\""
-#!alias wine-eve-file="WINEPREFIX=\${HOME}/.wine-eve wine explorer /desktop=eve,1920x1080 \"C:\Program Files (x86)\CCP\EVE\evefile.exe\""
-#!#        wine-eve2               wine eve online second install
-#!#!alias wine-eve2="WINEPREFIX=\${HOME}/.wine-eve2 wine explorer /desktop=eve2,1280x800 \"C:\Program Files (x86)\CCP\EVE\eve.exe\""
-#!alias wine-eve2="WINEPREFIX=\${HOME}/.wine-eve2 wine explorer /desktop=eve2,1920x1080 \"C:\Program Files (x86)\CCP\EVE\eve.exe\""
-#!#        wine-eft                wine eve online eft
-#!alias wine-eft="WINEPREFIX=\${HOME}/.wine-eve-tools wine \"C:\Program Files (x86)\Utilities\EFT\EFT.exe\""
-#!#        wine-eve-mon            wine eve online eve-mon
-#!alias wine-eve-mon="WINEPREFIX=\${HOME}/.wine-eve-tools wine \"C:\Program Files (x86)\EVEMon\EVEMon.exe\""
-#!#        eve-copy-settings       copy eve settings
-#!alias eve-copy-settings="
-#!    cp -R \"\${HOME}/Downloads/EVE/CCP/EVE/c_program_files_ccp_eve_tranquility/settings\" \
-    #!      \"\${HOME}/.wine-eve/drive_c/windows/profiles/kyle/Local Settings/Application Data/CCP/EVE/c_program_files_ccp_eve_tranquility/\"
-#!    cp -R \"\${HOME}/Downloads/EVE/CCP/EVE/c_users_kyle_program_files_eve_tranquility/settings\" \
-    #!      \"\${HOME}/.wine-eve2/drive_c/windows/profiles/kyle/Local Settings/Application Data/CCP/EVE/c_program_files_ccp_eve_tranquility/\""
-#        wine-fallout            wine fallout
-alias wine-fallout="WINEPREFIX=\${HOME}/.wine-fallout wine \"C:\GOG Games\Games\\Fallout\FalloutLauncher.exe\""
-#        wine-fallout-setup      configure fallout.cfg file
-alias wine-fallout-setup="
-    file=\"\${HOME}/.wine-fallout/drive_c/GOG Games/Fallout/fallout.cfg\"
-    sed -i 's/^critter_dat=.*$/critter_dat=C:\\\\GOG Games\\\\Fallout\\\\CRITTER.DAT\r/' \"\${file}\"
-    sed -i 's/^critter_patches=.*$/critter_patches=C:\\\\GOG Games\\\\Fallout\\\\DATA\r/' \"\${file}\"
-    sed -i 's/^master_dat=.*$/master_dat=C:\\\\GOG Games\\\\Fallout\\\\MASTER.DAT\r/' \"\${file}\"
-    sed -i 's/^master_patches=.*$/master_patches=C:\\\\GOG Games\\\\Fallout\\\\DATA\r/' \"\${file}\"
-    "
-#        wine-tta                wine through the ages
-alias wine-tta="WINEPREFIX=\${HOME}/.wine-tta wine \"C:\GOG Games\Through the Ages\ThroughTheAges_gog.exe\""
-#        wine-winamp             winamp
-alias wine-winamp="WINEPREFIX=\${HOME}/.wine-winamp wine \"C:\Program Files (x86)\Winamp\winamp.exe\""
-
-#
-# dosbox applications
-#
-#        dosbox-wc3              dosbox wing commander 3
-alias dosbox-wc3="(cd \${HOME}/.dosbox-wc3 && dosbox -conf .dosboxrc)"
-
-#
-# googlecl
-#
-#        google-contacts-to-abook  import google contacts to abook
-alias google-contacts-to-abook="data=name,email,phone,address,im,company,notes; (echo $data; google contacts list $data) | abook --convert --informat csv --outformat abook --outfile \${HOME}/.abook/addressbook"
-
-#
-# ls
-#
-#        ls_                     ls (classify, columns, literal, human-readable, auto-color)
-[[ "${os}" != "Darwin" ]] && alias ls_="ls -F -C -N -h --color=auto"
-[[ "${os}" == "Darwin" ]] && alias ls_="gls -F -C -N -h --color=auto"
-#        la                      ls -F -C -N -h --color=auto
-alias la="ls_"
-#        lsa                     ls -A (allmost-all)
-alias lsa="ls_ -A"
-#        lsd                     ls -d (directories)
-alias lsd="ls_ -d */"
-#        lsr                     ls -R (recursive)
-alias lsr="ls_ -R"
-#        ls1                     ls -1 (one-file-per-line)
-alias ls1="ls_ -1"
-#        ll                      ls -l (long-format)
-alias ll="ls_ -l"
-#        lla                     ls -l -A (long-format, allmost-all)
-alias lla="ls_ -l -A"
-#        lld                     ls -l -d (long-format, directories)
-alias lld="ls_ -l -d */"
-#        llr                     ls -l -R (long-format, recursive)
-alias llr="ls_ -l -R"
-#        llra                    ls -l -R -A (long-format, recursive, allmost-all)
-alias llra="ls_ -l -R -A"
-#        llrt                    ls -l -r -t (long-format, reverse-order, time-sort)
-alias llrt="ls_ -l -r -t"
-#        llrta                   ls -l -r -t -A (long-format, reverse-order, time-sort, allmost-all)
-alias llrta="ls_ -l -r -t -A"
-#        llrtadl                 llrta ~/Downloads/
-alias llrtadl="ls_ -l -r -t -A \${HOME}/Downloads/"
-#        lllrtalog               llrta /var/log
-alias llrtalog="ls_ -l -r -t -A /var/log"
-#        llag                    ls -l -A (long-format, allmost-all) with grep -i
-alias llag="ls_ -l -A | grep -i"
-#        llp                     ls (pretty format)
-alias llp="(echo 'PERM LINKS OWNER GROUP SIZE MONTH DAY HH:MM/YEAR NAME' ; ls -l | sed 1d) | column --table"
-#        dir                     ls (like ftp dir command)
-alias dir="ls_ -l -A | pager"
-
-#
-# exa
-#
-if _command exa ; then
-    #        exa                     (color and group directories first)
-    alias exa="exa --color=always --group-directories-first"
-    #        ls                      exa --color=always --group-directories-first
-    alias ls="exa"
-    #        la                      exa --color=always --group-directories-first
-    alias la="exa"
-    #        lsa                     exa -a (almost-all)
-    alias lsa="exa -a"
-    #        lsd                     exa -D (directories)
-    alias lsd="exa -D"
-    #        lsr                     exa -R (recursive)
-    alias lsr="exa -R"
-    #        ls1                     exa -1 (one-file-per-line)
-    alias ls1="exa -1"
-    #        ll                      exa -l (long-format)
-    alias ll="exa -l"
-    #        lla                     exa -l -a (long-format, almost-all)
-    alias lla="exa -l -a"
-    #        lld                     exa -l -D (long-format, directories)
-    alias lld="exa -l -D"
-    #        llr                     exa -l -R (long-format, recursive)
-    alias llr="exa -l -R"
-    #        llra                    exa -l -R -a (long-format, recursive, almost-all)
-    alias llra="exa -l -R -a"
-    #        llrt                    exa -l -r -t (long-format, reverse-order, time-sort)
-    alias llrt="exa -l -s newest"
-    #        llrta                   exa -l -r -t -a (long-format, reverse-order, time-sort, almost-all)
-    alias llrta="exa -l -s newest -a"
-    #        llrtadl                 llrta ~/Downloads/
-    alias llrtadl="exa -l -s newest -a \${HOME}/Downloads/"
-    #        llrtalog                llrta /var/log
-    alias llrtalog="exa -l -s newest -a /var/log"
-    #        llag                    exa -l -a (long-format, almost-all) with grep -i
-    alias llag="exa -l -a | grep -i"
-    #        llt                     exa -T (tree)
-    alias lst="exa -T -a"
-    #        ls.                     exa -a (almost-all), dot files and directories only
-    alias ls.="exa -a | egrep '^\.'"
-fi
+#        mcm                     make clean && make
+alias mcm="make clean && make"
 
 #
 # cd
@@ -1258,6 +1001,180 @@ alias cdweb="cd \${HOME}/web"
 alias cdwebb="cd \${HOME}/web/bin"
 
 #
+# cdrom
+#
+#        cdscan                  cdrecord -scanbus
+alias cdscan="cdrecord -scanbus"
+#        mkiso                   mkisofs <image.iso> <path/files>
+alias mkiso="mkisofs -v -r -o \$*"
+#        cdrec                   cdrecord -data <image.iso>
+alias cdrec="cdrecord -v dev=0,1,0 speed=8 -eject -data \$*"
+#        cdreca                  cdrecord -audio <path/files>
+alias cdreca="cdrecord -v dev=0,1,0 speed=8 -eject -audio \$*"
+#        cdblank                 cdrecord blank
+alias cdblank="cdrecord dev=0,1,0 speed=8 blank=fast"
+
+#
+# chmod
+#
+#        chmodx                  chmod +x
+alias chmodx="chmod +x"
+#        chmodd                  chmod u=rwX,g=rX,o=
+alias chmodd="chmod u=rwX,g=rX,o="
+#        chmoddo                 chmod u=rwx,g=rx,o=rx
+alias chmoddo="chmod u=rwX,g=rX,o=rX"
+#
+# chmod all
+#
+#        chmodar                 chmod u=r,g=r,o=r
+alias chmoda="chmod u=r,g=r,o=r"
+#        chmodarw                chmod u=rw,g=rw,o=rw
+alias chmodarw="chmod u=rw,g=rw,o=rw"
+#        chmodarx                chmod u=rX,g=rX,o=rX
+alias chmodarx="chmod u=rX,g=rX,o=rX"
+#        chmodaa                 chmod u=rwX,g=rwX,o=rwX
+alias chmodaa="chmod u=rwX,g=rwX,o=rwX"
+#
+# chmod user
+#
+#        chmodur                 chmod u=r,g=,o=
+alias chmodur="chmod u=r,g=,o="
+#        chmodurw                chmod u=rw,g=,o=
+alias chmodurw="chmod u=rw,g=,o="
+#        chmodurx                chmod u=rX,g=,o=
+alias chmodurx="chmod u=rX,g=,o="
+#        chmodua                 chmod u=rwX,g=,o=
+alias chmodua="chmod u=rwX,g=,o="
+#
+# chmod group
+#
+#        chmodgr                 chmod u=r,g=r,o=
+alias chmodgr="chmod u=r,g=r,o="
+#        chmodgrw                chmod u=rw,g=rw,o=
+alias chmodgrw="chmod u=rw,g=rw,o="
+#        chmodgrx                chmod u=rX,g=rX,o=
+alias chmodgrx="chmod u=rX,g=rX,o="
+#        chmodga                 chmod u=rwX,g=rwX,o=
+alias chmodga="chmod u=rwX,g=rwX,o="
+
+#
+# chown
+#
+#        chownr                  chown root:root
+alias chownr="sudo chown root:root"
+#        chownrr                 chown -R root:root
+alias chownrr="sudo chown -R root:root"
+#        chowna                  chown admin:admin
+alias chowna="sudo chown admin:admin"
+#        chownar                 chown -R admin:admin
+alias chownar="sudo chown -R admin:admin"
+#        chownk                  chown kyle:kyle
+alias chownk="sudo chown kyle:kyle"
+#        chownkr                 chown -R kyle:kyle
+alias chownkr="sudo chown -R kyle:kyle"
+
+#
+# ckermit
+#
+#        ckermit-m100            ckermit setup to connect to an M100/102/200 connected to ttyUSB0
+alias ckermit-m100="sudo ckermit \${HOME}/.ckermit_m100_connection"
+#        ckermit-hp95lx          ckermit setup to connect to an HP95LX connected to ttyUSB0
+alias ckermit-hp95lx="sudo ckermit \${HOME}/.ckermit_hp95lx_connection"
+
+#
+# clojure
+#
+#          clj                   clojure
+alias clj="clojure"
+
+#
+# compression
+#
+#        ungzip                  un-gzip files
+alias ungzip="gzip -d"
+#        bzip                    bzip2
+alias bzip="bzip2"
+#        unbzip                  un-bzip files
+alias unbzip="bzip2 -d -k"
+#!#        intar                   tar files [query user]
+#!alias intar="
+#!    echo -n 'File(s) to tar: ' ; read a
+#!    echo -n 'Name of tar: ' ; read b
+#!    tar cvf - \"\${a}\" > \"\${b}\""
+#        untar                   un-tar files
+alias untar="tar xvf"
+
+#
+# cp
+#
+#        cp                      copy (no dereference)
+[[ "${os}" != "Darwin" ]] && alias cp="cp -d"
+#        cpr                     copy (recursive, no dereference)
+alias cpr="cp -R -d"
+#        cprp                    copy (recursive, preserve, no dereference)
+alias cprp="cp -R -p -d"
+#        cpp                     copy (preserve, no dereference)
+alias cpp="cp -p -d"
+#        cprdux                  copy (recursive, no dereference, update,
+#                                      same file system)
+alias cprdux="cp -R -d -u -x"
+#        cprpdux                 copy (recursive, preserve, no dereference,
+#                                      update, same file system)
+alias cprpdux="cp -R -p -d -u -x"
+
+#
+# crontab
+#
+#        lcron                   list crontab
+alias lcron="crontab -l"
+#        acron                   list crontab (active)
+alias acron="crontab -l | grep \"^[^#]\""
+#        edcron                  edit crontab (and copy new crontab to ~/.cron)
+alias edcron="editor=vim crontab -e ; crontab -l > \${HOME}/.cron"
+#        mcron                   crontab -l > ~/.cron
+alias mcron="crontab -l > \${HOME}/.cron"
+
+#
+# docker
+#
+#        dockerrs                docker service restart
+alias dockerrs="sudo systemctl restart docker"
+#        dockerv                 docker version
+alias dockerv="docker version"
+#        dockerps                docker ps
+alias dockerps="docker ps"
+#        dockerpsa               docker ps -a
+alias dockerpsa="docker ps -a"
+#        dockerrsh               docker run debian container shell
+alias dockerrsh="docker run -i -t debian /bin/bash"
+#        dockerrmall             docker rm all containers
+alias dockerrmall="docker rm -v \$(docker ps -aq -f status=exited)"
+#        droplet-env-nullware-1  digital ocean env setup for droplet-nullware-1
+alias droplet-env-nullware-1="eval \"\$(docker-machine env droplet-nullware-1)\""
+
+#
+# dosbox applications
+#
+#        dosbox-wc3              dosbox wing commander 3
+alias dosbox-wc3="(cd \${HOME}/.dosbox-wc3 && dosbox -conf .dosboxrc)"
+
+#
+# du
+#
+#        dfh                     df -h (human readable)
+alias dfh="df -h"
+#        duh                     du -h (human readable)
+alias duh="du -h"
+#        dub                     du -h -b (human readable, bytes)
+alias dub="du -h -b"
+#        dus                     du -s -h (summary, human readable)
+alias dus="du -s -h"
+#        dusb                    du -s -h -b (summary, human readable, bytes)
+alias dusb="du -s -h -b"
+#        duss                    du -s -h * | sort -h -r | head -n 40
+alias duss="du -s -h * | sort -h -r | head -n 40"
+
+#
 # edit
 #
 #        edit                    edit
@@ -1415,62 +1332,105 @@ alias edesh="edit /etc/shadow"
 #!alias edekxv="edit /etc/kde2/kdm/Xservers"
 
 #
-# cp
+# emacs
 #
-#        cp                      copy (no dereference)
-[[ "${os}" != "Darwin" ]] && alias cp="cp -d"
-#        cpr                     copy (recursive, no dereference)
-alias cpr="cp -R -d"
-#        cprp                    copy (recursive, preserve, no dereference)
-alias cprp="cp -R -p -d"
-#        cpp                     copy (preserve, no dereference)
-alias cpp="cp -p -d"
-#        cprdux                  copy (recursive, no dereference, update,
-#                                      same file system)
-alias cprdux="cp -R -d -u -x"
-#        cprpdux                 copy (recursive, preserve, no dereference,
-#                                      update, same file system)
-alias cprpdux="cp -R -p -d -u -x"
+#        emacs-cvs-co            emacs cvs source check-out
+alias emacs-cvs-co="
+    echo 'You are about to check-out emacs source tree to current directory.'
+    echo -n 'Do you wish to proceed? [yN] ' ; read a
+    case \${a} in
+        y|Y) cvs -z3 -d:pserver:anonymous@cvs.savannah.gnu.org:/sources/emacs co emacs ;;
+    esac"
+#        emacs-cvs-build         emacs cvs source build
+alias emacs-cvs-build="
+    ./configure --with-xpm --with-jpeg --with-tiff --with-png --with-x
+    make bootstrap
+    make install"
+#        emacs-install-v8        install v8 under .emacs.d dir
+alias emacs-install-v8="
+    dir=v8-tmp
+    pushd \${HOME}/.emacs.d/
+    if [[ -d \${dir} ]] ; then
+        svn checkout http://v8.googlecode.com/svn/trunk/ \${dir}
+    else
+        svn update \${dir}
+    fi
+    (cd \${dir} && make dependencies && make native)
+    [[ -d \${dir}/out/native/ ]] && mv \${dir}/out/native v8
+    rm -rf \${dir}
+    popd"
 
 #
-# su
+# etags
 #
-#        sur                     su to root
-alias sur="sudo su -"
-#        suk                     su to kyle
-alias suk="sudo su - kyle"
+#        etags-emacs             make TAGS for emacs files
+alias etags-emacs="
+    o=\${HOME}/.emacs.d/TAGS
+    find \${HOME}/.emacs.d/ -name \"*.el\" -print0 | grep -zZv \"/.svn/\" | \
+      xargs -0 etags -a -o \${o} > /dev/null 2>&1
+    find /usr/share/emacs* -name \"*.el\" -print0 | grep -zZv \"/.svn/\" | \
+      xargs -0 etags -a -o \${o} > /dev/null 2>&1
+    cp \${o} \${HOME}/.emacs.d/TAGS"
+#        etags-c                 make TAGS for c/c++ files
+alias etags-c="
+    find . -name \"*.h\" -o -name \"*.c\" -o -name \"*.hpp\" -o -name \"*.cpp\" -print0 | \
+      grep -zZv \"/.svn/\" | xargs -0 etags > /dev/null 2>&1"
+#        etags-java              make TAGS for java files
+alias etags-java="
+    find . -name \"*.java\" -print0 | \
+      grep -zZv \"/.svn/\" | xargs -0 etags > /dev/null 2>&1"
 
 #
-# rm
+# exa
 #
-#        del                     remove
-alias del="rm"
-#        rmi                     interactive remove
-alias rmi="rm -i"
+if _command exa ; then
+    #        exa                     (color and group directories first)
+    alias exa="exa --color=always --group-directories-first"
+    #        la                      exa --color=always --group-directories-first
+    alias la="exa"
+    #        lsa                     exa -a (almost-all)
+    alias lsa="exa -a"
+    #        lsd                     exa -D (directories)
+    alias lsd="exa -D"
+    #        lsr                     exa -R (recursive)
+    alias lsr="exa -R"
+    #        ls1                     exa -1 (one-file-per-line)
+    alias ls1="exa -1"
+    #        ll                      exa -l (long-format)
+    alias ll="exa -l"
+    #        lla                     exa -l -a (long-format, almost-all)
+    alias lla="exa -l -a"
+    #        lld                     exa -l -D (long-format, directories)
+    alias lld="exa -l -D"
+    #        llr                     exa -l -R (long-format, recursive)
+    alias llr="exa -l -R"
+    #        llra                    exa -l -R -a (long-format, recursive, almost-all)
+    alias llra="exa -l -R -a"
+    #        llrt                    exa -l -r -t (long-format, reverse-order, time-sort)
+    alias llrt="exa -l -s newest"
+    #        llrta                   exa -l -r -t -a (long-format, reverse-order, time-sort, almost-all)
+    alias llrta="exa -l -s newest -a"
+    #        llrtadl                 llrta ~/Downloads/
+    alias llrtadl="exa -l -s newest -a \${HOME}/Downloads/"
+    #        llrtalog                llrta /var/log
+    alias llrtalog="exa -l -s newest -a /var/log"
+    #        llag                    exa -l -a (long-format, almost-all) with grep -i
+    alias llag="exa -l -a | grep -i"
+    #        llt                     exa -T (tree)
+    alias lst="exa -T -a"
+    #        ls.                     exa -a (almost-all), dot files and directories only
+    alias ls.="exa -a | egrep '^\.'"
+fi
 
 #
-# du
+# file system
 #
-#        dfh                     df -h (human readable)
-alias dfh="df -h"
-#        duh                     du -h (human readable)
-alias duh="du -h"
-#        dub                     du -h -b (human readable, bytes)
-alias dub="du -h -b"
-#        dus                     du -s -h (summary, human readable)
-alias dus="du -s -h"
-#        dusb                    du -s -h -b (summary, human readable, bytes)
-alias dusb="du -s -h -b"
-#        duss                    du -s -h * | sort -h -r | head -n 40
-alias duss="du -s -h * | sort -h -r | head -n 40"
-
-#
-# kill
-#
-#        kt                      kill -SIGTERM (friendly kill)
-alias kt="kill -SIGTERM"
-#        kk                      kill -SIGKILL (forced kill)
-alias kk="kill -SIGKILL"
+#        mkfs-ext2               format an ext2 filesystem (with 1% reserve)
+alias mkfs-ext2="sudo mkfs -t ext2 -m 1 -i 1024"
+#        mkfs-ext3               format an ext3 filesystem (with 1% reserve)
+alias mkfs-ext3="sudo mkfs -t ext3 -m 1 -i 1024"
+#        ext-dump                dump ext file system info
+alias ext-dump="dumpe2fs -h"
 
 #
 # fuser
@@ -1481,63 +1441,65 @@ alias fuvm="fuser -v -m"
 alias fuvmk="fuser -v -m -k"
 
 #
-# chmod
+# GNOME
 #
-#        chmodx                  chmod +x
-alias chmodx="chmod +x"
-#        chmodd                  chmod u=rwX,g=rX,o=
-alias chmodd="chmod u=rwX,g=rX,o="
-#        chmoddo                 chmod u=rwx,g=rx,o=rx
-alias chmoddo="chmod u=rwX,g=rX,o=rX"
-#
-# chmod all
-#
-#        chmodar                 chmod u=r,g=r,o=r
-alias chmoda="chmod u=r,g=r,o=r"
-#        chmodarw                chmod u=rw,g=rw,o=rw
-alias chmodarw="chmod u=rw,g=rw,o=rw"
-#        chmodarx                chmod u=rX,g=rX,o=rX
-alias chmodarx="chmod u=rX,g=rX,o=rX"
-#        chmodaa                 chmod u=rwX,g=rwX,o=rwX
-alias chmodaa="chmod u=rwX,g=rwX,o=rwX"
-#
-# chmod user
-#
-#        chmodur                 chmod u=r,g=,o=
-alias chmodur="chmod u=r,g=,o="
-#        chmodurw                chmod u=rw,g=,o=
-alias chmodurw="chmod u=rw,g=,o="
-#        chmodurx                chmod u=rX,g=,o=
-alias chmodurx="chmod u=rX,g=,o="
-#        chmodua                 chmod u=rwX,g=,o=
-alias chmodua="chmod u=rwX,g=,o="
-#
-# chmod group
-#
-#        chmodgr                 chmod u=r,g=r,o=
-alias chmodgr="chmod u=r,g=r,o="
-#        chmodgrw                chmod u=rw,g=rw,o=
-alias chmodgrw="chmod u=rw,g=rw,o="
-#        chmodgrx                chmod u=rX,g=rX,o=
-alias chmodgrx="chmod u=rX,g=rX,o="
-#        chmodga                 chmod u=rwX,g=rwX,o=
-alias chmodga="chmod u=rwX,g=rwX,o="
+#        gnome-gdm-setup         gksu gdmsetup
+alias gnome-gdm-setup="gksu gdmsetup"
+#        gsetting-values         dump all keybindings
+alias gsetting-values="
+    for schema in \$(gsettings list-schemas | sort) ; do
+        for key in \$(gsettings list-keys \${schema} | sort) ; do
+            echo \"\${schema}|\${key}|\$(gsettings get \${schema} \${key})\"
+        done
+    done | column --table --separator '|' --table-columns SCHEMA,KEY,VALUE"
+#        gsetting-ranges         dump all keybindings
+alias gsetting-ranges="
+    for schema in \$(gsettings list-schemas | sort) ; do
+        for key in \$(gsettings list-keys \${schema} | sort) ; do
+            echo \"\${schema}|\${key}|\$(gsettings range \${schema} \${key} |  tr '\n' ' ')\"
+        done
+    done | column --table --separator '|' --table-columns SCHEMA,KEY,RANGE"
+#        gsetting-gnome-keybindings  dump gnome keybindings
+alias gsetting-gnome-keybindings="
+    for key in \$(gsettings list-keys org.gnome.desktop.wm.keybindings | sort) ; do
+        echo \"\${key}|\$(gsettings get org.gnome.desktop.wm.keybindings \${key})\"
+    done | column --table --separator '|' --table-columns KEY,VALUE"
 
 #
-# chown
+# gpg (gnu pgp)
 #
-#        chownr                  chown root:root
-alias chownr="sudo chown root:root"
-#        chownrr                 chown -R root:root
-alias chownrr="sudo chown -R root:root"
-#        chowna                  chown admin:admin
-alias chowna="sudo chown admin:admin"
-#        chownar                 chown -R admin:admin
-alias chownar="sudo chown -R admin:admin"
-#        chownk                  chown kyle:kyle
-alias chownk="sudo chown kyle:kyle"
-#        chownkr                 chown -R kyle:kyle
-alias chownkr="sudo chown -R kyle:kyle"
+#        gpg-gen                 gpg --gen-key
+alias gpg-gen="gpg --gen-key"
+#        gpg-list                gpg --list-keys
+alias gpg-list="gpg --list-keys"
+#        gpg-list-secret         gpg --list-secret-keys
+alias gpg-list-secret="gpg --list-secret-keys"
+#        gpg-edit                gpg --edit-key
+alias gpg-edit="gpg --edit-key"
+#        gpg-send                gpg --keyserver 64.71.163.210 --send-keys
+alias gpg-send="gpg --keyserver 64.71.163.210 --send-keys"
+#        gpg-search              gpg --keyserver 64.71.163.210 --search-keys
+alias gpg-search="gpg --keyserver 64.71.163.210 --search-keys"
+
+#
+# googlecl
+#
+#        google-contacts-to-abook  import google contacts to abook
+alias google-contacts-to-abook="data=name,email,phone,address,im,company,notes; (echo $data; google contacts list $data) | abook --convert --informat csv --outformat abook --outfile \${HOME}/.abook/addressbook"
+
+#
+# gradle
+#
+#        gradlec                 gradle clean
+alias gradlec="gradle clean"
+#        gradleb                 gradle build
+alias gradleb="gradle build"
+#        gradlecb                gradle clean && gradle build
+alias gradlecb="gradle clean && gradle build"
+#        gradlear                gradle assembleRelease
+alias gradlear="gradle assembleRelease"
+#        gradlecar               gradle clean && gradle assembleRelease
+alias gradlecar="gradle clean && gradle assembleRelease"
 
 #
 # grep
@@ -1556,162 +1518,159 @@ alias fgrep="fgrep -I --color=auto"
 alias egrep="egrep -I --color=auto"
 
 #
-# compression
+# java
 #
-#        ungzip                  un-gzip files
-alias ungzip="gzip -d"
-#        bzip                    bzip2
-alias bzip="bzip2"
-#        unbzip                  un-bzip files
-alias unbzip="bzip2 -d -k"
-#!#        intar                   tar files [query user]
-#!alias intar="
-#!    echo -n 'File(s) to tar: ' ; read a
-#!    echo -n 'Name of tar: ' ; read b
-#!    tar cvf - \"\${a}\" > \"\${b}\""
-#        untar                   un-tar files
-alias untar="tar xvf"
+#        java-set-env-java8      set java environment to java 8
+alias java-set-env-java8="
+    sudo archlinux-java set java-8-openjdk && \
+    export JAVA_HOME=\"\$(java -XshowSettings:properties -version 2>&1 > /dev/null | grep 'java.home' | sed 's/^.* = //')\""
+#        java-set-env-java11     set java environment to java 11
+alias java-set-env-java11="
+    sudo archlinux-java set java-11-openjdk && \
+    export JAVA_HOME=\"\$(java -XshowSettings:properties -version 2>&1 > /dev/null | grep 'java.home' | sed 's/^.* = //')\""
+#        java-set-env-java18     set java environment to java 18
+alias java-set-env-java18="
+    sudo archlinux-java set java-18-openjdk && \
+    export JAVA_HOME=\"\$(java -XshowSettings:properties -version 2>&1 > /dev/null | grep 'java.home' | sed 's/^.* = //')\""
 
 #
-# crontab
+# jpegtran
 #
-#        lcron                   list crontab
-alias lcron="crontab -l"
-#        acron                   list crontab (active)
-alias acron="crontab -l | grep \"^[^#]\""
-#        edcron                  edit crontab (and copy new crontab to ~/.cron)
-alias edcron="editor=vim crontab -e ; crontab -l > \${HOME}/.cron"
-#        mcron                   crontab -l > ~/.cron
-alias mcron="crontab -l > \${HOME}/.cron"
+#        jpegtranleft            jpegtran -copy all -rotate 270
+alias jpegtranleft="jpegtran -copy all -rotate 270"
+#        jpegtranright           jpegtran -copy all -rotate 90
+alias jpegtranright="jpegtran -copy all -rotate 90"
 
 #
-# cdrom
+# KDE
 #
-#        cdscan                  cdrecord -scanbus
-alias cdscan="cdrecord -scanbus"
-#        mkiso                   mkisofs <image.iso> <path/files>
-alias mkiso="mkisofs -v -r -o \$*"
-#        cdrec                   cdrecord -data <image.iso>
-alias cdrec="cdrecord -v dev=0,1,0 speed=8 -eject -data \$*"
-#        cdreca                  cdrecord -audio <path/files>
-alias cdreca="cdrecord -v dev=0,1,0 speed=8 -eject -audio \$*"
-#        cdblank                 cdrecord blank
-alias cdblank="cdrecord dev=0,1,0 speed=8 blank=fast"
 
 #
-# rdesktop
+# kill
 #
-#        rdd                     rdesktop dozer (1024x768)
-alias rdd="rdesktop -u kyle -g 1024x768 -z -a16 dozer"
-#        rdd8                    rdesktop dozer (800x600)
-alias rdd8="rdesktop -u kyle -g 800x600 -z -a16 dozer"
-#        rddf                    rdesktop dozer (full)
-alias rddf="rdesktop -u kyle -f -z -a16 dozer"
+#        kt                      kill -SIGTERM (friendly kill)
+alias kt="kill -SIGTERM"
+#        kk                      kill -SIGKILL (forced kill)
+alias kk="kill -SIGKILL"
 
 #
-# ssh
+# linuxlogo
 #
-#        ssh-key-gen-rsa         generate rsa ssh keys
-alias ssh-key-gen-rsa="ssh-keygen -t rsa -b 4096"
-#        ssh-key-gen-ed          generate ed25519 ssh keys
-alias ssh-key-gen-ed="ssh-keygen -t ed25519"
-#        ssh-agent               turn on ssh agent
-alias ssh-agent="
-    eval \$(ssh-agent)
-    ssh-add
-    ssh-add -l"
-#!#        ssh-tunnel-irc          ssh tunnel irc (freenode.net)
-#!alias ssh-tunnel-irc="ssh -L 6670:irc.freenode.net:6667 \${nullwareip}"
-#!#!alias ssh-tunnel-irc="ssh -L 6667:irc.freenode.net:6667 \${nullwareip}"
-#!#        ssh-tunnel-imap         ssh tunnel imap (home)
-#!alias ssh-tunnel-imap="ssh -L 8143:morpheus:143 \${nullwareip}"
-#!#        ssh-tunnel-gmail        ssh tunnel gmail pop
-#!alias ssh-tunnel-gmail="ssh -L 8995:pop.gmail.com:995 \${nullwareip}"
-#!#        ssh-tunnel-ldap         ssh tunnel scheduleworld ldap
-#!alias ssh-tunnel-ldap="ssh -L 8389:ldap.scheduleworld.com:389 \${nullwareip}"
-#!#        ssh-tunnel-sshw         ssh tunnel ssh through work pc
-#!alias ssh-tunnel-sshw="ssh -L 2222:\${nullwareip}:22 kyle-work"
-#
-# ssh logons (internal)
-#
-#        ssh-apoc                ssh apoc
-alias ssh-apoc="echo 'ssh:apoc' ; ssh apoc"
-#        ssh-colleen             ssh colleen
-alias ssh-colleen="echo 'ssh:colleen@colleen' ; ssh colleen@colleen"
-#        ssh-firewall            ssh -p 8022 -l root firewall
-alias ssh-firewall="echo 'ssh:admin@firewall' ; ssh -p 8022 admin@firewall"
-#        ssh-gemini              ssh gemini
-alias ssh-gemini="echo 'ssh:gemini' ; ssh gemini"
-#        ssh-morpheus            ssh morpheus
-alias ssh-morpheus="echo 'ssh:morpheus' ; ssh morpheus"
-#        ssh-morpheusgit         ssh morpheus:git
-alias ssh-morpheusgit="echo 'ssh:git@morpheus' ; ssh -l git morpheus"
-#        ssh-neo                 ssh neo
-alias ssh-neo="echo 'ssh:neo' ; ssh neo"
-#        ssh-pi                  ssh raspberrypi
-alias ssh-pi="echo 'ssh:pi@raspberrypid' ; ssh pi@raspberrypid"
-#        ssh-raspad              ssh raspad
-alias ssh-raspad="echo 'ssh:raspadusb' ; ssh pi@raspadusb"
-#        ssh-switch              ssh switch
-alias ssh-switch="echo 'ssh:switch' ; ssh switch"
-#        ssh-tank                ssh tank
-alias ssh-tank="echo 'ssh:tank' ; ssh tank"
-#        ssh-tank2               ssh tank (2nd nic)
-alias ssh-tank2="echo 'ssh:tank' ; ssh 192.168.1.61"
-#        ssh-trinity             ssh trinity
-alias ssh-trinity="echo 'ssh:trinity' ; ssh trinity"
+#        dprll                   dpkg-reconfigure linuxlogo
+alias dprll="dpkg-reconfigure linuxlogo"
+#!#        llinit                  update /etc/inittab for linuxlogo
+#!alias llinit="
+#!    cp /etc/inittab /etc/inittab.old
+#!    sed inittab.old -e 's/getty 38400/getty -f \/etc\/issue.linuxlogo 38400/' > /etc/inittab"
+#        linuxlogo-setup         setup linuxlogo config
+alias linuxlogo-setup="
+    \$(cat /etc/linux_logo.conf | grep -q '^-l ubuntu$') || \
+    echo '-l ubuntu' | sudo tee -a /etc/linux_logo.conf"
+#        llmotd                  update /etc/motd with linuxlogo
+alias llmotd="
+    linuxlogo > /etc/motd
+    linuxlogo > /etc/motd.tail"
 
 #
-# ssh logons (external)
+# ls
 #
-#!#        sshx                  ssh nullware.com
-#!alias sshx="echo 'ssh:nullware.com' ; ssh \${nullwareip}"
-#!#        sshxr                 ssh nullware.com
-#!alias sshxr="echo 'ssh:nullware.com:root' ; ssh -l root \${nullwareip}"
-#!#        sshxk                 ssh nullware.com
-#!alias sshxk="echo 'ssh:nullware.com:kyle' ; ssh -l kyle \${nullwareip}"
-#        ssh-nullware            ssh nullware.com
-alias ssh-nullware="echo 'ssh:kyle@nullware.com' ; ssh kyle@\${nullwareip}"
+#        ls_                     ls (classify, columns, literal, human-readable, auto-color)
+[[ "${os}" != "Darwin" ]] && alias ls_="ls -F -C -N -h --color=auto"
+[[ "${os}" == "Darwin" ]] && alias ls_="gls -F -C -N -h --color=auto"
+#        la                      ls -F -C -N -h --color=auto
+alias la="ls_"
+#        lsa                     ls -A (allmost-all)
+alias lsa="ls_ -A"
+#        lsd                     ls -d (directories)
+alias lsd="ls_ -d */"
+#        lsr                     ls -R (recursive)
+alias lsr="ls_ -R"
+#        ls1                     ls -1 (one-file-per-line)
+alias ls1="ls_ -1"
+#        ll                      ls -l (long-format)
+alias ll="ls_ -l"
+#        lla                     ls -l -A (long-format, allmost-all)
+alias lla="ls_ -l -A"
+#        lld                     ls -l -d (long-format, directories)
+alias lld="ls_ -l -d */"
+#        llr                     ls -l -R (long-format, recursive)
+alias llr="ls_ -l -R"
+#        llra                    ls -l -R -A (long-format, recursive, allmost-all)
+alias llra="ls_ -l -R -A"
+#        llrt                    ls -l -r -t (long-format, reverse-order, time-sort)
+alias llrt="ls_ -l -r -t"
+#        llrta                   ls -l -r -t -A (long-format, reverse-order, time-sort, allmost-all)
+alias llrta="ls_ -l -r -t -A"
+#        llrtadl                 llrta ~/Downloads/
+alias llrtadl="ls_ -l -r -t -A \${HOME}/Downloads/"
+#        lllrtalog               llrta /var/log
+alias llrtalog="ls_ -l -r -t -A /var/log"
+#        llag                    ls -l -A (long-format, allmost-all) with grep -i
+alias llag="ls_ -l -A | grep -i"
+#        llp                     ls (pretty format)
+alias llp="(echo 'PERM LINKS OWNER GROUP SIZE MONTH DAY HH:MM/YEAR NAME' ; ls -l | sed 1d) | column --table"
+#        dir                     ls (like ftp dir command)
+alias dir="ls_ -l -A | pager"
 
 #
-# sftp (internal)
+# mp3blaster
 #
-#        sftpapoc                sftp apoc
-alias sftpapoc="echo 'sftp:apoc' ; sftp apoc"
-#        sftpfirewall            sftp -oPort=222 admin@firewall
-alias sftpf="echo 'sftp:admin@firewall' ; sftp -oPort=8022 admin@firewall"
-#        sftpmorpheus            sftp morpheus
-alias sftpmorpheus="echo 'sftp:morpheus' ; sftp morpheus"
-#        sftpneo                 sftp neo
-alias sftpneo="echo 'sftp:neo' ; sftp neo"
-#        sftptank                sftp tank
-alias sftptank="echo 'sftp:tank' ; sftp tank"
+#        mpb                     mp3blaster
+alias mpb="nice -n -5 mp3blaster -2"
+#        mpbdi                   mp3blaster streaming digitally imported (trance 56k)
+alias mpbdi="nice -n -5 mp3blaster -2 http://205.188.209.193:80/stream/1007"
+#        mpball                  mp3blaster playing all (random)
+alias mpball="nice -n -5 mp3blaster -2 -l ${home}/data/media/audio/Playlists/sorted_all.m3u"
+#        mpbs                    mp3blaster playing singles (random)
+alias mpbs="nice -n -5 mp3blaster -2 -l ${home}/data/media/audio/Playlists/sorted_singles.m3u"
+#        mpba                    mp3blaster playing albums (random)
+alias mpba="nice -n -5 mp3blaster -2 -l ${home}/data/media/audio/Playlists/sorted_albums.m3u"
 
 #
-# sftp (external)
+# mpd (Music Player Daemon)
 #
-#!#        sftpx                   sftp nullware.com
-#!alias sftpx="echo 'sftp:nullware.com' ; sftp \${nullwareip}"
-#!#        sftpxr                  sftp nullware.com
-#!alias sftpxr="echo 'sftp:nullware.com:root' ; sftp root@\${nullwareip}"
-#!#        sftpxk                  sftp nullware.com
-#!alias sftpxk="echo 'sftp:nullware.com:kyle' ; sftp kyle@\${nullwareip}"
+#        mpd-service-enable      systemctl --user enable/start mpd
+alias mpd-service-enable="systemctl --user enable mpd && systemctl --user start mpd"
+#        mpd-service-disable     systemctl --user disable mpd
+alias mpd-service-disable="systemctl --user disable mpd"
+#        mpd-service-restart     systemctl --user restart mpd
+alias mpd-service-restart="systemctl --user restart mpd"
+#        mpc-status              display artist and title of current song
+alias mpc-status="notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' \"\$(mpc | head -n 1)\""
+#        mpc-update              update mpc database
+alias mpc-update="mpc --wait update"
 
 #
-# ssh run commands
+# mpg123
 #
-#        sshmorpheusiftop        ssh -l root morpheus "TERM=screen iftop"
-alias sshmorpheusiftop="ssh -l root morpheus \"TERM=screen iftop\""
+#        mpgdi                   mpg123 streaming digitally imported (trance 56k)
+alias mpgdi="mpg123 -b 5000 http://205.188.209.193:80/stream/1007"
+#        mpgall                  mpg123 playing all (random)
+alias mpgall="mpg123 -b 5000 -z -@ ${home}/data/media/audio/Playlists/all.m3u"
+#        mpgs                    mpg123 playing singles (random)
+alias mpgs="mpg123 -b 5000 -z -@ ${home}/data/media/audio/Playlists/singles.m3u"
+#        mpga                    mpg123 playing albums (random)
+alias mpga="mpg123 -b 5000 -z -@ ${home}/data/media/audio/Playlists/albums.m3u"
 
 #
-# file system
+# mysql
 #
-#        mkfs-ext2               format an ext2 filesystem (with 1% reserve)
-alias mkfs-ext2="sudo mkfs -t ext2 -m 1 -i 1024"
-#        mkfs-ext3               format an ext3 filesystem (with 1% reserve)
-alias mkfs-ext3="sudo mkfs -t ext3 -m 1 -i 1024"
-#        ext-dump                dump ext file system info
-alias ext-dump="dumpe2fs -h"
+#        myr                     mysql -u root -p
+alias myr="mysql -u root -p"
+#        myw                     mysql -u web -p web
+alias myw="mysql -u web -p web"
+#        mywin                   mysql -u web -p web < <file>
+alias mywin="mysql -u web -p web < "
+#        mys                     mysql -u stock -p stock
+alias mys="mysql -u stock -p stock"
+#        mysin                   mysql -u stock -p stock < <file>
+alias mysin="mysql -u stock -p stock < "
+#        mynopasswd              mysqld --skip-grant-tables
+alias mynopasswd="sudo systemctl restart mysqld.service --skip-grant-tables"
+#        mypasswd                mysql change password
+alias mypasswd="
+    echo \"mysqladmin -u root password '<password>'\"
+    echo \"mysqladmin -u root -h <hostname> password '<password>'\""
 
 #
 # networking (general)
@@ -1800,6 +1759,108 @@ alias ping-uswest="ping uswest.net"
 alias ping-uswestip="ping 204.147.80.81"
 #        traceroute-uswest       traceroute uswest.net
 alias traceroute-uswest="traceroute uswest.net"
+
+#
+# offlineimap
+#
+#        imap-on                 turn offlineimap on
+alias imap-on="rm -f \${HOME}/.noofflineimap > /dev/null 2>&1"
+#! alias imap-on="
+#!     rm -f \${HOME}/.noofflineimap
+#!     \${HOME}/bin/run-app > /dev/null 2>&1"
+#        imap-off                turn offlineimap off
+alias imap-off="
+    touch \${HOME}/.noofflineimap
+    sudo pkill --signal SIGTERM --exact offlineimap"
+#! alias imap-off="touch \${HOME}/.noofflineimap > /dev/null 2>&1"
+#        imap-restart            restart offlineimap
+alias imap-restart="sudo pkill --signal SIGTERM --exact offlineimap"
+#        offlineimap-once        sync normal imap accounts once
+alias offlineimap-once="offlineimap -o -u ttyui"
+#        offlineimap-home        sync home imap account
+alias offlineimap-home="offlineimap -o -u ttyui -a Home"
+#        offlineimap-work        sync work imap account
+alias offlineimap-work="offlineimap -o -u ttyui -a Work"
+#        offlineimap-gmail       sync gmail imap accounts
+alias offlineimap-gmail="offlineimap -o -u ttyui -a Gmail"
+
+#
+# openldap
+#
+#        ldrs                    restart ldap
+alias ldrs="sudo systemctl restart ldap.service"
+#        lds                     search ldap
+alias lds="ldapsearch -D dc=localhost -s sub '(objectclass=*)' namingContexts -H ldap://localhost/ -x -w letmein"
+#        ldadd                   add ldif file to ldap
+alias ldadd="ldapadd -D 'dc=localhost' -W -H ldap://localhost/ -x -w letmein -f"
+#        lddel                   delete ldap node by dn
+alias lddel="ldapdelete -D 'dc=localhost' -W -H ldap://localhost/ -x -w letmein"
+#        lddelall                ldapdelall (all nodes)
+alias lddelall="ldapdelete -D 'dc=localhost' -H ldap://localhost/ -x -w letmein -r"
+
+#
+# perl
+#
+#        cpan                    run perl in CPAN mode (use default answers to prompts)
+alias cpan="PERL_MM_USE_DEFAULT=1 perl -MCPAN -e shell"
+
+#
+# postgresql
+#
+#        pgs                     psql -U stock stock
+alias pgs="psql -U stock stock"
+#        pgnj                    psql -U web netjuke
+alias pgnj="psql -U web netjuke"
+
+#
+# printing
+#
+#        lps                     lpstat -t -d
+alias lps="lpstat -t -d"
+#        lprn2                   lpr n-up 2
+alias lprn2="lpr -o number-up=2 -o page-border=single"
+
+#
+# ratpoison
+#
+
+#
+# rdesktop
+#
+#        rdd                     rdesktop dozer (1024x768)
+alias rdd="rdesktop -u kyle -g 1024x768 -z -a16 dozer"
+#        rdd8                    rdesktop dozer (800x600)
+alias rdd8="rdesktop -u kyle -g 800x600 -z -a16 dozer"
+#        rddf                    rdesktop dozer (full)
+alias rddf="rdesktop -u kyle -f -z -a16 dozer"
+
+#
+# remind
+#
+#        rem                     remind
+alias rem="remind \${HOME}/.reminders"
+#        rembot                  remind bot
+alias rembot="remind \${HOME}/.reminders_bot"
+#        today                   today in history
+alias today="
+    remind \${HOME}/.reminders_bot | head -c -1 | \
+      sed 's/^Reminders for/Today in history: / ; s/ (today):$// ; /^$/d'"
+#        edrem                   edit .reminder file
+alias edrem="\${EDITOR} \${HOME}/.reminders"
+#        edreminders             edit reminder files
+alias edreminders="
+    \${EDITOR} \${HOME}/.reminders
+    pushd \${HOME}/reminders
+    \$(pathcmd ls) -1 | while read file ; do \${EDITOR} \"\${file}\" ; done
+    popd"
+
+#
+# rm
+#
+#        del                     remove
+alias del="rm"
+#        rmi                     interactive remove
+alias rmi="rm -i"
 
 #
 # rsync
@@ -1921,18 +1982,22 @@ alias rsync-common-put-media-delete=" \
     rsync -rlptx --progress --delete \${HOME}/config/images/ ${home}/data/media/graphic/Images/Common/"
 
 #
-# update-alternatives
+# ruby
 #
-#        update-alternatives-x-session-manager  change default x session manager
-alias update-alternatives-x-session-manager="sudo update-alternatives --config x-session-manager"
-#        update-alternatives-x-window-manager  change default x window manager
-alias update-alternatives-x-window-manager="sudo update-alternatives --config x-window-manager"
-#        update-alternatives-java  change default java implementation
-alias update-alternatives-java="sudo update-alternatives --config java"
+#        gemq                    ruby gem query --name-matches
+alias gemq="gem query --name-matches"
+#        gemqr                   ruby gem query --remote --name-matches
+alias gemqr="gem query --remote --name-matches"
+#        gemir                   ruby gem install --remote
+alias gemir="gem install --remote"
 
 #
-# ratpoison
+# samba
 #
+#        samrs                   restart samba
+alias samrs="sudo systemctl restart samba.service"
+#        edesam                  edit /etc/samba/smb.conf
+alias edesam="ed /etc/samba/smb.conf"
 
 #
 # screen
@@ -2052,16 +2117,6 @@ alias sc20="\${HOME}/bin/screen-app 20"
     #!      screen -t shell 35 ssh -C -L 8389:ldap.scheduleworld.com:389 \${nullwareip} && \
 
 #
-# startx
-#
-#        startx-8                startx in 8 bit mode
-alias startx-8="startx -- -depth 8"
-#        startx-16               startx in 16 bit mode
-alias startx-16="startx -- -depth 16"
-#        startx-24               startx in 24 bit mode
-alias startx-24="startx -- -depth 24"
-
-#
 # service control
 #
 #!#        net-restart             restart networking
@@ -2076,42 +2131,127 @@ alias startx-24="startx -- -depth 24"
 #!alias zope-restart-debug="sudo /etc/init.d/zope stop ; /etc/init.d/zope start -D"
 
 #
-# apache
+# sftp (external)
 #
-#        aprs                    apache restart
-alias aprs="sudo systemctl restart httpd.service"
-#        aprl                    apache reload
-alias aprl="sudo systemctl reload httpd.service"
-#        aps                     apache status
-alias aps="sudo systemctl status httpd.service"
-#        edeac                   edit /etc/httpd/conf/httpd.conf
-alias edeac="ed /etc/httpd/conf/httpd.conf"
-#        apal                    tail -f -n 100 /var/log/httpd/access_log
-alias apal="tail -f -n 100 /var/log/httpd/access_log"
-#        apel                    tail -f -n 100 /var/log/httpd/error_log
-alias apel="tail -f -n 100 /var/log/httpd/error_log"
-#        aptop                   apachetop -f /var/log/httpd/access_log
-alias aptop="apachetop -f /var/log/httpd/access_log"
+#!#        sftpx                   sftp nullware.com
+#!alias sftpx="echo 'sftp:nullware.com' ; sftp \${nullwareip}"
+#!#        sftpxr                  sftp nullware.com
+#!alias sftpxr="echo 'sftp:nullware.com:root' ; sftp root@\${nullwareip}"
+#!#        sftpxk                  sftp nullware.com
+#!alias sftpxk="echo 'sftp:nullware.com:kyle' ; sftp kyle@\${nullwareip}"
 
 #
-# apache-ssl
+# sftp (internal)
 #
-#        apsrs                   restart apache-ssl
-alias apsrs="sudo systemctl restart https.service"
-#        sslcert                 build apache-ssl ssl certificate
-alias sslcert="
-    echo -n 'Build apache-ssl certificate? [yN] ' ; read a
-    case \${a} in
-        y|Y) \$(pathcmd ssl-certificate) --force ;;
-    esac"
+#        sftpapoc                sftp apoc
+alias sftpapoc="echo 'sftp:apoc' ; sftp apoc"
+#        sftpfirewall            sftp -oPort=222 admin@firewall
+alias sftpf="echo 'sftp:admin@firewall' ; sftp -oPort=8022 admin@firewall"
+#        sftpmorpheus            sftp morpheus
+alias sftpmorpheus="echo 'sftp:morpheus' ; sftp morpheus"
+#        sftpneo                 sftp neo
+alias sftpneo="echo 'sftp:neo' ; sftp neo"
+#        sftptank                sftp tank
+alias sftptank="echo 'sftp:tank' ; sftp tank"
 
 #
-# samba
+# ssh logons (external)
 #
-#        samrs                   restart samba
-alias samrs="sudo systemctl restart samba.service"
-#        edesam                  edit /etc/samba/smb.conf
-alias edesam="ed /etc/samba/smb.conf"
+#!#        sshx                  ssh nullware.com
+#!alias sshx="echo 'ssh:nullware.com' ; ssh \${nullwareip}"
+#!#        sshxr                 ssh nullware.com
+#!alias sshxr="echo 'ssh:nullware.com:root' ; ssh -l root \${nullwareip}"
+#!#        sshxk                 ssh nullware.com
+#!alias sshxk="echo 'ssh:nullware.com:kyle' ; ssh -l kyle \${nullwareip}"
+#        ssh-nullware            ssh nullware.com
+alias ssh-nullware="echo 'ssh:kyle@nullware.com' ; ssh kyle@\${nullwareip}"
+
+#
+# ssh
+#
+#        ssh-key-gen-rsa         generate rsa ssh keys
+alias ssh-key-gen-rsa="ssh-keygen -t rsa -b 4096"
+#        ssh-key-gen-ed          generate ed25519 ssh keys
+alias ssh-key-gen-ed="ssh-keygen -t ed25519"
+#        ssh-agent               turn on ssh agent
+alias ssh-agent="
+    eval \$(ssh-agent)
+    ssh-add
+    ssh-add -l"
+#!#        ssh-tunnel-irc          ssh tunnel irc (freenode.net)
+#!alias ssh-tunnel-irc="ssh -L 6670:irc.freenode.net:6667 \${nullwareip}"
+#!#!alias ssh-tunnel-irc="ssh -L 6667:irc.freenode.net:6667 \${nullwareip}"
+#!#        ssh-tunnel-imap         ssh tunnel imap (home)
+#!alias ssh-tunnel-imap="ssh -L 8143:morpheus:143 \${nullwareip}"
+#!#        ssh-tunnel-gmail        ssh tunnel gmail pop
+#!alias ssh-tunnel-gmail="ssh -L 8995:pop.gmail.com:995 \${nullwareip}"
+#!#        ssh-tunnel-ldap         ssh tunnel scheduleworld ldap
+#!alias ssh-tunnel-ldap="ssh -L 8389:ldap.scheduleworld.com:389 \${nullwareip}"
+#!#        ssh-tunnel-sshw         ssh tunnel ssh through work pc
+#!alias ssh-tunnel-sshw="ssh -L 2222:\${nullwareip}:22 kyle-work"
+#
+# ssh logons (internal)
+#
+#        ssh-apoc                ssh apoc
+alias ssh-apoc="echo 'ssh:apoc' ; ssh apoc"
+#        ssh-colleen             ssh colleen
+alias ssh-colleen="echo 'ssh:colleen@colleen' ; ssh colleen@colleen"
+#        ssh-firewall            ssh -p 8022 -l root firewall
+alias ssh-firewall="echo 'ssh:admin@firewall' ; ssh -p 8022 admin@firewall"
+#        ssh-gemini              ssh gemini
+alias ssh-gemini="echo 'ssh:gemini' ; ssh gemini"
+#        ssh-morpheus            ssh morpheus
+alias ssh-morpheus="echo 'ssh:morpheus' ; ssh morpheus"
+#        ssh-morpheusgit         ssh morpheus:git
+alias ssh-morpheusgit="echo 'ssh:git@morpheus' ; ssh -l git morpheus"
+#        ssh-neo                 ssh neo
+alias ssh-neo="echo 'ssh:neo' ; ssh neo"
+#        ssh-pi                  ssh raspberrypi
+alias ssh-pi="echo 'ssh:pi@raspberrypid' ; ssh pi@raspberrypid"
+#        ssh-raspad              ssh raspad
+alias ssh-raspad="echo 'ssh:raspadusb' ; ssh pi@raspadusb"
+#        ssh-switch              ssh switch
+alias ssh-switch="echo 'ssh:switch' ; ssh switch"
+#        ssh-tank                ssh tank
+alias ssh-tank="echo 'ssh:tank' ; ssh tank"
+#        ssh-tank2               ssh tank (2nd nic)
+alias ssh-tank2="echo 'ssh:tank' ; ssh 192.168.1.61"
+#        ssh-trinity             ssh trinity
+alias ssh-trinity="echo 'ssh:trinity' ; ssh trinity"
+
+#
+# ssh run commands
+#
+#        sshmorpheusiftop        ssh -l root morpheus "TERM=screen iftop"
+alias sshmorpheusiftop="ssh -l root morpheus \"TERM=screen iftop\""
+
+#
+# startx
+#
+#        startx-8                startx in 8 bit mode
+alias startx-8="startx -- -depth 8"
+#        startx-16               startx in 16 bit mode
+alias startx-16="startx -- -depth 16"
+#        startx-24               startx in 24 bit mode
+alias startx-24="startx -- -depth 24"
+
+#
+# su
+#
+#        sur                     su to root
+alias sur="sudo su -"
+#        suk                     su to kyle
+alias suk="sudo su - kyle"
+
+#
+# update-alternatives
+#
+#        update-alternatives-x-session-manager  change default x session manager
+alias update-alternatives-x-session-manager="sudo update-alternatives --config x-session-manager"
+#        update-alternatives-x-window-manager  change default x window manager
+alias update-alternatives-x-window-manager="sudo update-alternatives --config x-window-manager"
+#        update-alternatives-java  change default java implementation
+alias update-alternatives-java="sudo update-alternatives --config java"
 
 #
 # vnc (client)
@@ -2156,16 +2296,50 @@ alias vncs12w="vncserver -depth 16 -geometry 1280x800 :1"
 alias vncsk="vncserver -kill :1"
 
 #
-# X (Windows)
+# wine applications
 #
-#        xwi                     xwininfo
-alias xwi="xwininfo"
-#        xwir                    xwininfo -root
-alias xwir="xwininfo -root"
-#        xwit                    xwininfo -tree -root
-alias xwit="xwininfo -tree -root"
-#        geometry                current screen geometry
-alias geometry="xwininfo -root | grep geometry"
+#        winetricks-update       download latest version of winetricks
+alias winetricks-update="wget http://www.kegel.com/wine/winetricks -O \${HOME}/bin/vendor/winetricks"
+#        wine-bookshelf          wine microsoft bookshelf 2000
+alias wine-bookshelf="WINEPREFIX=${HOME}/.wine-bookshelf2000 wine \"C:\Program Files (x86)\Microsoft Reference\Bookshelf 2000\bshelf2k.exe\""
+#        wine-civ                wine civilization
+#!alias wine-civ="WINEPREFIX=\${HOME}/.wine-civ4 wine explorer /desktop=civ,1280x800 \"C:\Program Files\Firaxis Games\Sid Meier's Civilization 4\Beyond the Sword\Civ4BeyondSword.exe\""
+alias wine-civ="WINEPREFIX=\${HOME}/.wine-civ4 wine explorer /desktop=civ,1920x1080 \"C:\Program Files\Firaxis Games\Sid Meier's Civilization 4\Beyond the Sword\Civ4BeyondSword.exe\""
+#        wine-ddo                wine ddo
+alias wine-ddo="WINEPREFIX=\${HOME}/.wine-ddo wine \"C:\Program Files (x86)\StandingStoneGames\Dungeons & Dragons Online\TurbineLauncher.exe\""
+#        wine-ddo-cp             wine ddo character planner
+alias wine-ddo-cp="WINEPREFIX=\${HOME}/.wine-ddocp wine \"C:\Games\DDOCharGen\DDOCharGen.exe\""
+#!#        wine-eve                wine eve online
+#!#!alias wine-eve="WINEPREFIX=\${HOME}/.wine-eve wine explorer /desktop=eve,1280x800 \"C:\Program Files (x86)\CCP\EVE\eve.exe\""
+#!alias wine-eve="WINEPREFIX=\${HOME}/.wine-eve wine explorer /desktop=eve,1920x1080 \"C:\Program Files (x86)\CCP\EVE\eve.exe\""
+#!alias wine-eve-file="WINEPREFIX=\${HOME}/.wine-eve wine explorer /desktop=eve,1920x1080 \"C:\Program Files (x86)\CCP\EVE\evefile.exe\""
+#!#        wine-eve2               wine eve online second install
+#!#!alias wine-eve2="WINEPREFIX=\${HOME}/.wine-eve2 wine explorer /desktop=eve2,1280x800 \"C:\Program Files (x86)\CCP\EVE\eve.exe\""
+#!alias wine-eve2="WINEPREFIX=\${HOME}/.wine-eve2 wine explorer /desktop=eve2,1920x1080 \"C:\Program Files (x86)\CCP\EVE\eve.exe\""
+#!#        wine-eft                wine eve online eft
+#!alias wine-eft="WINEPREFIX=\${HOME}/.wine-eve-tools wine \"C:\Program Files (x86)\Utilities\EFT\EFT.exe\""
+#!#        wine-eve-mon            wine eve online eve-mon
+#!alias wine-eve-mon="WINEPREFIX=\${HOME}/.wine-eve-tools wine \"C:\Program Files (x86)\EVEMon\EVEMon.exe\""
+#!#        eve-copy-settings       copy eve settings
+#!alias eve-copy-settings="
+#!    cp -R \"\${HOME}/Downloads/EVE/CCP/EVE/c_program_files_ccp_eve_tranquility/settings\" \
+    #!      \"\${HOME}/.wine-eve/drive_c/windows/profiles/kyle/Local Settings/Application Data/CCP/EVE/c_program_files_ccp_eve_tranquility/\"
+#!    cp -R \"\${HOME}/Downloads/EVE/CCP/EVE/c_users_kyle_program_files_eve_tranquility/settings\" \
+    #!      \"\${HOME}/.wine-eve2/drive_c/windows/profiles/kyle/Local Settings/Application Data/CCP/EVE/c_program_files_ccp_eve_tranquility/\""
+#        wine-fallout            wine fallout
+alias wine-fallout="WINEPREFIX=\${HOME}/.wine-fallout wine \"C:\GOG Games\Games\\Fallout\FalloutLauncher.exe\""
+#        wine-fallout-setup      configure fallout.cfg file
+alias wine-fallout-setup="
+    file=\"\${HOME}/.wine-fallout/drive_c/GOG Games/Fallout/fallout.cfg\"
+    sed -i 's/^critter_dat=.*$/critter_dat=C:\\\\GOG Games\\\\Fallout\\\\CRITTER.DAT\r/' \"\${file}\"
+    sed -i 's/^critter_patches=.*$/critter_patches=C:\\\\GOG Games\\\\Fallout\\\\DATA\r/' \"\${file}\"
+    sed -i 's/^master_dat=.*$/master_dat=C:\\\\GOG Games\\\\Fallout\\\\MASTER.DAT\r/' \"\${file}\"
+    sed -i 's/^master_patches=.*$/master_patches=C:\\\\GOG Games\\\\Fallout\\\\DATA\r/' \"\${file}\"
+    "
+#        wine-tta                wine through the ages
+alias wine-tta="WINEPREFIX=\${HOME}/.wine-tta wine \"C:\GOG Games\Through the Ages\ThroughTheAges_gog.exe\""
+#        wine-winamp             winamp
+alias wine-winamp="WINEPREFIX=\${HOME}/.wine-winamp wine \"C:\Program Files (x86)\Winamp\winamp.exe\""
 
 #
 # x2x
@@ -2191,6 +2365,18 @@ alias x2xm2="
     ) &"
 
 #
+# xmms
+#
+#        xmmsdi                  xmms streaming digitally imported (trance 56k)
+alias xmmsdi="xmms http://205.188.209.193:80/stream/1007 &"
+#        xmmsall                 xmms playing all
+alias xmmsall="xmms ${home}/data/media/audio/Playlists/all.m3u &"
+#        xmmss                   xmms playing singles
+alias xmmss="xmms ${home}/data/media/audio/Playlists/singles.m3u &"
+#        xmmsa                   xmms playing albums
+alias xmmsa="xmms ${home}/data/media/audio/Playlists/albums.m3u &"
+
+#
 # xrandr
 #
 #        xrandr-reset            reset monitors
@@ -2209,278 +2395,107 @@ alias xrandr-left="xrandr --output HDMI-1 --rotate left"
 alias xrandr-right="xrandr --output HDMI-1 --rotate right"
 
 #
-# gpg (gnu pgp)
+# xscreensaver
 #
-#        gpg-gen                 gpg --gen-key
-alias gpg-gen="gpg --gen-key"
-#        gpg-list                gpg --list-keys
-alias gpg-list="gpg --list-keys"
-#        gpg-list-secret         gpg --list-secret-keys
-alias gpg-list-secret="gpg --list-secret-keys"
-#        gpg-edit                gpg --edit-key
-alias gpg-edit="gpg --edit-key"
-#        gpg-send                gpg --keyserver 64.71.163.210 --send-keys
-alias gpg-send="gpg --keyserver 64.71.163.210 --send-keys"
-#        gpg-search              gpg --keyserver 64.71.163.210 --search-keys
-alias gpg-search="gpg --keyserver 64.71.163.210 --search-keys"
+#        sson                    turn screensaver on
+alias sson="
+    rm -f \${HOME}/.noscreensaver
+    \${HOME}/bin/ssaverauto > /dev/null 2>&1"
+#        ssoff                   turn screensaver off
+alias ssoff="
+    touch \${HOME}/.noscreensaver
+    fuser -k -SIGTERM \${HOME}/bin/ssaver > /dev/null 2>&1
+    fuser -k -SIGTERM /usr/bin/xscreensaver > /dev/null 2>&1
+    fuser -k -SIGTERM /usr/bin/xlock > /dev/null 2>&1
+    fuser -k -SIGTERM /usr/bin/electricsheep > /dev/null 2>&1
+    fuser -k -SIGTERM /usr/bin/xautolock > /dev/null 2>&1
+    fuser -k -SIGKILL \${HOME}/bin/ssaver > /dev/null 2>&1
+    fuser -k -SIGKILL /usr/bin/xscreensaver > /dev/null 2>&1
+    fuser -k -SIGKILL /usr/bin/xlock > /dev/null 2>&1
+    fuser -k -SIGKILL /usr/bin/electricsheep > /dev/null 2>&1
+    fuser -k -SIGKILL /usr/bin/xautolock > /dev/null 2>&1"
+#        ssrs                    restart screensaver
+alias ssrs="
+    fuser -k -SIGTERM \${HOME}/bin/ssaver > /dev/null 2>&1
+    fuser -k -SIGTERM /usr/bin/xscreensaver > /dev/null 2>&1
+    fuser -k -SIGTERM /usr/bin/xlock > /dev/null 2>&1
+    fuser -k -SIGTERM /usr/bin/electricsheep > /dev/null 2>&1
+    fuser -k -SIGTERM /usr/bin/xautolock > /dev/null 2>&1
+    fuser -k -SIGKILL \${HOME}/bin/ssaver > /dev/null 2>&1
+    fuser -k -SIGKILL /usr/bin/xscreensaver > /dev/null 2>&1
+    fuser -k -SIGKILL /usr/bin/xlock > /dev/null 2>&1
+    fuser -k -SIGKILL /usr/bin/electricsheep > /dev/null 2>&1
+    fuser -k -SIGKILL /usr/bin/xautolock > /dev/null 2>&1
+    rm -f \${HOME}/.noscreensaver
+    \${HOME}/bin/ssaverauto > /dev/null 2>&1"
+#        xsc                     run xscreensaver in the background
+alias xsc="xscreensaver -no-splash & > /dev/null 2>&1"
+#        xscrs                   restart xscreensaver
+alias xscrs="
+    fuser -k -SIGTERM \$(pathcmd xscreensaver)
+    fuser -k -SIGKILL \$(pathcmd xscreensaver)
+    xscreensaver -no-splash & > /dev/null 2>&1"
+#        xscd                    run xscreensaver-demo
+alias xscd="xscreensaver-demo"
+#        xscl                    xscreensaver lock display
+alias xscl="xscreensaver-command -lock & > /dev/null 2>&1"
+#!#        cpxsc                   copy .xscreensaver to nobody and root
+#!alias cpxsc="
+#!    cp -p ${home}/somebody/.xscreensaver /
+#!    cp -p ${home}/somebody/.xscreensaver /root
+#!    chown nobody:nobody /.xscreensaver
+#!    chown root:root /root/.xscreensaver"
+#
+# slideshows and webcams
+#
+#        sschbg                  slideshow using chbg
+alias sschbg="chbg -randomize -interval 30.00 -R"
+#! add the following to .xscreensaver:
+#!  default-n:        "SlideShow (chbg)" \
+    #!                    chbg -xscreensaver -randomize -interval 0.30 \
+    #!                    -R /home/data/media/pictures_slide_show/Nasa/     \n\
+    #        ssfeh                   slideshow using feh
+alias ssfeh="feh --title \"Slideshow\" -F -x -z -D 30.00 -r"
+#! add the following to .xscreensaver:
+#!  default-n:        "SlideShow (feh)" \
+    #!                    feh --title "Slideshow" -F -x -D 0.30 \
+    #!                    -r /home/data/media/pictures_slide_show/Nasa/     \n\
+    #!       ssapp                   slideshow application
+ssapp="feh --title \"Slideshow\" -F -x -z -D 30.00 -r"
+#        sspersonal              personal slideshow
+alias sspersonal="${ssapp} ${home}/data/media/pictures_slide_show/Personal/"
+#        ssnasa                  nasa slideshow
+alias ssnasa="${ssapp} ${home}/data/media/pictures_slide_show/Nasa/"
+#        ssnerve                 nerve slideshow
+alias ssnerve="${ssapp} \"${home}/data/media/pictures_slide_show/Nerve Magazine/\""
+#        duluth-webcam-800       duluth webcam (800x640)
+alias duluth-webcam-800="arora \$(xwininfo -root | grep geometry) http://nullman.org/interesting/duluth-webcam-800x600.html"
+#        duluth-webcam-1024      duluth webcam (1024x768)
+alias duluth-webcam-1024="arora \$(xwininfo -root | grep geometry) http://nullman.org/interesting/duluth-webcam-1024x768.html"
 
 #
-# printing
+# X (Windows)
 #
-#        lps                     lpstat -t -d
-alias lps="lpstat -t -d"
-#        lprn2                   lpr n-up 2
-alias lprn2="lpr -o number-up=2 -o page-border=single"
-
-#
-# GNOME
-#
-#        gnome-gdm-setup         gksu gdmsetup
-alias gnome-gdm-setup="gksu gdmsetup"
-#        gsetting-values         dump all keybindings
-alias gsetting-values="
-    for schema in \$(gsettings list-schemas | sort) ; do
-        for key in \$(gsettings list-keys \${schema} | sort) ; do
-            echo \"\${schema}|\${key}|\$(gsettings get \${schema} \${key})\"
-        done
-    done | column --table --separator '|' --table-columns SCHEMA,KEY,VALUE"
-#        gsetting-ranges         dump all keybindings
-alias gsetting-ranges="
-    for schema in \$(gsettings list-schemas | sort) ; do
-        for key in \$(gsettings list-keys \${schema} | sort) ; do
-            echo \"\${schema}|\${key}|\$(gsettings range \${schema} \${key} |  tr '\n' ' ')\"
-        done
-    done | column --table --separator '|' --table-columns SCHEMA,KEY,RANGE"
-#        gsetting-gnome-keybindings  dump gnome keybindings
-alias gsetting-gnome-keybindings="
-    for key in \$(gsettings list-keys org.gnome.desktop.wm.keybindings | sort) ; do
-        echo \"\${key}|\$(gsettings get org.gnome.desktop.wm.keybindings \${key})\"
-    done | column --table --separator '|' --table-columns KEY,VALUE"
-
-#
-# KDE
-#
-
-#
-# c/c++
-#
-#        mcm                     make clean && make
-alias mcm="make clean && make"
-
-#
-# java
-#
-#        java-set-env-java8      set java environment to java 8
-alias java-set-env-java8="
-    sudo archlinux-java set java-8-openjdk && \
-    export JAVA_HOME=\"\$(java -XshowSettings:properties -version 2>&1 > /dev/null | grep 'java.home' | sed 's/^.* = //')\""
-#        java-set-env-java11     set java environment to java 11
-alias java-set-env-java11="
-    sudo archlinux-java set java-11-openjdk && \
-    export JAVA_HOME=\"\$(java -XshowSettings:properties -version 2>&1 > /dev/null | grep 'java.home' | sed 's/^.* = //')\""
-#        java-set-env-java18     set java environment to java 18
-alias java-set-env-java18="
-    sudo archlinux-java set java-18-openjdk && \
-    export JAVA_HOME=\"\$(java -XshowSettings:properties -version 2>&1 > /dev/null | grep 'java.home' | sed 's/^.* = //')\""
-
-#
-# perl
-#
-#        cpan                    run perl in CPAN mode (use default answers to prompts)
-alias cpan="PERL_MM_USE_DEFAULT=1 perl -MCPAN -e shell"
-
-#
-# ruby
-#
-#        gemq                    ruby gem query --name-matches
-alias gemq="gem query --name-matches"
-#        gemqr                   ruby gem query --remote --name-matches
-alias gemqr="gem query --remote --name-matches"
-#        gemir                   ruby gem install --remote
-alias gemir="gem install --remote"
-
-#
-# clojure
-#
-#          clj                   clojure
-alias clj="clojure"
-
-#
-# android
-#
-#        adbd                    adb devices
-alias adbd="adb devices"
-#        adblog                  adb logcat (no verboase logs)
-alias adblog="adb logcat | grep -v ' V '"
-#        adbloge                 adb -e logcat (no verboase logs)
-alias adbloge="adb -e logcat | grep -v ' V '"
-#        adblogd                 adb -d logcat (no verboase logs)
-alias adblogd="adb -d logcat | grep -v ' V '"
-#        adbi                    adb install
-alias adbi="adb install"
-#        adbie                   adb -e install
-alias adbie="adb -e install"
-#        adbid                   adb -d install
-alias adbid="adb -d install"
-#        adbir                   adb install -r
-alias adbir="adb install -r"
-#        adbire                  adb -e install -r
-alias adbire="adb -e install -r"
-#        adbird                  adb -d install -r
-alias adbird="adb -d install -r"
-#        adbdeeplink             adb shell am start
-alias adbdeeplink="adb shell am start"
-#        adbdate                 adb set date on device
-alias adbdate="adb shell date \$(date +%m%d%H%M%Y.%S)"
-#        adbdatee                adb set date on emulator
-alias adbdatee="adb -e shell date \$(date +%m%d%H%M%Y.%S)"
-#        adbdated                adb set date on attached device
-alias adbdated="adb -d shell date \$(date +%m%d%H%M%Y.%S)"
-#        adbrs                   restart adb
-alias adbrs="
-    sudo \${HOME}/android-sdk/platform-tools/adb kill-server && \
-      sudo \${HOME}/android-sdk/platform-tools/adb start-server"
-#        adb-usb-setup           setup adb usb device
-alias adb-usb-setup="
-    sudo bash -c \"
-        echo 'SUBSYSTEM==\\\"usb\\\", SYSFS{idVendor}==\\\"04e8\\\", MODE=\\\"0666\\\"' \
-          > /etc/udev/rules.d/51-android.rules && \
-          chmod a+r /etc/udev/rules.d/51-android.rules
-    \""
-#        adb-screenshot          abd screenshot (portrait)
-alias adb-screenshot="
-    adb shell screencap -p /sdcard/screen.png &&
-    adb pull /sdcard/screen.png android-device-screenshot-\$(date '+%Y-%m-%d-%H%M%S').png"
-#        adb-screenshot-landscape  abd screenshot (landscape)
-alias adb-screenshot-landscape="(
-    name=android-device-screenshot-\$(date '+%Y-%m-%d-%H%M%S').png
-    adb shell screencap -p /sdcard/screen.png &&
-    adb pull /sdcard/screen.png \${name} &&
-    convert \${name} -rotate 270 \${name}.tmp && mv \${name}.tmp \${name}"
-#!#        adb-animation         abd animation
-#!alias adb-animation="
-#!    adb shell screenrecord /sdcard/animation.mp4 &&
-#!    adb pull /sdcard/animation.mp4 android-device-screenshot-\$(date '+%Y-%m-%d-%H%M%S').mp4"
-#        adb-video-record        record a video
-alias adb-video-record="adb shell screenrecord /sdcard/animation.mp4"
-#        adb-video-copy          copy a recorded video off of device
-alias adb-video-copy="adb pull /sdcard/animation.mp4 android-device-screenshot-\$(date '+%Y-%m-%d-%H%M%S').mp4"
-#        ibus-sync               put ibus into sync mode to prevent keyboard issue in Android Studio
-alias ibus-sync="IBUS_ENABLE_SYNC_MODE=1 ibus-daemon -xrd"
-#        set-android-studio-stable  set android studio path to stable
-alias set-android-studio-stable="(cd \${HOME} && rm android-studio && ln -s android-studio-stable android-studio)"
-#        set-android-studio-beta  set android studio path to beta
-alias set-android-studio-beta="(cd \${HOME} && rm android-studio && ln -s android-studio-beta android-studio)"
-#        set-android-studio-canary  set android studio path to canary
-alias set-android-studio-canary="(cd \${HOME} && rm android-studio && ln -s android-studio-canary android-studio)"
-
-#
-# gradle
-#
-#        gradlec                 gradle clean
-alias gradlec="gradle clean"
-#        gradleb                 gradle build
-alias gradleb="gradle build"
-#        gradlecb                gradle clean && gradle build
-alias gradlecb="gradle clean && gradle build"
-#        gradlear                gradle assembleRelease
-alias gradlear="gradle assembleRelease"
-#        gradlecar               gradle clean && gradle assembleRelease
-alias gradlecar="gradle clean && gradle assembleRelease"
-
-#
-# mysql
-#
-#        myr                     mysql -u root -p
-alias myr="mysql -u root -p"
-#        myw                     mysql -u web -p web
-alias myw="mysql -u web -p web"
-#        mywin                   mysql -u web -p web < <file>
-alias mywin="mysql -u web -p web < "
-#        mys                     mysql -u stock -p stock
-alias mys="mysql -u stock -p stock"
-#        mysin                   mysql -u stock -p stock < <file>
-alias mysin="mysql -u stock -p stock < "
-#        mynopasswd              mysqld --skip-grant-tables
-alias mynopasswd="sudo systemctl restart mysqld.service --skip-grant-tables"
-#        mypasswd                mysql change password
-alias mypasswd="
-    echo \"mysqladmin -u root password '<password>'\"
-    echo \"mysqladmin -u root -h <hostname> password '<password>'\""
-
-#
-# postgresql
-#
-#        pgs                     psql -U stock stock
-alias pgs="psql -U stock stock"
-#        pgnj                    psql -U web netjuke
-alias pgnj="psql -U web netjuke"
-
-#
-# openldap
-#
-#        ldrs                    restart ldap
-alias ldrs="sudo systemctl restart ldap.service"
-#        lds                     search ldap
-alias lds="ldapsearch -D dc=localhost -s sub '(objectclass=*)' namingContexts -H ldap://localhost/ -x -w letmein"
-#        ldadd                   add ldif file to ldap
-alias ldadd="ldapadd -D 'dc=localhost' -W -H ldap://localhost/ -x -w letmein -f"
-#        lddel                   delete ldap node by dn
-alias lddel="ldapdelete -D 'dc=localhost' -W -H ldap://localhost/ -x -w letmein"
-#        lddelall                ldapdelall (all nodes)
-alias lddelall="ldapdelete -D 'dc=localhost' -H ldap://localhost/ -x -w letmein -r"
-
-#
-# docker
-#
-#        dockerrs                docker service restart
-alias dockerrs="sudo systemctl restart docker"
-#        dockerv                 docker version
-alias dockerv="docker version"
-#        dockerps                docker ps
-alias dockerps="docker ps"
-#        dockerpsa               docker ps -a
-alias dockerpsa="docker ps -a"
-#        dockerrsh               docker run debian container shell
-alias dockerrsh="docker run -i -t debian /bin/bash"
-#        dockerrmall             docker rm all containers
-alias dockerrmall="docker rm -v \$(docker ps -aq -f status=exited)"
-#        droplet-env-nullware-1  digital ocean env setup for droplet-nullware-1
-alias droplet-env-nullware-1="eval \"\$(docker-machine env droplet-nullware-1)\""
-
-#
-# ckermit
-#
-#        ckermit-m100            ckermit setup to connect to an M100/102/200 connected to ttyUSB0
-alias ckermit-m100="sudo ckermit \${HOME}/.ckermit_m100_connection"
-#        ckermit-hp95lx          ckermit setup to connect to an HP95LX connected to ttyUSB0
-alias ckermit-hp95lx="sudo ckermit \${HOME}/.ckermit_hp95lx_connection"
-
-#
-# mpd (Music Player Daemon)
-#
-#        mpd-service-enable      systemctl --user enable/start mpd
-alias mpd-service-enable="systemctl --user enable mpd && systemctl --user start mpd"
-#        mpd-service-disable     systemctl --user disable mpd
-alias mpd-service-disable="systemctl --user disable mpd"
-#        mpd-service-restart     systemctl --user restart mpd
-alias mpd-service-restart="systemctl --user restart mpd"
-#        mpc-status              display artist and title of current song
-alias mpc-status="notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' \"\$(mpc | head -n 1)\""
-#        mpc-update              update mpc database
-alias mpc-update="mpc --wait update"
+#        xwi                     xwininfo
+alias xwi="xwininfo"
+#        xwir                    xwininfo -root
+alias xwir="xwininfo -root"
+#        xwit                    xwininfo -tree -root
+alias xwit="xwininfo -tree -root"
+#        geometry                current screen geometry
+alias geometry="xwininfo -root | grep geometry"
 
 #
 # pacman (Package Manager)
 #
 #!#        pmu                     pacman -Syu (update packages with refresh)
-#!alias pmu="sudo pacman -Syu --noconfirm"
+#!alias pmu="sudo pacman -Syu"
 #!#        pmuy                    pacman -Syyu (update packages with forced refresh)
-#!alias pmuy="sudo pacman -Syyu --noconfirm"
+#!alias pmuy="sudo pacman -Syyu"
 #!#        pmi                     pacman -S (install package)
-#!alias pmi="sudo pacman -S --noconfirm"
+#!alias pmi="sudo pacman -S"
 #!#        pmr                     pacman -R (remove package and configuration files)
-#!alias pmr="sudo pacman -R --noconfirm --nosave"
+#!alias pmr="sudo pacman -R --nosave"
 #!#        pms                     pacman -Ss (search packages)
 #!alias pms="pacman -Ss"
 #!#        pmf                     pacman -F (search files)

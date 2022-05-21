@@ -8761,6 +8761,32 @@ Cursor is left at current column in newly created line."
     (move-to-column col)))
 ;; duplicate-line-inc:1 ends here
 
+;; [[file:init-emacs.org::#functions-emacs-functions-yank-as-rectangle][yank-as-rectangle:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Emacs Functions: yank-as-rectangle
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Emacs Functions: yank-as-rectangle")
+
+(defun yank-as-rectangle ()
+  "Yank the most recently killed text as a rectangle with upper left corner at point."
+  (interactive "*")
+  (with-temp-buffer
+    (yank)
+    (goto-char (point-min))
+    (rectangle-mark-mode 1)
+    (let ((width 0))
+      (while (not (eobp))
+        (end-of-line)
+        (when (> (current-column) width)
+          (setq width (current-column)))
+        (forward-line 1))
+      (forward-line 0)
+      (rectangle-right-char width))
+    (kill-rectangle (point-min) (point)))
+  (yank-rectangle))
+;; yank-as-rectangle:1 ends here
+
 ;; [[file:init-emacs.org::#functions-emacs-functions-display-line-numbers-type-toggle][display-line-numbers-type-toggle:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: display-line-numbers-type-toggle
