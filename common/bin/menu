@@ -267,7 +267,7 @@ for line in ${block} ; do
     x=$((${x} + 1))
 done
 
-#for ((x = 0; x < ${#display[*]}; x++)) ; do
+#for ((x = 0; x < ${#display[@]}; x++)) ; do
 #    echo "${display[$x]}"
 #done
 
@@ -279,7 +279,7 @@ for line in ${block} ; do
     x=$((${x} + 1))
 done
 
-#for ((x = 0; x < ${#display[*]}; x += 1)) ; do
+#for ((x = 0; x < ${#display[@]}; x += 1)) ; do
 #    echo "${command[${x}]}"
 #done
 
@@ -293,7 +293,7 @@ fi
 
 # get offset for centering
 len=0
-for ((x = 0; x < ${#display[*]}; x += 1)) ; do
+for ((x = 0; x < ${#display[@]}; x += 1)) ; do
     if [[ ${#display[${x}]} -gt ${len} ]] ; then
         len=${#display[${x}]}
     fi
@@ -313,7 +313,7 @@ tput cup 1 0
 #echo
 
 # print display
-for ((x = 0; x < ${#display[*]}; x += 1)) ; do
+for ((x = 0; x < ${#display[@]}; x += 1)) ; do
     if [[ "${row}" == "${x}" ]] ; then
         echo -n "${spc}" ; tput ${boldon} ; echo "${display[${x}]}" ; tput ${boldoff}
     else

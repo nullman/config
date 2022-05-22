@@ -126,7 +126,7 @@ sleep 2
 if [[ "${app}" == "xplanet" ]] ; then
     modes=(earth earth_moon eclipse saturn jupiter_moons jupiter_moons_close)
     if [[ "${mode}" == "random" ]] || [[ "${mode}" == "default" ]] ; then
-        num=${#modes[*]}
+        num=${#modes[@]}
         rand=$(($(date '+%s') % ${num}))
         mode=${modes[rand]}
     fi
