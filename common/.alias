@@ -373,8 +373,10 @@ alias umount-synology="
 #
 # general (external)
 #
-#        youtube-dl-best         youtube-dl -f bestvideo+bestaudio
-alias youtube-dl-best="youtube-dl -f bestvideo+bestaudio"
+#!#        youtube-dl-best         youtube-dl -f bestvideo+bestaudio
+#!alias youtube-dl-best="youtube-dl -f bestvideo+bestaudio"
+#        yt-dl
+alias ytdl="yt-dlp -f \"bv+ba/b\" -o \"%(channel)s - %(release_date>%Y-%m-%d,upload_date>%Y-%m-%d|Unknown)s - %(title)s.%(ext)s\""
 #        weather                 weather report
 alias weather="curl --silent wttr.in | head -n -2"
 #        termbin                 send content to termbin.com

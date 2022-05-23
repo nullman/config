@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+#===============================================================================
+# get-youtube-videos
+#
+# Grab the latest YouTube videos from a curated list.
+#
+# Author: Kyle W T Sherman
+#===============================================================================
+
+basedir="/mnt/synology/video/Internet Show"
+
+channels=(
+    "Adrian's Digital Basement       | https://www.youtube.com/c/adriansdigitalbasement/videos"
+    "Adrian's Digital Basement ][    | https://www.youtube.com/channel/UCbtwi4wK1YXd9AyV_4UcE6g/videos"
+    "Ben Eater                       | https://www.youtube.com/c/BenEater/videos"
+    "Dave's Garage                   | https://www.youtube.com/c/DavesGarage/videos"
+    "Flux Harmonic                   | https://www.youtube.com/c/FluxHarmonicLive/videos"
+    "Jake B                          | https://www.youtube.com/c/JakeBox0/videos"
+    "James Sharman                   | https://www.youtube.com/c/weirdboyjim/videos"
+    "Lukewh, Emacs                   | https://www.youtube.com/playlist?list=PLNJWazvift25KnHDwYlhwrrgr60wtpQOB"
+    "Me, Myself, and Die             | https://www.youtube.com/c/MeMyselfandDieRPG/videos"
+    "Protesilaos Stavrou             | https://www.youtube.com/c/ProtesilaosStavrou/videos"
+    "Commodore Amiga Demos           | https://www.youtube.com/playlist?list=PLnmLOQIDmUvUgbvY-Jq0txuYWYgWVcOOS"
+    "Commodore 64 Demos              | https://www.youtube.com/playlist?list=PLnmLOQIDmUvVn43FHdakSTY_W_EuoVwnT"
+    "System Crafters                 | https://www.youtube.com/c/SystemCrafters/videos"
+    "The 8-Bit Guy                   | https://www.youtube.com/c/The8BitGuy/videos"
+    "Tsoding Daily                   | https://www.youtube.com/c/TsodingDaily/videos"
+)
+
+for ((x = 0; x < ${#channels[@]}; x += 1)) ; do
+    name=$(echo "${channels[$x]}" | sed 's/ *|.*$//')
+    url=$(echo "${channels[$x]}" | sed 's/^.*| *//')
+    echo "${url} -> ${basedir}/${name}"
+    mkdir -p "${basedir}/${name}"
+    count=$(find "${basedir}/${name}" -type f | wc -l)
+    cd "${basedir}/${name}" && \
+        yt-dlp -f "bv+ba/b" \
+               --playlist-start ${count} \
+               -o "${name} - %(release_date>%Y-%m-%d,upload_date>%Y-%m-%d|Unknown)s - %(title)s.%(ext)s" \
+               "${url}"
+done
+
+#===============================================================================
+# End of File
+#===============================================================================
