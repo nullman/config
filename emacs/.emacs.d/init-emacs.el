@@ -19504,6 +19504,19 @@ Commands:
   (fset 'html-mode 'nxml-mode))
 ;; XML Mode:1 ends here
 
+;; [[file:init-emacs.org::#modes-yaml-mode][YAML Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: YAML Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: YAML Mode")
+
+(use-package yaml-mode
+  :straight t
+  :mode (("\\.yaml\\'" . yaml-mode)
+         ("\\.yml\\'" . yaml-mode)))
+;; YAML Mode:1 ends here
+
 ;; [[file:init-emacs.org::#menus][Menus:1]]
 ;;==============================================================================
 ;;; Menus

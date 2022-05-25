@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-05-21 09:51 (kyle)>
+  #+TIMESTAMP: <2022-05-25 10:12 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -29721,6 +29721,26 @@
         ;; derive xml-mode and html-mode from nxml-mode
         (fset 'xml-mode 'nxml-mode)
         (fset 'html-mode 'nxml-mode))
+    #+END_SRC
+
+*** YAML Mode
+    :PROPERTIES:
+    :CUSTOM_ID: modes-yaml-mode
+    :END:
+
+    YAML Mode
+
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Modes: YAML Mode
+      ;;------------------------------------------------------------------------------
+
+      (init-message 2 "Modes: YAML Mode")
+
+      (use-package yaml-mode
+        :straight t
+        :mode (("\\.yaml\\'" . yaml-mode)
+               ("\\.yml\\'" . yaml-mode)))
     #+END_SRC
 
 *** +Global Mode+
