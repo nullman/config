@@ -7747,56 +7747,6 @@ If an error occurs when loading, report it and add FILE to
   (safe-load file noerror nomessage nosuffix))
 ;; safe-load:1 ends here
 
-;; [[file:init-emacs.org::#functions-initialization-functions-save-mark-and-excursion][save-mark-and-excursion:1]]
-;;------------------------------------------------------------------------------
-;;;; Functions: Initialization Functions: save-mark-and-excursion
-;;------------------------------------------------------------------------------
-
-(init-message 3 "Functions: Initialization Functions: save-mark-and-excursion")
-
-(unless (fboundp 'save-mark-and-excursion)
-
-  (defun save-mark-and-excursion--save ()
-    (cons
-     (let ((mark (mark-marker)))
-       (and mark (marker-position mark) (copy-marker mark)))
-     mark-active))
-
-  (defun save-mark-and-excursion--restore (saved-mark-info)
-    (let ((saved-mark (car saved-mark-info))
-          (omark (marker-position (mark-marker)))
-          (nmark nil)
-          (saved-mark-active (cdr saved-mark-info)))
-      ;; mark marker
-      (if (null saved-mark)
-          (set-marker (mark-marker) nil)
-        (setf nmark (marker-position saved-mark))
-        (set-marker (mark-marker) nmark)
-        (set-marker saved-mark nil))
-      ;; mark active
-      (let ((cur-mark-active mark-active))
-        (setf mark-active saved-mark-active)
-        ;; if mark is active now, and either was not active or was at a
-        ;; different place, run the activate hook
-        (if saved-mark-active
-            (unless (eq omark nmark)
-              (run-hooks 'activate-mark-hook))
-          ;; if mark has ceased to be active, run deactivate hook
-          (when cur-mark-active
-            (run-hooks 'deactivate-mark-hook))))))
-
-  (defmacro save-mark-and-excursion (&rest body)
-    "Like `save-excursion', but also save and restore the mark state.
-
-This macro does what `save-excursion' did before Emacs 25.1."
-    (declare (indent 0))
-    (let ((saved-marker-sym (make-symbol "saved-marker")))
-      `(let ((,saved-marker-sym (save-mark-and-excursion--save)))
-         (unwind-protect
-             (save-mark-and-excursion ,@body)
-           (save-mark-and-excursion--restore ,saved-marker-sym))))))
-;; save-mark-and-excursion:1 ends here
-
 ;; [[file:init-emacs.org::#functions-advice-functions][Advice Functions:1]]
 ;;------------------------------------------------------------------------------
 ;;; Functions: Advice Functions

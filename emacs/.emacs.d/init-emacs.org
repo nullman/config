@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-05-25 10:12 (kyle)>
+  #+TIMESTAMP: <2022-05-29 10:01 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -11288,7 +11288,7 @@
           (safe-load file noerror nomessage nosuffix))
       #+END_SRC
 
-***** save-mark-and-excursion
+***** +save-mark-and-excursion+
       :PROPERTIES:
       :CUSTOM_ID: functions-initialization-functions-save-mark-and-excursion
       :END:
@@ -11300,54 +11300,54 @@
       Author: Daniel Colascione <dancol@dancol.org>
       Source: http://git.savannah.gnu.org/cgit/emacs.git/commit/?id=255a011f0ecf004b31c59945b10154b10fac3af1
 
-      #+BEGIN_SRC emacs-lisp
-        ;;------------------------------------------------------------------------------
-        ;;;; Functions: Initialization Functions: save-mark-and-excursion
-        ;;------------------------------------------------------------------------------
+      #+BEGIN_SRC emacs-lisp :tangle no
+        ;; ;;------------------------------------------------------------------------------
+        ;; ;;;; Functions: Initialization Functions: save-mark-and-excursion
+        ;; ;;------------------------------------------------------------------------------
 
-        (init-message 3 "Functions: Initialization Functions: save-mark-and-excursion")
+        ;; (init-message 3 "Functions: Initialization Functions: save-mark-and-excursion")
 
-        (unless (fboundp 'save-mark-and-excursion)
+        ;; (unless (fboundp 'save-mark-and-excursion)
 
-          (defun save-mark-and-excursion--save ()
-            (cons
-             (let ((mark (mark-marker)))
-               (and mark (marker-position mark) (copy-marker mark)))
-             mark-active))
+        ;;   (defun save-mark-and-excursion--save ()
+        ;;     (cons
+        ;;      (let ((mark (mark-marker)))
+        ;;        (and mark (marker-position mark) (copy-marker mark)))
+        ;;      mark-active))
 
-          (defun save-mark-and-excursion--restore (saved-mark-info)
-            (let ((saved-mark (car saved-mark-info))
-                  (omark (marker-position (mark-marker)))
-                  (nmark nil)
-                  (saved-mark-active (cdr saved-mark-info)))
-              ;; mark marker
-              (if (null saved-mark)
-                  (set-marker (mark-marker) nil)
-                (setf nmark (marker-position saved-mark))
-                (set-marker (mark-marker) nmark)
-                (set-marker saved-mark nil))
-              ;; mark active
-              (let ((cur-mark-active mark-active))
-                (setf mark-active saved-mark-active)
-                ;; if mark is active now, and either was not active or was at a
-                ;; different place, run the activate hook
-                (if saved-mark-active
-                    (unless (eq omark nmark)
-                      (run-hooks 'activate-mark-hook))
-                  ;; if mark has ceased to be active, run deactivate hook
-                  (when cur-mark-active
-                    (run-hooks 'deactivate-mark-hook))))))
+        ;;   (defun save-mark-and-excursion--restore (saved-mark-info)
+        ;;     (let ((saved-mark (car saved-mark-info))
+        ;;           (omark (marker-position (mark-marker)))
+        ;;           (nmark nil)
+        ;;           (saved-mark-active (cdr saved-mark-info)))
+        ;;       ;; mark marker
+        ;;       (if (null saved-mark)
+        ;;           (set-marker (mark-marker) nil)
+        ;;         (setf nmark (marker-position saved-mark))
+        ;;         (set-marker (mark-marker) nmark)
+        ;;         (set-marker saved-mark nil))
+        ;;       ;; mark active
+        ;;       (let ((cur-mark-active mark-active))
+        ;;         (setf mark-active saved-mark-active)
+        ;;         ;; if mark is active now, and either was not active or was at a
+        ;;         ;; different place, run the activate hook
+        ;;         (if saved-mark-active
+        ;;             (unless (eq omark nmark)
+        ;;               (run-hooks 'activate-mark-hook))
+        ;;           ;; if mark has ceased to be active, run deactivate hook
+        ;;           (when cur-mark-active
+        ;;             (run-hooks 'deactivate-mark-hook))))))
 
-          (defmacro save-mark-and-excursion (&rest body)
-            "Like `save-excursion', but also save and restore the mark state.
+        ;;   (defmacro save-mark-and-excursion (&rest body)
+        ;;     "Like `save-excursion', but also save and restore the mark state.
 
-        This macro does what `save-excursion' did before Emacs 25.1."
-            (declare (indent 0))
-            (let ((saved-marker-sym (make-symbol "saved-marker")))
-              `(let ((,saved-marker-sym (save-mark-and-excursion--save)))
-                 (unwind-protect
-                     (save-mark-and-excursion ,@body)
-                   (save-mark-and-excursion--restore ,saved-marker-sym))))))
+        ;; This macro does what `save-excursion' did before Emacs 25.1."
+        ;;     (declare (indent 0))
+        ;;     (let ((saved-marker-sym (make-symbol "saved-marker")))
+        ;;       `(let ((,saved-marker-sym (save-mark-and-excursion--save)))
+        ;;          (unwind-protect
+        ;;              (save-excursion ,@body)
+        ;;            (save-mark-and-excursion--restore ,saved-marker-sym))))))
       #+END_SRC
 
 *** Advice Functions
