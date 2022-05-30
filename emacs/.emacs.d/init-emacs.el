@@ -10612,9 +10612,9 @@ otherwise `downcase-word' is called.
 
 If DO-NOT-CAP-ENDS is non-nil, the first and last words will not
 be automatically capitalized."
-  ;; TODO: Do not change words that are mixed case or all caps
   (interactive "*")
-  (let ((words-single
+  (let ((case-fold-search nil)          ; case sensitive search
+        (words-single
          '(;; conjunctions
            "and" "as" "be" "into" "is" "it" "nor" "or" "so" "the" "that" "yet"
            ;; prepositions (single words)
@@ -10653,24 +10653,26 @@ be automatically capitalized."
     (let ((words-single-regexp (regexp-opt (mapcar #'capitalize words-single) 'words))
           (words-double-regexp (regexp-opt (mapcar #'capitalize words-double) 'words))
           (words-triple-regexp (regexp-opt (mapcar #'capitalize words-triple) 'words))
-          (abbreviation-word-regexp "\\b[A-Z][.A-Z]+[^ ]*\\b")
+          (abbreviation-word-regexp "\\b[A-Z][.A-Z]+[^ \t]*\\b")
+          (mixed-word-regexp "\\b[A-Z]*[a-z]+[A-Z]+[^ \t]*\\b")
           (first-word-regexp "\\(^[ \t]*\\(\\w+\\)\\|[\.!:&\*()/][ \t]*\\(\\w+\\)\\)")
           (last-word-regexp "\\(\\(\\w+\\)[ \t]*$\\|\\(\\w+\\)[ \t]*[\.!:&\*()\[]\\)"))
       (cl-labels
-          ((get-abbrevs (string)
+          ((get-fixed (string)
                         (let ((case-fold-search nil)
                               (pos 0)
-                              abbrevs)
-                          (while (string-match abbreviation-word-regexp string pos)
+                              fixed)
+                          (while (or (string-match abbreviation-word-regexp string pos)
+                                     (string-match mixed-word-regexp string pos))
                             (push (list (match-beginning 0)
                                         (match-end 0)
                                         (match-string 0 string))
-                                  abbrevs)
+                                  fixed)
                             (setq pos (match-end 0)))
-                          (nreverse abbrevs)))
-           (set-abbrevs (string abbrevs)
+                          (nreverse fixed)))
+           (set-fixed (string fixed)
                         (let ((string string))
-                          (dolist (a abbrevs)
+                          (dolist (a fixed)
                             (setq string
                                   (concat (substring string 0 (car a))
                                           (caddr a)
@@ -10684,15 +10686,15 @@ be automatically capitalized."
                   (replace-regexp-in-string
                    words-triple-regexp 'downcase
                    (capitalize string) t t) t t) t t)))
-        (let ((abbrevs (get-abbrevs string)))
+        (let ((fixed (get-fixed string)))
           (if do-not-cap-ends
-              (set-abbrevs (cap string) abbrevs)
-            (set-abbrevs
+              (set-fixed (cap string) fixed)
+            (set-fixed
              (replace-regexp-in-string
               first-word-regexp 'capitalize
               (replace-regexp-in-string
                last-word-regexp 'capitalize
-               (cap string) t t) t t) abbrevs)))))))
+               (cap string) t t) t t) fixed)))))))
 ;; titleize:1 ends here
 
 ;; [[file:init-emacs.org::#functions-text-conversion-functions-titleize-word-enhanced][titleize-word-enhanced:1]]
