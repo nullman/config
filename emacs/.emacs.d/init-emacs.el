@@ -10658,12 +10658,11 @@ be automatically capitalized."
           (first-word-regexp "\\(^[ \t]*\\(\\w+\\)\\|[\.!:&\*()/][ \t]*\\(\\w+\\)\\)")
           (last-word-regexp "\\(\\(\\w+\\)[ \t]*$\\|\\(\\w+\\)[ \t]*[\.!:&\*()\[]\\)"))
       (cl-labels
-          ((get-fixed (string)
+          ((get-fixed (string regexp)
                         (let ((case-fold-search nil)
                               (pos 0)
                               fixed)
-                          (while (or (string-match abbreviation-word-regexp string pos)
-                                     (string-match mixed-word-regexp string pos))
+                          (while (string-match regexp string pos)
                             (push (list (match-beginning 0)
                                         (match-end 0)
                                         (match-string 0 string))
@@ -10686,7 +10685,8 @@ be automatically capitalized."
                   (replace-regexp-in-string
                    words-triple-regexp 'downcase
                    (capitalize string) t t) t t) t t)))
-        (let ((fixed (get-fixed string)))
+        (let ((fixed (append (get-fixed string abbreviation-word-regexp)
+                             (get-fixed string mixed-word-regexp))))
           (if do-not-cap-ends
               (set-fixed (cap string) fixed)
             (set-fixed
