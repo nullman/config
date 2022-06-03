@@ -1915,6 +1915,10 @@ alias rsync-music-get-morpheus=" \
 alias rsync-music-put-morpheus=" \
     rsync -rlptx --progress ${home}/data/media/audio/Music/ morpheus:${home}/data/media/audio/Music/ && \
     rsync -rlptx --progress ${home}/data/media/audio/Playlists/ morpheus:${home}/data/media/audio/Playlists/"
+#        rsync-media-put-synology  rsync /home/data/media /mnt/synology/media
+alias rsync-media-put-synology="rsync -rlx --progress ${home}/data/media/ /mnt/synology/media"
+#        rsync-media-put-synology-delete  rsync /home/data/media /mnt/synology/media
+alias rsync-media-put-synology-delete="rsync -rlx --progress --delete ${home}/data/media/ /mnt/synology/media"
 #        rsync-music-put-colleen  rsync /home/data/media/audio/Music colleen:/home/data/media/audio/Music
 alias rsync-music-put-colleen=" \
     rsync -rlptx --progress ${home}/data/media/audio/Music/ colleen:${home}/data/media/audio/Music/ && \
@@ -2562,15 +2566,15 @@ alias pacman-reset-repository="
 # yay (Package Manager)
 #
 #        yau                     yay -Syu (update packages with refresh)
-alias yau="yay -Syu"
+alias yau="yay -Syu --noconfirm"
 #        yauf                    yay -Syyu (update packages with forced refresh)
-alias yauf="yay -Syyu"
+alias yauf="yay -Syyu --noconfirm"
 #        yai                     yay -S (install package)
-alias yai="yay -S --needed"
+alias yai="yay -S --needed --noconfirm"
 #        yair                    yay -S (reinstall package)
-alias yair="yay -S"
+alias yair="yay -S --noconfirm"
 #        yar                     yay -R (remove package and configuration files)
-alias yar="yay -R --nosave"
+alias yar="yay -R --nosave --noconfirm"
 #        yas                     yay -Ss (search packages)
 alias yas="yay -Ss"
 #        yaf                     yay -F (search files)
