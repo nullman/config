@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-06-04 00:34 (kyle)>
+  #+TIMESTAMP: <2022-06-04 09:43 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -22132,7 +22132,8 @@
        ("Baud Baby" "gopher://baud.baby/1")
        ("EyeBlea" "gopher://eyeblea.ch/1")
        ("Final Zone" "gopher://finalzone.ddns.net/1")
-       ("20 For Beers" "gopher://20ForBeers.com")
+       ("20 For Beers" "gopher://20ForBeers.com/1")
+       ("Nullman" "gopher://nullman.net/1")
        ("kurisu (L29)" "gopher://eyeblea.ch/1/~kurisu")
        ("fluxcap (L29) ???" "gopher://fluxcap.synchro.net:5070/1")
        ("nkeck72 (L29)" "gopher://gopher.nkeck72.xyz/1")
