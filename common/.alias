@@ -1923,26 +1923,6 @@ alias rsync-media-put-synology-delete="rsync -rlx --progress --delete ${home}/da
 alias rsync-music-put-colleen=" \
     rsync -rlptx --progress ${home}/data/media/audio/Music/ colleen:${home}/data/media/audio/Music/ && \
     rsync -rlptx --progress ${home}/data/media/audio/Playlists/ colleen:${home}/data/media/audio/Playlists/"
-#!#        rsync-music-put-music  rsync /home/data/media/audio/Music /media/${USER}/MUSIC
-#!alias rsync-music-put-music-sd="
-#!    echo 'Copying muisc files and playlists to Music USB:'
-#!    o=/run/media/\${USER}/\$(cd /run/media/\${USER} && \$(pathcmd ls) -1)
-#!    cp \${HOME}/.mpd/playlists/kyle.m3u \${o}/
-#!    cp \${HOME}/.mpd/playlists/rated_good.m3u \${o}/
-#!    (
-#!        cd \"${home}/data/media/audio/Music/\" && \
-#!            cat \${o}/*.m3u | while read line ; do
-#!                rsync -Rtxc --progress --delete \"\${line}\" \${o}/
-#!            done
-#!    )"
-#        rsync-music-put-music   rsync /home/data/media/audio/Music /media/${USER}/MUSIC
-alias rsync-music-put-music-sd=" \
-    o=/run/media/\${USER}/MUSIC && \
-    rsync -rLtxc --progress --delete \${HOME}/.mpd/playlists/kyle.m3u \${o}/ && \
-    rsync -rLtxc --progress --delete \${HOME}/.mpd/playlists/rated_good.m3u \${o}/ && \
-    rsync -rLtxc --progress --delete ${home}/data/media/audio/Music/* \${o}/ && \
-    rsync -rLtxc --progress --delete ${home}/data/media/audio/MODs \${o}/ && \
-    sync"
 #        rsync-video-get-morpheus  rsync morpheus:/home/data/media/video /home/data/media/video
 alias rsync-video-get-morpheus="rsync -rlptx --progress morpheus:/home/data/media/video/ ${home}/data/media/video/"
 #        rsync-video-put-morpheus  rsync morpheus:/home/data/media/video /home/data/media/video
@@ -1963,37 +1943,57 @@ alias rsync-repos-put-colleen="rsync -rlptx --progress ${home}/data/media/repos/
 #!alias rsync-org-put-dropbox="[[ -d \${HOME}/Dropbox/Org ]] && rsync -aAXv --delete \${HOME}/org/* \${HOME}/Dropbox/Org/"
 #        rsync-aerial-get-morpheus  rsync morpheus:/home/data/media/aerial /home/data/media/aerial
 alias rsync-aerial-get-morpheus="rsync -rlptx --progress morpheus:/home/data/media/aerial/ ${home}/data/media/aerial/"
-#        rsync-win-apps-put-win_apps-sd  rsync /home/data/media/software/Windows*/* /run/media/${USER}/WIN_APPS/Windows*/
-alias rsync-win-apps-put-win_apps-sd="
-    rsync -rLtxc --progress --delete --exclude={'Windows OS/','Partitions/'} ${home}/data/media/software/Windows* /run/media/\${USER}/WIN_APPS/ && \
-    rsync -rLtxc --progress --delete ${home}/data/media/repos/DOS ${home}/data/media/repos/FreeDOS /run/media/\${USER}/WIN_APPS/ && \
-    sync"
-#        rsync-windows-put-win_apps-sd  rsync /home/data/media/software/Windows*/* /run/media/${USER}/WINDOWS/Windows*/
-alias rsync-windows-put-win_apps-sd="
-    rsync -rLtxc --progress --delete --exclude={'Windows OS/','Partitions/'} ${home}/data/media/software/Windows* /run/media/\${USER}/WINDOWS/ && \
-    rsync -rLtxc --progress --delete ${home}/data/media/repos/DOS ${home}/data/media/repos/FreeDOS /run/media/\${USER}/WINDOWS/ && \
-    sync"
-#        rsync-t43-os2-put-t43-os2-sd  rsync /home/data/media/software/(Thinkpad T43|OS2)/* /run/media/${USER}/T43_OS2/(Thinkpad T43|OS2)/
-alias rsync-t43-os2-put-t43-os2-sd=" \
-    rsync -rLtxc --progress --delete --exclude={'ArcaOS/','CDs/','OS2/'} ${home}/data/media/software/OS2/* /run/media/\${USER}/T43_OS2/OS2/ && \
-    rsync -rLtxc --progress --delete \"${home}/data/media/software/Thinkpad T43\" /run/media/\${USER}/T43_OS2/ && \
-    sync"
-#        rsync-mac-put-mac_apps-sd  rsync /home/data/media/software/Macintosh/* /run/media/${USER}/MAC_APPS/Macintosh/
-alias rsync-mac-put-mac_apps-sd=" \
-    rsync -rLtxc --progress --delete --exclude='FINDER.DAT' ${home}/data/media/software/Macintosh/68000 /run/media/\${USER}/MAC_APPS/Macintosh/ && \
-    rsync -rLtxc --progress --delete --exclude='FINDER.DAT' ${home}/data/media/software/Macintosh/OS\ X /run/media/\${USER}/MAC_APPS/Macintosh/ && \
-    rsync -rLtxc --progress --delete --exclude='FINDER.DAT' ${home}/data/media/software/Macintosh/PPC /run/media/\${USER}/MAC_APPS/Macintosh/ && \
-    sync"
-#        rsync-c64-put-sd16      rsync ${HOME}/C64/* /run/media/${USER}/C64/
-alias rsync-c64-put-sd16="rsync -rLtxc --progress --delete --exclude='TOSEC/' \${HOME}/C64/* /run/media/\${USER}/C64/ && sync"
-#        rsync-c64-put-sd128     rsync ${HOME}/C64/* /run/media/${USER}/C64/
-alias rsync-c64-put-sd128="rsync -rLtxc --progress --delete \${HOME}/C64/* /run/media/\${USER}/C64/ && sync"
-#        rsync-adult-put-adult-sd  rsync /home/data/media/video/Adult/* /run/media/${USER}/ADULT/
-alias rsync-adult-put-adult-sd="rsync -rLtxc --progress --delete --exclude='White Boxxx Compilation' ${home}/data/media/video/Adult/ /run/media/\${USER}/ADULT/ && sync"
 #        rsync-common-put-media-delete rsync ${HOME}/config/icons/ and ${HOME}/config/images/ to /home/data/media/graphic/
 alias rsync-common-put-media-delete=" \
     rsync -rlptx --progress --delete \${HOME}/config/icons/ ${home}/data/media/graphic/Icons/Common/ && \
     rsync -rlptx --progress --delete \${HOME}/config/images/ ${home}/data/media/graphic/Images/Common/"
+#!#        rsync-music-put-music  rsync /home/data/media/audio/Music /media/${USER}/MUSIC
+#!alias rsync-music-put-music-sd="
+#!    echo 'Copying muisc files and playlists to Music USB:'
+#!    o=/run/media/\${USER}/\$(cd /run/media/\${USER} && \$(pathcmd ls) -1)
+#!    cp \${HOME}/.mpd/playlists/kyle.m3u \${o}/
+#!    cp \${HOME}/.mpd/playlists/rated_good.m3u \${o}/
+#!    (
+#!        cd \"${home}/data/media/audio/Music/\" && \
+#!            cat \${o}/*.m3u | while read line ; do
+#!                rsync -RtxW --progress --delete \"\${line}\" \${o}/
+#!            done
+#!    )"
+#        rsync-music-put-music   rsync /home/data/media/audio/Music /media/${USER}/MUSIC
+alias rsync-music-put-music-sd=" \
+    o=/run/media/\${USER}/MUSIC && \
+    rsync -rLtxW --size-only --progress --delete \${HOME}/.mpd/playlists/kyle.m3u \${o}/ && \
+    rsync -rLtxW --size-only --progress --delete \${HOME}/.mpd/playlists/rated_good.m3u \${o}/ && \
+    rsync -rLtxW --size-only --progress --delete ${home}/data/media/audio/Music/* \${o}/ && \
+    rsync -rLtxW --size-only --progress --delete ${home}/data/media/audio/MODs \${o}/ && \
+    sync"
+#        rsync-win-apps-put-win_apps-sd  rsync /home/data/media/software/Windows*/* /run/media/${USER}/WIN_APPS/Windows*/
+alias rsync-win-apps-put-win_apps-sd="
+    rsync -rLtxW --size-only --progress --delete --exclude={'Windows OS/','Partitions/'} ${home}/data/media/software/Windows* /run/media/\${USER}/WIN_APPS/ && \
+    rsync -rLtxW --size-only --progress --delete ${home}/data/media/repos/DOS ${home}/data/media/repos/FreeDOS /run/media/\${USER}/WIN_APPS/ && \
+    sync"
+#        rsync-windows-put-win_apps-sd  rsync /home/data/media/software/Windows*/* /run/media/${USER}/WINDOWS/Windows*/
+alias rsync-windows-put-win_apps-sd="
+    rsync -rLtxW --size-only --progress --delete --exclude={'Windows OS/','Partitions/'} ${home}/data/media/software/Windows* /run/media/\${USER}/WINDOWS/ && \
+    rsync -rLtxW --size-only --progress --delete ${home}/data/media/repos/DOS ${home}/data/media/repos/FreeDOS /run/media/\${USER}/WINDOWS/ && \
+    sync"
+#        rsync-t43-os2-put-t43-os2-sd  rsync /home/data/media/software/(Thinkpad T43|OS2)/* /run/media/${USER}/T43_OS2/(Thinkpad T43|OS2)/
+alias rsync-t43-os2-put-t43-os2-sd=" \
+    rsync -rLtxW --size-only --progress --delete --exclude={'ArcaOS/','CDs/','OS2/'} ${home}/data/media/software/OS2/* /run/media/\${USER}/T43_OS2/OS2/ && \
+    rsync -rLtxW --size-only --progress --delete \"${home}/data/media/software/Thinkpad T43\" /run/media/\${USER}/T43_OS2/ && \
+    sync"
+#        rsync-mac-put-mac_apps-sd  rsync /home/data/media/software/Macintosh/* /run/media/${USER}/MAC_APPS/Macintosh/
+alias rsync-mac-put-mac_apps-sd=" \
+    rsync -rLtxW --size-only --progress --delete --exclude='FINDER.DAT' ${home}/data/media/software/Macintosh/68000 /run/media/\${USER}/MAC_APPS/Macintosh/ && \
+    rsync -rLtxW --size-only --progress --delete --exclude='FINDER.DAT' ${home}/data/media/software/Macintosh/OS\ X /run/media/\${USER}/MAC_APPS/Macintosh/ && \
+    rsync -rLtxW --size-only --progress --delete --exclude='FINDER.DAT' ${home}/data/media/software/Macintosh/PPC /run/media/\${USER}/MAC_APPS/Macintosh/ && \
+    sync"
+#        rsync-c64-put-sd16      rsync ${HOME}/C64/* /run/media/${USER}/C64/
+alias rsync-c64-put-sd16="rsync -rLtxW --size-only --progress --delete --exclude='TOSEC/' \${HOME}/C64/* /run/media/\${USER}/C64/ && sync"
+#        rsync-c64-put-sd128     rsync ${HOME}/C64/* /run/media/${USER}/C64/
+alias rsync-c64-put-sd128="rsync -rLtxW --size-only --progress --delete \${HOME}/C64/* /run/media/\${USER}/C64/ && sync"
+#        rsync-adult-put-adult-sd  rsync /home/data/media/video/Adult/* /run/media/${USER}/ADULT/
+alias rsync-adult-put-adult-sd="rsync -rLtxW --size-only --progress --delete --exclude={'#recycle','White Boxxx Compilation'} ${home}/data/media/video/Adult/ /media/ADULT/ && sync"
 
 #
 # ruby
