@@ -15008,6 +15008,17 @@ USING is the remaining peg."
   :init (semantic-mode 1))
 ;; cedet/semantic:1 ends here
 
+;; [[file:init-emacs.org::#packages-cheat-sh][cheat-sh:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: cheat-sh
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Packages: cheat-sh")
+
+(use-package cheat-sh
+  :straight t)
+;; cheat-sh:1 ends here
+
 ;; [[file:init-emacs.org::#modules-command-log][command-log:1]]
 ;;------------------------------------------------------------------------------
 ;;; Modules: command-log

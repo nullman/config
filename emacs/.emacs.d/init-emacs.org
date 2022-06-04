@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-05-30 10:59 (kyle)>
+  #+TIMESTAMP: <2022-06-04 00:34 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -21490,6 +21490,24 @@
       ;; (use-package centered-cursor-mode
       ;;   :straight t
       ;;   :init (global-centered-cursor-mode 1))
+    #+END_SRC
+
+*** cheat-sh
+    :PROPERTIES:
+    :CUSTOM_ID: packages-cheat-sh
+    :END:
+
+    Interact with cheat.sh.
+
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Packages: cheat-sh
+      ;;------------------------------------------------------------------------------
+
+      (init-message 2 "Packages: cheat-sh")
+
+      (use-package cheat-sh
+        :straight t)
     #+END_SRC
 
 *** +color-theme+
