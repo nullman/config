@@ -245,6 +245,7 @@ case "${menu}" in
         if [[ $# -lt 2 ]] ; then
             servers=(
                 "morpheus"
+                "mouse"
                 "nullware"
                 "raspad"
                 "switch"
