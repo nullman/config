@@ -213,7 +213,7 @@ export CDR_SECURITY="8:dvd,clone:sparc-sun-solaris2,i386-pc-solaris2,i586-pc-lin
 # move nvm bin path to end of env path
 nvmpath=$(echo ":${PATH}:" | sed "s%^.*:\\(${HOME}/\.nvm/[^:]*\\):.*$%\1%")
 if [[ -n "${nvmpath}" ]] ; then
-    newpath=$(echo ":${PATH}:" | sed "s%:${HOME}/\.nvm/[^:]*:%%g ; s%^:%% ; s%:$%%")
+    newpath=$(echo ":${PATH}:" | sed "s%:${HOME}/\.nvm/[^:]*:%:%g ; s%^:%% ; s%:$%%")
     export PATH="${newpath}:${nvmpath}"
 fi
 
