@@ -27,38 +27,38 @@ _command() {
     command -v "$1" > /dev/null 2>&1
 }
 
-# prevent duplicate path entries
+# add path segment before or after existing path entries, preventing duplicate
 _pathadd() {
     if [[ -d "$1" ]] ; then
         local p=$(cd "$1" && pwd)
-        local q=$(echo "$p" | sed 's/(/\\(/g ; s/)/\\)/g')
-        if ! echo "${PATH}" | egrep -q "(^|:)$q($|:)" ; then
+        if [[ -n "${p}" ]] ; then
             if [[ -z "${PATH}" ]] ; then
                 PATH="${p}"
             else
+                local newpath=$(echo ":${PATH}:" | sed "s%:${p}:%:%g ; s%^:%% ; s%:$%%")
                 if [[ "$2" == "before" ]] ; then
-                    PATH="${p}:${PATH}"
+                    PATH="${p}:${newpath}"
                 else
-                    PATH="${PATH}:${p}"
+                    PATH="${newpath}:${p}"
                 fi
             fi
         fi
     fi
 }
 
-# prevent duplicate infopath entries
+# add infopath segment before or after existing infopath entries, preventing duplicates
 _infopathadd() {
     if [[ -d "$1" ]] ; then
         local p=$(cd "$1" && pwd)
-        local q=$(echo "$p" | sed 's/(/\\(/g ; s/)/\\)/g')
-        if ! echo "${INFOPATH}" | egrep -q "(^|:)$q($|:)" ; then
+        if [[ -n "${p}" ]] ; then
             if [[ -z "${INFOPATH}" ]] ; then
                 INFOPATH="${p}"
             else
+                local newinfopath=$(echo ":${INFOPATH}:" | sed "s%:${p}:%:%g ; s%^:%% ; s%:$%%")
                 if [[ "$2" == "before" ]] ; then
-                    INFOPATH="${p}:${INFOPATH}"
+                    INFOPATH="${p}:${newinfopath}"
                 else
-                    INFOPATH="${INFOPATH}:${p}"
+                    INFOPATH="${newinfopath}:${p}"
                 fi
             fi
         fi
@@ -210,8 +210,12 @@ export CDR_SECURITY="8:dvd,clone:sparc-sun-solaris2,i386-pc-solaris2,i586-pc-lin
 
 # initialize nvm
 [[ -f "/usr/share/nvm/init-nvm.sh" ]] && source "/usr/share/nvm/init-nvm.sh" 2>&1
-# move nvm bin path to end of path env
-export PATH=$(echo "${PATH}" | sed "s%\\(${HOME}/\.nvm/[^:]*\\):\\(.*$\\)%\2:\1%")
+# move nvm bin path to end of env path
+nvmpath=$(echo ":${PATH}:" | sed "s%^.*:\\(${HOME}/\.nvm/[^:]*\\):.*$%\1%")
+if [[ -n "${nvmpath}" ]] ; then
+    newpath=$(echo ":${PATH}:" | sed "s%:${HOME}/\.nvm/[^:]*:%%g ; s%^:%% ; s%:$%%")
+    export PATH="${newpath}:${nvmpath}"
+fi
 
 # initialize opam (ocaml package manager)
 #[[ "${SHELL: -4}" == "bash" ]] && [[ -f "${HOME}/.opam/opam-init/init.sh" ]] && source "${HOME}/.opam/opam-init/init.sh"
