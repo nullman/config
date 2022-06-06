@@ -27,7 +27,7 @@ _command() {
     command -v "$1" > /dev/null 2>&1
 }
 
-# add path segment before or after existing path entries, preventing duplicate
+# add path entry before or after existing path entries, preventing duplicate
 _pathadd() {
     if [[ -d "$1" ]] ; then
         local p=$(cd "$1" && pwd)
@@ -46,7 +46,7 @@ _pathadd() {
     fi
 }
 
-# add infopath segment before or after existing infopath entries, preventing duplicates
+# add infopath entry before or after existing infopath entries, preventing duplicates
 _infopathadd() {
     if [[ -d "$1" ]] ; then
         local p=$(cd "$1" && pwd)
@@ -175,11 +175,11 @@ export INFOPATH
 export SCREENDIR="${HOME}/.screendir"
 [[ -d "${SCREENDIR}" ]] || mkdir -p -m 700 "${SCREENDIR}"
 
-# # run ssh-agent
+# # ssh-agent
 # #pstest ssh-add || ssh-add > /dev/null 2>&1
 # pstest ssh-agent || ssh-agent > /dev/null 2>&1
 
-# # run keychain for one-time entry of ssh passphrase
+# # keychain for one-time entry of ssh passphrase
 # [[ -d "${HOME}/.ssh" ]] && eval "$(keychain --quiet --eval id_rsa)"
 
 # set XDG_DOWNLOAD_DIR
@@ -202,30 +202,30 @@ export WORKON_HOME="${HOME}/.virtualenvs"
 export PROJECT_HOME="${HOME}/.virtualenv-projects"
 [[ -x "/usr/local/bin/virtualenvwrapper.sh" ]] && source "/usr/local/bin/virtualenvwrapper.sh" 2>&1
 
-# prodvd key
+# set prodvd key
 export CDR_SECURITY="8:dvd,clone:sparc-sun-solaris2,i386-pc-solaris2,i586-pc-linux\,powerpc-apple,hppa,powerpc-ibm-aix,i386-unknown-freebsd,i386-unknown-openbsd,i38\6-unknown-netbsd,powerpc-apple-netbsd,i386-pc-bsdi,mips-sgi-irix,i386-pc-sco:1.11\::1093000000:::private/research/educational_non-commercial_use:9vl2T2kP6w6O4h.bXu\et8hP1Z3H5erm3qWmxhbcr.fHvuN8ZJbhQUWBzjAc"
 
 # # set ocaml package manager environment
 # [[ -x "${HOME}/.opam/opam-init/init.sh" ]] && source "${HOME}/.opam/opam-init/init.sh" > /dev/null 2>&1
 
-# initialize nvm
+# nvm
 [[ -f "/usr/share/nvm/init-nvm.sh" ]] && source "/usr/share/nvm/init-nvm.sh" 2>&1
-# move nvm bin path to end of env path
-nvmpath=$(echo ":${PATH}:" | sed "s%^.*:\\(${HOME}/\.nvm/[^:]*\\):.*$%\1%")
+# move nvm bin path after sbin
+nvmpath=$(echo ":${PATH}:" | egrep ":${HOME}/\.nvm/[^:]*:" | sed "s%^.*:\\(${HOME}/\.nvm/[^:]*\\):.*$%\1%")
 if [[ -n "${nvmpath}" ]] ; then
     newpath=$(echo ":${PATH}:" | sed "s%:${HOME}/\.nvm/[^:]*:%:%g ; s%^:%% ; s%:$%%")
-    export PATH="${newpath}:${nvmpath}"
+    export PATH=$(echo ${newpath} | sed "s%^\\(.*/sbin:\\)\\(.*\\)$%\1${nvmpath}:\2%")
 fi
 
-# initialize opam (ocaml package manager)
-#[[ "${SHELL: -4}" == "bash" ]] && [[ -f "${HOME}/.opam/opam-init/init.sh" ]] && source "${HOME}/.opam/opam-init/init.sh"
-#[[ "${SHELL: -3}" == "zsh" ]] && [[ -f "${HOME}/.opam/opam-init/init.zsh" ]] && source "${HOME}/.opam/opam-init/init.zsh"
+# opam (ocaml package manager)
+#[[ "${SHELL: -4}" == "bash" ]] && [[ -f "${HOME}/.opam/opam-init/init.sh" ]] && source "${HOME}/.opam/opam-init/init.sh" 2>&1
+#[[ "${SHELL: -3}" == "zsh" ]] && [[ -f "${HOME}/.opam/opam-init/init.zsh" ]] && source "${HOME}/.opam/opam-init/init.zsh" 2>&1
 
 # # run-app
 # [[ -x "${HOME}/bin/run-app" ]] && ${HOME}/bin/run-app 2>&1
 
-# install broot
-[[ -f "${HOME}/.config/broot/launcher/bash/br" ]] && source "${HOME}/.config/broot/launcher/bash/br"
+# broot
+[[ -f "${HOME}/.config/broot/launcher/bash/br" ]] && source "${HOME}/.config/broot/launcher/bash/br" 2>&1
 
 # source work shellrc
 [[ -e "${HOME}/.work" ]] && [[ -f "${HOME}/.shellrc-work" ]] && source "${HOME}/.shellrc-work" 2>&1
