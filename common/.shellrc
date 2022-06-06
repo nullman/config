@@ -210,6 +210,8 @@ export CDR_SECURITY="8:dvd,clone:sparc-sun-solaris2,i386-pc-solaris2,i586-pc-lin
 
 # initialize nvm
 [[ -f "/usr/share/nvm/init-nvm.sh" ]] && source "/usr/share/nvm/init-nvm.sh" 2>&1
+# move nvm bin path to end of path env
+export PATH=$(echo "${PATH}" | sed "s%\\(${HOME}/\.nvm/[^:]*\\):\\(.*$\\)%\2:\1%")
 
 # initialize opam (ocaml package manager)
 #[[ "${SHELL: -4}" == "bash" ]] && [[ -f "${HOME}/.opam/opam-init/init.sh" ]] && source "${HOME}/.opam/opam-init/init.sh"
