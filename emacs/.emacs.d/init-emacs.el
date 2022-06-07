@@ -15187,7 +15187,20 @@ USING is the remaining peg."
           ([remap mark-sexp] . easy-mark)))
 ;; easy-kill:1 ends here
 
-;; [[file:init-emacs.org::#modules-eldoc][eldoc:1]]
+;; [[file:init-emacs.org::#packages-editorconfig][editorconfig:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: editorconfig
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Packages: editorconfig")
+
+(use-package editorconfig
+  :straight t
+  :config
+  (editorconfig-mode 1))
+;; editorconfig:1 ends here
+
+;; [[file:init-emacs.org::#modules-eldoc][eldoc=======================================================================:1]]
 ;;------------------------------------------------------------------------------
 ;;; Modules: eldoc
 ;;------------------------------------------------------------------------------
@@ -15199,7 +15212,7 @@ USING is the remaining peg."
   :custom
   ;; no idle delay before showing contextual information
   (eldoc-idle-delay 0))
-;; eldoc:1 ends here
+;; eldoc=======================================================================:1 ends here
 
 ;; [[file:init-emacs.org::#modules-elfeed][elfeed:1]]
 ;;------------------------------------------------------------------------------
@@ -18187,7 +18200,7 @@ otherwise run `find-file-as-root'."
 
 (use-package json-mode
   :straight t
-  :mode (("\\.json\\'" . js2-mode))
+  :mode (("\\.json\\'" . json-mode))
   :config
   ;; set indentation to four spaces
   (setq json-encoding-default-indentation "    "

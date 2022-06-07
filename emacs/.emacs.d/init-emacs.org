@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-06-04 09:43 (kyle)>
+  #+TIMESTAMP: <2022-06-07 10:38 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -51,14 +51,19 @@
     |--------------------------------------|
     | Faces that May be Set with Font-Lock |
     |--------------------------------------|
-    | font-lock-comment-face               |
-    | font-lock-string-face                |
-    | font-lock-keyword-face               |
     | font-lock-builtin-face               |
-    | font-lock-function-name-face         |
-    | font-lock-variable-name-face         |
-    | font-lock-type-face                  |
+    | font-lock-comment-delimiter-face     |
+    | font-lock-comment-face               |
     | font-lock-constant-face              |
+    | font-lock-doc-face                   |
+    | font-lock-doc-string-face            |
+    | font-lock-function-name-face         |
+    | font-lock-keyword-face               |
+    | font-lock-negation-char-face         |
+    | font-lock-preprocessor-face          |
+    | font-lock-string-face                |
+    | font-lock-type-face                  |
+    | font-lock-variable-name-face         |
     | font-lock-warning-face               |
     |--------------------------------------|
 
@@ -21873,7 +21878,25 @@
                 ([remap mark-sexp] . easy-mark)))
     #+END_SRC
 
-*** eldoc
+*** editorconfig
+    :PROPERTIES:
+    :CUSTOM_ID: packages-editorconfig
+    :END:
+
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Packages: editorconfig
+      ;;------------------------------------------------------------------------------
+
+      (init-message 2 "Packages: editorconfig")
+
+      (use-package editorconfig
+        :straight t
+        :config
+        (editorconfig-mode 1))
+    #+END_SRC
+
+*** eldoc=======================================================================
     :PROPERTIES:
     :CUSTOM_ID: modules-eldoc
     :END:
@@ -27875,7 +27898,7 @@
 
       (use-package json-mode
         :straight t
-        :mode (("\\.json\\'" . js2-mode))
+        :mode (("\\.json\\'" . json-mode))
         :config
         ;; set indentation to four spaces
         (setq json-encoding-default-indentation "    "
