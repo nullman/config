@@ -1790,6 +1790,11 @@ KEYMAP defaults to `override-global-map'."
     (bind-keys ("C-h z" . describe-function-or-variable-at-point)
                ("C-x C-h z" . describe-function-or-variable-at-point)))
 
+  ;; shortdoc
+  (when (fboundp 'shortdoc-display-group)
+    (bind-keys ("C-h D" . shortdoc-display-group)
+               ("C-x C-h D" . shortdoc-display-group)))
+
   ;; ;; smart M-x
   ;; (when (fboundp 'smex)
   ;;   (bind-keys ("M-x" . smex))) ; default: `execute-extended-command'

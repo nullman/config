@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-06-07 10:38 (kyle)>
+  #+TIMESTAMP: <2022-06-08 09:58 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -2948,6 +2948,11 @@
         (when (fboundp 'describe-function-or-variable-at-point)
           (bind-keys ("C-h z" . describe-function-or-variable-at-point)
                      ("C-x C-h z" . describe-function-or-variable-at-point)))
+
+        ;; shortdoc
+        (when (fboundp 'shortdoc-display-group)
+          (bind-keys ("C-h D" . shortdoc-display-group)
+                     ("C-x C-h D" . shortdoc-display-group)))
 
         ;; ;; smart M-x
         ;; (when (fboundp 'smex)
