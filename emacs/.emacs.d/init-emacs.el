@@ -7442,8 +7442,8 @@ init-emacs-website.el to be used with batch commands."
                                 ";;;; Org Mode: Babel: Tangle Update Timestamps"
                                 ";;;; Org Mode: Babel: Tangle Case-Sensitive"
                                 ";;;; Functions: Emacs Functions: delete-line"
-                                ";;; Modules: htmlize"
-                                ";;; Modules: w3m")
+                                ";;; Packages: htmlize"
+                                ";;; Packages: w3m")
                               (let ((start (progn
                                              (goto-char (point-min))
                                              (re-search-forward "^[ \t]*:CUSTOM_ID: org-website$")))
@@ -14272,7 +14272,7 @@ USING is the remaining peg."
 
 ;; [[file:init-emacs.org::#completions-vertico-consult-vertico][vertico:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: vertico
+;;;; Completions: vertico/consult: vertico
 ;;------------------------------------------------------------------------------
 
 (init-message 3 "Completions: vertico/consult: vertico")
@@ -14286,8 +14286,10 @@ USING is the remaining peg."
 
 ;; [[file:init-emacs.org::#completions-vertico-consult-orderless][orderless:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: orderless
+;;;; Completions: vertico/consult: orderless
 ;;------------------------------------------------------------------------------
+
+(init-message 3 "Completions: vertico/consult: orderless")
 
 (use-package orderless
   :straight t
@@ -14299,8 +14301,10 @@ USING is the remaining peg."
 
 ;; [[file:init-emacs.org::#completions-vertico-consult-marginalia][marginalia:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: marginalia
+;;;; Completions: vertico/consult: marginalia
 ;;------------------------------------------------------------------------------
+
+(init-message 3 "Completions: vertico/consult: marginalia")
 
 (use-package marginalia
   :straight t
@@ -14311,7 +14315,7 @@ USING is the remaining peg."
 
 ;; [[file:init-emacs.org::#completions-vertico-consult-consult][consult:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: consult
+;;;; Completions: vertico/consult: consult
 ;;------------------------------------------------------------------------------
 
 (init-message 3 "Completions: vertico/consult: consult")
@@ -14535,7 +14539,7 @@ USING is the remaining peg."
 
 ;; [[file:init-emacs.org::#modules-abbrev-mode][abbrev-mode:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: abbrev-mode
+;;; Packages: abbrev-mode
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: abbrev-mode")
@@ -14562,7 +14566,7 @@ USING is the remaining peg."
 
 ;; [[file:init-emacs.org::#modules-ag][ag==========================================================================:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: ag
+;;; Packages: ag
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: ag")
@@ -14575,7 +14579,7 @@ USING is the remaining peg."
 
 ;; [[file:init-emacs.org::#modules-alert][alert:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: alert
+;;; Packages: alert
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: alert")
@@ -14588,7 +14592,7 @@ USING is the remaining peg."
 
 ;; [[file:init-emacs.org::#modules-analog-clock][analog-clock:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: analog-clock
+;;; Packages: analog-clock
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: analog-clock")
@@ -14609,7 +14613,7 @@ USING is the remaining peg."
 
 ;; [[file:init-emacs.org::#modules-any-ini-mode][any-ini-mode:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: any-ini-mode
+;;; Packages: any-ini-mode
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: any-ini-mode")
@@ -14620,7 +14624,7 @@ USING is the remaining peg."
 
 ;; [[file:init-emacs.org::#modules-async][async:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: async
+;;; Packages: async
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: async")
@@ -14652,7 +14656,7 @@ USING is the remaining peg."
 
 ;; [[file:init-emacs.org::#modules-auto-compile][auto-compile:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: auto-compile
+;;; Packages: auto-compile
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: auto-compile")
@@ -14668,7 +14672,7 @@ USING is the remaining peg."
 
 ;; [[file:init-emacs.org::#modules-avy][avy:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: avy
+;;; Packages: avy
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: avy")
@@ -14682,7 +14686,7 @@ USING is the remaining peg."
 
 ;; [[file:init-emacs.org::#modules-bash-completion][bash-completion:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: bash-completion
+;;; Packages: bash-completion
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: bash-completion")
@@ -14694,7 +14698,7 @@ USING is the remaining peg."
 
 ;; [[file:init-emacs.org::#modules-bbdb][bbdb:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: bbdb
+;;; Packages: bbdb
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: bbdb")
@@ -14864,7 +14868,7 @@ USING is the remaining peg."
 
 ;; [[file:init-emacs.org::#modules-beacon][beacon:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: beacon
+;;; Packages: beacon
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: beacon")
@@ -14882,7 +14886,7 @@ USING is the remaining peg."
 
 ;; [[file:init-emacs.org::#modules-boxquote][boxquote:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: boxquote
+;;; Packages: boxquote
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: boxquote")
@@ -14908,7 +14912,7 @@ USING is the remaining peg."
 
 ;; [[file:init-emacs.org::#modules-browse-kill-ring][browse-kill-ring:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: browse-kill-ring
+;;; Packages: browse-kill-ring
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: browse-kill-ring")
@@ -14921,7 +14925,7 @@ USING is the remaining peg."
 
 ;; [[file:init-emacs.org::#modules-bs][bs:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: bs
+;;; Packages: bs
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: bs")
@@ -14986,7 +14990,7 @@ USING is the remaining peg."
 
 ;; [[file:init-emacs.org::#modules-calc][calc:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: calc
+;;; Packages: calc
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: calc")
@@ -14999,7 +15003,7 @@ USING is the remaining peg."
 
 ;; [[file:init-emacs.org::#modules-cedet-semantic][cedet/semantic:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: cedet/semantic
+;;; Packages: cedet/semantic
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: cedet/semantic")
@@ -15026,7 +15030,7 @@ USING is the remaining peg."
 
 ;; [[file:init-emacs.org::#modules-command-log][command-log:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: command-log
+;;; Packages: command-log
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: command-log")
@@ -15053,7 +15057,7 @@ USING is the remaining peg."
 
 ;; [[file:init-emacs.org::#modules-compile][compile:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: compile
+;;; Packages: compile
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: compile")
@@ -15087,7 +15091,7 @@ USING is the remaining peg."
 
 ;; [[file:init-emacs.org::#modules-cycle-buffer][cycle-buffer:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: cycle-buffer
+;;; Packages: cycle-buffer
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: cycle-buffer")
@@ -15114,7 +15118,7 @@ USING is the remaining peg."
 
 ;; [[file:init-emacs.org::#modules-decide][decide:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: decide
+;;; Packages: decide
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: decide")
@@ -15125,7 +15129,7 @@ USING is the remaining peg."
 
 ;; [[file:init-emacs.org::#modules-demo-it][demo-it:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: demo-it
+;;; Packages: demo-it
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: demo-it")
@@ -15136,7 +15140,7 @@ USING is the remaining peg."
 
 ;; [[file:init-emacs.org::#modules-doom-modeline][doom-modeline:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: doom-modeline
+;;; Packages: doom-modeline
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: doom-modeline")
@@ -15182,7 +15186,7 @@ USING is the remaining peg."
 
 ;; [[file:init-emacs.org::#modules-easy-kill][easy-kill:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: easy-kill
+;;; Packages: easy-kill
 ;;------------------------------------------------------------------------------
 
 (use-package easy-kill
@@ -15207,7 +15211,7 @@ USING is the remaining peg."
 
 ;; [[file:init-emacs.org::#modules-eldoc][eldoc=======================================================================:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: eldoc
+;;; Packages: eldoc
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: eldoc")
@@ -15221,7 +15225,7 @@ USING is the remaining peg."
 
 ;; [[file:init-emacs.org::#modules-elfeed][elfeed:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: elfeed
+;;; Packages: elfeed
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: elfeed")
@@ -15338,7 +15342,7 @@ USING is the remaining peg."
 
 ;; [[file:init-emacs.org::#modules-elnode][elnode:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: elnode
+;;; Packages: elnode
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: elnode")
@@ -15350,7 +15354,7 @@ USING is the remaining peg."
 
 ;; [[file:init-emacs.org::#modules-elpher][elpher:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: elpher
+;;; Packages: elpher
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: elpher")
@@ -15369,7 +15373,7 @@ USING is the remaining peg."
 
 ;; [[file:init-emacs.org::#modules-eperiodic][eperiodic:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: eperiodic
+;;; Packages: eperiodic
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: eperiodic")
@@ -15381,7 +15385,7 @@ USING is the remaining peg."
 
 ;; [[file:init-emacs.org::#modules-epoch][epoch:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: epoch
+;;; Packages: epoch
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: epoch")
@@ -15393,7 +15397,7 @@ USING is the remaining peg."
 
 ;; [[file:init-emacs.org::#modules-ert][ert:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: ert
+;;; Packages: ert
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: ert")
@@ -15404,7 +15408,7 @@ USING is the remaining peg."
 
 ;; [[file:init-emacs.org::#modules-exec-path-from-shell][exec-path-from-shell:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: exec-path-from-shell
+;;; Packages: exec-path-from-shell
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: exec-path-from-shell")
@@ -15417,7 +15421,7 @@ USING is the remaining peg."
 
 ;; [[file:init-emacs.org::#modules-expand-region][expand-region:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: expand-region
+;;; Packages: expand-region
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: expand-region")
@@ -15430,7 +15434,7 @@ USING is the remaining peg."
 
 ;; [[file:init-emacs.org::#modules-flycheck][flycheck:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: flycheck
+;;; Packages: flycheck
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: flycheck")
@@ -15460,7 +15464,7 @@ USING is the remaining peg."
 
 ;; [[file:init-emacs.org::#modules-flymake-cursor][flymake-cursor:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: flymake-cursor
+;;; Packages: flymake-cursor
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: flymake-cursor")
@@ -15471,7 +15475,7 @@ USING is the remaining peg."
 
 ;; [[file:init-emacs.org::#modules-flyspell][flyspell:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: flyspell
+;;; Packages: flyspell
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: flyspell")
@@ -15490,7 +15494,7 @@ USING is the remaining peg."
 
 ;; [[file:init-emacs.org::#modules-fuzzy][fuzzy:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: fuzzy
+;;; Packages: fuzzy
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: fuzzy")
@@ -15503,7 +15507,7 @@ USING is the remaining peg."
 
 ;; [[file:init-emacs.org::#modules-git-timemachine][git-timemachine:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: git-timemachine
+;;; Packages: git-timemachine
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: git-timemachine")
@@ -15515,7 +15519,7 @@ USING is the remaining peg."
 
 ;; [[file:init-emacs.org::#modules-hippie-exp][hippie-exp:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: hippie-exp
+;;; Packages: hippie-exp
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: hippie-exp")
@@ -15540,7 +15544,7 @@ USING is the remaining peg."
 
 ;; [[file:init-emacs.org::#modules-htmlize][htmlize:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: htmlize
+;;; Packages: htmlize
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: htmlize")
@@ -15574,7 +15578,7 @@ USING is the remaining peg."
 
 ;; [[file:init-emacs.org::#modules-hungry-delete][hungry-delete:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: hungry-delete
+;;; Packages: hungry-delete
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: hungry-delete")
@@ -15623,7 +15627,7 @@ back to the previous non-whitespace character. See also
 
 ;; [[file:init-emacs.org::#modules-ibuffer][ibuffer:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: ibuffer
+;;; Packages: ibuffer
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: ibuffer")
@@ -15691,7 +15695,7 @@ back to the previous non-whitespace character. See also
 
 ;; [[file:init-emacs.org::#modules-iedit][iedit:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: iedit
+;;; Packages: iedit
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: iedit")
@@ -15704,7 +15708,7 @@ back to the previous non-whitespace character. See also
 
 ;; [[file:init-emacs.org::#modules-imdb][+imdb+:1]]
 ;; ;;------------------------------------------------------------------------------
-;; ;;; Modules: imdb
+;; ;;; Packages: imdb
 ;; ;;------------------------------------------------------------------------------
 
 ;; (init-message 2 "Modules: imdb")
@@ -15715,7 +15719,7 @@ back to the previous non-whitespace character. See also
 
 ;; [[file:init-emacs.org::#modules-ini][ini:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: ini
+;;; Packages: ini
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: ini")
@@ -15728,7 +15732,7 @@ back to the previous non-whitespace character. See also
 
 ;; [[file:init-emacs.org::#modules-ispell][ispell:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: ispell
+;;; Packages: ispell
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: ispell")
@@ -15749,7 +15753,7 @@ back to the previous non-whitespace character. See also
 
 ;; [[file:init-emacs.org::#modules-json][json:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: json
+;;; Packages: json
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: json")
@@ -15760,7 +15764,7 @@ back to the previous non-whitespace character. See also
 
 ;; [[file:init-emacs.org::#modules-key-chord][key-chord:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: key-chord
+;;; Packages: key-chord
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: key-chord")
@@ -15792,7 +15796,7 @@ back to the previous non-whitespace character. See also
 
 ;; [[file:init-emacs.org::#modules-keyfreq][keyfreq:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: keyfreq
+;;; Packages: keyfreq
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: keyfreq")
@@ -15813,7 +15817,7 @@ back to the previous non-whitespace character. See also
 
 ;; [[file:init-emacs.org::#modules-langtool][langtool:2]]
 ;;------------------------------------------------------------------------------
-;;; Modules: langtool
+;;; Packages: langtool
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: langtool")
@@ -15836,7 +15840,7 @@ back to the previous non-whitespace character. See also
 
 ;; [[file:init-emacs.org::#modules-magit][magit:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: magit
+;;; Packages: magit
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: magit")
@@ -15901,7 +15905,7 @@ back to the previous non-whitespace character. See also
 
 ;; [[file:init-emacs.org::#modules-mingus][mingus:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: mingus
+;;; Packages: mingus
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: mingus")
@@ -16580,7 +16584,7 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
 
 ;; [[file:init-emacs.org::#modules-minions][minions:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: minions
+;;; Packages: minions
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: minions")
@@ -16593,7 +16597,7 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
 
 ;; [[file:init-emacs.org::#modules-multiple-cursors][multiple-cursors:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: multiple-cursors
+;;; Packages: multiple-cursors
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: multiple-cursors")
@@ -16624,7 +16628,7 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
 
 ;; [[file:init-emacs.org::#modules-neotree][neotree:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: neotree
+;;; Packages: neotree
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: neotree")
@@ -16660,11 +16664,25 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
 (use-package nov
   :straight t
   :mode (("\\.epub\\'" . nov-mode)))
+
+;; ;;------------------------------------------------------------------------------
+;; ;;;; Packages: nov-xwidget
+;; ;;------------------------------------------------------------------------------
+
+;; (init-message 3 "Packages: nov-xwidget")
+
+;; (use-package nov-xwidget
+;;   :straight t
+;;   :after (nov)
+;;   :config
+;;   ;; (map! :map nov-mode-map
+;;   ;;       :n "gv" 'nov-xwidget-view)
+;;   (add-hook 'nov-mode-hook #'nov-xwidget-inject-all-files))
 ;; nov:1 ends here
 
 ;; [[file:init-emacs.org::#modules-occur][occur:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: occur
+;;; Packages: occur
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: occur")
@@ -16680,7 +16698,7 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
 
 ;; [[file:init-emacs.org::#modules-package-lint][package-lint:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: package-lint
+;;; Packages: package-lint
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: package-lint")
@@ -16691,7 +16709,7 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
 
 ;; [[file:init-emacs.org::#modules-persistent-scratch][persistent-scratch:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: persistent-scratch
+;;; Packages: persistent-scratch
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: persistent-scratch")
@@ -16719,7 +16737,7 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
 
 ;; [[file:init-emacs.org::#modules-popper][popper:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: popper
+;;; Packages: popper
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: popper")
@@ -16743,7 +16761,7 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
 
 ;; [[file:init-emacs.org::#modules-proced][proced:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: proced
+;;; Packages: proced
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: proced")
@@ -16798,7 +16816,7 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
 
 ;; [[file:init-emacs.org::#modules-ps-ccrypt][ps-ccrypt:2]]
 ;;------------------------------------------------------------------------------
-;;; Modules: ps-ccrypt
+;;; Packages: ps-ccrypt
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: ps-ccrypt")
@@ -16811,7 +16829,7 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
 
 ;; [[file:init-emacs.org::#modules-rainbow-mode][rainbow-mode:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: rainbow-mode
+;;; Packages: rainbow-mode
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: rainbow-mode")
@@ -16824,7 +16842,7 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
 
 ;; [[file:init-emacs.org::#modules-recentf][recentf:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: recentf
+;;; Packages: recentf
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: recentf")
@@ -16840,7 +16858,7 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
 
 ;; [[file:init-emacs.org::#modules-regex-tool][regex-tool:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: regex-tool
+;;; Packages: regex-tool
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: regex-tool")
@@ -16852,7 +16870,7 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
 
 ;; [[file:init-emacs.org::#modules-replacer][replacer:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: replacer
+;;; Packages: replacer
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: replacer")
@@ -16945,7 +16963,7 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
 
 ;; [[file:init-emacs.org::#modules-s][s:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: s
+;;; Packages: s
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: s")
@@ -16956,7 +16974,7 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
 
 ;; [[file:init-emacs.org::#modules-saveplace][saveplace:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: saveplace
+;;; Packages: saveplace
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: saveplace")
@@ -16968,7 +16986,7 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
 
 ;; [[file:init-emacs.org::#modules-smerge][smerge:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: smerge
+;;; Packages: smerge
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: smerge")
@@ -16990,7 +17008,7 @@ Do not perform the search on very large files (to avoid a delay when loaded)."
 
 ;; [[file:init-emacs.org::#modules-sokoban][sokoban:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: sokoban
+;;; Packages: sokoban
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: sokoban")
@@ -17004,7 +17022,7 @@ Do not perform the search on very large files (to avoid a delay when loaded)."
 
 ;; [[file:init-emacs.org::#modules-split-move][split-move:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: split-move
+;;; Packages: split-move
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: split-move")
@@ -17016,7 +17034,7 @@ Do not perform the search on very large files (to avoid a delay when loaded)."
 
 ;; [[file:init-emacs.org::#modules-spinner][spinner:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: spinner
+;;; Packages: spinner
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: spinner")
@@ -17027,7 +17045,7 @@ Do not perform the search on very large files (to avoid a delay when loaded)."
 
 ;; [[file:init-emacs.org::#modules-sudoku][sudoku:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: sudoku
+;;; Packages: sudoku
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: sudoku")
@@ -17051,7 +17069,7 @@ Do not perform the search on very large files (to avoid a delay when loaded)."
 
 ;; [[file:init-emacs.org::#modules-switch-window][switch-window:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: switch-window
+;;; Packages: switch-window
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: switch-window")
@@ -17067,7 +17085,7 @@ Do not perform the search on very large files (to avoid a delay when loaded)."
 
 ;; [[file:init-emacs.org::#modules-telnet][telnet:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: telnet
+;;; Packages: telnet
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: telnet")
@@ -17078,7 +17096,7 @@ Do not perform the search on very large files (to avoid a delay when loaded)."
 
 ;; [[file:init-emacs.org::#modules-timeclock][timeclock:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: timeclock
+;;; Packages: timeclock
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: timeclock")
@@ -17101,7 +17119,7 @@ Do not perform the search on very large files (to avoid a delay when loaded)."
 
 ;; [[file:init-emacs.org::#modules-time-stamp][time-stamp:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: time-stamp
+;;; Packages: time-stamp
 ;;
 ;; When there is a "Timestamp: <>" in the first 20 lines of a file,
 ;; emacs will write the time-stamp there when saving the file.
@@ -17123,7 +17141,7 @@ Do not perform the search on very large files (to avoid a delay when loaded)."
 
 ;; [[file:init-emacs.org::#modules-tramp][tramp:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: tramp
+;;; Packages: tramp
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: tramp")
@@ -17206,7 +17224,7 @@ otherwise run `find-file-as-root'."
 
 ;; [[file:init-emacs.org::#modules-undo-tree][undo-tree:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: undo-tree
+;;; Packages: undo-tree
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: undo-tree")
@@ -17224,7 +17242,7 @@ otherwise run `find-file-as-root'."
 
 ;; [[file:init-emacs.org::#modules-vimish-fold][vimish-fold:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: vimish-fold
+;;; Packages: vimish-fold
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: vimish-fold")
@@ -17235,7 +17253,7 @@ otherwise run `find-file-as-root'."
 
 ;; [[file:init-emacs.org::#modules-w3m][w3m:2]]
 ;;------------------------------------------------------------------------------
-;;; Modules: w3m
+;;; Packages: w3m
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: w3m")
@@ -17279,7 +17297,7 @@ otherwise run `find-file-as-root'."
   (add-hook 'w3m-display-hook #'custom-w3m-display-hook))
 
 ;; ;;------------------------------------------------------------------------------
-;; ;;;; Modules: w3m-session
+;; ;;;; Packages: w3m-session
 ;; ;;------------------------------------------------------------------------------
 
 ;; (init-message 3 "w3m-session")
@@ -17307,7 +17325,7 @@ otherwise run `find-file-as-root'."
 
 ;; [[file:init-emacs.org::#modules-web-query][web-query:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: web-query
+;;; Packages: web-query
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: web-query")
@@ -17329,7 +17347,7 @@ otherwise run `find-file-as-root'."
 
 ;; [[file:init-emacs.org::#modules-webjump][webjump:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: webjump
+;;; Packages: webjump
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: webjump")
@@ -17344,7 +17362,7 @@ otherwise run `find-file-as-root'."
 
 ;; [[file:init-emacs.org::#modules-weblogger][weblogger:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: weblogger
+;;; Packages: weblogger
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: weblogger")
@@ -17363,7 +17381,7 @@ otherwise run `find-file-as-root'."
 
 ;; [[file:init-emacs.org::#modules-wgrep][wgrep:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: wgrep
+;;; Packages: wgrep
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: wgrep")
@@ -17376,7 +17394,7 @@ otherwise run `find-file-as-root'."
 
 ;; [[file:init-emacs.org::#modules-which-key][which-key:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: which-key
+;;; Packages: which-key
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: which-key")
@@ -17389,7 +17407,7 @@ otherwise run `find-file-as-root'."
 
 ;; [[file:init-emacs.org::#modules-wtf][wtf:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: wtf
+;;; Packages: wtf
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: wtf")
@@ -17401,7 +17419,7 @@ otherwise run `find-file-as-root'."
 
 ;; [[file:init-emacs.org::#modules-wttrin][wttrin:1]]
 ;;------------------------------------------------------------------------------
-;;; Modules: wttrin
+;;; Packages: wttrin
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Modules: wttrin")
