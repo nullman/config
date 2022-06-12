@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-06-12 13:12 (kyle)>
+  #+TIMESTAMP: <2022-06-12 14:22 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -1096,17 +1096,29 @@
 
 *** GUI
     :PROPERTIES:
-    :CUSTOM_ID: general-settings-gui
+    :CUSTOM_ID: environment-settings-gui
     :END:
 
-    #+BEGIN_SRC emacs-lisp
-      ;;------------------------------------------------------------------------------
-      ;;; General Settings: GUI
-      ;;------------------------------------------------------------------------------
+***** Header
+      :PROPERTIES:
+      :CUSTOM_ID: environment-settings-gui-header
+      :END:
 
-      (when window-system
+      #+BEGIN_SRC emacs-lisp
+        (when window-system
+      #+END_SRC
 
-        (init-message 2 "General Settings: GUI")
+***** General
+      :PROPERTIES:
+      :CUSTOM_ID: environment-settings-gui-general
+      :END:
+
+      #+BEGIN_SRC emacs-lisp
+        ;;------------------------------------------------------------------------------
+        ;;;; Environment Settings: GUI: General
+        ;;------------------------------------------------------------------------------
+
+        (init-message 3 "Environment Settings: GUI: General")
 
         ;; clipboard
         (when (string= window-system "x")
@@ -1156,24 +1168,44 @@
         ;; scroll mouse settings
         (setq mouse-wheel-scroll-amount '(1 ((shift) . 1))
               mouse-wheel-progressive-speed t)
+      #+END_SRC
+
+***** Font
+      :PROPERTIES:
+      :CUSTOM_ID: environment-settings-gui-font
+      :END:
+
+      #+BEGIN_SRC emacs-lisp
+        ;;------------------------------------------------------------------------------
+        ;;;; Environment Settings: GUI: Font
+        ;;------------------------------------------------------------------------------
+
+        (init-message 3 "Environment Settings: GUI: Font")
 
         ;; set default font
         (ignore-errors
           (cl-case window-system
             (x
              (condition-case nil
-                 (progn
+                 (cond
                    ;;(set-frame-font "8x13" nil t)
                    ;;(set-frame-font "9x15" nil t)
                    ;;(set-frame-font "Ubuntu Mono-13" nil t)
                    ;;(set-frame-font "Inconsolata-15" nil t)
                    ;;(set-frame-font "BitstreamVeraSansMono Nerd Font Mono-12" nil t)
                    ;;(set-frame-font "DroidSansMono Nerd Font Mono-12" nil t)
-                   (set-frame-font "Hack Nerd Font Mono-12" nil t)
+                   ;;(set-frame-font "Hack Nerd Font Mono-12" nil t)
                    ;;(set-face-attribute 'default nil :font "Hack Nerd Font Mono" :height 132)
                    ;;(set-face-attribute 'fixed-pitch nil :font "Hack Nerd Font Mono" :height 156)
                    ;;(set-face-attribute 'variable-pitch nil :font "Hack Nerd Font" :height 168 :weight 'regular)
-                   )
+                   ((x-list-fonts "Hack Nerd Font")
+                    (set-frame-font "Hack Nerd Font Mono-12" nil t))
+                   ((x-list-fonts "DroidSansMono Nerd Font")
+                    (set-frame-font "DroidSansMono Nerd Font Mono-12" nil t))
+                   ((x-list-fonts "Fira Code")
+                    (set-frame-font "Fira Code Mono-12" nil t))
+                   (t
+                    (set-frame-font "9x15" nil t)))
                ('error
                 (set-frame-font "9x15" nil t))))
             (w32
@@ -1190,6 +1222,19 @@
                    )
                ('error
                 (set-frame-font "Menlo" nil t))))))
+      #+END_SRC
+
+***** Faces
+      :PROPERTIES:
+      :CUSTOM_ID: environment-settings-gui-faces
+      :END:
+
+      #+BEGIN_SRC emacs-lisp
+        ;;------------------------------------------------------------------------------
+        ;;;; Environment Settings: GUI: Faces
+        ;;------------------------------------------------------------------------------
+
+        (init-message 3 "Environment Settings: GUI: Faces")
 
         ;; ;; set faces
         ;; ;; white foreground on black background with yellow cursor
@@ -1208,12 +1253,12 @@
           100
           "Background transparency alpha percentage.
 
-      Common values:
+        Common values:
 
-        100 = none
-        90  = 10% transparency
-        85  = 15% transparency
-        80  = 20% transparency")
+          100 = none
+          90  = 10% transparency
+          85  = 15% transparency
+          80  = 20% transparency")
         (setq background-alpha (if (or window-system-mac window-system-windows)
                                    100        ; 0% transparency
                                  85))         ; 10% transparency
@@ -1224,12 +1269,19 @@
 
         ;; set mouse color
         (set-mouse-color color-mouse)
+      #+END_SRC
 
-        ;;------------------------------------------------------------------------------
-        ;;;; Theme
-        ;;------------------------------------------------------------------------------
+***** +Theme+
+      :PROPERTIES:
+      :CUSTOM_ID: environment-settings-gui-theme
+      :END:
 
-        ;; (init-message 3 "General Settings: GUI: Theme")
+      #+BEGIN_SRC emacs-lisp :tangle no
+        ;; ;;------------------------------------------------------------------------------
+        ;; ;;;; Environment Settings: GUI: Theme
+        ;; ;;------------------------------------------------------------------------------
+
+        ;; (init-message 3 "Environment Settings: GUI: Theme")
 
         ;; ;; flatland theme
         ;; ;; https://github.com/gchp/flatland-emacs
@@ -1237,118 +1289,125 @@
         ;;   :straight t
         ;;   :init (load-theme 'flatland :no-error))
 
-        ;; ;; darcula theme
-        ;; ;; https://github.com/ianyepan/jetbrains-darcula-emacs-theme
-        ;; (use-package jetbrains-darcula-theme
-        ;;   :straight t
-        ;;   :init (load-theme 'jetbrains-darcula :no-error))
+        ;; ;; ;; darcula theme
+        ;; ;; ;; https://github.com/ianyepan/jetbrains-darcula-emacs-theme
+        ;; ;; (use-package jetbrains-darcula-theme
+        ;; ;;   :straight t
+        ;; ;;   :init (load-theme 'jetbrains-darcula :no-error))
 
-        ;; ;; gruber-darker theme
-        ;; ;; https://github.com/rexim/gruber-darker-theme
-        ;; (use-package gruber-darker-theme
-        ;;   :straight t
-        ;;   :init (load-theme 'gruber-darker :no-error))
+        ;; ;; ;; gruber-darker theme
+        ;; ;; ;; https://github.com/rexim/gruber-darker-theme
+        ;; ;; (use-package gruber-darker-theme
+        ;; ;;   :straight t
+        ;; ;;   :init (load-theme 'gruber-darker :no-error))
 
-        ;; ;; dracula theme
-        ;; ;; https://draculatheme.com/emacs/
-        ;; (use-package dracula-theme
-        ;;   :straight t
-        ;;   :init (load-theme 'dracula :no-error))
+        ;; ;; ;; dracula theme
+        ;; ;; ;; https://draculatheme.com/emacs/
+        ;; ;; (use-package dracula-theme
+        ;; ;;   :straight t
+        ;; ;;   :init (load-theme 'dracula :no-error))
+
+        ;; ;; ;; material theme
+        ;; ;; ;; https://github.com/cpaulik/emacs-material-theme
+        ;; ;; (use-package material-theme
+        ;; ;;   :straight t
+        ;; ;;   :init (load-theme 'material :no-error))
 
         ;; ;; material theme
         ;; ;; https://github.com/cpaulik/emacs-material-theme
-        ;; (use-package material-theme
-        ;;   :straight t
-        ;;   :init (load-theme 'material :no-error))
+        ;; ;; (use-package material-theme
+        ;; ;;   :load-path (lambda () (file-truename (expand-file-name "material-theme.el" local-modules-dir)))
+        ;; ;;   :init (load-theme 'material :no-error))
 
-        ;; material theme
-        ;; https://github.com/cpaulik/emacs-material-theme
-        ;; (use-package material-theme
-        ;;   :load-path (lambda () (file-truename (expand-file-name "material-theme.el" local-modules-dir)))
-        ;;   :init (load-theme 'material :no-error))
+        ;; ;; ;; zenburn theme
+        ;; ;; ;; https://github.com/bbatsov/zenburn-emacs
+        ;; ;; (use-package zenburn-theme
+        ;; ;;   :straight t
+        ;; ;;   :init
+        ;; ;;   (setq zenburn-override-colors-alist   ; default values
+        ;; ;;         '(("zenburn-bg+05" . "#181818") ; #383838
+        ;; ;;           ("zenburn-bg+1"  . "#1f1f1f") ; #4f4f4f
+        ;; ;;           ("zenburn-bg+2"  . "#2f2f2f") ; #5f5f5f
+        ;; ;;           ("zenburn-bg+3"  . "#3f3f3f"))) ; #6f6f6f
+        ;; ;;   (load-theme 'zenburn :no-error))
 
-        ;; ;; zenburn theme
-        ;; ;; https://github.com/bbatsov/zenburn-emacs
-        ;; (use-package zenburn-theme
-        ;;   :straight t
-        ;;   :init
-        ;;   (setq zenburn-override-colors-alist   ; default values
-        ;;         '(("zenburn-bg+05" . "#181818") ; #383838
-        ;;           ("zenburn-bg+1"  . "#1f1f1f") ; #4f4f4f
-        ;;           ("zenburn-bg+2"  . "#2f2f2f") ; #5f5f5f
-        ;;           ("zenburn-bg+3"  . "#3f3f3f"))) ; #6f6f6f
-        ;;   (load-theme 'zenburn :no-error))
+        ;; ;; ;; color-theme-sanityinc-tomorrow theme
+        ;; ;; ;; https://github.com/purcell/color-theme-sanityinc-tomorrow
+        ;; ;; (use-package color-theme-sanityinc-tomorrow
+        ;; ;;   :straight t
+        ;; ;;   :init (load-theme 'sanityinc-tomorrow-night :no-error))
 
-        ;; ;; color-theme-sanityinc-tomorrow theme
-        ;; ;; https://github.com/purcell/color-theme-sanityinc-tomorrow
-        ;; (use-package color-theme-sanityinc-tomorrow
-        ;;   :straight t
-        ;;   :init (load-theme 'sanityinc-tomorrow-night :no-error))
+        ;; ;; ;; spacemacs-theme
+        ;; ;; ;; https://github.com/nashamri/spacemacs-theme
+        ;; ;; (use-package spacemacs-theme
+        ;; ;;   :straight t
+        ;; ;;   :init (load-theme 'spacemacs-dark :no-error))
 
-        ;; ;; spacemacs-theme
-        ;; ;; https://github.com/nashamri/spacemacs-theme
-        ;; (use-package spacemacs-theme
-        ;;   :straight t
-        ;;   :init (load-theme 'spacemacs-dark :no-error))
+        ;; ;; ;; solarized theme
+        ;; ;; ;; https://github.com/bbatsov/solarized-emacs
+        ;; ;; (use-package solarized-theme
+        ;; ;;   :straight t
+        ;; ;;   :init
+        ;; ;;   ;; make the fringe stand out from the background
+        ;; ;;   ;;(setq solarized-distinct-fringe-background t)
+        ;; ;;   ;; do not change the font for some headings and titles
+        ;; ;;   (setq solarized-use-variable-pitch nil)
+        ;; ;;   ;; make the modeline high contrast
+        ;; ;;   ;;(setq solarized-high-contrast-mode-line t)
+        ;; ;;   ;; use less bolding
+        ;; ;;   (setq solarized-use-less-bold t)
+        ;; ;;   ;; use more italics
+        ;; ;;   ;;(setq solarized-use-more-italic t)
+        ;; ;;   ;; use less colors for indicators such as git:gutter, flycheck and similar
+        ;; ;;   ;;(setq solarized-emphasize-indicators nil)
+        ;; ;;   ;; do not change size of org-mode headlines (but keep other size-changes)
+        ;; ;;   (setq solarized-scale-org-headlines nil)
+        ;; ;;   ;; avoid all font-size changes
+        ;; ;;   (setq solarized-height-minus-1 1.0)
+        ;; ;;   (setq solarized-height-plus-1 1.0)
+        ;; ;;   (setq solarized-height-plus-2 1.0)
+        ;; ;;   (setq solarized-height-plus-3 1.0)
+        ;; ;;   (setq solarized-height-plus-4 1.0)
+        ;; ;;   ;; load theme
+        ;; ;;   (load-theme 'solarized-dark :no-error))
 
-        ;; ;; solarized theme
-        ;; ;; https://github.com/bbatsov/solarized-emacs
-        ;; (use-package solarized-theme
-        ;;   :straight t
-        ;;   :init
-        ;;   ;; make the fringe stand out from the background
-        ;;   ;;(setq solarized-distinct-fringe-background t)
-        ;;   ;; do not change the font for some headings and titles
-        ;;   (setq solarized-use-variable-pitch nil)
-        ;;   ;; make the modeline high contrast
-        ;;   ;;(setq solarized-high-contrast-mode-line t)
-        ;;   ;; use less bolding
-        ;;   (setq solarized-use-less-bold t)
-        ;;   ;; use more italics
-        ;;   ;;(setq solarized-use-more-italic t)
-        ;;   ;; use less colors for indicators such as git:gutter, flycheck and similar
-        ;;   ;;(setq solarized-emphasize-indicators nil)
-        ;;   ;; do not change size of org-mode headlines (but keep other size-changes)
-        ;;   (setq solarized-scale-org-headlines nil)
-        ;;   ;; avoid all font-size changes
-        ;;   (setq solarized-height-minus-1 1.0)
-        ;;   (setq solarized-height-plus-1 1.0)
-        ;;   (setq solarized-height-plus-2 1.0)
-        ;;   (setq solarized-height-plus-3 1.0)
-        ;;   (setq solarized-height-plus-4 1.0)
-        ;;   ;; load theme
-        ;;   (load-theme 'solarized-dark :no-error))
+        ;; ;; ;; doom themes
+        ;; ;; (use-package doom-themes
+        ;; ;;   :straight t
+        ;; ;;   :custom
+        ;; ;;   (doom-themes-enable-bold t)      ; if nil, bold is universally disabled
+        ;; ;;   (doom-themes-enable-italic t)    ; if nil, italics is universally disabled
+        ;; ;;   (doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
+        ;; ;;   :config
+        ;; ;;   (load-theme 'doom-one :no-error)
+        ;; ;;   ;;(load-theme 'doom-dracula :no-error)
+        ;; ;;   ;; enable flashing mode-line on errors
+        ;; ;;   (doom-themes-visual-bell-config)
+        ;; ;;   ;; enable custom neotree theme (all-the-icons must be installed)
+        ;; ;;   (doom-themes-neotree-config)
+        ;; ;;   ;; or for treemacs users
+        ;; ;;   (doom-themes-treemacs-config)
+        ;; ;;   ;; correct (and improve) org-mode's native fontification
+        ;; ;;   (doom-themes-org-config))
+      #+END_SRC
 
-        ;; ;; doom themes
-        ;; (use-package doom-themes
-        ;;   :straight t
-        ;;   :custom
-        ;;   (doom-themes-enable-bold t)      ; if nil, bold is universally disabled
-        ;;   (doom-themes-enable-italic t)    ; if nil, italics is universally disabled
-        ;;   (doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
-        ;;   :config
-        ;;   (load-theme 'doom-one :no-error)
-        ;;   ;;(load-theme 'doom-dracula :no-error)
-        ;;   ;; enable flashing mode-line on errors
-        ;;   (doom-themes-visual-bell-config)
-        ;;   ;; enable custom neotree theme (all-the-icons must be installed)
-        ;;   (doom-themes-neotree-config)
-        ;;   ;; or for treemacs users
-        ;;   (doom-themes-treemacs-config)
-        ;;   ;; correct (and improve) org-mode's native fontification
-        ;;   (doom-themes-org-config))
+***** Modus Themes
+      :PROPERTIES:
+      :CUSTOM_ID: environment-settings-gui-modus-themes
+      :END:
 
+      #+BEGIN_SRC emacs-lisp
         ;;------------------------------------------------------------------------------
-        ;;;; Modus Theme
+        ;;;; Environment Settings: GUI: Modus Themes
         ;;------------------------------------------------------------------------------
 
-        (init-message 3 "General Settings: GUI: Modus Themes")
+        (init-message 3 "Environment Settings: GUI: Modus Themes")
 
         ;; modus themes
         ;; https://github.com/protesilaos/modus-themes/
         (use-package modus-themes
           :straight (:type built-in)
-          ;;:bind ("<f5>" . modus-themes-toggle))
+          :bind ("<f2>" . modus-themes-toggle)
           :init
           ;; add customizations before loading
           (setq modus-themes-italic-constructs t
@@ -1376,7 +1435,6 @@
                 ;; the text relative to the base font size (or a cons cell of
                 ;; height and FLOAT)
                 modus-themes-mode-line '(accented borderless (padding . 4) (height . 0.9))
-                ;;modus-themes-mode-line '(accented borderless padded)
 
                 ;; Same as above:
                 ;; modus-themes-mode-line '(accented borderless 4 0.9)
@@ -1389,7 +1447,8 @@
                 ;; Options for `modus-themes-syntax' are either nil (the default),
                 ;; or a list of properties that may include any of those symbols:
                 ;; `faint', `yellow-comments', `green-strings', `alt-syntax'
-                modus-themes-syntax nil
+                ;;modus-themes-syntax nil
+                modus-themes-syntax '(alt-syntax faint green-strings yellow-comments)
 
                 ;; Options for `modus-themes-hl-line' are either nil (the default),
                 ;; or a list of properties that may include any of those symbols:
@@ -1459,11 +1518,15 @@
                   (scheduled . uniform)
                   (habit . traffic-light))
 
-                ;; modus-themes-headings ; this is an alist: read the manual or its doc string
+                modus-themes-headings ; this is an alist: read the manual or its doc string
                 ;; '((1 . (overline background variable-pitch 1.3))
                 ;;   (2 . (rainbow overline 1.1))
                 ;;   (t . (semibold)))
-                )
+                '((t . (rainbow)))
+
+                modus-themes-vivendi-color-overrides ; override some main colors
+                `((bf-main . ,color-background)
+                  (fg-main . ,color-foreground)))
 
           ;; load theme files before enabling
           ;;(modus-themes-load-themes)
@@ -1471,8 +1534,17 @@
           :config
           (modus-themes-load-vivendi)
           ;;(modus-themes-load-operandi)
-          ))
-    #+END_SRC
+          )
+      #+END_SRC
+
+***** Footer
+      :PROPERTIES:
+      :CUSTOM_ID: environment-settings-gui-footer
+      :END:
+
+      #+BEGIN_SRC emacs-lisp
+        )
+      #+END_SRC
 
 *** General
     :PROPERTIES:
@@ -2877,12 +2949,12 @@
 
       (defun custom-key-bindings-function-keys ()
         "Set custom function key bindings."
-        (when (fboundp 'help)
-          (bind-keys ("<f1>" . help)))        ; default: `help-for-help'
         (when (fboundp 'help-for-help)
-          (bind-keys ("S-<f1>" . help-for-help)))
+          (bind-keys ("<f1>" . help-for-help)))
         (when (fboundp 'help-command)
-          (bind-keys ("<f2>" . help-command))) ; default: Prefix Command
+          (bind-keys ("S-<f1>" . help-command)))
+        (when (fboundp 'modus-themes-toggle)
+          (bind-keys ("<f2>" . modus-themes-toggle))) ; default: Prefix Command
         (when (fboundp 'kmacro-start-macro-or-insert-counter)
           (bind-keys ("<f3>" . kmacro-start-macro-or-insert-counter))) ; default: `kmacro-start-macro-or-insert-counter'
         (when (fboundp 'kmacro-end-or-call-macro)
@@ -3778,9 +3850,6 @@
         ;;  `(outline-6 ((t (:foreground ,color-6))))
         ;;  `(outline-7 ((t (:foreground ,color-7))))
         ;;  `(outline-8 ((t (:foreground ,color-8)))))
-        ;; remove height and box from levels
-        (dotimes (x 8)
-          (set-face-attribute `,(intern (format "outline-%s" (1+ x))) nil :height 1.0 :box nil))
 
         ;; advise `outline-up-heading' to suppress errors
         (advice-add 'outline-up-heading :around #'advice--ignore-errors))
@@ -3877,9 +3946,6 @@
         ;;  `(org-level-6 ((t (:foreground ,color-6))))
         ;;  `(org-level-7 ((t (:foreground ,color-7))))
         ;;  `(org-level-8 ((t (:foreground ,color-8)))))
-        ;; remove height and box from levels
-        (dotimes (x 8)
-          (set-face-attribute `,(intern (format "org-level-%s" (1+ x))) nil :height 1.0 :box nil))
 
         ;; set file apps
         (when window-system

@@ -445,114 +445,139 @@ A fortune is added if FORTUNE is non-nil."
 ;;   (add-to-list 'load-path (file-truename (expand-file-name "org-mode/lisp" emacs-modules-dir))))
 ;; Load Path:1 ends here
 
-;; [[file:init-emacs.org::#general-settings-gui][GUI:1]]
-;;------------------------------------------------------------------------------
-;;; General Settings: GUI
-;;------------------------------------------------------------------------------
-
+;; [[file:init-emacs.org::#environment-settings-gui-header][Header:1]]
 (when window-system
+;; Header:1 ends here
 
-  (init-message 2 "General Settings: GUI")
+;; [[file:init-emacs.org::#environment-settings-gui-general][General:1]]
+;;------------------------------------------------------------------------------
+;;;; Environment Settings: GUI: General
+;;------------------------------------------------------------------------------
 
-  ;; clipboard
-  (when (string= window-system "x")
-    (setq select-enable-clipboard t                                      ; cutting and pasting uses clipboard
-          select-enable-primary t                                        ; cutting and pasting uses primary selection
-          x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING) ; data-type request for X selection
-          save-interprogram-paste-before-kill t                          ; save clipboard strings into kill ring before replacing them
-          interprogram-paste-function 'x-cut-buffer-or-selection-value   ; function to call to get text cut from other programs
-          mouse-yank-at-point t))                                        ; mouse yank commands yank at point
+(init-message 3 "Environment Settings: GUI: General")
 
-  ;; inverse video on
-  (setq inverse-video t)
+;; clipboard
+(when (string= window-system "x")
+  (setq select-enable-clipboard t                                      ; cutting and pasting uses clipboard
+        select-enable-primary t                                        ; cutting and pasting uses primary selection
+        x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING) ; data-type request for X selection
+        save-interprogram-paste-before-kill t                          ; save clipboard strings into kill ring before replacing them
+        interprogram-paste-function 'x-cut-buffer-or-selection-value   ; function to call to get text cut from other programs
+        mouse-yank-at-point t))                                        ; mouse yank commands yank at point
 
-  ;; visible bell
-  (setq visible-bell t)
+;; inverse video on
+(setq inverse-video t)
 
-  ;; turn off bell
-  (setq ring-bell-function 'ignore)
+;; visible bell
+(setq visible-bell t)
 
-  ;; turn off cursor blinking
-  (blink-cursor-mode 0)
+;; turn off bell
+(setq ring-bell-function 'ignore)
 
-  ;; ;; scroll bar on right
-  ;; (setq scroll-bar-mode 'right)
-  ;; (scroll-bar-mode -1)
-  ;; (scroll-bar-mode 1)
+;; turn off cursor blinking
+(blink-cursor-mode 0)
 
-  ;; turn off scroll bar
-  (when (and (fboundp 'scroll-bar-mode)
-             scroll-bar-mode)
-    (scroll-bar-mode -1))
+;; ;; scroll bar on right
+;; (setq scroll-bar-mode 'right)
+;; (scroll-bar-mode -1)
+;; (scroll-bar-mode 1)
 
-  ;; turn off toolbar
-  (when (and (fboundp 'tool-bar-mode)
-             tool-bar-mode)
-    (tool-bar-mode -1))
+;; turn off scroll bar
+(when (and (fboundp 'scroll-bar-mode)
+           scroll-bar-mode)
+  (scroll-bar-mode -1))
 
-  ;; make default frame size fullscreen
-  ;;(add-to-list 'default-frame-alist '(fullscreen . maximized))
+;; turn off toolbar
+(when (and (fboundp 'tool-bar-mode)
+           tool-bar-mode)
+  (tool-bar-mode -1))
 
-  ;; put current buffer name in title bar
-  (setq frame-title-format "%b")
+;; make default frame size fullscreen
+;;(add-to-list 'default-frame-alist '(fullscreen . maximized))
 
-  ;; mouse button one drags the scroll bar
-  (bind-keys* ([vertical-scroll-bar down-mouse-1] . scroll-bar-drag))
+;; put current buffer name in title bar
+(setq frame-title-format "%b")
 
-  ;; scroll mouse settings
-  (setq mouse-wheel-scroll-amount '(1 ((shift) . 1))
-        mouse-wheel-progressive-speed t)
+;; mouse button one drags the scroll bar
+(bind-keys* ([vertical-scroll-bar down-mouse-1] . scroll-bar-drag))
 
-  ;; set default font
-  (ignore-errors
-    (cl-case window-system
-      (x
-       (condition-case nil
-           (progn
-             ;;(set-frame-font "8x13" nil t)
-             ;;(set-frame-font "9x15" nil t)
-             ;;(set-frame-font "Ubuntu Mono-13" nil t)
-             ;;(set-frame-font "Inconsolata-15" nil t)
-             ;;(set-frame-font "BitstreamVeraSansMono Nerd Font Mono-12" nil t)
-             ;;(set-frame-font "DroidSansMono Nerd Font Mono-12" nil t)
-             (set-frame-font "Hack Nerd Font Mono-12" nil t)
-             ;;(set-face-attribute 'default nil :font "Hack Nerd Font Mono" :height 132)
-             ;;(set-face-attribute 'fixed-pitch nil :font "Hack Nerd Font Mono" :height 156)
-             ;;(set-face-attribute 'variable-pitch nil :font "Hack Nerd Font" :height 168 :weight 'regular)
-             )
-         ('error
-          (set-frame-font "9x15" nil t))))
-      (w32
-       (condition-case nil
-           (set-frame-font "Hack Nerd Font Mono-12" nil t)
-         ('error
-          nil)))
-      (ns
-       (condition-case nil
-           (progn
-             ;;(set-frame-font "BitstreamVeraSansMono Nerd Font Mono-14" nil t)
-             ;;(set-frame-font "DroidSansMono Nerd Font Mono-14" nil t)
-             (set-frame-font "Hack Nerd Font Mono-14" nil t)
-             )
-         ('error
-          (set-frame-font "Menlo" nil t))))))
+;; scroll mouse settings
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))
+      mouse-wheel-progressive-speed t)
+;; General:1 ends here
 
-  ;; ;; set faces
-  ;; ;; white foreground on black background with yellow cursor
-  ;; (custom-set-faces
-  ;;  `(default ((t (:foreground ,color-foreground :background ,color-background))))
-  ;;  `(cursor ((t (:foreground ,color-background :background ,color-cursor)))))
+;; [[file:init-emacs.org::#environment-settings-gui-font][Font:1]]
+;;------------------------------------------------------------------------------
+;;;; Environment Settings: GUI: Font
+;;------------------------------------------------------------------------------
 
-  ;; ;; set faces
-  ;; ;; green foreground on black background with yellow cursor
-  ;; (custom-set-faces
-  ;;  `(default ((t (:foreground ,color-foreground :background ,color-background)))) ; green
-  ;;  `(cursor ((t (:foreground ,color-background :background ,color-cursor))))) ; yellow
+(init-message 3 "Environment Settings: GUI: Font")
 
-  ;; transparant background (not on Macs)
-  (defvar background-alpha
-    100
-    "Background transparency alpha percentage.
+;; set default font
+(ignore-errors
+  (cl-case window-system
+    (x
+     (condition-case nil
+         (cond
+           ;;(set-frame-font "8x13" nil t)
+           ;;(set-frame-font "9x15" nil t)
+           ;;(set-frame-font "Ubuntu Mono-13" nil t)
+           ;;(set-frame-font "Inconsolata-15" nil t)
+           ;;(set-frame-font "BitstreamVeraSansMono Nerd Font Mono-12" nil t)
+           ;;(set-frame-font "DroidSansMono Nerd Font Mono-12" nil t)
+           ;;(set-frame-font "Hack Nerd Font Mono-12" nil t)
+           ;;(set-face-attribute 'default nil :font "Hack Nerd Font Mono" :height 132)
+           ;;(set-face-attribute 'fixed-pitch nil :font "Hack Nerd Font Mono" :height 156)
+           ;;(set-face-attribute 'variable-pitch nil :font "Hack Nerd Font" :height 168 :weight 'regular)
+           ((x-list-fonts "Hack Nerd Font")
+            (set-frame-font "Hack Nerd Font Mono-12" nil t))
+           ((x-list-fonts "DroidSansMono Nerd Font")
+            (set-frame-font "DroidSansMono Nerd Font Mono-12" nil t))
+           ((x-list-fonts "Fira Code")
+            (set-frame-font "Fira Code Mono-12" nil t))
+           (t
+            (set-frame-font "9x15" nil t)))
+       ('error
+        (set-frame-font "9x15" nil t))))
+    (w32
+     (condition-case nil
+         (set-frame-font "Hack Nerd Font Mono-12" nil t)
+       ('error
+        nil)))
+    (ns
+     (condition-case nil
+         (progn
+           ;;(set-frame-font "BitstreamVeraSansMono Nerd Font Mono-14" nil t)
+           ;;(set-frame-font "DroidSansMono Nerd Font Mono-14" nil t)
+           (set-frame-font "Hack Nerd Font Mono-14" nil t)
+           )
+       ('error
+        (set-frame-font "Menlo" nil t))))))
+;; Font:1 ends here
+
+;; [[file:init-emacs.org::#environment-settings-gui-faces][Faces:1]]
+;;------------------------------------------------------------------------------
+;;;; Environment Settings: GUI: Faces
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Environment Settings: GUI: Faces")
+
+;; ;; set faces
+;; ;; white foreground on black background with yellow cursor
+;; (custom-set-faces
+;;  `(default ((t (:foreground ,color-foreground :background ,color-background))))
+;;  `(cursor ((t (:foreground ,color-background :background ,color-cursor)))))
+
+;; ;; set faces
+;; ;; green foreground on black background with yellow cursor
+;; (custom-set-faces
+;;  `(default ((t (:foreground ,color-foreground :background ,color-background)))) ; green
+;;  `(cursor ((t (:foreground ,color-background :background ,color-cursor))))) ; yellow
+
+;; transparant background (not on Macs)
+(defvar background-alpha
+  100
+  "Background transparency alpha percentage.
 
 Common values:
 
@@ -560,265 +585,162 @@ Common values:
   90  = 10% transparency
   85  = 15% transparency
   80  = 20% transparency")
-  (setq background-alpha (if (or window-system-mac window-system-windows)
-                             100        ; 0% transparency
-                           85))         ; 10% transparency
-  (set-frame-parameter (selected-frame) 'alpha
-                       `(,background-alpha . ,background-alpha))
-  (add-to-list 'default-frame-alist
-               `(alpha . (,background-alpha . ,background-alpha)))
+(setq background-alpha (if (or window-system-mac window-system-windows)
+                           100        ; 0% transparency
+                         85))         ; 10% transparency
+(set-frame-parameter (selected-frame) 'alpha
+                     `(,background-alpha . ,background-alpha))
+(add-to-list 'default-frame-alist
+             `(alpha . (,background-alpha . ,background-alpha)))
 
-  ;; set mouse color
-  (set-mouse-color color-mouse)
+;; set mouse color
+(set-mouse-color color-mouse)
+;; Faces:1 ends here
 
-  ;;------------------------------------------------------------------------------
-  ;;;; Theme
-  ;;------------------------------------------------------------------------------
+;; [[file:init-emacs.org::#environment-settings-gui-modus-themes][Modus Themes:1]]
+;;------------------------------------------------------------------------------
+;;;; Environment Settings: GUI: Modus Themes
+;;------------------------------------------------------------------------------
 
-  ;; (init-message 3 "General Settings: GUI: Theme")
+(init-message 3 "Environment Settings: GUI: Modus Themes")
 
-  ;; ;; flatland theme
-  ;; ;; https://github.com/gchp/flatland-emacs
-  ;; (use-package flatland-theme
-  ;;   :straight t
-  ;;   :init (load-theme 'flatland :no-error))
+;; modus themes
+;; https://github.com/protesilaos/modus-themes/
+(use-package modus-themes
+  :straight (:type built-in)
+  :bind ("<f2>" . modus-themes-toggle)
+  :init
+  ;; add customizations before loading
+  (setq modus-themes-italic-constructs t
+        modus-themes-bold-constructs nil
+        modus-themes-mixed-fonts nil
+        modus-themes-subtle-line-numbers nil
+        modus-themes-intense-mouseovers nil
+        modus-themes-deuteranopia t
+        modus-themes-tabs-accented t
+        modus-themes-variable-pitch-ui nil
+        modus-themes-inhibit-reload t ; only applies to `customize-set-variable' and related
 
-  ;; ;; darcula theme
-  ;; ;; https://github.com/ianyepan/jetbrains-darcula-emacs-theme
-  ;; (use-package jetbrains-darcula-theme
-  ;;   :straight t
-  ;;   :init (load-theme 'jetbrains-darcula :no-error))
+        modus-themes-fringes nil ; {nil,'subtle,'intense}
 
-  ;; ;; gruber-darker theme
-  ;; ;; https://github.com/rexim/gruber-darker-theme
-  ;; (use-package gruber-darker-theme
-  ;;   :straight t
-  ;;   :init (load-theme 'gruber-darker :no-error))
+        ;; Options for `modus-themes-lang-checkers' are either nil (the
+        ;; default), or a list of properties that may include any of those
+        ;; symbols: `straight-underline', `text-also', `background',
+        ;; `intense' OR `faint'.
+        modus-themes-lang-checkers nil
 
-  ;; ;; dracula theme
-  ;; ;; https://draculatheme.com/emacs/
-  ;; (use-package dracula-theme
-  ;;   :straight t
-  ;;   :init (load-theme 'dracula :no-error))
+        ;; Options for `modus-themes-mode-line' are either nil, or a list
+        ;; that can combine any of `3d' OR `moody', `borderless',
+        ;; `accented', a natural number for extra padding (or a cons cell
+        ;; of padding and NATNUM), and a floating point for the height of
+        ;; the text relative to the base font size (or a cons cell of
+        ;; height and FLOAT)
+        modus-themes-mode-line '(accented borderless (padding . 4) (height . 0.9))
 
-  ;; ;; material theme
-  ;; ;; https://github.com/cpaulik/emacs-material-theme
-  ;; (use-package material-theme
-  ;;   :straight t
-  ;;   :init (load-theme 'material :no-error))
+        ;; Same as above:
+        ;; modus-themes-mode-line '(accented borderless 4 0.9)
 
-  ;; material theme
-  ;; https://github.com/cpaulik/emacs-material-theme
-  ;; (use-package material-theme
-  ;;   :load-path (lambda () (file-truename (expand-file-name "material-theme.el" local-modules-dir)))
-  ;;   :init (load-theme 'material :no-error))
+        ;; Options for `modus-themes-markup' are either nil, or a list
+        ;; that can combine any of `bold', `italic', `background',
+        ;; `intense'.
+        modus-themes-markup '(background italic)
 
-  ;; ;; zenburn theme
-  ;; ;; https://github.com/bbatsov/zenburn-emacs
-  ;; (use-package zenburn-theme
-  ;;   :straight t
-  ;;   :init
-  ;;   (setq zenburn-override-colors-alist   ; default values
-  ;;         '(("zenburn-bg+05" . "#181818") ; #383838
-  ;;           ("zenburn-bg+1"  . "#1f1f1f") ; #4f4f4f
-  ;;           ("zenburn-bg+2"  . "#2f2f2f") ; #5f5f5f
-  ;;           ("zenburn-bg+3"  . "#3f3f3f"))) ; #6f6f6f
-  ;;   (load-theme 'zenburn :no-error))
+        ;; Options for `modus-themes-syntax' are either nil (the default),
+        ;; or a list of properties that may include any of those symbols:
+        ;; `faint', `yellow-comments', `green-strings', `alt-syntax'
+        ;;modus-themes-syntax nil
+        modus-themes-syntax '(alt-syntax faint green-strings yellow-comments)
 
-  ;; ;; color-theme-sanityinc-tomorrow theme
-  ;; ;; https://github.com/purcell/color-theme-sanityinc-tomorrow
-  ;; (use-package color-theme-sanityinc-tomorrow
-  ;;   :straight t
-  ;;   :init (load-theme 'sanityinc-tomorrow-night :no-error))
+        ;; Options for `modus-themes-hl-line' are either nil (the default),
+        ;; or a list of properties that may include any of those symbols:
+        ;; `accented', `underline', `intense'
+        ;;modus-themes-hl-line '(underline accented)
+        modus-themes-hl-line '(intense)
 
-  ;; ;; spacemacs-theme
-  ;; ;; https://github.com/nashamri/spacemacs-theme
-  ;; (use-package spacemacs-theme
-  ;;   :straight t
-  ;;   :init (load-theme 'spacemacs-dark :no-error))
+        ;; Options for `modus-themes-paren-match' are either nil (the
+        ;; default), or a list of properties that may include any of those
+        ;; symbols: `bold', `intense', `underline'
+        modus-themes-paren-match '(bold intense)
 
-  ;; ;; solarized theme
-  ;; ;; https://github.com/bbatsov/solarized-emacs
-  ;; (use-package solarized-theme
-  ;;   :straight t
-  ;;   :init
-  ;;   ;; make the fringe stand out from the background
-  ;;   ;;(setq solarized-distinct-fringe-background t)
-  ;;   ;; do not change the font for some headings and titles
-  ;;   (setq solarized-use-variable-pitch nil)
-  ;;   ;; make the modeline high contrast
-  ;;   ;;(setq solarized-high-contrast-mode-line t)
-  ;;   ;; use less bolding
-  ;;   (setq solarized-use-less-bold t)
-  ;;   ;; use more italics
-  ;;   ;;(setq solarized-use-more-italic t)
-  ;;   ;; use less colors for indicators such as git:gutter, flycheck and similar
-  ;;   ;;(setq solarized-emphasize-indicators nil)
-  ;;   ;; do not change size of org-mode headlines (but keep other size-changes)
-  ;;   (setq solarized-scale-org-headlines nil)
-  ;;   ;; avoid all font-size changes
-  ;;   (setq solarized-height-minus-1 1.0)
-  ;;   (setq solarized-height-plus-1 1.0)
-  ;;   (setq solarized-height-plus-2 1.0)
-  ;;   (setq solarized-height-plus-3 1.0)
-  ;;   (setq solarized-height-plus-4 1.0)
-  ;;   ;; load theme
-  ;;   (load-theme 'solarized-dark :no-error))
+        ;; Options for `modus-themes-links' are either nil (the default),
+        ;; or a list of properties that may include any of those symbols:
+        ;; `neutral-underline' OR `no-underline', `faint' OR `no-color',
+        ;; `bold', `italic', `background'
+        modus-themes-links '(neutral-underline background)
 
-  ;; ;; doom themes
-  ;; (use-package doom-themes
-  ;;   :straight t
-  ;;   :custom
-  ;;   (doom-themes-enable-bold t)      ; if nil, bold is universally disabled
-  ;;   (doom-themes-enable-italic t)    ; if nil, italics is universally disabled
-  ;;   (doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
-  ;;   :config
-  ;;   (load-theme 'doom-one :no-error)
-  ;;   ;;(load-theme 'doom-dracula :no-error)
-  ;;   ;; enable flashing mode-line on errors
-  ;;   (doom-themes-visual-bell-config)
-  ;;   ;; enable custom neotree theme (all-the-icons must be installed)
-  ;;   (doom-themes-neotree-config)
-  ;;   ;; or for treemacs users
-  ;;   (doom-themes-treemacs-config)
-  ;;   ;; correct (and improve) org-mode's native fontification
-  ;;   (doom-themes-org-config))
+        ;; Options for `modus-themes-box-buttons' are either nil (the
+        ;; default), or a list that can combine any of `flat', `accented',
+        ;; `faint', `variable-pitch', `underline', `all-buttons', the
+        ;; symbol of any font weight as listed in `modus-themes-weights',
+        ;; and a floating point number (e.g. 0.9) for the height of the
+        ;; button's text.
+        modus-themes-box-buttons '(variable-pitch flat faint 0.9)
 
-  ;;------------------------------------------------------------------------------
-  ;;;; Modus Theme
-  ;;------------------------------------------------------------------------------
+        ;; Options for `modus-themes-prompts' are either nil (the
+        ;; default), or a list of properties that may include any of those
+        ;; symbols: `background', `bold', `gray', `intense', `italic'
+        modus-themes-prompts '(intense bold)
 
-  (init-message 3 "General Settings: GUI: Modus Themes")
+        ;; The `modus-themes-completions' is an alist that reads three
+        ;; keys: `matches', `selection', `popup'.  Each accepts a nil
+        ;; value (or empty list) or a list of properties that can include
+        ;; any of the following (for WEIGHT read further below):
+        ;;
+        ;; `matches' - `background', `intense', `underline', `italic', WEIGHT
+        ;; `selection' - `accented', `intense', `underline', `italic', `text-also' WEIGHT
+        ;; `popup' - same as `selected'
+        ;; `t' - applies to any key not explicitly referenced (check docs)
+        ;;
+        ;; WEIGHT is a symbol such as `semibold', `light', or anything
+        ;; covered in `modus-themes-weights'.  Bold is used in the absence
+        ;; of an explicit WEIGHT.
+        modus-themes-completions '((matches . (extrabold))
+                                   (selection . (semibold accented))
+                                   (popup . (accented intense)))
 
-  ;; modus themes
-  ;; https://github.com/protesilaos/modus-themes/
-  (use-package modus-themes
-    :straight (:type built-in)
-    ;;:bind ("<f5>" . modus-themes-toggle))
-    :init
-    ;; add customizations before loading
-    (setq modus-themes-italic-constructs t
-          modus-themes-bold-constructs nil
-          modus-themes-mixed-fonts nil
-          modus-themes-subtle-line-numbers nil
-          modus-themes-intense-mouseovers nil
-          modus-themes-deuteranopia t
-          modus-themes-tabs-accented t
-          modus-themes-variable-pitch-ui nil
-          modus-themes-inhibit-reload t ; only applies to `customize-set-variable' and related
+        modus-themes-mail-citations nil ; {nil,'intense,'faint,'monochrome}
 
-          modus-themes-fringes nil ; {nil,'subtle,'intense}
+        ;; Options for `modus-themes-region' are either nil (the default),
+        ;; or a list of properties that may include any of those symbols:
+        ;; `no-extend', `bg-only', `accented'
+        ;;modus-themes-region '(bg-only no-extend)
+        modus-themes-region '(bg-only accented)
 
-          ;; Options for `modus-themes-lang-checkers' are either nil (the
-          ;; default), or a list of properties that may include any of those
-          ;; symbols: `straight-underline', `text-also', `background',
-          ;; `intense' OR `faint'.
-          modus-themes-lang-checkers nil
+        ;; Options for `modus-themes-diffs': nil, 'desaturated, 'bg-only
+        modus-themes-diffs 'desaturated
 
-          ;; Options for `modus-themes-mode-line' are either nil, or a list
-          ;; that can combine any of `3d' OR `moody', `borderless',
-          ;; `accented', a natural number for extra padding (or a cons cell
-          ;; of padding and NATNUM), and a floating point for the height of
-          ;; the text relative to the base font size (or a cons cell of
-          ;; height and FLOAT)
-          modus-themes-mode-line '(accented borderless (padding . 4) (height . 0.9))
-          ;;modus-themes-mode-line '(accented borderless padded)
+        ;;modus-themes-org-blocks 'gray-background ; {nil,'gray-background,'tinted-background}
+        modus-themes-org-blocks nil ; {nil,'gray-background,'tinted-background}
 
-          ;; Same as above:
-          ;; modus-themes-mode-line '(accented borderless 4 0.9)
+        modus-themes-org-agenda ; this is an alist: read the manual or its doc string
+        '((header-block . (variable-pitch 1.3))
+          (header-date . (grayscale workaholic bold-today 1.1))
+          (event . (accented varied))
+          (scheduled . uniform)
+          (habit . traffic-light))
 
-          ;; Options for `modus-themes-markup' are either nil, or a list
-          ;; that can combine any of `bold', `italic', `background',
-          ;; `intense'.
-          modus-themes-markup '(background italic)
+        modus-themes-headings ; this is an alist: read the manual or its doc string
+        ;; '((1 . (overline background variable-pitch 1.3))
+        ;;   (2 . (rainbow overline 1.1))
+        ;;   (t . (semibold)))
+        '((t . (rainbow)))
 
-          ;; Options for `modus-themes-syntax' are either nil (the default),
-          ;; or a list of properties that may include any of those symbols:
-          ;; `faint', `yellow-comments', `green-strings', `alt-syntax'
-          modus-themes-syntax nil
+        modus-themes-vivendi-color-overrides ; override some main colors
+        `((bf-main . ,color-background)
+          (fg-main . ,color-foreground)))
 
-          ;; Options for `modus-themes-hl-line' are either nil (the default),
-          ;; or a list of properties that may include any of those symbols:
-          ;; `accented', `underline', `intense'
-          ;;modus-themes-hl-line '(underline accented)
-          modus-themes-hl-line '(intense)
+  ;; load theme files before enabling
+  ;;(modus-themes-load-themes)
+  (load-theme 'modus-vivendi :no-error)
+  :config
+  (modus-themes-load-vivendi)
+  ;;(modus-themes-load-operandi)
+  )
+;; Modus Themes:1 ends here
 
-          ;; Options for `modus-themes-paren-match' are either nil (the
-          ;; default), or a list of properties that may include any of those
-          ;; symbols: `bold', `intense', `underline'
-          modus-themes-paren-match '(bold intense)
-
-          ;; Options for `modus-themes-links' are either nil (the default),
-          ;; or a list of properties that may include any of those symbols:
-          ;; `neutral-underline' OR `no-underline', `faint' OR `no-color',
-          ;; `bold', `italic', `background'
-          modus-themes-links '(neutral-underline background)
-
-          ;; Options for `modus-themes-box-buttons' are either nil (the
-          ;; default), or a list that can combine any of `flat', `accented',
-          ;; `faint', `variable-pitch', `underline', `all-buttons', the
-          ;; symbol of any font weight as listed in `modus-themes-weights',
-          ;; and a floating point number (e.g. 0.9) for the height of the
-          ;; button's text.
-          modus-themes-box-buttons '(variable-pitch flat faint 0.9)
-
-          ;; Options for `modus-themes-prompts' are either nil (the
-          ;; default), or a list of properties that may include any of those
-          ;; symbols: `background', `bold', `gray', `intense', `italic'
-          modus-themes-prompts '(intense bold)
-
-          ;; The `modus-themes-completions' is an alist that reads three
-          ;; keys: `matches', `selection', `popup'.  Each accepts a nil
-          ;; value (or empty list) or a list of properties that can include
-          ;; any of the following (for WEIGHT read further below):
-          ;;
-          ;; `matches' - `background', `intense', `underline', `italic', WEIGHT
-          ;; `selection' - `accented', `intense', `underline', `italic', `text-also' WEIGHT
-          ;; `popup' - same as `selected'
-          ;; `t' - applies to any key not explicitly referenced (check docs)
-          ;;
-          ;; WEIGHT is a symbol such as `semibold', `light', or anything
-          ;; covered in `modus-themes-weights'.  Bold is used in the absence
-          ;; of an explicit WEIGHT.
-          modus-themes-completions '((matches . (extrabold))
-                                     (selection . (semibold accented))
-                                     (popup . (accented intense)))
-
-          modus-themes-mail-citations nil ; {nil,'intense,'faint,'monochrome}
-
-          ;; Options for `modus-themes-region' are either nil (the default),
-          ;; or a list of properties that may include any of those symbols:
-          ;; `no-extend', `bg-only', `accented'
-          ;;modus-themes-region '(bg-only no-extend)
-          modus-themes-region '(bg-only accented)
-
-          ;; Options for `modus-themes-diffs': nil, 'desaturated, 'bg-only
-          modus-themes-diffs 'desaturated
-
-          ;;modus-themes-org-blocks 'gray-background ; {nil,'gray-background,'tinted-background}
-          modus-themes-org-blocks nil ; {nil,'gray-background,'tinted-background}
-
-          modus-themes-org-agenda ; this is an alist: read the manual or its doc string
-          '((header-block . (variable-pitch 1.3))
-            (header-date . (grayscale workaholic bold-today 1.1))
-            (event . (accented varied))
-            (scheduled . uniform)
-            (habit . traffic-light))
-
-          ;; modus-themes-headings ; this is an alist: read the manual or its doc string
-          ;; '((1 . (overline background variable-pitch 1.3))
-          ;;   (2 . (rainbow overline 1.1))
-          ;;   (t . (semibold)))
-          )
-
-    ;; load theme files before enabling
-    ;;(modus-themes-load-themes)
-    (load-theme 'modus-vivendi :no-error)
-    :config
-    (modus-themes-load-vivendi)
-    ;;(modus-themes-load-operandi)
-    ))
-;; GUI:1 ends here
+;; [[file:init-emacs.org::#environment-settings-gui-footer][Footer:1]]
+)
+;; Footer:1 ends here
 
 ;; [[file:init-emacs.org::#environment-settings-general][General:1]]
 ;;------------------------------------------------------------------------------
@@ -1733,12 +1655,12 @@ Otherwise, `custom-tab-width' is used."
 
 (defun custom-key-bindings-function-keys ()
   "Set custom function key bindings."
-  (when (fboundp 'help)
-    (bind-keys ("<f1>" . help)))        ; default: `help-for-help'
   (when (fboundp 'help-for-help)
-    (bind-keys ("S-<f1>" . help-for-help)))
+    (bind-keys ("<f1>" . help-for-help)))
   (when (fboundp 'help-command)
-    (bind-keys ("<f2>" . help-command))) ; default: Prefix Command
+    (bind-keys ("S-<f1>" . help-command)))
+  (when (fboundp 'modus-themes-toggle)
+    (bind-keys ("<f2>" . modus-themes-toggle))) ; default: Prefix Command
   (when (fboundp 'kmacro-start-macro-or-insert-counter)
     (bind-keys ("<f3>" . kmacro-start-macro-or-insert-counter))) ; default: `kmacro-start-macro-or-insert-counter'
   (when (fboundp 'kmacro-end-or-call-macro)
@@ -2586,9 +2508,6 @@ DATA should have been made by `org-outline-overlay-data'."
   ;;  `(outline-6 ((t (:foreground ,color-6))))
   ;;  `(outline-7 ((t (:foreground ,color-7))))
   ;;  `(outline-8 ((t (:foreground ,color-8)))))
-  ;; remove height and box from levels
-  (dotimes (x 8)
-    (set-face-attribute `,(intern (format "outline-%s" (1+ x))) nil :height 1.0 :box nil))
 
   ;; advise `outline-up-heading' to suppress errors
   (advice-add 'outline-up-heading :around #'advice--ignore-errors))
@@ -2678,9 +2597,6 @@ DATA should have been made by `org-outline-overlay-data'."
   ;;  `(org-level-6 ((t (:foreground ,color-6))))
   ;;  `(org-level-7 ((t (:foreground ,color-7))))
   ;;  `(org-level-8 ((t (:foreground ,color-8)))))
-  ;; remove height and box from levels
-  (dotimes (x 8)
-    (set-face-attribute `,(intern (format "org-level-%s" (1+ x))) nil :height 1.0 :box nil))
 
   ;; set file apps
   (when window-system
