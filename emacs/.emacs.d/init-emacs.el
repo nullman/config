@@ -726,11 +726,12 @@ Common values:
         '((t . (rainbow)))
 
         modus-themes-vivendi-color-overrides ; override some main colors
-        `((bf-main . ,color-background)
+        `((bg-main . ,color-background)
           (fg-main . ,color-foreground)))
 
   ;; load theme files before enabling
-  ;;(modus-themes-load-themes)
+  (modus-themes-load-themes)
+  (load-theme 'modus-operandi :no-error)
   (load-theme 'modus-vivendi :no-error)
   :config
   (modus-themes-load-vivendi)

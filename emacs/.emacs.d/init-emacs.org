@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-06-12 14:22 (kyle)>
+  #+TIMESTAMP: <2022-06-12 15:12 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -1525,16 +1525,16 @@
                 '((t . (rainbow)))
 
                 modus-themes-vivendi-color-overrides ; override some main colors
-                `((bf-main . ,color-background)
+                `((bg-main . ,color-background)
                   (fg-main . ,color-foreground)))
 
           ;; load theme files before enabling
           ;;(modus-themes-load-themes)
+          ;;(load-theme 'modus-operandi :no-error)
           (load-theme 'modus-vivendi :no-error)
           :config
-          (modus-themes-load-vivendi)
           ;;(modus-themes-load-operandi)
-          )
+          (modus-themes-load-vivendi))
       #+END_SRC
 
 ***** Footer
