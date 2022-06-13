@@ -620,7 +620,6 @@ Common values:
         modus-themes-tabs-accented t
         modus-themes-variable-pitch-ui nil
         modus-themes-inhibit-reload t ; only applies to `customize-set-variable' and related
-
         modus-themes-fringes nil ; {nil,'subtle,'intense}
 
         ;; Options for `modus-themes-lang-checkers' are either nil (the
@@ -723,7 +722,8 @@ Common values:
         ;; '((1 . (overline background variable-pitch 1.3))
         ;;   (2 . (rainbow overline 1.1))
         ;;   (t . (semibold)))
-        '((t . (rainbow)))
+        ;;'((t . (rainbow)))
+        '((t . ()))
 
         modus-themes-vivendi-color-overrides ; override some main colors
         `((bg-main . ,color-background)
