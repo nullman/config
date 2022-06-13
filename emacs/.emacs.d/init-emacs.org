@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-06-13 10:30 (kyle)>
+  #+TIMESTAMP: <2022-06-13 14:55 (kyle.sherman)>
 
 * Overview
   :PROPERTIES:
@@ -2953,8 +2953,6 @@
           (bind-keys ("<f1>" . help-for-help)))
         (when (fboundp 'help-command)
           (bind-keys ("S-<f1>" . help-command)))
-        (when (fboundp 'modus-themes-toggle)
-          (bind-keys ("<f2>" . modus-themes-toggle))) ; default: Prefix Command
         (when (fboundp 'kmacro-start-macro-or-insert-counter)
           (bind-keys ("<f3>" . kmacro-start-macro-or-insert-counter))) ; default: `kmacro-start-macro-or-insert-counter'
         (when (fboundp 'kmacro-end-or-call-macro)
@@ -12299,29 +12297,29 @@
             (move-to-column col)))
       #+END_SRC
 
-***** kill-word-enhanced
+***** +kill-word-enhanced+
       :PROPERTIES:
       :CUSTOM_ID: functions-emacs-functions-kill-word-enhanced
       :END:
 
-      #+BEGIN_SRC emacs-lisp
-        ;;------------------------------------------------------------------------------
-        ;;;; Functions: Emacs Functions: kill-word-enhanced
-        ;;------------------------------------------------------------------------------
+      #+BEGIN_SRC emacs-lisp :tangle no
+        ;; ;;------------------------------------------------------------------------------
+        ;; ;;;; Functions: Emacs Functions: kill-word-enhanced
+        ;; ;;------------------------------------------------------------------------------
 
-        (init-message 3 "Functions: Emacs Functions: kill-word-enhanced")
+        ;; (init-message 3 "Functions: Emacs Functions: kill-word-enhanced")
 
-        (defun kill-word-enhanced (arg)
-          "Kill word at point."
-          (interactive "*P")
-          (save-mark-and-excursion
-            (let ((p (point)))
-              (forward-word 1)
-              (when (> (point) p)
-                (forward-word -1)))
-            (kill-word (or arg 1))
-            (when (eq (char-after) ? )
-              (delete-char 1))))
+        ;; (defun kill-word-enhanced (arg)
+        ;;   "Kill word at point."
+        ;;   (interactive "*P")
+        ;;   (save-mark-and-excursion
+        ;;     (let ((p (point)))
+        ;;       (forward-word 1)
+        ;;       (when (> (point) p)
+        ;;         (forward-word -1)))
+        ;;     (kill-word (or arg 1))
+        ;;     (when (eq (char-after) ? )
+        ;;       (delete-char 1))))
       #+END_SRC
 
 ***** kill-region-or-word

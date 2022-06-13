@@ -1659,8 +1659,6 @@ Otherwise, `custom-tab-width' is used."
     (bind-keys ("<f1>" . help-for-help)))
   (when (fboundp 'help-command)
     (bind-keys ("S-<f1>" . help-command)))
-  (when (fboundp 'modus-themes-toggle)
-    (bind-keys ("<f2>" . modus-themes-toggle))) ; default: Prefix Command
   (when (fboundp 'kmacro-start-macro-or-insert-counter)
     (bind-keys ("<f3>" . kmacro-start-macro-or-insert-counter))) ; default: `kmacro-start-macro-or-insert-counter'
   (when (fboundp 'kmacro-end-or-call-macro)
@@ -8290,26 +8288,6 @@ Use `describe-function' or `describe-variable' as appropriate."
     (forward-line -1)
     (move-to-column col)))
 ;; move-line-up:1 ends here
-
-;; [[file:init-emacs.org::#functions-emacs-functions-kill-word-enhanced][kill-word-enhanced:1]]
-;;------------------------------------------------------------------------------
-;;;; Functions: Emacs Functions: kill-word-enhanced
-;;------------------------------------------------------------------------------
-
-(init-message 3 "Functions: Emacs Functions: kill-word-enhanced")
-
-(defun kill-word-enhanced (arg)
-  "Kill word at point."
-  (interactive "*P")
-  (save-mark-and-excursion
-    (let ((p (point)))
-      (forward-word 1)
-      (when (> (point) p)
-        (forward-word -1)))
-    (kill-word (or arg 1))
-    (when (eq (char-after) ? )
-      (delete-char 1))))
-;; kill-word-enhanced:1 ends here
 
 ;; [[file:init-emacs.org::#functions-emacs-functions-kill-region-or-word][kill-region-or-word:1]]
 ;;------------------------------------------------------------------------------
