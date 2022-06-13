@@ -730,13 +730,12 @@ Common values:
           (fg-main . ,color-foreground)))
 
   ;; load theme files before enabling
-  (modus-themes-load-themes)
-  (load-theme 'modus-operandi :no-error)
+  ;;(modus-themes-load-themes)
+  ;;(load-theme 'modus-operandi :no-error)
   (load-theme 'modus-vivendi :no-error)
   :config
-  (modus-themes-load-vivendi)
   ;;(modus-themes-load-operandi)
-  )
+  (modus-themes-load-vivendi))
 ;; Modus Themes:1 ends here
 
 ;; [[file:init-emacs.org::#environment-settings-gui-footer][Footer:1]]
