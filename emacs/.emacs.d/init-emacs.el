@@ -15872,6 +15872,124 @@ back to the previous non-whitespace character. See also
            ":/usr/share/languagetool/*")))
 ;; langtool:2 ends here
 
+;; [[file:init-emacs.org::#packages-lorem-ipsum][lorem-ipsum:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: lorem-ipsum
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Packages: lorem-ipsum")
+
+(use-package lorem-ipsum
+  :straight t)
+;; lorem-ipsum:1 ends here
+
+;; [[file:init-emacs.org::#packages-lorem-ipsum-overlay][lorem-ipsum-overlay:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: lorem-ipsum-overlay
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Packages: lorem-ipsum-overlay")
+
+(defcustom lorem-ipsum-overlay-exclude nil
+  "List of regexps to exclude from `lorem-ipsum-overlay'."
+  :type '(repeat regexp))
+
+(setq lorem-ipsum-overlay-exclude
+      `(,(rx (or bol bos blank) "#+" (1+ alnum) ":" (or eol eos blank))))
+
+(defun lorem-ipsum-overlay (&optional replace-p)
+  "Overlay all text in current buffer with \"lorem ipsum\" text.
+When called again, remove overlays. Useful for taking screenshots
+without revealing buffer contents.
+
+If REPLACE-P is non-nil (interactively, with prefix), replace
+buffer contents rather than overlaying them. When a buffer is
+very large and would have so many overlays that performance would
+be prohibitively slow, you may replace the buffer contents
+instead. (Of course, be careful about saving the buffer after
+replacing its contents.)
+
+Each piece of non-whitespace text in the buffer is compared with
+regexps in `unpackaged/lorem-ipsum-overlay-exclude', and ones
+that match are not overlaid. Note that the regexps are compared
+against the entire non-whitespace token, up-to and including the
+preceding whitespace, but only the alphabetic part of the token
+is overlaid. For example, in an Org buffer, a line that starts
+with:
+
+#+TITLE: unpackaged.el
+
+Could be matched against the exclude regexp (in `rx' syntax):
+
+(rx (or bol bos blank) \"#+\" (1+ alnum) \":\" (or eol eos blank))
+
+And the line would be overlaid like:
+
+#+TITLE: parturient.et"
+  (interactive "P")
+  (require 'lorem-ipsum)
+  (let ((ovs (overlays-in (point-min) (point-max))))
+    (if (cl-loop for ov in ovs
+                 thereis (overlay-get ov :lorem-ipsum-overlay))
+        ;; Remove overlays.
+        (dolist (ov ovs)
+          (when (overlay-get ov :lorem-ipsum-overlay)
+            (delete-overlay ov)))
+      ;; Add overlays.
+      (let ((lorem-ipsum-words (--> lorem-ipsum-text
+                                    (-flatten it) (apply #'concat it)
+                                    (split-string it (rx (or space punct)) 'omit-nulls)))
+            (case-fold-search nil))
+        (cl-labels ((overlay-group (group)
+                                   (let* ((beg (match-beginning group))
+                                          (end (match-end group))
+                                          (replacement-word (lorem-word (match-string group)))
+                                          (ov (make-overlay beg end)))
+                                     (when replacement-word
+                                       (overlay-put ov :lorem-ipsum-overlay t)
+                                       (overlay-put ov 'display replacement-word))))
+                    (replace-group (group)
+                                   (let* ((beg (match-beginning group))
+                                          (end (match-end group))
+                                          (replacement-word (lorem-word (match-string group))))
+                                     (when replacement-word
+                                       (setf (buffer-substring beg end) replacement-word))))
+                    (lorem-word (word)
+                                (if-let* ((matches (lorem-matches (length word))))
+                                    (apply-case word (downcase (seq-random-elt matches)))
+                                  ;; Word too long: compose one.
+                                  (apply-case word (downcase (compose-word (length word))))))
+                    (lorem-matches (length &optional (comparator #'=))
+                                   (cl-loop for liw in lorem-ipsum-words
+                                            when (funcall comparator (length liw) length)
+                                            collect liw))
+                    (apply-case (source target)
+                                (cl-loop for sc across-ref source
+                                         for tc across-ref target
+                                         when (not (string-match-p (rx lower) (char-to-string sc)))
+                                         do (setf tc (string-to-char (upcase (char-to-string tc)))))
+                                target)
+                    (compose-word (length)
+                                  (cl-loop while (> length 0)
+                                           for word = (seq-random-elt (lorem-matches length #'<=))
+                                           concat word
+                                           do (cl-decf length (length word)))))
+          (save-excursion
+            (goto-char (point-min))
+            (while (re-search-forward (rx (group (1+ (or bol bos blank (not alpha)))
+                                                 (0+ (not (any alpha blank)))
+                                                 (group (1+ alpha))
+                                                 (0+ (not (any alpha blank)))))
+                                      nil t)
+              (unless (cl-member (match-string 0) lorem-ipsum-overlay-exclude
+                                 :test (lambda (string regexp)
+                                         (string-match-p regexp string)))
+                (if replace-p
+                    (replace-group 2)
+                  (overlay-group 2)))
+              (goto-char (match-end 2)))))))))
+;; lorem-ipsum-overlay:1 ends here
+
 ;; [[file:init-emacs.org::#modules-magit][magit:1]]
 ;;------------------------------------------------------------------------------
 ;;; Packages: magit
