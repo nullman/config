@@ -9,8 +9,8 @@
 
 persist_file="${HOME}/.raspad-rotate-restore"
 
-if [[ $(pgrep --euid ${USER} --full auto-rotator) ]] ; then
-    kill $(pgrep --euid ${USER} --full auto-rotator)
+if [[ $(pgrep -u ${USER} -f auto-rotator) ]] ; then
+    kill $(pgrep -u ${USER} -f auto-rotator)
     notify-send --expire-time=2000 "Auto-rotation: OFF"
 else
     DISPLAY=:0.0 /usr/bin/python3 /usr/local/bin/auto-rotator &

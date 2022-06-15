@@ -577,9 +577,9 @@ bindsym $super+$alt+m exec pavucontrol
 #bindsym $super+Shift+F3 exec gksu pcmanfm
 #bindsym $super+Shift+F3 exec gksu thunar
 #bindsym $super+F5 exec terminal -e 'mocp'
-#bindsym $super+t exec --no-startup-id pkill --exact compton --euid ${USER}
+#bindsym $super+t exec --no-startup-id pkill -x compton -u ${USER}
 #bindsym $super+Ctrl+t exec --no-startup-id compton -b
-#bindsym $super+Shift+d --release exec "pkill --exact dunst --euid ${USER} && exec notify-send 'Reconfiguring Dunst'"
+#bindsym $super+Shift+d --release exec "pkill -x dunst -u ${USER} && exec notify-send 'Reconfiguring Dunst'"
 
 # screen snapshots
 bindsym Print exec --no-startup-id i3-scrot # full screen snapshot

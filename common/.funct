@@ -138,7 +138,7 @@ pstest() {
         echo "Test if a user applicaiton containing QUERY is currently running."
         echo "  QUERY  query string to search for"
     else
-        pgrep --euid ${USER} --full --ignore-case "$1" > /dev/null
+        pgrep -u ${USER} -f -i "$1" > /dev/null
     fi
 }
 #        iscommand               check if executable command is found in the path
@@ -260,8 +260,8 @@ term-name() {
 }
 #        psg                     ps with grep
 psg() {
-    pids=$(pgrep --full --ignore-case "$1" | tr '\n' ',' | sed 's/,$//')
-    [[ -n "${pids}" ]] && ps --format pid,ppid,user,args --pid ${pids}
+    pids=$(pgrep -f -i "$1" | tr '\n' ',' | sed 's/,$//')
+    [[ -n "${pids}" ]] && ps -o pid,ppid,user,args ${pids}
 }
 #        grepper                 fancy grep
 grepper() {
@@ -821,17 +821,17 @@ decrypt() {
 #
 #        ktg                     kill -SIGTERM (friendly) with grep
 ktg() {
-    pkill --signal SIGTERM --full --ignore-case "$1"
+    pkill -signal SIGTERM -f -i "$1"
 }
 #        kkg                     kill -SIGKILL (forced) with grep
 kkg() {
-    pkill --signal SIGTERM --full --ignore-case "$1"
+    pkill -signal SIGTERM -f -i "$1"
     sleep 1
-    pkill --signal SIGKILL --full --ignore-case "$1"
+    pkill -signal SIGKILL -f -i "$1"
 }
 #        khg                     kill -HUP (restart) with grep
 khg() {
-    pkill --signal SIGHUP --full --ignore-case "$1"
+    pkill -signal SIGHUP -f -i "$1"
 }
 
 #

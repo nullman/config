@@ -175,7 +175,7 @@ case "${menu}" in
         _killffplay() {
             # stop any currently playing sounds
             # (regardless of selection to prevent sounds from doubling up)
-            pkill --exact ffplay --euid ${USER} || true
+            pkill -x ffplay -u ${USER} || true
         }
 
         # find sound directory

@@ -303,11 +303,11 @@ alias debug-on="export LD_DEBUG=files"
 #        debug-off               turn off files (library modules) debugging info
 alias debug-off="export LD_DEBUG="
 #!#        alsa-reset            restart alsa sound
-#!alias alsa-reset="sudo pkill --exact pulseaudio ; sudo alsa force-reload"
+#!alias alsa-reset="sudo pkill -x pulseaudio ; sudo alsa force-reload"
 #!#        alsa-reset            restart alsa sound
 #!alias alsa-reset="sudo alsa force-reload"
 #        pulse-reset             restart pulseaudio sound
-alias pulse-reset="pkill --exact pulseaudio ; sleep 2 ; pulseaudio --daemonize=no &"
+alias pulse-reset="pkill -x pulseaudio ; sleep 2 ; pulseaudio --daemonize=no &"
 #        ver                     distribution version
 alias ver="lsb_release -a"
 #        kernel                  kernel version
@@ -329,9 +329,9 @@ alias fdisk-list="sudo fdisk -l"
 #        dd-sync                 sudo dd conv=fdatasync status=progress
 alias dd-sync="sudo dd conv=fdatasync status=progress"
 #        sxhkdrs                 sxhkd restart
-alias sxhkdrs="pkill --signal SIGUSR1 --exact sxhkd --euid \${USER}"
+alias sxhkdrs="pkill -signal SIGUSR1 -x sxhkd -u \${USER}"
 #        tint2rs                 tint2 restart
-alias tint2rs="(pkill --signal SIGUSR1 --exact tint2 --euid \${USER} && \
+alias tint2rs="(pkill -signal SIGUSR1 -x tint2 -u \${USER} && \
     xdo below -t \$(xdo id -N Bspwm) \$(xdo id -N Tint2)) || \${HOME}/bin/system-bar"
 #        xrdb-list               list custom .Xresource settings
 alias xrdb-list="xrdb -query -all"
@@ -1781,10 +1781,10 @@ alias imap-on="rm -f \${HOME}/.noofflineimap > /dev/null 2>&1"
 #        imap-off                turn offlineimap off
 alias imap-off="
     touch \${HOME}/.noofflineimap
-    sudo pkill --signal SIGTERM --exact offlineimap"
+    sudo pkill -signal SIGTERM -x offlineimap"
 #! alias imap-off="touch \${HOME}/.noofflineimap > /dev/null 2>&1"
 #        imap-restart            restart offlineimap
-alias imap-restart="sudo pkill --signal SIGTERM --exact offlineimap"
+alias imap-restart="sudo pkill -signal SIGTERM -x offlineimap"
 #        offlineimap-once        sync normal imap accounts once
 alias offlineimap-once="offlineimap -o -u ttyui"
 #        offlineimap-home        sync home imap account

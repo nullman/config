@@ -29,14 +29,14 @@ _command tint2 && (tint2 && xdo below -t $(xdo id -N Bspwm) $(xdo id -N Tint2)) 
 #_command tint2 && tint2 &
 
 # system bar applets
-_command clipit && (_delay ${delay} pkill --exact --euid ${USER} clipit ; clipit) &
-_command pa-applet && (_delay ${delay} pkill --exact --euid ${USER} pa-applet ; pa-applet) &
-_command blueman-applet && (_delay ${delay} pkill --exact --euid ${USER} blueman-applet ; blueman-applet) &
-_command nm-applet && (_delay ${delay} pkill --exact --euid ${USER} nm-applet ; nm-applet) &
-_command pamac-tray && (_delay ${delay} pkill --exact --euid ${USER} pamac-tray ; pamac-tray) &
-_command xfce4-power-manager && (_delay ${delay} pkill --exact --euid ${USER} xfce4-power-manager ; xfce4-power-manager) &
-#_command volumeicon && (_delay ${delay} pkill --exact --euid ${USER} volumeicon ; volumeicon) &
-#_command sbxkb && (_delay ${delay} pkill --exact --euid ${USER} sbxkb ; sbxkb) &
+_command clipit && (_delay ${delay} pkill -x -u ${USER} clipit ; clipit) &
+_command pa-applet && (_delay ${delay} pkill -x -u ${USER} pa-applet ; pa-applet) &
+_command blueman-applet && (_delay ${delay} pkill -x -u ${USER} blueman-applet ; blueman-applet) &
+_command nm-applet && (_delay ${delay} pkill -x -u ${USER} nm-applet ; nm-applet) &
+_command pamac-tray && (_delay ${delay} pkill -x -u ${USER} pamac-tray ; pamac-tray) &
+_command xfce4-power-manager && (_deay ${delay} pkill -x -u ${USER} xfce4-power-manager ; xfce4-power-manager) &
+#_command volumeicon && (_delay ${delay} pkill -x -u ${USER} volumeicon ; volumeicon) &
+#_command sbxkb && (_delay ${delay} pkill -x -u ${USER} sbxkb ; sbxkb) &
 
 #===============================================================================
 # End of File
