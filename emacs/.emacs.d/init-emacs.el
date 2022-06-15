@@ -13323,6 +13323,34 @@ Examples:
           (indent-region (point-min) (point-max) nil))))))
 ;; java-pretty-print-buffer:1 ends here
 
+;; [[file:init-emacs.org::#functions-code-formatting-functions-json-to-csv][json-to-csv:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Code Formatting Functions: json-to-csv
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Code Formatting Functions: json-to-csv")
+
+(defun json-to-csv (&optional beg end)
+  "Convert JSON array to CSV."
+  (interactive "*")
+  (save-mark-and-excursion
+    (let* ((beg (or beg (if (use-region-p) (region-beginning) (point-min))))
+           (end (or end (if (use-region-p) (region-end) (point-max))))
+           (source-buffer (current-buffer))
+           (target-name (generate-new-buffer-name
+                         (if (buffer-file-name)
+                             (concat
+                              (replace-regexp-in-string "\.json$" "" (buffer-file-name))
+                              ".csv")
+                           "*json-to-csv*")))
+           (target-buffer (generate-new-buffer-name target-name)))
+      (set-buffer (get-buffer-create target-buffer))
+      (insert-buffer-substring-no-properties source-buffer beg end)
+      (switch-to-buffer target-buffer) ; TODO: remove
+      ;; TODO: fill in
+      (switch-to-buffer target-buffer))))
+;; json-to-csv:1 ends here
+
 ;; [[file:init-emacs.org::#functions-code-formatting-functions-xml-format][xml-format:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Code Formatting Functions: xml-format
@@ -20981,6 +21009,50 @@ to the current ERC buffer."
                  (newline))
                (buffer-string)))))))))
 ;; +work-insert-release-pr-list+:1 ends here
+
+;; [[file:init-emacs.org::#work-functions-work-fix-json-array][work-fix-json-array:1]]
+;;------------------------------------------------------------------------------
+;;;; Work: Functions: work-fix-json-array
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Work: Functions: work-fix-json-array")
+
+(defun work-fix-json-array ()
+  "Fix invalid JavaScript JSON array."
+  (interactive "*")
+  (save-mark-and-excursion
+    ;; remove anything outside of array brackets
+    (goto-char (point-min))
+    (while (and (not (eobp))
+                (not (= (char-after) ?\[)))
+      (delete-char 1))
+    (goto-char (point-max))
+    (while (and (not (bobp))
+                (not (= (char-before) ?\])))
+      (backward-delete-char 1))
+    ;; reformat json objects to one per line
+    (goto-char (point-min))
+    (while (re-search-forward "\{" nil :no-error)
+      (let ((beg (point-marker))
+            (end (progn
+                   (re-search-forward "\}")
+                   (forward-char -1)
+                   (point-marker))))
+        (goto-char (marker-position beg))
+        (while (re-search-forward "\n *" (marker-position end) :no-error)
+          (replace-match " "))))
+    ;; remove any ending comas
+    (goto-char (point-min))
+    (while (re-search-forward ", \}" nil :no-error)
+      (replace-match " }"))
+    (goto-char (point-min))
+    (while (re-search-forward "\},\n[\t ]*\]" nil :no-error)
+      (replace-match "}\n]"))
+    ;; convert single quotes to double quotes
+    (goto-char (point-min))
+    (while (re-search-forward "'" nil :no-error)
+      (replace-match "\""))))
+;; work-fix-json-array:1 ends here
 
 ;; [[file:init-emacs.org::#work-menu][Menu:1]]
 ;;------------------------------------------------------------------------------
