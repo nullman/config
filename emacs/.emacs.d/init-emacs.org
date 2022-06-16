@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-06-15 12:04 (kyle)>
+  #+TIMESTAMP: <2022-06-16 16:21 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -1407,6 +1407,7 @@
         ;; https://github.com/protesilaos/modus-themes/
         (use-package modus-themes
           :straight (:type built-in)
+          :demand t
           :bind ("<f2>" . modus-themes-toggle)
           :init
           ;; add customizations before loading
@@ -6970,14 +6971,13 @@
       (init-message 2 "Org Mode: Visibility")
 
       (use-package org-visibility
-        :straight t
-        ;;:load-path (lambda () (file-truename (expand-file-name "~/code/github-nullman/emacs-org-visibility")))
+        ;;:straight t
+        :load-path (lambda () (file-truename (expand-file-name "~/code/github-nullman/emacs-org-visibility")))
         :after (org)
-        ;;:demand t
+        :demand t
         :bind (:map org-visibility-mode-map
                     ("C-x C-v" . org-visibility-force-save) ; default: `find-alternative-file'
                     ("C-x M-v" . org-visibility-remove))    ; default: undefined
-        :hook (org-mode . org-visibility-mode)
         :custom
         ;; list of directories and files to automatically persist and restore visibility state of
         (org-visibility-include-paths `(,(file-truename "~/.emacs.d/init-emacs.org")
@@ -6988,7 +6988,9 @@
                                         ,(file-truename "~/web/org")))
         ;; list of directories and files to not persist and restore visibility state of
         (org-visibility-exclude-paths `(,(file-truename "~/org/old")
-                                        ,(file-truename "~/org/test"))))
+                                        ,(file-truename "~/org/test")))
+        :config
+        (org-visibility-mode 1))
     #+END_SRC
 
 *** +Present+
