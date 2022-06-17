@@ -1688,6 +1688,9 @@ Otherwise, `custom-tab-width' is used."
     (bind-keys ("<f10>" . cycle-buffer))) ; default: `tmm-menubar'
   (when (fboundp 'cycle-buffer-permissive)
     (bind-keys ("S-<f10>" . cycle-buffer-permissive)))
+  ;; normally f11 and f12 are left for screen to use
+  (unbind-key "<f11>")                  ; default: `toggle-frame-fullscreen'
+  (unbind-key "<f12>")
   )
 
 (init-message 3 "custom-key-bindings-function-keys")
@@ -17404,6 +17407,24 @@ otherwise run `find-file-as-root'."
         (find-alternative-file-as-root)
       (find-file-as-root))))
 ;; tramp:1 ends here
+
+;; [[file:init-emacs.org::#packages-org-tree-slide][org-tree-slide:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: org-tree-slide
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Packages: org-tree-slide")
+
+(use-package org-tree-slide
+  :straight t
+  :bind (("S-<f8>" . org-tree-slide-mode)
+         ("C-<f8>" . org-tree-slide-skip-done-toggle))
+  :bind (:map org-tree-slide-mode-map
+              ("<f11>" . org-tree-slide-move-previous-tree)
+              ("<f12>" . org-tree-slide-move-next-tree))
+  :custom
+  (org-image-actual-width nil))
+;; org-tree-slide:1 ends here
 
 ;; [[file:init-emacs.org::#modules-undo-tree][undo-tree:1]]
 ;;------------------------------------------------------------------------------
