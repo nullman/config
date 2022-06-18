@@ -1,4 +1,4 @@
-* Org
+* Org                                                              :noexport:
   #+TITLE: Emacs Configuration
   #+AUTHOR: Kyle W T Sherman
   #+EMAIL: kylewsherman@gmail.com
@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-06-18 10:40 (kyle)>
+  #+TIMESTAMP: <2022-06-18 14:03 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -3732,8 +3732,6 @@
 
       (init-message 2 "Org Mode: Setup")
 
-      (init-message 3 "org")
-
       (use-package org
         :straight (:type built-in)
         :demand t
@@ -3832,8 +3830,6 @@
             (org-with-wide-buffer
              (org-show-all)
              (dolist (c data) (org-flag-region (car c) (cdr c) t 'outline))))))
-
-      (init-message 3 "outline")
 
       (use-package outline
         :straight (:type built-in)
@@ -4143,38 +4139,86 @@
           (setq org-archive-subtree-save-file-p t)))
     #+END_SRC
 
-*** Alerts
+*** +Alerts+
     :PROPERTIES:
     :CUSTOM_ID: org-mode-alerts
     :END:
 
-    #+BEGIN_SRC emacs-lisp
-      (init-message 2 "Org Mode: Alerts")
+    #+BEGIN_SRC emacs-lisp :tangle no
+      ;; ;;------------------------------------------------------------------------------
+      ;; ;;; Org Mode: Alerts
+      ;; ;;------------------------------------------------------------------------------
 
-      ;; (use-package org-alert
-      ;;   :straight t
-      ;;   :after (org)
-      ;;   :custom (alert-default-style 'notifications)
-      ;;   :config
-      ;;   (setq org-alert-interval 300
-      ;;         org-alert-notification-title "Org Reminder"))
+      ;; (init-message 2 "Org Mode: Alerts")
 
-      ;; throws error: void-function -orfn
-      ;; (use-package org-wild-notifier
-      ;;   :straight t
-      ;;   :after (org)
-      ;;   :custom
-      ;;   (alert-default-style 'notifications)
-      ;;   (org-wild-notifier-alert-time '(1 10 30))
-      ;;   (org-wild-notifier-keyword-whitelist '("TODO" "NEXT"))
-      ;;   (org-wild-notifier-notification-title "Org Reminder")
-      ;;   :init (org-wild-notifier-mode 1))
+      ;; ;; (use-package org-alert
+      ;; ;;   :straight t
+      ;; ;;   :after (org)
+      ;; ;;   :custom (alert-default-style 'notifications)
+      ;; ;;   :config
+      ;; ;;   (setq org-alert-interval 300
+      ;; ;;         org-alert-notification-title "Org Reminder"))
 
-      ;; (use-package org-notify
-      ;;   :straight t
-      ;;   :after (org)
-      ;;   :init (org-notify-start))
+      ;; ;; ;; throws error: void-function -orfn
+      ;; ;; (use-package org-wild-notifier
+      ;; ;;   :straight t
+      ;; ;;   :after (org)
+      ;; ;;   :custom
+      ;; ;;   (alert-default-style 'notifications)
+      ;; ;;   (org-wild-notifier-alert-time '(1 10 30))
+      ;; ;;   (org-wild-notifier-keyword-whitelist '("TODO" "NEXT"))
+      ;; ;;   (org-wild-notifier-notification-title "Org Reminder")
+      ;; ;;   :init (org-wild-notifier-mode 1))
+
+      ;; ;; (use-package org-notify
+      ;; ;;   :straight t
+      ;; ;;   :after (org)
+      ;; ;;   :init (org-notify-start))
     #+END_SRC
+
+*** LaTeX
+    :PROPERTIES:
+    :CUSTOM_ID: org-mode-latex
+    :END:
+
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Org Mode: LaTeX
+      ;;------------------------------------------------------------------------------
+
+      (init-message 2 "Org Mode: LaTeX")
+    #+END_SRC
+
+***** ox-latex
+      :PROPERTIES:
+      :CUSTOM_ID: org-mode-latex-ox-latex
+      :END:
+
+      #+BEGIN_SRC emacs-lisp
+        ;;------------------------------------------------------------------------------
+        ;;;; Org Mode: LaTeX: ox-latex
+        ;;------------------------------------------------------------------------------
+
+        (init-message 3 "Org Mode: LaTeX: ox-latex")
+
+        (use-package ox-latex
+          :straight (:type built-in)
+          :custom
+          (org-latex-listings t)
+          :init
+          (add-to-list 'org-latex-classes
+                       `("org-latex-plain"
+                         ,(concat
+                          "\\documentclass{article}\n"
+                          "[NO-DEFAULT-PACKAGES]\n"
+                          "[PACKAGES]\n"
+                          "[EXTRA]")
+                         ("\\section{%s}" . "\\section*{%s}")
+                         ("\\subsection{%s}" . "\\subsection*{%s}")
+                         ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                         ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                         ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+      #+END_SRC
 
 *** +Remember+
     :PROPERTIES:
@@ -6512,6 +6556,7 @@
                                      (js . t)
                                      ;;(json . t)
                                      (kotlin . t)
+                                     (latex . t)
                                      (lisp . t)
                                      (lua . t)
                                      (makefile . t)
@@ -7522,33 +7567,33 @@
             (switch-to-buffer target-buffer)))
       #+END_SRC
 
-***** duluth-hotel-invoiced-expense
+***** +duluth-hotel-invoiced-expense+
       :PROPERTIES:
       :CUSTOM_ID: org-mode-finances-duluth-hotel-invoiced-expense
       :END:
 
       Fill in Duluth Hotel invoiced expense based on the balance.
 
-      #+BEGIN_SRC emacs-lisp
-        ;;------------------------------------------------------------------------------
-        ;;;; Org Mode: Finances: duluth-hotel-invoiced-expense
-        ;;------------------------------------------------------------------------------
+      #+BEGIN_SRC emacs-lisp :tangle no
+        ;; ;;------------------------------------------------------------------------------
+        ;; ;;;; Org Mode: Finances: duluth-hotel-invoiced-expense
+        ;; ;;------------------------------------------------------------------------------
 
-        (init-message 3 "Org Mode: Finances: duluth-hotel-invoiced-expense")
+        ;; (init-message 3 "Org Mode: Finances: duluth-hotel-invoiced-expense")
 
-        (defun duluth-hotel-invoiced-expense (balance)
-          "Insert Duluth Hotel Invoiced Expense."
-          (interactive "*sTotal Balance: ")
-          (org-table-goto-column 5)
-          (org-table-blank-field)
-          (org-table-recalculate)
-          (org-table-goto-column 7)
-          (let* ((invoice (/ (round (* (- (string-to-number (org-table-get-field))
-                                          (string-to-number balance))
-                                       100)) 100.0)))
-            (org-table-goto-column 5)
-            (insert (format "%.2f" invoice))
-            (org-table-recalculate)))
+        ;; (defun duluth-hotel-invoiced-expense (balance)
+        ;;   "Insert Duluth Hotel Invoiced Expense."
+        ;;   (interactive "*sTotal Balance: ")
+        ;;   (org-table-goto-column 5)
+        ;;   (org-table-blank-field)
+        ;;   (org-table-recalculate)
+        ;;   (org-table-goto-column 7)
+        ;;   (let* ((invoice (/ (round (* (- (string-to-number (org-table-get-field))
+        ;;                                   (string-to-number balance))
+        ;;                                100)) 100.0)))
+        ;;     (org-table-goto-column 5)
+        ;;     (insert (format "%.2f" invoice))
+        ;;     (org-table-recalculate)))
       #+END_SRC
 
 ***** nwm-add-monthly-account-data
@@ -17538,7 +17583,7 @@
         (init-message 3 "Functions: Grep Search Functions: grep-org")
 
         ;; grep org
-        (grep-custom-generate grep-org "Grep org files: " ("~/org") "\\.org\\'")
+        (grep-custom-generate grep-org "Grep Org files: " ("~/org") "\\.org\\'")
       #+END_SRC
 
 ***** grep-python

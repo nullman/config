@@ -2390,8 +2390,6 @@ KEYMAP defaults to `override-global-map'."
 
 (init-message 2 "Org Mode: Setup")
 
-(init-message 3 "org")
-
 (use-package org
   :straight (:type built-in)
   :demand t
@@ -2490,8 +2488,6 @@ DATA should have been made by `org-outline-overlay-data'."
       (org-with-wide-buffer
        (org-show-all)
        (dolist (c data) (org-flag-region (car c) (cdr c) t 'outline))))))
-
-(init-message 3 "outline")
 
 (use-package outline
   :straight (:type built-in)
@@ -2787,33 +2783,39 @@ DATA should have been made by `org-outline-overlay-data'."
     (setq org-archive-subtree-save-file-p t)))
 ;; Agenda:1 ends here
 
-;; [[file:init-emacs.org::#org-mode-alerts][Alerts:1]]
-(init-message 2 "Org Mode: Alerts")
+;; [[file:init-emacs.org::#org-mode-latex][LaTeX:1]]
+;;------------------------------------------------------------------------------
+;;; Org Mode: LaTeX
+;;------------------------------------------------------------------------------
 
-;; (use-package org-alert
-;;   :straight t
-;;   :after (org)
-;;   :custom (alert-default-style 'notifications)
-;;   :config
-;;   (setq org-alert-interval 300
-;;         org-alert-notification-title "Org Reminder"))
+(init-message 2 "Org Mode: LaTeX")
+;; LaTeX:1 ends here
 
-;; throws error: void-function -orfn
-;; (use-package org-wild-notifier
-;;   :straight t
-;;   :after (org)
-;;   :custom
-;;   (alert-default-style 'notifications)
-;;   (org-wild-notifier-alert-time '(1 10 30))
-;;   (org-wild-notifier-keyword-whitelist '("TODO" "NEXT"))
-;;   (org-wild-notifier-notification-title "Org Reminder")
-;;   :init (org-wild-notifier-mode 1))
+;; [[file:init-emacs.org::#org-mode-latex-ox-latex][ox-latex:1]]
+;;------------------------------------------------------------------------------
+;;;; Org Mode: LaTeX: ox-latex
+;;------------------------------------------------------------------------------
 
-;; (use-package org-notify
-;;   :straight t
-;;   :after (org)
-;;   :init (org-notify-start))
-;; Alerts:1 ends here
+(init-message 3 "Org Mode: LaTeX: ox-latex")
+
+(use-package ox-latex
+  :straight (:type built-in)
+  :custom
+  (org-latex-listings t)
+  :init
+  (add-to-list 'org-latex-classes
+               `("org-latex-plain"
+                 ,(concat
+                  "\\documentclass{article}\n"
+                  "[NO-DEFAULT-PACKAGES]\n"
+                  "[PACKAGES]\n"
+                  "[EXTRA]")
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+;; ox-latex:1 ends here
 
 ;; [[file:init-emacs.org::#org-mode-modules][Modules:1]]
 ;;------------------------------------------------------------------------------
@@ -4636,6 +4638,7 @@ property list containing the parameters of the block."
                              (js . t)
                              ;;(json . t)
                              (kotlin . t)
+                             (latex . t)
                              (lisp . t)
                              (lua . t)
                              (makefile . t)
@@ -5420,28 +5423,6 @@ If NYXT-FILE is non-nil, then output is returned."
     (goto-char (point-min))
     (switch-to-buffer target-buffer)))
 ;; export-taxes:1 ends here
-
-;; [[file:init-emacs.org::#org-mode-finances-duluth-hotel-invoiced-expense][duluth-hotel-invoiced-expense:1]]
-;;------------------------------------------------------------------------------
-;;;; Org Mode: Finances: duluth-hotel-invoiced-expense
-;;------------------------------------------------------------------------------
-
-(init-message 3 "Org Mode: Finances: duluth-hotel-invoiced-expense")
-
-(defun duluth-hotel-invoiced-expense (balance)
-  "Insert Duluth Hotel Invoiced Expense."
-  (interactive "*sTotal Balance: ")
-  (org-table-goto-column 5)
-  (org-table-blank-field)
-  (org-table-recalculate)
-  (org-table-goto-column 7)
-  (let* ((invoice (/ (round (* (- (string-to-number (org-table-get-field))
-                                  (string-to-number balance))
-                               100)) 100.0)))
-    (org-table-goto-column 5)
-    (insert (format "%.2f" invoice))
-    (org-table-recalculate)))
-;; duluth-hotel-invoiced-expense:1 ends here
 
 ;; [[file:init-emacs.org::#org-mode-finances-nwm-add-monthly-account-data][nwm-add-monthly-account-data:1]]
 ;;------------------------------------------------------------------------------
@@ -12342,7 +12323,7 @@ MATCH is the file pattern to match."
 (init-message 3 "Functions: Grep Search Functions: grep-org")
 
 ;; grep org
-(grep-custom-generate grep-org "Grep org files: " ("~/org") "\\.org\\'")
+(grep-custom-generate grep-org "Grep Org files: " ("~/org") "\\.org\\'")
 ;; grep-org:1 ends here
 
 ;; [[file:init-emacs.org::#functions-grep-search-functions-grep-python][grep-python:1]]
