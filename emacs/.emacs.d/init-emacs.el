@@ -2906,7 +2906,7 @@ Output format:
      (HEADLINE32
       (HEADLINE321 . BODY321)
       (HEADLINE322 . BODY322)))))"
-  (let* ((property-headline-regexp "^[ \t]*\\** Org$")
+  (let* ((property-headline-regexp "^[ \t]*\\** Org\\([ \t]*:noexport:\\)?$")
          (property-regexp "^[ \t]*#\\+\\(.*\\): \\(.*\\)$")
          (property-drawer-regexp "[ \t]*:PROPERTIES:.*:END:[ \t]*")
          (headline-regexp "^\\(\*+ \\)\\(.*\\)$")
@@ -3055,7 +3055,7 @@ Output format if WITH-MARKERS is non-nil:
      (HEADLINE32 . MARKER32
       (HEADLINE321 . MARKER321 . BODY321)
       (HEADLINE322 . MARKER322 . BODY322)))))"
-  (let* ((property-headline-regexp "^[ \t]*\\** Org$")
+  (let* ((property-headline-regexp "^[ \t]*\\** Org\\([ \t]*:noexport:\\)?$")
          (property-regexp "^[ \t]*#\\+\\(.*\\): \\(.*\\)$")
          (property-drawer-regexp "[ \t]*:PROPERTIES:.*:END:[ \t]*")
          (headline-regexp "^\\(\*+ \\)\\(.*\\)$")
@@ -5041,9 +5041,9 @@ heading, properties, source block with title comment, and test block."
   :load-path (lambda () (file-truename (expand-file-name "~/code/github-nullman/emacs-org-visibility")))
   :after (org)
   :demand t
-  :bind (:map org-visibility-mode-map
-              ("C-x C-v" . org-visibility-force-save) ; default: `find-alternative-file'
-              ("C-x M-v" . org-visibility-remove))    ; default: undefined
+  :bind* (:map org-visibility-mode-map
+               ("C-x C-v" . org-visibility-force-save) ; default: `find-alternative-file'
+               ("C-x M-v" . org-visibility-remove))    ; default: undefined
   :custom
   ;; list of directories and files to automatically persist and restore visibility state of
   (org-visibility-include-paths `(,(file-truename "~/.emacs.d/init-emacs.org")
@@ -5107,7 +5107,6 @@ bookmarks found in FILE.
 
 Example input:
 
-  * Org
   * Folder 1
   ** Folder 2
   *** Bookmark 1
@@ -5122,9 +5121,7 @@ Example output:
     [(:type \"folder\" :title \"Folder 2\" :children
      [(:type \"bookmark\" :title \"Bookmark 1\" :uri \"URI1\")
       (:type \"bookmark\" :title \"Bookmark 2\" :uri \"URI2\" :keyword \"bm2\")])
-     (:type \"folder\" :title \"Folder 3\")]))
-
-If the first headline is \"Org\", it is ignored."
+     (:type \"folder\" :title \"Folder 3\")]))"
   (cl-labels
       ((parse (bm tree)
               (cond
@@ -15585,6 +15582,17 @@ USING is the remaining peg."
   :bind* ("C-x C-g" . git-timemachine))
 ;; git-timemachine:1 ends here
 
+;; [[file:init-emacs.org::#packages-hide-mode-line][hide-mode-line:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: hide-mode-line
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Packages: hide-mode-line")
+
+(use-package hide-mode-line
+  :straight t)
+;; hide-mode-line:1 ends here
+
 ;; [[file:init-emacs.org::#modules-hippie-exp][hippie-exp:1]]
 ;;------------------------------------------------------------------------------
 ;;; Packages: hippie-exp
@@ -17422,8 +17430,30 @@ otherwise run `find-file-as-root'."
   :bind (:map org-tree-slide-mode-map
               ("<f11>" . org-tree-slide-move-previous-tree)
               ("<f12>" . org-tree-slide-move-next-tree))
+  :hook ((org-tree-slide-play . org-tree-slide-presentation-setup)
+         (org-tree-slide-stop . org-tree-slide-presentation-reset))
   :custom
-  (org-image-actual-width nil))
+  (org-tree-slide-slide-in-effect t)
+  (org-tree-slide-activate-message "Presentation Mode: On")
+  (org-tree-slide-deactivate-message "Presentation Mode: Off")
+  (org-tree-slide-header t)
+  (org-tree-slide-breadcrumbs " > ")
+  (org-image-actual-width nil)
+  :config
+  (use-package hide-mode-line
+    :straight t)
+
+  (defun org-tree-slide-presentation-setup ()
+    (setq text-scale-mode-amount 3)
+    (when (fboundp 'hide-mode-line-mode)
+      (hide-mode-line-mode 1))
+    (org-display-inline-images)
+    (text-scale-mode 1))
+
+  (defun org-tree-slide-presentation-reset ()
+    (when (fboundp 'hide-mode-line-mode)
+      (hide-mode-line-mode 0))
+    (text-scale-mode 0)))
 ;; org-tree-slide:1 ends here
 
 ;; [[file:init-emacs.org::#modules-undo-tree][undo-tree:1]]

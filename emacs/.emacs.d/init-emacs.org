@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-06-17 09:17 (kyle)>
+  #+TIMESTAMP: <2022-06-18 10:40 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -4398,7 +4398,7 @@
              (HEADLINE32
               (HEADLINE321 . BODY321)
               (HEADLINE322 . BODY322)))))"
-          (let* ((property-headline-regexp "^[ \t]*\\** Org$")
+          (let* ((property-headline-regexp "^[ \t]*\\** Org\\([ \t]*:noexport:\\)?$")
                  (property-regexp "^[ \t]*#\\+\\(.*\\): \\(.*\\)$")
                  (property-drawer-regexp "[ \t]*:PROPERTIES:.*:END:[ \t]*")
                  (headline-regexp "^\\(\*+ \\)\\(.*\\)$")
@@ -4557,7 +4557,7 @@
              (HEADLINE32 . MARKER32
               (HEADLINE321 . MARKER321 . BODY321)
               (HEADLINE322 . MARKER322 . BODY322)))))"
-          (let* ((property-headline-regexp "^[ \t]*\\** Org$")
+          (let* ((property-headline-regexp "^[ \t]*\\** Org\\([ \t]*:noexport:\\)?$")
                  (property-regexp "^[ \t]*#\\+\\(.*\\): \\(.*\\)$")
                  (property-drawer-regexp "[ \t]*:PROPERTIES:.*:END:[ \t]*")
                  (headline-regexp "^\\(\*+ \\)\\(.*\\)$")
@@ -6978,9 +6978,9 @@
         :load-path (lambda () (file-truename (expand-file-name "~/code/github-nullman/emacs-org-visibility")))
         :after (org)
         :demand t
-        :bind (:map org-visibility-mode-map
-                    ("C-x C-v" . org-visibility-force-save) ; default: `find-alternative-file'
-                    ("C-x M-v" . org-visibility-remove))    ; default: undefined
+        :bind* (:map org-visibility-mode-map
+                     ("C-x C-v" . org-visibility-force-save) ; default: `find-alternative-file'
+                     ("C-x M-v" . org-visibility-remove))    ; default: undefined
         :custom
         ;; list of directories and files to automatically persist and restore visibility state of
         (org-visibility-include-paths `(,(file-truename "~/.emacs.d/init-emacs.org")
@@ -7173,7 +7173,6 @@
 
         Example input:
 
-          ,* Org
           ,* Folder 1
           ,** Folder 2
           ,*** Bookmark 1
@@ -7188,9 +7187,7 @@
             [(:type \"folder\" :title \"Folder 2\" :children
              [(:type \"bookmark\" :title \"Bookmark 1\" :uri \"URI1\")
               (:type \"bookmark\" :title \"Bookmark 2\" :uri \"URI2\" :keyword \"bm2\")])
-             (:type \"folder\" :title \"Folder 3\")]))
-
-        If the first headline is \"Org\", it is ignored."
+             (:type \"folder\" :title \"Folder 3\")]))"
           (cl-labels
               ((parse (bm tree)
                       (cond
@@ -22804,6 +22801,24 @@
       ;;   (advice-add 'helpful-command :after #'helpful-callable--other-buffer))
     #+END_SRC
 
+*** hide-mode-line
+    :PROPERTIES:
+    :CUSTOM_ID: packages-hide-mode-line
+    :END:
+
+    Minor mode that hides/masks your modeline.
+
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Packages: hide-mode-line
+      ;;------------------------------------------------------------------------------
+
+      (init-message 2 "Packages: hide-mode-line")
+
+      (use-package hide-mode-line
+        :straight t)
+    #+END_SRC
+
 *** hippie-exp
     :PROPERTIES:
     :CUSTOM_ID: modules-hippie-exp
@@ -26166,6 +26181,8 @@
     :CUSTOM_ID: packages-org-tree-slide
     :END:
 
+    A presentation tool for org-mode.
+
     #+BEGIN_SRC emacs-lisp
       ;;------------------------------------------------------------------------------
       ;;; Packages: org-tree-slide
@@ -26180,8 +26197,30 @@
         :bind (:map org-tree-slide-mode-map
                     ("<f11>" . org-tree-slide-move-previous-tree)
                     ("<f12>" . org-tree-slide-move-next-tree))
+        :hook ((org-tree-slide-play . org-tree-slide-presentation-setup)
+               (org-tree-slide-stop . org-tree-slide-presentation-reset))
         :custom
-        (org-image-actual-width nil))
+        (org-tree-slide-slide-in-effect t)
+        (org-tree-slide-activate-message "Presentation Mode: On")
+        (org-tree-slide-deactivate-message "Presentation Mode: Off")
+        (org-tree-slide-header t)
+        (org-tree-slide-breadcrumbs " > ")
+        (org-image-actual-width nil)
+        :config
+        (use-package hide-mode-line
+          :straight t)
+
+        (defun org-tree-slide-presentation-setup ()
+          (setq text-scale-mode-amount 3)
+          (when (fboundp 'hide-mode-line-mode)
+            (hide-mode-line-mode 1))
+          (org-display-inline-images)
+          (text-scale-mode 1))
+
+        (defun org-tree-slide-presentation-reset ()
+          (when (fboundp 'hide-mode-line-mode)
+            (hide-mode-line-mode 0))
+          (text-scale-mode 0)))
     #+END_SRC
 
 *** +twit+
