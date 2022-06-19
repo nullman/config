@@ -2643,11 +2643,6 @@ DATA should have been made by `org-outline-overlay-data'."
   (setq org-mobile-directory (file-truename (expand-file-name "~/Dropbox/MobileOrg")))
   (setq org-mobile-inbox-for-pull (file-truename (expand-file-name "index.org" org-mobile-directory)))
 
-  ;; ;; latex settings
-  ;; ;; (minted is installed with the Ubuntu texlive-latex-extra package)
-  ;; (setq org-export-latex-listings 'minted)
-  ;; (add-to-list 'org-export-latex-packages-alist '("" "minted") t)
-
   (defun org-update-parent-cookie ()
     "Update parent TODO cookies when children entries are killed."
     (when (eq major-mode 'org-mode)
@@ -3614,6 +3609,11 @@ ATTEMPT is used internally to determine how many tangle attempts have been made.
            (lambda (result)
              (message "Tangle finished: %s" ,file)
              (delete-file ,lock-file))))))))
+
+;; delete any existing lock/run files in case they were not cleaned up
+(mapc (lambda (x) (delete-file (expand-file-name x temporary-file-directory)))
+      '("emacs-tangle-file-async-lock-file"
+        "emacs-tangle-file-async-run-file"))
 ;; org-babel-tangle-file-async:1 ends here
 
 ;; [[file:init-emacs.org::#org-mode-functions-org-copy-tangled-sections][org-copy-tangled-sections:1]]

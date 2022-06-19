@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-06-18 14:03 (kyle)>
+  #+TIMESTAMP: <2022-06-18 14:49 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -3992,11 +3992,6 @@
         (setq org-mobile-directory (file-truename (expand-file-name "~/Dropbox/MobileOrg")))
         (setq org-mobile-inbox-for-pull (file-truename (expand-file-name "index.org" org-mobile-directory)))
 
-        ;; ;; latex settings
-        ;; ;; (minted is installed with the Ubuntu texlive-latex-extra package)
-        ;; (setq org-export-latex-listings 'minted)
-        ;; (add-to-list 'org-export-latex-packages-alist '("" "minted") t)
-
         (defun org-update-parent-cookie ()
           "Update parent TODO cookies when children entries are killed."
           (when (eq major-mode 'org-mode)
@@ -4181,6 +4176,8 @@
     :CUSTOM_ID: org-mode-latex
     :END:
 
+    LaTeX support for Org files.
+
     #+BEGIN_SRC emacs-lisp
       ;;------------------------------------------------------------------------------
       ;;; Org Mode: LaTeX
@@ -4218,6 +4215,112 @@
                          ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                          ("\\paragraph{%s}" . "\\paragraph*{%s}")
                          ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+      #+END_SRC
+
+***** +org-latex-plain.org+
+      :PROPERTIES:
+      :CUSTOM_ID: org-mode-latex-org-latex-plain-dot-org
+      :END:
+
+      Tangle manually when modified.
+
+      #+BEGIN_SRC org :tangle ~/org/org-latex-plain.org :comments no :tangle no
+        # %==============================================================================
+        # %% org-latex-plain.org
+        # %
+        # %% A simple LaTeX configuration for Org files.
+        # %
+        # % To use, add this line to an Org file:
+        # %
+        # %   #+SETUPFILE: ~/org/org-latex-plain.org
+        # %
+        # % Author: Jake Box <jakebox0@protonmail.com>
+        # % Source: https://github.com/jakebox/jake-emacs/blob/main/org/setupfiles_latex/jake-latex-standard.setup
+        # %==============================================================================
+
+        # #+LATEX_CLASS: org-latex-plain
+        # #+LATEX_CLASS_OPTIONS: [letterpaper, 11pt]
+
+        # #+LATEX_HEADER: \usepackage{lmodern}
+        # #+LATEX_HEADER: \usepackage[AUTO]{fontenc}
+        # #+LATEX_HEADER: \usepackage[AUTO]{inputenc}
+        # #+LATEX_HEADER: \usepackage{graphicx}
+        # #+LATEX_HEADER: \usepackage{amsmath, amsthm, amssymb}
+        # #+LATEX_HEADER: \usepackage[table, xcdraw]{xcolor}
+
+        # #+LATEX_HEADER: \setlength{\parindent}{2em}
+        # #+LATEX_HEADER: \setlength{\parskip}{0.3em}
+        # #+LATEX_HEADER: \usepackage[stretch=10]{microtype}
+        # #+LATEX_HEADER: \usepackage{hyphenat}
+        # #+LATEX_HEADER: \usepackage{ragged2e}
+        # #+LATEX_HEADER: \usepackage{subfig} % subfigures
+        # #+LATEX_HEADER: \usepackage{hyperref} % links
+        # #+LATEX_HEADER: \usepackage{listings} % code highlighting
+        # #+LATEX_HEADER: \usepackage{color} % for colorized code highlighting
+
+        # % Colorized Links
+        # #+LATEX_HEADER: \definecolor{bblue}{HTML}{0645AD}
+        # #+LATEX_HEADER: \usepackage[colorlinks]{hyperref}
+        # #+LATEX_HEADER: \hypersetup{colorlinks, linkcolor=blue, urlcolor=bblue}
+
+        # % Page Geometry
+        # #+LATEX_HEADER: \usepackage[top=1in, bottom=1.25in, left=1.45in, right=1.55in]{geometry}
+
+        # % Line Spacing
+        # #+LATEX_HEADER: \renewcommand{\baselinestretch}{1.12}
+
+        # % Page Numbering Disabled
+        # #+LATEX_HEADER: \pagenumbering{gobble}
+
+        # % Spacing, Titling, Text Setting
+        # #+LATEX_HEADER: \usepackage[explicit]{titlesec}
+
+        # % Title Customization
+        # #+LATEX_HEADER: \pretitle{\begin{center}\fontsize{20pt}{20pt}\selectfont}
+        # #+LATEX_HEADER: \posttitle{\par\end{center}}
+        # #+LATEX_HEADER: \preauthor{\begin{center}\vspace{-6bp}\fontsize{14pt}{14pt}\selectfont}
+        # #+LATEX_HEADER: \postauthor{\par\end{center}\vspace{-25bp}}
+
+        # #+LATEX_HEADER: \predate{\begin{center}\fontsize{12pt}{12pt}\selectfont}
+        # #+LATEX_HEADER: \postdate{\par\end{center}\vspace{0em}}
+
+        # #+LATEX_HEADER: \usepackage{multicol}
+
+        # % Move Title Up
+        # #+LATEX_HEADER: \usepackage{titling}
+        # #+LATEX_HEADER: \setlength{\droptitle}{-6em}
+
+        # % Section/Subsection Headings:
+
+        # % Section
+        # #+LATEX_HEADER: \titlespacing\section{0pt}{5pt}{5pt} % left margin, space before section header, space after section header
+
+        # % Subsection
+        # #+LATEX_HEADER: \titlespacing\subsection{0pt}{5pt}{-2pt} % left margin, space before subsection header, space after subsection header
+
+        # % Subsubsection
+        # #+LATEX_HEADER: \titlespacing\subsubsection{0pt}{5pt}{-2pt} % left margin, space before subsection header, space after subsection header
+
+        # % Lists:
+
+        # % List Spacing
+        # #+LATEX_HEADER: \usepackage{enumitem}
+        # #+LATEX_HEADER: \setlist{itemsep=-2pt} % or \setlist{noitemsep} to leave space around whole list
+
+        # % Ordered List Bullets
+        # #+LATEX_HEADER: \setenumerate[1]{label=\arabic*.}
+        # #+LATEX_HEADER: \setenumerate[2]{label=\Alpha*.}
+        # #+LATEX_HEADER: \setenumerate[3]{label=\roman*.}
+        # #+LATEX_HEADER: \setenumerate[4]{label=\alpha*.}
+
+        # % Unordered List Bullets
+        # #+LATEX_HEADER: \renewcommand{\labelitemi}{\textbullet}
+        # #+LATEX_HEADER: \renewcommand{\labelitemii}{\textopenbullet}
+        # #+LATEX_HEADER: \renewcommand{\labelitemiii}{\textendash}
+
+        # %==============================================================================
+        # %% End of File
+        # %==============================================================================
       #+END_SRC
 
 *** +Remember+
@@ -5279,6 +5382,11 @@
                    (lambda (result)
                      (message "Tangle finished: %s" ,file)
                      (delete-file ,lock-file))))))))
+
+        ;; delete any existing lock/run files in case they were not cleaned up
+        (mapc (lambda (x) (delete-file (expand-file-name x temporary-file-directory)))
+              '("emacs-tangle-file-async-lock-file"
+                "emacs-tangle-file-async-run-file"))
       #+END_SRC
 
 ***** org-copy-tangled-sections
