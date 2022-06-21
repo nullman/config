@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-06-19 09:50 (kyle)>
+  #+TIMESTAMP: <2022-06-21 13:26 (kyle.sherman)>
 
 * Overview
   :PROPERTIES:
@@ -127,7 +127,7 @@
 
     Tangle *early-init.el* file.
 
-    #+BEGIN_SRC emacs-lisp :tangle early-init.el
+    #+BEGIN_SRC emacs-lisp :tangle ~/config/emacs/.emacs.d/early-init.el
       ;; -*- mode: emacs-lisp; lexical-binding: t; no-byte-compile: t -*-
       ;;==============================================================================
       ;;; early-init.el
@@ -157,7 +157,7 @@
 
     Tangle *init.el* bootstrap file.
 
-    #+BEGIN_SRC emacs-lisp :tangle init.el
+    #+BEGIN_SRC emacs-lisp :tangle ~/config/emacs/.emacs.d/init.el
       ;; -*- mode: emacs-lisp; lexical-binding: t; no-byte-compile: t -*-
       ;;==============================================================================
       ;;; init.el
@@ -317,7 +317,7 @@
 
     Special init file for Windows machines where I run the MinGW version of Emacs.
 
-    #+BEGIN_SRC emacs-lisp :tangle init-windows.el
+    #+BEGIN_SRC emacs-lisp :tangle ~/config/emacs/.emacs.d/init-windows.el
       ;; -*- mode: emacs-lisp; lexical-binding: t; no-byte-compile: t -*-
       ;;==============================================================================
       ;;; init-windows.el
@@ -21215,7 +21215,7 @@
       ;;   (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
     #+END_SRC
 
-*** ag==========================================================================
+*** ag
     :PROPERTIES:
     :CUSTOM_ID: modules-ag
     :END:
@@ -22301,7 +22301,7 @@
         (editorconfig-mode 1))
     #+END_SRC
 
-*** eldoc=======================================================================
+*** eldoc
     :PROPERTIES:
     :CUSTOM_ID: modules-eldoc
     :END:

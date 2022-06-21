@@ -14641,7 +14641,7 @@ USING is the remaining peg."
   (add-hook 'kill-emacs-hook #'custom-kill-emacs-hook-write-abbrev-file))
 ;; abbrev-mode:1 ends here
 
-;; [[file:init-emacs.org::#modules-ag][ag==========================================================================:1]]
+;; [[file:init-emacs.org::#modules-ag][ag:1]]
 ;;------------------------------------------------------------------------------
 ;;; Packages: ag
 ;;------------------------------------------------------------------------------
@@ -14652,7 +14652,7 @@ USING is the remaining peg."
   :straight t
   :commands (ag)
   :custom (ag-arguments (list "--smart-case" "--stats")))
-;; ag==========================================================================:1 ends here
+;; ag:1 ends here
 
 ;; [[file:init-emacs.org::#modules-alert][alert:1]]
 ;;------------------------------------------------------------------------------
@@ -15286,7 +15286,7 @@ USING is the remaining peg."
   (editorconfig-mode 1))
 ;; editorconfig:1 ends here
 
-;; [[file:init-emacs.org::#modules-eldoc][eldoc=======================================================================:1]]
+;; [[file:init-emacs.org::#modules-eldoc][eldoc:1]]
 ;;------------------------------------------------------------------------------
 ;;; Packages: eldoc
 ;;------------------------------------------------------------------------------
@@ -15298,7 +15298,7 @@ USING is the remaining peg."
   :custom
   ;; no idle delay before showing contextual information
   (eldoc-idle-delay 0))
-;; eldoc=======================================================================:1 ends here
+;; eldoc:1 ends here
 
 ;; [[file:init-emacs.org::#modules-elfeed][elfeed:1]]
 ;;------------------------------------------------------------------------------
