@@ -18135,24 +18135,19 @@ otherwise run `find-file-as-root'."
 
 (use-package ediff
   :straight (:type built-in)
-  :config
+  :custom
   ;; split windows horizontally
-  (setq ediff-split-window-function 'split-window-horizontally)
-
+  (ediff-split-window-function 'split-window-horizontally)
   ;; only highlight current diff
-  (setq-default ediff-highlight-all-diffs nil)
-
+  (ediff-highlight-all-diffs nil)
   ;; turn off whitespace checking
-  (setq ediff-diff-options "-w")
-
+  (ediff-diff-options "-w")
   ;; place control window in same frame
-  (setq ediff-window-setup-function 'ediff-setup-windows-plain)
-
+  (ediff-window-setup-function 'ediff-setup-windows-plain)
   ;; place control window in separate frame
-  ;;(setq ediff-window-setup-function 'ediff-setup-windows-multiframe)
-
+  ;;(ediff-window-setup-function 'ediff-setup-windows-multiframe)
   ;; highlight changes to characters rather than words
-  ;;(setq ediff-forward-word-function 'forward-char)
+  ;;(ediff-forward-word-function 'forward-char)
   )
 ;; Ediff:1 ends here
 
