@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-06-21 15:41 (kyle.sherman)>
+  #+TIMESTAMP: <2022-06-22 09:04 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -22571,7 +22571,6 @@
        ("Gopherus Author" "gopher://gopher.viste.fr/1")
        ("Elpher" "gopher://thelambdalab.xyz/1/projects/elpher/")
        ("Project Gemini" "gemini://gemini.circumlunar.space/")
-       ("DistroTube" "gemini://distro.tube")
        ("System Crafters" "gemini://systemcrafters.cc")
        ("Writing a Gemini Server" "gemini://bcalderon.io/writing-a-gemini-server"))
     #+END_SRC

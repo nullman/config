@@ -24,7 +24,6 @@
  ("Gopherus Author" "gopher://gopher.viste.fr/1")
  ("Elpher" "gopher://thelambdalab.xyz/1/projects/elpher/")
  ("Project Gemini" "gemini://gemini.circumlunar.space/")
- ("DistroTube" "gemini://distro.tube")
  ("System Crafters" "gemini://systemcrafters.cc")
  ("Writing a Gemini Server" "gemini://bcalderon.io/writing-a-gemini-server"))
 ;; elpher:2 ends here
