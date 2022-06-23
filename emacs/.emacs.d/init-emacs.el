@@ -3839,12 +3839,13 @@ same directory as the org-buffer and insert a link to this file."
   :after (org))
 
 ;; babel settings
-;; (do not set `org-src-fontify-natively' to true as this breaks org-table-align->font-lock-fontify-region)
+;; do not set `org-src-fontify-natively' to true as this breaks org-table-align->font-lock-fontify-region
+;; `org-src-fontify-natively' also creates temp files that are not always cleaned up
 (setq org-use-property-inheritance t
       org-babel-use-quick-and-dirty-noweb-expansion t
       org-src-tab-acts-natively t
       org-src-preserve-indentation nil
-      ;;org-src-fontify-natively t
+      org-src-fontify-natively nil
       org-src-ask-before-returning-to-edit-buffer nil
       org-src-strip-leading-and-trailing-blank-lines t
       org-src-window-setup 'current-window
@@ -5075,9 +5076,9 @@ heading, properties, source block with title comment, and test block."
   :load-path (lambda () (file-truename (expand-file-name "~/code/github-nullman/emacs-org-visibility")))
   :after (org)
   :demand t
-  :bind* (:map org-visibility-mode-map
-               ("C-x C-v" . org-visibility-force-save) ; default: `find-alternative-file'
-               ("C-x M-v" . org-visibility-remove))    ; default: undefined
+  :bind (:map org-visibility-mode-map
+              ("C-x C-v" . org-visibility-force-save) ; default: `find-alternative-file'
+              ("C-x M-v" . org-visibility-remove))    ; default: undefined
   :custom
   ;; list of directories and files to automatically persist and restore visibility state of
   (org-visibility-include-paths `(,(file-truename "~/.emacs.d/init-emacs.org")
