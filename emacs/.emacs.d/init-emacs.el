@@ -839,7 +839,7 @@ Common values:
 
 ;; turn off line wrapping
 (setq truncate-lines t)
-(setq-default truncate-lines t)
+(setq-default truncate-lines truncate-lines)
 (toggle-truncate-lines 1)
 ;; General:15 ends here
 
@@ -935,7 +935,7 @@ Common values:
 
 ;; make current selection visible
 (transient-mark-mode 1)
-(setq-default transient-mark-mode t)
+(setq-default transient-mark-mode transient-mark-mode)
 ;; General:26 ends here
 
 ;; [[file:init-emacs.org::#environment-settings-general][General:27]]
@@ -1029,7 +1029,7 @@ Common values:
       '((space-mark 32 [183] [46]) ; 32 space ' ', 183 middle dot '·', 46 full stop '.'
         (newline-mark 10 [182 10]) ; 10 linefeed '\n', 182 ??? '¶'
         (tab-mark 9 [9655 9] [92 9])))    ; 9 tab '\t', 9655 '▷', 92 backslash '\'
-(global-whitespace-mode)              ; enable whitespace mode everywhere
+(global-whitespace-mode 1)              ; enable whitespace mode everywhere
 ;; General:35 ends here
 
 ;; [[file:init-emacs.org::#environment-settings-general][General:36]]
@@ -1225,7 +1225,8 @@ Common values:
 
 ;; [[file:init-emacs.org::#environment-settings-system][System:10]]
 ;; turn off bidirectional paragraph formatting
-(setq-default bidi-paragraph-direction 'left-to-right)
+(setq bidi-paragraph-direction 'left-to-right)
+(setq-default bidi-paragraph-direction bidi-paragraph-direction)
 
 ;; turn off bidirectional parentheses matching
 (when (version<= "27.1" emacs-version)
@@ -1269,7 +1270,7 @@ Common values:
 
 ;; do not make auto-save files
 (setq auto-save-default nil)
-(setq-default auto-save-default nil)
+(setq-default auto-save-default auto-save-default)
 (setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t))
       auto-save-list-file-prefix temporary-file-directory
       auto-save-list-file-name nil
@@ -1279,7 +1280,7 @@ Common values:
 ;; [[file:init-emacs.org::#environment-settings-files][Files:5]]
 ;; do not make backup files
 (setq make-backup-files nil)
-(setq-default make-backup-files nil)
+(setq-default make-backup-files make-backup-files)
 (setq backup-directory-alist `((".*" . ,temporary-file-directory))
       make-backup-files nil
       backup-by-copying t
@@ -1290,7 +1291,7 @@ Common values:
 ;; [[file:init-emacs.org::#environment-settings-files][Files:6]]
 ;; ;; do not make lock files
 ;; (setq create-lock-files nil)
-;; (setq-default create-lock-files nil)
+;; (setq-default create-lock-files create-lock-files)
 ;; Files:6 ends here
 
 ;; [[file:init-emacs.org::#environment-settings-files][Files:7]]
@@ -17718,10 +17719,12 @@ otherwise run `find-file-as-root'."
 (init-message 2 "Modes: Setup")
 
 ;; turn off electric indent for all modes
-(setq-default electric-indent-inhibit t)
+(setq electric-indent-inhibit t)
+(setq-default electric-indent-inhibit electric-indent-inhibit)
 
 ;; turn off electric mode for all cc modes
-(setq-default c-electric-flag nil)
+(setq c-electric-flag nil)
+(setq-default c-electric-flag c-electric-flag)
 ;; Setup:1 ends here
 
 ;; [[file:init-emacs.org::#modes-asm][ASM:1]]

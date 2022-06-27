@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-06-27 09:13 (kyle)>
+  #+TIMESTAMP: <2022-06-27 16:10 (kyle.sherman)>
 
 * Overview
   :PROPERTIES:
@@ -1691,7 +1691,7 @@
 
       ;; turn off line wrapping
       (setq truncate-lines t)
-      (setq-default truncate-lines t)
+      (setq-default truncate-lines truncate-lines)
       (toggle-truncate-lines 1)
     #+END_SRC
 
@@ -1818,7 +1818,7 @@
 
       ;; make current selection visible
       (transient-mark-mode 1)
-      (setq-default transient-mark-mode t)
+      (setq-default transient-mark-mode transient-mark-mode)
     #+END_SRC
 
     Set default tab indentation and width to 4. Turn on auto-complete.
@@ -1934,7 +1934,7 @@
             '((space-mark 32 [183] [46]) ; 32 space ' ', 183 middle dot '·', 46 full stop '.'
               (newline-mark 10 [182 10]) ; 10 linefeed '\n', 182 ??? '¶'
               (tab-mark 9 [9655 9] [92 9])))    ; 9 tab '\t', 9655 '▷', 92 backslash '\'
-      (global-whitespace-mode)              ; enable whitespace mode everywhere
+      (global-whitespace-mode 1)              ; enable whitespace mode everywhere
     #+END_SRC
 
     Highlight current line.
@@ -2202,7 +2202,8 @@
 
     #+BEGIN_SRC emacs-lisp
       ;; turn off bidirectional paragraph formatting
-      (setq-default bidi-paragraph-direction 'left-to-right)
+      (setq bidi-paragraph-direction 'left-to-right)
+      (setq-default bidi-paragraph-direction bidi-paragraph-direction)
 
       ;; turn off bidirectional parentheses matching
       (when (version<= "27.1" emacs-version)
@@ -2259,7 +2260,7 @@
 
       ;; do not make auto-save files
       (setq auto-save-default nil)
-      (setq-default auto-save-default nil)
+      (setq-default auto-save-default auto-save-default)
       (setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t))
             auto-save-list-file-prefix temporary-file-directory
             auto-save-list-file-name nil
@@ -2271,7 +2272,7 @@
     #+BEGIN_SRC emacs-lisp
       ;; do not make backup files
       (setq make-backup-files nil)
-      (setq-default make-backup-files nil)
+      (setq-default make-backup-files make-backup-files)
       (setq backup-directory-alist `((".*" . ,temporary-file-directory))
             make-backup-files nil
             backup-by-copying t
@@ -2284,7 +2285,7 @@
     #+BEGIN_SRC emacs-lisp
       ;; ;; do not make lock files
       ;; (setq create-lock-files nil)
-      ;; (setq-default create-lock-files nil)
+      ;; (setq-default create-lock-files create-lock-files)
     #+END_SRC
 
     Follow symlinks of version control files without asking or warning.
@@ -20314,35 +20315,36 @@
       (Should not be enabled at the same time as =company-mode=.)
 
       #+BEGIN_SRC emacs-lisp :tangle no
-        ;; ;;------------------------------------------------------------------------------
-        ;; ;;; Completions: auto-complete
-        ;; ;;------------------------------------------------------------------------------
+        ;;------------------------------------------------------------------------------
+        ;;; Completions: auto-complete
+        ;;------------------------------------------------------------------------------
 
-        ;; (init-message 3 "Completions: auto-complete: auto-complete")
+        (init-message 3 "Completions: auto-complete: auto-complete")
 
-        ;; (use-package auto-complete
-        ;;   :straight (:type built-in)
-        ;;   :diminish auto-complete-mode
-        ;;   :bind* (:map ac-complete-mode-map
-        ;;                ("C-n" . ac-next)
-        ;;                ("C-p" . ac-previous))
-        ;;   :init
-        ;;   ;; turn on auto-complete mode globally
-        ;;   (global-auto-complete-mode 1)
-        ;;   :config
-        ;;   ;; completion back-ends
-        ;;   (when (require 'auto-complete-config nil :no-error)
-        ;;     (ac-config-default))
-        ;;   (setq-default ac-sources '(ac-source-abbrev
-        ;;                              ac-source-dictionary
-        ;;                              ac-source-filename
-        ;;                              ac-source-files-in-current-dir
-        ;;                              ac-source-functions
-        ;;                              ac-source-variables
-        ;;                              ac-source-symbols
-        ;;                              ac-source-features
-        ;;                              ac-source-words-in-all-buffer
-        ;;                              ac-source-words-in-same-mode-buffers)))
+        (use-package auto-complete
+          :straight (:type built-in)
+          :diminish auto-complete-mode
+          :bind* (:map ac-complete-mode-map
+                       ("C-n" . ac-next)
+                       ("C-p" . ac-previous))
+          :init
+          ;; turn on auto-complete mode globally
+          (global-auto-complete-mode 1)
+          :config
+          ;; completion back-ends
+          (when (require 'auto-complete-config nil :no-error)
+            (ac-config-default))
+          (setq ac-sources '(ac-source-abbrev
+                             ac-source-dictionary
+                             ac-source-filename
+                             ac-source-files-in-current-dir
+                             ac-source-functions
+                             ac-source-variables
+                             ac-source-symbols
+                             ac-source-features
+                             ac-source-words-in-all-buffer
+                             ac-source-words-in-same-mode-buffers))
+          (setq-default ac-sources ac-sources))
       #+END_SRC
 
 *** +company/ivy+
@@ -26929,10 +26931,12 @@
       (init-message 2 "Modes: Setup")
 
       ;; turn off electric indent for all modes
-      (setq-default electric-indent-inhibit t)
+      (setq electric-indent-inhibit t)
+      (setq-default electric-indent-inhibit electric-indent-inhibit)
 
       ;; turn off electric mode for all cc modes
-      (setq-default c-electric-flag nil)
+      (setq c-electric-flag nil)
+      (setq-default c-electric-flag c-electric-flag)
     #+END_SRC
 
 *** ASM
@@ -28636,7 +28640,8 @@
       ;;   :custom
       ;;   (auctex-latexmk-inherit-TeX-PDF-mode t)
       ;;   :config
-      ;;   ;;(setq-default TeX-master nil)
+      ;;   ;;(setq TeX-master nil)
+      ;;   ;;(setq-default TeX-master TeX-master)
       ;;   (auctex-latexmk-setup))
 
       ;; ;;------------------------------------------------------------------------------
@@ -28668,7 +28673,8 @@
       ;;   (TeX-view-program-selection '((output-pdf "PDF Tools")))
       ;;   (TeX-source-correlate-start-server t)
       ;;   :config
-      ;;   ;;(setq-default TeX-master "paper.tex")
+      ;;   ;;(setq TeX-master "paper.tex")
+      ;;   ;;(setq-default TeX-master TeX-master)
       ;;   ;; update PDF buffers after successful LaTeX run
       ;;   (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer))
     #+END_SRC
@@ -29018,9 +29024,11 @@
       ;;                ("C-c C-z" . py-switch-to-python-eob-p))
       ;;   :config
       ;;   ;; use ipython
-      ;;   (setq-default py-shell-name "ipython")
+      ;;   (setq py-shell-name "ipython")
+      ;;   (setq-default py-shell-name py-shell-name)
       ;;   (setq py-force-py-shell-name-p t)
-      ;;   (setq-default py-which-bufname "IPython")
+      ;;   (setq py-which-bufname "IPython")
+      ;;   (setq-default py-which-bufname py-which-bufname)
 
       ;;   ;; turn off auto-indent so code pasting works
       ;;   (setq py-python-command-args '("--no-autoindent" "--colors=Linux"))
