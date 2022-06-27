@@ -18192,6 +18192,15 @@ otherwise run `find-file-as-root'."
 
 ;; fundamental-mode
 
+;; make sure tabs are not inserted
+(setq indent-tabs-mode nil)
+
+;; ;; turn off auto-fill
+;; (turn-off-auto-fill)
+
+;; turn off auto-save
+(auto-save-mode nil)
+
 ;; remove trailing blanks
 ;;(add-hook 'fundamental-mode-hook #'install-remove-trailing-blanks)
 

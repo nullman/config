@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-06-26 08:35 (kyle)>
+  #+TIMESTAMP: <2022-06-27 09:13 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -27577,6 +27577,15 @@
       (init-message 2 "Modes: Fundamental Mode")
 
       ;; fundamental-mode
+
+      ;; make sure tabs are not inserted
+      (setq indent-tabs-mode nil)
+
+      ;; ;; turn off auto-fill
+      ;; (turn-off-auto-fill)
+
+      ;; turn off auto-save
+      (auto-save-mode nil)
 
       ;; remove trailing blanks
       ;;(add-hook 'fundamental-mode-hook #'install-remove-trailing-blanks)
