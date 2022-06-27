@@ -3796,10 +3796,10 @@ same directory as the org-buffer and insert a link to this file."
   ;; make sure tabs are not inserted
   (setq indent-tabs-mode nil)
 
-  ;; turn off auto-fill mode
+  ;; turn off auto-fill
   (turn-off-auto-fill)
 
-  ;; turn off auto-save mode
+  ;; turn off auto-save
   (auto-save-mode nil)
 
   ;; turn off flyspell
@@ -3845,7 +3845,7 @@ same directory as the org-buffer and insert a link to this file."
       org-babel-use-quick-and-dirty-noweb-expansion t
       org-src-tab-acts-natively t
       org-src-preserve-indentation nil
-      org-src-fontify-natively nil
+      org-src-fontify-natively t
       org-src-ask-before-returning-to-edit-buffer nil
       org-src-strip-leading-and-trailing-blank-lines t
       org-src-window-setup 'current-window
@@ -5072,13 +5072,14 @@ heading, properties, source block with title comment, and test block."
 (init-message 2 "Org Mode: Visibility")
 
 (use-package org-visibility
-  :straight t
-  ;;:load-path (lambda () (file-truename (expand-file-name "~/code/github-nullman/emacs-org-visibility")))
+  ;;:straight t
+  :load-path (lambda () (file-truename (expand-file-name "~/code/github-nullman/emacs-org-visibility")))
   :after (org)
   :demand t
-  :bind (:map org-visibility-mode-map
-              ("C-x C-v" . org-visibility-force-save) ; default: `find-alternative-file'
-              ("C-x M-v" . org-visibility-remove))    ; default: undefined
+  :bind* (:map org-visibility-mode-map
+               ("C-x C-v" . org-visibility-force-save) ; default: `find-alternative-file'
+               ("C-x M-v" . org-visibility-remove))    ; default: undefined
+  :hook (org-mode . org-visibility-mode)
   :custom
   ;; list of directories and files to automatically persist and restore visibility state of
   (org-visibility-include-paths `(,(file-truename "~/.emacs.d/init-emacs.org")
@@ -5089,9 +5090,7 @@ heading, properties, source block with title comment, and test block."
                                   ,(file-truename "~/web/org")))
   ;; list of directories and files to not persist and restore visibility state of
   (org-visibility-exclude-paths `(,(file-truename "~/org/old")
-                                  ,(file-truename "~/org/test")))
-  :config
-  (org-visibility-mode 1))
+                                  ,(file-truename "~/org/test"))))
 ;; Visibility:1 ends here
 
 ;; [[file:init-emacs.org::#org-mode-bookmarks-org-bookmarks-guid][org-bookmarks-guid:1]]

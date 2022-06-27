@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-06-23 15:50 (kyle.sherman)>
+  #+TIMESTAMP: <2022-06-26 08:35 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -5559,10 +5559,10 @@
         ;; make sure tabs are not inserted
         (setq indent-tabs-mode nil)
 
-        ;; turn off auto-fill mode
+        ;; turn off auto-fill
         (turn-off-auto-fill)
 
-        ;; turn off auto-save mode
+        ;; turn off auto-save
         (auto-save-mode nil)
 
         ;; turn off flyspell
@@ -5622,7 +5622,7 @@
               org-babel-use-quick-and-dirty-noweb-expansion t
               org-src-tab-acts-natively t
               org-src-preserve-indentation nil
-              org-src-fontify-natively nil
+              org-src-fontify-natively t
               org-src-ask-before-returning-to-edit-buffer nil
               org-src-strip-leading-and-trailing-blank-lines t
               org-src-window-setup 'current-window
@@ -7128,13 +7128,14 @@
       (init-message 2 "Org Mode: Visibility")
 
       (use-package org-visibility
-        :straight t
-        ;;:load-path (lambda () (file-truename (expand-file-name "~/code/github-nullman/emacs-org-visibility")))
+        ;;:straight t
+        :load-path (lambda () (file-truename (expand-file-name "~/code/github-nullman/emacs-org-visibility")))
         :after (org)
         :demand t
-        :bind (:map org-visibility-mode-map
-                    ("C-x C-v" . org-visibility-force-save) ; default: `find-alternative-file'
-                    ("C-x M-v" . org-visibility-remove))    ; default: undefined
+        :bind* (:map org-visibility-mode-map
+                     ("C-x C-v" . org-visibility-force-save) ; default: `find-alternative-file'
+                     ("C-x M-v" . org-visibility-remove))    ; default: undefined
+        :hook (org-mode . org-visibility-mode)
         :custom
         ;; list of directories and files to automatically persist and restore visibility state of
         (org-visibility-include-paths `(,(file-truename "~/.emacs.d/init-emacs.org")
@@ -7145,9 +7146,7 @@
                                         ,(file-truename "~/web/org")))
         ;; list of directories and files to not persist and restore visibility state of
         (org-visibility-exclude-paths `(,(file-truename "~/org/old")
-                                        ,(file-truename "~/org/test")))
-        :config
-        (org-visibility-mode 1))
+                                        ,(file-truename "~/org/test"))))
     #+END_SRC
 
 *** +Present+
@@ -22490,6 +22489,7 @@
        (:name "BYTE Cellar" :html "https://bytecellar.com/" :rss "https://bytecellar.com/feed" :tag "vintage")
        (:name "Nerd Fail" :html "https://nerd.fail/" :rss "https://nerd.fail/feed/" :tag "vintage")
        (:name "Retro Computing Roundtable" :html "http://rcrpodcast.com/" :rss "http://rcrpodcast.com/rcrpodcast.rss" :tag "vintage")
+       (:name "Advent of Computing" :html "https://adventofcomputing.libsyn.com/" :rss "https://adventofcomputing.libsyn.com/rss" :tag "vintage")
        ;; Games
        ;;(:name "Star Citizen" :html "https://robertsspaceindustries.com/com-link/" :rss "https://robertsspaceindustries.com/comm-link/rss" :tag "game")
        ;; Other

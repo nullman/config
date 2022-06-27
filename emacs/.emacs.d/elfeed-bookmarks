@@ -1,4 +1,4 @@
-;; [[file:../../../.emacs.d/init-emacs.org::#modules-elfeed][elfeed:2]]
+;; [[file:init-emacs.org::#modules-elfeed][elfeed:2]]
 ;; Elfeed Bookmarks File
 (
  ;; Emacs
@@ -41,6 +41,7 @@
  (:name "BYTE Cellar" :html "https://bytecellar.com/" :rss "https://bytecellar.com/feed" :tag "vintage")
  (:name "Nerd Fail" :html "https://nerd.fail/" :rss "https://nerd.fail/feed/" :tag "vintage")
  (:name "Retro Computing Roundtable" :html "http://rcrpodcast.com/" :rss "http://rcrpodcast.com/rcrpodcast.rss" :tag "vintage")
+ (:name "Advent of Computing" :html "https://adventofcomputing.libsyn.com/" :rss "https://adventofcomputing.libsyn.com/rss" :tag "vintage")
  ;; Games
  ;;(:name "Star Citizen" :html "https://robertsspaceindustries.com/com-link/" :rss "https://robertsspaceindustries.com/comm-link/rss" :tag "game")
  ;; Other
