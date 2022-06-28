@@ -80,7 +80,7 @@ LEVEL is the indentation level."
 ;;------------------------------------------------------------------------------
 
 ;; reduce frequency of garbage collections
-(setq gc-cons-threshold (* 50 1000 1000)) ; default: 800000
+(setq gc-cons-threshold (* 100 1000 1000)) ; default: 800000
 ;; Set Emacs Lisp Garbage Collection Threshold:1 ends here
 
 ;; [[file:init-emacs.org::#start-ignore-errors-advice-wrapper][Ignore Errors Advice Wrapper:1]]
@@ -5073,8 +5073,8 @@ heading, properties, source block with title comment, and test block."
 (init-message 2 "Org Mode: Visibility")
 
 (use-package org-visibility
-  ;;:straight t
-  :load-path (lambda () (file-truename (expand-file-name "~/code/github-nullman/emacs-org-visibility")))
+  :straight t
+  ;;:load-path (lambda () (file-truename (expand-file-name "~/code/github-nullman/emacs-org-visibility")))
   :after (org)
   :demand t
   :bind* (:map org-visibility-mode-map
@@ -14516,7 +14516,6 @@ USING is the remaining peg."
   :straight t
   :diminish company-mode
   :bind (:map company-active-map
-              ("<tab>" . company-complete-selection)
               ("C-n" . company-select-next)
               ("C-p" . company-select-previous)
               ("M-k" . company-select-next)
@@ -15583,6 +15582,19 @@ USING is the remaining peg."
   :init (turn-on-fuzzy-isearch))
 ;; fuzzy:1 ends here
 
+;; [[file:init-emacs.org::#packages-gcmh][gcmh:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: gcmh
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Packages: gcmh")
+
+(use-package gcmh
+  :straight t
+  :config
+  (gcmh-mode 1))
+;; gcmh:1 ends here
+
 ;; [[file:init-emacs.org::#modules-git-timemachine][git-timemachine:1]]
 ;;------------------------------------------------------------------------------
 ;;; Packages: git-timemachine
@@ -15713,6 +15725,19 @@ back to the previous non-whitespace character. See also
         (let ((hungry-delete-mode nil))
           (delete-char -1))))))
 ;; hungry-delete:1 ends here
+
+;; [[file:init-emacs.org::#packages-hyperbole][hyperbole:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: hyperbole
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Packages: hyperbole")
+
+(use-package hyperbole
+  :straight t
+  :config
+  (hyperbole-mode 1))
+;; hyperbole:1 ends here
 
 ;; [[file:init-emacs.org::#modules-ibuffer][ibuffer:1]]
 ;;------------------------------------------------------------------------------
@@ -21286,17 +21311,6 @@ to the current ERC buffer."
            scroll-bar-mode)
   (scroll-bar-mode -1))
 ;; Turn off Scroll Bar:1 ends here
-
-;; [[file:init-emacs.org::#final-setup-reset-emacs-lisp-garbage-collection-threshold][Reset Emacs Lisp Garbage Collection Threshold:1]]
-;;------------------------------------------------------------------------------
-;;; Final Setup: Reset Emacs Lisp Garbage Collection Threshold
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Final Setup: Reset Emacs Lisp Garbage Collection Threshold")
-
-;; reset frequency of garbage collections
-(setq gc-cons-threshold (car (get 'gc-cons-threshold 'standard-value)))
-;; Reset Emacs Lisp Garbage Collection Threshold:1 ends here
 
 ;; [[file:init-emacs.org::#end][End:1]]
 (init-message 1 "End")

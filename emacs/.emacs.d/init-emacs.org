@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-06-27 16:10 (kyle.sherman)>
+  #+TIMESTAMP: <2022-06-28 14:53 (kyle.sherman)>
 
 * Overview
   :PROPERTIES:
@@ -442,7 +442,7 @@
       ;;------------------------------------------------------------------------------
 
       ;; reduce frequency of garbage collections
-      (setq gc-cons-threshold (* 50 1000 1000)) ; default: 800000
+      (setq gc-cons-threshold (* 100 1000 1000)) ; default: 800000
     #+END_SRC
 
 *** Ignore Errors Advice Wrapper
@@ -2122,13 +2122,18 @@
       (init-message 2 "Environment Settings: System")
     #+END_SRC
 
-    +Increase the Emacs Lisp garbage collection threshold to reduce the frequency+
-    +of garbage collections.+
+    +Optimize garbage collections.+
 
     #+BEGIN_SRC emacs-lisp :tangle no
-      ;; this is handled in the Start section so it can take effect earlier
       ;; ;; reduce frequency of garbage collections
-      ;; (setq gc-cons-threshold (* 50 1000 1000)) ; default: 800000
+      ;; ;; this is handled in the Start section so it can take effect earlier
+      ;; ;; (setq gc-cons-threshold (* 100 1000 1000)) ; default: 800000
+
+      ;; ;; run garbage collections when Emacs is backgrounded
+      ;; (add-hook 'focus-out-hook #'garbage-collect)
+
+      ;; ;; run garbage collections when Emacs is idle
+      ;; (run-with-idle-timer 5 t #'garbage-collect)
     #+END_SRC
 
     Allow Emacs to use a larger number of variable bindings and unwind protects.
@@ -7129,8 +7134,8 @@
       (init-message 2 "Org Mode: Visibility")
 
       (use-package org-visibility
-        ;;:straight t
-        :load-path (lambda () (file-truename (expand-file-name "~/code/github-nullman/emacs-org-visibility")))
+        :straight t
+        ;;:load-path (lambda () (file-truename (expand-file-name "~/code/github-nullman/emacs-org-visibility")))
         :after (org)
         :demand t
         :bind* (:map org-visibility-mode-map
@@ -20991,7 +20996,6 @@
           :straight t
           :diminish company-mode
           :bind (:map company-active-map
-                      ("<tab>" . company-complete-selection)
                       ("C-n" . company-select-next)
                       ("C-p" . company-select-previous)
                       ("M-k" . company-select-next)
@@ -22848,6 +22852,28 @@
         :init (turn-on-fuzzy-isearch))
     #+END_SRC
 
+*** gcmh
+    :PROPERTIES:
+    :CUSTOM_ID: packages-gcmh
+    :END:
+
+    Garbage Collector Magic Hack
+
+    Handles adjusting `gc-cons-threshold' and triggering a GC when idle.
+
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Packages: gcmh
+      ;;------------------------------------------------------------------------------
+
+      (init-message 2 "Packages: gcmh")
+
+      (use-package gcmh
+        :straight t
+        :config
+        (gcmh-mode 1))
+    #+END_SRC
+
 *** +git-gutter+
     :PROPERTIES:
     :CUSTOM_ID: modules-git-gutter
@@ -23102,6 +23128,28 @@
                 (delete-region (point) here)
               (let ((hungry-delete-mode nil))
                 (delete-char -1))))))
+    #+END_SRC
+
+*** hyperbole
+    :PROPERTIES:
+    :CUSTOM_ID: packages-hyperbole
+    :END:
+
+    GNU Hyperbole: The Everyday Hypertextual Information Manager
+
+    https://www.gnu.org/software/hyperbole/man/hyperbole.html
+
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Packages: hyperbole
+      ;;------------------------------------------------------------------------------
+
+      (init-message 2 "Packages: hyperbole")
+
+      (use-package hyperbole
+        :straight t
+        :config
+        (hyperbole-mode 1))
     #+END_SRC
 
 *** ibuffer
@@ -33160,22 +33208,23 @@
       ;; (set-mark-command nil)
     #+END_SRC
 
-*** Reset Emacs Lisp Garbage Collection Threshold
+*** +Reset Emacs Lisp Garbage Collection Threshold+
     :PROPERTIES:
     :CUSTOM_ID: final-setup-reset-emacs-lisp-garbage-collection-threshold
     :END:
 
-    Reset the Emacs Lisp garbage collection threshold to its default value.
+    +Reset the Emacs Lisp garbage collection threshold to its default value to+
+    +avoid long lockups.+
 
-    #+BEGIN_SRC emacs-lisp
-      ;;------------------------------------------------------------------------------
-      ;;; Final Setup: Reset Emacs Lisp Garbage Collection Threshold
-      ;;------------------------------------------------------------------------------
+    #+BEGIN_SRC emacs-lisp :tangle no
+      ;; ;;------------------------------------------------------------------------------
+      ;; ;;; Final Setup: Reset Emacs Lisp Garbage Collection Threshold
+      ;; ;;------------------------------------------------------------------------------
 
-      (init-message 2 "Final Setup: Reset Emacs Lisp Garbage Collection Threshold")
+      ;; (init-message 2 "Final Setup: Reset Emacs Lisp Garbage Collection Threshold")
 
-      ;; reset frequency of garbage collections
-      (setq gc-cons-threshold (car (get 'gc-cons-threshold 'standard-value)))
+      ;; ;; reset frequency of garbage collections (to 800000)
+      ;; (setq gc-cons-threshold (car (get 'gc-cons-threshold 'standard-value)))
     #+END_SRC
 
 *** +Turn off Debugging+
