@@ -38,6 +38,7 @@
 ;;; Start: Status Messages
 ;;------------------------------------------------------------------------------
 
+;; add timestamps to *Messages* buffer
 (defun message--with-timestamp (format-string &rest args)
   "Add timestamps to `*Messages*' buffer."
   (when (and (> (length format-string) 0)
@@ -52,16 +53,26 @@
 ;; advise `message'
 (advice-add 'message :before #'message--with-timestamp)
 
+;; keep track of load times
+(defvar init-message-timestamp nil
+  "Timestamp used to track time between `init-message' calls.")
+(setq init-message-timestamp (current-time))
+
+;; load time message
 (defun init-message (level format-string &rest args)
   "Custom version of `message' to log messages during Emacs initialization.
 
 LEVEL is the indentation level."
   (let ((file (file-name-sans-extension
                (file-name-nondirectory
-                (or load-file-name buffer-file-name (buffer-name))))))
+                (or load-file-name buffer-file-name (buffer-name)))))
+        (time (* (float-time (time-subtract (current-time) init-message-timestamp))
+                 1000.0)))
     (message (concat ";;; " file " "
-                     (make-string (* 2 level) ?-)
-                     "> " format-string) args)))
+                     (make-string (* 2 level) ?-) "> "
+                     (format format-string args) " "
+                     (format "[%i]" time)))
+    (setq init-message-timestamp (current-time))))
 
 (init-message 2 "Start: Status Messages")
 
@@ -162,8 +173,7 @@ Skips checks if run on Windows or Mac."
 (straight-use-package 'use-package)
 
 ;; turn off package file modification check at startup
-(setq straight-check-for-modifications
-      (remove 'find-at-startup straight-check-for-modifications))
+(setq straight-check-for-modifications '(find-when-checking check-on-save))
 
 ;; update recipe repositories
 ;;(straight-pull-recipe-repositories)
@@ -192,11 +202,7 @@ Skips checks if run on Windows or Mac."
   :straight (:type built-in))
 (use-package dash
   :straight t
-  :demand t
-  :config
-  (use-package dash-functional
-    :straight t
-    :demand t))
+  :demand t)
 (use-package diminish
   :straight (diminish :type git :host github :repo "myrjola/diminish.el"))
 (use-package f

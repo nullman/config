@@ -104,7 +104,7 @@
     (not (string-match "^\\(TAGS\\|\\*?sent\\)" (buffer-name)))
     (or (eq cycle-buffer-allow-visible t) ; visible buffers
         (eq (current-buffer) cycle-buffer-current)
-        (not (get-buffer-window (current-buffer) 
+        (not (get-buffer-window (current-buffer)
                                 (if cycle-buffer-allow-visible nil 'visible)))))
   "*A list of forms that determine if a buffer is considered for switching to.
 All forms should return non-nil for a buffer to be eligible. The forms are
@@ -114,7 +114,7 @@ variables (eg major-mode).
 You can add more restrictions by consing to the variable from inside
 cycle-buffer-load-hook or after (require 'cycle-buffer). For example to
 restrict switching from a C++ file only to relevant files, do this:
-  (setq cycle-buffer-filter (cons 
+  (setq cycle-buffer-filter (cons
      '(or (not (eq major-mode 'c++-mode))
           (string-match \"\\\\.\\\\(cc\\\\|hh\\\\)$\\\\|I?[mM]akefile\" (buffer-name)))
      cycle-buffer-filter))
@@ -130,7 +130,7 @@ the non-permissive versions of the cycle-buffer commands.")
 (defvar cycle-buffer-allow-visible 'other
   "*Whether to consider visible buffers. nil: ignore them; t: allow them; any
 other value: allow buffers visible on other frames, but not on the selected
-frame.") 
+frame.")
 
 (defvar cycle-buffer-show t
   "*Whether to show the buffer names in the echo area when you invoke one of
@@ -217,8 +217,8 @@ A prefix argument specifies the DISTANCE to skip, negative moves back."
 		cycle-buffer-list (cycle-buffer-filter (buffer-list)
 						       cycle-buffer-filter))))
                                         ; we use the permissive filter here
-                                        ; because cycle-buffer-list is shared 
-                                        ; between all cycle functions      
+                                        ; because cycle-buffer-list is shared
+                                        ; between all cycle functions
     (setq cycle-buffer-last-time time)
     (setq cycle-buffer-invocations (1+ cycle-buffer-invocations))
     (setq list
@@ -299,7 +299,7 @@ A prefix argument specifies the DISTANCE to skip, negative moves back."
                 ((cycle-buffer-filter
                   cycle-buffer-list cycle-buffer-filter-extra))))
     (setq str (if (and list (eq (car list) (current-buffer))) ""
-                ;; selected buffer not in show list 
+                ;; selected buffer not in show list
                 (format (car cycle-buffer-show-format) "")))
     (setq mid (/ (length str) 2))
     (setq next t)
@@ -342,7 +342,7 @@ A prefix argument specifies the DISTANCE to skip, negative moves back."
         (setq s (concat (substring s 0 (match-beginning 0))
                         (substring s (match-end 0))))
       (setq s (copy-sequence s)))       ; else the loop below is destructive
-    (loop for i below (length s)
+    (cl-loop for i below (length s)
           do (if (eq (aref s i) ? ) (aset s i ?_)))
     (setq len (length s))
     (if (> len cycle-buffer-show-length)
