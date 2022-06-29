@@ -2775,12 +2775,12 @@ alias gitciam="git commit -a -m"
 alias gitciu="git commit -a -m 'Update'"
 #        gitcif                  git commit -a --fixup
 alias gitcif="git commit -a --fixup"
-#        gitcia                  git --no-pager commit --amend --reuse-message=HEAD
-alias gitcia="git --no-pager commit --amend --reuse-message=HEAD"
-#        gitca                   git commit --amend
-alias gitca="git commit --amend"
-#        gitcano                 git commit --amend --no-edit
-alias gitcano="git commit --amend --no-edit"
+#!#        gitcia                  git --no-pager commit --amend --reuse-message=HEAD
+##!alias gitcia="git --no-pager commit --amend --reuse-message=HEAD"
+#        gitciaa                 git commit -a --amend
+alias gitciaa="git commit -a --amend"
+#        gitciaano               git commit -a --amend --no-edit
+alias gitciaano="git commit -a --amend --no-edit"
 #        gitst                   git stash
 alias gitst="git stash"
 #        gitstl                  git stash list
