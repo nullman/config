@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-06-29 16:47 (kyle)>
+  #+TIMESTAMP: <2022-06-30 08:48 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -1665,7 +1665,7 @@
     See =beginning-of-defun= for more information.
 
     #+BEGIN_SRC emacs-lisp
-      (init-message 3 "Beginning of Defun is Outermost Level Open-Paren.")
+      (init-message 3 "Beginning of Defun is Outermost Level Open-Paren")
 
       (setq open-paren-in-column-0-is-defun-start nil
             defun-prompt-regexp nil)
@@ -31246,34 +31246,56 @@
       ;;------------------------------------------------------------------------------
 
       (init-message 2 "Snippets: Setup")
-
-      (init-message 3 "yasnippet")
-
-      (use-package yasnippet
-        :straight t
-        :diminish yas-minor-mode
-        :config
-        ;; turn on globally
-        (yas-global-mode 1)
-
-        ;; turn off yas-expand on tab (all three are needed it seems)
-        (define-key yas-minor-mode-map [(tab)] nil)
-        (define-key yas-minor-mode-map (kbd "TAB") nil)
-        (define-key yas-minor-mode-map (kbd "<tab>") nil)
-
-        ;; (defun flyspell-incorrect-hook--inhibbit-when-yasnippet-active (beg end corrections)
-        ;;   "Inhibbit flyspell mode as it interferes with yasnippet."
-        ;;   (and yas-active-field-overlay
-        ;;        (overlay-buffer yas-active-field-overlay)))
-        ;; (add-hook 'flyspell-incorrect-hook #'flyspell-incorrect-hook--inhibbit-when-yasnippet-active)))
-        )
-
-      (init-message 3 "yasnippet-snippets")
-
-      (use-package yasnippet-snippets
-        :straight t
-        :after (yasnippet))
     #+END_SRC
+
+***** Yasnippet
+      :PROPERTIES:
+      :CUSTOM_ID: snippets-setup-yasnippet
+      :END:
+
+      #+BEGIN_SRC emacs-lisp
+        ;;------------------------------------------------------------------------------
+        ;;;; Snippets: Setup: Yasnippet
+        ;;------------------------------------------------------------------------------
+
+        (init-message 3 "Snippets: Setup: Yasnippet")
+
+        (use-package yasnippet
+          :straight t
+          :diminish yas-minor-mode
+          :config
+          ;; turn on globally
+          (yas-global-mode 1)
+
+          ;; turn off yas-expand on tab (all three are needed it seems)
+          (define-key yas-minor-mode-map [(tab)] nil)
+          (define-key yas-minor-mode-map (kbd "TAB") nil)
+          (define-key yas-minor-mode-map (kbd "<tab>") nil)
+
+          ;; (defun flyspell-incorrect-hook--inhibbit-when-yasnippet-active (beg end corrections)
+          ;;   "Inhibbit flyspell mode as it interferes with yasnippet."
+          ;;   (and yas-active-field-overlay
+          ;;        (overlay-buffer yas-active-field-overlay)))
+          ;; (add-hook 'flyspell-incorrect-hook #'flyspell-incorrect-hook--inhibbit-when-yasnippet-active)))
+          )
+      #+END_SRC
+
+******* Yasnippet Snippets
+        :PROPERTIES:
+        :CUSTOM_ID: snippets-setup-yasnippet-yasnippet-snippets
+        :END:
+
+        #+BEGIN_SRC emacs-lisp
+          ;;------------------------------------------------------------------------------
+          ;;;; Snippets: Setup: Yasnippet: Yasnippet Snippets
+          ;;------------------------------------------------------------------------------
+
+          (init-message 4 "Snippets: Setup: Yasnippet: Yasnippet Snippets")
+
+          (use-package yasnippet-snippets
+            :straight t
+            :after (yasnippet))
+        #+END_SRC
 
 *** Org-Mode
     :PROPERTIES:
@@ -31717,6 +31739,10 @@
       (use-package erc
         :straight (:type built-in)
         :config
+        (require 'erc-imenu)
+        (require 'erc-menu)
+        (require 'erc-notify)
+        (require 'erc-ring)
         (erc-button-mode 1)
         (erc-completion-mode 1)
         (erc-fill-mode 1)
@@ -31733,19 +31759,6 @@
         ;;                  "ldapsearch -x -P 2 -h db.debian.org -b dc=debian,dc=org ircnick=%s"
         ;;                  nick))) t)
         )
-
-      (use-package erc-imenu
-        :straight (:type built-in)
-        :after (erc))
-      (use-package erc-menu
-        :straight (:type built-in)
-        :after (erc))
-      (use-package erc-notify
-        :straight (:type built-in)
-        :after (erc))
-      (use-package erc-ring
-        :straight (:type built-in)
-        :after (erc))
     #+END_SRC
 
 *** Customization

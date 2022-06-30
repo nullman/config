@@ -819,7 +819,7 @@ Common values:
 ;; General:11 ends here
 
 ;; [[file:init-emacs.org::#environment-settings-general][General:12]]
-(init-message 3 "Beginning of Defun is Outermost Level Open-Paren.")
+(init-message 3 "Beginning of Defun is Outermost Level Open-Paren")
 
 (setq open-paren-in-column-0-is-defun-start nil
       defun-prompt-regexp nil)
@@ -20373,7 +20373,11 @@ Commands:
 
 (init-message 2 "Snippets: Setup")
 
-(init-message 3 "yasnippet")
+;;------------------------------------------------------------------------------
+;;;; Snippets: Setup: Yasnippet
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Snippets: Setup: Yasnippet")
 
 (use-package yasnippet
   :straight t
@@ -20394,7 +20398,11 @@ Commands:
   ;; (add-hook 'flyspell-incorrect-hook #'flyspell-incorrect-hook--inhibbit-when-yasnippet-active)))
   )
 
-(init-message 3 "yasnippet-snippets")
+;;------------------------------------------------------------------------------
+;;;; Snippets: Setup: Yasnippet: Yasnippet Snippets
+;;------------------------------------------------------------------------------
+
+(init-message 4 "Snippets: Setup: Yasnippet: Yasnippet Snippets")
 
 (use-package yasnippet-snippets
   :straight t
@@ -20619,6 +20627,10 @@ Commands:
 (use-package erc
   :straight (:type built-in)
   :config
+  (require 'erc-imenu)
+  (require 'erc-menu)
+  (require 'erc-notify)
+  (require 'erc-ring)
   (erc-button-mode 1)
   (erc-completion-mode 1)
   (erc-fill-mode 1)
@@ -20635,19 +20647,6 @@ Commands:
   ;;                  "ldapsearch -x -P 2 -h db.debian.org -b dc=debian,dc=org ircnick=%s"
   ;;                  nick))) t)
   )
-
-(use-package erc-imenu
-  :straight (:type built-in)
-  :after (erc))
-(use-package erc-menu
-  :straight (:type built-in)
-  :after (erc))
-(use-package erc-notify
-  :straight (:type built-in)
-  :after (erc))
-(use-package erc-ring
-  :straight (:type built-in)
-  :after (erc))
 ;; Setup:1 ends here
 
 ;; [[file:init-emacs.org::#erc-customization][Customization:1]]
