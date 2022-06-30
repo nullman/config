@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-06-30 08:48 (kyle)>
+  #+TIMESTAMP: <2022-06-30 12:05 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -771,9 +771,9 @@
         :straight t)
       (use-package bind-key
         :straight t
-        :init
+        :custom
         ;; extract docstrings from lambdas, closures and keymaps if possible
-        (setq bind-key-describe-special-forms t))
+        (bind-key-describe-special-forms t))
       (use-package cl-generic
         :straight (:type built-in))
       (use-package cl-macs

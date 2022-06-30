@@ -193,9 +193,9 @@ Skips checks if run on Windows or Mac."
   :straight t)
 (use-package bind-key
   :straight t
-  :init
+  :custom
   ;; extract docstrings from lambdas, closures and keymaps if possible
-  (setq bind-key-describe-special-forms t))
+  (bind-key-describe-special-forms t))
 (use-package cl-generic
   :straight (:type built-in))
 (use-package cl-macs
