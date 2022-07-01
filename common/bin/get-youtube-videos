@@ -48,16 +48,37 @@ channels=(
     "Tsoding Daily                   | https://www.youtube.com/c/TsodingDaily/videos"
 )
 
-for ((x = 1; x < ${#channels[@]}; x += 1)) ; do
+if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+    cat <<EOF
+Usage: $(basename $0) [--restart]
+Grab the latest YouTube videos from a curated list.
+  --list         - Display video list names
+  --restart LIST - Download any missing videos from LIST name
+EOF
+    exit 1
+fi
+
+if [[ "$1" == "--list" ]] ; then
+    for ((x = 0; x < ${#channels[@]}; x += 1)) ; do
+        echo "${channels[$x]}" | sed 's/ *|.*$//'
+    done
+    exit 0
+fi
+
+for ((x = 0; x < ${#channels[@]}; x += 1)) ; do
     name=$(echo "${channels[$x]}" | sed 's/ *|.*$//')
     url=$(echo "${channels[$x]}" | sed 's/^.*| *//')
     echo "${url} -> ${basedir}/${name}"
     mkdir -p "${basedir}/${name}"
     count=$(find "${basedir}/${name}" -type f | wc -l)
+    [[ "$1" == "--restart" ]] && [[ -z "$2" || "$2" == "${name}" ]] && count=0
+    start=""
+    [[ ${count} -gt 0 ]] && start="--playlist-start ${count}"
     cd "${basedir}/${name}" && \
-        yt-dlp -f "bv+ba/b" \
-               --playlist-start ${count} \
-               -o "${name} - %(release_date>%Y-%m-%d,upload_date>%Y-%m-%d|Unknown)s - %(title)s.%(ext)s" \
+        yt-dlp --format "bv+ba/b" \
+               --playlist-reverse \
+               ${start} \
+               --output "${name} - %(release_date>%Y-%m-%d,upload_date>%Y-%m-%d|Unknown)s - %(title)s.%(ext)s" \
                "${url}"
 done
 
