@@ -53,6 +53,7 @@ if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
 Usage: $(basename $0) [--restart]
 Grab the latest YouTube videos from a curated list.
   --list         - Display video list names
+  --restart      - Download any missing videos from all lists
   --restart LIST - Download any missing videos from LIST name
 EOF
     exit 1
