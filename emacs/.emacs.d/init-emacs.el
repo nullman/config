@@ -14315,215 +14315,26 @@ USING is the remaining peg."
 (init-message 1 "Completions")
 ;; Completions:1 ends here
 
-;; [[file:init-emacs.org::#completions-ido][+ido+:1]]
-;;------------------------------------------------------------------------------
-;;; Completions: ido
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Completions: ido")
-;; +ido+:1 ends here
-
-;; [[file:init-emacs.org::#completions-auto-complete][+auto-complete+:1]]
-;;------------------------------------------------------------------------------
-;;; Completions: auto-complete
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Completions: auto-complete")
-;; +auto-complete+:1 ends here
-
-;; [[file:init-emacs.org::#completions-company-ivy][+company/ivy+:1]]
+;; [[file:init-emacs.org::#completions-company-ivy][company/ivy:1]]
 ;;------------------------------------------------------------------------------
 ;;; Completions: company/ivy
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Completions: company/ivy")
-;; +company/ivy+:1 ends here
+;; company/ivy:1 ends here
 
-;; [[file:init-emacs.org::#completions-helm-swiper][+helm (swiper)+:1]]
+;; [[file:init-emacs.org::#completions-company-ivy-company][company:1]]
 ;;------------------------------------------------------------------------------
-;;; Completions: helm (swiper)
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Completions: helm (swiper)")
-;; +helm (swiper)+:1 ends here
-
-;; [[file:init-emacs.org::#completions-vertico-consult][vertico/consult:1]]
-;;------------------------------------------------------------------------------
-;;; Completions: vertico/consult
+;;; Completions: company
 ;;------------------------------------------------------------------------------
 
-(init-message 2 "Completions: vertico/consult")
-;; vertico/consult:1 ends here
-
-;; [[file:init-emacs.org::#completions-vertico-consult-vertico][vertico:1]]
-;;------------------------------------------------------------------------------
-;;;; Completions: vertico/consult: vertico
-;;------------------------------------------------------------------------------
-
-(init-message 3 "Completions: vertico/consult: vertico")
-
-(use-package vertico
-  :straight t
-  :demand t
-  :init
-  (vertico-mode))
-;; vertico:1 ends here
-
-;; [[file:init-emacs.org::#completions-vertico-consult-orderless][orderless:1]]
-;;------------------------------------------------------------------------------
-;;;; Completions: vertico/consult: orderless
-;;------------------------------------------------------------------------------
-
-(init-message 3 "Completions: vertico/consult: orderless")
-
-(use-package orderless
-  :straight t
-  :after (vertico)
-  :custom
-  (completion-styles '(orderless))
-  (completion-category-overrides '((file (styles partial-completion)))))
-;; orderless:1 ends here
-
-;; [[file:init-emacs.org::#completions-vertico-consult-marginalia][marginalia:1]]
-;;------------------------------------------------------------------------------
-;;;; Completions: vertico/consult: marginalia
-;;------------------------------------------------------------------------------
-
-(init-message 3 "Completions: vertico/consult: marginalia")
-
-(use-package marginalia
-  :straight t
-  :after (vertico)
-  :init
-  (marginalia-mode))
-;; marginalia:1 ends here
-
-;; [[file:init-emacs.org::#completions-vertico-consult-consult][consult:1]]
-;;------------------------------------------------------------------------------
-;;;; Completions: vertico/consult: consult
-;;------------------------------------------------------------------------------
-
-(init-message 3 "Completions: vertico/consult: consult")
-
-(use-package consult
-  :straight t
-  :after (vertico)
-  :bind (;; C-c bindings (mode-specific-map)
-         ("C-c h" . consult-history)
-         ("C-c m" . consult-mode-command)
-         ("C-c k" . consult-kmacro))
-  :bind* (;; C-x bindings (ctl-x-map)
-          ("C-x M-:" . consult-complex-command)         ; default: `repeat-complex-command'
-          ("C-x b" . consult-buffer)                    ; default: `switch-to-buffer'
-          ("C-x 4 b" . consult-buffer-other-window)     ; default: `switch-to-buffer-other-window'
-          ("C-x 5 b" . consult-buffer-other-frame)      ; default: `switch-to-buffer-other-frame'
-          ("C-x r b" . consult-bookmark)                ; default: `bookmark-jump'
-          ("C-x p b" . consult-project-buffer)          ; default: `project-switch-to-buffer'
-          ;; M-# bindings for fast register access
-          ("M-#" . consult-register-load)               ; default: `calc-dispatch'
-          ("M-'" . consult-register-store)              ; default: `abbrev-prefix-mark'
-          ("C-M-#" . consult-register)
-          ;; other bindings
-          ("M-y" . consult-yank-pop)                    ; default: `yank-pop'
-          ("<help> a" . consult-apropos)                ; default: `apropos-command'
-          ;; M-g bindings (goto-map)
-          ("M-g e" . consult-compile-error)
-          ("M-g f" . consult-flycheck)
-          ("M-g F" . consult-flymake)
-          ("M-g g" . consult-goto-line)                 ; default: `goto-line'
-          ("M-g M-g" . consult-goto-line)               ; default: `goto-line'
-          ("M-g o" . consult-outline)                   ; alternative: `consult-org-heading'
-          ("M-g m" . consult-mark)
-          ("M-g k" . consult-global-mark)
-          ("M-g i" . consult-imenu)
-          ("M-g I" . consult-imenu-multi)
-          ;; M-s bindings (search-map)
-          ("M-s d" . consult-find)
-          ("M-s D" . consult-locate)
-          ("M-s g" . consult-grep)
-          ("M-s G" . consult-git-grep)
-          ("M-s r" . consult-ripgrep)
-          ("M-s l" . consult-line)
-          ("M-s L" . consult-line-multi)
-          ("M-s m" . consult-multi-occur)
-          ("M-s k" . consult-keep-lines)
-          ("M-s u" . consult-focus-lines)
-          ;; isearch integration
-          ("M-s e" . consult-isearch-history)
-          :map isearch-mode-map
-          ("M-e" . consult-isearch-history)             ; default: `isearch-edit-string'
-          ("M-s e" . consult-isearch-history)           ; default: `isearch-edit-string'
-          ("M-s l" . consult-line)                      ; needed by `consult-line' to detect isearch
-          ("M-s L" . consult-line-multi)                ; needed by `consult-line' to detect isearch
-          ;; minibuffer bindings
-          :map minibuffer-local-map
-          ("C-<return>" . exit-minibuffer)              ; default: `vertico-exit'
-          ("M-<return>" . exit-minibuffer)              ; default: `vertico-exit'
-          ("M-s" . consult-history)                     ; default: `next-matching-history-element'
-          ("M-r" . consult-history))                    ; default: `previous-matching-history-element'
-  ;; enable automatic preview at point in the *Completions* buffer
-  :hook (completion-list-mode . consult-preview-at-point-mode)
-  :init
-  ;; improve the register preview for `consult-register' and the emacs built-ins
-  (setq register-preview-delay 0.5
-        register-preview-function #'consult-register-format)
-  ;; add thin lines, sorting, and hide the mode line of the register preview window
-  (advice-add #'register-preview :override #'consult-register-window)
-  ;; replace `completing-read-multiple' with an enhanced version
-  (advice-add #'completing-read-multiple :override #'consult-completing-read-multiple)
-  ;; select xref locations with preview
-  (setq xref-show-xrefs-function #'consult-xref
-        xref-show-definitions-function #'consult-xref)
-  :config
-  ;; configure preview key
-  (consult-customize
-   consult-theme
-   :preview-key '(:debounce 0.2 any))
-  ;;  consult-ripgrep consult-git-grep consult-grep
-  ;;  consult-bookmark consult-recent-file consult-xref
-  ;;  consult--source-bookmark consult--source-recent-file
-  ;;  consult--source-project-recent-file
-  ;;  :preview-key (kbd "M-."))
-  ;; configure narrowing key
-  (setq consult-narrow-key "<") ;; (kbd "C-+")
-  ;; make narrowing help available in the minibuffer
-  (define-key consult-narrow-map (vconcat consult-narrow-key "?") #'consult-narrow-help)
-
-  ;; By default `consult-project-function' uses `project-root' from project.el.
-  ;; Optionally configure a different project root function.
-  ;; There are multiple reasonable alternatives to chose from.
-  ;;;; 1. project.el (the default)
-  ;; (setq consult-project-function #'consult--default-project--function)
-  ;;;; 2. projectile.el (projectile-project-root)
-  ;; (autoload 'projectile-project-root "projectile")
-  ;; (setq consult-project-function (lambda (_) (projectile-project-root)))
-  ;;;; 3. vc.el (vc-root-dir)
-  ;; (setq consult-project-function (lambda (_) (vc-root-dir)))
-  ;;;; 4. locate-dominating-file
-  ;; (setq consult-project-function (lambda (_) (locate-dominating-file "." ".git")))
-
-  ;; turn off consult mode in incompatable modes
-  (defun force-completing-read-default (orig-fun &rest args)
-    "Force a function to use `completing-read-default'."
-    (let ((completing-read-function 'completing-read-default))
-      (apply orig-fun args)))
-  ;; advise `tmm-prompt'
-  (advice-add 'tmm-prompt :around #'force-completing-read-default)
-  ;; advise `yas-expand-snippet'
-  (advice-add 'yas-expand-snippet :around #'force-completing-read-default))
-;; consult:1 ends here
-
-;; [[file:init-emacs.org::#completions-vertico-consult-company][company:1]]
-;;------------------------------------------------------------------------------
-;;;; Completions: vertico/consult: company
-;;------------------------------------------------------------------------------
-
-(init-message 3 "Completions: vertico/consult: company")
+(init-message 3 "Completions: company/ivy: company")
 
 (use-package company
   :straight t
   :diminish company-mode
   :bind (:map company-active-map
+              ("<tab>" . company-complete-selection)
               ("C-n" . company-select-next)
               ("C-p" . company-select-previous)
               ("M-k" . company-select-next)
@@ -14553,16 +14364,6 @@ USING is the remaining peg."
 
 ;; ;; remove troublesome backends
 ;; (setq company-backends (remove 'company-capf company-backends)))
-
-;;------------------------------------------------------------------------------
-;;;; consult-company
-;;------------------------------------------------------------------------------
-
-(use-package consult-company
-  :straight t
-  :after (company)
-  :bind (:map company-active-map
-              ([remap completion-at-point] . consult-company)))
 
 ;; ;;------------------------------------------------------------------------------
 ;; ;;;; company-box
@@ -14613,6 +14414,153 @@ USING is the remaining peg."
 ;;      `(company-tooltip-selection ((t (:inherit font-lock-function-name-face))))
 ;;      `(company-tooltip-common ((t (:inherit font-lock-constant-face)))))))
 ;; company:1 ends here
+
+;; [[file:init-emacs.org::#completions-company-ivy-ivy-counsel][ivy/counsel:1]]
+;;------------------------------------------------------------------------------
+;;; Completions: ivy
+;;
+;; Add wildcard name completion to common tasks.
+;; Replace `completing-read-function' with `ivy-completing-read'.
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Completions: company/ivy: ivy/counsel")
+
+(use-package ivy
+  :straight (ivy :type git :host github :repo "abo-abo/swiper")
+  :demand t
+  :diminish ivy-mode
+  :commands (ivy-mode)
+  :bind* (("C-x C-r" . ivy-resume)      ; default: `find-file-read-only'
+          ("C-x b" . ivy-switch-buffer) ; default: `switch-to-buffer'
+          ("C-x O" . ivy-switch-buffer-other-window)) ; default: `other-window'
+  :bind (:map ivy-mode-map
+              ("C-<return>" . ivy-immediate-done))
+  :custom
+  ;; create file directories on non-match
+  (ivy-magic-slash-non-match-action 'ivy-magic-slash-non-match-create)
+  ;; add recent files and bookmarks to `ivy-switch-buffer'
+  (ivy-use-virtual-buffers t)
+  ;; allow minibuffer commands to work in the minibuffer
+  (enable-recursive-minibuffers t)
+  ;; style to use for displaying the current candidate count
+  (ivy-count-format "(%d/%d) ")
+  ;; ;; wrap around when at first/last candidate positions
+  ;; (ivy-wrap t)
+  :init
+  ;; turn on `ivy-mode'
+  (ivy-mode 1)
+  :config
+  ;; ;; set minibuffer height (number of lines) for various callers
+  ;; (setf (alist-get 'counsel-projectile-ag ivy-height-alist) 15)
+  ;; (setf (alist-get 'counsel-projectile-rg ivy-height-alist) 15)
+  ;; (setf (alist-get 'swiper ivy-height-alist) 15)
+  ;; (setf (alist-get 'counsel-switch-buffer ivy-height-alist) 7))
+
+  ;; turn off ivy mode in incompatable modes
+  (defun force-completing-read-default (orig-fun &rest args)
+    "Force a function to use `completing-read-default'."
+    (let ((completing-read-function 'completing-read-default))
+      (apply orig-fun args)))
+  ;; advise `tmm-prompt'
+  (advice-add 'tmm-prompt :around #'force-completing-read-default)
+  ;; advise `yas-expand-snippet'
+  (advice-add 'yas-expand-snippet :around #'force-completing-read-default))
+
+;;------------------------------------------------------------------------------
+;;;; counsel
+;;
+;; Various completion functions using ivy.
+;;------------------------------------------------------------------------------
+
+(init-message 3 "counsel")
+
+(use-package counsel
+  :straight (counsel :type git :host github :repo "abo-abo/swiper")
+  :after (ivy)
+  :bind* (("M-x" . counsel-M-x)
+          ;;([remap list-buffers] . counsel-switch-buffer) ; default: `list-buffers'
+          ;;("C-x b" . counsel-ibuffer)   ; default: `ivy-switch-buffer'
+          ;;("C-x C-b" . counsel-switch-buffer)   ; default: `list-buffers'
+          ("C-x C-f" . counsel-find-file)
+          ;;("C-h f" . counsel-describe-function)
+          ;;("C-h v" . counsel-describe-variable)
+          ("C-h l" . counsel-find-library)
+          ("C-h C-i" . counsel-info-lookup-symbol)
+          ("C-h u" . counsel-unicode-char))
+  :bind (:map minibuffer-local-map
+              ("C-r" . counsel-minibuffer-history))
+  :custom
+  ;; format linux application names with name and comment only
+  (counsel-linux-app-format-function #'counsel-linux-app-format-function-name-only)
+  :config
+  ;; do not start searches with ^
+  (setq ivy-initial-inputs-alist nil))
+
+;;------------------------------------------------------------------------------
+;;;; swiper
+;;
+;; Isearch with an overview.
+;;------------------------------------------------------------------------------
+
+(init-message 3 "swiper")
+
+(use-package swiper
+  :straight (swiper :type git :host github :repo "abo-abo/swiper")
+  :after (ivy)
+  :bind* ("C-'" . swiper))            ; default: `isearch-forward-regexp'
+
+;;------------------------------------------------------------------------------
+;;;; ivy-rich
+;;
+;; More friendly display transformer for ivy.
+;;------------------------------------------------------------------------------
+
+(init-message 3 "ivy-rich")
+
+(use-package ivy-rich
+  :straight t
+  :after (ivy counsel)
+  :init (ivy-rich-mode 1)
+  :config
+  ;; ignore exvm buffers
+  (let ((predicate (plist-get ivy-rich-display-transformers-list 'ivy-switch-buffer)))
+    (setq ivy-rich-display-transformers-list
+          (plist-put ivy-rich-display-transformers-list
+                     'ivy-switch-buffer
+                     `(:columns
+                       ,(plist-get predicate :columns)
+                       :predicate
+                       (lambda (cand)
+                         (if-let ((buffer (get-buffer cand)))
+                             (with-current-buffer buffer
+                               (not (derived-mode-p 'exwm-mode))))))))))
+
+;;------------------------------------------------------------------------------
+;;;; flx
+;;
+;; Improve sorting for fuzzy-matched results.
+;;------------------------------------------------------------------------------
+
+(init-message 3 "flx")
+
+(use-package flx
+  :straight t
+  :after (ivy)
+  :init
+  (setq ivy-flx-limit 10000))
+
+;; ;;------------------------------------------------------------------------------
+;; ;;;; ivy-hydra
+;; ;;
+;; ;; Additional key bindings for Ivy.
+;; ;;------------------------------------------------------------------------------
+
+;; (init-message 3 "ivy-hydra")
+
+;; (use-package ivy-hydra
+;;   :straight t
+;;   :after (ivy hydra))
+;; ivy/counsel:1 ends here
 
 ;; [[file:init-emacs.org::#packages][Packages:1]]
 ;;==============================================================================
@@ -15733,19 +15681,6 @@ back to the previous non-whitespace character. See also
         (let ((hungry-delete-mode nil))
           (delete-char -1))))))
 ;; hungry-delete:1 ends here
-
-;; [[file:init-emacs.org::#packages-hyperbole][hyperbole:1]]
-;;------------------------------------------------------------------------------
-;;; Packages: hyperbole
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Packages: hyperbole")
-
-(use-package hyperbole
-  :straight t
-  :config
-  (hyperbole-mode 1))
-;; hyperbole:1 ends here
 
 ;; [[file:init-emacs.org::#modules-ibuffer][ibuffer:1]]
 ;;------------------------------------------------------------------------------
@@ -17051,6 +16986,7 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
 (use-package counsel-projectile
   :straight t
   :after (ivy counsel projectile)
+  :after (counsel projectile)
   :init (counsel-projectile-mode))
 ;; projectile:1 ends here
 
@@ -17294,18 +17230,6 @@ Do not perform the search on very large files (to avoid a delay when loaded)."
   :straight (sudoku :type git :host github :repo "zevlg/sudoku.el")
   :commands (sudoku))
 ;; sudoku:1 ends here
-
-;; [[file:init-emacs.org::#packages-swiper][swiper:1]]
-;;------------------------------------------------------------------------------
-;;; Packages: swiper
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Packages: swiper")
-
-(use-package swiper
-  :straight (swiper :type git :host github :repo "abo-abo/swiper")
-  :bind* ("C-'" . swiper))              ; default: `isearch-forward-regexp'
-;; swiper:1 ends here
 
 ;; [[file:init-emacs.org::#modules-switch-window][switch-window:1]]
 ;;------------------------------------------------------------------------------
