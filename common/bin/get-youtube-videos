@@ -47,15 +47,17 @@ channels=(
 #    "The Retro Shack                 | https://www.youtube.com/c/TheRetroShack/videos"
 #    "TheGeekPub                      | https://www.youtube.com/c/TheGeekPub/videos"
     "Tsoding Daily                   | https://www.youtube.com/c/TsodingDaily/videos"
+#    "Usagi Electric                  | https://www.youtube.com/c/Nakazoto/videos"
 )
 
 if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
     cat <<EOF
-Usage: $(basename $0) [--restart]
+Usage: $(basename $0) [OPTIONS] [NAME]
 Grab the latest YouTube videos from a curated list.
+  NAME           - Name of list to download
   --list         - Display video list names
   --restart      - Download any missing videos from all lists
-  --restart LIST - Download any missing videos from LIST name
+  --restart NAME - Download any missing videos from NAME
 EOF
     exit 1
 fi
@@ -67,21 +69,31 @@ if [[ "$1" == "--list" ]] ; then
     exit 0
 fi
 
+listname=""
+if [[ -n "$1" && "${1:0:1}" != "-" ]] ; then
+    listname="$1"
+elif [[ "${1:0:1}" == "-" && -n "$2" ]] ; then
+    listname="$2"
+fi
+[[ -n "${listname}" ]] && echo "List: ${listname}"
+
 for ((x = 0; x < ${#channels[@]}; x += 1)) ; do
     name=$(echo "${channels[$x]}" | sed 's/ *|.*$//')
     url=$(echo "${channels[$x]}" | sed 's/^.*| *//')
-    echo "${url} -> ${basedir}/${name}"
-    mkdir -p "${basedir}/${name}"
-    count=$(find "${basedir}/${name}" -type f | wc -l)
-    [[ "$1" == "--restart" ]] && [[ -z "$2" || "$2" == "${name}" ]] && count=0
-    start=""
-    [[ ${count} -gt 0 ]] && start="--playlist-start $((${count} + 1))"
-    cd "${basedir}/${name}" && \
-        yt-dlp --format "bv+ba/b" \
-               --playlist-reverse \
-               ${start} \
-               --output "${name} - %(release_date>%Y-%m-%d,upload_date>%Y-%m-%d|Unknown)s - %(title)s.%(ext)s" \
-               "${url}"
+    if [[ -z "${listname}" || "${name}" == "${listname}" ]] ; then
+        echo "${url} -> ${basedir}/${name}"
+        mkdir -p "${basedir}/${name}"
+        count=$(find "${basedir}/${name}" -type f | wc -l)
+        [[ "$1" == "--restart" ]] && count=0
+        start=""
+        [[ ${count} -gt 0 ]] && start="--playlist-start $((${count} + 1))"
+        cd "${basedir}/${name}" && \
+            yt-dlp --format "bv+ba/b" \
+                   --playlist-reverse \
+                   ${start} \
+                   --output "${name} - %(release_date>%Y-%m-%d,upload_date>%Y-%m-%d|Unknown)s - %(title)s.%(ext)s" \
+                   "${url}"
+    fi
 done
 
 #===============================================================================
