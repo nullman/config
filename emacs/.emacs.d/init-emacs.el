@@ -68,10 +68,10 @@ LEVEL is the indentation level."
                 (or load-file-name buffer-file-name (buffer-name)))))
         (time (* (float-time (time-subtract (current-time) init-message-timestamp))
                  1000.0)))
-    (message (concat ";;; " file " "
+    (message (concat (format "[%4d] " time)
+                     file " "
                      (make-string (* 2 level) ?-) "> "
-                     (format format-string args) " "
-                     (format "[%i]" time)))
+                     (format format-string args) " "))
     (setq init-message-timestamp (current-time))))
 
 (init-message 2 "Start: Status Messages")
