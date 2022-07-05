@@ -3617,13 +3617,10 @@ Where BEG and END dates are in one of these formats:
 
 (init-message 3 "Org Mode: Functions: org-babel-tangle-file-async")
 
-(defun org-babel-tangle-file-async (file &optional target-file lang-re attempt)
-  "Asynchronous version of `org-babel-tangle-file'.
-
-ATTEMPT is used internally to determine how many tangle attempts have been made."
+(defun org-babel-tangle-file-async (file &optional target-file lang-re)
+  "Asynchronous version of `org-babel-tangle-file'."
   (interactive)
-  (let ((attempt (if attempt (1+ attempt) 1))
-        (lock-file (expand-file-name "emacs-tangle-file-async-lock-file"
+  (let ((lock-file (expand-file-name "emacs-tangle-file-async-lock-file"
                                      temporary-file-directory))
         (run-file (expand-file-name "emacs-tangle-file-async-run-file"
                                     temporary-file-directory)))
@@ -3632,21 +3629,20 @@ ATTEMPT is used internally to determine how many tangle attempts have been made.
           (message "Tangle running: %s" file)
           (when (not (file-exists-p run-file))
             (make-empty-file run-file)))
-      (progn
-        (message "Tangle started: %s" file)
-        (make-empty-file lock-file)
-        (eval
-         `(async-spinner
-           (lambda ()
-             (require 'ob-tangle)
-             (when (not (file-exists-p ,run-file))
-               (make-empty-file ,run-file))
-             (while (file-exists-p ,run-file)
-               (delete-file ,run-file)
-               (org-babel-tangle-file ,file ,target-file ,lang-re)))
-           (lambda (result)
-             (message "Tangle finished: %s" ,file)
-             (delete-file ,lock-file))))))))
+      (message "Tangle started: %s" file)
+      (make-empty-file lock-file)
+      (eval
+       `(async-spinner
+         (lambda ()
+           (require 'ob-tangle)
+           (when (not (file-exists-p ,run-file))
+             (make-empty-file ,run-file))
+           (while (file-exists-p ,run-file)
+             (delete-file ,run-file)
+             (org-babel-tangle-file ,file ,target-file ,lang-re)))
+         (lambda (result)
+           (message "Tangle finished: %s" ,file)
+           (delete-file ,lock-file)))))))
 
 ;; delete any existing lock/run files in case they were not cleaned up
 (mapc (lambda (x) (delete-file (expand-file-name x temporary-file-directory)))
