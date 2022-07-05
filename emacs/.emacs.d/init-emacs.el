@@ -18495,8 +18495,7 @@ otherwise run `find-file-as-root'."
 
   (defun custom-ledger-mode-hook ()
     ;; align amounts on save
-    (make-local-variable 'before-save-hook)
-    (add-hook 'before-save-hook #'custom-ledger-align-amounts))
+    (add-hook 'before-save-hook #'custom-ledger-align-amounts 0 :local))
   (add-hook 'ledger-mode-hook #'custom-ledger-mode-hook))
 ;; Ledger Mode:1 ends here
 

@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-07-05 15:16 (kyle)>
+  #+TIMESTAMP: <2022-07-05 16:43 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -28767,8 +28767,7 @@
 
         (defun custom-ledger-mode-hook ()
           ;; align amounts on save
-          (make-local-variable 'before-save-hook)
-          (add-hook 'before-save-hook #'custom-ledger-align-amounts))
+          (add-hook 'before-save-hook #'custom-ledger-align-amounts 0 :local))
         (add-hook 'ledger-mode-hook #'custom-ledger-mode-hook))
     #+END_SRC
 
