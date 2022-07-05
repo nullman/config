@@ -14334,8 +14334,10 @@ USING is the remaining peg."
   :straight t
   :demand t
   :bind (:map vertico-map
-              ("C-<return>" . vertico-exit-input)  ; default: `vertico-exit'
-              ("M-<return>" . vertico-exit-input)) ; default: `vertico-exit'
+              ("C-<return>" . vertico-exit-input) ; default: `vertico-exit'
+              ("M-<return>" . vertico-exit-input) ; default: `vertico-exit'
+              ("C-M-i" . vertico-scroll-down)     ; default: `completion-at-point' ("<prior>")
+              ("C-M-k" . vertico-scroll-up))      ; default: `kill-whole-line' ("<next>")
   :init
   (vertico-mode))
 ;; vertico:1 ends here
@@ -15489,6 +15491,19 @@ USING is the remaining peg."
   :bind* (("C-=" . er/expand-region)     ; default: `count-lines-region'
           ("C--" . er/contract-region))) ; default: `negative-argument'
 ;; expand-region:1 ends here
+
+;; [[file:init-emacs.org::#packages-explain-pause-mode][explain-pause-mode:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: explain-pause-mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Packages: explain-pause-mode")
+
+(use-package explain-pause-mode
+  :straight (explain-pause-mode :type git :host github :repo "lastquestion/explain-pause-mode")
+  :config
+  (explain-pause-mode))
+;; explain-pause-mode:1 ends here
 
 ;; [[file:init-emacs.org::#modules-flycheck][flycheck:1]]
 ;;------------------------------------------------------------------------------

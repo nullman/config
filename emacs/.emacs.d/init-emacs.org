@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-07-03 14:53 (kyle)>
+  #+TIMESTAMP: <2022-07-04 21:10 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -20805,8 +20805,10 @@
           :straight t
           :demand t
           :bind (:map vertico-map
-                      ("C-<return>" . vertico-exit-input)  ; default: `vertico-exit'
-                      ("M-<return>" . vertico-exit-input)) ; default: `vertico-exit'
+                      ("C-<return>" . vertico-exit-input) ; default: `vertico-exit'
+                      ("M-<return>" . vertico-exit-input) ; default: `vertico-exit'
+                      ("C-M-i" . vertico-scroll-down)     ; default: `completion-at-point' ("<prior>")
+                      ("C-M-k" . vertico-scroll-up))      ; default: `kill-whole-line' ("<next>")
           :init
           (vertico-mode))
       #+END_SRC
@@ -22762,6 +22764,24 @@
         :straight t
         :bind* (("C-=" . er/expand-region)     ; default: `count-lines-region'
                 ("C--" . er/contract-region))) ; default: `negative-argument'
+    #+END_SRC
+
+*** explain-pause-mode
+    :PROPERTIES:
+    :CUSTOM_ID: packages-explain-pause-mode
+    :END:
+
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Packages: explain-pause-mode
+      ;;------------------------------------------------------------------------------
+
+      (init-message 2 "Packages: explain-pause-mode")
+
+      (use-package explain-pause-mode
+        :straight (explain-pause-mode :type git :host github :repo "lastquestion/explain-pause-mode")
+        :config
+        (explain-pause-mode))
     #+END_SRC
 
 *** flycheck
