@@ -3620,10 +3620,13 @@ Where BEG and END dates are in one of these formats:
 (defun org-babel-tangle-file-async (file &optional target-file lang-re)
   "Asynchronous version of `org-babel-tangle-file'."
   (interactive)
-  (let ((lock-file (expand-file-name "emacs-tangle-file-async-lock-file"
-                                     temporary-file-directory))
-        (run-file (expand-file-name "emacs-tangle-file-async-run-file"
-                                    temporary-file-directory)))
+  (let* ((file-hash (secure-hash 'md5 file))
+         (lock-file (expand-file-name
+                     (concat "emacs-tangle-file-async-lock-file-" file-hash)
+                     temporary-file-directory))
+         (run-file (expand-file-name
+                    (concat "emacs-tangle-file-async-run-file-" file-hash)
+                    temporary-file-directory)))
     (if (file-exists-p lock-file)
         (progn
           (message "Tangle running: %s" file)
@@ -3645,9 +3648,17 @@ Where BEG and END dates are in one of these formats:
            (delete-file ,lock-file)))))))
 
 ;; delete any existing lock/run files in case they were not cleaned up
-(mapc (lambda (x) (delete-file (expand-file-name x temporary-file-directory)))
-      '("emacs-tangle-file-async-lock-file"
-        "emacs-tangle-file-async-run-file"))
+(mapc (lambda (x)
+        (mapc (lambda (f)
+                ;;(delete-file f)
+                (message "%s" f)))
+        x)
+      (mapcar (lambda (x)
+                (file-expand-wildcards
+                 (expand-file-name x temporary-file-directory)
+                 :full))
+              '("emacs-tangle-file-async-lock-file-*"
+                "emacs-tangle-file-async-run-file-*")))
 ;; org-babel-tangle-file-async:1 ends here
 
 ;; [[file:init-emacs.org::#org-mode-functions-org-copy-tangled-sections][org-copy-tangled-sections:1]]
