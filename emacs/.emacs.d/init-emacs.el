@@ -2537,16 +2537,20 @@ DATA should have been made by `org-outline-overlay-data'."
   :custom
   ;; org directory
   (org-directory (file-truename (expand-file-name "~/org")))
+  ;; ;; use org indent mode
+  ;; (org-indent-mode 1)
   ;; indent blocks to outline node level
   (org-adapt-indentation t)
   ;; ;; do not indent blocks to outline node level
   ;; (org-adapt-indentation nil)
-  ;; startup in "overview" (folded) by default
-  (org-startup-folded t)
   ;; skip levels
   (org-odd-levels-only t)
+  ;; ;; do not skip levels
+  ;; (org-odd-levels-only nil)
   ;; hide leading stars
   (org-hide-leading-stars t)
+  ;; startup in "overview" (folded) by default
+  (org-startup-folded t)
   ;; remap disputed keys (see `org-disputed-keys')
   (org-replace-disputed-keys t)
   ;; display inline images

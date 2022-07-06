@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-07-05 22:24 (kyle)>
+  #+TIMESTAMP: <2022-07-06 15:28 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -3891,16 +3891,20 @@
         :custom
         ;; org directory
         (org-directory (file-truename (expand-file-name "~/org")))
+        ;; ;; use org indent mode
+        ;; (org-indent-mode 1)
         ;; indent blocks to outline node level
         (org-adapt-indentation t)
         ;; ;; do not indent blocks to outline node level
         ;; (org-adapt-indentation nil)
-        ;; startup in "overview" (folded) by default
-        (org-startup-folded t)
         ;; skip levels
         (org-odd-levels-only t)
+        ;; ;; do not skip levels
+        ;; (org-odd-levels-only nil)
         ;; hide leading stars
         (org-hide-leading-stars t)
+        ;; startup in "overview" (folded) by default
+        (org-startup-folded t)
         ;; remap disputed keys (see `org-disputed-keys')
         (org-replace-disputed-keys t)
         ;; display inline images
@@ -5510,6 +5514,40 @@
                          ".png")))
             (call-process "import" nil nil nil file-name)
             (insert (concat "[[" file-name "]]\n"))))
+      #+END_SRC
+
+***** +org-convert-headings-to-oddeven+
+      :PROPERTIES:
+      :CUSTOM_ID: org-mode-functions-org-convert-headings-to-oddeven
+      :END:
+
+      #+BEGIN_SRC emacs-lisp :tangle no
+        ;; ;;------------------------------------------------------------------------------
+        ;; ;;;; Org Mode: Functions: org-convert-headings-to-oddeven
+        ;; ;;------------------------------------------------------------------------------
+
+        ;; (init-message 3 "Org Mode: Functions: org-convert-headings-to-oddeven")
+
+        ;; (defun org-convert-headings-to-oddeven ()
+        ;;   "Convert current org buffer from odd headings to odd-even
+        ;; headings."
+        ;;   (unless (derived-mode-p 'org-mode)
+        ;;     (user-error "Not an Org buffer"))
+        ;;   (save-mark-and-excursion
+        ;;     (goto-char (point-min))
+        ;;     (when (re-search-forward "^\\*\\* " nil :noerror)
+        ;;       (user-error "Even headings found"))
+        ;;     (goto-char (point-min))
+        ;;     (let ((maxlen 0))
+        ;;       (while (re-search-forward "^\\(\\*+\\) " nil :noerror)
+        ;;         (when (> (length (match-string 1)) maxlen)
+        ;;           (setq maxlen (length (match-string 1)))))
+        ;;       (dotimes (l (/ (1- maxlen) 2))
+        ;;         (let ((len (- maxlen (* l 2))))
+        ;;           (goto-char (point-min))
+        ;;           (while (re-search-forward "^\\(\\*+\\) " nil :noerror)
+        ;;             (when (= (length (match-string 1)) len)
+        ;;               (replace-match (substring (match-string 1) 0 (1- len)) nil nil nil 1))))))))
       #+END_SRC
 
 *** Hook
