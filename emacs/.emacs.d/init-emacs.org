@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-07-05 19:29 (kyle)>
+  #+TIMESTAMP: <2022-07-05 22:24 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -5397,9 +5397,8 @@
         ;; delete any existing lock/run files in case they were not cleaned up
         (mapc (lambda (x)
                 (mapc (lambda (f)
-                        ;;(delete-file f)
-                        (message "%s" f)))
-                x)
+                        (delete-file f))
+                      x))
               (mapcar (lambda (x)
                         (file-expand-wildcards
                          (expand-file-name x temporary-file-directory)

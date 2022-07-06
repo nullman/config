@@ -3650,9 +3650,8 @@ Where BEG and END dates are in one of these formats:
 ;; delete any existing lock/run files in case they were not cleaned up
 (mapc (lambda (x)
         (mapc (lambda (f)
-                ;;(delete-file f)
-                (message "%s" f)))
-        x)
+                (delete-file f))
+              x))
       (mapcar (lambda (x)
                 (file-expand-wildcards
                  (expand-file-name x temporary-file-directory)
