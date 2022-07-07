@@ -3799,7 +3799,7 @@ If BUFFER is nil, current buffer is used."
 
 (init-message 3 "Org Mode: Functions: org-convert-headings-from-oddeven-unindented-to-odd-indented")
 
-(defun org-convert-headings-from-oddeven-unindented-to-odd-indented ()
+(defun org-convert-headings-from-oddeven-unindented-to-odd-indented (&optional buffer)
   "Convert Org BUFFER from having odd and even heading levels and
   non-indented body data (`org-indent-mode') to having only odd
   heading levels and intended body data (`org-odd-levels-only'

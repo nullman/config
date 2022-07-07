@@ -8,7 +8,7 @@
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
-  #+TIMESTAMP: <2022-07-07 12:18 (kyle)>
+  #+TIMESTAMP: <2022-07-07 12:40 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -5570,7 +5570,7 @@
 
         (init-message 3 "Org Mode: Functions: org-convert-headings-from-oddeven-unindented-to-odd-indented")
 
-        (defun org-convert-headings-from-oddeven-unindented-to-odd-indented ()
+        (defun org-convert-headings-from-oddeven-unindented-to-odd-indented (&optional buffer)
           "Convert Org BUFFER from having odd and even heading levels and
           non-indented body data (`org-indent-mode') to having only odd
           heading levels and intended body data (`org-odd-levels-only'
