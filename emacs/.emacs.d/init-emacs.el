@@ -3755,75 +3755,84 @@ same directory as the org-buffer and insert a link to this file."
     (insert (concat "[[" file-name "]]\n"))))
 ;; org-screenshot:1 ends here
 
-;; [[file:init-emacs.org::#org-mode-functions-org-convert-headings-from-odd-adapt-to-oddeven-indent][org-convert-headings-from-odd-adapt-to-oddeven-indent:1]]
+;; [[file:init-emacs.org::#org-mode-functions-org-convert-headings-from-odd-indented-to-oddeven-unindented][org-convert-headings-from-odd-indented-to-oddeven-unindented:1]]
 ;;------------------------------------------------------------------------------
-;;;; Org Mode: Functions: org-convert-headings-from-odd-adapt-to-oddeven-indent
+;;;; Org Mode: Functions: org-convert-headings-from-odd-indented-to-oddeven-unindented
 ;;------------------------------------------------------------------------------
 
-(init-message 3 "Org Mode: Functions: org-convert-headings-from-odd-adapt-to-oddeven-indent")
+(init-message 3 "Org Mode: Functions: org-convert-headings-from-odd-indented-to-oddeven-unindented")
 
-(defun org-convert-headings-from-odd-adapt-to-oddeven-indent ()
-  "Convert current org buffer from `org-odd-levels-only' and
-`org-adapt-indentation' to odd-even levels and `org-indent-mode'."
+(defun org-convert-headings-from-odd-indented-to-oddeven-unindented (&optional buffer)
+  "Convert Org BUFFER from having only odd heading levels and
+indented body data (`org-odd-levels-only' and
+`org-adapt-indentation') to having odd and even heading levels
+and non-indented body data (`org-indent-mode').
+
+If BUFFER is nil, current buffer is used."
   (unless (derived-mode-p 'org-mode)
     (user-error "Not an Org buffer"))
-  (save-mark-and-excursion
-    (goto-char (point-min))
-    (while (re-search-forward "^\\(\\*+\\) " nil :noerror)
-      (when (evenp (length (match-string 1)))
-        (user-error "Even headings found")))
-    (goto-char (point-min))
-    (let ((spaces 2))
-      (while (not (eobp))
-        (cond
-         ((looking-at "^\\(\\*+\\) ")
-          (let ((level (/ (1+ (length (match-string 1))) 2)))
-            (replace-match (make-string level ?*) nil nil nil 1)
-            (setq spaces (* level 2))))
-         ((looking-at (concat "^" (make-string spaces ? ) "\\*"))
-          (replace-match ",*"))
-         ((looking-at (concat "^" (make-string spaces ? )))
-          (replace-match "")))
-        (forward-line 1)))))
-;; org-convert-headings-from-odd-adapt-to-oddeven-indent:1 ends here
-
-;; [[file:init-emacs.org::#org-mode-functions-org-convert-headings-from-oddeven-indent-to-odd-even-adapt][org-convert-headings-from-oddeven-indent-to-odd-even-adapt:1]]
-;;------------------------------------------------------------------------------
-;;;; Org Mode: Functions: org-convert-headings-from-oddeven-indent-to-odd-even-adapt
-;;------------------------------------------------------------------------------
-
-(init-message 3 "Org Mode: Functions: org-convert-headings-from-oddeven-indent-to-odd-even-adapt")
-
-(defun org-convert-headings-from-oddeven-indent-to-odd-even-adapt ()
-  "Convert current org buffer from odd-even levels and
-`org-indent-mode' to `org-odd-levels-only' and
-`org-adapt-indentation'."
-  (unless (derived-mode-p 'org-mode)
-    (user-error "Not an Org buffer"))
-  (save-mark-and-excursion
-    (goto-char (point-min))
-    (let (even subheading)
+  (with-current-buffer (or buffer (current-buffer))
+    (save-mark-and-excursion
+      (goto-char (point-min))
       (while (re-search-forward "^\\(\\*+\\) " nil :noerror)
         (when (evenp (length (match-string 1)))
-          (setq even t))
-        (when (> (length (match-string 1)) 2)
-          (setq subheading t)))
-      (when (and subheading (not even))
-        (user-error "Only odd headings found")))
-    (goto-char (point-min))
-    (let ((spaces 2))
-      (while (not (eobp))
-        (cond
-         ((looking-at "^\\(\\*+\\) ")
-          (let ((level (length (match-string 1))))
-            (replace-match (make-string (1- (* level 2)) ?*) nil nil nil 1)
-            (setq spaces (* level 2))))
-         ((looking-at "^,\\*")
-          (replace-match (concat (make-string spaces ? ) "*")))
-         ((not (looking-at "^$"))
-          (insert (make-string spaces ? ))))
-        (forward-line 1)))))
-;; org-convert-headings-from-oddeven-indent-to-odd-even-adapt:1 ends here
+          (user-error "Even headings found")))
+      (goto-char (point-min))
+      (let ((spaces 0))
+        (while (not (eobp))
+          (cond
+           ((looking-at "^\\(\\*+\\) ")
+            (let ((level (/ (1+ (length (match-string 1))) 2)))
+              (replace-match (make-string level ?*) nil nil nil 1)
+              (setq spaces (* level 2))))
+           ((looking-at (concat "^" (make-string spaces ? ) "\\*"))
+            (replace-match ",*"))
+           ((looking-at (concat "^" (make-string spaces ? )))
+            (replace-match "")))
+          (forward-line 1))))))
+;; org-convert-headings-from-odd-indented-to-oddeven-unindented:1 ends here
+
+;; [[file:init-emacs.org::#org-mode-functions-org-convert-headings-from-oddeven-unindented-to-odd-indented][org-convert-headings-from-oddeven-unindented-to-odd-indented:1]]
+;;------------------------------------------------------------------------------
+;;;; Org Mode: Functions: org-convert-headings-from-oddeven-unindented-to-odd-indented
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Org Mode: Functions: org-convert-headings-from-oddeven-unindented-to-odd-indented")
+
+(defun org-convert-headings-from-oddeven-unindented-to-odd-indented ()
+  "Convert Org BUFFER from having odd and even heading levels and
+  non-indented body data (`org-indent-mode') to having only odd
+  heading levels and intended body data (`org-odd-levels-only'
+  and `org-adapt-indentation').
+
+  If BUFFER is nil, current buffer is used."
+  (unless (derived-mode-p 'org-mode)
+    (user-error "Not an Org buffer"))
+  (with-current-buffer (or buffer (current-buffer))
+    (save-mark-and-excursion
+      (goto-char (point-min))
+      (let (even subheading)
+        (while (re-search-forward "^\\(\\*+\\) " nil :noerror)
+          (when (evenp (length (match-string 1)))
+            (setq even t))
+          (when (> (length (match-string 1)) 2)
+            (setq subheading t)))
+        (when (and subheading (not even))
+          (user-error "Only odd headings found")))
+      (goto-char (point-min))
+      (let ((spaces 0))
+        (while (not (eobp))
+          (cond
+           ((looking-at "^\\(\\*+\\) ")
+            (let ((level (length (match-string 1))))
+              (replace-match (make-string (1- (* level 2)) ?*) nil nil nil 1)
+              (setq spaces (* level 2))))
+           ((looking-at "^,\\*")
+            (replace-match (concat (make-string spaces ? ) "*")))
+           ((not (looking-at "^$"))
+            (insert (make-string spaces ? ))))
+          (forward-line 1))))))
+;; org-convert-headings-from-oddeven-unindented-to-odd-indented:1 ends here
 
 ;; [[file:init-emacs.org::#org-mode-hook][Hook:1]]
 ;;------------------------------------------------------------------------------
