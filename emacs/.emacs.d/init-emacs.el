@@ -2543,11 +2543,11 @@ DATA should have been made by `org-outline-overlay-data'."
   (org-adapt-indentation t)
   ;; ;; do not indent blocks to outline node level
   ;; (org-adapt-indentation nil)
-  ;; skip levels
+  ;; odd level headings only
   (org-odd-levels-only t)
-  ;; ;; do not skip levels
+  ;; ;; odd and even level headings
   ;; (org-odd-levels-only nil)
-  ;; hide leading stars
+  ;; hide leading stars on headings
   (org-hide-leading-stars t)
   ;; startup in "overview" (folded) by default
   (org-startup-folded t)
@@ -5168,8 +5168,8 @@ heading, properties, source block with title comment, and test block."
 (init-message 2 "Org Mode: Visibility")
 
 (use-package org-visibility
-  :straight t
-  ;;:load-path (lambda () (file-truename (expand-file-name "~/code/github-nullman/emacs-org-visibility")))
+  ;;:straight t
+  :load-path (lambda () (file-truename (expand-file-name "~/code/github-nullman/emacs-org-visibility")))
   :after (org)
   :demand t
   :bind* (:map org-visibility-mode-map
