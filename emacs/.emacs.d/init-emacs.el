@@ -15581,19 +15581,6 @@ USING is the remaining peg."
           ("C--" . er/contract-region))) ; default: `negative-argument'
 ;; expand-region:1 ends here
 
-;; [[file:init-emacs.org::#packages-explain-pause-mode][explain-pause-mode:1]]
-;;------------------------------------------------------------------------------
-;;; Packages: explain-pause-mode
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Packages: explain-pause-mode")
-
-(use-package explain-pause-mode
-  :straight (explain-pause-mode :type git :host github :repo "lastquestion/explain-pause-mode")
-  :config
-  (explain-pause-mode))
-;; explain-pause-mode:1 ends here
-
 ;; [[file:init-emacs.org::#modules-flycheck][flycheck:1]]
 ;;------------------------------------------------------------------------------
 ;;; Packages: flycheck

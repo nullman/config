@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: overview
-  #+TIMESTAMP: <2022-07-07 16:22 (kyle)>
+  #+TIMESTAMP: <2022-07-09 12:17 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -22866,22 +22866,22 @@
                 ("C--" . er/contract-region))) ; default: `negative-argument'
     #+END_SRC
 
-*** explain-pause-mode
+*** +explain-pause-mode+
     :PROPERTIES:
     :CUSTOM_ID: packages-explain-pause-mode
     :END:
 
-    #+BEGIN_SRC emacs-lisp
-      ;;------------------------------------------------------------------------------
-      ;;; Packages: explain-pause-mode
-      ;;------------------------------------------------------------------------------
+    #+BEGIN_SRC emacs-lisp :tangle no
+      ;; ;;------------------------------------------------------------------------------
+      ;; ;;; Packages: explain-pause-mode
+      ;; ;;------------------------------------------------------------------------------
 
-      (init-message 2 "Packages: explain-pause-mode")
+      ;; (init-message 2 "Packages: explain-pause-mode")
 
-      (use-package explain-pause-mode
-        :straight (explain-pause-mode :type git :host github :repo "lastquestion/explain-pause-mode")
-        :config
-        (explain-pause-mode))
+      ;; (use-package explain-pause-mode
+      ;;   :straight (explain-pause-mode :type git :host github :repo "lastquestion/explain-pause-mode")
+      ;;   :config
+      ;;   (explain-pause-mode))
     #+END_SRC
 
 *** flycheck
