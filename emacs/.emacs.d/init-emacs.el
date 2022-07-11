@@ -172,9 +172,9 @@ Skips checks if run on Windows or Mac."
 ;; use straight with `use-package'
 (straight-use-package 'use-package)
 
-;; configure `use-package' to use straight by default
-(use-package straight
-  :custom (straight-use-package-by-default t))
+;; ;; configure `use-package' to use straight by default
+;; (use-package straight
+;;   :custom (straight-use-package-by-default t))
 
 ;; turn off package file modification check at startup
 (setq straight-check-for-modifications '(find-when-checking check-on-save))
@@ -2583,7 +2583,7 @@ KEYMAP defaults to `override-global-map'."
       (if (fboundp 'org-babel-tangle-file-async)
           (org-babel-tangle-file-async init-emacs-true-file-name)
         (org-babel-tangle-file init-emacs-true-file-name))))
-  (add-hook 'after-save-hook #'after-save-hook--generate-init-emacs-elisp-file :append))
+  (add-hook 'after-save-hook #'after-save-hook--generate-init-emacs-elisp-file :append)
 
   (defun org-insert-heading--fix-newline-bug (orig-fun &rest args)
     "Fix extra newline bug in org."
@@ -2805,11 +2805,11 @@ DATA should have been made by `org-outline-overlay-data'."
     (setq org-capture-templates
           `(("i" "Inbox" entry
              (file+headline ,capture-file ,capture-headline)
-             "* TODO %?"
+             "* TODO %?\nOPENED: %U"
              :prepend t)
             ("@" "Inbox [mu4e]" entry
              (file+headline ,capture-file ,capture-headline)
-             "* TODO Email: \"%a\" %?"
+             "* TODO Email: \"%a\" %?\nOPENED: %U"
              :prepend t)))))
 ;; Capture:1 ends here
 
@@ -7628,7 +7628,7 @@ init-emacs-website.el to be used with batch commands."
                                 ";; set emacs home directory"
                                 ";; do not make backup files"
                                 ";;;; Org Mode: Functions: org-get-file-data"
-                                ";;;; Org Mode: Babel: Setup"
+                                ";;;; Org Mode: Babel: Configuration"
                                 ";;;; Org Mode: Babel: Tangle Update Timestamps"
                                 ";;;; Org Mode: Babel: Tangle Case-Sensitive"
                                 ";;;; Functions: Emacs Functions: delete-line"
@@ -17829,11 +17829,11 @@ otherwise run `find-file-as-root'."
   :hook (lsp-mode . lsp-ui-mode)
   :custom (lsp-ui-doc-position 'bottom))
 
-;;------------------------------------------------------------------------------
-;;;; helm-lsp
-;;
-;; LSP helm integration.
-;;------------------------------------------------------------------------------
+;; ;;------------------------------------------------------------------------------
+;; ;;;; helm-lsp
+;; ;;
+;; ;; LSP helm integration.
+;; ;;------------------------------------------------------------------------------
 
 ;; (init-message 3 "helm-lsp")
 
@@ -17841,17 +17841,17 @@ otherwise run `find-file-as-root'."
 ;;   :straight t
 ;;   :after (lsp-mode))
 
-;;------------------------------------------------------------------------------
-;;;; lsp-ivy
-;;
-;; LSP ivy integration.
-;;------------------------------------------------------------------------------
+;; ;;------------------------------------------------------------------------------
+;; ;;;; lsp-ivy
+;; ;;
+;; ;; LSP ivy integration.
+;; ;;------------------------------------------------------------------------------
 
-(init-message 3 "lsp-ivy")
+;; (init-message 3 "lsp-ivy")
 
-(use-package lsp-ivy
-  :straight t
-  :after (lsp-mode))
+;; (use-package lsp-ivy
+;;   :straight t
+;;   :after (lsp-mode))
 
 ;;------------------------------------------------------------------------------
 ;;;; lsp-treemacs
@@ -21367,13 +21367,13 @@ to the current ERC buffer."
 )
 ;; General:1 ends here
 
-;; [[file:init-emacs.org::#final-setup][Final Setup:1]]
+;; [[file:init-emacs.org::#final][Final:1]]
 ;;==============================================================================
-;;; Final Setup
+;;; Final
 ;;==============================================================================
 
-(init-message 1 "Final Setup")
-;; Final Setup:1 ends here
+(init-message 1 "Final")
+;; Final:1 ends here
 
 ;; [[file:init-emacs.org::#final-setup-set-key-bindings][Set Key Bindings:1]]
 ;;------------------------------------------------------------------------------
