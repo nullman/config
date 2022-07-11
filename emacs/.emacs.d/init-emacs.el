@@ -2395,141 +2395,6 @@ KEYMAP defaults to `override-global-map'."
 (init-message 1 "Org Mode")
 ;; Org Mode:1 ends here
 
-;; [[file:init-emacs.org::#org-mode-setup][Setup:1]]
-;;------------------------------------------------------------------------------
-;;; Org Mode: Setup
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Org Mode: Setup")
-
-(use-package org
-  :straight (:type built-in)
-  :demand t
-  :mode (("\\.org\\'" . org-mode)
-         ("\\.org_archive\\'" . org-mode)
-         ;;("\\.org\\.enc\\'" . org-mode)
-         ("\\.org\\.cpt\\'" . org-mode))
-  ;; :functions (org-insert-heading--fix-newline-bug)
-  :bind* (("C-c a" . org-agenda)
-          ("C-c c" . org-capture)
-          ;;("C-c l" . org-store-link)
-          ("C-c j" . org-babel-tangle-jump-to-org))
-  :config
-  (defun org-insert-heading--fix-newline-bug (orig-fun &rest args)
-    "Fix extra newline bug in org."
-    ;; make sure empty lines above new headline are not removed
-    (if (= (point) (line-beginning-position))
-        (let ((start (point)))
-          (apply orig-fun args)
-          (goto-char (line-beginning-position))
-          (while (< (point) start)
-            (newline))
-          (goto-char (line-end-position)))
-      (apply orig-fun args)))
-  ;; advise `org-insert-heading' to fix extra newline bug
-  (advice-add 'org-insert-heading :around #'org-insert-heading--fix-newline-bug)
-
-  ;; (defun org-fixup-indentation--unindent (diff)
-  ;;   "Unindent org begin/end blocks, keywords, and paragraphs."
-  ;;   (save-window-excursion
-  ;;     (save-mark-and-excursion
-  ;;       (save-match-data
-  ;;         (when (org-with-limited-levels (org-at-heading-p))
-  ;;           (org-with-wide-buffer
-  ;;            (narrow-to-region (line-beginning-position)
-  ;;                              (save-mark-and-excursion
-  ;;                                (org-with-limited-levels (outline-next-heading))
-  ;;                                (point)))
-  ;;            (forward-line 0)
-  ;;            (org-beginning-of-line)
-  ;;            (let* ((case-fold-search t)
-  ;;                   (indentation (- (point) (line-beginning-position)))
-  ;;                   (spacing (make-string (abs diff) ? ))
-  ;;                   (indented-regexp (concat "^" spacing "[ \t]*"))
-  ;;                   (text-indent t))
-  ;;              (forward-line 1)
-  ;;              (while (not (eobp))
-  ;;                (when (re-search-forward indented-regexp (line-end-position) :noerror)
-  ;;                  (let ((line-indentation (- (point) (line-beginning-position))))
-  ;;                    (forward-line 0)
-  ;;                    (cl-case (org-element-type (org-element-at-point))
-  ;;                      ('src-block
-  ;;                       (when (> diff 0)
-  ;;                         (delete-char diff)))
-  ;;                      ((paragraph table table-row)
-  ;;                       (if (> diff 0)
-  ;;                           (when (or (not text-indent)
-  ;;                                     (< line-indentation indentation))
-  ;;                             (delete-char diff)
-  ;;                             (setq text-indent nil))
-  ;;                         (if (and text-indent
-  ;;                                  (>= line-indentation (- indentation diff)))
-  ;;                             (delete-char (abs diff))
-  ;;                           (setq text-indent nil)))))))
-  ;;                (forward-line 1)))))))))
-  ;; ;; advise `org-fixup-indentation' to unindent as needed
-  ;; (advice-add 'org-fixup-indentation :after #'org-fixup-indentation--unindent)
-
-  ;; define some needed, but deprecated functions
-
-  (unless (fboundp 'org-outline-overlay-data)
-    (defun org-outline-overlay-data (&optional use-markers)
-      "Return a list of the locations of all outline overlays.
-These are overlays with the `invisible' property value `outline'.
-The return value is a list of cons cells, with start and stop
-positions for each overlay.
-If USE-MARKERS is set, return the positions as markers."
-      (let (beg end)
-        (org-with-wide-buffer
-         (delq nil
-               (mapcar (lambda (x)
-                         (when (eq (overlay-get x 'invisible) 'outline)
-                           (setq beg (overlay-start x)
-                                 end (overlay-end x))
-                           (and beg end (> end beg)
-                                (if use-markers
-                                    (cons (copy-marker beg)
-                                          (copy-marker end t))
-                                  (cons beg end)))))
-                       (overlays-in (point-min) (point-max))))))))
-
-  (unless (fboundp 'org-set-outline-overlay-data)
-    (defun org-set-outline-overlay-data (data)
-      "Create visibility overlays for all positions in DATA.
-DATA should have been made by `org-outline-overlay-data'."
-      (org-with-wide-buffer
-       (org-show-all)
-       (dolist (c data) (org-flag-region (car c) (cdr c) t 'outline))))))
-
-(use-package outline
-  :straight (:type built-in)
-  :after (org)
-  :commands (outline-up-heading
-             outline-forward-same-level
-             outline-show-subtree)
-  :config
-  ;; ;; faces
-  ;; (custom-set-faces
-  ;;  `(outline-1 ((t (:foreground ,color-1))))
-  ;;  `(outline-2 ((t (:foreground ,color-2))))
-  ;;  `(outline-3 ((t (:foreground ,color-3))))
-  ;;  `(outline-4 ((t (:foreground ,color-4))))
-  ;;  `(outline-5 ((t (:foreground ,color-5))))
-  ;;  `(outline-6 ((t (:foreground ,color-6))))
-  ;;  `(outline-7 ((t (:foreground ,color-7))))
-  ;;  `(outline-8 ((t (:foreground ,color-8)))))
-
-  ;; advise `outline-up-heading' to suppress errors
-  (advice-add 'outline-up-heading :around #'advice--ignore-errors))
-
-;; (init-message 3 "org-pdfview")
-
-;; needs pdftools, which annoyingly recompiles on every boot
-;; (use-package org-pdfview
-;;   :straight t
-;;   :after (org))
-;; Setup:1 ends here
-
 ;; [[file:init-emacs.org::#org-mode-configuration][Configuration:1]]
 ;;------------------------------------------------------------------------------
 ;;; Org Mode: Configuration
@@ -2539,6 +2404,15 @@ DATA should have been made by `org-outline-overlay-data'."
 
 (use-package org
   :straight (:type built-in)
+  :demand t
+  :mode (("\\.org\\'" . org-mode)
+         ("\\.org_archive\\'" . org-mode)
+         ;;("\\.org\\.enc\\'" . org-mode)
+         ("\\.org\\.cpt\\'" . org-mode))
+  :bind* (("C-c a" . org-agenda)
+          ("C-c c" . org-capture)
+          ;;("C-c l" . org-store-link)
+          ("C-c j" . org-babel-tangle-jump-to-org))
   :custom
   ;; org directory
   (org-directory (file-truename (expand-file-name "~/org")))
@@ -2710,7 +2584,122 @@ DATA should have been made by `org-outline-overlay-data'."
           (org-babel-tangle-file-async init-emacs-true-file-name)
         (org-babel-tangle-file init-emacs-true-file-name))))
   (add-hook 'after-save-hook #'after-save-hook--generate-init-emacs-elisp-file :append))
+
+  (defun org-insert-heading--fix-newline-bug (orig-fun &rest args)
+    "Fix extra newline bug in org."
+    ;; make sure empty lines above new headline are not removed
+    (if (= (point) (line-beginning-position))
+        (let ((start (point)))
+          (apply orig-fun args)
+          (goto-char (line-beginning-position))
+          (while (< (point) start)
+            (newline))
+          (goto-char (line-end-position)))
+      (apply orig-fun args)))
+  ;; advise `org-insert-heading' to fix extra newline bug
+  (advice-add 'org-insert-heading :around #'org-insert-heading--fix-newline-bug)
+
+  ;; (defun org-fixup-indentation--unindent (diff)
+  ;;   "Unindent org begin/end blocks, keywords, and paragraphs."
+  ;;   (save-window-excursion
+  ;;     (save-mark-and-excursion
+  ;;       (save-match-data
+  ;;         (when (org-with-limited-levels (org-at-heading-p))
+  ;;           (org-with-wide-buffer
+  ;;            (narrow-to-region (line-beginning-position)
+  ;;                              (save-mark-and-excursion
+  ;;                                (org-with-limited-levels (outline-next-heading))
+  ;;                                (point)))
+  ;;            (forward-line 0)
+  ;;            (org-beginning-of-line)
+  ;;            (let* ((case-fold-search t)
+  ;;                   (indentation (- (point) (line-beginning-position)))
+  ;;                   (spacing (make-string (abs diff) ? ))
+  ;;                   (indented-regexp (concat "^" spacing "[ \t]*"))
+  ;;                   (text-indent t))
+  ;;              (forward-line 1)
+  ;;              (while (not (eobp))
+  ;;                (when (re-search-forward indented-regexp (line-end-position) :noerror)
+  ;;                  (let ((line-indentation (- (point) (line-beginning-position))))
+  ;;                    (forward-line 0)
+  ;;                    (cl-case (org-element-type (org-element-at-point))
+  ;;                      ('src-block
+  ;;                       (when (> diff 0)
+  ;;                         (delete-char diff)))
+  ;;                      ((paragraph table table-row)
+  ;;                       (if (> diff 0)
+  ;;                           (when (or (not text-indent)
+  ;;                                     (< line-indentation indentation))
+  ;;                             (delete-char diff)
+  ;;                             (setq text-indent nil))
+  ;;                         (if (and text-indent
+  ;;                                  (>= line-indentation (- indentation diff)))
+  ;;                             (delete-char (abs diff))
+  ;;                           (setq text-indent nil)))))))
+  ;;                (forward-line 1)))))))))
+  ;; ;; advise `org-fixup-indentation' to unindent as needed
+  ;; (advice-add 'org-fixup-indentation :after #'org-fixup-indentation--unindent)
+
+  ;; define some needed, but deprecated functions
+
+  (unless (fboundp 'org-outline-overlay-data)
+    (defun org-outline-overlay-data (&optional use-markers)
+      "Return a list of the locations of all outline overlays.
+These are overlays with the `invisible' property value `outline'.
+The return value is a list of cons cells, with start and stop
+positions for each overlay.
+If USE-MARKERS is set, return the positions as markers."
+      (let (beg end)
+        (org-with-wide-buffer
+         (delq nil
+               (mapcar (lambda (x)
+                         (when (eq (overlay-get x 'invisible) 'outline)
+                           (setq beg (overlay-start x)
+                                 end (overlay-end x))
+                           (and beg end (> end beg)
+                                (if use-markers
+                                    (cons (copy-marker beg)
+                                          (copy-marker end t))
+                                  (cons beg end)))))
+                       (overlays-in (point-min) (point-max))))))))
+
+  (unless (fboundp 'org-set-outline-overlay-data)
+    (defun org-set-outline-overlay-data (data)
+      "Create visibility overlays for all positions in DATA.
+DATA should have been made by `org-outline-overlay-data'."
+      (org-with-wide-buffer
+       (org-show-all)
+       (dolist (c data) (org-flag-region (car c) (cdr c) t 'outline))))))
 ;; Configuration:1 ends here
+
+;; [[file:init-emacs.org::#org-mode-outline][Outline:1]]
+;;------------------------------------------------------------------------------
+;;; Org Mode: Outline
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Org Mode: Outline")
+
+(use-package outline
+  :straight (:type built-in)
+  :after (org)
+  :commands (outline-up-heading
+             outline-forward-same-level
+             outline-show-subtree)
+  :config
+  ;; ;; faces
+  ;; (custom-set-faces
+  ;;  `(outline-1 ((t (:foreground ,color-1))))
+  ;;  `(outline-2 ((t (:foreground ,color-2))))
+  ;;  `(outline-3 ((t (:foreground ,color-3))))
+  ;;  `(outline-4 ((t (:foreground ,color-4))))
+  ;;  `(outline-5 ((t (:foreground ,color-5))))
+  ;;  `(outline-6 ((t (:foreground ,color-6))))
+  ;;  `(outline-7 ((t (:foreground ,color-7))))
+  ;;  `(outline-8 ((t (:foreground ,color-8)))))
+
+  ;; advise `outline-up-heading' to suppress errors
+  (advice-add 'outline-up-heading :around #'advice--ignore-errors))
+;; Outline:1 ends here
 
 ;; [[file:init-emacs.org::#org-mode-agenda][Agenda:1]]
 ;;------------------------------------------------------------------------------
@@ -3951,12 +3940,12 @@ If BUFFER is nil, current buffer is used."
 (init-message 2 "Org Mode: Babel")
 ;; Babel:1 ends here
 
-;; [[file:init-emacs.org::#org-mode-babel-setup][Setup:1]]
+;; [[file:init-emacs.org::#org-mode-babel-configuration][Configuration:1]]
 ;;------------------------------------------------------------------------------
-;;;; Org Mode: Babel: Setup
+;;;; Org Mode: Babel: Configuration
 ;;------------------------------------------------------------------------------
 
-(init-message 3 "Org Mode: Babel: Setup")
+(init-message 3 "Org Mode: Babel: Configuration")
 
 ;; load ob-shell
 (use-package org
@@ -4052,7 +4041,7 @@ If BUFFER is nil, current buffer is used."
 ;;              (t (let ((doc-fun (org-eldoc-get-mode-local-documentation-function lang)))
 ;;                   (when (and (functionp doc-fun) (not (string= doc-fun "org-eldoc-documentation-function")))
 ;;                     (funcall doc-fun)))))))))
-;; Setup:1 ends here
+;; Configuration:1 ends here
 
 ;; [[file:init-emacs.org::#org-mode-babel-structure-templates][Structure Templates:1]]
 ;;------------------------------------------------------------------------------
@@ -17800,6 +17789,83 @@ otherwise run `find-file-as-root'."
 (init-message 1 "LSP Mode")
 ;; LSP Mode:1 ends here
 
+;; [[file:init-emacs.org::#lsp-mode-configuration][Configuration:1]]
+;;------------------------------------------------------------------------------
+;;; LSP Mode: Configuration
+;;------------------------------------------------------------------------------
+
+(init-message 2 "LSP Mode: Configuration")
+
+(defun custom-lsp-mode-hook ()
+  ;; turn on breadcrumbs
+  (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
+  (lsp-headerline-breadcrumb-mode))
+
+(use-package lsp-mode
+  :straight t
+  :after (company)
+  :commands (lsp lsp-mode lsp-defered)
+  :bind (:map lsp-mode-map
+              ("<tab>" . company-indent-or-complete-common))
+  :hook ((lsp-mode . custom-lsp-mode-hook)
+         (lsp-mode . company-mode))
+  :init
+  (setq lsp-keymap-prefix "C-x C-l")    ; default: `downcase-region'
+  :config
+  ;; add `which-key-mode' descriptions
+  (lsp-enable-which-key-integration t))
+
+;;------------------------------------------------------------------------------
+;;;; lsp-ui
+;;
+;; Minor mode that contains a series of useful UI integrations.
+;;------------------------------------------------------------------------------
+
+(init-message 3 "lsp-ui")
+
+(use-package lsp-ui
+  :straight t
+  :after (lsp-mode)
+  :hook (lsp-mode . lsp-ui-mode)
+  :custom (lsp-ui-doc-position 'bottom))
+
+;;------------------------------------------------------------------------------
+;;;; helm-lsp
+;;
+;; LSP helm integration.
+;;------------------------------------------------------------------------------
+
+;; (init-message 3 "helm-lsp")
+
+;; (use-package helm-lsp
+;;   :straight t
+;;   :after (lsp-mode))
+
+;;------------------------------------------------------------------------------
+;;;; lsp-ivy
+;;
+;; LSP ivy integration.
+;;------------------------------------------------------------------------------
+
+(init-message 3 "lsp-ivy")
+
+(use-package lsp-ivy
+  :straight t
+  :after (lsp-mode))
+
+;;------------------------------------------------------------------------------
+;;;; lsp-treemacs
+;;
+;; LSP treemacs integration.
+;;------------------------------------------------------------------------------
+
+(init-message 3 "lsp-treemacs")
+
+(use-package lsp-treemacs
+  :straight t
+  :after (lsp-mode))
+;; Configuration:1 ends here
+
 ;; [[file:init-emacs.org::#eglot][eglot:1]]
 ;;==============================================================================
 ;;; eglot
@@ -17819,12 +17885,12 @@ otherwise run `find-file-as-root'."
 (init-message 1 "Modes")
 ;; Modes:1 ends here
 
-;; [[file:init-emacs.org::#modes-setup][Setup:1]]
+;; [[file:init-emacs.org::#modes-configuration][Configuration:1]]
 ;;------------------------------------------------------------------------------
-;;; Modes: Setup
+;;; Modes: Configuration
 ;;------------------------------------------------------------------------------
 
-(init-message 2 "Modes: Setup")
+(init-message 2 "Modes: Configuration")
 
 ;; turn off electric indent for all modes
 (setq electric-indent-inhibit t)
@@ -17833,7 +17899,7 @@ otherwise run `find-file-as-root'."
 ;; turn off electric mode for all cc modes
 (setq c-electric-flag nil)
 (setq-default c-electric-flag c-electric-flag)
-;; Setup:1 ends here
+;; Configuration:1 ends here
 
 ;; [[file:init-emacs.org::#modes-asm][ASM:1]]
 ;;------------------------------------------------------------------------------
@@ -19884,13 +19950,13 @@ Commands:
 (init-message 1 "Menus")
 ;; Menus:1 ends here
 
-;; [[file:init-emacs.org::#menus-setup][Setup:1]]
+;; [[file:init-emacs.org::#menus-configuration][Configuration:1]]
 ;;------------------------------------------------------------------------------
-;;; Menus: Setup
+;;; Menus: Configuration
 ;;------------------------------------------------------------------------------
 
-(init-message 2 "Menus: Setup")
-;; Setup:1 ends here
+(init-message 2 "Menus: Configuration")
+;; Configuration:1 ends here
 
 ;; [[file:init-emacs.org::#menus-setup-easy-menu][Easy Menu:1]]
 ;;------------------------------------------------------------------------------
@@ -20445,10 +20511,10 @@ Commands:
 (init-message 1 "Snippets")
 
 ;;------------------------------------------------------------------------------
-;;; Snippets: Setup
+;;; Snippets: Configuration
 ;;------------------------------------------------------------------------------
 
-(init-message 2 "Snippets: Setup")
+(init-message 2 "Snippets: Configuration")
 
 ;;------------------------------------------------------------------------------
 ;;;; Snippets: Setup: Yasnippet
@@ -20499,19 +20565,19 @@ Commands:
 (init-message 1 "Hydras")
 ;; Hydras:1 ends here
 
-;; [[file:init-emacs.org::#hydras-setup][Setup:1]]
+;; [[file:init-emacs.org::#hydras-configuration][Configuration:1]]
 ;;------------------------------------------------------------------------------
-;;; Hydras: Setup
+;;; Hydras: Configuration
 ;;------------------------------------------------------------------------------
 
-(init-message 2 "Hydras: Setup")
+(init-message 2 "Hydras: Configuration")
 
 (init-message 3 "hydra")
 
 ;; hydra
 (use-package hydra
   :straight t)
-;; Setup:1 ends here
+;; Configuration:1 ends here
 
 ;; [[file:init-emacs.org::#windows-os][Windows OS:1]]
 ;;==============================================================================
@@ -20694,12 +20760,12 @@ Commands:
 (init-message 1 "ERC")
 ;; ERC:1 ends here
 
-;; [[file:init-emacs.org::#erc-setup][Setup:1]]
+;; [[file:init-emacs.org::#erc-configuration][Configuration:1]]
 ;;------------------------------------------------------------------------------
-;;; ERC: Setup
+;;; ERC: Configuration
 ;;------------------------------------------------------------------------------
 
-(init-message 2 "ERC: Setup")
+(init-message 2 "ERC: Configuration")
 
 (use-package erc
   :straight (:type built-in)
@@ -20724,7 +20790,7 @@ Commands:
   ;;                  "ldapsearch -x -P 2 -h db.debian.org -b dc=debian,dc=org ircnick=%s"
   ;;                  nick))) t)
   )
-;; Setup:1 ends here
+;; Configuration:1 ends here
 
 ;; [[file:init-emacs.org::#erc-customization][Customization:1]]
 ;;------------------------------------------------------------------------------
