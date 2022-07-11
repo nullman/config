@@ -172,6 +172,10 @@ Skips checks if run on Windows or Mac."
 ;; use straight with `use-package'
 (straight-use-package 'use-package)
 
+;; configure `use-package' to use straight by default
+(use-package straight
+  :custom (straight-use-package-by-default t))
+
 ;; turn off package file modification check at startup
 (setq straight-check-for-modifications '(find-when-checking check-on-save))
 

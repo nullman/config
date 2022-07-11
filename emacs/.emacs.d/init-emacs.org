@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: overview
-  #+TIMESTAMP: <2022-07-11 08:44 (kyle)>
+  #+TIMESTAMP: <2022-07-11 08:52 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -564,6 +564,10 @@
 
       ;; use straight with `use-package'
       (straight-use-package 'use-package)
+
+      ;; configure `use-package' to use straight by default
+      (use-package straight
+        :custom (straight-use-package-by-default t))
 
       ;; turn off package file modification check at startup
       (setq straight-check-for-modifications '(find-when-checking check-on-save))
