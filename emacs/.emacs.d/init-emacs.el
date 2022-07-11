@@ -2306,7 +2306,8 @@ KEYMAP defaults to `override-global-map'."
              ("i" . package-install)
              ("l" . package-list-packages-no-fetch)
              ("L" . package-list-packages)
-             ("P" . straight-pull-recipe-repositories)
+             ("R" . straight-pull-recipe-repositories)
+             ("P" . straight-pull-all)
              ("F" . straight-fetch-all))
 
   ;; run commands
@@ -20157,6 +20158,7 @@ Commands:
    ("List Packages (Refresh)" "package-list-packages" "List packages (after refresh).")
    ("Install Package" "package-install" "Install package.")
    ("Straight Refresh" "straight-pull-recipe-repositories" "Refresh recipe repositories.")
+   ("Straight Pull All" "straight-pull-all" "Pull all packages.")
    ("Straight Fetch All" "straight-fetch-all" "Fetch all packages.")
    ;;("Auto-Remove Packages" "package-autoremove" "Remove packages that are no more needed.")
    ;;("Quelpa Upgrade" "quelpa-upgrade" "Upgrade one Quelpa package.")

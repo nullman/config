@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: overview
-  #+TIMESTAMP: <2022-07-10 15:27 (kyle)>
+  #+TIMESTAMP: <2022-07-11 08:44 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -3631,7 +3631,8 @@
                    ("i" . package-install)
                    ("l" . package-list-packages-no-fetch)
                    ("L" . package-list-packages)
-                   ("P" . straight-pull-recipe-repositories)
+                   ("R" . straight-pull-recipe-repositories)
+                   ("P" . straight-pull-all)
                    ("F" . straight-fetch-all))
 
         ;; run commands
@@ -31014,6 +31015,7 @@
          ("List Packages (Refresh)" "package-list-packages" "List packages (after refresh).")
          ("Install Package" "package-install" "Install package.")
          ("Straight Refresh" "straight-pull-recipe-repositories" "Refresh recipe repositories.")
+         ("Straight Pull All" "straight-pull-all" "Pull all packages.")
          ("Straight Fetch All" "straight-fetch-all" "Fetch all packages.")
          ;;("Auto-Remove Packages" "package-autoremove" "Remove packages that are no more needed.")
          ;;("Quelpa Upgrade" "quelpa-upgrade" "Upgrade one Quelpa package.")
