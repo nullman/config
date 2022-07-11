@@ -2719,9 +2719,10 @@ DATA should have been made by `org-outline-overlay-data'."
 
 (init-message 2 "Org Mode: Agenda")
 
-(use-package org
+(use-package org-agenda
   :when (file-exists-p org-directory)
   :straight (:type built-in)
+  :after (org)
   :config
   ;; agenda key bindings
   ;;(define-key org-agenda-mode-map (kbd "C-n") 'next-line)
@@ -2733,10 +2734,13 @@ DATA should have been made by `org-outline-overlay-data'."
   (setq org-log-done 'time)
 
   ;; agenda files
-  (setq org-agenda-file-regexp "agenda.*\\.org\\'"
+  (setq org-agenda-file-regexp "agenda-.*\\.org\\'"
         org-agenda-files (mapcar (lambda (x) (expand-file-name x (file-name-as-directory org-directory)))
                                  (cl-remove-if-not (lambda (x) (string-match org-agenda-file-regexp x))
                                                    (directory-files org-directory))))
+
+  ;; default notes file
+  (setq org-default-notes-file (car org-agenda-files))
 
   ;; show 7 days in agenda view
   (setq org-agenda-span 7)
@@ -2793,6 +2797,32 @@ DATA should have been made by `org-outline-overlay-data'."
   (when (boundp 'org-archive-subtree-save-file-p)
     (setq org-archive-subtree-save-file-p t)))
 ;; Agenda:1 ends here
+
+;; [[file:init-emacs.org::#org-mode-capture][Capture:1]]
+;;------------------------------------------------------------------------------
+;;; Org Mode: Capture
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Org Mode: Capture")
+
+(use-package org-capture
+  :when (file-exists-p org-directory)
+  :straight (:type built-in)
+  :after (org
+          org-agenda)
+  :config
+  (let ((capture-file (car org-agenda-files))
+        (capture-headline "Inbox"))
+    (setq org-capture-templates
+          `(("i" "Inbox" entry
+             (file+headline ,capture-file ,capture-headline)
+             "* TODO %?"
+             :prepend t)
+            ("@" "Inbox [mu4e]" entry
+             (file+headline ,capture-file ,capture-headline)
+             "* TODO Email: \"%a\" %?"
+             :prepend t)))))
+;; Capture:1 ends here
 
 ;; [[file:init-emacs.org::#org-mode-latex][LaTeX:1]]
 ;;------------------------------------------------------------------------------
