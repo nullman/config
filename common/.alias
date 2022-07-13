@@ -2838,6 +2838,8 @@ alias git-submodule-update="
 alias git-prune="git remote prune origin"
 #        git-reset-head          git reset --hard HEAD
 alias git-reset-head="git reset --hard HEAD"
+#        git-reset-branch        git reset --hard origin/(current branch)
+alias git-reset-branch="git reset --hard origin/\$(git-branch)"
 #        git-clone-d1            git clone --depth=1
 alias git-clone-d1="git clone --depth=1"
 #        git-deepen-full         git fetch --unshallow and fetch branches
