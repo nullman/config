@@ -3225,6 +3225,45 @@ Output format if WITH-MARKERS is non-nil:
       (cons property-alist (cdr start)))))
 ;; org-get-buffer-data:1 ends here
 
+;; [[file:init-emacs.org::#org-mode-functions-org-get-buffer-tags-statistics][org-get-buffer-tags-statistics:1]]
+;;------------------------------------------------------------------------------
+;;;; Org Mode: Functions: org-get-buffer-tags-statistics
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Org Mode: Functions: org-get-buffer-tags-statistics")
+
+(defun org-get-buffer-tags-statistics (&optional files)
+  "Return an alist of tags and counts for all tags in FILES.
+
+FILES can be nil, a single file, or a list of files.
+If FILES is nil, the current buffer is used instead."
+  (let ((files
+         (mapcar #'file-truename
+                 (cond
+                  ((not files) (list (buffer-file-name)))
+                  ((bufferp files) (list files))
+                  ((listp files) files)
+                  (t (user-error "Invalid value for FILES: %S" files)))))
+        (loaded-files
+         (cl-remove-if #'null (mapcar #'buffer-file-name (buffer-list))))
+        stats)
+    (save-mark-and-excursion
+      (dolist (file files)
+        (find-file file)
+        (org-with-point-at 1
+          (let (tags)
+            (while (re-search-forward org-tag-line-re nil t)
+              (push (split-string (match-string-no-properties 2) ":") tags))
+            (dolist (tag (flatten-list tags))
+              (let ((node (assoc tag stats)))
+                (if node
+                    (setcdr node (1+ (cdr node)))
+                  (push (cons tag 1) stats))))))
+        (unless (member file loaded-files)
+          (kill-buffer))))
+    (sort stats (lambda (a b) (< (cdr a) (cdr b))))))
+;; org-get-buffer-tags-statistics:1 ends here
+
 ;; [[file:init-emacs.org::#org-mode-functions-org-safe-meta][org-safe-meta:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Functions: org-safe-meta

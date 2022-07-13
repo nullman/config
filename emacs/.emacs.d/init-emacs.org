@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-07-11 14:58 (kyle)>
+  #+TIMESTAMP: <2022-07-13 16:49 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -4583,6 +4583,8 @@
       :CUSTOM_ID: org-mode-functions-org-get-file-data
       :END:
 
+      Return a tree structure of org data found in the given file.
+
       #+BEGIN_SRC emacs-lisp
         ;;------------------------------------------------------------------------------
         ;;;; Org Mode: Functions: org-get-file-data
@@ -4718,10 +4720,7 @@
       :CUSTOM_ID: org-mode-functions-org-get-buffer-data
       :END:
 
-    :PROPERTIES:
-    :CUSTOM_ID: pages-home
-    :END:
-
+      Return a tree structure of org data found in the given buffer.
 
       #+BEGIN_SRC emacs-lisp
         ;;------------------------------------------------------------------------------
@@ -4875,6 +4874,52 @@
                   (setq property-section nil)))
                 (forward-line 1))
               (cons property-alist (cdr start)))))
+      #+END_SRC
+
+***** org-get-buffer-tags-statistics
+      :PROPERTIES:
+      :CUSTOM_ID: org-mode-functions-org-get-buffer-tags-statistics
+      :END:
+
+      Return an association list of tags and their counts in the given files.
+
+      #+BEGIN_SRC emacs-lisp
+        ;;------------------------------------------------------------------------------
+        ;;;; Org Mode: Functions: org-get-buffer-tags-statistics
+        ;;------------------------------------------------------------------------------
+
+        (init-message 3 "Org Mode: Functions: org-get-buffer-tags-statistics")
+
+        (defun org-get-buffer-tags-statistics (&optional files)
+          "Return an alist of tags and counts for all tags in FILES.
+
+        FILES can be nil, a single file, or a list of files.
+        If FILES is nil, the current buffer is used instead."
+          (let ((files
+                 (mapcar #'file-truename
+                         (cond
+                          ((not files) (list (buffer-file-name)))
+                          ((bufferp files) (list files))
+                          ((listp files) files)
+                          (t (user-error "Invalid value for FILES: %S" files)))))
+                (loaded-files
+                 (cl-remove-if #'null (mapcar #'buffer-file-name (buffer-list))))
+                stats)
+            (save-mark-and-excursion
+              (dolist (file files)
+                (find-file file)
+                (org-with-point-at 1
+                  (let (tags)
+                    (while (re-search-forward org-tag-line-re nil t)
+                      (push (split-string (match-string-no-properties 2) ":") tags))
+                    (dolist (tag (flatten-list tags))
+                      (let ((node (assoc tag stats)))
+                        (if node
+                            (setcdr node (1+ (cdr node)))
+                          (push (cons tag 1) stats))))))
+                (unless (member file loaded-files)
+                  (kill-buffer))))
+            (sort stats (lambda (a b) (< (cdr a) (cdr b))))))
       #+END_SRC
 
 ***** org-safe-meta
