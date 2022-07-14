@@ -261,7 +261,7 @@ term-name() {
 #        psg                     ps with grep
 psg() {
     pids=$(pgrep -f -i "$1" | tr '\n' ',' | sed 's/,$//')
-    [[ -n "${pids}" ]] && ps -o pid,ppid,user,args ${pids}
+    [[ -n "${pids}" ]] && ps -o pid,ppid,user,args -p ${pids}
 }
 #        grepper                 fancy grep
 grepper() {

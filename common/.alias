@@ -120,17 +120,19 @@ alias sra="source \${HOME}/bin/run-app"
 alias loc="locate -i"
 #        udb                     update locate database
 alias udb="sudo updatedb"
-#        psa                     ps -e --format pid,ppid,user,args --forest (all processes)
-alias psa="ps -e --format pid,ppid,user,args --forest"
+#        psa                     ps -e -o pid,ppid,user,args (all processes)
+alias psa="ps -e -o pid,ppid,user,args"
+#        psaf                    ps -e -o pid,ppid,user,args --forest (all processes)
+alias psaf="ps -e -o pid,ppid,user,args --forest"
 #        pscpu                   ps top cpu using processes
 alias pscpu="
-    ps -e --format pid,ppid,user,pcpu,pmem,args | \
-    head -n 1 && ps -e --format pid,ppid,user,pcpu,pmem,args | \
+    ps -e -o pid,ppid,user,pcpu,pmem,args | \
+    head -n 1 && ps -e -o pid,ppid,user,pcpu,pmem,args | \
     sort -nr -k 4 | head -n 10"
 #        psmem                   ps top memory using processes
 alias psmem="
-    ps -e --format pid,ppid,user,pcpu,pmem,args | \
-    head -n 1 && ps -e --format pid,ppid,user,pcpu,pmem,args | \
+    ps -e -o pid,ppid,user,pcpu,pmem,args | \
+    head -n 1 && ps -e -o pid,ppid,user,pcpu,pmem,args | \
     sort -nr -k 5 | head -n 10"
 #        un                      id -un (username)
 alias un="id -un"
