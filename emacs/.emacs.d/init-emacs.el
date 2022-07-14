@@ -3241,7 +3241,7 @@ If FILES is nil, the current buffer is used instead."
          (mapcar #'file-truename
                  (cond
                   ((not files) (list (buffer-file-name)))
-                  ((bufferp files) (list files))
+                  ((stringp files) (list files))
                   ((listp files) files)
                   (t (user-error "Invalid value for FILES: %S" files)))))
         (loaded-files
@@ -21416,20 +21416,20 @@ to the current ERC buffer."
 
 ;; [[file:init-emacs.org::#final-setup-set-key-bindings][Set Key Bindings:1]]
 ;;------------------------------------------------------------------------------
-;;; Final Setup: Set Key Bindings
+;;; Final: Set Key Bindings
 ;;------------------------------------------------------------------------------
 
-(init-message 2 "Final Setup: Set Key Bindings")
+(init-message 2 "Final: Set Key Bindings")
 
 (custom-key-bindings-set-all)
 ;; Set Key Bindings:1 ends here
 
 ;; [[file:init-emacs.org::#final-setup-compile-personal-modules][Compile Personal Modules:1]]
 ;;------------------------------------------------------------------------------
-;;; Final Setup: Compile Personal Modules
+;;; Final: Compile Personal Modules
 ;;------------------------------------------------------------------------------
 
-(init-message 2 "Final Setup: Compile Personal Modules")
+(init-message 2 "Final: Compile Personal Modules")
 
 ;; compile personal modules if needed
 (let ((dir local-modules-dir))
@@ -21445,10 +21445,10 @@ to the current ERC buffer."
 
 ;; [[file:init-emacs.org::#final-setup-start-emacs-server][Start Emacs Server:1]]
 ;;------------------------------------------------------------------------------
-;;; Final Setup: Start Emacs Server
+;;; Final: Start Emacs Server
 ;;------------------------------------------------------------------------------
 
-(init-message 2 "Final Setup: Start Emacs Server")
+(init-message 2 "Final: Start Emacs Server")
 
 ;; start emacs server
 (when (fboundp 'server-start-maybe)
@@ -21459,10 +21459,10 @@ to the current ERC buffer."
 
 ;; [[file:init-emacs.org::#final-setup-remove-logging-buffers][Remove Logging Buffers:1]]
 ;;------------------------------------------------------------------------------
-;;; Final Setup: Remove Logging Buffers
+;;; Final: Remove Logging Buffers
 ;;------------------------------------------------------------------------------
 
-(init-message 2 "Final Setup: Remove Logging Buffers")
+(init-message 2 "Final: Remove Logging Buffers")
 
 ;; ;; remove compile log buffer
 ;; (when (get-buffer "*Compile-Log*")
@@ -21475,10 +21475,10 @@ to the current ERC buffer."
 
 ;; [[file:init-emacs.org::#final-setup-fix-info-directory-list][Fix Info-Directory-List:1]]
 ;;------------------------------------------------------------------------------
-;;; Final Setup: Fix Info-Directory-List
+;;; Final: Fix Info-Directory-List
 ;;------------------------------------------------------------------------------
 
-(init-message 2 "Final Setup: Fix Info-Directory-List")
+(init-message 2 "Final: Fix Info-Directory-List")
 
 ;; make sure Info-default-directory-list is added to Info-directory-list
 (when (boundp 'Info-directory-list)
@@ -21488,10 +21488,10 @@ to the current ERC buffer."
 
 ;; [[file:init-emacs.org::#final-setup-turn-off-scroll-bar][Turn off Scroll Bar:1]]
 ;;------------------------------------------------------------------------------
-;;; Final Setup: Turn off Scroll Bar
+;;; Final: Turn off Scroll Bar
 ;;------------------------------------------------------------------------------
 
-(init-message 2 "Final Setup: Turn off Scroll Bar")
+(init-message 2 "Final: Turn off Scroll Bar")
 
 ;; turn off scroll bar
 (when (and (fboundp 'scroll-bar-mode)

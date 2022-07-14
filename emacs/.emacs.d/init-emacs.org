@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-07-13 16:49 (kyle)>
+  #+TIMESTAMP: <2022-07-13 20:56 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -886,7 +886,7 @@
       (cd "~")
     #+END_SRC
 
-    Setup shell environment.
+    Configure shell environment.
 
     #+BEGIN_SRC emacs-lisp
       ;; shell environment
@@ -4899,7 +4899,7 @@
                  (mapcar #'file-truename
                          (cond
                           ((not files) (list (buffer-file-name)))
-                          ((bufferp files) (list files))
+                          ((stringp files) (list files))
                           ((listp files) files)
                           (t (user-error "Invalid value for FILES: %S" files)))))
                 (loaded-files
@@ -5801,7 +5801,7 @@
       :CUSTOM_ID: org-mode-babel-configuration
       :END:
 
-      Setup =org-babel=.
+      Configure =org-babel=.
 
       #+BEGIN_SRC emacs-lisp
         ;;------------------------------------------------------------------------------
@@ -33187,10 +33187,10 @@
 
     #+BEGIN_SRC emacs-lisp
       ;;------------------------------------------------------------------------------
-      ;;; Final Setup: Set Key Bindings
+      ;;; Final: Set Key Bindings
       ;;------------------------------------------------------------------------------
 
-      (init-message 2 "Final Setup: Set Key Bindings")
+      (init-message 2 "Final: Set Key Bindings")
 
       (custom-key-bindings-set-all)
     #+END_SRC
@@ -33204,10 +33204,10 @@
 
     #+BEGIN_SRC emacs-lisp :tangle no
       ;; ;;------------------------------------------------------------------------------
-      ;; ;;; Final Setup: Turn on CUA Mode
+      ;; ;;; Final: Turn on CUA Mode
       ;; ;;------------------------------------------------------------------------------
 
-      ;; (init-message 2 "Final Setup: Turn on CUA Mode")
+      ;; (init-message 2 "Final: Turn on CUA Mode")
 
       ;; ;; turn on cua-mode
       ;; (cua-mode 1)                            ; with C-x/c/v key bindings
@@ -33226,10 +33226,10 @@
 
     #+BEGIN_SRC emacs-lisp :tangle no
       ;; ;;------------------------------------------------------------------------------
-      ;; ;;; Final Setup: Turn on Menu-Bar
+      ;; ;;; Final: Turn on Menu-Bar
       ;; ;;------------------------------------------------------------------------------
 
-      ;; (init-message 2 "Final Setup: Turn on Menu-Bar")
+      ;; (init-message 2 "Final: Turn on Menu-Bar")
 
       ;; ;; if running emacs in gui mode, turn on the menu bar
       ;; (when window-system
@@ -33246,10 +33246,10 @@
 
     #+BEGIN_SRC emacs-lisp
       ;;------------------------------------------------------------------------------
-      ;;; Final Setup: Compile Personal Modules
+      ;;; Final: Compile Personal Modules
       ;;------------------------------------------------------------------------------
 
-      (init-message 2 "Final Setup: Compile Personal Modules")
+      (init-message 2 "Final: Compile Personal Modules")
 
       ;; compile personal modules if needed
       (let ((dir local-modules-dir))
@@ -33272,10 +33272,10 @@
 
     #+BEGIN_SRC emacs-lisp :tangle no
       ;; ;;------------------------------------------------------------------------------
-      ;; ;;; Final Setup: Upgrade Quelpa Asynchronously
+      ;; ;;; Final: Upgrade Quelpa Asynchronously
       ;; ;;------------------------------------------------------------------------------
 
-      ;; (init-message 2 "Final Setup: Upgrade Quelpa Asynchronously")
+      ;; (init-message 2 "Final: Upgrade Quelpa Asynchronously")
 
       ;; ;; call `quelpa-self-upgrade' asynchronously
       ;; (async-start
@@ -33295,10 +33295,10 @@
 
     #+BEGIN_SRC emacs-lisp
       ;;------------------------------------------------------------------------------
-      ;;; Final Setup: Start Emacs Server
+      ;;; Final: Start Emacs Server
       ;;------------------------------------------------------------------------------
 
-      (init-message 2 "Final Setup: Start Emacs Server")
+      (init-message 2 "Final: Start Emacs Server")
 
       ;; start emacs server
       (when (fboundp 'server-start-maybe)
@@ -33316,10 +33316,10 @@
 
     #+BEGIN_SRC emacs-lisp :tangle no
       ;; ;;------------------------------------------------------------------------------
-      ;; ;;; Final Setup: Move to Current Desktop
+      ;; ;;; Final: Move to Current Desktop
       ;; ;;------------------------------------------------------------------------------
 
-      ;; (init-message 2 "Final Setup: Move to Current Desktop")
+      ;; (init-message 2 "Final: Move to Current Desktop")
 
       ;; ;; move to current desktop
       ;; (if (executable-find "wmctrl")
@@ -33340,10 +33340,10 @@
 
     #+BEGIN_SRC emacs-lisp :tangle no
       ;; ;;------------------------------------------------------------------------------
-      ;; ;;; Final Setup: Restore Open Buffers
+      ;; ;;; Final: Restore Open Buffers
       ;; ;;------------------------------------------------------------------------------
 
-      ;; (init-message 2 "Final Setup: Restore Open Buffers")
+      ;; (init-message 2 "Final: Restore Open Buffers")
 
       ;; ;; restore buffers
       ;; (use-package desktop
@@ -33362,10 +33362,10 @@
 
     #+BEGIN_SRC emacs-lisp
       ;;------------------------------------------------------------------------------
-      ;;; Final Setup: Remove Logging Buffers
+      ;;; Final: Remove Logging Buffers
       ;;------------------------------------------------------------------------------
 
-      (init-message 2 "Final Setup: Remove Logging Buffers")
+      (init-message 2 "Final: Remove Logging Buffers")
 
       ;; ;; remove compile log buffer
       ;; (when (get-buffer "*Compile-Log*")
@@ -33385,10 +33385,10 @@
 
     #+BEGIN_SRC emacs-lisp
       ;;------------------------------------------------------------------------------
-      ;;; Final Setup: Fix Info-Directory-List
+      ;;; Final: Fix Info-Directory-List
       ;;------------------------------------------------------------------------------
 
-      (init-message 2 "Final Setup: Fix Info-Directory-List")
+      (init-message 2 "Final: Fix Info-Directory-List")
 
       ;; make sure Info-default-directory-list is added to Info-directory-list
       (when (boundp 'Info-directory-list)
@@ -33406,10 +33406,10 @@
 
     #+BEGIN_SRC emacs-lisp
       ;;------------------------------------------------------------------------------
-      ;;; Final Setup: Turn off Scroll Bar
+      ;;; Final: Turn off Scroll Bar
       ;;------------------------------------------------------------------------------
 
-      (init-message 2 "Final Setup: Turn off Scroll Bar")
+      (init-message 2 "Final: Turn off Scroll Bar")
 
       ;; turn off scroll bar
       (when (and (fboundp 'scroll-bar-mode)
@@ -33426,10 +33426,10 @@
 
     #+BEGIN_SRC emacs-lisp :tangle no
       ;; ;;------------------------------------------------------------------------------
-      ;; ;;; Final Setup: Clear Mark
+      ;; ;;; Final: Clear Mark
       ;; ;;------------------------------------------------------------------------------
 
-      ;; (init-message 2 "Final Setup: Clear Mark")
+      ;; (init-message 2 "Final: Clear Mark")
 
       ;; ;; clear mark
       ;; (set-mark-command nil)
@@ -33445,10 +33445,10 @@
 
     #+BEGIN_SRC emacs-lisp :tangle no
       ;; ;;------------------------------------------------------------------------------
-      ;; ;;; Final Setup: Reset Emacs Lisp Garbage Collection Threshold
+      ;; ;;; Final: Reset Emacs Lisp Garbage Collection Threshold
       ;; ;;------------------------------------------------------------------------------
 
-      ;; (init-message 2 "Final Setup: Reset Emacs Lisp Garbage Collection Threshold")
+      ;; (init-message 2 "Final: Reset Emacs Lisp Garbage Collection Threshold")
 
       ;; ;; reset frequency of garbage collections (to 800000)
       ;; (setq gc-cons-threshold (car (get 'gc-cons-threshold 'standard-value)))
@@ -33463,10 +33463,10 @@
 
     #+BEGIN_SRC emacs-lisp :tangle no
       ;; ;;------------------------------------------------------------------------------
-      ;; ;;; Final Setup: Turn off Debugging
+      ;; ;;; Final: Turn off Debugging
       ;; ;;------------------------------------------------------------------------------
 
-      ;; (init-message 2 "Final Setup: Turn off Debugging")
+      ;; (init-message 2 "Final: Turn off Debugging")
 
       ;; ;; turn debugging off
       ;; (setq debug-on-error nil)
@@ -33481,10 +33481,10 @@
 
     #+BEGIN_SRC emacs-lisp :tangle no
       ;; ;;------------------------------------------------------------------------------
-      ;; ;;; Final Setup: Open Messages Buffer on Error
+      ;; ;;; Final: Open Messages Buffer on Error
       ;; ;;------------------------------------------------------------------------------
 
-      ;; (init-message 2 "Final Setup: Open Messages Buffer on Error")
+      ;; (init-message 2 "Final: Open Messages Buffer on Error")
 
       ;; ;; report any load errors
       ;; (unless (safe-load-check)
