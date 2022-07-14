@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-07-13 20:56 (kyle)>
+  #+TIMESTAMP: <2022-07-14 13:22 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -24790,8 +24790,8 @@
 
       (use-package multiple-cursors
         :straight t
-        :bind* (("C-c C->" . mc/edit-lines)
-                ("C-c C-<" . mc/mark-all-like-this)
+        :bind* (("C-c C-." . mc/edit-lines)
+                ("C-c C-," . mc/mark-all-like-this)
                 ("C->" . mc/mark-next-like-this)
                 ("C-<" . mc/mark-previous-like-this)
                 ("C-M->" . mc/unmark-next-like-this)

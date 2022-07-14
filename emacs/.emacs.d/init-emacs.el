@@ -16958,8 +16958,8 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
 
 (use-package multiple-cursors
   :straight t
-  :bind* (("C-c C->" . mc/edit-lines)
-          ("C-c C-<" . mc/mark-all-like-this)
+  :bind* (("C-c C-." . mc/edit-lines)
+          ("C-c C-," . mc/mark-all-like-this)
           ("C->" . mc/mark-next-like-this)
           ("C-<" . mc/mark-previous-like-this)
           ("C-M->" . mc/unmark-next-like-this)
