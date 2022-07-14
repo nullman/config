@@ -331,9 +331,9 @@ alias fdisk-list="sudo fdisk -l"
 #        dd-sync                 sudo dd conv=fdatasync status=progress
 alias dd-sync="sudo dd conv=fdatasync status=progress"
 #        sxhkdrs                 sxhkd restart
-alias sxhkdrs="pkill -signal SIGUSR1 -x sxhkd -u \${USER}"
+alias sxhkdrs="pkill -SIGUSR1 -x sxhkd -u \${USER}"
 #        tint2rs                 tint2 restart
-alias tint2rs="(pkill -signal SIGUSR1 -x tint2 -u \${USER} && \
+alias tint2rs="(pkill -SIGUSR1 -x tint2 -u \${USER} && \
     xdo below -t \$(xdo id -N Bspwm) \$(xdo id -N Tint2)) || \${HOME}/bin/system-bar"
 #        xrdb-list               list custom .Xresource settings
 alias xrdb-list="xrdb -query -all"
@@ -1783,10 +1783,10 @@ alias imap-on="rm -f \${HOME}/.noofflineimap > /dev/null 2>&1"
 #        imap-off                turn offlineimap off
 alias imap-off="
     touch \${HOME}/.noofflineimap
-    sudo pkill -signal SIGTERM -x offlineimap"
+    sudo pkill -SIGTERM -x offlineimap"
 #! alias imap-off="touch \${HOME}/.noofflineimap > /dev/null 2>&1"
 #        imap-restart            restart offlineimap
-alias imap-restart="sudo pkill -signal SIGTERM -x offlineimap"
+alias imap-restart="sudo pkill -SIGTERM -x offlineimap"
 #        offlineimap-once        sync normal imap accounts once
 alias offlineimap-once="offlineimap -o -u ttyui"
 #        offlineimap-home        sync home imap account
