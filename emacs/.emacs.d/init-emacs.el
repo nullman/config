@@ -3352,15 +3352,16 @@ case-sensitively, and CHAR is one of the characters defined in
 order.
 
 If entry at point has TODO and PRIORITY tags, then default
-SORT-TYPE is \"?o ?p\" which is to sort by TODO status, then by
-priority. Otherwise, default SORT-TYPE is \"?a\" which is to sort
-alphabetically."
+SORT-TYPE is \"?o ?p ?t (nil . ?a)\" which is to sort by TODO
+status, then by priority, the by timestamp, and finally
+alphabetically. Otherwise, default SORT-TYPE is \"?a\" which is
+to sort alphabetically."
   (interactive)
   (when (string= mode-name "Org")
     (let ((sort-types (or sort-types
                           (if (and (org-entry-get nil "TODO")
                                    (org-entry-get nil "PRIORITY"))
-                              '(?o ?p)
+                              '(?o ?p ?t (nil . ?a))
                             '((nil . ?a))))))
       (save-mark-and-excursion
         (goto-char (line-beginning-position))
