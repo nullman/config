@@ -1497,7 +1497,7 @@ backup-files() {
 #        rsync-cruzer                    rsync ISOs and bundle to sandisk cruzer
 rsync-cruzer() {
     # check destination
-    dest="/run/media/${USER}/ventoy/"
+    dest="/media/ventoy/"
     if [[ ! -d ${dest} ]] ; then
         echo "Could not find mounted USB at ${dest}"
         exit 1
@@ -1524,7 +1524,7 @@ rsync-cruzer() {
 #        rsync-bundle                    generate encrypted bundle and rsync it to mounted ventoy usb
 rsync-bundle() {
     # check destination
-    dest="/run/media/${USER}/FILES/"
+    dest="/media/FILES"
     if [[ ! -d "${dest}" ]] ; then
         echo "Could not find mounted USB at '${dest}'"
         exit 1
@@ -1542,9 +1542,13 @@ rsync-bundle() {
     # package and encrypt bundle directory
     pushd "${root}"
     tar cvfz "bundle.tgz" "bundle"
-    ccrypt -e "bundle.tgz"
+    #ccrypt -e "bundle.tgz"
+    openssl enc -aes-256-cbc -md sha512 -pbkdf2 -iter 100000 -salt -in "bundle.tgz" -out "bundle.tgz.enc"
     # sync bundle to usb
-    rsync -rLtxc --progress --delete "bundle.tgz.cpt" "${dest}"
+    rsync -rLtxc --progress --delete "bundle.tgz.enc" "${dest}/"
+    # add decrypt script
+    echo "openssl enc -aes-256-cbc -d -md sha512 -pbkdf2 -iter 100000 -salt -in bundle.tgz.enc -out bundle.tgz" > "${dest}/bundle-decrypt"
+    chmod +x "${dest}/bundle-decrypt"
     popd
     rm -rf "${root}"
 }
@@ -1554,13 +1558,13 @@ rsync-isos() {
         local sdir="$1"
         local ddir="$2"
         local query="$3"
-        mkdir -p "/run/media/${USER}/Ventoy/${ddir}"
+        mkdir -p "/media/Ventoy/${ddir}"
         (
             cd "/home/data/media/software/${sdir}"
             find . -mindepth 1 -maxdepth 1 -name "${query}" -printf '%P\n' | while read src ; do
                 local dst=$(echo "${src}" | sed "s/ /-/g")
-                echo "Syncing \"/home/data/media/software/${sdir}/${src}\" \"/run/media/${USER}/Ventoy/${ddir}/${dst}\""
-                rsync -rLtxc "/home/data/media/software/${sdir}/${src}" "/run/media/${USER}/Ventoy/${ddir}/${dst}"
+                echo "Syncing \"/home/data/media/software/${sdir}/${src}\" \"/media/Ventoy/${ddir}/${dst}\""
+                rsync -rLtxc "/home/data/media/software/${sdir}/${src}" "/media/Ventoy/${ddir}/${dst}"
             done
         )
     }
@@ -1687,10 +1691,11 @@ Refresh File Search Database
   yay -Fy
 Install Needed Packages
   yay -S --needed ccrypt stow
-Copy bundle.tgz.cpt from USB and decrypt it:
-  cp /run/media/kyle/Cruzer/bundle.tgz.cpt ~/
-  ccrypt -d bundle.tgz.cpt
+Copy bundle.tgz.enc from USB and decrypt it:
+  cp /media/FILES/bundle* .
+  chmod +x ./bundle-decrypt && ./bundle-decrypt
   tar xzf bundle.tgz
+  mv bundle/.ssh ~/
 Checkout config and config-private:
   git clone ${GIT_REPOSITORY_CONFIG} ~/config
   git clone ${GIT_REPOSITORY_CONFIG_PRIVATE} ~/config-private

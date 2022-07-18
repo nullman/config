@@ -919,8 +919,10 @@ alias cdk="cd \${HOME}"
 alias cdlib="cd /lib"
 #        cdlm                    cd /lib/modules/<kernel>
 alias cdlm="cd /lib/modules/\$(uname -r)"
-#        cdm                     cd /run/media/USER
-alias cdm="cd /run/media/\${USER}"
+#!#        cdm                     cd /run/media/USER
+#!alias cdm="cd /run/media/\${USER}"
+#        cdm                     cd /media
+alias cdm="cd /media"
 #        cdmnt                   cd /mnt
 alias cdmnt="cd /mnt"
 #        cdopt                   cd /opt
@@ -1544,6 +1546,12 @@ alias java-set-env-java11="
 alias java-set-env-java18="
     sudo archlinux-java set java-18-openjdk && \
     export JAVA_HOME=\"\$(java -XshowSettings:properties -version 2>&1 > /dev/null | grep 'java.home' | sed 's/^.* = //')\""
+
+#
+# javascript
+#
+#        js                      node js repl
+alias js="node"
 
 #
 # jpegtran
@@ -3048,7 +3056,8 @@ rsyncexclusions='{"/cdrom/*","/dev/*","/lost+found","/media/*","/mnt/*","/proc/*
 #        rsbid                   backup entire system to usb drive
 #!alias rsbid="sudo rsync -aAXv --delete --exclude=${rsyncexclusions} / /run/media/\${USER}/backup/\$(uname -n)"
 alias rsbid="
-    dir=/run/media/\${USER}
+    #dir=/run/media/\${USER}
+    dir=/media
     if [[ -d \${dir} ]] ; then
         sudo rsync -aAXv --delete-before --exclude=${rsyncexclusions} / \${dir}/\$(cd \${dir} && \$(pathcmd ls) -1)/\$(uname -n)
     else
@@ -3057,7 +3066,8 @@ alias rsbid="
     fi"
 #        rsbidsome               backup etc, home, root, and opt dirs to usb drive
 alias rsbidsome="
-    dir=/run/media/\${USER}
+    #dir=/run/media/\${USER}
+    dir=/media
     if [[ -d \${dir} ]] ; then
         echo 'Backing up:'
         o=\${dir}/\$(cd \${dir} && \$(pathcmd ls) -1)/\$(uname -n)
@@ -3073,36 +3083,6 @@ alias rsbidsome="
 #
 # setup
 #
-#        home-howto              howto setup git home dir on a new machine
-alias home-howto="
-    user=\${USER}
-    cat <<EOF
-Install ccrypt
-Copy bundle.tgz.cpt from USB and decrypt it:
-  cp /run/media/kyle/Cruzer/bundle.tgz.cpt \${HOME}/
-  ccrypt -d bundle.tgz.cpt
-  tar xzf bundle.tgz
-Checkout 'config' and 'config-private':
-  git clone \${GIT_REPOSITORY_CONFIG} \${HOME}/config
-  git clone \${GIT_REPOSITORY_CONFIG_PRIVATE} \${HOME}/config-private
-Source '.funct', '.alias', and '.shellrc':
-  source \${HOME}/config/.funct \${HOME}/config/.alias \${HOME}/config/.shellrc
-Run 'gitcodoc' to checkout 'doc' repository:
-  gitcodoc
-Run 'gitcodev' to checkout 'dev' repository:
-  gitcodev
-Run 'gitcoweb' to checkout 'web' repository:
-  gitcoweb
-Run 'home-intiialize' to create the initial links from '\${HOME}'
-to '\${HOME}/config' and '\${HOME}/config-private':
-  home-initialize
-(Run 'home-restow' to recreate the links in the future.)
-Setup /home/data directory:
-  sudo mkdir -p /home/data && sudo chown \${user}:\${user} /home/data
-Optionally run 'make-cron' to install the default crontab:
-  make-cron
-EOF
-"
 #        make-cron               setup initial crontab
 alias make-cron="
     echo \"You are about to overwrite your crontab with '\${HOME}/config/custom/\$(uname -n)/.cron'.\"
