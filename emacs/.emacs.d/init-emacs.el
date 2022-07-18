@@ -4819,7 +4819,8 @@ property list containing the parameters of the block."
 
 ;; babel languages (usable in source blocks)
 (org-babel-do-load-languages
- 'org-babel-load-languages '((clojure . t)
+ 'org-babel-load-languages '((C . t)
+                             (clojure . t)
                              (css . t)
                              (ditaa . t)
                              (dot . t)

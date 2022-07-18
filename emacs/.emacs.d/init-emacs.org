@@ -3,13 +3,13 @@
   #+AUTHOR: Kyle W T Sherman
   #+EMAIL: kylewsherman@gmail.com
   #+FILENAME: init-emacs.org
-  #+DESCRIPTION: Kyle Sherman's Org/Babel 'literate' Emacs Configuration
+  #+DESCRIPTION: Kyle Sherman's Org/Babel 'Literate' Emacs Configuration
   #+KEYWORDS: emacs, org-mode, babel, elisp, emacs lisp, lisp, programming language, literate programming, reproducible research
   #+LANGUAGE: en
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-07-14 23:30 (kyle)>
+  #+TIMESTAMP: <2022-07-18 10:31 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -6861,7 +6861,8 @@
 
         ;; babel languages (usable in source blocks)
         (org-babel-do-load-languages
-         'org-babel-load-languages '((clojure . t)
+         'org-babel-load-languages '((C . t)
+                                     (clojure . t)
                                      (css . t)
                                      (ditaa . t)
                                      (dot . t)
