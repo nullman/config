@@ -152,8 +152,8 @@ Skips checks if run on Windows or Mac."
 
 ;; initialize package system
 (require 'package)
-(setq package-archives '(("melpa" . "http://melpa.org/packages/")
-                         ("elpa" . "http://elpa.gnu.org/packages/")))
+(setq package-archives '(("melpa" . "https://melpa.org/packages/")
+                         ("elpa" . "https://elpa.gnu.org/packages/")))
 
 ;; bootstrap
 (defvar bootstrap-version)
@@ -245,8 +245,6 @@ Skips checks if run on Windows or Mac."
 
 ;; [[file:init-emacs.org::#environment-environment][Environment:2]]
 ;; set coding system to UTF-8
-(setq current-language-environment "UTF-8"
-      locale-coding-system 'utf-8)
 (set-language-environment 'utf-8)
 (set-default-coding-systems 'utf-8)
 (set-terminal-coding-system 'utf-8)
@@ -1132,21 +1130,14 @@ Common values:
 ;; General:45 ends here
 
 ;; [[file:init-emacs.org::#environment-general][General:46]]
-(init-message 3 "Disable `vc-git'.")
-
-;; disable vc-git
-(setq vc-handled-backends nil)
-;; General:46 ends here
-
-;; [[file:init-emacs.org::#environment-general][General:47]]
 ;; (init-message 3 "Recenter window after `next-error'.")
 
 ;; ;; always recenter after `next-error'
 ;; (setq next-error-recenter '(4))
 ;; ;;(add-hook 'next-error-hook #'recenter :append)
-;; General:47 ends here
+;; General:46 ends here
 
-;; [[file:init-emacs.org::#environment-general][General:48]]
+;; [[file:init-emacs.org::#environment-general][General:47]]
 (init-message 3 "Recenter window after `occur-mode-goto-occurrence'.")
 
 ;; always recenter after `occur-mode-goto-occurrence'
@@ -1155,9 +1146,9 @@ Common values:
   (recenter))
 ;; advise `occur-mode-goto-occurrence'
 (advice-add 'occur-mode-goto-occurrence :after #'occur-mode-goto-occurrence--recenter)
-;; General:48 ends here
+;; General:47 ends here
 
-;; [[file:init-emacs.org::#environment-general][General:49]]
+;; [[file:init-emacs.org::#environment-general][General:48]]
 (init-message 3 "Set time zones to use for `display-time-world'.")
 
 ;; set display-time-world time zones
@@ -1170,7 +1161,7 @@ Common values:
         ("Europe/London" "London")
         ("Europe/Paris" "Paris")
         ("Asia/Tokyo" "Tokyo")))
-;; General:49 ends here
+;; General:48 ends here
 
 ;; [[file:init-emacs.org::#environment-system][System:1]]
 ;;------------------------------------------------------------------------------
@@ -1344,7 +1335,9 @@ Common values:
   :straight (:type built-in)
   :custom
   ;; follow symlinks to version control files without asking or warning
-  (vc-follow-symlinks t))
+  (vc-follow-symlinks t)
+  ;; disable vc-git as it throws debugger errors when revert-buffer is called
+  (vc-handled-backends nil))
 ;; Version Control:1 ends here
 
 ;; [[file:init-emacs.org::#environment-files-compression][Compression:1]]

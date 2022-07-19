@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-07-19 13:05 (kyle)>
+  #+TIMESTAMP: <2022-07-19 16:24 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -545,8 +545,8 @@
 
       ;; initialize package system
       (require 'package)
-      (setq package-archives '(("melpa" . "http://melpa.org/packages/")
-                               ("elpa" . "http://elpa.gnu.org/packages/")))
+      (setq package-archives '(("melpa" . "https://melpa.org/packages/")
+                               ("elpa" . "https://elpa.gnu.org/packages/")))
 
       ;; bootstrap
       (defvar bootstrap-version)
@@ -831,8 +831,6 @@
 
     #+BEGIN_SRC emacs-lisp
       ;; set coding system to UTF-8
-      (setq current-language-environment "UTF-8"
-            locale-coding-system 'utf-8)
       (set-language-environment 'utf-8)
       (set-default-coding-systems 'utf-8)
       (set-terminal-coding-system 'utf-8)
@@ -876,7 +874,7 @@
         "Non-nil if running on a Linux X display.")
     #+END_SRC
 
-    Determine if we are running on a work computer.
+    Determine if running on a work computer.
 
     #+BEGIN_SRC emacs-lisp
       ;; determine if running on a work system
@@ -2065,16 +2063,6 @@
       (setq delete-active-region t)
     #+END_SRC
 
-    Disable =vc-git= as it likes to throw debugger errors when =revert-buffer= is
-    called.
-
-    #+BEGIN_SRC emacs-lisp
-      (init-message 3 "Disable `vc-git'.")
-
-      ;; disable vc-git
-      (setq vc-handled-backends nil)
-    #+END_SRC
-
     +Always recenter after =next-error= is called.+
 
     #+BEGIN_SRC emacs-lisp
@@ -2348,7 +2336,11 @@
           :straight (:type built-in)
           :custom
           ;; follow symlinks to version control files without asking or warning
-          (vc-follow-symlinks t))
+          (vc-follow-symlinks t)
+          ;; disable vc-git as it throws debugger errors when revert-buffer is called
+          (vc-handled-backends nil))
+    #+END_SRC
+
       #+END_SRC
 
 ***** Compression
