@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-07-18 10:31 (kyle)>
+  #+TIMESTAMP: <2022-07-19 13:05 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -722,24 +722,24 @@
       ;;   (paradox-enable))
     #+END_SRC
 
-* Environment Settings
+* Environment
   :PROPERTIES:
-  :CUSTOM_ID: environment-settings
+  :CUSTOM_ID: environment
   :END:
 
-  Emacs Environment (non-mode, non-module, non-package) settings.
+  Configuration of default Emacs settings.
 
   #+BEGIN_SRC emacs-lisp
     ;;==============================================================================
-    ;;; Environment Settings
+    ;;; Environment
     ;;==============================================================================
 
-    (init-message 1 "Environment Settings")
+    (init-message 1 "Environment")
   #+END_SRC
 
 *** +Debugging+
     :PROPERTIES:
-    :CUSTOM_ID: environment-settings-debugging
+    :CUSTOM_ID: environment-debugging
     :END:
 
     #+BEGIN_SRC emacs-lisp :tangle no
@@ -747,7 +747,7 @@
       ;; ;;; Environment Settings: Debugging
       ;; ;;------------------------------------------------------------------------------
 
-      ;; (init-message 2 "Environment Settings: Debugging")
+      ;; (init-message 2 "Environment: Debugging")
     #+END_SRC
 
     Turn debugging on when errors occur. This will also trap normal (expected)
@@ -763,15 +763,21 @@
       ;; ;; (add-hook 'after-init-hook #'after-init-hook--debug-on-error)
     #+END_SRC
 
-*** Modules
+*** Init Packages
     :PROPERTIES:
-    :CUSTOM_ID: environment-settings-modules
+    :CUSTOM_ID: environment-init-packages
     :END:
 
-    Load modules that are used for initialization.
+    Load packages that are used for initialization.
 
     #+BEGIN_SRC emacs-lisp
-      ;; load modules that are used for initialization
+      ;;------------------------------------------------------------------------------
+      ;;; Environment: Init Packages
+      ;;------------------------------------------------------------------------------
+
+      (init-message 2 "Environment: Init Packages")
+
+      ;; load packages that are used for initialization
       (use-package async
         :straight t)
       (use-package bind-key
@@ -810,15 +816,15 @@
 
 *** Environment
     :PROPERTIES:
-    :CUSTOM_ID: environment-settings-environment
+    :CUSTOM_ID: environment-environment
     :END:
 
     #+BEGIN_SRC emacs-lisp
       ;;------------------------------------------------------------------------------
-      ;;; Environment Settings: Environment
+      ;;; Environment: Environment
       ;;------------------------------------------------------------------------------
 
-      (init-message 2 "Environment Settings: Environment")
+      (init-message 2 "Environment: Environment")
     #+END_SRC
 
     Set coding system to *UTF-8*.
@@ -921,15 +927,15 @@
 
 *** Global Variables
     :PROPERTIES:
-    :CUSTOM_ID: environment-settings-global-variables
+    :CUSTOM_ID: environment-global-variables
     :END:
 
     #+BEGIN_SRC emacs-lisp
       ;;------------------------------------------------------------------------------
-      ;;; Environment Settings: Global Variables
+      ;;; Environment: Global Variables
       ;;------------------------------------------------------------------------------
 
-      (init-message 2 "Environment Settings: Global Variables")
+      (init-message 2 "Environment: Global Variables")
     #+END_SRC
 
     Set Emacs home directory.
@@ -1072,13 +1078,13 @@
 
 *** Load Path
     :PROPERTIES:
-    :CUSTOM_ID: environment-settings-load-path
+    :CUSTOM_ID: environment-load-path
     :END:
 
     Add other configuration directories to *load-path*.
 
     #+BEGIN_SRC emacs-lisp
-      (init-message 2 "Environment Settings: Load Path")
+      (init-message 2 "Environment: Load Path")
 
       ;; add paths to the head of `load-path' in reverse order.
 
@@ -1121,15 +1127,15 @@
 
 ***** General
       :PROPERTIES:
-      :CUSTOM_ID: environment-settings-gui-general
+      :CUSTOM_ID: environment-gui-general
       :END:
 
       #+BEGIN_SRC emacs-lisp
         ;;------------------------------------------------------------------------------
-        ;;;; Environment Settings: GUI: General
+        ;;;; Environment: GUI: General
         ;;------------------------------------------------------------------------------
 
-        (init-message 3 "Environment Settings: GUI: General")
+        (init-message 3 "Environment: GUI: General")
 
         ;; clipboard
         (when (string= window-system "x")
@@ -1183,15 +1189,15 @@
 
 ***** Font
       :PROPERTIES:
-      :CUSTOM_ID: environment-settings-gui-font
+      :CUSTOM_ID: environment-gui-font
       :END:
 
       #+BEGIN_SRC emacs-lisp
         ;;------------------------------------------------------------------------------
-        ;;;; Environment Settings: GUI: Font
+        ;;;; Environment: GUI: Font
         ;;------------------------------------------------------------------------------
 
-        (init-message 3 "Environment Settings: GUI: Font")
+        (init-message 3 "Environment: GUI: Font")
 
         ;; set default font
         (ignore-errors
@@ -1237,15 +1243,15 @@
 
 ***** Faces
       :PROPERTIES:
-      :CUSTOM_ID: environment-settings-gui-faces
+      :CUSTOM_ID: environment-gui-faces
       :END:
 
       #+BEGIN_SRC emacs-lisp
         ;;------------------------------------------------------------------------------
-        ;;;; Environment Settings: GUI: Faces
+        ;;;; Environment: GUI: Faces
         ;;------------------------------------------------------------------------------
 
-        (init-message 3 "Environment Settings: GUI: Faces")
+        (init-message 3 "Environment: GUI: Faces")
 
         ;; ;; set faces
         ;; ;; white foreground on black background with yellow cursor
@@ -1284,7 +1290,7 @@
 
 ***** +Theme+
       :PROPERTIES:
-      :CUSTOM_ID: environment-settings-gui-theme
+      :CUSTOM_ID: environment-gui-theme
       :END:
 
       #+BEGIN_SRC emacs-lisp :tangle no
@@ -1292,7 +1298,7 @@
         ;; ;;;; Environment Settings: GUI: Theme
         ;; ;;------------------------------------------------------------------------------
 
-        ;; (init-message 3 "Environment Settings: GUI: Theme")
+        ;; (init-message 3 "Environment: GUI: Theme")
 
         ;; ;; flatland theme
         ;; ;; https://github.com/gchp/flatland-emacs
@@ -1404,15 +1410,15 @@
 
 ***** Modus Themes
       :PROPERTIES:
-      :CUSTOM_ID: environment-settings-gui-modus-themes
+      :CUSTOM_ID: environment-gui-modus-themes
       :END:
 
       #+BEGIN_SRC emacs-lisp
         ;;------------------------------------------------------------------------------
-        ;;;; Environment Settings: GUI: Modus Themes
+        ;;;; Environment: GUI: Modus Themes
         ;;------------------------------------------------------------------------------
 
-        (init-message 3 "Environment Settings: GUI: Modus Themes")
+        (init-message 3 "Environment: GUI: Modus Themes")
 
         ;; modus themes
         ;; https://github.com/protesilaos/modus-themes/
@@ -1560,15 +1566,15 @@
 
 *** General
     :PROPERTIES:
-    :CUSTOM_ID: environment-settings-general
+    :CUSTOM_ID: environment-general
     :END:
 
     #+BEGIN_SRC emacs-lisp
       ;;------------------------------------------------------------------------------
-      ;;; Environment Settings: General
+      ;;; Environment: General
       ;;------------------------------------------------------------------------------
 
-      (init-message 2 "Environment Settings: General")
+      (init-message 2 "Environment: General")
     #+END_SRC
 
     Do not show the startup splash screen.
@@ -1632,17 +1638,6 @@
 
       ;; ;; set scratch buffer mode to `emacs-lisp-mode'
       ;; (setq initial-major-mode 'emacs-lisp-mode)
-    #+END_SRC
-
-    Ask before closing Emacs.
-
-    #+BEGIN_SRC emacs-lisp
-      (init-message 3 "Ask before Closing Emacs")
-
-      ;; ask before closing emacs
-      (setq kill-emacs-query-functions
-            (cons (lambda () (yes-or-no-p "Really kill Emacs? "))
-                  kill-emacs-query-functions))
     #+END_SRC
 
     Make backspace key work correctly.
@@ -2122,15 +2117,15 @@
 
 *** System
     :PROPERTIES:
-    :CUSTOM_ID: environment-settings-system
+    :CUSTOM_ID: environment-system
     :END:
 
     #+BEGIN_SRC emacs-lisp
       ;;------------------------------------------------------------------------------
-      ;;; Environment Settings: System
+      ;;; Environment: System
       ;;------------------------------------------------------------------------------
 
-      (init-message 2 "Environment Settings: System")
+      (init-message 2 "Environment: System")
     #+END_SRC
 
     +Optimize garbage collections.+
@@ -2230,238 +2225,266 @@
         (global-so-long-mode 1))
     #+END_SRC
 
-    Set =safe-local-variable-values=.
-
-    #+BEGIN_SRC emacs-lisp
-      (init-message 3 "Set `safe-local-variable-values'.")
-
-      ;; org-babel noweb start and end patterns
-      (add-to-list 'safe-local-variable-values '(org-babel-noweb-wrap-start . "{{"))
-      (add-to-list 'safe-local-variable-values '(org-babel-noweb-wrap-end . "}}"))
-    #+END_SRC
-
 *** Files
     :PROPERTIES:
-    :CUSTOM_ID: environment-settings-files
+    :CUSTOM_ID: environment-files
     :END:
 
     #+BEGIN_SRC emacs-lisp
       ;;------------------------------------------------------------------------------
-      ;;; Environment Settings: Files
+      ;;; Environment: Files
       ;;------------------------------------------------------------------------------
 
-      (init-message 2 "Environment Settings: Files")
+      (init-message 2 "Environment: Files")
     #+END_SRC
 
-    Increase maximum size of file above which a confirmation is requested.
+***** General
+      :PROPERTIES:
+      :CUSTOM_ID: environment-files-general
+      :END:
 
-    #+BEGIN_SRC emacs-lisp
-      ;; increase maximum size before confirmation is requested
-      (setq large-file-warning-threshold 50000000)
-    #+END_SRC
+      #+BEGIN_SRC emacs-lisp
+        ;;------------------------------------------------------------------------------
+        ;;;; Environment: Files: General
+        ;;------------------------------------------------------------------------------
 
-    Enable file local variables, but prompt before running =eval= on any of them.
+        (init-message 3 "Environment: Files: General")
 
-    #+BEGIN_SRC emacs-lisp
-      ;; enable file variables
-      (setq enable-local-variables t
-            enable-local-eval 'maybe)
-    #+END_SRC
+        (use-package files
+          :straight (:type built-in)
+          :custom
+          ;; do not make backup files
+          (make-backup-files nil)
+          (backup-inhibited t)
+          ;; reuse existing buffers, following file links
+          (find-file-existing-other-name t)
+          ;; end files with a newline
+          (require-final-newline t)
+          ;; do not make auto-save files
+          (auto-save-default nil)
+          ;; delete auto-save files
+          (delete-auto-save-files t)
+          ;; enable file local variables
+          (enable-local-variables t)
+          ;; enable directory local variables
+          (enable-dir-local-variables t)
+          ;; ask user before evaluating local variables
+          (enable-local-eval 'maybe)
+          ;; increase maximum file size (in bytes) to open before confirmation is requested
+          (large-file-warning-threshold (* 50 1000 1000))
+          ;; org-babel noweb start and end patterns are considered safe
+          (add-to-list 'safe-local-variable-values '(org-babel-noweb-wrap-start . "{{"))
+          (add-to-list 'safe-local-variable-values '(org-babel-noweb-wrap-end . "}}"))
+          ;; all backup files should go into the system temp directory
+          (backup-directory-alist `(("." . ,temporary-file-directory)))
+          ;; ask before closing emacs
+          (kill-emacs-query-functions
+           (cons (lambda () (yes-or-no-p "Really kill Emacs? "))
+                 kill-emacs-query-functions)))
+      #+END_SRC
 
-    Turn off auto-save files.
+      Create directories in file path on file save.
 
-    #+BEGIN_SRC emacs-lisp
-      ;; delete auto-save files
-      (setq delete-auto-save-files t)
+      #+BEGIN_SRC emacs-lisp
+        (defun create-buffer-file-name-directory-if-needed ()
+          "Create `buffer-file-name' directory if it does not already exist."
+          (when (and buffer-file-name
+                     (not (file-exists-p (file-name-directory buffer-file-name))))
+            (make-directory (file-name-directory buffer-file-name) t)))
 
-      ;; do not make auto-save files
-      (setq auto-save-default nil)
-      (setq-default auto-save-default auto-save-default)
-      (setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t))
-            auto-save-list-file-prefix temporary-file-directory
-            auto-save-list-file-name nil
-            auto-save-default nil)
-    #+END_SRC
+        ;; create directories if needed on file save
+        (add-hook 'before-save-hook #'create-buffer-file-name-directory-if-needed)
+      #+END_SRC
 
-    Turn off backup files and use =temporary-file-directory= for auto-save files.
+      Delete trailing whitespace and newlines on file save.
 
-    #+BEGIN_SRC emacs-lisp
-      ;; do not make backup files
-      (setq make-backup-files nil)
-      (setq-default make-backup-files make-backup-files)
-      (setq backup-directory-alist `((".*" . ,temporary-file-directory))
-            make-backup-files nil
-            backup-by-copying t
-            version-control nil
-            delete-old-versions t)
-    #+END_SRC
+      #+BEGIN_SRC emacs-lisp
+        ;; delete trailing lines on call to `delete-trailing-whitespace'
+        (setq delete-trailing-lines t)
 
-    +Turn off lock files.+
+        (defun delete-trailing-whitespace-if-not-read-only (&optional beg end)
+          "Call `delete-trailing-whitespace' if current buffer is not read-only."
+          (interactive (if (use-region-p)
+                           (list (region-beginning) (region-end))
+                         (list nil nil)))
+          (when (not buffer-read-only)
+            (delete-trailing-whitespace beg end)))
 
-    #+BEGIN_SRC emacs-lisp
-      ;; ;; do not make lock files
-      ;; (setq create-lock-files nil)
-      ;; (setq-default create-lock-files create-lock-files)
-    #+END_SRC
+        ;; delete trailing whitespace on save
+        (add-hook 'before-save-hook #'delete-trailing-whitespace-if-not-read-only)
+      #+END_SRC
 
-    Follow symlinks of version control files without asking or warning.
+      Make shell scripts executable when saving (and reset the buffer mode).
 
-    #+BEGIN_SRC emacs-lisp
-      ;; follow symlinks to version control files without asking or warning
-      (setq vc-follow-symlinks t)
-      (setq-default vc-follow-symlinks vc-follow-symlinks)
-    #+END_SRC
+      #+BEGIN_SRC emacs-lisp
+        ;; make shell scripts executable when saving (and reset the buffer mode)
+        (when (fboundp 'executable-make-buffer-file-executable-if-script-p)
+          (add-hook 'after-save-hook #'executable-make-buffer-file-executable-if-script-p))
+      #+END_SRC
 
-    Turn on auto-compression mode, which will handle uncompressing and compressing
-    various formats as files are loaded and saved.
+      File extensions for files that should save as DOS files.
 
-    #+BEGIN_SRC emacs-lisp
-      ;; handle gzip/zip/jar/tar files
-      (auto-compression-mode t)
-    #+END_SRC
+      #+BEGIN_SRC emacs-lisp
+        ;; set DOS file extensions
+        (add-to-list 'file-coding-system-alist '("\\.ASM\\'" . dos))
+        (add-to-list 'file-coding-system-alist '("\\.BAT\\'" . dos))
+        (add-to-list 'file-coding-system-alist '("\\.DO\\'" . dos))
+        (add-to-list 'file-coding-system-alist '("\\.SYS\\'" . dos))
+      #+END_SRC
 
-    If a file is already being visited by another buffer under a different name,
-    switch to it instead of loading the file into a new buffer.
+***** Version Control
+      :PROPERTIES:
+      :CUSTOM_ID: environment-files-version-control
+      :END:
 
-    #+BEGIN_SRC emacs-lisp
-      ;; reuse existing buffers, following file links
-      (setq find-file-existing-other-name t)
-    #+END_SRC
+      #+BEGIN_SRC emacs-lisp
+        ;;------------------------------------------------------------------------------
+        ;;;; Environment: Files: Version Control
+        ;;------------------------------------------------------------------------------
 
-    Make sure all files end with a newline when they are saved.
+        (init-message 3 "Environment: Files: Version Control")
 
-    #+BEGIN_SRC emacs-lisp
-      ;; end files with a newline
-      (setq require-final-newline t)
-    #+END_SRC
+        (use-package vc-hooks
+          :straight (:type built-in)
+          :custom
+          ;; follow symlinks to version control files without asking or warning
+          (vc-follow-symlinks t))
+      #+END_SRC
 
-    +Don't warn when trying to modify read-only buffers.+
+***** Compression
+      :PROPERTIES:
+      :CUSTOM_ID: environment-files-compression
+      :END:
 
-    #+BEGIN_SRC emacs-lisp :tangle no
-      ;; ;; kill text in read-only buffers without warning
-      ;; (setq kill-read-only-ok t)
-    #+END_SRC
+      #+BEGIN_SRC emacs-lisp
+        ;;------------------------------------------------------------------------------
+        ;;;; Environment: Files: Compression
+        ;;------------------------------------------------------------------------------
 
-    Automatically revert buffers when the file they are visiting changes.
+        (init-message 3 "Environment: Files: Compression")
 
-    #+BEGIN_SRC emacs-lisp
-      ;; turn on auto buffer revert mode
-      (global-auto-revert-mode 1)
-      ;; this is currently bugged and will cause the buffer to re-center vertically every couple of seconds
-      ;; (setq global-auto-revert-non-file-buffers t ; auto refresh dired too
-      ;;       auto-revert-verbose nil)              ; but, be quiet about it
-    #+END_SRC
+        (use-package jka-cmpr-hook
+          :straight (:type built-in)
+          :custom
+          ;; automatically uncompress and compress gzip/zip/jar/tar files
+          (auto-compression-mode t))
+      #+END_SRC
 
-    Create directories in file path on file save.
+***** Auto-Revert
+      :PROPERTIES:
+      :CUSTOM_ID: environment-files-auto-revert
+      :END:
 
-    #+BEGIN_SRC emacs-lisp
-      (defun create-buffer-file-name-directory-if-needed ()
-        "Create `buffer-file-name' directory if it does not already exist."
-        (when (and buffer-file-name
-                   (not (file-exists-p (file-name-directory buffer-file-name))))
-          (make-directory (file-name-directory buffer-file-name) t)))
+      Automatically revert buffers when the file they are visiting changes.
 
-      ;; create directories if needed on file save
-      (add-hook 'before-save-hook #'create-buffer-file-name-directory-if-needed)
-    #+END_SRC
+      #+BEGIN_SRC emacs-lisp
+        ;;------------------------------------------------------------------------------
+        ;;;; Environment: Files: Auto-Revert
+        ;;------------------------------------------------------------------------------
 
-    Delete trailing whitespace and newlines on file save.
+        (init-message 3 "Environment: Files: Auto-Revert")
 
-    #+BEGIN_SRC emacs-lisp
-      ;; delete trailing lines on call to `delete-trailing-whitespace'
-      (setq delete-trailing-lines t)
+        (use-package autorevert
+          :straight (:type built-in)
+          :custom
+          ;; turn on auto buffer revert mode
+          (global-auto-revert-mode 1))
+      #+END_SRC
 
-      (defun delete-trailing-whitespace-if-not-read-only (&optional beg end)
-        "Call `delete-trailing-whitespace' if current buffer is not read-only."
-        (interactive (if (use-region-p)
-                         (list (region-beginning) (region-end))
-                       (list nil nil)))
-        (when (not buffer-read-only)
-          (delete-trailing-whitespace beg end)))
+***** Bookmark
+      :PROPERTIES:
+      :CUSTOM_ID: environment-files-bookmark
+      :END:
 
-      ;; delete trailing whitespace on save
-      (add-hook 'before-save-hook #'delete-trailing-whitespace-if-not-read-only)
-    #+END_SRC
+      #+BEGIN_SRC emacs-lisp
+        ;;------------------------------------------------------------------------------
+        ;;;; Environment: Files: Bookmark
+        ;;------------------------------------------------------------------------------
 
-    Make shell scripts executable when saving (and reset the buffer mode).
+        (init-message 3 "Environment: Files: Bookmark")
 
-    #+BEGIN_SRC emacs-lisp
-      ;; make shell scripts executable when saving (and reset the buffer mode)
-      (when (fboundp 'executable-make-buffer-file-executable-if-script-p)
-        (add-hook 'after-save-hook #'executable-make-buffer-file-executable-if-script-p))
-    #+END_SRC
+        (use-package bookmark
+          :straight (:type built-in)
+          :custom
+          ;; auto-save bookmarks every time they change
+          (bookmark-save-flag 1))
+      #+END_SRC
 
-    File extensions for files that should save as DOS files.
+***** Desktop
+      :PROPERTIES:
+      :CUSTOM_ID: environment-files-desktop
+      :END:
 
-    #+BEGIN_SRC emacs-lisp
-      ;; set DOS file extensions
-      (add-to-list 'file-coding-system-alist '("\\.ASM\\'" . dos))
-      (add-to-list 'file-coding-system-alist '("\\.BAT\\'" . dos))
-      (add-to-list 'file-coding-system-alist '("\\.DO\\'" . dos))
-      (add-to-list 'file-coding-system-alist '("\\.SYS\\'" . dos))
-    #+END_SRC
+      Restore open buffers when Emacs is launched.
 
-    Save bookmarks file every time it changes.
+      #+BEGIN_SRC emacs-lisp
+        ;;------------------------------------------------------------------------------
+        ;;;; Environment: Files: Desktop
+        ;;------------------------------------------------------------------------------
 
-    #+BEGIN_SRC emacs-lisp
-      ;; auto-save bookmarks
-      (setq bookmark-save-flag 1)
-    #+END_SRC
+        (init-message 3 "Environment: Files: Desktop")
 
-    Save desktop history.
+        (use-package desktop
+          :straight (:type built-in)
+          :custom
+          (desktop-save 'ask-if-new)
+          (desktop-load-locked-desktop t)
+          (desktop-restore-eager 0) ; do not restore any buffers until all modules and modes have loaded
+          (desktop-buffers-not-to-save (concat "\\("
+                                               "\\.log\\|(ftp)\\|^tags\\|^TAGS"
+                                               "\\.diary\\|\\diary\\|\\.bbdb"
+                                               "\\)$"))
+          :init
+          ;; desktop history
+          (when-lock-file-acquired (expand-file-name "emacs-desktop-history-lock-file"
+                                                     temporary-file-directory)
+            (desktop-save-mode 1)
+            (add-to-list 'desktop-globals-to-save 'file-name-history t)
+            (add-to-list 'desktop-modes-not-to-save 'Info-mode t)
+            (add-to-list 'desktop-modes-not-to-save 'info-lookup-mode t)
+            ;;(add-to-list 'desktop-modes-not-to-save 'dired-mode t)
+            ;;(add-to-list 'desktop-modes-not-to-save 'fundamental-mode t)
+            ))
+      #+END_SRC
 
-    #+BEGIN_SRC emacs-lisp
-      ;; desktop history
-      (when-lock-file-acquired (expand-file-name "emacs-desktop-history-lock-file"
-                                                temporary-file-directory)
-        (desktop-save-mode 1)
-        (setq desktop-save 'ask-if-new
-              desktop-load-locked-desktop t
-              desktop-restore-eager 0 ; do not restore any buffers until all modules and modes have loaded
-              desktop-buffers-not-to-save (concat "\\("
-                                                  "\\.log\\|(ftp)\\|^tags\\|^TAGS"
-                                                  "\\.diary\\|\\diary\\|\\.bbdb"
-                                                  "\\)$"))
-        (add-to-list 'desktop-globals-to-save 'file-name-history t)
-        (add-to-list 'desktop-modes-not-to-save 'Info-mode t)
-        (add-to-list 'desktop-modes-not-to-save 'info-lookup-mode t)
-        ;;(add-to-list 'desktop-modes-not-to-save 'dired-mode t)
-        ;;(add-to-list 'desktop-modes-not-to-save 'fundamental-mode t)
-        )
-    #+END_SRC
+***** Minibuffer History
+      :PROPERTIES:
+      :CUSTOM_ID: environment-files-minibuffer-history
+      :END:
 
-    Save minibuffer history.
+      Save minibuffer history.
 
-    #+BEGIN_SRC emacs-lisp
-      ;; save minibuffer history
-      (when (fboundp 'savehist-mode)
-        (when-lock-file-acquired (expand-file-name "emacs-minibuffer-history-lock-file"
-                                                  temporary-file-directory)
-          (savehist-mode 1)
-          (setq savehist-save-minibuffer-history 1
-                savehist-additional-variables '(search-ring
-                                                regexp-search-ring))))
-    #+END_SRC
+      #+BEGIN_SRC emacs-lisp
+        ;;------------------------------------------------------------------------------
+        ;;;; Environment: Files: Minibuffer History
+        ;;------------------------------------------------------------------------------
 
-    +Load TAGS file.+
+        (init-message 3 "Environment: Files: Minibuffer History")
 
-    #+BEGIN_SRC emacs-lisp :tangle no
-      ;; ;; load tags table
-      ;; (let ((file (file-truename (expand-file-name "TAGS" local-init-dir))))
-      ;;   (when (file-exists-p file) (visit-tags-table file)))
-    #+END_SRC
+        (use-package savehist
+          :straight (:type built-in)
+          :custom
+          (savehist-save-minibuffer-history 1)
+          (savehist-additional-variables '(search-ring regexp-search-ring))
+          :init
+          ;; save minibuffer history
+          (when (fboundp 'savehist-mode)
+            (when-lock-file-acquired (expand-file-name "emacs-minibuffer-history-lock-file"
+                                                       temporary-file-directory)
+              (savehist-mode 1))))
+      #+END_SRC
 
 *** Buffers and Windows
     :PROPERTIES:
-    :CUSTOM_ID: environment-settings-buffers-and-windows
+    :CUSTOM_ID: environment-buffers-and-windows
     :END:
 
     #+BEGIN_SRC emacs-lisp
       ;;------------------------------------------------------------------------------
-      ;;; Environment Settings: Buffers and Windows
+      ;;; Environment: Buffers and Windows
       ;;------------------------------------------------------------------------------
 
-      (init-message 2 "Environment Settings: Buffers and Windows")
+      (init-message 2 "Environment: Buffers and Windows")
     #+END_SRC
 
     Use *C-<left>* and *C-<right>* to undo/redo window changes.
@@ -2513,15 +2536,15 @@
 
 *** Tabs
     :PROPERTIES:
-    :CUSTOM_ID: general-settings-tabs
+    :CUSTOM_ID: environment-tabs
     :END:
 
     #+BEGIN_SRC emacs-lisp
       ;;------------------------------------------------------------------------------
-      ;;; General Settings: Tabs
+      ;;; Environment: Tabs
       ;;------------------------------------------------------------------------------
 
-      (init-message 2 "General Settings: Tabs")
+      (init-message 2 "Environment: Tabs")
     #+END_SRC
 
     #+BEGIN_SRC emacs-lisp
@@ -2575,7 +2598,7 @@
 
 *** +Mode Line+
     :PROPERTIES:
-    :CUSTOM_ID: general-settings-mode-line
+    :CUSTOM_ID: environment-mode-line
     :END:
 
     #+BEGIN_SRC emacs-lisp :tangle no
@@ -2583,7 +2606,7 @@
       ;; ;;; General Settings: Mode Line
       ;; ;;------------------------------------------------------------------------------
 
-      ;; (init-message 2 "General Settings: Mode Line")
+      ;; (init-message 2 "Environment: Mode Line")
     #+END_SRC
 
     Show the day, date, and time in the mode line.
@@ -2763,15 +2786,15 @@
 
 ***** Configuration
       :PROPERTIES:
-      :CUSTOM_ID: environment-settings-terminals-configuration
+      :CUSTOM_ID: environment-terminals-configuration
       :END:
 
       #+BEGIN_SRC emacs-lisp
         ;;------------------------------------------------------------------------------
-        ;;;; Environment Settings: Terminals: Configuration
+        ;;;; Environment: Terminals: Configuration
         ;;------------------------------------------------------------------------------
 
-        (init-message 3 "Environment Settings: Terminals: Configuration")
+        (init-message 3 "Environment: Terminals: Configuration")
 
         (setq custom-terminal-history-size 10000
               custom-terminal-maximum-lines 10000)
@@ -2779,15 +2802,15 @@
 
 ***** eshell
       :PROPERTIES:
-      :CUSTOM_ID: environment-settings-terminals-eshell
+      :CUSTOM_ID: environment-terminals-eshell
       :END:
 
       #+BEGIN_SRC emacs-lisp
         ;;------------------------------------------------------------------------------
-        ;;;; Environment Settings: Terminals: eshell
+        ;;;; Environment: Terminals: eshell
         ;;------------------------------------------------------------------------------
 
-        (init-message 3 "Environment Settings: Terminals: eshell")
+        (init-message 3 "Environment: Terminals: eshell")
 
         (defun custom-eshell-first-time-mode-hook ()
           ;; save command history
@@ -2824,15 +2847,15 @@
 
 ***** term-bash
       :PROPERTIES:
-      :CUSTOM_ID: environment-settings-terminals-term-bash
+      :CUSTOM_ID: environment-terminals-term-bash
       :END:
 
       #+BEGIN_SRC emacs-lisp
         ;;------------------------------------------------------------------------------
-        ;;;; Environment Settings: Terminals: term-bash
+        ;;;; Environment: Terminals: term-bash
         ;;------------------------------------------------------------------------------
 
-        (init-message 3 "Environment Settings: Terminals: term-bash")
+        (init-message 3 "Environment: Terminals: term-bash")
 
         (defun term-bash ()
           "Start a BASH terminal-emulator in a new buffer."
@@ -2842,15 +2865,15 @@
 
 ***** term-zsh
       :PROPERTIES:
-      :CUSTOM_ID: environment-settings-terminals-term-zsh
+      :CUSTOM_ID: environment-terminals-term-zsh
       :END:
 
       #+BEGIN_SRC emacs-lisp
         ;;------------------------------------------------------------------------------
-        ;;;; Environment Settings: Terminals: term-zsh
+        ;;;; Environment: Terminals: term-zsh
         ;;------------------------------------------------------------------------------
 
-        (init-message 3 "Environment Settings: Terminals: term-zsh")
+        (init-message 3 "Environment: Terminals: term-zsh")
 
         (defun term-zsh ()
           "Start a ZSH terminal-emulator in a new buffer."
@@ -2860,15 +2883,15 @@
 
 ***** vterm
       :PROPERTIES:
-      :CUSTOM_ID: environment-settings-terminals-vterm
+      :CUSTOM_ID: environment-terminals-vterm
       :END:
 
       #+BEGIN_SRC emacs-lisp
         ;;------------------------------------------------------------------------------
-        ;;;; Environment Settings: Terminals: vterm
+        ;;;; Environment: Terminals: vterm
         ;;------------------------------------------------------------------------------
 
-        (init-message 3 "Environment Settings: Terminals: vterm")
+        (init-message 3 "Environment: Terminals: vterm")
 
         (use-package vterm
           :straight t
@@ -24742,40 +24765,6 @@
         (minions-mode 1))
     #+END_SRC
 
-*** +msf-abbrev+
-    :PROPERTIES:
-    :CUSTOM_ID: modules-msf-abbrev
-    :END:
-
-    Mode Based Abbreviations (msf-abbrev)
-
-    #+BEGIN_SRC emacs-lisp :tangle no
-      ;; ;;------------------------------------------------------------------------------
-      ;; ;;; Packages: msf-abbrev
-      ;; ;;------------------------------------------------------------------------------
-
-      ;; (init-message 2 "Modules: msf-abbrev")
-
-      ;; (use-package msf-abbrev
-      ;;   :straight (:type built-in)
-      ;;   :bind (("C-c C-a" . msf-abbrev-define-new-abbrev-this-mode)
-      ;;          ;;("C-c l" . msf-abbrev-goto-root)
-      ;;          ;;("C-c a" . msf-abbrev-define-new-abbrev-this-mode)
-      ;;          )
-      ;;   :config
-      ;;   ;; turn abbrev mode on
-      ;;   (setq abbrev-mode t)
-      ;;   (setq-default abbrev-mode abbrev-mode)
-
-      ;;   ;; do not prompt about saving abbreviations
-      ;;   (setq save-abbrevs nil)
-
-      ;;   ;; load up abbrevs for various modes
-      ;;   (setq msf-abbrev-verbose t)
-      ;;   (setq msf-abbrev-root (file-truename (expand-file-name "mode-abbrevs" emacs-home-dir)))
-      ;;   (msf-abbrev-load))
-    #+END_SRC
-
 *** multiple-cursors
     :PROPERTIES:
     :CUSTOM_ID: modules-multiple-cursors
@@ -30509,10 +30498,6 @@
       ;;     (setq sgml-omittag-transparent t)
       ;;     ;; automatically insert required elements
       ;;     (setq sgml-auto-insert-required-elements t)
-      ;;     ;; enable abbreviations
-      ;;     ;;(setq abbrev-mode t)
-      ;;     ;;(read-abbrev-file (file-truename (expand-file-name "~/.abbrev_defs")))
-      ;;     ;;(setq save-abbrevs t)
       ;;     )
       ;;   (add-hook 'sgml-mode-hook #'custom-sgml-mode-hook)
 

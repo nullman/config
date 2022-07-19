@@ -183,16 +183,22 @@ Skips checks if run on Windows or Mac."
 ;;(straight-pull-recipe-repositories)
 ;; Straight:1 ends here
 
-;; [[file:init-emacs.org::#environment-settings][Environment Settings:1]]
+;; [[file:init-emacs.org::#environment][Environment:1]]
 ;;==============================================================================
-;;; Environment Settings
+;;; Environment
 ;;==============================================================================
 
-(init-message 1 "Environment Settings")
-;; Environment Settings:1 ends here
+(init-message 1 "Environment")
+;; Environment:1 ends here
 
-;; [[file:init-emacs.org::#environment-settings-modules][Modules:1]]
-;; load modules that are used for initialization
+;; [[file:init-emacs.org::#environment-init-packages][Init Packages:1]]
+;;------------------------------------------------------------------------------
+;;; Environment: Init Packages
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Environment: Init Packages")
+
+;; load packages that are used for initialization
 (use-package async
   :straight t)
 (use-package bind-key
@@ -227,17 +233,17 @@ Skips checks if run on Windows or Mac."
   :straight (:type built-in))
 (use-package ox
   :straight (:type built-in))
-;; Modules:1 ends here
+;; Init Packages:1 ends here
 
-;; [[file:init-emacs.org::#environment-settings-environment][Environment:1]]
+;; [[file:init-emacs.org::#environment-environment][Environment:1]]
 ;;------------------------------------------------------------------------------
-;;; Environment Settings: Environment
+;;; Environment: Environment
 ;;------------------------------------------------------------------------------
 
-(init-message 2 "Environment Settings: Environment")
+(init-message 2 "Environment: Environment")
 ;; Environment:1 ends here
 
-;; [[file:init-emacs.org::#environment-settings-environment][Environment:2]]
+;; [[file:init-emacs.org::#environment-environment][Environment:2]]
 ;; set coding system to UTF-8
 (setq current-language-environment "UTF-8"
       locale-coding-system 'utf-8)
@@ -248,13 +254,13 @@ Skips checks if run on Windows or Mac."
 (prefer-coding-system 'utf-8)
 ;; Environment:2 ends here
 
-;; [[file:init-emacs.org::#environment-settings-environment][Environment:3]]
+;; [[file:init-emacs.org::#environment-environment][Environment:3]]
 ;; set timezone to CST
 ;;(setenv "TZ" "CDT+6")
 (setenv "TZ" "America/Chicago")
 ;; Environment:3 ends here
 
-;; [[file:init-emacs.org::#environment-settings-environment][Environment:4]]
+;; [[file:init-emacs.org::#environment-environment][Environment:4]]
 ;; determine if running on a MS-Windows display
 (defconst window-system-windows
   ;;(memq system-type '(emx win32 w32 mswindows ms-dos windows-nt))
@@ -262,33 +268,33 @@ Skips checks if run on Windows or Mac."
   "Non-nil if running on a MS-Windows display.")
 ;; Environment:4 ends here
 
-;; [[file:init-emacs.org::#environment-settings-environment][Environment:5]]
+;; [[file:init-emacs.org::#environment-environment][Environment:5]]
 ;; determine if running on a macintosh gnustep or cocoa display
 (defconst window-system-mac
   (string= window-system "ns")
   "Non-nil if running on a Macintosh GNUstep or Cocoa display.")
 ;; Environment:5 ends here
 
-;; [[file:init-emacs.org::#environment-settings-environment][Environment:6]]
+;; [[file:init-emacs.org::#environment-environment][Environment:6]]
 ;; determine if running on a Linux X display
 (defconst window-system-linux
   (string= window-system "x")
   "Non-nil if running on a Linux X display.")
 ;; Environment:6 ends here
 
-;; [[file:init-emacs.org::#environment-settings-environment][Environment:7]]
+;; [[file:init-emacs.org::#environment-environment][Environment:7]]
 ;; determine if running on a work system
 (defconst work-system
   (file-exists-p "~/.work")
   "Non-nil if running on a work system.")
 ;; Environment:7 ends here
 
-;; [[file:init-emacs.org::#environment-settings-environment][Environment:8]]
+;; [[file:init-emacs.org::#environment-environment][Environment:8]]
 ;; cd to home
 (cd "~")
 ;; Environment:8 ends here
 
-;; [[file:init-emacs.org::#environment-settings-environment][Environment:9]]
+;; [[file:init-emacs.org::#environment-environment][Environment:9]]
 ;; shell environment
 (setq shell-file-name (or (getenv "SHELL") "/bin/bash")
       shell-command-switch "-c"
@@ -306,7 +312,7 @@ Skips checks if run on Windows or Mac."
   (add-to-list 'exec-path "/usr/local/bin"))
 ;; Environment:9 ends here
 
-;; [[file:init-emacs.org::#environment-settings-environment][Environment:10]]
+;; [[file:init-emacs.org::#environment-environment][Environment:10]]
 ;; set object print depth (do not abbreviate printed objects)
 (setq print-length nil
       print-level nil
@@ -317,22 +323,22 @@ Skips checks if run on Windows or Mac."
 ;; (setq ps-print-header nil)
 ;; Environment:10 ends here
 
-;; [[file:init-emacs.org::#environment-settings-global-variables][Global Variables:1]]
+;; [[file:init-emacs.org::#environment-global-variables][Global Variables:1]]
 ;;------------------------------------------------------------------------------
-;;; Environment Settings: Global Variables
+;;; Environment: Global Variables
 ;;------------------------------------------------------------------------------
 
-(init-message 2 "Environment Settings: Global Variables")
+(init-message 2 "Environment: Global Variables")
 ;; Global Variables:1 ends here
 
-;; [[file:init-emacs.org::#environment-settings-global-variables][Global Variables:2]]
+;; [[file:init-emacs.org::#environment-global-variables][Global Variables:2]]
 ;; set emacs home directory
 (defconst emacs-home-dir
   (file-truename (expand-file-name "~/.emacs.d"))
   "Emacs configuration home directory.")
 ;; Global Variables:2 ends here
 
-;; [[file:init-emacs.org::#environment-settings-global-variables][Global Variables:3]]
+;; [[file:init-emacs.org::#environment-global-variables][Global Variables:3]]
 (defmacro emacs-home-sub-dir (dir)
   "Return expanded directory name of DIR if found as a
 sub-directory of `emacs-home-dir', or just `emacs-home-dir'
@@ -343,28 +349,28 @@ otherwise."
        emacs-home-dir)))
 ;; Global Variables:3 ends here
 
-;; [[file:init-emacs.org::#environment-settings-global-variables][Global Variables:4]]
+;; [[file:init-emacs.org::#environment-global-variables][Global Variables:4]]
 ;; set emacs modules directory
 (defconst emacs-modules-dir
   (emacs-home-sub-dir "modules")
   "Emacs modules directory.")
 ;; Global Variables:4 ends here
 
-;; [[file:init-emacs.org::#environment-settings-global-variables][Global Variables:6]]
+;; [[file:init-emacs.org::#environment-global-variables][Global Variables:6]]
 ;; set local modules directory
 (defconst local-modules-dir
   (emacs-home-sub-dir "local-modules")
   "Emacs local modules directory.")
 ;; Global Variables:6 ends here
 
-;; [[file:init-emacs.org::#environment-settings-global-variables][Global Variables:7]]
+;; [[file:init-emacs.org::#environment-global-variables][Global Variables:7]]
 ;; set local work modules directory
 (defconst local-work-modules-dir
   (emacs-home-sub-dir "local-work-modules")
   "Emacs local work modules directory.")
 ;; Global Variables:7 ends here
 
-;; [[file:init-emacs.org::#environment-settings-global-variables][Global Variables:8]]
+;; [[file:init-emacs.org::#environment-global-variables][Global Variables:8]]
 ;; set customization file
 (defconst customization-file
   (file-truename (expand-file-name "customization.el" emacs-home-dir))
@@ -372,14 +378,14 @@ otherwise."
 (setq custom-file customization-file)
 ;; Global Variables:8 ends here
 
-;; [[file:init-emacs.org::#environment-settings-global-variables][Global Variables:9]]
+;; [[file:init-emacs.org::#environment-global-variables][Global Variables:9]]
 ;; set init-emacs.org true file name
 (defconst init-emacs-true-file-name
   (file-truename (expand-file-name "init-emacs.org" emacs-home-dir))
   "The true file name of this buffer.")
 ;; Global Variables:9 ends here
 
-;; [[file:init-emacs.org::#environment-settings-global-variables][Global Variables:10]]
+;; [[file:init-emacs.org::#environment-global-variables][Global Variables:10]]
 ;; set user name
 (defconst user-name "kyle")
 (defconst user-full-name "Kyle W T Sherman")
@@ -388,7 +394,7 @@ otherwise."
 (defconst user-last-name "Sherman")
 ;; Global Variables:10 ends here
 
-;; [[file:init-emacs.org::#environment-settings-global-variables][Global Variables:11]]
+;; [[file:init-emacs.org::#environment-global-variables][Global Variables:11]]
 ;; set email address
 (defconst user-mail-address
   (if (getenv "EMAIL")
@@ -397,7 +403,7 @@ otherwise."
   "User email address.")
 ;; Global Variables:11 ends here
 
-;; [[file:init-emacs.org::#environment-settings-global-variables][Global Variables:12]]
+;; [[file:init-emacs.org::#environment-global-variables][Global Variables:12]]
 ;; set no-spam email address
 (defconst user-mail-address-nospam
   (replace-regexp-in-string "\\." " dot "
@@ -405,7 +411,7 @@ otherwise."
   "Slightly obfuscated user email address.")
 ;; Global Variables:12 ends here
 
-;; [[file:init-emacs.org::#environment-settings-global-variables][Global Variables:13]]
+;; [[file:init-emacs.org::#environment-global-variables][Global Variables:13]]
 (defun signature (&optional fortune)
   "Return a signature.
 
@@ -427,8 +433,8 @@ A fortune is added if FORTUNE is non-nil."
                 "")))))
 ;; Global Variables:13 ends here
 
-;; [[file:init-emacs.org::#environment-settings-load-path][Load Path:1]]
-(init-message 2 "Environment Settings: Load Path")
+;; [[file:init-emacs.org::#environment-load-path][Load Path:1]]
+(init-message 2 "Environment: Load Path")
 
 ;; add paths to the head of `load-path' in reverse order.
 
@@ -459,12 +465,12 @@ A fortune is added if FORTUNE is non-nil."
 (when window-system
 ;; Header:1 ends here
 
-;; [[file:init-emacs.org::#environment-settings-gui-general][General:1]]
+;; [[file:init-emacs.org::#environment-gui-general][General:1]]
 ;;------------------------------------------------------------------------------
-;;;; Environment Settings: GUI: General
+;;;; Environment: GUI: General
 ;;------------------------------------------------------------------------------
 
-(init-message 3 "Environment Settings: GUI: General")
+(init-message 3 "Environment: GUI: General")
 
 ;; clipboard
 (when (string= window-system "x")
@@ -516,12 +522,12 @@ A fortune is added if FORTUNE is non-nil."
       mouse-wheel-progressive-speed t)
 ;; General:1 ends here
 
-;; [[file:init-emacs.org::#environment-settings-gui-font][Font:1]]
+;; [[file:init-emacs.org::#environment-gui-font][Font:1]]
 ;;------------------------------------------------------------------------------
-;;;; Environment Settings: GUI: Font
+;;;; Environment: GUI: Font
 ;;------------------------------------------------------------------------------
 
-(init-message 3 "Environment Settings: GUI: Font")
+(init-message 3 "Environment: GUI: Font")
 
 ;; set default font
 (ignore-errors
@@ -565,12 +571,12 @@ A fortune is added if FORTUNE is non-nil."
         (set-frame-font "Menlo" nil t))))))
 ;; Font:1 ends here
 
-;; [[file:init-emacs.org::#environment-settings-gui-faces][Faces:1]]
+;; [[file:init-emacs.org::#environment-gui-faces][Faces:1]]
 ;;------------------------------------------------------------------------------
-;;;; Environment Settings: GUI: Faces
+;;;; Environment: GUI: Faces
 ;;------------------------------------------------------------------------------
 
-(init-message 3 "Environment Settings: GUI: Faces")
+(init-message 3 "Environment: GUI: Faces")
 
 ;; ;; set faces
 ;; ;; white foreground on black background with yellow cursor
@@ -607,12 +613,12 @@ Common values:
 (set-mouse-color color-mouse)
 ;; Faces:1 ends here
 
-;; [[file:init-emacs.org::#environment-settings-gui-modus-themes][Modus Themes:1]]
+;; [[file:init-emacs.org::#environment-gui-modus-themes][Modus Themes:1]]
 ;;------------------------------------------------------------------------------
-;;;; Environment Settings: GUI: Modus Themes
+;;;; Environment: GUI: Modus Themes
 ;;------------------------------------------------------------------------------
 
-(init-message 3 "Environment Settings: GUI: Modus Themes")
+(init-message 3 "Environment: GUI: Modus Themes")
 
 ;; modus themes
 ;; https://github.com/protesilaos/modus-themes/
@@ -753,27 +759,27 @@ Common values:
 )
 ;; Footer:1 ends here
 
-;; [[file:init-emacs.org::#environment-settings-general][General:1]]
+;; [[file:init-emacs.org::#environment-general][General:1]]
 ;;------------------------------------------------------------------------------
-;;; Environment Settings: General
+;;; Environment: General
 ;;------------------------------------------------------------------------------
 
-(init-message 2 "Environment Settings: General")
+(init-message 2 "Environment: General")
 ;; General:1 ends here
 
-;; [[file:init-emacs.org::#environment-settings-general][General:2]]
+;; [[file:init-emacs.org::#environment-general][General:2]]
 (init-message 3 "Disable Splash Screen")
 
 ;; disable splash screen
 (setq inhibit-startup-screen t)
 ;; General:2 ends here
 
-;; [[file:init-emacs.org::#environment-settings-general][General:3]]
+;; [[file:init-emacs.org::#environment-general][General:3]]
 ;; prefer newer el files over elc
 (setq load-prefer-newer t)
 ;; General:3 ends here
 
-;; [[file:init-emacs.org::#environment-settings-general][General:4]]
+;; [[file:init-emacs.org::#environment-general][General:4]]
 (init-message 3 "Hide Menu Bar")
 
 ;; hide menu-bar (use C-M-z to activate)
@@ -782,37 +788,28 @@ Common values:
   (menu-bar-mode -1))
 ;; General:4 ends here
 
-;; [[file:init-emacs.org::#environment-settings-general][General:6]]
+;; [[file:init-emacs.org::#environment-general][General:6]]
 (init-message 3 "Set Default Buffer Mode to `org-mode'")
 
 ;; set default buffer mode to `org-mode'
 (setq initial-major-mode 'org-mode)
 ;; General:6 ends here
 
-;; [[file:init-emacs.org::#environment-settings-general][General:7]]
+;; [[file:init-emacs.org::#environment-general][General:7]]
 (init-message 3 "Start with Empty Scratch Buffer")
 
 ;; clear scratch buffer
 (setq initial-scratch-message nil)
 ;; General:7 ends here
 
-;; [[file:init-emacs.org::#environment-settings-general][General:9]]
-(init-message 3 "Ask before Closing Emacs")
-
-;; ask before closing emacs
-(setq kill-emacs-query-functions
-      (cons (lambda () (yes-or-no-p "Really kill Emacs? "))
-            kill-emacs-query-functions))
-;; General:9 ends here
-
-;; [[file:init-emacs.org::#environment-settings-general][General:10]]
+;; [[file:init-emacs.org::#environment-general][General:9]]
 (init-message 3 "Make Backspace Key Work Correctly")
 
 ;; make baskspace key work
 (normal-erase-is-backspace-mode 1)
-;; General:10 ends here
+;; General:9 ends here
 
-;; [[file:init-emacs.org::#environment-settings-general][General:11]]
+;; [[file:init-emacs.org::#environment-general][General:10]]
 (init-message 3 "Add Some Characters to Word Boundaries")
 
 ;; add underscore to word boundaries
@@ -820,47 +817,47 @@ Common values:
 
 ;; add dash to word boundaries
 (modify-syntax-entry ?- "w")
-;; General:11 ends here
+;; General:10 ends here
 
-;; [[file:init-emacs.org::#environment-settings-general][General:12]]
+;; [[file:init-emacs.org::#environment-general][General:11]]
 (init-message 3 "Beginning of Defun is Outermost Level Open-Paren")
 
 (setq open-paren-in-column-0-is-defun-start nil
       defun-prompt-regexp nil)
-;; General:12 ends here
+;; General:11 ends here
 
-;; [[file:init-emacs.org::#environment-settings-general][General:13]]
+;; [[file:init-emacs.org::#environment-general][General:12]]
 (init-message 3 "Ignore Comments when Parsing S-Expressions")
 
 ;; do not parse comments in sexp's
 (setq parse-sexp-ignore-comments t)
 (setq-default parse-sexp-ignore-comments parse-sexp-ignore-comments)
-;; General:13 ends here
+;; General:12 ends here
 
-;; [[file:init-emacs.org::#environment-settings-general][General:14]]
+;; [[file:init-emacs.org::#environment-general][General:13]]
 ;; (init-message 3 "Wrap Lines by Default")
 
 ;; ;; wrap lines
 ;; (setq truncate-lines nil)
-;; General:14 ends here
+;; General:13 ends here
 
-;; [[file:init-emacs.org::#environment-settings-general][General:15]]
+;; [[file:init-emacs.org::#environment-general][General:14]]
 (init-message 3 "Do Not Wrap Lines by Default")
 
 ;; turn off line wrapping
 (setq truncate-lines t)
 (setq-default truncate-lines truncate-lines)
 (toggle-truncate-lines 1)
-;; General:15 ends here
+;; General:14 ends here
 
-;; [[file:init-emacs.org::#environment-settings-general][General:17]]
+;; [[file:init-emacs.org::#environment-general][General:16]]
 (init-message 3 "Turn Off `auto-fill-mode'")
 
 ;; do not automatically break lines by inserting newlines
 (turn-off-auto-fill)
-;; General:17 ends here
+;; General:16 ends here
 
-;; [[file:init-emacs.org::#environment-settings-general][General:18]]
+;; [[file:init-emacs.org::#environment-general][General:17]]
 ;; (init-message 3 "Turn On `global-visual-line-mode'")
 
 ;; ;; visually break lines that are longer than the screen width
@@ -874,9 +871,9 @@ Common values:
 
 ;; ;; use curly arrows to indicate a visual line wrap
 ;; (setq visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
-;; General:18 ends here
+;; General:17 ends here
 
-;; [[file:init-emacs.org::#environment-settings-general][General:19]]
+;; [[file:init-emacs.org::#environment-general][General:18]]
 (init-message 3 "Turn On `global-visual-line-mode'")
 
 ;; do not visually break lines that are longer than the screen width
@@ -890,30 +887,30 @@ Common values:
 
 ;; use curly arrows to indicate a visual line wrap
 (setq visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
-;; General:19 ends here
+;; General:18 ends here
 
-;; [[file:init-emacs.org::#environment-settings-general][General:20]]
+;; [[file:init-emacs.org::#environment-general][General:19]]
 (init-message 3 "Set `display-line-numbers-type' to relative")
 
 ;; when `display-line-numbers-mode' is on use relative numbering
 (setq display-line-numbers-type 'relative)
-;; General:20 ends here
+;; General:19 ends here
 
-;; [[file:init-emacs.org::#environment-settings-general][General:21]]
+;; [[file:init-emacs.org::#environment-general][General:20]]
 (init-message 3 "Prevent `next-line' from Inserting Newlines")
 
 ;; stop cursor at the end of the file
 (setq next-line-add-newlines nil)
-;; General:21 ends here
+;; General:20 ends here
 
-;; [[file:init-emacs.org::#environment-settings-general][General:22]]
+;; [[file:init-emacs.org::#environment-general][General:21]]
 (init-message 3 "Keep the Cursor in the Same Column When Using Page-Up and Page-Down")
 
 ;; keep screen position when using page-up and page-down
 (setq scroll-preserve-screen-position 'keep)
-;; General:22 ends here
+;; General:21 ends here
 
-;; [[file:init-emacs.org::#environment-settings-general][General:23]]
+;; [[file:init-emacs.org::#environment-general][General:22]]
 (init-message 3 "Scroll Conservatively")
 
 ;; scroll one line at a time
@@ -922,33 +919,33 @@ Common values:
 (setq scroll-conservatively 101)
 ;; turn off vertical auto-scroll
 (setq auto-window-vscroll nil)
-;; General:23 ends here
+;; General:22 ends here
 
-;; [[file:init-emacs.org::#environment-settings-general][General:24]]
+;; [[file:init-emacs.org::#environment-general][General:23]]
 (init-message 3 "Ignore Case on Search Matches")
 
 ;; make searches case-insensitive
 (setq case-fold-search t)
-;; General:24 ends here
+;; General:23 ends here
 
-;; [[file:init-emacs.org::#environment-settings-general][General:25]]
+;; [[file:init-emacs.org::#environment-general][General:24]]
 (init-message 3 "Highlight Search Matches")
 
 ;; highlight search matches
 (setq search-highlight t
       ;;isearch-highlight t
       query-replace-highlight t)
-;; General:25 ends here
+;; General:24 ends here
 
-;; [[file:init-emacs.org::#environment-settings-general][General:26]]
+;; [[file:init-emacs.org::#environment-general][General:25]]
 (init-message 3 "Hightlight Marked Regions")
 
 ;; make current selection visible
 (transient-mark-mode 1)
 (setq-default transient-mark-mode transient-mark-mode)
-;; General:26 ends here
+;; General:25 ends here
 
-;; [[file:init-emacs.org::#environment-settings-general][General:27]]
+;; [[file:init-emacs.org::#environment-general][General:26]]
 (init-message 3 "Set Default Tab Indentation to Four Spaces and Turn on Auto-Complete")
 
 ;; set tab indentation, width, and convert tabs to spaces
@@ -962,17 +959,17 @@ Common values:
               standard-indent standard-indent
               tab-always-indent tab-always-indent
               tab-stop-list tab-stop-list)
-;; General:27 ends here
+;; General:26 ends here
 
-;; [[file:init-emacs.org::#environment-settings-general][General:28]]
+;; [[file:init-emacs.org::#environment-general][General:27]]
 (init-message 3 "Set Default Line-Wrapping Column to 78")
 
 ;; set default fill column for `auto-fill-mode' mode and `fill-paragraph'
 (setq fill-column 78)
 (setq-default fill-column fill-column)
-;; General:28 ends here
+;; General:27 ends here
 
-;; [[file:init-emacs.org::#environment-settings-general][General:29]]
+;; [[file:init-emacs.org::#environment-general][General:28]]
 (init-message 3 "Set Default Right-Margin Comment Indent Column to 40")
 
 ;; set default comment column for in-line comments
@@ -981,51 +978,51 @@ Common values:
 ;; set default comment fill column for in-line comments
 (setq comment-fill-column nil)
 (setq-default comment-fill-column comment-fill-column)
-;; General:29 ends here
+;; General:28 ends here
 
-;; [[file:init-emacs.org::#environment-settings-general][General:30]]
+;; [[file:init-emacs.org::#environment-general][General:29]]
 (init-message 3 "Have Cursor Movements Attempt to Keep Point on Original Column")
 
 ;; turn on goal column support
 (put 'set-goal-column 'disabled nil)
-;; General:30 ends here
+;; General:29 ends here
 
-;; [[file:init-emacs.org::#environment-settings-general][General:31]]
+;; [[file:init-emacs.org::#environment-general][General:30]]
 (init-message 3 "Sentences and Colons Should Have One Space after Them")
 
 ;; insert one space after a sentence when filling text
 (setq sentence-end-double-space nil)
 ;; insert one space after a colon when filling text
 (setq colon-double-space nil)
-;; General:31 ends here
+;; General:30 ends here
 
-;; [[file:init-emacs.org::#environment-settings-general][General:32]]
+;; [[file:init-emacs.org::#environment-general][General:31]]
 ;; (init-message 3 "Sentences and Colons Should Have Two Spaces after Them")
 
 ;; ;; insert two spaces after a sentence when filling text
 ;; (setq sentence-end-double-space t)
 ;; ;; insert two spaces after a colon when filling text
 ;; (setq colon-double-space t)
-;; General:32 ends here
+;; General:31 ends here
 
-;; [[file:init-emacs.org::#environment-settings-general][General:33]]
+;; [[file:init-emacs.org::#environment-general][General:32]]
 (init-message 3 "Highlight Matching Parenthesis")
 
 ;; highlight matching parenthesis
 (show-paren-mode 1)
 (set-face-foreground 'show-paren-match color-paren)
 (set-face-attribute 'show-paren-match nil :weight 'extra-bold)
-;; General:33 ends here
+;; General:32 ends here
 
-;; [[file:init-emacs.org::#environment-settings-general][General:34]]
+;; [[file:init-emacs.org::#environment-general][General:33]]
 (init-message 3 "Highlight TABs")
 
 ;; highlight tabs
 (setq highlight-tabs t)
 (setq-default highlight-tabs highlight-tabs)
-;; General:34 ends here
+;; General:33 ends here
 
-;; [[file:init-emacs.org::#environment-settings-general][General:35]]
+;; [[file:init-emacs.org::#environment-general][General:34]]
 (init-message 3 "Highlight Tabs and Trailing Whitespace")
 
 ;; ;; highlight trailing white spaces
@@ -1040,32 +1037,32 @@ Common values:
         (newline-mark 10 [182 10]) ; 10 linefeed '\n', 182 ??? '¶'
         (tab-mark 9 [9655 9] [92 9])))    ; 9 tab '\t', 9655 '▷', 92 backslash '\'
 (global-whitespace-mode 1)              ; enable whitespace mode everywhere
-;; General:35 ends here
+;; General:34 ends here
 
-;; [[file:init-emacs.org::#environment-settings-general][General:36]]
+;; [[file:init-emacs.org::#environment-general][General:35]]
 (init-message 3 "Highlight Current Line")
 
 ;; highlight current line
 (hl-line-mode 1)
 (global-hl-line-mode 1)
-;; General:36 ends here
+;; General:35 ends here
 
-;; [[file:init-emacs.org::#environment-settings-general][General:37]]
+;; [[file:init-emacs.org::#environment-general][General:36]]
 (init-message 3 "Turn on Syntax Highlighting")
 
 ;; turn on global font lock mode and syntax highlighting
 (global-font-lock-mode 1)
 (setq font-lock-maximum-decoration t)
-;; General:37 ends here
+;; General:36 ends here
 
-;; [[file:init-emacs.org::#environment-settings-general][General:38]]
+;; [[file:init-emacs.org::#environment-general][General:37]]
 (init-message 3 "Typing Replaces Highlighted Text")
 
 ;; replace highlighted text with typed text
 (delete-selection-mode t)
-;; General:38 ends here
+;; General:37 ends here
 
-;; [[file:init-emacs.org::#environment-settings-general][General:39]]
+;; [[file:init-emacs.org::#environment-general][General:38]]
 (init-message 3 "Set Commenting Style to Indent")
 
 ;; ;; set comment start (default) and padding
@@ -1073,14 +1070,14 @@ Common values:
 ;;       comment-padding " ")
 ;; set comment style
 (setq comment-style 'indent)
-;; General:39 ends here
+;; General:38 ends here
 
-;; [[file:init-emacs.org::#environment-settings-general][General:40]]
+;; [[file:init-emacs.org::#environment-general][General:39]]
 (setq enable-recursive-minibuffers t)
 (minibuffer-depth-indicate-mode 1)
-;; General:40 ends here
+;; General:39 ends here
 
-;; [[file:init-emacs.org::#environment-settings-general][General:42]]
+;; [[file:init-emacs.org::#environment-general][General:41]]
 (init-message 3 "Have `apropos' Search All Symbols and Order by Relevance")
 
 ;; make apropos command search all symbols
@@ -1089,25 +1086,25 @@ Common values:
 ;; make apropos command list results by relevance
 (setq apropos-sort-by-scores t
       apropos-documentation-sort-by-scores t)
-;; General:42 ends here
+;; General:41 ends here
 
-;; [[file:init-emacs.org::#environment-settings-general][General:43]]
+;; [[file:init-emacs.org::#environment-general][General:42]]
 (init-message 3 "Set Default `grep' Command")
 
 ;; set grep command
 (setq grep-command "grep -n -H -i -r -e ")
-;; General:43 ends here
+;; General:42 ends here
 
-;; [[file:init-emacs.org::#environment-settings-general][General:44]]
+;; [[file:init-emacs.org::#environment-general][General:43]]
 (init-message 3 "Set Email Sources")
 
 ;; email settings
 (setq mail-sources `((pop :server "pop.gmail.com" :port 995
                           :user ,user-mail-address
                           :connection ssl :leave t)))
-;; General:44 ends here
+;; General:43 ends here
 
-;; [[file:init-emacs.org::#environment-settings-general][General:45]]
+;; [[file:init-emacs.org::#environment-general][General:44]]
 (init-message 3 "Set Default Browser")
 
 ;; set default browser
@@ -1124,32 +1121,32 @@ Common values:
 
 ;; set secondary browser
 (setq browse-url-secondary-browser-function 'browse-url-default-browser)
-;; General:45 ends here
+;; General:44 ends here
 
-;; [[file:init-emacs.org::#environment-settings-general][General:46]]
+;; [[file:init-emacs.org::#environment-general][General:45]]
 (init-message 3 "Single Character Deletion Commands Delete Active Regions Without Saving to the Kill Ring")
 
 ;; when deleting an active region via single character deletion command,
 ;; do not save to kill ring
 (setq delete-active-region t)
-;; General:46 ends here
+;; General:45 ends here
 
-;; [[file:init-emacs.org::#environment-settings-general][General:47]]
+;; [[file:init-emacs.org::#environment-general][General:46]]
 (init-message 3 "Disable `vc-git'.")
 
 ;; disable vc-git
 (setq vc-handled-backends nil)
-;; General:47 ends here
+;; General:46 ends here
 
-;; [[file:init-emacs.org::#environment-settings-general][General:48]]
+;; [[file:init-emacs.org::#environment-general][General:47]]
 ;; (init-message 3 "Recenter window after `next-error'.")
 
 ;; ;; always recenter after `next-error'
 ;; (setq next-error-recenter '(4))
 ;; ;;(add-hook 'next-error-hook #'recenter :append)
-;; General:48 ends here
+;; General:47 ends here
 
-;; [[file:init-emacs.org::#environment-settings-general][General:49]]
+;; [[file:init-emacs.org::#environment-general][General:48]]
 (init-message 3 "Recenter window after `occur-mode-goto-occurrence'.")
 
 ;; always recenter after `occur-mode-goto-occurrence'
@@ -1158,9 +1155,9 @@ Common values:
   (recenter))
 ;; advise `occur-mode-goto-occurrence'
 (advice-add 'occur-mode-goto-occurrence :after #'occur-mode-goto-occurrence--recenter)
-;; General:49 ends here
+;; General:48 ends here
 
-;; [[file:init-emacs.org::#environment-settings-general][General:50]]
+;; [[file:init-emacs.org::#environment-general][General:49]]
 (init-message 3 "Set time zones to use for `display-time-world'.")
 
 ;; set display-time-world time zones
@@ -1173,32 +1170,32 @@ Common values:
         ("Europe/London" "London")
         ("Europe/Paris" "Paris")
         ("Asia/Tokyo" "Tokyo")))
-;; General:50 ends here
+;; General:49 ends here
 
-;; [[file:init-emacs.org::#environment-settings-system][System:1]]
+;; [[file:init-emacs.org::#environment-system][System:1]]
 ;;------------------------------------------------------------------------------
-;;; Environment Settings: System
+;;; Environment: System
 ;;------------------------------------------------------------------------------
 
-(init-message 2 "Environment Settings: System")
+(init-message 2 "Environment: System")
 ;; System:1 ends here
 
-;; [[file:init-emacs.org::#environment-settings-system][System:3]]
+;; [[file:init-emacs.org::#environment-system][System:3]]
 ;; set max variable bindings
 (setq max-specpdl-size 10000)           ; default: 1300
 ;; System:3 ends here
 
-;; [[file:init-emacs.org::#environment-settings-system][System:4]]
+;; [[file:init-emacs.org::#environment-system][System:4]]
 ;; set max eval depth
 (setq max-lisp-eval-depth 10000)        ; default: 600
 ;; System:4 ends here
 
-;; [[file:init-emacs.org::#environment-settings-system][System:5]]
+;; [[file:init-emacs.org::#environment-system][System:5]]
 ;; set max message log size
 (setq message-log-max 2048)             ; default: 1000
 ;; System:5 ends here
 
-;; [[file:init-emacs.org::#environment-settings-system][System:6]]
+;; [[file:init-emacs.org::#environment-system][System:6]]
 ;; set max history list size
 (setq history-length 250)               ; default: 30
 
@@ -1206,7 +1203,7 @@ Common values:
 (setq history-delete-duplicates t)      ; default: nil
 ;; System:6 ends here
 
-;; [[file:init-emacs.org::#environment-settings-system][System:7]]
+;; [[file:init-emacs.org::#environment-system][System:7]]
 ;; set max kill ring size
 (setq kill-ring-max 100)                ; default: 60
 
@@ -1214,12 +1211,12 @@ Common values:
 (setq mark-ring-max 32)                 ; default: 16
 ;; System:7 ends here
 
-;; [[file:init-emacs.org::#environment-settings-system][System:8]]
+;; [[file:init-emacs.org::#environment-system][System:8]]
 ;; change all calls to `yes-or-no-p' to `y-or-n-p'
 (fset 'yes-or-no-p 'y-or-n-p)
 ;; System:8 ends here
 
-;; [[file:init-emacs.org::#environment-settings-system][System:9]]
+;; [[file:init-emacs.org::#environment-system][System:9]]
 ;; enable upercase region (C-x C-u)
 (put 'upcase-region 'disabled nil)
 
@@ -1233,7 +1230,7 @@ Common values:
 (setq disabled-command-function nil)
 ;; System:9 ends here
 
-;; [[file:init-emacs.org::#environment-settings-system][System:10]]
+;; [[file:init-emacs.org::#environment-system][System:10]]
 ;; turn off bidirectional paragraph formatting
 (setq bidi-paragraph-direction 'left-to-right)
 (setq-default bidi-paragraph-direction bidi-paragraph-direction)
@@ -1247,93 +1244,55 @@ Common values:
   (global-so-long-mode 1))
 ;; System:10 ends here
 
-;; [[file:init-emacs.org::#environment-settings-system][System:11]]
-(init-message 3 "Set `safe-local-variable-values'.")
-
-;; org-babel noweb start and end patterns
-(add-to-list 'safe-local-variable-values '(org-babel-noweb-wrap-start . "{{"))
-(add-to-list 'safe-local-variable-values '(org-babel-noweb-wrap-end . "}}"))
-;; System:11 ends here
-
-;; [[file:init-emacs.org::#environment-settings-files][Files:1]]
+;; [[file:init-emacs.org::#environment-files][Files:1]]
 ;;------------------------------------------------------------------------------
-;;; Environment Settings: Files
+;;; Environment: Files
 ;;------------------------------------------------------------------------------
 
-(init-message 2 "Environment Settings: Files")
+(init-message 2 "Environment: Files")
 ;; Files:1 ends here
 
-;; [[file:init-emacs.org::#environment-settings-files][Files:2]]
-;; increase maximum size before confirmation is requested
-(setq large-file-warning-threshold 50000000)
-;; Files:2 ends here
+;; [[file:init-emacs.org::#environment-files-general][General:1]]
+;;------------------------------------------------------------------------------
+;;;; Environment: Files: General
+;;------------------------------------------------------------------------------
 
-;; [[file:init-emacs.org::#environment-settings-files][Files:3]]
-;; enable file variables
-(setq enable-local-variables t
-      enable-local-eval 'maybe)
-;; Files:3 ends here
+(init-message 3 "Environment: Files: General")
 
-;; [[file:init-emacs.org::#environment-settings-files][Files:4]]
-;; delete auto-save files
-(setq delete-auto-save-files t)
+(use-package files
+  :straight (:type built-in)
+  :custom
+  ;; do not make backup files
+  (make-backup-files nil)
+  (backup-inhibited t)
+  ;; reuse existing buffers, following file links
+  (find-file-existing-other-name t)
+  ;; end files with a newline
+  (require-final-newline t)
+  ;; do not make auto-save files
+  (auto-save-default nil)
+  ;; delete auto-save files
+  (delete-auto-save-files t)
+  ;; enable file local variables
+  (enable-local-variables t)
+  ;; enable directory local variables
+  (enable-dir-local-variables t)
+  ;; ask user before evaluating local variables
+  (enable-local-eval 'maybe)
+  ;; increase maximum file size (in bytes) to open before confirmation is requested
+  (large-file-warning-threshold (* 50 1000 1000))
+  ;; org-babel noweb start and end patterns are considered safe
+  (add-to-list 'safe-local-variable-values '(org-babel-noweb-wrap-start . "{{"))
+  (add-to-list 'safe-local-variable-values '(org-babel-noweb-wrap-end . "}}"))
+  ;; all backup files should go into the system temp directory
+  (backup-directory-alist `(("." . ,temporary-file-directory)))
+  ;; ask before closing emacs
+  (kill-emacs-query-functions
+   (cons (lambda () (yes-or-no-p "Really kill Emacs? "))
+         kill-emacs-query-functions)))
+;; General:1 ends here
 
-;; do not make auto-save files
-(setq auto-save-default nil)
-(setq-default auto-save-default auto-save-default)
-(setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t))
-      auto-save-list-file-prefix temporary-file-directory
-      auto-save-list-file-name nil
-      auto-save-default nil)
-;; Files:4 ends here
-
-;; [[file:init-emacs.org::#environment-settings-files][Files:5]]
-;; do not make backup files
-(setq make-backup-files nil)
-(setq-default make-backup-files make-backup-files)
-(setq backup-directory-alist `((".*" . ,temporary-file-directory))
-      make-backup-files nil
-      backup-by-copying t
-      version-control nil
-      delete-old-versions t)
-;; Files:5 ends here
-
-;; [[file:init-emacs.org::#environment-settings-files][Files:6]]
-;; ;; do not make lock files
-;; (setq create-lock-files nil)
-;; (setq-default create-lock-files create-lock-files)
-;; Files:6 ends here
-
-;; [[file:init-emacs.org::#environment-settings-files][Files:7]]
-;; follow symlinks to version control files without asking or warning
-(setq vc-follow-symlinks t)
-(setq-default vc-follow-symlinks vc-follow-symlinks)
-;; Files:7 ends here
-
-;; [[file:init-emacs.org::#environment-settings-files][Files:8]]
-;; handle gzip/zip/jar/tar files
-(auto-compression-mode t)
-;; Files:8 ends here
-
-;; [[file:init-emacs.org::#environment-settings-files][Files:9]]
-;; reuse existing buffers, following file links
-(setq find-file-existing-other-name t)
-;; Files:9 ends here
-
-;; [[file:init-emacs.org::#environment-settings-files][Files:10]]
-;; end files with a newline
-(setq require-final-newline t)
-;; Files:10 ends here
-
-;; [[file:init-emacs.org::#environment-settings-files][Files:12]]
-;; turn on auto buffer revert mode
-(global-auto-revert-mode 1)
-;; this is currently bugged and will cause the buffer to re-center vertically every couple of seconds
-;; (setq global-auto-revert-non-file-buffers t ; auto refresh dired too
-;;       auto-revert-verbose nil)              ; but, be quiet about it
-;; Files:12 ends here
-
-;; [[file:init-emacs.org::#environment-settings-files][Files:13]]
+;; [[file:init-emacs.org::#environment-files-general][General:2]]
 (defun create-buffer-file-name-directory-if-needed ()
   "Create `buffer-file-name' directory if it does not already exist."
   (when (and buffer-file-name
@@ -1342,9 +1301,9 @@ Common values:
 
 ;; create directories if needed on file save
 (add-hook 'before-save-hook #'create-buffer-file-name-directory-if-needed)
-;; Files:13 ends here
+;; General:2 ends here
 
-;; [[file:init-emacs.org::#environment-settings-files][Files:14]]
+;; [[file:init-emacs.org::#environment-files-general][General:3]]
 ;; delete trailing lines on call to `delete-trailing-whitespace'
 (setq delete-trailing-lines t)
 
@@ -1358,101 +1317,171 @@ Common values:
 
 ;; delete trailing whitespace on save
 (add-hook 'before-save-hook #'delete-trailing-whitespace-if-not-read-only)
-;; Files:14 ends here
+;; General:3 ends here
 
-;; [[file:init-emacs.org::#environment-settings-files][Files:15]]
+;; [[file:init-emacs.org::#environment-files-general][General:4]]
 ;; make shell scripts executable when saving (and reset the buffer mode)
 (when (fboundp 'executable-make-buffer-file-executable-if-script-p)
   (add-hook 'after-save-hook #'executable-make-buffer-file-executable-if-script-p))
-;; Files:15 ends here
+;; General:4 ends here
 
-;; [[file:init-emacs.org::#environment-settings-files][Files:16]]
+;; [[file:init-emacs.org::#environment-files-general][General:5]]
 ;; set DOS file extensions
 (add-to-list 'file-coding-system-alist '("\\.ASM\\'" . dos))
 (add-to-list 'file-coding-system-alist '("\\.BAT\\'" . dos))
 (add-to-list 'file-coding-system-alist '("\\.DO\\'" . dos))
 (add-to-list 'file-coding-system-alist '("\\.SYS\\'" . dos))
-;; Files:16 ends here
+;; General:5 ends here
 
-;; [[file:init-emacs.org::#environment-settings-files][Files:17]]
-;; auto-save bookmarks
-(setq bookmark-save-flag 1)
-;; Files:17 ends here
-
-;; [[file:init-emacs.org::#environment-settings-files][Files:18]]
-;; desktop history
-(when-lock-file-acquired (expand-file-name "emacs-desktop-history-lock-file"
-                                          temporary-file-directory)
-  (desktop-save-mode 1)
-  (setq desktop-save 'ask-if-new
-        desktop-load-locked-desktop t
-        desktop-restore-eager 0 ; do not restore any buffers until all modules and modes have loaded
-        desktop-buffers-not-to-save (concat "\\("
-                                            "\\.log\\|(ftp)\\|^tags\\|^TAGS"
-                                            "\\.diary\\|\\diary\\|\\.bbdb"
-                                            "\\)$"))
-  (add-to-list 'desktop-globals-to-save 'file-name-history t)
-  (add-to-list 'desktop-modes-not-to-save 'Info-mode t)
-  (add-to-list 'desktop-modes-not-to-save 'info-lookup-mode t)
-  ;;(add-to-list 'desktop-modes-not-to-save 'dired-mode t)
-  ;;(add-to-list 'desktop-modes-not-to-save 'fundamental-mode t)
-  )
-;; Files:18 ends here
-
-;; [[file:init-emacs.org::#environment-settings-files][Files:19]]
-;; save minibuffer history
-(when (fboundp 'savehist-mode)
-  (when-lock-file-acquired (expand-file-name "emacs-minibuffer-history-lock-file"
-                                            temporary-file-directory)
-    (savehist-mode 1)
-    (setq savehist-save-minibuffer-history 1
-          savehist-additional-variables '(search-ring
-                                          regexp-search-ring))))
-;; Files:19 ends here
-
-;; [[file:init-emacs.org::#environment-settings-buffers-and-windows][Buffers and Windows:1]]
+;; [[file:init-emacs.org::#environment-files-version-control][Version Control:1]]
 ;;------------------------------------------------------------------------------
-;;; Environment Settings: Buffers and Windows
+;;;; Environment: Files: Version Control
 ;;------------------------------------------------------------------------------
 
-(init-message 2 "Environment Settings: Buffers and Windows")
+(init-message 3 "Environment: Files: Version Control")
+
+(use-package vc-hooks
+  :straight (:type built-in)
+  :custom
+  ;; follow symlinks to version control files without asking or warning
+  (vc-follow-symlinks t))
+;; Version Control:1 ends here
+
+;; [[file:init-emacs.org::#environment-files-compression][Compression:1]]
+;;------------------------------------------------------------------------------
+;;;; Environment: Files: Compression
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Environment: Files: Compression")
+
+(use-package jka-cmpr-hook
+  :straight (:type built-in)
+  :custom
+  ;; automatically uncompress and compress gzip/zip/jar/tar files
+  (auto-compression-mode t))
+;; Compression:1 ends here
+
+;; [[file:init-emacs.org::#environment-files-auto-revert][Auto-Revert:1]]
+;;------------------------------------------------------------------------------
+;;;; Environment: Files: Auto-Revert
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Environment: Files: Auto-Revert")
+
+(use-package autorevert
+  :straight (:type built-in)
+  :custom
+  ;; turn on auto buffer revert mode
+  (global-auto-revert-mode 1))
+;; Auto-Revert:1 ends here
+
+;; [[file:init-emacs.org::#environment-files-bookmark][Bookmark:1]]
+;;------------------------------------------------------------------------------
+;;;; Environment: Files: Bookmark
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Environment: Files: Bookmark")
+
+(use-package bookmark
+  :straight (:type built-in)
+  :custom
+  ;; auto-save bookmarks every time they change
+  (bookmark-save-flag 1))
+;; Bookmark:1 ends here
+
+;; [[file:init-emacs.org::#environment-files-desktop][Desktop:1]]
+;;------------------------------------------------------------------------------
+;;;; Environment: Files: Desktop
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Environment: Files: Desktop")
+
+(use-package desktop
+  :straight (:type built-in)
+  :custom
+  (desktop-save 'ask-if-new)
+  (desktop-load-locked-desktop t)
+  (desktop-restore-eager 0) ; do not restore any buffers until all modules and modes have loaded
+  (desktop-buffers-not-to-save (concat "\\("
+                                       "\\.log\\|(ftp)\\|^tags\\|^TAGS"
+                                       "\\.diary\\|\\diary\\|\\.bbdb"
+                                       "\\)$"))
+  :init
+  ;; desktop history
+  (when-lock-file-acquired (expand-file-name "emacs-desktop-history-lock-file"
+                                             temporary-file-directory)
+    (desktop-save-mode 1)
+    (add-to-list 'desktop-globals-to-save 'file-name-history t)
+    (add-to-list 'desktop-modes-not-to-save 'Info-mode t)
+    (add-to-list 'desktop-modes-not-to-save 'info-lookup-mode t)
+    ;;(add-to-list 'desktop-modes-not-to-save 'dired-mode t)
+    ;;(add-to-list 'desktop-modes-not-to-save 'fundamental-mode t)
+    ))
+;; Desktop:1 ends here
+
+;; [[file:init-emacs.org::#environment-files-minibuffer-history][Minibuffer History:1]]
+;;------------------------------------------------------------------------------
+;;;; Environment: Files: Minibuffer History
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Environment: Files: Minibuffer History")
+
+(use-package savehist
+  :straight (:type built-in)
+  :custom
+  (savehist-save-minibuffer-history 1)
+  (savehist-additional-variables '(search-ring regexp-search-ring))
+  :init
+  ;; save minibuffer history
+  (when (fboundp 'savehist-mode)
+    (when-lock-file-acquired (expand-file-name "emacs-minibuffer-history-lock-file"
+                                               temporary-file-directory)
+      (savehist-mode 1))))
+;; Minibuffer History:1 ends here
+
+;; [[file:init-emacs.org::#environment-buffers-and-windows][Buffers and Windows:1]]
+;;------------------------------------------------------------------------------
+;;; Environment: Buffers and Windows
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Environment: Buffers and Windows")
 ;; Buffers and Windows:1 ends here
 
-;; [[file:init-emacs.org::#environment-settings-buffers-and-windows][Buffers and Windows:2]]
+;; [[file:init-emacs.org::#environment-buffers-and-windows][Buffers and Windows:2]]
 ;; allow undo/redo of window settings
 (when (fboundp 'winner-mode)
   (winner-mode 1))
 ;; Buffers and Windows:2 ends here
 
-;; [[file:init-emacs.org::#environment-settings-buffers-and-windows][Buffers and Windows:4]]
+;; [[file:init-emacs.org::#environment-buffers-and-windows][Buffers and Windows:4]]
 ;; delay buffer fontification to increase scroll speed
 (setq jit-lock-defer-time 0.05)
 ;; Buffers and Windows:4 ends here
 
-;; [[file:init-emacs.org::#environment-settings-buffers-and-windows][Buffers and Windows:5]]
+;; [[file:init-emacs.org::#environment-buffers-and-windows][Buffers and Windows:5]]
 ;; preserve buffer point for each window
 (setq switch-to-buffer-preserve-window-point t)
 ;; Buffers and Windows:5 ends here
 
-;; [[file:init-emacs.org::#environment-settings-buffers-and-windows][Buffers and Windows:6]]
+;; [[file:init-emacs.org::#environment-buffers-and-windows][Buffers and Windows:6]]
 ;; smoother mouse movement
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 5) ((control))))
 ;; Buffers and Windows:6 ends here
 
-;; [[file:init-emacs.org::#environment-settings-buffers-and-windows][Buffers and Windows:7]]
+;; [[file:init-emacs.org::#environment-buffers-and-windows][Buffers and Windows:7]]
 ;; increase maximum mini-window height
 (setq max-mini-window-height 0.50)
 ;; Buffers and Windows:7 ends here
 
-;; [[file:init-emacs.org::#general-settings-tabs][Tabs:1]]
+;; [[file:init-emacs.org::#environment-tabs][Tabs:1]]
 ;;------------------------------------------------------------------------------
-;;; General Settings: Tabs
+;;; Environment: Tabs
 ;;------------------------------------------------------------------------------
 
-(init-message 2 "General Settings: Tabs")
+(init-message 2 "Environment: Tabs")
 ;; Tabs:1 ends here
 
-;; [[file:init-emacs.org::#general-settings-tabs][Tabs:2]]
+;; [[file:init-emacs.org::#environment-tabs][Tabs:2]]
 ;; regular tab width
 (defvar custom-tab-width 4
   "Regular tab width.")
@@ -1501,23 +1530,23 @@ Otherwise, `custom-tab-width' is used."
   (set-tabs t 8))
 ;; Tabs:2 ends here
 
-;; [[file:init-emacs.org::#environment-settings-terminals-configuration][Configuration:1]]
+;; [[file:init-emacs.org::#environment-terminals-configuration][Configuration:1]]
 ;;------------------------------------------------------------------------------
-;;;; Environment Settings: Terminals: Configuration
+;;;; Environment: Terminals: Configuration
 ;;------------------------------------------------------------------------------
 
-(init-message 3 "Environment Settings: Terminals: Configuration")
+(init-message 3 "Environment: Terminals: Configuration")
 
 (setq custom-terminal-history-size 10000
       custom-terminal-maximum-lines 10000)
 ;; Configuration:1 ends here
 
-;; [[file:init-emacs.org::#environment-settings-terminals-eshell][eshell:1]]
+;; [[file:init-emacs.org::#environment-terminals-eshell][eshell:1]]
 ;;------------------------------------------------------------------------------
-;;;; Environment Settings: Terminals: eshell
+;;;; Environment: Terminals: eshell
 ;;------------------------------------------------------------------------------
 
-(init-message 3 "Environment Settings: Terminals: eshell")
+(init-message 3 "Environment: Terminals: eshell")
 
 (defun custom-eshell-first-time-mode-hook ()
   ;; save command history
@@ -1552,12 +1581,12 @@ Otherwise, `custom-tab-width' is used."
   (eshell-git-prompt-use-theme 'powerline))
 ;; eshell:1 ends here
 
-;; [[file:init-emacs.org::#environment-settings-terminals-term-bash][term-bash:1]]
+;; [[file:init-emacs.org::#environment-terminals-term-bash][term-bash:1]]
 ;;------------------------------------------------------------------------------
-;;;; Environment Settings: Terminals: term-bash
+;;;; Environment: Terminals: term-bash
 ;;------------------------------------------------------------------------------
 
-(init-message 3 "Environment Settings: Terminals: term-bash")
+(init-message 3 "Environment: Terminals: term-bash")
 
 (defun term-bash ()
   "Start a BASH terminal-emulator in a new buffer."
@@ -1565,12 +1594,12 @@ Otherwise, `custom-tab-width' is used."
   (term "/bin/bash"))
 ;; term-bash:1 ends here
 
-;; [[file:init-emacs.org::#environment-settings-terminals-term-zsh][term-zsh:1]]
+;; [[file:init-emacs.org::#environment-terminals-term-zsh][term-zsh:1]]
 ;;------------------------------------------------------------------------------
-;;;; Environment Settings: Terminals: term-zsh
+;;;; Environment: Terminals: term-zsh
 ;;------------------------------------------------------------------------------
 
-(init-message 3 "Environment Settings: Terminals: term-zsh")
+(init-message 3 "Environment: Terminals: term-zsh")
 
 (defun term-zsh ()
   "Start a ZSH terminal-emulator in a new buffer."
@@ -1578,12 +1607,12 @@ Otherwise, `custom-tab-width' is used."
   (term "/bin/zsh"))
 ;; term-zsh:1 ends here
 
-;; [[file:init-emacs.org::#environment-settings-terminals-vterm][vterm:1]]
+;; [[file:init-emacs.org::#environment-terminals-vterm][vterm:1]]
 ;;------------------------------------------------------------------------------
-;;;; Environment Settings: Terminals: vterm
+;;;; Environment: Terminals: vterm
 ;;------------------------------------------------------------------------------
 
-(init-message 3 "Environment Settings: Terminals: vterm")
+(init-message 3 "Environment: Terminals: vterm")
 
 (use-package vterm
   :straight t
