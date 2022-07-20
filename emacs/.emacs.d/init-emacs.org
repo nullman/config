@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-07-19 16:24 (kyle)>
+  #+TIMESTAMP: <2022-07-20 12:57 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -487,7 +487,7 @@
 
     Lock-file wrapper macro to evaluate code blocks only once per emacs session.
 
-    Author: https://www.reddit.com/user/7890yuiop/
+    Source: https://www.reddit.com/user/7890yuiop/
 
     #+BEGIN_SRC emacs-lisp
       ;;------------------------------------------------------------------------------
@@ -1587,6 +1587,8 @@
     Load *el* files if newer than *elc* versions.
 
     #+BEGIN_SRC emacs-lisp
+      (init-message 3 "Prefer newer el files over elc")
+
       ;; prefer newer el files over elc
       (setq load-prefer-newer t)
     #+END_SRC
@@ -1665,6 +1667,7 @@
     #+BEGIN_SRC emacs-lisp
       (init-message 3 "Beginning of Defun is Outermost Level Open-Paren")
 
+      ;; beginning of defun is outermost level open-paren
       (setq open-paren-in-column-0-is-defun-start nil
             defun-prompt-regexp nil)
     #+END_SRC
@@ -1757,7 +1760,7 @@
     Set line number mode to *relative* as the default behavior.
 
     #+BEGIN_SRC emacs-lisp
-      (init-message 3 "Set `display-line-numbers-type' to relative")
+      (init-message 3 "Set `display-line-numbers-type' to Relative")
 
       ;; when `display-line-numbers-mode' is on use relative numbering
       (setq display-line-numbers-type 'relative)
@@ -2011,6 +2014,18 @@
             apropos-documentation-sort-by-scores t)
     #+END_SRC
 
+    Display customize menu entries and tag names as symbols.
+
+    #+BEGIN_SRC emacs-lisp
+      (init-message 3 "Display Customize Menu Entries and Tag Names as Symbols")
+
+      ;; display customize menu entries and tag names as symbols
+      (setq custom-unlispify-menu-entries nil
+            custom-unlispify-tag-names nil)
+      (setq-default custom-unlispify-menu-entries custom-unlispify-menu-entries
+                    custom-unlispify-tag-names custom-unlispify-tag-names)
+    #+END_SRC
+
     Set default =grep= command.
 
     #+BEGIN_SRC emacs-lisp
@@ -2066,7 +2081,7 @@
     +Always recenter after =next-error= is called.+
 
     #+BEGIN_SRC emacs-lisp
-      ;; (init-message 3 "Recenter window after `next-error'.")
+      ;; (init-message 3 "Recenter Window after `next-error'")
 
       ;; ;; always recenter after `next-error'
       ;; (setq next-error-recenter '(4))
@@ -2076,7 +2091,7 @@
     Always recenter after =occur-mode-goto-occurrence= is called.
 
     #+BEGIN_SRC emacs-lisp
-      (init-message 3 "Recenter window after `occur-mode-goto-occurrence'.")
+      (init-message 3 "Recenter Window after `occur-mode-goto-occurrence'")
 
       ;; always recenter after `occur-mode-goto-occurrence'
       (defun occur-mode-goto-occurrence--recenter (&optional arg)
@@ -2089,7 +2104,7 @@
     Set time zones to use for =display-time-world=.
 
     #+BEGIN_SRC emacs-lisp
-      (init-message 3 "Set time zones to use for `display-time-world'.")
+      (init-message 3 "Set Time Zones to Use for `display-time-world'")
 
       ;; set display-time-world time zones
       (setq display-time-world-list
@@ -2116,18 +2131,18 @@
       (init-message 2 "Environment: System")
     #+END_SRC
 
-    +Optimize garbage collections.+
+    Optimize garbage collections.
 
     #+BEGIN_SRC emacs-lisp :tangle no
-      ;; ;; reduce frequency of garbage collections
-      ;; ;; this is handled in the Start section so it can take effect earlier
-      ;; ;; (setq gc-cons-threshold (* 100 1000 1000)) ; default: 800000
+      ;; reduce frequency of garbage collections
+      ;; this is handled in the Start section so it can take effect earlier
+      ;; (setq gc-cons-threshold (* 100 1000 1000)) ; default: 800000
 
-      ;; ;; run garbage collections when Emacs is backgrounded
-      ;; (add-hook 'focus-out-hook #'garbage-collect)
+      ;; run garbage collections when Emacs is backgrounded
+      (add-hook 'focus-out-hook #'garbage-collect)
 
-      ;; ;; run garbage collections when Emacs is idle
-      ;; (run-with-idle-timer 5 t #'garbage-collect)
+      ;; run garbage collections when Emacs is idle
+      (run-with-idle-timer 20 t #'garbage-collect)
     #+END_SRC
 
     Allow Emacs to use a larger number of variable bindings and unwind protects.
@@ -2149,7 +2164,7 @@
 
     #+BEGIN_SRC emacs-lisp
       ;; set max message log size
-      (setq message-log-max 2048)             ; default: 1000
+      (setq message-log-max 10000)            ; default: 1000
     #+END_SRC
 
     Increase the maximum size of history lists and remove duplicate entries.
@@ -2213,6 +2228,14 @@
         (global-so-long-mode 1))
     #+END_SRC
 
+    Silence advice redefinition warnings.
+
+    #+BEGIN_SRC emacs-lisp
+      ;; silence advice redefinition warnings
+      (setq ad-redefinition-action 'accept)
+      (setq-default ad-redefinition-action ad-redefinition-action)
+    #+END_SRC
+
 *** Files
     :PROPERTIES:
     :CUSTOM_ID: environment-files
@@ -2250,6 +2273,8 @@
           (require-final-newline t)
           ;; do not make auto-save files
           (auto-save-default nil)
+          ;; disable auto-save list
+          (auto-save-list-file-prefix nil)
           ;; delete auto-save files
           (delete-auto-save-files t)
           ;; enable file local variables
@@ -2260,15 +2285,20 @@
           (enable-local-eval 'maybe)
           ;; increase maximum file size (in bytes) to open before confirmation is requested
           (large-file-warning-threshold (* 50 1000 1000))
-          ;; org-babel noweb start and end patterns are considered safe
-          (add-to-list 'safe-local-variable-values '(org-babel-noweb-wrap-start . "{{"))
-          (add-to-list 'safe-local-variable-values '(org-babel-noweb-wrap-end . "}}"))
           ;; all backup files should go into the system temp directory
           (backup-directory-alist `(("." . ,temporary-file-directory)))
           ;; ask before closing emacs
           (kill-emacs-query-functions
            (cons (lambda () (yes-or-no-p "Really kill Emacs? "))
                  kill-emacs-query-functions)))
+      #+END_SRC
+
+      Prevent local variable prompt for some safe local variable values.
+
+      #+BEGIN_SRC emacs-lisp
+        ;; org-babel noweb start and end patterns are considered safe
+        (add-to-list 'safe-local-variable-values '(org-babel-noweb-wrap-start . "{{"))
+        (add-to-list 'safe-local-variable-values '(org-babel-noweb-wrap-end . "}}"))
       #+END_SRC
 
       Create directories in file path on file save.
@@ -2537,9 +2567,7 @@
       ;;------------------------------------------------------------------------------
 
       (init-message 2 "Environment: Tabs")
-    #+END_SRC
 
-    #+BEGIN_SRC emacs-lisp
       ;; regular tab width
       (defvar custom-tab-width 4
         "Regular tab width.")
@@ -2771,10 +2799,18 @@
 
 *** Terminals
     :PROPERTIES:
-    :CUSTOM_ID: environment-settings-terminals
+    :CUSTOM_ID: environment-terminals
     :END:
 
     Customizations for the various terminal modes in Emacs.
+
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Environment: Terminals
+      ;;------------------------------------------------------------------------------
+
+      (init-message 2 "Environment: Terminals")
+    #+END_SRC
 
 ***** Configuration
       :PROPERTIES:

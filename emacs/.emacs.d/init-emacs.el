@@ -773,6 +773,8 @@ Common values:
 ;; General:2 ends here
 
 ;; [[file:init-emacs.org::#environment-general][General:3]]
+(init-message 3 "Prefer newer el files over elc")
+
 ;; prefer newer el files over elc
 (setq load-prefer-newer t)
 ;; General:3 ends here
@@ -820,6 +822,7 @@ Common values:
 ;; [[file:init-emacs.org::#environment-general][General:11]]
 (init-message 3 "Beginning of Defun is Outermost Level Open-Paren")
 
+;; beginning of defun is outermost level open-paren
 (setq open-paren-in-column-0-is-defun-start nil
       defun-prompt-regexp nil)
 ;; General:11 ends here
@@ -888,7 +891,7 @@ Common values:
 ;; General:18 ends here
 
 ;; [[file:init-emacs.org::#environment-general][General:19]]
-(init-message 3 "Set `display-line-numbers-type' to relative")
+(init-message 3 "Set `display-line-numbers-type' to Relative")
 
 ;; when `display-line-numbers-mode' is on use relative numbering
 (setq display-line-numbers-type 'relative)
@@ -1087,22 +1090,32 @@ Common values:
 ;; General:41 ends here
 
 ;; [[file:init-emacs.org::#environment-general][General:42]]
+(init-message 3 "Display Customize Menu Entries and Tag Names as Symbols")
+
+;; display customize menu entries and tag names as symbols
+(setq custom-unlispify-menu-entries nil
+      custom-unlispify-tag-names nil)
+(setq-default custom-unlispify-menu-entries custom-unlispify-menu-entries
+              custom-unlispify-tag-names custom-unlispify-tag-names)
+;; General:42 ends here
+
+;; [[file:init-emacs.org::#environment-general][General:43]]
 (init-message 3 "Set Default `grep' Command")
 
 ;; set grep command
 (setq grep-command "grep -n -H -i -r -e ")
-;; General:42 ends here
+;; General:43 ends here
 
-;; [[file:init-emacs.org::#environment-general][General:43]]
+;; [[file:init-emacs.org::#environment-general][General:44]]
 (init-message 3 "Set Email Sources")
 
 ;; email settings
 (setq mail-sources `((pop :server "pop.gmail.com" :port 995
                           :user ,user-mail-address
                           :connection ssl :leave t)))
-;; General:43 ends here
+;; General:44 ends here
 
-;; [[file:init-emacs.org::#environment-general][General:44]]
+;; [[file:init-emacs.org::#environment-general][General:45]]
 (init-message 3 "Set Default Browser")
 
 ;; set default browser
@@ -1119,26 +1132,26 @@ Common values:
 
 ;; set secondary browser
 (setq browse-url-secondary-browser-function 'browse-url-default-browser)
-;; General:44 ends here
+;; General:45 ends here
 
-;; [[file:init-emacs.org::#environment-general][General:45]]
+;; [[file:init-emacs.org::#environment-general][General:46]]
 (init-message 3 "Single Character Deletion Commands Delete Active Regions Without Saving to the Kill Ring")
 
 ;; when deleting an active region via single character deletion command,
 ;; do not save to kill ring
 (setq delete-active-region t)
-;; General:45 ends here
+;; General:46 ends here
 
-;; [[file:init-emacs.org::#environment-general][General:46]]
-;; (init-message 3 "Recenter window after `next-error'.")
+;; [[file:init-emacs.org::#environment-general][General:47]]
+;; (init-message 3 "Recenter Window after `next-error'")
 
 ;; ;; always recenter after `next-error'
 ;; (setq next-error-recenter '(4))
 ;; ;;(add-hook 'next-error-hook #'recenter :append)
-;; General:46 ends here
+;; General:47 ends here
 
-;; [[file:init-emacs.org::#environment-general][General:47]]
-(init-message 3 "Recenter window after `occur-mode-goto-occurrence'.")
+;; [[file:init-emacs.org::#environment-general][General:48]]
+(init-message 3 "Recenter Window after `occur-mode-goto-occurrence'")
 
 ;; always recenter after `occur-mode-goto-occurrence'
 (defun occur-mode-goto-occurrence--recenter (&optional arg)
@@ -1146,10 +1159,10 @@ Common values:
   (recenter))
 ;; advise `occur-mode-goto-occurrence'
 (advice-add 'occur-mode-goto-occurrence :after #'occur-mode-goto-occurrence--recenter)
-;; General:47 ends here
+;; General:48 ends here
 
-;; [[file:init-emacs.org::#environment-general][General:48]]
-(init-message 3 "Set time zones to use for `display-time-world'.")
+;; [[file:init-emacs.org::#environment-general][General:49]]
+(init-message 3 "Set Time Zones to Use for `display-time-world'")
 
 ;; set display-time-world time zones
 (setq display-time-world-list
@@ -1161,7 +1174,7 @@ Common values:
         ("Europe/London" "London")
         ("Europe/Paris" "Paris")
         ("Asia/Tokyo" "Tokyo")))
-;; General:48 ends here
+;; General:49 ends here
 
 ;; [[file:init-emacs.org::#environment-system][System:1]]
 ;;------------------------------------------------------------------------------
@@ -1183,7 +1196,7 @@ Common values:
 
 ;; [[file:init-emacs.org::#environment-system][System:5]]
 ;; set max message log size
-(setq message-log-max 2048)             ; default: 1000
+(setq message-log-max 10000)            ; default: 1000
 ;; System:5 ends here
 
 ;; [[file:init-emacs.org::#environment-system][System:6]]
@@ -1235,6 +1248,12 @@ Common values:
   (global-so-long-mode 1))
 ;; System:10 ends here
 
+;; [[file:init-emacs.org::#environment-system][System:11]]
+;; silence advice redefinition warnings
+(setq ad-redefinition-action 'accept)
+(setq-default ad-redefinition-action ad-redefinition-action)
+;; System:11 ends here
+
 ;; [[file:init-emacs.org::#environment-files][Files:1]]
 ;;------------------------------------------------------------------------------
 ;;; Environment: Files
@@ -1262,6 +1281,8 @@ Common values:
   (require-final-newline t)
   ;; do not make auto-save files
   (auto-save-default nil)
+  ;; disable auto-save list
+  (auto-save-list-file-prefix nil)
   ;; delete auto-save files
   (delete-auto-save-files t)
   ;; enable file local variables
@@ -1272,9 +1293,6 @@ Common values:
   (enable-local-eval 'maybe)
   ;; increase maximum file size (in bytes) to open before confirmation is requested
   (large-file-warning-threshold (* 50 1000 1000))
-  ;; org-babel noweb start and end patterns are considered safe
-  (add-to-list 'safe-local-variable-values '(org-babel-noweb-wrap-start . "{{"))
-  (add-to-list 'safe-local-variable-values '(org-babel-noweb-wrap-end . "}}"))
   ;; all backup files should go into the system temp directory
   (backup-directory-alist `(("." . ,temporary-file-directory)))
   ;; ask before closing emacs
@@ -1284,6 +1302,12 @@ Common values:
 ;; General:1 ends here
 
 ;; [[file:init-emacs.org::#environment-files-general][General:2]]
+;; org-babel noweb start and end patterns are considered safe
+(add-to-list 'safe-local-variable-values '(org-babel-noweb-wrap-start . "{{"))
+(add-to-list 'safe-local-variable-values '(org-babel-noweb-wrap-end . "}}"))
+;; General:2 ends here
+
+;; [[file:init-emacs.org::#environment-files-general][General:3]]
 (defun create-buffer-file-name-directory-if-needed ()
   "Create `buffer-file-name' directory if it does not already exist."
   (when (and buffer-file-name
@@ -1292,9 +1316,9 @@ Common values:
 
 ;; create directories if needed on file save
 (add-hook 'before-save-hook #'create-buffer-file-name-directory-if-needed)
-;; General:2 ends here
+;; General:3 ends here
 
-;; [[file:init-emacs.org::#environment-files-general][General:3]]
+;; [[file:init-emacs.org::#environment-files-general][General:4]]
 ;; delete trailing lines on call to `delete-trailing-whitespace'
 (setq delete-trailing-lines t)
 
@@ -1308,21 +1332,21 @@ Common values:
 
 ;; delete trailing whitespace on save
 (add-hook 'before-save-hook #'delete-trailing-whitespace-if-not-read-only)
-;; General:3 ends here
-
-;; [[file:init-emacs.org::#environment-files-general][General:4]]
-;; make shell scripts executable when saving (and reset the buffer mode)
-(when (fboundp 'executable-make-buffer-file-executable-if-script-p)
-  (add-hook 'after-save-hook #'executable-make-buffer-file-executable-if-script-p))
 ;; General:4 ends here
 
 ;; [[file:init-emacs.org::#environment-files-general][General:5]]
+;; make shell scripts executable when saving (and reset the buffer mode)
+(when (fboundp 'executable-make-buffer-file-executable-if-script-p)
+  (add-hook 'after-save-hook #'executable-make-buffer-file-executable-if-script-p))
+;; General:5 ends here
+
+;; [[file:init-emacs.org::#environment-files-general][General:6]]
 ;; set DOS file extensions
 (add-to-list 'file-coding-system-alist '("\\.ASM\\'" . dos))
 (add-to-list 'file-coding-system-alist '("\\.BAT\\'" . dos))
 (add-to-list 'file-coding-system-alist '("\\.DO\\'" . dos))
 (add-to-list 'file-coding-system-alist '("\\.SYS\\'" . dos))
-;; General:5 ends here
+;; General:6 ends here
 
 ;; [[file:init-emacs.org::#environment-files-version-control][Version Control:1]]
 ;;------------------------------------------------------------------------------
@@ -1472,9 +1496,7 @@ Common values:
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Environment: Tabs")
-;; Tabs:1 ends here
 
-;; [[file:init-emacs.org::#environment-tabs][Tabs:2]]
 ;; regular tab width
 (defvar custom-tab-width 4
   "Regular tab width.")
@@ -1521,7 +1543,15 @@ Otherwise, `custom-tab-width' is used."
 (defun enable-tabs-8 ()
   "Enable TAB character usage with a width of 8 spaces."
   (set-tabs t 8))
-;; Tabs:2 ends here
+;; Tabs:1 ends here
+
+;; [[file:init-emacs.org::#environment-terminals][Terminals:1]]
+;;------------------------------------------------------------------------------
+;;; Environment: Terminals
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Environment: Terminals")
+;; Terminals:1 ends here
 
 ;; [[file:init-emacs.org::#environment-terminals-configuration][Configuration:1]]
 ;;------------------------------------------------------------------------------
