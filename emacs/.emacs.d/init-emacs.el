@@ -3258,59 +3258,41 @@ If FILES is nil, the current buffer is used instead."
 
 (init-message 3 "Org Mode: Functions: org-sort-multi")
 
-(defun org-sort-multi (&rest sort-types)
-  "Multiple sorts on a certain level of an outline tree, or plain list items.
+(defun org-sort-multi (sort-types)
+  "Multiple sorts on a certain level of an outline tree, list items, or plan text.
 
 SORT-TYPES is a list where each entry is either a character or a
-cons pair (BOOL . CHAR), where BOOL is whether or not to sort
-case-sensitively, and CHAR is one of the characters defined in
-`org-sort-entries-or-items'. Entries are applied in back to front
-order.
+list of parmeters to be passed to `org-sort-entries'.
+
+If COMPARE-FUNC is provided, but GETKEY-FUNC is nil, then the
+header string will be used.
 
 Example: To sort first by TODO status, then by priority, then by
 date, then alphabetically (case-sensitive) use the following
 call:
 
-  (org-sort-multi '(?o ?p ?t (t . ?a))"
-  (interactive)
-  (dolist (x (nreverse sort-types))
-    (when (characterp x)
-      (setq x (cons nil x)))
-    (ignore-errors
-      (org-sort-entries (car x) (cdr x)))))
-;; org-sort-multi:1 ends here
+  (org-sort-multi '(?o ?p ?t (t ?a))
 
-;; [[file:init-emacs.org::#org-mode-functions-org-sort-current][org-sort-current:1]]
-;;------------------------------------------------------------------------------
-;;;; Org Mode: Functions: org-sort-current
-;;------------------------------------------------------------------------------
+Example: To sort using `string<' use the following call:
 
-(init-message 3 "Org Mode: Functions: org-sort-current")
-
-(defun org-sort-current (&rest sort-types)
-  "Sort the current org level.
-
-SORT-TYPES is a list where each entry is either a character or a
-cons pair (BOOL . CHAR), where BOOL is whether or not to sort
-case-sensitively, and CHAR is one of the characters defined in
-`org-sort-entries-or-items'. Entries are applied in back to front
-order.
-
-If entry at point has TODO and PRIORITY tags, then default
-SORT-TYPE is \"?o ?p ?t (nil . ?a)\" which is to sort by TODO
-status, then by priority, the by timestamp, and finally
-alphabetically. Otherwise, default SORT-TYPE is \"?a\" which is
-to sort alphabetically."
-  (interactive)
-  (when (string= mode-name "Org")
-    (let ((sort-types (or sort-types
-                          (if (and (org-entry-get nil "TODO")
-                                   (org-entry-get nil "PRIORITY"))
-                              '(?o ?p ?t (nil . ?a))
-                            '((nil . ?a))))))
-      (save-mark-and-excursion
-        (goto-char (line-beginning-position))
-        (cl-case (car (org-element-at-point))
+  (org-sort-multi '((nil ?f nil #'string<)))"
+  (save-mark-and-excursion
+    (goto-char (line-beginning-position))
+    (let ((type (car (org-element-at-point))))
+      (dolist (x (nreverse sort-types))
+        (when (characterp x)
+          (setq x (list nil x)))
+        (when (and (listp x)
+                   (> (length x) 3)
+                   (not (nth 2 x)))
+          (setq x `(,(car x)
+                    ,(cadr x)
+                    (lambda ()
+                      (org-sort-remove-invisible
+                       (buffer-substring (match-end 0) (point-at-eol))))
+                    (lambda (a b) (funcall ,(cadddr x) a b))
+                    ,@(cddddr x))))
+        (cl-case type
           ('headline
            (condition-case nil
                (outline-up-heading 1)
@@ -3327,7 +3309,8 @@ to sort alphabetically."
                (goto-char (point-max)))
              (let ((end (point)))
                (goto-char beg)
-               (apply #'org-sort-multi sort-types)
+               (ignore-errors
+                 (apply #'org-sort-entries x))
                (goto-char end)
                (when (eobp)
                  (forward-line -1))
@@ -3341,7 +3324,40 @@ to sort alphabetically."
                   (end (plist-get plist :contents-end)))
              (sort-lines nil beg end)))
           (t
-           (org-sort-list nil ?a)))))))
+           (ignore-errors
+             (apply #'org-sort-list x)))))))))
+;; org-sort-multi:1 ends here
+
+;; [[file:init-emacs.org::#org-mode-functions-org-sort-current][org-sort-current:1]]
+;;------------------------------------------------------------------------------
+;;;; Org Mode: Functions: org-sort-current
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Org Mode: Functions: org-sort-current")
+
+(defun org-sort-current (&optional sort-types)
+  "Sort the current org level.
+
+SORT-TYPES is a list where each entry is either a character or a
+list of parmeters to be passed to `org-sort-entries'.
+
+If COMPARE-FUNC is provided, but GETKEY-FUNC is nil, then the
+header string will be used. Entries are applied in back to front
+order.
+
+If entry at point has TODO and PRIORITY tags, then default
+SORT-TYPE is \"?o ?p ?t (nil ?f nil #'string<)\" which is to sort
+by TODO status, then by priority, then by timestamp, and finally
+by ASCII code. Otherwise, default SORT-TYPE is \"(nil ?f nil
+#'string<)\" which is to sort by ASCII code."
+  (interactive)
+  (when (string= mode-name "Org")
+    (let ((sort-types (or sort-types
+                          (if (and (org-entry-get nil "TODO")
+                                   (org-entry-get nil "PRIORITY"))
+                              '(?o ?p ?t (nil ?f nil #'string<))
+                            '((nil ?f nil #'string<))))))
+      (org-sort-multi sort-types))))
 ;; org-sort-current:1 ends here
 
 ;; [[file:init-emacs.org::#org-mode-functions-org-fill-element-adapt-indentation][org-fill-element--adapt-indentation:1]]
