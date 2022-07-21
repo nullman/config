@@ -12,11 +12,6 @@ _command() {
     command -v "$1" > /dev/null 2>&1
 }
 
-# check if running in windows os
-_iswindows() {
-    [[ "${OS}" == "Windows_NT" ]]
-}
-
 # keep original TERM value for scripts to use
 export REAL_TERM="${TERM}"
 # act like xterm with color support
@@ -28,6 +23,9 @@ export TERM="xterm-256color"
 # add to the run path
 export runpath="${runpath}:${HOME}/.bashrc"
 logger "Running: ${HOME}/.bashrc"
+
+# operating system
+os="$(uname -s)"
 
 # set environmental vars
 export SHELL="/bin/bash"
@@ -91,7 +89,7 @@ fi
 _command stty && stty tabs
 
 # make terminals not beep
-_iswindows || _command setterm && setterm -blength 0 > /dev/null 2>&1
+[[ "${OS}" == "Windows_NT" ]] || _command setterm && setterm -blength 0 > /dev/null 2>&1
 
 # set umask
 umask 0022
