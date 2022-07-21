@@ -3325,7 +3325,7 @@ Example: To sort using `string<' use the following call:
              (sort-lines nil beg end)))
           (t
            (ignore-errors
-             (apply #'org-sort-list x)))))))))
+             (apply #'org-sort-list x))))))))
 ;; org-sort-multi:1 ends here
 
 ;; [[file:init-emacs.org::#org-mode-functions-org-sort-current][org-sort-current:1]]
