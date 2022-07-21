@@ -60,29 +60,38 @@ zmodload zsh/terminfo
 
 if [[ "${os}" == "Darwin" ]] ; then
     # source auto-suggestions
-    [[ -f "/usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh 2>&1
+    [[ -f "/usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && source "/usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh" 2>&1
+
+    # enable fzf fuzzy matching
+    [[ -d "/usr/local/opt/fzf/bin" ]] && [[ ! "${PATH}" == */usr/local/opt/fzf/bin* ]] && export PATH="${PATH}:/usr/local/opt/fzf/bin"
+    [[ -f "/usr/local/opt/fzf/shell/completion.zsh" ]] && source "/usr/local/opt/fzf/shell/completion.zsh" 2>&1
+    [[ -f "/usr/local/opt/fzf/shell/key-bindings.zsh" ]] && source "/usr/local/opt/fzf/shell/key-bindings.zsh" 2>&1
 
     # source syntax highlighting
-    [[ -f "source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>&1
+    [[ -f "source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && source "/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" 2>&1
 
     # source powerlevel10k theme
-    [[ -f "/usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme" ]] && source /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme 2>&1
+    [[ -f "/usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme" ]] && source "/usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme" 2>&1
 else
     # source auto-suggestions
-    [[ -f "/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh 2>&1
+    [[ -f "/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && source "/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" 2>&1
+
+    # enable fzf fuzzy matching
+    [[ -f "/usr/share/fzf/completion.zsh" ]] && source "/usr/share/fzf/completion.zsh" 2>&1
+    [[ -f "/usr/share/fzf/key-bindings.zsh" ]] && source "/usr/share/fzf/key-bindings.zsh" 2>&1
 
     # source syntax highlighting
-    [[ -f "/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>&1
+    [[ -f "/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && source "/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" 2>&1
 
     # source history substring
-    [[ -f "/usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh" ]] && source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh 2>&1
+    [[ -f "/usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh" ]] && source "/usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh" 2>&1
 
     # source autojump
-    #[[ -f "/usr/share/autojump/autojump.zsh" ]] && source /usr/share/autojump/autojump.zsh 2>&1
+    #[[ -f "/usr/share/autojump/autojump.zsh" ]] && source "/usr/share/autojump/autojump.zsh" 2>&1
 
     # source powerlevel10k theme
-    #[[ -f "${HOME}/powerlevel10k/powerlevel10k.zsh-theme" ]] && source ${HOME}/powerlevel10k/powerlevel10k.zsh-theme 2>&1
-    [[ -f "/usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme" ]] && source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme 2>&1
+    #[[ -f "${HOME}/powerlevel10k/powerlevel10k.zsh-theme" ]] && source "${HOME}/powerlevel10k/powerlevel10k.zsh-theme" 2>&1
+    [[ -f "/usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme" ]] && source "/usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme" 2>&1
 fi
 
 # fix home/end keys in screen/tmux
@@ -94,12 +103,12 @@ fi
 # set prompt
 if [[ -n "${INSIDE_EMACS}" ]] ; then
     # use simple prompt, if run from within emacs
-    [[ -f "${HOME}/.p10k-simple.zsh" ]] && source ${HOME}/.p10k-simple.zsh 2>&1
+    [[ -f "${HOME}/.p10k-simple.zsh" ]] && source "${HOME}/.p10k-simple.zsh" 2>&1
     #export TERM=eterm-256color
     unset zle_bracketed_paste
 else
     # (To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.)
-    #[[ -f "${HOME}/.p10k.zsh" ]] && source ${HOME}/.p10k.zsh
+    #[[ -f "${HOME}/.p10k.zsh" ]] && source "${HOME}/.p10k.zsh"
 
     # enable powerlevel10k instant prompt
     [[ -f "${XDG_CACHE_HOME:-${HOME}/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]] && source "${XDG_CACHE_HOME:-${HOME}/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" 2>&1
@@ -157,16 +166,13 @@ if [[ "${os}" == "Linux" ]] ; then
     bindkey -M emacs '^N' history-substring-search-down # ctrl+n key to search history backwards
 fi
 
-# stty commands should only run on interactive terminals
-if [[ "$-" == "*i*" ]] ; then
-    # make backspace key work in terminal
-    #stty erase ^H
-    #stty erase ^?
-    #[[ -z "$(greppr erase)" ]] || stty erase $(getpr erase)
+# make backspace key work in terminal
+#stty erase ^H
+#stty erase ^?
+#[[ -z "$(greppr erase)" ]] || stty erase $(getpr erase)
 
-    # set tabs
-    _command stty && stty tabs
-fi
+# set tabs
+_command stty && stty tabs
 
 # set umask
 umask 0022
@@ -175,7 +181,7 @@ umask 0022
 typeset -g POWERLEVEL9K_INSTANT_PROMPT="quiet"
 
 # source shellrc
-[[ -f "${HOME}/.shellrc" ]] && source ${HOME}/.shellrc 2>&1
+[[ -f "${HOME}/.shellrc" ]] && source "${HOME}/.shellrc" 2>&1
 
 #===============================================================================
 # End of File

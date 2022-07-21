@@ -40,6 +40,17 @@ export HISTCONTROL="ignoredups"
 export HISTORY_IGNORE="(ls|pwd|history|h|cd|cd -|cd ..|cdd|exit|reboot|sudo reboot)"
 shopt -s histappend    # allow multiple terminals to write to the history file
 
+if [[ "${os}" == "Darwin" ]] ; then
+    # enable fzf fuzzy matching
+    [[ -d "/usr/local/opt/fzf/bin" ]] && [[ ! "${PATH}" == */usr/local/opt/fzf/bin* ]] && export PATH="${PATH}:/usr/local/opt/fzf/bin"
+    [[ -f "/usr/local/opt/fzf/shell/completion.bash" ]] && source "/usr/local/opt/fzf/shell/completion.bash" 2>&1
+    [[ -f "/usr/local/opt/fzf/shell/key-bindings.bash" ]] && source "/usr/local/opt/fzf/shell/key-bindings.bash" 2>&1
+else
+    # enable fzf fuzzy matching
+    [[ -f "/usr/share/fzf/completion.bash" ]] && source "/usr/share/fzf/completion.bash" 2>&1
+    [[ -f "/usr/share/fzf/key-bindings.bash" ]] && source "/usr/share/fzf/key-bindings.bash" 2>&1
+fi
+
 # fix home/end keys in screen/tmux
 if [[ -n "${STY}" ]] || [[ -n "${TMUX}" ]] ; then
     bind '"\e[1~":"\eOH"'
@@ -71,16 +82,13 @@ fi
 # manjaro i3
 #export PS1="\[\033[1;32m\]\h:\u \[\033[1;34m\]\w \[\033[1;33m\]\$ \[\033[0m\]"
 
-# stty commands should only run on interactive terminals
-if [[ "$-" == "*i*" ]] ; then
-    # make backspace key work in terminal
-    #stty erase ^H
-    #stty erase ^?
-    #[[ -z "$(greppr erase)" ]] || stty erase $(getpr erase)
+# make backspace key work in terminal
+#stty erase ^H
+#stty erase ^?
+#[[ -z "$(greppr erase)" ]] || stty erase $(getpr erase)
 
-    # set tabs
-    _command stty && stty tabs
-fi
+# set tabs
+_command stty && stty tabs
 
 # make terminals not beep
 _iswindows || _command setterm && setterm -blength 0 > /dev/null 2>&1
