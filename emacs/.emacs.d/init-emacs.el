@@ -531,45 +531,47 @@ A fortune is added if FORTUNE is non-nil."
 (init-message 3 "Environment: GUI: Font")
 
 ;; set default font
-(ignore-errors
+(cl-labels
+    ((set-font (font)
+               (set-face-attribute 'default nil :font font)
+               (set-face-attribute 'fixed-pitch nil :font font)
+               (set-face-attribute 'variable-pitch nil :font font)))
   (cl-case window-system
     (x
      (condition-case nil
-         (cond
-           ;;(set-frame-font "8x13" nil t)
-           ;;(set-frame-font "9x15" nil t)
-           ;;(set-frame-font "Ubuntu Mono-13" nil t)
-           ;;(set-frame-font "Inconsolata-15" nil t)
-           ;;(set-frame-font "BitstreamVeraSansMono Nerd Font Mono-12" nil t)
-           ;;(set-frame-font "DroidSansMono Nerd Font Mono-12" nil t)
-           ;;(set-frame-font "Hack Nerd Font Mono-12" nil t)
-           ;;(set-face-attribute 'default nil :font "Hack Nerd Font Mono" :height 132)
-           ;;(set-face-attribute 'fixed-pitch nil :font "Hack Nerd Font Mono" :height 156)
-           ;;(set-face-attribute 'variable-pitch nil :font "Hack Nerd Font" :height 168 :weight 'regular)
+         (set-font
+          (cond
+           ;; "8x13"
+           ;; "9x15"
+           ;; "Ubuntu Mono-13"
+           ;; "Inconsolata-15"
+           ;; "BitstreamVeraSansMono Nerd Font Mono-12"
+           ;; "DroidSansMono Nerd Font Mono-12"
+           ;; "Hack Nerd Font Mono-12"
            ((x-list-fonts "Hack Nerd Font")
-            (set-frame-font "Hack Nerd Font Mono-12" nil t))
+            "Hack Nerd Font Mono-12")
+           ;; ((x-list-fonts "Hack Nerd Font")
+           ;;  "Hack Nerd Font Mono-12")
            ((x-list-fonts "DroidSansMono Nerd Font")
-            (set-frame-font "DroidSansMono Nerd Font Mono-12" nil t))
+            "DroidSansMono Nerd Font Mono-12")
            ((x-list-fonts "Fira Code")
-            (set-frame-font "Fira Code Mono-12" nil t))
+            "Fira Code Mono-12")
            (t
-            (set-frame-font "9x15" nil t)))
+            "9x15" nil)))
        ('error
-        (set-frame-font "9x15" nil t))))
+        (set-font "9x15"))))
     (w32
      (condition-case nil
-         (set-frame-font "Hack Nerd Font Mono-12" nil t)
+         (set-font "Hack Nerd Font Mono-12")
        ('error
         nil)))
     (ns
      (condition-case nil
-         (progn
-           ;;(set-frame-font "BitstreamVeraSansMono Nerd Font Mono-14" nil t)
-           ;;(set-frame-font "DroidSansMono Nerd Font Mono-14" nil t)
-           (set-frame-font "Hack Nerd Font Mono-14" nil t)
-           )
+         ;;(set-font "BitstreamVeraSansMono Nerd Font Mono-14")
+         ;;(set-font "DroidSansMono Nerd Font Mono-14")
+         (set-font "Hack Nerd Font Mono-14")
        ('error
-        (set-frame-font "Menlo" nil t))))))
+        (set-font "Menlo"))))))
 ;; Font:1 ends here
 
 ;; [[file:init-emacs.org::#environment-gui-faces][Faces:1]]
@@ -16105,40 +16107,41 @@ And the line would be overlaid like:
                                     (-flatten it) (apply #'concat it)
                                     (split-string it (rx (or space punct)) 'omit-nulls)))
             (case-fold-search nil))
-        (cl-labels ((overlay-group (group)
-                                   (let* ((beg (match-beginning group))
-                                          (end (match-end group))
-                                          (replacement-word (lorem-word (match-string group)))
-                                          (ov (make-overlay beg end)))
-                                     (when replacement-word
-                                       (overlay-put ov :lorem-ipsum-overlay t)
-                                       (overlay-put ov 'display replacement-word))))
-                    (replace-group (group)
-                                   (let* ((beg (match-beginning group))
-                                          (end (match-end group))
-                                          (replacement-word (lorem-word (match-string group))))
-                                     (when replacement-word
-                                       (setf (buffer-substring beg end) replacement-word))))
-                    (lorem-word (word)
-                                (if-let* ((matches (lorem-matches (length word))))
-                                    (apply-case word (downcase (seq-random-elt matches)))
-                                  ;; Word too long: compose one.
-                                  (apply-case word (downcase (compose-word (length word))))))
-                    (lorem-matches (length &optional (comparator #'=))
-                                   (cl-loop for liw in lorem-ipsum-words
-                                            when (funcall comparator (length liw) length)
-                                            collect liw))
-                    (apply-case (source target)
-                                (cl-loop for sc across-ref source
-                                         for tc across-ref target
-                                         when (not (string-match-p (rx lower) (char-to-string sc)))
-                                         do (setf tc (string-to-char (upcase (char-to-string tc)))))
-                                target)
-                    (compose-word (length)
-                                  (cl-loop while (> length 0)
-                                           for word = (seq-random-elt (lorem-matches length #'<=))
-                                           concat word
-                                           do (cl-decf length (length word)))))
+        (cl-labels
+            ((overlay-group (group)
+                            (let* ((beg (match-beginning group))
+                                   (end (match-end group))
+                                   (replacement-word (lorem-word (match-string group)))
+                                   (ov (make-overlay beg end)))
+                              (when replacement-word
+                                (overlay-put ov :lorem-ipsum-overlay t)
+                                (overlay-put ov 'display replacement-word))))
+             (replace-group (group)
+                            (let* ((beg (match-beginning group))
+                                   (end (match-end group))
+                                   (replacement-word (lorem-word (match-string group))))
+                              (when replacement-word
+                                (setf (buffer-substring beg end) replacement-word))))
+             (lorem-word (word)
+                         (if-let* ((matches (lorem-matches (length word))))
+                             (apply-case word (downcase (seq-random-elt matches)))
+                           ;; Word too long: compose one.
+                           (apply-case word (downcase (compose-word (length word))))))
+             (lorem-matches (length &optional (comparator #'=))
+                            (cl-loop for liw in lorem-ipsum-words
+                                     when (funcall comparator (length liw) length)
+                                     collect liw))
+             (apply-case (source target)
+                         (cl-loop for sc across-ref source
+                                  for tc across-ref target
+                                  when (not (string-match-p (rx lower) (char-to-string sc)))
+                                  do (setf tc (string-to-char (upcase (char-to-string tc)))))
+                         target)
+             (compose-word (length)
+                           (cl-loop while (> length 0)
+                                    for word = (seq-random-elt (lorem-matches length #'<=))
+                                    concat word
+                                    do (cl-decf length (length word)))))
           (save-excursion
             (goto-char (point-min))
             (while (re-search-forward (rx (group (1+ (or bol bos blank (not alpha)))
@@ -18207,7 +18210,7 @@ otherwise run `find-file-as-root'."
   ;; auto-revert buffer upon revisiting
   (dired-auto-revert-buffer t)
   ;; list directories first and remove unwanted fields
-  (dired-listing-switches "-alh --group-directories-first")
+  (dired-listing-switches "-alhGv1 --time-style=+%F --group-directories-first")
   :config
   ;; mac support
   (when window-system-mac
