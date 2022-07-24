@@ -1960,52 +1960,55 @@ alias rsync-common-put-media-delete=" \
 #!#        rsync-music-put-music  rsync /home/data/media/audio/Music /media/MUSIC
 #!alias rsync-music-put-music-sd="
 #!    echo 'Copying muisc files and playlists to Music USB:'
-#!    #o=/run/media/\${USER}/\$(cd /run/media/\${USER} && \$(pathcmd ls) -1)
-#!    o=/media/MUSIC
-#!    cp \${HOME}/.mpd/playlists/kyle.m3u \${o}/
-#!    cp \${HOME}/.mpd/playlists/rated_good.m3u \${o}/
+#!    basedir=/run/media/\${USER}
+#!    dir=\${basedir}/\$(cd \${basedir} && \$(pathcmd ls) -1)
+#!    cp \${HOME}/.mpd/playlists/kyle.m3u \${dir}/
+#!    cp \${HOME}/.mpd/playlists/rated_good.m3u \${dir}/
 #!    (
 #!        cd \"${home}/data/media/audio/Music/\" && \
-#!            cat \${o}/*.m3u | while read line ; do
-#!                rsync -RtxW --progress --delete \"\${line}\" \${o}/
+#!            cat \${dir}/*.m3u | while read line ; do
+#!                rsync -RtxW --progress --delete \"\${line}\" \${dir}/
 #!            done
 #!    )"
 #        rsync-music-put-music   rsync /home/data/media/audio/Music /media/MUSIC
 alias rsync-music-put-music-sd=" \
-    #o=/run/media/\${USER}/MUSIC && \
-    o=/media/MUSIC && \
-    rsync -rLtxW --size-only --progress --delete \${HOME}/.mpd/playlists/kyle.m3u \${o}/ && \
-    rsync -rLtxW --size-only --progress --delete \${HOME}/.mpd/playlists/rated_good.m3u \${o}/ && \
-    rsync -rLtxW --size-only --progress --delete ${home}/data/media/audio/Music/* \${o}/ && \
-    rsync -rLtxW --size-only --progress --delete ${home}/data/media/audio/MODs \${o}/ && \
+    dir=/run/media/\${USER}/MUSIC && \
+    rsync -rLtxW --size-only --progress --delete \${HOME}/.mpd/playlists/kyle.m3u \${dir}/ && \
+    rsync -rLtxW --size-only --progress --delete \${HOME}/.mpd/playlists/rated_good.m3u \${dir}/ && \
+    rsync -rLtxW --size-only --progress --delete ${home}/data/media/audio/Music/* \${dir}/ && \
+    rsync -rLtxW --size-only --progress --delete ${home}/data/media/audio/MODs \${dir}/ && \
     sync"
 #        rsync-win-apps-put-win_apps-sd  rsync /home/data/media/software/Windows*/* /media/WIN_APPS/Windows*/
 alias rsync-win-apps-put-win_apps-sd="
-    rsync -rLtxW --size-only --progress --delete --exclude={'Windows OS/','Partitions/'} ${home}/data/media/software/Windows* /media/WIN_APPS/ && \
-    rsync -rLtxW --size-only --progress --delete ${home}/data/media/repos/DOS ${home}/data/media/repos/FreeDOS /media/WIN_APPS/ && \
+    dir=/run/media/\${USER}/WIN_APPS && \
+    rsync -rLtxW --size-only --progress --delete --exclude={'Windows OS/','Partitions/'} ${home}/data/media/software/Windows* \${dir}/ && \
+    rsync -rLtxW --size-only --progress --delete ${home}/data/media/repos/DOS ${home}/data/media/repos/FreeDOS \${dir}/ && \
     sync"
 #        rsync-windows-put-windows-sd  rsync /home/data/media/software/Windows*/* /media/WINDOWS/Windows*/
 alias rsync-windows-put-windows-sd="
-    rsync -rLtxW --size-only --progress --delete --exclude={'Windows OS/','Partitions/'} ${home}/data/media/software/Windows* /media/WINDOWS/ && \
-    rsync -rLtxW --size-only --progress --delete ${home}/data/media/repos/DOS ${home}/data/media/repos/FreeDOS /media/WINDOWS/ && \
+    dir=/run/media/\${USER}/WINDOWS && \
+    rsync -rLtxW --size-only --progress --delete --exclude={'Windows OS/','Partitions/'} ${home}/data/media/software/Windows* \${dir}/ && \
+    rsync -rLtxW --size-only --progress --delete ${home}/data/media/repos/DOS ${home}/data/media/repos/FreeDOS \${dir}/ && \
     sync"
 #        rsync-t43-os2-put-t43-os2-sd  rsync /home/data/media/software/(Thinkpad T43|OS2)/* /media/T43_OS2/(Thinkpad T43|OS2)/
 alias rsync-t43-os2-put-t43-os2-sd=" \
-    rsync -rLtxW --size-only --progress --delete --exclude={'ArcaOS/','CDs/','OS2/'} ${home}/data/media/software/OS2/* /media/T43_OS2/OS2/ && \
-    rsync -rLtxW --size-only --progress --delete \"${home}/data/media/software/Thinkpad T43\" /media/T43_OS2/ && \
+    dir=/run/media/\${USER}/T43_OS2 && \
+    rsync -rLtxW --size-only --progress --delete --exclude={'ArcaOS/','CDs/','OS2/'} ${home}/data/media/software/OS2/* \${dir}/OS2/ && \
+    rsync -rLtxW --size-only --progress --delete \"${home}/data/media/software/Thinkpad T43\" \${dir}/ && \
     sync"
 #        rsync-mac-put-mac_apps-sd  rsync /home/data/media/software/Macintosh/* /media/MAC_APPS/Macintosh/
 alias rsync-mac-put-mac_apps-sd=" \
-    rsync -rLtxW --size-only --progress --delete --exclude='FINDER.DAT' ${home}/data/media/software/Macintosh/68000 /media/MAC_APPS/Macintosh/ && \
-    rsync -rLtxW --size-only --progress --delete --exclude='FINDER.DAT' ${home}/data/media/software/Macintosh/OS\ X /media/MAC_APPS/Macintosh/ && \
-    rsync -rLtxW --size-only --progress --delete --exclude='FINDER.DAT' ${home}/data/media/software/Macintosh/PPC /media/MAC_APPS/Macintosh/ && \
+    dir=/run/media/\${USER}/MAC_APPS/Macintosh && \
+    rsync -rLtxW --size-only --progress --delete --exclude='FINDER.DAT' ${home}/data/media/software/Macintosh/68000 \${dir}/ && \
+    rsync -rLtxW --size-only --progress --delete --exclude='FINDER.DAT' ${home}/data/media/software/Macintosh/OS\ X \${dir}/ && \
+    rsync -rLtxW --size-only --progress --delete --exclude='FINDER.DAT' ${home}/data/media/software/Macintosh/PPC \${dir}/ && \
     sync"
 #        rsync-c64-put-sd16      rsync ${HOME}/C64/* /media/C64/
-alias rsync-c64-put-sd16="rsync -rLtxW --size-only --progress --delete --exclude='TOSEC/' \${HOME}/C64/* /media/C64/ && sync"
+alias rsync-c64-put-sd16="rsync -rLtxW --size-only --progress --delete --exclude='TOSEC/' \${HOME}/C64/* /run/media/\${USER}/C64/ && sync"
 #        rsync-c64-put-sd128     rsync ${HOME}/C64/* /media/C64/
-alias rsync-c64-put-sd128="rsync -rLtxW --size-only --progress --delete \${HOME}/C64/* /media/C64/ && sync"
+alias rsync-c64-put-sd128="rsync -rLtxW --size-only --progress --delete \${HOME}/C64/* /run/media/\${USER}/C64/ && sync"
 #        rsync-adult-put-adult-sd  rsync /home/data/media/video/Adult/* /media/ADULT/
-alias rsync-adult-put-adult-sd="rsync -rLtxW --size-only --progress --delete --exclude={'#recycle','White Boxxx Compilation'} ${home}/data/media/video/Adult/ /media/ADULT/ && sync"
+alias rsync-adult-put-adult-sd="rsync -rLtxW --size-only --progress --delete --exclude={'#recycle','White Boxxx Compilation'} ${home}/data/media/video/Adult/ /run/media/\${USER}/ADULT/ && sync"
 
 #
 # ruby
@@ -2326,6 +2329,8 @@ alias vncsk="vncserver -kill :1"
 #
 #        winetricks-update       download latest version of winetricks
 alias winetricks-update="wget http://www.kegel.com/wine/winetricks -O \${HOME}/bin/vendor/winetricks"
+#        wine-aol                wine retro aol
+alias wine-aol="WINEPREFIX=${HOME}/.wine-aol wine explorer \"C:\Program Files (x86)/Re-AOL\AOL.EXE\""
 #        wine-bookshelf          wine microsoft bookshelf 2000
 alias wine-bookshelf="WINEPREFIX=${HOME}/.wine-bookshelf2000 wine \"C:\Program Files (x86)\Microsoft Reference\Bookshelf 2000\bshelf2k.exe\""
 #        wine-civ                wine civilization
@@ -3056,24 +3061,23 @@ rsyncexclusions='{"/cdrom/*","/dev/*","/lost+found","/media/*","/mnt/*","/proc/*
 #        rsbid                   backup entire system to usb drive
 #!alias rsbid="sudo rsync -aAXv --delete --exclude=${rsyncexclusions} / /run/media/\${USER}/backup/\$(uname -n)"
 alias rsbid="
-    #dir=/run/media/\${USER}
-    dir=/media
+    basedir=/run/media/\${USER}
+    dir=\${basedir}/\$(cd \${basedir} && \$(pathcmd ls) -1)/\$(uname -n)
     if [[ -d \${dir} ]] ; then
-        sudo rsync -aAXv --delete-before --exclude=${rsyncexclusions} / \${dir}/\$(cd \${dir} && \$(pathcmd ls) -1)/\$(uname -n)
+        sudo rsync -aAXv --delete-before --exclude=${rsyncexclusions} / \${dir}
     else
         echo \"Cannot find backup directory: \${dir}\"
         echo \"Make sure the backup drive is mounted\"
     fi"
 #        rsbidsome               backup etc, home, root, and opt dirs to usb drive
 alias rsbidsome="
-    #dir=/run/media/\${USER}
-    dir=/media
+    basedir=/run/media/\${USER}
+    dir=\${basedir}/\$(cd \${basedir} && \$(pathcmd ls) -1)/\$(uname -n)
     if [[ -d \${dir} ]] ; then
         echo 'Backing up:'
-        o=\${dir}/\$(cd \${dir} && \$(pathcmd ls) -1)/\$(uname -n)
         for d in \"etc\" \"home\" \"root\" \"opt\" ; do
-            echo \"  /\${d} => \${o}/\"
-            sudo rsync -aAXv --delete-before --exclude=${rsyncexclusions} /\${d} \${o}/
+            echo \"  /\${d} => \${dir}/\"
+            sudo rsync -aAXv --delete-before --exclude=${rsyncexclusions} /\${d} \${dir}/
         done
     else
         echo \"Cannot find back directory: \${dir}\"
