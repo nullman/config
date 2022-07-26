@@ -3290,8 +3290,10 @@ Example: To sort using `string<' use the following call:
           (setq x `(,(car x)
                     ,(cadr x)
                     (lambda ()
-                      (org-sort-remove-invisible
-                       (buffer-substring (match-end 0) (point-at-eol))))
+                      (replace-regexp-in-string
+                       "^[ \t]*" ""
+                       (buffer-substring-no-properties
+                        (match-end 0) (point-at-eol))))
                     (lambda (a b) (funcall ,(cadddr x) a b))
                     ,@(cddddr x))))
         (cl-case type
@@ -20087,7 +20089,8 @@ Commands:
 ;; load menu
 (auto-menu
  "Load"
- `(("Restore Context" "context-restore" "Restore previous context save.")
+ `(
+   ;;("Restore Context" "context-restore" "Restore previous context save.")
    ("Home Files..."
     ,(auto-menu-file '((".alias" . "~/.alias")
                        (".alias-local" . "~/.alias-local")
