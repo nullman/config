@@ -10,7 +10,7 @@
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
 <<<<<<< HEAD
-  #+TIMESTAMP: <2022-07-24 23:19 (kyle)>
+  #+TIMESTAMP: <2022-07-26 13:59 (kyle)>
 =======
   #+TIMESTAMP: <2022-07-25 14:39 (kyle)>
 >>>>>>> 15ca07aac585c5c47e1386a155cf44755244f946
@@ -1650,6 +1650,13 @@
 
       ;; add dash to word boundaries
       (modify-syntax-entry ?- "w")
+    #+END_SRC
+
+    Add camel-case words to word boundaries.
+
+    #+BEGIN_SRC emacs-lisp
+      ;; add camel-case words to word boundaries
+      (global-subword-mode 1)
     #+END_SRC
 
     Find open-paren at outermost level when searching for beginning of defuns.
@@ -5907,7 +5914,7 @@
       :END:
 
       Add templates to =org-structure-template-alist= and
-      =org-tempo-keywords-alist=. Customize =org-temp= so headers are in uppercase.
+      =org-tempo-keywords-alist=. Customize =org-tempo= so headers are in uppercase.
 
       #+BEGIN_SRC emacs-lisp
         ;;------------------------------------------------------------------------------
@@ -5921,8 +5928,7 @@
           :custom
           ;; set keyword completion elements
           (org-tempo-keywords-alist
-           '(
-             ("A" . "ascii")
+           '(("A" . "ascii")
              ;;("c" . "call")
              ("H" . "html")
              ("i" . "index")
@@ -5930,8 +5936,7 @@
              ("n" . "name")))
           ;; set block types
           (org-structure-template-alist
-           '(
-             ("c" . "center")
+           '(("c" . "center")
              ("C" . "comment")
              ("e" . "example")
              ("E" . "export")
@@ -5983,7 +5988,7 @@
 
           ;; custom `org-tempo--include-file' with upcase header
           (defun org-tempo--include-file ()
-            "Add #+include: and a file name."
+            "Add #+INCLUDE: and a file name."
             (let ((inhibit-quit t))
               (unless (with-local-quit
                         (prog1 t

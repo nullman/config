@@ -811,35 +811,40 @@ Common values:
 ;; General:10 ends here
 
 ;; [[file:init-emacs.org::#environment-general][General:11]]
-;; beginning of defun is outermost level open-paren
-(setq open-paren-in-column-0-is-defun-start nil
-      defun-prompt-regexp nil)
+;; add camel-case words to word boundaries
+(global-subword-mode 1)
 ;; General:11 ends here
 
 ;; [[file:init-emacs.org::#environment-general][General:12]]
-;; do not parse comments in sexp's
-(setq parse-sexp-ignore-comments t)
-(setq-default parse-sexp-ignore-comments parse-sexp-ignore-comments)
+;; beginning of defun is outermost level open-paren
+(setq open-paren-in-column-0-is-defun-start nil
+      defun-prompt-regexp nil)
 ;; General:12 ends here
 
 ;; [[file:init-emacs.org::#environment-general][General:13]]
-;; ;; wrap lines
-;; (setq truncate-lines nil)
+;; do not parse comments in sexp's
+(setq parse-sexp-ignore-comments t)
+(setq-default parse-sexp-ignore-comments parse-sexp-ignore-comments)
 ;; General:13 ends here
 
 ;; [[file:init-emacs.org::#environment-general][General:14]]
+;; ;; wrap lines
+;; (setq truncate-lines nil)
+;; General:14 ends here
+
+;; [[file:init-emacs.org::#environment-general][General:15]]
 ;; turn off line wrapping
 (setq truncate-lines t)
 (setq-default truncate-lines truncate-lines)
 (toggle-truncate-lines 1)
-;; General:14 ends here
+;; General:15 ends here
 
-;; [[file:init-emacs.org::#environment-general][General:16]]
+;; [[file:init-emacs.org::#environment-general][General:17]]
 ;; do not automatically break lines by inserting newlines
 (turn-off-auto-fill)
-;; General:16 ends here
+;; General:17 ends here
 
-;; [[file:init-emacs.org::#environment-general][General:18]]
+;; [[file:init-emacs.org::#environment-general][General:19]]
 ;; do not visually break lines that are longer than the screen width
 (global-visual-line-mode -1)
 
@@ -851,24 +856,24 @@ Common values:
 
 ;; use curly arrows to indicate a visual line wrap
 (setq visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
-;; General:18 ends here
-
-;; [[file:init-emacs.org::#environment-general][General:19]]
-;; when `display-line-numbers-mode' is on use relative numbering
-(setq display-line-numbers-type 'relative)
 ;; General:19 ends here
 
 ;; [[file:init-emacs.org::#environment-general][General:20]]
-;; stop cursor at the end of the file
-(setq next-line-add-newlines nil)
+;; when `display-line-numbers-mode' is on use relative numbering
+(setq display-line-numbers-type 'relative)
 ;; General:20 ends here
 
 ;; [[file:init-emacs.org::#environment-general][General:21]]
-;; keep screen position when using page-up and page-down
-(setq scroll-preserve-screen-position 'keep)
+;; stop cursor at the end of the file
+(setq next-line-add-newlines nil)
 ;; General:21 ends here
 
 ;; [[file:init-emacs.org::#environment-general][General:22]]
+;; keep screen position when using page-up and page-down
+(setq scroll-preserve-screen-position 'keep)
+;; General:22 ends here
+
+;; [[file:init-emacs.org::#environment-general][General:23]]
 ;; scroll one line at a time
 (setq scroll-step 1)
 ;; scroll fewer lines
@@ -877,27 +882,27 @@ Common values:
 (setq scroll-margin 2)
 ;; turn off vertical auto-scroll
 (setq auto-window-vscroll nil)
-;; General:22 ends here
-
-;; [[file:init-emacs.org::#environment-general][General:23]]
-;; make searches case-insensitive
-(setq case-fold-search t)
 ;; General:23 ends here
 
 ;; [[file:init-emacs.org::#environment-general][General:24]]
+;; make searches case-insensitive
+(setq case-fold-search t)
+;; General:24 ends here
+
+;; [[file:init-emacs.org::#environment-general][General:25]]
 ;; highlight search matches
 (setq search-highlight t
       ;;isearch-highlight t
       query-replace-highlight t)
-;; General:24 ends here
-
-;; [[file:init-emacs.org::#environment-general][General:25]]
-;; make current selection visible
-(transient-mark-mode 1)
-(setq-default transient-mark-mode transient-mark-mode)
 ;; General:25 ends here
 
 ;; [[file:init-emacs.org::#environment-general][General:26]]
+;; make current selection visible
+(transient-mark-mode 1)
+(setq-default transient-mark-mode transient-mark-mode)
+;; General:26 ends here
+
+;; [[file:init-emacs.org::#environment-general][General:27]]
 ;; set tab indentation, width, and convert tabs to spaces
 (setq indent-tabs-mode nil              ; do not insert tab characters
       tab-width 4                       ; default tab width is four spaces
@@ -909,49 +914,49 @@ Common values:
               standard-indent standard-indent
               tab-always-indent tab-always-indent
               tab-stop-list tab-stop-list)
-;; General:26 ends here
-
-;; [[file:init-emacs.org::#environment-general][General:27]]
-;; set default fill column for `auto-fill-mode' mode and `fill-paragraph'
-(setq fill-column 78)
-(setq-default fill-column fill-column)
 ;; General:27 ends here
 
 ;; [[file:init-emacs.org::#environment-general][General:28]]
+;; set default fill column for `auto-fill-mode' mode and `fill-paragraph'
+(setq fill-column 78)
+(setq-default fill-column fill-column)
+;; General:28 ends here
+
+;; [[file:init-emacs.org::#environment-general][General:29]]
 ;; set default comment column for in-line comments
 (setq comment-column 40)
 (setq-default comment-column comment-column)
 ;; set default comment fill column for in-line comments
 (setq comment-fill-column nil)
 (setq-default comment-fill-column comment-fill-column)
-;; General:28 ends here
-
-;; [[file:init-emacs.org::#environment-general][General:29]]
-;; turn on goal column support
-(put 'set-goal-column 'disabled nil)
 ;; General:29 ends here
 
 ;; [[file:init-emacs.org::#environment-general][General:30]]
+;; turn on goal column support
+(put 'set-goal-column 'disabled nil)
+;; General:30 ends here
+
+;; [[file:init-emacs.org::#environment-general][General:31]]
 ;; insert one space after a sentence when filling text
 (setq sentence-end-double-space nil)
 ;; insert one space after a colon when filling text
 (setq colon-double-space nil)
-;; General:30 ends here
+;; General:31 ends here
 
-;; [[file:init-emacs.org::#environment-general][General:32]]
+;; [[file:init-emacs.org::#environment-general][General:33]]
 ;; highlight matching parenthesis
 (show-paren-mode 1)
 (set-face-foreground 'show-paren-match color-paren)
 (set-face-attribute 'show-paren-match nil :weight 'extra-bold)
-;; General:32 ends here
-
-;; [[file:init-emacs.org::#environment-general][General:33]]
-;; highlight tabs
-(setq highlight-tabs t)
-(setq-default highlight-tabs highlight-tabs)
 ;; General:33 ends here
 
 ;; [[file:init-emacs.org::#environment-general][General:34]]
+;; highlight tabs
+(setq highlight-tabs t)
+(setq-default highlight-tabs highlight-tabs)
+;; General:34 ends here
+
+;; [[file:init-emacs.org::#environment-general][General:35]]
 ;; ;; highlight trailing white spaces
 ;; (setq show-trailing-whitespace t)
 ;; (setq-default show-trailing-whitespace show-trailing-whitespace)
@@ -964,68 +969,68 @@ Common values:
         (newline-mark 10 [182 10]) ; 10 linefeed '\n', 182 ??? '¶'
         (tab-mark 9 [9655 9] [92 9])))    ; 9 tab '\t', 9655 '▷', 92 backslash '\'
 (global-whitespace-mode 1)              ; enable whitespace mode everywhere
-;; General:34 ends here
-
-;; [[file:init-emacs.org::#environment-general][General:35]]
-;; highlight current line
-(hl-line-mode 1)
-(global-hl-line-mode 1)
 ;; General:35 ends here
 
 ;; [[file:init-emacs.org::#environment-general][General:36]]
-;; turn on global font lock mode and syntax highlighting
-(global-font-lock-mode 1)
-(setq font-lock-maximum-decoration t)
+;; highlight current line
+(hl-line-mode 1)
+(global-hl-line-mode 1)
 ;; General:36 ends here
 
 ;; [[file:init-emacs.org::#environment-general][General:37]]
-;; replace highlighted text with typed text
-(delete-selection-mode 1)
+;; turn on global font lock mode and syntax highlighting
+(global-font-lock-mode 1)
+(setq font-lock-maximum-decoration t)
 ;; General:37 ends here
 
 ;; [[file:init-emacs.org::#environment-general][General:38]]
+;; replace highlighted text with typed text
+(delete-selection-mode 1)
+;; General:38 ends here
+
+;; [[file:init-emacs.org::#environment-general][General:39]]
 ;; ;; set comment start (default) and padding
 ;; (setq comment-start "#"
 ;;       comment-padding " ")
 ;; set comment style
 (setq comment-style 'indent)
-;; General:38 ends here
-
-;; [[file:init-emacs.org::#environment-general][General:39]]
-(setq enable-recursive-minibuffers t)
-(minibuffer-depth-indicate-mode 1)
 ;; General:39 ends here
 
-;; [[file:init-emacs.org::#environment-general][General:41]]
+;; [[file:init-emacs.org::#environment-general][General:40]]
+(setq enable-recursive-minibuffers t)
+(minibuffer-depth-indicate-mode 1)
+;; General:40 ends here
+
+;; [[file:init-emacs.org::#environment-general][General:42]]
 ;; make apropos command search all symbols
 (setq apropos-do-all t)
 
 ;; make apropos command list results by relevance
 (setq apropos-sort-by-scores t
       apropos-documentation-sort-by-scores t)
-;; General:41 ends here
+;; General:42 ends here
 
-;; [[file:init-emacs.org::#environment-general][General:42]]
+;; [[file:init-emacs.org::#environment-general][General:43]]
 ;; display customize menu entries and tag names as symbols
 (setq custom-unlispify-menu-entries nil
       custom-unlispify-tag-names nil)
 (setq-default custom-unlispify-menu-entries custom-unlispify-menu-entries
               custom-unlispify-tag-names custom-unlispify-tag-names)
-;; General:42 ends here
-
-;; [[file:init-emacs.org::#environment-general][General:43]]
-;; set grep command
-(setq grep-command "grep -n -H -i -r -e ")
 ;; General:43 ends here
 
 ;; [[file:init-emacs.org::#environment-general][General:44]]
+;; set grep command
+(setq grep-command "grep -n -H -i -r -e ")
+;; General:44 ends here
+
+;; [[file:init-emacs.org::#environment-general][General:45]]
 ;; email settings
 (setq mail-sources `((pop :server "pop.gmail.com" :port 995
                           :user ,user-mail-address
                           :connection ssl :leave t)))
-;; General:44 ends here
+;; General:45 ends here
 
-;; [[file:init-emacs.org::#environment-general][General:45]]
+;; [[file:init-emacs.org::#environment-general][General:46]]
 ;; set default browser
 ;;(setq browse-url-generic-program "x-www-browser")
 ;;(setq browse-url-generic-program "w3m")
@@ -1040,24 +1045,24 @@ Common values:
 
 ;; set secondary browser
 (setq browse-url-secondary-browser-function 'browse-url-default-browser)
-;; General:45 ends here
+;; General:46 ends here
 
-;; [[file:init-emacs.org::#environment-general][General:46]]
+;; [[file:init-emacs.org::#environment-general][General:47]]
 ;; when deleting an active region via single character deletion command,
 ;; do not save to kill ring
 (setq delete-active-region t)
-;; General:46 ends here
+;; General:47 ends here
 
-;; [[file:init-emacs.org::#environment-general][General:48]]
+;; [[file:init-emacs.org::#environment-general][General:49]]
 ;; always recenter after `occur-mode-goto-occurrence'
 (defun occur-mode-goto-occurrence--recenter (&optional arg)
   "Recenter when an `occur' result is selected."
   (recenter))
 ;; advise `occur-mode-goto-occurrence'
 (advice-add 'occur-mode-goto-occurrence :after #'occur-mode-goto-occurrence--recenter)
-;; General:48 ends here
+;; General:49 ends here
 
-;; [[file:init-emacs.org::#environment-general][General:49]]
+;; [[file:init-emacs.org::#environment-general][General:50]]
 ;; set display-time-world time zones
 (setq display-time-world-list
       '(("Etc/UTC" "UTC")
@@ -1068,7 +1073,7 @@ Common values:
         ("Europe/London" "London")
         ("Europe/Paris" "Paris")
         ("Asia/Tokyo" "Tokyo")))
-;; General:49 ends here
+;; General:50 ends here
 
 ;; [[file:init-emacs.org::#environment-system][System:1]]
 ;;------------------------------------------------------------------------------
@@ -4060,8 +4065,7 @@ If BUFFER is nil, current buffer is used."
   :custom
   ;; set keyword completion elements
   (org-tempo-keywords-alist
-   '(
-     ("A" . "ascii")
+   '(("A" . "ascii")
      ;;("c" . "call")
      ("H" . "html")
      ("i" . "index")
@@ -4069,8 +4073,7 @@ If BUFFER is nil, current buffer is used."
      ("n" . "name")))
   ;; set block types
   (org-structure-template-alist
-   '(
-     ("c" . "center")
+   '(("c" . "center")
      ("C" . "comment")
      ("e" . "example")
      ("E" . "export")
@@ -4122,7 +4125,7 @@ If BUFFER is nil, current buffer is used."
 
   ;; custom `org-tempo--include-file' with upcase header
   (defun org-tempo--include-file ()
-    "Add #+include: and a file name."
+    "Add #+INCLUDE: and a file name."
     (let ((inhibit-quit t))
       (unless (with-local-quit
                 (prog1 t
