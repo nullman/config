@@ -4137,7 +4137,15 @@ If BUFFER is nil, current buffer is used."
         (setq quit-flag nil))))
 
   ;; update templates
-  (org-tempo-add-templates))
+  (org-tempo-add-templates)
+
+  ;; disable `org-src-tab-acts-natively' during template indentation
+  (defun tempo-insert--disable-org-src-tab-acts-natively (orig-fun &rest args)
+    "Disable `org-src-tab-acts-natively' during template indentation."
+    (let ((org-src-tab-acts-natively nil))
+      (apply orig-fun args)))
+  ;; advise `tempo-insert'
+  (advice-add 'tempo-insert :around #'tempo-insert--disable-org-src-tab-acts-natively))
 
 ;; ;; upcase begin_src and end_src block headers
 ;; (defun org-insert-structure-template--upcase (type)
