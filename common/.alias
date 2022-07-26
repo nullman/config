@@ -2780,6 +2780,10 @@ alias gitcod="git checkout develop"
 alias gitcom="git checkout master"
 #        gitcob                  git checkout -b
 alias gitcob="git checkout -b"
+#        gitco-ours              git checkout --ours --
+alias gitco-ours="git checkout --ours --"
+#        gitco-theirs            git checkout --theirs --
+alias gitco-theirs="git checkout --theirs --"
 #        gitci                   git commit
 alias gitci="git commit"
 #        gitcim                  git commit -m
