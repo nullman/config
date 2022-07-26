@@ -9,7 +9,11 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
+<<<<<<< HEAD
   #+TIMESTAMP: <2022-07-24 23:19 (kyle)>
+=======
+  #+TIMESTAMP: <2022-07-25 14:39 (kyle)>
+>>>>>>> 15ca07aac585c5c47e1386a155cf44755244f946
 
 * Overview
   :PROPERTIES:
@@ -5733,19 +5737,19 @@
                    ("C-c a" . org-agenda)
                    ("C-c l" . org-store-link)
                    ("C-c m" . org-insert-todo-heading)
-                   ("C-c p" . org-priority) ; "C-c ," gets overridden by `semantic-complete-analyze-inline'
-                   ("C-c s" . org-sort-current) ; sort current level
-                   ("C-c z" . org-agenda-archive-done-tasks) ; archive done tasks
-                   ;;("C-c C-j" . counsel-org-goto)            ; default: `org-goto'
-                   ("C-c C-j" . consult-outline)             ; default: `org-goto'
-                   ;;("C-c C-z" . switch-to-lisp) ; default: `org-add-note'
-                   ("C-c C-z" . geiser-mode-switch-to-repl) ; default: `org-add-note'
-                   ("C-c C-x C-l" . org-toggle-link-display) ; toggle showing or hiding links
-                   ("C-c C-x t" . org-toggle-headline-checkbox) ; toggle between headline and checkbox
+                   ("C-c p" . org-priority)                                   ; "C-c ," gets overridden by `semantic-complete-analyze-inline'
+                   ("C-c s" . org-sort-current)                               ; sort current level
+                   ("C-c z" . org-agenda-archive-done-tasks)                  ; archive done tasks
+                   ;;("C-c C-j" . counsel-org-goto)                           ; default: `org-goto'
+                   ("C-c C-j" . consult-org-heading)                          ; default: `org-goto'
+                   ;;("C-c C-z" . switch-to-lisp)                             ; default: `org-add-note'
+                   ("C-c C-z" . geiser-mode-switch-to-repl)                   ; default: `org-add-note'
+                   ("C-c C-x C-l" . org-toggle-link-display)                  ; toggle showing or hiding links
+                   ("C-c C-x t" . org-toggle-headline-checkbox)               ; toggle between headline and checkbox
                    ("C-c C-x T" . org-toggle-literate-programming-code-block) ; toggle literate programming code block on/off
-                   ("C-c C-x F" . org-fix-literate-programming-heading) ; fix literate programming heading of current org section
-                   ("C-c C-v q" . org-babel-tangle-block) ; tangle current source block
-                   ("C-c C-v C-q" . org-babel-tangle-block)) ; tangle current source block
+                   ("C-c C-x F" . org-fix-literate-programming-heading)       ; fix literate programming heading of current org section
+                   ("C-c C-v q" . org-babel-tangle-block)                     ; tangle current source block
+                   ("C-c C-v C-q" . org-babel-tangle-block))                  ; tangle current source block
         ;; custom movement keys
         (custom-key-bindings-movement-keys org-mode-map)
 
@@ -18542,7 +18546,7 @@
           protected Date dte;           // date example"
           (interactive "*")
           (let ((case-fold-search t)
-                (comment-regexp (concat "\\(\\s-*\\)" comment-start))
+                (comment-regexp (concat "\\(\\s-*\\)" comment-start " "))
                 (point (point))
                 (beg (or beg (if (use-region-p) (region-beginning) nil)))
                 (end (or end (if (use-region-p) (region-end) nil))))
@@ -21077,33 +21081,33 @@
                  ("C-c m" . consult-mode-command)
                  ("C-c k" . consult-kmacro))
           :bind* (
-                  ("C-'" . consult-line)                        ; default: `isearch-forward-regexp'
-                  ;; C-x bindings (ctl-x-map)
-                  ("C-x M-:" . consult-complex-command)         ; default: `repeat-complex-command'
-                  ("C-x b" . consult-buffer)                    ; default: `switch-to-buffer'
-                  ("C-x 4 b" . consult-buffer-other-window)     ; default: `switch-to-buffer-other-window'
-                  ("C-x 5 b" . consult-buffer-other-frame)      ; default: `switch-to-buffer-other-frame'
-                  ("C-x r b" . consult-bookmark)                ; default: `bookmark-jump'
-                  ("C-x p b" . consult-project-buffer)          ; default: `project-switch-to-buffer'
-                  ;; M-# bindings for fast register access
-                  ("M-#" . consult-register-load)               ; default: `calc-dispatch'
-                  ("M-'" . consult-register-store)              ; default: `abbrev-prefix-mark'
+                  ("C-'" . consult-line)                    ; default: `isearch-forward-regexp'
+                  ;                                         ; C-x bindings (ctl-x-map)
+                  ("C-x M-:" . consult-complex-command)     ; default: `repeat-complex-command'
+                  ("C-x b" . consult-buffer)                ; default: `switch-to-buffer'
+                  ("C-x 4 b" . consult-buffer-other-window) ; default: `switch-to-buffer-other-window'
+                  ("C-x 5 b" . consult-buffer-other-frame)  ; default: `switch-to-buffer-other-frame'
+                  ("C-x r b" . consult-bookmark)            ; default: `bookmark-jump'
+                  ("C-x p b" . consult-project-buffer)      ; default: `project-switch-to-buffer'
+                  ;                                         ; M-# bindings for fast register access
+                  ("M-#" . consult-register-load)           ; default: `calc-dispatch'
+                  ("M-'" . consult-register-store)          ; default: `abbrev-prefix-mark'
                   ("C-M-#" . consult-register)
-                  ;; other bindings
-                  ("M-y" . consult-yank-pop)                    ; default: `yank-pop'
-                  ("<help> a" . consult-apropos)                ; default: `apropos-command'
-                  ;; M-g bindings (goto-map)
+                  ;                                         ; other bindings
+                  ("M-y" . consult-yank-pop)                ; default: `yank-pop'
+                  ("<help> a" . consult-apropos)            ; default: `apropos-command'
+                  ;                                         ; M-g bindings (goto-map)
                   ("M-g e" . consult-compile-error)
                   ("M-g f" . consult-flycheck)
                   ("M-g F" . consult-flymake)
-                  ("M-g g" . consult-goto-line)                 ; default: `goto-line'
-                  ("M-g M-g" . consult-goto-line)               ; default: `goto-line'
-                  ("M-g o" . consult-outline)                   ; alternative: `consult-org-heading'
+                  ("M-g g" . consult-goto-line)             ; default: `goto-line'
+                  ("M-g M-g" . consult-goto-line)           ; default: `goto-line'
+                  ("M-g o" . consult-org-heading)           ; alternative: `consult-outline'
                   ("M-g m" . consult-mark)
                   ("M-g k" . consult-global-mark)
                   ("M-g i" . consult-imenu)
                   ("M-g I" . consult-imenu-multi)
-                  ;; M-s bindings (search-map)
+                  ;                                         ; M-s bindings (search-map)
                   ("M-s d" . consult-find)
                   ("M-s D" . consult-locate)
                   ("M-s g" . consult-grep)
@@ -21114,19 +21118,19 @@
                   ("M-s m" . consult-multi-occur)
                   ("M-s k" . consult-keep-lines)
                   ("M-s u" . consult-focus-lines)
-                  ;; isearch integration
+                  ;                                         ; isearch integration
                   ("M-s e" . consult-isearch-history)
                   :map isearch-mode-map
-                  ("M-e" . consult-isearch-history)             ; default: `isearch-edit-string'
-                  ("M-s e" . consult-isearch-history)           ; default: `isearch-edit-string'
-                  ("M-s l" . consult-line)                      ; needed by `consult-line' to detect isearch
-                  ("M-s L" . consult-line-multi)                ; needed by `consult-line' to detect isearch
-                  ;; minibuffer bindings
+                  ("M-e" . consult-isearch-history)         ; default: `isearch-edit-string'
+                  ("M-s e" . consult-isearch-history)       ; default: `isearch-edit-string'
+                  ("M-s l" . consult-line)                  ; needed by `consult-line' to detect isearch
+                  ("M-s L" . consult-line-multi)            ; needed by `consult-line' to detect isearch
+                  ;                                         ; minibuffer bindings
                   :map minibuffer-local-map
-                  ;;("C-<return>" . exit-minibuffer)              ; default: `vertico-exit'
-                  ;;("M-<return>" . exit-minibuffer)              ; default: `vertico-exit'
-                  ("M-s" . consult-history)                     ; default: `next-matching-history-element'
-                  ("M-r" . consult-history))                    ; default: `previous-matching-history-element'
+                  ;;("C-<return>" . exit-minibuffer)        ; default: `vertico-exit'
+                  ;;("M-<return>" . exit-minibuffer)        ; default: `vertico-exit'
+                  ("M-s" . consult-history)                 ; default: `next-matching-history-element'
+                  ("M-r" . consult-history))                ; default: `previous-matching-history-element'
           ;; enable automatic preview at point in the *Completions* buffer
           :hook (completion-list-mode . consult-preview-at-point-mode)
           :init
