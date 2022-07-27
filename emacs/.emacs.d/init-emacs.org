@@ -10,7 +10,7 @@
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
 <<<<<<< HEAD
-  #+TIMESTAMP: <2022-07-26 14:13 (kyle)>
+  #+TIMESTAMP: <2022-07-27 16:29 (kyle)>
 =======
   #+TIMESTAMP: <2022-07-25 14:39 (kyle)>
 >>>>>>> 15ca07aac585c5c47e1386a155cf44755244f946
@@ -1527,7 +1527,7 @@
                 ;; or a list of properties that may include any of those symbols:
                 ;; `no-extend', `bg-only', `accented'
                 ;;modus-themes-region '(bg-only no-extend)
-                modus-themes-region '(bg-only accented)
+                modus-themes-region nil
 
                 ;; Options for `modus-themes-diffs': nil, 'desaturated, 'bg-only
                 modus-themes-diffs 'desaturated
@@ -6881,6 +6881,7 @@
                                      ;;(json . t)
                                      (kotlin . t)
                                      (latex . t)
+                                     (lilypond . t)
                                      (lisp . t)
                                      (lua . t)
                                      (makefile . t)
