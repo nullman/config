@@ -84,14 +84,15 @@ for ((x = 0; x < ${#channels[@]}; x += 1)) ; do
     if [[ -z "${listname}" || "${name}" == "${listname}" ]] ; then
         echo "${url} -> ${basedir}/${name}"
         mkdir -p "${basedir}/${name}"
-        count=$(find "${basedir}/${name}" -type f | wc -l)
-        [[ "$1" == "--restart" ]] && count=0
-        start=""
-        [[ ${count} -gt 0 ]] && start="--playlist-start $((${count} + 1))"
+        date=$(find "${basedir}/${name}" -type f | sort | tail -n 1 | \
+                   sed 's/.*\([0-9][0-9][0-9][0-9]\)-\([0-9][0-9]\)-\([0-9][0-9]\).*/\1\2\3/')
+        dateafter="--dateafter ${date}"
+        [[ "$1" == "--restart" ]] && dateafter=""
+        echo "${dateafter}"
         cd "${basedir}/${name}" && \
             yt-dlp --format "bv+ba/b" \
                    --playlist-reverse \
-                   ${start} \
+                   ${dateafter} \
                    --output "${name} - %(release_date>%Y-%m-%d,upload_date>%Y-%m-%d|Unknown)s - %(title)s.%(ext)s" \
                    "${url}"
     fi
