@@ -7,8 +7,8 @@
 # Author: Kyle W T Sherman
 #===============================================================================
 
-width=$(xwininfo -root | grep geometry | cut -c 13- | cut -d '+' -f 1 | cut -d 'x' -f 1)
-height=$(xwininfo -root | grep geometry | cut -c 13- | cut -d '+' -f 1 | cut -d 'x' -f 2)
+width=$(xdotool getdisplaygeometry | cut -d ' ' -f 1)
+height=$(xdotool getdisplaygeometry | cut -d ' ' -f 2)
 xdotool mousemove $(($width-240)) $(($height-240))
 gsimplecal &
 

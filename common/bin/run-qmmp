@@ -9,8 +9,8 @@
 
 qmmp %F &
 sleep 1 && \
-    width=$(xwininfo -root | grep geometry | cut -c 13- | cut -d '+' -f 1 | cut -d 'x' -f 1) && \
-    height=$(xwininfo -root | grep geometry | cut -c 13- | cut -d '+' -f 1 | cut -d 'x' -f 2) && \
+    width=$(xdotool getdisplaygeometry | cut -d ' ' -f 1) && \
+    height=$(xdotool getdisplaygeometry | cut -d ' ' -f 2) && \
     xdotool search --name Qmmp windowmove %@ $(($width-275)) 0 && \
     xdotool search --name Playlist windowmove %@ $(($width-275)) 114 && \
     xdotool search --name Playlist windowsize %@ $(($width-275)) $((116+(($height-384)/29)*29)) && \
