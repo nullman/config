@@ -110,8 +110,8 @@ _ba Ghb desktop='^5' follow=on
 _ba jetbrains-idea desktop='^6' follow=on
 _ba jetbrains-idea-ce desktop='^6' follow=on
 _ba jetbrains-studio desktop='^6' follow=on
-_ba dosbox desktop='^6' follow=on
-_ba BasiliskII desktop='^6' follow=on
+#_ba dosbox desktop='^6' follow=on
+#_ba BasiliskII desktop='^6' follow=on
 _ba 'VirtualBox Manager' desktop='^6' follow=on
 _ba 'VirtualBox Machine' desktop='^6' follow=on
 _ba discord desktop='^7' follow=on
