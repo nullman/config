@@ -1,4 +1,4 @@
-;; [[file:init-emacs.org::#init-init][Init:1]]
+;; [[file:../../../.emacs.d/init-emacs.org::#init-init][Init:1]]
 ;; -*- mode: emacs-lisp; lexical-binding: t; no-byte-compile: t -*-
 ;;==============================================================================
 ;;; init.el
