@@ -3296,9 +3296,9 @@ Example: To sort using `string<' use the following call:
                     ,(cadr x)
                     (lambda ()
                       (replace-regexp-in-string
-                       "^[ \t]*" ""
+                       "^[\*]*[ \t]*" ""
                        (buffer-substring-no-properties
-                        (match-end 0) (point-at-eol))))
+                        (point-at-bol) (point-at-eol))))
                     (lambda (a b) (funcall ,(cadddr x) a b))
                     ,@(cddddr x))))
         (cl-case type

@@ -10,7 +10,7 @@
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
 <<<<<<< HEAD
-  #+TIMESTAMP: <2022-07-27 16:29 (kyle)>
+  #+TIMESTAMP: <2022-07-27 21:20 (kyle)>
 =======
   #+TIMESTAMP: <2022-07-25 14:39 (kyle)>
 >>>>>>> 15ca07aac585c5c47e1386a155cf44755244f946
@@ -5000,9 +5000,9 @@
                             ,(cadr x)
                             (lambda ()
                               (replace-regexp-in-string
-                               "^[ \t]*" ""
+                               "^[\*]*[ \t]*" ""
                                (buffer-substring-no-properties
-                                (match-end 0) (point-at-eol))))
+                                (point-at-bol) (point-at-eol))))
                             (lambda (a b) (funcall ,(cadddr x) a b))
                             ,@(cddddr x))))
                 (cl-case type
