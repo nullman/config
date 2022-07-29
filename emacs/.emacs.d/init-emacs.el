@@ -13075,7 +13075,10 @@ Becomes:
   protected Date dte;           // date example"
   (interactive "*")
   (let ((case-fold-search t)
-        (comment-regexp (concat "\\(\\s-*\\)" comment-start " "))
+        (comment-regexp
+         (concat "\\(\\s-*\\)"
+                 comment-start
+                 (if (string= comment-start ";") " " "")))
         (point (point))
         (beg (or beg (if (use-region-p) (region-beginning) nil)))
         (end (or end (if (use-region-p) (region-end) nil))))

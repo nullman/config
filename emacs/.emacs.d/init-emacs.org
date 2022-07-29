@@ -10,7 +10,7 @@
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
 <<<<<<< HEAD
-  #+TIMESTAMP: <2022-07-27 21:20 (kyle)>
+  #+TIMESTAMP: <2022-07-28 19:38 (kyle)>
 =======
   #+TIMESTAMP: <2022-07-25 14:39 (kyle)>
 >>>>>>> 15ca07aac585c5c47e1386a155cf44755244f946
@@ -18560,7 +18560,10 @@
           protected Date dte;           // date example"
           (interactive "*")
           (let ((case-fold-search t)
-                (comment-regexp (concat "\\(\\s-*\\)" comment-start " "))
+                (comment-regexp
+                 (concat "\\(\\s-*\\)"
+                         comment-start
+                         (if (string= comment-start ";") " " "")))
                 (point (point))
                 (beg (or beg (if (use-region-p) (region-beginning) nil)))
                 (end (or end (if (use-region-p) (region-end) nil))))

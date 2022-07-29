@@ -1,4 +1,4 @@
-;; [[file:../../../.emacs.d/init-emacs.org::#modules-elpher][elpher:2]]
+;; [[file:init-emacs.org::#modules-elpher][elpher:2]]
 ;; Elpher Bookmarks File
 (("Gopherpedia" "gopher://gopherpedia.com/1")
  ("Gopher Project" "gopher://gopherproject.org/1")
