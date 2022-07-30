@@ -38,12 +38,13 @@ channels=(
 #    "Mac84                           | https://www.youtube.com/c/Mac84/videos"
 #    "Matt Heffernan Slithy Games     | https://www.youtube.com/c/slithymatt/videos"
     "Me, Myself, and Die             | https://www.youtube.com/c/MeMyselfandDieRPG/videos"
-#    "PhilsComputerLab                | https://www.youtube.com/c/philscomputerlab/videos"
+    "PhilsComputerLab                | https://www.youtube.com/c/philscomputerlab/videos"
     "Protesilaos Stavrou             | https://www.youtube.com/c/ProtesilaosStavrou/videos"
 #    "Retro Hack Shack                | https://www.youtube.com/c/RetroHackShack/videos"
 #    "Retro Recipes                   | https://www.youtube.com/c/Perifractic/videos"
 #    "RMC, The Cave                   | https://www.youtube.com/c/RMCRetro/videos"
     "System Crafters                 | https://www.youtube.com/c/SystemCrafters/videos"
+    "Tech Tangents                   | https://www.youtube.com/c/AkBKukU/videos"
     "The 8-Bit Guy                   | https://www.youtube.com/c/The8BitGuy/videos"
 #    "The Retro Shack                 | https://www.youtube.com/c/TheRetroShack/videos"
 #    "TheGeekPub                      | https://www.youtube.com/c/TheGeekPub/videos"
@@ -82,7 +83,9 @@ for ((x = 0; x < ${#channels[@]}; x += 1)) ; do
     name=$(echo "${channels[$x]}" | sed 's/ *|.*$//')
     url=$(echo "${channels[$x]}" | sed 's/^.*| *//')
     if [[ -z "${listname}" || "${name}" == "${listname}" ]] ; then
+        echo
         echo "${url} -> ${basedir}/${name}"
+        echo
         mkdir -p "${basedir}/${name}"
         archive="--download-archive ${HOME}/.yt-dlp-download-archive"
         [[ "$1" == "--restart" ]] && archive=="--no-download-archive"
