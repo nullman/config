@@ -10,7 +10,7 @@
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
 <<<<<<< HEAD
-  #+TIMESTAMP: <2022-08-01 11:25 (kyle)>
+  #+TIMESTAMP: <2022-08-01 12:22 (kyle)>
 =======
   #+TIMESTAMP: <2022-07-25 14:39 (kyle)>
 >>>>>>> 15ca07aac585c5c47e1386a155cf44755244f946
@@ -5071,9 +5071,10 @@
         by ASCII code. Otherwise, default SORT-TYPE is \"(nil ?f nil
         #'string<)\" which is to sort by ASCII code."
           (interactive)
-          (when (string= mode-name "Org")
+          (when (derived-mode-p 'org-mode)
             (let ((sort-types (or sort-types
-                                  (if (and (org-entry-get nil "TODO")
+                                  (if (and (eq (car (org-element-at-point)) 'headline)
+                                           (org-entry-get nil "TODO")
                                            (org-entry-get nil "PRIORITY"))
                                       '(?o ?p ?t (nil ?f nil #'string<))
                                     '((nil ?f nil #'string<))))))
@@ -14322,7 +14323,7 @@
                                             (:file . "\.gopher\\'")
                                             (:file . "\\'.gopherus.bookmarks\\'")
                                             (:file . "\\'Makefile\\'")
-                                            (:mode . "Makefile"))
+                                            (:mode . 'make-mode))
           "List of mode name and file name regexp patterns to exclude
         from tab removal on file save."
           :type 'list
@@ -14336,8 +14337,7 @@
                                       (name (cdr x)))
                                   (and
                                    (not (and (eq type :mode)
-                                             (stringp mode-name)
-                                             (string= mode-name name)))
+                                             (derived-mode-p name)))
                                    (not (and (eq type :file)
                                              (string-match name file-name))))))
                               remove-tabs-exceptions)
@@ -30672,7 +30672,7 @@
       ;;   ;;(install-remove-trailing-blanks)
 
       ;;   ;; remove tabs (all but makefile-mode)
-      ;;   ;;(unless (string= mode-name "Makefile")
+      ;;   ;;(unless (derived-mode-p 'make-mode)
       ;;   ;;  (install-remove-tabs))
 
       ;;   ;; turn on spell mode

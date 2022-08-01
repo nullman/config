@@ -3360,9 +3360,10 @@ by TODO status, then by priority, then by timestamp, and finally
 by ASCII code. Otherwise, default SORT-TYPE is \"(nil ?f nil
 #'string<)\" which is to sort by ASCII code."
   (interactive)
-  (when (string= mode-name "Org")
+  (when (derived-mode-p 'org-mode)
     (let ((sort-types (or sort-types
-                          (if (and (org-entry-get nil "TODO")
+                          (if (and (eq (car (org-element-at-point)) 'headline)
+                                   (org-entry-get nil "TODO")
                                    (org-entry-get nil "PRIORITY"))
                               '(?o ?p ?t (nil ?f nil #'string<))
                             '((nil ?f nil #'string<))))))
@@ -9707,7 +9708,7 @@ If buffer is read-only quietly do nothing."
                                     (:file . "\.gopher\\'")
                                     (:file . "\\'.gopherus.bookmarks\\'")
                                     (:file . "\\'Makefile\\'")
-                                    (:mode . "Makefile"))
+                                    (:mode . 'make-mode))
   "List of mode name and file name regexp patterns to exclude
 from tab removal on file save."
   :type 'list
@@ -9721,8 +9722,7 @@ from tab removal on file save."
                               (name (cdr x)))
                           (and
                            (not (and (eq type :mode)
-                                     (stringp mode-name)
-                                     (string= mode-name name)))
+                                     (derived-mode-p name)))
                            (not (and (eq type :file)
                                      (string-match name file-name))))))
                       remove-tabs-exceptions)
