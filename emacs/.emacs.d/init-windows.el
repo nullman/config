@@ -1,4 +1,4 @@
-;; [[file:../../../.emacs.d/init-emacs.org::#init-windows-init][Windows Init:1]]
+;; [[file:init-emacs.org::#init-windows-init][Windows Init:1]]
 ;; -*- mode: emacs-lisp; lexical-binding: t; no-byte-compile: t -*-
 ;;==============================================================================
 ;;; init-windows.el

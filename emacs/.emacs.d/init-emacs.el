@@ -245,11 +245,12 @@ Skips checks if run on Windows or Mac."
 
 ;; [[file:init-emacs.org::#environment-environment][Environment:2]]
 ;; set coding system to UTF-8
+(prefer-coding-system 'utf-8)
 (set-language-environment 'utf-8)
 (set-default-coding-systems 'utf-8)
 (set-terminal-coding-system 'utf-8)
 (set-selection-coding-system 'utf-8)
-(prefer-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
 ;; Environment:2 ends here
 
 ;; [[file:init-emacs.org::#environment-environment][Environment:3]]
