@@ -14513,7 +14513,9 @@ USING is the remaining peg."
 (init-message 3 "Completions: vertico/consult/company: consult")
 
 (use-package consult
-  :straight t
+  :straight (consult-custom
+             :type git :host github :repo "minad/consult"
+             :pre-build "git checkout 0.17")
   :after (vertico)
   :bind (;; C-c bindings (mode-specific-map)
          ("C-c h" . consult-history)
@@ -14521,21 +14523,21 @@ USING is the remaining peg."
          ("C-c k" . consult-kmacro))
   :bind* (
           ("C-'" . consult-line)                    ; default: `isearch-forward-regexp'
-          ;                                         ; C-x bindings (ctl-x-map)
+          ;; C-x bindings (ctl-x-map)
           ("C-x M-:" . consult-complex-command)     ; default: `repeat-complex-command'
           ("C-x b" . consult-buffer)                ; default: `switch-to-buffer'
           ("C-x 4 b" . consult-buffer-other-window) ; default: `switch-to-buffer-other-window'
           ("C-x 5 b" . consult-buffer-other-frame)  ; default: `switch-to-buffer-other-frame'
           ("C-x r b" . consult-bookmark)            ; default: `bookmark-jump'
           ("C-x p b" . consult-project-buffer)      ; default: `project-switch-to-buffer'
-          ;                                         ; M-# bindings for fast register access
+          ;; M-# bindings for fast register access
           ("M-#" . consult-register-load)           ; default: `calc-dispatch'
           ("M-'" . consult-register-store)          ; default: `abbrev-prefix-mark'
           ("C-M-#" . consult-register)
-          ;                                         ; other bindings
+          ;; other bindings
           ("M-y" . consult-yank-pop)                ; default: `yank-pop'
           ("<help> a" . consult-apropos)            ; default: `apropos-command'
-          ;                                         ; M-g bindings (goto-map)
+          ;; M-g bindings (goto-map)
           ("M-g e" . consult-compile-error)
           ("M-g f" . consult-flycheck)
           ("M-g F" . consult-flymake)
@@ -14546,7 +14548,7 @@ USING is the remaining peg."
           ("M-g k" . consult-global-mark)
           ("M-g i" . consult-imenu)
           ("M-g I" . consult-imenu-multi)
-          ;                                         ; M-s bindings (search-map)
+          ;; M-s bindings (search-map)
           ("M-s d" . consult-find)
           ("M-s D" . consult-locate)
           ("M-s g" . consult-grep)
@@ -14557,14 +14559,14 @@ USING is the remaining peg."
           ("M-s m" . consult-multi-occur)
           ("M-s k" . consult-keep-lines)
           ("M-s u" . consult-focus-lines)
-          ;                                         ; isearch integration
+          ;; isearch integration
           ("M-s e" . consult-isearch-history)
           :map isearch-mode-map
           ("M-e" . consult-isearch-history)         ; default: `isearch-edit-string'
           ("M-s e" . consult-isearch-history)       ; default: `isearch-edit-string'
           ("M-s l" . consult-line)                  ; needed by `consult-line' to detect isearch
           ("M-s L" . consult-line-multi)            ; needed by `consult-line' to detect isearch
-          ;                                         ; minibuffer bindings
+          ;; minibuffer bindings
           :map minibuffer-local-map
           ;;("C-<return>" . exit-minibuffer)        ; default: `vertico-exit'
           ;;("M-<return>" . exit-minibuffer)        ; default: `vertico-exit'
