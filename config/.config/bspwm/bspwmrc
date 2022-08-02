@@ -105,8 +105,8 @@ _ba Thunar desktop='^5' follow=on
 _ba Org.gnome.Nautilus desktop='^5' follow=on
 #_ba Filezilla desktop='^5' follow=on
 _ba Transmission-gtk desktop='^5' follow=on
-_ba balena-etcher-electron desktop='^5' follow=on
-_ba Ghb desktop='^5' follow=on
+#_ba balena-etcher-electron desktop='^5' follow=on
+#_ba Ghb desktop='^5' follow=on
 _ba jetbrains-idea desktop='^6' follow=on
 _ba jetbrains-idea-ce desktop='^6' follow=on
 _ba jetbrains-studio desktop='^6' follow=on
