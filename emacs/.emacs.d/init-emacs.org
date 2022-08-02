@@ -10,7 +10,7 @@
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
 <<<<<<< HEAD
-  #+TIMESTAMP: <2022-08-01 13:53 (kyle)>
+  #+TIMESTAMP: <2022-08-02 15:13 (kyle)>
 =======
   #+TIMESTAMP: <2022-07-25 14:39 (kyle)>
 >>>>>>> 15ca07aac585c5c47e1386a155cf44755244f946
