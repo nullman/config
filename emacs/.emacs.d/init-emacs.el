@@ -15715,6 +15715,43 @@ USING is the remaining peg."
   (gcmh-mode 1))
 ;; gcmh:1 ends here
 
+;; [[file:init-emacs.org::#modules-git-gutter][git-gutter:1]]
+;;------------------------------------------------------------------------------
+;; Modules: git-gutter
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: git-gutter")
+
+(use-package git-gutter
+  :straight t
+  :demand t
+  :diminish (git-gutter-mode . "GG")
+  ;; :bind (("C-x C-g" . git-gutter)
+  ;;            ;; ("C-x v =" . git-gutter:popup-hunk)
+  ;;            ;; ("C-x p" . git-gutter:previous-hunk)
+  ;;            ;; ("C-x n" . git-gutter:next-hunk)
+  ;;            ;; ("C-x v s" . git-gutter:stage-hunk)
+  ;;            ;; ("C-x v r" . git-gutter:revert-hunk)
+  ;;            ;; ("C-x v SPC" . git-gutter:mark-hunk)
+  ;;            )
+  :config
+  ;; turn on globally
+  (global-git-gutter-mode 1)
+
+  ;; periodically update
+  (setq git-gutter:update-interval 2)
+
+  ;; set symbols
+  (setq git-gutter:modified-sign "="
+        git-gutter:added-sign "+"
+        git-gutter:deleted-sign "-")
+
+  ;; set colors
+  (set-face-background 'git-gutter:modified "purple")
+  (set-face-background 'git-gutter:added "green")
+  (set-face-background 'git-gutter:deleted "red"))
+;; git-gutter:1 ends here
+
 ;; [[file:init-emacs.org::#modules-git-timemachine][git-timemachine:1]]
 ;;------------------------------------------------------------------------------
 ;;; Packages: git-timemachine

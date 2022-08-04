@@ -10,7 +10,7 @@
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
 <<<<<<< HEAD
-  #+TIMESTAMP: <2022-08-02 15:13 (kyle)>
+  #+TIMESTAMP: <2022-08-04 11:58 (kyle)>
 =======
   #+TIMESTAMP: <2022-07-25 14:39 (kyle)>
 >>>>>>> 15ca07aac585c5c47e1386a155cf44755244f946
@@ -22445,6 +22445,29 @@
         :straight t)
     #+END_SRC
 
+*** +diff-hl+
+    :PROPERTIES:
+    :CUSTOM_ID: packages-diff-hl
+    :END:
+
+    Highlight uncommitted changes using VC.
+
+    #+BEGIN_SRC emacs-lisp :tangle no
+      ;; ;;------------------------------------------------------------------------------
+      ;; ;;; Packages: diff-hl
+      ;; ;;------------------------------------------------------------------------------
+
+      ;; (init-message 2 "Packages: diff-hl")
+
+      ;; (use-package diff-hl
+      ;;   :straight t
+      ;;   :demand t
+      ;;   :config
+      ;;   (global-diff-hl-mode 1)
+      ;;   (diff-hl-margin-mode 1)
+      ;;   (diff-hl-dired-mode 1))
+    #+END_SRC
+
 *** doom-modeline
     :PROPERTIES:
     :CUSTOM_ID: modules-doom-modeline
@@ -23118,55 +23141,48 @@
         (gcmh-mode 1))
     #+END_SRC
 
-*** +git-gutter+
+*** git-gutter
     :PROPERTIES:
     :CUSTOM_ID: modules-git-gutter
     :END:
 
-    Port of Sublime Text plugin GitGutter (git-gutter)
+    Port of Sublime Text plugin GitGutter
 
-    #+BEGIN_SRC emacs-lisp :tangle no
-      ;; ;;------------------------------------------------------------------------------
-      ;; ;; Modules: git-gutter
-      ;; ;;------------------------------------------------------------------------------
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;; Modules: git-gutter
+      ;;------------------------------------------------------------------------------
 
-      ;; (init-message 2 "Modules: git-gutter")
+      (init-message 2 "Modules: git-gutter")
 
-      ;; (use-package git-gutter
-      ;;   :straight (:type built-in)
-      ;;   :diminish (git-gutter-mode . "GG")
-      ;;   :commands (git-gutter
-      ;;              global-git-gutter-mode)
-      ;;   :bind (("C-x C-g" . git-gutter)
-      ;;              ;; ("C-x v =" . git-gutter:popup-hunk)
-      ;;              ;; ("C-x p" . git-gutter:previous-hunk)
-      ;;              ;; ("C-x n" . git-gutter:next-hunk)
-      ;;              ;; ("C-x v s" . git-gutter:stage-hunk)
-      ;;              ;; ("C-x v r" . git-gutter:revert-hunk)
-      ;;              ;; ("C-x v SPC" . git-gutter:mark-hunk)
-      ;;              )
-      ;;   :init
-      ;;   ;; turn on globally
-      ;;   ;;(global-git-gutter-mode 1)
+      (use-package git-gutter
+        :straight t
+        :demand t
+        :diminish (git-gutter-mode . "GG")
+        ;; :bind (("C-x C-g" . git-gutter)
+        ;;            ;; ("C-x v =" . git-gutter:popup-hunk)
+        ;;            ;; ("C-x p" . git-gutter:previous-hunk)
+        ;;            ;; ("C-x n" . git-gutter:next-hunk)
+        ;;            ;; ("C-x v s" . git-gutter:stage-hunk)
+        ;;            ;; ("C-x v r" . git-gutter:revert-hunk)
+        ;;            ;; ("C-x v SPC" . git-gutter:mark-hunk)
+        ;;            )
+        :config
+        ;; turn on globally
+        (global-git-gutter-mode 1)
 
-      ;;   ;; turn off globally
-      ;;   (global-git-gutter-mode -1)
-      ;;   :config
-      ;;   ;; periodically update
-      ;;   (setq git-gutter:update-interval 2)
+        ;; periodically update
+        (setq git-gutter:update-interval 2)
 
-      ;;   ;; set symbols
-      ;;   (setq git-gutter:modified-sign "="
-      ;;         git-gutter:added-sign "+"
-      ;;         git-gutter:deleted-sign "-")
+        ;; set symbols
+        (setq git-gutter:modified-sign "="
+              git-gutter:added-sign "+"
+              git-gutter:deleted-sign "-")
 
-      ;;   ;; set colors
-      ;;   ;; (set-face-foreground 'git-gutter:modified "gray")
-      ;;   ;; (set-face-foreground 'git-gutter:added "gray")
-      ;;   ;; (set-face-foreground 'git-gutter:deleted "gray")
-      ;;   (set-face-background 'git-gutter:modified "purple")
-      ;;   (set-face-background 'git-gutter:added "green")
-      ;;   (set-face-background 'git-gutter:deleted "red"))
+        ;; set colors
+        (set-face-background 'git-gutter:modified "purple")
+        (set-face-background 'git-gutter:added "green")
+        (set-face-background 'git-gutter:deleted "red"))
     #+END_SRC
 
 *** git-timemachine
