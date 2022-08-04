@@ -15734,17 +15734,16 @@ USING is the remaining peg."
   ;;            ;; ("C-x v r" . git-gutter:revert-hunk)
   ;;            ;; ("C-x v SPC" . git-gutter:mark-hunk)
   ;;            )
+  :custom
+  ;; set symbols
+  (git-gutter:modified-sign "=")
+  (git-gutter:added-sign "+")
+  (git-gutter:deleted-sign "-")
+  ;; periodically update
+  (git-gutter:update-interval 2)
   :config
   ;; turn on globally
   (global-git-gutter-mode 1)
-
-  ;; periodically update
-  (setq git-gutter:update-interval 2)
-
-  ;; set symbols
-  (setq git-gutter:modified-sign "="
-        git-gutter:added-sign "+"
-        git-gutter:deleted-sign "-")
 
   ;; set colors
   (set-face-background 'git-gutter:modified "purple")

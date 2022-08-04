@@ -10,7 +10,7 @@
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
 <<<<<<< HEAD
-  #+TIMESTAMP: <2022-08-04 11:58 (kyle)>
+  #+TIMESTAMP: <2022-08-04 12:10 (kyle)>
 =======
   #+TIMESTAMP: <2022-07-25 14:39 (kyle)>
 >>>>>>> 15ca07aac585c5c47e1386a155cf44755244f946
@@ -23167,17 +23167,16 @@
         ;;            ;; ("C-x v r" . git-gutter:revert-hunk)
         ;;            ;; ("C-x v SPC" . git-gutter:mark-hunk)
         ;;            )
+        :custom
+        ;; set symbols
+        (git-gutter:modified-sign "=")
+        (git-gutter:added-sign "+")
+        (git-gutter:deleted-sign "-")
+        ;; periodically update
+        (git-gutter:update-interval 2)
         :config
         ;; turn on globally
         (global-git-gutter-mode 1)
-
-        ;; periodically update
-        (setq git-gutter:update-interval 2)
-
-        ;; set symbols
-        (setq git-gutter:modified-sign "="
-              git-gutter:added-sign "+"
-              git-gutter:deleted-sign "-")
 
         ;; set colors
         (set-face-background 'git-gutter:modified "purple")
