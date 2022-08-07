@@ -9,11 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-<<<<<<< HEAD
-  #+TIMESTAMP: <2022-08-06 12:08 (kyle)>
-=======
-  #+TIMESTAMP: <2022-07-25 14:39 (kyle)>
->>>>>>> 15ca07aac585c5c47e1386a155cf44755244f946
+  #+TIMESTAMP: <2022-08-07 08:53 (kyle)>
 
 * Overview
   :PROPERTIES:
