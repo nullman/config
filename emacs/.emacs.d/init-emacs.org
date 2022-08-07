@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-08-07 08:55 (kyle)>
+  #+TIMESTAMP: <2022-08-07 10:14 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -651,7 +651,7 @@
       ;;   (let ((buffer (find-file-noselect (file-truename (expand-file-name "~/.emacs.d/init.el")))))
       ;;     (with-current-buffer buffer
       ;;       (when (re-search-forward ";;; init.el ends here" nil :noerror)
-      ;;         (goto-char (line-beginning-position))
+      ;;         (forward-line 0)
       ;;         (forward-line 1)
       ;;         (kill-region (point) (point-max))
       ;;         (save-buffer)
@@ -3921,7 +3921,7 @@
           (if (= (point) (line-beginning-position))
               (let ((start (point)))
                 (apply orig-fun args)
-                (goto-char (line-beginning-position))
+                (forward-line 0)
                 (while (< (point) start)
                   (newline))
                 (goto-char (line-end-position)))
@@ -4985,7 +4985,7 @@
 
           (org-sort-multi '((nil ?f nil #'string<)))"
           (save-mark-and-excursion
-            (goto-char (line-beginning-position))
+            (forward-line 0)
             (let ((type (car (org-element-at-point))))
               (dolist (x (nreverse sort-types))
                 (when (characterp x)
@@ -5204,7 +5204,7 @@
                   (narrow-to-region beg end)
                   (goto-char (point-min))
                   (while (re-search-forward "^[ \t]*:PROPERTIES:$" nil :noerror)
-                    (goto-char (line-beginning-position))
+                    (forward-line 0)
                     (forward-char 1)
                     (while (and (not (looking-at "^[ \t]*:END:$"))
                                 (re-search-forward "^[ \t]*:CUSTOM_ID: " (line-end-position) :noerror))
@@ -5215,7 +5215,7 @@
                         (goto-char pos)
                         (while (re-search-forward ":" (line-end-position) :noerror)
                           (replace-match "-"))
-                        (goto-char (line-beginning-position))
+                        (forward-line 0)
                         (forward-line 1)))))))))
       #+END_SRC
 
@@ -5315,7 +5315,7 @@
               (save-match-data
                 (goto-char beg)
                 (while (<= (point) end)
-                  (goto-char (line-beginning-position))
+                  (forward-line 0)
                   (if (re-search-forward "^\\*+ " (line-end-position) :noerror)
                       (replace-match (concat
                                       (make-string (- (point) (line-beginning-position) 2) ? )
@@ -5428,7 +5428,7 @@
         ;;     (when step
         ;;       (goto-char end)
         ;;       (forward-line 1)
-        ;;       (goto-char (line-beginning-position)))))
+        ;;       (forward-line 0))))
       #+END_SRC
 
 ***** org-babel-tangle-block
@@ -5548,14 +5548,14 @@
               (dolist (section sections)
                 (goto-char (point-min))
                 (re-search-forward (concat "^[ \t]*" section "$"))
-                (goto-char (line-beginning-position))
+                (forward-line 0)
                 (forward-line -1)
                 (unless (looking-at "^[ \t]*;;--")
                   (forward-line 1))
                 (let ((beg (point))
                       (end (progn
                              (re-search-forward (concat "^[ \t]*;; .* ends here$"))
-                             (goto-char (line-beginning-position))
+                             (forward-line 0)
                              (forward-line 1)
                              (point))))
                   (append-to-buffer buffer beg end))))
@@ -5566,7 +5566,7 @@
             ;; remove all ';; ... ends here' lines
             (goto-char (point-min))
             (while (re-search-forward "^[ \t]*;; .* ends here$" nil :noerror)
-              (goto-char (line-beginning-position))
+              (forward-line 0)
               (delete-region (line-beginning-position) (line-end-position)))
             (goto-char (point-max))
             ;; insert footer
@@ -6967,7 +6967,7 @@
               (save-match-data
                 (org-with-wide-buffer
                  ;; find heading of current position
-                 (goto-char (line-beginning-position))
+                 (forward-line 0)
                  (while (not (looking-at "^\*+ "))
                    (forward-line -1))
                  (let* ((case-fold-search t)
@@ -7009,14 +7009,17 @@
                                  (comment-4 (concat comment-3 comment-1)))
                             (when (looking-at (concat
                                                comment-2 "[=-]+\n"
-                                               comment-2 "+ .*\n"
-                                               comment-2 "[=-]+$"))
+                                               comment-2 "+ .*\n"))
                               (replace-match
                                (concat
                                 comment-2 (make-string 78 (if (> level 1) ?- ?=)) "\n"
-                                (if (> level 2) comment-4 comment-3) " " title "\n"
-                                comment-2 (make-string 78 (if (> level 1) ?- ?=))))))
-                          (goto-char (line-beginning-position))
+                                (if (> level 2) comment-4 comment-3) " " title "\n"))
+                              (forward-line 0)
+                              (while (looking-at comment-2)
+                                (when (looking-at (concat comment-2 "[=-]+\n"))
+                                  (replace-match
+                                   (concat comment-2 (make-string 78 (if (> level 1) ?- ?=)) "\n")))
+                                (forward-line 1))))
                           ;; set `init-message' text
                           (when (re-search-forward "(init-message .*$" nil :noerror)
                             (replace-match (concat "(init-message " (number-to-string level) " \"" title "\")")))))))))))))
@@ -7844,7 +7847,7 @@
                          "Sherman Taxes "
                          (save-mark-and-excursion
                            (save-match-data
-                             (goto-char (line-beginning-position))
+                             (forward-line 0)
                              (re-search-forward "^\*+ " (line-end-position))
                              (buffer-substring-no-properties (point) (line-end-position))))))
                  (target-buffer (generate-new-buffer-name (concat "*" title "*"))))
@@ -7876,7 +7879,7 @@
               (capitalize-region (line-beginning-position) (line-end-position)))
             (goto-char (point-min))
             (while (re-search-forward "^\|-" nil :noerror)
-              (goto-char (line-beginning-position))
+              (forward-line 0)
               (when (save-mark-and-excursion
                       (forward-line -1)
                       (not (looking-at "^$")))
@@ -8031,11 +8034,11 @@
             (insert-buffer-substring source-buffer)
             (goto-char (point-min))
             (search-forward "* mtg cards owned")
-            (goto-char (line-beginning-position))
+            (forward-line 0)
             (kill-region (point-min) (point))
             (unless (search-forward "* mtg card sets" nil :noerror)
               (goto-char (point-max)))
-            (goto-char (line-beginning-position))
+            (forward-line 0)
             (kill-region (point) (point-max))
             (org-mode)
             (goto-char (point-min))
@@ -8169,7 +8172,7 @@
         ;;   (interactive "p")
         ;;   (save-mark-and-excursion
         ;;     (save-match-data
-        ;;       (goto-char (line-beginning-position))
+        ;;       (forward-line 0)
         ;;       (when (re-search-forward "^| *\\([^| ]*\\) *|" (line-end-position) :noerror)
         ;;         (let ((num (+ (string-to-number (match-string 1)) (or amount 1))))
         ;;           (replace-match (number-to-string num) nil nil nil 1)
@@ -8308,24 +8311,24 @@
         (defun ddo-fix-wiki-description ()
           "Fix wiki description around point."
           (interactive)
-          (goto-char (line-beginning-position))
+          (forward-line 0)
           (while (not (looking-at "\\*"))
             (insert ", ")
-            (goto-char (line-beginning-position))
+            (forward-line 0)
             (delete-char -1)
-            (goto-char (line-beginning-position)))
+            (forward-line 0))
           (while (re-search-forward "Icon tooltip\.png" (line-end-position) :noerror)
             (replace-match ""))
-          (goto-char (line-beginning-position))
+          (forward-line 0)
           (while (re-search-forward " +," (line-end-position) :noerror)
             (replace-match ","))
-          (goto-char (line-beginning-position))
+          (forward-line 0)
           (while (re-search-forward ",," (line-end-position) :noerror)
             (replace-match ","))
-          (goto-char (line-beginning-position))
+          (forward-line 0)
           (while (re-search-forward "  +" (line-end-position) :noerror)
             (replace-match " "))
-          (goto-char (line-beginning-position))
+          (forward-line 0)
           (while (re-search-forward " +$" (line-end-position) :noerror)
             (replace-match ""))
           (goto-char (line-end-position))
@@ -8923,7 +8926,7 @@
         ;;                 (forward-line 1))
         ;;               (setcdr tree (cons (replace-regexp-in-string "[ \t\n]*$" "" body) nil))
         ;;               (setq tree (cdr tree))
-        ;;               (goto-char (line-beginning-position))
+        ;;               (forward-line 0)
         ;;               (forward-line -1)))))
         ;;         (forward-line 1))
         ;;       (cons property-alist (cdr start)))))
@@ -9129,7 +9132,7 @@
                   (goto-char (point-min))
                   (while (not (eobp))
                     (insert spc)
-                    (goto-char (line-beginning-position))
+                    (forward-line 0)
                     (forward-line 1))))
               ;; return justified string
               (buffer-string))))
@@ -13074,7 +13077,7 @@
             (when line
               (goto-char (point-min))
               (forward-line (1- line)))
-            (goto-char (line-beginning-position))
+            (forward-line 0)
             (let ((beg (point)))
               (if (eobp)
                   (goto-char (line-end-position))
@@ -13101,7 +13104,7 @@
             (when line
               (goto-char (point-min))
               (forward-line (1- line)))
-            (goto-char (line-beginning-position))
+            (forward-line 0)
             (let ((beg (point)))
               (if (eobp)
                   (goto-char (line-end-position))
@@ -13128,7 +13131,7 @@
             (when line
               (goto-char (point-min))
               (forward-line (1- line)))
-            (goto-char (line-beginning-position))
+            (forward-line 0)
             (delete-region (point)
                            (progn
                              (forward-line 1)
@@ -13205,7 +13208,7 @@
                 (save-mark-and-excursion
                   (ignore-errors
                     (forward-line -1)
-                    (goto-char (line-beginning-position))
+                    (forward-line 0)
                     (forward-sexp)
                     (when (looking-at "\\()+\\)[ \t]*;")
                       (replace-match (make-string (length (match-string 1)) ?\s) nil nil nil 1))
@@ -15129,7 +15132,7 @@
             (goto-char beg)
             (when (> (point) (line-beginning-position))
               (forward-line 1)
-              (goto-char (line-beginning-position)))
+              (forward-line 0))
             (while (< (point) end)
               (when (looking-at "^+")
                 (delete-char 1))
@@ -15742,7 +15745,7 @@
               (save-mark-and-excursion
                 (goto-char (point-min))
                 (while (not (eobp))
-                  (goto-char (line-beginning-position))
+                  (forward-line 0)
                   (if (re-search-forward regexp (line-end-position) :noerror)
                       (delete-line)
                     (forward-line 1))))))
@@ -16590,7 +16593,7 @@
           (interactive "*")
           (save-mark-and-excursion
             (save-match-data
-              (goto-char (line-beginning-position))
+              (forward-line 0)
               (while (looking-at " +") (forward-char 1))
               (while (looking-at ";+") (forward-char 1))
               (let ((start (point)))
@@ -18148,7 +18151,7 @@
               ;;(when indent
               ;;  (indent-according-to-mode))
               (setq ind (current-indentation))
-              (goto-char (line-beginning-position))
+              (forward-line 0)
               ;; continue if we are in a code block
               (unless (or
                        (looking-at blank-line-regexp)
@@ -18167,7 +18170,7 @@
                   ;; indent if INDENT is t
                   ;;(when indent
                   ;;  (indent-according-to-mode))
-                  (goto-char (line-beginning-position)))
+                  (forward-line 0))
                 ;; if current line is not part of range, then move down
                 (unless (and
                          (not (looking-at blank-line-regexp))
@@ -18176,7 +18179,7 @@
                              (looking-at regexp)
                            t))
                   (forward-line 1))
-                (goto-char (line-beginning-position))
+                (forward-line 0)
                 (setq beg (point))
                 ;; indent if INDENT is t
                 (when indent
@@ -18194,7 +18197,7 @@
                   ;; indent if INDENT is t
                   (when indent
                     (indent-according-to-mode))
-                  (goto-char (line-beginning-position)))
+                  (forward-line 0))
                 (unless (and
                          (not (looking-at blank-line-regexp))
                          (= ind (current-indentation))
@@ -18265,7 +18268,7 @@
                              (not (equal (get-char-property (point) 'face)
                                          'font-lock-comment-face)))
                         ;; remove extra whitespace
-                        (goto-char (line-beginning-position))
+                        (forward-line 0)
                         (re-search-forward equal-regexp (line-end-position))
                         (replace-match " = ")
                         ;; put point before the equal sign
@@ -18273,7 +18276,7 @@
                         ;; store point if larger than others
                         (when (> (- (point) (line-beginning-position)) pos)
                           (setq pos (- (point) (line-beginning-position)))))
-                      (goto-char (line-beginning-position))
+                      (forward-line 0)
                       (forward-line 1))
                     ;; move through the block, padding as needed
                     (goto-char (point-min))
@@ -18286,12 +18289,12 @@
                         ;; pad as needed
                         (while (< (- (point) (line-beginning-position)) pos)
                           (insert " ")))
-                      (goto-char (line-beginning-position))
+                      (forward-line 0)
                       (forward-line 1))
                     ;; handle lines that ends in a comment
                     (goto-char (point-min))
                     (while (< (point) (point-max))
-                      (goto-char (line-beginning-position))
+                      (forward-line 0)
                       (forward-char (current-indentation))
                       ;; if line is not a comment line and line ends in a comment, then
                       ;; call comment-indent
@@ -18382,7 +18385,7 @@
                       (forward-char (current-indentation))
                       (while (re-search-forward whitespace-regexp (line-end-position) :noerror)
                         (replace-match " "))
-                      (goto-char (line-beginning-position))
+                      (forward-line 0)
                       (forward-line 1))
                     ;; loop until all face changes have been analyzed
                     (while (> change change-prev)
@@ -18400,7 +18403,7 @@
                       ;; loop through all lines in range
                       (while (< (point) (point-max))
                         ;; goto start of line + indentation
-                        (goto-char (line-beginning-position))
+                        (forward-line 0)
                         (forward-char (current-indentation))
                         ;; ignore comment lines
                         (unless (member (get-char-property (point) 'face)
@@ -18408,7 +18411,7 @@
                                               'nxml-comment-delimiter-face
                                               'nxml-comment-content-face))
                           ;; goto start of line + change-prev
-                          (goto-char (line-beginning-position))
+                          (forward-line 0)
                           (forward-char change-prev)
                           ;; get face-prev of first non-whitespace character
                           (unless face-prev
@@ -18454,7 +18457,7 @@
                         ;; loop through all lines in range
                         (while (< (point) (point-max))
                           ;; goto start of line + indentation
-                          (goto-char (line-beginning-position))
+                          (forward-line 0)
                           (forward-char (current-indentation))
                           ;; ignore comment lines
                           (unless (member (get-char-property (point) 'face)
@@ -18462,7 +18465,7 @@
                                                 'nxml-comment-delimiter-face
                                                 'nxml-comment-content-face))
                             ;; goto start of line + change-prev
-                            (goto-char (line-beginning-position))
+                            (forward-line 0)
                             (forward-char change-prev)
                             ;; find start of face change
                             ;; move forward until whitespace is reached
@@ -18486,7 +18489,7 @@
                     ;; handle lines that ends in a comment
                     (goto-char (point-min))
                     (while (< (point) (point-max))
-                      (goto-char (line-beginning-position))
+                      (forward-line 0)
                       (forward-char (current-indentation))
                       ;; if line is not a comment line and line ends in a comment, then
                       ;; call comment-indent
@@ -18689,7 +18692,7 @@
                 (class-regexp "\\bclass\\b"))
             (save-mark-and-excursion
               (save-match-data
-                (goto-char (line-beginning-position))
+                (forward-line 0)
                 (if (looking-at single-line-comment-regexp)
                     ;; convert single line comments into a multi-line comment
                     (let ((beg (progn
@@ -18708,7 +18711,7 @@
                                  (line-end-position)))
                           (space (make-string (- (re-search-forward indentation-regexp) (line-beginning-position)) ? ))
                           (class (progn
-                                   (goto-char (line-beginning-position))
+                                   (forward-line 0)
                                    (forward-line 1)
                                    (while (looking-at empty-line-regexp)
                                      (forward-line 1))
@@ -19148,7 +19151,7 @@
         ;;       (while (< (point) end)
         ;;         (delete-char -1)
         ;;         (insert ? )
-        ;;         (goto-char (line-beginning-position))
+        ;;         (forward-line 0)
         ;;         (forward-line 1))
         ;;       ;; finally use the python json.tool to format the json string
         ;;       (shell-command-on-region beg end "python -mjson.tool" (current-buffer) t))))
@@ -19274,11 +19277,11 @@
                   (save-match-data
                     (goto-char (point-min))
                     (re-search-forward "^;;; Template")
-                    (goto-char (line-beginning-position))
+                    (forward-line 0)
                     (forward-line 3)
                     (let ((beg (point)))
                       (forward-sexp 2)
-                      (goto-char (line-beginning-position))
+                      (forward-line 0)
                       (forward-line 2)
                       (let ((template (replace-regexp-in-string
                                        "\\?" strnum
@@ -19528,7 +19531,7 @@
             (save-mark-and-excursion
               (save-match-data
                 ;; save attr position
-                (goto-char (line-beginning-position))
+                (forward-line 0)
                 (when (search-forward "::" (line-end-position) :noerror)
                   (setq attr (point))
                   ;; find xml block
@@ -19554,7 +19557,7 @@
                       (goto-char (point-min))
                       ;; if block is commented out, then uncomment
                       (search-forward "<?xml")
-                      (goto-char (line-beginning-position))
+                      (forward-line 0)
                       (when (char-equal (char-after (point)) ?#)
                         (while (char-equal (char-after (point)) ?#)
                           ;; remove leading #
@@ -19563,7 +19566,7 @@
                           (when (char-equal (char-after (point)) ? )
                             (delete-char 1))
                           (forward-line 1)
-                          (goto-char (line-beginning-position))))
+                          (forward-line 0)))
                       ;; remove comment lines
                       (goto-char (point-min))
                       (while (re-search-forward "^[ \t]*#" (point-max) :noerror)
@@ -19575,7 +19578,7 @@
                       ;; append every line with a space
                       (goto-char (point-min))
                       (while (not (eobp))
-                        (goto-char (line-beginning-position))
+                        (forward-line 0)
                         (insert " ")
                         (forward-line 1))
                       ;; copy encoded block
@@ -19584,7 +19587,7 @@
                     (goto-char attr)
                     (delete-region (point) (line-end-position))
                     (forward-line 1)
-                    (goto-char (line-beginning-position))
+                    (forward-line 0)
                     (while (char-equal (char-after (point)) ? )
                       (delete-region (line-beginning-position) (line-end-position))
                       (delete-char 1))
@@ -20162,7 +20165,7 @@
           (save-mark-and-excursion
             (let ((length (progn (end-of-line)
                                  (current-column))))
-              (goto-char (line-beginning-position))
+              (forward-line 0)
               (insert (make-string (max 0 (/ (- fill-column length) 2)) ?\s)))))
 
         (defun star-wars-scroll-scroll-prepare-marker-list ()
@@ -20220,7 +20223,7 @@
                     (goto-char (caar walker))
                     (delete-char 1)
                     (setf (car walker) (cdar walker))
-                    (goto-char (line-beginning-position))
+                    (forward-line 0)
                     (insert " "))
                   (setq walker (cdr walker)))))))
 
@@ -20353,7 +20356,7 @@
 
 ***** +ido+
       :PROPERTIES:
-      :CUSTOM_ID: completions-ido
+      :CUSTOM_ID: completions-ido-ido
       :END:
 
       Buffer and File Name Wildcard Searching (ido)
@@ -20374,8 +20377,7 @@
 
       #+BEGIN_SRC emacs-lisp :tangle no
         ;; ;;------------------------------------------------------------------------------
-        ;; ;;; Completions: ido
-        ;; ;;------------------------------------------------------------------------------
+        ;; ;;;; Completions: ido: ido
         ;; ;;
         ;; ;; Adds wildcard name completion to `switch-buffer' and `find-file'.
         ;; ;; I do not like this feature for `find-file' -- too hard to open normal/new
@@ -20388,8 +20390,9 @@
         ;; ;;   ido-vertical-mode
         ;; ;;   ido-yes-or-no
         ;; ;;   idomenu
+        ;; ;;------------------------------------------------------------------------------
 
-        ;; (init-message 3 "Completions: ido")
+        ;; (init-message 3 "Completions: ido: ido")
 
         ;; (use-package ido
         ;;   :straight (:type built-in)
@@ -20533,7 +20536,7 @@
 
       #+BEGIN_SRC emacs-lisp :tangle no
         ;;------------------------------------------------------------------------------
-        ;;; Completions: auto-complete
+        ;;;; Completions: auto-complete: auto-complete
         ;;------------------------------------------------------------------------------
 
         (init-message 3 "Completions: auto-complete: auto-complete")
@@ -20617,7 +20620,7 @@
         ;;   (when (fboundp 'company-elisp)
         ;;     (add-to-list 'company-backends #'company-elisp t))
         ;;   (when (fboundp 'company-files)
-        ;;     (add-to-list 'company-backends #'company-files t))
+o        ;;     (add-to-list 'company-backends #'company-files t))
         ;;   (when (fboundp 'company-ispell)
         ;;     (add-to-list 'company-backends #'company-ispell t))
         ;;   (when (fboundp 'company-robe)
@@ -20676,9 +20679,9 @@
         ;; ;;      `(company-tooltip-common ((t (:inherit font-lock-constant-face)))))))
       #+END_SRC
 
-***** +ivy/counsel+
+***** +ivy+
       :PROPERTIES:
-      :CUSTOM_ID: completions-company-ivy-counsel-swiper-ivy-counsel
+      :CUSTOM_ID: completions-company-ivy-counsel-swiper-ivy
       :END:
 
       Generic completion method that adds wildcard name completion to common tasks.
@@ -20687,13 +20690,13 @@
 
       #+BEGIN_SRC emacs-lisp :tangle no
         ;; ;;------------------------------------------------------------------------------
-        ;; ;;; Completions: ivy
+        ;; ;;;; Completions: company/ivy/counsel/swiper: ivy
         ;; ;;
         ;; ;; Add wildcard name completion to common tasks.
         ;; ;; Replace `completing-read-function' with `ivy-completing-read'.
         ;; ;;------------------------------------------------------------------------------
 
-        ;; (init-message 3 "Completions: company/ivy/counsel/swiper: ivy/counsel")
+        ;; (init-message 3 "Completions: company/ivy/counsel/swiper: ivy")
 
         ;; (use-package ivy
         ;;   :straight (ivy :type git :host github :repo "abo-abo/swiper")
@@ -20735,49 +20738,6 @@
         ;;   (advice-add 'tmm-prompt :around #'force-completing-read-default)
         ;;   ;; advise `yas-expand-snippet'
         ;;   (advice-add 'yas-expand-snippet :around #'force-completing-read-default))
-
-        ;; ;;------------------------------------------------------------------------------
-        ;; ;;;; counsel
-        ;; ;;
-        ;; ;; Various completion functions using ivy.
-        ;; ;;------------------------------------------------------------------------------
-
-        ;; (init-message 3 "counsel")
-
-        ;; (use-package counsel
-        ;;   :straight (counsel :type git :host github :repo "abo-abo/swiper")
-        ;;   :after (ivy)
-        ;;   :bind* (("M-x" . counsel-M-x)
-        ;;           ;;([remap list-buffers] . counsel-switch-buffer) ; default: `list-buffers'
-        ;;           ;;("C-x b" . counsel-ibuffer)   ; default: `ivy-switch-buffer'
-        ;;           ;;("C-x C-b" . counsel-switch-buffer)   ; default: `list-buffers'
-        ;;           ("C-x C-f" . counsel-find-file)
-        ;;           ;;("C-h f" . counsel-describe-function)
-        ;;           ;;("C-h v" . counsel-describe-variable)
-        ;;           ("C-h l" . counsel-find-library)
-        ;;           ("C-h C-i" . counsel-info-lookup-symbol)
-        ;;           ("C-h u" . counsel-unicode-char))
-        ;;   :bind (:map minibuffer-local-map
-        ;;               ("C-r" . counsel-minibuffer-history))
-        ;;   :custom
-        ;;   ;; format linux application names with name and comment only
-        ;;   (counsel-linux-app-format-function #'counsel-linux-app-format-function-name-only)
-        ;;   :config
-        ;;   ;; do not start searches with ^
-        ;;   (setq ivy-initial-inputs-alist nil))
-
-        ;; ;;------------------------------------------------------------------------------
-        ;; ;;;; swiper
-        ;; ;;
-        ;; ;; Isearch with an overview.
-        ;; ;;------------------------------------------------------------------------------
-
-        ;; (init-message 3 "swiper")
-
-        ;; (use-package swiper
-        ;;   :straight (swiper :type git :host github :repo "abo-abo/swiper")
-        ;;   :after (ivy)
-        ;;   :bind* ("C-'" . swiper))            ; default: `isearch-forward-regexp'
 
         ;; ;;------------------------------------------------------------------------------
         ;; ;;;; ivy-rich
@@ -20832,6 +20792,65 @@
         ;; ;;   :after (ivy hydra))
       #+END_SRC
 
+***** +counsel+
+      :PROPERTIES:
+      :CUSTOM_ID: completions-company-ivy-counsel-swiper-counsel
+      :END:
+
+      Various completion functions using ivy.
+
+      #+BEGIN_SRC emacs-lisp :tangle no
+        ;; ;;------------------------------------------------------------------------------
+        ;; ;;;; Completions: company/ivy/counsel/swiper: counsel
+        ;; ;;
+        ;; ;; Various completion functions using ivy.
+        ;; ;;------------------------------------------------------------------------------
+
+        ;; (init-message 3 "Completions: company/ivy/counsel/swiper: counsel")
+
+        ;; (use-package counsel
+        ;;   :straight (counsel :type git :host github :repo "abo-abo/swiper")
+        ;;   :after (ivy)
+        ;;   :bind* (("M-x" . counsel-M-x)
+        ;;           ;;([remap list-buffers] . counsel-switch-buffer) ; default: `list-buffers'
+        ;;           ;;("C-x b" . counsel-ibuffer)   ; default: `ivy-switch-buffer'
+        ;;           ;;("C-x C-b" . counsel-switch-buffer)   ; default: `list-buffers'
+        ;;           ("C-x C-f" . counsel-find-file)
+        ;;           ;;("C-h f" . counsel-describe-function)
+        ;;           ;;("C-h v" . counsel-describe-variable)
+        ;;           ("C-h l" . counsel-find-library)
+        ;;           ("C-h C-i" . counsel-info-lookup-symbol)
+        ;;           ("C-h u" . counsel-unicode-char))
+        ;;   :bind (:map minibuffer-local-map
+        ;;               ("C-r" . counsel-minibuffer-history))
+        ;;   :custom
+        ;;   ;; format linux application names with name and comment only
+        ;;   (counsel-linux-app-format-function #'counsel-linux-app-format-function-name-only)
+        ;;   :config
+        ;;   ;; do not start searches with ^
+        ;;   (setq ivy-initial-inputs-alist nil))
+      #+END_SRC
+
+***** +swiper+
+      :PROPERTIES:
+      :CUSTOM_ID: completions-company-ivy-counsel-swiper-swiper
+      :END:
+
+      #+BEGIN_SRC emacs-lisp :tangle no
+        ;; ;;------------------------------------------------------------------------------
+        ;; ;;;; Completions: company/ivy/counsel/swiper: swiper
+        ;; ;;
+        ;; ;; Isearch with an overview.
+        ;; ;;------------------------------------------------------------------------------
+
+        ;; (init-message 3 "Completions: company/ivy/counsel/swiper: swiper")
+
+        ;; (use-package swiper
+        ;;   :straight (swiper :type git :host github :repo "abo-abo/swiper")
+        ;;   :after (ivy)
+        ;;   :bind* ("C-'" . swiper))            ; default: `isearch-forward-regexp'
+      #+END_SRC
+
 *** +helm/swiper+
     :PROPERTIES:
     :CUSTOM_ID: completions-helm-swiper
@@ -20842,12 +20861,12 @@
       ;; ;;; Completions: helm (swiper)
       ;; ;;------------------------------------------------------------------------------
 
-      ;; (init-message 2 "Completions: helm (swiper)")
+      ;; (init-message 2 "Completions: helm/swiper")
     #+END_SRC
 
-***** +helm/swiper+
+***** +helm+
       :PROPERTIES:
-      :CUSTOM_ID: completions-helm-swiper-helm-swiper
+      :CUSTOM_ID: completions-helm-swiper-helm
       :END:
 
       Emacs incremental and narrowing framework.
@@ -20858,10 +20877,10 @@
 
       #+BEGIN_SRC emacs-lisp :tangle no
         ;; ;;------------------------------------------------------------------------------
-        ;; ;;; Completions: helm (swiper)
+        ;; ;;;; Completions: helm
         ;; ;;------------------------------------------------------------------------------
 
-        ;; (init-message 3 "Completions: helm (swiper): helm (swiper)")
+        ;; (init-message 3 "Completions: helm/swiper: helm")
 
         ;; (use-package helm
         ;;   :straight t
@@ -20962,12 +20981,25 @@
         ;;   (advice-add 'tmm-prompt :around #'force-completing-read-default)
         ;;   ;; advise `yas-expand-snippet'
         ;;   (advice-add 'yas-expand-snippet :around #'force-completing-read-default))
+      #+END_SRC
 
+***** +swiper-helm+
+      :PROPERTIES:
+      :CUSTOM_ID: completions-helm-swiper-swiper-helm
+      :END:
+
+      Emacs incremental and narrowing framework.
+
+      Swiper search with =isearch= using =helm=.
+
+      (Should not be enabled at the same time as =ivy-mode=.)
+
+      #+BEGIN_SRC emacs-lisp :tangle no
         ;; ;;------------------------------------------------------------------------------
-        ;; ;;;; swiper-helm
+        ;; ;;;; Completions: helm/swiper: swiper-helm
         ;; ;;------------------------------------------------------------------------------
 
-        ;; (init-message 3 "swiper-helm")
+        ;; (init-message 3 "Completions: helm/swiper: swiper-helm")
 
         ;; (use-package swiper-helm
         ;;   :straight t
@@ -24260,7 +24292,7 @@
             (let (buffer-read-only)
               (save-mark-and-excursion
                 (save-match-data
-                  (goto-char (line-beginning-position))
+                  (forward-line 0)
                   (when (re-search-forward "  \\[[0-9]\\]$" (line-end-position) :noerror)
                     (replace-match ""))
                   (goto-char (line-end-position))
@@ -24386,7 +24418,7 @@
         ;;             (forward-line 1)
         ;;             (delete-region (point-min) (point)))
         ;;           (when (re-search-forward "External links" nil :noerror)
-        ;;             (goto-char (line-beginning-position))
+        ;;             (forward-line 0)
         ;;             (delete-region (point) (point-max)))
         ;;           (goto-char (point-min))
         ;;           (while (re-search-forward "phone Send" nil :noerror)
@@ -24468,7 +24500,7 @@
                         (fundamental-mode)
                         (goto-char (point-min))
                         (when (re-search-forward start-regexp nil :noerror)
-                          (goto-char (line-beginning-position))
+                          (forward-line 0)
                           (forward-line 1)
                           (let ((pos (point)))
                             (forward-line -3)
@@ -24561,7 +24593,7 @@
                     (fundamental-mode)
                     (goto-char (point-min))
                     (when (re-search-forward start-regexp nil :noerror)
-                      (goto-char (line-beginning-position))
+                      (forward-line 0)
                       (forward-line 1)
                       (let ((pos (point)))
                         (forward-line -3)
@@ -25882,7 +25914,7 @@
       ;;         (save-match-data
       ;;           (let (buffer-read-only)
       ;;             (buffer-disable-undo)
-      ;;             (goto-char (line-beginning-position))
+      ;;             (forward-line 0)
       ;;             (let ((rating (simple-mpc-get-song-rating)))
       ;;               (when (and rating
       ;;                          (re-search-forward simple-mpc-song-rating-regexp (line-end-position) :noerror))
@@ -25914,7 +25946,7 @@
       ;;                 (when (and rating
       ;;                            (re-search-forward simple-mpc-song-rating-regexp (line-end-position) :noerror))
       ;;                   (replace-match (concat "[" (number-to-string rating) "]"))))
-      ;;               (goto-char (line-beginning-position))
+      ;;               (forward-line 0)
       ;;               (forward-line 1)))))))
 
       ;;   (defun simple-mpc-view-current-playlist--display-all-song-ratings (&optional ignore-auto noconfirm keep-point)
@@ -26077,7 +26109,7 @@
       ;;               (fundamental-mode)
       ;;               (goto-char (point-min))
       ;;               (when (re-search-forward start-regexp nil :noerror)
-      ;;                 (goto-char (line-beginning-position))
+      ;;                 (forward-line 0)
       ;;                 (forward-line 1)
       ;;                 (let ((pos (point)))
       ;;                   (forward-line -3)
@@ -32400,7 +32432,7 @@
         ;;                   (insert "*BF Android App Analytics ")
         ;;                   (goto-char (line-end-position))
         ;;                   (insert "*\n")
-        ;;                   (goto-char (line-beginning-position))
+        ;;                   (forward-line 0)
         ;;                   (forward-line 4)
         ;;                   (org-table-goto-column 1)
         ;;                   (org-table-delete-column)
@@ -32454,7 +32486,7 @@
         ;;              (time-str-regexp (concat date-regexp " (" date-regexp " - " date-regexp ")")))
         ;;         (save-mark-and-excursion
         ;;           (save-match-data
-        ;;             (goto-char (line-beginning-position))
+        ;;             (forward-line 0)
         ;;             (when (re-search-forward time-str-regexp (line-end-position) :noerror)
         ;;               (replace-match time-str)))))))
       #+END_SRC
@@ -32491,7 +32523,7 @@
               (save-mark-and-excursion
                 (save-match-data
                   ;; remove leading "feature/" text
-                  (goto-char (line-beginning-position))
+                  (forward-line 0)
                   (while (re-search-forward "\\bfeature/" (line-end-position) :noerror)
                     (replace-match ""))
                   ;; handle different project names
@@ -32499,25 +32531,25 @@
                    ((re-search-forward "\\[?\\b[Aa][Nn][Dd][Rr][Oo][Ii][Dd]-" (line-end-position) :noerror)
                     (replace-match "ANDROID-" t)
                     (fix-branch)
-                    (goto-char (line-beginning-position))
+                    (forward-line 0)
                     (when (re-search-forward "\\b\\(ANDROID-[[:digit:]]+\\)\\([a-zA-Z0-9-_\.]*\\)\\b" (line-end-position) :noerror)
                       (replace-match (concat "[[https://buzzfeed.atlassian.net/browse/" (match-string 1) "][" (match-string 0) "]]") t)))
                    ((re-search-forward "\\[?\\b[Aa][Dd][Ss][Gg][Rr][Oo][Uu][Pp]-" (line-end-position) :noerror)
                     (replace-match "ADSGROUP-" t)
                     (fix-branch)
-                    (goto-char (line-beginning-position))
+                    (forward-line 0)
                     (when (re-search-forward "\\b\\(ADSGROUP-[[:digit:]]+\\)\\([a-zA-Z0-9-_\.]*\\)\\b" (line-end-position) :noerror)
                       (replace-match (concat "[[https://buzzfeed.atlassian.net/browse/" (match-string 1) "][" (match-string 0) "]]") t)))
                    ((re-search-forward "\\[?\\b[Bb][Ff][Oo]-" (line-end-position) :noerror)
                     (replace-match "BFO-" t)
                     (fix-branch)
-                    (goto-char (line-beginning-position))
+                    (forward-line 0)
                     (when (re-search-forward "\\b\\(BFO-[[:digit:]]+\\)\\([a-zA-Z0-9-_\.]*\\)\\b" (line-end-position) :noerror)
                       (replace-match (concat "[[https://buzzfeed.atlassian.net/browse/" (match-string 1) "][" (match-string 0) "]]") t)))
                    ((re-search-forward "\\[?\\b[Qq][Uu][Ii][Zz]-" (line-end-position) :noerror)
                     (replace-match "QUIZ-" t)
                     (fix-branch)
-                    (goto-char (line-beginning-position))
+                    (forward-line 0)
                     (when (re-search-forward "\\b\\(QUIZ-[[:digit:]]+\\)\\([a-zA-Z0-9-_\.]*\\)\\b" (line-end-position) :noerror)
                       (replace-match (concat "[[https://buzzfeed.atlassian.net/browse/" (match-string 1) "][" (match-string 0) "]]") t)))))))))
       #+END_SRC
@@ -32563,14 +32595,14 @@
         ;;             ;; find start commit on current line or before
         ;;             (save-mark-and-excursion
         ;;               (save-match-data
-        ;;                 (goto-char (line-beginning-position))
+        ;;                 (forward-line 0)
         ;;                 (unless (re-search-backward "^\*\*\*\*\* RC" nil :noerror)
         ;;                   (error "Could not find start commit"))
         ;;                 (goto-char (line-end-position))
         ;;                 (setq commit-start (buffer-substring-no-properties (- (point) 40) (point)))
         ;;                 (setq start (commit-pos commit-start))
         ;;                 ;; determine which way to search for next commit
-        ;;                 (goto-char (line-beginning-position))
+        ;;                 (forward-line 0)
         ;;                 (if (looking-at "^\*\*\*\*\* RC1: ")
         ;;                     ;; find last RC in previous release
         ;;                     (while (or (not end) (< end start))
@@ -32584,7 +32616,7 @@
         ;;                       (setq end (commit-pos commit-end)))
         ;;                   ;; find previous RC in this release
         ;;                   (progn
-        ;;                     (goto-char (line-beginning-position))
+        ;;                     (forward-line 0)
         ;;                     (unless (re-search-backward "^\*\*\*\*\* RC" nil :noerror)
         ;;                       (error "Could not find end commit"))
         ;;                     (goto-char (line-end-position))
@@ -32662,7 +32694,7 @@
                     (while (re-search-forward "\\[?\\b[Aa][Nn][Dd][Rr][Oo][Ii][Dd]-" nil :noerror)
                       (replace-match "ANDROID-" t)
                       (fix-branch)
-                      (goto-char (line-beginning-position))
+                      (forward-line 0)
                       (when (re-search-forward "\\b\\(ANDROID-[[:digit:]]+\\)\\([a-zA-Z0-9-_\.]*\\)\\b" nil :noerror)
                         (cl-pushnew (match-string 0) prs :test 'string=))
                       (goto-char (line-end-position)))
@@ -32670,7 +32702,7 @@
                     (while (re-search-forward "\\[?\\b[Aa][Dd][Ss][Gg][Rr][Oo][Uu][Pp]-" nil :noerror)
                       (replace-match "ADSGROUP-" t)
                       (fix-branch)
-                      (goto-char (line-beginning-position))
+                      (forward-line 0)
                       (when (re-search-forward "\\b\\(ADSGROUP-[[:digit:]]+\\)\\([a-zA-Z0-9-_\.]*\\)\\b" nil :noerror)
                         (cl-pushnew (match-string 0) prs :test 'string=))
                       (goto-char (line-end-position)))
@@ -32678,7 +32710,7 @@
                     (while (re-search-forward "\\[?\\b[Bb][Ff][Oo]-" nil :noerror)
                       (replace-match "BFO-" t)
                       (fix-branch)
-                      (goto-char (line-beginning-position))
+                      (forward-line 0)
                       (when (re-search-forward "\\b\\(BFO-[[:digit:]]+\\)\\([a-zA-Z0-9-_\.]*\\)\\b" nil :noerror)
                         (cl-pushnew (match-string 0) prs :test 'string=))
                       (goto-char (line-end-position)))
@@ -32686,7 +32718,7 @@
                     (while (re-search-forward "\\[?\\b[Qq][Uu][Ii][Zz]-" nil :noerror)
                       (replace-match "QUIZ-" t)
                       (fix-branch)
-                      (goto-char (line-beginning-position))
+                      (forward-line 0)
                       (when (re-search-forward "\\b\\(QUIZ-[[:digit:]]+\\)\\([a-zA-Z0-9-_\.]*\\)\\b" nil :noerror)
                         (cl-pushnew (match-string 0) prs :test 'string=))
                       (goto-char (line-end-position))))
@@ -32773,7 +32805,7 @@
         ;;                         (indent-clock-regexp "^\\( * \\)CLOCK")
         ;;                         (report-regexp "^ +report")
         ;;                         (total-time-regexp "\\*Total time\\* +| +\\*\\([0-9]\\{1,2\\}:[0-9]\\{2\\}\\)\\*"))
-        ;;                     (goto-char (line-beginning-position))
+        ;;                     (forward-line 0)
         ;;                     ;; make sure point is on a time block header (YYYY-MM-DD - YYYY-MM-DD)
         ;;                     ;; move up until a match is found
         ;;                     (while (and (not (bobp)) (not (looking-at header-regexp)))
@@ -32808,7 +32840,7 @@
         ;;                           (goto-char (point-min))
         ;;                           (unless (re-search-forward report-regexp nil :noerror)
         ;;                             (error "Could not find report section"))
-        ;;                           (goto-char (line-beginning-position))
+        ;;                           (forward-line 0)
         ;;                           (delete-region (point) (point-max))
         ;;                           (newline)
         ;;                           (insert (concat "Total time: " time))))

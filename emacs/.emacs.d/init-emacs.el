@@ -2544,7 +2544,7 @@ KEYMAP defaults to `override-global-map'."
     (if (= (point) (line-beginning-position))
         (let ((start (point)))
           (apply orig-fun args)
-          (goto-char (line-beginning-position))
+          (forward-line 0)
           (while (< (point) start)
             (newline))
           (goto-char (line-end-position)))
@@ -3285,7 +3285,7 @@ Example: To sort using `string<' use the following call:
 
   (org-sort-multi '((nil ?f nil #'string<)))"
   (save-mark-and-excursion
-    (goto-char (line-beginning-position))
+    (forward-line 0)
     (let ((type (car (org-element-at-point))))
       (dolist (x (nreverse sort-types))
         (when (characterp x)
@@ -3476,7 +3476,7 @@ replacing spaces with dashes."
           (narrow-to-region beg end)
           (goto-char (point-min))
           (while (re-search-forward "^[ \t]*:PROPERTIES:$" nil :noerror)
-            (goto-char (line-beginning-position))
+            (forward-line 0)
             (forward-char 1)
             (while (and (not (looking-at "^[ \t]*:END:$"))
                         (re-search-forward "^[ \t]*:CUSTOM_ID: " (line-end-position) :noerror))
@@ -3487,7 +3487,7 @@ replacing spaces with dashes."
                 (goto-char pos)
                 (while (re-search-forward ":" (line-end-position) :noerror)
                   (replace-match "-"))
-                (goto-char (line-beginning-position))
+                (forward-line 0)
                 (forward-line 1)))))))))
 ;; org-fix-custom-ids:1 ends here
 
@@ -3570,7 +3570,7 @@ If BEG and END are given, only that region is exported."
       (save-match-data
         (goto-char beg)
         (while (<= (point) end)
-          (goto-char (line-beginning-position))
+          (forward-line 0)
           (if (re-search-forward "^\\*+ " (line-end-position) :noerror)
               (replace-match (concat
                               (make-string (- (point) (line-beginning-position) 2) ? )
@@ -3733,14 +3733,14 @@ TARGET-FILE."
       (dolist (section sections)
         (goto-char (point-min))
         (re-search-forward (concat "^[ \t]*" section "$"))
-        (goto-char (line-beginning-position))
+        (forward-line 0)
         (forward-line -1)
         (unless (looking-at "^[ \t]*;;--")
           (forward-line 1))
         (let ((beg (point))
               (end (progn
                      (re-search-forward (concat "^[ \t]*;; .* ends here$"))
-                     (goto-char (line-beginning-position))
+                     (forward-line 0)
                      (forward-line 1)
                      (point))))
           (append-to-buffer buffer beg end))))
@@ -3751,7 +3751,7 @@ TARGET-FILE."
     ;; remove all ';; ... ends here' lines
     (goto-char (point-min))
     (while (re-search-forward "^[ \t]*;; .* ends here$" nil :noerror)
-      (goto-char (line-beginning-position))
+      (forward-line 0)
       (delete-region (line-beginning-position) (line-end-position)))
     (goto-char (point-max))
     ;; insert footer
@@ -4881,7 +4881,7 @@ Reset the CUSTOM_ID property, title comment, and `init-message'."
       (save-match-data
         (org-with-wide-buffer
          ;; find heading of current position
-         (goto-char (line-beginning-position))
+         (forward-line 0)
          (while (not (looking-at "^\*+ "))
            (forward-line -1))
          (let* ((case-fold-search t)
@@ -4923,14 +4923,17 @@ Reset the CUSTOM_ID property, title comment, and `init-message'."
                          (comment-4 (concat comment-3 comment-1)))
                     (when (looking-at (concat
                                        comment-2 "[=-]+\n"
-                                       comment-2 "+ .*\n"
-                                       comment-2 "[=-]+$"))
+                                       comment-2 "+ .*\n"))
                       (replace-match
                        (concat
                         comment-2 (make-string 78 (if (> level 1) ?- ?=)) "\n"
-                        (if (> level 2) comment-4 comment-3) " " title "\n"
-                        comment-2 (make-string 78 (if (> level 1) ?- ?=))))))
-                  (goto-char (line-beginning-position))
+                        (if (> level 2) comment-4 comment-3) " " title "\n"))
+                      (forward-line 0)
+                      (while (looking-at comment-2)
+                        (when (looking-at (concat comment-2 "[=-]+\n"))
+                          (replace-match
+                           (concat comment-2 (make-string 78 (if (> level 1) ?- ?=)) "\n")))
+                        (forward-line 1))))
                   ;; set `init-message' text
                   (when (re-search-forward "(init-message .*$" nil :noerror)
                     (replace-match (concat "(init-message " (number-to-string level) " \"" title "\")")))))))))))))
@@ -5550,7 +5553,7 @@ If NYXT-FILE is non-nil, then output is returned."
                  "Sherman Taxes "
                  (save-mark-and-excursion
                    (save-match-data
-                     (goto-char (line-beginning-position))
+                     (forward-line 0)
                      (re-search-forward "^\*+ " (line-end-position))
                      (buffer-substring-no-properties (point) (line-end-position))))))
          (target-buffer (generate-new-buffer-name (concat "*" title "*"))))
@@ -5582,7 +5585,7 @@ If NYXT-FILE is non-nil, then output is returned."
       (capitalize-region (line-beginning-position) (line-end-position)))
     (goto-char (point-min))
     (while (re-search-forward "^\|-" nil :noerror)
-      (goto-char (line-beginning-position))
+      (forward-line 0)
       (when (save-mark-and-excursion
               (forward-line -1)
               (not (looking-at "^$")))
@@ -5684,11 +5687,11 @@ If NYXT-FILE is non-nil, then output is returned."
     (insert-buffer-substring source-buffer)
     (goto-char (point-min))
     (search-forward "* mtg cards owned")
-    (goto-char (line-beginning-position))
+    (forward-line 0)
     (kill-region (point-min) (point))
     (unless (search-forward "* mtg card sets" nil :noerror)
       (goto-char (point-max)))
-    (goto-char (line-beginning-position))
+    (forward-line 0)
     (kill-region (point) (point-max))
     (org-mode)
     (goto-char (point-min))
@@ -5886,24 +5889,24 @@ If OWNED is non-nil, add an Owned column to the table."
 (defun ddo-fix-wiki-description ()
   "Fix wiki description around point."
   (interactive)
-  (goto-char (line-beginning-position))
+  (forward-line 0)
   (while (not (looking-at "\\*"))
     (insert ", ")
-    (goto-char (line-beginning-position))
+    (forward-line 0)
     (delete-char -1)
-    (goto-char (line-beginning-position)))
+    (forward-line 0))
   (while (re-search-forward "Icon tooltip\.png" (line-end-position) :noerror)
     (replace-match ""))
-  (goto-char (line-beginning-position))
+  (forward-line 0)
   (while (re-search-forward " +," (line-end-position) :noerror)
     (replace-match ","))
-  (goto-char (line-beginning-position))
+  (forward-line 0)
   (while (re-search-forward ",," (line-end-position) :noerror)
     (replace-match ","))
-  (goto-char (line-beginning-position))
+  (forward-line 0)
   (while (re-search-forward "  +" (line-end-position) :noerror)
     (replace-match " "))
-  (goto-char (line-beginning-position))
+  (forward-line 0)
   (while (re-search-forward " +$" (line-end-position) :noerror)
     (replace-match ""))
   (goto-char (line-end-position))
@@ -6485,7 +6488,7 @@ JUSTIFY determines the type of justification: `left', `right',
           (goto-char (point-min))
           (while (not (eobp))
             (insert spc)
-            (goto-char (line-beginning-position))
+            (forward-line 0)
             (forward-line 1))))
       ;; return justified string
       (buffer-string))))
@@ -8756,7 +8759,7 @@ With argument ARG, do this that many times."
     (when line
       (goto-char (point-min))
       (forward-line (1- line)))
-    (goto-char (line-beginning-position))
+    (forward-line 0)
     (let ((beg (point)))
       (if (eobp)
           (goto-char (line-end-position))
@@ -8778,7 +8781,7 @@ With argument ARG, do this that many times."
     (when line
       (goto-char (point-min))
       (forward-line (1- line)))
-    (goto-char (line-beginning-position))
+    (forward-line 0)
     (let ((beg (point)))
       (if (eobp)
           (goto-char (line-end-position))
@@ -8800,7 +8803,7 @@ With argument ARG, do this that many times."
     (when line
       (goto-char (point-min))
       (forward-line (1- line)))
-    (goto-char (line-beginning-position))
+    (forward-line 0)
     (delete-region (point)
                    (progn
                      (forward-line 1)
@@ -8867,7 +8870,7 @@ Cursor is left at current column in newly created line."
         (save-mark-and-excursion
           (ignore-errors
             (forward-line -1)
-            (goto-char (line-beginning-position))
+            (forward-line 0)
             (forward-sexp)
             (when (looking-at "\\()+\\)[ \t]*;")
               (replace-match (make-string (length (match-string 1)) ?\s) nil nil nil 1))
@@ -10351,7 +10354,7 @@ FORMAT is a 'date' format string (defaults to
     (goto-char beg)
     (when (> (point) (line-beginning-position))
       (forward-line 1)
-      (goto-char (line-beginning-position)))
+      (forward-line 0))
     (while (< (point) end)
       (when (looking-at "^+")
         (delete-char 1))
@@ -10694,7 +10697,7 @@ Otherwise, behaves the same as `occur'."
     (save-mark-and-excursion
       (goto-char (point-min))
       (while (not (eobp))
-        (goto-char (line-beginning-position))
+        (forward-line 0)
         (if (re-search-forward regexp (line-end-position) :noerror)
             (delete-line)
           (forward-line 1))))))
@@ -11396,7 +11399,7 @@ TENS defaults to 12."
   (interactive "*")
   (save-mark-and-excursion
     (save-match-data
-      (goto-char (line-beginning-position))
+      (forward-line 0)
       (while (looking-at " +") (forward-char 1))
       (while (looking-at ";+") (forward-char 1))
       (let ((start (point)))
@@ -12692,7 +12695,7 @@ indented via `indent-according-to-mode'."
       ;;(when indent
       ;;  (indent-according-to-mode))
       (setq ind (current-indentation))
-      (goto-char (line-beginning-position))
+      (forward-line 0)
       ;; continue if we are in a code block
       (unless (or
                (looking-at blank-line-regexp)
@@ -12711,7 +12714,7 @@ indented via `indent-according-to-mode'."
           ;; indent if INDENT is t
           ;;(when indent
           ;;  (indent-according-to-mode))
-          (goto-char (line-beginning-position)))
+          (forward-line 0))
         ;; if current line is not part of range, then move down
         (unless (and
                  (not (looking-at blank-line-regexp))
@@ -12720,7 +12723,7 @@ indented via `indent-according-to-mode'."
                      (looking-at regexp)
                    t))
           (forward-line 1))
-        (goto-char (line-beginning-position))
+        (forward-line 0)
         (setq beg (point))
         ;; indent if INDENT is t
         (when indent
@@ -12738,7 +12741,7 @@ indented via `indent-according-to-mode'."
           ;; indent if INDENT is t
           (when indent
             (indent-according-to-mode))
-          (goto-char (line-beginning-position)))
+          (forward-line 0))
         (unless (and
                  (not (looking-at blank-line-regexp))
                  (= ind (current-indentation))
@@ -12804,7 +12807,7 @@ Becomes:
                      (not (equal (get-char-property (point) 'face)
                                  'font-lock-comment-face)))
                 ;; remove extra whitespace
-                (goto-char (line-beginning-position))
+                (forward-line 0)
                 (re-search-forward equal-regexp (line-end-position))
                 (replace-match " = ")
                 ;; put point before the equal sign
@@ -12812,7 +12815,7 @@ Becomes:
                 ;; store point if larger than others
                 (when (> (- (point) (line-beginning-position)) pos)
                   (setq pos (- (point) (line-beginning-position)))))
-              (goto-char (line-beginning-position))
+              (forward-line 0)
               (forward-line 1))
             ;; move through the block, padding as needed
             (goto-char (point-min))
@@ -12825,12 +12828,12 @@ Becomes:
                 ;; pad as needed
                 (while (< (- (point) (line-beginning-position)) pos)
                   (insert " ")))
-              (goto-char (line-beginning-position))
+              (forward-line 0)
               (forward-line 1))
             ;; handle lines that ends in a comment
             (goto-char (point-min))
             (while (< (point) (point-max))
-              (goto-char (line-beginning-position))
+              (forward-line 0)
               (forward-char (current-indentation))
               ;; if line is not a comment line and line ends in a comment, then
               ;; call comment-indent
@@ -12911,7 +12914,7 @@ Becomes:
               (forward-char (current-indentation))
               (while (re-search-forward whitespace-regexp (line-end-position) :noerror)
                 (replace-match " "))
-              (goto-char (line-beginning-position))
+              (forward-line 0)
               (forward-line 1))
             ;; loop until all face changes have been analyzed
             (while (> change change-prev)
@@ -12929,7 +12932,7 @@ Becomes:
               ;; loop through all lines in range
               (while (< (point) (point-max))
                 ;; goto start of line + indentation
-                (goto-char (line-beginning-position))
+                (forward-line 0)
                 (forward-char (current-indentation))
                 ;; ignore comment lines
                 (unless (member (get-char-property (point) 'face)
@@ -12937,7 +12940,7 @@ Becomes:
                                       'nxml-comment-delimiter-face
                                       'nxml-comment-content-face))
                   ;; goto start of line + change-prev
-                  (goto-char (line-beginning-position))
+                  (forward-line 0)
                   (forward-char change-prev)
                   ;; get face-prev of first non-whitespace character
                   (unless face-prev
@@ -12983,7 +12986,7 @@ Becomes:
                 ;; loop through all lines in range
                 (while (< (point) (point-max))
                   ;; goto start of line + indentation
-                  (goto-char (line-beginning-position))
+                  (forward-line 0)
                   (forward-char (current-indentation))
                   ;; ignore comment lines
                   (unless (member (get-char-property (point) 'face)
@@ -12991,7 +12994,7 @@ Becomes:
                                         'nxml-comment-delimiter-face
                                         'nxml-comment-content-face))
                     ;; goto start of line + change-prev
-                    (goto-char (line-beginning-position))
+                    (forward-line 0)
                     (forward-char change-prev)
                     ;; find start of face change
                     ;; move forward until whitespace is reached
@@ -13015,7 +13018,7 @@ Becomes:
             ;; handle lines that ends in a comment
             (goto-char (point-min))
             (while (< (point) (point-max))
-              (goto-char (line-beginning-position))
+              (forward-line 0)
               (forward-char (current-indentation))
               ;; if line is not a comment line and line ends in a comment, then
               ;; call comment-indent
@@ -13143,7 +13146,7 @@ Examples:
         (class-regexp "\\bclass\\b"))
     (save-mark-and-excursion
       (save-match-data
-        (goto-char (line-beginning-position))
+        (forward-line 0)
         (if (looking-at single-line-comment-regexp)
             ;; convert single line comments into a multi-line comment
             (let ((beg (progn
@@ -13162,7 +13165,7 @@ Examples:
                          (line-end-position)))
                   (space (make-string (- (re-search-forward indentation-regexp) (line-beginning-position)) ? ))
                   (class (progn
-                           (goto-char (line-beginning-position))
+                           (forward-line 0)
                            (forward-line 1)
                            (while (looking-at empty-line-regexp)
                              (forward-line 1))
@@ -13579,11 +13582,11 @@ If optional COUNT is given, repeat up to NUM+COUNT-1."
           (save-match-data
             (goto-char (point-min))
             (re-search-forward "^;;; Template")
-            (goto-char (line-beginning-position))
+            (forward-line 0)
             (forward-line 3)
             (let ((beg (point)))
               (forward-sexp 2)
-              (goto-char (line-beginning-position))
+              (forward-line 0)
               (forward-line 2)
               (let ((template (replace-regexp-in-string
                                "\\?" strnum
@@ -13783,7 +13786,7 @@ the form of `attribute::'."
     (save-mark-and-excursion
       (save-match-data
         ;; save attr position
-        (goto-char (line-beginning-position))
+        (forward-line 0)
         (when (search-forward "::" (line-end-position) :noerror)
           (setq attr (point))
           ;; find xml block
@@ -13809,7 +13812,7 @@ the form of `attribute::'."
               (goto-char (point-min))
               ;; if block is commented out, then uncomment
               (search-forward "<?xml")
-              (goto-char (line-beginning-position))
+              (forward-line 0)
               (when (char-equal (char-after (point)) ?#)
                 (while (char-equal (char-after (point)) ?#)
                   ;; remove leading #
@@ -13818,7 +13821,7 @@ the form of `attribute::'."
                   (when (char-equal (char-after (point)) ? )
                     (delete-char 1))
                   (forward-line 1)
-                  (goto-char (line-beginning-position))))
+                  (forward-line 0)))
               ;; remove comment lines
               (goto-char (point-min))
               (while (re-search-forward "^[ \t]*#" (point-max) :noerror)
@@ -13830,7 +13833,7 @@ the form of `attribute::'."
               ;; append every line with a space
               (goto-char (point-min))
               (while (not (eobp))
-                (goto-char (line-beginning-position))
+                (forward-line 0)
                 (insert " ")
                 (forward-line 1))
               ;; copy encoded block
@@ -13839,7 +13842,7 @@ the form of `attribute::'."
             (goto-char attr)
             (delete-region (point) (line-end-position))
             (forward-line 1)
-            (goto-char (line-beginning-position))
+            (forward-line 0)
             (while (char-equal (char-after (point)) ? )
               (delete-region (line-beginning-position) (line-end-position))
               (delete-char 1))
@@ -14296,7 +14299,7 @@ taking into account leading/trailing whitespace."
   (save-mark-and-excursion
     (let ((length (progn (end-of-line)
                          (current-column))))
-      (goto-char (line-beginning-position))
+      (forward-line 0)
       (insert (make-string (max 0 (/ (- fill-column length) 2)) ?\s)))))
 
 (defun star-wars-scroll-scroll-prepare-marker-list ()
@@ -14354,7 +14357,7 @@ be touched by character deletion.")
             (goto-char (caar walker))
             (delete-char 1)
             (setf (car walker) (cdar walker))
-            (goto-char (line-beginning-position))
+            (forward-line 0)
             (insert " "))
           (setq walker (cdr walker)))))))
 
@@ -16470,7 +16473,7 @@ If HIGHLIGHT is non-nil, highlight song."
       (let (buffer-read-only)
         (save-mark-and-excursion
           (save-match-data
-            (goto-char (line-beginning-position))
+            (forward-line 0)
             (when (re-search-forward "  \\[[0-9]\\]$" (line-end-position) :noerror)
               (replace-match ""))
             (goto-char (line-end-position))
@@ -16596,7 +16599,7 @@ Use text properties to mark the line then call `mingus-set-NP-mark'."
   ;;             (forward-line 1)
   ;;             (delete-region (point-min) (point)))
   ;;           (when (re-search-forward "External links" nil :noerror)
-  ;;             (goto-char (line-beginning-position))
+  ;;             (forward-line 0)
   ;;             (delete-region (point) (point-max)))
   ;;           (goto-char (point-min))
   ;;           (while (re-search-forward "phone Send" nil :noerror)
@@ -16678,7 +16681,7 @@ by scraping the azlyrics.com site."
                   (fundamental-mode)
                   (goto-char (point-min))
                   (when (re-search-forward start-regexp nil :noerror)
-                    (goto-char (line-beginning-position))
+                    (forward-line 0)
                     (forward-line 1)
                     (let ((pos (point)))
                       (forward-line -3)
@@ -16771,7 +16774,7 @@ by scraping the metrolyrics.com site."
               (fundamental-mode)
               (goto-char (point-min))
               (when (re-search-forward start-regexp nil :noerror)
-                (goto-char (line-beginning-position))
+                (forward-line 0)
                 (forward-line 1)
                 (let ((pos (point)))
                   (forward-line -3)
@@ -21206,7 +21209,7 @@ to the current ERC buffer."
       (save-mark-and-excursion
         (save-match-data
           ;; remove leading "feature/" text
-          (goto-char (line-beginning-position))
+          (forward-line 0)
           (while (re-search-forward "\\bfeature/" (line-end-position) :noerror)
             (replace-match ""))
           ;; handle different project names
@@ -21214,25 +21217,25 @@ to the current ERC buffer."
            ((re-search-forward "\\[?\\b[Aa][Nn][Dd][Rr][Oo][Ii][Dd]-" (line-end-position) :noerror)
             (replace-match "ANDROID-" t)
             (fix-branch)
-            (goto-char (line-beginning-position))
+            (forward-line 0)
             (when (re-search-forward "\\b\\(ANDROID-[[:digit:]]+\\)\\([a-zA-Z0-9-_\.]*\\)\\b" (line-end-position) :noerror)
               (replace-match (concat "[[https://buzzfeed.atlassian.net/browse/" (match-string 1) "][" (match-string 0) "]]") t)))
            ((re-search-forward "\\[?\\b[Aa][Dd][Ss][Gg][Rr][Oo][Uu][Pp]-" (line-end-position) :noerror)
             (replace-match "ADSGROUP-" t)
             (fix-branch)
-            (goto-char (line-beginning-position))
+            (forward-line 0)
             (when (re-search-forward "\\b\\(ADSGROUP-[[:digit:]]+\\)\\([a-zA-Z0-9-_\.]*\\)\\b" (line-end-position) :noerror)
               (replace-match (concat "[[https://buzzfeed.atlassian.net/browse/" (match-string 1) "][" (match-string 0) "]]") t)))
            ((re-search-forward "\\[?\\b[Bb][Ff][Oo]-" (line-end-position) :noerror)
             (replace-match "BFO-" t)
             (fix-branch)
-            (goto-char (line-beginning-position))
+            (forward-line 0)
             (when (re-search-forward "\\b\\(BFO-[[:digit:]]+\\)\\([a-zA-Z0-9-_\.]*\\)\\b" (line-end-position) :noerror)
               (replace-match (concat "[[https://buzzfeed.atlassian.net/browse/" (match-string 1) "][" (match-string 0) "]]") t)))
            ((re-search-forward "\\[?\\b[Qq][Uu][Ii][Zz]-" (line-end-position) :noerror)
             (replace-match "QUIZ-" t)
             (fix-branch)
-            (goto-char (line-beginning-position))
+            (forward-line 0)
             (when (re-search-forward "\\b\\(QUIZ-[[:digit:]]+\\)\\([a-zA-Z0-9-_\.]*\\)\\b" (line-end-position) :noerror)
               (replace-match (concat "[[https://buzzfeed.atlassian.net/browse/" (match-string 1) "][" (match-string 0) "]]") t)))))))))
 ;; +work-linkify-jira-card+:1 ends here
@@ -21277,7 +21280,7 @@ to the current ERC buffer."
             (while (re-search-forward "\\[?\\b[Aa][Nn][Dd][Rr][Oo][Ii][Dd]-" nil :noerror)
               (replace-match "ANDROID-" t)
               (fix-branch)
-              (goto-char (line-beginning-position))
+              (forward-line 0)
               (when (re-search-forward "\\b\\(ANDROID-[[:digit:]]+\\)\\([a-zA-Z0-9-_\.]*\\)\\b" nil :noerror)
                 (cl-pushnew (match-string 0) prs :test 'string=))
               (goto-char (line-end-position)))
@@ -21285,7 +21288,7 @@ to the current ERC buffer."
             (while (re-search-forward "\\[?\\b[Aa][Dd][Ss][Gg][Rr][Oo][Uu][Pp]-" nil :noerror)
               (replace-match "ADSGROUP-" t)
               (fix-branch)
-              (goto-char (line-beginning-position))
+              (forward-line 0)
               (when (re-search-forward "\\b\\(ADSGROUP-[[:digit:]]+\\)\\([a-zA-Z0-9-_\.]*\\)\\b" nil :noerror)
                 (cl-pushnew (match-string 0) prs :test 'string=))
               (goto-char (line-end-position)))
@@ -21293,7 +21296,7 @@ to the current ERC buffer."
             (while (re-search-forward "\\[?\\b[Bb][Ff][Oo]-" nil :noerror)
               (replace-match "BFO-" t)
               (fix-branch)
-              (goto-char (line-beginning-position))
+              (forward-line 0)
               (when (re-search-forward "\\b\\(BFO-[[:digit:]]+\\)\\([a-zA-Z0-9-_\.]*\\)\\b" nil :noerror)
                 (cl-pushnew (match-string 0) prs :test 'string=))
               (goto-char (line-end-position)))
@@ -21301,7 +21304,7 @@ to the current ERC buffer."
             (while (re-search-forward "\\[?\\b[Qq][Uu][Ii][Zz]-" nil :noerror)
               (replace-match "QUIZ-" t)
               (fix-branch)
-              (goto-char (line-beginning-position))
+              (forward-line 0)
               (when (re-search-forward "\\b\\(QUIZ-[[:digit:]]+\\)\\([a-zA-Z0-9-_\.]*\\)\\b" nil :noerror)
                 (cl-pushnew (match-string 0) prs :test 'string=))
               (goto-char (line-end-position))))
