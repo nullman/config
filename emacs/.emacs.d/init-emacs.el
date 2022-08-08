@@ -15718,41 +15718,50 @@ USING is the remaining peg."
   (gcmh-mode 1))
 ;; gcmh:1 ends here
 
-;; [[file:init-emacs.org::#modules-git-gutter][git-gutter:1]]
+;; [[file:init-emacs.org::#packages-git-gutter][git-gutter+:1]]
 ;;------------------------------------------------------------------------------
-;; Modules: git-gutter
+;;; Packages: git-gutter
 ;;------------------------------------------------------------------------------
 
-(init-message 2 "Modules: git-gutter")
+(init-message 2 "Packages: git-gutter")
 
-(use-package git-gutter
+(use-package git-gutter+
   :straight t
   :demand t
-  :diminish (git-gutter-mode . "GG")
-  ;; :bind (("C-x C-g" . git-gutter)
-  ;;            ;; ("C-x v =" . git-gutter:popup-hunk)
-  ;;            ;; ("C-x p" . git-gutter:previous-hunk)
-  ;;            ;; ("C-x n" . git-gutter:next-hunk)
-  ;;            ;; ("C-x v s" . git-gutter:stage-hunk)
-  ;;            ;; ("C-x v r" . git-gutter:revert-hunk)
-  ;;            ;; ("C-x v SPC" . git-gutter:mark-hunk)
+  :diminish (git-gutter+-mode . "GG")
+  ;; :bind (("C-x C-g" . git-gutter+)
+  ;;            ;; ("C-x v =" . git-gutter+-popup-hunk)
+  ;;            ;; ("C-x p" . git-gutter+-previous-hunk)
+  ;;            ;; ("C-x n" . git-gutter+-next-hunk)
+  ;;            ;; ("C-x v s" . git-gutter+-stage-hunk)
+  ;;            ;; ("C-x v r" . git-gutter+-revert-hunk)
+  ;;            ;; ("C-x v SPC" . git-gutter+-mark-hunk)
   ;;            )
   :custom
   ;; set symbols
-  (git-gutter:modified-sign "=")
-  (git-gutter:added-sign "+")
-  (git-gutter:deleted-sign "-")
+  (git-gutter+:modified-sign "=")
+  (git-gutter+:added-sign "+")
+  (git-gutter+:deleted-sign "-")
+  ;; empty separator
+  (git-gutter+-separator-sign nil)
   ;; periodically update
-  (git-gutter:update-interval 2)
+  (git-gutter+:update-interval 2)
   :config
   ;; turn on globally
-  (global-git-gutter-mode 1)
+  (global-git-gutter+-mode 1)
 
   ;; set colors
-  (set-face-background 'git-gutter:modified "purple")
-  (set-face-background 'git-gutter:added "green")
-  (set-face-background 'git-gutter:deleted "red"))
-;; git-gutter:1 ends here
+  (set-face-background 'git-gutter+-modified "purple")
+  (set-face-background 'git-gutter+-added "green")
+  (set-face-background 'git-gutter+-deleted "red")
+  (set-face-background 'git-gutter+-separator nil))
+
+;; (use-package git-gutter-fringe+
+;;   :straight t
+;;   :after (git-gutter+)
+;;   :config
+;;   (git-gutter-fr+-minimal))
+;; git-gutter+:1 ends here
 
 ;; [[file:init-emacs.org::#modules-git-timemachine][git-timemachine:1]]
 ;;------------------------------------------------------------------------------
