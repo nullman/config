@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-08-09 12:30 (kyle)>
+  #+TIMESTAMP: <2022-08-09 12:46 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -2070,7 +2070,8 @@
       (add-hook 'focus-out-hook #'garbage-collect)
 
       ;; run garbage collections when Emacs is idle
-      (run-with-idle-timer 20 t #'garbage-collect)
+      (cancel-function-timers #'garbage-collect)
+      (run-with-idle-timer 20 :refresh #'garbage-collect)
     #+END_SRC
 
     Allow Emacs to use a larger number of variable bindings and unwind protects.
@@ -2708,7 +2709,7 @@
       ;; ;;   ;; seed count-words-paragraph
       ;; ;;   (setq count-words-paragraph "0  ")
       ;; ;;   ;; create timer to keep count-words-paragraph updated
-      ;; ;;   (run-with-idle-timer 0.5 t
+      ;; ;;   (run-with-idle-timer 0.5 :refresh
       ;; ;;                        (lambda ()
       ;; ;;                          (let ((count (number-to-string (count-words-paragraph))))
       ;; ;;                            (while (< (length count) 3)
@@ -21571,7 +21572,8 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         ;;(analog-clock-draw-function #'analog-clock-draw-ssd)
         :init
         ;; screen saver mode (sort of)
-        ;;(run-with-idle-timer 600 t #'analog-clock)
+        ;;(cancel-function-timers #'analog-clock)
+        ;;(run-with-idle-timer 600 :refresh #'analog-clock)
         )
     #+END_SRC
 
@@ -23262,7 +23264,11 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
           ;; set bold
           (set-face-bold 'git-gutter+-added t)
           (set-face-bold 'git-gutter+-deleted t)
-          (set-face-bold 'git-gutter+-modified t)))
+          (set-face-bold 'git-gutter+-modified t))
+
+        ;; refresh periodically
+        (cancel-function-timers #'git-gutter+-refresh)
+        (run-with-idle-timer 20 :repeat #'git-gutter+-refresh))
 
       ;; (use-package git-gutter-fringe+
       ;;   :straight t

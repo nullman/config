@@ -14807,7 +14807,8 @@ USING is the remaining peg."
   ;;(analog-clock-draw-function #'analog-clock-draw-ssd)
   :init
   ;; screen saver mode (sort of)
-  ;;(run-with-idle-timer 600 t #'analog-clock)
+  ;;(cancel-function-timers #'analog-clock)
+  ;;(run-with-idle-timer 600 :refresh #'analog-clock)
   )
 ;; analog-clock:1 ends here
 
@@ -15761,7 +15762,11 @@ USING is the remaining peg."
     ;; set bold
     (set-face-bold 'git-gutter+-added t)
     (set-face-bold 'git-gutter+-deleted t)
-    (set-face-bold 'git-gutter+-modified t)))
+    (set-face-bold 'git-gutter+-modified t))
+
+  ;; refresh periodically
+  (cancel-function-timers #'git-gutter+-refresh)
+  (run-with-idle-timer 20 :repeat #'git-gutter+-refresh))
 
 ;; (use-package git-gutter-fringe+
 ;;   :straight t
