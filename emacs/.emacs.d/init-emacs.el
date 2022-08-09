@@ -15727,7 +15727,6 @@ USING is the remaining peg."
 
 (use-package git-gutter+
   :straight t
-  :demand t
   :diminish (git-gutter+-mode . "GG")
   ;; :bind (("C-x C-g" . git-gutter+)
   ;;            ;; ("C-x v =" . git-gutter+-popup-hunk)
@@ -15739,22 +15738,30 @@ USING is the remaining peg."
   ;;            )
   :custom
   ;; set symbols
-  (git-gutter+:modified-sign "=")
-  (git-gutter+:added-sign "+")
-  (git-gutter+:deleted-sign "-")
-  ;; empty separator
+  (git-gutter+-added-sign "+")
+  (git-gutter+-deleted-sign "-")
+  ;;(git-gutter+-modified-sign "=")
+  (git-gutter+-modified-sign "≠")
+  (git-gutter+-unchanged-sign nil)
   (git-gutter+-separator-sign nil)
-  ;; periodically update
-  (git-gutter+:update-interval 2)
-  :config
+  :init
   ;; turn on globally
   (global-git-gutter+-mode 1)
-
-  ;; set colors
-  (set-face-background 'git-gutter+-modified "purple")
-  (set-face-background 'git-gutter+-added "green")
-  (set-face-background 'git-gutter+-deleted "red")
-  (set-face-background 'git-gutter+-separator nil))
+  :config
+  (let ((background (face-attribute 'default :background)))
+    ;; set face atttributes (colors and bold)
+    (set-face-foreground 'git-gutter+-added "green")
+    (set-face-foreground 'git-gutter+-deleted "red")
+    (set-face-foreground 'git-gutter+-modified "purple")
+    (set-face-background 'git-gutter+-added background)
+    (set-face-background 'git-gutter+-deleted background)
+    (set-face-background 'git-gutter+-modified background)
+    (set-face-background 'git-gutter+-unchanged background)
+    (set-face-background 'git-gutter+-separator background)
+    ;; set bold
+    (set-face-bold 'git-gutter+-added t)
+    (set-face-bold 'git-gutter+-deleted t)
+    (set-face-bold 'git-gutter+-modified t)))
 
 ;; (use-package git-gutter-fringe+
 ;;   :straight t

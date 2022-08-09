@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-08-08 16:08 (kyle)>
+  #+TIMESTAMP: <2022-08-09 12:30 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -23197,9 +23197,9 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;;   ;;            )
       ;;   :custom
       ;;   ;; set symbols
-      ;;   (git-gutter:modified-sign "=")
       ;;   (git-gutter:added-sign "+")
       ;;   (git-gutter:deleted-sign "-")
+      ;;   (git-gutter:modified-sign "=")
       ;;   ;; periodically update
       ;;   (git-gutter:update-interval 2)
       ;;   :config
@@ -23207,9 +23207,9 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;;   (global-git-gutter-mode 1)
 
       ;;   ;; set colors
-      ;;   (set-face-background 'git-gutter:modified "purple")
       ;;   (set-face-background 'git-gutter:added "green")
-      ;;   (set-face-background 'git-gutter:deleted "red"))
+      ;;   (set-face-background 'git-gutter:deleted "red")
+      ;;   (set-face-background 'git-gutter:modified "purple"))
     #+END_SRC
 
 *** git-gutter+
@@ -23228,7 +23228,6 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
 
       (use-package git-gutter+
         :straight t
-        :demand t
         :diminish (git-gutter+-mode . "GG")
         ;; :bind (("C-x C-g" . git-gutter+)
         ;;            ;; ("C-x v =" . git-gutter+-popup-hunk)
@@ -23240,22 +23239,30 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         ;;            )
         :custom
         ;; set symbols
-        (git-gutter+:modified-sign "=")
-        (git-gutter+:added-sign "+")
-        (git-gutter+:deleted-sign "-")
-        ;; empty separator
+        (git-gutter+-added-sign "+")
+        (git-gutter+-deleted-sign "-")
+        ;;(git-gutter+-modified-sign "=")
+        (git-gutter+-modified-sign "≠")
+        (git-gutter+-unchanged-sign nil)
         (git-gutter+-separator-sign nil)
-        ;; periodically update
-        (git-gutter+:update-interval 2)
-        :config
+        :init
         ;; turn on globally
         (global-git-gutter+-mode 1)
-
-        ;; set colors
-        (set-face-background 'git-gutter+-modified "purple")
-        (set-face-background 'git-gutter+-added "green")
-        (set-face-background 'git-gutter+-deleted "red")
-        (set-face-background 'git-gutter+-separator nil))
+        :config
+        (let ((background (face-attribute 'default :background)))
+          ;; set face atttributes (colors and bold)
+          (set-face-foreground 'git-gutter+-added "green")
+          (set-face-foreground 'git-gutter+-deleted "red")
+          (set-face-foreground 'git-gutter+-modified "purple")
+          (set-face-background 'git-gutter+-added background)
+          (set-face-background 'git-gutter+-deleted background)
+          (set-face-background 'git-gutter+-modified background)
+          (set-face-background 'git-gutter+-unchanged background)
+          (set-face-background 'git-gutter+-separator background)
+          ;; set bold
+          (set-face-bold 'git-gutter+-added t)
+          (set-face-bold 'git-gutter+-deleted t)
+          (set-face-bold 'git-gutter+-modified t)))
 
       ;; (use-package git-gutter-fringe+
       ;;   :straight t
