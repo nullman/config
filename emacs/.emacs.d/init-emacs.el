@@ -15771,7 +15771,6 @@ USING is the remaining peg."
     (set-face-bold 'git-gutter+-modified t))
 
   ;; refresh periodically
-  (require 'magit-process)
   (defun git-gutter+-refresh-maybe ()
     "Call `git-gutter+-refresh' if active buffer file is tracked by git."
     (when (and (buffer-file-name)

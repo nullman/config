@@ -26,10 +26,10 @@
 ;; Process file even if timestamp is not newer than target if FORCE
 ;; is non-nil."
 ;;   (let* ((case-fold-search t)
-;;          (file-base (file-truename (expand-file-name (file-name-sans-extension file))))
-;;          (file-org (concat (file-name-base file) ".org"))
-;;          (file-elisp (concat file-base ".el"))
-;;          (file-comp (concat file-base ".elc"))
+;;          (file-base (concat (file-name-directory user-init-file) "init-emacs"))
+;;          (file-org (file-truename (concat file-base ".org")))
+;;          (file-elisp (file-truename (concat file-base ".el")))
+;;          (file-comp (file-truename (concat file-base ".elc")))
 ;;          (heading-regexp "^\*+ ")
 ;;          (heading-comment-regexp "^\*+ COMMENT ")
 ;;          (begin-regexp "^[ \t]*#\\+BEGIN_SRC emacs-lisp")
@@ -111,10 +111,10 @@
 ;;       (byte-compile-file file-elisp))))
 
 ;; ;; generate and load main init file
-;; (let* ((file-base (file-truename (expand-file-name "~/.emacs.d/init-emacs")))
-;;        (file-org (concat file-base ".org"))
-;;        (file-elisp (concat file-base ".el"))
-;;        (file-comp (concat file-base ".elc")))
+;; (let* ((file-base (concat (file-name-directory user-init-file) "init-emacs"))
+;;        (file-org (file-truename (concat file-base ".org")))
+;;        (file-elisp (file-truename (concat file-base ".el")))
+;;        (file-comp (file-truename (concat file-base ".elc"))))
 ;;   ;; do not try to byte compile the generated file as it will fail since our environment is not setup
 ;;   (org-babel-generate-elisp-file file-org)
 ;;   ;; delete any existing byte compiled init file to prevent an outdated version from loading
@@ -132,10 +132,10 @@
 (setq vc-follow-symlinks t)
 
 ;; generate (if needed) and load main init file
-(let* ((file-base (file-truename (expand-file-name "~/.emacs.d/init-emacs")))
-       (file-org (concat file-base ".org"))
-       (file-elisp (concat file-base ".el"))
-       (file-comp (concat file-base ".elc")))
+(let* ((file-base (concat (file-name-directory user-init-file) "init-emacs"))
+       (file-org (file-truename (concat file-base ".org")))
+       (file-elisp (file-truename (concat file-base ".el")))
+       (file-comp (file-truename (concat file-base ".elc"))))
   ;; do not try to byte compile the generated file as it will fail since our environment is not setup
   (when (file-newer-than-file-p file-org file-elisp)
     (org-babel-tangle-file file-org))
