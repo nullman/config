@@ -326,6 +326,8 @@ alias figletwt="figlet -Wt"
 alias dos-format-720="sudo ufiformat -f 720 -v "
 #        dos-format-1440         ufiformat -f 1440 -v
 alias dos-format-1440="sudo ufiformat -f 1440 -v "
+#        make-floppy-image       mkfs.msdos -C floppy.dsk 1440
+alias make-floppy-image="mkfs.msdos -C floppy.dsk 1440"
 #        fdisk-list              sudo fdisk -l
 alias fdisk-list="sudo fdisk -l"
 #        dd-sync                 sudo dd conv=fdatasync status=progress
