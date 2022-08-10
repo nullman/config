@@ -15771,9 +15771,14 @@ USING is the remaining peg."
     (set-face-bold 'git-gutter+-modified t))
 
   ;; refresh periodically
-  (advice-add 'git-gutter+-refresh :around #'advice--ignore-all-errors)
-  (cancel-function-timers #'git-gutter+-refresh)
-  (run-with-idle-timer 20 :repeat #'git-gutter+-refresh))
+  (require 'magit-process)
+  (defun git-gutter+-refresh-maybe ()
+    "Call `git-gutter+-refresh' if active buffer file is tracked by git."
+    (when (and (buffer-file-name)
+               (magit-file-tracked-p (buffer-file-name)))
+      (git-gutter+-refresh)))
+  (cancel-function-timers #'git-gutter+-refresh-maybe)
+  (run-with-idle-timer 20 :repeat #'git-gutter+-refresh-maybe))
 
 ;; (use-package git-gutter-fringe+
 ;;   :straight t

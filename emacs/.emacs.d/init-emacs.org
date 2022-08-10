@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-08-10 10:29 (kyle)>
+  #+TIMESTAMP: <2022-08-10 11:42 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -23273,9 +23273,14 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
           (set-face-bold 'git-gutter+-modified t))
 
         ;; refresh periodically
-        (advice-add 'git-gutter+-refresh :around #'advice--ignore-all-errors)
-        (cancel-function-timers #'git-gutter+-refresh)
-        (run-with-idle-timer 20 :repeat #'git-gutter+-refresh))
+        (require 'magit-process)
+        (defun git-gutter+-refresh-maybe ()
+          "Call `git-gutter+-refresh' if active buffer file is tracked by git."
+          (when (and (buffer-file-name)
+                     (magit-file-tracked-p (buffer-file-name)))
+            (git-gutter+-refresh)))
+        (cancel-function-timers #'git-gutter+-refresh-maybe)
+        (run-with-idle-timer 20 :repeat #'git-gutter+-refresh-maybe))
 
       ;; (use-package git-gutter-fringe+
       ;;   :straight t
