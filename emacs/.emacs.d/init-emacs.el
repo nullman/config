@@ -99,8 +99,14 @@ LEVEL is the indentation level."
 ;;; Start: Ignore Errors Advice Wrapper
 ;;------------------------------------------------------------------------------
 
-;; generic advice wrapper function to ignore errors
-(defun advice--ignore-errors (orig-fun &rest args)
+;; generic advice wrapper function to ignore all errors
+(defun advice--ignore-all-errors (orig-fun &rest args)
+  "Ignore errors when calling ORIG-FUN with ARGS."
+  (ignore-errors
+    (apply orig-fun args)))
+
+;; generic advice wrapper function to ignore interactive errors
+(defun advice--ignore-interactive-errors (orig-fun &rest args)
   "Ignore errors when interactively calling ORIG-FUN with ARGS."
   (condition-case err
       (apply orig-fun args)
@@ -2651,7 +2657,7 @@ DATA should have been made by `org-outline-overlay-data'."
   ;;  `(outline-8 ((t (:foreground ,color-8)))))
 
   ;; advise `outline-up-heading' to suppress errors
-  (advice-add 'outline-up-heading :around #'advice--ignore-errors))
+  (advice-add 'outline-up-heading :around #'advice--ignore-interactive-errors))
 ;; Outline:1 ends here
 
 ;; [[file:init-emacs.org::#org-mode-agenda][Agenda:1]]
@@ -15308,13 +15314,13 @@ USING is the remaining peg."
           ("S-<f10>" . cycle-buffer-permissive))
   :init
   ;; advise `cycle-buffer`
-  (advice-add 'cycle-buffer :around #'advice--ignore-errors)
+  (advice-add 'cycle-buffer :around #'advice--ignore-interactive-errors)
   ;; advise `cycle-buffer-permissive`
-  (advice-add 'cycle-buffer-permissive :around #'advice--ignore-errors)
+  (advice-add 'cycle-buffer-permissive :around #'advice--ignore-interactive-errors)
   ;; advise `cycle-buffer-backward`
-  (advice-add 'cycle-buffer-backward :around #'advice--ignore-errors)
+  (advice-add 'cycle-buffer-backward :around #'advice--ignore-interactive-errors)
   ;; advise `cycle-buffer-backward-permissive`
-  (advice-add 'cycle-buffer-backward-permissive :around #'advice--ignore-errors))
+  (advice-add 'cycle-buffer-backward-permissive :around #'advice--ignore-interactive-errors))
 ;; cycle-buffer:1 ends here
 
 ;; [[file:init-emacs.org::#modules-decide][decide:1]]
@@ -15728,6 +15734,7 @@ USING is the remaining peg."
 
 (use-package git-gutter+
   :straight t
+  :demand t
   :diminish (git-gutter+-mode . "GG")
   ;; :bind (("C-x C-g" . git-gutter+)
   ;;            ;; ("C-x v =" . git-gutter+-popup-hunk)
@@ -15745,12 +15752,12 @@ USING is the remaining peg."
   (git-gutter+-modified-sign "≠")
   (git-gutter+-unchanged-sign nil)
   (git-gutter+-separator-sign nil)
-  :init
+  :config
   ;; turn on globally
   (global-git-gutter+-mode 1)
-  :config
+
+  ;; set face atttributes (colors and bold)
   (let ((background (face-attribute 'default :background)))
-    ;; set face atttributes (colors and bold)
     (set-face-foreground 'git-gutter+-added "green")
     (set-face-foreground 'git-gutter+-deleted "red")
     (set-face-foreground 'git-gutter+-modified "purple")
@@ -15759,12 +15766,12 @@ USING is the remaining peg."
     (set-face-background 'git-gutter+-modified background)
     (set-face-background 'git-gutter+-unchanged background)
     (set-face-background 'git-gutter+-separator background)
-    ;; set bold
     (set-face-bold 'git-gutter+-added t)
     (set-face-bold 'git-gutter+-deleted t)
     (set-face-bold 'git-gutter+-modified t))
 
   ;; refresh periodically
+  (advice-add 'git-gutter+-refresh :around #'advice--ignore-all-errors)
   (cancel-function-timers #'git-gutter+-refresh)
   (run-with-idle-timer 20 :repeat #'git-gutter+-refresh))
 
@@ -18341,7 +18348,7 @@ otherwise run `find-file-as-root'."
     (dired-single-buffer ".."))
   :config
   ;; advise `dired-single-buffer-mouse' to suppress errors
-  (advice-add 'dired-single-buffer-mouse :around #'advice--ignore-errors))
+  (advice-add 'dired-single-buffer-mouse :around #'advice--ignore-interactive-errors))
 
 ;;------------------------------------------------------------------------------
 ;;;; dired-open
