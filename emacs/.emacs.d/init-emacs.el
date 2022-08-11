@@ -3781,20 +3781,18 @@ TARGET-FILE."
   "Take a screenshot into a time stamped unique-named file in the
 same directory as the org-buffer and insert a link to this file."
   (interactive)
-  ;; (let ((file-name
-  ;;        (concat
-  ;;         (make-temp-name
-  ;;          (concat (buffer-file-name)
-  ;;                  "_"
-  ;;                  (format-time-string "%Y%m%d_%H%M%S_")))
-  ;;         ".png")))
-  (let ((file-name
-         (concat (buffer-file-name)
-                 "_"
-                 (format-time-string "%Y%m%d_%H%M%S")
-                 ".png")))
-    (call-process "import" nil nil nil file-name)
-    (insert (concat "[[" file-name "]]\n"))))
+  ;; (let ((file (concat
+  ;;              (make-temp-name
+  ;;               (concat (buffer-file-name)
+  ;;                       "_"
+  ;;                       (format-time-string "%Y%m%d_%H%M%S_")))
+  ;;              ".png")))
+  (let ((file (concat (buffer-file-name)
+                      "_"
+                      (format-time-string "%Y%m%d_%H%M%S")
+                      ".png")))
+    (call-process "import" nil nil nil file)
+    (insert (concat "[[" file "]]\n"))))
 ;; org-screenshot:1 ends here
 
 ;; [[file:init-emacs.org::#org-mode-functions-org-convert-headings-from-odd-indented-to-oddeven-unindented][org-convert-headings-from-odd-indented-to-oddeven-unindented:1]]
@@ -9530,20 +9528,20 @@ With a prefix argument N, (un)comment that many sexps."
 
 (init-message 3 "Functions: Emacs Functions: rename-buffer-and-file")
 
-(defun rename-buffer-and-file (file-name &optional confirm)
-  "Rename current buffer and file to FILE-NAME."
+(defun rename-buffer-and-file (name &optional confirm)
+  "Rename current buffer and file to NAME."
   (interactive
    (list (if buffer-file-name
              (read-file-name "Rename buffer to: " default-directory)
            (error "Current buffer is not visiting a file"))
          (not current-prefix-arg)))
-  (or (not file-name) (string-equal file-name "")
-      (let ((source-file-name buffer-file-name))
-        (unless source-file-name
+  (or (not name) (string-equal name "")
+      (let ((source-file buffer-file-name))
+        (unless source-file
           (error "Buffer '%s' is not visiting a file" (buffer-name)))
-        (write-file file-name confirm)
-        (when (file-exists-p file-name)
-          (delete-file source-file-name)))))
+        (write-file name confirm)
+        (when (file-exists-p name)
+          (delete-file source-file)))))
 ;; rename-buffer-and-file:1 ends here
 
 ;; [[file:init-emacs.org::#functions-emacs-functions-move-buffer-and-file][move-buffer-and-file:1]]
@@ -9561,22 +9559,22 @@ With a prefix argument N, (un)comment that many sexps."
                                   (file-name-directory buffer-file-name))
            (error "Current buffer is not visiting a file"))
          (not current-prefix-arg)))
-  (let* ((source-file-name buffer-file-name)
+  (let* ((source-file buffer-file-name)
          (dir (if (or (string= dir "")
                       (not (string= (substring dir -1) "/")))
                   (concat dir "/")
                 dir))
-         (file-name (concat dir (file-name-nondirectory source-file-name))))
-    (if (not source-file-name)
+         (file (concat dir (file-name-nondirectory source-file))))
+    (if (not source-file)
         (message "Buffer '%s' is not visiting a file" (buffer-name))
       (progn
         (unless (and confirm
-                     (file-exists-p file-name)
-                     (not (yes-or-no-p (format "File `%s' exists; overwrite? " file-name)))
+                     (file-exists-p file)
+                     (not (yes-or-no-p (format "File `%s' exists; overwrite? " file)))
                      (message "Canceled"))
-          (copy-file source-file-name file-name t)
-          (delete-file source-file-name)
-          (set-visited-file-name file-name)
+          (copy-file source-file file t)
+          (delete-file source-file)
+          (set-visited-file-name file)
           (set-buffer-modified-p nil)
           (vc-refresh-state))))))
 ;; move-buffer-and-file:1 ends here
@@ -9593,18 +9591,18 @@ With a prefix argument N, (un)comment that many sexps."
 
 BUFFER defaults to the current buffer."
   (interactive)
-  (let* ((buffer-name (or buffer (current-buffer)))
-         (file-name (buffer-file-name buffer-name)))
-    (if (not (and file-name (file-exists-p file-name)))
+  (let* ((buffer (or buffer (current-buffer)))
+         (file (buffer-file-name buffer)))
+    (if (not (and file (file-exists-p file)))
         (if (fboundp 'ido-kill-buffer)
             (ido-kill-buffer)
           (kill-buffer))
       (unless (and
-               (not (yes-or-no-p (format "Are you sure you want to delete '%s'? " file-name)))
+               (not (yes-or-no-p (format "Are you sure you want to delete '%s'? " file)))
                (message "Canceled"))
-        (delete-file file-name)
-        (kill-buffer buffer-name)
-        (message "File '%s' successfully deleted" file-name)))))
+        (delete-file file)
+        (kill-buffer buffer)
+        (message "File '%s' successfully deleted" file)))))
 ;; delete-buffer-and-file:1 ends here
 
 ;; [[file:init-emacs.org::#functions-emacs-functions-expand-relative-file-name][expand-relative-file-name:1]]
@@ -9614,9 +9612,9 @@ BUFFER defaults to the current buffer."
 
 (init-message 3 "Functions: Emacs Functions: expand-relative-file-name")
 
-(defun expand-relative-file-name (file-name)
+(defun expand-relative-file-name (name)
   "Expand FILE-NAME found in current directory."
-  (file-truename (expand-file-name file-name (file-name-directory (or load-file-name buffer-file-name)))))
+  (file-truename (expand-file-name name (file-name-directory (or load-file-name buffer-file-name)))))
 ;; expand-relative-file-name:1 ends here
 
 ;; [[file:init-emacs.org::#functions-emacs-functions-remove-trailing-blanks][remove-trailing-blanks:1]]
@@ -9725,7 +9723,7 @@ from tab removal on file save."
   :group 'files)
 
 (defun remove-tabs-with-exceptions (&optional ask)
-  (let ((file-name (file-name-nondirectory buffer-file-name)))
+  (let ((file (file-name-nondirectory buffer-file-name)))
     (unless
         (cl-remove-if (lambda (x)
                         (let ((type (car x))
@@ -9734,7 +9732,7 @@ from tab removal on file save."
                            (not (and (eq type :mode)
                                      (derived-mode-p name)))
                            (not (and (eq type :file)
-                                     (string-match name file-name))))))
+                                     (string-match name file))))))
                       remove-tabs-exceptions)
       (remove-tabs ask))))
 
@@ -9957,8 +9955,8 @@ ARG is passed along if shell is being toggled on."
   "Switch to `*scratch-MODE*' buffer, creating it if needed."
   (interactive)
   (let* ((mode major-mode)
-         (buffer-name (concat "*scratch-" (symbol-name mode) "*")))
-    (switch-to-buffer buffer-name)
+         (buffer (concat "*scratch-" (symbol-name mode) "*")))
+    (switch-to-buffer buffer)
     (funcall mode)))
 ;; switch-to-scratch-for-current-mode:1 ends here
 
@@ -10003,12 +10001,12 @@ Add the following to your init.el file for this to work:
 
   \(add-hook 'kill-buffer-query-functions #'recreate-scratch-when-killed)"
   (interactive)
-  (let ((buffer-name "*scratch*"))
-    (if (string= (buffer-name (current-buffer)) buffer-name)
+  (let ((buffer "*scratch*"))
+    (if (string= (buffer-name (current-buffer)) buffer)
         (let ((kill-buffer-query-functions kill-buffer-query-functions))
           (remove-hook 'kill-buffer-query-functions 'recreate-scratch-when-killed)
           (kill-buffer (current-buffer))
-          (set-buffer (get-buffer-create buffer-name))
+          (set-buffer (get-buffer-create buffer))
           nil)
       t)))
 
@@ -10378,8 +10376,8 @@ FORMAT is a 'date' format string (defaults to
 (defun execute-buffer ()
   "Execute or compile current file."
   (interactive)
-  (let* ((file-name (shell-quote-argument buffer-file-name))
-         (file-type (substring (shell-command-to-string (concat "file " file-name)) 0 -1))
+  (let* ((file (shell-quote-argument buffer-file-name))
+         (file-type (substring (shell-command-to-string (concat "file " file)) 0 -1))
          (type-map '(("Lisp" . "clisp")
                      ("bash" . "bash")
                      ("perl" . "perl")
@@ -10394,7 +10392,7 @@ FORMAT is a 'date' format string (defaults to
         ((or (not type) cmd))
       (when (cl-search (car type) file-type)
         (setq cmd (cdr type))))
-    (shell-command (concat cmd " " file-name))))
+    (shell-command (concat cmd " " file))))
 ;; execute-buffer:1 ends here
 
 ;; [[file:init-emacs.org::#functions-emacs-functions-file-in-exec-path][file-in-exec-path:1]]
@@ -13579,9 +13577,9 @@ Convert poorly formatted XML into something better."
   "Insert a Project Euler template for NUM.
 
 If optional COUNT is given, repeat up to NUM+COUNT-1."
-  (let ((buffer-name "project-euler.lisp"))
-    (unless (string= (buffer-name) buffer-name)
-      (error "Buffer is not '%s'" buffer-name))
+  (let ((buffer "project-euler.lisp"))
+    (unless (string= (buffer-name) buffer)
+      (error "Buffer is not '%s'" buffer))
     (dotimes (x (or count 1))
       (let ((strnum (format "%03d" (+ num x))))
         (save-mark-and-excursion
@@ -15513,7 +15511,7 @@ USING is the remaining peg."
   (defun elfeed-bookmarks-to-opml ()
     "Export Elfeed Bookmarks File to OPML."
     (interactive)
-    (let* ((buffer-name (generate-new-buffer-name "*elfeed-bookmarks-opml*"))
+    (let* ((buffer (generate-new-buffer-name "*elfeed-bookmarks-opml*"))
            (bookmarks
             (with-temp-buffer
               (insert-file-contents (locate-user-emacs-file "elfeed-bookmarks"))
@@ -15524,7 +15522,7 @@ USING is the remaining peg."
               (dolist (x (mapcar (lambda (x) (plist-get x :tag)) bookmarks))
                 (cl-pushnew x temp :test #'string=))
               (nreverse temp))))
-      (switch-to-buffer buffer-name)
+      (switch-to-buffer buffer)
       (insert "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n")
       (insert "<opml version=\"1.0\">\n")
       (insert "  <head>\n")
@@ -15773,9 +15771,12 @@ USING is the remaining peg."
   ;; refresh periodically
   (defun git-gutter+-refresh-maybe ()
     "Call `git-gutter+-refresh' if active buffer file is tracked by git."
-    (when (and (buffer-file-name)
-               (magit-file-tracked-p (buffer-file-name)))
-      (git-gutter+-refresh)))
+    (let ((file (buffer-file-name)))
+      (when (and file
+                 (zerop
+                  (let ((default-directory (file-name-directory file)))
+                    (call-process "git" nil nil nil "ls-files" "--error-unmatch" file))))
+        (git-gutter+-refresh))))
   (cancel-function-timers #'git-gutter+-refresh-maybe)
   (run-with-idle-timer 20 :repeat #'git-gutter+-refresh-maybe))
 
@@ -16476,9 +16477,9 @@ defaults to the string \" - \"."
       (or (and mingus-use-caching
                (gethash id mingus-song-strings))
           (let ((val
-                 (let* ((file-name (and file (file-name-nondirectory file)))
+                 (let* ((file (and file (file-name-nondirectory file)))
                         (short (remove nil (list (or artist albumartist)
-                                                 (or title file-name)))))
+                                                 (or title file)))))
                    (mapconcat 'identity short separator))))
             (and mingus-use-caching
                  (puthash id val mingus-song-strings))
@@ -16499,9 +16500,9 @@ defaults to the string \" - \"."
     "Display song rating of currently selected mingus song.
 
 If HIGHLIGHT is non-nil, highlight song."
-    (let ((buffer-name "*Mingus*"))
-      (unless (string= (buffer-name) buffer-name)
-        (error "Buffer is not `%s'" buffer-name))
+    (let ((buffer "*Mingus*"))
+      (unless (string= (buffer-name) buffer)
+        (error "Buffer is not `%s'" buffer))
       (let (buffer-read-only)
         (save-mark-and-excursion
           (save-match-data
@@ -16846,7 +16847,7 @@ by scraping the metrolyrics.com site."
           ;; remove anything in parenthesis from title
           (setq title (replace-regexp-in-string " ?([^)]*)" "" title))
           ;; call lyrics api
-          (let ((buffer-name (concat "*" artist ": " title "*"))
+          (let ((buffer (concat "*" artist ": " title "*"))
                 (lyrics (funcall funct artist title)))
             ;; if no lyrics returned, try again with song title only (helps with covers)
             (when (or (not lyrics)
@@ -16855,13 +16856,13 @@ by scraping the metrolyrics.com site."
             (if (and lyrics
                      (> (length lyrics) 0))
                 (progn
-                  (get-buffer-create buffer-name)
-                  (set-buffer buffer-name)
+                  (get-buffer-create buffer)
+                  (set-buffer buffer)
                   (let ((buffer-read-only nil))
                     (erase-buffer)
                     (insert lyrics)
                     (delete-trailing-whitespace)
-                    (switch-to-buffer buffer-name)
+                    (switch-to-buffer buffer)
                     (goto-char (point-min))
                     (view-mode)))
               (message "No lyrics found for Artist: %s, Title: %s" artist title)))))))
