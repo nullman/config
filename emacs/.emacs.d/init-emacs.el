@@ -15766,19 +15766,19 @@ USING is the remaining peg."
     (set-face-background 'git-gutter+-separator background)
     (set-face-bold 'git-gutter+-added t)
     (set-face-bold 'git-gutter+-deleted t)
-    (set-face-bold 'git-gutter+-modified t)))
+    (set-face-bold 'git-gutter+-modified t))
 
-  ;; ;; refresh periodically
-  ;; (defun git-gutter+-refresh-maybe ()
-  ;;   "Call `git-gutter+-refresh' if active buffer file is tracked by git."
-  ;;   (let ((file (buffer-file-name)))
-  ;;     (when (and file
-  ;;                (zerop
-  ;;                 (let ((default-directory (file-name-directory file)))
-  ;;                   (call-process "git" nil nil nil "ls-files" "--error-unmatch" file))))
-  ;;       (git-gutter+-refresh))))
-  ;; (cancel-function-timers #'git-gutter+-refresh-maybe)
-  ;; (run-with-idle-timer 20 :repeat #'git-gutter+-refresh-maybe))
+  ;; refresh periodically
+  (defun git-gutter+-refresh-maybe ()
+    "Call `git-gutter+-refresh' if active buffer file is tracked by git."
+    (let ((file (buffer-file-name)))
+      (when (and file
+                 (zerop
+                  (let ((default-directory (file-name-directory file)))
+                    (call-process "git" nil nil nil "ls-files" "--error-unmatch" file))))
+        (git-gutter+-refresh))))
+  (cancel-function-timers #'git-gutter+-refresh-maybe)
+  (run-with-idle-timer 20 :repeat #'git-gutter+-refresh-maybe))
 
 ;; (use-package git-gutter-fringe+
 ;;   :straight t

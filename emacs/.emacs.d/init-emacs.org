@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-08-11 12:30 (kyle)>
+  #+TIMESTAMP: <2022-08-11 12:31 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -23268,19 +23268,19 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
           (set-face-background 'git-gutter+-separator background)
           (set-face-bold 'git-gutter+-added t)
           (set-face-bold 'git-gutter+-deleted t)
-          (set-face-bold 'git-gutter+-modified t)))
+          (set-face-bold 'git-gutter+-modified t))
 
-        ;; ;; refresh periodically
-        ;; (defun git-gutter+-refresh-maybe ()
-        ;;   "Call `git-gutter+-refresh' if active buffer file is tracked by git."
-        ;;   (let ((file (buffer-file-name)))
-        ;;     (when (and file
-        ;;                (zerop
-        ;;                 (let ((default-directory (file-name-directory file)))
-        ;;                   (call-process "git" nil nil nil "ls-files" "--error-unmatch" file))))
-        ;;       (git-gutter+-refresh))))
-        ;; (cancel-function-timers #'git-gutter+-refresh-maybe)
-        ;; (run-with-idle-timer 20 :repeat #'git-gutter+-refresh-maybe))
+        ;; refresh periodically
+        (defun git-gutter+-refresh-maybe ()
+          "Call `git-gutter+-refresh' if active buffer file is tracked by git."
+          (let ((file (buffer-file-name)))
+            (when (and file
+                       (zerop
+                        (let ((default-directory (file-name-directory file)))
+                          (call-process "git" nil nil nil "ls-files" "--error-unmatch" file))))
+              (git-gutter+-refresh))))
+        (cancel-function-timers #'git-gutter+-refresh-maybe)
+        (run-with-idle-timer 20 :repeat #'git-gutter+-refresh-maybe))
 
       ;; (use-package git-gutter-fringe+
       ;;   :straight t
