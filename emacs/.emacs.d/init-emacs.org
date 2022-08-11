@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-08-11 12:31 (kyle)>
+  #+TIMESTAMP: <2022-08-11 15:47 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -1990,16 +1990,16 @@
       ;;(setq browse-url-generic-program "x-www-browser")
       ;;(setq browse-url-generic-program "w3m")
       ;;(setq browse-url-generic-program "mozilla")
-      (setq browse-url-browser-function 'browse-url-default-browser)
-      ;;(setq browse-url-browser-function 'browse-url-generic)
-      ;;(setq browse-url-browser-function 'eww-browse-url)
-      ;;(setq browse-url-browser-function 'w3m-browse-url)
-      ;;(setq browse-url-browser-function 'browse-url-firefox
+      ;;(setq browse-url-browser-function #'browse-url-default-browser)
+      ;;(setq browse-url-browser-function #'browse-url-generic)
+      (setq browse-url-browser-function #'eww-browse-url)
+      ;;(setq browse-url-browser-function #'w3m-browse-url)
+      ;;(setq browse-url-browser-function #'browse-url-firefox
       ;;      browse-url-new-window-flag  t
       ;;      browse-url-firefox-new-window-is-tab t)
 
       ;; set secondary browser
-      (setq browse-url-secondary-browser-function 'browse-url-default-browser)
+      (setq browse-url-secondary-browser-function #'browse-url-default-browser)
     #+END_SRC
 
     Make single character deletion commands (delete and backspace) delete an
@@ -2073,11 +2073,16 @@
       ;; (setq gc-cons-threshold (* 100 1000 1000)) ; default: 800000
 
       ;; run garbage collections when Emacs is backgrounded
-      (add-hook 'focus-out-hook #'garbage-collect)
+      (defun garbage-collect-maybe ()
+        "Run `garbage-collect' if Emacs does not have focus."
+        (unless (frame-focus-state)
+          (garbage-collect)))
+      ;; advise `after-focus-change-function'
+      (advice-add 'after-focus-change-function :after #'garbage-collect-maybe)
 
-      ;; run garbage collections when Emacs is idle
-      (cancel-function-timers #'garbage-collect)
-      (run-with-idle-timer 20 :refresh #'garbage-collect)
+      ;; ;; run garbage collections when Emacs is idle
+      ;; (cancel-function-timers #'garbage-collect)
+      ;; (run-with-idle-timer 20 :refresh #'garbage-collect)
     #+END_SRC
 
     Allow Emacs to use a larger number of variable bindings and unwind protects.
