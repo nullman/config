@@ -3104,7 +3104,7 @@ Output format if WITH-MARKERS is non-nil:
           (let ((key (match-string-no-properties 1))
                 (value (match-string-no-properties 2)))
             (push (cons key value) property-alist)))
-         ;; add folders
+         ;; add headlines
          ((looking-at headline-regexp)
           (setq property-section nil)
           (let ((headline-level (/ (length (match-string-no-properties 1))

@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-08-11 15:47 (kyle)>
+  #+TIMESTAMP: <2022-08-14 10:53 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -4788,7 +4788,7 @@
                   (let ((key (match-string-no-properties 1))
                         (value (match-string-no-properties 2)))
                     (push (cons key value) property-alist)))
-                 ;; add folders
+                 ;; add headlines
                  ((looking-at headline-regexp)
                   (setq property-section nil)
                   (let ((headline-level (/ (length (match-string-no-properties 1))
