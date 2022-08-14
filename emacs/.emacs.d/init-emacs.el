@@ -9535,7 +9535,7 @@ With a prefix argument N, (un)comment that many sexps."
              (read-file-name "Rename buffer to: " default-directory)
            (error "Current buffer is not visiting a file"))
          (not current-prefix-arg)))
-  (or (not name) (string-equal name "")
+  (or (not name) (string= name "")
       (let ((source-file buffer-file-name))
         (unless source-file
           (error "Buffer '%s' is not visiting a file" (buffer-name)))
