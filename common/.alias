@@ -2923,6 +2923,8 @@ alias gitrm="
 alias git-commit-to-clipboard="git rev-parse HEAD | tr -d '\n' | xsel && xsel --output | xsel --clipboard"
 #!#        git-clone-powerlevel10k= git clone powerlevel10k to ~/powerlevel10k
 #!alias git-clone-powerlevel10k="git clone --depth=1 https://github.com/romkatv/powerlevel10k.git \${HOME}/powerlevel10k"
+#        lg                      lazygit
+alias lg="lazygit"
 
 #
 # git respository

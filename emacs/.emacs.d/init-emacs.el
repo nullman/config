@@ -15773,6 +15773,7 @@ USING is the remaining peg."
     "Call `git-gutter+-refresh' if active buffer file is tracked by git."
     (let ((file (buffer-file-name)))
       (when (and file
+                 (file-exists-p file)
                  (zerop
                   (let ((default-directory (file-name-directory file)))
                     (call-process "git" nil nil nil "ls-files" "--error-unmatch" file))))
