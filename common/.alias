@@ -1753,10 +1753,14 @@ alias ping-choi="ping 192.168.1.42"
 alias ping-switch="ping 192.168.1.44"
 #        ping-mouse              ping mouse
 alias ping-mouse="ping 192.168.1.51"
-#        ping-raspberrypi        ping raspberrypi
-alias ping-raspberrypi="ping 192.168.1.54"
-#        ping-raspberrypid       ping raspberrypid
-alias ping-raspberrypid="ping 192.168.1.55"
+#        ping-raspad             ping raspad
+alias ping-raspad="ping 192.168.1.52"
+#        ping-raspadd            ping raspadd
+alias ping-raspadd="ping 192.168.1.53"
+#        ping-pimodem            ping pimodem
+alias ping-pimodem="ping 192.168.1.54"
+#        ping-pimodemd           ping pimodemd
+alias ping-pimodemd="ping 192.168.1.55"
 #        ping-colleen            ping colleen
 alias ping-colleen="ping 192.168.1.62"
 #        ping-dns1               ping dns server 1
@@ -1949,8 +1953,8 @@ alias rsync-repos-get-morpheus="rsync -rlptx --progress morpheus:/home/data/medi
 alias rsync-repos-put-morpheus="rsync -rlptx --progress ${home}/data/media/repos/ morpheus:${home}/data/media/repos/"
 #        rsync-repos-put-colleen  rsync /home/data/media/repos colleen:/home/data/media/repos
 alias rsync-repos-put-colleen="rsync -rlptx --progress ${home}/data/media/repos/ colleen:${home}/data/media/repos/"
-#!#        rsync-playlists-put-pi  rsync /home/data/media/audio/Playlists raspberrypi:/media/playlists
-#!alias rsync-playlists-put-pi="rsync -rlptx --progress ${home}/data/media/audio/Playlists/ pi@raspberrypi:/media/playlists/"
+#!#        rsync-playlists-put-pi  rsync /home/data/media/audio/Playlists pimodem:/media/playlists
+#!alias rsync-playlists-put-pi="rsync -rlptx --progress ${home}/data/media/audio/Playlists/ pi@pimodem:/media/playlists/"
 #!#        rsync-org-put-dropbox  rsync ${HOME}/org/* ${HOME}/Dropbox/Org/
 #!alias rsync-org-put-dropbox="[[ -d \${HOME}/Dropbox/Org ]] && rsync -aAXv --delete \${HOME}/org/* \${HOME}/Dropbox/Org/"
 #        rsync-aerial-get-morpheus  rsync morpheus:/home/data/media/aerial /home/data/media/aerial
@@ -2237,8 +2241,8 @@ alias ssh-morpheus="echo 'ssh:morpheus' ; ssh morpheus"
 alias ssh-morpheusgit="echo 'ssh:git@morpheus' ; ssh -l git morpheus"
 #        ssh-neo                 ssh neo
 alias ssh-neo="echo 'ssh:neo' ; ssh neo"
-#        ssh-pi                  ssh raspberrypi
-alias ssh-pi="echo 'ssh:pi@raspberrypid' ; ssh pi@raspberrypid"
+#        ssh-pimodem             ssh pimodem
+alias ssh-pimodem="echo 'ssh:pi@pimodemd' ; ssh pi@pimodemd"
 #        ssh-raspad              ssh raspad
 alias ssh-raspad="echo 'ssh:raspadusb' ; ssh pi@raspadusb"
 #        ssh-switch              ssh switch
