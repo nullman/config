@@ -1711,8 +1711,10 @@ alias nsap="sudo netstat -a -p"
 alias nstup="sudo netstat -t -u -p"
 #        nstupl                  netstat (tcp, udp, programs, listening)
 alias nstupl="sudo netstat -t -u -p -l"
-#        lsofi                   lsof -i (list open files matching givin internet address)
+#        lsofi                   lsof -i (list open files matching given internet address)
 alias lsofi="sudo lsof -i"
+#        lsofg                   lsof with grep (list open files matching given query)
+alias lsofg="sudo lsof | grep"
 #        wgetp                   wget --passive-ftp
 alias wgetp="wget --passive-ftp"
 #        nml                     nmap localhost
@@ -3073,8 +3075,10 @@ rsyncexclusions='{"/cdrom/*","/dev/*","/lost+found","/media/*","/mnt/*","/proc/*
 #        rsbid                   backup entire system to usb drive
 #!alias rsbid="sudo rsync -aAXv --delete --exclude=${rsyncexclusions} / /run/media/\${USER}/backup/\$(uname -n)"
 alias rsbid="
-    basedir=/run/media/\${USER}
-    dir=\${basedir}/\$(cd \${basedir} && \$(pathcmd ls) -1)/\$(uname -n)
+    #basedir=/run/media/\${USER}
+    #dir=\${basedir}/\$(cd \${basedir} && \$(pathcmd ls) -1)/\$(uname -n)
+    basedir=/run/media/\${USER}/Backup
+    dir=\${basedir}/\$(uname -n)
     if [[ -d \${dir} ]] ; then
         sudo rsync -aAXv --delete-before --exclude=${rsyncexclusions} / \${dir}
     else
@@ -3083,8 +3087,10 @@ alias rsbid="
     fi"
 #        rsbidsome               backup etc, home, root, and opt dirs to usb drive
 alias rsbidsome="
-    basedir=/run/media/\${USER}
-    dir=\${basedir}/\$(cd \${basedir} && \$(pathcmd ls) -1)/\$(uname -n)
+    #basedir=/run/media/\${USER}
+    #dir=\${basedir}/\$(cd \${basedir} && \$(pathcmd ls) -1)/\$(uname -n)
+    basedir=/run/media/\${USER}/Backup
+    dir=\${basedir}/\$(uname -n)
     if [[ -d \${dir} ]] ; then
         echo 'Backing up:'
         for d in \"etc\" \"home\" \"root\" \"opt\" ; do
