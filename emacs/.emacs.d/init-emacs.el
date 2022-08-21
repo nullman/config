@@ -3573,19 +3573,22 @@ If BEG and END are given, only that region is exported."
         (end (or end (if (use-region-p) (region-end) (point)))))
     (deactivate-mark)
     (save-mark-and-excursion
-      (save-match-data
-        (goto-char beg)
-        (while (<= (point) end)
-          (forward-line 0)
-          (if (re-search-forward "^\\*+ " (line-end-position) :noerror)
-              (replace-match (concat
-                              (make-string (- (point) (line-beginning-position) 2) ? )
-                              "- [ ] "))
-            (if (re-search-forward "^ *- \\[ \\] " (line-end-position) :noerror)
+      (save-restriction
+        (save-match-data
+          (narrow-to-region beg end)
+          (goto-char (point-min))
+          (while (not (eobp))
+            (forward-line 0)
+            (if (re-search-forward "^\\*+ " (line-end-position) :noerror)
+                (replace-match (concat
+                                (make-string (- (point) (line-beginning-position) 2) ? )
+                                "- [ ] "))
+              (forward-line 0)
+              (when (re-search-forward "^[ \t]*- \\[[ X]\\] " (line-end-position) :noerror)
                 (replace-match (concat
                                 (make-string (- (point) (line-beginning-position) 5) ?*)
                                 " "))))
-          (forward-line 1))))))
+            (forward-line 1)))))))
 ;; org-toggle-headline-checkbox:1 ends here
 
 ;; [[file:init-emacs.org::#org-mode-functions-org-table-remove-commas][org-table-remove-commas:1]]
@@ -4956,13 +4959,19 @@ Reset the CUSTOM_ID property, title comment, and `init-message'."
 Reset the CUSTOM_ID property, title comment, and `init-message'."
   (interactive "*")
   (let ((case-fold-search t)
-        (beg (or beg (if (use-region-p) (region-beginning) (progn (beginning-of-line-text) (point)))))
-        (end (or end (if (use-region-p) (region-end) (line-end-position)))))
-    (save-window-excursion
-      (save-mark-and-excursion
+        (beg (or beg (if (use-region-p)
+                         (region-beginning)
+                       (progn (beginning-of-line-text) (point)))))
+        (end (or end (if (use-region-p)
+                         (region-end)
+                       (line-end-position)))))
+    (deactivate-mark)
+    (save-mark-and-excursion
+      (save-restriction
         (save-match-data
           (org-with-wide-buffer
-           (goto-char beg)
+           (narrow-to-region beg end)
+           (goto-char (point-min))
            (while (and (re-search-forward "^[ \t]*:CUSTOM_ID:" nil :noerror)
                        (< (line-end-position) end))
              (org-fix-literate-programming-heading)
@@ -8480,17 +8489,19 @@ whether or not a region is selected."
   (interactive "*")
   (let ((beg (or beg (if (use-region-p) (region-beginning) (point-min))))
         (end (or end (if (use-region-p) (region-end) (point-max)))))
+    (deactivate-mark)
     (save-mark-and-excursion
       (save-restriction
-        (narrow-to-region beg end)
-        (goto-char (point-min))
-        (while (not (eobp))
-          (kill-line 1)
-          (yank)
-          (let ((next-line (point)))
-            (while (re-search-forward (format "^%s" (regexp-quote (car kill-ring))) nil :noerror)
-              (replace-match "" nil nil))
-            (goto-char next-line)))))))
+        (save-match-data
+          (narrow-to-region beg end)
+          (goto-char (point-min))
+          (while (not (eobp))
+            (kill-line 1)
+            (yank)
+            (let ((next-line (point)))
+              (while (re-search-forward (format "^%s" (regexp-quote (car kill-ring))) nil :noerror)
+                (replace-match "" nil nil))
+              (goto-char next-line))))))))
 ;; kill-duplicate-lines:1 ends here
 
 ;; [[file:init-emacs.org::#functions-emacs-functions-indent-or-expand][indent-or-expand:1]]
@@ -9433,14 +9444,14 @@ BUFFER defaults to the current buffer."
   "Uncomment an sexp around point."
   (interactive "P")
   (let* ((initial-point (point-marker))
-         (p)
+         (point)
          (end (save-mark-and-excursion
                 (save-match-data
                   (when (elt (syntax-ppss) 4)
                     (search-backward-regexp comment-start-skip
                                             (line-beginning-position)
                                             :noerror))
-                  (setq p (point-marker))
+                  (setq point (point-marker))
                   (comment-forward (point-max))
                   (point-marker))))
          (beg (save-mark-and-excursion
@@ -9459,17 +9470,17 @@ BUFFER defaults to the current buffer."
                   (point-marker)))))
     (unless (= beg end)
       (uncomment-region beg end)
-      (goto-char p)
+      (goto-char point)
       ;; identify the top-level sexp inside the comment
       (while (and (ignore-errors (backward-up-list) t)
                   (>= (point) beg))
         (skip-chars-backward (rx (syntax expression-prefix)))
-        (setq p (point-marker)))
+        (setq point (point-marker)))
       ;; re-comment everything before it
       (ignore-errors
-        (comment-region beg p))
+        (comment-region beg point))
       ;; and everything after it
-      (goto-char p)
+      (goto-char point)
       (forward-sexp (or n 1))
       (skip-chars-forward "\r\n[:blank:]")
       (if (< (point) end)
@@ -10071,6 +10082,7 @@ Optional START and END parameters will limit the search to a region."
   (let ((beg (or beg (if (use-region-p) (region-beginning) (point-min))))
         (end (or end (if (use-region-p) (region-end) (point-max))))
         comments)
+    (deactivate-mark)
     (save-mark-and-excursion
       (save-restriction
         (save-match-data
@@ -10940,34 +10952,40 @@ titling conventions.
 If a word should be capitalized, `capitalize-word' is called,
 otherwise `downcase-word' is called."
   (interactive "*")
-  (let* ((pos (point))
-         (beg (or beg (cond
-                       ((use-region-p)
-                        (region-beginning))
-                       ((eq major-mode 'wdired-mode)
-                        (point))
-                       (t
-                        (beginning-of-line-text) (point)))))
-         (end (or end (cond
-                       ((use-region-p)
-                        (region-end))
-                       ((eq major-mode 'wdired-mode)
-                        (if (re-search-forward "\.[^.]+$" (line-end-position) :noerror)
-                            (match-beginning 0)
-                          (line-end-position)))
-                       (t
-                        (line-end-position)))))
-         (col (- pos beg)))
-    (let ((syntax-table (copy-syntax-table (syntax-table)))
-          (str (buffer-substring-no-properties beg end)))
-      (modify-syntax-entry ?- "." syntax-table)
-      (modify-syntax-entry ?_ "." syntax-table)
-      (modify-syntax-entry ?' "w" syntax-table)
-      (with-syntax-table syntax-table
-        (kill-region beg end)
-        (goto-char beg)
-        (insert (titleize str))
-        (goto-char (+ beg col))))))
+  (save-excursion
+    (save-match-data
+      (let* ((pos (point))
+             (beg (or beg (cond
+                           ((use-region-p)
+                            (region-beginning))
+                           ((eq major-mode 'wdired-mode)
+                            (point))
+                           (t
+                            (beginning-of-line-text) (point)))))
+             (end (or end (cond
+                           ((use-region-p)
+                            (region-end))
+                           ((eq major-mode 'wdired-mode)
+                            (if (re-search-forward "\.[^.]+$" (line-end-position) :noerror)
+                                (match-beginning 0)
+                              (line-end-position)))
+                           (t
+                            (line-end-position)))))
+             (col (- pos beg)))
+        (deactivate-mark)
+        (save-restriction
+          (narrow-to-region beg end)
+          (goto-char (point-min))
+          (let ((syntax-table (copy-syntax-table (syntax-table)))
+                (str (buffer-substring-no-properties beg end)))
+            (modify-syntax-entry ?- "." syntax-table)
+            (modify-syntax-entry ?_ "." syntax-table)
+            (modify-syntax-entry ?' "w" syntax-table)
+            (with-syntax-table syntax-table
+              (kill-region beg end)
+              (goto-char beg)
+              (insert (titleize str))
+              (goto-char (+ beg col)))))))))
 ;; titleize-line-or-region:1 ends here
 
 ;; [[file:init-emacs.org::#functions-text-conversion-functions-unfill-paragraph][unfill-paragraph:1]]
@@ -10996,18 +11014,20 @@ otherwise `downcase-word' is called."
   "Single-space sentence ending punctuation in the current
 paragraph or selected region."
   (interactive "*")
-  (save-mark-and-excursion
-    (save-match-data
-      (let ((beg (or beg (and (use-region-p) (region-beginning))))
-            (end (or end (and (use-region-p) (region-end)))))
-        (unless (and beg end)
-          (mark-paragraph)
-          (setq beg (point)
-                end (mark-marker)))
-        (goto-char beg)
-        (while (and (< (point) end)
-                    (re-search-forward "\\([^[:blank:]][.?!]['\"”)]?\\)[[:blank:]]\\([^[:blank:]]\\)" end :noerror))
-          (replace-match "\\1 \\2"))))))
+  (let ((beg (or beg (and (use-region-p) (region-beginning))))
+        (end (or end (and (use-region-p) (region-end)))))
+    (deactivate-mark)
+    (save-mark-and-excursion
+      (save-restriction
+        (save-match-data
+          (unless (and beg end)
+            (mark-paragraph)
+            (setq beg (point)
+                  end (mark-marker)))
+          (narrow-to-region beg end)
+          (goto-char (point-min))
+          (while (re-search-forward "\\([^[:blank:]][.?!]['\"”)]?\\)[[:blank:]]\\([^[:blank:]]\\)" end :noerror)
+            (replace-match "\\1 \\2")))))))
 ;; single-space-punctuation:1 ends here
 
 ;; [[file:init-emacs.org::#functions-text-conversion-functions-double-space-punctuation][double-space-punctuation:1]]
@@ -11021,18 +11041,20 @@ paragraph or selected region."
   "Double-space sentence ending punctuation in the current
 paragraph or selected region."
   (interactive "*")
-  (save-mark-and-excursion
-    (save-match-data
-      (let ((beg (or beg (and (use-region-p) (region-beginning))))
-            (end (or end (and (use-region-p) (region-end)))))
-        (unless (and beg end)
-          (mark-paragraph)
-          (setq beg (point)
-                end (mark-marker)))
-        (goto-char beg)
-        (while (and (< (point) end)
-                    (re-search-forward "\\([^[:blank:]][.?!]['\"”)]?\\)[[:blank:]]\\([^[:blank:]]\\)" end :noerror))
-          (replace-match "\\1  \\2"))))))
+  (let ((beg (or beg (and (use-region-p) (region-beginning))))
+        (end (or end (and (use-region-p) (region-end)))))
+    (deactivate-mark)
+    (save-mark-and-excursion
+      (save-restriction
+        (save-match-data
+          (unless (and beg end)
+            (mark-paragraph)
+            (setq beg (point)
+                  end (mark-marker)))
+          (narrow-to-region beg end)
+          (goto-char (point-min))
+          (while (re-search-forward "\\([^[:blank:]][.?!]['\"”)]?\\)[[:blank:]]\\([^[:blank:]]\\)" end :noerror)
+            (replace-match "\\1  \\2")))))))
 ;; double-space-punctuation:1 ends here
 
 ;; [[file:init-emacs.org::#functions-text-inserting-functions][Text Inserting Functions:1]]
@@ -13226,6 +13248,7 @@ Examples:
   (interactive "*")
   (let ((beg (or beg (if (use-region-p) (region-beginning) (point-min))))
         (end (or end (if (use-region-p) (region-end) (point-max)))))
+    (deactivate-mark)
     (save-mark-and-excursion
       (save-restriction
         (narrow-to-region beg end)
@@ -13337,6 +13360,7 @@ Examples:
   (interactive "*")
   (let ((beg (or beg (if (use-region-p) (region-beginning) (point-min))))
         (end (or end (if (use-region-p) (region-end) (point-max)))))
+    (deactivate-mark)
     (save-mark-and-excursion
       (save-restriction
         (save-match-data
@@ -13389,6 +13413,7 @@ Examples:
   (interactive "*")
   (let ((beg (or beg (if (use-region-p) (region-beginning) (point-min))))
         (end (or end (if (use-region-p) (region-end) (point-max)))))
+    (deactivate-mark)
     (save-mark-and-excursion
       (save-restriction
         (save-match-data
@@ -13441,6 +13466,7 @@ Examples:
   (interactive "*")
   (let ((beg (or beg (if (use-region-p) (region-beginning) (point-min))))
         (end (or end (if (use-region-p) (region-end) (point-max)))))
+    (deactivate-mark)
     (save-mark-and-excursion
       (save-restriction
         (save-match-data
@@ -13531,6 +13557,7 @@ Convert poorly formatted XML into something better."
   (let ((beg (or beg (if (use-region-p) (region-beginning) (point-min))))
         (end (or end (if (use-region-p) (region-end) (point-max))))
         (mode major-mode))
+    (deactivate-mark)
     (save-mark-and-excursion
       (save-restriction
         (save-match-data
@@ -21390,7 +21417,7 @@ to the current ERC buffer."
     (while (re-search-forward ", \}" nil :no-error)
       (replace-match " }"))
     (goto-char (point-min))
-    (while (re-search-forward "\},\n[\t ]*\]" nil :no-error)
+    (while (re-search-forward "\},\n[ \t]*\]" nil :no-error)
       (replace-match "}\n]"))
     ;; convert single quotes to double quotes
     (goto-char (point-min))
