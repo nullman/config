@@ -3569,8 +3569,8 @@ If BEG and END are given, only that region is exported."
 (defun org-toggle-headline-checkbox (&optional beg end)
   "Toggle between an Org headline and checkbox on current line or region."
   (interactive)
-  (let ((beg (or beg (if (use-region-p) (region-beginning) (point))))
-        (end (or end (if (use-region-p) (region-end) (point)))))
+  (let ((beg (or beg (if (use-region-p) (region-beginning) (point-at-bol))))
+        (end (or end (if (use-region-p) (region-end) (point-at-eol)))))
     (deactivate-mark)
     (save-mark-and-excursion
       (save-restriction

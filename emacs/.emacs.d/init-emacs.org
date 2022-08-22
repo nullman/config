@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-08-21 09:55 (kyle)>
+  #+TIMESTAMP: <2022-08-22 16:06 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -5320,8 +5320,8 @@
         (defun org-toggle-headline-checkbox (&optional beg end)
           "Toggle between an Org headline and checkbox on current line or region."
           (interactive)
-          (let ((beg (or beg (if (use-region-p) (region-beginning) (point))))
-                (end (or end (if (use-region-p) (region-end) (point)))))
+          (let ((beg (or beg (if (use-region-p) (region-beginning) (point-at-bol))))
+                (end (or end (if (use-region-p) (region-end) (point-at-eol)))))
             (deactivate-mark)
             (save-mark-and-excursion
               (save-restriction
@@ -21274,6 +21274,8 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       :END:
 
       Modular text completion framework. Only turned on in programming modes.
+
+      https://company-mode.github.io/
 
       #+BEGIN_SRC emacs-lisp
         ;;------------------------------------------------------------------------------
