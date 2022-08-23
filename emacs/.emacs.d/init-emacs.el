@@ -9991,11 +9991,17 @@ ARG is passed along if shell is being toggled on."
 
 (init-message 3 "Functions: Emacs Functions: new-emacs-lisp-scratch")
 
-(defun new-emacs-lisp-scratch ()
-  "Create a new scratch buffer with `emacs-lisp-mode'."
+(defun new-emacs-lisp-scratch (&optional use-existing)
+  "Create a new scratch buffer with `emacs-lisp-mode'.
+
+If USE-EXISTING is non-nil, switch to an existing buffer if one
+exists, otherwise create a new one."
   (interactive)
-  (switch-to-buffer (generate-new-buffer-name "*scratch-emacs-lisp-mode*"))
-  (emacs-lisp-mode))
+  (let ((buffer "*scratch-emacs-lisp-mode*"))
+    (if (and use-existing (get-buffer buffer))
+        (switch-to-buffer buffer)
+      (switch-to-buffer (generate-new-buffer-name buffer))
+      (emacs-lisp-mode))))
 ;; new-emacs-lisp-scratch:1 ends here
 
 ;; [[file:init-emacs.org::#functions-emacs-functions-recreate-scratch-when-killed][recreate-scratch-when-killed:1]]
@@ -20139,7 +20145,8 @@ Commands:
  `(("*scratch*" "(switch-to-buffer \"*scratch*\")" "Switch to '*scratch*' buffer.")
    ("New *scratch*" "(switch-to-buffer (generate-new-buffer-name \"*scratch*\"))" "Create and switch to a '*scratch*' buffer.")
    ("Current Mode *scratch*" "(switch-to-scratch-for-current-mode)" "Switch to '*scratch-MODE*' buffer.")
-   ("Emacs Lisp Mode *scratch*" "(new-emacs-lisp-scratch)" "Create and switch to '*scratch-emacs-lisp-mode*' buffer.")
+   ("Emacs Lisp Mode *scratch*" "(new-emacs-lisp-scratch :use-existing)" "Switch to '*scratch-emacs-lisp-mode*' buffer.")
+   ("New Emacs Lisp Mode *scratch*" "(new-emacs-lisp-scratch)" "Create and switch to '*scratch-emacs-lisp-mode*' buffer.")
    ("*messages*" "(switch-to-buffer \"*Messages*\")" "Switch to '*Messages*' buffer.")))
 ;; Buffer-Switch Menu:1 ends here
 
