@@ -14685,26 +14685,24 @@ USING is the remaining peg."
   (company-auto-commit nil)
   (company-minimum-prefix-length 1)
   (company-idle-delay 1.0)
-  :init
+  ;; :init
   ;; (global-company-mode 1)
   ;; (add-hook 'after-init-hook #'global-company-mode)
-  :config
-  ;; backends
-  (when (fboundp 'company-files)
-    (add-to-list 'company-backends #'company-files t))
-  (when (fboundp 'company-keywords)
-    (add-to-list 'company-backends #'company-keywords t))
-  (when (fboundp 'company-ispell)
-    (add-to-list 'company-backends #'company-ispell t))
-  (when (fboundp 'company-dabbrev)
-    (add-to-list 'company-backends #'company-dabbrev t))
-  (when (fboundp 'company-elisp)
-    (add-to-list 'company-backends #'company-elisp t))
-  (when (fboundp 'company-robe)
-    (add-to-list 'company-backends #'company-robe t)))
-
-;; ;; remove troublesome backends
-;; (setq company-backends (remove 'company-capf company-backends)))
+  ;; :config
+  ;; ;; backends
+  ;; (when (fboundp 'company-files)
+  ;;   (add-to-list 'company-backends #'company-files t))
+  ;; (when (fboundp 'company-keywords)
+  ;;   (add-to-list 'company-backends #'company-keywords t))
+  ;; (when (fboundp 'company-ispell)
+  ;;   (add-to-list 'company-backends #'company-ispell t))
+  ;; (when (fboundp 'company-elisp)
+  ;;   (add-to-list 'company-backends #'company-elisp t))
+  ;; (when (fboundp 'company-robe)
+  ;;   (add-to-list 'company-backends #'company-robe t))
+  ;; (when (fboundp 'company-dabbrev)
+  ;;   (add-to-list 'company-backends #'company-dabbrev t)))
+  )
 
 ;;------------------------------------------------------------------------------
 ;;;; consult-company
@@ -17228,8 +17226,8 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
     "Custom `popper-mode' display function."
     (display-buffer-in-direction
      buffer
-     `((window-height . 0.4)
-       (window-width . 0.4)
+     `((window-height . 0.5)
+       (window-width . 0.5)
        (direction . ,(custom-popper-direction))
        (body-function . ,#'select-window))))
        ;;(body-function . ,#'custom-popper-select-window))))
