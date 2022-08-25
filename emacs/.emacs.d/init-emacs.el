@@ -10958,10 +10958,9 @@ titling conventions.
 If a word should be capitalized, `capitalize-word' is called,
 otherwise `downcase-word' is called."
   (interactive "*")
-  (save-excursion
+  (let ((pos (point)))
     (save-match-data
-      (let* ((pos (point))
-             (beg (or beg (cond
+      (let* ((beg (or beg (cond
                            ((use-region-p)
                             (region-beginning))
                            ((eq major-mode 'wdired-mode)
@@ -10991,7 +10990,8 @@ otherwise `downcase-word' is called."
               (kill-region beg end)
               (goto-char beg)
               (insert (titleize str))
-              (goto-char (+ beg col)))))))))
+              (goto-char (+ beg col)))))))
+    (goto-char pos)))
 ;; titleize-line-or-region:1 ends here
 
 ;; [[file:init-emacs.org::#functions-text-conversion-functions-unfill-paragraph][unfill-paragraph:1]]

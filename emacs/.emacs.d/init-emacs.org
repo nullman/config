@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-08-23 10:02 (kyle)>
+  #+TIMESTAMP: <2022-08-24 22:49 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -16047,10 +16047,9 @@
         If a word should be capitalized, `capitalize-word' is called,
         otherwise `downcase-word' is called."
           (interactive "*")
-          (save-excursion
+          (let ((pos (point)))
             (save-match-data
-              (let* ((pos (point))
-                     (beg (or beg (cond
+              (let* ((beg (or beg (cond
                                    ((use-region-p)
                                     (region-beginning))
                                    ((eq major-mode 'wdired-mode)
@@ -16080,7 +16079,8 @@
                       (kill-region beg end)
                       (goto-char beg)
                       (insert (titleize str))
-                      (goto-char (+ beg col)))))))))
+                      (goto-char (+ beg col)))))))
+            (goto-char pos)))
       #+END_SRC
 
 ***** unfill-paragraph
