@@ -17205,9 +17205,10 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
      "^\\*shell.*\\*$" shell-mode
      "^\\*term.*\\*$" term-mode
      "^\\*vterm.*\\*$" vterm-mode
+     "^\\*Occur\\*$" occur-mode
+     "^\\*ag search text.*" ag-mode
      help-mode
-     compilation-mode
-     occur-mode))
+     compilation-mode))
   (popper-mode 1)
   (popper-echo-mode 1)
   :config
