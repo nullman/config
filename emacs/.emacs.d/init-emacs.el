@@ -14690,14 +14690,16 @@ USING is the remaining peg."
   ;; (add-hook 'after-init-hook #'global-company-mode)
   :config
   ;; backends
+  (when (fboundp 'company-files)
+    (add-to-list 'company-backends #'company-files t))
+  (when (fboundp 'company-keywords)
+    (add-to-list 'company-backends #'company-keywords t))
+  (when (fboundp 'company-ispell)
+    (add-to-list 'company-backends #'company-ispell t))
   (when (fboundp 'company-dabbrev)
     (add-to-list 'company-backends #'company-dabbrev t))
   (when (fboundp 'company-elisp)
     (add-to-list 'company-backends #'company-elisp t))
-  (when (fboundp 'company-files)
-    (add-to-list 'company-backends #'company-files t))
-  (when (fboundp 'company-ispell)
-    (add-to-list 'company-backends #'company-ispell t))
   (when (fboundp 'company-robe)
     (add-to-list 'company-backends #'company-robe t)))
 
@@ -14708,6 +14710,9 @@ USING is the remaining peg."
 ;;;; consult-company
 ;;------------------------------------------------------------------------------
 
+(init-message 3 "consult-company")
+
+;; consult company frontend
 (use-package consult-company
   :straight t
   :after (company)
@@ -14720,7 +14725,7 @@ USING is the remaining peg."
 
 ;; (init-message 3 "company-box")
 
-;; ;; company front end with icons
+;; ;; company frontend with icons
 ;; (use-package company-box
 ;;   :straight t
 ;;   :after (company)
@@ -17194,6 +17199,7 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
   :custom
   (popper-reference-buffers
    '(("Output\\*$" . hide)
+     ("\\*Compile-Log\\*" . hide)
      ("\\*Async Shell Command\\*" . hide)
      ("\\*Shell Command Output\\*" . hide)
      "\\*Messages\\*" messages-buffer-mode
@@ -17204,8 +17210,8 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
      help-mode
      compilation-mode
      occur-mode))
-  (popper-mode +1)
-  (popper-echo-mode +1)
+  (popper-mode 1)
+  (popper-echo-mode 1)
   :config
   (defun custom-popper-direction ()
     "Return desired direction of popper window."
