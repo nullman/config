@@ -14692,8 +14692,6 @@ USING is the remaining peg."
   ;; backends
   (when (fboundp 'company-dabbrev)
     (add-to-list 'company-backends #'company-dabbrev t))
-  (when (fboundp 'company-emacs-eclim)
-    (add-to-list 'company-backends #'company-emacs-eclim t))
   (when (fboundp 'company-elisp)
     (add-to-list 'company-backends #'company-elisp t))
   (when (fboundp 'company-files)
@@ -17195,14 +17193,41 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
          ("C-x C-`" . popper-toggle-type))
   :custom
   (popper-reference-buffers
-   '("\\*Messages\\*"
-     "Output\\*$"
-     "\\*Async Shell Command\\*"
+   '(("Output\\*$" . hide)
+     ("\\*Async Shell Command\\*" . hide)
+     ("\\*Shell Command Output\\*" . hide)
+     "\\*Messages\\*" messages-buffer-mode
+     "^\\*eshell.*\\*$" eshell-mode
+     "^\\*shell.*\\*$" shell-mode
+     "^\\*term.*\\*$" term-mode
+     "^\\*vterm.*\\*$" vterm-mode
      help-mode
-     compilation-mode))
-  :init
+     compilation-mode
+     occur-mode))
   (popper-mode +1)
-  (popper-echo-mode +1))
+  (popper-echo-mode +1)
+  :config
+  (defun custom-popper-direction ()
+    "Return desired direction of popper window."
+    (if (> (window-width) (* (window-height) 2)) 'right 'below))
+  ;; (defun custom-popper-select-window (window &optional norecord)
+  ;;   "Maybe call `select-window' on popper window."
+  ;;   (unless (member major-mode
+  ;;               '(messages-buffer-mode
+  ;;                 help-mode
+  ;;                 compilation-mode
+  ;;                 occur-mode))
+  ;;       (select-window window norecord)))
+  (defun custom-popper-display-function (buffer &optional _alist)
+    "Custom `popper-mode' display function."
+    (display-buffer-in-direction
+     buffer
+     `((window-height . 0.4)
+       (window-width . 0.4)
+       (direction . ,(custom-popper-direction))
+       (body-function . ,#'select-window))))
+       ;;(body-function . ,#'custom-popper-select-window))))
+  (setq popper-display-function #'custom-popper-display-function))
 ;; popper:1 ends here
 
 ;; [[file:init-emacs.org::#modules-proced][proced:1]]
