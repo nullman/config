@@ -17197,10 +17197,8 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
   :custom
   (popper-reference-buffers
    '(("Output\\*$" . hide)
-     ("\\*Compile-Log\\*" . hide)
-     ("\\*Async Shell Command\\*" . hide)
-     ("\\*Shell Command Output\\*" . hide)
-     "\\*Messages\\*" messages-buffer-mode
+     ("^\\*Async Shell Command\\*$" . hide)
+     "^\\*Messages\\*$" messages-buffer-mode
      "^\\*eshell.*\\*$" eshell-mode
      "^\\*shell.*\\*$" shell-mode
      "^\\*term.*\\*$" term-mode
