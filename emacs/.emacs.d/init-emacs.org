@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-08-25 16:10 (kyle)>
+  #+TIMESTAMP: <2022-08-27 14:00 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -14919,7 +14919,7 @@
         (init-message 3 "Functions: Emacs Functions: ascii-table")
 
         (defun ascii-table ()
-          "Print a table of the ASCII characters from 0 to 254 in a buffer."
+          "Display a table of the ASCII characters from 0 to 254 in a buffer."
           (interactive)
           ;; thanks to David Jolley for the special-chars list
           (let ((special-chars ["NUL " "SOH " "STX " "ETX " "EOT "
@@ -14952,7 +14952,7 @@
 
         ;; simple version
         ;; (defun ascii-table ()
-        ;;   "Print the ASCII characters from 0 to 254 in a buffer."
+        ;;   "Display the ASCII characters from 0 to 254 in a buffer."
         ;;   (interactive)
         ;;   (switch-to-buffer "*ASCII Table*")
         ;;   (buffer-disable-undo (current-buffer))
@@ -14978,7 +14978,7 @@
         (init-message 3 "Functions: Emacs Functions: http-status-code-table")
 
         (defun http-status-code-table ()
-          "Print a table of the HTTP status codes in a buffer."
+          "Display a table of the HTTP status codes in a buffer."
           (interactive)
           (let ((status-codes
                  '((100 . "Continue")
@@ -15074,7 +15074,7 @@
         (init-message 3 "Functions: Emacs Functions: powers-of-two-table")
 
         (defun powers-of-two-table ()
-          "Print a table of the first 64 Powers of two in a buffer."
+          "Display a table of the first 64 Powers of two in a buffer."
           (interactive)
           (switch-to-buffer "*Powers of Two Table*")
           (buffer-disable-undo (current-buffer))
@@ -15093,6 +15093,59 @@
                   (insert (format "%5d   %20s   %17s\n" x dec hex))))))
           (setq buffer-read-only t)
           (goto-char (point-min)))
+      #+END_SRC
+
+***** +keybindings-table+
+      :PROPERTIES:
+      :CUSTOM_ID: functions-emacs-functions-keybindings-table
+      :END:
+
+      Display a table of the keybindings for the current mode.
+
+      TODO: Implement
+
+      #+BEGIN_SRC emacs-lisp :tangle no
+        ;; ;;------------------------------------------------------------------------------
+        ;; ;;;; Functions: Emacs Functions: keybindings-table
+        ;; ;;------------------------------------------------------------------------------
+
+        ;; (init-message 3 "Functions: Emacs Functions: keybindings-table")
+
+        ;; (defun keybindings-table ()
+        ;;   "Display a table of the keybindings for the current mode."
+        ;;   (interactive)
+        ;;   (switch-to-buffer "*Keybindings Table*")
+        ;;   (buffer-disable-undo (current-buffer))
+        ;;     (let (buffer-read-only)
+        ;;       (erase-buffer)
+        ;;       )
+        ;;     (setq buffer-read-only t)
+        ;;     (goto-char (point-min)))
+
+        ;; ;; (defun my/dump-bindings-recursive (prefix &optional level buffer)
+        ;; ;;   (dolist (key (which-key--get-bindings (kbd prefix)))
+        ;; ;;     (with-current-buffer buffer
+        ;; ;;       (when level
+        ;; ;;         (insert (make-string level ? )))
+        ;; ;;       (insert (apply #'format "%s%s%s\n" key)))
+        ;; ;;     (when (string-match-p
+        ;; ;;            (rx bos "+" (* nonl))
+        ;; ;;            (substring-no-properties (elt key 2)))
+        ;; ;;       (my/dump-bindings-recursive
+        ;; ;;        (concat prefix " " (substring-no-properties (car key)))
+        ;; ;;        (+ 2 (or level 0))
+        ;; ;;        buffer))))
+
+        ;; ;; (defun my/dump-bindings (prefix)
+        ;; ;;   "Dump keybindings starting with PREFIX in a tree-like form."
+        ;; ;;   (interactive "sPrefix: ")
+        ;; ;;   (let ((buffer (get-buffer-create "bindings")))
+        ;; ;;     (with-current-buffer buffer
+        ;; ;;       (erase-buffer))
+        ;; ;;     (my/dump-bindings-recursive prefix 0 buffer)
+        ;; ;;     (with-current-buffer buffer
+        ;; ;;       (goto-char (point-min)))
+        ;; ;;     (switch-to-buffer-other-window buffer)))
       #+END_SRC
 
 ***** +match-paren+
@@ -15393,7 +15446,7 @@
             (nreverse mode-list)))
       #+END_SRC
 
-*** Emacs Grouped Functions
+*** Emacs Grouped Functions=====================================================
     :PROPERTIES:
     :CUSTOM_ID: functions-emacs-grouped-functions
     :END:
@@ -25382,8 +25435,9 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
            "^\\*shell.*\\*$" shell-mode
            "^\\*term.*\\*$" term-mode
            "^\\*vterm.*\\*$" vterm-mode
+           "^\\*ielm.*\\*$" inferior-emacs-lisp-mode
            "^\\*Occur\\*$" occur-mode
-           "^\\*ag search text.*" ag-mode
+           "^\\*ag search text.*\\*$" ag-mode
            help-mode
            compilation-mode))
         (popper-mode 1)

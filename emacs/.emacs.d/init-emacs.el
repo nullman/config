@@ -10181,7 +10181,7 @@ FORMAT is a 'date' format string (defaults to
 (init-message 3 "Functions: Emacs Functions: ascii-table")
 
 (defun ascii-table ()
-  "Print a table of the ASCII characters from 0 to 254 in a buffer."
+  "Display a table of the ASCII characters from 0 to 254 in a buffer."
   (interactive)
   ;; thanks to David Jolley for the special-chars list
   (let ((special-chars ["NUL " "SOH " "STX " "ETX " "EOT "
@@ -10214,7 +10214,7 @@ FORMAT is a 'date' format string (defaults to
 
 ;; simple version
 ;; (defun ascii-table ()
-;;   "Print the ASCII characters from 0 to 254 in a buffer."
+;;   "Display the ASCII characters from 0 to 254 in a buffer."
 ;;   (interactive)
 ;;   (switch-to-buffer "*ASCII Table*")
 ;;   (buffer-disable-undo (current-buffer))
@@ -10233,7 +10233,7 @@ FORMAT is a 'date' format string (defaults to
 (init-message 3 "Functions: Emacs Functions: http-status-code-table")
 
 (defun http-status-code-table ()
-  "Print a table of the HTTP status codes in a buffer."
+  "Display a table of the HTTP status codes in a buffer."
   (interactive)
   (let ((status-codes
          '((100 . "Continue")
@@ -10322,7 +10322,7 @@ FORMAT is a 'date' format string (defaults to
 (init-message 3 "Functions: Emacs Functions: powers-of-two-table")
 
 (defun powers-of-two-table ()
-  "Print a table of the first 64 Powers of two in a buffer."
+  "Display a table of the first 64 Powers of two in a buffer."
   (interactive)
   (switch-to-buffer "*Powers of Two Table*")
   (buffer-disable-undo (current-buffer))
@@ -10537,13 +10537,13 @@ MODE defaults to `major-mode'."
     (nreverse mode-list)))
 ;; derived-modes:1 ends here
 
-;; [[file:init-emacs.org::#functions-emacs-grouped-functions][Emacs Grouped Functions:1]]
+;; [[file:init-emacs.org::#functions-emacs-grouped-functions][Emacs Grouped Functions=====================================================:1]]
 ;;------------------------------------------------------------------------------
 ;;; Functions: Emacs Grouped Functions
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Functions: Emacs Grouped Functions")
-;; Emacs Grouped Functions:1 ends here
+;; Emacs Grouped Functions=====================================================:1 ends here
 
 ;; [[file:init-emacs.org::#functions-emacs-grouped-functions-buffer-kill][Buffer Kill:1]]
 ;;------------------------------------------------------------------------------
@@ -17205,8 +17205,9 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
      "^\\*shell.*\\*$" shell-mode
      "^\\*term.*\\*$" term-mode
      "^\\*vterm.*\\*$" vterm-mode
+     "^\\*ielm.*\\*$" inferior-emacs-lisp-mode
      "^\\*Occur\\*$" occur-mode
-     "^\\*ag search text.*" ag-mode
+     "^\\*ag search text.*\\*$" ag-mode
      help-mode
      compilation-mode))
   (popper-mode 1)
