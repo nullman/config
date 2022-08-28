@@ -614,10 +614,8 @@ Common values:
 (setq background-alpha (if (or window-system-mac window-system-windows)
                            100        ; 0% transparency
                          85))         ; 10% transparency
-(set-frame-parameter (selected-frame) 'alpha
-                     `(,background-alpha . ,background-alpha))
-(add-to-list 'default-frame-alist
-             `(alpha . (,background-alpha . ,background-alpha)))
+(set-frame-parameter (selected-frame) 'alpha background-alpha)
+(add-to-list 'default-frame-alist (cons 'alpha background-alpha))
 
 ;; set mouse color
 (set-mouse-color color-mouse)
