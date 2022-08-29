@@ -15585,6 +15585,32 @@ USING is the remaining peg."
       (insert "</opml>\n"))))
 ;; elfeed:1 ends here
 
+;; [[file:init-emacs.org::#packages-elfeed-tube][elfeed-tube:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: elfeed-tube
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Packages: elfeed-tube")
+
+(use-package elfeed-tube
+  :straight t
+  :after elfeed
+  :bind (:map elfeed-search-mode-map
+              ("F" . elfeed-tube-fetch)
+              ([remap save-buffer] . elfeed-tube-save))
+  :bind (:map elfeed-show-mode-map
+              ("F" . elfeed-tube-fetch)
+              ([remap save-buffer] . elfeed-tube-save))
+  :config
+  (elfeed-tube-setup))
+
+;; (use-package elfeed-tube-mpv
+;;   :straight t
+;;   :bind (:map elfeed-show-mode-map
+;;               ("C-c C-f" . elfeed-tube-mpv-follow-mode)
+;;               ("C-c C-w" . elfeed-tube-mpv-where)))
+;; elfeed-tube:1 ends here
+
 ;; [[file:init-emacs.org::#modules-elnode][elnode:1]]
 ;;------------------------------------------------------------------------------
 ;;; Packages: elnode

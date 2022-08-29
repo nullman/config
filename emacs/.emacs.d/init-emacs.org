@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-08-28 11:07 (kyle)>
+  #+TIMESTAMP: <2022-08-29 10:51 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -22888,6 +22888,37 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
        ;; Personal
        (:name "Nulldot Blog" :html "http://nulldot.net/" :rss "http://nulldot.net/index.rss" :tag "dev")
        ))
+    #+END_SRC
+
+*** elfeed-tube
+    :PROPERTIES:
+    :CUSTOM_ID: packages-elfeed-tube
+    :END:
+
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Packages: elfeed-tube
+      ;;------------------------------------------------------------------------------
+
+      (init-message 2 "Packages: elfeed-tube")
+
+      (use-package elfeed-tube
+        :straight t
+        :after elfeed
+        :bind (:map elfeed-search-mode-map
+                    ("F" . elfeed-tube-fetch)
+                    ([remap save-buffer] . elfeed-tube-save))
+        :bind (:map elfeed-show-mode-map
+                    ("F" . elfeed-tube-fetch)
+                    ([remap save-buffer] . elfeed-tube-save))
+        :config
+        (elfeed-tube-setup))
+
+      ;; (use-package elfeed-tube-mpv
+      ;;   :straight t
+      ;;   :bind (:map elfeed-show-mode-map
+      ;;               ("C-c C-f" . elfeed-tube-mpv-follow-mode)
+      ;;               ("C-c C-w" . elfeed-tube-mpv-where)))
     #+END_SRC
 
 *** elnode
