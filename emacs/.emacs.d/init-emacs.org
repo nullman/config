@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-08-27 18:13 (kyle)>
+  #+TIMESTAMP: <2022-08-28 11:07 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -14247,6 +14247,7 @@
 
         ;; mode hooks are added in their sections
         (defun remove-trailing-blanks (&optional ask)
+          (interactive "*")
           "Remove trailing spaces and tabs from every line in the current buffer.
 
         Also remove trailing newlines from the end of the buffer, apart
@@ -14309,6 +14310,7 @@
 
         ;; mode hooks are added in their sections
         (defun remove-tabs (&optional ask)
+          (interactive "*")
           "Remove tabs from every line in the current buffer.
 
         If ASK is non-nil, ask for confirmation.
@@ -17219,6 +17221,12 @@
               ('space (insert (cl-reduce (lambda (x y) (concat x " " y)) phrase)))
               ('hyphen (insert (cl-reduce (lambda (x y) (concat x "-" y)) phrase)))
               (t (insert (cl-reduce (lambda (x y) (concat x y)) phrase))))))
+
+        (defun insert-password-phrase-three-space ()
+          "Call `insert-password-phrase' with a COUNT of 3 and an OUTPUT
+        of 'space."
+          (interactive "*")
+          (insert-password-phrase 3 'space))
 
         (defun insert-password-phrase-three-hyphen ()
           "Call `insert-password-phrase' with a COUNT of 3 and an OUTPUT

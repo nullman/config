@@ -9635,6 +9635,7 @@ BUFFER defaults to the current buffer."
 
 ;; mode hooks are added in their sections
 (defun remove-trailing-blanks (&optional ask)
+  (interactive "*")
   "Remove trailing spaces and tabs from every line in the current buffer.
 
 Also remove trailing newlines from the end of the buffer, apart
@@ -9692,6 +9693,7 @@ If ASK is non-nil, ask for confirmation."
 
 ;; mode hooks are added in their sections
 (defun remove-tabs (&optional ask)
+  (interactive "*")
   "Remove tabs from every line in the current buffer.
 
 If ASK is non-nil, ask for confirmation.
@@ -11916,6 +11918,12 @@ OUTPUT (defaults to 'phrase):
       ('space (insert (cl-reduce (lambda (x y) (concat x " " y)) phrase)))
       ('hyphen (insert (cl-reduce (lambda (x y) (concat x "-" y)) phrase)))
       (t (insert (cl-reduce (lambda (x y) (concat x y)) phrase))))))
+
+(defun insert-password-phrase-three-space ()
+  "Call `insert-password-phrase' with a COUNT of 3 and an OUTPUT
+of 'space."
+  (interactive "*")
+  (insert-password-phrase 3 'space))
 
 (defun insert-password-phrase-three-hyphen ()
   "Call `insert-password-phrase' with a COUNT of 3 and an OUTPUT
