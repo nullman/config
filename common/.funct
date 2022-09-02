@@ -1698,12 +1698,14 @@ Install yay
 Refresh File Search Database
   yay -Fy
 Install Needed Packages
-  yay -S --needed ccrypt stow
-Copy bundle.tgz.enc from USB and decrypt it:
+  yay -S --needed base-devel stow
+Copy bundle.tgz.enc from USB, decrypt it, and run scripts:
+  mkdir -p ~/tmp && cd ~/tmp
   cp /media/FILES/bundle* .
   chmod +x ./bundle-decrypt && ./bundle-decrypt
   tar xzf bundle.tgz
   mv bundle/.ssh ~/
+  ./bundle/make-etc-hosts
 Checkout config and config-private:
   git clone ${GIT_REPOSITORY_CONFIG} ~/config
   git clone ${GIT_REPOSITORY_CONFIG_PRIVATE} ~/config-private
@@ -1832,7 +1834,8 @@ manjaro-initialize() {
     _getsection() {
         local file="${HOME}/org/personal.org"
         local regexp="/^[ \t]*#\+NAME: $1\$/,/^[ \t]*#\+END_SRC\$/{print \$0}"
-        awk "${regexp}" "${file}" | tail -n +3 | head -n -1 | sed 's/^[ \t]*//'
+        awk "${regexp}" "${file}" | tail -n +3 | head -n -1 | sed 's/^[ \t]*//' | \
+            sed 's/--needed/--needed --noprovides --answerdiff None --answerclean None --mflags \"--noconfirm\"/'
     }
 
     standard=(

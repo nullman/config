@@ -300,7 +300,7 @@ for ((x = 0; x < ${#display[@]}; x += 1)) ; do
 done
 offset=$(((${cols} - ${len}) / 2))
 if [[ ${offset} -lt 0 ]] ; then offset=0 ; fi
-spc='' ; for ((x=0; x<${offset}; x+=1)) ; do spc+=' ' ; done
+spc='' ; for ((x = 0; x < ${offset}; x += 1)) ; do spc+=' ' ; done
 
 # clear screen
 tput clear
@@ -325,7 +325,7 @@ done
 info="q=quit  up/down=movement  enter=select  u=up"
 offset=$(((${cols} - ${#info}) / 2))
 if [[ ${offset} -lt 0 ]] ; then offset=0 ; fi
-infospc='' ; for ((x=0; x<${offset}; x+=1)) ; do infospc+=' ' ; done
+infospc='' ; for ((x = 0; x < ${offset}; x += 1)) ; do infospc+=' ' ; done
 echo
 echo -n "${infospc}"
 echo "q=quit  up/down=movement  enter=select  u=up"

@@ -39,7 +39,7 @@ channels=(
 #    "Mac84                           | https://www.youtube.com/c/Mac84/videos"
 #    "Matt Heffernan Slithy Games     | https://www.youtube.com/c/slithymatt/videos"
     "Me, Myself, and Die             | https://www.youtube.com/c/MeMyselfandDieRPG/videos"
-    "PhilsComputerLab                | https://www.youtube.com/c/philscomputerlab/videos"
+#    "PhilsComputerLab                | https://www.youtube.com/c/philscomputerlab/videos"
     "Protesilaos Stavrou             | https://www.youtube.com/c/ProtesilaosStavrou/videos"
 #    "Retro Hack Shack                | https://www.youtube.com/c/RetroHackShack/videos"
 #    "Retro Recipes                   | https://www.youtube.com/c/Perifractic/videos"
@@ -90,9 +90,10 @@ for ((x = 0; x < ${#channels[@]}; x += 1)) ; do
         echo
         mkdir -p "${basedir}/${name}"
         archive="--download-archive ${HOME}/.yt-dlp-download-archive"
-        [[ "$1" == "--restart" ]] && archive=="--no-download-archive"
+        [[ "$1" == "--restart" ]] && archive="--no-download-archive"
         cd "${basedir}/${name}" && \
-            yt-dlp --format "bv+ba/b" \
+            yt-dlp --format "bv*+ba/b" \
+                   --format-sort "res:1080,res:720,res:480" \
                    --playlist-reverse \
                    ${archive} \
                    --output "${name} - %(release_date>%Y-%m-%d,upload_date>%Y-%m-%d|Unknown)s - %(title)s.%(ext)s" \

@@ -20453,7 +20453,7 @@ Commands:
    ("Install Package" "package-install" "Install package.")
    ("Straight Refresh" "straight-pull-recipe-repositories" "Refresh recipe repositories.")
    ("Straight Pull All" "straight-pull-all" "Pull all packages.")
-   ("Straight Fetch All" "straight-fetch-all" "Fetch all packages.")
+   ;;("Straight Fetch All" "straight-fetch-all" "Fetch all packages.")
    ;;("Auto-Remove Packages" "package-autoremove" "Remove packages that are no more needed.")
    ;;("Quelpa Upgrade" "quelpa-upgrade" "Upgrade one Quelpa package.")
    ;;("Quelpa Upgrade All" "quelpa-upgrade-all" "Upgrade all Quelpa packages.")
