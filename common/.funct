@@ -1939,6 +1939,7 @@ manjaro-initialize() {
                 echo
                 echo "========== ${section} =========="
                 echo
+                echo "$(_getsection ${section})"
                 eval "$(_getsection ${section})"
             done
 
