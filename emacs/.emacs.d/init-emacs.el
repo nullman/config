@@ -5630,8 +5630,8 @@ If NYXT-FILE is non-nil, then output is returned."
                     "NWM_A40_345190"
                     "NWM_B40_300756"
                     "NWM_B40_300798"
-                    "NWM_PX1-012685"
-                    "NWM_PX1-012692"))
+                    "NWM_PX1_012685"
+                    "NWM_PX1_012692"))
           date
           balances)
       (with-temp-buffer

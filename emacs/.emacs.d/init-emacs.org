@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-09-02 14:44 (kyle)>
+  #+TIMESTAMP: <2022-09-02 22:00 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -7964,8 +7964,8 @@
                             "NWM_A40_345190"
                             "NWM_B40_300756"
                             "NWM_B40_300798"
-                            "NWM_PX1-012685"
-                            "NWM_PX1-012692"))
+                            "NWM_PX1_012685"
+                            "NWM_PX1_012692"))
                   date
                   balances)
               (with-temp-buffer
