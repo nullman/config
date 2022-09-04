@@ -2616,6 +2616,8 @@ alias yaln="yay -Qqettn"
 alias yalf="yay -Qqettm"
 #        yals                    yay -Qs (search installed packages)
 alias yals="yay -Qs"
+#        yaps                    yay -Ps (print package statistics)
+alias yaps="yay -Ps"
 
 #
 # apt package mangement (debian/ubuntu)

@@ -1835,7 +1835,8 @@ manjaro-initialize() {
         local file="${HOME}/org/personal.org"
         local regexp="/^[ \t]*#\+NAME: $1\$/,/^[ \t]*#\+END_SRC\$/{print \$0}"
         awk "${regexp}" "${file}" | tail -n +3 | head -n -1 | sed 's/^[ \t]*//' | \
-            sed 's/--needed/--needed --noprovides --answerdiff None --answerclean None --mflags \"--noconfirm\"/'
+            sed 's/--needed/--needed --noprovides --answerdiff None --answerclean None --mflags \"--noconfirm\"/' | \
+            sed 's/yay /yes | yay /'
     }
 
     standard=(
