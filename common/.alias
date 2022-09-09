@@ -2419,19 +2419,20 @@ alias xmmsa="xmms ${home}/data/media/audio/Playlists/albums.m3u &"
 # xrandr
 #
 #        xrandr-reset            reset monitors
-alias xrandr-reset="xrandr --auto"
+#!alias xrandr-reset="xrandr --auto"
+alias xrandr-reset="xrandr --output \$(xrandr | grep ' connected ' | sed 's/ .*//' | head -n 1) --auto"
 #        xrandr-above            turn on external monitor (above laptop screen)
 alias xrandr-above="
     monitors=(\$(xrandr | grep ' connected ' | sed 's/ .*//')) && \
     xrandr --output \${monitors[1]} --auto --above \${monitors[0]}"
 #        xrandr-normal           rotate display to its normal viewing angle
-alias xrandr-normal="xrandr --output HDMI-1 --rotate normal"
+alias xrandr-normal="xrandr --output \$(xrandr | grep ' connected ' | sed 's/ .*//' | head -n 1) --rotate normal"
 #        xrandr-inverted         rotate display to its inverted viewing angle
-alias xrandr-inverted="xrandr --output HDMI-1 --rotate inverted"
+alias xrandr-inverted="xrandr --output \$(xrandr | grep ' connected ' | sed 's/ .*//' | head -n 1) --rotate inverted"
 #        xrandr-left             rotate display to its left viewing angle
-alias xrandr-left="xrandr --output HDMI-1 --rotate left"
+alias xrandr-left="xrandr --output \$(xrandr | grep ' connected ' | sed 's/ .*//' | head -n 1) --rotate left"
 #        xrandr-right            rotate display to its right viewing angle
-alias xrandr-right="xrandr --output HDMI-1 --rotate right"
+alias xrandr-right="xrandr --output \$(xrandr | grep ' connected ' | sed 's/ .*//' | head -n 1) --rotate right"
 
 #
 # xscreensaver

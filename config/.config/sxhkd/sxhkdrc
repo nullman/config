@@ -199,7 +199,7 @@ super + shift + t
 
 # reset video
 super + shift + 6
-    xrandr --auto && notify-send --expire-time=2000 'Resetting video'
+    xrandr --output $(xrandr | grep ' connected ' | sed 's/ .*//' | head -n 1) --auto && notify-send --expire-time=2000 'Resetting video'
 
 # git synchronize config
 super + alt + y
