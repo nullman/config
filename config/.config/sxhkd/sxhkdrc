@@ -197,6 +197,10 @@ super + shift + r
 super + shift + t
     ((pkill -SIGUSR1 -x tint2 -u ${USER} && xdo below -t $(xdo id -N Bspwm) $(xdo id -N Tint2)) || ${HOME}/bin/system-bar &) && notify-send --expire-time=2000 'Reloading Tint'
 
+# reset video
+super + shift + 6
+    xrandr --auto && notify-send --expire-time=2000 'Resetting video'
+
 # git synchronize config
 super + alt + y
     source "${HOME}/.funct" && (git-sync-config && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12" --tail
