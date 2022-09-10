@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-09-09 17:05 (kyle)>
+  #+TIMESTAMP: <2022-09-10 09:54 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -15647,12 +15647,19 @@
       :CUSTOM_ID: functions-emacs-grouped-functions-clipboard
       :END:
 
-      X clipboard cut and paste functions.
+      X Clipboard Cut and Paste Functions
 
       Modified versions of the similarly named functions =clipboard-kill-region=,
       =clipboard-kill-ring-save=, and =clipboard-yank=. These functions use the
       Linux command line tool *xsel* (which must be installed) to get the same
       functionality when running Emacs in command line mode.
+
+      You need to have the *xsel* command installed on your system for this to work.
+
+      #+BEGIN_SRC sh :dir /sudo:: :tangle no
+        # install xsel on Manjaro/Arch system
+        sudo pacman -S install xsel
+      #+END_SRC
 
       #+BEGIN_SRC emacs-lisp
         ;;------------------------------------------------------------------------------
@@ -15665,8 +15672,6 @@
         ;; `clipboard-kill-ring-save', and `clipboard-yank'. These functions use the
         ;; Linux command line tool `xsel' (which must be installed) to get the same
         ;; functionality when running Emacs in command line mode.
-        ;; In Ubuntu/Debian run:
-        ;;   sudo apt-get install xsel
 
         ;; only load if not in window mode and xsel command is available on system
         (when (and (not window-system)

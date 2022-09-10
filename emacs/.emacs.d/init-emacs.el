@@ -10622,7 +10622,7 @@ if there are more than two. Then delete that window."
   (kill-other-window-buffer t))
 ;; kill-other-window-buffer-and-delete-window:1 ends here
 
-;; [[file:init-emacs.org::#functions-emacs-grouped-functions-clipboard][Clipboard:1]]
+;; [[file:init-emacs.org::#functions-emacs-grouped-functions-clipboard][Clipboard:2]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Grouped Functions: Clipboard
 ;;------------------------------------------------------------------------------
@@ -10633,8 +10633,6 @@ if there are more than two. Then delete that window."
 ;; `clipboard-kill-ring-save', and `clipboard-yank'. These functions use the
 ;; Linux command line tool `xsel' (which must be installed) to get the same
 ;; functionality when running Emacs in command line mode.
-;; In Ubuntu/Debian run:
-;;   sudo apt-get install xsel
 
 ;; only load if not in window mode and xsel command is available on system
 (when (and (not window-system)
@@ -10667,7 +10665,7 @@ if there are more than two. Then delete that window."
     "Insert the clipboard contents, or the last stretch of killed text."
     (interactive "*")
     (insert (shell-command-to-string "xsel -o"))))
-;; Clipboard:1 ends here
+;; Clipboard:2 ends here
 
 ;; [[file:init-emacs.org::#functions-emacs-grouped-functions-occur][Occur:1]]
 ;;------------------------------------------------------------------------------
