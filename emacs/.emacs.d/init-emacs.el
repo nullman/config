@@ -15712,12 +15712,7 @@ USING is the remaining peg."
 
 (use-package flycheck
   :straight t
-  :commands (flycheck-mod
-             global-flycheck-mode)
-  :init
-  ;; ;; initialize globally
-  ;; (add-hook 'after-init-hook #'global-flycheck-mode)
-  )
+  :hook (after-init . global-flycheck-mode))
 
 ;;------------------------------------------------------------------------------
 ;;;; flycheck-package
@@ -19912,10 +19907,26 @@ Commands:
 
 (use-package typescript-mode
   :straight t
-  :mode ("\\.ts\\'" . typescript-mode)
+  :mode (("\\.ts\\'" . typescript-mode)
+         ("\\.tsx\\'" . typescript-mode))
   :hook (typescript-mode . lsp-deferred)
   :config
   (setq typescript-indent-level 2))
+
+;; tide for typescript
+(use-package tide
+  :straight t
+  :after (typescript-mode company flycheck)
+  :hook ((typescript-mode . tide-setup)
+         (typescript-mode . tide-hl-identifier-mode)
+         (before-save . tide-format-before-save))
+   :config
+   (flycheck-add-next-checker 'typescript-tide 'javascript-eslint))
+
+;; Add node_modules to PATH
+(use-package add-node-modules-path
+  :straight t
+  :hook (typescript-mode . add-node-modules-path))
 ;; TypeScript Mode:2 ends here
 
 ;; [[file:init-emacs.org::#modes-v-mode][V Mode:1]]
