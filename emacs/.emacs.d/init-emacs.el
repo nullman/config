@@ -16097,6 +16097,7 @@ back to the previous non-whitespace character. See also
              ispell-complete-word-dict
              ispell-message
              ispell-region-end
+             ispell-set-spellchecker-params
              ispell-word)
   :bind (("<f6>" . ispell-word)
          ("<S-f6>" . ispell))
