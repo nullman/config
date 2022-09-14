@@ -27,7 +27,7 @@ _command() {
     command -v "$1" > /dev/null 2>&1
 }
 
-# add path entry before or after existing path entries, preventing duplicate
+# add path entry before or after existing path entries, preventing duplicates
 _pathadd() {
     if [[ -d "$1" ]] ; then
         local p=$(cd "$1" && pwd)
@@ -101,9 +101,11 @@ export GEM_HOME="$(_command ruby && ruby -e 'print Gem.user_dir')"
 
 # android
 [[ -d "/usr/local/share/android-sdk" ]] && export ANDROID_SDK="/usr/local/share/android-sdk"
+[[ -d "${HOME}/Library/Android/sdk" ]] && export ANDROID_SDK="${HOME}/Library/Android/sdk"
 [[ -d "${HOME}/android-sdk" ]] && export ANDROID_SDK="${HOME}/android-sdk"
 export ANDROID_SDK_ROOT="${ANDROID_SDK}"
 [[ -d "/usr/local/share/android-ndk" ]] && export ANDROID_NDK="/usr/local/share/android-ndk"
+[[ -d "${HOME}/Library/Android/sdk/ndk-bundle" ]] && export ANDROID_SDK="${HOME}/Library/Android/sdk/ndk-bundle"
 [[ -d "${HOME}/android-sdk/ndk-bundle" ]] && export ANDROID_NDK="${HOME}/android-sdk/ndk-bundle"
 export ANDROID_NDK_HOME="${ANDROID_NDK}"
 
