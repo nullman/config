@@ -3024,6 +3024,14 @@ alias gitcohaiku="git clone \${GIT_REPOSITORY_HAIKU} \${HOME}/haiku"
 alias gituohaiku="(cd \${HOME}/haiku && git pull origin)"
 #        gitpohaiku              push haiku git repository (to origin)
 alias gitpohaiku="(cd \${HOME}/haiku && git push origin)"
+#        gituoall                pull (update) all repositories
+alias git-check-home="
+    dirs=('config' 'config-private' 'dev' 'doc' 'web')
+    for dir in \${dirs[@]} ; do
+        if [[ -d \${HOME}/\${dir} ]] ; then
+            (cd \${HOME}/\${dir} && grep -r '^<<<<<<< HEAD')
+        fi
+    done"
 
 #
 # script help
