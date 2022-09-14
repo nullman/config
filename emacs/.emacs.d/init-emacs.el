@@ -2770,6 +2770,26 @@ DATA should have been made by `org-outline-overlay-data'."
              :prepend t)))))
 ;; Capture:1 ends here
 
+;; [[file:init-emacs.org::#org-mode-appear][Appear:1]]
+;;------------------------------------------------------------------------------
+;;; Org Mode: Appear
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Org Mode: Appear")
+
+(use-package org-appear
+  :straight t
+  :hook (org-mode . org-appear-mode)
+  :custom
+  (org-appear-autolinks t)
+  (org-appear-autosubmarkers t)
+  (org-appear-autoentities t)
+  (org-appear-autokeywords t)
+  (org-appear-inside-latex t)
+  (org-appear-delay 0.5)
+  (org-appear-trigger #'always))
+;; Appear:1 ends here
+
 ;; [[file:init-emacs.org::#org-mode-latex][LaTeX:1]]
 ;;------------------------------------------------------------------------------
 ;;; Org Mode: LaTeX

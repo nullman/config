@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-09-13 15:27 (kyle)>
+  #+TIMESTAMP: <2022-09-14 13:52 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -4207,6 +4207,31 @@
       ;; ;;   :straight t
       ;; ;;   :after (org)
       ;; ;;   :init (org-notify-start))
+    #+END_SRC
+
+*** Appear
+    :PROPERTIES:
+    :CUSTOM_ID: org-mode-appear
+    :END:
+
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Org Mode: Appear
+      ;;------------------------------------------------------------------------------
+
+      (init-message 2 "Org Mode: Appear")
+
+      (use-package org-appear
+        :straight t
+        :hook (org-mode . org-appear-mode)
+        :custom
+        (org-appear-autolinks t)
+        (org-appear-autosubmarkers t)
+        (org-appear-autoentities t)
+        (org-appear-autokeywords t)
+        (org-appear-inside-latex t)
+        (org-appear-delay 0.5)
+        (org-appear-trigger #'always))
     #+END_SRC
 
 *** LaTeX
