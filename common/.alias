@@ -730,8 +730,8 @@ alias adbdatee="adb -e shell date \$(date +%m%d%H%M%Y.%S)"
 alias adbdated="adb -d shell date \$(date +%m%d%H%M%Y.%S)"
 #        adbrs                   restart adb
 alias adbrs="
-    sudo \${HOME}/android-sdk/platform-tools/adb kill-server && \
-      sudo \${HOME}/android-sdk/platform-tools/adb start-server"
+    sudo \${ANDROID_SDK}/platform-tools/adb kill-server && \
+      sudo \${ANDROID_SDK}/platform-tools/adb start-server"
 #        adb-usb-setup           setup adb usb device
 alias adb-usb-setup="
     sudo bash -c \"
