@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-09-14 13:52 (kyle)>
+  #+TIMESTAMP: <2022-09-14 15:03 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -10267,13 +10267,16 @@
         (defun org-website-tangle-publish-async (&optional project force)
           "Asynchronous version of `org-website-tangle-publish'."
           (interactive)
-          (eval
-           `(async-spinner
-             (lambda ()
-               (load "~/web/bin/init-emacs-website.el")
-               (org-website-tangle-publish ,project ,force))
-             (lambda (result)
-               (message "Website tangle/publish finished")))))
+          (let ((file (file-truename "~/web/bin/init-emacs-website.el")))
+            (unless (file-exists-p file)
+              (error "Cannot load %s" file))
+            (eval
+             `(async-spinner
+               (lambda ()
+                 (load ,file)
+                 (org-website-tangle-publish ,project ,force))
+               (lambda (result)
+                 (message "Website tangle/publish finished"))))))
       #+END_SRC
 
 ***** +Tangle Publish Asynchronously+

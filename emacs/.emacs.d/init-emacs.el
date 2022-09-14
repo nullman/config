@@ -7472,13 +7472,16 @@ If FORCE is non-nil, force publish all files in project."
 (defun org-website-tangle-publish-async (&optional project force)
   "Asynchronous version of `org-website-tangle-publish'."
   (interactive)
-  (eval
-   `(async-spinner
-     (lambda ()
-       (load "~/web/bin/init-emacs-website.el")
-       (org-website-tangle-publish ,project ,force))
-     (lambda (result)
-       (message "Website tangle/publish finished")))))
+  (let ((file (file-truename "~/web/bin/init-emacs-website.el")))
+    (unless (file-exists-p file)
+      (error "Cannot load %s" file))
+    (eval
+     `(async-spinner
+       (lambda ()
+         (load ,file)
+         (org-website-tangle-publish ,project ,force))
+       (lambda (result)
+         (message "Website tangle/publish finished"))))))
 ;; Tangle Publish:1 ends here
 
 ;; [[file:init-emacs.org::#org-website-helper-functions-tangle-publish-asynchronously][+Tangle Publish Asynchronously+:1]]
