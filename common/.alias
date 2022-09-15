@@ -1538,16 +1538,28 @@ alias egrep="egrep -I --color=auto"
 #
 #        java-set-env-java8      set java environment to java 8
 alias java-set-env-java8="
-    sudo archlinux-java set java-8-openjdk && \
-    export JAVA_HOME=\"\$(java -XshowSettings:properties -version 2>&1 > /dev/null | grep 'java.home' | sed 's/^.* = //')\""
+    if [[ $(uname -s) == Darwin ]] ; then
+        export JAVA_HOME=\"\$(/usr/libexec/java_home -v 1.8)\"
+    else
+        sudo archlinux-java set java-8-openjdk && \
+        export JAVA_HOME=\"\$(java -XshowSettings:properties -version 2>&1 > /dev/null | grep 'java.home' | sed 's/^.* = //')\"
+    fi"
 #        java-set-env-java11     set java environment to java 11
 alias java-set-env-java11="
-    sudo archlinux-java set java-11-openjdk && \
-    export JAVA_HOME=\"\$(java -XshowSettings:properties -version 2>&1 > /dev/null | grep 'java.home' | sed 's/^.* = //')\""
+    if [[ $(uname -s) == Darwin ]] ; then
+        export JAVA_HOME=\"\$(/usr/libexec/java_home -v 11)\"
+    else
+        sudo archlinux-java set java-11-openjdk && \
+        export JAVA_HOME=\"\$(java -XshowSettings:properties -version 2>&1 > /dev/null | grep 'java.home' | sed 's/^.* = //')\"
+    fi"
 #        java-set-env-java18     set java environment to java 18
 alias java-set-env-java18="
-    sudo archlinux-java set java-18-openjdk && \
-    export JAVA_HOME=\"\$(java -XshowSettings:properties -version 2>&1 > /dev/null | grep 'java.home' | sed 's/^.* = //')\""
+    if [[ $(uname -s) == Darwin ]] ; then
+        export JAVA_HOME=\"\$(/usr/libexec/java_home -v 18)\"
+    else
+        sudo archlinux-java set java-18-openjdk && \
+        export JAVA_HOME=\"\$(java -XshowSettings:properties -version 2>&1 > /dev/null | grep 'java.home' | sed 's/^.* = //')\"
+    fi"
 
 #
 # javascript
