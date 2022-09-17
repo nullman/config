@@ -1992,43 +1992,124 @@ alias rsync-common-put-media-delete=" \
 #!    )"
 #        rsync-music-put-music   rsync /home/data/media/audio/Music /media/MUSIC
 alias rsync-music-put-music-sd=" \
-    dir=/run/media/\${USER}/MUSIC && \
-    rsync -rLtxW --size-only --progress --delete \${HOME}/.mpd/playlists/kyle.m3u \${dir}/ && \
-    rsync -rLtxW --size-only --progress --delete \${HOME}/.mpd/playlists/rated_good.m3u \${dir}/ && \
-    rsync -rLtxW --size-only --progress --delete ${home}/data/media/audio/Music/* \${dir}/ && \
-    rsync -rLtxW --size-only --progress --delete ${home}/data/media/audio/MODs \${dir}/ && \
-    sync"
+    usb=MUSIC
+    dir1=/media/\${usb}
+    dir2=/run/media/\${USER}/\${usb}
+    dir=''
+    [[ -d \${dir1} ]] && dir=\${dir1}
+    [[ -d \${dir2} ]] && dir=\${dir2}
+    if [[ -d \${dir} ]] ; then
+        rsync -rLtxW --size-only --progress --delete \${HOME}/.mpd/playlists/kyle.m3u \${dir}/
+        rsync -rLtxW --size-only --progress --delete \${HOME}/.mpd/playlists/rated_good.m3u \${dir}/
+        rsync -rLtxW --size-only --progress --delete ${home}/data/media/audio/Music/* \${dir}/
+        rsync -rLtxW --size-only --progress --delete ${home}/data/media/audio/MODs \${dir}/
+        sync
+    else
+        echo \"Error: \${usb} USB not found\"
+    fi"
 #        rsync-win-apps-put-win_apps-sd  rsync /home/data/media/software/Windows*/* /media/WIN_APPS/Windows*/
 alias rsync-win-apps-put-win_apps-sd="
-    dir=/run/media/\${USER}/WIN_APPS && \
-    rsync -rLtxW --size-only --progress --delete --exclude={'Windows OS/','Partitions/'} ${home}/data/media/software/Windows* \${dir}/ && \
-    rsync -rLtxW --size-only --progress --delete ${home}/data/media/repos/DOS ${home}/data/media/repos/FreeDOS \${dir}/ && \
-    sync"
+    usb=WIN_APPS
+    dir1=/media/\${usb}
+    dir2=/run/media/\${USER}/\${usb}
+    dir=''
+    [[ -d \${dir1} ]] && dir=\${dir1}
+    [[ -d \${dir2} ]] && dir=\${dir2}
+    if [[ -d \${dir} ]] ; then
+        rsync -rLtxW --size-only --progress --delete --exclude={'Windows OS/','Partitions/'} ${home}/data/media/software/Windows* \${dir}/
+        rsync -rLtxW --size-only --progress --delete ${home}/data/media/repos/DOS ${home}/data/media/repos/FreeDOS \${dir}/
+        sync
+    else
+        echo \"Error: \${usb} USB not found\"
+    fi"
 #        rsync-windows-put-windows-sd  rsync /home/data/media/software/Windows*/* /media/WINDOWS/Windows*/
 alias rsync-windows-put-windows-sd="
-    dir=/run/media/\${USER}/WINDOWS && \
-    rsync -rLtxW --size-only --progress --delete --exclude={'Windows OS/','Partitions/'} ${home}/data/media/software/Windows* \${dir}/ && \
-    rsync -rLtxW --size-only --progress --delete ${home}/data/media/repos/DOS ${home}/data/media/repos/FreeDOS \${dir}/ && \
-    sync"
+    usb=WINDOWS
+    dir1=/media/\${usb}
+    dir2=/run/media/\${USER}/\${usb}
+    dir=''
+    [[ -d \${dir1} ]] && dir=\${dir1}
+    [[ -d \${dir2} ]] && dir=\${dir2}
+    if [[ -d \${dir} ]] ; then
+        rsync -rLtxW --size-only --progress --delete --exclude={'Windows OS/','Partitions/'} ${home}/data/media/software/Windows* \${dir}/
+        rsync -rLtxW --size-only --progress --delete ${home}/data/media/repos/DOS ${home}/data/media/repos/FreeDOS \${dir}/
+        sync
+    else
+        echo \"Error: \${usb} USB not found\"
+    fi"
 #        rsync-t43-os2-put-t43-os2-sd  rsync /home/data/media/software/(Thinkpad T43|OS2)/* /media/T43_OS2/(Thinkpad T43|OS2)/
 alias rsync-t43-os2-put-t43-os2-sd=" \
-    dir=/run/media/\${USER}/T43_OS2 && \
-    rsync -rLtxW --size-only --progress --delete --exclude={'ArcaOS/','CDs/','OS2/'} ${home}/data/media/software/OS2/* \${dir}/OS2/ && \
-    rsync -rLtxW --size-only --progress --delete \"${home}/data/media/software/Thinkpad T43\" \${dir}/ && \
-    sync"
+    usb=T43_OS2
+    dir1=/media/\${usb}
+    dir2=/run/media/\${USER}/\${usb}
+    dir=''
+    [[ -d \${dir1} ]] && dir=\${dir1}
+    [[ -d \${dir2} ]] && dir=\${dir2}
+    if [[ -d \${dir} ]] ; then
+        rsync -rLtxW --size-only --progress --delete --exclude={'ArcaOS/','CDs/','OS2/'} ${home}/data/media/software/OS2/* \${dir}/OS2/
+        rsync -rLtxW --size-only --progress --delete \"${home}/data/media/software/Thinkpad T43\" \${dir}/
+        sync
+    else
+        echo \"Error: \${usb} USB not found\"
+    fi"
 #        rsync-mac-put-mac_apps-sd  rsync /home/data/media/software/Macintosh/* /media/MAC_APPS/Macintosh/
 alias rsync-mac-put-mac_apps-sd=" \
-    dir=/run/media/\${USER}/MAC_APPS/Macintosh && \
-    rsync -rLtxW --size-only --progress --delete --exclude='FINDER.DAT' ${home}/data/media/software/Macintosh/68000 \${dir}/ && \
-    rsync -rLtxW --size-only --progress --delete --exclude='FINDER.DAT' ${home}/data/media/software/Macintosh/OS\ X \${dir}/ && \
-    rsync -rLtxW --size-only --progress --delete --exclude='FINDER.DAT' ${home}/data/media/software/Macintosh/PPC \${dir}/ && \
-    sync"
+    usb=MAC_APPS/Macintosh
+    dir1=/media/\${usb}
+    dir2=/run/media/\${USER}/\${usb}
+    dir=''
+    [[ -d \${dir1} ]] && dir=\${dir1}
+    [[ -d \${dir2} ]] && dir=\${dir2}
+    if [[ -d \${dir} ]] ; then
+        rsync -rLtxW --size-only --progress --delete --exclude='FINDER.DAT' ${home}/data/media/software/Macintosh/68000 \${dir}/
+        rsync -rLtxW --size-only --progress --delete --exclude='FINDER.DAT' ${home}/data/media/software/Macintosh/OS\ X \${dir}/
+        rsync -rLtxW --size-only --progress --delete --exclude='FINDER.DAT' ${home}/data/media/software/Macintosh/PPC \${dir}/
+        sync
+    else
+        echo \"Error: \${usb} USB not found\"
+    fi"
 #        rsync-c64-put-sd16      rsync ${HOME}/C64/* /media/C64/
-alias rsync-c64-put-sd16="rsync -rLtxW --size-only --progress --delete --exclude='TOSEC/' \${HOME}/C64/* /run/media/\${USER}/C64/ && sync"
+alias rsync-c64-put-sd16="
+    usb=C64
+    dir1=/media/\${usb}
+    dir2=/run/media/\${USER}/\${usb}
+    dir=''
+    [[ -d \${dir1} ]] && dir=\${dir1}
+    [[ -d \${dir2} ]] && dir=\${dir2}
+    if [[ -d \${dir} ]] ; then
+        rsync -rLtxW --size-only --progress --delete --exclude='TOSEC/' \${HOME}/C64/* \${dir}/
+        sync
+    else
+        echo \"Error: \${usb} USB not found\"
+    fi"
 #        rsync-c64-put-sd128     rsync ${HOME}/C64/* /media/C64/
-alias rsync-c64-put-sd128="rsync -rLtxW --size-only --progress --delete \${HOME}/C64/* /run/media/\${USER}/C64/ && sync"
+alias rsync-c64-put-sd128="
+    usb=C64
+    dir1=/media/\${usb}
+    dir2=/run/media/\${USER}/\${usb}
+    dir=''
+    [[ -d \${dir1} ]] && dir=\${dir1}
+    [[ -d \${dir2} ]] && dir=\${dir2}
+    if [[ -d \${dir} ]] ; then
+        rsync -rLtxW --size-only --progress --delete \${HOME}/C64/* \${dir}/
+        sync
+    else
+        echo \"Error: \${usb} USB not found\"
+    fi"
 #        rsync-adult-put-adult-sd  rsync /home/data/media/video/Adult/* /media/ADULT/
-alias rsync-adult-put-adult-sd="rsync -rLtxW --size-only --progress --delete --exclude={'#recycle','White Boxxx Compilation'} ${home}/data/media/video/Adult/ /run/media/\${USER}/ADULT/ && sync"
+alias rsync-adult-put-adult-sd="
+    usb=ADULT
+    dir1=/media/\${usb}
+    dir2=/run/media/\${USER}/\${usb}
+    dir=''
+    [[ -d \${dir1} ]] && dir=\${dir1}
+    [[ -d \${dir2} ]] && dir=\${dir2}
+    if [[ -d \${dir} ]] ; then
+        rsync -rLtxW --size-only --progress --delete --exclude={'#recycle','White Boxxx Compilation'} ${home}/data/media/video/Adult/ \${dir}/
+        sync
+    else
+        echo \"Error: \${usb} USB not found\"
+    fi"
 
 #
 # ruby
