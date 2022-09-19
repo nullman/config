@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-09-14 15:06 (kyle)>
+  #+TIMESTAMP: <2022-09-19 10:06 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -23446,23 +23446,23 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;;   (git-gutter-fr+-minimal))
     #+END_SRC
 
-*** git-timemachine
+*** +git-timemachine+
     :PROPERTIES:
     :CUSTOM_ID: modules-git-timemachine
     :END:
 
     Walk through git revisions of a file.
 
-    #+BEGIN_SRC emacs-lisp
-      ;;------------------------------------------------------------------------------
-      ;;; Packages: git-timemachine
-      ;;------------------------------------------------------------------------------
+    #+BEGIN_SRC emacs-lisp :tangle no
+      ;; ;;------------------------------------------------------------------------------
+      ;; ;;; Packages: git-timemachine
+      ;; ;;------------------------------------------------------------------------------
 
-      (init-message 2 "Modules: git-timemachine")
+      ;; (init-message 2 "Modules: git-timemachine")
 
-      (use-package git-timemachine
-        :straight t
-        :bind* ("C-x C-g" . git-timemachine))
+      ;; (use-package git-timemachine
+      ;;   :straight t
+      ;;   :bind* ("C-x C-g" . git-timemachine))
     #+END_SRC
 
 *** +helpful+
@@ -25474,6 +25474,8 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
     :PROPERTIES:
     :CUSTOM_ID: modules-popper
     :END:
+
+    Treat certain buffer windows as popups.
 
     #+BEGIN_SRC emacs-lisp
       ;;------------------------------------------------------------------------------

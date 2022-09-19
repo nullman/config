@@ -15867,18 +15867,6 @@ USING is the remaining peg."
 ;;   (git-gutter-fr+-minimal))
 ;; git-gutter+:1 ends here
 
-;; [[file:init-emacs.org::#modules-git-timemachine][git-timemachine:1]]
-;;------------------------------------------------------------------------------
-;;; Packages: git-timemachine
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modules: git-timemachine")
-
-(use-package git-timemachine
-  :straight t
-  :bind* ("C-x C-g" . git-timemachine))
-;; git-timemachine:1 ends here
-
 ;; [[file:init-emacs.org::#packages-hide-mode-line][hide-mode-line:1]]
 ;;------------------------------------------------------------------------------
 ;;; Packages: hide-mode-line
