@@ -1050,6 +1050,8 @@ alias chmodarw="chmod u=rw,g=rw,o=rw"
 alias chmodarx="chmod u=rX,g=rX,o=rX"
 #        chmodaa                 chmod u=rwX,g=rwX,o=rwX
 alias chmodaa="chmod u=rwX,g=rwX,o=rwX"
+#        chmodan                 chmod u=rwX,g=rX,o=rX (normal)
+alias chmodan="chmod u=rwX,g=rX,o=rX"
 #
 # chmod user
 #
