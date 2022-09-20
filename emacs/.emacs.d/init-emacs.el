@@ -2386,7 +2386,7 @@ KEYMAP defaults to `override-global-map'."
   ;; hide leading stars on headings
   (org-hide-leading-stars t)
   ;; startup in "overview" (folded) by default
-  (org-startup-folded t)
+  (org-startup-folded 'overview)
   ;; remap disputed keys (see `org-disputed-keys')
   (org-replace-disputed-keys t)
   ;; display inline images

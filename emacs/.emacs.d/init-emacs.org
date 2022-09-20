@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-09-19 10:06 (kyle)>
+  #+TIMESTAMP: <2022-09-20 10:54 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -3769,7 +3769,7 @@
         ;; hide leading stars on headings
         (org-hide-leading-stars t)
         ;; startup in "overview" (folded) by default
-        (org-startup-folded t)
+        (org-startup-folded 'overview)
         ;; remap disputed keys (see `org-disputed-keys')
         (org-replace-disputed-keys t)
         ;; display inline images
