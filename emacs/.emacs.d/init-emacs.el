@@ -5249,6 +5249,7 @@ heading, properties, source block with title comment, and test block."
   ;;:straight t
   :load-path (lambda () (file-truename (expand-file-name "~/code/github-nullman/emacs-org-visibility")))
   :after (org)
+  :demand t
   :bind* (:map org-visibility-mode-map
                ("C-x C-v" . org-visibility-force-save) ; default: `find-alternative-file'
                ("C-x M-v" . org-visibility-remove))    ; default: undefined
@@ -5263,7 +5264,7 @@ heading, properties, source block with title comment, and test block."
   ;; list of directories and files to not persist and restore visibility state of
   (org-visibility-exclude-paths `(,(file-truename "~/org/old")
                                   ,(file-truename "~/org/test")))
-  :init
+  :config
   (org-visibility-mode 1))
 ;; Visibility:1 ends here
 
