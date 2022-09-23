@@ -59,7 +59,8 @@ while getopts ":drwsh" opt ; do
             exit 0
             ;;
         *)
-            echo -e "Invalid option: -$OPTARG"
+
+            echo -e "Invalid option: -${OPTARG}" >&2
             _usage
             exit 1
     esac

@@ -7,100 +7,143 @@
 # Author: Kyle W T Sherman
 #===============================================================================
 
-basedir="/mnt/synology/video/Internet Show"
+basedir="/mnt/synology/video"
 
 channels=(
-#    "8-Bit Keys                      | https://www.youtube.com/c/8BitKeys/videos"
-#    "8-Bit Show And Tell             | https://www.youtube.com/c/8BitShowAndTell/videos"
-#    "Action Retro                    | https://www.youtube.com/c/ActionRetro/videos"
-    "Adrian's Digital Basement       | https://www.youtube.com/c/adriansdigitalbasement/videos"
-    "Adrian's Digital Basement ][    | https://www.youtube.com/channel/UCbtwi4wK1YXd9AyV_4UcE6g/videos"
-#    "Back Office Show                | https://www.youtube.com/c/backofficeshow/videos"
-    "Ben Eater                       | https://www.youtube.com/c/BenEater/videos"
-#    "Ben Heck Hacks                  | https://www.youtube.com/c/BenHeckHacks/videos"
-#    "Blue OS Museum                  | https://www.youtube.com/channel/UCO6vmCYZl7ZhEydFGi76iaw/videos"
-#    "Chyrosran22                     | https://www.youtube.com/user/Chyrosran22/videos"
-#    "Commodore Amiga Demos           | https://www.youtube.com/playlist?list=PLnmLOQIDmUvUgbvY-Jq0txuYWYgWVcOOS"
-#    "Commodore 64 Demos              | https://www.youtube.com/playlist?list=PLnmLOQIDmUvVn43FHdakSTY_W_EuoVwnT"
-#    "Dave's Garage                   | https://www.youtube.com/c/DavesGarage/videos"
-#    "DUST                            | https://www.youtube.com/c/watchdust/videos"
-#    "EmacsConf                       | https://www.youtube.com/c/EmacsConf/videos"
-#    "Emacs Rocks                     | https://www.youtube.com/user/emacsrocks/videos"
-    "Flux Harmonic                   | https://www.youtube.com/c/FluxHarmonicLive/videos"
-#    "FreeDOS                         | https://www.youtube.com/c/FreeDOSProject/videos"
-#    "GeekBits                        | https://www.youtube.com/c/GeekBits/videos"
-#    "Handheld Computing              | https://www.youtube.com/c/HandheldComputing/videos"
-    "Hey Birt                        | https://www.youtube.com/c/HeyBirt/videos"
-#    "Jake B                          | https://www.youtube.com/c/JakeBox0/videos"
-#    "James Sharman                   | https://www.youtube.com/c/weirdboyjim/videos"
-#    "Jan Beta                        | https://www.youtube.com/c/JanBeta"
-#    "LGR                             | https://www.youtube.com/c/Lazygamereviews/videos"
-#    "LGR Blerbs                      | https://www.youtube.com/c/LGRBlerbs/videos"
-    "Lukewh, Emacs                   | https://www.youtube.com/playlist?list=PLNJWazvift25KnHDwYlhwrrgr60wtpQOB"
-#    "Mac84                           | https://www.youtube.com/c/Mac84/videos"
-#    "Matt Heffernan Slithy Games     | https://www.youtube.com/c/slithymatt/videos"
-    "Me, Myself, and Die             | https://www.youtube.com/c/MeMyselfandDieRPG/videos"
-    "PhilsComputerLab                | https://www.youtube.com/c/philscomputerlab/videos"
-    "Protesilaos Stavrou             | https://www.youtube.com/c/ProtesilaosStavrou/videos"
-#    "Retro Hack Shack                | https://www.youtube.com/c/RetroHackShack/videos"
-#    "Retro Recipes                   | https://www.youtube.com/c/Perifractic/videos"
-#    "root42                          | https://www.youtube.com/c/root42/videos"
-#    "RMC, The Cave                   | https://www.youtube.com/c/RMCRetro/videos"
-    "System Crafters                 | https://www.youtube.com/c/SystemCrafters/videos"
-    "Tech Tangents                   | https://www.youtube.com/c/AkBKukU/videos"
-    "The 8-Bit Guy                   | https://www.youtube.com/c/The8BitGuy/videos"
-#    "The Retro Shack                 | https://www.youtube.com/c/TheRetroShack/videos"
-#    "TheGeekPub                      | https://www.youtube.com/c/TheGeekPub/videos"
-    "Tsoding Daily                   | https://www.youtube.com/c/TsodingDaily/videos"
-#    "Usagi Electric                  | https://www.youtube.com/c/Nakazoto/videos"
+#   "8-Bit Keys                      | Internet Show  | https://www.youtube.com/c/8BitKeys/videos"
+#   "8-Bit Show And Tell             | Internet Show  | https://www.youtube.com/c/8BitShowAndTell/videos"
+#   "Action Retro                    | Internet Show  | https://www.youtube.com/c/ActionRetro/videos"
+    "Adrian's Digital Basement       | Internet Show  | https://www.youtube.com/c/adriansdigitalbasement/videos"
+    "Adrian's Digital Basement ][    | Internet Show  | https://www.youtube.com/channel/UCbtwi4wK1YXd9AyV_4UcE6g/videos"
+#   "Back Office Show                | Internet Show  | https://www.youtube.com/c/backofficeshow/videos"
+    "Ben Eater                       | Internet Show  | https://www.youtube.com/c/BenEater/videos"
+#   "Ben Heck Hacks                  | Internet Show  | https://www.youtube.com/c/BenHeckHacks/videos"
+#   "Blue OS Museum                  | Internet Show  | https://www.youtube.com/channel/UCO6vmCYZl7ZhEydFGi76iaw/videos"
+#   "Chyrosran22                     | Internet Show  | https://www.youtube.com/user/Chyrosran22/videos"
+#   "Commodore Amiga Demos           | Internet Show  | https://www.youtube.com/playlist?list=PLnmLOQIDmUvUgbvY-Jq0txuYWYgWVcOOS"
+#   "Commodore 64 Demos              | Internet Show  | https://www.youtube.com/playlist?list=PLnmLOQIDmUvVn43FHdakSTY_W_EuoVwnT"
+#   "Dave's Garage                   | Internet Show  | https://www.youtube.com/c/DavesGarage/videos"
+#   "DUST                            | Internet Show  | https://www.youtube.com/c/watchdust/videos"
+#   "EmacsConf                       | Internet Show  | https://www.youtube.com/c/EmacsConf/videos"
+#   "Emacs Rocks                     | Internet Show  | https://www.youtube.com/user/emacsrocks/videos"
+    "Flux Harmonic                   | Internet Show  | https://www.youtube.com/c/FluxHarmonicLive/videos"
+#   "FreeDOS                         | Internet Show  | https://www.youtube.com/c/FreeDOSProject/videos"
+#   "GeekBits                        | Internet Show  | https://www.youtube.com/c/GeekBits/videos"
+#   "Handheld Computing              | Internet Show  | https://www.youtube.com/c/HandheldComputing/videos"
+    "Hey Birt                        | Internet Show  | https://www.youtube.com/c/HeyBirt/videos"
+#   "Jake B                          | Internet Show  | https://www.youtube.com/c/JakeBox0/videos"
+#   "James Sharman                   | Internet Show  | https://www.youtube.com/c/weirdboyjim/videos"
+#   "Jan Beta                        | Internet Show  | https://www.youtube.com/c/JanBeta"
+#   "LGR                             | Internet Show  | https://www.youtube.com/c/Lazygamereviews/videos"
+#   "LGR Blerbs                      | Internet Show  | https://www.youtube.com/c/LGRBlerbs/videos"
+    "Lukewh, Emacs                   | Internet Show  | https://www.youtube.com/playlist?list=PLNJWazvift25KnHDwYlhwrrgr60wtpQOB"
+#   "Mac84                           | Internet Show  | https://www.youtube.com/c/Mac84/videos"
+#   "Matt Heffernan Slithy Games     | Internet Show  | https://www.youtube.com/c/slithymatt/videos"
+    "Me, Myself, and Die             | Internet Show  | https://www.youtube.com/c/MeMyselfandDieRPG/videos"
+#   "Paul Scinocca                   | Internet Video | https://www.youtube.com/c/PaulScinocca/videos"
+    "PhilsComputerLab                | Internet Show  | https://www.youtube.com/c/philscomputerlab/videos"
+    "Protesilaos Stavrou             | Internet Show  | https://www.youtube.com/c/ProtesilaosStavrou/videos"
+#   "Retro Hack Shack                | Internet Show  | https://www.youtube.com/c/RetroHackShack/videos"
+#   "Retro Recipes                   | Internet Show  | https://www.youtube.com/c/Perifractic/videos"
+#   "root42                          | Internet Show  | https://www.youtube.com/c/root42/videos"
+#   "RMC, The Cave                   | Internet Show  | https://www.youtube.com/c/RMCRetro/videos"
+    "System Crafters                 | Internet Show  | https://www.youtube.com/c/SystemCrafters/videos"
+    "Tech Tangents                   | Internet Show  | https://www.youtube.com/c/AkBKukU/videos"
+    "The 8-Bit Guy                   | Internet Show  | https://www.youtube.com/c/The8BitGuy/videos"
+#   "The Retro Shack                 | Internet Show  | https://www.youtube.com/c/TheRetroShack/videos"
+#   "TheGeekPub                      | Internet Show  | https://www.youtube.com/c/TheGeekPub/videos"
+    "Tsoding Daily                   | Internet Show  | https://www.youtube.com/c/TsodingDaily/videos"
+#   "Usagi Electric                  | Internet Show  | https://www.youtube.com/c/Nakazoto/videos"
 )
 
-if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+_usage() {
     cat <<EOF
-Usage: $(basename $0) [OPTIONS] [NAME]
+Usage: $(basename $0) [OPTIONS] [CHANNEL]
 Grab the latest YouTube videos from a curated list.
-  NAME           - Name of list to download
-  --list         - Display video list names
-  --restart      - Download any missing videos from all lists
-  --restart NAME - Download any missing videos from NAME
+  OPTIONS:
+  -l, --list             display video list names
+  -r, --restart          download any missing videos from all lists
+  -r, --restart CHANNEL  download any missing videos from CHANNEL
+  -h, --help             show help (this message)
+  CHANNEL                download videos from CHANNEL
 EOF
-    exit 1
-fi
+}
 
-if [[ "$1" == "--list" ]] ; then
-    for ((x = 0; x < ${#channels[@]}; x += 1)) ; do
-        echo "${channels[$x]}" | sed 's/ *|.*$//'
-    done
-    exit 0
-fi
-
-listname=""
-if [[ -n "$1" && "${1:0:1}" != "-" ]] ; then
-    listname="$1"
-elif [[ "${1:0:1}" == "-" && -n "$2" ]] ; then
+_download() {
+    archive="$1"
     listname="$2"
-fi
-[[ -n "${listname}" ]] && echo "List: ${listname}"
 
-for ((x = 0; x < ${#channels[@]}; x += 1)) ; do
-    name=$(echo "${channels[$x]}" | sed 's/ *|.*$//')
-    url=$(echo "${channels[$x]}" | sed 's/^.*| *//')
-    if [[ -z "${listname}" || "${name}" == "${listname}" ]] ; then
-        echo
-        echo "${url} -> ${basedir}/${name}"
-        echo
-        mkdir -p "${basedir}/${name}"
-        archive="--download-archive ${HOME}/.yt-dlp-download-archive"
-        [[ "$1" == "--restart" ]] && archive="--no-download-archive"
-        cd "${basedir}/${name}" && \
-            yt-dlp --format "bv*+ba/b" \
-                   --format-sort "res:1080,res:720,res:480" \
-                   --playlist-reverse \
-                   ${archive} \
-                   --output "${name} - %(release_date>%Y-%m-%d,upload_date>%Y-%m-%d|Unknown)s - %(title)s.%(ext)s" \
-                   "${url}"
-    fi
+    [[ -n "${listname}" ]] && echo "List: ${listname}"
+
+    for ((x = 0; x < ${#channels[@]}; x += 1)) ; do
+        channel=$(echo "${channels[$x]}" | sed 's/ *|/|/g ; s/| */|/g')
+        name=$(echo "${channel}" | cut -d '|' -f 1)
+        dir=$(echo "${channel}" | cut -d '|' -f 2)
+        url=$(echo "${channel}" | cut -d '|' -f 3)
+        echo "|${name}|${dir}|${url}|"
+        if [[ -z "${listname}" || "${name}" == "${listname}" ]] ; then
+            path="${basedir}/${dir}/${name}"
+            echo
+            echo "${url} -> ${path}"
+            echo
+            mkdir -p "${path}"
+            cd "${path}" && \
+                yt-dlp --format "bv*+ba/b" \
+                       --format-sort "res:1080,res:720,res:480" \
+                       --playlist-reverse \
+                       ${archive} \
+                       --output "${name} - %(release_date>%Y-%m-%d,upload_date>%Y-%m-%d|Unknown)s - %(title)s.%(ext)s" \
+                       "${url}"
+        fi
+    done
+}
+
+archive="--download-archive ${HOME}/.yt-dlp-download-archive"
+
+# handle command line arguments
+while true ; do
+    case $1 in
+        -l|--list)
+            for ((x = 0; x < ${#channels[@]}; x += 1)) ; do
+                echo "${channels[$x]}" | sed 's/ *|.*$//'
+            done
+            exit 0
+            ;;
+        -r|--restart)
+            listname=
+            if [[ -n "$2" ]] ; then
+                listname="$2"
+                shift
+            fi
+            archive="--no-download-archive"
+            _download "${archive}" "${listname}"
+            exit 0
+            ;;
+        -h|-\?|--help)
+            _usage 0
+            exit 0
+            ;;
+        --)
+            shift
+            break
+            ;;
+        -?*)
+            echo -e "Invalid option: $1" >&2
+            _usage
+            exit 1
+            ;;
+        *)
+            break
+            ;;
+    esac
+    shift
 done
+
+listname=
+[[ -n "$1" ]] && listname="$1"
+_download "${archive}" "${listname}"
+
+exit 0
 
 #===============================================================================
 # End of File
