@@ -17145,7 +17145,7 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
 
 (use-package nov
   :straight t
-  :mode (("\\.epub\\'" . nov-mode)))
+  :mode ("\\.epub\\'" . nov-mode))
 
 ;; ;;------------------------------------------------------------------------------
 ;; ;;;; Packages: nov-xwidget
@@ -20031,6 +20031,20 @@ Commands:
   ;;(add-hook 'v-mode-hook #'install-remove-tabs)
   )
 ;; V Mode:1 ends here
+
+;; [[file:init-emacs.org::#modes-vimrc-mode][Vimrc Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Vimrc Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Vimrc Mode")
+
+(use-package vimrc-mode
+  :straight t
+  :mode (("\\.vimrc\\'" . vimrc-mode)
+         ("\\.vim\\'" . vimrc-mode)
+         ("\\.exrc\\'" . vimrc-mode)))
+;; Vimrc Mode:1 ends here
 
 ;; [[file:init-emacs.org::#modes-xml-mode][XML Mode:1]]
 ;;------------------------------------------------------------------------------
