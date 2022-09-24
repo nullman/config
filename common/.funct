@@ -1894,6 +1894,7 @@ manjaro-initialize() {
         "manjaro-packages-optional-network"
         "manjaro-packages-optional-development"
         "manjaro-packages-optional-development-commander-x-16"
+        "manjaro-packages-optional-development-djgpp"
         "manjaro-packages-optional-graphical"
         "manjaro-packages-optional-audio"
         "manjaro-packages-optional-audio-grip"
