@@ -3336,9 +3336,9 @@ alias make-dict-words="sudo wget https://gist.githubusercontent.com/wchargin/892
 #!    fi"
 
 #
-# commander x-16
+# commander x16
 #
-#        x16-setup               git clone commander x-16 repos and make
+#        x16-setup               git clone commander x16 repos and make
 alias x16-setup="
     basedir=\${HOME}/code
     cc65dir=\${basedir}/cc65
@@ -3358,7 +3358,7 @@ alias x16-setup="
             echo \"Make sure your path contains: '\${x16dir}/x16-emulator'\" && \
             echo \"Now run x16update to build the repositories\"
     )"
-#        x16-update              git pull commander x-16 repos and make
+#        x16-update              git pull commander x16 repos and make
 alias x16-update="
     basedir=\${HOME}/code
     cc65dir=\${basedir}/cc65
@@ -3374,7 +3374,7 @@ alias x16-update="
             cd x16-emulator && git pull origin && make && cd .. && \
             cd x16-rom && git pull origin && make
     )"
-#        x16-emu                 commander x-16 emulator
+#        x16-emu                 commander x16 emulator
 #!alias x16-emu="x16emu -rom /usr/share/x16-rom/rom.bin"
 alias x16-emu="x16emu -rom \${HOME}/code/commander-x16/x16-rom/rom.bin"
 
