@@ -31,7 +31,7 @@ os="$(uname -s)"
 export SHELL="/bin/zsh"
 
 # command history
-export HISTFILE="${HOME}/.cache/zsh_history"
+export HISTFILE="${HOME}/.zsh_history"
 export HISTSIZE="10000"
 export SAVEHIST="10000"
 export HISTCONTROL="ignoredups"
