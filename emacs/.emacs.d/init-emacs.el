@@ -10558,13 +10558,13 @@ MODE defaults to `major-mode'."
     (nreverse mode-list)))
 ;; derived-modes:1 ends here
 
-;; [[file:init-emacs.org::#functions-emacs-grouped-functions][Emacs Grouped Functions=====================================================:1]]
+;; [[file:init-emacs.org::#functions-emacs-grouped-functions][Emacs Grouped Functions:1]]
 ;;------------------------------------------------------------------------------
 ;;; Functions: Emacs Grouped Functions
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Functions: Emacs Grouped Functions")
-;; Emacs Grouped Functions=====================================================:1 ends here
+;; Emacs Grouped Functions:1 ends here
 
 ;; [[file:init-emacs.org::#functions-emacs-grouped-functions-buffer-kill][Buffer Kill:1]]
 ;;------------------------------------------------------------------------------
@@ -17778,6 +17778,17 @@ otherwise run `find-file-as-root'."
   ;; turn on undo-tree globally
   (global-undo-tree-mode 1))
 ;; undo-tree:1 ends here
+
+;; [[file:init-emacs.org::#modules-units-mode][units-mode:2]]
+;;------------------------------------------------------------------------------
+;;; Packages: units-mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: units-mode")
+
+(use-package units-mode
+  :straight t)
+;; units-mode:2 ends here
 
 ;; [[file:init-emacs.org::#modules-vimish-fold][vimish-fold:1]]
 ;;------------------------------------------------------------------------------

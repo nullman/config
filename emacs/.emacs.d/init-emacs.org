@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-09-29 14:54 (kyle)>
+  #+TIMESTAMP: <2022-09-29 15:07 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -15472,7 +15472,7 @@
             (nreverse mode-list)))
       #+END_SRC
 
-*** Emacs Grouped Functions=====================================================
+*** Emacs Grouped Functions
     :PROPERTIES:
     :CUSTOM_ID: functions-emacs-grouped-functions
     :END:
@@ -15680,7 +15680,7 @@
       Linux command line tool *xsel* (which must be installed) to get the same
       functionality when running Emacs in command line mode.
 
-      You need to have the *xsel* command installed on your system for this to work.
+      The *xsel* command needs to be installed for this to work.
 
       #+BEGIN_SRC sh :dir /sudo:: :tangle no
         # install xsel on Manjaro/Arch system
@@ -17594,8 +17594,7 @@
       :CUSTOM_ID: functions-external-program-functions-define-word
       :END:
 
-      You need to have the *trans* command installed on your system for this to
-      work.
+      The *trans* command needs to be installed for this to work.
 
       #+BEGIN_SRC sh :dir /sudo:: :tangle no
         # install trans on Manjaro/Arch system
@@ -24037,8 +24036,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
 
     Grammar check utility using LanguageTool.
 
-    You need to have the *languagetool* command installed on your system for this
-    to work.
+    The *languagetool* command needs to be installed for this to work.
 
     #+BEGIN_SRC sh :tangle no :dir /sudo::
       # install languagetool on Manjaro/Arch system
@@ -25646,8 +25644,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
 
     Support for reading, writing, and loading encrypted files.
 
-    You need to have the *ccrypt* command installed on your system for this to
-    work.
+    The *ccrypt* command needs to be installed for this to work.
 
     #+BEGIN_SRC sh :tangle no :dir /sudo::
       # install ccrypt on Manjaro/Arch system
@@ -26997,6 +26994,31 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;;         uniquify-ignore-buffers-re "^\\*"))
     #+END_SRC
 
+*** units-mode
+    :PROPERTIES:
+    :CUSTOM_ID: modules-units-mode
+    :END:
+
+    Mode for conversion between different units.
+
+    The *units* command needs to be installed for this to work.
+
+    #+BEGIN_SRC sh :dir /sudo:: :tangle no
+      # install units on Manjaro/Arch system
+      sudo pacman -S install units
+    #+END_SRC
+
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Packages: units-mode
+      ;;------------------------------------------------------------------------------
+
+      (init-message 2 "Modules: units-mode")
+
+      (use-package units-mode
+        :straight t)
+    #+END_SRC
+
 *** vimish-fold
     :PROPERTIES:
     :CUSTOM_ID: modules-vimish-fold
@@ -27022,7 +27044,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
 
     Visit World Wide Web pages using the external w3m command.
 
-    You need to have the *w3m* command installed on your system for this to work.
+    The *w3m* command needs to be installed for this to work.
 
     #+BEGIN_SRC sh :dir /sudo:: :tangle no
       # install w3m on Manjaro/Arch system
