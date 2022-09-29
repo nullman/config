@@ -5246,8 +5246,8 @@ heading, properties, source block with title comment, and test block."
 (init-message 2 "Org Mode: Visibility")
 
 (use-package org-visibility
-  ;;:straight t
-  :load-path (lambda () (file-truename (expand-file-name "~/code/github-nullman/emacs-org-visibility")))
+  :straight t
+  ;;:load-path (lambda () (file-truename (expand-file-name "~/code/github-nullman/emacs-org-visibility")))
   :after (org)
   :demand t
   :bind* (:map org-visibility-mode-map

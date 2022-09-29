@@ -1850,6 +1850,7 @@ manjaro-initialize() {
         "manjaro-lightdm-gtk-greeter-conf"
         "manjaro-lightdm-slick-greeter-conf"
         "manjaro-wm"
+        #"manjaro-wm-spacefm-conf"
         "manjaro-bspwm"
         "manjaro-pkgfile"
         "manjaro-copy-wallpapers"
