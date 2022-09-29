@@ -51,6 +51,7 @@ channels=(
 #   "RMC, The Cave                    | Internet Show  | https://www.youtube.com/c/RMCRetro/videos"
     "System Crafters                  | Internet Show  | https://www.youtube.com/c/SystemCrafters/videos"
     "Tech Tangents                    | Internet Show  | https://www.youtube.com/c/AkBKukU/videos"
+#   "Techmoan                         | Internet Show  | https://www.youtube.com/c/Techmoan/videos"
     "The 8-Bit Guy                    | Internet Show  | https://www.youtube.com/c/The8BitGuy/videos"
 #   "The Centre for Computing History | Internet Show  | https://www.youtube.com/c/TheCentreforComputingHistory/videos"
 #   "The Phintage Collector           | Internet Show  | https://www.youtube.com/c/THEPHINTAGECOLLECTOR/videos"
@@ -59,6 +60,7 @@ channels=(
 #   "This Does Not Compute            | Internet Show  | https://www.youtube.com/c/ThisDoesNotCompute/videos"
     "Tsoding Daily                    | Internet Show  | https://www.youtube.com/c/TsodingDaily/videos"
 #   "Usagi Electric                   | Internet Show  | https://www.youtube.com/c/Nakazoto/videos"
+#   "Vsauce2                          | Internet Show  | https://www.youtube.com/user/Vsauce2/videos"
 )
 
 _usage() {
