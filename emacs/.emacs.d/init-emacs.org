@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-09-29 21:39 (kyle)>
+  #+TIMESTAMP: <2022-09-30 08:51 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -26994,7 +26994,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;;         uniquify-ignore-buffers-re "^\\*"))
     #+END_SRC
 
-*** +units-mode+
+*** units-mode
     :PROPERTIES:
     :CUSTOM_ID: modules-units-mode
     :END:
@@ -27003,20 +27003,20 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
 
     The *units* command needs to be installed for this to work.
 
-    #+BEGIN_SRC sh :dir /sudo:: :tangle no :tangle no
-      # # install units on Manjaro/Arch system
-      # sudo pacman -S --noconfirm units
+    #+BEGIN_SRC sh :dir /sudo:: :tangle no
+      # install units on Manjaro/Arch system
+      sudo pacman -S --noconfirm units
     #+END_SRC
 
-    #+BEGIN_SRC emacs-lisp :tangle no
-      ;; ;;------------------------------------------------------------------------------
-      ;; ;;; Packages: units-mode
-      ;; ;;------------------------------------------------------------------------------
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Packages: units-mode
+      ;;------------------------------------------------------------------------------
 
-      ;; (init-message 2 "Modules: units-mode")
+      (init-message 2 "Modules: units-mode")
 
-      ;; (use-package units-mode
-      ;;   :straight t)
+      (use-package units-mode
+        :straight t)
     #+END_SRC
 
 *** vimish-fold
