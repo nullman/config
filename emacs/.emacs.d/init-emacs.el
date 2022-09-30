@@ -17779,17 +17779,6 @@ otherwise run `find-file-as-root'."
   (global-undo-tree-mode 1))
 ;; undo-tree:1 ends here
 
-;; [[file:init-emacs.org::#modules-units-mode][units-mode:2]]
-;;------------------------------------------------------------------------------
-;;; Packages: units-mode
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modules: units-mode")
-
-(use-package units-mode
-  :straight t)
-;; units-mode:2 ends here
-
 ;; [[file:init-emacs.org::#modules-vimish-fold][vimish-fold:1]]
 ;;------------------------------------------------------------------------------
 ;;; Packages: vimish-fold
@@ -20495,7 +20484,7 @@ Commands:
  `(("List Packages" "(package-list-packages :nofetch)" "List packages.")
    ("List Packages (Refresh)" "package-list-packages" "List packages (after refresh).")
    ("Install Package" "package-install" "Install package.")
-   ("Straight Refresh" "straight-pull-recipe-repositories" "Refresh recipe repositories.")
+   ("Straight Refresh Recipes" "straight-pull-recipe-repositories" "Refresh recipe repositories.")
    ("Straight Pull All" "straight-pull-all" "Pull all packages.")
    ;;("Straight Fetch All" "straight-fetch-all" "Fetch all packages.")
    ;;("Auto-Remove Packages" "package-autoremove" "Remove packages that are no more needed.")

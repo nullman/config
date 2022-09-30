@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-09-29 15:07 (kyle)>
+  #+TIMESTAMP: <2022-09-29 21:39 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -15684,7 +15684,7 @@
 
       #+BEGIN_SRC sh :dir /sudo:: :tangle no
         # install xsel on Manjaro/Arch system
-        sudo pacman -S install xsel
+        sudo pacman -S --noconfirm xsel
       #+END_SRC
 
       #+BEGIN_SRC emacs-lisp
@@ -17598,7 +17598,7 @@
 
       #+BEGIN_SRC sh :dir /sudo:: :tangle no
         # install trans on Manjaro/Arch system
-        sudo pacman -S install translate-shell
+        sudo pacman -S --noconfirm translate-shell
       #+END_SRC
 
       #+BEGIN_SRC emacs-lisp
@@ -24040,7 +24040,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
 
     #+BEGIN_SRC sh :tangle no :dir /sudo::
       # install languagetool on Manjaro/Arch system
-      sudo pacman -S languagetool
+      sudo pacman -S --noconfirm languagetool
     #+END_SRC
 
     #+BEGIN_SRC emacs-lisp
@@ -25648,7 +25648,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
 
     #+BEGIN_SRC sh :tangle no :dir /sudo::
       # install ccrypt on Manjaro/Arch system
-      sudo pacman -S install ccrypt
+      sudo pacman -S --noconfirm ccrypt
     #+END_SRC
 
     #+BEGIN_SRC emacs-lisp
@@ -26994,7 +26994,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;;         uniquify-ignore-buffers-re "^\\*"))
     #+END_SRC
 
-*** units-mode
+*** +units-mode+
     :PROPERTIES:
     :CUSTOM_ID: modules-units-mode
     :END:
@@ -27003,20 +27003,20 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
 
     The *units* command needs to be installed for this to work.
 
-    #+BEGIN_SRC sh :dir /sudo:: :tangle no
-      # install units on Manjaro/Arch system
-      sudo pacman -S install units
+    #+BEGIN_SRC sh :dir /sudo:: :tangle no :tangle no
+      # # install units on Manjaro/Arch system
+      # sudo pacman -S --noconfirm units
     #+END_SRC
 
-    #+BEGIN_SRC emacs-lisp
-      ;;------------------------------------------------------------------------------
-      ;;; Packages: units-mode
-      ;;------------------------------------------------------------------------------
+    #+BEGIN_SRC emacs-lisp :tangle no
+      ;; ;;------------------------------------------------------------------------------
+      ;; ;;; Packages: units-mode
+      ;; ;;------------------------------------------------------------------------------
 
-      (init-message 2 "Modules: units-mode")
+      ;; (init-message 2 "Modules: units-mode")
 
-      (use-package units-mode
-        :straight t)
+      ;; (use-package units-mode
+      ;;   :straight t)
     #+END_SRC
 
 *** vimish-fold
@@ -27048,7 +27048,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
 
     #+BEGIN_SRC sh :dir /sudo:: :tangle no
       # install w3m on Manjaro/Arch system
-      sudo pacman -S install w3m
+      sudo pacman -S --noconfirm w3m
     #+END_SRC
 
     #+BEGIN_SRC emacs-lisp
@@ -31456,7 +31456,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
        `(("List Packages" "(package-list-packages :nofetch)" "List packages.")
          ("List Packages (Refresh)" "package-list-packages" "List packages (after refresh).")
          ("Install Package" "package-install" "Install package.")
-         ("Straight Refresh" "straight-pull-recipe-repositories" "Refresh recipe repositories.")
+         ("Straight Refresh Recipes" "straight-pull-recipe-repositories" "Refresh recipe repositories.")
          ("Straight Pull All" "straight-pull-all" "Pull all packages.")
          ;;("Straight Fetch All" "straight-fetch-all" "Fetch all packages.")
          ;;("Auto-Remove Packages" "package-autoremove" "Remove packages that are no more needed.")
