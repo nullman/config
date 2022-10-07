@@ -214,7 +214,7 @@ export CDR_SECURITY="8:dvd,clone:sparc-sun-solaris2,i386-pc-solaris2,i586-pc-lin
 # nvm
 [[ -f "/usr/share/nvm/init-nvm.sh" ]] && source "/usr/share/nvm/init-nvm.sh" 2>&1
 # move nvm bin path after sbin
-nvmpath=$(echo ":${PATH}:" | egrep ":${HOME}/\.nvm/[^:]*:" | sed "s%^.*:\\(${HOME}/\.nvm/[^:]*\\):.*$%\1%")
+nvmpath=$(echo ":${PATH}:" | grep -E ":${HOME}/\.nvm/[^:]*:" | sed "s%^.*:\\(${HOME}/\.nvm/[^:]*\\):.*$%\1%")
 if [[ -n "${nvmpath}" ]] ; then
     newpath=$(echo ":${PATH}:" | sed "s%:${HOME}/\.nvm/[^:]*:%:%g ; s%^:%% ; s%:$%%")
     export PATH=$(echo ${newpath} | sed "s%^\\(.*/sbin:\\)\\(.*\\)$%\1${nvmpath}:\2%")

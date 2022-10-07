@@ -1437,7 +1437,7 @@ if _command exa ; then
     #        llt                     exa -T (tree)
     alias lst="exa -T -a"
     #        ls.                     exa -a (almost-all), dot files and directories only
-    alias ls.="exa -a | egrep '^\.'"
+    alias ls.="exa -a | grep -E '^\.'"
 fi
 
 #
@@ -1532,8 +1532,8 @@ alias grepi="grep -H -n -i"
 alias grepir="grep -H -n -i -r"
 #        fgrep                   fgrep (no binaries, auto-color)
 alias fgrep="fgrep -I --color=auto"
-#        egrep                   egrep (no binaries, auto-color)
-alias egrep="egrep -I --color=auto"
+#        egrep                   grep (extended-regexp, no binaries, auto-color)
+alias egrep="grep -E -I --color=auto"
 
 #
 # java
