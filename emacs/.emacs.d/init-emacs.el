@@ -17786,8 +17786,6 @@ otherwise run `find-file-as-root'."
 
 (init-message 2 "Modules: units-mode")
 
-(use-package units-mode
-  :straight t)
 ;; units-mode:2 ends here
 
 ;; [[file:init-emacs.org::#modules-vimish-fold][vimish-fold:1]]
