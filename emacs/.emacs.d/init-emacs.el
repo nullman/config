@@ -17779,15 +17779,6 @@ otherwise run `find-file-as-root'."
   (global-undo-tree-mode 1))
 ;; undo-tree:1 ends here
 
-;; [[file:init-emacs.org::#modules-units-mode][units-mode:2]]
-;;------------------------------------------------------------------------------
-;;; Packages: units-mode
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modules: units-mode")
-
-;; units-mode:2 ends here
-
 ;; [[file:init-emacs.org::#modules-vimish-fold][vimish-fold:1]]
 ;;------------------------------------------------------------------------------
 ;;; Packages: vimish-fold
