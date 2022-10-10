@@ -2256,8 +2256,8 @@ KEYMAP defaults to `override-global-map'."
              :prefix "f"
              :prefix-map space-miscellaneous-format-map
              :menu-name "Format Commands"
-             ("j" . json-pretty-print-buffer)
-             ("x" . xml-format))
+             ("j" . json-pretty-print)
+             ("x" . xml-pretty-print))
 
   ;; package commands
   (bind-keys :map space-map
@@ -13379,15 +13379,15 @@ Examples:
           (downcase-word 1))))))
 ;; camel-case-to-lisp:1 ends here
 
-;; [[file:init-emacs.org::#functions-code-formatting-functions-c-pretty-print-buffer][c-pretty-print-buffer:1]]
+;; [[file:init-emacs.org::#functions-code-formatting-functions-c-pretty-print][c-pretty-print:1]]
 ;;------------------------------------------------------------------------------
-;;;; Functions: Code Formatting Functions: c-pretty-print-buffer
+;;;; Functions: Code Formatting Functions: c-pretty-print
 ;;------------------------------------------------------------------------------
 
-(init-message 3 "Functions: Code Formatting Functions: c-pretty-print-buffer")
+(init-message 3 "Functions: Code Formatting Functions: c-pretty-print")
 
-(defun c-pretty-print-buffer (&optional beg end)
-  "Reformat (pretty-print) c/c++ code block."
+(defun c-pretty-print (&optional beg end)
+  "Pretty-print selected region."
   (interactive "*")
   (let ((beg (or beg (if (use-region-p) (region-beginning) (point-min))))
         (end (or end (if (use-region-p) (region-end) (point-max)))))
@@ -13430,17 +13430,17 @@ Examples:
             (indent-according-to-mode))
           ;; indent buffer
           (indent-region (point-min) (point-max) nil))))))
-;; c-pretty-print-buffer:1 ends here
+;; c-pretty-print:1 ends here
 
-;; [[file:init-emacs.org::#functions-code-formatting-functions-ruby-pretty-print-buffer][ruby-pretty-print-buffer:1]]
+;; [[file:init-emacs.org::#functions-code-formatting-functions-ruby-pretty-print][ruby-pretty-print:1]]
 ;;------------------------------------------------------------------------------
-;;;; Functions: Code Formatting Functions: ruby-pretty-print-buffer
+;;;; Functions: Code Formatting Functions: ruby-pretty-print
 ;;------------------------------------------------------------------------------
 
-(init-message 3 "Functions: Code Formatting Functions: ruby-pretty-print-buffer")
+(init-message 3 "Functions: Code Formatting Functions: ruby-pretty-print")
 
-(defun ruby-pretty-print-buffer (&optional beg end)
-  "Reformat (pretty-print) ruby code block."
+(defun ruby-pretty-print (&optional beg end)
+  "Pretty-print selected region."
   (interactive "*")
   (let ((beg (or beg (if (use-region-p) (region-beginning) (point-min))))
         (end (or end (if (use-region-p) (region-end) (point-max)))))
@@ -13483,17 +13483,17 @@ Examples:
             (replace-match "\n\n"))
           ;; indent buffer
           (indent-region (point-min) (point-max) nil))))))
-;; ruby-pretty-print-buffer:1 ends here
+;; ruby-pretty-print:1 ends here
 
-;; [[file:init-emacs.org::#functions-code-formatting-functions-java-pretty-print-buffer][java-pretty-print-buffer:1]]
+;; [[file:init-emacs.org::#functions-code-formatting-functions-java-pretty-print][java-pretty-print:1]]
 ;;------------------------------------------------------------------------------
-;;;; Functions: Code Formatting Functions: java-pretty-print-buffer
+;;;; Functions: Code Formatting Functions: java-pretty-print
 ;;------------------------------------------------------------------------------
 
-(init-message 3 "Functions: Code Formatting Functions: java-pretty-print-buffer")
+(init-message 3 "Functions: Code Formatting Functions: java-pretty-print")
 
-(defun java-pretty-print-buffer (&optional beg end)
-  "Reformat (pretty-print) Java code block."
+(defun java-pretty-print (&optional beg end)
+  "Pretty-print selected region."
   (interactive "*")
   (let ((beg (or beg (if (use-region-p) (region-beginning) (point-min))))
         (end (or end (if (use-region-p) (region-end) (point-max)))))
@@ -13543,7 +13543,7 @@ Examples:
             (indent-according-to-mode))
           ;; indent buffer
           (indent-region (point-min) (point-max) nil))))))
-;; java-pretty-print-buffer:1 ends here
+;; java-pretty-print:1 ends here
 
 ;; [[file:init-emacs.org::#functions-code-formatting-functions-json-to-csv][json-to-csv:1]]
 ;;------------------------------------------------------------------------------
@@ -13573,15 +13573,15 @@ Examples:
       (switch-to-buffer target-buffer))))
 ;; json-to-csv:1 ends here
 
-;; [[file:init-emacs.org::#functions-code-formatting-functions-xml-pretty-print-buffer][xml-pretty-print-buffer:1]]
+;; [[file:init-emacs.org::#functions-code-formatting-functions-xml-pretty-print][xml-pretty-print:1]]
 ;;------------------------------------------------------------------------------
-;;;; Functions: Code Formatting Functions: xml-pretty-print-buffer
+;;;; Functions: Code Formatting Functions: xml-pretty-print
 ;;------------------------------------------------------------------------------
 
-(init-message 3 "Functions: Code Formatting Functions: xml-pretty-print-buffer")
+(init-message 3 "Functions: Code Formatting Functions: xml-pretty-print")
 
-(defun xml-pretty-print-buffer (&optional beg end)
-  "Reformat (pretty-print) XML block."
+(defun xml-pretty-print (&optional beg end)
+  "Pretty-print selected region."
   (interactive "*")
   (let ((beg (or beg (if (use-region-p) (region-beginning) (point-min))))
         (end (or end (if (use-region-p) (region-end) (point-max))))
@@ -13612,7 +13612,7 @@ Examples:
             ;; indent buffer
             (indent-region (point-min) (point-max)))
           (funcall mode))))))
-;; xml-pretty-print-buffer:1 ends here
+;; xml-pretty-print:1 ends here
 
 ;; [[file:init-emacs.org::#functions-code-inserting-functions][Code Inserting Functions:1]]
 ;;------------------------------------------------------------------------------
@@ -20517,11 +20517,11 @@ Commands:
      ("Evaluate SLIME Buffer" "slime-eval-buffer" "Run `slime-eval-buffer' on the current buffer.")
      ("Python REPL" "elpy-shell-switch-to-shell" "Start Python REPL for interactively evaluating Python expressions.")))
    ("Reformat"
-    (("JSON Reformat" "json-pretty-print-buffer" "Reformat (pretty-print) JSON in current buffer.")
-     ("XML Reformat" "xml-pretty-print-buffer" "Reformat (pretty-print) XML in current buffer.")
-     ("Java Reformat" "java-pretty-print-buffer" "Reformat (pretty-print) Java code in current buffer.")
-     ("Ruby Reformat" "ruby-pretty-print-buffer" "Reformat (pretty-print) Ruby code in current buffer.")
-     ("C Reformat" "c-pretty-print-buffer" "Reformat (pretty-print) C code in current buffer.")))
+    (("JSON Reformat" "json-pretty-print" "Reformat (pretty-print) JSON in current buffer.")
+     ("XML Reformat" "xml-pretty-print" "Reformat (pretty-print) XML in current buffer.")
+     ("Java Reformat" "java-pretty-print" "Reformat (pretty-print) Java code in current buffer.")
+     ("Ruby Reformat" "ruby-pretty-print" "Reformat (pretty-print) Ruby code in current buffer.")
+     ("C Reformat" "c-pretty-print" "Reformat (pretty-print) C code in current buffer.")))
    ("Command Log"
     (("Command Log Mode ON" "command-log-mode-on" "Turn on ‘command-log-mode’ and open the log buffer.")
      ("Command Log Mode OFF" "command-log-mode-off" "Turn off ‘command-log-mode’ and close the log buffer.")

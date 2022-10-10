@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-10-10 15:39 (kyle)>
+  #+TIMESTAMP: <2022-10-10 15:47 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -3614,8 +3614,8 @@
                    :prefix "f"
                    :prefix-map space-miscellaneous-format-map
                    :menu-name "Format Commands"
-                   ("j" . json-pretty-print-buffer)
-                   ("x" . xml-format))
+                   ("j" . json-pretty-print)
+                   ("x" . xml-pretty-print))
 
         ;; package commands
         (bind-keys :map space-map
@@ -19071,22 +19071,22 @@
                   (downcase-word 1))))))
       #+END_SRC
 
-***** c-pretty-print-buffer
+***** c-pretty-print
       :PROPERTIES:
-      :CUSTOM_ID: functions-code-formatting-functions-c-pretty-print-buffer
+      :CUSTOM_ID: functions-code-formatting-functions-c-pretty-print
       :END:
 
       Reformat (pretty-print) C/C++ block.
 
       #+BEGIN_SRC emacs-lisp
         ;;------------------------------------------------------------------------------
-        ;;;; Functions: Code Formatting Functions: c-pretty-print-buffer
+        ;;;; Functions: Code Formatting Functions: c-pretty-print
         ;;------------------------------------------------------------------------------
 
-        (init-message 3 "Functions: Code Formatting Functions: c-pretty-print-buffer")
+        (init-message 3 "Functions: Code Formatting Functions: c-pretty-print")
 
-        (defun c-pretty-print-buffer (&optional beg end)
-          "Reformat (pretty-print) c/c++ code block."
+        (defun c-pretty-print (&optional beg end)
+          "Pretty-print selected region."
           (interactive "*")
           (let ((beg (or beg (if (use-region-p) (region-beginning) (point-min))))
                 (end (or end (if (use-region-p) (region-end) (point-max)))))
@@ -19131,22 +19131,22 @@
                   (indent-region (point-min) (point-max) nil))))))
       #+END_SRC
 
-***** ruby-pretty-print-buffer
+***** ruby-pretty-print
       :PROPERTIES:
-      :CUSTOM_ID: functions-code-formatting-functions-ruby-pretty-print-buffer
+      :CUSTOM_ID: functions-code-formatting-functions-ruby-pretty-print
       :END:
 
       Reformat (pretty-print) Ruby block.
 
       #+BEGIN_SRC emacs-lisp
         ;;------------------------------------------------------------------------------
-        ;;;; Functions: Code Formatting Functions: ruby-pretty-print-buffer
+        ;;;; Functions: Code Formatting Functions: ruby-pretty-print
         ;;------------------------------------------------------------------------------
 
-        (init-message 3 "Functions: Code Formatting Functions: ruby-pretty-print-buffer")
+        (init-message 3 "Functions: Code Formatting Functions: ruby-pretty-print")
 
-        (defun ruby-pretty-print-buffer (&optional beg end)
-          "Reformat (pretty-print) ruby code block."
+        (defun ruby-pretty-print (&optional beg end)
+          "Pretty-print selected region."
           (interactive "*")
           (let ((beg (or beg (if (use-region-p) (region-beginning) (point-min))))
                 (end (or end (if (use-region-p) (region-end) (point-max)))))
@@ -19191,22 +19191,22 @@
                   (indent-region (point-min) (point-max) nil))))))
       #+END_SRC
 
-***** java-pretty-print-buffer
+***** java-pretty-print
       :PROPERTIES:
-      :CUSTOM_ID: functions-code-formatting-functions-java-pretty-print-buffer
+      :CUSTOM_ID: functions-code-formatting-functions-java-pretty-print
       :END:
 
       Reformat (pretty-print) Java block.
 
       #+BEGIN_SRC emacs-lisp
         ;;------------------------------------------------------------------------------
-        ;;;; Functions: Code Formatting Functions: java-pretty-print-buffer
+        ;;;; Functions: Code Formatting Functions: java-pretty-print
         ;;------------------------------------------------------------------------------
 
-        (init-message 3 "Functions: Code Formatting Functions: java-pretty-print-buffer")
+        (init-message 3 "Functions: Code Formatting Functions: java-pretty-print")
 
-        (defun java-pretty-print-buffer (&optional beg end)
-          "Reformat (pretty-print) Java code block."
+        (defun java-pretty-print (&optional beg end)
+          "Pretty-print selected region."
           (interactive "*")
           (let ((beg (or beg (if (use-region-p) (region-beginning) (point-min))))
                 (end (or end (if (use-region-p) (region-end) (point-max)))))
@@ -19258,9 +19258,9 @@
                   (indent-region (point-min) (point-max) nil))))))
       #+END_SRC
 
-***** +json-pretty-print-buffer+
+***** +json-pretty-print+
       :PROPERTIES:
-      :CUSTOM_ID: functions-code-formatting-functions-json-pretty-print-buffer
+      :CUSTOM_ID: functions-code-formatting-functions-json-pretty-print
       :END:
 
       Reformat (pretty-print) JSON block.
@@ -19271,13 +19271,13 @@
 
       #+BEGIN_SRC emacs-lisp :tangle no
         ;; ;;------------------------------------------------------------------------------
-        ;; ;;;; Functions: Code Formatting Functions: json-pretty-print-buffer
+        ;; ;;;; Functions: Code Formatting Functions: json-pretty-print
         ;; ;;------------------------------------------------------------------------------
 
-        ;; (init-message 3 "Functions: Code Formatting Functions: json-pretty-print-buffer")
+        ;; (init-message 3 "Functions: Code Formatting Functions: json-pretty-print")
 
-        ;; (defun json-pretty-print-buffer (&optional beg end)
-        ;;   "Reformat (pretty-print) JSON block."
+        ;; (defun json-pretty-print (&optional beg end)
+        ;;   "Pretty-print selected region."
         ;;   (interactive "*")
         ;;   (save-mark-and-excursion
         ;;     (let ((beg (or beg (if (use-region-p) (region-beginning) (point-min))))
@@ -19329,22 +19329,22 @@
               (switch-to-buffer target-buffer))))
       #+END_SRC
 
-***** xml-pretty-print-buffer
+***** xml-pretty-print
       :PROPERTIES:
-      :CUSTOM_ID: functions-code-formatting-functions-xml-pretty-print-buffer
+      :CUSTOM_ID: functions-code-formatting-functions-xml-pretty-print
       :END:
 
       Reformat (pretty-print) XML block.
 
       #+BEGIN_SRC emacs-lisp
         ;;------------------------------------------------------------------------------
-        ;;;; Functions: Code Formatting Functions: xml-pretty-print-buffer
+        ;;;; Functions: Code Formatting Functions: xml-pretty-print
         ;;------------------------------------------------------------------------------
 
-        (init-message 3 "Functions: Code Formatting Functions: xml-pretty-print-buffer")
+        (init-message 3 "Functions: Code Formatting Functions: xml-pretty-print")
 
-        (defun xml-pretty-print-buffer (&optional beg end)
-          "Reformat (pretty-print) XML block."
+        (defun xml-pretty-print (&optional beg end)
+          "Pretty-print selected region."
           (interactive "*")
           (let ((beg (or beg (if (use-region-p) (region-beginning) (point-min))))
                 (end (or end (if (use-region-p) (region-end) (point-max))))
@@ -31504,11 +31504,11 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
            ("Evaluate SLIME Buffer" "slime-eval-buffer" "Run `slime-eval-buffer' on the current buffer.")
            ("Python REPL" "elpy-shell-switch-to-shell" "Start Python REPL for interactively evaluating Python expressions.")))
          ("Reformat"
-          (("JSON Reformat" "json-pretty-print-buffer" "Reformat (pretty-print) JSON in current buffer.")
-           ("XML Reformat" "xml-pretty-print-buffer" "Reformat (pretty-print) XML in current buffer.")
-           ("Java Reformat" "java-pretty-print-buffer" "Reformat (pretty-print) Java code in current buffer.")
-           ("Ruby Reformat" "ruby-pretty-print-buffer" "Reformat (pretty-print) Ruby code in current buffer.")
-           ("C Reformat" "c-pretty-print-buffer" "Reformat (pretty-print) C code in current buffer.")))
+          (("JSON Reformat" "json-pretty-print" "Reformat (pretty-print) JSON in current buffer.")
+           ("XML Reformat" "xml-pretty-print" "Reformat (pretty-print) XML in current buffer.")
+           ("Java Reformat" "java-pretty-print" "Reformat (pretty-print) Java code in current buffer.")
+           ("Ruby Reformat" "ruby-pretty-print" "Reformat (pretty-print) Ruby code in current buffer.")
+           ("C Reformat" "c-pretty-print" "Reformat (pretty-print) C code in current buffer.")))
          ("Command Log"
           (("Command Log Mode ON" "command-log-mode-on" "Turn on ‘command-log-mode’ and open the log buffer.")
            ("Command Log Mode OFF" "command-log-mode-off" "Turn off ‘command-log-mode’ and close the log buffer.")
