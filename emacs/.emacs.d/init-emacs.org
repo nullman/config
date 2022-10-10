@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-10-09 11:24 (kyle)>
+  #+TIMESTAMP: <2022-10-10 15:39 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -19076,6 +19076,8 @@
       :CUSTOM_ID: functions-code-formatting-functions-c-pretty-print-buffer
       :END:
 
+      Reformat (pretty-print) C/C++ block.
+
       #+BEGIN_SRC emacs-lisp
         ;;------------------------------------------------------------------------------
         ;;;; Functions: Code Formatting Functions: c-pretty-print-buffer
@@ -19084,7 +19086,7 @@
         (init-message 3 "Functions: Code Formatting Functions: c-pretty-print-buffer")
 
         (defun c-pretty-print-buffer (&optional beg end)
-          "Clean up c/c++ code."
+          "Reformat (pretty-print) c/c++ code block."
           (interactive "*")
           (let ((beg (or beg (if (use-region-p) (region-beginning) (point-min))))
                 (end (or end (if (use-region-p) (region-end) (point-max)))))
@@ -19134,6 +19136,8 @@
       :CUSTOM_ID: functions-code-formatting-functions-ruby-pretty-print-buffer
       :END:
 
+      Reformat (pretty-print) Ruby block.
+
       #+BEGIN_SRC emacs-lisp
         ;;------------------------------------------------------------------------------
         ;;;; Functions: Code Formatting Functions: ruby-pretty-print-buffer
@@ -19142,7 +19146,7 @@
         (init-message 3 "Functions: Code Formatting Functions: ruby-pretty-print-buffer")
 
         (defun ruby-pretty-print-buffer (&optional beg end)
-          "Clean up ruby code."
+          "Reformat (pretty-print) ruby code block."
           (interactive "*")
           (let ((beg (or beg (if (use-region-p) (region-beginning) (point-min))))
                 (end (or end (if (use-region-p) (region-end) (point-max)))))
@@ -19192,6 +19196,8 @@
       :CUSTOM_ID: functions-code-formatting-functions-java-pretty-print-buffer
       :END:
 
+      Reformat (pretty-print) Java block.
+
       #+BEGIN_SRC emacs-lisp
         ;;------------------------------------------------------------------------------
         ;;;; Functions: Code Formatting Functions: java-pretty-print-buffer
@@ -19200,7 +19206,7 @@
         (init-message 3 "Functions: Code Formatting Functions: java-pretty-print-buffer")
 
         (defun java-pretty-print-buffer (&optional beg end)
-          "Clean up Java code."
+          "Reformat (pretty-print) Java code block."
           (interactive "*")
           (let ((beg (or beg (if (use-region-p) (region-beginning) (point-min))))
                 (end (or end (if (use-region-p) (region-end) (point-max)))))
@@ -19257,7 +19263,7 @@
       :CUSTOM_ID: functions-code-formatting-functions-json-pretty-print-buffer
       :END:
 
-      Clean up JSON block.
+      Reformat (pretty-print) JSON block.
 
       Source: http://stefan.arentz.ca/beautify-json-in-emacs.html
 
@@ -19271,7 +19277,7 @@
         ;; (init-message 3 "Functions: Code Formatting Functions: json-pretty-print-buffer")
 
         ;; (defun json-pretty-print-buffer (&optional beg end)
-        ;;   "Clean up JSON block."
+        ;;   "Reformat (pretty-print) JSON block."
         ;;   (interactive "*")
         ;;   (save-mark-and-excursion
         ;;     (let ((beg (or beg (if (use-region-p) (region-beginning) (point-min))))
@@ -19323,22 +19329,22 @@
               (switch-to-buffer target-buffer))))
       #+END_SRC
 
-***** xml-format
+***** xml-pretty-print-buffer
       :PROPERTIES:
-      :CUSTOM_ID: functions-code-formatting-functions-xml-format
+      :CUSTOM_ID: functions-code-formatting-functions-xml-pretty-print-buffer
       :END:
+
+      Reformat (pretty-print) XML block.
 
       #+BEGIN_SRC emacs-lisp
         ;;------------------------------------------------------------------------------
-        ;;;; Functions: Code Formatting Functions: xml-format
+        ;;;; Functions: Code Formatting Functions: xml-pretty-print-buffer
         ;;------------------------------------------------------------------------------
 
-        (init-message 3 "Functions: Code Formatting Functions: xml-format")
+        (init-message 3 "Functions: Code Formatting Functions: xml-pretty-print-buffer")
 
-        (defun xml-format (&optional beg end)
-          "Format XML buffer.
-
-        Convert poorly formatted XML into something better."
+        (defun xml-pretty-print-buffer (&optional beg end)
+          "Reformat (pretty-print) XML block."
           (interactive "*")
           (let ((beg (or beg (if (use-region-p) (region-beginning) (point-min))))
                 (end (or end (if (use-region-p) (region-end) (point-max))))
@@ -31498,11 +31504,11 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
            ("Evaluate SLIME Buffer" "slime-eval-buffer" "Run `slime-eval-buffer' on the current buffer.")
            ("Python REPL" "elpy-shell-switch-to-shell" "Start Python REPL for interactively evaluating Python expressions.")))
          ("Reformat"
-          (("JSON Reformat" "json-pretty-print-buffer" "Reformat JSON in current buffer.")
-           ("XML Reformat" "xml-format" "Reformat XML in current buffer.")
-           ("Java Reformat" "java-pretty-print-buffer" "Reformat Java code in current buffer.")
-           ("Ruby Reformat" "ruby-pretty-print-buffer" "Reformat Ruby code in current buffer.")
-           ("C Reformat" "c-pretty-print-buffer" "Reformat C code in current buffer.")))
+          (("JSON Reformat" "json-pretty-print-buffer" "Reformat (pretty-print) JSON in current buffer.")
+           ("XML Reformat" "xml-pretty-print-buffer" "Reformat (pretty-print) XML in current buffer.")
+           ("Java Reformat" "java-pretty-print-buffer" "Reformat (pretty-print) Java code in current buffer.")
+           ("Ruby Reformat" "ruby-pretty-print-buffer" "Reformat (pretty-print) Ruby code in current buffer.")
+           ("C Reformat" "c-pretty-print-buffer" "Reformat (pretty-print) C code in current buffer.")))
          ("Command Log"
           (("Command Log Mode ON" "command-log-mode-on" "Turn on ‘command-log-mode’ and open the log buffer.")
            ("Command Log Mode OFF" "command-log-mode-off" "Turn off ‘command-log-mode’ and close the log buffer.")
