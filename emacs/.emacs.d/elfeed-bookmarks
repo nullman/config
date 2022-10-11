@@ -23,7 +23,7 @@
  (:name "Linux Foundation" :html "https://www.linuxfoundation.org/" :rss "https://www.linuxfoundation.org/feed/" :tag "linux")
  (:name "Linux Magazine" :html "https://www.linux-magazine.com/" :rss "https://www.linux-magazine.com/rss/feed/lmi_news" :tag "linux")
  (:name "Softpedia Linux" :html "https://linux.softpedia.com/" :rss "https://linux.softpedia.com/backend.xml" :tag "linux")
- (:name "Lunduke Journal" :html "https://www.lunduke.com/" :rss "https://www.lunduke.com/feed/" :tag "linux")
+ (:name "Lunduke Journal" :html "https://lunduke.substack.com/" :rss "https://lunduke.substack.com/feed" :tag "linux")
  (:name "Luke Smith" :html "https://lukesmith.xyz/" :rss "https://lukesmith.xyz/rss.xml" :tag "linux")
  (:name "Open Source Voices" :html "https://www.opensourcevoices.org/" :rss "https://feeds.fireside.fm/opensourcevoices/rss" :tag "linux")
  ;; Computers / Technical
