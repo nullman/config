@@ -1114,12 +1114,20 @@ make-cert() {
 #!        pamac install --no-confirm "$1" || pamac build --no-confirm "$1"
 #!    fi
 #!}
+#        yass                    yay specific search
+yass() {
+    if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+        echo "Usage: $0 PACKAGE"
+    else
+        yay -Ss "$1" | grep "^[a-z]*/$1 "
+    fi
+}
 #        yasi                    yay search installed packages
 yasi() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 PACKAGE"
     else
-        yay -Ss "$@" | grep " (Installed"
+        yay -Ss "$1" | grep " (Installed"
     fi
 }
 
