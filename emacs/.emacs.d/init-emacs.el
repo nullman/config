@@ -79,7 +79,7 @@ LEVEL is the indentation level."
 ;; display load time after startup
 (defun emacs-startup-hook--message-startup-time ()
   "Message the Emacs startup time and number of garbage collections."
-  (message "Emacs startup time: %f seconds"
+  (message "Emacs startup time: %.2f seconds"
            (float-time (time-subtract after-init-time before-init-time)))
   (message "Emacs startup garbage collections: %d" gcs-done))
 (add-hook 'emacs-startup-hook #'emacs-startup-hook--message-startup-time)
@@ -13545,34 +13545,6 @@ Examples:
           (indent-region (point-min) (point-max) nil))))))
 ;; java-pretty-print:1 ends here
 
-;; [[file:init-emacs.org::#functions-code-formatting-functions-json-to-csv][json-to-csv:1]]
-;;------------------------------------------------------------------------------
-;;;; Functions: Code Formatting Functions: json-to-csv
-;;------------------------------------------------------------------------------
-
-(init-message 3 "Functions: Code Formatting Functions: json-to-csv")
-
-(defun json-to-csv (&optional beg end)
-  "Convert JSON array to CSV."
-  (interactive "*")
-  (save-mark-and-excursion
-    (let* ((beg (or beg (if (use-region-p) (region-beginning) (point-min))))
-           (end (or end (if (use-region-p) (region-end) (point-max))))
-           (source-buffer (current-buffer))
-           (target-name (generate-new-buffer-name
-                         (if (buffer-file-name)
-                             (concat
-                              (replace-regexp-in-string "\.json$" "" (buffer-file-name))
-                              ".csv")
-                           "*json-to-csv*")))
-           (target-buffer (generate-new-buffer-name target-name)))
-      (set-buffer (get-buffer-create target-buffer))
-      (insert-buffer-substring-no-properties source-buffer beg end)
-      (switch-to-buffer target-buffer) ; TODO: remove
-      ;; TODO: fill in
-      (switch-to-buffer target-buffer))))
-;; json-to-csv:1 ends here
-
 ;; [[file:init-emacs.org::#functions-code-formatting-functions-xml-pretty-print][xml-pretty-print:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Code Formatting Functions: xml-pretty-print
@@ -14552,6 +14524,7 @@ USING is the remaining peg."
   :after (vertico)
   :custom
   (completion-styles '(orderless))
+  ;;(completion-category-defaults nil)
   (completion-category-overrides '((file (styles partial-completion)))))
 ;; orderless:1 ends here
 

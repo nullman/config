@@ -76,6 +76,7 @@ export home="${HOME}"
 [[ -z "${TERM}" ]] && export TERM="xterm-256color" # act like xterm with color support
 export TERMINAL="${TERM}"
 export PAGER="less"
+export ZPAGER="zless"
 export LESS="--CLEAR-SCREEN --quit-if-one-screen --ignore-case --jump-target=10 --LONG-PROMPT --RAW-CONTROL-CHARS --no-init --tilde --shift 4"
 export MANPAGER="less"
 #_command bat && export BAT_THEME="ansi-dark" && export MANPAGER="sh -c 'col -bx | bat -l man -p'"

@@ -38,11 +38,11 @@ nullwareip="159.203.165.79"
 #        alh                     alias help
 alias alh="
     cat \${HOME}/.alias \${HOME}/.alias-work 2>/dev/null | \
-      grep '^#' | grep -v '^#!' | sed 's/^#//' | more"
+      grep '^#' | grep -v '^#!' | sed 's/^#//' | \${PAGER}"
 #        alhl                    alias help (long)
 alias alhl="
     cat \${HOME}/.alias \${HOME}/.alias-work 2>/dev/null | \
-      grep -v '^#!' | grep -v '^#  ' | sed 's/^#//' | more"
+      grep -v '^#!' | grep -v '^#  ' | sed 's/^#//' | \${PAGER}"
 #        alhg                    alias help with grep
 alias alhg="
     cat \${HOME}/.alias \${HOME}/.alias-work 2>/dev/null | \
@@ -50,7 +50,7 @@ alias alhg="
 #!#        ahlg                    alias help (long) with grep
 #!alias alhlg="
 #!    cat \${HOME}/.alias \${HOME}/.alias-work 2>/dev/null | \
-#!      grep -v '^#!' | grep -v '^#  ' | sed 's/^#//' | more | grep -i"
+#!      grep -v '^#!' | grep -v '^#  ' | sed 's/^#//' | grep -i"
 
 #
 # source core scripts
@@ -173,11 +173,11 @@ alias hhg="fc -l 1 | grep -i"
 #        xevkp                   xev key presses only
 alias xevkp="xev | sed -ne '/^KeyPress/,/^$/p'"
 #        xk                      xmodmap -pk (print keys)
-alias xk="xmodmap -pk | pager"
+alias xk="xmodmap -pk | \${PAGER}"
 #        xke                     xmodmap -pke (print keys as expressions)
-alias xke="xmodmap -pke | pager"
+alias xke="xmodmap -pke | \${PAGER}"
 #        xkb-rules               list xkb rules
-alias xkb-rules="pager /usr/share/X11/xkb/rules/base.lst"
+alias xkb-rules="\${PAGER} /usr/share/X11/xkb/rules/base.lst"
 #        diffc                   diff -c (context output format)
 alias diffc="diff -c"
 #        xd                      xxdiff (X based diff app)
@@ -185,7 +185,7 @@ alias xd="xxdiff"
 #        xl                      xlock (lock the screen)
 alias xl="xlock -nice 1 +usefirst -mode flame"
 #        xkeys                   list x11 keys
-alias xkeys="pager /usr/include/X11/keysumdef.h"
+alias xkeys="\${PAGER} /usr/include/X11/keysumdef.h"
 #        setdate                 set system date using ntpdate
 alias setdate="ntpdate -su 128.101.101.101 ; hwclock --systohc"
 #        ra                      run-app
@@ -193,7 +193,7 @@ alias ra="run-app"
 #        ccs                     ccache -s (cache status)
 alias ccs="ccache -s"
 #        lwords                  list words
-alias lwords="pager /usr/share/dict/words"
+alias lwords="\${PAGER} /usr/share/dict/words"
 #        fort                    fortune
 alias fort="\$(pathcmd fortune /usr/bin/fortune:/usr/games/fortune) -a"
 #        fortq                   fortune query
@@ -261,7 +261,7 @@ alias fart="paplay \${HOME}/sounds/farts/0111.wav"
 #        find-kernel-mod         find kernel modules
 alias find-kernel-mod="find /lib/modules/\$(uname -r)/ -type f -iname '*.o' -or -iname '*.ko'"
 #        hosts                   cat /etc/hosts
-alias hosts="cat /etc/hosts | pager"
+alias hosts="cat /etc/hosts | \${PAGER}"
 #        hostsg                  grep /etc/hosts
 alias hostsg="cat /etc/hosts | grep -i"
 #        resolv                  cat /etc/resolv.conf
@@ -1646,7 +1646,7 @@ alias llag="ls_ -l -A | grep -i"
 #        llp                     ls (pretty format)
 alias llp="(echo 'PERM LINKS OWNER GROUP SIZE MONTH DAY HH:MM/YEAR NAME' ; ls -l | sed 1d) | column --table"
 #        dir                     ls (like ftp dir command)
-alias dir="ls_ -l -A | pager"
+alias dir="ls_ -l -A | \${PAGER}"
 
 #
 # mp3blaster
@@ -2657,7 +2657,7 @@ alias pacman-rm-orphans="sudo pacman -Rns \$(pacman -Qtdq)"
 alias pacman-rm-lock="sudo rm /var/lib/pacman/db.lck"
 #        pacman-reset-mirrors    reset and rebuild pacman mirrors list
 alias pacman-reset-mirrors="sudo pacman-mirrors --geoip"
-#        pacman-reset-repository reset and rebuild pacman repository (used to recover from an invalid state)
+#        pacman-reset-repository  reset and rebuild pacman repository (used to recover from an invalid state)
 alias pacman-reset-repository="
     # reset mirrors
     sudo pacman-mirrors --geoip
@@ -2904,7 +2904,7 @@ alias gitciu="git commit -a -m 'Update'"
 #        gitcif                  git commit -a --fixup
 alias gitcif="git commit -a --fixup"
 #!#        gitcia                  git --no-pager commit --amend --reuse-message=HEAD
-##!alias gitcia="git --no-pager commit --amend --reuse-message=HEAD"
+#!alias gitcia="git --no-pager commit --amend --reuse-message=HEAD"
 #        gitciaa                 git commit -a --amend
 alias gitciaa="git commit -a --amend"
 #        gitciaano               git commit -a --amend --no-edit
@@ -2979,7 +2979,7 @@ alias gitgc="git gc"
 alias gitgca="git gc --aggressive"
 #        git-assume-unchanged    git update-index --assume-unchanged
 alias git-assume-unchanged="git update-index --assume-unchanged"
-#        git-no-assume-unchanged git update-index --no-assume-unchanged
+#        git-no-assume-unchanged  git update-index --no-assume-unchanged
 alias git-no-assume-unchanged="git update-index --no-assume-unchanged"
 #        git-setup-config        git set remote and merge in config
 alias git-setup-config="

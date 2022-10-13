@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-10-11 09:08 (kyle)>
+  #+TIMESTAMP: <2022-10-13 14:20 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -434,7 +434,7 @@
       ;; display load time after startup
       (defun emacs-startup-hook--message-startup-time ()
         "Message the Emacs startup time and number of garbage collections."
-        (message "Emacs startup time: %f seconds"
+        (message "Emacs startup time: %.2f seconds"
                  (float-time (time-subtract after-init-time before-init-time)))
         (message "Emacs startup garbage collections: %d" gcs-done))
       (add-hook 'emacs-startup-hook #'emacs-startup-hook--message-startup-time)
@@ -19294,39 +19294,39 @@
         ;;       (shell-command-on-region beg end "python -mjson.tool" (current-buffer) t))))
       #+END_SRC
 
-***** json-to-csv
+***** +json-to-csv+
       :PROPERTIES:
       :CUSTOM_ID: functions-code-formatting-functions-json-to-csv
       :END:
 
       Convert JSON array to CSV.
 
-      #+BEGIN_SRC emacs-lisp
-        ;;------------------------------------------------------------------------------
-        ;;;; Functions: Code Formatting Functions: json-to-csv
-        ;;------------------------------------------------------------------------------
+      #+BEGIN_SRC emacs-lisp :tangle no
+        ;; ;;------------------------------------------------------------------------------
+        ;; ;;;; Functions: Code Formatting Functions: json-to-csv
+        ;; ;;------------------------------------------------------------------------------
 
-        (init-message 3 "Functions: Code Formatting Functions: json-to-csv")
+        ;; (init-message 3 "Functions: Code Formatting Functions: json-to-csv")
 
-        (defun json-to-csv (&optional beg end)
-          "Convert JSON array to CSV."
-          (interactive "*")
-          (save-mark-and-excursion
-            (let* ((beg (or beg (if (use-region-p) (region-beginning) (point-min))))
-                   (end (or end (if (use-region-p) (region-end) (point-max))))
-                   (source-buffer (current-buffer))
-                   (target-name (generate-new-buffer-name
-                                 (if (buffer-file-name)
-                                     (concat
-                                      (replace-regexp-in-string "\.json$" "" (buffer-file-name))
-                                      ".csv")
-                                   "*json-to-csv*")))
-                   (target-buffer (generate-new-buffer-name target-name)))
-              (set-buffer (get-buffer-create target-buffer))
-              (insert-buffer-substring-no-properties source-buffer beg end)
-              (switch-to-buffer target-buffer) ; TODO: remove
-              ;; TODO: fill in
-              (switch-to-buffer target-buffer))))
+        ;; (defun json-to-csv (&optional beg end)
+        ;;   "Convert JSON array to CSV."
+        ;;   (interactive "*")
+        ;;   (save-mark-and-excursion
+        ;;     (let* ((beg (or beg (if (use-region-p) (region-beginning) (point-min))))
+        ;;            (end (or end (if (use-region-p) (region-end) (point-max))))
+        ;;            (source-buffer (current-buffer))
+        ;;            (target-name (generate-new-buffer-name
+        ;;                          (if (buffer-file-name)
+        ;;                              (concat
+        ;;                               (replace-regexp-in-string "\.json$" "" (buffer-file-name))
+        ;;                               ".csv")
+        ;;                            "*json-to-csv*")))
+        ;;            (target-buffer (generate-new-buffer-name target-name)))
+        ;;       (set-buffer (get-buffer-create target-buffer))
+        ;;       (insert-buffer-substring-no-properties source-buffer beg end)
+        ;;       (switch-to-buffer target-buffer) ; TODO: remove
+        ;;       ;; TODO: fill in
+        ;;       (switch-to-buffer target-buffer))))
       #+END_SRC
 
 ***** xml-pretty-print
@@ -21210,6 +21210,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
           :after (vertico)
           :custom
           (completion-styles '(orderless))
+          ;;(completion-category-defaults nil)
           (completion-category-overrides '((file (styles partial-completion)))))
       #+END_SRC
 
