@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-10-13 23:32 (kyle)>
+  #+TIMESTAMP: <2022-10-14 07:55 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -23086,6 +23086,24 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;;           ("M-a M-c" . elscreen-create)))
     #+END_SRC
 
+*** epaint
+    :PROPERTIES:
+    :CUSTOM_ID: packages-epaint
+    :END:
+
+    A simple paint tool for Emacs.
+
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Packages: epaint
+      ;;------------------------------------------------------------------------------
+
+      (init-message 2 "Packages: epaint")
+
+      (use-package epaint
+        :straight (:type git :host github :repo "chuntaro/epaint"))
+    #+END_SRC
+
 *** eperiodic
     :PROPERTIES:
     :CUSTOM_ID: modules-eperiodic
@@ -26607,6 +26625,8 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
     :CUSTOM_ID: packages-svg-2048
     :END:
 
+    An SVG version of the titular HTML5 game.
+
     #+BEGIN_SRC emacs-lisp
             ;;------------------------------------------------------------------------------
             ;;; Packages: svg-2048
@@ -26627,6 +26647,8 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
     :PROPERTIES:
     :CUSTOM_ID: packages-svg-clock
     :END:
+
+    Analog clock using Scalable Vector Graphics.
 
     #+BEGIN_SRC emacs-lisp
       ;;------------------------------------------------------------------------------

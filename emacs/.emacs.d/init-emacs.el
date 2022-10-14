@@ -15632,6 +15632,17 @@ USING is the remaining peg."
     (org-show-entry)))
 ;; elpher:1 ends here
 
+;; [[file:init-emacs.org::#packages-epaint][epaint:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: epaint
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Packages: epaint")
+
+(use-package epaint
+  :straight (:type git :host github :repo "chuntaro/epaint"))
+;; epaint:1 ends here
+
 ;; [[file:init-emacs.org::#modules-eperiodic][eperiodic:1]]
 ;;------------------------------------------------------------------------------
 ;;; Packages: eperiodic
