@@ -562,6 +562,17 @@ wordle-match() {
         eval "${cmd}"
     fi
 }
+#        play-youtube-desktop    play a youtube video on the desktop background
+play-youtube-desktop() {
+    if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+        echo "Usage: $0 VIDEOID"
+        echo "Play YouTube video on desktop background."
+    else
+        xwinwrap -ni -g $(xwininfo -root | grep geometry | cut -c 13-) \
+                 -s -st -sp -b -nf -ov -- mpv --profile=wallpaper \
+                 -wid WID "https://youtu.be/$1" loop 0
+    fi
+}
 
 #
 # conversion
@@ -1127,7 +1138,7 @@ yasi() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 PACKAGE"
     else
-        yay -Ss "$1" | sed -n ":a ; /^[a-z]*\/$1 / { N ; s/\n// ; p ; d ; ba }" | grep " (Installed"
+        yay -Ss "$1" | sed -n ":a ; { N ; s/\n// ; p ; d ; ba }" | grep " (Installed"
     fi
 }
 
