@@ -1119,7 +1119,7 @@ yass() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 PACKAGE"
     else
-        yay -Ss "$1" | grep "^[a-z]*/$1 "
+        yay -Ss "$1" | sed -n ":a ; /^[a-z]*\/$1 / { N ; s/\n// ; p ; ba }"
     fi
 }
 #        yasi                    yay search installed packages
@@ -1127,7 +1127,7 @@ yasi() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 PACKAGE"
     else
-        yay -Ss "$1" | grep " (Installed"
+        yay -Ss "$1" | sed -n ":a ; /^[a-z]*\/$1 / { N ; s/\n// ; p ; ba }" | grep " (Installed"
     fi
 }
 
@@ -1645,6 +1645,53 @@ adb-log-app() {
         adb ${*:1:$#-1} logcat | grep $(adb ${*:1:$#-1} shell ps | grep "${*: -1}" | cut -c10-15)
     fi
 }
+
+#!#
+#!# howto
+#!#
+#!#        howto-kernel            howto build the kernel
+#!howto-kernel() {
+#!    cat <<EOF
+#!HowTo Build the Kernel in Gentoo
+#!
+#!# cd /usr/src/linux
+#!# rm -f .version
+#!
+#!If needed use 'make mrproper' to do a full clean.
+#!Note: This will delete the .config file.
+#!
+#!# make menuconfig [make your config selections and save]
+#!# make dep && make clean bzImage modules modules_install
+#!# cp /boot/bzImage /boot/bzImage.old
+#!# cp /usr/src/linux/arch/i386/boot/bzImage /boot
+#!
+#!(Cross your fingers and reboot.)
+#!EOF
+#!}
+#!#        howto-grub              howto setup grub bootloader
+#!howto-grub() {
+#!    cat <<EOF
+#!HowTo Setup the Grub Bootloader
+#!
+#!# mount /boot
+#!# cd /boot/grub
+#!# vi grub.conf
+#!
+#!It should look like this:
+#!  default 0
+#!  timeout 5
+#!  splashimage=(hd0,0)/boot/grub/splash.xpm.gz
+#!  title=Gentoo Linux
+#!  root (hd0,0)
+#!  kernel /boot/bzImage root=/dev/hda3
+#!
+#!# ln -s grub.conf menu.lst
+#!# grub
+#!  grub> root (hd0,0)
+#!  grub> setup (hd0)
+#!  grub> quit
+#!EOF
+#!}
 
 #
 # setup
