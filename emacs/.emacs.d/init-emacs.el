@@ -1715,10 +1715,10 @@ KEYMAP defaults to `override-global-map'."
   (let ((keymap (or keymap override-global-map)))
     ;; cursor movement keys (short, single character)
     (bind-keys* :map keymap
-                ("<up>" . previous-line) ; default: `previous-line'
-                ("<down>" . next-line)   ; default: `next-line'
-                ("<left>" . left-char)   ; default: `left-char'
-                ("<right>" . right-char) ; default: `right-char'
+                ;;("<up>" . previous-line) ; default: `previous-line'
+                ;;("<down>" . next-line)   ; default: `next-line'
+                ;;("<left>" . left-char)   ; default: `left-char'
+                ;;("<right>" . right-char) ; default: `right-char'
                 ("M-i" . previous-line)  ; default: `tab-to-tab-stop' ("C-p")
                 ("M-k" . next-line)      ; default: `kill-sentence' ("C-n")
                 ("M-j" . left-char)      ; default: `indent-new-comment-line' ("C-f")
@@ -17536,6 +17536,33 @@ Do not perform the search on very large files (to avoid a delay when loaded)."
   :straight (sudoku :type git :host github :repo "zevlg/sudoku.el")
   :commands (sudoku))
 ;; sudoku:1 ends here
+
+;; [[file:init-emacs.org::#packages-svg-2048][svg-2048:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: svg-2048
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Packages: svg-2048")
+
+(use-package svg-2048
+  :straight (:type git :host github :repo "wasamasa/svg-2048")
+  :bind (:map svg-2048-mode-map
+              ("<left>" . svg-2048-move-left)
+              ("<right>" . svg-2048-move-right)
+              ("<up>" . svg-2048-move-up)
+              ("<down>" . svg-2048-move-down)))
+;; svg-2048:1 ends here
+
+;; [[file:init-emacs.org::#packages-svg-clock][svg-clock:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: svg-clock
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Packages: svg-clock")
+
+(use-package svg-clock
+  :straight t)
+;; svg-clock:1 ends here
 
 ;; [[file:init-emacs.org::#modules-switch-window][switch-window:1]]
 ;;------------------------------------------------------------------------------

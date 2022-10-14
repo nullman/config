@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-10-13 14:20 (kyle)>
+  #+TIMESTAMP: <2022-10-13 23:32 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -3058,10 +3058,10 @@
         (let ((keymap (or keymap override-global-map)))
           ;; cursor movement keys (short, single character)
           (bind-keys* :map keymap
-                      ("<up>" . previous-line) ; default: `previous-line'
-                      ("<down>" . next-line)   ; default: `next-line'
-                      ("<left>" . left-char)   ; default: `left-char'
-                      ("<right>" . right-char) ; default: `right-char'
+                      ;;("<up>" . previous-line) ; default: `previous-line'
+                      ;;("<down>" . next-line)   ; default: `next-line'
+                      ;;("<left>" . left-char)   ; default: `left-char'
+                      ;;("<right>" . right-char) ; default: `right-char'
                       ("M-i" . previous-line)  ; default: `tab-to-tab-stop' ("C-p")
                       ("M-k" . next-line)      ; default: `kill-sentence' ("C-n")
                       ("M-j" . left-char)      ; default: `indent-new-comment-line' ("C-f")
@@ -26600,6 +26600,43 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       (use-package sudoku
         :straight (sudoku :type git :host github :repo "zevlg/sudoku.el")
         :commands (sudoku))
+    #+END_SRC
+
+*** svg-2048
+    :PROPERTIES:
+    :CUSTOM_ID: packages-svg-2048
+    :END:
+
+    #+BEGIN_SRC emacs-lisp
+            ;;------------------------------------------------------------------------------
+            ;;; Packages: svg-2048
+            ;;------------------------------------------------------------------------------
+
+            (init-message 2 "Packages: svg-2048")
+
+            (use-package svg-2048
+              :straight (:type git :host github :repo "wasamasa/svg-2048")
+              :bind (:map svg-2048-mode-map
+                          ("<left>" . svg-2048-move-left)
+                          ("<right>" . svg-2048-move-right)
+                          ("<up>" . svg-2048-move-up)
+                          ("<down>" . svg-2048-move-down)))
+    #+END_SRC
+
+*** svg-clock
+    :PROPERTIES:
+    :CUSTOM_ID: packages-svg-clock
+    :END:
+
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Packages: svg-clock
+      ;;------------------------------------------------------------------------------
+
+      (init-message 2 "Packages: svg-clock")
+
+      (use-package svg-clock
+        :straight t)
     #+END_SRC
 
 *** switch-window
