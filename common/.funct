@@ -1119,7 +1119,7 @@ yass() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 PACKAGE"
     else
-        yay -Ss "$1" | sed -n ":a ; /^[a-z]*\/$1 / { N ; s/\n// ; p ; ba }"
+        yay -Ss "$1" | sed -n ":a ; /^[a-z]*\/$1 / { N ; s/\n// ; p ; d ; ba }"
     fi
 }
 #        yasi                    yay search installed packages
@@ -1127,7 +1127,7 @@ yasi() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 PACKAGE"
     else
-        yay -Ss "$1" | sed -n ":a ; /^[a-z]*\/$1 / { N ; s/\n// ; p ; ba }" | grep " (Installed"
+        yay -Ss "$1" | sed -n ":a ; /^[a-z]*\/$1 / { N ; s/\n// ; p ; d ; ba }" | grep " (Installed"
     fi
 }
 
