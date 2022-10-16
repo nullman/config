@@ -10,10 +10,10 @@
 #=============================================================================
 
 # source funct
-[[ -f "${HOME}/.funct" ]] && source "${HOME}/.funct" 2>&1
+[[ -f "${HOME}/.funct" ]] && source "${HOME}/.funct"
 
 # source alias
-[[ -f "${HOME}/.alias" ]] && source "${HOME}/.alias" 2>&1
+[[ -f "${HOME}/.alias" ]] && source "${HOME}/.alias"
 
 # add to the run path
 export runpath="${runpath}:${HOME}/.shellrc"
@@ -81,7 +81,7 @@ export LESS="--CLEAR-SCREEN --quit-if-one-screen --ignore-case --jump-target=10 
 export MANPAGER="less"
 #_command bat && export BAT_THEME="ansi-dark" && export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 export PROCESS_SHELL="$(ps -hp $$ | awk '{print $5}')"
-export EDITOR="emacs-edit"                 # default terminal editor
+export EDITOR="emacs-edit"              # default terminal editor
 export VISUAL="${EDITOR}"               # default GUI editor
 #export EDITOR="emacsclient -t -a ''"    # default terminal editor
 #export VISUAL="emacsclient -c -a emacs" # default GUI editor
@@ -232,10 +232,10 @@ fi
 [[ -f "${HOME}/.config/broot/launcher/bash/br" ]] && source "${HOME}/.config/broot/launcher/bash/br" 2>&1
 
 # source work shellrc
-[[ -e "${HOME}/.work" ]] && [[ -f "${HOME}/.shellrc-work" ]] && source "${HOME}/.shellrc-work" 2>&1
+[[ -e "${HOME}/.work" ]] && [[ -f "${HOME}/.shellrc-work" ]] && source "${HOME}/.shellrc-work"
 
 # source secure environment settings
-[[ -f "${HOME}/.secure-env" ]] && source "${HOME}/.secure-env" 2>&1
+[[ -f "${HOME}/.secure-env" ]] && source "${HOME}/.secure-env"
 
 # display something
 

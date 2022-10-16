@@ -57,8 +57,8 @@ fi
 
 # set prompt
 if [[ -n "${INSIDE_EMACS}" ]] ; then
-    # set emacs prompt to: host:user path git-branch $
-    #export PS1="\h:\u \w\$(git-branch-prompt)\\$ "
+    # set emacs prompt to: path $
+    #export PS1="\w \\$ "
     # set emacs prompt to: path git-branch $
     export PS1="\w\$(git-branch-prompt) \\$ "
 else
@@ -101,7 +101,7 @@ shopt -s autocd
 shopt -s checkwinsize
 
 # source shellrc
-[[ -f "${HOME}/.shellrc" ]] && source "${HOME}/.shellrc" 2>&1
+[[ -f "${HOME}/.shellrc" ]] && source "${HOME}/.shellrc"
 
 # run bash completion
 [[ -x "/etc/bash-completion" ]] && source "/etc/bash-completion" 2>&1

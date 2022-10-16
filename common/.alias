@@ -164,11 +164,11 @@ alias tailf="tail -n 100 -f"
 alias headl="head -n 100"
 #        h                       history
 alias h="history"
-#        hh                      zsh long history (fc -l -300)
+#        hh                      long history (fc -l -300)
 alias hh="fc -l -300"
 #        hg                      history with grep
 alias hg="history | grep -i"
-#        hhg                     zsh long history with grep
+#        hhg                     long history with grep
 alias hhg="fc -l 1 | grep -i"
 #        xevkp                   xev key presses only
 alias xevkp="xev | sed -ne '/^KeyPress/,/^$/p'"
@@ -2297,6 +2297,8 @@ alias sftptank="echo 'sftp:tank' ; sftp tank"
 #!alias sshxk="echo 'ssh:nullware.com:kyle' ; ssh -l kyle \${nullwareip}"
 #        ssh-nullware            ssh nullware.com
 alias ssh-nullware="echo 'ssh:kyle@nullware.com' ; ssh kyle@\${nullwareip}"
+#        ssh-roguery             ssh -p 1337 nullman@roguery.xibb.net
+alias ssh-roguery="echo 'nullman@roguery.xibb.net' ; ssh -p 1337 nullman@roguery.xibb.net"
 
 #
 # ssh
