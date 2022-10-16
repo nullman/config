@@ -9,12 +9,12 @@
 #-------------------------------------------------------------------------------
 # Custom Key Bindings
 #
-## General Rules:
-## - Lower case is used for basic commands.
-## - C (control) modifier key is used for advanced commands
-##     (or modified basic ones).
-## - M (alt) modifier key is used for commands that launch applications.
-## - Upper case is used for other commands.
+# General Rules:
+# - Lower case is used for basic commands.
+# - C (control) modifier key is used for advanced commands
+#     (or modified basic ones).
+# - M (alt) modifier key is used for commands that launch applications.
+# - Upper case is used for other commands.
 #-------------------------------------------------------------------------------
 
 bind = source ${HOME}/.screenrc-bindings
