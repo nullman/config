@@ -2717,6 +2717,10 @@ alias yalf="yay -Qqettm"
 alias yals="yay -Qs"
 #        yaps                    yay -Ps (print package statistics)
 alias yaps="yay -Ps"
+#        yay-rm-old           remove old yay packages
+alias yay-rm-old="yay -Sc"
+#        yay-rm-orphans       remove orphaned yay packages
+alias yay-rm-orphans="yay -Rns \$(yay -Qtdq)"
 
 #
 # apt package mangement (debian/ubuntu)
