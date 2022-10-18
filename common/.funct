@@ -583,7 +583,7 @@ dos-to-linux() {
         echo "Usage: $0 FILE"
         echo "Convert FILE from DOS format to Linux format."
     else
-        sed -i '' 's/\r$//' "$1"
+        sed -i 's/\r$//' "$1"
     fi
 }
 #        linux-to-dos            convert a linux text file LF to dos CR+LF format
@@ -592,7 +592,7 @@ linux-to-dos() {
         echo "Usage: $0 FILE"
         echo "Convert FILE from Linux format to DOS format."
     else
-        sed -i '' 's/$/\r/' "$1"
+        sed -i 's/$/\r/' "$1"
     fi
 }
 #        lower-dir               convert dir to lowercase
@@ -707,7 +707,7 @@ sed-dir() {
                     cd "${dir}" && \
                         find . -mindepth 1 -maxdepth 1 -type f | while read file ; do
                             echo "${file}"
-                            sed -i '' "${script}" "${file}"
+                            sed -i "${script}" "${file}"
                         done
                 )
                 ;;

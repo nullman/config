@@ -689,11 +689,11 @@ alias seti="(cd \${HOME}/setiathome ; setiathome -email -nice 19) &"
 #!#        centericq-fix-source    fix source code for centericq
 #!alias centericq-fix-source="
 #!    echo 'Changing DD.MM.YY dates to YY-MM-DD...'
-#!    sed -i '' 's/DD.MM.YY/YY-MM-DD/g' src/icqface.cc
+#!    sed -i 's/DD.MM.YY/YY-MM-DD/g' src/icqface.cc
 #!    echo 'Changing DD.MM dates to MM-DD...'
-#!    sed -i '' 's/DD.MM/MM-DD/g' src/icqface.cc
+#!    sed -i 's/DD.MM/MM-DD/g' src/icqface.cc
 #!    echo 'Changing DD-MM-YYYY dates to YYYY-MM-DD...'
-#!    sed -i '' 's/DD-MM-YYYY/YYYY-MM-DD/g ; s/\&d, \&m, \&y/\&y, \&m, \&d/g' src/icqdialogs.cc"
+#!    sed -i 's/DD-MM-YYYY/YYYY-MM-DD/g ; s/\&d, \&m, \&y/\&y, \&m, \&d/g' src/icqdialogs.cc"
 #        gsettings-reset-app-picker-layout  reset application picker
 alias gsettings-reset-app-picker-layout="gsettings reset org.gnome.shell app-picker-layout"
 
@@ -2467,10 +2467,10 @@ alias wine-fallout="WINEPREFIX=\${HOME}/.wine-fallout wine \"C:\GOG Games\Games\
 #        wine-fallout-setup      configure fallout.cfg file
 alias wine-fallout-setup="
     file=\"\${HOME}/.wine-fallout/drive_c/GOG Games/Fallout/fallout.cfg\"
-    sed -i '' 's/^critter_dat=.*$/critter_dat=C:\\\\GOG Games\\\\Fallout\\\\CRITTER.DAT\r/' \"\${file}\"
-    sed -i '' 's/^critter_patches=.*$/critter_patches=C:\\\\GOG Games\\\\Fallout\\\\DATA\r/' \"\${file}\"
-    sed -i '' 's/^master_dat=.*$/master_dat=C:\\\\GOG Games\\\\Fallout\\\\MASTER.DAT\r/' \"\${file}\"
-    sed -i '' 's/^master_patches=.*$/master_patches=C:\\\\GOG Games\\\\Fallout\\\\DATA\r/' \"\${file}\"
+    sed -i 's/^critter_dat=.*$/critter_dat=C:\\\\GOG Games\\\\Fallout\\\\CRITTER.DAT\r/' \"\${file}\"
+    sed -i 's/^critter_patches=.*$/critter_patches=C:\\\\GOG Games\\\\Fallout\\\\DATA\r/' \"\${file}\"
+    sed -i 's/^master_dat=.*$/master_dat=C:\\\\GOG Games\\\\Fallout\\\\MASTER.DAT\r/' \"\${file}\"
+    sed -i 's/^master_patches=.*$/master_patches=C:\\\\GOG Games\\\\Fallout\\\\DATA\r/' \"\${file}\"
     "
 #        wine-tta                wine through the ages
 alias wine-tta="WINEPREFIX=\${HOME}/.wine-tta wine \"C:\GOG Games\Through the Ages\ThroughTheAges_gog.exe\""
