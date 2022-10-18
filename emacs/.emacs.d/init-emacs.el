@@ -15841,7 +15841,7 @@ USING is the remaining peg."
                     (call-process "git" nil nil nil "ls-files" "--error-unmatch" file))))
         (git-gutter+-refresh))))
   (cancel-function-timers #'git-gutter+-refresh-maybe)
-  (run-with-idle-timer 20 :repeat #'git-gutter+-refresh-maybe))
+  (run-with-idle-timer 5 :repeat #'git-gutter+-refresh-maybe))
 
 ;; (use-package git-gutter-fringe+
 ;;   :straight t
@@ -17228,6 +17228,29 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
   (popper-mode 1)
   (popper-echo-mode 1)
   :config
+  (defun popper-close-buffer (&optional buffer)
+    "Close popup BUFFER or current buffer if none given."
+    (let ((buffer (or (and buffer (get-buffer buffer)) (current-buffer)))
+          (new-open-popup-alist '()))
+      (dolist (x popper-open-popup-alist)
+        (let ((win (car x))
+              (buf (cdr x))
+              (group (when popper-group-function
+                       (with-current-buffer buf
+                         (funcall popper-group-function)))))
+          (if (not (equal buf buffer))
+              (push x new-open-popup-alist)
+            (unless (cl-member buf
+                               (cdr (assoc group popper-buried-popup-alist))
+                               :key 'cdr)
+              ;; buffer doesn't already exist in the buried popup list
+              (push (cons nil buf) (alist-get group
+                                              popper-buried-popup-alist
+                                              nil nil 'equal)))
+            (with-selected-window win
+              (popper--delete-popup win)))))
+      (setq popper-open-popup-alist (nreverse new-open-popup-alist))))
+
   (defun custom-popper-direction ()
     "Return desired direction of popper window."
     (if (> (window-width) (* (window-height) 2)) 'right 'below))
@@ -17239,15 +17262,17 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
   ;;                 compilation-mode
   ;;                 occur-mode))
   ;;       (select-window window norecord)))
+
   (defun custom-popper-display-function (buffer &optional _alist)
     "Custom `popper-mode' display function."
+    (popper-close-buffer buffer)
     (display-buffer-in-direction
      buffer
      `((window-height . 0.5)
        (window-width . 0.5)
        (direction . ,(custom-popper-direction))
        (body-function . ,#'select-window))))
-       ;;(body-function . ,#'custom-popper-select-window))))
+  ;;(body-function . ,#'custom-popper-select-window))))
   (setq popper-display-function #'custom-popper-display-function))
 ;; popper:1 ends here
 
@@ -17641,7 +17666,7 @@ Do not perform the search on very large files (to avoid a delay when loaded)."
   :commands (time-stamp)
   :custom (time-stamp-active t)
   :init
-  (setq time-stamp-line-limit 20
+  (setq time-stamp-line-limit 50
         time-stamp-start "[Tt][Ii][Mm][Ee][-]?[Ss][Tt][Aa][Mm][Pp]:[ \t]+\\\\?[\"<]+"
         time-stamp-format "%Y-%02m-%02d %02H:%02M (%u)")
   (add-hook 'before-save-hook #'time-stamp))
