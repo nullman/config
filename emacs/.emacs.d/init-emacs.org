@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-10-18 10:51 (kyle)>
+  #+TIMESTAMP: <2022-10-19 11:54 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -21325,9 +21325,9 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
           (setq register-preview-delay 0.5
                 register-preview-function #'consult-register-format)
           ;; add thin lines, sorting, and hide the mode line of the register preview window
-          (advice-add #'register-preview :override #'consult-register-window)
-          ;; replace `completing-read-multiple' with an enhanced version
-          (advice-add #'completing-read-multiple :override #'consult-completing-read-multiple)
+          (advice-add 'register-preview :override #'consult-register-window)
+          ;; ;; replace `completing-read-multiple' with an enhanced version
+          ;; (advice-add 'completing-read-multiple :override #'consult-completing-read-multiple)
           ;; select xref locations with preview
           (setq xref-show-xrefs-function #'consult-xref
                 xref-show-definitions-function #'consult-xref)

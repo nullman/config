@@ -14616,9 +14616,9 @@ USING is the remaining peg."
   (setq register-preview-delay 0.5
         register-preview-function #'consult-register-format)
   ;; add thin lines, sorting, and hide the mode line of the register preview window
-  (advice-add #'register-preview :override #'consult-register-window)
-  ;; replace `completing-read-multiple' with an enhanced version
-  (advice-add #'completing-read-multiple :override #'consult-completing-read-multiple)
+  (advice-add 'register-preview :override #'consult-register-window)
+  ;; ;; replace `completing-read-multiple' with an enhanced version
+  ;; (advice-add 'completing-read-multiple :override #'consult-completing-read-multiple)
   ;; select xref locations with preview
   (setq xref-show-xrefs-function #'consult-xref
         xref-show-definitions-function #'consult-xref)
