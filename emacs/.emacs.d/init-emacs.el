@@ -2025,9 +2025,9 @@ KEYMAP defaults to `override-global-map'."
   ;; (when (fboundp 'hippie-expand)
   ;;   (bind-keys ("M-/" . hippie-expand))) ; default: `dabbrev-expand'
 
-  ;; complete tag
-  (when (fboundp 'complete-tag)
-    (bind-keys ("M-C-/" . complete-tag)))
+  ;; ;; complete tag
+  ;; (when (fboundp 'complete-tag)
+  ;;   (bind-keys ("C-M-/" . complete-tag)))
 
   ;; unset set-fill-column
   (unbind-key "C-x f")                  ; default: `set-fill-column'
@@ -2113,23 +2113,23 @@ KEYMAP defaults to `override-global-map'."
   ;; "C-h e" defaults to `view-echo-area-messages'
   (unbind-key "C-h e")
   (define-prefix-command 'help-find-map nil "Help Find Commands")
-  (bind-keys* :prefix "C-h e"
-              :prefix-map help-find-map
-              :menu-name "Help Find Commands"
-              ("e" . view-echo-area-messages)
-              ("f" . find-function)
-              ("k" . find-function-on-key)
-              ("l" . find-library)
-              ("v" . find-variable)
-              ("V" . apropos-value))
+  (bind-keys :prefix "C-h e"
+             :prefix-map help-find-map
+             :menu-name "Help Find Commands"
+             ("e" . view-echo-area-messages)
+             ("f" . find-function)
+             ("k" . find-function-on-key)
+             ("l" . find-library)
+             ("v" . find-variable)
+             ("V" . apropos-value))
 
   ;; custom prefix launching point (M-space)
   (unbind-key "M-SPC")
   (define-prefix-command 'space-map nil "Space Prefix Launching Point")
-  (bind-keys* :prefix "M-SPC"
-              :prefix-map space-map
-              :menu-name "Space Prefix Launching Point")
-  (bind-keys* ("C-." . space-map))      ; in case the OS consumes M-SPC
+  (bind-keys :prefix "M-SPC"
+             :prefix-map space-map
+             :menu-name "Space Prefix Launching Point")
+  (bind-keys ("C-." . space-map))      ; in case the OS consumes M-SPC
 
   ;; menu
   (bind-keys :map space-map ("M-SPC" . tmm-menubar))
@@ -14485,13 +14485,13 @@ USING is the remaining peg."
 (init-message 1 "Completions")
 ;; Completions:1 ends here
 
-;; [[file:init-emacs.org::#completions-vertico-consult-company][vertico/consult/company:1]]
+;; [[file:init-emacs.org::#completions-vertico-consult-company-corfu][vertico/consult/company/corfu:1]]
 ;;------------------------------------------------------------------------------
-;;; Completions: vertico/consult/company
+;;; Completions: vertico/consult/company/corfu
 ;;------------------------------------------------------------------------------
 
-(init-message 2 "Completions: vertico/consult/company")
-;; vertico/consult/company:1 ends here
+(init-message 2 "Completions: vertico/consult/company/corfu")
+;; vertico/consult/company/corfu:1 ends here
 
 ;; [[file:init-emacs.org::#completions-vertico-consult-company-vertico][vertico:1]]
 ;;------------------------------------------------------------------------------
@@ -14661,107 +14661,77 @@ USING is the remaining peg."
   (advice-add 'yas-expand-snippet :around #'force-completing-read-default))
 ;; consult:1 ends here
 
-;; [[file:init-emacs.org::#completions-vertico-consult-company-company][company:1]]
+;; [[file:init-emacs.org::#completions-vertico-consult-company-corfu][corfu:1]]
 ;;------------------------------------------------------------------------------
-;;;; Completions: vertico/consult/company: company
+;;;; Completions: vertico/consult/company: corfu
 ;;------------------------------------------------------------------------------
 
-(init-message 3 "Completions: vertico/consult/company: company")
+(init-message 3 "Completions: vertico/consult/company: corfu")
 
-(use-package company
+(use-package corfu
   :straight t
-  :diminish company-mode
-  :bind (:map company-active-map
-              ("C-n" . company-select-next)
-              ("C-p" . company-select-previous)
-              ("M-k" . company-select-next)
-              ("M-i" . company-select-previous))
-  :hook (prog-mode . company-mode)
+  ;; ;; enable only for certain modes
+  ;; :hook ((prog-mode . corfu-mode)
+  ;;        (shell-mode . corfu-mode)
+  ;;        (eshell-mode . corfu-mode))
+  :bind (:map corfu-map
+              ("C-SPC" . corfu-insert-separator)
+              ("M-SPC" . corfu-insert-separator)
+              ("RET" . nil)             ; enter does not complete
+              ("S-RET" . corfu-insert)  ; shift enter completes
+              ("TAB" . corfu-next)
+              ([tab] . corfu-next)
+              ("S-TAB" . corfu-previous)
+              ([backtab] . corfu-previous))
   :custom
-  (company-auto-commit nil)
-  (company-minimum-prefix-length 1)
-  (company-idle-delay 1.0)
-  ;; :init
-  ;; (global-company-mode 1)
-  ;; (add-hook 'after-init-hook #'global-company-mode)
-  ;; :config
-  ;; ;; backends
-  ;; (when (fboundp 'company-files)
-  ;;   (add-to-list 'company-backends #'company-files t))
-  ;; (when (fboundp 'company-keywords)
-  ;;   (add-to-list 'company-backends #'company-keywords t))
-  ;; (when (fboundp 'company-ispell)
-  ;;   (add-to-list 'company-backends #'company-ispell t))
-  ;; (when (fboundp 'company-elisp)
-  ;;   (add-to-list 'company-backends #'company-elisp t))
-  ;; (when (fboundp 'company-robe)
-  ;;   (add-to-list 'company-backends #'company-robe t))
-  ;; (when (fboundp 'company-dabbrev)
-  ;;   (add-to-list 'company-backends #'company-dabbrev t)))
-  )
+  (corfu-cycle nil)                 ; disable cycling for `corfu-next/previous'
+  (corfu-auto t)                    ; enable auto completion
+  (corfu-auto-prefix 1)             ; auto complete after a number of typed characters
+  (corfu-auto-delay 1.0)            ; auto complete after a delay
+  (corfu-separator ?\s)             ; whitespace is orderless field separator
+  (corfu-quit-at-boundary 'separator) ; quit at completion boundary
+  (corfu-quit-no-match nil)         ; do not quit if there is no match
+  (corfu-preview-current 'insert)   ; insert current candidate preview
+  (corfu-preselect-first nil)       ; disable candidate preselection
+  (corfu-on-exact-match nil)        ; configure handling of exact matches
+  (corfu-echo-documentation 0.25)   ; enable documentation in the echo area
+  (corfu-scroll-margin 5)           ; use scroll margin
+  :init
+  (global-corfu-mode 1)
+  ;;(corfu-history-mode 1)
+  :config
+  (defun custom-corfu-eshell-mode-hook ()
+    (setq-local corfu-auto nil
+                corfu-quit-at-boundary t
+                corfu-quit-no-match t)
+    (corfu-mode 1))
+  (add-hook 'eshell-mode-hook #'custom-corfu-eshell-mode-hook))
 
 ;;------------------------------------------------------------------------------
-;;;; consult-company
+;;;; corfu-doc
 ;;------------------------------------------------------------------------------
 
-(init-message 3 "consult-company")
-
-;; consult company frontend
-(use-package consult-company
-  :straight t
-  :after (company)
-  :bind (:map company-active-map
-              ([remap completion-at-point] . consult-company)))
-
-;; ;;------------------------------------------------------------------------------
-;; ;;;; company-box
-;; ;;------------------------------------------------------------------------------
-
-;; (init-message 3 "company-box")
-
-;; ;; company frontend with icons
-;; (use-package company-box
-;;   :straight t
-;;   :after (company)
-;;   :hook (company-mode . company-box-mode))
-
-;;------------------------------------------------------------------------------
-;;;; company-quickhelp
-;;------------------------------------------------------------------------------
-
-(init-message 3 "company-quickhelp")
+(init-message 3 "corfu-doc")
 
 ;; popup documentation for completion candidates
-(use-package company-quickhelp
+(use-package corfu-doc
   :straight t
-  :after (company)
-  :hook (company-mode . company-quickhelp-mode)
-  :custom
-  (company-quickhelp-delay 0.5)
-  (company-quickhelp-max-lines nil)
-  (company-quickhelp-color-foreground "white")
-  (company-quickhelp-color-background "dim gray"))
+  :after (corfu)
+  :hook (corfu-mode . corfu-doc-mode)
+  :bind (:map corfu-map
+              ("M-p" . corfu-doc-scroll-down)
+              ("M-n" . corfu-doc-scroll-up)
+              ("M-d" . corfu-doc-toggle)))
 
-;; ;;------------------------------------------------------------------------------
-;; ;;;; color
-;; ;;------------------------------------------------------------------------------
+(init-message 3 "corfu-doc-terminal")
 
-;; (init-message 3 "color")
-
-;; ;; set colors for a dark background
-;; (use-package color
-;;   :straight t
-;;   :after (company)
-;;   :commands (color-lighten-name)
-;;   :config
-;;   (let ((bg (face-attribute 'default :background)))
-;;     (custom-set-faces
-;;      `(company-tooltip ((t (:inherit default :background ,(color-lighten-name bg 10)))))
-;;      `(company-scrollbar-bg ((t (:background ,(color-lighten-name bg 15)))))
-;;      `(company-scrollbar-fg ((t (:background ,(color-lighten-name bg 20)))))
-;;      `(company-tooltip-selection ((t (:inherit font-lock-function-name-face))))
-;;      `(company-tooltip-common ((t (:inherit font-lock-constant-face)))))))
-;; company:1 ends here
+;; make `corfu-doc' work in terminal
+(use-package corfu-doc-terminal
+  :straight (corfu-doc-terminal :type git :repo "https://codeberg.org/akib/emacs-corfu-doc-terminal.git")
+  :init
+  (unless (display-graphic-p)
+    (corfu-doc-terminal-mode 1)))
+;; corfu:1 ends here
 
 ;; [[file:init-emacs.org::#packages][Packages:1]]
 ;;==============================================================================
@@ -15870,19 +15840,20 @@ USING is the remaining peg."
 
 (use-package hippie-exp
   :straight (:type built-in)
-  :bind* ("M-/" . hippie-expand)
+  :bind* (("M-/" . hippie-expand)         ; default: `dabbrev-expand'
+          ("C-M-/" . completion-at-point))
   :custom
   (hippie-expand-try-functions-list
    '(try-expand-dabbrev
      try-expand-dabbrev-all-buffers
      try-expand-dabbrev-from-kill
+     try-complete-lisp-symbol-partially
+     try-complete-lisp-symbol
      try-complete-file-name-partially
      try-complete-file-name
      try-expand-all-abbrevs
      try-expand-list
      try-expand-line
-     try-complete-lisp-symbol-partially
-     try-complete-lisp-symbol
      yas-hippie-try-expand)))
 ;; hippie-exp:1 ends here
 
@@ -17270,8 +17241,8 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
      buffer
      `((window-height . 0.5)
        (window-width . 0.5)
-       (direction . ,(custom-popper-direction))
-       (body-function . ,#'select-window))))
+       (direction . ,(custom-popper-direction)))))
+  ;;(body-function . ,#'select-window))))
   ;;(body-function . ,#'custom-popper-select-window))))
   (setq popper-display-function #'custom-popper-display-function))
 ;; popper:1 ends here
@@ -19675,7 +19646,7 @@ Commands:
     (bind-keys :map slime-mode-map
                ("C-c C-c" . slime-eval-sexp)
                ("C-x C-e" . slime-eval-last-expression)
-               ("M-C-x" . slime-eval-sexp)
+               ("C-M-x" . slime-eval-sexp)
                ("C-c C-k" . slime-eval-buffer))
 
     ;; start inferior lisp job
