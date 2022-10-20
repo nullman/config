@@ -1535,21 +1535,6 @@ Otherwise, `custom-tab-width' is used."
   (term "/bin/zsh"))
 ;; term-zsh:1 ends here
 
-;; [[file:init-emacs.org::#environment-terminals-vterm][vterm:1]]
-;;------------------------------------------------------------------------------
-;;;; Environment: Terminals: vterm
-;;------------------------------------------------------------------------------
-
-(init-message 3 "Environment: Terminals: vterm")
-
-(use-package vterm
-  :straight t
-  :commands (vterm)
-  :custom
-  (vterm-max-scrollback custom-terminal-maximum-lines)
-  (vterm-kill-buffer-on-exit nil))
-;; vterm:1 ends here
-
 ;; [[file:init-emacs.org::#key-bindings][Key Bindings:1]]
 ;;==============================================================================
 ;;; Key Bindings
@@ -14485,13 +14470,13 @@ USING is the remaining peg."
 (init-message 1 "Completions")
 ;; Completions:1 ends here
 
-;; [[file:init-emacs.org::#completions-vertico-consult-company-corfu][vertico/consult/company/corfu:1]]
+;; [[file:init-emacs.org::#completions-vertico-consult-corfu][vertico/consult/corfu:1]]
 ;;------------------------------------------------------------------------------
-;;; Completions: vertico/consult/company/corfu
+;;; Completions: vertico/consult/corfu
 ;;------------------------------------------------------------------------------
 
-(init-message 2 "Completions: vertico/consult/company/corfu")
-;; vertico/consult/company/corfu:1 ends here
+(init-message 2 "Completions: vertico/consult/corfu")
+;; vertico/consult/corfu:1 ends here
 
 ;; [[file:init-emacs.org::#completions-vertico-consult-company-vertico][vertico:1]]
 ;;------------------------------------------------------------------------------
@@ -14732,6 +14717,49 @@ USING is the remaining peg."
   (unless (display-graphic-p)
     (corfu-doc-terminal-mode 1)))
 ;; corfu:1 ends here
+
+;; [[file:init-emacs.org::#cape][cape:1]]
+;;==============================================================================
+;;; cape
+;;==============================================================================
+
+(init-message 1 "cape")
+
+(use-package cape
+  :straight t
+  ;; ;; bind dedicated completion commands
+  ;; :bind (("C-c p p" . completion-at-point) ; capf
+  ;;        ("C-c p t" . complete-tag)        ; etags
+  ;;        ("C-c p d" . cape-dabbrev)        ; or dabbrev-completion
+  ;;        ("C-c p h" . cape-history)
+  ;;        ("C-c p f" . cape-file)
+  ;;        ("C-c p k" . cape-keyword)
+  ;;        ("C-c p s" . cape-symbol)
+  ;;        ("C-c p a" . cape-abbrev)
+  ;;        ("C-c p i" . cape-ispell)
+  ;;        ("C-c p l" . cape-line)
+  ;;        ("C-c p w" . cape-dict)
+  ;;        ("C-c p \\" . cape-tex)
+  ;;        ("C-c p _" . cape-tex)
+  ;;        ("C-c p ^" . cape-tex)
+  ;;        ("C-c p &" . cape-sgml)
+  ;;        ("C-c p r" . cape-rfc1345))
+  :init
+  ;; add `completion-at-point-functions', used by `completion-at-point'
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  (add-to-list 'completion-at-point-functions #'cape-history)
+  (add-to-list 'completion-at-point-functions #'cape-keyword)
+  ;;(add-to-list 'completion-at-point-functions #'cape-tex)
+  ;;(add-to-list 'completion-at-point-functions #'cape-sgml)
+  (add-to-list 'completion-at-point-functions #'cape-rfc1345)
+  ;;(add-to-list 'completion-at-point-functions #'cape-abbrev)
+  (add-to-list 'completion-at-point-functions #'cape-ispell)
+  ;;(add-to-list 'completion-at-point-functions #'cape-dict)
+  ;;(add-to-list 'completion-at-point-functions #'cape-symbol)
+  ;;(add-to-list 'completion-at-point-functions #'cape-line)
+  )
+;; cape:1 ends here
 
 ;; [[file:init-emacs.org::#packages][Packages:1]]
 ;;==============================================================================
@@ -17274,7 +17302,7 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
   ;; :after (ivy)
   :diminish (projectile-mode . "Proj")
   :bind* ("C-x p" . projectile-command-map)
-  :bind-keymap ("C-c p" . projectile-command-map)
+  ;;:bind-keymap ("C-c p" . projectile-command-map)
   :custom
   ;; open the root directory when switching projects
   (projectile-switch-project-action #'projectile-dired)
