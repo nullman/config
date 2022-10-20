@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-10-19 17:07 (kyle)>
+  #+TIMESTAMP: <2022-10-19 19:46 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -22996,6 +22996,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
        (:name "Advent of Computing" :html "https://adventofcomputing.libsyn.com/" :rss "https://adventofcomputing.libsyn.com/rss" :tag "vintage")
        (:name "Lunduke Journal" :html "https://lunduke.substack.com/" :rss "https://lunduke.substack.com/feed" :tag "vintage")
        (:name "Computer Ads from the Past" :html "https://computeradsfromthepast.substack.com/" :rss "https://computeradsfromthepast.substack.com/feed" :tag "vintage")
+       (:name "Retro Millennial" :html "https://retropunk.substack.com/" :rss "https://retropunk.substack.com/feed" :tag "vintage")
        ;; Games
        ;;(:name "Star Citizen" :html "https://robertsspaceindustries.com/com-link/" :rss "https://robertsspaceindustries.com/comm-link/rss" :tag "game")
        ;; Other

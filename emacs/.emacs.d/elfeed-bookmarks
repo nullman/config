@@ -43,6 +43,7 @@
  (:name "Advent of Computing" :html "https://adventofcomputing.libsyn.com/" :rss "https://adventofcomputing.libsyn.com/rss" :tag "vintage")
  (:name "Lunduke Journal" :html "https://lunduke.substack.com/" :rss "https://lunduke.substack.com/feed" :tag "vintage")
  (:name "Computer Ads from the Past" :html "https://computeradsfromthepast.substack.com/" :rss "https://computeradsfromthepast.substack.com/feed" :tag "vintage")
+ (:name "Retro Millennial" :html "https://retropunk.substack.com/" :rss "https://retropunk.substack.com/feed" :tag "vintage")
  ;; Games
  ;;(:name "Star Citizen" :html "https://robertsspaceindustries.com/com-link/" :rss "https://robertsspaceindustries.com/comm-link/rss" :tag "game")
  ;; Other
