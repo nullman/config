@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-10-20 11:12 (kyle)>
+  #+TIMESTAMP: <2022-10-20 11:41 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -21581,23 +21581,23 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
 
         (use-package cape
           :straight t
-          ;; ;; bind dedicated completion commands
-          ;; :bind (("C-c p p" . completion-at-point) ; capf
-          ;;        ("C-c p t" . complete-tag)        ; etags
-          ;;        ("C-c p d" . cape-dabbrev)        ; or dabbrev-completion
-          ;;        ("C-c p h" . cape-history)
-          ;;        ("C-c p f" . cape-file)
-          ;;        ("C-c p k" . cape-keyword)
-          ;;        ("C-c p s" . cape-symbol)
-          ;;        ("C-c p a" . cape-abbrev)
-          ;;        ("C-c p i" . cape-ispell)
-          ;;        ("C-c p l" . cape-line)
-          ;;        ("C-c p w" . cape-dict)
-          ;;        ("C-c p \\" . cape-tex)
-          ;;        ("C-c p _" . cape-tex)
-          ;;        ("C-c p ^" . cape-tex)
-          ;;        ("C-c p &" . cape-sgml)
-          ;;        ("C-c p r" . cape-rfc1345))
+          ;; bind dedicated completion commands
+          :bind (("C-c p p" . completion-at-point) ; capf
+                 ("C-c p t" . complete-tag)        ; etags
+                 ("C-c p d" . cape-dabbrev)        ; or dabbrev-completion
+                 ("C-c p h" . cape-history)
+                 ("C-c p f" . cape-file)
+                 ("C-c p k" . cape-keyword)
+                 ("C-c p s" . cape-symbol)
+                 ("C-c p a" . cape-abbrev)
+                 ("C-c p i" . cape-ispell)
+                 ("C-c p l" . cape-line)
+                 ("C-c p w" . cape-dict)
+                 ("C-c p \\" . cape-tex)
+                 ("C-c p _" . cape-tex)
+                 ("C-c p ^" . cape-tex)
+                 ("C-c p &" . cape-sgml)
+                 ("C-c p r" . cape-rfc1345))
           :init
           ;; add `completion-at-point-functions', used by `completion-at-point'
           (add-to-list 'completion-at-point-functions #'cape-dabbrev)
@@ -23601,9 +23601,10 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
                        (zerop
                         (let ((default-directory (file-name-directory file)))
                           (call-process "git" nil nil nil "ls-files" "--error-unmatch" file))))
-              (git-gutter+-refresh))))
+              (ignore-errors
+                (git-gutter+-refresh-maybe)))))
         (cancel-function-timers #'git-gutter+-refresh-maybe)
-        (run-with-idle-timer 5 :repeat #'git-gutter+-refresh-maybe))
+        (run-with-idle-timer 20 :repeat #'git-gutter+-refresh-maybe))
 
       ;; (use-package git-gutter-fringe+
       ;;   :straight t
