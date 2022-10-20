@@ -14663,11 +14663,13 @@ USING is the remaining peg."
               ("C-SPC" . corfu-insert-separator)
               ("M-SPC" . corfu-insert-separator)
               ("RET" . nil)             ; enter does not complete
-              ("S-RET" . corfu-insert)  ; shift enter completes
-              ("TAB" . corfu-next)
-              ([tab] . corfu-next)
-              ("S-TAB" . corfu-previous)
-              ([backtab] . corfu-previous))
+              ("S-RET" . corfu-insert)
+              ("C-n" . corfu-next)
+              ("M-k" . corfu-next)
+              ("C-p" . corfu-previous)
+              ("M-i" . corfu-previous)
+              ("TAB" . corfu-complete)
+              ("<tab>" . corfu-complete))
   :custom
   (corfu-cycle nil)                 ; disable cycling for `corfu-next/previous'
   (corfu-auto t)                    ; enable auto completion
@@ -17165,6 +17167,46 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
       (bind-keys* :map occur-mode-map ("C-c C-r" . occur-remove))))
 ;; occur:1 ends here
 
+;; [[file:init-emacs.org::#packages-org-tree-slide][org-tree-slide:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: org-tree-slide
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Packages: org-tree-slide")
+
+(use-package org-tree-slide
+  :straight t
+  :bind (("S-<f8>" . org-tree-slide-mode)
+         ("C-<f8>" . org-tree-slide-skip-done-toggle))
+  :bind (:map org-tree-slide-mode-map
+              ("<f11>" . org-tree-slide-move-previous-tree)
+              ("<f12>" . org-tree-slide-move-next-tree))
+  :hook ((org-tree-slide-play . org-tree-slide-presentation-setup)
+         (org-tree-slide-stop . org-tree-slide-presentation-reset))
+  :custom
+  (org-tree-slide-slide-in-effect t)
+  (org-tree-slide-activate-message "Presentation Mode: On")
+  (org-tree-slide-deactivate-message "Presentation Mode: Off")
+  (org-tree-slide-header t)
+  (org-tree-slide-breadcrumbs " > ")
+  (org-image-actual-width nil)
+  :config
+  (use-package hide-mode-line
+    :straight t)
+
+  (defun org-tree-slide-presentation-setup ()
+    (setq text-scale-mode-amount 3)
+    (when (fboundp 'hide-mode-line-mode)
+      (hide-mode-line-mode 1))
+    (org-display-inline-images)
+    (text-scale-mode 1))
+
+  (defun org-tree-slide-presentation-reset ()
+    (when (fboundp 'hide-mode-line-mode)
+      (hide-mode-line-mode 0))
+    (text-scale-mode 0)))
+;; org-tree-slide:1 ends here
+
 ;; [[file:init-emacs.org::#modules-package-lint][package-lint:1]]
 ;;------------------------------------------------------------------------------
 ;;; Packages: package-lint
@@ -17760,46 +17802,6 @@ otherwise run `find-file-as-root'."
       (find-file-as-root))))
 ;; tramp:1 ends here
 
-;; [[file:init-emacs.org::#packages-org-tree-slide][org-tree-slide:1]]
-;;------------------------------------------------------------------------------
-;;; Packages: org-tree-slide
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Packages: org-tree-slide")
-
-(use-package org-tree-slide
-  :straight t
-  :bind (("S-<f8>" . org-tree-slide-mode)
-         ("C-<f8>" . org-tree-slide-skip-done-toggle))
-  :bind (:map org-tree-slide-mode-map
-              ("<f11>" . org-tree-slide-move-previous-tree)
-              ("<f12>" . org-tree-slide-move-next-tree))
-  :hook ((org-tree-slide-play . org-tree-slide-presentation-setup)
-         (org-tree-slide-stop . org-tree-slide-presentation-reset))
-  :custom
-  (org-tree-slide-slide-in-effect t)
-  (org-tree-slide-activate-message "Presentation Mode: On")
-  (org-tree-slide-deactivate-message "Presentation Mode: Off")
-  (org-tree-slide-header t)
-  (org-tree-slide-breadcrumbs " > ")
-  (org-image-actual-width nil)
-  :config
-  (use-package hide-mode-line
-    :straight t)
-
-  (defun org-tree-slide-presentation-setup ()
-    (setq text-scale-mode-amount 3)
-    (when (fboundp 'hide-mode-line-mode)
-      (hide-mode-line-mode 1))
-    (org-display-inline-images)
-    (text-scale-mode 1))
-
-  (defun org-tree-slide-presentation-reset ()
-    (when (fboundp 'hide-mode-line-mode)
-      (hide-mode-line-mode 0))
-    (text-scale-mode 0)))
-;; org-tree-slide:1 ends here
-
 ;; [[file:init-emacs.org::#modules-undo-tree][undo-tree:1]]
 ;;------------------------------------------------------------------------------
 ;;; Packages: undo-tree
@@ -18037,12 +18039,15 @@ otherwise run `find-file-as-root'."
 
 (use-package lsp-mode
   :straight t
-  :after (company)
+  ;;:after (company)
+  :after (corfu)
   :commands (lsp lsp-mode lsp-defered)
   :bind (:map lsp-mode-map
-              ("<tab>" . company-indent-or-complete-common))
-  :hook ((lsp-mode . custom-lsp-mode-hook)
-         (lsp-mode . company-mode))
+              ("M-RET" . lsp-execute-code-action))
+  ;;             ("TAB" . company-indent-or-complete-common)
+  ;;             ("<tab>" . company-indent-or-complete-common))
+  :hook ((lsp-mode . custom-lsp-mode-hook))
+         ;; (lsp-mode . company-mode))
   :init
   (setq lsp-keymap-prefix "C-x C-l")    ; default: `downcase-region'
   :config
@@ -18061,7 +18066,10 @@ otherwise run `find-file-as-root'."
   :straight t
   :after (lsp-mode)
   :hook (lsp-mode . lsp-ui-mode)
-  :custom (lsp-ui-doc-position 'bottom))
+  :custom
+  ;;(lsp-ui-doc-position 'bottom)
+  (lsp-ui-doc-position 'at-point)
+  (lsp-ui-sideline-show-code-actions t))
 
 ;; ;;------------------------------------------------------------------------------
 ;; ;;;; helm-lsp
@@ -18093,11 +18101,13 @@ otherwise run `find-file-as-root'."
 ;; LSP treemacs integration.
 ;;------------------------------------------------------------------------------
 
-(init-message 3 "lsp-treemacs")
+;; (init-message 3 "lsp-treemacs")
 
-(use-package lsp-treemacs
-  :straight t
-  :after (lsp-mode))
+;; (use-package lsp-treemacs
+;;   :straight t
+;;   :after (lsp-mode)
+;;   :init
+;;   (lsp-treemacs-sync-mode 1))
 ;; Configuration:1 ends here
 
 ;; [[file:init-emacs.org::#eglot][eglot:1]]
@@ -18890,6 +18900,76 @@ otherwise run `find-file-as-root'."
   (setq json-encoding-default-indentation "    "
         json-encoding-pretty-print t))
 ;; JSON Mode:1 ends here
+
+;; [[file:init-emacs.org::#modes-kotlin-mode][Kotlin Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Kotlin Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Kotlin Mode")
+
+(use-package kotlin-mode
+  :straight t
+  :after (lsp-mode)
+  :mode (("\\.kt\\'" . kotlin-mode)
+         ("\\.kts\\'" . kotlin-mode)))
+
+;; (use-package java-mode
+;;   :straight t
+;;   :after (lsp-mode)
+;;   :mode (("\\.kt\\'" . kotlin-mode)
+;;          ("\\.kts\\'" . kotlin-mode)))
+;;   :commands (java-mode
+;;              kotlin-mode--syntax-propertize-function)
+;;   :functions (kotlin-send-buffer)
+;;   :config
+;;   ;; add style for kotlin-mode
+;;   (add-to-list 'c-default-style '(kotlin-mode . "java"))
+
+;;   ;; add junit lib to classpath when creating a repl (so unit tests work)
+;;   (add-to-list 'kotlin-args-repl "-classpath" t)
+;;   (add-to-list 'kotlin-args-repl (file-truename (expand-file-name "~/dev/kotlin/lib/junit-4.12.jar") t))
+
+;;   ;; redefine kotlin-mode so that indentation works
+;;   ;; based on `java-mode'
+;;   (define-derived-mode kotlin-mode java-mode "Kotlin"
+;;     "Major mode for editing Kotlin."
+
+;;     (setq font-lock-defaults '((kotlin-mode--font-lock-keywords) nil nil))
+;;     (setq-local syntax-propertize-function #'kotlin-mode--syntax-propertize-function)
+;;     (set (make-local-variable 'comment-start) "//")
+;;     (set (make-local-variable 'comment-padding) 1)
+;;     (set (make-local-variable 'comment-start-skip) "\\(//+\\|/\\*+\\)\\s *")
+;;     (set (make-local-variable 'comment-end) "")
+;;     (set (make-local-variable 'c-comment-start-regexp) "//")
+;;     (set (make-local-variable 'c-block-comment-start-regexp) "/\\*")
+;;     (set (make-local-variable 'indent-line-function) 'kotlin-mode--indent-line)
+
+;;     :group 'kotlin
+;;     :syntax-table kotlin-mode-syntax-table)
+
+;;   ;; redefine send region to remove comments before sending
+;;   ;; (kotlinc REPL does not currently support comments)
+;;   (defun kotlin-send-region (beg end)
+;;     "Send current region to Kotlin interpreter."
+;;     (interactive "r")
+;;     (let ((buffer (current-buffer)))
+;;       (with-temp-buffer
+;;         (insert-buffer-substring-no-properties buffer beg end)
+;;         (java-remove-comments)
+;;         (comint-send-region kotlin-repl-buffer (point-min) (point-max))
+;;         (comint-send-string kotlin-repl-buffer "\n")))))
+
+;;------------------------------------------------------------------------------
+;;;; flycheck kotlin
+;;------------------------------------------------------------------------------
+
+(use-package flycheck-kotlin
+  :straight t
+  :after (flycheck kotlin-mode)
+  :defines (flycheck-mode)
+  :hook (kotlin-mode . flycheck-mode))
+;; Kotlin Mode:1 ends here
 
 ;; [[file:init-emacs.org::#modes-ledger-mode][Ledger Mode:1]]
 ;;------------------------------------------------------------------------------
