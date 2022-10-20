@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-10-20 11:03 (kyle)>
+  #+TIMESTAMP: <2022-10-20 11:12 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -21612,7 +21612,12 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
           ;;(add-to-list 'completion-at-point-functions #'cape-dict)
           ;;(add-to-list 'completion-at-point-functions #'cape-symbol)
           ;;(add-to-list 'completion-at-point-functions #'cape-line)
-          )
+          :config
+          ;; sanitize `pcomplete-completions-at-point' capf
+          ;; capf has undesired side effects on Emacs 28 and earlier
+          (when (version<= "29.0" emacs-version)
+            (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-silent)
+            (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-purify)))
       #+END_SRC
 
 * Packages
