@@ -15480,6 +15480,10 @@ USING is the remaining peg."
               ("h" . elfeed-show-mode-help)
               ("?" . elfeed-show-mode-help))
   :custom
+  ;; use curl utility to fetch feeds
+  (elfeed-use-curl nil)
+  ;; reduce max connections for better performance
+  (elfeed-curl-max-connections 1)
   ;; standard filters
   (elfeed-search-filter "-junk +unread")
   ;; custom feed list

@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-10-20 14:44 (kyle)>
+  #+TIMESTAMP: <2022-10-20 21:59 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -22913,6 +22913,10 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
                     ("h" . elfeed-show-mode-help)
                     ("?" . elfeed-show-mode-help))
         :custom
+        ;; use curl utility to fetch feeds
+        (elfeed-use-curl nil)
+        ;; reduce max connections for better performance
+        (elfeed-curl-max-connections 1)
         ;; standard filters
         (elfeed-search-filter "-junk +unread")
         ;; custom feed list
