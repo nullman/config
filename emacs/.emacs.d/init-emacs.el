@@ -10879,7 +10879,7 @@ be automatically capitalized."
           (abbreviation-word-regexp "\\b[A-Z][.A-Z]+[^ \t]*\\b")
           (mixed-word-regexp "\\b[A-Z]*[a-z]+[A-Z]+[^ \t]*\\b")
           (first-word-regexp "\\(^[ \t]*\\(\\w+\\)\\|[\.!:&\*()/][ \t]*\\(\\w+\\)\\)")
-          (last-word-regexp "\\(\\(\\w+\\)[ \t]*$\\|\\(\\w+\\)[ \t]*[\.!:&\*()\[]\\)"))
+          (last-word-regexp "\\(\\(\\w+\\)[ \t]*$\\|\\(\\w+\\)[ \t]*[\.!\?:&\*()\[]\\)"))
       (cl-labels
           ((get-fixed (string regexp)
                         (let ((case-fold-search nil)
@@ -14663,7 +14663,7 @@ USING is the remaining peg."
               ("C-SPC" . corfu-insert-separator)
               ("M-SPC" . corfu-insert-separator)
               ("RET" . nil)             ; enter does not complete
-              ("S-RET" . corfu-insert)
+              ;; ("S-RET" . corfu-insert)
               ("C-n" . corfu-next)
               ("M-k" . corfu-next)
               ("C-p" . corfu-previous)
@@ -20652,9 +20652,10 @@ Commands:
      ("Command Log Mode OFF" "command-log-mode-off" "Turn off ‘command-log-mode’ and close the log buffer.")
      ("Clear Command Log Buffer" "clm/command-log-clear" "Clear the command log buffer.")))
    ("Edit"
-    (("Replacer Replacements Edit" "replacer-replacements-edit" "Edit `replacer-replacements'.")
-     ("Elfeed Boookmarks Edit" "elfeed-bookmarks-edit" "Edit Elfeeds bookmarks file.")
-     ("Elpher Bookmarks Edit" "elpher-bookmarks-edit" "Edit Elpher bookmarks file.")))
+    (("Replacer Replacements" "replacer-replacements-edit" "Edit `replacer-replacements'.")
+     ("Elfeed Boookmarks" "elfeed-bookmarks-edit" "Edit Elfeeds bookmarks file.")
+     ("Elpher Bookmarks" "elpher-bookmarks-edit" "Edit Elpher bookmarks file.")
+     ("YouTube Get Videos" "(org-link-open-from-string \"file:~/config-private/common/org/init-home.org::get-youtube-videos\")" "Edit get-youtube-videos file.")))
    ("TAGS"
     (("Visit Local TAGS" "(when (find-file-updir \"TAGS\") (visit-tags-table (find-file-updir \"TAGS\") t))" "Visit local tags table.")
      ("Create Local TAGS" "etags-create" "Create local tags table.")))
