@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-10-22 10:15 (kyle)>
+  #+TIMESTAMP: <2022-10-22 16:21 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -29485,25 +29485,25 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
               json-encoding-pretty-print t))
     #+END_SRC
 
-*** Kotlin Mode
+*** +Kotlin Mode+
     :PROPERTIES:
     :CUSTOM_ID: modes-kotlin-mode
     :END:
 
     Major mode for kotlin.
 
-    #+BEGIN_SRC emacs-lisp
-      ;;------------------------------------------------------------------------------
-      ;;; Modes: Kotlin Mode
-      ;;------------------------------------------------------------------------------
+    #+BEGIN_SRC emacs-lisp :tangle no
+      ;; ;;------------------------------------------------------------------------------
+      ;; ;;; Modes: Kotlin Mode
+      ;; ;;------------------------------------------------------------------------------
 
-      (init-message 2 "Modes: Kotlin Mode")
+      ;; (init-message 2 "Modes: Kotlin Mode")
 
-      (use-package kotlin-mode
-        :straight t
-        :after (lsp-mode)
-        :mode (("\\.kt\\'" . kotlin-mode)
-               ("\\.kts\\'" . kotlin-mode)))
+      ;; ;; (use-package kotlin-mode
+      ;; ;;   :straight t
+      ;; ;;   :after (lsp-mode)
+      ;; ;;   :mode (("\\.kt\\'" . kotlin-mode)
+      ;; ;;          ("\\.kts\\'" . kotlin-mode)))
 
       ;; (use-package java-mode
       ;;   :straight t
@@ -29551,15 +29551,15 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;;         (comint-send-region kotlin-repl-buffer (point-min) (point-max))
       ;;         (comint-send-string kotlin-repl-buffer "\n")))))
 
-      ;;------------------------------------------------------------------------------
-      ;;;; flycheck kotlin
-      ;;------------------------------------------------------------------------------
+      ;; ;;------------------------------------------------------------------------------
+      ;; ;;;; flycheck kotlin
+      ;; ;;------------------------------------------------------------------------------
 
-      (use-package flycheck-kotlin
-        :straight t
-        :after (flycheck kotlin-mode)
-        :defines (flycheck-mode)
-        :hook (kotlin-mode . flycheck-mode))
+      ;; (use-package flycheck-kotlin
+      ;;   :straight t
+      ;;   :after (flycheck kotlin-mode)
+      ;;   :defines (flycheck-mode)
+      ;;   :hook (kotlin-mode . flycheck-mode))
     #+END_SRC
 
 *** +LaTeX+
