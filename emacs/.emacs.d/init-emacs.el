@@ -17574,7 +17574,7 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
 (use-package saveplace
   :straight (:type built-in)
   :custom
-  (save-place-file (locate-user-emacs-file ".save-place"))
+  (save-place-file (locate-user-emacs-file ".saveplace"))
   (save-place-ignore-files-regexp
    (rx (seq
         ;; ignore org files so as to not conflict with `org-visibility'
