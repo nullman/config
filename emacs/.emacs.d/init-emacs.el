@@ -16276,11 +16276,11 @@ And the line would be overlaid like:
   (let ((ovs (overlays-in (point-min) (point-max))))
     (if (cl-loop for ov in ovs
                  thereis (overlay-get ov :lorem-ipsum-overlay))
-        ;; Remove overlays.
+        ;; remove overlays
         (dolist (ov ovs)
           (when (overlay-get ov :lorem-ipsum-overlay)
             (delete-overlay ov)))
-      ;; Add overlays.
+      ;; add overlays
       (let ((lorem-ipsum-words (--> lorem-ipsum-text
                                     (-flatten it) (apply #'concat it)
                                     (split-string it (rx (or space punct)) 'omit-nulls)))
@@ -16303,7 +16303,7 @@ And the line would be overlaid like:
              (lorem-word (word)
                          (if-let* ((matches (lorem-matches (length word))))
                              (apply-case word (downcase (seq-random-elt matches)))
-                           ;; Word too long: compose one.
+                           ;; word too long; compose one
                            (apply-case word (downcase (compose-word (length word))))))
              (lorem-matches (length &optional (comparator #'=))
                             (cl-loop for liw in lorem-ipsum-words
@@ -17573,6 +17573,13 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
 
 (use-package saveplace
   :straight (:type built-in)
+  :custom
+  (save-place-file (locate-user-emacs-file ".save-place"))
+  (save-place-ignore-files-regexp
+   (rx (seq
+        ;; ignore org files so as to not conflict with `org-visibility'
+        (or ".org")
+        eol)))
   :init (save-place-mode 1))
 ;; saveplace:1 ends here
 
