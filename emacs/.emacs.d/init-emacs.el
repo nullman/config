@@ -10707,28 +10707,6 @@ Otherwise, behaves the same as `occur'."
       (occur ".+"))))
 ;; occur-inverse:1 ends here
 
-;; [[file:init-emacs.org::#functions-emacs-grouped-functions-occur-occur-remove][occur-remove:1]]
-;;------------------------------------------------------------------------------
-;;;; Functions: Emacs Grouped Functions: Occur: occur-remove
-;;------------------------------------------------------------------------------
-
-(init-message 4 "Functions: Emacs Grouped Functions: Occur: occur-remove")
-
-(defun occur-remove (regexp)
-  "Remove all lines in the *Occur* buffer containing a match for REGEXP."
-  (interactive "sRegexp: ")
-  (unless (string= (buffer-name) "*Occur*")
-    (error "This function can only be run within an *Occur* buffer."))
-  (let ((inhibit-read-only t))
-    (save-mark-and-excursion
-      (goto-char (point-min))
-      (while (not (eobp))
-        (forward-line 0)
-        (if (re-search-forward regexp (line-end-position) :noerror)
-            (delete-line)
-          (forward-line 1))))))
-;; occur-remove:1 ends here
-
 ;; [[file:init-emacs.org::#functions-text-conversion-functions][Text Conversion Functions:1]]
 ;;------------------------------------------------------------------------------
 ;;; Functions: Text Conversion Functions
@@ -15201,11 +15179,26 @@ USING is the remaining peg."
   :commands (list-buffers bs-show)
   :bind* (([remap list-buffers] . bs-show) ; default: `list-buffers'
           ("C-x C-b" . bs-show))           ; default: `list-buffers'
+  :bind (:map bs-mode-map
+              ("C-n" . bs-down)
+              ("C-p" . bs-up))
   :config
-  (defvar custom-bs-always-show-regexps '("\\*\\(scratch\\|info\\|grep\\)\\*")
+  (defvar custom-bs-always-show-regexps
+    ;;'("\\*\\(scratch\\|info\\|grep\\)\\*")
+    (list
+     (rx (seq bos "*" (or "scratch" "info" "grep") "*" eos)))
     "*Buffer regexps to always show when buffer switching.")
-  (defvar custom-bs-never-show-regexps '("^\\s-" "^\\*" "TAGS$" "^Map_Sym.txt$" "^magit")
+
+  (defvar custom-bs-never-show-regexps
+    ;;'("^\\s-" "^\\*" "TAGS$" "^Map_Sym.txt$" "^magit")
+    (list
+     (rx (or (seq bos space)
+             (seq bos "*")
+             (seq "TAGS" eos)
+             (seq bos "Map_Sym.txt" eos)
+             (seq bos "magit"))))
     "*Buffer regexps to never show when buffer switching.")
+
   (defvar custom-ido-ignore-dired-buffers nil
     "*If non-nil, buffer switching should ignore dired buffers.")
 
@@ -15248,7 +15241,19 @@ USING is the remaining peg."
   (defun custom-bs-cycle-buffer-filter-extra ()
     "Add ignore rules to `cycle-buffer'."
     (not (custom-bs-ignore-buffer (buffer-name))))
-  (add-to-list 'cycle-buffer-filter-extra '(custom-bs-cycle-buffer-filter-extra) t))
+  (add-to-list 'cycle-buffer-filter-extra '(custom-bs-cycle-buffer-filter-extra) t)
+
+  ;; customize `bs--up' so it does not wrap
+  (defun bs--up ()
+    "Move point vertically up one line."
+    (when (> (count-lines 1 (point)) bs-header-lines-length)
+      (forward-line -1)))
+
+  ;; customize `bs--down' so it does not wrap
+  (defun bs--down ()
+    "Move point vertically down one line."
+    (if (< (line-end-position) (point-max))
+        (forward-line 1))))
 ;; bs:1 ends here
 
 ;; [[file:init-emacs.org::#modules-calc][calc:1]]
@@ -15369,13 +15374,13 @@ USING is the remaining peg."
           ("<f10>" . cycle-buffer)      ; default: `tmm-menubar'
           ("S-<f10>" . cycle-buffer-permissive))
   :init
-  ;; advise `cycle-buffer`
+  ;; advise `cycle-buffer'
   (advice-add 'cycle-buffer :around #'advice--ignore-interactive-errors)
-  ;; advise `cycle-buffer-permissive`
+  ;; advise `cycle-buffer-permissive'
   (advice-add 'cycle-buffer-permissive :around #'advice--ignore-interactive-errors)
-  ;; advise `cycle-buffer-backward`
+  ;; advise `cycle-buffer-backward'
   (advice-add 'cycle-buffer-backward :around #'advice--ignore-interactive-errors)
-  ;; advise `cycle-buffer-backward-permissive`
+  ;; advise `cycle-buffer-backward-permissive'
   (advice-add 'cycle-buffer-backward-permissive :around #'advice--ignore-interactive-errors))
 ;; cycle-buffer:1 ends here
 
@@ -17189,9 +17194,7 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
   :straight (:type built-in)
   :config
   (when (fboundp 'occur-inverse)
-      (bind-keys* :map occur-mode-map ("C-c C-i" . occur-inverse)))
-  (when (fboundp 'occur-remove)
-      (bind-keys* :map occur-mode-map ("C-c C-r" . occur-remove))))
+      (bind-keys* :map occur-mode-map ("C-c C-i" . occur-inverse))))
 ;; occur:1 ends here
 
 ;; [[file:init-emacs.org::#packages-org-tree-slide][org-tree-slide:1]]
