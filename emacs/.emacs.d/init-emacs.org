@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-10-22 16:21 (kyle)>
+  #+TIMESTAMP: <2022-10-24 18:30 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -23175,7 +23175,9 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
 
     #+BEGIN_SRC emacs-lisp :tangle ~/config/emacs/.emacs.d/elpher-bookmarks
       ;; Elpher Bookmarks File
-      (("Gopherpedia" "gopher://gopherpedia.com/1")
+      (
+       ;; Gopher
+       ("Gopherpedia" "gopher://gopherpedia.com/1")
        ("Gopher Project" "gopher://gopherproject.org/1")
        ("Floodgap Systems" "gopher://gopher.floodgap.com/1")
        ("Hacker News" "gopher://hngopher.com/1")
@@ -23198,6 +23200,9 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
        ("Bitreich" "gopher://bitreich.org/1")
        ("Gopherus Author" "gopher://gopher.viste.fr/1")
        ("Elpher" "gopher://thelambdalab.xyz/1/projects/elpher/")
+       ("Klondike Solitaire" "gopher://worldofsolitaire.com/")
+
+       ;; Gemini
        ("Project Gemini" "gemini://gemini.circumlunar.space/")
        ("System Crafters" "gemini://systemcrafters.cc")
        ("Writing a Gemini Server" "gemini://bcalderon.io/writing-a-gemini-server"))
