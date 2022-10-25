@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-10-24 18:46 (kyle)>
+  #+TIMESTAMP: <2022-10-25 14:15 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -22971,7 +22971,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         ;; use curl utility to fetch feeds
         (elfeed-use-curl nil)
         ;; reduce max connections for better performance
-        (elfeed-curl-max-connections 1)
+        (elfeed-curl-max-connections 6)
         ;; standard filters
         (elfeed-search-filter "-junk +unread")
         ;; custom feed list
@@ -24003,6 +24003,29 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;;   (setq identica-username "nullman")
       ;;   ;; (setq identica-password "password")
       ;;   )
+    #+END_SRC
+
+*** isearch
+    :PROPERTIES:
+    :CUSTOM_ID: packages-isearch
+    :END:
+
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Packages: isearch
+      ;;------------------------------------------------------------------------------
+
+      (init-message 2 "Packages: isearch")
+
+      (use-package isearch
+        :straight (:type built-in)
+        :bind (:map isearch-mode-map
+                    ("C-M-<backspace>" . isearch-clear))
+        :config
+        (defun isearch-clear ()
+          "Clear `isearch' search string."
+          (interactive)
+          (isearch-del-char most-positive-fixnum)))
     #+END_SRC
 
 *** iedit

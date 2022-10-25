@@ -15511,7 +15511,7 @@ USING is the remaining peg."
   ;; use curl utility to fetch feeds
   (elfeed-use-curl nil)
   ;; reduce max connections for better performance
-  (elfeed-curl-max-connections 1)
+  (elfeed-curl-max-connections 6)
   ;; standard filters
   (elfeed-search-filter "-junk +unread")
   ;; custom feed list
@@ -16075,6 +16075,24 @@ back to the previous non-whitespace character. See also
     (ibuffer-switch-to-saved-filter-groups "default"))
   (add-hook 'ibuffer-mode-hook #'custom-ibuffer-mode-hook))
 ;; ibuffer:1 ends here
+
+;; [[file:init-emacs.org::#packages-isearch][isearch:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: isearch
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Packages: isearch")
+
+(use-package isearch
+  :straight (:type built-in)
+  :bind (:map isearch-mode-map
+              ("C-M-<backspace>" . isearch-clear))
+  :config
+  (defun isearch-clear ()
+    "Clear `isearch' search string."
+    (interactive)
+    (isearch-del-char most-positive-fixnum)))
+;; isearch:1 ends here
 
 ;; [[file:init-emacs.org::#modules-iedit][iedit:1]]
 ;;------------------------------------------------------------------------------
