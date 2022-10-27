@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-10-25 14:15 (kyle)>
+  #+TIMESTAMP: <2022-10-27 09:18 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -17689,6 +17689,28 @@
                    (substring-no-properties
                     (thing-at-point 'word))))))
             (define-word-after-spell-check word)))
+      #+END_SRC
+
+***** run-command
+      :PROPERTIES:
+      :CUSTOM_ID: functions-external-program-functions-run-command
+      :END:
+
+      #+BEGIN_SRC emacs-lisp
+        ;;------------------------------------------------------------------------------
+        ;;;; Functions: External Program Functions: run-command
+        ;;------------------------------------------------------------------------------
+
+        (init-message 3 "Functions: External Program Functions: run-command")
+
+        (defun run-command (command &optional destination)
+          "Use `call-process' to run COMMAND with optional DESTINATION.
+
+        See `call-process' documentation for instructions on how to use
+        DESTINATION."
+          (let ((destination (or destination 0))
+                (parts (split-string command (rx (one-or-more space)))))
+            (apply #'call-process `(,(car parts) nil ,destination nil ,@(cdr parts)))))
       #+END_SRC
 
 *** Newer Emacs Functionality Functions

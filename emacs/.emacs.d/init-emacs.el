@@ -12257,6 +12257,23 @@ When the region is active, define the marked phrase."
     (define-word-after-spell-check word)))
 ;; define-word:2 ends here
 
+;; [[file:init-emacs.org::#functions-external-program-functions-run-command][run-command:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: External Program Functions: run-command
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: External Program Functions: run-command")
+
+(defun run-command (command &optional destination)
+  "Use `call-process' to run COMMAND with optional DESTINATION.
+
+See `call-process' documentation for instructions on how to use
+DESTINATION."
+  (let ((destination (or destination 0))
+        (parts (split-string command (rx (one-or-more space)))))
+    (apply #'call-process `(,(car parts) nil ,destination nil ,@(cdr parts)))))
+;; run-command:1 ends here
+
 ;; [[file:init-emacs.org::#functions-newer-emacs-functionality-functions][Newer Emacs Functionality Functions:1]]
 ;;------------------------------------------------------------------------------
 ;;; Functions: Newer Emacs Functionality Functions
