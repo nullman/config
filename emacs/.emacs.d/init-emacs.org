@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-10-27 09:18 (kyle)>
+  #+TIMESTAMP: <2022-10-27 11:01 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -17695,6 +17695,8 @@
       :PROPERTIES:
       :CUSTOM_ID: functions-external-program-functions-run-command
       :END:
+
+      Ease of use wrapper around =call-process= to run an external command.
 
       #+BEGIN_SRC emacs-lisp
         ;;------------------------------------------------------------------------------
