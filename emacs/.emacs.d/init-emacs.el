@@ -10145,6 +10145,35 @@ Optional START and END parameters will limit the search to a region."
       count)))
 ;; count-words-paragraph:1 ends here
 
+;; [[file:init-emacs.org::#functions-emacs-functions-count-lines-of-code][count-lines-of-code:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Emacs Functions: count-lines-of-code
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Emacs Functions: count-lines-of-code")
+
+(defun count-lines-of-code (&optional beg end)
+  "Count the number of code lines in the selected region or entire buffer (if none)."
+  (interactive)
+  (cl-labels
+      ((inside-comment () (nth 4 (syntax-ppss))))
+    (let* ((beg (or beg (if (use-region-p) (region-beginning) (point-min))))
+           (end (or end (if (use-region-p) (region-end) (point-max))))
+           (not-space-regexp (rx (not space)))
+           (count 0))
+      (save-mark-and-excursion
+        (save-restriction
+          (save-match-data
+            (narrow-to-region beg end)
+            (goto-char (point-min))
+            (while (not (eobp))
+              (while (not (= (point) (line-end-position)))
+                (re-search-forward not-space-regexp
+    (when (called-interactively-p 'any)
+      (message "%s" count))
+    count))
+;; count-lines-of-code:1 ends here
+
 ;; [[file:init-emacs.org::#functions-emacs-functions-date-offset][date-offset:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: date-offset
