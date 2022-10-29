@@ -5377,7 +5377,7 @@ If JSON-FILE is non-nil, then output is returned."
          (timestamp (org-bookmarks-timestamp)))
     (cl-labels
         ((gen-id ()
-                 (incf global-id))
+                 (cl-incf global-id))
          (parse (bm tree index)
                 (let* ((type (plist-get bm :type))
                        (type-value (cdr (assoc type type-value-list)))
@@ -5407,7 +5407,7 @@ If JSON-FILE is non-nil, then output is returned."
                     (setq entry (append entry (list :root root))))
                   (when children
                     (let ((idx -1))
-                      (setq entry (append entry (list :children (map 'vector (lambda (x) (parse x tree (incf idx))) children))))))
+                      (setq entry (append entry (list :children (map 'vector (lambda (x) (parse x tree (cl-incf idx))) children))))))
                   (append tree entry))))
       (let ((json-object-type 'plist)
             (json-array-type 'vector)
@@ -10155,20 +10155,18 @@ Optional START and END parameters will limit the search to a region."
 (defun count-lines-of-code (&optional beg end)
   "Count the number of code lines in the selected region or entire buffer (if none)."
   (interactive)
-  (cl-labels
-      ((inside-comment () (nth 4 (syntax-ppss))))
-    (let* ((beg (or beg (if (use-region-p) (region-beginning) (point-min))))
-           (end (or end (if (use-region-p) (region-end) (point-max))))
-           (not-space-regexp (rx (not space)))
-           (count 0))
-      (save-mark-and-excursion
-        (save-restriction
-          (save-match-data
-            (narrow-to-region beg end)
-            (goto-char (point-min))
-            (while (not (eobp))
-              (while (not (= (point) (line-end-position)))
-                (re-search-forward not-space-regexp
+  (let ((beg (or beg (if (use-region-p) (region-beginning) (point-min))))
+        (end (or end (if (use-region-p) (region-end) (point-max))))
+        (count 0))
+    (save-mark-and-excursion
+      (save-restriction
+        (save-match-data
+          (narrow-to-region beg end)
+          (goto-char (point-min))
+          (while (not (eobp))
+            (unless (comment-only-p (line-beginning-position) (line-end-position))
+              (cl-incf count))
+            (forward-line 1)))))
     (when (called-interactively-p 'any)
       (message "%s" count))
     count))
@@ -11703,9 +11701,9 @@ of the current buffer."
                         (elt bookends (random bookends-size)))))
           (push char password)
           (when (member char numbers)
-            (incf number-count))
+            (cl-incf number-count))
           (when (member char symbols)
-            (incf symbol-count))
+            (cl-incf symbol-count))
           (when (and (> number-count 0)
                      (> symbol-count 0))
             (setq valid t))))
