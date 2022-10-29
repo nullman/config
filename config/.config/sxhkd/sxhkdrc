@@ -198,7 +198,7 @@ super + shift + t
     ((pkill -SIGUSR1 -x tint2 -u ${USER} && xdo below -t $(xdo id -N Bspwm) $(xdo id -N Tint2)) || ${HOME}/bin/system-bar &) && notify-send --expire-time=2000 'Reloading Tint'
 
 # reset video
-super + shift + 6
+super + shift + v
     xrandr --output $(xrandr | grep ' connected ' | sed 's/ .*//' | head -n 1) --auto && notify-send --expire-time=2000 'Resetting video'
 
 # git synchronize config
