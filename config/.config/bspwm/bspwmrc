@@ -277,6 +277,9 @@ _command conky && [[ -f "${HOME}/.config/conky/bspwm-keybindings.conkyrc" ]] && 
 # clipmenu
 _command clipmenud && clipmenud &
 
+# eject-applet
+_command eject-applet && eject-applet &
+
 # set cursor theme
 _command fix_xcursor && fix_xcursor &
 
