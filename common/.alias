@@ -2107,7 +2107,8 @@ alias rsync-adult-put-adult-sd="
     [[ -d \${dir1} ]] && dir=\${dir1}
     [[ -d \${dir2} ]] && dir=\${dir2}
     if [[ -d \${dir} ]] ; then
-        rsync -rLtxW --size-only --progress --delete --exclude={'#recycle','White Boxxx Compilation'} ${home}/data/media/video/Adult/ \${dir}/
+        #rsync -rLtxW --size-only --progress --delete --exclude={'#recycle','White Boxxx Compilation'} ${home}/data/media/video/Adult/ \${dir}/
+        rsync -rLtxW --size-only --progress --delete \"${home}/data/media/video/Adult/XXX Internet/\" \${dir}/
         sync
     else
         echo \"Error: \${usb} USB not found\"
