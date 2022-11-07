@@ -14718,7 +14718,7 @@ USING is the remaining peg."
   :custom
   (corfu-cycle nil)                 ; disable cycling for `corfu-next/previous'
   (corfu-auto t)                    ; enable auto completion
-  (corfu-auto-prefix 1)             ; auto complete after a number of typed characters
+  (corfu-auto-prefix 3)             ; auto complete after a number of typed characters
   (corfu-auto-delay 1.0)            ; auto complete after a delay
   (corfu-separator ?\s)             ; whitespace is orderless field separator
   (corfu-quit-at-boundary 'separator) ; quit at completion boundary

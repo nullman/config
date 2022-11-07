@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-11-05 13:52 (kyle)>
+  #+TIMESTAMP: <2022-11-07 16:27 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -21604,7 +21604,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
           :custom
           (corfu-cycle nil)                 ; disable cycling for `corfu-next/previous'
           (corfu-auto t)                    ; enable auto completion
-          (corfu-auto-prefix 1)             ; auto complete after a number of typed characters
+          (corfu-auto-prefix 3)             ; auto complete after a number of typed characters
           (corfu-auto-delay 1.0)            ; auto complete after a delay
           (corfu-separator ?\s)             ; whitespace is orderless field separator
           (corfu-quit-at-boundary 'separator) ; quit at completion boundary
