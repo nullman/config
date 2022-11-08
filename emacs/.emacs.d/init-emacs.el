@@ -15926,22 +15926,6 @@ USING is the remaining peg."
   (cancel-function-timers #'git-gutter+-refresh)
   (run-with-idle-timer 20 :repeat #'git-gutter+-refresh))
 
-  ;; ;; refresh periodically
-  ;; this takes too long to run and locks up Emacs
-  ;; (defun git-gutter+-refresh-maybe ()
-  ;;   "Call `git-gutter+-refresh' if active buffer file is tracked by git."
-  ;;   (interactive)
-  ;;   (let ((file (buffer-file-name)))
-  ;;     (when (and file
-  ;;                (file-exists-p file)
-  ;;                (zerop
-  ;;                 (let ((default-directory (file-name-directory file)))
-  ;;                   (call-process "git" nil nil nil "ls-files" "--error-unmatch" file))))
-  ;;       (ignore-errors
-  ;;         (git-gutter+-refresh-maybe)))))
-  ;; (cancel-function-timers #'git-gutter+-refresh-maybe)
-  ;; (run-with-idle-timer 20 :repeat #'git-gutter+-refresh-maybe))
-
 ;; (use-package git-gutter-fringe+
 ;;   :straight t
 ;;   :after (git-gutter+)
