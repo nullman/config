@@ -15713,6 +15713,17 @@ USING is the remaining peg."
     (org-show-entry)))
 ;; elpher:1 ends here
 
+;; [[file:init-emacs.org::#packages-emacs-everywhere][emacs-everywhere:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: emacs-everywhere
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Packages: emacs-everywhere")
+
+(use-package emacs-everywhere
+  :straight t)
+;; emacs-everywhere:1 ends here
+
 ;; [[file:init-emacs.org::#packages-epaint][epaint:1]]
 ;;------------------------------------------------------------------------------
 ;;; Packages: epaint

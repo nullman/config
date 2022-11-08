@@ -150,24 +150,54 @@ super + alt + c
     CM_LAUNCHER=rofi clipmenu
 
 # emoji selector
-super + alt + e
+super + alt + j
     rofi -modi emoji -show emoji
 
 # bitwarden selector (clear clipboard after 30 seconds)
 super + alt + p
     bwmenu --clear 30
 
+# generate password
+super + ctrl + p
+    tr --delete --complement 'a-zA-Z0-9!@#$%^&*-_=+;:,<.>/?' < /dev/urandom | \
+    head --bytes 14 | xclip -selection clipboard && \
+    notify-send --expire-time=2000 'Random password generated on clipboard'
+
 # paste selector
 super + alt + apostrophe
     ${HOME}/bin/rofi-menu paste
 
-# session menu
-super + shift + e
-    ${HOME}/bin/rofi-session-menu -s
-
 # display time
 super + alt + backslash
     echo "$(date '+%Y-%m-%d')\n $(date '+%H:%M:%S')" | yad --text-info --width=520 --height=240 --no-buttons --timeout=3 --fontname="Droid Sans Mono 64"
+
+# edit with emacs
+super + alt + e
+    emacsclient --eval '(emacs-everywhere)'
+
+# git synchronize config
+super + alt + y
+    source "${HOME}/.funct" && (git-sync-config && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12" --tail
+
+# git synchronize extra
+super + alt + u
+    source "${HOME}/.funct" && (git-sync-extra && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12" --tail
+
+# start screen saver
+super + alt + s
+    xscreensaver-command -activate
+
+# start screen saver in lock mode
+super + alt + x
+    xscreensaver-command -lock
+#    xlock
+#    xlock -mode flame
+#    ssaverauto --lock
+#    xscreensaver-command -lock
+
+# session menu
+super + shift + e
+    ${HOME}/bin/rofi-session-menu -s
 
 # get xprop class name
 super + shift + p
@@ -200,32 +230,6 @@ super + shift + t
 # reset video
 super + shift + v
     xrandr --output $(xrandr | grep ' connected ' | sed 's/ .*//' | head -n 1) --auto && notify-send --expire-time=2000 'Resetting video'
-
-# git synchronize config
-super + alt + y
-    source "${HOME}/.funct" && (git-sync-config && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12" --tail
-
-# git synchronize extra
-super + alt + u
-    source "${HOME}/.funct" && (git-sync-extra && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12" --tail
-
-# start screen saver
-super + alt + s
-    xscreensaver-command -activate
-
-# start screen saver in lock mode
-super + alt + x
-    xscreensaver-command -lock
-#    xlock
-#    xlock -mode flame
-#    ssaverauto --lock
-#    xscreensaver-command -lock
-
-# generate password
-super + ctrl + p
-    tr --delete --complement 'a-zA-Z0-9!@#$%^&*-_=+;:,<.>/?' < /dev/urandom | \
-    head --bytes 14 | xclip -selection clipboard && \
-    notify-send --expire-time=2000 'Random password generated on clipboard'
 
 # connect to beats headphones via bluetooth
 super + alt + b

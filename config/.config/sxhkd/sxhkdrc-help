@@ -8,10 +8,19 @@ System Tools
 | Super | Alt |      |       | h      | Display Key Bindings           |
 | Super | Alt |      |       | Space  | Application Launcher           |
 | Super | Alt |      |       | d      | Program Launcher               |
-| Super | Alt |      |       | m      | Menu Launcher                  |
+| Super | Alt |      |       | Return | Rofi Menu Launcher             |
 | Super | Alt |      |       | w      | Window Selector                |
-| Super | Alt |      |       | e      | Emoji Selector                 |
+| Super | Alt |      |       | c      | Clipmenu Selector              |
+| Super | Alt |      |       | j      | Emoji Selector                 |
 | Super | Alt |      |       | p      | Bitwarden Selector             |
+| Super |     | Ctrl |       | p      | Generate Password              |
+| Super | Alt |      |       | '      | Paste Selector                 |
+| Super | Alt |      |       | \      | Display Time                   |
+| Super | Alt |      |       | e      | Edit with Emacs                |
+| Super | Alt |      |       | y      | Git Sync Home                  |
+| Super | Alt |      |       | u      | Git Sync Doc                   |
+| Super | Alt |      |       | s      | Start Screensaver              |
+| Super | Alt |      |       | x      | Lock Screensaver               |
 | Super |     |      | Shift | e      | Lock, Logout, Reboot, Shutdown |
 | Super |     |      | Shift | p      | Get XProp Class Name           |
 | Super |     |      | Shift | Delete | Kill Process Clicked           |
@@ -19,10 +28,9 @@ System Tools
 | Super |     | Ctrl |       | Print  | Window Snapshot                |
 | Super |     |      | Shift | Print  | Region Snapshot                |
 | Super |     |      | Shift | r      | Reload SXHKD                   |
-| Super | Alt |      |       | y      | Git Sync Home                  |
-| Super | Alt |      |       | u      | Git Sync Doc                   |
-| Super | Alt |      |       | s      | Start Screensaver              |
-| Super | Alt |      |       | x      | Lock Screensaver               |
+| Super |     |      | Shift | t      | Reload Tint                    |
+| Super |     |      | Shift | v      | Reset Video                    |
+| Super | Alt |      |       | b      | Connect to Beats Headphones    |
 
 Media
 
@@ -45,4 +53,3 @@ Applications
 | Super | Alt | Ctrl | Shift | Key    | Description |
 |-------+-----+------+-------+--------+-------------|
 | Super | Alt |      |       | t      | Terminal    |
-| Super | Alt |      |       | Return | Rofi Menu   |
