@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-11-08 08:41 (kyle)>
+  #+TIMESTAMP: <2022-11-08 09:47 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -15720,7 +15720,7 @@
       The *xsel* command needs to be installed for this to work.
 
       #+BEGIN_SRC sh :dir /sudo:: :tangle no
-        # install xsel on Manjaro/Arch system
+        # install xsel on Arch system
         sudo pacman -S --noconfirm xsel
       #+END_SRC
 
@@ -17662,7 +17662,7 @@
       The *trans* command needs to be installed for this to work.
 
       #+BEGIN_SRC sh :dir /sudo:: :tangle no
-        # install trans on Manjaro/Arch system
+        # install trans on Arch system
         sudo pacman -S --noconfirm translate-shell
       #+END_SRC
 
@@ -23357,6 +23357,15 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
     :CUSTOM_ID: packages-emacs-everywhere
     :END:
 
+    System-Wide Popup Windows for Quick Edits
+
+    The *xwininfo* command needs to be installed for this to work.
+
+    #+BEGIN_SRC sh :dir /sudo:: :tangle no
+      # install xwininfo on Arch system
+      sudo pacman -S --noconfirm xorg-xwininfo
+    #+END_SRC
+
     #+BEGIN_SRC emacs-lisp
       ;;------------------------------------------------------------------------------
       ;;; Packages: emacs-everywhere
@@ -24373,7 +24382,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
     The *languagetool* command needs to be installed for this to work.
 
     #+BEGIN_SRC sh :tangle no :dir /sudo::
-      # install languagetool on Manjaro/Arch system
+      # install languagetool on Arch system
       sudo pacman -S --noconfirm languagetool
     #+END_SRC
 
@@ -26051,7 +26060,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
     The *ccrypt* command needs to be installed for this to work.
 
     #+BEGIN_SRC sh :tangle no :dir /sudo::
-      # install ccrypt on Manjaro/Arch system
+      # install ccrypt on Arch system
       sudo pacman -S --noconfirm ccrypt
     #+END_SRC
 
@@ -27521,7 +27530,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
     The *units* command needs to be installed for this to work.
 
     #+BEGIN_SRC sh :dir /sudo:: :tangle no :tangle no
-      # # install units on Manjaro/Arch system
+      # # install units on Arch system
       # sudo pacman -S --noconfirm units
     #+END_SRC
 
@@ -27564,7 +27573,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
     The *w3m* command needs to be installed for this to work.
 
     #+BEGIN_SRC sh :dir /sudo:: :tangle no
-      # install w3m on Manjaro/Arch system
+      # install w3m on Arch system
       sudo pacman -S --noconfirm w3m
     #+END_SRC
 
