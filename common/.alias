@@ -2887,12 +2887,12 @@ alias gitd="git diff -w"
 alias gitdh="git diff -w HEAD~"
 #        gitco                   git checkout
 alias gitco="git checkout"
-#        gitcod                  git checkout develop
-alias gitcod="git checkout develop"
-#        gitcom                  git checkout master
-alias gitcom="git checkout master"
 #        gitcob                  git checkout -b
 alias gitcob="git checkout -b"
+#        gitcom                  git checkout master
+alias gitcom="git checkout \$(git-master)"
+#        gitcod                  git checkout develop
+alias gitcod="git checkout develop"
 #        gitco-ours              git checkout --ours --
 alias gitco-ours="git checkout --ours --"
 #        gitco-theirs            git checkout --theirs --
@@ -2925,24 +2925,24 @@ alias gitstp="git stash pop"
 alias gitu="git pull"
 #        gituo                   git pull origin
 alias gituo="git pull origin"
+#        gituom                  git pull origin master
+alias gituom="git pull origin \$(git-master)"
 #        gituob                  git pull origin (current branch)
 alias gituob="git pull origin \$(git-branch)"
 #        gituod                  git pull origin develop
 alias gituod="git pull origin develop"
-#        gituom                  git pull origin master
-alias gituom="git pull origin master"
 #        gitua                   git pull --all
 alias gitua="git pull --all"
 #        gitpo                   git push origin
 alias gitpo="git push origin"
 #        gitpof                  git push origin --force
 alias gitpof="git push origin --force"
-#        gitpod                  git push origin develop
-alias gitpod="git push origin develop"
 #        gitpom                  git push origin master
-alias gitpom="git push origin master"
+alias gitpom="git push origin \$(git-master)"
 #        gitpob                  git push origin (current branch)
 alias gitpob="git push origin \$(git-branch)"
+#        gitpod                  git push origin develop
+alias gitpod="git push origin develop"
 #        gitb                    git branch
 alias gitb="git branch"
 #        gitba                   git branch -a
@@ -2964,8 +2964,8 @@ alias gitrebase-autosquash="git rebase -i --autosquash"
 #        git-submodule-update    git submodule update (init, recursive, fetch, master)
 alias git-submodule-update="
     git submodule update --init --recursive --checkout
-    git submodule foreach --recursive git checkout master
-    git submodule foreach --recursive git pull origin master"
+    git submodule foreach --recursive git checkout \$(git-master)
+    git submodule foreach --recursive git pull origin \$(git-master)"
 #        git-prune               git remote prune origin
 alias git-prune="git remote prune origin"
 #        git-reset-head          git reset --hard HEAD

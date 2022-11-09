@@ -1192,9 +1192,13 @@ dvd-encode() {
 #
 # git
 #
+#        git-master              git master branch name
+git-master() {
+    git remote show origin | sed -n '/HEAD branch/s/.*: //p'
+}
 #        git-branch              git branch name
 git-branch() {
-    git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
+    git branch --no-color 2> /dev/null | sed -n '/^\*/s/^\* *//p'
 }
 #        git-branch-prompt       git branch name for terminal prompt
 git-branch-prompt() {
