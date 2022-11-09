@@ -2927,16 +2927,20 @@ alias gitu="git pull"
 alias gituo="git pull origin"
 #        gituom                  git pull origin master
 alias gituom="git pull origin \$(git-master)"
+#        gituomr                 git pull origin master --rebase
+alias gituomr="git pull origin \$(git-master) --rebase"
 #        gituob                  git pull origin (current branch)
 alias gituob="git pull origin \$(git-branch)"
+#        gituobr                 git pull origin (current branch)
+alias gituobr="git pull origin \$(git-branch) --rebase"
 #        gituod                  git pull origin develop
 alias gituod="git pull origin develop"
 #        gitua                   git pull --all
 alias gitua="git pull --all"
 #        gitpo                   git push origin
 alias gitpo="git push origin"
-#        gitpof                  git push origin --force
-alias gitpof="git push origin --force"
+#        gitpof                  git push origin --force-with-lease
+alias gitpof="git push origin --force-with-lease"
 #        gitpom                  git push origin master
 alias gitpom="git push origin \$(git-master)"
 #        gitpob                  git push origin (current branch)
@@ -2957,10 +2961,10 @@ alias gitbd="git branch -d"
 alias gitbD="git branch -D"
 #        gitmerge                git merge --no-ff
 alias gitmerge="git merge --no-ff"
-#        gitrebase               git rebase -i
-alias gitrebase="git rebase -i"
-#        gitrebase-autosquash    git rebase -i --autosquash
-alias gitrebase-autosquash="git rebase -i --autosquash"
+#        gitrebase               git rebase -i -v
+alias gitrebase="git rebase -i -v"
+#        gitrebase-autosquash    git rebase -i -v --autosquash
+alias gitrebase-autosquash="git rebase -i -v --autosquash"
 #        git-submodule-update    git submodule update (init, recursive, fetch, master)
 alias git-submodule-update="
     git submodule update --init --recursive --checkout

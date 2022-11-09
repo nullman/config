@@ -1198,7 +1198,8 @@ git-master() {
 }
 #        git-branch              git branch name
 git-branch() {
-    git branch --no-color 2> /dev/null | sed -n '/^\*/s/^\* *//p'
+    #git branch --no-color 2> /dev/null | sed -n '/^\*/s/^\* *//p'
+    git rev-parse --abbrev-ref HEAD
 }
 #        git-branch-prompt       git branch name for terminal prompt
 git-branch-prompt() {
