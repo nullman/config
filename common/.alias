@@ -1739,6 +1739,8 @@ alias nmlp="nmap -p 1-10000 localhost"
 alias nmp="nmap -p 1-10000"
 #        nmu                     nmap with udp
 alias nmu="nmap -sS -sU"
+#        asl                     arp-scan --localnet
+alias asl="sudo arp-scan --localnet"
 
 #
 # networking (ping)
