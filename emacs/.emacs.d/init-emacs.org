@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-11-09 10:59 (kyle)>
+  #+TIMESTAMP: <2022-11-10 09:12 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -4285,110 +4285,136 @@
                          ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
       #+END_SRC
 
-***** +org-latex-plain.org+
+***** ob-latex-as-png
+      :PROPERTIES:
+      :CUSTOM_ID: org-mode-latex-ob-latex-as-png
+      :END:
+
+      An Org-babel "language" whose execution produces PNGs from LaTeX snippets;
+      useful for shipping *arbitrary* LaTeX results in HTML.
+
+      The *pdflatex* command needs to be installed for this to work.
+
+      #+BEGIN_SRC sh :dir /sudo:: :tangle no
+        # install texlive-bin on Arch system
+        sudo pacman -S --noconfirm texlive-bin
+      #+END_SRC
+
+      #+BEGIN_SRC emacs-lisp
+        ;;------------------------------------------------------------------------------
+        ;;;; Org Mode: LaTeX: ob-latex-as-png
+        ;;------------------------------------------------------------------------------
+
+        (init-message 3 "Org Mode: LaTeX: ob-latex-as-png")
+
+        (use-package ob-latex-as-png
+          :straight t)
+      #+END_SRC
+
+***** org-latex-plain.org
       :PROPERTIES:
       :CUSTOM_ID: org-mode-latex-org-latex-plain-dot-org
       :END:
 
       Tangle manually when modified.
 
-      #+BEGIN_SRC org :tangle ~/org/org-latex-plain.org :comments no :tangle no
-        # %==============================================================================
-        # %% org-latex-plain.org
-        # %
-        # %% A simple LaTeX configuration for Org files.
-        # %
-        # % To use, add this line to an Org file:
-        # %
-        # %   #+SETUPFILE: ~/org/org-latex-plain.org
-        # %
-        # % Author: Jake Box <jakebox0@protonmail.com>
-        # % Source: https://github.com/jakebox/jake-emacs/blob/main/org/setupfiles_latex/jake-latex-standard.setup
-        # %==============================================================================
+      #+BEGIN_SRC org :tangle ~/org/org-latex-plain.org :comments no
+        %==============================================================================
+        %% org-latex-plain.org
+        %
+        %% A simple LaTeX configuration for Org files.
+        %
+        % To use, add this line to an Org file:
+        %
+        %   #+SETUPFILE: ~/org/org-latex-plain.org
+        %
+        % Author: Jake Box <jakebox0@protonmail.com>
+        % Source: https://github.com/jakebox/jake-emacs/blob/main/org/setupfiles_latex/jake-latex-standard.setup
+        %==============================================================================
 
-        # #+LATEX_CLASS: org-latex-plain
-        # #+LATEX_CLASS_OPTIONS: [letterpaper, 11pt]
+        ,#+LATEX_CLASS: org-latex-plain
+        ,#+LATEX_CLASS_OPTIONS: [letterpaper, 11pt]
 
-        # #+LATEX_HEADER: \usepackage{lmodern}
-        # #+LATEX_HEADER: \usepackage[AUTO]{fontenc}
-        # #+LATEX_HEADER: \usepackage[AUTO]{inputenc}
-        # #+LATEX_HEADER: \usepackage{graphicx}
-        # #+LATEX_HEADER: \usepackage{amsmath, amsthm, amssymb}
-        # #+LATEX_HEADER: \usepackage[table, xcdraw]{xcolor}
+        ,#+LATEX_HEADER: \usepackage{lmodern}
+        ,#+LATEX_HEADER: \usepackage[AUTO]{fontenc}
+        ,#+LATEX_HEADER: \usepackage[AUTO]{inputenc}
+        ,#+LATEX_HEADER: \usepackage{graphicx}
+        ,#+LATEX_HEADER: \usepackage{amsmath, amsthm, amssymb}
+        ,#+LATEX_HEADER: \usepackage[table, xcdraw]{xcolor}
 
-        # #+LATEX_HEADER: \setlength{\parindent}{2em}
-        # #+LATEX_HEADER: \setlength{\parskip}{0.3em}
-        # #+LATEX_HEADER: \usepackage[stretch=10]{microtype}
-        # #+LATEX_HEADER: \usepackage{hyphenat}
-        # #+LATEX_HEADER: \usepackage{ragged2e}
-        # #+LATEX_HEADER: \usepackage{subfig} % subfigures
-        # #+LATEX_HEADER: \usepackage{hyperref} % links
-        # #+LATEX_HEADER: \usepackage{listings} % code highlighting
-        # #+LATEX_HEADER: \usepackage{color} % for colorized code highlighting
+        ,#+LATEX_HEADER: \setlength{\parindent}{2em}
+        ,#+LATEX_HEADER: \setlength{\parskip}{0.3em}
+        ,#+LATEX_HEADER: \usepackage[stretch=10]{microtype}
+        ,#+LATEX_HEADER: \usepackage{hyphenat}
+        ,#+LATEX_HEADER: \usepackage{ragged2e}
+        ,#+LATEX_HEADER: \usepackage{subfig} % subfigures
+        ,#+LATEX_HEADER: \usepackage{hyperref} % links
+        ,#+LATEX_HEADER: \usepackage{listings} % code highlighting
+        ,#+LATEX_HEADER: \usepackage{color} % for colorized code highlighting
 
-        # % Colorized Links
-        # #+LATEX_HEADER: \definecolor{bblue}{HTML}{0645AD}
-        # #+LATEX_HEADER: \usepackage[colorlinks]{hyperref}
-        # #+LATEX_HEADER: \hypersetup{colorlinks, linkcolor=blue, urlcolor=bblue}
+        % Colorized Links
+        ,#+LATEX_HEADER: \definecolor{bblue}{HTML}{0645AD}
+        ,#+LATEX_HEADER: \usepackage[colorlinks]{hyperref}
+        ,#+LATEX_HEADER: \hypersetup{colorlinks, linkcolor=blue, urlcolor=bblue}
 
-        # % Page Geometry
-        # #+LATEX_HEADER: \usepackage[top=1in, bottom=1.25in, left=1.45in, right=1.55in]{geometry}
+        % Page Geometry
+        ,#+LATEX_HEADER: \usepackage[top=1in, bottom=1.25in, left=1.45in, right=1.55in]{geometry}
 
-        # % Line Spacing
-        # #+LATEX_HEADER: \renewcommand{\baselinestretch}{1.12}
+        % Line Spacing
+        ,#+LATEX_HEADER: \renewcommand{\baselinestretch}{1.12}
 
-        # % Page Numbering Disabled
-        # #+LATEX_HEADER: \pagenumbering{gobble}
+        % Page Numbering Disabled
+        ,#+LATEX_HEADER: \pagenumbering{gobble}
 
-        # % Spacing, Titling, Text Setting
-        # #+LATEX_HEADER: \usepackage[explicit]{titlesec}
+        % Spacing, Titling, Text Setting
+        ,#+LATEX_HEADER: \usepackage[explicit]{titlesec}
 
-        # % Title Customization
-        # #+LATEX_HEADER: \pretitle{\begin{center}\fontsize{20pt}{20pt}\selectfont}
-        # #+LATEX_HEADER: \posttitle{\par\end{center}}
-        # #+LATEX_HEADER: \preauthor{\begin{center}\vspace{-6bp}\fontsize{14pt}{14pt}\selectfont}
-        # #+LATEX_HEADER: \postauthor{\par\end{center}\vspace{-25bp}}
+        % Title Customization
+        ,#+LATEX_HEADER: \pretitle{\begin{center}\fontsize{20pt}{20pt}\selectfont}
+        ,#+LATEX_HEADER: \posttitle{\par\end{center}}
+        ,#+LATEX_HEADER: \preauthor{\begin{center}\vspace{-6bp}\fontsize{14pt}{14pt}\selectfont}
+        ,#+LATEX_HEADER: \postauthor{\par\end{center}\vspace{-25bp}}
 
-        # #+LATEX_HEADER: \predate{\begin{center}\fontsize{12pt}{12pt}\selectfont}
-        # #+LATEX_HEADER: \postdate{\par\end{center}\vspace{0em}}
+        ,#+LATEX_HEADER: \predate{\begin{center}\fontsize{12pt}{12pt}\selectfont}
+        ,#+LATEX_HEADER: \postdate{\par\end{center}\vspace{0em}}
 
-        # #+LATEX_HEADER: \usepackage{multicol}
+        ,#+LATEX_HEADER: \usepackage{multicol}
 
-        # % Move Title Up
-        # #+LATEX_HEADER: \usepackage{titling}
-        # #+LATEX_HEADER: \setlength{\droptitle}{-6em}
+        % Move Title Up
+        ,#+LATEX_HEADER: \usepackage{titling}
+        ,#+LATEX_HEADER: \setlength{\droptitle}{-6em}
 
-        # % Section/Subsection Headings:
+        % Section/Subsection Headings:
 
-        # % Section
-        # #+LATEX_HEADER: \titlespacing\section{0pt}{5pt}{5pt} % left margin, space before section header, space after section header
+        % Section
+        ,#+LATEX_HEADER: \titlespacing\section{0pt}{5pt}{5pt} % left margin, space before section header, space after section header
 
-        # % Subsection
-        # #+LATEX_HEADER: \titlespacing\subsection{0pt}{5pt}{-2pt} % left margin, space before subsection header, space after subsection header
+        % Subsection
+        ,#+LATEX_HEADER: \titlespacing\subsection{0pt}{5pt}{-2pt} % left margin, space before subsection header, space after subsection header
 
-        # % Subsubsection
-        # #+LATEX_HEADER: \titlespacing\subsubsection{0pt}{5pt}{-2pt} % left margin, space before subsection header, space after subsection header
+        % Subsubsection
+        ,#+LATEX_HEADER: \titlespacing\subsubsection{0pt}{5pt}{-2pt} % left margin, space before subsection header, space after subsection header
 
-        # % Lists:
+        % Lists:
 
-        # % List Spacing
-        # #+LATEX_HEADER: \usepackage{enumitem}
-        # #+LATEX_HEADER: \setlist{itemsep=-2pt} % or \setlist{noitemsep} to leave space around whole list
+        % List Spacing
+        ,#+LATEX_HEADER: \usepackage{enumitem}
+        ,#+LATEX_HEADER: \setlist{itemsep=-2pt} % or \setlist{noitemsep} to leave space around whole list
 
-        # % Ordered List Bullets
-        # #+LATEX_HEADER: \setenumerate[1]{label=\arabic*.}
-        # #+LATEX_HEADER: \setenumerate[2]{label=\Alpha*.}
-        # #+LATEX_HEADER: \setenumerate[3]{label=\roman*.}
-        # #+LATEX_HEADER: \setenumerate[4]{label=\alpha*.}
+        % Ordered List Bullets
+        ,#+LATEX_HEADER: \setenumerate[1]{label=\arabic*.}
+        ,#+LATEX_HEADER: \setenumerate[2]{label=\Alpha*.}
+        ,#+LATEX_HEADER: \setenumerate[3]{label=\roman*.}
+        ,#+LATEX_HEADER: \setenumerate[4]{label=\alpha*.}
 
-        # % Unordered List Bullets
-        # #+LATEX_HEADER: \renewcommand{\labelitemi}{\textbullet}
-        # #+LATEX_HEADER: \renewcommand{\labelitemii}{\textopenbullet}
-        # #+LATEX_HEADER: \renewcommand{\labelitemiii}{\textendash}
+        % Unordered List Bullets
+        ,#+LATEX_HEADER: \renewcommand{\labelitemi}{\textbullet}
+        ,#+LATEX_HEADER: \renewcommand{\labelitemii}{\textopenbullet}
+        ,#+LATEX_HEADER: \renewcommand{\labelitemiii}{\textendash}
 
-        # %==============================================================================
-        # %% End of File
-        # %==============================================================================
+        %==============================================================================
+        %% End of File
+        %==============================================================================
       #+END_SRC
 
 *** +Remember+
@@ -13765,7 +13791,9 @@
           "Capitalize word at point."
           (interactive "*P")
           (let ((syntax-table (copy-syntax-table (syntax-table))))
+            (modify-syntax-entry ?_ "." syntax-table)
             (modify-syntax-entry ?- "." syntax-table)
+            (modify-syntax-entry ?' "w" syntax-table)
             (with-syntax-table syntax-table
               (let ((p (point)))
                 (forward-word 1)
@@ -13795,7 +13823,9 @@
           (interactive "*P")
           (save-mark-and-excursion
             (let ((syntax-table (copy-syntax-table (syntax-table))))
+              (modify-syntax-entry ?_ "." syntax-table)
               (modify-syntax-entry ?- "." syntax-table)
+              (modify-syntax-entry ?' "w" syntax-table)
               (with-syntax-table syntax-table
                 (let ((p (point))
                       (arg (or arg 1)))
@@ -16160,8 +16190,8 @@
           "Titleize word at point."
           (interactive "*p")
           (let ((syntax-table (copy-syntax-table (syntax-table))))
-            (modify-syntax-entry ?- "." syntax-table)
             (modify-syntax-entry ?_ "." syntax-table)
+            (modify-syntax-entry ?- "." syntax-table)
             (modify-syntax-entry ?' "w" syntax-table)
             (with-syntax-table syntax-table
               (dotimes (x (or arg 1))
@@ -16221,8 +16251,8 @@
                   (goto-char (point-min))
                   (let ((syntax-table (copy-syntax-table (syntax-table)))
                         (str (buffer-substring-no-properties beg end)))
-                    (modify-syntax-entry ?- "." syntax-table)
                     (modify-syntax-entry ?_ "." syntax-table)
+                    (modify-syntax-entry ?- "." syntax-table)
                     (modify-syntax-entry ?' "w" syntax-table)
                     (with-syntax-table syntax-table
                       (kill-region beg end)
@@ -31095,7 +31125,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
 
           ;; add underscore and dash to word boundaries
           (modify-syntax-entry ?_ "w" text-mode-syntax-table)
-          (modify-syntax-entry ?- "w" text-mode-syntax-table)
+          (Modify-Syntax-Entry ?- "w" text-mode-syntax-table)
 
           ;; turn on flyspell
           (flyspell-mode 1)

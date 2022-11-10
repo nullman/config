@@ -2807,6 +2807,12 @@ DATA should have been made by `org-outline-overlay-data'."
                  ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                  ("\\paragraph{%s}" . "\\paragraph*{%s}")
                  ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+
+
+(init-message 3 "Org Mode: LaTeX: ob-latex-as-png")
+
+(use-package ob-latex-as-png
+  :straight t)
 ;; ox-latex:1 ends here
 
 ;; [[file:init-emacs.org::#org-mode-toc][TOC:1]]
@@ -9208,7 +9214,9 @@ If less than a page away, jump to the beginning of the buffer."
   "Capitalize word at point."
   (interactive "*P")
   (let ((syntax-table (copy-syntax-table (syntax-table))))
+    (modify-syntax-entry ?_ "." syntax-table)
     (modify-syntax-entry ?- "." syntax-table)
+    (modify-syntax-entry ?' "w" syntax-table)
     (with-syntax-table syntax-table
       (let ((p (point)))
         (forward-word 1)
@@ -9233,7 +9241,9 @@ If less than a page away, jump to the beginning of the buffer."
   (interactive "*P")
   (save-mark-and-excursion
     (let ((syntax-table (copy-syntax-table (syntax-table))))
+      (modify-syntax-entry ?_ "." syntax-table)
       (modify-syntax-entry ?- "." syntax-table)
+      (modify-syntax-entry ?' "w" syntax-table)
       (with-syntax-table syntax-table
         (let ((p (point))
               (arg (or arg 1)))
@@ -10959,8 +10969,8 @@ be automatically capitalized."
   "Titleize word at point."
   (interactive "*p")
   (let ((syntax-table (copy-syntax-table (syntax-table))))
-    (modify-syntax-entry ?- "." syntax-table)
     (modify-syntax-entry ?_ "." syntax-table)
+    (modify-syntax-entry ?- "." syntax-table)
     (modify-syntax-entry ?' "w" syntax-table)
     (with-syntax-table syntax-table
       (dotimes (x (or arg 1))
@@ -11015,8 +11025,8 @@ otherwise `downcase-word' is called."
           (goto-char (point-min))
           (let ((syntax-table (copy-syntax-table (syntax-table)))
                 (str (buffer-substring-no-properties beg end)))
-            (modify-syntax-entry ?- "." syntax-table)
             (modify-syntax-entry ?_ "." syntax-table)
+            (modify-syntax-entry ?- "." syntax-table)
             (modify-syntax-entry ?' "w" syntax-table)
             (with-syntax-table syntax-table
               (kill-region beg end)
@@ -20024,7 +20034,7 @@ Commands:
 
     ;; add underscore and dash to word boundaries
     (modify-syntax-entry ?_ "w" text-mode-syntax-table)
-    (modify-syntax-entry ?- "w" text-mode-syntax-table)
+    (Modify-Syntax-Entry ?- "w" text-mode-syntax-table)
 
     ;; turn on flyspell
     (flyspell-mode 1)
