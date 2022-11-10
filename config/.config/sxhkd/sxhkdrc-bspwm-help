@@ -3,11 +3,12 @@ Simple X Hotkey Daemon Key Bindings for BSPWM
 
 General
 
-| Super | Alt | Ctrl | Shift | Key | Description           |
-|-------+-----+------+-------+-----+-----------------------|
-| Super |     |      | Shift | w   | Close Node            |
-| Super |     |      | Shift | q   | Kill Node             |
-| Super |     | Ctrl |       | m   | Toggle Monocle Layout |
+| Super | Alt | Ctrl | Shift | Key | Description                |
+|-------+-----+------+-------+-----+----------------------------|
+| Super |     | Ctrl |       | h   | Display BSPWM Key Bindings |
+| Super |     |      | Shift | w   | Close Node                 |
+| Super |     |      | Shift | q   | Kill Node                  |
+| Super |     | Ctrl |       | m   | Toggle Monocle Layout      |
 
 
 State
