@@ -6,7 +6,7 @@
 #!
 #! Shell Functions Definitions
 #!
-#! Author: Kyle W T Sherman
+#! {{author}}
 #!==============================================================================
 #!
 #! cdargs
@@ -1925,6 +1925,7 @@ manjaro-initialize() {
     optional=(
         "manjaro-packages-optional-applications"
         "manjaro-packages-optional-utilities"
+        "manjaro-packages-optional-utilities-latex"
         "manjaro-packages-optional-network"
         "manjaro-packages-optional-development"
         "manjaro-packages-optional-development-commander-x16"
@@ -2017,5 +2018,5 @@ manjaro-initialize() {
 
 #!
 #!==============================================================================
-#! End of File
+#! {{eof}}
 #!==============================================================================
