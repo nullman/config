@@ -6,15 +6,13 @@
 #!
 #! Alias Definitions
 #!
-#! Author: Kyle W T Sherman
+#! {{author}}
 #!==============================================================================
 #!
 #! helper functions
 #!
 #!       _command                check if executable command is found in the path
-_command() {
-    command -v "$1" > /dev/null 2>&1
-}
+{{shell-command}}
 #!
 #! set variables
 #!
@@ -23,7 +21,7 @@ home="$(cd ${HOME} ; cd .. ; pwd)"
 #!       operating system
 os="$(uname -s)"
 #!       terminal
-terminal="alacritty"
+terminal="{{terminal-command}}"
 #!       network device
 networkdevice="$(_command ip && ip route get 1.1.1.1 | awk '{print $5}')"
 #!       nullwareip
@@ -330,8 +328,8 @@ alias dos-format-1440="sudo ufiformat -f 1440 -v "
 alias make-floppy-image="mkfs.msdos -C floppy.dsk 1440"
 #        fdisk-list              sudo fdisk -l
 alias fdisk-list="sudo fdisk -l"
-#        dd-sync                 sudo dd conv=fdatasync status=progress
-alias dd-sync="sudo dd conv=fdatasync status=progress"
+#        dd-sync                 sudo dd bs=4M conv=fdatasync status=progress
+alias dd-sync="sudo dd bs=4M conv=fdatasync status=progress"
 #        sxhkdrs                 sxhkd restart
 alias sxhkdrs="pkill -SIGUSR1 -x sxhkd -u \${USER}"
 #        tint2rs                 tint2 restart
@@ -1672,7 +1670,7 @@ alias mpd-service-disable="systemctl --user disable mpd"
 #        mpd-service-restart     systemctl --user restart mpd
 alias mpd-service-restart="systemctl --user restart mpd"
 #        mpc-status              display artist and title of current song
-alias mpc-status="notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' \"\$(mpc | head -n 1)\""
+alias mpc-status="{{notify-music}} \"\$(mpc | head -n 1)\""
 #        mpc-update              update mpc database
 alias mpc-update="mpc --wait update"
 
@@ -3153,7 +3151,7 @@ alias script-head="
 #
 # script_description
 #
-# Author: Kyle W T Sherman
+# {{author}}
 #===============================================================================
 EOF
 "
@@ -3393,5 +3391,5 @@ alias x16-emu="x16emu -rom \${HOME}/code/commander-x16/x16-rom/rom.bin"
 
 #
 #!==============================================================================
-#! End of File
+#! {{eof}}
 #!==============================================================================
