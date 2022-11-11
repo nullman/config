@@ -2807,13 +2807,18 @@ DATA should have been made by `org-outline-overlay-data'."
                  ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                  ("\\paragraph{%s}" . "\\paragraph*{%s}")
                  ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+;; ox-latex:1 ends here
 
+;; [[file:init-emacs.org::#org-mode-latex-ob-latex-as-png][ob-latex-as-png:2]]
+;;------------------------------------------------------------------------------
+;;;; Org Mode: LaTeX: ob-latex-as-png
+;;------------------------------------------------------------------------------
 
 (init-message 3 "Org Mode: LaTeX: ob-latex-as-png")
 
 (use-package ob-latex-as-png
   :straight t)
-;; ox-latex:1 ends here
+;; ob-latex-as-png:2 ends here
 
 ;; [[file:init-emacs.org::#org-mode-toc][TOC:1]]
 ;;------------------------------------------------------------------------------

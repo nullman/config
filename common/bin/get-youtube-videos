@@ -4,7 +4,7 @@
 #
 # Grab the latest YouTube videos from a curated list.
 #
-# Author: Kyle W T Sherman
+# {{author}}
 #===============================================================================
 
 basedir="/mnt/synology/video"
@@ -18,7 +18,7 @@ channels=(
     "Adrian's Digital Basement        | Computer/Retro       | https://www.youtube.com/c/adriansdigitalbasement/videos"
     "Adrian's Digital Basement ][     | Computer/Retro       | https://www.youtube.com/channel/UCbtwi4wK1YXd9AyV_4UcE6g/videos"
     "AngeTheGreat                     | Computer/Development | https://www.youtube.com/channel/UCV0t1y4h_6-2SqEpXBXgwFQ/videos"
-    "Back Office Show                 | Computer/Retro       | https://www.youtube.com/c/backofficeshow/videos"
+##    "Back Office Show                 | Computer/Retro       | https://www.youtube.com/c/backofficeshow/videos"
     "Baggers                          | Computer/Development | https://www.youtube.com/user/CBaggers/videos"
     "Ben Eater                        | Computer/Hardware    | https://www.youtube.com/c/BenEater/videos"
     "Ben Heck Hacks                   | Computer/Hardware    | https://www.youtube.com/c/BenHeckHacks/videos"
@@ -27,6 +27,8 @@ channels=(
 #   "Chyrosran22 ???                  | Computer/Retro       | https://www.youtube.com/user/Chyrosran22/videos"
     "Commodore Amiga Demos            | Computer/Retro       | https://www.youtube.com/playlist?list=PLnmLOQIDmUvUgbvY-Jq0txuYWYgWVcOOS"
     "Commodore 64 Demos               | Computer/Retro       | https://www.youtube.com/playlist?list=PLnmLOQIDmUvVn43FHdakSTY_W_EuoVwnT"
+#   "Computerphile                    | Computer/Development | https://www.youtube.com/user/Computerphile/videos"
+#   "CuriousMarc                      | Science              | https://www.youtube.com/c/CuriousMarc/videos"
     "Dave's Garage                    | Computer/Retro       | https://www.youtube.com/c/DavesGarage/videos"
 #   "Doctor Volt                      | Computer/Retro       | https://www.youtube.com/c/DoctorVolt/videos"
 #   "DUST                             | Show                 | https://www.youtube.com/c/watchdust/videos"
@@ -75,7 +77,7 @@ channels=(
     "The Retro Shack                  | Computer/Retro       | https://www.youtube.com/c/TheRetroShack/videos"
 #   "TheGeekPub                       | Computer/Retro       | https://www.youtube.com/c/TheGeekPub/videos"
 #   "This Does Not Compute            | Computer/Retro       | https://www.youtube.com/c/ThisDoesNotCompute/videos"
-    "Tsoding Daily                    | Computer/Development | https://www.youtube.com/c/TsodingDaily/videos"
+##    "Tsoding Daily                    | Computer/Development | https://www.youtube.com/c/TsodingDaily/videos"
 #   "Usagi Electric                   | Computer/Retro       | https://www.youtube.com/c/Nakazoto/videos"
 #   "Veritasium                       | Science              | https://www.youtube.com/c/veritasium/videos"
 #   "Vsauce2                          | Science              | https://www.youtube.com/user/Vsauce2/videos"
@@ -171,5 +173,5 @@ _download "${archive}" "${listname}"
 exit 0
 
 #===============================================================================
-# End of File
+# {{eof}}
 #===============================================================================
