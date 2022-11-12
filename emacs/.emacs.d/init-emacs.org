@@ -6,10 +6,10 @@
   #+DESCRIPTION: Kyle Sherman's Org/Babel 'Literate' Emacs Configuration
   #+KEYWORDS: emacs, org-mode, babel, elisp, emacs lisp, lisp, programming language, literate programming, reproducible research
   #+LANGUAGE: en
-  #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdir yes
+  #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-11-10 13:34 (kyle)>
+  #+TIMESTAMP: <2022-11-12 10:03 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -2012,11 +2012,11 @@
       (setq delete-active-region t)
     #+END_SRC
 
-    Select help window on creation.
+    +Select help window on creation.+
 
-    #+BEGIN_SRC
-      ;; select help window on creation
-      (setq help-window-select t)
+    #+BEGIN_SRC emacs-lisp :tangle no
+      ;; ;; select help window on creation
+      ;; (setq help-window-select t)
     #+END_SRC
 
     +Always recenter after =next-error= is called.+
@@ -2311,8 +2311,6 @@
           (vc-follow-symlinks t)
           ;; disable vc-git as it throws debugger errors when revert-buffer is called
           (vc-handled-backends nil))
-    #+END_SRC
-
       #+END_SRC
 
 ***** Compression
@@ -10313,7 +10311,7 @@
       :CUSTOM_ID: org-website-helper-functions-tangle-publish-asynchronously
       :END:
 
-      #+BEGIN_SRC emacs-lisp :tanlge no
+      #+BEGIN_SRC emacs-lisp :tangle no
         ;; ;;------------------------------------------------------------------------------
         ;; ;;;; Org Website: Helper Functions: Tangle Publish Asynchronously
         ;; ;;------------------------------------------------------------------------------
@@ -19065,17 +19063,17 @@
                                (setq comment (1- (point))))))))))))))))
       #+END_SRC
 
-***** +java-remove-comments+
+***** +java-remove-comments-old+
       :PROPERTIES:
-      :CUSTOM_ID: functions-code-formatting-functions-java-remove-comments
+      :CUSTOM_ID: functions-code-formatting-functions-java-remove-comments-old
       :END:
 
       #+BEGIN_SRC emacs-lisp :tangle no
         ;; ;;------------------------------------------------------------------------------
-        ;; ;;;; Functions: Code Formatting Functions: java-remove-comments
+        ;; ;;;; Functions: Code Formatting Functions: java-remove-comments-old
         ;; ;;------------------------------------------------------------------------------
 
-        ;; (init-message 3 "Functions: Code Formatting Functions: java-remove-comments")
+        ;; (init-message 3 "Functions: Code Formatting Functions: java-remove-comments-old")
 
         ;; (defun java-remove-comments (string)
         ;;   "Return code STRING with all Java comments removed."
@@ -33380,7 +33378,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       :CUSTOM_ID: work-functions-work-linkify-jira-card
       :END:
 
-      #+BEGIN_SRC emacs-lisp :tanlge no
+      #+BEGIN_SRC emacs-lisp :tangle no
         ;;------------------------------------------------------------------------------
         ;;;; Work: Functions: work-linkify-jira-card
         ;;------------------------------------------------------------------------------

@@ -6,13 +6,15 @@
 #!
 #! Alias Definitions
 #!
-#! {{author}}
+#! Author: Kyle W T Sherman
 #!==============================================================================
 #!
 #! helper functions
 #!
 #!       _command                check if executable command is found in the path
-{{shell-command}}
+_command() {
+    command -v "$1" > /dev/null 2>&1
+}
 #!
 #! set variables
 #!
@@ -21,7 +23,7 @@ home="$(cd ${HOME} ; cd .. ; pwd)"
 #!       operating system
 os="$(uname -s)"
 #!       terminal
-terminal="{{terminal-command}}"
+terminal="alacritty"
 #!       network device
 networkdevice="$(_command ip && ip route get 1.1.1.1 | awk '{print $5}')"
 #!       nullwareip
@@ -1670,7 +1672,7 @@ alias mpd-service-disable="systemctl --user disable mpd"
 #        mpd-service-restart     systemctl --user restart mpd
 alias mpd-service-restart="systemctl --user restart mpd"
 #        mpc-status              display artist and title of current song
-alias mpc-status="{{notify-music}} \"\$(mpc | head -n 1)\""
+alias mpc-status="notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' \"\$(mpc | head -n 1)\""
 #        mpc-update              update mpc database
 alias mpc-update="mpc --wait update"
 
@@ -2338,6 +2340,8 @@ alias ssh-gemini="echo 'ssh:gemini' ; ssh gemini"
 alias ssh-morpheus="echo 'ssh:morpheus' ; ssh morpheus"
 #        ssh-morpheusgit         ssh morpheus:git
 alias ssh-morpheusgit="echo 'ssh:git@morpheus' ; ssh -l git morpheus"
+#        ssh-mouse               ssh mouse
+alias ssh-mouse="echo 'ssh:mouse' ; ssh mouse"
 #        ssh-neo                 ssh neo
 alias ssh-neo="echo 'ssh:neo' ; ssh neo"
 #        ssh-pimodem             ssh pimodem
@@ -3151,7 +3155,7 @@ alias script-head="
 #
 # script_description
 #
-# {{author}}
+# Author: Kyle W T Sherman
 #===============================================================================
 EOF
 "
@@ -3391,5 +3395,5 @@ alias x16-emu="x16emu -rom \${HOME}/code/commander-x16/x16-rom/rom.bin"
 
 #
 #!==============================================================================
-#! {{eof}}
+#! End of File
 #!==============================================================================

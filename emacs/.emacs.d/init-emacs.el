@@ -1058,16 +1058,16 @@ Common values:
 (setq delete-active-region t)
 ;; General:47 ends here
 
-;; [[file:init-emacs.org::#environment-general][General:49]]
+;; [[file:init-emacs.org::#environment-general][General:50]]
 ;; always recenter after `occur-mode-goto-occurrence'
 (defun occur-mode-goto-occurrence--recenter (&optional arg)
   "Recenter when an `occur' result is selected."
   (recenter))
 ;; advise `occur-mode-goto-occurrence'
 (advice-add 'occur-mode-goto-occurrence :after #'occur-mode-goto-occurrence--recenter)
-;; General:49 ends here
+;; General:50 ends here
 
-;; [[file:init-emacs.org::#environment-general][General:50]]
+;; [[file:init-emacs.org::#environment-general][General:51]]
 ;; set display-time-world time zones
 (setq display-time-world-list
       '(("Etc/UTC" "UTC")
@@ -1078,7 +1078,7 @@ Common values:
         ("Europe/London" "London")
         ("Europe/Paris" "Paris")
         ("Asia/Tokyo" "Tokyo")))
-;; General:50 ends here
+;; General:51 ends here
 
 ;; [[file:init-emacs.org::#environment-system][System:1]]
 ;;------------------------------------------------------------------------------
@@ -7477,42 +7477,6 @@ If FORCE is non-nil, force publish all files in project."
      (lambda (result)
        (message "Website tangle/publish finished")))))
 ;; Tangle Publish:1 ends here
-
-;; [[file:init-emacs.org::#org-website-helper-functions-tangle-publish-asynchronously][+Tangle Publish Asynchronously+:1]]
-;; ;;------------------------------------------------------------------------------
-;; ;;;; Org Website: Helper Functions: Tangle Publish Asynchronously
-;; ;;------------------------------------------------------------------------------
-
-;; (init-message 3 "Org Website: Helper Functions: Tangle Publish Asynchronously")
-
-;; (defun org-website-tangle-publish-async (&optional project force)
-;;   "Tangle and publish org-website projects asynchronously.
-;; \nIf PROJECT is non-nil, only tangle/publish that project.
-;; If FORCE is non-nil, force publish all files in project."
-;;   (interactive)
-;;   (message (concat "~/web/bin/website-tangle-publish"
-;;                    (if project (concat " --site " project) "")
-;;                    (if force " --force" "")))
-;;   ;; (let ((args (cl-remove-if #'null
-;;   ;;                           (append
-;;   ;;                            (when project (append '("--site") (list project)))
-;;   ;;                            (when force '("--force"))))))
-;;   (eval
-;;    `(async-spinner
-;;      (lambda ()
-;;        (shell-command
-;;         (concat "~/web/bin/website-tangle-publish"
-;;                 (if ,project (concat " --site " ,project) "")
-;;                 (if ,force " --force" ""))))
-;;      (lambda (result)
-;;        (message "Website tangle/publish finished")))))
-
-;; ;; (eval `(start-process
-;; ;;         "org-website-tangle-publish-async-process-name"
-;; ;;         "*org-website-tangle-publish-async*"
-;; ;;         "~/web/bin/website-tangle-publish"
-;; ;;         ,@args)))))
-;; +Tangle Publish Asynchronously+:1 ends here
 
 ;; [[file:init-emacs.org::#org-website-helper-functions-blog-post-create][Blog Post Create:1]]
 ;;------------------------------------------------------------------------------
@@ -21510,64 +21474,6 @@ to the current ERC buffer."
 (when work-system
   (init-message 2 "Work: Functions"))
 ;; Functions:1 ends here
-
-;; [[file:init-emacs.org::#work-functions-work-linkify-jira-card][+work-linkify-jira-card+:1]]
-;;------------------------------------------------------------------------------
-;;;; Work: Functions: work-linkify-jira-card
-;;------------------------------------------------------------------------------
-
-(when work-system
-  (init-message 3 "Work: Functions: work-linkify-jira-card")
-
-  (defun work-linkify-jira-card ()
-    "Add Jira URL link to Android Jira card."
-    (interactive)
-    (cl-labels
-        ;; clean up branch name
-        ((fix-branch ()
-                     ;; convert spaces to dashes
-                     (save-mark-and-excursion
-                       (save-match-data
-                         (while (re-search-forward " " (line-end-position) :noerror)
-                           (replace-match "-" t))))
-                     ;; remove brackets
-                     (save-mark-and-excursion
-                       (save-match-data
-                         (while (re-search-forward "\\(\\[\\|\\]\\)" (line-end-position) :noerror)
-                           (replace-match "" t))))))
-      (save-mark-and-excursion
-        (save-match-data
-          ;; remove leading "feature/" text
-          (forward-line 0)
-          (while (re-search-forward "\\bfeature/" (line-end-position) :noerror)
-            (replace-match ""))
-          ;; handle different project names
-          (cond
-           ((re-search-forward "\\[?\\b[Aa][Nn][Dd][Rr][Oo][Ii][Dd]-" (line-end-position) :noerror)
-            (replace-match "ANDROID-" t)
-            (fix-branch)
-            (forward-line 0)
-            (when (re-search-forward "\\b\\(ANDROID-[[:digit:]]+\\)\\([a-zA-Z0-9-_\.]*\\)\\b" (line-end-position) :noerror)
-              (replace-match (concat "[[https://buzzfeed.atlassian.net/browse/" (match-string 1) "][" (match-string 0) "]]") t)))
-           ((re-search-forward "\\[?\\b[Aa][Dd][Ss][Gg][Rr][Oo][Uu][Pp]-" (line-end-position) :noerror)
-            (replace-match "ADSGROUP-" t)
-            (fix-branch)
-            (forward-line 0)
-            (when (re-search-forward "\\b\\(ADSGROUP-[[:digit:]]+\\)\\([a-zA-Z0-9-_\.]*\\)\\b" (line-end-position) :noerror)
-              (replace-match (concat "[[https://buzzfeed.atlassian.net/browse/" (match-string 1) "][" (match-string 0) "]]") t)))
-           ((re-search-forward "\\[?\\b[Bb][Ff][Oo]-" (line-end-position) :noerror)
-            (replace-match "BFO-" t)
-            (fix-branch)
-            (forward-line 0)
-            (when (re-search-forward "\\b\\(BFO-[[:digit:]]+\\)\\([a-zA-Z0-9-_\.]*\\)\\b" (line-end-position) :noerror)
-              (replace-match (concat "[[https://buzzfeed.atlassian.net/browse/" (match-string 1) "][" (match-string 0) "]]") t)))
-           ((re-search-forward "\\[?\\b[Qq][Uu][Ii][Zz]-" (line-end-position) :noerror)
-            (replace-match "QUIZ-" t)
-            (fix-branch)
-            (forward-line 0)
-            (when (re-search-forward "\\b\\(QUIZ-[[:digit:]]+\\)\\([a-zA-Z0-9-_\.]*\\)\\b" (line-end-position) :noerror)
-              (replace-match (concat "[[https://buzzfeed.atlassian.net/browse/" (match-string 1) "][" (match-string 0) "]]") t)))))))))
-;; +work-linkify-jira-card+:1 ends here
 
 ;; [[file:init-emacs.org::#work-functions-work-insert-release-pr-list][+work-insert-release-pr-list+:1]]
 ;;------------------------------------------------------------------------------
