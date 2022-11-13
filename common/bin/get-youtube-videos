@@ -4,7 +4,7 @@
 #
 # Grab the latest YouTube videos from a curated list.
 #
-# {{author}}
+# Author: Kyle W T Sherman
 #===============================================================================
 
 basedir="/mnt/synology/video"
@@ -52,7 +52,7 @@ channels=(
     "lxsameer                         | Computer/Emacs       | https://www.youtube.com/c/lxsameer/videos"
 #   "Mac84                            | Computer/Retro       | https://www.youtube.com/c/Mac84/videos"
     "Matt Heffernan Slithy Games      | Computer/Development | https://www.youtube.com/c/slithymatt/videos"
-    "Me, Myself, and Die              | Gaming               | https://www.youtube.com/c/MeMyselfandDieRPG/videos"
+    "Me, Myself, and Die              | Game                 | https://www.youtube.com/c/MeMyselfandDieRPG/videos"
 #   "Michael MJD                      | Computer/Retro       | https://www.youtube.com/c/MichaelMJD/videos"
 #   "Mr Lurch's Things                | Computer/Retro       | https://www.youtube.com/c/MrLurchsThings"
 #   "NDC Conferences                  | Computer/Development | https://www.youtube.com/c/NDCConferences/videos"
@@ -64,6 +64,7 @@ channels=(
     "Retro Hack Shack                 | Computer/Retro       | https://www.youtube.com/c/RetroHackShack/videos"
     "Retro Recipes                    | Computer/Retro       | https://www.youtube.com/c/Perifractic/videos"
     "root42                           | Computer/Development | https://www.youtube.com/c/root42/videos"
+    "RossDM - Puzzle Solving          | Game                 | https://www.youtube.com/c/RossDM/videos"
     "RMC, The Cave                    | Computer/Retro       | https://www.youtube.com/c/RMCRetro/videos"
 #   "Stand-up Maths                   | Science              | https://www.youtube.com/user/standupmaths/videos"
 #   "Strange Loop Conference          | Computer/Development | https://www.youtube.com/c/StrangeLoopConf/videos"
@@ -173,5 +174,5 @@ _download "${archive}" "${listname}"
 exit 0
 
 #===============================================================================
-# {{eof}}
+# End of File
 #===============================================================================

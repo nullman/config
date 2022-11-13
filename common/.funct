@@ -6,7 +6,7 @@
 #!
 #! Shell Functions Definitions
 #!
-#! {{author}}
+#! Author: Kyle W T Sherman
 #!==============================================================================
 #!
 #! cdargs
@@ -1207,7 +1207,7 @@ git-master() {
 #        git-branch              git branch name
 git-branch() {
     #git branch --no-color 2> /dev/null | sed -n '/^\*/s/^\* *//p'
-    git rev-parse --abbrev-ref HEAD
+    git rev-parse --abbrev-ref HEAD 2> /dev/null
 }
 #        git-branch-prompt       git branch name for terminal prompt
 git-branch-prompt() {
@@ -2018,5 +2018,5 @@ manjaro-initialize() {
 
 #!
 #!==============================================================================
-#! {{eof}}
+#! End of File
 #!==============================================================================
