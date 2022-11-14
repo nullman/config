@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-11-12 10:03 (kyle)>
+  #+TIMESTAMP: <2022-11-13 14:42 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -26363,6 +26363,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
 
       (use-package saveplace
         :straight (:type built-in)
+        :after (org-visibility)             ; restore visibility before moving point
         :custom
         (save-place-file (locate-user-emacs-file ".saveplace"))
         (save-place-limit 100)
@@ -26372,7 +26373,14 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
               (seq ".org" eol)
               ;; ignore ~/.cddb files
               "/.cddb/")))
-        :init (save-place-mode 1))
+        :init (save-place-mode 1)
+        :config
+        (defun save-place-find-file-hook--ignore-hidden-point ()
+          "Only restore position if point is visible."
+          (when (invisible-p (point))
+            (beginning-of-buffer)))
+        ;; advise `save-place-find-file-hook'
+        (advice-add 'save-place-find-file-hook :after #'save-place-find-file-hook--ignore-hidden-point))
     #+END_SRC
 
 *** +selected+

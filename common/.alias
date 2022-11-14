@@ -20,8 +20,10 @@ _command() {
 #!
 #!       home
 home="$(cd ${HOME} ; cd .. ; pwd)"
-#!       operating system
+#!       operating system (Linux, Windows_NT, Darwin, Haiku)
 os="$(uname -s)"
+#!       config directory
+config="${home}/$([[ ${os} == Haiku ]] && echo 'haiku-config' || echo 'config')"
 #!       terminal
 terminal="alacritty"
 #!       network device
@@ -968,13 +970,13 @@ alias cdvl="cd /var/log"
 #        cdrh                    cd /root
 alias cdrh="cd /root"
 #        cdc                     cd ~/config
-alias cdc="cd \${HOME}/config"
+alias cdc="cd ${config}"
 #        cdcc                    cd ~/config/custom/HOSTNAME
-alias cdcc="cd \${HOME}/config/custom/\$(uname -n)"
+alias cdcc="cd ${config}/custom/\$(uname -n)"
 #        cdcem                   cd ~/config/emacs/.emacs.d
-alias cdcem="cd \${HOME}/config/emacs/.emacs.d"
+alias cdcem="cd ${config}/emacs/.emacs.d"
 #        cdcp                    cd ~/config-private
-alias cdcp="cd \${HOME}/config-private"
+alias cdcp="cd ${config}-private"
 #        cdem                    cd ~/.emacs.d
 alias cdem="cd \${HOME}/.emacs.d"
 #        cdemlm                  cd ~/.emacs.d/local-modules
@@ -1979,8 +1981,8 @@ alias rsync-repos-put-colleen="rsync -rlptx --progress ${home}/data/media/repos/
 alias rsync-aerial-get-morpheus="rsync -rlptx --progress morpheus:/home/data/media/aerial/ ${home}/data/media/aerial/"
 #        rsync-common-put-media-delete rsync ${HOME}/config/icons/ and ${HOME}/config/images/ to /home/data/media/graphic/
 alias rsync-common-put-media-delete=" \
-    rsync -rlptx --progress --delete \${HOME}/config/icons/ ${home}/data/media/graphic/Icons/Common/ && \
-    rsync -rlptx --progress --delete \${HOME}/config/images/ ${home}/data/media/graphic/Images/Common/"
+    rsync -rlptx --progress --delete ${config}/icons/ ${home}/data/media/graphic/Icons/Common/ && \
+    rsync -rlptx --progress --delete ${config}/images/ ${home}/data/media/graphic/Images/Common/"
 #!#        rsync-music-put-music  rsync /home/data/media/audio/Music /media/MUSIC
 #!alias rsync-music-put-music-sd="
 #!    echo 'Copying muisc files and playlists to Music USB:'
@@ -3062,39 +3064,39 @@ export GIT_REPOSITORY_WEB="git@github.com:nullman/web.git"
 export GIT_REPOSITORY_HAIKU="git@github.com:nullman/haiku.git"
 #        gitsh                   status home (config, config-private) git repositories
 alias gitsh="
-    (echo '~/config status' && cd \${HOME}/config && git status)
-    ([[ -d \${HOME}/config-private ]] && echo '~/config-private status' && cd \${HOME}/config-private && git status)"
+    (echo '~/config status' && cd ${config} && git status)
+    ([[ -d ${config}-private ]] && echo '~/config-private status' && cd ${config}-private && git status)"
 #        gitcoh                  clone home (config, config-private) git repositories
 alias gitcoh="
-    git clone \${GIT_REPOSITORY_CONFIG} \${HOME}/config
-    git clone \${GIT_REPOSITORY_CONFIG_PRIVATE} \${HOME}/config-private"
+    git clone \${GIT_REPOSITORY_CONFIG} ${config}
+    git clone \${GIT_REPOSITORY_CONFIG_PRIVATE} ${config}-private"
 #        gitcihu                 commit (check in) home git repository (default update)
 alias gitcihu="
-    #if [[ -L \${HOME}/.cron -a -f \${HOME}/config/custom/\$(uname -n)/.cron ]] ; then
-    #    crontab -l > \${HOME}/config/custom/\$(uname -n)/.cron
+    #if [[ -L \${HOME}/.cron -a -f ${config}/custom/\$(uname -n)/.cron ]] ; then
+    #    crontab -l > ${config}/custom/\$(uname -n)/.cron
     #fi
-    if [[ -d \${HOME}/config-private ]] && [[ -f \${HOME}/.addressbook ]] && [[ ! -L \${HOME}/.addressbook ]] ; then
+    if [[ -d ${config}-private ]] && [[ -f \${HOME}/.addressbook ]] && [[ ! -L \${HOME}/.addressbook ]] ; then
         pushd \${HOME}
         cp .addressbook config-private/common/
         ln -sf config-private/common/.addressbook
         popd
     fi
-    if [[ -d \${HOME}/config-private ]] && [[ -f \${HOME}/.xscreensaver ]] && [[ ! -L \${HOME}/.xscreensaver ]] ; then
+    if [[ -d ${config}-private ]] && [[ -f \${HOME}/.xscreensaver ]] && [[ ! -L \${HOME}/.xscreensaver ]] ; then
         pushd \${HOME}
         cp .xscreensaver config-private/common/
         ln -sf config-private/common/.xscreensaver
         popd
     fi
-    (cd \${HOME}/config && git commit -a -m 'Update')
-    ([[ -d \${HOME}/config-private ]] && cd \${HOME}/config-private && git commit -a -m 'Update')"
+    (cd ${config} && git commit -a -m 'Update')
+    ([[ -d ${config}-private ]] && cd ${config}-private && git commit -a -m 'Update')"
 #        gituoh                  pull (update) home git repository (from origin)
 alias gituoh="
-    (cd \${HOME}/config && git pull origin)
-    ([[ -d \${HOME}/config-private ]] && cd \${HOME}/config-private && git pull origin)"
+    (cd ${config} && git pull origin)
+    ([[ -d ${config}-private ]] && cd ${config}-private && git pull origin)"
 #        gitpoh                  push home git repository (to origin)
 alias gitpoh="
-    (cd \${HOME}/config && git push origin)
-    ([[ -d \${HOME}/config-private ]] && cd \${HOME}/config-private && git push origin)"
+    (cd ${config} && git push origin)
+    ([[ -d ${config}-private ]] && cd ${config}-private && git push origin)"
 #        gitsdev                 status dev git repository
 alias gitsdev="(cd \${HOME}/dev && removeorgfontfiles && git status)"
 #        gitcodev                clone dev git repository
@@ -3228,10 +3230,10 @@ alias rsbidsome="
 #
 #        make-cron               setup initial crontab
 alias make-cron="
-    echo \"You are about to overwrite your crontab with '\${HOME}/config/custom/\$(uname -n)/.cron'.\"
+    echo \"You are about to overwrite your crontab with '${config}/custom/\$(uname -n)/.cron'.\"
     echo -n \"Do you wish to proceed? [yN] \" ; read a
     case \${a} in
-        y|Y) crontab \${HOME}/config/custom/\$(uname -n)/.cron ;;
+        y|Y) crontab ${config}/custom/\$(uname -n)/.cron ;;
     esac"
 #        mkraw                   make raw character device
 alias mkraw="
@@ -3274,7 +3276,7 @@ alias copy-wall="
 #        copy-fonts              copy fonts
 alias copy-fonts="
     mkdir -p \${HOME}/.local/share/fonts
-    cp \${HOME}/config/fonts \${HOME}/.local/share/fonts/"
+    cp ${config}/fonts \${HOME}/.local/share/fonts/"
 #!#        copy-skins              copy mp3 skins to xmms
 #!alias copy-skins="sudo cp -Rp \${HOME}/documents/Skins/* /usr/share/xmms/Skins/"
 #!#        copy-icewm              copy icewm settings to ~/

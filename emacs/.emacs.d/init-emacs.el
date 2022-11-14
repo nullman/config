@@ -17618,6 +17618,7 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
 
 (use-package saveplace
   :straight (:type built-in)
+  :after (org-visibility)             ; restore visibility before moving point
   :custom
   (save-place-file (locate-user-emacs-file ".saveplace"))
   (save-place-limit 100)
@@ -17627,7 +17628,14 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
         (seq ".org" eol)
         ;; ignore ~/.cddb files
         "/.cddb/")))
-  :init (save-place-mode 1))
+  :init (save-place-mode 1)
+  :config
+  (defun save-place-find-file-hook--ignore-hidden-point ()
+    "Only restore position if point is visible."
+    (when (invisible-p (point))
+      (beginning-of-buffer)))
+  ;; advise `save-place-find-file-hook'
+  (advice-add 'save-place-find-file-hook :after #'save-place-find-file-hook--ignore-hidden-point))
 ;; saveplace:1 ends here
 
 ;; [[file:init-emacs.org::#modules-smerge][smerge:1]]

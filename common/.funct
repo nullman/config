@@ -18,6 +18,8 @@
 #!
 #!       operating system
 os="$(uname -s)"
+#!       config directory
+config="${HOME}/$([[ ${os} == Haiku ]] && echo 'haiku-config' || echo 'config')"
 #!       default rsync exclusions
 #!rsyncexclusions='{"/cdrom/*","/dev/*","/lost+found","/media/*","/mnt/*","/proc/*","/run/*","/sys/*","/tmp/*","/var/tmp/*","/home/*/.cache/*","/home/*/.ccache/*","/home/*/.gvfs","/home/*/.local/share/Trash/*","/home/*/.thumbnails/*"}'
 #!
@@ -1265,7 +1267,7 @@ git-sync-config() {
     # sync config repositories
     _gitsync "config" "config-private"
 
-    if [[ -d "${HOME}/config-private" ]] ; then
+    if [[ -d "${config}-private" ]] ; then
         #if [[ -L .cron ]] && [[ -f config-private/custom/$(uname -n)/.cron ]] ; then
         #    echo "Update crontab..."
         #    crontab -l > config-private/custom/$(uname -n)/.cron
@@ -1786,7 +1788,7 @@ home-initialize() {
         "/home/data/media/repos/DOS"
     )
 
-    echo "You are about to setup links from '${HOME}' to '${HOME}/config' and '${HOME}/config-private'."
+    echo "You are about to setup links from '${HOME}' to '${config}' and '${config}-private'."
     echo "All files and directories replaced will be moved to '${backupdir}'."
     echo "This command should only be run once for a given HOME directory."
     [[ -e "${HOME}/.alias" ]] && echo "It looks like stow initialization has already occurred" && return 1
@@ -1794,7 +1796,7 @@ home-initialize() {
 
     case "${a}" in
         y|Y)
-            [[ -d "${HOME}/config" ]] || (echo "Missing config directory!" && return 1)
+            [[ -d "${config}" ]] || (echo "Missing config directory!" && return 1)
 
             echo "Moving existing home files to '${backupdir}'..."
             (
@@ -1812,7 +1814,7 @@ home-initialize() {
             echo "Creating stow target directories..."
             mkdir -p "${HOME}/.emacs.d"
             mkdir -p "${HOME}/.local/share/applications"
-            find "${HOME}/config/config/.config" -mindepth 1 -maxdepth 1 -type d | \
+            find "${config}/config/.config" -mindepth 1 -maxdepth 1 -type d | \
                 while read dir ; do
                     bn=$(basename "${dir}")
                     mkdir -p "${HOME}/.config/${bn}"
@@ -1821,11 +1823,11 @@ home-initialize() {
             # stow
             echo "Stowing packages..."
             (cd "${HOME}" && ln -s -f config/.stow-global-ignore .)
-            stow --dir="${HOME}/config" --target="${HOME}" --stow "common" "emacs"
-            stow --dir="${HOME}/config" --target="${HOME}" --no-folding --stow "config" "local"
-            stow --dir="${HOME}/config/custom" --target="${HOME}" --no-folding --stow "$(uname -n)"
-            [[ -d "${HOME}/config-private" ]] && stow --dir="${HOME}/config-private" --target="${HOME}" --stow "common" "emacs"
-            [[ -d "${HOME}/config-private" ]] && stow --dir="${HOME}/config-private" --target="${HOME}" --no-folding --stow "config"
+            stow --dir="${config}" --target="${HOME}" --stow "common" "emacs"
+            stow --dir="${config}" --target="${HOME}" --no-folding --stow "config" "local"
+            stow --dir="${config}/custom" --target="${HOME}" --no-folding --stow "$(uname -n)"
+            [[ -d "${config}-private" ]] && stow --dir="${config}-private" --target="${HOME}" --stow "common" "emacs"
+            [[ -d "${config}-private" ]] && stow --dir="${config}-private" --target="${HOME}" --no-folding --stow "config"
 
             echo "Making other symlinks..."
             (
@@ -1846,7 +1848,7 @@ home-restow() {
     echo "Creating stow target directories..."
     mkdir -p "${HOME}/.emacs.d"
     mkdir -p "${HOME}/.local/share/applications"
-    find "${HOME}/config/config/.config" -mindepth 1 -maxdepth 1 -type d | \
+    find "${config}/config/.config" -mindepth 1 -maxdepth 1 -type d | \
         while read dir ; do
             bn=$(basename "${dir}")
             mkdir -p "${HOME}/.config/${bn}"
@@ -1855,11 +1857,11 @@ home-restow() {
     # restow
     echo "Restowing packages..."
     (cd "${HOME}" && ln -s -f config/.stow-global-ignore .)
-    stow --dir="${HOME}/config" --target="${HOME}" --restow "common" "emacs"
-    stow --dir="${HOME}/config" --target="${HOME}" --no-folding --restow "config" "local"
-    stow --dir="${HOME}/config/custom" --target="${HOME}" --no-folding --restow "$(uname -n)"
-    [[ -d "${HOME}/config-private" ]] && stow --dir="${HOME}/config-private" --target="${HOME}" --restow "common" "emacs"
-    [[ -d "${HOME}/config-private" ]] && stow --dir="${HOME}/config-private" --target="${HOME}" --no-folding --restow "config"
+    stow --dir="${config}" --target="${HOME}" --restow "common" "emacs"
+    stow --dir="${config}" --target="${HOME}" --no-folding --restow "config" "local"
+    stow --dir="${config}/custom" --target="${HOME}" --no-folding --restow "$(uname -n)"
+    [[ -d "${config}-private" ]] && stow --dir="${config}-private" --target="${HOME}" --restow "common" "emacs"
+    [[ -d "${config}-private" ]] && stow --dir="${config}-private" --target="${HOME}" --no-folding --restow "config"
 }
 #        manjaro-initialize      install manjaro packages and setup system
 manjaro-initialize() {
