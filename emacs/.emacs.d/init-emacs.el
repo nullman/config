@@ -19188,7 +19188,7 @@ otherwise run `find-file-as-root'."
           (perl-mode)))))
 
   ;; run when a file is loaded
-  (add-hook 'find-file-hooks #'perl-mode-maybe)
+  (add-hook 'find-file-hook #'perl-mode-maybe)
 
   ;; remove trailing blanks
   ;;(add-hook 'perl-mode-hook #'install-remove-trailing-blanks)
@@ -19443,7 +19443,7 @@ Commands:
           (ruby-mode)))))
 
   ;; run when a file is loaded
-  (add-hook 'find-file-hooks #'ruby-mode-maybe)
+  (add-hook 'find-file-hook #'ruby-mode-maybe)
 
   ;; remove trailing blanks
   ;;(add-hook 'ruby-mode-hook #'install-remove-trailing-blanks)
@@ -19587,7 +19587,7 @@ Commands:
           (rust-mode)))))
 
   ;; run when a file is loaded
-  (add-hook 'find-file-hooks #'rust-mode-maybe)
+  (add-hook 'find-file-hook #'rust-mode-maybe)
 
   ;; remove trailing blanks
   ;;(add-hook 'rust-mode-hook #'install-remove-trailing-blanks)
@@ -19654,7 +19654,7 @@ Commands:
           (sh-mode)))))
 
   ;; run when a file is loaded
-  (add-hook 'find-file-hooks #'sh-mode-maybe)
+  (add-hook 'find-file-hook #'sh-mode-maybe)
 
   ;; remove trailing blanks
   ;;(add-hook 'sh-mode-hook #'install-remove-trailing-blanks)
@@ -20160,7 +20160,7 @@ Commands:
           (v-mode)))))
 
   ;; run when a file is loaded
-  (add-hook 'find-file-hooks #'v-mode-maybe)
+  (add-hook 'find-file-hook #'v-mode-maybe)
 
   ;; remove trailing blanks
   ;;(add-hook 'v-mode-hook #'install-remove-trailing-blanks)
@@ -21653,6 +21653,8 @@ to the current ERC buffer."
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Other: Apply Patches")
+
+(add-hook 'find-file-hook #'hack-local-variables)
 ;; Apply Patches:1 ends here
 
 ;; [[file:init-emacs.org::#aliases][Aliases:1]]

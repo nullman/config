@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-11-13 14:42 (kyle)>
+  #+TIMESTAMP: <2022-11-13 20:11 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -30082,7 +30082,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
                 (perl-mode)))))
 
         ;; run when a file is loaded
-        (add-hook 'find-file-hooks #'perl-mode-maybe)
+        (add-hook 'find-file-hook #'perl-mode-maybe)
 
         ;; remove trailing blanks
         ;;(add-hook 'perl-mode-hook #'install-remove-trailing-blanks)
@@ -30519,7 +30519,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
                 (ruby-mode)))))
 
         ;; run when a file is loaded
-        (add-hook 'find-file-hooks #'ruby-mode-maybe)
+        (add-hook 'find-file-hook #'ruby-mode-maybe)
 
         ;; remove trailing blanks
         ;;(add-hook 'ruby-mode-hook #'install-remove-trailing-blanks)
@@ -30670,7 +30670,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
                 (rust-mode)))))
 
         ;; run when a file is loaded
-        (add-hook 'find-file-hooks #'rust-mode-maybe)
+        (add-hook 'find-file-hook #'rust-mode-maybe)
 
         ;; remove trailing blanks
         ;;(add-hook 'rust-mode-hook #'install-remove-trailing-blanks)
@@ -30744,7 +30744,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
                 (sh-mode)))))
 
         ;; run when a file is loaded
-        (add-hook 'find-file-hooks #'sh-mode-maybe)
+        (add-hook 'find-file-hook #'sh-mode-maybe)
 
         ;; remove trailing blanks
         ;;(add-hook 'sh-mode-hook #'install-remove-trailing-blanks)
@@ -31300,7 +31300,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
                 (v-mode)))))
 
         ;; run when a file is loaded
-        (add-hook 'find-file-hooks #'v-mode-maybe)
+        (add-hook 'find-file-hook #'v-mode-maybe)
 
         ;; remove trailing blanks
         ;;(add-hook 'v-mode-hook #'install-remove-trailing-blanks)
@@ -34032,6 +34032,8 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;;------------------------------------------------------------------------------
 
       (init-message 2 "Other: Apply Patches")
+
+      (add-hook 'find-file-hook #'hack-local-variables)
     #+END_SRC
 
 * Aliases
