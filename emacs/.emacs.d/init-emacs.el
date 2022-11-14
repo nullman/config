@@ -1617,20 +1617,20 @@ Otherwise, `custom-tab-width' is used."
     (bind-keys ("<f3>" . kmacro-start-macro-or-insert-counter))) ; default: `kmacro-start-macro-or-insert-counter'
   (when (fboundp 'kmacro-end-or-call-macro)
     (bind-keys ("<f4>" . kmacro-end-or-call-macro))) ; default: `kmacro-end-or-call-macro'
-  (when (fboundp 'define-word-after-spell-check)
-    (bind-keys ("<f5>" . define-word-after-spell-check)))
   (when (fboundp 'define-word-at-point-after-spell-check)
-    (bind-keys ("S-<f5>" . define-word-at-point-after-spell-check)))
+    (bind-keys ("<f5>" . define-word-at-point-after-spell-check)))
+  (when (fboundp 'define-word-after-spell-check)
+    (bind-keys ("S-<f5>" . define-word-after-spell-check)))
   ;; (when (fboundp 'ispell-word)
   ;;   (bind-keys ("<f6>" . ispell-word)))
   ;; (when (fboundp 'ispell)
   ;;   (bind-keys ("<S-f6>" . ispell)))
-  (when (fboundp 'web-query)
-    (bind-keys ("<f7>" . web-query)))
   (when (fboundp 'web-query-symbol-by-mode-at-point)
-    (bind-keys ("<S-f7>" . web-query-symbol-by-mode-at-point)))
+    (bind-keys ("<f7>" . web-query-symbol-by-mode-at-point)))
   ;; (when (fboundp 'web-query-word-at-point)
-  ;;   (bind-keys ("S-<f7>" . web-query-word-at-point)))
+  ;;   (bind-keys ("<f7>" . web-query-word-at-point)))
+  (when (fboundp 'web-query)
+    (bind-keys ("<S-f7>" . web-query)))
   (when (fboundp 'neotree)
     (bind-keys ("<f8>" . neotree)))
   (when (fboundp 'cycle-buffer-backward)
@@ -1643,8 +1643,7 @@ Otherwise, `custom-tab-width' is used."
     (bind-keys ("S-<f10>" . cycle-buffer-permissive)))
   ;; normally f11 and f12 are left for screen to use
   (unbind-key "<f11>")                  ; default: `toggle-frame-fullscreen'
-  (unbind-key "<f12>")
-  )
+  (unbind-key "<f12>"))
 
 (init-message 3 "custom-key-bindings-function-keys")
 (custom-key-bindings-function-keys)

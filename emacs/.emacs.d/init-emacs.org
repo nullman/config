@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-11-13 20:11 (kyle)>
+  #+TIMESTAMP: <2022-11-14 14:30 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -2968,20 +2968,20 @@
           (bind-keys ("<f3>" . kmacro-start-macro-or-insert-counter))) ; default: `kmacro-start-macro-or-insert-counter'
         (when (fboundp 'kmacro-end-or-call-macro)
           (bind-keys ("<f4>" . kmacro-end-or-call-macro))) ; default: `kmacro-end-or-call-macro'
-        (when (fboundp 'define-word-after-spell-check)
-          (bind-keys ("<f5>" . define-word-after-spell-check)))
         (when (fboundp 'define-word-at-point-after-spell-check)
-          (bind-keys ("S-<f5>" . define-word-at-point-after-spell-check)))
+          (bind-keys ("<f5>" . define-word-at-point-after-spell-check)))
+        (when (fboundp 'define-word-after-spell-check)
+          (bind-keys ("S-<f5>" . define-word-after-spell-check)))
         ;; (when (fboundp 'ispell-word)
         ;;   (bind-keys ("<f6>" . ispell-word)))
         ;; (when (fboundp 'ispell)
         ;;   (bind-keys ("<S-f6>" . ispell)))
-        (when (fboundp 'web-query)
-          (bind-keys ("<f7>" . web-query)))
         (when (fboundp 'web-query-symbol-by-mode-at-point)
-          (bind-keys ("<S-f7>" . web-query-symbol-by-mode-at-point)))
+          (bind-keys ("<f7>" . web-query-symbol-by-mode-at-point)))
         ;; (when (fboundp 'web-query-word-at-point)
-        ;;   (bind-keys ("S-<f7>" . web-query-word-at-point)))
+        ;;   (bind-keys ("<f7>" . web-query-word-at-point)))
+        (when (fboundp 'web-query)
+          (bind-keys ("<S-f7>" . web-query)))
         (when (fboundp 'neotree)
           (bind-keys ("<f8>" . neotree)))
         (when (fboundp 'cycle-buffer-backward)
@@ -2994,8 +2994,7 @@
           (bind-keys ("S-<f10>" . cycle-buffer-permissive)))
         ;; normally f11 and f12 are left for screen to use
         (unbind-key "<f11>")                  ; default: `toggle-frame-fullscreen'
-        (unbind-key "<f12>")
-        )
+        (unbind-key "<f12>"))
 
       (init-message 3 "custom-key-bindings-function-keys")
       (custom-key-bindings-function-keys)
@@ -23191,7 +23190,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
        (:name "Hacker News" :html "https://news.ycombinator.com/" :rss "https://news.ycombinator.com/rss" :tag "dev")
        (:name "Ars Technica" :html "https://www.arstechnica.com/" :rss "https://feeds.arstechnica.com/arstechnica/index/" :tag "dev")
        (:name "TWIT" :html "https://www.twit.tv/" :rss "https://feeds.twit.tv/twit_video_hd.xml" :tag "dev")
-       (:name "How-To Geek" :html "https://www.howtogeek.com/" :rss "https://www.howtogeek.com/feed/" :tag "dev")
+       ;;(:name "How-To Geek" :html "https://www.howtogeek.com/" :rss "https://www.howtogeek.com/feed/" :tag "dev")
        (:name "Coding Horror" :html "https://blog.codinghorror.com/" :rss "http://feeds.feedburner.com/codinghorror?format=xml" :tag "dev")
        (:name "Haiku" :html "https://www.haiku-os.org/blog/" :rss "https://www.haiku-os.org/blog/index.xml" :tag "dev")
        (:name "nixCraft" :html "https://www.cyberciti.biz/" :rss "https://www.cyberciti.biz/atom/atom.xml" :tag "dev")
