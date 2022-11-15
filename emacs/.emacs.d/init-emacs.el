@@ -7956,32 +7956,6 @@ If an error occurs when loading, report it and add FILE to
   (safe-load file noerror nomessage nosuffix))
 ;; safe-load:1 ends here
 
-;; [[file:init-emacs.org::#functions-advice-functions][Advice Functions:1]]
-;;------------------------------------------------------------------------------
-;;; Functions: Advice Functions
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Functions: Advice Functions")
-;; Advice Functions:1 ends here
-
-;; [[file:init-emacs.org::#functions-advice-functions-compile-goto-error-org][Compile Goto Error Org:1]]
-;;------------------------------------------------------------------------------
-;;;; Functions: Advice Functions: Compile Goto Error Org
-;;------------------------------------------------------------------------------
-
-(init-message 3 "Functions: Advice Functions: Compile Goto Error Org")
-
-(defun compile-goto-error--org (&optional event)
-  "Open compilation bugs in org file for errors in tangled elisp code."
-  (when (eq major-mode 'emacs-lisp-mode)
-    (ignore-errors (org-babel-tangle-jump-to-org))))
-
-(defun compilation-mode-hook--compile-goto-error ()
-  "Hook to advise `compile-goto-error'."
-  (advice-add 'compile-goto-error :after #'compile-goto-error--org))
-(add-hook 'compilation-mode-hook #'compilation-mode-hook--compile-goto-error)
-;; Compile Goto Error Org:1 ends here
-
 ;; [[file:init-emacs.org::#functions-general-functions][General Functions:1]]
 ;;------------------------------------------------------------------------------
 ;;; Functions: General Functions
@@ -12598,6 +12572,68 @@ MATCH is the file pattern to match."
 ;; grep web
 (grep-custom-generate grep-web "Grep web files: " ("~/web/org") "\\.org\\'")
 ;; grep-web:1 ends here
+
+;; [[file:init-emacs.org::#functions-regexp-matching-functions][Regexp Matching Functions:1]]
+;;------------------------------------------------------------------------------
+;;; Functions: Regexp Matching Functions
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Functions: Regexp Matching Functions")
+;; Regexp Matching Functions:1 ends here
+
+;; [[file:init-emacs.org::#functions-regexp-matching-functions-regexp-uri][regexp-uri:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Regexp Matching Functions: regexp-uri
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Regexp Matching Functions: regexp-uri")
+
+(defconst regexp-url
+  (rx-let (;; digits         = 1*digit
+           (digits (1+ digit))
+           ;; alphadigit     = alpha | digit
+           (alphadigit alnum)
+           ;; reserved       = ";" | "/" | "?" | ":" | "@" | "&" | "="
+           (reserved (any ";" "/" "?" ":" "@" "&" "="))
+           ;; safe           = "$" | "-" | "_" | "." | "+"
+           (safe (any "$" "-" "_" "." "+"))
+           ;; extra          = "!" | "*" | "'" | "(" | ")" | ","
+           (extra (any "!" "*" "'" "(" ")" ","))
+           ;; unreserved     = alpha | digit | safe | extra
+           (unreserved (or alpha digit safe extra))
+           ;; escape         = "%" hex hex
+           (escape (seq "%" hex hex))
+           ;; uchar          = unreserved | escape
+           (uchar (or unreserved escape))
+           ;; port           = digits
+           (port digits)
+           ;; hostnumber     = digits "." digits "." digits "." digits
+           (hostnumber (seq digits "." digits "." digits "." digits))
+           ;; toplabel       = alpha | alpha *[ alphadigit | "-" ] alphadigit
+           (toplabel (or alpha (seq alpha (0+ (or alphadigit "-")) alphadigit)))
+           ;; domainlabel    = alphadigit | alphadigit *[ alphadigit | "-" ] alphadigit
+           (domainlabel (or alphadigit (seq alphadigit (0+ (or alphadigit "-")) alphadigit)))
+           ;; hostname       = *[ domainlabel "." ] toplabel
+           (hostname (seq (0+ domainlabel ".") toplabel))
+           ;; host           = hostname | hostnumber
+           (host (or hostname hostnumber))
+           ;; hostport       = host [ ":" port ]
+           (hostport (seq host (opt ":" port)))
+           ;; hsegment       = *[ uchar | ";" | ":" | "@" | "&" | "=" ]
+           (hsegment (0+ (or uchar ";" ":" "@" "&" "=")))
+           ;; hpath          = hsegment *[ "/" hsegment ]
+           (hpath (seq hsegment (0+ (or uchar ";" ":" "@" "&" "="))))
+           ;; search         = *[ uchar | ";" | ":" | "@" | "&" | "=" ]
+           (search (0+ (or uchar ";" ":" "@" "&" "="))))
+    (rx
+     (or
+      ;; httpurl: "http[s]://" hostport [ "/" hpath [ "?" search ]]
+      (seq "http" (? "s") "://" hostport (opt  "/" hpath (opt  "?" search)))
+      ))))
+  "Regular expression that matches a valid URL.
+
+URL RFC: http://www.faqs.org/rfcs/rfc1738.html")
+;; regexp-uri:1 ends here
 
 ;; [[file:init-emacs.org::#functions-tags-file-functions][TAGS File Functions:1]]
 ;;------------------------------------------------------------------------------
@@ -21646,6 +21682,24 @@ to the current ERC buffer."
 (init-message 2 "Other: Apply Advice")
 ;; Apply Advice:1 ends here
 
+;; [[file:init-emacs.org::#other-apply-advice-compile-goto-error-org][Compile Goto Error Org:1]]
+;;------------------------------------------------------------------------------
+;;;; Other: Apply Advice: Compile Goto Error Org
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Other: Apply Advice: Compile Goto Error Org")
+
+(defun compile-goto-error--org (&optional event)
+  "Open compilation bugs in org file for errors in tangled elisp code."
+  (when (eq major-mode 'emacs-lisp-mode)
+    (ignore-errors (org-babel-tangle-jump-to-org))))
+
+(defun compilation-mode-hook--compile-goto-error ()
+  "Hook to advise `compile-goto-error'."
+  (advice-add 'compile-goto-error :after #'compile-goto-error--org))
+(add-hook 'compilation-mode-hook #'compilation-mode-hook--compile-goto-error)
+;; Compile Goto Error Org:1 ends here
+
 ;; [[file:init-emacs.org::#other-apply-patches][Apply Patches:1]]
 ;;------------------------------------------------------------------------------
 ;;; Other: Apply Patches
@@ -21653,6 +21707,7 @@ to the current ERC buffer."
 
 (init-message 2 "Other: Apply Patches")
 
+;; force `find-file' to load local variables
 (add-hook 'find-file-hook #'hack-local-variables)
 ;; Apply Patches:1 ends here
 
