@@ -12628,8 +12628,8 @@ MATCH is the file pattern to match."
     (rx
      (or
       ;; httpurl: "http[s]://" hostport [ "/" hpath [ "?" search ]]
-      (seq "http" (? "s") "://" hostport (opt  "/" hpath (opt  "?" search)))
-      ))))
+      (seq "http" (? "s") "://" hostport (opt "/" hpath (opt "?" search)))
+      )))
   "Regular expression that matches a valid URL.
 
 URL RFC: http://www.faqs.org/rfcs/rfc1738.html")

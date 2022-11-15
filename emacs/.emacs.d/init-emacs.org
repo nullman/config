@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-11-15 14:45 (kyle)>
+  #+TIMESTAMP: <2022-11-15 14:57 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -18190,8 +18190,8 @@
             (rx
              (or
               ;; httpurl: "http[s]://" hostport [ "/" hpath [ "?" search ]]
-              (seq "http" (? "s") "://" hostport (opt  "/" hpath (opt  "?" search)))
-              ))))
+              (seq "http" (? "s") "://" hostport (opt "/" hpath (opt "?" search)))
+              )))
           "Regular expression that matches a valid URL.
 
         URL RFC: http://www.faqs.org/rfcs/rfc1738.html")
