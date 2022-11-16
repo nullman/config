@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-11-16 09:02 (kyle)>
+  #+TIMESTAMP: <2022-11-16 16:32 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -3106,6 +3106,16 @@
                       ("C-x M-j" . windmove-left)
                       ("C-x M-l" . windmove-right))
 
+          ;; window resize keys
+          (when (fboundp 'window-shrink-vertically)
+            (bind-keys :map keymap ("C-M-S-i" . window-shrink-vertically)))
+          (when (fboundp 'window-enlarge-vertically)
+            (bind-keys :map keymap ("C-M-S-k" . window-enlarge-vertically)))
+          (when (fboundp 'window-shrink-horizontally)
+            (bind-keys :map keymap ("C-M-S-j" . window-shrink-horizontally)))
+          (when (fboundp 'window-enlarge-horizontally)
+            (bind-keys :map keymap ("C-M-S-l" . window-enlarge-horizontally)))
+
           ;; move line up
           (when (fboundp 'move-line-up)
             (bind-keys* :map keymap
@@ -3304,14 +3314,6 @@
         (when (fboundp 'titleize-word-enhanced)
           (bind-keys ("M-t" . titleize-word-enhanced)) ; default: `transpose-words'
           (bind-keys ("M-T" . titleize-line-or-region)))
-
-        ;; enlarge window by 5
-        (when (fboundp 'enlarge-window-5)
-          (bind-keys ("C-x &" . enlarge-window-5)))
-
-        ;; shrink window by 5
-        (when (fboundp 'shrink-window-5)
-          (bind-keys ("C-x %" . shrink-window-5))) ; default: `View-goto-percent'
 
         ;; describe text properties
         (bind-keys ("C-x M-p" . describe-text-properties))
@@ -3656,6 +3658,20 @@
           (bind-keys :map space-terminal-map ("z" . term-zsh)))
         (when (fboundp 'vterm)
           (bind-keys :map space-terminal-map ("v" . vterm)))
+
+        ;; ;; window resize commands
+        ;; (bind-keys :map space-map
+        ;;            :prefix "w"
+        ;;            :prefix-map space-window-resize-map
+        ;;            :menu-name "Window Resize")
+        ;; (when (fboundp 'window-shrink-vertically)
+        ;;   (bind-keys :map space-window-resize-map ("i" . window-shrink-vertically)))
+        ;; (when (fboundp 'window-enlarge-vertically)
+        ;;   (bind-keys :map space-window-resize-map ("k" . window-enlarge-vertically)))
+        ;; (when (fboundp 'window-shrink-horizontally)
+        ;;   (bind-keys :map space-window-resize-map ("j" . window-shrink-horizontally)))
+        ;; (when (fboundp 'window-enlarge-horizontally)
+        ;;   (bind-keys :map space-window-resize-map ("l" . window-enlarge-horizontally)))
 
         ;; browse-url commands
         (bind-keys :map space-map
@@ -12835,44 +12851,84 @@
               (when win-2nd (other-window 1)))))
       #+END_SRC
 
-***** enlarge-window-5
+***** window-enlarge-vertically
       :PROPERTIES:
-      :CUSTOM_ID: functions-emacs-functions-enlarge-window-5
+      :CUSTOM_ID: functions-emacs-functions-window-enlarge-vertically
       :END:
 
       #+BEGIN_SRC emacs-lisp
         ;;------------------------------------------------------------------------------
-        ;;;; Functions: Emacs Functions: enlarge-window-5
+        ;;;; Functions: Emacs Functions: window-enlarge-vertically
         ;;------------------------------------------------------------------------------
 
-        (init-message 3 "Functions: Emacs Functions: enlarge-window-5")
+        (init-message 3 "Functions: Emacs Functions: window-enlarge-vertically")
 
-        (defun enlarge-window-5 (arg)
-          "Make current window 5 lines bigger."
+        (defun window-enlarge-vertically (arg)
+          "Make current window 5 lines bigger vertically."
           (interactive "P")
           (if arg
               (enlarge-window (* 5 arg))
             (enlarge-window 5)))
       #+END_SRC
 
-***** shrink-window-5
+***** window-shrink-vertically
       :PROPERTIES:
-      :CUSTOM_ID: functions-emacs-functions-shrink-window-5
+      :CUSTOM_ID: functions-emacs-functions-window-shrink-vertically
       :END:
 
       #+BEGIN_SRC emacs-lisp
         ;;------------------------------------------------------------------------------
-        ;;;; Functions: Emacs Functions: shrink-window-5
+        ;;;; Functions: Emacs Functions: window-shrink-vertically
         ;;------------------------------------------------------------------------------
 
-        (init-message 3 "Functions: Emacs Functions: shrink-window-5")
+        (init-message 3 "Functions: Emacs Functions: window-shrink-vertically")
 
-        (defun shrink-window-5 (arg)
-          "Make current window 5 lines smaller."
+        (defun window-shrink-vertically (arg)
+          "Make current window 5 lines smaller vertically."
           (interactive "P")
           (if arg
-              (enlarge-window (* -5 arg))
-            (enlarge-window -5)))
+              (shrink-window (* 5 arg))
+            (shrink-window 5)))
+      #+END_SRC
+
+***** window-enlarge-horizontally
+      :PROPERTIES:
+      :CUSTOM_ID: functions-emacs-functions-window-enlarge-horizontally
+      :END:
+
+      #+BEGIN_SRC emacs-lisp
+        ;;------------------------------------------------------------------------------
+        ;;;; Functions: Emacs Functions: window-enlarge-horizontally
+        ;;------------------------------------------------------------------------------
+
+        (init-message 3 "Functions: Emacs Functions: window-enlarge-horizontally")
+
+        (defun window-enlarge-horizontally (arg)
+          "Make current window 5 lines bigger horizontally."
+          (interactive "P")
+          (if arg
+              (enlarge-window (* 5 arg) :horizontal)
+            (enlarge-window 5 :horizontal)))
+      #+END_SRC
+
+***** window-shrink-horizontally
+      :PROPERTIES:
+      :CUSTOM_ID: functions-emacs-functions-window-shrink-horizontally
+      :END:
+
+      #+BEGIN_SRC emacs-lisp
+        ;;------------------------------------------------------------------------------
+        ;;;; Functions: Emacs Functions: window-shrink-horizontally
+        ;;------------------------------------------------------------------------------
+
+        (init-message 3 "Functions: Emacs Functions: window-shrink-horizontally")
+
+        (defun window-shrink-horizontally (arg)
+          "Make current window 5 lines smaller horizontally."
+          (interactive "P")
+          (if arg
+              (shrink-window (* 5 arg) :horizontal)
+            (shrink-window 5 :horizontal)))
       #+END_SRC
 
 ***** compile-elisp

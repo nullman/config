@@ -1745,6 +1745,16 @@ KEYMAP defaults to `override-global-map'."
                 ("C-x M-j" . windmove-left)
                 ("C-x M-l" . windmove-right))
 
+    ;; window resize keys
+    (when (fboundp 'window-shrink-vertically)
+      (bind-keys :map keymap ("C-M-S-i" . window-shrink-vertically)))
+    (when (fboundp 'window-enlarge-vertically)
+      (bind-keys :map keymap ("C-M-S-k" . window-enlarge-vertically)))
+    (when (fboundp 'window-shrink-horizontally)
+      (bind-keys :map keymap ("C-M-S-j" . window-shrink-horizontally)))
+    (when (fboundp 'window-enlarge-horizontally)
+      (bind-keys :map keymap ("C-M-S-l" . window-enlarge-horizontally)))
+
     ;; move line up
     (when (fboundp 'move-line-up)
       (bind-keys* :map keymap
@@ -1938,14 +1948,6 @@ KEYMAP defaults to `override-global-map'."
   (when (fboundp 'titleize-word-enhanced)
     (bind-keys ("M-t" . titleize-word-enhanced)) ; default: `transpose-words'
     (bind-keys ("M-T" . titleize-line-or-region)))
-
-  ;; enlarge window by 5
-  (when (fboundp 'enlarge-window-5)
-    (bind-keys ("C-x &" . enlarge-window-5)))
-
-  ;; shrink window by 5
-  (when (fboundp 'shrink-window-5)
-    (bind-keys ("C-x %" . shrink-window-5))) ; default: `View-goto-percent'
 
   ;; describe text properties
   (bind-keys ("C-x M-p" . describe-text-properties))
@@ -2280,6 +2282,20 @@ KEYMAP defaults to `override-global-map'."
     (bind-keys :map space-terminal-map ("z" . term-zsh)))
   (when (fboundp 'vterm)
     (bind-keys :map space-terminal-map ("v" . vterm)))
+
+  ;; ;; window resize commands
+  ;; (bind-keys :map space-map
+  ;;            :prefix "w"
+  ;;            :prefix-map space-window-resize-map
+  ;;            :menu-name "Window Resize")
+  ;; (when (fboundp 'window-shrink-vertically)
+  ;;   (bind-keys :map space-window-resize-map ("i" . window-shrink-vertically)))
+  ;; (when (fboundp 'window-enlarge-vertically)
+  ;;   (bind-keys :map space-window-resize-map ("k" . window-enlarge-vertically)))
+  ;; (when (fboundp 'window-shrink-horizontally)
+  ;;   (bind-keys :map space-window-resize-map ("j" . window-shrink-horizontally)))
+  ;; (when (fboundp 'window-enlarge-horizontally)
+  ;;   (bind-keys :map space-window-resize-map ("l" . window-enlarge-horizontally)))
 
   ;; browse-url commands
   (bind-keys :map space-map
@@ -8534,35 +8550,65 @@ whether or not a region is selected."
       (when win-2nd (other-window 1)))))
 ;; toggle-window-split:1 ends here
 
-;; [[file:init-emacs.org::#functions-emacs-functions-enlarge-window-5][enlarge-window-5:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-window-enlarge-vertically][window-enlarge-vertically:1]]
 ;;------------------------------------------------------------------------------
-;;;; Functions: Emacs Functions: enlarge-window-5
+;;;; Functions: Emacs Functions: window-enlarge-vertically
 ;;------------------------------------------------------------------------------
 
-(init-message 3 "Functions: Emacs Functions: enlarge-window-5")
+(init-message 3 "Functions: Emacs Functions: window-enlarge-vertically")
 
-(defun enlarge-window-5 (arg)
-  "Make current window 5 lines bigger."
+(defun window-enlarge-vertically (arg)
+  "Make current window 5 lines bigger vertically."
   (interactive "P")
   (if arg
       (enlarge-window (* 5 arg))
     (enlarge-window 5)))
-;; enlarge-window-5:1 ends here
+;; window-enlarge-vertically:1 ends here
 
-;; [[file:init-emacs.org::#functions-emacs-functions-shrink-window-5][shrink-window-5:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-window-shrink-vertically][window-shrink-vertically:1]]
 ;;------------------------------------------------------------------------------
-;;;; Functions: Emacs Functions: shrink-window-5
+;;;; Functions: Emacs Functions: window-shrink-vertically
 ;;------------------------------------------------------------------------------
 
-(init-message 3 "Functions: Emacs Functions: shrink-window-5")
+(init-message 3 "Functions: Emacs Functions: window-shrink-vertically")
 
-(defun shrink-window-5 (arg)
-  "Make current window 5 lines smaller."
+(defun window-shrink-vertically (arg)
+  "Make current window 5 lines smaller vertically."
   (interactive "P")
   (if arg
-      (enlarge-window (* -5 arg))
-    (enlarge-window -5)))
-;; shrink-window-5:1 ends here
+      (shrink-window (* 5 arg))
+    (shrink-window 5)))
+;; window-shrink-vertically:1 ends here
+
+;; [[file:init-emacs.org::#functions-emacs-functions-window-enlarge-horizontally][window-enlarge-horizontally:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Emacs Functions: window-enlarge-horizontally
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Emacs Functions: window-enlarge-horizontally")
+
+(defun window-enlarge-horizontally (arg)
+  "Make current window 5 lines bigger horizontally."
+  (interactive "P")
+  (if arg
+      (enlarge-window (* 5 arg) :horizontal)
+    (enlarge-window 5 :horizontal)))
+;; window-enlarge-horizontally:1 ends here
+
+;; [[file:init-emacs.org::#functions-emacs-functions-window-shrink-horizontally][window-shrink-horizontally:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Emacs Functions: window-shrink-horizontally
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Emacs Functions: window-shrink-horizontally")
+
+(defun window-shrink-horizontally (arg)
+  "Make current window 5 lines smaller horizontally."
+  (interactive "P")
+  (if arg
+      (shrink-window (* 5 arg) :horizontal)
+    (shrink-window 5 :horizontal)))
+;; window-shrink-horizontally:1 ends here
 
 ;; [[file:init-emacs.org::#functions-emacs-functions-compile-elisp][compile-elisp:1]]
 ;;------------------------------------------------------------------------------
