@@ -12573,68 +12573,6 @@ MATCH is the file pattern to match."
 (grep-custom-generate grep-web "Grep web files: " ("~/web/org") "\\.org\\'")
 ;; grep-web:1 ends here
 
-;; [[file:init-emacs.org::#functions-regexp-matching-functions][Regexp Matching Functions:1]]
-;;------------------------------------------------------------------------------
-;;; Functions: Regexp Matching Functions
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Functions: Regexp Matching Functions")
-;; Regexp Matching Functions:1 ends here
-
-;; [[file:init-emacs.org::#functions-regexp-matching-functions-regexp-uri][regexp-uri:1]]
-;;------------------------------------------------------------------------------
-;;;; Functions: Regexp Matching Functions: regexp-uri
-;;------------------------------------------------------------------------------
-
-(init-message 3 "Functions: Regexp Matching Functions: regexp-uri")
-
-(defconst regexp-url
-  (rx-let (;; digits         = 1*digit
-           (digits (1+ digit))
-           ;; alphadigit     = alpha | digit
-           (alphadigit alnum)
-           ;; reserved       = ";" | "/" | "?" | ":" | "@" | "&" | "="
-           (reserved (any ";" "/" "?" ":" "@" "&" "="))
-           ;; safe           = "$" | "-" | "_" | "." | "+"
-           (safe (any "$" "-" "_" "." "+"))
-           ;; extra          = "!" | "*" | "'" | "(" | ")" | ","
-           (extra (any "!" "*" "'" "(" ")" ","))
-           ;; unreserved     = alpha | digit | safe | extra
-           (unreserved (or alpha digit safe extra))
-           ;; escape         = "%" hex hex
-           (escape (seq "%" hex hex))
-           ;; uchar          = unreserved | escape
-           (uchar (or unreserved escape))
-           ;; port           = digits
-           (port digits)
-           ;; hostnumber     = digits "." digits "." digits "." digits
-           (hostnumber (seq digits "." digits "." digits "." digits))
-           ;; toplabel       = alpha | alpha *[ alphadigit | "-" ] alphadigit
-           (toplabel (or alpha (seq alpha (0+ (or alphadigit "-")) alphadigit)))
-           ;; domainlabel    = alphadigit | alphadigit *[ alphadigit | "-" ] alphadigit
-           (domainlabel (or alphadigit (seq alphadigit (0+ (or alphadigit "-")) alphadigit)))
-           ;; hostname       = *[ domainlabel "." ] toplabel
-           (hostname (seq (0+ domainlabel ".") toplabel))
-           ;; host           = hostname | hostnumber
-           (host (or hostname hostnumber))
-           ;; hostport       = host [ ":" port ]
-           (hostport (seq host (opt ":" port)))
-           ;; hsegment       = *[ uchar | ";" | ":" | "@" | "&" | "=" ]
-           (hsegment (0+ (or uchar ";" ":" "@" "&" "=")))
-           ;; hpath          = hsegment *[ "/" hsegment ]
-           (hpath (seq hsegment (0+ (or uchar ";" ":" "@" "&" "="))))
-           ;; search         = *[ uchar | ";" | ":" | "@" | "&" | "=" ]
-           (search (0+ (or uchar ";" ":" "@" "&" "="))))
-    (rx
-     (or
-      ;; httpurl: "http[s]://" hostport [ "/" hpath [ "?" search ]]
-      (seq "http" (? "s") "://" hostport (opt "/" hpath (opt "?" search)))
-      )))
-  "Regular expression that matches a valid URL.
-
-URL RFC: http://www.faqs.org/rfcs/rfc1738.html")
-;; regexp-uri:1 ends here
-
 ;; [[file:init-emacs.org::#functions-tags-file-functions][TAGS File Functions:1]]
 ;;------------------------------------------------------------------------------
 ;;; Functions: TAGS File Functions
@@ -20046,7 +19984,7 @@ Commands:
 
     ;; add underscore and dash to word boundaries
     (modify-syntax-entry ?_ "w" text-mode-syntax-table)
-    (Modify-Syntax-Entry ?- "w" text-mode-syntax-table)
+    (modify-syntax-entry ?- "w" text-mode-syntax-table)
 
     ;; turn on flyspell
     (flyspell-mode 1)
