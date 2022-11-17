@@ -2922,7 +2922,7 @@ alias gitciaa="git commit -a --amend"
 #        gitciaano               git commit -a --amend --no-edit
 alias gitciaano="git commit -a --amend --no-edit"
 #        git-uncommit-head       git reset HEAD^
-alias gituc="git reset 'HEAD^'"
+alias git-uncommit-head="git reset 'HEAD^'"
 #        gitst                   git stash
 alias gitst="git stash"
 #        gitstl                  git stash list
