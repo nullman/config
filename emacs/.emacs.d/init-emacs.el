@@ -16467,6 +16467,23 @@ And the line would be overlaid like:
 ;;   :after (magit))
 ;; magit:1 ends here
 
+;; [[file:init-emacs.org::#packages-mastodon][mastodon:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: mastodon
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Packages: mastodon")
+
+(use-package mastodon
+  :straight t
+  :config
+  (let* ((env (expand-file-name "~/.mastodon"))
+         (url (string-trim (shell-command-to-string (concat "sed -n 's/emacs.ch-url=//p' " env))))
+         (username (string-trim (shell-command-to-string (concat "sed -n 's/emacs.ch-username=//p' " env)))))
+    (setq mastodon-instance-url url
+          mastodon-active-user username)))
+;; mastodon:1 ends here
+
 ;; [[file:init-emacs.org::#modules-mingus][mingus:1]]
 ;;------------------------------------------------------------------------------
 ;;; Packages: mingus
@@ -17336,83 +17353,6 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
   :custom
   (pocket-reader-archive-on-open nil))
 ;; pocket-reader:1 ends here
-
-;; [[file:init-emacs.org::#modules-popper][popper:1]]
-;;------------------------------------------------------------------------------
-;;; Packages: popper
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modules: popper")
-
-(use-package popper
-  :straight t
-  :bind (("C-`" . popper-toggle-latest)
-         ("C-M-`" . popper-cycle)
-         ("C-x C-`" . popper-toggle-type))
-  :custom
-  (popper-reference-buffers
-   '(("Output\\*$" . hide)
-     ("^\\*Async Shell Command\\*$" . hide)
-     "^\\*Messages\\*$" messages-buffer-mode
-     "^\\*eshell.*\\*$" eshell-mode
-     "^\\*shell.*\\*$" shell-mode
-     "^\\*term.*\\*$" term-mode
-     "^\\*vterm.*\\*$" vterm-mode
-     "^\\*ielm.*\\*$" inferior-emacs-lisp-mode
-     "^\\*Occur\\*$" occur-mode
-     "^\\*ag search text.*\\*$" ag-mode
-     help-mode
-     compilation-mode))
-  (popper-mode 1)
-  (popper-echo-mode 1)
-  :config
-  (defun popper-close-buffer (&optional buffer)
-    "Close popup BUFFER or current buffer if none given."
-    (let ((buffer (or (and buffer (get-buffer buffer)) (current-buffer)))
-          (new-open-popup-alist '()))
-      (dolist (x popper-open-popup-alist)
-        (let ((win (car x))
-              (buf (cdr x))
-              (group (when popper-group-function
-                       (with-current-buffer buf
-                         (funcall popper-group-function)))))
-          (if (not (equal buf buffer))
-              (push x new-open-popup-alist)
-            (unless (cl-member buf
-                               (cdr (assoc group popper-buried-popup-alist))
-                               :key 'cdr)
-              ;; buffer doesn't already exist in the buried popup list
-              (push (cons nil buf) (alist-get group
-                                              popper-buried-popup-alist
-                                              nil nil 'equal)))
-            (with-selected-window win
-              (popper--delete-popup win)))))
-      (setq popper-open-popup-alist (nreverse new-open-popup-alist))))
-
-  (defun custom-popper-direction ()
-    "Return desired direction of popper window."
-    (if (> (window-width) (* (window-height) 2)) 'right 'below))
-  ;; (defun custom-popper-select-window (window &optional norecord)
-  ;;   "Maybe call `select-window' on popper window."
-  ;;   (unless (member major-mode
-  ;;               '(messages-buffer-mode
-  ;;                 help-mode
-  ;;                 compilation-mode
-  ;;                 occur-mode))
-  ;;       (select-window window norecord)))
-
-  (defun custom-popper-display-function (buffer &optional _alist)
-    "Custom `popper-mode' display function."
-    (popper-close-buffer buffer)
-    (display-buffer-in-direction
-     buffer
-     `((window-height . 0.5)
-       (window-width . 0.5)
-       (direction . ,(custom-popper-direction)))))
-  ;;(body-function . ,#'select-window))))
-  ;;(body-function . ,#'custom-popper-select-window))))
-  (setq popper-display-function #'custom-popper-display-function))
-;; popper:1 ends here
 
 ;; [[file:init-emacs.org::#modules-proced][proced:1]]
 ;;------------------------------------------------------------------------------
@@ -20532,6 +20472,7 @@ Commands:
    ("Elpher" "elpher" "Run Elpher (Emacs Gopher Client).")
    ("ERC" "erc" "Run ERC (Emacs Internet Relay Chat client).")
    ("Gnus" "gnus" "Run Gnus (Newsreader)")
+   ("Mastodon" "mastodon" "Run Mastodon (Social Client)")
    ))
 
 ;; (when (fboundp 'term-ansi)
