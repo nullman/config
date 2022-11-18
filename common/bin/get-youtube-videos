@@ -13,7 +13,7 @@ basedir="/mnt/synology/video"
 channels=(
 #   "3Blue1Brown                      | Science              | https://www.youtube.com/c/3blue1brown/videos"
     "8-Bit Keys                       | Computer/Retro       | https://www.youtube.com/c/8BitKeys/videos"
-    "8-Bit Show And Tell              | Computer/Retro       | https://www.youtube.com/c/8BitShowAndTell/videos"
+    "8-Bit Show and Tell              | Computer/Retro       | https://www.youtube.com/c/8BitShowAndTell/videos"
     "Action Retro                     | Computer/Retro       | https://www.youtube.com/c/ActionRetro/videos"
     "Adrian's Digital Basement        | Computer/Retro       | https://www.youtube.com/c/adriansdigitalbasement/videos"
     "Adrian's Digital Basement ][     | Computer/Retro       | https://www.youtube.com/channel/UCbtwi4wK1YXd9AyV_4UcE6g/videos"
@@ -24,12 +24,14 @@ channels=(
     "Ben Heck Hacks                   | Computer/Hardware    | https://www.youtube.com/c/BenHeckHacks/videos"
 #   "Blue OS Museum                   | Computer/Retro       | https://www.youtube.com/channel/UCO6vmCYZl7ZhEydFGi76iaw/videos"
 #   "Chris Titus Tech                 | Computer/General     | https://www.youtube.com/c/ChrisTitusTech/videos"
+#   "Chris Ramsay                     | Puzzle               | https://www.youtube.com/c/ChrisRamsay52/videos"
 #   "Chyrosran22 ???                  | Computer/Retro       | https://www.youtube.com/user/Chyrosran22/videos"
     "Commodore Amiga Demos            | Computer/Retro       | https://www.youtube.com/playlist?list=PLnmLOQIDmUvUgbvY-Jq0txuYWYgWVcOOS"
     "Commodore 64 Demos               | Computer/Retro       | https://www.youtube.com/playlist?list=PLnmLOQIDmUvVn43FHdakSTY_W_EuoVwnT"
 #   "Computerphile                    | Computer/Development | https://www.youtube.com/user/Computerphile/videos"
 #   "CuriousMarc                      | Science              | https://www.youtube.com/c/CuriousMarc/videos"
     "Dave's Garage                    | Computer/Retro       | https://www.youtube.com/c/DavesGarage/videos"
+#   "DIY Perks                        | Computer/Hardware    | https://www.youtube.com/c/DIYPerks/videos"
 #   "Doctor Volt                      | Computer/Retro       | https://www.youtube.com/c/DoctorVolt/videos"
 #   "DUST                             | Show                 | https://www.youtube.com/c/watchdust/videos"
     "EmacsConf                        | Computer/Emacs       | https://www.youtube.com/c/EmacsConf/videos"
@@ -83,6 +85,7 @@ channels=(
 #   "Usagi Electric                   | Computer/Retro       | https://www.youtube.com/c/Nakazoto/videos"
 #   "Veritasium                       | Science              | https://www.youtube.com/c/veritasium/videos"
 #   "Vsauce2                          | Science              | https://www.youtube.com/user/Vsauce2/videos"
+    "Work from Hype                   | Computer/Hardware    | https://www.youtube.com/channel/UCcCYTCDxsMl84_btikjY40Q/videos"
 )
 
 _usage() {
