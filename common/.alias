@@ -148,8 +148,8 @@ alias path="echo \${PATH}"
 alias ifc="ifconfig"
 #        iwconfig                iwconfig
 alias iwc="iwconfig"
-#        dhc-release             release dhch leased ip address
-alias dhc-release="sudo dhclient -r -v"
+#        dhcp-release            release dhcp leased ip address
+alias dhcp-release="sudo dhclient -r -v"
 #        dt                      display date and time
 alias dt="date '+%Y-%m-%d %H:%M:%S'"
 #        dt-clock                display updating date and time

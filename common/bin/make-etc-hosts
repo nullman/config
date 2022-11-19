@@ -28,8 +28,6 @@ sudo bash -c "
 192.168.1.50    mouse
 192.168.1.52    raspad
 192.168.1.53    raspadusb
-192.168.1.54    pimodem
-192.168.1.55    pimodemd
 192.168.1.56    retropie
 192.168.1.57    retropied
 192.168.1.62    colleen
@@ -39,7 +37,6 @@ sudo bash -c "
 192.168.1.82    astro
 
 192.168.8.1     vacation
-#192.168.17.1    airave
 
 159.203.165.79  nullware
 
