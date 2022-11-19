@@ -247,7 +247,10 @@ case "${menu}" in
                 "morpheus"
                 "mouse"
                 "nullware"
+                "pihole"
+                "pimodemd"
                 "raspad"
+                "retropie"
                 "switch"
             )
             sel=$(printf "%s\n" "${servers[@]}" | rofi -dmenu -i -p 'SSH' -hide-scrollbar)

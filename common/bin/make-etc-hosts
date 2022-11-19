@@ -29,6 +29,10 @@ sudo bash -c "
 192.168.1.53    raspadusb
 192.168.1.54    pimodem
 192.168.1.55    pimodemd
+#192.168.1.56    retropie
+#192.168.1.57    retropied
+192.168.1.56    pihole
+192.168.1.57    piholed
 192.168.1.62    colleen
 192.168.1.64    commodore64
 192.168.1.66    t5200

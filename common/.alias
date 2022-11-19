@@ -2350,6 +2350,8 @@ alias ssh-neo="echo 'ssh:neo' ; ssh neo"
 alias ssh-pimodem="echo 'ssh:pi@pimodemd' ; ssh pi@pimodemd"
 #        ssh-raspad              ssh raspad
 alias ssh-raspad="echo 'ssh:raspadusb' ; ssh pi@raspadusb"
+#        ssh-retropie            ssh retropie
+alias ssh-retropie="echo 'ssh:retropie' ; ssh pi@retropie"
 #        ssh-switch              ssh switch
 alias ssh-switch="echo 'ssh:switch' ; ssh switch"
 #        ssh-tank                ssh tank
