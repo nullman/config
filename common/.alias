@@ -358,6 +358,8 @@ alias fortune-cowsay-lolcat="fortune | cowsay | lolcat"
 alias find-ls="find . -maxdepth 1 -not -regex '^\.+$'"
 #        update-desktop-apps     update-desktop-database ~/.local/share/applications
 alias update-desktop-apps="update-desktop-database \${HOME}/.local/share/applications"
+#        pi-serial-number        print raspberry pi serial number
+alias pi-serial-number="echo \$(cat /sys/firmware/devicetree/base/serial-number)"
 #        mount-synology          mount synology drives
 alias mount-synology="
     sudo mkdir -p /mnt/synology
@@ -1751,6 +1753,8 @@ alias asl="sudo arp-scan --localnet"
 alias ping-firewall="ping 192.168.1.1"
 #        ping-bridge             ping bridge
 alias ping-bridge="ping 192.168.1.2"
+#        ping-pihole             ping pihole
+alias ping-pihole="ping 192.168.1.3"
 #        ping-synology           ping synology
 alias ping-synology="ping 192.168.1.6"
 #        ping-morpheus           ping morpheus
@@ -1781,6 +1785,10 @@ alias ping-raspadd="ping 192.168.1.53"
 alias ping-pimodem="ping 192.168.1.54"
 #        ping-pimodemd           ping pimodemd
 alias ping-pimodemd="ping 192.168.1.55"
+#        ping-retropie            ping retropie
+alias ping-retropie="ping 192.168.1.56"
+#        ping-retropied           ping retropied
+alias ping-retropied="ping 192.168.1.57"
 #        ping-colleen            ping colleen
 alias ping-colleen="ping 192.168.1.62"
 #        ping-dns1               ping dns server 1
@@ -2346,6 +2354,8 @@ alias ssh-morpheusgit="echo 'ssh:git@morpheus' ; ssh -l git morpheus"
 alias ssh-mouse="echo 'ssh:mouse' ; ssh mouse"
 #        ssh-neo                 ssh neo
 alias ssh-neo="echo 'ssh:neo' ; ssh neo"
+#        ssh-pihole              ssh pihole
+alias ssh-pihole="echo 'ssh:pi@pihole' ; ssh pi@pihole"
 #        ssh-pimodem             ssh pimodem
 alias ssh-pimodem="echo 'ssh:pi@pimodemd' ; ssh pi@pimodemd"
 #        ssh-raspad              ssh raspad
