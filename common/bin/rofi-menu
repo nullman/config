@@ -244,14 +244,13 @@ case "${menu}" in
     ssh)
         if [[ $# -lt 2 ]] ; then
             servers=(
-                "morpheus"
-                "mouse"
-                "nullware"
-                "pihole"
-                "pimodemd"
-                "raspad"
-                "retropie"
-                "switch"
+                "kyle@morpheus"
+                "kyle@mouse"
+                "kyle@nullware"
+                "kyle@switch"
+                "pi@pihole"
+                "pi@raspad"
+                "pi@retropie"
             )
             sel=$(printf "%s\n" "${servers[@]}" | rofi -dmenu -i -p 'SSH' -hide-scrollbar)
         else
@@ -260,9 +259,7 @@ case "${menu}" in
 
         # launch selected ssh connection
         if [[ -n "${sel}" ]] ; then
-            user="${USER}"
-            [[ "${sel}" == "raspad" ]] && user="pi"
-            (alacritty -t "SSH ${sel}" -e "ssh" "${user}@${sel}" &)
+            (alacritty -t "SSH ${sel}" -e "ssh" "${sel}" &)
         fi
         ;;
 esac
