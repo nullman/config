@@ -23,7 +23,7 @@ home="$(cd ${HOME} ; cd .. ; pwd)"
 #!       operating system (Linux, Windows_NT, Darwin, Haiku)
 os="$(uname -s)"
 #!       config directory
-config="${home}/$([[ ${os} == Haiku ]] && echo 'haiku-config' || echo 'config')"
+config="\${HOME}/$([[ ${os} == Haiku ]] && echo 'haiku-config' || echo 'config')"
 #!       terminal
 terminal="alacritty"
 #!       network device
