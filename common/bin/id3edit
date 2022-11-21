@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+#===============================================================================
+# id3edit
+#
+# Run id3info on given mp3 file(s), parse data into a temporary file, launch
+# emacs editor and wait for user to modify the data, then run id3tag to update
+# the id3 tag.
+#
+# Author: Kyle W T Sherman
+#===============================================================================
+
+tmpfile="$(mktemp)"
+
+while [[ $# -gt 0 ]] ; do
+    # get id3 tag data
+    id3info "$1" > "${tmpfile}"
+    file=$(sed -n -e 's/^\*\*\* Tag information for //p' ${tmpfile})
+    artist=$(sed -n -e 's/^=== TPE1.*: //p' ${tmpfile})
+    album=$(sed -n -e 's/^=== TALB.*: //p' ${tmpfile})
+    title=$(sed -n -e 's/^=== TIT2.*: //p' ${tmpfile})
+    track=$(sed -n -e 's/^=== TRCK.*: //p' ${tmpfile})
+    year=$(sed -n -e 's/^=== TYER.*: //p' ${tmpfile})
+
+    # create temporary file to edit id3 tag data
+    echo "File:   ${file}" > "${tmpfile}"
+    echo "Artist: ${artist}" >> "${tmpfile}"
+    echo "Album:  ${album}" >> "${tmpfile}"
+    echo "Title:  ${title}" >> "${tmpfile}"
+    echo "Track:  ${track}" >> "${tmpfile}"
+    echo "Year:   ${year}" >> "${tmpfile}"
+    cat "${tmpfile}"
+
+    # launch editor to modify tags
+    WAIT=true emacs-edit "${tmpfile}"
+
+    # get modified id3 tag data
+    newfile=$(sed -n -e 's/^File:   //p' ${tmpfile})
+    newartist=$(sed -n -e 's/^Artist: //p' ${tmpfile})
+    newalbum=$(sed -n -e 's/^Album:  //p' ${tmpfile})
+    newtitle=$(sed -n -e 's/^Title:  //p' ${tmpfile})
+    newtrack=$(sed -n -e 's/^Track:  //p' ${tmpfile})
+    newyear=$(sed -n -e 's/^Year:   //p' ${tmpfile})
+
+    # make sure new file ends in .mp3
+    newfile="${newfile:0:-4}.mp3"
+
+    # update id3 tags in original file
+    [[ "${artist}" != "${newartist}" ]] && id3tag --artist="${newartist}" "${file}"
+    [[ "${album}" != "${newalbum}" ]] && id3tag --album="${newalbum}" "${file}"
+    [[ "${title}" != "${newtitle}" ]] && id3tag --song="${newtitle}" "${file}"
+    [[ "${track}" != "${newtrack}" ]] && id3tag --track="${newtrack:0:2}" --total="${newtrack:3:2}" "${file}"
+    [[ "${year}" != "${newyear}" ]] && id3tag --year="${newyear}" "${file}"
+
+    # update file name
+    [[ "${file}" != "${newfile}" ]] && mv "${file}" "${newfile}"
+
+    # clean up
+    rm -f "${tmpfile}"
+
+    shift
+done
+
+#===============================================================================
+# End of File
+#===============================================================================
