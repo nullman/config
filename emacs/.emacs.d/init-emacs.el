@@ -1498,7 +1498,7 @@ Otherwise, `custom-tab-width' is used."
   :config
   (setenv "PAGER" "cat")                ; less does not work well inside Emacs
 
-  (with-eval-after-load 'esh-opt
+  (with-eval-after-load "esh-opt"
     (setq eshell-destroy-buffer-when-process-dies t
           eshell-visual-commands '("htop" "ssh" "vim" "zsh"))))
 
