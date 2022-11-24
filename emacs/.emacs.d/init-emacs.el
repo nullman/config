@@ -10896,7 +10896,7 @@ be automatically capitalized."
           (first-word-regexp (rx (or (seq bos
                                           (zero-or-more (not space))
                                           (group (one-or-more word)))
-                                     (seq punct
+                                     (seq (or "." "!" "?" ":" "&" "*" "(" ")" "/")
                                           (zero-or-more space)
                                           (group (one-or-more word))))))
           ;;(last-word-regexp "\\(\\(\\w+\\)[ \t]*$\\|\\(\\w+\\)[ \t]*[\.!\?:&\*()\[]\\)")
@@ -10905,7 +10905,7 @@ be automatically capitalized."
                                          eos)
                                     (seq (group (one-or-more word))
                                          (zero-or-more space)
-                                         punct)))))
+                                         (one-or-more "." "!" "?" ":" "&" "*" "(" ")" "[" "]"))))))
       (cl-labels
           ((get-fixed (string regexp)
                       (let ((case-fold-search nil)
@@ -16306,7 +16306,11 @@ back to the previous non-whitespace character. See also
   :type '(repeat regexp))
 
 (setq lorem-ipsum-overlay-exclude
-      `(,(rx (or bol bos blank) "#+" (1+ alnum) ":" (or eol eos blank))))
+      `(,(rx (or bol bos blank)
+             "#+"
+             (one-or-more alnum)
+             ":"
+             (or eol eos blank))))
 
 (defun lorem-ipsum-overlay (&optional replace-p)
   "Overlay all text in current buffer with \"lorem ipsum\" text.
@@ -16388,10 +16392,10 @@ And the line would be overlaid like:
                                     do (cl-decf length (length word)))))
           (save-excursion
             (goto-char (point-min))
-            (while (re-search-forward (rx (group (1+ (or bol bos blank (not alpha)))
-                                                 (0+ (not (any alpha blank)))
-                                                 (group (1+ alpha))
-                                                 (0+ (not (any alpha blank)))))
+            (while (re-search-forward (rx (group (one-or-more (or bol bos blank (not alpha)))
+                                                 (zero-or-more (not (any alpha blank)))
+                                                 (group (one-ore-more alpha))
+                                                 (zero-or-more (not (any alpha blank)))))
                                       nil t)
               (unless (cl-member (match-string 0) lorem-ipsum-overlay-exclude
                                  :test (lambda (string regexp)
