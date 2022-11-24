@@ -137,10 +137,10 @@ case "$1" in
         fi
         # fuser -k -SIGTERM /usr/bin/xv
         # fuser -k -SIGKILL /usr/bin/xv
-        # xv -root -rmode 5 -random -viewonly -wloop -wait ${wait} /home/data/media/pictures_slide_show/
+        # xv -root -rmode 5 -random -viewonly -wloop -wait ${wait} "/home/data/media/Pictures Slide Show/"
         fuser -k -SIGTERM /usr/bin/feh
         fuser -k -SIGKILL /usr/bin/feh
-        feh --title "Slideshow" -F -x -z -D ${wait} -r /home/data/media/pictures_slide_show/
+        feh --title "Slideshow" -F -x -z -D ${wait} -r "/home/data/media/Pictures Slide Show/"
         ;;
     nasa)
         # slideshow (nasa)
@@ -151,10 +151,10 @@ case "$1" in
         fi
         # fuser -k -SIGTERM /usr/bin/xview
         # fuser -k -SIGKILL /usr/bin/xview
-        # xview -root -rmode 5 -random -viewonly -wloop -wait ${wait} /home/data/media/nasa_pictures/
+        # xview -root -rmode 5 -random -viewonly -wloop -wait ${wait} /home/data/media/Nasa Pictures/
         fuser -k -SIGTERM /usr/bin/feh
         fuser -k -SIGKILL /usr/bin/feh
-        feh --title "Slideshow" -F -x -z -D ${wait} -r /home/data/media/nasa_pictures/
+        feh --title "Slideshow" -F -x -z -D ${wait} -r "/home/data/media/Nasa Pictures/"
         ;;
 esac
 

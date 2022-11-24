@@ -11,7 +11,7 @@
 #   nice -n 10 /root/bin/get-nasa-pictures ; nice -n 19 /root/bin/make-nasa-slide-show
 #
 # Old method:
-#   (cd /home/data/media/nasa_pictures ; nice -n 19 wget -r -p -L -nc -nH -np
+#   (cd /home/data/media/Nasa Pictures ; nice -n 19 wget -r -p -L -nc -nH -np
 #     -A big.jpg,big.gif,big.png -q http://antwrp.gsfc.nasa.gov/apod/image/
 #     ; nice -n 19 /root/bin/make-nasa-slide-show)
 #
@@ -19,8 +19,8 @@
 #===============================================================================
 
 # dirs
-indir="/home/data/media/nasa_pictures/apod/image"
-outdir="/home/data/media/pictures_slide_show/Nasa"
+indir="/home/data/media/Nasa Pictures/apod/image"
+outdir="/home/data/media/Pictures Slide Show/Nasa"
 
 mkdir -p "${outdir}"
 #rm -rf "${outdir}/*"

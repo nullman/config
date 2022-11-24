@@ -30,6 +30,7 @@ channels=(
     "Commodore Amiga Demos            | Computer/Retro       | https://www.youtube.com/playlist?list=PLnmLOQIDmUvUgbvY-Jq0txuYWYgWVcOOS"
     "Commodore 64 Demos               | Computer/Retro       | https://www.youtube.com/playlist?list=PLnmLOQIDmUvVn43FHdakSTY_W_EuoVwnT"
 #   "Computerphile                    | Computer/Development | https://www.youtube.com/user/Computerphile/videos"
+#   "Craft Computing                  | Computer/General     | https://www.youtube.com/@CraftComputing/videos"
 #   "CuriousMarc                      | Science              | https://www.youtube.com/c/CuriousMarc/videos"
     "Dave's Garage                    | Computer/Retro       | https://www.youtube.com/c/DavesGarage/videos"
 #   "DistroTube                       | Computer/General     | https://www.youtube.com/c/DistroTube/videos"
@@ -49,6 +50,7 @@ channels=(
     "Jake B                           | Computer/Emacs       | https://www.youtube.com/c/JakeBox0/videos"
 #   "James Sharman                    | Computer/Hardware    | https://www.youtube.com/c/weirdboyjim/videos"
 #   "Jan Beta                         | Computer/Retro       | https://www.youtube.com/c/JanBeta"
+#   "John's Basement                  | Computer/Retro       | https://www.youtube.com/@JohnsBasement/videos"
     "Kaveh808                         | Computer/Development | https://www.youtube.com/channel/UCHNK9EcrAwP7djlwQN4C_tg/videos"
 #   "LGR                              | Computer/Retro       | https://www.youtube.com/c/Lazygamereviews/videos"
 #   "LGR Blerbs                       | Computer/Retro       | https://www.youtube.com/c/LGRBlerbs/videos"
@@ -87,6 +89,7 @@ channels=(
 #   "Usagi Electric                   | Computer/Retro       | https://www.youtube.com/c/Nakazoto/videos"
 #   "Veritasium                       | Science              | https://www.youtube.com/c/veritasium/videos"
 #   "Vsauce2                          | Science              | https://www.youtube.com/user/Vsauce2/videos"
+#   "Vintage Computer Federation      | Computer/Retro       | https://www.youtube.com/@vcfederation/videos"
     "Work from Hype                   | Computer/Hardware    | https://www.youtube.com/channel/UCcCYTCDxsMl84_btikjY40Q/videos"
 )
 

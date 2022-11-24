@@ -14,7 +14,7 @@
 domain="https://gitlab.com"
 baseurl="${domain}/dwt1/wallpapers"
 imageurl="${baseurl}/raw/master"
-dir="/home/data/media/graphic/Backgrounds/DistroTube"
+dir="/home/data/media/Graphic/Backgrounds/DistroTube"
 
 echo "Note: When fetching all new images, the last one tried will error as it won't exist."
 

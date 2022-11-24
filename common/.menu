@@ -74,9 +74,9 @@ media:
 mp3blaster|mp3blaster
 
 slideshow:
-Personal Slideshow|feh --title "Personal Slideshow" -F -x -z -D 30.00 -r /home/data/media/pictures_slide_show/Personal/
-Nasa Slideshow|feh --title "Nasa Slideshow" -F -x -z -D 30.00 -r /home/data/media/pictures_slide_show/Nasa/
-Nerve Slideshow|feh --title "Nerve Slideshow" -F -x -z -D 30.00 -r "/home/data/media/pictures_slide_show/Nerve Magazine/"
+Personal Slideshow|feh --title "Personal Slideshow" -F -x -z -D 30.00 -r "/home/data/media/Pictures Slide Show/Personal/"
+Nasa Slideshow|feh --title "Nasa Slideshow" -F -x -z -D 30.00 -r "/home/data/media/Pictures Slide Show/Nasa/"
+Nerve Slideshow|feh --title "Nerve Slideshow" -F -x -z -D 30.00 -r "/home/data/media/Pictures Slide Show/Nerve Magazine/"
 Duluth Webcam 1024x768|arora \$(xwininfo -root | grep geometry) http://nullman.org/interesting/duluth-webcam-1024x768.html
 Duluth Webcam 800x600|arora \$(xwininfo -root | grep geometry) http://nullman.org/interesting/duluth-webcam-800x600.html
 
