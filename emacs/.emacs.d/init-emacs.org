@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-11-24 17:25 (kyle)>
+  #+TIMESTAMP: <2022-11-24 22:01 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -1988,12 +1988,12 @@
 
     #+BEGIN_SRC emacs-lisp
       ;; set default browser
+      ;;(setq browse-url-browser-function #'browse-url-default-browser)
       ;;(setq browse-url-generic-program "x-www-browser")
       ;;(setq browse-url-generic-program "w3m")
       ;;(setq browse-url-generic-program "mozilla")
-      (setq browse-url-browser-function #'browse-url-default-browser)
       ;;(setq browse-url-browser-function #'browse-url-generic)
-      ;;(setq browse-url-browser-function #'eww-browse-url)
+      (setq browse-url-browser-function #'eww-browse-url)
       ;;(setq browse-url-browser-function #'w3m-browse-url)
       ;;(setq browse-url-browser-function #'browse-url-firefox
       ;;      browse-url-new-window-flag  t

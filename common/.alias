@@ -355,7 +355,7 @@ alias find-duplicate-files="
 #        fortune-cowsay-lolcat   fortune piped to cowsay piped to lolcat
 alias fortune-cowsay-lolcat="fortune | cowsay | lolcat"
 #        find-ls                 find like ls -1
-alias find-ls="find . -maxdepth 1 -not -regex '^\.+$'"
+alias find-ls="find . -mindepth 1 -maxdepth 1 -not -regex '^\.+$'"
 #        update-desktop-apps     update-desktop-database ~/.local/share/applications
 alias update-desktop-apps="update-desktop-database \${HOME}/.local/share/applications"
 #        pi-serial-number        print raspberry pi serial number
@@ -1943,8 +1943,8 @@ alias rsync-media-put-morpheus-delete="rsync -rlptx --progress --delete ${home}/
 alias rsync-media-put-synology="rsync -rlx --progress ${home}/data/media/ /mnt/synology/media"
 #        rsync-media-put-synology-delete  rsync /home/data/media /mnt/synology/media
 alias rsync-media-put-synology-delete="
-    find ${home}/data/media/ -maxdepth 1 -not -regex '^\.+$' | while read dir ; do
-        rsync -rlx --progress --delete -n \"${dir}\" /mnt/synology/media
+    find ${home}/data/media/ -mindepth 1 -maxdepth 1 -type d -not -regex '^\.+$' | sort | while read dir ; do
+        rsync -rlx --progress --delete \"\${dir}\" /mnt/synology/media
     done"
 #        rsync-text-get-morpheus  rsync morpheus:/home/data/media/Text /home/data/media/Text
 alias rsync-text-get-morpheus="rsync -rlptx --progress morpheus:/home/data/media/Text/ ${home}/data/media/Text/"

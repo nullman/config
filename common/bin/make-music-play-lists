@@ -13,8 +13,8 @@ genres=("Classic%Rock" "Classical%-%Instrumental" "Country" "Hard%Rock" "Pop%-%D
 
 tmpfile="__temp__"
 
-musicdir="/home/data/media/audio/Music"  # music directory
-pldir="/home/data/media/audio/Playlists" # play list directory
+musicdir="/home/data/media/Audio/Music"  # music directory
+pldir="/home/data/media/Audio/Playlists" # play list directory
 ratingsdir="${HOME}/.song-ratings"       # ratings directory
 
 #===============================================================================

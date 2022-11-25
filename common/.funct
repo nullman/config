@@ -1546,7 +1546,7 @@ rsync-cruzer() {
     fi
 
     # sync ISOs
-    root="/home/data/media/software/Boot Tools"
+    root="/home/data/media/Software/Boot Tools"
     files=(
         "${root}/Clonezilla Live "*.iso
         "${root}/Darik's Boot and Nuke "*.iso
@@ -1602,11 +1602,11 @@ rsync-isos() {
         local query="$3"
         mkdir -p "/media/Ventoy/${ddir}"
         (
-            cd "/home/data/media/software/${sdir}"
+            cd "/home/data/media/Software/${sdir}"
             find . -mindepth 1 -maxdepth 1 -name "${query}" -printf '%P\n' | while read src ; do
                 local dst=$(echo "${src}" | sed "s/ /-/g")
-                echo "Syncing \"/home/data/media/software/${sdir}/${src}\" \"/media/Ventoy/${ddir}/${dst}\""
-                rsync -rLtxc "/home/data/media/software/${sdir}/${src}" "/media/Ventoy/${ddir}/${dst}"
+                echo "Syncing \"/home/data/media/Software/${sdir}/${src}\" \"/media/Ventoy/${ddir}/${dst}\""
+                rsync -rLtxc "/home/data/media/Software/${sdir}/${src}" "/media/Ventoy/${ddir}/${dst}"
             done
         )
     }
@@ -1783,9 +1783,9 @@ home-initialize() {
         "doc/icons"
         "doc/images"
         "doc/sounds"
-        "/home/data/media/audio/Sounds"
-        "/home/data/media/repos/C64"
-        "/home/data/media/repos/DOS"
+        "/home/data/media/Audio/Sounds"
+        "/home/data/media/Repos/C64"
+        "/home/data/media/Repos/DOS"
     )
 
     echo "You are about to setup links from '${HOME}' to '${config}' and '${config}-private'."

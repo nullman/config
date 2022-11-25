@@ -164,7 +164,7 @@ _pathadd "${HOME}/.cargo/bin"
 export PATH
 
 # cd path
-CDPATH=":.:/mnt:/home/data/media:/home/data/media/audio/Music:${HOME}"
+CDPATH=":.:/mnt:/home/data/media:/home/data/media/Audio/Music:${HOME}"
 export CDPATH
 
 # add libraries to LD_LIBRARY_PATH

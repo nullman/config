@@ -81,7 +81,7 @@ case "${menu}" in
     dosbox)
         # generate and display a list of dosbox emulators
         if [[ $# -lt 2 ]] ; then
-            sel=$(cd "${HOME}/.dosbox" && find -maxdepth 1 -name 'dosbox-*' -not -regex '\./dosbox-0.*' | sed 's%^\./dosbox-\(.*\)\.conf%\1%' | rofi -dmenu -i -p 'DOSBox' -hide-scrollbar)
+            sel=$(cd "${HOME}/.dosbox" && find -mindepth 1 -maxdepth 1 -name 'dosbox-*' -not -regex '\./dosbox-0.*' | sed 's%^\./dosbox-\(.*\)\.conf%\1%' | rofi -dmenu -i -p 'DOSBox' -hide-scrollbar)
         else
             sel=$2
         fi
@@ -123,7 +123,7 @@ case "${menu}" in
     qemu)
         # generate and display a list of qemu emulators
         if [[ $# -lt 2 ]] ; then
-            sel=$(cd ${HOME}/qemu && find . -maxdepth 1 -type d -not -regex '^\.+$' | sed 's%\./%%' | sort | rofi -dmenu -i -p 'Qemu' -hide-scrollbar)
+            sel=$(cd ${HOME}/qemu && find . -mindepth 1 -maxdepth 1 -type d -not -regex '^\.+$' | sed 's%\./%%' | sort | rofi -dmenu -i -p 'Qemu' -hide-scrollbar)
         else
             sel=$2
         fi
@@ -163,11 +163,11 @@ case "${menu}" in
             if [[ -z "${sel}" ]] ; then
                 local opts=(
                     "${stop}"
-                    "$(cd "${sounddir}" && find . -maxdepth 1 -type d -not -regex '^\.+$' | sed 's%^\./\(.*\)$%[\1]%' | sort)"
-                    "$(cd "${sounddir}" && find . -maxdepth 1 -type f -not -regex '^\.+$' | sed 's%^\./%%' | sort)"
+                    "$(cd "${sounddir}" && find . -mindepth 1 -maxdepth 1 -type d -not -regex '^\.+$' | sed 's%^\./\(.*\)$%[\1]%' | sort)"
+                    "$(cd "${sounddir}" && find . -mindepth 1 -maxdepth 1 -type f -not -regex '^\.+$' | sed 's%^\./%%' | sort)"
                 )
             else
-                local opts=("${up}" "$(cd "${selpath}" && find . -maxdepth 1 -type f -not -regex '^\.+$' | sed 's%./%%' | sort)")
+                local opts=("${up}" "$(cd "${selpath}" && find . -mindepth 1 -maxdepth 1 -type f -not -regex '^\.+$' | sed 's%./%%' | sort)")
             fi
             sel=$(printf '%s\n' "${opts[@]}" | rofi -dmenu -i -p 'Sounds' -hide-scrollbar)
         }
