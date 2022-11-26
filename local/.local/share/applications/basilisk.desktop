@@ -1,6 +1,6 @@
 [Desktop Entry]
-Name=Basilisk II
-Comment=Basilisk II Macintosh Emulator
+Name=Basilisk II (Macintosh Emulator)
+Comment=Macintosh Emulator
 Exec=BasiliskII
 Type=Application
 Terminal=false

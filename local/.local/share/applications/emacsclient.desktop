@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Emacs Client
 Generic Name=Text Editor
-Comment=Edit text in running Emacs instance
+Comment=Edit Text in Running Emacs Instance
 Exec=emacsclient %F
 Icon=emacs
 Type=Application

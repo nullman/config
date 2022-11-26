@@ -1,6 +1,6 @@
 [Desktop Entry]
-Name=Qmmp
-GenericName=Audio player
+Name=Qmmp (Audio Player)
+GenericName=Audio Player
 Comment=Launch Qmmp and move it to the right size of the screen
 Exec=sh -c "\\${HOME}/bin/run-qmmp"
 Type=Application

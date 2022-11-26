@@ -1,5 +1,5 @@
 [Desktop Entry]
-Name=xkill
+Name=xkill (X-Kill Selected Application)
 Comment=X-Kill Selected Application
 Exec=xkill
 Type=Application
