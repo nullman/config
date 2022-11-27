@@ -1859,12 +1859,16 @@ alias lddelall="ldapdelete -D 'dc=localhost' -H ldap://localhost/ -x -w letmein 
 alias cpan="PERL_MM_USE_DEFAULT=1 perl -MCPAN -e shell"
 
 #
-# postgresql
+# pilot-link
 #
-#        pgs                     psql -U stock stock
-alias pgs="psql -U stock stock"
-#        pgnj                    psql -U web netjuke
-alias pgnj="psql -U web netjuke"
+#        pl                      pilot-xfer --port=/dev/ttyUSB0
+alias pl="pilot-xfer --port=/dev/ttyUSB0"
+#        pl-backup               pilot-xfer --port=/dev/ttyUSB0 --backup=/home/data/media/Repos/PalmPilot/Backup
+alias pl-backup="pilot-xfer --port=/dev/ttyUSB0 --backup=${home}/data/media/Repos/PalmPilot/Backup"
+#        pl-install              pilot-xfer --port=/dev/ttyUSB0 --install
+alias pl-install="pilot-xfer --port=/dev/ttyUSB0 --install"
+#        pl-delete              pilot-xfer --port=/dev/ttyUSB0 --delete
+alias pl-delete="pilot-xfer --port=/dev/ttyUSB0 --delete"
 
 #
 # printing
