@@ -10896,8 +10896,9 @@ be automatically capitalized."
           (first-word-regexp (rx (or (seq bos
                                           (zero-or-more (not space))
                                           (group (one-or-more word)))
-                                     (seq (or "." "!" "?" ":" "&" "*" "(" ")" "/")
-                                          (zero-or-more space)
+                                     ;;(seq (or "." "!" "?" ":" "&" "*" "(" ")" "/")
+                                     (seq (or (seq punct (one-or-more space))
+                                              (seq (or "(" ")" "/") (zero-or-more space)))
                                           (group (one-or-more word))))))
           ;;(last-word-regexp "\\(\\(\\w+\\)[ \t]*$\\|\\(\\w+\\)[ \t]*[\.!\?:&\*()\[]\\)")
           (last-word-regexp (rx (or (seq (group (one-or-more word))
@@ -10905,7 +10906,8 @@ be automatically capitalized."
                                          eos)
                                     (seq (group (one-or-more word))
                                          (zero-or-more space)
-                                         (one-or-more "." "!" "?" ":" "&" "*" "(" ")" "[" "]"))))))
+                                         ;;(one-or-more "." "!" "?" ":" "&" "*" "(" ")" "[" "]")
+                                         (one-or-more punct))))))
       (cl-labels
           ((get-fixed (string regexp)
                       (let ((case-fold-search nil)
@@ -14641,8 +14643,11 @@ USING is the remaining peg."
   :hook (completion-list-mode . consult-preview-at-point-mode)
   :init
   ;; improve the register preview for `consult-register' and the emacs built-ins
-  (setq register-preview-delay 0.5
-        register-preview-function #'consult-register-format)
+  (setq register-preview-function #'consult-register-format)
+  ;; delay register preview
+  ;;(setq register-preview-delay 0.5)
+  ;; disable register preview
+  (setq register-preview-delay nil)
   ;; add thin lines, sorting, and hide the mode line of the register preview window
   (advice-add 'register-preview :override #'consult-register-window)
   ;; ;; replace `completing-read-multiple' with an enhanced version
@@ -14654,12 +14659,15 @@ USING is the remaining peg."
   ;; configure preview key
   (consult-customize
    consult-theme
-   :preview-key '(:debounce 0.2 any))
+   ;;:preview-key '(:debounce 0.2 any))   ; delay preview
+   :preview-key (kbd "<tab>"))          ; show preview on key press
   ;;  consult-ripgrep consult-git-grep consult-grep
   ;;  consult-bookmark consult-recent-file consult-xref
   ;;  consult--source-bookmark consult--source-recent-file
   ;;  consult--source-project-recent-file
-  ;;  :preview-key (kbd "M-."))
+  ;; my/command-wrapping-consult    ;; disable auto previews inside my command
+  ;; :preview-key '(:debounce 0.4 any) ;; Option 1: Delay preview
+  ;; :preview-key (kbd "M-."))      ;; Option 2: Manual preview
   ;; configure narrowing key
   (setq consult-narrow-key "<") ;; (kbd "C-+")
   ;; make narrowing help available in the minibuffer
@@ -18106,7 +18114,7 @@ otherwise run `find-file-as-root'."
 (defun custom-lsp-mode-hook ()
   ;; turn on breadcrumbs
   (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
-  (lsp-headerline-breadcrumb-mode))
+  (lsp-headerline-breadcrumb-mode 1))
 
 (use-package lsp-mode
   :straight t
