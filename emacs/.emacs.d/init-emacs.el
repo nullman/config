@@ -1853,8 +1853,8 @@ KEYMAP defaults to `override-global-map'."
 
   ;; ;; expand region
   ;; (when (fboundp 'er/expand-region)
-  ;;   (bind-keys ("M-=" . er/expand-region)   ; default: `count-lines-region'
-  ;;              ("C-=" . er/contract-region) ; default: `count-lines-region'
+  ;;   (bind-keys ("C-=" . er/expand-region)   ; default: `count-lines-region'
+  ;;              ("C-+" . er/contract-region) ; default: `count-lines-region'
   ;;              ("C-M-SPC" . er/expand-region) ; default: `mark-sexp'
   ;;              ("C-M-S-SPC" . er/contract-region)))
 
@@ -15791,7 +15791,8 @@ USING is the remaining peg."
 (use-package expand-region
   :straight t
   :bind* (("C-=" . er/expand-region)     ; default: `count-lines-region'
-          ("C--" . er/contract-region))) ; default: `negative-argument'
+          ("C-+" . er/contract-region))) ; default: `negative-argument'
+          ;;("C--" . er/contract-region))) ; default: `negative-argument'
 ;; expand-region:1 ends here
 
 ;; [[file:init-emacs.org::#modules-flycheck][flycheck:1]]
@@ -16525,14 +16526,17 @@ And the line would be overlaid like:
               ("<right>" . forward-char)
               ("<home>" . beginning-of-line)
               ("<end>" . end-of-line)
-              ("C-c C-u" . mingus-mpc-update)
+              ("C-c C-e" . mingus-edit-id3tag)
               ("C-c C-l" . mingus-get-lyrics)
+              ("C-c C-u" . mingus-mpc-update)
               ("<f1>" . mingus-set-song-rating-1)
               ("<f2>" . mingus-set-song-rating-2)
               ("<f3>" . mingus-set-song-rating-3)
               ("<f4>" . mingus-set-song-rating-4)
               ("<f5>" . mingus-set-song-rating-5)
               ("<f6>" . mingus-set-song-rating-0))
+  :bind (:map mingus-browse-map
+              ("C-c C-u" . mingus-mpc-update))
   :config
   ;; for some reason these are not being defined in libmpdee.el
   (defmacro _mpdgv () `(aref conn 0))
@@ -16571,6 +16575,11 @@ And the line would be overlaid like:
 
   ;; set mpd config file location
   (setq mingus-mpd-config-file "~/.mpd/mpd.conf")
+
+  ;; set mpd music directory location
+  (defcustom mingus-mpd-music-dir nil
+    "mpd music directory.")
+  (setq mingus-mpd-music-dir "~/.mpd/music/")
 
   ;; sort case-insensitive
   (setq mingus-fold-case t)
@@ -16756,6 +16765,16 @@ Use text properties to mark the line then call `mingus-set-NP-mark'."
     (interactive)
     (message "Updating mpc (Music Player Client)...")
     (shell-command "mpc --wait update > /dev/null 2>&1"))
+
+  (defun mingus-edit-id3tag ()
+    "Edit id3 tag of the selected song."
+    (interactive)
+    (let ((details (mingus-get-details)))
+      (when details
+        (let ((file (plist-get details 'file)))
+          (message "Editing id3 tag for file: %s" file)
+          (cd mingus-mpd-music-dir)
+          (start-process "id3edit" nil "~/bin/id3edit" file)))))
 
   ;;-----------------------------------------------------------------------
   ;;;; Mingus Fetch Lyrics Commands

@@ -206,6 +206,14 @@ genres=(
     "191 Psybient"
 )
 
+if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+    cat <<EOF
+Usage: $(basename $0) FILE [FILE...]
+Edit id3 tags of given files.
+EOF
+    exit 1
+fi
+
 while [[ $# -gt 0 ]] ; do
     # get id3 tag data
     id3info "$1" > "${tmpfile}"
@@ -230,7 +238,8 @@ while [[ $# -gt 0 ]] ; do
     cat "${tmpfile}"
 
     # launch editor to modify tags
-    WAIT=true emacs-edit "${tmpfile}"
+    #WAIT=true emacs-edit "${tmpfile}"
+    emacsclient "${tmpfile}"
 
     # get modified id3 tag data
     newfile=$(sed -n 's/^File:   //p' ${tmpfile})
