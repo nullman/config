@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-11-28 00:15 (kyle)>
+  #+TIMESTAMP: <2022-11-28 10:09 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -24711,756 +24711,756 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
     MPD Music Client
 
     #+BEGIN_SRC emacs-lisp
-            ;;------------------------------------------------------------------------------
-            ;;; Packages: mingus
-            ;;------------------------------------------------------------------------------
+      ;;------------------------------------------------------------------------------
+      ;;; Packages: mingus
+      ;;------------------------------------------------------------------------------
 
-            (init-message 2 "Modules: mingus")
+      (init-message 2 "Modules: mingus")
 
-            (use-package mingus
-              :straight t
-              :commands (mingus
-                         mingus-create-NP-mark
-                         mingus-get-details
-                         mingus-get-insertion-number
-                         mingus-get-new-playlist-version
-                         mingus-goto-line
-                         mingus-set-insertion-point
-                         mingus-move
-                         mingus-move-NP-mark
-                         mingus-playlist-length
-                         mingus-set-song-pos
-                         mingus-switch-to-playlist
-                         mingus-truncate-string
-                         mpd-execute-command
-                         mpd-get-status)
-              :bind* ("C-x /" . mingus-switch-to-buffer)
-              :bind (:map mingus-global-map
-                          ("<left>" . backward-char)
-                          ("<right>" . forward-char)
-                          ("<home>" . beginning-of-line)
-                          ("<end>" . end-of-line)
-                          ("C-c C-u" . mingus-mpc-update))
-              :bind (:map mingus-playlist-map
-                          ("SPC" . mingus-pause)
-                          ("<left>" . backward-char)
-                          ("<right>" . forward-char)
-                          ("<home>" . beginning-of-line)
-                          ("<end>" . end-of-line)
-                          ("C-c C-e" . mingus-edit-id3tag)
-                          ("C-c C-l" . mingus-get-lyrics)
-                          ("C-c C-u" . mingus-mpc-update)
-                          ("<f1>" . mingus-set-song-rating-1)
-                          ("<f2>" . mingus-set-song-rating-2)
-                          ("<f3>" . mingus-set-song-rating-3)
-                          ("<f4>" . mingus-set-song-rating-4)
-                          ("<f5>" . mingus-set-song-rating-5)
-                          ("<f6>" . mingus-set-song-rating-0))
-              :bind (:map mingus-browse-map
-                          ("C-c C-u" . mingus-mpc-update))
-              :config
-              ;; for some reason these are not being defined in libmpdee.el
-              (defmacro _mpdgv () `(aref conn 0))
-              (defmacro _mpdsv (val) `(aset conn 0 ,val))
-              (defmacro _mpdgo () `(aref conn 1))
-              (defmacro _mpdso (val) `(aset conn 1 ,val))
-              (defmacro _mpdgb () `(aref conn 2))
-              (defmacro _mpdsb (val) `(aset conn 2 ,val))
-              (defmacro _mpdgl () `(aref conn 3))
-              (defmacro _mpdsl (val) `(aset conn 3 ,val))
-              (defmacro _mpdgs () `(aref conn 4))
-              (defmacro _mpdss (val) `(aset conn 4 ,val))
-              (defmacro _mpdgf () `(aref conn 5))
-              (defmacro _mpdsf (val) `(aset conn 5 ,val))
-              (defmacro _mpdgt () `(aref conn 6))
-              (defmacro _mpdst (val) `(aset conn 6 ,val))
-              (defmacro _mpdgh () `(aref conn 7))
-              (defmacro _mpdsh (val) `(aset conn 7 ,val))
-              (defmacro _mpdgp () `(aref conn 8))
-              (defmacro _mpdsp (val) `(aset conn 8 ,val))
-              (defmacro _mpdga () `(aref conn 9))
-              (defmacro _mpdsa (val) `(aset conn 9 ,val))
+      (use-package mingus
+        :straight t
+        :commands (mingus
+                   mingus-create-NP-mark
+                   mingus-get-details
+                   mingus-get-insertion-number
+                   mingus-get-new-playlist-version
+                   mingus-goto-line
+                   mingus-set-insertion-point
+                   mingus-move
+                   mingus-move-NP-mark
+                   mingus-playlist-length
+                   mingus-set-song-pos
+                   mingus-switch-to-playlist
+                   mingus-truncate-string
+                   mpd-execute-command
+                   mpd-get-status)
+        :bind* ("C-x /" . mingus-switch-to-buffer)
+        :bind (:map mingus-global-map
+                    ("<left>" . backward-char)
+                    ("<right>" . forward-char)
+                    ("<home>" . beginning-of-line)
+                    ("<end>" . end-of-line)
+                    ("C-c C-u" . mingus-mpc-update))
+        :bind (:map mingus-playlist-map
+                    ("SPC" . mingus-pause)
+                    ("<left>" . backward-char)
+                    ("<right>" . forward-char)
+                    ("<home>" . beginning-of-line)
+                    ("<end>" . end-of-line)
+                    ("C-c C-e" . mingus-edit-id3tag)
+                    ("C-c C-l" . mingus-get-lyrics)
+                    ("C-c C-u" . mingus-mpc-update)
+                    ("<f1>" . mingus-set-song-rating-1)
+                    ("<f2>" . mingus-set-song-rating-2)
+                    ("<f3>" . mingus-set-song-rating-3)
+                    ("<f4>" . mingus-set-song-rating-4)
+                    ("<f5>" . mingus-set-song-rating-5)
+                    ("<f6>" . mingus-set-song-rating-0))
+        :bind (:map mingus-browse-map
+                    ("C-c C-u" . mingus-mpc-update))
+        :config
+        ;; for some reason these are not being defined in libmpdee.el
+        (defmacro _mpdgv () `(aref conn 0))
+        (defmacro _mpdsv (val) `(aset conn 0 ,val))
+        (defmacro _mpdgo () `(aref conn 1))
+        (defmacro _mpdso (val) `(aset conn 1 ,val))
+        (defmacro _mpdgb () `(aref conn 2))
+        (defmacro _mpdsb (val) `(aset conn 2 ,val))
+        (defmacro _mpdgl () `(aref conn 3))
+        (defmacro _mpdsl (val) `(aset conn 3 ,val))
+        (defmacro _mpdgs () `(aref conn 4))
+        (defmacro _mpdss (val) `(aset conn 4 ,val))
+        (defmacro _mpdgf () `(aref conn 5))
+        (defmacro _mpdsf (val) `(aset conn 5 ,val))
+        (defmacro _mpdgt () `(aref conn 6))
+        (defmacro _mpdst (val) `(aset conn 6 ,val))
+        (defmacro _mpdgh () `(aref conn 7))
+        (defmacro _mpdsh (val) `(aset conn 7 ,val))
+        (defmacro _mpdgp () `(aref conn 8))
+        (defmacro _mpdsp (val) `(aset conn 8 ,val))
+        (defmacro _mpdga () `(aref conn 9))
+        (defmacro _mpdsa (val) `(aset conn 9 ,val))
 
-              (defun custom-mingus-hook-custom-settings ()
-                ;; disable undo
-                (buffer-disable-undo)
+        (defun custom-mingus-hook-custom-settings ()
+          ;; disable undo
+          (buffer-disable-undo)
 
-                ;; turn off the display of trailing whitespace
-                (setq show-trailing-whitespace nil)
+          ;; turn off the display of trailing whitespace
+          (setq show-trailing-whitespace nil)
 
-                ;; ;; highlight current line
-                ;; (hl-line-mode 1)
-                )
-              (add-hook 'mingus-playlist-hooks #'custom-mingus-hook-custom-settings)
-              (add-hook 'mingus-browse-hook #'custom-mingus-hook-custom-settings)
+          ;; ;; highlight current line
+          ;; (hl-line-mode 1)
+          )
+        (add-hook 'mingus-playlist-hooks #'custom-mingus-hook-custom-settings)
+        (add-hook 'mingus-browse-hook #'custom-mingus-hook-custom-settings)
 
-              ;; set mpd config file location
-              (setq mingus-mpd-config-file "~/.mpd/mpd.conf")
+        ;; set mpd config file location
+        (setq mingus-mpd-config-file "~/.mpd/mpd.conf")
 
-              ;; set mpd music directory location
-              (defcustom mingus-mpd-music-dir nil
-                "mpd music directory.")
-              (setq mingus-mpd-music-dir "~/.mpd/music/")
+        ;; set mpd music directory location
+        (defcustom mingus-mpd-music-dir nil
+          "mpd music directory.")
+        (setq mingus-mpd-music-dir "~/.mpd/music/")
 
-              ;; sort case-insensitive
-              (setq mingus-fold-case t)
+        ;; sort case-insensitive
+        (setq mingus-fold-case t)
 
-              ;; use ido-mode for searching
-              (setq mingus-use-ido-mode-p t)
+        ;; use ido-mode for searching
+        (setq mingus-use-ido-mode-p t)
 
-              ;; do not use the mouse
-              (setq mingus-use-mouse-p nil)
+        ;; do not use the mouse
+        (setq mingus-use-mouse-p nil)
 
-              ;; custom playlist song format
-              (setq mingus-format-song-function 'mingus-format-song-custom-columns)
+        ;; custom playlist song format
+        (setq mingus-format-song-function 'mingus-format-song-custom-columns)
 
-              (defun mingus-switch-to-buffer ()
-                "Start mingus or switch to it if already running."
-                (interactive)
-                (if (get-buffer "*Mingus*")
-                    (switch-to-buffer "*Mingus*")
-                  (mingus)))
+        (defun mingus-switch-to-buffer ()
+          "Start mingus or switch to it if already running."
+          (interactive)
+          (if (get-buffer "*Mingus*")
+              (switch-to-buffer "*Mingus*")
+            (mingus)))
 
-              (defun mingus-truncate-string (string length)
-                (truncate-string-to-width string (max 1 length) nil 32 "..."))
+        (defun mingus-truncate-string (string length)
+          (truncate-string-to-width string (max 1 length) nil 32 "..."))
 
-              (defun mingus-format-song-custom-columns (plist)
-                "Custom column playlist song format."
-                (let* ((show-albums (>= (window-text-width) 140))
-                       (available-width (- (window-text-width) 19))
-                       (song-width (/ available-width (if show-albums 3 2)))
-                       (artist-width (/ available-width (if show-albums 3 2)))
-                       (album-width (/ available-width 3))
-                       (string
-                        (concat
-                         (format "% 4d.%.2d  "
-                                 (/ (or (plist-get plist 'Time) 0) 60)
-                                 (mod (or (plist-get plist 'Time) 0) 60))
-                         (mingus-truncate-string
-                          (or (plist-get plist 'Title)
-                              (plist-get plist 'Name)
-                              (plist-get plist 'file))
-                          song-width)
-                         (concat "  "
-                                 (mingus-truncate-string
-                                  (or (plist-get plist 'Artist)
-                                      (plist-get plist 'AlbumArtist)
-                                      "")
-                                  artist-width))
-                         (if show-albums
-                             (concat "  "
-                                     (mingus-truncate-string
-                                      (or (plist-get plist 'Album) "")
-                                      album-width))
-                           ""))))
-                  string))
+        (defun mingus-format-song-custom-columns (plist)
+          "Custom column playlist song format."
+          (let* ((show-albums (>= (window-text-width) 140))
+                 (available-width (- (window-text-width) 19))
+                 (song-width (/ available-width (if show-albums 3 2)))
+                 (artist-width (/ available-width (if show-albums 3 2)))
+                 (album-width (/ available-width 3))
+                 (string
+                  (concat
+                   (format "% 4d.%.2d  "
+                           (/ (or (plist-get plist 'Time) 0) 60)
+                           (mod (or (plist-get plist 'Time) 0) 60))
+                   (mingus-truncate-string
+                    (or (plist-get plist 'Title)
+                        (plist-get plist 'Name)
+                        (plist-get plist 'file))
+                    song-width)
+                   (concat "  "
+                           (mingus-truncate-string
+                            (or (plist-get plist 'Artist)
+                                (plist-get plist 'AlbumArtist)
+                                "")
+                            artist-width))
+                   (if show-albums
+                       (concat "  "
+                               (mingus-truncate-string
+                                (or (plist-get plist 'Album) "")
+                                album-width))
+                     ""))))
+            string))
 
-              (defun mingus-format-song-custom-simple (plist &optional separator)
-                "Make a string from PLIST.
+        (defun mingus-format-song-custom-simple (plist &optional separator)
+          "Make a string from PLIST.
 
-            Concatenate the results for the values with SEPARATOR, where SEPARATOR
-            defaults to the string \" - \"."
-                (let ((artist (plist-get plist 'Artist))
-                      (album (plist-get plist 'Album))
-                      (title (plist-get plist 'Title))
-                      (albumartist (plist-get plist 'Albumartist))
-                      (track (plist-get plist 'Track))
-                      (name (plist-get plist 'Name))
-                      (genre (plist-get plist 'Genre))
-                      (date (plist-get plist 'Date))
-                      (composer (plist-get plist 'Composer))
-                      (performer (plist-get plist 'Performer))
-                      (comment (plist-get plist 'Comment))
-                      (disc (plist-get plist 'Disc))
-                      (time (plist-get plist 'Time))
-                      (pos (plist-get plist 'Pos))
-                      (id (plist-get plist 'Id))
-                      (file (plist-get plist 'file))
-                      (separator (or separator " - ")))
-                  (or (and mingus-use-caching
-                           (gethash id mingus-song-strings))
-                      (let ((val
-                             (let* ((file (and file (file-name-nondirectory file)))
-                                    (short (remove nil (list (or artist albumartist)
-                                                             (or title file)))))
-                               (mapconcat 'identity short separator))))
-                        (and mingus-use-caching
-                             (puthash id val mingus-song-strings))
-                        val))))
+      Concatenate the results for the values with SEPARATOR, where SEPARATOR
+      defaults to the string \" - \"."
+          (let ((artist (plist-get plist 'Artist))
+                (album (plist-get plist 'Album))
+                (title (plist-get plist 'Title))
+                (albumartist (plist-get plist 'Albumartist))
+                (track (plist-get plist 'Track))
+                (name (plist-get plist 'Name))
+                (genre (plist-get plist 'Genre))
+                (date (plist-get plist 'Date))
+                (composer (plist-get plist 'Composer))
+                (performer (plist-get plist 'Performer))
+                (comment (plist-get plist 'Comment))
+                (disc (plist-get plist 'Disc))
+                (time (plist-get plist 'Time))
+                (pos (plist-get plist 'Pos))
+                (id (plist-get plist 'Id))
+                (file (plist-get plist 'file))
+                (separator (or separator " - ")))
+            (or (and mingus-use-caching
+                     (gethash id mingus-song-strings))
+                (let ((val
+                       (let* ((file (and file (file-name-nondirectory file)))
+                              (short (remove nil (list (or artist albumartist)
+                                                       (or title file)))))
+                         (mapconcat 'identity short separator))))
+                  (and mingus-use-caching
+                       (puthash id val mingus-song-strings))
+                  val))))
 
-              ;; recenter screen after moving to current song
-              (defun mingus-goto-current-song--recenter ()
-                "Recenter screen after moving to current song."
-                (recenter-top-bottom))
-              ;; advise `mingus-goto-current-song'
-              (advice-add 'mingus-goto-current-song :after #'mingus-goto-current-song--recenter)
+        ;; recenter screen after moving to current song
+        (defun mingus-goto-current-song--recenter ()
+          "Recenter screen after moving to current song."
+          (recenter-top-bottom))
+        ;; advise `mingus-goto-current-song'
+        (advice-add 'mingus-goto-current-song :after #'mingus-goto-current-song--recenter)
 
-              (defun mingus-insert-song-rating (rating)
-                "Insert song rating at current position."
-                (insert (format "  [%s]" rating)))
+        (defun mingus-insert-song-rating (rating)
+          "Insert song rating at current position."
+          (insert (format "  [%s]" rating)))
 
-              (defun mingus-display-song-rating (highlight)
-                "Display song rating of currently selected mingus song.
+        (defun mingus-display-song-rating (highlight)
+          "Display song rating of currently selected mingus song.
 
-            If HIGHLIGHT is non-nil, highlight song."
-                (let ((buffer "*Mingus*"))
-                  (unless (string= (buffer-name) buffer)
-                    (error "Buffer is not `%s'" buffer))
-                  (let (buffer-read-only)
-                    (save-mark-and-excursion
-                      (save-match-data
-                        (forward-line 0)
-                        (when (re-search-forward "  \\[[0-9]\\]$" (line-end-position) :noerror)
-                          (replace-match ""))
-                        (goto-char (line-end-position))
-                        (mingus-insert-song-rating (or (mingus-get-song-rating) 0))
-                        (when highlight
-                          (put-text-property (line-beginning-position) (line-end-position) 'face 'font-lock-keyword-face)))))))
+      If HIGHLIGHT is non-nil, highlight song."
+          (let ((buffer "*Mingus*"))
+            (unless (string= (buffer-name) buffer)
+              (error "Buffer is not `%s'" buffer))
+            (let (buffer-read-only)
+              (save-mark-and-excursion
+                (save-match-data
+                  (forward-line 0)
+                  (when (re-search-forward "  \\[[0-9]\\]$" (line-end-position) :noerror)
+                    (replace-match ""))
+                  (goto-char (line-end-position))
+                  (mingus-insert-song-rating (or (mingus-get-song-rating) 0))
+                  (when highlight
+                    (put-text-property (line-beginning-position) (line-end-position) 'face 'font-lock-keyword-face)))))))
 
-              (defun mingus-set-NP-mark--highlight-current-song (orig-fun &rest args)
-                "Mark entire line of currently playing song.
+        (defun mingus-set-NP-mark--highlight-current-song (orig-fun &rest args)
+          "Mark entire line of currently playing song.
 
-            Use text properties to mark the line then call `mingus-set-NP-mark'."
-                (when (string= (buffer-name) "*Mingus*")
-                  (ignore-errors
-                    (let ((pos (or (and (> (length args) 1) (cadr args))
-                                   (plist-get (mpd-get-status mpd-inter-conn) 'song)))
-                          buffer-read-only)
-                      (when pos
-                        (save-mark-and-excursion
-                          (save-window-excursion
-                            (remove-text-properties (point-min) (point-max) '(face nil))
-                            (mingus-goto-line (1+ pos))
-                            (mingus-display-song-rating t)))))))
-                (apply orig-fun args))
-              ;; advise `mingus-set-NP-mark'
-              (advice-add 'mingus-set-NP-mark :around #'mingus-set-NP-mark--highlight-current-song)
-
-              (defun mingus-get-all-song-ratings ()
-                "Return all song ratings as a hash table of songs to ratings."
-                (let ((ratings (make-hash-table :test 'equal)))
-                  (dotimes (x 5)
-                    (let* ((rating (1+ x))
-                           (file (file-truename
-                                  (expand-file-name
-                                   (concat mingus-ratings-prefix (number-to-string rating))
-                                   mingus-ratings-directory))))
-                      (with-temp-buffer
-                        (insert-file-contents file)
-                        (goto-char (point-min))
-                        (while (not (eobp))
-                          (puthash (buffer-substring-no-properties (line-beginning-position) (line-end-position)) rating ratings)
-                          (forward-line 1)))))
-                  ratings))
-
-              (defun mingus-display-all-song-ratings ()
-                "Display all song ratings in mingus playlist buffer."
-                (when (string= (buffer-name) "*Mingus*")
+      Use text properties to mark the line then call `mingus-set-NP-mark'."
+          (when (string= (buffer-name) "*Mingus*")
+            (ignore-errors
+              (let ((pos (or (and (> (length args) 1) (cadr args))
+                             (plist-get (mpd-get-status mpd-inter-conn) 'song)))
+                    buffer-read-only)
+                (when pos
                   (save-mark-and-excursion
                     (save-window-excursion
-                      (let ((ratings (mingus-get-all-song-ratings))
-                            buffer-read-only)
-                        (buffer-disable-undo)
+                      (remove-text-properties (point-min) (point-max) '(face nil))
+                      (mingus-goto-line (1+ pos))
+                      (mingus-display-song-rating t)))))))
+          (apply orig-fun args))
+        ;; advise `mingus-set-NP-mark'
+        (advice-add 'mingus-set-NP-mark :around #'mingus-set-NP-mark--highlight-current-song)
+
+        (defun mingus-get-all-song-ratings ()
+          "Return all song ratings as a hash table of songs to ratings."
+          (let ((ratings (make-hash-table :test 'equal)))
+            (dotimes (x 5)
+              (let* ((rating (1+ x))
+                     (file (file-truename
+                            (expand-file-name
+                             (concat mingus-ratings-prefix (number-to-string rating))
+                             mingus-ratings-directory))))
+                (with-temp-buffer
+                  (insert-file-contents file)
+                  (goto-char (point-min))
+                  (while (not (eobp))
+                    (puthash (buffer-substring-no-properties (line-beginning-position) (line-end-position)) rating ratings)
+                    (forward-line 1)))))
+            ratings))
+
+        (defun mingus-display-all-song-ratings ()
+          "Display all song ratings in mingus playlist buffer."
+          (when (string= (buffer-name) "*Mingus*")
+            (save-mark-and-excursion
+              (save-window-excursion
+                (let ((ratings (mingus-get-all-song-ratings))
+                      buffer-read-only)
+                  (buffer-disable-undo)
+                  (goto-char (point-min))
+                  (while (not (eobp))
+                    (ignore-errors
+                      (let ((rating (get-byte (- (line-end-position) 2))))
+                        (unless (and (= (get-byte (- (line-end-position) 1)) 93)
+                                     (= (get-byte (- (line-end-position) 3)) 91)
+                                     (>= rating 48)
+                                     (<= rating 53))
+                          (let ((details (mingus-get-details)))
+                            (when details
+                              (let* ((file (plist-get details 'file))
+                                     (rating (gethash file ratings)))
+                                (goto-char (line-end-position))
+                                (mingus-insert-song-rating (number-to-string (or rating 0)))))))))
+                    (forward-line 1)))))))
+        ;; advise `mingus-switch-to-playlist'
+        (advice-add 'mingus-switch-to-playlist :after #'mingus-display-all-song-ratings)
+        ;; advise `mingus-redraw-buffer'
+        (advice-add 'mingus-redraw-buffer :after #'mingus-display-all-song-ratings)
+
+        (defun mingus-mpc-update ()
+          "Update (refresh) mpc (Music Player Client)"
+          (interactive)
+          (message "Updating mpc (Music Player Client)...")
+          (shell-command "mpc --wait update > /dev/null 2>&1"))
+
+        (defun mingus-edit-id3tag--finish-edit ()
+          "Save any id3 tag changes and close the edit window."
+          (interactive)
+          (message "%s" (buffer-substring-no-properties (point-min) (point-max)))
+          (kill-buffer (current-buffer)))
+
+        (defun mingus-edit-id3tag--abort-edit ()
+          "Close the edit window without saving changes."
+          (interactive)
+          (message "%s" (buffer-substring-no-properties (point-min) (point-max)))
+          (kill-buffer (current-buffer)))
+
+        (defun mingus-edit-id3tag ()
+          "Edit id3 tag of the selected song."
+          (interactive)
+          (let ((id3tag "id3tag")
+                (details (mingus-get-details)))
+            (unless (executable-find id3tag)
+              (error "Could not find %s command" id3tag))
+            (when details
+              (let ((buffer (get-buffer-create "*Mingus Edit ID3 Tags*"))
+                    (keymap (make-sparse-keymap))
+                    (artist (plist-get details 'Artist))
+                    (album (plist-get details 'Album))
+                    (title (plist-get details 'Title))
+                    (track (plist-get details 'Track))
+                    (genre (plist-get details 'Genre))
+                    (date (plist-get details 'Date))
+                    (file (plist-get details 'file)))
+                (bind-keys :map keymap
+                           ("<return>" . newline)
+                           ("C-c C-c" . mingus-edit-id3tag--finish-edit)
+                           ("C-c C-k" . mingus-edit-id3tag--abort-edit))
+                (let* ((info (concat
+                              "File:   " file "\n"
+                              "Artist: " artist "\n"
+                              "Album:  " album "\n"
+                              "Title:  " title "\n"
+                              "Track:  " track "\n"
+                              "Year:   " date "\n"
+                              "Genre:  " genre)))
+                  (with-current-buffer buffer
+                    (setq buffer-read-only nil)
+                    (add-text-properties (point-min) (point-max) '(read-only nil))
+                    (kill-region (point-min) (point-max))
+                    (setq major-mode 'text-mode)
+                    (setq mode-name "Edit ID3 Tags")
+                    (use-local-map keymap)
+                    (setq header-line-format
+                          (substitute-command-keys
+                           (concat
+                            "Edit id3 tags, then exit with `\\[mingus-edit-id3tag--finish-edit]'"
+                            " or abort with `\\[mingus-edit-id3tag--abort-edit]'")))
+                    (insert info)
+                    (goto-char (point-min))
+                    (while (not (eobp))
+                      (add-text-properties
+                       (point) (+ (point) 7)
+                       '(face bold read-only t cursor-intangible t))
+                      (forward-line 1))
+                    (cursor-intangible-mode 1)
+                    (set-buffer-modified-p nil)
+                    (setq buffer-undo-list nil)
+                    (goto-char (point-min)))
+                  (switch-to-buffer buffer))))))
+
+        ;;-----------------------------------------------------------------------
+        ;;;; Mingus Fetch Lyrics Commands
+        ;;-----------------------------------------------------------------------
+
+        (init-message 3 "Mingus Fetch Lyrics Commands")
+
+        ;; ;; TODO: add ability to query multiple lyric sites when a result is not found on one
+        ;; (defun mingus-get-lyrics ()
+        ;;   "Get lyrics (original non-api version)."
+        ;;   (interactive)
+        ;;   (let ((details (mingus-get-details)))
+        ;;     (when details
+        ;;       (let ((artist (plist-get details 'Artist))
+        ;;             (title (plist-get details 'Title))
+        ;;             (site "azlyrics.com")
+        ;;             ;;(site "allthelyrics.com")
+        ;;             ;;(site "lyricwiki.org")
+        ;;             ;;(site "lyrics.wikia.com")
+        ;;             (user-agent "Mozilla/4.0 (MSIE 6.0; Windows NT 5.0)")
+        ;;             (referer "http://www.google.com/")
+        ;;             (file (shell-command-to-string "echo -n /tmp/mingus-lyrics-$$.html")))
+        ;;         ;; remove ", The" from artist
+        ;;         (setq artist (replace-regexp-in-string artist ", The$" ""))
+        ;;         ;; remove anything in parenthesis from title
+        ;;         (setq title (replace-regexp-in-string title " ?([^)]*)" ""))
+        ;;         (let ((query (concat "http://www.google.com/search?q="
+        ;;                              "lyrics "
+        ;;                              "\"" artist "\" "
+        ;;                              "\"" title "\" "
+        ;;                              "site:" site
+        ;;                              "&btnI=Search")))
+        ;;           (call-process "wget" nil nil nil
+        ;;                         "--no-verbose"
+        ;;                         "--convert-links"
+        ;;                         (concat "--user-agent=" user-agent)
+        ;;                         (concat "--referer=" referer)
+        ;;                         "-O" file
+        ;;                         query)
+        ;;           (browse-url (concat "file://" file))
+        ;;           ;; clean up response
+        ;;           (fundamental-mode)
+        ;;           (setq buffer-read-only nil)
+        ;;           (buffer-disable-undo)
+        ;;           (when (re-search-forward "You must enable javascript to view this page." nil :noerror)
+        ;;             (goto-char (line-end-position))
+        ;;             (forward-line 1)
+        ;;             (delete-region (point-min) (point)))
+        ;;           (when (re-search-forward "External links" nil :noerror)
+        ;;             (forward-line 0)
+        ;;             (delete-region (point) (point-max)))
+        ;;           (goto-char (point-min))
+        ;;           (while (re-search-forward "phone Send" nil :noerror)
+        ;;             (delete-region (line-beginning-position) (1+ (line-end-position))))
+        ;;           (setq buffer-read-only nil)
+        ;;           (goto-char (point-min))
+        ;;           )))))
+
+        (defun mingus-get-lyrics-azlyrics (artist title)
+          "Return the lyrics for a song matching ARTIST and TITLE
+      by scraping the azlyrics.com site."
+          (interactive)
+          (message "artist: %s, title: %s" artist title)
+          (let* ((start-regexp "<!-- Usage of azlyrics.com")
+                 (end-regexp "<!-- MxM banner -->")
+                 (ret-regexp "")
+                 (bracket-regexp " *\\[[^\]].*\\]")
+                 (starting-spaces-regexp "^ +")
+                 (ending-spaces-regexp " +$")
+                 (feat-regexp "<span class=\"feat\">\\(.*\\)</span>")
+                 (site "azlyrics.com")
+                 ;;(user-agent "Mozilla/4.0 (MSIE 6.0; Windows NT 5.0)")
+                 (user-agent "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0; WOW64; Trident/4.0; SLCC1)")
+                 (referer "http://www.google.com/")
+                 (search-file (shell-command-to-string "echo -n /tmp/mingus-search-$$.html"))
+                 (lyrics-file (shell-command-to-string "echo -n /tmp/mingus-lyrics-$$.html"))
+                 (parsed-title
+                  (replace-regexp-in-string ending-spaces-regexp ""
+                                            (replace-regexp-in-string starting-spaces-regexp ""
+                                                                      (replace-regexp-in-string bracket-regexp "" title))))
+                 (query (concat "http://www.google.com/search?q="
+                                "lyrics "
+                                (if artist (concat "\"" artist "\" ") "")
+                                "\"" parsed-title "\" "
+                                "site:" site
+                                "&btnI=Search"))
+                 url
+                 lyrics
+                 error)
+            ;; TODO: make this call asynchronous (using `start-process')
+            (call-process "wget" nil nil nil
+                          "--no-verbose"
+                          "--convert-links"
+                          (concat "--user-agent=" user-agent)
+                          (concat "--referer=" referer)
+                          "-O" search-file
+                          query)
+            (message "query: %s" query)
+            (message "wget call: wget --no-verbose --convert-links --user-agent=\"%s\" --referer=%s -O %s %s" user-agent referer search-file query)
+            (with-temp-buffer
+              (buffer-disable-undo)
+              (condition-case err
+                  (progn
+                    (insert-file-contents search-file)
+                    (goto-char (point-min))
+                    (re-search-forward (concat "https://www." site "[^\"]*"))
+                    (setq url (match-string-no-properties 0)))
+                ('error
+                 (message "Error trying to find lyrics url: %s" err)
+                 (setq error t))))
+            (if (and error artist)
+                ;; on error, try again without artist
+                (mingus-get-lyrics-azlyrics nil title)
+              (progn
+                ;; no error, so continue
+                (call-process "wget" nil nil nil
+                              "--no-verbose"
+                              "--convert-links"
+                              (concat "--user-agent=" user-agent)
+                              (concat "--referer=" referer)
+                              "-O" lyrics-file
+                              url)
+                (with-temp-buffer
+                  (buffer-disable-undo)
+                  (condition-case err
+                      (progn
+                        (insert-file-contents lyrics-file)
+                        ;; clean up response
+                        (fundamental-mode)
                         (goto-char (point-min))
-                        (while (not (eobp))
-                          (ignore-errors
-                            (let ((rating (get-byte (- (line-end-position) 2))))
-                              (unless (and (= (get-byte (- (line-end-position) 1)) 93)
-                                           (= (get-byte (- (line-end-position) 3)) 91)
-                                           (>= rating 48)
-                                           (<= rating 53))
-                                (let ((details (mingus-get-details)))
-                                  (when details
-                                    (let* ((file (plist-get details 'file))
-                                           (rating (gethash file ratings)))
-                                      (goto-char (line-end-position))
-                                      (mingus-insert-song-rating (number-to-string (or rating 0)))))))))
-                          (forward-line 1)))))))
-              ;; advise `mingus-switch-to-playlist'
-              (advice-add 'mingus-switch-to-playlist :after #'mingus-display-all-song-ratings)
-              ;; advise `mingus-redraw-buffer'
-              (advice-add 'mingus-redraw-buffer :after #'mingus-display-all-song-ratings)
+                        (when (re-search-forward start-regexp nil :noerror)
+                          (forward-line 0)
+                          (forward-line 1)
+                          (let ((pos (point)))
+                            (forward-line -3)
+                            (delete-region (point) pos))
+                          (forward-line -2)
+                          (delete-region (point-min) (point)))
+                        (when (re-search-forward end-regexp nil :noerror)
+                          (delete-region (line-beginning-position) (point-max)))
+                        (goto-char (point-min))
+                        (while (re-search-forward ret-regexp nil :noerror)
+                          (replace-match ""))
+                        (goto-char (point-min))
+                        (while (re-search-forward feat-regexp nil :noerror)
+                          (replace-match "\\1"))
+                        (shr-render-region (point-min) (point-max))
+                        (goto-char (point-max))
+                        (delete-blank-lines)
+                        (goto-char (point-min))
+                        (insert (upcase artist) ": " (upcase title))
+                        (newline)
+                        (newline)
+                        (setq lyrics (buffer-substring-no-properties (point-min) (point-max))))
+                    ('error
+                     (message "Error trying to format lyrics result: %s" err)))
+                  lyrics)))))
 
-              (defun mingus-mpc-update ()
-                "Update (refresh) mpc (Music Player Client)"
-                (interactive)
-                (message "Updating mpc (Music Player Client)...")
-                (shell-command "mpc --wait update > /dev/null 2>&1"))
+        ;; this site seems to be no longer working (2010-04-06)
+        (defun mingus-get-lyrics-leoslyrics (artist title)
+          "Return the lyrics for a song matching ARTIST and TITLE
+      using the api.leoslyrics.com site."
+          (interactive)
+          (let ((query (concat "wget -q \"http://api.leoslyrics.com/api_search.php?auth=emacs"
+                               (if artist (concat "&artist=" (url-hexify-string artist)) "")
+                               "&songtitle=" (url-hexify-string title)
+                               "\" -O - | xmlstarlet sel -t -v \"/leoslyrics/searchResults/result/@hid\"")))
+            ;;(message "hid query: %s" query)
+            (let ((hid (shell-command-to-string query)))
+              (when hid
+                ;;(message "hid: %s" (url-hexify-string hid))
+                (let ((query (concat "wget -q \"http://api.leoslyrics.com/api_lyrics.php?auth=emacs&hid="
+                                     (url-hexify-string hid)
+                                     "\" -O - | xmlstarlet sel -t -v \"/leoslyrics/lyric/text/text()\""
+                                     " | xmlstarlet unesc | tr -d '\r'")))
+                  ;;(message "lyrics query: %s" query)
+                  (let ((lyrics (shell-command-to-string query)))
+                    lyrics))))))
 
-              (defun mingus-edit-id3tag--finish-edit ()
-                "Save any id3 tag changes and close the edit window."
-                (interactive)
-                (message "%s" (buffer-substring-no-properties (point-min) (point-max)))
-                (kill-buffer (current-buffer)))
+        (defun mingus-get-lyrics-metrolyrics (artist title)
+          "Return the lyrics for a song matching ARTIST and TITLE
+      by scraping the metrolyrics.com site."
+          (interactive)
+          (let* ((start-regexp "<div id=\"lyrics-body-text\">")
+                 (end-regexp "</div>")
+                 (ret-regexp "")
+                 (bracket-regexp " *\\[[^\]].*\\]")
+                 (starting-spaces-regexp "^ +")
+                 (ending-spaces-regexp " +$")
+                 (site "metrolyrics.com")
+                 ;;(user-agent "Mozilla/4.0 (MSIE 6.0; Windows NT 5.0)")
+                 (user-agent "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0; WOW64; Trident/4.0; SLCC1)")
+                 (referer "http://www.google.com/")
+                 (file (shell-command-to-string "echo -n /tmp/mingus-lyrics-$$.html"))
+                 (parsed-title
+                  (replace-regexp-in-string ending-spaces-regexp ""
+                                            (replace-regexp-in-string starting-spaces-regexp ""
+                                                                      (replace-regexp-in-string bracket-regexp "" title))))
+                 (query (concat "http://www.google.com/search?q="
+                                "lyrics "
+                                (if artist "\"" artist "\" " "")
+                                "\"" parsed-title "\" "
+                                "site:" site
+                                "&btnI=Search"))
+                 (lyrics))
+            ;; TODO: make this call asynchronous (using `start-process')
+            (call-process "wget" nil nil nil
+                          "--no-verbose"
+                          "--convert-links"
+                          (concat "--user-agent=" user-agent)
+                          (concat "--referer=" referer)
+                          "-O" file
+                          query)
+            (message "query: %s" query)
+            (message "wget call: wget --no-verbose --convert-links --user-agent=\"%s\" --referer=%s -O %s %s" user-agent referer file query)
+            (with-temp-buffer
+              (buffer-disable-undo)
+              (condition-case err
+                  (progn
+                    (insert-file-contents file)
+                    ;; clean up response
+                    (fundamental-mode)
+                    (goto-char (point-min))
+                    (when (re-search-forward start-regexp nil :noerror)
+                      (forward-line 0)
+                      (forward-line 1)
+                      (let ((pos (point)))
+                        (forward-line -3)
+                        (delete-region (point) pos))
+                      (forward-line -2)
+                      (delete-region (point-min) (point)))
+                    (when (re-search-forward end-regexp nil :noerror)
+                      (delete-region (line-beginning-position) (point-max)))
+                    (goto-char (point-min))
+                    (while (re-search-forward ret-regexp nil :noerror)
+                      (replace-match ""))
+                    (shr-render-region (point-min) (point-max))
+                    (goto-char (point-max))
+                    (delete-blank-lines)
+                    (goto-char (point-min))
+                    (insert (upcase artist) ": " (upcase title))
+                    (newline)
+                    (newline)
+                    (setq lyrics (buffer-substring-no-properties (point-min) (point-max))))
+                ('error
+                 (message "Error trying to format lyrics result: %s" err)))
+              lyrics)))
 
-              (defun mingus-edit-id3tag--abort-edit ()
-                "Close the edit window without saving changes."
-                (interactive)
-                (message "%s" (buffer-substring-no-properties (point-min) (point-max)))
-                (kill-buffer (current-buffer)))
-
-              (defun mingus-edit-id3tag ()
-                "Edit id3 tag of the selected song."
-                (interactive)
-                (let ((id3tag "id3tag")
-                      (details (mingus-get-details)))
-                  (unless (executable-find id3tag)
-                    (error "Could not find %s command" id3tag))
-                  (when details
-                    (let ((buffer (get-buffer-create "*Mingus Edit ID3 Tags*"))
-                          (keymap (make-sparse-keymap))
-                          (artist (plist-get details 'Artist))
-                          (album (plist-get details 'Album))
-                          (title (plist-get details 'Title))
-                          (track (plist-get details 'Track))
-                          (genre (plist-get details 'Genre))
-                          (date (plist-get details 'Date))
-                          (file (plist-get details 'file)))
-                      (bind-keys :map keymap
-                                 ("<return>" . newline)
-                                 ("C-c C-c" . mingus-edit-id3tag--finish-edit)
-                                 ("C-c C-k" . mingus-edit-id3tag--abort-edit))
-                      (let* ((info (concat
-                                    "File:   " file "\n"
-                                    "Artist: " artist "\n"
-                                    "Album:  " album "\n"
-                                    "Title:  " title "\n"
-                                    "Track:  " track "\n"
-                                    "Year:   " date "\n"
-                                    "Genre:  " genre)))
-                        (with-current-buffer buffer
-                          (setq buffer-read-only nil)
-                          (add-text-properties (point-min) (point-max) '(read-only nil))
-                          (kill-region (point-min) (point-max))
-                          (setq major-mode 'text-mode)
-                          (setq mode-name "Edit ID3 Tags")
-                          (use-local-map keymap)
-                          (setq header-line-format
-                                (substitute-command-keys
-                                 (concat
-                                  "Edit id3 tags, then exit with `\\[mingus-edit-id3tag--finish-edit]'"
-                                  " or abort with `\\[mingus-edit-id3tag--abort-edit]'")))
-                          (insert info)
+        ;; TODO: add ability to query multiple lyric sites when a result is not found on one
+        (defun mingus-get-lyrics ()
+          "Display lyrics for the selected song."
+          (interactive)
+          (let ((details (mingus-get-details)))
+            (when details
+              (let ((artist (plist-get details 'Artist))
+                    (title (plist-get details 'Title))
+                    (funct 'mingus-get-lyrics-azlyrics))
+                ;;(funct 'mingus-get-lyrics-leoslyrics))
+                ;;(funct 'mingus-get-lyrics-metrolyrics))
+                ;; remove ", The" from artist
+                (setq artist (replace-regexp-in-string ", The$" "" artist))
+                ;; remove anything in parenthesis from title
+                (setq title (replace-regexp-in-string " ?([^)]*)" "" title))
+                ;; call lyrics api
+                (let ((buffer (concat "*" artist ": " title "*"))
+                      (lyrics (funcall funct artist title)))
+                  ;; if no lyrics returned, try again with song title only (helps with covers)
+                  (when (or (not lyrics)
+                            (zerop (length lyrics)))
+                    (setq lyrics (funcall funct nil title)))
+                  (if (and lyrics
+                           (> (length lyrics) 0))
+                      (progn
+                        (get-buffer-create buffer)
+                        (set-buffer buffer)
+                        (let ((buffer-read-only nil))
+                          (erase-buffer)
+                          (insert lyrics)
+                          (delete-trailing-whitespace)
+                          (switch-to-buffer buffer)
                           (goto-char (point-min))
-                          (while (not (eobp))
-                            (add-text-properties
-                             (point) (+ (point) 7)
-                             '(face bold read-only t cursor-intangible t))
-                            (forward-line 1))
-                          (cursor-intangible-mode 1)
-                          (set-buffer-modified-p nil)
-                          (setq buffer-undo-list nil)
-                          (goto-char (point-min)))
-                        (switch-to-buffer buffer)))))))))
+                          (view-mode)))
+                    (message "No lyrics found for Artist: %s, Title: %s" artist title)))))))
 
-              ;;-----------------------------------------------------------------------
-              ;;;; Mingus Fetch Lyrics Commands
-              ;;-----------------------------------------------------------------------
+        ;;-----------------------------------------------------------------------
+        ;;;; Mingus Song Rating System
+        ;;-----------------------------------------------------------------------
 
-              (init-message 3 "Mingus Fetch Lyrics Commands")
+        (init-message 3 "Mingus Song Rating System")
 
-              ;; ;; TODO: add ability to query multiple lyric sites when a result is not found on one
-              ;; (defun mingus-get-lyrics ()
-              ;;   "Get lyrics (original non-api version)."
-              ;;   (interactive)
-              ;;   (let ((details (mingus-get-details)))
-              ;;     (when details
-              ;;       (let ((artist (plist-get details 'Artist))
-              ;;             (title (plist-get details 'Title))
-              ;;             (site "azlyrics.com")
-              ;;             ;;(site "allthelyrics.com")
-              ;;             ;;(site "lyricwiki.org")
-              ;;             ;;(site "lyrics.wikia.com")
-              ;;             (user-agent "Mozilla/4.0 (MSIE 6.0; Windows NT 5.0)")
-              ;;             (referer "http://www.google.com/")
-              ;;             (file (shell-command-to-string "echo -n /tmp/mingus-lyrics-$$.html")))
-              ;;         ;; remove ", The" from artist
-              ;;         (setq artist (replace-regexp-in-string artist ", The$" ""))
-              ;;         ;; remove anything in parenthesis from title
-              ;;         (setq title (replace-regexp-in-string title " ?([^)]*)" ""))
-              ;;         (let ((query (concat "http://www.google.com/search?q="
-              ;;                              "lyrics "
-              ;;                              "\"" artist "\" "
-              ;;                              "\"" title "\" "
-              ;;                              "site:" site
-              ;;                              "&btnI=Search")))
-              ;;           (call-process "wget" nil nil nil
-              ;;                         "--no-verbose"
-              ;;                         "--convert-links"
-              ;;                         (concat "--user-agent=" user-agent)
-              ;;                         (concat "--referer=" referer)
-              ;;                         "-O" file
-              ;;                         query)
-              ;;           (browse-url (concat "file://" file))
-              ;;           ;; clean up response
-              ;;           (fundamental-mode)
-              ;;           (setq buffer-read-only nil)
-              ;;           (buffer-disable-undo)
-              ;;           (when (re-search-forward "You must enable javascript to view this page." nil :noerror)
-              ;;             (goto-char (line-end-position))
-              ;;             (forward-line 1)
-              ;;             (delete-region (point-min) (point)))
-              ;;           (when (re-search-forward "External links" nil :noerror)
-              ;;             (forward-line 0)
-              ;;             (delete-region (point) (point-max)))
-              ;;           (goto-char (point-min))
-              ;;           (while (re-search-forward "phone Send" nil :noerror)
-              ;;             (delete-region (line-beginning-position) (1+ (line-end-position))))
-              ;;           (setq buffer-read-only nil)
-              ;;           (goto-char (point-min))
-              ;;           )))))
+        ;; directory to store rating play lists
+        (defcustom mingus-ratings-directory `,(file-truename (expand-file-name "~/.song-ratings"))
+          "Directory to store rating play lists."
+          :type 'string
+          :group 'mingus)
 
-              (defun mingus-get-lyrics-azlyrics (artist title)
-                "Return the lyrics for a song matching ARTIST and TITLE
-            by scraping the azlyrics.com site."
-                (interactive)
-                (message "artist: %s, title: %s" artist title)
-                (let* ((start-regexp "<!-- Usage of azlyrics.com")
-                       (end-regexp "<!-- MxM banner -->")
-                       (ret-regexp "")
-                       (bracket-regexp " *\\[[^\]].*\\]")
-                       (starting-spaces-regexp "^ +")
-                       (ending-spaces-regexp " +$")
-                       (feat-regexp "<span class=\"feat\">\\(.*\\)</span>")
-                       (site "azlyrics.com")
-                       ;;(user-agent "Mozilla/4.0 (MSIE 6.0; Windows NT 5.0)")
-                       (user-agent "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0; WOW64; Trident/4.0; SLCC1)")
-                       (referer "http://www.google.com/")
-                       (search-file (shell-command-to-string "echo -n /tmp/mingus-search-$$.html"))
-                       (lyrics-file (shell-command-to-string "echo -n /tmp/mingus-lyrics-$$.html"))
-                       (parsed-title
-                        (replace-regexp-in-string ending-spaces-regexp ""
-                                                  (replace-regexp-in-string starting-spaces-regexp ""
-                                                                            (replace-regexp-in-string bracket-regexp "" title))))
-                       (query (concat "http://www.google.com/search?q="
-                                      "lyrics "
-                                      (if artist (concat "\"" artist "\" ") "")
-                                      "\"" parsed-title "\" "
-                                      "site:" site
-                                      "&btnI=Search"))
-                       url
-                       lyrics
-                       error)
-                  ;; TODO: make this call asynchronous (using `start-process')
-                  (call-process "wget" nil nil nil
-                                "--no-verbose"
-                                "--convert-links"
-                                (concat "--user-agent=" user-agent)
-                                (concat "--referer=" referer)
-                                "-O" search-file
-                                query)
-                  (message "query: %s" query)
-                  (message "wget call: wget --no-verbose --convert-links --user-agent=\"%s\" --referer=%s -O %s %s" user-agent referer search-file query)
-                  (with-temp-buffer
-                    (buffer-disable-undo)
-                    (condition-case err
-                        (progn
-                          (insert-file-contents search-file)
-                          (goto-char (point-min))
-                          (re-search-forward (concat "https://www." site "[^\"]*"))
-                          (setq url (match-string-no-properties 0)))
-                      ('error
-                       (message "Error trying to find lyrics url: %s" err)
-                       (setq error t))))
-                  (if (and error artist)
-                      ;; on error, try again without artist
-                      (mingus-get-lyrics-azlyrics nil title)
-                    (progn
-                      ;; no error, so continue
-                      (call-process "wget" nil nil nil
-                                    "--no-verbose"
-                                    "--convert-links"
-                                    (concat "--user-agent=" user-agent)
-                                    (concat "--referer=" referer)
-                                    "-O" lyrics-file
-                                    url)
-                      (with-temp-buffer
-                        (buffer-disable-undo)
-                        (condition-case err
-                            (progn
-                              (insert-file-contents lyrics-file)
-                              ;; clean up response
-                              (fundamental-mode)
-                              (goto-char (point-min))
-                              (when (re-search-forward start-regexp nil :noerror)
-                                (forward-line 0)
-                                (forward-line 1)
-                                (let ((pos (point)))
-                                  (forward-line -3)
-                                  (delete-region (point) pos))
-                                (forward-line -2)
-                                (delete-region (point-min) (point)))
-                              (when (re-search-forward end-regexp nil :noerror)
-                                (delete-region (line-beginning-position) (point-max)))
-                              (goto-char (point-min))
-                              (while (re-search-forward ret-regexp nil :noerror)
-                                (replace-match ""))
-                              (goto-char (point-min))
-                              (while (re-search-forward feat-regexp nil :noerror)
-                                (replace-match "\\1"))
-                              (shr-render-region (point-min) (point-max))
-                              (goto-char (point-max))
-                              (delete-blank-lines)
-                              (goto-char (point-min))
-                              (insert (upcase artist) ": " (upcase title))
-                              (newline)
-                              (newline)
-                              (setq lyrics (buffer-substring-no-properties (point-min) (point-max))))
-                          ('error
-                           (message "Error trying to format lyrics result: %s" err)))
-                        lyrics)))))
+        ;; rating play list prefix
+        (defcustom mingus-ratings-prefix "songs-rated-"
+          "Ratings play list files prefix."
+          :type 'string
+          :group 'mingus)
 
-              ;; this site seems to be no longer working (2010-04-06)
-              (defun mingus-get-lyrics-leoslyrics (artist title)
-                "Return the lyrics for a song matching ARTIST and TITLE
-            using the api.leoslyrics.com site."
-                (interactive)
-                (let ((query (concat "wget -q \"http://api.leoslyrics.com/api_search.php?auth=emacs"
-                                     (if artist (concat "&artist=" (url-hexify-string artist)) "")
-                                     "&songtitle=" (url-hexify-string title)
-                                     "\" -O - | xmlstarlet sel -t -v \"/leoslyrics/searchResults/result/@hid\"")))
-                  ;;(message "hid query: %s" query)
-                  (let ((hid (shell-command-to-string query)))
-                    (when hid
-                      ;;(message "hid: %s" (url-hexify-string hid))
-                      (let ((query (concat "wget -q \"http://api.leoslyrics.com/api_lyrics.php?auth=emacs&hid="
-                                           (url-hexify-string hid)
-                                           "\" -O - | xmlstarlet sel -t -v \"/leoslyrics/lyric/text/text()\""
-                                           " | xmlstarlet unesc | tr -d '\r'")))
-                        ;;(message "lyrics query: %s" query)
-                        (let ((lyrics (shell-command-to-string query)))
-                          lyrics))))))
+        (defun mingus-get-song-rating ()
+          "Return song rating of the selected song."
+          (interactive)
+          (let ((details (mingus-get-details)))
+            (when details
+              (let* ((file (plist-get details 'file))
+                     (song-name (propertize
+                                 (replace-regexp-in-string "^.*/\\([^/]+\\)\\..*$" "\\1" file)
+                                 'face
+                                 'font-lock-keyword-face))
+                     (get-cmd (concat
+                               "cd " mingus-ratings-directory " && "
+                               "(for x in $(ls " mingus-ratings-prefix "*) ; do grep -q -F \""
+                               (replace-regexp-in-string "\"" "\"" file)
+                               "\" \"${x}\" && echo ${x: -1}; done)")))
+                ;;(message "get-cmd: %s" get-cmd)
+                ;; make sure ratings directory exists
+                (unless (file-exists-p mingus-ratings-directory)
+                  (make-directory mingus-ratings-directory))
+                ;; get rating, if there is one
+                (let ((rating (shell-command-to-string get-cmd)))
+                  (when (string-match "\r?\n$" rating)
+                    (setq rating (replace-match "" t nil rating)))
+                  (when (zerop (length rating))
+                    (setq rating "0"))
+                  (let ((rating-name (propertize rating 'face 'font-lock-keyword-face)))
+                    ;; print or return rating
+                    (if (called-interactively-p 'any)
+                        (message "Rating for %s is %s" song-name rating-name)
+                      (string-to-number rating))))))))
 
-              (defun mingus-get-lyrics-metrolyrics (artist title)
-                "Return the lyrics for a song matching ARTIST and TITLE
-            by scraping the metrolyrics.com site."
-                (interactive)
-                (let* ((start-regexp "<div id=\"lyrics-body-text\">")
-                       (end-regexp "</div>")
-                       (ret-regexp "")
-                       (bracket-regexp " *\\[[^\]].*\\]")
-                       (starting-spaces-regexp "^ +")
-                       (ending-spaces-regexp " +$")
-                       (site "metrolyrics.com")
-                       ;;(user-agent "Mozilla/4.0 (MSIE 6.0; Windows NT 5.0)")
-                       (user-agent "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0; WOW64; Trident/4.0; SLCC1)")
-                       (referer "http://www.google.com/")
-                       (file (shell-command-to-string "echo -n /tmp/mingus-lyrics-$$.html"))
-                       (parsed-title
-                        (replace-regexp-in-string ending-spaces-regexp ""
-                                                  (replace-regexp-in-string starting-spaces-regexp ""
-                                                                            (replace-regexp-in-string bracket-regexp "" title))))
-                       (query (concat "http://www.google.com/search?q="
-                                      "lyrics "
-                                      (if artist "\"" artist "\" " "")
-                                      "\"" parsed-title "\" "
-                                      "site:" site
-                                      "&btnI=Search"))
-                       (lyrics))
-                  ;; TODO: make this call asynchronous (using `start-process')
-                  (call-process "wget" nil nil nil
-                                "--no-verbose"
-                                "--convert-links"
-                                (concat "--user-agent=" user-agent)
-                                (concat "--referer=" referer)
-                                "-O" file
-                                query)
-                  (message "query: %s" query)
-                  (message "wget call: wget --no-verbose --convert-links --user-agent=\"%s\" --referer=%s -O %s %s" user-agent referer file query)
-                  (with-temp-buffer
-                    (buffer-disable-undo)
-                    (condition-case err
-                        (progn
-                          (insert-file-contents file)
-                          ;; clean up response
-                          (fundamental-mode)
-                          (goto-char (point-min))
-                          (when (re-search-forward start-regexp nil :noerror)
-                            (forward-line 0)
-                            (forward-line 1)
-                            (let ((pos (point)))
-                              (forward-line -3)
-                              (delete-region (point) pos))
-                            (forward-line -2)
-                            (delete-region (point-min) (point)))
-                          (when (re-search-forward end-regexp nil :noerror)
-                            (delete-region (line-beginning-position) (point-max)))
-                          (goto-char (point-min))
-                          (while (re-search-forward ret-regexp nil :noerror)
-                            (replace-match ""))
-                          (shr-render-region (point-min) (point-max))
-                          (goto-char (point-max))
-                          (delete-blank-lines)
-                          (goto-char (point-min))
-                          (insert (upcase artist) ": " (upcase title))
-                          (newline)
-                          (newline)
-                          (setq lyrics (buffer-substring-no-properties (point-min) (point-max))))
-                      ('error
-                       (message "Error trying to format lyrics result: %s" err)))
-                    lyrics)))
+        (defun mingus-set-song-rating (rating)
+          "Set song rating of the selected song.
 
-              ;; TODO: add ability to query multiple lyric sites when a result is not found on one
-              (defun mingus-get-lyrics ()
-                "Display lyrics for the selected song."
-                (interactive)
-                (let ((details (mingus-get-details)))
-                  (when details
-                    (let ((artist (plist-get details 'Artist))
-                          (title (plist-get details 'Title))
-                          (funct 'mingus-get-lyrics-azlyrics))
-                      ;;(funct 'mingus-get-lyrics-leoslyrics))
-                      ;;(funct 'mingus-get-lyrics-metrolyrics))
-                      ;; remove ", The" from artist
-                      (setq artist (replace-regexp-in-string ", The$" "" artist))
-                      ;; remove anything in parenthesis from title
-                      (setq title (replace-regexp-in-string " ?([^)]*)" "" title))
-                      ;; call lyrics api
-                      (let ((buffer (concat "*" artist ": " title "*"))
-                            (lyrics (funcall funct artist title)))
-                        ;; if no lyrics returned, try again with song title only (helps with covers)
-                        (when (or (not lyrics)
-                                  (zerop (length lyrics)))
-                          (setq lyrics (funcall funct nil title)))
-                        (if (and lyrics
-                                 (> (length lyrics) 0))
-                            (progn
-                              (get-buffer-create buffer)
-                              (set-buffer buffer)
-                              (let ((buffer-read-only nil))
-                                (erase-buffer)
-                                (insert lyrics)
-                                (delete-trailing-whitespace)
-                                (switch-to-buffer buffer)
-                                (goto-char (point-min))
-                                (view-mode)))
-                          (message "No lyrics found for Artist: %s, Title: %s" artist title)))))))
+      RATING may be a number from 0 to 5, where 1 is least favorite and
+      5 is most favorite. 0 will unset the rating."
+          (interactive)
+          (unless (and (>= rating 0) (<= rating 5))
+            (error "Rating must be a number from 0 through 5"))
+          (let ((details (mingus-get-details)))
+            (when details
+              (let* ((file (plist-get details 'file))
+                     (song-name (propertize
+                                 (replace-regexp-in-string "^.*/\\([^/]+\\)\\..*$" "\\1" file)
+                                 'face
+                                 'font-lock-keyword-face))
+                     (rating-name (propertize (number-to-string rating) 'face 'font-lock-keyword-face))
+                     (playlist (concat mingus-ratings-prefix (number-to-string rating)))
+                     (clear-cmd (concat
+                                 "cd " mingus-ratings-directory " && "
+                                 "(for x in $(find . -name '" mingus-ratings-prefix "*') ; do grep -v -F \""
+                                 (replace-regexp-in-string "\"" "\"" file)
+                                 "\" \"${x}\" > tmp ; mv tmp \"${x}\" ; done)"))
+                     (set-cmd (concat
+                               "cd " mingus-ratings-directory " && "
+                               "(echo \""
+                               (replace-regexp-in-string "\"" "\"" file)
+                               "\" >> " playlist ") && "
+                               "(cat " playlist " | sort > tmp ; mv tmp " playlist ")")))
+                ;;(message "clear-cmd: %s" clear-cmd)
+                ;;(message "set-cmd: %s" set-cmd)
+                ;; make sure ratings directory exists
+                (unless (file-exists-p mingus-ratings-directory)
+                  (make-directory mingus-ratings-directory))
+                ;; clear song from any play lists
+                (shell-command clear-cmd)
+                ;; if rating > 0, add song to corresponding ratings play list
+                (if (> rating 0)
+                    ;; set rating
+                    (if (> (shell-command set-cmd) 0)
+                        (error "Could not set rating for %s" song-name)
+                      (message "%s rating was set to %s" song-name rating-name))
+                  ;; rating was cleared
+                  (message "%s rating was cleared" song-name))
+                (let (buffer-read-only)
+                  (buffer-disable-undo)
+                  (mingus-display-song-rating nil))))))
 
-              ;;-----------------------------------------------------------------------
-              ;;;; Mingus Song Rating System
-              ;;-----------------------------------------------------------------------
+        (defun mingus-set-song-rating-1 ()
+          "Call `mingus-set-song-rating' with a rating of 1."
+          (interactive)
+          (mingus-set-song-rating 1))
 
-              (init-message 3 "Mingus Song Rating System")
+        (defun mingus-set-song-rating-2 ()
+          "Call `mingus-set-song-rating' with a rating of 2."
+          (interactive)
+          (mingus-set-song-rating 2))
 
-              ;; directory to store rating play lists
-              (defcustom mingus-ratings-directory `,(file-truename (expand-file-name "~/.song-ratings"))
-                "Directory to store rating play lists."
-                :type 'string
-                :group 'mingus)
+        (defun mingus-set-song-rating-3 ()
+          "Call `mingus-set-song-rating' with a rating of 3."
+          (interactive)
+          (mingus-set-song-rating 3))
 
-              ;; rating play list prefix
-              (defcustom mingus-ratings-prefix "songs-rated-"
-                "Ratings play list files prefix."
-                :type 'string
-                :group 'mingus)
+        (defun mingus-set-song-rating-4 ()
+          "Call `mingus-set-song-rating' with a rating of 4."
+          (interactive)
+          (mingus-set-song-rating 4))
 
-              (defun mingus-get-song-rating ()
-                "Return song rating of the selected song."
-                (interactive)
-                (let ((details (mingus-get-details)))
-                  (when details
-                    (let* ((file (plist-get details 'file))
-                           (song-name (propertize
-                                       (replace-regexp-in-string "^.*/\\([^/]+\\)\\..*$" "\\1" file)
-                                       'face
-                                       'font-lock-keyword-face))
-                           (get-cmd (concat
-                                     "cd " mingus-ratings-directory " && "
-                                     "(for x in $(ls " mingus-ratings-prefix "*) ; do grep -q -F \""
-                                     (replace-regexp-in-string "\"" "\"" file)
-                                     "\" \"${x}\" && echo ${x: -1}; done)")))
-                      ;;(message "get-cmd: %s" get-cmd)
-                      ;; make sure ratings directory exists
-                      (unless (file-exists-p mingus-ratings-directory)
-                        (make-directory mingus-ratings-directory))
-                      ;; get rating, if there is one
-                      (let ((rating (shell-command-to-string get-cmd)))
-                        (when (string-match "\r?\n$" rating)
-                          (setq rating (replace-match "" t nil rating)))
-                        (when (zerop (length rating))
-                          (setq rating "0"))
-                        (let ((rating-name (propertize rating 'face 'font-lock-keyword-face)))
-                          ;; print or return rating
-                          (if (called-interactively-p 'any)
-                              (message "Rating for %s is %s" song-name rating-name)
-                            (string-to-number rating))))))))
+        (defun mingus-set-song-rating-5 ()
+          "Call `mingus-set-song-rating' with a rating of 5."
+          (interactive)
+          (mingus-set-song-rating 5))
 
-              (defun mingus-set-song-rating (rating)
-                "Set song rating of the selected song.
-
-            RATING may be a number from 0 to 5, where 1 is least favorite and
-            5 is most favorite. 0 will unset the rating."
-                (interactive)
-                (unless (and (>= rating 0) (<= rating 5))
-                  (error "Rating must be a number from 0 through 5"))
-                (let ((details (mingus-get-details)))
-                  (when details
-                    (let* ((file (plist-get details 'file))
-                           (song-name (propertize
-                                       (replace-regexp-in-string "^.*/\\([^/]+\\)\\..*$" "\\1" file)
-                                       'face
-                                       'font-lock-keyword-face))
-                           (rating-name (propertize (number-to-string rating) 'face 'font-lock-keyword-face))
-                           (playlist (concat mingus-ratings-prefix (number-to-string rating)))
-                           (clear-cmd (concat
-                                       "cd " mingus-ratings-directory " && "
-                                       "(for x in $(find . -name '" mingus-ratings-prefix "*') ; do grep -v -F \""
-                                       (replace-regexp-in-string "\"" "\"" file)
-                                       "\" \"${x}\" > tmp ; mv tmp \"${x}\" ; done)"))
-                           (set-cmd (concat
-                                     "cd " mingus-ratings-directory " && "
-                                     "(echo \""
-                                     (replace-regexp-in-string "\"" "\"" file)
-                                     "\" >> " playlist ") && "
-                                     "(cat " playlist " | sort > tmp ; mv tmp " playlist ")")))
-                      ;;(message "clear-cmd: %s" clear-cmd)
-                      ;;(message "set-cmd: %s" set-cmd)
-                      ;; make sure ratings directory exists
-                      (unless (file-exists-p mingus-ratings-directory)
-                        (make-directory mingus-ratings-directory))
-                      ;; clear song from any play lists
-                      (shell-command clear-cmd)
-                      ;; if rating > 0, add song to corresponding ratings play list
-                      (if (> rating 0)
-                          ;; set rating
-                          (if (> (shell-command set-cmd) 0)
-                              (error "Could not set rating for %s" song-name)
-                            (message "%s rating was set to %s" song-name rating-name))
-                        ;; rating was cleared
-                        (message "%s rating was cleared" song-name))
-                      (let (buffer-read-only)
-                        (buffer-disable-undo)
-                        (mingus-display-song-rating nil))))))
-
-              (defun mingus-set-song-rating-1 ()
-                "Call `mingus-set-song-rating' with a rating of 1."
-                (interactive)
-                (mingus-set-song-rating 1))
-
-              (defun mingus-set-song-rating-2 ()
-                "Call `mingus-set-song-rating' with a rating of 2."
-                (interactive)
-                (mingus-set-song-rating 2))
-
-              (defun mingus-set-song-rating-3 ()
-                "Call `mingus-set-song-rating' with a rating of 3."
-                (interactive)
-                (mingus-set-song-rating 3))
-
-              (defun mingus-set-song-rating-4 ()
-                "Call `mingus-set-song-rating' with a rating of 4."
-                (interactive)
-                (mingus-set-song-rating 4))
-
-              (defun mingus-set-song-rating-5 ()
-                "Call `mingus-set-song-rating' with a rating of 5."
-                (interactive)
-                (mingus-set-song-rating 5))
-
-              (defun mingus-set-song-rating-0 ()
-                "Call `mingus-set-song-rating' with a rating of 0."
-                (interactive)
-                (mingus-set-song-rating 0)))
+        (defun mingus-set-song-rating-0 ()
+          "Call `mingus-set-song-rating' with a rating of 0."
+          (interactive)
+          (mingus-set-song-rating 0)))
     #+END_SRC
 
 *** minions

@@ -16836,7 +16836,7 @@ Use text properties to mark the line then call `mingus-set-NP-mark'."
               (set-buffer-modified-p nil)
               (setq buffer-undo-list nil)
               (goto-char (point-min)))
-            (switch-to-buffer buffer)))))))))
+            (switch-to-buffer buffer))))))
 
   ;;-----------------------------------------------------------------------
   ;;;; Mingus Fetch Lyrics Commands
