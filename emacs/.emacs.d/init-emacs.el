@@ -11655,9 +11655,10 @@ of the current buffer."
 (defun insert-figlet (text)
   "Insert figlet version of TEXT, if figlet is installed."
   (interactive "*sText: ")
-  (if (executable-find "figlet")
-      (insert (shell-command-to-string (concat "figlet " text)))
-    (error "Could not find figlet command")))
+  (let ((figlet "figlet"))
+    (unless (executable-find figlet)
+      (error "Could not find %s command" figlet))
+    (insert (shell-command-to-string (concat figlet " " text)))))
 ;; insert-figlet:1 ends here
 
 ;; [[file:init-emacs.org::#functions-text-inserting-functions-insert-password][insert-password:1]]
@@ -14643,11 +14644,8 @@ USING is the remaining peg."
   :hook (completion-list-mode . consult-preview-at-point-mode)
   :init
   ;; improve the register preview for `consult-register' and the emacs built-ins
-  (setq register-preview-function #'consult-register-format)
-  ;; delay register preview
-  ;;(setq register-preview-delay 0.5)
-  ;; disable register preview
-  (setq register-preview-delay nil)
+  (setq register-preview-function #'consult-register-format
+        register-preview-delay 0.5)
   ;; add thin lines, sorting, and hide the mode line of the register preview window
   (advice-add 'register-preview :override #'consult-register-window)
   ;; ;; replace `completing-read-multiple' with an enhanced version
@@ -14659,8 +14657,7 @@ USING is the remaining peg."
   ;; configure preview key
   (consult-customize
    consult-theme
-   ;;:preview-key '(:debounce 0.2 any))   ; delay preview
-   :preview-key (kbd "<tab>"))          ; show preview on key press
+   :preview-key '(:debounce 0.2 any))   ; delay preview
   ;;  consult-ripgrep consult-git-grep consult-grep
   ;;  consult-bookmark consult-recent-file consult-xref
   ;;  consult--source-bookmark consult--source-recent-file
@@ -14723,9 +14720,10 @@ USING is the remaining peg."
               ("<tab>" . corfu-complete))
   :custom
   (corfu-cycle nil)                 ; disable cycling for `corfu-next/previous'
-  (corfu-auto t)                    ; enable auto completion
-  (corfu-auto-prefix 3)             ; auto complete after a number of typed characters
-  (corfu-auto-delay 1.0)            ; auto complete after a delay
+  ;;(corfu-auto t)                    ; enable auto completion
+  ;;(corfu-auto-prefix 3)             ; auto complete after a number of typed characters
+  ;;(corfu-auto-delay 1.0)            ; auto complete after a delay
+  (corfu-auto nil)                    ; disable auto completion
   (corfu-separator ?\s)             ; whitespace is orderless field separator
   (corfu-quit-at-boundary 'separator) ; quit at completion boundary
   (corfu-quit-no-match nil)         ; do not quit if there is no match
@@ -16647,22 +16645,22 @@ And the line would be overlaid like:
 
 Concatenate the results for the values with SEPARATOR, where SEPARATOR
 defaults to the string \" - \"."
-    (let ((artist (cl-getf plist 'Artist))
-          (album (cl-getf plist 'Album))
-          (title (cl-getf plist 'Title))
-          (albumartist (cl-getf plist 'Albumartist))
-          (track (cl-getf plist 'Track))
-          (name (cl-getf plist 'Name))
-          (genre (cl-getf plist 'Genre))
-          (date (cl-getf plist 'Date))
-          (composer (cl-getf plist 'Composer))
-          (performer (cl-getf plist 'Performer))
-          (comment (cl-getf plist 'Comment))
-          (disc (cl-getf plist 'Disc))
-          (time (cl-getf plist 'Time))
-          (pos (cl-getf plist 'Pos))
-          (id (cl-getf plist 'Id))
-          (file (cl-getf plist 'file))
+    (let ((artist (plist-get plist 'Artist))
+          (album (plist-get plist 'Album))
+          (title (plist-get plist 'Title))
+          (albumartist (plist-get plist 'Albumartist))
+          (track (plist-get plist 'Track))
+          (name (plist-get plist 'Name))
+          (genre (plist-get plist 'Genre))
+          (date (plist-get plist 'Date))
+          (composer (plist-get plist 'Composer))
+          (performer (plist-get plist 'Performer))
+          (comment (plist-get plist 'Comment))
+          (disc (plist-get plist 'Disc))
+          (time (plist-get plist 'Time))
+          (pos (plist-get plist 'Pos))
+          (id (plist-get plist 'Id))
+          (file (plist-get plist 'file))
           (separator (or separator " - ")))
       (or (and mingus-use-caching
                (gethash id mingus-song-strings))
@@ -16711,7 +16709,7 @@ Use text properties to mark the line then call `mingus-set-NP-mark'."
     (when (string= (buffer-name) "*Mingus*")
       (ignore-errors
         (let ((pos (or (and (> (length args) 1) (cadr args))
-                       (cl-getf (mpd-get-status mpd-inter-conn) 'song)))
+                       (plist-get (mpd-get-status mpd-inter-conn) 'song)))
               buffer-read-only)
           (when pos
             (save-mark-and-excursion
@@ -16774,15 +16772,44 @@ Use text properties to mark the line then call `mingus-set-NP-mark'."
     (message "Updating mpc (Music Player Client)...")
     (shell-command "mpc --wait update > /dev/null 2>&1"))
 
+  (defun mingus--edit-id3tag-process ()
+    ""
+    (message "%s" (buffer-substring-no-properties (point-min) (point-max)))
+    )
+
   (defun mingus-edit-id3tag ()
     "Edit id3 tag of the selected song."
     (interactive)
-    (let ((details (mingus-get-details)))
+    (let ((id3tag "id3tag")
+          (details (mingus-get-details)))
+      (unless (executable-find id3tag)
+        (error "Could not find %s command" id3tag))
       (when details
-        (let ((file (plist-get details 'file)))
-          (message "Editing id3 tag for file: %s" file)
-          (cd mingus-mpd-music-dir)
-          (start-process "id3edit" nil "~/bin/id3edit" file)))))
+        (let ((buffer-name "*Mingus Edit ID3 Tag*")
+              (keymap (make-sparse-keymap))
+              (artist (plist-get details 'Artist))
+              (album (plist-get details 'Album))
+              (title (plist-get details 'Title))
+              (track (plist-get details 'Track))
+              (genre (plist-get details 'Genre))
+              (date (plist-get details 'Date))
+              (file (plist-get details 'file)))
+          ;; (bind-keys :map keymap
+          ;;            ("<return>" . newline)
+          ;;            ("C-c C-c" . exit-minibuffer)
+          ;;            ("C-c C-k" . (lambda (x) (setq process-changes nil) (exit-minibuffer))))
+          (let* ((info (concat
+                        "File:   " file "\n"
+                        "Artist: " artist "\n"
+                        "Album:  " album "\n"
+                        "Title:  " title "\n"
+                        "Track:  " track "\n"
+                        "Year:   " date "\n"
+                        "Genre:  " genre)))
+                 (org-src--edit-element nil buffer-name nil #'mingus--edit-id3tag-process info))
+                 ;;(result (read-from-minibuffer "" nil keymap nil t info)))
+                 ;;(result (completing-read "" (list info) nil nil (cons info 0) t)))
+          ))))
 
   ;;-----------------------------------------------------------------------
   ;;;; Mingus Fetch Lyrics Commands
