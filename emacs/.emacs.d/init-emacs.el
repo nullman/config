@@ -16782,7 +16782,6 @@ Use text properties to mark the line then call `mingus-set-NP-mark'."
     "Close the edit window without saving changes."
     (interactive)
     (message "%s" (buffer-substring-no-properties (point-min) (point-max)))
-    ;;(set-buffer-modified-p nil)
     (kill-buffer (current-buffer)))
 
   (defun mingus-edit-id3tag ()
@@ -16816,6 +16815,8 @@ Use text properties to mark the line then call `mingus-set-NP-mark'."
                         "Genre:  " genre)))
             (with-current-buffer buffer
               (setq buffer-read-only nil)
+              (add-text-properties (point-min) (point-max) '(read-only nil))
+              (kill-region (point-min) (point-max))
               (setq major-mode 'text-mode)
               (setq mode-name "Edit ID3 Tags")
               (use-local-map keymap)
@@ -16826,13 +16827,16 @@ Use text properties to mark the line then call `mingus-set-NP-mark'."
                       " or abort with `\\[mingus-edit-id3tag--abort-edit]'")))
               (insert info)
               (goto-char (point-min))
+              (while (not (eobp))
+                (add-text-properties
+                 (point) (+ (point) 7)
+                 '(face bold read-only t cursor-intangible t))
+                (forward-line 1))
+              (cursor-intangible-mode 1)
               (set-buffer-modified-p nil)
               (setq buffer-undo-list nil)
-              ;; (message "%s"
-              ;;          (substitute-command-keys
-              ;;           (concat "Press \\[mingus-edit-id3tag--finish-edit] when finished"
-              ;;                   " or \\[mingus-edit-id3tag--abort-edit] to abort changes"
-            (switch-to-buffer buffer))))))))))
+              (goto-char (point-min)))
+            (switch-to-buffer buffer)))))))))
 
   ;;-----------------------------------------------------------------------
   ;;;; Mingus Fetch Lyrics Commands
