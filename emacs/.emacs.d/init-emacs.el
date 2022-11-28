@@ -16772,10 +16772,18 @@ Use text properties to mark the line then call `mingus-set-NP-mark'."
     (message "Updating mpc (Music Player Client)...")
     (shell-command "mpc --wait update > /dev/null 2>&1"))
 
-  (defun mingus--edit-id3tag-process ()
-    ""
+  (defun mingus-edit-id3tag--finish-edit ()
+    "Save any id3 tag changes and close the edit window."
+    (interactive)
     (message "%s" (buffer-substring-no-properties (point-min) (point-max)))
-    )
+    (kill-buffer (current-buffer)))
+
+  (defun mingus-edit-id3tag--abort-edit ()
+    "Close the edit window without saving changes."
+    (interactive)
+    (message "%s" (buffer-substring-no-properties (point-min) (point-max)))
+    ;;(set-buffer-modified-p nil)
+    (kill-buffer (current-buffer)))
 
   (defun mingus-edit-id3tag ()
     "Edit id3 tag of the selected song."
@@ -16785,7 +16793,7 @@ Use text properties to mark the line then call `mingus-set-NP-mark'."
       (unless (executable-find id3tag)
         (error "Could not find %s command" id3tag))
       (when details
-        (let ((buffer-name "*Mingus Edit ID3 Tag*")
+        (let ((buffer (get-buffer-create "*Mingus Edit ID3 Tags*"))
               (keymap (make-sparse-keymap))
               (artist (plist-get details 'Artist))
               (album (plist-get details 'Album))
@@ -16794,10 +16802,10 @@ Use text properties to mark the line then call `mingus-set-NP-mark'."
               (genre (plist-get details 'Genre))
               (date (plist-get details 'Date))
               (file (plist-get details 'file)))
-          ;; (bind-keys :map keymap
-          ;;            ("<return>" . newline)
-          ;;            ("C-c C-c" . exit-minibuffer)
-          ;;            ("C-c C-k" . (lambda (x) (setq process-changes nil) (exit-minibuffer))))
+          (bind-keys :map keymap
+                     ("<return>" . newline)
+                     ("C-c C-c" . mingus-edit-id3tag--finish-edit)
+                     ("C-c C-k" . mingus-edit-id3tag--abort-edit))
           (let* ((info (concat
                         "File:   " file "\n"
                         "Artist: " artist "\n"
@@ -16806,10 +16814,25 @@ Use text properties to mark the line then call `mingus-set-NP-mark'."
                         "Track:  " track "\n"
                         "Year:   " date "\n"
                         "Genre:  " genre)))
-                 (org-src--edit-element nil buffer-name nil #'mingus--edit-id3tag-process info))
-                 ;;(result (read-from-minibuffer "" nil keymap nil t info)))
-                 ;;(result (completing-read "" (list info) nil nil (cons info 0) t)))
-          ))))
+            (with-current-buffer buffer
+              (setq buffer-read-only nil)
+              (setq major-mode 'text-mode)
+              (setq mode-name "Edit ID3 Tags")
+              (use-local-map keymap)
+              (setq header-line-format
+                    (substitute-command-keys
+                     (concat
+                      "Edit id3 tags, then exit with `\\[mingus-edit-id3tag--finish-edit]'"
+                      " or abort with `\\[mingus-edit-id3tag--abort-edit]'")))
+              (insert info)
+              (goto-char (point-min))
+              (set-buffer-modified-p nil)
+              (setq buffer-undo-list nil)
+              ;; (message "%s"
+              ;;          (substitute-command-keys
+              ;;           (concat "Press \\[mingus-edit-id3tag--finish-edit] when finished"
+              ;;                   " or \\[mingus-edit-id3tag--abort-edit] to abort changes"
+            (switch-to-buffer buffer))))))))))
 
   ;;-----------------------------------------------------------------------
   ;;;; Mingus Fetch Lyrics Commands
