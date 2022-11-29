@@ -35,7 +35,7 @@ _delay 10
 
 # initialize foreground applications
 _command alacritty && alacritty -e ${HOME}/bin/run-screen &
-#_command emacs && _delay 1 emacs &
+_command emacs && _delay 1 emacs &
 #_command slack && _delay 1 slack &
 #_command thunderbird && _delay 10 thunderbird &
 _command firefox && _delay 1 firefox &
