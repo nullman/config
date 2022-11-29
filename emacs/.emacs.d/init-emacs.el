@@ -14747,27 +14747,27 @@ USING is the remaining peg."
 ;;;; corfu-doc
 ;;------------------------------------------------------------------------------
 
-(init-message 3 "corfu-doc")
+;; (init-message 3 "corfu-doc")
 
-;; popup documentation for completion candidates
-(use-package corfu-doc
-  :straight t
-  :after (corfu)
-  :hook (corfu-mode . corfu-doc-mode)
-  :bind (:map corfu-map
-              ("M-p" . corfu-doc-scroll-down)
-              ("M-n" . corfu-doc-scroll-up)
-              ("M-d" . corfu-doc-toggle)))
+;; ;; popup documentation for completion candidates
+;; (use-package corfu-doc
+;;   :straight t
+;;   :after (corfu)
+;;   :hook (corfu-mode . corfu-doc-mode)
+;;   :bind (:map corfu-map
+;;               ("M-p" . corfu-doc-scroll-down)
+;;               ("M-n" . corfu-doc-scroll-up)
+;;               ("M-d" . corfu-doc-toggle)))
 
-(init-message 3 "corfu-doc-terminal")
+;; (init-message 3 "corfu-doc-terminal")
 
-;; make `corfu-doc' work in terminal
-(use-package corfu-doc-terminal
-  :straight (corfu-doc-terminal :type git :repo "https://codeberg.org/akib/emacs-corfu-doc-terminal.git")
-  :init
-  (unless (display-graphic-p)
-    (corfu-doc-terminal-mode 1)))
-;; corfu:1 ends here
+;; ;; make `corfu-doc' work in terminal
+;; (use-package corfu-doc-terminal
+;;   :straight (corfu-doc-terminal :type git :repo "https://codeberg.org/akib/emacs-corfu-doc-terminal.git")
+;;   :init
+;;   (unless (display-graphic-p)
+;;     (corfu-doc-terminal-mode 1)))
+;; ;; corfu:1 ends here
 
 ;; [[file:init-emacs.org::#cape][cape:1]]
 ;;==============================================================================
