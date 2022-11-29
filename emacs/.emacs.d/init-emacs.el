@@ -14743,30 +14743,30 @@ USING is the remaining peg."
     (corfu-mode 1))
   (add-hook 'eshell-mode-hook #'custom-corfu-eshell-mode-hook))
 
-;;------------------------------------------------------------------------------
-;;;; corfu-doc
-;;------------------------------------------------------------------------------
+;; ;;------------------------------------------------------------------------------
+;; ;;;; corfu-doc
+;; ;;------------------------------------------------------------------------------
 
-(init-message 3 "corfu-doc")
+;; (init-message 3 "corfu-doc")
 
-;; popup documentation for completion candidates
-(use-package corfu-doc
-  :straight t
-  :after (corfu)
-  :hook (corfu-mode . corfu-doc-mode)
-  :bind (:map corfu-map
-              ("M-p" . corfu-doc-scroll-down)
-              ("M-n" . corfu-doc-scroll-up)
-              ("M-d" . corfu-doc-toggle)))
+;; ;; popup documentation for completion candidates
+;; (use-package corfu-doc
+;;   :straight t
+;;   :after (corfu)
+;;   :hook (corfu-mode . corfu-doc-mode)
+;;   :bind (:map corfu-map
+;;               ("M-p" . corfu-doc-scroll-down)
+;;               ("M-n" . corfu-doc-scroll-up)
+;;               ("M-d" . corfu-doc-toggle)))
 
-(init-message 3 "corfu-doc-terminal")
+;; (init-message 3 "corfu-doc-terminal")
 
-;; make `corfu-doc' work in terminal
-(use-package corfu-doc-terminal
-  :straight (corfu-doc-terminal :type git :repo "https://codeberg.org/akib/emacs-corfu-doc-terminal.git")
-  :init
-  (unless (display-graphic-p)
-    (corfu-doc-terminal-mode 1)))
+;; ;; make `corfu-doc' work in terminal
+;; (use-package corfu-doc-terminal
+;;   :straight (corfu-doc-terminal :type git :repo "https://codeberg.org/akib/emacs-corfu-doc-terminal.git")
+;;   :init
+;;   (unless (display-graphic-p)
+;;     (corfu-doc-terminal-mode 1)))
 ;; corfu:1 ends here
 
 ;; [[file:init-emacs.org::#cape][cape:1]]
@@ -20667,8 +20667,9 @@ Commands:
  `(("List Packages" "(package-list-packages :nofetch)" "List packages.")
    ("List Packages (Refresh)" "package-list-packages" "List packages (after refresh).")
    ("Install Package" "package-install" "Install package.")
-   ("Straight Refresh Recipes" "straight-pull-recipe-repositories" "Refresh recipe repositories.")
-   ("Straight Pull All" "straight-pull-all" "Pull all packages.")
+   ("Refresh Recipes (straight)" "straight-pull-recipe-repositories" "Refresh recipe repositories.")
+   ("Pull All (straight)" "straight-pull-all" "Pull all packages.")
+   ("Remove Unused (straight)" "(straight-remove-unused-repos t)" "Remove unused recipies.")
    ;;("Straight Fetch All" "straight-fetch-all" "Fetch all packages.")
    ;;("Auto-Remove Packages" "package-autoremove" "Remove packages that are no more needed.")
    ;;("Quelpa Upgrade" "quelpa-upgrade" "Upgrade one Quelpa package.")
