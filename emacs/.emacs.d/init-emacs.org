@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-11-29 11:40 (kyle)>
+  #+TIMESTAMP: <2022-11-30 11:16 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -33326,6 +33326,12 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
 
       (when work-system
         (init-message 2 "Work: Settings")
+
+        ;; set default browser
+        (setq browse-url-browser-function #'browse-url-default-browser)
+
+        ;; set secondary browser
+        (setq browse-url-secondary-browser-function #'browse-url-default-browser)
 
         ;; add perl files to remove-tabs-exceptions
         (add-to-list 'remove-tabs-exceptions '(:file . "\\.t\\'") t)

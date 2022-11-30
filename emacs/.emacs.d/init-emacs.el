@@ -21478,6 +21478,12 @@ to the current ERC buffer."
 (when work-system
   (init-message 2 "Work: Settings")
 
+  ;; set default browser
+  (setq browse-url-browser-function #'browse-url-default-browser)
+
+  ;; set secondary browser
+  (setq browse-url-secondary-browser-function #'browse-url-default-browser)
+
   ;; add perl files to remove-tabs-exceptions
   (add-to-list 'remove-tabs-exceptions '(:file . "\\.t\\'") t)
   (add-to-list 'remove-tabs-exceptions '(:file . "\\.tt\\'") t)

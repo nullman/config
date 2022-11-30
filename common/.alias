@@ -1739,10 +1739,10 @@ alias lsofg="sudo lsof | grep"
 alias wgetp="wget --passive-ftp"
 #        nml                     nmap localhost
 alias nml="nmap localhost"
-#        nmlp                    nmap -p 1-10000 localhost
-alias nmlp="nmap -p 1-10000 localhost"
-#        nmp                     nmap -p 1-10000
-alias nmp="nmap -p 1-10000"
+#        nmlp                    nmap -p 1-65535 localhost
+alias nmlp="nmap -p 1-65535 localhost"
+#        nmp                     nmap -p 1-65535
+alias nmp="nmap -p 1-65535"
 #        nmu                     nmap with udp
 alias nmu="nmap -sS -sU"
 #        asl                     arp-scan --localnet
