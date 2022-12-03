@@ -17411,19 +17411,6 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
   :straight t)
 ;; package-lint:1 ends here
 
-;; [[file:init-emacs.org::#modules-paredit][paredit:1]]
-;;------------------------------------------------------------------------------
-;;; Packages: paredit
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modules: paredit")
-
-(use-package paredit
-  :straight t
-  :hook ((lisp-data-mode . enable-paredit-mode)
-         (scheme-mode . enable-paredit-mode)))
-;; paredit:1 ends here
-
 ;; [[file:init-emacs.org::#modules-persistent-scratch][persistent-scratch:1]]
 ;;------------------------------------------------------------------------------
 ;;; Packages: persistent-scratch
