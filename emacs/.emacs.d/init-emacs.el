@@ -15925,11 +15925,11 @@ USING is the remaining peg."
     (set-face-background 'git-gutter+-separator background)
     (set-face-bold 'git-gutter+-added t)
     (set-face-bold 'git-gutter+-deleted t)
-    (set-face-bold 'git-gutter+-modified t))
+    (set-face-bold 'git-gutter+-modified t)))
 
-  ;; refresh periodically
-  (cancel-function-timers #'git-gutter+-refresh)
-  (run-with-idle-timer 20 :repeat #'git-gutter+-refresh))
+  ;; ;; refresh periodically
+  ;; (cancel-function-timers #'git-gutter+-refresh)
+  ;; (run-with-idle-timer 20 :repeat #'git-gutter+-refresh))
 
 ;; (use-package git-gutter-fringe+
 ;;   :straight t
