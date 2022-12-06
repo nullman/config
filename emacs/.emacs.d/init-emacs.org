@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-12-05 14:34 (kyle)>
+  #+TIMESTAMP: <2022-12-06 15:46 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -27560,6 +27560,40 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;; (use-package treemacs-magit
       ;;   :after (treemacs magit)
       ;;   :ensure t))
+    #+END_SRC
+
+*** tree-sitter
+    :PROPERTIES:
+    :CUSTOM_ID: packages-tree-sitter
+    :END:
+
+    Incremental Parsing System
+
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Packages: tree-sitter
+      ;;------------------------------------------------------------------------------
+
+      (init-message 2 "Packages: tree-sitter")
+
+      (use-package tree-sitter
+        :straight t
+        ;;:hook (prog-mode . tree-sitter-hl-mode)
+        :hook (tree-sitter-after-on . tree-sitter-hl-mode)
+        :init
+        (global-tree-sitter-mode 1))
+
+      ;;------------------------------------------------------------------------------
+      ;;;; tree-sitter-langs
+      ;;
+      ;; Grammar bundle for tree-sitter.
+      ;;------------------------------------------------------------------------------
+
+      (init-message 3 "tree-sitter-langs")
+
+      (use-package tree-sitter-langs
+        :straight t
+        :after (tree-sitter))
     #+END_SRC
 
 *** +twit+

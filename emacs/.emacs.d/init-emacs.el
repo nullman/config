@@ -17935,6 +17935,33 @@ otherwise run `find-file-as-root'."
       (find-file-as-root))))
 ;; tramp:1 ends here
 
+;; [[file:init-emacs.org::#packages-tree-sitter][tree-sitter:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: tree-sitter
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Packages: tree-sitter")
+
+(use-package tree-sitter
+  :straight t
+  ;;:hook (prog-mode . tree-sitter-hl-mode)
+  :hook (tree-sitter-after-on . tree-sitter-hl-mode)
+  :init
+  (global-tree-sitter-mode 1))
+
+;;------------------------------------------------------------------------------
+;;;; tree-sitter-langs
+;;
+;; Grammar bundle for tree-sitter.
+;;------------------------------------------------------------------------------
+
+(init-message 3 "tree-sitter-langs")
+
+(use-package tree-sitter-langs
+  :straight t
+  :after (tree-sitter))
+;; tree-sitter:1 ends here
+
 ;; [[file:init-emacs.org::#modules-undo-tree][undo-tree:1]]
 ;;------------------------------------------------------------------------------
 ;;; Packages: undo-tree
