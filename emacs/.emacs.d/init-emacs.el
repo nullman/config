@@ -17400,6 +17400,17 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
     (text-scale-mode 0)))
 ;; org-tree-slide:1 ends here
 
+;; [[file:init-emacs.org::#packages-olivetti][olivetti:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: olivetti
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Packages: olivetti")
+
+(use-package olivetti
+  :straight t)
+;; olivetti:1 ends here
+
 ;; [[file:init-emacs.org::#modules-package-lint][package-lint:1]]
 ;;------------------------------------------------------------------------------
 ;;; Packages: package-lint
