@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-12-13 11:51 (kyle)>
+  #+TIMESTAMP: <2022-12-16 11:41 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -3602,6 +3602,7 @@
                    ("c" . emacs-lisp-byte-compile)
                    ("d" . toggle-debug-on-error)
                    ("m" . macrostep-mode)
+                   ("q" . toggle-debug-on-quit)
                    ("s" . toggle-case-fold-search)
                    ("t" . toggle-truncate-lines)
                    ("x" . regexp-builder)
@@ -32260,7 +32261,8 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
            ("Export Bookmarks to HTML" "(org-bookmarks-export-to-html \"~/org/bookmarks.org\" \"~/Desktop/bookmarks.html\")" "Export bookmarks.org to ~/Desktop/bookmarks.html.")
            ("Export Bookmarks to NYXT" "(org-bookmarks-export-to-nyxt \"~/org/bookmarks.org\" \"~/config/local/.local/share/nyxt/bookmarks.lisp\")" "Export bookmarks.org to ~/config/local/.local/share/nyxt/bookmarks.lisp.")))
          ("Revert Buffer" "revert-buffer" "Run `revert-buffer' on current buffer.")
-         ("Debug On Error Mode [Toggle]" "toggle-debug-on-error" "Toggle `debug-on-error'.")
+         ("Debug on Error Mode [Toggle]" "toggle-debug-on-error" "Toggle `debug-on-error'.")
+         ("Debug on Quit Mode [Toggle]" "toggle-debug-on-quit" "Toggle `debug-on-quit'.")
          ("Truncate Line Mode [Toggle]" "toggle-truncate-lines" "Toggle `truncate-lines' in current buffer.")
          ("Visual Line Mode [Toggle]" "visual-line-mode" "Toggle `visual-line-mode' in current buffer.")
          ("Search Case Sensitivity [Toggle]" "toggle-case-fold-search" "Toggle case-fold-search in current buffer.")
