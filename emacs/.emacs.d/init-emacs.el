@@ -91,7 +91,7 @@ LEVEL is the indentation level."
 ;;------------------------------------------------------------------------------
 
 ;; reduce frequency of garbage collections
-(setq gc-cons-threshold (* 100 1000 1000)) ; default: 800000
+(setq gc-cons-threshold (* 8 1024 1024)) ; default: 800000
 ;; Set Emacs Lisp Garbage Collection Threshold:1 ends here
 
 ;; [[file:init-emacs.org::#start-ignore-errors-advice-wrapper][Ignore Errors Advice Wrapper:1]]
@@ -19219,10 +19219,9 @@ otherwise run `find-file-as-root'."
   :mode (("\\.md\\'" . markdown-mode)
          ("\\.markdown\\'" . markdown-mode))
   :functions (markdown-mode-fix-org-tables)
-  :config
   ;; use org table mode for markdown tables
-  (add-hook 'markdown-mode-hook #'orgtbl-mode)
-
+  :hook (markdown-mode . orgtbl-mode)
+  :config
   (defun markdown-mode-fix-org-tables ()
     "Hook to fix org table format on save."
     (save-mark-and-excursion
@@ -19230,9 +19229,11 @@ otherwise run `find-file-as-root'."
         (goto-char (point-min))
         (while (search-forward "-+-" nil :noerror)
           (replace-match "-|-")))))
-  (add-hook 'markdown-mode-hook
-            (lambda()
-              (add-hook 'before-save-hook #'markdown-mode-fix-org-tables nil 'make-it-local))))
+  (defun before-save-hook--markdown-mode-fix-org-tables ()
+    "Add hook to run `markdown-mode-fix-org-tables' before saving
+Markdown files."
+    (add-hook 'before-save-hook #'markdown-mode-fix-org-tables nil 'make-it-local))
+  (add-hook 'markdown-mode-hook #'before-save-hook--markdown-mode-fix-org-tables))
 ;; Markdown Mode:1 ends here
 
 ;; [[file:init-emacs.org::#modes-perl-mode][Perl Mode:1]]

@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-12-16 11:41 (kyle)>
+  #+TIMESTAMP: <2022-12-20 15:44 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -454,7 +454,7 @@
       ;;------------------------------------------------------------------------------
 
       ;; reduce frequency of garbage collections
-      (setq gc-cons-threshold (* 100 1000 1000)) ; default: 800000
+      (setq gc-cons-threshold (* 8 1024 1024)) ; default: 800000
     #+END_SRC
 
 *** Ignore Errors Advice Wrapper
@@ -2071,7 +2071,7 @@
     #+BEGIN_SRC emacs-lisp :tangle no
       ;; reduce frequency of garbage collections
       ;; this is handled in the Start section so it can take effect earlier
-      ;; (setq gc-cons-threshold (* 100 1000 1000)) ; default: 800000
+      ;; (setq gc-cons-threshold (* 8 1024 1024)) ; default: 800000
 
       ;; run garbage collections when Emacs is backgrounded
       (defun garbage-collect-maybe ()
@@ -30141,10 +30141,9 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         :mode (("\\.md\\'" . markdown-mode)
                ("\\.markdown\\'" . markdown-mode))
         :functions (markdown-mode-fix-org-tables)
-        :config
         ;; use org table mode for markdown tables
-        (add-hook 'markdown-mode-hook #'orgtbl-mode)
-
+        :hook (markdown-mode . orgtbl-mode)
+        :config
         (defun markdown-mode-fix-org-tables ()
           "Hook to fix org table format on save."
           (save-mark-and-excursion
@@ -30152,9 +30151,11 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
               (goto-char (point-min))
               (while (search-forward "-+-" nil :noerror)
                 (replace-match "-|-")))))
-        (add-hook 'markdown-mode-hook
-                  (lambda()
-                    (add-hook 'before-save-hook #'markdown-mode-fix-org-tables nil 'make-it-local))))
+        (defun before-save-hook--markdown-mode-fix-org-tables ()
+          "Add hook to run `markdown-mode-fix-org-tables' before saving
+      Markdown files."
+          (add-hook 'before-save-hook #'markdown-mode-fix-org-tables nil 'make-it-local))
+        (add-hook 'markdown-mode-hook #'before-save-hook--markdown-mode-fix-org-tables))
     #+END_SRC
 
 *** +Muse Mode+
