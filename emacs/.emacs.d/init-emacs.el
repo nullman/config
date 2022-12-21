@@ -2390,6 +2390,8 @@ KEYMAP defaults to `override-global-map'."
   (org-startup-folded 'overview)
   ;; remap disputed keys (see `org-disputed-keys')
   (org-replace-disputed-keys t)
+  ;; shift-cursor commands select text when possible
+  (org-support-shift-select 'always)
   ;; display inline images
   (org-startup-with-inline-images t)
   ;; do not insert empty lines around headings

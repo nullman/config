@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-12-20 15:44 (kyle)>
+  #+TIMESTAMP: <2022-12-21 09:07 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -3791,6 +3791,8 @@
         (org-startup-folded 'overview)
         ;; remap disputed keys (see `org-disputed-keys')
         (org-replace-disputed-keys t)
+        ;; shift-cursor commands select text when possible
+        (org-support-shift-select 'always)
         ;; display inline images
         (org-startup-with-inline-images t)
         ;; do not insert empty lines around headings
