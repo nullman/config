@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2022-12-21 09:07 (kyle)>
+  #+TIMESTAMP: <2022-12-24 13:06 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -3599,20 +3599,28 @@
                    :prefix "m"
                    :prefix-map space-miscellaneous-map
                    :menu-name "Miscellaneous Commands"
-                   ("c" . emacs-lisp-byte-compile)
-                   ("d" . toggle-debug-on-error)
+                   ("b" . emacs-lisp-byte-compile)
+                   ("c" . customize-group)
+                   ("g" . magit-status)
                    ("m" . macrostep-mode)
-                   ("q" . toggle-debug-on-quit)
-                   ("s" . toggle-case-fold-search)
-                   ("t" . toggle-truncate-lines)
-                   ("x" . regexp-builder)
-                   ("v" . visual-line-mode))
+                   ("s" . server-start-maybe)
+                   ("w" . webjump)
+                   ("x" . regexp-builder))
+        ;; miscellaneous display commands
+        (bind-keys :map space-miscellaneous-map
+                   :prefix "d"
+                   :prefix-map space-miscellaneous-display-map
+                   :menu-name "Display Commands"
+                   ("c" . list-colors-display)
+                   ("f" . list-faces-display)
+                   ("w" . display-time-world))
         ;; miscellaneous eval commands
         (bind-keys :map space-miscellaneous-map
                    :prefix "e"
                    :prefix-map space-miscellaneous-eval-map
                    :menu-name "Eval Commands"
                    ("b" . eval-buffer)
+                   ("i" . ielm)
                    ("r" . eval-region))
         ;; miscellaneous format commands
         (bind-keys :map space-miscellaneous-map
@@ -3621,6 +3629,16 @@
                    :menu-name "Format Commands"
                    ("j" . json-pretty-print)
                    ("x" . xml-pretty-print))
+        ;; miscellaneous toggle commands
+        (bind-keys :map space-miscellaneous-map
+                   :prefix "t"
+                   :prefix-map space-miscellaneous-toggle-map
+                   :menu-name "Toggle Commands"
+                   ("d" . toggle-debug-on-error)
+                   ("q" . toggle-debug-on-quit)
+                   ("s" . toggle-case-fold-search)
+                   ("t" . toggle-truncate-lines)
+                   ("v" . visual-line-mode))
 
         ;; package commands
         (bind-keys :map space-map
@@ -32200,32 +32218,13 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;; miscellaneous menu
       (auto-menu
        "Misc"
-       `(("Development"
-          (("Racket REPL" "run-racket" "Start Racket REPL for interactively evaluating Racket expressions.")
-           ("Kotlin REPL" "kotlin-repl" "Start Kotlin REPL for interactively evaluating Kotlin expressions.")
-           ("Common Lisp SLIME Mode" "(slime 'clisp)" "Start SLIME mode for interactively evaluating Common Lisp expressions.")
-           ("Steel Bank Common Lisp SLIME Mode" "(slime 'sbcl)" "Start SLIME mode for interactively evaluating Common Lisp expressions.")
-           ("Clojure SLIME Mode" "(slime 'clojure)" "Start SLIME mode for interactively evaluating Clojure expressions.")
-           ("Evaluate SLIME Buffer" "slime-eval-buffer" "Run `slime-eval-buffer' on the current buffer.")
-           ("Python REPL" "elpy-shell-switch-to-shell" "Start Python REPL for interactively evaluating Python expressions.")))
-         ("Reformat"
-          (("JSON Reformat" "json-pretty-print" "Reformat (pretty-print) JSON in current buffer.")
-           ("XML Reformat" "xml-pretty-print" "Reformat (pretty-print) XML in current buffer.")
-           ("Java Reformat" "java-pretty-print" "Reformat (pretty-print) Java code in current buffer.")
-           ("Ruby Reformat" "ruby-pretty-print" "Reformat (pretty-print) Ruby code in current buffer.")
-           ("C Reformat" "c-pretty-print" "Reformat (pretty-print) C code in current buffer.")))
-         ("Command Log"
-          (("Command Log Mode ON" "command-log-mode-on" "Turn on ‘command-log-mode’ and open the log buffer.")
-           ("Command Log Mode OFF" "command-log-mode-off" "Turn off ‘command-log-mode’ and close the log buffer.")
-           ("Clear Command Log Buffer" "clm/command-log-clear" "Clear the command log buffer.")))
-         ("Edit"
-          (("Replacer Replacements" "replacer-replacements-edit" "Edit `replacer-replacements'.")
-           ("Elfeed Boookmarks" "elfeed-bookmarks-edit" "Edit Elfeeds bookmarks file.")
-           ("Elpher Bookmarks" "elpher-bookmarks-edit" "Edit Elpher bookmarks file.")
-           ("YouTube Get Videos" "(org-link-open-from-string \"file:~/config-private/common/org/init-home.org::get-youtube-videos\")" "Edit get-youtube-videos file.")))
-         ("TAGS"
-          (("Visit Local TAGS" "(when (find-file-updir \"TAGS\") (visit-tags-table (find-file-updir \"TAGS\") t))" "Visit local tags table.")
-           ("Create Local TAGS" "etags-create" "Create local tags table.")))
+       `(("BBS"
+          (("Level 29 BBS Fetch"
+            "(progn (find-file (file-truename (expand-file-name \"level-29-bbs.org\" bbs-directory))) (unless (fboundp 'l29-fetch-messages-new) (org-babel-execute-buffer)) (l29-fetch-messages-new))"
+            "Run `l29-fetch-messages-new' to fetch new messages from the Level 29 BBS into level-29-bbs.org.")
+           ("House of Lunduke BBS Fetch"
+            "(progn (find-file (file-truename (expand-file-name \"house-of-lunduke-bbs.org\" bbs-directory))) (unless (fboundp 'lunduke-fetch-messages-new) (org-babel-execute-buffer)) (lunduke-fetch-messages-new))"
+            "Run `lunduke-fetch-messages-new' to fetch new messages from the House of Lunduke BBS into house-of-lunduke-bbs.org.")))
          ("Byte-Compile"
           (("Generate `init-emacs.el'"
             "(org-babel-generate-elisp-file (file-truename (expand-file-name \"init-emacs.org\" emacs-home-dir)))"
@@ -32240,6 +32239,35 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
            ;;        (concat "(compile-elisp \"" emacs-modules-dir "\")")
            ;;        (concat "Byte-Compile `" emacs-modules-dir "' directory."))
            ))
+         ("Command Log"
+          (("Command Log Mode ON" "command-log-mode-on" "Turn on ‘command-log-mode’ and open the log buffer.")
+           ("Command Log Mode OFF" "command-log-mode-off" "Turn off ‘command-log-mode’ and close the log buffer.")
+           ("Clear Command Log Buffer" "clm/command-log-clear" "Clear the command log buffer.")))
+         ("Coding System"
+          (("UNIX Coding System" "(set-coding-system 'unix)" "Call `set-coding-system' to set the coding system to UNIX.")
+           ("DOS Coding System" "(set-coding-system 'dos)" "Call `set-coding-system' to set the coding system to DOS.")
+           ("Mac Coding System" "(set-coding-system 'mac)" "Call `set-coding-system' to set the coding system to Mac.")))
+         ("Development"
+          (("Racket REPL" "run-racket" "Start Racket REPL for interactively evaluating Racket expressions.")
+           ("Kotlin REPL" "kotlin-repl" "Start Kotlin REPL for interactively evaluating Kotlin expressions.")
+           ("Common Lisp SLIME Mode" "(slime 'clisp)" "Start SLIME mode for interactively evaluating Common Lisp expressions.")
+           ("Steel Bank Common Lisp SLIME Mode" "(slime 'sbcl)" "Start SLIME mode for interactively evaluating Common Lisp expressions.")
+           ("Clojure SLIME Mode" "(slime 'clojure)" "Start SLIME mode for interactively evaluating Clojure expressions.")
+           ("Evaluate SLIME Buffer" "slime-eval-buffer" "Run `slime-eval-buffer' on the current buffer.")
+           ("Python REPL" "elpy-shell-switch-to-shell" "Start Python REPL for interactively evaluating Python expressions.")))
+         ("Display"
+          (("World Time" "display-time-world" "Display the time in various time zones.")
+           ("Colors Display" "list-colors-display" "List Emacs font colors.")
+           ("Faces Display" "list-faces-display" "List Emacs font faces.")))
+         ("Edit"
+          (("Replacer Replacements" "replacer-replacements-edit" "Edit `replacer-replacements'.")
+           ("Elfeed Boookmarks" "elfeed-bookmarks-edit" "Edit Elfeeds bookmarks file.")
+           ("Elpher Bookmarks" "elpher-bookmarks-edit" "Edit Elpher bookmarks file.")
+           ("YouTube Get Videos" "(org-link-open-from-string \"file:~/config-private/common/org/init-home.org::get-youtube-videos\")" "Edit get-youtube-videos file.")))
+         ("Export"
+          (("Export Bookmarks to JSON" "(org-bookmarks-export-to-json \"~/org/bookmarks.org\" \"~/Desktop/bookmarks.json\")" "Export bookmarks.org to ~/Desktop/bookmarks.json.")
+           ("Export Bookmarks to HTML" "(org-bookmarks-export-to-html \"~/org/bookmarks.org\" \"~/Desktop/bookmarks.html\")" "Export bookmarks.org to ~/Desktop/bookmarks.html.")
+           ("Export Bookmarks to NYXT" "(org-bookmarks-export-to-nyxt \"~/org/bookmarks.org\" \"~/config/local/.local/share/nyxt/bookmarks.lisp\")" "Export bookmarks.org to ~/config/local/.local/share/nyxt/bookmarks.lisp.")))
          ("Fonts"
           (("Hack Nerd Font Mono-12" "(set-frame-font \"Hack Nerd Font Mono-12\" nil t)" "Call `set-frame-font` to set the font to 'Hack Nerd Font Mono-12'.")
            ("Hack Nerd Font Mono-14" "(set-frame-font \"Hack Nerd Font Mono-14\" nil t)" "Call `set-frame-font` to set the font to 'Hack Nerd Font Mono-14'.")
@@ -32248,36 +32276,28 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
            ("DroidSansMono Nerd Font Mono-12" "(set-frame-font \"DroidSansMono Nerd Font Mono-12\" nil t)" "Call `set-frame-font` to set the font to 'DroidSansMono Nerd Font Mono-12'.")
            ("DroidSansMono Nerd Font Mono-14" "(set-frame-font \"DroidSansMono Nerd Font Mono-14\" nil t)" "Call `set-frame-font` to set the font to 'DroidSansMono Nerd Font Mono-14'.")
            ("9x15" "(set-frame-font \"9x15\" nil t)" "Call `set-frame-font` to set the font to '9x15'.")))
-         ("Coding System"
-          (("UNIX Coding System" "(set-coding-system 'unix)" "Call `set-coding-system' to set the coding system to UNIX.")
-           ("DOS Coding System" "(set-coding-system 'dos)" "Call `set-coding-system' to set the coding system to DOS.")
-           ("Mac Coding System" "(set-coding-system 'mac)" "Call `set-coding-system' to set the coding system to Mac.")))
-         ("BBS"
-          (("Level 29 BBS Fetch"
-            "(progn (find-file (file-truename (expand-file-name \"level-29-bbs.org\" bbs-directory))) (unless (fboundp 'l29-fetch-messages-new) (org-babel-execute-buffer)) (l29-fetch-messages-new))"
-            "Run `l29-fetch-messages-new' to fetch new messages from the Level 29 BBS into level-29-bbs.org.")
-           ("House of Lunduke BBS Fetch"
-            "(progn (find-file (file-truename (expand-file-name \"house-of-lunduke-bbs.org\" bbs-directory))) (unless (fboundp 'lunduke-fetch-messages-new) (org-babel-execute-buffer)) (lunduke-fetch-messages-new))"
-            "Run `lunduke-fetch-messages-new' to fetch new messages from the House of Lunduke BBS into house-of-lunduke-bbs.org.")))
-         ("Export"
-          (("Export Bookmarks to JSON" "(org-bookmarks-export-to-json \"~/org/bookmarks.org\" \"~/Desktop/bookmarks.json\")" "Export bookmarks.org to ~/Desktop/bookmarks.json.")
-           ("Export Bookmarks to HTML" "(org-bookmarks-export-to-html \"~/org/bookmarks.org\" \"~/Desktop/bookmarks.html\")" "Export bookmarks.org to ~/Desktop/bookmarks.html.")
-           ("Export Bookmarks to NYXT" "(org-bookmarks-export-to-nyxt \"~/org/bookmarks.org\" \"~/config/local/.local/share/nyxt/bookmarks.lisp\")" "Export bookmarks.org to ~/config/local/.local/share/nyxt/bookmarks.lisp.")))
+         ("Reformat"
+          (("JSON Reformat" "json-pretty-print" "Reformat (pretty-print) JSON in current buffer.")
+           ("XML Reformat" "xml-pretty-print" "Reformat (pretty-print) XML in current buffer.")
+           ("Java Reformat" "java-pretty-print" "Reformat (pretty-print) Java code in current buffer.")
+           ("Ruby Reformat" "ruby-pretty-print" "Reformat (pretty-print) Ruby code in current buffer.")
+           ("C Reformat" "c-pretty-print" "Reformat (pretty-print) C code in current buffer.")))
+         ("Toggle"
+          (("Debug on Error Mode" "toggle-debug-on-error" "Toggle `debug-on-error'.")
+           ("Debug on Quit Mode" "toggle-debug-on-quit" "Toggle `debug-on-quit'.")
+           ("Truncate Line Mode" "toggle-truncate-lines" "Toggle `truncate-lines' in current buffer.")
+           ("Visual Line Mode" "visual-line-mode" "Toggle `visual-line-mode' in current buffer.")
+           ("Search Case Sensitivity" "toggle-case-fold-search" "Toggle case-fold-search in current buffer.")))
+         ("TAGS"
+          (("Visit Local TAGS" "(when (find-file-updir \"TAGS\") (visit-tags-table (find-file-updir \"TAGS\") t))" "Visit local tags table.")
+           ("Create Local TAGS" "etags-create" "Create local tags table.")))
          ("Revert Buffer" "revert-buffer" "Run `revert-buffer' on current buffer.")
-         ("Debug on Error Mode [Toggle]" "toggle-debug-on-error" "Toggle `debug-on-error'.")
-         ("Debug on Quit Mode [Toggle]" "toggle-debug-on-quit" "Toggle `debug-on-quit'.")
-         ("Truncate Line Mode [Toggle]" "toggle-truncate-lines" "Toggle `truncate-lines' in current buffer.")
-         ("Visual Line Mode [Toggle]" "visual-line-mode" "Toggle `visual-line-mode' in current buffer.")
-         ("Search Case Sensitivity [Toggle]" "toggle-case-fold-search" "Toggle case-fold-search in current buffer.")
          ("Git Status" "(magit-status default-directory)" "Open Git Status buffer.")
          ("Web Jump" "webjump" "Jump to a Web site from a programmable hotlist.")
          ("IELM Mode" "ielm" "Open buffer for interactively evaluating Emacs Lisp expressions.")
          ("Evaluate Buffer" "eval-buffer" "Run `eval-buffer' on the current buffer.")
          ("Customize Group" "customize-group" "Run `customize-group' function.")
          ("Regular Expression Builder" "regexp-builder" "Start Regular Expression Builder in current buffer.")
-         ("World Time" "display-time-world" "Display the time in various time zones.")
-         ("Colors Display" "list-colors-display" "List Emacs font colors.")
-         ("Faces Display" "list-faces-display" "List Emacs font faces.")
          ("Restart Emacs Server" "server-start-maybe" "Restart Emacs server.")
          ))
       ;;("Tip of the Day" "totd" "Display a random emacs command.")
