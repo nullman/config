@@ -738,8 +738,10 @@ alias adbrs="
       sudo \${ANDROID_SDK}/platform-tools/adb start-server"
 #        adb-usb-setup           setup adb usb device
 alias adb-usb-setup="
+    # lsusb
+    # 0e8d:201c MediaTek Inc. Astro_Slide_5G_Transformer
     sudo bash -c \"
-        echo 'SUBSYSTEM==\\\"usb\\\", SYSFS{idVendor}==\\\"04e8\\\", MODE=\\\"0666\\\"' \
+        echo 'SUBSYSTEM==\\\"usb\\\", ATTR{idVendor}==\\\"0e8d\\\", ATTR{idProduct}==\\\"201c\\\", MODE=\\\"0666\\\", GROUP=\\\"plugdev\\\"' \
           > /etc/udev/rules.d/51-android.rules && \
           chmod a+r /etc/udev/rules.d/51-android.rules
     \""
@@ -761,6 +763,8 @@ alias adb-screenshot-landscape="(
 alias adb-video-record="adb shell screenrecord /sdcard/animation.mp4"
 #        adb-video-copy          copy a recorded video off of device
 alias adb-video-copy="adb pull /sdcard/animation.mp4 android-device-screenshot-\$(date '+%Y-%m-%d-%H%M%S').mp4"
+#        adb-music-push          push /home/data/media/Audio/Music to device /sdcard/Music
+alias adb-music-push="adb push --sync ${home}/data/media/Audio/Music/* /sdcard/Music/"
 #        ibus-sync               put ibus into sync mode to prevent keyboard issue in Android Studio
 alias ibus-sync="IBUS_ENABLE_SYNC_MODE=1 ibus-daemon -xrd"
 #        set-android-studio-stable  set android studio path to stable

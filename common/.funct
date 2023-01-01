@@ -716,14 +716,19 @@ sed-dir() {
         esac
     fi
 }
-#        m4v-to-mp4              convert all m4v videos in current directory to mp4 videos
-m4v-to-mp4() {
+#
+# video conversion
+#
+#        convert-m4v-to-mp4      convert all m4v videos in current directory to mp4 videos
+convert-m4v-to-mp4() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 FILE..."
+        echo "Convert all files in current directory or a list of FILEs from m4v to mp4 video."
     else
         files=("$@")
         for infile in "${files[@]}" ; do
-            outfile="${infile:0:-4}.mp4"
+            #outfile="${infile:0:-4}.mp4"
+            outfile=$(echo "${infile}" | sed 's/\..*$/.mp4/')
             echo "${infile} -> ${outfile}"
             ffmpeg -i "${infile}" -codec copy "${outfile}" && rm "${infile}"
         done
@@ -733,11 +738,25 @@ m4v-to-mp4() {
 convert-video-to-mp3() {
     if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 FILE"
-        echo "Convert a video file to an audio mp3 with 192K bitrate."
+        echo "Convert a video to an audio only mp3 with 192K bitrate."
     else
-        in="$1"
-        out=$(echo "${in}" | sed 's/\..*$/.mp3/')
-        ffmpeg -i "${in}" -b:a 192K -vn "${out}"
+        infile="$1"
+        outfile=$(echo "${infile}" | sed 's/\..*$/.mp3/')
+        ffmpeg -i "${infile}" -b:a 192k -vn "${outfile}"
+    fi
+}
+#        convert-video-to-720p-mp4  convert bluray 1080p video file to 720p mp4
+convert-video-to-720p-mp4() {
+    if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+        echo "Usage: $0 FILE"
+        echo "Convert a bluray 1080p video to a 720p mp4 video with 192K bitrate audio."
+    else
+        infile="$1"
+        outfile=$(echo "${infile}" | sed 's/\..*$/.mp4/')
+        ffmpeg -i "${infile}" \
+               -c:v libx264 -preset veryslow -tune film -crf 22 -vf scale=-2:720 \
+               -b:a 192k "${outfile}"
+               #-c:a libfdk_aac -b:a 192k \
     fi
 }
 
