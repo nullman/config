@@ -719,11 +719,11 @@ sed-dir() {
 #
 # video conversion
 #
-#        convert-m4v-to-mp4      convert all m4v videos in current directory to mp4 videos
-convert-m4v-to-mp4() {
+#        convert-video-to-mp4      convert all videos in current directory to mp4 videos
+convert-video-to-mp4() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 FILE..."
-        echo "Convert all files in current directory or a list of FILEs from m4v to mp4 video."
+        echo "Convert all files in current directory or a list of FILEs to mp4 video."
     else
         files=("$@")
         for infile in "${files[@]}" ; do
@@ -734,7 +734,7 @@ convert-m4v-to-mp4() {
         done
     fi
 }
-#        convert-video-to-mp3    convert video file to audio mp3
+#        convert-video-to-mp3    convert video to audio mp3
 convert-video-to-mp3() {
     if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 FILE"
@@ -745,17 +745,18 @@ convert-video-to-mp3() {
         ffmpeg -i "${infile}" -b:a 192k -vn "${outfile}"
     fi
 }
-#        convert-video-to-720p-mp4  convert bluray 1080p video file to 720p mp4
-convert-video-to-720p-mp4() {
+#        convert-video-to-720p   convert blu-ray 1080p video to 720p
+convert-video-to-720p() {
     if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 FILE"
-        echo "Convert a bluray 1080p video to a 720p mp4 video with 192K bitrate audio."
+        echo "Convert a blu-ray 1080p video to 720p."
     else
         infile="$1"
-        outfile=$(echo "${infile}" | sed 's/\..*$/.mp4/')
+        outfile=$(echo "${infile}" | sed 's/\..*$/-720p\1/')
         ffmpeg -i "${infile}" \
                -c:v libx264 -preset veryslow -tune film -crf 22 -vf scale=-2:720 \
-               -b:a 192k "${outfile}"
+               "${outfile}"
+               #-b:a 192k \
                #-c:a libfdk_aac -b:a 192k \
     fi
 }
