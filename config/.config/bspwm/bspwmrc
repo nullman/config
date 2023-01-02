@@ -90,6 +90,7 @@ _bc presel_feedback_color      "#5e81ac"
 _ba Emacs desktop='^2' follow=on
 _ba Slack desktop='^3' follow=on
 _ba thunderbird desktop='^3' follow=on
+_ba betterbird desktop='^3' follow=on
 _ba android-messages-desktop desktop='^3' follow=on
 _ba teams-for-linux desktop='^3' follow=on
 _ba firefox desktop='^4' follow=on
