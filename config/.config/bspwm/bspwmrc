@@ -23,7 +23,8 @@ _ba() {
 #-------------------------------------------------------------------------------
 
 #bspc monitor -d 1 2 3 4 5 6 7 8 9 10
-bspc monitor -d "1 " "2 " "3 " "4 " "5 " "6 " "7 " "8 " "9 " "10 "
+#bspc monitor -d "1 " "2 " "3 " "4 " "5 " "6 " "7 " "8 " "9 " "10 "
+bspc monitor -d "1 " "2 " "3 " "4 " "5 " "6 " "7 " "8 " "9 " "10 "
 
 #-------------------------------------------------------------------------------
 # Configuration
@@ -80,19 +81,23 @@ _bc focused_border_color       "#5e81ac"
 _bc presel_feedback_color      "#5e81ac"
 
 #-------------------------------------------------------------------------------
-# Application Rules
+# Application Desktop Assignments
 #-------------------------------------------------------------------------------
 
-# desktop assignments
+# 1: Terminal
 #_ba URxvt desktop='^1' follow=on
 #_ba Alacritty desktop='^1' follow=on
 #_ba Termite desktop='^1' follow=on
+
+# 2: Editor
 _ba Emacs desktop='^2' follow=on
-_ba Slack desktop='^3' follow=on
+
+# 3: Email
 _ba thunderbird desktop='^3' follow=on
 _ba betterbird desktop='^3' follow=on
-_ba android-messages-desktop desktop='^3' follow=on
-_ba teams-for-linux desktop='^3' follow=on
+_ba ms-outlook-nativefier desktop='^3' follow=on
+
+# 4: Browser
 _ba firefox desktop='^4' follow=on
 _ba LibreWolf desktop='^4' follow=on
 _ba Brave-browser desktop='^4' follow=on
@@ -100,6 +105,8 @@ _ba Chromium desktop='^4' follow=on
 _ba Google-chrome desktop='^4' follow=on
 _ba vivaldi-stable desktop='^4' follow=on
 _ba gopherus-sdl desktop='^4' follow=on
+
+# 5: File Manager
 _ba Pcmanfm desktop='^5' follow=on
 _ba Spacefm desktop='^5' follow=on
 _ba Thunar desktop='^5' follow=on
@@ -108,30 +115,45 @@ _ba Org.gnome.Nautilus desktop='^5' follow=on
 _ba Transmission-gtk desktop='^5' follow=on
 #_ba balena-etcher-electron desktop='^5' follow=on
 #_ba Ghb desktop='^5' follow=on
-_ba jetbrains-idea desktop='^6' follow=on
-_ba jetbrains-idea-ce desktop='^6' follow=on
-_ba jetbrains-studio desktop='^6' follow=on
-#_ba dosbox desktop='^6' follow=on
-#_ba BasiliskII desktop='^6' follow=on
-_ba 'VirtualBox Manager' desktop='^6' follow=on
-_ba 'VirtualBox Machine' desktop='^6' follow=on
-_ba discord desktop='^7' follow=on
-_ba discord-development desktop='^7' follow=on
+
+# 6: Chat
+_ba Slack desktop='^6' follow=on
+_ba discord desktop='^6' follow=on
+_ba discord-development desktop='^6' follow=on
+
+# 7: More Chat
 _ba Pidgin desktop='^7' follow=on
-#_ba org.gajim.Gajim desktop='^7' follow=on
-_ba Gajim desktop='^7' follow=on
-_ba 'Hyperspace Desktop' desktop='^7' follow=on
 _ba Tootle desktop='^7' follow=on
 _ba Com.github.bleakgrey.tootle desktop='^7' follow=on
-_ba Gimp-2.10 desktop='^8' follow=on
-_ba ms-outlook-nativefier desktop='^8' follow=on
+_ba Gajim desktop='^7' follow=on
+_ba 'Hyperspace Desktop' desktop='^7' follow=on
+_ba android-messages-desktop desktop='^7' follow=on
+_ba teams-for-linux desktop='^7' follow=on
+
+# 8: Development
+_ba jetbrains-idea desktop='^8' follow=on
+_ba jetbrains-idea-ce desktop='^8' follow=on
+_ba jetbrains-studio desktop='^8' follow=on
+#_ba dosbox desktop='^8' follow=on
+#_ba BasiliskII desktop='^8' follow=on
+_ba 'VirtualBox Manager' desktop='^8' follow=on
+_ba 'VirtualBox Machine' desktop='^8' follow=on
+
+# 9: Image, Video, and Audio
+_ba Gimp-2.10 desktop='^9' follow=on
 _ba Qmmp desktop='^9' follow=on
 _ba mplayer2 desktop='^9' follow=on
 _ba Lollypop desktop='^9' follow=on
 _ba LBRY desktop='^9' follow=on
 _ba spotify desktop='^9' follow=on
 _ba bluejeans-v2 desktop='^9' follow=on
+
+# 10: Remote
 _ba syncterm desktop='^10' follow=on
+
+#-------------------------------------------------------------------------------
+# Application Rules
+#-------------------------------------------------------------------------------
 
 # tiled applications
 _ba Emacs state=tiled

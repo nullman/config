@@ -2032,7 +2032,10 @@ KEYMAP defaults to `override-global-map'."
 
   ;; toggle pop-up shell
   (when (and (fboundp 'pop-up-shell) (fboundp 'pop-up-shell-toggle))
-    (bind-keys ("C-x C-]" . pop-up-shell-toggle))))
+    (bind-keys ("C-x C-]" . pop-up-shell-toggle)))
+
+  ;; describe character under cursor
+  (bind-keys ("C-x _" . describe-char)))
 
 (init-message 3 "custom-key-bindings-standard-keys")
 (custom-key-bindings-standard-keys)
