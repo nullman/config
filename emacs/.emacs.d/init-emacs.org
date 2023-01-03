@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2023-01-02 16:02 (kyle)>
+  #+TIMESTAMP: <2023-01-03 12:09 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -3616,7 +3616,10 @@
                    :menu-name "Display Commands"
                    ("c" . list-colors-display)
                    ("f" . list-faces-display)
+                   ("s" . list-character-sets)
                    ("w" . display-time-world))
+        (when (fboundp 'term-bash)
+          (bind-keys :map space-miscellaneous-display-map ("u" . list-charset-unicode)))
         ;; miscellaneous eval commands
         (bind-keys :map space-miscellaneous-map
                    :prefix "e"
@@ -15517,15 +15520,15 @@
 
 ***** derived-modes
       :PROPERTIES:
-      :CUSTOM_ID: functions-derived-modes
+      :CUSTOM_ID: functions-emacs-functions-derived-modes
       :END:
 
       #+BEGIN_SRC emacs-lisp
         ;;------------------------------------------------------------------------------
-        ;;; Functions: derived-modes
+        ;;;; Functions: Emacs Functions: derived-modes
         ;;------------------------------------------------------------------------------
 
-        (init-message 2 "Functions: derived-modes")
+        (init-message 3 "Functions: Emacs Functions: derived-modes")
 
         (defun derived-modes (&optional mode)
           "Return a list of the ancestor modes that MODE is derived from.
@@ -15536,6 +15539,24 @@
             (while (setq mode (get mode 'derived-mode-parent))
               (push mode mode-list))
             (nreverse mode-list)))
+      #+END_SRC
+
+***** list-charset-unicode
+      :PROPERTIES:
+      :CUSTOM_ID: functions-emacs-functions-list-charset-unicode
+      :END:
+
+      #+BEGIN_SRC emacs-lisp
+        ;;------------------------------------------------------------------------------
+        ;;;; Functions: Emacs Functions: list-charset-unicode
+        ;;------------------------------------------------------------------------------
+
+        (init-message 3 "Functions: Emacs Functions: list-charset-unicode")
+
+        (defun list-charset-unicode ()
+          "Display a list of characters in character set `unicode-bmp'."
+          (interactive)
+          (list-charset-chars 'unicode-bmp))
       #+END_SRC
 
 *** Emacs Grouped Functions
@@ -32261,7 +32282,9 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
          ("Display"
           (("World Time" "display-time-world" "Display the time in various time zones.")
            ("Colors Display" "list-colors-display" "List Emacs font colors.")
-           ("Faces Display" "list-faces-display" "List Emacs font faces.")))
+           ("Faces Display" "list-faces-display" "List Emacs font faces.")
+           ("Character Sets Display" "list-character-sets" "List character sets.")
+           ("Unicode Character Set Display" "list-charset-unicode" "List `unicode-bmp' character set.")))
          ("Edit"
           (("Replacer Replacements" "replacer-replacements-edit" "Edit `replacer-replacements'.")
            ("Elfeed Boookmarks" "elfeed-bookmarks-edit" "Edit Elfeeds bookmarks file.")

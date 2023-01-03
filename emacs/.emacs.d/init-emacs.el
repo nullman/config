@@ -2240,7 +2240,10 @@ KEYMAP defaults to `override-global-map'."
              :menu-name "Display Commands"
              ("c" . list-colors-display)
              ("f" . list-faces-display)
+             ("s" . list-character-sets)
              ("w" . display-time-world))
+  (when (fboundp 'term-bash)
+    (bind-keys :map space-miscellaneous-display-map ("u" . list-charset-unicode)))
   ;; miscellaneous eval commands
   (bind-keys :map space-miscellaneous-map
              :prefix "e"
@@ -10574,12 +10577,12 @@ others appropriately."
   (message "case-fold-search: %s" (if case-fold-search "ON" "OFF")))
 ;; toggle-case-fold-search:1 ends here
 
-;; [[file:init-emacs.org::#functions-derived-modes][derived-modes:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-derived-modes][derived-modes:1]]
 ;;------------------------------------------------------------------------------
-;;; Functions: derived-modes
+;;;; Functions: Emacs Functions: derived-modes
 ;;------------------------------------------------------------------------------
 
-(init-message 2 "Functions: derived-modes")
+(init-message 3 "Functions: Emacs Functions: derived-modes")
 
 (defun derived-modes (&optional mode)
   "Return a list of the ancestor modes that MODE is derived from.
@@ -10591,6 +10594,19 @@ MODE defaults to `major-mode'."
       (push mode mode-list))
     (nreverse mode-list)))
 ;; derived-modes:1 ends here
+
+;; [[file:init-emacs.org::#functions-emacs-functions-list-charset-unicode][list-charset-unicode:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Emacs Functions: list-charset-unicode
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Emacs Functions: list-charset-unicode")
+
+(defun list-charset-unicode ()
+  "Display a list of characters in character set `unicode-bmp'."
+  (interactive)
+  (list-charset-chars 'unicode-bmp))
+;; list-charset-unicode:1 ends here
 
 ;; [[file:init-emacs.org::#functions-emacs-grouped-functions][Emacs Grouped Functions:1]]
 ;;------------------------------------------------------------------------------
@@ -20796,7 +20812,9 @@ Commands:
    ("Display"
     (("World Time" "display-time-world" "Display the time in various time zones.")
      ("Colors Display" "list-colors-display" "List Emacs font colors.")
-     ("Faces Display" "list-faces-display" "List Emacs font faces.")))
+     ("Faces Display" "list-faces-display" "List Emacs font faces.")
+     ("Character Sets Display" "list-character-sets" "List character sets.")
+     ("Unicode Character Set Display" "list-charset-unicode" "List `unicode-bmp' character set.")))
    ("Edit"
     (("Replacer Replacements" "replacer-replacements-edit" "Edit `replacer-replacements'.")
      ("Elfeed Boookmarks" "elfeed-bookmarks-edit" "Edit Elfeeds bookmarks file.")
