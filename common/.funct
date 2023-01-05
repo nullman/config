@@ -584,6 +584,8 @@ dos-to-linux() {
     if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 FILE"
         echo "Convert FILE from DOS format to Linux format."
+        echo "Convert multiple files using something like:"
+        echo "  ls -1 | while read f ; do $0 \$f ; done"
     else
         sed -i 's/\r$//' "$1"
     fi
@@ -593,6 +595,8 @@ linux-to-dos() {
     if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 FILE"
         echo "Convert FILE from Linux format to DOS format."
+        echo "Convert multiple files using something like:"
+        echo "  ls -1 | while read f ; do $0 \$f ; done"
     else
         sed -i 's/$/\r/' "$1"
     fi
