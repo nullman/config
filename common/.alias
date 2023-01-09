@@ -1618,9 +1618,9 @@ alias llmotd="
 #
 # ls
 #
-#        ls_                     ls (classify, columns, literal, human-readable, auto-color)
-[[ "${os}" != "Darwin" ]] && alias ls_="ls -F -C -N -h --color=auto"
-[[ "${os}" == "Darwin" ]] && alias ls_="gls -F -C -N -h --color=auto"
+#        ls_                     ls (classify, columns, literal, human-readable, directories-first, auto-color)
+[[ "${os}" != "Darwin" ]] && alias ls_="ls -F -C -N -h --group-directories-first --color=auto"
+[[ "${os}" == "Darwin" ]] && alias ls_="gls -F -C -N -h --group-directories-first --color=auto"
 #        la                      ls -F -C -N -h --color=auto
 alias la="ls_"
 #        lsa                     ls -A (allmost-all)
@@ -2104,7 +2104,7 @@ alias rsync-c64-put-sd16="
     [[ -d \${dir1} ]] && dir=\${dir1}
     [[ -d \${dir2} ]] && dir=\${dir2}
     if [[ -d \${dir} ]] ; then
-        rsync -rLtxW --size-only --progress --delete --exclude='TOSEC/' \${HOME}/C64/* \${dir}/
+        rsync -rLtxW --size-only --progress --delete --exclude='TOSEC/' ${home}/data/media/Repos/C64/* \${dir}/
         sync
     else
         echo \"Error: \${usb} USB not found\"
@@ -2118,7 +2118,7 @@ alias rsync-c64-put-sd128="
     [[ -d \${dir1} ]] && dir=\${dir1}
     [[ -d \${dir2} ]] && dir=\${dir2}
     if [[ -d \${dir} ]] ; then
-        rsync -rLtxW --size-only --progress --delete \${HOME}/C64/* \${dir}/
+        rsync -rLtxW --size-only --progress --delete ${home}/data/media/Repos/C64/* \${dir}/
         sync
     else
         echo \"Error: \${usb} USB not found\"
