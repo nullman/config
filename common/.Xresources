@@ -265,7 +265,7 @@ URxvt.keysym.C-=:            font-size:increase
 URxvt.keysym.C-_:            font-size:decrease
 URxvt.keysym.C-+:            font-size:increase
 !! Matcher
-URxvt.url-launcher:	         urxvt -e lynx -cfg=${HOME}/.lynxrc
+URxvt.url-launcher:          urxvt -e lynx -cfg=${HOME}/.lynxrc
 URxvt.matcher.button:        1
 !! Clipboard
 URxvt.keysym.M-c:            perl:clipboard:copy
