@@ -2697,12 +2697,12 @@ alias pacman-reset-repository="
 
     # update keyring
     sudo pacman -Sy archlinux-keyring manjaro-keyring
-    sudo rm -r /etc/pacman.d/gnupg
-    sudo rm -r /root/.gnupg
+    sudo rm -rf /etc/pacman.d/gnupg
+    sudo rm -rf /root/.gnupg
     gpg --refresh-keys
     sudo pacman-key --init
-    sudo pacman-key --populate archlinux manjaro
     sudo pacman-key --refresh-keys
+    sudo pacman-key --populate archlinux manjaro
 
     # remove unused packages (orphans)
     sudo pacman -Rsn \$(pacman -Qdtq)
@@ -2714,7 +2714,7 @@ alias pacman-reset-repository="
     sudo pacman -Sc
 
     # clear sessions cache
-    rm -r \${HOME}/.cache/sessions/*
+    rm -rf \${HOME}/.cache/sessions/*
 
     # update packages
     sudo pacman -Syyu"
