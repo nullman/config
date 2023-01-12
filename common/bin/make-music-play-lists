@@ -9,7 +9,8 @@
 # Author: Kyle W T Sherman
 #===============================================================================
 
-genres=("Classic%Rock" "Classical%-%Instrumental" "Country" "Hard%Rock" "Pop%-%Dance" "R&B" "Rap" "Reggae" "Rock%-%Alternative" "Techno%-%Electronic")
+#genres=("Classic%Rock" "Classical%-%Instrumental" "Country" "Hard%Rock" "Pop%-%Dance" "R&B" "Rap" "Reggae" "Rock%-%Alternative" "Techno%-%Electronic")
+genres=("Classic%Rock" "Country" "Hard%Rock" "Pop%-%Dance" "R&B" "Rap" "Reggae" "Rock%-%Alternative")
 
 tmpfile="__temp__"
 

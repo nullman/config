@@ -5302,7 +5302,7 @@ heading, properties, source block with title comment, and test block."
   ;; list of directories and files to not persist and restore visibility state of
   (org-visibility-exclude-paths `(,(file-truename "~/org/old")
                                   ,(file-truename "~/org/test")))
-  :config
+  :init
   (org-visibility-mode 1))
 ;; Visibility:1 ends here
 
@@ -21923,6 +21923,17 @@ to the current ERC buffer."
            scroll-bar-mode)
   (scroll-bar-mode -1))
 ;; Turn off Scroll Bar:1 ends here
+
+;; [[file:init-emacs.org::#final-setup-reset-emacs-lisp-garbage-collection-threshold][Reset Emacs Lisp Garbage Collection Threshold:1]]
+;;------------------------------------------------------------------------------
+;;; Final: Reset Emacs Lisp Garbage Collection Threshold
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Final: Reset Emacs Lisp Garbage Collection Threshold")
+
+;; reset frequency of garbage collections (to 800000)
+(setq gc-cons-threshold (car (get 'gc-cons-threshold 'standard-value)))
+;; Reset Emacs Lisp Garbage Collection Threshold:1 ends here
 
 ;; [[file:init-emacs.org::#end][End:1]]
 (init-message 1 "End")
