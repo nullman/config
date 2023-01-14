@@ -738,13 +738,18 @@ alias adbrs="
       sudo \${ANDROID_SDK}/platform-tools/adb start-server"
 #        adb-usb-setup           setup adb usb device
 alias adb-usb-setup="
+    # general android settings
+    sudo bash -c \"
+        wget https://raw.githubusercontent.com/bkerler/mtkclient/main/Setup/Linux/50-android.rules \
+          -O /etc/udev/rules.d/50-android.rules && \
+          chmod a+r /etc/udev/rules.d/50-android.rules\"
     # lsusb
     # 0e8d:201c MediaTek Inc. Astro_Slide_5G_Transformer
     sudo bash -c \"
         echo 'SUBSYSTEM==\\\"usb\\\", ATTR{idVendor}==\\\"0e8d\\\", ATTR{idProduct}==\\\"201c\\\", MODE=\\\"0666\\\", GROUP=\\\"plugdev\\\"' \
           > /etc/udev/rules.d/51-android.rules && \
-          chmod a+r /etc/udev/rules.d/51-android.rules
-    \""
+          chmod a+r /etc/udev/rules.d/51-android.rules\"
+    "
 #        adb-screenshot          abd screenshot (portrait)
 alias adb-screenshot="
     adb shell screencap -p /sdcard/screen.png &&
