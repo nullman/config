@@ -2875,7 +2875,7 @@ DATA should have been made by `org-outline-overlay-data'."
   ;; forked branch fixes a bug
   :straight (org-make-toc :type git :host github
                           :repo "nullman/org-make-toc"
-                          :branch "fix/drawer-end-regexp")
+                          :branch "fix/no-auto-save-temp-file")
   :hook (org-mode . org-make-toc-mode)
   :custom
   (org-make-toc-link-type-fn #'org-make-toc--link-entry-custom)
