@@ -102,7 +102,6 @@ _ba firefox desktop='^4' follow=on
 _ba LibreWolf desktop='^4' follow=on
 _ba Brave-browser desktop='^4' follow=on
 _ba Chromium desktop='^4' follow=on
-_ba Google-chrome desktop='^4' follow=on
 _ba vivaldi-stable desktop='^4' follow=on
 _ba gopherus-sdl desktop='^4' follow=on
 
@@ -140,6 +139,7 @@ _ba 'VirtualBox Manager' desktop='^8' follow=on
 _ba 'VirtualBox Machine' desktop='^8' follow=on
 
 # 9: Image, Video, and Audio
+_ba Google-chrome desktop='^9' follow=on
 _ba Gimp-2.10 desktop='^9' follow=on
 _ba Qmmp desktop='^9' follow=on
 _ba mplayer2 desktop='^9' follow=on
