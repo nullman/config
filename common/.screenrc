@@ -67,7 +67,7 @@ pow_detach_msg "Screen session of \$LOGNAME \$:cr:\$:nl:ended."
 #zombie "^["
 
 # screensaver setup
-#blankerprg cmatrix
+#blankerprg cmatrix -a
 #blankerprg clockywock
 #idle 3600
 
