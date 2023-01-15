@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+#===============================================================================
+# android-install-applications
+#
+# Install standard android applications.
+#
+# Author: Kyle W T Sherman
+#===============================================================================
+
+set -euo pipefail
+
+_getfield() {
+    echo "$1" | cut -d '|' -f $2 | sed 's/^ *// ; s/ *$//'
+}
+
+installed=($(adb shell pm list packages | sed 's/^package:/"/ ; s/$/"/'))
+
+_isinstalled() {
+    skip="false"
+    for i in ${installed[@]} ; do
+        if [[ "${i}" == "$1" ]] ; then
+             skip="true"
+             break;
+        fi
+    done
+    echo "${skip}"
+}
+
+file="${HOME}/org/personal.org"
+regexp="/^[ \t]*#\+NAME: android-applications\$/,/^\*/{print \$0}"
+items=$(awk "${regexp}" "${file}" | tail -n +5 | head -n -2 | sed '/|--/d ; s/ //g ; s/^|// ; s/|$//')
+#echo "${items}" | while read item ; do
+for item in ${items[@]} ; do
+    app=$(_getfield "${item}" 1)
+    group=$(_getfield "${item}" 2)
+    repo=$(_getfield "${item}" 3)
+    package=$(_getfield "${item}" 4)
+    echo "${app} (${package})"
+    if [[ "$(_isinstalled \"${package}\")" = "true" ]] ; then
+        echo "Already installed, skipping"
+    else
+        case ${repo} in
+            GPS)
+                (adb shell am start "https://play.google.com/store/apps/details?id=${package}" &)
+                ;;
+            FD)
+                (adb shell am start "https://f-droid.org/en/packages/${package}/" &)
+                ;;
+        esac
+        sleep 3
+    fi
+done
+
+exit 0
+
+#===============================================================================
+# End of File
+#===============================================================================
