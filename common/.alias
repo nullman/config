@@ -778,6 +778,16 @@ alias set-android-studio-stable="(cd \${HOME} && rm android-studio && ln -s andr
 alias set-android-studio-beta="(cd \${HOME} && rm android-studio && ln -s android-studio-beta android-studio)"
 #        set-android-studio-canary  set android studio path to canary
 alias set-android-studio-canary="(cd \${HOME} && rm android-studio && ln -s android-studio-canary android-studio)"
+#!#        adb-pull-titanium-backup  copy titanium backup files from device to computer
+#!alias adb-pull-titanium-backup="
+#!    indir=\$(echo \"/storage/\$(adb shell ls -1 /storage/ | grep -v emulated | grep -v self)/TitaniumBackup\")
+#!    outdir=\"/home/data/backup/\"
+#!    adb pull -a \"\${indir}\" \"\${outdir}\""
+#        adb-pull-titanium-backup  copy titanium backup files from device to computer
+alias adb-sync-titanium-backup="
+    indir=\$(echo \"/storage/\$(adb shell ls -1 /storage/ | grep -v emulated | grep -v self)/TitaniumBackup\")
+    outdir=\"/home/data/backup/\"
+    adbsync --pull --show-progress --del \"\${outdir}\" \"\${indir}\""
 
 #
 # apache
