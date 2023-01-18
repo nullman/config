@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2023-01-18 13:28 (kyle)>
+  #+TIMESTAMP: <2023-01-18 14:06 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -6498,7 +6498,7 @@
         BODY is the contents of the block, as a string. PARAMS is a
         property list containing the parameters of the block."
               (let* ((classname (or (cdr (assoc :classname params))
-                                    (error ":classname parameter is required")))
+                                    (user-error ":classname parameter is required")))
                      (packagename (file-name-directory classname))
                      (src-file (concat classname ".java"))
                      (javacflags (or (cdr (assoc :javacflags params)) ""))
@@ -12471,7 +12471,7 @@
                    (car front))
                   ((show) (format "%s" (append front (reverse back))))
                   ((fb) (format "front: %s, back: %s" front back))
-                  (t (error "Illegal command given to queue object: %s" cmd)))))))
+                  (t (user-error "Illegal command given to queue object: %s" cmd)))))))
       #+END_SRC
 
 ***** quicksort
@@ -14255,12 +14255,12 @@
           (interactive
            (list (if buffer-file-name
                      (read-file-name "Rename buffer to: " default-directory)
-                   (error "Current buffer is not visiting a file"))
+                   (user-error "Current buffer is not visiting a file"))
                  (not current-prefix-arg)))
           (or (not name) (string= name "")
               (let ((source-file buffer-file-name))
                 (unless source-file
-                  (error "Buffer '%s' is not visiting a file" (buffer-name)))
+                  (user-error "Current buffer is not visiting a file"))
                 (write-file name confirm)
                 (when (file-exists-p name)
                   (delete-file source-file)))))
@@ -14284,7 +14284,7 @@
            (list (if buffer-file-name
                      (read-directory-name "Move to directory: " default-directory
                                           (file-name-directory buffer-file-name))
-                   (error "Current buffer is not visiting a file"))
+                   (user-error "Current buffer is not visiting a file"))
                  (not current-prefix-arg)))
           (let* ((source-file buffer-file-name)
                  (dir (if (or (string= dir "")
@@ -16002,7 +16002,7 @@
           ;;   "Remove all lines in the *Occur* buffer containing a match for REGEXP."
           ;;   (interactive "sRegexp: ")
           ;;   (unless (string= (buffer-name) "*Occur*")
-          ;;     (error "This function can only be run within an *Occur* buffer."))
+          ;;     (user-error "Current buffer is not an *Occur* buffer."))
           ;;   (let ((inhibit-read-only t))
           ;;     (save-mark-and-excursion
           ;;       (goto-char (point-min))
@@ -16525,7 +16525,7 @@
                        "-" (substring uuid 20 32))))
            ;; else, error
            (t
-            `(error "Could not find a suitable system command to produce a UUID"))))
+            `(user-error "Could not find a suitable system command to produce a UUID"))))
         (defalias 'guid 'uuid)
       #+END_SRC
 
@@ -16640,7 +16640,7 @@
             (if (executable-find cmd)
                 `(shell-command-to-string (concat ,cmd " | tail -n +2"))
               ;; else error
-              `(error "Could not find %s command" ,cmd))))
+              `(user-error "Could not find system command: %s" ,cmd))))
       #+END_SRC
 
 ***** insert-uuid-xml
@@ -17124,7 +17124,7 @@
           (interactive "*sText: ")
           (let ((figlet "figlet"))
             (unless (executable-find figlet)
-              (error "Could not find %s command" figlet))
+              (user-error "Could not find system command: %s" figlet))
             (insert (shell-command-to-string (concat figlet " " text)))))
       #+END_SRC
 
@@ -17161,7 +17161,7 @@
                    password
                    valid)
               (when (< length 6)
-                (error "Password LENGTH must be at least 6."))
+                (user-error "Password LENGTH must be at least 6."))
               (while (or (< (length password) length)
                          (not valid))
                 (when (= (length password) length)
@@ -17729,7 +17729,7 @@
                               package)))
                     (message "Searching for Arch package: %s" cmd)
                     (insert (s-trim (shell-command-to-string cmd))))
-                (error "Neither 'pamac', 'yaourt', 'yay', or 'pacman' where found in path")))))
+                (user-error "Neither 'pamac', 'yaourt', 'yay', or 'pacman' where found in system path")))))
       #+END_SRC
 
 ***** set-arch-package-description
@@ -18982,7 +18982,7 @@
         ;;                             (line-end-position)))))
         ;;           (if (and beg end)
         ;;               (align-regexp beg end space-regexp nil nil :repeat)
-        ;;             (error "Could not determine block beginning or end")))))))
+        ;;             (user-error "Could not determine block beginning or end")))))))
       #+END_SRC
 
 ***** java-toggle-comment-type
@@ -19608,7 +19608,7 @@
         If optional COUNT is given, repeat up to NUM+COUNT-1."
           (let ((buffer "project-euler.lisp"))
             (unless (string= (buffer-name) buffer)
-              (error "Buffer is not '%s'" buffer))
+              (user-error "Current buffer is not: %s" buffer))
             (dotimes (x (or count 1))
               (let ((strnum (format "%03d" (+ num x))))
                 (save-mark-and-excursion
@@ -20013,9 +20013,9 @@
         for 1, 5, 10, 50, 100, 500, and 1,000."
           (interactive "NInteger number: ")
           (when (< num 0)
-            (error "NUM must be 1 or greater"))
+            (user-error "NUM must be 1 or greater"))
           (when (>= num 5000)
-            (error "NUM must be less than 5,000"))
+            (user-error "NUM must be less than 5,000"))
           (let ((roman))
             (cl-labels
                 ((convert (num)
@@ -20318,7 +20318,7 @@
               (mapconcat 'string list ""))
             ;;(setq word-file "~/tw")
             (unless (file-exists-p word-file)
-              (error "Word file `%s' does not exist" word-file))
+              (user-error "Word file does not exist: %s" word-file))
             ;; load word file
             (let* ((words (split-string (file-to-string word-file))) ; word list
                    (word-hash (make-hash-table :size (length words))) ; number to word hash
@@ -20797,7 +20797,7 @@
         ;;   ;;   (interactive
         ;;   ;;    (list (bookmark-completing-read "Goto bookmark" bookmark-current-bookmark)))
         ;;   ;;   (unless bookmark
-        ;;   ;;     (error "No bookmark specified"))
+        ;;   ;;     (user-error "No bookmark specified"))
         ;;   ;;   (let ((file (bookmark-get-filename bookmark)))
         ;;   ;;     (ido-set-current-directory
         ;;   ;;      (if (file-directory-p file)
@@ -24976,7 +24976,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       If HIGHLIGHT is non-nil, highlight song."
           (let ((buffer "*Mingus*"))
             (unless (string= (buffer-name) buffer)
-              (error "Buffer is not `%s'" buffer))
+              (user-error "Current buffer is not: %s" buffer))
             (let (buffer-read-only)
               (save-mark-and-excursion
                 (save-match-data
@@ -25076,7 +25076,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
           (let ((id3tag "id3tag")
                 (details (mingus-get-details)))
             (unless (executable-find id3tag)
-              (error "Could not find %s command" id3tag))
+              (user-error "Could not find system command: %s" id3tag))
             (when details
               (let ((buffer (get-buffer-create "*Mingus Edit ID3 Tags*"))
                     (keymap (make-sparse-keymap))
@@ -25463,7 +25463,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       5 is most favorite. 0 will unset the rating."
           (interactive)
           (unless (and (>= rating 0) (<= rating 5))
-            (error "Rating must be a number from 0 through 5"))
+            (user-error "Rating must be a number from 0 through 5"))
           (let ((details (mingus-get-details)))
             (when details
               (let* ((file (plist-get details 'file))
@@ -25495,8 +25495,8 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
                 (if (> rating 0)
                     ;; set rating
                     (if (> (shell-command set-cmd) 0)
-                        (error "Could not set rating for %s" song-name)
-                      (message "%s rating was set to %s" song-name rating-name))
+                        (user-error "Could not set rating for \"%s\"" song-name)
+                      (message "\"%s\" rating was set to %s" song-name rating-name))
                   ;; rating was cleared
                   (message "%s rating was cleared" song-name))
                 (let (buffer-read-only)
@@ -26880,7 +26880,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;;   and 5 is most favorite. 0 will unset the rating."
       ;;     (interactive)
       ;;     (unless (and (>= rating 0) (<= rating 5))
-      ;;       (error "Rating must be a number from 0 through 5"))
+      ;;       (user-error "Rating must be a number from 0 through 5"))
       ;;     (let ((details (simple-mpc-get-song-details)))
       ;;       (when details
       ;;         (let* ((file (cdr (assq :file details)))
@@ -26908,7 +26908,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;;           (if (> rating 0)
       ;;               ;; set rating
       ;;               (if (> (shell-command set-cmd) 0)
-      ;;                   (error "Could not set rating for \"%s - %s\"" artist title)
+      ;;                   (user-error "Could not set rating for \"%s - %s\"" artist title)
       ;;                 (message "\"%s - %s\" rating was set to %s" artist title rating))
       ;;             ;; rating was cleared
       ;;             (message "\"%s - %s\" rating was cleared" artist title))
@@ -33723,19 +33723,19 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         ;;                          (goto-char (point-min))
         ;;                          (if (re-search-forward (concat "^commit " commit) nil :noerror)
         ;;                              (line-beginning-position)
-        ;;                            (error "COMMIT not found: %s" commit)))))
+        ;;                            (user-error "COMMIT not found: %s" commit)))))
         ;;         (let (start
         ;;               end)
         ;;           ;; if commits not given, try to guess them
         ;;           (when (not (and commit-start commit-end))
         ;;             (when commit-start
-        ;;               (error "Must provide both COMMIT-START and COMMIT-END or neither"))
+        ;;               (user-error "Must provide both COMMIT-START and COMMIT-END or neither"))
         ;;             ;; find start commit on current line or before
         ;;             (save-mark-and-excursion
         ;;               (save-match-data
         ;;                 (forward-line 0)
         ;;                 (unless (re-search-backward "^\*\*\*\*\* RC" nil :noerror)
-        ;;                   (error "Could not find start commit"))
+        ;;                   (user-error "Could not find start commit"))
         ;;                 (goto-char (line-end-position))
         ;;                 (setq commit-start (buffer-substring-no-properties (- (point) 40) (point)))
         ;;                 (setq start (commit-pos commit-start))
@@ -33748,7 +33748,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         ;;                                (re-search-forward "^\* Release" nil :noerror)
         ;;                                (re-search-forward "^\* Release" nil :noerror)
         ;;                                (re-search-backward "^\*\*\*\*\* RC" nil :noerror))
-        ;;                         (error "Could not find end commit"))
+        ;;                         (user-error "Could not find end commit"))
         ;;                       (goto-char (line-end-position))
         ;;                       (setq commit-end (buffer-substring-no-properties (- (point) 40) (point)))
         ;;                       (setq end (commit-pos commit-end)))
@@ -33756,7 +33756,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         ;;                   (progn
         ;;                     (forward-line 0)
         ;;                     (unless (re-search-backward "^\*\*\*\*\* RC" nil :noerror)
-        ;;                       (error "Could not find end commit"))
+        ;;                       (user-error "Could not find end commit"))
         ;;                     (goto-char (line-end-position))
         ;;                     (setq end (commit-pos (buffer-substring-no-properties (- (point) 40) (point))))))))
         ;;             (with-temp-buffer
@@ -33766,13 +33766,13 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         ;;                 (goto-char (point-min))
         ;;                 (if (re-search-forward (concat "^commit " commit-start) nil :noerror)
         ;;                     (setq start (line-beginning-position))
-        ;;                   (error "COMMIT-START not found: %s" commit-start)))
+        ;;                   (user-error "COMMIT-START not found: %s" commit-start)))
         ;;               ;; find end
         ;;               (unless end
         ;;                 (goto-char (point-min))
         ;;                 (if (re-search-forward (concat "^commit " commit-end) nil :noerror)
         ;;                     (setq end (line-beginning-position))
-        ;;                   (error "COMMIT-END not found: %s" commit-end)))
+        ;;                   (user-error "COMMIT-END not found: %s" commit-end)))
         ;;               ;; delete text outside of release block
         ;;               (if (< start end)
         ;;                   (progn
@@ -33949,7 +33949,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         ;;                     (while (and (not (bobp)) (not (looking-at header-regexp)))
         ;;                       (forward-line -1))
         ;;                     (unless (looking-at header-regexp)
-        ;;                       (error "No time block found"))
+        ;;                       (user-error "No time block found"))
         ;;                     (let ((target-buffer (generate-new-buffer-name "*work-invoice*"))
         ;;                           (indent-level 0))
         ;;                       (org-copy-subtree)
@@ -33977,7 +33977,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         ;;                         (let ((time (match-string 1)))
         ;;                           (goto-char (point-min))
         ;;                           (unless (re-search-forward report-regexp nil :noerror)
-        ;;                             (error "Could not find report section"))
+        ;;                             (user-error "Could not find report section"))
         ;;                           (forward-line 0)
         ;;                           (delete-region (point) (point-max))
         ;;                           (newline)

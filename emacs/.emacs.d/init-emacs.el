@@ -4475,7 +4475,7 @@ This function is called by `org-babel-execute-src-block'."
 BODY is the contents of the block, as a string. PARAMS is a
 property list containing the parameters of the block."
       (let* ((classname (or (cdr (assoc :classname params))
-                            (error ":classname parameter is required")))
+                            (user-error ":classname parameter is required")))
              (packagename (file-name-directory classname))
              (src-file (concat classname ".java"))
              (javacflags (or (cdr (assoc :javacflags params)) ""))
@@ -8240,7 +8240,7 @@ Source: http://irreal.org/blog/?p=40"
            (car front))
           ((show) (format "%s" (append front (reverse back))))
           ((fb) (format "front: %s, back: %s" front back))
-          (t (error "Illegal command given to queue object: %s" cmd)))))))
+          (t (user-error "Illegal command given to queue object: %s" cmd)))))))
 ;; queue:1 ends here
 
 ;; [[file:init-emacs.org::#functions-general-functions-quicksort][quicksort:1]]
@@ -9581,12 +9581,12 @@ With a prefix argument N, (un)comment that many sexps."
   (interactive
    (list (if buffer-file-name
              (read-file-name "Rename buffer to: " default-directory)
-           (error "Current buffer is not visiting a file"))
+           (user-error "Current buffer is not visiting a file"))
          (not current-prefix-arg)))
   (or (not name) (string= name "")
       (let ((source-file buffer-file-name))
         (unless source-file
-          (error "Buffer '%s' is not visiting a file" (buffer-name)))
+          (user-error "Current buffer is not visiting a file"))
         (write-file name confirm)
         (when (file-exists-p name)
           (delete-file source-file)))))
@@ -9605,7 +9605,7 @@ With a prefix argument N, (un)comment that many sexps."
    (list (if buffer-file-name
              (read-directory-name "Move to directory: " default-directory
                                   (file-name-directory buffer-file-name))
-           (error "Current buffer is not visiting a file"))
+           (user-error "Current buffer is not visiting a file"))
          (not current-prefix-arg)))
   (let* ((source-file buffer-file-name)
          (dir (if (or (string= dir "")
@@ -11216,7 +11216,7 @@ Example: 5ac55464-24e6-419c-99cf-5e1682bb3819"
                "-" (substring uuid 20 32))))
    ;; else, error
    (t
-    `(error "Could not find a suitable system command to produce a UUID"))))
+    `(user-error "Could not find a suitable system command to produce a UUID"))))
 (defalias 'guid 'uuid)
 ;; uuid:1 ends here
 
@@ -11311,7 +11311,7 @@ Example:
     (if (executable-find cmd)
         `(shell-command-to-string (concat ,cmd " | tail -n +2"))
       ;; else error
-      `(error "Could not find %s command" ,cmd))))
+      `(user-error "Could not find system command: %s" ,cmd))))
 ;; uuid-xml:1 ends here
 
 ;; [[file:init-emacs.org::#functions-text-inserting-functions-insert-uuid-xml][insert-uuid-xml:1]]
@@ -11705,7 +11705,7 @@ of the current buffer."
   (interactive "*sText: ")
   (let ((figlet "figlet"))
     (unless (executable-find figlet)
-      (error "Could not find %s command" figlet))
+      (user-error "Could not find system command: %s" figlet))
     (insert (shell-command-to-string (concat figlet " " text)))))
 ;; insert-figlet:1 ends here
 
@@ -11737,7 +11737,7 @@ of the current buffer."
            password
            valid)
       (when (< length 6)
-        (error "Password LENGTH must be at least 6."))
+        (user-error "Password LENGTH must be at least 6."))
       (while (or (< (length password) length)
                  (not valid))
         (when (= (length password) length)
@@ -12242,7 +12242,7 @@ If FILE is non-nil, use that fortune file."
                       package)))
             (message "Searching for Arch package: %s" cmd)
             (insert (s-trim (shell-command-to-string cmd))))
-        (error "Neither 'pamac', 'yaourt', 'yay', or 'pacman' where found in path")))))
+        (user-error "Neither 'pamac', 'yaourt', 'yay', or 'pacman' where found in system path")))))
 ;; insert-arch-package-description:1 ends here
 
 ;; [[file:init-emacs.org::#functions-external-program-functions-set-arch-package-description][set-arch-package-description:1]]
@@ -13686,7 +13686,7 @@ Examples:
 If optional COUNT is given, repeat up to NUM+COUNT-1."
   (let ((buffer "project-euler.lisp"))
     (unless (string= (buffer-name) buffer)
-      (error "Buffer is not '%s'" buffer))
+      (user-error "Current buffer is not: %s" buffer))
     (dotimes (x (or count 1))
       (let ((strnum (format "%03d" (+ num x))))
         (save-mark-and-excursion
@@ -14028,9 +14028,9 @@ Roman numerals use I, V, X, L, C, D, and M, standing respectively
 for 1, 5, 10, 50, 100, 500, and 1,000."
   (interactive "NInteger number: ")
   (when (< num 0)
-    (error "NUM must be 1 or greater"))
+    (user-error "NUM must be 1 or greater"))
   (when (>= num 5000)
-    (error "NUM must be less than 5,000"))
+    (user-error "NUM must be less than 5,000"))
   (let ((roman))
     (cl-labels
         ((convert (num)
@@ -14250,7 +14250,7 @@ WORD-FILE defaults to `/usr/share/dict/words'."
       (mapconcat 'string list ""))
     ;;(setq word-file "~/tw")
     (unless (file-exists-p word-file)
-      (error "Word file `%s' does not exist" word-file))
+      (user-error "Word file does not exist: %s" word-file))
     ;; load word file
     (let* ((words (split-string (file-to-string word-file))) ; word list
            (word-hash (make-hash-table :size (length words))) ; number to word hash
@@ -16738,7 +16738,7 @@ defaults to the string \" - \"."
 If HIGHLIGHT is non-nil, highlight song."
     (let ((buffer "*Mingus*"))
       (unless (string= (buffer-name) buffer)
-        (error "Buffer is not `%s'" buffer))
+        (user-error "Current buffer is not: %s" buffer))
       (let (buffer-read-only)
         (save-mark-and-excursion
           (save-match-data
@@ -16838,7 +16838,7 @@ Use text properties to mark the line then call `mingus-set-NP-mark'."
     (let ((id3tag "id3tag")
           (details (mingus-get-details)))
       (unless (executable-find id3tag)
-        (error "Could not find %s command" id3tag))
+        (user-error "Could not find system command: %s" id3tag))
       (when details
         (let ((buffer (get-buffer-create "*Mingus Edit ID3 Tags*"))
               (keymap (make-sparse-keymap))
@@ -17225,7 +17225,7 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
 5 is most favorite. 0 will unset the rating."
     (interactive)
     (unless (and (>= rating 0) (<= rating 5))
-      (error "Rating must be a number from 0 through 5"))
+      (user-error "Rating must be a number from 0 through 5"))
     (let ((details (mingus-get-details)))
       (when details
         (let* ((file (plist-get details 'file))
@@ -17257,8 +17257,8 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
           (if (> rating 0)
               ;; set rating
               (if (> (shell-command set-cmd) 0)
-                  (error "Could not set rating for %s" song-name)
-                (message "%s rating was set to %s" song-name rating-name))
+                  (user-error "Could not set rating for \"%s\"" song-name)
+                (message "\"%s\" rating was set to %s" song-name rating-name))
             ;; rating was cleared
             (message "%s rating was cleared" song-name))
           (let (buffer-read-only)
