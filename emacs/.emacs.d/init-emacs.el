@@ -1535,6 +1535,14 @@ Otherwise, `custom-tab-width' is used."
   (term "/bin/zsh"))
 ;; term-zsh:1 ends here
 
+;; [[file:init-emacs.org::#environment-bookmarks][Bookmarks:1]]
+;;------------------------------------------------------------------------------
+;;; Environment: Bookmarks
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Environment: Bookmarks")
+;; Bookmarks:1 ends here
+
 ;; [[file:init-emacs.org::#key-bindings][Key Bindings:1]]
 ;;==============================================================================
 ;;; Key Bindings
@@ -15753,7 +15761,7 @@ USING is the remaining peg."
     (interactive)
     (find-file (file-truename (expand-file-name "init-emacs.org" emacs-home-dir)))
     (goto-char (point-min))
-    (search-forward ";; Elpher Bookmarks File\n")
+    (search-forward ";;;; Emacs Bookmark")
     (org-show-entry)))
 ;; elpher:1 ends here
 

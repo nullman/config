@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2023-01-18 13:11 (kyle)>
+  #+TIMESTAMP: <2023-01-18 13:28 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -2870,6 +2870,64 @@
         ;;   (vterm-max-scrollback custom-terminal-maximum-lines)
         ;;   (vterm-kill-buffer-on-exit nil))
       #+END_SRC
+
+*** Bookmarks
+    :PROPERTIES:
+    :CUSTOM_ID: environment-bookmarks
+    :END:
+
+    Emacs Bookmarks
+
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Environment: Bookmarks
+      ;;------------------------------------------------------------------------------
+
+      (init-message 2 "Environment: Bookmarks")
+    #+END_SRC
+
+    #+BEGIN_SRC emacs-lisp :tangle ~/config/emacs/.emacs.d/bookmarks
+      ;;;; Emacs Bookmark Format Version 1;;;; -*- coding: utf-8-emacs; mode: lisp-data -*-
+      ;;; -*- End Of Bookmark File Format Version Stamp -*-
+      (
+       ;; Gopher: Search
+       ("Gopherpedia" (location . "gopher://gopherpedia.com/1") (handler . elpher-bookmark-jump))
+       ;; Gopher: News
+       ("Gopher Project" (location . "gopher://gopherproject.org/1") (handler . elpher-bookmark-jump))
+       ("Hacker News" (location . "gopher://hngopher.com/1") (handler . elpher-bookmark-jump))
+       ("Weather Forecasts" (location . "gopher://gopher.floodgap.com/1/groundhog") (handler . elpher-bookmark-jump))
+       ;; Gopher: Repositories
+       ("Floodgap Systems" (location . "gopher://gopher.floodgap.com/1") (handler . elpher-bookmark-jump))
+       ("Quux" (location . "gopher://quux.org/1") (handler . elpher-bookmark-jump))
+       ("TEXTFILES" (location . "gopher://0x1bi.net/1/textfiles") (handler . elpher-bookmark-jump))
+       ;; Gopher: Popular
+       ("SDF Public Access UNIX System" (location . "gopher://sdf.org/1") (handler . elpher-bookmark-jump))
+       ("Gopher Club" (location . "gopher://gopher.club/1/phlogs/") (handler . elpher-bookmark-jump))
+       ("Zaibatsu" (location . "gopher://zaibatsu.circumlunar.space/1") (handler . elpher-bookmark-jump))
+       ("Baud Baby" (location . "gopher://baud.baby/1") (handler . elpher-bookmark-jump))
+       ("EyeBlea" (location . "gopher://eyeblea.ch/1") (handler . elpher-bookmark-jump))
+       ("Final Zone" (location . "gopher://finalzone.ddns.net/1") (handler . elpher-bookmark-jump))
+       ("20 For Beers" (location . "gopher://20ForBeers.com/1") (handler . elpher-bookmark-jump))
+       ("Bitreich" (location . "gopher://bitreich.org/1") (handler . elpher-bookmark-jump))
+       ;; Gopher: Esoteric
+       ("Gopherus Author" (location . "gopher://gopher.viste.fr/1") (handler . elpher-bookmark-jump))
+       ("Elpher" (location . "gopher://thelambdalab.xyz/1/projects/elpher/") (handler . elpher-bookmark-jump))
+       ("Klondike Solitaire" (location . "gopher://worldofsolitaire.com/") (handler . elpher-bookmark-jump))
+       ;; Gopher: Personal
+       ("Nullman" (location . "gopher://nullman.net/1") (handler . elpher-bookmark-jump))
+       ("kurisu (L29)" (location . "gopher://eyeblea.ch/1/~kurisu") (handler . elpher-bookmark-jump))
+       ;;("fluxcap (L29) ???" (location . "gopher://fluxcap.synchro.net:5070/1") (handler . elpher-bookmark-jump))
+       ("nkeck72 (L29)" (location . "gopher://gopher.nkeck72.xyz/1") (handler . elpher-bookmark-jump))
+       ("MeatLoTioN (Lunduke)" (location . "gopher://gopher.erb.pw/1") (handler . elpher-bookmark-jump))
+       ;;("fputs (Lunduke) ???" (location . "gopher://fputs.com/1") (handler . elpher-bookmark-jump))
+
+       ;; Gemini
+       ("Project Gemini" (location . "gemini://gemini.circumlunar.space/") (handler . elpher-bookmark-jump))
+       ("Planet m68k" (location . "gemini://m68k.info/") (handler . elpher-bookmark-jump))
+       ;;("System Crafters" (location . "gemini://systemcrafters.cc") (handler . elpher-bookmark-jump))
+       ;;("Writing a Gemini Server" (location . "gemini://bcalderon.io/writing-a-gemini-server") (handler . elpher-bookmark-jump))
+       )
+    #+END_SRC
 
 * Key Bindings
   :PROPERTIES:
@@ -23256,7 +23314,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
     :CUSTOM_ID: packages-elfeed-tube
     :END:
 
-    YouTube integration for Elfeed
+    YouTube Integration for Elfeed
 
     #+BEGIN_SRC emacs-lisp
       ;;------------------------------------------------------------------------------
@@ -23325,50 +23383,8 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
           (interactive)
           (find-file (file-truename (expand-file-name "init-emacs.org" emacs-home-dir)))
           (goto-char (point-min))
-          (search-forward ";; Elpher Bookmarks File\n")
+          (search-forward ";;;; Emacs Bookmark")
           (org-show-entry)))
-    #+END_SRC
-
-    #+BEGIN_SRC emacs-lisp :tangle ~/config/emacs/.emacs.d/elpher-bookmarks
-      ;; Elpher Bookmarks File
-      (
-       ;; Gopher: Search
-       ("Gopherpedia" "gopher://gopherpedia.com/")
-       ;; Gopher: News
-       ("Gopher Project" "gopher://gopherproject.org/1")
-       ("Hacker News" "gopher://hngopher.com/1")
-       ("Weather Forecasts" "gopher://gopher.floodgap.com/1/groundhog")
-       ;; Gopher: Repositories
-       ("Floodgap Systems" "gopher://gopher.floodgap.com/1")
-       ("Quux" "gopher://quux.org/1")
-       ("TEXTFILES" "gopher://0x1bi.net/1/textfiles")
-       ;; Gopher: Popular
-       ("SDF Public Access UNIX System" "gopher://sdf.org/1")
-       ("Gopher Club" "gopher://gopher.club/1/phlogs/")
-       ("Zaibatsu" "gopher://zaibatsu.circumlunar.space/1")
-       ("Baud Baby" "gopher://baud.baby/1")
-       ("EyeBlea" "gopher://eyeblea.ch/1")
-       ("Final Zone" "gopher://finalzone.ddns.net/1")
-       ("20 For Beers" "gopher://20ForBeers.com/1")
-       ("Bitreich" "gopher://bitreich.org/1")
-       ;; Gopher: Esoteric
-       ("Gopherus Author" "gopher://gopher.viste.fr/1")
-       ("Elpher" "gopher://thelambdalab.xyz/1/projects/elpher/")
-       ("Klondike Solitaire" "gopher://worldofsolitaire.com/")
-       ;; Gopher: Personal
-       ("Nullman" "gopher://nullman.net/1")
-       ("kurisu (L29)" "gopher://eyeblea.ch/1/~kurisu")
-       ;;("fluxcap (L29)" "gopher://fluxcap.synchro.net:5070/1")
-       ("nkeck72 (L29)" "gopher://gopher.nkeck72.xyz/1")
-       ("MeatLoTioN (Lunduke)" "gopher://gopher.erb.pw/1")
-       ;;("fputs (Lunduke)" "gopher://fputs.com/1")
-
-       ;; Gemini
-       ("Project Gemini" "gemini://gemini.circumlunar.space/")
-       ("Planet m68k" "gemini://m68k.info/")
-       ;;("System Crafters" "gemini://systemcrafters.cc")
-       ;;("Writing a Gemini Server" "gemini://bcalderon.io/writing-a-gemini-server")
-       )
     #+END_SRC
 
 *** +elscreen+
