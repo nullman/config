@@ -1,14 +1,17 @@
 ;; [[file:init-emacs.org::#modules-elpher][elpher:2]]
 ;; Elpher Bookmarks File
 (
- ;; Gopher
- ("Gopherpedia" "gopher://gopherpedia.com/1")
+ ;; Gopher: Search
+ ("Gopherpedia" "gopher://gopherpedia.com/")
+ ;; Gopher: News
  ("Gopher Project" "gopher://gopherproject.org/1")
- ("Floodgap Systems" "gopher://gopher.floodgap.com/1")
  ("Hacker News" "gopher://hngopher.com/1")
  ("Weather Forecasts" "gopher://gopher.floodgap.com/1/groundhog")
+ ;; Gopher: Repositories
+ ("Floodgap Systems" "gopher://gopher.floodgap.com/1")
  ("Quux" "gopher://quux.org/1")
  ("TEXTFILES" "gopher://0x1bi.net/1/textfiles")
+ ;; Gopher: Popular
  ("SDF Public Access UNIX System" "gopher://sdf.org/1")
  ("Gopher Club" "gopher://gopher.club/1/phlogs/")
  ("Zaibatsu" "gopher://zaibatsu.circumlunar.space/1")
@@ -16,19 +19,23 @@
  ("EyeBlea" "gopher://eyeblea.ch/1")
  ("Final Zone" "gopher://finalzone.ddns.net/1")
  ("20 For Beers" "gopher://20ForBeers.com/1")
- ("Nullman" "gopher://nullman.net/1")
- ("kurisu (L29)" "gopher://eyeblea.ch/1/~kurisu")
- ("fluxcap (L29) ???" "gopher://fluxcap.synchro.net:5070/1")
- ("nkeck72 (L29)" "gopher://gopher.nkeck72.xyz/1")
- ("MeatLoTioN (Lunduke)" "gopher://gopher.erb.pw/1")
- ("fputs (Lunduke) ???" "gopher://fputs.com/1")
  ("Bitreich" "gopher://bitreich.org/1")
+ ;; Gopher: Esoteric
  ("Gopherus Author" "gopher://gopher.viste.fr/1")
  ("Elpher" "gopher://thelambdalab.xyz/1/projects/elpher/")
  ("Klondike Solitaire" "gopher://worldofsolitaire.com/")
+ ;; Gopher: Personal
+ ("Nullman" "gopher://nullman.net/1")
+ ("kurisu (L29)" "gopher://eyeblea.ch/1/~kurisu")
+ ;;("fluxcap (L29)" "gopher://fluxcap.synchro.net:5070/1")
+ ("nkeck72 (L29)" "gopher://gopher.nkeck72.xyz/1")
+ ("MeatLoTioN (Lunduke)" "gopher://gopher.erb.pw/1")
+ ;;("fputs (Lunduke)" "gopher://fputs.com/1")
 
  ;; Gemini
  ("Project Gemini" "gemini://gemini.circumlunar.space/")
- ("System Crafters" "gemini://systemcrafters.cc")
- ("Writing a Gemini Server" "gemini://bcalderon.io/writing-a-gemini-server"))
+ ("Planet m68k" "gemini://m68k.info/")
+ ;;("System Crafters" "gemini://systemcrafters.cc")
+ ;;("Writing a Gemini Server" "gemini://bcalderon.io/writing-a-gemini-server")
+ )
 ;; elpher:2 ends here

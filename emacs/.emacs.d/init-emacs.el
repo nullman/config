@@ -18661,6 +18661,27 @@ otherwise run `find-file-as-root'."
   (dired-auto-revert-buffer t)
   ;; list directories first and remove unwanted fields
   (dired-listing-switches "-alhGv1 --time-style=+%F --group-directories-first")
+  ;; supplemental rules for suggested commands based on file extensions
+  ;; see `dired-guess-shell-alist-default' for default list
+  (dired-guess-shell-alist-user
+   '(("\\.pdf\\'" "evince")
+     ("\\.htm?l\\'" "firefox")
+     ("\\.doc?x\\'" "libreoffice --writer")
+     ("\\.odt\\'" "libreoffice --writer")
+     ("\\.p[bgpn]m\\'" "gpicview")
+     ("\\.bmp\\'" "gpicview")
+     ("\\.gif\\'" "gpicview")
+     ("\\.tif?f\\'" "gpicview")
+     ("\\.png\\'" "gpicview")
+     ("\\.jpe?g\\'" "gpicview")
+     ("\\.mpe?g\\'" "vlc")
+     ("\\.avi\\'" "vlc")
+     ("\\.mkv\\'" "vlc")
+     ("\\.mp4\\'" "vlc")
+     ("\\.wmv\\'" "vlc")
+     ("\\.mp3\\'" "audacious")
+     ("\\.ogg\\'" "audacious")
+     ("\\.wav\\'" "audacious")))
   :config
   ;; mac support
   (when window-system-mac
