@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2023-01-18 14:06 (kyle)>
+  #+TIMESTAMP: <2023-01-19 10:27 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -1993,12 +1993,11 @@
       ;;(setq browse-url-generic-program "w3m")
       ;;(setq browse-url-generic-program "mozilla")
       ;;(setq browse-url-browser-function #'browse-url-generic)
-      (setq browse-url-browser-function #'eww-browse-url)
+      ;;(setq browse-url-browser-function #'eww-browse-url)
       ;;(setq browse-url-browser-function #'w3m-browse-url)
-      ;;(setq browse-url-browser-function #'browse-url-firefox
-      ;;      browse-url-new-window-flag  t
-      ;;      browse-url-firefox-new-window-is-tab t)
-
+      (setq browse-url-browser-function #'browse-url-firefox
+            browse-url-new-window-flag t
+            browse-url-firefox-new-window-is-tab t)
       ;; set secondary browser
       (setq browse-url-secondary-browser-function #'browse-url-default-browser)
     #+END_SRC

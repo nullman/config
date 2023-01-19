@@ -392,7 +392,10 @@ alias umount-synology="
 #!#        youtube-dl-best         youtube-dl -f bestvideo+bestaudio
 #!alias youtube-dl-best="youtube-dl -f bestvideo+bestaudio"
 #        yt-dl
-alias ytdl="yt-dlp -f \"bv+ba/b\" -o \"%(channel)s - %(release_date>%Y-%m-%d,upload_date>%Y-%m-%d|Unknown)s - %(title)s.%(ext)s\""
+alias ytdl="
+    yt-dlp --format \"bv*+ba/b\" \
+           --format-sort \"res:1080,res:720,res:480\" \
+           --output \"%(channel)s - %(release_date>%Y-%m-%d,upload_date>%Y-%m-%d|Unknown)s - %(title)s.%(ext)s\""
 #        weather                 weather report
 alias weather="curl --silent wttr.in | head -n -2"
 #        termbin                 send content to termbin.com
@@ -1030,6 +1033,8 @@ alias cdprj="cd \${HOME}/prj"
 alias cdprjjs="cd \${HOME}/prj/javascript"
 #        cdt                     cd ~/tmp
 alias cdt="cd \${HOME}/tmp"
+#        cd_                     cd ~/tmp/_____
+alias cd_="cd \${HOME}/tmp/_____"
 #        cdw                     cd ~/web
 alias cdw="cd \${HOME}/web"
 #        cdwb                    cd ~/web/bin
