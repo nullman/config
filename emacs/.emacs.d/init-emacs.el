@@ -2396,7 +2396,6 @@ KEYMAP defaults to `override-global-map'."
   :demand t
   :mode (("\\.org\\'" . org-mode)
          ("\\.org_archive\\'" . org-mode)
-         ("\\.org\\.enc\\'" . org-mode)
          ("\\.org\\.cpt\\'" . org-mode))
   :bind* (("C-c a" . org-agenda)
           ("C-c c" . org-capture)
@@ -5659,7 +5658,7 @@ If NYXT-FILE is non-nil, then output is returned."
                            (concat
                             (substring date 6 10)
                             (substring date 0 2))))
-    (let ((buffer (get-buffer "personal-encrypted.org.cpt"))
+    (let ((buffer (get-buffer "personal-encrypted.org.gpg"))
           (tables '("NWM_A40_344433"
                     "NWM_A40_344458"
                     "NWM_A40_345190"
@@ -15421,58 +15420,6 @@ USING is the remaining peg."
   (add-hook 'compilation-finish-functions #'custom-compilation-finish-function))
 ;; compile:1 ends here
 
-;; [[file:init-emacs.org::#packages-crypt][crypt++:1]]
-;;------------------------------------------------------------------------------
-;;; Packages: crypt
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Packages: crypt")
-
-(use-package crypt++
-  :load-path (lambda () (file-truename (expand-file-name "crypt++.el" emacs-modules-dir)))
-  :config
-  ;; confirm password for new encrypted file
-  (setq crypt-confirm-password t)
-  ;; use openssl aes-256-cbc encryption
-  (setq crypt-encryption-type 'aes-256-cbc)
-  ;; automatically encrypt when writing
-  (setq crypt-auto-write-buffer-encrypted t)
-
-  ;; add openssl aes-256-cbc encryption support
-  (defun crypt-build-encryption-alist--add-openssl (orig-fun &rest args)
-    "Add openssl support."
-    (append
-     (apply orig-fun args)
-     (list
-      (list 'aes-256-cbc
-            crypt-encryption-magic-regexp
-            crypt-encryption-magic-regexp-inverse
-            "\\(\\.ose\\|\\.aes\\|\\.enc\\)$"
-            "openssl" "openssl"
-            '("-e" "-aes-256-cbc" "-md" "sha512" "-pbkdf2" "-base64" "-k")
-            '("-d" "-aes-256-cbc" "-md" "sha512" "-pbkdf2" "-base64" "-k")
-            "Enc"
-            nil
-            t))))
-  ;; advise `crypt-build-encryption-alist'
-  (advice-add 'crypt-build-encryption-alist :around #'crypt-build-encryption-alist--add-openssl)
-
-  ;; add required "pass:" prefix to key
-  (defun crypt-encrypt-region--add-pass-prefix (orig-fun &rest args)
-    "Add required \"pass:\" prefix to KEY when using openssl encryption."
-    (let ((start (car args))
-          (end (cadr args))
-          (key (concat "pass:" (caddr args)))
-          (decrypt (if (cdddr args) (cadddr args) nil)))
-      (apply orig-fun (list start end key decrypt))))
-  ;; advise `crypt-encrypt-region'
-  (advice-add 'crypt-encrypt-region :around #'crypt-encrypt-region--add-pass-prefix)
-
-  ;; reset crypt++ after customizations
-  (crypt-rebuild-tables)
-  (crypt-bind-insert-file))
-;; crypt++:1 ends here
-
 ;; [[file:init-emacs.org::#modules-cycle-buffer][cycle-buffer:1]]
 ;;------------------------------------------------------------------------------
 ;;; Packages: cycle-buffer
@@ -15818,6 +15765,23 @@ USING is the remaining peg."
   :load-path (lambda () (file-truename (expand-file-name "eperiodic.el" emacs-modules-dir)))
   :commands (eperiodic))
 ;; eperiodic:1 ends here
+
+;; [[file:init-emacs.org::#packages-epg][epg:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: epg
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Packages: epg")
+
+(use-package epg
+  :straight (:type built-in)
+  :custom
+  ;; do not prompt for password on every save
+  (epa-file-cache-passphrase-for-symmetric-encryption t)
+  ;; redirect pinentry queries to caller
+  ;; i.e. emacs will use its minibuffer to query passphrases
+  (epg-pinentry-mode 'loopback))
+;; epg:1 ends here
 
 ;; [[file:init-emacs.org::#modules-epoch][epoch:1]]
 ;;------------------------------------------------------------------------------
@@ -20649,10 +20613,10 @@ Commands:
     ,(auto-menu-file-dir "~/web/org" "\\.org\\'" "find-file" t))
    ("Org Files..."
     ,(cl-remove-if (lambda (x) (string-prefix-p "agenda-" (car x)))
-                   (auto-menu-file-dir "~/org" "\\.\\(org\\|org\\.cpt\\)\\'" "find-file" t)))
+                   (auto-menu-file-dir "~/org" "\\.\\(org\\|org\\.gpg\\)\\'" "find-file" t)))
    ("Agenda Files..."
     ,(cl-remove-if (lambda (x) (not (string-prefix-p "agenda-" (car x))))
-                   (auto-menu-file-dir "~/org" "\\.\\(org\\|org\\.cpt\\)\\'" "find-file" t)))
+                   (auto-menu-file-dir "~/org" "\\.\\(org\\|org\\.gpg\\)\\'" "find-file" t)))
    ("Bookmarks" "load-bookmarks" "Load `~/lynx_bookmarks.html' file.")
    ("Emacs Work Modules..."
     ,(auto-menu-file-dir local-work-modules-dir "\\.el\\'" "find-file" t))

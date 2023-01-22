@@ -1583,7 +1583,7 @@ rsync-cruzer() {
     done
 
     # create and copy bundle
-    rsyncbundle
+    rsync-bundle
 }
 #        rsync-bundle            generate encrypted bundle and rsync it to mounted ventoy usb
 rsync-bundle() {
