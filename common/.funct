@@ -837,8 +837,7 @@ encrypt() {
         else
             pw="$1"
         fi
-        #aes -e -f ${infile} -o ${outfile} -p ${pw}
-        openssl enc -e -aes-256-cbc -md sha512 -pbkdf2 -in ${infile} -out ${outfile} -pass ${pw}
+        openssl enc -e -aes-256-cbc -md sha512 -pbkdf2 -base64 -in "${infile}" -out "${outfile}" -pass "pass:${pw}"
     fi
 }
 #        decrypt                 decrypt file
@@ -856,8 +855,7 @@ decrypt() {
         else
             pw="$1"
         fi
-        #aes -d -f ${infile} -o ${outfile} -p ${pw}
-        openssl enc -d -aes-256-cbc -md sha512 -pbkdf2 -in ${infile} -out ${outfile} -pass ${pw}
+        openssl enc -d -aes-256-cbc -md sha512 -pbkdf2 -base64 -in "${infile}" -out "${outfile}" -pass "pass:${pw}"
     fi
 }
 

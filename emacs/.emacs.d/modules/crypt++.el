@@ -1941,7 +1941,7 @@ decryption is done."
             (if (not decrypt) crypt-confirm-password))
            decrypt)))
 
-  (crypt-save-point
+  ;;(crypt-save-point
 
    ;; We define the PROGRAM as the encryption program or decryption program
    ;; listed for `crypt-encryption-type' of `crypt-encryption-alist.'  These
@@ -1987,7 +1987,7 @@ decryption is done."
 
       ;; Default - just a non-null string.
       (t
-       (call-process-region start end prog t '(t nil) nil args key))))))
+       (call-process-region start end prog t '(t nil) nil args key)))));)
 
 
 (defun crypt-encrypt-buffer (key &optional decrypt buffer)
