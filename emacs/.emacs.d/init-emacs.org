@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2023-01-19 10:27 (kyle)>
+  #+TIMESTAMP: <2023-01-21 19:09 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -4574,42 +4574,42 @@
       ;;         remember-annotation-functions planner-annotation-functions))
     #+END_SRC
 
-*** TOC
+*** +TOC+
     :PROPERTIES:
     :CUSTOM_ID: org-mode-toc
     :END:
 
     Automatic table of contents for Org files.
 
-    #+BEGIN_SRC emacs-lisp
-      ;;------------------------------------------------------------------------------
-      ;;; Org Mode: TOC
-      ;;------------------------------------------------------------------------------
+    #+BEGIN_SRC emacs-lisp :tangle no
+      ;; ;;------------------------------------------------------------------------------
+      ;; ;;; Org Mode: TOC
+      ;; ;;------------------------------------------------------------------------------
 
-      (init-message 2 "Org Mode: TOC")
+      ;; (init-message 2 "Org Mode: TOC")
 
-      (use-package org-make-toc
-        ;; original author is not maintaining the code
-        ;; :straight (org-make-toc :type git :host github :repo "alphapapa/org-make-toc")
-        ;; forked branch fixes a bug
-        :straight (org-make-toc :type git :host github
-                                :repo "nullman/org-make-toc"
-                                :branch "fix/no-auto-save-temp-file")
-        :hook (org-mode . org-make-toc-mode)
-        :custom
-        (org-make-toc-link-type-fn #'org-make-toc--link-entry-custom)
-        :config
-        ;; custom link entry generator
-        (defun org-make-toc--link-entry-custom ()
-          "Return text for ENTRY converted to ID link."
-          (or (when-let* ((id (cdr (assoc "CUSTOM_ID" (org-entry-properties))))
-                          (title (cdr (assoc "ITEM" (org-entry-properties))))
-                          (filename (if org-make-toc-filename-prefix
-                                        (file-name-nondirectory (buffer-file-name))
-                                      "")))
-                (org-link-make-string (concat filename "#" id)
-                                      (org-make-toc--visible-text title)))
-              (org-make-toc--link-entry-github))))
+      ;; (use-package org-make-toc
+      ;;   ;; original author is not maintaining the code
+      ;;   ;; :straight (org-make-toc :type git :host github :repo "alphapapa/org-make-toc")
+      ;;   ;; forked branch fixes a bug
+      ;;   :straight (org-make-toc :type git :host github
+      ;;                           :repo "nullman/org-make-toc"
+      ;;                           :branch "fix/no-auto-save-temp-file")
+      ;;   :hook (org-mode . org-make-toc-mode)
+      ;;   :custom
+      ;;   (org-make-toc-link-type-fn #'org-make-toc--link-entry-custom)
+      ;;   :config
+      ;;   ;; custom link entry generator
+      ;;   (defun org-make-toc--link-entry-custom ()
+      ;;     "Return text for ENTRY converted to ID link."
+      ;;     (or (when-let* ((id (cdr (assoc "CUSTOM_ID" (org-entry-properties))))
+      ;;                     (title (cdr (assoc "ITEM" (org-entry-properties))))
+      ;;                     (filename (if org-make-toc-filename-prefix
+      ;;                                   (file-name-nondirectory (buffer-file-name))
+      ;;                                 "")))
+      ;;           (org-link-make-string (concat filename "#" id)
+      ;;                                 (org-make-toc--visible-text title)))
+      ;;         (org-make-toc--link-entry-github))))
     #+END_SRC
 
 *** +PDF+

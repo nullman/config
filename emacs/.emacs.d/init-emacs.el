@@ -2869,37 +2869,6 @@ DATA should have been made by `org-outline-overlay-data'."
   :straight t)
 ;; ob-latex-as-png:2 ends here
 
-;; [[file:init-emacs.org::#org-mode-toc][TOC:1]]
-;;------------------------------------------------------------------------------
-;;; Org Mode: TOC
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Org Mode: TOC")
-
-(use-package org-make-toc
-  ;; original author is not maintaining the code
-  ;; :straight (org-make-toc :type git :host github :repo "alphapapa/org-make-toc")
-  ;; forked branch fixes a bug
-  :straight (org-make-toc :type git :host github
-                          :repo "nullman/org-make-toc"
-                          :branch "fix/no-auto-save-temp-file")
-  :hook (org-mode . org-make-toc-mode)
-  :custom
-  (org-make-toc-link-type-fn #'org-make-toc--link-entry-custom)
-  :config
-  ;; custom link entry generator
-  (defun org-make-toc--link-entry-custom ()
-    "Return text for ENTRY converted to ID link."
-    (or (when-let* ((id (cdr (assoc "CUSTOM_ID" (org-entry-properties))))
-                    (title (cdr (assoc "ITEM" (org-entry-properties))))
-                    (filename (if org-make-toc-filename-prefix
-                                  (file-name-nondirectory (buffer-file-name))
-                                "")))
-          (org-link-make-string (concat filename "#" id)
-                                (org-make-toc--visible-text title)))
-        (org-make-toc--link-entry-github))))
-;; TOC:1 ends here
-
 ;; [[file:init-emacs.org::#org-mode-modules][Modules:1]]
 ;;------------------------------------------------------------------------------
 ;;; Org Mode: Modules
