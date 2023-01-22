@@ -838,7 +838,7 @@ encrypt() {
             pw="$1"
         fi
         #aes -e -f ${infile} -o ${outfile} -p ${pw}
-        openssl enc -aes256 -pbkdf2 -in ${infile} -out ${outfile} -pass ${pw}
+        openssl enc -e -aes-256-cbc -md sha512 -pbkdf2 -in ${infile} -out ${outfile} -pass ${pw}
     fi
 }
 #        decrypt                 decrypt file
@@ -857,7 +857,7 @@ decrypt() {
             pw="$1"
         fi
         #aes -d -f ${infile} -o ${outfile} -p ${pw}
-        openssl enc -aes256 -pbkdf2 -d -in ${infile} -out ${outfile} -pass ${pw}
+        openssl enc -d -aes-256-cbc -md sha512 -pbkdf2 -in ${infile} -out ${outfile} -pass ${pw}
     fi
 }
 
@@ -1609,11 +1609,11 @@ rsync-bundle() {
     pushd "${root}"
     tar cvfz "bundle.tgz" "bundle"
     #ccrypt -e "bundle.tgz"
-    openssl enc -aes-256-cbc -md sha512 -pbkdf2 -iter 100000 -salt -in "bundle.tgz" -out "bundle.tgz.enc"
+    openssl enc -e -aes-256-cbc -md sha512 -pbkdf2 -iter 100000 -salt -in "bundle.tgz" -out "bundle.tgz.enc"
     # sync bundle to usb
     rsync -rLtxc --progress --delete "bundle.tgz.enc" "${dest}/"
     # add decrypt script
-    echo "openssl enc -aes-256-cbc -d -md sha512 -pbkdf2 -iter 100000 -salt -in bundle.tgz.enc -out bundle.tgz" > "${dest}/bundle-decrypt"
+    echo "openssl enc -d -aes-256-cbc -md sha512 -pbkdf2 -iter 100000 -salt -in bundle.tgz.enc -out bundle.tgz" > "${dest}/bundle-decrypt"
     chmod +x "${dest}/bundle-decrypt"
     popd
     rm -rf "${root}"

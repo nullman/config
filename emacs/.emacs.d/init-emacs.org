@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2023-01-21 19:09 (kyle)>
+  #+TIMESTAMP: <2023-01-22 10:47 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -3847,7 +3847,7 @@
         :demand t
         :mode (("\\.org\\'" . org-mode)
                ("\\.org_archive\\'" . org-mode)
-               ;;("\\.org\\.enc\\'" . org-mode)
+               ("\\.org\\.enc\\'" . org-mode)
                ("\\.org\\.cpt\\'" . org-mode))
         :bind* (("C-c a" . org-agenda)
                 ("C-c c" . org-capture)
@@ -22790,6 +22790,54 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
             (save-excursion (goto-char (point-max)) (insert msg))
             (message "Compilation %s: %s" (string-trim-right why) msg)))
         (add-hook 'compilation-finish-functions #'custom-compilation-finish-function))
+    #+END_SRC
+
+*** crypt++
+    :PROPERTIES:
+    :CUSTOM_ID: packages-crypt
+    :END:
+
+    Support for reading, writing, and loading encrypted files.
+
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Packages: crypt
+      ;;------------------------------------------------------------------------------
+
+      (init-message 2 "Packages: crypt")
+
+      (use-package crypt++
+        :load-path (lambda () (file-truename (expand-file-name "crypt++.el" emacs-modules-dir)))
+        :config
+        ;; confirm password for new encrypted file
+        (setq crypt-confirm-password t)
+        ;; use openssl aes-256-cbc encryption
+        (setq crypt-encryption-type 'aes-256-cbc)
+        ;; automatically encrypt when writing
+        (setq crypt-auto-write-buffer-encrypted t)
+
+        ;; add openssl aes-256-cbc encryption support
+        (defun crypt-build-encryption-alist--add-openssl (orig-fun &rest args)
+          "Add openssl support."
+          (append
+           (apply orig-fun args)
+           (list
+            (list 'aes-256-cbc
+                  crypt-encryption-magic-regexp
+                  crypt-encryption-magic-regexp-inverse
+                  "\\(\\.ose\\|\\.aes\\|\\.enc\\)$"
+                  "openssl" "openssl"
+                  '("-e" "aes-256-cbc" "-md" "sha512" "-pbkdf2" "-base64" "-k")
+                  '("-d" "aes-256-cbc" "-md" "sha512" "-pbkdf2" "-base64" "-k")
+                  "Enc"
+                  nil
+                  t))))
+        ;; advise `crypt-build-encryption-alist'
+        (advice-add 'crypt-build-encryption-alist :around #'crypt-build-encryption-alist--add-openssl)
+
+        ;; reset crypt++ after customizations
+        (crypt-rebuild-tables)
+        (crypt-bind-insert-file))
     #+END_SRC
 
 *** cycle-buffer
