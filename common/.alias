@@ -1970,11 +1970,14 @@ alias rsync-media-put-morpheus="rsync -rlptx --progress ${home}/data/media/ morp
 #        rsync-media-put-morpheus-delete  rsync /home/data/media morpheus:/home/data/media
 alias rsync-media-put-morpheus-delete="rsync -rlptx --progress --delete ${home}/data/media/ morpheus:/home/data/media/"
 #        rsync-media-put-synology  rsync /home/data/media /mnt/synology/media
-alias rsync-media-put-synology="rsync -rlx --progress ${home}/data/media/ /mnt/synology/media"
+alias rsync-media-put-synology="
+    find ${home}/data/media/ -mindepth 1 -maxdepth 1 -type d -not -regex '^\.+$' | sort | while read dir ; do
+        rsync -rL --size-only --progress \"\${dir}\" /mnt/synology/media
+    done"
 #        rsync-media-put-synology-delete  rsync /home/data/media /mnt/synology/media
 alias rsync-media-put-synology-delete="
     find ${home}/data/media/ -mindepth 1 -maxdepth 1 -type d -not -regex '^\.+$' | sort | while read dir ; do
-        rsync -rlx --progress --delete \"\${dir}\" /mnt/synology/media
+        rsync -rL --size-only --progress --delete \"\${dir}\" /mnt/synology/media
     done"
 #        rsync-text-get-morpheus  rsync morpheus:/home/data/media/Text /home/data/media/Text
 alias rsync-text-get-morpheus="rsync -rlptx --progress morpheus:/home/data/media/Text/ ${home}/data/media/Text/"
