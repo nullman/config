@@ -2395,8 +2395,7 @@ KEYMAP defaults to `override-global-map'."
   :straight (:type built-in)
   :demand t
   :mode (("\\.org\\'" . org-mode)
-         ("\\.org_archive\\'" . org-mode)
-         ("\\.org\\.cpt\\'" . org-mode))
+         ("\\.org_archive\\'" . org-mode))
   :bind* (("C-c a" . org-agenda)
           ("C-c c" . org-capture)
           ;;("C-c l" . org-store-link)
@@ -17537,19 +17536,6 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
 ;;   :after (counsel projectile)
 ;;   :init (counsel-projectile-mode))
 ;; projectile:1 ends here
-
-;; [[file:init-emacs.org::#modules-ps-ccrypt][ps-ccrypt:2]]
-;;------------------------------------------------------------------------------
-;;; Packages: ps-ccrypt
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modules: ps-ccrypt")
-
-(use-package ps-ccrypt
-  :when (executable-find "ccrypt") ; only use if binary is available on system
-  ;; local copy with a bug fix
-  :load-path (lambda () (file-truename (expand-file-name "ps-ccrypt.el" emacs-modules-dir))))
-;; ps-ccrypt:2 ends here
 
 ;; [[file:init-emacs.org::#modules-rainbow-mode][rainbow-mode:1]]
 ;;------------------------------------------------------------------------------

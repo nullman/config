@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2023-01-22 16:08 (kyle)>
+  #+TIMESTAMP: <2023-01-23 12:11 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -3846,8 +3846,7 @@
         :straight (:type built-in)
         :demand t
         :mode (("\\.org\\'" . org-mode)
-               ("\\.org_archive\\'" . org-mode)
-               ("\\.org\\.cpt\\'" . org-mode))
+               ("\\.org_archive\\'" . org-mode))
         :bind* (("C-c a" . org-agenda)
                 ("C-c c" . org-capture)
                 ;;("C-c l" . org-store-link)
@@ -26266,33 +26265,6 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;;   :after (ivy counsel projectile)
       ;;   :after (counsel projectile)
       ;;   :init (counsel-projectile-mode))
-    #+END_SRC
-
-*** ps-ccrypt
-    :PROPERTIES:
-    :CUSTOM_ID: modules-ps-ccrypt
-    :END:
-
-    Support for reading, writing, and loading encrypted files.
-
-    The *ccrypt* command needs to be installed for this to work.
-
-    #+BEGIN_SRC sh :tangle no :dir /sudo::
-      # install ccrypt on Arch system
-      sudo pacman -S --noconfirm ccrypt
-    #+END_SRC
-
-    #+BEGIN_SRC emacs-lisp
-      ;;------------------------------------------------------------------------------
-      ;;; Packages: ps-ccrypt
-      ;;------------------------------------------------------------------------------
-
-      (init-message 2 "Modules: ps-ccrypt")
-
-      (use-package ps-ccrypt
-        :when (executable-find "ccrypt") ; only use if binary is available on system
-        ;; local copy with a bug fix
-        :load-path (lambda () (file-truename (expand-file-name "ps-ccrypt.el" emacs-modules-dir))))
     #+END_SRC
 
 *** +psvn+
