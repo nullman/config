@@ -4,7 +4,7 @@
 #
 # Perform an rm after copying any deleted files to the trash.
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 trashdir="${HOME}/.Trash"

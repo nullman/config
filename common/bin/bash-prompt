@@ -6,7 +6,7 @@
 #
 # Put the current directory in the upper right corner.
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 prompt_command() {

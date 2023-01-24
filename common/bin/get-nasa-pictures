@@ -4,7 +4,7 @@
 #
 # Grab the latest images from Nasa's picture of the day.
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 urlbase="https://apod.nasa.gov/apod"

@@ -4,7 +4,7 @@
 #
 # Return a unique id that will fit in a bigint.
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 BEGIN { $^W = 1; }

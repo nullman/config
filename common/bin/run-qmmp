@@ -4,7 +4,7 @@
 #
 # Run Qmmp audio player and move it to the right side of the screen.
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 qmmp %F &

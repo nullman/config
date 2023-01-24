@@ -4,7 +4,7 @@
 #
 # Run an AIM bot that just generates UUIDs.
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 BEGIN { $^W = 1; }

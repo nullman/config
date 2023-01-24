@@ -10,7 +10,7 @@
 # Requirements:
 #   apt-get install uml-utilities bridge-utils
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 #dhcp=dynamic

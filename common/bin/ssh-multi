@@ -19,7 +19,7 @@
 #   # apt-get install rubygems
 #   # gem install --remote net-ssh
 #
-# Author: Kyle W T Sherman (based on Joel Jensen's version)
+# Author: Kyle W T Sherman <kylewsherman@gmail.com> (based on Joel Jensen's version)
 #===============================================================================
 
 require "rubygems"

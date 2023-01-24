@@ -4,7 +4,7 @@
 #
 # Clean, download, and compile the latest clojure and related project files.
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 dir="${HOME}/.clojure"

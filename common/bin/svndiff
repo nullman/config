@@ -4,7 +4,7 @@
 #
 # Run svn diff with various options.
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 if [[ ! -d .svn ]] ; then

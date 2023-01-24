@@ -7,7 +7,7 @@
 # Infile defaults to ~/bookmarks.xml and outfile defaults to
 # lynx_bookmarks.html.
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 BEGIN { $^W = 1; }

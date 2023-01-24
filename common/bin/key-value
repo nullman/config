@@ -4,7 +4,7 @@
 #
 # Interface to a key-value data dictionary.
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 # key/value base dir

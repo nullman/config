@@ -9,7 +9,7 @@
 #   num   - number of results to return (default = 10)
 #   mode  - normal or im (default = normal)
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 #BEGIN { $^W = 1; }

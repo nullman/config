@@ -4,7 +4,7 @@
 #
 # Run unit tests on the key-value script.
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 # TODO: add tests for all errors

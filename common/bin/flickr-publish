@@ -22,7 +22,7 @@
 # Required Ubuntu/Debian libs:
 #   apt-get install libflickr-api-perl libflickr-upload-perl
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 BEGIN { $^W = 1; }

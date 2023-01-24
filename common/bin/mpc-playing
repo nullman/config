@@ -4,7 +4,7 @@
 #
 # Print currently playing Music Player Daemon song.
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 artist=$(mpc -f '%artist%' | head -n 1)

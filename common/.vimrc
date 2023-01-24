@@ -3,7 +3,7 @@
 "
 " Vim Config
 "
-" Author: Kyle W T Sherman
+" Author: Kyle W T Sherman <kylewsherman@gmail.com>
 "=============================================================================
 
 " UI

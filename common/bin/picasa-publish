@@ -20,7 +20,7 @@
 #
 # Set DEBUG=1 before calling for debug output.
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 BEGIN { $^W = 1; }

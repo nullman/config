@@ -8,7 +8,7 @@
 #   from      - master host
 #   direction - screen side used for the connection (north, south, east, west)
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 # kill any existing x2x processes

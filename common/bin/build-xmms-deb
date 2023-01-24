@@ -4,7 +4,7 @@
 #
 # Download xmms, compile it, build a deb, and install it.
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 echo "xmmslib.a install issue"

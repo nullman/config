@@ -6,7 +6,7 @@
 # emacs editor and wait for user to modify the data, then run id3tag to update
 # the id3 tag.
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 tmpfile="$(mktemp)"

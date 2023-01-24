@@ -4,7 +4,7 @@
 #
 # Bash Config
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #=============================================================================
 
 # check if executable command is found in the path

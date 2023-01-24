@@ -4,7 +4,7 @@
 #
 # Remote Login Bash Config
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #=============================================================================
 
 # add to the run path

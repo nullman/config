@@ -4,7 +4,7 @@
 #
 # Run emacs if the emacs server is running or vim/vi editor otherwise.
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 WAIT=true VI=true emacs-edit "$@"

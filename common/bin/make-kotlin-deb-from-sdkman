@@ -6,7 +6,7 @@
 #
 #   ~/.sdkman/candidates/kotlin/current
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 IN="${HOME}/.sdkman/candidates/kotlin/current"

@@ -4,7 +4,7 @@
 #
 # Grab the latest YouTube videos from a curated list.
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 basedir="/mnt/synology/video"

@@ -4,7 +4,7 @@
 #
 # Install Internet Explorer 6 using Wine.
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 dir="/tmp/wine-ie6-install"

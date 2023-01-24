@@ -4,7 +4,7 @@
 #
 # Present a menu of rofi menus.
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 set -euo pipefail

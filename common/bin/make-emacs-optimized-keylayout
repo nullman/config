@@ -4,7 +4,7 @@
 #
 # Make EmacsOptimized.keylayout file in `/Library/Keyboard Layouts/EmacsOptimized.keylayout'.
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 if [[ "${OSTYPE}" != "darwin"* ]] ; then

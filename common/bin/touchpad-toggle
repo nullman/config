@@ -4,7 +4,7 @@
 #
 # Toggle the Synaptic Touchpad on and off.
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 state=$(synclient -l | grep TouchpadOff | sed 's/^.* = //')

@@ -5,7 +5,7 @@
 # Run an irc chat bot that responds using elizatalk and performs various other
 # actions.
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 BEGIN { $^W = 1; }

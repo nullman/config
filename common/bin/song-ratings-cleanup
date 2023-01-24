@@ -4,7 +4,7 @@
 #
 # Remove missing entries from song ratings files.
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 # set line separator to newline

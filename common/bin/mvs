@@ -8,7 +8,7 @@
 #
 # The name mvs is a combination of mv (move) and the s command in sed.
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 set -euo pipefail

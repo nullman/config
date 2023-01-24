@@ -4,7 +4,7 @@
 #
 # Run gsimplecal calendar and move it to the bottom right side of the screen.
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 width=$(xdotool getdisplaygeometry | cut -d ' ' -f 1)

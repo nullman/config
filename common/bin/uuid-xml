@@ -4,7 +4,7 @@
 #
 # Print a uuid (guid) in Java serialized XML.
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 class=UuidXml

@@ -4,7 +4,7 @@
 #
 # Make apache configuration file `/etc/httpd/conf/httpd.conf'.
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 # backup original httpd.conf

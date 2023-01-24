@@ -4,7 +4,7 @@
 #
 # Print a uuid (guid).
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 # first try using uuidgen

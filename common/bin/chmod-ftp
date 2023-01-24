@@ -6,7 +6,7 @@
 #
 # An entry in cron should execute this script every n minutes.
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 datadir="/mnt/morpheus/data1"

@@ -5,7 +5,7 @@
 # Launch an emacs editor, using emacs server if found, and wait for the file
 # to be closed.
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 WAIT=true emacs-edit "$@"

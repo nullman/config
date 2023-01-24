@@ -4,7 +4,7 @@
 #
 # Log into an irc server and channel, then say whatever comes in to its STDIN.
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 # set verbose mode

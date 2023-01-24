@@ -4,7 +4,7 @@
 #
 # Launch an Xnest environment.
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 width=$(xwininfo -root | grep Width | sed 's/Width: // ; s/ //g')

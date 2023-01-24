@@ -4,7 +4,7 @@
 #
 # Toggle auto-rotation of Raspad device.
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 persist_file="${HOME}/.raspad-rotate-restore"

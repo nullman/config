@@ -13,7 +13,7 @@
 #   $ emacsclientcat ~/.emacs
 #
 # Author: Phil Jackson (phil@shellarchive.co.uk)
-# Author: Kyle W T Sherman (some minor modifications)
+# Author: Kyle W T Sherman <kylewsherman@gmail.com> (some minor modifications)
 #===============================================================================
 
 unset DISPLAY

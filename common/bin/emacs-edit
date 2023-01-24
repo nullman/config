@@ -4,7 +4,7 @@
 #
 # Launch an emacs editor, using emacs server if found.
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 # return wether or not terminal is running in screen

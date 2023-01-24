@@ -4,7 +4,7 @@
 #
 # Launch AUDACIOUS and enqueue any passed files.
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 if [[ $(command -v audacious) ]] ; then

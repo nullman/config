@@ -8,7 +8,7 @@
 #
 # It should be run every weekday from a cron job.
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 url="http://webpages.charter.net/dohara12/cameras/lsmmacam/lsmvc800.jpg"

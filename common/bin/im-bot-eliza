@@ -7,7 +7,7 @@
 # Wrap the im-bot and determine whether to pass messages through unchanged or
 # to call it with the eliza-fortune option.
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 # im-bot command

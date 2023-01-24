@@ -6,7 +6,7 @@
 #
 # See usage() or run with no paramaters to see usage information.
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 BEGIN { $^W = 1; }

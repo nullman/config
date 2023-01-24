@@ -4,7 +4,7 @@
 #
 # Launch XMMS and enqueue any passed files.
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 xmms --enqueue "$@"

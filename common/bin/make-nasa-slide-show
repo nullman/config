@@ -15,7 +15,7 @@
 #     -A big.jpg,big.gif,big.png -q http://antwrp.gsfc.nasa.gov/apod/image/
 #     ; nice -n 19 /root/bin/make-nasa-slide-show)
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 # dirs

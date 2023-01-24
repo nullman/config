@@ -4,7 +4,7 @@
 #
 # Print the current date in a variety of formats.
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 tmp="/tmp/date-convert-$$"

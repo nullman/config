@@ -4,7 +4,7 @@
 #
 # Make apache site files in `/etc/apache2/sites-available'.
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 sadir=/etc/apache2/sites-available

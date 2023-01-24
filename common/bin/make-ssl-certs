@@ -4,7 +4,7 @@
 #
 # Step you through the process of generating openssl keys and certs.
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 # tell the user what is going to happen and

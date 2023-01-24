@@ -54,7 +54,7 @@
 #
 # The underscore character represents an empty sequence element.
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #
 # Reference: https://github.com/baskerville/sxhkd
 # Reference: https://gitlab.com/protesilaos/dotfiles/-/blob/v2.2.0/bspwm/.config/sxhkd/sxhkdrc

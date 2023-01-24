@@ -5,7 +5,7 @@
 # Transfer all pictures from a canon s100 camera to the current directory and
 # rename them using the timestamp.
 #
-# Author: Kyle W T Sherman
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 echo -n "Download all the pictures from a Canon S-100? [yN] " ; read a
