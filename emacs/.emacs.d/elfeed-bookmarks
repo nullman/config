@@ -46,6 +46,7 @@
  (:name "Retro Millennial" :html "https://retropunk.substack.com/" :rss "https://retropunk.substack.com/feed" :tag "vintage")
  (:name "Joshua Stein" :html "https://jcs.org/" :rss "https://jcs.org/rss" :tag "vintage")
  (:name "Planet m68k" :html "https://m68k.info/" :rss "http://m68k.info/index.xml" :tag "vintage")
+ (:name "Atari Code" :html "https://ataricode.com/" :rss "https://ataricode.com/index.xml" :tag "vintage")
  ;; Games
  ;;(:name "Star Citizen" :html "https://robertsspaceindustries.com/com-link/" :rss "https://robertsspaceindustries.com/comm-link/rss" :tag "game")
  ;; Other

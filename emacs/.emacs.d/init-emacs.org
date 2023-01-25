@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2023-01-23 12:11 (kyle)>
+  #+TIMESTAMP: <2023-01-25 09:51 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -23171,7 +23171,8 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
           (find-file (file-truename (expand-file-name "init-emacs.org" emacs-home-dir)))
           (goto-char (point-min))
           (search-forward ";; Elfeed Bookmarks File\n")
-          (org-show-entry))
+          (org-show-entry)
+          (recenter-top-bottom scroll-margin))
 
         (defun elfeed-search-mode-help ()
           "Display `elfeed-search-mode' commands in mini-buffer."
@@ -23296,6 +23297,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
        (:name "Retro Millennial" :html "https://retropunk.substack.com/" :rss "https://retropunk.substack.com/feed" :tag "vintage")
        (:name "Joshua Stein" :html "https://jcs.org/" :rss "https://jcs.org/rss" :tag "vintage")
        (:name "Planet m68k" :html "https://m68k.info/" :rss "http://m68k.info/index.xml" :tag "vintage")
+       (:name "Atari Code" :html "https://ataricode.com/" :rss "https://ataricode.com/index.xml" :tag "vintage")
        ;; Games
        ;;(:name "Star Citizen" :html "https://robertsspaceindustries.com/com-link/" :rss "https://robertsspaceindustries.com/comm-link/rss" :tag "game")
        ;; Other
@@ -23381,7 +23383,8 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
           (find-file (file-truename (expand-file-name "init-emacs.org" emacs-home-dir)))
           (goto-char (point-min))
           (search-forward ";;;; Emacs Bookmark")
-          (org-show-entry)))
+          (org-show-entry)
+          (recenter-top-bottom scroll-margin)))
     #+END_SRC
 
 *** +elscreen+

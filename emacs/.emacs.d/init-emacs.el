@@ -15597,7 +15597,8 @@ USING is the remaining peg."
     (find-file (file-truename (expand-file-name "init-emacs.org" emacs-home-dir)))
     (goto-char (point-min))
     (search-forward ";; Elfeed Bookmarks File\n")
-    (org-show-entry))
+    (org-show-entry)
+    (recenter-top-bottom scroll-margin))
 
   (defun elfeed-search-mode-help ()
     "Display `elfeed-search-mode' commands in mini-buffer."
@@ -15728,7 +15729,8 @@ USING is the remaining peg."
     (find-file (file-truename (expand-file-name "init-emacs.org" emacs-home-dir)))
     (goto-char (point-min))
     (search-forward ";;;; Emacs Bookmark")
-    (org-show-entry)))
+    (org-show-entry)
+    (recenter-top-bottom scroll-margin)))
 ;; elpher:1 ends here
 
 ;; [[file:init-emacs.org::#packages-emacs-everywhere][emacs-everywhere:2]]
