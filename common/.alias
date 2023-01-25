@@ -2500,7 +2500,7 @@ alias wine-bookshelf="WINEPREFIX=${HOME}/.wine-bookshelf2000 wine \"C:\Program F
 #!alias wine-civ="WINEPREFIX=\${HOME}/.wine-civ4 wine explorer /desktop=civ,1280x800 \"C:\Program Files\Firaxis Games\Sid Meier's Civilization 4\Beyond the Sword\Civ4BeyondSword.exe\""
 alias wine-civ="WINEPREFIX=\${HOME}/.wine-civ4 wine explorer /desktop=civ,1920x1080 \"C:\Program Files\Firaxis Games\Sid Meier's Civilization 4\Beyond the Sword\Civ4BeyondSword.exe\""
 #        wine-ddo                wine ddo
-alias wine-ddo="WINEPREFIX=\${HOME}/.wine-ddo wine \"C:\Program Files (x86)\StandingStoneGames\Dungeons & Dragons Online\TurbineLauncher.exe\""
+alias wine-ddo="WINEPREFIX=\${HOME}/.wine-ddo wine \"C:\Program Files (x86)\StandingStoneGames\Dungeons & Dragons Online\DNDLauncher.exe\""
 #        wine-ddo-cp             wine ddo character planner
 alias wine-ddo-cp="WINEPREFIX=\${HOME}/.wine-ddocp wine \"C:\Games\DDOCharGen\DDOCharGen.exe\""
 #!#        wine-eve                wine eve online
