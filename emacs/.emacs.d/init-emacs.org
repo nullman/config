@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2023-01-25 09:51 (kyle)>
+  #+TIMESTAMP: <2023-01-27 20:25 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -15054,250 +15054,6 @@
             date))
       #+END_SRC
 
-***** ascii-table
-      :PROPERTIES:
-      :CUSTOM_ID: functions-emacs-functions-ascii-table
-      :END:
-
-      Display a table of the ASCII characters.
-
-      #+BEGIN_SRC emacs-lisp
-        ;;------------------------------------------------------------------------------
-        ;;;; Functions: Emacs Functions: ascii-table
-        ;;------------------------------------------------------------------------------
-
-        (init-message 3 "Functions: Emacs Functions: ascii-table")
-
-        (defun ascii-table ()
-          "Display a table of the ASCII characters from 0 to 254 in a buffer."
-          (interactive)
-          ;; thanks to David Jolley for the special-chars list
-          (let ((special-chars ["NUL " "SOH " "STX " "ETX " "EOT "
-                                "ENQ " "ACK " "BEL " "BS  " "HT  "
-                                "LF  " "VT  " "FF  " "CR  " "SO  "
-                                "SI  " "DLE " "DC1 " "DC2 " "DC3 "
-                                "DC4 " "NAK " "SYN " "ETB " "CAN "
-                                "EM  " "SUB " "ESC " "FS  " "GS  "
-                                "RS  " "US  "]))
-            (switch-to-buffer "*ASCII Table*")
-            (buffer-disable-undo (current-buffer))
-            (let (buffer-read-only)
-              (erase-buffer)
-              (dotimes (y 32)
-                (dotimes (x 8)
-                  (when (and (> y 0) (zerop (mod x 8)))
-                    (newline))
-                  (let ((c (+ y (* x 32))))
-                    (insert (format "%4d " c)
-                            (cond
-                             ((< c 32)
-                              (aref special-chars c))
-                             ((= c 127)
-                              "DEL ")
-                             ((or (< c 127) (> c 159))
-                              (format "%-4c" c))
-                             (t "    ")))))))
-            (setq buffer-read-only t)
-            (goto-char (point-min))))
-
-        ;; simple version
-        ;; (defun ascii-table ()
-        ;;   "Display the ASCII characters from 0 to 254 in a buffer."
-        ;;   (interactive)
-        ;;   (switch-to-buffer "*ASCII Table*")
-        ;;   (buffer-disable-undo (current-buffer))
-        ;;   (erase-buffer)
-        ;;   (dotimes (x 255)
-        ;;     (insert (format "%4d %c\n" x x)))
-        ;;   (setq buffer-read-only t)
-        ;;   (goto-char (point-min)))
-      #+END_SRC
-
-***** http-status-code-table
-      :PROPERTIES:
-      :CUSTOM_ID: functions-emacs-functions-http-status-code-table
-      :END:
-
-      Display a table of the HTTP status codes.
-
-      #+BEGIN_SRC emacs-lisp
-        ;;------------------------------------------------------------------------------
-        ;;;; Functions: Emacs Functions: http-status-code-table
-        ;;------------------------------------------------------------------------------
-
-        (init-message 3 "Functions: Emacs Functions: http-status-code-table")
-
-        (defun http-status-code-table ()
-          "Display a table of the HTTP status codes in a buffer."
-          (interactive)
-          (let ((status-codes
-                 '((100 . "Continue")
-                   (101 . "Switching Protocols")
-                   (102 . "Processing")
-                   (103 . "Early Hints")
-                   (104 . "Unassigned")
-                   (200 . "OK")
-                   (201 . "Created")
-                   (202 . "Accepted")
-                   (203 . "Non-Authoritative Information")
-                   (204 . "No Content")
-                   (205 . "Reset Content")
-                   (206 . "Partial Content")
-                   (207 . "Multi-Status")
-                   (208 . "Already Reported")
-                   (209 . "Unassigned")
-                   (226 . "IM Used")
-                   (227 . "Unassigned")
-                   (300 . "Multiple Choices")
-                   (301 . "Moved Permanently")
-                   (302 . "Found")
-                   (303 . "See Other")
-                   (304 . "Not Modified")
-                   (305 . "Use Proxy")
-                   (306 . "(Unused)")
-                   (307 . "Temporary Redirect")
-                   (308 . "Permanent Redirect")
-                   (400 . "Bad Request")
-                   (401 . "Unauthorized")
-                   (402 . "Payment Required")
-                   (403 . "Forbidden")
-                   (404 . "Not Found")
-                   (405 . "Method Not Allowed")
-                   (406 . "Not Acceptable")
-                   (407 . "Proxy Authentication Required")
-                   (408 . "Request Timeout")
-                   (409 . "Conflict")
-                   (410 . "Gone")
-                   (411 . "Length Required")
-                   (412 . "Precondition Failed")
-                   (413 . "Payload Too Large")
-                   (414 . "URI Too Long")
-                   (415 . "Unsupported Media Type")
-                   (416 . "Range Not Satisfiable")
-                   (417 . "Expectation Failed")
-                   (421 . "Misdirected Request")
-                   (422 . "Unprocessable Entity")
-                   (423 . "Locked")
-                   (424 . "Failed Dependency")
-                   (425 . "Too Early")
-                   (426 . "Upgrade Required")
-                   (427 . "Unassigned")
-                   (428 . "Precondition Required")
-                   (429 . "Too Many Requests")
-                   (430 . "Unassigned")
-                   (431 . "Request Header Fields Too Large")
-                   (451 . "Unavailable For Legal Reasons")
-                   (500 . "Internal Server Error")
-                   (501 . "Not Implemented")
-                   (502 . "Bad Gateway")
-                   (503 . "Service Unavailable")
-                   (504 . "Gateway Timeout")
-                   (505 . "HTTP Version Not Supported")
-                   (506 . "Variant Also Negotiates")
-                   (507 . "Insufficient Storage")
-                   (508 . "Loop Detected")
-                   (509 . "Unassigned")
-                   (510 . "Not Extended")
-                   (511 . "Network Authentication Required"))))
-            (switch-to-buffer "*HTTP Status Code Table*")
-            (buffer-disable-undo (current-buffer))
-            (let (buffer-read-only)
-              (erase-buffer)
-              (mapc (lambda (c) (insert (format "%5d %s\n" (car c) (cdr c))))
-                    status-codes))
-            (setq buffer-read-only t)
-            (goto-char (point-min))))
-      #+END_SRC
-
-***** powers-of-two-table
-      :PROPERTIES:
-      :CUSTOM_ID: functions-emacs-functions-powers-of-two-table
-      :END:
-
-      Display the first 64 powers of two.
-
-      #+BEGIN_SRC emacs-lisp
-        ;;------------------------------------------------------------------------------
-        ;;;; Functions: Emacs Functions: powers-of-two-table
-        ;;------------------------------------------------------------------------------
-
-        (init-message 3 "Functions: Emacs Functions: powers-of-two-table")
-
-        (defun powers-of-two-table ()
-          "Display a table of the first 64 Powers of two in a buffer."
-          (interactive)
-          (switch-to-buffer "*Powers of Two Table*")
-          (buffer-disable-undo (current-buffer))
-          (let (buffer-read-only)
-            (erase-buffer)
-            (insert "POWER   DECIMAL                HEX\n")
-            (insert "-----   --------------------   -----------------\n")
-            (dotimes (x 65)
-              (if (<= x  60)
-                  (let ((pow (expt 2 x)))
-                    (insert (format "%5d   %20d   %17X\n" x pow pow)))
-                (let ((dec (progn (calc-radix 10)
-                                  (calc-eval (format "2^%d" x))))
-                      (hex (progn (calc-radix 16)
-                                  (substring (calc-eval (format "2^%d" x)) 3))))
-                  (insert (format "%5d   %20s   %17s\n" x dec hex))))))
-          (setq buffer-read-only t)
-          (goto-char (point-min)))
-      #+END_SRC
-
-***** +keybindings-table+
-      :PROPERTIES:
-      :CUSTOM_ID: functions-emacs-functions-keybindings-table
-      :END:
-
-      Display a table of the keybindings for the current mode.
-
-      TODO: Implement
-
-      #+BEGIN_SRC emacs-lisp :tangle no
-        ;; ;;------------------------------------------------------------------------------
-        ;; ;;;; Functions: Emacs Functions: keybindings-table
-        ;; ;;------------------------------------------------------------------------------
-
-        ;; (init-message 3 "Functions: Emacs Functions: keybindings-table")
-
-        ;; (defun keybindings-table ()
-        ;;   "Display a table of the keybindings for the current mode."
-        ;;   (interactive)
-        ;;   (switch-to-buffer "*Keybindings Table*")
-        ;;   (buffer-disable-undo (current-buffer))
-        ;;     (let (buffer-read-only)
-        ;;       (erase-buffer)
-        ;;       )
-        ;;     (setq buffer-read-only t)
-        ;;     (goto-char (point-min)))
-
-        ;; ;; (defun my/dump-bindings-recursive (prefix &optional level buffer)
-        ;; ;;   (dolist (key (which-key--get-bindings (kbd prefix)))
-        ;; ;;     (with-current-buffer buffer
-        ;; ;;       (when level
-        ;; ;;         (insert (make-string level ? )))
-        ;; ;;       (insert (apply #'format "%s%s%s\n" key)))
-        ;; ;;     (when (string-match-p
-        ;; ;;            (rx bos "+" (* nonl))
-        ;; ;;            (substring-no-properties (elt key 2)))
-        ;; ;;       (my/dump-bindings-recursive
-        ;; ;;        (concat prefix " " (substring-no-properties (car key)))
-        ;; ;;        (+ 2 (or level 0))
-        ;; ;;        buffer))))
-
-        ;; ;; (defun my/dump-bindings (prefix)
-        ;; ;;   "Dump keybindings starting with PREFIX in a tree-like form."
-        ;; ;;   (interactive "sPrefix: ")
-        ;; ;;   (let ((buffer (get-buffer-create "bindings")))
-        ;; ;;     (with-current-buffer buffer
-        ;; ;;       (erase-buffer))
-        ;; ;;     (my/dump-bindings-recursive prefix 0 buffer)
-        ;; ;;     (with-current-buffer buffer
-        ;; ;;       (goto-char (point-min)))
-        ;; ;;     (switch-to-buffer-other-window buffer)))
-      #+END_SRC
-
 ***** +match-paren+
       :PROPERTIES:
       :CUSTOM_ID: functions-emacs-functions-match-paren
@@ -15612,6 +15368,59 @@
           "Display a list of characters in character set `unicode-bmp'."
           (interactive)
           (list-charset-chars 'unicode-bmp))
+      #+END_SRC
+
+***** +keybindings-table+
+      :PROPERTIES:
+      :CUSTOM_ID: functions-emacs-functions-keybindings-table
+      :END:
+
+      Display a table of the keybindings for the current mode.
+
+      TODO: Implement
+
+      #+BEGIN_SRC emacs-lisp :tangle no
+        ;; ;;------------------------------------------------------------------------------
+        ;; ;;;; Functions: Emacs Functions: keybindings-table
+        ;; ;;------------------------------------------------------------------------------
+
+        ;; (init-message 3 "Functions: Emacs Functions: keybindings-table")
+
+        ;; (defun keybindings-table ()
+        ;;   "Display a table of the keybindings for the current mode."
+        ;;   (interactive)
+        ;;   (switch-to-buffer "*Keybindings Table*")
+        ;;   (buffer-disable-undo (current-buffer))
+        ;;     (let (buffer-read-only)
+        ;;       (erase-buffer)
+        ;;       )
+        ;;     (setq buffer-read-only t)
+        ;;     (goto-char (point-min)))
+
+        ;; ;; (defun my/dump-bindings-recursive (prefix &optional level buffer)
+        ;; ;;   (dolist (key (which-key--get-bindings (kbd prefix)))
+        ;; ;;     (with-current-buffer buffer
+        ;; ;;       (when level
+        ;; ;;         (insert (make-string level ? )))
+        ;; ;;       (insert (apply #'format "%s%s%s\n" key)))
+        ;; ;;     (when (string-match-p
+        ;; ;;            (rx bos "+" (* nonl))
+        ;; ;;            (substring-no-properties (elt key 2)))
+        ;; ;;       (my/dump-bindings-recursive
+        ;; ;;        (concat prefix " " (substring-no-properties (car key)))
+        ;; ;;        (+ 2 (or level 0))
+        ;; ;;        buffer))))
+
+        ;; ;; (defun my/dump-bindings (prefix)
+        ;; ;;   "Dump keybindings starting with PREFIX in a tree-like form."
+        ;; ;;   (interactive "sPrefix: ")
+        ;; ;;   (let ((buffer (get-buffer-create "bindings")))
+        ;; ;;     (with-current-buffer buffer
+        ;; ;;       (erase-buffer))
+        ;; ;;     (my/dump-bindings-recursive prefix 0 buffer)
+        ;; ;;     (with-current-buffer buffer
+        ;; ;;       (goto-char (point-min)))
+        ;; ;;     (switch-to-buffer-other-window buffer)))
       #+END_SRC
 
 *** Emacs Grouped Functions
@@ -20116,6 +19925,243 @@
         (assert (string= (integer-to-roman-numerals 2100) "MMC"))
         (assert (string= (integer-to-roman-numerals 3000) "MMM"))
         (assert (string= (integer-to-roman-numerals 4000) "MMMM"))
+      #+END_SRC
+
+*** Table Generators
+    :PROPERTIES:
+    :CUSTOM_ID: functions-table-generators
+    :END:
+
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Functions: Table Generators
+      ;;------------------------------------------------------------------------------
+
+      (init-message 2 "Functions: Table Generators")
+    #+END_SRC
+
+***** ascii-table
+      :PROPERTIES:
+      :CUSTOM_ID: functions-table-generators-ascii-table
+      :END:
+
+      Display a table of the ASCII characters.
+
+      #+BEGIN_SRC emacs-lisp
+        ;;------------------------------------------------------------------------------
+        ;;;; Functions: Table Generators: ascii-table
+        ;;------------------------------------------------------------------------------
+
+        (init-message 3 "Functions: Table Generators: ascii-table")
+
+        (defun ascii-table ()
+          "Display a table of the ASCII characters from 0 to 254 in a buffer."
+          (interactive)
+          ;; thanks to David Jolley for the special-chars list
+          (let ((special-chars ["NUL " "SOH " "STX " "ETX " "EOT "
+                                "ENQ " "ACK " "BEL " "BS  " "HT  "
+                                "LF  " "VT  " "FF  " "CR  " "SO  "
+                                "SI  " "DLE " "DC1 " "DC2 " "DC3 "
+                                "DC4 " "NAK " "SYN " "ETB " "CAN "
+                                "EM  " "SUB " "ESC " "FS  " "GS  "
+                                "RS  " "US  "]))
+            (switch-to-buffer "*ASCII Table*")
+            (buffer-disable-undo (current-buffer))
+            (let (buffer-read-only)
+              (erase-buffer)
+              (dotimes (y 32)
+                (dotimes (x 8)
+                  (when (and (> y 0) (zerop (mod x 8)))
+                    (newline))
+                  (let ((c (+ y (* x 32))))
+                    (insert (format "%4d " c)
+                            (cond
+                             ((< c 32)
+                              (aref special-chars c))
+                             ((= c 127)
+                              "DEL ")
+                             ((or (< c 127) (> c 159))
+                              (format "%-4c" c))
+                             (t "    ")))))))
+            (setq buffer-read-only t)
+            (goto-char (point-min))))
+
+        ;; simple version
+        ;; (defun ascii-table ()
+        ;;   "Display the ASCII characters from 0 to 254 in a buffer."
+        ;;   (interactive)
+        ;;   (switch-to-buffer "*ASCII Table*")
+        ;;   (buffer-disable-undo (current-buffer))
+        ;;   (erase-buffer)
+        ;;   (dotimes (x 255)
+        ;;     (insert (format "%4d %c\n" x x)))
+        ;;   (setq buffer-read-only t)
+        ;;   (goto-char (point-min)))
+      #+END_SRC
+
+***** http-status-code-table
+      :PROPERTIES:
+      :CUSTOM_ID: functions-table-generators-http-status-code-table
+      :END:
+
+      Display a table of the HTTP status codes.
+
+      #+BEGIN_SRC emacs-lisp
+        ;;------------------------------------------------------------------------------
+        ;;;; Functions: Table Generators: http-status-code-table
+        ;;------------------------------------------------------------------------------
+
+        (init-message 3 "Functions: Table Generators: http-status-code-table")
+
+        (defun http-status-code-table ()
+          "Display a table of the HTTP status codes in a buffer."
+          (interactive)
+          (let ((status-codes
+                 '((100 . "Continue")
+                   (101 . "Switching Protocols")
+                   (102 . "Processing")
+                   (103 . "Early Hints")
+                   (104 . "Unassigned")
+                   (200 . "OK")
+                   (201 . "Created")
+                   (202 . "Accepted")
+                   (203 . "Non-Authoritative Information")
+                   (204 . "No Content")
+                   (205 . "Reset Content")
+                   (206 . "Partial Content")
+                   (207 . "Multi-Status")
+                   (208 . "Already Reported")
+                   (209 . "Unassigned")
+                   (226 . "IM Used")
+                   (227 . "Unassigned")
+                   (300 . "Multiple Choices")
+                   (301 . "Moved Permanently")
+                   (302 . "Found")
+                   (303 . "See Other")
+                   (304 . "Not Modified")
+                   (305 . "Use Proxy")
+                   (306 . "(Unused)")
+                   (307 . "Temporary Redirect")
+                   (308 . "Permanent Redirect")
+                   (400 . "Bad Request")
+                   (401 . "Unauthorized")
+                   (402 . "Payment Required")
+                   (403 . "Forbidden")
+                   (404 . "Not Found")
+                   (405 . "Method Not Allowed")
+                   (406 . "Not Acceptable")
+                   (407 . "Proxy Authentication Required")
+                   (408 . "Request Timeout")
+                   (409 . "Conflict")
+                   (410 . "Gone")
+                   (411 . "Length Required")
+                   (412 . "Precondition Failed")
+                   (413 . "Payload Too Large")
+                   (414 . "URI Too Long")
+                   (415 . "Unsupported Media Type")
+                   (416 . "Range Not Satisfiable")
+                   (417 . "Expectation Failed")
+                   (421 . "Misdirected Request")
+                   (422 . "Unprocessable Entity")
+                   (423 . "Locked")
+                   (424 . "Failed Dependency")
+                   (425 . "Too Early")
+                   (426 . "Upgrade Required")
+                   (427 . "Unassigned")
+                   (428 . "Precondition Required")
+                   (429 . "Too Many Requests")
+                   (430 . "Unassigned")
+                   (431 . "Request Header Fields Too Large")
+                   (451 . "Unavailable For Legal Reasons")
+                   (500 . "Internal Server Error")
+                   (501 . "Not Implemented")
+                   (502 . "Bad Gateway")
+                   (503 . "Service Unavailable")
+                   (504 . "Gateway Timeout")
+                   (505 . "HTTP Version Not Supported")
+                   (506 . "Variant Also Negotiates")
+                   (507 . "Insufficient Storage")
+                   (508 . "Loop Detected")
+                   (509 . "Unassigned")
+                   (510 . "Not Extended")
+                   (511 . "Network Authentication Required"))))
+            (switch-to-buffer "*HTTP Status Code Table*")
+            (buffer-disable-undo (current-buffer))
+            (let (buffer-read-only)
+              (erase-buffer)
+              (insert "CODE   DESCRIPTION\n")
+              (insert "----   -----------\n")
+              (mapc (lambda (c) (insert (format "%4d   %s\n" (car c) (cdr c))))
+                    status-codes))
+            (setq buffer-read-only t)
+            (goto-char (point-min))))
+      #+END_SRC
+
+***** powers-of-two-table
+      :PROPERTIES:
+      :CUSTOM_ID: functions-table-generators-powers-of-two-table
+      :END:
+
+      Display the first 64 powers of two.
+
+      #+BEGIN_SRC emacs-lisp
+        ;;------------------------------------------------------------------------------
+        ;;;; Functions: Table Generators: powers-of-two-table
+        ;;------------------------------------------------------------------------------
+
+        (init-message 3 "Functions: Table Generators: powers-of-two-table")
+
+        (defun powers-of-two-table ()
+          "Display a table of the first 64 Powers of two in a buffer."
+          (interactive)
+          (switch-to-buffer "*Powers of Two Table*")
+          (buffer-disable-undo (current-buffer))
+          (let (buffer-read-only)
+            (erase-buffer)
+            (insert "POWER   DECIMAL                HEX\n")
+            (insert "-----   --------------------   -----------------\n")
+            (dotimes (x 65)
+              (if (<= x 60)
+                  (let ((pow (expt 2 x)))
+                    (insert (format "%5d   %20d   %17X\n" x pow pow)))
+                (let ((dec (progn (calc-radix 10)
+                                  (calc-eval (format "2^%d" x))))
+                      (hex (progn (calc-radix 16)
+                                  (substring (calc-eval (format "2^%d" x)) 3))))
+                  (insert (format "%5d   %20s   %17s\n" x dec hex))))))
+          (setq buffer-read-only t)
+          (goto-char (point-min)))
+      #+END_SRC
+
+***** trigonometry-table
+      :PROPERTIES:
+      :CUSTOM_ID: functions-table-generators-trigonometry-table
+      :END:
+
+      Display SIN, COS, TAN, values.
+
+      #+BEGIN_SRC emacs-lisp
+        ;;------------------------------------------------------------------------------
+        ;;;; Functions: Table Generators: trigonometry-table
+        ;;------------------------------------------------------------------------------
+
+        (init-message 3 "Functions: Table Generators: trigonometry-table")
+
+        (defun trigonometry-table ()
+          "Display a table of trigonometry values."
+          (interactive)
+          (switch-to-buffer "*Trigonometry Table*")
+          (buffer-disable-undo (current-buffer))
+          (let (buffer-read-only)
+            (erase-buffer)
+            (insert "NUMBER   SIN      COS      TAN       SIN      COS      TAN\n")
+            (insert "------   ------   ------   -------   ------   ------   -------\n")
+            (dotimes (x 41)
+              (let ((n (/ (- x 20) 10.0)))
+                (insert (format "% 6.1f   % 6.3f   % 6.3f   % 7.3f   % 6.3f   % 6.3f   % 7.3f\n" n
+                                (sin n) (cos n) (tan n) (asin n) (acos n) (atan n))))))
+          (setq buffer-read-only t)
+          (goto-char (point-min)))
       #+END_SRC
 
 *** Programs
