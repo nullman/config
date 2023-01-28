@@ -14069,12 +14069,14 @@ for 1, 5, 10, 50, 100, 500, and 1,000."
   (buffer-disable-undo (current-buffer))
   (let (buffer-read-only)
     (erase-buffer)
-    (insert "NUMBER   SIN      COS      TAN       SIN      COS      TAN\n")
+    (insert "NUMBER   SIN      COS      TAN       ARCSIN   ARCCOS   ARCTAN\n")
     (insert "------   ------   ------   -------   ------   ------   -------\n")
     (dotimes (x 41)
-      (let ((n (/ (- x 20) 10.0)))
-        (insert (format "% 6.1f   % 6.3f   % 6.3f   % 7.3f   % 6.3f   % 6.3f   % 7.3f\n" n
-                        (sin n) (cos n) (tan n) (asin n) (acos n) (atan n))))))
+      (let ((n (* float-pi (/ (- x 20) 40.0))))
+        (insert (format "% 6.3f   % 6.3f   % 6.3f   % 7.3f   % 6.3f   % 6.3f   % 7.3f\n" n
+                        (sin n) (cos n)
+                        (if (and (> x 0) (< x 40)) (tan n) (acos n))
+                        (asin n) (acos n) (atan n))))))
   (setq buffer-read-only t)
   (goto-char (point-min)))
 ;; trigonometry-table:1 ends here
