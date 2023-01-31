@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2023-01-27 20:54 (kyle)>
+  #+TIMESTAMP: <2023-01-30 14:29 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -20154,13 +20154,13 @@
           (buffer-disable-undo (current-buffer))
           (let (buffer-read-only)
             (erase-buffer)
-            (insert "NUMBER   SIN      COS      TAN       ARCSIN   ARCCOS   ARCTAN\n")
-            (insert "------   ------   ------   -------   ------   ------   -------\n")
-            (dotimes (x 41)
-              (let ((n (* float-pi (/ (- x 20) 40.0))))
-                (insert (format "% 6.3f   % 6.3f   % 6.3f   % 7.3f   % 6.3f   % 6.3f   % 7.3f\n" n
+            (insert "RADIANS   SIN      COS      TAN       ARCSIN   ARCCOS   ARCTAN\n")
+            (insert "-------   ------   ------   -------   ------   ------   -------\n")
+            (dotimes (x 81)
+              (let ((n (* float-pi (/ (- x 40) 40.0))))
+                (insert (format "% 7.3f   % 6.3f   % 6.3f   % 7.3f   % 6.3f   % 6.3f   % 7.3f\n" n
                                 (sin n) (cos n)
-                                (if (and (> x 0) (< x 40)) (tan n) (acos n))
+                                (if (not (or (= x 20) (= x 60))) (tan n) (acos n))
                                 (asin n) (acos n) (atan n))))))
           (setq buffer-read-only t)
           (goto-char (point-min)))
