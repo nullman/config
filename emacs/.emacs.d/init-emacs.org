@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2023-02-01 18:30 (kyle)>
+  #+TIMESTAMP: <2023-02-02 11:44 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -20248,13 +20248,50 @@
                    (44 65 65) (44 60 65) (44 52 65) (44 48 65)
                    (0 0 0) (0 0 0) (0 0 0) (0 0 0)
                    (0 0 0) (0 0 0) (0 0 0) (0 0 0)))
-                (emacs-colors (mapcar (lambda (x)
-                                        (cons
-                                         (apply 'format "#%02x%02x%02x"
-                                                (mapcar (lambda (x) (ash x -8))
-                                                        (color-values x)))
-                                         x))
-                                      (defined-colors))))
+                (color-names
+                 '(("#000000" . "Black")
+                   ("#0000AA" . "Navy")
+                   ("#00AA00" . "Green")
+                   ("#00AAAA" . "Teal")
+                   ("#AA0000" . "Maroon")
+                   ("#AA00AA" . "Purple")
+                   ("#AA5500" . "Brown")
+                   ("#AAAAAA" . "Silver")
+                   ("#555555" . "Gray")
+                   ("#5555FF" . "Blue")
+                   ("#55FF55" . "Lime")
+                   ("#55FFFF" . "Cyan")
+                   ("#FF5555" . "Orange")
+                   ("#FF55FF" . "Magenta")
+                   ("#FFFF55" . "Yellow")
+                   ("#FFFFFF" . "White")
+                   ("#141414" . "Gray")
+                   ("#202020" . "Gray")
+                   ("#2C2C2C" . "Gray")
+                   ("#383838" . "Gray")
+                   ("#454545" . "Gray")
+                   ("#515151" . "Gray")
+                   ("#616161" . "Gray")
+                   ("#717171" . "Gray")
+                   ("#828282" . "Gray")
+                   ("#929292" . "Gray")
+                   ("#A2A2A2" . "Gray")
+                   ("#B6B6B6" . "Gray")
+                   ("#CBCBCB" . "Gray")
+                   ("#E3E3E3" . "Gray")
+                   ("#0000FF" . "Blue")
+                   ("#FF00FF" . "Magenta")
+                   ("#FF0000" . "Red")
+                   ("#FFFF00" . "Yellow")
+                   ("#00FF00" . "Green")
+                   ("#00FFFF" . "Cyan"))))
+                ;; (color-names (mapcar (lambda (x)
+                ;;                        (cons
+                ;;                         (apply 'format "#%02X%02X%02X"
+                ;;                                (mapcar (lambda (x) (ash x -8))
+                ;;                                        (color-values x)))
+                ;;                         x))
+                ;;                      (defined-colors))))
             (switch-to-buffer "*VGA Color Table*")
             (buffer-disable-undo (current-buffer))
             (let (buffer-read-only)
@@ -20263,10 +20300,10 @@
               (insert "-----   -------------   ---------   ---------------   ------------\n")
               (dotimes (x (length vga-colors))
                 (let* ((rgb (nth x vga-colors))
-                       (hex (apply #'format "#%02x%02x%02x" rgb))
+                       (hex (apply #'format "#%02X%02X%02X" rgb))
                        (hsv (apply #'color-rgb-to-hsv (mapcar (lambda (x) (/ x 256.0)) rgb)))
                        (fg (readable-foreground-color hex))
-                       (name (or (cdr (assoc-string hex emacs-colors)) "")))
+                       (name (or (cdr (assoc-string hex color-names)) "")))
                   (insert (propertize
                            (format "%5d   %3d, %3d, %3d   %-9s   %-15s   %-12s\n"
                                    x
