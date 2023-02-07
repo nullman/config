@@ -95,6 +95,7 @@ channels=(
     "root42                            | Computer/Development | https://www.youtube.com/c/root42/videos"
     "RossDM - Puzzle Solving           | Puzzle               | https://www.youtube.com/c/RossDM/videos"
     "RMC, The Cave                     | Computer/Retro       | https://www.youtube.com/c/RMCRetro/videos"
+#    "Sabine Hossenfelder               | Science              | https://www.youtube.com/@SabineHossenfelder/videos"
 #   "Stand-up Maths                    | Science              | https://www.youtube.com/user/standupmaths/videos"
 #   "Strange Loop Conference           | Computer/Development | https://www.youtube.com/c/StrangeLoopConf/videos"
     "System Crafters                   | Computer/Emacs       | https://www.youtube.com/c/SystemCrafters/videos"

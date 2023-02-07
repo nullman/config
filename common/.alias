@@ -772,7 +772,21 @@ alias adb-video-record="adb shell screenrecord /sdcard/animation.mp4"
 #        adb-video-copy          copy a recorded video off of device
 alias adb-video-copy="adb pull /sdcard/animation.mp4 android-device-screenshot-\$(date '+%Y-%m-%d-%H%M%S').mp4"
 #        adb-music-push          push /home/data/media/Audio/Music to device /sdcard/Music
-alias adb-music-push="adb push --sync ${home}/data/media/Audio/Music/* /sdcard/Music/"
+alias adb-sync-music-push="adbsync --show-progress ${home}/data/media/Audio/Music/* /sdcard/Music/"
+#        adbsync-titanium-backup-get  copy titanium backup files from device to computer
+alias adbsync-titanium-backup-get="
+    indir=\$(echo \"/storage/\$(adb shell ls -1 /storage/ | grep -v emulated | grep -v self)/TitaniumBackup\")
+    outdir=\"${home}/data/backup/\"
+    adbsync --pull --show-progress --del \"\${outdir}\" \"\${indir}\""
+#        adbsync-home-pages-put  copy home-pages directory from computer to device
+alias adbsync-home-pages-put="
+    indir=\"\${HOME}/config/common/home-pages\"
+    outdir=\"/storage/emulated/0/Download/\"
+    adbsync --show-progress --del \"\${indir}\" \"\${outdir}\""
+
+#
+# android studio
+#
 #        ibus-sync               put ibus into sync mode to prevent keyboard issue in Android Studio
 alias ibus-sync="IBUS_ENABLE_SYNC_MODE=1 ibus-daemon -xrd"
 #        set-android-studio-stable  set android studio path to stable
@@ -781,16 +795,6 @@ alias set-android-studio-stable="(cd \${HOME} && rm android-studio && ln -s andr
 alias set-android-studio-beta="(cd \${HOME} && rm android-studio && ln -s android-studio-beta android-studio)"
 #        set-android-studio-canary  set android studio path to canary
 alias set-android-studio-canary="(cd \${HOME} && rm android-studio && ln -s android-studio-canary android-studio)"
-#!#        adb-pull-titanium-backup  copy titanium backup files from device to computer
-#!alias adb-pull-titanium-backup="
-#!    indir=\$(echo \"/storage/\$(adb shell ls -1 /storage/ | grep -v emulated | grep -v self)/TitaniumBackup\")
-#!    outdir=\"/home/data/backup/\"
-#!    adb pull -a \"\${indir}\" \"\${outdir}\""
-#        adb-pull-titanium-backup  copy titanium backup files from device to computer
-alias adb-sync-titanium-backup="
-    indir=\$(echo \"/storage/\$(adb shell ls -1 /storage/ | grep -v emulated | grep -v self)/TitaniumBackup\")
-    outdir=\"/home/data/backup/\"
-    adbsync --pull --show-progress --del \"\${outdir}\" \"\${indir}\""
 
 #
 # apache
