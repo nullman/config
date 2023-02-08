@@ -1962,7 +1962,7 @@ alias rsync-media-get-morpheus-exclude="rsync -rlptx --progress --exclude={'/rep
 #        rsync-media-get-morpheus-mouse-delete  rsync morpheus:/home/data/media /home/data/media (specific sub-directories)
 alias rsync-media-get-morpheus-mouse-delete=" \
     if [[ "$(uname -n)" == "mouse" ]] ; then
-        rsync -rlptx --progress --delete --exclude={'/Humor/','/iTunes/','/Other/'} morpheus:/home/data/media/Audio/ ${home}/data/media/Audio/ && \
+        rsync -rlptx --progress --delete --exclude={'/Humor/','/Other/'} morpheus:/home/data/media/Audio/ ${home}/data/media/Audio/ && \
         rsync -rlptx --progress --delete morpheus:/home/data/media/Music/ ${home}/data/media/Music/ && \
         rsync -rlptx --progress --delete \"morpheus:/home/data/media/Pictures Slide Show/\" \"${home}/data/media/Pictures Slide Show/\" && \
         #rsync -rlptx --progress --delete morpheus:/home/data/media/Repos/ ${home}/data/media/Repos/ && \
@@ -1977,14 +1977,14 @@ alias rsync-media-put-morpheus-delete="rsync -rlptx --progress --delete ${home}/
 alias rsync-media-put-synology="
     find ${home}/data/media/ -mindepth 1 -maxdepth 1 -type d -not -regex '^\.+$' | sort | while read dir ; do
         rsync -r --munge-links --size-only --progress \
-            --exclude={'/Audio/iTunes/','/Audio/Music/','/Graphic/ASCII-ANSI/','/Music/'} \
+            --exclude={'/Audio/Music/','/Graphic/ASCII-ANSI/','/iTunes/','/Music/'} \
             \"\${dir}\" /mnt/synology/media
     done"
 #        rsync-media-put-synology-delete  rsync /home/data/media /mnt/synology/media
 alias rsync-media-put-synology-delete="
     find ${home}/data/media/ -mindepth 1 -maxdepth 1 -type d -not -regex '^\.+$' | sort | while read dir ; do
         rsync -r --munge-links --size-only --progress --delete \
-            --exclude={'/Audio/iTunes/','/Audio/Music/','/Graphic/ASCII-ANSI/','/Music/'} \
+            --exclude={'/Audio/Music/','/Graphic/ASCII-ANSI/','/iTunes/','/Music/'} \
             \"\${dir}\" /mnt/synology/media
     done"
 #        rsync-text-get-morpheus  rsync morpheus:/home/data/media/Text /home/data/media/Text
