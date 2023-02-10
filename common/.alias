@@ -2749,6 +2749,19 @@ alias pacman-reset-repository="
 
     # update packages
     sudo pacman -Syyu"
+#        pacman-clear-cache      clear pacman cache and unused packages
+alias pacman-chear-cache="
+    # remove unused packages (orphans)
+    sudo pacman -Rsn \$(pacman -Qdtq)
+
+    # safely remove old packages
+    sudo paccache -rvk3
+
+    # remove all cached packages that are not currently installed, and the unused sync database
+    sudo pacman -Sc
+
+    # clear sessions cache
+    rm -rf \${HOME}/.cache/sessions/*"
 
 #
 # yay (Package Manager)
