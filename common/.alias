@@ -2713,10 +2713,10 @@ alias geometry="xwininfo -root | grep geometry"
 #!alias pmls="pacman -Qs"
 #!#        pmlsi                   pacman -Qsi (search installed packages with info)
 #!alias pmlsi="pacman -Qsi"
-#        pmlz                      pacman list installed packages by size
-alias pmlz="LC_ALL=C pacman -Qi | awk '/^Name/{name=\$3} /^Installed Size/{print \$4\$5, name}' | sort -h"
-#        pmlzz                     pacman list installed packages and dependencies by size
-alias pmlzz="expac -S -H M '%k\t%n' | sort -h"
+#!#        pmlz                      pacman list installed packages by size
+#!alias pmlz="LC_ALL=C pacman -Qi | awk '/^Name/{name=\$3} /^Installed Size/{print \$4\$5, name}' | sort -h"
+#!#        pmlzz                     expac list installed packages and dependencies by size
+#!alias pmlzz="expac -S -H M '%k\t%n' | sort -h"
 #        pacman-rm-old           pacman remove old packages
 alias pacman-rm-old="sudo pacman -Sc"
 #        pacman-rm-orphans       pacman remove orphaned packages
@@ -2798,6 +2798,10 @@ alias yalf="yay -Qqettm"
 alias yals="yay -Qs"
 #        yaps                    yay -Ps (print package statistics)
 alias yaps="yay -Ps"
+#        yalz                      pacman list installed packages by size
+alias yalz="LC_ALL=C yay -Qi | awk '/^Name/{name=\$3} /^Installed Size/{print \$4\$5, name}' | sort -h"
+#        yalzz                     expac list installed packages and dependencies by size
+alias yalzz="expac -S -H M '%k\t%n' | sort -h"
 #        yay-rm-old              remove old yay packages
 alias yay-rm-old="yay -Sc"
 #        yay-rm-orphans          remove orphaned yay packages
