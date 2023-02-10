@@ -118,6 +118,7 @@ channels=(
 #   "Vsauce2                           | Science              | https://www.youtube.com/user/Vsauce2/videos"
 #   "Vintage Computer Federation       | Computer/Retro       | https://www.youtube.com/@vcfederation/videos"
     "Work from Hype                    | Computer/Hardware    | https://www.youtube.com/channel/UCcCYTCDxsMl84_btikjY40Q/videos"
+    "Wrangler Amiga                    | Computer/Retro       | https://www.youtube.com/@wrangleramiga896/videos"
 )
 
 _usage() {
