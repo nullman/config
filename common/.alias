@@ -957,6 +957,18 @@ alias cdlm="cd /lib/modules/\$(uname -r)"
 alias cdm="cd /media"
 #        cdmnt                   cd /mnt
 alias cdmnt="cd /mnt"
+#        cdsadult                cd /mnt/synology/adult
+alias cdsadult="cd /mnt/synology/adult"
+#        cdsmedia                cd /mnt/synology/media
+alias cdsmedia="cd /mnt/synology/media"
+#        cdsmusic                cd /mnt/synology/music
+alias cdsmusic="cd /mnt/synology/music"
+#        cdsphoto                cd /mnt/synology/photo
+alias cdsphoto="cd /mnt/synology/photo"
+#        cdsvideo                cd /mnt/synology/video
+alias cdsvideo="cd /mnt/synology/video"
+#        cdsmusicvideos          cd /mnt/synology/video/Music/Videos
+alias cdsmusicvideos="cd /mnt/synology/video/Music/Videos"
 #        cdopt                   cd /opt
 alias cdopt="cd /opt"
 #        cdpr                    cd /proc
