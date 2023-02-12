@@ -18,4 +18,5 @@ file:///home/data/media/Text/Magazines Magazines
 file:///home/data/media/Text/Manuals Manuals
 sftp://morpheus/home/data/media sftp:media
 smb://morpheus/media smb:media
+file:///mnt/synology mnt:synology
 smb://synology smb:synology
