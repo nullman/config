@@ -39,9 +39,9 @@ _command alacritty && alacritty -e ${HOME}/bin/run-screen &
 _command firefox && _delay 1 firefox &
 #_command vivaldi && _delay 1 vivaldi &
 #_command chromium && _delay 1 chromium &
+#_command thunar && _delay 1 thunar &
 #_command pcmanfm && _delay 1 pcmanfm &
 #_command spacefm && _delay 1 spacefm &
-#_command thunar && _delay 1 thunar &
 #_command slack && _delay 1 slack &
 #_command discord && _delay 1 discord &
 #_command tootle && _delay 10 tootle &

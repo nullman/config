@@ -1817,6 +1817,17 @@ pressed. -->
       <desktop>4</desktop>
       <maximized>true</maximized>
     </application>
+    <application class="Thunar">
+      <desktop>5</desktop>
+      <position force="no">
+        <x>-0</x>
+        <y>0</y>
+      </position>
+      <size>
+        <height>100%</height>
+        <width>50%</width>
+      </size>
+    </application>
     <application class="Pcmanfm">
       <desktop>5</desktop>
       <position force="no">
@@ -1832,17 +1843,6 @@ pressed. -->
       <desktop>5</desktop>
       <position force="no">
         <x>0</x>
-        <y>0</y>
-      </position>
-      <size>
-        <height>100%</height>
-        <width>50%</width>
-      </size>
-    </application>
-    <application class="Thunar">
-      <desktop>5</desktop>
-      <position force="no">
-        <x>-0</x>
         <y>0</y>
       </position>
       <size>

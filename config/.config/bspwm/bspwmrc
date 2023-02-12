@@ -106,9 +106,9 @@ _ba vivaldi-stable desktop='^4' follow=on
 _ba gopherus-sdl desktop='^4' follow=on
 
 # 5: File Manager
+_ba Thunar desktop='^5' follow=on
 _ba Pcmanfm desktop='^5' follow=on
 _ba Spacefm desktop='^5' follow=on
-_ba Thunar desktop='^5' follow=on
 _ba Org.gnome.Nautilus desktop='^5' follow=on
 #_ba Filezilla desktop='^5' follow=on
 _ba Transmission-gtk desktop='^5' follow=on
