@@ -23,7 +23,7 @@ channels=(
     "Al's Geek Lab                     | Computer/Retro       | https://www.youtube.com/@AlsGeekLab/videos"
     "All Games                         | Computer/Retro       | https://www.youtube.com/@AllGamesPlayer/videos"
     "AngeTheGreat                      | Computer/Development | https://www.youtube.com/channel/UCV0t1y4h_6-2SqEpXBXgwFQ/videos"
-##    "Back Office Show                  | Computer/Retro       | https://www.youtube.com/c/backofficeshow/videos"
+    "Back Office Show                  | Computer/Retro       | https://www.youtube.com/c/backofficeshow/videos"
     "Baggers                           | Computer/Development | https://www.youtube.com/user/CBaggers/videos"
     "Ben Eater                         | Computer/Hardware    | https://www.youtube.com/c/BenEater/videos"
     "Ben Heck Hacks                    | Computer/Hardware    | https://www.youtube.com/c/BenHeckHacks/videos"
@@ -96,7 +96,8 @@ channels=(
     "root42                            | Computer/Development | https://www.youtube.com/c/root42/videos"
     "RossDM - Puzzle Solving           | Puzzle               | https://www.youtube.com/c/RossDM/videos"
     "RMC, The Cave                     | Computer/Retro       | https://www.youtube.com/c/RMCRetro/videos"
-#    "Sabine Hossenfelder               | Science              | https://www.youtube.com/@SabineHossenfelder/videos"
+##   "Sabine Hossenfelder               | Science              | https://www.youtube.com/@SabineHossenfelder/videos"
+    "Sowell Explains                   | Philosophy           | https://www.youtube.com/@SowellExplains/videos"
 #   "Stand-up Maths                    | Science              | https://www.youtube.com/user/standupmaths/videos"
 #   "Strange Loop Conference           | Computer/Development | https://www.youtube.com/c/StrangeLoopConf/videos"
     "System Crafters                   | Computer/Emacs       | https://www.youtube.com/c/SystemCrafters/videos"
@@ -146,7 +147,7 @@ _download() {
         name=$(echo "${channel}" | cut -d '|' -f 1)
         dir=$(echo "${channel}" | cut -d '|' -f 2)
         url=$(echo "${channel}" | cut -d '|' -f 3)
-        echo "|${name}|${dir}|${url}|"
+        echo "| ${name} | ${dir} | ${url}|"
         if [[ -z "${listname}" || "${name}" == "${listname}" ]] ; then
             path="${basedir}/${dir}/${name}"
             echo
