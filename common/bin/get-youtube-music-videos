@@ -1,0 +1,155 @@
+#!/usr/bin/env bash
+#===============================================================================
+# get-youtube-music-videos
+#
+# Grab a curated list of YouTube music videos.
+#
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
+#===============================================================================
+
+basedir="/mnt/synology/video/Music/Videos"
+#basedir="${HOME}/synology/video/Music/Videos"
+
+videos=(
+    "1975, The - Love it If We Made It | https://www.youtube.com/watch?v=1Wl1B7DPegc"
+    "1975, The - Somebody Else | https://www.youtube.com/watch?v=Bimd2nZirT4"
+    "1975, The - The Sound | https://www.youtube.com/watch?v=FSnAllHtG70"
+    "B-52's, The - 52 Girls | https://www.youtube.com/watch?v=X049zRjInTQ"
+    "B-52's, The - Dance This Mess Around | https://www.youtube.com/watch?v=Qsb0HlSfUpg"
+    "B-52's, The - Love Shack | https://www.youtube.com/watch?v=9SOryJvTAGs"
+    "B-52's, The - Private Idaho [HQ] | https://www.youtube.com/watch?v=yXmnmvDl-ao"
+    "B-52's, The - Roam | https://www.youtube.com/watch?v=iNwC0sp-uA4"
+    "B-52's, The - Rock Lobster | https://www.youtube.com/watch?v=n4QSYx4wVQg"
+    "Bangles, The - Hazy Shade of Winter | https://www.youtube.com/watch?v=TxrwImCJCqk"
+    "Bon Iver - Holocene | https://www.youtube.com/watch?v=TWcyIpul8OE"
+    "Bon Iver - I Can't Make You Love Me, Nick of Time | https://www.youtube.com/watch?v=Q3VjaCy5gck"
+    "Bon Iver - Skinny Love | https://www.youtube.com/watch?v=-83qrKGZ3ps"
+    "Cowboy Junkies - Sweet Jane | https://www.youtube.com/watch?v=Fa9nN3G2CSg"
+    "Cranberries, The - Dreams | https://www.youtube.com/watch?v=Yam5uK6e-bQ"
+    "Cranberries, The - Linger | https://www.youtube.com/watch?v=G6Kspj3OO0s"
+    "Cranberries, The - Ode to My Family | https://www.youtube.com/watch?v=Zz-DJr1Qs54"
+    "Cranberries, The - Salvation | https://www.youtube.com/watch?v=KotlCEGNbh8"
+    "Cranberries, The - When You're Gone | https://www.youtube.com/watch?v=RUmdWdEgHgk"
+    "Cranberries, The - Zombie | https://www.youtube.com/watch?v=6Ejga4kJUts"
+    "Depeche Mode - Everything Counts | https://www.youtube.com/watch?v=1t-gK-9EIq4"
+    "Depeche Mode - Just Can't Get Enough | https://www.youtube.com/watch?v=_6FBfAQ-NDE"
+    "Depeche Mode - Personal Jesus | https://www.youtube.com/watch?v=u1xrNaTO1bI"
+    "Depeche Mode - Strangelove | https://www.youtube.com/watch?v=JIrm0dHbCDU"
+    "Dream Academy, The - Life in a Northern Town | https://www.youtube.com/watch?v=5UXnulANF8g"
+    "Dua Lipa - Don't Start Now | https://www.youtube.com/watch?v=oygrmJFKYZY"
+    "Dua Lipa - Levitating (Feat. DaBaby) | https://www.youtube.com/watch?v=TUVcZfQe-Kw"
+    "Dua Lipa - Love Again | https://www.youtube.com/watch?v=BC19kwABFwc"
+    "Electric Light Orchestra - Mr. Blue Sky | https://www.youtube.com/watch?v=aQUlA8Hcv4s"
+    "Elton John, Dua Lipa - Cold Heart (PNAU Remix) | https://www.youtube.com/watch?v=qod03PVTLqk"
+    "Fleetwood Mac - Dreams | https://www.youtube.com/watch?v=Y3ywicffOj4"
+    "Fleetwood Mac - Gold Dust Woman | https://www.youtube.com/watch?v=xzxSIMaMIZQ"
+    "Fleetwood Mac - Go Your Own Way | https://www.youtube.com/watch?v=ozl3L9fhKtE"
+    "Fleetwood Mac - Gypsy | https://www.youtube.com/watch?v=mwgg1Pu6cNg"
+    "Fleetwood Mac - Landslide | https://www.youtube.com/watch?v=WM7-PYtXtJM"
+    "Fleetwood Mac - Rhiannon | https://www.youtube.com/watch?v=jQAK6sVovUk"
+    "Fleetwood Mac - The Chain | https://www.youtube.com/watch?v=kBYHwH1Vb-c"
+    "Goo Goo Dolls - Iris | https://www.youtube.com/watch?v=NdYWuo9OFAw"
+    "Goo Goo Dolls - Name | https://www.youtube.com/watch?v=yQOBUrRaPU0"
+    "Goo Goo Dolls - Slide | https://www.youtube.com/watch?v=yP4qdefD2To"
+    "Imogen Heap - Hide and Seek | https://www.youtube.com/watch?v=UYIAfiVGluk"
+    "Live - Lightning Crashes | https://www.youtube.com/watch?v=xsJ4O-nSveg"
+    "Live - Overcome | https://www.youtube.com/watch?v=jpCa7Ay596M"
+    "Madonna - Borderline | https://www.youtube.com/watch?v=rSaC-YbSDpo"
+    "Madonna - Crazy for You | https://www.youtube.com/watch?v=DHutZXREZ0E"
+    "Madonna - Into the Groove | https://www.youtube.com/watch?v=52iW3lcpK5M"
+    "Madonna - Like a Prayer | https://www.youtube.com/watch?v=79fzeNUqQbQ"
+    "Madonna - Lucky Star | https://www.youtube.com/watch?v=ThHz9wlBeLU"
+    "Mazzy Star - Fade into You | https://www.youtube.com/watch?v=ImKY6TZEyrI"
+    "Men at Work - Down Under | https://www.youtube.com/watch?v=XfR9iY5y94s"
+    "Men at Work - Who Can it be Now? | https://www.youtube.com/watch?v=SECVGN4Bsgg"
+    "Men without Hats - The Safety Dance | https://www.youtube.com/watch?v=nM4okRvCg2g"
+    "Michael Jackson - Beat It | https://www.youtube.com/watch?v=oRdxUFDoQe0"
+    "Michael Jackson - Billie Jean | https://www.youtube.com/watch?v=Zi_XLOBDo_Y"
+    "Michael Jackson - Don't Stop 'til You Get Enough | https://www.youtube.com/watch?v=yURRmWtbTbo"
+    "Michael Jackson - Rock with You | https://www.youtube.com/watch?v=5X-Mrc2l1d0"
+    "Michael Jackson - Smooth Criminal | https://www.youtube.com/watch?v=h_D3VFfhvs4"
+    "Michael Jackson - The Way You Make Me Feel | https://www.youtube.com/watch?v=HzZ_urpj4As"
+    "Michael Jackson - Thriller | https://www.youtube.com/watch?v=sOnqjkJTMaA"
+    "Midnight Oil - Beds Are Burning | https://www.youtube.com/watch?v=ejorQVy3m8E"
+    "Midnight Oil - Blue Sky Mine | https://www.youtube.com/watch?v=Ofrqm6-LCqs"
+    "Moody Blues, The - I Know You're out There Somewhere | https://www.youtube.com/watch?v=cjImFYf2Vzc"
+    "Moody Blues, The - Nights in White Satin | https://www.youtube.com/watch?v=9muzyOd4Lh8"
+    "Moody Blues, The - Your Wildest Dreams | https://www.youtube.com/watch?v=kmmPFrkuPq0"
+    "Nirvana - Come as You Are | https://www.youtube.com/watch?v=vabnZ9-ex7o"
+    "Nirvana - In Bloom | https://www.youtube.com/watch?v=PbgKEjNBHqM"
+    "Nirvana - Lithium | https://www.youtube.com/watch?v=pkcJEvMcnEg"
+    "Nirvana - Smells like Teen Spirit | https://www.youtube.com/watch?v=hTWKbfoikeg"
+    "Outfield, The - Your Love | https://www.youtube.com/watch?v=4N1iwQxiHrs"
+    "Portugal, The Man - Feel it Still | https://www.youtube.com/watch?v=pBkHHoOIIn8"
+    "Portugal, The Man - Feel it Still [Stripped Session] | https://www.youtube.com/watch?v=F09POwrBn-M"
+    "Portugal, The Man - Live in the Moment | https://www.youtube.com/watch?v=Hha0bwVvGmY"
+    "Queen - Under Pressure (Feat. David Bowie) | https://www.youtube.com/watch?v=a01QQZyl-_I"
+    "Red Rider - Lunatic Fringe [Vision Quest] | https://www.youtube.com/watch?v=6XdFExsqoC4"
+    "R.E.M. - Driver 8 | https://www.youtube.com/watch?v=wuFId1RYSZE"
+    "R.E.M. - Everybody Hurts | https://www.youtube.com/watch?v=5rOiW_xY-kc"
+    "R.E.M. - Fall on Me | https://www.youtube.com/watch?v=lf6vCjtaV1k"
+    "R.E.M. - It's the End of the World as We Know It (And I Feel Fine) | https://www.youtube.com/watch?v=Z0GFRcFm-aY"
+    "R.E.M. - Losing My Religion | https://www.youtube.com/watch?v=xwtdhWltSIg"
+    "R.E.M. - Man on the Moon | https://www.youtube.com/watch?v=dLxpNiF0YKs"
+    "R.E.M. - The One I Love | https://www.youtube.com/watch?v=j7oQEPfe-O8"
+    "Sia - Chandelier | https://www.youtube.com/watch?v=2vjPBrBU-TM"
+    "Sia - Cheap Thrills (Feat. Sean Paul) | https://www.youtube.com/watch?v=nYh-n7EOtMA"
+    "Sia - Cheap Thrills [Performance Edit] | https://www.youtube.com/watch?v=31crA53Dgu0"
+    "Sia - Elastic Heart (Feat. Shia LaBeouf & Maddie Ziegler) | https://www.youtube.com/watch?v=KWZGAExj-es"
+    "Sia - Unstoppable | https://www.youtube.com/watch?v=YaEG2aWJnZ8"
+    "Sinéad O'Connor - Mandinka | https://www.youtube.com/watch?v=Gf_RHVjPrHY"
+    "Sinéad O'Connor - Nothing Compares 2 U | https://www.youtube.com/watch?v=0-EF60neguk"
+    "Taylor Swift - Anti-Hero | https://www.youtube.com/watch?v=b1kbLwvqugk"
+    "Taylor Swift - Exile (Feat. Bon Iver) | https://www.youtube.com/watch?v=osdoLjUNFnA"
+    "Taylor Swift - Shake it Off | https://www.youtube.com/watch?v=nfWlot6h_JM"
+    "Taylor Swift - Style | https://www.youtube.com/watch?v=-CmadmM5cOk"
+    "Tears for Fears - Everybody Wants to Rule the World | https://www.youtube.com/watch?v=aGCdLKXNF3w"
+    "Tears for Fears - Head over Heels | https://www.youtube.com/watch?v=CsHiG-43Fzg"
+    "Tears for Fears - Mad World | https://www.youtube.com/watch?v=u1ZvPSpLxCg"
+    "Tears for Fears - Shout | https://www.youtube.com/watch?v=Ye7FKc1JQe4"
+    "Tears for Fears - Sowing the Seeds of Love | https://www.youtube.com/watch?v=VAtGOESO7W8"
+    "Temple of the Dog - Hunger Strike | https://www.youtube.com/watch?v=VUb450Alpps"
+    "Toad the Wet Sprocket - All I Want | https://www.youtube.com/watch?v=AVYYpNaSs2Y"
+    "Toad the Wet Sprocket - Fall Down | https://www.youtube.com/watch?v=_c5ln9wP0TA"
+    "Toad the Wet Sprocket - Fly from Heaven | https://www.youtube.com/watch?v=7JjZMjPaF30"
+    "Toad the Wet Sprocket - Hold On | https://www.youtube.com/watch?v=I_9aoHBEeFk"
+    "Toad the Wet Sprocket - Something's Always Wrong | https://www.youtube.com/watch?v=fK7bwIVrQFs"
+    "Toad the Wet Sprocket - Walk on the Ocean | https://www.youtube.com/watch?v=12bM1CqHoBY"
+    "Toto - Africa | https://www.youtube.com/watch?v=FTQbiNvZqaY"
+    "Weeknd, The - Blinding Lights | https://www.youtube.com/watch?v=4NRXx6U8ABQ"
+    "Weeknd, The - Can't Feel My Face | https://www.youtube.com/watch?v=KEI4qSrkPAs"
+    "Weeknd, The - Creepin' (Feat. 21 Savage) | https://www.youtube.com/watch?v=KMkvqdpsiJA"
+    "Weeknd, The - I Feel it Coming (Feat. Daft Punk) | https://www.youtube.com/watch?v=qFLhGq0060w"
+    "Weeknd, The - Save Your Tears | https://www.youtube.com/watch?v=XXYlFuWEuKI"
+    "Weeknd, The - Starboy (Feat. Daft Punk) | https://www.youtube.com/watch?v=34Na4j8AVgA"
+    "Weeknd, The - The Hills | https://www.youtube.com/watch?v=yzTuBuRdAyA"
+)
+
+if [[ ! -d "${basedir}" ]] ; then
+    echo "Output directory does not exist: ${basedir}"
+    exit 1
+fi
+
+for ((x = 0; x < ${#videos[@]}; x += 1)) ; do
+    video=$(echo "${videos[$x]}" | sed 's/ *|/|/g ; s/| */|/g')
+    name=$(echo "${video}" | cut -d '|' -f 1)
+    url=$(echo "${video}" | cut -d '|' -f 2)
+    echo "| ${name} | ${url} |"
+    path="${basedir}/${name}.webm"
+    if [[ ! -f "${path}" ]] ; then
+        echo
+        echo "${url} -> ${path}"
+        echo
+        cd "${basedir}" && \
+            yt-dlp --format "bv*+ba/b" \
+                   --format-sort "res:1080,res:720,res:480" \
+                   --output "${name}.%(ext)s" \
+                   "${url}"
+    fi
+done
+
+exit 0
+
+#===============================================================================
+# End of File
+#===============================================================================
