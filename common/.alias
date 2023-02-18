@@ -2023,6 +2023,8 @@ alias rsync-music-put-morpheus=" \
 alias rsync-music-put-colleen=" \
     rsync -rlptx --progress ${home}/data/media/Audio/Music/ colleen:${home}/data/media/Audio/Music/ && \
     rsync -rlptx --progress ${home}/data/media/Audio/Playlists/ colleen:${home}/data/media/Audio/Playlists/"
+#        rsync-music-put-synology  rsync /home/data/media/Audio/Music /mnt/synology/music
+alias rsync-music-put-synology="rsync -r --munge-links --size-only --progress ${home}/data/media/Audio/Music/ /mnt/synology/music/"
 #        rsync-video-get-morpheus  rsync morpheus:/home/data/media/Video /home/data/media/Video
 alias rsync-video-get-morpheus="rsync -rlptx --progress morpheus:/home/data/media/Video/ ${home}/data/media/Video/"
 #        rsync-video-put-morpheus  rsync morpheus:/home/data/media/Video /home/data/media/Video
