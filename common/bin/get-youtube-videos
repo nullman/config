@@ -9,6 +9,8 @@
 
 basedir="/mnt/synology/video"
 #basedir="${HOME}/synology/video"
+#ytdlp="$(which yt-dlp)"
+ytdlp="${HOME}/code/yt-dlp/yt-dlp"
 
 channels=(
     "Computer/Demo        | Commodore Amiga Demos             | https://www.youtube.com/playlist?list=PLnmLOQIDmUvUgbvY-Jq0txuYWYgWVcOOS"
@@ -151,22 +153,23 @@ _download() {
         echo "| ${dir} | ${name} | ${url}|"
         if [[ -z "${listname}" || "${name}" == "${listname}" ]] ; then
             path="${basedir}/${dir}/${name}"
+            cmd="${ytdlp} \
+                --format 'bv*+ba/b' \
+                --format-sort 'res:1080,res:720,res:480' \
+                --playlist-reverse \
+                ${archive} \
+                --output '"${name}" - %(release_date>%Y-%m-%d,upload_date>%Y-%m-%d|Unknown)s - %(title)s.%(ext)s' \
+                '"${url}"'"
             echo
             echo "${url} -> ${path}"
             echo
             mkdir -p "${path}"
-            cd "${path}" && \
-                yt-dlp --format "bv*+ba/b" \
-                       --format-sort "res:1080,res:720,res:480" \
-                       --playlist-reverse \
-                       ${archive} \
-                       --output "${name} - %(release_date>%Y-%m-%d,upload_date>%Y-%m-%d|Unknown)s - %(title)s.%(ext)s" \
-                       "${url}"
+            cd "${path}" && eval "${cmd}"
         fi
     done
 }
 
-archive="--download-archive ${HOME}/.yt-dlp-download-archive"
+archive="--download-archive '"${HOME}/.yt-dlp-download-archive"'"
 
 # handle command line arguments
 while true ; do

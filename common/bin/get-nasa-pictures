@@ -9,7 +9,7 @@
 
 urlbase="https://apod.nasa.gov/apod"
 archive="${urlbase}/archivepix.html"
-dir="/home/data/media/Nasa Pictures/apod"
+root="/home/data/media/Nasa Pictures/apod"
 index="/tmp/nasa-pictures-index.$$"
 
 wget "${archive}" -q -O - | grep 'href="ap' | sed 's/^.*\"ap/ap/ ; s/\".*$//' > "${index}"
@@ -17,8 +17,9 @@ wget "${archive}" -q -O - | grep 'href="ap' | sed 's/^.*\"ap/ap/ ; s/\".*$//' > 
 done=0
 for page in $(cat "${index}") ; do
     image=$(wget "${urlbase}/${page}" -q -O - | grep 'href="image/' | sed 's/^.*href="// ; s/".*$//')
-    file="${dir}/${image}"
-    mkdir -p "$(dirname ${file})"
+    file="${root}/${image}"
+    dir=$(dirname "${file}")
+    mkdir -p "${dir}"
     if [[ -f "${file}" ]] ; then
         echo "All images downloaded"
         break
