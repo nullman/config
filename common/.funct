@@ -1876,6 +1876,14 @@ home-restow() {
             mkdir -p "${HOME}/.config/${bn}"
         done
 
+    # cleanup
+    echo "Cleanup some files..."
+    if [[ -d "${HOME}/.config/gtk-3.0" ]] ; then
+        [[ -L "${HOME}/.config/gtk-3.0/bookmarks" ]] || mv "${HOME}/.config/gtk-3.0/bookmarks" "${HOME}/.config/gtk-3.0/bookmarks.old"
+        [[ -L "${HOME}/.config/gtk-3.0/gtk.css" ]] || mv "${HOME}/.config/gtk-3.0/gtk.css" "${HOME}/.config/gtk-3.0/gtk.css.old"
+        [[ -L "${HOME}/.config/gtk-3.0/settings.ini" ]] || mv "${HOME}/.config/gtk-3.0/settings.ini" "${HOME}/.config/gtk-3.0/settings.ini.old"
+    fi
+
     # restow
     echo "Restowing packages..."
     (cd "${HOME}" && ln -s -f config/.stow-global-ignore .)
