@@ -2468,18 +2468,22 @@ alias update-alternatives-java="sudo update-alternatives --config java"
 #
 #        vncm1                   vnc mouse1:0
 alias vncm1="vncviewer mouse1:0"
-#        vncm2                   vnc mouse2:0
-alias vncm2="vncviewer mouse2:0"
-#        vncm3                   vnc mouse3:0
-alias vncm3="vncviewer mouse3:0"
-#        vncy                    vnc trinity:0
-alias vncy="vncviewer trinity:0"
 #        vncvm1                  vnc mouse1:0 (view only)
 alias vncvm1="vncviewer -viewonly mouse1:0"
+#        vncm2                   vnc mouse2:0
+alias vncm2="vncviewer mouse2:0"
 #        vncvm2                  vnc mouse2:0 (view only)
 alias vncvm2="vncviewer -viewonly mouse2:0"
+#        vncm3                   vnc mouse3:0
+alias vncm3="vncviewer mouse3:0"
 #        vncvm3                  vnc mouse3:0 (view only)
 alias vncvm3="vncviewer -viewonly mouse3:0"
+#        vncrp                   vnc raspad:0
+alias vncrp="vncviewer raspad:0"
+#        vncvrp                  vnc raspad:0 (view only)
+alias vncvrp="vncviewer -viewonly raspad:0"
+#        vncy                    vnc trinity:0
+alias vncy="vncviewer trinity:0"
 #        vncvy                   vnc trinity:0 (view only)
 alias vncvy="vncviewer -viewonly trinity:0"
 
