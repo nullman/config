@@ -922,8 +922,12 @@ Common values:
 ;; General:27 ends here
 
 ;; [[file:init-emacs.org::#environment-general][General:28]]
+;; custom fill-column value
+(defconst custom-fill-column 78
+  "Custom `fill-column' value.")
+
 ;; set default fill column for `auto-fill-mode' mode and `fill-paragraph'
-(setq fill-column 78)
+(setq fill-column custom-fill-column)
 (setq-default fill-column fill-column)
 ;; General:28 ends here
 
@@ -3915,6 +3919,7 @@ If BUFFER is nil, current buffer is used."
 (init-message 2 "Org Mode: Hook")
 
 (defun custom-org-mode-hook ()
+  "Custom `org-mode' hook."
   ;; remappings
   (bind-keys :map org-mode-map
              ([remap org-metaleft] . org-safe-metaleft)
@@ -16094,6 +16099,52 @@ USING is the remaining peg."
   (gcmh-mode 1))
 ;; gcmh:1 ends here
 
+;; [[file:init-emacs.org::#packages-git-gutter][git-gutter:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: git-gutter
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Packages: git-gutter")
+
+(use-package git-gutter
+  :straight t
+  :demand t
+  :diminish (git-gutter-mode . "GG")
+  ;; :bind (("C-x C-g" . git-gutter)
+  ;;            ;; ("C-x v =" . git-gutter:popup-hunk)
+  ;;            ;; ("C-x p" . git-gutter:previous-hunk)
+  ;;            ;; ("C-x n" . git-gutter:next-hunk)
+  ;;            ;; ("C-x v s" . git-gutter:stage-hunk)
+  ;;            ;; ("C-x v r" . git-gutter:revert-hunk)
+  ;;            ;; ("C-x v SPC" . git-gutter:mark-hunk)
+  ;;            )
+  :custom
+  ;; set symbols
+  (git-gutter:added-sign "+")
+  (git-gutter:deleted-sign "-")
+  ;;(git-gutter:modified-sign "=")
+  (git-gutter:modified-sign "≠")
+  ;; periodically update
+  (git-gutter:update-interval 2)
+  :config
+  ;; turn on globally
+  (global-git-gutter-mode 1)
+
+  ;; set face atttributes (colors and bold)
+  (let ((background (face-attribute 'default :background)))
+    (set-face-foreground 'git-gutter:added "green")
+    (set-face-foreground 'git-gutter:deleted "red")
+    (set-face-foreground 'git-gutter:modified "purple")
+    (set-face-background 'git-gutter:added background)
+    (set-face-background 'git-gutter:deleted background)
+    (set-face-background 'git-gutter:modified background)
+    (set-face-background 'git-gutter:unchanged background)
+    (set-face-background 'git-gutter:separator background)
+    (set-face-bold 'git-gutter:added t)
+    (set-face-bold 'git-gutter:deleted t)
+    (set-face-bold 'git-gutter:modified t)))
+;; git-gutter:1 ends here
+
 ;; [[file:init-emacs.org::#packages-hide-mode-line][hide-mode-line:1]]
 ;;------------------------------------------------------------------------------
 ;;; Packages: hide-mode-line
@@ -18363,7 +18414,7 @@ otherwise run `find-file-as-root'."
   :hook ((lsp-mode . custom-lsp-mode-hook))
          ;; (lsp-mode . company-mode))
   :init
-  (setq lsp-keymap-prefix "C-x C-l")    ; default: `downcase-region'
+  (setq lsp-keymap-prefix "C-c C-l")    ; default: `downcase-region'
   :config
   ;; add `which-key-mode' descriptions
   (lsp-enable-which-key-integration t))
@@ -18587,9 +18638,9 @@ otherwise run `find-file-as-root'."
     (c-add-style "local" custom-c-style t)
     ;;(c-set-style 'stroustrup)
 
-    ;; electric indention turned off
+    ;; electric indention turned on
     (when (fboundp 'c-toggle-electric-state)
-      (c-toggle-electric-state -1))
+      (c-toggle-electric-state 1))
 
     ;; auto-newline and hungry-delete turned off
     (when (fboundp 'c-toggle-auto-hungry-state)
@@ -18617,7 +18668,7 @@ otherwise run `find-file-as-root'."
     ;; (define-key c-mode-base-map (kbd "C-c o") 'ff-find-other-file)
 
     ;; set default fill column for auto-fill mode and fill-paragraph
-    (setq fill-column 78)
+    (setq fill-column custom-fill-column)
 
     ;; turn on auto-fill
     ;;(turn-on-auto-fill)
@@ -20251,7 +20302,7 @@ Commands:
     ;;(bind-key "<tab>" 'indent-relative text-mode-map)
 
     ;; set default fill column for auto-fill mode
-    (setq fill-column 78)
+    (setq fill-column custom-fill-column)
 
     ;; turn on word wrap
     (turn-on-auto-fill)
