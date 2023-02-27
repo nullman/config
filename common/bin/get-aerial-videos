@@ -4,133 +4,250 @@
 #
 # Grab the latest videos from Apple's Aerial repository.
 #
-# It should be run once a week or so.
-#
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
-#index="http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/entries.json"
-dir="/home/data/media/Video/Aerial"
+basedir="/home/data/media/Video/Aerial"
 
-#urls=$(wget "${index}" -q -O - | grep '"url" : ".*"' | sed 's/^.*" : "// ; s/".*$//')
+# https://aur.archlinux.org/packages/xscreensaver-aerial-videos-4k/
+# https://bzamayo.com/watch-all-the-apple-tv-aerial-video-screensavers
+# https://github.com/OrangeJedi/Aerial/blob/master/videos.json
+videos=(
+    "b1-1                               | 1080p | http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b1-1.mov"
+    "b1-2                               | 1080p | http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b1-2.mov"
+    "b1-3                               | 1080p | http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b1-3.mov"
+    "b1-4                               | 1080p | http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b1-4.mov"
+    "b10-3                              | 1080p | http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b10-3.mov"
+    "b2-1                               | 1080p | http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b2-1.mov"
+    "b2-2                               | 1080p | http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b2-2.mov"
+    "b2-3                               | 1080p | http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b2-3.mov"
+    "b2-4                               | 1080p | http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b2-4.mov"
+    "b3-1                               | 1080p | http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b3-1.mov"
+    "b3-2                               | 1080p | http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b3-2.mov"
+    "b3-3                               | 1080p | http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b3-3.mov"
+    "b4-1                               | 1080p | http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b4-1.mov"
+    "b4-2                               | 1080p | http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b4-2.mov"
+    "b4-3                               | 1080p | http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b4-3.mov"
+    "b5-1                               | 1080p | http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b5-1.mov"
+    "b5-2                               | 1080p | http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b5-2.mov"
+    "b5-3                               | 1080p | http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b5-3.mov"
+    "b6-1                               | 1080p | http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b6-1.mov"
+    "b6-2                               | 1080p | http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b6-2.mov"
+    "b6-3                               | 1080p | http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b6-3.mov"
+    "b6-4                               | 1080p | http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b6-4.mov"
+    "b7-1                               | 1080p | http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b7-1.mov"
+    "b7-2                               | 1080p | http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b7-2.mov"
+    "b7-3                               | 1080p | http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b7-3.mov"
+    "b8-1                               | 1080p | http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b8-1.mov"
+    "b8-2                               | 1080p | http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b8-2.mov"
+    "b8-3                               | 1080p | http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b8-3.mov"
+    "b9-2                               | 1080p | http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b9-2.mov"
+    "b9-3                               | 1080p | http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b9-3.mov"
+    "comp_GL_G010_C006_v08_6Mbps        | 2160p | http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/comp_GL_G010_C006_v08_6Mbps.mov"
+    #"West Africa to the Alps            | 1080p | http://sylvan.apple.com/Aerials/2x/Videos/comp_A001_C004_1207W5_v23_SDR_FINAL_20180706_SDR_2K_HEVC.mov"
+    #"West Africa to the Alps            | 2160p | http://sylvan.apple.com/Aerials/2x/Videos/comp_A001_C004_1207W5_v23_SDR_FINAL_20180706_SDR_4K_HEVC.mov"
+    #"Sahara and Italy                   | 1080p | http://sylvan.apple.com/Aerials/2x/Videos/comp_A009_C001_010181A_v09_SDR_PS_FINAL_20180725_SDR_2K_HEVC.mov"
+    #"Sahara and Italy                   | 2160p | http://sylvan.apple.com/Aerials/2x/Videos/comp_A009_C001_010181A_v09_SDR_PS_FINAL_20180725_SDR_4K_HEVC.mov"
+    #"Iran and Afghanistan               | 1080p | http://sylvan.apple.com/Aerials/2x/Videos/comp_A083_C002_1130KZ_v04_SDR_PS_FINAL_20180725_SDR_2K_HEVC.mov"
+    #"Iran and Afghanistan               | 2160p | http://sylvan.apple.com/Aerials/2x/Videos/comp_A083_C002_1130KZ_v04_SDR_PS_FINAL_20180725_SDR_4K_HEVC.mov"
+    #"Africa and the Middle East         | 1080p | http://sylvan.apple.com/Aerials/2x/Videos/comp_A103_C002_0205DG_v12_SDR_FINAL_20180706_SDR_2K_HEVC.mov"
+    #"Africa and the Middle East         | 2160p | http://sylvan.apple.com/Aerials/2x/Videos/comp_A103_C002_0205DG_v12_SDR_FINAL_20180706_SDR_4K_HEVC.mov"
+    #"New Zealand                        | 1080p | http://sylvan.apple.com/Aerials/2x/Videos/comp_A105_C003_0212CT_FLARE_v10_SDR_PS_FINAL_20180711_SDR_2K_HEVC.mov"
+    #"New Zealand                        | 2160p | http://sylvan.apple.com/Aerials/2x/Videos/comp_A105_C003_0212CT_FLARE_v10_SDR_PS_FINAL_20180711_SDR_4K_HEVC.mov"
+    #"Caribbean                          | 1080p | http://sylvan.apple.com/Aerials/2x/Videos/comp_A108_C001_v09_SDR_FINAL_22062018_SDR_2K_HEVC.mov"
+    #"Caribbean                          | 2160p | http://sylvan.apple.com/Aerials/2x/Videos/comp_A108_C001_v09_SDR_FINAL_22062018_SDR_4K_HEVC.mov"
+    #"Northern California to Baja        | 1080p | http://sylvan.apple.com/Aerials/2x/Videos/comp_A114_C001_0305OT_v10_SDR_FINAL_22062018_SDR_2K_HEVC.mov"
+    #"Northern California to Baja        | 2160p | http://sylvan.apple.com/Aerials/2x/Videos/comp_A114_C001_0305OT_v10_SDR_FINAL_22062018_SDR_4K_HEVC.mov"
+    #"Longji Rice Terraces               | 1080p | http://sylvan.apple.com/Aerials/2x/Videos/comp_CH_C002_C005_PSNK_v05_SDR_PS_FINAL_20180709_SDR_2K_HEVC.mov"
+    #"Longji Rice Terraces               | 2160p | http://sylvan.apple.com/Aerials/2x/Videos/comp_CH_C002_C005_PSNK_v05_SDR_PS_FINAL_20180709_SDR_4K_HEVC.mov"
+    #"Wulingyuan National Park 2         | 1080p | http://sylvan.apple.com/Aerials/2x/Videos/comp_CH_C007_C004_PSNK_v02_SDR_PS_FINAL_20180709_SDR_2K_HEVC.mov"
+    #"Wulingyuan National Park 2         | 2160p | http://sylvan.apple.com/Aerials/2x/Videos/comp_CH_C007_C004_PSNK_v02_SDR_PS_FINAL_20180709_SDR_4K_HEVC.mov"
+    #"Wulingyuan National Park 1         | 1080p | http://sylvan.apple.com/Aerials/2x/Videos/comp_CH_C007_C011_PSNK_v02_SDR_PS_FINAL_20180709_SDR_2K_HEVC.mov"
+    #"Wulingyuan National Park 1         | 2160p | http://sylvan.apple.com/Aerials/2x/Videos/comp_CH_C007_C011_PSNK_v02_SDR_PS_FINAL_20180709_SDR_4K_HEVC.mov"
+    #"                                   | 1080p | http://sylvan.apple.com/Aerials/2x/Videos/comp_GMT026_363A_103NC_E1027_KOREA_JAPAN_NIGHT_v17_SDR_FINAL_25062018_SDR_2K_HEVC.mov"
+    #"                                   | 2160p | http://sylvan.apple.com/Aerials/2x/Videos/comp_GMT026_363A_103NC_E1027_KOREA_JAPAN_NIGHT_v17_SDR_FINAL_25062018_SDR_4K_HEVC.mov"
+    #"                                   | 2160p | http://sylvan.apple.com/Aerials/2x/Videos/comp_GMT306_139NC_139J_3066_CALI_TO_VEGAS_v07_SDR_FINAL_22062018_SDR_4K_HEVC.mov"
+    #"Caribbean Day                      | 1080p | http://sylvan.apple.com/Aerials/2x/Videos/comp_GMT308_139K_142NC_CARIBBEAN_DAY_v09_SDR_FINAL_22062018_SDR_2K_HEVC.mov"
+    #"Caribbean Day                      | 2160p | http://sylvan.apple.com/Aerials/2x/Videos/comp_GMT308_139K_142NC_CARIBBEAN_DAY_v09_SDR_FINAL_22062018_SDR_4K_HEVC.mov"
+    #"Africa Night                       | 1080p | http://sylvan.apple.com/Aerials/2x/Videos/comp_GMT312_162NC_139M_1041_AFRICA_NIGHT_v14_SDR_FINAL_20180706_SDR_2K_HEVC.mov"
+    #"Africa Night                       | 2160p | http://sylvan.apple.com/Aerials/2x/Videos/comp_GMT312_162NC_139M_1041_AFRICA_NIGHT_v14_SDR_FINAL_20180706_SDR_4K_HEVC.mov"
+    #"China                              | 1080p | http://sylvan.apple.com/Aerials/2x/Videos/comp_GMT329_113NC_396B_1105_CHINA_v04_SDR_FINAL_20180706_F900F2700_SDR_2K_HEVC.mov"
+    #"China                              | 2160p | http://sylvan.apple.com/Aerials/2x/Videos/comp_GMT329_113NC_396B_1105_CHINA_v04_SDR_FINAL_20180706_F900F2700_SDR_4K_HEVC.mov"
+    #"Ireland to Asia                    | 1080p | http://sylvan.apple.com/Aerials/2x/Videos/comp_GMT329_117NC_401C_1037_IRELAND_TO_ASIA_v48_SDR_PS_FINAL_20180725_F0F6300_SDR_2K_HEVC.mov"
+    #"Ireland to Asia                    | 2160p | http://sylvan.apple.com/Aerials/2x/Videos/comp_GMT329_117NC_401C_1037_IRELAND_TO_ASIA_v48_SDR_PS_FINAL_20180725_F0F6300_SDR_4K_HEVC.mov"
+    #"Hollywood Hills                    | 1080p | http://sylvan.apple.com/Aerials/2x/Videos/comp_LA_A006_C004_v01_SDR_FINAL_PS_20180730_SDR_2K_HEVC.mov"
+    #"Hollywood Hills                    | 2160p | http://sylvan.apple.com/Aerials/2x/Videos/comp_LA_A006_C004_v01_SDR_FINAL_PS_20180730_SDR_4K_HEVC.mov"
+    #"                                   | 1080p | http://sylvan.apple.com/Aerials/2x/Videos/DB_D001_C001_2K_SDR_HEVC.mov"
+    #"                                   | 2160p | http://sylvan.apple.com/Aerials/2x/Videos/DB_D001_C001_4K_SDR_HEVC.mov"
+    #"                                   | 1080p | http://sylvan.apple.com/Aerials/2x/Videos/DB_D001_C005_2K_SDR_HEVC.mov"
+    #"                                   | 2160p | http://sylvan.apple.com/Aerials/2x/Videos/DB_D001_C005_4K_SDR_HEVC.mov"
+    #"                                   | 1080p | http://sylvan.apple.com/Aerials/2x/Videos/DB_D002_C003_2K_SDR_HEVC.mov"
+    #"                                   | 2160p | http://sylvan.apple.com/Aerials/2x/Videos/DB_D002_C003_4K_SDR_HEVC.mov"
+    #"                                   | 1080p | http://sylvan.apple.com/Aerials/2x/Videos/DB_D008_C010_2K_SDR_HEVC.mov"
+    #"                                   | 2160p | http://sylvan.apple.com/Aerials/2x/Videos/DB_D008_C010_4K_SDR_HEVC.mov"
+    #"                                   | 1080p | http://sylvan.apple.com/Aerials/2x/Videos/DB_D011_C009_2K_SDR_HEVC.mov"
+    #"                                   | 2160p | http://sylvan.apple.com/Aerials/2x/Videos/DB_D011_C009_4K_SDR_HEVC.mov"
+    #"                                   | 1080p | http://sylvan.apple.com/Aerials/2x/Videos/DB_D011_C010_2K_SDR_HEVC.mov"
+    #"                                   | 2160p | http://sylvan.apple.com/Aerials/2x/Videos/DB_D011_C010_4K_SDR_HEVC.mov"
+    #"                                   | 1080p | http://sylvan.apple.com/Aerials/2x/Videos/GL_G002_C002_2K_SDR_HEVC.mov"
+    #"                                   | 2160p | http://sylvan.apple.com/Aerials/2x/Videos/GL_G002_C002_4K_SDR_HEVC.mov"
+    #"                                   | 1080p | http://sylvan.apple.com/Aerials/2x/Videos/GL_G004_C010_2K_SDR_HEVC.mov"
+    #"                                   | 2160p | http://sylvan.apple.com/Aerials/2x/Videos/GL_G004_C010_4K_SDR_HEVC.mov"
+    #"                                   | 1080p | http://sylvan.apple.com/Aerials/2x/Videos/HK_B005_C011_2K_SDR_HEVC.mov"
+    #"                                   | 2160p | http://sylvan.apple.com/Aerials/2x/Videos/HK_B005_C011_4K_SDR_HEVC.mov"
+    #"                                   | 1080p | http://sylvan.apple.com/Aerials/2x/Videos/HK_H004_C001_2K_SDR_HEVC.mov"
+    #"                                   | 2160p | http://sylvan.apple.com/Aerials/2x/Videos/HK_H004_C001_4K_SDR_HEVC.mov"
+    #"                                   | 1080p | http://sylvan.apple.com/Aerials/2x/Videos/HK_H004_C008_2K_SDR_HEVC.mov"
+    #"                                   | 2160p | http://sylvan.apple.com/Aerials/2x/Videos/HK_H004_C008_4K_SDR_HEVC.mov"
+    #"                                   | 1080p | http://sylvan.apple.com/Aerials/2x/Videos/HK_H004_C010_2K_SDR_HEVC.mov"
+    #"                                   | 2160p | http://sylvan.apple.com/Aerials/2x/Videos/HK_H004_C010_4K_SDR_HEVC.mov"
+    #"                                   | 1080p | http://sylvan.apple.com/Aerials/2x/Videos/HK_H004_C013_2K_SDR_HEVC.mov"
+    #"                                   | 2160p | http://sylvan.apple.com/Aerials/2x/Videos/HK_H004_C013_4K_SDR_HEVC.mov"
+    #"                                   | 1080p | http://sylvan.apple.com/Aerials/2x/Videos/LA_A005_C009_2K_SDR_HEVC.mov"
+    #"                                   | 2160p | http://sylvan.apple.com/Aerials/2x/Videos/LA_A005_C009_4K_SDR_HEVC.mov"
+    #"                                   | 1080p | http://sylvan.apple.com/Aerials/2x/Videos/LA_A006_C008_2K_SDR_HEVC.mov"
+    #"                                   | 2160p | http://sylvan.apple.com/Aerials/2x/Videos/LA_A006_C008_4K_SDR_HEVC.mov"
+    #"                                   | 1080p | http://sylvan.apple.com/Aerials/2x/Videos/LA_A008_C004_2K_SDR_HEVC.mov"
+    #"                                   | 2160p | http://sylvan.apple.com/Aerials/2x/Videos/LA_A008_C004_4K_SDR_HEVC.mov"
+    #"                                   | 1080p | http://sylvan.apple.com/Aerials/2x/Videos/LA_A009_C009_2K_SDR_HEVC.mov"
+    #"                                   | 2160p | http://sylvan.apple.com/Aerials/2x/Videos/LA_A009_C009_4K_SDR_HEVC.mov"
+    #"                                   | 1080p | http://sylvan.apple.com/Aerials/2x/Videos/LA_A011_C003_2K_SDR_HEVC.mov"
+    #"                                   | 2160p | http://sylvan.apple.com/Aerials/2x/Videos/LA_A011_C003_4K_SDR_HEVC.mov"
+    #"                                   | 2160p | http://sylvan.apple.com/Aerials/2x/Videos/LW_L001_C006_4K_SDR_HEVC.mov"
+    "Africa and the Middle East         | 1080p | http://sylvan.apple.com/Videos/comp_A103_C002_0205DG_v12_SDR_FINAL_20180706_SDR_2K_AVC.mov"
+    "Africa Night                       | 1080p | http://sylvan.apple.com/Videos/comp_GMT312_162NC_139M_1041_AFRICA_NIGHT_v14_SDR_FINAL_20180706_SDR_2K_AVC.mov"
+    "Alaskan Jellies 1                  | 1080p | http://sylvan.apple.com/Videos/g201_AK_A003_C014_SDR_20191113_SDR_2K_AVC.mov"
+    "Alaskan Jellies 2                  | 1080p | http://sylvan.apple.com/Videos/AK_A004_C012_SDR_20191217_SDR_2K_AVC.mov"
+    "Antartica                          | 1080p | http://sylvan.apple.com/Videos/comp_GMT110_112NC_364D_1054_AURORA_ANTARTICA__COMP_FINAL_v34_PS_SDR_20181107_SDR_2K_AVC.mov"
+    "Atlantic Ocean to Spain and France | 1080p | http://sylvan.apple.com/Videos/comp_A001_C001_120530_v04_SDR_FINAL_20180706_SDR_2K_AVC.mov"
+    "Australia                          | 1080p | http://sylvan.apple.com/Videos/comp_GMT060_117NC_363D_1034_AUSTRALIA_v35_SDR_PS_FINAL_20180731_SDR_2K_AVC.mov"
+    "Barracuda                          | 1080p | http://sylvan.apple.com/Videos/BO_A018_C029_SDR_20190812_SDR_2K_AVC.mov"
+    "Bumpheads                          | 1080p | http://sylvan.apple.com/Videos/BO_A014_C008_SDR_20190719_SDR_2K_AVC.mov"
+    "California Dolphins                | 1080p | http://sylvan.apple.com/Videos/DL_B002_C011_SDR_20191122_SDR_2K_AVC.mov"
+    "California Kelp Forest             | 1080p | http://sylvan.apple.com/Videos/g201_CA_A016_C002_SDR_20191114_SDR_2K_AVC.mov"
+    "California to Vegas                | 1080p | http://sylvan.apple.com/Videos/comp_GMT306_139NC_139J_3066_CALI_TO_VEGAS_v08_SDR_PS_20180824_SDR_2K_AVC.mov"
+    "Caribbean to Central America       | 1080p | http://sylvan.apple.com/Videos/comp_A105_C002_v06_SDR_FINAL_25062018_SDR_2K_AVC.mov"
+    "Caribbean                          | 1080p | http://sylvan.apple.com/Videos/comp_A108_C001_v09_SDR_FINAL_22062018_SDR_2K_AVC.mov"
+    "Caribbean Day                      | 1080p | http://sylvan.apple.com/Videos/comp_GMT308_139K_142NC_CARIBBEAN_DAY_v09_SDR_FINAL_22062018_SDR_2K_AVC.mov"
+    "Longji Rice Terraces               | 1080p | http://sylvan.apple.com/Videos/comp_CH_C002_C005_PSNK_v05_SDR_PS_FINAL_20180709_SDR_2K_AVC.mov"
+    "China                              | 1080p | http://sylvan.apple.com/Videos/comp_GMT329_113NC_396B_1105_CHINA_v04_SDR_FINAL_20180706_F900F2700_SDR_2K_AVC.mov"
+    "Wulingyuan National Park 1         | 1080p | http://sylvan.apple.com/Videos/comp_CH_C007_C011_PSNK_v02_SDR_PS_FINAL_20180709_SDR_2K_AVC.mov"
+    "Wulingyuan National Park 2         | 1080p | http://sylvan.apple.com/Videos/comp_CH_C007_C004_PSNK_v02_SDR_PS_FINAL_20180709_SDR_2K_AVC.mov"
+    "Great Wall 1                       | 1080p | http://sylvan.apple.com/Videos/comp_C001_C005_PS_v01_SDR_PS_20180925_SDR_2K_AVC.mov"
+    "Great Wall 2                       | 1080p | http://sylvan.apple.com/Videos/comp_C004_C003_PS_v01_SDR_PS_20180925_SDR_2K_AVC.mov"
+    "Great Wall 3                       | 1080p | http://sylvan.apple.com/Videos/comp_C003_C003_PS_v01_SDR_PS_20180925_SDR_2K_AVC.mov"
+    "Costa Rica Dolphins                | 1080p | http://sylvan.apple.com/Videos/CR_A009_C007_SDR_20191113_SDR_2K_AVC.mov"
+    "Cownose Rays                       | 1080p | http://sylvan.apple.com/Videos/MEX_A006_C008_SDR_20190923_SDR_2K_AVC.mov"
+    "Approaching Burj Khalifa           | 1080p | http://sylvan.apple.com/Videos/comp_DB_D011_C010_PSNK_DENOISE_v19_SDR_PS_20180914_SDR_2K_AVC.mov"
+    "Sheikh Zayed Road                  | 1080p | http://sylvan.apple.com/Videos/comp_DB_D008_C010_PSNK_v21_SDR_PS_20180914_F0F16157_SDR_2K_AVC.mov"
+    "Downtown                           | 1080p | http://sylvan.apple.com/Videos/comp_DB_D002_C003_PSNK_v04_SDR_PS_20180914_SDR_2K_AVC.mov"
+    "Marina 1                           | 1080p | http://sylvan.apple.com/Videos/comp_DB_D001_C001_PSNK_v06_SDR_PS_20180824_SDR_2K_AVC.mov"
+    "Marina 2                           | 1080p | http://sylvan.apple.com/Videos/comp_DB_D001_C005_COMP_PSNK_v12_SDR_PS_20180912_SDR_2K_AVC.mov"
+    "Grand Canyon 1                     | 1080p | http://sylvan.apple.com/Videos/G007_C004_UHD_SDR_2K_AVC.mov"
+    "Grand Canyon 2                     | 1080p | http://sylvan.apple.com/Videos/G008_C015_UHD_SDR_2K_AVC.mov"
+    "Grand Canyon 3                     | 1080p | http://sylvan.apple.com/Videos/G009_C003_UHD_SDR_2K_AVC.mov"
+    "Grand Canyon 4                     | 1080p | http://sylvan.apple.com/Videos/G009_C014_UHD_SDR_2K_AVC.mov"
+    "Grand Canyon 5                     | 1080p | http://sylvan.apple.com/Videos/G010_C026_UHD_SDR_v02_2K_AVC.mov"
+    "Gray Reef Sharks                   | 1080p | http://sylvan.apple.com/Videos/FK_U009_C004_SDR_20191220_SDR_2K_AVC.mov"
+    "Ilulissat Icefjord                 | 1080p | http://sylvan.apple.com/Videos/comp_GL_G002_C002_PSNK_v03_SDR_PS_20180925_SDR_2K_AVC.mov"
+    "Ilulissat Icefjord 2               | 1080p | http://sylvan.apple.com/Videos/comp_GL_G010_C006_PSNK_NOSUN_v12_SDR_PS_FINAL_20180709_SDR_2K_AVC.mov"
+    "Nuussuaq Peninsula                 | 1080p | http://sylvan.apple.com/Videos/comp_GL_G004_C010_PSNK_v04_SDR_PS_FINAL_20180709_SDR_2K_AVC.mov"
+    "Kohala Coastline                   | 1080p | http://sylvan.apple.com/Videos/comp_H012_C009_PS_v01_SDR_PS_20180925_SDR_2K_AVC.mov"
+    "Pu'u O 'Umi                        | 1080p | http://sylvan.apple.com/Videos/comp_H004_C009_PS_v01_SDR_PS_20180925_SDR_2K_AVC.mov"
+    "Waimanu Valley                     | 1080p | http://sylvan.apple.com/Videos/comp_H005_C012_PS_v01_SDR_PS_20180925_SDR_2K_AVC.mov"
+    "Pu'u O 'Umi                        | 1080p | http://sylvan.apple.com/Videos/comp_H004_C007_PS_v02_SDR_PS_20180925_SDR_2K_AVC.mov"
+    "Laupāhoehoe Nui                    | 1080p | http://sylvan.apple.com/Videos/comp_H007_C003_PS_v01_SDR_PS_20180925_SDR_2K_AVC.mov"
+    "Victoria Harbour                   | 1080p | http://sylvan.apple.com/Videos/comp_HK_B005_C011_PSNK_v16_SDR_PS_20180914_SDR_2K_AVC.mov"
+    "Victoria Peak                      | 1080p | http://sylvan.apple.com/Videos/comp_HK_H004_C010_PSNK_v08_SDR_PS_20181009_SDR_2K_AVC.mov"
+    "Wan Chai                           | 1080p | http://sylvan.apple.com/Videos/comp_HK_H004_C013_t9_6M_HB_tag0.mov"
+    "Victoria Harbour 1                 | 1080p | http://sylvan.apple.com/Videos/comp_HK_H004_C008_PSNK_v19_SDR_PS_20180914_SDR_2K_AVC.mov"
+    "Humpback Whale                     | 1080p | http://sylvan.apple.com/Videos/g201_WH_D004_L014_SDR_20191031_SDR_2K_AVC.mov"
+    "Tungnaá                            | 1080p | http://sylvan.apple.com/Videos/I003_C008_SDR_2K_AVC.mov"
+    "Jökulgilskvísl River               | 1080p | http://sylvan.apple.com/Videos/I003_C011_SDR_2K_AVC.mov"
+    "Landmannalaugar                    | 1080p | http://sylvan.apple.com/Videos/I004_C014_SDR_2K_AVC.mov"
+    "Jökulgil                           | 1080p | http://sylvan.apple.com/Videos/I003_C015_SDR_2K_AVC.mov"
+    "Langisjór                          | 1080p | http://sylvan.apple.com/Videos/I003_C004_SDR_2K_AVC.mov"
+    "Mýrdalsjökull Glacier              | 1080p | http://sylvan.apple.com/Videos/I005_C008_CROP_SDR_2K_AVC.mov"
+    "Iran and Afghanistan               | 1080p | http://sylvan.apple.com/Videos/comp_A083_C002_1130KZ_v04_SDR_PS_FINAL_20180725_SDR_2K_AVC.mov"
+    "Ireland to Asia                    | 1080p | http://sylvan.apple.com/Videos/comp_GMT329_117NC_401C_1037_IRELAND_TO_ASIA_v48_SDR_PS_FINAL_20180725_F0F6300_SDR_2K_AVC.mov"
+    "Italy to Asia                      | 1080p | http://sylvan.apple.com/Videos/comp_GMT329_113NC_396B_1105_ITALY_v03_SDR_FINAL_20180706_SDR_2K_AVC.mov"
+    "Jacks                              | 1080p | http://sylvan.apple.com/Videos/BO_A014_C023_SDR_20190717_F240F3709_SDR_2K_AVC.mov"
+    "South African Kelp                 | 1080p | http://sylvan.apple.com/Videos/KP_A010_C002_SDR_20190717_SDR_2K_AVC.mov"
+    "Korea and Japan Night              | 1080p | http://sylvan.apple.com/Videos/comp_GMT026_363A_103NC_E1027_KOREA_JAPAN_NIGHT_v18_SDR_PS_20180907_SDR_2K_AVC.mov"
+    "Liwa Oasis 1                       | 1080p | http://sylvan.apple.com/Videos/comp_LW_L001_C006_PSNK_DENOISE_v02_SDR_PS_FINAL_20180709_SDR_2K_AVC.mov"
+    "Liwa Oasis 2                       | 1080p | http://sylvan.apple.com/Videos/comp_LW_L001_C003__PSNK_DENOISE_v04_SDR_PS_FINAL_20180803_SDR_2K_AVC.mov"
+    "Buckingham Palace                  | 1080p | http://sylvan.apple.com/Videos/comp_L007_C007_PS_v01_SDR_PS_20180925_SDR_2K_AVC.mov"
+    "River Thames near Sunset           | 1080p | http://sylvan.apple.com/Videos/comp_L012_c002_PS_v01_SDR_PS_20180925_SDR_2K_AVC.mov"
+    "River Thames                       | 1080p | http://sylvan.apple.com/Videos/comp_L010_C006_PS_v01_SDR_PS_20180925_SDR_2K_AVC.mov"
+    "River Thames at Dusk               | 1080p | http://sylvan.apple.com/Videos/comp_L004_C011_PS_v01_SDR_PS_20180925_SDR_2K_AVC.mov"
+    "Santa Monica Beach                 | 1080p | http://sylvan.apple.com/Videos/comp_LA_A008_C004_ALTB_ED_FROM_FLAME_RETIME_v46_SDR_PS_20180917_SDR_2K_AVC.mov"
+    "Harbor Freeway                     | 1080p | http://sylvan.apple.com/Videos/comp_LA_A005_C009_PSNK_ALT_v09_SDR_PS_201809134_SDR_2K_AVC.mov"
+    "Downtown                           | 1080p | http://sylvan.apple.com/Videos/comp_LA_A011_C003_DGRN_LNFIX_STAB_v57_SDR_PS_20181002_SDR_2K_AVC.mov"
+    "Hollywood Hills                    | 1080p | http://sylvan.apple.com/Videos/comp_LA_A006_C004_v01_SDR_FINAL_PS_20180730_SDR_2K_AVC.mov"
+    "Los Angeles Int'l Airport          | 1080p | http://sylvan.apple.com/Videos/comp_LA_A006_C008_PSNK_ALL_LOGOS_v10_SDR_PS_FINAL_20180801_SDR_2K_AVC.mov"
+    "Griffith Observatory               | 1080p | http://sylvan.apple.com/Videos/comp_LA_A009_C009_PSNK_v02_SDR_PS_FINAL_20180709_SDR_2K_AVC.mov"
+    "Seventh Avenue                     | 1080p | http://sylvan.apple.com/Videos/comp_N013_C004_PS_v01_SDR_PS_20180925_F1970F7193_SDR_2K_AVC.mov"
+    "Central Park                       | 1080p | http://sylvan.apple.com/Videos/comp_N008_C009_PS_v01_SDR_PS_20180925_SDR_2K_AVC.mov"
+    "Lower Manhattan                    | 1080p | http://sylvan.apple.com/Videos/comp_N008_C003_PS_v01_SDR_PS_20180925_SDR_2K_AVC.mov"
+    "Upper East Side                    | 1080p | http://sylvan.apple.com/Videos/comp_N003_C006_PS_v01_SDR_PS_20180925_SDR_2K_AVC.mov"
+    "Mexico City to New York            | 1080p | http://sylvan.apple.com/Videos/comp_GMT307_136NC_134K_8277_NY_NIGHT_01_v25_SDR_PS_20180907_SDR_2K_AVC.mov"
+    "New Zealand                        | 1080p | http://sylvan.apple.com/Videos/comp_A105_C003_0212CT_FLARE_v10_SDR_PS_FINAL_20180711_SDR_2K_AVC.mov"
+    "Nile Delta                         | 1080p | http://sylvan.apple.com/Videos/comp_A050_C004_1027V8_v16_SDR_FINAL_20180706_SDR_2K_AVC.mov"
+    "North America Aurora               | 1080p | http://sylvan.apple.com/Videos/comp_GMT314_139M_170NC_NORTH_AMERICA_AURORA__COMP_v22_SDR_20181206_v12CC_SDR_2K_AVC.mov"
+    "Palau Coral                        | 1080p | http://sylvan.apple.com/Videos/PA_A004_C003_SDR_20190719_SDR_2K_AVC.mov"
+    "Palau Jellies 1                    | 1080p | http://sylvan.apple.com/Videos/PA_A001_C007_SDR_20190717_SDR_2K_AVC.mov"
+    "Palau Jellies 2                    | 1080p | http://sylvan.apple.com/Videos/PA_A002_C009_SDR_20190730_ALT01_SDR_2K_AVC.mov"
+    "Palau Jellies 3                    | 1080p | http://sylvan.apple.com/Videos/PA_A010_C007_SDR_20190717_SDR_2K_AVC.mov"
+    "Cuernos del Paine                  | 1080p | http://sylvan.apple.com/Videos/P001_C005_UHD_SDR_2K_AVC.mov"
+    "Lago Nordenskjöld 1                | 1080p | http://sylvan.apple.com/Videos/P005_C002_UHD_SDR_2K_AVC.mov"
+    "Lago Nordenskjöld 2                | 1080p | http://sylvan.apple.com/Videos/P006_C002_UHD_SDR_2K_AVC.mov"
+    "Torres del Paine National Park     | 1080p | http://sylvan.apple.com/Videos/P007_C027_UHD_SDR_2K_AVC.mov"
+    "Red Sea Coral                      | 1080p | http://sylvan.apple.com/Videos/RS_A008_C010_SDR_20191218_SDR_2K_AVC.mov"
+    "Sahara and Italy                   | 1080p | http://sylvan.apple.com/Videos/comp_A009_C001_010181A_v09_SDR_PS_FINAL_20180725_SDR_2K_AVC.mov"
+    "Golden Gate from SF                | 1080p | http://sylvan.apple.com/Videos/comp_A013_C012_0122D6_CC_v01_SDR_PS_FINAL_20180709_SDR_2K_AVC.mov"
+    "Bay Bridge                         | 1080p | http://sylvan.apple.com/Videos/comp_A015_C018_0128ZS_v03_SDR_PS_FINAL_20180709__SDR_2K_AVC.mov"
+    "Bay and Golden Gate                | 1080p | http://sylvan.apple.com/Videos/comp_A006_C003_1219EE_CC_v01_SDR_PS_FINAL_20180709_SDR_2K_AVC.mov"
+    "Bay and Embarcadero                | 1080p | http://sylvan.apple.com/Videos/comp_1223LV_FLARE_v21_SDR_PS_FINAL_20180709_F0F5700_SDR_2K_AVC.mov"
+    "Marin Headlands in Fog             | 1080p | http://sylvan.apple.com/Videos/comp_A008_C007_011550_CC_v01_SDR_PS_FINAL_20180709_SDR_2K_AVC.mov"
+    "Embarcadero, Market Street         | 1080p | http://sylvan.apple.com/Videos/comp_A012_C014_1223PT_v53_SDR_PS_FINAL_20180709_F0F8700_SDR_2K_AVC.mov"
+    "Fisherman's Wharf                  | 1080p | http://sylvan.apple.com/Videos/comp_A007_C017_01156B_v02_SDR_PS_20180925_SDR_2K_AVC.mov"
+    "Isle of Skye                       | 1080p | http://sylvan.apple.com/Videos/S003_C020_SDR_2K_AVC.mov"
+    "Castle Tioram                      | 1080p | http://sylvan.apple.com/Videos/S006_C007_SDR_2K_AVC.mov"
+    "Loch Moidart                       | 1080p | http://sylvan.apple.com/Videos/S005_C015_SDR_2K_AVC.mov"
+    "Sea Stars                          | 1080p | http://sylvan.apple.com/Videos/BO_A012_C031_SDR_20190726_SDR_2K_AVC.mov"
+    "Seals                              | 1080p | http://sylvan.apple.com/Videos/SE_A016_C009_SDR_20190717_SDR_2K_AVC.mov"
+    "South Africa to North Asia         | 1080p | http://sylvan.apple.com/Videos/comp_A351_C001_v06_SDR_PS_20180725_SDR_2K_AVC.mov"
+    "Northern California to Baja        | 1080p | http://sylvan.apple.com/Videos/comp_A114_C001_0305OT_v10_SDR_FINAL_22062018_SDR_2K_AVC.mov"
+    "Tahiti Waves 1                     | 1080p | http://sylvan.apple.com/Videos/g201_TH_803_A001_8_SDR_20191031_SDR_2K_AVC.mov"
+    "Tahiti Waves 2                     | 1080p | http://sylvan.apple.com/Videos/g201_TH_804_A001_8_SDR_20191031_SDR_2K_AVC.mov"
+    "West Africa to the Alps            | 1080p | http://sylvan.apple.com/Videos/comp_A001_C004_1207W5_v23_SDR_FINAL_20180706_SDR_2K_AVC.mov"
+    "Half Dome and Nevada Fall          | 1080p | http://sylvan.apple.com/Videos/Y004_C015_SDR_2K_AVC.mov"
+    "Merced Peak                        | 1080p | http://sylvan.apple.com/Videos/Y003_C009_SDR_2K_AVC.mov"
+    "Tuolumne Meadows                   | 1080p | http://sylvan.apple.com/Videos/Y009_C015_SDR_2K_AVC.mov"
+    "Matthes Crest                      | 1080p | http://sylvan.apple.com/Videos/Y011_C008_SDR_2K_AVC.mov"
+    "Yosemite 1                         | 1080p | http://sylvan.apple.com/Videos/Y005_C003_SDR_2K_AVC.mov"
+    "Yosemite 2                         | 1080p | http://sylvan.apple.com/Videos/Y002_C013_SDR_2K_AVC.mov"
+    "Yosemite 3                         | 1080p | http://sylvan.apple.com/Videos/Y011_C001_SDR_2K_AVC.mov"
+)
 
-# see https://aur.archlinux.org/packages/xscreensaver-aerial-videos-4k/
-urls="
-    http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b1-1.mov
-    http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b1-2.mov
-    http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b1-3.mov
-    http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b1-4.mov
-    http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b10-3.mov
-    http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b2-1.mov
-    http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b2-2.mov
-    http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b2-3.mov
-    http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b2-4.mov
-    http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b3-1.mov
-    http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b3-2.mov
-    http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b3-3.mov
-    http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b4-1.mov
-    http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b4-2.mov
-    http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b4-3.mov
-    http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b5-1.mov
-    http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b5-2.mov
-    http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b5-3.mov
-    http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b6-1.mov
-    http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b6-2.mov
-    http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b6-3.mov
-    http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b6-4.mov
-    http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b7-1.mov
-    http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b7-2.mov
-    http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b7-3.mov
-    http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b8-1.mov
-    http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b8-2.mov
-    http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b8-3.mov
-    http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b9-2.mov
-    http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b9-3.mov
-    http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/comp_GL_G010_C006_v08_6Mbps.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/comp_A001_C004_1207W5_v23_SDR_FINAL_20180706_SDR_2K_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/comp_A001_C004_1207W5_v23_SDR_FINAL_20180706_SDR_4K_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/comp_A009_C001_010181A_v09_SDR_PS_FINAL_20180725_SDR_2K_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/comp_A009_C001_010181A_v09_SDR_PS_FINAL_20180725_SDR_4K_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/comp_A083_C002_1130KZ_v04_SDR_PS_FINAL_20180725_SDR_2K_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/comp_A083_C002_1130KZ_v04_SDR_PS_FINAL_20180725_SDR_4K_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/comp_A103_C002_0205DG_v12_SDR_FINAL_20180706_SDR_2K_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/comp_A103_C002_0205DG_v12_SDR_FINAL_20180706_SDR_4K_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/comp_A105_C003_0212CT_FLARE_v10_SDR_PS_FINAL_20180711_SDR_2K_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/comp_A105_C003_0212CT_FLARE_v10_SDR_PS_FINAL_20180711_SDR_4K_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/comp_A108_C001_v09_SDR_FINAL_22062018_SDR_2K_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/comp_A108_C001_v09_SDR_FINAL_22062018_SDR_4K_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/comp_A114_C001_0305OT_v10_SDR_FINAL_22062018_SDR_2K_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/comp_A114_C001_0305OT_v10_SDR_FINAL_22062018_SDR_4K_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/comp_CH_C002_C005_PSNK_v05_SDR_PS_FINAL_20180709_SDR_2K_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/comp_CH_C002_C005_PSNK_v05_SDR_PS_FINAL_20180709_SDR_4K_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/comp_CH_C007_C004_PSNK_v02_SDR_PS_FINAL_20180709_SDR_2K_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/comp_CH_C007_C004_PSNK_v02_SDR_PS_FINAL_20180709_SDR_4K_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/comp_CH_C007_C011_PSNK_v02_SDR_PS_FINAL_20180709_SDR_2K_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/comp_CH_C007_C011_PSNK_v02_SDR_PS_FINAL_20180709_SDR_4K_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/comp_GMT026_363A_103NC_E1027_KOREA_JAPAN_NIGHT_v17_SDR_FINAL_25062018_SDR_2K_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/comp_GMT026_363A_103NC_E1027_KOREA_JAPAN_NIGHT_v17_SDR_FINAL_25062018_SDR_4K_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/comp_GMT306_139NC_139J_3066_CALI_TO_VEGAS_v07_SDR_FINAL_22062018_SDR_4K_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/comp_GMT308_139K_142NC_CARIBBEAN_DAY_v09_SDR_FINAL_22062018_SDR_2K_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/comp_GMT308_139K_142NC_CARIBBEAN_DAY_v09_SDR_FINAL_22062018_SDR_4K_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/comp_GMT312_162NC_139M_1041_AFRICA_NIGHT_v14_SDR_FINAL_20180706_SDR_2K_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/comp_GMT312_162NC_139M_1041_AFRICA_NIGHT_v14_SDR_FINAL_20180706_SDR_4K_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/comp_GMT329_113NC_396B_1105_CHINA_v04_SDR_FINAL_20180706_F900F2700_SDR_2K_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/comp_GMT329_113NC_396B_1105_CHINA_v04_SDR_FINAL_20180706_F900F2700_SDR_4K_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/comp_GMT329_117NC_401C_1037_IRELAND_TO_ASIA_v48_SDR_PS_FINAL_20180725_F0F6300_SDR_2K_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/comp_GMT329_117NC_401C_1037_IRELAND_TO_ASIA_v48_SDR_PS_FINAL_20180725_F0F6300_SDR_4K_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/comp_LA_A006_C004_v01_SDR_FINAL_PS_20180730_SDR_2K_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/comp_LA_A006_C004_v01_SDR_FINAL_PS_20180730_SDR_4K_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/DB_D001_C001_2K_SDR_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/DB_D001_C001_4K_SDR_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/DB_D001_C005_2K_SDR_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/DB_D001_C005_4K_SDR_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/DB_D002_C003_2K_SDR_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/DB_D002_C003_4K_SDR_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/DB_D008_C010_2K_SDR_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/DB_D008_C010_4K_SDR_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/DB_D011_C009_2K_SDR_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/DB_D011_C009_4K_SDR_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/DB_D011_C010_2K_SDR_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/DB_D011_C010_4K_SDR_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/GL_G002_C002_2K_SDR_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/GL_G002_C002_4K_SDR_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/GL_G004_C010_2K_SDR_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/GL_G004_C010_4K_SDR_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/HK_B005_C011_2K_SDR_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/HK_B005_C011_4K_SDR_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/HK_H004_C001_2K_SDR_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/HK_H004_C001_4K_SDR_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/HK_H004_C008_2K_SDR_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/HK_H004_C008_4K_SDR_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/HK_H004_C010_2K_SDR_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/HK_H004_C010_4K_SDR_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/HK_H004_C013_2K_SDR_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/HK_H004_C013_4K_SDR_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/LA_A005_C009_2K_SDR_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/LA_A005_C009_4K_SDR_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/LA_A006_C008_2K_SDR_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/LA_A006_C008_4K_SDR_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/LA_A008_C004_2K_SDR_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/LA_A008_C004_4K_SDR_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/LA_A009_C009_2K_SDR_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/LA_A009_C009_4K_SDR_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/LA_A011_C003_2K_SDR_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/LA_A011_C003_4K_SDR_HEVC.mov
-    http://sylvan.apple.com/Aerials/2x/Videos/LW_L001_C006_4K_SDR_HEVC.mov
-"
+mkdir -p ${basedir}
 
-mkdir -p ${dir}
-
-for url in ${urls} ; do
-    file="${dir}/$(echo "${url}" | sed 's%^.*/%%')"
-    if [[ -f "${file}" ]] ; then
-        echo "Skipping: ${file}"
-    else
-        echo "Fetching: ${url}"
-        echo "       => ${file}"
-        wget "${url}" -O "${file}"
+for ((x = 0; x < ${#videos[@]}; x += 1)) ; do
+    video=$(echo "${videos[$x]}" | sed 's/ *|/|/g ; s/| */|/g')
+    name=$(echo "${video}" | cut -d '|' -f 1)
+    dir=$(echo "${video}" | cut -d '|' -f 2)
+    url=$(echo "${video}" | cut -d '|' -f 3)
+    echo "| ${name} | ${dir} | ${url} |"
+    path="${basedir}/${dir}/${name}.mov"
+    if [[ ! -f "${path}" ]] ; then
+        echo
+        echo "${url} -> ${path}"
+        echo
+        wget "${url}" -O "${path}"
     fi
 done
+
+exit 0
 
 #===============================================================================
 # End of File
