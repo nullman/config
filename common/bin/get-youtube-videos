@@ -54,6 +54,7 @@ channels=(
     "Computer/Hardware    | Ben Eater                         | https://www.youtube.com/c/BenEater/videos"
     "Computer/Hardware    | Ben Heck Hacks                    | https://www.youtube.com/c/BenHeckHacks/videos"
     "Computer/Hardware    | DIY Perks                         | https://www.youtube.com/c/DIYPerks/videos"
+    "Computer/Hardware    | element14 presents                | https://www.youtube.com/@element14presents/videos"
     "Computer/Hardware    | EMM Computers                     | https://www.youtube.com/@elijahmmiller/videos"
     "Computer/Hardware    | James Sharman                     | https://www.youtube.com/c/weirdboyjim/videos"
     "Computer/Hardware    | Slador                            | https://www.youtube.com/@SladorSoft/videos"
@@ -64,6 +65,7 @@ channels=(
     "Computer/Retro       | Adrian's Digital Basement         | https://www.youtube.com/c/adriansdigitalbasement/videos"
     "Computer/Retro       | Adrian's Digital Basement ][      | https://www.youtube.com/channel/UCbtwi4wK1YXd9AyV_4UcE6g/videos"
     "Computer/Retro       | Advent of Computing               | https://www.youtube.com/@adventofcomputing4504/videos"
+#   "Computer/Retro       | Ahoy                              | https://www.youtube.com/@XboxAhoy/videos"
     "Computer/Retro       | Al's Geek Lab                     | https://www.youtube.com/@AlsGeekLab/videos"
     "Computer/Retro       | All Games                         | https://www.youtube.com/@AllGamesPlayer/videos"
     "Computer/Retro       | Back Office Show                  | https://www.youtube.com/c/backofficeshow/videos"
@@ -89,7 +91,7 @@ channels=(
 ##   "Computer/Retro       | Mr Lurch's Things                 | https://www.youtube.com/c/MrLurchsThings"
 #   "Computer/Retro       | Modern Vintage Gamer ???          | https://www.youtube.com/@ModernVintageGamer/videos"
 ##   "Computer/Retro       | Noel's Retro Lab                  | https://www.youtube.com/c/NoelsRetroLab/videos"
-##   "Computer/Retro       | Nostalgia Nerd                    | https://www.youtube.com/@Nostalgianerd/videos"
+    "Computer/Retro       | Nostalgia Nerd                    | https://www.youtube.com/@Nostalgianerd/videos"
 #   "Computer/Retro       | OldTechBloke ???                  | https://www.youtube.com/c/OldTechBloke/videos"
     "Computer/Retro       | Operation 8-Bit                   | https://www.youtube.com/@Operation8Bit/videos"
     "Computer/Retro       | PhilsComputerLab                  | https://www.youtube.com/c/philscomputerlab/videos"
@@ -129,6 +131,7 @@ channels=(
 #   "Science              | Veritasium                        | https://www.youtube.com/c/veritasium/videos"
 #   "Science              | Vsauce2                           | https://www.youtube.com/user/Vsauce2/videos"
 #   "Show                 | DUST                              | https://www.youtube.com/c/watchdust/videos"
+#   "Show                 | For the Empire                    | https://www.youtube.com/watch?v=g43lgCJ_D6o&list=PLxJr4XsTcWljTxufEaW_3X1VY_eqjuLgi"
 )
 
 _usage() {
