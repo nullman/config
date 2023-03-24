@@ -16099,52 +16099,6 @@ USING is the remaining peg."
   (gcmh-mode 1))
 ;; gcmh:1 ends here
 
-;; [[file:init-emacs.org::#packages-git-gutter][git-gutter:1]]
-;;------------------------------------------------------------------------------
-;;; Packages: git-gutter
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Packages: git-gutter")
-
-(use-package git-gutter
-  :straight t
-  :demand t
-  :diminish (git-gutter-mode . "GG")
-  ;; :bind (("C-x C-g" . git-gutter)
-  ;;            ;; ("C-x v =" . git-gutter:popup-hunk)
-  ;;            ;; ("C-x p" . git-gutter:previous-hunk)
-  ;;            ;; ("C-x n" . git-gutter:next-hunk)
-  ;;            ;; ("C-x v s" . git-gutter:stage-hunk)
-  ;;            ;; ("C-x v r" . git-gutter:revert-hunk)
-  ;;            ;; ("C-x v SPC" . git-gutter:mark-hunk)
-  ;;            )
-  :custom
-  ;; set symbols
-  (git-gutter:added-sign "+")
-  (git-gutter:deleted-sign "-")
-  ;;(git-gutter:modified-sign "=")
-  (git-gutter:modified-sign "≠")
-  ;; periodically update
-  (git-gutter:update-interval 2)
-  :config
-  ;; ;; turn on globally
-  ;; (global-git-gutter-mode 1)
-
-  ;; set face atttributes (colors and bold)
-  (let ((background (face-attribute 'default :background)))
-    (set-face-foreground 'git-gutter:added "green")
-    (set-face-foreground 'git-gutter:deleted "red")
-    (set-face-foreground 'git-gutter:modified "purple")
-    (set-face-background 'git-gutter:added background)
-    (set-face-background 'git-gutter:deleted background)
-    (set-face-background 'git-gutter:modified background)
-    (set-face-background 'git-gutter:unchanged background)
-    (set-face-background 'git-gutter:separator background)
-    (set-face-bold 'git-gutter:added t)
-    (set-face-bold 'git-gutter:deleted t)
-    (set-face-bold 'git-gutter:modified t)))
-;; git-gutter:1 ends here
-
 ;; [[file:init-emacs.org::#packages-hide-mode-line][hide-mode-line:1]]
 ;;------------------------------------------------------------------------------
 ;;; Packages: hide-mode-line
