@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2023-03-23 09:37 (kyle)>
+  #+TIMESTAMP: <2023-03-30 17:22 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -4428,7 +4428,7 @@
         %   #+SETUPFILE: ~/org/org-latex-plain.org
         %
         % Author: Jake Box <jakebox0@protonmail.com>
-        % Source: https://github.com/jakebox/jake-emacs/blob/main/org/setupfiles_latex/jake-latex-standard.setup
+        % Source: https://github.com/jakebox/jake-emacs/
         %==============================================================================
 
         ,#+LATEX_CLASS: org-latex-plain
@@ -4515,6 +4515,23 @@
         %% End of File
         %==============================================================================
       #+END_SRC
+
+*** +ACUTeX+
+    :PROPERTIES:
+    :CUSTOM_ID: org-mode-acutex
+    :END:
+
+    #+BEGIN_SRC emacs-lisp :tangle no
+      ;; ;;------------------------------------------------------------------------------
+      ;; ;;; Org Mode: ACUTeX
+      ;; ;;------------------------------------------------------------------------------
+
+      ;; (init-message 2 "Org Mode: ACUTeX")
+
+      ;; (use-package auctex
+      ;;   :straight t
+      ;;   :after (tex))
+    #+END_SRC
 
 *** +Remember+
     :PROPERTIES:
