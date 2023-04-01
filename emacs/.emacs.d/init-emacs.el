@@ -17433,8 +17433,8 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
   :straight t
   :bind* (("C-c C-." . mc/edit-lines)
           ("C-c C-," . mc/mark-all-like-this)
-          ("C->" . mc/mark-next-like-this)
-          ("C-<" . mc/mark-previous-like-this)
+          ("C-M-." . mc/mark-next-like-this)     ; default: `xref-find-apropos'
+          ("C-M-," . mc/mark-previous-like-this) ; default: `xref-go-forward'
           ("C-M->" . mc/unmark-next-like-this)
           ("C-M-<" . mc/unmark-previous-like-this)))
 ;; multiple-cursors:1 ends here

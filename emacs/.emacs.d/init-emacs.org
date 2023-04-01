@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2023-03-30 17:22 (kyle)>
+  #+TIMESTAMP: <2023-04-01 11:52 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -25890,8 +25890,8 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         :straight t
         :bind* (("C-c C-." . mc/edit-lines)
                 ("C-c C-," . mc/mark-all-like-this)
-                ("C->" . mc/mark-next-like-this)
-                ("C-<" . mc/mark-previous-like-this)
+                ("C-M-." . mc/mark-next-like-this)     ; default: `xref-find-apropos'
+                ("C-M-," . mc/mark-previous-like-this) ; default: `xref-go-forward'
                 ("C-M->" . mc/unmark-next-like-this)
                 ("C-M-<" . mc/unmark-previous-like-this)))
     #+END_SRC
