@@ -4129,6 +4129,7 @@ If BUFFER is nil, current buffer is used."
      ("s" . "src")
      ("sel" . "src emacs-lisp")
      ("sk" . "src kotlin")
+     ("sl" . "src latex")
      ("spy" . "src python")
      ("sql" . "src sql")
      ("sr" . "src racket")
