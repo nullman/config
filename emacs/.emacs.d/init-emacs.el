@@ -4293,6 +4293,25 @@ If BUFFER is nil, current buffer is used."
 (add-hook 'org-babel-post-tangle-hook #'org-babel-post-tangle-hook--delete-trailing-whitespace)
 ;; Tangle Delete Trailing Whitespace:1 ends here
 
+;; [[file:init-emacs.org::#org-mode-babel-tangle-generate-pdf-from-tex][Tangle Generate PDF from TEX:1]]
+;;------------------------------------------------------------------------------
+;;;; Org Mode: Babel: Tangle Generate PDF from TEX
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Org Mode: Babel: Tangle Generate PDF from TEX")
+
+(defun org-babel-post-tangle-hook--generate-pdf-from-tex ()
+  "Generate PDF from tangled TEX file."
+  (let ((case-fold-search t)
+        (filename (expand-file-name (buffer-file-name)))
+        (output "*PDFLaTeX Output*"))
+    (when (string= (file-name-extension filename) "tex")
+      (shell-command
+       (concat "pdflatex -halt-on-error \"" filename "\"")
+       output))))
+(add-hook 'org-babel-post-tangle-hook #'org-babel-post-tangle-hook--generate-pdf-from-tex)
+;; Tangle Generate PDF from TEX:1 ends here
+
 ;; [[file:init-emacs.org::#org-mode-babel-racket][Racket:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Babel: Racket
