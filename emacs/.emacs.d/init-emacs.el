@@ -4295,7 +4295,7 @@ If BUFFER is nil, current buffer is used."
 
 ;; [[file:init-emacs.org::#org-mode-babel-tangle-generate-pdf-from-tex][Tangle Generate PDF from TEX:1]]
 ;;------------------------------------------------------------------------------
-;;;; Org Mode: Babel: Tangle Generate PDF from TEX
+  ;;;; Org Mode: Babel: Tangle Generate PDF from TEX
 ;;------------------------------------------------------------------------------
 
 (init-message 3 "Org Mode: Babel: Tangle Generate PDF from TEX")
@@ -4308,8 +4308,11 @@ If BUFFER is nil, current buffer is used."
     (when (string= (file-name-extension filename) "tex")
       (shell-command
        (concat "pdflatex -halt-on-error \"" filename "\"")
-       output))))
-(add-hook 'org-babel-post-tangle-hook #'org-babel-post-tangle-hook--generate-pdf-from-tex)
+       output)
+      (dolist (suffix '("aux" "log"))
+        (delete-file (concat (file-name-sans-extension filename)
+                             "." suffix))))))
+  (add-hook 'org-babel-post-tangle-hook #'org-babel-post-tangle-hook--generate-pdf-from-tex)
 ;; Tangle Generate PDF from TEX:1 ends here
 
 ;; [[file:init-emacs.org::#org-mode-babel-racket][Racket:1]]

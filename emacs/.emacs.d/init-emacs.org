@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2023-04-02 20:41 (kyle)>
+  #+TIMESTAMP: <2023-04-03 13:21 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -6359,7 +6359,7 @@
 
       #+BEGIN_SRC emacs-lisp
         ;;------------------------------------------------------------------------------
-        ;;;; Org Mode: Babel: Tangle Generate PDF from TEX
+          ;;;; Org Mode: Babel: Tangle Generate PDF from TEX
         ;;------------------------------------------------------------------------------
 
         (init-message 3 "Org Mode: Babel: Tangle Generate PDF from TEX")
@@ -6372,8 +6372,11 @@
             (when (string= (file-name-extension filename) "tex")
               (shell-command
                (concat "pdflatex -halt-on-error \"" filename "\"")
-               output))))
-        (add-hook 'org-babel-post-tangle-hook #'org-babel-post-tangle-hook--generate-pdf-from-tex)
+               output)
+              (dolist (suffix '("aux" "log"))
+                (delete-file (concat (file-name-sans-extension filename)
+                                     "." suffix))))))
+          (add-hook 'org-babel-post-tangle-hook #'org-babel-post-tangle-hook--generate-pdf-from-tex)
       #+END_SRC
 
 ***** Racket
