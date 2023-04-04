@@ -116,7 +116,7 @@ channels=(
 #   "Computer/Retro       | VCF Midwest                       | https://www.youtube.com/@VCFMW/videos"
 #   "Computer/Retro       | Vintage Computer Federation       | https://www.youtube.com/@vcfederation/videos"
     "Computer/Retro       | Wrangler Amiga                    | https://www.youtube.com/@wrangleramiga896/videos"
-#   "Game                 | Actualol                          | https://www.youtube.com/@actualol/videos"
+#   "Game                 | Actualol ???                      | https://www.youtube.com/@actualol/videos"
     "Game                 | Me, Myself, and Die               | https://www.youtube.com/c/MeMyselfandDieRPG/videos"
     "Mechanical           | Mechanistic                       | https://www.youtube.com/@mechanistic3d/videos"
     "Music/Ambient        | Smai-Lee                          | https://www.youtube.com/@smai-lee/videos"
@@ -126,14 +126,14 @@ channels=(
 #   "Scenic               | Paul Scinocca (Duluth Ships)      | https://www.youtube.com/c/PaulScinocca/videos"
 #   "Science              | 3Blue1Brown                       | https://www.youtube.com/c/3blue1brown/videos"
 #   "Science              | CuriousMarc                       | https://www.youtube.com/c/CuriousMarc/videos"
-#   "Science              | Data is Beautiful                 | https://www.youtube.com/@DataIsBeautifulOfficial/videos"
+    "Science              | Data is Beautiful                 | https://www.youtube.com/@DataIsBeautifulOfficial/videos"
 #   "Science              | MindYourDecisions                 | https://www.youtube.com/@MindYourDecisions/videos"
 #   "Science              | Sabine Hossenfelder               | https://www.youtube.com/@SabineHossenfelder/videos"
 #   "Science              | Stand-up Maths                    | https://www.youtube.com/user/standupmaths/videos"
 #   "Science              | Veritasium                        | https://www.youtube.com/c/veritasium/videos"
 #   "Science              | Vsauce2                           | https://www.youtube.com/user/Vsauce2/videos"
 #   "Show                 | DUST                              | https://www.youtube.com/c/watchdust/videos"
-#   "Show                 | For the Empire                    | https://www.youtube.com/watch?v=g43lgCJ_D6o&list=PLxJr4XsTcWljTxufEaW_3X1VY_eqjuLgi"
+    "Show                 | For the Empire                    | https://www.youtube.com/watch?v=g43lgCJ_D6o&list=PLxJr4XsTcWljTxufEaW_3X1VY_eqjuLgi"
 )
 
 _usage() {
