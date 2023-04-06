@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2023-04-03 13:21 (kyle)>
+  #+TIMESTAMP: <2023-04-05 17:29 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -32945,6 +32945,11 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         (use-package yasnippet
           :straight t
           :diminish yas-minor-mode
+          :bind (:map yas-minor-mode-map
+                      ("C-c & n" . yas-new-snippet)
+                      ("C-c & s" . yas-insert-snippet)
+                      ("C-c & v" . yas-visit-snippet-file)
+                      ("C-/" . yas-insert-snippet)) ; default: `undo-tree-undo'
           :config
           ;; turn on globally
           (yas-global-mode 1)

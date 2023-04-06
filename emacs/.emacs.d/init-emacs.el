@@ -21172,6 +21172,11 @@ Commands:
 (use-package yasnippet
   :straight t
   :diminish yas-minor-mode
+  :bind (:map yas-minor-mode-map
+              ("C-c & n" . yas-new-snippet)
+              ("C-c & s" . yas-insert-snippet)
+              ("C-c & v" . yas-visit-snippet-file)
+              ("C-/" . yas-insert-snippet)) ; default: `undo-tree-undo'
   :config
   ;; turn on globally
   (yas-global-mode 1)
