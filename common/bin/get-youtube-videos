@@ -89,6 +89,7 @@ channels=(
     "Computer/Retro       | Mac84                             | https://www.youtube.com/c/Mac84/videos"
     "Computer/Retro       | Macintosh Librarian               | https://www.youtube.com/@MacintoshLibrarian/videos"
 #   "Computer/Retro       | Michael MJD ???                   | https://www.youtube.com/c/MichaelMJD/videos"
+#   "Computer/Retro       | moshix                            | https://www.youtube.com/@moshixmainframechannel/videos"
 ##   "Computer/Retro       | Mr Lurch's Things                 | https://www.youtube.com/c/MrLurchsThings"
 #   "Computer/Retro       | Modern Vintage Gamer ???          | https://www.youtube.com/@ModernVintageGamer/videos"
 ##   "Computer/Retro       | Noel's Retro Lab                  | https://www.youtube.com/c/NoelsRetroLab/videos"
@@ -127,14 +128,14 @@ channels=(
 #   "Scenic               | Paul Scinocca (Duluth Ships)      | https://www.youtube.com/c/PaulScinocca/videos"
 #   "Science              | 3Blue1Brown                       | https://www.youtube.com/c/3blue1brown/videos"
 #   "Science              | CuriousMarc                       | https://www.youtube.com/c/CuriousMarc/videos"
-    "Science              | Data is Beautiful                 | https://www.youtube.com/@DataIsBeautifulOfficial/videos"
+##    "Science              | Data is Beautiful                 | https://www.youtube.com/@DataIsBeautifulOfficial/videos"
 #   "Science              | MindYourDecisions                 | https://www.youtube.com/@MindYourDecisions/videos"
 #   "Science              | Sabine Hossenfelder               | https://www.youtube.com/@SabineHossenfelder/videos"
 #   "Science              | Stand-up Maths                    | https://www.youtube.com/user/standupmaths/videos"
 #   "Science              | Veritasium                        | https://www.youtube.com/c/veritasium/videos"
 #   "Science              | Vsauce2                           | https://www.youtube.com/user/Vsauce2/videos"
 #   "Show                 | DUST                              | https://www.youtube.com/c/watchdust/videos"
-    "Show                 | For the Empire                    | https://www.youtube.com/watch?v=g43lgCJ_D6o&list=PLxJr4XsTcWljTxufEaW_3X1VY_eqjuLgi"
+##    "Show                 | For the Empire                    | https://www.youtube.com/watch?v=g43lgCJ_D6o&list=PLxJr4XsTcWljTxufEaW_3X1VY_eqjuLgi"
 )
 
 _usage() {
