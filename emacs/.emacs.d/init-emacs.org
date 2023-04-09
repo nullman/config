@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2023-04-05 17:29 (kyle)>
+  #+TIMESTAMP: <2023-04-08 21:24 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -6226,7 +6226,7 @@
 
       Customize Org/Babel =org-edit-src-exit=.
 
-      - It will update LAST_MODIFIED property timestamp on source update.
+      - It will update /LAST_MODIFIED/ property timestamp on source update.
       - It will =recenter= when going in/out of edit mode.
 
       #+BEGIN_SRC emacs-lisp
@@ -6371,12 +6371,14 @@
                 (output "*PDFLaTeX Output*"))
             (when (string= (file-name-extension filename) "tex")
               (shell-command
-               (concat "pdflatex -halt-on-error \"" filename "\"")
-               output)
-              (dolist (suffix '("aux" "log"))
-                (delete-file (concat (file-name-sans-extension filename)
-                                     "." suffix))))))
-          (add-hook 'org-babel-post-tangle-hook #'org-babel-post-tangle-hook--generate-pdf-from-tex)
+               (concat "pdflatex -output-directory=" temporary-file-directory
+                       " -halt-on-error \"" filename "\" && "
+                       "cp \"" temporary-file-directory
+                       (file-name-sans-extension
+                        (file-name-nondirectory filename)) ".pdf" "\" "
+                       "\"" (file-name-sans-extension filename) ".pdf" "\"")
+               output))))
+        (add-hook 'org-babel-post-tangle-hook #'org-babel-post-tangle-hook--generate-pdf-from-tex)
       #+END_SRC
 
 ***** Racket

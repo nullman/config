@@ -4307,12 +4307,14 @@ If BUFFER is nil, current buffer is used."
         (output "*PDFLaTeX Output*"))
     (when (string= (file-name-extension filename) "tex")
       (shell-command
-       (concat "pdflatex -halt-on-error \"" filename "\"")
-       output)
-      (dolist (suffix '("aux" "log"))
-        (delete-file (concat (file-name-sans-extension filename)
-                             "." suffix))))))
-  (add-hook 'org-babel-post-tangle-hook #'org-babel-post-tangle-hook--generate-pdf-from-tex)
+       (concat "pdflatex -output-directory=" temporary-file-directory
+               " -halt-on-error \"" filename "\" && "
+               "cp \"" temporary-file-directory
+               (file-name-sans-extension
+                (file-name-nondirectory filename)) ".pdf" "\" "
+               "\"" (file-name-sans-extension filename) ".pdf" "\"")
+       output))))
+(add-hook 'org-babel-post-tangle-hook #'org-babel-post-tangle-hook--generate-pdf-from-tex)
 ;; Tangle Generate PDF from TEX:1 ends here
 
 ;; [[file:init-emacs.org::#org-mode-babel-racket][Racket:1]]
