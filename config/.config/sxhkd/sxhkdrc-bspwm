@@ -229,6 +229,16 @@ super + ctrl + e
 # super + ctrl + {Up,Down,Left,Right}
 #     bspc node --move {0 -20,0 20,-20 0,20 0}
 
+# move and resize using mouse
+super + button{1,2,3}
+    bspc grab_pointer {move,resize_side,resize_corner}
+
+super + !button{1,2,3}
+    bspc {track_pointer,track_pointer,track_pointer} %i %i
+
+super + @button{1,2,3}
+    bspc {ungrab_pointer,ungrab_pointer,ungrab_pointer}
+
 #===============================================================================
 # End of File
 #===============================================================================
