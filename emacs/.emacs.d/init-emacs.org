@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2023-04-08 21:24 (kyle)>
+  #+TIMESTAMP: <2023-04-10 12:14 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -30297,32 +30297,56 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;;   :hook (kotlin-mode . flycheck-mode))
     #+END_SRC
 
-*** +LaTeX+
+*** LaTeX
     :PROPERTIES:
     :CUSTOM_ID: modes-latex
     :END:
 
-    #+BEGIN_SRC emacs-lisp :tangle no
-      ;; ;;------------------------------------------------------------------------------
-      ;; ;;; Modes: LaTeX
-      ;; ;;------------------------------------------------------------------------------
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Modes: LaTeX
+      ;;------------------------------------------------------------------------------
 
-      ;; (init-message 2 "Modes: LaTeX")
+      (init-message 2 "Modes: LaTeX")
 
-      ;; ;;------------------------------------------------------------------------------
-      ;; ;;; Packages: pdf-tools
-      ;; ;;------------------------------------------------------------------------------
+      ;;------------------------------------------------------------------------------
+      ;;; Packages: tex
+      ;;------------------------------------------------------------------------------
 
-      ;; (init-message 3 "Packages: pdf-tools")
+      (init-message 3 "Packages: tex")
 
-      ;; (use-package pdf-tools
-      ;;   :straight t
-      ;;   :bind (:map pdf-view-mode-map
-      ;;               ("C-s" . isearch-forward)
-      ;;               ("C-r" . isearch-backward))
-      ;;   ;; :hook (pdf-view-mode . bms/pdf-midnite-amber) ; turn on midnight-mode for pdfs
-      ;;   :config
-      ;;   (pdf-tools-install))
+      (use-package tex
+        :straight (:type built-in)
+        :mode ("\\.tex\\'" . latex-mode)
+        :custom
+        (TeX-auto-save t)
+        (TeX-parse-self t)
+        (TeX-source-correlate-mode t)
+        (TeX-source-correlate-method 'synctex)
+        (reftex-plug-into-AUCTeX t)
+        (TeX-view-program-selection '((output-pdf "PDF Tools")))
+        (TeX-source-correlate-start-server t)
+        (latex-noindent-commands '("footnote"))
+        :config
+        ;;(setq TeX-master "paper.tex")
+        ;;(setq-default TeX-master TeX-master)
+        ;; update PDF buffers after successful LaTeX run
+        (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer))
+
+      ;;------------------------------------------------------------------------------
+      ;;; Packages: pdf-tools
+      ;;------------------------------------------------------------------------------
+
+      (init-message 3 "Packages: pdf-tools")
+
+      (use-package pdf-tools
+        :straight t
+        :bind (:map pdf-view-mode-map
+                    ("C-s" . isearch-forward)
+                    ("C-r" . isearch-backward))
+        ;; :hook (pdf-view-mode . bms/pdf-midnite-amber) ; turn on midnight-mode for pdfs
+        :config
+        (pdf-tools-install))
 
       ;; ;;------------------------------------------------------------------------------
       ;; ;;; Packages: auctex-latexmk
@@ -30349,29 +30373,6 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;;   :straight t
       ;;   :after (company)
       ;;   :init (company-auctex-init))
-
-      ;; ;;------------------------------------------------------------------------------
-      ;; ;;; Packages: tex
-      ;; ;;------------------------------------------------------------------------------
-
-      ;; (init-message 3 "Packages: tex")
-
-      ;; (use-package tex
-      ;;   :straight (:type built-in)
-      ;;   :mode ("\\.tex\\'" . latex-mode)
-      ;;   :custom
-      ;;   (TeX-auto-save t)
-      ;;   (TeX-parse-self t)
-      ;;   (TeX-source-correlate-mode t)
-      ;;   (TeX-source-correlate-method 'synctex)
-      ;;   (reftex-plug-into-AUCTeX t)
-      ;;   (TeX-view-program-selection '((output-pdf "PDF Tools")))
-      ;;   (TeX-source-correlate-start-server t)
-      ;;   :config
-      ;;   ;;(setq TeX-master "paper.tex")
-      ;;   ;;(setq-default TeX-master TeX-master)
-      ;;   ;; update PDF buffers after successful LaTeX run
-      ;;   (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer))
     #+END_SRC
 
 *** Ledger Mode

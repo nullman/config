@@ -19266,6 +19266,79 @@ otherwise run `find-file-as-root'."
         json-encoding-pretty-print t))
 ;; JSON Mode:1 ends here
 
+;; [[file:init-emacs.org::#modes-latex][LaTeX:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: LaTeX
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: LaTeX")
+
+;;------------------------------------------------------------------------------
+;;; Packages: tex
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Packages: tex")
+
+(use-package tex
+  :straight (:type built-in)
+  :mode ("\\.tex\\'" . latex-mode)
+  :custom
+  (TeX-auto-save t)
+  (TeX-parse-self t)
+  (TeX-source-correlate-mode t)
+  (TeX-source-correlate-method 'synctex)
+  (reftex-plug-into-AUCTeX t)
+  (TeX-view-program-selection '((output-pdf "PDF Tools")))
+  (TeX-source-correlate-start-server t)
+  (latex-noindent-commands '("footnote"))
+  :config
+  ;;(setq TeX-master "paper.tex")
+  ;;(setq-default TeX-master TeX-master)
+  ;; update PDF buffers after successful LaTeX run
+  (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer))
+
+;;------------------------------------------------------------------------------
+;;; Packages: pdf-tools
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Packages: pdf-tools")
+
+(use-package pdf-tools
+  :straight t
+  :bind (:map pdf-view-mode-map
+              ("C-s" . isearch-forward)
+              ("C-r" . isearch-backward))
+  ;; :hook (pdf-view-mode . bms/pdf-midnite-amber) ; turn on midnight-mode for pdfs
+  :config
+  (pdf-tools-install))
+
+;; ;;------------------------------------------------------------------------------
+;; ;;; Packages: auctex-latexmk
+;; ;;------------------------------------------------------------------------------
+
+;; (init-message 3 "Packages: auctex-latexmk")
+
+;; (use-package auctex-latexmk
+;;   :straight t
+;;   :custom
+;;   (auctex-latexmk-inherit-TeX-PDF-mode t)
+;;   :config
+;;   ;;(setq TeX-master nil)
+;;   ;;(setq-default TeX-master TeX-master)
+;;   (auctex-latexmk-setup))
+
+;; ;;------------------------------------------------------------------------------
+;; ;;; Packages: company-acutex
+;; ;;------------------------------------------------------------------------------
+
+;; (init-message 3 "Packages: company-acutex")
+
+;; (use-package company-auctex
+;;   :straight t
+;;   :after (company)
+;;   :init (company-auctex-init))
+;; LaTeX:1 ends here
+
 ;; [[file:init-emacs.org::#modes-ledger-mode][Ledger Mode:1]]
 ;;------------------------------------------------------------------------------
 ;;; Modes: Ledger Mode
