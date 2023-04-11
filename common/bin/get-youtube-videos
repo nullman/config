@@ -49,6 +49,7 @@ channels=(
 #   "Computer/General     | Craft Computing                   | https://www.youtube.com/@CraftComputing/videos"
 #   "Computer/General     | DistroTube ???                    | https://www.youtube.com/c/DistroTube/videos"
 #   "Computer/General     | ExplainingComputers ???           | https://www.youtube.com/c/explainingcomputers/videos"
+    "Computer/General     | Jake@Linux                        | https://www.youtube.com/@JakeLinux/videos"
 #   "Computer/General     | PCWorld ???                       | https://www.youtube.com/pcworld/videos"
 #   "Computer/Graphics    | pwnisher                          | https://www.youtube.com/@pwnisher/videos"
     "Computer/Hardware    | Ben Eater                         | https://www.youtube.com/c/BenEater/videos"
@@ -135,7 +136,7 @@ channels=(
 #   "Science              | Veritasium                        | https://www.youtube.com/c/veritasium/videos"
 #   "Science              | Vsauce2                           | https://www.youtube.com/user/Vsauce2/videos"
 #   "Show                 | DUST                              | https://www.youtube.com/c/watchdust/videos"
-##    "Show                 | For the Empire                    | https://www.youtube.com/watch?v=g43lgCJ_D6o&list=PLxJr4XsTcWljTxufEaW_3X1VY_eqjuLgi"
+    "Show                 | For the Empire                    | https://www.youtube.com/watch?v=g43lgCJ_D6o&list=PLxJr4XsTcWljTxufEaW_3X1VY_eqjuLgi"
 )
 
 _usage() {
