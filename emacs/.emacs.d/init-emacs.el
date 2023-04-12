@@ -1963,6 +1963,12 @@ KEYMAP defaults to `override-global-map'."
   ;; describe text properties
   (bind-keys ("C-x M-p" . describe-text-properties))
 
+  ;; undo
+  (bind-keys ("C-_" . undo))
+
+  ;; undo-redo
+  (bind-keys ("M-_" . undo-redo))
+
   ;; goto last change (undo)
   (when (fboundp 'goto-last-change)
     (bind-keys ("C-x C-_" . goto-last-change)))

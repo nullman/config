@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2023-04-10 12:14 (kyle)>
+  #+TIMESTAMP: <2023-04-12 10:18 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -3378,6 +3378,12 @@
 
         ;; describe text properties
         (bind-keys ("C-x M-p" . describe-text-properties))
+
+        ;; undo
+        (bind-keys ("C-_" . undo))
+
+        ;; undo-redo
+        (bind-keys ("M-_" . undo-redo))
 
         ;; goto last change (undo)
         (when (fboundp 'goto-last-change)
