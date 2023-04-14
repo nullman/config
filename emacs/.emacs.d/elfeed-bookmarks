@@ -25,7 +25,7 @@
  ;;(:name "Softpedia Linux" :html "https://linux.softpedia.com/" :rss "https://linux.softpedia.com/backend.xml" :tag "linux")
  (:name "Open Source Voices" :html "https://www.opensourcevoices.org/" :rss "https://feeds.fireside.fm/opensourcevoices/rss" :tag "linux")
  (:name "Luke Smith" :html "https://lukesmith.xyz/" :rss "https://lukesmith.xyz/rss.xml" :tag "linux")
- ;; Computers / Technical
+ ;; Development / Computers / Technical
  (:name "Slashdot" :html "https://slashdot.org/" :rss "https://slashdot.org/slashdot.rss" :tag "dev")
  (:name "Hacker News" :html "https://news.ycombinator.com/" :rss "https://news.ycombinator.com/rss" :tag "dev")
  (:name "Ars Technica" :html "https://www.arstechnica.com/" :rss "https://feeds.arstechnica.com/arstechnica/index/" :tag "dev")
@@ -36,6 +36,7 @@
  (:name "nixCraft" :html "https://www.cyberciti.biz/" :rss "https://www.cyberciti.biz/atom/atom.xml" :tag "dev")
  (:name "TecMint" :html "https://www.tecmint.com/" :rss "https://www.tecmint.com/feed/" :tag "dev")
  (:name "N O D E" :html "https://n-o-d-e.net/" :rss "https://n-o-d-e.net/rss/rss.xml" :tag "dev")
+ (:name "Andreas Kling" :html "https://awesomekling.substack.com/" :rss "https://awesomekling.substack.com/feed" :tag "dev")
  ;; Vintage/Retro Computing
  (:name "BYTE Cellar" :html "https://bytecellar.com/" :rss "https://bytecellar.com/feed" :tag "vintage")
  (:name "Nerd Fail" :html "https://nerd.fail/" :rss "https://nerd.fail/feed/" :tag "vintage")
@@ -50,8 +51,9 @@
  ;; Games
  ;;(:name "Star Citizen" :html "https://robertsspaceindustries.com/com-link/" :rss "https://robertsspaceindustries.com/comm-link/rss" :tag "game")
  ;; Other
- (:name "New York Times OPEN Blogs" :html "https://open.blogs.nytimes.com/" :rss "https://open.blogs.nytimes.com/feed/" :tag "blog")
+ ;;(:name "New York Times OPEN Blogs" :html "https://open.blogs.nytimes.com/" :rss "https://open.blogs.nytimes.com/feed/" :tag "blog")
  (:name "XKCD Comic" :html "https://xkcd.com/" :rss "https://xkcd.com/atom.xml" :tag "comic")
+ (:name "Nerdy Entertainment Community" :html "https://nerdyentertainment.locals.com/" :rss "https://nerdyentertainment.locals.com/feed" :tag "blog")
  ;; Personal
  (:name "Nulldot Blog" :html "http://nulldot.net/" :rss "http://nulldot.net/index.rss" :tag "dev")
  ))
