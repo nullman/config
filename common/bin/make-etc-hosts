@@ -12,29 +12,29 @@ sudo bash -c "
 
 192.168.1.1     firewall
 192.168.1.2     bridge
-192.168.1.3     pihole
-192.168.1.6     synology
-192.168.1.10    morpheus mail
-#192.168.1.10    kylesherman.net kylesherman.com kylesherman.org nulldigital.com nulldot.com nulldot.net nulldot.org nullman.com nullman.net nullman.org nullware.com nullware.org bloodmoon.nullware.com fortunequote.nullware.com powerhouse.nullware.com
-192.168.1.16    printer canon
-192.168.1.30    neo
-192.168.1.32    tank
-192.168.1.34    apoc
-192.168.1.36    trinity
-192.168.1.38    smith
-192.168.1.40    dozer
-192.168.1.42    choi
-192.168.1.44    switch
-192.168.1.50    mouse
-192.168.1.52    raspad
-192.168.1.53    raspadusb
-192.168.1.56    retropie
-192.168.1.57    retropied
-192.168.1.62    colleen
-192.168.1.64    commodore64
-192.168.1.66    t5200
-192.168.1.80    gemini
-192.168.1.82    astro
+#192.168.1.3     pihole
+#192.168.1.6     synology
+#192.168.1.10    morpheus mail
+##192.168.1.10    kylesherman.net kylesherman.com kylesherman.org nulldigital.com nulldot.com nulldot.net nulldot.org nullman.com nullman.net nullman.org nullware.com nullware.org bloodmoon.nullware.com fortunequote.nullware.com powerhouse.nullware.com
+#192.168.1.16    printer canon
+#192.168.1.30    neo
+#192.168.1.32    tank
+#192.168.1.34    apoc
+#192.168.1.36    trinity
+#192.168.1.38    smith
+#192.168.1.40    dozer
+#192.168.1.42    choi
+#192.168.1.44    switch
+#192.168.1.50    mouse
+#192.168.1.52    raspad
+#192.168.1.53    raspadusb
+#192.168.1.56    retropie
+#192.168.1.57    retropied
+#192.168.1.62    colleen
+#192.168.1.64    c64
+#192.168.1.66    t5200
+#192.168.1.80    gemini
+#192.168.1.82    astro
 
 192.168.8.1     vacation
 
