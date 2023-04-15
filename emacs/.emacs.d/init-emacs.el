@@ -10975,6 +10975,33 @@ paragraph or selected region."
             (replace-match "\\1  \\2")))))))
 ;; double-space-punctuation:1 ends here
 
+;; [[file:init-emacs.org::#functions-text-conversion-functions-convert-unicode-characters][convert-unicode-characters:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Text Conversion Functions: convert-unicode-characters
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Text Conversion Functions: convert-unicode-characters")
+
+(defun convert-unicode-characters (&optional beg end)
+  "Convert common unicode characters of document or selected region."
+  (interactive "*")
+  (let ((beg (or beg (and (use-region-p) (region-beginning)) (point-min)))
+        (end (or end (and (use-region-p) (region-end)) (point-max))))
+    (deactivate-mark)
+    (save-mark-and-excursion
+      (save-restriction
+        (save-match-data
+          (narrow-to-region beg end)
+          (dolist (x '(("✴" . "•")
+                       ("…" . "...")
+                       ("’" . "'")
+                       ("“" . "\"")
+                       ("”" . "\"")))
+            (goto-char (point-min))
+            (while (re-search-forward (car x) end :noerror)
+              (replace-match (cdr x)))))))))
+;; convert-unicode-characters:1 ends here
+
 ;; [[file:init-emacs.org::#functions-text-inserting-functions][Text Inserting Functions:1]]
 ;;------------------------------------------------------------------------------
 ;;; Functions: Text Inserting Functions

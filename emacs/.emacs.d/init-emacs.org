@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2023-04-13 22:33 (kyle)>
+  #+TIMESTAMP: <2023-04-15 17:16 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -16296,6 +16296,38 @@
                   (goto-char (point-min))
                   (while (re-search-forward "\\([^[:blank:]][.?!]['\"”)]?\\)[[:blank:]]\\([^[:blank:]]\\)" end :noerror)
                     (replace-match "\\1  \\2")))))))
+      #+END_SRC
+
+***** convert-unicode-characters
+      :PROPERTIES:
+      :CUSTOM_ID: functions-text-conversion-functions-convert-unicode-characters
+      :END:
+
+      #+BEGIN_SRC emacs-lisp
+        ;;------------------------------------------------------------------------------
+        ;;;; Functions: Text Conversion Functions: convert-unicode-characters
+        ;;------------------------------------------------------------------------------
+
+        (init-message 3 "Functions: Text Conversion Functions: convert-unicode-characters")
+
+        (defun convert-unicode-characters (&optional beg end)
+          "Convert common unicode characters of document or selected region."
+          (interactive "*")
+          (let ((beg (or beg (and (use-region-p) (region-beginning)) (point-min)))
+                (end (or end (and (use-region-p) (region-end)) (point-max))))
+            (deactivate-mark)
+            (save-mark-and-excursion
+              (save-restriction
+                (save-match-data
+                  (narrow-to-region beg end)
+                  (dolist (x '(("✴" . "•")
+                               ("…" . "...")
+                               ("’" . "'")
+                               ("“" . "\"")
+                               ("”" . "\"")))
+                    (goto-char (point-min))
+                    (while (re-search-forward (car x) end :noerror)
+                      (replace-match (cdr x)))))))))
       #+END_SRC
 
 *** Text Inserting Functions
