@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2023-04-16 08:51 (kyle)>
+  #+TIMESTAMP: <2023-04-16 15:17 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -8564,21 +8564,6 @@
           (insert ")"))
       #+END_SRC
 
-*** Ironsworn
-    :PROPERTIES:
-    :CUSTOM_ID: org-mode-ironsworn
-    :END:
-
-    Ironsworn RPG related functions.
-
-    #+BEGIN_SRC emacs-lisp
-      ;;------------------------------------------------------------------------------
-      ;;; Org Mode: Ironsworn
-      ;;------------------------------------------------------------------------------
-
-      (init-message 2 "Org Mode: Ironsworn")
-    #+END_SRC
-
 * Org Website
   :PROPERTIES:
   :CUSTOM_ID: org-website
@@ -16324,7 +16309,9 @@
                                ("…" . "...")
                                ("’" . "'")
                                ("“" . "\"")
-                               ("”" . "\"")))
+                               ("”" . "\"")
+                               ;;("—" . "-")
+                               ))
                     (goto-char (point-min))
                     (while (re-search-forward (car x) end :noerror)
                       (replace-match (cdr x)))))))))
@@ -16973,6 +16960,40 @@
                         (insert ";")))
                     (insert " lexical-binding: t;")))
               (insert ";; -*- lexical-binding: t; -*-\n;;\n"))))
+      #+END_SRC
+
+***** insert-org-header
+      :PROPERTIES:
+      :CUSTOM_ID: functions-text-inserting-functions-insert-org-header
+      :END:
+
+      #+BEGIN_SRC emacs-lisp
+        ;;------------------------------------------------------------------------------
+        ;;;; Functions: Text Inserting Functions: insert-org-header
+        ;;------------------------------------------------------------------------------
+
+        (init-message 3 "Functions: Text Inserting Functions: insert-org-header")
+
+        (defun insert-org-header ()
+          "Insert `org-mode' header."
+          (interactive "*")
+          (let ((text
+                 `("* Org                                                              :noexport:"
+                   "#+TITLE: TITLE"
+                   "#+AUTHOR: Kyle W. T. Sherman"
+                   ,(concat "#+EMAIL: " user-mail-address)
+                   "#+FILENAME: FILENAME.org"
+                   "#+DESCRIPTION: DESCRIPTION"
+                   "#+KEYWORDS: KEYWORD, emacs, org-mode, babel, literate programming, reproducible research"
+                   "#+LANGUAGE: en"
+                   "#+PROPERTY: header-args :noweb yes :padline yes :comments no :results silent output :mkdirp yes :cache yes"
+                   "#+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil"
+                   "#+STARTUP: noindent odd overview"
+                   "#+TIMESTAMP: <>"
+                   "")))
+            (dolist (x text)
+              (insert x)
+              (newline))))
       #+END_SRC
 
 ***** insert-toc-header

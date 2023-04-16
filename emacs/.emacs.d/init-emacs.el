@@ -5993,14 +5993,6 @@ If OWNED is non-nil, add an Owned column to the table."
   (insert ")"))
 ;; ddo-fix-wiki-description:1 ends here
 
-;; [[file:init-emacs.org::#org-mode-ironsworn][Ironsworn:1]]
-;;------------------------------------------------------------------------------
-;;; Org Mode: Ironsworn
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Org Mode: Ironsworn")
-;; Ironsworn:1 ends here
-
 ;; [[file:init-emacs.org::#org-website][Org Website:1]]
 ;;==============================================================================
 ;;; Org Website
@@ -10996,7 +10988,9 @@ paragraph or selected region."
                        ("…" . "...")
                        ("’" . "'")
                        ("“" . "\"")
-                       ("”" . "\"")))
+                       ("”" . "\"")
+                       ;;("—" . "-")
+                       ))
             (goto-char (point-min))
             (while (re-search-forward (car x) end :noerror)
               (replace-match (cdr x)))))))))
@@ -11526,6 +11520,35 @@ of the current buffer."
             (insert " lexical-binding: t;")))
       (insert ";; -*- lexical-binding: t; -*-\n;;\n"))))
 ;; insert-lexical-binding:1 ends here
+
+;; [[file:init-emacs.org::#functions-text-inserting-functions-insert-org-header][insert-org-header:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Text Inserting Functions: insert-org-header
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Text Inserting Functions: insert-org-header")
+
+(defun insert-org-header ()
+  "Insert `org-mode' header."
+  (interactive "*")
+  (let ((text
+         `("* Org                                                              :noexport:"
+           "#+TITLE: TITLE"
+           "#+AUTHOR: Kyle W. T. Sherman"
+           ,(concat "#+EMAIL: " user-mail-address)
+           "#+FILENAME: FILENAME.org"
+           "#+DESCRIPTION: DESCRIPTION"
+           "#+KEYWORDS: KEYWORD, emacs, org-mode, babel, literate programming, reproducible research"
+           "#+LANGUAGE: en"
+           "#+PROPERTY: header-args :noweb yes :padline yes :comments no :results silent output :mkdirp yes :cache yes"
+           "#+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil"
+           "#+STARTUP: noindent odd overview"
+           "#+TIMESTAMP: <>"
+           "")))
+    (dolist (x text)
+      (insert x)
+      (newline))))
+;; insert-org-header:1 ends here
 
 ;; [[file:init-emacs.org::#functions-text-inserting-functions-insert-toc-header][insert-toc-header:1]]
 ;;------------------------------------------------------------------------------
