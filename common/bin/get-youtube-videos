@@ -167,7 +167,7 @@ _download() {
         dir=$(echo "${channel}" | cut -d '|' -f 1)
         name=$(echo "${channel}" | cut -d '|' -f 2)
         url=$(echo "${channel}" | cut -d '|' -f 3)
-        echo "| ${dir} | ${name} | ${url}|"
+        echo "| ${dir} | ${name} | ${url} |"
         if [[ -z "${listname}" || "${name}" == "${listname}" ]] ; then
             path="${basedir}/${dir}/${name}"
             cmd="${ytdlp} \
@@ -193,7 +193,7 @@ while true ; do
     case $1 in
         -l|--list)
             for ((x = 0; x < ${#channels[@]}; x += 1)) ; do
-                echo "${channels[$x]}" | sed 's/ *|.*$//'
+                echo "${channels[$x]}" | sed 's/^[^|]*| *// ; s/ *|.*$//'
             done
             exit 0
             ;;
