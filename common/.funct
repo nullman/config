@@ -1558,13 +1558,44 @@ backup-files() {
 #!        esac
 #!    fi
 #!}
+#        rsync-bundle            generate encrypted bundle and rsync it to mounted ventoy usb
+rsync-bundle() {
+    # check destination
+    dest="/run/media/${USER}/FILES"
+    if [[ ! -d "${dest}" ]] ; then
+        echo "Could not find mounted USB at '${dest}'"
+        return 1
+    fi
+
+    # create bundle
+    root="/tmp/bundle-$$"
+    tmp="${root}/bundle"
+    mkdir -p "${tmp}"
+    # add ~/.ssh
+    mkdir -p "${tmp}/.ssh" && chmod 700 "${tmp}/.ssh"
+    cp -p "${HOME}/.ssh/id_"* "${tmp}/.ssh/"
+    # # add make-etc-hosts
+    # cp "${HOME}/bin/make-etc-hosts" "${tmp}/"
+    # package and encrypt bundle directory
+    pushd "${root}"
+    tar cvfz "bundle.tgz" "bundle"
+    #ccrypt -e "bundle.tgz"
+    openssl enc -e -aes-256-cbc -md sha512 -pbkdf2 -iter 100000 -salt -in "bundle.tgz" -out "bundle.tgz.enc"
+    # sync bundle to usb
+    rsync -rLtxc --progress --delete "bundle.tgz.enc" "${dest}/"
+    # add decrypt script
+    echo "openssl enc -d -aes-256-cbc -md sha512 -pbkdf2 -iter 100000 -salt -in bundle.tgz.enc -out bundle.tgz" > "${dest}/bundle-decrypt"
+    chmod +x "${dest}/bundle-decrypt"
+    popd
+    rm -rf "${root}"
+}
 #        rsync-cruzer            rsync ISOs and bundle to sandisk cruzer
 rsync-cruzer() {
     # check destination
-    dest="/media/ventoy/"
+    dest="/run/media/${USER}/ventoy"
     if [[ ! -d ${dest} ]] ; then
         echo "Could not find mounted USB at ${dest}"
-        exit 1
+        return 1
     fi
 
     # sync ISOs
@@ -1579,42 +1610,11 @@ rsync-cruzer() {
         "${root}/System Rescue "*.iso
     )
     for file in "${files[@]}" ; do
-        rsync -rLtxc --progress --delete "${file}" "${dest}"
+        rsync -rLtxc --progress --delete "${file}" "${dest}/"
     done
 
     # create and copy bundle
     rsync-bundle
-}
-#        rsync-bundle            generate encrypted bundle and rsync it to mounted ventoy usb
-rsync-bundle() {
-    # check destination
-    dest="/media/FILES"
-    if [[ ! -d "${dest}" ]] ; then
-        echo "Could not find mounted USB at '${dest}'"
-        exit 1
-    fi
-
-    # create bundle
-    root="/tmp/bundle-$$"
-    tmp="${root}/bundle"
-    mkdir -p "${tmp}"
-    # add ~/.ssh
-    mkdir -p "${tmp}/.ssh" && chmod 700 "${tmp}/.ssh"
-    cp -p "${HOME}/.ssh/id_"* "${tmp}/.ssh/"
-    # add make-etc-hosts
-    cp "${HOME}/bin/make-etc-hosts" "${tmp}/"
-    # package and encrypt bundle directory
-    pushd "${root}"
-    tar cvfz "bundle.tgz" "bundle"
-    #ccrypt -e "bundle.tgz"
-    openssl enc -e -aes-256-cbc -md sha512 -pbkdf2 -iter 100000 -salt -in "bundle.tgz" -out "bundle.tgz.enc"
-    # sync bundle to usb
-    rsync -rLtxc --progress --delete "bundle.tgz.enc" "${dest}/"
-    # add decrypt script
-    printf "#!/usr/bin/env sh\n\nopenssl enc -d -aes-256-cbc -md sha512 -pbkdf2 -iter 100000 -salt -in bundle.tgz.enc -out bundle.tgz\n" > "${dest}/bundle-decrypt"
-    chmod +x "${dest}/bundle-decrypt"
-    popd
-    rm -rf "${root}"
 }
 #        rsync-isos              rsync software ISOs to mounted ventoy usb
 rsync-isos() {
