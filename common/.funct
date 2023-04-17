@@ -1611,7 +1611,7 @@ rsync-bundle() {
     # sync bundle to usb
     rsync -rLtxc --progress --delete "bundle.tgz.enc" "${dest}/"
     # add decrypt script
-    echo "openssl enc -d -aes-256-cbc -md sha512 -pbkdf2 -iter 100000 -salt -in bundle.tgz.enc -out bundle.tgz" > "${dest}/bundle-decrypt"
+    printf "#!/usr/bin/env sh\n\nopenssl enc -d -aes-256-cbc -md sha512 -pbkdf2 -iter 100000 -salt -in bundle.tgz.enc -out bundle.tgz\n" > "${dest}/bundle-decrypt"
     chmod +x "${dest}/bundle-decrypt"
     popd
     rm -rf "${root}"
@@ -1782,8 +1782,8 @@ Setup /home/data directory:
   sudo mkdir -p /home/data && sudo chown \${USER}:\${USER} /home/data
 Optionally install the default crontab:
   make-cron
-Install manjaro packages and setup system:
-  manjaro-initialize
+Install arch packages and setup system:
+  arch-initialize
 EOF
 }
 #        home-initialize         stow links from ~/ to ~/config and ~/config-private dirs
@@ -1892,6 +1892,161 @@ home-restow() {
     stow --dir="${config}/custom" --target="${HOME}" --no-folding --restow "$(uname -n)"
     [[ -d "${config}-private" ]] && stow --dir="${config}-private" --target="${HOME}" --restow "common" "emacs"
     [[ -d "${config}-private" ]] && stow --dir="${config}-private" --target="${HOME}" --no-folding --restow "config"
+}
+#        arch-initialize      install arch packages and setup system
+arch-initialize() {
+    _getsection() {
+        local file="${HOME}/org/personal.org"
+        local regexp="/^[ \t]*#\+NAME: $1\$/,/^[ \t]*#\+END_SRC\$/{print \$0}"
+        awk "${regexp}" "${file}" | tail -n +3 | head -n -1 | sed 's/^[ \t]*//' | \
+            sed 's/--needed/--needed --noprovides --answerdiff None --answerclean None --mflags \"--noconfirm\"/' | \
+            sed 's/yay /yes | yay /'
+    }
+
+    standard=(
+        "arch-group"
+        "arch-sudoers"
+        "arch-locale"
+        "arch-upgrade"
+        "arch-initial-applications"
+        "arch-lightdm"
+        "arch-lightdm-conf"
+        "arch-lightdm-gtk-greeter-conf"
+        "arch-lightdm-slick-greeter-conf"
+        "arch-wm"
+        "arch-wm-spacefm"
+        #"arch-wm-spacefm-conf"
+        "arch-wm-thunar"
+        "arch-bspwm"
+        "arch-pkgfile"
+        "arch-copy-wallpapers"
+        "arch-fix-backgrounds"
+        "arch-set-background-image"
+        "arch-fonts"
+        "arch-font-cache"
+        "arch-networkmanager"
+        "arch-packages-system"
+        "arch-packages-system-zsh"
+        "arch-packages-applications"
+        "arch-packages-applications-orpie"
+        "arch-packages-applications-irssi"
+        "arch-packages-applications-xscreensaver"
+        "arch-packages-applications-xscreensaver-aerial"
+        "arch-packages-applications-x48"
+        "arch-packages-utilities"
+        "arch-packages-utilities-bitwarden"
+        "arch-packages-network"
+        "arch-packages-development"
+        "arch-packages-graphical"
+        "arch-packages-audio"
+        "arch-packages-audio-audacious-winamp-classic-skin"
+        "arch-packages-video"
+        "arch-packages-wine"
+        "arch-packages-emulators"
+        "arch-packages-other-cli-hacks"
+        "arch-configure-zsh"
+        "arch-configure-pcmanfm"
+        "arch-configure-java-8-openjdk"
+        "arch-service-pulseaudio"
+        "arch-service-mpd"
+        "arch-service-mpdris"
+        #"arch-service-docker"
+        #"arch-service-fstrim"
+        "arch-printer-cannon"
+    )
+
+    optional=(
+        "arch-packages-optional-applications"
+        "arch-packages-optional-utilities"
+        "arch-packages-optional-utilities-latex"
+        "arch-packages-optional-network"
+        "arch-packages-optional-development"
+        "arch-packages-optional-development-commander-x16"
+        "arch-packages-optional-development-djgpp"
+        "arch-packages-optional-graphical"
+        "arch-packages-optional-audio"
+        "arch-packages-optional-audio-grip"
+        "arch-packages-optional-video"
+        "arch-packages-optional-video-dvd"
+        "arch-packages-optional-video-editors"
+        "arch-packages-optional-emulators"
+        "arch-packages-optional-emulators-virtualbox"
+        "arch-packages-optional-emulators-virtual-t"
+        "arch-packages-optional-games"
+        "arch-packages-optional-games-proton"
+        "arch-packages-optional-games-marathon"
+        "arch-packages-optional-other"
+        "arch-packages-optional-other-nvidia"
+    )
+
+    if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+        echo "Usage: $0 [--optional]"
+        echo "  -o,--optional  install optional packages instead"
+        return 1
+    fi
+
+    if [[ "$1" == "-o" ]] || [[ "$1" == "--optional" ]] ; then
+        opt=1
+        sections=(${optional[@]})
+    else
+        opt=0
+        sections=(${standard[@]})
+    fi
+
+    echo "You are about to install a curated set of Arch packages and setup this system."
+    echo "This command is normally run once for a given system installation, but it is"
+    echo "safe to run multiple times to pick up new packages or configuration changes."
+    [[ ${opt} -eq 1 ]] && echo "The OPTIONAL parameter was given, so (only) optional packages will be installed."
+    echo -n "Do you wish to proceed? [yN] " ; read a
+
+    case "${a}" in
+        y|Y)
+            echo
+            echo "========== Arch Initialization Script =========="
+            echo
+
+            for section in ${sections[@]} ; do
+                echo
+                echo "========== ${section} =========="
+                echo
+                #echo "$(_getsection ${section})"
+                eval "$(_getsection ${section})"
+            done
+
+            echo
+            echo "========== Arch Initialization Complete =========="
+            echo
+            echo "Optional setup:"
+            echo
+            echo "SSH Daemon"
+            echo
+            echo "1) Edit /etc/ssh/sshd_config:"
+            echo
+            echo "------------------------------------------------------------------------------"
+            echo "# do not allow root logins"
+            echo "PermitRootLogin no"
+            echo
+            echo "# do not allow password logins (public key must be in authorized hosts file)"
+            echo "PasswordAuthentication no"
+            echo
+            echo "# allow X11 connections [optional]"
+            echo "X11Forwarding yes"
+            echo "------------------------------------------------------------------------------"
+            echo
+            echo "2) Enable sshd service:"
+            echo
+            echo "  sudo systemctl enable sshd.service"
+            echo "  sudo systemctl start sshd.service"
+            echo "  sudo systemctl status sshd.service"
+            echo
+            echo "Aerial Screensaver (xscreensaver)"
+            echo
+            echo "Run the following command to install the Aerial Screensaver Videos (very long install):"
+            echo "  mkdir -p ~/tmp && yaourt -S --needed xscreensaver-aerial-videos-4k --tmp ~/tmp && rm -r ~/tmp/yaourt-tmp-$(id -un)"
+            echo
+            echo "End of Arch Installation Script"
+            ;;
+    esac
 }
 #        manjaro-initialize      install manjaro packages and setup system
 manjaro-initialize() {

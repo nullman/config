@@ -13988,7 +13988,7 @@ for 1, 5, 10, 50, 100, 500, and 1,000."
                         "EM  " "SUB " "ESC " "FS  " "GS  "
                         "RS  " "US  "]))
     (switch-to-buffer "*ASCII Table*")
-    (buffer-disable-undo (current-buffer))
+    (buffer-disable-undo)
     (let (buffer-read-only)
       (erase-buffer)
       (dotimes (y 32)
@@ -14013,7 +14013,7 @@ for 1, 5, 10, 50, 100, 500, and 1,000."
 ;;   "Display the ASCII characters from 0 to 254 in a buffer."
 ;;   (interactive)
 ;;   (switch-to-buffer "*ASCII Table*")
-;;   (buffer-disable-undo (current-buffer))
+;;   (buffer-disable-undo)
 ;;   (erase-buffer)
 ;;   (dotimes (x 255)
 ;;     (insert (format "%4d %c\n" x x)))
@@ -14101,7 +14101,7 @@ for 1, 5, 10, 50, 100, 500, and 1,000."
            (510 . "Not Extended")
            (511 . "Network Authentication Required"))))
     (switch-to-buffer "*HTTP Status Code Table*")
-    (buffer-disable-undo (current-buffer))
+    (buffer-disable-undo)
     (let (buffer-read-only)
       (erase-buffer)
       (insert "CODE   DESCRIPTION\n")
@@ -14123,7 +14123,7 @@ for 1, 5, 10, 50, 100, 500, and 1,000."
   "Display a table of the first 64 Powers of two in a buffer."
   (interactive)
   (switch-to-buffer "*Powers of Two Table*")
-  (buffer-disable-undo (current-buffer))
+  (buffer-disable-undo)
   (let (buffer-read-only)
     (erase-buffer)
     (insert "POWER   DECIMAL                HEX\n")
@@ -14152,7 +14152,7 @@ for 1, 5, 10, 50, 100, 500, and 1,000."
   "Display a table of trigonometry values."
   (interactive)
   (switch-to-buffer "*Trigonometry Table*")
-  (buffer-disable-undo (current-buffer))
+  (buffer-disable-undo)
   (let (buffer-read-only)
     (erase-buffer)
     (insert "RADIANS   SIN      COS      TAN       ARCSIN   ARCCOS   ARCTAN\n")
@@ -14287,7 +14287,7 @@ for 1, 5, 10, 50, 100, 500, and 1,000."
         ;;                         x))
         ;;                      (defined-colors))))
     (switch-to-buffer "*VGA Color Table*")
-    (buffer-disable-undo (current-buffer))
+    (buffer-disable-undo)
     (let (buffer-read-only)
       (erase-buffer)
       (insert "COLOR   RGB (Decimal)   RGB (Hex)   HSV (0.0 - 1.0)   NAME\n")
@@ -14720,7 +14720,7 @@ be touched by character deletion.")
       (with-temp-buffer
         (switch-to-buffer (current-buffer))
         (rename-buffer "*Star Wars Scroll*")
-        (buffer-disable-undo (current-buffer))
+        (buffer-disable-undo)
         (untabify (point-min) (point-max))
         (save-window-excursion
           (delete-other-windows)
@@ -17057,6 +17057,7 @@ Use text properties to mark the line then call `mingus-set-NP-mark'."
                         "Genre:  " genre)))
             (with-current-buffer buffer
               (setq buffer-read-only nil)
+              (buffer-disable-undo)
               (add-text-properties (point-min) (point-max) '(read-only nil))
               (kill-region (point-min) (point-max))
               (setq major-mode 'text-mode)
@@ -17076,7 +17077,6 @@ Use text properties to mark the line then call `mingus-set-NP-mark'."
                 (forward-line 1))
               (cursor-intangible-mode 1)
               (set-buffer-modified-p nil)
-              (setq buffer-undo-list nil)
               (goto-char (point-min)))
             (switch-to-buffer buffer))))))
 

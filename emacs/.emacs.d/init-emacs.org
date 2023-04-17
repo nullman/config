@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2023-04-16 15:17 (kyle)>
+  #+TIMESTAMP: <2023-04-17 09:41 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -15435,7 +15435,7 @@
         ;;   "Display a table of the keybindings for the current mode."
         ;;   (interactive)
         ;;   (switch-to-buffer "*Keybindings Table*")
-        ;;   (buffer-disable-undo (current-buffer))
+        ;;   (buffer-disable-undo)
         ;;     (let (buffer-read-only)
         ;;       (erase-buffer)
         ;;       )
@@ -20079,7 +20079,7 @@
                                 "EM  " "SUB " "ESC " "FS  " "GS  "
                                 "RS  " "US  "]))
             (switch-to-buffer "*ASCII Table*")
-            (buffer-disable-undo (current-buffer))
+            (buffer-disable-undo)
             (let (buffer-read-only)
               (erase-buffer)
               (dotimes (y 32)
@@ -20104,7 +20104,7 @@
         ;;   "Display the ASCII characters from 0 to 254 in a buffer."
         ;;   (interactive)
         ;;   (switch-to-buffer "*ASCII Table*")
-        ;;   (buffer-disable-undo (current-buffer))
+        ;;   (buffer-disable-undo)
         ;;   (erase-buffer)
         ;;   (dotimes (x 255)
         ;;     (insert (format "%4d %c\n" x x)))
@@ -20199,7 +20199,7 @@
                    (510 . "Not Extended")
                    (511 . "Network Authentication Required"))))
             (switch-to-buffer "*HTTP Status Code Table*")
-            (buffer-disable-undo (current-buffer))
+            (buffer-disable-undo)
             (let (buffer-read-only)
               (erase-buffer)
               (insert "CODE   DESCRIPTION\n")
@@ -20228,7 +20228,7 @@
           "Display a table of the first 64 Powers of two in a buffer."
           (interactive)
           (switch-to-buffer "*Powers of Two Table*")
-          (buffer-disable-undo (current-buffer))
+          (buffer-disable-undo)
           (let (buffer-read-only)
             (erase-buffer)
             (insert "POWER   DECIMAL                HEX\n")
@@ -20264,7 +20264,7 @@
           "Display a table of trigonometry values."
           (interactive)
           (switch-to-buffer "*Trigonometry Table*")
-          (buffer-disable-undo (current-buffer))
+          (buffer-disable-undo)
           (let (buffer-read-only)
             (erase-buffer)
             (insert "RADIANS   SIN      COS      TAN       ARCSIN   ARCCOS   ARCTAN\n")
@@ -20406,7 +20406,7 @@
                 ;;                         x))
                 ;;                      (defined-colors))))
             (switch-to-buffer "*VGA Color Table*")
-            (buffer-disable-undo (current-buffer))
+            (buffer-disable-undo)
             (let (buffer-read-only)
               (erase-buffer)
               (insert "COLOR   RGB (Decimal)   RGB (Hex)   HSV (0.0 - 1.0)   NAME\n")
@@ -20890,7 +20890,7 @@
               (with-temp-buffer
                 (switch-to-buffer (current-buffer))
                 (rename-buffer "*Star Wars Scroll*")
-                (buffer-disable-undo (current-buffer))
+                (buffer-disable-undo)
                 (untabify (point-min) (point-max))
                 (save-window-excursion
                   (delete-other-windows)
@@ -25512,6 +25512,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
                               "Genre:  " genre)))
                   (with-current-buffer buffer
                     (setq buffer-read-only nil)
+                    (buffer-disable-undo)
                     (add-text-properties (point-min) (point-max) '(read-only nil))
                     (kill-region (point-min) (point-max))
                     (setq major-mode 'text-mode)
@@ -25531,7 +25532,6 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
                       (forward-line 1))
                     (cursor-intangible-mode 1)
                     (set-buffer-modified-p nil)
-                    (setq buffer-undo-list nil)
                     (goto-char (point-min)))
                   (switch-to-buffer buffer))))))
 
