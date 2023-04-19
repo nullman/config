@@ -1904,7 +1904,7 @@ arch-initialize() {
     standard=(
         "arch-group"
         "arch-sudoers"
-        "arch-locale"
+        #"arch-locale"
         "arch-upgrade"
         "arch-initial-applications"
         "arch-lightdm"
@@ -1974,7 +1974,7 @@ arch-initialize() {
         "arch-packages-optional-games-proton"
         "arch-packages-optional-games-marathon"
         "arch-packages-optional-other"
-        "arch-packages-optional-other-nvidia"
+        #"arch-packages-optional-other-nvidia"
     )
 
     if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then

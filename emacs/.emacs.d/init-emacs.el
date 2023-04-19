@@ -12105,7 +12105,7 @@ If FILE is non-nil, use that fortune file."
   (cl-labels
       ((command-path (command)
                      (let ((path (s-trim (shell-command-to-string
-                                          (format "which %s 2>/dev/null" command)))))
+                                          (format "command -v \"%s\" 2>&1" command)))))
                        (if (string= path "")
                            nil
                          path))))
@@ -12113,6 +12113,7 @@ If FILE is non-nil, use that fortune file."
                                (command-path "yaourt")
                                (command-path "yay")
                                (command-path "pacman"))))
+      (message "%S" package-manager)
       (if package-manager
           (let ((cmd (format
                       "%s %s %s | awk '/^%s / {p=1;next}p' | tr -d '\\n' | tr -s '[:blank:]'"
