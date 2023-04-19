@@ -12109,11 +12109,11 @@ If FILE is non-nil, use that fortune file."
                        (if (string= path "")
                            nil
                          path))))
-    (let ((package-manager (or (command-path "pamac")
-                               (command-path "yaourt")
-                               (command-path "yay")
-                               (command-path "pacman"))))
-      (message "%S" package-manager)
+    (let ((package-manager (or
+                            (command-path "pacman")
+                            (command-path "yay")
+                            (command-path "pamac")
+                            (command-path "yaourt"))))
       (if package-manager
           (let ((cmd (format
                       "%s %s %s | awk '/^%s / {p=1;next}p' | tr -d '\\n' | tr -s '[:blank:]'"
@@ -12125,7 +12125,7 @@ If FILE is non-nil, use that fortune file."
                       package)))
             (message "Searching for Arch package: %s" cmd)
             (insert (s-trim (shell-command-to-string cmd))))
-        (user-error "Neither 'pamac', 'yaourt', 'yay', or 'pacman' where found in system path")))))
+        (user-error "Neither 'pacman', 'yay', 'pamac', or 'yaourt' where found in system path")))))
 ;; insert-arch-package-description:1 ends here
 
 ;; [[file:init-emacs.org::#functions-external-program-functions-set-arch-package-description][set-arch-package-description:1]]

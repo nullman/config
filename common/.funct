@@ -1136,7 +1136,7 @@ make-cert() {
 }
 
 #
-# manjaro
+# arch
 #
 #!#        pmi                     pamac install or build
 #!#
