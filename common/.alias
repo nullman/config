@@ -2705,36 +2705,38 @@ alias geometry="xwininfo -root | grep geometry"
 #
 # pacman (Package Manager)
 #
-#!#        pmu                     pacman -Syu (update packages with refresh)
-#!alias pmu="sudo pacman -Syu"
-#!#        pmuy                    pacman -Syyu (update packages with forced refresh)
-#!alias pmuy="sudo pacman -Syyu"
-#!#        pmi                     pacman -S (install package)
-#!alias pmi="sudo pacman -S"
-#!#        pmr                     pacman -R (remove package and configuration files)
-#!alias pmr="sudo pacman -R --nosave"
-#!#        pms                     pacman -Ss (search packages)
-#!alias pms="pacman -Ss"
-#!#        pmf                     pacman -F (search files)
-#!alias pmf="pacman -F"
-#!#        pmq                     pacman -Q (query installed packages)
-#!alias pmq="pacman -Q"
-#!#        pmqi                    pacman -Qi (query installed packages with info)
-#!alias pmqi="pacman -Qi"
-#!#        pml                     pacman -Qqett (list installed packages)
-#!alias pml="pacman -Qqett"
-#!#        pmln                    pacman -Qqettn (list installed native packages)
-#!alias pmln="pacman -Qqettn"
-#!#        pmlf                    pacman -Qqettm (list installed foreign/AUR packages)
-#!alias pmlf="pacman -Qqettm"
-#!#        pmls                    pacman -Qs (search installed packages)
-#!alias pmls="pacman -Qs"
-#!#        pmlsi                   pacman -Qsi (search installed packages with info)
-#!alias pmlsi="pacman -Qsi"
-#!#        pmlz                      pacman list installed packages by size
-#!alias pmlz="LC_ALL=C pacman -Qi | awk '/^Name/{name=\$3} /^Installed Size/{print \$4\$5, name}' | sort -h"
-#!#        pmlzz                     expac list installed packages and dependencies by size
-#!alias pmlzz="expac -S -H M '%k\t%n' | sort -h"
+#        pmu                     pacman -Syu (update packages with refresh)
+alias pmu="sudo pacman -Syu --noconfirm"
+#        pmuf                    pacman -Syyu (update packages with forced refresh)
+alias pmuf="sudo pacman -Syyu --noconfirm"
+#        pmi                     pacman -S (install package)
+alias pmi="sudo pacman -S --needed --noconfirm"
+#        pmir                    pacman -S (reinstall package)
+alias pmir="sudo pacman -S --noconfirm"
+#        pmr                     pacman -R (remove package and configuration files)
+alias pmr="sudo pacman -R --nosave --noconfirm"
+#        pms                     pacman -Ss (search packages)
+alias pms="pacman -Ss"
+#        pmf                     pacman -F (search files)
+alias pmf="pacman -F"
+#        pmq                     pacman -Q (query installed packages)
+alias pmq="pacman -Q"
+#        pmqi                    pacman -Qi (query installed packages with info)
+alias pmqi="pacman -Qi"
+#        pml                     pacman -Qqett (list installed packages)
+alias pml="pacman -Qqett"
+#        pmln                    pacman -Qqettn (list installed native packages)
+alias pmln="pacman -Qqettn"
+#        pmlf                    pacman -Qqettm (list installed foreign/AUR packages)
+alias pmlf="pacman -Qqettm"
+#        pmls                    pacman -Qs (search installed packages)
+alias pmls="pacman -Qs"
+#        pmlsi                   pacman -Qsi (search installed packages with info)
+alias pmlsi="pacman -Qsi"
+#        pmlz                    pacman list installed packages by size
+alias pmlz="LC_ALL=C pacman -Qi | awk '/^Name/{name=\$3} /^Installed Size/{print \$4\$5, name}' | sort -h"
+#        pmlzz                   expac list installed packages and dependencies by size
+alias pmlzz="expac -S -H M '%k\t%n' | sort -h"
 #        pacman-rm-old           pacman remove old packages
 alias pacman-rm-old="sudo pacman -Sc"
 #        pacman-rm-orphans       pacman remove orphaned packages

@@ -1901,80 +1901,52 @@ arch-initialize() {
             sed 's/yay /yes | yay /'
     }
 
+    _getpackages() {
+        local file="${HOME}/org/personal.org"
+        local regexp="/^[ \t]*#\+NAME: $1\$/,/^\*/{print \$0}"
+        awk "${regexp}" "${file}" | tail -n +4 | head -n -1 | \
+            grep -v "^ *|---" | grep -v "^ *| x |" | grep "$2" | \
+            cut -d '|' -f 4 | sed 's/^ *// ; s/ *$//'
+    }
+
+    repocmd="sudo pacman -S --needed --noconfirm"
+    aurcmd="yay -S --needed --noprovides --answerdiff None --answerclean None --mflags \"--noconfirm\""
+
     standard=(
         "arch-group"
         "arch-sudoers"
         #"arch-locale"
-        "arch-upgrade"
-        "arch-initial-applications"
-        "arch-lightdm"
+        #"arch-capslock-control"
+        "arch-package-managers"
         "arch-lightdm-conf"
         "arch-lightdm-gtk-greeter-conf"
         "arch-lightdm-slick-greeter-conf"
-        "arch-wm"
-        "arch-wm-spacefm"
-        #"arch-wm-spacefm-conf"
-        "arch-wm-thunar"
-        "arch-bspwm"
         "arch-pkgfile"
         "arch-copy-wallpapers"
         "arch-fix-backgrounds"
         "arch-set-background-image"
-        "arch-fonts"
         "arch-font-cache"
         "arch-networkmanager"
-        "arch-packages-system"
-        "arch-packages-system-zsh"
-        "arch-packages-applications"
-        "arch-packages-applications-orpie"
         "arch-packages-applications-irssi"
-        "arch-packages-applications-xscreensaver"
         "arch-packages-applications-xscreensaver-aerial"
         "arch-packages-applications-x48"
-        "arch-packages-utilities"
-        "arch-packages-utilities-bitwarden"
-        "arch-packages-network"
-        "arch-packages-development"
-        "arch-packages-graphical"
-        "arch-packages-audio"
         "arch-packages-audio-audacious-winamp-classic-skin"
-        "arch-packages-video"
-        "arch-packages-wine"
-        "arch-packages-emulators"
-        "arch-packages-other-cli-hacks"
-        "arch-configure-zsh"
-        "arch-configure-pcmanfm"
+        #"arch-configure-gsync"
         "arch-configure-java-8-openjdk"
+        #"arch-configure-java-11-openjdk"
         "arch-service-pulseaudio"
         "arch-service-mpd"
         "arch-service-mpdris"
         #"arch-service-docker"
         #"arch-service-fstrim"
+        "arch-service-cups"
         "arch-printer-cannon"
     )
 
     optional=(
-        "arch-packages-optional-applications"
-        "arch-packages-optional-utilities"
-        "arch-packages-optional-utilities-latex"
-        "arch-packages-optional-network"
-        "arch-packages-optional-development"
-        "arch-packages-optional-development-commander-x16"
-        "arch-packages-optional-development-djgpp"
-        "arch-packages-optional-graphical"
-        "arch-packages-optional-audio"
+        #"arch-packages-optional-utilities-fingerprint"
         "arch-packages-optional-audio-grip"
-        "arch-packages-optional-video"
         "arch-packages-optional-video-dvd"
-        "arch-packages-optional-video-editors"
-        "arch-packages-optional-emulators"
-        "arch-packages-optional-emulators-virtualbox"
-        "arch-packages-optional-emulators-virtual-t"
-        "arch-packages-optional-games"
-        "arch-packages-optional-games-proton"
-        "arch-packages-optional-games-marathon"
-        "arch-packages-optional-other"
-        #"arch-packages-optional-other-nvidia"
     )
 
     if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
@@ -1986,9 +1958,11 @@ arch-initialize() {
     if [[ "$1" == "-o" ]] || [[ "$1" == "--optional" ]] ; then
         opt=1
         sections=(${optional[@]})
+        packagesname="arch-optional-packages"
     else
         opt=0
         sections=(${standard[@]})
+        packagesname="arch-packages"
     fi
 
     echo "You are about to install a curated set of Arch packages and setup this system."
@@ -2002,6 +1976,30 @@ arch-initialize() {
             echo
             echo "========== Arch Initialization Script =========="
             echo
+
+            echo
+            echo "==========$([[ ${opt} -eq 1 ]] && echo ' Optional') Packages =========="
+            echo
+
+            # repo packages
+            packages="$(_getpackages ${packagesname} '|     |' | tr '\n' ' ')"
+            echo
+            echo "========== Repo Packages =========="
+            echo
+            echo "${packages}"
+            echo
+            eval "${repocmd} ${packages}"
+
+            # aur packages
+            packages="$(_getpackages ${packagesname} '| aur |' | tr '\n' ' ')"
+            echo
+            echo "========== AUR Packages =========="
+            echo
+            echo "${packages}"
+            echo
+            eval "${aurcmd} ${packages}"
+
+            return 0
 
             for section in ${sections[@]} ; do
                 echo
@@ -2040,7 +2038,7 @@ arch-initialize() {
             echo "Aerial Screensaver (xscreensaver)"
             echo
             echo "Run the following command to install the Aerial Screensaver Videos (very long install):"
-            echo "  mkdir -p ~/tmp && yaourt -S --needed xscreensaver-aerial-videos-4k --tmp ~/tmp && rm -r ~/tmp/yaourt-tmp-$(id -un)"
+            echo "  mkdir -p ~/tmp && yay -S --needed xscreensaver-aerial-videos-4k --tmp ~/tmp && rm -r ~/tmp/yaourt-tmp-$(id -un)"
             echo
             echo "End of Arch Installation Script"
             ;;
