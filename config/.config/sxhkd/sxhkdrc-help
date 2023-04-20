@@ -6,6 +6,7 @@ System Tools
 | Super | Alt | Ctrl | Shift | Key    | Description                    |
 |-------+-----+------+-------+--------+--------------------------------|
 | Super | Alt |      |       | h      | Display Key Bindings           |
+| Super |     |      | Shift | h      | Display BSPWM Manual           |
 | Super | Alt |      |       | Space  | Application Launcher           |
 | Super | Alt |      |       | d      | Program Launcher               |
 | Super | Alt |      |       | Return | Rofi Menu Launcher             |

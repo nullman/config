@@ -169,7 +169,8 @@ super + alt + apostrophe
 
 # display time
 super + alt + backslash
-    echo "$(date '+%Y-%m-%d')\n $(date '+%H:%M:%S')" | yad --text-info --width=520 --height=240 --no-buttons --timeout=3 --fontname="Droid Sans Mono 64"
+    echo "$(date '+%Y-%m-%d')\n $(date '+%H:%M:%S')" | \
+    yad --text-info --width=520 --height=240 --no-buttons --timeout=3 --fontname="Droid Sans Mono 64"
 
 # edit with emacs
 super + alt + e
@@ -225,12 +226,15 @@ super + shift + r
 
 # reload tint2
 super + shift + t
-    ((pkill -SIGUSR1 -x tint2 -u ${USER} &&
-    xdo below -t $(xdo id -N Bspwm) $(xdo id -N Tint2)) || ${HOME}/bin/system-bar &) && notify-send --expire-time=2000 'Reloading Tint'
+    ((pkill -SIGUSR1 -x tint2 -u ${USER} && sleep 0.1 && \
+    xdo below -t $(xdo id -n root) $(xdo id -N Tint2)) || \
+    ${HOME}/bin/system-bar &) && notify-send --expire-time=2000 'Reloading Tint'
+    #xdo below -t $(xdo id -N Bspwm) $(xdo id -N Tint2)) || \
 
 # reset video
 super + shift + v
-    xrandr --output $(xrandr | grep ' connected ' | sed 's/ .*//' | head -n 1) --auto && notify-send --expire-time=2000 'Resetting video'
+    xrandr --output $(xrandr | grep ' connected ' | sed 's/ .*//' | head -n 1) --auto && \
+    notify-send --expire-time=2000 'Resetting video'
 
 # connect to beats headphones via bluetooth
 super + alt + b
