@@ -51,7 +51,7 @@ _command thunar && _delay 1 thunar &
 #_command pidgin && _delay 1 pidgin &
 #_command gajim && _delay 10 gajim &
 #_command idea && _delay 10 idea &
-_command google-chrome && _delay 1 google-chrome &
+_command google-chrome-stable && _delay 1 google-chrome-stable &
 #_command lbry && _delay 1 lbry &
 #_command syncterm && _delay 1 syncterm &
 
