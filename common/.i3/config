@@ -597,13 +597,14 @@ bindsym $super+$alt+k --release exec --no-startup-id xkill
 # Standard Applications
 #-------------------------------------------------------------------------------
 
+# system bar
+[[ -f "${HOME}/bin/system-bar" ]] && exec --no-startup-id source "${HOME}/bin/system-bar"
+
 # autostart standard applications
 #exec --no-startup-id ssh-agent
 #exec --no-startup-id ssh-add
 #exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id nitrogen --restore ; sleep 1 ; compton -b
-#exec --no-startup-id tint2
-#exec --no-startup-id manjaro-hello
 exec --no-startup-id nm-applet
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id pamac-tray

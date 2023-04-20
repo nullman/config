@@ -226,7 +226,7 @@ super + shift + r
 
 # reload tint2
 super + shift + t
-    ((pkill -SIGUSR1 -x tint2 -u ${USER} && sleep 0.1 && \
+    ((pkill -SIGUSR1 -x tint2 -u ${USER} && sleep 1 && \
     xdo below -t $(xdo id -n root) $(xdo id -N Tint2)) || \
     ${HOME}/bin/system-bar &) && notify-send --expire-time=2000 'Reloading Tint'
     #xdo below -t $(xdo id -N Bspwm) $(xdo id -N Tint2)) || \

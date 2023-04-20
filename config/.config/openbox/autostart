@@ -47,10 +47,8 @@ _command sxhkd && sxhkd -c "${HOME}/.config/sxhkd/sxhkdrc" &
 #_command manjaro-compositor && manjaro-compositor --start &
 _command compton && compton -c &
 
-# system bars
-#_command manjaro-tint2-session && manjaro-tint2-session &
-#_command polybar && polybar -c ${HOME}/.config/polybar/config openbox-bar &
-_command tint2 && tint2 &
+# system bar
+[[ -f "${HOME}/bin/system-bar" ]] && source "${HOME}/bin/system-bar"
 
 # system bar applets
 _command clipit && (_delay ${delay} pgrep -x -u ${USER} clipit > /dev/null || clipit) &
