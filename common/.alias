@@ -339,7 +339,6 @@ alias sxhkdrs="pkill -SIGUSR1 -x sxhkd -u \${USER}"
 #        tint2rs                 tint2 restart
 alias tint2rs="(pkill -SIGUSR1 -x tint2 -u \${USER} && \
     xdo below -t \$(xdo id -N Bspwm) \$(xdo id -N Tint2)) || \${HOME}/bin/system-bar"
-#!    xdo below -t \$(xdo id -n root) \$(xdo id -N Tint2)) || \${HOME}/bin/system-bar"
 #        xrdb-list               list custom .Xresource settings
 alias xrdb-list="xrdb -query -all"
 #        xrdb-merge-home         merge ~/.Xresource settings into xrdb

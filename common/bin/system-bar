@@ -26,7 +26,6 @@ _delay() {
 #_command manjaro-tint2-session && manjaro-tint2-session &
 #_command polybar && polybar -c ${HOME}/.config/polybar/config openbox-bar &
 _command tint2 && (tint2 && xdo below -t $(xdo id -N Bspwm) $(xdo id -N Tint2)) & # status bar hidden when fullscreen
-#_command tint2 && (tint2 && xdo below -t $(xdo id -n root) $(xdo id -N Tint2)) & # status bar hidden when fullscreen
 #_command tint2 && tint2 &
 
 # system bar applets
