@@ -338,7 +338,8 @@ alias dd-sync="sudo dd bs=4M conv=fdatasync status=progress"
 alias sxhkdrs="pkill -SIGUSR1 -x sxhkd -u \${USER}"
 #        tint2rs                 tint2 restart
 alias tint2rs="(pkill -SIGUSR1 -x tint2 -u \${USER} && \
-    xdo below -t \$(xdo id -n root) \$(xdo id -N Tint2)) || \${HOME}/bin/system-bar"
+    xdo below -t \$(xdo id -N Bspwm) \$(xdo id -N Tint2)) || \${HOME}/bin/system-bar"
+#!    xdo below -t \$(xdo id -n root) \$(xdo id -N Tint2)) || \${HOME}/bin/system-bar"
 #        xrdb-list               list custom .Xresource settings
 alias xrdb-list="xrdb -query -all"
 #        xrdb-merge-home         merge ~/.Xresource settings into xrdb
@@ -587,10 +588,8 @@ alias readme-centericq="zpager \$(locate centericq | grep README.gz)"
 alias readme-irssi="zpager \$(locate irssi | grep README.gz)"
 
 #
-# manjaro
+# arch
 #
-#        install-manjaro         run custom manjaro installation script
-alias install-manjaro="sudo bash -c \"bash <(curl -s http://kylesherman.net/init/manjaro.sh)\""
 #        scl                     list all services
 alias scl="systemctl list-unit-files && systemctl --user list-unit-files"
 #        scle                    list enabled services
@@ -2751,13 +2750,15 @@ alias pacman-reset-repository="
     sudo pacman-mirrors --geoip
 
     # update keyring
-    sudo pacman -Sy archlinux-keyring manjaro-keyring
+    #sudo pacman -Sy archlinux-keyring manjaro-keyring
+    sudo pacman -Sy archlinux-keyring
     sudo rm -rf /etc/pacman.d/gnupg
     sudo rm -rf /root/.gnupg
     gpg --refresh-keys
     sudo pacman-key --init
     sudo pacman-key --refresh-keys
-    sudo pacman-key --populate archlinux manjaro
+    #sudo pacman-key --populate archlinux manjaro
+    sudo pacman-key --populate archlinux
 
     # remove unused packages (orphans)
     sudo pacman -Rsn \$(pacman -Qdtq)
