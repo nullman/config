@@ -1927,10 +1927,10 @@ arch-initialize() {
         "arch-set-background-image"
         "arch-font-cache"
         "arch-networkmanager"
-        "arch-packages-applications-irssi"
-        "arch-packages-applications-xscreensaver-aerial"
-        "arch-packages-applications-x48"
-        "arch-packages-audio-audacious-winamp-classic-skin"
+        "arch-configure-irssi"
+        "arch-configure-xscreensaver-aerial"
+        "arch-configure-x48"
+        "arch-configure-audacious-winamp-classic-skin"
         #"arch-configure-gsync"
         "arch-configure-java-8-openjdk"
         #"arch-configure-java-11-openjdk"
@@ -1944,9 +1944,9 @@ arch-initialize() {
     )
 
     optional=(
-        #"arch-packages-optional-utilities-fingerprint"
-        "arch-packages-optional-audio-grip"
-        "arch-packages-optional-video-dvd"
+        #"arch-configure-fingerprint"
+        "arch-configure-grip"
+        #"arch-configure-handbrake"
     )
 
     if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
