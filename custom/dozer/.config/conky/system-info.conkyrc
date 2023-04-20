@@ -86,8 +86,9 @@ ${voffset 5}${color2}Kernel:${color}  ${alignr}${kernel}
 ${voffset 5}${color2}Uptime:${color}  ${alignr}${uptime_short}
 # utc time
 ${voffset 5}${color2}UTC:${color}  ${alignr}${utime %H:%M}
-# packages
-${voffset 5}${color2}Packages to Update:${color}  ${alignr}${execi 3600 checkupdates | wc -l}
+# disabled due to rate limits on aur.archlinux.org
+# # packages
+# ${voffset 5}${color2}Packages to Update:${color}  ${alignr}${execi 3600 checkupdates | wc -l}
 # entropy
 ${voffset 5}${color2}Entropy:${color}  ${entropy_avail} / ${entropy_poolsize}  ${entropy_perc}%  ${entropy_bar}
 
