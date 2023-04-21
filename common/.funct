@@ -1877,9 +1877,15 @@ home-restow() {
     # cleanup
     echo "Cleanup some files..."
     if [[ -d "${HOME}/.config/gtk-3.0" ]] ; then
-        [[ -L "${HOME}/.config/gtk-3.0/bookmarks" ]] || mv "${HOME}/.config/gtk-3.0/bookmarks" "${HOME}/.config/gtk-3.0/bookmarks.old"
-        [[ -L "${HOME}/.config/gtk-3.0/gtk.css" ]] || mv "${HOME}/.config/gtk-3.0/gtk.css" "${HOME}/.config/gtk-3.0/gtk.css.old"
-        [[ -L "${HOME}/.config/gtk-3.0/settings.ini" ]] || mv "${HOME}/.config/gtk-3.0/settings.ini" "${HOME}/.config/gtk-3.0/settings.ini.old"
+        for file in "gtk-3.0/bookmarks" \
+                    "gtk-3.0/gtk.css" \
+                    "gtk-3.0/settings.ini" \
+                    "xfce4/xfconf/xfce-perchannel-xml/xsettings.xml"
+        do
+            if [[ -f "${HOME}/.config/${file}" ]] && [[ ! -L "${HOME}/.config/${file}" ]] ; then
+                mv "${HOME}/.config/${file}" "${HOME}/.config/${file}.old"
+            fi
+        done
     fi
 
     # restow
@@ -1925,7 +1931,7 @@ arch-initialize() {
         "arch-copy-wallpapers"
         "arch-fix-backgrounds"
         "arch-set-background-image"
-        "arch-font-cache"
+        "arch-fonts"
         "arch-networkmanager"
         "arch-configure-irssi"
         "arch-configure-xscreensaver-aerial"

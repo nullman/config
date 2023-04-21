@@ -990,6 +990,8 @@ alias cdul="cd /usr/local"
 #!alias cdupp="cd /usr/portage/packages"
 #        cduh                    cd /usr/share
 alias cduh="cd /usr/share"
+#        cdfonts                 cd /usr/share/fonts
+alias cdfonts="cd /usr/share/fonts"
 #        cdus                    cd /usr/src
 alias cdus="cd /usr/src"
 #        cdusl                   cd /usr/src/linux
