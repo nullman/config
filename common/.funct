@@ -2005,8 +2005,6 @@ arch-initialize() {
             echo
             eval "${aurcmd} ${packages}"
 
-            return 0
-
             for section in ${sections[@]} ; do
                 echo
                 echo "========== ${section} =========="
