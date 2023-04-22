@@ -1918,12 +1918,15 @@ arch-initialize() {
     repocmd="sudo pacman -S --needed --noconfirm"
     aurcmd="yay -S --needed --noprovides --answerdiff None --answerclean None --mflags \"--noconfirm\""
 
-    standard=(
+    initial=(
         "arch-group"
         "arch-sudoers"
         #"arch-locale"
         #"arch-capslock-control"
         "arch-package-managers"
+    )
+
+    standard=(
         "arch-lightdm-conf"
         "arch-lightdm-gtk-greeter-conf"
         "arch-lightdm-slick-greeter-conf"
@@ -1974,7 +1977,10 @@ arch-initialize() {
     echo "You are about to install a curated set of Arch packages and setup this system."
     echo "This command is normally run once for a given system installation, but it is"
     echo "safe to run multiple times to pick up new packages or configuration changes."
-    [[ ${opt} -eq 1 ]] && echo "The OPTIONAL parameter was given, so (only) optional packages will be installed."
+    if [[ ${opt} -eq 1 ]] ; then
+        echo "The OPTIONAL parameter was given, so (only) optional packages will be installed."
+        echo "This should only be run after running this script without the OPTIONAL parameter."
+    fi
     echo -n "Do you wish to proceed? [yN] " ; read a
 
     case "${a}" in
@@ -1982,6 +1988,16 @@ arch-initialize() {
             echo
             echo "========== Arch Initialization Script =========="
             echo
+
+            if [[ ${opt} -eq 0 ]] ; then
+                for section in ${initial[@]} ; do
+                    echo
+                    echo "========== ${section} =========="
+                    echo
+                    #echo "$(_getsection ${section})"
+                    eval "$(_getsection ${section})"
+                done
+            fi
 
             echo
             echo "==========$([[ ${opt} -eq 1 ]] && echo ' Optional') Packages =========="
@@ -2016,34 +2032,36 @@ arch-initialize() {
             echo
             echo "========== Arch Initialization Complete =========="
             echo
-            echo "Optional setup:"
-            echo
-            echo "SSH Daemon"
-            echo
-            echo "1) Edit /etc/ssh/sshd_config:"
-            echo
-            echo "------------------------------------------------------------------------------"
-            echo "# do not allow root logins"
-            echo "PermitRootLogin no"
-            echo
-            echo "# do not allow password logins (public key must be in authorized hosts file)"
-            echo "PasswordAuthentication no"
-            echo
-            echo "# allow X11 connections [optional]"
-            echo "X11Forwarding yes"
-            echo "------------------------------------------------------------------------------"
-            echo
-            echo "2) Enable sshd service:"
-            echo
-            echo "  sudo systemctl enable sshd.service"
-            echo "  sudo systemctl start sshd.service"
-            echo "  sudo systemctl status sshd.service"
-            echo
-            echo "Aerial Screensaver (xscreensaver)"
-            echo
-            echo "Run the following command to install the Aerial Screensaver Videos (very long install):"
-            echo "  mkdir -p ~/tmp && yay -S --needed xscreensaver-aerial-videos-4k --tmp ~/tmp && rm -r ~/tmp/yaourt-tmp-$(id -un)"
-            echo
+            if [[ ${opt} -eq 0 ]] ; then
+                echo "Optional setup:"
+                echo
+                echo "SSH Daemon"
+                echo
+                echo "1) Edit /etc/ssh/sshd_config:"
+                echo
+                echo "------------------------------------------------------------------------------"
+                echo "# do not allow root logins"
+                echo "PermitRootLogin no"
+                echo
+                echo "# do not allow password logins (public key must be in authorized hosts file)"
+                echo "PasswordAuthentication no"
+                echo
+                echo "# allow X11 connections [optional]"
+                echo "X11Forwarding yes"
+                echo "------------------------------------------------------------------------------"
+                echo
+                echo "2) Enable sshd service:"
+                echo
+                echo "  sudo systemctl enable sshd.service"
+                echo "  sudo systemctl start sshd.service"
+                echo "  sudo systemctl status sshd.service"
+                echo
+                echo "Aerial Screensaver (xscreensaver)"
+                echo
+                echo "Run the following command to install the Aerial Screensaver Videos (very long install):"
+                echo "  mkdir -p ~/tmp && yay -S --needed xscreensaver-aerial-videos-4k --tmp ~/tmp && rm -r ~/tmp/yaourt-tmp-$(id -un)"
+                echo
+            fi
             echo "End of Arch Installation Script"
             ;;
     esac
