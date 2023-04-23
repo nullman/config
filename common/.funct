@@ -1943,6 +1943,8 @@ arch-initialize() {
         #"arch-configure-gsync"
         "arch-configure-java-8-openjdk"
         #"arch-configure-java-11-openjdk"
+        "arch-service-networkmanager"
+        "arch-service-bluetooth"
         "arch-service-pulseaudio"
         "arch-service-mpd"
         "arch-service-mpdris"
