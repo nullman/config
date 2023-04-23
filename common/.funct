@@ -1916,7 +1916,7 @@ arch-initialize() {
     }
 
     repocmd="sudo pacman -S --needed --noconfirm"
-    aurcmd="yay -S --needed --noprovides --answerdiff None --answerclean None --mflags \"--noconfirm\""
+    aurcmd="yay -S --needed --noconfirm --noprovides --answerdiff None --answerclean None --mflags \"--noconfirm\""
 
     initial=(
         "arch-group"
@@ -1952,6 +1952,7 @@ arch-initialize() {
         #"arch-service-fstrim"
         "arch-service-cups"
         "arch-printer-cannon"
+        "arch-final"
     )
 
     optional=(

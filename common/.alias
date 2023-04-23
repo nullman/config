@@ -2799,6 +2799,8 @@ alias yau="yay -Syu --noconfirm"
 alias yauf="yay -Syyu --noconfirm"
 #        yai                     yay -S (install package)
 alias yai="yay -S --needed --noconfirm"
+#        yaic                    yay -S (install package with confirmation)
+alias yaic="yay -S --needed"
 #        yair                    yay -S (reinstall package)
 alias yair="yay -S --noconfirm"
 #        yar                     yay -R (remove package and configuration files)
