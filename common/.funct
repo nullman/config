@@ -2015,6 +2015,8 @@ arch-initialize() {
             echo
             echo "${packages}"
             echo
+            echo "Press any key to install"
+            read pause
             eval "${repocmd} ${packages}"
 
             # aur packages
@@ -2024,6 +2026,8 @@ arch-initialize() {
             echo
             echo "${packages}"
             echo
+            echo "Press any key to install"
+            read pause
             eval "${aurcmd} ${packages}"
 
             for section in ${sections[@]} ; do
