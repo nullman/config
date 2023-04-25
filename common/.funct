@@ -1878,9 +1878,9 @@ home-restow() {
     echo "Cleanup some files..."
     if [[ -d "${HOME}/.config/gtk-3.0" ]] ; then
         for file in "gtk-3.0/bookmarks" \
-                    "gtk-3.0/gtk.css" \
-                    "gtk-3.0/settings.ini" \
-                    "xfce4/xfconf/xfce-perchannel-xml/xsettings.xml"
+                        "gtk-3.0/gtk.css" \
+                        "gtk-3.0/settings.ini" \
+                        "xfce4/xfconf/xfce-perchannel-xml/xsettings.xml"
         do
             if [[ -f "${HOME}/.config/${file}" ]] && [[ ! -L "${HOME}/.config/${file}" ]] ; then
                 mv "${HOME}/.config/${file}" "${HOME}/.config/${file}.old"
@@ -1986,94 +1986,87 @@ arch-initialize() {
         echo "The OPTIONAL parameter was given, so (only) optional packages will be installed."
         echo "This should only be run after running this script without the OPTIONAL parameter."
     fi
-    echo -n "Do you wish to proceed? [yN] " ; read a
 
-    case "${a}" in
-        y|Y)
-            echo
-            echo "========== Arch Initialization Script =========="
-            echo
+    echo
+    echo "========== Arch Initialization Script =========="
+    echo
 
-            if [[ ${opt} -eq 0 ]] ; then
-                for section in ${initial[@]} ; do
-                    echo
-                    echo "========== ${section} =========="
-                    echo
-                    #echo "$(_getsection ${section})"
-                    eval "$(_getsection ${section})"
-                done
-            fi
+    if [[ ${opt} -eq 0 ]] ; then
+        for section in ${initial[@]} ; do
+            echo
+            echo "========== ${section} =========="
+            echo
+            #echo "$(_getsection ${section})"
+            eval "$(_getsection ${section})"
+        done
+    fi
 
-            echo
-            echo "==========$([[ ${opt} -eq 1 ]] && echo ' Optional') Packages =========="
-            echo
+    echo
+    echo "==========$([[ ${opt} -eq 1 ]] && echo ' Optional') Packages =========="
+    echo
 
-            # repo packages
-            packages="$(_getpackages ${packagesname} '|     |' | tr '\n' ' ')"
-            echo
-            echo "========== Repo Packages =========="
-            echo
-            echo "${packages}"
-            echo
-            echo "Press any key to install"
-            read pause
-            eval "${repocmd} ${packages}"
+    # repo packages
+    packages=($(_getpackages ${packagesname} '|     |'))
+    echo
+    echo "========== Repo Packages =========="
+    echo
+    for x in $(seq 0 $((${#packages[@]} / 20))) ; do
+        #echo "${packages[@]:$((x * 20)):20}"
+        eval "${repocmd} ${packages[@]:$((x * 20)):20}"
+    done
 
-            # aur packages
-            packages="$(_getpackages ${packagesname} '| aur |' | tr '\n' ' ')"
-            echo
-            echo "========== AUR Packages =========="
-            echo
-            echo "${packages}"
-            echo
-            echo "Press any key to install"
-            read pause
-            eval "${aurcmd} ${packages}"
+    # aur packages
+    packages=($(_getpackages ${packagesname} '| aur |'))
+    echo
+    echo "========== AUR Packages =========="
+    echo
+    for x in $(seq 0 $((${#packages[@]} / 20))) ; do
+        #echo "${packages[@]:$((x * 20)):20}"
+        eval "${aurcmd} ${packages[@]:$((x * 20)):20}"
+    done
 
-            for section in ${sections[@]} ; do
-                echo
-                echo "========== ${section} =========="
-                echo
-                #echo "$(_getsection ${section})"
-                eval "$(_getsection ${section})"
-            done
+    for section in ${sections[@]} ; do
+        echo
+        echo "========== ${section} =========="
+        echo
+        #echo "$(_getsection ${section})"
+        eval "$(_getsection ${section})"
+    done
 
-            echo
-            echo "========== Arch Initialization Complete =========="
-            echo
-            if [[ ${opt} -eq 0 ]] ; then
-                echo "Optional setup:"
-                echo
-                echo "SSH Daemon"
-                echo
-                echo "1) Edit /etc/ssh/sshd_config:"
-                echo
-                echo "------------------------------------------------------------------------------"
-                echo "# do not allow root logins"
-                echo "PermitRootLogin no"
-                echo
-                echo "# do not allow password logins (public key must be in authorized hosts file)"
-                echo "PasswordAuthentication no"
-                echo
-                echo "# allow X11 connections [optional]"
-                echo "X11Forwarding yes"
-                echo "------------------------------------------------------------------------------"
-                echo
-                echo "2) Enable sshd service:"
-                echo
-                echo "  sudo systemctl enable sshd.service"
-                echo "  sudo systemctl start sshd.service"
-                echo "  sudo systemctl status sshd.service"
-                echo
-                echo "Aerial Screensaver (xscreensaver)"
-                echo
-                echo "Run the following command to install the Aerial Screensaver Videos (very long install):"
-                echo "  mkdir -p ~/tmp && yay -S --needed xscreensaver-aerial-videos-4k --tmp ~/tmp && rm -r ~/tmp/yaourt-tmp-$(id -un)"
-                echo
-            fi
-            echo "End of Arch Installation Script"
-            ;;
-    esac
+    echo
+    echo "========== Arch Initialization Complete =========="
+    echo
+    if [[ ${opt} -eq 0 ]] ; then
+        echo "Optional setup:"
+        echo
+        echo "SSH Daemon"
+        echo
+        echo "1) Edit /etc/ssh/sshd_config:"
+        echo
+        echo "------------------------------------------------------------------------------"
+        echo "# do not allow root logins"
+        echo "PermitRootLogin no"
+        echo
+        echo "# do not allow password logins (public key must be in authorized hosts file)"
+        echo "PasswordAuthentication no"
+        echo
+        echo "# allow X11 connections [optional]"
+        echo "X11Forwarding yes"
+        echo "------------------------------------------------------------------------------"
+        echo
+        echo "2) Enable sshd service:"
+        echo
+        echo "  sudo systemctl enable sshd.service"
+        echo "  sudo systemctl start sshd.service"
+        echo "  sudo systemctl status sshd.service"
+        echo
+        echo "Aerial Screensaver (xscreensaver)"
+        echo
+        echo "Run the following command to install the Aerial Screensaver Videos (very long install):"
+        echo "  mkdir -p ~/tmp && yay -S --needed xscreensaver-aerial-videos-4k --tmp ~/tmp && rm -r ~/tmp/yaourt-tmp-${USER}"
+        echo
+    fi
+    echo "End of Arch Installation Script"
 }
 #        manjaro-initialize      install manjaro packages and setup system
 manjaro-initialize() {
@@ -2179,56 +2172,51 @@ manjaro-initialize() {
     echo "This command is normally run once for a given system installation, but it is"
     echo "safe to run multiple times to pick up new packages or configuration changes."
     [[ ${opt} -eq 1 ]] && echo "The OPTIONAL parameter was given, so (only) optional packages will be installed."
-    echo -n "Do you wish to proceed? [yN] " ; read a
 
-    case "${a}" in
-        y|Y)
-            echo
-            echo "========== Manjaro Initialization Script =========="
-            echo
+    echo
+    echo "========== Manjaro Initialization Script =========="
+    echo
 
-            for section in ${sections[@]} ; do
-                echo
-                echo "========== ${section} =========="
-                echo
-                #echo "$(_getsection ${section})"
-                eval "$(_getsection ${section})"
-            done
+    for section in ${sections[@]} ; do
+        echo
+        echo "========== ${section} =========="
+        echo
+        #echo "$(_getsection ${section})"
+        eval "$(_getsection ${section})"
+    done
 
-            echo
-            echo "========== Manjaro Initialization Complete =========="
-            echo
-            echo "Optional setup:"
-            echo
-            echo "SSH Daemon"
-            echo
-            echo "1) Edit /etc/ssh/sshd_config:"
-            echo
-            echo "------------------------------------------------------------------------------"
-            echo "# do not allow root logins"
-            echo "PermitRootLogin no"
-            echo
-            echo "# do not allow password logins (public key must be in authorized hosts file)"
-            echo "PasswordAuthentication no"
-            echo
-            echo "# allow X11 connections [optional]"
-            echo "X11Forwarding yes"
-            echo "------------------------------------------------------------------------------"
-            echo
-            echo "2) Enable sshd service:"
-            echo
-            echo "  sudo systemctl enable sshd.service"
-            echo "  sudo systemctl start sshd.service"
-            echo "  sudo systemctl status sshd.service"
-            echo
-            echo "Aerial Screensaver (xscreensaver)"
-            echo
-            echo "Run the following command to install the Aerial Screensaver Videos (very long install):"
-            echo "  mkdir -p ~/tmp && yaourt -S --needed xscreensaver-aerial-videos-4k --tmp ~/tmp && rm -r ~/tmp/yaourt-tmp-$(id -un)"
-            echo
-            echo "End of Manjaro Installation Script"
-            ;;
-    esac
+    echo
+    echo "========== Manjaro Initialization Complete =========="
+    echo
+    echo "Optional setup:"
+    echo
+    echo "SSH Daemon"
+    echo
+    echo "1) Edit /etc/ssh/sshd_config:"
+    echo
+    echo "------------------------------------------------------------------------------"
+    echo "# do not allow root logins"
+    echo "PermitRootLogin no"
+    echo
+    echo "# do not allow password logins (public key must be in authorized hosts file)"
+    echo "PasswordAuthentication no"
+    echo
+    echo "# allow X11 connections [optional]"
+    echo "X11Forwarding yes"
+    echo "------------------------------------------------------------------------------"
+    echo
+    echo "2) Enable sshd service:"
+    echo
+    echo "  sudo systemctl enable sshd.service"
+    echo "  sudo systemctl start sshd.service"
+    echo "  sudo systemctl status sshd.service"
+    echo
+    echo "Aerial Screensaver (xscreensaver)"
+    echo
+    echo "Run the following command to install the Aerial Screensaver Videos (very long install):"
+    echo "  mkdir -p ~/tmp && yaourt -S --needed xscreensaver-aerial-videos-4k --tmp ~/tmp && rm -r ~/tmp/yaourt-tmp-${USER}"
+    echo
+    echo "End of Manjaro Installation Script"
 }
 
 #!
