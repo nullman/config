@@ -176,6 +176,10 @@ super + alt + backslash
 super + alt + e
     emacsclient --eval '(emacs-everywhere)'
 
+# restart resume user service (caps-lock and insert key changes)
+super + alt + r
+    systemctl --user restart resume && notify-send --expire-time=2000 'User services restarted'
+
 # git synchronize config
 super + alt + y
     source "${HOME}/.funct" && (git-sync-config && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12" --tail

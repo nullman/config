@@ -1944,16 +1944,9 @@ arch-initialize() {
         #"arch-configure-gsync"
         "arch-configure-java-8-openjdk"
         #"arch-configure-java-11-openjdk"
-        "arch-printer-cannon"
-        "arch-service-lightdm"
-        "arch-service-networkmanager"
-        "arch-service-bluetooth"
-        "arch-service-cups"
-        #"arch-service-fstrim"
-        #"arch-service-docker"
-        "arch-service-pulseaudio"
-        "arch-service-mpd"
-        "arch-service-mpdris"
+        #"arch-printer-cannon"
+        "arch-services"
+        "arch-user-services"
         "arch-final"
     )
 
@@ -2011,8 +2004,8 @@ arch-initialize() {
     echo "========== Repo Packages =========="
     echo
     for x in $(seq 0 $((${#packages[@]} / 20))) ; do
-        #echo "${packages[@]:$((x * 20)):20}"
-        eval "${repocmd} ${packages[@]:$((x * 20)):20}"
+        echo "${repocmd} $(echo ${packages[@]:$((x * 20)):20})"
+        eval "${repocmd} $(echo ${packages[@]:$((x * 20)):20})"
     done
 
     # aur packages
@@ -2021,8 +2014,8 @@ arch-initialize() {
     echo "========== AUR Packages =========="
     echo
     for x in $(seq 0 $((${#packages[@]} / 20))) ; do
-        #echo "${packages[@]:$((x * 20)):20}"
-        eval "${aurcmd} ${packages[@]:$((x * 20)):20}"
+        echo "${aurcmd} $(echo ${packages[@]:$((x * 20)):20})"
+        eval "${aurcmd} $(echo ${packages[@]:$((x * 20)):20})"
     done
 
     for section in ${sections[@]} ; do
