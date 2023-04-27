@@ -1925,6 +1925,7 @@ arch-initialize() {
 
     repocmd="sudo pacman -S --needed --noconfirm"
     aurcmd="yay -S --needed --noconfirm --noprovides --answerdiff None --answerclean None --mflags \"--noconfirm\""
+    cmdsize=10
 
     initial=(
         "arch-group"
@@ -2011,9 +2012,9 @@ arch-initialize() {
     echo
     echo "========== Repo Packages =========="
     echo
-    for x in $(seq 0 $((${#packages[@]} / 20))) ; do
-        echo "${repocmd} $(echo ${packages[@]:$((x * 20)):20})"
-        eval "${repocmd} $(echo ${packages[@]:$((x * 20)):20})"
+    for x in $(seq 0 $((${#packages[@]} / ${cmdsize}))) ; do
+        echo "${repocmd} $(echo ${packages[@]:$((x * ${cmdsize})):${cmdsize}})"
+        eval "${repocmd} $(echo ${packages[@]:$((x * ${cmdsize})):${cmdsize}})"
     done
 
     # aur packages
@@ -2021,9 +2022,9 @@ arch-initialize() {
     echo
     echo "========== AUR Packages =========="
     echo
-    for x in $(seq 0 $((${#packages[@]} / 20))) ; do
-        echo "${aurcmd} $(echo ${packages[@]:$((x * 20)):20})"
-        eval "${aurcmd} $(echo ${packages[@]:$((x * 20)):20})"
+    for x in $(seq 0 $((${#packages[@]} / ${cmdsize}))) ; do
+        echo "${aurcmd} $(echo ${packages[@]:$((x * ${cmdsize})):${cmdsize}})"
+        eval "${aurcmd} $(echo ${packages[@]:$((x * ${cmdsize})):${cmdsize}})"
     done
 
     for section in ${sections[@]} ; do
