@@ -10891,7 +10891,7 @@ otherwise `downcase-word' is called."
             (modify-syntax-entry ?- "." syntax-table)
             (modify-syntax-entry ?' "w" syntax-table)
             (with-syntax-table syntax-table
-              (kill-region beg end)
+              (delete-region beg end)
               (goto-char beg)
               (insert (titleize str))
               (goto-char (+ beg col)))))))
