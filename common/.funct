@@ -731,7 +731,8 @@ convert-video-to-mp4() {
         for infile in "${files[@]}" ; do
             outfile=$(echo "${infile}" | sed 's/\..*$/.mp4/')
             echo "${infile} -> ${outfile}"
-            ffmpeg -i "${infile}" -c:v libx264 -c:a aac "${outfile}" && rm "${infile}"
+            ffmpeg -i "${infile}" -c:v libx264 "${outfile}" && rm "${infile}"
+            #ffmpeg -i "${infile}" -c:v libx264 -c:a aac "${outfile}" && rm "${infile}"
         done
     fi
 }
@@ -756,8 +757,8 @@ convert-video-to-720p() {
         outfile=$(echo "${infile}" | sed 's/\..*$/-720p.mp4/')
         ffmpeg -i "${infile}" \
                -c:v libx264 -preset veryslow -tune film -crf 22 -vf scale=-2:720 \
-               -c:a aac
                "${outfile}"
+               #-c:a aac
                #-b:a 192k \
     fi
 }
