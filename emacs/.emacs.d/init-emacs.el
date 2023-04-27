@@ -8091,7 +8091,7 @@ Use optional DELIM as a delimiter."
   "Calls the `substring' function safely.
 
 No errors will be returned for out of range values of FROM and
-TO. Instead an empty string is returned."
+TO. Instead the entire string is returned."
   (let* ((len (length string))
          (to (or to len)))
     (when (< from 0)
@@ -8101,7 +8101,7 @@ TO. Instead an empty string is returned."
     (if (or (< from 0) (> from len)
             (< to 0) (> to len)
             (< to from))
-        ""
+        string
       (substring string from to))))
 ;; safe-substring:1 ends here
 
@@ -12099,24 +12099,27 @@ If FILE is non-nil, use that fortune file."
 
 (init-message 3 "Functions: External Program Functions: insert-arch-package-description")
 
-(defun insert-arch-package-description (package)
-  "Insert Arch OS package description for given PACKAGE."
+(defun insert-arch-package-description (package &optional max-length)
+  "Insert Arch OS package description for given PACKAGE.
+
+Optional parameter, MAX-LENGTH will truncate the description if
+it is longer."
   (interactive "*")
   (cl-labels
       ((command-path (command)
-                     (let ((path (s-trim (shell-command-to-string
-                                          (format "command -v \"%s\" 2>&1" command)))))
+                     (let ((path (string-trim (shell-command-to-string
+                                               (format "command -v \"%s\" 2>&1" command)))))
                        (if (string= path "")
                            nil
                          path))))
     (let ((package-manager (or
-                            (command-path "pacman")
                             (command-path "yay")
-                            (command-path "pamac")
-                            (command-path "yaourt"))))
+                            (command-path "yaourt")
+                            (command-path "pacman")
+                            (command-path "pamac"))))
       (if package-manager
           (let ((cmd (format
-                      "%s %s %s | awk '/^%s / {p=1;next}p' | tr -d '\\n' | tr -s '[:blank:]'"
+                      "%s %s %s | sed -n '/^[a-z]*\\/%s /{n;p}' | tr -d '\\n' | tr -s '[:blank:]'"
                       package-manager
                       (if (string= (substring package-manager -5) "pamac")
                           "search -a"
@@ -12124,7 +12127,11 @@ If FILE is non-nil, use that fortune file."
                       package
                       package)))
             (message "Searching for Arch package: %s" cmd)
-            (insert (s-trim (shell-command-to-string cmd))))
+            (let ((desc (string-trim (shell-command-to-string cmd))))
+              (insert (if (and max-length
+                               (> (length desc) max-length))
+                          (concat (substring desc 0 (- max-length 3)) "...")
+                        desc))))
         (user-error "Neither 'pacman', 'yay', 'pamac', or 'yaourt' where found in system path")))))
 ;; insert-arch-package-description:1 ends here
 
@@ -12161,13 +12168,15 @@ If FILE is non-nil, use that fortune file."
   (interactive "*")
   (save-mark-and-excursion
     (forward-line 0)
-    (let ((package (re-search-forward "|[^|]*|[^|]*|\\([^|]*\\)|[^|]*|[^|]*|" (point-at-eol))))
+    (let ((package (re-search-forward "|[^|]*|[^|]*|[ \t]*\\([^ \t|]*\\)[ \t]*|[^|]*|[^|]*|" (point-at-eol))))
       (let ((package (match-string-no-properties 1)))
         ;; remove any existing description
         (forward-line 0)
-        (re-search-forward "|[^|]*|[^|]*|[^|]*|[^|]*|\\([^|]*\\)|" (point-at-eol))
-        (replace-match "")
-        (insert-arch-package-description package)))))
+        (re-search-forward "|[^|]*|[^|]*|[^|]*|[^|]*|" (point-at-eol))
+        (org-table-blank-field)
+        (insert-arch-package-description package 80)
+        ;;(org-table-align)
+        ))))
 ;; set-arch-package-description:1 ends here
 
 ;; [[file:init-emacs.org::#functions-external-program-functions-define-word][define-word:2]]

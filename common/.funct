@@ -1170,6 +1170,14 @@ yasi() {
         yay -Ss "$1" | sed -n ":a ; { N ; s/\n// ; p ; d ; ba }" | grep " (Installed"
     fi
 }
+#        yasis                   yay specific search installed packages
+yasis() {
+    if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+        echo "Usage: $0 SEARCH"
+    else
+        yay -Ss "$1" | sed -n ":a ; /^[a-z]*\/$1 / { N ; s/\n// ; p ; d ; ba }" | grep " (Installed"
+    fi
+}
 
 #
 # debian
