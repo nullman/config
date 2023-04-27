@@ -124,6 +124,7 @@ _ba discord-development desktop='^6' follow=on
 _ba Pidgin desktop='^7' follow=on
 _ba Tootle desktop='^7' follow=on
 _ba Com.github.bleakgrey.tootle desktop='^7' follow=on
+_ba dev.geopjr.Tuba desktop='^7' follow=on
 _ba Gajim desktop='^7' follow=on
 _ba 'Hyperspace Desktop' desktop='^7' follow=on
 _ba android-messages-desktop desktop='^7' follow=on

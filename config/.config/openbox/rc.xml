@@ -1950,6 +1950,17 @@ pressed. -->
         <width>50%</width>
       </size>
     </application>
+    <application class="dev.geopjr.Tuba">
+      <desktop>7</desktop>
+      <position force="no">
+        <x>-0</x>
+        <y>0</y>
+      </position>
+      <size>
+        <height>100%</height>
+        <width>50%</width>
+      </size>
+    </application>
     <application class="Microsoft Teams*">
       <desktop>7</desktop>
       <maximized>true</maximized>

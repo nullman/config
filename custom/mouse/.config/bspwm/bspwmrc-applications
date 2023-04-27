@@ -44,6 +44,7 @@ _command alacritty && alacritty -e ${HOME}/bin/run-screen &
 #_command discord && _delay 1 discord &
 #_command tootle && _delay 10 tootle &
 #_command com.github.bleakgrey.tootle && _delay 10 com.github.bleakgrey.tootle &
+#_command dev.geopjr.Tuba && _delay 10 dev.geopjr.Tuba &
 #_command lbry && _delay 1 lbry &
 #_command syncterm && _delay 1 syncterm &
 

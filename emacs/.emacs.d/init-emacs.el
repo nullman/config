@@ -12135,25 +12135,39 @@ If FILE is non-nil, use that fortune file."
 
 (init-message 3 "Functions: External Program Functions: set-arch-package-description")
 
+;; old version
+;; (defun set-arch-package-description ()
+;;   "Set Arch OS package description for package install command found on current line."
+;;   (interactive "*")
+;;   (save-mark-and-excursion
+;;     (forward-line 0)
+;;     (when (and
+;;            (re-search-forward "\\b\\(pacman\\|yay\\|yaourt\\|pamac\\)\\([ \t]+\\(-S\\|install\\|build\\)\\)\\([ \t]+-[^ \t]*\\)*" (point-at-eol) :noerror)
+;;            (re-search-forward "[ \t]*\\b\\([^ \t]+\\)\\b" (point-at-eol) :noerror))
+;;       (let ((package (match-string-no-properties 1)))
+;;         ;; remove any existing description
+;;         (if (re-search-forward "#" (point-at-eol) :noerror)
+;;             (progn
+;;               (delete-region (point) (line-end-position))
+;;               (insert " "))
+;;           (progn
+;;             (end-of-line)
+;;             (insert " # ")))
+;;         (insert-arch-package-description package)
+;;         (align-comments)))))
+
 (defun set-arch-package-description ()
-  "Set Arch OS package description for package install command found on current line."
+  "Set Arch OS package description for package found on current line."
   (interactive "*")
   (save-mark-and-excursion
     (forward-line 0)
-    (when (and
-           (re-search-forward "\\b\\(pacman\\|yaourt\\|yay\\|pamac\\)\\([ \t]+\\(-S\\|install\\|build\\)\\)\\([ \t]+-[^ \t]*\\)*" (point-at-eol) :noerror)
-           (re-search-forward "[ \t]*\\b\\([^ \t]+\\)\\b" (point-at-eol) :noerror))
+    (let ((package (re-search-forward "|[^|]*|[^|]*|\\([^|]*\\)|[^|]*|[^|]*|" (point-at-eol))))
       (let ((package (match-string-no-properties 1)))
         ;; remove any existing description
-        (if (re-search-forward "#" (point-at-eol) :noerror)
-            (progn
-              (delete-region (point) (line-end-position))
-              (insert " "))
-          (progn
-            (end-of-line)
-            (insert " # ")))
-        (insert-arch-package-description package)
-        (align-comments)))))
+        (forward-line 0)
+        (re-search-forward "|[^|]*|[^|]*|[^|]*|[^|]*|\\([^|]*\\)|" (point-at-eol))
+        (replace-match "")
+        (insert-arch-package-description package)))))
 ;; set-arch-package-description:1 ends here
 
 ;; [[file:init-emacs.org::#functions-external-program-functions-define-word][define-word:2]]

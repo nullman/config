@@ -729,10 +729,9 @@ convert-video-to-mp4() {
     else
         files=("$@")
         for infile in "${files[@]}" ; do
-            #outfile="${infile:0:-4}.mp4"
             outfile=$(echo "${infile}" | sed 's/\..*$/.mp4/')
             echo "${infile} -> ${outfile}"
-            ffmpeg -i "${infile}" -codec copy "${outfile}" && rm "${infile}"
+            ffmpeg -i "${infile}" -c:v libx264 -c:a aac "${outfile}" && rm "${infile}"
         done
     fi
 }
@@ -754,12 +753,12 @@ convert-video-to-720p() {
         echo "Convert a blu-ray 1080p video to 720p."
     else
         infile="$1"
-        outfile=$(echo "${infile}" | sed 's/\(\..*\)$/-720p\1/')
+        outfile=$(echo "${infile}" | sed 's/\..*$/-720p.mp4/')
         ffmpeg -i "${infile}" \
                -c:v libx264 -preset veryslow -tune film -crf 22 -vf scale=-2:720 \
+               -c:a aac
                "${outfile}"
                #-b:a 192k \
-               #-c:a libfdk_aac -b:a 192k \
     fi
 }
 
