@@ -1930,6 +1930,7 @@ arch-initialize() {
     initial=(
         "arch-group"
         "arch-sudoers"
+        "arch-sysctl"
         #"arch-locale"
         #"arch-capslock-control"
         "arch-package-managers"
