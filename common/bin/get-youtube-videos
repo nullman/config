@@ -46,11 +46,12 @@ channels=(
     "Computer/Emacs       | Tony Aldon                        | https://www.youtube.com/@tonyaldon/videos"
 #   "Computer/General     | adventuresin9 ???                 | https://www.youtube.com/@adventuresin9797/videos"
     "Computer/General     | Chris Titus Tech                  | https://www.youtube.com/c/ChrisTitusTech/videos"
-#   "Computer/General     | Craft Computing                   | https://www.youtube.com/@CraftComputing/videos"
+#   "Computer/General     | Craft Computing ???               | https://www.youtube.com/@CraftComputing/videos"
 #   "Computer/General     | DistroTube ???                    | https://www.youtube.com/c/DistroTube/videos"
 #   "Computer/General     | ExplainingComputers ???           | https://www.youtube.com/c/explainingcomputers/videos"
     "Computer/General     | Jake@Linux                        | https://www.youtube.com/@JakeLinux/videos"
 #   "Computer/General     | PCWorld ???                       | https://www.youtube.com/pcworld/videos"
+    "Computer/General     | Stephen's Tech Talks              | https://www.youtube.com/@stephenstechtalks5377/videos"
 #   "Computer/Graphics    | pwnisher                          | https://www.youtube.com/@pwnisher/videos"
     "Computer/Hardware    | Ben Eater                         | https://www.youtube.com/c/BenEater/videos"
     "Computer/Hardware    | Ben Heck Hacks                    | https://www.youtube.com/c/BenHeckHacks/videos"
@@ -178,8 +179,8 @@ _download() {
                 --format-sort 'res:1080,res:720,res:480' \
                 --playlist-reverse \
                 ${archive} \
-                --output '"${name}" - %(release_date>%Y-%m-%d,upload_date>%Y-%m-%d|Unknown)s - %(title)s.%(ext)s' \
-                '"${url}"'"
+                --output \"${name} - %(release_date>%Y-%m-%d,upload_date>%Y-%m-%d|Unknown)s - %(title)s.%(ext)s\" \
+                '${url}'"
             echo
             echo "${url} -> ${path}"
             echo

@@ -12163,10 +12163,15 @@ it is longer."
 ;;         (insert-arch-package-description package)
 ;;         (align-comments)))))
 
-(defun set-arch-package-description ()
-  "Set Arch OS package description for package found on current line."
+(defun set-arch-package-description (&optional fast)
+  "Set Arch OS package description for package found on current line.
+
+If FAST is non-nil, `org-table-align' will not be called before
+or after."
   (interactive "*")
   (save-mark-and-excursion
+    (unless fast
+      (org-table-align))
     (forward-line 0)
     (let ((package (re-search-forward "|[^|]*|[^|]*|[ \t]*\\([^ \t|]*\\)[ \t]*|[^|]*|[^|]*|" (point-at-eol))))
       (let ((package (match-string-no-properties 1)))
@@ -12175,8 +12180,8 @@ it is longer."
         (re-search-forward "|[^|]*|[^|]*|[^|]*|[^|]*|" (point-at-eol))
         (org-table-blank-field)
         (insert-arch-package-description package 80)
-        ;;(org-table-align)
-        ))))
+        (unless fast
+          (org-table-align))))))
 ;; set-arch-package-description:1 ends here
 
 ;; [[file:init-emacs.org::#functions-external-program-functions-define-word][define-word:2]]

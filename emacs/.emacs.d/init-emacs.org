@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2023-04-27 11:44 (kyle)>
+  #+TIMESTAMP: <2023-04-29 10:13 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -17692,10 +17692,15 @@
         ;;         (insert-arch-package-description package)
         ;;         (align-comments)))))
 
-        (defun set-arch-package-description ()
-          "Set Arch OS package description for package found on current line."
+        (defun set-arch-package-description (&optional fast)
+          "Set Arch OS package description for package found on current line.
+
+        If FAST is non-nil, `org-table-align' will not be called before
+        or after."
           (interactive "*")
           (save-mark-and-excursion
+            (unless fast
+              (org-table-align))
             (forward-line 0)
             (let ((package (re-search-forward "|[^|]*|[^|]*|[ \t]*\\([^ \t|]*\\)[ \t]*|[^|]*|[^|]*|" (point-at-eol))))
               (let ((package (match-string-no-properties 1)))
@@ -17704,8 +17709,8 @@
                 (re-search-forward "|[^|]*|[^|]*|[^|]*|[^|]*|" (point-at-eol))
                 (org-table-blank-field)
                 (insert-arch-package-description package 80)
-                ;;(org-table-align)
-                ))))
+                (unless fast
+                  (org-table-align))))))
       #+END_SRC
 
 ***** define-word
