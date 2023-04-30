@@ -225,7 +225,7 @@ alias gdmrs="sudo systemctl restart gdm.service"
 #        gnome-shell-restart     gnome-shell restart
 alias gnome-shell-restart="DISPLAY=:0 gnome-shell --replace"
 #        lightdm-restart         lightdm restart
-alias lightdm-resetart="sudo systemctl restart lightdm.service"
+alias lightdm-restart="sudo systemctl restart lightdm.service"
 #        networkrs               network restart
 alias networkrs="
     sudo systemctl stop NetworkManager
