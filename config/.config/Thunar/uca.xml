@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+<action>
+        <icon>utilities-terminal</icon>
+        <name>Open Terminal Here</name>
+        <submenu></submenu>
+        <unique-id>1525028244173986-1</unique-id>
+        <command>exo-open --working-directory %d --launch TerminalEmulator</command>
+        <description>Open Terminal Here</description>
+        <range>*</range>
+        <patterns>*</patterns>
+        <startup-notify/>
+        <directories/>
+        <audio-files/>
+        <image-files/>
+        <other-files/>
+        <text-files/>
+        <video-files/>
+</action>
+<action>
+        <icon>emacs</icon>
+        <name>Open File in Emacs</name>
+        <submenu></submenu>
+        <unique-id>1613860216544745-1</unique-id>
+        <command>emacsclient --alternate-editor=vi %F</command>
+        <description>Open File in Emacs</description>
+        <range>*</range>
+        <patterns>*</patterns>
+        <startup-notify/>
+        <other-files/>
+        <text-files/>
+</action>
+<action>
+        <icon>emacs</icon>
+        <name>Open Dir in Emacs</name>
+        <submenu></submenu>
+        <unique-id>1676218516586732-1</unique-id>
+        <command>emacsclient --alternate-editor=vi %D</command>
+        <description>Open Dir in Emacs</description>
+        <range>*</range>
+        <patterns>*</patterns>
+        <startup-notify/>
+        <directories/>
+        <audio-files/>
+        <image-files/>
+        <other-files/>
+        <text-files/>
+        <video-files/>
+</action>
+</actions>
