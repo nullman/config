@@ -725,14 +725,16 @@ sed-dir() {
 convert-video-to-mp4() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 FILE..."
-        echo "Convert all files in current directory or a list of FILEs to mp4 video."
+        echo "Convert all FILEs to mp4 video."
     else
         files=("$@")
         for infile in "${files[@]}" ; do
             outfile=$(echo "${infile}" | sed 's/\..*$/.mp4/')
             echo "${infile} -> ${outfile}"
-            ffmpeg -i "${infile}" -c:v libx264 "${outfile}" && rm "${infile}"
-            #ffmpeg -i "${infile}" -c:v libx264 -c:a aac "${outfile}" && rm "${infile}"
+            ffmpeg -i "${infile}" \
+                   -c:v libx264 \
+                   -c:a aac \
+                   "${outfile}"
         done
     fi
 }
@@ -757,8 +759,8 @@ convert-video-to-720p() {
         outfile=$(echo "${infile}" | sed 's/\..*$/-720p.mp4/')
         ffmpeg -i "${infile}" \
                -c:v libx264 -preset veryslow -tune film -crf 22 -vf scale=-2:720 \
+               -c:a aac \
                "${outfile}"
-               #-c:a aac
                #-b:a 192k \
     fi
 }

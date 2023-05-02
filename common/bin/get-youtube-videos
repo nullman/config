@@ -131,6 +131,7 @@ channels=(
     "Game                 | Me, Myself, and Die               | https://www.youtube.com/c/MeMyselfandDieRPG/videos"
     "Mechanical           | Mechanistic                       | https://www.youtube.com/@mechanistic3d/videos"
     "Music/Ambient        | Smai-Lee                          | https://www.youtube.com/@smai-lee/videos"
+    "Music/Ambient        | Synth Musiq                       | https://www.youtube.com/@synthmusiq/videos"
     "Philosophy           | Sowell Explains                   | https://www.youtube.com/@SowellExplains/videos"
 #   "Puzzle               | Chris Ramsay ???                  | https://www.youtube.com/c/ChrisRamsay52/videos"
     "Puzzle               | RossDM - Puzzle Solving           | https://www.youtube.com/c/RossDM/videos"
@@ -176,12 +177,13 @@ _download() {
         if [[ -z "${listname}" || "${name}" == "${listname}" ]] ; then
             path="${basedir}/${dir}/${name}"
             cmd="${ytdlp} \
-                --format 'bv*+ba/b' \
+                --format 'h264+aac' \
                 --format-sort 'res:1080,res:720,res:480' \
                 --playlist-reverse \
                 ${archive} \
                 --output \"${name} - %(release_date>%Y-%m-%d,upload_date>%Y-%m-%d|Unknown)s - %(title)s.%(ext)s\" \
                 '${url}'"
+                #--format 'bv*+ba/b'
             echo
             echo "${url} -> ${path}"
             echo
