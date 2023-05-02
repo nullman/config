@@ -2065,11 +2065,6 @@ arch-initialize() {
         echo "  sudo systemctl start sshd.service"
         echo "  sudo systemctl status sshd.service"
         echo
-        echo "Aerial Screensaver (xscreensaver)"
-        echo
-        echo "Run the following command to install the Aerial Screensaver Videos (very long install):"
-        echo "  mkdir -p ~/tmp && yay -S --needed xscreensaver-aerial-videos-4k --tmp ~/tmp && rm -r ~/tmp/yaourt-tmp-${USER}"
-        echo
     fi
     echo "End of Arch Installation Script"
 }

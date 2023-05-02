@@ -181,9 +181,10 @@ _download() {
                 --format-sort 'res:1080,res:720,res:480' \
                 --playlist-reverse \
                 ${archive} \
-                --output \"${name} - %(release_date>%Y-%m-%d,upload_date>%Y-%m-%d|Unknown)s - %(title)s.%(ext)s\" \
+                --output \"${name} - %(release_date>%Y-%m-%d,upload_date>%Y-%m-%d|Unknown)s - %(title)s.mp4\" \
                 '${url}'"
                 #--format 'bv*+ba/b'
+                #--output \"${name} - %(release_date>%Y-%m-%d,upload_date>%Y-%m-%d|Unknown)s - %(title)s.%(ext)s\" \
             echo
             echo "${url} -> ${path}"
             echo

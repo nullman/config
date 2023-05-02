@@ -1971,7 +1971,7 @@ alias rsync-rlptx="rsync -rlptx --progress"
 #        rsync-media-get-morpheus  rsync morpheus:/home/data/media /home/data/media
 alias rsync-media-get-morpheus="rsync -rlptx --progress morpheus:/home/data/media/ ${home}/data/media/"
 #        rsync-media-get-morpheus-exclude  rsync morpheus:/home/data/media /home/data/media (minus software and video directories)
-alias rsync-media-get-morpheus-exclude="rsync -rlptx --progress --exclude={'/repos/','/software/','/video/'} morpheus:/home/data/media/ ${home}/data/media/"
+alias rsync-media-get-morpheus-exclude="rsync -rlptx --progress --exclude={'/Repos/','/Software/','/Video/'} morpheus:/home/data/media/ ${home}/data/media/"
 #        rsync-media-get-morpheus-mouse-delete  rsync morpheus:/home/data/media /home/data/media (specific sub-directories)
 alias rsync-media-get-morpheus-mouse-delete=" \
     if [[ "$(uname -n)" == "mouse" ]] ; then
