@@ -9283,13 +9283,13 @@ If less than a page away, jump to the beginning of the buffer."
                   (cond
                    ;; lowercase -> capitalized
                    ((s-lowercase-p word)
-                    (capitalize-word arg))
+                    (capitalize-word-enhanced arg))
                    ;; uppercase -> lowercase
                    ((s-uppercase-p word)
-                    (downcase-word arg))
+                    (downcase-word-enhanced arg))
                    ;; other -> uppercase
                    (t
-                    (upcase-word arg))))))))))))
+                    (upcase-word-enhanced arg))))))))))))
 (bind-keys* ("M-c" . toggle-word-case))
 ;; toggle-word-case:1 ends here
 
