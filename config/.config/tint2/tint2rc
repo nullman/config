@@ -228,7 +228,7 @@ clock_dwheel_command =
 
 battery_tooltip = 1
 battery_low_status = 10
-battery_low_cmd = notify-send --expire-time=10000 "Battery is low!"
+battery_low_cmd = [[ -e /sys/class/power_supply/BAT0 ]] && notify-send --expire-time=10000 "Battery is low!"
 battery_full_cmd =
 bat1_font = System San Francisco Display 12
 battery_font_color = #ffffff 100

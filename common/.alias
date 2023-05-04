@@ -238,28 +238,6 @@ alias networkrs="
 alias menuw="menu \${HOME}/.menu_work"
 #        mw                      menu ~/.menu_work
 alias mw="menu \${HOME}/.menu_work"
-#!#        beep                    beep console
-#!alias beep="echo -e -n \"\a\""
-#!#        beep-ten                beep console ten times
-#!alias beep-ten="
-#!    for ((x = 1; x < 10; x++)) ; do
-#!        echo -e -n \"\a\"
-#!        sleep 1
-#!    done"
-#!#        beep-loop               beep console until a key is pressed
-#!alias beep-loop=""
-#        click                   play click test sound with paplay
-alias click="paplay \${HOME}/sounds/click.wav"
-#        beep                    play beep test sound with paplay
-alias beep="paplay \${HOME}/sounds/shortbeep.wav"
-#        beep-ten                play beep test sound with paplay ten times
-alias beep-ten="
-    for ((x = 1; x < 10; x++)) ; do
-        paplay \${HOME}/sounds/shortbeep.wav
-        sleep 1
-    done"
-#        fart                    play fart test sound with paplay
-alias fart="paplay \${HOME}/sounds/farts/0111.wav"
 #        find-kernel-mod         find kernel modules
 alias find-kernel-mod="find /lib/modules/\$(uname -r)/ -type f -iname '*.o' -or -iname '*.ko'"
 #        hosts                   cat /etc/hosts
@@ -480,6 +458,30 @@ alias nitrogen-metcalfe-gray="nitrogen --save --set-tiled /usr/share/backgrounds
 alias nitrogen-metcalfe-orange="nitrogen --save --set-tiled /usr/share/backgrounds/Metcalfe-Loves-Linux-3.jpg"
 #        nitrogen-metcalfe-green  set wallpaper to Metcalfe-Loves-Linux-4.jpg (green)
 alias nitrogen-metcalfe-green="nitrogen --save --set-tiled /usr/share/backgrounds/Metcalfe-Loves-Linux-4.jpg"
+
+#
+# sounds
+#
+#!#        beep                    beep console
+#!alias beep="echo -e -n \"\a\""
+#!#        beep-ten                beep console ten times
+#!alias beep-ten="
+#!    for ((x = 1; x < 10; x++)) ; do
+#!        echo -e -n \"\a\"
+#!        sleep 1
+#!    done"
+#!#        beep-loop               beep console until a key is pressed
+#!alias beep-loop=""
+#        click                   play click test sound with paplay
+alias click="paplay \${HOME}/sounds/click.wav"
+#        beep                    play beep test sound with paplay
+alias beep="paplay \${HOME}/sounds/shortbeep.wav"
+#        beep-ten                play beep test sound with paplay ten times
+alias beep-ten="
+    for ((x = 1; x < 10; x++)) ; do
+        paplay \${HOME}/sounds/shortbeep.wav
+        sleep 1
+    done"
 
 #
 # bash
