@@ -1934,7 +1934,7 @@ arch-initialize() {
         "arch-sudoers"
         "arch-sysctl"
         #"arch-locale"
-        #"arch-capslock-control"
+        "arch-capslock-control"
         "arch-package-managers"
     )
 
