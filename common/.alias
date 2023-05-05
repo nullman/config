@@ -339,31 +339,6 @@ alias find-ls="find . -mindepth 1 -maxdepth 1 -not -regex '^\.+$'"
 alias update-desktop-apps="update-desktop-database \${HOME}/.local/share/applications"
 #        pi-serial-number        print raspberry pi serial number
 alias pi-serial-number="echo \$(cat /sys/firmware/devicetree/base/serial-number)"
-#        mount-synology          mount synology drives
-alias mount-synology="
-    sudo mkdir -p /mnt/synology
-    sudo mkdir -p /mnt/synology/adult
-    sudo mkdir -p /mnt/synology/media
-    sudo mkdir -p /mnt/synology/music
-    sudo mkdir -p /mnt/synology/photo
-    sudo mkdir -p /mnt/synology/video
-    #sudo chown -R \${USER}:\${USER} /mnt/synology
-    sudo sh -c \"mount -t cifs //synology/adult /mnt/synology/adult -o \$(cat \${HOME}/.synology-mount-parameters)\"
-    sleep 0.2
-    sudo sh -c \"mount -t cifs //synology/media /mnt/synology/media -o \$(cat \${HOME}/.synology-mount-parameters)\"
-    sleep 0.2
-    sudo sh -c \"mount -t cifs //synology/music /mnt/synology/music -o \$(cat \${HOME}/.synology-mount-parameters)\"
-    sleep 0.2
-    sudo sh -c \"mount -t cifs //synology/photo /mnt/synology/photo -o \$(cat \${HOME}/.synology-mount-parameters)\"
-    sleep 0.2
-    sudo sh -c \"mount -t cifs //synology/video /mnt/synology/video -o \$(cat \${HOME}/.synology-mount-parameters)\""
-#        umount-synology         umount synology drives
-alias umount-synology="
-    sudo umount /mnt/synology/adult
-    sudo umount /mnt/synology/media
-    sudo umount /mnt/synology/music
-    sudo umount /mnt/synology/photo
-    sudo umount /mnt/synology/video"
 
 #
 # general (external)
@@ -446,6 +421,31 @@ alias stopwatch="
         date -u -d @\$((ts - start)) '+%H:%M:%S'
         sleep 1s
     done"
+#        mount-synology          mount synology drives
+alias mount-synology="
+    sudo mkdir -p /mnt/synology
+    sudo mkdir -p /mnt/synology/adult
+    sudo mkdir -p /mnt/synology/media
+    sudo mkdir -p /mnt/synology/music
+    sudo mkdir -p /mnt/synology/photo
+    sudo mkdir -p /mnt/synology/video
+    #sudo chown -R \${USER}:\${USER} /mnt/synology
+    sudo sh -c \"mount -t cifs //synology/adult /mnt/synology/adult -o \$(cat \${HOME}/.synology-mount-parameters)\"
+    sleep 0.2
+    sudo sh -c \"mount -t cifs //synology/media /mnt/synology/media -o \$(cat \${HOME}/.synology-mount-parameters)\"
+    sleep 0.2
+    sudo sh -c \"mount -t cifs //synology/music /mnt/synology/music -o \$(cat \${HOME}/.synology-mount-parameters)\"
+    sleep 0.2
+    sudo sh -c \"mount -t cifs //synology/photo /mnt/synology/photo -o \$(cat \${HOME}/.synology-mount-parameters)\"
+    sleep 0.2
+    sudo sh -c \"mount -t cifs //synology/video /mnt/synology/video -o \$(cat \${HOME}/.synology-mount-parameters)\""
+#        umount-synology         umount synology drives
+alias umount-synology="
+    sudo umount /mnt/synology/adult
+    sudo umount /mnt/synology/media
+    sudo umount /mnt/synology/music
+    sudo umount /mnt/synology/photo
+    sudo umount /mnt/synology/video"
 
 #
 # wallpaper
@@ -538,20 +538,30 @@ alias dev="cat /proc/devices"
 #
 # services (daemons)
 #
+#        scl                     list all services
+alias scl="systemctl list-unit-files && systemctl --user list-unit-files"
 #        systemctl-list          list all services
 alias systemctl-list="systemctl list-unit-files && systemctl --user list-unit-files"
+#        scle                    list enabled services
+alias scle="systemctl list-unit-files --state enabled && systemctl --user list-unit-files --state enabled"
 #        systemctl-list-enabled  list enabled services
-alias systemctl-list-enabled="
-    systemctl list-unit-files --state enabled && \
-    systemctl --user list-unit-files --state enabled"
+alias systemctl-list-enabled="systemctl list-unit-files --state enabled && systemctl --user list-unit-files --state enabled"
 #        systemctl-list-grep     list all services with grep
 alias systemctl-list-grep="(systemctl list-unit-files && systemctl --user list-unit-files) | grep -i"
+#        sce                     enable service
+alias sce="sudo systemctl enable --now"
 #        systemctl-enable        enable service
 alias systemctl-enable="sudo systemctl enable --now"
+#        scd                     disable service
+alias scd="sudo systemctl disable"
 #        systemctl-disable       disable service
 alias systemctl-disable="sudo systemctl disable"
+#        scur                    reload user service definitions
+alias scur="systemctl --user daemon-reload"
 #        systemctl-user-reload   reload user service definitions
 alias systemctl-user-reload="systemctl --user daemon-reload"
+#        scrs                    restart service
+alias scrs="sudo systemctl restart"
 #        systemctl-restart       restart service
 alias systemctl-restart="sudo systemctl restart"
 
@@ -592,16 +602,6 @@ alias readme-irssi="zpager \$(locate irssi | grep README.gz)"
 #
 # arch
 #
-#        scl                     list all services
-alias scl="systemctl list-unit-files && systemctl --user list-unit-files"
-#        scle                    list enabled services
-alias scle="systemctl list-unit-files | grep enabled && systemctl --user list-unit-files | grep enabled"
-#        sce                     enable service
-alias sce="sudo systemctl enable --now"
-#        scd                     disable service
-alias scd="sudo systemctl disable"
-#        scrs                    restart service
-alias scrs="sudo systemctl restart"
 
 #
 # ubuntu
@@ -1798,8 +1798,10 @@ alias asl="sudo arp-scan --localnet"
 alias ping-firewall="ping 192.168.1.1"
 #        ping-bridge             ping bridge
 alias ping-bridge="ping 192.168.1.2"
-#        ping-pihole             ping pihole
-alias ping-pihole="ping 192.168.1.3"
+#        ping-pimodemd           ping pimodemd
+alias ping-pimodemd="ping 192.168.1.3"
+#        ping-synologyx          ping synology
+alias ping-synologyx="ping 192.168.1.5"
 #        ping-synology           ping synology
 alias ping-synology="ping 192.168.1.6"
 #        ping-morpheus           ping morpheus
@@ -1821,15 +1823,11 @@ alias ping-choi="ping 192.168.1.42"
 #        ping-switch             ping switch
 alias ping-switch="ping 192.168.1.44"
 #        ping-mouse              ping mouse
-alias ping-mouse="ping 192.168.1.51"
+alias ping-mouse="ping 192.168.1.50"
 #        ping-raspad             ping raspad
-alias ping-raspad="ping 192.168.1.52"
+alias ping-raspad="ping 192.168.1.54"
 #        ping-raspadd            ping raspadd
-alias ping-raspadd="ping 192.168.1.53"
-#        ping-pimodem            ping pimodem
-alias ping-pimodem="ping 192.168.1.54"
-#        ping-pimodemd           ping pimodemd
-alias ping-pimodemd="ping 192.168.1.55"
+alias ping-raspadd="ping 192.168.1.55"
 #        ping-retropie            ping retropie
 alias ping-retropie="ping 192.168.1.56"
 #        ping-retropied           ping retropied
@@ -1844,8 +1842,6 @@ alias ping-dns2="ping 24.31.3.9"
 alias ping-gateway="ping 24.31.20.1"
 #        ping-nullware           ping nullware
 alias ping-nullware="ping \${nullwareip}"
-#        ping-work               ping work
-alias ping-work="ping kyle-work"
 #        ping-google             ping google.com
 alias ping-google="ping google.com"
 #        ping-googleip           ping google.com by ip address
@@ -1858,6 +1854,8 @@ alias ping-uswest="ping uswest.net"
 alias ping-uswestip="ping 204.147.80.81"
 #        traceroute-uswest       traceroute uswest.net
 alias traceroute-uswest="traceroute uswest.net"
+#        icanhazip               display external IP address
+alias icanhazip="curl icanhazip.com"
 
 #
 # offlineimap
@@ -3384,7 +3382,8 @@ alias copy-wall="
 #        copy-fonts              copy fonts
 alias copy-fonts="
     mkdir -p \${HOME}/.local/share/fonts
-    cp ${config}/fonts \${HOME}/.local/share/fonts/"
+    cp ${config}-private/common/.fonts/* \${HOME}/.local/share/fonts/
+    fc-cache -v -f"
 #!#        copy-skins              copy mp3 skins to xmms
 #!alias copy-skins="sudo cp -Rp \${HOME}/documents/Skins/* /usr/share/xmms/Skins/"
 #!#        copy-icewm              copy icewm settings to ~/

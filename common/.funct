@@ -1791,7 +1791,7 @@ Setup /home/data directory:
 Optionally install the default crontab:
   make-cron
 Install arch packages and setup system:
-  arch-initialize
+  arch-intialize
 EOF
 }
 #        home-initialize         stow links from ~/ to ~/config and ~/config-private dirs
@@ -1947,7 +1947,8 @@ arch-initialize() {
         "arch-copy-wallpapers"
         "arch-fix-backgrounds"
         "arch-set-background-image"
-        "arch-fonts"
+        "arch-copy-fonts"
+        "arch-ssh-config"
         "arch-networkmanager"
         "arch-configure-irssi"
         "arch-configure-xscreensaver-aerial"
