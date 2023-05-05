@@ -27,7 +27,7 @@ config="\${HOME}/$([[ ${os} == Haiku ]] && echo 'haiku-config' || echo 'config')
 #!       terminal
 terminal="alacritty"
 #!       network device
-networkdevice="$(_command ip && ip route get 1.1.1.1 | awk '{print $5}')"
+networkdevice="$(_command ip && ip route get 1.1.1.1 2> /dev/null | awk '{print $5}')"
 #!       nullwareip
 nullwareip="159.203.165.79"
 #===============================================================================
@@ -3369,8 +3369,13 @@ alias mkraw="
 #!            cp /root/.hosts /etc/hosts
 #!            ;;
 #!    esac"
-#        copy-wall               copy wallpapers to system
-alias copy-wall="
+#        copy-fonts              copy fonts
+alias copy-fonts="
+    mkdir -p \${HOME}/.local/share/fonts
+    cp ${config}-private/common/fonts/* \${HOME}/.local/share/fonts/
+    fc-cache -v -f"
+#        copy-wallpapers         copy wallpapers to system
+alias copy-wallpapers="
     sudo bash -c \"
         mkdir -p /usr/local/share/wallpapers
         cp \${HOME}/wallpapers/* /usr/local/share/wallpapers/
@@ -3379,11 +3384,6 @@ alias copy-wall="
         cp \${HOME}/wallpapers/* /usr/share/backgrounds/
         chmod 644 /usr/share/backgrounds/*
     \""
-#        copy-fonts              copy fonts
-alias copy-fonts="
-    mkdir -p \${HOME}/.local/share/fonts
-    cp ${config}-private/common/.fonts/* \${HOME}/.local/share/fonts/
-    fc-cache -v -f"
 #!#        copy-skins              copy mp3 skins to xmms
 #!alias copy-skins="sudo cp -Rp \${HOME}/documents/Skins/* /usr/share/xmms/Skins/"
 #!#        copy-icewm              copy icewm settings to ~/
