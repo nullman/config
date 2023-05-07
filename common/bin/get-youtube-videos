@@ -9,8 +9,8 @@
 
 basedir="/mnt/synology/video"
 #basedir="${HOME}/synology/video"
-#ytdlp="$(which yt-dlp)"
-ytdlp="${HOME}/code/yt-dlp/yt-dlp"
+ytdlp="$(which yt-dlp)"
+#ytdlp="${HOME}/code/yt-dlp/yt-dlp"
 
 channels=(
     "Computer/Demo        | Commodore Amiga Demos             | https://www.youtube.com/playlist?list=PLnmLOQIDmUvUgbvY-Jq0txuYWYgWVcOOS"
@@ -178,14 +178,14 @@ _download() {
         if [[ -z "${listname}" || "${name}" == "${listname}" ]] ; then
             path="${basedir}/${dir}/${name}"
             cmd="${ytdlp} \
-                --format 'h264+aac' \
+                --format 'bv*+ba/b' \
                 --format-sort 'res:1080,res:720,res:480' \
                 --playlist-reverse \
                 ${archive} \
-                --output \"${name} - %(release_date>%Y-%m-%d,upload_date>%Y-%m-%d|Unknown)s - %(title)s.mp4\" \
+                --output \"${name} - %(release_date>%Y-%m-%d,upload_date>%Y-%m-%d|Unknown)s - %(title)s.%(ext)s\" \
                 '${url}'"
-                #--format 'bv*+ba/b'
-                #--output \"${name} - %(release_date>%Y-%m-%d,upload_date>%Y-%m-%d|Unknown)s - %(title)s.%(ext)s\" \
+                #--format 'h264+aac' \
+                #--output \"${name} - %(release_date>%Y-%m-%d,upload_date>%Y-%m-%d|Unknown)s - %(title)s.mp4\" \
             echo
             echo "${url} -> ${path}"
             echo
