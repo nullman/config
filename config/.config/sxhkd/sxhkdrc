@@ -225,8 +225,8 @@ super + shift + Print
     scrot --select --freeze --exec 'mv $f ~/Pictures/' && notify-send --expire-time=2000 'Region snapshot saved'
 
 # reload sxhkd
-super + shift + r
-    pkill -SIGUSR1 -x sxhkd -u ${USER} && notify-send --expire-time=2000 'Reloading sxhkd'
+super + shift + s
+    pkill -SIGUSR1 -x sxhkd -u ${USER} && notify-send --expire-time=2000 'Reloading SXHKD'
 
 # reload tint2
 super + shift + t

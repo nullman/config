@@ -21,17 +21,17 @@ for page in $(cat "${index}") ; do
         file="${root}/${image}"
         dir=$(dirname "${file}")
         mkdir -p "${dir}"
-        #if [[ -f "${file}" ]] ; then
-        #    echo "All images downloaded"
-        #    break
-        #fi
+        if [[ -f "${file}" ]] ; then
+            echo "All images downloaded"
+            exit 1
+        fi
         echo "Fetching: ${page}"
         echo "          ${urlbase}/${image}"
         echo "       => ${file}"
         wget "${urlbase}/${image}" -q -O "${file}"
     done
 done
-#rm -f "${index}"
+rm -f "${index}"
 
 #===============================================================================
 # End of File
