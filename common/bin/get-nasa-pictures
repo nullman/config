@@ -16,20 +16,22 @@ wget "${archive}" -q -O - | grep 'href="ap' | sed 's/^.*\"ap/ap/ ; s/\".*$//' > 
 
 done=0
 for page in $(cat "${index}") ; do
-    image=$(wget "${urlbase}/${page}" -q -O - | grep 'href="image/' | sed 's/^.*href="// ; s/".*$//')
-    file="${root}/${image}"
-    dir=$(dirname "${file}")
-    mkdir -p "${dir}"
-    if [[ -f "${file}" ]] ; then
-        echo "All images downloaded"
-        break
-    fi
-    echo "Fetching: ${page}"
-    echo "          ${urlbase}/${image}"
-    echo "       => ${file}"
-    wget "${urlbase}/${image}" -q -O "${file}"
+    images=($(wget "${urlbase}/${page}" -q -O - | grep 'href="image/' | sed 's/^.*href="// ; s/".*$//'))
+    for image in ${images} ; do
+        file="${root}/${image}"
+        dir=$(dirname "${file}")
+        mkdir -p "${dir}"
+        #if [[ -f "${file}" ]] ; then
+        #    echo "All images downloaded"
+        #    break
+        #fi
+        echo "Fetching: ${page}"
+        echo "          ${urlbase}/${image}"
+        echo "       => ${file}"
+        wget "${urlbase}/${image}" -q -O "${file}"
+    done
 done
-rm -f "${index}"
+#rm -f "${index}"
 
 #===============================================================================
 # End of File
