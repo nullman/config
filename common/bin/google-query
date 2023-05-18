@@ -46,12 +46,12 @@ while ((my $result = $search->next_result()) && ($i < $num)) {
         $out .= $result->url . "\n";
         $out .= $result->description . "\n\n";
         $out =~ s/<br>/\n/g;
-}
+    }
     if ($mode eq 'im') {
         $out = $result->url . " -- " . $result->title;
         $out =~ s/<br>/ /g;
         if ($i > 0) { $out = "\n" . $out; }
-}
+    }
     $out =~ s/<\/?b>//g;
     $out =~ s/&#39;/\'/g;
     $out =~ s/&quot;/\"/g;

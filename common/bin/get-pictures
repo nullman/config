@@ -8,7 +8,7 @@
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
-echo -n "Download all the pictures from a Canon S-100? [yN] " ; read a
+echo -n "Download all the pictures from a Canon S-100? [yN] " ; read -r a
 case "${a}" in
     y|Y)
         echo
@@ -18,7 +18,7 @@ case "${a}" in
         ;;
     *)
         echo
-        echo -n "Download picture info from a Canon S-100? [yN] " ; read a
+        echo -n "Download picture info from a Canon S-100? [yN] " ; read -r a
         case "${a}" in
             y|Y)
                 echo
@@ -30,7 +30,7 @@ case "${a}" in
 esac
 
 echo
-echo -n "Rename picture files using the timestamps in __photo_info__? [yN] " ; read a
+echo -n "Rename picture files using the timestamps in __photo_info__? [yN] " ; read -r a
 case "${a}" in
     y|Y)
         echo

@@ -257,7 +257,8 @@ _command sxhkd && pgrep -x sxhkd || sxhkd -c "${HOME}/.config/sxhkd/sxhkdrc{,-bs
 
 # compositor
 #_command manjaro-compositor && manjaro-compositor --start &
-_command compton && compton -c &
+#_command compton && compton -c &
+_command picom && picom -c &
 
 # system bar
 [[ -f "${HOME}/bin/system-bar" ]] && source "${HOME}/bin/system-bar"

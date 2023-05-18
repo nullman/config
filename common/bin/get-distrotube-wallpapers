@@ -34,7 +34,7 @@ while true ; do
     file="${padded: -4}.jpg"
     echo "Fetching wallpaper: ${file}"
     url="${imageurl}/${file}"
-    wget -O "${dir}/${file}" "${url}"
+    wget "${url}" -O "${dir}/${file}"
     rc=$?
     if [[ ${rc} != 0 ]] ; then
         rm "${dir}/${file}"

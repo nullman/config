@@ -373,7 +373,7 @@ alias terminal-width-80="
     echo '         1         2         3         4         5         6         7         8'
     echo '12345678901234567890123456789012345678901234567890123456789012345678901234567890'
     echo
-    echo 'Press Enter for terminal height: ' ; read a
+    echo 'Press Enter for terminal height: ' ; read -r a
     for x in \$(seq 80 -1 2) ; do
         echo \${x}
     done"
@@ -384,7 +384,7 @@ alias terminal-width-144="
     echo '         1         2         3         4         5         6         7         8         9         0         1         2         3         4'
     echo '123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234'
     echo
-    echo 'Press Enter for terminal height: ' ; read a
+    echo 'Press Enter for terminal height: ' ; read -r a
     for x in \$(seq 144 -1 2) ; do
         echo \${x}
     done"
@@ -395,7 +395,7 @@ alias terminal-width-200="
     echo '         1         2         3         4         5         6         7         8         9         0         1         2         3         4         5         6         7         8         9         0'
     echo '12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890'
     echo
-    echo 'Press Enter for terminal height: ' ; read a
+    echo 'Press Enter for terminal height: ' ; read -r a
     for x in \$(seq 200 -1 2) ; do
         echo \${x}
     done"
@@ -627,8 +627,8 @@ alias ubuntu-system-setup="
 #        medibuntu-install       install medibuntu sources
 alias medibuntu-install="
     sudo bash -c \"
-        wget --output-document=/etc/apt/sources.list.d/medibuntu.list \
-          http://www.medibuntu.org/sources.list.d/\$(lsb_release -cs).list && \
+        wget http://www.medibuntu.org/sources.list.d/\$(lsb_release -cs).list \
+          -O /etc/apt/sources.list.d/medibuntu.list && \
           apt-get --quiet update && \
           apt-get --yes --quiet --allow-unauthenticated install medibuntu-keyring && \
           apt-get --quiet update
@@ -822,7 +822,7 @@ alias aptop="apachetop -f /var/log/httpd/access_log"
 alias apsrs="sudo systemctl restart https.service"
 #        sslcert                 build apache-ssl ssl certificate
 alias sslcert="
-    echo -n 'Build apache-ssl certificate? [yN] ' ; read a
+    echo -n 'Build apache-ssl certificate? [yN] ' ; read -r a
     case \${a} in
         y|Y) \$(pathcmd ssl-certificate) --force ;;
     esac"
@@ -1163,7 +1163,7 @@ alias bzip="bzip2"
 alias unbzip="bzip2 -d -k"
 #!#        intar                   tar files [query user]
 #!alias intar="
-#!    echo -n 'File(s) to tar: ' ; read a
+#!    echo -n 'File(s) to tar: ' ; read -r a
 #!    echo -n 'Name of tar: ' ; read b
 #!    tar cvf - \"\${a}\" > \"\${b}\""
 #        untar                   un-tar files
@@ -1402,7 +1402,7 @@ alias edesh="edit /etc/shadow"
 #        emacs-cvs-co            emacs cvs source check-out
 alias emacs-cvs-co="
     echo 'You are about to check-out emacs source tree to current directory.'
-    echo -n 'Do you wish to proceed? [yN] ' ; read a
+    echo -n 'Do you wish to proceed? [yN] ' ; read -r a
     case \${a} in
         y|Y) cvs -z3 -d:pserver:anonymous@cvs.savannah.gnu.org:/sources/emacs co emacs ;;
     esac"
@@ -1952,7 +1952,7 @@ alias edrem="\${EDITOR} \${HOME}/.reminders"
 alias edreminders="
     \${EDITOR} \${HOME}/.reminders
     pushd \${HOME}/reminders
-    \$(pathcmd ls) -1 | while read file ; do \${EDITOR} \"\${file}\" ; done
+    \$(pathcmd ls) -1 | while read -r file ; do \${EDITOR} \"\${file}\" ; done
     popd"
 
 #
@@ -1988,14 +1988,14 @@ alias rsync-media-put-morpheus="rsync -rlptx --progress ${home}/data/media/ morp
 alias rsync-media-put-morpheus-delete="rsync -rlptx --progress --delete ${home}/data/media/ morpheus:/home/data/media/"
 #        rsync-media-put-synology  rsync /home/data/media /mnt/synology/media
 alias rsync-media-put-synology="
-    find ${home}/data/media/ -mindepth 1 -maxdepth 1 -type d -not -regex '^\.+$' | sort | while read dir ; do
+    find ${home}/data/media/ -mindepth 1 -maxdepth 1 -type d -not -regex '^\.+$' | sort | while read -r dir ; do
         rsync -r --munge-links --size-only --progress \
             --exclude={'/Audio/Music/','/Graphic/ASCII-ANSI/','/iTunes/','/Music/'} \
             \"\${dir}\" /mnt/synology/media
     done"
 #        rsync-media-put-synology-delete  rsync /home/data/media /mnt/synology/media
 alias rsync-media-put-synology-delete="
-    find ${home}/data/media/ -mindepth 1 -maxdepth 1 -type d -not -regex '^\.+$' | sort | while read dir ; do
+    find ${home}/data/media/ -mindepth 1 -maxdepth 1 -type d -not -regex '^\.+$' | sort | while read -r dir ; do
         rsync -r --munge-links --size-only --progress --delete \
             --exclude={'/Audio/Music/','/Graphic/ASCII-ANSI/','/iTunes/','/Music/'} \
             \"\${dir}\" /mnt/synology/media
@@ -2059,7 +2059,7 @@ alias rsync-common-put-media-delete=" \
 #!    cp \${HOME}/.mpd/playlists/rated_good.m3u \${dir}/
 #!    (
 #!        cd \"${home}/data/media/Audio/Music/\" && \
-#!            cat \${dir}/*.m3u | while read line ; do
+#!            cat \${dir}/*.m3u | while read -r line ; do
 #!                rsync -RtxW --progress --delete \"\${line}\" \${dir}/
 #!            done
 #!    )"
@@ -2903,21 +2903,21 @@ alias dprc="sudo dpkg-reconfigure"
 alias dprcl="sudo dpkg-reconfigure -plow locales"
 #        dprcx                   dpkg-reconfigure xserver
 alias dprcx="
-    echo -n 'Reconfigure X? [yN] ' ; read a
+    echo -n 'Reconfigure X? [yN] ' ; read -r a
     case \${a} in
         y|Y) dpkg-reconfigure xserver-xfree86 xserver-common ;;
     esac"
 #        dpkg-reinstall          reinstall all packages
 alias dpkg-reinstall="
     echo 'You are about to reinstall all of your currently installed Debian packages.'
-    echo -n 'Do you wish to proceed? [yN] ' ; read a
+    echo -n 'Do you wish to proceed? [yN] ' ; read -r a
     case \${a} in
         y|Y)
             cat /var/lib/dpkg/status |
               grep -B 1 installed | grep -v installed |
               perl -ne 'if (/:\s+(.*)/) { print qq(\${1}\n); }' |
               xargs apt-get --reinstall install or COLUMNS=200 dpkg -l |
-              awk '/^ii/ { print \${2} }' | xargs apt-get --reinstall install
+              awk '/^ii/{print \${2}}' | xargs apt-get --reinstall install
             ;;
     esac"
 
@@ -3140,7 +3140,7 @@ EOF
 alias gitrm="
     echo 'You are about to remove the following files:'
     git status | grep '^#' | grep -v 'modified:' | tail -n +5 | sed 's/^#//'
-    echo -n 'Do you wish to proceed? [yN] ' ; read a
+    echo -n 'Do you wish to proceed? [yN] ' ; read -r a
     case \${a} in
         y|Y)
             git status | grep '^#' | grep -v 'modified:' | tail -n +5 | sed 's/^#//' | xargs rm
@@ -3337,19 +3337,19 @@ alias rsbidsome="
 #        make-cron               setup initial crontab
 alias make-cron="
     echo \"You are about to overwrite your crontab with '${config}/custom/\$(uname -n)/.cron'.\"
-    echo -n \"Do you wish to proceed? [yN] \" ; read a
+    echo -n \"Do you wish to proceed? [yN] \" ; read -r a
     case \${a} in
         y|Y) crontab ${config}/custom/\$(uname -n)/.cron ;;
     esac"
 #        mkraw                   make raw character device
 alias mkraw="
-  echo -n 'Raw device number: ' ; read a
+  echo -n 'Raw device number: ' ; read -r a
   mknod --mode=644 /dev/raw/raw\${a} c 162 \${a}"
 #!#        copy-hosts                      copy .hosts + .hosts_ssmedia to /etc/hosts
 #!alias copy-hosts="
 #!    echo \"You are about to replace your '/etc/hosts' file with\"
 #!    echo \"/root/.hosts plus '/root/.hosts_ssmedia'.\"
-#!    echo -n \"Do you wish to proceed? [yN] \" ; read a
+#!    echo -n \"Do you wish to proceed? [yN] \" ; read -r a
 #!    case \${a} in
 #!        y|Y)
 #!            cp -p /etc/hosts /etc/hosts.old
@@ -3362,7 +3362,7 @@ alias mkraw="
 #!#        copy-hosts                      copy .hosts to /etc/hosts
 #!alias copy-hosts="
 #!    echo \"You are about to replace your '/etc/hosts' file with '/root/.hosts'.\"
-#!    echo -n \"Do you wish to proceed? [yN] \" ; read a
+#!    echo -n \"Do you wish to proceed? [yN] \" ; read -r a
 #!    case \${a} in
 #!        y|Y)
 #!            cp -p /etc/hosts /etc/hosts.old
@@ -3424,7 +3424,7 @@ alias copy-wallpapers="
 #        make-ssh-config         make ssh config file
 alias make-ssh-config="
     o=\${HOME}/.ssh/config
-    echo -n \"Reset your '\${HOME}/.ssh/config' file? [yN] \" ; read a
+    echo -n \"Reset your '\${HOME}/.ssh/config' file? [yN] \" ; read -r a
     case \${a} in
         y|Y)
             echo '# keep ssh logins alive' > \${o}

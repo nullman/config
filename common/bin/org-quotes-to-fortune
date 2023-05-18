@@ -44,7 +44,7 @@ my $i = 0;
 while (exists($xbel->{node}->[$i])) {
     if ($xbel->{node}->[$i]->{data}->[0] eq $quotes) {
         ParseQuotes($xbel->{node}->[$i]->{node});
-}
+    }
     $i++;
 }
 
@@ -61,7 +61,7 @@ sub ParseQuotes {
     while (exists($node->[$i])) {
         ParseQuotesSection($node->[$i]);
         $i++;
-}
+    }
 }
 
 # parse a quotes section
@@ -72,9 +72,9 @@ sub ParseQuotesSection {
     my $outfile;
     if (exists($node->{data}->[0])) {
         $outfile = $outdir . "/" . $node->{data}->[0];
-} else {
-    exit;
-}
+    } else {
+        exit;
+    }
     open(OUTFILE, ">$outfile") || die("ERROR: Output file \'" . $outfile . "\' could not be opened\n");
 
     # write quotes to output file
@@ -87,50 +87,50 @@ sub ParseQuotesSection {
         # check that there is an author part and a quote part
         if (!(exists($quote[1])) || exists($quote[2])) {
             print("ERROR: Bad quote line found: $line\n");
-    } else {
-        # if no errors, then continue
-        my $quote = $quote[1];
-        my $author = $quote[0];
-        # convert "\\n" to "\n"
-        $quote =~ s/\\n/\n/g;
-        $author =~ s/\\n/\n/g;
-        # format quote (78 characters per line)
-        my $tmpfile = system("mktemp");
-        open(PIPE, "|fmt --width=78 --split-only > $tmpfile");
-        print(PIPE $quote);
-        close(PIPE);
-        open(PIPE, "$tmpfile");
-        $quote = "";
-        while(<PIPE>) { $quote .= $_; }
-        chomp($quote);
-        close(PIPE);
-        unlink("$tmpfile");
-        # print quote
-        print(OUTFILE "$quote\n");
-        # author
-        if (length($author) > 0) {
-            # format author (59 characters per line)
-            $tmpfile = system("mktemp");
-            open(PIPE, "|fmt --width=59 --split-only > $tmpfile");
-            print(PIPE $author);
+        } else {
+            # if no errors, then continue
+            my $quote = $quote[1];
+            my $author = $quote[0];
+            # convert "\\n" to "\n"
+            $quote =~ s/\\n/\n/g;
+            $author =~ s/\\n/\n/g;
+            # format quote (78 characters per line)
+            my $tmpfile = system("mktemp");
+            open(PIPE, "|fmt --width=78 --split-only > $tmpfile");
+            print(PIPE $quote);
             close(PIPE);
             open(PIPE, "$tmpfile");
-            $author = "";
-            while(<PIPE>) { $author .= $_; }
-            chomp($author);
+            $quote = "";
+            while(<PIPE>) { $quote .= $_; }
+            chomp($quote);
             close(PIPE);
             unlink("$tmpfile");
-            # format author
-            $author = "\t\t-- " . $author;
-            $author =~ s/\n/\n\t\t   /g;
-            # print author
-            print(OUTFILE "$author\n");
-    }
-        # print spacer
-        print(OUTFILE "%\n");
-    }
+            # print quote
+            print(OUTFILE "$quote\n");
+            # author
+            if (length($author) > 0) {
+                # format author (59 characters per line)
+                $tmpfile = system("mktemp");
+                open(PIPE, "|fmt --width=59 --split-only > $tmpfile");
+                print(PIPE $author);
+                close(PIPE);
+                open(PIPE, "$tmpfile");
+                $author = "";
+                while(<PIPE>) { $author .= $_; }
+                chomp($author);
+                close(PIPE);
+                unlink("$tmpfile");
+                # format author
+                $author = "\t\t-- " . $author;
+                $author =~ s/\n/\n\t\t   /g;
+                # print author
+                print(OUTFILE "$author\n");
+            }
+            # print spacer
+            print(OUTFILE "%\n");
+        }
         $i++;
-}
+    }
 
     #print(Dumper($node));
 

@@ -77,14 +77,14 @@ if (open(TAGFILE, "<$tagfile")) {
     foreach $tag (<TAGFILE>) {
         chomp($tag);
         push(@taglist, $tag);
-}
+    }
     close(TAGFILE);
 }
 if (open(TAGFILE, "<$nontagfile")) {
     foreach $tag (<TAGFILE>) {
         chomp($tag);
         push(@nontaglist, $tag);
-}
+    }
     close(TAGFILE);
 }
 # set strings of all the tags
@@ -99,14 +99,14 @@ foreach $tag (@taglist) {
         my $mwtag = $tag;
         $mwtag =~ s/_/ /g;
         push(@multiwordtaglist, $mwtag);
-}
+    }
 }
 foreach $tag (@nontaglist) {
     if ($tag =~ m/_/) {
         my $mwtag = $tag;
         $mwtag =~ s/_/ /g;
         push(@multiwordtaglist, $mwtag);
-}
+    }
 }
 #my $multiwordtagstr = '|' . join('|', @multiwordtaglist) . '|';
 
@@ -169,7 +169,7 @@ if ($mtags eq '') {
     print("Missing tags:\n");
     foreach $tag (sort(split(' ', $mtags))) {
         print("$tag\n");
-}
+    }
 }
 
 #===============================================================================
@@ -216,33 +216,33 @@ sub GetTags {
             # add single words to the string if they exist in tags
             foreach $tag (split(' ', $mwtag)) {
                 if ($tagstr =~ m/ $tag /) { $str .= $tag . ' '; }
+            }
         }
     }
-}
 
     if ($mode eq 'tags') {
         # loop though valid tags and match against string
         foreach $tag (@taglist) {
             if ($str =~ m/ $tag / && !($tags =~ m/ $tag /)) { $tags .= $tag . ' '; }
+        }
+    } elsif ($mode eq 'nontags') {
+        # loop though non-tags and match against string
+        foreach $tag (@nontaglist) {
+            if ($str =~ m/ $tag / && !($tags =~ m/ $tag /)) { $tags .= $tag . ' '; }
+        }
+    } elsif ($mode eq 'missingtags') {
+        # loop though string and track non-matches
+        foreach $tag (split(' ', $str)) {
+            if (!($alltagstr =~ m/ $tag /) && !($tags =~ m/ $tag /)) { $tags .= $tag . ' '; }
+        }
     }
-} elsif ($mode eq 'nontags') {
-    # loop though non-tags and match against string
-    foreach $tag (@nontaglist) {
-        if ($str =~ m/ $tag / && !($tags =~ m/ $tag /)) { $tags .= $tag . ' '; }
-}
-} elsif ($mode eq 'missingtags') {
-    # loop though string and track non-matches
-    foreach $tag (split(' ', $str)) {
-        if (!($alltagstr =~ m/ $tag /) && !($tags =~ m/ $tag /)) { $tags .= $tag . ' '; }
-}
-}
 
     # output tags
     if ($debug) {
         print("Mode: $mode\n");
         print("String: $str\n");
         print("Tags: $tags\n");
-}
+    }
 
     return($tags);
 }
@@ -269,18 +269,18 @@ sub ScanDir {
             if ($mode eq 'test') {
                 $newtags = &GetTags($file, $tags, 'missingtags');
                 $alltags = &GetTags($file, $alltags, 'missingtags');
-        } else {
-            $newtags = &GetTags($file, $tags, 'tags');
-            $alltags = &GetTags($file, $alltags, 'tags');
-        }
+            } else {
+                $newtags = &GetTags($file, $tags, 'tags');
+                $alltags = &GetTags($file, $alltags, 'tags');
+            }
             # recursively call this procedure
             if ($mode eq 'test') {
                 $alltags = &ScanDir($path . '/' . $file, $alltags, $set, $mode);
-        } else {
-            &ScanDir($path . '/' . $file, $newtags, $set, $mode);
+            } else {
+                &ScanDir($path . '/' . $file, $newtags, $set, $mode);
+            }
         }
     }
-}
 
     # if $path is an image, then upload and tag it
     elsif ($path =~ m/\.(jpg|jpeg|gif|png|bmp)$/) {
@@ -297,13 +297,13 @@ sub ScanDir {
         if (open(TEXT, "<$textfile")) {
             $text = <TEXT>;
             close(TEXT);
-    }
+        }
 
         # create summary from title and text
         my $summary = $title;
         if (length($text) > 0) {
             $summary .= "\n" . $text;
-    }
+        }
 
         # trim tags
         $tags = &TrimStr($tags);
@@ -315,27 +315,27 @@ sub ScanDir {
         my $date = $title;
         if ($title =~ m/^\d\d\d\d-\d\d-\d\d \d\d\.\d\d\.\d\d /) {
             $date =~ s/^(\d\d\d\d-\d\d-\d\d \d\d\.\d\d\.\d\d) .*$/$1/;
-    } elsif ($title =~ m/^\d\d\d\d-\d\d-\d\d \d\d\.\d\d /) {
-        $date =~ s/^(\d\d\d\d-\d\d-\d\d \d\d\.\d\d) .*$/$1/;
-    } elsif ($title =~ m/^\d\d\d\d-\d\d-\d\d \d\d /) {
-        $date =~ s/^(\d\d\d\d-\d\d-\d\d \d\d) .*$/$1/;
-    } elsif ($title =~ m/^\d\d\d\d-\d\d-\d\d /) {
-        $date =~ s/^(\d\d\d\d-\d\d-\d\d) .*$/$1/;
-    } elsif ($title =~ m/^\d\d\d\d-\d\d /) {
-        $date =~ s/^(\d\d\d\d-\d\d) .*$/$1/;
-    } elsif ($title =~ m/^\d\d\d\d /) {
-        $date =~ s/^(\d\d\d\d) .*$/$1/;
-    } else {
-        $date = '';
-    }
+        } elsif ($title =~ m/^\d\d\d\d-\d\d-\d\d \d\d\.\d\d /) {
+            $date =~ s/^(\d\d\d\d-\d\d-\d\d \d\d\.\d\d) .*$/$1/;
+        } elsif ($title =~ m/^\d\d\d\d-\d\d-\d\d \d\d /) {
+            $date =~ s/^(\d\d\d\d-\d\d-\d\d \d\d) .*$/$1/;
+        } elsif ($title =~ m/^\d\d\d\d-\d\d-\d\d /) {
+            $date =~ s/^(\d\d\d\d-\d\d-\d\d) .*$/$1/;
+        } elsif ($title =~ m/^\d\d\d\d-\d\d /) {
+            $date =~ s/^(\d\d\d\d-\d\d) .*$/$1/;
+        } elsif ($title =~ m/^\d\d\d\d /) {
+            $date =~ s/^(\d\d\d\d) .*$/$1/;
+        } else {
+            $date = '';
+        }
 
         # test mode
         if ($mode eq 'test') {
             if ($tags ne '') {
                 print("File: \'$path\'\n");
                 print("Missing tags: $tags\n");
+            }
         }
-    }
 
         # upload mode
         if ($mode eq 'upload') {
@@ -350,14 +350,14 @@ sub ScanDir {
             $cmd .= " \"" . EscChars($path) . "\"";
             if ($debug) {
                 print("Command: " . Dumper($cmd));
-        }
+            }
 
             # upload image
             my $response = system($cmd);
             if ($debug) {
                 print("Response: " . Dumper($response));
+            }
         }
-    }
 
         # output image info
         if ($debug) {
@@ -369,10 +369,10 @@ sub ScanDir {
             print("Text: $text\n");
             print("Date: $date\n");
             print("--------------------------------------------------------------------------------\n");
-    } elsif ($mode eq 'upload') {
-        print("Created title: $title; tags: $tags\n");
+        } elsif ($mode eq 'upload') {
+            print("Created title: $title; tags: $tags\n");
+        }
     }
-}
 
     return($alltags);
 }
@@ -390,19 +390,19 @@ sub CreateSet {
     my $date = $set;
     if ($title =~ m/^\d\d\d\d-\d\d-\d\d \d\d\.\d\d\.\d\d /) {
         $date =~ s/^(\d\d\d\d-\d\d-\d\d \d\d\.\d\d\.\d\d) .*$/$1/;
-} elsif ($title =~ m/^\d\d\d\d-\d\d-\d\d \d\d\.\d\d /) {
-    $date =~ s/^(\d\d\d\d-\d\d-\d\d \d\d\.\d\d) .*$/$1/;
-} elsif ($title =~ m/^\d\d\d\d-\d\d-\d\d \d\d /) {
-    $date =~ s/^(\d\d\d\d-\d\d-\d\d \d\d) .*$/$1/;
-} elsif ($title =~ m/^\d\d\d\d-\d\d-\d\d /) {
-    $date =~ s/^(\d\d\d\d-\d\d-\d\d) .*$/$1/;
-} elsif ($title =~ m/^\d\d\d\d-\d\d /) {
-    $date =~ s/^(\d\d\d\d-\d\d) .*$/$1/;
-} elsif ($title =~ m/^\d\d\d\d /) {
-    $date =~ s/^(\d\d\d\d) .*$/$1/;
-} else {
-    $date = '';
-}
+    } elsif ($title =~ m/^\d\d\d\d-\d\d-\d\d \d\d\.\d\d /) {
+        $date =~ s/^(\d\d\d\d-\d\d-\d\d \d\d\.\d\d) .*$/$1/;
+    } elsif ($title =~ m/^\d\d\d\d-\d\d-\d\d \d\d /) {
+        $date =~ s/^(\d\d\d\d-\d\d-\d\d \d\d) .*$/$1/;
+    } elsif ($title =~ m/^\d\d\d\d-\d\d-\d\d /) {
+        $date =~ s/^(\d\d\d\d-\d\d-\d\d) .*$/$1/;
+    } elsif ($title =~ m/^\d\d\d\d-\d\d /) {
+        $date =~ s/^(\d\d\d\d-\d\d) .*$/$1/;
+    } elsif ($title =~ m/^\d\d\d\d /) {
+        $date =~ s/^(\d\d\d\d) .*$/$1/;
+    } else {
+        $date = '';
+    }
 
     # create the set
     # TODO: add description option from .txt file
@@ -411,11 +411,11 @@ sub CreateSet {
     $cmd .= " --date=\"" . EscChars($date) . "\"";
     if ($debug) {
         print("Command: " . Dumper($cmd));
-}
+    }
     my $response = system($cmd);
     if ($debug) {
         print("Response: " . Dumper($response));
-}
+    }
     print("Created set: $title; date: $date\n");
 }
 

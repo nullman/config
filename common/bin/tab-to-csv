@@ -27,9 +27,9 @@ elsif ($#c + 1 > $n) {
     pop;
     if ($csv->combine(@c[0 .. $n - 1])) {
         print $csv->string;
-} else {
-    printf STDERR $csv->error_input;
-}
+    } else {
+        printf STDERR $csv->error_input;
+    }
     @c = @c[$n .. $#_];
 }
 if (@c > 0) {

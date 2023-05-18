@@ -154,6 +154,7 @@ super + alt + j
     rofi -modi emoji -show emoji
 
 # bitwarden selector (clear clipboard after 30 seconds)
+# first login using 'bw login'
 super + alt + p
     bwmenu --clear 30
 

@@ -3373,7 +3373,8 @@ Example: To sort using `string<' use the following call:
                (when (looking-at "^\\s-*$")
                  (delete-line))
                (goto-char beg)
-               (dotimes (x 2) (org-cycle)))))
+               (dotimes (_ 2)
+                 (org-cycle)))))
           ('paragraph
            (let* ((plist (cadr (org-element-at-point)))
                   (beg (plist-get plist :contents-begin))
@@ -5087,7 +5088,7 @@ Reset the CUSTOM_ID property, title comment, and `init-message'."
              (goto-char beg)
              (re-search-forward " " (line-end-position))
              (if toggle-on
-                 (dotimes (x 2)
+                 (dotimes (_ 2)
                    (when (re-search-forward "\+" (line-end-position))
                      (replace-match "")))
                (progn
@@ -8153,8 +8154,8 @@ TO. Instead the entire string is returned."
 (defun map-integer (fn n)
   "Call function FN once for every number from 0 to N-1."
   (let ((acc nil))
-    (dotimes (i n)
-      (push (funcall fn i) acc))
+    (dotimes (x n)
+      (push (funcall fn x) acc))
     (nreverse acc)))
 ;; map-integer:1 ends here
 
@@ -8664,7 +8665,7 @@ DIR defaults to `emacs-home-dir' or `~/.emacs.d'."
 (defun join-next-line (arg)
   "Join next line with current one."
   (interactive "*P")
-  (dotimes (n (or arg 1))
+  (dotimes (_ (or arg 1))
     (join-line -1)))
 ;; join-next-line:1 ends here
 
@@ -8729,7 +8730,7 @@ With argument ARG, do this that many times."
   (interactive "p")
   (let ((whitespace-regexp "[ \t\n]")
         (alphanumeric-regexp "[[:alnum:]-_]"))
-    (dotimes (x arg)
+    (dotimes (_ arg)
       (delete-region
        (point)
        (save-mark-and-excursion
@@ -8762,7 +8763,7 @@ With argument ARG, do this that many times."
   (interactive "p")
   (let ((whitespace-regexp "[ \t\n]")
         (alphanumeric-regexp "[[:alnum:]-_]"))
-    (dotimes (x arg)
+    (dotimes (_ arg)
       (delete-region
        (save-mark-and-excursion
          (backward-char 1)
@@ -10246,9 +10247,9 @@ FORMAT is a 'date' format string (defaults to
   (let ((tags '(Conses Floats Vector-Cells Symbols String-Chars Miscs Intervals Strings))
         (muc (memory-use-counts))
         (str ""))
-    (dotimes (n (length tags))
+    (dotimes (x (length tags))
       (setq str (concat str (if (zerop (length str)) "" ", ")
-                        (symbol-name (nth n tags)) ": " (number-to-string (nth n muc)))))
+                        (symbol-name (nth x tags)) ": " (number-to-string (nth x muc)))))
     str))
 ;; memory-use-counts-pretty:1 ends here
 
@@ -10835,7 +10836,7 @@ be automatically capitalized."
     (modify-syntax-entry ?- "." syntax-table)
     (modify-syntax-entry ?' "w" syntax-table)
     (with-syntax-table syntax-table
-      (dotimes (x (or arg 1))
+      (dotimes (_ (or arg 1))
         (let ((p (point)))
           (forward-word 1)
           (forward-word -1)
@@ -11237,7 +11238,7 @@ If TENS is non-nil, insert that many ruler segments of ten digits.
 TENS defaults to 12."
   (interactive "*")
   (let ((tens (or tens 12)))
-    (dotimes (x tens)
+    (dotimes (_ tens)
       (insert "1234567890"))))
 ;; insert-column-position-ruler:1 ends here
 
@@ -13634,10 +13635,10 @@ If optional COUNT is given, repeat up to NUM+COUNT-1."
     (cl-do ((s size (1- s)))
         ((zerop s))
       (let ((i ""))
-        (dotimes (x (+ padding s))
+        (dotimes (_ (+ padding s))
           (setq i (concat i " ")))
         (setq i (concat i "/"))
-        (dotimes (x (* (- size s) 2))
+        (dotimes (_ (* (- size s) 2))
           (setq i (concat i " ")))
         (setq i (concat i "\\"))
         (insert i)
@@ -19605,7 +19606,9 @@ Markdown files."
   (defun custom-perl-mode-hook ()
     ;; configure some options
     (setq perl-indent-level 4)
-    (setq perl-continued-statement-offset 0)
+    (setq perl-indent-parens-as-block t)
+    (setq perl-indent-continued-arguments t)
+    (setq perl-continued-statement-offset 4)
 
     ;; turn on flyspell
     (flyspell-prog-mode))

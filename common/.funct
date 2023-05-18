@@ -96,7 +96,7 @@ pathcmd() {
             done
         fi
         loc=
-        echo "${paths}" | sed 's/:/\n/g' | while read dir ; do
+        echo "${paths}" | sed 's/:/\n/g' | while read -r dir ; do
             if [[ -x "${dir}/${cmd}" ]] && [[ -z "${loc}" ]] ; then
                 loc="${dir}/${cmd}"
             fi
@@ -372,7 +372,7 @@ java-vnc() {
 x() {
     echo "$@" | fmt
     echo -n "Execute command line? [Yn] "
-    read a
+    read -r a
     case "${a}" in
         y|Y|"") ("$@") ;;
     esac
@@ -529,7 +529,7 @@ ansi-slideshow() {
         echo "Usage: $0 DIR"
         echo "Display a slideshow of all ANSI text graphic files in given directory."
     else
-        find "$1" -iname *".ANS" -print | sort --random-sort | while read file ; do
+        find "$1" -iname *".ANS" -print | sort --random-sort | while read -r file ; do
             iconv -f 437 "${file}" | pv --quiet --rate-limit 1200
             sleep 10
         done
@@ -583,7 +583,7 @@ dos-to-linux() {
         echo "Usage: $0 FILE"
         echo "Convert FILE from DOS format to Linux format."
         echo "Convert multiple files using something like:"
-        echo "  ls -1 | while read f ; do $0 \$f ; done"
+        echo "  ls -1 | while read -r f ; do $0 \$f ; done"
     else
         sed -i 's/\r$//' "$1"
     fi
@@ -594,7 +594,7 @@ linux-to-dos() {
         echo "Usage: $0 FILE"
         echo "Convert FILE from Linux format to DOS format."
         echo "Convert multiple files using something like:"
-        echo "  ls -1 | while read f ; do $0 \$f ; done"
+        echo "  ls -1 | while read -r f ; do $0 \$f ; done"
     else
         sed -i 's/$/\r/' "$1"
     fi
@@ -604,14 +604,14 @@ lower-dir() {
     echo "You are about to recursively convert the contents of the current directory"
     echo "'$(pwd)' to lowercase,"
     echo -n "Do you wish to proceed? [yN] "
-    read a
+    read -r a
     case "${a}" in
         y|Y)
-            find . -depth -type d | while read infile ; do
+            find . -depth -type d | while read -r infile ; do
                 outfile=$(echo "${infile}" | tr '[:upper:]' '[:lower:]')
                 mv -fv "${infile}" "${outfile}"
             done
-            find . -depth -type f | while read infile ; do
+            find . -depth -type f | while read -r infile ; do
                 outfile=$(echo "${infile}" | tr '[:upper:]' '[:lower:]')
                 mv -fv "${infile}" "${outfile}"
             done
@@ -623,14 +623,14 @@ upper-dir() {
     echo "You are about to recursively convert the contents of the current directory"
     echo "'$(pwd)' to uppercase,"
     echo -n "Do you wish to proceed? [yN] "
-    read a
+    read -r a
     case "${a}" in
         y|Y)
-            find . -depth -type d | while read infile ; do
+            find . -depth -type d | while read -r infile ; do
                 outfile=$(echo "${infile}" | tr '[:lower:]' '[:upper:]')
                 mv -fv "${infile}" "${outfile}"
             done
-            find . -depth -type f | while read infile ; do
+            find . -depth -type f | while read -r infile ; do
                 outfile=$(echo "${infile}" | tr '[:lower:]' '[:upper:]')
                 mv -fv "${infile}" "${outfile}"
             done
@@ -643,7 +643,7 @@ uncompress-dir-tree() {
     echo "'$(pwd)' and all of its children, and delete the original files."
     echo "Only .zip files are considered."
     echo -n "Do you wish to proceed? [yN] "
-    read a
+    read -r a
     case "${a}" in
         y|Y)
             find . -iname *".zip" -print | while read file ; do
@@ -658,7 +658,7 @@ lns-dir() {
     if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 DIR"
     else
-        $(pathcmd ls) -1 "$1" | while read a ; do
+        $(pathcmd ls) -1 "$1" | while read -r a ; do
             ln -s "$1/${a}" ${a}
         done
     fi
@@ -704,7 +704,7 @@ sed-dir() {
         echo "You are about to apply SED script '$1'"
         echo "to all files in directory '${dir}'."
         echo -n "Do you wish to proceed? [yN] "
-        read a
+        read -r a
         case "${a}" in
             y|Y)
                 (
@@ -887,7 +887,7 @@ show-mem() {
 }
 #        show-ip                 show configured IP address
 show-ip() {
-    ifconfig | awk '/inet/ {print $2}' | awk -F : '// {print $2}' | grep -v "^$"
+    ifconfig | awk '/inet/{print $2}' | awk -F : '//{print $2}' | grep -v "^$"
 }
 #        show-port               show active network ports
 show-port() {
@@ -906,7 +906,7 @@ fsck-shutdown() {
 
     echo "You are about to reboot the computer and have it fsck the root drive."
     echo -n "Do you wish to proceed? [yN] "
-    read a
+    read -r a
     case "${a}" in
         y|Y)
             sudo touch /forcefsck && sudo reboot
@@ -981,7 +981,7 @@ longevity() {
         echo "You are about to delete all files matching pattern '${pattern}'"
         echo "in ${dir} that are older than ${days} days."
         echo -n "Do you wish to proceed? [yN] "
-        read a
+        read -r a
         case "${a}" in
             y|Y)
                 find ${dir} -mtime +${days} -type f -iname '${pattern}' -exec rm {} \;
@@ -1418,7 +1418,7 @@ backup-files() {
 #!        shift
 #!        echo "Are you sure you want to copy all system directories"
 #!        echo -n "from '${src}' to '${dest}'? [yN] "
-#!        read a
+#!        read -r a
 #!        case "${a}" in
 #!            y|Y)
 #!                cp -Rpdux "${src}/bin" "${dest}/bin"
@@ -1441,7 +1441,7 @@ backup-files() {
 #!#        copy-kyle               copy key files from /home/kyle to ${HOME}
 #!copy-kyle() {
 #!    echo -n "Are you sure you want to copy main files from /home/kyle to ${HOME}? [yN] "
-#!    read a
+#!    read -r a
 #!    case "${a}" in
 #!        y|Y)
 #!            src=/home/kyle
@@ -1495,7 +1495,7 @@ backup-files() {
 #!        echo "         copyhome kyle@192.168.1.10:/home/kyle init"
 #!    else
 #!        echo -n "Are you sure you want to copy home files from '$1' to '${HOME}'? [yN] "
-#!        read a
+#!        read -r a
 #!        case "${a}" in
 #!            y|Y)
 #!                src="$1"
@@ -1537,7 +1537,7 @@ backup-files() {
 #!        echo "         rsynchome /home/kyle kyle@192.168.1.10:/home/kyle init"
 #!    else
 #!        echo -n "Are you sure you want to sync home files from '$1' to '$2'? [yN] "
-#!        read a
+#!        read -r a
 #!        case "${a}" in
 #!            y|Y)
 #!                src="$1"
@@ -1822,7 +1822,7 @@ home-initialize() {
     echo "All files and directories replaced will be moved to '${backupdir}'."
     echo "This command should only be run once for a given HOME directory."
     [[ -e "${HOME}/.alias" ]] && echo "It looks like stow initialization has already occurred" && return 1
-    echo -n "Do you wish to proceed? [yN] " ; read a
+    echo -n "Do you wish to proceed? [yN] " ; read -r a
 
     case "${a}" in
         y|Y)
