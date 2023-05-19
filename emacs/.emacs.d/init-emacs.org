@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2023-05-10 21:59 (kyle)>
+  #+TIMESTAMP: <2023-05-18 19:48 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -23867,6 +23867,24 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       (init-message 2 "Packages: emacs-everywhere")
 
       (use-package emacs-everywhere
+        :straight t)
+    #+END_SRC
+
+*** ement
+    :PROPERTIES:
+    :CUSTOM_ID: packages-ement
+    :END:
+
+    Matrix Client for Emacs
+
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Packages: ement
+      ;;------------------------------------------------------------------------------
+
+      (init-message 2 "Packages: ement")
+
+      (use-package ement
         :straight t)
     #+END_SRC
 

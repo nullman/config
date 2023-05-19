@@ -16039,6 +16039,17 @@ USING is the remaining peg."
   :straight t)
 ;; emacs-everywhere:2 ends here
 
+;; [[file:init-emacs.org::#packages-ement][ement:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: ement
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Packages: ement")
+
+(use-package ement
+  :straight t)
+;; ement:1 ends here
+
 ;; [[file:init-emacs.org::#packages-epaint][epaint:1]]
 ;;------------------------------------------------------------------------------
 ;;; Packages: epaint
