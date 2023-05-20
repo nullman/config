@@ -11663,7 +11663,10 @@ OUTPUT (defaults to 'phrase):
   'space    \"three word phrase\"
   'hyphen   \"three-word-phrase\"
   'list     (\"three\" \"word\" \"phrase\")"
-  (interactive "*nCount: ")
+  (interactive
+   (list
+    (read-number "Count: ")
+    (intern (completing-read "Output: " '("phrase" "space" "hyphen" "list") nil t))))
   (let* ((words
           '("abandon" "ability" "able" "about" "above" "absent" "absorb" "abstract" "absurd"
             "abuse" "access" "accident" "account" "accuse" "achieve" "acid" "acoustic"
