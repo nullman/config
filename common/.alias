@@ -752,8 +752,7 @@ alias adb-usb-setup="
     sudo bash -c \"
         echo 'SUBSYSTEM==\\\"usb\\\", ATTR{idVendor}==\\\"0e8d\\\", ATTR{idProduct}==\\\"201c\\\", MODE=\\\"0666\\\", GROUP=\\\"plugdev\\\"' \
           > /etc/udev/rules.d/51-android.rules && \
-          chmod a+r /etc/udev/rules.d/51-android.rules\"
-    "
+          chmod a+r /etc/udev/rules.d/51-android.rules\""
 #        adb-screenshot          abd screenshot (portrait)
 alias adb-screenshot="
     adb shell screencap -p /sdcard/screen.png &&
@@ -772,18 +771,24 @@ alias adb-screenshot-landscape="(
 alias adb-video-record="adb shell screenrecord /sdcard/animation.mp4"
 #        adb-video-copy          copy a recorded video off of device
 alias adb-video-copy="adb pull /sdcard/animation.mp4 android-device-screenshot-\$(date '+%Y-%m-%d-%H%M%S').mp4"
-#        adb-music-push          push /home/data/media/Audio/Music to device /sdcard/Music
-alias adb-sync-music-push="adbsync --show-progress ${home}/data/media/Audio/Music/* /sdcard/Music/"
 #        adbsync-titanium-backup-get  copy titanium backup files from device to computer
 alias adbsync-titanium-backup-get="
-    indir=\$(echo \"/storage/\$(adb shell ls -1 /storage/ | grep -v emulated | grep -v self)/TitaniumBackup\")
+    indir=\$(echo \"/storage/\$(adb shell ls -1 /storage/ | grep -v emulated | grep -v self)/TitaniumBackup/\")
     outdir=\"${home}/data/backup/\"
-    adbsync --pull --show-progress --del \"\${outdir}\" \"\${indir}\""
+    adbsync --show-progress --del pull \"\${indir}\" \"\${outdir}\""
 #        adbsync-home-pages-put  copy home-pages directory from computer to device
 alias adbsync-home-pages-put="
     indir=\"\${HOME}/config/common/home-pages\"
-    outdir=\"/storage/emulated/0/Download/\"
-    adbsync --show-progress --del \"\${indir}\" \"\${outdir}\""
+    outdir=\$(echo \"/storage/\$(adb shell ls -1 /storage/ | grep -v emulated | grep -v self)/Download/\")
+    adbsync --show-progress --del push \"\${indir}\" \"\${outdir}\""
+#        adbsync-music-put       copy /home/data/media/Audio/Music from computer to device
+alias adbsync-music-put="
+    indir=\"${home}/data/media/Audio\"
+    outdir=\$(echo \"/storage/\$(adb shell ls -1 /storage/ | grep -v emulated | grep -v self)/Music/\")
+    adbsync --show-progress --del push \"\${indir}/Music/\" \"\${outdir}\"
+    find \"\${indir}/Playlists/\" -name \"*.m3u\" | while read -r file ; do
+        adb push \"\${file}\" \"\${outdir}\"
+    done"
 
 #
 # android studio

@@ -48,8 +48,9 @@ _command slack && _delay 1 slack &
 _command discord && _delay 10 discord &
 #_command tootle && _delay 1 tootle &
 #_command com.github.bleakgrey.tootle && _delay 1 com.github.bleakgrey.tootle &
+_command Element && _delay 1 Element &
 _command dev.geopjr.Tuba && _delay 10 dev.geopjr.Tuba &
-_command pidgin && _delay 10 pidgin &
+#_command pidgin && _delay 10 pidgin &
 #_command gajim && _delay 10 gajim &
 #_command idea && _delay 10 idea &
 #_command lbry && _delay 1 lbry &

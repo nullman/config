@@ -118,11 +118,11 @@ _ba Transmission-gtk desktop='^5' follow=on
 # 6: Chat
 _ba Slack desktop='^6' follow=on
 _ba discord desktop='^6' follow=on
-_ba discord-development desktop='^6' follow=on
 
 # 7: More Chat
 _ba Pidgin desktop='^7' follow=on
 _ba Tootle desktop='^7' follow=on
+_ba Element desktop='^7' follow=on
 _ba Com.github.bleakgrey.tootle desktop='^7' follow=on
 _ba dev.geopjr.Tuba desktop='^7' follow=on
 _ba Gajim desktop='^7' follow=on
