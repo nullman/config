@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2023-05-19 11:07 (kyle)>
+  #+TIMESTAMP: <2023-05-26 13:49 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -17102,10 +17102,10 @@
                     (setq valid t))))
               (insert (list-to-string password)))))
 
-        (defun insert-password-14 ()
-          "Call `insert-password' with a LENGTH of 14"
+        (defun insert-password-20 ()
+          "Call `insert-password' with a LENGTH of 20"
           (interactive "*")
-          (insert-password 14))
+          (insert-password 20))
       #+END_SRC
 
 ***** insert-password-phrase
@@ -26879,7 +26879,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
            ("it" . insert-time)
            ("iuuid" . insert-uuid)
            ("iguid" . insert-guid)
-           ("ipw" . insert-password-14)
+           ("ipw" . insert-password-20)
            ("ipp" . insert-password-phrase-three-hyphen)
            ("i=" . append-equal-to-column-80)
            ("i-" . append-dash-to-column-80)
@@ -32912,7 +32912,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
          ("Time HH:MM:SS" "insert-time" "Insert time in HH:MM:SS format.")
          ("UUID" "insert-uuid" "Insert a UUID.")
          ("GUID" "insert-guid" "Insert a GUID.")
-         ("Password" "insert-password-14" "Insert a random password (length 14).")
+         ("Password" "insert-password-20" "Insert a random password (length 20).")
          ("Password Phrase" "insert-password-phrase-three-hyphen" "Insert a random password phrase (three words, hyphenated).")
          ("Figlet" "insert-figlet" "Insert figlet text.")
          ("Equals" "append-equal-to-column-80" "Append `=' characters up to column 80.")

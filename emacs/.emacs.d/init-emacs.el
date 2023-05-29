@@ -11641,10 +11641,10 @@ of the current buffer."
             (setq valid t))))
       (insert (list-to-string password)))))
 
-(defun insert-password-14 ()
-  "Call `insert-password' with a LENGTH of 14"
+(defun insert-password-20 ()
+  "Call `insert-password' with a LENGTH of 20"
   (interactive "*")
-  (insert-password 14))
+  (insert-password 20))
 ;; insert-password:1 ends here
 
 ;; [[file:init-emacs.org::#functions-text-inserting-functions-insert-password-phrase][insert-password-phrase:1]]
@@ -17861,7 +17861,7 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
      ("it" . insert-time)
      ("iuuid" . insert-uuid)
      ("iguid" . insert-guid)
-     ("ipw" . insert-password-14)
+     ("ipw" . insert-password-20)
      ("ipp" . insert-password-phrase-three-hyphen)
      ("i=" . append-equal-to-column-80)
      ("i-" . append-dash-to-column-80)
@@ -21265,7 +21265,7 @@ Commands:
    ("Time HH:MM:SS" "insert-time" "Insert time in HH:MM:SS format.")
    ("UUID" "insert-uuid" "Insert a UUID.")
    ("GUID" "insert-guid" "Insert a GUID.")
-   ("Password" "insert-password-14" "Insert a random password (length 14).")
+   ("Password" "insert-password-20" "Insert a random password (length 20).")
    ("Password Phrase" "insert-password-phrase-three-hyphen" "Insert a random password phrase (three words, hyphenated).")
    ("Figlet" "insert-figlet" "Insert figlet text.")
    ("Equals" "append-equal-to-column-80" "Append `=' characters up to column 80.")
