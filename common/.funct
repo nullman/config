@@ -1600,7 +1600,7 @@ rsync-bundle() {
 #        rsync-cruzer            rsync ISOs and bundle to sandisk cruzer
 rsync-cruzer() {
     # check destination
-    dest="/run/media/${USER}/ventoy"
+    dest="/run/media/${USER}/Ventoy"
     if [[ ! -d ${dest} ]] ; then
         echo "Could not find mounted USB at ${dest}"
         return 1
@@ -1624,30 +1624,41 @@ rsync-cruzer() {
     # create and copy bundle
     rsync-bundle
 }
-#        rsync-isos              rsync software ISOs to mounted ventoy usb
-rsync-isos() {
+#        rsync-install           rsync software ISOs to mounted ventoy usb
+rsync-install() {
+    root="/home/data/media/Software"
+    dest="/run/media/${USER}/Ventoy"
     syncdir() {
         local sdir="$1"
         local ddir="$2"
         local query="$3"
-        mkdir -p "/media/Ventoy/${ddir}"
+        mkdir -p "${dest}/${ddir}"
         (
-            cd "/home/data/media/Software/${sdir}"
+            cd "${root}/${sdir}"
             find . -mindepth 1 -maxdepth 1 -name "${query}" -printf '%P\n' | while read src ; do
                 local dst=$(echo "${src}" | sed "s/ /-/g")
-                echo "Syncing \"/home/data/media/Software/${sdir}/${src}\" \"/media/Ventoy/${ddir}/${dst}\""
-                rsync -rLtxc "/home/data/media/Software/${sdir}/${src}" "/media/Ventoy/${ddir}/${dst}"
+                echo "Syncing \"${root}/${sdir}/${src}\" \"${dest}/${ddir}/${dst}\""
+                rsync -rLtxc "${root}/${sdir}/${src}" "${dest}/${ddir}/${dst}"
             done
         )
     }
 
     syncdir 'Boot Tools' 'Boot-Tools' '*.iso'
     syncdir 'DOSBox/DOSBox' 'DOS' '*.iso'
+    #syncdir 'Haiku/Haiku OS' 'Haiku' 'Haiku-R1-Beta4-*.iso' # Haiku does not work with Ventoy
     syncdir 'Hypervisor/OpenIndiana' 'Hypervisor' '*.iso'
     syncdir 'Hypervisor/SmartOS' 'Hypervisor' '*.iso'
     syncdir 'Hypervisor/VMware ESXi (vSphere Hypervisor)' 'Hypervisor' '*.iso'
     syncdir 'Hypervisor/XCP NG' 'Hypervisor' '*.iso'
-    syncdir 'Linux/Linux OS' 'Linux' '*.iso'
+    syncdir 'Linux/Linux OS' 'Linux' 'ArchLinux*.iso'
+    syncdir 'Linux/Linux OS' 'Linux' 'CentOS*.iso'
+    syncdir 'Linux/Linux OS' 'Linux' 'Debian*.iso'
+    syncdir 'Linux/Linux OS' 'Linux' 'Guix*.iso'
+    syncdir 'Linux/Linux OS' 'Linux' 'Nix*.iso'
+    #syncdir 'Linux/Linux OS' 'Linux' 'Qubes*.iso' # Qubes does not work with Ventoy
+    syncdir 'Linux/Linux OS' 'Linux' 'Rocky*.iso'
+    syncdir 'Linux/Linux OS' 'Linux' 'Tails*.iso'
+    syncdir 'Linux/Linux OS' 'Linux' 'Ubuntu*.iso'
     syncdir 'Linux/Manjaro OS' 'Manjaro' '*.iso'
     syncdir 'OS2/ArcaOS/ArcaOS-5.0.5' 'Other' '*.iso'
     syncdir 'Windows XP, 7, 10/Windows OS' 'Windows' '*.iso'
