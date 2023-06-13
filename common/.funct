@@ -1008,8 +1008,8 @@ EOF
 #
 # ssh
 #
-#        ssh-key-cp              copy ssh key to remote server
-ssh-key-cp() {
+#        ssh-key-copy            copy ssh public key to remote server
+ssh-key-copy() {
     if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 [USER@]SERVER"
     else
@@ -1021,7 +1021,7 @@ ssh-key-cp() {
     fi
 }
 #!# this version does not work on macos
-#!ssh-key-cp() {
+#!ssh-key-copy() {
 #!    if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
 #!        echo "Usage: $0 [USER@]SERVER"
 #!    else
@@ -1029,8 +1029,8 @@ ssh-key-cp() {
 #!        ssh-copy-id -i "${HOME}/.ssh/id_rsa.pub" "$1"
 #!    fi
 #!}
-#        ssh-urxvt-cp            copy urxvt terminfo data to remote server
-ssh-urxvt-cp() {
+#        ssh-urxvt-copy          copy urxvt terminfo data to remote server
+ssh-urxvt-copy() {
     if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 [USER@]SERVER"
     else
@@ -1945,7 +1945,6 @@ arch-initialize() {
         "arch-sudoers"
         "arch-sysctl"
         #"arch-locale"
-        "arch-capslock-control"
         "arch-package-managers"
     )
 
@@ -1972,6 +1971,7 @@ arch-initialize() {
         "arch-configure-java-8-openjdk"
         #"arch-configure-java-11-openjdk"
         #"arch-printer-cannon"
+        "arch-capslock-control"
         "arch-services"
         "arch-user-services"
         "arch-final"
