@@ -19825,8 +19825,8 @@ Commands:
   :config
   (defun custom-ruby-mode-hook ()
     ;; set indent level
-    ;;(setq ruby-indent-level 4)
     (setq ruby-indent-level 2)
+    ;;(setq ruby-indent-level 4)
 
     ;; define keys
     (define-key ruby-mode-map (kbd "<return>") 'reindent-then-newline-and-indent)

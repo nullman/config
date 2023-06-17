@@ -4,8 +4,6 @@
 #
 # Run a single command on multiple servers at once via ssh.
 #
-# Requires rubygems and net/ssh.
-#
 # Parameters:
 #   username
 #   password
@@ -15,9 +13,8 @@
 # Example:
 #   ssh-multi foo bar "server1 server2" "ps ax | grep -v grep | grep myapp"
 #
-# To install rubygems and net/ssh on Ubuntu/Debian do:
-#   # apt-get install rubygems
-#   # gem install --remote net-ssh
+# Required gems:
+#   net-ssh
 #
 # Author: Kyle W T Sherman <kylewsherman@gmail.com> (based on Joel Jensen's version)
 #===============================================================================

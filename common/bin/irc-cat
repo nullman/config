@@ -15,14 +15,14 @@ require 'rubygems'
 require 'IRC'
 
 # setup
-$server = "irc.win.dowjones.net"
-$port = "6667"
-$nick = "buildreport"
-$channels = ["build"]
-$command = "tail -n 0 -f cruisecontrol.log | grep INFO"
+server = "irc.win.dowjones.net"
+port = "6667"
+nick = "buildreport"
+channels = ["build"]
+command = "tail -n 0 -f cruisecontrol.log | grep INFO"
 
 # create irc bot
-bot = IRC.new($nick, $server, $port, $nick)
+bot = IRC.new(nick, server, port, nick)
 
 # add callback on connect
 IRCEvent.add_callback('endofmotd') { |event|
