@@ -17,10 +17,10 @@ Description=User invert screen (flip screen by 180 degrees)
 [Service]
 Type=forking
 ExecStart=/bin/sh -c 'exec sleep 10s && exec /usr/bin/xrandr --output "HDMI-1" --rotate inverted && exec /usr/bin/xinput --set-prop "ILITEK ILITEK-TP" "Coordinate Transformation Matrix" -1 0 1 0 -1 1 0 0 1'
-TimeoutSec=20
+TimeoutSec=60
 
 [Install]
-WantedBy=default.target
+WantedBy=default.target sleep.target
 
 #===============================================================================
 # End of File
