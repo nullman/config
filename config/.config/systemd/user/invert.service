@@ -12,17 +12,14 @@
 #===============================================================================
 
 [Unit]
-Description=User invert screen actions
-Before=sleep.target
-StopWhenUnneeded=yes
+Description=User invert screen (flip screen by 180 degrees)
 
 [Service]
 Type=oneshot
-RemainAfterExit=yes
 ExecStop=xrandr --output "HDMI-1" --rotate inverted && xinput --set-prop "ILITEK ILITEK-TP" "Coordinate Transformation Matrix" -1 0 1 0 -1 1 0 0 1
 
 [Install]
-WantedBy=sleep.target
+WantedBy=default.target
 
 #===============================================================================
 # End of File
