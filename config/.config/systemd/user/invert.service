@@ -16,8 +16,8 @@ Description=User invert screen (flip screen by 180 degrees)
 
 [Service]
 Type=oneshot
-ExecStart=/bin/sh -c 'exec /usr/sbin/xrandr --output "HDMI-1" --rotate inverted && exec /usr/sbin/xinput --set-prop "ILITEK ILITEK-TP" "Coordinate Transformation Matrix" -1 0 1 0 -1 1 0 0 1'
-#ExecStart=/usr/sbin/xrandr --output "HDMI-1" --rotate inverted && /usr/sbin/xinput --set-prop "ILITEK ILITEK-TP" "Coordinate Transformation Matrix" -1 0 1 0 -1 1 0 0 1
+ExecStart=/bin/sh -c 'exec /usr/bin/xrandr --output "HDMI-1" --rotate inverted && exec /usr/bin/xinput --set-prop "ILITEK ILITEK-TP" "Coordinate Transformation Matrix" -1 0 1 0 -1 1 0 0 1'
+#ExecStart=/usr/bin/xrandr --output "HDMI-1" --rotate inverted && /usr/bin/xinput --set-prop "ILITEK ILITEK-TP" "Coordinate Transformation Matrix" -1 0 1 0 -1 1 0 0 1
 
 [Install]
 WantedBy=default.target
