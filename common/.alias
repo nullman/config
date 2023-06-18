@@ -2418,12 +2418,10 @@ alias ssh-morpheusgit="echo 'ssh:git@morpheus' ; ssh -l git morpheus"
 alias ssh-mouse="echo 'ssh:mouse' ; ssh mouse"
 #        ssh-neo                 ssh neo
 alias ssh-neo="echo 'ssh:neo' ; ssh neo"
-#        ssh-pihole              ssh pihole
-alias ssh-pihole="echo 'ssh:pi@pihole' ; ssh pi@pihole"
 #        ssh-pimodem             ssh pimodem
 alias ssh-pimodem="echo 'ssh:pi@pimodemd' ; ssh pi@pimodemd"
 #        ssh-raspad              ssh raspad
-alias ssh-raspad="echo 'ssh:raspadusb' ; ssh pi@raspadusb"
+alias ssh-raspad="echo 'ssh:raspad-usb' ; ssh pi@raspad-usb"
 #        ssh-retropie            ssh retropie
 alias ssh-retropie="echo 'ssh:retropie' ; ssh pi@retropie"
 #        ssh-switch              ssh switch

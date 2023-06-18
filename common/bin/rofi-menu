@@ -248,7 +248,7 @@ case "${menu}" in
                 "kyle@mouse"
                 "kyle@nullware"
                 "kyle@switch"
-                "pi@pihole"
+                "pi@pimodem"
                 "pi@raspad"
                 "pi@retropie"
             )
