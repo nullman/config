@@ -1,0 +1,29 @@
+#===============================================================================
+# .config/systemd/user/invert.service
+#
+# Configuration for systemd user invert screen service.
+#
+# Enable:   systemctl --user enable invert.service
+# Start:    systemctl --user start invert.service
+# Stop:     systemctl --user stop invert.service
+# Disable:  systemctl --user disable invert.service
+#
+# Reference: https://wiki.archlinux.org/index.php/Systemd/User
+#===============================================================================
+
+[Unit]
+Description=User invert screen actions
+Before=sleep.target
+StopWhenUnneeded=yes
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStop=xrandr --output "HDMI-1" --rotate inverted && xinput --set-prop "ILITEK ILITEK-TP" "Coordinate Transformation Matrix" -1 0 1 0 -1 1 0 0 1
+
+[Install]
+WantedBy=sleep.target
+
+#===============================================================================
+# End of File
+#===============================================================================
