@@ -1831,8 +1831,8 @@ alias ping-switch="ping 192.168.1.44"
 alias ping-mouse="ping 192.168.1.50"
 #        ping-raspad             ping raspad
 alias ping-raspad="ping 192.168.1.54"
-#        ping-raspadd            ping raspadd
-alias ping-raspadd="ping 192.168.1.55"
+#        ping-raspad-usb         ping raspad-usb
+alias ping-raspad-usb="ping 192.168.1.55"
 #        ping-retropie            ping retropie
 alias ping-retropie="ping 192.168.1.56"
 #        ping-retropied           ping retropied

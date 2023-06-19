@@ -25,6 +25,7 @@ MENU:
   rsync   Synchronize Files
   sounds  Play Sounds
   ssh     SSH into Systems
+  vnc     VNC into Systems
 EOF
 }
 
@@ -40,6 +41,7 @@ if [[ $# -lt 1 ]] ; then
         "Rsync"
         "Sounds"
         "SSH"
+        "VNC"
     )
     menu=$(printf "%s\n" "${menus[@]}" | rofi -dmenu -i -p 'Menu')
 else
@@ -250,6 +252,7 @@ case "${menu}" in
                 "kyle@switch"
                 "pi@pimodem"
                 "pi@raspad"
+                "pi@raspad-usb"
                 "pi@retropie"
             )
             sel=$(printf "%s\n" "${servers[@]}" | rofi -dmenu -i -p 'SSH')
@@ -260,6 +263,26 @@ case "${menu}" in
         # launch selected ssh connection
         if [[ -n "${sel}" ]] ; then
             (alacritty -t "SSH ${sel}" -e "ssh" "${sel}" &)
+        fi
+        ;;
+
+    vnc)
+        if [[ $# -lt 2 ]] ; then
+            servers=(
+                "switch"
+                "pimodem"
+                "raspad"
+                "raspad-usb"
+                "retropie"
+            )
+            sel=$(printf "%s\n" "${servers[@]}" | rofi -dmenu -i -p 'VNC')
+        else
+            sel=$2
+        fi
+
+        # launch selected vnc connection
+        if [[ -n "${sel}" ]] ; then
+            (vncviewer "${sel}:0" &)
         fi
         ;;
 esac
