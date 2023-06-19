@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2023-06-17 13:57 (kyle)>
+  #+TIMESTAMP: <2023-06-19 14:34 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -4297,7 +4297,8 @@
       ;; ;; (use-package org-alert
       ;; ;;   :straight t
       ;; ;;   :after (org)
-      ;; ;;   :custom (alert-default-style 'notifications)
+      ;; ;;   :custom
+      ;; ;;   (alert-default-style 'notifications)
       ;; ;;   :config
       ;; ;;   (setq org-alert-interval 300
       ;; ;;         org-alert-notification-title "Org Reminder"))
@@ -22325,7 +22326,8 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       (use-package ag
         :straight t
         :commands (ag)
-        :custom (ag-arguments (list "--smart-case" "--stats")))
+        :custom
+        (ag-arguments (list "--smart-case" "--stats")))
     #+END_SRC
 
 *** +aggressive-indent+
@@ -22375,7 +22377,8 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       (use-package alert
         :straight t
         :commands (alert)
-        :custom (alert-default-style 'libnotify))
+        :custom
+        (alert-default-style 'libnotify))
     #+END_SRC
 
 *** analog-clock
@@ -27861,7 +27864,8 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       (use-package time-stamp
         :straight (:type built-in)
         :commands (time-stamp)
-        :custom (time-stamp-active t)
+        :custom
+        (time-stamp-active t)
         :init
         (setq time-stamp-line-limit 50
               time-stamp-start "[Tt][Ii][Mm][Ee][-]?[Ss][Tt][Aa][Mm][Pp]:[ \t]+\\\\?[\"<]+"
@@ -29119,7 +29123,8 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         :straight (:type built-in)
         :mode (("\\.css\\'" . css-mode)
                ("\\.scss\\'" . css-mode))
-        :custom (cssm-indent-function #'cssm-c-style-indenter))
+        :custom
+        (cssm-indent-function #'cssm-c-style-indenter))
     #+END_SRC
 
 *** Dired
@@ -31276,7 +31281,8 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
                     ("C-c C-d" . rust-dbg-wrap-or-unwrap)
                     ("C-c C-f" . rust-format-buffer)
                     ("C-c C-n" . rust-goto-format-problem))
-        :custom (rustic-lsp-client nil)
+        :custom
+        (rustic-lsp-client nil)
         :config
         (defun custom-rust-mode-hook ()
           ;; use spaces for tabs

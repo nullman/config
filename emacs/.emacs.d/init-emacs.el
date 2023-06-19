@@ -15174,7 +15174,8 @@ USING is the remaining peg."
 (use-package ag
   :straight t
   :commands (ag)
-  :custom (ag-arguments (list "--smart-case" "--stats")))
+  :custom
+  (ag-arguments (list "--smart-case" "--stats")))
 ;; ag:1 ends here
 
 ;; [[file:init-emacs.org::#modules-alert][alert:1]]
@@ -15187,7 +15188,8 @@ USING is the remaining peg."
 (use-package alert
   :straight t
   :commands (alert)
-  :custom (alert-default-style 'libnotify))
+  :custom
+  (alert-default-style 'libnotify))
 ;; alert:1 ends here
 
 ;; [[file:init-emacs.org::#modules-analog-clock][analog-clock:1]]
@@ -18117,7 +18119,8 @@ Do not perform the search on very large files (to avoid a delay when loaded)."
 (use-package time-stamp
   :straight (:type built-in)
   :commands (time-stamp)
-  :custom (time-stamp-active t)
+  :custom
+  (time-stamp-active t)
   :init
   (setq time-stamp-line-limit 50
         time-stamp-start "[Tt][Ii][Mm][Ee][-]?[Ss][Tt][Aa][Mm][Pp]:[ \t]+\\\\?[\"<]+"
@@ -18855,7 +18858,8 @@ otherwise run `find-file-as-root'."
   :straight (:type built-in)
   :mode (("\\.css\\'" . css-mode)
          ("\\.scss\\'" . css-mode))
-  :custom (cssm-indent-function #'cssm-c-style-indenter))
+  :custom
+  (cssm-indent-function #'cssm-c-style-indenter))
 ;; CSS Mode:1 ends here
 
 ;; [[file:init-emacs.org::#modes-dired][Dired:1]]
@@ -19960,7 +19964,8 @@ Commands:
               ("C-c C-d" . rust-dbg-wrap-or-unwrap)
               ("C-c C-f" . rust-format-buffer)
               ("C-c C-n" . rust-goto-format-problem))
-  :custom (rustic-lsp-client nil)
+  :custom
+  (rustic-lsp-client nil)
   :config
   (defun custom-rust-mode-hook ()
     ;; use spaces for tabs
