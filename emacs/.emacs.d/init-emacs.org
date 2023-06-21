@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2023-06-19 14:34 (kyle)>
+  #+TIMESTAMP: <2023-06-20 19:01 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -2925,6 +2925,7 @@
        ;;("fputs (Lunduke) ???" (location . "gopher://fputs.com/1") (handler . elpher-bookmark-jump))
 
        ;; Gemini
+       ("Haiku" (location . "gemini://lofi.haiku-os.org/") (handler . elpher-bookmark-jump))
        ("Project Gemini" (location . "gemini://gemini.circumlunar.space/") (handler . elpher-bookmark-jump))
        ("Planet m68k" (location . "gemini://m68k.info/") (handler . elpher-bookmark-jump))
        ;;("System Crafters" (location . "gemini://systemcrafters.cc") (handler . elpher-bookmark-jump))

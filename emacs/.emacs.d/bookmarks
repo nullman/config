@@ -34,6 +34,7 @@
  ;;("fputs (Lunduke) ???" (location . "gopher://fputs.com/1") (handler . elpher-bookmark-jump))
 
  ;; Gemini
+ ("Haiku" (location . "gemini://lofi.haiku-os.org/") (handler . elpher-bookmark-jump))
  ("Project Gemini" (location . "gemini://gemini.circumlunar.space/") (handler . elpher-bookmark-jump))
  ("Planet m68k" (location . "gemini://m68k.info/") (handler . elpher-bookmark-jump))
  ;;("System Crafters" (location . "gemini://systemcrafters.cc") (handler . elpher-bookmark-jump))
