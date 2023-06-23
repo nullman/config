@@ -10754,8 +10754,8 @@ be automatically capitalized."
           (words-triple-regexp (regexp-opt (mapcar #'capitalize words-triple) 'words))
           ;;(abbreviation-word-regexp "\\b[A-Z][.A-Z]+[^ \t]*\\b")
           (abbreviation-word-regexp (rx word-boundary
-                                        upper
-                                        (one-or-more (any "." upper))
+                                        (any digit upper)
+                                        (one-or-more (any "." digit upper))
                                         (zero-or-more (not space))
                                         word-boundary))
           ;;(mixed-word-regexp "\\b[A-Z]*[a-z]+[A-Z]+[^ \t]*\\b")

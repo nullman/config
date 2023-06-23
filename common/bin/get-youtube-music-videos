@@ -7,8 +7,13 @@
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
-basedir="/mnt/synology/video/Music/Videos"
-#basedir="${HOME}/synology/video/Music/Videos"
+basedir="/mnt/synology/video/Music"
+#basedir="${HOME}/synology/video/Music"
+origdir="${basedir}/Videos (Original)"
+mp4dir="${basedir}/Videos"
+
+mkdir -p "${origdir}"
+mkdir -p "${mp4dir}"
 
 videos=(
     "1975, The - Love it If We Made It                                  | https://www.youtube.com/watch?v=1Wl1B7DPegc"
@@ -52,6 +57,7 @@ videos=(
     "Goo Goo Dolls - Name                                               | https://www.youtube.com/watch?v=yQOBUrRaPU0"
     "Goo Goo Dolls - Slide                                              | https://www.youtube.com/watch?v=yP4qdefD2To"
     "Imogen Heap - Hide and Seek                                        | https://www.youtube.com/watch?v=UYIAfiVGluk"
+    "KNULP - Wish You Were Here (Pink Floyd Cover)                      | https://www.youtube.com/watch?v=-jqXZTxLzPo"
     "Live - Lightning Crashes                                           | https://www.youtube.com/watch?v=xsJ4O-nSveg"
     "Live - Overcome                                                    | https://www.youtube.com/watch?v=jpCa7Ay596M"
     "Madonna - Borderline                                               | https://www.youtube.com/watch?v=rSaC-YbSDpo"
@@ -81,6 +87,7 @@ videos=(
     "Nirvana - Smells like Teen Spirit                                  | https://www.youtube.com/watch?v=hTWKbfoikeg"
     "Olivia Rodrigo - Good 4 U                                          | https://www.youtube.com/watch?v=gNi_6U5Pm_o"
     "Outfield, The - Your Love                                          | https://www.youtube.com/watch?v=4N1iwQxiHrs"
+    "Pink Floyd - Wish You Were Here                                    | https://www.youtube.com/watch?v=01izSmWzgeI"
     "Portugal, The Man - Feel it Still                                  | https://www.youtube.com/watch?v=pBkHHoOIIn8"
     "Portugal, The Man - Feel it Still [Stripped Session]               | https://www.youtube.com/watch?v=F09POwrBn-M"
     "Portugal, The Man - Live in the Moment                             | https://www.youtube.com/watch?v=Hha0bwVvGmY"
@@ -126,26 +133,29 @@ videos=(
     "Weeknd, The - The Hills                                            | https://www.youtube.com/watch?v=yzTuBuRdAyA"
 )
 
-if [[ ! -d "${basedir}" ]] ; then
-    echo "Output directory does not exist: ${basedir}"
-    exit 1
-fi
-
 for ((x = 0; x < ${#videos[@]}; x += 1)) ; do
     video=$(echo "${videos[$x]}" | sed 's/ *|/|/g ; s/| */|/g')
     name=$(echo "${video}" | cut -d '|' -f 1)
     url=$(echo "${video}" | cut -d '|' -f 2)
+    escname=$(echo ${name} | sed 's/\[/\\\[/g ; s/\]/\\\]/g')
     echo "| ${name} | ${url} |"
-    path="${basedir}/${name}.webm"
-    if [[ ! -f "${path}" ]] ; then
+    if [[ -z $(find "${origdir}" -name "${escname}\.*") ]] ; then
         echo
-        echo "${url} -> ${path}"
+        echo "${url}"
         echo
-        cd "${basedir}" && \
-            yt-dlp --format "bv*+ba/b" \
-                   --format-sort "res:1080,res:720,res:480" \
-                   --output "${name}.%(ext)s" \
-                   "${url}"
+        yt-dlp --format "bv*+ba/b" \
+               --format-sort "res:1080,res:720,res:480" \
+               --output "${origdir}/${name}.%(ext)s" \
+               "${url}"
+        origfile=$(find "${origdir}" -name "${escname}\.*")
+        mp4file="${mp4dir}/${name}.mp4"
+        echo
+        echo "${origfile} --> ${mp4file}"
+        echo
+        ffmpeg -n -i "${origfile}" \
+               -c:v libx264 \
+               -c:a aac \
+               "${mp4file}"
     fi
 done
 
