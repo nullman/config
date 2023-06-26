@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2023-06-23 00:00 (kyle)>
+  #+TIMESTAMP: <2023-06-26 13:28 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -23686,6 +23686,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
        ;;(:name "Softpedia Linux" :html "https://linux.softpedia.com/" :rss "https://linux.softpedia.com/backend.xml" :tag "linux")
        (:name "Open Source Voices" :html "https://www.opensourcevoices.org/" :rss "https://feeds.fireside.fm/opensourcevoices/rss" :tag "linux")
        (:name "Luke Smith" :html "https://lukesmith.xyz/" :rss "https://lukesmith.xyz/rss.xml" :tag "linux")
+       (:name "Jeff Geerling" :html "https://www.jeffgeerling.com/" :rss "https://www.jeffgeerling.com/blog.xml" :tag "linux")
        ;; Development / Computers / Technical
        (:name "Slashdot" :html "https://slashdot.org/" :rss "https://slashdot.org/slashdot.rss" :tag "dev")
        (:name "Hacker News" :html "https://news.ycombinator.com/" :rss "https://news.ycombinator.com/rss" :tag "dev")
