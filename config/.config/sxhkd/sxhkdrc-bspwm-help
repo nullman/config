@@ -58,6 +58,6 @@ Move and Resize
 | Super |     | Ctrl |       | b   | Balance Nodes             |
 | Super |     | Ctrl |       | e   | Equalize Nodes            |
 
-[1] After entering expand/contract/move window mode, use I, K, J, and L to
-expand/contract the current window, and use Up, Down, Left, and Right
-arrow keys to move a floating window around. Press Esc to exit mode.
+[1] After entering resize/move window mode, use i/I, k/K, j/J, and l/L to
+expand/contract the current window, and use Up, Down, Left, and Right arrow
+keys to move a floating window around. Press Esc to exit mode.

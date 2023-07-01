@@ -156,6 +156,10 @@ super + alt + c
 super + alt + j
     rofi -modi emoji -show emoji
 
+# paste selector
+super + alt + apostrophe
+    ${HOME}/bin/rofi-menu paste
+
 # bitwarden selector (clear clipboard after 30 seconds)
 # first login using 'bw login'
 super + alt + p
@@ -166,10 +170,6 @@ super + ctrl + p
     tr --delete --complement 'a-zA-Z0-9!@#$%^&*-_=+;:,<.>/?' < /dev/urandom | \
     head --bytes 14 | xclip -selection clipboard && \
     notify-send --expire-time=2000 'Random password generated on clipboard'
-
-# paste selector
-super + alt + apostrophe
-    ${HOME}/bin/rofi-menu paste
 
 # display time
 super + alt + backslash
@@ -244,22 +244,20 @@ super + shift + v
     xrandr --output $(xrandr | grep ' connected ' | sed 's/ .*//' | head -n 1) --auto && \
     notify-send --expire-time=2000 'Resetting video'
 
-# connect to beats headphones via bluetooth
+# connect to  headphones via bluetooth
 super + alt + b
-    notify-send --expire-time=2000 'Connecting to Beats Headphones via Bluetooth' && \
-    bluetoothctl connect 04:88:E2:6A:00:6C
+    notify-send --expire-time=2000 'Connecting to Sennheiser HD 350BT Headphones via Bluetooth' && \
+    bluetoothctl connect 80:C3:BA:0E:CB:E5
 
 #-------------------------------------------------------------------------------
 # Media
 #-------------------------------------------------------------------------------
 
 # volume control
-# super + alt + ctrl + {Left,Right}
-#     pactl -- set-sink-volume 0 {-,+}10% && aplay "${HOME}/sounds/test.wav"
 super + alt + ctrl + Left
-    pactl -- set-sink-volume 0 -10% && notify-send --expire-time=2000 'Volume Down 10%' && aplay "${HOME}/sounds/test.wav"
+    pactl -- set-sink-volume 0 -2% && notify-send --expire-time=2000 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
 super + alt + ctrl + Right
-    pactl -- set-sink-volume 0 +10% && notify-send --expire-time=2000 'Volume Up 10%' && aplay "${HOME}/sounds/test.wav"
+    pactl -- set-sink-volume 0 +2% && notify-send --expire-time=2000 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
 
 # mpc control
 super + alt + ctrl + m

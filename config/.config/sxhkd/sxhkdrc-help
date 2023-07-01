@@ -3,42 +3,42 @@ Simple X Hotkey Daemon Key Bindings
 
 System Tools
 
-| Super | Alt | Ctrl | Shift | Key    | Description                    |
-|-------+-----+------+-------+--------+--------------------------------|
-| Super | Alt |      |       | h      | Display Key Bindings           |
-| Super |     |      | Shift | h      | Display BSPWM Manual           |
-| Super | Alt |      |       | Space  | Application Launcher           |
-| Super | Alt |      |       | d      | Program Launcher               |
-| Super | Alt |      |       | Return | Rofi Menu Launcher             |
-| Super | Alt |      |       | w      | Window Selector                |
-| Super | Alt |      |       | c      | Clipmenu Selector              |
-| Super | Alt |      |       | j      | Emoji Selector                 |
-| Super | Alt |      |       | p      | Bitwarden Selector             |
-| Super |     | Ctrl |       | p      | Generate Password              |
-| Super | Alt |      |       | '      | Paste Selector                 |
-| Super | Alt |      |       | \      | Display Time                   |
-| Super | Alt |      |       | e      | Edit with Emacs                |
-| Super | Alt |      |       | y      | Git Sync Home                  |
-| Super | Alt |      |       | u      | Git Sync Doc                   |
-| Super | Alt |      |       | s      | Start Screensaver              |
-| Super | Alt |      |       | x      | Lock Screensaver               |
-| Super |     |      | Shift | e      | Lock, Logout, Reboot, Shutdown |
-| Super |     |      | Shift | p      | Get XProp Class Name           |
-| Super |     |      | Shift | Delete | Kill Process Clicked           |
-| Super | Alt |      |       | Print  | Screen Snapshot                |
-| Super |     | Ctrl |       | Print  | Window Snapshot                |
-| Super |     |      | Shift | Print  | Region Snapshot                |
-| Super |     |      | Shift | r      | Reload SXHKD                   |
-| Super |     |      | Shift | t      | Reload Tint                    |
-| Super |     |      | Shift | v      | Reset Video                    |
-| Super | Alt |      |       | b      | Connect to Beats Headphones    |
+| Super | Alt | Ctrl | Shift | Key    | Description                     |
+|-------+-----+------+-------+--------+---------------------------------|
+| Super | Alt |      |       | h      | Display Key Bindings            |
+| Super |     |      | Shift | h      | Display BSPWM Manual            |
+| Super | Alt |      |       | Space  | Desktop Application Launcher    |
+| Super | Alt |      |       | d      | Program Launcher                |
+| Super | Alt |      |       | Return | Menu Launcher                   |
+| Super | Alt |      |       | w      | Window Selector                 |
+| Super | Alt |      |       | c      | Clipmenu Selector               |
+| Super | Alt |      |       | j      | Emoji Selector                  |
+| Super | Alt |      |       | '      | Paste Selector                  |
+| Super | Alt |      |       | p      | Bitwarden Selector              |
+| Super |     | Ctrl |       | p      | Generate Password               |
+| Super | Alt |      |       | \      | Display Time                    |
+| Super | Alt |      |       | e      | Edit with Emacs                 |
+| Super | Alt |      |       | y      | Git Sync Home                   |
+| Super | Alt |      |       | u      | Git Sync Doc                    |
+| Super | Alt |      |       | s      | Start Screensaver               |
+| Super | Alt |      |       | x      | Lock Screensaver                |
+| Super |     |      | Shift | e      | Lock, Logout, Reboot, Shutdown  |
+| Super |     |      | Shift | p      | Get XProp Class Name            |
+| Super |     |      | Shift | Delete | Kill Process Clicked            |
+| Super | Alt |      |       | Print  | Screen Snapshot                 |
+| Super |     | Ctrl |       | Print  | Window Snapshot                 |
+| Super |     |      | Shift | Print  | Region Snapshot                 |
+| Super |     |      | Shift | s      | Reload SXHKD                    |
+| Super |     |      | Shift | t      | Reload Tint                     |
+| Super |     |      | Shift | v      | Reset Video                     |
+| Super | Alt |      |       | b      | Connect to Bluetooth Headphones |
 
 Media
 
 | Super | Alt | Ctrl | Shift | Key    | Description               |
 |-------+-----+------+-------+--------+---------------------------|
-| Super | Alt | Ctrl |       | Left   | Volume Down 10%           |
-| Super | Alt | Ctrl |       | Right  | Volume Up 10%             |
+| Super | Alt | Ctrl |       | Left   | Volume Down               |
+| Super | Alt | Ctrl |       | Right  | Volume Up                 |
 | Super | Alt | Ctrl |       | m      | MPD: Play/Pause Song      |
 | Super | Alt | Ctrl |       | Comma  | MPD: Play Previous Song   |
 | Super | Alt | Ctrl |       | Period | MPD: Play Next Song       |
