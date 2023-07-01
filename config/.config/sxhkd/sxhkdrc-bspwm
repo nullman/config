@@ -194,28 +194,34 @@ super + ctrl + space
 # Move and Resize
 #-------------------------------------------------------------------------------
 
-# resize window by moving one of its sides outward
+# resize window:
+#   outward with lowercase i/k/j/l keys
+#   inward with uppercase I/K/J/L keys
 # move floating window with arrow keys
-super + ctrl + s : {i,k,j,l,Up,Down,Left,Right}
+super + ctrl + s : {i,k,j,l,I,K,J,L,Up,Down,Left,Right}
     n=20 ; \
     bspc node \
     { --resize top      0 -$n , \
       --resize bottom   0  $n , \
       --resize left   -$n   0 , \
       --resize right   $n   0 , \
+      --resize bottom   0 -$n , \
+      --resize top      0  $n , \
+      --resize right  -$n   0 , \
+      --resize left    $n   0 , \
       --move            0 -$n , \
       --move            0  $n , \
       --move          -$n   0 , \
       --move           $n   0 }
 
-# resize window by moving one of its sides inward
-super + ctrl + s : shift + {i,k,j,l}
-    n=20 ; \
-    bspc node \
-    { --resize bottom   0 -$n , \
-      --resize top      0  $n , \
-      --resize right  -$n   0 , \
-      --resize left    $n   0 }
+# # resize window by moving one of its sides inward
+# super + ctrl + s : shift + {i,k,j,l}
+#     n=20 ; \
+#     bspc node \
+#     { --resize bottom   0 -$n , \
+#       --resize top      0  $n , \
+#       --resize right  -$n   0 , \
+#       --resize left    $n   0 }
 
 # balance windows in current desktop
 super + ctrl + b

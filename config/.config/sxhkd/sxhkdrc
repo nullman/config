@@ -82,19 +82,22 @@ control + alt + {Up,Down,Left,Right}
 # Media Keys
 #-------------------------------------------------------------------------------
 
-# audio mute ???
+# XF86AudioMute
+#     pactl -- set-sink-mute 0 toggle && notify-send --expire-time=2000 "$(pactl -- get-sink-mute 0)"
 
-# sound down ???
+# XF86AudioLowerVolume
+#     pactl -- set-sink-volume 0 -2% && notify-send --expire-time=2000 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
 
-# sound up ???
+# XF86AudioRaiseVolume
+#     pactl -- set-sink-volume 0 +2% && notify-send --expire-time=2000 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
 
-# XF86AudioMicMute
+# # XF86AudioMicMute
 
-XF86MonBrightnessUp
-    xbacklight -inc 10 && notify-send --expire-time=2000 'Brightness Up'
+# XF86MonBrightnessUp
+#     xbacklight -inc 10 && notify-send --expire-time=2000 'Brightness Up'
 
-XF86MonBrightnessDown
-    xbacklight -dec 10 && notify-send --expire-time=2000 'Brightness Down'
+# XF86MonBrightnessDown
+#     xbacklight -dec 10 && notify-send --expire-time=2000 'Brightness Down'
 
 # XF86Display
 
