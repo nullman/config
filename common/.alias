@@ -1291,10 +1291,10 @@ alias edm="edit \${HOME}/.menu"
 alias edmw="edit \${HOME}/.menu_work"
 #        edoff                   edit ~/.offlineimaprc
 alias edoff="edit \${HOME}/.offlineimaprc"
-#        edrp                    edit ~/.ratpoisonrc
-alias edrp="edit \${HOME}/.ratpoisonrc"
-#        edrpb                   edit ~/.ratpoisonrc-bindings
-alias edrpb="edit \${HOME}/.ratpoisonrc-bindings"
+#!#        edrp                    edit ~/.ratpoisonrc
+#!alias edrp="edit \${HOME}/.ratpoisonrc"
+#!#        edrpb                   edit ~/.ratpoisonrc-bindings
+#!alias edrpb="edit \${HOME}/.ratpoisonrc-bindings"
 #        edsc                    edit ~/.screenrc
 alias edsc="edit \${HOME}/.screenrc"
 #        edscb                   edit ~/.screenrc-bindings
@@ -1333,10 +1333,10 @@ alias edxs="edit \${HOME}/.xsession"
 alias edsa="edit \${HOME}/bin/screen-app"
 #        edra                    edit ~/bin/run-app
 alias edra="edit \${HOME}/bin/run-app"
-#        edrpm                   edit ~/bin/ratpoison-menu
-alias edrpm="edit \${HOME}/bin/ratpoison-menu"
-#        edrpw                   edit ~/bin/ratpoison-windows
-alias edrpw="edit \${HOME}/bin/ratpoison-windows"
+#!#        edrpm                   edit ~/bin/ratpoison-menu
+#!alias edrpm="edit \${HOME}/bin/ratpoison-menu"
+#!#        edrpw                   edit ~/bin/ratpoison-windows
+#!alias edrpw="edit \${HOME}/bin/ratpoison-windows"
 #        edbgc                   edit /boot/grub/grub.conf
 alias edbgc="edit /boot/grub/grub.conf"
 #        edbgm                   edit /boot/grub/menu.lst
