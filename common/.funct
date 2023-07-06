@@ -1944,6 +1944,7 @@ arch-initialize() {
         "arch-group"
         "arch-sudoers"
         "arch-sysctl"
+        "arch-systemd"
         #"arch-locale"
         "arch-package-managers"
     )
@@ -2163,7 +2164,7 @@ manjaro-initialize() {
         "manjaro-packages-optional-emulators-virtualbox"
         "manjaro-packages-optional-emulators-virtual-t"
         "manjaro-packages-optional-games"
-        "manjaro-packages-optional-games-proton"
+        "manjaro-packages-optional-games-steam"
         "manjaro-packages-optional-games-marathon"
         "manjaro-packages-optional-other"
         "manjaro-packages-optional-other-nvidia"
