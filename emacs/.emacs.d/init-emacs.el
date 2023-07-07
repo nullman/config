@@ -20862,7 +20862,7 @@ Commands:
                     ("prj" . "~/prj")
                     ("code" . "~/code")
                     ("github" . "~/code/github-nullman")
-                    ("gitlab" . "~/code/gitlab-kylesherman")
+                    ;;("gitlab" . "~/code/gitlab-kylesherman")
                     ("media" . "/home/data/media")
                     ("music" . "/home/data/media/audio/Music")
                     ("text" . "/home/data/media/text")
