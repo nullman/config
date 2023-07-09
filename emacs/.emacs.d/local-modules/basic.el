@@ -6,6 +6,7 @@
 ;; Created:  2008-03-29
 ;; Version:  0.1
 ;; Keywords: languages tools
+;; Package-Requires: ((emacs "25.1"))
 ;;
 ;; This file is not part of GNU Emacs.
 ;;
@@ -1668,6 +1669,57 @@ INPUT is used to respond to input prompts."
   (let ((basic-test-mode t)
         (basic-test-input (car input)))
     (basic-run)))
+
+;; renumber basic buffer
+;;;###autoload
+(defun basic-renumber (&optional start increment buffer)
+  "Renumber current BASIC buffer.
+\nIf START is non-nil, start with that number (default = 10).
+If INCREMENT is non-nil, increment by that much (default = 10).
+If BUFFER is non-nil, use it instead of `current-buffer'."
+  (interactive "*")
+  (unless (eq major-mode 'basic-mode)
+    (user-error "Not a BASIC buffer"))
+  (let ((start (or start 10))
+        (increment (or increment 10))
+        (buffer (or buffer (current-buffer)))
+        (linenum-list '())
+        (linenum-map (make-hash-table)))
+    (set-buffer buffer)
+    ;; populate list of line numbers
+    (save-mark-and-excursion
+      (save-match-data
+        (goto-char (point-min))
+        (while (re-search-forward "^\\([0-9]+\\)\\b" nil :noerror)
+          (push (string-to-number (match-string 1)) linenum-list))))
+    (setq linenum-list (nreverse linenum-list))
+    ;; renumber list and create mapping
+    (cl-do ((ln linenum-list (cdr ln))
+            (cn start (+ cn increment)))
+        ((null ln))
+      (puthash (car ln) cn linenum-map))
+    ;; renumber buffer
+    (save-mark-and-excursion
+      (save-match-data
+        (goto-char (point-min))
+        (dolist (ln linenum-list)
+          (re-search-forward (concat "^" (number-to-string ln) "\\b"))
+          (replace-match (number-to-string (gethash ln linenum-map))))
+        (dolist (cmd '("GOSUB" "GOTO" "THEN"))
+          (goto-char (point-min))
+          (while (re-search-forward
+                  (concat "\\b" cmd "\\b *\\([0-9]+\\)\\b") nil :noerror)
+            (replace-match
+             (number-to-string
+              (gethash (string-to-number (match-string 1)) linenum-map))
+             nil nil nil 1)
+            ;; handle ON GOTO and ON GOSUB line number lists
+            (while (re-search-forward
+                    (concat ", *\\b\\([0-9]+\\)\\b") (point-at-eol) :noerror)
+              (replace-match
+               (number-to-string
+                (gethash (string-to-number (match-string 1)) linenum-map))
+               nil nil nil 1))))))))
 
 (provide 'basic)
 
