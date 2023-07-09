@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2023-07-06 14:41 (kyle)>
+  #+TIMESTAMP: <2023-07-08 22:38 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -3263,6 +3263,9 @@
         ;; ;; bs-show (buffer select)
         ;; (when (fboundp 'bs-show)
         ;;   (bind-keys ("C-x C-b" . bs-show))) ; default: `list-buffers'
+
+        ;; cycle to previous buffer
+        (bind-keys ("C-`" . mode-line-other-buffer))
 
         ;; bury buffer
         (bind-keys ("C-c y" . bury-buffer))

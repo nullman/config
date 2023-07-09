@@ -548,15 +548,15 @@ wordle-match() {
     else
         cmd="cat ~/doc/information/words.txt | grep '^.\{$1\}$' | tr 'A-Z' 'a-z'"
         if [[ $# -gt 1 ]] ; then
-            cmd="${cmd} | grep -v '[$2]'"
+            cmd="${cmd} | grep --color=never -v '[$2]'"
         fi
         if [[ $# -gt 2 ]] ; then
             for x in $(echo "$3" | grep -o '.') ; do
-                cmd="${cmd} | grep '${x}'"
+                cmd="${cmd} | grep --color=never '${x}'"
             done
         fi
         if [[ $# -gt 3 ]] ; then
-            cmd="${cmd} | grep '$4'"
+            cmd="${cmd} | grep --color=never '$4'"
         fi
         #echo "${cmd}"
         eval "${cmd}"

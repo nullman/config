@@ -1,11 +1,11 @@
-;;; basic.el --- Applesoft BASIC Compiler/Interpreter
+;;; basic.el --- Applesoft BASIC Compiler/Interpreter -*- lexical-binding: t -*-
 ;;
 ;;; Copyright (C) 2008-2014 Kyle W T Sherman
 ;;
 ;; Author:   Kyle W T Sherman <kylewsherman at gmail dot com>
 ;; Created:  2008-03-29
 ;; Version:  0.1
-;; Keywords: applesoft basic parser compiler interpreter mode
+;; Keywords: languages tools
 ;;
 ;; This file is not part of GNU Emacs.
 ;;
@@ -76,6 +76,9 @@
 ;; - Look at Applesoft BASIC reference/book and make sure this is compliant.
 
 ;;; Code:
+
+;; cl
+(require 'cl-lib)
 
 ;; customize group
 (defgroup basic nil
@@ -234,7 +237,7 @@
 
 ;; print error
 (defun basic-print-error (basic-error)
-  "Return `basic-error' in GNU standard error format:
+  "Return BASIC-ERROR in GNU standard error format:
 
 \"LINENO:COLUMN: MESSAGE.\""
   (format "%d:%d: %s"
@@ -474,7 +477,7 @@ Format returned:
                       ;; handle everything else
                       (when (eq state :start)
                         ;; current should be nil (internal error, if not)
-                        (assert (eq current nil) (current) "Variable current not cleared")
+                        (cl-assert (eq current nil) (current) "Variable current not cleared")
                         ;; type should be valid
                         (if type
                             ;; ignore whitespace
@@ -505,7 +508,7 @@ Format returned:
                       (when (eq state :end)
                         (setq state :start)))))
              finally (progn
-                       (when (and current (plusp (length current)))
+                       (when (and current (cl-plusp (length current)))
                          (setq current (substring current 0 (1- (length current)))))
                        (cl-case state
                          (:rem
@@ -600,7 +603,7 @@ The error list is nil if there are no errors."
 (defconst basic-dim-prefix
   "dim-"
   "Prefix value to distinguish non-dimension variable from same
-  name dimension variable.")
+name dimension variable.")
 
 ;; make list of jump targets
 (defun basic-compile-internal-jumps (tokens)
@@ -609,7 +612,7 @@ The error list is nil if there are no errors."
         add-num)                        ; need to add next line number
     (dolist (line tokens)
       (when add-num
-        (pushnew (car line) jumps)
+        (cl-pushnew (car line) jumps)
         (setq add-num nil))
       (cl-do ((token (cdr line) (cdr token)))
           ((or (not token) (eq (caar token) :rem)))
@@ -622,7 +625,7 @@ The error list is nil if there are no errors."
                (and
                 (cadr token)
                 (eq (caadr token) :number)))
-          (pushnew (cdadr token) jumps))
+          (cl-pushnew (cdadr token) jumps))
         ;; indirect jump targets (adds next line number)
         (when (or (eq (caar token) :for)
                   (eq (caar token) :gosub)
@@ -659,7 +662,8 @@ optional TEXT."
 
 ;; look
 (defun basic-compile-internal-look (key &optional value)
-  "Look ahead in `basic-line' for KEY, return VALUE or t if successful, nil if not."
+  "Look ahead in `basic-line' for KEY, return VALUE or t if
+successful, nil if not."
   (if (and basic-line
            (or
             (eq (caar basic-line) key)
@@ -672,7 +676,8 @@ optional TEXT."
 
 ;; soft match
 (defun basic-compile-internal-soft-match (key &optional value)
-  "Match KEY in `basic-line' and consume it, return VALUE or t if successful, or nil if not."
+  "Match KEY in `basic-line' and consume it, return VALUE or t if
+successful, or nil if not."
   (if (and basic-line
            (or
             (eq (caar basic-line) key)
@@ -686,7 +691,8 @@ optional TEXT."
 
 ;; match
 (defun basic-compile-internal-match (key &optional value)
-  "Match KEY in `basic-line' and consume it, return VALUE if successful, or push an error if not."
+  "Match KEY in `basic-line' and consume it, return VALUE if
+successful, or push an error if not."
   (let ((value (basic-compile-internal-soft-match key value)))
     (or value
         ;; (error "Expected '%S' at %S" (gethash key basic-parse-grammar-type-char-hash) basic-line-number)))
@@ -899,7 +905,7 @@ optional TEXT."
 
 ;; compile equation level loop
 (defun basic-compile-internal-compile-equation-level-loop (level)
-  "Compile equation using state levels in a stack with recursive calls."
+  "Compile equation using state LEVEL in a stack with recursive call."
   (cond
    ;; main entry point
    ((eq level 1)
@@ -1031,7 +1037,7 @@ optional TEXT."
 
 ;; compile an equation
 (defun basic-compile-internal-compile-equation (&optional level)
-  "Create a stack and call compile loop."
+  "Create an equation stack at state LEVEL and call compile loop."
   (let ((level (or level 1))
         basic-stack)
     (basic-compile-internal-compile-equation-level-loop level)
@@ -1365,8 +1371,7 @@ optional TEXT."
                       (basic-compile-internal-push-error :variable-reserved-word))))))
                (t
                 ;; force parsing error
-                (basic-compile-internal-match :variable))))
-             )))))
+                (basic-compile-internal-match :variable)))))))))
     ;; return code
     (nreverse code)))
 

@@ -1847,6 +1847,9 @@ KEYMAP defaults to `override-global-map'."
   ;; (when (fboundp 'bs-show)
   ;;   (bind-keys ("C-x C-b" . bs-show))) ; default: `list-buffers'
 
+  ;; cycle to previous buffer
+  (bind-keys ("C-`" . mode-line-other-buffer))
+
   ;; bury buffer
   (bind-keys ("C-c y" . bury-buffer))
   (bind-keys ("C-c C-y" . bury-buffer)) ; default: `org-evaluate-time-range'
