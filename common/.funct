@@ -832,8 +832,7 @@ encrypt() {
         outfile="$1"
         shift
         if [[ $# -eq 0 ]] ; then
-            echo -n "Password: "
-            read pw
+            read -r -s -p 'Password: ' pw
         else
             pw="$1"
         fi
@@ -850,8 +849,7 @@ decrypt() {
         outfile="$1"
         shift
         if [[ $# -eq 0 ]] ; then
-            echo -n "Password: "
-            read pw
+            read -r -s -p 'Password: ' pw
         else
             pw="$1"
         fi
