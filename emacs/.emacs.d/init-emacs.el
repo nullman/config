@@ -2587,21 +2587,6 @@ KEYMAP defaults to `override-global-map'."
         (org-babel-tangle-file init-emacs-true-file-name))))
   (add-hook 'after-save-hook #'after-save-hook--generate-init-emacs-elisp-file :append)
 
-  ;; FIXME: finish this
-  ;; (defun org-ctrl-c-ctrl-c--org-toggle-checkbox-region (orig-fun &rest args)
-  ;;   "Toogle all checkboxes in region."
-  ;;   (interactive "*")
-  ;;   (let ((beg (or beg (when (use-region-p) (region-beginning))))
-  ;;         (end (or end (when (use-region-p) (region-end)))))
-  ;;     (save-excursion
-  ;;       (when (and beg end (progn (goto-char beg) (org-at-item-checkbox-p)))
-  ;;         (deactivate-mark)
-  ;;         (goto-char beg)
-  ;;         (while (org-at-item-checkbox-p)
-  ;;           (org-toggle-checkbox
-  ;; ;; advise `org-ctrl-c-ctrl-c' to toggle all checkboxes in a region
-  ;; (advice-add 'org-ctrl-c-ctrl-c :around #'org-ctrl-c-ctrl-c--org-toggle-checkbox-region)
-
   (defun org-insert-heading--fix-newline-bug (orig-fun &rest args)
     "Fix extra newline bug in org."
     ;; make sure empty lines above new headline are not removed
