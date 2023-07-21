@@ -302,6 +302,12 @@ URxvt.keysym.M-v:            perl:clipboard:paste
 !XScreenSaver.passwd.thermometer.background: COLOR_BLUE_LIGHT
 !XScreenSaver.passwd.thermometer.width: 4
 
+!!! X48
+x48*smallLabelFont: fixed
+x48*mediumLabelFont: fixed
+x48*largeLabelFont: fixed
+x48*connectionFont: fixed
+
 !===============================================================================
 ! End of File
 !===============================================================================
