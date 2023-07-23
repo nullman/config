@@ -12,6 +12,23 @@
     <link rel="home" href="/" />
 
     <style>
+      :root {
+          --background: #202020;
+          --background-accent: #181818;
+          --primary: #D0D0D0;
+          --secondary: #B0B0B0;
+          --accent: #F0F0F0;
+          --link: #D0D0D0;
+          --link-hover: #F0F0F0;
+          --header: #80B0F0;
+          --header-hover: #80B0F0;
+          --header-accent: #70A0E0;
+          --header-link: #80B0F0;
+          --header-link-hover: #A0D0FF;
+          --menu-item-highlight: #204060;
+          --border: #70B0E0;
+      }
+
       html {
           font-family: Menlo, "Bitstream Vera Sans Mono", "DejaVu Sans Mono", DroidSansMono, Monaco, "Lucida Console", Terminal, Consolas, "Liberation Mono", "Courier New", monospace;
           font-size: .9em;
@@ -20,19 +37,19 @@
       }
 
       body {
-          background-color: #202020;
-          color: #B0B0B0;
+          background-color: var(--background);
+          color: var(--primary);
           min-height: 100%;
           padding: 0;
       }
 
       a:link, a:visited {
-          color: #D0D0D0;
+          color: var(--link);
           text-decoration: none;
       }
 
       a:hover, a:active {
-          color: #F0F0F0;
+          color: var(--link-hover);
       }
 
       div {
@@ -48,11 +65,26 @@
       }
 
       h1, h2, h3 {
-          color: #A0A0F0;
+          color: var(--header);
+      }
+      h1 a:hover, h1 a:active, h2 a:hover, h2 a:active, h3 a:hover, h3 a:active {
+          color: var(--header-hover);
       }
 
       #menu {
           margin: 0 1em;
+      }
+
+      .menu-item {
+          padding: 0 .1em 0 .1em;
+          text-transform: capitalize;
+      }
+
+      .menu-item-current {
+          background-color: var(--menu-item-highlight);
+          color: var(--accent);
+          padding: 0 .1em 0 .1em;
+          text-transform: capitalize;
       }
 
       #footer {
@@ -67,8 +99,10 @@
 
   <body>
 
-    <!-- <div id="menu"><a href="home.html">[ HOME ]</a>&nbsp;&nbsp;<a href="dev.html">[ DEV ]</a>&nbsp;&nbsp;<a href="work.html">[ WORK ]</a></div> -->
-    <div id="menu"><a href="home.html">[ HOME ]</a>&nbsp;&nbsp;<a href="dev.html">[ DEV ]</a></div>
+    <div id="menu">
+      <a class="menu-item-current" href="home.html">[ HOME ]</a>&nbsp;&nbsp;<a class="menu-item" href="dev.html">[ DEV ]</a>
+    </div>
+
 
 <div class="column">
 <h2 id="id__main">Main</h2>
@@ -132,7 +166,7 @@
 <img src="https://www.google.com/s2/favicons?domain=https://www.youtube.com/watch?v=L4KHY5QAtvs" width="16" height="16" />&nbsp;<a href="https://www.youtube.com/watch?v=L4KHY5QAtvs">Space Mountain Star Tunnel Music</a><br />
 <img src="https://www.google.com/s2/favicons?domain=https://odysee.com/@filfar:9/hacking-music-mix-mr-robot-13:b" width="16" height="16" />&nbsp;<a href="https://odysee.com/@filfar:9/hacking-music-mix-mr-robot-13:b">Hacking Music Mix: Mr. Robot #13</a><br />
 <img src="https://www.google.com/s2/favicons?domain=https://www.youtube.com/watch?v=AO5usfpdWak" width="16" height="16" />&nbsp;<a href="https://www.youtube.com/watch?v=AO5usfpdWak">FastLoaders (C64): Back in Time Live Bergen</a><br />
-<img src="https://www.google.com/s2/favicons?domain=https://www.youtube.com/watch?v=Y9q6RYg2Pdg" width="16" height="16" />&nbsp;<a href="https://www.youtube.com/watch?v=Y9q6RYg2Pdg">Datawave FM: Glitchy Synthwave Radio for Retro Computing</a><br />
+<img src="https://www.google.com/s2/favicons?domain=https://www.youtube.com/watch?v=Y9q6RYg2Pdg" width="16" height="16" />&nbsp;<a href="https://www.youtube.com/watch?v=Y9q6RYg2Pdg">Datawave FM: Glitchy Synthwave Radio</a><br />
 <img src="https://www.google.com/s2/favicons?domain=https://www.youtube.com/watch?v=ors0wpcVDcc" width="16" height="16" />&nbsp;<a href="https://www.youtube.com/watch?v=ors0wpcVDcc">Psychedelic Space Rock</a><br />
 <img src="https://www.google.com/s2/favicons?domain=https://odysee.com/@Danheim:4/fimbul-radio:2" width="16" height="16" />&nbsp;<a href="https://odysee.com/@Danheim:4/fimbul-radio:2">Fimbul Radio: Live Viking Music 24/7</a><br />
 <img src="https://www.google.com/s2/favicons?domain=https://www.youtube.com/watch?v=KKUOQwmCDYY%20list=PLkeAVViI4wTkSh1j2q9ft0U3te2OyzHvZ" width="16" height="16" />&nbsp;<a href="https://www.youtube.com/watch?v=KKUOQwmCDYY%20list=PLkeAVViI4wTkSh1j2q9ft0U3te2OyzHvZ">Super Guitar Bros: Sonic Mania: Studiopolis</a><br />
@@ -188,7 +222,7 @@
 </div>
 
 
-<div id="footer">Last Modified: 2023-05-21 18:57</div>
+<div id="footer">Last Modified: 2023-07-23 19:44</div>
 
 </body>
 

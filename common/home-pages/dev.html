@@ -12,6 +12,23 @@
     <link rel="home" href="/" />
 
     <style>
+      :root {
+          --background: #202020;
+          --background-accent: #181818;
+          --primary: #D0D0D0;
+          --secondary: #B0B0B0;
+          --accent: #F0F0F0;
+          --link: #D0D0D0;
+          --link-hover: #F0F0F0;
+          --header: #80B0F0;
+          --header-hover: #80B0F0;
+          --header-accent: #70A0E0;
+          --header-link: #80B0F0;
+          --header-link-hover: #A0D0FF;
+          --menu-item-highlight: #204060;
+          --border: #70B0E0;
+      }
+
       html {
           font-family: Menlo, "Bitstream Vera Sans Mono", "DejaVu Sans Mono", DroidSansMono, Monaco, "Lucida Console", Terminal, Consolas, "Liberation Mono", "Courier New", monospace;
           font-size: .9em;
@@ -20,19 +37,19 @@
       }
 
       body {
-          background-color: #202020;
-          color: #B0B0B0;
+          background-color: var(--background);
+          color: var(--primary);
           min-height: 100%;
           padding: 0;
       }
 
       a:link, a:visited {
-          color: #D0D0D0;
+          color: var(--link);
           text-decoration: none;
       }
 
       a:hover, a:active {
-          color: #F0F0F0;
+          color: var(--link-hover);
       }
 
       div {
@@ -48,11 +65,26 @@
       }
 
       h1, h2, h3 {
-          color: #A0A0F0;
+          color: var(--header);
+      }
+      h1 a:hover, h1 a:active, h2 a:hover, h2 a:active, h3 a:hover, h3 a:active {
+          color: var(--header-hover);
       }
 
       #menu {
           margin: 0 1em;
+      }
+
+      .menu-item {
+          padding: 0 .1em 0 .1em;
+          text-transform: capitalize;
+      }
+
+      .menu-item-current {
+          background-color: var(--menu-item-highlight);
+          color: var(--accent);
+          padding: 0 .1em 0 .1em;
+          text-transform: capitalize;
       }
 
       #footer {
@@ -67,8 +99,10 @@
 
   <body>
 
-    <!-- <div id="menu"><a href="home.html">[ HOME ]</a>&nbsp;&nbsp;<a href="dev.html">[ DEV ]</a>&nbsp;&nbsp;<a href="work.html">[ WORK ]</a></div> -->
-    <div id="menu"><a href="home.html">[ HOME ]</a>&nbsp;&nbsp;<a href="dev.html">[ DEV ]</a></div>
+    <div id="menu">
+      <a class="menu-item" href="home.html">[ HOME ]</a>&nbsp;&nbsp;<a class="menu-item-current" href="dev.html">[ DEV ]</a>
+    </div>
+
 
 <div class="column">
 <h2 id="id__main">Main</h2>
@@ -174,7 +208,7 @@
 </div>
 
 
-<div id="footer">Last Modified: 2023-05-21 18:57</div>
+<div id="footer">Last Modified: 2023-07-23 19:44</div>
 
 </body>
 
