@@ -2460,6 +2460,10 @@ KEYMAP defaults to `override-global-map'."
   ;; time stamp settings
   (org-display-custom-times t)
   (org-time-stamp-custom-formats '("<%Y-%m-%d %a>" . "<%Y-%m-%d %a %H:%M>"))
+  ;; always show lineage
+  (org-show-context-detail
+   '((default . lineage)
+     (agenda . local)))
   ;; todo keywords
   ;;(org-todo-keywords '("TODO(t)" "NEXT(n)" "|" "DONE(d!)"))
   ;; log note settings

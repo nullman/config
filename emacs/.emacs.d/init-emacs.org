@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2023-07-17 09:32 (kyle)>
+  #+TIMESTAMP: <2023-07-23 15:49 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -3912,6 +3912,10 @@
         ;; time stamp settings
         (org-display-custom-times t)
         (org-time-stamp-custom-formats '("<%Y-%m-%d %a>" . "<%Y-%m-%d %a %H:%M>"))
+        ;; always show lineage
+        (org-show-context-detail
+         '((default . lineage)
+           (agenda . local)))
         ;; todo keywords
         ;;(org-todo-keywords '("TODO(t)" "NEXT(n)" "|" "DONE(d!)"))
         ;; log note settings
