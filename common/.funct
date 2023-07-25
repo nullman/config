@@ -1914,7 +1914,7 @@ home-restow() {
     stow --dir="$(configdir)" --target="${HOME}" --no-folding --restow "config" "local"
     stow --dir="$(configdir)/custom" --target="${HOME}" --no-folding --restow "$(uname -n)"
     [[ -d "$(configdir)-private" ]] && stow --dir="$(configdir)-private" --target="${HOME}" --restow "common" "emacs"
-    [[ -d "$(configdir)-private" ]] && stow --dir="$(configdir)-private" --target="${HOME}" --no-folding --restow "config"
+    [[ -d "$(configdir)-private" ]] && stow --dir="$(configdir)-private" --target="${HOME}" --no-folding --restow "config" "local"
 }
 #        arch-initialize      install arch packages and setup system
 arch-initialize() {
