@@ -2419,7 +2419,7 @@ alias ssh-mouse="echo 'ssh:mouse' ; ssh mouse"
 #        ssh-neo                 ssh neo
 alias ssh-neo="echo 'ssh:neo' ; ssh neo"
 #        ssh-pimodem             ssh pimodem
-alias ssh-pimodem="echo 'ssh:pi@pimodemd' ; ssh pi@pimodemd"
+alias ssh-pimodem="echo 'ssh:pi@pimodem' ; ssh pi@pimodem"
 #        ssh-raspad              ssh raspad
 alias ssh-raspad="echo 'ssh:raspad-usb' ; ssh pi@raspad-usb"
 #        ssh-retropie            ssh retropie
