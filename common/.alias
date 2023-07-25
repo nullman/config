@@ -1041,8 +1041,8 @@ alias cdb="cd \${HOME}/bin"
 alias cdcode="cd \${HOME}/code"
 #        cdgithub                cd ~/code/github-nullman
 alias cdgithub="cd \${HOME}/code/github-nullman"
-#        cdgitlab                cd ~/code/gitlab-kylesherman
-alias cdgitlab="cd \${HOME}/code/gitlab-kylesherman"
+#!#        cdgitlab                cd ~/code/gitlab-kylesherman
+#!alias cdgitlab="cd \${HOME}/code/gitlab-kylesherman"
 #        cddoc                   cd ~/doc
 alias cddoc="cd \${HOME}/doc"
 #        cddev                   cd ~/dev

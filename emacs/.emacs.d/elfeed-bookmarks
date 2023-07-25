@@ -38,6 +38,7 @@
  (:name "TecMint" :html "https://www.tecmint.com/" :rss "https://www.tecmint.com/feed/" :tag "dev")
  (:name "N O D E" :html "https://n-o-d-e.net/" :rss "https://n-o-d-e.net/rss/rss.xml" :tag "dev")
  (:name "Andreas Kling" :html "https://awesomekling.substack.com/" :rss "https://awesomekling.substack.com/feed" :tag "dev")
+ (:name "Null Program" :html "https://nullprogram.com/" :rss "https://nullprogram.com/feed/" :tag "dev")
  ;; Vintage/Retro Computing
  (:name "BYTE Cellar" :html "https://bytecellar.com/" :rss "https://bytecellar.com/feed" :tag "vintage")
  (:name "Nerd Fail" :html "https://nerd.fail/" :rss "https://nerd.fail/feed/" :tag "vintage")
@@ -49,8 +50,6 @@
  (:name "Joshua Stein" :html "https://jcs.org/" :rss "https://jcs.org/rss" :tag "vintage")
  (:name "Planet m68k" :html "https://m68k.info/" :rss "http://m68k.info/index.xml" :tag "vintage")
  (:name "Atari Code" :html "https://ataricode.com/" :rss "https://ataricode.com/index.xml" :tag "vintage")
- ;; Games
- ;;(:name "Star Citizen" :html "https://robertsspaceindustries.com/com-link/" :rss "https://robertsspaceindustries.com/comm-link/rss" :tag "game")
  ;; Other
  ;;(:name "New York Times OPEN Blogs" :html "https://open.blogs.nytimes.com/" :rss "https://open.blogs.nytimes.com/feed/" :tag "blog")
  (:name "XKCD Comic" :html "https://xkcd.com/" :rss "https://xkcd.com/atom.xml" :tag "comic")
