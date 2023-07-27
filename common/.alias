@@ -1825,6 +1825,8 @@ alias ping-trinity="ping 192.168.1.36"
 alias ping-dozer="ping 192.168.1.40"
 #        ping-choi               ping choi
 alias ping-choi="ping 192.168.1.42"
+#        ping-choi-direct        ping choi-direct
+alias ping-choi-direct="ping 192.168.1.43"
 #        ping-switch             ping switch
 alias ping-switch="ping 192.168.1.44"
 #        ping-mouse              ping mouse
