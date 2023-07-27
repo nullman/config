@@ -99,8 +99,8 @@ my $upload = Flickr::Upload->new({'key' => $key, 'secret' => $secret,});
 if (opendir(DIR, $confdir)) {
     closedir(DIR);
 } else {
-    system('/bin/mkdir', $confdir) or die("Failed to create \'$confdir\' directory\n");
-    system('/bin/chmod', '700', $confdir) or die("Failed to set permissions on \'$confdir\' directory");
+    system('mkdir', $confdir) or die("Failed to create \'$confdir\' directory\n");
+    system('chmod', '700', $confdir) or die("Failed to set permissions on \'$confdir\' directory");
 }
 
 # get token

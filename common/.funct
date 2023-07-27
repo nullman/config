@@ -1006,15 +1006,15 @@ EOF
 #
 # ssh
 #
-#        ssh-key-copy            copy ssh public key to remote server
+#        ssh-key-copy            copy ssh key authorization to remote server
 ssh-key-copy() {
     if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 [USER@]SERVER"
     else
         ssh "$1" '[[ ! -d .ssh ]] && mkdir -p .ssh && chmod 700 .ssh'
         find "${HOME}/.ssh/" -name "*.pub" | while read file ; do
-            cat "${file}" | ssh "$1" '/bin/cat >> .ssh/authorized_keys ; \
-                /bin/chmod 600 .ssh/authorized_keys'
+            cat "${file}" | ssh "$1" 'cat >> .ssh/authorized_keys ; \
+                chmod 600 .ssh/authorized_keys'
         done
     fi
 }

@@ -2377,19 +2377,9 @@ alias sftptank="echo 'sftp:tank' ; sftp tank"
 alias ssh-nullware="echo 'ssh:kyle@nullware.com' ; ssh kyle@\${nullwareip}"
 #        ssh-roguery             ssh -p 1337 nullman@roguery.xibb.net
 alias ssh-roguery="echo 'nullman@roguery.xibb.net' ; ssh -p 1337 nullman@roguery.xibb.net"
-
-#
-# ssh
-#
-#        ssh-key-gen-rsa         generate rsa ssh keys
-alias ssh-key-gen-rsa="ssh-keygen -t rsa -b 4096"
-#        ssh-key-gen-ed          generate ed25519 ssh keys
-alias ssh-key-gen-ed="ssh-keygen -t ed25519"
-#        ssh-agent               turn on ssh agent
-alias ssh-agent="
-    eval \$(ssh-agent)
-    ssh-add
-    ssh-add -l"
+#!#
+#!# ssh tunnels (external)
+#!#
 #!#        ssh-tunnel-irc          ssh tunnel irc (freenode.net)
 #!alias ssh-tunnel-irc="ssh -L 6670:irc.freenode.net:6667 \${nullwareip}"
 #!#!alias ssh-tunnel-irc="ssh -L 6667:irc.freenode.net:6667 \${nullwareip}"
@@ -2401,6 +2391,21 @@ alias ssh-agent="
 #!alias ssh-tunnel-ldap="ssh -L 8389:ldap.scheduleworld.com:389 \${nullwareip}"
 #!#        ssh-tunnel-sshw         ssh tunnel ssh through work pc
 #!alias ssh-tunnel-sshw="ssh -L 2222:\${nullwareip}:22 kyle-work"
+
+#
+# ssh
+#
+#        ssh-keygen-rsa          generate rsa ssh keys
+alias ssh-keygen-rsa="ssh-keygen -t rsa -b 4096"
+#        ssh-keygen-ed           generate ed25519 ssh keys
+alias ssh-keygen-ed="ssh-keygen -t ed25519"
+#        ssh-remove-known-host   remove hostname from known_hosts file
+alias ssh-remove-known-host="ssh-keygen -R"
+#        ssh-agent               turn on ssh agent
+alias ssh-agent="
+    eval \$(ssh-agent)
+    ssh-add
+    ssh-add -l"
 #
 # ssh logons (internal)
 #
@@ -2438,8 +2443,8 @@ alias ssh-trinity="echo 'ssh:trinity' ; ssh trinity"
 #
 # ssh run commands
 #
-#        sshmorpheusiftop        ssh -l root morpheus "TERM=screen iftop"
-alias sshmorpheusiftop="ssh -l root morpheus \"TERM=screen iftop\""
+#        ssh-morpheus-iftop      ssh -l root morpheus "TERM=screen iftop"
+alias ssh-morpheus-iftop="ssh -l root morpheus \"TERM=screen iftop\""
 
 #
 # startx
