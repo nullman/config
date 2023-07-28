@@ -45,7 +45,7 @@ _command setxkbmap && setxkbmap -option 'shift:both_capslock,caps:ctrl_modifier'
 # sxhkd
 pkill -x sxhkd -u ${USER} > /dev/null 2>&1
 if _command sxhkd && [[ -f ${HOME}/.config/sxhkd/sxhkdrc ]] ; then
-    if [[ "${XDG_SESSION_DESKTOP}" == "bspwm" ]] ; then
+    if [[ "${XDG_SESSION_DESKTOP: -5}" == "bspwm" ]] ; then
         (sxhkd -c ${HOME}/.config/sxhkd/sxhkdrc{,-bspwm} > /dev/null 2>&1) &
     else
         (sxhkd -c ${HOME}/.config/sxhkd/sxhkdrc > /dev/null 2>&1) &
