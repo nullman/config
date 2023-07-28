@@ -4,6 +4,8 @@
 #
 # Launch an emacs editor, using emacs server if found.
 #
+# Requires: lsof
+#
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
@@ -53,7 +55,7 @@ fi
 # pause if debugging
 if [[ -n "${DEBUG}" ]] ; then
     echo "Press return to start editor"
-    read a
+    read -r a
 fi
 
 # if emacs client is running...
