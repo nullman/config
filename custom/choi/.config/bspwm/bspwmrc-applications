@@ -32,12 +32,12 @@ _command xscreensaver && xscreensaver -no-splash &
 
 # initialize foreground applications
 _command alacritty && alacritty -e ${HOME}/bin/run-screen &
-#_command emacs && _delay 1 emacs &
+_command emacs && _delay 1 emacs &
 #_command slack && _delay 1 slack &
 #_command thunderbird && _delay 1 thunderbird &
-#_command firefox && _delay 1 firefox &
+_command firefox && _delay 1 firefox &
 #_command chromium && _delay 1 chromium &
-#_command thunar && _delay 1 thunar &
+_command thunar && _delay 1 thunar &
 #_command pcmanfm && _delay 1 pcmanfm &
 #_command spacefm && _delay 1 spacefm &
 #_command idea && _delay 10 idea &
