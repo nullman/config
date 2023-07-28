@@ -1361,6 +1361,10 @@ alias edemc="edit /etc/make.conf"
 alias edema="edit /etc/modules.autoload"
 #        edmotd                  edit /etc/motd
 alias edmotd="edit /etc/motd"
+#        edenc                   edit /etc/nixos/configuration.nix
+alias edenc="edit /etc/nixos/configuration.nix"
+#        edenh                   edit /etc/nixos/hardware-configuration.nix
+alias edenh="edit /etc/nixos/hardware-configuration.nix"
 #        edepw                   edit /etc/passwd
 alias edepw="edit /etc/passwd"
 #        edepr                   edit /etc/profile
