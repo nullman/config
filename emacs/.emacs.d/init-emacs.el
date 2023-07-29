@@ -507,8 +507,7 @@ A fortune is added if FORTUNE is non-nil."
 ;; (scroll-bar-mode 1)
 
 ;; turn off scroll bar
-(when (and (fboundp 'scroll-bar-mode)
-           scroll-bar-mode)
+(when (fboundp 'scroll-bar-mode)
   (scroll-bar-mode -1))
 
 ;; turn off toolbar
@@ -22256,8 +22255,7 @@ to the current ERC buffer."
 (init-message 2 "Final: Turn off Scroll Bar")
 
 ;; turn off scroll bar
-(when (and (fboundp 'scroll-bar-mode)
-           scroll-bar-mode)
+(when (fboundp 'scroll-bar-mode)
   (scroll-bar-mode -1))
 ;; Turn off Scroll Bar:1 ends here
 
