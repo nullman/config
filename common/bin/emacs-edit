@@ -34,11 +34,12 @@ fi
 [[ -n "${DEBUG}" ]] && echo "vi: ${vi}"
 
 # get emacsclient socket name
-if [[ "$(uname -s)" == "Darwin" ]] ; then
-    socketname=$(lsof -c /emacs/i | grep server | tr -s ' ' | cut -d' ' -f8 | head -n 1)
-else
-    socketname=$(lsof -c /emacs/i | grep server | tr -s ' ' | cut -d' ' -f9 | head -n 1)
-fi
+# if [[ "$(uname -s)" == "Darwin" ]] ; then
+#     socketname=$(lsof -w -c /emacs/i | grep '/run/user/[0-9]*/emacs/server' | tr -s ' ' | cut -d' ' -f8 | head -n 1)
+# else
+#     socketname=$(lsof -w -c /emacs/i | grep '/run/user/[0-9]*/emacs/server' | tr -s ' ' | cut -d' ' -f9 | head -n 1)
+# fi
+socketname="/run/user/$(id -u)/emacs/server"
 [[ -n "${DEBUG}" ]] && echo "socketname: ${socketname}"
 
 # determine if screen is running under this user and if emacs is running under it
