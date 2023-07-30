@@ -72,6 +72,26 @@ if [[ "${os}" == "Darwin" ]] ; then
 
     # source powerlevel10k theme
     [[ -f "/usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme" ]] && source "/usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme" 2>&1
+elif $(uname -v | grep -q 'NixOS') ; then
+    # source auto-suggestions
+    [[ -f "/nix/store/l8vb1vqj5csw5prgd98nh6hlgnhjn1wk-zsh-autosuggestions-0.7.0/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && \
+        source "/nix/store/l8vb1vqj5csw5prgd98nh6hlgnhjn1wk-zsh-autosuggestions-0.7.0/share/zsh-autosuggestions/zsh-autosuggestions.zsh" 2>&1
+
+    # # enable fzf fuzzy matching
+    # [[ -f "/usr/share/fzf/completion.zsh" ]] && source "/usr/share/fzf/completion.zsh" 2>&1
+    # [[ -f "/usr/share/fzf/key-bindings.zsh" ]] && source "/usr/share/fzf/key-bindings.zsh" 2>&1
+
+    # source syntax highlighting
+    [[ -f "/nix/store/w6rg0972jkk4c3cqg2h02gl1zf6laslj-zsh-syntax-highlighting-0.7.1/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && \
+        source "/nix/store/w6rg0972jkk4c3cqg2h02gl1zf6laslj-zsh-syntax-highlighting-0.7.1/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" 2>&1
+
+    # source history substring
+    [[ -f "/nix/store/7p9d957grdz0rb3v3k0k3l5j3bzi7rgd-zsh-history-substring-search-1.0.2/share/zsh-history-substring-search/zsh-history-substring-search.zsh" ]] && \
+        source "/nix/store/7p9d957grdz0rb3v3k0k3l5j3bzi7rgd-zsh-history-substring-search-1.0.2/share/zsh-history-substring-search/zsh-history-substring-search.zsh" 2>&1
+
+    # source powerlevel10k theme
+    [[ -f "/nix/store/13igxyi3rgsnmspwsdy6xay83bcfi6cs-powerlevel10k-1.18.0/share/zsh-powerlevel10k/powerlevel10k.zsh-theme" ]] && \
+        source "/nix/store/13igxyi3rgsnmspwsdy6xay83bcfi6cs-powerlevel10k-1.18.0/share/zsh-powerlevel10k/powerlevel10k.zsh-theme" 2>&1
 else
     # source auto-suggestions
     [[ -f "/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && source "/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" 2>&1
