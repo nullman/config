@@ -197,13 +197,13 @@ alias ccs="ccache -s"
 #        lwords                  list words
 alias lwords="\${PAGER} /usr/share/dict/words"
 #        fort                    fortune
-alias fort="\$(pathcmd fortune /usr/bin/fortune:/usr/games/fortune) -a"
+alias fort="fortune -a"
 #        fortq                   fortune query
-alias fortq="\$(pathcmd fortune /usr/bin/fortune:/usr/games/fortune) -a -m"
+alias fortq="fortune -a -m"
 #        quote                   quote
-alias quote="\$(pathcmd fortune /usr/bin/fortune:/usr/games/fortune) -a \${HOME}/quotes"
+alias quote="fortune -a \${HOME}/quotes"
 #        quoteq                  quote query
-alias quoteq="\$(pathcmd fortune /usr/bin/fortune:/usr/games/fortune) -a \${HOME}/quotes -m"
+alias quoteq="fortune -a \${HOME}/quotes -m"
 #!#        uuid                    print a UUID (or GUID)
 #!alias uuid="uuidgen"
 #!#        uuid                    print a UUID (or GUID)
@@ -512,7 +512,7 @@ alias set-prompt-dos="export PS1=\"C:{PWD////\\\\}> \""
 #
 #        chsh-zsh                set default shell to ZSH
 alias chsh-zsh="
-    sudo chsh \${USER} -s /bin/zsh && \
+    sudo chsh \${USER} -s $(which zsh) && \
     echo 'Default shell is now ZSH.  Logout out for it to take effect.'"
 
 #
@@ -652,7 +652,7 @@ alias install-gemini="sudo bash -c \"bash <(curl -s http://kylesherman.net/init/
 alias term="${terminal}"
 #        email                   run pine
 alias email="pine"
-#        im                      run centericq
+#        im                      run centericq (asci characters only)
 alias im="centericq -a"
 #        irc                     run irssi
 alias irc="irssi"
@@ -684,12 +684,12 @@ alias spell="ispell"
 alias calc="rpncalc"
 #        mca                     run midnight commander in ascii mode
 alias mca="mc -a"
-#        centericq               centericq -a (use asci characters only)
-alias centericq="\$(pathcmd centericq) -a"
+#        centericqa              centericq -a (asci characters only)
+alias centericqa="centericq -a"
 #        centericq-unsent        find unset messages in centericq
 alias centericq-unsent="find \${HOME}/.centericq/ -name offline"
-#        motor                   motor -a (use asci characters only)
-alias motor="\$(pathcmd motor) -a"
+#        motora                  motor -a (asci characters only)
+alias motora="motor -a"
 #        seti                    run setiathome in the background
 alias seti="(cd \${HOME}/setiathome ; setiathome -email -nice 19) &"
 #!#        freenet-config          configure freenet
@@ -829,7 +829,7 @@ alias apsrs="sudo systemctl restart https.service"
 alias sslcert="
     echo -n 'Build apache-ssl certificate? [yN] ' ; read -r a
     case \${a} in
-        y|Y) \$(pathcmd ssl-certificate) --force ;;
+        y|Y) ssl-certificate --force ;;
     esac"
 
 #
