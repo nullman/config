@@ -2985,7 +2985,9 @@ alias qdu="qubes-dom0-update --enablerepo=qubes-dom0-current-testing"
 # NixOS
 #
 #        nixrs                   nixos-rebuild switch
-alias nixrs="sudo nixos-rebuild switch"
+alias nixrs="
+    [[ -d \${HOME}/nixos ]] && sudo cp -L -v \${HOME}/nixos/* /etc/nixos/
+    sudo nixos-rebuild switch"
 
 #
 # git
