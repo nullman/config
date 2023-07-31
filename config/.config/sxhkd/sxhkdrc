@@ -154,7 +154,7 @@ super + alt + c
 
 # emoji selector
 super + alt + j
-    rofi -modi emoji -show emoji
+    rofimoji
 
 # paste selector
 super + alt + apostrophe

@@ -1366,7 +1366,7 @@ pressed. -->
           <enabled>true</enabled>
           <name>Rofi: emoji</name>
         </startupnotify>
-        <command>rofi -modi emoji -show emoji</command>
+        <command>rofimoji</command>
       </action>
     </keybind>
     <keybind key="mod5-A-e">
@@ -1375,7 +1375,7 @@ pressed. -->
           <enabled>true</enabled>
           <name>Rofi: emoji</name>
         </startupnotify>
-        <command>rofi -modi emoji -show emoji</command>
+        <command>rofimoji</command>
       </action>
     </keybind>
     <!-- Rofi [bitwarden] -->
