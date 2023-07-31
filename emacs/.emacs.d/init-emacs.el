@@ -5157,6 +5157,36 @@ different from NAME."
 (org-insert-literate-programming-src-gen "kotlin")
 ;; org-insert-literate-programming-statics:1 ends here
 
+;; [[file:init-emacs.org::#org-mode-babel-functions-org-insert-literate-programming-block][org-insert-literate-programming-block:1]]
+;;------------------------------------------------------------------------------
+;;;; Org Mode: Babel Functions: org-insert-literate-programming-block
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Org Mode: Babel Functions: org-insert-literate-programming-block")
+
+(defun org-insert-literate-programming-block (&optional title)
+  "Insert 'literate programming' block consisting of a heading,
+properties, and source block."
+  (interactive "*")
+  (let* ((case-fold-search t)
+         (point (point))
+         (title (or title (read-string "Block title: ")))
+         (tag (org-generate-custom-id-from-title title)))
+    (org-insert-heading)
+    (insert title)
+    (org-set-property "CUSTOM_ID" tag)
+    (re-search-forward "^[ \t]*:END:$")
+    (newline)
+    (newline)
+    (insert "#+BEGIN_SRC conf-unix\n")
+    (insert "#+END_SRC\n")
+    (indent-region point (point))
+    (org-previous-visible-heading 1)
+    (goto-char (line-end-position))
+    (org-fix-literate-programming-heading)
+    (forward-line 12)))
+;; org-insert-literate-programming-block:1 ends here
+
 ;; [[file:init-emacs.org::#org-mode-babel-functions-org-insert-literate-programming-init-emacs-block][org-insert-literate-programming-init-emacs-block:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Babel Functions: org-insert-literate-programming-init-emacs-block
@@ -21258,6 +21288,7 @@ Commands:
  "Insert"
  '(("Org-Babel Inserts"
     (("Name" "org-insert-literate-programming-name" "Insert #+NAME.")
+     ("Block" "org-insert-literate-programming-block" "Insert block.")
      ("Emacs Init Block" "org-insert-literate-programming-init-emacs-block" "Insert Emacs Init block.")
      ("Code Block" "org-insert-literate-programming-code-block" "Insert Code block.")
      ("Project Euler Block" "org-insert-literate-programming-project-euler-problem-block" "Insert Project Euler block.")
