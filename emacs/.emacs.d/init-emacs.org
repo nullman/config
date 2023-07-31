@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2023-07-29 00:58 (kyle)>
+  #+TIMESTAMP: <2023-07-31 10:01 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -1226,8 +1226,6 @@
                    ;; "Hack Nerd Font Mono-14"
                    ((x-list-fonts "Hack Nerd Font")
                     "Hack Nerd Font Mono-14")
-                   ;; ((x-list-fonts "Hack Nerd Font")
-                   ;;  "Hack Nerd Font Mono-14")
                    ((x-list-fonts "DroidSansMono Nerd Font")
                     "DroidSansMono Nerd Font Mono-14")
                    ((x-list-fonts "Fira Code")
@@ -30723,6 +30721,23 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;;   ;; call external muse initialization script in web project
       ;;   (when (file-exists-p muse-init-file)
       ;;     (safe-load muse-init-file)))
+    #+END_SRC
+
+*** Nix
+    :PROPERTIES:
+    :CUSTOM_ID: modes-nix
+    :END:
+
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Modes: Nix
+      ;;------------------------------------------------------------------------------
+
+      (init-message 2 "Modes: Nix")
+
+      (use-package nix-mode
+        :straight t
+        :mode ("\\.nix\\'" . nix-mode))
     #+END_SRC
 
 *** Perl Mode

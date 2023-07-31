@@ -556,8 +556,6 @@ A fortune is added if FORTUNE is non-nil."
            ;; "Hack Nerd Font Mono-14"
            ((x-list-fonts "Hack Nerd Font")
             "Hack Nerd Font Mono-14")
-           ;; ((x-list-fonts "Hack Nerd Font")
-           ;;  "Hack Nerd Font Mono-14")
            ((x-list-fonts "DroidSansMono Nerd Font")
             "DroidSansMono Nerd Font Mono-14")
            ((x-list-fonts "Fira Code")
@@ -19602,6 +19600,18 @@ Markdown files."
     (add-hook 'before-save-hook #'markdown-mode-fix-org-tables nil 'make-it-local))
   (add-hook 'markdown-mode-hook #'before-save-hook--markdown-mode-fix-org-tables))
 ;; Markdown Mode:1 ends here
+
+;; [[file:init-emacs.org::#modes-nix][Nix:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Nix
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Nix")
+
+(use-package nix-mode
+  :straight t
+  :mode ("\\.nix\\'" . nix-mode))
+;; Nix:1 ends here
 
 ;; [[file:init-emacs.org::#modes-perl-mode][Perl Mode:1]]
 ;;------------------------------------------------------------------------------
