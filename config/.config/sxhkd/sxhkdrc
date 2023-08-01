@@ -153,7 +153,7 @@ super + alt + c
     CM_LAUNCHER=rofi clipmenu
 
 # emoji selector
-super + alt + j
+super + alt + o
     rofimoji
 
 # paste selector

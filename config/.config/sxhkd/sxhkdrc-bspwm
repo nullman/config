@@ -106,7 +106,8 @@ super + {_,shift + }{Up,Down,Left,Right}
 
 # rotate/swap nodes in given direction in current desktop
 super + {_,shift + }{comma,period}
-    bspc node {@/ --circulate,--swap} {backward,forward}
+    bspc node {'focused.!floating.!fullscreen.window#@/' --circulate,--swap} {backward,forward}
+    #bspc node {@/ --circulate,--swap} {backward,forward}
 
 # swap node with first child node in current desktop
 super + shift + g
