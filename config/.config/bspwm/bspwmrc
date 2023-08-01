@@ -50,10 +50,9 @@ fi
 #_bc split_ratio                0.6
 _bc split_ratio                0.7
 _bc automatic_scheme           alternate
-_bc initial_polarity           first_child
-#_bc initial_polarity           second_child
+#_bc initial_polarity           first_child
+_bc initial_polarity           second_child
 _bc removal_adjustment         false
-#_bc removal_adjustment         true
 _bc borderless_monocle         false
 _bc gapless_monocle            false
 _bc single_monocle             true

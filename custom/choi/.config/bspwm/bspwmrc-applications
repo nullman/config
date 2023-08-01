@@ -31,10 +31,10 @@ _command xscreensaver && xscreensaver -no-splash &
 #_command emacs && emacs --daemon &
 
 # delay so that networking has time to connect
-_delay 10
+_delay 0
 
 # initialize foreground applications
-_command alacritty && _delay 0 alacritty -e ${HOME}/bin/run-screen &
+_command alacritty && alacritty -e ${HOME}/bin/run-screen &
 _command emacs && _delay 0 emacs &
 #_command thunderbird && _delay 0 thunderbird &
 #_command betterbird && _delay 0 betterbird &
