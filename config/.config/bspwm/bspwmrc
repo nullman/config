@@ -41,17 +41,19 @@ if _command bsp-layout ; then
     bsp-layout set tall "6 " --master-size 0.5
 fi
 
-
 #-------------------------------------------------------------------------------
 # Configuration
 #-------------------------------------------------------------------------------
 
 # global settings
 #_bc split_ratio                0.5
+#_bc split_ratio                0.6
 _bc split_ratio                0.7
 _bc automatic_scheme           alternate
-_bc initial_polarity           second_child
-_bc removal_adjustment         true
+_bc initial_polarity           first_child
+#_bc initial_polarity           second_child
+_bc removal_adjustment         false
+#_bc removal_adjustment         true
 _bc borderless_monocle         false
 _bc gapless_monocle            false
 _bc single_monocle             true
@@ -67,10 +69,6 @@ _bc honor_size_hints           true
 _bc remove_disabled_monitors   true
 _bc remove_unplugged_monitors  true
 _bc merge_overlapping_monitors true
-#_bc split_ratio                0.6
-#_bc automatic_scheme           spiral
-#_bc initial_polarity           first_child
-#_bc removal_adjustment         true
 
 # monitor and desktop settings
 _bc top_padding                0
@@ -80,10 +78,10 @@ _bc bottom_padding             30       # room for system bar
 _bc left_padding               0
 
 # desktop settings
-_bc window_gap                 5
+_bc window_gap                 4
 
 # node settings
-_bc border_width               2
+_bc border_width               4
 
 # pointer bindings
 _bc pointer_modifier           mod4
