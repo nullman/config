@@ -488,7 +488,7 @@ alias beep-ten="
 #
 #        chsh-bash               set default shell to BASH
 alias chsh-bash="
-    sudo chsh \${USER} -s /bin/bash && \
+    sudo chsh \${USER} -s \$(which bash) && \
     echo 'Default shell is now BASH.  Logout out for it to take effect.'"
 #!#        set-prompt              set terminal prompt to: [host:user:path]$
 #!alias set-prompt="export PS1=\"[\h:\u:\w]\\$ \""
@@ -568,8 +568,8 @@ alias systemctl-restart="sudo systemctl restart"
 #
 # bluetooth
 #
-# bluetoothctl-connect-beats     connect to Beats Wireless Headphones
-alias bluetoothctl-connect-beats="bluetoothctl connect 04:88:E2:6A:00:6C"
+# bluetoothctl-connect-hd350bt   connect to Sennheiser HD 350BT headphones via bluetooth
+alias bluetoothctl-connect-hd350bt="bluetoothctl connect 80:C3:BA:0E:CB:E5"
 
 #
 # web sites
