@@ -13,6 +13,10 @@
 ;; init-emacs.org => early-init.el
 ;;==============================================================================
 
+;; macro combining `setq' and `setq-default'
+;; FIXME
+;;(defmacro setq-customize (
+
 ;; disable default emacs package handling (needed for straight)
 (setq package-enable-at-startup nil)
 

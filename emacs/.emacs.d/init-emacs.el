@@ -483,14 +483,21 @@ A fortune is added if FORTUNE is non-nil."
         select-enable-primary t                                        ; cutting and pasting uses primary selection
         x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING) ; data-type request for X selection
         save-interprogram-paste-before-kill t                          ; save clipboard strings into kill ring before replacing them
-        interprogram-paste-function 'x-cut-buffer-or-selection-value   ; function to call to get text cut from other programs
-        mouse-yank-at-point t))                                        ; mouse yank commands yank at point
+        mouse-yank-at-point t                                          ; mouse yank commands yank at point
+        interprogram-paste-function 'x-cut-buffer-or-selection-value)  ; function to call to get text cut from other programs
+  (setq-default select-enable-clipboard select-enable-clipboard
+                select-enable-primary select-enable-primary
+                x-select-request-type x-select-request-type
+                save-interprogram-paste-before-kill save-interprogram-paste-before-kill
+                mouse-yank-at-point mouse-yank-at-point))
 
 ;; inverse video on
 (setq inverse-video t)
+(setq-default inverse-video inverse-video)
 
 ;; visible bell
 (setq visible-bell t)
+(setq-default visible-bell visible-bell)
 
 ;; turn off bell
 (setq ring-bell-function 'ignore)
@@ -517,6 +524,9 @@ A fortune is added if FORTUNE is non-nil."
 
 ;; make default frame size fullscreen
 ;;(add-to-list 'default-frame-alist '(fullscreen . maximized))
+
+;; do not shrink frame to match font size
+(setq frame-resize-pixelwise t)
 
 ;; put current buffer name in title bar
 (setq frame-title-format "%b")
