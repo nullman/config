@@ -1152,7 +1152,9 @@ yasg() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 SEARCH GREP"
     else
-        yay -Ss "$1" | sed -n ":a ; { N ; s/\n// ; p ; d ; ba }" | grep -i "$2"
+        s="$1"
+        shift
+        yay -Ss "${s}" | sed -n ":a ; { N ; s/\n// ; p ; d ; ba }" | grep -i "$*"
     fi
 }
 #        yass                    yay specific search
@@ -1160,7 +1162,7 @@ yass() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 SEARCH"
     else
-        yay -Ss "$1" | sed -n ":a ; /^[a-z]*\/$1 / { N ; s/\n// ; p ; d ; ba }"
+        yay -Ss "$*" | sed -n ":a ; /^[a-z]*\/$* / { N ; s/\n// ; p ; d ; ba }"
     fi
 }
 #        yasi                    yay search installed packages
@@ -1168,7 +1170,7 @@ yasi() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 SEARCH"
     else
-        yay -Ss "$1" | sed -n ":a ; { N ; s/\n// ; p ; d ; ba }" | grep " (Installed"
+        yay -Ss "$*" | sed -n ":a ; { N ; s/\n// ; p ; d ; ba }" | grep " (Installed"
     fi
 }
 #        yasis                   yay specific search installed packages
@@ -1176,7 +1178,7 @@ yasis() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 SEARCH"
     else
-        yay -Ss "$1" | sed -n ":a ; /^[a-z]*\/$1 / { N ; s/\n// ; p ; d ; ba }" | grep " (Installed"
+        yay -Ss "$*" | sed -n ":a ; /^[a-z]*\/$* / { N ; s/\n// ; p ; d ; ba }" | grep " (Installed"
     fi
 }
 
@@ -1190,6 +1192,43 @@ acsg() {
         echo "Usage: $0 QUERY"
     else
         apt-cache search "$1" | grep -i "^$1"
+    fi
+}
+
+#
+# nixos
+#
+#        nixsg                   nixos search with grep
+nixsg() {
+    if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+        echo "Usage: $0 SEARCH GREP"
+    else
+        s="$1"
+        shift
+        tmpfile="$(mktemp)"
+        nix --extra-experimental-features "nix-command flakes" search nixpkgs "${s}" > "${tmpfile}"
+        sed -n ":a ; /^\* / { N ; s/\n// ; p ; d ; ba }" "${tmpfile}" | grep -i "$*"
+        rm "${tmpfile}"
+    fi
+}
+# #        nixss                   nixos specific search
+# nixss() {
+#     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+#         echo "Usage: $0 SEARCH"
+#     else
+#         s="$1"
+#         shift
+#         tmpfile="$(mktemp)"
+#         nix --extra-experimental-features "nix-command flakes" search nixpkgs "${s}" > "${tmpfile}"
+#         sed -n ":a ; /^\* / { N ; s/\n// ; p ; d ; ba }" "${tmpfile}"
+#     fi
+# }
+#        nixsi                   nixos search installed packages
+nixsi() {
+    if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+        echo "Usage: $0 SEARCH"
+    else
+        nix-store -q --references /run/current-system/sw | sed 's/^[^-]*-//' | grep -i "$*" | sort
     fi
 }
 
@@ -1778,7 +1817,6 @@ Copy bundle.tgz.enc from USB, decrypt it, and run scripts:
   chmod +x ./bundle-decrypt && ./bundle-decrypt
   tar xzf bundle.tgz
   mv bundle/.ssh ~/
-  ./bundle/make-etc-hosts
 Checkout config and config-private:
   git clone ${GIT_REPOSITORY_CONFIG} ~/config
   git clone ${GIT_REPOSITORY_CONFIG_PRIVATE} ~/config-private
@@ -1818,10 +1856,6 @@ home-initialize() {
         ".zshrc"
     )
     symlinkdirs=(
-        "doc/avatars"
-        "doc/icons"
-        "doc/images"
-        "doc/sounds"
         "/home/data/media/Audio/Sounds"
         "/home/data/media/Repos/C64"
         "/home/data/media/Repos/DOS"

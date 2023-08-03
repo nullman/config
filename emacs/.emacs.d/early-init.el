@@ -20,6 +20,9 @@
 ;; disable default emacs package handling (needed for straight)
 (setq package-enable-at-startup nil)
 
+;; do not shrink frame to match font size
+(setq frame-resize-pixelwise t)
+
 ;;==============================================================================
 ;;; early-init.el ends here
 ;;==============================================================================
