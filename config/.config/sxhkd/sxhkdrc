@@ -200,9 +200,9 @@ super + alt + x
 #    ssaverauto --lock
 #    xscreensaver-command -lock
 
-# restart user services (caps-lock and insert key changes)
-super + ctrl + r
-    systemctl --user restart setxkbmap xkbcomp xset && notify-send --expire-time=2000 'User services restarted'
+# # restart user services (caps-lock and insert key changes)
+# super + ctrl + r
+#     systemctl --user restart setxkbmap xkbcomp xset && notify-send --expire-time=2000 'User services restarted'
 
 # session menu
 super + shift + e
@@ -248,6 +248,10 @@ super + shift + v
 super + alt + b
     notify-send --expire-time=2000 'Connecting to Sennheiser HD 350BT Headphones via Bluetooth' && \
     bluetoothctl connect 80:C3:BA:0E:CB:E5
+
+# nixos-rebuild switch
+super + alt + ctrl + r
+    sudo nixos-rebuild switch | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12" --tail
 
 #-------------------------------------------------------------------------------
 # Media

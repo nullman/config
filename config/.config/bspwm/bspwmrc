@@ -41,16 +41,6 @@ bspc monitor -d "1 " "2 " "3 " "4 " "5 " "6 " "7 " "8 " 
 #     bsp-layout set tall "6 " --master-size 0.5
 # fi
 
-if _command /home/kyle/code/bsp-layout/src/layout.sh ; then
-    # setup master stack on all desktops
-    bspc query -D --names | while read -r d ; do
-        /home/kyle/code/bsp-layout/src/layout.sh set tall "${d}" --master-size 0.6
-    done
-
-    # set desktop 6 to a 50/50 split for slack/discord
-    /home/kyle/code/bsp-layout/src/layout.sh set tall "6 " --master-size 0.5
-fi
-
 #-------------------------------------------------------------------------------
 # Configuration
 #-------------------------------------------------------------------------------
@@ -60,8 +50,8 @@ _bc split_ratio                0.5
 #_bc split_ratio                0.6
 #_bc split_ratio                0.7
 _bc automatic_scheme           alternate
-_bc initial_polarity           first_child
-#_bc initial_polarity           second_child
+#_bc initial_polarity           first_child
+_bc initial_polarity           second_child
 _bc removal_adjustment         true
 _bc borderless_monocle         false
 _bc gapless_monocle            false
