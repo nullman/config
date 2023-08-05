@@ -23,6 +23,9 @@
 ;; do not shrink frame to match font size
 (setq frame-resize-pixelwise t)
 
+;; suppress display compilation warnings
+(setq warning-suppress-types '((comp)))
+
 ;;==============================================================================
 ;;; early-init.el ends here
 ;;==============================================================================

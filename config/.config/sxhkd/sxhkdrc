@@ -251,7 +251,7 @@ super + alt + b
 
 # nixos-rebuild switch
 super + alt + ctrl + r
-    sudo nixos-rebuild switch | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12" --tail
+    sudo -i nixos-rebuild switch | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12" --tail
 
 #-------------------------------------------------------------------------------
 # Media

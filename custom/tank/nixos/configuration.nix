@@ -559,6 +559,7 @@
     translate-shell
     units
     wipe
+    yt-dlp
     zoxide
 
     # internet

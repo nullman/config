@@ -7,8 +7,8 @@
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
-basedir="/mnt/synology/video"
-#basedir="${HOME}/synology/video"
+#basedir="/mnt/synology/video"
+basedir="${HOME}/synology/video"
 ytdlp="$(which yt-dlp)"
 #ytdlp="${HOME}/code/yt-dlp/yt-dlp"
 
@@ -131,7 +131,7 @@ channels=(
     "Computer/Retro       | Techmoan                                   | https://www.youtube.com/c/Techmoan/videos"
     "Computer/Retro       | TexElec                                    | https://www.youtube.com/c/TexElec/videos"
     "Computer/Retro       | The 8-Bit Guy                              | https://www.youtube.com/c/The8BitGuy/videos"
-##    "Computer/Retro       | The Byte Attic                             | https://www.youtube.com/@thebyteattic/videos"
+    "Computer/Retro       | The Byte Attic                             | https://www.youtube.com/@thebyteattic/videos"
 #    "Computer/Retro       | The Centre for Computing History           | https://www.youtube.com/c/TheCentreforComputingHistory/videos"
 #    "Computer/Retro       | The Commodore Room                         | https://www.youtube.com/@thecommodoreroom4554/videos"
 ##    "Computer/Retro       | The Eric Experiment                        | https://www.youtube.com/@TheEricExperiment/videos"
