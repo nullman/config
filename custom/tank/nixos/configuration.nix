@@ -68,6 +68,12 @@
   # dconf
   programs.dconf.enable = true;
 
+  # acpi
+  services.acpid.enable = true;
+
+  # backlight
+  hardware.acpilight.enable = true;
+
   # xdg
   xdg.portal = {
     enable = true;
@@ -303,6 +309,7 @@
   # packages
   environment.systemPackages = with pkgs; [
     # system
+    acpi
     alacritty
     arandr
     aspell
@@ -329,6 +336,7 @@
     ispell
     kitty
     libnotify
+    light
     lm_sensors
     lsb-release
     lsof
@@ -389,6 +397,7 @@
     gsimplecal
     gtk3
     gxmessage
+    hicolor-icon-theme
     hyprland
     hyprpaper
     hyprpicker
