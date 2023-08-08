@@ -94,10 +94,12 @@ XF86AudioRaiseVolume
 # XF86AudioMicMute
 
 XF86MonBrightnessUp
-    xbacklight -inc 10 && notify-send --expire-time=2000 'Brightness Up'
+    light -A 10 && notify-send --expire-time=2000 'Brightness Up'
+    #xbacklight -inc 10 && notify-send --expire-time=2000 'Brightness Up'
 
 XF86MonBrightnessDown
-    xbacklight -dec 10 && notify-send --expire-time=2000 'Brightness Down'
+    light -U 10 && notify-send --expire-time=2000 'Brightness Down'
+    #xbacklight -dec 10 && notify-send --expire-time=2000 'Brightness Down'
 
 # XF86Display
 

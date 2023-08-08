@@ -7,8 +7,8 @@
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
-#basedir="/mnt/synology/video"
-basedir="${HOME}/synology/video"
+basedir="/mnt/synology/video"
+#basedir="${HOME}/synology/video"
 ytdlp="$(which yt-dlp)"
 #ytdlp="${HOME}/code/yt-dlp/yt-dlp"
 
