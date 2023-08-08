@@ -55,7 +55,7 @@
   # };
   console = {
     packages = [ pkgs.terminus_font ];
-    font = "${pkgs.terminus_font}/share/consolefonts/ter-i22b.psf.gz";
+    font = "${pkgs.terminus_font}/share/consolefonts/ter-d20b.psf.gz";
     useXkbConfig = true;
   };
 
@@ -70,9 +70,6 @@
 
   # acpi
   services.acpid.enable = true;
-
-  # backlight
-  hardware.acpilight.enable = true;
 
   # xdg
   xdg.portal = {
@@ -188,8 +185,8 @@
   # touchpad
   services.xserver.libinput.enable = true;
 
-  ## light
-  #programs.light.enable = true;
+  # light
+  programs.light.enable = true;
 
   # printing
   services.printing.enable = true;
