@@ -39,6 +39,7 @@
   nixpkgs.config.joypixels.acceptLicense = true;
   nixpkgs.config.permittedInsecurePackages = [
     "electron-12.2.3"
+    "openssl-1.1.1u"
   ];
 
   # time zone
@@ -458,12 +459,16 @@
     xvkbd
 
     # applications
+    ardour
     audacious
     audacity
+    blender
+    celluloid
     evince
     gimp
     gphoto2
     gphoto2fs
+    inkscape
     #kdenlive
     libreoffice
     mpc-qt
@@ -472,6 +477,7 @@
     notepadqq
     #obs-studio
     #(pkgs.wrapOBS {plugins = with pkgs.obs-studio-plugins; [ wlrobs ]; })
+    spotify
     #virt-viewer
     xfce.thunar
     xfce.thunar-archive-plugin
@@ -480,6 +486,7 @@
 
     # utilities
     bitwarden
+    easytag
     etcher
     flameshot
     font-manager
@@ -488,7 +495,9 @@
     gcal
     gnome.file-roller
     gparted
+    grip id3lib
     gtkimageview
+    handbrake libdvdcss libaacs libbluray
     meld
     simplescreenrecorder
     #x48
@@ -524,11 +533,13 @@
     zenith
 
     # console
+    asciinema
     bat
     bc
     bitwarden-cli
     bitwarden-menu
     broot
+    cool-retro-term
     ddgr
     element
     exa
@@ -584,24 +595,59 @@
     #syncterm
     tuba
 
-    # emulation
+    # emulators
+    basiliskii
     dosbox
+    gnome.gnome-boxes
+    mame
     qemu_kvm
+    vice
+    virt-manager
+    virt-viewer
+    virtualbox
+    wine
+    winetricks
 
     # development
+    acme
     adb-sync
     android-tools
     android-udev-rules
+    binutils
+    cc65
+    ccache
+    clang
     cmake
+    ctags
+    #djgpp
     gcc
+    github-desktop
     glibc
     gnumake
+    gnuplot
+    graphviz
+    gradle
+    jdk
+    #jdk11
+    #jdk8
+    jre
     htmlq
     jq
+    kotlin
+    lazygit
+    pandoc
+    plantuml
     python311
     python311Packages.pip
+    racket
+    regina
+    ruby
     rustup
+    shellcheck
     tokei
+    vlang
+    x16-emulator
+    x16-rom
     yq
 
     # zsh
@@ -646,6 +692,45 @@
     # printer
     system-config-printer
     canon-cups-ufr2
+
+    # console hacks
+    aalib
+    asciiquarium
+    bb
+    bucklespring
+    cbonsai
+    cmatrix
+    cowsay
+    dwt1-shell-color-scripts
+    figlet
+    genact
+    hackertyper
+    hollywood
+    lolcat
+    rig
+    sl
+    tty-clock
+
+    # games
+    alephone
+    #alephone-apotheosis-x
+    alephone-durandal
+    alephone-eternal
+    alephone-evil
+    alephone-infinity
+    alephone-marathon
+    alephone-pathways-into-darkness
+    alephone-pheonix
+    alephone-red
+    alephone-rubicon-x
+    #alephone-yuge
+    eidolon
+    pingus
+    proton-caller
+    protontricks
+    pysolfc
+    steam
+    steam-tui
   ];
 
   # copy nixos configuration on rebuild
