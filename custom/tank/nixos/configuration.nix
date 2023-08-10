@@ -614,6 +614,7 @@
     android-tools
     android-udev-rules
     binutils
+    bison
     cc65
     ccache
     clang
@@ -642,7 +643,7 @@
     racket
     regina
     ruby
-    rustup
+    rustc
     shellcheck
     tokei
     vlang
