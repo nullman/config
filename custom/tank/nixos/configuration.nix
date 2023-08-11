@@ -624,6 +624,7 @@
     gcc
     github-desktop
     glibc
+    gmp
     gnumake
     gnuplot
     graphviz
@@ -636,6 +637,9 @@
     jq
     kotlin
     lazygit
+    m4
+    libmpc
+    mpfr
     pandoc
     plantuml
     python311
