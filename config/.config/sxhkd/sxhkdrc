@@ -83,13 +83,16 @@ control + alt + {Up,Down,Left,Right}
 #-------------------------------------------------------------------------------
 
 XF86AudioMute
-    pactl -- set-sink-mute 0 toggle && notify-send --expire-time=2000 "$(pactl -- get-sink-mute 0)"
+    wpctl set-mute 49 toggle && notify-send --expire-time=2000 "$(wpctl get-volume 49)"
+    #pactl -- set-sink-mute 0 toggle && notify-send --expire-time=2000 "$(pactl -- get-sink-mute 0)"
 
 XF86AudioLowerVolume
-    pactl -- set-sink-volume 0 -2% && notify-send --expire-time=2000 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
+    wpctl set-volume 49 2%- && notify-send --expire-time=2000 "$(wpctl get-volume 49)"
+    #pactl -- set-sink-volume 0 -2% && notify-send --expire-time=2000 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
 
 XF86AudioRaiseVolume
-    pactl -- set-sink-volume 0 +2% && notify-send --expire-time=2000 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
+    wpctl set-volume 49 2%+ && notify-send --expire-time=2000 "$(wpctl get-volume 49)"
+    #pactl -- set-sink-volume 0 +2% && notify-send --expire-time=2000 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
 
 # XF86AudioMicMute
 

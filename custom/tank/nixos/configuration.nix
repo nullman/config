@@ -13,6 +13,7 @@
   imports = [
     ./hardware-configuration.nix
     ./hardware-encryption-configuration.nix
+    #<home-manager/nixos>
   ];
 
   # systemd-boot EFI boot loader
@@ -35,12 +36,19 @@
   # standard settings
 
   # package settings
-  nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.joypixels.acceptLicense = true;
-  nixpkgs.config.permittedInsecurePackages = [
-    "electron-12.2.3"
-    "openssl-1.1.1u"
-  ];
+  nixpkgs.config = {
+    allowUnfree = true;
+    joypixels.acceptLicense = true;
+    permittedInsecurePackages = [
+      "electron-12.2.3"
+      "openssl-1.1.1v"
+    ];
+    packageOverrides = pkgs: {
+      nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
+        inherit pkgs;
+      };
+    };
+  };
 
   # time zone
   time.timeZone = "US/Central";
@@ -160,12 +168,13 @@
   services.picom.enable = true;
 
   # pipewire
-  sound.enable = true;
+  # sound.enable = true;
   # hardware.pulseaudio.enable = true;
   # hardware.pulseaudio.support32Bit = true;
   # nixpkgs.config.pulseaudio = true;
   # #hardware.pulseaudio.extraConfig = "load-module module-combine-sink";
   # #hardware.pulseaudio.extraConfig = "unload-module module-suspend-on-idle";
+  security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -255,6 +264,14 @@
   services.gvfs.enable = true;         # mount, trash, and other functionalities
   services.tumbler.enable = true;      # thumbnail support for images
 
+  # firefox
+  programs.firefox = {
+    enable = true;
+    package = pkgs.wrapFirefox pkgs.firefox-unwrapped {
+      extraNativeMessagingHosts = with pkgs.nur.repos.wolfangaukang; [ vdhcoapp ];
+    };
+  };
+
   # openssh
   services.openssh.enable = true;
 
@@ -284,6 +301,16 @@
       "wheel"
     ];
   };
+
+  # # home customizations
+  # home-manager = {
+  #   #useGlobalPkgs = true;
+  #   #useUserPackages = true;
+  #   users.kyle = { pkgs, ... }: {
+  #     home.stateVersion = "23.05";        # same as system.stateVersion
+  #     home.packages = with pkgs.nur.repos.wolfangaukang; [ vdhcoapp ];
+  #   };
+  # };
 
   # mpd
   services.mpd = {
@@ -315,9 +342,11 @@
     bluez
     bluez-tools
     brightnessctl
+    bzip2
     clipmenu
     cifs-utils
     curl
+    dos2unix
     dosfstools
     duf
     emacs
@@ -327,6 +356,7 @@
     git
     gnugrep
     gnupg
+    gzip
     hfsprogs
     imagemagick
     inxi
@@ -361,6 +391,7 @@
     shc
     silver-searcher
     stow
+    texinfo
     tldr
     tlp
     tmux
@@ -371,6 +402,7 @@
     usbutils
     vim
     wget
+    xz
     ydotool
 
     # window manager
@@ -499,6 +531,7 @@
     gtkimageview
     handbrake libdvdcss libaacs libbluray
     meld
+    nur.repos.wolfangaukang.vdhcoapp
     simplescreenrecorder
     #x48
     xscreensaver
@@ -621,26 +654,30 @@
     cmake
     ctags
     #djgpp
+    flex
     gcc
     github-desktop
     glibc
-    gmp
+    #gmp
     gnumake
     gnuplot
+    gpp
     graphviz
     gradle
+    htmlq
     jdk
     #jdk11
     #jdk8
     jre
-    htmlq
     jq
     kotlin
     lazygit
+    #libmpc
     m4
-    libmpc
-    mpfr
+    #mpfr
+    nasm
     pandoc
+    patch
     plantuml
     python311
     python311Packages.pip
@@ -654,6 +691,7 @@
     x16-emulator
     x16-rom
     yq
+    zlib
 
     # zsh
     fzf-zsh
