@@ -28,7 +28,7 @@ logger "Running: ${HOME}/.bashrc"
 os="$(uname -s)"
 
 # set environmental vars
-export SHELL="$(which bash)"
+export SHELL="$(command -v bash)"
 
 # command history
 export HISTFILE="${HOME}/.cache/bash_history"

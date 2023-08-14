@@ -488,7 +488,7 @@ alias beep-ten="
 #
 #        chsh-bash               set default shell to BASH
 alias chsh-bash="
-    sudo chsh \${USER} -s \$(which bash) && \
+    sudo chsh \${USER} -s \$(command -v bash) && \
     echo 'Default shell is now BASH.  Logout out for it to take effect.'"
 #!#        set-prompt              set terminal prompt to: [host:user:path]$
 #!alias set-prompt="export PS1=\"[\h:\u:\w]\\$ \""
@@ -512,7 +512,7 @@ alias set-prompt-dos="export PS1=\"C:{PWD////\\\\}> \""
 #
 #        chsh-zsh                set default shell to ZSH
 alias chsh-zsh="
-    sudo chsh \${USER} -s $(which zsh) && \
+    sudo chsh \${USER} -s $(command -v zsh) && \
     echo 'Default shell is now ZSH.  Logout out for it to take effect.'"
 
 #

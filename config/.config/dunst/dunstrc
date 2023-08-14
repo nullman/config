@@ -142,7 +142,7 @@ separator_color = #263238
 startup_notification = false
 
 # dmenu path.
-dmenu = $(which dmenu) -p dunst:
+dmenu = $(command -v dmenu) -p dunst:
 
 # Browser for opening urls in context menu.
 #browser = palemoon

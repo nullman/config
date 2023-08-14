@@ -28,7 +28,7 @@ logger "Running: ${HOME}/.zshrc"
 os="$(uname -s)"
 
 # set environmental vars
-export SHELL="$(which zsh)"
+export SHELL="$(command -v zsh)"
 
 # command history
 export HISTFILE="${HOME}/.cache/zsh_history"

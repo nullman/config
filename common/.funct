@@ -192,10 +192,6 @@ changelog() {
 #
 # general
 #
-#!#        which                   version of which that includes aliases and functions
-#!which () {
-#!    (alias ; declare -f) | /usr/bin/which --tty-only --read-alias --read-functions --show-tilde --show-dot "$@"
-#!}
 #!#        cv                      run cdargs and cd to the result
 #!cv() {
 #!    if [[ $# -eq 0 ]] ; then

@@ -9,7 +9,7 @@
 
 basedir="/mnt/synology/video"
 #basedir="${HOME}/synology/video"
-ytdlp="$(which yt-dlp)"
+ytdlp="$(command -v yt-dlp)"
 #ytdlp="${HOME}/code/yt-dlp/yt-dlp"
 
 channels=(
