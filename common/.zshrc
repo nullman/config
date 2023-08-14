@@ -58,6 +58,22 @@ setopt rmstarsilent        # do not prompt to confirm when deleting using *
 # load terminfo
 zmodload zsh/terminfo
 
+# prevent powerlevel9k configuration wizard from launching
+POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+
+# plugins
+zp="${HOME}/.zsh_plugins"
+zpb="${HOME}/.zsh-plugins-bundle"
+if [[ -f "${zp}" ]] ; then
+    # build plugin bundle if needed
+    if [[ ! -f "${zpb}" ]] || [[ "${zpb}" -ot "${zp}" ]] ; then
+        antibody bundle < "${zp}" > "${zpb}"
+    fi
+
+    # source plugins
+    [[ -f "${zpb}" ]] && source "${zpb}" 2>&1
+fi
+
 # set prompt
 if [[ -n "${INSIDE_EMACS}" ]] ; then
     # use simple prompt, if run from within emacs
@@ -73,19 +89,6 @@ else
         source "${XDG_CACHE_HOME:-${HOME}/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" 2>&1
     # hide the right side
     p10k display '*/right'=hide 2>&1
-fi
-
-# plugins
-zp="${HOME}/.zsh_plugins"
-zpb="${HOME}/.zsh-plugins-bundle"
-if [[ -f "${zp}" ]] ; then
-    # build plugin bundle if needed
-    if [[ ! -f "${zpb}" ]] || [[ "${zpb}" -ot "${zp}" ]] ; then
-        antibody bundle < "${zp}" > "${zpb}"
-    fi
-
-    # source plugins
-    [[ -f "${zpb}" ]] && source "${zpb}" 2>&1
 fi
 
 # if [[ "${os}" == "Darwin" ]] ; then
