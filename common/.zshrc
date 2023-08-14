@@ -88,7 +88,7 @@ else
     [[ -f "${XDG_CACHE_HOME:-${HOME}/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]] && \
         source "${XDG_CACHE_HOME:-${HOME}/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" 2>&1
     # hide the right side
-    p10k display '*/right'=hide 2>&1
+    #p10k display '*/right'=hide
 fi
 
 # if [[ "${os}" == "Darwin" ]] ; then
