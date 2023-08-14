@@ -364,8 +364,8 @@ kmg() {
 java-vnc() {
     java VncViewer HOST $1 PORT 5900
 }
-#        x                       execute with prompt
-x() {
+#        prompt                  execute with prompt
+prompt() {
     echo "$@" | fmt
     echo -n "Execute command line? [Yn] "
     read -r a

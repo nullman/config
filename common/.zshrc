@@ -58,6 +58,23 @@ setopt rmstarsilent        # do not prompt to confirm when deleting using *
 # load terminfo
 zmodload zsh/terminfo
 
+# set prompt
+if [[ -n "${INSIDE_EMACS}" ]] ; then
+    # use simple prompt, if run from within emacs
+    [[ -f "${HOME}/.p10k-simple.zsh" ]] && source "${HOME}/.p10k-simple.zsh" 2>&1
+    #export TERM=eterm-256color
+    unset zle_bracketed_paste
+else
+    # to customize prompt, run 'p10k configure' or edit ~/.p10k.zsh
+    #[[ -f "${HOME}/.p10k.zsh" ]] && source "${HOME}/.p10k.zsh"
+
+    # enable powerlevel10k instant prompt
+    [[ -f "${XDG_CACHE_HOME:-${HOME}/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]] && \
+        source "${XDG_CACHE_HOME:-${HOME}/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" 2>&1
+    # hide the right side
+    p10k display '*/right'=hide 2>&1
+fi
+
 # plugins
 zp="${HOME}/.zsh_plugins"
 zpb="${HOME}/.zsh-plugins-bundle"
@@ -131,21 +148,6 @@ fi
 if [[ -n "${STY}" ]] || [[ -n "${TMUX}" ]] ; then
     bindkey "\e[1~" beginning-of-line
     bindkey "\e[4~" end-of-line
-fi
-
-# set prompt
-if [[ -n "${INSIDE_EMACS}" ]] ; then
-    # use simple prompt, if run from within emacs
-    [[ -f "${HOME}/.p10k-simple.zsh" ]] && source "${HOME}/.p10k-simple.zsh" 2>&1
-    #export TERM=eterm-256color
-    unset zle_bracketed_paste
-else
-    # (To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.)
-    #[[ -f "${HOME}/.p10k.zsh" ]] && source "${HOME}/.p10k.zsh"
-
-    # enable powerlevel10k instant prompt
-    [[ -f "${XDG_CACHE_HOME:-${HOME}/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]] && \
-        source "${XDG_CACHE_HOME:-${HOME}/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" 2>&1
 fi
 
 # compinstall
