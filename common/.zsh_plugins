@@ -1,0 +1,51 @@
+#===============================================================================
+# .zsh_plugins
+#
+# Antibody Zsh Plugins List
+#
+# Bundle with:
+#
+#   antibody bundle < .zsh_plugins > ~/.zsh-plugins-bundle
+#
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
+#===============================================================================
+
+# node version manager
+#lukechilds/zsh-nvm
+
+# add colors to man pages
+robbyrussell/oh-my-zsh path:plugins/colored-man-pages
+
+# provide suggested packages to be installed if a command cannot be found
+robbyrussell/oh-my-zsh path:plugins/command-not-found
+
+# fzf fuzzy auto-completion and key bindings
+robbyrussell/oh-my-zsh path:plugins/fzf
+
+# provide many git aliases and a few useful functions
+#robbyrussell/oh-my-zsh path:plugins/git
+
+# provide completion definitions for some of the commands defined by git-extras
+#robbyrussell/oh-my-zsh path:plugins/git-extras
+
+# add node-docs function
+robbyrussell/oh-my-zsh path:plugins/node
+
+# powerlevel10k theme
+romkatv/powerlevel10k
+
+# z jump around
+rupa/z
+
+# suggest commands as you type based on history and completions
+zsh-users/zsh-autosuggestions
+
+# additional completion definitions
+zsh-users/zsh-completions
+
+# fish shell-like syntax highlighting
+zsh-users/zsh-syntax-highlighting
+
+#===============================================================================
+# End of File
+#===============================================================================

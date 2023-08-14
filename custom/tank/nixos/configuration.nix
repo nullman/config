@@ -284,7 +284,7 @@
     group = "kyle";
     uid = 1000;
     isNormalUser = true;
-    #shell = "/run/current-system/sw/bin/zsh";
+    shell = "/run/current-system/sw/bin/zsh";
     initialPassword = "nixos";
     extraGroups = [
       "audio"
@@ -530,6 +530,7 @@
     grip id3lib
     gtkimageview
     handbrake libdvdcss libaacs libbluray
+    #mediawriter
     meld
     nur.repos.wolfangaukang.vdhcoapp
     simplescreenrecorder
@@ -562,6 +563,7 @@
     tig
     ugrep
     w3m
+    x3270
     xplr
     zenith
 
@@ -694,13 +696,14 @@
     zlib
 
     # zsh
-    fzf-zsh
+    antibody
+    #fzf-zsh
     meslo-lgs-nf
     zsh
-    zsh-autosuggestions
-    zsh-history-substring-search
-    zsh-powerlevel10k
-    zsh-syntax-highlighting
+    #zsh-autosuggestions
+    #zsh-history-substring-search
+    #zsh-powerlevel10k
+    #zsh-syntax-highlighting
 
     ## fonts
     #anonymousPro

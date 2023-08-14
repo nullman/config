@@ -80,8 +80,8 @@ alias a="alias"
 alias ua="unalias"
 #        f                       declare -f (show function definition)
 alias f="declare -f"
-#        z                       exit shell
-alias z="exit"
+#        x                       exit shell
+alias x="exit"
 #        c                       clear shell buffer
 alias c="clear"
 #        r                       reset shell buffer

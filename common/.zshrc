@@ -1,11 +1,11 @@
 #!/usr/bin/env zsh
-#=============================================================================
+#===============================================================================
 # .zshrc
 #
 # Zsh Config
 #
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
-#=============================================================================
+#===============================================================================
 
 # check if executable command is found in the path
 _command() {
@@ -58,61 +58,74 @@ setopt rmstarsilent        # do not prompt to confirm when deleting using *
 # load terminfo
 zmodload zsh/terminfo
 
-if [[ "${os}" == "Darwin" ]] ; then
-    # source auto-suggestions
-    [[ -f "/usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && source "/usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh" 2>&1
+# plugins
+zp="${HOME}/.zsh_plugins"
+zpb="${HOME}/.zsh-plugins-bundle"
+if [[ -f "${zp}" ]] ; then
+    # build plugin bundle if needed
+    if [[ ! -f "${zpb}" ]] || [[ "${zpb}" -ot "${zp}" ]] ; then
+        antibody bundle < "${zp}" > "${zpb}"
+    fi
 
-    # enable fzf fuzzy matching
-    [[ -d "/usr/local/opt/fzf/bin" ]] && [[ ! "${PATH}" == */usr/local/opt/fzf/bin* ]] && export PATH="${PATH}:/usr/local/opt/fzf/bin"
-    [[ -f "/usr/local/opt/fzf/shell/completion.zsh" ]] && source "/usr/local/opt/fzf/shell/completion.zsh" 2>&1
-    [[ -f "/usr/local/opt/fzf/shell/key-bindings.zsh" ]] && source "/usr/local/opt/fzf/shell/key-bindings.zsh" 2>&1
-
-    # source syntax highlighting
-    [[ -f "source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && source "/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" 2>&1
-
-    # source powerlevel10k theme
-    [[ -f "/usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme" ]] && source "/usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme" 2>&1
-elif $(uname -v | grep -q 'NixOS') ; then
-    # source auto-suggestions
-    [[ -f "/nix/store/l8vb1vqj5csw5prgd98nh6hlgnhjn1wk-zsh-autosuggestions-0.7.0/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && \
-        source "/nix/store/l8vb1vqj5csw5prgd98nh6hlgnhjn1wk-zsh-autosuggestions-0.7.0/share/zsh-autosuggestions/zsh-autosuggestions.zsh" 2>&1
-
-    # # enable fzf fuzzy matching
-    # [[ -f "/usr/share/fzf/completion.zsh" ]] && source "/usr/share/fzf/completion.zsh" 2>&1
-    # [[ -f "/usr/share/fzf/key-bindings.zsh" ]] && source "/usr/share/fzf/key-bindings.zsh" 2>&1
-
-    # source syntax highlighting
-    [[ -f "/nix/store/w6rg0972jkk4c3cqg2h02gl1zf6laslj-zsh-syntax-highlighting-0.7.1/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && \
-        source "/nix/store/w6rg0972jkk4c3cqg2h02gl1zf6laslj-zsh-syntax-highlighting-0.7.1/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" 2>&1
-
-    # source history substring
-    [[ -f "/nix/store/7p9d957grdz0rb3v3k0k3l5j3bzi7rgd-zsh-history-substring-search-1.0.2/share/zsh-history-substring-search/zsh-history-substring-search.zsh" ]] && \
-        source "/nix/store/7p9d957grdz0rb3v3k0k3l5j3bzi7rgd-zsh-history-substring-search-1.0.2/share/zsh-history-substring-search/zsh-history-substring-search.zsh" 2>&1
-
-    # source powerlevel10k theme
-    [[ -f "/nix/store/13igxyi3rgsnmspwsdy6xay83bcfi6cs-powerlevel10k-1.18.0/share/zsh-powerlevel10k/powerlevel10k.zsh-theme" ]] && \
-        source "/nix/store/13igxyi3rgsnmspwsdy6xay83bcfi6cs-powerlevel10k-1.18.0/share/zsh-powerlevel10k/powerlevel10k.zsh-theme" 2>&1
-else
-    # source auto-suggestions
-    [[ -f "/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && source "/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" 2>&1
-
-    # enable fzf fuzzy matching
-    [[ -f "/usr/share/fzf/completion.zsh" ]] && source "/usr/share/fzf/completion.zsh" 2>&1
-    [[ -f "/usr/share/fzf/key-bindings.zsh" ]] && source "/usr/share/fzf/key-bindings.zsh" 2>&1
-
-    # source syntax highlighting
-    [[ -f "/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && source "/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" 2>&1
-
-    # source history substring
-    [[ -f "/usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh" ]] && source "/usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh" 2>&1
-
-    # source autojump
-    #[[ -f "/usr/share/autojump/autojump.zsh" ]] && source "/usr/share/autojump/autojump.zsh" 2>&1
-
-    # source powerlevel10k theme
-    #[[ -f "${HOME}/powerlevel10k/powerlevel10k.zsh-theme" ]] && source "${HOME}/powerlevel10k/powerlevel10k.zsh-theme" 2>&1
-    [[ -f "/usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme" ]] && source "/usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme" 2>&1
+    # source plugins
+    [[ -f "${zpb}" ]] && source "${zpb}" 2>&1
 fi
+
+# if [[ "${os}" == "Darwin" ]] ; then
+#     # source auto-suggestions
+#     [[ -f "/usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && source "/usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh" 2>&1
+
+#     # enable fzf fuzzy matching
+#     [[ -d "/usr/local/opt/fzf/bin" ]] && [[ ! "${PATH}" == */usr/local/opt/fzf/bin* ]] && export PATH="${PATH}:/usr/local/opt/fzf/bin"
+#     [[ -f "/usr/local/opt/fzf/shell/completion.zsh" ]] && source "/usr/local/opt/fzf/shell/completion.zsh" 2>&1
+#     [[ -f "/usr/local/opt/fzf/shell/key-bindings.zsh" ]] && source "/usr/local/opt/fzf/shell/key-bindings.zsh" 2>&1
+
+#     # source syntax highlighting
+#     [[ -f "source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && source "/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" 2>&1
+
+#     # source powerlevel10k theme
+#     [[ -f "/usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme" ]] && source "/usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme" 2>&1
+# elif $(uname -v | grep -q 'NixOS') ; then
+#     # source auto-suggestions
+#     [[ -f "/nix/store/l8vb1vqj5csw5prgd98nh6hlgnhjn1wk-zsh-autosuggestions-0.7.0/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && \
+    #         source "/nix/store/l8vb1vqj5csw5prgd98nh6hlgnhjn1wk-zsh-autosuggestions-0.7.0/share/zsh-autosuggestions/zsh-autosuggestions.zsh" 2>&1
+
+#     # # enable fzf fuzzy matching
+#     # [[ -f "/usr/share/fzf/completion.zsh" ]] && source "/usr/share/fzf/completion.zsh" 2>&1
+#     # [[ -f "/usr/share/fzf/key-bindings.zsh" ]] && source "/usr/share/fzf/key-bindings.zsh" 2>&1
+
+#     # source syntax highlighting
+#     [[ -f "/nix/store/w6rg0972jkk4c3cqg2h02gl1zf6laslj-zsh-syntax-highlighting-0.7.1/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && \
+    #         source "/nix/store/w6rg0972jkk4c3cqg2h02gl1zf6laslj-zsh-syntax-highlighting-0.7.1/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" 2>&1
+
+#     # source history substring
+#     [[ -f "/nix/store/7p9d957grdz0rb3v3k0k3l5j3bzi7rgd-zsh-history-substring-search-1.0.2/share/zsh-history-substring-search/zsh-history-substring-search.zsh" ]] && \
+    #         source "/nix/store/7p9d957grdz0rb3v3k0k3l5j3bzi7rgd-zsh-history-substring-search-1.0.2/share/zsh-history-substring-search/zsh-history-substring-search.zsh" 2>&1
+
+#     # source powerlevel10k theme
+#     [[ -f "/nix/store/13igxyi3rgsnmspwsdy6xay83bcfi6cs-powerlevel10k-1.18.0/share/zsh-powerlevel10k/powerlevel10k.zsh-theme" ]] && \
+    #         source "/nix/store/13igxyi3rgsnmspwsdy6xay83bcfi6cs-powerlevel10k-1.18.0/share/zsh-powerlevel10k/powerlevel10k.zsh-theme" 2>&1
+# else
+#     # source auto-suggestions
+#     [[ -f "/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && source "/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" 2>&1
+
+#     # enable fzf fuzzy matching
+#     [[ -f "/usr/share/fzf/completion.zsh" ]] && source "/usr/share/fzf/completion.zsh" 2>&1
+#     [[ -f "/usr/share/fzf/key-bindings.zsh" ]] && source "/usr/share/fzf/key-bindings.zsh" 2>&1
+
+#     # source syntax highlighting
+#     [[ -f "/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && source "/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" 2>&1
+
+#     # source history substring
+#     [[ -f "/usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh" ]] && source "/usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh" 2>&1
+
+#     # source autojump
+#     #[[ -f "/usr/share/autojump/autojump.zsh" ]] && source "/usr/share/autojump/autojump.zsh" 2>&1
+
+#     # source powerlevel10k theme
+#     #[[ -f "${HOME}/powerlevel10k/powerlevel10k.zsh-theme" ]] && source "${HOME}/powerlevel10k/powerlevel10k.zsh-theme" 2>&1
+#     [[ -f "/usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme" ]] && source "/usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme" 2>&1
+# fi
 
 # fix home/end keys in screen/tmux
 if [[ -n "${STY}" ]] || [[ -n "${TMUX}" ]] ; then
@@ -131,7 +144,8 @@ else
     #[[ -f "${HOME}/.p10k.zsh" ]] && source "${HOME}/.p10k.zsh"
 
     # enable powerlevel10k instant prompt
-    [[ -f "${XDG_CACHE_HOME:-${HOME}/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]] && source "${XDG_CACHE_HOME:-${HOME}/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" 2>&1
+    [[ -f "${XDG_CACHE_HOME:-${HOME}/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]] && \
+        source "${XDG_CACHE_HOME:-${HOME}/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" 2>&1
 fi
 
 # compinstall
