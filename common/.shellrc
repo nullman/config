@@ -65,6 +65,25 @@ _infopathadd() {
     fi
 }
 
+# add library entry before or after existing LD_LIBRARY_PATH entries, preventing duplicates
+_libadd() {
+    if [[ -d "$1" ]] ; then
+        local p=$(cd "$1" && pwd)
+        if [[ -n "${p}" ]] ; then
+            if [[ -z "${LD_LIBRARY_PATH}" ]] ; then
+                LD_LIBRARY_PATH="${p}"
+            else
+                local newpath=$(echo ":${LD_LIBRARY_PATH}:" | sed "s%:${p}:%:%g ; s%^:%% ; s%:$%%")
+                if [[ "$2" == "before" ]] ; then
+                    LD_LIBRARY_PATH="${p}:${newpath}"
+                else
+                    LD_LIBRARY_PATH="${newpath}:${p}"
+                fi
+            fi
+        fi
+    fi
+}
+
 # set environmental vars
 export USERNAME="${USER}"
 export HOSTNAME="$(uname -n)"
@@ -168,8 +187,9 @@ CDPATH=":.:/mnt:/home/data/media:/home/data/media/Audio/Music:${HOME}"
 export CDPATH
 
 # add libraries to LD_LIBRARY_PATH
-echo "${LD_LIBRARY_PATH}" | grep -q "/usr/lib" || LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/usr/lib"
-echo "${LD_LIBRARY_PATH}" | grep -q "/usr/local/lib" || LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/usr/local/lib"
+_libadd "/usr/lib"
+_libadd "/usr/local/lib"
+_libadd "/run/current-system/sw/lib"
 
 # info path
 _infopathadd "/usr/share/info" before
