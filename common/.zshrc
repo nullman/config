@@ -81,14 +81,13 @@ if [[ -n "${INSIDE_EMACS}" ]] ; then
     #export TERM=eterm-256color
     unset zle_bracketed_paste
 else
-    # to customize prompt, run 'p10k configure' or edit ~/.p10k.zsh
-    #[[ -f "${HOME}/.p10k.zsh" ]] && source "${HOME}/.p10k.zsh"
-
     # enable powerlevel10k instant prompt
     [[ -f "${XDG_CACHE_HOME:-${HOME}/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]] && \
         source "${XDG_CACHE_HOME:-${HOME}/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" 2>&1
     # hide the right side
     #p10k display '*/right'=hide
+    # customize prompt via 'p10k configure' or edit ~/.p10k.zsh
+    [[ -f "${HOME}/.p10k.zsh" ]] && source "${HOME}/.p10k.zsh"
 fi
 
 # if [[ "${os}" == "Darwin" ]] ; then
