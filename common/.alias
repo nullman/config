@@ -2998,11 +2998,13 @@ alias nixrs="
     src=\${dir}/lib/mozilla/native-messaging-hosts/net.downloadhelper.coapp.json
     [[ -d \${dir} ]] && ln -s -f \${src} \${HOME}/.mozilla/native-messaging-hosts/"
 #        nixs                    nixos package search
-alias nixs="nix --extra-experimental-features \"nix-command flakes\" search nixpkgs"
+alias nixs="nix search nixpkgs"
 #        nixf                    nixos file search
 alias nixf="nix-locate -w"
 #        nix-store-query         nix-store installed package location query
 alias nix-store-query="nix-store -q -R /run/current-system | grep"
+#        nix-shell-development   nix-shell ~/.shell.nix
+alias nix-shell-development="nix-shell \${HOME}/.shell.nix"
 
 #
 # git

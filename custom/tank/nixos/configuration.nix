@@ -21,7 +21,7 @@
     systemd-boot.enable = true;
     efi.canTouchEfiVariables = true;
   };
-  fileSystems."/".options = [ "noatime" "nodiratime" "discard" ];
+  fileSystems."/".options = [ "noatime" ];
 
   # # mdadm.conf
   # environment.etc."mdadm.conf".text = ''
@@ -34,6 +34,14 @@
   networking.networkmanager.enable = true;
 
   # standard settings
+
+  # nix settings
+  nix.settings = {
+    experimental-features = [
+      "flakes"
+      "nix-command"
+    ];
+  };
 
   # package settings
   nixpkgs.config = {
@@ -312,6 +320,58 @@
   #   };
   # };
 
+  # automounts
+  services.rpcbind.enable = true;         # needed for NFS
+  systemd.mounts = let commonMountOptions = {
+    mountConfig = {
+      Options = "vers=3.0,credentials=/home/kyle/.synology-mount-credentials,iocharset=utf8,rw,file_mode=0777,dir_mode=0777,noatime";
+      TimeoutSec = 30;
+      Type = "cifs";
+    };
+  };
+
+  in [
+    (commonMountOptions // {
+      what = "//synology/adult";
+      where = "/mnt/synology/adult";
+    })
+
+    (commonMountOptions // {
+      what = "//synology/media";
+      where = "/mnt/synology/media";
+    })
+
+    (commonMountOptions // {
+      what = "//synology/music";
+      where = "/mnt/synology/music";
+    })
+
+    (commonMountOptions // {
+      what = "//synology/photo";
+      where = "/mnt/synology/photo";
+    })
+
+    (commonMountOptions // {
+      what = "//synology/video";
+      where = "/mnt/synology/video";
+    })
+  ];
+
+  systemd.automounts = let commonAutoMountOptions = {
+    wantedBy = [ "multi-user.target" ];
+    # automountConfig = {
+    #   TimeoutIdleSec = "600";
+    # };
+  };
+
+  in [
+    (commonAutoMountOptions // { where = "/mnt/synology/adult"; })
+    (commonAutoMountOptions // { where = "/mnt/synology/media"; })
+    (commonAutoMountOptions // { where = "/mnt/synology/music"; })
+    (commonAutoMountOptions // { where = "/mnt/synology/photo"; })
+    (commonAutoMountOptions // { where = "/mnt/synology/video"; })
+  ];
+
   # mpd
   services.mpd = {
     enable = true;
@@ -377,6 +437,7 @@
     mtools
     neofetch
     nettools
+    nfs-utils
     nix-index
     nmap
     pipewire
