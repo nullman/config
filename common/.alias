@@ -2990,7 +2990,7 @@ alias qdu="qubes-dom0-update --enablerepo=qubes-dom0-current-testing"
 #
 #        nixrs                   nixos-rebuild switch
 alias nixrs="
-    [[ -d \${HOME}/nixos ]] && sudo cp -L -v \${HOME}/.nixos/etc/* /etc/nixos/
+    [[ -d \${HOME}/.nixos/etc ]] && sudo cp -L -v \${HOME}/.nixos/etc/* /etc/nixos/
     sudo -i nixos-rebuild switch
 
     # link downloadhelper coapp for firefox
