@@ -2990,7 +2990,7 @@ alias qdu="qubes-dom0-update --enablerepo=qubes-dom0-current-testing"
 #
 #        nixrs                   nixos-rebuild switch
 alias nixrs="
-    [[ -d \${HOME}/nixos ]] && sudo cp -L -v \${HOME}/nixos/* /etc/nixos/
+    [[ -d \${HOME}/nixos ]] && sudo cp -L -v \${HOME}/.nixos/etc/* /etc/nixos/
     sudo -i nixos-rebuild switch
 
     # link downloadhelper coapp for firefox
@@ -3003,8 +3003,8 @@ alias nixs="nix search nixpkgs"
 alias nixf="nix-locate -w"
 #        nix-store-query         nix-store installed package location query
 alias nix-store-query="nix-store -q -R /run/current-system | grep"
-#        nix-shell-development   nix-shell ~/.shell.nix
-alias nix-shell-development="nix-shell \${HOME}/.shell.nix"
+#        nix-shell-development   nix-shell ~/.nixos/shell.nix
+alias nix-shell-development="nix-shell \${HOME}/.nixos/shell.nix"
 
 #
 # git

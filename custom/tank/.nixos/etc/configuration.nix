@@ -65,11 +65,6 @@
   i18n.defaultLocale = "en_US.UTF-8";
 
   # console
-  # console = {
-  #   font = "Lat2-Terminus16";
-  #   # keyMap = "us";
-  #   useXkbConfig = true;
-  # };
   console = {
     packages = [ pkgs.terminus_font ];
     font = "${pkgs.terminus_font}/share/consolefonts/ter-d20b.psf.gz";
@@ -231,6 +226,7 @@
       noto-fonts
       noto-fonts-emoji
       #proggyfonts
+      source-han-sans
       terminus-nerdfont
       terminus_font_ttf
       #ubuntu_font_family
@@ -245,7 +241,8 @@
     fontconfig = {
       enable = true;
       defaultFonts = {
-        monospace = ["Hack LG M Regular Nerd Font Complete Mono" ];
+        #monospace = ["Hack LG M Regular Nerd Font Complete Mono" ];
+        monospace = ["Meslo LG M Regular Nerd Font Complete Mono" ];
         serif = [ "Noto Serif" "Source Han Serif" ];
         sansSerif = [ "Noto Sans" "Source Han Sans" ];
       };
@@ -405,6 +402,7 @@
     bzip2
     clipmenu
     cifs-utils
+    coreutils
     curl
     dos2unix
     dosfstools
@@ -413,9 +411,12 @@
     findutils
     fortune
     fzf
+    gawk
     git
     gnugrep
     gnupg
+    gnused
+    gnutar
     gzip
     hfsprogs
     imagemagick
@@ -831,6 +832,7 @@
     alephone-red
     alephone-rubicon-x
     #alephone-yuge
+    bsdgames
     eidolon
     pingus
     proton-caller
