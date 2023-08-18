@@ -1,0 +1,79 @@
+(defwidget metric [label value onchange]
+  (box :orientation "h"
+       :class "metric"
+       :space-evenly false
+       (box :class "label" label)
+       (scale :min 0
+              :max 101
+              :active {onchange != ""}
+              :value value
+              :onchange onchange)))
+
+(defwidget workspaces []
+  (box :class "workspaces"
+       :orientation "h"
+       :space-evenly true
+       :halign "start"
+       :spacing 4
+       ;; symbols:                   
+       (button :onclick "wmctrl -s 0" "1  ")
+       (button :onclick "wmctrl -s 1" "2  ")
+       (button :onclick "wmctrl -s 2" "3  ")
+       (button :onclick "wmctrl -s 3" "4  ")
+       (button :onclick "wmctrl -s 4" "5  ")
+       (button :onclick "wmctrl -s 5" "6  ")
+       (button :onclick "wmctrl -s 6" "7  ")
+       (button :onclick "wmctrl -s 7" "8  ")
+       (button :onclick "wmctrl -s 8" "9  ")
+       (button :onclick "wmctrl -s 9" "10  ")))
+
+(defwidget music []
+  (box :class "music"
+       :orientation "h"
+       :space-evenly false
+       :halign "center"
+       :spacing 10
+       (box :class "music-state" music-state)
+       (box :class "music-info" {music-info != "" ? "${music-info}" : ""})))
+
+(defwidget status []
+  (box :class "status"
+       :orientation "h"
+       :space-evenly false
+       :halign "end"
+       (metric :label "🔊"
+               :value volume
+               :onchange "pactl -- set-sink-volume 0 {}%")
+       (metric :label ""
+               :value {EWW_RAM.used_mem_perc}
+               :onchange "")
+       (metric :label "💾"
+               :value {round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}
+               :onchange "")
+       time))
+
+(defpoll music-info :interval "5s" "~/bin/mpc-playing")
+
+(defpoll music-state :interval "5s" "mpc | grep -q \"^\\[playing\\]\" && echo \"\" || echo \"\"")
+
+(defpoll volume :interval "1s" "[[ $(pamixer --get-mute) == true ]] && echo '0' || pamixer --get-volume")
+
+(defpoll time :interval "1s" "date '+%a %Y-%m-%d %H:%M'")
+
+(defwidget bar []
+  (centerbox :orientation "h"
+             (workspaces)
+             (music)
+             (status)))
+
+(defwindow bar
+  :monitor 0
+  :windowtype "dock"
+  :geometry (geometry :x "0%"
+                      :y "0%"
+                      :width "100%"
+                      :height "12px"
+                      :anchor "bottom center")
+  :reserve (struts :side "bottom"
+                   :distance "12px")
+  (bar))
