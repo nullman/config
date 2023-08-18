@@ -1,6 +1,20 @@
+(defpoll active-desktop :interval "200ms" "bspc query -D -d --names")
+
+(defpoll music-info :interval "1s" "~/bin/mpc-playing")
+
+(defpoll music-state :interval "1s" "mpc | grep -q \"^\\[playing\\]\" && echo \"\" || echo \"\"")
+
+(defpoll mute :interval "200ms" "[[ $(pamixer --get-mute) == true ]] && echo '🔇' || echo '🔊'")
+
+(defpoll volume :interval "200ms" "[[ $(pamixer --get-mute) == true ]] && echo '0' || pamixer --get-volume")
+
+(defpoll brightness :interval "200ms" "light -G | cut -c 1-2")
+
+(defpoll time :interval "200ms" "date '+%a %Y-%m-%d %H:%M'")
+
 (defwidget metric-onclick [label value onchange onclick]
-  (box :orientation "h"
-       :class "metric"
+  (box :class "metric"
+       :orientation "h"
        :space-evenly false
        (box :class "label"
             (button :onclick onclick label))
@@ -11,8 +25,8 @@
               :onchange onchange)))
 
 (defwidget metric [label value onchange]
-  (box :orientation "h"
-       :class "metric"
+  (box :class "metric"
+       :orientation "h"
        :space-evenly false
        (box :class "label" label)
        (scale :min 0
@@ -21,6 +35,10 @@
               :value value
               :onchange onchange)))
 
+(defwidget workspace [label value onclick]
+  (box :class {value == active-desktop ? "highlight" : "label"}
+       (button :onclick onclick label)))
+
 (defwidget workspaces []
   (box :class "workspaces"
        :orientation "h"
@@ -28,16 +46,16 @@
        :halign "start"
        :spacing 4
        ;; symbols:                   
-       (button :onclick "wmctrl -s 0" "1  ")
-       (button :onclick "wmctrl -s 1" "2  ")
-       (button :onclick "wmctrl -s 2" "3  ")
-       (button :onclick "wmctrl -s 3" "4  ")
-       (button :onclick "wmctrl -s 4" "5  ")
-       (button :onclick "wmctrl -s 5" "6  ")
-       (button :onclick "wmctrl -s 6" "7  ")
-       (button :onclick "wmctrl -s 7" "8  ")
-       (button :onclick "wmctrl -s 8" "9  ")
-       (button :onclick "wmctrl -s 9" "10  ")))
+       (workspace :label "1  " :value "1" :onclick "wmctrl -s 0")
+       (workspace :label "2  " :value "2" :onclick "vmctrl -s 1")
+       (workspace :label "3  " :value "3" :onclick "vmctrl -s 2")
+       (workspace :label "4  " :value "4" :onclick "vmctrl -s 3")
+       (workspace :label "5  " :value "5" :onclick "vmctrl -s 4")
+       (workspace :label "6  " :value "6" :onclick "vmctrl -s 5")
+       (workspace :label "7  " :value "7" :onclick "vmctrl -s 6")
+       (workspace :label "8  " :value "8" :onclick "vmctrl -s 7")
+       (workspace :label "9  " :value "9" :onclick "vmctrl -s 8")
+       (workspace :label "10  " :value "10" :onclick "vmctrl -s 9")))
 
 (defwidget music []
   (box :class "music"
@@ -69,18 +87,6 @@
                :value {round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}
                :onchange "")
        time))
-
-(defpoll music-info :interval "1s" "~/bin/mpc-playing")
-
-(defpoll music-state :interval "1s" "mpc | grep -q \"^\\[playing\\]\" && echo \"\" || echo \"\"")
-
-(defpoll mute :interval "200ms" "[[ $(pamixer --get-mute) == true ]] && echo '🔇' || echo '🔊'")
-
-(defpoll volume :interval "200ms" "[[ $(pamixer --get-mute) == true ]] && echo '0' || pamixer --get-volume")
-
-(defpoll brightness :interval "200ms" "light -G | cut -c 1-2")
-
-(defpoll time :interval "200ms" "date '+%a %Y-%m-%d %H:%M'")
 
 (defwidget bar []
   (centerbox :orientation "h"
