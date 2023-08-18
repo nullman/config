@@ -170,21 +170,25 @@
   # compositor: picom
   services.picom.enable = true;
 
-  # pipewire
-  # sound.enable = true;
-  # hardware.pulseaudio.enable = true;
-  # hardware.pulseaudio.support32Bit = true;
-  # nixpkgs.config.pulseaudio = true;
-  # #hardware.pulseaudio.extraConfig = "load-module module-combine-sink";
-  # #hardware.pulseaudio.extraConfig = "unload-module module-suspend-on-idle";
+  # pulse audio
+  sound.enable = true;
+  hardware.pulseaudio.enable = true;
+  hardware.pulseaudio.support32Bit = true;
+  nixpkgs.config.pulseaudio = true;
+  #hardware.pulseaudio.extraConfig = "load-module module-combine-sink";
+  #hardware.pulseaudio.extraConfig = "unload-module module-suspend-on-idle";
   security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    jack.enable = true;
-  };
+
+  ## pipewire
+  #sound.enable = true;
+  #security.rtkit.enable = true;
+  #services.pipewire = {
+  #  enable = true;
+  #  alsa.enable = true;
+  #  alsa.support32Bit = true;
+  #  pulse.enable = true;
+  #  jack.enable = true;
+  #};
 
   # bluetooth
   hardware.bluetooth.enable = true;
@@ -380,9 +384,13 @@
     playlistDirectory = "/home/data/media/Audio/Playlists";
     extraConfig = ''
       audio_output {
-        type "pipewire"
-        name "PipeWire Output"
+        type "pulse"
+        name "PulseAudio Output"
       }
+      # audio_output {
+      #   type "pipewire"
+      #   name "PipeWire Output"
+      # }
     '';
   };
 
@@ -483,6 +491,7 @@
     dunst
     evtest
     eww
+    eww-wayland
     gnome-icon-theme
     gnome.eog
     gnome.gnome-keyring
@@ -530,6 +539,8 @@
     wmname
     #wofi
     wmctrl
+    xfce.xfce4-power-manager
+    xfce.xfconf
     xdg-desktop-portal-gtk
     xdg-desktop-portal-hyprland
     xdg-utils
@@ -540,7 +551,6 @@
     x2x
     xclip
     xdo
-    xfce.xfconf
     xorg.libX11
     xorg.libX11.dev
     xorg.libXft

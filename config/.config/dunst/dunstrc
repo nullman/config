@@ -42,7 +42,6 @@ alignment = left
 # Set to 0 to disable.
 bounce_freq = 5
 
-
 # Show age of message if message is older than show_age_threshold
 # seconds.
 # Set to -1 to disable.
@@ -54,7 +53,6 @@ word_wrap = no
 
 # Ignore newlines '\n' in notifications.
 ignore_newline = no
-
 
 # The geometry of the window:
 #   [{width}]x{height}[+/-{x}+/-{y}]
@@ -179,9 +177,10 @@ history = ctrl+mod4+h
 # Context menu.
 context = ctrl+mod1+c
 
-[urgency_low]
 # IMPORTANT: colors have to be defined in quotation marks.
 # Otherwise the "#" and following would be interpreted as a comment.
+
+[urgency_low]
 background = "#263238"
 foreground = "#556064"
 timeout = 10
@@ -195,7 +194,6 @@ timeout = 10
 background = "#d62929"
 foreground = "#f9faf9"
 timeout = 0
-
 
 # Every section that isn't one of the above is interpreted as a rules to
 # override settings for certain messages.
@@ -234,21 +232,25 @@ timeout = 0
 #    summary = "*signed on*"
 #    urgency = low
 #
+
 #[signed_off]
 #    appname = Pidgin
 #    summary = *signed off*
 #    urgency = low
 #
+
 #[says]
 #    appname = Pidgin
 #    summary = *says*
 #    urgency = critical
 #
+
 #[twitter]
 #    appname = Pidgin
 #    summary = *twitter.com*
 #    urgency = normal
 #
+
 #[Claws Mail]
 #    appname = claws-mail
 #    category = email.arrived
@@ -256,40 +258,44 @@ timeout = 0
 #    background = "#2f899e"
 #    foreground = "#ffa247"
 #
+
 #[mute.sh]
 #     appname = mute
 #     category = mute.sound
 #     script = mute.sh
 #
+
 #[JDownloader]
 #    appname = JDownloader
 #    category = JD
 #    background = "#ffa247"
 #    foreground = "#ffffff"
 #
+
 #[newsbeuter]
 #    summary = *Feeds*
 #    background = "#a8eb41"
 #    foreground = "#ffffff"
 #
+
 [irc]
 appname = weechat
 timeout = 0
 background = "#0033bb"
 foreground = "#dddddd"
-#
+
 [weechat hl]
 appname = weechat
 category = weechat.HL
 background = "#ff5c47"
 foreground = "#ffffff"
-#
+
 [weechat pn]
 appname = weechat
 category = weechat.PM
 background = "#d53b84"
 foreground = "#ffffff"
-#
+
 #[CMUS]
 #    appname = CMUS
 #    category = cmus
@@ -298,5 +304,5 @@ foreground = "#ffffff"
 #
 #    background = "#30ab70"
 #    foreground = "#f67245"
-#
+
 # vim: ft=cfg

@@ -75,7 +75,7 @@ super + shift + h
     man bspwm | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12" --tail
 
 # close/kill active program
-super + shift + {w,q}
+super + shift + {w,k}
     bspc node --{close,kill}
 
 # alternate between tiled and monocle layout

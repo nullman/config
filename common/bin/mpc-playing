@@ -12,6 +12,7 @@ album=$(mpc -f '%album%' | head -n 1)
 title=$(mpc -f '%title%' | head -n 1)
 file=$(mpc -f '%file%' | head -n 1)
 rating=$(grep -F "${file}" ${HOME}/.song-ratings/* | sed 's/^.*songs-rated-\([0-9]\).*$/\1/')
+state=$(mpc | grep -q "^\[playing\]" && printf "playing" || printf "paused")
 
 if [[ "$1" == "--verbose" ]] ; then
     echo "Artist: ${artist}"
@@ -19,7 +20,13 @@ if [[ "$1" == "--verbose" ]] ; then
     echo "Title: ${title}"
     echo "Rating: ${rating}"
     echo "File: ${file}"
+    echo "State: ${state}"
 else
+    #if [[ ${state} == 'playing' ]] ; then
+    #    echo -n "  "
+    #else
+    #    echo -n "  "
+    #fi
     echo -n "${artist} - ${title} [${rating}]"
 fi
 

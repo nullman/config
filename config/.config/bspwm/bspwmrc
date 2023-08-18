@@ -27,9 +27,9 @@ _ba() {
 # Monitors
 #-------------------------------------------------------------------------------
 
-#bspc monitor -d 1 2 3 4 5 6 7 8 9 10
-#bspc monitor -d "1 " "2 " "3 " "4 " "5 " "6 " "7 " "8 " "9 " "10 "
-bspc monitor -d "1 " "2 " "3 " "4 " "5 " "6 " "7 " "8 " "9 " "10 "
+bspc monitor -d 1 2 3 4 5 6 7 8 9 10
+#bspc monitor -d "1  " "2  " "3  " "4  " "5  " "6  " "7  " "8  " "9  " "10  "
+#bspc monitor -d "1  " "2  " "3  " "4  " "5  " "6  " "7  " "8  " "9  " "10  "
 
 # if _command bsp-layout ; then
 #     # setup master stack on all desktops
@@ -71,9 +71,11 @@ _bc merge_overlapping_monitors true
 
 # monitor and desktop settings
 _bc top_padding                0
+#_bc top_padding                20       # room for eww system bar
 _bc right_padding              0
 #_bc bottom_padding             0
-_bc bottom_padding             30       # room for system bar
+#_bc bottom_padding             30       # room for tint2 system bar
+_bc bottom_padding             20       # room for eww system bar
 _bc left_padding               0
 
 # desktop settings

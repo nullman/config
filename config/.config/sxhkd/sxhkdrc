@@ -210,7 +210,7 @@ super + alt + x
 #     systemctl --user restart setxkbmap xkbcomp xset && notify-send --expire-time=2000 'User services restarted'
 
 # session menu
-super + shift + e
+super + shift + q
     ${HOME}/bin/rofi-session-menu -s
 
 # get xprop class name
@@ -240,9 +240,12 @@ super + shift + s
 # reload tint2
 super + shift + t
     ((pkill -SIGUSR1 -x tint2 -u ${USER} && sleep 1 && \
-    xdo below -t $(xdo id -n root) $(xdo id -N Tint2)) || \
-    ${HOME}/bin/system-bar &) && notify-send --expire-time=2000 'Reloading Tint'
-    #xdo below -t $(xdo id -N Bspwm) $(xdo id -N Tint2)) || \
+      xdo below -t $(xdo id -n root) $(xdo id -N Tint2)) || \
+      ${HOME}/bin/system-bar &) && notify-send --expire-time=2000 'Reloading Tint'
+
+# reload eww
+super + shift + e
+    (${HOME}/bin/system-bar &) && notify-send --expire-time=2000 'Reloading EWW'
 
 # reset video
 super + shift + v

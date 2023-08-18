@@ -7,7 +7,7 @@ General
 |-------+-----+------+-------+-----+----------------------------|
 | Super |     | Ctrl |       | h   | Display BSPWM Key Bindings |
 | Super |     |      | Shift | w   | Close Node                 |
-| Super |     |      | Shift | q   | Kill Node                  |
+| Super |     |      | Shift | k   | Kill Node                  |
 | Super |     | Ctrl |       | m   | Toggle Monocle Layout      |
 
 
