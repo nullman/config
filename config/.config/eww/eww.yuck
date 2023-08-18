@@ -1,3 +1,15 @@
+(defwidget metric-onclick [label value onchange onclick]
+  (box :orientation "h"
+       :class "metric"
+       :space-evenly false
+       (box :class "label"
+            (button :onclick onclick label))
+       (scale :min 0
+              :max 101
+              :active {onchange != ""}
+              :value value
+              :onchange onchange)))
+
 (defwidget metric [label value onchange]
   (box :orientation "h"
        :class "metric"
@@ -33,17 +45,23 @@
        :space-evenly false
        :halign "center"
        :spacing 10
-       (box :class "music-state" music-state)
-       (box :class "music-info" {music-info != "" ? "${music-info}" : ""})))
+       (box :class "music-state"
+            (button :onclick "mpc toggle" music-state))
+       (box :class "music-info"
+            (button :onclick "mpc toggle" {music-info != "" ? "${music-info}" : ""}))))
 
 (defwidget status []
   (box :class "status"
        :orientation "h"
        :space-evenly false
        :halign "end"
-       (metric :label "🔊"
-               :value volume
-               :onchange "pactl -- set-sink-volume 0 {}%")
+       (metric-onclick :label mute
+                       :value volume
+                       :onchange "pactl -- set-sink-volume 0 {}%"
+                       :onclick "pactl -- set-sink-mute 0 toggle")
+       (metric :label "🔅"
+               :value brightness
+               :onchange "light -S {}")
        (metric :label ""
                :value {EWW_RAM.used_mem_perc}
                :onchange "")
@@ -52,13 +70,17 @@
                :onchange "")
        time))
 
-(defpoll music-info :interval "5s" "~/bin/mpc-playing")
+(defpoll music-info :interval "1s" "~/bin/mpc-playing")
 
-(defpoll music-state :interval "5s" "mpc | grep -q \"^\\[playing\\]\" && echo \"\" || echo \"\"")
+(defpoll music-state :interval "1s" "mpc | grep -q \"^\\[playing\\]\" && echo \"\" || echo \"\"")
 
-(defpoll volume :interval "1s" "[[ $(pamixer --get-mute) == true ]] && echo '0' || pamixer --get-volume")
+(defpoll mute :interval "200ms" "[[ $(pamixer --get-mute) == true ]] && echo '🔇' || echo '🔊'")
 
-(defpoll time :interval "1s" "date '+%a %Y-%m-%d %H:%M'")
+(defpoll volume :interval "200ms" "[[ $(pamixer --get-mute) == true ]] && echo '0' || pamixer --get-volume")
+
+(defpoll brightness :interval "200ms" "light -G | cut -c 1-2")
+
+(defpoll time :interval "200ms" "date '+%a %Y-%m-%d %H:%M'")
 
 (defwidget bar []
   (centerbox :orientation "h"
