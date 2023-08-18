@@ -44,7 +44,7 @@ while getopts ":drwsh" opt ; do
             rofi -modi window -show window
             ;;
         s)
-            sel=$(printf "🔒 Lock\n← Logout\n♻ Reboot\n⏻ Shutdown" | \
+            sel=$(printf "	Lock\n	Logout\n	Reboot\n⏻	Shutdown" | \
                       rofi -dmenu -i -p 'System' -width 20 -padding 20 -lines 4)
             case "${sel}" in
                 *Lock) lockscreen -- scrot ;;

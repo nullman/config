@@ -31,8 +31,12 @@
     border-radius: 10px;
 }
 
-.workspaces {
+.left-bar {
     margin-left: 10px;
+}
+
+.right-bar {
+    margin-right: 10px;
 }
 
 button:hover {
@@ -44,11 +48,7 @@ button:hover {
     color: #5e81ac;
 }
 
-.status {
-    margin-right: 10px;
-}
-
-.status slider {
+slider {
     all: unset;
     color: #ffd5cd;
 }

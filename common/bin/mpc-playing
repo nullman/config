@@ -22,11 +22,6 @@ if [[ "$1" == "--verbose" ]] ; then
     echo "File: ${file}"
     echo "State: ${state}"
 else
-    #if [[ ${state} == 'playing' ]] ; then
-    #    echo -n "  "
-    #else
-    #    echo -n "  "
-    #fi
     echo -n "${artist} - ${title} [${rating}]"
 fi
 

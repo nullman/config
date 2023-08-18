@@ -227,7 +227,19 @@
       #mononoki
       #mplus-outline-fonts.githubRelease
       nerdfonts
-      noto-fonts
+      (noto-fonts.override { fonts = [
+                               "NotoMono Nerd Font"
+                               "NotoMono Nerd Font Mono"
+                               "NotoMono Nerd Font Propo"
+                               "Noto Music"
+                               "Noto Sans"
+                               "Noto SansM Nerd Font"
+                               "Noto SansM Nerd Font Mono"
+                               "Noto SansM Nerd Font Propo"
+                               "NotoSans Nerd Font"
+                               "NotoSans Nerd Font Propo"
+                               "Noto Serif"
+                             ]; })
       noto-fonts-emoji
       #proggyfonts
       source-han-mono

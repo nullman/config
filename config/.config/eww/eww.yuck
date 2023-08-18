@@ -1,3 +1,17 @@
+;;==============================================================================
+;; .config/eww/eww.yuck
+;;
+;; Elkowars Wacky Widgets configuration.
+;;
+;; Reference: https://github.com/elkowar/eww/tree/master/examples/eww-bar
+;; Reference: https://github.com/ikz87/dots-2.0/tree/main/Configs/eww/mybar
+;; Reference: https://github.com/rxyhn/tokyo/tree/main/config/eww/bar
+;;==============================================================================
+
+;;------------------------------------------------------------------------------
+;; Polls
+;;------------------------------------------------------------------------------
+
 (defpoll active-desktop :interval "200ms" "bspc query -D -d --names")
 
 (defpoll music-info :interval "1s" "~/bin/mpc-playing")
@@ -10,7 +24,15 @@
 
 (defpoll brightness :interval "200ms" "light -G | cut -c 1-2")
 
+(defpoll weather :interval "300s" "scripts/weather")
+
+(defpoll battery :interval "200ms" "scripts/battery")
+
 (defpoll time :interval "200ms" "date '+%a %Y-%m-%d %H:%M'")
+
+;;------------------------------------------------------------------------------
+;; Helper Widgets
+;;------------------------------------------------------------------------------
 
 (defwidget metric-onclick [label value onchange onclick]
   (box :class "metric"
@@ -39,26 +61,39 @@
   (box :class {value == active-desktop ? "highlight" : "label"}
        (button :onclick onclick label)))
 
-(defwidget workspaces []
-  (box :class "workspaces"
-       :orientation "h"
-       :space-evenly true
-       :halign "start"
-       :spacing 4
-       ;; symbols:                   
-       (workspace :label "1  " :value "1" :onclick "wmctrl -s 0")
-       (workspace :label "2  " :value "2" :onclick "vmctrl -s 1")
-       (workspace :label "3  " :value "3" :onclick "vmctrl -s 2")
-       (workspace :label "4  " :value "4" :onclick "vmctrl -s 3")
-       (workspace :label "5  " :value "5" :onclick "vmctrl -s 4")
-       (workspace :label "6  " :value "6" :onclick "vmctrl -s 5")
-       (workspace :label "7  " :value "7" :onclick "vmctrl -s 6")
-       (workspace :label "8  " :value "8" :onclick "vmctrl -s 7")
-       (workspace :label "9  " :value "9" :onclick "vmctrl -s 8")
-       (workspace :label "10  " :value "10" :onclick "vmctrl -s 9")))
+;;------------------------------------------------------------------------------
+;; Section Widgets
+;;------------------------------------------------------------------------------
 
-(defwidget music []
-  (box :class "music"
+(defwidget left-bar []
+  (box :class "left-bar"
+       :orientation "h"
+       :space-evenly false
+       :halign "start"
+       :spacing 10
+       ;; application search
+       (box :class "label"
+            (button :onclick "rofi -modi drun -show drun &" " "))
+       ;; menu launcher
+       ;; (box :class "label"
+       ;;      (button :onclick "~/bin/rofi-menu" " "))
+       ;; window selector
+       (box :class "label"
+            (button :onclick "rofi -modi window -show window &" " "))
+       ;; symbols:                       
+       (workspace :label "1  " :value "1" :onclick "bspc desktop --focus '^1'")
+       (workspace :label "2  " :value "2" :onclick "bspc desktop --focus '^2'")
+       (workspace :label "3  " :value "3" :onclick "bspc desktop --focus '^3'")
+       (workspace :label "4  " :value "4" :onclick "bspc desktop --focus '^4'")
+       (workspace :label "5  " :value "5" :onclick "bspc desktop --focus '^5'")
+       (workspace :label "6  " :value "6" :onclick "bspc desktop --focus '^6'")
+       (workspace :label "7  " :value "7" :onclick "bspc desktop --focus '^7'")
+       (workspace :label "8  " :value "8" :onclick "bspc desktop --focus '^8'")
+       (workspace :label "9  " :value "9" :onclick "bspc desktop --focus '^9'")
+       (workspace :label "10  " :value "10" :onclick "bspc desktop --focus '^10'")))
+
+(defwidget center-bar []
+  (box :class "center-bar"
        :orientation "h"
        :space-evenly false
        :halign "center"
@@ -68,31 +103,40 @@
        (box :class "music-info"
             (button :onclick "mpc toggle" {music-info != "" ? "${music-info}" : ""}))))
 
-(defwidget status []
-  (box :class "status"
+(defwidget right-bar []
+  (box :class "right-bar"
        :orientation "h"
        :space-evenly false
        :halign "end"
+       (box :class "label"
+            (button :onclick "curl -s http://wttr.in/san%20diego | head -n -2 | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12" --tail" weather))
        (metric-onclick :label mute
                        :value volume
                        :onchange "pactl -- set-sink-volume 0 {}%"
                        :onclick "pactl -- set-sink-mute 0 toggle")
-       (metric :label "🔅"
+       (metric :label ""
                :value brightness
                :onchange "light -S {}")
        (metric :label ""
                :value {EWW_RAM.used_mem_perc}
                :onchange "")
-       (metric :label "💾"
+       (metric :label ""
                :value {round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}
                :onchange "")
-       time))
+       (box :class "label"
+            (button :onclick "xfce4-power-manager-settings" battery))
+       (box :class "label"
+            (button :onclick "" time))))
 
 (defwidget bar []
   (centerbox :orientation "h"
-             (workspaces)
-             (music)
-             (status)))
+             (left-bar)
+             (center-bar)
+             (right-bar)))
+
+;;------------------------------------------------------------------------------
+;; Windows
+;;------------------------------------------------------------------------------
 
 (defwindow bar
   :monitor 0
@@ -105,3 +149,7 @@
   :reserve (struts :side "bottom"
                    :distance "12px")
   (bar))
+
+;;==============================================================================
+;; End of File
+;;==============================================================================
