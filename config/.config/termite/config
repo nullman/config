@@ -7,7 +7,8 @@
 #clickable_url = true
 #dynamic_title = true
 #font = Monospace 9
-font = Hack Nerd Font Mono
+#font = Hack Nerd Font Mono
+font = MesloLGS Nerd Font Mono
 #fullscreen = true
 fullscreen = false # prevent F11 from toggling fullscreen mode
 #icon_name = terminal

@@ -32,7 +32,9 @@
 
 (defpoll battery-status :interval "1s" "cat /sys/class/power_supply/BAT0/status")
 
-(defpoll time :interval "200ms" "date '+%a %Y-%m-%d %H:%M'")
+(defpoll clock :interval "200ms" "scripts/clock")
+
+;;(defpoll time :interval "200ms" "date '+%a %Y-%m-%d %H:%M'")
 
 ;;------------------------------------------------------------------------------
 ;; Helper Widgets
@@ -113,6 +115,8 @@
        :space-evenly false
        :halign "end"
        :spacing 10
+       (box :class "label"
+            (button :onclick "xdg-open http://wttr.in/san%20diego &" weather))
        (metric-onclick :label mute
                        :value volume
                        :onchange "pactl -- set-sink-volume 0 {}%"
@@ -131,9 +135,7 @@
                     :tooltip "${battery-capacity}%, ${battery-status}"
                     battery))
        (box :class "label"
-            (button :onclick "xdg-open http://wttr.in/san%20diego &" weather))
-       (box :class "label"
-            (button :onclick "" time))))
+            (button :onclick "" clock))))
 
 (defwidget bar []
   (centerbox :orientation "h"

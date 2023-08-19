@@ -21,7 +21,7 @@ conky.config = {
 
 conky.text = [[
 # date and time
-${voffset 8}${color2}${font Bitstream Vera Sans:size=16}${time %A}${font} \
+${voffset -12}${color2}${font Bitstream Vera Sans:size=16}${time %A}${font} \
 ${voffset -8}${alignr}${color}${font Bitstream Vera Sans:size=38}${time %e}${font}
 ${voffset -30}${color}${font Bitstream Vera Sans:size=18}${time %b}${font} \
 ${voffset -3} ${color}${font Bitstream Vera Sans:size=20}${time %Y}${font}${color2}${hr}
@@ -94,7 +94,8 @@ ${voffset 5}${color2}UTC:${color}  ${alignr}${utime %H:%M}
 # # packages
 # ${voffset 5}${color2}Packages to Update:${color}  ${alignr}${execi 3600 checkupdates | wc -l}
 # entropy
-${voffset 5}${color2}Entropy:${color}  ${entropy_avail} / ${entropy_poolsize}  ${entropy_perc}%  ${entropy_bar}
+${voffset 5}${color2}Entropy:${color}  ${alignr}${entropy_avail} / ${entropy_poolsize}  ${entropy_perc}%
+#${voffset 5}${color2}Entropy:${color}  ${entropy_avail} / ${entropy_poolsize}  ${entropy_perc}%  ${entropy_bar}
 
 # music
 ${voffset 10}${color2}Artist:${color}  ${alignr}${mpd_artist}

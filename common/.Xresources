@@ -111,11 +111,11 @@
 !! General Settings
 !!------------------------------------------------------------------------------
 
-#define FONT_TERMINAL_REGULAR xft:Hack:style=Regular:size=12
-#define FONT_TERMINAL_BOLD xft:Hack:style=Bold:size=12
-#define FONT_TERMINAL_ITALIC xft:Hack:style=Italic:size=12
+#define FONT_TERMINAL_REGULAR xft:MesloLGS:style=Regular:size=14
+#define FONT_TERMINAL_BOLD xft:MesloLGS:style=Bold:size=14
+#define FONT_TERMINAL_ITALIC xft:MesloLGS:style=Italic:size=14
 
-#define FONT_EDITOR Droid Sans Mono 12
+#define FONT_EDITOR MesloLGS Nerd Font Mono 14
 
 #define FONT_DIALOG System San Francisco Display 24
 
@@ -129,7 +129,7 @@ Emacs.background: #09151b
 !Emacs.pointerColor: #798188
 Emacs.cursorColor: #ffff33
 Emacs.cursorBlink: false
-Emacs.font: Droid Sans Mono 12
+Emacs.font: MesloLGS Nerd Font Mono 14
 Emacs.fullscreen: maximized
 Emacs.horizontalScrollBars: false
 Emacs.menuBar: false
@@ -182,7 +182,7 @@ XTerm.visualBell:        false
 XTerm.waitForMap:        true
 XTerm.saveLines:         16384
 XTerm.scrollBar:         false
-XTerm*faceName:          FONT_TERMINAL_REGULAR, xft:Monospace:style=Medium:size=12, xft:JoyPixels:size=12, xft:Mononoki Nerd Font:size=12, 9x15
+XTerm*faceName:          FONT_TERMINAL_REGULAR, xft:Monospace:style=Medium:size=14, xft:JoyPixels:size=14, xft:Mononoki Nerd Font:size=14, 9x15
 XTerm*faceSize:          12
 XTerm*renderFont:        true
 XTerm*utf8:              2
@@ -241,7 +241,7 @@ URxvt.jumpScroll:            true
 URxvt.scrollBar:             false
 URxvt.cursorBlink:           false
 URxvt.pointerBlank:          true
-URxvt*font:                  FONT_TERMINAL_REGULAR, xft:Monospace:style=Medium:size=12, xft:JoyPixels:size=12, xft:Mononoki Nerd Font:size=12, 9x15
+URxvt*font:                  FONT_TERMINAL_REGULAR, xft:Monospace:style=Medium:size=14, xft:JoyPixels:size=14, xft:Mononoki Nerd Font:size=14, 9x15
 URxvt*boldFont:              FONT_TERMINAL_BOLD
 URxvt*italicFont:            FONT_TERMINAL_ITALIC
 URxvt.intensityStyles:       false

@@ -562,14 +562,10 @@ A fortune is added if FORTUNE is non-nil."
            ;; "Ubuntu Mono-13"
            ;; "Inconsolata-15"
            ;; "BitstreamVeraSansMono Nerd Font Mono-14"
-           ;; "DroidSansMono Nerd Font Mono-14"
-           ;; "Hack Nerd Font Mono-14"
-           ((x-list-fonts "Hack Nerd Font")
-            "Hack Nerd Font Mono-14")
-           ((x-list-fonts "DroidSansMono Nerd Font")
-            "DroidSansMono Nerd Font Mono-14")
-           ((x-list-fonts "Fira Code")
-            "Fira Code Mono-14")
+           ((x-list-fonts "MesloLGS Nerd Font") "MesloLGS Nerd Font Mono-14")
+           ((x-list-fonts "Hack Nerd Font") "Hack Nerd Font Mono-14")
+           ((x-list-fonts "DroidSansMono Nerd Font") "DroidSansMono Nerd Font Mono-14")
+           ((x-list-fonts "Fira Code") "Fira Code Mono-14")
            (t
             "9x15" nil)))
        ('error

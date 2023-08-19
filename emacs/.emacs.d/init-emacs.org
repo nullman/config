@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2023-08-05 13:21 (kyle)>
+  #+TIMESTAMP: <2023-08-19 14:11 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -1242,14 +1242,10 @@
                    ;; "Ubuntu Mono-13"
                    ;; "Inconsolata-15"
                    ;; "BitstreamVeraSansMono Nerd Font Mono-14"
-                   ;; "DroidSansMono Nerd Font Mono-14"
-                   ;; "Hack Nerd Font Mono-14"
-                   ((x-list-fonts "Hack Nerd Font")
-                    "Hack Nerd Font Mono-14")
-                   ((x-list-fonts "DroidSansMono Nerd Font")
-                    "DroidSansMono Nerd Font Mono-14")
-                   ((x-list-fonts "Fira Code")
-                    "Fira Code Mono-14")
+                   ((x-list-fonts "MesloLGS Nerd Font") "MesloLGS Nerd Font Mono-14")
+                   ((x-list-fonts "Hack Nerd Font") "Hack Nerd Font Mono-14")
+                   ((x-list-fonts "DroidSansMono Nerd Font") "DroidSansMono Nerd Font Mono-14")
+                   ((x-list-fonts "Fira Code") "Fira Code Mono-14")
                    (t
                     "9x15" nil)))
                ('error
