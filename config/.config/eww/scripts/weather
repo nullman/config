@@ -10,60 +10,50 @@ fi
 curl -s "http://rss.accuweather.com/rss/liveweather_rss.asp?metric=${METRIC}&locCode=$1" | perl -ne '
     use utf8;
     binmode(STDOUT, ":utf8");
-    if (/Currently/) {
+    if (/\<title\>Currently: /) {
         chomp;
         /\<title\>Currently: (.*)?\<\/title\>/;
         my @values = split(":", $1);
         my $desc = $values[0];
         my $temp = $values[1];
         my $icon = "";
-        if ($desc eq "Sunny" || $desc eq "Mostly Sunny" || $desc eq "Partly Sunny") {
-            $icon = " ";
-        }
-        if ($desc eq "Hazy Sunshine" || $desc eq "Hot") {
-            $icon = " ";
-        }
-        if ($desc eq "Intermittent Clouds") {
-            $icon = " ";
-        }
-        if ($desc eq "Mostly Cloudy" || $desc eq "Cloudy") {
-            $icon = " ";
-        }
-        if ($desc eq "Dreary (Overcast)" || $desc eq "Fog") {
-            $icon = " ";
-        }
-        if ($desc eq "Rain") {
-            $icon = " ";
-        }
-        if ($desc eq "Showers" || $desc eq "Partly Cloudy w/ Showers" || $desc eq "Mostly Cloudy w/ Showers") {
-            $icon = " ";
-        }
-        if ($desc eq "Partly Sunny w/ Showers") {
-            $icon = " ";
-        }
-        if ($desc eq "T-Storms") {
-            $icon = " ";
-        }
-        if ($desc eq "Mostly Cloudy w/ T-Storms" || $desc eq "Partly Cloudy w/ T-Storms") {
-            $icon = " ";
-        }
-        if ($desc eq "Partly Sunny w/ T-Storms") {
-            $icon = " ";
-        }
-        if ($desc eq "Windy") {
-            $icon = " ";
-        }
-        if ($desc eq "Flurries" || $desc eq "Mostly Cloudy w/ Flurries" || $desc eq "Snow" || $desc eq "Mostly Cloudy w/ Snow") {
-            $icron = " ";
-        }
-        if ($desc eq "Partly Sunny w/ Flurries") {
-            $icron = " ";
-        }
-        if ($desc eq "Ice" || $desc eq "Sleet" || $desc eq "Freezing Rain" || $desc eq "Rain and Snow" || $desc eq "Cold") {
-            $icron = " ";
-        }
-        if ($desc eq "Clear" || $desc eq "Mostly Clear" || $desc eq "Partly Cloudy" || $desc eq "Intermittent Clouds" || $desc eq "Hazy Moonlight") {
-            $icron = " ";
+        for ($desc) {
+            if("Sunny") { $icon = " "; }
+            elsif("Mostly Sunny") { $icon = " "; }
+            elsif("Partly Sunny") { $icon = " "; }
+            elsif("Hazy Sunshine") { $icon = " "; }
+            elsif("Hot") { $icon = " "; }
+            elsif("Intermittent Clouds") { $icon = " "; }
+            elsif("Cloudy") { $icon = " "; }
+            elsif("Mostly Cloudy") { $icon = " "; }
+            elsif("Dreary (Overcast)") { $icon = " "; }
+            elsif("Fog") { $icon = " "; }
+            elsif("Rain") { $icon = " "; }
+            elsif("Showers") { $icon = " "; }
+            elsif("Partly Cloudy w/ Showers") { $icon = " "; }
+            elsif("Mostly Cloudy w/ Showers") { $icon = " "; }
+            elsif("Partly Sunny w/ Showers") { $icon = " "; }
+            elsif("T-Storms") { $icon = " "; }
+            elsif("Mostly Cloudy w/ T-Storms") { $icon = " "; }
+            elsif("Partly Cloudy w/ T-Storms") { $icon = " "; }
+            elsif("Partly Sunny w/ T-Storms") { $icon = " "; }
+            elsif("Windy") { $icon = " "; }
+            elsif("Flurries") { $icon = " "; }
+            elsif("Mostly Cloudy w/ Flurries") { $icon = " "; }
+            elsif("Snow") { $icon = " "; }
+            elsif("Mostly Cloudy w/ Snow") { $icon = " "; }
+            elsif("Partly Sunny w/ Flurries") { $icon = " "; }
+            elsif("Ice") { $icon = " "; }
+            elsif("Sleet") { $icon = " "; }
+            elsif("Freezing Rain") { $icon = " "; }
+            elsif("Rain and Snow") { $icon = " "; }
+            elsif("Cold") { $icon = " "; }
+            elsif("Clear") { $icon = " "; }
+            elsif("Mostly Clear") { $icon = " "; }
+            elsif("Partly Cloudy") { $icon = " "; }
+            elsif("Intermittent Clouds") { $icon = " "; }
+            elsif("Hazy Moonlight") { $icon = " "; }
+            else { system("notify-send -u critical \"Weather: $desc\""); }
         }
         print "$icon$temp";
     }'
