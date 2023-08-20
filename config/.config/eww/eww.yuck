@@ -135,9 +135,8 @@
                :value {round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}
                :onchange "")
        (box :class "label"
-            (button :onclick ""
-                    :tooltip "${battery-capacity}%, ${battery-status}"
-                    battery))
+            :tooltip "${battery-capacity}%, ${battery-status}"
+                    battery)
        (box :class "label"
             (button :onclick "" clock))))
 
