@@ -227,19 +227,7 @@
       #mononoki
       #mplus-outline-fonts.githubRelease
       nerdfonts
-      (noto-fonts.override { fonts = [
-                               "NotoMono Nerd Font"
-                               "NotoMono Nerd Font Mono"
-                               "NotoMono Nerd Font Propo"
-                               "Noto Music"
-                               "Noto Sans"
-                               "Noto SansM Nerd Font"
-                               "Noto SansM Nerd Font Mono"
-                               "Noto SansM Nerd Font Propo"
-                               "NotoSans Nerd Font"
-                               "NotoSans Nerd Font Propo"
-                               "Noto Serif"
-                             ]; })
+      noto-fonts
       noto-fonts-emoji
       #proggyfonts
       source-han-mono
@@ -261,7 +249,8 @@
       defaultFonts = {
         #monospace = ["Hack LG M Regular Nerd Font Complete Mono" ];
         #monospace = ["Meslo LG M Regular Nerd Font Complete Mono" ];
-        monospace = ["Hack Nerd Font Mono" ];
+        #monospace = ["Hack Nerd Font Mono" ];
+        monospace = ["MesloLGS Nerd Font Mono" ];
         serif = [ "Noto Serif" "Source Han Serif" ];
         sansSerif = [ "Noto Sans" "Source Han Sans" ];
       };
@@ -651,6 +640,7 @@
     tig
     ugrep
     w3m
+    wordgrinder
     x3270
     xplr
     zenith
@@ -863,6 +853,7 @@
     #alephone-yuge
     bsdgames
     eidolon
+    flare
     pingus
     proton-caller
     protontricks

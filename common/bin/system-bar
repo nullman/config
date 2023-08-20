@@ -26,7 +26,7 @@ _delay() {
 #_command manjaro-tint2-session && manjaro-tint2-session &
 #_command polybar && polybar -c ${HOME}/.config/polybar/config openbox-bar &
 #_command tint2 && (tint2 && sleep 1 && xdo below -t $(xdo id -n root) $(xdo id -N Tint2)) & # status bar hidden when fullscreen
-_command eww && (eww --restart open bar) &
+_command eww && (eww --restart open bar && sleep 1 && xdo below -t $(xdo id -n root) $(xdo id -N eww-bar)) & # status bar hidden when fullscreen
 
 # system bar applets
 _command clipit && (_delay ${delay} pkill -x -u ${USER} clipit ; clipit) &

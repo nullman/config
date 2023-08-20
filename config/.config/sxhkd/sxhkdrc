@@ -135,7 +135,7 @@ XF86TouchpadToggle
 
 # display sxhkd keybindings
 super + alt + h
-    yad --text-info --width=1024 --height=768 --no-buttons --fontname='Droid Sans Mono 12' --tail --filename="${HOME}/.config/sxhkd/sxhkdrc-help"
+    yad --text-info --width=1024 --height=768 --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail --filename="${HOME}/.config/sxhkd/sxhkdrc-help"
 
 # desktop application launcher
 super + alt + space
@@ -187,11 +187,11 @@ super + alt + e
 
 # git synchronize config
 super + alt + y
-    source "${HOME}/.funct" && (git-sync-config && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname='Droid Sans Mono 12' --tail
+    source "${HOME}/.funct" && (git-sync-config && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail
 
 # git synchronize extra
 super + alt + u
-    source "${HOME}/.funct" && (git-sync-extra && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname='Droid Sans Mono 12' --tail
+    source "${HOME}/.funct" && (git-sync-extra && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail
 
 # start screen saver
 super + alt + s
@@ -215,7 +215,7 @@ super + shift + q
 
 # get xprop class name
 super + shift + p
-    xprop | grep '^WM_CLASS' | yad --text-info --width=1024 --height=768 --no-buttons --fontname='Droid Sans Mono 12' --tail
+    xprop | grep '^WM_CLASS' | yad --text-info --width=1024 --height=768 --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail
 
 # kill process clicked
 super + shift + Delete
@@ -237,11 +237,11 @@ super + shift + Print
 super + shift + s
     pkill -SIGUSR1 -x sxhkd -u ${USER} && notify-send --expire-time=2000 'Reloading SXHKD'
 
-# reload tint2
-super + shift + t
-    ((pkill -SIGUSR1 -x tint2 -u ${USER} && sleep 1 && \
-      xdo below -t $(xdo id -n root) $(xdo id -N Tint2)) || \
-      ${HOME}/bin/system-bar &) && notify-send --expire-time=2000 'Reloading Tint'
+# # reload tint2
+# super + shift + t
+#     ((pkill -SIGUSR1 -x tint2 -u ${USER} && sleep 1 && \
+#       xdo below -t $(xdo id -n root) $(xdo id -N Tint2)) || \
+#       ${HOME}/bin/system-bar &) && notify-send --expire-time=2000 'Reloading Tint'
 
 # reload eww
 super + shift + e
@@ -259,7 +259,7 @@ super + alt + b
 
 # nixos-rebuild switch
 super + alt + ctrl + r
-    sudo -i nixos-rebuild switch | yad --text-info --width=1024 --height=768 --no-buttons --fontname='Droid Sans Mono 12' --tail
+    sudo -i nixos-rebuild switch | yad --text-info --width=1024 --height=768 --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail
 
 #-------------------------------------------------------------------------------
 # Media

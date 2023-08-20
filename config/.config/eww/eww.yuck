@@ -12,29 +12,31 @@
 ;; Polls
 ;;------------------------------------------------------------------------------
 
-(defpoll active-desktop :interval "200ms" "bspc query -D -d --names")
+(defpoll active-desktop :interval "500ms" "bspc query -D -d --names")
 
-(defpoll music-info :interval "1s" "~/bin/mpc-playing")
+(defpoll music-info :interval "2s" "~/bin/mpc-playing")
 
-(defpoll music-state :interval "1s" "mpc | grep -q \"^\\[playing\\]\" && echo \"\" || echo \"\"")
+(defpoll music-state :interval "2s" "mpc | grep -q \"^\\[playing\\]\" && echo \"\" || echo \"\"")
 
-(defpoll mute :interval "200ms" "[[ $(pamixer --get-mute) == true ]] && echo '🔇' || echo '🔊'")
+(defpoll mute :interval "500ms" "[[ $(pamixer --get-mute) == true ]] && echo '🔇' || echo '🔊'")
 
-(defpoll volume :interval "200ms" "[[ $(pamixer --get-mute) == true ]] && echo '0' || pamixer --get-volume")
+(defpoll volume :interval "500ms" "[[ $(pamixer --get-mute) == true ]] && echo '0' || pamixer --get-volume")
 
-(defpoll brightness :interval "200ms" "light -G | cut -c 1-2")
+(defpoll brightness :interval "500ms" "light -G | cut -c 1-2")
 
 (defpoll weather :interval "300s" "scripts/weather 55433")
 
-(defpoll battery :interval "1s" "scripts/battery")
+(defpoll weather-status :interval "300s" "scripts/weather-status 55433")
 
-(defpoll battery-capacity :interval "1s" "cat /sys/class/power_supply/BAT0/capacity")
+(defpoll battery :interval "2s" "scripts/battery")
 
-(defpoll battery-status :interval "1s" "cat /sys/class/power_supply/BAT0/status")
+(defpoll battery-capacity :interval "5s" "cat /sys/class/power_supply/BAT0/capacity")
 
-(defpoll clock :interval "200ms" "scripts/clock")
+(defpoll battery-status :interval "5s" "cat /sys/class/power_supply/BAT0/status")
 
-;;(defpoll time :interval "200ms" "date '+%a %Y-%m-%d %H:%M'")
+(defpoll clock :interval "500ms" "scripts/clock")
+
+;;(defpoll time :interval "500ms" "date '+%a %Y-%m-%d %H:%M'")
 
 ;;------------------------------------------------------------------------------
 ;; Helper Widgets
@@ -85,7 +87,7 @@
        ;;      (button :onclick "~/bin/rofi-menu" " "))
        ;; window selector
        (box :class "label"
-            (button :onclick "rofi -modi window -show window &" " "))
+            (button :onclick "rofi -modi window -show window &" " "))
        ;; symbols:                       
        (workspace :label "1  " :value "1" :onclick "bspc desktop --focus '^1'")
        (workspace :label "2  " :value "2" :onclick "bspc desktop --focus '^2'")
@@ -116,7 +118,9 @@
        :halign "end"
        :spacing 10
        (box :class "label"
-            (button :onclick "xdg-open http://wttr.in/san%20diego &" weather))
+            (button :onclick "xdg-open http://wttr.in/san%20diego &"
+                    :tooltip weather-status
+                    weather))
        (metric-onclick :label mute
                        :value volume
                        :onchange "pactl -- set-sink-volume 0 {}%"
@@ -127,7 +131,7 @@
        (metric :label ""
                :value {EWW_RAM.used_mem_perc}
                :onchange "")
-       (metric :label ""
+       (metric :label "󰆼"
                :value {round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}
                :onchange "")
        (box :class "label"
