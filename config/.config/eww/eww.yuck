@@ -16,7 +16,7 @@
 
 (defpoll music-info :interval "2s" "~/bin/mpc-playing")
 
-(defpoll music-state :interval "2s" "mpc | grep -q \"^\\[playing\\]\" && echo \"\" || echo \"\"")
+(defpoll music-state :interval "2s" "mpc | grep -q '^\\[playing\\]' && echo '' || echo ''")
 
 (defpoll mute :interval "500ms" "[[ $(pamixer --get-mute) == true ]] && echo '🔇' || echo '🔊'")
 
@@ -114,6 +114,7 @@
        (box :class "label"
             :tooltip weather-status
             (button :onclick "xdg-open http://wttr.in/san%20diego &" weather))
+            ;;(button :onclick "yad --text-info --width=1024 --height=768 --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --command 'curl --silent wttr.in | head -n -2' &"))
        (metric :label mute
                :value volume
                :onchange "pactl -- set-sink-volume 0 {}%"

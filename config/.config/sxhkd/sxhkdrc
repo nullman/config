@@ -179,7 +179,7 @@ super + ctrl + p
 # display time
 super + alt + backslash
     printf "$(date '+%Y-%m-%d')\n $(date '+%H:%M:%S')" | \
-    yad --text-info --width=520 --height=240 --no-buttons --timeout=3 --fontname="Droid Sans Mono 64"
+    yad --text-info --width=520 --height=240 --no-buttons --timeout=3 --fontname="MesloLGS Nerd Font Mono 64"
 
 # edit with emacs
 super + alt + e
