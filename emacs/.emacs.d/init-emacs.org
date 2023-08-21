@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2023-08-19 14:11 (kyle)>
+  #+TIMESTAMP: <2023-08-21 16:54 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -30385,7 +30385,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
 
       (use-package json-mode
         :straight t
-        :mode (("\\.json\\'" . json-mode))
+        :mode ("\\.json\\'" . json-mode)
         :config
         ;; set indentation to four spaces
         (setq json-encoding-default-indentation "    "
@@ -30681,7 +30681,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
 
       (use-package lua-mode
         :straight t
-        :mode (("\\.lua\\'" . lua-mode)))
+        :mode ("\\.lua\\'" . lua-mode))
     #+END_SRC
 
 *** Makefile Mode
@@ -32335,6 +32335,26 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         :straight t
         :mode (("\\.yaml\\'" . yaml-mode)
                ("\\.yml\\'" . yaml-mode)))
+    #+END_SRC
+
+*** +Yuck Mode+
+    :PROPERTIES:
+    :CUSTOM_ID: modes-yuck-mode
+    :END:
+
+    Major mode to edit Yuck files, like those used with ElKowar's Wacky Widgets
+    (EWW).
+
+    #+BEGIN_SRC emacs-lisp :tangle no
+      ;; ;;------------------------------------------------------------------------------
+      ;; ;;; Modes: Yuck Mode
+      ;; ;;------------------------------------------------------------------------------
+
+      ;; (init-message 2 "Modes: Yuck Mode")
+
+      ;; (use-package yuck-mode
+      ;;   :straight t
+      ;;   :mode ("\\.yuck\\'" . yuck-mode))
     #+END_SRC
 
 *** +Global Mode+

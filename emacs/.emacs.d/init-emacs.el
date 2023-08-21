@@ -19394,7 +19394,7 @@ otherwise run `find-file-as-root'."
 
 (use-package json-mode
   :straight t
-  :mode (("\\.json\\'" . json-mode))
+  :mode ("\\.json\\'" . json-mode)
   :config
   ;; set indentation to four spaces
   (setq json-encoding-default-indentation "    "
@@ -19587,7 +19587,7 @@ otherwise run `find-file-as-root'."
 
 (use-package lua-mode
   :straight t
-  :mode (("\\.lua\\'" . lua-mode)))
+  :mode ("\\.lua\\'" . lua-mode))
 ;; LUA Mode:1 ends here
 
 ;; [[file:init-emacs.org::#modes-makefile-mode][Makefile Mode:1]]

@@ -61,9 +61,9 @@ _command xfce4-power-manager && (_delay ${delay} pgrep -x -u ${USER} xfce4-power
 #_command sbxkb && (_delay ${delay} pgrep -x -u ${USER} sbxkb > /dev/null || sbxkb) &
 
 # system info and key bindings on wallpaper
-#_command manjaro-conky-session && manjaro-conky-session &
-_command conky && conky --config="${HOME}/.config/conky/system-info.conkyrc" &
-_command conky && conky --config="${HOME}/.config/conky/openbox-keybindings.conkyrc" &
+_command conky && [[ -f "${HOME}/.config/conky/system-info.conkyrc" ]] && conky --config="${HOME}/.config/conky/system-info.conkyrc" &
+_command conky && [[ -f "${HOME}/.config/conky/weather.conkyrc" ]] && conky --config="${HOME}/.config/conky/weather.conkyrc" &
+_command conky && [[ -f "${HOME}/.config/conky/bspwm-keybindings.conkyrc" ]] && conky --config="${HOME}/.config/conky/bspwm-keybindings.conkyrc" &
 
 # full-screen task-switcher
 #_command skippy-xd && skippy-xd --config "${HOME}/.config/skippy-xd/skippy-xd.rc" --start-daemon &

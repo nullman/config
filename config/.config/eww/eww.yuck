@@ -6,6 +6,7 @@
 ;; Reference: https://github.com/elkowar/eww/tree/master/examples/eww-bar
 ;; Reference: https://github.com/ikz87/dots-2.0/tree/main/Configs/eww/mybar
 ;; Reference: https://github.com/rxyhn/tokyo/tree/main/config/eww/bar
+;; Reference: https://dharmx.is-a.dev/eww-powermenu/
 ;;==============================================================================
 
 ;;------------------------------------------------------------------------------
@@ -24,9 +25,11 @@
 
 (defpoll brightness :interval "500ms" "light -G | cut -c 1-2")
 
-(defpoll weather :interval "300s" "scripts/weather 55433 icon")
+;;(defpoll weather :interval "300s" "scripts/weather 55433 icon")
+(defpoll weather :interval "300s" "curl --silent 'wttr.in/?format=%c+%t'")
 
-(defpoll weather-status :interval "300s" "scripts/weather 55433 status")
+;;(defpoll weather :interval "300s" "scripts/weather 55433 status")
+(defpoll weather-status :interval "300s" "curl --silent 'wttr.in/?format=%C+%t'")
 
 (defpoll battery :interval "2s" "scripts/battery")
 
@@ -42,7 +45,19 @@
 ;; Helper Widgets
 ;;------------------------------------------------------------------------------
 
-(defwidget metric [label value onchange ?onclick ?tooltip]
+(defwidget metric [label value onchange ?tooltip]
+  (box :class "metric"
+       :orientation "h"
+       :space-evenly false
+       :tooltip tooltip
+       (box :class "label" label)
+       (scale :min 0
+              :max 101
+              :active {onchange != ""}
+              :value value
+              :onchange onchange)))
+
+(defwidget metric-onclick [label value onchange onclick ?tooltip]
   (box :class "metric"
        :orientation "h"
        :space-evenly false
@@ -114,11 +129,11 @@
        (box :class "label"
             :tooltip weather-status
             (button :onclick "curl --silent wttr.in | head -n -2 | sed 's/\\x1B\\[[0-9;]*[a-zA-Z]//g' | yad --text-info --width=1138 --height=760 --no-buttons" weather))
-       (metric :label mute
-               :value volume
-               :onchange "pactl -- set-sink-volume 0 {}%"
-               :onclick "pactl -- set-sink-mute 0 toggle"
-               :tooltip "Volume: ${volume}%")
+       (metric-onclick :label mute
+                       :value volume
+                       :onchange "pactl -- set-sink-volume 0 {}%"
+                       :onclick "pactl -- set-sink-mute 0 toggle"
+                       :tooltip "Volume: ${volume}%")
        (metric :label ""
                :value brightness
                :onchange "light -S {}"

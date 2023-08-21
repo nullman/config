@@ -287,6 +287,7 @@ _command picom && picom -c &
 
 # system info and key bindings on wallpaper
 _command conky && [[ -f "${HOME}/.config/conky/system-info.conkyrc" ]] && conky --config="${HOME}/.config/conky/system-info.conkyrc" &
+_command conky && [[ -f "${HOME}/.config/conky/weather.conkyrc" ]] && conky --config="${HOME}/.config/conky/weather.conkyrc" &
 _command conky && [[ -f "${HOME}/.config/conky/bspwm-keybindings.conkyrc" ]] && conky --config="${HOME}/.config/conky/bspwm-keybindings.conkyrc" &
 
 # full-screen task-switcher
