@@ -113,8 +113,7 @@
        :spacing 10
        (box :class "label"
             :tooltip weather-status
-            (button :onclick "xdg-open http://wttr.in/san%20diego &" weather))
-            ;;(button :onclick "yad --text-info --width=1024 --height=768 --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --command 'curl --silent wttr.in | head -n -2' &"))
+            (button :onclick "curl --silent wttr.in | head -n -2 | sed 's/\\x1B\\[[0-9;]*[a-zA-Z]//g' | yad --text-info --width=1138 --height=760 --no-buttons" weather))
        (metric :label mute
                :value volume
                :onchange "pactl -- set-sink-volume 0 {}%"
