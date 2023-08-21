@@ -20,7 +20,7 @@
     border-radius: 50px;
     min-height: 3px;
     min-width: 50px;
-    margin-left: 10px;
+    padding-left: 10px;
     /* margin-right: 10px; */
 }
 
@@ -40,9 +40,11 @@
 }
 
 button:hover {
-    color: #d35d6e;
+    color: #ffffff;
+    /* color: #d35d6e; */
     /* color: #bf5f5f; */
     /* color: #5e81ac; */
+    font-weight: bold;
 }
 
 .music-state {
@@ -56,9 +58,5 @@ slider {
 
 .highlight {
     color: #cfcf00;
-    font-weight: bold;
-}
-
-.label-ram {
-    font-size: large;
+    /* font-weight: bold; */
 }

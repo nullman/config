@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+time=$(date '+%a %Y-%m-%d %H:%M')
+min=$(date '+%M')
+
+# symbols: 󱑊 󱐿 󱑀 󱑁 󱑂 󱑃 󱑄 󱑅 󱑆 󱑇 󱑈 󱑉
+icon="󱑉"
+[[ "${min}" -lt "55" ]] && icon="󱑈"
+[[ "${min}" -lt "50" ]] && icon="󱑇"
+[[ "${min}" -lt "45" ]] && icon="󱑆"
+[[ "${min}" -lt "40" ]] && icon="󱑅"
+[[ "${min}" -lt "35" ]] && icon="󱑄"
+[[ "${min}" -lt "30" ]] && icon="󱑃"
+[[ "${min}" -lt "25" ]] && icon="󱑂"
+[[ "${min}" -lt "20" ]] && icon="󱑁"
+[[ "${min}" -lt "15" ]] && icon="󱑀"
+[[ "${min}" -lt "10" ]] && icon="󱐿"
+[[ "${min}" -lt "5" ]] && icon="󱑊"
+
+printf "${icon}  ${time}"

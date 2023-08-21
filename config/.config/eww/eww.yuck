@@ -24,9 +24,9 @@
 
 (defpoll brightness :interval "500ms" "light -G | cut -c 1-2")
 
-(defpoll weather :interval "300s" "scripts/weather 55433")
+(defpoll weather :interval "300s" "scripts/weather 55433 icon")
 
-(defpoll weather-status :interval "300s" "scripts/weather-status 55433")
+(defpoll weather-status :interval "300s" "scripts/weather 55433 status")
 
 (defpoll battery :interval "2s" "scripts/battery")
 
@@ -42,10 +42,11 @@
 ;; Helper Widgets
 ;;------------------------------------------------------------------------------
 
-(defwidget metric-onclick [label value onchange onclick]
+(defwidget metric [label value onchange ?onclick ?tooltip]
   (box :class "metric"
        :orientation "h"
        :space-evenly false
+       :tooltip tooltip
        (box :class "label"
             (button :onclick onclick label))
        (scale :min 0
@@ -54,19 +55,9 @@
               :value value
               :onchange onchange)))
 
-(defwidget metric [label value onchange]
-  (box :class "metric"
-       :orientation "h"
-       :space-evenly false
-       (box :class "label" label)
-       (scale :min 0
-              :max 101
-              :active {onchange != ""}
-              :value value
-              :onchange onchange)))
-
-(defwidget workspace [label value onclick]
+(defwidget workspace [label value onclick ?tooltip]
   (box :class {value == active-desktop ? "highlight" : "label"}
+       :tooltip tooltip
        (button :onclick onclick label)))
 
 ;;------------------------------------------------------------------------------
@@ -81,24 +72,27 @@
        :spacing 10
        ;; application search
        (box :class "label"
+            :tooltip "Application Search"
             (button :onclick "rofi -modi drun -show drun &" " "))
-       ;; menu launcher
+       ;; launcher menu
        ;; (box :class "label"
+       ;;      :tooltip "Launcher Menu"
        ;;      (button :onclick "~/bin/rofi-menu" " "))
        ;; window selector
        (box :class "label"
+            :tooltip "Window Selector"
             (button :onclick "rofi -modi window -show window &" " "))
        ;; symbols:                       
-       (workspace :label "1  " :value "1" :onclick "bspc desktop --focus '^1'")
-       (workspace :label "2  " :value "2" :onclick "bspc desktop --focus '^2'")
-       (workspace :label "3  " :value "3" :onclick "bspc desktop --focus '^3'")
-       (workspace :label "4  " :value "4" :onclick "bspc desktop --focus '^4'")
-       (workspace :label "5  " :value "5" :onclick "bspc desktop --focus '^5'")
-       (workspace :label "6  " :value "6" :onclick "bspc desktop --focus '^6'")
-       (workspace :label "7  " :value "7" :onclick "bspc desktop --focus '^7'")
-       (workspace :label "8  " :value "8" :onclick "bspc desktop --focus '^8'")
-       (workspace :label "9  " :value "9" :onclick "bspc desktop --focus '^9'")
-       (workspace :label "10  " :value "10" :onclick "bspc desktop --focus '^10'")))
+       (workspace :label "1  " :value "1" :onclick "bspc desktop --focus '^1'" :tooltip "Workspace 1")
+       (workspace :label "2  " :value "2" :onclick "bspc desktop --focus '^2'" :tooltip "Workspace 2")
+       (workspace :label "3  " :value "3" :onclick "bspc desktop --focus '^3'" :tooltip "Workspace 3")
+       (workspace :label "4  " :value "4" :onclick "bspc desktop --focus '^4'" :tooltip "Workspace 4")
+       (workspace :label "5  " :value "5" :onclick "bspc desktop --focus '^5'" :tooltip "Workspace 5")
+       (workspace :label "6  " :value "6" :onclick "bspc desktop --focus '^6'" :tooltip "Workspace 6")
+       (workspace :label "7  " :value "7" :onclick "bspc desktop --focus '^7'" :tooltip "Workspace 7")
+       (workspace :label "8  " :value "8" :onclick "bspc desktop --focus '^8'" :tooltip "Workspace 8")
+       (workspace :label "9  " :value "9" :onclick "bspc desktop --focus '^9'" :tooltip "Workspace 9")
+       (workspace :label "10  " :value "10" :onclick "bspc desktop --focus '^10'" :tooltip "Workspace 10")))
 
 (defwidget center-bar []
   (box :class "center-bar"
@@ -118,25 +112,28 @@
        :halign "end"
        :spacing 10
        (box :class "label"
-            (button :onclick "xdg-open http://wttr.in/san%20diego &"
-                    :tooltip weather-status
-                    weather))
-       (metric-onclick :label mute
-                       :value volume
-                       :onchange "pactl -- set-sink-volume 0 {}%"
-                       :onclick "pactl -- set-sink-mute 0 toggle")
+            :tooltip weather-status
+            (button :onclick "xdg-open http://wttr.in/san%20diego &" weather))
+       (metric :label mute
+               :value volume
+               :onchange "pactl -- set-sink-volume 0 {}%"
+               :onclick "pactl -- set-sink-mute 0 toggle"
+               :tooltip "Volume: ${volume}%")
        (metric :label ""
                :value brightness
-               :onchange "light -S {}")
+               :onchange "light -S {}"
+               :tooltip "Brightness: ${brightness}%")
        (metric :label ""
                :value {EWW_RAM.used_mem_perc}
-               :onchange "")
+               :onchange ""
+               :tooltip "RAM Used: ${EWW_RAM.used_mem_perc}%")
        (metric :label "󰆼"
                :value {round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}
-               :onchange "")
+               :onchange ""
+               :tooltip "Disk Used: ${round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}%")
        (box :class "label"
             :tooltip "${battery-capacity}%, ${battery-status}"
-                    battery)
+            battery)
        (box :class "label"
             (button :onclick "" clock))))
 

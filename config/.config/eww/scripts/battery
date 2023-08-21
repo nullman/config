@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+dir="/sys/class/power_supply/BAT0"
+
+[[ -d "${dir}" ]] || exit
+
+capacity="$(cat ${dir}/capacity)"
+status="$(cat ${dir}/status)"
+
+[[ "${capacity}" -lt "90" && "${status}" = "Charging" ]] && printf "󰂄" && exit
+
+[[ "${capacity}" -lt "20" ]] && notify-send -u critical "Low Battery"
+
+# symbols: 󰁹 󰂂 󰂁 󰂀 󰁿 󰁾 󰁽 󰁼 󰁻 󰁺
+icon="󰁹"
+[[ "${capacity}" -lt "90" ]] && icon="󰂂"
+[[ "${capacity}" -lt "80" ]] && icon="󰂁"
+[[ "${capacity}" -lt "70" ]] && icon="󰂀"
+[[ "${capacity}" -lt "60" ]] && icon="󰁿"
+[[ "${capacity}" -lt "50" ]] && icon="󰁾"
+[[ "${capacity}" -lt "40" ]] && icon="󰁽"
+[[ "${capacity}" -lt "30" ]] && icon="󰁼"
+[[ "${capacity}" -lt "20" ]] && icon="󰁻"
+[[ "${capacity}" -lt "10" ]] && icon="󰁺"
+
+printf "${icon}"
