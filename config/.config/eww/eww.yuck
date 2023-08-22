@@ -84,21 +84,6 @@
 ;; Item Widgets
 ;;------------------------------------------------------------------------------
 
-;; (defwidget volume [mute volume]
-;;   (box :class "metric"
-;;        :orientation "h"
-;;        :space-evenly false
-;;        :tooltip "Volume: ${volume}%"
-;;        (box :class "label"
-;;             (button :onclick "pactl -- set-sink-mute 0 toggle"
-;;                     ;; symbols: 🔇 🔊
-;;                     (label :text {mute == "true" ? "🔇" : "🔊"})))
-;;        (scale :min 0
-;;               :max 101
-;;               :active true
-;;               :value volume
-;;               :onchange "pactl -- set-sink-volume 0 {}%")))
-
 (defwidget volume [mute volume]
   (metric-onclick
    :label {mute == "true" ? "🔇" : "🔊"}
@@ -127,7 +112,7 @@
        :tooltip "Network strength: ${strength}%"
        ;; symbols: 󰤮 󰤯 󰤟 󰤢 󰤥 󰤨
        (button :onclick "nm-connection-editor &"
-               (label :text {strength == "" ? "-" :
+               (label :text {strength == "" ? "?" :
                       strength < 21 ? "󰤯" :
                       strength < 41 ? "󰤟" :
                       strength < 61 ? "󰤢" :
@@ -148,8 +133,7 @@
                       min < 40 ? "󱑅" :
                       min < 45 ? "󱑆" :
                       min < 50 ? "󱑇" :
-                      min < 55 ? "󱑈" : "󱑉"})
-               ;;(label :text "${time}")
+                      min < 55 ? "󱑈" : "󱑉"} "${time}")
                )))
 
 ;;------------------------------------------------------------------------------
@@ -245,7 +229,7 @@
 (defwindow bar
   :monitor 0
   :windowtype "dock"
-  :stacking "bg"
+  ;;:stacking "bg"
   :geometry (geometry :x "0%"
                       :y "0%"
                       :width "100%"
