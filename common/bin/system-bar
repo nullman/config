@@ -7,8 +7,11 @@
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
+# kill any running instances of system-bar
+pkill -u ${USER} $(basename "$0")
+
 # delay before launching applets
-delay=2
+delay=0
 
 # check if executable command is found in the path
 _command() {
@@ -29,12 +32,12 @@ _delay() {
 _command eww && (eww --restart open bar && sleep 1 && xdo below -t $(xdo id -n root) $(xdo id -N eww-bar)) & # status bar hidden when fullscreen
 
 # system bar applets
-_command clipit && (_delay ${delay} pkill -x -u ${USER} clipit ; clipit) &
+_command clipit && (_delay ${delay} pkill -u ${USER} clipit ; clipit) &
 _command pa-applet && (_delay ${delay} pkill -x -u ${USER} pa-applet ; pa-applet) &
 _command blueman-applet && (_delay ${delay} pkill -x -u ${USER} blueman-applet ; blueman-applet) &
 _command nm-applet && (_delay ${delay} pkill -x -u ${USER} nm-applet ; nm-applet) &
 #_command pamac-tray && (_delay ${delay} pkill -x -u ${USER} pamac-tray ; pamac-tray) &
-_command xfce4-power-manager && (_deay ${delay} pkill -x -u ${USER} xfce4-power-manager ; xfce4-power-manager) &
+_command xfce4-power-manager && (_delay ${delay} pkill -x -u ${USER} xfce4-power-manager ; xfce4-power-manager) &
 #_command volumeicon && (_delay ${delay} pkill -x -u ${USER} volumeicon ; volumeicon) &
 #_command sbxkb && (_delay ${delay} pkill -x -u ${USER} sbxkb ; sbxkb) &
 

@@ -16,34 +16,24 @@
 (defpoll active-desktop :interval "500ms" "bspc query -D -d --names")
 
 (defpoll music-info :interval "2s" "~/bin/mpc-playing")
-
 (defpoll music-state :interval "2s" "mpc | grep -q '^\\[playing\\]' && echo '' || echo ''")
 
-;;(defpoll mute :interval "500ms" "[[ $(pamixer --get-mute) == true ]] && echo '🔇' || echo '🔊'")
 (defpoll mute :interval "500ms" "pamixer --get-mute")
-
 (defpoll volume :interval "500ms" "[[ $(pamixer --get-mute) == true ]] && echo '0' || pamixer --get-volume")
-
 (defpoll brightness :interval "500ms" "light -G | cut -c 1-2")
 
 (defpoll weather :interval "600s" "scripts/weather 55433 icon")
-;;(defpoll weather :interval "1800s" "curl --silent 'wttr.in/?format=%c%t'")
-
 (defpoll weather-status :interval "600s" "scripts/weather 55433 status")
+
+;;(defpoll weather :interval "1800s" "curl --silent 'wttr.in/?format=%c%t'")
 ;;(defpoll weather-status :interval "1800s" "curl --silent 'wttr.in/?format=%C+%t'")
 
-;;(defpoll battery :interval "2s" "scripts/battery")
+(defpoll wifi-strength :interval "2s" "nmcli -t -f SIGNAL,ACTIVE device wifi | awk -F ':' '{ if ($2 == \"yes\") print $1 }'")
+(defpoll wifi-status :interval "2s" "nmcli -t -f WIFI radio")
 
-;;(defpoll battery-capacity :interval "5s" "cat /sys/class/power_supply/BAT0/capacity")
-
-;;(defpoll battery-status :interval "5s" "cat /sys/class/power_supply/BAT0/status")
-
-(defpoll network-strength :interval "2s" "nmcli -t -f SIGNAL,ACTIVE device wifi | awk -F ':' '{ if ($2 == \"yes\") print $1 }'")
-
-;;(defpoll clock :interval "500ms" "scripts/clock")
+(defpoll bt-status :interval "2s" "[[ $(cat /sys/class/bluetooth/hci0/rfkill7/state) -eq 1 ]] && printf 'enabled' || printf 'disabled'")
 
 (defpoll time :interval "500ms" "date '+%a %Y-%m-%d %H:%M'")
-
 (defpoll min :interval "500ms" "date '+%M'")
 
 ;;------------------------------------------------------------------------------
@@ -62,13 +52,15 @@
               :value value
               :onchange onchange)))
 
-(defwidget metric-onclick [label value onchange onclick ?tooltip]
+(defwidget metric-onclick [label value onchange onclick ?onrightclick ?tooltip]
   (box :class "metric"
        :orientation "h"
        :space-evenly false
        :tooltip tooltip
        (box :class "label"
-            (button :onclick onclick label))
+            (button :onclick onclick
+                    :onrightclick onrightclick
+                    label))
        (scale :min 0
               :max 101
               :active {onchange != ""}
@@ -90,19 +82,21 @@
    :value volume
    :onchange "pactl -- set-sink-volume 0 {}%"
    :onclick "pactl -- set-sink-mute 0 toggle"
+   :onrightclick "pavucontrol &"
    :tooltip "Volume: ${volume}%"))
 
-(defwidget battery [capacity status]
+(defwidget battery [status capacity]
   (box :class "label"
        :tooltip "${capacity}%, ${status}"
        ;; symbols: 󰁺 󰁻 󰁼 󰁽 󰁾 󰁿 󰂀 󰂁 󰂂 󰁹 󰂆 󰂇 󰂈 󰂉 󰂊 󰂋 󰂅 󰂄
-       (label :text {status == "Charging" && capacity < 15 ? "󰂆" :
+       (label :text {status == "Charging" && capacity < 18 ? "󰂆" :
               status == "Charging" && capacity < 30 ? "󰂇" :
-              status == "Charging" && capacity < 45 ? "󰂈" :
-              status == "Charging" && capacity < 60 ? "󰂉" :
-              status == "Charging" && capacity < 75 ? "󰂊" :
-              status == "Charging" && capacity < 90 ? "󰂋" :
-              status == "Charging" ? "󰂅" :
+              status == "Charging" && capacity < 42 ? "󰂈" :
+              status == "Charging" && capacity < 54 ? "󰂉" :
+              status == "Charging" && capacity < 66 ? "󰂊" :
+              status == "Charging" && capacity < 78 ? "󰂋" :
+              status == "Charging" && capacity < 90 ? "󰂅" :
+              status == "Charging" ? "󰁹" :
               capacity < 10 ? "󰁺" :
               capacity < 20 ? "󰁻" :
               capacity < 30 ? "󰁼" :
@@ -112,27 +106,25 @@
               capacity < 70 ? "󰂀" :
               capacity < 80 ? "󰂁" :
               capacity < 90 ? "󰂂" : "󰁹"})))
-       ;; (label :text {status == "Charging" ? "󰂄" :
-       ;;        capacity < 10 ? "󰁺" :
-       ;;        capacity < 20 ? "󰁻" :
-       ;;        capacity < 30 ? "󰁼" :
-       ;;        capacity < 40 ? "󰁽" :
-       ;;        capacity < 50 ? "󰁾" :
-       ;;        capacity < 60 ? "󰁿" :
-       ;;        capacity < 70 ? "󰂀" :
-       ;;        capacity < 80 ? "󰂁" :
-       ;;        capacity < 90 ? "󰂂" : "󰁹"})))
 
-(defwidget network [strength]
+(defwidget wifi [status strength]
   (box :class "label"
-       :tooltip "Network strength: ${strength}%"
-       ;; symbols: 󰤮 󰤯 󰤟 󰤢 󰤥 󰤨
-       (button :onclick "nm-connection-editor &"
-               (label :text {strength == "" ? "?" :
-                      strength < 21 ? "󰤯" :
-                      strength < 41 ? "󰤟" :
-                      strength < 61 ? "󰤢" :
-                      strength < 81 ? "󰤥" : "󰤨"}))))
+       :tooltip "WiFi strength: ${strength}%"
+       (button :onclick {status == "enabled" ? "nmcli radio wifi off" : "nmcli radio wifi on"}
+               :onrightclick "nm-connection-editor &"
+               ;; symbols: 󰤮 󰤯 󰤟 󰤢 󰤥 󰤨
+               (label :text {status == "" ? "󰤮" :
+                      status < 21 ? "󰤯" :
+                      status < 41 ? "󰤟" :
+                      status < 61 ? "󰤢" :
+                      status < 81 ? "󰤥" : "󰤨"}))))
+
+(defwidget bluetooth [status]
+  (box :class "label"
+       :tooltip "Bluetooth status: ${status}"
+       (button :onrightclick "blueman-manager &"
+               ;; symbols: 󰂯 󰂰 󰂱 󰂲 󰂳 󰂴
+               (label :text {status == "enabled" ? "󰂯" : "󰂲"}))))
 
 (defwidget clock [min time]
   (box :class "label"
@@ -142,7 +134,7 @@
                 :space-evenly false
                 :spacing 5
                 ;; symbols: 󱑊 󱐿 󱑀 󱑁 󱑂 󱑃 󱑄 󱑅 󱑆 󱑇 󱑈 󱑉
-                (label :text {min == "" ? "󱑂" :
+                (label :text {min == "" ? "" :
                        min < 5 ? "󱑊" :
                        min < 10 ? "󱐿" :
                        min < 15 ? "󱑀" :
@@ -225,16 +217,13 @@
                :value {round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}
                :onchange ""
                :tooltip "Disk Used: ${round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}%")
-       ;; (box :class "label"
-       ;;      :tooltip "${battery-capacity}%, ${battery-status}"
-       ;;      battery)
-       (battery :capacity {EWW_BATTERY.BAT0.capacity}
-                :status {EWW_BATTERY.BAT0.status})
-       (network :strength network-strength)
+       (battery :status {EWW_BATTERY.BAT0.status}
+                :capacity {EWW_BATTERY.BAT0.capacity})
+       (wifi :status wifi-status
+             :strength wifi-strength)
+       (bluetooth :status bt-status)
        (clock :min min
               :time time)))
-;; (box :class "label"
-;;      (button :onclick "" clock))))
 
 (defwidget bar []
   (centerbox :orientation "h"
@@ -249,7 +238,6 @@
 (defwindow bar
   :monitor 0
   :windowtype "dock"
-  ;;:stacking "bg"
   :geometry (geometry :x "0%"
                       :y "0%"
                       :width "100%"

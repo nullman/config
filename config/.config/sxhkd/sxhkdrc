@@ -245,7 +245,8 @@ super + shift + s
 
 # reload eww
 super + shift + e
-    (${HOME}/bin/system-bar &) && notify-send --expire-time=2000 'Reloading EWW'
+    (eww --restart open bar && sleep 1 && xdo below -t $(xdo id -n root) $(xdo id -N eww-bar)) && notify-send --expire-time=2000 'Reloading EWW'
+    #(pkill -u ${USER} system-bar ; ${HOME}/bin/system-bar &) && notify-send --expire-time=2000 'Reloading EWW'
 
 # reset video
 super + shift + v
