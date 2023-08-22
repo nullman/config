@@ -651,6 +651,7 @@
     bc
     bitwarden-cli
     bitwarden-menu
+    boxes
     broot
     cool-retro-term
     ddgr
