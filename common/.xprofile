@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-#=============================================================================
+#===============================================================================
 # .xprofile
 #
 # X Initialization Configuration
 #
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
-#=============================================================================
+#===============================================================================
 
 # add to the run path
 export runpath="${runpath}:${HOME}/.xprofile"
@@ -39,16 +39,16 @@ _command setxkbmap && setxkbmap -option 'shift:both_capslock,caps:ctrl_modifier'
 # _command setxkbmap && setxkbmap -option 'shift:both_capslock_cancel,caps:ctrl_modifier'
 
 # # xbindkeys
-# pkill -x xbindkeys -u ${USER} > /dev/null 2>&1
+# pkill -x -u ${USER} xbindkeys > /dev/null 2>&1
 # _command xbindkeys && [[ -f ${HOME}/.xbindkeysrc ]] && xbindkeys > /dev/null 2>&1
 
 # sxhkd
 if _command sxhkd && [[ -f ${HOME}/.config/sxhkd/sxhkdrc ]] ; then
     if [[ "${XDG_SESSION_DESKTOP: -5}" == "bspwm" ]] ; then
-        (pkill -x sxhkd -u ${USER} > /dev/null 2>&1
+        (pkill -x -u ${USER} sxhkd > /dev/null 2>&1
          sxhkd -c ${HOME}/.config/sxhkd/sxhkdrc{,-bspwm} > /dev/null 2>&1) &
     else
-        (pkill -x sxhkd -u ${USER} > /dev/null 2>&1
+        (pkill -x -u ${USER} sxhkd > /dev/null 2>&1
          sxhkd -c ${HOME}/.config/sxhkd/sxhkdrc > /dev/null 2>&1) &
     fi
 fi
@@ -85,6 +85,6 @@ _command xset && xset -dpms s off b off m 2/1 4 r rate 500 35
 # restore rotation
 #[[ -x ${HOME}/.raspad-rotate-restore ]] && ${HOME}/.raspad-rotate-restore
 
-#=============================================================================
+#===============================================================================
 # End of File
-#=============================================================================
+#===============================================================================

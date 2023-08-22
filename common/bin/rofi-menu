@@ -104,7 +104,7 @@ case "${menu}" in
 
         # synchronize with selected git repository
         if [[ -n "${sel}" ]] ; then
-            source "${HOME}/.funct" && (eval "${sel}" && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12" --tail
+            source "${HOME}/.funct" && (eval "${sel}" && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail
         fi
         ;;
 
@@ -148,7 +148,7 @@ case "${menu}" in
         if [[ -n "${sel}" ]] ; then
             home="$(cd ${HOME} ; cd .. ; pwd)"
             cmd=$(cat "${HOME}/.alias" | sed ':a;N;$!ba;s/\\\n//g' | sed -n '/alias '"${sel}"'/p' | sed 's/^alias '"${sel}"'="// ; s/"$//')
-            (eval "${cmd}" && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12" --tail
+            (eval "${cmd}" && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail
         fi
         ;;
 
@@ -177,7 +177,7 @@ case "${menu}" in
         _killffplay() {
             # stop any currently playing sounds
             # (regardless of selection to prevent sounds from doubling up)
-            pkill -x ffplay -u ${USER} || true
+            pkill -x -u ${USER} ffplay || true
         }
 
         # find sound directory

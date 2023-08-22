@@ -114,10 +114,10 @@
                :onrightclick "nm-connection-editor &"
                ;; symbols: 󰤮 󰤯 󰤟 󰤢 󰤥 󰤨
                (label :text {status == "" ? "󰤮" :
-                      status < 21 ? "󰤯" :
-                      status < 41 ? "󰤟" :
-                      status < 61 ? "󰤢" :
-                      status < 81 ? "󰤥" : "󰤨"}))))
+                      strength < 21 ? "󰤯" :
+                      strength < 41 ? "󰤟" :
+                      strength < 61 ? "󰤢" :
+                      strength < 81 ? "󰤥" : "󰤨"}))))
 
 (defwidget bluetooth [status]
   (box :class "label"
@@ -130,23 +130,23 @@
   (box :class "label"
        (button :onclick ""
                (box :class "label"
-                :orientation "h"
-                :space-evenly false
-                :spacing 5
-                ;; symbols: 󱑊 󱐿 󱑀 󱑁 󱑂 󱑃 󱑄 󱑅 󱑆 󱑇 󱑈 󱑉
-                (label :text {min == "" ? "" :
-                       min < 5 ? "󱑊" :
-                       min < 10 ? "󱐿" :
-                       min < 15 ? "󱑀" :
-                       min < 20 ? "󱑁" :
-                       min < 25 ? "󱑂" :
-                       min < 30 ? "󱑃" :
-                       min < 35 ? "󱑄" :
-                       min < 40 ? "󱑅" :
-                       min < 45 ? "󱑆" :
-                       min < 50 ? "󱑇" :
-                       min < 55 ? "󱑈" : "󱑉"})
-                (label :text "${time}")))))
+                    :orientation "h"
+                    :space-evenly false
+                    :spacing 5
+                    ;; symbols: 󱑊 󱐿 󱑀 󱑁 󱑂 󱑃 󱑄 󱑅 󱑆 󱑇 󱑈 󱑉
+                    (label :text {min == "" ? " " :
+                           min < 5 ? "󱑊 " :
+                           min < 10 ? "󱐿 " :
+                           min < 15 ? "󱑀 " :
+                           min < 20 ? "󱑁 " :
+                           min < 25 ? "󱑂 " :
+                           min < 30 ? "󱑃 " :
+                           min < 35 ? "󱑄 " :
+                           min < 40 ? "󱑅 " :
+                           min < 45 ? "󱑆 " :
+                           min < 50 ? "󱑇 " :
+                           min < 55 ? "󱑈 " : "󱑉 "})
+                    (label :text "${time}")))))
 
 ;;------------------------------------------------------------------------------
 ;; Section Widgets

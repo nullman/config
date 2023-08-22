@@ -131,7 +131,7 @@ back in. -->
     <number>10</number>
     <firstdesk>1</firstdesk>
     <names>
-      <!-- Symbols:                  -->
+      <!-- Symbols:                     -->
       <name>1 </name>
       <name>2 </name>
       <name>3 </name>
@@ -1187,7 +1187,7 @@ pressed. -->
         <command>notify-send --expire-time=2000 'Reconfiguring Tint'</command>
       </action>
       <action name="Execute">
-        <command>pkill -SIGUSR1 -x tint2 -u ${USER}</command>
+        <command>pkill -SIGUSR1 -x -u ${USER} tint2</command>
       </action>
     </keybind>
     <keybind key="mod5-S-t">
@@ -1195,7 +1195,7 @@ pressed. -->
         <command>notify-send --expire-time=2000 'Reconfiguring Tint'</command>
       </action>
       <action name="Execute">
-        <command>pkill -SIGUSR1 -x tint2 -u ${USER}</command>
+        <command>pkill -SIGUSR1 -x -u ${USER} tint2</command>
       </action>
     </keybind>
     <!-- Exit Menu -->
@@ -1223,12 +1223,12 @@ pressed. -->
     <!-- XProp -->
     <keybind key="W-S-p">
       <action name="Execute">
-        <command>sh -c "xprop | grep '^WM_CLASS' | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12" --tail"</command>
+        <command>sh -c "xprop | grep '^WM_CLASS' | yad --text-info --width=1024 --height=768 --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail"</command>
       </action>
     </keybind>
     <keybind key="mod5-S-p">
       <action name="Execute">
-        <command>sh -c "xprop | grep '^WM_CLASS' | yad --text-info --width=1024 --height=768 --no-buttons --fontname="Droid Sans Mono 12" --tail"</command>
+        <command>sh -c "xprop | grep '^WM_CLASS' | yad --text-info --width=1024 --height=768 --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail"</command>
       </action>
     </keybind>
     <!-- Key bindings for running applications -->

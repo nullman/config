@@ -235,18 +235,19 @@ super + shift + Print
 
 # reload sxhkd
 super + shift + s
-    pkill -SIGUSR1 -x sxhkd -u ${USER} && notify-send --expire-time=2000 'Reloading SXHKD'
+    pkill -SIGUSR1 -x -u ${USER} sxhkd && notify-send --expire-time=2000 'Reloading SXHKD'
 
 # # reload tint2
 # super + shift + t
-#     ((pkill -SIGUSR1 -x tint2 -u ${USER} && sleep 1 && \
+#     ((pkill -SIGUSR1 -x -u ${USER} tint2 && sleep 1 && \
 #       xdo below -t $(xdo id -n root) $(xdo id -N Tint2)) || \
 #       ${HOME}/bin/system-bar &) && notify-send --expire-time=2000 'Reloading Tint'
 
 # reload eww
 super + shift + e
-    (eww --restart open bar && sleep 1 && xdo below -t $(xdo id -n root) $(xdo id -N eww-bar)) && notify-send --expire-time=2000 'Reloading EWW'
-    #(pkill -u ${USER} system-bar ; ${HOME}/bin/system-bar &) && notify-send --expire-time=2000 'Reloading EWW'
+    (pkill -x -u ${USER} eww && eww --restart open bar && sleep 1 && \
+    xdo below -t $(xdo id -n root) $(xdo id -N eww-bar)) && notify-send --expire-time=2000 'Reloading EWW'
+    #(pkill -u ${USER} system-bar && ${HOME}/bin/system-bar &) && notify-send --expire-time=2000 'Reloading EWW'
 
 # reset video
 super + shift + v

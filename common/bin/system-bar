@@ -7,9 +7,6 @@
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
-# kill any running instances of system-bar
-pkill -u ${USER} $(basename "$0")
-
 # delay before launching applets
 delay=0
 
