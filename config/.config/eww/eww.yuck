@@ -95,8 +95,14 @@
 (defwidget battery [capacity status]
   (box :class "label"
        :tooltip "${capacity}%, ${status}"
-       ;; symbols: 󰂄 󰁺 󰁻 󰁼 󰁽 󰁾 󰁿 󰂀 󰂁 󰂂 󰁹
-       (label :text {status == "Charging" ? "󰂄" :
+       ;; symbols: 󰁺 󰁻 󰁼 󰁽 󰁾 󰁿 󰂀 󰂁 󰂂 󰁹 󰂆 󰂇 󰂈 󰂉 󰂊 󰂋 󰂅 󰂄
+       (label :text {status == "Charging" && capacity < 15 ? "󰂆" :
+              status == "Charging" && capacity < 30 ? "󰂇" :
+              status == "Charging" && capacity < 45 ? "󰂈" :
+              status == "Charging" && capacity < 60 ? "󰂉" :
+              status == "Charging" && capacity < 75 ? "󰂊" :
+              status == "Charging" && capacity < 90 ? "󰂋" :
+              status == "Charging" ? "󰂅" :
               capacity < 10 ? "󰁺" :
               capacity < 20 ? "󰁻" :
               capacity < 30 ? "󰁼" :
@@ -106,6 +112,16 @@
               capacity < 70 ? "󰂀" :
               capacity < 80 ? "󰂁" :
               capacity < 90 ? "󰂂" : "󰁹"})))
+       ;; (label :text {status == "Charging" ? "󰂄" :
+       ;;        capacity < 10 ? "󰁺" :
+       ;;        capacity < 20 ? "󰁻" :
+       ;;        capacity < 30 ? "󰁼" :
+       ;;        capacity < 40 ? "󰁽" :
+       ;;        capacity < 50 ? "󰁾" :
+       ;;        capacity < 60 ? "󰁿" :
+       ;;        capacity < 70 ? "󰂀" :
+       ;;        capacity < 80 ? "󰂁" :
+       ;;        capacity < 90 ? "󰂂" : "󰁹"})))
 
 (defwidget network [strength]
   (box :class "label"
