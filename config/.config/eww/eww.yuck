@@ -201,7 +201,7 @@
        :spacing 10
        (box :class "label"
             :tooltip weather-status
-            (button :onclick "curl --silent wttr.in | head -n -2 | sed 's/\\x1B\\[[0-9;]*[a-zA-Z]//g' | yad --text-info --width=1138 --height=760 --no-buttons"
+            (button :onclick "curl --silent wttr.in/?T | head -n -2 | yad --text-info --width=1138 --height=760 --no-buttons"
                     weather))
        (volume :mute mute
                :volume volume)
