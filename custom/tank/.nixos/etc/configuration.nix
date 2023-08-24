@@ -412,6 +412,9 @@
     bluez-tools
     brightnessctl
     bzip2
+    canon-cups-ufr2
+    carps-cups
+    cups-bjnp
     clipmenu
     cifs-utils
     coreutils
@@ -707,6 +710,7 @@
     nyxt
     slack
     #syncterm
+    transmission-gtk
     tuba
 
     # emulators
