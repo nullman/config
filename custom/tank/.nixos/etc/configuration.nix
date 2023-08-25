@@ -206,7 +206,24 @@
   programs.light.enable = true;
 
   # printing
-  services.printing.enable = true;
+  services = {
+      printing = {
+        enable = true;
+        drivers = [ pkgs.canon-cups-ufr2 ];
+        #stateless = true;
+        logLevel = "debug";
+      };
+      #avahi = {
+      #  enable = true;
+      #  nssmdns = true;
+      #  openFirewall = true;              # wifi printer
+      #  #ipv4 = true;
+      #  #browseDomains = [ "printer" ];
+      #  #publish.enable = true;
+      #  #publish.workstation = true;
+      #  #publish.addresses = true;
+      #};
+  };
 
   # fonts
   fonts = {
@@ -413,7 +430,7 @@
     brightnessctl
     bzip2
     canon-cups-ufr2
-    carps-cups
+    #carps-cups
     cups-bjnp
     clipmenu
     cifs-utils
