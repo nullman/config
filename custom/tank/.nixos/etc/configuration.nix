@@ -209,8 +209,9 @@
   services = {
       printing = {
         enable = true;
+        cups-pdf.enable = true;
         drivers = [ pkgs.canon-cups-ufr2 ];
-        #stateless = true;
+        stateless = true;
         logLevel = "debug";
       };
       #avahi = {
