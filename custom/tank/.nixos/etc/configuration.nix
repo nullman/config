@@ -46,6 +46,17 @@
   # package settings
   nixpkgs.config = {
     allowUnfree = true;
+    #allowUnfreePredicate = (pkg: builtins.elem pkg.pname [
+    #  "canon-cups-ufr2"
+    #  "cnijfilter2"
+    #  "discord"
+    #  "font-adobe-utopia-100dpi"
+    #  "font-bh-100dpi"
+    #  "font-bh-lucidatypewriter-100dpi"
+    #  "rar"
+    #  "slack"
+    #  "spotify"
+    #]);
     joypixels.acceptLicense = true;
     permittedInsecurePackages = [
       "electron-12.2.3"
@@ -207,23 +218,39 @@
 
   # printing
   services = {
-      printing = {
-        enable = true;
-        cups-pdf.enable = true;
-        drivers = [ pkgs.canon-cups-ufr2 ];
-        stateless = true;
-        logLevel = "debug";
-      };
-      #avahi = {
-      #  enable = true;
-      #  nssmdns = true;
-      #  openFirewall = true;              # wifi printer
-      #  #ipv4 = true;
-      #  #browseDomains = [ "printer" ];
-      #  #publish.enable = true;
-      #  #publish.workstation = true;
-      #  #publish.addresses = true;
-      #};
+    printing = {
+      enable = true;
+      cups-pdf.enable = true;
+      drivers = [ pkgs.canon-cups-ufr2 pkgs.cups-pdf-to-pdf ];
+      #drivers = [ pkgs.canon-cups-ufr2 pkgs.carps-cups pkgs.cups-bjnp ];
+      stateless = true;
+      logLevel = "debug";
+      #extraConf = ''
+      #  DefaultEncryption Never
+      #'';
+    };
+    #avahi = {
+    #  enable = true;
+    #  nssmdns = true;
+    #  openFirewall = true;              # wifi printer
+    #  #ipv4 = true;
+    #  #browseDomains = [ "printer" ];
+    #  #publish.enable = true;
+    #  #publish.workstation = true;
+    #  #publish.addresses = true;
+    #};
+  };
+  hardware.printers = {
+    ensurePrinters = [
+      {
+        name = "Canon-MF210";
+        #deviceUri = "ipp://${if startWhenNeeded then "socketActivatedServer" else "serviceServer"}/printers/DeskjetLocal";
+        deviceUri = "socket://printer:9100";
+        #model = "drv:///sample.drv/deskjet.ppd";
+        model = "CNRCUPSMF210ZK.ppd";
+      }
+    ];
+    ensureDefaultPrinter = "Canon-MF210";
   };
 
   # fonts
@@ -429,10 +456,8 @@
     bluez
     bluez-tools
     brightnessctl
+    #busybox                                 # overwrites ls
     bzip2
-    canon-cups-ufr2
-    #carps-cups
-    cups-bjnp
     clipmenu
     cifs-utils
     coreutils
@@ -553,6 +578,7 @@
     rofimoji
     scrot
     sxhkd
+    system-config-printer
     tint2
     unclutter
     #waybar
@@ -609,10 +635,10 @@
     #(pkgs.wrapOBS {plugins = with pkgs.obs-studio-plugins; [ wlrobs ]; })
     spotify
     #virt-viewer
-    xfce.thunar
-    xfce.thunar-archive-plugin
-    xfce.thunar-media-tags-plugin
-    xfce.thunar-volman
+    #xfce.thunar
+    #xfce.thunar-archive-plugin
+    #xfce.thunar-media-tags-plugin
+    #xfce.thunar-volman
 
     # utilities
     bitwarden
@@ -806,38 +832,7 @@
     #zsh-powerlevel10k
     #zsh-syntax-highlighting
 
-    ## # fonts
-    ## anonymousPro
-    ## #cantarell-fonts
-    ## #dejavu_fonts
-    ## #dina-font
-    ## fira-code
-    ## fira-code-symbols
-    ## font-awesome
-    ## #freefont_ttf
-    ## #google-fonts
-    ## hack-font
-    ## #joypixels
-    ## #liberation_ttf
-    ## #mononoki
-    ## #mplus-outline-fonts.githubRelease
-    ## nerdfonts
-    ## noto-fonts
-    ## noto-fonts-emoji
-    ## #proggyfonts
-    ## source-han-mono
-    ## source-han-sans
-    ## source-han-serif
-    ## terminus-nerdfont
-    ## terminus_font_ttf
-    ## #ubuntu_font_family
-    ## #unifont
-    ## #xorg.fontadobe100dpi
-    ## #xorg.fontadobe75dpi
-    ## #xorg.fontbh100dpi
-    ## #xorg.fontbh75dpi
-    ## #xorg.fontbhtype1
-    ## #xorg.fontmiscmisc
+    #
 
     # printer
     system-config-printer
