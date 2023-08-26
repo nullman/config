@@ -2,17 +2,26 @@
     all: unset;
 }
 
-/* global styles */
+/* Windows */
 
 .bar {
     /* background-color: #3A3A3A; */
     /* background-color: rgba(58, 58, 58, .50); */
+    /* background-color: #1D1D1D; */
     background-color: rgba(29, 29, 29, .60);
     color: #cfcfcf;
     padding: 12px;
 }
 
-/* class styles */
+/* Widgets */
+
+.left-bar {
+    margin-left: 10px;
+}
+
+.right-bar {
+    margin-right: 10px;
+}
 
 .metric scale trough {
     all: unset;
@@ -31,12 +40,11 @@
     border-radius: 10px;
 }
 
-.left-bar {
-    margin-left: 10px;
-}
+/* Shared */
 
-.right-bar {
-    margin-right: 10px;
+slider {
+    all: unset;
+    color: #ffd5cd;
 }
 
 button:hover {
@@ -47,17 +55,12 @@ button:hover {
     font-weight: bold;
 }
 
-.music-state {
-    color: #5e81ac;
-}
-
-slider {
-    all: unset;
-    color: #ffd5cd;
-}
-
 .highlight {
     color: #ffffff;
     /* color: #cfcf00; */
     font-weight: bold;
+}
+
+.music-state {
+    color: #5e81ac;
 }

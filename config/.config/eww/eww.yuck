@@ -10,6 +10,15 @@
 ;;==============================================================================
 
 ;;------------------------------------------------------------------------------
+;; Variables
+;;------------------------------------------------------------------------------
+
+(defvar calendar-is-open false)
+;;(defvar year "0")
+;;(defvar month "0")
+;;(defvar day "0")
+
+;;------------------------------------------------------------------------------
 ;; Polls
 ;;------------------------------------------------------------------------------
 
@@ -35,6 +44,9 @@
 
 (defpoll time :interval "500ms" "date '+%a %Y-%m-%d %H:%M'")
 (defpoll min :interval "500ms" "date '+%M'")
+(defpoll year :interval "3600s" "date '+%Y'")
+(defpoll month :interval "3600s" "date '+%m'")
+(defpoll day :interval "3600s" "date '+%d'")
 
 ;;------------------------------------------------------------------------------
 ;; Helper Widgets
@@ -128,7 +140,9 @@
 
 (defwidget clock [min time]
   (box :class "label"
-       (button :onclick ""
+       (button :onclick {calendar-is-open == "true" ?
+               "${EWW_CMD} close calendar && ${EWW_CMD} update calendar-is-open=false" :
+               "${EWW_CMD} open calendar && ${EWW_CMD} update calendar-is-open=true"}
                (box :class "label"
                     :orientation "h"
                     :space-evenly false
@@ -180,7 +194,12 @@
        (workspace :label "7  " :value "7" :onclick "bspc desktop --focus '^7'" :tooltip "Workspace 7")
        (workspace :label "8  " :value "8" :onclick "bspc desktop --focus '^8'" :tooltip "Workspace 8")
        (workspace :label "9  " :value "9" :onclick "bspc desktop --focus '^9'" :tooltip "Workspace 9")
-       (workspace :label "10  " :value "10" :onclick "bspc desktop --focus '^10'" :tooltip "Workspace 10")))
+       (workspace :label "10  " :value "10" :onclick "bspc desktop --focus '^10'" :tooltip "Workspace 10")
+       ;; weather
+       (box :class "label"
+            :tooltip weather-status
+            (button :onclick "curl --silent wttr.in/?T | head -n -2 | yad --text-info --width=1138 --height=760 --no-buttons"
+                    weather))))
 
 (defwidget center-bar []
   (box :class "center-bar"
@@ -188,6 +207,7 @@
        :space-evenly false
        :halign "center"
        :spacing 10
+       ;; music
        (box :class "music-state"
             (button :onclick "mpc toggle" music-state))
        (box :class "music-info"
@@ -199,29 +219,33 @@
        :space-evenly false
        :halign "end"
        :spacing 10
-       (box :class "label"
-            :tooltip weather-status
-            (button :onclick "curl --silent wttr.in/?T | head -n -2 | yad --text-info --width=1138 --height=760 --no-buttons"
-                    weather))
+       ;; volume
        (volume :mute mute
                :volume volume)
+       ;; brightness
        (metric :label ""
                :value brightness
                :onchange "light -S {}"
                :tooltip "Brightness: ${brightness}%")
+       ;; ram
        (metric :label ""
                :value {EWW_RAM.used_mem_perc}
                :onchange ""
                :tooltip "RAM Used: ${EWW_RAM.used_mem_perc}%")
+       ;; disk
        (metric :label "󰆼"
                :value {round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}
                :onchange ""
                :tooltip "Disk Used: ${round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}%")
+       ;; battery
        (battery :status {EWW_BATTERY.BAT0.status}
                 :capacity {EWW_BATTERY.BAT0.capacity})
+       ;; wifi
        (wifi :status wifi-status
              :strength wifi-strength)
+       ;; bluetooth
        (bluetooth :status bt-status)
+       ;; time
        (clock :min min
               :time time)))
 
@@ -235,9 +259,109 @@
 ;; Windows
 ;;------------------------------------------------------------------------------
 
+(defwindow calendar
+  :windowtype "dock"
+  :stacking "fg"
+  :geometry (geometry :x "-10px"
+                      :y "-30px"
+                      :width "500px"
+                      :height "220px"
+                      :anchor "bottom right")
+  (box :class "bar"
+       :orientation "h"
+       :valign "fill"
+       :halign "fill"
+       (calendar :year year
+                 :month month
+                 :day day
+                 :show-details "true"
+                 :show-heading "true"
+                 :show-day-names "true")))
+
+;; (defwindow music
+;;   :windowtype "dock"
+;;   :stacking "fg"
+;;   :geometry (geometry :x "40px"
+;;                       :y "65px"
+;;                       :width "415px"
+;;                       :height "200px")
+;;     (box :orientation "v"
+;;          :valign "fill"
+;;          :halign "fill"
+;;          :space-evenly "false"
+;;          :class "music-box-popup"
+;;          (box :orientation "h"
+;;               :valign "fill"
+;;               :halign "fill"
+;;               :space-evenly "false"
+;;               (box :valign "center"
+;;                    :halign "start"
+;;                    :height 140
+;;                    :width 140
+;;                    :class "media-art-popup-box"
+;;                    (image :valign "center"
+;;                           :halign "center"
+;;                           :class "media-art-popup"
+;;                           :tooltip "${title} by ${artist}"
+;;                           :path cover))
+;;               (box :valign "center"
+;;                    :halign "fill"
+;;                    :orientation "v"
+;;                    :class "media-data-popup"
+;;                    :spacing 20
+;;                    (label :class "media-title-popup"
+;;                           :markup title-parsed
+;;                           :halign "center")
+;;                    (label :class "media-artist-popup"
+;;                           :markup artist-parsed
+;;                           :halign "center")
+;;                    (box :orientation "h"
+;;                         :halign "fill"
+;;                         :valign "fill"
+;;                         :class "media-buttons-box-popup"
+;;                         (eventbox :cursor "pointer"
+;;                                   (button :onclick "scripts/media-control --prev"
+;;                                           :class "nextprev-popup"
+;;                                           :tooltip "Previous"
+;;                                           ""))
+;;                         (eventbox :cursor "pointer"
+;;                                   (button :onclick "scripts/media-control --move -5"
+;;                                           :class "move-popup"
+;;                                           :tooltip "-5 seconds"
+;;                                           ""))
+;;                         (eventbox :cursor "pointer"
+;;                                   (button :onclick "scripts/media-control --toggle"
+;;                                           :class "playpause-popup"
+;;                                           :tooltip "Play/Pause"
+;;                                           media-status))
+;;                         (eventbox :cursor "pointer"
+;;                                   (button :onclick "scripts/media-control --move +5"
+;;                                           :class "move-popup"
+;;                                           :tooltip "+5 seconds"
+;;                                           ""))
+;;                         (eventbox :cursor "pointer"
+;;                                   (button :onclick "scripts/media-control --next"
+;;                                           :class "nextprev-popup"
+;;                                           :tooltip "Next"
+;;                                           "")))))
+;;          (eventbox :cursor "pointer"
+;;                    :onhover "${EWW_CMD} update media-bar-class-popup=\"bar-highlighted-popup\" && ${EWW_CMD} update media-bar-is-active-popup=true"
+;;                    :onhoverlost "${EWW_CMD} update media-bar-class-popup=\"bar-normal-popup\" && ${EWW_CMD} update media-bar-is-active-popup=false"
+;;                    (box :active media-bar-is-active-popup
+;;                         :orientation "h"
+;;                         :valign "fill"
+;;                         :halign "fill"
+;;                         :class media-bar-class-popup
+;;                         (scale :min 0
+;;                                :max length
+;;                                :value position
+;;                                :orientation "h"
+;;                                :onchange "scripts/media-control --seek {} ${media-bar-is-active-popup}")))))
+
 (defwindow bar
   :monitor 0
   :windowtype "dock"
+  :stacking "bg"
   :geometry (geometry :x "0%"
                       :y "0%"
                       :width "100%"
