@@ -60,8 +60,9 @@ _command xfce4-power-manager && (_delay ${delay} pgrep -x -u ${USER} xfce4-power
 #_command volumeicon && (_delay ${delay} pgrep -x -u ${USER} volumeicon > /dev/null || volumeicon) &
 #_command sbxkb && (_delay ${delay} pgrep -x -u ${USER} sbxkb > /dev/null || sbxkb) &
 
-# system info and key bindings on wallpaper
+# conky displays on wallpaper
 _command conky && [[ -f "${HOME}/.config/conky/system-info.conkyrc" ]] && conky --config="${HOME}/.config/conky/system-info.conkyrc" &
+_command conky && [[ -f "${HOME}/.config/conky/reminders.conkyrc" ]] && conky --config="${HOME}/.config/conky/reminders.conkyrc" &
 _command conky && [[ -f "${HOME}/.config/conky/weather.conkyrc" ]] && conky --config="${HOME}/.config/conky/weather.conkyrc" &
 _command conky && [[ -f "${HOME}/.config/conky/bspwm-keybindings.conkyrc" ]] && conky --config="${HOME}/.config/conky/bspwm-keybindings.conkyrc" &
 
