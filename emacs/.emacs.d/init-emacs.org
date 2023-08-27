@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2023-08-27 14:52 (kyle)>
+  #+TIMESTAMP: <2023-08-27 15:01 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -12532,49 +12532,49 @@
               (list wins max))))
       #+END_SRC
 
-***** queue
+***** +queue+
       :PROPERTIES:
       :CUSTOM_ID: functions-general-functions-queue
       :END:
 
-      #+BEGIN_SRC emacs-lisp
-        ;;------------------------------------------------------------------------------
-        ;;;; Functions: General Functions: queue
-        ;;------------------------------------------------------------------------------
+      #+BEGIN_SRC emacs-lisp :tangle no
+        ;; ;;------------------------------------------------------------------------------
+        ;; ;;;; Functions: General Functions: queue
+        ;; ;;------------------------------------------------------------------------------
 
-        (init-message 3 "Functions: General Functions: queue")
+        ;; (init-message 3 "Functions: General Functions: queue")
 
-        (defun make-queue ()
-          "Return FIFO (first-in first-out) queue function.
+        ;; (defun make-queue ()
+        ;;   "Return FIFO (first-in first-out) queue function.
 
-        Then call the queue function with one of the following commands:
+        ;; Then call the queue function with one of the following commands:
 
-          'push X = Add X to the back of the queue
-          'pop    = Remove element from the front of the queue and return it
-          'peek   = Return the element in the front of the queue
-          'show   = Display the queue's contents
-          'fb     = Display the front and back queues (for debugging)
+        ;;   'push X = Add X to the back of the queue
+        ;;   'pop    = Remove element from the front of the queue and return it
+        ;;   'peek   = Return the element in the front of the queue
+        ;;   'show   = Display the queue's contents
+        ;;   'fb     = Display the front and back queues (for debugging)
 
-        Source: http://irreal.org/blog/?p=40"
-          (lexical-let (front
-                        back)
-            (lambda (cmd &optional data)
-              (cl-labels
-                  ((exchange ()
-                             (setq front (reverse back))
-                             (setq back '())))
-                (cl-case cmd
-                  ((push) (push data back))
-                  ((pop) (or (pop front)
-                             (progn
-                               (exchange)
-                               (pop front))))
-                  ((peek) (unless front
-                            (exchange))
-                   (car front))
-                  ((show) (format "%s" (append front (reverse back))))
-                  ((fb) (format "front: %s, back: %s" front back))
-                  (t (user-error "Illegal command given to queue object: %s" cmd)))))))
+        ;; Source: http://irreal.org/blog/?p=40"
+        ;;   (lexical-let (front
+        ;;                 back)
+        ;;     (lambda (cmd &optional data)
+        ;;       (cl-labels
+        ;;           ((exchange ()
+        ;;                      (setq front (reverse back))
+        ;;                      (setq back '())))
+        ;;         (cl-case cmd
+        ;;           ((push) (push data back))
+        ;;           ((pop) (or (pop front)
+        ;;                      (progn
+        ;;                        (exchange)
+        ;;                        (pop front))))
+        ;;           ((peek) (unless front
+        ;;                     (exchange))
+        ;;            (car front))
+        ;;           ((show) (format "%s" (append front (reverse back))))
+        ;;           ((fb) (format "front: %s, back: %s" front back))
+        ;;           (t (user-error "Illegal command given to queue object: %s" cmd)))))))
       #+END_SRC
 
 ***** quicksort

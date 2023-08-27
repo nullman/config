@@ -1,4 +1,4 @@
-;; [[file:init-emacs.org::#init-early-init][Early Init:1]]
+;; [[file:init-emacs.org::*Early Init][Early Init:1]]
 ;; -*- mode: emacs-lisp; lexical-binding: t; no-byte-compile: t -*-
 ;;==============================================================================
 ;;; early-init.el
