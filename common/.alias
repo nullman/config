@@ -1959,9 +1959,9 @@ alias rddf="rdesktop -u kyle -f -z -a16 dozer"
 # remind
 #
 #        rem                     remind
-alias rem="remind \${HOME}/.reminders"
+alias rem="remind \${HOME}/.reminders | fold -w 72"
 #        rembot                  remind bot
-alias rembot="remind \${HOME}/.reminders_bot"
+alias rembot="remind \${HOME}/.reminders_bot | fold -w 72"
 #        today                   today in history
 alias today="
     remind \${HOME}/.reminders_bot | head -c -1 | \
