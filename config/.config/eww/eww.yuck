@@ -277,7 +277,7 @@
                  :show-details "true"
                  :show-heading "true"
                  :show-day-names "true"
-                 :onclick "remind ~/.reminders $(date -d {2}-$(({1}+1))-{0} '+%_d %b %Y') | fold -w 72 | yad --text-info --width=800 --height=600 --no-buttons")))
+                 :onclick "remind ~/.reminders $(date -d {2}-$(({1}+1))-{0} '+%_d %b %Y') | fold -w 80 -s | yad --text-info --width=800 --height=600 --no-buttons")))
 
 ;; (defwindow music
 ;;   :windowtype "dock"
