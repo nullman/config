@@ -16720,7 +16720,7 @@ And the line would be overlaid like:
             (goto-char (point-min))
             (while (re-search-forward (rx (group (one-or-more (or bol bos blank (not alpha)))
                                                  (zero-or-more (not (any alpha blank)))
-                                                 (group (one-ore-more alpha))
+                                                 (group (one-or-more alpha))
                                                  (zero-or-more (not (any alpha blank)))))
                                       nil t)
               (unless (cl-member (match-string 0) lorem-ipsum-overlay-exclude
