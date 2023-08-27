@@ -13,6 +13,7 @@
   imports = [
     ./hardware-configuration.nix
     ./hardware-encryption-configuration.nix
+    #inputs.gBar.homeManagerModules.x86_64-linux.default
     #<home-manager/nixos>
   ];
 
@@ -216,43 +217,6 @@
   # light
   programs.light.enable = true;
 
-  # printing
-  services = {
-    printing = {
-      enable = true;
-      cups-pdf.enable = true;
-      drivers = [ pkgs.canon-cups-ufr2 pkgs.cups-pdf-to-pdf ];
-      #drivers = [ pkgs.canon-cups-ufr2 pkgs.carps-cups pkgs.cups-bjnp ];
-      stateless = true;
-      logLevel = "debug";
-      #extraConf = ''
-      #  DefaultEncryption Never
-      #'';
-    };
-    #avahi = {
-    #  enable = true;
-    #  nssmdns = true;
-    #  openFirewall = true;              # wifi printer
-    #  #ipv4 = true;
-    #  #browseDomains = [ "printer" ];
-    #  #publish.enable = true;
-    #  #publish.workstation = true;
-    #  #publish.addresses = true;
-    #};
-  };
-  hardware.printers = {
-    ensurePrinters = [
-      {
-        name = "Canon-MF210";
-        #deviceUri = "ipp://${if startWhenNeeded then "socketActivatedServer" else "serviceServer"}/printers/DeskjetLocal";
-        deviceUri = "socket://printer:9100";
-        #model = "drv:///sample.drv/deskjet.ppd";
-        model = "CNRCUPSMF210ZK.ppd";
-      }
-    ];
-    ensureDefaultPrinter = "Canon-MF210";
-  };
-
   # fonts
   fonts = {
     fontDir.enable = true;
@@ -300,6 +264,41 @@
         sansSerif = [ "Noto Sans" "Source Han Sans" ];
       };
     };
+  };
+
+  # printing
+  services = {
+    printing = {
+      enable = true;
+      cups-pdf.enable = true;
+      drivers = [ pkgs.canon-cups-ufr2 pkgs.cups-pdf-to-pdf ];
+      #drivers = [ pkgs.canon-cups-ufr2 pkgs.carps-cups pkgs.cups-bjnp ];
+      stateless = true;
+      logLevel = "debug";
+      #extraConf = ''
+      #  DefaultEncryption Never
+      #'';
+    };
+    #avahi = {
+    #  enable = true;
+    #  nssmdns = true;
+    #  openFirewall = true;              # wifi printer
+    #  #ipv4 = true;
+    #  #browseDomains = [ "printer" ];
+    #  #publish.enable = true;
+    #  #publish.workstation = true;
+    #  #publish.addresses = true;
+    #};
+  };
+  hardware.printers = {
+    ensurePrinters = [
+      {
+        name = "Canon-MF210";
+        deviceUri = "socket://printer:9100";
+        model = "CNRCUPSMF210ZK.ppd";
+      }
+    ];
+    ensureDefaultPrinter = "Canon-MF210";
   };
 
   # opengl
