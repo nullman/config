@@ -2800,7 +2800,7 @@ alias pacman-reset-repository="
     # update packages
     sudo pacman -Syyu"
 #        pacman-clear-cache      clear pacman cache and unused packages
-alias pacman-chear-cache="
+alias pacman-clear-cache="
     # remove unused packages (orphans)
     sudo pacman -Rsn \$(pacman -Qdtq)
 
