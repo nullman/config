@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+METRIC=0                                # should be 0 for F or 1 for C
+
+if [[ $# -ne 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] || \
+       [[ "$2" != "status" && "$2" != "icon" ]] ; then
+    echo "Usage: $(basename $0) LOCATION_CODE [status|icon]"
+    echo "  LOCATION_CODE  ZIP Code"
+    echo "  status         Return text description (default)"
+    echo "  icon           Return icon and temperature"
+    exit 1
+fi
+
+data=$(curl -s "http://rss.accuweather.com/rss/liveweather_rss.asp?metric=${METRIC}&locCode=$1" | \
+           sed -n '/<title>Currently: .*<\/title>/p' | sed 's/^.*<title>Currently: // ; s/<\/title>.*$//')
+
+if [[ "$2" == "status" ]] ; then
+    printf "${data}"
+else
+    #echo "${data}"
+    desc=$(echo "${data}" | sed 's/: .*$//')
+    temp=$(echo "${data}" | sed 's/^.*: //')
+    #echo "desc: ${desc}"
+    #echo "temp: ${temp}"
+    icon=""
+    case "$desc" in
+        "Sunny") icon="" ;;
+        "Mostly Sunny") icon="" ;;
+        "Partly Sunny") icon="" ;;
+        "Hazy Sunshine") icon="" ;;
+        "Hot") icon="" ;;
+        "Intermittent Clouds") icon="" ;;
+        "Cloudy") icon="" ;;
+        "Mostly Cloudy") icon="" ;;
+        "Dreary (Overcast)") icon="" ;;
+        "Fog") icon="" ;;
+        "Rain") icon="" ;;
+        "Showers") icon="" ;;
+        "Partly Cloudy w/ Showers") icon="" ;;
+        "Mostly Cloudy w/ Showers") icon="" ;;
+        "Partly Sunny w/ Showers") icon="" ;;
+        "T-Storms") icon="" ;;
+        "Mostly Cloudy w/ T-Storms") icon="" ;;
+        "Partly Cloudy w/ T-Storms") icon="" ;;
+        "Partly Sunny w/ T-Storms") icon="" ;;
+        "Windy") icon="" ;;
+        "Flurries") icon="" ;;
+        "Mostly Cloudy w/ Flurries") icon="" ;;
+        "Snow") icon="" ;;
+        "Mostly Cloudy w/ Snow") icon="" ;;
+        "Partly Sunny w/ Flurries") icon="" ;;
+        "Ice") icon="" ;;
+        "Sleet") icon="" ;;
+        "Freezing Rain") icon="" ;;
+        "Rain and Snow") icon="" ;;
+        "Cold") icon="" ;;
+        "Clear") icon="" ;;
+        "Mostly Clear") icon="" ;;
+        "Partly Cloudy") icon="" ;;
+        "Intermittent Clouds") icon="" ;;
+        "Hazy Moonlight") icon="" ;;
+        *) notify-send -u critical "Unknown weather: ${desc}" ;;
+    esac
+    if [[ -n "${icon}" ]] ; then
+        printf "${icon}  ${temp}";
+    else
+        printf "${temp}";
+    fi
+fi

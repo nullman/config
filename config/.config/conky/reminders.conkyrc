@@ -1,0 +1,24 @@
+conky.config = {
+alignment = 'top_middle',
+background = true,
+color2 = '2ECC71',
+cpu_avg_samples = 2,
+default_color = 'E0E2E3',
+double_buffer = true,
+font = 'Mono:size=12',
+gap_x = 25,
+gap_y = 45,
+minimum_width = 240,
+minimum_height = 126,
+no_buffers = true,
+own_window = true,
+own_window_class = 'Conky',
+own_window_type = 'desktop',
+own_window_transparent = true,
+update_interval = 60.0,
+update_interval_on_battery = 300.0,
+use_xft = true,
+}
+conky.text = [[
+${texeci 600 remind ${HOME}/.reminders | fold -w 72 -s}
+]]
