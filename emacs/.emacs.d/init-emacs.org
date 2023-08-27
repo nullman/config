@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2023-08-27 11:05 (kyle)>
+  #+TIMESTAMP: <2023-08-27 14:52 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -413,7 +413,7 @@
               (with-current-buffer "*Messages*"
                 (let ((inhibit-read-only t))
                   (goto-char (point-max))
-                  (when (not (bolp)) (newline))
+                  (unless (bolp) (newline))
                   (insert (format-time-string "[%T] " (current-time)))))))))
       ;; advise `message'
       (advice-add 'message :before #'message--with-timestamp)
@@ -685,7 +685,7 @@
       ;; (package-initialize)
 
       ;; ;; refresh package archive contents if empty
-      ;; (when (not package-archive-contents)
+      ;; (unless package-archive-contents
       ;;   (package-refresh-contents))
 
       ;; ;; install `use-package' to load packages
@@ -1152,6 +1152,10 @@
 
         (init-message 3 "Environment: GUI: General")
 
+        ;; support for emacs version < 25.1
+        (unless (fboundp 'gui-selection-value)
+          (defalias 'gui-selection-value 'x-cut-buffer-or-selection-value))
+
         ;; clipboard
         (when (string= window-system "x")
           (setq select-enable-clipboard t                                      ; cutting and pasting uses clipboard
@@ -1159,7 +1163,7 @@
                 x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING) ; data-type request for X selection
                 save-interprogram-paste-before-kill t                          ; save clipboard strings into kill ring before replacing them
                 mouse-yank-at-point t                                          ; mouse yank commands yank at point
-                interprogram-paste-function 'x-cut-buffer-or-selection-value)  ; function to call to get text cut from other programs
+                interprogram-paste-function 'gui-selection-value)              ; function to call to get text cut from other programs
           (setq-default select-enable-clipboard select-enable-clipboard
                         select-enable-primary select-enable-primary
                         x-select-request-type x-select-request-type
@@ -1732,7 +1736,7 @@
 
       ;; ;; (defun buffer-menu-mode-hook--visual-line-mode()
       ;; ;;   "Hook to turn on `visual-line-mode' in most buffers."
-      ;; ;;   (when (not (string= (substring (buffer-name) 0 1) "*"))
+      ;; ;;   (unless (string= (substring (buffer-name) 0 1) "*")
       ;; ;;     (visual-line-mode 1)))
       ;; ;; (add-hook 'buffer-menu-mode-hook #'buffer-menu-mode-hook--visual-line-mode)
 
@@ -1748,7 +1752,7 @@
 
       ;; (defun buffer-menu-mode-hook--visual-line-mode()
       ;;   "Hook to turn off `visual-line-mode' in most buffers."
-      ;;   (when (not (string= (substring (buffer-name) 0 1) "*"))
+      ;;   (unless (string= (substring (buffer-name) 0 1) "*")
       ;;     (visual-line-mode -1)))
       ;; (add-hook 'buffer-menu-mode-hook #'buffer-menu-mode-hook--visual-line-mode)
 
@@ -2283,7 +2287,7 @@
           (interactive (if (use-region-p)
                            (list (region-beginning) (region-end))
                          (list nil nil)))
-          (when (not buffer-read-only)
+          (unless buffer-read-only
             (delete-trailing-whitespace beg end)))
 
         ;; delete trailing whitespace on save
@@ -4258,7 +4262,7 @@
                         (org-agenda-overriding-header "Unscheduled TODO entries: "))))))
 
         ;; fix bug
-        (when (not (boundp 'org-called-interactively-p))
+        (unless (boundp 'org-called-interactively-p)
           (defalias 'org-called-interactively-p 'called-interactively-p))
 
         ;; archive done tasks
@@ -5692,7 +5696,7 @@
             (if (file-exists-p lock-file)
                 (progn
                   (message "Tangle running: %s" file)
-                  (when (not (file-exists-p run-file))
+                  (unless (file-exists-p run-file)
                     (make-empty-file run-file)))
               (message "Tangle started: %s" file)
               (make-empty-file lock-file)
@@ -5700,7 +5704,7 @@
                `(async-spinner
                  (lambda ()
                    (require 'ob-tangle)
-                   (when (not (file-exists-p ,run-file))
+                   (unless (file-exists-p ,run-file)
                      (make-empty-file ,run-file))
                    (while (file-exists-p ,run-file)
                      (delete-file ,run-file)
@@ -8082,7 +8086,7 @@
                             (setq tags (append tags (tags title))))
                           (when keyword
                             (setq tags (append tags (list keyword))))
-                          (when (not folder?)
+                          (unless folder?
                             (insert
                              (format "%S\n" (list :url uri :title title :date timestamp :tags tags))))
                           (when children
@@ -14536,7 +14540,7 @@
         If ASK is non-nil, ask for confirmation.
 
         If buffer is read-only quietly do nothing."
-          (when (not buffer-read-only)
+          (unless buffer-read-only
             (when (and (not (zerop (buffer-size)))
                        (char-equal (char-after (buffer-size)) ?\n)
                        (save-mark-and-excursion
@@ -18760,7 +18764,7 @@
                           (setq face-change nil)
                           (while (and (< (point) (line-end-position))
                                       (not (looking-at whitespace-regexp)))
-                            (when (not (equal face-prev (get-char-property (point) 'face)))
+                            (unless (equal face-prev (get-char-property (point) 'face))
                               (setq face-change t))
                             (forward-char 1))
                           ;; move forward until a non-whitespace character is reached that
@@ -19034,14 +19038,14 @@
                                  (while (and (not (bobp))
                                              (looking-at single-line-comment-regexp))
                                    (forward-line -1))
-                                 (when (not (looking-at single-line-comment-regexp))
+                                 (unless (looking-at single-line-comment-regexp)
                                    (forward-line 1))
                                  (line-beginning-position)))
                           (end (progn
                                  (while (and (not (eobp))
                                              (looking-at single-line-comment-regexp))
                                    (forward-line 1))
-                                 (when (not (looking-at single-line-comment-regexp))
+                                 (unless (looking-at single-line-comment-regexp)
                                    (forward-line -1))
                                  (line-end-position)))
                           (space (make-string (- (re-search-forward indentation-regexp) (line-beginning-position)) ? ))
@@ -19146,7 +19150,7 @@
                                  (forward-char -1))
                                (let ((mark (point)))
                                  (goto-char (line-end-position))
-                                 (when (not (eobp))
+                                 (unless (eobp)
                                    (forward-char 1))
                                  (delete-region mark (point))))
                               ;; block comment
@@ -29571,7 +29575,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;;               (add-hook 'before-save-hook #'gofmt-before-save)
 
       ;;               ;; customize compile command to run go build
-      ;;               (when (not (string-match "go" compile-command))
+      ;;               (unless (string-match "go" compile-command)
       ;;                 (setq-local compile-command "go build -v && go test -v && go vet"))
 
       ;;               ;; oracle
@@ -29996,8 +30000,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
 
       ;;             ;; add alias for run command to be like other language modes
       ;;             (defalias 'run-java 'jde-run)
-      ;;             (defalias 'run-jde 'jde-run)
-      ;;             ))
+      ;;             (defalias 'run-jde 'jde-run)))
     #+END_SRC
 
 *** +Java: Flymake Mode for JDE+
@@ -34269,7 +34272,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         ;;         (let (start
         ;;               end)
         ;;           ;; if commits not given, try to guess them
-        ;;           (when (not (and commit-start commit-end))
+        ;;           (unless (and commit-start commit-end)
         ;;             (when commit-start
         ;;               (user-error "Must provide both COMMIT-START and COMMIT-END or neither"))
         ;;             ;; find start commit on current line or before
@@ -35028,7 +35031,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
               (cond
                ((string-match "^\\.\\.?$" (file-name-nondirectory file)))
                ((string-match ".*\\.el\\'" file)
-                (when (not (file-directory-p file))
+                (unless (file-directory-p file)
                   (compile-file-if-needed file))))))))
     #+END_SRC
 
