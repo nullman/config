@@ -274,7 +274,8 @@
       drivers = [ pkgs.canon-cups-ufr2 pkgs.cups-pdf-to-pdf ];
       #drivers = [ pkgs.canon-cups-ufr2 pkgs.carps-cups pkgs.cups-bjnp ];
       stateless = true;
-      logLevel = "debug";
+      #logLevel = "debug";
+      logLevel = "verbose";
       #extraConf = ''
       #  DefaultEncryption Never
       #'';
@@ -783,6 +784,7 @@
     ctags
     #djgpp
     flex
+    fpc
     gcc
     github-desktop
     glibc
@@ -823,13 +825,8 @@
 
     # zsh
     antibody
-    #fzf-zsh
     meslo-lgs-nf
     zsh
-    #zsh-autosuggestions
-    #zsh-history-substring-search
-    #zsh-powerlevel10k
-    #zsh-syntax-highlighting
 
     #
 

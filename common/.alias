@@ -3002,9 +3002,11 @@ alias nixrs="
     dir=\$(nix-store -q -R /run/current-system | grep vdhcoapp)
     src=\${dir}/lib/mozilla/native-messaging-hosts/net.downloadhelper.coapp.json
     [[ -d \${dir} ]] && ln -s -f \${src} \${HOME}/.mozilla/native-messaging-hosts/"
-#        nixs                    nixos package search
+#        nixcu                   nix-channel update
+alias nixcu="nix-channel --update"
+#        nixs                    nix package search
 alias nixs="nix search nixpkgs"
-#        nixf                    nixos file search
+#        nixf                    nix-locate file search
 alias nixf="nix-locate -w"
 #        nix-store-query         nix-store installed package location query
 alias nix-store-query="nix-store -q -R /run/current-system | grep"
