@@ -22,7 +22,7 @@
         <name>Open File in Emacs</name>
         <submenu></submenu>
         <unique-id>1613860216544745-1</unique-id>
-        <command>emacsclient --alternate-editor=vi %F</command>
+        <command>emacsclient --alternate-editor=vim %F</command>
         <description>Open File in Emacs</description>
         <range>*</range>
         <patterns>*</patterns>
@@ -35,7 +35,7 @@
         <name>Open Dir in Emacs</name>
         <submenu></submenu>
         <unique-id>1676218516586732-1</unique-id>
-        <command>emacsclient --alternate-editor=vi %D</command>
+        <command>emacsclient --alternate-editor=vim %D</command>
         <description>Open Dir in Emacs</description>
         <range>*</range>
         <patterns>*</patterns>
