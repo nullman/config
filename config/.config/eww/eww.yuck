@@ -360,16 +360,17 @@
 ;;                                :onchange "scripts/media-control --seek {} ${media-bar-is-active-popup}")))))
 
 (defwindow bar
-  :monitor 0
+  :monitor "0"
   :windowtype "dock"
   :stacking "bg"
+  :wm-ignore "true"
   :geometry (geometry :x "0%"
                       :y "0%"
                       :width "100%"
                       :height "12px"
                       :anchor "bottom center")
   :reserve (struts :side "bottom"
-                   :distance "12px")
+                   :distance "14px")
   (bar))
 
 ;;==============================================================================

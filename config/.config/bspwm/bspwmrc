@@ -71,11 +71,11 @@ _bc merge_overlapping_monitors true
 
 # monitor and desktop settings
 _bc top_padding                0
-#_bc top_padding                20       # room for eww system bar
+#_bc top_padding                22       # room for eww system bar
 _bc right_padding              0
 #_bc bottom_padding             0
 #_bc bottom_padding             30       # room for tint2 system bar
-_bc bottom_padding             24       # room for eww system bar
+_bc bottom_padding             22       # room for eww system bar
 _bc left_padding               0
 
 # desktop settings
