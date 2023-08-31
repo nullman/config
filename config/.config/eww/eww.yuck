@@ -43,7 +43,7 @@
 (defpoll bt-status :interval "2s" "[[ $(cat /sys/class/bluetooth/hci0/rfkill7/state) -eq 1 ]] && printf 'enabled' || printf 'disabled'")
 
 (defpoll time :interval "500ms" "date '+%a %Y-%m-%d %H:%M'")
-(defpoll min :interval "500ms" "date '+%M'")
+(defpoll hour :interval "500ms" "date '+%I'")
 (defpoll year :interval "3600s" "date '+%Y'")
 (defpoll month :interval "3600s" "date '+%m'")
 (defpoll day :interval "3600s" "date '+%d'")
@@ -139,7 +139,7 @@
                ;; symbols: 󰂯 󰂰 󰂱 󰂲 󰂳 󰂴
                (label :text {status == "enabled" ? "󰂯" : "󰂲"}))))
 
-(defwidget clock [min time]
+(defwidget clock [hour time]
   (box :class "label"
        (button :onclick {calendar-is-open == "true" ?
                "${EWW_CMD} close calendar && ${EWW_CMD} update calendar-is-open=false" :
@@ -149,18 +149,18 @@
                     :space-evenly false
                     :spacing 5
                     ;; symbols: 󱑊 󱐿 󱑀 󱑁 󱑂 󱑃 󱑄 󱑅 󱑆 󱑇 󱑈 󱑉
-                    (label :text {min == "" ? " " :
-                           min < 5 ? "󱑊 " :
-                           min < 10 ? "󱐿 " :
-                           min < 15 ? "󱑀 " :
-                           min < 20 ? "󱑁 " :
-                           min < 25 ? "󱑂 " :
-                           min < 30 ? "󱑃 " :
-                           min < 35 ? "󱑄 " :
-                           min < 40 ? "󱑅 " :
-                           min < 45 ? "󱑆 " :
-                           min < 50 ? "󱑇 " :
-                           min < 55 ? "󱑈 " : "󱑉 "})
+                    (label :text {hour == "" ? " " :
+                           hour == "01" ? "󱐿 " :
+                           hour == "02" ? "󱑀 " :
+                           hour == "03" ? "󱑁 " :
+                           hour == "04" ? "󱑂 " :
+                           hour == "05" ? "󱑃 " :
+                           hour == "06" ? "󱑄 " :
+                           hour == "07" ? "󱑅 " :
+                           hour == "08" ? "󱑆 " :
+                           hour == "09" ? "󱑇 " :
+                           hour == "10" ? "󱑈 " :
+                           hour == "11" ? "󱑉 " : "󱑊 "})
                     (label :text "${time}")))))
 
 ;;------------------------------------------------------------------------------
@@ -247,7 +247,7 @@
        ;; bluetooth
        (bluetooth :status bt-status)
        ;; time
-       (clock :min min
+       (clock :hour hour
               :time time)))
 
 (defwidget bar []
