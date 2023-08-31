@@ -31,11 +31,11 @@
 (defpoll volume :interval "500ms" "[[ $(pamixer --get-mute) == true ]] && echo '0' || pamixer --get-volume")
 (defpoll brightness :interval "500ms" "light -G | cut -c 1-2")
 
-;;(defpoll weather :interval "600s" "scripts/weather 55433 icon")
-;;(defpoll weather-status :interval "600s" "scripts/weather 55433 status")
+;;(defpoll weather :interval "600s" "~/bin/system-bar-weather 55433 icon")
+;;(defpoll weather-status :interval "600s" "~/bin/system-bar-weather 55433 status")
 
-(defpoll weather :interval "600s" "curl --silent 'wttr.in/?format=%c%t'")
-(defpoll weather-status :interval "600s" "curl --silent 'wttr.in/?format=%C+%t'")
+(defpoll weather :interval "600s" "curl --silent 'wttr.in/?minneapolis&format=%c%t'")
+(defpoll weather-status :interval "600s" "curl --silent 'wttr.in/?minneapolis&format=%C+%t'")
 
 (defpoll wifi-strength :interval "2s" "nmcli -t -f SIGNAL,ACTIVE device wifi | awk -F ':' '{ if ($2 == \"yes\") print $1 }'")
 (defpoll wifi-status :interval "2s" "nmcli -t -f WIFI radio")
@@ -90,7 +90,8 @@
 
 (defwidget volume [mute volume]
   (metric-onclick
-   :label {mute == "true" ? "🔇" : "🔊"}
+   ;; symbols: 🔊       󰕾 󰕿 󰖀 | 🔇 󰖁
+   :label {mute == "true" ? "󰖁" : "󰖀"}
    :value volume
    :onchange "pactl -- set-sink-volume 0 {}%"
    :onclick "pactl -- set-sink-mute 0 toggle"
@@ -198,7 +199,7 @@
        ;; weather
        (box :class "label"
             :tooltip weather-status
-            (button :onclick "curl --silent wttr.in/?T | head -n -2 | yad --text-info --width=1138 --height=760 --no-buttons"
+            (button :onclick "curl --silent wttr.in/?minneapolis&T | head -n -2 | yad --text-info --width=1138 --height=760 --no-buttons"
                     weather))))
 
 (defwidget center-bar []

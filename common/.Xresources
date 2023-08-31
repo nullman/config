@@ -168,9 +168,10 @@ Xft.hintstyle: hintfull
 Xft.lcdfilter: lcdfilter
 
 !! XTerm
-XTerm*background:        COLOR_BACKGROUND_TR
+!XTerm*background:        COLOR_BACKGROUND
+XTerm*background:        #000000
 XTerm*foreground:        COLOR_PRIMARY
-XTerm.borderColor:       COLOR_BACKGROUND
+XTerm.borderColor:       COLOR_EMPHASIZED
 XTerm.borderWidth:       0
 XTerm.allowSendEvents:   true
 XTerm.internalBorder:    0

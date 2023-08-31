@@ -20,5 +20,5 @@ update_interval_on_battery = 300.0,
 use_xft = true,
 }
 conky.text = [[
-${texeci 600 curl --silent "wttr.in/?0T"}
+${texeci 600 curl --silent "wttr.in/?minneapolis&0T"}
 ]]
