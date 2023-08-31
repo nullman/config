@@ -31,11 +31,11 @@
 (defpoll volume :interval "500ms" "[[ $(pamixer --get-mute) == true ]] && echo '0' || pamixer --get-volume")
 (defpoll brightness :interval "500ms" "light -G | cut -c 1-2")
 
-;;(defpoll weather :interval "600s" "~/bin/system-bar-weather 55433 icon")
-;;(defpoll weather-status :interval "600s" "~/bin/system-bar-weather 55433 status")
+(defpoll weather :interval "600s" "~/bin/system-bar-weather icon 55433")
+(defpoll weather-status :interval "600s" "~/bin/system-bar-weather status 55433")
 
-(defpoll weather :interval "600s" "curl --silent 'wttr.in/?minneapolis&format=%c%t'")
-(defpoll weather-status :interval "600s" "curl --silent 'wttr.in/?minneapolis&format=%C+%t'")
+;;(defpoll weather :interval "600s" "curl --silent 'wttr.in/?minneapolis&format=%c%t'")
+;;(defpoll weather-status :interval "600s" "curl --silent 'wttr.in/?minneapolis&format=%C+%t'")
 
 (defpoll wifi-strength :interval "2s" "nmcli -t -f SIGNAL,ACTIVE device wifi | awk -F ':' '{ if ($2 == \"yes\") print $1 }'")
 (defpoll wifi-status :interval "2s" "nmcli -t -f WIFI radio")

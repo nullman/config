@@ -39,6 +39,7 @@
  (:name "N O D E" :html "https://n-o-d-e.net/" :rss "https://n-o-d-e.net/rss/rss.xml" :tag "dev")
  (:name "Andreas Kling" :html "https://awesomekling.substack.com/" :rss "https://awesomekling.substack.com/feed" :tag "dev")
  (:name "Null Program" :html "https://nullprogram.com/" :rss "https://nullprogram.com/feed/" :tag "dev")
+ (:name "LINUX Unplugged" :html "https://linuxunplugged.com/" :rss "https://linuxunplugged.com/rss" :tag "dev")
  ;; Vintage/Retro Computing
  (:name "BYTE Cellar" :html "https://bytecellar.com/" :rss "https://bytecellar.com/feed" :tag "vintage")
  (:name "Nerd Fail" :html "https://nerd.fail/" :rss "https://nerd.fail/feed/" :tag "vintage")

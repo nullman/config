@@ -1,19 +1,20 @@
 #!/usr/bin/env bash
 METRIC=0                                # should be 0 for F or 1 for C
 
-if [[ $# -ne 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] || \
-       [[ "$2" != "status" && "$2" != "icon" ]] ; then
-    echo "Usage: $(basename $0) LOCATION_CODE [status|icon]"
-    echo "  LOCATION_CODE  ZIP Code"
-    echo "  status         Return text description (default)"
+if [[ $# -ne 2 ]] || [[ "$1" != "status" && "$1" != "icon" ]] ; then
+    echo "Usage: $(basename $0) (status|icon) LOCATION_CODE"
+    echo "  status         Return text description"
     echo "  icon           Return icon and temperature"
+    echo "  LOCATION_CODE  ZIP Code"
     exit 1
 fi
 
-data=$(curl -s "http://rss.accuweather.com/rss/liveweather_rss.asp?metric=${METRIC}&locCode=$1" | \
+type="$1"
+loc="$2"
+data=$(curl -s "http://rss.accuweather.com/rss/liveweather_rss.asp?metric=${METRIC}&locCode=${loc}" | \
            sed -n '/<title>Currently: .*<\/title>/p' | sed 's/^.*<title>Currently: // ; s/<\/title>.*$//')
 
-if [[ "$2" == "status" ]] ; then
+if [[ "${type}" == "status" ]] ; then
     printf "${data}"
 else
     #echo "${data}"
