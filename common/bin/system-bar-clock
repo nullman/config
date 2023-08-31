@@ -1,19 +1,19 @@
 #!/usr/bin/env bash
 time=$(date '+%a %Y-%m-%d %H:%M')
-min=$(date '+%M')
+hour=$(date '+%I')
 
 # symbols: 󱑊 󱐿 󱑀 󱑁 󱑂 󱑃 󱑄 󱑅 󱑆 󱑇 󱑈 󱑉
-icon="󱑉"
-[[ "${min}" -lt "55" ]] && icon="󱑈"
-[[ "${min}" -lt "50" ]] && icon="󱑇"
-[[ "${min}" -lt "45" ]] && icon="󱑆"
-[[ "${min}" -lt "40" ]] && icon="󱑅"
-[[ "${min}" -lt "35" ]] && icon="󱑄"
-[[ "${min}" -lt "30" ]] && icon="󱑃"
-[[ "${min}" -lt "25" ]] && icon="󱑂"
-[[ "${min}" -lt "20" ]] && icon="󱑁"
-[[ "${min}" -lt "15" ]] && icon="󱑀"
-[[ "${min}" -lt "10" ]] && icon="󱐿"
-[[ "${min}" -lt "5" ]] && icon="󱑊"
+[[ "${hour}" -eq "01" ]] && icon="󱐿"
+[[ "${hour}" -eq "02" ]] && icon="󱑀"
+[[ "${hour}" -eq "03" ]] && icon="󱑁"
+[[ "${hour}" -eq "04" ]] && icon="󱑂"
+[[ "${hour}" -eq "05" ]] && icon="󱑃"
+[[ "${hour}" -eq "06" ]] && icon="󱑄"
+[[ "${hour}" -eq "07" ]] && icon="󱑅"
+[[ "${hour}" -eq "08" ]] && icon="󱑆"
+[[ "${hour}" -eq "09" ]] && icon="󱑇"
+[[ "${hour}" -eq "10" ]] && icon="󱑈"
+[[ "${hour}" -eq "11" ]] && icon="󱑉"
+[[ "${hour}" -eq "12" ]] && icon="󱑊"
 
 printf "${icon}  ${time}"
