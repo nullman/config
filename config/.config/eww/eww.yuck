@@ -52,6 +52,7 @@
 
 (defwidget metric [label value onchange ?tooltip]
   (box :class "metric"
+       :visible {value == "" ? "false" : "true"}
        :orientation "h"
        :space-evenly false
        :tooltip tooltip
@@ -64,6 +65,7 @@
 
 (defwidget metric-onclick [label value onchange onclick ?onrightclick ?tooltip]
   (box :class "metric"
+       :visible {value == "" ? "false" : "true"}
        :orientation "h"
        :space-evenly false
        :tooltip tooltip
