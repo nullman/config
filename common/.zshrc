@@ -66,7 +66,7 @@ zp="${HOME}/.zsh_plugins"
 zpb="${HOME}/.zsh-plugins-bundle"
 if [[ -f "${zp}" ]] ; then
     # build plugin bundle if needed
-    if [[ ! -f "${zpb}" ]] || [[ "${zpb}" -ot "${zp}" ]] ; then
+    if [[ ! -f "${zpb}" ]] || [[ "${zpb}" -ot "${zp}" ]] || [[ $(wc -c < "${zpb}") -eq 0 ]] ; then
         antibody bundle < "${zp}" > "${zpb}"
     fi
 
