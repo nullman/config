@@ -243,8 +243,8 @@
                :onchange ""
                :tooltip "Disk Used: ${round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}%")
        ;; battery
-       (battery :status {EWW_BATTERY.BAT0.status}
-                :capacity {EWW_BATTERY.BAT0.capacity})
+       (battery :status {EWW_BATTERY == "" ? "" : EWW_BATTERY.BAT0.status}
+                :capacity {EWW_BATTERY == "" ? "" : EWW_BATTERY.BAT0.capacity})
        ;; wifi
        (wifi :status wifi-status
              :strength wifi-strength)
