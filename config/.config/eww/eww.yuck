@@ -103,7 +103,8 @@
        :visible {capacity == "" ? "false" : "true"}
        :tooltip "${capacity}%, ${status}"
        ;; symbols: 󰁺 󰁻 󰁼 󰁽 󰁾 󰁿 󰂀 󰂁 󰂂 󰁹 󰂆 󰂇 󰂈 󰂉 󰂊 󰂋 󰂅 󰂄
-       (label :text {status == "Charging" && capacity < 18 ? "󰂆" :
+       (label :text {capacity == "" ? " " :
+              status == "Charging" && capacity < 18 ? "󰂆" :
               status == "Charging" && capacity < 30 ? "󰂇" :
               status == "Charging" && capacity < 42 ? "󰂈" :
               status == "Charging" && capacity < 54 ? "󰂉" :
