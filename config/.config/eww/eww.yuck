@@ -126,7 +126,7 @@
        (button :onclick {status == "enabled" ? "nmcli radio wifi off" : "nmcli radio wifi on"}
                :onrightclick "nm-connection-editor &"
                ;; symbols: 󰤮 󰤯 󰤟 󰤢 󰤥 󰤨
-               (label :text {status == "" ? "󰤮" :
+               (label :text {strength == "" ? "󰤮" :
                       strength < 21 ? "󰤯" :
                       strength < 41 ? "󰤟" :
                       strength < 61 ? "󰤢" :
