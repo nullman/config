@@ -7,6 +7,11 @@
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
+if [[ -n $(mpc | grep '^MPD error') ]] ; then
+    echo " - "
+    exit 1
+fi
+
 artist=$(mpc -f '%artist%' | head -n 1)
 album=$(mpc -f '%album%' | head -n 1)
 title=$(mpc -f '%title%' | head -n 1)
