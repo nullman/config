@@ -60,7 +60,7 @@
        (scale :min 0
               :max 101
               :active {onchange != ""}
-              :value value
+              :value {value == "" ? "0" : value}
               :onchange onchange)))
 
 (defwidget metric-onclick [label value onchange onclick ?onrightclick ?tooltip]
@@ -76,7 +76,7 @@
        (scale :min 0
               :max 101
               :active {onchange != ""}
-              :value value
+              :value {value == "" ? "0" : value}
               :onchange onchange)))
 
 (defwidget workspace [label value onclick ?tooltip]
