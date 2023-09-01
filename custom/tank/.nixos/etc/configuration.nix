@@ -466,6 +466,7 @@
     dosfstools
     duf
     emacs
+    file
     findutils
     fortune
     fzf

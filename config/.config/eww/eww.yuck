@@ -38,7 +38,7 @@
 (defpoll wifi-strength :interval "2s" "nmcli -t -f SIGNAL,ACTIVE device wifi | awk -F ':' '{ if ($2 == \"yes\") print $1 }'")
 (defpoll wifi-status :interval "2s" "nmcli -t -f WIFI radio")
 
-(defpoll bt-status :interval "2s" "[[ $(cat /sys/class/bluetooth/hci0/rfkill7/state) -eq 1 ]] && printf 'enabled' || printf 'disabled'")
+(defpoll bt-status :interval "2s" "[[ $(command -v hcitool) ]] && [[ $(cat /sys/class/bluetooth/hci0/rfkill*/state) -eq 1 ]] && printf 'enabled' || printf 'disabled'")
 
 (defpoll time :interval "500ms" "date '+%a %Y-%m-%d %H:%M'")
 (defpoll hour :interval "500ms" "date '+%I'")
