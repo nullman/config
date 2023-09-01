@@ -7,10 +7,7 @@
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
-if [[ -n "$(mpc 2>&1 | grep '^MPD error')" ]] ; then
-    echo " - "
-    exit 1
-fi
+[[ -n "$(mpc 2>&1 | grep '^MPD error')" ]] && exit 1
 
 artist=$(mpc -f '%artist%' | head -n 1)
 album=$(mpc -f '%album%' | head -n 1)

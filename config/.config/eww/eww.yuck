@@ -214,9 +214,11 @@
        :spacing 10
        ;; music
        (box :class "music-state"
+            :visible {music-info == "" ? "false" : "true"}
             (button :onclick "mpc toggle" music-state))
        (box :class "music-info"
-            (button :onclick "mpc toggle" {music-info != "" ? "${music-info}" : ""}))))
+            :visible {music-info == "" ? "false" : "true"}
+            (button :onclick "mpc toggle" music-info))))
 
 (defwidget right-bar []
   (box :class "right-bar"
