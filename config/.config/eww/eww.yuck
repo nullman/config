@@ -3,6 +3,7 @@
 ;;
 ;; Elkowars Wacky Widgets configuration.
 ;;
+;; Reference: https://elkowar.github.io/eww/
 ;; Reference: https://github.com/elkowar/eww/tree/master/examples/eww-bar
 ;; Reference: https://github.com/ikz87/dots-2.0/tree/main/Configs/eww/mybar
 ;; Reference: https://github.com/rxyhn/tokyo/tree/main/config/eww/bar
@@ -22,14 +23,14 @@
 ;; Polls
 ;;------------------------------------------------------------------------------
 
-(defpoll active-desktop :interval "500ms" "bspc query -D -d --names")
+(defpoll active-desktop :interval "500ms" :initial "0" "bspc query -D -d --names")
 
 (defpoll music-info :interval "2s" "~/bin/mpc-playing")
 (defpoll music-state :interval "2s" "mpc | grep -q '^\\[playing\\]' && echo '' || echo ''")
 
 (defpoll mute :interval "500ms" "pamixer --get-mute")
-(defpoll volume :interval "500ms" "[[ $(pamixer --get-mute) == true ]] && echo '0' || pamixer --get-volume")
-(defpoll brightness :interval "500ms" "light -G | cut -c 1-2")
+(defpoll volume :interval "500ms" :initial "0" "[[ $(pamixer --get-mute) == true ]] && echo '0' || pamixer --get-volume")
+(defpoll brightness :interval "500ms" :initial "0" "light -G | cut -c 1-2")
 
 (defpoll weather :interval "600s" "~/bin/system-bar-weather icon 55433")
 (defpoll weather-status :interval "600s" "~/bin/system-bar-weather status 55433")
@@ -37,7 +38,7 @@
 ;;(defpoll weather :interval "600s" "curl --silent 'wttr.in/?minneapolis&u&format=%c%t'")
 ;;(defpoll weather-status :interval "600s" "curl --silent 'wttr.in/?minneapolis&u&format=%C+%t'")
 
-(defpoll wifi-strength :interval "2s" "nmcli -t -f SIGNAL,ACTIVE device wifi | awk -F ':' '{ if ($2 == \"yes\") print $1 }'")
+(defpoll wifi-strength :interval "2s" :initial "0" "nmcli -t -f SIGNAL,ACTIVE device wifi | awk -F ':' '{ if ($2 == \"yes\") print $1 }'")
 (defpoll wifi-status :interval "2s" "nmcli -t -f WIFI radio")
 
 (defpoll bt-status :interval "2s" "[[ $(cat /sys/class/bluetooth/hci0/rfkill7/state) -eq 1 ]] && printf 'enabled' || printf 'disabled'")
