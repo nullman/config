@@ -62,7 +62,7 @@ _gettemp() {
     sensors ${opts} | grep "^temp1:" | sed 's/^temp1: \+//' | head -n 1
 }
 
-threads="$(lscpu -p | grep -v "^#" | wc -l)"
+threads="$(lscpu -p | grep -v '^#' | wc -l)"
 
 echo "Performing CPU temperature test on ${threads} threads..."
 

@@ -136,6 +136,8 @@ alias psmem="
     ps -e -o pid,ppid,user,pcpu,pmem,args | \
     head -n 1 && ps -e -o pid,ppid,user,pcpu,pmem,args | \
     sort -nr -k 5 | head -n 10"
+#        cpu-threads             number of cpu threads
+alias cpu-threads="lscpu -p | grep -v '^#' | wc -l"
 #        un                      id -un (username)
 alias un="id -un"
 #        hn                      uname -n (hostname)
