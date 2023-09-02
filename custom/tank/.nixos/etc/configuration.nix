@@ -651,6 +651,7 @@
     fontforge-gtk
     gcal
     gnome.file-roller
+    gnome-frog
     gparted
     grip id3lib
     gtkimageview
