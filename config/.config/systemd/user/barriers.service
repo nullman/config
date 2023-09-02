@@ -16,7 +16,7 @@ Description=Barrier Server (barriers)
 After=network.target
 
 [Service]
-ExecStart=/usr/sbin/barriers --daemon --debug INFO --enable-crypto --enable-drag-drop --config ${HOME}/.barrier.conf
+ExecStart=/usr/sbin/barriers --debug INFO --no-tray --enable-drag-drop --config ${HOME}/.barrier.conf
 Restart=always
 RestartSec=10
 

@@ -18,7 +18,7 @@ After=network.target
 [Service]
 #ExecStart=/bin/sh -c 'exec /usr/bin/barrierc --no-daemon --debug INFO --enable-crypto --enable-drag-drop [dozer]:24800 </dev/zero'
 #ExecStart=/usr/sbin/barrier
-ExecStart=/usr/sbin/barrierc --daemon --debug INFO --enable-crypto --enable-drag-drop --config ${HOME}/.barrier.conf
+ExecStart=/usr/sbin/barrierc --debug INFO --no-tray --enable-drag-drop dozer:24800
 Restart=always
 RestartSec=10
 
