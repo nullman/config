@@ -13,10 +13,12 @@
 
 [Unit]
 Description=Barrier (barrier)
+After=network.target
 
 [Service]
-#ExecStart=/bin/bash -c 'exec /usr/bin/barrierc --no-daemon --debug INFO --enable-crypto --enable-drag-drop [dozer]:24800 </dev/zero'
-ExecStart=/sbin/barrier
+#ExecStart=/bin/sh -c 'exec /usr/bin/barrierc --no-daemon --debug INFO --enable-crypto --enable-drag-drop [dozer]:24800 </dev/zero'
+#ExecStart=/usr/sbin/barrier
+ExecStart=barrierc --no-daemon --debug INFO --enable-crypto --config ${HOME}/.barrier.conf
 Restart=always
 RestartSec=10
 

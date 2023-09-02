@@ -5,11 +5,8 @@
 /* Windows */
 
 .bar {
-    /* background-color: #3A3A3A; */
-    /* background-color: rgba(58, 58, 58, .50); */
-    /* background-color: #1D1D1D; */
     background-color: rgba(29, 29, 29, .60);
-    color: #cfcfcf;
+    color: #AFAFAF;
     padding: 12px;
 }
 
@@ -25,7 +22,7 @@
 
 .metric scale trough {
     all: unset;
-    background-color: #4e4e4e;
+    background-color: #4E4E4E;
     border-radius: 50px;
     min-height: 5px;
     min-width: 50px;
@@ -35,8 +32,7 @@
 
 .metric scale trough highlight {
     all: unset;
-    background-color: #d35d6e;
-    /* color: #000000; */
+    background-color: #D35D6E;
     border-radius: 10px;
 }
 
@@ -44,25 +40,25 @@
 
 slider {
     all: unset;
-    color: #ffd5cd;
+    color: #FFD5CD;
 }
 
 button:hover {
-    color: #ffffff;
-    /* color: #d35d6e; */
-    /* color: #bf5f5f; */
-    /* color: #5e81ac; */
+    color: #FFFFFF;
+    /* color: #D35D6E; */
+    /* color: #BF5F5F; */
+    /* color: #5E81AC; */
     font-weight: bold;
 }
 
 .highlight {
-    /* color: #ffffff; */
-    /* color: #cfcf00; */
-    color: #5e81ac;
+    color: #FFFFFF;
+    /* color: #CFCF00; */
+    /* color: #5E81AC; */
     font-weight: bold;
 }
 
 .music-state {
-    color: #5e81ac;
+    /* color: #5E81AC; */
     font-weight: bold;
 }
