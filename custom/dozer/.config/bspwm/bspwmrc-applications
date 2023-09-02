@@ -26,7 +26,7 @@ _command xscreensaver && xscreensaver -no-splash &
 #_command xautolock && xautolock -time 30 -locker 'xscreensaver-command -lock' & # lock screen after 30 minutes
 #_command mpd && mpd ${HOME}/.mpd/mpd.conf &
 #_command dropbox && dropbox start &
-#_command barriers && barriers --config ${HOME}/.barrier.conf &
+_command barriers && barriers --config ${HOME}/.barrier.conf &
 #_command barrierc && barrierc SERVER &
 #_command emacs && emacs --daemon &
 
@@ -48,8 +48,9 @@ _command thunar && _delay 1 thunar &
 #_command discord && _delay 1 discord &
 #_command tootle && _delay 10 tootle &
 #_command com.github.bleakgrey.tootle && _delay 10 com.github.bleakgrey.tootle &
+#_command element-desktop && _delay 1 element-desktop &
 #_command dev.geopjr.Tuba && _delay 10 dev.geopjr.Tuba &
-#_command pidgin && _delay 1 pidgin &
+#_command pidgin && _delay 10 pidgin &
 #_command gajim && _delay 10 gajim &
 #_command idea && _delay 10 idea &
 _command google-chrome-stable && _delay 1 google-chrome-stable &
