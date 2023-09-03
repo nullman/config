@@ -223,6 +223,7 @@
     fonts = with pkgs; [
       anonymousPro
       #cantarell-fonts
+      corefonts
       #dejavu_fonts
       #dina-font
       fira-code
