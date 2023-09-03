@@ -270,33 +270,15 @@
   services = {
     printing = {
       enable = true;
-      cups-pdf.enable = true;
-      drivers = [ pkgs.canon-cups-ufr2 pkgs.cups-pdf-to-pdf ];
-      #drivers = [ pkgs.canon-cups-ufr2 pkgs.carps-cups pkgs.cups-bjnp ];
-      stateless = true;
       #logLevel = "debug";
-      logLevel = "verbose";
-      #extraConf = ''
-      #  DefaultEncryption Never
-      #'';
     };
-    #avahi = {
-    #  enable = true;
-    #  nssmdns = true;
-    #  openFirewall = true;              # wifi printer
-    #  #ipv4 = true;
-    #  #browseDomains = [ "printer" ];
-    #  #publish.enable = true;
-    #  #publish.workstation = true;
-    #  #publish.addresses = true;
-    #};
   };
   hardware.printers = {
     ensurePrinters = [
       {
         name = "Canon-MF210";
-        deviceUri = "socket://printer:9100";
-        model = "CNRCUPSMF210ZK.ppd";
+        deviceUri = "ipp://printer/ipp/print";
+        model = "everywhere";
       }
     ];
     ensureDefaultPrinter = "Canon-MF210";
@@ -330,8 +312,16 @@
     };
   };
 
-  # openssh
-  services.openssh.enable = true;
+  ## openssh server
+  #services.openssh.enable = true;
+
+  ## open firewall ports
+  #networking.firewall = {
+  #  enable = true;
+  #  allowedTCPPorts = [ 515 631 9100 ];
+  #  allowedUDPPorts = [ 515 631 9100 ];
+  #  checkReversePath = "loose";
+  #};
 
   # user account
   users.groups.kyle = {
@@ -832,9 +822,8 @@
 
     #
 
-    # printer
+    # printing
     system-config-printer
-    canon-cups-ufr2
 
     # console hacks
     aalib
