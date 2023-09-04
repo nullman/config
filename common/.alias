@@ -3016,6 +3016,8 @@ alias nixf="nix-locate -w"
 alias nix-store-query="nix-store -q -R /run/current-system | grep"
 #        nix-shell-development   nix-shell ~/.nixos/shell.nix
 alias nix-shell-development="nix-shell \${HOME}/.nixos/shell.nix"
+#        nix-store-cleanup       nix-store garbage collect and optimize
+alias nix-store-cleanup="nix-store --gc && nix-store --optimise"
 
 #
 # git

@@ -8,7 +8,7 @@ conky.config = {
     font = 'Bitstream Vera Sans:size=12',
     gap_x = 25,
     gap_y = 45,
-    minimum_width = 340,
+    minimum_width = 400,
     no_buffers = true,
     own_window = true,
     own_window_class = 'Conky',
@@ -21,7 +21,7 @@ conky.config = {
 
 conky.text = [[
 # date and time
-${voffset 8}${color2}${font Bitstream Vera Sans:size=16}${time %A}${font} \
+${voffset -12}${color2}${font Bitstream Vera Sans:size=16}${time %A}${font} \
 ${voffset -8}${alignr}${color}${font Bitstream Vera Sans:size=38}${time %e}${font}
 ${voffset -30}${color}${font Bitstream Vera Sans:size=18}${time %b}${font} \
 ${voffset -3} ${color}${font Bitstream Vera Sans:size=20}${time %Y}${font}${color2}${hr}
@@ -82,7 +82,8 @@ ${voffset 10}${color}${font Bitstream Vera Sans:bold:size=12}System${font}
 # user
 ${voffset 5}${color2}User:${color}  ${alignr}${execi 1200 whoami}@${nodename}
 # os/distro
-${voffset 5}${color2}OS:${color}  ${alignr}${execi 3600 awk -F = '/DISTRIB_DESCRIPTION/ {print $2}' /etc/lsb-release | sed 's/"//g'}: ${execi 3600 awk -F = '/DISTRIB_RELEASE/ {printf $2" "} /NAME/ {print $2}' /etc/lsb-release | sed 's/"//g'}
+#${voffset 5}${color2}OS:${color}  ${alignr}${execi 3600 awk -F = '/DISTRIB_DESCRIPTION/{print $2}' /etc/lsb-release | sed 's/"//g'}: ${execi 3600 awk -F = '/DISTRIB_RELEASE/{printf $2" "} /NAME/{print $2}' /etc/lsb-release | sed 's/"//g'}
+${voffset 5}${color2}OS:${color}  ${alignr}${execi 3600 awk -F = '/DISTRIB_DESCRIPTION/{print $2}' /etc/lsb-release | sed 's/"//g'}
 # kernel
 ${voffset 5}${color2}Kernel:${color}  ${alignr}${kernel}
 # uptime
@@ -93,9 +94,12 @@ ${voffset 5}${color2}UTC:${color}  ${alignr}${utime %H:%M}
 # # packages
 # ${voffset 5}${color2}Packages to Update:${color}  ${alignr}${execi 3600 checkupdates | wc -l}
 # entropy
-${voffset 5}${color2}Entropy:${color}  ${entropy_avail} / ${entropy_poolsize}  ${entropy_perc}%  ${entropy_bar}
+${voffset 5}${color2}Entropy:${color}  ${alignr}${entropy_avail} / ${entropy_poolsize}  ${entropy_perc}%
+#${voffset 5}${color2}Entropy:${color}  ${entropy_avail} / ${entropy_poolsize}  ${entropy_perc}%  ${entropy_bar}
 
 # music
-${voffset 10}${color2}Artist:${color}  ${alignr}${mpd_artist}
-${color2}Song:${color}  ${alignr}${mpd_title}
+#${voffset 10}${color2}Artist:${color}  ${alignr}${mpd_artist}
+#${color2}Song:${color}  ${alignr}${mpd_title}
+${voffset 10}${color2}Artist:${color}  ${alignr}${texeci 2 ~/bin/mpc-playing | awk -F ' - ' '{ if (length($1) <= 40) { print $1 } else { print substr($1, 0, 40)"..." } }'}
+${color2}Song:${color}  ${alignr}${texeci 2 ~/bin/mpc-playing | awk -F ' - ' '{ if (length($2) <= 40) { print $2 } else { print substr($2, 0, 40)"..." } }'}
 ]]

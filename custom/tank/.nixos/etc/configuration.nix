@@ -633,6 +633,7 @@
     #xfce.thunar-volman
 
     # utilities
+    appimage-run
     bitwarden
     easytag
     etcher

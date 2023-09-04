@@ -23,6 +23,7 @@
 (defpoll active-desktop :interval "500ms" "bspc query -D -d --names")
 
 (defpoll music-info :interval "2s" "~/bin/mpc-playing")
+;;(defpoll music-info :interval "2s" "~/bin/mpc-playing | awk -F ' - ' '{ if (length($2) <= 40) { print $2 } else { print substr($2, 0, 40)\"...\" } }'")
 (defpoll music-state :interval "2s" "mpc | grep -q '^\\[playing\\]' && echo '' || echo ''")
 
 (defpoll mute :interval "500ms" "pamixer --get-mute")
