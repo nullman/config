@@ -238,9 +238,6 @@ wmname LG3D
 # fix java app not refreshing issue in tiling window managers
 export _JAVA_AWT_WM_NONREPARENTING=1
 
-# # delay before launching applets
-# delay=2
-
 # check if executable command is found in the path
 _command() {
     command -v "$1" > /dev/null 2>&1

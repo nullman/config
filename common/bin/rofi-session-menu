@@ -44,13 +44,14 @@ while getopts ":drwsh" opt ; do
             rofi -modi window -show window
             ;;
         s)
-            # symbols:  |   󰈆 󰈇  |    | ⏻
-            sel=$(printf "\tLock\n󰈇\tLogout\n\tReboot\n⏻\tShutdown" | \
+            # symbols:  |   󰈆 󰈇  | ⏼ |    | ⏻
+            sel=$(printf "\tLock\n󰈇\tLogout\n\tReboot\n⏼\tHibernate\n⏻\tShutdown" | \
                       rofi -dmenu -i -p 'System' -width 20 -padding 20 -lines 4)
             case "${sel}" in
-                *Lock) lockscreen -- scrot ;;
+                *Lock) systemctl suspend ;;
                 *Logout) loginctl terminate-session $(loginctl session-status | head -n 1 | awk '{print $1}') ;;
                 *Reboot) systemctl reboot ;;
+                *Hibernate) systemctl hibernate ;;
                 *Shutdown) systemctl poweroff ;;
             esac
             ;;

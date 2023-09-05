@@ -2066,8 +2066,8 @@ alias rsync-repos-put-colleen="rsync -rlptx --progress ${home}/data/media/Repos/
 #!alias rsync-playlists-put-pi="rsync -rlptx --progress ${home}/data/media/Audio/Playlists/ pi@pimodem:/media/playlists/"
 #!#        rsync-org-put-dropbox  rsync ${HOME}/org/* ${HOME}/Dropbox/Org/
 #!alias rsync-org-put-dropbox="[[ -d \${HOME}/Dropbox/Org ]] && rsync -aAXv --delete \${HOME}/org/* \${HOME}/Dropbox/Org/"
-#        rsync-aerial-get-morpheus  rsync morpheus:/home/data/media/aerial /home/data/media/aerial
-alias rsync-aerial-get-morpheus="rsync -rlptx --progress morpheus:/home/data/media/aerial/ ${home}/data/media/aerial/"
+#        rsync-aerial-get-morpheus  rsync morpheus:/home/data/media/Video/Aerial /home/data/media/Video/Aerial
+alias rsync-aerial-get-morpheus="rsync -rlptx --progress morpheus:/home/data/media/Video/Aerial/ ${home}/data/media/Video/Aerial/"
 #        rsync-common-put-media-delete rsync ${HOME}/doc/icons/ and ${HOME}/doc/images/ to /home/data/media/Graphic/
 alias rsync-common-put-media-delete=" \
     rsync -rlptx --progress --delete \"\${HOME}/doc/icons/\" ${home}/data/media/Graphic/Icons/Common/ && \
@@ -3016,8 +3016,8 @@ alias nixf="nix-locate -w"
 alias nix-store-query="nix-store -q -R /run/current-system | grep"
 #        nix-shell-development   nix-shell ~/.nixos/shell.nix
 alias nix-shell-development="nix-shell \${HOME}/.nixos/shell.nix"
-#        nix-store-cleanup       nix-store garbage collect and optimize
-alias nix-store-cleanup="nix-store --gc && nix-store --optimise"
+#        nix-store-cleanup       nix-store garbage collect (keep 30 days) and optimize
+alias nix-store-cleanup="nix-collect-garbage --delete-older-than 30d && nix-store --optimise"
 
 #
 # git

@@ -47,17 +47,6 @@
   # package settings
   nixpkgs.config = {
     allowUnfree = true;
-    #allowUnfreePredicate = (pkg: builtins.elem pkg.pname [
-    #  "canon-cups-ufr2"
-    #  "cnijfilter2"
-    #  "discord"
-    #  "font-adobe-utopia-100dpi"
-    #  "font-bh-100dpi"
-    #  "font-bh-lucidatypewriter-100dpi"
-    #  "rar"
-    #  "slack"
-    #  "spotify"
-    #]);
     joypixels.acceptLicense = true;
     permittedInsecurePackages = [
       "electron-12.2.3"
@@ -116,11 +105,11 @@
         ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
         Restart = "on-failure";
         RestartSec = 1;
-        TimeoutStopSec = 10;
+        TimeoutStopSec = 30;
       };
     };
     extraConfig = ''
-      DefaultTimeoutStopSec=10s
+      DefaultTimeoutStopSec=30s
     '';
   };
 
@@ -457,6 +446,8 @@
     dosfstools
     duf
     emacs
+    exfat
+    exfatprogs
     file
     findutils
     fortune
@@ -579,7 +570,9 @@
     wmname
     #wofi
     wmctrl
+    xfce.exo
     xfce.xfce4-power-manager
+    xfce.xfce4-settings
     xfce.xfconf
     xdg-desktop-portal-gtk
     xdg-desktop-portal-hyprland
@@ -653,7 +646,6 @@
     nur.repos.wolfangaukang.vdhcoapp
     simplescreenrecorder
     #x48
-    xscreensaver
 
     # tui
     btop
@@ -792,6 +784,7 @@
     jdk
     #jdk11
     #jdk8
+    jetbrains.idea-community
     jre
     jq
     kotlin
@@ -807,6 +800,7 @@
     python311Packages.pip
     racket
     regina
+    rnix-lsp
     ruby
     rustc
     shellcheck
@@ -844,6 +838,15 @@
     rig
     sl
     tty-clock
+
+    # latex
+
+    # xscreensaver
+    xscreensaver
+    # extra savers
+    antsimulator
+    xmountains
+    xplanet
 
     # games
     alephone
