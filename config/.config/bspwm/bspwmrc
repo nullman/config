@@ -281,15 +281,8 @@ _command picom && picom -c &
 # system bar
 [[ -f "${HOME}/bin/system-bar" ]] && source "${HOME}/bin/system-bar"
 
-# conky displays on wallpaper
-_command conky && [[ -f "${HOME}/.config/conky/system-info.conkyrc" ]] && conky --config="${HOME}/.config/conky/system-info.conkyrc" &
-_command conky && [[ -f "${HOME}/.config/conky/bspwm-keybindings.conkyrc" ]] && conky --config="${HOME}/.config/conky/bspwm-keybindings.conkyrc" &
-#_command conky && [[ -f "${HOME}/.config/conky/reminders.conkyrc" ]] && conky --config="${HOME}/.config/conky/reminders.conkyrc" &
-_command conky && [[ -f "${HOME}/.config/conky/reminders.conkyrc" ]] && \
-    ([[ $(xrandr | sed -n 's/^.* current //p' | sed 's/ x .*$//') -gt 1600 ]] && conky --config="${HOME}/.config/conky/reminders.conkyrc") &
-#_command conky && [[ -f "${HOME}/.config/conky/weather.conkyrc" ]] && conky --config="${HOME}/.config/conky/weather.conkyrc" &
-_command conky && [[ -f "${HOME}/.config/conky/weather.conkyrc" ]] && \
-    ([[ $(xrandr | sed -n 's/^.* current //p' | sed 's/ x .*$//') -gt 1600 ]] && conky --config="${HOME}/.config/conky/weather.conkyrc") &
+# system wallpaper displays
+[[ -f "${HOME}/bin/system-wallpaper-displays" ]] && source "${HOME}/bin/system-wallpaper-displays"
 
 # full-screen task-switcher
 #_command skippy-xd && skippy-xd --config "${HOME}/.config/skippy-xd/skippy-xd.rc" --start-daemon &

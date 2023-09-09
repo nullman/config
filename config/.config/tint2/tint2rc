@@ -90,9 +90,9 @@ border_color_pressed = #000000 100
 # :    Adds a separator. You can specify more than one.
 #-------------------------------------
 
-#panel_items = TFBCS
-panel_items = TFEBCS
-panel_size = 100% 30
+#panel_items = TFBSC
+panel_items = TFEBSC
+panel_size = 100% 20
 panel_margin = 0 0
 panel_padding = 2 0 10
 panel_background_id = 1
@@ -140,7 +140,7 @@ taskbar_always_show_all_desktop_tasks = 0
 taskbar_name_padding = 4 2
 taskbar_name_background_id = 0
 taskbar_name_active_background_id = 0
-taskbar_name_font = System San Francisco Display Bold 12
+taskbar_name_font = MesloLGS Nerd Font Mono 10
 taskbar_name_font_color = #e3e3e3 100
 taskbar_name_active_font_color = #ffffff 100
 taskbar_distribute_size = 0
@@ -157,7 +157,7 @@ task_centered = 1
 urgent_nb_of_blink = 100000
 task_maximum_size = 150 35
 task_padding = 2 2 4
-task_font = System San Francisco Display 12
+task_font = MesloLGS Nerd Font Mono 10
 task_tooltip = 1
 task_thumbnail = 0
 task_thumbnail_size = 210
@@ -208,7 +208,7 @@ launcher_item_app = /usr/share/applications/chromium.desktop
 
 time1_format = %a %Y-%m-%d %H:%M
 time2_format =
-time1_font = System San Francisco Display 12
+time1_font = MesloLGS Nerd Font Mono 10
 time1_timezone =
 time2_timezone =
 clock_font_color = #ffffff 100
@@ -230,7 +230,7 @@ battery_tooltip = 1
 battery_low_status = 10
 battery_low_cmd = [[ -e /sys/class/power_supply/BAT0 ]] && notify-send --expire-time=10000 "Battery is low!"
 battery_full_cmd =
-bat1_font = System San Francisco Display 12
+bat1_font = MesloLGS Nerd Font Mono 10
 battery_font_color = #ffffff 100
 bat1_format = %p %t
 bat2_format =
@@ -273,7 +273,7 @@ execp_rclick_command = xdg-open 'http://wttr.in/?san%20diego&u'
 execp_mclick_command =
 execp_uwheel_command =
 execp_dwheel_command =
-execp_font = System San Francisco Display 12
+execp_font = MesloLGS Nerd Font Mono 10
 execp_font_color = #ffffff 100
 execp_padding = 2 0
 execp_background_id = 0

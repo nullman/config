@@ -287,11 +287,11 @@ alias debug-on="export LD_DEBUG=files"
 #        debug-off               turn off files (library modules) debugging info
 alias debug-off="export LD_DEBUG="
 #!#        alsa-reset            restart alsa sound
-#!alias alsa-reset="sudo pkill -x pulseaudio ; sudo alsa force-reload"
+#!alias alsa-reset="sudo pkill -x -f pulseaudio ; sudo alsa force-reload"
 #!#        alsa-reset            restart alsa sound
 #!alias alsa-reset="sudo alsa force-reload"
 #        pulse-reset             restart pulseaudio sound
-alias pulse-reset="pkill -x pulseaudio ; sleep 2 ; pulseaudio --daemonize=no &"
+alias pulse-reset="pkill -x -f pulseaudio ; sleep 2 ; pulseaudio --daemonize=no &"
 #        ver                     distribution version
 alias ver="lsb_release -a"
 #        kernel                  kernel version
@@ -315,14 +315,14 @@ alias fdisk-list="sudo fdisk -l"
 #        dd-sync                 sudo dd bs=4M conv=fdatasync status=progress
 alias dd-sync="sudo dd bs=4M conv=fdatasync status=progress"
 #        sxhkdrs                 sxhkd restart
-alias sxhkdrs="pkill -SIGUSR1 -x -u \${USER} sxhkd"
-#!#        tint2rs                 tint2 restart
-#!alias tint2rs="(pkill -SIGUSR1 -x -u \${USER} tint2 && sleep 1 && \
-#!    xdo below -t \$(xdo id -n root) \$(xdo id -N Tint2)) || \${HOME}/bin/system-bar"
-#!#!    xdo below -t \$(xdo id -N Bspwm) \$(xdo id -N Tint2)) || \${HOME}/bin/system-bar"
+alias sxhkdrs="pkill -SIGUSR1 -x -f -u \${USER} sxhkd"
+#        tint2rs                 tint2 restart
+alias tint2rs="(pkill -x -f -u \${USER} tint2 ; tint2 && sleep 1 && \
+    xdo below -t \$(xdo id -n root) \$(xdo id -N Tint2)) &"
 #        ewwrs                   eww restart
-alias ewwrs="(pkill -x -u \${USER} eww && eww --restart open bar && sleep 1 && \
+alias ewwrs="(eww --restart open bar && sleep 1 && \
     xdo below -t \$(xdo id -n root) \$(xdo id -N eww-bar))"
+#!alias ewwrs="(pkill -x -f -u \${USER} eww ; eww --restart open bar && sleep 1 && \
 #        xrdb-list               list custom .Xresource settings
 alias xrdb-list="xrdb -query -all"
 #        xrdb-merge-home         merge ~/.Xresource settings into xrdb
@@ -1876,8 +1876,10 @@ alias ping-uswest="ping uswest.net"
 alias ping-uswestip="ping 204.147.80.81"
 #        traceroute-uswest       traceroute uswest.net
 alias traceroute-uswest="traceroute uswest.net"
+#        ipaddress               display external IP address
+alias ipaddress="curl http://httpbin.org/get --silent | jq --raw-output .origin"
 #        icanhazip               display external IP address
-alias icanhazip="curl icanhazip.com"
+alias icanhazip="curl http://icanhazip.com --silent"
 
 #
 # offlineimap
@@ -1890,10 +1892,10 @@ alias imap-on="rm -f \${HOME}/.noofflineimap > /dev/null 2>&1"
 #        imap-off                turn offlineimap off
 alias imap-off="
     touch \${HOME}/.noofflineimap
-    sudo pkill -SIGTERM -x offlineimap"
+    sudo pkill -SIGTERM -x -f offlineimap"
 #! alias imap-off="touch \${HOME}/.noofflineimap > /dev/null 2>&1"
 #        imap-restart            restart offlineimap
-alias imap-restart="sudo pkill -SIGTERM -x offlineimap"
+alias imap-restart="sudo pkill -SIGTERM -x -f offlineimap"
 #        offlineimap-once        sync normal imap accounts once
 alias offlineimap-once="offlineimap -o -u ttyui"
 #        offlineimap-home        sync home imap account
@@ -3016,8 +3018,11 @@ alias nixf="nix-locate -w"
 alias nix-store-query="nix-store -q -R /run/current-system | grep"
 #        nix-shell-development   nix-shell ~/.nixos/shell.nix
 alias nix-shell-development="nix-shell \${HOME}/.nixos/shell.nix"
-#        nix-store-cleanup       nix-store garbage collect (keep 30 days) and optimize
-alias nix-store-cleanup="nix-collect-garbage --delete-older-than 30d && nix-store --optimise"
+#        nix-store-cleanup       nix-store delete old generations, garbage collect, and optimize
+alias nix-store-cleanup="
+    sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations 30d && \
+    nix-collect-garbage --delete-older-than 30d && \
+    nix-store --optimise"
 
 #
 # git

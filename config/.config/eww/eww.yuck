@@ -125,7 +125,7 @@
 
 (defwidget wifi [status strength]
   (box :class "label"
-       :visible {strength == "" ? "false" : "true"}
+       ;;:visible {strength == "" ? "false" : "true"}
        :tooltip "WiFi strength: ${strength}%"
        (button :onclick {status == "enabled" ? "nmcli radio wifi off" : "nmcli radio wifi on"}
                :onrightclick "nm-connection-editor &"
@@ -138,7 +138,7 @@
 
 (defwidget bluetooth [status]
   (box :class "label"
-       :visible {status == "" ? "false" : "true"}
+       ;;:visible {status == "" ? "false" : "true"}
        :tooltip "Bluetooth status: ${status}"
        (button :onrightclick "blueman-manager &"
                ;; symbols: 󰂯 󰂰 󰂱 󰂲 󰂳 󰂴

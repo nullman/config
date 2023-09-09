@@ -235,19 +235,24 @@ super + shift + Print
 
 # reload sxhkd
 super + shift + s
-    pkill -SIGUSR1 -x -u ${USER} sxhkd && notify-send --expire-time=2000 'Reloading SXHKD'
+    pkill -SIGUSR1 -x -f -u ${USER} sxhkd && notify-send --expire-time=2000 'Reloading SXHKD'
 
-# # reload tint2
-# super + shift + t
-#     ((pkill -SIGUSR1 -x -u ${USER} tint2 && sleep 1 && \
-#       xdo below -t $(xdo id -n root) $(xdo id -N Tint2)) || \
-#       ${HOME}/bin/system-bar &) && notify-send --expire-time=2000 'Reloading Tint'
+# reload tint2
+super + shift + t
+    ((pkill -x -f -u ${USER} tint2 ; tint2 && sleep 1 && \
+    xdo below -t $(xdo id -n root) $(xdo id -N tint2)) &) && \
+    notify-send --expire-time=2000 'Reloading Tint'
 
 # reload eww
 super + shift + e
-    (pkill -x -u ${USER} eww && eww --restart open bar && sleep 1 && \
-    xdo below -t $(xdo id -n root) $(xdo id -N eww-bar)) && notify-send --expire-time=2000 'Reloading EWW'
-    #(pkill -u ${USER} system-bar && ${HOME}/bin/system-bar &) && notify-send --expire-time=2000 'Reloading EWW'
+    eww --restart open bar && sleep 1 && \
+    xdo below -t $(xdo id -n root) $(xdo id -N eww-bar) && \
+    notify-send --expire-time=2000 'Reloading EWW'
+    #(pkill -x -f -u ${USER} eww ; eww --restart open bar && sleep 1 && \
+
+# reload conky
+super + shift + c
+    (${HOME}/bin/system-wallpaper-displays &) && notify-send --expire-time=2000 'Reloading Conky'
 
 # reset video
 super + shift + v

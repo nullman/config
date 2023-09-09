@@ -600,6 +600,9 @@ bindsym $super+$alt+k --release exec --no-startup-id xkill
 # system bar
 [[ -f "${HOME}/bin/system-bar" ]] && exec --no-startup-id source "${HOME}/bin/system-bar"
 
+# system wallpaper displays
+[[ -f "${HOME}/bin/system-wallpaper-displays" ]] && source "${HOME}/bin/system-wallpaper-displays"
+
 # autostart standard applications
 #exec --no-startup-id ssh-agent
 #exec --no-startup-id ssh-add
@@ -613,7 +616,7 @@ exec --no-startup-id clipit
 #exec --no-startup-id blueman-applet
 #exec_always --no-startup-id sbxkb
 #exec --no-startup-id start_conky_maia # background wallpaper help text
-exec --no-startup-id conky --config=/usr/share/conky/conky_green # background wallpaper system monitor
+#exec --no-startup-id conky --config=/usr/share/conky/conky_green # background wallpaper system monitor
 #exec --no-startup-id start_conky_green
 #exec --no-startup-id xautolock -time 30 -locker blurlock # lock screen after 30 minutes
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 & eval $(gnome-keyring-daemon -s --components=pkcs11,secrets,ssh,gpg) # gnome app auth

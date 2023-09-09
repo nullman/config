@@ -58,6 +58,11 @@
       };
     };
   };
+  nixpkgs.overlays = [
+    (final: prev: {
+      syncterm = prev.callPackage /home/kyle/.nixos/pkgs/syncterm {};
+    })
+  ];
 
   # time zone
   time.timeZone = "US/Central";
@@ -425,6 +430,8 @@
     XDG_RUNTIME_DIR = "/run/user/1000";   # userid of above "user"
   };
 
+  #
+
   # packages
   environment.systemPackages = with pkgs; [
     # system
@@ -442,6 +449,7 @@
     cifs-utils
     coreutils
     curl
+    direnv
     dos2unix
     dosfstools
     duf
@@ -739,7 +747,7 @@
     ncgopher
     nyxt
     slack
-    #syncterm
+    syncterm                                # pthread error
     transmission-gtk
     tuba
 

@@ -31,6 +31,7 @@ System Tools
 | Super |     |      | Shift | s      | Reload SXHKD                    |
 | Super |     |      | Shift | t      | Reload Tint                     |
 | Super |     |      | Shift | e      | Reload EWW                      |
+| Super |     |      | Shift | c      | Reload Conky                    |
 | Super |     |      | Shift | v      | Reset Video                     |
 | Super | Alt |      |       | b      | Connect to Bluetooth Headphones |
 

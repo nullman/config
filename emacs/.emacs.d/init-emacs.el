@@ -3741,10 +3741,18 @@ Where BEG and END dates are in one of these formats:
 
 (init-message 3 "Org Mode: Functions: org-babel-tangle-block")
 
-(defun org-babel-tangle-block ()
-  "Tangle blocks for the tangle file of the block at point."
+(defun org-babel-tangle-block (&optional file)
+  "Tangle blocks for the tangle file of the block at point.
+
+If FILE is non-nil, then search the buffer for blocks that tangle
+to FILE and tangle them."
   (interactive)
-  (org-babel-tangle '(16)))
+  (if file
+      (save-excursion
+        (goto-char (point-min))
+        (when (re-search-forward (concat "#\\+BEGIN_SRC .* :tangle " file))
+          (org-babel-tangle '(16))))
+    (org-babel-tangle '(16))))
 ;; org-babel-tangle-block:1 ends here
 
 ;; [[file:init-emacs.org::#org-mode-functions-org-babel-tangle-file-async][org-babel-tangle-file-async:1]]
@@ -11923,17 +11931,17 @@ OUTPUT (defaults to 'phrase):
       ('hyphen (insert (cl-reduce (lambda (x y) (concat x "-" y)) phrase)))
       (t (insert (cl-reduce (lambda (x y) (concat x y)) phrase))))))
 
-(defun insert-password-phrase-three-space ()
-  "Call `insert-password-phrase' with a COUNT of 3 and an OUTPUT
+(defun insert-password-phrase-6-space ()
+  "Call `insert-password-phrase' with a COUNT of 6 and an OUTPUT
 of 'space."
   (interactive "*")
-  (insert-password-phrase 3 'space))
+  (insert-password-phrase 6 'space))
 
-(defun insert-password-phrase-three-hyphen ()
-  "Call `insert-password-phrase' with a COUNT of 3 and an OUTPUT
+(defun insert-password-phrase-6-hyphen ()
+  "Call `insert-password-phrase' with a COUNT of 6 and an OUTPUT
 of 'hyphen."
   (interactive "*")
-  (insert-password-phrase 3 'hyphen))
+  (insert-password-phrase 6 'hyphen))
 ;; insert-password-phrase:1 ends here
 
 ;; [[file:init-emacs.org::#functions-text-inserting-functions-insert-license-gpl][insert-license-gpl:1]]
