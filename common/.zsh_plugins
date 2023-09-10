@@ -37,6 +37,9 @@ romkatv/powerlevel10k
 # z jump around
 rupa/z
 
+# nix completions
+spwhitt/nix-zsh-completions
+
 # suggest commands as you type based on history and completions
 zsh-users/zsh-autosuggestions
 

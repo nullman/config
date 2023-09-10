@@ -137,6 +137,9 @@
     ACTION=="add", SUBSYSTEMS=="usb", SUBSYSTEM=="block", ENV{ID_FS_USAGE}=="filesystem", RUN{program}+="${pkgs.systemd}/bin/systemd-mount --no-block --automount=yes --collect $devnode /media"
   '';
 
+  # shells
+  programs.zsh.enable = true;
+
   # locate
   services.locate = {
     enable = true;
@@ -736,6 +739,7 @@
 
     # internet
     betterbird
+    bore-cli
     chromium
     discord
     element-desktop
@@ -744,10 +748,11 @@
     #firefox-wayland
     gajim
     kristall
+    magic-wormhole
     ncgopher
     nyxt
     slack
-    syncterm                                # pthread error
+    syncterm
     transmission-gtk
     tuba
 
