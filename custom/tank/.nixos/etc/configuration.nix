@@ -20,6 +20,7 @@
   # systemd-boot EFI boot loader
   boot.loader = {
     systemd-boot.enable = true;
+    systemd-boot.configurationLimit = 20;
     efi.canTouchEfiVariables = true;
   };
   fileSystems."/".options = [ "noatime" ];
@@ -145,6 +146,23 @@
     enable = true;
     locate = pkgs.mlocate;
     localuser = null;
+    prunePaths = [
+      "/dev"
+      "/lost+found"
+      "/media"
+      "/mnt"
+      "/nix/store"
+      "/nix/var/log/nix"
+      "/proc"
+      "/srv"
+      "/sys"
+      "/tmp"
+      "/var/cache"
+      "/var/lock"
+      "/var/run"
+      "/var/spool"
+      "/var/tmp"
+    ];
   };
 
   # x11

@@ -17,7 +17,7 @@
 let e =
   pkgs.buildFHSEnv {
     name = "development-build-env";
-    targetPkgs = ps: with ps; [
+    targetPkgs = pkgs: with pkgs; [
       # libraries
       gmp gmp.dev
       isl
