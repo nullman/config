@@ -32,6 +32,7 @@
  (:name "Ars Technica" :html "https://www.arstechnica.com/" :rss "https://feeds.arstechnica.com/arstechnica/index/" :tag "dev")
  (:name "TWIT" :html "https://www.twit.tv/" :rss "https://feeds.twit.tv/twit_video_hd.xml" :tag "dev")
  ;;(:name "How-To Geek" :html "https://www.howtogeek.com/" :rss "https://www.howtogeek.com/feed/" :tag "dev")
+ (:name "System Crafters" :html "https://systemcrafters.net/" :rss "https://systemcrafters.net/rss/news.xml" :tag "dev")
  (:name "Coding Horror" :html "https://blog.codinghorror.com/" :rss "http://feeds.feedburner.com/codinghorror?format=xml" :tag "dev")
  (:name "Haiku" :html "https://www.haiku-os.org/blog/" :rss "https://www.haiku-os.org/blog/index.xml" :tag "dev")
  (:name "nixCraft" :html "https://www.cyberciti.biz/" :rss "https://www.cyberciti.biz/atom/atom.xml" :tag "dev")

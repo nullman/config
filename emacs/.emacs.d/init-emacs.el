@@ -16260,6 +16260,17 @@ USING is the remaining peg."
   (gcmh-mode 1))
 ;; gcmh:1 ends here
 
+;; [[file:init-emacs.org::#packages-guix][guix:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: guix
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Packages: guix")
+
+(use-package guix
+  :straight t)
+;; guix:1 ends here
+
 ;; [[file:init-emacs.org::#packages-hide-mode-line][hide-mode-line:1]]
 ;;------------------------------------------------------------------------------
 ;;; Packages: hide-mode-line

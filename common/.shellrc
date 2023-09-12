@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#=============================================================================
+#===============================================================================
 # .shellrc
 #
 # Shell Run Commands
@@ -7,7 +7,7 @@
 # File to be sourced from main shell script (i.e. .bashrc and .zshrc).
 #
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
-#=============================================================================
+#===============================================================================
 
 # source funct
 [[ -f "${HOME}/.funct" ]] && source "${HOME}/.funct"
@@ -260,7 +260,7 @@ fi
 # display something
 
 # display system information
-_command neofetch && neofetch 2>&1
+#_command neofetch && neofetch 2>&1 # too slow
 
 # # display color script
 # _command colorscript && colorscript random 2>&1
@@ -268,6 +268,6 @@ _command neofetch && neofetch 2>&1
 # # display weather
 # _command curl && curl --silent wttr.in 2>&1 | head -n 7
 
-#=============================================================================
+#===============================================================================
 # End of File
-#=============================================================================
+#===============================================================================

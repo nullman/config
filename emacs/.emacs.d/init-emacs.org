@@ -9,15 +9,14 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2023-09-09 12:26 (kyle)>
+  #+TIMESTAMP: <2023-09-12 11:02 (kyle)>
 
 * Table of Contents
   :PROPERTIES:
-  :TOC: :include all
+  :TOC: :include all :ignore this
   :END:
 
   :CONTENTS:
-- [[#table-of-contents][Table of Contents]]
 - [[#overview][Overview]]
 - [[#information][Information]]
   - [[#information-font-lock-faces][Font-Lock Faces]]
@@ -590,6 +589,7 @@
   - [[#packages-git-gutter][git-gutter]]
   - [[#packages-git-gutter][git-gutter+]]
   - [[#modules-git-timemachine][git-timemachine]]
+  - [[#packages-guix][guix]]
   - [[#modules-helpful][helpful]]
   - [[#packages-hide-mode-line][hide-mode-line]]
   - [[#modules-hippie-exp][hippie-exp]]
@@ -24590,6 +24590,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
        (:name "Ars Technica" :html "https://www.arstechnica.com/" :rss "https://feeds.arstechnica.com/arstechnica/index/" :tag "dev")
        (:name "TWIT" :html "https://www.twit.tv/" :rss "https://feeds.twit.tv/twit_video_hd.xml" :tag "dev")
        ;;(:name "How-To Geek" :html "https://www.howtogeek.com/" :rss "https://www.howtogeek.com/feed/" :tag "dev")
+       (:name "System Crafters" :html "https://systemcrafters.net/" :rss "https://systemcrafters.net/rss/news.xml" :tag "dev")
        (:name "Coding Horror" :html "https://blog.codinghorror.com/" :rss "http://feeds.feedburner.com/codinghorror?format=xml" :tag "dev")
        (:name "Haiku" :html "https://www.haiku-os.org/blog/" :rss "https://www.haiku-os.org/blog/index.xml" :tag "dev")
        (:name "nixCraft" :html "https://www.cyberciti.biz/" :rss "https://www.cyberciti.biz/atom/atom.xml" :tag "dev")
@@ -25223,6 +25224,24 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;; (use-package git-timemachine
       ;;   :straight t
       ;;   :bind* ("C-x C-g" . git-timemachine))
+    #+END_SRC
+
+*** guix
+    :PROPERTIES:
+    :CUSTOM_ID: packages-guix
+    :END:
+
+    Popup Interface for Emacs-Guix Commands
+
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Packages: guix
+      ;;------------------------------------------------------------------------------
+
+      (init-message 2 "Packages: guix")
+
+      (use-package guix
+        :straight t)
     #+END_SRC
 
 *** +helpful+
