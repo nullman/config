@@ -19,8 +19,10 @@
 
   # systemd-boot EFI boot loader
   boot.loader = {
-    systemd-boot.enable = true;
-    systemd-boot.configurationLimit = 20;
+    systemd-boot = {
+      enable = true;
+      configurationLimit = 20;
+    };
     efi.canTouchEfiVariables = true;
   };
   fileSystems."/".options = [ "noatime" ];
@@ -218,10 +220,13 @@
   #};
 
   # bluetooth
-  hardware.bluetooth.enable = true;
-  hardware.bluetooth.settings = {
-    General = {
-      Enable = "Source,Sink,Media,Socket";
+  hardware.bluetooth = {
+    enable = true;
+    hsphfpd.enable = true;
+    settings = {
+      General = {
+        Enable = "Source,Sink,Media,Socket";
+      };
     };
   };
   services.blueman.enable = true;
@@ -360,6 +365,7 @@
       "lp"
       "mlocate"
       "networkmanager"
+      "scanner"
       "users"
       "video"
       "wheel"
@@ -451,7 +457,26 @@
     XDG_RUNTIME_DIR = "/run/user/1000";   # userid of above "user"
   };
 
-  #
+  ## gbar
+  #programs.gBar = {
+  #  enable = true;
+  #  # config = {
+  #  #   Location = "L";
+  #  #   EnableSNI = true;
+  #  #   SNIIconSize = {
+  #  #     Discord = 26;
+  #  #     OBS = 23;
+  #  #   };
+  #  #   WorkspaceSymbols = [ " " " " ];
+  #  # };
+  #};
+
+  ## packages
+  #environment.systemPackages = with pkgs; [
+  #  curl
+  #  wget
+  #  vim
+  #];
 
   # packages
   environment.systemPackages = with pkgs; [
@@ -504,7 +529,7 @@
     man-db
     man-pages
     menumaker
-    mlocate
+    #mlocate
     mtools
     neofetch
     nettools

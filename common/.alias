@@ -344,6 +344,8 @@ alias find-ls="find . -mindepth 1 -maxdepth 1 -not -regex '^\.+$'"
 alias update-desktop-apps="update-desktop-database \${HOME}/.local/share/applications"
 #        pi-serial-number        print raspberry pi serial number
 alias pi-serial-number="echo \$(cat /sys/firmware/devicetree/base/serial-number)"
+#        nf                      neofetch
+alias nf="neofetch"
 
 #
 # general (external)
@@ -3027,12 +3029,12 @@ alias nix-store-cleanup="
 #
 # Guix
 #
-#        guixrs                  guix reconfigure system
-alias guixrs="sudo -E guix system reconfigure ~/.config/guix/system.scm"
-#!#        guixcu                  guix-channel update
-#!alias guixcu="guix-channel --update"
-#        guixs                   guix package search
-alias guixs="guix search"
+#!#        guixrs                  guix reconfigure system
+#!alias guixrs="sudo -E guix system reconfigure \${HOME}/.config/guix/system.scm"
+#!#!#        guixcu                  guix-channel update
+#!#!alias guixcu="guix-channel --update"
+#!#        guixs                   guix package search
+#!alias guixs="guix search"
 #!#        guixf                   guix-locate file search
 #!alias guixf="guix-locate -w"
 #!#        guix-store-query        guix-store installed package location query

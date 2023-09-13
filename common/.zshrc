@@ -94,20 +94,20 @@ if [[ -n "${STY}" ]] || [[ -n "${TMUX}" ]] ; then
     bindkey "\e[4~" end-of-line
 fi
 
-# compinstall
-autoload -U compinit
-zstyle :compinstall filename "${HOME}/.zshrc"
-zstyle ':completion:*' menu select
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' # case insensitive tab completion
-zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}" # colored completion (different colors for dirs/files/etc)
-zstyle ':completion:*' rehash true # automatically find new executables in path
-# speed up completions
-zstyle ':completion:*' accept-exact '*(N)'
-zstyle ':completion:*' use-cache on
-zstyle ':completion:*' cache-path "${HOME}/.cache/zsh"
-zmodload zsh/complist
-compinit
-_comp_options+=(globdots)               # include hidden files
+# # compinstall # very slow (takes a full second to run)
+# autoload -U compinit
+# zstyle :compinstall filename "${HOME}/.zshrc"
+# zstyle ':completion:*' menu select
+# zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' # case insensitive tab completion
+# zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}" # colored completion (different colors for dirs/files/etc)
+# zstyle ':completion:*' rehash true # automatically find new executables in path
+# # speed up completions
+# zstyle ':completion:*' accept-exact '*(N)'
+# zstyle ':completion:*' use-cache on
+# zstyle ':completion:*' cache-path "${HOME}/.cache/zsh"
+# zmodload zsh/complist
+# compinit
+# _comp_options+=(globdots)               # include hidden files
 
 # key bindings
 bindkey '^ ' autosuggest-accept     # ctrl+space key to accept auto-suggestion
