@@ -3025,6 +3025,22 @@ alias nix-store-cleanup="
     nix-store --optimise"
 
 #
+# Guix
+#
+#        guixrs                  guix reconfigure system
+alias guixrs="sudo -E guix system reconfigure ~/.config/guix/system.scm"
+#!#        guixcu                  guix-channel update
+#!alias guixcu="guix-channel --update"
+#        guixs                   guix package search
+alias guixs="guix search"
+#!#        guixf                   guix-locate file search
+#!alias guixf="guix-locate -w"
+#!#        guix-store-query        guix-store installed package location query
+#!alias guix-store-query="guix-store -q -R /run/current-system | grep"
+#!#        guix-shell-development  guix-shell ~/.guixos/shell.guix
+#!alias guix-shell-development="guix-shell \${HOME}/.guixos/shell.guix"
+
+#
 # git
 #
 #        git-prompt              show git branch name in terminal prompt

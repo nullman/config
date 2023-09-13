@@ -7,16 +7,17 @@
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
-[[ -n "$(mpc 2>&1 | grep '^MPD error')" ]] && exit 1
+[[ -n "$(mpc 2>&1 | grep '^\(MPD error\|volume: n/a\)')" ]] && exit 1
 
-artist=$(mpc -f '%artist%' | head -n 1)
-album=$(mpc -f '%album%' | head -n 1)
-title=$(mpc -f '%title%' | head -n 1)
+info=$(mpc -f '[[%artist% - ] %title%]|[%file%]' | head -n 1)
 file=$(mpc -f '%file%' | head -n 1)
 rating=$(grep -F "${file}" ${HOME}/.song-ratings/* | sed 's/^.*songs-rated-\([0-9]\).*$/\1/')
 state=$(mpc | grep -q "^\[playing\]" && printf "playing" || printf "paused")
 
 if [[ "$1" == "--verbose" ]] ; then
+    artist=$(mpc -f '%artist%' | head -n 1)
+    album=$(mpc -f '%album%' | head -n 1)
+    title=$(mpc -f '%title%' | head -n 1)
     echo "Artist: ${artist}"
     echo "Album: ${album}"
     echo "Title: ${title}"
@@ -24,7 +25,7 @@ if [[ "$1" == "--verbose" ]] ; then
     echo "File: ${file}"
     echo "State: ${state}"
 else
-    echo -n "${artist} - ${title} [${rating}]"
+    echo -n "${info} [${rating}]"
 fi
 
 #===============================================================================
