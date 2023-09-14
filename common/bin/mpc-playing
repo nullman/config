@@ -7,25 +7,32 @@
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
-[[ -n "$(mpc 2>&1 | grep '^\(MPD error\|volume: n/a\)')" ]] && exit 1
+[[ $(mpc | wc -l) != 3 ]] && echo -n "-" && exit 1
 
-info=$(mpc -f '[[%artist% - ] %title%]|[%file%]' | head -n 1)
-file=$(mpc -f '%file%' | head -n 1)
+song=$(mpc -f '[[%artist% - ] %title%]|[%file%]' | sed -n 1p)
+status=$(mpc | sed -n 2p)
+state=$(echo "${status}" | sed 's/^\[\(.*\)\].*$/\1/')
+num=$(echo "${status}" | sed 's/^.*#\([^ ]*\).*$/\1/')
+pct=$(echo "${status}" | sed 's/^.*(\(.*\)).*$/\1/')
+pct="0${pct}"
+pct="${pct: -3}"
+file=$(mpc -f '%file%' | sed -n 1p)
 rating=$(grep -F "${file}" ${HOME}/.song-ratings/* | sed 's/^.*songs-rated-\([0-9]\).*$/\1/')
-state=$(mpc | grep -q "^\[playing\]" && printf "playing" || printf "paused")
 
 if [[ "$1" == "--verbose" ]] ; then
-    artist=$(mpc -f '%artist%' | head -n 1)
-    album=$(mpc -f '%album%' | head -n 1)
-    title=$(mpc -f '%title%' | head -n 1)
+    artist=$(mpc -f '%artist%' | sed -n 1p)
+    album=$(mpc -f '%album%' | sed -n 1p)
+    title=$(mpc -f '%title%' | sed -n 1p)
     echo "Artist: ${artist}"
     echo "Album: ${album}"
     echo "Title: ${title}"
     echo "Rating: ${rating}"
-    echo "File: ${file}"
     echo "State: ${state}"
+    echo "Number: ${num}"
+    echo "Percentage: ${pct}"
+    echo "File: ${file}"
 else
-    echo -n "${info} [${rating}]"
+    echo -n "${song} [${rating}] ${num} ${pct}"
 fi
 
 #===============================================================================

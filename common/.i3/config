@@ -8,6 +8,11 @@
 # Reference: http://i3wm.org/docs/userguide.html
 #===============================================================================
 
+# check if executable command is found in the path
+_command() {
+    command -v "$1" > /dev/null 2>&1
+}
+
 #-------------------------------------------------------------------------------
 # General
 #-------------------------------------------------------------------------------
@@ -52,7 +57,8 @@ hide_edge_borders smart
 #font pango:DejaVu Sans Mono 8 # good unicode glyph coverage
 #font xft:URWGothic-Book 11
 #font xft:Droid Sans Mono 12
-font pango:System San Francisco Display 12
+#font pango:System San Francisco Display 12
+font pango:MesloLGS Nerd Font Mono 10
 
 # use Mouse+$super to drag floating windows to their wanted position
 floating_modifier $super
@@ -71,24 +77,24 @@ force_display_urgency_hint 500 ms
 #-------------------------------------------------------------------------------
 
 # start a terminal
-bindsym $super+Return exec i3-sensible-terminal
+#bindsym $super+Return exec i3-sensible-terminal
+bindsym $super+$alt+t exec i3-sensible-terminal
 
 # kill focused window
-bindsym $super+Shift+q kill
+bindsym $super+Shift+w kill
 
 # program launcher
 #bindsym $super+d exec --no-startup-id dmenu_run
 #bindsym $super+d exec --no-startup-id dmenu_recency
 #bindsym $super+z exec --no-startup-id i3-dmenu-desktop # only show applications having a .desktop file
-bindsym $super+Shift+d exec --no-startup-id rofi -show run
-#bindsym $super+Shift+z exec --no-startup-id rofi -show drun
-bindsym $super+space exec --no-startup-id rofi -show drun
+bindsym $super+$alt+d exec --no-startup-id rofi -show run
+bindsym $super+$alt+space exec --no-startup-id rofi -show drun
 
 # categorized menu
-#bindsym $super+Shift+z exec --no-startup-id morc_menu
+#bindsym $super+$alt+z exec --no-startup-id morc_menu
 
 # cli configuration tool
-bindsym $super+Shift+b exec terminal -e 'bmenu'
+#bindsym $super+Shift+b exec terminal -e 'bmenu'
 
 # change focus
 bindsym $super+Left focus left
@@ -121,11 +127,11 @@ bindsym $super+$alt+f fullscreen toggle
 #bindsym $super+Control+space fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
-bindsym $super+$alt+s layout stacking
-bindsym $super+$alt+w layout tabbed
-bindsym $super+$alt+e layout toggle split
-bindsym $super+$alt+t layout toggle
-bindsym $super+Control+t layout toggle all
+bindsym $super+Control+s layout stacking
+bindsym $super+Control+w layout tabbed
+bindsym $super+Control+e layout toggle split
+bindsym $super+Control+t layout toggle
+bindsym $super+Control+Shift+t layout toggle all
 
 # toggle tiling / floating
 bindsym $super+Shift+space floating toggle
@@ -401,46 +407,46 @@ client.background       #000000
 # i3 Bar / i3 Status Bar
 #-------------------------------------------------------------------------------
 
-# start i3bar to display workspace bar (plus system information)
-bar {
-    i3bar_command i3bar
-    #status_command i3status
-    status_command i3blocks -c ${HOME}/.i3/i3blocks.conf
-    position bottom
+# # start i3bar to display workspace bar (plus system information)
+# bar {
+#     i3bar_command i3bar
+#     #status_command i3status
+#     status_command i3blocks -c ${HOME}/.i3/i3blocks.conf
+#     position bottom
 
-    # set primary output first (ex: 'xrandr --output eDP1 --primary')
-    #tray_output primary
+#     # set primary output first (ex: 'xrandr --output eDP1 --primary')
+#     #tray_output primary
 
-    bindsym button4 nop
-    bindsym button5 nop
-    #font xft:URWGothic-Book 11
+#     bindsym button4 nop
+#     bindsym button5 nop
+#     #font xft:URWGothic-Book 11
 
-    colors {
-           # background #283339
-           # statusline #f9faf9
-           # separator  #454947
+#     colors {
+#            # background #283339
+#            # statusline #f9faf9
+#            # separator  #454947
 
-           # #                  border  backgr  text
-           # focused_workspace  #f9faf9 #16a085 #292f34
-           # active_workspace   #595b5b #353836 #fdf6e3
-           # inactive_workspace #595b5b #283339 #eee8d5
-           # binding_mode       #16a085 #2c2c2c #f9faf9
-           # urgent_workspace   #16a085 #fdf6e3 #e5201d
+#            # #                  border  backgr  text
+#            # focused_workspace  #f9faf9 #16a085 #292f34
+#            # active_workspace   #595b5b #353836 #fdf6e3
+#            # inactive_workspace #595b5b #283339 #eee8d5
+#            # binding_mode       #16a085 #2c2c2c #f9faf9
+#            # urgent_workspace   #16a085 #fdf6e3 #e5201d
 
-           background $focused_bg
-           statusline $focused_fg
-           separator  $separator
+#            background $focused_bg
+#            statusline $focused_fg
+#            separator  $separator
 
-           #                  border          background       text
-           focused_workspace  $focused_bg     $focused_bg      $focused_fg
-           active_workspace   $unfocused_bg   $unfocused_bg    $unfocused_fg
-           inactive_workspace $unfocused_bg   $unfocused_bg    $unfocused_fg
-           urgent_workspace   $urgent_bg      $urgent_bg       $focused_fg
-    }
-}
+#            #                  border          background       text
+#            focused_workspace  $focused_bg     $focused_bg      $focused_fg
+#            active_workspace   $unfocused_bg   $unfocused_bg    $unfocused_fg
+#            inactive_workspace $unfocused_bg   $unfocused_bg    $unfocused_fg
+#            urgent_workspace   $urgent_bg      $urgent_bg       $focused_fg
+#     }
+# }
 
-# toggle i3status bar
-bindsym $super+Shift+m bar mode toggle
+# # toggle i3status bar
+# bindsym $super+Shift+m bar mode toggle
 
 #-------------------------------------------------------------------------------
 # i3 Gaps
@@ -577,9 +583,9 @@ bindsym $super+$alt+m exec pavucontrol
 #bindsym $super+Shift+F3 exec gksu pcmanfm
 #bindsym $super+Shift+F3 exec gksu thunar
 #bindsym $super+F5 exec terminal -e 'mocp'
-#bindsym $super+t exec --no-startup-id pkill -x -u ${USER} compton
+#bindsym $super+t exec --no-startup-id pkill -x -f -u ${USER} compton
 #bindsym $super+Ctrl+t exec --no-startup-id compton -b
-#bindsym $super+Shift+d --release exec "pkill -x -u ${USER} dunst && exec notify-send 'Reconfiguring Dunst'"
+#bindsym $super+Shift+d --release exec "pkill -x -f -u ${USER} dunst ; exec notify-send 'Reconfiguring Dunst'"
 
 # screen snapshots
 bindsym Print exec --no-startup-id i3-scrot # full screen snapshot
@@ -597,31 +603,75 @@ bindsym $super+$alt+k --release exec --no-startup-id xkill
 # Standard Applications
 #-------------------------------------------------------------------------------
 
+# gnome policykit authentation agent
+[[ -x /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 ]] && /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+# gnome keyring
+#eval "$(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg)" &
+# lx policykit authentation agent
+#_command lxpolkit && lxpolkit &
+
+# compositor
+#_command manjaro-compositor && manjaro-compositor --start &
+#_command compton && compton -c &
+_command picom && picom -c &
+
 # system bar
 [[ -f "${HOME}/bin/system-bar" ]] && exec --no-startup-id source "${HOME}/bin/system-bar"
 
 # system wallpaper displays
-[[ -f "${HOME}/bin/system-wallpaper-displays" ]] && source "${HOME}/bin/system-wallpaper-displays"
+[[ -f "${HOME}/bin/system-wallpaper-displays" ]] && exec --no-startup-id source "${HOME}/bin/system-wallpaper-displays"
 
-# autostart standard applications
-#exec --no-startup-id ssh-agent
-#exec --no-startup-id ssh-add
-#exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec --no-startup-id nitrogen --restore ; sleep 1 ; compton -b
-exec --no-startup-id nm-applet
-exec --no-startup-id xfce4-power-manager
-exec --no-startup-id pamac-tray
-exec --no-startup-id pa-applet
-exec --no-startup-id clipit
-#exec --no-startup-id blueman-applet
-#exec_always --no-startup-id sbxkb
-#exec --no-startup-id start_conky_maia # background wallpaper help text
-#exec --no-startup-id conky --config=/usr/share/conky/conky_green # background wallpaper system monitor
-#exec --no-startup-id start_conky_green
-#exec --no-startup-id xautolock -time 30 -locker blurlock # lock screen after 30 minutes
-exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 & eval $(gnome-keyring-daemon -s --components=pkcs11,secrets,ssh,gpg) # gnome app auth
-#exec_always --no-startup-id ff-theme-util
-exec_always --no-startup-id fix_xcursor
+# # autostart standard applications
+# #exec --no-startup-id ssh-agent
+# #exec --no-startup-id ssh-add
+# #exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+# #exec --no-startup-id nitrogen --restore
+# exec --no-startup-id nm-applet
+# exec --no-startup-id xfce4-power-manager
+# exec --no-startup-id pamac-tray
+# exec --no-startup-id pa-applet
+# exec --no-startup-id clipit
+# #exec --no-startup-id blueman-applet
+# #exec_always --no-startup-id sbxkb
+# #exec --no-startup-id start_conky_maia # background wallpaper help text
+# #exec --no-startup-id conky --config=/usr/share/conky/conky_green # background wallpaper system monitor
+# #exec --no-startup-id start_conky_green
+# #exec --no-startup-id xautolock -time 30 -locker blurlock # lock screen after 30 minutes
+# #exec_always --no-startup-id ff-theme-util
+# #exec_always --no-startup-id fix_xcursor
+
+# full-screen task-switcher
+#_command skippy-xd && skippy-xd --config "${HOME}/.config/skippy-xd/skippy-xd.rc" --start-daemon &
+
+# localize user system folders
+#_command xdg-user-dirs-gtk-update && xdg-user-dirs-gtk-update &
+
+# enable numlock [do not use on laptops without numpads]
+#_command numlockx && numlockx &
+
+# screen saver
+#_command xautolock && xautolock -time 30 -locker blurlock & # lock screen after 30 minutes
+
+# tell firefox to match theme
+#_command ff-theme-util && ff-theme-util &
+
+# clipmenu
+_command clipmenud && clipmenud &
+
+# eject-applet
+#_command eject-applet && eject-applet &
+
+# set cursor theme
+_command fix_xcursor && fix_xcursor &
+
+# hide mouse when not in use
+_command unclutter && unclutter &
+
+# wallpaper manager
+_command nitrogen && nitrogen --restore &
+
+# rebuild wm menu
+#sleep 10 && _command mmaker && mmaker --force openbox &
 
 #-------------------------------------------------------------------------------
 # Custom Applications
@@ -630,7 +680,7 @@ exec_always --no-startup-id fix_xcursor
 # switch to workspace 1
 exec --no-startup-id i3-msg "workspace $workspace1"
 
-# autostart custom applications
+# auto-start custom applications
 exec --no-startup-id "source ${HOME}/.i3applications"
 
 #===============================================================================

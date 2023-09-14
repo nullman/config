@@ -24,7 +24,8 @@
 
 (defpoll music-info :interval "2s" "~/bin/mpc-playing")
 ;;(defpoll music-info :interval "2s" "~/bin/mpc-playing | awk -F ' - ' '{ if (length($2) <= 40) { print $2 } else { print substr($2, 0, 40)\"...\" } }'")
-(defpoll music-state :interval "2s" "mpc | grep -q '^\\[playing\\]' && echo '' || echo ''")
+;; symbols:    
+(defpoll music-state :interval "2s" "mpc | sed -n 2p | sed 's/^\[\(.*\)\].*$/\1/' | grep -q '^\\[playing\\]' && echo '' || echo ''")
 
 (defpoll mute :interval "500ms" "pamixer --get-mute")
 (defpoll volume :interval "500ms" "[[ $(pamixer --get-mute) == true ]] && echo '0' || pamixer --get-volume")
@@ -142,8 +143,8 @@
        ;;:visible {status == "" ? "false" : "true"}
        :tooltip "Bluetooth status: ${status}"
        (button :onrightclick "blueman-manager &"
-               ;; symbols: 󰂯 󰂰 󰂱 󰂲 󰂳 󰂴
-               (label :text {status == "enabled" ? "󰂯" : "󰂲"}))))
+               ;; symbols:   󰂯 󰂰 󰂱 󰂲 󰂳 󰂴
+               (label :text {status == "enabled" ? "" : "󰂯"}))))
 
 (defwidget clock [min time]
   (box :class "label"

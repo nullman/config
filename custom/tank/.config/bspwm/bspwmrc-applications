@@ -23,7 +23,7 @@ _delay() {
 # initialize background applications and services
 _command xscreensaver && xscreensaver -no-splash &
 #_command xautolock && xautolock -time 30 -locker blurlock & # lock screen after 30 minutes
-#_command xautolock && xautolock -time 30 -locker 'xscreensaver-command -lock' & # lock screen after 30 minutes
+_command xautolock && xautolock -time 30 -locker 'xscreensaver-command -lock' & # lock screen after 30 minutes
 #_command mpd && mpd ${HOME}/.mpd/mpd.conf &
 #_command dropbox && dropbox start &
 #_command barriers && barriers --config ${HOME}/.barrier.conf &
@@ -31,7 +31,7 @@ _command xscreensaver && xscreensaver -no-splash &
 #_command emacs && emacs --daemon &
 
 # delay so that networking has time to connect
-_delay 0
+#_delay 0
 
 # initialize foreground applications
 _command alacritty && alacritty -e ${HOME}/bin/run-screen &

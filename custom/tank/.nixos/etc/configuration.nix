@@ -64,6 +64,7 @@
   nixpkgs.overlays = [
     (final: prev: {
       syncterm = prev.callPackage /home/kyle/.nixos/pkgs/syncterm {};
+      #carbonyl = prev.callPackage /home/kyle/code/github-nullman/nixpkgs/pkgs/applications/terminal-emulators/carbonyl {};
     })
   ];
 
@@ -194,7 +195,9 @@
   };
 
   # window manager: bspwm
+  #services.xserver.desktopManager.xfce.enable = true;
   services.xserver.windowManager.bspwm.enable = true;
+  #services.xserver.displayManager.defaultSession = "none+bspwm";
 
   # compositor: picom
   services.picom.enable = true;
@@ -589,6 +592,7 @@
     hyprland
     hyprpaper
     hyprpicker
+    i3-gaps
     keychain
     lightdm
     lightdm-slick-greeter
@@ -740,6 +744,7 @@
     bitwarden-menu
     boxes
     broot
+    #carbonyl
     cool-retro-term
     ddgr
     element

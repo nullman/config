@@ -4,6 +4,8 @@
 #
 # Present a menu of rofi menus.
 #
+# Symbols:  ☰  |    | ✂ ⎘ 󰄶 📋  | 󰍹  |  |    󱇠  | 󰆧 |  |  🎵 | 󰛇 |
+#
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
@@ -32,24 +34,25 @@ EOF
 # handle no arguments given
 if [[ $# -lt 1 ]] ; then
     menus=(
-        "Term"
-        "CRT"
-        "DOSBox"
-        "Git"
-        "Paste"
-        "Qemu"
-        "Rsync"
-        "Sounds"
-        "SSH"
-        "VNC"
+        "	Term"
+        "󰍹	CRT"
+        "	DOSBox"
+        "	Git"
+        "	Paste"
+        "󰆧	Qemu"
+        "	Rsync"
+        "	Sounds"
+        "	SSH"
+        "󰛇	VNC"
     )
-    menu=$(printf "%s\n" "${menus[@]}" | rofi -dmenu -i -p 'Menu')
+    menu=$(printf "%s\n" "${menus[@]}" | rofi -dmenu -i -p "  Menu")
 else
     menu=$1
 fi
 
 # handle menu
-menu=$(echo "${menu}" | tr '[:upper:]' '[:lower:]')
+menu=$(echo "${menu}" | sed 's/^.*\t//' | tr '[:upper:]' '[:lower:]')
+echo "${menu}"
 case "${menu}" in
     term)
         (alacritty &)
@@ -69,7 +72,7 @@ case "${menu}" in
         )
         # display a list of cool-retro-term profiles
         if [[ $# -lt 2 ]] ; then
-            sel=$(printf '%s\n' "${profiles[@]}" | rofi -dmenu -i -p 'Cool Retro Term')
+            sel=$(printf '%s\n' "${profiles[@]}" | rofi -dmenu -i -p "󰍹	Cool Retro Term")
         else
             sel=$2
         fi
@@ -83,7 +86,7 @@ case "${menu}" in
     dosbox)
         # generate and display a list of dosbox emulators
         if [[ $# -lt 2 ]] ; then
-            sel=$(cd "${HOME}/.dosbox" && find -mindepth 1 -maxdepth 1 -name 'dosbox-*' -not -regex '\./dosbox-0.*' | sed 's%^\./dosbox-\(.*\)\.conf%\1%' | rofi -dmenu -i -p 'DOSBox')
+            sel=$(cd "${HOME}/.dosbox" && find -mindepth 1 -maxdepth 1 -name 'dosbox-*' -not -regex '\./dosbox-0.*' | sed 's%^\./dosbox-\(.*\)\.conf%\1%' | rofi -dmenu -i -p "	DOSBox")
         else
             sel=$2
         fi
@@ -97,7 +100,7 @@ case "${menu}" in
     git)
         # display git repositories
         if [[ $# -lt 2 ]] ; then
-            sel=$(grep "# *git-sync" "${HOME}/.funct" | cut -d " " -f 9 | rofi -dmenu -i -p 'Git')
+            sel=$(grep "# *git-sync" "${HOME}/.funct" | cut -d " " -f 9 | rofi -dmenu -i -p "	Git")
         else
             sel=$2
         fi
@@ -111,7 +114,7 @@ case "${menu}" in
     paste)
         # display paste options
         if [[ $# -lt 2 ]] ; then
-            sel=$(cat ${HOME}/.paste-strings | rofi -dmenu -i -p 'Paste')
+            sel=$(cat ${HOME}/.paste-strings | rofi -dmenu -i -p "	Paste")
         else
             sel=$2
         fi
@@ -125,7 +128,7 @@ case "${menu}" in
     qemu)
         # generate and display a list of qemu emulators
         if [[ $# -lt 2 ]] ; then
-            sel=$(cd ${HOME}/qemu && find . -mindepth 1 -maxdepth 1 -type d -not -regex '^\.+$' | sed 's%\./%%' | sort | rofi -dmenu -i -p 'Qemu')
+            sel=$(cd ${HOME}/qemu && find . -mindepth 1 -maxdepth 1 -type d -not -regex '^\.+$' | sed 's%\./%%' | sort | rofi -dmenu -i -p "󰆧	Qemu")
         else
             sel=$2
         fi
@@ -139,7 +142,7 @@ case "${menu}" in
     rsync)
         # display rsync targets
         if [[ $# -lt 2 ]] ; then
-            sel=$(grep "^# *rsync-" ${HOME}/.alias | cut -d " " -f 9 | rofi -dmenu -i -p 'Rsync')
+            sel=$(grep "^# *rsync-" ${HOME}/.alias | cut -d " " -f 9 | rofi -dmenu -i -p "	Rsync")
         else
             sel=$2
         fi
@@ -171,7 +174,7 @@ case "${menu}" in
             else
                 local opts=("${up}" "$(cd "${selpath}" && find . -mindepth 1 -maxdepth 1 -type f -not -regex '^\.+$' | sed 's%./%%' | sort)")
             fi
-            sel=$(printf '%s\n' "${opts[@]}" | rofi -dmenu -i -p 'Sounds')
+            sel=$(printf '%s\n' "${opts[@]}" | rofi -dmenu -i -p "	Sounds")
         }
 
         _killffplay() {
@@ -255,7 +258,7 @@ case "${menu}" in
                 "pi@raspad-usb"
                 "pi@retropie"
             )
-            sel=$(printf "%s\n" "${servers[@]}" | rofi -dmenu -i -p 'SSH')
+            sel=$(printf "%s\n" "${servers[@]}" | rofi -dmenu -i -p "	SSH")
         else
             sel=$2
         fi
@@ -275,7 +278,7 @@ case "${menu}" in
                 "raspad-usb"
                 "retropie"
             )
-            sel=$(printf "%s\n" "${servers[@]}" | rofi -dmenu -i -p 'VNC')
+            sel=$(printf "%s\n" "${servers[@]}" | rofi -dmenu -i -p "󰛇	VNC")
         else
             sel=$2
         fi
