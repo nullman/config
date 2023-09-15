@@ -1207,18 +1207,16 @@ nixsg() {
         rm "${tmpfile}"
     fi
 }
-# #        nixss                   nixos specific search
-# nixss() {
-#     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-#         echo "Usage: $0 SEARCH"
-#     else
-#         s="$1"
-#         shift
-#         tmpfile="$(mktemp)"
-#         nix --extra-experimental-features "nix-command flakes" search nixpkgs "${s}" > "${tmpfile}"
-#         sed -n ":a ; /^\* / { N ; s/\n// ; p ; d ; ba }" "${tmpfile}"
-#     fi
-# }
+#        nixss                   nixos specific search
+nixss() {
+    if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+        echo "Usage: $0 SEARCH"
+    else
+        s="$1"
+        shift
+        nix --extra-experimental-features "nix-command flakes" search nixpkgs "\.${s}$"
+    fi
+}
 #        nixsi                   nixos search installed packages
 nixsi() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
