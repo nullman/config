@@ -17,7 +17,7 @@ xkbcomp ${DISPLAY} - | sed 's/ Insert / NoSymbol /' | xkbcomp - ${DISPLAY} > /de
 xset -display ${DISPLAY} -dpms s off b off m 2/1 4 r rate 500 35 > /dev/null 2>&1
 
 # # reload xbindkeys
-# [[ -f ${HOME}/.xbindkeysrc ]] && pkill -SIGHUP -x -f -u ${USER} xbindkeys > /dev/null 2>&1
+# [[ -f ${HOME}/.xbindkeysrc ]] && pkill -SIGHUP -x -f -u ${USER} $(realpath $(which xbindkeys)) > /dev/null 2>&1
 
 # # disable insert key and set ctrl+alt arrows to pgup/pgdn/home/end
 # xkbcomp ${DISPLAY} - | sed \

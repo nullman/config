@@ -23,19 +23,19 @@ _delay() {
 }
 
 # system bar
-#_command polybar && pkill -x -f -u ${USER} polybar ; polybar -c ${HOME}/.config/polybar/config openbox-bar &
-#_command tint2 && (pkill -x -f -u ${USER} tint2 ; tint2 && sleep 1 && xdo below -t $(xdo id -n root) $(xdo id -N Tint2)) & # status bar hidden when fullscreen
+#_command polybar && pkill -x -f -u ${USER} $(realpath $(which polybar)) ; polybar -c ${HOME}/.config/polybar/config openbox-bar &
+#_command tint2 && (pkill -x -f -u ${USER} $(realpath $(which tint2)) ; tint2 && sleep 1 && xdo below -t $(xdo id -n root) $(xdo id -N Tint2)) & # status bar hidden when fullscreen
 _command eww && (eww --restart open bar && sleep 1 && xdo below -t $(xdo id -n root) $(xdo id -N eww-bar)) & # status bar hidden when fullscreen
 
 # system bar applets
-_command clipit && (_delay ${delay} pkill -f -u ${USER} clipit ; clipit) &
-_command pa-applet && (_delay ${delay} pkill -x -f -u ${USER} pa-applet ; pa-applet) &
-_command blueman-applet && (_delay ${delay} pkill -x -f -u ${USER} blueman-applet ; blueman-applet) &
-_command nm-applet && (_delay ${delay} pkill -x -f -u ${USER} nm-applet ; nm-applet) &
-#_command pamac-tray && (_delay ${delay} pkill -x -f -u ${USER} pamac-tray ; pamac-tray) &
-_command xfce4-power-manager && (_delay ${delay} pkill -x -f -u ${USER} xfce4-power-manager ; xfce4-power-manager) &
-#_command volumeicon && (_delay ${delay} pkill -x -f -u ${USER} volumeicon ; volumeicon) &
-#_command sbxkb && (_delay ${delay} pkill -x -f -u ${USER} sbxkb ; sbxkb) &
+_command clipit && (_delay ${delay} pkill -x -f -u ${USER} $(realpath $(which clipit)) ; clipit) &
+_command pa-applet && (_delay ${delay} pkill -x -f -u ${USER} $(realpath $(which pa-applet)) ; pa-applet) &
+_command blueman-applet && (_delay ${delay} pkill -x -f -u ${USER} $(realpath $(which blueman-applet)) ; blueman-applet) &
+_command nm-applet && (_delay ${delay} pkill -x -f -u ${USER} $(realpath $(which nm-applet)) ; nm-applet) &
+#_command pamac-tray && (_delay ${delay} pkill -x -f -u ${USER} $(realpath $(which pamac-tray)) ; pamac-tray) &
+_command xfce4-power-manager && (_delay ${delay} pkill -x -f -u ${USER} $(realpath $(which xfce4-power-manager)) ; xfce4-power-manager) &
+#_command volumeicon && (_delay ${delay} pkill -x -f -u ${USER} $(realpath $(which volumeicon)) ; volumeicon) &
+#_command sbxkb && (_delay ${delay} pkill -x -f -u ${USER} $(realpath $(which sbxkb)) ; sbxkb) &
 
 #===============================================================================
 # End of File

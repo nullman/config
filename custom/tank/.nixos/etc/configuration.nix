@@ -64,7 +64,6 @@
   nixpkgs.overlays = [
     (final: prev: {
       syncterm = prev.callPackage /home/kyle/.nixos/pkgs/syncterm {};
-      #carbonyl = prev.callPackage /home/kyle/code/github-nullman/nixpkgs/pkgs/applications/terminal-emulators/carbonyl {};
     })
   ];
 
@@ -99,6 +98,11 @@
     # wlr.enable = true;
     # gtk portal needed to make gtk apps happy
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  };
+
+  # environment
+  environment.variables = {
+    GTK_DATA_PREFIX = "/run/current-system/sw";
   };
 
   # policy kit
@@ -198,6 +202,10 @@
   #services.xserver.desktopManager.xfce.enable = true;
   services.xserver.windowManager.bspwm.enable = true;
   #services.xserver.displayManager.defaultSession = "none+bspwm";
+
+  # window manager: i3wm
+  services.xserver.windowManager.i3.enable = true;
+  services.xserver.windowManager.i3.package = pkgs.i3-gaps;
 
   # compositor: picom
   services.picom.enable = true;

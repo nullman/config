@@ -239,11 +239,11 @@ super + shift + Print
 
 # reload sxhkd
 super + shift + s
-    pkill -SIGUSR1 -x -f -u ${USER} sxhkd && notify-send --expire-time=2000 'Reloading SXHKD'
+    pkill -SIGUSR1 -x -f -u ${USER} $(realpath $(which sxhkd)) && notify-send --expire-time=2000 'Reloading SXHKD'
 
 # reload tint2
 super + shift + t
-    ((pkill -x -f -u ${USER} tint2 ; tint2 && sleep 1 && \
+    ((pkill -x -f -u ${USER} $(realpath $(which tint2)) ; tint2 && sleep 1 && \
     xdo below -t $(xdo id -n root) $(xdo id -N tint2)) &) && \
     notify-send --expire-time=2000 'Reloading Tint'
 
@@ -252,7 +252,7 @@ super + shift + e
     eww --restart open bar && sleep 1 && \
     xdo below -t $(xdo id -n root) $(xdo id -N eww-bar) && \
     notify-send --expire-time=2000 'Reloading EWW'
-    #(pkill -x -f -u ${USER} eww ; eww --restart open bar && sleep 1 && \
+    #(pkill -x -f -u ${USER} $(realpath $(which eww)) ; eww --restart open bar && sleep 1 && \
 
 # reload conky
 super + shift + c
@@ -338,7 +338,7 @@ super + alt + ctrl + apostrophe
 #-------------------------------------------------------------------------------
 
 # terminal
-super + return
+super + Return
     alacritty
 
 #===============================================================================

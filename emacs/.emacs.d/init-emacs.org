@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2023-09-12 11:02 (kyle)>
+  #+TIMESTAMP: <2023-09-15 12:53 (kyle)>
 
 * Table of Contents
   :PROPERTIES:
@@ -2633,13 +2633,20 @@
       (setq case-fold-search t)
     #+END_SRC
 
-    Highlight search matches.
+    +Highlight search matches.+
+
+    #+BEGIN_SRC emacs-lisp :tangle no
+      ;; ;; highlight search matches
+      ;; (setq search-highlight t
+      ;;       query-replace-highlight t)
+    #+END_SRC
+
+    Do not Highlight search matches due to poor performance.
 
     #+BEGIN_SRC emacs-lisp
       ;; highlight search matches
-      (setq search-highlight t
-            ;;isearch-highlight t
-            query-replace-highlight t)
+      (setq search-highlight nil
+            query-replace-highlight nil)
     #+END_SRC
 
     Highlight marked regions.
@@ -5651,7 +5658,8 @@
                  (start tree)
                  (stack nil)
                  (matches path)
-                 (path-level (length path)))
+                 (path-level (length path))
+                 (parse-error "Error parsing at headline: %s"))
             (with-temp-buffer
               (insert-file-contents file)
               (goto-char (point-min))
@@ -5686,6 +5694,8 @@
                         (setq matches (cdr matches)))
                       (cond
                        ((> headline-level level)
+                        (unless tree
+                          (user-error parse-error headline-value))
                         (setcdr tree (cons (cons headline-value nil) nil))
                         (setq tree (cdr tree))
                         (push tree stack)
@@ -5693,6 +5703,8 @@
                         (setq level headline-level))
                        ((= headline-level level)
                         (setq tree (pop stack))
+                        (unless tree
+                          (user-error parse-error headline-value))
                         (setcdr tree (cons (cons headline-value nil) nil))
                         (setq tree (cdr tree))
                         (push tree stack)
@@ -5702,6 +5714,8 @@
                           (setq tree (pop stack))
                           (setq level (1- level)))
                         (setq tree (pop stack))
+                        (unless tree
+                          (user-error parse-error headline-value))
                         (setcdr tree (cons (cons headline-value nil) nil))
                         (setq tree (cdr tree))
                         (push tree stack)

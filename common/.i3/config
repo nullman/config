@@ -8,11 +8,6 @@
 # Reference: http://i3wm.org/docs/userguide.html
 #===============================================================================
 
-# check if executable command is found in the path
-_command() {
-    command -v "$1" > /dev/null 2>&1
-}
-
 #-------------------------------------------------------------------------------
 # General
 #-------------------------------------------------------------------------------
@@ -77,16 +72,13 @@ force_display_urgency_hint 500 ms
 #-------------------------------------------------------------------------------
 
 # start a terminal
-#bindsym $super+Return exec i3-sensible-terminal
-bindsym $super+$alt+t exec i3-sensible-terminal
+bindsym $super+Return exec alacritty
+#bindsym $super+$alt+t exec alacritty
 
 # kill focused window
 bindsym $super+Shift+w kill
 
 # program launcher
-#bindsym $super+d exec --no-startup-id dmenu_run
-#bindsym $super+d exec --no-startup-id dmenu_recency
-#bindsym $super+z exec --no-startup-id i3-dmenu-desktop # only show applications having a .desktop file
 bindsym $super+$alt+d exec --no-startup-id rofi -show run
 bindsym $super+$alt+space exec --no-startup-id rofi -show drun
 
@@ -117,36 +109,35 @@ bindsym $super+Shift+Right move right
 bindsym $super+Shift+$right move right
 
 # split in horizontal orientation
-bindsym $super+$alt+h split horizontal
+bindsym $super+Control+h split horizontal
 
 # split in vertical orientation
-bindsym $super+$alt+v split vertical
+bindsym $super+Control+v split vertical
 
 # enter fullscreen mode for the focused container
-bindsym $super+$alt+f fullscreen toggle
-#bindsym $super+Control+space fullscreen toggle
+bindsym $super+Control+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
-bindsym $super+Control+s layout stacking
-bindsym $super+Control+w layout tabbed
-bindsym $super+Control+e layout toggle split
-bindsym $super+Control+t layout toggle
-bindsym $super+Control+Shift+t layout toggle all
+bindsym $super+Control+1 layout stacking
+bindsym $super+Control+2 layout tabbed
+bindsym $super+Control+3 layout toggle split
+bindsym $super+Control+4 layout toggle
+bindsym $super+Control+5 layout toggle all
 
 # toggle tiling / floating
-bindsym $super+Shift+space floating toggle
+#bindsym $super+Control+space floating toggle
 
 # change focus between tiling / floating windows
-bindsym $super+Control+space focus mode_toggle
+#bindsym $super+Control+Shift+space focus mode_toggle
 
 # toggle sticky
-bindsym $super+Control+s sticky toggle
+#bindsym $super+Control+s sticky toggle
 
 # focus the parent container
-bindsym $super+Shift+a focus parent
+#bindsym $super+Shift+a focus parent
 
 # focus the child container
-bindsym $super+Control+a focus child
+#bindsym $super+Control+a focus child
 
 # show the next scratchpad window or hide the focused scratchpad window
 # if there are multiple scratchpad windows, this command cycles through them
@@ -583,9 +574,9 @@ bindsym $super+$alt+m exec pavucontrol
 #bindsym $super+Shift+F3 exec gksu pcmanfm
 #bindsym $super+Shift+F3 exec gksu thunar
 #bindsym $super+F5 exec terminal -e 'mocp'
-#bindsym $super+t exec --no-startup-id pkill -x -f -u ${USER} compton
+#bindsym $super+t exec --no-startup-id pkill -x -f -u ${USER} $(realpath $(which compton))
 #bindsym $super+Ctrl+t exec --no-startup-id compton -b
-#bindsym $super+Shift+d --release exec "pkill -x -f -u ${USER} dunst ; exec notify-send 'Reconfiguring Dunst'"
+#bindsym $super+Shift+d --release exec "pkill -x -f -u ${USER} $(realpath $(which dunst)) ; exec notify-send 'Reconfiguring Dunst'"
 
 # screen snapshots
 bindsym Print exec --no-startup-id i3-scrot # full screen snapshot
@@ -604,22 +595,21 @@ bindsym $super+$alt+k --release exec --no-startup-id xkill
 #-------------------------------------------------------------------------------
 
 # gnome policykit authentation agent
-[[ -x /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 ]] && /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+#[[ -x /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 ]] && exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 # gnome keyring
-#eval "$(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg)" &
+# eval "$(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg)" &
 # lx policykit authentation agent
-#_command lxpolkit && lxpolkit &
+# lxpolkit &
 
 # compositor
-#_command manjaro-compositor && manjaro-compositor --start &
-#_command compton && compton -c &
-_command picom && picom -c &
+# compton -c &
+exec --no-startup-id picom -c
 
 # system bar
-[[ -f "${HOME}/bin/system-bar" ]] && exec --no-startup-id source "${HOME}/bin/system-bar"
+exec --no-startup-id source "${HOME}/bin/system-bar"
 
 # system wallpaper displays
-[[ -f "${HOME}/bin/system-wallpaper-displays" ]] && exec --no-startup-id source "${HOME}/bin/system-wallpaper-displays"
+exec --no-startup-id source "${HOME}/bin/system-wallpaper-displays"
 
 # # autostart standard applications
 # #exec --no-startup-id ssh-agent
@@ -641,37 +631,37 @@ _command picom && picom -c &
 # #exec_always --no-startup-id fix_xcursor
 
 # full-screen task-switcher
-#_command skippy-xd && skippy-xd --config "${HOME}/.config/skippy-xd/skippy-xd.rc" --start-daemon &
+#exec --no-startup-id skippy-xd --config "${HOME}/.config/skippy-xd/skippy-xd.rc" --start-daemon
 
 # localize user system folders
-#_command xdg-user-dirs-gtk-update && xdg-user-dirs-gtk-update &
+#exec --no-startup-id xdg-user-dirs-gtk-update
 
 # enable numlock [do not use on laptops without numpads]
-#_command numlockx && numlockx &
+#exec --no-startup-id numlockx
 
 # screen saver
-#_command xautolock && xautolock -time 30 -locker blurlock & # lock screen after 30 minutes
+#exec --no-startup-id xautolock -time 30 -locker blurlock # lock screen after 30 minutes
 
 # tell firefox to match theme
-#_command ff-theme-util && ff-theme-util &
+#exec --no-startup-id ff-theme-util
 
 # clipmenu
-_command clipmenud && clipmenud &
+exec --no-startup-id clipmenud
 
 # eject-applet
-#_command eject-applet && eject-applet &
+#exec --no-startup-id eject-applet
 
 # set cursor theme
-_command fix_xcursor && fix_xcursor &
+exec --no-startup-id fix_xcursor
 
 # hide mouse when not in use
-_command unclutter && unclutter &
+exec --no-startup-id unclutter
 
 # wallpaper manager
-_command nitrogen && nitrogen --restore &
+exec --no-startup-id nitrogen --restore
 
 # rebuild wm menu
-#sleep 10 && _command mmaker && mmaker --force openbox &
+#sleep 10 && exec --no-startup-id mmaker --force openbox
 
 #-------------------------------------------------------------------------------
 # Custom Applications
