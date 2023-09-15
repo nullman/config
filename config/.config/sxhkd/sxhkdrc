@@ -145,6 +145,10 @@ super + alt + space
 super + alt + d
     rofi -modi run -show run
 
+# application launcher
+super + alt + a
+    ${HOME}/bin/application-launcher
+
 # menu launcher
 super + alt + Return
     ${HOME}/bin/rofi-menu

@@ -210,9 +210,12 @@ export SCREENDIR="${HOME}/.screendir"
 export XDG_DOWNLOAD_DIR="${HOME}/Downloads"
 
 # set XDG_DATA_DIRS
-export XDG_DATA_DIRS="/usr/local/share:/usr/share"
+[[ -d "/usr/local/share" ]] && export XDG_DATA_DIRS="/usr/local/share:/usr/share"
 # add flatpak support
-export XDG_DATA_DIRS="${XDG_DATA_DIRS}:${HOME}/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share"
+[[ -d "/var/lib/flatpak/exports/share" ]] && export XDG_DATA_DIRS="${XDG_DATA_DIRS}:${HOME}/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share"
+
+# set GTK (NixOS)
+#[[ -d "/run/current-system/sw"]] && export GTK_DATA_PREFIX="/run/current-system/sw"
 
 # set java home
 [[ "${os}" == "Linux" ]] && _command java && export JAVA_HOME="$(java -XshowSettings:properties -version 2>&1 > /dev/null | grep 'java.home' | sed 's/^.* = //')"
