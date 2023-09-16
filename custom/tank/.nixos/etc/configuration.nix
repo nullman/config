@@ -59,6 +59,9 @@
       nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
         inherit pkgs;
       };
+      # ruby = pkgs.ruby.withPackages (p: with p; [ nokogiri ]) {
+      #   inherit pkgs;
+      # };
     };
   };
   nixpkgs.overlays = [
@@ -871,6 +874,7 @@
     regina
     rnix-lsp
     ruby
+    rubyPackages.nokogiri
     rustc
     shellcheck
     tokei
