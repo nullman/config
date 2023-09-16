@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+#===============================================================================
+# application-launcher
+#
+# Launch select group of applications in the background.
+#
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
+#===============================================================================
+
+apps=$(cat ${HOME}/.applications | sed -n '/^[^ #]/p')
+
+cmd="yad --width=512 --height=384 --list --checklist --column 'Run' --column 'Application'"
+for app in ${apps} ; do
+    cmd="${cmd} TRUE ${app}"
+done
+
+#eval "${cmd} 2>/dev/null"
+launch=$(eval "${cmd} 2>/dev/null")
+
+for line in ${launch} ; do
+    app=$(echo "${line}" | sed 's/^.*|\(.*\)|$/\1/')
+    #echo "app: ${app}"
+    if [[ $(command -v ${app}) ]] ; then
+        if [[ ! $(pgrep -u ${USER} -f ${app}) ]] ; then
+            if [[ "${app}" == "alacritty" ]] ; then
+                alacritty -e ${HOME}/bin/run-screen &
+            else
+                #echo "${app}"
+                eval ${app} &
+            fi
+        fi
+    else
+        notify-send -u critical "${app} not installed"
+    fi
+done
+
+#===============================================================================
+# End of File
+#===============================================================================
