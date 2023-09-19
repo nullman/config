@@ -83,9 +83,6 @@
     useXkbConfig = true;
   };
 
-  # gnome keyring
-  services.gnome.gnome-keyring.enable = true;
-
   # dbus
   services.dbus.enable = true;
 
@@ -108,7 +105,10 @@
     GTK_DATA_PREFIX = "/run/current-system/sw";
   };
 
-  # policy kit
+  # gnome settings
+  services.gnome.gnome-settings-daemon.enable = true;
+
+  # gnome policy kit
   security.polkit.enable = true;
   systemd = {
     user.services.polkit-gnome-authentication-agent-1 = {
@@ -128,6 +128,9 @@
       DefaultTimeoutStopSec=30s
     '';
   };
+
+  # gnome keyring
+  services.gnome.gnome-keyring.enable = true;
 
   # sudo
   security.sudo = {
@@ -593,6 +596,7 @@
     gnome-icon-theme
     gnome.eog
     gnome.gnome-keyring
+    gnome.gnome-settings-daemon
     gnome.gnome-themes-extra
     gnome.gvfs
     gnome.zenity
@@ -800,6 +804,7 @@
     betterbird
     bore-cli
     chromium
+    dino
     discord
     element-desktop
     filezilla

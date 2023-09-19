@@ -2188,6 +2188,7 @@ KEYMAP defaults to `override-global-map'."
              ("P" . magit-push-current)
              ("r" . magit-rebase)
              ("s" . magit-status))
+
   ;; git log commands
   (bind-keys :map space-git-map
              :prefix "l"
@@ -2232,6 +2233,7 @@ KEYMAP defaults to `override-global-map'."
              ("d" . insert-date)
              ("t" . insert-datetime)
              ("u" . insert-uuid))
+
   ;; insert org-babel commands
   (bind-keys :map space-insert-map
              :prefix "o"
@@ -2247,6 +2249,17 @@ KEYMAP defaults to `override-global-map'."
              ("r" . org-insert-literate-programming-src-racket)
              ("s" . org-insert-literate-programming-src-sh))
 
+  ;; insert commands
+  (bind-keys :map space-insert-map
+             :prefix "p"
+             :prefix-map space-insert-password-map
+             :menu-name "Insert Password Commands"
+             ("p" . insert-password)
+             ("h" . insert-password-phrase)
+             ("2" . insert-password-20)
+             ("3" . insert-password-phrase-3-space)
+             ("6" . insert-password-phrase-6-space))
+
   ;; miscellaneous commands
   (bind-keys :map space-map
              :prefix "m"
@@ -2259,6 +2272,7 @@ KEYMAP defaults to `override-global-map'."
              ("s" . server-start-maybe)
              ("w" . webjump)
              ("x" . regexp-builder))
+
   ;; miscellaneous display commands
   (bind-keys :map space-miscellaneous-map
              :prefix "d"
@@ -2270,6 +2284,7 @@ KEYMAP defaults to `override-global-map'."
              ("w" . display-time-world))
   (when (fboundp 'term-bash)
     (bind-keys :map space-miscellaneous-display-map ("u" . list-charset-unicode)))
+
   ;; miscellaneous eval commands
   (bind-keys :map space-miscellaneous-map
              :prefix "e"
@@ -2278,6 +2293,7 @@ KEYMAP defaults to `override-global-map'."
              ("b" . eval-buffer)
              ("i" . ielm)
              ("r" . eval-region))
+
   ;; miscellaneous format commands
   (bind-keys :map space-miscellaneous-map
              :prefix "f"
@@ -2285,6 +2301,7 @@ KEYMAP defaults to `override-global-map'."
              :menu-name "Format Commands"
              ("j" . json-pretty-print)
              ("x" . xml-pretty-print))
+
   ;; miscellaneous toggle commands
   (bind-keys :map space-miscellaneous-map
              :prefix "t"
@@ -5171,8 +5188,8 @@ Reset the CUSTOM_ID property, title comment, and `init-message'."
   (org-indent-line)
   (insert "#+NAME: "))
 
-(defmacro org-insert-literate-programming-src-gen (name &optional lang)
-  "Generate org babel insert function from NAME and optional LANG.
+(defmacro org-insert-literate-programming-src-function (name &optional lang)
+  "Return org babel insert function from NAME and optional LANG.
 
 LANG is only needed if the language section of the block is
 different from NAME."
@@ -5194,22 +5211,22 @@ different from NAME."
          (forward-line -2)))))
 
 ;; org-insert-literate-programming-src
-(org-insert-literate-programming-src-gen nil)
+(org-insert-literate-programming-src-function nil)
 
 ;; org-insert-literate-programming-src-sh
-(org-insert-literate-programming-src-gen "sh")
+(org-insert-literate-programming-src-function "sh")
 
 ;; org-insert-literate-programming-src-sh-sudo
-(org-insert-literate-programming-src-gen "sh-sudo" "sh :dir /sudo::")
+(org-insert-literate-programming-src-function "sh-sudo" "sh :dir /sudo::")
 
 ;; org-insert-literate-programming-src-emacs-lisp
-(org-insert-literate-programming-src-gen "emacs-lisp")
+(org-insert-literate-programming-src-function "emacs-lisp")
 
 ;; org-insert-literate-programming-src-racket
-(org-insert-literate-programming-src-gen "racket")
+(org-insert-literate-programming-src-function "racket")
 
 ;; org-insert-literate-programming-src-kotlin
-(org-insert-literate-programming-src-gen "kotlin")
+(org-insert-literate-programming-src-function "kotlin")
 ;; org-insert-literate-programming-statics:1 ends here
 
 ;; [[file:init-emacs.org::#org-mode-babel-functions-org-insert-literate-programming-block][org-insert-literate-programming-block:1]]
@@ -11705,10 +11722,10 @@ of the current buffer."
 
 (init-message 3 "Functions: Text Inserting Functions: insert-password-phrase")
 
-(defun insert-password-phrase (count &optional output)
+(defun insert-password-phrase (count &optional type)
   "Insert generated password phrase containing COUNT words.
 
-OUTPUT (defaults to 'phrase):
+TYPE (defaults to 'phrase):
 
   'phrase   \"threewordphrase\"
   'space    \"three word phrase\"
@@ -11717,7 +11734,7 @@ OUTPUT (defaults to 'phrase):
   (interactive
    (list
     (read-number "Count: ")
-    (intern (completing-read "Output: " '("phrase" "space" "hyphen" "list") nil t))))
+    (intern (completing-read "Type: " '("phrase" "space" "hyphen" "list") nil t))))
   (let* ((words
           '("abandon" "ability" "able" "about" "above" "absent" "absorb" "abstract" "absurd"
             "abuse" "access" "accident" "account" "accuse" "achieve" "acid" "acoustic"
@@ -11931,20 +11948,46 @@ OUTPUT (defaults to 'phrase):
          phrase)
     (while (< (length phrase) count)
       (cl-pushnew (elt words (random size)) phrase))
-    (cl-case output
+    (cl-case type
       ('list (insert (format "%S" phrase)))
       ('space (insert (cl-reduce (lambda (x y) (concat x " " y)) phrase)))
       ('hyphen (insert (cl-reduce (lambda (x y) (concat x "-" y)) phrase)))
       (t (insert (cl-reduce (lambda (x y) (concat x y)) phrase))))))
 
+;; (defmacro insert-password-phrase-count-type-function (count type)
+;;   "Return function insert-password-phrase-COUNT-TYPE that inserts
+;; a password of TYPE having COUNT."
+;;   (let* ((funct (intern (format "insert-password-phrase-%s-%s" count type)))
+;;          (doc (format "Call `insert-password-phrase' with a COUNT of %s and a TYPE\nof '%s." count type)))
+;;     (message "funct: %s" funct)
+;;     (message "doc: %s" doc)
+;;     `(defun ,funct ()
+;;          ,doc
+;;        (interactive "*")
+;;        (insert-password-phrase ,count ,type))))
+
+;; (insert-password-phrase-count-type-function 4 "space")
+
+(defun insert-password-phrase-3-space ()
+  "Call `insert-password-phrase' with a COUNT of 3 and a TYPE
+of 'space."
+  (interactive "*")
+  (insert-password-phrase 3 'space))
+
 (defun insert-password-phrase-6-space ()
-  "Call `insert-password-phrase' with a COUNT of 6 and an OUTPUT
+  "Call `insert-password-phrase' with a COUNT of 6 and a TYPE
 of 'space."
   (interactive "*")
   (insert-password-phrase 6 'space))
 
+(defun insert-password-phrase-3-hyphen ()
+  "Call `insert-password-phrase' with a COUNT of 3 and a TYPE
+of 'hyphen."
+  (interactive "*")
+  (insert-password-phrase 3 'hyphen))
+
 (defun insert-password-phrase-6-hyphen ()
-  "Call `insert-password-phrase' with a COUNT of 6 and an OUTPUT
+  "Call `insert-password-phrase' with a COUNT of 6 and a TYPE
 of 'hyphen."
   (interactive "*")
   (insert-password-phrase 6 'hyphen))
@@ -12501,15 +12544,15 @@ MATCH is the file pattern to match."
 ;; (funcall (grep-custom ("~/.profile") ".*") "path")
 ;; grep-custom:1 ends here
 
-;; [[file:init-emacs.org::#functions-grep-search-functions-grep-custom-generate][grep-custom-generate:1]]
+;; [[file:init-emacs.org::#functions-grep-search-functions-grep-custom-function][grep-custom-function:1]]
 ;;------------------------------------------------------------------------------
-;;;; Functions: Grep Search Functions: grep-custom-generate
+;;;; Functions: Grep Search Functions: grep-custom-function
 ;;------------------------------------------------------------------------------
 
-(init-message 3 "Functions: Grep Search Functions: grep-custom-generate")
+(init-message 3 "Functions: Grep Search Functions: grep-custom-function")
 
-(defmacro grep-custom-generate (name prompt dirs match)
-  "Generate a custom grep function.
+(defmacro grep-custom-function (name prompt dirs match)
+  "Return custom grep function.
 
 NAME is the function name.
 
@@ -12530,7 +12573,7 @@ MATCH is the file pattern to match."
                 "A file matching pattern of `" match "' is used.")
        (interactive ,(concat "s" prompt))
        (funcall (grep-custom ,dirs ,match) query))))
-;; grep-custom-generate:1 ends here
+;; grep-custom-function:1 ends here
 
 ;; [[file:init-emacs.org::#functions-grep-search-functions-grep-bin][grep-bin:1]]
 ;;------------------------------------------------------------------------------
@@ -12540,7 +12583,7 @@ MATCH is the file pattern to match."
 (init-message 3 "Functions: Grep Search Functions: grep-bin")
 
 ;; grep bin
-(grep-custom-generate grep-bin "Grep HOME bin files: " ("~/bin") nil)
+(grep-custom-function grep-bin "Grep HOME bin files: " ("~/bin") nil)
 ;; grep-bin:1 ends here
 
 ;; [[file:init-emacs.org::#functions-grep-search-functions-grep-clojure][grep-clojure:1]]
@@ -12551,7 +12594,7 @@ MATCH is the file pattern to match."
 (init-message 3 "Functions: Grep Search Functions: grep-clojure")
 
 ;; grep clojure
-(grep-custom-generate grep-clojure "Grep Clojure files: " ("~/dev/clojure") "\\(\\.org$\\|\\.clj$\\)")
+(grep-custom-function grep-clojure "Grep Clojure files: " ("~/dev/clojure") "\\(\\.org$\\|\\.clj$\\)")
 ;; grep-clojure:1 ends here
 
 ;; [[file:init-emacs.org::#functions-grep-search-functions-grep-clisp][grep-clisp:1]]
@@ -12562,7 +12605,7 @@ MATCH is the file pattern to match."
 (init-message 3 "Functions: Grep Search Functions: grep-clisp")
 
 ;; grep clisp
-(grep-custom-generate grep-clisp "Grep CLISP files: " ("~/dev/clisp")  "\\(\\.org$\\|\\.lisp$\\)")
+(grep-custom-function grep-clisp "Grep CLISP files: " ("~/dev/clisp")  "\\(\\.org$\\|\\.lisp$\\)")
 ;; grep-clisp:1 ends here
 
 ;; [[file:init-emacs.org::#functions-grep-search-functions-grep-emacs-init][grep-emacs-init:1]]
@@ -12573,7 +12616,7 @@ MATCH is the file pattern to match."
 (init-message 3 "Functions: Grep Search Functions: grep-emacs-init")
 
 ;; grep emacs initialization
-(grep-custom-generate grep-emacs-init "Grep Emacs Initialization files: "
+(grep-custom-function grep-emacs-init "Grep Emacs Initialization files: "
                       ("~/.emacs.d/init.el"
                        "~/.emacs.d/init-emacs.org"
                        "~/.emacs.d/customization.el")
@@ -12588,7 +12631,7 @@ MATCH is the file pattern to match."
 (init-message 3 "Functions: Grep Search Functions: grep-home-init")
 
 ;; grep home
-(grep-custom-generate grep-home-init "Grep Home Initialization files: "
+(grep-custom-function grep-home-init "Grep Home Initialization files: "
                       ("~/org/init-home.org") "\\.org\\'")
 ;; grep-home-init:1 ends here
 
@@ -12600,7 +12643,7 @@ MATCH is the file pattern to match."
 (init-message 3 "Functions: Grep Search Functions: grep-org")
 
 ;; grep org
-(grep-custom-generate grep-org "Grep Org files: " ("~/org") "\\.org\\'")
+(grep-custom-function grep-org "Grep Org files: " ("~/org") "\\.org\\'")
 ;; grep-org:1 ends here
 
 ;; [[file:init-emacs.org::#functions-grep-search-functions-grep-python][grep-python:1]]
@@ -12611,7 +12654,7 @@ MATCH is the file pattern to match."
 (init-message 3 "Functions: Grep Search Functions: grep-python")
 
 ;; grep python
-(grep-custom-generate grep-python "Grep Python files: " ("~/dev/python")  "\\(\\.org$\\|\\.py$\\)")
+(grep-custom-function grep-python "Grep Python files: " ("~/dev/python")  "\\(\\.org$\\|\\.py$\\)")
 ;; grep-python:1 ends here
 
 ;; [[file:init-emacs.org::#functions-grep-search-functions-grep-racket][grep-racket:1]]
@@ -12622,7 +12665,7 @@ MATCH is the file pattern to match."
 (init-message 3 "Functions: Grep Search Functions: grep-racket")
 
 ;; grep racket
-(grep-custom-generate grep-racket "Grep Racket files: " ("~/dev/racket") "\\.rkt\\'")
+(grep-custom-function grep-racket "Grep Racket files: " ("~/dev/racket") "\\.rkt\\'")
 ;; grep-racket:1 ends here
 
 ;; [[file:init-emacs.org::#functions-grep-search-functions-grep-web][grep-web:1]]
@@ -12633,7 +12676,7 @@ MATCH is the file pattern to match."
 (init-message 3 "Functions: Grep Search Functions: grep-web")
 
 ;; grep web
-(grep-custom-generate grep-web "Grep web files: " ("~/web/org") "\\.org\\'")
+(grep-custom-function grep-web "Grep web files: " ("~/web/org") "\\.org\\'")
 ;; grep-web:1 ends here
 
 ;; [[file:init-emacs.org::#functions-tags-file-functions][TAGS File Functions:1]]
@@ -18515,110 +18558,6 @@ otherwise run `find-file-as-root'."
   (wttrin-default-accept-language '("Accept-Language" . "en-US")))
 ;; wttrin:1 ends here
 
-;; [[file:init-emacs.org::#lsp-mode][LSP Mode:1]]
-;;==============================================================================
-;;; LSP Mode
-;;==============================================================================
-
-(init-message 1 "LSP Mode")
-;; LSP Mode:1 ends here
-
-;; [[file:init-emacs.org::#lsp-mode-configuration][Configuration:1]]
-;;------------------------------------------------------------------------------
-;;; LSP Mode: Configuration
-;;------------------------------------------------------------------------------
-
-(init-message 2 "LSP Mode: Configuration")
-
-(defun custom-lsp-mode-hook ()
-  ;; turn on breadcrumbs
-  (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
-  (lsp-headerline-breadcrumb-mode 1))
-
-(use-package lsp-mode
-  :straight t
-  ;;:after (company)
-  :after (corfu)
-  :commands (lsp lsp-mode lsp-defered)
-  :bind (:map lsp-mode-map
-              ("M-RET" . lsp-execute-code-action))
-  ;;             ("TAB" . company-indent-or-complete-common)
-  ;;             ("<tab>" . company-indent-or-complete-common))
-  :hook ((lsp-mode . custom-lsp-mode-hook))
-         ;; (lsp-mode . company-mode))
-  :init
-  (setq lsp-keymap-prefix "C-c C-l")    ; default: `downcase-region'
-  :config
-  ;; add `which-key-mode' descriptions
-  (lsp-enable-which-key-integration t))
-
-;;------------------------------------------------------------------------------
-;;;; lsp-ui
-;;
-;; Minor mode that contains a series of useful UI integrations.
-;;------------------------------------------------------------------------------
-
-(init-message 3 "lsp-ui")
-
-(use-package lsp-ui
-  :straight t
-  :after (lsp-mode)
-  :hook (lsp-mode . lsp-ui-mode)
-  :custom
-  ;;(lsp-ui-doc-position 'bottom)
-  (lsp-ui-doc-position 'at-point)
-  (lsp-ui-sideline-show-code-actions t))
-
-;; ;;------------------------------------------------------------------------------
-;; ;;;; helm-lsp
-;; ;;
-;; ;; LSP helm integration.
-;; ;;------------------------------------------------------------------------------
-
-;; (init-message 3 "helm-lsp")
-
-;; (use-package helm-lsp
-;;   :straight t
-;;   :after (lsp-mode))
-
-;; ;;------------------------------------------------------------------------------
-;; ;;;; lsp-ivy
-;; ;;
-;; ;; LSP ivy integration.
-;; ;;------------------------------------------------------------------------------
-
-;; (init-message 3 "lsp-ivy")
-
-;; (use-package lsp-ivy
-;;   :straight t
-;;   :after (lsp-mode))
-
-;;------------------------------------------------------------------------------
-;;;; lsp-treemacs
-;;
-;; LSP treemacs integration.
-;;------------------------------------------------------------------------------
-
-;; (init-message 3 "lsp-treemacs")
-
-;; (use-package lsp-treemacs
-;;   :straight t
-;;   :after (lsp-mode)
-;;   :init
-;;   (lsp-treemacs-sync-mode 1))
-;; Configuration:1 ends here
-
-;; [[file:init-emacs.org::#eglot][eglot:1]]
-;;==============================================================================
-;;; eglot
-;;==============================================================================
-
-(init-message 1 "eglot")
-
-(use-package eglot
-  :straight t)
-;; eglot:1 ends here
-
 ;; [[file:init-emacs.org::#modes][Modes:1]]
 ;;==============================================================================
 ;;; Modes
@@ -19597,6 +19536,102 @@ otherwise run `find-file-as-root'."
   ;;(add-hook 'common-lisp-mode-hook #'install-remove-tabs)
   )
 ;; Lisp Mode:1 ends here
+
+;; [[file:init-emacs.org::#modes-lsp-mode][LSP Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: LSP Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: LSP Mode")
+
+(defun custom-lsp-mode-hook ()
+  ;; turn on breadcrumbs
+  (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
+  (lsp-headerline-breadcrumb-mode 1))
+
+(use-package lsp-mode
+  :straight t
+  ;;:after (company)
+  :after (corfu)
+  :commands (lsp lsp-mode lsp-defered)
+  :bind (:map lsp-mode-map
+              ("M-RET" . lsp-execute-code-action))
+  ;;             ("TAB" . company-indent-or-complete-common)
+  ;;             ("<tab>" . company-indent-or-complete-common))
+  :hook ((lsp-mode . custom-lsp-mode-hook))
+  ;; (lsp-mode . company-mode))
+  :init
+  (setq lsp-keymap-prefix "C-c C-l")    ; default: `downcase-region'
+  :config
+  ;; add `which-key-mode' descriptions
+  (lsp-enable-which-key-integration t))
+
+;;------------------------------------------------------------------------------
+;;;; lsp-ui
+;;
+;; Minor mode that contains a series of useful UI integrations.
+;;------------------------------------------------------------------------------
+
+(init-message 3 "lsp-ui")
+
+(use-package lsp-ui
+  :straight t
+  :after (lsp-mode)
+  :hook (lsp-mode . lsp-ui-mode)
+  :custom
+  ;;(lsp-ui-doc-position 'bottom)
+  (lsp-ui-doc-position 'at-point)
+  (lsp-ui-sideline-show-code-actions t))
+
+;; ;;------------------------------------------------------------------------------
+;; ;;;; helm-lsp
+;; ;;
+;; ;; LSP helm integration.
+;; ;;------------------------------------------------------------------------------
+
+;; (init-message 3 "helm-lsp")
+
+;; (use-package helm-lsp
+;;   :straight t
+;;   :after (lsp-mode))
+
+;; ;;------------------------------------------------------------------------------
+;; ;;;; lsp-ivy
+;; ;;
+;; ;; LSP ivy integration.
+;; ;;------------------------------------------------------------------------------
+
+;; (init-message 3 "lsp-ivy")
+
+;; (use-package lsp-ivy
+;;   :straight t
+;;   :after (lsp-mode))
+
+;;------------------------------------------------------------------------------
+;;;; lsp-treemacs
+;;
+;; LSP treemacs integration.
+;;------------------------------------------------------------------------------
+
+;; (init-message 3 "lsp-treemacs")
+
+;; (use-package lsp-treemacs
+;;   :straight t
+;;   :after (lsp-mode)
+;;   :init
+;;   (lsp-treemacs-sync-mode 1))
+
+;;------------------------------------------------------------------------------
+;;;; eglot
+;;
+;; Client for Language Server Protocol (LSP) servers.
+;;------------------------------------------------------------------------------
+
+(init-message 3 "eglot")
+
+(use-package eglot
+  :straight t)
+;; LSP Mode:1 ends here
 
 ;; [[file:init-emacs.org::#modes-lua-mode][LUA Mode:1]]
 ;;------------------------------------------------------------------------------

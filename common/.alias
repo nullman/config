@@ -3030,6 +3030,8 @@ alias nix-store-cleanup="
 alias nix-shell-development="nix-shell \${HOME}/.nixos/shell.nix"
 #        nix-shell-ruby          nix-shell with ruby packages
 alias nix-shell-ruby="nix-shell -p \"ruby.withPackages (ps: with ps; [ nokogiri ])\""
+#        nix-run-ruby            nix-shell --run with ruby packages
+alias nix-run-ruby="nix-shell -p \"ruby.withPackages (ps: with ps; [ nokogiri ])\" --run"
 
 #
 # Guix
