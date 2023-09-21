@@ -138,12 +138,12 @@ pstest() {
         echo "Test if a user applicaiton containing QUERY is currently running."
         echo "  QUERY  query string to search for"
     else
-        pgrep -u ${USER} -f -i "$1" > /dev/null
+        pgrep -u ${USER} -f -i "$1" >/dev/null
     fi
 }
 #        iscommand               check if executable command is found in the path
 iscommand() {
-    command -v "$1" > /dev/null 2>&1
+    command -v "$1" >/dev/null 2>&1
 }
 #        keypress                get a single key press
 keypress() {
@@ -152,7 +152,7 @@ keypress() {
     # disable canonical mode and local echo
     stty -icanon -echo
     # get key
-    key=$(dd bs=1 count=1 2> /dev/null)
+    key=$(dd bs=1 count=1 2>/dev/null)
     # restore tty settings
     stty "${ttysettings}"
     # return key pressed
@@ -1269,8 +1269,8 @@ git-master() {
 }
 #        git-branch              git branch name
 git-branch() {
-    #git branch --no-color 2> /dev/null | sed -n '/^\*/s/^\* *//p'
-    git rev-parse --abbrev-ref HEAD 2> /dev/null
+    #git branch --no-color 2>/dev/null | sed -n '/^\*/s/^\* *//p'
+    git rev-parse --abbrev-ref HEAD 2>/dev/null
 }
 #        git-branch-prompt       git branch name for terminal prompt
 git-branch-prompt() {
@@ -1302,7 +1302,7 @@ _gitsync() {
             # remove org font files
             echo "Removing org font files..."
             find "${HOME}/${dir}" -name '*org-src-fontification*' -print | \
-                xargs rm > /dev/null 2>&1
+                xargs rm >/dev/null 2>&1
 
             # pull (update) home git repository (from origin)
             echo "Pulling '${dir}' from origin..."
@@ -1495,11 +1495,11 @@ backup-files() {
 #!            fi
 #!            # copy bin
 #!            rm -rf "${HOME}/bin_bak"
-#!            mv "${HOME}/bin" "${HOME}/bin_bak" > /dev/null 2>&1
+#!            mv "${HOME}/bin" "${HOME}/bin_bak" >/dev/null 2>&1
 #!            cp -R --preserve=mode,timestamps "${src}/config/common/bin" "${HOME}/"
 #!            # copy emacs
 #!            rm -rf "${HOME}/.emacs.d_bak"
-#!            mv "${HOME}/.emacs.d" "${HOME}/.emacs.d_bak" > /dev/null 2>&1
+#!            mv "${HOME}/.emacs.d" "${HOME}/.emacs.d_bak" >/dev/null 2>&1
 #!            cp -R --preserve=mode,timestamps "${src}/config/.emacs.d" "${HOME}/"
 #!            # sync other dirs
 #!            # (just link to these)
@@ -1544,7 +1544,7 @@ backup-files() {
 #!                fi
 #!                # copy bin
 #!                rm -rf "${HOME}/bin_bak"
-#!                mv "${HOME}/bin" "${HOME}/bin_bak" > /dev/null 2>&1
+#!                mv "${HOME}/bin" "${HOME}/bin_bak" >/dev/null 2>&1
 #!                scp -r "${src}/config/bin" "${HOME}/"
 #!                # sync other dirs
 #!                #rsync -rlptx --delete "${src}/sounds" "${HOME}/"
@@ -1717,7 +1717,7 @@ jar-version() {
             cp "${jar}" "${tmpdir}/"
             (
                 cd "${tmpdir}"
-                unzip "${jar}" > /dev/null
+                unzip "${jar}" >/dev/null
                 echo "${jar} $(grep '^Created-By' 'META-INF/MANIFEST.MF' | sed 's/^Created-By: // ; s/ (Sun.*$//')"
             )
             rm -rf "${tmpdir}"

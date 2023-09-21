@@ -24,7 +24,7 @@ os="$(uname -s)"
 
 # check if executable command is found in the path
 _command() {
-    command -v "$1" > /dev/null 2>&1
+    command -v "$1" >/dev/null 2>&1
 }
 
 # add path entry before or after existing path entries, preventing duplicates
@@ -200,8 +200,8 @@ export SCREENDIR="${HOME}/.screendir"
 [[ -d "${SCREENDIR}" ]] || mkdir -p -m 700 "${SCREENDIR}"
 
 # # ssh-agent
-# #pstest ssh-add || ssh-add > /dev/null 2>&1
-# pstest ssh-agent || ssh-agent > /dev/null 2>&1
+# #pstest ssh-add || ssh-add >/dev/null 2>&1
+# pstest ssh-agent || ssh-agent >/dev/null 2>&1
 
 # # keychain for one-time entry of ssh passphrase
 # [[ -d "${HOME}/.ssh" ]] && eval "$(keychain --quiet --eval id_rsa)"
@@ -218,7 +218,7 @@ export XDG_DOWNLOAD_DIR="${HOME}/Downloads"
 #[[ -d "/run/current-system/sw"]] && export GTK_DATA_PREFIX="/run/current-system/sw"
 
 # set java home
-[[ "${os}" == "Linux" ]] && _command java && export JAVA_HOME="$(java -XshowSettings:properties -version 2>&1 > /dev/null | grep 'java.home' | sed 's/^.* = //')"
+[[ "${os}" == "Linux" ]] && _command java && export JAVA_HOME="$(java -XshowSettings:properties -version >/dev/null 2>&1 | grep 'java.home' | sed 's/^.* = //')"
 [[ "${os}" == "Darwin" ]] && [[ -x /usr/libexec/java_home ]] && export JAVA_HOME="$(/usr/libexec/java_home)"
 
 # # set oracle environment
@@ -233,7 +233,7 @@ export PROJECT_HOME="${HOME}/.virtualenv-projects"
 export CDR_SECURITY="8:dvd,clone:sparc-sun-solaris2,i386-pc-solaris2,i586-pc-linux\,powerpc-apple,hppa,powerpc-ibm-aix,i386-unknown-freebsd,i386-unknown-openbsd,i38\6-unknown-netbsd,powerpc-apple-netbsd,i386-pc-bsdi,mips-sgi-irix,i386-pc-sco:1.11\::1093000000:::private/research/educational_non-commercial_use:9vl2T2kP6w6O4h.bXu\et8hP1Z3H5erm3qWmxhbcr.fHvuN8ZJbhQUWBzjAc"
 
 # # set ocaml package manager environment
-# [[ -x "${HOME}/.opam/opam-init/init.sh" ]] && source "${HOME}/.opam/opam-init/init.sh" > /dev/null 2>&1
+# [[ -x "${HOME}/.opam/opam-init/init.sh" ]] && source "${HOME}/.opam/opam-init/init.sh" >/dev/null 2>&1
 
 # nvm
 [[ -f "/usr/share/nvm/init-nvm.sh" ]] && source "/usr/share/nvm/init-nvm.sh" 2>&1

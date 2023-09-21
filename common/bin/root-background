@@ -115,8 +115,8 @@ if [[ "${app}" == "xplanetrvf" ]] ; then
     wait=4
 fi
 
-#fuser -k -SIGTERM /usr/bin/xplanet > /dev/null 2>&1
-#fuser -k -SIGKILL /usr/bin/xplanet > /dev/null 2>&1
+#fuser -k -SIGTERM /usr/bin/xplanet >/dev/null 2>&1
+#fuser -k -SIGKILL /usr/bin/xplanet >/dev/null 2>&1
 # if the app is already running we exit
 [[ -z "$(ps -ef | grep -v grep | grep -v \"$0\" | grep ${USER} | grep \"${app}\")" ]] || exit 1
 sleep 2
@@ -159,7 +159,7 @@ if [[ "${app}" == "xplanet" ]] ; then
                     fi
                 done
             done
-        ) & > /dev/null 2>&1
+        ) & >/dev/null 2>&1
     else
         # just run normal modes
         (
@@ -168,7 +168,7 @@ if [[ "${app}" == "xplanet" ]] ; then
             else
                 _gnomebg
             fi
-        ) & > /dev/null 2>&1
+        ) & >/dev/null 2>&1
     fi
 else
     eval "${cmd} $@"

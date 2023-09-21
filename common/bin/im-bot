@@ -89,10 +89,10 @@ case "${cmd}" in
                 #fortune ${fparam} -m "${msg}" 2>/dev/null | sed -e 's/\t/    /g ; s/^%$//'
                 fortune ${fparam} -m "${msg}" 2>/dev/null > ${tmp}
                 if [[ -n "$(cat ${tmp})" ]] ; then
-                    strfile "${tmp}" > /dev/null
+                    strfile "${tmp}" >/dev/null
                     fortune "${tmp}" | sed -e 's/\t/    /g ; s/^%$//'
                 fi
-                rm -f "${tmp}" "${tmp}.dat" > /dev/null 2>&1
+                rm -f "${tmp}" "${tmp}.dat" >/dev/null 2>&1
             fi
         else
             fortune ${fparam} 2>/dev/null | sed -e 's/\t/    /g'
@@ -104,10 +104,10 @@ case "${cmd}" in
             # query for keyword, then return random quote
             fortune "${HOME}/quotes" -m "${msg}" 2>/dev/null > ${tmp}
             if [[ -n "$(cat ${tmp})" ]] ; then
-                strfile "${tmp}" > /dev/null
+                strfile "${tmp}" >/dev/null
                 fortune "${tmp}" | sed -e 's/\t/    /g ; s/^%$//'
             fi
-            rm -f "${tmp}" "${tmp}.dat" > /dev/null 2>&1
+            rm -f "${tmp}" "${tmp}.dat" >/dev/null 2>&1
         else
             # return random quote
             fortune "${HOME}/quotes" | sed -e 's/\t/    /g'

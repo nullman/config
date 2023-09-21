@@ -26,7 +26,7 @@ if [[ ! -d "${musicdir}" ]] ; then
     echo "Error: Could not find music directory: ${musicdir}"
     exit 1
 fi
-pushd "${musicdir}" > /dev/null 2>&1
+pushd "${musicdir}" >/dev/null 2>&1
 
 #===============================================================================
 # albums
@@ -163,7 +163,7 @@ paste -d '\n' "${pldir}/rated_normal.m3u" "${pldir}/unrated.m3u" | sed '/^$/d' >
 
 [[ -f "${pldir}/${tmpfile}" ]] && rm -f "${pldir}/${tmpfile}"
 
-popd > /dev/null 2>&1
+popd >/dev/null 2>&1
 
 #===============================================================================
 # End of File

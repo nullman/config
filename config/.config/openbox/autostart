@@ -11,7 +11,7 @@ delay=2
 
 # check if executable command is found in the path
 _command() {
-    command -v "$1" > /dev/null 2>&1
+    command -v "$1" >/dev/null 2>&1
 }
 
 # delay running a command (SECONDS COMMAND)

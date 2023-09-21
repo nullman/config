@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
-#=============================================================================
+#===============================================================================
 # .bashrc
 #
 # Bash Config
 #
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
-#=============================================================================
+#===============================================================================
 
 # check if executable command is found in the path
 _command() {
-    command -v "$1" > /dev/null 2>&1
+    command -v "$1" >/dev/null 2>&1
 }
 
 # keep original TERM value for scripts to use
@@ -89,7 +89,7 @@ fi
 _command stty && stty tabs
 
 # make terminals not beep
-[[ "${OS}" == "Windows_NT" ]] || _command setterm && setterm -blength 0 > /dev/null 2>&1
+[[ "${OS}" == "Windows_NT" ]] || _command setterm && setterm -blength 0 >/dev/null 2>&1
 
 # set umask
 umask 0022

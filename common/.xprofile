@@ -13,7 +13,7 @@ logger "Running: ${HOME}/.xprofile"
 
 # check if executable command is found in the path
 _command() {
-    command -v "$1" > /dev/null 2>&1
+    command -v "$1" >/dev/null 2>&1
 }
 
 # xresources
@@ -25,7 +25,7 @@ _command xmodmap && [[ -f /etc/X11/xinit/.Xmodmap ]] && xmodmap /etc/X11/xinit/.
 _command xmodmap && [[ -f ${HOME}/.Xmodmap ]] && xmodmap ${HOME}/.Xmodmap
 
 # disable insert key
-_command xkbcomp && xkbcomp ${DISPLAY} - | sed 's/ Insert / NoSymbol /' | xkbcomp - ${DISPLAY} > /dev/null 2>&1
+_command xkbcomp && xkbcomp ${DISPLAY} - | sed 's/ Insert / NoSymbol /' | xkbcomp - ${DISPLAY} >/dev/null 2>&1
 
 # setxkbmap key behavior modifications
 #   caps lock  -> control
@@ -39,17 +39,17 @@ _command setxkbmap && setxkbmap -option 'shift:both_capslock,caps:ctrl_modifier'
 # _command setxkbmap && setxkbmap -option 'shift:both_capslock_cancel,caps:ctrl_modifier'
 
 # # xbindkeys
-# pkill -x -f -u ${USER} $(realpath $(which xbindkeys)) > /dev/null 2>&1
-# _command xbindkeys && [[ -f ${HOME}/.xbindkeysrc ]] && xbindkeys > /dev/null 2>&1
+# pkill -x -f -u ${USER} $(realpath $(which xbindkeys)) >/dev/null 2>&1
+# _command xbindkeys && [[ -f ${HOME}/.xbindkeysrc ]] && xbindkeys >/dev/null 2>&1
 
 # sxhkd
 if _command sxhkd && [[ -f ${HOME}/.config/sxhkd/sxhkdrc ]] ; then
     if [[ "${XDG_SESSION_DESKTOP: -5}" == "bspwm" ]] ; then
-        (pkill -x -f -u ${USER} $(realpath $(which sxhkd)) > /dev/null 2>&1
-         sxhkd -c ${HOME}/.config/sxhkd/sxhkdrc{,-bspwm} > /dev/null 2>&1) &
+        (pkill -x -f -u ${USER} $(realpath $(which sxhkd)) >/dev/null 2>&1
+         sxhkd -c ${HOME}/.config/sxhkd/sxhkdrc{,-bspwm} >/dev/null 2>&1) &
     else
-        (pkill -x -f -u ${USER} $(realpath $(which sxhkd)) > /dev/null 2>&1
-         sxhkd -c ${HOME}/.config/sxhkd/sxhkdrc > /dev/null 2>&1) &
+        (pkill -x -f -u ${USER} $(realpath $(which sxhkd)) >/dev/null 2>&1
+         sxhkd -c ${HOME}/.config/sxhkd/sxhkdrc >/dev/null 2>&1) &
     fi
 fi
 
@@ -57,18 +57,18 @@ fi
 _command xset && xset -dpms s off b off m 2/1 4 r rate 500 35
 
 # set background color and mouse pointer
-#_command xsetroot && xsetroot -solid black -cursor_name left_ptr > /dev/null 2>&1
+#_command xsetroot && xsetroot -solid black -cursor_name left_ptr >/dev/null 2>&1
 
 # # set no energy saving, mouse acceleration rate, and keyboard acceleration rate
 # if [[ -n "$(greppr screen_blank)" ]] ; then
-#     _command xset && xset -dpms s on b off m 2/1 4 r rate 500 35 > /dev/null 2>&1
+#     _command xset && xset -dpms s on b off m 2/1 4 r rate 500 35 >/dev/null 2>&1
 # else
-#     _command xset && xset -dpms s off b off m 2/1 4 r rate 500 35 > /dev/null 2>&1
+#     _command xset && xset -dpms s off b off m 2/1 4 r rate 500 35 >/dev/null 2>&1
 # fi
 
 # xhost
-#_command xhost && xhost +localhost > /dev/null 2>&1
-#_command xhost && xhost +mouse1 > /dev/null 2>&1
+#_command xhost && xhost +localhost >/dev/null 2>&1
+#_command xhost && xhost +mouse1 >/dev/null 2>&1
 
 # run-app
 #${HOME}/bin/run-app
@@ -77,7 +77,7 @@ _command xset && xset -dpms s off b off m 2/1 4 r rate 500 35
 #[[ -f ${HOME}/.xprofile-applications ]] && source ${HOME}/.xprofile-applications 2>&1
 
 # start wm
-#[[ -z "$(greppr window_manager)" ]] || ps ux | grep -v grep | grep -q window_manager || (exec $(getpr window_manager) &) > /dev/null 2>&1
+#[[ -z "$(greppr window_manager)" ]] || ps ux | grep -v grep | grep -q window_manager || (exec $(getpr window_manager) &) >/dev/null 2>&1
 
 # select a window manager
 #exec selectwm

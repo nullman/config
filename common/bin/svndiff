@@ -57,7 +57,7 @@ prev="${file}_PREV"
 # SIGQUIT  3
 # SIGTERM 15
 trap "rm -f ${prev}" 2 3 15
-svn cat ${rev} ${file} > ${prev} 2> /dev/null
+svn cat ${rev} ${file} > ${prev} 2>/dev/null
 ${dif} ${geometry} ${prev} ${file}
 
 sleep 1

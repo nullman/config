@@ -14,11 +14,13 @@
   boot.initrd.luks.devices = {
     root0 = {
       device = "/dev/disk/by-uuid/0bbb9f6c-b91c-48e5-aaef-9bfb3785dc0e";
+      #device = "/dev/disk/by-label/";
       preLVM = true;
       allowDiscards = true;
     };
     root1 = {
       device = "/dev/disk/by-uuid/62aeffa6-8f7e-4c4d-889b-15b9ea2152db";
+      #device = "/dev/disk/by-label/";
       preLVM = true;
       allowDiscards = true;
     };

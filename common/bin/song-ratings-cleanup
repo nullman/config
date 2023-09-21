@@ -87,7 +87,7 @@ if [[ ${dryrun} = false ]] ; then
         _process
     else
         echo
-        echo -n "Do you want to remove all missing files? [yN] " ; read a
+        echo -n "Do you want to remove all missing files? [yN] " ; read -r a
         case "${a}" in
             y|Y)
                 _process

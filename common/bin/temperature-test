@@ -71,9 +71,9 @@ for x in $(seq ${count}) ; do
     echo -n "[${c: $((-${#count}))}/${count}] "
     _gettemp $1
     if [[ $(command -v sysbench) ]] ; then
-        sysbench --test=cpu --num-threads=${threads} --cpu-max-prime=25000 run > /dev/null 2>&1
+        sysbench --test=cpu --num-threads=${threads} --cpu-max-prime=25000 run >/dev/null 2>&1
     else
-        stress --cpu ${threads} --timeout 10s > /dev/null 2>&1
+        stress --cpu ${threads} --timeout 10s >/dev/null 2>&1
     fi
 done
 

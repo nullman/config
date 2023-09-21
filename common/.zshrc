@@ -9,7 +9,7 @@
 
 # check if executable command is found in the path
 _command() {
-    command -v "$1" > /dev/null 2>&1
+    command -v "$1" >/dev/null 2>&1
 }
 
 # keep original TERM value for scripts to use

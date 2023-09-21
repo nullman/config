@@ -26,7 +26,7 @@ if [[ ! -t 0 ]] ; then
 
     cat > "${tmpfile}"
 
-    if (emacsclient -a emacs -e "${lisp}" "${@}" > /dev/null) ; then
+    if (emacsclient -a emacs -e "${lisp}" "${@}" >/dev/null) ; then
         echo "Failed to import your data into Emacs"
     fi
 
@@ -35,7 +35,7 @@ else
     # nothing from stdin, use parameters
 
     if [[ $# -gt 0 ]] ; then
-        emacsclient -n -a emacs "${@}" > /dev/null
+        emacsclient -n -a emacs "${@}" >/dev/null
     fi
 fi
 

@@ -17,8 +17,8 @@ After=sshd.service
 
 [Service]
 #Type=dbus
-ExecStart=/usr/sbin/tightvnc
 #Type=forking
+ExecStart=/usr/sbin/tightvnc
 
 [Install]
 WantedBy=default.target

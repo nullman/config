@@ -34,13 +34,13 @@ the /etc/ssl/openssl.cnf file must be setup:
     commonName_default          = mycompany.com
     emailAddress_default        = postmaster@mycompany.com
 EOF
-echo -n "Are you ready to start? [yN] " ; read a
+echo -n "Are you ready to start? [yN] " ; read -r a
 case "${a}" in
     y|Y)
         pushd /etc/ssl
 
         echo
-        echo -n "Create private key? [yN] " ; read a
+        echo -n "Create private key? [yN] " ; read -r a
         case "${a}" in
             y|Y)
                 echo
@@ -56,7 +56,7 @@ case "${a}" in
         esac
 
         echo
-        echo -n "Create signing request? [yN] " ; read a
+        echo -n "Create signing request? [yN] " ; read -r a
         case "${a}" in
             y|Y)
                 echo
@@ -70,7 +70,7 @@ case "${a}" in
         esac
 
         echo
-        echo -n "Create private key for CA? [yN] " ; read a
+        echo -n "Create private key for CA? [yN] " ; read -r a
         case "${a}" in
             y|Y)
                 echo
@@ -86,7 +86,7 @@ case "${a}" in
         esac
 
         echo
-        echo -n "Create CA certificate? [yN] " ; read a
+        echo -n "Create CA certificate? [yN] " ; read -r a
         case "${a}" in
             y|Y)
                 echo
@@ -118,7 +118,7 @@ case "${a}" in
         fi
 
         echo
-        echo -n "Create unencryped CA certificate? [yN] " ; read a
+        echo -n "Create unencryped CA certificate? [yN] " ; read -r a
         case "${a}" in
             y|Y)
                 echo

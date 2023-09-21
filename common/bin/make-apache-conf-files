@@ -12,7 +12,7 @@ cedir=/etc/apache2/conf-enabled
 
 echo "You are about to install a set of apache conf files."
 echo -n "Do you wish to proceed? [yN] "
-read a
+read -r a
 case "${a}" in
     y|Y)
         echo "Installing files..."
