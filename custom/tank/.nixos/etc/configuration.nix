@@ -507,7 +507,7 @@
     bluez
     bluez-tools
     brightnessctl
-    busybox
+    #busybox                                 # non-standard ps, ls, etc
     bzip2
     clipmenu
     cifs-utils

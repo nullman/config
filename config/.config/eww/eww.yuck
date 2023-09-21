@@ -29,7 +29,7 @@
 
 (defpoll mute :interval "500ms" "pamixer --get-mute")
 (defpoll volume :interval "500ms" "[[ $(pamixer --get-mute) == true ]] && echo '0' || pamixer --get-volume")
-(defpoll brightness :interval "500ms" "light -G | cut -c 1-2")
+(defpoll brightness :interval "500ms" "light -G | sed 's/\.[0-9]*$//'")
 
 (defpoll weather :interval "600s" "~/bin/system-bar-weather icon 55433")
 (defpoll weather-status :interval "600s" "~/bin/system-bar-weather status 55433")
@@ -287,7 +287,7 @@
                  :show-details "true"
                  :show-heading "true"
                  :show-day-names "true")))
-                 ;;:onclick "remind ~/.reminders $(date -d {2}-$(({1}+1))-{0} '+%_d %b %Y') | fold -w 80 -s | yad --text-info --width=800 --height=600 --no-buttons")))
+;;:onclick "remind ~/.reminders $(date -d {2}-$(({1}+1))-{0} '+%_d %b %Y') | fold -w 80 -s | yad --text-info --width=800 --height=600 --no-buttons")))
 
 ;; (defwindow music
 ;;   :windowtype "dock"

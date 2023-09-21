@@ -97,11 +97,11 @@ XF86AudioRaiseVolume
 # XF86AudioMicMute
 
 XF86MonBrightnessUp
-    light -A 10 && notify-send --expire-time=2000 --replace-id 3 "Brightness: $(light -G | cut -c 1-2)"
+    light -A 10 && notify-send --expire-time=2000 --replace-id 3 "Brightness: $(light -G | sed 's/\.[0-9]*$//')"
     #xbacklight -inc 10 && notify-send --expire-time=2000 --replace-id 3 'Brightness Up'
 
 XF86MonBrightnessDown
-    light -U 10 && notify-send --expire-time=2000 --replace-id 3 "Brightness: $(light -G | cut -c 1-2)"
+    light -U 10 && notify-send --expire-time=2000 --replace-id 3 "Brightness: $(light -G | sed 's/\.[0-9]*$//')"
     #xbacklight -dec 10 && notify-send --expire-time=2000 --replace-id 3 'Brightness Down'
 
 # XF86Display
