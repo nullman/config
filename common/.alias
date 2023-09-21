@@ -13,7 +13,7 @@
 #!
 #!       _command                check if executable command is found in the path
 _command() {
-    command -v "$1" > /dev/null 2>&1
+    command -v "$1" >/dev/null 2>&1
 }
 #!
 #! set variables
@@ -27,7 +27,7 @@ config="\${HOME}/$([[ ${os} == Haiku ]] && echo 'haiku-config' || echo 'config')
 #!       terminal
 terminal="alacritty"
 #!       network device
-networkdevice="$(_command ip && ip route get 1.1.1.1 2> /dev/null | awk '{print $5}')"
+networkdevice="$(_command ip && ip route get 1.1.1.1 2>/dev/null | awk '{print $5}')"
 #!       nullwareip
 nullwareip="159.203.165.79"
 #===============================================================================
@@ -417,7 +417,7 @@ alias remove-org-font-files="
             for dir in config dev web ; do
                 [[ -d \${dir} ]] && \
                     find \${HOME}/\${dir} -name '*org-src-fontification*' -print | \
-                    xargs rm > /dev/null 2>&1
+                    xargs rm >/dev/null 2>&1
             done
     )"
 #        stopwatch               start stopwatch timer
@@ -1454,18 +1454,18 @@ alias emacs-install-v8="
 alias etags-emacs="
     o=\${HOME}/.emacs.d/TAGS
     find \${HOME}/.emacs.d/ -name \"*.el\" -print0 | grep -zZv \"/.svn/\" | \
-      xargs -0 etags -a -o \${o} > /dev/null 2>&1
+      xargs -0 etags -a -o \${o} >/dev/null 2>&1
     find /usr/share/emacs* -name \"*.el\" -print0 | grep -zZv \"/.svn/\" | \
-      xargs -0 etags -a -o \${o} > /dev/null 2>&1
+      xargs -0 etags -a -o \${o} >/dev/null 2>&1
     cp \${o} \${HOME}/.emacs.d/TAGS"
 #        etags-c                 make TAGS for c/c++ files
 alias etags-c="
     find . -name \"*.h\" -o -name \"*.c\" -o -name \"*.hpp\" -o -name \"*.cpp\" -print0 | \
-      grep -zZv \"/.svn/\" | xargs -0 etags > /dev/null 2>&1"
+      grep -zZv \"/.svn/\" | xargs -0 etags >/dev/null 2>&1"
 #        etags-java              make TAGS for java files
 alias etags-java="
     find . -name \"*.java\" -print0 | \
-      grep -zZv \"/.svn/\" | xargs -0 etags > /dev/null 2>&1"
+      grep -zZv \"/.svn/\" | xargs -0 etags >/dev/null 2>&1"
 
 #
 # exa
@@ -1613,7 +1613,7 @@ alias java-set-env-java8="
         export JAVA_HOME=\"\$(/usr/libexec/java_home -v 1.8)\"
     else
         sudo archlinux-java set java-8-openjdk && \
-        export JAVA_HOME=\"\$(java -XshowSettings:properties -version 2>&1 > /dev/null | grep 'java.home' | sed 's/^.* = //')\"
+        export JAVA_HOME=\"\$(java -XshowSettings:properties -version 2>&1 >/dev/null | grep 'java.home' | sed 's/^.* = //')\"
     fi"
 #        java-set-env-java11     set java environment to java 11
 alias java-set-env-java11="
@@ -1621,7 +1621,7 @@ alias java-set-env-java11="
         export JAVA_HOME=\"\$(/usr/libexec/java_home -v 11)\"
     else
         sudo archlinux-java set java-11-openjdk && \
-        export JAVA_HOME=\"\$(java -XshowSettings:properties -version 2>&1 > /dev/null | grep 'java.home' | sed 's/^.* = //')\"
+        export JAVA_HOME=\"\$(java -XshowSettings:properties -version 2>&1 >/dev/null | grep 'java.home' | sed 's/^.* = //')\"
     fi"
 #        java-set-env-java18     set java environment to java 18
 alias java-set-env-java18="
@@ -1629,7 +1629,7 @@ alias java-set-env-java18="
         export JAVA_HOME=\"\$(/usr/libexec/java_home -v 18)\"
     else
         sudo archlinux-java set java-18-openjdk && \
-        export JAVA_HOME=\"\$(java -XshowSettings:properties -version 2>&1 > /dev/null | grep 'java.home' | sed 's/^.* = //')\"
+        export JAVA_HOME=\"\$(java -XshowSettings:properties -version 2>&1 >/dev/null | grep 'java.home' | sed 's/^.* = //')\"
     fi"
 
 #
@@ -1679,6 +1679,7 @@ alias llmotd="
 #
 # ls
 #
+unalias ls >/dev/null 2>&1
 #        ls_                     ls (classify, columns, literal, human-readable, directories-first, auto-color)
 [[ "${os}" != "Darwin" ]] && alias ls_="ls -F -C -N -h --group-directories-first --color=auto"
 [[ "${os}" == "Darwin" ]] && alias ls_="gls -F -C -N -h --group-directories-first --color=auto"
@@ -1887,15 +1888,15 @@ alias icanhazip="curl http://icanhazip.com --silent"
 # offlineimap
 #
 #        imap-on                 turn offlineimap on
-alias imap-on="rm -f \${HOME}/.noofflineimap > /dev/null 2>&1"
+alias imap-on="rm -f \${HOME}/.noofflineimap >/dev/null 2>&1"
 #! alias imap-on="
 #!     rm -f \${HOME}/.noofflineimap
-#!     \${HOME}/bin/run-app > /dev/null 2>&1"
+#!     \${HOME}/bin/run-app >/dev/null 2>&1"
 #        imap-off                turn offlineimap off
 alias imap-off="
     touch \${HOME}/.noofflineimap
     sudo pkill -SIGTERM -x -f \$(realpath \$(which offlineimap))"
-#! alias imap-off="touch \${HOME}/.noofflineimap > /dev/null 2>&1"
+#! alias imap-off="touch \${HOME}/.noofflineimap >/dev/null 2>&1"
 #        imap-restart            restart offlineimap
 alias imap-restart="sudo pkill -SIGTERM -x -f \$(realpath \$(which offlineimap))"
 #        offlineimap-once        sync normal imap accounts once
@@ -2649,45 +2650,45 @@ alias xrandr-resolution="xrandr | sed -n 's/^.* current //p' | sed 's/,.*$// ; s
 #        sson                    turn screensaver on
 alias sson="
     rm -f \${HOME}/.noscreensaver
-    \${HOME}/bin/ssaverauto > /dev/null 2>&1"
+    \${HOME}/bin/ssaverauto >/dev/null 2>&1"
 #        ssoff                   turn screensaver off
 alias ssoff="
     touch \${HOME}/.noscreensaver
-    fuser -k -SIGTERM \${HOME}/bin/ssaver > /dev/null 2>&1
-    fuser -k -SIGTERM /usr/bin/xscreensaver > /dev/null 2>&1
-    fuser -k -SIGTERM /usr/bin/xlock > /dev/null 2>&1
-    fuser -k -SIGTERM /usr/bin/electricsheep > /dev/null 2>&1
-    fuser -k -SIGTERM /usr/bin/xautolock > /dev/null 2>&1
-    fuser -k -SIGKILL \${HOME}/bin/ssaver > /dev/null 2>&1
-    fuser -k -SIGKILL /usr/bin/xscreensaver > /dev/null 2>&1
-    fuser -k -SIGKILL /usr/bin/xlock > /dev/null 2>&1
-    fuser -k -SIGKILL /usr/bin/electricsheep > /dev/null 2>&1
-    fuser -k -SIGKILL /usr/bin/xautolock > /dev/null 2>&1"
+    fuser -k -SIGTERM \${HOME}/bin/ssaver >/dev/null 2>&1
+    fuser -k -SIGTERM /usr/bin/xscreensaver >/dev/null 2>&1
+    fuser -k -SIGTERM /usr/bin/xlock >/dev/null 2>&1
+    fuser -k -SIGTERM /usr/bin/electricsheep >/dev/null 2>&1
+    fuser -k -SIGTERM /usr/bin/xautolock >/dev/null 2>&1
+    fuser -k -SIGKILL \${HOME}/bin/ssaver >/dev/null 2>&1
+    fuser -k -SIGKILL /usr/bin/xscreensaver >/dev/null 2>&1
+    fuser -k -SIGKILL /usr/bin/xlock >/dev/null 2>&1
+    fuser -k -SIGKILL /usr/bin/electricsheep >/dev/null 2>&1
+    fuser -k -SIGKILL /usr/bin/xautolock >/dev/null 2>&1"
 #        ssrs                    restart screensaver
 alias ssrs="
-    fuser -k -SIGTERM \${HOME}/bin/ssaver > /dev/null 2>&1
-    fuser -k -SIGTERM /usr/bin/xscreensaver > /dev/null 2>&1
-    fuser -k -SIGTERM /usr/bin/xlock > /dev/null 2>&1
-    fuser -k -SIGTERM /usr/bin/electricsheep > /dev/null 2>&1
-    fuser -k -SIGTERM /usr/bin/xautolock > /dev/null 2>&1
-    fuser -k -SIGKILL \${HOME}/bin/ssaver > /dev/null 2>&1
-    fuser -k -SIGKILL /usr/bin/xscreensaver > /dev/null 2>&1
-    fuser -k -SIGKILL /usr/bin/xlock > /dev/null 2>&1
-    fuser -k -SIGKILL /usr/bin/electricsheep > /dev/null 2>&1
-    fuser -k -SIGKILL /usr/bin/xautolock > /dev/null 2>&1
+    fuser -k -SIGTERM \${HOME}/bin/ssaver >/dev/null 2>&1
+    fuser -k -SIGTERM /usr/bin/xscreensaver >/dev/null 2>&1
+    fuser -k -SIGTERM /usr/bin/xlock >/dev/null 2>&1
+    fuser -k -SIGTERM /usr/bin/electricsheep >/dev/null 2>&1
+    fuser -k -SIGTERM /usr/bin/xautolock >/dev/null 2>&1
+    fuser -k -SIGKILL \${HOME}/bin/ssaver >/dev/null 2>&1
+    fuser -k -SIGKILL /usr/bin/xscreensaver >/dev/null 2>&1
+    fuser -k -SIGKILL /usr/bin/xlock >/dev/null 2>&1
+    fuser -k -SIGKILL /usr/bin/electricsheep >/dev/null 2>&1
+    fuser -k -SIGKILL /usr/bin/xautolock >/dev/null 2>&1
     rm -f \${HOME}/.noscreensaver
-    \${HOME}/bin/ssaverauto > /dev/null 2>&1"
+    \${HOME}/bin/ssaverauto >/dev/null 2>&1"
 #        xsc                     run xscreensaver in the background
-alias xsc="xscreensaver -no-splash & > /dev/null 2>&1"
+alias xsc="xscreensaver -no-splash & >/dev/null 2>&1"
 #        xscrs                   restart xscreensaver
 alias xscrs="
     fuser -k -SIGTERM \$(pathcmd xscreensaver)
     fuser -k -SIGKILL \$(pathcmd xscreensaver)
-    xscreensaver -no-splash & > /dev/null 2>&1"
+    xscreensaver -no-splash & >/dev/null 2>&1"
 #        xscd                    run xscreensaver-demo
 alias xscd="xscreensaver-demo"
 #        xscl                    xscreensaver lock display
-alias xscl="xscreensaver-command -lock & > /dev/null 2>&1"
+alias xscl="xscreensaver-command -lock & >/dev/null 2>&1"
 #!#        cpxsc                   copy .xscreensaver to nobody and root
 #!alias cpxsc="
 #!    cp -p ${home}/somebody/.xscreensaver /
@@ -3539,7 +3540,7 @@ alias make-dict-words="sudo wget https://gist.githubusercontent.com/wchargin/892
 #!            echo '#!/bin/sh' > \${o}
 #!            echo 'case \\\$1 in' >> \${o}
 #!            echo '    resume|thaw)' >> \${o}
-#!            echo '        (xmodmap \${HOME}/.Xmodmap &) > /dev/null 2>&1' >> \${o}
+#!            echo '        (xmodmap \${HOME}/.Xmodmap &) >/dev/null 2>&1' >> \${o}
 #!            echo '        ;;' >> \${o}
 #!            echo 'esac' >> \${o}
 #!            chmod +x \${o}

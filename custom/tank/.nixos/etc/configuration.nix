@@ -379,6 +379,7 @@
       "floppy"
       "input"
       "kvm"
+      "libvirtd"
       "lp"
       "mlocate"
       "networkmanager"
@@ -506,7 +507,7 @@
     bluez
     bluez-tools
     brightnessctl
-    #busybox                                 # overwrites ls
+    busybox
     bzip2
     clipmenu
     cifs-utils
