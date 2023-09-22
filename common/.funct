@@ -1225,6 +1225,14 @@ nixsi() {
         nix-store -q --references /run/current-system/sw | sed 's/^[^-]*-//' | grep -i "$*" | sort
     fi
 }
+#        nixfi                   nix-locate package of installed file
+nixfi() {
+    if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+        echo "Usage: $0 FILE"
+    else
+        readlink -e $(which $*)
+    fi
+}
 
 #
 # dvd encode
