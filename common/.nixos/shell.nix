@@ -19,6 +19,7 @@ let e =
     name = "development-build-env";
     targetPkgs = pkgs: with pkgs; [
       # libraries
+      glibc
       gmp gmp.dev
       isl
       libffi libffi.dev
@@ -28,10 +29,15 @@ let e =
       xz xz.dev
       zlib zlib.dev
 
-      # utilities
+      # toolchain
       bison
       flex
+      gcc
       m4
+      perl
+      pkgconf
+      stdenv.cc
+      stdenv.cc.libc stdenv.cc.libc_dev
       texinfo
 
       # test harnesses
@@ -40,11 +46,6 @@ let e =
 
       # valgrind annotations
       valgrind valgrind.dev
-
-      # toolchain
-      gcc
-      stdenv.cc
-      stdenv.cc.libc stdenv.cc.libc_dev
     ];
   };
 in e.env

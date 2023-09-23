@@ -66,6 +66,8 @@
   };
   nixpkgs.overlays = [
     (final: prev: {
+      binutils-ia16 = prev.callPackage /home/kyle/.nixos/pkgs/binutils-ia16 {};
+      gcc-ia16 = prev.callPackage /home/kyle/.nixos/pkgs/gcc-ia16 {};
       syncterm = prev.callPackage /home/kyle/.nixos/pkgs/syncterm {};
     })
   ];
@@ -840,6 +842,7 @@
     android-tools
     android-udev-rules
     binutils
+    binutils-ia16
     bison
     cc65
     ccache
@@ -850,6 +853,7 @@
     flex
     fpc
     gcc
+    gcc-ia16
     github-desktop
     glibc
     #gmp

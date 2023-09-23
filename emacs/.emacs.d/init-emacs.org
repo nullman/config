@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2023-09-18 23:12 (kyle)>
+  #+TIMESTAMP: <2023-09-22 14:54 (kyle)>
 
 * Table of Contents
   :PROPERTIES:
@@ -24659,7 +24659,8 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
        (:name "Nerd Fail" :html "https://nerd.fail/" :rss "https://nerd.fail/feed/" :tag "vintage")
        (:name "Retro Computing Roundtable" :html "http://rcrpodcast.com/" :rss "http://rcrpodcast.com/rcrpodcast.rss" :tag "vintage")
        (:name "Advent of Computing" :html "https://adventofcomputing.libsyn.com/" :rss "https://adventofcomputing.libsyn.com/rss" :tag "vintage")
-       (:name "Lunduke Journal" :html "https://lunduke.substack.com/" :rss "https://lunduke.substack.com/feed" :tag "vintage")
+       ;;(:name "Lunduke Journal" :html "https://lunduke.substack.com/" :rss "https://lunduke.substack.com/feed" :tag "vintage")
+       (:name "Lunduke Journal" :html "https://lunduke.substack.com/" :rss "https://api.substack.com/feed/podcast/462466.rss" :tag "vintage")
        (:name "Computer Ads from the Past" :html "https://computeradsfromthepast.substack.com/" :rss "https://computeradsfromthepast.substack.com/feed" :tag "vintage")
        (:name "Retro Millennial" :html "https://retropunk.substack.com/" :rss "https://retropunk.substack.com/feed" :tag "vintage")
        (:name "Joshua Stein" :html "https://jcs.org/" :rss "https://jcs.org/rss" :tag "vintage")
