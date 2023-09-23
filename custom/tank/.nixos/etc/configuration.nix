@@ -67,6 +67,8 @@
   nixpkgs.overlays = [
     (final: prev: {
       binutils-ia16 = prev.callPackage /home/kyle/.nixos/pkgs/binutils-ia16 {};
+      djgpp_i586 = prev.callPackage /home/kyle/.nixos/pkgs/djgpp { targetArchitecture = "i586"; };
+      djgpp_i686 = prev.callPackage /home/kyle/.nixos/pkgs/djgpp { targetArchitecture = "i686"; };
       gcc-ia16 = prev.callPackage /home/kyle/.nixos/pkgs/gcc-ia16 {};
       syncterm = prev.callPackage /home/kyle/.nixos/pkgs/syncterm {};
     })
@@ -849,7 +851,7 @@
     clang
     cmake
     ctags
-    #djgpp
+    djgpp_i686
     flex
     fpc
     gcc
