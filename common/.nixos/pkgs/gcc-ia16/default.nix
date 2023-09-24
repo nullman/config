@@ -47,21 +47,14 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--prefix=$(out)"
     "--target=ia16-elf"
-    #"--bindir=$(out)/bin"
-    #"--libdir=$(out)/lib/ia16-elf"
     "--enable-languages=c"
     "--disable-multilib"
-    "--disable-nls"
-    "--disable-headers"
+    #"--disable-nls"
+    #"--disable-headers"
     "--disable-libssp"
     "--disable-isl"
     "--disable-werror"
   ];
-
-  #postInstall = ''
-  #  cd ..
-  #  rm -rf gcc-ia16-build
-  #'';
 
   enableParallelBuilding = true;
 

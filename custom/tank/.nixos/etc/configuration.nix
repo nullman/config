@@ -163,12 +163,13 @@
     enable = true;
     locate = pkgs.mlocate;
     localuser = null;
+    pruneBindMounts = true;
     prunePaths = [
       "/dev"
       "/lost+found"
       "/media"
       "/mnt"
-      "/nix/store"
+      #"/nix/store"
       "/nix/var/log/nix"
       "/proc"
       "/srv"
