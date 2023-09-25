@@ -878,6 +878,8 @@
     m4
     #mpfr
     nasm
+    open-watcom-bin
+    #open-watcom-v2
     pandoc
     patch
     plantuml
