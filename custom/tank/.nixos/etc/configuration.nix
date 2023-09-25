@@ -952,7 +952,9 @@
     bsdgames
     eidolon
     flare
+    lutris
     pingus
+    playonlinux
     proton-caller
     protontricks
     pysolfc

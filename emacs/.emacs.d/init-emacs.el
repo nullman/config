@@ -10820,20 +10820,23 @@ be automatically capitalized."
     (let ((words-single-regexp (regexp-opt (mapcar #'capitalize words-single) 'words))
           (words-double-regexp (regexp-opt (mapcar #'capitalize words-double) 'words))
           (words-triple-regexp (regexp-opt (mapcar #'capitalize words-triple) 'words))
-          ;;(abbreviation-word-regexp "\\b[A-Z][.A-Z]+[^ \t]*\\b")
           (abbreviation-word-regexp (rx word-boundary
                                         (any digit upper)
                                         (one-or-more (any "." digit upper))
                                         (zero-or-more (not space))
                                         word-boundary))
-          ;;(mixed-word-regexp "\\b[A-Z]*[a-z]+[A-Z]+[^ \t]*\\b")
           (mixed-word-regexp (rx word-boundary
                                  (zero-or-more upper)
+                                 (zero-or-more digit)
                                  (one-or-more lower)
+                                 (zero-or-more digit)
                                  (one-or-more upper)
                                  (zero-or-more (not space))
                                  word-boundary))
-          ;;(first-word-regexp "\\(^[ \t]*\\(\\w+\\)\\|[\.!\?:&\*()/][ \t]*\\(\\w+\\)\\)")
+          (file-extenstion-word-regexp (rx (not space)
+                                           "."
+                                           (one-or-more (not space))
+                                           eos))
           (first-word-regexp (rx (or (seq bos
                                           (zero-or-more (not space))
                                           (group (one-or-more word)))
@@ -10841,7 +10844,6 @@ be automatically capitalized."
                                      (seq (or (seq punct (one-or-more space))
                                               (seq (or "(" ")" "/") (zero-or-more space)))
                                           (group (one-or-more word))))))
-          ;;(last-word-regexp "\\(\\(\\w+\\)[ \t]*$\\|\\(\\w+\\)[ \t]*[\.!\?:&\*()\[]\\)")
           (last-word-regexp (rx (or (seq (group (one-or-more word))
                                          (zero-or-more space)
                                          eos)
@@ -10878,7 +10880,8 @@ be automatically capitalized."
                    words-triple-regexp 'downcase
                    (capitalize string) t t) t t) t t)))
         (let ((fixed (append (get-fixed string abbreviation-word-regexp)
-                             (get-fixed string mixed-word-regexp))))
+                             (get-fixed string mixed-word-regexp)
+                             (get-fixed string file-extenstion-word-regexp))))
           (if do-not-cap-ends
               (set-fixed (cap string) fixed)
             (set-fixed
