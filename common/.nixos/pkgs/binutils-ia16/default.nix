@@ -6,7 +6,7 @@
 , glibc
 , m4
 , perl
-, pkgconfig
+, pkg-config
 , texinfo
 , zlib
 }:
@@ -28,7 +28,7 @@ stdenv.mkDerivation rec {
     glibc
     m4
     perl
-    pkgconfig
+    pkg-config
     texinfo
     zlib
   ];

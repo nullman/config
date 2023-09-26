@@ -6,7 +6,7 @@
 , gmp
 , libmpc
 , mpfr
-, pkgconfig
+, pkg-config
 , zlib
 }:
 
@@ -29,7 +29,7 @@ stdenv.mkDerivation rec {
     #m4
     mpfr
     #perl
-    pkgconfig
+    pkg-config
     #texinfo
     zlib
   ];
