@@ -252,7 +252,6 @@ super + shift + e
     eww --restart open bar && sleep 1 && \
     xdo below -t $(xdo id -n root) $(xdo id -N eww-bar) && \
     notify-send --expire-time=2000 'Reloading EWW'
-    #(pkill -x -f -u ${USER} $(realpath $(which eww)) ; eww --restart open bar && sleep 1 && \
 
 # reload conky
 super + shift + c

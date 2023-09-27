@@ -9,7 +9,7 @@
 
 [[ $(mpc | wc -l) != 3 ]] && echo -n "-" && exit 1
 
-song=$(mpc -f '[[%artist% - ] %title%]|[%file%]' | sed -n 1p)
+song=$(mpc -f '[[%artist% - ]%title%]|[%file%]' | sed -n 1p)
 status=$(mpc | sed -n 2p)
 state=$(echo "${status}" | sed 's/^\[\(.*\)\].*$/\1/')
 num=$(echo "${status}" | sed 's/^.*#\([^ ]*\).*$/\1/')

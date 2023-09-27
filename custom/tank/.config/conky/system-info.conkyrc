@@ -101,5 +101,5 @@ ${color2}Entropy:${color}  ${alignr}${entropy_avail} / ${entropy_poolsize}  ${en
 #${color2}Artist:${color}  ${alignr}${mpd_artist}
 #${color2}Song:${color}  ${alignr}${mpd_title}
 ${color2}Artist:${color}  ${alignr}${texeci 2 ~/bin/mpc-playing | awk -F ' - ' '{ if (length($1) <= 40) { print $1 } else { print substr($1, 0, 40)"..." } }'}
-${color2}Song:${color}  ${alignr}${texeci 2 ~/bin/mpc-playing | awk -F ' - ' '{ if (length($2) <= 40) { print $2 } else { print substr($2, 0, 40)"..." } }'}
+${color2}Song:${color}  ${alignr}${texeci 2 ~/bin/mpc-playing | sed 's/ \+[0-9]\+\/[0-9]\+.*$//' | awk -F ' - ' '{ if (length($2) <= 40) { print $2 } else { print substr($2, 0, 40)"..." } }'}
 ]]

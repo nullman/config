@@ -259,7 +259,7 @@
   # fonts
   fonts = {
     fontDir.enable = true;
-    packages = with pkgs; [
+    fonts = with pkgs; [
       anonymousPro
       #cantarell-fonts
       corefonts
@@ -475,6 +475,11 @@
   systemd.services.mpd.environment = {
     # https://gitlab.freedesktop.org/pipewire/pipewire/-/issues/609
     XDG_RUNTIME_DIR = "/run/user/1000";   # userid of above "user"
+  };
+
+  services.dovecot2 = {
+    enable = true;
+    mailLocation = "maildir:~/Maildir";
   };
 
   ## gbar
@@ -766,7 +771,7 @@
     cool-retro-term
     ddgr
     element
-    eza
+    exa
     f3
     fd
     frogmouth

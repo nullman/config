@@ -13,7 +13,7 @@ _command() {
 }
 
 # conky displays on wallpaper
-_command conky && pkill -x -u ${USER} $(realpath $(which conky))
+_command conky && pkill -x -u ${USER} conky
 _command conky && [[ -f "${HOME}/.config/conky/system-info.conkyrc" ]] && conky --config="${HOME}/.config/conky/system-info.conkyrc" &
 _command conky && [[ -f "${HOME}/.config/conky/bspwm-keybindings.conkyrc" ]] && conky --config="${HOME}/.config/conky/bspwm-keybindings.conkyrc" &
 ##_command conky && [[ -f "${HOME}/.config/conky/reminders.conkyrc" ]] && conky --config="${HOME}/.config/conky/reminders.conkyrc" &
