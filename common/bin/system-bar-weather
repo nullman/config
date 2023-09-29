@@ -39,7 +39,7 @@ else
         "Partly Cloudy w/ Showers") icon="" ;;
         "Mostly Cloudy w/ Showers") icon="" ;;
         "Partly Sunny w/ Showers") icon="" ;;
-        "T-Storms") icon="" ;;
+        "T-Storms" | "Thunderstorms") icon="" ;;
         "Mostly Cloudy w/ T-Storms") icon="" ;;
         "Partly Cloudy w/ T-Storms") icon="" ;;
         "Partly Sunny w/ T-Storms") icon="" ;;
