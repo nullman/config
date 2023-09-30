@@ -4,7 +4,8 @@
 #
 # Present a menu of rofi menus.
 #
-# Symbols:  ☰  |    | ✂ ⎘ 󰄶   󰅌 󰅍  | 󰍹  |  |    󱇠  | 󰆧 |  |  🎵  | 󰛇
+# Symbols:  ☰  |    | ✂ ⎘ 󰄶   󰅌 󰅍 󰨸 󱉥 󱉦 󱉧 󱉨 󱉫 󱉬 
+# Symbols: 󰍹  |  |    󱇠  | 󰆧 |  |   󰝚 | 󰛇
 #
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================

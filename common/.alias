@@ -2725,7 +2725,7 @@ alias geometry="xwininfo -root | grep geometry"
 #
 #        nixrs                   nixos-rebuild switch
 alias nixrs="
-    [[ -d \${HOME}/.nixos/etc ]] && sudo cp -L -v \${HOME}/.nixos/etc/* /etc/nixos/
+    [[ -d \${HOME}/.nixos-etc ]] && sudo cp -L -v \${HOME}/.nixos-etc/* /etc/nixos/
     sudo -i nixos-rebuild switch
 
     # link downloadhelper coapp for firefox
@@ -2747,6 +2747,8 @@ alias nix-store-cleanup="
     sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations 30d && \
     nix-collect-garbage --delete-older-than 30d && \
     nix-store --optimise"
+#        nix-scp-index-to-mouse  scp nix-index to mouse
+alias nix-scp-index-to-mouse="scp -r .cache/nix-index mouse:/home/kyle/.cache/"
 #
 # NixOS Development
 #

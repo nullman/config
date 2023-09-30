@@ -9,18 +9,18 @@
 { config, pkgs, ... }:
 
 {
-  # imports
-  imports = [
-    ./hardware-configuration.nix
-    #<home-manager/nixos>
-  ];
-
   ## imports
   #imports = [
   #  ./hardware-configuration.nix
-  #  ./hardware-encryption-configuration.nix
   #  #<home-manager/nixos>
   #];
+
+  # imports
+  imports = [
+    ./hardware-configuration.nix
+    ./hardware-encryption-configuration.nix
+    #<home-manager/nixos>
+  ];
 
   # systemd-boot EFI boot loader
   boot.loader = {
@@ -32,8 +32,14 @@
   };
   fileSystems."/".options = [ "noatime" ];
 
+  # # mdadm.conf
+  # environment.etc."mdadm.conf".text = ''
+  #   ARRAY /dev/md0 metadata=1.0 name=archiso:0 UUID=764b3bea:1aad3e88:5543f650:bd7314d2
+  #   ARRAY /dev/md1 metadata=1.2 name=archiso:1 UUID=dc0e0617:70216ae6:c8af2052:5e730003
+  # '';
+
   # networking
-  networking.hostName = "mouse";
+  networking.hostName = "tank";
   networking.networkmanager.enable = true;
 
   # standard settings
@@ -330,8 +336,8 @@
     driSupport32Bit = true;
   };
 
-  ## virtualization
-  #virtualisation.libvirtd.enable = true;
+  # virtualization
+  virtualisation.libvirtd.enable = true;
 
   # thunar
   programs.thunar.enable = true;
@@ -351,8 +357,8 @@
     };
   };
 
-  # openssh server
-  services.openssh.enable = true;
+  ## openssh server
+  #services.openssh.enable = true;
 
   ## open firewall ports
   #networking.firewall = {
@@ -476,10 +482,10 @@
     XDG_RUNTIME_DIR = "/run/user/1000";   # userid of above "user"
   };
 
-  #services.dovecot2 = {
-  #  enable = true;
-  #  mailLocation = "maildir:~/Maildir";
-  #};
+  services.dovecot2 = {
+    enable = true;
+    mailLocation = "maildir:~/Maildir";
+  };
 
   ## # gbar
   ## programs.gBar = {
@@ -679,53 +685,53 @@
     xsel
     xvkbd
 
-    ## applications
-    #ardour
-    #audacious
-    #audacity
-    #blender
-    #celluloid
-    #evince
-    #gimp
-    #gphoto2
-    #gphoto2fs
-    #inkscape
-    ##kdenlive
-    #libreoffice
-    #mpc-qt
-    #mpv
-    #mupdf
-    #notepadqq
-    ##obs-studio
-    ##(pkgs.wrapOBS {plugins = with pkgs.obs-studio-plugins; [ wlrobs ]; })
-    #spotify
-    ##virt-viewer
-    ##xfce.thunar
-    ##xfce.thunar-archive-plugin
-    ##xfce.thunar-media-tags-plugin
-    ##xfce.thunar-volman
+    # applications
+    ardour
+    audacious
+    audacity
+    blender
+    celluloid
+    evince
+    gimp
+    gphoto2
+    gphoto2fs
+    inkscape
+    #kdenlive
+    libreoffice
+    mpc-qt
+    mpv
+    mupdf
+    notepadqq
+    #obs-studio
+    #(pkgs.wrapOBS {plugins = with pkgs.obs-studio-plugins; [ wlrobs ]; })
+    spotify
+    #virt-viewer
+    #xfce.thunar
+    #xfce.thunar-archive-plugin
+    #xfce.thunar-media-tags-plugin
+    #xfce.thunar-volman
 
-    ## utilities
-    #appimage-run
-    #bitwarden
-    #easytag
-    #etcher
-    #flameshot
-    #font-manager
-    #fontpreview
-    #fontforge-gtk
-    #gcal
-    #gnome.file-roller
-    #gnome-frog
-    #gparted
-    #grip id3lib
-    #gtkimageview
-    #handbrake libdvdcss libaacs libbluray
-    ##mediawriter
-    #meld
-    #nur.repos.wolfangaukang.vdhcoapp
-    #simplescreenrecorder
-    ##x48
+    # utilities
+    appimage-run
+    bitwarden
+    easytag
+    etcher
+    flameshot
+    font-manager
+    fontpreview
+    fontforge-gtk
+    gcal
+    gnome.file-roller
+    gnome-frog
+    gparted
+    grip id3lib
+    gtkimageview
+    handbrake libdvdcss libaacs libbluray
+    #mediawriter
+    meld
+    nur.repos.wolfangaukang.vdhcoapp
+    simplescreenrecorder
+    #x48
 
     # tui
     btop
@@ -827,78 +833,78 @@
     transmission-gtk
     tuba
 
-    ## emulators
-    #basiliskii
-    #dosbox
-    #gnome.gnome-boxes
-    #mame
-    #qemu_kvm
-    #vice
-    #virt-manager
-    #virt-viewer
-    #virtualbox
-    #wine
-    #winetricks
+    # emulators
+    basiliskii
+    dosbox
+    gnome.gnome-boxes
+    mame
+    qemu_kvm
+    vice
+    virt-manager
+    virt-viewer
+    virtualbox
+    wine
+    winetricks
 
-    ## development
-    #acme
-    #adb-sync
-    #android-tools
-    #android-udev-rules
-    #binutils
-    #binutils-ia16
-    #bison
-    #cc65
-    #ccache
-    #clang
-    #cmake
-    #ctags
-    #djgpp_i686
-    #flex
-    #fpc
-    #gcc
-    #gcc-ia16
-    #github-desktop
-    #glibc
-    ##gmp
-    #gnumake
-    #gnuplot
-    #gpp
-    #graphviz
-    #gradle
-    #htmlq
-    #jdk
-    ##jdk11
-    ##jdk8
-    #jetbrains.idea-community
-    #jre
-    #jq
-    #kotlin
-    #lazygit
-    ##libmpc
-    #m4
-    ##mpfr
-    #nasm
-    #open-watcom-bin
-    ##open-watcom-v2
-    #pandoc
-    #patch
-    #plantuml
-    #python311
-    #python311Packages.pip
-    #racket
-    #regina
-    #rnix-lsp
-    #ruby
-    #rubyPackages.nokogiri
-    #rustc
-    #shellcheck
-    #tokei
-    #vlang
-    #x16-emulator
-    #x16-rom
-    #yq
-    #zlib
+    # development
+    acme
+    adb-sync
+    android-tools
+    android-udev-rules
+    binutils
+    binutils-ia16
+    bison
+    cc65
+    ccache
+    clang
+    cmake
+    ctags
+    djgpp_i686
+    flex
+    fpc
+    gcc
+    gcc-ia16
+    github-desktop
+    glibc
+    #gmp
+    gnumake
+    gnuplot
+    gpp
+    graphviz
+    gradle
+    htmlq
+    jdk
+    #jdk11
+    #jdk8
+    jetbrains.idea-community
+    jre
+    jq
+    kotlin
+    lazygit
+    #libmpc
+    m4
+    #mpfr
+    nasm
+    open-watcom-bin
+    #open-watcom-v2
+    pandoc
+    patch
+    plantuml
+    python311
+    python311Packages.pip
+    racket
+    regina
+    rnix-lsp
+    ruby
+    rubyPackages.nokogiri
+    rustc
+    shellcheck
+    tokei
+    vlang
+    x16-emulator
+    x16-rom
+    yq
+    zlib
 
     # zsh
     antibody
@@ -927,6 +933,7 @@
     tty-clock
 
     # latex
+    texlive.combined.scheme-full
 
     # xscreensaver
     xscreensaver
@@ -935,30 +942,30 @@
     xmountains
     xplanet
 
-    ## games
-    #alephone
-    ##alephone-apotheosis-x
-    #alephone-durandal
-    #alephone-eternal
-    #alephone-evil
-    #alephone-infinity
-    #alephone-marathon
-    #alephone-pathways-into-darkness
-    #alephone-pheonix
-    #alephone-red
-    #alephone-rubicon-x
-    ##alephone-yuge
-    #bsdgames
-    #eidolon
-    #flare
-    #lutris
-    #pingus
-    #playonlinux
-    #proton-caller
-    #protontricks
-    #pysolfc
-    #steam
-    #steam-tui
+    # games
+    alephone
+    #alephone-apotheosis-x
+    alephone-durandal
+    alephone-eternal
+    alephone-evil
+    alephone-infinity
+    alephone-marathon
+    alephone-pathways-into-darkness
+    alephone-pheonix
+    alephone-red
+    alephone-rubicon-x
+    #alephone-yuge
+    bsdgames
+    eidolon
+    flare
+    lutris
+    pingus
+    playonlinux
+    proton-caller
+    protontricks
+    pysolfc
+    steam
+    steam-tui
   ];
 
   # copy nixos configuration on rebuild

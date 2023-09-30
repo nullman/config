@@ -244,7 +244,7 @@
                :onchange ""
                :tooltip "RAM Used: ${EWW_RAM.used_mem_perc}%")
        ;; disk
-       ;; symbols: 󰆼 󰆼    
+       ;; symbols: 󰆼 󰆼   󱘲  
        (metric :label "󰆼"
                :value {round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}
                :onchange ""
