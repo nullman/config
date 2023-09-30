@@ -1286,7 +1286,7 @@ git-branch-prompt() {
     if [[ -z "${gitbranch}" ]] ; then
         echo ""
     else
-        echo " ${gitbranch}"
+        echo "  ${gitbranch}"
     fi
 }
 #        gitcouo                 git checkout BRANCH and pull origin BRANCH
