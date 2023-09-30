@@ -9,11 +9,16 @@
 { config, pkgs, ... }:
 
 {
+  ## imports
+  #imports = [
+  #  ./hardware-configuration.nix
+  #  #<home-manager/nixos>
+  #];
+
   # imports
   imports = [
     ./hardware-configuration.nix
     ./hardware-encryption-configuration.nix
-    #inputs.gBar.homeManagerModules.x86_64-linux.default
     #<home-manager/nixos>
   ];
 
@@ -209,7 +214,7 @@
   # window manager: bspwm
   #services.xserver.desktopManager.xfce.enable = true;
   services.xserver.windowManager.bspwm.enable = true;
-  #services.xserver.displayManager.defaultSession = "none+bspwm";
+  services.xserver.displayManager.defaultSession = "none+bspwm";
 
   # window manager: i3wm
   services.xserver.windowManager.i3.enable = true;
@@ -482,19 +487,19 @@
     mailLocation = "maildir:~/Maildir";
   };
 
-  ## gbar
-  #programs.gBar = {
-  #  enable = true;
-  #  # config = {
-  #  #   Location = "L";
-  #  #   EnableSNI = true;
-  #  #   SNIIconSize = {
-  #  #     Discord = 26;
-  #  #     OBS = 23;
-  #  #   };
-  #  #   WorkspaceSymbols = [ " " " " ];
-  #  # };
-  #};
+  ## # gbar
+  ## programs.gBar = {
+  ##   enable = true;
+  ##   # config = {
+  ##   #   Location = "L";
+  ##   #   EnableSNI = true;
+  ##   #   SNIIconSize = {
+  ##   #     Discord = 26;
+  ##   #     OBS = 23;
+  ##   #   };
+  ##   #   WorkspaceSymbols = [ " " " " ];
+  ##   # };
+  ## };
 
   ## packages
   #environment.systemPackages = with pkgs; [

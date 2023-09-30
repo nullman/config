@@ -208,7 +208,7 @@
   # window manager: bspwm
   #services.xserver.desktopManager.xfce.enable = true;
   services.xserver.windowManager.bspwm.enable = true;
-  #services.xserver.displayManager.defaultSession = "none+bspwm";
+  services.xserver.displayManager.defaultSession = "none+bspwm";
 
   # window manager: i3wm
   services.xserver.windowManager.i3.enable = true;
@@ -807,25 +807,25 @@
     yt-dlp
     zoxide
 
-    ## internet
-    #betterbird
-    #bore-cli
-    #chromium
-    #dino
-    #discord
-    #element-desktop
-    #filezilla
-    #firefox
-    ##firefox-wayland
-    #gajim
-    #kristall
-    #magic-wormhole
-    #ncgopher
-    #nyxt
-    #slack
-    #syncterm
-    #transmission-gtk
-    #tuba
+    # internet
+    betterbird
+    bore-cli
+    chromium
+    dino
+    discord
+    element-desktop
+    filezilla
+    firefox
+    #firefox-wayland
+    gajim
+    kristall
+    magic-wormhole
+    ncgopher
+    nyxt
+    slack
+    syncterm
+    transmission-gtk
+    tuba
 
     ## emulators
     #basiliskii
@@ -904,8 +904,6 @@
     antibody
     meslo-lgs-nf
     zsh
-
-    #
 
     # printing
     system-config-printer
