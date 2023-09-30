@@ -27,26 +27,12 @@ ${voffset -30}${color}${font Bitstream Vera Sans:size=18}${time %b}${font} \
 ${voffset -3} ${color}${font Bitstream Vera Sans:size=20}${time %Y}${font}${color2}${hr}
 
 # cpu
-#${voffset 10}${color}${font Bitstream Vera Sans:bold:size=12}CPU${font}  ${alignc}${freq_g} GHz  ${alignr}${cpu}%
 ${voffset 10}${color}${font Bitstream Vera Sans:bold:size=12}CPU${font}  ${alignc}${hwmon 0 temp 1}°C  ${alignr}${cpu}%
 ${color}${cpubar}
 ${color}${cpugraph - 15}${color}
-#${color Gray}01 [${freq_g 1}] ${cpu 1}% ${cpubar cpu1}${color}
-#${color Gray}02 [${freq_g 2}] ${cpu 2}% ${cpubar cpu2}${color}
-#${color Gray}03 [${freq_g 3}] ${cpu 3}% ${cpubar cpu3}${color}
-#${color Gray}04 [${freq_g 4}] ${cpu 4}% ${cpubar cpu4}${color}
-#${color Gray}05 [${freq_g 5}] ${cpu 5}% ${cpubar cpu5}${color}
-#${color Gray}06 [${freq_g 6}] ${cpu 6}% ${cpubar cpu6}${color}
-#${color Gray}07 [${freq_g 7}] ${cpu 7}% ${cpubar cpu7}${color}
-#${color Gray}08 [${freq_g 8}] ${cpu 8}% ${cpubar cpu8}${color}
-#${color Gray}09 [${freq_g 9}] ${cpu 9}% ${cpubar cpu9}${color}
-#${color Gray}10 [${freq_g 10}] ${cpu 10}% ${cpubar cpu10}${color}
-#${color Gray}11 [${freq_g 11}] ${cpu 11}% ${cpubar cpu11}${color}
-#${color Gray}12 [${freq_g 12}] ${cpu 12}% ${cpubar cpu12}${color}
 ${color2}${top name 1}  ${alignr}${top cpu 1}%${color}
 ${color2}${top name 2}  ${alignr}${top cpu 2}%${color}
 ${color2}${top name 3}  ${alignr}${top cpu 3}%${color}
-${color2}${top name 4}  ${alignr}${top cpu 4}%${color}
 
 # ram
 ${voffset 10}${color}${font Bitstream Vera Sans:bold:size=12}RAM${font}  ${alignc}${mem} / ${memmax}  ${alignr}${memperc}%
@@ -54,7 +40,6 @@ ${color}${membar}
 ${color2}${top_mem name 1}  ${alignr}${top_mem mem_res 1}${color}
 ${color2}${top_mem name 2}  ${alignr}${top_mem mem_res 2}${color}
 ${color2}${top_mem name 3}  ${alignr}${top_mem mem_res 3}${color}
-${color2}${top_mem name 4}  ${alignr}${top_mem mem_res 4}${color}
 
 # disk
 ${voffset 10}${color}${font Bitstream Vera Sans:bold:size=12}Disk${font}  ${alignc}${fs_used /} / ${fs_size /}  ${alignr}${fs_used_perc /}%
@@ -101,5 +86,5 @@ ${color2}Entropy:${color}  ${alignr}${entropy_avail} / ${entropy_poolsize}  ${en
 #${color2}Artist:${color}  ${alignr}${mpd_artist}
 #${color2}Song:${color}  ${alignr}${mpd_title}
 ${color2}Artist:${color}  ${alignr}${texeci 2 ~/bin/mpc-playing | awk -F ' - ' '{ if (length($1) <= 40) { print $1 } else { print substr($1, 0, 40)"..." } }'}
-${color2}Song:${color}  ${alignr}${texeci 2 ~/bin/mpc-playing | awk -F ' - ' '{ if (length($2) <= 40) { print $2 } else { print substr($2, 0, 40)"..." } }'}
+${color2}Song:${color}  ${alignr}${texeci 2 ~/bin/mpc-playing | sed 's/ \+[0-9]\+\/[0-9]\+.*$//' | awk -F ' - ' '{ if (length($2) <= 40) { print $2 } else { print substr($2, 0, 40)"..." } }'}
 ]]
