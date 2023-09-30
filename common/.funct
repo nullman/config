@@ -1755,8 +1755,8 @@ adb-log-app() {
 #!#
 #!# howto
 #!#
-#!#        howto-kernel            howto build the kernel
-#!howto-kernel() {
+#!#        kernel-howto            howto build the kernel
+#!kernel-howto() {
 #!    cat <<EOF
 #!HowTo Build the Kernel in Gentoo
 #!
@@ -1774,8 +1774,8 @@ adb-log-app() {
 #!(Cross your fingers and reboot.)
 #!EOF
 #!}
-#!#        howto-grub              howto setup grub bootloader
-#!howto-grub() {
+#!#        grub-howto              howto setup grub bootloader
+#!grub-howto() {
 #!    cat <<EOF
 #!HowTo Setup the Grub Bootloader
 #!
@@ -1802,45 +1802,48 @@ adb-log-app() {
 #
 # setup
 #
-#        howto-home              howto setup git home dir on a new machine
-howto-home() {
+#        home-howto              howto setup git home dir on a new machine
+home-howto() {
     cat <<EOF
-Update Packages
-  sudo pacman -Syyu --needed
-Install yay
-  sudo pacman -S --needed yay
-Refresh File Search Database
-  yay -Fy
-Install Needed Packages
-  yay -S --needed base-devel stow
-Copy bundle.tgz.enc from USB, decrypt it, and run scripts:
+Install packages: base-devel stow
+
+Copy ~/.ssh directory from existing machine:
+  scp -r ~/.ssh USER@HOSTNAME:/home/USER/
+
+Or copy bundle.tgz.enc from USB, decrypt it, and run scripts:
   mkdir -p ~/tmp && cd ~/tmp
   cp /media/FILES/bundle* .
   chmod +x ./bundle-decrypt && ./bundle-decrypt
   tar xzf bundle.tgz
   mv bundle/.ssh ~/
+
 Checkout config and config-private:
   git clone ${GIT_REPOSITORY_CONFIG} ~/config
   git clone ${GIT_REPOSITORY_CONFIG_PRIVATE} ~/config-private
+
 Source environment scripts:
   source ~/config/common/.funct
   source ~/config/common/.alias
   source ~/config/common/.shellrc
+
 Checkout doc repository:
   gitcodoc
+
 Checkout dev repository:
   gitcodev
+
 Checkout web repository:
   gitcoweb
+
 Create the initial links from ~ to ~/config and ~/config-private:
   home-initialize
 (Run 'home-restow' to recreate the links in the future.)
+
 Setup /home/data directory:
   sudo mkdir -p /home/data && sudo chown \${USER}:\${USER} /home/data
+
 Optionally install the default crontab:
   make-cron
-Install arch packages and setup system:
-  arch-intialize
 EOF
 }
 #        home-initialize         stow links from ~/ to ~/config and ~/config-private dirs
