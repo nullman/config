@@ -228,14 +228,6 @@ alias gdmrs="sudo systemctl restart gdm.service"
 alias gnome-shell-restart="DISPLAY=:0 gnome-shell --replace"
 #        lightdm-restart         lightdm restart
 alias lightdm-restart="sudo systemctl restart lightdm.service"
-#        networkrs               network restart
-alias networkrs="
-    sudo systemctl stop NetworkManager
-    sudo systemctl stop iwd
-    sleep 5s
-    sudo systemctl start iwd
-    sleep 5s
-    sudo systemctl start NetworkManager"
 #        menuw                   menu ~/.menu_work
 alias menuw="menu \${HOME}/.menu_work"
 #        mw                      menu ~/.menu_work
@@ -458,13 +450,33 @@ alias stopwatch="
 # wallpaper
 #
 #        nitrogen-metcalfe-blue  set wallpaper to Metcalfe-Loves-Linux-1.jpg (blue)
-alias nitrogen-metcalfe-blue="nitrogen --save --set-tiled /usr/share/backgrounds/Metcalfe-Loves-Linux-1.jpg"
+alias nitrogen-metcalfe-blue="
+    if \$(uname -v | grep -q 'NixOS') ; then
+        nitrogen --save --set-tiled /etc/nixos/wallpapers/Metcalfe-Loves-Linux-1.jpg
+    else
+        nitrogen --save --set-tiled /usr/share/backgrounds/Metcalfe-Loves-Linux-1.jpg
+    fi"
 #        nitrogen-metcalfe-gray  set wallpaper to Metcalfe-Loves-Linux-2.jpg (gray)
-alias nitrogen-metcalfe-gray="nitrogen --save --set-tiled /usr/share/backgrounds/Metcalfe-Loves-Linux-2.jpg"
+alias nitrogen-metcalfe-gray="
+    if \$(uname -v | grep -q 'NixOS') ; then
+        nitrogen --save --set-tiled /etc/nixos/wallpapers/Metcalfe-Loves-Linux-2.jpg
+    else
+        nitrogen --save --set-tiled /usr/share/backgrounds/Metcalfe-Loves-Linux-2.jpg
+    fi"
 #        nitrogen-metcalfe-orange  set wallpaper to Metcalfe-Loves-Linux-3.jpg (orange)
-alias nitrogen-metcalfe-orange="nitrogen --save --set-tiled /usr/share/backgrounds/Metcalfe-Loves-Linux-3.jpg"
+alias nitrogen-metcalfe-orange="
+    if \$(uname -v | grep -q 'NixOS') ; then
+        nitrogen --save --set-tiled /etc/nixos/wallpapers/Metcalfe-Loves-Linux-3.jpg
+    else
+        nitrogen --save --set-tiled /usr/share/backgrounds/Metcalfe-Loves-Linux-3.jpg
+    fi"
 #        nitrogen-metcalfe-green  set wallpaper to Metcalfe-Loves-Linux-4.jpg (green)
-alias nitrogen-metcalfe-green="nitrogen --save --set-tiled /usr/share/backgrounds/Metcalfe-Loves-Linux-4.jpg"
+alias nitrogen-metcalfe-green="
+    if \$(uname -v | grep -q 'NixOS') ; then
+        nitrogen --save --set-tiled /etc/nixos/wallpapers/Metcalfe-Loves-Linux-4.jpg
+    else
+        nitrogen --save --set-tiled /usr/share/backgrounds/Metcalfe-Loves-Linux-4.jpg
+    fi"
 
 #
 # sounds
@@ -575,6 +587,129 @@ alias systemctl-restart="sudo systemctl restart"
 alias journalctl-follow-unit="journalctl --follow --unit"
 
 #
+# network
+#
+#        netdev                  network device
+alias netdev="echo \"\$(ip route get 1.1.1.1 | awk '{print \$5}')\""
+#        netip                   show ip address of main network device
+alias netip="ifconfig ${networkdevice} | grep 'inet [0-9]' | sed 's/^.*inet // ; s/ .*$//'"
+#        netinfo                 show network info of main network device
+alias netinfo="nmcli device show ${networkdevice}"
+#        netdns                  show dns routers of main network device
+alias netdns="nmcli device show ${networkdevice} | grep IP4\.DNS"
+#        ns                      netstat
+alias ns="sudo netstat"
+#        nsap                    netstat (all sockets, programs)
+alias nsap="sudo netstat -a -p"
+#        nstup                   netstat (tcp, udp, programs)
+alias nstup="sudo netstat -t -u -p"
+#        nstupl                  netstat (tcp, udp, programs, listening)
+alias nstupl="sudo netstat -t -u -p -l"
+#        lsofi                   lsof -i (list open files matching given internet address)
+alias lsofi="sudo lsof -i"
+#        lsofg                   lsof with grep (list open files matching given query)
+alias lsofg="sudo lsof | grep"
+#        wgetp                   wget --passive-ftp
+alias wgetp="wget --passive-ftp"
+#        nml                     nmap localhost
+alias nml="nmap localhost"
+#        nmlp                    nmap -p 1-65535 localhost
+alias nmlp="nmap -p 1-65535 localhost"
+#        nmp                     nmap -p 1-65535
+alias nmp="nmap -p 1-65535"
+#        nmu                     nmap with udp
+alias nmu="nmap -sS -sU"
+#        asl                     arp-scan --localnet
+alias asl="sudo arp-scan --localnet"
+#
+# network (ping, traceroute, external ip address)
+#
+#        ping-firewall           ping firewall
+alias ping-firewall="ping 192.168.1.1"
+#        ping-bridge             ping bridge
+alias ping-bridge="ping 192.168.1.2"
+#        ping-pimodem            ping pimodem
+alias ping-pimodem="ping 192.168.1.3"
+#        ping-synologyx          ping synology
+alias ping-synologyx="ping 192.168.1.5"
+#        ping-synology           ping synology
+alias ping-synology="ping 192.168.1.6"
+#        ping-morpheus           ping morpheus
+alias ping-morpheus="ping 192.168.1.10"
+#        ping-printer            ping printer
+alias ping-printer="ping 192.168.1.16"
+#        ping-neo                ping neo
+alias ping-neo="ping 192.168.1.30"
+#        ping-tank               ping tank
+alias ping-tank="ping 192.168.1.32"
+#        ping-apoc               ping apoc
+alias ping-apoc="ping 192.168.1.34"
+#        ping-trinity            ping trinity
+alias ping-trinity="ping 192.168.1.36"
+#        ping-dozer              ping dozer
+alias ping-dozer="ping 192.168.1.40"
+#        ping-choi               ping choi
+alias ping-choi="ping 192.168.1.42"
+#        ping-choi-direct        ping choi-direct
+alias ping-choi-direct="ping 192.168.1.43"
+#        ping-switch             ping switch
+alias ping-switch="ping 192.168.1.44"
+#        ping-mouse              ping mouse
+alias ping-mouse="ping 192.168.1.50"
+#        ping-raspad             ping raspad
+alias ping-raspad="ping 192.168.1.54"
+#        ping-raspad-usb         ping raspad-usb
+alias ping-raspad-usb="ping 192.168.1.55"
+#        ping-retropie           ping retropie
+alias ping-retropie="ping 192.168.1.56"
+#        ping-retropie-direct    ping retropie-direct
+alias ping-retropie-direct="ping 192.168.1.57"
+#        ping-retro              ping retro
+alias ping-retro="ping 192.168.1.62"
+#        ping-dns1               ping dns server 1
+alias ping-dns1="ping 24.31.3.8"
+#        ping-dns2               ping dns server 2
+alias ping-dns2="ping 24.31.3.9"
+#        ping-gateway            ping gateway
+alias ping-gateway="ping 24.31.20.1"
+#        ping-nullware           ping nullware
+alias ping-nullware="ping \${nullwareip}"
+#        ping-google             ping google.com
+alias ping-google="ping google.com"
+#        ping-googleip           ping google.com by ip address
+alias ping-googleip="ping 172.217.15.110"
+#        traceroute-google       traceroute google.com
+alias traceroute-google="traceroute google.com"
+#        ping-uswest             ping uswest.net
+alias ping-uswest="ping uswest.net"
+#        ping-uswestip           ping uswest.net by ip address
+alias ping-uswestip="ping 204.147.80.81"
+#        traceroute-uswest       traceroute uswest.net
+alias traceroute-uswest="traceroute uswest.net"
+#        ipaddress               display external IP address
+alias ipaddress="curl http://httpbin.org/get --silent | jq --raw-output .origin"
+#        icanhazip               display external IP address
+alias icanhazip="curl http://icanhazip.com --silent"
+#
+# network manager
+#
+#        nmrs                    network manager restart
+alias nmrs="
+    sudo systemctl stop NetworkManager
+    sudo systemctl stop iwd
+    sleep 5s
+    sudo systemctl start iwd
+    sleep 5s
+    sudo systemctl start NetworkManager"
+#        nm-nullman              network manager connect to nullman wifi
+alias nm-nullman="nmcli -a device wifi connect nullman"
+#
+# wpa_supplicant
+#
+#        wpa-nullman             wpa connect to nullman wifi
+alias wpa-nullman=""
+
+#
 # bluetooth
 #
 # bluetoothctl-connect-hd350bt   connect to Sennheiser HD 350BT headphones via bluetooth
@@ -607,50 +742,6 @@ alias readme-pine="zpager \$(locate pine | grep README.gz)"
 alias readme-centericq="zpager \$(locate centericq | grep README.gz)"
 #        readme-irssi            readme for irssi
 alias readme-irssi="zpager \$(locate irssi | grep README.gz)"
-
-#
-# arch
-#
-
-#
-# ubuntu
-#
-#        dpkg-make-installed-packages  make ~/installed-packages file
-alias dpkg-make-installed-packages="dpkg --get-selections > \${HOME}/installed-packages"
-#        dpkg-install-packages   install all deb packages in ~/installed-packages
-alias dpkg-install-packages="cat \${HOME}/installed-packages | xargs apt-get install -y"
-#        dpkg-config-fonts       configure fixed fonts in ubuntu
-alias dpkg-config-fonts="
-    dpkg-reconfigure fontconfig-config
-    dpkg-reconfigure fontconfig"
-#        dpkg-config-dash        change sh to use bash instead of dash
-alias dpkg-config-dash="dpkg-reconfigure dash"
-#        ubuntu-system-setup     initial system setup in ubuntu
-alias ubuntu-system-setup="
-    sudo bash -c \"
-        apt-get -y install linuxlogo && \
-          echo '-L ubuntu' > /etc/linux_logo.conf
-        linuxlogo > /etc/motd
-        linuxlogo > /etc/motd.tail
-    \""
-#        medibuntu-install       install medibuntu sources
-alias medibuntu-install="
-    sudo bash -c \"
-        wget http://www.medibuntu.org/sources.list.d/\$(lsb_release -cs).list \
-          -O /etc/apt/sources.list.d/medibuntu.list && \
-          apt-get --quiet update && \
-          apt-get --yes --quiet --allow-unauthenticated install medibuntu-keyring && \
-          apt-get --quiet update
-     \""
-#        ubuntu-release-upgrade  install ubuntu release upgrade
-alias ubuntu-release-upgrade="sudo do-release-upgrade"
-#
-# debian
-#
-#        install-debian          run custom debian installation script
-alias install-debian="sudo bash -c \"bash <(curl -s http://kylesherman.net/init/debian.sh)\""
-#        install-gemini          run custom gemini installation script
-alias install-gemini="sudo bash -c \"bash <(curl -s http://kylesherman.net/init/gemini.sh)\""
 
 #
 # applications (general)
@@ -1779,112 +1870,6 @@ alias mypasswd="
     echo \"mysqladmin -u root -h <hostname> password '<password>'\""
 
 #
-# networking (general)
-#
-#        netdev                  network device
-alias netdev="echo \"\$(ip route get 1.1.1.1 | awk '{print \$5}')\""
-#        netip                   show ip address of main network device
-alias netip="ifconfig ${networkdevice} | grep 'inet [0-9]' | sed 's/^.*inet // ; s/ .*$//'"
-#        netinfo                 show network info of main network device
-alias netinfo="nmcli device show ${networkdevice}"
-#        netdns                  show dns routers of main network device
-alias netdns="nmcli device show ${networkdevice} | grep IP4\.DNS"
-#        ns                      netstat
-alias ns="sudo netstat"
-#        nsap                    netstat (all sockets, programs)
-alias nsap="sudo netstat -a -p"
-#        nstup                   netstat (tcp, udp, programs)
-alias nstup="sudo netstat -t -u -p"
-#        nstupl                  netstat (tcp, udp, programs, listening)
-alias nstupl="sudo netstat -t -u -p -l"
-#        lsofi                   lsof -i (list open files matching given internet address)
-alias lsofi="sudo lsof -i"
-#        lsofg                   lsof with grep (list open files matching given query)
-alias lsofg="sudo lsof | grep"
-#        wgetp                   wget --passive-ftp
-alias wgetp="wget --passive-ftp"
-#        nml                     nmap localhost
-alias nml="nmap localhost"
-#        nmlp                    nmap -p 1-65535 localhost
-alias nmlp="nmap -p 1-65535 localhost"
-#        nmp                     nmap -p 1-65535
-alias nmp="nmap -p 1-65535"
-#        nmu                     nmap with udp
-alias nmu="nmap -sS -sU"
-#        asl                     arp-scan --localnet
-alias asl="sudo arp-scan --localnet"
-
-#
-# networking (ping)
-#
-#        ping-firewall           ping firewall
-alias ping-firewall="ping 192.168.1.1"
-#        ping-bridge             ping bridge
-alias ping-bridge="ping 192.168.1.2"
-#        ping-pimodem            ping pimodem
-alias ping-pimodem="ping 192.168.1.3"
-#        ping-synologyx          ping synology
-alias ping-synologyx="ping 192.168.1.5"
-#        ping-synology           ping synology
-alias ping-synology="ping 192.168.1.6"
-#        ping-morpheus           ping morpheus
-alias ping-morpheus="ping 192.168.1.10"
-#        ping-printer            ping printer
-alias ping-printer="ping 192.168.1.16"
-#        ping-neo                ping neo
-alias ping-neo="ping 192.168.1.30"
-#        ping-tank               ping tank
-alias ping-tank="ping 192.168.1.32"
-#        ping-apoc               ping apoc
-alias ping-apoc="ping 192.168.1.34"
-#        ping-trinity            ping trinity
-alias ping-trinity="ping 192.168.1.36"
-#        ping-dozer              ping dozer
-alias ping-dozer="ping 192.168.1.40"
-#        ping-choi               ping choi
-alias ping-choi="ping 192.168.1.42"
-#        ping-choi-direct        ping choi-direct
-alias ping-choi-direct="ping 192.168.1.43"
-#        ping-switch             ping switch
-alias ping-switch="ping 192.168.1.44"
-#        ping-mouse              ping mouse
-alias ping-mouse="ping 192.168.1.50"
-#        ping-raspad             ping raspad
-alias ping-raspad="ping 192.168.1.54"
-#        ping-raspad-usb         ping raspad-usb
-alias ping-raspad-usb="ping 192.168.1.55"
-#        ping-retropie           ping retropie
-alias ping-retropie="ping 192.168.1.56"
-#        ping-retropie-direct    ping retropie-direct
-alias ping-retropie-direct="ping 192.168.1.57"
-#        ping-retro              ping retro
-alias ping-retro="ping 192.168.1.62"
-#        ping-dns1               ping dns server 1
-alias ping-dns1="ping 24.31.3.8"
-#        ping-dns2               ping dns server 2
-alias ping-dns2="ping 24.31.3.9"
-#        ping-gateway            ping gateway
-alias ping-gateway="ping 24.31.20.1"
-#        ping-nullware           ping nullware
-alias ping-nullware="ping \${nullwareip}"
-#        ping-google             ping google.com
-alias ping-google="ping google.com"
-#        ping-googleip           ping google.com by ip address
-alias ping-googleip="ping 172.217.15.110"
-#        trgoogle                traceroute google.com
-alias trgoogle="traceroute google.com"
-#        ping-uswest             ping uswest.net
-alias ping-uswest="ping uswest.net"
-#        ping-uswestip           ping uswest.net by ip address
-alias ping-uswestip="ping 204.147.80.81"
-#        traceroute-uswest       traceroute uswest.net
-alias traceroute-uswest="traceroute uswest.net"
-#        ipaddress               display external IP address
-alias ipaddress="curl http://httpbin.org/get --silent | jq --raw-output .origin"
-#        icanhazip               display external IP address
-alias icanhazip="curl http://icanhazip.com --silent"
-
-#
 # offlineimap
 #
 #        imap-on                 turn offlineimap on
@@ -2736,6 +2721,116 @@ alias xwit="xwininfo -tree -root"
 alias geometry="xwininfo -root | grep geometry"
 
 #
+# NixOS
+#
+#        nixrs                   nixos-rebuild switch
+alias nixrs="
+    [[ -d \${HOME}/.nixos/etc ]] && sudo cp -L -v \${HOME}/.nixos/etc/* /etc/nixos/
+    sudo -i nixos-rebuild switch
+
+    # link downloadhelper coapp for firefox
+    dir=\$(nix-store -q -R /run/current-system | grep vdhcoapp)
+    src=\${dir}/lib/mozilla/native-messaging-hosts/net.downloadhelper.coapp.json
+    [[ -d \${dir} ]] && ln -s -f \${src} \${HOME}/.mozilla/native-messaging-hosts/"
+#        nixcl                   nix-channel list
+alias nixcl="sudo -i nix-channel --list"
+#        nixcu                   nix-channel update
+alias nixcu="sudo -i nix-channel --update"
+#        nixs                    nix package search
+alias nixs="nix search nixpkgs"
+#        nixf                    nix-locate file search
+alias nixf="nix-locate -w"
+#        nix-store-query         nix-store installed package location query
+alias nix-store-query="nix-store -q -R /run/current-system | grep"
+#        nix-store-cleanup       nix-store delete old generations, garbage collect, and optimize
+alias nix-store-cleanup="
+    sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations 30d && \
+    nix-collect-garbage --delete-older-than 30d && \
+    nix-store --optimise"
+#
+# NixOS Development
+#
+#        nix-shell-development   nix-shell ~/.nixos/development-build-env.nix
+alias nix-shell-development="nix-shell \${HOME}/.nixos/development-build-env.nix"
+#        nix-shell-ruby          nix-shell with ruby packages
+alias nix-shell-ruby="nix-shell -p \"ruby.withPackages (ps: with ps; [ nokogiri ])\""
+#        nix-run-ruby            nix-shell --run with ruby packages
+alias nix-run-ruby="nix-shell -p \"ruby.withPackages (ps: with ps; [ nokogiri ])\" --run"
+
+#
+# Guix
+#
+#!#        guixrs                  guix reconfigure system
+#!alias guixrs="sudo -E guix system reconfigure \${HOME}/.config/guix/system.scm"
+#!#!#        guixcu                  guix-channel update
+#!#!alias guixcu="guix-channel --update"
+#!#        guixs                   guix package search
+#!alias guixs="guix search"
+#!#        guixf                   guix-locate file search
+#!alias guixf="guix-locate -w"
+#!#        guix-store-query        guix-store installed package location query
+#!alias guix-store-query="guix-store -q -R /run/current-system | grep"
+#!#        guix-shell-development  guix-shell ~/.guixos/shell.guix
+#!alias guix-shell-development="guix-shell \${HOME}/.guixos/shell.guix"
+
+#
+# ubuntu
+#
+#        dpkg-make-installed-packages  make ~/installed-packages file
+alias dpkg-make-installed-packages="dpkg --get-selections > \${HOME}/installed-packages"
+#        dpkg-install-packages   install all deb packages in ~/installed-packages
+alias dpkg-install-packages="cat \${HOME}/installed-packages | xargs apt-get install -y"
+#        dpkg-config-fonts       configure fixed fonts in ubuntu
+alias dpkg-config-fonts="
+    dpkg-reconfigure fontconfig-config
+    dpkg-reconfigure fontconfig"
+#        dpkg-config-dash        change sh to use bash instead of dash
+alias dpkg-config-dash="dpkg-reconfigure dash"
+#        ubuntu-system-setup     initial system setup in ubuntu
+alias ubuntu-system-setup="
+    sudo bash -c \"
+        apt-get -y install linuxlogo && \
+          echo '-L ubuntu' > /etc/linux_logo.conf
+        linuxlogo > /etc/motd
+        linuxlogo > /etc/motd.tail
+    \""
+#        medibuntu-install       install medibuntu sources
+alias medibuntu-install="
+    sudo bash -c \"
+        wget http://www.medibuntu.org/sources.list.d/\$(lsb_release -cs).list \
+          -O /etc/apt/sources.list.d/medibuntu.list && \
+          apt-get --quiet update && \
+          apt-get --yes --quiet --allow-unauthenticated install medibuntu-keyring && \
+          apt-get --quiet update
+     \""
+#        ubuntu-release-upgrade  install ubuntu release upgrade
+alias ubuntu-release-upgrade="sudo do-release-upgrade"
+
+#
+# debian
+#
+#        install-debian          run custom debian installation script
+alias install-debian="sudo bash -c \"bash <(curl -s http://kylesherman.net/init/debian.sh)\""
+#        install-gemini          run custom gemini installation script
+alias install-gemini="sudo bash -c \"bash <(curl -s http://kylesherman.net/init/gemini.sh)\""
+#        debver                  debian version
+alias debver="cat /etc/debian_version"
+#        urc                     update-rc.d
+alias rcu="update-rc.d"
+#        kernel-mpkg             make-kpkg buildpackage
+alias kernel-mpkg="make-kpkg buildpackage"
+#        deb-cache-delete        delete /var/cache/apt/archives/*.deb
+alias deb-cache-delete="find /var/cache/apt/archives/ -name *.deb -print0 | xargs -0 -L 1 rm -f"
+#        cid                     checkinstall -D (create deb)
+alias cid="checkinstall -D make install"
+#        gpgdeb                  install debian gpg key
+alias gpgdeb="
+    gpg --keyserver subkeys.pgp.net --recv-keys 2D230C5F
+    gpg --export 084750FC01A6D388A643D869010908312D230C5F | sudo apt-key add -"
+#        debo                    deborphan (see orphaned packages)
+alias debo="deborphan"
+
+#
 # pacman (Package Manager)
 #
 #        pmu                     pacman -Syu (update packages with refresh)
@@ -2954,26 +3049,6 @@ alias dpkg-reinstall="
     esac"
 
 #
-# debian
-#
-#        debver                  debian version
-alias debver="cat /etc/debian_version"
-#        urc                     update-rc.d
-alias rcu="update-rc.d"
-#        kernel-mpkg             make-kpkg buildpackage
-alias kernel-mpkg="make-kpkg buildpackage"
-#        deb-cache-delete        delete /var/cache/apt/archives/*.deb
-alias deb-cache-delete="find /var/cache/apt/archives/ -name *.deb -print0 | xargs -0 -L 1 rm -f"
-#        cid                     checkinstall -D (create deb)
-alias cid="checkinstall -D make install"
-#        gpgdeb                  install debian gpg key
-alias gpgdeb="
-    gpg --keyserver subkeys.pgp.net --recv-keys 2D230C5F
-    gpg --export 084750FC01A6D388A643D869010908312D230C5F | sudo apt-key add -"
-#        debo                    deborphan (see orphaned packages)
-alias debo="deborphan"
-
-#
 # yum package mangement (fedora/redhat)
 #
 #        yumh                    yum help
@@ -2998,59 +3073,6 @@ alias rpmq="rpm -q -a | grep"
 #
 #        qdu                     qubes-dom0-update
 alias qdu="qubes-dom0-update --enablerepo=qubes-dom0-current-testing"
-
-#
-# NixOS
-#
-#        nixrs                   nixos-rebuild switch
-alias nixrs="
-    [[ -d \${HOME}/.nixos/etc ]] && sudo cp -L -v \${HOME}/.nixos/etc/* /etc/nixos/
-    sudo -i nixos-rebuild switch
-
-    # link downloadhelper coapp for firefox
-    dir=\$(nix-store -q -R /run/current-system | grep vdhcoapp)
-    src=\${dir}/lib/mozilla/native-messaging-hosts/net.downloadhelper.coapp.json
-    [[ -d \${dir} ]] && ln -s -f \${src} \${HOME}/.mozilla/native-messaging-hosts/"
-#        nixcl                   nix-channel list
-alias nixcl="sudo -i nix-channel --list"
-#        nixcu                   nix-channel update
-alias nixcu="sudo -i nix-channel --update"
-#        nixs                    nix package search
-alias nixs="nix search nixpkgs"
-#        nixf                    nix-locate file search
-alias nixf="nix-locate -w"
-#        nix-store-query         nix-store installed package location query
-alias nix-store-query="nix-store -q -R /run/current-system | grep"
-#        nix-store-cleanup       nix-store delete old generations, garbage collect, and optimize
-alias nix-store-cleanup="
-    sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations 30d && \
-    nix-collect-garbage --delete-older-than 30d && \
-    nix-store --optimise"
-#
-# NixOS Development
-#
-#        nix-shell-development   nix-shell ~/.nixos/development-build-env.nix
-alias nix-shell-development="nix-shell \${HOME}/.nixos/development-build-env.nix"
-#        nix-shell-ruby          nix-shell with ruby packages
-alias nix-shell-ruby="nix-shell -p \"ruby.withPackages (ps: with ps; [ nokogiri ])\""
-#        nix-run-ruby            nix-shell --run with ruby packages
-alias nix-run-ruby="nix-shell -p \"ruby.withPackages (ps: with ps; [ nokogiri ])\" --run"
-
-#
-# Guix
-#
-#!#        guixrs                  guix reconfigure system
-#!alias guixrs="sudo -E guix system reconfigure \${HOME}/.config/guix/system.scm"
-#!#!#        guixcu                  guix-channel update
-#!#!alias guixcu="guix-channel --update"
-#!#        guixs                   guix package search
-#!alias guixs="guix search"
-#!#        guixf                   guix-locate file search
-#!alias guixf="guix-locate -w"
-#!#        guix-store-query        guix-store installed package location query
-#!alias guix-store-query="guix-store -q -R /run/current-system | grep"
-#!#        guix-shell-development  guix-shell ~/.guixos/shell.guix
-#!alias guix-shell-development="guix-shell \${HOME}/.guixos/shell.guix"
 
 #
 # git

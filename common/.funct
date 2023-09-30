@@ -1839,6 +1839,9 @@ Create the initial links from ~ to ~/config and ~/config-private:
   home-initialize
 (Run 'home-restow' to recreate the links in the future.)
 
+Copy wallpapers:
+  copy-wallpapers
+
 Setup /home/data directory:
   sudo mkdir -p /home/data && sudo chown \${USER}:\${USER} /home/data
 
