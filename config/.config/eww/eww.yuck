@@ -238,11 +238,13 @@
                :onchange "light -S {}"
                :tooltip "Brightness: ${brightness}%")
        ;; ram
-       (metric :label ""
+       ;; symbols:  󰍛
+       (metric :label "󰍛"
                :value {EWW_RAM.used_mem_perc}
                :onchange ""
                :tooltip "RAM Used: ${EWW_RAM.used_mem_perc}%")
        ;; disk
+       ;; symbols: 󰆼 󰆼    
        (metric :label "󰆼"
                :value {round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}
                :onchange ""
