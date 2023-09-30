@@ -89,7 +89,7 @@ fi
 _command stty && stty tabs
 
 # make terminals not beep
-[[ "${OS}" == "Windows_NT" ]] || _command setterm && setterm -blength 0 >/dev/null 2>&1
+[[ "${os}" == "Windows_NT" ]] || _command setterm && setterm -blength 0 >/dev/null 2>&1
 
 # set umask
 umask 0022
