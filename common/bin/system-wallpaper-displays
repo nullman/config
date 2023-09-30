@@ -15,13 +15,15 @@ _command() {
 # conky displays on wallpaper
 _command conky && pkill -x -u ${USER} conky
 _command conky && [[ -f "${HOME}/.config/conky/system-info.conkyrc" ]] && conky --config="${HOME}/.config/conky/system-info.conkyrc" &
-_command conky && [[ -f "${HOME}/.config/conky/bspwm-keybindings.conkyrc" ]] && conky --config="${HOME}/.config/conky/bspwm-keybindings.conkyrc" &
-##_command conky && [[ -f "${HOME}/.config/conky/reminders.conkyrc" ]] && conky --config="${HOME}/.config/conky/reminders.conkyrc" &
-_command conky && [[ -f "${HOME}/.config/conky/reminders.conkyrc" ]] && \
-    ([[ $(xrandr | sed -n 's/^.* current //p' | sed 's/ x .*$//') -gt 1600 ]] && conky --config="${HOME}/.config/conky/reminders.conkyrc") &
-##_command conky && [[ -f "${HOME}/.config/conky/weather.conkyrc" ]] && conky --config="${HOME}/.config/conky/weather.conkyrc" &
-#_command conky && [[ -f "${HOME}/.config/conky/weather.conkyrc" ]] && \
-#    ([[ $(xrandr | sed -n 's/^.* current //p' | sed 's/ x .*$//') -gt 1600 ]] && conky --config="${HOME}/.config/conky/weather.conkyrc") &
+if [[ '$(uname -n)' != 'mouse' ]] ; then
+    _command conky && [[ -f "${HOME}/.config/conky/bspwm-keybindings.conkyrc" ]] && conky --config="${HOME}/.config/conky/bspwm-keybindings.conkyrc" &
+    ##_command conky && [[ -f "${HOME}/.config/conky/reminders.conkyrc" ]] && conky --config="${HOME}/.config/conky/reminders.conkyrc" &
+    _command conky && [[ -f "${HOME}/.config/conky/reminders.conkyrc" ]] && \
+        ([[ $(xrandr | sed -n 's/^.* current //p' | sed 's/ x .*$//') -gt 1600 ]] && conky --config="${HOME}/.config/conky/reminders.conkyrc") &
+    ##_command conky && [[ -f "${HOME}/.config/conky/weather.conkyrc" ]] && conky --config="${HOME}/.config/conky/weather.conkyrc" &
+    #_command conky && [[ -f "${HOME}/.config/conky/weather.conkyrc" ]] && \
+        #    ([[ $(xrandr | sed -n 's/^.* current //p' | sed 's/ x .*$//') -gt 1600 ]] && conky --config="${HOME}/.config/conky/weather.conkyrc") &
+fi
 
 #===============================================================================
 # End of File
