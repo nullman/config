@@ -23,7 +23,7 @@ home="$(cd ${HOME} ; cd .. ; pwd)"
 #!       operating system (Linux, Windows_NT, Darwin, Haiku)
 os="$(uname -s)"
 #!       config directory
-config="\${HOME}/$([[ '$(uname -o)' == 'Haiku' ]] && echo 'haiku-config' || echo 'config')"
+config="\${HOME}/$([[ $(uname -o) == 'Haiku' ]] && echo 'haiku-config' || echo 'config')"
 #!       terminal
 terminal="alacritty"
 #!       network device
@@ -1700,7 +1700,7 @@ alias egrep="grep -E -I --color=auto"
 #
 #        java-set-env-java8      set java environment to java 8
 alias java-set-env-java8="
-    if [[ '$(uname -s)' == 'Darwin' ]] ; then
+    if [[ $(uname -s) == 'Darwin' ]] ; then
         export JAVA_HOME=\"\$(/usr/libexec/java_home -v 1.8)\"
     else
         sudo archlinux-java set java-8-openjdk && \
@@ -1708,7 +1708,7 @@ alias java-set-env-java8="
     fi"
 #        java-set-env-java11     set java environment to java 11
 alias java-set-env-java11="
-    if [[ '$(uname -s)' == 'Darwin' ]] ; then
+    if [[ $(uname -s) == 'Darwin' ]] ; then
         export JAVA_HOME=\"\$(/usr/libexec/java_home -v 11)\"
     else
         sudo archlinux-java set java-11-openjdk && \
@@ -1716,7 +1716,7 @@ alias java-set-env-java11="
     fi"
 #        java-set-env-java18     set java environment to java 18
 alias java-set-env-java18="
-    if [[ '$(uname -s)' == 'Darwin' ]] ; then
+    if [[ $(uname -s) == 'Darwin' ]] ; then
         export JAVA_HOME=\"\$(/usr/libexec/java_home -v 18)\"
     else
         sudo archlinux-java set java-18-openjdk && \
@@ -1986,7 +1986,7 @@ alias rsync-media-get-morpheus="rsync -rlptx --progress morpheus:/home/data/medi
 alias rsync-media-get-morpheus-exclude="rsync -rlptx --progress --exclude={'/Repos/','/Software/','/Video/'} morpheus:/home/data/media/ ${home}/data/media/"
 #        rsync-media-get-morpheus-mouse-delete  rsync morpheus:/home/data/media /home/data/media (specific sub-directories)
 alias rsync-media-get-morpheus-mouse-delete=" \
-    if [[ '$(uname -n)' == 'mouse ]] ; then
+    if [[ $(uname -n) == 'mouse ]] ; then
         rsync -rlptx --progress --delete --exclude={'/Humor/','/Other/'} morpheus:/home/data/media/Audio/ ${home}/data/media/Audio/ && \
         rsync -rlptx --progress --delete morpheus:/home/data/media/Music/ ${home}/data/media/Music/ && \
         rsync -rlptx --progress --delete \"morpheus:/home/data/media/Pictures Slide Show/\" \"${home}/data/media/Pictures Slide Show/\" && \
