@@ -61,30 +61,4 @@ ${color2}Dn:${color}  ${goto 40}${downspeed wlp2s0}  ${goto 120}${downspeedgraph
 # battery
 ${voffset 10}${color}${font Bitstream Vera Sans:bold:size=12}Battery${font}  ${alignc}${battery_time}  ${alignr}${battery_short}
 ${color}${battery_bar}
-
-# system information
-${voffset 10}${color}${font Bitstream Vera Sans:bold:size=12}System${font}
-# user
-${color2}User:${color}  ${alignr}${execi 1200 whoami}@${nodename}
-# os/distro
-#${color2}OS:${color}  ${alignr}${execi 3600 awk -F = '/DISTRIB_DESCRIPTION/{print $2}' /etc/lsb-release | sed 's/"//g'}: ${execi 3600 awk -F = '/DISTRIB_RELEASE/{printf $2" "} /NAME/{print $2}' /etc/lsb-release | sed 's/"//g'}
-${color2}OS:${color}  ${alignr}${execi 3600 awk -F = '/DISTRIB_DESCRIPTION/{print $2}' /etc/lsb-release | sed 's/"//g'}
-# kernel
-${color2}Kernel:${color}  ${alignr}${kernel}
-# uptime
-${color2}Uptime:${color}  ${alignr}${uptime_short}
-# utc time
-${color2}UTC:${color}  ${alignr}${utime %H:%M}
-# disabled due to rate limits on aur.archlinux.org
-# # packages
-# ${color2}Packages to Update:${color}  ${alignr}${execi 3600 checkupdates | wc -l}
-# entropy
-${color2}Entropy:${color}  ${alignr}${entropy_avail} / ${entropy_poolsize}  ${entropy_perc}%
-#${color2}Entropy:${color}  ${entropy_avail} / ${entropy_poolsize}  ${entropy_perc}%  ${entropy_bar}
-
-# music
-#${color2}Artist:${color}  ${alignr}${mpd_artist}
-#${color2}Song:${color}  ${alignr}${mpd_title}
-${color2}Artist:${color}  ${alignr}${texeci 2 ~/bin/mpc-playing | awk -F ' - ' '{ if (length($1) <= 40) { print $1 } else { print substr($1, 0, 40)"..." } }'}
-${color2}Song:${color}  ${alignr}${texeci 2 ~/bin/mpc-playing | sed 's/ \+[0-9]\+\/[0-9]\+.*$//' | awk -F ' - ' '{ if (length($2) <= 40) { print $2 } else { print substr($2, 0, 40)"..." } }'}
 ]]
