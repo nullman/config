@@ -56,6 +56,9 @@ _command alacritty && alacritty -e ${HOME}/bin/run-screen &
 ##_command lbry && _delay 1 lbry &
 ##_command syncterm && _delay 1 syncterm &
 
+# launch application launcher
+_command ${HOME}/bin/application-launcher && ${HOME}/bin/application-launcher &
+
 #===============================================================================
 # End of File
 #===============================================================================

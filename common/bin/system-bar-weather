@@ -20,6 +20,7 @@ else
     #echo "${data}"
     desc=$(echo "${data}" | sed 's/: .*$//')
     temp=$(echo "${data}" | sed 's/^.*: //')
+    [[ -z "${desc}" || -z "${temp}" ]] && exit 1
     #echo "desc: ${desc}"
     #echo "temp: ${temp}"
     icon=""

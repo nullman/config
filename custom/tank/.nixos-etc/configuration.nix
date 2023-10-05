@@ -794,6 +794,7 @@
     mtr
     navi
     ncdu
+    ookla-speedtest
     powertop
     procs
     rar
@@ -802,6 +803,7 @@
     sd
     sharutils
     smem
+    speedtest-cli
     sysbench
     sysstat
     sysz
