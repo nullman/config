@@ -58,7 +58,7 @@
     joypixels.acceptLicense = true;
     permittedInsecurePackages = [
       "electron-12.2.3"
-      "openssl-1.1.1v"
+      "openssl-1.1.1w"
     ];
     packageOverrides = pkgs: {
       nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
