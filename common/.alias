@@ -2418,6 +2418,8 @@ alias ssh-agent="
 alias ssh-apoc="echo 'ssh:apoc' ; ssh apoc"
 #        ssh-colleen             ssh colleen
 alias ssh-colleen="echo 'ssh:colleen@colleen' ; ssh colleen@colleen"
+#        ssh-dozer               ssh dozer
+alias ssh-dozer="echo 'ssh:dozer' ; ssh dozer"
 #        ssh-firewall            ssh -p 8022 -l root firewall
 alias ssh-firewall="echo 'ssh:admin@firewall' ; ssh -p 8022 admin@firewall"
 #        ssh-gemini              ssh gemini
