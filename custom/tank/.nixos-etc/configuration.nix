@@ -46,7 +46,7 @@
 
   # sysctl settings
   boot.kernel.sysctl = {
-    "vm.swappiness" = 0;
+    "vm.swappiness" = 0;                  # cat /proc/sys/vm/swappiness
   };
 
   # nix settings
@@ -605,6 +605,7 @@
     nix-index
     nmap
     parted
+    pciutils
     pipewire
     pkg-config
     pulseaudio
