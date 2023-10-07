@@ -866,6 +866,7 @@
     firefox
     #firefox-wayland
     gajim
+    google-chrome
     kristall
     magic-wormhole
     ncgopher

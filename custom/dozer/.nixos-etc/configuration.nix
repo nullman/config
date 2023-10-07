@@ -9,18 +9,25 @@
 { config, pkgs, ... }:
 
 {
-  ## imports
-  #imports = [
-  #  ./hardware-configuration.nix
-  #  #<home-manager/nixos>
-  #];
-
   # imports
   imports = [
     ./hardware-configuration.nix
-    ./hardware-encryption-configuration.nix
     #<home-manager/nixos>
   ];
+
+  swapDevices = [
+    {
+      device = "/home/swapfile";
+      size = 32768;                     # 32 GB
+    }
+  ];
+
+  ## imports
+  #imports = [
+  #  ./hardware-configuration.nix
+  #  ./hardware-encryption-configuration.nix
+  #  #<home-manager/nixos>
+  #];
 
   # systemd-boot EFI boot loader
   boot.loader = {
@@ -31,12 +38,6 @@
     efi.canTouchEfiVariables = true;
   };
   fileSystems."/".options = [ "noatime" ];
-
-  # # mdadm.conf
-  # environment.etc."mdadm.conf".text = ''
-  #   ARRAY /dev/md0 metadata=1.0 name=archiso:0 UUID=764b3bea:1aad3e88:5543f650:bd7314d2
-  #   ARRAY /dev/md1 metadata=1.2 name=archiso:1 UUID=dc0e0617:70216ae6:c8af2052:5e730003
-  # '';
 
   # networking
   networking.hostName = "dozer";
@@ -394,8 +395,8 @@
     };
   };
 
-  ## openssh server
-  #services.openssh.enable = true;
+  # openssh server
+  services.openssh.enable = true;
 
   ## open firewall ports
   #networking.firewall = {
@@ -866,6 +867,7 @@
     firefox
     #firefox-wayland
     gajim
+    google-chrome
     kristall
     magic-wormhole
     ncgopher
