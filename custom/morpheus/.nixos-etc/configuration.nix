@@ -42,7 +42,7 @@
 
   # sysctl settings
   boot.kernel.sysctl = {
-    "vm.swappiness" = 0;
+    "vm.swappiness" = 0;                  # cat /proc/sys/vm/swappiness
   };
 
   # nix settings
@@ -216,8 +216,8 @@
   #  # enable nvidia settings menu
   #  nvidiaSettings = true;
   #  # select appropriate driver version [optional]
-  #  #package = config.boot.kernelPackages.nvidiaPackages.stable;
-  #  package = config.boot.kernelPackages.nvidiaPackages.legacy_390;
+  #  package = config.boot.kernelPackages.nvidiaPackages.stable;
+  #  #package = config.boot.kernelPackages.nvidiaPackages.legacy_470;
   #};
 
   ## nvidia prime
@@ -601,6 +601,7 @@
     nix-index
     nmap
     parted
+    pciutils
     pipewire
     pkg-config
     pulseaudio

@@ -220,8 +220,8 @@
   #  # enable nvidia settings menu
   #  nvidiaSettings = true;
   #  # select appropriate driver version [optional]
-  #  #package = config.boot.kernelPackages.nvidiaPackages.stable;
-  #  package = config.boot.kernelPackages.nvidiaPackages.legacy_390;
+  #  package = config.boot.kernelPackages.nvidiaPackages.stable;
+  #  #package = config.boot.kernelPackages.nvidiaPackages.legacy_470;
   #};
 
   ## nvidia prime
