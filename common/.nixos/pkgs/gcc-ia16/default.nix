@@ -18,7 +18,8 @@ stdenv.mkDerivation rec {
     owner = "tkchia";
     repo = pname;
     rev = "a4c99e280eca6188ef2a69fcabe5af9f14d7eeb6";
-    hash = "sha256-9G/X0sksJH0lrI1F7Hy1O21Gh+6XUS7cxu8QmqO0KvU=";
+    #hash = "sha256-9G/X0sksJH0lrI1F7Hy1O21Gh+6XUS7cxu8QmqO0KvU=";
+    hash = "sha256-LP5SL04O3tC2PzV1r04XY1wLTMBa1r972CYJx6g7vyU=";
   };
 
   nativeBuildInputs = [
