@@ -874,78 +874,78 @@
     transmission-gtk
     tuba
 
-    ## emulators
-    #basiliskii
-    #dosbox
-    #gnome.gnome-boxes
-    #mame
-    #qemu_kvm
-    #vice
-    #virt-manager
-    #virt-viewer
-    #virtualbox
-    #wine
-    #winetricks
+    # emulators
+    basiliskii
+    dosbox
+    gnome.gnome-boxes
+    mame
+    qemu_kvm
+    vice
+    virt-manager
+    virt-viewer
+    virtualbox
+    wine
+    winetricks
 
-    ## development
-    #acme
-    #adb-sync
-    #android-tools
-    #android-udev-rules
-    #binutils
-    #binutils-ia16
-    #bison
-    #cc65
-    #ccache
-    #clang
-    #cmake
-    #ctags
-    #djgpp_i686
-    #flex
-    #fpc
-    #gcc
-    #gcc-ia16
-    #github-desktop
-    #glibc
-    ##gmp
-    #gnumake
-    #gnuplot
-    #gpp
-    #graphviz
-    #gradle
-    #htmlq
-    #jdk
-    ##jdk11
-    ##jdk8
-    #jetbrains.idea-community
-    #jre
-    #jq
-    #kotlin
-    #lazygit
-    ##libmpc
-    #m4
-    ##mpfr
-    #nasm
-    #open-watcom-bin
-    ##open-watcom-v2
-    #pandoc
-    #patch
-    #plantuml
-    #python311
-    #python311Packages.pip
-    #racket
-    #regina
-    #rnix-lsp
-    #ruby
-    #rubyPackages.nokogiri
-    #rustc
-    #shellcheck
-    #tokei
-    #vlang
-    #x16-emulator
-    #x16-rom
-    #yq
-    #zlib
+    # development
+    acme
+    adb-sync
+    android-tools
+    android-udev-rules
+    binutils
+    binutils-ia16
+    bison
+    cc65
+    ccache
+    clang
+    cmake
+    ctags
+    djgpp_i686
+    flex
+    fpc
+    gcc
+    gcc-ia16
+    github-desktop
+    glibc
+    #gmp
+    gnumake
+    gnuplot
+    gpp
+    graphviz
+    gradle
+    htmlq
+    jdk
+    #jdk11
+    #jdk8
+    jetbrains.idea-community
+    jre
+    jq
+    kotlin
+    lazygit
+    #libmpc
+    m4
+    #mpfr
+    nasm
+    open-watcom-bin
+    #open-watcom-v2
+    pandoc
+    patch
+    plantuml
+    python311
+    python311Packages.pip
+    racket
+    regina
+    rnix-lsp
+    ruby
+    rubyPackages.nokogiri
+    rustc
+    shellcheck
+    tokei
+    vlang
+    x16-emulator
+    x16-rom
+    yq
+    zlib
 
     # zsh
     antibody
@@ -973,8 +973,8 @@
     sl
     tty-clock
 
-    ## latex
-    #texlive.combined.scheme-full
+    # latex
+    texlive.combined.scheme-full
 
     # xscreensaver
     xscreensaver
@@ -983,31 +983,31 @@
     xmountains
     xplanet
 
-    ## games
-    #alephone
-    ##alephone-apotheosis-x
-    #alephone-durandal
-    #alephone-eternal
-    #alephone-evil
-    #alephone-infinity
-    #alephone-marathon
-    #alephone-pathways-into-darkness
-    #alephone-pheonix
-    #alephone-red
-    #alephone-rubicon-x
-    ##alephone-yuge
-    #bsdgames
-    #eidolon
-    #flare
-    #gamemode
-    #lutris
-    #pingus
-    #playonlinux
-    #proton-caller
-    #protontricks
-    #pysolfc
-    #steam
-    #steam-tui
+    # games
+    alephone
+    #alephone-apotheosis-x
+    alephone-durandal
+    alephone-eternal
+    alephone-evil
+    alephone-infinity
+    alephone-marathon
+    alephone-pathways-into-darkness
+    alephone-pheonix
+    alephone-red
+    alephone-rubicon-x
+    #alephone-yuge
+    bsdgames
+    eidolon
+    flare
+    gamemode
+    lutris
+    pingus
+    playonlinux
+    proton-caller
+    protontricks
+    pysolfc
+    steam
+    steam-tui
   ];
 
   # copy nixos configuration on rebuild
