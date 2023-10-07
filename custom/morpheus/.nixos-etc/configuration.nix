@@ -40,6 +40,11 @@
 
   # standard settings
 
+  # sysctl settings
+  boot.kernel.sysctl = {
+    "vm.swappiness" = 0;
+  };
+
   # nix settings
   nix.settings = {
     experimental-features = [

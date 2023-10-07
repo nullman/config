@@ -39,7 +39,7 @@
   # '';
 
   # networking
-  networking.hostName = "tank";
+  networking.hostName = "dozer";
   networking.networkmanager.enable = true;
 
   # standard settings
