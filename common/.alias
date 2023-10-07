@@ -2731,9 +2731,10 @@ alias nixrs="
     sudo -i nixos-rebuild switch
 
     # link downloadhelper coapp for firefox
-    dir=\$(nix-store -q -R /run/current-system | grep vdhcoapp)
-    src=\${dir}/lib/mozilla/native-messaging-hosts/net.downloadhelper.coapp.json
-    [[ -d \${dir} ]] && ln -s -f \${src} \${HOME}/.mozilla/native-messaging-hosts/"
+    dstdir=\${HOME}/.mozilla/native-messaging-hosts/
+    srcdir=\$(nix-store -q -R /run/current-system | grep vdhcoapp)
+    srcfile=\${srcdir}/lib/mozilla/native-messaging-hosts/net.downloadhelper.coapp.json
+    [[ -d \${srcdir} ]] && [[ -d \${dstdir}]] && ln -s -f \${srcfile} \${dstdir}"
 #        nixcl                   nix-channel list
 alias nixcl="sudo -i nix-channel --list"
 #        nixcu                   nix-channel update
