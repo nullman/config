@@ -8,9 +8,6 @@
 
 { config, pkgs, ... }:
 
-let
-  nix-gaming = import (builtins.fetchTarball "https://github.com/fufexan/nix-gaming/archive/master.tar.gz");
-in
 {
   # imports
   imports = [
@@ -551,8 +548,6 @@ in
 
   # packages
   environment.systemPackages = with pkgs; [
-    nix-gaming.packages.${pkgs.hostPlatform.system}.proton-ge
-
     # system
     acpi
     alacritty
