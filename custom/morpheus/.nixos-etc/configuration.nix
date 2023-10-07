@@ -22,24 +22,20 @@
     #<home-manager/nixos>
   ];
 
-  # systemd-boot EFI boot loader
+  # grub MBR boot loader
   boot.loader = {
-    systemd-boot = {
+    grub = {
       enable = true;
+      enableCryptodisk = true;
       configurationLimit = 20;
+      device = "/dev/sda";
+      useOSProber = true;
     };
-    efi.canTouchEfiVariables = true;
   };
   fileSystems."/".options = [ "noatime" ];
 
-  # # mdadm.conf
-  # environment.etc."mdadm.conf".text = ''
-  #   ARRAY /dev/md0 metadata=1.0 name=archiso:0 UUID=764b3bea:1aad3e88:5543f650:bd7314d2
-  #   ARRAY /dev/md1 metadata=1.2 name=archiso:1 UUID=dc0e0617:70216ae6:c8af2052:5e730003
-  # '';
-
   # networking
-  networking.hostName = "tank";
+  networking.hostName = "morpheus";
   networking.networkmanager.enable = true;
 
   # standard settings
@@ -58,6 +54,8 @@
     joypixels.acceptLicense = true;
     permittedInsecurePackages = [
       "electron-12.2.3"
+      "openssl-1.1.1u"
+      "openssl-1.1.1v"
       "openssl-1.1.1w"
     ];
     packageOverrides = pkgs: {
@@ -387,8 +385,8 @@
     };
   };
 
-  ## openssh server
-  #services.openssh.enable = true;
+  # openssh server
+  services.openssh.enable = true;
 
   ## open firewall ports
   #networking.firewall = {

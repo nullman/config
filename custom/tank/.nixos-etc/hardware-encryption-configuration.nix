@@ -10,7 +10,7 @@
   #   '';
   # };
 
- # luks
+  # luks
   boot.initrd.luks.devices = {
     root0 = {
       device = "/dev/disk/by-uuid/0bbb9f6c-b91c-48e5-aaef-9bfb3785dc0e";
