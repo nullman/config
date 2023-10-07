@@ -762,6 +762,7 @@
     fontpreview
     fontforge-gtk
     gcal
+    glmark2
     gnome.file-roller
     gnome-frog
     gparted

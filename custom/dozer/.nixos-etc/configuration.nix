@@ -8,6 +8,9 @@
 
 { config, pkgs, ... }:
 
+#let
+#  nix-gaming = import (builtins.fetchTarball "https://github.com/fufexan/nix-gaming/archive/master.tar.gz");
+#in {
 {
   # imports
   imports = [
@@ -548,6 +551,8 @@
 
   # packages
   environment.systemPackages = with pkgs; [
+    #nix-gaming.packages.${pkgs.hostPlatform.system}.proton-ge
+
     # system
     acpi
     alacritty
@@ -763,6 +768,7 @@
     fontpreview
     fontforge-gtk
     gcal
+    glmark2
     gnome.file-roller
     gnome-frog
     gparted
@@ -1003,6 +1009,7 @@
     bsdgames
     eidolon
     flare
+    gamemode
     lutris
     pingus
     playonlinux
