@@ -6,22 +6,22 @@
 
 alacritty
 emacs
-#thunderbird
 betterbird
+#thunderbird
 firefox
-#chromium
+##chromium
 thunar
-#pcmanfm
-#spacefm
+##pcmanfm
+##spacefm
 slack
 discord
-#tootle
+##tootle
 element-desktop
 dev.geopjr.Tuba
 gajim
-#pidgin
-#idea
-#lbry
+##pidgin
+##idea
+##lbry
 #syncterm
 
 #===============================================================================

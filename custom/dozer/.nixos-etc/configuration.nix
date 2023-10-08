@@ -61,9 +61,11 @@
   # package settings
   nixpkgs.config = {
     allowUnfree = true;
+    nvidia.acceptLicense = true;
     joypixels.acceptLicense = true;
     permittedInsecurePackages = [
       "electron-12.2.3"
+      "electron-19.1.9"
       "openssl-1.1.1u"
       "openssl-1.1.1v"
       "openssl-1.1.1w"
@@ -355,6 +357,55 @@
       };
     };
   };
+  ## fonts
+  #fonts = {
+  #  fontDir.enable = true;
+  #  packages = with pkgs; [
+  #    anonymousPro
+  #    #cantarell-fonts
+  #    corefonts
+  #    #dejavu_fonts
+  #    #dina-font
+  #    fira-code
+  #    fira-code-symbols
+  #    font-awesome
+  #    #freefont_ttf
+  #    #google-fonts
+  #    hack-font
+  #    #joypixels
+  #    #liberation_ttf
+  #    #mononoki
+  #    #mplus-outline-fonts.githubRelease
+  #    nerdfonts
+  #    noto-fonts
+  #    noto-fonts-emoji
+  #    #proggyfonts
+  #    source-han-mono
+  #    source-han-sans
+  #    source-han-serif
+  #    terminus-nerdfont
+  #    terminus_font_ttf
+  #    #ubuntu_font_family
+  #    #unifont
+  #    #xorg.fontadobe100dpi
+  #    #xorg.fontadobe75dpi
+  #    #xorg.fontbh100dpi
+  #    #xorg.fontbh75dpi
+  #    #xorg.fontbhtype1
+  #    #xorg.fontmiscmisc
+  #  ];
+  #  fontconfig = {
+  #    enable = true;
+  #    defaultFonts = {
+  #      #monospace = ["Hack LG M Regular Nerd Font Complete Mono" ];
+  #      #monospace = ["Meslo LG M Regular Nerd Font Complete Mono" ];
+  #      #monospace = ["Hack Nerd Font Mono" ];
+  #      monospace = ["MesloLGS Nerd Font Mono" ];
+  #      serif = [ "Noto Serif" "Source Han Serif" ];
+  #      sansSerif = [ "Noto Sans" "Source Han Sans" ];
+  #    };
+  #  };
+  #};
 
   # printing
   services = {
@@ -819,7 +870,7 @@
     cool-retro-term
     ddgr
     element
-    exa
+    eza
     f3
     fd
     frogmouth
