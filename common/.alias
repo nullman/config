@@ -2735,6 +2735,8 @@ alias nixrs="
     srcdir=\$(nix-store -q -R /run/current-system | grep vdhcoapp)
     srcfile=\${srcdir}/lib/mozilla/native-messaging-hosts/net.downloadhelper.coapp.json
     [[ -d \${srcdir} ]] && [[ -d \${dstdir} ]] && ln -s -f \${srcfile} \${dstdir}"
+#        nixrsu                  nixos-rebuild switch --upgrade
+alias nixrsu="sudo -i nixos-rebuild switch --upgrade"
 #        nixcl                   nix-channel list
 alias nixcl="sudo -i nix-channel --list"
 #        nixcu                   nix-channel update
