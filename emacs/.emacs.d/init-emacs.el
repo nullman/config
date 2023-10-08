@@ -2258,7 +2258,8 @@ KEYMAP defaults to `override-global-map'."
              ("h" . insert-password-phrase)
              ("2" . insert-password-20)
              ("3" . insert-password-phrase-3-space)
-             ("6" . insert-password-phrase-6-space))
+             ("6" . insert-password-phrase-6-space)
+             ("-" . insert-password-phrase-6-hyphen-capitalize))
 
   ;; miscellaneous commands
   (bind-keys :map space-map
@@ -8381,7 +8382,7 @@ clipboard."
 
 (init-message 3 "Functions: General Functions: password-phrase")
 
-(defun password-phrase (count &optional type)
+(defun password-phrase (count &optional type capitalized)
   "Return generated password phrase containing COUNT words.
 
 TYPE (defaults to 'phrase):
@@ -8389,7 +8390,9 @@ TYPE (defaults to 'phrase):
   'phrase   \"threewordphrase\"
   'space    \"three word phrase\"
   'hyphen   \"three-word-phrase\"
-  'list     (\"three\" \"word\" \"phrase\")"
+  'list     (\"three\" \"word\" \"phrase\")
+
+If CAPITALIZED is non-nil, capitalize each word."
   (interactive
    (list
     (read-number "Count: ")
@@ -8606,21 +8609,23 @@ TYPE (defaults to 'phrase):
          (size (length words))
          phrase)
     (while (< (length phrase) count)
-      (cl-pushnew (elt words (random size)) phrase))
+      (if capitalize
+          (cl-pushnew (capitalize (elt words (random size))) phrase)
+        (cl-pushnew (elt words (random size)) phrase)))
     (cl-case type
       ('list (format "%S" phrase))
       ('space (cl-reduce (lambda (x y) (concat x " " y)) phrase))
       ('hyphen (cl-reduce (lambda (x y) (concat x "-" y)) phrase))
       (t (cl-reduce (lambda (x y) (concat x y)) phrase)))))
 
-(defun password-phrase-to-clipboard (count &optional type)
-  "Call `password-phrase' with COUNT and TYPE and put the result on
-the clipboard."
+(defun password-phrase-to-clipboard (count &optional type capitalize)
+  "Call `password-phrase' with COUNT, TYPE, and CAPITALIZE and put
+the result on the clipboard."
   (interactive
    (list
     (read-number "Count: ")
     (intern (completing-read "Type: " '("phrase" "space" "hyphen" "list") nil t))))
-  (let ((password (password-phrase count type)))
+  (let ((password (password-phrase count type capitalize)))
     (with-temp-buffer
       (insert password)
       (clipboard-kill-region (point-min) (point-max)))
@@ -8658,11 +8663,23 @@ of 'hyphen."
   (interactive "*")
   (password-phrase-to-clipboard 3 'hyphen))
 
+(defun password-phrase-to-clipboard-3-hyphen-capitalize ()
+  "Call `password-phrase-to-clipboard' with a COUNT of 3 and a TYPE
+of 'hyphen, with capitalized words."
+  (interactive "*")
+  (password-phrase-to-clipboard 3 'hyphen :capitalize))
+
 (defun password-phrase-to-clipboard-6-hyphen ()
   "Call `password-phrase-to-clipboard' with a COUNT of 6 and a TYPE
 of 'hyphen."
   (interactive "*")
   (password-phrase-to-clipboard 6 'hyphen))
+
+(defun password-phrase-to-clipboard-6-hyphen-capitalize ()
+  "Call `password-phrase-to-clipboard' with a COUNT of 6 a TYPE
+of 'hyphen, with capitalized words."
+  (interactive "*")
+  (password-phrase-to-clipboard 6 'hyphen :capitalize))
 ;; password-phrase:1 ends here
 
 ;; [[file:init-emacs.org::#functions-emacs-functions][Emacs Functions:1]]
@@ -12027,27 +12044,39 @@ result."
 
 (defun insert-password-phrase-3-space ()
   "Call `password-phrase-to-clipboard' with a COUNT of 3 and a TYPE
-of 'space and insert the result."
+of 'space, and insert the result."
   (interactive "*")
   (insert (password-phrase-to-clipboard 3 'space)))
 
 (defun insert-password-phrase-6-space ()
   "Call `password-phrase-to-clipboard' with a COUNT of 6 and a TYPE
-of 'space and insert the result."
+of 'space, and insert the result."
   (interactive "*")
   (insert (password-phrase-to-clipboard 6 'space)))
 
 (defun insert-password-phrase-3-hyphen ()
   "Call `password-phrase-to-clipboard' with a COUNT of 3 and a TYPE
-of 'hyphen and insert the result."
+of 'hyphen, and insert the result."
   (interactive "*")
   (insert (password-phrase-to-clipboard 3 'hyphen)))
 
+(defun insert-password-phrase-3-hyphen-capitalize ()
+  "Call `password-phrase-to-clipboard' with a COUNT of 3 and a TYPE
+of 'hyphen with capitalized words, and insert the result."
+  (interactive "*")
+  (insert (password-phrase-to-clipboard 3 'hyphen :capitalize)))
+
 (defun insert-password-phrase-6-hyphen ()
   "Call `password-phrase-to-clipboard' with a COUNT of 6 and a TYPE
-of 'hyphen and insert the result."
+of 'hyphen, and insert the result."
   (interactive "*")
   (insert (password-phrase-to-clipboard 6 'hyphen)))
+
+(defun insert-password-phrase-6-hyphen-capitalize ()
+  "Call `password-phrase-to-clipboard' with a COUNT of 6 and a TYPE
+of 'hyphen with capitalized words, and insert the result."
+  (interactive "*")
+  (insert (password-phrase-to-clipboard 6 'hyphen :capitalize)))
 ;; insert-password-phrase:1 ends here
 
 ;; [[file:init-emacs.org::#functions-text-inserting-functions-insert-license-gpl][insert-license-gpl:1]]
