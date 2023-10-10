@@ -1187,7 +1187,7 @@ pressed. -->
         <command>notify-send --expire-time=2000 'Reconfiguring Tint'</command>
       </action>
       <action name="Execute">
-        <command>pkill -SIGUSR1 -x -f -u ${USER} $(realpath $(which tint2))</command>
+        <command>pkill -SIGUSR1 -u ${USER} tint2</command>
       </action>
     </keybind>
     <keybind key="mod5-S-t">
@@ -1195,7 +1195,7 @@ pressed. -->
         <command>notify-send --expire-time=2000 'Reconfiguring Tint'</command>
       </action>
       <action name="Execute">
-        <command>pkill -SIGUSR1 -x -f -u ${USER} $(realpath $(which tint2))</command>
+        <command>pkill -SIGUSR1 -u ${USER} tint2</command>
       </action>
     </keybind>
     <!-- Exit Menu -->
@@ -2077,7 +2077,7 @@ type="the window's _OB_APP_TYPE property (see obxprob)..
   </applications>
 </openbox_config>
 <!--
-    #===============================================================================
-    # End of File
-    #===============================================================================
+#===============================================================================
+# End of File
+#===============================================================================
 -->

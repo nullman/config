@@ -858,17 +858,17 @@ decrypt() {
 #
 #        ktg                     kill -SIGTERM (friendly) with grep
 ktg() {
-    pkill -SIGTERM -f -i "$1"
+    pkill -SIGTERM -i "$1"
 }
 #        kkg                     kill -SIGKILL (forced) with grep
 kkg() {
-    pkill -SIGTERM -f -i "$1"
+    pkill -SIGTERM -i "$1"
     sleep 1
-    pkill -SIGKILL -f -i "$1"
+    pkill -SIGKILL -i "$1"
 }
 #        khg                     kill -HUP (restart) with grep
 khg() {
-    pkill -SIGHUP -f -i "$1"
+    pkill -SIGHUP -i "$1"
 }
 
 #

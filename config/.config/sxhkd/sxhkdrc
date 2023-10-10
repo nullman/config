@@ -239,11 +239,11 @@ super + shift + Print
 
 # reload sxhkd
 super + shift + s
-    pkill -SIGUSR1 -x -f -u ${USER} $(realpath $(which sxhkd)) && notify-send --expire-time=2000 'Reloading SXHKD'
+    pkill -SIGUSR1 -u ${USER} sxhkd && notify-send --expire-time=2000 'Reloading SXHKD'
 
 # reload tint2
 super + shift + t
-    ((pkill -x -f -u ${USER} $(realpath $(which tint2)) ; tint2 && sleep 1 && \
+    ((pkill -u ${USER} tint2 ; tint2 && sleep 1 && \
     xdo below -t $(xdo id -n root) $(xdo id -N tint2)) &) && \
     notify-send --expire-time=2000 'Reloading Tint'
 

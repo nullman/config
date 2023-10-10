@@ -279,11 +279,11 @@ alias debug-on="export LD_DEBUG=files"
 #        debug-off               turn off files (library modules) debugging info
 alias debug-off="export LD_DEBUG="
 #!#        alsa-reset            restart alsa sound
-#!alias alsa-reset="sudo pkill -x -f \$(realpath \$(which pulseaudio)) ; sudo alsa force-reload"
+#!alias alsa-reset="sudo pkill -u \${USER} pulseaudio ; sudo alsa force-reload"
 #!#        alsa-reset            restart alsa sound
 #!alias alsa-reset="sudo alsa force-reload"
 #        pulse-reset             restart pulseaudio sound
-alias pulse-reset="pkill -x -f \$(realpath \$(which pulseaudio)) ; sleep 2 ; pulseaudio --daemonize=no &"
+alias pulse-reset="pkill -u \${USER} pulseaudio ; sleep 2 ; pulseaudio --daemonize=no &"
 #        ver                     distribution version
 alias ver="lsb_release -a"
 #        kernel                  kernel version
@@ -307,14 +307,14 @@ alias fdisk-list="sudo fdisk -l"
 #        dd-sync                 sudo dd bs=4M conv=fdatasync status=progress
 alias dd-sync="sudo dd bs=4M conv=fdatasync status=progress"
 #        sxhkdrs                 sxhkd restart
-alias sxhkdrs="pkill -SIGUSR1 -x -f -u \${USER} \$(realpath \$(which sxhkd))"
+alias sxhkdrs="pkill -SIGUSR1 -u \${USER} sxhkd"
 #        tint2rs                 tint2 restart
-alias tint2rs="(pkill -x -f -u \${USER} \$(realpath \$(which tint2)) ; tint2 && sleep 1 && \
+alias tint2rs="(pkill -u \${USER} tint2 ; tint2 && sleep 1 && \
     xdo below -t \$(xdo id -n root) \$(xdo id -N Tint2)) &"
 #        ewwrs                   eww restart
 alias ewwrs="(eww --restart open bar && sleep 1 && \
     xdo below -t \$(xdo id -n root) \$(xdo id -N eww-bar))"
-#!alias ewwrs="(pkill -x -f -u \${USER} \$(realpath \$(which eww)) ; eww --restart open bar && sleep 1 && \
+#!alias ewwrs="(pkill -u \${USER} eww ; eww --restart open bar && sleep 1 && \
 #        xrdb-list               list custom .Xresource settings
 alias xrdb-list="xrdb -query -all"
 #        xrdb-merge-home         merge ~/.Xresource settings into xrdb
@@ -1880,10 +1880,10 @@ alias imap-on="rm -f \${HOME}/.noofflineimap >/dev/null 2>&1"
 #        imap-off                turn offlineimap off
 alias imap-off="
     touch \${HOME}/.noofflineimap
-    sudo pkill -SIGTERM -x -f \$(realpath \$(which offlineimap))"
+    sudo pkill -SIGTERM -u \${USER} offlineimap"
 #! alias imap-off="touch \${HOME}/.noofflineimap >/dev/null 2>&1"
 #        imap-restart            restart offlineimap
-alias imap-restart="sudo pkill -SIGTERM -x -f \$(realpath \$(which offlineimap))"
+alias imap-restart="sudo pkill -SIGTERM -u \${USER} offlineimap"
 #        offlineimap-once        sync normal imap accounts once
 alias offlineimap-once="offlineimap -o -u ttyui"
 #        offlineimap-home        sync home imap account
