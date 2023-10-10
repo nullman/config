@@ -1986,6 +1986,7 @@ arch-initialize() {
         "arch-sysctl"
         "arch-systemd"
         #"arch-locale"
+        "arch-sysctl-conf"
         "arch-package-managers"
     )
 

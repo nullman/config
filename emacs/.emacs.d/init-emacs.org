@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2023-10-08 12:21 (kyle)>
+  #+TIMESTAMP: <2023-10-09 19:10 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -13856,7 +13856,7 @@
             (when line
               (goto-char (point-min))
               (forward-line (1- line)))
-            (let ((line (buffer-substring (line-beginning-position) (line-end-position))))
+            (let ((line (buffer-substring-no-properties (line-beginning-position) (line-end-position))))
               (when comment
                 (comment-region (line-beginning-position) (line-end-position)))
               (when (and (fboundp 'org-at-table-p) (org-at-table-p))
@@ -13910,7 +13910,7 @@
             (forward-line 1)
             (while (re-search-forward "[0-9]+" (line-end-position) :noerror)
               (let ((num (string-to-number
-                          (buffer-substring (match-beginning 0) (match-end 0)))))
+                          (buffer-substring-no-properties (match-beginning 0) (match-end 0)))))
                 (replace-match (int-to-string (1+ num)))))
             (move-to-column col)))
       #+END_SRC
@@ -15729,8 +15729,9 @@
         ;;   "Replace the file name at point with the true path."
         ;;   (interactive)
         ;;   (forward-line 0)
-        ;;   (let* ((file (buffer-substring (point)
-        ;;                                 (save-mark-and-excursion (end-of-line) (point))))
+        ;;   (let* ((file (buffer-substring-no-properties
+        ;;                 (point)
+        ;;                 (save-mark-and-excursion (end-of-line) (point))))
         ;;         (file-dir (file-name-directory file))
         ;;         (file-true-dir (file-truename file-dir))
         ;;         (file-name (file-name-nondirectory file)))
@@ -20090,7 +20091,7 @@
                     (end-of-line)
                     (setq end (point))
                     ;; copy block to temp buffer
-                    (setq block (buffer-substring beg end))
+                    (setq block (buffer-substring-no-properties beg end))
                     ;; following two lines used for debugging
                     ;;(save-current-buffer
                     ;;  (set-buffer (get-buffer-create "*temp*"))
@@ -20124,7 +20125,7 @@
                         (insert " ")
                         (forward-line 1))
                       ;; copy encoded block
-                      (setq block (buffer-substring (point-min) (point-max))))
+                      (setq block (buffer-substring-no-properties (point-min) (point-max))))
                     ;; delete attr data
                     (goto-char attr)
                     (delete-region (point) (line-end-position))
@@ -25345,7 +25346,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
                                          (end (match-end group))
                                          (replacement-word (lorem-word (match-string group))))
                                     (when replacement-word
-                                      (setf (buffer-substring beg end) replacement-word))))
+                                      (setf (buffer-substring-no-properties beg end) replacement-word))))
                    (lorem-word (word)
                                (if-let* ((matches (lorem-matches (length word))))
                                    (apply-case word (downcase (seq-random-elt matches)))
@@ -27534,7 +27535,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;;             (insert-file-contents file)
       ;;             (goto-char (point-min))
       ;;             (while (not (eobp))
-      ;;               (puthash (buffer-substring (line-beginning-position) (line-end-position)) rating song-ratings)
+      ;;               (puthash (buffer-substring-no-properties (line-beginning-position) (line-end-position)) rating song-ratings)
       ;;               (forward-line 1)))))
       ;;       (save-mark-and-excursion
       ;;         (with-current-buffer simple-mpc-current-playlist-buffer-name
@@ -32480,7 +32481,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         ;;   (save-mark-and-excursion
         ;;     (save-match-data
         ;;       (re-search-forward html-outline-level)
-        ;;       (let ((tag (buffer-substring (match-beginning 1) (match-end 1))))
+        ;;       (let ((tag (buffer-substring-no-properties (match-beginning 1) (match-end 1))))
         ;;         (if (eq (length tag) 2)
         ;;             (- (aref tag 1) ?0)
         ;;           0)))))
