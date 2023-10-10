@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2023-10-09 19:10 (kyle)>
+  #+TIMESTAMP: <2023-10-09 23:41 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -2416,6 +2416,7 @@
         (use-package desktop
           :straight (:type built-in)
           :custom
+          (desktop-dirname user-emacs-directory)
           (desktop-save 'ask-if-new)
           (desktop-load-locked-desktop t)
           (desktop-restore-eager 0) ; do not restore any buffers until all modules and modes have loaded
