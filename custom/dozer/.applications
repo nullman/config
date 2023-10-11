@@ -5,7 +5,7 @@
 #===============================================================================
 
 alacritty
-emacs
+#emacs
 #betterbird
 ##thunderbird
 firefox
