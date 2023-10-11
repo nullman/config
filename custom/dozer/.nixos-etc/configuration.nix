@@ -173,6 +173,9 @@
   # shells
   programs.zsh.enable = true;
 
+  # steam
+  programs.steam.enable = true;
+
   # locate
   services.locate = {
     enable = true;

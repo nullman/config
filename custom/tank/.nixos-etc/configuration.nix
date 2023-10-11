@@ -60,9 +60,11 @@
   # package settings
   nixpkgs.config = {
     allowUnfree = true;
+    nvidia.acceptLicense = true;
     joypixels.acceptLicense = true;
     permittedInsecurePackages = [
       "electron-12.2.3"
+      "electron-19.1.9"
       "openssl-1.1.1u"
       "openssl-1.1.1v"
       "openssl-1.1.1w"
@@ -169,6 +171,9 @@
 
   # shells
   programs.zsh.enable = true;
+
+  # steam
+  programs.steam.enable = true;
 
   # locate
   services.locate = {
@@ -819,6 +824,7 @@
     ddgr
     element
     exa
+    #eza
     f3
     fd
     frogmouth
@@ -1003,6 +1009,7 @@
     bsdgames
     eidolon
     flare
+    gamemode
     lutris
     pingus
     playonlinux
