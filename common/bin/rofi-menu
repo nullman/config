@@ -35,16 +35,16 @@ EOF
 # handle no arguments given
 if [[ $# -lt 1 ]] ; then
     menus=(
-        "printf "\t"Term"
-        "󰍹printf "\t"CRT"
-        "printf "\t"DOSBox"
-        "printf "\t"Git"
-        "printf "\t"Paste"
-        "󰆧printf "\t"Qemu"
-        "printf "\t"Rsync"
-        "printf "\t"Sounds"
-        "printf "\t"SSH"
-        "󰛇printf "\t"VNC"
+        "	Term"
+        "󰍹	CRT"
+        "	DOSBox"
+        "	Git"
+        "	Paste"
+        "󰆧	Qemu"
+        "	Rsync"
+        "	Sounds"
+        "	SSH"
+        "󰛇	VNC"
     )
     menu=$(printf "%s\n" "${menus[@]}" | rofi -dmenu -i -p "	Menu")
 else
