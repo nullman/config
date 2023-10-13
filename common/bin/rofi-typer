@@ -16,6 +16,8 @@ set -euo pipefail
 
 conf="${HOME}/.rofi-typer"
 
+prefixcode=47      # ;
+
 keycode[32]=65     # [Space]
 keycode[33]=50:10  # !
 keycode[34]=50:48  # "
@@ -125,7 +127,7 @@ EOF
 # handle arguments
 if [[ $# -lt 1 ]] ; then
     # if no arguments given, prompt user with selector for key
-    (sleep 0.1 ; xdo key_press -k 47 ; xdo key_release -k 47) &
+    (sleep 0.1 ; xdo key_press -k ${prefixcode} ; xdo key_release -k ${prefixcode}) &
     key=$(cat "${conf}" | rofi -dmenu -i -p "󰪛	Key / Value")
     key=$(echo "${key}" | sed 's/ *=.*$//')
 else
