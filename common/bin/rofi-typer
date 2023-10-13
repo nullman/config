@@ -1,0 +1,161 @@
+#!/usr/bin/env bash
+#===============================================================================
+# rofi-typer
+#
+# Present a menu of things to type in the active window.
+#
+# ~/.rofi-typer must exists with key/value pairs:
+#
+#   key1 = value1
+#   key2 = value2
+#
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
+#===============================================================================
+
+set -euo pipefail
+
+conf="${HOME}/.rofi-typer"
+
+keycode[32]=65     # [Space]
+keycode[33]=50:10  # !
+keycode[34]=50:48  # "
+keycode[35]=50:12  # #
+keycode[36]=50:13  # $
+keycode[37]=50:14  # %
+keycode[38]=50:16  # &
+keycode[39]=50:48  # '
+keycode[40]=50:18  # (
+keycode[41]=50:19  # )
+keycode[42]=50:17  # *
+keycode[43]=50:21  # +
+keycode[44]=59     # ,
+keycode[45]=20     # -
+keycode[46]=60     # .
+keycode[47]=61     # /
+keycode[48]=19     # 0
+keycode[49]=10     # 1
+keycode[50]=11     # 2
+keycode[51]=12     # 3
+keycode[52]=13     # 4
+keycode[53]=14     # 5
+keycode[54]=15     # 6
+keycode[55]=16     # 7
+keycode[56]=17     # 8
+keycode[57]=18     # 9
+keycode[58]=50:47  # :
+keycode[59]=47     # ;
+keycode[60]=50:59  # <
+keycode[61]=21     # =
+keycode[62]=50:60  # >
+keycode[63]=50:61  # ?
+keycode[64]=50:11  # @
+keycode[65]=50:38  # A
+keycode[66]=50:56  # B
+keycode[67]=50:54  # C
+keycode[68]=50:40  # D
+keycode[69]=50:26  # E
+keycode[70]=50:41  # F
+keycode[71]=50:42  # G
+keycode[72]=50:43  # H
+keycode[73]=50:31  # I
+keycode[74]=50:44  # J
+keycode[75]=50:45  # K
+keycode[76]=50:46  # L
+keycode[77]=50:58  # M
+keycode[78]=50:57  # N
+keycode[79]=50:32  # O
+keycode[80]=50:33  # P
+keycode[81]=50:24  # Q
+keycode[82]=50:27  # R
+keycode[83]=50:39  # S
+keycode[84]=50:28  # T
+keycode[85]=50:30  # U
+keycode[86]=50:55  # V
+keycode[87]=50:25  # W
+keycode[88]=50:53  # X
+keycode[89]=50:29  # Y
+keycode[90]=50:52  # Z
+keycode[91]=34     # [
+keycode[92]=51     # \
+keycode[93]=35     # ]
+keycode[94]=50:15  # ^
+keycode[95]=50:20  # _
+keycode[96]=49     # `
+keycode[97]=38     # a
+keycode[98]=56     # b
+keycode[99]=54     # c
+keycode[100]=40    # d
+keycode[101]=26    # e
+keycode[102]=41    # f
+keycode[103]=42    # g
+keycode[104]=43    # h
+keycode[105]=31    # i
+keycode[106]=44    # j
+keycode[107]=45    # k
+keycode[108]=46    # l
+keycode[109]=58    # m
+keycode[110]=57    # n
+keycode[111]=32    # o
+keycode[112]=33    # p
+keycode[113]=24    # q
+keycode[114]=27    # r
+keycode[115]=39    # s
+keycode[116]=28    # t
+keycode[117]=30    # u
+keycode[118]=55    # v
+keycode[119]=25    # w
+keycode[120]=53    # x
+keycode[121]=29    # y
+keycode[122]=52    # z
+keycode[123]=50:34 # {
+keycode[124]=50:51 # |
+keycode[125]=50:35 # }
+keycode[126]=50:49 # ~
+
+# display usage information
+_usage() {
+    cat <<EOF
+Usage: $(basename "$0") [KEY]
+Present a menu of things to type in the active window.
+KEY is a unique key sequence that maps to a value that is typed.
+Key/value pairs are pulled from ~/.rofi-typer
+EOF
+}
+
+# handle arguments
+if [[ $# -lt 1 ]] ; then
+    # if no arguments given, prompt user with selector for key
+    (sleep 0.1 ; xdo key_press -k 47 ; xdo key_release -k 47) &
+    key=$(cat "${conf}" | rofi -dmenu -i -p "󰪛	Key / Value")
+    key=$(echo "${key}" | sed 's/ *=.*$//')
+else
+    # otherwise, use argument as key
+    key=$1
+fi
+
+# lookup value and type it in active window using xdo
+value=$(grep "^${key} *=" "${conf}" | sed 's/^.*= *//')
+#echo "${key}	${value}"
+for ((x=0; x<${#value}; x++)) ; do
+    ascii=$(printf "%d\n" "'${value:$x:1}")
+    code=${keycode[${ascii}]}
+    if [[ "${#code}" -gt 2 ]] ; then
+        code1="${code:0:2}"
+        code2="${code:3:2}"
+        #echo "${code1} - ${code2}"
+        xdo key_press -k ${code1}
+        xdo key_press -k ${code2}
+        xdo key_release -k ${code2}
+        xdo key_release -k ${code1}
+    else
+        #echo "${code}"
+        xdo key_press -k ${code}
+        xdo key_release -k ${code}
+    fi
+done
+
+exit 0
+
+#===============================================================================
+# End of File
+#===============================================================================
