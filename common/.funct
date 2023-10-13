@@ -1582,7 +1582,7 @@ backup-files() {
 #!                src="$1"
 #!                dest="$2"
 #!                # rsync config files
-#!                files=".alias .alias-work .bashrc .funct .funct-work .menu .menu_work .screenrc .screenrc-bindings .shellrc .shellrc-work .zshrc"
+#!                files=".alias .alias-work .bashrc .funct .funct-work .menu .menu-work .screenrc .screenrc-bindings .shellrc .shellrc-work .zshrc"
 #!                filelist=""
 #!                for file in ${files} ; do
 #!                    filelist="${filelist} ${src}/config/${file}"

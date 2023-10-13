@@ -1,11 +1,11 @@
 #===============================================================================
-# .zsh_plugins
+# .zsh-plugins
 #
 # Antibody Zsh Plugins List
 #
 # Bundle with:
 #
-#   antibody bundle < .zsh_plugins > ~/.zsh-plugins-bundle
+#   antibody bundle < .zsh-plugins > ~/.zsh-plugins-bundle
 #
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
