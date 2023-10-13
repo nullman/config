@@ -9,10 +9,12 @@ System Tools
 | Super |     |      | Shift | h      | Display BSPWM Manual            |
 | Super | Alt |      |       | Space  | Desktop Application Launcher    |
 | Super | Alt |      |       | d      | Program Launcher                |
+| Super | Alt |      |       | a      | Group Application Launcher      |
 | Super | Alt |      |       | Return | Menu Launcher                   |
 | Super | Alt |      |       | w      | Window Selector                 |
 | Super | Alt |      |       | c      | Clipmenu Selector               |
 | Super | Alt |      |       | o      | Emoji Selector                  |
+| Super | Alt |      |       | ;      | Typer Selector                  |
 | Super | Alt |      |       | '      | Paste Selector                  |
 | Super | Alt |      |       | p      | Bitwarden Selector              |
 | Super |     | Ctrl |       | p      | Generate Password               |

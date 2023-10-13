@@ -42,8 +42,9 @@ ${color2}${hr}${color}
 [Super + Shift] + G  ${alignr}Swap Node with First Child
 [Super + Control] + S  ${alignr}Resize and Move Mode
 [Super + Control] + B/E  ${alignr}Balance/Equalize Nodes
-[Super + Alt] + Spc/D/Ret  ${alignr}App/Program/Rofi Launcher
+[Super + Alt] + Spc/D/A/Ret  ${alignr}App/Program/Group/Menu
 [Super + Alt] + W/C/O/P  ${alignr}Window/Clip/Emoji/Bitwarden
+[Super + Alt] + ;/'  ${alignr}Typer/Paste
 [Super + Alt] + \/E  ${alignr}Display Time/Edit with Emacs
 [Super + Alt] + Y/U  ${alignr}Git Sync Home/Doc
 [Super + Alt] + S/X  ${alignr}Start/Lock Screensaver

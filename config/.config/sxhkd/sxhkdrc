@@ -166,6 +166,10 @@ super + alt + c
 super + alt + o
     rofimoji
 
+# typer selector
+super + alt + semicolon
+    ${HOME}/bin/rofi-typer
+
 # paste selector
 super + alt + apostrophe
     ${HOME}/bin/rofi-menu paste
