@@ -62,7 +62,7 @@ zmodload zsh/terminfo
 POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
 
 # plugins
-zp="${HOME}/.zsh_plugins"
+zp="${HOME}/.zsh-plugins"
 zpb="${HOME}/.zsh-plugins-bundle"
 if [[ -f "${zp}" ]] ; then
     # build plugin bundle if needed
