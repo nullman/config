@@ -228,10 +228,10 @@ alias gdmrs="sudo systemctl restart gdm.service"
 alias gnome-shell-restart="DISPLAY=:0 gnome-shell --replace"
 #        lightdm-restart         lightdm restart
 alias lightdm-restart="sudo systemctl restart lightdm.service"
-#        menuw                   menu ~/.menu_work
-alias menuw="menu \${HOME}/.menu_work"
-#        mw                      menu ~/.menu_work
-alias mw="menu \${HOME}/.menu_work"
+#        menuw                   menu ~/.menu-work
+alias menuw="menu \${HOME}/.menu-work"
+#        mw                      menu ~/.menu-work
+alias mw="menu \${HOME}/.menu-work"
 #        find-kernel-mod         find kernel modules
 alias find-kernel-mod="find /lib/modules/\$(uname -r)/ -type f -iname '*.o' -or -iname '*.ko'"
 #        hosts                   cat /etc/hosts
@@ -1251,9 +1251,9 @@ alias chownkr="sudo chown -R kyle:kyle"
 # ckermit
 #
 #        ckermit-m100            ckermit setup to connect to an M100/102/200 connected to ttyUSB0
-alias ckermit-m100="sudo ckermit \${HOME}/.ckermit_m100_connection"
+alias ckermit-m100="sudo ckermit \${HOME}/.ckermit-m100-connection"
 #        ckermit-hp95lx          ckermit setup to connect to an HP95LX connected to ttyUSB0
-alias ckermit-hp95lx="sudo ckermit \${HOME}/.ckermit_hp95lx_connection"
+alias ckermit-hp95lx="sudo ckermit \${HOME}/.ckermit-hp95lx-connection"
 
 #
 # clojure
@@ -1391,8 +1391,8 @@ alias edhos="edit \${HOME}/.hosts_ssmedia"
 alias edkey="edit \${HOME}/.keylaunchrc"
 #        edm                     edit ~/.menu
 alias edm="edit \${HOME}/.menu"
-#        edmw                    edit ~/.menu_work
-alias edmw="edit \${HOME}/.menu_work"
+#        edmw                    edit ~/.menu-work
+alias edmw="edit \${HOME}/.menu-work"
 #        edoff                   edit ~/.offlineimaprc
 alias edoff="edit \${HOME}/.offlineimaprc"
 #!#        edrp                    edit ~/.ratpoisonrc
@@ -1953,10 +1953,10 @@ alias rddf="rdesktop -u kyle -f -z -a16 dozer"
 #        rem                     remind
 alias rem="remind \${HOME}/.reminders | fold -w 72 -s"
 #        rembot                  remind bot
-alias rembot="remind \${HOME}/.reminders_bot | fold -w 72 -s"
+alias rembot="remind \${HOME}/.reminders-bot | fold -w 72 -s"
 #        today                   today in history
 alias today="
-    remind \${HOME}/.reminders_bot | head -c -1 | \
+    remind \${HOME}/.reminders-bot | head -c -1 | \
       sed 's/^Reminders for/Today in history: / ; s/ (today):$// ; /^$/d'"
 #        edrem                   edit .reminder file
 alias edrem="\${EDITOR} \${HOME}/.reminders"
