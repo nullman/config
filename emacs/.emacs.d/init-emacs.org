@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2023-10-15 00:38 (kyle)>
+  #+TIMESTAMP: <2023-10-15 12:57 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -23955,18 +23955,19 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
        (:name "Null Program" :html "https://nullprogram.com/" :rss "https://nullprogram.com/feed/" :tag "dev")
        (:name "LINUX Unplugged" :html "https://linuxunplugged.com/" :rss "https://linuxunplugged.com/rss" :tag "dev")
        (:name "Sam H. Smith (Serenum)" :html "https://samhsmith.com/" :rss "https://samhsmith.com/index.xml" :tag "dev")
-       ;; Vintage/Retro Computing
-       (:name "BYTE Cellar" :html "https://bytecellar.com/" :rss "https://bytecellar.com/feed" :tag "vintage")
-       (:name "Nerd Fail" :html "https://nerd.fail/" :rss "https://nerd.fail/feed/" :tag "vintage")
-       (:name "Retro Computing Roundtable" :html "http://rcrpodcast.com/" :rss "http://rcrpodcast.com/rcrpodcast.rss" :tag "vintage")
-       (:name "Advent of Computing" :html "https://adventofcomputing.libsyn.com/" :rss "https://adventofcomputing.libsyn.com/rss" :tag "vintage")
-       ;;(:name "Lunduke Journal" :html "https://lunduke.substack.com/" :rss "https://lunduke.substack.com/feed" :tag "vintage")
-       (:name "Lunduke Journal" :html "https://lunduke.substack.com/" :rss "https://api.substack.com/feed/podcast/462466.rss" :tag "vintage")
-       (:name "Computer Ads from the Past" :html "https://computeradsfromthepast.substack.com/" :rss "https://computeradsfromthepast.substack.com/feed" :tag "vintage")
-       (:name "Retro Millennial" :html "https://retropunk.substack.com/" :rss "https://retropunk.substack.com/feed" :tag "vintage")
-       (:name "Joshua Stein" :html "https://jcs.org/" :rss "https://jcs.org/rss" :tag "vintage")
-       (:name "Planet m68k" :html "https://m68k.info/" :rss "http://m68k.info/index.xml" :tag "vintage")
-       (:name "Atari Code" :html "https://ataricode.com/" :rss "https://ataricode.com/index.xml" :tag "vintage")
+       ;; Retro Computing
+       (:name "Two Stop Bits" :html "https://twostopbits.com/" :rss "https://twostopbits.com/rss" :tag "retro")
+       (:name "BYTE Cellar" :html "https://bytecellar.com/" :rss "https://bytecellar.com/feed" :tag "retro")
+       (:name "Nerd Fail" :html "https://nerd.fail/" :rss "https://nerd.fail/feed/" :tag "retro")
+       (:name "Retro Computing Roundtable" :html "http://rcrpodcast.com/" :rss "http://rcrpodcast.com/rcrpodcast.rss" :tag "retro")
+       (:name "Advent of Computing" :html "https://adventofcomputing.libsyn.com/" :rss "https://adventofcomputing.libsyn.com/rss" :tag "retro")
+       ;;(:name "Lunduke Journal" :html "https://lunduke.substack.com/" :rss "https://lunduke.substack.com/feed" :tag "retro")
+       (:name "Lunduke Journal" :html "https://lunduke.substack.com/" :rss "https://api.substack.com/feed/podcast/462466.rss" :tag "retro")
+       (:name "Computer Ads from the Past" :html "https://computeradsfromthepast.substack.com/" :rss "https://computeradsfromthepast.substack.com/feed" :tag "retro")
+       (:name "Retro Millennial" :html "https://retropunk.substack.com/" :rss "https://retropunk.substack.com/feed" :tag "retro")
+       (:name "Joshua Stein" :html "https://jcs.org/" :rss "https://jcs.org/rss" :tag "retro")
+       (:name "Planet m68k" :html "https://m68k.info/" :rss "http://m68k.info/index.xml" :tag "retro")
+       (:name "Atari Code" :html "https://ataricode.com/" :rss "https://ataricode.com/index.xml" :tag "retro")
        ;; Other
        ;;(:name "New York Times OPEN Blogs" :html "https://open.blogs.nytimes.com/" :rss "https://open.blogs.nytimes.com/feed/" :tag "blog")
        (:name "XKCD Comic" :html "https://xkcd.com/" :rss "https://xkcd.com/atom.xml" :tag "comic")

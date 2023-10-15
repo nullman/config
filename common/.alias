@@ -27,7 +27,7 @@ config="\${HOME}/$([[ $(uname -o) == 'Haiku' ]] && echo 'haiku-config' || echo '
 #!       terminal
 terminal="alacritty"
 #!       network device
-networkdevice="$(_command ip && ip route get 1.1.1.1 2>/dev/null | awk '{print $5}')"
+networkdevice="$(_command ip && ip route get 192.168.0.1 2>/dev/null | awk '{print $5}')"
 #!       nullwareip
 nullwareip="159.203.165.79"
 #===============================================================================
@@ -594,9 +594,11 @@ alias netdev="echo \"\$(ip route get 1.1.1.1 | awk '{print \$5}')\""
 #        netip                   show ip address of main network device
 alias netip="ifconfig ${networkdevice} | grep 'inet [0-9]' | sed 's/^.*inet // ; s/ .*$//'"
 #        netinfo                 show network info of main network device
-alias netinfo="nmcli device show ${networkdevice}"
+alias netinfo="iwctl device ${networkdevice} show"
+#!alias netinfo="nmcli device show ${networkdevice}"
 #        netdns                  show dns routers of main network device
-alias netdns="nmcli device show ${networkdevice} | grep IP4\.DNS"
+alias netdns="iwctl station ${networkdevice} show | grep 'IPv4 address'"
+#!alias netdns="nmcli device show ${networkdevice} | grep IP4\.DNS"
 #        ns                      netstat
 alias ns="sudo netstat"
 #        nsap                    netstat (all sockets, programs)
@@ -690,24 +692,29 @@ alias traceroute-uswest="traceroute uswest.net"
 alias ipaddress="curl http://httpbin.org/get --silent | jq --raw-output .origin"
 #        icanhazip               display external IP address
 alias icanhazip="curl http://icanhazip.com --silent"
+#!#
+#!# network manager
+#!#
+#!#        nmrs                    network manager restart
+#!alias nmrs="
+#!    sudo systemctl stop NetworkManager
+#!    sudo systemctl stop iwd
+#!    sleep 5s
+#!    sudo systemctl start iwd
+#!    sleep 5s
+#!    sudo systemctl start NetworkManager"
+#!#        nm-nullman              network manager connect to nullman wifi
+#!alias nm-nullman="nmcli -a device wifi connect nullman"
 #
-# network manager
+# iwd
 #
-#        nmrs                    network manager restart
-alias nmrs="
-    sudo systemctl stop NetworkManager
+#        iwrs                    iw restart
+alias iwrs="
     sudo systemctl stop iwd
     sleep 5s
-    sudo systemctl start iwd
-    sleep 5s
-    sudo systemctl start NetworkManager"
-#        nm-nullman              network manager connect to nullman wifi
-alias nm-nullman="nmcli -a device wifi connect nullman"
-#
-# wpa_supplicant
-#
-#        wpa-nullman             wpa connect to nullman wifi
-alias wpa-nullman=""
+    sudo systemctl start iwd"
+#        iw-nullman              iw connect to nullman wifi
+alias iw-nullman="iwctl station device ${networkdevice} connect nullman"
 
 #
 # bluetooth

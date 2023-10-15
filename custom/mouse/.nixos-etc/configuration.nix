@@ -33,10 +33,21 @@
   fileSystems."/".options = [ "noatime" ];
 
   # networking
+  networking = {
+    wireless.iwd.enable = true;
+    networkmanager = {
+      enable = true;
+      wifi.backend = "iwd";
+    };
+  };
   networking.hostName = "mouse";
-  networking.networkmanager.enable = true;
 
   # standard settings
+
+  # sysctl settings
+  boot.kernel.sysctl = {
+    "vm.swappiness" = 0;                  # cat /proc/sys/vm/swappiness
+  };
 
   # nix settings
   nix.settings = {
@@ -49,10 +60,14 @@
   # package settings
   nixpkgs.config = {
     allowUnfree = true;
+    nvidia.acceptLicense = true;
     joypixels.acceptLicense = true;
     permittedInsecurePackages = [
       "electron-12.2.3"
+      "electron-19.1.9"
+      "openssl-1.1.1u"
       "openssl-1.1.1v"
+      "openssl-1.1.1w"
     ];
     packageOverrides = pkgs: {
       nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
@@ -149,13 +164,16 @@
   #   enableSSHSupport = true;
   # };
 
-  # udev
-  services.udev.extraRules = ''
-    ACTION=="add", SUBSYSTEMS=="usb", SUBSYSTEM=="block", ENV{ID_FS_USAGE}=="filesystem", RUN{program}+="${pkgs.systemd}/bin/systemd-mount --no-block --automount=yes --collect $devnode /media"
-  '';
+  # # udev
+  # services.udev.extraRules = ''
+  #   ACTION=="add", SUBSYSTEMS=="usb", SUBSYSTEM=="block", ENV{ID_FS_USAGE}=="filesystem", RUN{program}+="${pkgs.systemd}/bin/systemd-mount --no-block --automount=yes --collect $devnode /media"
+  # '';
 
   # shells
   programs.zsh.enable = true;
+
+  # steam
+  programs.steam.enable = true;
 
   # locate
   services.locate = {
@@ -180,6 +198,13 @@
       "/var/spool"
       "/var/tmp"
     ];
+  };
+
+  # opengl
+  hardware.opengl = {
+    enable = true;
+    driSupport = true;
+    driSupport32Bit = true;
   };
 
   # x11
@@ -321,13 +346,6 @@
       }
     ];
     ensureDefaultPrinter = "Canon-MF210";
-  };
-
-  # opengl
-  hardware.opengl = {
-    enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
   };
 
   ## virtualization
@@ -547,6 +565,7 @@
     light
     lm_sensors
     lsb-release
+    lshw
     lsof
     lynx
     man
@@ -560,6 +579,8 @@
     nfs-utils
     nix-index
     nmap
+    parted
+    pciutils
     pipewire
     pkg-config
     pulseaudio
@@ -707,6 +728,7 @@
 
     ## utilities
     #appimage-run
+    #authy
     #bitwarden
     #easytag
     #etcher
@@ -715,6 +737,7 @@
     #fontpreview
     #fontforge-gtk
     #gcal
+    #glmark2
     #gnome.file-roller
     #gnome-frog
     #gparted
@@ -771,6 +794,7 @@
     ddgr
     element
     exa
+    #eza
     f3
     fd
     frogmouth
@@ -788,6 +812,7 @@
     mtr
     navi
     ncdu
+    ookla-speedtest
     powertop
     procs
     rar
@@ -796,6 +821,7 @@
     sd
     sharutils
     smem
+    speedtest-cli
     sysbench
     sysstat
     sysz
@@ -818,6 +844,7 @@
     firefox
     #firefox-wayland
     gajim
+    google-chrome
     kristall
     magic-wormhole
     ncgopher
@@ -843,6 +870,7 @@
     ## development
     #acme
     #adb-sync
+    #android-studio
     #android-tools
     #android-udev-rules
     #binutils
@@ -952,6 +980,7 @@
     #bsdgames
     #eidolon
     #flare
+    #gamemode
     #lutris
     #pingus
     #playonlinux

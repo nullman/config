@@ -40,8 +40,14 @@
   fileSystems."/".options = [ "noatime" ];
 
   # networking
+  networking = {
+    wireless.iwd.enable = true;
+    #networkmanager = {
+    #  enable = true;
+    #  wifi.backend = "iwd";
+    #};
+  };
   networking.hostName = "dozer";
-  networking.networkmanager.enable = true;
 
   # standard settings
 
@@ -667,6 +673,7 @@
     hyprpaper
     hyprpicker
     i3-gaps
+    iwgtk
     keychain
     lightdm
     lightdm-slick-greeter
