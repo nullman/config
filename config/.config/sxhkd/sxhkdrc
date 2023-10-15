@@ -139,14 +139,14 @@ super + alt + h
 
 # desktop application launcher
 super + alt + space
-    rofi -show combi -modes combi -combi-modes "window,drun"
-    #rofi -modi drun -show drun
+    rofi -modi drun -show drun
+    #rofi -show combi -modes combi -combi-modes "window,drun"
 
 # program launcher
 super + alt + d
     rofi -modi run -show run
 
-# application launcher
+# application group launcher
 super + alt + a
     ${HOME}/bin/application-launcher
 

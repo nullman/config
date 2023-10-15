@@ -900,6 +900,7 @@
     # development
     acme
     adb-sync
+    android-studio
     android-tools
     android-udev-rules
     binutils
