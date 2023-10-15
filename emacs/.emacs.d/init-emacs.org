@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2023-10-11 23:53 (kyle)>
+  #+TIMESTAMP: <2023-10-15 00:38 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -25428,9 +25428,11 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
                     ("C-c C-a" . magit-commit-amend-without-prompt))
         :bind (:map magit-mode-map
                     ("v" . magit-visit-pull-request-url))
-        ;; :custom
+        :custom
         ;; ;; use ivy
         ;; (magit-completing-read-function #'ivy-completing-read)
+        ;; use real dates in log
+        (magit-log-margin '(t "%Y-%m-%d %H:%M " magit-log-margin-width t 18))
         :init (setq magit-last-seen-setup-instructions "1.4.0")
         :config
         (defun magit-toggle-whitespace ()

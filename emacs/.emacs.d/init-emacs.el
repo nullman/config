@@ -16902,9 +16902,11 @@ And the line would be overlaid like:
               ("C-c C-a" . magit-commit-amend-without-prompt))
   :bind (:map magit-mode-map
               ("v" . magit-visit-pull-request-url))
-  ;; :custom
+  :custom
   ;; ;; use ivy
   ;; (magit-completing-read-function #'ivy-completing-read)
+  ;; use real dates in log
+  (magit-log-margin '(t "%Y-%m-%d %H:%M " magit-log-margin-width t 18))
   :init (setq magit-last-seen-setup-instructions "1.4.0")
   :config
   (defun magit-toggle-whitespace ()
