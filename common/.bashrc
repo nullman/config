@@ -12,6 +12,27 @@ _command() {
     command -v "$1" >/dev/null 2>&1
 }
 
+# shell colors
+# shell colors
+export COLOR_DEFAULT="\[\033[0m\]"      # light yellow
+export COLOR_BLACK="\[\033[0;30m\]"
+export COLOR_DARK_GRAY="\[\033[1;30m\]"
+export COLOR_RED="\[\033[0;31m\]"
+export COLOR_LIGHT_RED="\[\033[1;31m\]"
+export COLOR_GREEN="\[\033[0;32m\]"
+export COLOR_LIGHT_GREEN="\[\033[1;32m\]"
+export COLOR_BROWN="\[\033[0;33m\]"
+export COLOR_YELLOW="\[\033[1;33m\]"
+export COLOR_LIGHT_YELLOW="\[\033[0m\]"
+export COLOR_BLUE="\[\033[0;34m\]"
+export COLOR_LIGHT_BLUE="\[\033[1;34m\]"
+export COLOR_PURPLE="\[\033[0;35m\]"
+export COLOR_LIGHT_PURPLE="\[\033[1;35m\]"
+export COLOR_CYAN="\[\033[0;36m\]"
+export COLOR_LIGHT_CYAN="\[\033[1;36m\]"
+export COLOR_LIGHT_GRAY="\[\033[0;37m\]"
+export COLOR_WHITE="\[\033[1;37m\]"
+
 # keep original TERM value for scripts to use
 export REAL_TERM="${TERM}"
 # act like xterm with color support
@@ -38,15 +59,19 @@ export HISTCONTROL="ignoredups"
 export HISTORY_IGNORE="(ls|pwd|history|h|cd|cd -|cd ..|cdd|exit|reboot|sudo reboot)"
 shopt -s histappend    # allow multiple terminals to write to the history file
 
+# enable fzf fuzzy matching
 if [[ "${os}" == "Darwin" ]] ; then
-    # enable fzf fuzzy matching
     [[ -d "/usr/local/opt/fzf/bin" ]] && [[ ! "${PATH}" == */usr/local/opt/fzf/bin* ]] && export PATH="${PATH}:/usr/local/opt/fzf/bin"
-    [[ -f "/usr/local/opt/fzf/shell/completion.bash" ]] && source "/usr/local/opt/fzf/shell/completion.bash" 2>&1
     [[ -f "/usr/local/opt/fzf/shell/key-bindings.bash" ]] && source "/usr/local/opt/fzf/shell/key-bindings.bash" 2>&1
+    [[ -f "/usr/local/opt/fzf/shell/completion.bash" ]] && source "/usr/local/opt/fzf/shell/completion.bash" 2>&1
+elif $(uname -v | grep -q 'NixOS') ; then
+    if _command fzf-share ; then
+        source "$(fzf-share)/key-bindings.bash"
+        source "$(fzf-share)/completion.bash"
+    fi
 else
-    # enable fzf fuzzy matching
-    [[ -f "/usr/share/fzf/completion.bash" ]] && source "/usr/share/fzf/completion.bash" 2>&1
     [[ -f "/usr/share/fzf/key-bindings.bash" ]] && source "/usr/share/fzf/key-bindings.bash" 2>&1
+    [[ -f "/usr/share/fzf/completion.bash" ]] && source "/usr/share/fzf/completion.bash" 2>&1
 fi
 
 # fix home/end keys in screen/tmux
@@ -104,7 +129,7 @@ shopt -s checkwinsize
 [[ -f "${HOME}/.shellrc" ]] && source "${HOME}/.shellrc"
 
 # run bash completion
-[[ -x "/etc/bash-completion" ]] && source "/etc/bash-completion" 2>&1
+[[ -f "/etc/bash-completion" ]] && source "/etc/bash-completion" 2>&1
 
 # perl modules
 #PATH="/home/kyle/perl5/bin${PATH:+:${PATH}}"; export PATH;

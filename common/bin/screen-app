@@ -19,15 +19,15 @@ Launch APPLICATION in a specific screen window.
     mon    zenith               0
     mon    slmon                0
     em     emacs                1
-    1      zsh                  1
-    2      zsh                  2
-    3      zsh                  3
-    4      zsh                  4
-    5      zsh                  5
-    6      zsh                  6
-    7      zsh                  7
-    8      zsh                  8
-    9      zsh                  9
+    1      shell                1
+    2      shell                2
+    3      shell                3
+    4      shell                4
+    5      shell                5
+    6      shell                6
+    7      shell                7
+    8      shell                8
+    9      shell                9
     ifmon  iftop               10
     mail   pine                11
     im     centerim            12
@@ -64,27 +64,27 @@ case "$1" in
     calc|orpie) screen -t calculator 19 orpie ;;
     rpncalc) screen -t calculator 19 rpncalc ;;
     spell|ispell) screen -t spell 20 ispell -a ;;
-    0) screen -t shell 0 zsh ;;
-    1) screen -t shell 1 zsh ;;
-    2) screen -t shell 2 zsh ;;
-    3) screen -t shell 3 zsh ;;
-    4) screen -t shell 4 zsh ;;
-    5) screen -t shell 5 zsh ;;
-    6) screen -t shell 6 zsh ;;
-    7) screen -t shell 7 zsh ;;
-    8) screen -t shell 8 zsh ;;
-    9) screen -t shell 9 zsh ;;
-    10) screen -t shell 10 zsh ;;
-    11) screen -t shell 11 zsh ;;
-    12) screen -t shell 12 zsh ;;
-    13) screen -t shell 13 zsh ;;
-    14) screen -t shell 14 zsh ;;
-    15) screen -t shell 15 zsh ;;
-    16) screen -t shell 16 zsh ;;
-    17) screen -t shell 17 zsh ;;
-    18) screen -t shell 18 zsh ;;
-    19) screen -t shell 19 zsh ;;
-    20) screen -t shell 20 zsh ;;
+    0) screen -t shell 0 ${SHELL} ;;
+    1) screen -t shell 1 ${SHELL} ;;
+    2) screen -t shell 2 ${SHELL} ;;
+    3) screen -t shell 3 ${SHELL} ;;
+    4) screen -t shell 4 ${SHELL} ;;
+    5) screen -t shell 5 ${SHELL} ;;
+    6) screen -t shell 6 ${SHELL} ;;
+    7) screen -t shell 7 ${SHELL} ;;
+    8) screen -t shell 8 ${SHELL} ;;
+    9) screen -t shell 9 ${SHELL} ;;
+    10) screen -t shell 10 ${SHELL} ;;
+    11) screen -t shell 11 ${SHELL} ;;
+    12) screen -t shell 12 ${SHELL} ;;
+    13) screen -t shell 13 ${SHELL} ;;
+    14) screen -t shell 14 ${SHELL} ;;
+    15) screen -t shell 15 ${SHELL} ;;
+    16) screen -t shell 16 ${SHELL} ;;
+    17) screen -t shell 17 ${SHELL} ;;
+    18) screen -t shell 18 ${SHELL} ;;
+    19) screen -t shell 19 ${SHELL} ;;
+    20) screen -t shell 20 ${SHELL} ;;
     apps)
         ${HOME}/bin/screen_app mon
         ${HOME}/bin/screen_app emacs
