@@ -5,7 +5,7 @@
 ;; Author:   Kyle W T Sherman <kylewsherman at gmail dot com>
 ;; Created:  2008-02-12
 ;; Version:  1.0
-;; Keywords: multiple task
+;; Keywords: tools
 ;;
 ;; This file is not part of GNU Emacs.
 ;;
@@ -69,7 +69,7 @@ COMMANDS is a list of commands containing:
   ARGS    is a list of string arguments to pass to PROGRAM.
   BUFFER  is a buffer name to direct the output.
 
-Returned list contains lists of process and timestamps."
+Returned list contains lists of processes and timestamps."
   (let (processes)
     (dolist (command commands)
       (let* ((name (car command))
@@ -132,8 +132,8 @@ be displayed and returned."
         (when (> (length command) 28)
           (setq command (substring command 0 28)))
         (if times
-            (let* ((microsecs (third time-diff))
-                   (total-seconds (+ (* (first time-diff) 65536) (second time-diff)))
+            (let* ((microsecs (caddr time-diff))
+                   (total-seconds (+ (* (car time-diff) 65536) (cadr time-diff)))
                    (hours (floor (/ total-seconds 3600)))
                    (mins (floor (/ (- total-seconds (* hours 3600)) 60)))
                    (secs (- total-seconds (* hours 3600) (* mins 60))))
@@ -156,7 +156,8 @@ be displayed and returned."
 ;; multi task
 ;;;###autoload
 (defun multi-task (commands &optional kill-buffers)
-  "Start COMMANDS asynchronously, report running statistics, and return when commands have completed.
+  "Start COMMANDS asynchronously, report running statistics,
+and return when commands have completed.
 
 COMMANDS is a list of commands containing:
 
@@ -206,6 +207,6 @@ command buffers are killed after they finish running."
 
 ;;; Tests:
 
-;;(multi-task '(("pwd test" "pwd" nil "pwd test") ("ls test" "ls" ("-l" "-a" "/etc") "ls test") ("sleep test" "sleep" ("2s") "sleep test")))
+;;(multi-task '(("pwd test" "pwd" nil "pwd test") ("ls test" "ls" ("-l" "-a" "/etc") "ls test") ("sleep test" "sleep" ("2s") "sleep test")) :kill-buffers)
 
 ;;; multi-task.el ends here

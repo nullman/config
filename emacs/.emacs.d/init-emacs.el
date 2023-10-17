@@ -10854,6 +10854,125 @@ MODE defaults to `major-mode'."
   (list-charset-chars 'unicode-bmp))
 ;; list-charset-unicode:1 ends here
 
+;; [[file:init-emacs.org::#functions-emacs-functions-url-test][url-test:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Emacs Functions: url-test
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Emacs Functions: url-test")
+
+(defun url-test (&optional buffer)
+  "Display a report of testing all URLs in BUFFER.
+
+If BUFFER is nil, use `current-buffer'."
+  (interactive)
+  (let ((max-threads 30)
+        (url-regexp "https?:\/\/\\(www\.\\)?[-a-zA-Z0-9@:%._\+~#=]\\{1,256\\}\.[a-zA-Z0-9()]\\{1,6\\}\\b\\([-a-zA-Z0-9()@:%_\+.~#?&//=]*\\)")
+        (output-buffer (generate-new-buffer "*Test URLs*"))
+        (filename (buffer-file-name (or buffer (current-buffer))))
+        urls
+        failures
+        processes
+        (count 1))
+    ;; populate list of urls
+    (save-mark-and-excursion
+      (when buffer
+        (set-buffer buffer))
+      (goto-char (point-min))
+      (while (re-search-forward url-regexp nil :noerror)
+        (push (list (match-string-no-properties 0)
+                    (line-number-at-pos (match-beginning 0)))
+              urls)))
+    (setq urls (nreverse urls))
+    ;; loop through list of urls
+    (buffer-disable-undo output-buffer)
+    (switch-to-buffer-other-window output-buffer)
+    (while (or urls processes)
+      ;; add background processes until max-threads are running
+      (while (and urls (< (length processes) max-threads))
+        (let* ((bundle (pop urls))
+               (url (car bundle))
+               (name (format "url-test-%d" count))
+               (buffer (concat "*" name "*")))
+          (cl-incf count)
+          (push (list
+                 bundle
+                 (start-process
+                  name
+                  buffer
+                  "curl" "--output" "/dev/null"
+                  "--silent"
+                  "--write-out" "%{http_code}\n"
+                  "--connect-timeout" "10"
+                  "--max-time" "20"
+                  url))
+                processes)))
+      ;; display current processes and their statuses
+      (switch-to-buffer output-buffer)
+      (setq buffer-read-only nil)
+      (erase-buffer)
+      (insert "URL Testing Status")
+      (newline)
+      (newline)
+      (insert "URL                                                                   Status")
+      (newline)
+      (insert "--------------------------------------------------------------------  ------")
+      (newline)
+      (dolist (lst (reverse processes))
+        (let* ((url (caar lst))
+               (process (cadr lst))
+               (status (process-status process)))
+          (when (> (length url) 68)
+            (setq url (substring url 0 68)))
+          (insert (format "%-68s  %S" url status))
+          (newline)))
+      (goto-char (point-min))
+      (setq buffer-read-only t)
+      ;; remove finished processes
+      ;; after drawing them so their status will display before being removed
+      (setq processes
+            (cl-remove-if (lambda (x)
+                            (unless (eq (process-status (cadr x)) 'run)
+                              (let* ((buffer (process-buffer (cadr x)))
+                                     (code (progn
+                                             (set-buffer buffer)
+                                             (goto-char (point-min))
+                                             (string-to-number
+                                              (buffer-substring-no-properties (point-at-bol) (point-at-eol))))))
+                                (when (not (= code 200))
+                                  (push (append (car x) (list code)) failures))
+                                (kill-buffer buffer))
+                              t))
+                          processes))
+      ;; draw screen and wait 0.1 second
+      (sit-for 0.1))
+    ;; display report
+    (switch-to-buffer output-buffer)
+    (setq buffer-read-only nil)
+    (erase-buffer)
+    (insert "URL Testing Results")
+    (newline)
+    (newline)
+    (insert (format "Number of URLs checked: %d" count))
+    (newline)
+    (insert (format "Number of failed URLs: %d" (length failures)))
+    (newline)
+    (newline)
+    (insert "Code  URL")
+    (newline)
+    (insert "----  --------------------------------------------------------------------")
+    (newline)
+    (dolist (lst (reverse failures))
+      (let ((url (car lst))
+            (pos (cadr lst))
+            (code (caddr lst)))
+        (insert (format "\[\[file:%s::%d\]\[%-4d  %s\]\]" filename pos code url))
+        (newline)))
+    (goto-char (point-min))
+    (setq buffer-read-only t)
+    (org-mode)))
+;; url-test:1 ends here
+
 ;; [[file:init-emacs.org::#functions-emacs-grouped-functions][Emacs Grouped Functions:1]]
 ;;------------------------------------------------------------------------------
 ;;; Functions: Emacs Grouped Functions
@@ -14531,36 +14650,6 @@ for 1, 5, 10, 50, 100, 500, and 1,000."
 
 (init-message 2 "Functions: Programs")
 ;; Programs:1 ends here
-
-;; [[file:init-emacs.org::#functions-programs-national-debt][National Debt:1]]
-;;------------------------------------------------------------------------------
-;;;; Functions: Programs: National Debt
-;;------------------------------------------------------------------------------
-
-(init-message 3 "Functions: Programs: National Debt")
-
-(defun national-debt ()
-  "Return the current US national debt."
-  (interactive)
-  (save-current-buffer
-    (let ((buffer (url-retrieve-synchronously "http://brillig.com/debt_clock/"))
-          result)
-      (when buffer
-        (with-current-buffer buffer
-          (goto-char (point-min))
-          (when (re-search-forward "debtiv\.gif.*[Aa][Ll][Tt]=\"\\([^\"]*\\)" nil :noerror)
-            (setq result
-                  (replace-regexp-in-string
-                   "\s+" ""
-                   (buffer-substring-no-properties (match-beginning 1) (match-end 1)))))))
-      (if result
-          (if (called-interactively-p 'any)
-              (message result)
-            (string-to-number
-             (replace-regexp-in-string "," ""
-                                       (replace-regexp-in-string "\\$" "" result))))
-        (message "Error fetching the national debt")))))
-;; National Debt:1 ends here
 
 ;; [[file:init-emacs.org::#functions-programs-flesch-readability-index][Flesch Readability Index:1]]
 ;;------------------------------------------------------------------------------
