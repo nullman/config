@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2023-10-16 23:59 (kyle)>
+  #+TIMESTAMP: <2023-10-17 02:43 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -15998,7 +15998,7 @@
             (while (or urls processes)
               ;; add background processes until max-threads are running
               (while (and urls (< (length processes) max-threads))
-                (let* ((bundle (pop urls))
+                (let* ((bundle (append (pop urls) (list count)))
                        (url (car bundle))
                        (name (format "url-test-%d" count))
                        (buffer (concat "*" name "*")))
@@ -16070,15 +16070,15 @@
             (newline)
             (insert "----  --------------------------------------------------------------------")
             (newline)
-            (dolist (lst (reverse failures))
+            (dolist (lst (sort failures #'(lambda (a b) (< (caddr a) (caddr b)))))
               (let ((url (car lst))
                     (pos (cadr lst))
-                    (code (caddr lst)))
+                    (code (cadddr lst)))
                 (insert (format "\[\[file:%s::%d\]\[%-4d  %s\]\]" filename pos code url))
                 (newline)))
             (goto-char (point-min))
-            (setq buffer-read-only t)
-            (org-mode)))
+            (org-mode)
+            (setq buffer-read-only t)))
       #+END_SRC
 
 *** Emacs Grouped Functions

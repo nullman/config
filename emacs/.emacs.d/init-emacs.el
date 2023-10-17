@@ -10890,7 +10890,7 @@ If BUFFER is nil, use `current-buffer'."
     (while (or urls processes)
       ;; add background processes until max-threads are running
       (while (and urls (< (length processes) max-threads))
-        (let* ((bundle (pop urls))
+        (let* ((bundle (append (pop urls) (list count)))
                (url (car bundle))
                (name (format "url-test-%d" count))
                (buffer (concat "*" name "*")))
@@ -10962,15 +10962,15 @@ If BUFFER is nil, use `current-buffer'."
     (newline)
     (insert "----  --------------------------------------------------------------------")
     (newline)
-    (dolist (lst (reverse failures))
+    (dolist (lst (sort failures #'(lambda (a b) (< (caddr a) (caddr b)))))
       (let ((url (car lst))
             (pos (cadr lst))
-            (code (caddr lst)))
+            (code (cadddr lst)))
         (insert (format "\[\[file:%s::%d\]\[%-4d  %s\]\]" filename pos code url))
         (newline)))
     (goto-char (point-min))
-    (setq buffer-read-only t)
-    (org-mode)))
+    (org-mode)
+    (setq buffer-read-only t)))
 ;; url-test:1 ends here
 
 ;; [[file:init-emacs.org::#functions-emacs-grouped-functions][Emacs Grouped Functions:1]]
