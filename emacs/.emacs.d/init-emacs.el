@@ -10867,14 +10867,15 @@ MODE defaults to `major-mode'."
 If BUFFER is nil, use `current-buffer'."
   (interactive)
   (let ((max-threads 30)
+        (connect-timeout 30)
         (url-regexp "https?:\/\/\\(www\.\\)?[-a-zA-Z0-9@:%._\+~#=]\\{1,256\\}\.[a-zA-Z0-9()]\\{1,6\\}\\b\\([-a-zA-Z0-9()@:%_\+.~#?&//=]*\\)")
         (output-buffer (generate-new-buffer "*Test URLs*"))
         (filename (buffer-file-name (or buffer (current-buffer))))
-        urls
+        bundles
         failures
         processes
         (count 1))
-    ;; populate list of urls
+    ;; populate list of urls in bundles
     (save-mark-and-excursion
       (when buffer
         (set-buffer buffer))
@@ -10882,15 +10883,15 @@ If BUFFER is nil, use `current-buffer'."
       (while (re-search-forward url-regexp nil :noerror)
         (push (list (match-string-no-properties 0)
                     (line-number-at-pos (match-beginning 0)))
-              urls)))
-    (setq urls (nreverse urls))
-    ;; loop through list of urls
+              bundles)))
+    (setq bundles (nreverse bundles))
+    ;; loop through list of bundles
     (buffer-disable-undo output-buffer)
     (switch-to-buffer-other-window output-buffer)
-    (while (or urls processes)
+    (while (or bundles processes)
       ;; add background processes until max-threads are running
-      (while (and urls (< (length processes) max-threads))
-        (let* ((bundle (append (pop urls) (list count)))
+      (while (and bundles (< (length processes) max-threads))
+        (let* ((bundle (append (pop bundles) (list count (current-time))))
                (url (car bundle))
                (name (format "url-test-%d" count))
                (buffer (concat "*" name "*")))
@@ -10903,8 +10904,8 @@ If BUFFER is nil, use `current-buffer'."
                   "curl" "--output" "/dev/null"
                   "--silent"
                   "--write-out" "%{http_code}\n"
-                  "--connect-timeout" "10"
-                  "--max-time" "20"
+                  "--connect-timeout" "30"
+                  "--max-time" "30"
                   url))
                 processes)))
       ;; display current processes and their statuses
@@ -10931,19 +10932,29 @@ If BUFFER is nil, use `current-buffer'."
       ;; remove finished processes
       ;; after drawing them so their status will display before being removed
       (setq processes
-            (cl-remove-if (lambda (x)
-                            (unless (eq (process-status (cadr x)) 'run)
-                              (let* ((buffer (process-buffer (cadr x)))
-                                     (code (progn
-                                             (set-buffer buffer)
-                                             (goto-char (point-min))
-                                             (string-to-number
-                                              (buffer-substring-no-properties (point-at-bol) (point-at-eol))))))
-                                (when (not (= code 200))
-                                  (push (append (car x) (list code)) failures))
-                                (kill-buffer buffer))
-                              t))
-                          processes))
+            (cl-remove-if
+             (lambda (x)
+               (let* ((process (cadr x))
+                      (status (process-status process))
+                      (time (cadddr (car x)))
+                      (time-diff (time-subtract (current-time) time))
+                      (seconds (+ (* (car time-diff) 65536) (cadr time-diff))))
+                 (unless (and (eq status 'run) (< seconds 30))
+                   (let* ((buffer (process-buffer process))
+                          (code (progn
+                                  (set-buffer buffer)
+                                  (goto-char (point-min))
+                                  (string-to-number
+                                   (buffer-substring-no-properties (point-at-bol) (point-at-eol))))))
+                     (when (not (= code 200))
+                       (push (append (reverse (cdr (reverse (car x))))
+                                     (list code)) failures))
+                     ;;(when (not (eq status 'exit))
+                     ;;  (delete-process process))
+                     (delete-process process)
+                     (kill-buffer buffer))
+                   t)))
+             processes))
       ;; draw screen and wait 0.1 second
       (sit-for 0.1))
     ;; display report
