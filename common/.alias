@@ -2756,6 +2756,10 @@ alias nixcl="sudo -i nix-channel --list"
 alias nixcu="sudo -i nix-channel --update"
 #        nixs                    nix package search
 alias nixs="nix search nixpkgs"
+#        nixq                    nix-env --query (installed package search)
+alias nixq="nix-env --query"
+#        nixqa                   nix-env --query --available (package search)
+alias nixqa="nix-env --query --available"
 #        nixf                    nix-locate file search
 alias nixf="nix-locate -w"
 #        nix-store-query         nix-store installed package location query
