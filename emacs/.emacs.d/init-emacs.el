@@ -10854,12 +10854,12 @@ MODE defaults to `major-mode'."
   (list-charset-chars 'unicode-bmp))
 ;; list-charset-unicode:1 ends here
 
-;; [[file:init-emacs.org::#functions-emacs-functions-url-test][url-test:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-url-test-url-test][url-test:1]]
 ;;------------------------------------------------------------------------------
-;;;; Functions: Emacs Functions: url-test
+;;;; Functions: Emacs Functions: url-test: url-test
 ;;------------------------------------------------------------------------------
 
-(init-message 3 "Functions: Emacs Functions: url-test")
+(init-message 4 "Functions: Emacs Functions: url-test: url-test")
 
 (defun url-test (&optional buffer)
   "Display a report of testing all URLs in BUFFER.
@@ -10869,7 +10869,7 @@ If BUFFER is nil, use `current-buffer'."
   (let ((max-threads 30)
         (connect-timeout 30)
         (url-regexp "https?:\/\/\\(www\.\\)?[-a-zA-Z0-9@:%._\+~#=]\\{1,256\\}\.[a-zA-Z0-9()]\\{1,6\\}\\b\\([-a-zA-Z0-9()@:%_\+.~#?&//=]*\\)")
-        (output-buffer (generate-new-buffer "*Test URLs*"))
+        (output-buffer (get-buffer-create "*Test URLs*"))
         (filename (buffer-file-name (or buffer (current-buffer))))
         bundles
         failures
@@ -10885,9 +10885,10 @@ If BUFFER is nil, use `current-buffer'."
                     (line-number-at-pos (match-beginning 0)))
               bundles)))
     (setq bundles (nreverse bundles))
-    ;; loop through list of bundles
-    (buffer-disable-undo output-buffer)
+    ;; setup output-buffer
     (switch-to-buffer-other-window output-buffer)
+    (buffer-disable-undo output-buffer)
+    ;; loop through list of bundles
     (while (or bundles processes)
       ;; add background processes until max-threads are running
       (while (and bundles (< (length processes) max-threads))
@@ -10904,28 +10905,32 @@ If BUFFER is nil, use `current-buffer'."
                   "curl" "--output" "/dev/null"
                   "--silent"
                   "--write-out" "%{http_code}\n"
-                  "--connect-timeout" "30"
-                  "--max-time" "30"
+                  "--connect-timeout" (number-to-string connect-timeout)
+                  "--max-time" (number-to-string connect-timeout)
                   url))
                 processes)))
       ;; display current processes and their statuses
-      (switch-to-buffer output-buffer)
+      (set-buffer output-buffer)
       (setq buffer-read-only nil)
       (erase-buffer)
       (insert "URL Testing Status")
       (newline)
       (newline)
-      (insert "URL                                                                   Status")
+      (insert "URL                                                                   Time")
       (newline)
-      (insert "--------------------------------------------------------------------  ------")
+      (insert "--------------------------------------------------------------------  ---------")
       (newline)
-      (dolist (lst (reverse processes))
-        (let* ((url (caar lst))
-               (process (cadr lst))
-               (status (process-status process)))
+      (dolist (x (reverse processes))
+        (let* ((url (caar x))
+               (process (cadr x))
+               (status (process-status process))
+               (time (cadddr (car x)))
+               (time-diff (time-subtract (current-time) time))
+               (microsecs (caddr time-diff))
+               (secs (+ (* (car time-diff) 65536) (cadr time-diff))))
           (when (> (length url) 68)
             (setq url (substring url 0 68)))
-          (insert (format "%-68s  %S" url status))
+          (insert (format "%-68s  %2d.%d" url secs microsecs))
           (newline)))
       (goto-char (point-min))
       (setq buffer-read-only t)
@@ -10938,8 +10943,8 @@ If BUFFER is nil, use `current-buffer'."
                       (status (process-status process))
                       (time (cadddr (car x)))
                       (time-diff (time-subtract (current-time) time))
-                      (seconds (+ (* (car time-diff) 65536) (cadr time-diff))))
-                 (unless (and (eq status 'run) (< seconds 30))
+                      (secs (+ (* (car time-diff) 65536) (cadr time-diff))))
+                 (unless (and (eq status 'run) (< secs connect-timeout))
                    (let* ((buffer (process-buffer process))
                           (code (progn
                                   (set-buffer buffer)
@@ -10973,16 +10978,59 @@ If BUFFER is nil, use `current-buffer'."
     (newline)
     (insert "----  --------------------------------------------------------------------")
     (newline)
-    (dolist (lst (sort failures #'(lambda (a b) (< (caddr a) (caddr b)))))
-      (let ((url (car lst))
-            (pos (cadr lst))
-            (code (cadddr lst)))
+    (dolist (x (sort failures #'(lambda (a b) (< (caddr a) (caddr b)))))
+      (let ((url (car x))
+            (pos (cadr x))
+            (code (cadddr x)))
         (insert (format "\[\[file:%s::%d\]\[%-4d  %s\]\]" filename pos code url))
         (newline)))
     (goto-char (point-min))
     (org-mode)
     (setq buffer-read-only t)))
 ;; url-test:1 ends here
+
+;; [[file:init-emacs.org::#functions-emacs-functions-url-test-url-test-replace-redirects][url-test-replace-redirects:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Emacs Functions: url-test: url-test-replace-redirects
+;;------------------------------------------------------------------------------
+
+(init-message 4 "Functions: Emacs Functions: url-test: url-test-replace-redirects")
+
+(defun url-test-replace-redirects ()
+  "Replace all 30x redirect URLs (in original buffer) found in a '*Test URLs*' buffer.
+
+This should only be run after `url-test' is run."
+  (interactive)
+  (let ((max-threads 30)
+        (connect-timeout 30)
+        (url-regexp "https?:\/\/\\(www\.\\)?[-a-zA-Z0-9@:%._\+~#=]\\{1,256\\}\.[a-zA-Z0-9()]\\{1,6\\}\\b\\([-a-zA-Z0-9()@:%_\+.~#?&//=]*\\)")
+        (30x-regexp "\\]\\[30[0-9] ")
+        (buffer (get-buffer "*Test URLs*")))
+    (when (not (eq (current-buffer) buffer))
+      (user-error "Must be run from the '*Test URLs*' buffer created by `url-test'."))
+    (save-mark-and-excursion
+      (goto-char (point-min))
+      (while (re-search-forward 30x-regexp nil :noerror)
+        (org-open-at-point)
+        (re-search-forward "^[ \t]*" (point-at-eol))
+        (let* ((url (buffer-substring-no-properties (point) (point-at-eol)))
+               (new-url (with-temp-buffer
+                          (shell-command
+                           (join-strings (list
+                                          "curl" "--output" "/dev/null"
+                                          "--location"
+                                          "--silent"
+                                          "--write-out" "%{url_effective}"
+                                          "--connect-timeout" "30"
+                                          "--max-time" "30"
+                                          url) " "))
+                          (buffer-substring-no-properties (point-at-bol) (point-at-eol)))))
+          (when (and (cl-plusp (length new-url))
+                     (not (string= url new-url)))
+            (delete-region (point) (point-at-eol))
+            (insert new-url)
+            (set-buffer buffer)))))))
+;; url-test-replace-redirects:1 ends here
 
 ;; [[file:init-emacs.org::#functions-emacs-grouped-functions][Emacs Grouped Functions:1]]
 ;;------------------------------------------------------------------------------

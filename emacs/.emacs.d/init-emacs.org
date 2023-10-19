@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2023-10-17 14:45 (kyle)>
+  #+TIMESTAMP: <2023-10-19 16:25 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -15960,137 +15960,198 @@
       :CUSTOM_ID: functions-emacs-functions-url-test
       :END:
 
-      Display a report of testing all URLs in a buffer.
+******* url-test
+        :PROPERTIES:
+        :CUSTOM_ID: functions-emacs-functions-url-test-url-test
+        :END:
 
-      #+BEGIN_SRC emacs-lisp
-        ;;------------------------------------------------------------------------------
-        ;;;; Functions: Emacs Functions: url-test
-        ;;------------------------------------------------------------------------------
+        Display a report of testing all URLs in a buffer.
 
-        (init-message 3 "Functions: Emacs Functions: url-test")
+        #+BEGIN_SRC emacs-lisp
+          ;;------------------------------------------------------------------------------
+          ;;;; Functions: Emacs Functions: url-test: url-test
+          ;;------------------------------------------------------------------------------
 
-        (defun url-test (&optional buffer)
-          "Display a report of testing all URLs in BUFFER.
+          (init-message 4 "Functions: Emacs Functions: url-test: url-test")
 
-        If BUFFER is nil, use `current-buffer'."
-          (interactive)
-          (let ((max-threads 30)
-                (connect-timeout 30)
-                (url-regexp "https?:\/\/\\(www\.\\)?[-a-zA-Z0-9@:%._\+~#=]\\{1,256\\}\.[a-zA-Z0-9()]\\{1,6\\}\\b\\([-a-zA-Z0-9()@:%_\+.~#?&//=]*\\)")
-                (output-buffer (generate-new-buffer "*Test URLs*"))
-                (filename (buffer-file-name (or buffer (current-buffer))))
-                bundles
-                failures
-                processes
-                (count 1))
-            ;; populate list of urls in bundles
-            (save-mark-and-excursion
-              (when buffer
-                (set-buffer buffer))
-              (goto-char (point-min))
-              (while (re-search-forward url-regexp nil :noerror)
-                (push (list (match-string-no-properties 0)
-                            (line-number-at-pos (match-beginning 0)))
-                      bundles)))
-            (setq bundles (nreverse bundles))
-            ;; loop through list of bundles
-            (buffer-disable-undo output-buffer)
-            (switch-to-buffer-other-window output-buffer)
-            (while (or bundles processes)
-              ;; add background processes until max-threads are running
-              (while (and bundles (< (length processes) max-threads))
-                (let* ((bundle (append (pop bundles) (list count (current-time))))
-                       (url (car bundle))
-                       (name (format "url-test-%d" count))
-                       (buffer (concat "*" name "*")))
-                  (cl-incf count)
-                  (push (list
-                         bundle
-                         (start-process
-                          name
-                          buffer
-                          "curl" "--output" "/dev/null"
-                          "--silent"
-                          "--write-out" "%{http_code}\n"
-                          "--connect-timeout" "30"
-                          "--max-time" "30"
-                          url))
-                        processes)))
-              ;; display current processes and their statuses
+          (defun url-test (&optional buffer)
+            "Display a report of testing all URLs in BUFFER.
+
+          If BUFFER is nil, use `current-buffer'."
+            (interactive)
+            (let ((max-threads 30)
+                  (connect-timeout 30)
+                  (url-regexp "https?:\/\/\\(www\.\\)?[-a-zA-Z0-9@:%._\+~#=]\\{1,256\\}\.[a-zA-Z0-9()]\\{1,6\\}\\b\\([-a-zA-Z0-9()@:%_\+.~#?&//=]*\\)")
+                  (output-buffer (get-buffer-create "*Test URLs*"))
+                  (filename (buffer-file-name (or buffer (current-buffer))))
+                  bundles
+                  failures
+                  processes
+                  (count 1))
+              ;; populate list of urls in bundles
+              (save-mark-and-excursion
+                (when buffer
+                  (set-buffer buffer))
+                (goto-char (point-min))
+                (while (re-search-forward url-regexp nil :noerror)
+                  (push (list (match-string-no-properties 0)
+                              (line-number-at-pos (match-beginning 0)))
+                        bundles)))
+              (setq bundles (nreverse bundles))
+              ;; setup output-buffer
+              (switch-to-buffer-other-window output-buffer)
+              (buffer-disable-undo output-buffer)
+              ;; loop through list of bundles
+              (while (or bundles processes)
+                ;; add background processes until max-threads are running
+                (while (and bundles (< (length processes) max-threads))
+                  (let* ((bundle (append (pop bundles) (list count (current-time))))
+                         (url (car bundle))
+                         (name (format "url-test-%d" count))
+                         (buffer (concat "*" name "*")))
+                    (cl-incf count)
+                    (push (list
+                           bundle
+                           (start-process
+                            name
+                            buffer
+                            "curl" "--output" "/dev/null"
+                            "--silent"
+                            "--write-out" "%{http_code}\n"
+                            "--connect-timeout" (number-to-string connect-timeout)
+                            "--max-time" (number-to-string connect-timeout)
+                            url))
+                          processes)))
+                ;; display current processes and their statuses
+                (set-buffer output-buffer)
+                (setq buffer-read-only nil)
+                (erase-buffer)
+                (insert "URL Testing Status")
+                (newline)
+                (newline)
+                (insert "URL                                                                   Time")
+                (newline)
+                (insert "--------------------------------------------------------------------  ---------")
+                (newline)
+                (dolist (x (reverse processes))
+                  (let* ((url (caar x))
+                         (process (cadr x))
+                         (status (process-status process))
+                         (time (cadddr (car x)))
+                         (time-diff (time-subtract (current-time) time))
+                         (microsecs (caddr time-diff))
+                         (secs (+ (* (car time-diff) 65536) (cadr time-diff))))
+                    (when (> (length url) 68)
+                      (setq url (substring url 0 68)))
+                    (insert (format "%-68s  %2d.%d" url secs microsecs))
+                    (newline)))
+                (goto-char (point-min))
+                (setq buffer-read-only t)
+                ;; remove finished processes
+                ;; after drawing them so their status will display before being removed
+                (setq processes
+                      (cl-remove-if
+                       (lambda (x)
+                         (let* ((process (cadr x))
+                                (status (process-status process))
+                                (time (cadddr (car x)))
+                                (time-diff (time-subtract (current-time) time))
+                                (secs (+ (* (car time-diff) 65536) (cadr time-diff))))
+                           (unless (and (eq status 'run) (< secs connect-timeout))
+                             (let* ((buffer (process-buffer process))
+                                    (code (progn
+                                            (set-buffer buffer)
+                                            (goto-char (point-min))
+                                            (string-to-number
+                                             (buffer-substring-no-properties (point-at-bol) (point-at-eol))))))
+                               (when (not (= code 200))
+                                 (push (append (reverse (cdr (reverse (car x))))
+                                               (list code)) failures))
+                               ;;(when (not (eq status 'exit))
+                               ;;  (delete-process process))
+                               (delete-process process)
+                               (kill-buffer buffer))
+                             t)))
+                       processes))
+                ;; draw screen and wait 0.1 second
+                (sit-for 0.1))
+              ;; display report
               (switch-to-buffer output-buffer)
               (setq buffer-read-only nil)
               (erase-buffer)
-              (insert "URL Testing Status")
+              (insert "URL Testing Results")
               (newline)
               (newline)
-              (insert "URL                                                                   Status")
+              (insert (format "Number of URLs checked: %d" count))
               (newline)
-              (insert "--------------------------------------------------------------------  ------")
+              (insert (format "Number of failed URLs: %d" (length failures)))
               (newline)
-              (dolist (lst (reverse processes))
-                (let* ((url (caar lst))
-                       (process (cadr lst))
-                       (status (process-status process)))
-                  (when (> (length url) 68)
-                    (setq url (substring url 0 68)))
-                  (insert (format "%-68s  %S" url status))
+              (newline)
+              (insert "Code  URL")
+              (newline)
+              (insert "----  --------------------------------------------------------------------")
+              (newline)
+              (dolist (x (sort failures #'(lambda (a b) (< (caddr a) (caddr b)))))
+                (let ((url (car x))
+                      (pos (cadr x))
+                      (code (cadddr x)))
+                  (insert (format "\[\[file:%s::%d\]\[%-4d  %s\]\]" filename pos code url))
                   (newline)))
               (goto-char (point-min))
-              (setq buffer-read-only t)
-              ;; remove finished processes
-              ;; after drawing them so their status will display before being removed
-              (setq processes
-                    (cl-remove-if
-                     (lambda (x)
-                       (let* ((process (cadr x))
-                              (status (process-status process))
-                              (time (cadddr (car x)))
-                              (time-diff (time-subtract (current-time) time))
-                              (seconds (+ (* (car time-diff) 65536) (cadr time-diff))))
-                         (unless (and (eq status 'run) (< seconds 30))
-                           (let* ((buffer (process-buffer process))
-                                  (code (progn
-                                          (set-buffer buffer)
-                                          (goto-char (point-min))
-                                          (string-to-number
-                                           (buffer-substring-no-properties (point-at-bol) (point-at-eol))))))
-                             (when (not (= code 200))
-                               (push (append (reverse (cdr (reverse (car x))))
-                                             (list code)) failures))
-                             ;;(when (not (eq status 'exit))
-                             ;;  (delete-process process))
-                             (delete-process process)
-                             (kill-buffer buffer))
-                           t)))
-                     processes))
-              ;; draw screen and wait 0.1 second
-              (sit-for 0.1))
-            ;; display report
-            (switch-to-buffer output-buffer)
-            (setq buffer-read-only nil)
-            (erase-buffer)
-            (insert "URL Testing Results")
-            (newline)
-            (newline)
-            (insert (format "Number of URLs checked: %d" count))
-            (newline)
-            (insert (format "Number of failed URLs: %d" (length failures)))
-            (newline)
-            (newline)
-            (insert "Code  URL")
-            (newline)
-            (insert "----  --------------------------------------------------------------------")
-            (newline)
-            (dolist (lst (sort failures #'(lambda (a b) (< (caddr a) (caddr b)))))
-              (let ((url (car lst))
-                    (pos (cadr lst))
-                    (code (cadddr lst)))
-                (insert (format "\[\[file:%s::%d\]\[%-4d  %s\]\]" filename pos code url))
-                (newline)))
-            (goto-char (point-min))
-            (org-mode)
-            (setq buffer-read-only t)))
-      #+END_SRC
+              (org-mode)
+              (setq buffer-read-only t)))
+        #+END_SRC
+
+******* url-test-replace-redirects
+        :PROPERTIES:
+        :CUSTOM_ID: functions-emacs-functions-url-test-url-test-replace-redirects
+        :END:
+
+        Replace all 30x redirect URLs, in original buffer, found in a '*Test URLs*'
+        buffer. This should only be run after ~url-test~ is run.
+
+        #+BEGIN_SRC emacs-lisp
+          ;;------------------------------------------------------------------------------
+          ;;;; Functions: Emacs Functions: url-test: url-test-replace-redirects
+          ;;------------------------------------------------------------------------------
+
+          (init-message 4 "Functions: Emacs Functions: url-test: url-test-replace-redirects")
+
+          (defun url-test-replace-redirects ()
+            "Replace all 30x redirect URLs (in original buffer) found in a '*Test URLs*' buffer.
+
+          This should only be run after `url-test' is run."
+            (interactive)
+            (let ((max-threads 30)
+                  (connect-timeout 30)
+                  (url-regexp "https?:\/\/\\(www\.\\)?[-a-zA-Z0-9@:%._\+~#=]\\{1,256\\}\.[a-zA-Z0-9()]\\{1,6\\}\\b\\([-a-zA-Z0-9()@:%_\+.~#?&//=]*\\)")
+                  (30x-regexp "\\]\\[30[0-9] ")
+                  (buffer (get-buffer "*Test URLs*")))
+              (when (not (eq (current-buffer) buffer))
+                (user-error "Must be run from the '*Test URLs*' buffer created by `url-test'."))
+              (save-mark-and-excursion
+                (goto-char (point-min))
+                (while (re-search-forward 30x-regexp nil :noerror)
+                  (org-open-at-point)
+                  (re-search-forward "^[ \t]*" (point-at-eol))
+                  (let* ((url (buffer-substring-no-properties (point) (point-at-eol)))
+                         (new-url (with-temp-buffer
+                                    (shell-command
+                                     (join-strings (list
+                                                    "curl" "--output" "/dev/null"
+                                                    "--location"
+                                                    "--silent"
+                                                    "--write-out" "%{url_effective}"
+                                                    "--connect-timeout" "30"
+                                                    "--max-time" "30"
+                                                    url) " "))
+                                    (buffer-substring-no-properties (point-at-bol) (point-at-eol)))))
+                    (when (and (cl-plusp (length new-url))
+                               (not (string= url new-url)))
+                      (delete-region (point) (point-at-eol))
+                      (insert new-url)
+                      (set-buffer buffer)))))))
+        #+END_SRC
 
 *** Emacs Grouped Functions
     :PROPERTIES:
