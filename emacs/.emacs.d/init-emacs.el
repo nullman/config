@@ -10854,6 +10854,39 @@ MODE defaults to `major-mode'."
   (list-charset-chars 'unicode-bmp))
 ;; list-charset-unicode:1 ends here
 
+;; [[file:init-emacs.org::#functions-emacs-functions-url-refresh][url-refresh:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Emacs Functions: url-refresh
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Emacs Functions: url-refresh")
+
+(defun url-refresh ()
+  "If cursor is on a URL, fetch it, following any redirects, then
+update the URL to the new location."
+  (interactive)
+  (let ((url-regexp "https?:\/\/\\(www\.\\)?[-a-zA-Z0-9@:%._\+~#=]\\{1,256\\}\.[a-zA-Z0-9()]\\{1,6\\}\\b\\([-a-zA-Z0-9()@:%_\+.~#?&//=]*\\)"))
+    (save-mark-and-excursion
+      (forward-line 0)
+      (when (re-search-forward url-regexp (point-at-eol))
+        (let* ((start (match-beginning 0))
+               (end (match-end 0))
+               (url (match-string-no-properties 0))
+               (new-url (shell-command-to-string
+                         (join-strings (list
+                                        "curl" "--output" "/dev/null"
+                                        "--location"
+                                        "--silent"
+                                        "--write-out" "%{url_effective}"
+                                        url)
+                                       " "))))
+          (when (and (cl-plusp (length new-url))
+                     (not (string= url new-url)))
+            (delete-region start end)
+            (goto-char start)
+            (insert new-url)))))))
+;; url-refresh:1 ends here
+
 ;; [[file:init-emacs.org::#functions-emacs-functions-url-test-url-test][url-test:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: url-test: url-test
@@ -10988,49 +11021,6 @@ If BUFFER is nil, use `current-buffer'."
     (org-mode)
     (setq buffer-read-only t)))
 ;; url-test:1 ends here
-
-;; [[file:init-emacs.org::#functions-emacs-functions-url-test-url-test-replace-redirects][url-test-replace-redirects:1]]
-;;------------------------------------------------------------------------------
-;;;; Functions: Emacs Functions: url-test: url-test-replace-redirects
-;;------------------------------------------------------------------------------
-
-(init-message 4 "Functions: Emacs Functions: url-test: url-test-replace-redirects")
-
-(defun url-test-replace-redirects ()
-  "Replace all 30x redirect URLs (in original buffer) found in a '*Test URLs*' buffer.
-
-This should only be run after `url-test' is run."
-  (interactive)
-  (let ((max-threads 30)
-        (connect-timeout 30)
-        (url-regexp "https?:\/\/\\(www\.\\)?[-a-zA-Z0-9@:%._\+~#=]\\{1,256\\}\.[a-zA-Z0-9()]\\{1,6\\}\\b\\([-a-zA-Z0-9()@:%_\+.~#?&//=]*\\)")
-        (30x-regexp "\\]\\[30[0-9] ")
-        (buffer (get-buffer "*Test URLs*")))
-    (when (not (eq (current-buffer) buffer))
-      (user-error "Must be run from the '*Test URLs*' buffer created by `url-test'."))
-    (save-mark-and-excursion
-      (goto-char (point-min))
-      (while (re-search-forward 30x-regexp nil :noerror)
-        (org-open-at-point)
-        (re-search-forward "^[ \t]*" (point-at-eol))
-        (let* ((url (buffer-substring-no-properties (point) (point-at-eol)))
-               (new-url (with-temp-buffer
-                          (shell-command
-                           (join-strings (list
-                                          "curl" "--output" "/dev/null"
-                                          "--location"
-                                          "--silent"
-                                          "--write-out" "%{url_effective}"
-                                          "--connect-timeout" "30"
-                                          "--max-time" "30"
-                                          url) " "))
-                          (buffer-substring-no-properties (point-at-bol) (point-at-eol)))))
-          (when (and (cl-plusp (length new-url))
-                     (not (string= url new-url)))
-            (delete-region (point) (point-at-eol))
-            (insert new-url)
-            (set-buffer buffer)))))))
-;; url-test-replace-redirects:1 ends here
 
 ;; [[file:init-emacs.org::#functions-emacs-grouped-functions][Emacs Grouped Functions:1]]
 ;;------------------------------------------------------------------------------
