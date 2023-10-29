@@ -781,6 +781,7 @@
     meld
     nur.repos.wolfangaukang.vdhcoapp
     simplescreenrecorder
+    upscayl
     #x48
 
     # tui
@@ -934,6 +935,7 @@
     jetbrains.idea-community
     jre
     jq
+    jqp
     kotlin
     lazygit
     #libmpc
@@ -1020,6 +1022,7 @@
     proton-caller
     protontricks
     pysolfc
+    shattered-pixel-dungeon
     steam
     steam-tui
   ];
