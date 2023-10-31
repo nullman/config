@@ -786,7 +786,7 @@
     meld
     nur.repos.wolfangaukang.vdhcoapp
     simplescreenrecorder
-    upscayl
+    #upscayl
     #x48
 
     # tui
