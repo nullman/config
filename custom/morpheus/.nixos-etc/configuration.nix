@@ -1017,6 +1017,7 @@
     eidolon
     flare
     gamemode
+    gemrb
     lutris
     pingus
     playonlinux
