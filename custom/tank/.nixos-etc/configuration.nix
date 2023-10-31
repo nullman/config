@@ -71,6 +71,7 @@
     permittedInsecurePackages = [
       "electron-12.2.3"
       "electron-19.1.9"
+      "electron-24.8.6"
       "openssl-1.1.1u"
       "openssl-1.1.1v"
       "openssl-1.1.1w"
