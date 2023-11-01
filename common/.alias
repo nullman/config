@@ -2202,6 +2202,20 @@ alias rsync-adult-put-adult-sd="
     else
         echo \"Error: \${usb} USB not found\"
     fi"
+#        rsync-sdi-put-windows-sd  rsync /home/data/Snappy Driver Installer/* /media/WINDOWS/Snappy Driver Installer/
+alias rsync-sdi-put-windows-sd="
+    usb=WINDOWS
+    dir1=/media/\${usb}
+    dir2=/run/media/\${USER}/\${usb}
+    dir=''
+    [[ -d \${dir1} ]] && dir=\${dir1}
+    [[ -d \${dir2} ]] && dir=\${dir2}
+    if [[ -d \${dir} ]] ; then
+        rsync -rLtxW --size-only --progress --delete \"${home}/data/Snappy Driver Installer/\" \"\${dir}/Snappy Driver Installer/\"
+        sync
+    else
+        echo \"Error: \${usb} USB not found\"
+    fi"
 
 #
 # ruby
@@ -2537,30 +2551,30 @@ alias vncsk="vncserver -kill :1"
 #
 # wine applications
 #
-#        winetricks-update       download latest version of winetricks
-alias winetricks-update="wget http://www.kegel.com/wine/winetricks -O \${HOME}/bin/vendor/winetricks"
+#!#        winetricks-update       download latest version of winetricks
+#!alias winetricks-update="wget http://www.kegel.com/wine/winetricks -O \${HOME}/bin/vendor/winetricks"
 #        wine-aol                wine retro aol
-alias wine-aol="WINEPREFIX=${HOME}/.wine-aol wine explorer \"C:\Program Files (x86)/Re-AOL\AOL.EXE\""
+alias wine-aol="WINEPREFIX=${HOME}/.wine-aol wine explorer \"C:\Program Files (x86)/Re-AOL\AOL.EXE\" &"
 #        wine-bookshelf          wine microsoft bookshelf 2000
-alias wine-bookshelf="WINEPREFIX=${HOME}/.wine-bookshelf2000 wine \"C:\Program Files (x86)\Microsoft Reference\Bookshelf 2000\bshelf2k.exe\""
+alias wine-bookshelf="WINEPREFIX=${HOME}/.wine-bookshelf2000 wine \"C:\Program Files (x86)\Microsoft Reference\Bookshelf 2000\bshelf2k.exe\" &"
 #        wine-civ                wine civilization
-#!alias wine-civ="WINEPREFIX=\${HOME}/.wine-civ4 wine explorer /desktop=civ,1280x800 \"C:\Program Files\Firaxis Games\Sid Meier's Civilization 4\Beyond the Sword\Civ4BeyondSword.exe\""
-alias wine-civ="WINEPREFIX=\${HOME}/.wine-civ4 wine explorer /desktop=civ,1920x1080 \"C:\Program Files\Firaxis Games\Sid Meier's Civilization 4\Beyond the Sword\Civ4BeyondSword.exe\""
+#!alias wine-civ="WINEPREFIX=\${HOME}/.wine-civ4 wine explorer /desktop=civ,1280x800 \"C:\Program Files\Firaxis Games\Sid Meier's Civilization 4\Beyond the Sword\Civ4BeyondSword.exe\" &"
+alias wine-civ="WINEPREFIX=\${HOME}/.wine-civ4 wine explorer /desktop=civ,1920x1080 \"C:\Program Files\Firaxis Games\Sid Meier's Civilization 4\Beyond the Sword\Civ4BeyondSword.exe\" &"
 #        wine-ddo                wine ddo
-alias wine-ddo="WINEPREFIX=\${HOME}/.wine-ddo wine \"C:\Program Files (x86)\StandingStoneGames\Dungeons & Dragons Online\DNDLauncher.exe\""
+alias wine-ddo="WINEPREFIX=\${HOME}/.wine-ddo wine \"C:\Program Files (x86)\StandingStoneGames\Dungeons & Dragons Online\DNDLauncher.exe\" &"
 #        wine-ddo-cp             wine ddo character planner
-alias wine-ddo-cp="WINEPREFIX=\${HOME}/.wine-ddocp wine \"C:\Games\DDOCharGen\DDOCharGen.exe\""
+alias wine-ddo-cp="WINEPREFIX=\${HOME}/.wine-ddocp wine \"C:\Games\DDOCharGen\DDOCharGen.exe\" &"
 #!#        wine-eve                wine eve online
-#!#!alias wine-eve="WINEPREFIX=\${HOME}/.wine-eve wine explorer /desktop=eve,1280x800 \"C:\Program Files (x86)\CCP\EVE\eve.exe\""
-#!alias wine-eve="WINEPREFIX=\${HOME}/.wine-eve wine explorer /desktop=eve,1920x1080 \"C:\Program Files (x86)\CCP\EVE\eve.exe\""
-#!alias wine-eve-file="WINEPREFIX=\${HOME}/.wine-eve wine explorer /desktop=eve,1920x1080 \"C:\Program Files (x86)\CCP\EVE\evefile.exe\""
+#!#!alias wine-eve="WINEPREFIX=\${HOME}/.wine-eve wine explorer /desktop=eve,1280x800 \"C:\Program Files (x86)\CCP\EVE\eve.exe\" &"
+#!alias wine-eve="WINEPREFIX=\${HOME}/.wine-eve wine explorer /desktop=eve,1920x1080 \"C:\Program Files (x86)\CCP\EVE\eve.exe\" &"
+#!alias wine-eve-file="WINEPREFIX=\${HOME}/.wine-eve wine explorer /desktop=eve,1920x1080 \"C:\Program Files (x86)\CCP\EVE\evefile.exe\" &"
 #!#        wine-eve2               wine eve online second install
-#!#!alias wine-eve2="WINEPREFIX=\${HOME}/.wine-eve2 wine explorer /desktop=eve2,1280x800 \"C:\Program Files (x86)\CCP\EVE\eve.exe\""
-#!alias wine-eve2="WINEPREFIX=\${HOME}/.wine-eve2 wine explorer /desktop=eve2,1920x1080 \"C:\Program Files (x86)\CCP\EVE\eve.exe\""
+#!#!alias wine-eve2="WINEPREFIX=\${HOME}/.wine-eve2 wine explorer /desktop=eve2,1280x800 \"C:\Program Files (x86)\CCP\EVE\eve.exe\" &"
+#!alias wine-eve2="WINEPREFIX=\${HOME}/.wine-eve2 wine explorer /desktop=eve2,1920x1080 \"C:\Program Files (x86)\CCP\EVE\eve.exe\" &"
 #!#        wine-eft                wine eve online eft
-#!alias wine-eft="WINEPREFIX=\${HOME}/.wine-eve-tools wine \"C:\Program Files (x86)\Utilities\EFT\EFT.exe\""
+#!alias wine-eft="WINEPREFIX=\${HOME}/.wine-eve-tools wine \"C:\Program Files (x86)\Utilities\EFT\EFT.exe\" &"
 #!#        wine-eve-mon            wine eve online eve-mon
-#!alias wine-eve-mon="WINEPREFIX=\${HOME}/.wine-eve-tools wine \"C:\Program Files (x86)\EVEMon\EVEMon.exe\""
+#!alias wine-eve-mon="WINEPREFIX=\${HOME}/.wine-eve-tools wine \"C:\Program Files (x86)\EVEMon\EVEMon.exe\" &"
 #!#        eve-copy-settings       copy eve settings
 #!alias eve-copy-settings="
 #!    cp -R \"\${HOME}/Downloads/EVE/CCP/EVE/c_program_files_ccp_eve_tranquility/settings\" \
@@ -2568,7 +2582,7 @@ alias wine-ddo-cp="WINEPREFIX=\${HOME}/.wine-ddocp wine \"C:\Games\DDOCharGen\DD
 #!    cp -R \"\${HOME}/Downloads/EVE/CCP/EVE/c_users_kyle_program_files_eve_tranquility/settings\" \
     #!      \"\${HOME}/.wine-eve2/drive_c/windows/profiles/kyle/Local Settings/Application Data/CCP/EVE/c_program_files_ccp_eve_tranquility/\""
 #        wine-fallout            wine fallout
-alias wine-fallout="WINEPREFIX=\${HOME}/.wine-fallout wine \"C:\GOG Games\Games\\Fallout\FalloutLauncher.exe\""
+alias wine-fallout="WINEPREFIX=\${HOME}/.wine-fallout wine \"C:\GOG Games\Games\\Fallout\FalloutLauncher.exe\" &"
 #        wine-fallout-setup      configure fallout.cfg file
 alias wine-fallout-setup="
     file=\"\${HOME}/.wine-fallout/drive_c/GOG Games/Fallout/fallout.cfg\"
@@ -2577,10 +2591,12 @@ alias wine-fallout-setup="
     sed -i 's/^master_dat=.*$/master_dat=C:\\\\GOG Games\\\\Fallout\\\\MASTER.DAT\r/' \"\${file}\"
     sed -i 's/^master_patches=.*$/master_patches=C:\\\\GOG Games\\\\Fallout\\\\DATA\r/' \"\${file}\"
     "
+#        wine-sdi                wine snappy driver installer
+alias wine-sdi="(cd \"${home}/data/Snappy Driver Installer\" ; WINEPREFIX=\${HOME}/.wine-sdi wine \"SDI_R2009.exe\" &)"
 #        wine-tta                wine through the ages
-alias wine-tta="WINEPREFIX=\${HOME}/.wine-tta wine \"C:\GOG Games\Through the Ages\ThroughTheAges_gog.exe\""
+alias wine-tta="WINEPREFIX=\${HOME}/.wine-tta wine \"C:\GOG Games\Through the Ages\ThroughTheAges_gog.exe\" &"
 #        wine-winamp             winamp
-alias wine-winamp="WINEPREFIX=\${HOME}/.wine-winamp wine \"C:\Program Files (x86)\Winamp\winamp.exe\""
+alias wine-winamp="WINEPREFIX=\${HOME}/.wine-winamp wine \"C:\Program Files (x86)\Winamp\winamp.exe\" &"
 
 #
 # x2x
