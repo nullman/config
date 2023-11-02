@@ -338,6 +338,8 @@ alias update-desktop-apps="update-desktop-database \${HOME}/.local/share/applica
 alias pi-serial-number="echo \$(cat /sys/firmware/devicetree/base/serial-number)"
 #        nf                      neofetch
 alias nf="neofetch"
+#        shred-device            shred device (one random pass, one zero pass)
+alias shred-device="sudo shred -v -n1 --random-source=/dev/urandom -z"
 
 #
 # general (external)
