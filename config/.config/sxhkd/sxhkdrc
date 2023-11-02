@@ -83,15 +83,18 @@ control + alt + {Up,Down,Left,Right}
 #-------------------------------------------------------------------------------
 
 XF86AudioMute
-    pactl -- set-sink-mute 0 toggle && notify-send --expire-time=2000 --replace-id 1 "$(pactl -- get-sink-mute 0)"
+    pamixer --toggle-mute && notify-send --expire-time=2000 --replace-id 1 "$(pamixer --get-mute | sed 's/false/Unmuted/ ; s/true/Muted/')"
+    #pactl -- set-sink-mute 0 toggle && notify-send --expire-time=2000 --replace-id 1 "$(pactl -- get-sink-mute 0)"
     #wpctl set-mute 49 toggle && notify-send --expire-time=2000 --replace-id 1 "$(wpctl get-volume ???)"
 
 XF86AudioLowerVolume
-    pactl -- set-sink-volume 0 -2% && notify-send --expire-time=2000 --replace-id 2 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
+    pamixer --decrease 2 && notify-send --expire-time=2000 --replace-id 2 "$(pamixer --get-volume | sed 's/^/Volume: /')"
+    #pactl -- set-sink-volume 0 -2% && notify-send --expire-time=2000 --replace-id 2 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
     #wpctl set-volume 49 2%- && notify-send --expire-time=2000 --replace-id 2 "$(wpctl get-volume ???)"
 
 XF86AudioRaiseVolume
-    pactl -- set-sink-volume 0 +2% && notify-send --expire-time=2000 --replace-id 2 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
+    pamixer --increase 2 && notify-send --expire-time=2000 --replace-id 2 "$(pamixer --get-volume | sed 's/^/Volume: /')"
+    #pactl -- set-sink-volume 0 +2% && notify-send --expire-time=2000 --replace-id 2 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
     #wpctl set-volume 49 2%+ && notify-send --expire-time=2000 --replace-id 2 "$(wpctl get-volume ???)"
 
 # XF86AudioMicMute
@@ -281,10 +284,12 @@ super + alt + ctrl + r
 #-------------------------------------------------------------------------------
 
 # volume control
+super + alt + ctrl + Up
+    pamixer --toggle-mute && notify-send --expire-time=2000 --replace-id 1 "$(pamixer --get-mute | sed 's/false/Unmuted/ ; s/true/Muted/')"
 super + alt + ctrl + Left
-    pactl -- set-sink-volume 0 -2% && notify-send --expire-time=2000 --replace-id 2 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
+    pamixer --decrease 2 && notify-send --expire-time=2000 --replace-id 2 "$(pamixer --get-volume | sed 's/^/Volume: /')"
 super + alt + ctrl + Right
-    pactl -- set-sink-volume 0 +2% && notify-send --expire-time=2000 --replace-id 2 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
+    pamixer --increase 2 && notify-send --expire-time=2000 --replace-id 2 "$(pamixer --get-volume | sed 's/^/Volume: /')"
 
 # mpc control
 super + alt + ctrl + m

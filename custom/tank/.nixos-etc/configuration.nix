@@ -751,7 +751,6 @@
     inkscape
     #kdenlive
     libreoffice
-    mpc-qt
     mpv
     mupdf
     notepadqq
