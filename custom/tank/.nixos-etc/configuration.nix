@@ -763,6 +763,7 @@
     #xfce.thunar-archive-plugin
     #xfce.thunar-media-tags-plugin
     #xfce.thunar-volman
+    ymuse
 
     # utilities
     appimage-run
