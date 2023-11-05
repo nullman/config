@@ -14,7 +14,7 @@ genres=("Classic%Rock" "Country" "Hard%Rock" "Pop%-%Dance" "R&B" "Rap" "Reggae" 
 
 tmpfile="__temp__"
 
-musicdir="/home/data/media/Audio/Music"  # music directory
+musicdir="/home/data/media/Audio/MPD"    # music directory
 pldir="/home/data/media/Audio/Playlists" # play list directory
 ratingsdir="${HOME}/.song-ratings"       # ratings directory
 

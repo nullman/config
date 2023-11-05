@@ -2161,6 +2161,8 @@ KEYMAP defaults to `override-global-map'."
     (bind-keys :map space-buffer-map ("n" . new-scratch)))
   (when (fboundp 'new-emacs-lisp-scratch)
     (bind-keys :map space-buffer-map ("e" . new-emacs-lisp-scratch)))
+  (when (fboundp 'new-org-scratch)
+    (bind-keys :map space-buffer-map ("o" . new-org-scratch)))
   (when (fboundp 'switch-to-scratch)
     (bind-keys :map space-buffer-map ("s" . switch-to-scratch)))
   (when (fboundp 'switch-to-scratch-for-current-mode)
@@ -10444,12 +10446,32 @@ ARG is passed along if shell is being toggled on."
 If USE-EXISTING is non-nil, switch to an existing buffer if one
 exists, otherwise create a new one."
   (interactive)
-  (let ((buffer "*scratch-emacs-lisp-mode*"))
+  (let ((buffer "*scratch-emacs-lisp*"))
     (if (and use-existing (get-buffer buffer))
         (switch-to-buffer buffer)
       (switch-to-buffer (generate-new-buffer-name buffer))
       (emacs-lisp-mode))))
 ;; new-emacs-lisp-scratch:1 ends here
+
+;; [[file:init-emacs.org::#functions-emacs-functions-new-org-scratch][new-org-scratch:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Emacs Functions: new-org-scratch
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Emacs Functions: new-org-scratch")
+
+(defun new-org-scratch (&optional use-existing)
+  "Create a new scratch buffer with `org-mode'.
+
+If USE-EXISTING is non-nil, switch to an existing buffer if one
+exists, otherwise create a new one."
+  (interactive)
+  (let ((buffer "*scratch-org*"))
+    (if (and use-existing (get-buffer buffer))
+        (switch-to-buffer buffer)
+      (switch-to-buffer (generate-new-buffer-name buffer))
+      (org-mode))))
+;; new-org-scratch:1 ends here
 
 ;; [[file:init-emacs.org::#functions-emacs-functions-recreate-scratch-when-killed][recreate-scratch-when-killed:1]]
 ;;------------------------------------------------------------------------------
@@ -17426,7 +17448,6 @@ Use text properties to mark the line then call `mingus-set-NP-mark'."
                         "Genre:  " genre)))
             (with-current-buffer buffer
               (setq buffer-read-only nil)
-              (buffer-disable-undo)
               (add-text-properties (point-min) (point-max) '(read-only nil))
               (kill-region (point-min) (point-max))
               (setq major-mode 'text-mode)
@@ -21166,10 +21187,12 @@ Commands:
 (auto-menu
  "Buffer-Switch"
  `(("*scratch*" "(switch-to-buffer \"*scratch*\")" "Switch to '*scratch*' buffer.")
-   ("New *scratch*" "(switch-to-buffer (generate-new-buffer-name \"*scratch*\"))" "Create and switch to a '*scratch*' buffer.")
+   ("*scratch* (new)" "(switch-to-buffer (generate-new-buffer-name \"*scratch*\"))" "Create and switch to a '*scratch*' buffer.")
    ("Current Mode *scratch*" "(switch-to-scratch-for-current-mode)" "Switch to '*scratch-MODE*' buffer.")
-   ("Emacs Lisp Mode *scratch*" "(new-emacs-lisp-scratch :use-existing)" "Switch to '*scratch-emacs-lisp-mode*' buffer.")
-   ("New Emacs Lisp Mode *scratch*" "(new-emacs-lisp-scratch)" "Create and switch to '*scratch-emacs-lisp-mode*' buffer.")
+   ("Emacs Lisp *scratch*" "(new-emacs-lisp-scratch :use-existing)" "Switch to '*scratch-emacs-lisp*' buffer.")
+   ("Emacs Lisp *scratch* (new)" "(new-emacs-lisp-scratch)" "Create and switch to '*scratch-emacs-lisp*' buffer.")
+   ("Org *scratch*" "(new-org-scratch :use-existing)" "Switch to '*scratch-org*' buffer.")
+   ("Org *scratch* (new)" "(new-org-scratch)" "Create and switch to '*scratch-org*' buffer.")
    ("*messages*" "(switch-to-buffer \"*Messages*\")" "Switch to '*Messages*' buffer.")))
 ;; Buffer-Switch Menu:1 ends here
 
@@ -21209,10 +21232,10 @@ Commands:
                     ("github" . "~/code/github-nullman")
                     ;;("gitlab" . "~/code/gitlab-kylesherman")
                     ("media" . "/home/data/media")
-                    ("music" . "/home/data/media/audio/Music")
-                    ("text" . "/home/data/media/text")
-                    ("softwre" . "/home/data/media/software")
-                    ("repos" . "/home/data/media/repos")
+                    ("music" . "/home/data/media/Audio/Music")
+                    ("text" . "/home/data/media/Text")
+                    ("softwre" . "/home/data/media/Software")
+                    ("repos" . "/home/data/media/Repos")
                     ("Downloads" . "~/Downloads")
                     ("Documents" . "~/Documents")
                     ("clisp" . "~/dev/clisp")

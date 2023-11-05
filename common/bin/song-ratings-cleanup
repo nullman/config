@@ -13,7 +13,7 @@ IFS=$'\n'
 
 dir="${HOME}/.song-ratings"
 files="$(find ${dir}/ -type f -exec basename {} \;)"
-audiodir="/home/data/media/Audio/Music"
+musicdir="/home/data/media/Audio/MPD"
 dryrun=false
 yes=false
 quiet=false
@@ -51,7 +51,7 @@ _dryrun() {
     echo
     for file in ${files} ; do
         for song in $(cat "${dir}/${file}") ; do
-            if [[ ! -e "${audiodir}/${song}" ]] ; then
+            if [[ ! -e "${musicdir}/${song}" ]] ; then
                 echo "${file}: ${song}"
             fi
         done
@@ -65,7 +65,7 @@ _process() {
         local tmpfile="${tmpdir}/${file}"
         touch ${tmpfile}
         for song in $(cat "${dir}/${file}") ; do
-            if [[ -e "${audiodir}/${song}" ]] ; then
+            if [[ -e "${musicdir}/${song}" ]] ; then
                 echo "${song}" >> ${tmpfile}
             else
                 ${quiet} || echo "Removed missing song: ${song}"

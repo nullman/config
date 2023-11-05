@@ -513,7 +513,7 @@
   services.mpd = {
     enable = true;
     user = "kyle";
-    musicDirectory = "/home/data/media/Audio/Music";
+    musicDirectory = "/home/data/media/Audio/MPD";
     playlistDirectory = "/home/data/media/Audio/Playlists";
     extraConfig = ''
       audio_output {

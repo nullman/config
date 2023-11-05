@@ -1997,7 +1997,7 @@ alias rsync-media-get-morpheus-exclude="rsync -rlptx --progress --exclude={'/Rep
 alias rsync-media-get-morpheus-mouse-delete=" \
     if [[ $(uname -n) == 'mouse ]] ; then
         rsync -rlptx --progress --delete --exclude={'/Humor/','/Other/'} morpheus:/home/data/media/Audio/ ${home}/data/media/Audio/ && \
-        rsync -rlptx --progress --delete morpheus:/home/data/media/Music/ ${home}/data/media/Music/ && \
+        rsync -rlptx --progress --delete morpheus:/home/data/media/Audio/Music/ ${home}/data/media/Audio/Music/ && \
         rsync -rlptx --progress --delete \"morpheus:/home/data/media/Pictures Slide Show/\" \"${home}/data/media/Pictures Slide Show/\" && \
         #rsync -rlptx --progress --delete morpheus:/home/data/media/Repos/ ${home}/data/media/Repos/ && \
         rsync -rlptx --progress --delete morpheus:/home/data/media/Text/ ${home}/data/media/Text/ && \

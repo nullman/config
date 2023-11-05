@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2023-10-19 19:25 (kyle)>
+  #+TIMESTAMP: <2023-11-04 15:45 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -3606,6 +3606,8 @@
           (bind-keys :map space-buffer-map ("n" . new-scratch)))
         (when (fboundp 'new-emacs-lisp-scratch)
           (bind-keys :map space-buffer-map ("e" . new-emacs-lisp-scratch)))
+        (when (fboundp 'new-org-scratch)
+          (bind-keys :map space-buffer-map ("o" . new-org-scratch)))
         (when (fboundp 'switch-to-scratch)
           (bind-keys :map space-buffer-map ("s" . switch-to-scratch)))
         (when (fboundp 'switch-to-scratch-for-current-mode)
@@ -15337,11 +15339,36 @@
         If USE-EXISTING is non-nil, switch to an existing buffer if one
         exists, otherwise create a new one."
           (interactive)
-          (let ((buffer "*scratch-emacs-lisp-mode*"))
+          (let ((buffer "*scratch-emacs-lisp*"))
             (if (and use-existing (get-buffer buffer))
                 (switch-to-buffer buffer)
               (switch-to-buffer (generate-new-buffer-name buffer))
               (emacs-lisp-mode))))
+      #+END_SRC
+
+***** new-org-scratch
+      :PROPERTIES:
+      :CUSTOM_ID: functions-emacs-functions-new-org-scratch
+      :END:
+
+      #+BEGIN_SRC emacs-lisp
+        ;;------------------------------------------------------------------------------
+        ;;;; Functions: Emacs Functions: new-org-scratch
+        ;;------------------------------------------------------------------------------
+
+        (init-message 3 "Functions: Emacs Functions: new-org-scratch")
+
+        (defun new-org-scratch (&optional use-existing)
+          "Create a new scratch buffer with `org-mode'.
+
+        If USE-EXISTING is non-nil, switch to an existing buffer if one
+        exists, otherwise create a new one."
+          (interactive)
+          (let ((buffer "*scratch-org*"))
+            (if (and use-existing (get-buffer buffer))
+                (switch-to-buffer buffer)
+              (switch-to-buffer (generate-new-buffer-name buffer))
+              (org-mode))))
       #+END_SRC
 
 ***** recreate-scratch-when-killed
@@ -23544,48 +23571,50 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;;   ;; (setq-local completion-at-point-functions '(codeium-completion-at-point))
       ;;   ;; multiple backends
       ;;   (setq-local completion-at-point-functions
-      ;;               (list (cape-super-capf #'codeium-completion-at-point
+      ;;               (list completion-at-point-functions
+      ;;                     (cape-super-capf #'codeium-completion-at-point
       ;;                                      #'lsp-completion-at-point))))
 
       ;; (use-package codeium
-      ;;   :straight '(:type git :host github :repo "Exafunction/codeium.el")
+      ;;   :straight (codeium :type git :host github :repo "Exafunction/codeium.el")
       ;;   :hook (prog-mode . custom-codeium-mode-hook) ; use with programming modes only
-      ;;   :init
-      ;;   ;; ;; use globally
-      ;;   ;; (add-to-list 'completion-at-point-functions #'codeium-completion-at-point)
-      ;;   :custom
-      ;;   (use-dialog-box nil)                  ; do not use popup boxes
-      ;;   :config
-      ;;   ;; if you don't want to use customize to save the api-key
-      ;;   ;; (setq codeium/metadata/api_key "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx")
+      ;;   ;; :init
+      ;;   ;; ;; ;; use globally
+      ;;   ;; ;; (add-to-list 'completion-at-point-functions #'codeium-completion-at-point)
+      ;;   ;; :custom
+      ;;   ;; (use-dialog-box nil)                  ; do not use popup boxes
+      ;;   ;; :config
+      ;;   ;; ;; if you don't want to use customize to save the api-key
+      ;;   ;; ;; (setq codeium/metadata/api_key "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx")
 
-      ;;   ;; ;; get codeium status in the modeline
-      ;;   ;; (setq codeium-mode-line-enable
-      ;;   ;;       (lambda (api) (not (memq api '(CancelRequest Heartbeat AcceptCompletion)))))
-      ;;   ;; (add-to-list 'mode-line-format '(:eval (car-safe codeium-mode-line)) t)
-      ;;   ;; alternatively for a more extensive mode-line
-      ;;   ;; (add-to-list 'mode-line-format '(-50 "" codeium-mode-line) t)
+      ;;   ;; ;; ;; get codeium status in the modeline
+      ;;   ;; ;; (setq codeium-mode-line-enable
+      ;;   ;; ;;       (lambda (api) (not (memq api '(CancelRequest Heartbeat AcceptCompletion)))))
+      ;;   ;; ;; (add-to-list 'mode-line-format '(:eval (car-safe codeium-mode-line)) t)
+      ;;   ;; ;; alternatively for a more extensive mode-line
+      ;;   ;; ;; (add-to-list 'mode-line-format '(-50 "" codeium-mode-line) t)
 
-      ;;   ;; use M-x codeium-diagnose to see apis/fields that would be sent to the local language server
-      ;;   (setq codeium-api-enabled
-      ;;         (lambda (api)
-      ;;           (memq api '(GetCompletions Heartbeat CancelRequest GetAuthToken RegisterUser auth-redirect AcceptCompletion))))
-      ;;   ;; you can also set a config for a single buffer like this:
-      ;;   ;; (add-hook 'python-mode-hook
-      ;;   ;;     (lambda ()
-      ;;   ;;         (setq-local codeium/editor_options/tab_size 4)))
+      ;;   ;; ;; use M-x codeium-diagnose to see apis/fields that would be sent to the local language server
+      ;;   ;; (setq codeium-api-enabled
+      ;;   ;;       (lambda (api)
+      ;;   ;;         (memq api '(GetCompletions Heartbeat CancelRequest GetAuthToken RegisterUser auth-redirect AcceptCompletion))))
+      ;;   ;; ;; you can also set a config for a single buffer like this:
+      ;;   ;; ;; (add-hook 'python-mode-hook
+      ;;   ;; ;;     (lambda ()
+      ;;   ;; ;;         (setq-local codeium/editor_options/tab_size 4)))
 
-      ;;   ;; You can overwrite all the codeium configs!
-      ;;   ;; for example, we recommend limiting the string sent to codeium for better performance
-      ;;   (defun my-codeium/document/text ()
-      ;;     (buffer-substring-no-properties (max (- (point) 3000) (point-min)) (min (+ (point) 1000) (point-max))))
-      ;;   ;; if you change the text, you should also change the cursor_offset
-      ;;   ;; warning: this is measured by UTF-8 encoded bytes
-      ;;   (defun my-codeium/document/cursor_offset ()
-      ;;     (codeium-utf8-byte-length
-      ;;      (buffer-substring-no-properties (max (- (point) 3000) (point-min)) (point))))
-      ;;   (setq codeium/document/text 'my-codeium/document/text)
-      ;;   (setq codeium/document/cursor_offset 'my-codeium/document/cursor_offset))
+      ;;   ;; ;; You can overwrite all the codeium configs!
+      ;;   ;; ;; for example, we recommend limiting the string sent to codeium for better performance
+      ;;   ;; (defun my-codeium/document/text ()
+      ;;   ;;   (buffer-substring-no-properties (max (- (point) 3000) (point-min)) (min (+ (point) 1000) (point-max))))
+      ;;   ;; ;; if you change the text, you should also change the cursor_offset
+      ;;   ;; ;; warning: this is measured by UTF-8 encoded bytes
+      ;;   ;; (defun my-codeium/document/cursor_offset ()
+      ;;   ;;   (codeium-utf8-byte-length
+      ;;   ;;    (buffer-substring-no-properties (max (- (point) 3000) (point-min)) (point))))
+      ;;   ;; (setq codeium/document/text 'my-codeium/document/text)
+      ;;   ;; (setq codeium/document/cursor_offset 'my-codeium/document/cursor_offset)
+      ;;   )
     #+END_SRC
 
 *** +color-theme+
@@ -26077,7 +26106,6 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
                               "Genre:  " genre)))
                   (with-current-buffer buffer
                     (setq buffer-read-only nil)
-                    (buffer-disable-undo)
                     (add-text-properties (point-min) (point-max) '(read-only nil))
                     (kill-region (point-min) (point-max))
                     (setq major-mode 'text-mode)
@@ -26717,6 +26745,34 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;;       (apply orig-fun args)))
       ;;   ;; advise `openwith-file-handler'
       ;;   (advice-add 'openwith-file-handler :around #'openwith-file-handler--no-error))
+    #+END_SRC
+
+*** +org-ai+
+    :PROPERTIES:
+    :CUSTOM_ID: packages-org-ai
+    :END:
+
+    Use ChatGPT and other LLMs in org-mode and beyond.
+
+    #+BEGIN_SRC emacs-lisp :tangle no
+      ;; ;;------------------------------------------------------------------------------
+      ;; ;;; Packages: org-ai
+      ;; ;;------------------------------------------------------------------------------
+
+      ;; (init-message 2 "Packages: org-ai")
+
+      ;; (use-package org-ai
+      ;;   :straight t
+      ;;   :after (org)
+      ;;   :commands (org-ai-mode org-ai-global-mode)
+      ;;   :init
+      ;;   (add-hook 'org-mode-hook #'org-ai-mode)
+      ;;   (org-ai-global-mode)                  ; global keybinding (C-c M-a)
+      ;;   ;;:custom
+      ;;   ;;(org-ai-default-chat-model "gpt-4")
+      ;;   :config
+      ;;   ;;(org-ai-install-yasnippets)
+      ;;   )
     #+END_SRC
 
 *** org-tree-slide
@@ -32943,10 +32999,12 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       (auto-menu
        "Buffer-Switch"
        `(("*scratch*" "(switch-to-buffer \"*scratch*\")" "Switch to '*scratch*' buffer.")
-         ("New *scratch*" "(switch-to-buffer (generate-new-buffer-name \"*scratch*\"))" "Create and switch to a '*scratch*' buffer.")
+         ("*scratch* (new)" "(switch-to-buffer (generate-new-buffer-name \"*scratch*\"))" "Create and switch to a '*scratch*' buffer.")
          ("Current Mode *scratch*" "(switch-to-scratch-for-current-mode)" "Switch to '*scratch-MODE*' buffer.")
-         ("Emacs Lisp Mode *scratch*" "(new-emacs-lisp-scratch :use-existing)" "Switch to '*scratch-emacs-lisp-mode*' buffer.")
-         ("New Emacs Lisp Mode *scratch*" "(new-emacs-lisp-scratch)" "Create and switch to '*scratch-emacs-lisp-mode*' buffer.")
+         ("Emacs Lisp *scratch*" "(new-emacs-lisp-scratch :use-existing)" "Switch to '*scratch-emacs-lisp*' buffer.")
+         ("Emacs Lisp *scratch* (new)" "(new-emacs-lisp-scratch)" "Create and switch to '*scratch-emacs-lisp*' buffer.")
+         ("Org *scratch*" "(new-org-scratch :use-existing)" "Switch to '*scratch-org*' buffer.")
+         ("Org *scratch* (new)" "(new-org-scratch)" "Create and switch to '*scratch-org*' buffer.")
          ("*messages*" "(switch-to-buffer \"*Messages*\")" "Switch to '*Messages*' buffer.")))
     #+END_SRC
 
@@ -32993,10 +33051,10 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
                           ("github" . "~/code/github-nullman")
                           ;;("gitlab" . "~/code/gitlab-kylesherman")
                           ("media" . "/home/data/media")
-                          ("music" . "/home/data/media/audio/Music")
-                          ("text" . "/home/data/media/text")
-                          ("softwre" . "/home/data/media/software")
-                          ("repos" . "/home/data/media/repos")
+                          ("music" . "/home/data/media/Audio/Music")
+                          ("text" . "/home/data/media/Text")
+                          ("softwre" . "/home/data/media/Software")
+                          ("repos" . "/home/data/media/Repos")
                           ("Downloads" . "~/Downloads")
                           ("Documents" . "~/Documents")
                           ("clisp" . "~/dev/clisp")
