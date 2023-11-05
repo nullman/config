@@ -17408,13 +17408,48 @@ Use text properties to mark the line then call `mingus-set-NP-mark'."
   (defun mingus-edit-id3tag--finish-edit ()
     "Save any id3 tag changes and close the edit window."
     (interactive)
-    (message "%s" (buffer-substring-no-properties (point-min) (point-max)))
+    ;;(message "%s" (buffer-substring-no-properties (point-min) (point-max)))
+    (unless details
+      (error "Could not find buffer local var: details"))
+    (let* ((id3tag "id3tag")
+           (file (plist-get details 'file))
+           (rename file)
+           (fields `(("File" ,(plist-get details 'file) "file")
+                     ("Artist" ,(plist-get details 'Artist) "artist")
+                     ("Album" ,(plist-get details 'Album) "album")
+                     ("Title" ,(plist-get details 'Title) "song")
+                     ("Track" ,(plist-get details 'Track) "track")
+                     ("Year" ,(plist-get details 'Date) "year")
+                     ("Genre" ,(plist-get details 'Genre) "genre"))))
+      (unless (executable-find id3tag)
+        (user-error "Could not find system command: %s" id3tag))
+      (goto-char (point-min))
+      (dolist (x fields)
+        (let ((regexp (concat "^" (car x) ": *\\(.*\\)$"))
+              (old (or (cadr x) ""))
+              (tag (caddr x))
+              (process (concat "mingus-edit-id3tag-" (caddr x))))
+          (re-search-forward regexp (point-at-eol))
+          (let* ((new (match-string 1))
+                 (arg (concat "--" tag "=\"" new "\"")))
+            (when (not (string= old new))
+              (if (string= tag "file")
+                  (setq rename new)
+                ;;(start-process process (current-buffer) id3tag arg file))))))
+                (message (concat process (buffer-name (current-buffer)) id3tag arg file))))
+            (forward-line 1))))
+      (when (not (string= file rename))
+        ;; rename
+        (message "rename: %s -> %s"
+                 (concat mingus-mpd-music-dir file)
+                 (concat mingus-mpd-music-dir rename))
+        ))
     (kill-buffer (current-buffer)))
 
   (defun mingus-edit-id3tag--abort-edit ()
     "Close the edit window without saving changes."
     (interactive)
-    (message "%s" (buffer-substring-no-properties (point-min) (point-max)))
+    ;;(message "%s" (buffer-substring-no-properties (point-min) (point-max)))
     (kill-buffer (current-buffer)))
 
   (defun mingus-edit-id3tag ()
@@ -17447,6 +17482,7 @@ Use text properties to mark the line then call `mingus-set-NP-mark'."
                         "Year:   " date "\n"
                         "Genre:  " genre)))
             (with-current-buffer buffer
+              (setq-local details details)
               (setq buffer-read-only nil)
               (add-text-properties (point-min) (point-max) '(read-only nil))
               (kill-region (point-min) (point-max))
