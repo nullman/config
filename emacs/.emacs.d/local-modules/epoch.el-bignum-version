@@ -6,6 +6,7 @@
 ;; Created:  2009-11-17
 ;; Version:  1.0
 ;; Keywords: epoch time calendar
+;; Package-Requires: ((emacs "24.3"))
 ;;
 ;; This file is not part of GNU Emacs.
 ;;
@@ -39,8 +40,8 @@
 
 ;;; Code:
 
-;; cl
-(with-no-warnings (require 'cl-lib))
+;; requires
+(require 'cl-lib)
 
 ;; widget
 (require 'widget)
@@ -248,9 +249,9 @@ those from the current time."
     ;; create unique examples list and all times list
     (when times
       (dolist (time (epoch-parse-times times))
-        (pushnew time time-examples :test '=)))
+        (cl-pushnew time time-examples :test '=)))
     (dolist (times epoch-time-examples)
-      (pushnew times time-examples :test '=))
+      (cl-pushnew times time-examples :test '=))
     (setq time-examples (nreverse time-examples))
     (setq all-times (sort all-times '<))
     ;; last time
@@ -287,7 +288,7 @@ those from the current time."
                    :value "+"
                    :notify `(lambda (&rest ignore)
                               (let ((time-epoch (widget-value widget-time-epoch)))
-                                (pushnew (string-to-number time-epoch) epoch-time-examples)
+                                (cl-pushnew (string-to-number time-epoch) epoch-time-examples)
                                 (kill-buffer nil)
                                 (epoch-menu ,times))))
     (widget-insert "\n\n")

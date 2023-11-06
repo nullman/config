@@ -78,7 +78,7 @@
 
 ;;; Code:
 
-;; cl
+;; requires
 (require 'cl-lib)
 
 ;; customize group

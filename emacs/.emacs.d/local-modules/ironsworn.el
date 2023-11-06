@@ -6,6 +6,7 @@
 ;; Created:  2022-03-30
 ;; Version:  1.0
 ;; Keywords: game
+;; Package-Requires: ((emacs "24.3"))
 ;;
 ;; This file is not part of GNU Emacs.
 ;;
@@ -50,7 +51,8 @@
 
 ;;; Code:
 
-;; widget
+;; requires
+(require 'cl-lib)
 (require 'widget)
 
 ;; customize group
@@ -190,9 +192,9 @@ will be used. Otherwise, a list will be presented to pick from."
     ;; create unique examples list and all times list
     (when times
       (dolist (time (ironsworn-parse-times times))
-        (pushnew time time-examples :test '=)))
+        (cl-pushnew time time-examples :test '=)))
     (dolist (times ironsworn-time-examples)
-      (pushnew times time-examples :test '=))
+      (cl-pushnew times time-examples :test '=))
     (setq time-examples (nreverse time-examples))
     (setq all-times (sort all-times '<))
     ;; last time

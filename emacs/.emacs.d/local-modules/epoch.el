@@ -6,6 +6,7 @@
 ;; Created:  2009-11-17
 ;; Version:  1.0
 ;; Keywords: epoch time calendar
+;; Package-Requires: ((emacs "24.3"))
 ;;
 ;; This file is not part of GNU Emacs.
 ;;
@@ -56,7 +57,8 @@
 
 ;;; Code:
 
-;; widget
+;; requires
+(require 'cl-lib)
 (require 'widget)
 
 ;; use UTC timezone
@@ -83,7 +85,8 @@ With optional DIVISOR, truncate ARG/DIVISOR."
 ;; float to string
 (defun float-to-string (num)
   "Return string version of float NUM.
-\nIf NUM ends with '.0', that part is removed."
+
+If NUM ends with '.0', that part is removed."
   (replace-regexp-in-string "\\.0$" "" (number-to-string num)))
 
 ;; time to epoch conversion
@@ -161,7 +164,8 @@ consistent time."
 ;; parse times
 (defun epoch-parse-times (times)
   "Return a list of Emacs times from parsing TIMES.
-\nSupported types are listed in the `epoch-parse-time' function
+
+Supported types are listed in the `epoch-parse-time' function
 definition."
   (remove nil (mapcar 'epoch-parse-time times)))
 
@@ -217,7 +221,8 @@ those from the current time."
 (defvar epoch-time-examples
   nil
   "Examples of `time-to-epoch' and `epoch-to-time' times queried.
-\nInitialized with `epoch-time-examples-reset' function.")
+
+Initialized with `epoch-time-examples-reset' function.")
 
 ;; reset time examples
 (defun epoch-time-examples-reset ()
@@ -247,7 +252,8 @@ those from the current time."
 ;;;###autoload
 (defun epoch (&optional times epoch)
   "Interactive epoch-to-time and time-to-epoch converter interface.
-\nIf TIMES is non-nil, it adds them to the examples list."
+
+If TIMES is non-nil, it adds them to the examples list."
   (interactive)
   ;; make sure times is a list
   (when (and times (not (listp times)))
@@ -270,9 +276,9 @@ those from the current time."
     ;; create unique examples list and all times list
     (when times
       (dolist (time (epoch-parse-times times))
-        (pushnew time time-examples :test '=)))
+        (cl-pushnew time time-examples :test '=)))
     (dolist (times epoch-time-examples)
-      (pushnew times time-examples :test '=))
+      (cl-pushnew times time-examples :test '=))
     (setq time-examples (nreverse time-examples))
     (setq all-times (sort all-times '<))
     ;; last time
