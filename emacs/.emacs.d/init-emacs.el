@@ -18160,30 +18160,35 @@ Use text properties to mark the line then call `mingus-set-NP-mark'."
         (user-error "Could not find system command: %s" id3tag))
       (when details
         (cl-labels
-            ((get-detail (field)
+            ((expand-mpd-file (file)
+                              (expand-file-name (concat mingus-mpd-music-dir file)))
+             (get-detail (field)
                          (or (plist-get details field) ""))
              (format-name (name)
-                          (substring (concat name ":      ") 0 8))
-             (update-id3tag (arg val)
-                            (start-process process-name nil id3tag
-                                           (concat "--" arg "=\"" val "\""))))
+                          (substring (concat name ":      ") 0 8)))
           (let ((buffer (get-buffer-create buffer-name))
-                (fields `(("File" ,(get-detail 'file) "file" 70)
-                          ("Artist" ,(get-detail 'Artist) "artist" 70)
-                          ("Album" ,(get-detail 'Album) "album" 70)
-                          ("Title" ,(get-detail 'Title) "song" 70)
-                          ("Track" ,(get-detail 'Track) "track" 5)
-                          ("Year" ,(get-detail 'Date) "year" 4)
-                          ("Genre" ,(get-detail 'Genre) "genre" nil))))
+                (file (expand-mpd-file (get-detail 'file)))
+                (fields `(("file" "File" ,(get-detail 'file) 70)
+                          ("artist" "Artist" ,(get-detail 'Artist) 70)
+                          ("album" "Album" ,(get-detail 'Album) 70)
+                          ("song" "Title" ,(get-detail 'Title) 70)
+                          ("track" "Track" ,(get-detail 'Track) 5)
+                          ("year" "Year" ,(get-detail 'Date) 4)
+                          ("genre" "Genre" ,(get-detail 'Genre) nil))))
             (with-current-buffer buffer
               (erase-buffer)
               (kill-all-local-variables)
+              (setq-local process-name process-name)
+              (setq-local id3tag id3tag)
               (setq-local details details)
+              (setq-local genres genres)
+              (setq-local file file)
+              (setq-local fields fields)
               (widget-insert (concat (propertize "Edit ID3 Tags" 'face 'font-lock-keyword-face) "\n\n"))
               (dolist (x fields)
-                (let ((name (car x))
-                      (val (cadr x))
-                      (tag (caddr x))
+                (let ((tag (car x))
+                      (name (cadr x))
+                      (val (caddr x))
                       (size (cadddr x)))
                   (widget-insert (propertize (format-name name) 'face 'font-lock-keyword-face))
                   (cond
@@ -18203,13 +18208,28 @@ Use text properties to mark the line then call `mingus-set-NP-mark'."
                                                            :value ,val
                                                            :size ,size))))))
                   (widget-insert "\n")))
-              (widget-insert "\n\n")
               (widget-create 'push-button
                              :value "Save"
                              :notify (lambda (&rest ignore)
-                                       (when (not (string= (get-detail 'Artist) (widget-value wid-artist)))
-                                         (update-id3tag "artist" (widget-value wid-artist)))
-                                       (kill-buffer nil)))
+                                       (cl-labels
+                                           ((update-id3tag (arg val file)
+                                                           (start-process process-name nil id3tag
+                                                                          (concat "--" arg "=\"" val "\"")
+                                                                          file)))
+                                         (dolist (x (reverse fields)) ; reverse fields so file rename happens last
+                                           (let* ((tag (car x))
+                                                  (val (caddr x))
+                                                  (new-val (funcall `(lambda () (widget-value ,(intern (concat "wid-" tag)))))))
+                                             (when (not (string= val new-val))
+                                               (cond
+                                                ((string= tag "file")
+                                                 (rename-file file (expand-mpd-file new-val)))
+                                                ((string= tag "genre")
+                                                 (let ((num (number-to-string (cdr (assoc new-val genres)))))
+                                                   (update-id3tag tag num)))
+                                                (t
+                                                 (update-id3tag tag new-val))))))
+                                         (kill-buffer nil))))
               (widget-insert "  ")
               (widget-create 'push-button
                              :value "Cancel"
