@@ -214,35 +214,40 @@
     driSupport32Bit = true;
   };
 
-  ## nvidia
-  #services.xserver.videoDrivers = [ "nvidia" ];
-  #hardware.nvidia = {
-  #  # modesetting is needed for most wayland compositors
-  #  modesetting.enable = true;
-  #  # power management (experimental, and can cause sleep/suspend to fail)
-  #  powerManagement.enable = false;
-  #  # fine-grained power management; turns off GPU when not in use
-  #  # (experimental, and only works on modern Nvidia GPUs -- Turing or newer)
-  #  powerManagement.finegrained = false;
-  #  # open source version of nvidia
-  #  # Turing and later architectures only
-  #  # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus
-  #  # only available on driver 515.43.04+
-  #  open = false;
-  #  # enable nvidia settings menu
-  #  nvidiaSettings = true;
-  #  # select appropriate driver version [optional]
-  #  #package = config.boot.kernelPackages.nvidiaPackages.stable;
-  #  package = config.boot.kernelPackages.nvidiaPackages.legacy_470;
-  #};
+  # nvidia
+  services.xserver.videoDrivers = [ "nvidia" ];
+  hardware.nvidia = {
+    # modesetting is needed for most wayland compositors
+    modesetting.enable = true;
+    # power management (experimental, and can cause sleep/suspend to fail)
+    powerManagement.enable = false;
+    # fine-grained power management; turns off GPU when not in use
+    # (experimental, and only works on modern Nvidia GPUs -- Turing or newer)
+    powerManagement.finegrained = false;
+    # open source version of nvidia
+    # Turing and later architectures only
+    # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus
+    # only available on driver 515.43.04+
+    open = false;
+    # enable nvidia settings menu
+    nvidiaSettings = true;
+    # select appropriate driver version [optional]
+    #package = config.boot.kernelPackages.nvidiaPackages.stable;
+    #package = config.boot.kernelPackages.nvidiaPackages.legacy_470;
+  };
 
-  ## nvidia prime
-  ## for laptops with intel and nvidia graphics cards
-  #hardware.nvidia.prime = {
-  #  # get bus id using: sudo lshw -c display
-  #  intelBusId = "PCI:0:2:0";
-  #  nvidiaBusId = "PCI:1:0:0";
-  #};
+  # nvidia prime
+  # for laptops with intel and nvidia graphics cards
+  hardware.nvidia.prime = {
+    # get bus id using: sudo lshw -c display
+    intelBusId = "PCI:0:2:0";
+    nvidiaBusId = "PCI:1:0:0";
+    sync.enable = true;
+    #offload = {
+    #  enable = true;
+    #  enableOffloadCmd = true;
+    #};
+  };
 
   # x11
   services.xserver = {
