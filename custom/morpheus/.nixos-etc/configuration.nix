@@ -229,7 +229,7 @@
   #  nvidiaSettings = true;
   #  # select appropriate driver version [optional]
   #  #package = config.boot.kernelPackages.nvidiaPackages.stable;
-  #  package = config.boot.kernelPackages.nvidiaPackages.legacy_470;
+  #  #package = config.boot.kernelPackages.nvidiaPackages.legacy_470;
   #};
 
   ## nvidia prime
@@ -238,6 +238,12 @@
   #  # get bus id using: sudo lshw -c display
   #  intelBusId = "PCI:0:2:0";
   #  nvidiaBusId = "PCI:1:0:0";
+  #  #sync.enable = true;
+  #  reverseSync.enable = true;
+  #  #offload = {
+  #  #  enable = true;
+  #  #  enableOffloadCmd = true;
+  #  #};
   #};
 
   # x11
