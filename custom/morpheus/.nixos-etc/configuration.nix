@@ -892,6 +892,7 @@
     magic-wormhole
     ncgopher
     nyxt
+    pidgin
     slack
     syncterm
     transmission-gtk
