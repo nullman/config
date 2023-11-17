@@ -15,13 +15,6 @@
     #<home-manager/nixos>
   ];
 
-  swapDevices = [
-    {
-      device = "/home/swapfile";
-      size = 32768;                     # 32 GB
-    }
-  ];
-
   ## imports
   #imports = [
   #  ./hardware-configuration.nix
@@ -38,6 +31,13 @@
     efi.canTouchEfiVariables = true;
   };
   fileSystems."/".options = [ "noatime" ];
+
+  swapDevices = [
+    {
+      device = "/home/swapfile";
+      size = 32768;                     # 32 GB
+    }
+  ];
 
   # networking
   networking = {
@@ -238,6 +238,9 @@
     #package = config.boot.kernelPackages.nvidiaPackages.stable;
     #package = config.boot.kernelPackages.nvidiaPackages.legacy_470;
   };
+
+  # use 470 driver for GeForce GTX 770
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.legacy_470;
 
   ## nvidia prime
   ## for laptops with intel and nvidia graphics cards
