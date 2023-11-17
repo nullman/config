@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2023-11-15 20:55 (kyle)>
+  #+TIMESTAMP: <2023-11-16 21:50 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -26128,7 +26128,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
           (interactive)
           (message "Updating mpc (Music Player Client)...")
           ;;(shell-command "mpc --wait update > /dev/null 2>&1")
-          (mpd-update mingus-mpd-music-dir))
+          (mpd-update mpd-inter-conn mingus-mpd-music-dir))
 
         ;; (defun mingus-edit-id3tag--finish-edit ()
         ;;   "Save any id3 tag changes and close the edit window."
@@ -26235,43 +26235,112 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         ;;             (goto-char (point-min)))
         ;;           (switch-to-buffer buffer))))))
 
-        (defun mingus-edit-id3tag--finish-edit ()
-          "Save any id3 tag changes and close the edit window."
-          (interactive)
-          ;;(message "%s" (buffer-substring-no-properties (point-min) (point-max)))
-          (cl-labels
-              ((update-id3tag (arg val file)
-                              (start-process process-name nil id3tag
-                                             (concat "--" arg "=\"" val "\"")
-                                             file)))
-            (dolist (x (reverse fields)) ; reverse fields so file rename happens last
-              (let* ((tag (car x))
-                     (val (caddr x))
-                     (new-val (funcall `(lambda () (widget-value ,(intern (concat "wid-" tag)))))))
-                (when (not (string= val new-val))
-                  (cond
-                   ((string= tag "file")
-                    (rename-file file (expand-mpd-file new-val)))
-                   ((string= tag "genre")
-                    (let ((num (number-to-string (cdr (assoc new-val genres)))))
-                      (update-id3tag tag num file)))
-                   (t
-                    (update-id3tag tag new-val file))))))
-            (kill-buffer)))
+        (defun mingus-id3tag-info (file)
+          "Return plist of id3tag information of FILE."
+          (let ((id3info "id3info")
+                (fields '(("TPE1" Artist)
+                          ("TALB" Album)
+                          ("TIT2" Title)
+                          ;;("COMM" Comment)
+                          ;;("" Desc)
+                          ("TYER" Year)
+                          ("TRCK" Track)
+                          ("TCON" Genre))))
+            (unless (executable-find id3info)
+              (user-error "Could not find system command: %s" id3info))
+            (let ((info (shell-command-to-string (concat id3info " \"" file "\"")))
+                  result)
+              (dolist (x fields)
+                (let ((tag (car x))
+                      (name (cadr x)))
+                  (when (string-match (concat "^=== " tag " [^:]*: \\(.*\\)$") info)
+                    (let ((val (match-string 1 info)))
+                      (setq result
+                            (cond
+                             ((string= tag "TCON")
+                              (plist-put result 'Genre
+                                         (string-to-number
+                                          (substring val 1 (1- (length val))))))
+                             ;; ((string= tag "TRCK")
+                             ;;  (let* ((split (split-string val "/"))
+                             ;;         (track (car split))
+                             ;;         (total (cadr split)))
+                             ;;    (plist-put
+                             ;;     (if total
+                             ;;         (plist-put result 'Total total)
+                             ;;       result) 'Track track)))
+                             (t
+                              (plist-put result name val))))))))
+              result)))
 
-        (defun mingus-edit-id3tag--abort-edit ()
-          "Close the edit window without saving changes."
-          (interactive)
-          ;;(message "%s" (buffer-substring-no-properties (point-min) (point-max)))
-          (kill-buffer))
+        (defun mingus-id3tag-set (file field value)
+          "Set id3tag information of FIELD in FILE to VALUE."
+          (let ((id3tag "id3tag")
+                (process-name "mingus-id3tag-set-process")
+                (fields '((Artist "artist")
+                          (Album "album")
+                          (Title "song")
+                          (Track "track")
+                          (Total "total")
+                          (Year "year")
+                          (Genre "genre"))))
+            (unless (executable-find id3tag)
+              (user-error "Could not find system command: %s" id3tag))
+            (when (eq field 'Track)
+              (let* ((split (split-string value "/"))
+                     (track (car split))
+                     (total (cadr split)))
+                (mingus-id3tag-set file 'Total total)
+                (setq value track)))
+            (start-process
+             process-name nil id3tag
+             (concat "--" (cadr (assoc field fields)) "="
+                     (if (eq field 'Genre)
+                         (number-to-string value)
+                       value))
+             file)))
 
-        (defun mingus-edit-id3tag ()
-          "Edit id3 tag of the selected song."
-          (interactive)
+        ;; (defun mingus-edit-id3tag--finish-edit ()
+        ;;   "Save any id3 tag changes and close the edit window."
+        ;;   (interactive)
+        ;;   ;;(message "%s" (buffer-substring-no-properties (point-min) (point-max)))
+        ;;   (dolist (x (reverse fields)) ; reverse fields so file rename happens last
+        ;;     (let* ((tag (car x))
+        ;;            (val (caddr x))
+        ;;            (new-val (funcall `(lambda () (widget-value ,(intern (concat "wid-" tag)))))))
+        ;;       (when (not (string= val new-val))
+        ;;         (cond
+        ;;          ((string= tag "file")
+        ;;           (rename-file file (expand-mpd-file new-val)))
+        ;;          ((string= tag "genre")
+        ;;           (let ((num (number-to-string (cdr (assoc new-val genres)))))
+        ;;             (update-id3tag tag num file)))
+        ;;          (t
+        ;;           (update-id3tag tag new-val file))))))
+        ;;   (kill-buffer))
+
+        ;; (defun mingus-edit-id3tag--abort-edit ()
+        ;;   "Close the edit window without saving changes."
+        ;;   (interactive)
+        ;;   ;;(message "%s" (buffer-substring-no-properties (point-min) (point-max)))
+        ;;   (kill-buffer))
+
+      (defun mingus-edit-id3tag ()
+        "Edit id3 tag of the selected song."
+        (interactive)
+        (cl-labels
+            ((expand-mpd-file (file)
+                              (expand-file-name (concat mingus-mpd-music-dir file)))
+             (get-info (info field)
+                       (or (plist-get info field) ""))
+             (format-name (name)
+                          (substring (concat name ":      ") 0 8))
+             (genre-id-to-name (genres name)
+                               (caar (remove-if-not (lambda (x) (= (cdr x) name))
+                                                    genres))))
           (let ((buffer-name "*Mingus Edit ID3 Tags*")
-                (process-name "mingus-edit-id3tag-process")
                 (id3tag "id3tag")
-                (details (mingus-get-details))
+                (file (plist-get (mingus-get-details) 'file))
                 (genres '(("Blues" . 0)
                           ("Classic Rock" . 1)
                           ("Country" . 2)
@@ -26466,89 +26535,78 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
                           ("Psybient" . 191))))
             (unless (executable-find id3tag)
               (user-error "Could not find system command: %s" id3tag))
-            (when details
-              (cl-labels
-                  ((expand-mpd-file (file)
-                                    (expand-file-name (concat mingus-mpd-music-dir file)))
-                   (get-detail (field)
-                               (or (plist-get details field) ""))
-                   (format-name (name)
-                                (substring (concat name ":      ") 0 8)))
-                (let ((buffer (get-buffer-create buffer-name))
-                      (file (expand-mpd-file (get-detail 'file)))
-                      (fields `(("file" "File" ,(get-detail 'file) 70)
-                                ("artist" "Artist" ,(get-detail 'Artist) 70)
-                                ("album" "Album" ,(get-detail 'Album) 70)
-                                ("song" "Title" ,(get-detail 'Title) 70)
-                                ("track" "Track" ,(get-detail 'Track) 5)
-                                ("year" "Year" ,(get-detail 'Date) 4)
-                                ("genre" "Genre" ,(get-detail 'Genre) nil))))
-                  (with-current-buffer buffer
-                    (erase-buffer)
-                    (kill-all-local-variables)
-                    (setq-local process-name process-name)
-                    (setq-local id3tag id3tag)
-                    (setq-local details details)
-                    (setq-local genres genres)
-                    (setq-local file file)
-                    (setq-local fields fields)
-                    (widget-insert (concat (propertize "Edit ID3 Tags" 'face 'font-lock-keyword-face) "\n\n"))
-                    (dolist (x fields)
-                      (let ((tag (car x))
-                            (name (cadr x))
-                            (val (caddr x))
-                            (size (cadddr x)))
-                        (widget-insert (propertize (format-name name) 'face 'font-lock-keyword-face))
-                        (cond
-                         ((string= tag "genre")
-                          (funcall `(lambda ()
-                                      (setq-local ,(intern (concat "wid-" tag))
-                                                  (widget-create 'menu-choice
-                                                                 :tag "Select"
-                                                                 :value ,val
-                                                                 ,@(mapcar (lambda (x)
-                                                                             `'(choice-item ,(car x)))
-                                                                           genres))))))
-                         (t
-                          (funcall `(lambda ()
-                                      (setq-local ,(intern (concat "wid-" tag))
-                                                  (widget-create 'editable-field
-                                                                 :value ,val
-                                                                 :size ,size))))))
-                        (widget-insert "\n")))
-                    (widget-create 'push-button
-                                   :value "Save"
-                                   :notify (lambda (&rest _)
-                                             (cl-labels
-                                                 ((update-id3tag (arg val file)
-                                                                 (start-process
-                                                                  process-name nil id3tag
-                                                                  (concat "--" arg "=\"" val "\" \"" file "\""))))
-                                               (dolist (x (reverse fields)) ; reverse fields so file rename happens last
-                                                 (let* ((tag (car x))
-                                                        (val (caddr x))
-                                                        (new-val (funcall `(lambda () (widget-value ,(intern (concat "wid-" tag)))))))
-                                                   (when (not (string= val new-val))
-                                                     (cond
-                                                      ((string= tag "file")
-                                                       (rename-file file (expand-mpd-file new-val)))
-                                                      ((string= tag "genre")
-                                                       (let ((num (number-to-string (cdr (assoc new-val genres)))))
-                                                         (update-id3tag tag num file)))
-                                                      (t
-                                                       (update-id3tag tag new-val file))))))
-                                               (kill-buffer))))
-                    (widget-insert "  ")
-                    (widget-create 'push-button
-                                   :value "Cancel"
-                                   :notify (lambda (&rest _)
-                                             (kill-buffer)))
-                    (set-buffer-modified-p nil)
-                    (use-local-map widget-keymap)
-                    (widget-setup)
-                    (switch-to-buffer buffer)
-                    (goto-char (point-min))
-                    (widget-forward 1)))))))
+            (let* ((buffer (get-buffer-create buffer-name))
+                   (info (mingus-id3tag-info (expand-mpd-file file)))
+                   (fields `((File "File" ,file 70)
+                             (Artist "Artist" ,(get-info info 'Artist) 70)
+                             (Album "Album" ,(get-info info 'Album) 70)
+                             (Title "Title" ,(get-info info 'Title) 70)
+                             (Track "Track" ,(get-info info 'Track) 5)
+                             (Year "Year" ,(get-info info 'Year) 4)
+                             (Genre "Genre" ,(genre-id-to-name genres (get-info info 'Genre)) nil))))
+              (with-current-buffer buffer
+                (erase-buffer)
+                (kill-all-local-variables)
+                (setq-local file file)
+                (setq-local info info)
+                (setq-local genres genres)
+                (setq-local fields fields)
+                (widget-insert (concat (propertize "Edit ID3 Tags" 'face 'font-lock-keyword-face) "\n\n"))
+                (dolist (x fields)
+                  (let ((field (car x))
+                        (name (cadr x))
+                        (val (caddr x))
+                        (size (cadddr x)))
+                    (widget-insert (propertize (format-name name) 'face 'font-lock-keyword-face))
+                    (cond
+                     ((eq field 'Genre)
+                      (funcall `(lambda ()
+                                  (setq-local ,(intern (concat "wid-" name))
+                                              (widget-create 'menu-choice
+                                                             :tag "Select"
+                                                             :value ,val
+                                                             ,@(mapcar (lambda (x)
+                                                                         `'(choice-item ,(car x)))
+                                                                       genres))))))
+                     (t
+                      (funcall `(lambda ()
+                                  (setq-local ,(intern (concat "wid-" name))
+                                              (widget-create 'editable-field
+                                                             :value ,val
+                                                             :size ,size))))))
+                    (widget-insert "\n")))
+                (widget-create 'push-button
+                               :value "OK"
+                               :notify (lambda (&rest _)
+                                         (cl-labels
+                                             ((expand-mpd-file (file)
+                                                               (expand-file-name (concat mingus-mpd-music-dir file))))
+                                           (let ((file (expand-file-name file)))
+                                             (dolist (x (reverse fields)) ; reverse fields so file rename happens last
+                                               (let* ((field (car x))
+                                                      (name (cadr x))
+                                                      (val (caddr x))
+                                                      (new-val (funcall `(lambda () (widget-value ,(intern (concat "wid-" name)))))))
+                                                 (when (not (string= val new-val))
+                                                   (cond
+                                                    ((eq field 'File)
+                                                     (rename-file file (expand-mpd-file new-val)))
+                                                    ((eq field 'Genre)
+                                                     (mingus-id3tag-set file field (cdr (assoc new-val genres))))
+                                                    (t
+                                                     (mingus-id3tag-set file field new-val))))))
+                                             (kill-buffer)))))
+                (widget-insert "  ")
+                (widget-create 'push-button
+                               :value "Cancel"
+                               :notify (lambda (&rest _)
+                                         (kill-buffer)))
+                (set-buffer-modified-p nil)
+                (use-local-map widget-keymap)
+                (widget-setup)
+                (switch-to-buffer buffer)
+                (goto-char (point-min))
+                (widget-forward 1)))))))
 
         ;;-----------------------------------------------------------------------
         ;;;; Mingus Fetch Lyrics Commands

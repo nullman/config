@@ -852,6 +852,7 @@
     gpart
     hardinfo
     hyperfine
+    id3v2
     inetutils
     lsd
     miller
