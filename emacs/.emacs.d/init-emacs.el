@@ -17402,7 +17402,7 @@ Use text properties to mark the line then call `mingus-set-NP-mark'."
   (defun mingus-mpc-update ()
     "Update (refresh) mpc (Music Player Client)"
     (interactive)
-    (message "Updating mpc (Music Player Client)...")
+    ;;(message "Updating mpc (Music Player Client)...")
     ;;(shell-command "mpc --wait update > /dev/null 2>&1")
     (mpd-update mpd-inter-conn mingus-mpd-music-dir))
 

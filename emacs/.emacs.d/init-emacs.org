@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2023-11-17 12:51 (kyle)>
+  #+TIMESTAMP: <2023-11-18 12:58 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -26126,7 +26126,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         (defun mingus-mpc-update ()
           "Update (refresh) mpc (Music Player Client)"
           (interactive)
-          (message "Updating mpc (Music Player Client)...")
+          ;;(message "Updating mpc (Music Player Client)...")
           ;;(shell-command "mpc --wait update > /dev/null 2>&1")
           (mpd-update mpd-inter-conn mingus-mpd-music-dir))
 
