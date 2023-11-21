@@ -21,3 +21,4 @@ sftp://morpheus/home/data/media sftp:media
 smb://morpheus/media smb:media
 file:///mnt/synology mnt:synology
 smb://synology smb:synology
+smb://dozer/Share smb:dozer

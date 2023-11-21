@@ -233,7 +233,6 @@
   #  #package = config.boot.kernelPackages.nvidiaPackages.stable;
   #  #package = config.boot.kernelPackages.nvidiaPackages.legacy_470;
   #};
-
   ## nvidia prime
   ## for laptops with intel and nvidia graphics cards
   #hardware.nvidia.prime = {
