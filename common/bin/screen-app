@@ -36,6 +36,7 @@ Launch APPLICATION in a specific screen window.
     news   tin                 15
     rss    snownews            16
     stocks mop                 17
+    crypto cointop             18
     cal    wyrd                18
     calc   orpie               19
     calc   rpncalc             19
@@ -60,6 +61,7 @@ case "$1" in
     slrn) screen -t news 15 bash -c "sort -o ${HOME}/.slrn_gmane ${HOME}/.slrn_gmane ; slrn --nntp -n -h news.gmane.org -f ${HOME}/.slrn_gmane" ;;
     rss|snownews) screen -t rss 16 snownews ;;
     stocks) screen -t stocks 17 mop ;;
+    crypto) screen -t crypto 18 cointop ;;
     cal|wyrd) screen -t calendar 18 wyrd ;;
     calc|orpie) screen -t calculator 19 orpie ;;
     rpncalc) screen -t calculator 19 rpncalc ;;
@@ -96,7 +98,7 @@ case "$1" in
         ${HOME}/bin/screen_app news
         ${HOME}/bin/screen_app rss
         ${HOME}/bin/screen_app stocks
-        ${HOME}/bin/screen_app cal
+        ${HOME}/bin/screen_app crypto
         ${HOME}/bin/screen_app calc
         ${HOME}/bin/screen_app spell
         ;;
@@ -119,7 +121,7 @@ case "$1" in
         ${HOME}/bin/screen_app news
         ${HOME}/bin/screen_app rss
         ${HOME}/bin/screen_app stocks
-        ${HOME}/bin/screen_app cal
+        ${HOME}/bin/screen_app cypto
         ${HOME}/bin/screen_app calc
         ${HOME}/bin/screen_app spell
         ;;

@@ -94,6 +94,7 @@
       djgpp_i586 = prev.callPackage /home/kyle/.nixos/pkgs/djgpp { targetArchitecture = "i586"; };
       djgpp_i686 = prev.callPackage /home/kyle/.nixos/pkgs/djgpp { targetArchitecture = "i686"; };
       gcc-ia16 = prev.callPackage /home/kyle/.nixos/pkgs/gcc-ia16 {};
+      mtkclient = prev.callPackage /home/kyle/.nixos/pkgs/mtkclient {};
       syncterm = prev.callPackage /home/kyle/.nixos/pkgs/syncterm {};
     })
   ];
@@ -754,7 +755,9 @@
     audacious
     audacity
     blender
+    calibre
     celluloid
+    electrum
     evince
     gimp
     gphoto2
@@ -793,8 +796,10 @@
     grip id3lib
     gtkimageview
     handbrake libdvdcss libaacs libbluray
+    makemkv
     #mediawriter
     meld
+    mtkclient
     nur.repos.wolfangaukang.vdhcoapp
     simplescreenrecorder
     #upscayl
@@ -888,6 +893,7 @@
     betterbird
     bore-cli
     chromium
+    cointop
     dino
     discord
     element-desktop
@@ -898,6 +904,7 @@
     google-chrome
     kristall
     magic-wormhole
+    mop
     ncgopher
     nyxt
     pidgin

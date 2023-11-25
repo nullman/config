@@ -2292,6 +2292,8 @@ alias scnews="\${HOME}/bin/screen-app news"
 alias scrss="\${HOME}/bin/screen-app rss"
 #        scstocks                screen-app stocks
 alias scstocks="\${HOME}/bin/screen-app stocks"
+#        sccrypto                screen-app crypto
+alias sccrypto="\${HOME}/bin/screen-app crypto"
 #        sccal                   screen-app cal
 alias sccal="\${HOME}/bin/screen-app cal"
 #        sccalc                  screen-app calc
