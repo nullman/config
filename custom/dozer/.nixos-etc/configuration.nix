@@ -94,7 +94,7 @@
       djgpp_i586 = prev.callPackage /home/kyle/.nixos/pkgs/djgpp { targetArchitecture = "i586"; };
       djgpp_i686 = prev.callPackage /home/kyle/.nixos/pkgs/djgpp { targetArchitecture = "i686"; };
       gcc-ia16 = prev.callPackage /home/kyle/.nixos/pkgs/gcc-ia16 {};
-      mtkclient = prev.callPackage /home/kyle/.nixos/pkgs/mtkclient {};
+      #mtkclient = prev.callPackage /home/kyle/.nixos/pkgs/mtkclient {};
       syncterm = prev.callPackage /home/kyle/.nixos/pkgs/syncterm {};
     })
   ];
@@ -182,6 +182,9 @@
 
   # shells
   programs.zsh.enable = true;
+
+  # adb
+  programs.adb.enable = true;
 
   # steam
   programs.steam.enable = true;
@@ -441,6 +444,7 @@
     shell = "/run/current-system/sw/bin/zsh";
     initialPassword = "nixos";
     extraGroups = [
+      "adbusers"
       "audio"
       "cdrom"
       "disk"
@@ -799,8 +803,9 @@
     makemkv
     #mediawriter
     meld
-    mtkclient
+    #mtkclient
     nur.repos.wolfangaukang.vdhcoapp
+    scrcpy
     simplescreenrecorder
     #upscayl
     #x48
@@ -892,6 +897,7 @@
     # internet
     betterbird
     bore-cli
+    brave
     chromium
     cointop
     dino
