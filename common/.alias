@@ -880,28 +880,36 @@ alias adb-screenshot-landscape="(
 alias adb-video-record="adb shell screenrecord /sdcard/animation.mp4"
 #        adb-video-copy          copy a recorded video off of device
 alias adb-video-copy="adb pull /sdcard/animation.mp4 android-device-screenshot-\$(date '+%Y-%m-%d-%H%M%S').mp4"
-#        adb-sync-titanium-backup-get  copy titanium backup files from device to computer
-alias adb-sync-titanium-backup-get="
-    indir=\$(echo \"/storage/\$(adb shell ls -1 /storage/ | grep -v emulated | grep -v self)/TitaniumBackup/\")
-    outdir=\"${home}/data/backup/\"
-    adb-sync --delete \"\${indir}\" \"\${outdir}\""
-    #!adb-sync --show-progress --del pull \"\${indir}\" \"\${outdir}\""
+#!#        adb-sync-titanium-backup-get  copy titanium backup files from device to computer
+#!alias adb-sync-titanium-backup-get="
+#!    indir=\"/sdcard/TitaniumBackup/\"
+#!    outdir=\"${home}/data/backup/\"
+#!    adb-sync --delete \"\${indir}\" \"\${outdir}\""
+#!    #indir=\$(echo \"/storage/\$(adb shell ls -1 /storage/ | grep -v emulated | grep -v self)/TitaniumBackup/\")
+#!    #!adb-sync --show-progress --del pull \"\${indir}\" \"\${outdir}\""
 #        adb-sync-home-pages-put  copy home-pages directory from computer to device
 alias adb-sync-home-pages-put="
     indir=\"\${HOME}/config/common/home-pages\"
-    outdir=\$(echo \"/storage/\$(adb shell ls -1 /storage/ | grep -v emulated | grep -v self)/Download/\")
+    outdir=\"/sdcard/Download/\"
     adb-sync --delete \"\${indir}\" \"\${outdir}\""
+    #outdir=\$(echo \"/storage/\$(adb shell ls -1 /storage/ | grep -v emulated | grep -v self)/Download/\")
     #!adb-sync --show-progress --del push \"\${indir}\" \"\${outdir}\""
 #        adb-sync-music-put       copy /home/data/media/Audio/Music from computer to device
 alias adb-sync-music-put="
     indir=\"${home}/data/media/Audio\"
-    outdir=\$(echo \"/storage/\$(adb shell ls -1 /storage/ | grep -v emulated | grep -v self)/Music/\")
+    outdir=\"/sdcard/Music/\"
     adb-sync --delete \"\${indir}/Music/\" \"\${outdir}\"
     find \"\${indir}/Playlists/\" -name \"*.m3u\" | while read -r file ; do
         adb push \"\${file}\" \"\${outdir}\"
     done"
+    #outdir=\$(echo \"/storage/\$(adb shell ls -1 /storage/ | grep -v emulated | grep -v self)/Music/\")
     #!adb-sync --show-progress --del push \"\${indir}/Music/\" \"\${outdir}\"
     #!adb-sync \"\${indir}/Music/Playlists/\" \"\${outdir}\""
+#        adb-sync-download-get    copy backup files from device to computer
+alias adb-sync-download-get="
+    indir=\"/sdcard/Download/\"
+    outdir=\"/home/data/backup/android/Download/\"
+    adb-sync --reverse --delete \"\${indir}\" \"\${outdir}\""
 
 #
 # android studio
