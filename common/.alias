@@ -721,9 +721,9 @@ alias iw-nullman="iwctl station device ${networkdevice} connect nullman"
 #
 # bluetooth
 #
-# bluetoothctl-hd350bt-connect   connect to Sennheiser HD350BT headphones via bluetooth
+# bluetoothctl-hd350bt-connect   connect to Sennheiser HD 350BT headphones via bluetooth
 alias bluetoothctl-hd350bt-connect="bluetoothctl connect 80:C3:BA:0E:CB:E5"
-# bluetoothctl-hd350bt-disconnect  disconnect from Sennheiser HD350BT headphones via bluetooth
+# bluetoothctl-hd350bt-disconnect  disconnect from Sennheiser HD 350BT headphones via bluetooth
 alias bluetoothctl-hd350bt-disconnect="bluetoothctl disconnect 80:C3:BA:0E:CB:E5"
 
 #
