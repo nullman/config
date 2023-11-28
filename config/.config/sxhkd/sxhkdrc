@@ -270,10 +270,13 @@ super + shift + v
     xrandr --output $(xrandr | grep ' connected ' | sed 's/ .*//' | head -n 1) --auto && \
     notify-send --expire-time=2000 'Resetting video'
 
-# connect to headphones via bluetooth
+# connect to sennheiser hd350bt headphones
 super + alt + b
-    notify-send --expire-time=2000 'Connecting to Sennheiser HD 350BT Headphones via Bluetooth' && \
+    notify-send --expire-time=2000 'Connecting to Sennheiser HD350BT Headphones' && \
     bluetoothctl connect 80:C3:BA:0E:CB:E5
+super + shift + alt + b
+    notify-send --expire-time=2000 'Disconnecting from Sennheiser HD350BT Headphones' && \
+    bluetoothctl disconnect 80:C3:BA:0E:CB:E5
 
 # nixos-rebuild switch
 super + alt + ctrl + r
