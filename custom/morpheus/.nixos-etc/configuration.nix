@@ -294,6 +294,7 @@
   #hardware.pulseaudio.extraConfig = "load-module module-combine-sink";
   #hardware.pulseaudio.extraConfig = "unload-module module-suspend-on-idle";
   security.rtkit.enable = true;
+  hardware.bluetooth.hsphfpd.enable = true;
 
   ## pipewire
   #sound.enable = true;
@@ -309,7 +310,8 @@
   # bluetooth
   hardware.bluetooth = {
     enable = true;
-    hsphfpd.enable = true;
+    #hsphfpd.enable = true;                # pulse audio
+    #hsphfpd.enable = false;               # pipewire
     settings = {
       General = {
         Enable = "Source,Sink,Media,Socket";
@@ -623,6 +625,7 @@
     nettools
     nfs-utils
     nix-index
+    ntfsprogs
     nmap
     parted
     pciutils

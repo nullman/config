@@ -310,7 +310,6 @@
     pulse.enable = true;
     jack.enable = true;
   };
-  #hardware.bluetooth.hsphfpd.enable = false;
 
   # bluetooth
   hardware.bluetooth = {
@@ -630,6 +629,7 @@
     nettools
     nfs-utils
     nix-index
+    ntfsprogs
     nmap
     parted
     pciutils
