@@ -35,10 +35,10 @@
   # networking
   networking = {
     wireless.iwd.enable = true;
-    networkmanager = {
-      enable = true;
-      wifi.backend = "iwd";
-    };
+    #networkmanager = {
+    #  enable = true;
+    #  wifi.backend = "iwd";
+    #};
   };
   networking.hostName = "mouse";
 
@@ -46,7 +46,9 @@
 
   # sysctl settings
   boot.kernel.sysctl = {
-    "vm.swappiness" = 0;                  # cat /proc/sys/vm/swappiness
+    "fs.file-max" = 524288;        # open file descriptors limit (star citizen)
+    "vm.max_map_count" = 16777216; # maxmimum number of "memory map areas" a process can have (star citizen)
+    "vm.swappiness" = 0;           # only use swap if needed; cat /proc/sys/vm/swappiness
   };
 
   # nix settings
@@ -65,6 +67,7 @@
     permittedInsecurePackages = [
       "electron-12.2.3"
       "electron-19.1.9"
+      "electron-24.8.6"
       "openssl-1.1.1u"
       "openssl-1.1.1v"
       "openssl-1.1.1w"
@@ -84,6 +87,7 @@
       djgpp_i586 = prev.callPackage /home/kyle/.nixos/pkgs/djgpp { targetArchitecture = "i586"; };
       djgpp_i686 = prev.callPackage /home/kyle/.nixos/pkgs/djgpp { targetArchitecture = "i686"; };
       gcc-ia16 = prev.callPackage /home/kyle/.nixos/pkgs/gcc-ia16 {};
+      #mtkclient = prev.callPackage /home/kyle/.nixos/pkgs/mtkclient {};
       syncterm = prev.callPackage /home/kyle/.nixos/pkgs/syncterm {};
     })
   ];
@@ -172,6 +176,9 @@
   # shells
   programs.zsh.enable = true;
 
+  # adb
+  programs.adb.enable = true;
+
   # steam
   programs.steam.enable = true;
 
@@ -242,30 +249,32 @@
   # compositor: picom
   services.picom.enable = true;
 
-  # pulse audio
-  sound.enable = true;
-  hardware.pulseaudio.enable = true;
-  hardware.pulseaudio.support32Bit = true;
-  nixpkgs.config.pulseaudio = true;
-  #hardware.pulseaudio.extraConfig = "load-module module-combine-sink";
-  #hardware.pulseaudio.extraConfig = "unload-module module-suspend-on-idle";
-  security.rtkit.enable = true;
-
-  ## pipewire
+  ## pulse audio
   #sound.enable = true;
+  #hardware.pulseaudio.enable = true;
+  #hardware.pulseaudio.support32Bit = true;
+  #nixpkgs.config.pulseaudio = true;
+  ##hardware.pulseaudio.extraConfig = "load-module module-combine-sink";
+  ##hardware.pulseaudio.extraConfig = "unload-module module-suspend-on-idle";
   #security.rtkit.enable = true;
-  #services.pipewire = {
-  #  enable = true;
-  #  alsa.enable = true;
-  #  alsa.support32Bit = true;
-  #  pulse.enable = true;
-  #  jack.enable = true;
-  #};
+  #hardware.bluetooth.hsphfpd.enable = true;
+
+  # pipewire
+  sound.enable = true;
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    jack.enable = true;
+  };
 
   # bluetooth
   hardware.bluetooth = {
     enable = true;
-    hsphfpd.enable = true;
+    #hsphfpd.enable = true;                # pulse audio
+    #hsphfpd.enable = false;               # pipewire
     settings = {
       General = {
         Enable = "Source,Sink,Media,Socket";
@@ -392,6 +401,7 @@
     shell = "/run/current-system/sw/bin/zsh";
     initialPassword = "nixos";
     extraGroups = [
+      "adbusers"
       "audio"
       "cdrom"
       "disk"
@@ -475,7 +485,7 @@
   services.mpd = {
     enable = true;
     user = "kyle";
-    musicDirectory = "/home/data/media/Audio/Music";
+    musicDirectory = "/home/data/media/Audio/MPD";
     playlistDirectory = "/home/data/media/Audio/Playlists";
     extraConfig = ''
       audio_output {
@@ -578,6 +588,7 @@
     nettools
     nfs-utils
     nix-index
+    ntfsprogs
     nmap
     parted
     pciutils
@@ -636,6 +647,7 @@
     hyprpaper
     hyprpicker
     i3-gaps
+    iwgtk
     keychain
     lightdm
     lightdm-slick-greeter
@@ -705,7 +717,9 @@
     #audacious
     #audacity
     #blender
+    #calibre
     #celluloid
+    #electrum
     #evince
     #gimp
     #gphoto2
@@ -713,7 +727,6 @@
     #inkscape
     ##kdenlive
     #libreoffice
-    #mpc-qt
     #mpv
     #mupdf
     #notepadqq
@@ -725,6 +738,7 @@
     ##xfce.thunar-archive-plugin
     ##xfce.thunar-media-tags-plugin
     ##xfce.thunar-volman
+    #ymuse
 
     ## utilities
     #appimage-run
@@ -744,10 +758,14 @@
     #grip id3lib
     #gtkimageview
     #handbrake libdvdcss libaacs libbluray
+    #makemkv
     ##mediawriter
     #meld
+    ##mtkclient
     #nur.repos.wolfangaukang.vdhcoapp
+    #scrcpy
     #simplescreenrecorder
+    ##upscayl
     ##x48
 
     # tui
@@ -782,6 +800,7 @@
     zenith
 
     # console
+    argc
     asciinema
     bat
     bc
@@ -804,6 +823,7 @@
     gpart
     hardinfo
     hyperfine
+    id3v2
     inetutils
     lsd
     miller
@@ -836,7 +856,9 @@
     # internet
     betterbird
     bore-cli
+    brave
     chromium
+    cointop
     dino
     discord
     element-desktop
@@ -847,8 +869,10 @@
     google-chrome
     kristall
     magic-wormhole
+    mop
     ncgopher
     nyxt
+    pidgin
     slack
     syncterm
     transmission-gtk
@@ -864,7 +888,8 @@
     #virt-manager
     #virt-viewer
     #virtualbox
-    #wine
+    ##wine
+    #wineWowPackages.stable
     #winetricks
 
     ## development
@@ -901,6 +926,7 @@
     #jetbrains.idea-community
     #jre
     #jq
+    #jqp
     #kotlin
     #lazygit
     ##libmpc
@@ -981,12 +1007,14 @@
     #eidolon
     #flare
     #gamemode
+    #gemrb
     #lutris
     #pingus
     #playonlinux
     #proton-caller
     #protontricks
     #pysolfc
+    #shattered-pixel-dungeon
     #steam
     #steam-tui
   ];

@@ -32,6 +32,7 @@
  ("nkeck72 (L29)" (location . "gopher://gopher.nkeck72.xyz/1") (handler . elpher-bookmark-jump))
  ("MeatLoTioN (Lunduke)" (location . "gopher://gopher.erb.pw/1") (handler . elpher-bookmark-jump))
  ;;("fputs (Lunduke) ???" (location . "gopher://fputs.com/1") (handler . elpher-bookmark-jump))
+ ("Nepsis (Lunduke)" (location . "gopher://bpfh.space") (handler . elpher-bookmark-jump))
 
  ;; Gemini
  ("Haiku" (location . "gemini://lofi.haiku-os.org/") (handler . elpher-bookmark-jump))

@@ -841,6 +841,7 @@
     zenith
 
     # console
+    argc
     asciinema
     bat
     bc
