@@ -787,6 +787,7 @@
     bitwarden
     easytag
     etcher
+    ffmpeg_6-full
     flameshot
     font-manager
     fontpreview
@@ -925,6 +926,7 @@
     gnome.gnome-boxes
     mame
     qemu_kvm
+    uae
     vice
     virt-manager
     virt-viewer
