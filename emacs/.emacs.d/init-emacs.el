@@ -5510,12 +5510,12 @@ If JSON-FILE is non-nil, then output is returned."
                            ("folder" . 2)))
          (type-value-list '(("bookmark" . "text/x-moz-place")
                             ("folder" . "text/x-moz-place-container")))
-         (title-guid-list '(("Bookmarks Menu" . "menu________")
-                            ("Bookmarks Toolbar" . "toolbar_____")
+         (title-guid-list '(("Bookmarks Toolbar" . "toolbar_____")
+                            ("Bookmarks Menu" . "menu________")
                             ("Other Bookmarks" . "unfiled_____")
                             ("Mobile Bookmarks" . "mobile______")))
-         (title-root-list '(("Bookmarks Menu" . "bookmarksMenuFolder")
-                            ("Bookmarks Toolbar" . "toolbarFolder")
+         (title-root-list '(("Bookmarks Toolbar" . "toolbarFolder")
+                            ("Bookmarks Menu" . "bookmarksMenuFolder")
                             ("Other Bookmarks" . "unfiledBookmarksFolder")
                             ("Mobile Bookmarks" . "mobileFolder")))
          (global-id 0)
@@ -5585,7 +5585,6 @@ If JSON-FILE is non-nil, then output is returned."
 (init-message 3 "Org Mode: Bookmarks: org-bookmarks-export-to-html")
 
 (defun org-bookmarks-export-to-html (org-file &optional html-file)
-  "Export from an Org Bookmarks file to a Mozilla/Firefox Bookmarks HTML file."
   "Export from an Org Bookmarks file, ORG-FILE,
 to a Mozilla/Firefox Bookmarks HTML file, HTML-FILE.
 
@@ -5608,7 +5607,7 @@ If HTML-FILE is non-nil, then output is returned."
                        (children (plist-get bm :children))
                        (entry (cl-case type-code
                                 (2 (concat
-                                    (indent idt "<DT><H3>")
+                                    (indent idt "<DT><H3")
                                     " ADD_DATE=\"" timestamp "\""
                                     " LAST_MODIFIED=\"" timestamp "\""
                                     (if title-code (concat " " title-code "=\"true\"") "")
@@ -5622,9 +5621,9 @@ If HTML-FILE is non-nil, then output is returned."
                                     ">" title "</A>")))))
                   (when children
                     (setq entry (concat entry
-                                        (indent idt "<DL><p>\n")
+                                        "\n" (indent idt "<DL><p>\n")
                                         (mapconcat (lambda (x) (parse x str (+ idt 4))) children "\n")
-                                        (indent idt "</DL>\n"))))
+                                        "\n" (indent idt "</DL><p>\n"))))
                   entry)))
       (let ((bookmarks (org-bookmarks-parse org-file)))
         (with-temp-buffer
@@ -5634,10 +5633,9 @@ If HTML-FILE is non-nil, then output is returned."
 <META HTTP-EQUIV=\"Content-Type\" CONTENT=\"text/html; charset=UTF-8\">
 <TITLE>Bookmarks</TITLE>
 <H1>Bookmarks Menu</H1>
-
 <DL><p>\n"
             (mapconcat (lambda (x) (parse x "" 4)) bookmarks "\n"))
-           "</DL>\n")
+           "</DL><p>\n")
           (if html-file
               (write-region (point-min) (point-max) html-file)
             (buffer-substring-no-properties (point-min) (point-max))))))))
@@ -5656,8 +5654,8 @@ to an NYXT Bookmarks Lisp file, NYXT-FILE.
 
 If NYXT-FILE is non-nil, then output is returned."
   (let ((timestamp (format-time-string "%FT%T.%6NZ"))
-        (title-root-list '(("Bookmarks Menu" . "bookmarksMenuFolder")
-                           ("Bookmarks Toolbar" . "toolbarFolder")
+        (title-root-list '(("Bookmarks Toolbar" . "toolbarFolder")
+                           ("Bookmarks Menu" . "bookmarksMenuFolder")
                            ("Other Bookmarks" . "unfiledBookmarksFolder")
                            ("Mobile Bookmarks" . "mobileFolder"))))
     (cl-labels
@@ -5692,6 +5690,77 @@ If NYXT-FILE is non-nil, then output is returned."
               (write-region (point-min) (point-max) nyxt-file)
             (buffer-substring-no-properties (point-min) (point-max))))))))
 ;; org-bookmarks-export-to-nyxt:1 ends here
+
+;; [[file:init-emacs.org::#org-mode-bookmarks-org-bookmarks-export-to-chrome-html][org-bookmarks-export-to-chrome-html:1]]
+;;------------------------------------------------------------------------------
+;;;; Org Mode: Bookmarks: org-bookmarks-export-to-chrome-html
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Org Mode: Bookmarks: org-bookmarks-export-to-chrome-html")
+
+(defun org-bookmarks-export-to-chrome-html (org-file &optional html-file)
+  "Export from an Org Bookmarks file, ORG-FILE,
+to a Chrome/Chromium Bookmarks HTML file, HTML-FILE.
+
+If HTML-FILE is non-nil, then output is returned."
+  (let* ((type-code-list '(("bookmark" . 1)
+                           ("folder" . 2)))
+         (title-code-list '(("Bookmarks Toolbar" . "PERSONAL_TOOLBAR_FOLDER")
+                            ("Other Bookmarks" . "UNFILED_BOOKMARKS_FOLDER")))
+         (title-rename-list '(("Bookmarks Toolbar" . "Bookmarks bar")
+                              ("Bookmarks Menu" . :none)
+                              ("Other Bookmarks" . :none)))
+         (timestamp (number-to-string (truncate (org-bookmarks-timestamp) 1000000))))
+    (cl-labels
+        ((indent (idt str)
+                 (concat (spaces-string idt) str))
+         (parse (bm str idt)
+                (let* ((type (plist-get bm :type))
+                       (type-code (cdr (assoc type type-code-list)))
+                       (title (plist-get bm :title))
+                       (title-code (cdr (assoc title title-code-list)))
+                       (title-rename (cdr (assoc title title-rename-list)))
+                       (skip (eq title-rename :none))
+                       (uri (url-encode-url (plist-get bm :uri)))
+                       (keyword (plist-get bm :keyword))
+                       (children (plist-get bm :children))
+                       (entry (cl-case type-code
+                                (2 (if skip
+                                       ""
+                                     (concat
+                                      (indent idt "<DT><H3")
+                                      " ADD_DATE=\"" timestamp "\""
+                                      " LAST_MODIFIED=\"" timestamp "\""
+                                      (if title-code (concat " " title-code "=\"true\"") "")
+                                      ">" (or title-rename title) "</H3>")))
+                                (1 (concat
+                                    (indent idt "<DT>")
+                                    "<A HREF=\"" uri "\""
+                                    " ADD_DATE=\"" timestamp "\""
+                                    " LAST_MODIFIED=\"" timestamp "\""
+                                    (if keyword (concat " SHORTCUTURL=\"" keyword "\"") "")
+                                    ">" title "</A>")))))
+                  (when children
+                    (setq entry (concat entry
+                                        (if skip "" (concat "\n" (indent idt "<DL><p>\n")))
+                                        (mapconcat (lambda (x) (parse x str (+ idt 4))) children "\n")
+                                        (if skip "" (concat "\n" (indent idt "</DL><p>\n"))))))
+                  entry)))
+      (let ((bookmarks (org-bookmarks-parse org-file)))
+        (with-temp-buffer
+          (insert
+           (concat
+            "<!DOCTYPE NETSCAPE-Bookmark-file-1>
+<META HTTP-EQUIV=\"Content-Type\" CONTENT=\"text/html; charset=UTF-8\">
+<TITLE>Bookmarks</TITLE>
+<H1>Bookmarks</H1>
+<DL><p>\n"
+            (mapconcat (lambda (x) (parse x "" 4)) bookmarks "\n"))
+           "</DL><p>\n")
+          (if html-file
+              (write-region (point-min) (point-max) html-file)
+            (buffer-substring-no-properties (point-min) (point-max))))))))
+;; org-bookmarks-export-to-chrome-html:1 ends here
 
 ;; [[file:init-emacs.org::#org-mode-finances][Finances:1]]
 ;;------------------------------------------------------------------------------
@@ -21591,9 +21660,10 @@ Commands:
      ("Elpher Bookmarks" "elpher-bookmarks-edit" "Edit Elpher bookmarks file.")
      ("YouTube Get Videos" "(org-link-open-from-string \"file:~/config-private/common/org/init-home.org::get-youtube-videos\")" "Edit get-youtube-videos file.")))
    ("Export"
-    (("Export Bookmarks to JSON" "(org-bookmarks-export-to-json \"~/org/bookmarks.org\" \"~/Desktop/bookmarks.json\")" "Export bookmarks.org to ~/Desktop/bookmarks.json.")
-     ("Export Bookmarks to HTML" "(org-bookmarks-export-to-html \"~/org/bookmarks.org\" \"~/Desktop/bookmarks.html\")" "Export bookmarks.org to ~/Desktop/bookmarks.html.")
-     ("Export Bookmarks to NYXT" "(org-bookmarks-export-to-nyxt \"~/org/bookmarks.org\" \"~/config/local/.local/share/nyxt/bookmarks.lisp\")" "Export bookmarks.org to ~/config/local/.local/share/nyxt/bookmarks.lisp.")))
+    (("Export Bookmarks to JSON" "(org-bookmarks-export-to-json \"~/org/bookmarks.org\" \"~/Documents/bookmarks.json\")" "Export bookmarks.org to ~/Documents/bookmarks.json.")
+     ("Export Bookmarks to HTML" "(org-bookmarks-export-to-html \"~/org/bookmarks.org\" \"~/Documents/bookmarks.html\")" "Export bookmarks.org to ~/Documents/bookmarks.html.")
+     ("Export Bookmarks to NYXT" "(org-bookmarks-export-to-nyxt \"~/org/bookmarks.org\" \"~/config/local/.local/share/nyxt/bookmarks.lisp\")" "Export bookmarks.org to ~/config/local/.local/share/nyxt/bookmarks.lisp.")
+     ("Export Bookmarks to Chrome HTML" "(org-bookmarks-export-to-chrome-html \"~/org/bookmarks.org\" \"~/Documents/bookmarks-chrome.html\")" "Export bookmarks.org to ~/Documents/bookmarks-chrome.html.")))
    ("Fonts"
     (("Hack Nerd Font Mono-12" "(set-frame-font \"Hack Nerd Font Mono-12\" nil t)" "Call `set-frame-font` to set the font to 'Hack Nerd Font Mono-12'.")
      ("Hack Nerd Font Mono-14" "(set-frame-font \"Hack Nerd Font Mono-14\" nil t)" "Call `set-frame-font` to set the font to 'Hack Nerd Font Mono-14'.")
