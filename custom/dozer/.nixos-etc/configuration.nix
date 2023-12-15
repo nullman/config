@@ -804,6 +804,7 @@
     grip id3lib
     gtkimageview
     handbrake libdvdcss libaacs libbluray
+    livecaptions
     makemkv
     #mediawriter
     meld
