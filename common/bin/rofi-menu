@@ -5,12 +5,12 @@
 # Present a menu of rofi menus.
 #
 # Symbols:  ☰  |    | ✂ ⎘ 󰄶   󰅌 󰅍 󰨸 󱉥 󱉦 󱉧 󱉨 󱉫 󱉬 
-# Symbols: 󰍹  |  |    󱇠  | 󰆧 |  |   󰝚 | 󰛇
+# Symbols: 󰍹  |  |    󱇠  | 󰆧 |  |   󰝚 | 󰛇 | 󰃃 󰃀
 #
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
-set -euo pipefail
+set -eu #o pipefail
 
 # display usage information
 _usage() {
@@ -18,17 +18,18 @@ _usage() {
 Usage: $(basename "$0") [MENU]
 Present a menu of rofi menus.
 MENU:
-  NONE    Menu of Selections
-  term    Terminal
-  crt     Cool Retro Term
-  dosbox  DOSBox Emulator
-  git     Synchronize Repositories
-  paste   Paste Strings
-  qemu    QEMU Emulator
-  rsync   Synchronize Files
-  sounds  Play Sounds
-  ssh     SSH into Systems
-  vnc     VNC into Systems
+  NONE       Menu of Selections
+  term       Terminal
+  bookmarks  Bookmarks
+  crt        Cool Retro Term
+  dosbox     DOSBox Emulator
+  git        Synchronize Repositories
+  paste      Paste Strings
+  qemu       QEMU Emulator
+  rsync      Synchronize Files
+  sounds     Play Sounds
+  ssh        SSH into Systems
+  vnc        VNC into Systems
 EOF
 }
 
@@ -36,6 +37,7 @@ EOF
 if [[ $# -lt 1 ]] ; then
     menus=(
         "	Term"
+        "󰃃	Bookmarks"
         "󰍹	CRT"
         "	DOSBox"
         "	Git"
@@ -53,10 +55,25 @@ fi
 
 # handle menu
 menu=$(echo "${menu}" | sed 's/^.*\t//' | tr '[:upper:]' '[:lower:]')
-echo "${menu}"
+#echo "${menu}"
 case "${menu}" in
     term)
         (alacritty &)
+        ;;
+
+    bookmarks)
+        # display bookmarks
+        if [[ $# -lt 2 ]] ; then
+            sel=$("${HOME}/bin/org-bookmarks-to-list" | rofi -dmenu -i -p "󰃃	Bookmarks")
+        else
+            sel=$2
+        fi
+
+        # open bookmark
+        if [[ -n "${sel}" ]] ; then
+            url=$(echo "${sel}" | sed 's/^.* \([^ ]*$\)/\1/')
+            (xdg-open "${url}" &)
+        fi
         ;;
 
     crt)
@@ -115,7 +132,7 @@ case "${menu}" in
     paste)
         # display paste options
         if [[ $# -lt 2 ]] ; then
-            sel=$(cat ${HOME}/.paste-strings | rofi -dmenu -i -p "	Paste")
+            sel=$(cat "${HOME}/.paste-strings" | rofi -dmenu -i -p "	Paste")
         else
             sel=$2
         fi
@@ -129,7 +146,7 @@ case "${menu}" in
     qemu)
         # generate and display a list of qemu emulators
         if [[ $# -lt 2 ]] ; then
-            sel=$(cd ${HOME}/qemu && find . -mindepth 1 -maxdepth 1 -type d -not -regex '^\.+$' | sed 's%\./%%' | sort | rofi -dmenu -i -p "󰆧	Qemu")
+            sel=$(cd "${HOME}/qemu" && find . -mindepth 1 -maxdepth 1 -type d -not -regex '^\.+$' | sed 's%\./%%' | sort | rofi -dmenu -i -p "󰆧	Qemu")
         else
             sel=$2
         fi
