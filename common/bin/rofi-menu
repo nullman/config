@@ -5,7 +5,7 @@
 # Present a menu of rofi menus.
 #
 # Symbols:  ☰  |    | ✂ ⎘ 󰄶   󰅌 󰅍 󰨸 󱉥 󱉦 󱉧 󱉨 󱉫 󱉬 
-# Symbols: 󰍹  |  |    󱇠  | 󰆧 |  |   󰝚 | 󰛇 | 󰃃 󰃀
+# Symbols: 󰍹  |  |    󱇠  | 󰆧 |  |   󰝚 | 󰛇 | 󰃃 󰃀 | 󰯫
 #
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
@@ -20,6 +20,7 @@ Present a menu of rofi menus.
 MENU:
   NONE       Menu of Selections
   term       Terminal
+  acronyms   Technology Acronyms
   bookmarks  Bookmarks
   crt        Cool Retro Term
   dosbox     DOSBox Emulator
@@ -37,6 +38,7 @@ EOF
 if [[ $# -lt 1 ]] ; then
     menus=(
         "	Term"
+        "󰯫	Acronyms"
         "󰃃	Bookmarks"
         "󰍹	CRT"
         "	DOSBox"
@@ -61,10 +63,23 @@ case "${menu}" in
         (alacritty &)
         ;;
 
+    acronyms)
+        (
+            curl --silent "https://en.wikipedia.org/wiki/List_of_computing_and_IT_abbreviations" |
+                grep "^<li>" |
+                grep "/wiki/" |
+                sed 's%^<li><a[^>]\+>\(.\+\)</a>\(.\+\)</li>%\1: \2% ;
+                    s%—%%g ; s%</ul>%% ; s%</\?b>%%g ; s%\&amp;%\&% ;
+                    s%<sup .*</sup>%%g ; s%</div>%%g ; s%</a>$%% ;
+                    s%<a [^>]*>%% ; s%%% ; s%</a>%: %' |
+                grep -v '^<li>' | rofi -dmenu -i -p "󰯫	Technology Acronyms" &
+        )
+        ;;
+
     bookmarks)
         # display bookmarks
         if [[ $# -lt 2 ]] ; then
-            sel=$("${HOME}/bin/org-bookmarks-to-list" | rofi -dmenu -i -p "󰃃	Bookmarks")
+            sel=$("${HOME}/bin/org-bookmarks-to-list" | rofi -dmenu -i -p "󰃃	Browser Bookmarks")
         else
             sel=$2
         fi
@@ -104,7 +119,11 @@ case "${menu}" in
     dosbox)
         # generate and display a list of dosbox emulators
         if [[ $# -lt 2 ]] ; then
-            sel=$(cd "${HOME}/.dosbox" && find -mindepth 1 -maxdepth 1 -name 'dosbox-*' -not -regex '\./dosbox-0.*' | sed 's%^\./dosbox-\(.*\)\.conf%\1%' | rofi -dmenu -i -p "	DOSBox")
+            sel=$(
+                cd "${HOME}/.dosbox" &&
+                    find -mindepth 1 -maxdepth 1 -name 'dosbox-*' -not -regex '\./dosbox-0.*' |
+                        sed 's%^\./dosbox-\(.*\)\.conf%\1%' | rofi -dmenu -i -p "	DOSBox"
+               )
         else
             sel=$2
         fi
@@ -146,7 +165,8 @@ case "${menu}" in
     qemu)
         # generate and display a list of qemu emulators
         if [[ $# -lt 2 ]] ; then
-            sel=$(cd "${HOME}/qemu" && find . -mindepth 1 -maxdepth 1 -type d -not -regex '^\.+$' | sed 's%\./%%' | sort | rofi -dmenu -i -p "󰆧	Qemu")
+            sel=$(
+                cd "${HOME}/qemu" && find . -mindepth 1 -maxdepth 1 -type d -not -regex '^\.+$' | sed 's%\./%%' | sort | rofi -dmenu -i -p "󰆧	Qemu")
         else
             sel=$2
         fi

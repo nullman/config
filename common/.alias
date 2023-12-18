@@ -360,9 +360,19 @@ alias tb="nc termbin.com 9999"
 #        starwars                star wars in ascii text
 alias starwars="telnet towel.blinkenlights.nl"
 #        rickroll                terminal rick-roll
-alias rickroll="curl -s -L https://raw.githubusercontent.com/keroserene/rickrollrc/master/roll.sh | bash"
+alias rickroll="curl --silent --location https://raw.githubusercontent.com/keroserene/rickrollrc/master/roll.sh | bash"
 #        rate                    display top crypto currency rates
 alias rate="curl --silent rate.sx"
+#        tech-acronyms           display a list of technology acronyms for searching
+alias tech-acronyms="
+    curl --silent \"https://en.wikipedia.org/wiki/List_of_computing_and_IT_abbreviations\" | \
+    grep \"^<li>\" | \
+    grep \"/wiki/\" | \
+    sed 's%^<li><a[^>]\+>\(.\+\)</a>\(.\+\)</li>%\1: \2% ; \
+        s%—%%g ; s%</ul>%% ; s%</\?b>%%g ; s%\&amp;%\&% ; \
+        s%<sup .*</sup>%%g ; s%</div>%%g ; s%</a>$%% ; \
+        s%<a [^>]*>%% ; s%%% ; s%</a>%: %' | \
+    grep -v '^<li>' | rofi -dmenu -i -p 'Technology Acronyms'"
 
 #
 # general (complex)
