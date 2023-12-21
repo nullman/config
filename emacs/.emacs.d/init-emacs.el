@@ -2262,7 +2262,8 @@ KEYMAP defaults to `override-global-map'."
              ("2" . insert-password-20)
              ("3" . insert-password-phrase-3-space)
              ("6" . insert-password-phrase-6-space)
-             ("-" . insert-password-phrase-6-hyphen-capitalize))
+             ("-" . insert-password-phrase-6-hyphen-capitalize)
+             ("!" . insert-password-phrase-6-symbol-capitalize))
 
   ;; miscellaneous commands
   (bind-keys :map space-map
@@ -8454,21 +8455,22 @@ clipboard."
 
 (init-message 3 "Functions: General Functions: password-phrase")
 
-(defun password-phrase (count &optional type capitalized)
+(defun password-phrase (count &optional type capitalize)
   "Return generated password phrase containing COUNT words.
 
 TYPE (defaults to 'phrase):
 
   'phrase   \"threewordphrase\"
-  'space    \"three word phrase\"
-  'hyphen   \"three-word-phrase\"
-  'list     (\"three\" \"word\" \"phrase\")
+  'space    \"multi word phrase\"
+  'hyphen   \"hyphen-word-phrase\"
+  'symbol   \"symbol!word@phrase\"
+  'list     (\"list\" \"word\" \"phrase\")
 
-If CAPITALIZED is non-nil, capitalize each word."
+If CAPITALIZE is non-nil, capitalize each word."
   (interactive
    (list
     (read-number "Count: ")
-    (intern (completing-read "Type: " '("phrase" "space" "hyphen" "list") nil t))))
+    (intern (completing-read "Type: " '("phrase" "space" "hyphen" "symbol" "list") nil t))))
   (let* ((words
           '("abandon" "ability" "able" "about" "above" "absent" "absorb" "abstract" "absurd"
             "abuse" "access" "accident" "account" "accuse" "achieve" "acid" "acoustic"
@@ -8678,12 +8680,17 @@ If CAPITALIZED is non-nil, capitalize each word."
             "wise" "wish" "witness" "wolf" "woman" "wonder" "wood" "wool" "word" "work" "world"
             "worry" "worth" "wrap" "wreck" "wrestle" "wrist" "write" "wrong" "yard" "year" "yellow"
             "you" "young" "youth" "zebra" "zero" "zone" "zoo"))
-         (size (length words))
+         (word-size (length words))
+         (symbols '("!" "@" "#" "$" "%" "^" "&" "*" "(" ")" "-" "_" "=" "+" ";" ":" "'" "\"" "," "<" "." ">" "/" "?"))
+         (symbol-size (length symbols))
          phrase)
     (while (< (length phrase) count)
       (if capitalize
-          (cl-pushnew (capitalize (elt words (random size))) phrase)
-        (cl-pushnew (elt words (random size)) phrase)))
+          (cl-pushnew (capitalize (elt words (random word-size))) phrase)
+        (cl-pushnew (elt words (random word-size)) phrase))
+      (when (and (eq type 'symbol)
+                 (> (length phrase) 1))
+        (cl-pushnew (concat (pop phrase) (elt symbols (random symbol-size))) phrase)))
     (cl-case type
       ('list (format "%S" phrase))
       ('space (cl-reduce (lambda (x y) (concat x " " y)) phrase))
@@ -8741,6 +8748,12 @@ of 'hyphen, with capitalized words."
   (interactive "*")
   (password-phrase-to-clipboard 3 'hyphen :capitalize))
 
+(defun password-phrase-to-clipboard-3-symbol-capitalize ()
+  "Call `password-phrase-to-clipboard' with a COUNT of 3 and a TYPE
+of 'symbol, with capitalized words."
+  (interactive "*")
+  (password-phrase-to-clipboard 3 'symbol :capitalize))
+
 (defun password-phrase-to-clipboard-6-hyphen ()
   "Call `password-phrase-to-clipboard' with a COUNT of 6 and a TYPE
 of 'hyphen."
@@ -8752,6 +8765,12 @@ of 'hyphen."
 of 'hyphen, with capitalized words."
   (interactive "*")
   (password-phrase-to-clipboard 6 'hyphen :capitalize))
+
+(defun password-phrase-to-clipboard-6-symbol-capitalize ()
+  "Call `password-phrase-to-clipboard' with a COUNT of 6 and a TYPE
+of 'symbol, with capitalized words."
+  (interactive "*")
+  (password-phrase-to-clipboard 6 'symbol :capitalize))
 ;; password-phrase:1 ends here
 
 ;; [[file:init-emacs.org::#functions-emacs-functions][Emacs Functions:1]]
@@ -12337,6 +12356,12 @@ of 'hyphen, and insert the result."
 of 'hyphen with capitalized words, and insert the result."
   (interactive "*")
   (insert (password-phrase-to-clipboard 6 'hyphen :capitalize)))
+
+(defun insert-password-phrase-6-symbol-capitalize ()
+  "Call `password-phrase-to-clipboard' with a COUNT of 6 and a TYPE
+of 'symbol with capitalized words, and insert the result."
+  (interactive "*")
+  (insert (password-phrase-to-clipboard 6 'symbol :capitalize)))
 ;; insert-password-phrase:1 ends here
 
 ;; [[file:init-emacs.org::#functions-text-inserting-functions-insert-license-gpl][insert-license-gpl:1]]
@@ -21778,7 +21803,7 @@ Commands:
    ("UUID" "insert-uuid" "Insert a UUID.")
    ("GUID" "insert-guid" "Insert a GUID.")
    ("Password" "insert-password-20" "Insert a random password (length 20).")
-   ("Password Phrase" "insert-password-phrase-three-hyphen" "Insert a random password phrase (three words, hyphenated).")
+   ("Password Phrase" "insert-password-phrase-6-symbol-capitalize" "Insert a random password phrase (six words, hyphenated, capitalized, with symbols).")
    ("Figlet" "insert-figlet" "Insert figlet text.")
    ("Equals" "append-equal-to-column-80" "Append `=' characters up to column 80.")
    ("Dashes" "append-dash-to-column-80" "Append `-' characters up to column 80.")
