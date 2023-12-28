@@ -660,6 +660,7 @@
     usbutils
     vim
     wget
+    woeusb
     xz
     ydotool
 
