@@ -876,6 +876,7 @@
     ncgopher
     nyxt
     pidgin
+    simplex-chat-desktop
     slack
     syncterm
     transmission-gtk

@@ -3470,7 +3470,7 @@ alias web-generate-game="(cd \${HOME}/web/bin && ./generate-game && ./publish --
 # backup
 #
 #!       rsyncexclusions         default rsync exclusions
-rsyncexclusions='{"/cdrom/*","/dev/*","/lost+found","/media/*","/mnt/*","/nix/store/*","/proc/*","/run/*","/sys/*","/tmp/*","/var/tmp/*","/home/*/.cache/*","/home/*/.ccache/*","/home/*/.gradle","/home/*/.gvfs","/home/.npm","/home/*/.local/share/Trash/*","/home/*/.thumbnails/*","/home/backup/*","/home/*/Games/*"}'
+rsyncexclusions='{"/cdrom/*","/dev/*","/lost+found","/media/*","/mnt/*","/nix/store/*","/proc/*","/run/*","/sys/*","/tmp/*","/var/tmp/*","/home/*/.cache/*","/home/*/.ccache/*","/home/*/.gradle","/home/*/.gvfs","/home/*/.lutris-cache","/home/.npm","/home/*/.local/share/Trash/*","/home/*/.thumbnails/*","/home/backup/*","/home/*/Games/*"}'
 #!
 #        rsbid                   backup entire system to usb drive
 #!alias rsbid="sudo rsync -aAXv --delete --exclude=${rsyncexclusions} / /run/media/\${USER}/backup/\$(uname -n)"
