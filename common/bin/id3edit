@@ -3,8 +3,8 @@
 # id3edit
 #
 # Run id3info on given mp3 file(s), parse data into a temporary file, launch
-# emacs editor and wait for user to modify the data, then run id3tag to update
-# the id3 tag.
+# Emacs and wait for user to modify the data, then run id3tag to update the
+# id3 tag.
 #
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
