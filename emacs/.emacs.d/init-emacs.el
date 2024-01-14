@@ -11569,10 +11569,11 @@ otherwise `downcase-word' is called."
              (end (or end (cond
                            ((use-region-p)
                             (region-end))
-                           ((eq major-mode 'wdired-mode)
-                            (if (re-search-forward "\.[^.]+$" (line-end-position) :noerror)
-                                (match-beginning 0)
-                              (line-end-position)))
+                           ;; below not working
+                           ;; ((eq major-mode 'wdired-mode)
+                           ;;  (if (re-search-forward "\.[a-z]+$" (line-end-position) t)
+                           ;;      (match-beginning 0)
+                           ;;    (line-end-position)))
                            (t
                             (line-end-position)))))
              (col (- pos beg)))
