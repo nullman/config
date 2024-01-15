@@ -942,6 +942,10 @@
     wineWowPackages.stable
     winetricks
 
+    # containers
+    distrobox
+    podman
+
     # development
     acme
     adb-sync
