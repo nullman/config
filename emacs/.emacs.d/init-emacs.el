@@ -11406,7 +11406,7 @@ be automatically capitalized."
   (let ((case-fold-search nil)          ; case sensitive search
         (words-single
          '(;; conjunctions
-           "and" "as" "be" "into" "is" "it" "nor" "or" "so" "the" "that" "yet"
+           "and" "as" "be" "into" "is" "it" "it's" "nor" "or" "so" "the" "that" "yet"
            ;; prepositions (single words)
            "a" "abaft" "aboard" "about" "above" "absent" "across" "afore"
            "after" "against" "along" "alongside" "amid" "amidst" "among"
@@ -11456,24 +11456,31 @@ be automatically capitalized."
                                  (one-or-more upper)
                                  (zero-or-more (not space))
                                  word-boundary))
-          (file-extenstion-word-regexp (rx (not space)
-                                           "."
-                                           (one-or-more (not space))
-                                           eos))
+          (file-extension-word-regexp (rx "."
+                                          (one-or-more (not space))
+                                          eos))
           (first-word-regexp (rx (or (seq bos
                                           (zero-or-more (not space))
                                           (group (one-or-more word)))
-                                     ;;(seq (or "." "!" "?" ":" "&" "*" "(" ")" "/")
-                                     (seq (or (seq punct (one-or-more space))
-                                              (seq (or "(" ")" "/") (zero-or-more space)))
+                                     ;;(seq (or (seq punct (one-or-more space))
+                                     ;;         (seq (or "(" ")" "/") (zero-or-more space)))
+                                     (seq (seq (or "." "!" "?" ":" "&" "*" "(" ")" "[" "]" "/") (zero-or-more space))
+                                          (group (one-or-more word)))
+                                     (seq (one-or-more space)
+                                          "-"
+                                          (one-or-more space)
                                           (group (one-or-more word))))))
           (last-word-regexp (rx (or (seq (group (one-or-more word))
                                          (zero-or-more space)
                                          eos)
                                     (seq (group (one-or-more word))
                                          (zero-or-more space)
-                                         ;;(one-or-more "." "!" "?" ":" "&" "*" "(" ")" "[" "]")
-                                         (one-or-more punct))))))
+                                         ;;(one-or-more punct)
+                                         (or "." "!" "?" ":" "&" "*" "(" ")" "[" "]" "/"))
+                                    (seq (group (one-or-more word))
+                                         (one-or-more space)
+                                         "-"
+                                         (one-or-more space))))))
       (cl-labels
           ((get-fixed (string regexp)
                       (let ((case-fold-search nil)
@@ -11502,17 +11509,24 @@ be automatically capitalized."
                   (replace-regexp-in-string
                    words-triple-regexp 'downcase
                    (capitalize string) t t) t t) t t)))
-        (let ((fixed (append (get-fixed string abbreviation-word-regexp)
-                             (get-fixed string mixed-word-regexp)
-                             (get-fixed string file-extenstion-word-regexp))))
-          (if do-not-cap-ends
-              (set-fixed (cap string) fixed)
-            (set-fixed
-             (replace-regexp-in-string
-              first-word-regexp 'capitalize
+        (let* ((extension (get-fixed string file-extension-word-regexp))
+               (string (if extension
+                           (substring string 0 (caar extension))
+                         string))
+               (fixed (append (get-fixed string abbreviation-word-regexp)
+                              (get-fixed string mixed-word-regexp))))
+          (concat
+           (if do-not-cap-ends
+               (set-fixed (cap string) fixed)
+             (set-fixed
               (replace-regexp-in-string
-               last-word-regexp 'capitalize
-               (cap string) t t) t t) fixed)))))))
+               first-word-regexp 'capitalize
+               (replace-regexp-in-string
+                last-word-regexp 'capitalize
+                (cap string) t t) t t) fixed))
+           (if extension
+               (caddar extension)
+             "")))))))
 ;; titleize:1 ends here
 
 ;; [[file:init-emacs.org::#functions-text-conversion-functions-titleize-word-enhanced][titleize-word-enhanced:1]]
