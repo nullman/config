@@ -214,16 +214,21 @@ EOF
     exit 1
 fi
 
+if [[ ! -f "$1" ]] ; then
+    echo "File does not exist: $1"
+    exit 1
+fi
+
 while [[ $# -gt 0 ]] ; do
     # get id3 tag data
     id3info "$1" > "${tmpfile}"
     file=$(sed -n 's/^\*\*\* Tag information for //p' ${tmpfile})
-    artist=$(sed -n 's/^=== TPE1.*: //p' ${tmpfile})
-    album=$(sed -n 's/^=== TALB.*: //p' ${tmpfile})
-    title=$(sed -n 's/^=== TIT2.*: //p' ${tmpfile})
-    track=$(sed -n 's/^=== TRCK.*: //p' ${tmpfile})
-    year=$(sed -n 's/^=== TYER.*: //p' ${tmpfile})
-    genre=$(sed -n 's/^=== TCON.*: //p' ${tmpfile})
+    artist=$(sed -n 's/^=== TPE1[^:]*: //p' ${tmpfile})
+    album=$(sed -n 's/^=== TALB[^:]*: //p' ${tmpfile})
+    title=$(sed -n 's/^=== TIT2[^:]*: //p' ${tmpfile})
+    track=$(sed -n 's/^=== TRCK[^:]*: //p' ${tmpfile})
+    year=$(sed -n 's/^=== TYER[^:]*: //p' ${tmpfile})
+    genre=$(sed -n 's/^=== TCON[^:]*: //p' ${tmpfile})
     genrenum="$((${genre}))"
     genrename="${genres[${genrenum}]}"
 
