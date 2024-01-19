@@ -240,7 +240,7 @@ while [[ $# -gt 0 ]] ; do
     echo "Track:  ${track}" >> "${tmpfile}"
     echo "Year:   ${year}" >> "${tmpfile}"
     echo "Genre:  ${genrename}" >> "${tmpfile}"
-    cat "${tmpfile}"
+    #cat "${tmpfile}"
 
     # launch editor to modify tags
     #WAIT=true emacs-edit "${tmpfile}"
@@ -254,7 +254,6 @@ while [[ $# -gt 0 ]] ; do
     newtrack=$(sed -n 's/^Track:  //p' ${tmpfile})
     newyear=$(sed -n 's/^Year:   //p' ${tmpfile})
     newgenre=$(sed -n 's/^Genre:  \([0-9]\+\).*$/\1/p' ${tmpfile})
-    echo "${newgenre}"
 
     # make sure new file ends in .mp3
     newfile="${newfile:0:-4}.mp3"
