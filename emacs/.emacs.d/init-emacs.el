@@ -11477,7 +11477,8 @@ be automatically capitalized."
                                           (group (one-or-more word)))
                                      ;;(seq (or (seq punct (one-or-more space))
                                      ;;         (seq (or "(" ")" "/") (zero-or-more space)))
-                                     (seq (seq (or "," "." "!" "?" ":" ";" "\"" "&" "*" "(" ")" "[" "]" "/") (zero-or-more space))
+                                     (seq (seq (or "," "." "!" "?" ":" ";" "\"" "&" "*" "(" ")" "[" "]" "/")
+                                               (zero-or-more space))
                                           (group (one-or-more word)))
                                      (seq (one-or-more space)
                                           "-"
@@ -11489,7 +11490,7 @@ be automatically capitalized."
                                     (seq (group (one-or-more word))
                                          (zero-or-more space)
                                          ;;(one-or-more punct)
-                                         (or "," "." "!" "?" ":" ";" "\"" "&" "*" "(" ")" "[" "]" "/"))
+                                         (or "," "." "!" "?" ":" ";" "&" "*" "(" ")" "[" "]" "/"))
                                     (seq (group (one-or-more word))
                                          (one-or-more space)
                                          "-"

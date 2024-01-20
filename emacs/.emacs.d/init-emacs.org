@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2024-01-18 01:30 (kyle)>
+  #+TIMESTAMP: <2024-01-19 14:52 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -16916,7 +16916,8 @@
                                                   (group (one-or-more word)))
                                              ;;(seq (or (seq punct (one-or-more space))
                                              ;;         (seq (or "(" ")" "/") (zero-or-more space)))
-                                             (seq (seq (or "," "." "!" "?" ":" ";" "\"" "&" "*" "(" ")" "[" "]" "/") (zero-or-more space))
+                                             (seq (seq (or "," "." "!" "?" ":" ";" "\"" "&" "*" "(" ")" "[" "]" "/")
+                                                       (zero-or-more space))
                                                   (group (one-or-more word)))
                                              (seq (one-or-more space)
                                                   "-"
@@ -16928,7 +16929,7 @@
                                             (seq (group (one-or-more word))
                                                  (zero-or-more space)
                                                  ;;(one-or-more punct)
-                                                 (or "," "." "!" "?" ":" ";" "\"" "&" "*" "(" ")" "[" "]" "/"))
+                                                 (or "," "." "!" "?" ":" ";" "&" "*" "(" ")" "[" "]" "/"))
                                             (seq (group (one-or-more word))
                                                  (one-or-more space)
                                                  "-"
