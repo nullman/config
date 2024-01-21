@@ -894,6 +894,7 @@
     sysstat
     sysz
     testdisk
+    textual-paint
     thefuck
     translate-shell
     units
