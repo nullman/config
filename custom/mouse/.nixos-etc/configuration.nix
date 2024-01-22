@@ -42,6 +42,17 @@
   };
   networking.hostName = "mouse";
 
+  ## open firewall ports
+  #networking.firewall = {
+  #  enable = true;
+  #  allowedTCPPorts = [ 515 631 9100 ];
+  #  allowedUDPPorts = [ 515 631 9100 ];
+  #  checkReversePath = "loose";
+  #};
+
+  # openssh server
+  services.openssh.enable = true;
+
   # standard settings
 
   # sysctl settings
@@ -378,16 +389,49 @@
     };
   };
 
-  # openssh server
-  services.openssh.enable = true;
+  #virtualisation.docker.enable = true;
 
-  ## open firewall ports
-  #networking.firewall = {
+  # mpd
+  services.mpd = {
+    enable = true;
+    user = "kyle";
+    musicDirectory = "/home/data/media/Audio/MPD";
+    playlistDirectory = "/home/data/media/Audio/Playlists";
+    extraConfig = ''
+      audio_output {
+        type "pulse"
+        name "PulseAudio Output"
+      }
+      # audio_output {
+      #   type "pipewire"
+      #   name "PipeWire Output"
+      # }
+    '';
+  };
+
+  systemd.services.mpd.environment = {
+    # https://gitlab.freedesktop.org/pipewire/pipewire/-/issues/609
+    XDG_RUNTIME_DIR = "/run/user/1000";   # userid of above "user"
+  };
+
+  #services.dovecot2 = {
   #  enable = true;
-  #  allowedTCPPorts = [ 515 631 9100 ];
-  #  allowedUDPPorts = [ 515 631 9100 ];
-  #  checkReversePath = "loose";
+  #  mailLocation = "maildir:~/Maildir";
   #};
+
+  ## # gbar
+  ## programs.gBar = {
+  ##   enable = true;
+  ##   # config = {
+  ##   #   Location = "L";
+  ##   #   EnableSNI = true;
+  ##   #   SNIIconSize = {
+  ##   #     Discord = 26;
+  ##   #     OBS = 23;
+  ##   #   };
+  ##   #   WorkspaceSymbols = [ " " " " ];
+  ##   # };
+  ## };
 
   # user account
   users.groups.kyle = {
@@ -405,6 +449,7 @@
       "audio"
       "cdrom"
       "disk"
+      "docker"
       "floppy"
       "input"
       "kvm"
@@ -480,48 +525,6 @@
     (commonAutoMountOptions // { where = "/mnt/synology/photo"; })
     (commonAutoMountOptions // { where = "/mnt/synology/video"; })
   ];
-
-  # mpd
-  services.mpd = {
-    enable = true;
-    user = "kyle";
-    musicDirectory = "/home/data/media/Audio/MPD";
-    playlistDirectory = "/home/data/media/Audio/Playlists";
-    extraConfig = ''
-      audio_output {
-        type "pulse"
-        name "PulseAudio Output"
-      }
-      # audio_output {
-      #   type "pipewire"
-      #   name "PipeWire Output"
-      # }
-    '';
-  };
-
-  systemd.services.mpd.environment = {
-    # https://gitlab.freedesktop.org/pipewire/pipewire/-/issues/609
-    XDG_RUNTIME_DIR = "/run/user/1000";   # userid of above "user"
-  };
-
-  #services.dovecot2 = {
-  #  enable = true;
-  #  mailLocation = "maildir:~/Maildir";
-  #};
-
-  ## # gbar
-  ## programs.gBar = {
-  ##   enable = true;
-  ##   # config = {
-  ##   #   Location = "L";
-  ##   #   EnableSNI = true;
-  ##   #   SNIIconSize = {
-  ##   #     Discord = 26;
-  ##   #     OBS = 23;
-  ##   #   };
-  ##   #   WorkspaceSymbols = [ " " " " ];
-  ##   # };
-  ## };
 
   ## packages
   #environment.systemPackages = with pkgs; [
@@ -849,7 +852,7 @@
     sysstat
     sysz
     testdisk
-    textual-paint
+    #textual-paint
     thefuck
     translate-shell
     units
@@ -877,7 +880,7 @@
     ncgopher
     nyxt
     pidgin
-    simplex-chat-desktop
+    #simplex-chat-desktop
     slack
     syncterm
     transmission-gtk
