@@ -110,7 +110,10 @@
   ];
 
   # time zone
-  time.timeZone = "US/Central";
+  #time.timeZone = "US/Pacific";
+  time.timeZone = "US/Mountain";
+  #time.timeZone = "US/Central";
+  #time.timeZone = "US/Eastern";
 
   # internationalization
   i18n.defaultLocale = "en_US.UTF-8";
@@ -809,7 +812,7 @@
     #mediawriter
     meld
     #mtkclient
-    nur.repos.wolfangaukang.vdhcoapp
+    #nur.repos.wolfangaukang.vdhcoapp
     scrcpy
     simplescreenrecorder
     #upscayl

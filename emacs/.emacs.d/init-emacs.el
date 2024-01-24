@@ -7687,7 +7687,7 @@ If FORCE is non-nil, force publish all files in project."
 If TITLE is nil, caller is prompted for one."
   (interactive "sTitle: ")
   (save-match-data
-    (setq title (titleize title :three-letter-max))
+    (setq title (titleize title))
     (find-file "~/web/org/nulldot.org")
     (goto-char (point-min))
     (re-search-forward "^\*\*\* Blog Posts$")
@@ -11394,20 +11394,19 @@ Or any coding system returned by `list-coding-systems'."
 (init-message 3 "Functions: Text Conversion Functions: titleize")
 
 ;; rules found here: http://titlecapitalization.com/
-(defun titleize (string &optional three-letter-max do-not-cap-ends)
+(defun titleize (string &optional cmos do-not-cap-ends)
   "Capitalize STRING according to titling conventions.
 
 If a word should be capitalized, `capitalize-word' is called,
 otherwise `downcase-word' is called.
 
-If THREE-LETTER-MAX is non-nil, use a subset of lowercased words,
-mostly consisting of three letters or less.
+If CMOS is non-nil, adhere to the Chicago Manual of Style.
 
 If DO-NOT-CAP-ENDS is non-nil, the first and last words will not
 be automatically capitalized."
   (interactive "*")
   (let ((case-fold-search nil)          ; case sensitive search
-        (words-three
+        (words-short
          '(;; english
            "a" "an" "and" "as" "at" "be" "but" "by" "for" "from" "in" "into"
            "is" "it" "it's" "nor" "o'" "on" "or" "of" "onto" "per" "so" "the"
@@ -11452,7 +11451,7 @@ be automatically capitalized."
            "in lieu of" "in order to" "in place of" "in point of"
            "in spite of" "on account of" "on behalf of" "on top of"
            "with regard to" "with respect to" "with a view to")))
-    (let ((words-three-regexp (regexp-opt (mapcar #'capitalize words-three) 'words))
+    (let ((words-short-regexp (regexp-opt (mapcar #'capitalize words-short) 'words))
           (words-single-regexp (regexp-opt (mapcar #'capitalize words-single) 'words))
           (words-double-regexp (regexp-opt (mapcar #'capitalize words-double) 'words))
           (words-triple-regexp (regexp-opt (mapcar #'capitalize words-triple) 'words))
@@ -11477,7 +11476,8 @@ be automatically capitalized."
                                           (group (one-or-more word)))
                                      ;;(seq (or (seq punct (one-or-more space))
                                      ;;         (seq (or "(" ")" "/") (zero-or-more space)))
-                                     (seq (seq (or "," "." "!" "?" ":" ";" "\"" "&" "*" "(" ")" "[" "]" "/")
+                                     ;;(seq (seq (or "," "." "!" "?" ":" ";" "\"" "&" "*" "(" ")" "[" "]" "/")
+                                     (seq (seq (or "." "!" "?" ":" ";" "\"" "&" "*" "(" ")" "[" "]" "/")
                                                (zero-or-more space))
                                           (group (one-or-more word)))
                                      (seq (one-or-more space)
@@ -11490,7 +11490,8 @@ be automatically capitalized."
                                     (seq (group (one-or-more word))
                                          (zero-or-more space)
                                          ;;(one-or-more punct)
-                                         (or "," "." "!" "?" ":" ";" "&" "*" "(" ")" "[" "]" "/"))
+                                         ;;(or "," "." "!" "?" ":" ";" "&" "*" "(" ")" "[" "]" "/"))
+                                         (or "." "!" "?" ":" ";" "&" "*" "(" ")" "[" "]" "/"))
                                     (seq (group (one-or-more word))
                                          (one-or-more space)
                                          "-"
@@ -11516,17 +11517,17 @@ be automatically capitalized."
                                         (substring string (cadr a)))))
                         string))
            (cap (string)
-                (if three-letter-max
+                (if cmos
                     (replace-regexp-in-string
-                     words-three-regexp 'downcase
-                     (capitalize string) t t)
+                     words-single-regexp 'downcase
+                     (replace-regexp-in-string
+                      words-double-regexp 'downcase
+                      (replace-regexp-in-string
+                       words-triple-regexp 'downcase
+                       (capitalize string) t t) t t) t t)
                   (replace-regexp-in-string
-                   words-single-regexp 'downcase
-                   (replace-regexp-in-string
-                    words-double-regexp 'downcase
-                    (replace-regexp-in-string
-                     words-triple-regexp 'downcase
-                     (capitalize string) t t) t t) t t))))
+                   words-short-regexp 'downcase
+                   (capitalize string) t t))))
         (let* ((extension (get-fixed string file-extension-word-regexp))
                (string (if extension
                            (substring string 0 (caar extension))
@@ -11572,7 +11573,7 @@ be automatically capitalized."
           (when bounds
             (goto-char (car bounds)))
           (when (re-search-forward "\\(\\w+\\)" nil :noerror)
-            (replace-match (titleize (match-string 0) :three-letter-max :do-not-cap-ends) t)))))))
+            (replace-match (titleize (match-string 0) nil :do-not-cap-ends) t)))))))
 ;; titleize-word-enhanced:1 ends here
 
 ;; [[file:init-emacs.org::#functions-text-conversion-functions-titleize-line-or-region][titleize-line-or-region:1]]
@@ -11621,7 +11622,7 @@ otherwise `downcase-word' is called."
             (with-syntax-table syntax-table
               (delete-region beg end)
               (goto-char beg)
-              (insert (titleize str :three-letter-max))
+              (insert (titleize str))
               (goto-char (+ beg col)))))))
     (goto-char pos)))
 ;; titleize-line-or-region:1 ends here
