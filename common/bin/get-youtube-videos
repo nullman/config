@@ -1,276 +1,277 @@
 #!/usr/bin/env bash
 #===============================================================================
-# get-youtube-videos
-#
-# Grab the latest YouTube videos from a curated list.
-#
-# Author: Kyle W T Sherman <kylewsherman@gmail.com>
-#===============================================================================
+  # get-youtube-videos
+  #
+  # Grab the latest YouTube videos from a curated list.
+  #
+  # Author: Kyle W T Sherman <kylewsherman@gmail.com>
+  #===============================================================================
 
-basedir="/mnt/synology/video"
-#basedir="${HOME}/synology/video"
-ytdlp="$(command -v yt-dlp)"
-#ytdlp="${HOME}/code/yt-dlp/yt-dlp"
+  basedir="/mnt/synology/video"
+  #basedir="${HOME}/synology/video"
+  ytdlp="$(command -v yt-dlp)"
+  #ytdlp="${HOME}/code/yt-dlp/yt-dlp"
 
-channels=(
-    "Computer/Demo        | Commodore Amiga Demos                      | https://www.youtube.com/playlist?list=PLnmLOQIDmUvUgbvY-Jq0txuYWYgWVcOOS"
-    "Computer/Demo        | Commodore 64 Demos                         | https://www.youtube.com/playlist?list=PLnmLOQIDmUvVn43FHdakSTY_W_EuoVwnT"
-    "Computer/Development | AngeTheGreat                               | https://www.youtube.com/channel/UCV0t1y4h_6-2SqEpXBXgwFQ/videos"
-    "Computer/Development | Baggers                                    | https://www.youtube.com/user/CBaggers/videos"
-    "Computer/Development | code4th                                    | https://www.youtube.com/@code4th/videos"
-    "Computer/Development | CodeAesthetic                              | https://www.youtube.com/@CodeAesthetic/videos"
-    "Computer/Development | Computerphile                              | https://www.youtube.com/user/Computerphile/videos"
-#?    "Computer/Development | CppCon                                     | https://www.youtube.com/user/CppCon/videos"
-    "Computer/Development | Jacob Sorber                               | https://www.youtube.com/@JacobSorber/videos"
-    "Computer/Development | javidx9                                    | https://www.youtube.com/@javidx9/videos"
-    "Computer/Development | Kaveh808                                   | https://www.youtube.com/channel/UCHNK9EcrAwP7djlwQN4C_tg/videos"
-    "Computer/Development | Matt Heffernan Slithy Games                | https://www.youtube.com/c/slithymatt/videos"
-    "Computer/Development | Molly Rocket                               | https://www.youtube.com/@MollyRocket/videos"
-#    "Computer/Development | NDC Conferences                            | https://www.youtube.com/c/NDCConferences/videos"
-##    "Computer/Development | Nir Lichtman                               | https://www.youtube.com/@nirlichtman/videos"
-    "Computer/Development | PCRetroProgrammer                          | https://www.youtube.com/@pcretroprogrammer2656/videos"
-    "Computer/Development | Racket                                     | https://www.youtube.com/@racketlang/videos"
-    "Computer/Development | root42                                     | https://www.youtube.com/c/root42/videos"
-    "Computer/Development | Shallan                                   | https://www.youtube.com/@Shallan64/videos"
-    "Computer/Development | Spanning Tree                              | https://www.youtube.com/@SpanningTree/videos"
-#    "Computer/Development | Strange Loop Conference                    | https://www.youtube.com/c/StrangeLoopConf/videos"
-    "Computer/Development | Tsoding Daily                              | https://www.youtube.com/c/TsodingDaily/videos"
-    "Computer/Emacs       | Chris Maiorana                             | https://www.youtube.com/@ChristopherMaiorana/videos"
-    "Computer/Emacs       | Dr. Trefor Bazett > LaTeX Tutorials        | https://www.youtube.com/playlist?list=PLHXZ9OQGMqxcWWkx2DMnQmj5os2X5ZR73"
-    "Computer/Emacs       | EmacsConf                                  | https://www.youtube.com/c/EmacsConf/videos"
-    "Computer/Emacs       | Emacs Elements Chapter 2                   | https://www.youtube.com/@emacselements361/videos"
-    "Computer/Emacs       | Emacs Rocks                                | https://www.youtube.com/user/emacsrocks/videos"
-    "Computer/Emacs       | Flux Harmonic                              | https://www.youtube.com/c/FluxHarmonicLive/videos"
-    "Computer/Emacs       | Gavin Freeborn                             | https://www.youtube.com/c/GavinFreeborn/videos"
-    "Computer/Emacs       | Jake B                                     | https://www.youtube.com/c/JakeBox0/videos"
-    "Computer/Emacs       | Luke Smith > LaTeX                         | https://www.youtube.com/playlist?list=PL-p5XmQHB_JSQvW8_mhBdcwEyxdVX0c1T"
-    "Computer/Emacs       | Lukewh > Emacs                             | https://www.youtube.com/playlist?list=PLNJWazvift25KnHDwYlhwrrgr60wtpQOB"
-    "Computer/Emacs       | lxsameer                                   | https://www.youtube.com/c/lxsameer/videos"
-    "Computer/Emacs       | Protesilaos Stavrou                        | https://www.youtube.com/c/ProtesilaosStavrou/videos"
-    "Computer/Emacs       | System Crafters                            | https://www.youtube.com/c/SystemCrafters/videos"
-    "Computer/Emacs       | System Crafters Streams                    | https://www.youtube.com/c/SystemCrafters/streams"
-    "Computer/Emacs       | Tony Aldon                                 | https://www.youtube.com/@tonyaldon/videos"
-#?    "Computer/General     | adventuresin9                             | https://www.youtube.com/@adventuresin9797/videos"
-    "Computer/General     | Chris Titus Tech                           | https://www.youtube.com/c/ChrisTitusTech/videos"
-    "Computer/General     | Titus Tech Talk                            | https://www.youtube.com/@TitusTechTalk/videos"
-#?    "Computer/General     | Craft Computing                            | https://www.youtube.com/@CraftComputing/videos"
-    "Computer/General       | Dave's Garage                            | https://www.youtube.com/c/DavesGarage/videos"
-#?    "Computer/General     | DistroTube                                 | https://www.youtube.com/c/DistroTube/videos"
-#?    "Computer/General     | ETA Prime                                  | https://www.youtube.com/c/ETAPRIME/videos"
-#?    "Computer/General     | ExplainingComputers                        | https://www.youtube.com/c/explainingcomputers/videos"
-    "Computer/General     | Jake@Linux                                 | https://www.youtube.com/@JakeLinux/videos"
-#?    "Computer/General     | PCWorld                                    | https://www.youtube.com/pcworld/videos"
-    "Computer/General     | Stephen's Tech Talks                       | https://www.youtube.com/@stephenstechtalks5377/videos"
-#    "Computer/Graphics    | pwnisher                                   | https://www.youtube.com/@pwnisher/videos"
-    "Computer/Hardware    | Ben Eater                                  | https://www.youtube.com/c/BenEater/videos"
-    "Computer/Hardware    | Ben Heck Hacks                             | https://www.youtube.com/c/BenHeckHacks/videos"
-    "Computer/Hardware    | DIY Perks                                  | https://www.youtube.com/c/DIYPerks/videos"
-    "Computer/Hardware    | element14 presents                         | https://www.youtube.com/@element14presents/videos"
-    "Computer/Hardware    | EMM Computers                              | https://www.youtube.com/@elijahmmiller/videos"
-    "Computer/Hardware    | Irish Craic Party                          | https://www.youtube.com/@IrishCraicParty/videos"
-    "Computer/Hardware    | James Sharman                              | https://www.youtube.com/c/weirdboyjim/videos"
-    "Computer/Hardware    | Slador                                     | https://www.youtube.com/@SladorSoft/videos"
-    "Computer/Hardware    | Troy Schrapel                              | https://www.youtube.com/@TroySchrapel/videos"
-    "Computer/Hardware    | Work from Hype                             | https://www.youtube.com/channel/UCcCYTCDxsMl84_btikjY40Q/videos"
-    "Computer/Retro       | 8-bit and more                             | https://www.youtube.com/@8bitandmore/videos"
-    "Computer/Retro       | 8-Bit Keys                                 | https://www.youtube.com/c/8BitKeys/videos"
-    "Computer/Retro       | 8-Bit Show and Tell                        | https://www.youtube.com/c/8BitShowAndTell/videos"
-    "Computer/Retro       | Action Retro                               | https://www.youtube.com/c/ActionRetro/videos"
-    "Computer/Retro       | Adrian's Digital Basement                  | https://www.youtube.com/c/adriansdigitalbasement/videos"
-    "Computer/Retro       | Adrian's Digital Basement ][               | https://www.youtube.com/channel/UCbtwi4wK1YXd9AyV_4UcE6g/videos"
-#?    "Computer/Retro       | Adrian's Digital Basement ///              | https://www.youtube.com/@adriansdigitalbasement5529/videos"
-    "Computer/Retro       | Advent of Computing                        | https://www.youtube.com/@adventofcomputing4504/videos"
-#?    "Computer/Retro       | Ahoy                                       | https://www.youtube.com/@XboxAhoy/videos"
-    "Computer/Retro       | Al's Geek Lab                              | https://www.youtube.com/@AlsGeekLab/videos"
-    "Computer/Retro       | All Games                                  | https://www.youtube.com/@AllGamesPlayer/videos"
-#    "Computer/Retro       | Amiga Bill                                 | https://www.youtube.com/@AmigaBill/videos"
-#    "Computer/Retro       | Amigos Retro Gaming                        | https://www.youtube.com/@AmigosRetroGaming/videos"
-    "Computer/Retro       | Back Office Show                           | https://www.youtube.com/c/backofficeshow/videos"
-#    "Computer/Retro       | Blue OS Museum                             | https://www.youtube.com/channel/UCO6vmCYZl7ZhEydFGi76iaw/videos"
-#    "Computer/Retro       | Bits und Bolts                             | https://www.youtube.com/@bitsundbolts/videos"
-    "Computer/Retro       | Cathode Ray Dude                           | https://www.youtube.com/@CathodeRayDude/videos"
-    "Computer/Retro       | Chris Edwards Restoration > Amiga          | https://www.youtube.com/playlist?list=PLWHevKbRJhRluNtql3-UhAcgjLYVKhTMl"
-#?    "Computer/Retro       | Chyrosran22                                | https://www.youtube.com/user/Chyrosran22/videos"
-#    "Computer/Retro       | Computer History Archives Project          | https://www.youtube.com/@ComputerHistoryArchivesProject/videos"
-    "Computer/Retro       | Dan Wood                                   | https://www.youtube.com/@danwood_uk/videos"
-#    "Computer/Retro       | DJ Sures                                   | https://www.youtube.com/@DJSures/videos"
-#    "Computer/Retro       | Doctor Volt                                | https://www.youtube.com/c/DoctorVolt/videos"
-    "Computer/Retro       | Epictronics                                 | https://www.youtube.com/@Epictronics1/videos"
-    "Computer/Retro       | FreeDOS                                    | https://www.youtube.com/c/FreeDOSProject/videos"
-    "Computer/Retro       | GeekBits                                   | https://www.youtube.com/c/GeekBits/videos"
-    "Computer/Retro       | Handheld Computing                         | https://www.youtube.com/c/HandheldComputing/videos"
-    "Computer/Retro       | Hey Birt                                   | https://www.youtube.com/c/HeyBirt/videos"
-    "Computer/Retro       | Ian Witham                                 | https://www.youtube.com/@IanWitham/videos"
-    "Computer/Retro       | Jan Beta                                   | https://www.youtube.com/c/JanBeta"
-#    "Computer/Retro       | John's Basement                            | https://www.youtube.com/@JohnsBasement/videos"
-    "Computer/Retro       | Josip Retro Bits                           | https://www.youtube.com/@JosipRetroBits/videos"
-#    "Computer/Retro       | LGR                                        | https://www.youtube.com/c/Lazygamereviews/videos"
-#    "Computer/Retro       | LGR Blerbs                                 | https://www.youtube.com/c/LGRBlerbs/videos"
-    "Computer/Retro       | LowSpecGamer                               | https://www.youtube.com/c/lowspecgamer/videos"
-##    "Computer/Retro       | LearnAgon                                  | https://www.youtube.com/@LearnAgon/videos"
-    "Computer/Retro       | Mac84                                      | https://www.youtube.com/c/Mac84/videos"
-    "Computer/Retro       | Macintosh Librarian                        | https://www.youtube.com/@MacintoshLibrarian/videos"
-    "Computer/Retro       | Michael MJD                                | https://www.youtube.com/c/MichaelMJD/videos"
-    "Computer/Retro       | MikeyGRetro                                | https://www.youtube.com/@MikeyGRetro/videos"
-#   "Computer/Retro       | moshix                                     | https://www.youtube.com/@moshixmainframechannel/videos"
-    "Computer/Retro       | Mr Lurch's Things                          | https://www.youtube.com/@MrLurchsThings/videos"
-#?    "Computer/Retro       | Modern Vintage Gamer                       | https://www.youtube.com/@ModernVintageGamer/videos"
-    "Computer/Retro       | Noel's Retro Lab                           | https://www.youtube.com/c/NoelsRetroLab/videos"
-    "Computer/Retro       | Nostalgia Nerd                             | https://www.youtube.com/@Nostalgianerd/videos"
-#?    "Computer/Retro       | OldTechBloke                               | https://www.youtube.com/c/OldTechBloke/videos"
-    "Computer/Retro       | Operation 8-Bit                            | https://www.youtube.com/@Operation8Bit/videos"
-    "Computer/Retro       | PhilsComputerLab                           | https://www.youtube.com/c/philscomputerlab/videos"
-    "Computer/Retro       | RavenWolf Retro Tech                       | https://www.youtube.com/@RavenWolfRetroTech/videos"
-    "Computer/Retro       | retrobits                                  | https://www.youtube.com/@retrobitstv/videos"
-    "Computer/Retro       | RetroBytes                                 | https://www.youtube.com/@RetroBytesUK/videos"
-    "Computer/Retro       | RetroGarage                                | https://www.youtube.com/@retrogarage8734/videos"
-    "Computer/Retro       | RETRO is the new black (Wolfgang Kierdorf) | https://www.youtube.com/@RetroWK/videos"
-    "Computer/Retro       | RetroSpector78                             | https://www.youtube.com/@RetroSpector78/videos"
-    "Computer/Retro       | Retro Computing Roundtable                 | https://www.youtube.com/@retrocomputingroundtable4445/streams"
-    "Computer/Retro       | Retro Hack Shack                           | https://www.youtube.com/c/RetroHackShack/videos"
-    "Computer/Retro       | Retro Recipes                              | https://www.youtube.com/c/Perifractic/videos"
-    "Computer/Retro       | RMC, The Cave                              | https://www.youtube.com/c/RMCRetro/videos"
-    "Computer/Retro       | Rumbledethumps                             | https://www.youtube.com/@rumbledethumps/videos"
-    "Computer/Retro       | Scan Lines                                 | https://www.youtube.com/@ScanLinesAU/videos"
-    "Computer/Retro       | Tail Recursive                             | https://www.youtube.com/@pweingar/videos"
-    "Computer/Retro       | TechHut                                    | https://www.youtube.com/c/TechHutHD/videos"
-    "Computer/Retro       | Tech Tangents                              | https://www.youtube.com/c/AkBKukU/videos"
-    "Computer/Retro       | Techmoan                                   | https://www.youtube.com/c/Techmoan/videos"
-    "Computer/Retro       | TexElec                                    | https://www.youtube.com/c/TexElec/videos"
-    "Computer/Retro       | The 8-Bit Guy                              | https://www.youtube.com/c/The8BitGuy/videos"
-    "Computer/Retro       | The Byte Attic                             | https://www.youtube.com/@thebyteattic/videos"
-#    "Computer/Retro       | The Centre for Computing History           | https://www.youtube.com/c/TheCentreforComputingHistory/videos"
-#    "Computer/Retro       | The Commodore Room                         | https://www.youtube.com/@thecommodoreroom4554/videos"
-    "Computer/Retro       | The Eric Experiment                        | https://www.youtube.com/@TheEricExperiment/videos"
-    "Computer/Retro       | The Phintage Collector                     | https://www.youtube.com/c/THEPHINTAGECOLLECTOR/videos"
-#    "Computer/Retro       | The Retro Desk                             | https://www.youtube.com/@slithymatt/videos"
-    "Computer/Retro       | The Retro Shack                            | https://www.youtube.com/c/TheRetroShack/videos"
-    "Computer/Retro       | The Serial Port                            | https://www.youtube.com/@theserialport/videos"
-    "Computer/Retro       | TheGeekPub                                 | https://www.youtube.com/c/TheGeekPub/videos"
-    "Computer/Retro       | TheRasteri                                 | https://www.youtube.com/@TheRasteri/videos"
-    "Computer/Retro       | This Does Not Compute                      | https://www.youtube.com/c/ThisDoesNotCompute/videos"
-    "Computer/Retro       | Usagi Electric                             | https://www.youtube.com/c/Nakazoto/videos"
-#    "Computer/Retro       | VCF Midwest                                | https://www.youtube.com/@VCFMW/videos"
-#    "Computer/Retro       | Vintage Computer Federation                | https://www.youtube.com/@vcfederation/videos"
-    "Computer/Retro       | Wrangler Amiga                             | https://www.youtube.com/@wrangleramiga896/videos"
-#    "Electronic           | GreatScott!                                | https://www.youtube.com/@greatscottlab/videos"
-#?    "Game                 | Actualol                                   | https://www.youtube.com/@actualol/videos"
-    "Game                 | Me, Myself, and Die                        | https://www.youtube.com/c/MeMyselfandDieRPG/videos"
-    "History              | Another Boring Topic                       | https://www.youtube.com/@AnotherBoringTopic/videos"
-    "Mechanical           | Mechanistic                                | https://www.youtube.com/@mechanistic3d/videos"
-    "Mechanical           | Technology Connections                     | https://www.youtube.com/@TechnologyConnections/videos"
-##    "Mechanical           | Zac Builds                                 | https://www.youtube.com/@ZacBuilds/videos"
-    "Music/Ambient        | Smai-Lee                                   | https://www.youtube.com/@smai-lee/videos"
-    "Music/Ambient        | Synth Musiq                                | https://www.youtube.com/@synthmusiq/videos"
-    "Philosophy           | Sowell Explains                            | https://www.youtube.com/@SowellExplains/videos"
-#?    "Puzzle               | Chris Ramsay                               | https://www.youtube.com/c/ChrisRamsay52/videos"
-    "Puzzle               | RossDM - Puzzle Solving                    | https://www.youtube.com/c/RossDM/videos"
-    "Scenic               | Paul Scinocca (Duluth Ships)               | https://www.youtube.com/c/PaulScinocca/videos"
-#    "Science              | 3Blue1Brown                                | https://www.youtube.com/c/3blue1brown/videos"
-#    "Science              | CuriousMarc                                | https://www.youtube.com/c/CuriousMarc/videos"
-    "Science              | Data is Beautiful                          | https://www.youtube.com/@DataIsBeautifulOfficial/videos"
-#    "Science              | MindYourDecisions                          | https://www.youtube.com/@MindYourDecisions/videos"
-#    "Science              | Sabine Hossenfelder                        | https://www.youtube.com/@SabineHossenfelder/videos"
-    "Science              | Spacedock                                  | https://www.youtube.com/@Spacedock/videos"
-#    "Science              | Stand-up Maths                             | https://www.youtube.com/user/standupmaths/videos"
-#    "Science              | Veritasium                                 | https://www.youtube.com/c/veritasium/videos"
-#    "Science              | Vsauce2                                    | https://www.youtube.com/user/Vsauce2/videos"
-#    "Show                 | DUST                                       | https://www.youtube.com/c/watchdust/videos"
-    "Show                 | For the Empire                             | https://www.youtube.com/watch?v=g43lgCJ_D6o&list=PLxJr4XsTcWljTxufEaW_3X1VY_eqjuLgi"
-)
+  channels=(
+      "Computer/Demo        | Commodore Amiga Demos                      | https://www.youtube.com/playlist?list=PLnmLOQIDmUvUgbvY-Jq0txuYWYgWVcOOS"
+      "Computer/Demo        | Commodore 64 Demos                         | https://www.youtube.com/playlist?list=PLnmLOQIDmUvVn43FHdakSTY_W_EuoVwnT"
+      "Computer/Development | AngeTheGreat                               | https://www.youtube.com/channel/UCV0t1y4h_6-2SqEpXBXgwFQ/videos"
+      "Computer/Development | Baggers                                    | https://www.youtube.com/user/CBaggers/videos"
+      "Computer/Development | code4th                                    | https://www.youtube.com/@code4th/videos"
+      "Computer/Development | CodeAesthetic                              | https://www.youtube.com/@CodeAesthetic/videos"
+      "Computer/Development | Computerphile                              | https://www.youtube.com/user/Computerphile/videos"
+  #?    "Computer/Development | CppCon                                     | https://www.youtube.com/user/CppCon/videos"
+      "Computer/Development | Jacob Sorber                               | https://www.youtube.com/@JacobSorber/videos"
+      "Computer/Development | javidx9                                    | https://www.youtube.com/@javidx9/videos"
+      "Computer/Development | Kaveh808                                   | https://www.youtube.com/channel/UCHNK9EcrAwP7djlwQN4C_tg/videos"
+      "Computer/Development | Matt Heffernan Slithy Games                | https://www.youtube.com/c/slithymatt/videos"
+      "Computer/Development | Molly Rocket                               | https://www.youtube.com/@MollyRocket/videos"
+  #    "Computer/Development | NDC Conferences                            | https://www.youtube.com/c/NDCConferences/videos"
+  ##    "Computer/Development | Nir Lichtman                               | https://www.youtube.com/@nirlichtman/videos"
+      "Computer/Development | PCRetroProgrammer                          | https://www.youtube.com/@pcretroprogrammer2656/videos"
+      "Computer/Development | Racket                                     | https://www.youtube.com/@racketlang/videos"
+      "Computer/Development | root42                                     | https://www.youtube.com/c/root42/videos"
+      "Computer/Development | Shallan                                   | https://www.youtube.com/@Shallan64/videos"
+      "Computer/Development | Spanning Tree                              | https://www.youtube.com/@SpanningTree/videos"
+  #    "Computer/Development | Strange Loop Conference                    | https://www.youtube.com/c/StrangeLoopConf/videos"
+      "Computer/Development | Tsoding Daily                              | https://www.youtube.com/c/TsodingDaily/videos"
+      "Computer/Emacs       | Chris Maiorana                             | https://www.youtube.com/@ChristopherMaiorana/videos"
+      "Computer/Emacs       | Dr. Trefor Bazett > LaTeX Tutorials        | https://www.youtube.com/playlist?list=PLHXZ9OQGMqxcWWkx2DMnQmj5os2X5ZR73"
+      "Computer/Emacs       | EmacsConf                                  | https://www.youtube.com/c/EmacsConf/videos"
+      "Computer/Emacs       | Emacs Elements Chapter 2                   | https://www.youtube.com/@emacselements361/videos"
+      "Computer/Emacs       | Emacs Rocks                                | https://www.youtube.com/user/emacsrocks/videos"
+      "Computer/Emacs       | Flux Harmonic                              | https://www.youtube.com/c/FluxHarmonicLive/videos"
+      "Computer/Emacs       | Gavin Freeborn                             | https://www.youtube.com/c/GavinFreeborn/videos"
+      "Computer/Emacs       | Jake B                                     | https://www.youtube.com/c/JakeBox0/videos"
+      "Computer/Emacs       | Luke Smith > LaTeX                         | https://www.youtube.com/playlist?list=PL-p5XmQHB_JSQvW8_mhBdcwEyxdVX0c1T"
+      "Computer/Emacs       | Lukewh > Emacs                             | https://www.youtube.com/playlist?list=PLNJWazvift25KnHDwYlhwrrgr60wtpQOB"
+      "Computer/Emacs       | lxsameer                                   | https://www.youtube.com/c/lxsameer/videos"
+      "Computer/Emacs       | Protesilaos Stavrou                        | https://www.youtube.com/c/ProtesilaosStavrou/videos"
+      "Computer/Emacs       | System Crafters                            | https://www.youtube.com/c/SystemCrafters/videos"
+      "Computer/Emacs       | System Crafters Streams                    | https://www.youtube.com/c/SystemCrafters/streams"
+      "Computer/Emacs       | Tony Aldon                                 | https://www.youtube.com/@tonyaldon/videos"
+  #?    "Computer/General     | adventuresin9                             | https://www.youtube.com/@adventuresin9797/videos"
+      "Computer/General     | Chris Titus Tech                           | https://www.youtube.com/c/ChrisTitusTech/videos"
+      "Computer/General     | Titus Tech Talk                            | https://www.youtube.com/@TitusTechTalk/videos"
+  #?    "Computer/General     | Craft Computing                            | https://www.youtube.com/@CraftComputing/videos"
+      "Computer/General       | Dave's Garage                            | https://www.youtube.com/c/DavesGarage/videos"
+  #?    "Computer/General     | DistroTube                                 | https://www.youtube.com/c/DistroTube/videos"
+  #?    "Computer/General     | ETA Prime                                  | https://www.youtube.com/c/ETAPRIME/videos"
+  #?    "Computer/General     | ExplainingComputers                        | https://www.youtube.com/c/explainingcomputers/videos"
+      "Computer/General     | Jake@Linux                                 | https://www.youtube.com/@JakeLinux/videos"
+  #?    "Computer/General     | PCWorld                                    | https://www.youtube.com/pcworld/videos"
+      "Computer/General     | Stephen's Tech Talks                       | https://www.youtube.com/@stephenstechtalks5377/videos"
+  #    "Computer/Graphics    | pwnisher                                   | https://www.youtube.com/@pwnisher/videos"
+      "Computer/Hardware    | Ben Eater                                  | https://www.youtube.com/c/BenEater/videos"
+      "Computer/Hardware    | Ben Heck Hacks                             | https://www.youtube.com/c/BenHeckHacks/videos"
+      "Computer/Hardware    | DIY Perks                                  | https://www.youtube.com/c/DIYPerks/videos"
+      "Computer/Hardware    | element14 presents                         | https://www.youtube.com/@element14presents/videos"
+      "Computer/Hardware    | EMM Computers                              | https://www.youtube.com/@elijahmmiller/videos"
+      "Computer/Hardware    | Irish Craic Party                          | https://www.youtube.com/@IrishCraicParty/videos"
+      "Computer/Hardware    | James Sharman                              | https://www.youtube.com/c/weirdboyjim/videos"
+      "Computer/Hardware    | Slador                                     | https://www.youtube.com/@SladorSoft/videos"
+      "Computer/Hardware    | Troy Schrapel                              | https://www.youtube.com/@TroySchrapel/videos"
+      "Computer/Hardware    | Work from Hype                             | https://www.youtube.com/channel/UCcCYTCDxsMl84_btikjY40Q/videos"
+      "Computer/Retro       | 8-bit and more                             | https://www.youtube.com/@8bitandmore/videos"
+      "Computer/Retro       | 8-Bit Keys                                 | https://www.youtube.com/c/8BitKeys/videos"
+      "Computer/Retro       | 8-Bit Show and Tell                        | https://www.youtube.com/c/8BitShowAndTell/videos"
+      "Computer/Retro       | Action Retro                               | https://www.youtube.com/c/ActionRetro/videos"
+      "Computer/Retro       | Adrian's Digital Basement                  | https://www.youtube.com/c/adriansdigitalbasement/videos"
+      "Computer/Retro       | Adrian's Digital Basement ][               | https://www.youtube.com/channel/UCbtwi4wK1YXd9AyV_4UcE6g/videos"
+k  #?    "Computer/Retro       | Adrian's Digital Basement ///              | https://www.youtube.com/@adriansdigitalbasement5529/videos"
+      "Computer/Retro       | Advent of Computing                        | https://www.youtube.com/@adventofcomputing4504/videos"
+  #?    "Computer/Retro       | Ahoy                                       | https://www.youtube.com/@XboxAhoy/videos"
+      "Computer/Retro       | Al's Geek Lab                              | https://www.youtube.com/@AlsGeekLab/videos"
+      "Computer/Retro       | All Games                                  | https://www.youtube.com/@AllGamesPlayer/videos"
+  #    "Computer/Retro       | Amiga Bill                                 | https://www.youtube.com/@AmigaBill/videos"
+  #    "Computer/Retro       | Amigos Retro Gaming                        | https://www.youtube.com/@AmigosRetroGaming/videos"
+      "Computer/Retro       | Back Office Show                           | https://www.youtube.com/c/backofficeshow/videos"
+  #    "Computer/Retro       | Blue OS Museum                             | https://www.youtube.com/channel/UCO6vmCYZl7ZhEydFGi76iaw/videos"
+  #    "Computer/Retro       | Bits und Bolts                             | https://www.youtube.com/@bitsundbolts/videos"
+      "Computer/Retro       | Cathode Ray Dude                           | https://www.youtube.com/@CathodeRayDude/videos"
+      "Computer/Retro       | Chris Edwards Restoration > Amiga          | https://www.youtube.com/playlist?list=PLWHevKbRJhRluNtql3-UhAcgjLYVKhTMl"
+  #?    "Computer/Retro       | Chyrosran22                                | https://www.youtube.com/user/Chyrosran22/videos"
+  #    "Computer/Retro       | Computer History Archives Project          | https://www.youtube.com/@ComputerHistoryArchivesProject/videos"
+      "Computer/Retro       | Dan Wood                                   | https://www.youtube.com/@danwood_uk/videos"
+  #    "Computer/Retro       | DJ Sures                                   | https://www.youtube.com/@DJSures/videos"
+  #    "Computer/Retro       | Doctor Volt                                | https://www.youtube.com/c/DoctorVolt/videos"
+      "Computer/Retro       | Epictronics                                 | https://www.youtube.com/@Epictronics1/videos"
+      "Computer/Retro       | FreeDOS                                    | https://www.youtube.com/c/FreeDOSProject/videos"
+      "Computer/Retro       | GeekBits                                   | https://www.youtube.com/c/GeekBits/videos"
+      "Computer/Retro       | Handheld Computing                         | https://www.youtube.com/c/HandheldComputing/videos"
+      "Computer/Retro       | Hey Birt                                   | https://www.youtube.com/c/HeyBirt/videos"
+      "Computer/Retro       | Ian Witham                                 | https://www.youtube.com/@IanWitham/videos"
+      "Computer/Retro       | Jan Beta                                   | https://www.youtube.com/c/JanBeta"
+  #    "Computer/Retro       | John's Basement                            | https://www.youtube.com/@JohnsBasement/videos"
+      "Computer/Retro       | Josip Retro Bits                           | https://www.youtube.com/@JosipRetroBits/videos"
+  #    "Computer/Retro       | LGR                                        | https://www.youtube.com/c/Lazygamereviews/videos"
+  #    "Computer/Retro       | LGR Blerbs                                 | https://www.youtube.com/c/LGRBlerbs/videos"
+      "Computer/Retro       | LowSpecGamer                               | https://www.youtube.com/c/lowspecgamer/videos"
+  ##    "Computer/Retro       | LearnAgon                                  | https://www.youtube.com/@LearnAgon/videos"
+      "Computer/Retro       | Mac84                                      | https://www.youtube.com/c/Mac84/videos"
+      "Computer/Retro       | Macintosh Librarian                        | https://www.youtube.com/@MacintoshLibrarian/videos"
+      "Computer/Retro       | Michael MJD                                | https://www.youtube.com/c/MichaelMJD/videos"
+      "Computer/Retro       | MikeyGRetro                                | https://www.youtube.com/@MikeyGRetro/videos"
+  #   "Computer/Retro       | moshix                                     | https://www.youtube.com/@moshixmainframechannel/videos"
+      "Computer/Retro       | Mr Lurch's Things                          | https://www.youtube.com/@MrLurchsThings/videos"
+  #?    "Computer/Retro       | Modern Vintage Gamer                       | https://www.youtube.com/@ModernVintageGamer/videos"
+      "Computer/Retro       | Noel's Retro Lab                           | https://www.youtube.com/c/NoelsRetroLab/videos"
+      "Computer/Retro       | Nostalgia Nerd                             | https://www.youtube.com/@Nostalgianerd/videos"
+  #?    "Computer/Retro       | OldTechBloke                               | https://www.youtube.com/c/OldTechBloke/videos"
+      "Computer/Retro       | Operation 8-Bit                            | https://www.youtube.com/@Operation8Bit/videos"
+      "Computer/Retro       | PhilsComputerLab                           | https://www.youtube.com/c/philscomputerlab/videos"
+      "Computer/Retro       | RavenWolf Retro Tech                       | https://www.youtube.com/@RavenWolfRetroTech/videos"
+      "Computer/Retro       | retrobits                                  | https://www.youtube.com/@retrobitstv/videos"
+      "Computer/Retro       | RetroBytes                                 | https://www.youtube.com/@RetroBytesUK/videos"
+      "Computer/Retro       | RetroGarage                                | https://www.youtube.com/@retrogarage8734/videos"
+      "Computer/Retro       | RETRO is the new black (Wolfgang Kierdorf) | https://www.youtube.com/@RetroWK/videos"
+      "Computer/Retro       | RetroSpector78                             | https://www.youtube.com/@RetroSpector78/videos"
+      "Computer/Retro       | Retro Computing Roundtable                 | https://www.youtube.com/@retrocomputingroundtable4445/streams"
+      "Computer/Retro       | Retro Hack Shack                           | https://www.youtube.com/c/RetroHackShack/videos"
+      "Computer/Retro       | Retro Recipes                              | https://www.youtube.com/c/Perifractic/videos"
+      "Computer/Retro       | RMC, The Cave                              | https://www.youtube.com/c/RMCRetro/videos"
+      "Computer/Retro       | Rumbledethumps                             | https://www.youtube.com/@rumbledethumps/videos"
+      "Computer/Retro       | Scan Lines                                 | https://www.youtube.com/@ScanLinesAU/videos"
+      "Computer/Retro       | Tail Recursive                             | https://www.youtube.com/@pweingar/videos"
+      "Computer/Retro       | TechHut                                    | https://www.youtube.com/c/TechHutHD/videos"
+      "Computer/Retro       | Tech Tangents                              | https://www.youtube.com/c/AkBKukU/videos"
+      "Computer/Retro       | Techmoan                                   | https://www.youtube.com/c/Techmoan/videos"
+      "Computer/Retro       | TexElec                                    | https://www.youtube.com/c/TexElec/videos"
+      "Computer/Retro       | The 8-Bit Guy                              | https://www.youtube.com/c/The8BitGuy/videos"
+      "Computer/Retro       | The Byte Attic                             | https://www.youtube.com/@thebyteattic/videos"
+  #    "Computer/Retro       | The Centre for Computing History           | https://www.youtube.com/c/TheCentreforComputingHistory/videos"
+  #    "Computer/Retro       | The Commodore Room                         | https://www.youtube.com/@thecommodoreroom4554/videos"
+      "Computer/Retro       | The Eric Experiment                        | https://www.youtube.com/@TheEricExperiment/videos"
+      "Computer/Retro       | The Phintage Collector                     | https://www.youtube.com/c/THEPHINTAGECOLLECTOR/videos"
+  #    "Computer/Retro       | The Retro Desk                             | https://www.youtube.com/@slithymatt/videos"
+      "Computer/Retro       | The Retro Shack                            | https://www.youtube.com/c/TheRetroShack/videos"
+      "Computer/Retro       | The Serial Port                            | https://www.youtube.com/@theserialport/videos"
+      "Computer/Retro       | TheGeekPub                                 | https://www.youtube.com/c/TheGeekPub/videos"
+      "Computer/Retro       | TheRasteri                                 | https://www.youtube.com/@TheRasteri/videos"
+  #    "Computer/Retro       | TheRetroRecall                             | https://www.youtube.com/@TheRetroRecall/videos"
+      "Computer/Retro       | This Does Not Compute                      | https://www.youtube.com/c/ThisDoesNotCompute/videos"
+      "Computer/Retro       | Usagi Electric                             | https://www.youtube.com/c/Nakazoto/videos"
+  #    "Computer/Retro       | VCF Midwest                                | https://www.youtube.com/@VCFMW/videos"
+  #    "Computer/Retro       | Vintage Computer Federation                | https://www.youtube.com/@vcfederation/videos"
+      "Computer/Retro       | Wrangler Amiga                             | https://www.youtube.com/@wrangleramiga896/videos"
+  #    "Electronic           | GreatScott!                                | https://www.youtube.com/@greatscottlab/videos"
+  #?    "Game                 | Actualol                                   | https://www.youtube.com/@actualol/videos"
+      "Game                 | Me, Myself, and Die                        | https://www.youtube.com/c/MeMyselfandDieRPG/videos"
+      "History              | Another Boring Topic                       | https://www.youtube.com/@AnotherBoringTopic/videos"
+      "Mechanical           | Mechanistic                                | https://www.youtube.com/@mechanistic3d/videos"
+      "Mechanical           | Technology Connections                     | https://www.youtube.com/@TechnologyConnections/videos"
+  ##    "Mechanical           | Zac Builds                                 | https://www.youtube.com/@ZacBuilds/videos"
+      "Music/Ambient        | Smai-Lee                                   | https://www.youtube.com/@smai-lee/videos"
+      "Music/Ambient        | Synth Musiq                                | https://www.youtube.com/@synthmusiq/videos"
+      "Philosophy           | Sowell Explains                            | https://www.youtube.com/@SowellExplains/videos"
+  #?    "Puzzle               | Chris Ramsay                               | https://www.youtube.com/c/ChrisRamsay52/videos"
+      "Puzzle               | RossDM - Puzzle Solving                    | https://www.youtube.com/c/RossDM/videos"
+      "Scenic               | Paul Scinocca (Duluth Ships)               | https://www.youtube.com/c/PaulScinocca/videos"
+  #    "Science              | 3Blue1Brown                                | https://www.youtube.com/c/3blue1brown/videos"
+  #    "Science              | CuriousMarc                                | https://www.youtube.com/c/CuriousMarc/videos"
+      "Science              | Data is Beautiful                          | https://www.youtube.com/@DataIsBeautifulOfficial/videos"
+  #    "Science              | MindYourDecisions                          | https://www.youtube.com/@MindYourDecisions/videos"
+  #    "Science              | Sabine Hossenfelder                        | https://www.youtube.com/@SabineHossenfelder/videos"
+      "Science              | Spacedock                                  | https://www.youtube.com/@Spacedock/videos"
+  #    "Science              | Stand-up Maths                             | https://www.youtube.com/user/standupmaths/videos"
+  #    "Science              | Veritasium                                 | https://www.youtube.com/c/veritasium/videos"
+  #    "Science              | Vsauce2                                    | https://www.youtube.com/user/Vsauce2/videos"
+  #    "Show                 | DUST                                       | https://www.youtube.com/c/watchdust/videos"
+      "Show                 | For the Empire                             | https://www.youtube.com/watch?v=g43lgCJ_D6o&list=PLxJr4XsTcWljTxufEaW_3X1VY_eqjuLgi"
+  )
 
-_usage() {
-    cat <<EOF
-Usage: $(basename $0) [OPTIONS] [CHANNEL]
-Grab the latest YouTube videos from a curated list.
-  OPTIONS:
-  -l, --list             display video list names
-  -r, --restart          download any missing videos from all lists
-  -r, --restart CHANNEL  download any missing videos from CHANNEL
-  -h, --help             show help (this message)
-  CHANNEL                download videos from CHANNEL
-EOF
-}
+  _usage() {
+      cat <<EOF
+  Usage: $(basename $0) [OPTIONS] [CHANNEL]
+  Grab the latest YouTube videos from a curated list.
+    OPTIONS:
+    -l, --list             display video list names
+    -r, --restart          download any missing videos from all lists
+    -r, --restart CHANNEL  download any missing videos from CHANNEL
+    -h, --help             show help (this message)
+    CHANNEL                download videos from CHANNEL
+  EOF
+  }
 
-_download() {
-    archive="$1"
-    listname="$2"
+  _download() {
+      archive="$1"
+      listname="$2"
 
-    [[ -n "${listname}" ]] && echo "List: ${listname}"
+      [[ -n "${listname}" ]] && echo "List: ${listname}"
 
-    for ((x = 0; x < ${#channels[@]}; x += 1)) ; do
-        channel=$(echo "${channels[$x]}" | sed 's/ *|/|/g ; s/| */|/g')
-        dir=$(echo "${channel}" | cut -d '|' -f 1)
-        name=$(echo "${channel}" | cut -d '|' -f 2)
-        url=$(echo "${channel}" | cut -d '|' -f 3)
-        echo "| ${dir} | ${name} | ${url} |"
-        if [[ -z "${listname}" || "${name}" == "${listname}" ]] ; then
-            path="${basedir}/${dir}/${name}"
-            cmd="${ytdlp} \
-                --format 'bv*+ba/b' \
-                --format-sort 'res:1080,res:720,res:480' \
-                --playlist-reverse \
-                ${archive} \
-                --output \"${name} - %(release_date>%Y-%m-%d,upload_date>%Y-%m-%d|Unknown)s - %(title)s.%(ext)s\" \
-                '${url}'"
-                #--format 'h264+aac' \
-                #--output \"${name} - %(release_date>%Y-%m-%d,upload_date>%Y-%m-%d|Unknown)s - %(title)s.mp4\" \
-            echo
-            echo "${url} -> ${path}"
-            echo
-            mkdir -p "${path}"
-            cd "${path}" && eval "${cmd}"
-        fi
-    done
-}
+      for ((x = 0; x < ${#channels[@]}; x += 1)) ; do
+          channel=$(echo "${channels[$x]}" | sed 's/ *|/|/g ; s/| */|/g')
+          dir=$(echo "${channel}" | cut -d '|' -f 1)
+          name=$(echo "${channel}" | cut -d '|' -f 2)
+          url=$(echo "${channel}" | cut -d '|' -f 3)
+          echo "| ${dir} | ${name} | ${url} |"
+          if [[ -z "${listname}" || "${name}" == "${listname}" ]] ; then
+              path="${basedir}/${dir}/${name}"
+              cmd="${ytdlp} \
+                  --format 'bv*+ba/b' \
+                  --format-sort 'res:1080,res:720,res:480' \
+                  --playlist-reverse \
+                  ${archive} \
+                  --output \"${name} - %(release_date>%Y-%m-%d,upload_date>%Y-%m-%d|Unknown)s - %(title)s.%(ext)s\" \
+                  '${url}'"
+                  #--format 'h264+aac' \
+                  #--output \"${name} - %(release_date>%Y-%m-%d,upload_date>%Y-%m-%d|Unknown)s - %(title)s.mp4\" \
+              echo
+              echo "${url} -> ${path}"
+              echo
+              mkdir -p "${path}"
+              cd "${path}" && eval "${cmd}"
+          fi
+      done
+  }
 
-archive="--download-archive '"${HOME}/.yt-dlp-download-archive"'"
+  archive="--download-archive '"${HOME}/.yt-dlp-download-archive"'"
 
-# handle command line arguments
-while true ; do
-    case $1 in
-        -l|--list)
-            for ((x = 0; x < ${#channels[@]}; x += 1)) ; do
-                echo "${channels[$x]}" | sed 's/^[^|]*| *// ; s/ *|.*$//'
-            done
-            exit 0
-            ;;
-        -r|--restart)
-            listname=
-            if [[ -n "$2" ]] ; then
-                listname="$2"
-                shift
-            fi
-            archive="--no-download-archive"
-            _download "${archive}" "${listname}"
-            exit 0
-            ;;
-        -h|-\?|--help)
-            _usage 0
-            exit 0
-            ;;
-        --)
-            shift
-            break
-            ;;
-        -?*)
-            echo -e "Invalid option: $1" >&2
-            _usage
-            exit 1
-            ;;
-        *)
-            break
-            ;;
-    esac
-    shift
-done
+  # handle command line arguments
+  while true ; do
+      case $1 in
+          -l|--list)
+              for ((x = 0; x < ${#channels[@]}; x += 1)) ; do
+                  echo "${channels[$x]}" | sed 's/^[^|]*| *// ; s/ *|.*$//'
+              done
+              exit 0
+              ;;
+          -r|--restart)
+              listname=
+              if [[ -n "$2" ]] ; then
+                  listname="$2"
+                  shift
+              fi
+              archive="--no-download-archive"
+              _download "${archive}" "${listname}"
+              exit 0
+              ;;
+          -h|-\?|--help)
+              _usage 0
+              exit 0
+              ;;
+          --)
+              shift
+              break
+              ;;
+          -?*)
+              echo -e "Invalid option: $1" >&2
+              _usage
+              exit 1
+              ;;
+          *)
+              break
+              ;;
+      esac
+      shift
+  done
 
-listname=
-[[ -n "$1" ]] && listname="$1"
-_download "${archive}" "${listname}"
+  listname=
+  [[ -n "$1" ]] && listname="$1"
+  _download "${archive}" "${listname}"
 
-exit 0
+  exit 0
 
-#===============================================================================
-# End of File
-#===============================================================================
+  #===============================================================================
+  # End of File
+  #===============================================================================

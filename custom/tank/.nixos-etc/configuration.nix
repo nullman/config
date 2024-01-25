@@ -106,6 +106,7 @@
       gcc-ia16 = prev.callPackage /home/kyle/.nixos/pkgs/gcc-ia16 {};
       #mtkclient = prev.callPackage /home/kyle/.nixos/pkgs/mtkclient {};
       syncterm = prev.callPackage /home/kyle/.nixos/pkgs/syncterm {};
+      vdhcoapp = prev.callPackage /home/kyle/.nixos/pkgs/vdhcoapp {};
     })
   ];
 
@@ -429,7 +430,8 @@
   programs.firefox = {
     enable = true;
     package = pkgs.wrapFirefox pkgs.firefox-unwrapped {
-      extraNativeMessagingHosts = with pkgs.nur.repos.wolfangaukang; [ vdhcoapp ];
+      #extraNativeMessagingHosts = with pkgs.nur.repos.wolfangaukang; [ vdhcoapp ];
+      extraNativeMessagingHosts = with pkgs; [ vdhcoapp ];
     };
   };
 
@@ -767,6 +769,7 @@
     blender
     calibre
     celluloid
+    cider
     electrum
     evince
     gimp
@@ -816,6 +819,7 @@
     scrcpy
     simplescreenrecorder
     #upscayl
+    #vdhcoapp
     #x48
 
     # tui
