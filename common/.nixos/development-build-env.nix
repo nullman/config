@@ -28,6 +28,13 @@ let e = pkgs.buildFHSEnv {
         xz xz.dev
         zlib zlib.dev
 
+        # xorg
+        xorg.libxcb xorg.libxcb.dev
+        xorg.libXinerama xorg.libXinerama.dev
+        xorg.xcbutil xorg.xcbutil.dev
+        xorg.xcbutilkeysyms xorg.xcbutilkeysyms.dev
+        xorg.xcbutilwm xorg.xcbutilwm.dev
+
         # toolchain
         bison
         flex

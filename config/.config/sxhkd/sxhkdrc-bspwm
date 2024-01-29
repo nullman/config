@@ -78,7 +78,7 @@ super + shift + h
 super + shift + {w,k}
     bspc node --{close,kill}
 
-# alternate between tiled and monocle layout
+# alternate between tiled, stacked, and monocle layout
 super + ctrl + m
     bspc desktop --layout next
 
