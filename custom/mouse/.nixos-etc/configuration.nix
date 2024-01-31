@@ -101,6 +101,8 @@
       #mtkclient = prev.callPackage /home/kyle/.nixos/pkgs/mtkclient {};
       syncterm = prev.callPackage /home/kyle/.nixos/pkgs/syncterm {};
       vdhcoapp = prev.callPackage /home/kyle/.nixos/pkgs/vdhcoapp {};
+      #bspwm = prev.callPackage /home/kyle/code/nixpkgs/pkgs/applications/window-managers/bspwm {};
+      #bspwm = prev.callPackage /home/kyle/code/bspwm {};
     })
   ];
 

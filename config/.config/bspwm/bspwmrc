@@ -56,7 +56,8 @@ _bc removal_adjustment         true
 _bc borderless_monocle         false
 _bc gapless_monocle            false
 _bc single_monocle             true
-_bc layout_stacked             true
+#_bc layout_stacked             false
+#_bc layout_stacked             true
 _bc click_to_focus             any
 _bc swallow_first_click        false
 _bc focus_follows_pointer      false

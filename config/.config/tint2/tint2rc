@@ -262,7 +262,7 @@ tooltip_font_color = #dddddd 100
 #-------------------------------------
 
 execp = new
-execp_command = ${HOME}/bin/system-bar-weather icon 55433
+execp_command = ${HOME}/bin/system-bar-weather icon 92116
 execp_interval = 300
 execp_has_icon = 0
 execp_cache_icon = 0

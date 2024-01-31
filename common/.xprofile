@@ -82,6 +82,14 @@ _command xset && xset -dpms s off b off m 2/1 4 r rate 500 35
 # select a window manager
 #exec selectwm
 
+if [[ -n "$(pgrep -x i3)"]] || [[ -n "$(pgrep -x bspwm)" ]] ; then
+    # https://wiki.archlinux.org/title/bspwm#Problems_with_Java_applications
+    # set window manager name so that java applications work
+    wmname LG3D
+    # fix java app not refreshing issue in tiling window managers
+    export _JAVA_AWT_WM_NONREPARENTING=1
+fi
+
 # restore rotation
 #[[ -x ${HOME}/.raspad-rotate-restore ]] && ${HOME}/.raspad-rotate-restore
 

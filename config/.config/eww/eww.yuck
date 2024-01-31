@@ -31,8 +31,8 @@
 (defpoll volume :interval "500ms" "[[ $(pamixer --get-mute) == true ]] && echo '0' || pamixer --get-volume")
 (defpoll brightness :interval "500ms" "light -G | sed 's/\.[0-9]*$//'")
 
-(defpoll weather :interval "600s" "~/bin/system-bar-weather icon 55433")
-(defpoll weather-status :interval "600s" "~/bin/system-bar-weather status 55433")
+(defpoll weather :interval "600s" "~/bin/system-bar-weather icon 92116")
+(defpoll weather-status :interval "600s" "~/bin/system-bar-weather status 92116")
 
 ;;(defpoll weather :interval "600s" "curl --silent 'wttr.in/?minneapolis&u&format=%c%t'")
 ;;(defpoll weather-status :interval "600s" "curl --silent 'wttr.in/?minneapolis&u&format=%C+%t'")
