@@ -53,7 +53,8 @@ hide_edge_borders smart
 #font xft:URWGothic-Book 11
 #font xft:Droid Sans Mono 12
 #font pango:System San Francisco Display 12
-font pango:MesloLGS Nerd Font Mono 10
+#font pango:MesloLGS Nerd Font Mono 10
+font pango:MesloLGS Nerd Font Mono 0
 
 # use Mouse+$super to drag floating windows to their wanted position
 floating_modifier $super
@@ -73,7 +74,6 @@ force_display_urgency_hint 500 ms
 
 # start a terminal
 bindsym $super+Return exec alacritty
-#bindsym $super+$alt+t exec alacritty
 
 # kill focused window
 bindsym $super+Shift+w kill
@@ -151,46 +151,27 @@ bindsym $super+grave scratchpad show
 
 # set $workspace1 "1 Term"
 # set $workspace2 "2 Edit"
-# set $workspace3 "3 Soc"
-# set $workspace4 "4 Firefox"
+# set $workspace3 "3 Email"
+# set $workspace4 "4 Browser"
 # set $workspace5 "5 File"
-# set $workspace6 "6 Dev"
-# set $workspace7 "7 ?"
-# set $workspace8 "8 ?"
-# set $workspace9 "9 ?"
-# set $workspace10 "10 Music"
+# set $workspace6 "6 Chat"
+# set $workspace7 "7 Chat"
+# set $workspace8 "8 Dev"
+# set $workspace9 "9 Video"
+# set $workspace10 "10 Remote"
 
-# terminal
+#  Σ    #                
+
 set $workspace1 "1 "
-# editor
-#set $workspace2 "2 Σ"
-#set $workspace2 "2 "
-#set $workspace2 "2 "
 set $workspace2 "2 "
-# social
-#set $workspace3 "3 #"
-#set $workspace3 "3 "
-#set $workspace3 "3 "
-#set $workspace3 "3 "
-set $workspace3 "3 "
-# firefox
+set $workspace3 "3 "
 set $workspace4 "4 "
-# files
-set $workspace7 "5 "
-# development (ide)
-set $workspace6 "6 "
-# other
-set $workspace9 "7 "
-set $workspace9 "8 "
-set $workspace9 "9 "
-# music
-#set $workspace10 "10 "
-set $workspace10 "10 🎵"
-
-# chromium
-#set $workspace5 "5 "
-# books/news
-#set $workspace8 "8 "
+set $workspace7 "5 "
+set $workspace6 "6 "
+set $workspace9 "7 "
+set $workspace9 "8 "
+set $workspace9 "9 "
+set $workspace10 "10 "
 
 # switch to workspace next / previous
 #bindsym $super+Ctrl+Left workspace prev
@@ -459,7 +440,7 @@ smart_gaps on
 # container on this workspace)
 # on|no_gaps (on=always activate and no_gaps=only activate if the gap size to
 # the edge of the screen is 0)
-smart_borders on
+smart_borders off
 
 # # Press $super+Shift+g to enter the gap mode. Choose o or i for modifying
 # # outer/inner gaps. Press one of + / - (in-/decrement for current workspace)
@@ -502,57 +483,140 @@ smart_borders on
 # }
 
 #-------------------------------------------------------------------------------
-# Application Customizations
+# Application Desktop Assignments
 #-------------------------------------------------------------------------------
 
 # open specific applications in specific windows
 # use xprop to determine application classes
+
+# 1: Terminal
+#assign [class="URxvt"] $workspace1
 #assign [class="Alacritty"] $workspace1
+#assign [class="Termite"] $workspace1
+
+# 2: Editor
 assign [class="Emacs"] $workspace2
-assign [class="Slack"] $workspace3
-assign [class="Thunderbird"] $workspace3
+
+# 3: Email
+assign [class="thunderbird"] $workspace3
+assign [class="betterbird"] $workspace3
+assign [class="ms-outlook-nativefier"] $workspace3
+
+# 4: Browser
 assign [class="firefox"] $workspace4
-assign [class="Chromium"] $workspace4
-assign [class="pcmanfm"] $workspace5
+assign [class="LibreWolf"] $workspace4
+assign [class="Brave-browser"] $workspace4
+assign [class="vivaldi-stable"] $workspace4
+assign [class="gopherus-sdl"] $workspace4
+
+# 5: File Manager
 assign [class="Thunar"] $workspace5
+assign [class="Pcmanfm"] $workspace5
+assign [class="Spacefm"] $workspace5
 assign [class="Org.gnome.Nautilus"] $workspace5
-assign [class="jetbrains-idea-ce"] $workspace6
-assign [class="dosbox"] $workspace6
-assign [class="discord"] $workspace7
-#assign [class="Evince"] $workspace8
-assign [class="Lollypop"] $workspace10
+#assign [class="Filezilla"] $workspace5
+assign [class="Transmission-gtk"] $workspace5
+#assign [class="balena-etcher-electron"] $workspace5
+#assign [class="Ghb"] $workspace5
+
+# 6: Chat
+assign [class="Slack"] $workspace6
+assign [class="discord"] $workspace6
+
+# 7: More Chat
+assign [class="Pidgin"] $workspace7
+assign [class="Tootle"] $workspace7
+assign [class="Com.github.bleakgrey.tootle"] $workspace7
+assign [class="Element"] $workspace7
+assign [class="dev.geopjr.Tuba"] $workspace7
+assign [class="Gajim"] $workspace7
+assign [class="Hyperspace Desktop"] $workspace7
+assign [class="android-messages-desktop"] $workspace7
+assign [class="teams-for-linux"] $workspace7
+
+# 8: Development
+assign [class="jetbrains-idea"] $workspace8
+assign [class="jetbrains-idea-ce"] $workspace8
+assign [class="jetbrains-studio"] $workspace8
+#assign [class="dosbox"] $workspace8
+#assign [class="BasiliskII desktop"] $workspace8
+assign [class="VirtualBox Manager"] $workspace8
+assign [class="VirtualBox Machine"] $workspace8
+
+# 9: Image, Video, and Audio
+assign [class="Chromium"] $workspace9
+assign [class="Google-chrome"] $workspace9
+assign [class="Gimp-2.10"] $workspace9
+assign [class="Qmmp"] $workspace9
+assign [class="mplayer2"] $workspace9
+assign [class="Lollypop"] $workspace9
+assign [class="LBRY"] $workspace9
+assign [class="spotify"] $workspace9
+assign [class="bluejeans-v2"] $workspace9
+
+# 10: Remote
+assign [class="syncterm"] $workspace10
+#assign [class="Evince"] $workspace10
+
+#-------------------------------------------------------------------------------
+# Application Rules
+#-------------------------------------------------------------------------------
 
 # open specific applications in floating mode
+# for_window [class="^*"] border pixel 1
 for_window [title="alsamixer"] floating enable border pixel 1
+for_window [class="arandr"] floating enable border normal
+for_window [class="Audacious"] floating enable border normal
+for_window [class="balena-etcher-electron"] floating enable border normal
+for_window [class="BasiliskII"] floating enable border normal
+for_window [class=".blueman-manager-wrapped"] floating enable border normal
 for_window [class="Calamares"] floating enable border normal
 for_window [class="Clipgrab"] floating enable
-for_window [title="File Transfer*"] floating enable
+for_window [class="Cisco AnyConnect Secure Mobility Client"] floating enable
+for_window [class="Conky"] floating enable
+#for_window [class="dosbox"] floating enable
+for_window [class="feh"] floating enable
+for_window [class="File Transfer*"] floating enable
+for_window [class="Font-manager"] floating enable
+for_window [class="Font-viewer"] floating enable
 for_window [class="Galculator"] floating enable border pixel 1
+for_window [class="Gnome-disks"] floating enable border pixel 1
 for_window [class="GParted"] floating enable border normal
 for_window [class="(?i)gsimplecal"] floating enable
-for_window [title="gxmessage"] floating enable border pixel 1
+for_window [title="Gxmessage"] floating enable border pixel 1
 #for_window [title="i3_help"] floating enable sticky enable border normal
+for_window [class="iwgtk"] floating enable sticky enable border normal
+#for_window [class="jetbrains-idea"] fullscreen enable border normal
 #for_window [class="jetbrains-idea-ce"] fullscreen enable border normal
+#for_window [class="jetbrains-studio"] fullscreen enable border normal
 for_window [class="Lightdm-gtk-greeter-settings"] floating enable
 for_window [class="Lxappearance"] floating enable sticky enable border normal
 for_window [class="Manjaro-hello"] floating enable
 for_window [class="Manjaro Settings Manager"] floating enable border normal
+for_window [class="mpv"] floating enable border normal
 for_window [title="MuseScore: Play Panel"] floating enable
 for_window [class="Nitrogen"] floating enable sticky enable border normal
-for_window [class="Oblogout"] fullscreen enable
+for_window [class="oblogout"] fullscreen enable
 for_window [class="octopi"] floating enable
 for_window [title="About Pale Moon"] floating enable
 for_window [class="Pamac-manager"] floating enable
+for_window [class="Paprefs"] floating enable
 for_window [class="Pavucontrol"] floating enable
+for_window [class="Qmmp"] floating enable sticky enable border normal
 for_window [class="qt5ct"] floating enable sticky enable border normal
 for_window [class="Qtconfig-qt4"] floating enable sticky enable border normal
 for_window [class="Simple-scan"] floating enable border normal
 for_window [class="(?i)System-config-printer.py"] floating enable border normal
 for_window [class="Skype"] floating enable border normal
+for_window [class="syncterm"] floating enable border normal
 for_window [class="Thus"] floating enable border normal
+for_window [class="Tint2conf"] floating enable border normal
 for_window [class="Timeset-gui"] floating enable border normal
 for_window [class="(?i)virtualbox"] floating enable border normal
+for_window [class="X48"] floating enable
 for_window [class="Xfburn"] floating enable
+for_window [class="Xfce4-settings-manager"] floating enable
+for_window [class="Yad"] floating enable
 
 #-------------------------------------------------------------------------------
 # System
@@ -562,9 +626,9 @@ for_window [class="Xfburn"] floating enable
 # exec --no-startup-id volumeicon
 # #bindsym $super+Ctrl+m exec terminal -e 'alsamixer'
 # bindsym $super+$alt+m exec terminal -e 'alsamixer'
-exec --no-startup-id pulseaudio
+# exec --no-startup-id pulseaudio
 #bindsym $super+Ctrl+m exec pavucontrol
-bindsym $super+$alt+m exec pavucontrol
+#bindsym $super+$alt+m exec pavucontrol
 
 # other
 #bindsym $super+F2 exec palemoon
@@ -591,18 +655,23 @@ bindsym $super+Shift+h exec xdg-open /usr/share/doc/manjaro/i3_help.pdf
 bindsym $super+$alt+k --release exec --no-startup-id xkill
 
 #-------------------------------------------------------------------------------
-# Standard Applications
+# Auto-Start Standard Applications
 #-------------------------------------------------------------------------------
 
+# simple x hotkey daemon (both standard and bspwm key bindings)
+# (might have been run already by .xprofile)
+# pgrep -x sxhkd || exec --no-startup-id sxhkd -c "${HOME}/.config/sxhkd/sxhkdrc{,-i3}"
+#exec --no-startup-id sxhkd -c "${HOME}/.config/sxhkd/sxhkdrc{,-i3}"
+exec --no-startup-id sxhkd -c "${HOME}/.config/sxhkd/sxhkdrc"
+
 # gnome policykit authentation agent
-#[[ -x /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 ]] && exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 # gnome keyring
 # eval "$(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg)" &
 # lx policykit authentation agent
 # lxpolkit &
 
 # compositor
-# compton -c &
 exec --no-startup-id picom -c
 
 # system bar
@@ -671,7 +740,7 @@ exec --no-startup-id nitrogen --restore
 exec --no-startup-id i3-msg "workspace $workspace1"
 
 # auto-start custom applications
-exec --no-startup-id "source ${HOME}/.i3applications"
+exec --no-startup-id "source ${HOME}/.i3-applications"
 
 #===============================================================================
 # End of File

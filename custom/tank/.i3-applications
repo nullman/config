@@ -1,5 +1,5 @@
 #===============================================================================
-# .i3applications
+# .i3-applications
 #
 # Configuration for i3 initial applications.
 #===============================================================================
@@ -30,7 +30,7 @@ _command xautolock && i3-msg "exec --no-startup-id xautolock -time 30 -locker 'x
 #_delay 0
 
 # initialize foreground applications
-_command alacritty && i3-msg "exec --no-startup-id alacritty -e ${HOME}/bin/run-screen"
+#_command alacritty && i3-msg "exec --no-startup-id alacritty -e ${HOME}/bin/run-screen"
 #_command emacs && i3-msg "exec --no-startup-id _delay 1 emacs"
 ##_command thunderbird && i3-msg "exec --no-startup-id _delay 1 thunderbird"
 #_command betterbird && i3-msg "exec --no-startup-id _delay 1 betterbird"
@@ -50,6 +50,9 @@ _command alacritty && i3-msg "exec --no-startup-id alacritty -e ${HOME}/bin/run-
 
 # example using a saved i3 workspace via the i3-save-tree command
 # i3-msg "workspace 1 ; append_layout /home/kyle/.i3/worspace-1.json"
+
+# launch application launcher
+_command ${HOME}/bin/application-launcher && ${HOME}/bin/application-launcher &
 
 #===============================================================================
 # End of File

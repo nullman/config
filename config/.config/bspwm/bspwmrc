@@ -56,8 +56,6 @@ _bc removal_adjustment         true
 _bc borderless_monocle         false
 _bc gapless_monocle            false
 _bc single_monocle             true
-#_bc layout_stacked             false
-#_bc layout_stacked             true
 _bc click_to_focus             any
 _bc swallow_first_click        false
 _bc focus_follows_pointer      false
@@ -103,6 +101,9 @@ _bc active_border_color        "#1e1e1e"
 _bc focused_border_color       "#5e81ac"
 _bc presel_feedback_color      "#5e81ac"
 
+# desktop layout
+bspc desktop --layout tiled
+
 #-------------------------------------------------------------------------------
 # Application Desktop Assignments
 #-------------------------------------------------------------------------------
@@ -124,7 +125,6 @@ _ba ms-outlook-nativefier desktop='^3' follow=on
 _ba firefox desktop='^4' follow=on
 _ba LibreWolf desktop='^4' follow=on
 _ba Brave-browser desktop='^4' follow=on
-_ba Chromium desktop='^4' follow=on
 _ba vivaldi-stable desktop='^4' follow=on
 _ba gopherus-sdl desktop='^4' follow=on
 
@@ -145,8 +145,8 @@ _ba discord desktop='^6' follow=on
 # 7: More Chat
 _ba Pidgin desktop='^7' follow=on
 _ba Tootle desktop='^7' follow=on
-_ba Element desktop='^7' follow=on
 _ba Com.github.bleakgrey.tootle desktop='^7' follow=on
+_ba Element desktop='^7' follow=on
 _ba dev.geopjr.Tuba desktop='^7' follow=on
 _ba Gajim desktop='^7' follow=on
 _ba 'Hyperspace Desktop' desktop='^7' follow=on
@@ -163,6 +163,7 @@ _ba 'VirtualBox Manager' desktop='^8' follow=on
 _ba 'VirtualBox Machine' desktop='^8' follow=on
 
 # 9: Image, Video, and Audio
+_ba Chromium desktop='^9' follow=on
 _ba Google-chrome desktop='^9' follow=on
 _ba Gimp-2.10 desktop='^9' follow=on
 _ba Qmmp desktop='^9' follow=on
@@ -200,33 +201,55 @@ _ba 'VirtualBox Machine' state=fullscreen
 _ba w40k.exe state=fullscreen
 
 # floating applications
+_ba alsamixer state=floating center=true
 _ba arandr state=floating center=true
 _ba Audacious state=floating sticky=true
 _ba balena-etcher-electron state=floating center=true
 _ba BasiliskII state=floating center=true
+_ba '.blueman-manager-wrapped' state=floating center=true
+_ba Calamares state=floating center=true
+_ba Clipgrab state=floating center=true
 _ba 'Cisco AnyConnect Secure Mobility Client' state=floating center=true
-_ba dosbox state=floating center=true
+#_ba dosbox state=floating center=true
 _ba feh state=floating center=true
+_ba 'File Transfer*' state=floating center=true
 _ba Font-manager state=floating center=true
 _ba Font-viewer state=floating center=true
+_ba Galculator state=floating center=true
 _ba Gnome-disks state=floating center=true
 _ba GParted state=floating center=true
 _ba Gxmessage state=floating center=true
+_ba '(?i)gsimplecal' state=floating center=true
+_ba iwgtk state=floating center=true
 #_ba jetbrains-idea state=floating center=true
 #_ba jetbrains-idea-ce state=floating center=true
 #_ba jetbrains-studio state=floating center=true
+_ba Lightdm-gtk-greeter-settings state=floating center=true
 _ba Lxappearance state=floating center=true
+_ba Manjaro-hello state=floating center=true
 _ba 'Manjaro Settings Manager' state=floating center=true
 _ba mpv state=floating center=true sticky=on
+_ba 'MuseScore: Play Panel' state=floating center=true sticky=on
 _ba Nitrogen state=floating center=true
 _ba oblogout state=floating center=true
+_ba octopi state=floating center=true
+_ba 'About Pale Moon' state=floating center=true
 _ba Pamac-manager state=floating center=true
 _ba Paprefs state=floating center=true
 _ba Pavucontrol state=floating center=true
 _ba Qmmp state=floating sticky=true
+_ba qt5ct state=floating sticky=true
+_ba Qtconfig-qt4 state=floating sticky=true
+_ba Simple-scan state=floating center=true
+_ba '(?i)System-config-printer.py' state=floating center=true
+_ba Skype state=floating center=true
 _ba syncterm state=floating center=true
+_ba Thus state=floating center=true
 _ba Tint2conf state=floating center=true
+_ba Timeset-gui state=floating center=true
+_ba '(?i)virtualbox' state=floating center=true
 _ba X48 state=floating center=true
+_ba Xfburn state=floating center=true
 _ba Xfce4-settings-manager state=floating center=true
 _ba Yad state=floating center=true
 
@@ -234,11 +257,11 @@ _ba Yad state=floating center=true
 # Auto-Start Standard Applications
 #-------------------------------------------------------------------------------
 
-# https://wiki.archlinux.org/title/bspwm#Problems_with_Java_applications
-# set window manager name so that java applications work
-wmname LG3D
-# fix java app not refreshing issue in tiling window managers
-export _JAVA_AWT_WM_NONREPARENTING=1
+# # https://wiki.archlinux.org/title/bspwm#Problems_with_Java_applications
+# # set window manager name so that java applications work
+# wmname LG3D
+# # fix java app not refreshing issue in tiling window managers
+# export _JAVA_AWT_WM_NONREPARENTING=1
 
 # check if executable command is found in the path
 _command() {
