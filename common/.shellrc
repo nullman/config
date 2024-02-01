@@ -190,7 +190,7 @@ export CDPATH
 # add libraries to LD_LIBRARY_PATH
 _libadd "/usr/lib"
 _libadd "/usr/local/lib"
-_libadd "/run/current-system/sw/lib"
+#_libadd "/run/current-system/sw/lib"
 
 # info path
 _infopathadd "/usr/share/info" before

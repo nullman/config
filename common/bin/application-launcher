@@ -4,6 +4,8 @@
 #
 # Launch select group of applications in the background.
 #
+# If ~/.dev exists, then only pre-check terminal and editor.
+#
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
@@ -11,7 +13,11 @@ apps=$(cat ${HOME}/.applications | sed -n '/^[^ #]/p')
 
 cmd="yad --width=512 --height=384 --list --checklist --column 'Run' --column 'Application'"
 for app in ${apps} ; do
-    cmd="${cmd} TRUE ${app}"
+    if [[ ! -f ${HOME}/.dev ]] || [[ "${app}" == "alacritty" ]] || [[ "${app}" == "emacs" ]] ; then
+        cmd="${cmd} TRUE ${app}"
+    else
+        cmd="${cmd} FALSE ${app}"
+    fi
 done
 
 #eval "${cmd} 2>/dev/null"
