@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2024-01-25 16:58 (kyle)>
+  #+TIMESTAMP: <2024-02-02 21:46 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -25047,6 +25047,26 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;; (use-package git-timemachine
       ;;   :straight t
       ;;   :bind* ("C-x C-g" . git-timemachine))
+    #+END_SRC
+
+*** golden-ratio
+    :PROPERTIES:
+    :CUSTOM_ID: packages-golden-ratio
+    :END:
+
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Packages: golden-ratio
+      ;;------------------------------------------------------------------------------
+
+      (init-message 2 "Packages: golden-ratio")
+
+      (use-package golden-ratio
+        :straight t
+        ;; :custom
+        ;; (golden-ratio-exclude-modes '(occur-mode))
+        :config
+        (golden-ratio-mode))
     #+END_SRC
 
 *** guix

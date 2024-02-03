@@ -16686,6 +16686,21 @@ USING is the remaining peg."
   (gcmh-mode 1))
 ;; gcmh:1 ends here
 
+;; [[file:init-emacs.org::#packages-golden-ratio][golden-ratio:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: golden-ratio
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Packages: golden-ratio")
+
+(use-package golden-ratio
+  :straight t
+  ;; :custom
+  ;; (golden-ratio-exclude-modes '(occur-mode))
+  :config
+  (golden-ratio-mode))
+;; golden-ratio:1 ends here
+
 ;; [[file:init-emacs.org::#packages-guix][guix:1]]
 ;;------------------------------------------------------------------------------
 ;;; Packages: guix

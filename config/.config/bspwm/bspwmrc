@@ -19,7 +19,7 @@ _bc() {
 }
 
 # bspc rule --add
-_ba() {
+_br() {
     bspc rule --add "$@"
 }
 
@@ -47,8 +47,7 @@ bspc monitor -d 1 2 3 4 5 6 7 8 9 10
 
 # global settings
 _bc split_ratio                0.5
-#_bc split_ratio                0.6
-#_bc split_ratio                0.7
+_bc stacked_ratio              0.7
 _bc automatic_scheme           alternate
 #_bc initial_polarity           first_child
 _bc initial_polarity           second_child
@@ -109,149 +108,149 @@ bspc desktop --layout tiled
 #-------------------------------------------------------------------------------
 
 # 1: Terminal
-#_ba URxvt desktop='^1' follow=on
-#_ba Alacritty desktop='^1' follow=on
-#_ba Termite desktop='^1' follow=on
+#_br URxvt desktop='^1' follow=on
+#_br Alacritty desktop='^1' follow=on
+#_br Termite desktop='^1' follow=on
 
 # 2: Editor
-_ba Emacs desktop='^2' follow=on
+_br Emacs desktop='^2' follow=on
 
 # 3: Email
-_ba thunderbird desktop='^3' follow=on
-_ba betterbird desktop='^3' follow=on
-_ba ms-outlook-nativefier desktop='^3' follow=on
+_br thunderbird desktop='^3' follow=on
+_br betterbird desktop='^3' follow=on
+_br ms-outlook-nativefier desktop='^3' follow=on
 
 # 4: Browser
-_ba firefox desktop='^4' follow=on
-_ba LibreWolf desktop='^4' follow=on
-_ba Brave-browser desktop='^4' follow=on
-_ba vivaldi-stable desktop='^4' follow=on
-_ba gopherus-sdl desktop='^4' follow=on
+_br firefox desktop='^4' follow=on
+_br LibreWolf desktop='^4' follow=on
+_br Brave-browser desktop='^4' follow=on
+_br vivaldi-stable desktop='^4' follow=on
+_br gopherus-sdl desktop='^4' follow=on
 
 # 5: File Manager
-_ba Thunar desktop='^5' follow=on
-_ba Pcmanfm desktop='^5' follow=on
-_ba Spacefm desktop='^5' follow=on
-_ba Org.gnome.Nautilus desktop='^5' follow=on
-#_ba Filezilla desktop='^5' follow=on
-_ba Transmission-gtk desktop='^5' follow=on
-#_ba balena-etcher-electron desktop='^5' follow=on
-#_ba Ghb desktop='^5' follow=on
+_br Thunar desktop='^5' follow=on
+_br Pcmanfm desktop='^5' follow=on
+_br Spacefm desktop='^5' follow=on
+_br Org.gnome.Nautilus desktop='^5' follow=on
+#_br Filezilla desktop='^5' follow=on
+_br Transmission-gtk desktop='^5' follow=on
+#_br balena-etcher-electron desktop='^5' follow=on
+#_br Ghb desktop='^5' follow=on
 
 # 6: Chat
-_ba Slack desktop='^6' follow=on
-_ba discord desktop='^6' follow=on
+_br Slack desktop='^6' follow=on
+_br discord desktop='^6' follow=on
 
 # 7: More Chat
-_ba Pidgin desktop='^7' follow=on
-_ba Tootle desktop='^7' follow=on
-_ba Com.github.bleakgrey.tootle desktop='^7' follow=on
-_ba Element desktop='^7' follow=on
-_ba dev.geopjr.Tuba desktop='^7' follow=on
-_ba Gajim desktop='^7' follow=on
-_ba 'Hyperspace Desktop' desktop='^7' follow=on
-_ba android-messages-desktop desktop='^7' follow=on
-_ba teams-for-linux desktop='^7' follow=on
+_br Pidgin desktop='^7' follow=on
+_br Tootle desktop='^7' follow=on
+_br Com.github.bleakgrey.tootle desktop='^7' follow=on
+_br Element desktop='^7' follow=on
+_br dev.geopjr.Tuba desktop='^7' follow=on
+_br Gajim desktop='^7' follow=on
+_br 'Hyperspace Desktop' desktop='^7' follow=on
+_br android-messages-desktop desktop='^7' follow=on
+_br teams-for-linux desktop='^7' follow=on
 
 # 8: Development
-_ba jetbrains-idea desktop='^8' follow=on
-_ba jetbrains-idea-ce desktop='^8' follow=on
-_ba jetbrains-studio desktop='^8' follow=on
-#_ba dosbox desktop='^8' follow=on
-#_ba BasiliskII desktop='^8' follow=on
-_ba 'VirtualBox Manager' desktop='^8' follow=on
-_ba 'VirtualBox Machine' desktop='^8' follow=on
+_br jetbrains-idea desktop='^8' follow=on
+_br jetbrains-idea-ce desktop='^8' follow=on
+_br jetbrains-studio desktop='^8' follow=on
+#_br dosbox desktop='^8' follow=on
+#_br BasiliskII desktop='^8' follow=on
+_br 'VirtualBox Manager' desktop='^8' follow=on
+_br 'VirtualBox Machine' desktop='^8' follow=on
 
 # 9: Image, Video, and Audio
-_ba Chromium desktop='^9' follow=on
-_ba Google-chrome desktop='^9' follow=on
-_ba Gimp-2.10 desktop='^9' follow=on
-_ba Qmmp desktop='^9' follow=on
-_ba mplayer2 desktop='^9' follow=on
-_ba Lollypop desktop='^9' follow=on
-_ba LBRY desktop='^9' follow=on
-_ba spotify desktop='^9' follow=on
-_ba bluejeans-v2 desktop='^9' follow=on
+_br Chromium desktop='^9' follow=on
+_br Google-chrome desktop='^9' follow=on
+_br Gimp-2.10 desktop='^9' follow=on
+_br Qmmp desktop='^9' follow=on
+_br mplayer2 desktop='^9' follow=on
+_br Lollypop desktop='^9' follow=on
+_br LBRY desktop='^9' follow=on
+_br spotify desktop='^9' follow=on
+_br bluejeans-v2 desktop='^9' follow=on
 
 # 10: Remote
-_ba syncterm desktop='^10' follow=on
+_br syncterm desktop='^10' follow=on
 
 #-------------------------------------------------------------------------------
 # Application Rules
 #-------------------------------------------------------------------------------
 
 # tiled applications
-_ba Emacs state=tiled
+_br Emacs state=tiled
 
 # fullscreen applications
-_ba bluejeans-v2 state=fullscreen
-_ba Evince state=fullscreen
-_ba Ghb state=fullscreen
-_ba Gimp-2.10 state=fullscreen
-#_ba jetbrains-idea state=fullscreen
-#_ba jetbrains-idea-ce state=fullscreen
-#_ba jetbrains-studio state=fullscreen
-#_ba LBRY state=fullscreen
-#_ba 'Microsoft Teams' state=fullscreen
-_ba mplayer2 state=fullscreen
-#_ba spotify state=fullscreen
-_ba vlc state=fullscreen
-_ba 'VirtualBox Manager' state=fullscreen
-_ba 'VirtualBox Machine' state=fullscreen
-_ba w40k.exe state=fullscreen
+_br bluejeans-v2 state=fullscreen
+_br Evince state=fullscreen
+_br Ghb state=fullscreen
+_br Gimp-2.10 state=fullscreen
+#_br jetbrains-idea state=fullscreen
+#_br jetbrains-idea-ce state=fullscreen
+#_br jetbrains-studio state=fullscreen
+#_br LBRY state=fullscreen
+#_br 'Microsoft Teams' state=fullscreen
+_br mplayer2 state=fullscreen
+#_br spotify state=fullscreen
+_br vlc state=fullscreen
+_br 'VirtualBox Manager' state=fullscreen
+_br 'VirtualBox Machine' state=fullscreen
+_br w40k.exe state=fullscreen
 
 # floating applications
-_ba alsamixer state=floating center=true
-_ba arandr state=floating center=true
-_ba Audacious state=floating sticky=true
-_ba balena-etcher-electron state=floating center=true
-_ba BasiliskII state=floating center=true
-_ba '.blueman-manager-wrapped' state=floating center=true
-_ba Calamares state=floating center=true
-_ba Clipgrab state=floating center=true
-_ba 'Cisco AnyConnect Secure Mobility Client' state=floating center=true
-#_ba dosbox state=floating center=true
-_ba feh state=floating center=true
-_ba 'File Transfer*' state=floating center=true
-_ba Font-manager state=floating center=true
-_ba Font-viewer state=floating center=true
-_ba Galculator state=floating center=true
-_ba Gnome-disks state=floating center=true
-_ba GParted state=floating center=true
-_ba Gxmessage state=floating center=true
-_ba '(?i)gsimplecal' state=floating center=true
-_ba iwgtk state=floating center=true
-#_ba jetbrains-idea state=floating center=true
-#_ba jetbrains-idea-ce state=floating center=true
-#_ba jetbrains-studio state=floating center=true
-_ba Lightdm-gtk-greeter-settings state=floating center=true
-_ba Lxappearance state=floating center=true
-_ba Manjaro-hello state=floating center=true
-_ba 'Manjaro Settings Manager' state=floating center=true
-_ba mpv state=floating center=true sticky=on
-_ba 'MuseScore: Play Panel' state=floating center=true sticky=on
-_ba Nitrogen state=floating center=true
-_ba oblogout state=floating center=true
-_ba octopi state=floating center=true
-_ba 'About Pale Moon' state=floating center=true
-_ba Pamac-manager state=floating center=true
-_ba Paprefs state=floating center=true
-_ba Pavucontrol state=floating center=true
-_ba Qmmp state=floating sticky=true
-_ba qt5ct state=floating sticky=true
-_ba Qtconfig-qt4 state=floating sticky=true
-_ba Simple-scan state=floating center=true
-_ba '(?i)System-config-printer.py' state=floating center=true
-_ba Skype state=floating center=true
-_ba syncterm state=floating center=true
-_ba Thus state=floating center=true
-_ba Tint2conf state=floating center=true
-_ba Timeset-gui state=floating center=true
-_ba '(?i)virtualbox' state=floating center=true
-_ba X48 state=floating center=true
-_ba Xfburn state=floating center=true
-_ba Xfce4-settings-manager state=floating center=true
-_ba Yad state=floating center=true
+_br alsamixer state=floating center=true
+_br arandr state=floating center=true
+_br Audacious state=floating sticky=true
+_br balena-etcher-electron state=floating center=true
+_br BasiliskII state=floating center=true
+_br '.blueman-manager-wrapped' state=floating center=true
+_br Calamares state=floating center=true
+_br Clipgrab state=floating center=true
+_br 'Cisco AnyConnect Secure Mobility Client' state=floating center=true
+#_br dosbox state=floating center=true
+_br feh state=floating center=true
+_br 'File Transfer*' state=floating center=true
+_br Font-manager state=floating center=true
+_br Font-viewer state=floating center=true
+_br Galculator state=floating center=true
+_br Gnome-disks state=floating center=true
+_br GParted state=floating center=true
+_br Gxmessage state=floating center=true
+_br '(?i)gsimplecal' state=floating center=true
+_br iwgtk state=floating center=true
+#_br jetbrains-idea state=floating center=true
+#_br jetbrains-idea-ce state=floating center=true
+#_br jetbrains-studio state=floating center=true
+_br Lightdm-gtk-greeter-settings state=floating center=true
+_br Lxappearance state=floating center=true
+_br Manjaro-hello state=floating center=true
+_br 'Manjaro Settings Manager' state=floating center=true
+_br mpv state=floating center=true sticky=on
+_br 'MuseScore: Play Panel' state=floating center=true sticky=on
+_br Nitrogen state=floating center=true
+_br oblogout state=floating center=true
+_br octopi state=floating center=true
+_br 'About Pale Moon' state=floating center=true
+_br Pamac-manager state=floating center=true
+_br Paprefs state=floating center=true
+_br Pavucontrol state=floating center=true
+_br Qmmp state=floating sticky=true
+_br qt5ct state=floating sticky=true
+_br Qtconfig-qt4 state=floating sticky=true
+_br Simple-scan state=floating center=true
+_br '(?i)System-config-printer.py' state=floating center=true
+_br Skype state=floating center=true
+_br syncterm state=floating center=true
+_br Thus state=floating center=true
+_br Tint2conf state=floating center=true
+_br Timeset-gui state=floating center=true
+_br '(?i)virtualbox' state=floating center=true
+_br X48 state=floating center=true
+_br Xfburn state=floating center=true
+_br Xfce4-settings-manager state=floating center=true
+_br Yad state=floating center=true
 
 #-------------------------------------------------------------------------------
 # Auto-Start Standard Applications
