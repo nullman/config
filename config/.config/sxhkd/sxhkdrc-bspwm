@@ -78,10 +78,6 @@ super + shift + h
 super + shift + {w,k}
     bspc node --{close,kill}
 
-# alternate between tiled, stacked, and monocle layout
-super + ctrl + m
-    bspc desktop --layout next
-
 #-------------------------------------------------------------------------------
 # State and Flags
 #-------------------------------------------------------------------------------
@@ -93,6 +89,14 @@ super + ctrl + {t,shift + t,f,shift + f}
 # # set node flags
 # super + ctrl + {m,x,y,z}
 #     bspc node --flag {marked,locked,sticky,private}
+
+# alternate between tiled/stacked and monocle layout
+super + ctrl + m
+    bspc desktop --layout next
+
+# alternate between tiled and stacked layout
+super + ctrl + shift + m
+    bspc desktop --stacked
 
 #-------------------------------------------------------------------------------
 # Focus and Swap
@@ -143,7 +147,7 @@ super + alt + shift + {Up,Down}
 
 # focus next/previous node in current desktop
 alt + {_,shift + }Tab
-    bspc node --focus {next,prev}.local
+    bspc node --focus {next,prev}.local.leaf
 
 # # focus next/previous node in all desktops and monitors
 # super + {_,shift + }Tab
@@ -152,12 +156,12 @@ alt + {_,shift + }Tab
 # focus older/newer node in focus history in all desktops and monitors
 super + {_,shift + }Tab
     bspc wm --record-history off ; \
-    bspc node --focus {older,newer} ; \
+    bspc node --focus {older,newer}.leaf ; \
     bspc wm --record-history on
 
 # focus last node/desktop
 {alt,super} + grave
-    bspc {node,desktop} -f last
+    bspc {node -f last.leaf,desktop -f last}
 
 # focus given desktop
 super + {1-9,0}

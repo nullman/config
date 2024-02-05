@@ -8,17 +8,18 @@ General
 | Super |     | Ctrl |       | h   | Display BSPWM Key Bindings |
 | Super |     |      | Shift | w   | Close Node                 |
 | Super |     |      | Shift | k   | Kill Node                  |
-| Super |     | Ctrl |       | m   | Toggle Monocle Layout      |
 
 
 State
 
-| Super | Alt | Ctrl | Shift | Key | Description         |
-|-------+-----+------+-------+-----+---------------------|
-| Super |     | Ctrl |       | t   | Tiled Layout        |
-| Super |     | Ctrl | Shift | t   | Pseudo-Tiled Layout |
-| Super |     | Ctrl |       | f   | Fullscreen Layout   |
-| Super |     | Ctrl | Shift | f   | Floating Layout     |
+| Super | Alt | Ctrl | Shift | Key | Description           |
+|-------+-----+------+-------+-----+-----------------------|
+| Super |     | Ctrl |       | t   | Tiled Layout          |
+| Super |     | Ctrl | Shift | t   | Pseudo-Tiled Layout   |
+| Super |     | Ctrl |       | f   | Fullscreen Layout     |
+| Super |     | Ctrl | Shift | f   | Floating Layout       |
+| Super |     | Ctrl |       | m   | Toggle Monocle Layout |
+| Super |     | Ctrl | Shift | m   | Toggle Stacked Layout |
 
 Focus and Swap
 

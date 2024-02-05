@@ -67,6 +67,7 @@ _bc honor_size_hints           true
 _bc remove_disabled_monitors   true
 _bc remove_unplugged_monitors  true
 _bc merge_overlapping_monitors true
+#_bc stacked_tiled              true
 
 # monitor and desktop settings
 _bc top_padding                0
