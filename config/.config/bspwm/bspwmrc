@@ -31,22 +31,14 @@ bspc monitor -d 1 2 3 4 5 6 7 8 9 10
 #bspc monitor -d "1  " "2  " "3  " "4  " "5  " "6  " "7  " "8  " "9  " "10  "
 #bspc monitor -d "1  " "2  " "3  " "4  " "5  " "6  " "7  " "8  " "9  " "10  "
 
-# if _command bsp-layout ; then
-#     # setup master stack on all desktops
-#     bspc query -D --names | while read -r d ; do
-#         bsp-layout set tall "${d}" --master-size 0.7
-#     done
-
-#     # set desktop 6 to a 50/50 split for slack/discord
-#     bsp-layout set tall "6 " --master-size 0.5
-# fi
-
 #-------------------------------------------------------------------------------
 # Configuration
 #-------------------------------------------------------------------------------
 
 # global settings
 _bc split_ratio                0.5
+_bc stacked_layout             true
+_bc stacked_direction          east
 _bc stacked_ratio              0.7
 _bc automatic_scheme           alternate
 #_bc initial_polarity           first_child
@@ -67,7 +59,6 @@ _bc honor_size_hints           true
 _bc remove_disabled_monitors   true
 _bc remove_unplugged_monitors  true
 _bc merge_overlapping_monitors true
-#_bc stacked_tiled              true
 
 # monitor and desktop settings
 _bc top_padding                0
@@ -101,27 +92,28 @@ _bc active_border_color        "#1e1e1e"
 _bc focused_border_color       "#5e81ac"
 _bc presel_feedback_color      "#5e81ac"
 
-# desktop layout
-bspc desktop --layout tiled
-
 #-------------------------------------------------------------------------------
 # Application Desktop Assignments
 #-------------------------------------------------------------------------------
 
 # 1: Terminal
+bspc desktop 1 --layout stacked
 #_br URxvt desktop='^1' follow=on
 #_br Alacritty desktop='^1' follow=on
 #_br Termite desktop='^1' follow=on
 
 # 2: Editor
+bspc desktop 2 --layout stacked
 _br Emacs desktop='^2' follow=on
 
 # 3: Email
+bspc desktop 3 --layout monocle
 _br thunderbird desktop='^3' follow=on
 _br betterbird desktop='^3' follow=on
 _br ms-outlook-nativefier desktop='^3' follow=on
 
 # 4: Browser
+bspc desktop 4 --layout monocle
 _br firefox desktop='^4' follow=on
 _br LibreWolf desktop='^4' follow=on
 _br Brave-browser desktop='^4' follow=on
@@ -129,6 +121,7 @@ _br vivaldi-stable desktop='^4' follow=on
 _br gopherus-sdl desktop='^4' follow=on
 
 # 5: File Manager
+bspc desktop 5 --layout stacked
 _br Thunar desktop='^5' follow=on
 _br Pcmanfm desktop='^5' follow=on
 _br Spacefm desktop='^5' follow=on
@@ -139,10 +132,12 @@ _br Transmission-gtk desktop='^5' follow=on
 #_br Ghb desktop='^5' follow=on
 
 # 6: Chat
+bspc desktop 6 --layout tiled
 _br Slack desktop='^6' follow=on
 _br discord desktop='^6' follow=on
 
 # 7: More Chat
+bspc desktop 7 --layout stacked
 _br Pidgin desktop='^7' follow=on
 _br Tootle desktop='^7' follow=on
 _br Com.github.bleakgrey.tootle desktop='^7' follow=on
@@ -154,6 +149,7 @@ _br android-messages-desktop desktop='^7' follow=on
 _br teams-for-linux desktop='^7' follow=on
 
 # 8: Development
+bspc desktop 8 --layout monocle
 _br jetbrains-idea desktop='^8' follow=on
 _br jetbrains-idea-ce desktop='^8' follow=on
 _br jetbrains-studio desktop='^8' follow=on
@@ -163,6 +159,7 @@ _br 'VirtualBox Manager' desktop='^8' follow=on
 _br 'VirtualBox Machine' desktop='^8' follow=on
 
 # 9: Image, Video, and Audio
+bspc desktop 9 --layout stacked
 _br Chromium desktop='^9' follow=on
 _br Google-chrome desktop='^9' follow=on
 _br Gimp-2.10 desktop='^9' follow=on
@@ -174,6 +171,7 @@ _br spotify desktop='^9' follow=on
 _br bluejeans-v2 desktop='^9' follow=on
 
 # 10: Remote
+bspc desktop 9 --layout stacked
 _br syncterm desktop='^10' follow=on
 
 #-------------------------------------------------------------------------------

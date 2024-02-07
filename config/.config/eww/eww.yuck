@@ -253,8 +253,8 @@
                :onchange "light -S {}"
                :tooltip "Brightness: ${brightness}%")
        ;; ram
-       ;; symbols:  󰍛
-       (metric :label "󰍛"
+       ;; symbols:   󰍛
+       (metric :label ""
                :value {EWW_RAM.used_mem_perc}
                :onchange ""
                :tooltip "RAM Used: ${EWW_RAM.used_mem_perc}%")

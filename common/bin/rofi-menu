@@ -5,7 +5,7 @@
 # Present a menu of rofi menus.
 #
 # Symbols:  ☰  |    | ✂ ⎘ 󰄶   󰅌 󰅍 󰨸 󱉥 󱉦 󱉧 󱉨 󱉫 󱉬 
-# Symbols: 󰍹  |  |    󱇠  | 󰆧 |  |   󰝚 | 󰛇 | 󰃃 󰃀 | 󰯫
+# Symbols: 󰍹    |  |    󱇠  | 󰆧 |  |   󰝚 | 󰛇 | 󰃃 󰃀 | 󰯫 󰈍 
 #
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
@@ -30,6 +30,7 @@ MENU:
   rsync      Synchronize Files
   sounds     Play Sounds
   ssh        SSH into Systems
+  typer      Type Strings
   vnc        VNC into Systems
 EOF
 }
@@ -48,6 +49,7 @@ if [[ $# -lt 1 ]] ; then
         "	Rsync"
         "	Sounds"
         "	SSH"
+        "	Typer"
         "󰛇	VNC"
     )
     menu=$(printf "%s\n" "${menus[@]}" | rofi -dmenu -i -p "	Menu")
@@ -305,6 +307,11 @@ case "${menu}" in
         if [[ -n "${sel}" ]] ; then
             (alacritty -t "SSH ${sel}" -e "ssh" "${sel}" &)
         fi
+        ;;
+
+    typer)
+        # run typer
+        ${HOME}/bin/typer
         ;;
 
     vnc)
