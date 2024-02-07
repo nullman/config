@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2024-02-06 20:28 (kyle)>
+  #+TIMESTAMP: <2024-02-07 15:22 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -561,8 +561,10 @@
 
       ;; initialize package system
       (require 'package)
-      (setq package-archives '(("melpa" . "https://melpa.org/packages/")
-                               ("elpa" . "https://elpa.gnu.org/packages/"))
+      ;; (setq package-archives '(("melpa" . "https://melpa.org/packages/")
+      ;;                          ("elpa" . "https://elpa.gnu.org/packages/"))
+      (setq package-archives '(("elpa" . "https://elpa.gnu.org/packages/")
+                               ("nongnu" . "https://elpa.nongnu.org/nongnu/"))
             native-comp-async-report-warnings-errors nil)
 
       ;; bootstrap
@@ -7702,36 +7704,69 @@
         (org-visibility-mode 1))
     #+END_SRC
 
-*** +Present+
+*** Present
     :PROPERTIES:
     :CUSTOM_ID: org-mode-present
     :END:
 
-    #+BEGIN_SRC emacs-lisp :tangle no
-      ;; ;;------------------------------------------------------------------------------
-      ;; ;;; Org Mode: Present
-      ;; ;;------------------------------------------------------------------------------
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Org Mode: Present
+      ;;------------------------------------------------------------------------------
 
-      ;; (init-message 2 "Org Mode: Present")
+      (init-message 2 "Org Mode: Present")
 
-      ;; (use-package org-present
-      ;;   :straight t
-      ;;   :config
-      ;;   (defun custom-org-present-mode-hook ()
-      ;;     "Customizations for entering `org-present-mode'."
-      ;;     (org-present-big)
-      ;;     (org-display-inline-images)
-      ;;     (org-present-hide-cursor)
-      ;;     (org-present-read-only))
-      ;;   (add-hook 'org-present-mode-hook #'custom-org-present-mode-hook)
+      (use-package org-present
+        :straight t
+        :config
+        ;; custom `org-present-read-only' function to fix cursor bug
+        (defun org-present-read-only ()
+          "Make buffer read-only."
+          (interactive)
+          (setq buffer-read-only t)
+          (define-key org-present-mode-keymap (kbd "SPC") #'org-present-next))
 
-      ;;   (defun custom-org-present-mode-quit-hook ()
-      ;;     "Customizations for exiting `org-present-mode'."
-      ;;     (org-present-small)
-      ;;     (org-remove-inline-images)
-      ;;     (org-present-show-cursor)
-      ;;     (org-present-read-write))
-      ;;   (add-hook 'org-present-mode-quit-hook #'custom-org-present-mode-quit-hook))
+        (defun custom-org-present-mode-hook ()
+          "Customizations for entering `org-present-mode'."
+          ;;(org-present-big)
+          (setq-local face-remapping-alist '((default (:height 1.5) variable-pitch)
+                                             (header-line (:height 4.0) variable-pitch)
+                                             (org-document-title (:height 1.75) org-document-title)
+                                             (org-code (:height 1.55) org-code)
+                                             (org-verbatim (:height 1.55) org-verbatim)
+                                             (org-block (:height 1.25) org-block)
+                                             (org-block-begin-line (:height 0.7) org-block)))
+          (setq-local header-line-format " ")
+          (org-display-inline-images)
+          (org-present-hide-cursor)
+          (org-present-read-only)
+          (when (fboundp 'visual-fill-column-mode)
+            (visual-fill-column-mode 1))
+          (visual-line-mode 1))
+        (add-hook 'org-present-mode-hook #'custom-org-present-mode-hook)
+
+        (defun custom-org-present-mode-quit-hook ()
+          "Customizations for exiting `org-present-mode'."
+          ;;(org-present-small)
+          (setq-local face-remapping-alist '((default variable-pitch default)))
+          (setq-local header-line-format nil)
+          (org-remove-inline-images)
+          (org-present-show-cursor)
+          (org-present-read-write)
+          (when (fboundp 'visual-fill-column-mode)
+            (visual-fill-column-mode 0))
+          (visual-line-mode 0))
+        (add-hook 'org-present-mode-quit-hook #'custom-org-present-mode-quit-hook)
+
+        (defun custom-org-present-after-navigate-functions (buffer-name heading)
+          "Customizations for navigating in `org-present-mode'."
+          ;; collapse headlines
+          (org-overview)
+          ;; show top entry
+          (org-show-entry)
+          ;; show direct subheadlines, but do not expand them
+          (org-show-children))
+        (add-hook 'org-present-after-navigate-functions #'custom-org-present-after-navigate-functions))
     #+END_SRC
 
 *** +Reveal+
@@ -29109,6 +29144,25 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
 
       (use-package vimish-fold
         :straight t)
+    #+END_SRC
+
+*** visual-fill-column
+    :PROPERTIES:
+    :CUSTOM_ID: packages-visual-fill-column
+    :END:
+
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Packages: visual-fill-column
+      ;;------------------------------------------------------------------------------
+
+      (init-message 2 "Packages: visual-fill-column")
+
+      (use-package visual-fill-column
+        :straight t
+        :custom
+        (visual-fill-column-center-text t)
+        (visual-fill-column-width 120))
     #+END_SRC
 
 *** w3m
