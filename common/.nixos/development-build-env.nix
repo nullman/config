@@ -36,6 +36,7 @@ let e = pkgs.buildFHSEnv {
         xorg.xcbutilwm xorg.xcbutilwm.dev
 
         # toolchain
+        asciidoc
         bison
         flex
         gcc
