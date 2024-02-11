@@ -103,8 +103,8 @@
       #mtkclient = prev.callPackage /home/kyle/.nixos/pkgs/mtkclient {};
       syncterm = prev.callPackage /home/kyle/.nixos/pkgs/syncterm {};
       vdhcoapp = prev.callPackage /home/kyle/.nixos/pkgs/vdhcoapp {};
-      #bspwm = prev.callPackage /home/kyle/code/nixpkgs/pkgs/applications/window-managers/bspwm {};
-      #bspwm = prev.callPackage /home/kyle/code/bspwm {};
+      bspwm = prev.callPackage /home/kyle/code/bspwm {};
+      #services.xserver.windowManager.bspwm = prev.callPackage /home/kyle/code/nixpkgs/pkgs/applications/window-managers/bspwm.nix {};
     })
   ];
 
@@ -770,6 +770,7 @@
     cider
     electrum
     evince
+    freetube
     gimp
     gphoto2
     gphoto2fs

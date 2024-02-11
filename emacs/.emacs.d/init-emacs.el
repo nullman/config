@@ -2836,8 +2836,7 @@ DATA should have been made by `org-outline-overlay-data'."
 (use-package org-capture
   :when (file-exists-p org-directory)
   :straight (:type built-in)
-  :after (org
-          org-agenda)
+  :after (org org-agenda)
   :config
   (let ((capture-file (car org-agenda-files))
         (capture-headline "Inbox"))
@@ -5401,6 +5400,37 @@ heading, properties, source block with title comment, and test block."
   :init
   (org-visibility-mode 1))
 ;; Visibility:1 ends here
+
+;; [[file:init-emacs.org::#org-mode-contacts][Contacts:1]]
+;;------------------------------------------------------------------------------
+;;; Org Mode: Contacts
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Org Mode: Contacts")
+
+(use-package org-contacts
+  :straight t
+  :after (org)
+  :custom
+  (org-contacts-files
+   (list (file-truename (expand-file-name "~/org/contacts.org")))))
+
+;; ;;------------------------------------------------------------------------------
+;; ;;; Org Mode: VCARD
+;; ;;------------------------------------------------------------------------------
+
+;; (init-message 3 "Org Mode: VCARD")
+
+;; buggy; needs a maintainer
+
+;; (use-package org-vcard
+;;   :straight t
+;;   :custom
+;;   (org-vcard-default-version "3.0")
+;;   (org-vcard-default-language "en")
+;;   (org-vcard-default-style "flat")
+;;   (org-vcard-include-import-unknowns t))
+;; Contacts:1 ends here
 
 ;; [[file:init-emacs.org::#org-mode-present][Present:1]]
 ;;------------------------------------------------------------------------------
@@ -19549,10 +19579,23 @@ otherwise run `find-file-as-root'."
 ;; (init-message 3 "all-the-icons-dired")
 
 ;; ;; add icons to file listings
+;; ;; unicode icons makes text no longer line up
 ;; (use-package all-the-icons-dired
+;;   :if (display-graphic-p)
 ;;   :straight t
 ;;   :commands (dired dired-jump)
 ;;   :hook (dired-mode . all-the-icons-dired-mode))
+
+;;------------------------------------------------------------------------------
+;;;; dired-narrow
+;;------------------------------------------------------------------------------
+
+(init-message 3 "dired-narrow")
+
+(use-package dired-narrow
+  :straight t
+  :bind (("C-c C-n" . dired-narrow)
+         ("C-c C-f" . dired-narrow-fuzzy)))
 ;; Dired:1 ends here
 
 ;; [[file:init-emacs.org::#modes-ediff][Ediff:1]]
@@ -20094,6 +20137,8 @@ otherwise run `find-file-as-root'."
 (init-message 2 "Modes: LSP Mode")
 
 (defun custom-lsp-mode-hook ()
+  ;; add `which-key-mode' descriptions
+  (lsp-enable-which-key-integration t)
   ;; turn on breadcrumbs
   (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
   (lsp-headerline-breadcrumb-mode 1))
@@ -20107,13 +20152,16 @@ otherwise run `find-file-as-root'."
               ("M-RET" . lsp-execute-code-action))
   ;;             ("TAB" . company-indent-or-complete-common)
   ;;             ("<tab>" . company-indent-or-complete-common))
-  :hook ((lsp-mode . custom-lsp-mode-hook))
+  :hook ((lsp-mode . custom-lsp-mode-hook)
+         (prog-mode . lsp-defered))
   ;; (lsp-mode . company-mode))
+  :custom
+  (lsp-enable-folding nil)
+  (lsp-enable-links nil)
+  (lsp-enable-snippet nil)
+  (lsp-keymap-prefix "C-c ;")
   :init
-  (setq lsp-keymap-prefix "C-c C-l")    ; default: `downcase-region'
-  :config
-  ;; add `which-key-mode' descriptions
-  (lsp-enable-which-key-integration t))
+  (setq lsp-keymap-prefix "C-c C-l"))   ; default: `downcase-region'
 
 ;;------------------------------------------------------------------------------
 ;;;; lsp-ui
