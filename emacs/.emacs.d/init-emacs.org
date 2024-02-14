@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2024-02-10 22:33 (kyle)>
+  #+TIMESTAMP: <2024-02-13 23:34 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -25138,6 +25138,22 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         ;; (golden-ratio-exclude-modes '(occur-mode))
         :config
         (golden-ratio-mode))
+    #+END_SRC
+
+*** gptel
+    :PROPERTIES:
+    :CUSTOM_ID: packages-gptel
+    :END:
+
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Packages: gptel
+      ;;------------------------------------------------------------------------------
+
+      (init-message 2 "Packages: gptel")
+
+      (use-package gptel
+        :straight t)
     #+END_SRC
 
 *** guix

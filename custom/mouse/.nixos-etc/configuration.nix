@@ -107,8 +107,8 @@
   ];
 
   # time zone
-  #time.timeZone = "US/Pacific";
-  time.timeZone = "US/Mountain";
+  time.timeZone = "US/Pacific";
+  #time.timeZone = "US/Mountain";
   #time.timeZone = "US/Central";
   #time.timeZone = "US/Eastern";
 
