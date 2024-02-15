@@ -16794,17 +16794,6 @@ USING is the remaining peg."
   (golden-ratio-mode))
 ;; golden-ratio:1 ends here
 
-;; [[file:init-emacs.org::#packages-gptel][gptel:1]]
-;;------------------------------------------------------------------------------
-;;; Packages: gptel
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Packages: gptel")
-
-(use-package gptel
-  :straight t)
-;; gptel:1 ends here
-
 ;; [[file:init-emacs.org::#packages-guix][guix:1]]
 ;;------------------------------------------------------------------------------
 ;;; Packages: guix

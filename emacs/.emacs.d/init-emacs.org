@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2024-02-13 23:34 (kyle)>
+  #+TIMESTAMP: <2024-02-14 10:09 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -25140,20 +25140,24 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         (golden-ratio-mode))
     #+END_SRC
 
-*** gptel
+*** +GPTel+
     :PROPERTIES:
     :CUSTOM_ID: packages-gptel
     :END:
 
-    #+BEGIN_SRC emacs-lisp
-      ;;------------------------------------------------------------------------------
-      ;;; Packages: gptel
-      ;;------------------------------------------------------------------------------
+    A simple Large Language Model chat client, with support for multiple
+    models/backends.
 
-      (init-message 2 "Packages: gptel")
+    #+BEGIN_SRC emacs-lisp :tangle no
+      ;; ;;------------------------------------------------------------------------------
+      ;; ;;; Packages: GPTel
+      ;; ;;------------------------------------------------------------------------------
 
-      (use-package gptel
-        :straight t)
+      ;; (init-message 2 "Packages: GPTel")
+
+      ;; (use-package gptel
+      ;;   :straight t)
+
     #+END_SRC
 
 *** guix
