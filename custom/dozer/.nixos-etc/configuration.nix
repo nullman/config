@@ -530,7 +530,7 @@
   services.rpcbind.enable = true;         # needed for NFS
   systemd.mounts = let commonMountOptions = {
     mountConfig = {
-      Options = "vers=3.0,credentials=/home/kyle/.synology-mount-credentials,iocharset=utf8,rw,file_mode=0777,dir_mode=0777,noatime";
+      Options = "vers=3.0,credentials=/home/kyle/.synology-mount-credentials,iocharset=utf8,rw,file_mode=0777,dir_mode=0777,noatime,nofail";
       TimeoutSec = 30;
       Type = "cifs";
     };
@@ -802,6 +802,7 @@
     appimage-run
     authy
     bitwarden
+    dmg2img
     easytag
     etcher
     ffmpeg_6-full
@@ -826,7 +827,7 @@
     scrcpy
     simplescreenrecorder
     #upscayl
-    #vdhcoapp
+    vdhcoapp
     #x48
 
     # tui
@@ -938,6 +939,7 @@
     #simplex-chat-desktop
     slack
     syncterm
+    telegram-desktop
     transmission-gtk
     tuba
 
@@ -947,6 +949,8 @@
     gnome.gnome-boxes
     mame
     qemu_kvm
+    quickemu
+    quickgui
     uae
     vice
     virt-manager
@@ -1071,6 +1075,7 @@
     alephone-red
     alephone-rubicon-x
     #alephone-yuge
+    azimuth
     bsdgames
     eidolon
     flare
