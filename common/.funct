@@ -1657,7 +1657,8 @@ rsync-cruzer() {
         "${root}/System Rescue "*.iso
     )
     for file in "${files[@]}" ; do
-        rsync -rLtxc --progress --delete "${file}" "${dest}/"
+        #rsynW -rLtxc --progress --delete "${file}" "${dest}/"
+        rsynW -rLtxW --size-only --progress --delete "${file}" "${dest}/"
     done
 
     # create and copy bundle
@@ -1677,7 +1678,8 @@ rsync-install() {
             find . -mindepth 1 -maxdepth 1 -name "${query}" -printf '%P\n' | while read src ; do
                 local dst=$(echo "${src}" | sed "s/ /-/g")
                 echo "Syncing \"${root}/${sdir}/${src}\" \"${dest}/${ddir}/${dst}\""
-                rsync -rLtxc "${root}/${sdir}/${src}" "${dest}/${ddir}/${dst}"
+                #rsync -rLtxc "${root}/${sdir}/${src}" "${dest}/${ddir}/${dst}"
+                rsync -rLtxW --size-only --progress "${root}/${sdir}/${src}" "${dest}/${ddir}/${dst}"
             done
         )
     }
@@ -1689,16 +1691,16 @@ rsync-install() {
     syncdir 'Hypervisor/SmartOS' 'Hypervisor' '*.iso'
     syncdir 'Hypervisor/VMware ESXi (vSphere Hypervisor)' 'Hypervisor' '*.iso'
     syncdir 'Hypervisor/XCP NG' 'Hypervisor' '*.iso'
-    syncdir 'Linux/Linux OS' 'Linux' 'ArchLinux*.iso'
-    syncdir 'Linux/Linux OS' 'Linux' 'CentOS*.iso'
-    syncdir 'Linux/Linux OS' 'Linux' 'Debian*.iso'
-    syncdir 'Linux/Linux OS' 'Linux' 'Guix*.iso'
-    syncdir 'Linux/Linux OS' 'Linux' 'Nix*.iso'
-    #syncdir 'Linux/Linux OS' 'Linux' 'Qubes*.iso' # Qubes does not work with Ventoy
-    syncdir 'Linux/Linux OS' 'Linux' 'Rocky*.iso'
-    syncdir 'Linux/Linux OS' 'Linux' 'Tails*.iso'
-    syncdir 'Linux/Linux OS' 'Linux' 'Ubuntu*.iso'
-    syncdir 'Linux/Manjaro OS' 'Manjaro' '*.iso'
+    syncdir 'Linux/Linux OS' 'Linux' '[^Q]*.iso' # Qubes does not work with Ventoy
+    #syncdir 'Linux/Linux OS' 'Linux' 'ArchLinux*.iso'
+    #syncdir 'Linux/Linux OS' 'Linux' 'CentOS*.iso'
+    #syncdir 'Linux/Linux OS' 'Linux' 'Debian*.iso'
+    #syncdir 'Linux/Linux OS' 'Linux' 'Guix*.iso'
+    #syncdir 'Linux/Linux OS' 'Linux' 'NixOS*.iso'
+    #syncdir 'Linux/Linux OS' 'Linux' 'PCLinuxOS*.iso'
+    #syncdir 'Linux/Linux OS' 'Linux' 'Rocky*.iso'
+    #syncdir 'Linux/Linux OS' 'Linux' 'Tails*.iso'
+    #syncdir 'Linux/Linux OS' 'Linux' 'Ubuntu*.iso'
     syncdir 'OS2/ArcaOS/ArcaOS-5.0.5' 'Other' '*.iso'
     syncdir 'Windows XP, 7, 10/Windows OS' 'Windows' '*.iso'
     sync
