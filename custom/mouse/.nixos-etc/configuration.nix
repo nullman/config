@@ -782,7 +782,7 @@
     #scrcpy
     #simplescreenrecorder
     ##upscayl
-    #vdhcoapp
+    ##vdhcoapp
     ##x48
 
     # tui
@@ -960,6 +960,7 @@
     #m4
     ##mpfr
     #nasm
+    #node2nix
     #open-watcom-bin
     ##open-watcom-v2
     #pandoc
