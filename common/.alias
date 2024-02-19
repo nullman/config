@@ -2091,20 +2091,7 @@ alias rsync-aerial-get-morpheus="rsync -rlptx --progress morpheus:/home/data/med
 alias rsync-common-put-media-delete=" \
     rsync -rlptx --progress --delete \"\${HOME}/doc/icons/\" ${home}/data/media/Graphic/Icons/Common/ && \
     rsync -rlptx --progress --delete \"\${HOME}/doc/images/\" ${home}/data/media/Graphic/Images/Common/"
-#!#        rsync-music-put-music  rsync /home/data/media/Audio/Music /media/Music
-#!alias rsync-music-put-music-sd="
-#!    echo 'Copying muisc files and playlists to Music USB:'
-#!    basedir=/run/media/\${USER}
-#!    dir=\${basedir}/\$(cd \${basedir} && \$(pathcmd ls) -1)
-#!    cp \${HOME}/.mpd/playlists/kyle.m3u \${dir}/
-#!    cp \${HOME}/.mpd/playlists/rated_good.m3u \${dir}/
-#!    (
-#!        cd \"${home}/data/media/Audio/Music/\" && \
-#!            cat \${dir}/*.m3u | while read -r line ; do
-#!                rsync -RtxW --progress --delete \"\${line}\" \${dir}/
-#!            done
-#!    )"
-#        rsync-music-put-music   rsync /home/data/media/Audio/Music /media/Music
+#        rsync-music-put-music-sd  rsync /home/data/media/Audio/Music /media/MUSIC
 alias rsync-music-put-music-sd=" \
     usb=MUSIC
     dir1=/media/\${usb}

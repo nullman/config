@@ -786,6 +786,7 @@
     notepadqq
     #obs-studio
     #(pkgs.wrapOBS {plugins = with pkgs.obs-studio-plugins; [ wlrobs ]; })
+    reaper
     spotify
     #virt-viewer
     #xfce.thunar
@@ -885,6 +886,7 @@
     inetutils
     lsd
     miller
+    minicom
     mpc-cli
     mpd mpdris2
     mtr
