@@ -307,26 +307,26 @@
   # compositor: picom
   services.picom.enable = true;
 
-  ## pulse audio
-  #sound.enable = true;
-  #hardware.pulseaudio.enable = true;
-  #hardware.pulseaudio.support32Bit = true;
-  #nixpkgs.config.pulseaudio = true;
-  ##hardware.pulseaudio.extraConfig = "load-module module-combine-sink";
-  ##hardware.pulseaudio.extraConfig = "unload-module module-suspend-on-idle";
-  #security.rtkit.enable = true;
-  #hardware.bluetooth.hsphfpd.enable = true;
-
-  # pipewire
+  # pulse audio
   sound.enable = true;
+  hardware.pulseaudio.enable = true;
+  hardware.pulseaudio.support32Bit = true;
+  nixpkgs.config.pulseaudio = true;
+  #hardware.pulseaudio.extraConfig = "load-module module-combine-sink";
+  #hardware.pulseaudio.extraConfig = "unload-module module-suspend-on-idle";
   security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    jack.enable = true;
-  };
+  hardware.bluetooth.hsphfpd.enable = true;
+
+  ## pipewire
+  #sound.enable = true;
+  #security.rtkit.enable = true;
+  #services.pipewire = {
+  #  enable = true;
+  #  alsa.enable = true;
+  #  alsa.support32Bit = true;
+  #  pulse.enable = true;
+  #  jack.enable = true;
+  #};
 
   # bluetooth
   hardware.bluetooth = {
@@ -616,6 +616,7 @@
     gnused
     gnutar
     gzip
+    hdparm
     hfsprogs
     imagemagick
     inxi
