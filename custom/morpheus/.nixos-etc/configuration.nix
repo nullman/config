@@ -612,6 +612,7 @@
     gnused
     gnutar
     gzip
+    hdparm
     hfsprogs
     imagemagick
     inxi
@@ -777,12 +778,14 @@
     inkscape
     #kdenlive
     libreoffice
-    mpv
+    #mpv
     mupdf
     notepadqq
     #obs-studio
     #(pkgs.wrapOBS {plugins = with pkgs.obs-studio-plugins; [ wlrobs ]; })
+    reaper
     spotify
+    vlc
     #virt-viewer
     #xfce.thunar
     #xfce.thunar-archive-plugin
@@ -881,6 +884,7 @@
     inetutils
     lsd
     miller
+    minicom
     mpc-cli
     mpd mpdris2
     mtr
