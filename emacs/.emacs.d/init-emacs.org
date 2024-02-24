@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2024-02-14 10:09 (kyle)>
+  #+TIMESTAMP: <2024-02-24 17:09 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -8015,7 +8015,7 @@
           "Export from an Org Bookmarks file, ORG-FILE,
         to a Mozilla/Firefox Bookmarks JSON file, JSON-FILE.
 
-        If JSON-FILE is non-nil, then output is returned."
+        If JSON-FILE is nil, then output is returned."
           (let* ((type-code-list '(("bookmark" . 1)
                                    ("folder" . 2)))
                  (type-value-list '(("bookmark" . "text/x-moz-place")
@@ -8082,8 +8082,63 @@
                           :root "placesRoot"
                           :children (map 'vector (lambda (x) (parse x nil 0)) bookmarks))))
                   (newline)
+                  (json-pretty-print (point-min) (point-max))
                   (if json-file
                       (write-region (point-min) (point-max) json-file)
+                    (buffer-substring-no-properties (point-min) (point-max))))))))
+      #+END_SRC
+
+***** org-bookmarks-export-to-text
+      :PROPERTIES:
+      :CUSTOM_ID: org-mode-bookmarks-org-bookmarks-export-to-text
+      :END:
+
+      Export from an Org Bookmarks file to a text file with one bookmark per line.
+
+      #+BEGIN_SRC emacs-lisp
+        ;;------------------------------------------------------------------------------
+        ;;;; Org Mode: Bookmarks: org-bookmarks-export-to-text
+        ;;------------------------------------------------------------------------------
+
+        (init-message 3 "Org Mode: Bookmarks: org-bookmarks-export-to-text")
+
+        (defun org-bookmarks-export-to-text (org-file &optional text-file)
+          "Export from an Org Bookmarks file, ORG-FILE,
+        to a text file, TEXT-FILE.
+
+        If TEXT-FILE is nil, then output is returned."
+          (let ((title-root-list '(("Bookmarks Toolbar" . "Toolbar")
+                                   ("Bookmarks Menu" . "Menu")
+                                   ("Other Bookmarks" . "Other")
+                                   ("Mobile Bookmarks" . "Mobile"))))
+            (cl-labels
+                ((folder? (type)
+                          (string= type "folder"))
+                 (path-string (path)
+                              (string-join (reverse path) " > "))
+                 (parse (bm path)
+                        (let* ((type (plist-get bm :type))
+                               (folder? (folder? type))
+                               (title (plist-get bm :title))
+                               (uri (plist-get bm :uri))
+                               (keyword (plist-get bm :keyword))
+                               (children (plist-get bm :children))
+                               (root? (cdr (assoc title title-root-list)))
+                               (path path))
+                          (unless folder?
+                            (insert
+                             (if keyword
+                                 (format "%s > %s [%s]: %s\n" (path-string path) title keyword uri)
+                               (format "%s > %s: %s\n" (path-string path) title uri))))
+                          (when children
+                            (let ((path (if root? (list root?)
+                                          (cons title path))))
+                              (map 'vector (lambda (x) (parse x path)) children))))))
+              (let ((bookmarks (org-bookmarks-parse org-file)))
+                (with-temp-buffer
+                  (map 'vector (lambda (x) (parse x '())) bookmarks)
+                  (if text-file
+                      (write-region (point-min) (point-max) text-file)
                     (buffer-substring-no-properties (point-min) (point-max))))))))
       #+END_SRC
 
@@ -8105,7 +8160,7 @@
           "Export from an Org Bookmarks file, ORG-FILE,
         to a Mozilla/Firefox Bookmarks HTML file, HTML-FILE.
 
-        If HTML-FILE is non-nil, then output is returned."
+        If HTML-FILE is nil, then output is returned."
           (let* ((type-code-list '(("bookmark" . 1)
                                    ("folder" . 2)))
                  (title-code-list '(("Bookmarks Toolbar" . "PERSONAL_TOOLBAR_FOLDER")
@@ -8176,7 +8231,7 @@
           "Export from an Org Bookmarks file, ORG-FILE,
         to an NYXT Bookmarks Lisp file, NYXT-FILE.
 
-        If NYXT-FILE is non-nil, then output is returned."
+        If NYXT-FILE is nil, then output is returned."
           (let ((timestamp (format-time-string "%FT%T.%6NZ"))
                 (title-root-list '(("Bookmarks Toolbar" . "toolbarFolder")
                                    ("Bookmarks Menu" . "bookmarksMenuFolder")
@@ -8233,7 +8288,7 @@
           "Export from an Org Bookmarks file, ORG-FILE,
         to a Chrome/Chromium Bookmarks HTML file, HTML-FILE.
 
-        If HTML-FILE is non-nil, then output is returned."
+        If HTML-FILE is nil, then output is returned."
           (let* ((type-code-list '(("bookmark" . 1)
                                    ("folder" . 2)))
                  (title-code-list '(("Bookmarks Toolbar" . "PERSONAL_TOOLBAR_FOLDER")
@@ -33806,6 +33861,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
            ("YouTube Get Videos" "(org-link-open-from-string \"file:~/config-private/common/org/init-home.org::get-youtube-videos\")" "Edit get-youtube-videos file.")))
          ("Export"
           (("Export Bookmarks to JSON" "(org-bookmarks-export-to-json \"~/org/bookmarks.org\" \"~/Documents/bookmarks.json\")" "Export bookmarks.org to ~/Documents/bookmarks.json.")
+           ("Export Bookmarks to Text" "(org-bookmarks-export-to-text \"~/org/bookmarks.org\" \"~/Documents/bookmarks.txt\")" "Export bookmarks.org to ~/Documents/bookmarks.txt.")
            ("Export Bookmarks to HTML" "(org-bookmarks-export-to-html \"~/org/bookmarks.org\" \"~/Documents/bookmarks.html\")" "Export bookmarks.org to ~/Documents/bookmarks.html.")
            ("Export Bookmarks to NYXT" "(org-bookmarks-export-to-nyxt \"~/org/bookmarks.org\" \"~/config/local/.local/share/nyxt/bookmarks.lisp\")" "Export bookmarks.org to ~/config/local/.local/share/nyxt/bookmarks.lisp.")
            ("Export Bookmarks to Chrome HTML" "(org-bookmarks-export-to-chrome-html \"~/org/bookmarks.org\" \"~/Documents/bookmarks-chrome.html\")" "Export bookmarks.org to ~/Documents/bookmarks-chrome.html.")))

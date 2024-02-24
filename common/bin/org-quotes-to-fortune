@@ -41,9 +41,9 @@ open(INFILE, "<$infile") || die("ERROR: Input file \'" . $infile . "\' could not
 
 # look for top level quotes node
 my $i = 0;
-while (exists($xbel->{node}->[$i])) {
-    if ($xbel->{node}->[$i]->{data}->[0] eq $quotes) {
-        ParseQuotes($xbel->{node}->[$i]->{node});
+while (exists(node->[$i])) {
+    if (node->[$i]->{data}->[0] eq $quotes) {
+        ParseQuotes(node->[$i]->{node});
     }
     $i++;
 }

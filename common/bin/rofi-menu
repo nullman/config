@@ -81,7 +81,7 @@ case "${menu}" in
     bookmarks)
         # display bookmarks
         if [[ $# -lt 2 ]] ; then
-            sel=$("${HOME}/bin/org-bookmarks-to-list" | rofi -dmenu -i -p "󰃃	Browser Bookmarks")
+            sel=$(cat "${HOME}/Documents/bookmarks.txt" | rofi -dmenu -i -p "󰃃	Browser Bookmarks")
         else
             sel=$2
         fi
