@@ -31,38 +31,38 @@ configdir() {
 #        fuh                     funct help
 alias fuh="
     cat ${HOME}/.funct ${HOME}/.funct-work 2>/dev/null | \
-      grep '^#' | grep -v '^#!' | sed 's/^#//' | ${PAGER}"
+      grep '^[[:space:]]*#' | grep -v '^[[:space:]]*#!' | sed 's/^[[:space:]]*#//' | ${PAGER}"
 #        fuhl                    funct help (long)
 alias fuhl="
     cat ${HOME}/.funct ${HOME}/.funct-work 2>/dev/null | \
-      grep -v '^#!' | grep -v '^#  ' | sed s/^#// | ${PAGER}"
+      grep -v '^[[:space:]]*#!' | grep -v '^[[:space:]]*#  ' | sed s/^[[:space:]]*#// | ${PAGER}"
 #        fuhg                    funct help with grep
 alias fuhg="
     cat ${HOME}/.funct ${HOME}/.funct-work 2>/dev/null | \
-      grep '^#' | grep -v '^#!' | sed 's/^#//' | grep -i"
+      grep '^[[:space:]]*#' | grep -v '^[[:space:]]*#!' | sed 's/^[[:space:]]*#//' | grep -i"
 #        alfuhg                  alias and funct help with grep
 alfuhg() {
     for file in ".alias" ".alias-work" ; do
         [[ -f "${HOME}/${file}" ]] && \
             echo "Aliases (${file}):" && \
-            cat "${HOME}/${file}" | grep '^#' | grep -v '^#!' | sed 's/^#//' | grep -i "$1"
+            cat "${HOME}/${file}" | grep '^[[:space:]]*#' | grep -v '^[[:space:]]*#!' | sed 's/^[[:space:]]*#//' | grep -i "$1"
     done
     for file in ".funct" ".funct-work" ; do
         [[ -f "${HOME}/${file}" ]] && \
             echo "Functions (${file}):" && \
-            cat "${HOME}/${file}" | grep '^#' | grep -v '^#!' | sed 's/^#//' | grep -i "$1"
+            cat "${HOME}/${file}" | grep '^[[:space:]]*#' | grep -v '^[[:space:]]*#!' | sed 's/^[[:space:]]*#//' | grep -i "$1"
     done
 }
 #!#        alfuhlg                 alias and funct help (long) with grep
 #!alfuhlg() {
 #!    echo "Aliases:"
-#!    cat "${HOME}/.alias" | grep -v '^#!' | grep -v '^#  ' | sed 's/^#//' | grep -i "$1"
+#!    cat "${HOME}/.alias" | grep -v '^[[:space:]]*#!' | grep -v '^[[:space:]]*#  ' | sed 's/^[[:space:]]*#//' | grep -i "$1"
 #!    echo "Functions:"
-#!    cat "${HOME}/.funct" | grep -v '^#!' | grep -v '^#  ' | sed 's/^#//' | grep -i "$1"
+#!    cat "${HOME}/.funct" | grep -v '^[[:space:]]*#!' | grep -v '^[[:space:]]*#  ' | sed 's/^[[:space:]]*#//' | grep -i "$1"
 #!}
 #        alg                     alias grep
 alg() {
-    cat "${HOME}/.alias" | sed -n '/^#[[:space:]].*'$1'/,/"$/p'
+    cat "${HOME}/.alias" | sed -n '/^[[:space:]]*#[[:space:]].*'$1'/,/"$/p'
 }
 #        fug                     funct grep
 fug() {

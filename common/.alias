@@ -40,19 +40,19 @@ nullwareip="159.203.165.79"
 #        alh                     alias help
 alias alh="
     cat \${HOME}/.alias \${HOME}/.alias-work 2>/dev/null | \
-      grep '^#' | grep -v '^#!' | sed 's/^#//' | \${PAGER}"
+      grep '^[[:space:]]*#' | grep -v '^[[:space:]]*#!' | sed 's/^[[:space:]]*#//' | \${PAGER}"
 #        alhl                    alias help (long)
 alias alhl="
     cat \${HOME}/.alias \${HOME}/.alias-work 2>/dev/null | \
-      grep -v '^#!' | grep -v '^#  ' | sed 's/^#//' | \${PAGER}"
+      grep -v '^[[:space:]]*#!' | grep -v '^[[:space:]]*#  ' | sed 's/^[[:space:]]*#//' | \${PAGER}"
 #        alhg                    alias help with grep
 alias alhg="
     cat \${HOME}/.alias \${HOME}/.alias-work 2>/dev/null | \
-      grep '^#' | grep -v '^#!' | sed 's/^#//' | grep -i"
+      grep '^[[:space:]]*#' | grep -v '^[[:space:]]*#!' | sed 's/^[[:space:]]*#//' | grep -i"
 #!#        ahlg                    alias help (long) with grep
 #!alias alhlg="
 #!    cat \${HOME}/.alias \${HOME}/.alias-work 2>/dev/null | \
-#!      grep -v '^#!' | grep -v '^#  ' | sed 's/^#//' | grep -i"
+#!      grep -v '^[[:space:]]*#!' | grep -v '^[[:space:]]*#  ' | sed 's/^[[:space:]]*#//' | grep -i"
 
 #
 # source core scripts
@@ -1800,43 +1800,45 @@ alias llmotd="
 # ls
 #
 unalias ls >/dev/null 2>&1
-#        ls_                     ls (classify, columns, literal, human-readable, directories-first, auto-color)
-[[ "${os}" != "Darwin" ]] && alias ls_="ls -F -C -N -h --group-directories-first --color=auto"
-[[ "${os}" == "Darwin" ]] && alias ls_="gls -F -C -N -h --group-directories-first --color=auto"
-#        la                      ls -F -C -N -h --color=auto
-alias la="ls_"
-#        lsa                     ls -A (allmost-all)
-alias lsa="ls_ -A"
-#        lsd                     ls -d (directories)
-alias lsd="ls_ -d */"
-#        lsr                     ls -R (recursive)
-alias lsr="ls_ -R"
-#        ls1                     ls -1 (one-file-per-line)
-alias ls1="ls_ -1"
-#        ll                      ls -l (long-format)
-alias ll="ls_ -l"
-#        lla                     ls -l -A (long-format, allmost-all)
-alias lla="ls_ -l -A"
-#        lld                     ls -l -d (long-format, directories)
-alias lld="ls_ -l -d */"
-#        llr                     ls -l -R (long-format, recursive)
-alias llr="ls_ -l -R"
-#        llra                    ls -l -R -A (long-format, recursive, allmost-all)
-alias llra="ls_ -l -R -A"
-#        llrt                    ls -l -r -t (long-format, reverse-order, time-sort)
-alias llrt="ls_ -l -r -t"
-#        llrta                   ls -l -r -t -A (long-format, reverse-order, time-sort, allmost-all)
-alias llrta="ls_ -l -r -t -A"
-#        llrtadl                 llrta ~/Downloads/
-alias llrtadl="ls_ -l -r -t -A \${HOME}/Downloads/"
-#        lllrtalog               llrta /var/log
-alias llrtalog="ls_ -l -r -t -A /var/log"
-#        llag                    ls -l -A (long-format, allmost-all) with grep -i
-alias llag="ls_ -l -A | grep -i"
-#        llp                     ls (pretty format)
-alias llp="(echo 'PERM LINKS OWNER GROUP SIZE MONTH DAY HH:MM/YEAR NAME' ; ls -l | sed 1d) | column --table"
-#        dir                     ls (like ftp dir command)
-alias dir="ls_ -l -A | \${PAGER}"
+if ! _command exa ; then
+    #        ls_                     ls (classify, columns, literal, human-readable, directories-first, auto-color)
+    [[ "${os}" != "Darwin" ]] && alias ls_="ls -F -C -N -h --group-directories-first --color=auto"
+    [[ "${os}" == "Darwin" ]] && alias ls_="gls -F -C -N -h --group-directories-first --color=auto"
+    #        la                      ls -F -C -N -h --color=auto
+    alias la="ls_"
+    #        lsa                     ls -A (allmost-all)
+    alias lsa="ls_ -A"
+    #        lsd                     ls -d (directories)
+    alias lsd="ls_ -d */"
+    #        lsr                     ls -R (recursive)
+    alias lsr="ls_ -R"
+    #        ls1                     ls -1 (one-file-per-line)
+    alias ls1="ls_ -1"
+    #        ll                      ls -l (long-format)
+    alias ll="ls_ -l"
+    #        lla                     ls -l -A (long-format, allmost-all)
+    alias lla="ls_ -l -A"
+    #        lld                     ls -l -d (long-format, directories)
+    alias lld="ls_ -l -d */"
+    #        llr                     ls -l -R (long-format, recursive)
+    alias llr="ls_ -l -R"
+    #        llra                    ls -l -R -A (long-format, recursive, allmost-all)
+    alias llra="ls_ -l -R -A"
+    #        llrt                    ls -l -r -t (long-format, reverse-order, time-sort)
+    alias llrt="ls_ -l -r -t"
+    #        llrta                   ls -l -r -t -A (long-format, reverse-order, time-sort, allmost-all)
+    alias llrta="ls_ -l -r -t -A"
+    #        llrtadl                 llrta ~/Downloads/
+    alias llrtadl="ls_ -l -r -t -A \${HOME}/Downloads/"
+    #        lllrtalog               llrta /var/log
+    alias llrtalog="ls_ -l -r -t -A /var/log"
+    #        llag                    ls -l -A (long-format, allmost-all) with grep -i
+    alias llag="ls_ -l -A | grep -i"
+    #        llp                     ls (pretty format)
+    alias llp="(echo 'PERM LINKS OWNER GROUP SIZE MONTH DAY HH:MM/YEAR NAME' ; ls -l | sed 1d) | column --table"
+    #        dir                     ls (like ftp dir command)
+    alias dir="ls_ -l -A | \${PAGER}"
+fi
 
 #
 # mp3blaster

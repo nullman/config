@@ -166,8 +166,12 @@ super + alt + c
     CM_LAUNCHER=rofi clipmenu
 
 # emoji selector
-super + alt + o
+super + alt + e
     rofimoji
+
+# bookmarks selector
+super + alt + o
+    ${HOME}/bin/rofi-menu bookmarks
 
 # typer selector
 super + alt + semicolon
@@ -193,9 +197,9 @@ super + alt + backslash
     printf "$(date '+%Y-%m-%d')\n $(date '+%H:%M:%S')" | \
     yad --text-info --width=520 --height=240 --no-buttons --timeout=3 --fontname="MesloLGS Nerd Font Mono 64"
 
-# edit with emacs
-super + alt + e
-    emacsclient --eval '(emacs-everywhere)'
+# # edit with emacs
+# super + alt + e
+#     emacsclient --eval '(emacs-everywhere)'
 
 # git synchronize config
 super + alt + y

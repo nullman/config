@@ -32,7 +32,7 @@ ${color2}${hr}${color}
 [Super + Shift] + 1..0  ${alignr}Send to given Desktop
 [Super + Shift] + W  ${alignr}Close Node
 [Super + Shift] + Q  ${alignr}Kill Node
-[Super + Ctrl] + M  ${alignr}Toggle Monocle Layout
+[Super + Ctrl] + M  ${alignr}Toggle Tiled/Stacked/Monocle Layout
 [Super + Ctrl] + T/F  ${alignr}Set Tiled/Fullscreen Layout
 [Super + Ctrl + Shift] + T/F  ${alignr}Set Pseudo-Tiled/Floating Layout
 [Super] + I/K/J/L  ${alignr}Focus Node in Direction
@@ -43,9 +43,9 @@ ${color2}${hr}${color}
 [Super + Control] + S  ${alignr}Resize and Move Mode
 [Super + Control] + B/E  ${alignr}Balance/Equalize Nodes
 [Super + Alt] + Spc/D/A/Ret  ${alignr}App/Program/Group/Menu
-[Super + Alt] + W/C/O/P  ${alignr}Window/Clip/Emoji/Bitwarden
-[Super + Alt] + ;/'  ${alignr}Typer/Paste
-[Super + Alt] + \/E  ${alignr}Display Time/Edit with Emacs
+[Super + Alt] + W/C/E/O  ${alignr}Window/Clip/Emoji/Bookmarks
+[Super + Alt] + ;/'/P  ${alignr}Typer/Paste/Bitwarden
+[Super + Alt] + \  ${alignr}Display Time
 [Super + Alt] + Y/U  ${alignr}Git Sync Home/Doc
 [Super + Alt] + S/X  ${alignr}Start/Lock Screensaver
 [Super + Shift] + Q  ${alignr}Lock, Logout, Reboot, Shutdown

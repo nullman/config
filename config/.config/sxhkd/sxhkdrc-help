@@ -13,13 +13,13 @@ System Tools
 | Super | Alt |      |       | Return | Menu Launcher                   |
 | Super | Alt |      |       | w      | Window Selector                 |
 | Super | Alt |      |       | c      | Clipmenu Selector               |
-| Super | Alt |      |       | o      | Emoji Selector                  |
+| Super | Alt |      |       | e      | Emoji Selector                  |
+| Super | Alt |      |       | o      | Bookmarks Selector              |
 | Super | Alt |      |       | ;      | Typer Selector                  |
 | Super | Alt |      |       | '      | Paste Selector                  |
 | Super | Alt |      |       | p      | Bitwarden Selector              |
 | Super |     | Ctrl |       | p      | Generate Password               |
 | Super | Alt |      |       | \      | Display Time                    |
-| Super | Alt |      |       | e      | Edit with Emacs                 |
 | Super | Alt |      |       | y      | Git Sync Home                   |
 | Super | Alt |      |       | u      | Git Sync Doc                    |
 | Super | Alt |      |       | s      | Start Screensaver               |
