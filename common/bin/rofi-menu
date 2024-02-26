@@ -58,7 +58,7 @@ else
 fi
 
 # handle menu
-menu=$(echo "${menu}" | sed 's/^.*\t//' | tr '[:upper:]' '[:lower:]')
+menu=$(printf "${menu}" | sed 's/^.*\t//' | tr '[:upper:]' '[:lower:]')
 #echo "${menu}"
 case "${menu}" in
     term)
@@ -88,7 +88,7 @@ case "${menu}" in
 
         # open bookmark
         if [[ -n "${sel}" ]] ; then
-            url=$(echo "${sel}" | sed 's/^.* \([^ ]*$\)/\1/')
+            url=$(printf "${sel}" | sed 's/^.* \([^ ]*$\)/\1/')
             (xdg-open "${url}" &)
         fi
         ;;
@@ -160,7 +160,7 @@ case "${menu}" in
 
         # copy paste selection to the clipboard
         if [[ -n "${sel}" ]] ; then
-            echo -n "${sel}" | xsel && xsel --output | xsel --clipboard
+            printf "${sel}" | xsel && xsel --output | xsel --clipboard
         fi
         ;;
 
@@ -246,7 +246,7 @@ case "${menu}" in
                     _select
                 fi
 
-                sel=$(echo "${sel}" | sed 's%^\[%% ; s%\]$%%')
+                sel=$(printf "${sel}" | sed 's%^\[%% ; s%\]$%%')
                 selpath="${sounddir}/${sel}"
                 echo "selpath: ${selpath}"
 
@@ -274,7 +274,7 @@ case "${menu}" in
 
                 # handle playing a sound file
                 _killffplay
-                if $(echo "${sel}" | grep -q "Ambient Sound Effects") ; then
+                if $(printf "${sel}" | grep -q "Ambient Sound Effects") ; then
                     echo "Playing: ${sel} (in a loop)"
                     ffplay -nodisp -loop 0 "${selpath}"
                 else

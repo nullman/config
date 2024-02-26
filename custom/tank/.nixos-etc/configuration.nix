@@ -782,7 +782,7 @@
     inkscape
     #kdenlive
     libreoffice
-    #mpv
+    mpv
     mupdf
     notepadqq
     #obs-studio
