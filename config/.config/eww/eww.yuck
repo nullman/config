@@ -34,8 +34,8 @@
 (defpoll weather :interval "600s" "~/bin/system-bar-weather icon 92116")
 (defpoll weather-status :interval "600s" "~/bin/system-bar-weather status 92116")
 
-;;(defpoll weather :interval "600s" "curl --silent 'wttr.in/?minneapolis&u&format=%c%t'")
-;;(defpoll weather-status :interval "600s" "curl --silent 'wttr.in/?minneapolis&u&format=%C+%t'")
+;;(defpoll weather :interval "600s" "curl --silent 'wttr.in/San+Diego?u&format=%c%t'")
+;;(defpoll weather-status :interval "600s" "curl --silent 'wttr.in/San+Diego?u&format=%C+%t'")
 
 ;;(defpoll wifi-strength :interval "2s" "nmcli -t -f SIGNAL,ACTIVE device wifi | awk -F ':' '{ if ($2 == \"yes\") print $1 }'")
 ;;(defpoll wifi-status :interval "2s" "nmcli -t -f WIFI radio")
@@ -221,7 +221,7 @@
        ;; weather
        (box :class "label"
             :tooltip weather-status
-            (button :onclick "curl --silent 'wttr.in/?minneapolis&uT' | head -n -2 | yad --text-info --width=620 --height=840 --no-buttons"
+            (button :onclick "curl --silent 'wttr.in/San+Diego?uT' | head -n -2 | yad --text-info --width=1140 --height=840 --no-buttons"
                     weather))))
 
 (defwidget center-bar []

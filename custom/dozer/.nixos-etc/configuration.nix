@@ -646,6 +646,7 @@
     nix-index
     ntfsprogs
     nmap
+    p7zip
     parted
     pciutils
     pipewire
