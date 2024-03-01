@@ -77,11 +77,9 @@
     joypixels.acceptLicense = true;
     permittedInsecurePackages = [
       "electron-12.2.3"
-      "electron-19.1.9"
       "electron-24.8.6"
-      "openssl-1.1.1u"
-      "openssl-1.1.1v"
       "openssl-1.1.1w"
+      "teams-1.5.00.23861"
     ];
     packageOverrides = pkgs: {
       nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
@@ -599,8 +597,9 @@
     nettools
     nfs-utils
     nix-index
-    ntfsprogs
     nmap
+    ntfsprogs
+    ntp
     p7zip
     parted
     pciutils
@@ -899,9 +898,11 @@
     #simplex-chat-desktop
     slack
     syncterm
+    teams
     telegram-desktop
     transmission-gtk
     tuba
+    zoom-us
 
     ## emulators
     #basiliskii

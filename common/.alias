@@ -30,6 +30,7 @@ terminal="alacritty"
 networkdevice="$(_command ip && ip route get 192.168.0.1 2>/dev/null | awk '{print $5}')"
 #!       nullwareip
 nullwareip="159.203.165.79"
+
 #===============================================================================
 # Alias Definitions
 #===============================================================================
@@ -191,7 +192,7 @@ alias xl="xlock -nice 1 +usefirst -mode flame"
 #        xkeys                   list x11 keys
 alias xkeys="\${PAGER} /usr/include/X11/keysumdef.h"
 #        setdate                 set system date using ntpdate
-alias setdate="ntpdate -su 128.101.101.101 ; hwclock --systohc"
+alias setdate="sudo ntpdate -su 128.101.101.101 ; sudo hwclock --systohc"
 #        ra                      run-app
 alias ra="run-app"
 #        ccs                     ccache -s (cache status)
@@ -691,7 +692,7 @@ alias ping-nullware="ping \${nullwareip}"
 #        ping-google             ping google.com
 alias ping-google="ping google.com"
 #        ping-googleip           ping google.com by ip address
-alias ping-googleip="ping 172.217.15.110"
+alias ping-googleip="ping 142.250.217.142"
 #        traceroute-google       traceroute google.com
 alias traceroute-google="traceroute google.com"
 #        ping-uswest             ping uswest.net
@@ -3669,7 +3670,7 @@ alias x16-update="
 #!alias x16-emu="x16emu -rom /usr/share/x16-rom/rom.bin"
 alias x16-emu="x16emu -rom \${HOME}/code/commander-x16/x16-rom/rom.bin"
 
-#
+#!
 #!==============================================================================
 #! End of File
 #!==============================================================================
