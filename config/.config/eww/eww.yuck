@@ -221,7 +221,7 @@
        ;; weather
        (box :class "label"
             :tooltip weather-status
-            (button :onclick "curl --silent 'wttr.in/San+Diego?uT' | head -n -2 | yad --text-info --width=1140 --height=840 --no-buttons"
+            (button :onclick "curl --silent 'wttr.in/San+Diego?uT' | head -n -2 | yad --text-info --width=1140 --height=840 --no-buttons 2>/dev/null"
                     weather))))
 
 (defwidget center-bar []
@@ -304,7 +304,7 @@
                  :show-details "true"
                  :show-heading "true"
                  :show-day-names "true")))
-;;:onclick "remind ~/.reminders $(date -d {2}-$(({1}+1))-{0} '+%_d %b %Y') | fold -w 80 -s | yad --text-info --width=800 --height=600 --no-buttons")))
+;;:onclick "remind ~/.reminders $(date -d {2}-$(({1}+1))-{0} '+%_d %b %Y') | fold -w 80 -s | yad --text-info --width=800 --height=600 --no-buttons 2>/dev/null")))
 
 ;; (defwindow music
 ;;   :windowtype "dock"

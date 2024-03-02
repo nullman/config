@@ -5,7 +5,7 @@
 # Present a menu of rofi menus.
 #
 # Symbols:  ☰  |    | ✂ ⎘ 󰄶   󰅌 󰅍 󰨸 󱉥 󱉦 󱉧 󱉨 󱉫 󱉬 
-# Symbols: 󰍹    |  |    󱇠  | 󰆧 |  |   󰝚 | 󰛇 | 󰃃 󰃀 | 󰯫 󰈍 
+# Symbols: 󰍹    |  |    󱇠  | 󰆧 |  |   󰝚 | 󰛇 | 󰃃 󰃀 | 󰯫 󰈍   󰀬 
 #
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
@@ -29,6 +29,7 @@ MENU:
   qemu       QEMU Emulator
   rsync      Synchronize Files
   sounds     Play Sounds
+  spell      Spell Check & Definition
   ssh        SSH into Systems
   typer      Type Strings
   vnc        VNC into Systems
@@ -48,6 +49,7 @@ if [[ $# -lt 1 ]] ; then
         "󰆧	Qemu"
         "	Rsync"
         "	Sounds"
+        "	Spell"
         "	SSH"
         "	Typer"
         "󰛇	VNC"
@@ -146,7 +148,7 @@ case "${menu}" in
 
         # synchronize with selected git repository
         if [[ -n "${sel}" ]] ; then
-            source "${HOME}/.funct" && (eval "${sel}" && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail
+            source "${HOME}/.funct" && (eval "${sel}" && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
         fi
         ;;
 
@@ -191,7 +193,7 @@ case "${menu}" in
         if [[ -n "${sel}" ]] ; then
             home="$(cd ${HOME} ; cd .. ; pwd)"
             cmd=$(cat "${HOME}/.alias" | sed ':a;N;$!ba;s/\\\n//g' | sed -n '/alias '"${sel}"'/p' | sed 's/^alias '"${sel}"'="// ; s/"$//')
-            (eval "${cmd}" && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail
+            (eval "${cmd}" && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
         fi
         ;;
 
@@ -284,6 +286,26 @@ case "${menu}" in
                 break
             done
         fi
+        ;;
+
+    spell)
+        if [[ $# -lt 2 ]] ; then
+            sel=$(yad --title "Spell" --entry --text "Word to spell and define:" --fontname='MesloLGS Nerd Font Mono 14' 2>/dev/null)
+        else
+            sel=$2
+        fi
+
+        res=$(printf "${sel}" | ispell -a | tail -n -1)
+
+        word=""
+        case "${res:0:1}" in
+            \*) word="${sel}" ;;
+            \+) word="${res:1}" ;;
+            \#) yad --title "Word" --text "Word ${sel} was not found" --fontname='MesloLGS Nerd Font Mono 14' 2>/dev/null ;;
+            \?|\&) word=$(printf "${res}" | sed 's/^.*: // ; s/, */,/g' | tr ',' '\n' | rofi -dmenu -i -p "	Select Word to Define") ;;
+        esac
+
+        [[ -n "${word}" ]] && trans -no-ansi "${word}" | yad --title "Definition" --text-info --width=1024 --height=768 --wrap --no-buttons --wrap --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
         ;;
 
     ssh)

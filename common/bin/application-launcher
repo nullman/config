@@ -11,7 +11,7 @@
 
 apps=$(cat ${HOME}/.applications | sed -n '/^[^ #]/p')
 
-cmd="yad --width=512 --height=384 --list --checklist --column 'Run' --column 'Application'"
+cmd="yad --width=512 --height=384 --list --checklist --column 'Run' --column 'Application' 2>/dev/null"
 for app in ${apps} ; do
     if [[ ! -f ${HOME}/.dev ]] || [[ "${app}" == "alacritty" ]] || [[ "${app}" == "emacs" ]] ; then
         cmd="${cmd} TRUE ${app}"

@@ -138,7 +138,7 @@ XF86TouchpadToggle
 
 # display sxhkd keybindings
 super + alt + h
-    yad --text-info --width=1024 --height=768 --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail --filename="${HOME}/.config/sxhkd/sxhkdrc-help"
+    yad --text-info --width=1024 --height=768 --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null --filename="${HOME}/.config/sxhkd/sxhkdrc-help"
 
 # desktop application launcher
 super + alt + space
@@ -195,7 +195,7 @@ super + ctrl + p
 # display time
 super + alt + backslash
     printf "$(date '+%Y-%m-%d')\n $(date '+%H:%M:%S')" | \
-    yad --text-info --width=520 --height=240 --no-buttons --timeout=3 --fontname="MesloLGS Nerd Font Mono 64"
+    yad --text-info --width=520 --height=240 --no-buttons --timeout=3 --fontname="MesloLGS Nerd Font Mono 64" 2>/dev/null
 
 # # edit with emacs
 # super + alt + e
@@ -203,11 +203,11 @@ super + alt + backslash
 
 # git synchronize config
 super + alt + y
-    source "${HOME}/.funct" && (git-sync-config && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail
+    source "${HOME}/.funct" && (git-sync-config && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
 
 # git synchronize extra
 super + alt + u
-    source "${HOME}/.funct" && (git-sync-extra && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail
+    source "${HOME}/.funct" && (git-sync-extra && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
 
 # start screen saver
 super + alt + s
@@ -231,7 +231,7 @@ super + shift + q
 
 # get xprop class name
 super + shift + p
-    xprop | grep '^WM_CLASS' | yad --text-info --width=1024 --height=768 --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail
+    xprop | grep '^WM_CLASS' | yad --text-info --width=1024 --height=768 --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
 
 # kill process clicked
 super + shift + Delete
@@ -284,7 +284,7 @@ super + shift + alt + b
 
 # nixos-rebuild switch
 super + alt + ctrl + r
-    sudo -i nixos-rebuild switch | yad --text-info --width=1024 --height=768 --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail
+    sudo -i nixos-rebuild switch | yad --text-info --width=1024 --height=768 --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
 
 #-------------------------------------------------------------------------------
 # Media
