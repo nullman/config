@@ -138,7 +138,7 @@ XF86TouchpadToggle
 
 # display sxhkd keybindings
 super + alt + h
-    yad --text-info --width=1024 --height=768 --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null --filename="${HOME}/.config/sxhkd/sxhkdrc-help"
+    yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null --filename="${HOME}/.config/sxhkd/sxhkdrc-help"
 
 # desktop application launcher
 super + alt + space
@@ -181,21 +181,30 @@ super + alt + semicolon
 super + alt + apostrophe
     ${HOME}/bin/rofi-menu paste
 
-# bitwarden selector (clear clipboard after 30 seconds)
+# spell and define word
+super + alt + s
+    ${HOME}/bin/rofi-menu spell
+
+# bitwarden selector (clear clipboard after 60 seconds)
 # first login using 'bw login'
 super + alt + p
-    bwmenu --clear 30
+    bwmenu --clear 60
+
+# # generate password
+# super + ctrl + p
+#     tr --delete --complement 'a-zA-Z0-9!@#$%^&*-_=+;:,<.>/?' < /dev/urandom | \
+#     head --bytes 14 | xclip -selection clipboard && \
+#     notify-send --expire-time=2000 'Random password generated on clipboard'
 
 # generate password
 super + ctrl + p
-    tr --delete --complement 'a-zA-Z0-9!@#$%^&*-_=+;:,<.>/?' < /dev/urandom | \
-    head --bytes 14 | xclip -selection clipboard && \
-    notify-send --expire-time=2000 'Random password generated on clipboard'
+    ${HOME}/bin/password-phrase 6 hyphen true | tr -d '\n' | xclip -selection clipboard && \
+    notify-send --expire-time=2000 'Random password phrase on clipboard'
 
 # display time
 super + alt + backslash
     printf "$(date '+%Y-%m-%d')\n $(date '+%H:%M:%S')" | \
-    yad --text-info --width=520 --height=240 --no-buttons --timeout=3 --fontname="MesloLGS Nerd Font Mono 64" 2>/dev/null
+    yad --text-info --width=520 --height=240 --wrap --no-buttons --timeout=3 --fontname="MesloLGS Nerd Font Mono 64" 2>/dev/null
 
 # # edit with emacs
 # super + alt + e
@@ -203,18 +212,18 @@ super + alt + backslash
 
 # git synchronize config
 super + alt + y
-    source "${HOME}/.funct" && (git-sync-config && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
+    source "${HOME}/.funct" && (git-sync-config && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
 
 # git synchronize extra
 super + alt + u
-    source "${HOME}/.funct" && (git-sync-extra && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
+    source "${HOME}/.funct" && (git-sync-extra && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
 
 # start screen saver
-super + alt + s
+super + alt + x
     xscreensaver-command -activate
 
 # start screen saver in lock mode
-super + alt + x
+super + shift + x
     xscreensaver-command -lock
 #    xlock
 #    xlock -mode flame
@@ -231,7 +240,7 @@ super + shift + q
 
 # get xprop class name
 super + shift + p
-    xprop | grep '^WM_CLASS' | yad --text-info --width=1024 --height=768 --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
+    xprop | grep '^WM_CLASS' | yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
 
 # kill process clicked
 super + shift + Delete
@@ -284,7 +293,7 @@ super + shift + alt + b
 
 # nixos-rebuild switch
 super + alt + ctrl + r
-    sudo -i nixos-rebuild switch | yad --text-info --width=1024 --height=768 --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
+    sudo -i nixos-rebuild switch | yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
 
 #-------------------------------------------------------------------------------
 # Media

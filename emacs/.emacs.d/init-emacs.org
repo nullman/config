@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2024-02-24 17:09 (kyle)>
+  #+TIMESTAMP: <2024-03-02 14:38 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -29112,38 +29112,40 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;;   :ensure t))
     #+END_SRC
 
-*** tree-sitter
+*** +tree-sitter+
     :PROPERTIES:
     :CUSTOM_ID: packages-tree-sitter
     :END:
 
     Incremental Parsing System
 
-    #+BEGIN_SRC emacs-lisp
-      ;;------------------------------------------------------------------------------
-      ;;; Packages: tree-sitter
-      ;;------------------------------------------------------------------------------
+    [Causes 100% CPU Emacs lock-ups when saving large files.]
 
-      (init-message 2 "Packages: tree-sitter")
+    #+BEGIN_SRC emacs-lisp :tangle no
+      ;; ;;------------------------------------------------------------------------------
+      ;; ;;; Packages: tree-sitter
+      ;; ;;------------------------------------------------------------------------------
 
-      (use-package tree-sitter
-        :straight t
-        ;;:hook (prog-mode . tree-sitter-hl-mode)
-        :hook (tree-sitter-after-on . tree-sitter-hl-mode)
-        :init
-        (global-tree-sitter-mode 1))
+      ;; (init-message 2 "Packages: tree-sitter")
 
-      ;;------------------------------------------------------------------------------
-      ;;;; tree-sitter-langs
-      ;;
-      ;; Grammar bundle for tree-sitter.
-      ;;------------------------------------------------------------------------------
+      ;; (use-package tree-sitter
+      ;;   :straight t
+      ;;   ;;:hook (prog-mode . tree-sitter-hl-mode)
+      ;;   :hook (tree-sitter-after-on . tree-sitter-hl-mode)
+      ;;   :init
+      ;;   (global-tree-sitter-mode 1))
 
-      (init-message 3 "tree-sitter-langs")
+      ;; ;;------------------------------------------------------------------------------
+      ;; ;;;; tree-sitter-langs
+      ;; ;;
+      ;; ;; Grammar bundle for tree-sitter.
+      ;; ;;------------------------------------------------------------------------------
 
-      (use-package tree-sitter-langs
-        :straight t
-        :after (tree-sitter))
+      ;; (init-message 3 "tree-sitter-langs")
+
+      ;; (use-package tree-sitter-langs
+      ;;   :straight t
+      ;;   :after (tree-sitter))
     #+END_SRC
 
 *** +twit+

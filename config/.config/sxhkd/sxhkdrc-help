@@ -17,13 +17,14 @@ System Tools
 | Super | Alt |      |       | o      | Bookmarks Selector              |
 | Super | Alt |      |       | ;      | Typer Selector                  |
 | Super | Alt |      |       | '      | Paste Selector                  |
+| Super | Alt |      |       | s      | Spell and Define Word           |
 | Super | Alt |      |       | p      | Bitwarden Selector              |
 | Super |     | Ctrl |       | p      | Generate Password               |
 | Super | Alt |      |       | \      | Display Time                    |
 | Super | Alt |      |       | y      | Git Sync Home                   |
 | Super | Alt |      |       | u      | Git Sync Doc                    |
-| Super | Alt |      |       | s      | Start Screensaver               |
-| Super | Alt |      |       | x      | Lock Screensaver                |
+| Super | Alt |      |       | x      | Start Screensaver               |
+| Super |     |      | Shift | x      | Lock Screensaver                |
 | Super |     |      | Shift | q      | Lock, Logout, Reboot, Shutdown  |
 | Super |     |      | Shift | p      | Get XProp Class Name            |
 | Super |     |      | Shift | Delete | Kill Process Clicked            |

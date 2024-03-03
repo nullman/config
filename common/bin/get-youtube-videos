@@ -183,6 +183,7 @@ channels=(
 #    "Science              | Vsauce2                                    | https://www.youtube.com/user/Vsauce2/videos"
 #    "Show                 | DUST                                       | https://www.youtube.com/c/watchdust/videos"
     "Show                 | For the Empire                             | https://www.youtube.com/watch?v=g43lgCJ_D6o&list=PLxJr4XsTcWljTxufEaW_3X1VY_eqjuLgi"
+#    "Show                 | The Dark Cosmos                            | https://www.youtube.com/@TheDarkCosmos1/videos"
 )
 
 _usage() {
