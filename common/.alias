@@ -2278,6 +2278,8 @@ alias scmon="\${HOME}/bin/screen-app mon"
 alias sctop="\${HOME}/bin/screen-app top"
 #        schtop                  screen-app htop
 alias schtop="\${HOME}/bin/screen-app htop"
+#        scbtop                  screen-app btop
+alias scbtop="\${HOME}/bin/screen-app btop"
 #        sczenith                screen-app zenith
 alias sczenith="\${HOME}/bin/screen-app zenith"
 #        scifmon                 screen-app ifmon
@@ -3190,6 +3192,8 @@ alias gitciaano="git commit -a --amend --no-edit"
 alias git-uncommit-head="git reset 'HEAD^'"
 #        gitst                   git stash
 alias gitst="git stash"
+#        gitsta                  git stash --all
+alias gitsta="git stash --all"
 #        gitstl                  git stash list
 alias gitstl="git stash list"
 #        gitstp                  git stash pop

@@ -16,6 +16,7 @@ Launch APPLICATION in a specific screen window.
     -----  ----------------  ------
     mon    top                  0
     mon    htop                 0
+    mon    btop                 0
     mon    zenith               0
     mon    slmon                0
     em     emacs                1
@@ -48,6 +49,7 @@ fi
 case "$1" in
     mon|top) screen -t mon 0 top ;;
     htop) screen -t mon 0 htop ;;
+    btop) screen -t mon 0 btop ;;
     zenith) screen -t mon 0 zenith ;;
     slmon) screen -t mon 0 slmon ;;
     em|emacs) screen -t emacs 1 emacs --no-site-file -nw ;;

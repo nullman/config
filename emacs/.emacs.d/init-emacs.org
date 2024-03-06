@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2024-03-02 14:38 (kyle)>
+  #+TIMESTAMP: <2024-03-06 00:45 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -31561,13 +31561,13 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         :straight t
         ;;:after (company)
         :after (corfu)
-        :commands (lsp lsp-mode lsp-defered)
+        :commands (lsp lsp-mode lsp-deferred)
         :bind (:map lsp-mode-map
                     ("M-RET" . lsp-execute-code-action))
         ;;             ("TAB" . company-indent-or-complete-common)
         ;;             ("<tab>" . company-indent-or-complete-common))
         :hook ((lsp-mode . custom-lsp-mode-hook)
-               (prog-mode . lsp-defered))
+               (prog-mode . lsp-deferred))
         ;; (lsp-mode . company-mode))
         :custom
         (lsp-enable-folding nil)

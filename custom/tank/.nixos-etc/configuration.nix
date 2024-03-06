@@ -830,10 +830,12 @@
     #x48
 
     # tui
+    atuin
     btop
     calcurse
     cmus
     cointop
+    du-dust
     elinks
     gopher
     gomuks
@@ -870,6 +872,7 @@
     boxes
     broot
     #carbonyl
+    chezmoi
     cool-retro-term
     ddgr
     element
@@ -1084,6 +1087,7 @@
     flare
     gamemode
     gemrb
+    heroic
     lutris
     pingus
     playonlinux

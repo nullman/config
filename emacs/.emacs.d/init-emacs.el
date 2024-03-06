@@ -20168,13 +20168,13 @@ otherwise run `find-file-as-root'."
   :straight t
   ;;:after (company)
   :after (corfu)
-  :commands (lsp lsp-mode lsp-defered)
+  :commands (lsp lsp-mode lsp-deferred)
   :bind (:map lsp-mode-map
               ("M-RET" . lsp-execute-code-action))
   ;;             ("TAB" . company-indent-or-complete-common)
   ;;             ("<tab>" . company-indent-or-complete-common))
   :hook ((lsp-mode . custom-lsp-mode-hook)
-         (prog-mode . lsp-defered))
+         (prog-mode . lsp-deferred))
   ;; (lsp-mode . company-mode))
   :custom
   (lsp-enable-folding nil)
