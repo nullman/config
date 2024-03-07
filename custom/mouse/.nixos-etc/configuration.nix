@@ -97,6 +97,7 @@
       djgpp_i686 = prev.callPackage /home/kyle/.nixos/pkgs/djgpp { targetArchitecture = "i686"; };
       gcc-ia16 = prev.callPackage /home/kyle/.nixos/pkgs/gcc-ia16 {};
       #mtkclient = prev.callPackage /home/kyle/.nixos/pkgs/mtkclient {};
+      #stow = prev.callPackage /home/kyle/.nixos/pkgs/stow {};
       syncterm = prev.callPackage /home/kyle/.nixos/pkgs/syncterm {};
       vdhcoapp = prev.callPackage /home/kyle/.nixos/pkgs/vdhcoapp {};
       bspwm = prev.callPackage /home/kyle/code/bspwm {};
@@ -643,7 +644,6 @@
     dunst
     evtest
     eww
-    eww-wayland
     gnome-icon-theme
     gnome.eog
     gnome.gnome-keyring
@@ -934,6 +934,8 @@
     #android-studio
     #android-tools
     #android-udev-rules
+    #autoconf
+    #automake
     #binutils
     #binutils-ia16
     #bison
