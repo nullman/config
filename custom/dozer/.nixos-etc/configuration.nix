@@ -861,6 +861,7 @@
     tig
     ugrep
     w3m
+    wavemon
     wordgrinder
     x3270
     xplr

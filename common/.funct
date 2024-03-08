@@ -1931,7 +1931,7 @@ home-restow() {
     echo "Creating stow target directories..."
     mkdir -p "${HOME}/.emacs.d"
     mkdir -p "${HOME}/.local/share/applications"
-    find "$(configdir)/config/.config" -mindepth 1 -maxdepth 1 -type d | \
+    find "$(configdir)/config/.config" -mindepth 1 -type d | \
         while read dir ; do
             bn=$(basename "${dir}")
             mkdir -p "${HOME}/.config/${bn}"
@@ -1943,6 +1943,7 @@ home-restow() {
         for file in "gtk-3.0/bookmarks" \
                         "gtk-3.0/gtk.css" \
                         "gtk-3.0/settings.ini" \
+                        "xfce4/xfconf/xfce-perchannel-xml/xfce4-power-manager.xml" \
                         "xfce4/xfconf/xfce-perchannel-xml/xsettings.xml"
         do
             if [[ -f "${HOME}/.config/${file}" ]] && [[ ! -L "${HOME}/.config/${file}" ]] ; then
