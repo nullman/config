@@ -835,6 +835,7 @@
 
     # tui
     atuin
+    bmon
     btop
     calcurse
     cmus
@@ -859,6 +860,7 @@
     ranger
     s-tui
     tig
+    tty-clock
     ugrep
     w3m
     wavemon
