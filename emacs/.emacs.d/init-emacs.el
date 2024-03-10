@@ -8398,6 +8398,34 @@ TO. Instead the entire string is returned."
       (substring string from to))))
 ;; safe-substring:1 ends here
 
+;; [[file:init-emacs.org::#functions-general-functions-set-nth][set-nth:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: General Functions: set-nth
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: General Functions: set-nth")
+
+(defun set-nth (n list val)
+   "Destructively set the Nth element of LIST to VAL."
+   (setcar (nthcdr n list) val))
+;; set-nth:1 ends here
+
+;; [[file:init-emacs.org::#functions-general-functions-delete-nth][delete-nth:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: General Functions: delete-nth
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: General Functions: delete-nth")
+
+(defun delete-nth (n list)
+  "Destructively delete the Nth element of LIST."
+  (if (= n 0)
+      (progn
+        (setcar list (car (cdr list)))
+        (setcdr list (cdr (cdr list))))
+    (setcdr (nthcdr (1- n) list) (nthcdr (1+ n) list))))
+;; delete-nth:1 ends here
+
 ;; [[file:init-emacs.org::#functions-general-functions-for-each][for-each:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: General Functions: for-each

@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2024-03-06 00:45 (kyle)>
+  #+TIMESTAMP: <2024-03-09 18:23 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -2944,6 +2944,7 @@
        ("Gopherus Author" (location . "gopher://gopher.viste.fr/1") (handler . elpher-bookmark-jump))
        ("Elpher" (location . "gopher://thelambdalab.xyz/1/projects/elpher/") (handler . elpher-bookmark-jump))
        ("Klondike Solitaire" (location . "gopher://worldofsolitaire.com/") (handler . elpher-bookmark-jump))
+       ("Plan9 Project (jrsharp, L29)" (location . "gopher://frstcomputer.com/") (handler . elpher-bookmark-jump))
        ;; Gopher: Personal
        ("Nullman" (location . "gopher://nullman.net/1") (handler . elpher-bookmark-jump))
        ("kurisu (L29)" (location . "gopher://eyeblea.ch/1/~kurisu") (handler . elpher-bookmark-jump))
@@ -12655,6 +12656,44 @@
         ;;       (replace-regexp-in-string "^[ \t\n]*" ""
         ;;                                 (replace-regexp-in-string "[ \t\n]*$" "" string))
         ;;     string))
+      #+END_SRC
+
+***** set-nth
+      :PROPERTIES:
+      :CUSTOM_ID: functions-general-functions-set-nth
+      :END:
+
+      #+BEGIN_SRC emacs-lisp
+        ;;------------------------------------------------------------------------------
+        ;;;; Functions: General Functions: set-nth
+        ;;------------------------------------------------------------------------------
+
+        (init-message 3 "Functions: General Functions: set-nth")
+
+        (defun set-nth (n list val)
+           "Destructively set the Nth element of LIST to VAL."
+           (setcar (nthcdr n list) val))
+      #+END_SRC
+
+***** delete-nth
+      :PROPERTIES:
+      :CUSTOM_ID: functions-general-functions-delete-nth
+      :END:
+
+      #+BEGIN_SRC emacs-lisp
+        ;;------------------------------------------------------------------------------
+        ;;;; Functions: General Functions: delete-nth
+        ;;------------------------------------------------------------------------------
+
+        (init-message 3 "Functions: General Functions: delete-nth")
+
+        (defun delete-nth (n list)
+          "Destructively delete the Nth element of LIST."
+          (if (= n 0)
+              (progn
+                (setcar list (car (cdr list)))
+                (setcdr list (cdr (cdr list))))
+            (setcdr (nthcdr (1- n) list) (nthcdr (1+ n) list))))
       #+END_SRC
 
 ***** for-each

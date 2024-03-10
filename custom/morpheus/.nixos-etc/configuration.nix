@@ -1085,6 +1085,7 @@
     azimuth
     bsdgames
     eidolon
+    endless-sky
     flare
     gamemode
     gemrb

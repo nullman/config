@@ -83,29 +83,29 @@ control + alt + {Up,Down,Left,Right}
 #-------------------------------------------------------------------------------
 
 XF86AudioMute
-    pamixer --toggle-mute && notify-send --expire-time=2000 --replace-id 1 "$(pamixer --get-mute | sed 's/false/Unmuted/ ; s/true/Muted/')"
-    #pactl -- set-sink-mute 0 toggle && notify-send --expire-time=2000 --replace-id 1 "$(pactl -- get-sink-mute 0)"
-    #wpctl set-mute 49 toggle && notify-send --expire-time=2000 --replace-id 1 "$(wpctl get-volume ???)"
+    pamixer --toggle-mute && notify-send --expire-time=3000 --replace-id 1 "$(pamixer --get-mute | sed 's/false/Unmuted/ ; s/true/Muted/')"
+    #pactl -- set-sink-mute 0 toggle && notify-send --expire-time=3000 --replace-id 1 "$(pactl -- get-sink-mute 0)"
+    #wpctl set-mute 49 toggle && notify-send --expire-time=3000 --replace-id 1 "$(wpctl get-volume ???)"
 
 XF86AudioLowerVolume
-    pamixer --decrease 2 && notify-send --expire-time=2000 --replace-id 2 "$(pamixer --get-volume | sed 's/^/Volume: /')"
-    #pactl -- set-sink-volume 0 -2% && notify-send --expire-time=2000 --replace-id 2 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
-    #wpctl set-volume 49 2%- && notify-send --expire-time=2000 --replace-id 2 "$(wpctl get-volume ???)"
+    pamixer --decrease 2 && notify-send --expire-time=3000 --replace-id 2 "$(pamixer --get-volume | sed 's/^/Volume: /')"
+    #pactl -- set-sink-volume 0 -2% && notify-send --expire-time=3000 --replace-id 2 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
+    #wpctl set-volume 49 2%- && notify-send --expire-time=3000 --replace-id 2 "$(wpctl get-volume ???)"
 
 XF86AudioRaiseVolume
-    pamixer --increase 2 && notify-send --expire-time=2000 --replace-id 2 "$(pamixer --get-volume | sed 's/^/Volume: /')"
-    #pactl -- set-sink-volume 0 +2% && notify-send --expire-time=2000 --replace-id 2 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
-    #wpctl set-volume 49 2%+ && notify-send --expire-time=2000 --replace-id 2 "$(wpctl get-volume ???)"
+    pamixer --increase 2 && notify-send --expire-time=3000 --replace-id 2 "$(pamixer --get-volume | sed 's/^/Volume: /')"
+    #pactl -- set-sink-volume 0 +2% && notify-send --expire-time=3000 --replace-id 2 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
+    #wpctl set-volume 49 2%+ && notify-send --expire-time=3000 --replace-id 2 "$(wpctl get-volume ???)"
 
 # XF86AudioMicMute
 
 XF86MonBrightnessUp
-    light -A 10 && notify-send --expire-time=2000 --replace-id 3 "Brightness: $(light -G | sed 's/\.[0-9]*$//')"
-    #xbacklight -inc 10 && notify-send --expire-time=2000 --replace-id 3 'Brightness Up'
+    light -A 10 && notify-send --expire-time=3000 --replace-id 3 "Brightness: $(light -G | sed 's/\.[0-9]*$//')"
+    #xbacklight -inc 10 && notify-send --expire-time=3000 --replace-id 3 'Brightness Up'
 
 XF86MonBrightnessDown
-    light -U 10 && notify-send --expire-time=2000 --replace-id 3 "Brightness: $(light -G | sed 's/\.[0-9]*$//')"
-    #xbacklight -dec 10 && notify-send --expire-time=2000 --replace-id 3 'Brightness Down'
+    light -U 10 && notify-send --expire-time=3000 --replace-id 3 "Brightness: $(light -G | sed 's/\.[0-9]*$//')"
+    #xbacklight -dec 10 && notify-send --expire-time=3000 --replace-id 3 'Brightness Down'
 
 # XF86Display
 
@@ -118,19 +118,19 @@ XF86MonBrightnessDown
 # XF86Favorites
 
 XF86TouchpadToggle
-    touchpad-toggle && notify-send --expire-time=2000 --replace-id 4 'Toggle Touchpad'
+    touchpad-toggle && notify-send --expire-time=3000 --replace-id 4 'Toggle Touchpad'
 
 # XF86AudioPlay
-#     playerctl play && notify-send --expire-time=2000 --replace-id 5 'Play Audio'
+#     playerctl play && notify-send --expire-time=3000 --replace-id 5 'Play Audio'
 
 # XF86AudioPause
-#     playerctl pause && notify-send --expire-time=2000 --replace-id 5 'Pause Audio'
+#     playerctl pause && notify-send --expire-time=3000 --replace-id 5 'Pause Audio'
 
 # XF86AudioNext
-#     playerctl next && notify-send --expire-time=2000 --replace-id 5 'Next Song'
+#     playerctl next && notify-send --expire-time=3000 --replace-id 5 'Next Song'
 
 # XF86AudioPrev
-#     playerctl previous && notify-send --expire-time=2000 --replace-id 5 'Previous Song'
+#     playerctl previous && notify-send --expire-time=3000 --replace-id 5 'Previous Song'
 
 #-------------------------------------------------------------------------------
 # System Tools
@@ -194,12 +194,12 @@ super + alt + p
 # super + ctrl + p
 #     tr --delete --complement 'a-zA-Z0-9!@#$%^&*-_=+;:,<.>/?' < /dev/urandom | \
 #     head --bytes 14 | xclip -selection clipboard && \
-#     notify-send --expire-time=2000 'Random password generated on clipboard'
+#     notify-send --expire-time=3000 'Random password generated on clipboard'
 
 # generate password
 super + ctrl + p
     ${HOME}/bin/password-phrase 6 hyphen true | tr -d '\n' | xclip -selection clipboard && \
-    notify-send --expire-time=2000 'Random password phrase on clipboard'
+    notify-send --expire-time=3000 'Random password phrase on clipboard'
 
 # display time
 super + alt + backslash
@@ -232,7 +232,7 @@ super + shift + x
 
 # # restart user services (caps-lock and insert key changes)
 # super + ctrl + r
-#     systemctl --user restart setxkbmap xkbcomp xset && notify-send --expire-time=2000 'User services restarted'
+#     systemctl --user restart setxkbmap xkbcomp xset && notify-send --expire-time=3000 'User services restarted'
 
 # session menu
 super + shift + q
@@ -248,47 +248,47 @@ super + shift + Delete
 
 # snapshot of entire screen
 super + alt + Print
-    scrot --exec 'mv $f ~/Pictures/' && notify-send --expire-time=2000 'Screen snapshot saved'
+    scrot --exec 'mv $f ~/Pictures/' && notify-send --expire-time=3000 'Screen snapshot saved'
 
 # snapshot of active window
 super + ctrl + Print
-    scrot --focused --exec 'mv $f ~/Pictures/' && notify-send --expire-time=2000 'Window snapshot saved'
+    scrot --focused --exec 'mv $f ~/Pictures/' && notify-send --expire-time=3000 'Window snapshot saved'
 
 # snapshot of selected region
 super + shift + Print
-    scrot --select --freeze --exec 'mv $f ~/Pictures/' && notify-send --expire-time=2000 'Region snapshot saved'
+    scrot --select --freeze --exec 'mv $f ~/Pictures/' && notify-send --expire-time=3000 'Region snapshot saved'
 
 # reload sxhkd
 super + shift + s
-    pkill -SIGUSR1 -u ${USER} sxhkd && notify-send --expire-time=2000 'Reloading SXHKD'
+    pkill -SIGUSR1 -u ${USER} sxhkd && notify-send --expire-time=3000 'Reloading SXHKD'
 
 # # reload tint2
 # super + shift + t
 #     ((pkill -u ${USER} tint2 ; tint2 && sleep 1 && \
 #     xdo below -t $(xdo id -n root) $(xdo id -N tint2)) &) && \
-#     notify-send --expire-time=2000 'Reloading Tint'
+#     notify-send --expire-time=3000 'Reloading Tint'
 
 # reload eww
 super + shift + e
     eww --restart open bar && sleep 1 && \
     xdo below -t $(xdo id -n root) $(xdo id -N eww-bar) && \
-    notify-send --expire-time=2000 'Reloading EWW'
+    notify-send --expire-time=3000 'Reloading EWW'
 
 # reload conky
 super + shift + c
-    (${HOME}/bin/system-wallpaper-displays &) && notify-send --expire-time=2000 'Reloading Conky'
+    (${HOME}/bin/system-wallpaper-displays &) && notify-send --expire-time=3000 'Reloading Conky'
 
 # reset video
 super + shift + v
     xrandr --output $(xrandr | grep ' connected ' | sed 's/ .*//' | head -n 1) --auto && \
-    notify-send --expire-time=2000 'Resetting video'
+    notify-send --expire-time=3000 'Resetting video'
 
 # connect to sennheiser hd350bt headphones
 super + alt + b
-    notify-send --expire-time=2000 'Connecting to Sennheiser HD 350BT Headphones' && \
+    notify-send --expire-time=3000 'Connecting to Sennheiser HD 350BT Headphones' && \
     bluetoothctl connect 80:C3:BA:0E:CB:E5
 super + shift + alt + b
-    notify-send --expire-time=2000 'Disconnecting from Sennheiser HD 350BT Headphones' && \
+    notify-send --expire-time=3000 'Disconnecting from Sennheiser HD 350BT Headphones' && \
     bluetoothctl disconnect 80:C3:BA:0E:CB:E5
 
 # nixos-rebuild switch
@@ -301,62 +301,62 @@ super + alt + ctrl + r
 
 # volume control
 super + alt + ctrl + Up
-    pamixer --toggle-mute && notify-send --expire-time=2000 --replace-id 1 "$(pamixer --get-mute | sed 's/false/Unmuted/ ; s/true/Muted/')"
+    pamixer --toggle-mute && notify-send --expire-time=3000 --replace-id 1 "$(pamixer --get-mute | sed 's/false/Unmuted/ ; s/true/Muted/')"
 super + alt + ctrl + Left
-    pamixer --decrease 2 && notify-send --expire-time=2000 --replace-id 2 "$(pamixer --get-volume | sed 's/^/Volume: /')"
+    pamixer --decrease 2 && notify-send --expire-time=3000 --replace-id 2 "$(pamixer --get-volume | sed 's/^/Volume: /')"
 super + alt + ctrl + Right
-    pamixer --increase 2 && notify-send --expire-time=2000 --replace-id 2 "$(pamixer --get-volume | sed 's/^/Volume: /')"
+    pamixer --increase 2 && notify-send --expire-time=3000 --replace-id 2 "$(pamixer --get-volume | sed 's/^/Volume: /')"
 
 # mpc control
 super + alt + ctrl + m
-    mpc toggle && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' --replace-id 5 "$(${HOME}/bin/mpc-playing)"
+    mpc toggle && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 super + alt + ctrl + comma
-    mpc prev && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' --replace-id 5 "$(${HOME}/bin/mpc-playing)"
+    mpc prev && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 super + alt + ctrl + period
-    mpc next && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' --replace-id 5 "$(${HOME}/bin/mpc-playing)"
+    mpc next && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 super + alt + ctrl + slash
-    notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' --replace-id 5 "$(${HOME}/bin/mpc-playing)"
+    notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 
 # mpc control (media keys)
 XF86AudioPrev
-    mpc prev && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' --replace-id 5 "$(${HOME}/bin/mpc-playing)"
+    mpc prev && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 XF86AudioPlay
-    mpc play && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' --replace-id 5 "$(${HOME}/bin/mpc-playing)"
+    mpc play && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 XF86AudioStop
-    mpc stop && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' --replace-id 5 "$(${HOME}/bin/mpc-playing)"
+    mpc stop && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 XF86AudioNext
-    mpc next && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' --replace-id 5 "$(${HOME}/bin/mpc-playing)"
+    mpc next && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 
 # # spotify control
 # Shift+Alt + a
-#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' --replace-id 5 "$(${HOME}/bin/spotify-playing)
+#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 # Shift+Alt + s
-#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' --replace-id 5 "$(${HOME}/bin/spotify-playing)
+#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 # Shift+Alt + d
-#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' --replace-id 5 "$(${HOME}/bin/spotify-playing)"
+#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 # Shift+Alt + f
-#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' --replace-id 5 "$(${HOME}/bin/spotify-playing)"
+#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 # XF86AudioPrevious
-#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' --replace-id 5 "$(${HOME}/bin/spotify-playing)"
+#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 # XF86AudioPlay
-#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' --replace-id 5 "$(${HOME}/bin/spotify-playing)"
+#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 # XF86AudioStop
-#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' --replace-id 5 "$(${HOME}/bin/spotify-playing)"
+#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 # XF86AudioNext
-#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' --replace-id 5 "$(${HOME}/bin/spotify-playing)"
-#  dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' --replace-id 5 "$(${HOME}/bin/spotify-playing)"
+#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+#  dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 
 # media player control
 super + alt + ctrl + z
-    qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' --replace-id 5 "$(${HOME}/bin/spotify-playing)"
+    qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 super + alt + ctrl + c
-    qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' --replace-id 5 "$(${HOME}/bin/spotify-playing)"
+    qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 super + alt + ctrl + x
-    qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' --replace-id 5 "$(${HOME}/bin/spotify-playing)"
+    qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 super + alt + ctrl + b
-    qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' --replace-id 5 "$(${HOME}/bin/spotify-playing)"
+    qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 super + alt + ctrl + apostrophe
-    notify-send --expire-time=3000 --icon='/usr/share/icons/Papirus/16x16/apps/mpd.svg' --replace-id 5 "$(${HOME}/bin/spotify-playing)"
+    notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 
 #-------------------------------------------------------------------------------
 # Applications

@@ -25,6 +25,7 @@
  ("Gopherus Author" (location . "gopher://gopher.viste.fr/1") (handler . elpher-bookmark-jump))
  ("Elpher" (location . "gopher://thelambdalab.xyz/1/projects/elpher/") (handler . elpher-bookmark-jump))
  ("Klondike Solitaire" (location . "gopher://worldofsolitaire.com/") (handler . elpher-bookmark-jump))
+ ("Plan9 Project (jrsharp, L29)" (location . "gopher://frstcomputer.com/") (handler . elpher-bookmark-jump))
  ;; Gopher: Personal
  ("Nullman" (location . "gopher://nullman.net/1") (handler . elpher-bookmark-jump))
  ("kurisu (L29)" (location . "gopher://eyeblea.ch/1/~kurisu") (handler . elpher-bookmark-jump))
