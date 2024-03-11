@@ -11894,6 +11894,65 @@ paragraph or selected region."
               (replace-match (cdr x)))))))))
 ;; convert-unicode-characters:1 ends here
 
+;; [[file:init-emacs.org::#functions-text-conversion-functions-parse-csv][parse-csv:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Text Conversion Functions: parse-csv
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Text Conversion Functions: parse-csv")
+
+(defun parse-csv (data)
+  "Parse DATA as a block of comma-separated values.
+Return a list (one per row) of lists (one element per value).
+
+Example input:
+
+  1,2,\"3\n4\",5,6
+
+Example output:
+
+  ((\"1\" \"2\" \"3\n4\" \"5\" \"6\")))))"
+  (cl-labels
+      ((parse (data quote field line block)
+              (if (not data)
+                  (if field
+                      (parse data quote nil (cons (concat (nreverse field)) line) block)
+                    (if line
+                        (parse (cdr data) quote nil nil (cons (nreverse line) block))
+                      (nreverse block)))
+                (let ((c (car data)))
+                  (cl-case c
+                    ;; line terminator
+                    ((?\n)
+                     (if quote
+                         (parse (cdr data) quote (push c field) line block)
+                       (if field
+                           (parse data quote nil (cons (concat (nreverse field)) line) block)
+                         (parse (cdr data) quote nil nil (cons (nreverse line) block)))))
+                    ;; field terminator
+                    ((?\,)
+                     (if quote
+                         (parse (cdr data) quote (push c field) line block)
+                       (parse (cdr data) quote nil (cons (concat (nreverse field)) line) block)))
+                    ;; quote
+                    ((?\")
+                     (parse (cdr data) (not quote) field line block))
+                    ;; escape
+                    ((?\\)
+                     (parse (cddr data) quote (push (caar data) field) line block))
+                    ;; other
+                    (t
+                     (parse (cdr data) quote (push c field) line block)))))))
+    ;; convert data string into a list of characters and call parser
+    (parse (append data nil) nil nil nil nil)))
+
+;; (defun parse-csv-test ()
+;;   "Test `parse-csv'."
+;;   (assert (equal (parse-csv "1,2,3") '(("1" "2" "3"))))
+;;   (assert (equal (parse-csv "1,2,3\n4,5,6") '(("1" "2" "3") ("4" "5" "6"))))
+;;   (assert (equal (parse-csv "1,2,\"3\n4\",5,6") '(("1" "2" "3\n4" "5" "6")))))
+;; parse-csv:1 ends here
+
 ;; [[file:init-emacs.org::#functions-text-inserting-functions][Text Inserting Functions:1]]
 ;;------------------------------------------------------------------------------
 ;;; Functions: Text Inserting Functions

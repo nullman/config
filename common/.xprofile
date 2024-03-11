@@ -82,7 +82,7 @@ _command xset && xset -dpms s off b off m 2/1 4 r rate 500 35
 # select a window manager
 #exec selectwm
 
-if [[ -n "$(pgrep -x i3)"]] || [[ -n "$(pgrep -x bspwm)" ]] ; then
+if [[ -n "$(pgrep -x i3)" ]] || [[ -n "$(pgrep -x bspwm)" ]] ; then
     # https://wiki.archlinux.org/title/bspwm#Problems_with_Java_applications
     # set window manager name so that java applications work
     wmname LG3D
