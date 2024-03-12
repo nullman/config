@@ -22,6 +22,7 @@ MENU:
   term       Terminal
   acronyms   Technology Acronyms
   bookmarks  Bookmarks
+  contacts   Contacts
   crt        Cool Retro Term
   dosbox     DOSBox Emulator
   git        Synchronize Repositories
@@ -42,6 +43,7 @@ if [[ $# -lt 1 ]] ; then
         "	Term"
         "󰯫	Acronyms"
         "󰃃	Bookmarks"
+        "󰈍	Contacts"
         "󰍹	CRT"
         "	DOSBox"
         "	Git"
@@ -83,7 +85,7 @@ case "${menu}" in
     bookmarks)
         # display bookmarks
         if [[ $# -lt 2 ]] ; then
-            sel=$(cat "${HOME}/Documents/bookmarks.txt" | rofi -dmenu -i -p "󰃃	Browser Bookmarks")
+            sel=$(cat "${HOME}/Documents/bookmarks.txt" | rofi -dmenu -i -p "󰃃	Bookmarks")
         else
             sel=$2
         fi
@@ -92,6 +94,33 @@ case "${menu}" in
         if [[ -n "${sel}" ]] ; then
             url=$(printf "${sel}" | sed 's/^.* \([^ ]*$\)/\1/')
             (xdg-open "${url}" &)
+        fi
+        ;;
+
+    contacts)
+        # display contacts
+        if [[ $# -lt 2 ]] ; then
+            sel=$(grep '^\*\*\*\*\* ' "${HOME}/org/contacts.org" | sed 's/^\*\*\*\*\* //' | rofi -dmenu -i -p "󰈍	Contacts")
+        else
+            sel=$2
+        fi
+
+        # open bookmark
+        if [[ -n "${sel}" ]] ; then
+            echo "${sel}"
+            awk '
+                BEGIN { FS="\n"; RS=""; OFS="\n"; ORS="\n" }
+                {
+                     for (i=1; i<=NF; i++) {
+                         if ($i ~ /^\*\*\*\*\* '"${sel}"'$/) {
+                            for (j=i+1; j<=NF; j++) {
+                                if ($j ~ /^\*/) break
+                                print $j
+                            }
+                        }
+                    }
+                }' "${HOME}/org/contacts.org" | \
+                    yad --text-info --width=1600 --height=1000 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
         fi
         ;;
 
