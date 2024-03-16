@@ -170,9 +170,9 @@ _br LBRY desktop='^9' follow=on
 _br spotify desktop='^9' follow=on
 _br bluejeans-v2 desktop='^9' follow=on
 
-# 10: Remote
+# 10: Games
 bspc desktop 9 --layout stacked
-_br syncterm desktop='^10' follow=on
+#_br syncterm desktop='^10' follow=on
 
 #-------------------------------------------------------------------------------
 # Application Rules

@@ -9,8 +9,8 @@
 
 basedir="/mnt/synology/video/Music"
 #basedir="${HOME}/synology/video/Music"
-origdir="${basedir}/Videos (Original)"
-mp4dir="${basedir}/Videos"
+origdir="${basedir}/Video (Original)"
+mp4dir="${basedir}/Video"
 
 mkdir -p "${origdir}"
 mkdir -p "${mp4dir}"
@@ -138,6 +138,7 @@ videos=(
     "Toad the Wet Sprocket - Something's Always Wrong                   | https://www.youtube.com/watch?v=fK7bwIVrQFs"
     "Toad the Wet Sprocket - Walk on the Ocean                          | https://www.youtube.com/watch?v=12bM1CqHoBY"
     "Toto - Africa                                                      | https://www.youtube.com/watch?v=FTQbiNvZqaY"
+    #"Underworld - Cowgirl                                               | https://www.youtube.com/watch?v=5TySnF_Pb3M"
     "Weeknd, The - Blinding Lights                                      | https://www.youtube.com/watch?v=4NRXx6U8ABQ"
     "Weeknd, The - Can't Feel My Face                                   | https://www.youtube.com/watch?v=KEI4qSrkPAs"
     "Weeknd, The - Creepin' (Feat. 21 Savage)                           | https://www.youtube.com/watch?v=KMkvqdpsiJA"
