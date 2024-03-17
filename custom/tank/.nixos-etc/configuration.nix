@@ -942,9 +942,8 @@
     ncgopher
     nyxt
     pidgin
-    #simplex-chat-desktop
     slack
-    simplex-chat-desktop
+    #simplex-chat-desktop
     syncterm
     teams
     telegram-desktop

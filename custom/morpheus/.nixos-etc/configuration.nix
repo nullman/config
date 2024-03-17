@@ -32,7 +32,7 @@
       useOSProber = true;
     };
   };
-  fileSystems."/".options = [ "noatime" ];
+  fileSystems."/".options = [ "relatime" ];
 
   # networking
   networking = {
@@ -521,7 +521,7 @@
   services.rpcbind.enable = true;         # needed for NFS
   systemd.mounts = let commonMountOptions = {
     mountConfig = {
-      Options = "vers=3.0,credentials=/home/kyle/.synology-mount-credentials,iocharset=utf8,rw,file_mode=0777,dir_mode=0777,noatime,nofail";
+      Options = "vers=3.0,credentials=/home/kyle/.synology-mount-credentials,iocharset=utf8,rw,file_mode=0777,dir_mode=0777,relatime,nofail";
       TimeoutSec = 30;
       Type = "cifs";
     };
@@ -938,8 +938,8 @@
     ncgopher
     nyxt
     pidgin
-    #simplex-chat-desktop
     slack
+    #simplex-chat-desktop
     syncterm
     teams
     telegram-desktop

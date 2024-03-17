@@ -1865,7 +1865,7 @@ alias mpd-service-disable="systemctl --user disable mpd"
 #        mpd-service-restart     systemctl --user restart mpd
 alias mpd-service-restart="systemctl --user restart mpd"
 #        mpc-status              display artist and title of current song
-alias mpc-status="notify-send --expire-time=3000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+alias mpc-status="notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 #        mpc-update              update mpc database
 alias mpc-update="mpc --wait update"
 
@@ -2034,16 +2034,16 @@ alias rsync-media-put-morpheus-delete="rsync -rlptx --progress --delete ${home}/
 alias rsync-media-put-synology="
     find ${home}/data/media/ -mindepth 1 -maxdepth 1 -type d -not -regex '^\.+$' | sort | while read -r dir ; do
         rsync -r --munge-links --size-only --progress \
-            --exclude={'/Audio/Music/','/Graphic/ASCII-ANSI/','/iTunes/','/Music/'} \
             \"\${dir}\" /mnt/synology/media
     done"
+#!            --exclude={'/Audio/Music/','/Graphic/ASCII-ANSI/','/iTunes/','/Music/'} \
 #        rsync-media-put-synology-delete  rsync /home/data/media /mnt/synology/media
 alias rsync-media-put-synology-delete="
     find ${home}/data/media/ -mindepth 1 -maxdepth 1 -type d -not -regex '^\.+$' | sort | while read -r dir ; do
         rsync -r --munge-links --size-only --progress --delete \
-            --exclude={'/Audio/Music/','/Graphic/ASCII-ANSI/','/iTunes/','/Music/'} \
             \"\${dir}\" /mnt/synology/media
     done"
+#!            --exclude={'/Audio/Music/','/Graphic/ASCII-ANSI/','/iTunes/','/Music/'} \
 #        rsync-text-get-morpheus  rsync morpheus:/home/data/media/Text /home/data/media/Text
 alias rsync-text-get-morpheus="rsync -rlptx --progress morpheus:/home/data/media/Text/ ${home}/data/media/Text/"
 #        rsync-text-put-morpheus  rsync /home/data/media/Text morpheus:/home/data/media/Text
@@ -3464,7 +3464,7 @@ alias web-generate-game="(cd \${HOME}/web/bin && ./generate-game && ./publish --
 # backup
 #
 #!       rsyncexclusions         default rsync exclusions
-rsyncexclusions='{"/cdrom/*","/dev/*","/lost+found","/media/*","/mnt/*","/nix/store/*","/proc/*","/run/*","/sys/*","/tmp/*","/var/log/*","/var/tmp/*","/home/*/.cache/*","/home/*/.ccache/*","/home/*/.gradle","/home/*/.gvfs","/home/*/.lutris-cache","/home/.npm","/home/*/.local/share/Trash/*","/home/*/.thumbnails/*","/home/backup/*","/home/*/Games/*"}'
+rsyncexclusions='{"/cdrom/*","/dev/*","/lost+found","/media/*","/mnt/*","/nix/store/*","/proc/*","/run/*","/sys/*","/tmp/*","/var/log/*","/var/tmp/*","/home/*/.cache/*","/home/*/.ccache/*","/home/*/.gradle","/home/*/.gvfs","/home/*/.local/*","/home/*/.lutris-cache","/home/*/.npm","/home/*/.thumbnails/*","/home/backup/*","/home/*/Downloads/*","/home/*/Games/*","/home/data/media/Software"}'
 #!
 #        rsbid                   backup entire system to usb drive
 #!alias rsbid="sudo rsync -aAXv --delete --exclude=${rsyncexclusions} / /run/media/\${USER}/backup/\$(uname -n)"
