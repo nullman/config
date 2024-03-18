@@ -107,7 +107,7 @@
       #stow = prev.callPackage /home/kyle/.nixos/pkgs/stow {};
       syncterm = prev.callPackage /home/kyle/.nixos/pkgs/syncterm {};
       vdhcoapp = prev.callPackage /home/kyle/.nixos/pkgs/vdhcoapp {};
-      bspwm = prev.callPackage /home/kyle/code/bspwm {};
+      bspwm = prev.callPackage /home/kyle/code/github-nullman/bspwm {};
       #services.xserver.windowManager.bspwm = prev.callPackage /home/kyle/code/nixpkgs/pkgs/applications/window-managers/bspwm.nix {};
     })
   ];
