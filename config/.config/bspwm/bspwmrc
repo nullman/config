@@ -29,7 +29,7 @@ _br() {
 
 # global settings
 _bc split_ratio                0.5
-_bc stacked_layout             true
+#_bc stacked_layout             true
 _bc stacked_direction          east
 _bc stacked_ratio              0.7
 _bc automatic_scheme           alternate
@@ -97,13 +97,13 @@ bspc monitor -d 1 2 3 4 5 6 7 8 9 10
 #-------------------------------------------------------------------------------
 
 # 1: Terminal
-bspc desktop 1 --layout stacked
+#bspc desktop 1 --layout stacked
 #_br URxvt desktop='^1' follow=on
 #_br Alacritty desktop='^1' follow=on
 #_br Termite desktop='^1' follow=on
 
 # 2: Editor
-bspc desktop 2 --layout stacked
+#bspc desktop 2 --layout stacked
 _br Emacs desktop='^2' follow=on
 
 # 3: Email
@@ -121,7 +121,7 @@ _br vivaldi-stable desktop='^4' follow=on
 _br gopherus-sdl desktop='^4' follow=on
 
 # 5: File Manager
-bspc desktop 5 --layout stacked
+#bspc desktop 5 --layout stacked
 _br Thunar desktop='^5' follow=on
 _br Pcmanfm desktop='^5' follow=on
 _br Spacefm desktop='^5' follow=on
@@ -137,7 +137,7 @@ _br Slack desktop='^6' follow=on
 _br discord desktop='^6' follow=on
 
 # 7: More Chat
-bspc desktop 7 --layout stacked
+#bspc desktop 7 --layout stacked
 _br Pidgin desktop='^7' follow=on
 _br Tootle desktop='^7' follow=on
 _br Com.github.bleakgrey.tootle desktop='^7' follow=on
@@ -159,7 +159,7 @@ _br 'VirtualBox Manager' desktop='^8' follow=on
 _br 'VirtualBox Machine' desktop='^8' follow=on
 
 # 9: Image, Video, and Audio
-bspc desktop 9 --layout stacked
+#bspc desktop 9 --layout stacked
 _br Chromium desktop='^9' follow=on
 _br Google-chrome desktop='^9' follow=on
 _br Gimp-2.10 desktop='^9' follow=on
@@ -171,7 +171,7 @@ _br spotify desktop='^9' follow=on
 _br bluejeans-v2 desktop='^9' follow=on
 
 # 10: Games
-bspc desktop 9 --layout stacked
+#bspc desktop 9 --layout stacked
 #_br syncterm desktop='^10' follow=on
 
 #-------------------------------------------------------------------------------
