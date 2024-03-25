@@ -705,19 +705,19 @@ alias traceroute-uswest="traceroute uswest.net"
 alias ipaddress="curl http://httpbin.org/get --silent | jq --raw-output .origin"
 #        icanhazip               display external IP address
 alias icanhazip="curl http://icanhazip.com --silent"
-#
-# network manager
-#
-#        nmrs                    network manager restart
-alias nmrs="
-    sudo systemctl stop NetworkManager
-    sudo systemctl stop iwd
-    sleep 5s
-    sudo systemctl start iwd
-    sleep 5s
-    sudo systemctl start NetworkManager"
-#        nm-nullman              network manager connect to nullman wifi
-alias nm-nullman="nmcli -a device wifi connect nullman"
+#!#
+#!# network manager
+#!#
+#!#        nmrs                    network manager restart
+#!alias nmrs="
+#!    sudo systemctl stop NetworkManager
+#!    sudo systemctl stop iwd
+#!    sleep 5s
+#!    sudo systemctl start iwd
+#!    sleep 5s
+#!    sudo systemctl start NetworkManager"
+#!#        nm-nullman              network manager connect to nullman wifi
+#!alias nm-nullman="nmcli -a device wifi connect nullman"
 #
 # iwd
 #
