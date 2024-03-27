@@ -1037,6 +1037,10 @@
     yq
     zlib
 
+    # ai
+    ollama
+    tabby
+
     # zsh
     antibody
     meslo-lgs-nf

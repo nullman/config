@@ -3170,6 +3170,8 @@ alias gitcod="git checkout develop"
 alias gitco-ours="git checkout --ours --"
 #        gitco-theirs            git checkout --theirs --
 alias gitco-theirs="git checkout --theirs --"
+#        gitconfig               git config --list
+alias gitconfig="git config --list"
 #        gitci                   git commit
 alias gitci="git commit"
 #        gitcim                  git commit -m
