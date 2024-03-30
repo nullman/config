@@ -4874,10 +4874,10 @@ property list containing the parameters of the block."
                                 " -prg " output-file " -run &"))))
     (with-temp-file src-file
       (insert (org-babel-expand-body:generic body params)))
-    (message (format "Compiling: %s" compile-command))
+    (message "Compiling: %s" compile-command)
     (org-babel-eval compile-command "")
     (when x16emu
-      (message (format "Running: %s" run-command))
+      (message "Running: %s" run-command)
       (org-babel-eval run-command ""))))
 
 ;; ;; 64tass version
@@ -8990,7 +8990,7 @@ evaluated."
          (condition-case err
              (setq result (progn ,fn))
            ('error
-            (message (format "Caught error: %s" err))
+            (message "Caught error: %s" err)
             (setq result (cons 'error (list err)))))
          result)
      ,@finally))
@@ -10004,7 +10004,7 @@ BUFFER defaults to the current buffer."
         (forward-sexp)
         (eval-last-sexp nil)
         (cl-incf count))
-      (message (format "Evaluated %d expressions." count)))))
+      (message "Evaluated %d expressions." count))))
 ;; eval-sexp-buffer:1 ends here
 
 ;; [[file:init-emacs.org::*eval-and-replace-last-sexp][eval-and-replace-last-sexp:1]]
@@ -10134,7 +10134,7 @@ BUFFER defaults to the current buffer."
         (forward-sexp 1)
         (indent-current-sexp)
         (cl-incf count))
-      (message (format "Indented %d expressions." count)))))
+      (message "Indented %d expressions." count))))
 ;; indent-sexp-buffer:1 ends here
 
 ;; [[file:init-emacs.org::*comment-or-uncomment-sexp][comment-or-uncomment-sexp:1]]
@@ -13355,7 +13355,7 @@ user is prompted for the location."
                        "grep -zZv \"/.svn/\" | "
                        "xargs -0 etags -o " file " && "
                        "echo 'Created TAGS file'")))
-      (message (format "Running command: %s" cmd))
+      (message "Running command: %s" cmd)
       ;; create tags file
       (shell-command cmd)
       ;; kill TAGS buffer

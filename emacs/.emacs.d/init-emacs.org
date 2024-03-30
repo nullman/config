@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2024-03-29 22:22 (kyle)>
+  #+TIMESTAMP: <2024-03-30 13:56 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -7099,10 +7099,10 @@
                                         " -prg " output-file " -run &"))))
             (with-temp-file src-file
               (insert (org-babel-expand-body:generic body params)))
-            (message (format "Compiling: %s" compile-command))
+            (message "Compiling: %s" compile-command)
             (org-babel-eval compile-command "")
             (when x16emu
-              (message (format "Running: %s" run-command))
+              (message "Running: %s" run-command)
               (org-babel-eval run-command ""))))
 
         ;; ;; 64tass version
@@ -13376,7 +13376,7 @@
                  (condition-case err
                      (setq result (progn ,fn))
                    ('error
-                    (message (format "Caught error: %s" err))
+                    (message "Caught error: %s" err)
                     (setq result (cons 'error (list err)))))
                  result)
              ,@finally))
@@ -14758,7 +14758,7 @@
                 (forward-sexp)
                 (eval-last-sexp nil)
                 (cl-incf count))
-              (message (format "Evaluated %d expressions." count)))))
+              (message "Evaluated %d expressions." count))))
       #+END_SRC
 
 ***** eval-and-replace-last-sexp
@@ -14923,7 +14923,7 @@
                 (forward-sexp 1)
                 (indent-current-sexp)
                 (cl-incf count))
-              (message (format "Indented %d expressions." count)))))
+              (message "Indented %d expressions." count))))
       #+END_SRC
 
 ***** comment-or-uncomment-sexp
@@ -19177,7 +19177,7 @@
                                "grep -zZv \"/.svn/\" | "
                                "xargs -0 etags -o " file " && "
                                "echo 'Created TAGS file'")))
-              (message (format "Running command: %s" cmd))
+              (message "Running command: %s" cmd)
               ;; create tags file
               (shell-command cmd)
               ;; kill TAGS buffer
