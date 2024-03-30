@@ -115,7 +115,6 @@ scrolling:
 font:
 #font:
   # Normal (roman) font face
-  #normal:
   normal:
     # Font family
     #
@@ -132,7 +131,6 @@ font:
     style: Regular
 
   # Bold font face
-  #bold:
   bold:
     # Font family
     #
@@ -147,7 +145,7 @@ font:
     style: Bold
 
   # Italic font face
-  #italic:
+  italic:
     # Font family
     #
     # If the italic family is not specified, it will fall back to the
@@ -161,15 +159,16 @@ font:
     style: Italic
 
   # Bold italic font face
-  #bold_italic:
+  bold_italic:
     # Font family
     #
     # If the bold italic family is not specified, it will fall back to the
     # value specified for the normal font.
     #family: monospace
+    family: MesloLGS Nerd Font Mono
 
     # The `style` can be specified to pick a specific face.
-    #style: Bold Italic
+    style: Bold Italic
 
   # Point size
   #size: 11.0

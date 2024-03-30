@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2024-03-17 15:57 (kyle)>
+  #+TIMESTAMP: <2024-03-29 22:22 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -4464,6 +4464,7 @@
       #+BEGIN_SRC sh :dir /sudo:: :tangle no
         # install texlive-bin on Arch system
         sudo pacman -S --noconfirm texlive-bin
+        # nixos package: texlive.combined.scheme-full
       #+END_SRC
 
       #+BEGIN_SRC emacs-lisp
@@ -16692,6 +16693,7 @@
       #+BEGIN_SRC sh :dir /sudo:: :tangle no
         # install xsel on Arch system
         sudo pacman -S --noconfirm xsel
+        # nixos package: xsel
       #+END_SRC
 
       #+BEGIN_SRC emacs-lisp
@@ -18609,6 +18611,7 @@
       #+BEGIN_SRC sh :dir /sudo:: :tangle no
         # install trans on Arch system
         sudo pacman -S --noconfirm translate-shell
+        # nixos package: translate-shell
       #+END_SRC
 
       #+BEGIN_SRC emacs-lisp
@@ -18621,14 +18624,14 @@
         (defun define-word (&optional word)
           "Return definition of WORD and put it on the `kill-ring'."
           (interactive "MWord: ")
-          (message
-           (kill-new
-            (with-temp-buffer
-              (call-process "trans" nil t nil (shell-quote-argument word))
-              (goto-char (point-min))
-              (when (re-search-forward "^Examples" nil :noerror)
-                (delete-region (1- (line-beginning-position)) (point-max)))
-              (buffer-string)))))
+          (let ((def (with-temp-buffer
+                       (call-process "trans" nil t nil (shell-quote-argument word))
+                       (goto-char (point-min))
+                       (when (re-search-forward "^Examples" nil :noerror)
+                         (delete-region (1- (line-beginning-position)) (point-max)))
+                       (buffer-string))))
+            (kill-new def)
+            (message "%s" def)))
 
         (defun define-word-after-spell-check (word)
           "Define WORD after spell checking.
@@ -24813,6 +24816,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
     #+BEGIN_SRC sh :dir /sudo:: :tangle no
       # install xwininfo on Arch system
       sudo pacman -S --noconfirm xorg-xwininfo
+      # nixos package: xwininfo
     #+END_SRC
 
     #+BEGIN_SRC emacs-lisp
@@ -25936,6 +25940,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
     #+BEGIN_SRC sh :tangle no :dir /sudo::
       # install languagetool on Arch system
       sudo pacman -S --noconfirm languagetool
+      # nixos package: languagetool
     #+END_SRC
 
     #+BEGIN_SRC emacs-lisp
@@ -29330,6 +29335,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
     #+BEGIN_SRC sh :dir /sudo:: :tangle no :tangle no
       # # install units on Arch system
       # sudo pacman -S --noconfirm units
+      # nixos package: units
     #+END_SRC
 
     #+BEGIN_SRC emacs-lisp :tangle no
@@ -29392,6 +29398,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
     #+BEGIN_SRC sh :dir /sudo:: :tangle no
       # install w3m on Arch system
       sudo pacman -S --noconfirm w3m
+      # nixos package: w3m
     #+END_SRC
 
     #+BEGIN_SRC emacs-lisp

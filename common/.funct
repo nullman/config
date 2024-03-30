@@ -1202,7 +1202,8 @@ nixsg() {
         s="$1"
         shift
         tmpfile="$(mktemp)"
-        nix --extra-experimental-features "nix-command flakes" search nixpkgs "${s}" > "${tmpfile}"
+        #nix --extra-experimental-features "nix-command flakes" search nixpkgs "${s}" > "${tmpfile}"
+        nix search nixpkgs "${s}" > "${tmpfile}"
         sed -n ":a ; /^\* / { N ; s/\n// ; p ; d ; ba }" "${tmpfile}" | grep -i "$*"
         rm "${tmpfile}"
     fi
@@ -1214,7 +1215,8 @@ nixss() {
     else
         s="$1"
         shift
-        nix --extra-experimental-features "nix-command flakes" search nixpkgs "\.${s}$"
+        #nix --extra-experimental-features "nix-command flakes" search nixpkgs "\.${s}$"
+        nix search nixpkgs "\.${s}$"
     fi
 }
 #        nixsi                   nixos search installed packages
