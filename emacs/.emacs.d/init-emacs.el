@@ -12971,8 +12971,9 @@ When the region is active, define the marked phrase."
             (region-end)))
           (t
            (substring-no-properties
-            (thing-at-point 'word))))))
-    (define-word-after-spell-check word)))
+            (or (thing-at-point 'word) ""))))))
+    (when (plusp (length word))
+      (define-word-after-spell-check word))))
 ;; define-word:2 ends here
 
 ;; [[file:init-emacs.org::*run-command][run-command:1]]
