@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2024-03-30 23:16 (kyle)>
+  #+TIMESTAMP: <2024-03-31 14:58 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -586,7 +586,8 @@
 
       ;; ;; configure `use-package' to use straight by default
       ;; (use-package straight
-      ;;   :custom (straight-use-package-by-default t))
+      ;;   :custom
+      ;;   (straight-use-package-by-default t))
 
       ;; turn off package file modification check at startup
       (setq straight-check-for-modifications '(find-when-checking check-on-save))
@@ -22665,6 +22666,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
 
         (use-package vertico
           :straight t
+          :after (compat)
           :demand t
           :bind (:map vertico-map
                       ("C-<return>" . vertico-exit-input) ; default: `vertico-exit'
@@ -22993,6 +22995,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
 
         (use-package corfu
           :straight t
+          :after (compat)
           ;; ;; enable only for certain modes
           ;; :hook ((prog-mode . corfu-mode)
           ;;        (shell-mode . corfu-mode)
@@ -24382,16 +24385,15 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
 
       (use-package doom-modeline
         :straight t
-        :after (all-the-icons)
+        :after (all-the-icons nerd-icons)
         :demand t
         :custom
-        ;; customizations
         (doom-modeline-height 30)
-        :init (doom-modeline-mode 1)
+        :init
+        (doom-modeline-mode 1)
         :config
         ;; show line number in modeline
         (line-number-mode 1)
-
         ;; show column number in modeline
         (column-number-mode 1))
 
@@ -24417,6 +24419,21 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         ;;                    (t "all-the-icons.ttf"))))
         ;;   (or (file-exists-p (expand-file-name font-name font-dest))
         ;;       (all-the-icons-install-fonts :noconfirm))))
+
+      ;;------------------------------------------------------------------------------
+      ;;;; nerd-icons
+      ;;------------------------------------------------------------------------------
+
+      (init-message 3 "nerd-icons")
+
+      (use-package nerd-icons
+        :straight (nerd-icons
+                   :type git
+                   :host github
+                   :repo "rainstormstudio/nerd-icons.el")
+                   ;;:files (:defaults "data"))
+        :custom
+        (nerd-icons-font-family "Symbols Nerd Font Mono"))
     #+END_SRC
 
 *** easy-kill
@@ -26249,6 +26266,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
 
       (use-package mastodon
         :straight t
+        :after (persist)
         :config
         (let* ((env (expand-file-name "~/.mastodon"))
                (url (string-trim (shell-command-to-string (concat "sed -n 's/emacs.ch-url=//p' " env))))
@@ -27457,20 +27475,20 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;;   :init (setq global-pabbrev-mode t))
     #+END_SRC
 
-*** package-lint
+*** +package-lint+
     :PROPERTIES:
     :CUSTOM_ID: modules-package-lint
     :END:
 
-    #+BEGIN_SRC emacs-lisp
-      ;;------------------------------------------------------------------------------
-      ;;; Packages: package-lint
-      ;;------------------------------------------------------------------------------
+    #+BEGIN_SRC emacs-lisp :tangle no
+      ;; ;;------------------------------------------------------------------------------
+      ;; ;;; Packages: package-lint
+      ;; ;;------------------------------------------------------------------------------
 
-      (init-message 2 "Modules: package-lint")
+      ;; (init-message 2 "Modules: package-lint")
 
-      (use-package package-lint
-        :straight t)
+      ;; (use-package package-lint
+      ;;   :straight t)
     #+END_SRC
 
 *** +paredit+
@@ -27638,6 +27656,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
 
       (use-package pocket-reader
         :straight t
+        :after (peg)
         :custom
         (pocket-reader-archive-on-open nil))
     #+END_SRC

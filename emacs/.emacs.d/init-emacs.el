@@ -183,7 +183,8 @@ Skips checks if run on Windows or Mac."
 
 ;; ;; configure `use-package' to use straight by default
 ;; (use-package straight
-;;   :custom (straight-use-package-by-default t))
+;;   :custom
+;;   (straight-use-package-by-default t))
 
 ;; turn off package file modification check at startup
 (setq straight-check-for-modifications '(find-when-checking check-on-save))
@@ -15543,6 +15544,7 @@ USING is the remaining peg."
 
 (use-package vertico
   :straight t
+  :after (compat)
   :demand t
   :bind (:map vertico-map
               ("C-<return>" . vertico-exit-input) ; default: `vertico-exit'
@@ -15713,6 +15715,7 @@ USING is the remaining peg."
 
 (use-package corfu
   :straight t
+  :after (compat)
   ;; ;; enable only for certain modes
   ;; :hook ((prog-mode . corfu-mode)
   ;;        (shell-mode . corfu-mode)
@@ -16475,16 +16478,15 @@ USING is the remaining peg."
 
 (use-package doom-modeline
   :straight t
-  :after (all-the-icons)
+  :after (all-the-icons nerd-icons)
   :demand t
   :custom
-  ;; customizations
   (doom-modeline-height 30)
-  :init (doom-modeline-mode 1)
+  :init
+  (doom-modeline-mode 1)
   :config
   ;; show line number in modeline
   (line-number-mode 1)
-
   ;; show column number in modeline
   (column-number-mode 1))
 
@@ -16510,6 +16512,21 @@ USING is the remaining peg."
   ;;                    (t "all-the-icons.ttf"))))
   ;;   (or (file-exists-p (expand-file-name font-name font-dest))
   ;;       (all-the-icons-install-fonts :noconfirm))))
+
+;;------------------------------------------------------------------------------
+;;;; nerd-icons
+;;------------------------------------------------------------------------------
+
+(init-message 3 "nerd-icons")
+
+(use-package nerd-icons
+  :straight (nerd-icons
+             :type git
+             :host github
+             :repo "rainstormstudio/nerd-icons.el")
+             ;;:files (:defaults "data"))
+  :custom
+  (nerd-icons-font-family "Symbols Nerd Font Mono"))
 ;; doom-modeline:1 ends here
 
 ;; [[file:init-emacs.org::*easy-kill][easy-kill:1]]
@@ -17492,6 +17509,7 @@ And the line would be overlaid like:
 
 (use-package mastodon
   :straight t
+  :after (persist)
   :config
   (let* ((env (expand-file-name "~/.mastodon"))
          (url (string-trim (shell-command-to-string (concat "sed -n 's/emacs.ch-url=//p' " env))))
@@ -18494,17 +18512,6 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
   :straight t)
 ;; olivetti:1 ends here
 
-;; [[file:init-emacs.org::*package-lint][package-lint:1]]
-;;------------------------------------------------------------------------------
-;;; Packages: package-lint
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modules: package-lint")
-
-(use-package package-lint
-  :straight t)
-;; package-lint:1 ends here
-
 ;; [[file:init-emacs.org::*persistent-scratch][persistent-scratch:1]]
 ;;------------------------------------------------------------------------------
 ;;; Packages: persistent-scratch
@@ -18529,6 +18536,7 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
 
 (use-package pocket-reader
   :straight t
+  :after (peg)
   :custom
   (pocket-reader-archive-on-open nil))
 ;; pocket-reader:1 ends here
