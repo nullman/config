@@ -66,8 +66,8 @@ ${color2}I/O:${color}  ${diskio}  ${goto 120}${diskiograph /dev/dm-0 15}
 
 # network
 ${voffset 10}${color}${font Bitstream Vera Sans:bold:size=12}Network${font}  ${alignr}${color2}Up:${color} ${totalup wlan0}  ${color2}Dn:${color} ${totaldown wlan0}
-${color2}Up:${color}  ${goto 40}${upspeed wlan0}  ${goto 120}${upspeedgraph wlan0 15}
-${color2}Dn:${color}  ${goto 40}${downspeed wlan0}  ${goto 120}${downspeedgraph wlan0 15}
+${color2}Up:${color}  ${goto 40}${upspeed wlan0}  ${goto 120}${upspeedgraph wlan0 15 -t -l}
+${color2}Dn:${color}  ${goto 40}${downspeed wlan0}  ${goto 120}${downspeedgraph wlan0 15 -t -l}
 #${color2}Up${color}  ${alignr}${upspeed wlan0}
 #${color}${upspeedgraph wlan0}
 #${color2}Down${color}  ${alignr}${downspeed wlan0}
