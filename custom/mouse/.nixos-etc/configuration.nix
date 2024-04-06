@@ -69,6 +69,7 @@
       "nix-command"
     ];
   };
+  # nix.extraOptions = "experimental-features = flakes nix-command";
 
   # package settings
   nixpkgs.config = {
@@ -79,7 +80,6 @@
       "electron-12.2.3"
       "electron-24.8.6"
       "openssl-1.1.1w"
-      "teams-1.5.00.23861"
     ];
     packageOverrides = pkgs: {
       nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
@@ -135,7 +135,14 @@
     enable = true;
     # wlr.enable = true;
     # gtk portal needed to make gtk apps happy
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    #extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    config = {
+      common = {
+        default = [
+          "gtk"
+        ];
+      };
+    };
   };
 
   # environment
@@ -201,7 +208,7 @@
   # locate
   services.locate = {
     enable = true;
-    locate = pkgs.mlocate;
+    package = pkgs.mlocate;
     localuser = null;
     pruneBindMounts = true;
     prunePaths = [
@@ -233,9 +240,11 @@
   # x11
   services.xserver = {
     enable = true;
-    layout = "us";
-    xkbVariant = "";
-    xkbOptions = "shift:both_capslock,caps:ctrl_modifier";
+    xkb = {
+      layout = "us";
+      variant = "";
+      options = "shift:both_capslock,caps:ctrl_modifier";
+    };
   };
 
   # wayland/hyprland
@@ -308,7 +317,7 @@
   # fonts
   fonts = {
     fontDir.enable = true;
-    fonts = with pkgs; [
+    packages = with pkgs; [
       anonymousPro
       #cantarell-fonts
       corefonts
@@ -390,10 +399,28 @@
   programs.firefox = {
     enable = true;
     package = pkgs.wrapFirefox pkgs.firefox-unwrapped {
-      #extraNativeMessagingHosts = with pkgs.nur.repos.wolfangaukang; [ vdhcoapp ];
-      extraNativeMessagingHosts = with pkgs; [ vdhcoapp ];
+      extraPolicies = {
+        DisableTelemetry = true;
+        DisableFirefoxStudies = true;
+        EnableTrackingProtection = {
+          Value= true;
+          Locked = true;
+          Cryptomining = true;
+          Fingerprinting = true;
+        };
+      };
+      #nativeMessagingHosts = {
+      #  packages = [ pkgs.vdhcoapp ];
+      #};
     };
   };
+  # programs.firefox = {
+  #   enable = true;
+  #   package = pkgs.wrapFirefox pkgs.firefox-unwrapped {
+  #     #nativeMessagingHosts = with pkgs.nur.repos.wolfangaukang; [ vdhcoapp ];
+  #     nativeMessagingHosts = with pkgs; [ vdhcoapp ];
+  #   };
+  # };
 
   #virtualisation.docker.enable = true;
 
@@ -581,6 +608,7 @@
     iperf
     ispell
     kitty
+    languagetool
     libnotify
     light
     lm_sensors
@@ -758,11 +786,11 @@
 
     ## utilities
     #appimage-run
-    #authy
+    ##authy # failed to build
     #bitwarden
     #dmg2img
     #easytag
-    #etcher
+    ##etcher # unsecure electron
     #ffmpeg_6-full
     #flameshot
     #font-manager
@@ -838,8 +866,8 @@
     cool-retro-term
     ddgr
     element
-    exa
-    #eza
+    #exa # unmaintained
+    eza
     f3
     fd
     frogmouth
@@ -902,17 +930,19 @@
     nyxt
     pidgin
     slack
-    #simplex-chat-desktop
+    simplex-chat-desktop
     syncterm
-    teams
+    #teams # unsupported system
     telegram-desktop
     transmission-gtk
     tuba
+    #vdhcoapp
     zoom-us
 
     ## emulators
     #basiliskii
     #dosbox
+    #dosbox-x
     #gnome.gnome-boxes
     #mame
     #qemu_kvm
@@ -984,7 +1014,7 @@
     #python311Packages.pip
     #racket
     #regina
-    #rnix-lsp
+    ##rnix-lsp # unmaintained
     #ruby
     #rubyPackages.nokogiri
     #rustc

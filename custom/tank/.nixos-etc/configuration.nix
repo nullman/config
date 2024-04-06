@@ -649,6 +649,7 @@
     iperf
     ispell
     kitty
+    languagetool
     libnotify
     light
     lm_sensors
@@ -982,11 +983,13 @@
     # emulators
     basiliskii
     dosbox
+    dosbox-x
     gnome.gnome-boxes
     mame
     qemu_kvm
     quickemu
     quickgui
+    tiny8086
     uae
     vice
     virt-manager
