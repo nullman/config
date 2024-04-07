@@ -1333,6 +1333,7 @@ Common values:
 
 (use-package desktop
   :straight (:type built-in)
+  :demand t
   :custom
   (desktop-dirname user-emacs-directory)
   (desktop-save 'ask-if-new)
@@ -17549,7 +17550,7 @@ And the line would be overlaid like:
               ("<home>" . beginning-of-line)
               ("<end>" . end-of-line)
               ("C-c C-u" . mingus-mpc-update))
-  :bind (:map mingus-playlist-map
+  :bind (:map mingus-playlist-mode-map
               ("SPC" . mingus-pause)
               ("<left>" . backward-char)
               ("<right>" . forward-char)
@@ -17564,7 +17565,7 @@ And the line would be overlaid like:
               ("<f4>" . mingus-set-song-rating-4)
               ("<f5>" . mingus-set-song-rating-5)
               ("<f6>" . mingus-set-song-rating-0))
-  :bind (:map mingus-browse-map
+  :bind (:map mingus-browse-mode-map
               ("C-c C-u" . mingus-mpc-update))
   :config
   ;; for some reason these are not being defined in libmpdee.el

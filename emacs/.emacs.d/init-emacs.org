@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2024-03-31 14:58 (kyle)>
+  #+TIMESTAMP: <2024-04-07 13:57 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -2419,6 +2419,7 @@
 
         (use-package desktop
           :straight (:type built-in)
+          :demand t
           :custom
           (desktop-dirname user-emacs-directory)
           (desktop-save 'ask-if-new)
@@ -26313,7 +26314,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
                     ("<home>" . beginning-of-line)
                     ("<end>" . end-of-line)
                     ("C-c C-u" . mingus-mpc-update))
-        :bind (:map mingus-playlist-map
+        :bind (:map mingus-playlist-mode-map
                     ("SPC" . mingus-pause)
                     ("<left>" . backward-char)
                     ("<right>" . forward-char)
@@ -26328,7 +26329,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
                     ("<f4>" . mingus-set-song-rating-4)
                     ("<f5>" . mingus-set-song-rating-5)
                     ("<f6>" . mingus-set-song-rating-0))
-        :bind (:map mingus-browse-map
+        :bind (:map mingus-browse-mode-map
                     ("C-c C-u" . mingus-mpc-update))
         :config
         ;; for some reason these are not being defined in libmpdee.el
