@@ -1333,11 +1333,10 @@ Common values:
 
 (use-package desktop
   :straight (:type built-in)
-  :demand t
   :custom
   (desktop-dirname user-emacs-directory)
   (desktop-save 'ask-if-new)
-  (desktop-load-locked-desktop t)
+  (desktop-load-locked-desktop 'check-pid)
   (desktop-restore-eager 0) ; do not restore any buffers until all modules and modes have loaded
   (desktop-buffers-not-to-save (concat "\\("
                                        "\\.log\\|(ftp)\\|^tags\\|^TAGS"
@@ -1345,15 +1344,19 @@ Common values:
                                        "\\)$"))
   :init
   ;; desktop history
-  (when-lock-file-acquired (expand-file-name "emacs-desktop-history-lock-file"
-                                             temporary-file-directory)
-    (desktop-save-mode 1)
-    (add-to-list 'desktop-globals-to-save 'file-name-history t)
-    (add-to-list 'desktop-modes-not-to-save 'Info-mode t)
-    (add-to-list 'desktop-modes-not-to-save 'info-lookup-mode t)
-    ;;(add-to-list 'desktop-modes-not-to-save 'dired-mode t)
-    ;;(add-to-list 'desktop-modes-not-to-save 'fundamental-mode t)
-    ))
+  ;; (when-lock-file-acquired (expand-file-name "emacs-desktop-history-lock-file"
+  ;;                                            temporary-file-directory)
+  ;;   (desktop-save-mode 1)
+  ;;   (add-to-list 'desktop-globals-to-save 'file-name-history t)
+  ;;   (add-to-list 'desktop-modes-not-to-save 'Info-mode t)
+  ;;   (add-to-list 'desktop-modes-not-to-save 'info-lookup-mode t)
+  ;;   ;;(add-to-list 'desktop-modes-not-to-save 'dired-mode t)
+  ;;   ;;(add-to-list 'desktop-modes-not-to-save 'fundamental-mode t)
+  ;;   ))
+  (desktop-save-mode 1)
+  (add-to-list 'desktop-globals-to-save 'file-name-history t)
+  (add-to-list 'desktop-modes-not-to-save 'Info-mode t)
+  (add-to-list 'desktop-modes-not-to-save 'info-lookup-mode t))
 ;; Desktop:1 ends here
 
 ;; [[file:init-emacs.org::*Minibuffer History][Minibuffer History:1]]
@@ -22940,9 +22943,10 @@ to the current ERC buffer."
 
 ;; start emacs server
 (when (fboundp 'server-start-maybe)
-  (when-lock-file-acquired (expand-file-name "emacs-server-lock-file"
-                                            temporary-file-directory)
-    (server-start-maybe)))
+  ;; (when-lock-file-acquired (expand-file-name "emacs-server-lock-file"
+  ;;                                            temporary-file-directory)
+  ;;   (server-start-maybe)))
+  (server-start-maybe))
 ;; Start Emacs Server:1 ends here
 
 ;; [[file:init-emacs.org::*Remove Logging Buffers][Remove Logging Buffers:1]]

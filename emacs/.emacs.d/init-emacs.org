@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2024-04-07 13:57 (kyle)>
+  #+TIMESTAMP: <2024-04-09 13:30 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -2419,11 +2419,10 @@
 
         (use-package desktop
           :straight (:type built-in)
-          :demand t
           :custom
           (desktop-dirname user-emacs-directory)
           (desktop-save 'ask-if-new)
-          (desktop-load-locked-desktop t)
+          (desktop-load-locked-desktop 'check-pid)
           (desktop-restore-eager 0) ; do not restore any buffers until all modules and modes have loaded
           (desktop-buffers-not-to-save (concat "\\("
                                                "\\.log\\|(ftp)\\|^tags\\|^TAGS"
@@ -2431,15 +2430,19 @@
                                                "\\)$"))
           :init
           ;; desktop history
-          (when-lock-file-acquired (expand-file-name "emacs-desktop-history-lock-file"
-                                                     temporary-file-directory)
-            (desktop-save-mode 1)
-            (add-to-list 'desktop-globals-to-save 'file-name-history t)
-            (add-to-list 'desktop-modes-not-to-save 'Info-mode t)
-            (add-to-list 'desktop-modes-not-to-save 'info-lookup-mode t)
-            ;;(add-to-list 'desktop-modes-not-to-save 'dired-mode t)
-            ;;(add-to-list 'desktop-modes-not-to-save 'fundamental-mode t)
-            ))
+          ;; (when-lock-file-acquired (expand-file-name "emacs-desktop-history-lock-file"
+          ;;                                            temporary-file-directory)
+          ;;   (desktop-save-mode 1)
+          ;;   (add-to-list 'desktop-globals-to-save 'file-name-history t)
+          ;;   (add-to-list 'desktop-modes-not-to-save 'Info-mode t)
+          ;;   (add-to-list 'desktop-modes-not-to-save 'info-lookup-mode t)
+          ;;   ;;(add-to-list 'desktop-modes-not-to-save 'dired-mode t)
+          ;;   ;;(add-to-list 'desktop-modes-not-to-save 'fundamental-mode t)
+          ;;   ))
+          (desktop-save-mode 1)
+          (add-to-list 'desktop-globals-to-save 'file-name-history t)
+          (add-to-list 'desktop-modes-not-to-save 'Info-mode t)
+          (add-to-list 'desktop-modes-not-to-save 'info-lookup-mode t))
       #+END_SRC
 
 ***** Minibuffer History
@@ -36192,9 +36195,10 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
 
       ;; start emacs server
       (when (fboundp 'server-start-maybe)
-        (when-lock-file-acquired (expand-file-name "emacs-server-lock-file"
-                                                  temporary-file-directory)
-          (server-start-maybe)))
+        ;; (when-lock-file-acquired (expand-file-name "emacs-server-lock-file"
+        ;;                                            temporary-file-directory)
+        ;;   (server-start-maybe)))
+        (server-start-maybe))
     #+END_SRC
 
 *** +Move to Current Desktop+
