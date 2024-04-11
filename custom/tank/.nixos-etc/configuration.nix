@@ -815,6 +815,7 @@
     notepadqq
     #obs-studio
     #(pkgs.wrapOBS {plugins = with pkgs.obs-studio-plugins; [ wlrobs ]; })
+    qmplay2
     reaper
     spotify
     vlc

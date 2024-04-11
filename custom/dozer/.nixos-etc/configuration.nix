@@ -819,6 +819,7 @@
     notepadqq
     #obs-studio
     #(pkgs.wrapOBS {plugins = with pkgs.obs-studio-plugins; [ wlrobs ]; })
+    qmplay2
     reaper
     spotify
     vlc
@@ -993,6 +994,7 @@
     qemu_kvm
     quickemu
     quickgui
+    tiny8086
     uae
     vice
     virt-manager
