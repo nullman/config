@@ -2015,16 +2015,16 @@ alias rsync-rlptx="rsync -rlptx --progress"
 #        rsync-media-get-morpheus  rsync morpheus:/home/data/media /home/data/media
 alias rsync-media-get-morpheus="rsync -rlptx --progress morpheus:/home/data/media/ ${home}/data/media/"
 #        rsync-media-get-morpheus-exclude  rsync morpheus:/home/data/media /home/data/media (minus software and video directories)
-alias rsync-media-get-morpheus-exclude="rsync -rlptx --progress --exclude={'/Repos/','/Software/','/Video/'} morpheus:/home/data/media/ ${home}/data/media/"
+alias rsync-media-get-morpheus-exclude="rsync -rlptx --progress -f'- /Repos/' -f'- /Software/' -f'- /Video/' morpheus:/home/data/media/ ${home}/data/media/"
 #        rsync-media-get-morpheus-mouse-delete  rsync morpheus:/home/data/media /home/data/media (specific sub-directories)
 alias rsync-media-get-morpheus-mouse-delete=" \
     if [[ $(uname -n) == 'mouse ]] ; then
-        rsync -rlptx --progress --delete --exclude={'/Humor/','/Other/'} morpheus:/home/data/media/Audio/ ${home}/data/media/Audio/ && \
+        rsync -rlptx --progress --delete -f'- /Humor/' -f'- /Other/' morpheus:/home/data/media/Audio/ ${home}/data/media/Audio/ && \
         rsync -rlptx --progress --delete morpheus:/home/data/media/Audio/Music/ ${home}/data/media/Audio/Music/ && \
         rsync -rlptx --progress --delete \"morpheus:/home/data/media/Pictures Slide Show/\" \"${home}/data/media/Pictures Slide Show/\" && \
         #rsync -rlptx --progress --delete morpheus:/home/data/media/Repos/ ${home}/data/media/Repos/ && \
         rsync -rlptx --progress --delete morpheus:/home/data/media/Text/ ${home}/data/media/Text/ && \
-        rsync -rlptx --progress --delete --exclude={'/Adult/','/Development/'} morpheus:/home/data/media/Video/ ${home}/data/media/Video/
+        rsync -rlptx --progress --delete -f'- /Adult/' -f'- /Development/' morpheus:/home/data/media/Video/ ${home}/data/media/Video/
     fi"
 #        rsync-media-put-morpheus  rsync /home/data/media morpheus:/home/data/media
 alias rsync-media-put-morpheus="rsync -rlptx --progress ${home}/data/media/ morpheus:/home/data/media/"
@@ -2033,17 +2033,21 @@ alias rsync-media-put-morpheus-delete="rsync -rlptx --progress --delete ${home}/
 #        rsync-media-put-synology  rsync /home/data/media /mnt/synology/media
 alias rsync-media-put-synology="
     find ${home}/data/media/ -mindepth 1 -maxdepth 1 -type d -not -regex '^\.+$' | sort | while read -r dir ; do
-        rsync -r --munge-links --size-only --progress \
+        rsync -r --munge-links --checksum --progress --delete \
+            -f'- /Graphic/ASCII-ANSI/' \
             \"\${dir}\" /mnt/synology/media
     done"
-#!            --exclude={'/Audio/Music/','/Graphic/ASCII-ANSI/','/iTunes/','/Music/'} \
+#!        rsync -r --munge-links --size-only --progress --delete \
+#!            -f'- /Audio/Music/' -f'- /Graphic/ASCII-ANSI/' -f'- /iTunes/' -f'- /Music/' \
 #        rsync-media-put-synology-delete  rsync /home/data/media /mnt/synology/media
 alias rsync-media-put-synology-delete="
     find ${home}/data/media/ -mindepth 1 -maxdepth 1 -type d -not -regex '^\.+$' | sort | while read -r dir ; do
-        rsync -r --munge-links --size-only --progress --delete \
+        rsync -r --munge-links --checksum --progress --delete \
+            -f'- /Graphic/ASCII-ANSI/' \
             \"\${dir}\" /mnt/synology/media
     done"
-#!            --exclude={'/Audio/Music/','/Graphic/ASCII-ANSI/','/iTunes/','/Music/'} \
+#!        rsync -r --munge-links --size-only --progress --delete \
+#!            -f'- /Audio/Music/' -f'- /Graphic/ASCII-ANSI/' -f'- /iTunes/' -f'- /Music/' \
 #        rsync-text-get-morpheus  rsync morpheus:/home/data/media/Text /home/data/media/Text
 alias rsync-text-get-morpheus="rsync -rlptx --progress morpheus:/home/data/media/Text/ ${home}/data/media/Text/"
 #        rsync-text-put-morpheus  rsync /home/data/media/Text morpheus:/home/data/media/Text
@@ -2069,7 +2073,7 @@ alias rsync-music-put-colleen=" \
     rsync -rlptx --progress ${home}/data/media/Audio/Music/ colleen:${home}/data/media/Audio/Music/ && \
     rsync -rlptx --progress ${home}/data/media/Audio/Playlists/ colleen:${home}/data/media/Audio/Playlists/"
 #        rsync-music-put-synology  rsync /home/data/media/Audio/Music /mnt/synology/music
-alias rsync-music-put-synology="rsync -r --munge-links --size-only --progress ${home}/data/media/Audio/Music/ /mnt/synology/music/"
+alias rsync-music-put-synology="rsync -r --munge-links --checksum --progress ${home}/data/media/Audio/Music/ /mnt/synology/music/"
 #        rsync-video-get-morpheus  rsync morpheus:/home/data/media/Video /home/data/media/Video
 alias rsync-video-get-morpheus="rsync -rlptx --progress morpheus:/home/data/media/Video/ ${home}/data/media/Video/"
 #        rsync-video-put-morpheus  rsync morpheus:/home/data/media/Video /home/data/media/Video
@@ -2120,7 +2124,7 @@ alias rsync-win-apps-put-win_apps-sd="
     [[ -d \${dir1} ]] && dir=\${dir1}
     [[ -d \${dir2} ]] && dir=\${dir2}
     if [[ -d \${dir} ]] ; then
-        rsync -rLtxW --size-only --progress --delete --exclude={'Windows OS/','Partitions/'} ${home}/data/media/Software/Windows* \${dir}/
+        rsync -rLtxW --size-only --progress --delete -f'- Windows OS/' -f'- Partitions/' ${home}/data/media/Software/Windows* \${dir}/
         rsync -rLtxW --size-only --progress --delete ${home}/data/media/Repos/DOS ${home}/data/media/Repos/FreeDOS \${dir}/
         sync
     else
@@ -2135,7 +2139,7 @@ alias rsync-windows-put-windows-sd="
     [[ -d \${dir1} ]] && dir=\${dir1}
     [[ -d \${dir2} ]] && dir=\${dir2}
     if [[ -d \${dir} ]] ; then
-        rsync -rLtxW --size-only --progress --delete --exclude={'Windows OS/','Partitions/'} ${home}/data/media/Software/Windows* \${dir}/
+        rsync -rLtxW --size-only --progress --delete -f'- Windows OS/' -f'- Partitions/' ${home}/data/media/Software/Windows* \${dir}/
         rsync -rLtxW --size-only --progress --delete ${home}/data/media/Repos/DOS ${home}/data/media/Repos/FreeDOS \${dir}/
         sync
     else
@@ -2150,7 +2154,7 @@ alias rsync-t43-os2-put-t43-os2-sd=" \
     [[ -d \${dir1} ]] && dir=\${dir1}
     [[ -d \${dir2} ]] && dir=\${dir2}
     if [[ -d \${dir} ]] ; then
-        rsync -rLtxW --size-only --progress --delete --exclude={'ArcaOS/','CDs/','OS2/'} ${home}/data/media/Software/OS2/* \${dir}/OS2/
+        rsync -rLtxW --size-only --progress --delete -f'- ArcaOS/' -f'- CDs/' -f'- OS2/' ${home}/data/media/Software/OS2/* \${dir}/OS2/
         rsync -rLtxW --size-only --progress --delete \"${home}/data/media/Software/Thinkpad T43\" \${dir}/
         sync
     else
@@ -2165,9 +2169,9 @@ alias rsync-mac-put-mac_apps-sd=" \
     [[ -d \${dir1} ]] && dir=\${dir1}
     [[ -d \${dir2} ]] && dir=\${dir2}
     if [[ -d \${dir} ]] ; then
-        rsync -rLtxW --size-only --progress --delete --exclude='FINDER.DAT' ${home}/data/media/Software/Macintosh/68000 \${dir}/
-        rsync -rLtxW --size-only --progress --delete --exclude='FINDER.DAT' ${home}/data/media/Software/Macintosh/OS\ X \${dir}/
-        rsync -rLtxW --size-only --progress --delete --exclude='FINDER.DAT' ${home}/data/media/Software/Macintosh/PPC \${dir}/
+        rsync -rLtxW --size-only --progress --delete -f'- FINDER.DAT' ${home}/data/media/Software/Macintosh/68000 \${dir}/
+        rsync -rLtxW --size-only --progress --delete -f'- FINDER.DAT' ${home}/data/media/Software/Macintosh/OS\ X \${dir}/
+        rsync -rLtxW --size-only --progress --delete -f'- FINDER.DAT' ${home}/data/media/Software/Macintosh/PPC \${dir}/
         sync
     else
         echo \"Error: \${usb} USB not found\"
@@ -2181,7 +2185,7 @@ alias rsync-c64-put-sd16="
     [[ -d \${dir1} ]] && dir=\${dir1}
     [[ -d \${dir2} ]] && dir=\${dir2}
     if [[ -d \${dir} ]] ; then
-        rsync -rLtxW --size-only --progress --delete --exclude='TOSEC/' ${home}/data/media/Repos/C64/* \${dir}/
+        rsync -rLtxW --size-only --progress --delete -f'- TOSEC/' ${home}/data/media/Repos/C64/* \${dir}/
         sync
     else
         echo \"Error: \${usb} USB not found\"
@@ -2209,7 +2213,7 @@ alias rsync-adult-put-adult-sd="
     [[ -d \${dir1} ]] && dir=\${dir1}
     [[ -d \${dir2} ]] && dir=\${dir2}
     if [[ -d \${dir} ]] ; then
-        rsync -rLtxW --size-only --progress --delete --exclude={'\#recycle'} ${home}/data/media/Video/Adult/ \${dir}/
+        rsync -rLtxW --size-only --progress --delete -f='- \#recycle' ${home}/data/media/Video/Adult/ \${dir}/
         sync
     else
         echo \"Error: \${usb} USB not found\"
@@ -3466,17 +3470,17 @@ alias web-generate-game="(cd \${HOME}/web/bin && ./generate-game && ./publish --
 # backup
 #
 #!       rsyncexclusions         default rsync exclusions
-rsyncexclusions='{"/cdrom/*","/dev/*","/lost+found","/media/*","/mnt/*","/nix/store/*","/proc/*","/run/*","/sys/*","/tmp/*","/var/log/*","/var/tmp/*","/home/*/.cache/*","/home/*/.ccache/*","/home/*/.gradle","/home/*/.gvfs","/home/*/.local/*","/home/*/.lutris-cache","/home/*/.npm","/home/*/.thumbnails/*","/home/backup/*","/home/*/Downloads/*","/home/*/Games/*","/home/data/media/Software"}'
+rsyncexclusions="-f'- /cdrom/**' -f'- /dev/**' -f'- /lost+found' -f'- /media/**' -f'- /mnt/**' -f'- /nix/store/**' -f'- /proc/**' -f'- /run/**' -f'- /sys/**' -f'- /tmp/**' -f'- /var/log/**' -f'- /var/tmp/**' -f'- /home/*/.cache/**' -f'- /home/*/.ccache/**' -f'- /home/*/.gradle' -f'- /home/*/.gvfs' -f'- /home/*/.local/**' -f'- /home/*/.lutris-cache' -f'- /home/*/.npm' -f'- /home/*/.thumbnails/**' -f'- /home/backup/**' -f'- /home/*/Downloads/**' -f'- /home/*/Games/**' -f'- /home/data/media/Software'"
 #!
 #        rsbid                   backup entire system to usb drive
-#!alias rsbid="sudo rsync -aAXv --delete --exclude=${rsyncexclusions} / /run/media/\${USER}/backup/\$(uname -n)"
+#!alias rsbid="sudo rsync -aAXv --delete ${rsyncexclusions} / /run/media/\${USER}/backup/\$(uname -n)"
 alias rsbid="
     #basedir=/run/media/\${USER}
     #dir=\${basedir}/\$(cd \${basedir} && \$(pathcmd ls) -1)/\$(uname -n)
     basedir=/run/media/\${USER}/Backup
     dir=\${basedir}/\$(uname -n)
     if [[ -d \${dir} ]] ; then
-        sudo rsync -aAXv --delete-before --exclude=${rsyncexclusions} / \${dir}
+        sudo rsync -aAXv --delete-before ${rsyncexclusions} / \${dir}
     else
         echo \"Cannot find backup directory: \${dir}\"
         echo \"Make sure the backup drive is mounted\"
@@ -3491,7 +3495,7 @@ alias rsbidsome="
         echo 'Backing up:'
         for d in \"etc\" \"home\" \"root\" \"opt\" ; do
             echo \"  /\${d} => \${dir}/\"
-            sudo rsync -aAXv --delete-before --exclude=${rsyncexclusions} /\${d} \${dir}/
+            sudo rsync -aAXv --delete-before ${rsyncexclusions} /\${d} \${dir}/
         done
     else
         echo \"Cannot find back directory: \${dir}\"

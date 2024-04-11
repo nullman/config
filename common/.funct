@@ -1558,7 +1558,7 @@ backup-files() {
 #!                scp -r "${src}/config/bin" "${HOME}/"
 #!                # sync other dirs
 #!                #rsync -rlptx --delete "${src}/sounds" "${HOME}/"
-#!                rsync -rlptx --delete --exclude='*.elc' "${src}/config/.emacs.d" "${HOME}/"
+#!                rsync -rlptx --delete -f'- *.elc' "${src}/config/.emacs.d" "${HOME}/"
 #!                ;;
 #!        esac
 #!    fi
@@ -1602,7 +1602,7 @@ backup-files() {
 #!                # rsync bin
 #!                rsync -rlptx --delete "${src}/config/bin" "${dest}/"
 #!                # rsync .emacs.d
-#!                rsync -rlptx --delete --exclude='*.elc' "${src}/config/.emacs.d" "${dest}/"
+#!                rsync -rlptx --delete -f'- *.elc' "${src}/config/.emacs.d" "${dest}/"
 #!                ;;
 #!        esac
 #!    fi
