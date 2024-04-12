@@ -65,12 +65,12 @@ alias al="
     done"
 #        spr                     source profile (.shellrc)
 alias spr="[[ -f \${HOME}/.shellrc ]] && source \${HOME}/.shellrc"
+#        sxpr                    source .xprofile
+alias sxpr="[[ -f \${HOME}/.xprofile ]] && source \${HOME}/.xprofile"
 #        sba                     source .bashrc
 alias sba="[[ -f \${HOME}/.bashrc ]] && source \${HOME}/.bashrc"
 #        szsh                    source .zsh
 alias szsh="[[ -f \${HOME}/.zshrc ]] && source \${HOME}/.zshrc"
-#        sxp                     source .xprofile
-alias sxp="[[ -f \${HOME}/.xprofile ]] && source \${HOME}/.xprofile"
 
 #
 # general (basic)

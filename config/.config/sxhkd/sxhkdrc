@@ -167,7 +167,7 @@ super + alt + c
 
 # emoji selector
 super + alt + e
-    rofimoji
+    rofimoji --action print | tr -d '\n' | xsel && xsel --output | xsel --clipboard
 
 # bookmarks selector
 super + alt + o
