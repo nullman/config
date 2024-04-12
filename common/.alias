@@ -2033,20 +2033,18 @@ alias rsync-media-put-morpheus-delete="rsync -rlptx --progress --delete ${home}/
 #        rsync-media-put-synology  rsync /home/data/media /mnt/synology/media
 alias rsync-media-put-synology="
     find ${home}/data/media/ -mindepth 1 -maxdepth 1 -type d -not -regex '^\.+$' | sort | while read -r dir ; do
-        rsync -r --munge-links --checksum --progress --delete \
+        rsync -r --munge-links --size-only --progress --delete \
             -f'- /Graphic/ASCII-ANSI/' \
             \"\${dir}\" /mnt/synology/media
     done"
-#!        rsync -r --munge-links --size-only --progress --delete \
 #!            -f'- /Audio/Music/' -f'- /Graphic/ASCII-ANSI/' -f'- /iTunes/' -f'- /Music/' \
 #        rsync-media-put-synology-delete  rsync /home/data/media /mnt/synology/media
 alias rsync-media-put-synology-delete="
     find ${home}/data/media/ -mindepth 1 -maxdepth 1 -type d -not -regex '^\.+$' | sort | while read -r dir ; do
-        rsync -r --munge-links --checksum --progress --delete \
+        rsync -r --munge-links --size-only --progress --delete \
             -f'- /Graphic/ASCII-ANSI/' \
             \"\${dir}\" /mnt/synology/media
     done"
-#!        rsync -r --munge-links --size-only --progress --delete \
 #!            -f'- /Audio/Music/' -f'- /Graphic/ASCII-ANSI/' -f'- /iTunes/' -f'- /Music/' \
 #        rsync-text-get-morpheus  rsync morpheus:/home/data/media/Text /home/data/media/Text
 alias rsync-text-get-morpheus="rsync -rlptx --progress morpheus:/home/data/media/Text/ ${home}/data/media/Text/"
@@ -2073,7 +2071,7 @@ alias rsync-music-put-colleen=" \
     rsync -rlptx --progress ${home}/data/media/Audio/Music/ colleen:${home}/data/media/Audio/Music/ && \
     rsync -rlptx --progress ${home}/data/media/Audio/Playlists/ colleen:${home}/data/media/Audio/Playlists/"
 #        rsync-music-put-synology  rsync /home/data/media/Audio/Music /mnt/synology/music
-alias rsync-music-put-synology="rsync -r --munge-links --checksum --progress ${home}/data/media/Audio/Music/ /mnt/synology/music/"
+alias rsync-music-put-synology="rsync -r --munge-links --size-only --progress ${home}/data/media/Audio/Music/ /mnt/synology/music/"
 #        rsync-video-get-morpheus  rsync morpheus:/home/data/media/Video /home/data/media/Video
 alias rsync-video-get-morpheus="rsync -rlptx --progress morpheus:/home/data/media/Video/ ${home}/data/media/Video/"
 #        rsync-video-put-morpheus  rsync morpheus:/home/data/media/Video /home/data/media/Video
