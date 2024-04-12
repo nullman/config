@@ -2245,22 +2245,24 @@ KEYMAP defaults to `override-global-map'."
              ("t" . insert-datetime)
              ("u" . insert-uuid))
 
-  ;; insert org-babel commands
+  ;; insert org-mode commands
   (bind-keys :map space-insert-map
              :prefix "o"
              :prefix-map space-insert-babel-map
-             :menu-name "Insert Org-Babel Commands"
+             :menu-name "Insert Org-Mode Commands"
              ("b" . org-insert-literate-programming-src)
              ("c" . org-insert-literate-programming-code-block)
              ("e" . org-insert-literate-programming-src-emacs-lisp)
+             ("h" . org-insert-header)
              ("i" . org-insert-literate-programming-init-emacs-block)
              ("k" . org-insert-literate-programming-src-kotlin)
              ("n" . org-insert-literate-programming-name)
              ("p" . org-insert-literate-programming-project-euler-problem-block)
              ("r" . org-insert-literate-programming-src-racket)
-             ("s" . org-insert-literate-programming-src-sh))
+             ("s" . org-insert-literate-programming-src-sh)
+             ("t" . org-insert-table))
 
-  ;; insert commands
+  ;; insert password commands
   (bind-keys :map space-insert-map
              :prefix "p"
              :prefix-map space-insert-password-map
@@ -3738,77 +3740,6 @@ Where BEG and END dates are in one of these formats:
       (- end beg))))
 ;; org-days-between-dates:1 ends here
 
-;; [[file:init-emacs.org::*org-babel-tangle-block][org-babel-tangle-block:1]]
-;;------------------------------------------------------------------------------
-;;;; Org Mode: Functions: org-babel-tangle-block
-;;------------------------------------------------------------------------------
-
-(init-message 3 "Org Mode: Functions: org-babel-tangle-block")
-
-(defun org-babel-tangle-block (&optional file)
-  "Tangle blocks for the tangle file of the block at point.
-
-If FILE is non-nil, then search the buffer for blocks that tangle
-to FILE and tangle them."
-  (interactive)
-  (if file
-      (save-excursion
-        (goto-char (point-min))
-        (when (re-search-forward (concat "#\\+BEGIN_SRC .* :tangle " file))
-          (org-babel-tangle '(16))))
-    (org-babel-tangle '(16))))
-;; org-babel-tangle-block:1 ends here
-
-;; [[file:init-emacs.org::*org-babel-tangle-file-async][org-babel-tangle-file-async:1]]
-;;------------------------------------------------------------------------------
-;;;; Org Mode: Functions: org-babel-tangle-file-async
-;;------------------------------------------------------------------------------
-
-(init-message 3 "Org Mode: Functions: org-babel-tangle-file-async")
-
-(defun org-babel-tangle-file-async (file &optional target-file lang-re)
-  "Asynchronous version of `org-babel-tangle-file'."
-  (interactive)
-  (let* ((file-hash (secure-hash 'md5 file))
-         (lock-file (expand-file-name
-                     (concat "emacs-tangle-file-async-lock-file-" file-hash)
-                     temporary-file-directory))
-         (run-file (expand-file-name
-                    (concat "emacs-tangle-file-async-run-file-" file-hash)
-                    temporary-file-directory)))
-    (if (file-exists-p lock-file)
-        (progn
-          (message "Tangle running: %s" file)
-          (unless (file-exists-p run-file)
-            (make-empty-file run-file)))
-      (message "Tangle started: %s" file)
-      (make-empty-file lock-file)
-      (eval
-       `(async-spinner
-         (lambda ()
-           (require 'ob-tangle)
-           (unless (file-exists-p ,run-file)
-             (make-empty-file ,run-file))
-           (while (file-exists-p ,run-file)
-             (delete-file ,run-file)
-             (org-babel-tangle-file ,file ,target-file ,lang-re)))
-         (lambda (result)
-           (message "Tangle finished: %s" ,file)
-           (delete-file ,lock-file)))))))
-
-;; delete any existing lock/run files in case they were not cleaned up
-(mapc (lambda (x)
-        (mapc (lambda (f)
-                (delete-file f))
-              x))
-      (mapcar (lambda (x)
-                (file-expand-wildcards
-                 (expand-file-name x temporary-file-directory)
-                 :full))
-              '("emacs-tangle-file-async-lock-file-*"
-                "emacs-tangle-file-async-run-file-*")))
-;; org-babel-tangle-file-async:1 ends here
-
 ;; [[file:init-emacs.org::*org-copy-tangled-sections][org-copy-tangled-sections:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Functions: org-copy-tangled-sections
@@ -3976,6 +3907,81 @@ If BUFFER is nil, current buffer is used."
             (insert (make-string spaces ? ))))
           (forward-line 1))))))
 ;; org-convert-headings-from-oddeven-unindented-to-odd-indented:1 ends here
+
+;; [[file:init-emacs.org::*org-insert-header][org-insert-header:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Text Inserting Functions: org-insert-header
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Text Inserting Functions: org-insert-header")
+
+(defun org-insert-header ()
+  "Insert literate programming header."
+  (interactive "*")
+  (let ((text
+         `("* Org                                                              :noexport:"
+           "#+TITLE: TITLE"
+           "#+AUTHOR: Kyle W. T. Sherman"
+           ,(concat "#+EMAIL: " user-mail-address)
+           "#+FILENAME: FILENAME.org"
+           "#+DESCRIPTION: DESCRIPTION"
+           "#+KEYWORDS: KEYWORD, emacs, org-mode, babel, literate programming, reproducible research"
+           "#+LANGUAGE: en"
+           "#+PROPERTY: header-args :noweb yes :padline yes :comments no :results silent output :mkdirp yes :cache yes"
+           "#+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil"
+           "#+STARTUP: noindent odd overview"
+           "#+TIMESTAMP: <>"
+           "")))
+    (dolist (x text)
+      (insert x)
+      (newline))))
+;; org-insert-header:1 ends here
+
+;; [[file:init-emacs.org::*org-insert-table][org-insert-table:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Text Inserting Functions: org-insert-table
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Text Inserting Functions: org-insert-table")
+
+(defun org-insert-table ()
+  "Insert table template."
+  (interactive "*")
+  (let ((text
+         '("|---|"
+           "|   |"
+           "|---|"
+           "|   |"
+           "|---|")))
+    (dolist (x text)
+      (insert x)
+      (newline))))
+;; org-insert-table:1 ends here
+
+;; [[file:init-emacs.org::*org-insert-toc-header][org-insert-toc-header:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Text Inserting Functions: org-insert-toc-header
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Text Inserting Functions: org-insert-toc-header")
+
+(defun org-insert-toc-header ()
+  "Insert table of contents (TOC) header."
+  (interactive "*")
+  (let ((text
+         `("* Table of Contents"
+           "  :PROPERTIES:"
+           "  :CUSTOM_ID: table-of-contents"
+           "  :TOC: :include all"
+           "  :END:"
+           ""
+           "  :CONTENTS:"
+           "  :END:"
+           "")))
+    (dolist (x text)
+      (insert x)
+      (newline))))
+;; org-insert-toc-header:1 ends here
 
 ;; [[file:init-emacs.org::*Hook][Hook:1]]
 ;;------------------------------------------------------------------------------
@@ -4972,6 +4978,77 @@ property list containing the parameters of the block."
 
 (init-message 2 "Org Mode: Babel Functions")
 ;; Babel Functions:1 ends here
+
+;; [[file:init-emacs.org::*org-babel-tangle-block][org-babel-tangle-block:1]]
+;;------------------------------------------------------------------------------
+;;;; Org Mode: Functions: org-babel-tangle-block
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Org Mode: Functions: org-babel-tangle-block")
+
+(defun org-babel-tangle-block (&optional file)
+  "Tangle blocks for the tangle file of the block at point.
+
+If FILE is non-nil, then search the buffer for blocks that tangle
+to FILE and tangle them."
+  (interactive)
+  (if file
+      (save-excursion
+        (goto-char (point-min))
+        (when (re-search-forward (concat "#\\+BEGIN_SRC .* :tangle " file))
+          (org-babel-tangle '(16))))
+    (org-babel-tangle '(16))))
+;; org-babel-tangle-block:1 ends here
+
+;; [[file:init-emacs.org::*org-babel-tangle-file-async][org-babel-tangle-file-async:1]]
+;;------------------------------------------------------------------------------
+;;;; Org Mode: Functions: org-babel-tangle-file-async
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Org Mode: Functions: org-babel-tangle-file-async")
+
+(defun org-babel-tangle-file-async (file &optional target-file lang-re)
+  "Asynchronous version of `org-babel-tangle-file'."
+  (interactive)
+  (let* ((file-hash (secure-hash 'md5 file))
+         (lock-file (expand-file-name
+                     (concat "emacs-tangle-file-async-lock-file-" file-hash)
+                     temporary-file-directory))
+         (run-file (expand-file-name
+                    (concat "emacs-tangle-file-async-run-file-" file-hash)
+                    temporary-file-directory)))
+    (if (file-exists-p lock-file)
+        (progn
+          (message "Tangle running: %s" file)
+          (unless (file-exists-p run-file)
+            (make-empty-file run-file)))
+      (message "Tangle started: %s" file)
+      (make-empty-file lock-file)
+      (eval
+       `(async-spinner
+         (lambda ()
+           (require 'ob-tangle)
+           (unless (file-exists-p ,run-file)
+             (make-empty-file ,run-file))
+           (while (file-exists-p ,run-file)
+             (delete-file ,run-file)
+             (org-babel-tangle-file ,file ,target-file ,lang-re)))
+         (lambda (result)
+           (message "Tangle finished: %s" ,file)
+           (delete-file ,lock-file)))))))
+
+;; delete any existing lock/run files in case they were not cleaned up
+(mapc (lambda (x)
+        (mapc (lambda (f)
+                (delete-file f))
+              x))
+      (mapcar (lambda (x)
+                (file-expand-wildcards
+                 (expand-file-name x temporary-file-directory)
+                 :full))
+              '("emacs-tangle-file-async-lock-file-*"
+                "emacs-tangle-file-async-run-file-*")))
+;; org-babel-tangle-file-async:1 ends here
 
 ;; [[file:init-emacs.org::*org-generate-custom-id-from-title][org-generate-custom-id-from-title:1]]
 ;;------------------------------------------------------------------------------
@@ -12482,60 +12559,6 @@ of the current buffer."
             (insert " lexical-binding: t;")))
       (insert ";; -*- lexical-binding: t; -*-\n;;\n"))))
 ;; insert-lexical-binding:1 ends here
-
-;; [[file:init-emacs.org::*insert-org-header][insert-org-header:1]]
-;;------------------------------------------------------------------------------
-;;;; Functions: Text Inserting Functions: insert-org-header
-;;------------------------------------------------------------------------------
-
-(init-message 3 "Functions: Text Inserting Functions: insert-org-header")
-
-(defun insert-org-header ()
-  "Insert `org-mode' header."
-  (interactive "*")
-  (let ((text
-         `("* Org                                                              :noexport:"
-           "#+TITLE: TITLE"
-           "#+AUTHOR: Kyle W. T. Sherman"
-           ,(concat "#+EMAIL: " user-mail-address)
-           "#+FILENAME: FILENAME.org"
-           "#+DESCRIPTION: DESCRIPTION"
-           "#+KEYWORDS: KEYWORD, emacs, org-mode, babel, literate programming, reproducible research"
-           "#+LANGUAGE: en"
-           "#+PROPERTY: header-args :noweb yes :padline yes :comments no :results silent output :mkdirp yes :cache yes"
-           "#+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil"
-           "#+STARTUP: noindent odd overview"
-           "#+TIMESTAMP: <>"
-           "")))
-    (dolist (x text)
-      (insert x)
-      (newline))))
-;; insert-org-header:1 ends here
-
-;; [[file:init-emacs.org::*insert-toc-header][insert-toc-header:1]]
-;;------------------------------------------------------------------------------
-;;;; Functions: Text Inserting Functions: insert-toc-header
-;;------------------------------------------------------------------------------
-
-(init-message 3 "Functions: Text Inserting Functions: insert-toc-header")
-
-(defun insert-toc-header ()
-  "Insert `org-mode' table of contents (TOC) header."
-  (interactive "*")
-  (let ((text
-         `("* Table of Contents"
-           "  :PROPERTIES:"
-           "  :CUSTOM_ID: table-of-contents"
-           "  :TOC: :include all"
-           "  :END:"
-           ""
-           "  :CONTENTS:"
-           "  :END:"
-           "")))
-    (dolist (x text)
-      (insert x)
-      (newline))))
-;; insert-toc-header:1 ends here
 
 ;; [[file:init-emacs.org::*insert-figlet][insert-figlet:1]]
 ;;------------------------------------------------------------------------------
@@ -21975,8 +21998,11 @@ Commands:
 ;; insert menu
 (auto-menu
  "Insert"
- '(("Org-Babel Inserts"
-    (("Name" "org-insert-literate-programming-name" "Insert #+NAME.")
+ '(("Org Inserts"
+    (("Header" "org-insert-header" "Insert literate programming header.")
+     ("Table" "org-insert-table" "Insert table template.")
+     ("TOC Header" "org-insert-toc-header" "Insert table of contents header.")
+     ("Name" "org-insert-literate-programming-name" "Insert #+NAME.")
      ("Block" "org-insert-literate-programming-block" "Insert block.")
      ("Emacs Init Block" "org-insert-literate-programming-init-emacs-block" "Insert Emacs Init block.")
      ("Code Block" "org-insert-literate-programming-code-block" "Insert Code block.")
@@ -22009,7 +22035,6 @@ Commands:
    ("Capture Table" "(table-capture (mark) (point) \"  \" \"\n\" 'left 20)" "Capture table from selected text.")
    ("Apostrophe" "(insert \"’\")" "Insert a fancy apostrophe `’'.")
    ("Lexical Binding" "insert-lexical-binding" "Insert elisp lexical binding header.")
-   ("TOC Header" "insert-toc-header" "Insert org-mode table of contents header.")
    ))
 ;; ("Muse"
 ;;  ("Muse Header" "muse-header" "Insert Muse standard header line.")
