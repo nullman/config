@@ -12,7 +12,7 @@ conky.config = {
     no_buffers = true,
     own_window = true,
     own_window_class = 'Conky',
-    own_window_type = 'desktop',
+    own_window_type = 'override',
     own_window_transparent = true,
     update_interval = 1.0,
     update_interval_on_battery = 5.0,
@@ -30,7 +30,7 @@ ${voffset -3} ${color}${font Bitstream Vera Sans:size=20}${time %Y}${font}${colo
 #${voffset 10}${color}${font Bitstream Vera Sans:bold:size=12}CPU${font}  ${alignc}${freq_g} GHz  ${alignr}${cpu}%
 ${voffset 10}${color}${font Bitstream Vera Sans:bold:size=12}CPU${font}  ${alignc}${hwmon 0 temp 1}°C  ${alignr}${cpu}%
 ${color}${cpubar}
-${color}${cpugraph - 15}${color}
+${color}${cpugraph 000000 ffffff}${color}
 #${color Gray}01 [${freq_g 1}] ${cpu 1}% ${cpubar cpu1}${color}
 #${color Gray}02 [${freq_g 2}] ${cpu 2}% ${cpubar cpu2}${color}
 #${color Gray}03 [${freq_g 3}] ${cpu 3}% ${cpubar cpu3}${color}
@@ -66,8 +66,8 @@ ${color2}I/O:${color}  ${diskio}  ${goto 120}${diskiograph /dev/dm-1 15}
 
 # network
 ${voffset 10}${color}${font Bitstream Vera Sans:bold:size=12}Network${font}  ${alignr}${color2}Up:${color} ${totalup eno1}  ${color2}Dn:${color} ${totaldown eno1}
-${color2}Up:${color}  ${goto 40}${upspeed eno1}  ${goto 120}${upspeedgraph eno1 15}
-${color2}Dn:${color}  ${goto 40}${downspeed eno1}  ${goto 120}${downspeedgraph eno1 15}
+${color2}Up:${color}  ${goto 40}${upspeed eno1}  ${goto 120}${upspeedgraph eno1 15, 000000 ffffff}
+${color2}Dn:${color}  ${goto 40}${downspeed eno1}  ${goto 120}${downspeedgraph eno1 15, 000000 ffffff}
 #${color2}Up${color}  ${alignr}${upspeed eno1}
 #${color}${upspeedgraph eno1}
 #${color2}Down${color}  ${alignr}${downspeed eno1}
@@ -97,5 +97,5 @@ ${color2}Entropy:${color}  ${alignr}${entropy_avail} / ${entropy_poolsize}  ${en
 #${color2}Artist:${color}  ${alignr}${mpd_artist}
 #${color2}Song:${color}  ${alignr}${mpd_title}
 ${color2}Artist:${color}  ${alignr}${texeci 2 ~/bin/mpc-playing | awk -F ' - ' '{ if (length($1) <= 40) { print $1 } else { print substr($1, 0, 40)"..." } }'}
-${color2}Song:${color}  ${alignr}${texeci 2 ~/bin/mpc-playing | awk -F ' - ' '{ if (length($2) <= 40) { print $2 } else { print substr($2, 0, 40)"..." } }'}
+${color2}Song:${color}  ${alignr}${texeci 2 ~/bin/mpc-playing | sed 's/ \+[0-9]\+\/[0-9]\+.*$//' | awk -F ' - ' '{ if (length($2) <= 40) { print $2 } else { print substr($2, 0, 40)"..." } }'}
 ]]

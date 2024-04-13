@@ -12,7 +12,7 @@ conky.config = {
     no_buffers = true,
     own_window = true,
     own_window_class = 'Conky',
-    own_window_type = 'desktop',
+    own_window_type = 'override',
     own_window_transparent = true,
     update_interval = 1.0,
     update_interval_on_battery = 5.0,
@@ -51,8 +51,8 @@ ${color2}I/O:${color}  ${diskio}  ${goto 120}${diskiograph /dev/dm-0 15}
 
 # network
 ${voffset 10}${color}${font Bitstream Vera Sans:bold:size=12}Network${font}  ${alignr}${color2}Up:${color} ${totalup wlp2s0}  ${color2}Dn:${color} ${totaldown wlp2s0}
-${color2}Up:${color}  ${goto 40}${upspeed wlp2s0}  ${goto 120}${upspeedgraph wlp2s0 15}
-${color2}Dn:${color}  ${goto 40}${downspeed wlp2s0}  ${goto 120}${downspeedgraph wlp2s0 15}
+${color2}Up:${color}  ${goto 40}${upspeed wlp2s0}  ${goto 120}${upspeedgraph wlp2s0 15, 000000 ffffff}
+${color2}Dn:${color}  ${goto 40}${downspeed wlp2s0}  ${goto 120}${downspeedgraph wlp2s0 15, 000000 ffffff}
 #${color2}Up${color}  ${alignr}${upspeed wlp2s0}
 #${color}${upspeedgraph wlp2s0}
 #${color2}Down${color}  ${alignr}${downspeed wlp2s0}

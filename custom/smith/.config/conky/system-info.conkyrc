@@ -30,7 +30,7 @@ ${voffset -3} ${color}${font Bitstream Vera Sans:size=20}${time %Y}${font}${colo
 #${voffset 10}${color}${font Bitstream Vera Sans:bold:size=12}CPU${font}  ${alignc}${freq_g} GHz  ${alignr}${cpu}%
 ${voffset 10}${color}${font Bitstream Vera Sans:bold:size=12}CPU${font}  ${alignc}${hwmon 0 temp 1}°C  ${alignr}${cpu}%
 ${color}${cpubar}
-${color}${cpugraph - 15}${color}
+${color}${cpugraph 000000 ffffff}${color}
 #${color Gray}01 [${freq_g 1}] ${cpu 1}% ${cpubar cpu1}${color}
 #${color Gray}02 [${freq_g 2}] ${cpu 2}% ${cpubar cpu2}${color}
 #${color Gray}03 [${freq_g 3}] ${cpu 3}% ${cpubar cpu3}${color}
@@ -66,8 +66,8 @@ ${color2}I/O:${color}  ${diskio}  ${goto 120}${diskiograph /dev/sda4 15}
 
 # network
 ${voffset 10}${color}${font Bitstream Vera Sans:bold:size=12}Network${font}  ${alignr}${color2}Up:${color} ${totalup enp0s25}  ${color2}Dn:${color} ${totaldown enp0s25}
-${color2}Up:${color}  ${goto 40}${upspeed enp0s25}  ${goto 120}${upspeedgraph enp0s25 15}
-${color2}Dn:${color}  ${goto 40}${downspeed enp0s25}  ${goto 120}${downspeedgraph enp0s25 15}
+${color2}Up:${color}  ${goto 40}${upspeed enp0s25}  ${goto 120}${upspeedgraph enp0s25 15, 000000 ffffff}
+${color2}Dn:${color}  ${goto 40}${downspeed enp0s25}  ${goto 120}${downspeedgraph enp0s25 15, 000000 ffffff}
 #${color2}Up${color}  ${alignr}${upspeed enp0s25}
 #${color}${upspeedgraph enp0s25}
 #${color2}Down${color}  ${alignr}${downspeed enp0s25}
