@@ -2248,7 +2248,7 @@ KEYMAP defaults to `override-global-map'."
   ;; insert org-mode commands
   (bind-keys :map space-insert-map
              :prefix "o"
-             :prefix-map space-insert-babel-map
+             :prefix-map space-insert-org-map
              :menu-name "Insert Org-Mode Commands"
              ("b" . org-insert-literate-programming-src)
              ("c" . org-insert-literate-programming-code-block)

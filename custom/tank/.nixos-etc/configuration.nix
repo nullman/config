@@ -1129,6 +1129,7 @@
     flare
     gamemode
     gemrb
+    gzdoom
     heroic
     lutris
     pingus

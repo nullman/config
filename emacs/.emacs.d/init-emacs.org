@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2024-04-12 13:45 (kyle)>
+  #+TIMESTAMP: <2024-04-12 21:17 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -3695,7 +3695,7 @@
         ;; insert org-mode commands
         (bind-keys :map space-insert-map
                    :prefix "o"
-                   :prefix-map space-insert-babel-map
+                   :prefix-map space-insert-org-map
                    :menu-name "Insert Org-Mode Commands"
                    ("b" . org-insert-literate-programming-src)
                    ("c" . org-insert-literate-programming-code-block)
