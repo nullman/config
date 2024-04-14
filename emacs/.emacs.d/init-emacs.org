@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2024-04-12 21:17 (kyle)>
+  #+TIMESTAMP: <2024-04-14 00:40 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -18658,7 +18658,7 @@
           "Return definition of WORD and put it on the `kill-ring'."
           (interactive "MWord: ")
           (let ((def (with-temp-buffer
-                       (call-process "trans" nil t nil (shell-quote-argument word))
+                       (call-process "trans" nil t nil "-no-ansi" (shell-quote-argument word))
                        (goto-char (point-min))
                        (when (re-search-forward "^Examples" nil :noerror)
                          (delete-region (1- (line-beginning-position)) (point-max)))

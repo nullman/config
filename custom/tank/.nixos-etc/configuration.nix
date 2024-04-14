@@ -907,6 +907,7 @@
     chezmoi
     cool-retro-term
     ddgr
+    dict
     element
     #exa # unmaintained
     eza

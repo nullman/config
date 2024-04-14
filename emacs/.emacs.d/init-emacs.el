@@ -12954,7 +12954,7 @@ or after."
   "Return definition of WORD and put it on the `kill-ring'."
   (interactive "MWord: ")
   (let ((def (with-temp-buffer
-               (call-process "trans" nil t nil (shell-quote-argument word))
+               (call-process "trans" nil t nil "-no-ansi" (shell-quote-argument word))
                (goto-char (point-min))
                (when (re-search-forward "^Examples" nil :noerror)
                  (delete-region (1- (line-beginning-position)) (point-max)))
