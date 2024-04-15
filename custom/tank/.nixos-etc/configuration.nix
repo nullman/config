@@ -1133,6 +1133,7 @@
     gzdoom
     heroic
     lutris
+    openttd
     pingus
     playonlinux
     proton-caller
