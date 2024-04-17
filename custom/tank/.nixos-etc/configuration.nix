@@ -355,6 +355,9 @@
   # light
   programs.light.enable = true;
 
+  # fingerprint
+  services.fprintd.enable = true;
+
   # fonts
   fonts = {
     fontDir.enable = true;
