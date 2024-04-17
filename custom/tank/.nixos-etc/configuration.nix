@@ -306,7 +306,7 @@
   # window manager: bspwm
   #services.xserver.desktopManager.xfce.enable = true;
   services.xserver.windowManager.bspwm.enable = true;
-  services.xserver.displayManager.defaultSession = "none+bspwm";
+  services.displayManager.defaultSession = "none+bspwm";
 
   # window manager: i3wm
   services.xserver.windowManager.i3.enable = true;
@@ -357,6 +357,12 @@
 
   # fingerprint
   services.fprintd.enable = true;
+  services.fprintd.tod.enable = true;
+  services.fprintd.tod.driver = pkgs.libfprint-2-tod1-goodix-550a;
+  #services.fprintd.tod.driver = pkgs.libfprint-2-tod1-vfs0090;
+  security.pam.services.i3lock.fprintAuth = true;
+  security.pam.services.lightdm-greeter.fprintAuth = true;
+  security.pam.services.xscreensaver.fprintAuth = true;
 
   # fonts
   fonts = {
@@ -637,6 +643,7 @@
     file
     findutils
     fortune
+    #fwupd
     fzf
     gawk
     git
