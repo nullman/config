@@ -355,15 +355,6 @@
   # light
   programs.light.enable = true;
 
-  # fingerprint
-  services.fprintd.enable = true;
-  services.fprintd.tod.enable = true;
-  services.fprintd.tod.driver = pkgs.libfprint-2-tod1-goodix-550a;
-  #services.fprintd.tod.driver = pkgs.libfprint-2-tod1-vfs0090;
-  security.pam.services.i3lock.fprintAuth = true;
-  security.pam.services.lightdm-greeter.fprintAuth = true;
-  security.pam.services.xscreensaver.fprintAuth = true;
-
   # fonts
   fonts = {
     fontDir.enable = true;
