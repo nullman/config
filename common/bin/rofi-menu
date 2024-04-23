@@ -191,7 +191,7 @@ case "${menu}" in
 
         # copy paste selection to the clipboard
         if [[ -n "${sel}" ]] ; then
-            printf "${sel}" | xsel && xsel --output | xsel --clipboard
+            printf "${sel}" | xsel
         fi
         ;;
 

@@ -167,7 +167,8 @@ super + alt + c
 
 # emoji selector
 super + alt + e
-    rofimoji --action print | tr -d '\n' | xsel && xsel --output | xsel --clipboard
+    rofimoji --typer xdotool --clipboarder xsel --skin-tone neutral
+    #rofimoji --action print  --skin-tone neutral | tr -d '\n' | xsel && xsel --output
 
 # bookmarks selector
 super + alt + o
