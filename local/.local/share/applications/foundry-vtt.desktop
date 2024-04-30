@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Foundry VTT
+Comment=Foundry Virtual Tabletop
+Exec=sh -c "NIXPKGS_ALLOW_UNFREE=1 nix-shell -p steam-run --run \"steam-run \\${HOME}/foundry/foundryvtt\""
+Type=Application
+Icon="\\${HOME}/foundry/foundryvtt.png"
+Terminal=false
+StartupNotify=true
+Categories=Application;Game;
