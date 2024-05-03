@@ -105,7 +105,7 @@
       #mtkclient = prev.callPackage /home/kyle/.nixos/pkgs/mtkclient {};
       #stow = prev.callPackage /home/kyle/.nixos/pkgs/stow {};
       syncterm = prev.callPackage /home/kyle/.nixos/pkgs/syncterm {};
-      vdhcoapp = prev.callPackage /home/kyle/.nixos/pkgs/vdhcoapp {};
+      #vdhcoapp = prev.callPackage /home/kyle/.nixos/pkgs/vdhcoapp {};
       bspwm = prev.callPackage /home/kyle/code/github-nullman/bspwm {};
       #services.xserver.windowManager.bspwm = prev.callPackage /home/kyle/code/nixpkgs/pkgs/applications/window-managers/bspwm.nix {};
     })
@@ -856,7 +856,6 @@
     scrcpy
     simplescreenrecorder
     #upscayl
-    #vdhcoapp
     #x48
 
     # tui
@@ -980,7 +979,7 @@
     telegram-desktop
     transmission-gtk
     tuba
-    #vdhcoapp
+    vdhcoapp
     zoom-us
 
     # emulators
