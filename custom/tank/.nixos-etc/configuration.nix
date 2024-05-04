@@ -40,13 +40,16 @@
 
   # networking
   networking = {
-    wireless.iwd.enable = true;
-    #networkmanager = {
-    #  enable = true;
-    #  wifi.backend = "iwd";
-    #};
+    #wireless.iwd.enable = true;
+    networkmanager = {
+      enable = true;
+      wifi.backend = "iwd";
+    };
+    useDHCP = false;
   };
   networking.hostName = "tank";
+  networking.interfaces.wlan0.useDHCP = true;
+  networking.interfaces.enp0s31f6.useDHCP = true;
 
   ## open firewall ports
   #networking.firewall = {
@@ -105,7 +108,7 @@
       #mtkclient = prev.callPackage /home/kyle/.nixos/pkgs/mtkclient {};
       #stow = prev.callPackage /home/kyle/.nixos/pkgs/stow {};
       syncterm = prev.callPackage /home/kyle/.nixos/pkgs/syncterm {};
-      #vdhcoapp = prev.callPackage /home/kyle/.nixos/pkgs/vdhcoapp {};
+      vdhcoapp = prev.callPackage /home/kyle/.nixos/pkgs/vdhcoapp {};
       bspwm = prev.callPackage /home/kyle/code/github-nullman/bspwm {};
       #services.xserver.windowManager.bspwm = prev.callPackage /home/kyle/code/nixpkgs/pkgs/applications/window-managers/bspwm.nix {};
     })
@@ -350,7 +353,7 @@
   services.blueman.enable = true;
 
   # touchpad
-  services.xserver.libinput.enable = true;
+  services.libinput.enable = true;
 
   # light
   programs.light.enable = true;
@@ -979,7 +982,7 @@
     telegram-desktop
     transmission-gtk
     tuba
-    vdhcoapp
+    #vdhcoapp
     zoom-us
 
     # emulators
