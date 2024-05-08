@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=GURPS Character Sheet
-Exec=sh -c "NIXPKGS_ALLOW_UNFREE=1 nix-shell -p steam-run --run \"steam-run \\${HOME}/bin/vendor/gurps-character-sheet\""
+Exec=sh -c "NIXPKGS_ALLOW_UNFREE=1 nix-shell -p steam-run --run \"steam-run \\${HOME}/gurps/gurps-character-sheet\""
 Type=Application
 Terminal=false
 StartupNotify=true
