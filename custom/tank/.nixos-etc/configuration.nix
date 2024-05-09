@@ -211,6 +211,9 @@
   # adb
   programs.adb.enable = true;
 
+  # ld (libraries in standard paths)
+  programs.nix-ld.enable = true;
+
   # steam
   programs.steam.enable = true;
 
@@ -805,7 +808,7 @@
     calibre
     celluloid
     cider
-    electrum
+    ###electrum
     evince
     freetube
     gimp
