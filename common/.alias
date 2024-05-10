@@ -2820,7 +2820,7 @@ alias nix-run-ruby="nix-shell -p \"ruby.withPackages (ps: with ps; [ nokogiri ])
 #        nix-run-foundryvtt      nix-shell run foundryvtt
 alias nix-run-foundryvtt="NIXPKGS_ALLOW_UNFREE=1 nix-shell -p steam-run --run \"steam-run \${HOME}/foundry/foundryvtt\""
 #        nix-run-gcs             nix-shell run gcs (gurps character sheet)
-alias nix-run-gcs="NIXPKGS_ALLOW_UNFREE=1 nix-shell -p steam-run --run \"steam-run \${HOME}/gurps/gcs\""
+alias nix-run-gcs="NIXPKGS_ALLOW_UNFREE=1 nix-shell -p steam-run --run \"steam-run \${HOME}/gurps/gcs\" ; rm -f \${HOME}/.local/share/applications/com.trollworks.gcs.desktop"
 
 #
 # Guix
