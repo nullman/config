@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2024-04-14 00:40 (kyle)>
+  #+TIMESTAMP: <2024-05-12 16:40 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -25172,6 +25172,29 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         :commands (turn-on-fuzzy-isearch)
         :init (turn-on-fuzzy-isearch))
     #+END_SRC
+
+*** game-master-assistant
+    :PROPERTIES:
+    :CUSTOM_ID: packages-game-master-assistant
+    :END:
+
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Packages: game-master-assistant
+      ;;------------------------------------------------------------------------------
+
+      (init-message 2 "Packages: game-master-assistant")
+
+      (use-package game-master-assistant
+        :load-path (lambda () (file-truename (expand-file-name "~/code/github-nullman/emacs-game-master-assistant")))
+        :commands (game-master-assistant-random-query))
+
+      (defun game-master-assistant-insert-names (arg)
+        "Insert ARG number of randomly generated short names at point."
+        (interactive "p")
+        (dotimes (_ arg)
+          (insert (format "%s\n" (game-master-assistant-random-query "generated-name-short")))))
+      #+END_SRC
 
 *** gcmh
     :PROPERTIES:

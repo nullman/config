@@ -1,4 +1,4 @@
-﻿;; [[file:init-emacs.org::*Colors][Colors:1]]
+;; [[file:init-emacs.org::*Colors][Colors:1]]
 (let ((data '(("Color" "Name" "Symbol" "Hex Code") ("Adwaita Dark Background (Original)" "" "" "#29353b") ("Adwaita Dark Background (Darker)" "" "" "#19252b") ("Adwaita Dark Background (Darkest)" "" "color-background" "#09151b") ("White Foreground" "" "color-foreground" "#bbc2cf") ("White Foreground Accent" "" "" "#798188") ("Yellow Cursor" "" "color-cursor" "#eeee22") ("Bright Yellow Highlight" "" "color-paren" "#ffff33") ("White Mouse" "" "color-mouse" "#ffffff") ("Outline Level 1" "goldenrod" "color-1" "#daa520") ("Outline Level 2" "light goldenrod" "color-2" "#eedd82") ("Outline Level 3" "yellow green" "color-3" "#9acd32") ("Outline Level 4" "light salmon" "color-4" "#ffa07a") ("Outline Level 5" "tan" "color-5" "#d2b48c") ("Outline Level 6" "light green" "color-6" "#90ee90") ("Outline Level 7" "coral" "color-7" "#ff7f50") ("Outline Level 8" "wheat" "color-8" "#f5deb3"))))
 ;;------------------------------------------------------------------------------
 ;;; Constants: Colors
@@ -16945,6 +16945,24 @@ USING is the remaining peg."
   :commands (turn-on-fuzzy-isearch)
   :init (turn-on-fuzzy-isearch))
 ;; fuzzy:1 ends here
+
+;; [[file:init-emacs.org::*game-master-assistant][game-master-assistant:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: game-master-assistant
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Packages: game-master-assistant")
+
+(use-package game-master-assistant
+  :load-path (lambda () (file-truename (expand-file-name "~/code/github-nullman/emacs-game-master-assistant")))
+  :commands (game-master-assistant-random-query))
+
+(defun game-master-assistant-insert-names (arg)
+  "Insert ARG number of randomly generated short names at point."
+  (interactive "p")
+  (dotimes (_ arg)
+    (insert (format "%s\n" (game-master-assistant-random-query "generated-name-short")))))
+;; game-master-assistant:1 ends here
 
 ;; [[file:init-emacs.org::*gcmh][gcmh:1]]
 ;;------------------------------------------------------------------------------
