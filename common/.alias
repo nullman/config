@@ -596,6 +596,10 @@ alias systemctl-user-reload="systemctl --user daemon-reload"
 alias scrs="sudo systemctl restart"
 #        systemctl-restart       restart service
 alias systemctl-restart="sudo systemctl restart"
+#        scram                   restart automounts
+alias scram="sudo systemctl restart '*.automount'"
+#        systemctl-restart-automounts  restart automounts
+alias systemctl-restart-automounts="sudo systemctl restart '*.automount'"
 #        journalctl-follow-unit  tail journal for service
 alias journalctl-follow-unit="journalctl --follow --unit"
 
