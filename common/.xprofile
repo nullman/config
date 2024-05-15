@@ -56,6 +56,9 @@ fi
 # set no energy saving, mouse acceleration rate, and keyboard acceleration rate
 _command xset && xset -dpms s off b off m 2/1 4 r rate 500 35
 
+# # set mouse scrolling speed
+# _command imwheel && imwheel -b 4 8 >/dev/null 2>&1
+
 # set background color and mouse pointer
 #_command xsetroot && xsetroot -solid black -cursor_name left_ptr >/dev/null 2>&1
 

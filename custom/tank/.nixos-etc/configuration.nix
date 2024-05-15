@@ -652,6 +652,7 @@
     hdparm
     hfsprogs
     imagemagick
+    imwheel
     inxi
     iperf
     ispell

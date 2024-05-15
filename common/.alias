@@ -271,6 +271,8 @@ alias xset-default="xset -dpms s off b off m 2/1 4 r rate 500 35"
 alias xset-mouse="xset -dpms s off b off m 2/1 4"
 #        xset-key                xset -dpms s off b off r rate 500 35
 alias xset-key="xset -dpms s off b off r rate 500 35"
+#        imwheel-scroll          imwheel -b 4 8
+alias imwheel-scroll="imwheel -b 4 8"
 #        mac                     mount mac drive and run xhfs
 alias mac="mmac ; xhfs /dev/loop0 \${HOME}/Downloads/macintosh ; umac"
 #        sm                      configure squirrelmail

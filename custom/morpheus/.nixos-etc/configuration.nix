@@ -36,11 +36,12 @@
 
   # networking
   networking = {
-    wireless.iwd.enable = true;
-    #networkmanager = {
-    #  enable = true;
-    #  wifi.backend = "iwd";
-    #};
+    #wireless.iwd.enable = true;
+    networkmanager = {
+      enable = true;
+      wifi.backend = "iwd";
+    };
+    useDHCP = false;
   };
   networking.hostName = "morpheus";
 
@@ -101,7 +102,7 @@
       #mtkclient = prev.callPackage /home/kyle/.nixos/pkgs/mtkclient {};
       #stow = prev.callPackage /home/kyle/.nixos/pkgs/stow {};
       syncterm = prev.callPackage /home/kyle/.nixos/pkgs/syncterm {};
-      vdhcoapp = prev.callPackage /home/kyle/.nixos/pkgs/vdhcoapp {};
+      #vdhcoapp = prev.callPackage /home/kyle/.nixos/pkgs/vdhcoapp {};
       bspwm = prev.callPackage /home/kyle/code/github-nullman/bspwm {};
       #services.xserver.windowManager.bspwm = prev.callPackage /home/kyle/code/nixpkgs/pkgs/applications/window-managers/bspwm.nix {};
     })
@@ -204,6 +205,9 @@
   # adb
   programs.adb.enable = true;
 
+  # ld (libraries in standard paths)
+  #programs.nix-ld.enable = true;
+
   # steam
   programs.steam.enable = true;
 
@@ -302,7 +306,7 @@
   # window manager: bspwm
   #services.xserver.desktopManager.xfce.enable = true;
   services.xserver.windowManager.bspwm.enable = true;
-  services.xserver.displayManager.defaultSession = "none+bspwm";
+  services.displayManager.defaultSession = "none+bspwm";
 
   # window manager: i3wm
   services.xserver.windowManager.i3.enable = true;
@@ -346,7 +350,7 @@
   services.blueman.enable = true;
 
   # touchpad
-  services.xserver.libinput.enable = true;
+  services.libinput.enable = true;
 
   # light
   programs.light.enable = true;
@@ -446,9 +450,9 @@
           Fingerprinting = true;
         };
       };
-      #nativeMessagingHosts = {
-      #  packages = [ pkgs.vdhcoapp ];
-      #};
+    };
+    nativeMessagingHosts = {
+      packages = [ pkgs.vdhcoapp ];
     };
   };
   # programs.firefox = {
@@ -630,6 +634,7 @@
     file
     findutils
     fortune
+    #fwupd
     fzf
     gawk
     git
@@ -641,6 +646,7 @@
     hdparm
     hfsprogs
     imagemagick
+    imwheel
     inxi
     iperf
     ispell
@@ -797,7 +803,7 @@
     calibre
     celluloid
     cider
-    electrum
+    ###electrum
     evince
     freetube
     gimp
@@ -831,7 +837,7 @@
     #etcher # unsecure electron
     ffmpeg_6-full
     flameshot
-    font-manager
+    ###font-manager
     fontpreview
     fontforge-gtk
     gcal
@@ -847,11 +853,9 @@
     #mediawriter
     meld
     #mtkclient
-    #nur.repos.wolfangaukang.vdhcoapp
     scrcpy
     simplescreenrecorder
     #upscayl
-    #vdhcoapp
     #x48
 
     # tui
@@ -903,6 +907,7 @@
     chezmoi
     cool-retro-term
     ddgr
+    dict
     element
     #exa # unmaintained
     eza
@@ -953,7 +958,7 @@
     brave
     chromium
     cointop
-    dino
+    ###dino
     discord
     element-desktop
     filezilla
@@ -962,9 +967,10 @@
     gajim
     google-chrome
     kristall
-    magic-wormhole
+    #magic-wormhole
     mop
     ncgopher
+    #nur.repos.wolfangaukang.vdhcoapp
     nyxt
     pidgin
     slack
@@ -974,7 +980,7 @@
     telegram-desktop
     transmission-gtk
     tuba
-    #vdhcoapp
+    vdhcoapp
     zoom-us
 
     # emulators
@@ -1121,8 +1127,10 @@
     flare
     gamemode
     gemrb
+    gzdoom
     heroic
     lutris
+    openttd
     pingus
     playonlinux
     proton-caller
