@@ -640,6 +640,7 @@
     pciutils
     pipewire
     pkg-config
+    psmisc
     pulseaudio
     pulseaudio-ctl
     ripgrep

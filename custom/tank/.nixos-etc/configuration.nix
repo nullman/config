@@ -51,13 +51,15 @@
   networking.interfaces.wlan0.useDHCP = true;
   networking.interfaces.enp0s31f6.useDHCP = true;
 
-  ## open firewall ports
-  #networking.firewall = {
-  #  enable = true;
-  #  allowedTCPPorts = [ 515 631 9100 ];
-  #  allowedUDPPorts = [ 515 631 9100 ];
-  #  checkReversePath = "loose";
-  #};
+  networking.firewall.allowedTCPPorts = [ 30000 ]; # Foundry VTT
+
+  ## # open firewall ports
+  ## networking.firewall = {
+  ##   enable = true;
+  ##   allowedTCPPorts = [ 515 631 9100 ];
+  ##   allowedUDPPorts = [ 515 631 9100 ];
+  ##   checkReversePath = "loose";
+  ## };
 
   ## openssh server
   #services.openssh.enable = true;
@@ -683,6 +685,7 @@
     pciutils
     pipewire
     pkg-config
+    psmisc
     pulseaudio
     pulseaudio-ctl
     ripgrep
