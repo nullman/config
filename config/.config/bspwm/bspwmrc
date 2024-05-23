@@ -160,7 +160,7 @@ _br 'VirtualBox Machine' desktop='^8' follow=on
 
 # 9: Image, Video, and Audio
 #bspc desktop 9 --layout stacked
-_br Chromium desktop='^9' follow=on
+_br Chromium-browser desktop='^9' follow=on
 _br Google-chrome desktop='^9' follow=on
 _br Gimp-2.10 desktop='^9' follow=on
 _br Qmmp desktop='^9' follow=on

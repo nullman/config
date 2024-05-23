@@ -50,13 +50,13 @@
   };
   networking.hostName = "dozer";
 
-  ## open firewall ports
-  #networking.firewall = {
-  #  enable = true;
-  #  allowedTCPPorts = [ 515 631 9100 ];
-  #  allowedUDPPorts = [ 515 631 9100 ];
-  #  checkReversePath = "loose";
-  #};
+  ## # open firewall ports
+  ## networking.firewall = {
+  ##   enable = true;
+  ##   allowedTCPPorts = [ 515 631 9100 ];
+  ##   allowedUDPPorts = [ 515 631 9100 ];
+  ##   checkReversePath = "loose";
+  ## };
 
   # openssh server
   services.openssh.enable = true;
