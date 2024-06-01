@@ -11966,6 +11966,7 @@ paragraph or selected region."
           (narrow-to-region beg end)
           (dolist (x '(("✴" . "•")
                        ("…" . "...")
+                       ("‘" . "'")
                        ("’" . "'")
                        ("“" . "\"")
                        ("”" . "\"")
