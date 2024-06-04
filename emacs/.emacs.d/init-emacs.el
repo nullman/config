@@ -11970,6 +11970,8 @@ paragraph or selected region."
                        ("’" . "'")
                        ("“" . "\"")
                        ("”" . "\"")
+                       ("ﬁ" . "fi")
+                       ("ﬂ" . "fl")
                        ;;("—" . "-")
                        ))
             (goto-char (point-min))

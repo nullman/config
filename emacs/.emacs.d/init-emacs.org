@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2024-06-01 14:11 (kyle)>
+  #+TIMESTAMP: <2024-06-03 23:00 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -17458,6 +17458,8 @@
                                ("’" . "'")
                                ("“" . "\"")
                                ("”" . "\"")
+                               ("ﬁ" . "fi")
+                               ("ﬂ" . "fl")
                                ;;("—" . "-")
                                ))
                     (goto-char (point-min))
