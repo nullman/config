@@ -4,7 +4,7 @@
 #
 # Present a menu of rofi menus.
 #
-# Symbols:  ☰  |    | ✂ ⎘ 󰄶   󰅌 󰅍 󰨸 󱉥 󱉦 󱉧 󱉨 󱉫 󱉬 
+# Symbols:  ☰  |    | ✂ ⎘ 󰄶   󰅌 󰅍 󰨸 󱉥 󱉦 󱉧 󱉨 󱉫 󱉬  | 
 # Symbols: 󰍹    |  |    󱇠  | 󰆧 |  |   󰝚 | 󰛇 | 󰃃 󰃀 | 󰯫 󰈍   󰀬 
 #
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
@@ -27,6 +27,7 @@ MENU:
   dosbox     DOSBox Emulator
   git        Synchronize Repositories
   paste      Paste Strings
+  password   Generate Password
   qemu       QEMU Emulator
   rsync      Synchronize Files
   sounds     Play Sounds
@@ -48,6 +49,7 @@ if [[ $# -lt 1 ]] ; then
         "	DOSBox"
         "	Git"
         "	Paste"
+        "	Password"
         "󰆧	Qemu"
         "	Rsync"
         "	Sounds"
@@ -125,19 +127,19 @@ case "${menu}" in
         ;;
 
     crt)
-        profiles=(
-            "Default Amber"
-            "Monochrome Green"
-            "Green Scanlines"
-            "Default Pixelated"
-            "Apple ]["
-            "Vintage"
-            "IBM DOS"
-            "IBM 3278"
-            "Futuristic"
-        )
         # display a list of cool-retro-term profiles
         if [[ $# -lt 2 ]] ; then
+            profiles=(
+                "Default Amber"
+                "Monochrome Green"
+                "Green Scanlines"
+                "Default Pixelated"
+                "Apple ]["
+                "Vintage"
+                "IBM DOS"
+                "IBM 3278"
+                "Futuristic"
+            )
             sel=$(printf '%s\n' "${profiles[@]}" | rofi -dmenu -i -p "󰍹	Cool Retro Term")
         else
             sel=$2
@@ -192,6 +194,36 @@ case "${menu}" in
         # copy paste selection to the clipboard
         if [[ -n "${sel}" ]] ; then
             printf "${sel}" | xsel && xsel --output | xsel --clipboard
+        fi
+        ;;
+
+    password)
+        # display password options
+        if [[ $# -lt 2 ]] ; then
+            passwords=(
+                "6 Capitalized/Hyphenated Word Phrase"
+                "4 Capitalized/Hyphenated Word Phrase"
+                "20 Letters/Numbers/Symbols"
+            )
+            sel=$(printf '%s\n' "${passwords[@]}" | rofi -dmenu -i -p "	Password")
+        else
+            sel=$2
+        fi
+
+        # copy password selection to the clipboard
+        if [[ -n "${sel}" ]] ; then
+            case "${sel}" in
+                "6 Capitalized/Hyphenated Word Phrase")
+                    printf "$(${HOME}/bin/password-phrase 6 hyphen true)" | xsel && xsel --output | xsel --clipboard
+                    ;;
+                "4 Capitalized/Hyphenated Word Phrase")
+                    printf "$(${HOME}/bin/password-phrase 4 hyphen true)" | xsel && xsel --output | xsel --clipboard
+                    ;;
+                "20 Letters/Numbers/Symbols")
+                    tr --delete --complement 'a-zA-Z0-9!@#$%^&*-_=+;:,<.>/?' < /dev/urandom | \
+                        head --bytes 20 | xsel && xsel --output | xsel --clipboard
+                    ;;
+            esac
         fi
         ;;
 

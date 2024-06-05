@@ -45,13 +45,13 @@
   };
   networking.hostName = "morpheus";
 
-  ## # open firewall ports
-  ## networking.firewall = {
-  ##   enable = true;
-  ##   allowedTCPPorts = [ 515 631 9100 ];
-  ##   allowedUDPPorts = [ 515 631 9100 ];
-  ##   checkReversePath = "loose";
-  ## };
+  ## open firewall ports
+  #networking.firewall = {
+  #  enable = true;
+  #  #allowedTCPPorts = [ 515 631 9100 ];
+  #  #allowedUDPPorts = [ 515 631 9100 ];
+  #  checkReversePath = "loose";
+  #};
 
   # openssh server
   services.openssh.enable = true;
@@ -409,9 +409,15 @@
   services = {
     printing = {
       enable = true;
-      #logLevel = "debug";
+      logLevel = "debug";
     };
   };
+  # # printing avahi
+  # services.avahi = {
+  #   enable = true;
+  #   nssmdns4 = true;
+  #   openFirewall = true;
+  # };
   hardware.printers = {
     ensurePrinters = [
       {
@@ -804,7 +810,7 @@
     calibre
     celluloid
     cider
-    ###electrum
+    electrum
     evince
     freetube
     gimp
@@ -838,7 +844,7 @@
     #etcher # unsecure electron
     ffmpeg_6-full
     flameshot
-    ###font-manager
+    font-manager
     fontpreview
     fontforge-gtk
     gcal
@@ -959,7 +965,7 @@
     brave
     chromium
     cointop
-    ###dino
+    dino
     discord
     element-desktop
     filezilla

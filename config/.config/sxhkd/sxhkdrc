@@ -197,10 +197,14 @@ super + alt + p
 #     head --bytes 14 | xclip -selection clipboard && \
 #     notify-send --expire-time=3000 'Random password generated on clipboard'
 
+# # generate password
+# super + ctrl + p
+#     ${HOME}/bin/password-phrase 6 hyphen true | tr -d '\n' | xclip -selection clipboard && \
+#     notify-send --expire-time=3000 'Random password phrase on clipboard'
+
 # generate password
 super + ctrl + p
-    ${HOME}/bin/password-phrase 6 hyphen true | tr -d '\n' | xclip -selection clipboard && \
-    notify-send --expire-time=3000 'Random password phrase on clipboard'
+    ${HOME}/bin/rofi-menu password && notify-send --expire-time=3000 'Random password phrase on clipboard'
 
 # display time
 super + alt + backslash

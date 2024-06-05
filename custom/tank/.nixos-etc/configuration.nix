@@ -435,16 +435,6 @@
     ];
     ensureDefaultPrinter = "Canon-MF210";
   };
-  # hardware.printers = {
-  #   ensurePrinters = [
-  #     {
-  #       name = "Canon-MF210";
-  #       deviceUri = "implicitclass://Canon_MF210/";
-  #       model = "drv:///cupsfilters.drv/pwgrast.ppd";
-  #     }
-  #   ];
-  #   ensureDefaultPrinter = "Canon-MF210";
-  # };
 
   # virtualization
   virtualisation.libvirtd.enable = true;
@@ -827,7 +817,7 @@
     calibre
     celluloid
     cider
-    ###electrum
+    electrum
     evince
     freetube
     gimp
@@ -861,7 +851,7 @@
     #etcher # unsecure electron
     ffmpeg_6-full
     flameshot
-    ###font-manager
+    font-manager
     fontpreview
     fontforge-gtk
     gcal
@@ -982,7 +972,7 @@
     brave
     chromium
     cointop
-    ###dino
+    dino
     discord
     element-desktop
     filezilla
