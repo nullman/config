@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2024-06-03 23:00 (kyle)>
+  #+TIMESTAMP: <2024-06-06 13:56 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -25899,6 +25899,26 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
                ("<S-f6>" . ispell))
         :config
         (setq ispell-enable-tex-parser t))
+    #+END_SRC
+
+*** +jinx+
+    :PROPERTIES:
+    :CUSTOM_ID: packages-jinx
+    :END:
+
+    Jinx is a fast just-in-time spell-checker for Emacs.
+
+    #+BEGIN_SRC emacs-lisp :tangle no
+      ;; ;;------------------------------------------------------------------------------
+      ;; ;;; Packages: jinx
+      ;; ;;------------------------------------------------------------------------------
+
+      ;; (init-message 2 "Packages: jinx")
+
+      ;; (use-package jinx
+      ;;   :straight t
+      ;;   :hook (emacs-startup . global-jinx-mode)
+      ;;   :bind (("M-$" . jinx-correct)))
     #+END_SRC
 
 *** json
