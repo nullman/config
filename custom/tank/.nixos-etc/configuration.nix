@@ -187,6 +187,12 @@
   # gnome keyring
   services.gnome.gnome-keyring.enable = true;
 
+  # gnome file services: mount, trash, and other functionality
+  services.gvfs = {
+    enable = true;
+    package = lib.mkForce pkgs.gnome3.gvfs;
+  };
+
   # sudo
   security.sudo = {
     extraConfig = ''
@@ -446,7 +452,6 @@
     thunar-media-tags-plugin
     thunar-volman
   ];
-  services.gvfs.enable = true;         # mount, trash, and other functionalities
   services.tumbler.enable = true;      # thumbnail support for images
 
   # firefox
@@ -565,8 +570,9 @@
   services.rpcbind.enable = true;         # needed for NFS
   systemd.mounts = let commonMountOptions = {
     mountConfig = {
-      Options = "vers=3.0,credentials=/home/kyle/.synology-mount-credentials,iocharset=utf8,rw,file_mode=0777,dir_mode=0777,relatime,nofail";
-      TimeoutSec = 30;
+      #Options = "vers=3.0,credentials=/home/kyle/.synology-mount-credentials,iocharset=utf8,rw,file_mode=0777,dir_mode=0777,relatime,nofail";
+      #TimeoutSec = 30;
+      Options = "vers=3.0,credentials=/home/kyle/.synology-mount-credentials,iocharset=utf8,rw,file_mode=0777,dir_mode=0777,relatime,x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
       Type = "cifs";
     };
   };
