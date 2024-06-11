@@ -110,6 +110,7 @@
       #stow = prev.callPackage /home/kyle/.nixos/pkgs/stow {};
       syncterm = prev.callPackage /home/kyle/.nixos/pkgs/syncterm {};
       #vdhcoapp = prev.callPackage /home/kyle/.nixos/pkgs/vdhcoapp {};
+      #x48 = prev.callPackage /home/kyle/.nixos/pkgs/x48 {};
       bspwm = prev.callPackage /home/kyle/code/github-nullman/bspwm {};
       #services.xserver.windowManager.bspwm = prev.callPackage /home/kyle/code/nixpkgs/pkgs/applications/window-managers/bspwm.nix {};
     })
@@ -187,11 +188,11 @@
   # gnome keyring
   services.gnome.gnome-keyring.enable = true;
 
-  # gnome file services: mount, trash, and other functionality
-  services.gvfs = {
-    enable = true;
-    package = lib.mkForce pkgs.gnome3.gvfs;
-  };
+  # # gnome file services: mount, trash, and other functionality
+  # services.gvfs = {
+  #   enable = true;
+  #   package = lib.mkForce pkgs.gnome3.gvfs;
+  # };
 
   # sudo
   security.sudo = {
@@ -452,7 +453,8 @@
     thunar-media-tags-plugin
     thunar-volman
   ];
-  services.tumbler.enable = true;      # thumbnail support for images
+  services.gvfs.enable = true;           # mount, trash, and other functionality
+  services.tumbler.enable = true;        # thumbnail support for images
 
   # firefox
   programs.firefox = {
@@ -850,7 +852,7 @@
 
     # utilities
     appimage-run
-    #authy # failed to build
+    #authy # end of life
     bitwarden
     dmg2img
     easytag
