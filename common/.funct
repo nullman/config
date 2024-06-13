@@ -259,6 +259,11 @@ psg() {
     pids=$(pgrep -f -i "$1" | tr '\n' ',' | sed 's/,$//')
     [[ -n "${pids}" ]] && ps -o pid,ppid,user,args -p ${pids}
 }
+#        psgg                    ps with grep (with more fields)
+psgg() {
+    pids=$(pgrep -f -i "$1" | tr '\n' ',' | sed 's/,$//')
+    [[ -n "${pids}" ]] && ps -o pid,ppid,user,pcpu,pmem,size,vsize,args -p ${pids}
+}
 #        grepper                 fancy grep
 grepper() {
     grep -iIHrn --color=always "$1" . | ${PAGER}

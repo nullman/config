@@ -2236,6 +2236,21 @@ alias rsync-sdi-put-windows-sd="
     else
         echo \"Error: \${usb} USB not found\"
     fi"
+#        rsync-foundry-put-nullware rsync ${HOME}/foundry nullware:/home/kyle/foundry
+alias rsync-foundry-put-nullware="
+    rsync -rlptx --delete --force \
+        --exclude=\".git*\" \
+        --rsh=\"ssh -l kyle\" \
+        --progress \
+        \"${HOME}/foundry/\" \
+        \"${nullwareip}:/home/kyle/foundry/\"
+    rsync -rlptx --delete --force \
+        --exclude=\".git*\" \
+        --exclude=\"Config/license.json\" \
+        --rsh=\"ssh -l kyle\" \
+        --progress \
+        \"${HOME}/foundrydata/\" \
+        \"${nullwareip}:/home/kyle/foundrydata/\""
 
 #
 # ruby

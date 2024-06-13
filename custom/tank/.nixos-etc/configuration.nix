@@ -70,6 +70,7 @@
     "fs.file-max" = 524288;        # open file descriptors limit (star citizen)
     "vm.max_map_count" = 16777216; # maxmimum number of "memory map areas" a process can have (star citizen)
     "vm.swappiness" = 0;           # only use swap if needed; cat /proc/sys/vm/swappiness
+    "vm.vfs_cache_pressure" = 50;  # cache inode and dentry information; cat /proc/sys/vm/vfs_cache_pressure
   };
 
   # nix settings
@@ -875,6 +876,7 @@
     #mediawriter
     meld
     #mtkclient
+    poppler_utils                           # pdf converter
     scrcpy
     simplescreenrecorder
     #upscayl
