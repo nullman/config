@@ -573,9 +573,9 @@
   services.rpcbind.enable = true;         # needed for NFS
   systemd.mounts = let commonMountOptions = {
     mountConfig = {
-      #Options = "vers=3.0,credentials=/home/kyle/.synology-mount-credentials,iocharset=utf8,rw,file_mode=0777,dir_mode=0777,relatime,nofail";
-      #TimeoutSec = 30;
-      Options = "vers=3.0,credentials=/home/kyle/.synology-mount-credentials,iocharset=utf8,rw,file_mode=0777,dir_mode=0777,relatime,x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
+      Options = "vers=3.0,credentials=/home/kyle/.synology-mount-credentials,iocharset=utf8,rw,file_mode=0777,dir_mode=0777,relatime,nofail";
+      TimeoutSec = 30;
+      #Options = "vers=3.0,credentials=/home/kyle/.synology-mount-credentials,iocharset=utf8,rw,file_mode=0777,dir_mode=0777,relatime,x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
       Type = "cifs";
     };
   };
