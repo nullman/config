@@ -995,7 +995,7 @@
     mop
     ncgopher
     #nur.repos.wolfangaukang.vdhcoapp
-    nyxt
+    #nyxt
     pidgin
     slack
     simplex-chat-desktop

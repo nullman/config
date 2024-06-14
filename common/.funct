@@ -1208,7 +1208,7 @@ nixsg() {
         shift
         tmpfile="$(mktemp)"
         #nix --extra-experimental-features "nix-command flakes" search nixpkgs "${s}" > "${tmpfile}"
-        nix search nixpkgs "${s}" > "${tmpfile}"
+        nix search --quiet nixpkgs "${s}" 2>&1 | head -n -1 > "${tmpfile}"
         sed -n ":a ; /^\* / { N ; s/\n// ; p ; d ; ba }" "${tmpfile}" | grep -i "$*"
         rm "${tmpfile}"
     fi
@@ -1221,7 +1221,7 @@ nixss() {
         s="$1"
         shift
         #nix --extra-experimental-features "nix-command flakes" search nixpkgs "\.${s}$"
-        nix search nixpkgs "\.${s}$"
+        nix search --quiet nixpkgs "\.${s}$" 2>&1 | head -n -1 | sed '/^warning:/d'
     fi
 }
 #        nixsi                   nixos search installed packages
@@ -1229,7 +1229,7 @@ nixsi() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 SEARCH"
     else
-        nix-store -q --references /run/current-system/sw | sed 's/^[^-]*-//' | grep -i "$*" | sort
+        nix-store --quiet -q --references /run/current-system/sw 2>&1 | sed 's/^[^-]*-// ; /^warning:/d' | grep -i "$*" | sort
     fi
 }
 #        nixfi                   nix-locate package of installed file
