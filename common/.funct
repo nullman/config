@@ -1199,18 +1199,15 @@ acsg() {
 #
 # nixos
 #
-#        nixsg                   nixos search with grep
-nixsg() {
+#        nixs                    nixos search
+nixs() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 SEARCH GREP"
+        echo "Usage: $0 SEARCH"
     else
         s="$1"
         shift
-        tmpfile="$(mktemp)"
-        #nix --extra-experimental-features "nix-command flakes" search nixpkgs "${s}" > "${tmpfile}"
-        nix search --quiet nixpkgs "${s}" 2>&1 | head -n -1 > "${tmpfile}"
-        sed -n ":a ; /^\* / { N ; s/\n// ; p ; d ; ba }" "${tmpfile}" | grep -i "$*"
-        rm "${tmpfile}"
+        #nix --extra-experimental-features "nix-command flakes" search nixpkgs "${s}"
+        nix search --quiet nixpkgs "${s}" 2>/dev/null | sed '/^warning:/d' | head -n -1
     fi
 }
 #        nixss                   nixos specific search
@@ -1221,7 +1218,7 @@ nixss() {
         s="$1"
         shift
         #nix --extra-experimental-features "nix-command flakes" search nixpkgs "\.${s}$"
-        nix search --quiet nixpkgs "\.${s}$" 2>&1 | head -n -1 | sed '/^warning:/d'
+        nix search --quiet nixpkgs "nixpkgs\.${s}$" 2>/dev/null | sed '/^warning:/d' | head -n -1
     fi
 }
 #        nixsi                   nixos search installed packages
@@ -1229,7 +1226,21 @@ nixsi() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: $0 SEARCH"
     else
-        nix-store --quiet -q --references /run/current-system/sw 2>&1 | sed 's/^[^-]*-// ; /^warning:/d' | grep -i "$*" | sort
+        nix-store --quiet -q --references /run/current-system/sw 2>/dev/null | sed 's/^[^-]*-// ; /^warning:/d' | grep -i "$*" | sort
+    fi
+}
+#        nixsg                   nixos search with grep
+nixsg() {
+    if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+        echo "Usage: $0 SEARCH GREP"
+    else
+        s="$1"
+        shift
+        tmpfile="$(mktemp)"
+        #nix --extra-experimental-features "nix-command flakes" search nixpkgs "${s}" > "${tmpfile}"
+        nix search --quiet nixpkgs "${s}" 2>/dev/null | head -n -1 > "${tmpfile}"
+        sed -n ":a ; /^\* / { N ; s/\n// ; p ; d ; ba }" "${tmpfile}" | grep -i "$*"
+        rm "${tmpfile}"
     fi
 }
 #        nixfi                   nix-locate package of installed file

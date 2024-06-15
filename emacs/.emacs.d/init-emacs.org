@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2024-06-13 14:23 (kyle)>
+  #+TIMESTAMP: <2024-06-15 16:15 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -18637,65 +18637,69 @@
                   (org-table-align))))))
       #+END_SRC
 
-***** insert-nix-package-description
+***** +insert-nix-package-description+
       :PROPERTIES:
       :CUSTOM_ID: functions-external-program-functions-insert-nix-package-description
       :END:
 
-      #+BEGIN_SRC emacs-lisp
-        ;;------------------------------------------------------------------------------
-        ;;;; Functions: External Program Functions: insert-nix-package-description
-        ;;------------------------------------------------------------------------------
+      #+BEGIN_SRC emacs-lisp :tangle no
+        ;; ;;------------------------------------------------------------------------------
+        ;; ;;;; Functions: External Program Functions: insert-nix-package-description
+        ;; ;;------------------------------------------------------------------------------
 
-        (init-message 3 "Functions: External Program Functions: insert-nix-package-description")
+        ;; (init-message 3 "Functions: External Program Functions: insert-nix-package-description")
 
-        (defun insert-nix-package-description (package &optional max-length)
-          "Insert Nix package description for given PACKAGE.
+        ;; (defun insert-nix-package-description (package &optional max-length)
+        ;;   "Insert Nix package description for given PACKAGE.
 
-        Optional parameter, MAX-LENGTH will truncate the description if
-        it is longer."
-          (interactive "*")
-          (cl-labels
-              ((command-path (command)
-                 (let ((path (string-trim (shell-command-to-string
-                                           (format "command -v \"%s\" 2>&1" command)))))
-                   (if (string= path "")
-                       nil
-                     path))))
-            (let ((cmd (format
-                        "nix search --quiet nixpkgs \"\\.%s$\" | head -n -1 | sed '/^warning:/d'"
-                        package)))
-              (message "Searching for Nix package: %s" cmd)
-              (let ((desc (string-trim (shell-command-to-string cmd))))
-                (insert (if (and max-length
-                                 (> (length desc) max-length))
-                            (concat (substring desc 0 (- max-length 3)) "...")
-                          desc))))))
+        ;; Optional parameter, MAX-LENGTH will truncate the description if
+        ;; it is longer."
+        ;;   (interactive "*")
+        ;;   (call-process "nix" nil t nil "search" "--quiet" "nixpkgs"
+        ;;                 (format "\"\\.%s$\"" package)
+        ;;                 "2>/dev/null"))
+
+        ;; ;; (defun insert-nix-package-description (package &optional max-length)
+        ;; ;;   "Insert Nix package description for given PACKAGE.
+
+        ;; ;; Optional parameter, MAX-LENGTH will truncate the description if
+        ;; ;; it is longer."
+        ;; ;;   (interactive "*")
+        ;; ;;     (let ((cmd (format
+        ;; ;;                 "nix search --quiet nixpkgs \"\\.%s$\" 2>/dev/null | sed '/^warning:/d' | head -n -1 | tail -n 1"
+        ;; ;;                 package)))
+        ;; ;;       (message "Searching for Nix package: %s" cmd)
+        ;; ;;       (call-process "date" nil t nil "+%Y-%m-%d")
+        ;; ;;       (let ((desc (string-trim (shell-command-to-string cmd))))
+        ;; ;;         (insert (if (and max-length
+        ;; ;;                          (> (length desc) max-length))
+        ;; ;;                     (concat (substring desc 0 (- max-length 3)) "...")
+        ;; ;;                   desc))))))
       #+END_SRC
 
-***** set-nix-package-description
+***** +set-nix-package-description+
       :PROPERTIES:
       :CUSTOM_ID: functions-external-program-functions-set-nix-package-description
       :END:
 
-      #+BEGIN_SRC emacs-lisp
-        ;;------------------------------------------------------------------------------
-        ;;;; Functions: External Program Functions: set-nix-package-description
-        ;;------------------------------------------------------------------------------
+      #+BEGIN_SRC emacs-lisp :tangle no
+        ;; ;;------------------------------------------------------------------------------
+        ;; ;;;; Functions: External Program Functions: set-nix-package-description
+        ;; ;;------------------------------------------------------------------------------
 
-        (init-message 3 "Functions: External Program Functions: set-nix-package-description")
+        ;; (init-message 3 "Functions: External Program Functions: set-nix-package-description")
 
-        (defun set-nix-package-description ()
-          "Set Nix package description for package found on current line."
-          (interactive "*")
-          (save-mark-and-excursion
-            (forward-line 0)
-            (let ((package (re-search-forward "^[ \t]*\\([^ \t]*\\)" (point-at-eol))))
-              (let ((package (match-string-no-properties 1)))
-                ;; remove any existing description
-                (kill-region (point) (point-at-eol))
-                (comment-indent)
-                (insert-nix-package-description package 80)))))
+        ;; (defun set-nix-package-description ()
+        ;;   "Set Nix package description for package found on current line."
+        ;;   (interactive "*")
+        ;;   (save-mark-and-excursion
+        ;;     (forward-line 0)
+        ;;     (let ((package (re-search-forward "^[ \t]*\\([^ \t]*\\)" (point-at-eol))))
+        ;;       (let ((package (match-string-no-properties 1)))
+        ;;         ;; remove any existing description
+        ;;         (kill-region (point) (point-at-eol))
+        ;;         (comment-indent)
+        ;;         (insert-nix-package-description package 80)))))
       #+END_SRC
 
 ***** define-word

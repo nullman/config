@@ -12946,57 +12946,6 @@ or after."
           (org-table-align))))))
 ;; set-arch-package-description:1 ends here
 
-;; [[file:init-emacs.org::*insert-nix-package-description][insert-nix-package-description:1]]
-;;------------------------------------------------------------------------------
-;;;; Functions: External Program Functions: insert-nix-package-description
-;;------------------------------------------------------------------------------
-
-(init-message 3 "Functions: External Program Functions: insert-nix-package-description")
-
-(defun insert-nix-package-description (package &optional max-length)
-  "Insert Nix package description for given PACKAGE.
-
-Optional parameter, MAX-LENGTH will truncate the description if
-it is longer."
-  (interactive "*")
-  (cl-labels
-      ((command-path (command)
-         (let ((path (string-trim (shell-command-to-string
-                                   (format "command -v \"%s\" 2>&1" command)))))
-           (if (string= path "")
-               nil
-             path))))
-    (let ((cmd (format
-                "nix search --quiet nixpkgs \"\\.%s$\" | head -n -1 | sed '/^warning:/d'"
-                package)))
-      (message "Searching for Nix package: %s" cmd)
-      (let ((desc (string-trim (shell-command-to-string cmd))))
-        (insert (if (and max-length
-                         (> (length desc) max-length))
-                    (concat (substring desc 0 (- max-length 3)) "...")
-                  desc))))))
-;; insert-nix-package-description:1 ends here
-
-;; [[file:init-emacs.org::*set-nix-package-description][set-nix-package-description:1]]
-;;------------------------------------------------------------------------------
-;;;; Functions: External Program Functions: set-nix-package-description
-;;------------------------------------------------------------------------------
-
-(init-message 3 "Functions: External Program Functions: set-nix-package-description")
-
-(defun set-nix-package-description ()
-  "Set Nix package description for package found on current line."
-  (interactive "*")
-  (save-mark-and-excursion
-    (forward-line 0)
-    (let ((package (re-search-forward "^[ \t]*\\([^ \t]*\\)" (point-at-eol))))
-      (let ((package (match-string-no-properties 1)))
-        ;; remove any existing description
-        (kill-region (point) (point-at-eol))
-        (comment-indent)
-        (insert-nix-package-description package 80)))))
-;; set-nix-package-description:1 ends here
-
 ;; [[file:init-emacs.org::*define-word][define-word:2]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: External Program Functions: define-word
