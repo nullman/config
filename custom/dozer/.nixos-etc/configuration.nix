@@ -68,6 +68,7 @@
     "fs.file-max" = 524288;        # open file descriptors limit (star citizen)
     "vm.max_map_count" = 16777216; # maxmimum number of "memory map areas" a process can have (star citizen)
     "vm.swappiness" = 0;           # only use swap if needed; cat /proc/sys/vm/swappiness
+    "vm.vfs_cache_pressure" = 50;  # cache inode and dentry information; cat /proc/sys/vm/vfs_cache_pressure
   };
 
   # nix settings
@@ -108,6 +109,7 @@
       #stow = prev.callPackage /home/kyle/.nixos/pkgs/stow {};
       syncterm = prev.callPackage /home/kyle/.nixos/pkgs/syncterm {};
       #vdhcoapp = prev.callPackage /home/kyle/.nixos/pkgs/vdhcoapp {};
+      #x48 = prev.callPackage /home/kyle/.nixos/pkgs/x48 {};
       bspwm = prev.callPackage /home/kyle/code/github-nullman/bspwm {};
       #services.xserver.windowManager.bspwm = prev.callPackage /home/kyle/code/nixpkgs/pkgs/applications/window-managers/bspwm.nix {};
     })
@@ -184,6 +186,12 @@
 
   # gnome keyring
   services.gnome.gnome-keyring.enable = true;
+
+  # # gnome file services: mount, trash, and other functionality
+  # services.gvfs = {
+  #   enable = true;
+  #   package = lib.mkForce pkgs.gnome3.gvfs;
+  # };
 
   # sudo
   security.sudo = {
@@ -447,8 +455,8 @@
     thunar-media-tags-plugin
     thunar-volman
   ];
-  services.gvfs.enable = true;         # mount, trash, and other functionalities
-  services.tumbler.enable = true;      # thumbnail support for images
+  services.gvfs.enable = true;           # mount, trash, and other functionality
+  services.tumbler.enable = true;        # thumbnail support for images
 
   # firefox
   programs.firefox = {
@@ -568,6 +576,7 @@
     mountConfig = {
       Options = "vers=3.0,credentials=/home/kyle/.synology-mount-credentials,iocharset=utf8,rw,file_mode=0777,dir_mode=0777,relatime,nofail";
       TimeoutSec = 30;
+      #Options = "vers=3.0,credentials=/home/kyle/.synology-mount-credentials,iocharset=utf8,rw,file_mode=0777,dir_mode=0777,relatime,x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
       Type = "cifs";
     };
   };
@@ -624,536 +633,529 @@
   # packages
   environment.systemPackages = with pkgs; [
     # system
-    acpi
-    alacritty
-    arandr
-    aspell
-    aspellDicts.en
-    bluez
-    bluez-tools
-    brightnessctl
-    #busybox                                 # non-standard ps, ls, etc
-    bzip2
-    clipmenu
-    cifs-utils
-    coreutils
-    curl
-    direnv
-    dos2unix
-    dosfstools
-    duf
-    emacs
-    exfat
-    exfatprogs
-    file
-    findutils
-    fortune
-    #fwupd
-    fzf
-    gawk
-    git
-    gnugrep
-    gnupg
-    gnused
-    gnutar
-    gzip
-    hdparm
-    hfsprogs
-    imagemagick
-    imwheel
-    inxi
-    iperf
-    ispell
-    kitty
-    languagetool
-    libnotify
-    light
-    lm_sensors
-    lsb-release
-    lshw
-    lsof
-    lynx
-    man
-    man-db
-    man-pages
-    menumaker
-    #mlocate
-    mtools
-    neofetch
-    nettools
-    nfs-utils
-    nix-index
-    nmap
-    ntfsprogs
-    ntp
-    p7zip
-    parted
-    pciutils
-    pipewire
-    pkg-config
-    psmisc
-    pulseaudio
-    pulseaudio-ctl
-    ripgrep
-    rsync
-    samba
-    screen
-    scrub
-    shc
-    silver-searcher
-    stow
-    texinfo
-    tldr
-    tlp
-    tmux
-    traceroute
-    trash-cli
-    ufiformat
-    unzip
-    usbutils
-    vim
-    wget
-    woeusb
-    xz
-    ydotool
+    acpi                                    # Show battery status and other ACPI information
+    alacritty                               # Cross-platform, GPU-accelerated terminal emulator
+    arandr                                  # Simple visual front end for XRandR
+    aspell                                  # Spell checker for many languages
+    aspellDicts.en                          # Aspell dictionary for English
+    bluez                                   # Official Linux Bluetooth protocol stack
+    bluez-tools                             # Set of tools to manage bluetooth devices for linux
+    brightnessctl                           # This program allows you read and control device brightness
+    bzip2                                   # High-quality data compression program
+    clipmenu                                # Clipboard management using dmenu
+    cifs-utils                              # Tools for managing Linux CIFS client filesystems
+    coreutils                               # GNU Core Utilities
+    curl                                    # Command line tool for transferring files with URL syntax
+    direnv                                  # Shell extension that manages your environment
+    dos2unix                                # Convert text files with DOS or Mac line breaks to Unix line breaks and vice versa
+    dosfstools                              # Utilities for creating and checking FAT and VFAT file systems
+    duf                                     # Disk Usage/Free Utility
+    emacs                                   # Extensible, customizable GNU text editor
+    exfat                                   # Free exFAT file system implementation
+    exfatprogs                              # exFAT filesystem userspace utilities
+    file                                    # Program that shows the type of files
+    findutils                               # GNU Find Utilities, the basic directory searching utilities of the GNU operating system
+    fortune                                 # Program that displays a pseudorandom message from a database of quotations
+    fzf                                     # Command-line fuzzy finder written in Go
+    gawk                                    # GNU implementation of the Awk programming language
+    git                                     # Distributed version control system
+    gnugrep                                 # GNU implementation of the Unix grep command
+    gnupg                                   # Modern release of the GNU Privacy Guard, a GPL OpenPGP implementation
+    gnused                                  # GNU sed, a batch stream editor
+    gnutar                                  # GNU implementation of the `tar' archiver
+    gzip                                    # GNU zip compression program
+    hdparm                                  # Tool to get/set ATA/SATA drive parameters under Linux
+    hfsprogs                                # HFS/HFS+ user space utils
+    imagemagick                             # Software suite to create, edit, compose, or convert bitmap images
+    imwheel                                 # Mouse wheel configuration tool for XFree86/Xorg
+    inxi                                    # Full featured CLI system information tool
+    iperf                                   # Tool to measure IP bandwidth using UDP or TCP
+    ispell                                  # Interactive spell-checking program for Unix
+    kitty                                   # Modern, hackable, featureful, OpenGL based terminal emulator
+    languagetool                            # Proofreading program for English, French German, Polish, and more
+    libnotify                               # Library that sends desktop notifications to a notification daemon
+    light                                   # GNU/Linux application to control backlights
+    lm_sensors                              # Tools for reading hardware sensors
+    lsb-release                             # Prints certain LSB (Linux Standard Base) and Distribution information
+    lshw                                    # Provide detailed information on the hardware configuration of the machine
+    lsof                                    # Tool to list open files
+    lynx                                    # Text-mode web browser
+    man                                     # Implementation of the standard Unix documentation system accessed using the man command
+    man-db                                  # Implementation of the standard Unix documentation system accessed using the man command
+    man-pages                               # Linux development manual pages
+    menumaker                               # Heuristics-driven menu generator for several window managers
+    mtools                                  # Utilities to access MS-DOS disks
+    neofetch                                # Fast, highly customizable system info script
+    nettools                                # Set of tools for controlling the network subsystem in Linux
+    nfs-utils                               # Linux user-space NFS utilities
+    nix-index                               # Files database for nixpkgs
+    nmap                                    # Free and open source utility for network discovery and security auditing
+    ntfsprogs                               # FUSE-based NTFS driver with full write support
+    ntp                                     # Implementation of the Network Time Protocol
+    p7zip                                   # New p7zip fork with additional codecs and improvements (forked from https://sourceforge.net/projects/p7zip/)
+    parted                                  # Create, destroy, resize, check, and copy partitions
+    pciutils                                # Collection of programs for inspecting and manipulating configuration of PCI devices
+    pipewire                                # Server and user space API to deal with multimedia pipelines
+    pkg-config                              # Tool that allows packages to find out information about other packages (wrapper script)
+    psmisc                                  # Set of small useful utilities that use the proc filesystem (such as fuser, killall and pstree)
+    pulseaudio                              # Sound server for POSIX and Win32 systems
+    pulseaudio-ctl                          # Control pulseaudio volume from the shell or mapped to keyboard shortcuts. No need for alsa-utils
+    ripgrep                                 # Utility that combines the usability of The Silver Searcher with the raw speed of grep
+    rsync                                   # Fast incremental file transfer utility
+    samba                                   # Standard Windows interoperability suite of programs for Linux and Unix
+    screen                                  # Window manager that multiplexes a physical terminal
+    scrub                                   # Disk overwrite utility
+    shc                                     # Shell Script Compiler
+    silver-searcher                         # Code-searching tool similar to ack, but faster
+    stow                                    # Tool for managing the installation of multiple software packages in the same run-time directory tree
+    texinfo                                 # GNU documentation system
+    tldr                                    # Simplified and community-driven man pages
+    tlp                                     # Advanced Power Management for Linux
+    tmux                                    # Terminal multiplexer
+    traceroute                              # Tracks the route taken by packets over an IP network
+    trash-cli                               # Command line interface to the freedesktop.org trashcan
+    ufiformat                               # Low-level disk formatting utility for USB floppy drives
+    unzip                                   # Extraction utility for archives compressed in .zip format
+    usbutils                                # Tools for working with USB devices, such as lsusb
+    vim                                     # Most popular clone of the VI editor
+    wget                                    # Tool for retrieving files using HTTP, HTTPS, and FTP
+    woeusb                                  # Create bootable USB disks from Windows ISO images
+    xz                                      # General-purpose data compression software, successor of LZMA
+    ydotool                                 # Generic Linux command-line automation tool
 
     # window manager
-    adapta-gtk-theme
-    blueman
-    bspwm
-    bsp-layout
-    clipit
-    conky
-    dconf
-    dialog
-    dmenu
-    dunst
-    evtest
-    eww
-    gnome-icon-theme
-    gnome.eog
-    gnome.gnome-keyring
-    gnome.gnome-settings-daemon
-    gnome.gnome-themes-extra
-    gnome.gvfs
-    gnome.zenity
-    gsimplecal
-    gtk3
-    gxmessage
-    hicolor-icon-theme
-    hyprland
-    hyprpaper
-    hyprpicker
-    i3-gaps
-    iwgtk
-    keychain
-    lightdm
-    lightdm-slick-greeter
-    lxappearance
-    mesa-demos
-    ncpamixer
-    networkmanager
-    networkmanagerapplet
-    nitrogen
-    pa_applet
-    pamixer
-    paprefs
-    pasystray
-    pavucontrol
-    picom
-    pmount
-    polkit_gnome
-    psensor
-    qt5.qtwayland
-    qt6.qmake
-    qt6.qtwayland
-    rofi
-    rofi-wayland
-    rofimoji
-    scrot
-    sxhkd
-    system-config-printer
-    tint2
-    unclutter
-    #waybar
-    wl-color-picker
-    wlroots
-    wmname
-    #wofi
-    wmctrl
-    xfce.exo
-    xfce.xfce4-power-manager
-    xfce.xfce4-settings
-    xfce.xfconf
-    xdg-desktop-portal-gtk
-    xdg-desktop-portal-hyprland
-    xdg-utils
-    xwayland
-    yad
+    adapta-gtk-theme                        # Adaptive GTK theme based on Material Design Guidelines
+    blueman                                 # GTK-based Bluetooth Manager
+    bspwm                                   # Tiling window manager based on binary space partitioning
+    bsp-layout                              # Manage layouts in bspwm
+    clipit                                  # Lightweight GTK Clipboard Manager
+    conky                                   # Advanced, highly configurable system monitor based on torsmo
+    dconf                                   #
+    dialog                                  # Display dialog boxes from shell
+    dmenu                                   # Generic, highly customizable, and efficient menu for the X Window System
+    dunst                                   # Lightweight and customizable notification daemon
+    evtest                                  # Simple tool for input event debugging
+    eww                                     # Widget system made in Rust to create widgets for any WM
+    gnome-icon-theme                        # Collection of icons for the GNOME 2 desktop
+    gnome.eog                               # GNOME image viewer
+    gnome.gnome-keyring                     # Collection of components in GNOME that store secrets, passwords, keys, certificates and make them available to applications
+    gnome.gnome-settings-daemon             #
+    gnome.gnome-themes-extra                #
+    gnome.gvfs                              # Virtual Filesystem support library (full GNOME support)
+    gnome.zenity                            # Tool to display dialogs from the commandline and shell scripts
+    gsimplecal                              # Lightweight calendar application written in C++ using GTK
+    gtk3                                    # Multi-platform toolkit for creating graphical user interfaces
+    gxmessage                               # GTK enabled dropin replacement for xmessage
+    hicolor-icon-theme                      # Default fallback theme used by implementations of the icon theme specification
+    hyprland                                # Dynamic tiling Wayland compositor that doesn't sacrifice on its looks
+    hyprpaper                               # Blazing fast wayland wallpaper utility
+    hyprpicker                              # Wlroots-compatible Wayland color picker that does not suck
+    i3-gaps                                 # Tiling window manager
+    iwgtk                                   # Lightweight, graphical wifi management utility for Linux
+    keychain                                # Keychain management tool
+    lightdm                                 # Cross-desktop display manager
+    lightdm-slick-greeter                   # Slick-looking LightDM greeter
+    lxappearance                            # Lightweight program for configuring the theme and fonts of gtk applications
+    mesa-demos                              # Collection of demos and test programs for OpenGL and Mesa
+    ncpamixer                               # Terminal mixer for PulseAudio inspired by pavucontrol
+    networkmanager                          # Network configuration and management tool
+    networkmanagerapplet                    # NetworkManager control applet for GNOME
+    nitrogen                                # Wallpaper browser and setter for X11
+    pa_applet                               #
+    pamixer                                 # Pulseaudio command line mixer
+    paprefs                                 # PulseAudio Preferences
+    pasystray                               # PulseAudio system tray
+    pavucontrol                             # PulseAudio Volume Control
+    picom                                   # Fork of XCompMgr, a sample compositing manager for X servers
+    pmount                                  # Mount removable devices as normal user
+    polkit_gnome                            # Dbus session bus service that is used to bring up authentication dialogs
+    psensor                                 # Graphical hardware monitoring application for Linux
+    qt5.qtwayland                           # Cross-platform application framework for C++
+    qt6.qmake                               #
+    qt6.qtwayland                           # Cross-platform application framework for C++
+    rofi                                    # Window switcher, run dialog and dmenu replacement
+    rofi-wayland                            # Window switcher, run dialog and dmenu replacement for Wayland
+    rofimoji                                # Simple emoji and character picker for rofi
+    scrot                                   # Command-line screen capture utility
+    sxhkd                                   # Simple X hotkey daemon
+    system-config-printer                   #
+    tint2                                   # Simple panel/taskbar unintrusive and light (memory, cpu, aestetic)
+    unclutter                               # Hides mouse pointer while not in use
+    #waybar                                  # Highly customizable Wayland bar for Sway and Wlroots based compositors
+    wl-color-picker                         # Wayland color picker that also works on wlroots
+    wlroots                                 # Modular Wayland compositor library
+    wmname                                  # Prints or set the window manager name property of the root window
+    #wofi                                    # Launcher/menu program for wlroots based wayland compositors such as sway
+    wmctrl                                  # CLI tool to interact with EWMH/NetWM compatible X Window Managers
+    xfce.exo                                # Application library for Xfce
+    xfce.xfce4-power-manager                # Power manager for the Xfce Desktop Environment
+    xfce.xfce4-settings                     # Settings manager for Xfce
+    xfce.xfconf                             # Simple client-server configuration storage and query system for Xfce
+    xdg-desktop-portal-gtk                  # Desktop integration portals for sandboxed apps
+    xdg-desktop-portal-hyprland             # xdg-desktop-portal backend for Hyprland
+    xdg-utils                               # Set of command line tools that assist applications with a variety of desktop integration tasks
+    xwayland                                # X server for interfacing X11 apps with the Wayland protocol
+    yad                                     # GUI dialog tool for shell scripts
 
     # x11
-    x2x
-    xclip
-    xdo
-    xorg.libX11
-    xorg.libX11.dev
-    xorg.libXft
-    xorg.libXinerama
-    xorg.libxcb
-    xorg.xbacklight
-    xorg.xev
-    xorg.xinit
-    xorg.xinput
-    xorg.xkill
-    xorg.xprop
-    xorg.xwininfo
-    xsel
-    xvkbd
+    x2x                                     # Allows the keyboard, mouse on one X display to be used to control another X display
+    xclip                                   # Tool to access the X clipboard from a console application
+    xdo                                     # Small X utility to perform elementary actions on windows
+    xorg.libX11                             #
+    xorg.libX11.dev                         #
+    xorg.libXft                             #
+    xorg.libXinerama                        #
+    xorg.libxcb                             #
+    xorg.xbacklight                         #
+    xorg.xev                                #
+    xorg.xinit                              #
+    xorg.xinput                             #
+    xorg.xkill                              #
+    xorg.xprop                              #
+    xorg.xwininfo                           #
+    xsel                                    # Command-line program for getting and setting the contents of the X selection
+    xvkbd                                   # Virtual keyboard for X window system
 
     # applications
-    ardour
-    audacious
-    audacity
-    blender
-    calibre
-    celluloid
-    cider
-    electrum
-    evince
-    freetube
-    gimp
-    gphoto2
-    gphoto2fs
-    inkscape
-    #kdenlive
-    libreoffice
-    mpv
-    mupdf
-    notepadqq
-    #obs-studio
+    ardour                                  # Multi-track hard disk recording software
+    audacious                               # Lightweight and versatile audio player
+    audacity                                # Sound editor with graphical UI
+    blender                                 # 3D Creation/Animation/Publishing System
+    calibre                                 # Comprehensive e-book software
+    celluloid                               # Simple GTK frontend for the mpv video player
+    cider                                   # New look into listening and enjoying Apple Music in style and performance
+    electrum                                # Lightweight Bitcoin wallet
+    evince                                  # GNOME's document viewer
+    freetube                                # Open Source YouTube app for privacy
+    gimp                                    # GNU Image Manipulation Program
+    gphoto2                                 # Ready to use set of digital camera software applications
+    gphoto2fs                               # Fuse FS to mount a digital camera
+    inkscape                                # Vector graphics editor
+    #kdenlive                                # Video editor
+    libreoffice                             # Comprehensive, professional-quality productivity suite, a variant of openoffice.org
+    mpv                                     # General-purpose media player, fork of MPlayer and mplayer2
+    mupdf                                   # Lightweight PDF, XPS, and E-book viewer and toolkit written in portable C
+    notepadqq                               # Notepad++-like editor for the Linux desktop
+    #obs-studio                              # Free and open source software for video recording and live streaming
     #(pkgs.wrapOBS {plugins = with pkgs.obs-studio-plugins; [ wlrobs ]; })
-    qmplay2
-    reaper
-    spotify
-    vlc
-    #virt-viewer
-    #xfce.thunar
-    #xfce.thunar-archive-plugin
-    #xfce.thunar-media-tags-plugin
-    #xfce.thunar-volman
-    ymuse
+    qmplay2                                 # Qt-based Multimedia player
+    reaper                                  # Digital audio workstation
+    spotify                                 # Play music from the Spotify music service
+    vlc                                     # Cross-platform media player and streaming server
+    #virt-viewer                             # Viewer for remote virtual machines
+    #xfce.thunar                             # Xfce file manager
+    #xfce.thunar-archive-plugin              # Thunar plugin providing file context menus for archives
+    #xfce.thunar-media-tags-plugin           # Thunar plugin providing tagging and renaming features for media files
+    #xfce.thunar-volman                      # Thunar extension for automatic management of removable drives and media
+    ymuse                                   # GTK client for Music Player Daemon (MPD)
 
     # utilities
-    appimage-run
-    #authy # failed to build
-    bitwarden
-    dmg2img
-    easytag
-    #etcher # unsecure electron
-    ffmpeg_6-full
-    flameshot
-    font-manager
-    fontpreview
-    fontforge-gtk
-    gcal
-    glmark2
-    gnome.file-roller
-    gnome-frog
-    gparted
-    grip id3lib
-    gtkimageview
-    handbrake libdvdcss libaacs libbluray
-    livecaptions
-    makemkv
-    #mediawriter
-    meld
-    #mtkclient
-    scrcpy
-    simplescreenrecorder
-    #upscayl
-    #x48
+    appimage-run                            #
+    bitwarden                               # A secure and free password manager for all of your devices
+    dmg2img                                 # Apple's compressed dmg to standard (hfsplus) image disk file convert tool
+    easytag                                 # View and edit tags for various audio files
+    ffmpeg_6-full                           # Complete, cross-platform solution to record, convert and stream audio and video
+    flameshot                               # Powerful yet simple to use screenshot software
+    font-manager                            # Simple font management for GTK desktop environments
+    fontpreview                             # Highly customizable and minimal font previewer written in bash
+    fontforge-gtk                           # Font editor
+    gcal                                    # Program for calculating and printing calendars
+    glmark2                                 # OpenGL (ES) 2.0 benchmark
+    gnome.file-roller                       # Archive manager for the GNOME desktop environment
+    gnome-frog                              # Intuitive text extraction tool (OCR) for GNOME desktop
+    gparted                                 # Graphical disk partitioning tool
+    grip id3lib                             # GTK-based audio CD player/ripper
+    gtkimageview                            # Image viewer widget for GTK
+    handbrake libdvdcss libaacs libbluray   # Tool for converting video files and ripping DVDs
+    livecaptions                            # Linux Desktop application that provides live captioning
+    makemkv                                 # Convert blu-ray and dvd to mkv
+    mediawriter                             # Tool to write images files to portable media
+    meld                                    # Visual diff and merge tool
+    #mtkclient                               #
+    poppler_utils                           # PDF rendering library
+    scrcpy                                  # Display and control Android devices over USB or TCP/IP
+    simplescreenrecorder                    # Screen recorder for Linux
+    upscayl                                 # Free and Open Source AI Image Upscaler
+    #x48                                     #
 
     # tui
-    atuin
-    bmon
-    btop
-    calcurse
-    cmus
-    cointop
-    du-dust
-    elinks
-    gopher
-    gomuks
-    hexedit
-    hexyl
-    htop
-    iftop
-    irssi
-    links2
-    lynx
-    mc
-    mcabber
-    mop
-    orpie
-    phetch
-    qodem
-    ranger
-    s-tui
-    tig
-    tty-clock
-    ugrep
-    w3m
-    wavemon
-    wordgrinder
-    x3270
-    xplr
-    zenith
+    atuin                                   # Replacement for a shell history which records additional commands context with optional encrypted synchronization between machines
+    bmon                                    # Network bandwidth monitor
+    btop                                    # Monitor of resources
+    calcurse                                # Calendar and scheduling application for the command line
+    cmus                                    # Small, fast and powerful console music player for Linux and *BSD
+    cointop                                 # Fastest and most interactive terminal based UI application for tracking cryptocurrencies
+    du-dust                                 # du + rust = dust. Like du but more intuitive
+    elinks                                  # Full-featured text-mode web browser
+    gopher                                  # Ncurses gopher client
+    gomuks                                  # A terminal based Matrix client written in Go
+    hexedit                                 # View and edit files in hexadecimal or in ASCII
+    hexyl                                   # Command-line hex viewer
+    htop                                    # Interactive process viewer
+    iftop                                   # Display bandwidth usage on a network interface
+    irssi                                   # Terminal based IRC client
+    links2                                  # Small browser with some graphics support
+    lynx                                    # Text-mode web browser
+    mc                                      # File Manager and User Shell for the GNU Project, known as Midnight Commander
+    mcabber                                 # Small Jabber console client
+    mop                                     # Simple stock tracker implemented in go
+    orpie                                   # Curses-based RPN calculator
+    phetch                                  # Quick lil gopher client for your terminal, written in rust
+    qodem                                   # Re-implementation of the DOS-era Qmodem serial communications package
+    ranger                                  # File manager with minimalistic curses interface
+    s-tui                                   # Stress-Terminal UI monitoring tool
+    tig                                     # Text-mode interface for git
+    tty-clock                               # Digital clock in ncurses
+    ugrep                                   # Ultra fast grep with interactive query UI
+    w3m                                     # Text-mode web browser
+    wavemon                                 # Ncurses-based monitoring application for wireless network devices
+    wordgrinder                             # Text-based word processor
+    x3270                                   # IBM 3270 terminal emulator for the X Window System
+    xplr                                    # Hackable, minimal, fast TUI file explorer
+    zenith                                  # Sort of like top or htop but with zoom-able charts, network, and disk usage
 
     # console
-    argc
-    asciinema
-    bat
-    bc
-    bitwarden-cli
-    bitwarden-menu
-    boxes
-    broot
-    #carbonyl
-    chezmoi
-    cool-retro-term
-    ddgr
-    dict
-    element
-    #exa # unmaintained
-    eza
-    f3
-    fd
-    frogmouth
-    gcalcli
-    gdu
-    googler
-    gpart
-    hardinfo
-    hyperfine
-    id3v2
-    inetutils
-    lsd
-    miller
-    minicom
-    mpc-cli
-    mpd mpdris2
-    mtr
-    navi
-    ncdu
-    ookla-speedtest
-    powertop
-    procs
-    rar
-    remind
-    sad
-    sd
-    sharutils
-    smem
-    speedtest-cli
-    sysbench
-    sysstat
-    sysz
-    testdisk
-    #textual-paint
-    thefuck
-    translate-shell
-    units
-    wipe
-    yt-dlp
-    zoxide
+    argc                                    # Command-line options, arguments and sub-commands parser for bash
+    asciinema                               # Terminal session recorder and the best companion of asciinema.org
+    bat                                     # Cat(1) clone with syntax highlighting and Git integration
+    bc                                      # GNU software calculator
+    bitwarden-cli                           # Secure and free password manager for all of your devices
+    bitwarden-menu                          # Dmenu/Rofi frontend for managing Bitwarden vaults. Uses the Bitwarden CLI tool to interact with the Bitwarden database
+    boxes                                   # Command line program which draws, removes, and repairs ASCII art boxes
+    broot                                   # config-private/common/org loading ❯
+    chezmoi                                 # Interactive tree view, a fuzzy search, a balanced BFS descent and customizable commands
+    cool-retro-term                         # Manage your dotfiles across multiple machines, securely
+    ddgr                                    # Terminal emulator which mimics the old cathode display
+    dict                                    # Dict protocol server and client
+    element                                 # Periodic table on the command line
+    eza                                     # Modern, maintained replacement for ls
+    f3                                      # Fight Flash Fraud
+    fd                                      # Simple, fast and user-friendly alternative to find
+    frogmouth                               # Markdown browser for your terminal
+    gcalcli                                 # CLI for Google Calendar
+    gdu                                     # Disk usage analyzer with console interface
+    googler                                 # Google Search, Google Site Search, Google News from the terminal
+    gpart                                   # Guess PC-type hard disk partitions
+    hardinfo                                # Display information about your hardware and operating system
+    hyperfine                               # Command-line benchmarking tool
+    id3v2                                   # Command line editor for id3v2 tags
+    inetutils                               # Collection of common network programs
+    lsd                                     # Next gen ls command
+    miller                                  # Like awk, sed, cut, join, and sort for data formats such as CSV, TSV, JSON, JSON Lines, and positionally-indexed
+    minicom                                 # Modem control and terminal emulation program
+    mpc-cli                                 # Minimalist command line interface to MPD
+    mpd mpdris2                             # Flexible, powerful daemon for playing music
+    mtr                                     # Network diagnostics tool
+    navi                                    # Interactive cheatsheet tool for the command-line and application launchers
+    ncdu                                    # Disk usage analyzer with an ncurses interface
+    ookla-speedtest                         # Command line internet speedtest tool by Ookla
+    powertop                                # Analyze power consumption on Intel-based laptops
+    procs                                   # Modern replacement for ps written in Rust
+    rar                                     # Utility for RAR archives
+    remind                                  # Sophisticated calendar and alarm program for the console
+    sad                                     # CLI tool to search and replace
+    sd                                      # Intuitive find & replace CLI (sed alternative)
+    sharutils                               # Tools for remote synchronization and `shell archives'
+    smem                                    # Memory usage reporting tool that takes shared memory into account
+    speedtest-cli                           # Command line interface for testing internet bandwidth using speedtest.net
+    sysbench                                # Modular, cross-platform and multi-threaded benchmark tool
+    sysstat                                 # Collection of performance monitoring tools for Linux (such as sar, iostat and pidstat)
+    sysz                                    # Fzf terminal UI for systemctl
+    testdisk                                # Data recovery utilities
+    #textual-paint                           # TUI image editor inspired by MS Paint
+    thefuck                                 # Magnificent app which corrects your previous console command
+    translate-shell                         # Command-line translator using Google Translate, Bing Translator, Yandex.Translate, and Apertium
+    units                                   # Unit conversion tool
+    wipe                                    # Secure file wiping utility
+    yt-dlp                                  # Command-line tool to download videos from YouTube.com and other sites (youtube-dl fork)
+    zoxide                                  # Fast cd command that learns your habits
 
     # internet
-    betterbird
-    bore-cli
-    brave
-    chromium
-    cointop
-    dino
-    discord
-    element-desktop
-    filezilla
-    firefox
-    #firefox-wayland
-    gajim
-    google-chrome
-    kristall
-    #magic-wormhole
-    mop
-    ncgopher
-    #nur.repos.wolfangaukang.vdhcoapp
-    nyxt
-    pidgin
-    slack
-    simplex-chat-desktop
-    syncterm
-    #teams # unsupported system
-    telegram-desktop
-    transmission-gtk
-    tuba
-    vdhcoapp
-    zoom-us
+    betterbird                              # Betterbird is a fine-tuned version of Mozilla Thunderbird, Thunderbird on steroids, if you will
+    bore-cli                                # Rust tool to create TCP tunnels
+    brave                                   # Privacy-oriented browser for Desktop and Laptop computers
+    chromium                                # Open source web browser from Google
+    cointop                                 # Fastest and most interactive terminal based UI application for tracking cryptocurrencies
+    dino                                    # Modern Jabber/XMPP Client using GTK/Vala
+    discord                                 # All-in-one cross-platform voice and text chat for gamers
+    element-desktop                         # A feature-rich client for Matrix.org
+    filezilla                               # Graphical FTP, FTPS and SFTP client
+    firefox                                 # Web browser built from Firefox source tree
+    #firefox-wayland                         # Web browser built from Firefox source tree
+    gajim                                   # Jabber client written in PyGTK
+    google-chrome                           # Freeware web browser developed by Google
+    kristall                                # Graphical small-internet client, supports gemini, http, https, gopher, finger
+    #magic-wormhole                          # Securely transfer data between computers
+    mop                                     # Simple stock tracker implemented in go
+    ncgopher                                # Gopher and gemini client for the modern internet
+    #nyxt                                    # Infinitely extensible web-browser (with Lisp development files using WebKitGTK platform port)
+    pidgin                                  # Multi-protocol instant messaging client
+    slack                                   # Desktop client for Slack
+    simplex-chat-desktop                    # Desktop application for SimpleX Chat
+    syncterm                                # BBS terminal emulator
+    telegram-desktop                        # Telegram Desktop messaging app
+    transmission-gtk                        # Fast, easy and free BitTorrent client
+    tuba                                    # Browse the Fediverse
+    vdhcoapp                                # Companion application for the Video DownloadHelper browser add-on
+    zoom-us                                 # zoom.us video conferencing application
 
     # emulators
-    basiliskii
-    dosbox
-    dosbox-x
-    gnome.gnome-boxes
-    mame
-    qemu_kvm
-    quickemu
-    quickgui
-    tiny8086
-    uae
-    vice
-    virt-manager
-    virt-viewer
-    virtualbox
-    #wine
-    wineWowPackages.stable
-    winetricks
+    basiliskii                              # 68k Macintosh emulator
+    dosbox                                  # DOS emulator
+    dosbox-x                                # Cross-platform DOS emulator based on the DOSBox project
+    gnome.gnome-boxes                       # Simple GNOME 3 application to access remote or virtual systems
+    mame                                    # Multi-purpose emulation framework
+    qemu_kvm                                # Generic and open source machine emulator and virtualizer
+    quickemu                                # Quickly create and run optimised Windows, macOS and Linux virtual machines
+    quickgui                                # Flutter frontend for quickemu
+    tiny8086                                # Open-source small 8086 emulator
+    uae                                     # Ultimate/Unix/Unusable Amiga Emulator
+    vice                                    # Emulators for a variety of 8-bit Commodore computers
+    virt-manager                            # Desktop user interface for managing virtual machines
+    virt-viewer                             # Viewer for remote virtual machines
+    virtualbox                              # PC emulator
+    #wine                                    # Open Source implementation of the Windows API on top of X, OpenGL, and Unix
+    wineWowPackages.stable                  # Open Source implementation of the Windows API on top of X, OpenGL, and Unix
+    winetricks                              # Script to install DLLs needed to work around problems in Wine
 
     # containers
-    distrobox
-    podman
+    distrobox                               # Wrapper around podman or docker to create and start containers
+    podman                                  # Program for managing pods, containers and container images
 
     # development
-    acme
-    adb-sync
-    android-studio
-    android-tools
-    android-udev-rules
-    autoconf
-    automake
-    binutils
-    binutils-ia16
-    bison
-    cc65
-    ccache
-    clang
-    cmake
-    ctags
-    djgpp_i686
-    flex
-    fpc
-    gcc
-    gcc-ia16
-    github-desktop
-    glibc
-    #gmp
-    gnumake
-    gnuplot
-    gpp
-    graphviz
-    gradle
-    htmlq
-    jdk
-    #jdk11
-    #jdk8
-    jetbrains.idea-community
-    jre
-    jq
-    jqp
-    kotlin
-    lazygit
-    #libmpc
-    m4
-    #mpfr
-    nasm
-    node2nix
-    open-watcom-bin
-    #open-watcom-v2
-    pandoc
-    patch
-    plantuml
-    python311
-    python311Packages.pip
-    racket
-    regina
-    #rnix-lsp # unmaintained
-    ruby
-    rubyPackages.nokogiri
-    rustc
-    shellcheck
-    tokei
-    vlang
-    x16-emulator
-    x16-rom
-    yq
-    zlib
+    acme                                    # Multi-platform cross assembler for 6502/6510/65816 CPUs
+    adb-sync                                # Tool to synchronise files between a PC and an Android devices using ADB (Android Debug Bridge)
+    android-studio                          # Official IDE for Android (stable channel)
+    android-tools                           # Android SDK platform tools
+    android-udev-rules                      # Android udev rules list aimed to be the most comprehensive on the net
+    autoconf                                # Part of the GNU Build System
+    automake                                # GNU standard-compliant makefile generator
+    binutils                                # Tools for manipulating binaries (linker, assembler, etc.) (wrapper script)
+    binutils-ia16                           #
+    bison                                   # Yacc-compatible parser generator
+    cc65                                    # C compiler for processors of 6502 family
+    ccache                                  # Compiler cache for fast recompilation of C/C++ code
+    clang                                   # C language family frontend for LLVM (wrapper script)
+    cmake                                   # Cross-platform, open-source build system generator
+    csvkit                                  # Suite of command-line tools for converting to and working with CSV
+    ctags                                   # Tool for fast source code browsing (exuberant ctags)
+    djgpp_i686                              # Complete 32-bit GNU-based development system for Intel x86 PCs running DOS
+    flex                                    # Fast lexical analyser generator
+    fpc                                     # Free Pascal Compiler from a source distribution
+    gcc                                     # GNU Compiler Collection, version 13.2.0 (wrapper script)
+    gcc-ia16                                # xss gcc-ia16
+    github-desktop                          # GUI for managing Git and GitHub
+    glibc                                   # GNU C Library
+    #gmp                                     # GNU multiple precision arithmetic library
+    gnumake                                 # Tool to control the generation of non-source files from sources
+    gnuplot                                 # Portable command-line driven graphing utility for many platforms
+    gpp                                     # General-purpose preprocessor with customizable syntax
+    graphviz                                # Graph visualization tools
+    gradle                                  # Enterprise-grade build system
+    htmlq                                   # Like jq, but for HTML
+    jdk                                     # Open-source Java Development Kit
+    #jdk11                                   # Open-source Java Development Kit
+    #jdk8                                    # Open-source Java Development Kit
+    jetbrains.idea-community                # Free Java, Kotlin, Groovy and Scala IDE from jetbrains (built from source)
+    jre                                     # Open-source Java Development Kit
+    jq                                      # Lightweight and flexible command-line JSON processor
+    jqp                                     # TUI playground to experiment with jq
+    kotlin                                  # General purpose programming language
+    lazygit                                 # Simple terminal UI for git commands
+    #libmpc                                  # Library for multiprecision complex arithmetic with exact rounding
+    m4                                      # GNU M4, a macro processor
+    #mpfr                                    # Library for multiple-precision floating-point arithmetic
+    nasm                                    # 80x86 and x86-64 assembler designed for portability and modularity
+    node2nix                                # Generate Nix expressions to build NPM packages
+    open-watcom-bin                         # Project to maintain and enhance the Watcom C, C++, and Fortran cross compilers and tools
+    #open-watcom-v2                          # V2 fork of the Open Watcom suite of compilers and tools
+    pandoc                                  # Conversion between documentation formats
+    patch                                   # GNU Patch, a program to apply differences to files
+    plantuml                                # Draw UML diagrams using a simple and human readable text description
+    python311                               # High-level dynamically-typed programming language
+    python311Packages.pip                   # PyPA recommended tool for installing Python packages
+    racket                                  # Programmable programming language
+    regina                                  # REXX interpreter
+    ruby                                    # Object-oriented language for quick and easy programming
+    rubyPackages.nokogiri                   #
+    rustc                                   # Safe, concurrent, practical language (wrapper script)
+    shellcheck                              # Shell script analysis tool
+    tokei                                   # Program that allows you to count your code, quickly
+    vlang                                   # Simple, fast, safe, compiled language for developing maintainable software
+    x16-emulator                            # Official emulator of CommanderX16 8-bit computer
+    x16-rom                                 # ROM file for CommanderX16 8-bit computer
+    yq                                      # Command-line YAML/XML/TOML processor - jq wrapper for YAML, XML, TOML documents
+    zlib                                    # Lossless data-compression library
 
     # zsh
-    antibody
-    meslo-lgs-nf
-    zsh
+    antibody                                # Fastest shell plugin manager
+    meslo-lgs-nf                            # Meslo Nerd Font patched for Powerlevel10k
+    zsh                                     # Z shell
 
     # printing
-    system-config-printer
+    system-config-printer                   #
 
     # console hacks
-    aalib
-    asciiquarium
-    bb
-    bucklespring
-    cbonsai
-    cmatrix
-    cowsay
-    dwt1-shell-color-scripts
-    figlet
-    genact
-    hackertyper
-    hollywood
-    lolcat
-    rig
-    sl
-    tty-clock
+    aalib                                   # ASCII art graphics library
+    asciiquarium                            # Enjoy the mysteries of the sea from the safety of your own terminal!
+    bb                                      # AA-lib demo
+    bucklespring                            # Nostalgia bucklespring keyboard sound
+    cbonsai                                 # Grow bonsai trees in your terminal
+    cmatrix                                 # Simulates the falling characters theme from The Matrix movie
+    cowsay                                  # Program which generates ASCII pictures of a cow with a message
+    dwt1-shell-color-scripts                # Collection of shell color scripts collected by dt (Derek Taylor)
+    figlet                                  # Program for making large letters out of ordinary text
+    genact                                  # Nonsense activity generator
+    hackertyper                             # C rewrite of hackertyper.net
+    hollywood                               # Fill your console with Hollywood melodrama technobabble
+    lolcat                                  # Rainbow version of cat
+    rig                                     # Random identity generator
+    sl                                      # Steam Locomotive runs across your terminal when you type 'sl'
+    tty-clock                               # Digital clock in ncurses
 
     # latex
-    texlive.combined.scheme-full
+    texlive.combined.scheme-full            #
 
     # xscreensaver
-    xscreensaver
+    xscreensaver                            # Set of screensavers
+
     # extra savers
-    antsimulator
-    xmountains
-    xplanet
+    antsimulator                            # Simple Ants simulator
+    xmountains                              # X11 based fractal landscape generator
+    xplanet                                 # Renders an image of the earth or other planets into the X root window
 
     # games
-    alephone
-    #alephone-apotheosis-x
-    alephone-durandal
-    alephone-eternal
-    alephone-evil
-    alephone-infinity
-    alephone-marathon
-    alephone-pathways-into-darkness
-    alephone-pheonix
-    alephone-red
-    alephone-rubicon-x
-    #alephone-yuge
-    azimuth
-    bsdgames
-    eidolon
-    endless-sky
-    flare
-    gamemode
-    gemrb
-    gzdoom
-    heroic
-    lutris
-    openttd
-    pingus
-    playonlinux
-    proton-caller
-    protontricks
-    pysolfc
-    shattered-pixel-dungeon
-    steam
-    steam-tui
+    alephone                                # Aleph One is the open source continuation of Bungie’s Marathon 2 game engine
+    #alephone-apotheosis-x                   # Total conversion for Marathon Infinity running on the Aleph One engine
+    alephone-durandal                       # Second chapter of the Marathon trilogy
+    alephone-eternal                        # Picking up from the end of the Marathon trilogy, you find yourself suddenly ninety-four years in the future, in the year 2905
+    alephone-evil                           # First conversion for Marathon Infinity
+    alephone-infinity                       # Third chapter of the Marathon trilogy
+    alephone-marathon                       # First chapter of the Marathon trilogy
+    alephone-pathways-into-darkness         # Port of the 1993 mac game "Pathways Into Darkness" by Bungie to the Aleph One engine
+    alephone-pheonix                        # 35-level single player major Marathon conversion
+    alephone-red                            # Survival horror-esque Marathon conversion
+    alephone-rubicon-x                      # Unofficial forth chapter of the Marathon series
+    #alephone-yuge                           # 30 level Marathon scenario, plus 225 secret levels for many extra hours of gameplay
+    azimuth                                 # Metroidvania game using only vectorial graphic
+    bsdgames                                # Ports of all the games from NetBSD-current that are free
+    eidolon                                 # Single TUI-based registry for drm-free, wine and steam games on linux, accessed through a rofi launch menu
+    endless-sky                             # Sandbox-style space exploration game similar to Elite, Escape Velocity, or Star Control
+    flare                                   # Fantasy action RPG using the FLARE engine
+    gamemode                                # Optimise Linux system performance on demand
+    gemrb                                   # Reimplementation of the Infinity Engine, used by games such as Baldur's Gate
+    gzdoom                                  # Modder-friendly OpenGL and Vulkan source port based on the DOOM engine
+    heroic                                  # Native GOG, Epic, and Amazon Games Launcher for Linux, Windows and Mac
+    lutris                                  # Open Source gaming platform for GNU/Linux
+    openttd                                 # Open source clone of the Microprose game "Transport Tycoon Deluxe"
+    pingus                                  # Puzzle game with mechanics similar to Lemmings
+    playonlinux                             # GUI for managing Windows programs under linux
+    proton-caller                           # Run Windows programs with Proton
+    protontricks                            # Simple wrapper for running Winetricks commands for Proton-enabled games
+    pysolfc                                 # A collection of more than 1000 solitaire card games
+    shattered-pixel-dungeon                 # Traditional roguelike game with pixel-art graphics and simple interface
+    steam                                   # Digital distribution platform
+    steam-tui                               # Rust TUI client for steamcmd
   ];
 
   # copy nixos configuration on rebuild

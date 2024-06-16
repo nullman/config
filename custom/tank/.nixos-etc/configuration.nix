@@ -1036,6 +1036,7 @@
     ccache                                  # Compiler cache for fast recompilation of C/C++ code
     clang                                   # C language family frontend for LLVM (wrapper script)
     cmake                                   # Cross-platform, open-source build system generator
+    csvkit                                  # Suite of command-line tools for converting to and working with CSV
     ctags                                   # Tool for fast source code browsing (exuberant ctags)
     djgpp_i686                              # Complete 32-bit GNU-based development system for Intel x86 PCs running DOS
     flex                                    # Fast lexical analyser generator

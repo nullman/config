@@ -107,9 +107,9 @@ case "${menu}" in
             sel=$2
         fi
 
-        # open bookmark
+        # open contact
         if [[ -n "${sel}" ]] ; then
-            echo "${sel}"
+            sel=$(printf "${sel}" | sed 's/(/\\(/ ; s/)/\\)/')
             awk '
                 BEGIN { FS="\n"; RS=""; OFS="\n"; ORS="\n" }
                 {
@@ -311,7 +311,6 @@ case "${menu}" in
 
                 sel=$(printf "${sel}" | sed 's%^\[%% ; s%\]$%%')
                 selpath="${sounddir}/${sel}"
-                echo "selpath: ${selpath}"
 
                 if [[ "${sel}" == "${stop}" ]] ; then
                     _killffplay
