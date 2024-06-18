@@ -303,22 +303,22 @@
     };
   };
 
-  # wayland/hyprland
-  programs.hyprland = {
-    enable = true;
-    xwayland.enable = true;
-  };
-
-  ## display manager: lightdm
-  #services.xserver.displayManager.lightdm.greeters.slick = {
+  ## wayland/hyprland
+  #programs.hyprland = {
   #  enable = true;
-  #  extraConfig = ''
-  #    [Greeter]
-  #    background=/etc/nixos/wallpapers/Fluorescence.jpg
-  #  '';
+  #  xwayland.enable = true;
   #};
-  # display manager: sddm
-  services.displayManager.sddm.enable = true;
+
+  # display manager: lightdm
+  services.xserver.displayManager.lightdm.greeters.slick = {
+    enable = true;
+    extraConfig = ''
+      [Greeter]
+      background=/etc/nixos/wallpapers/Fluorescence.jpg
+    '';
+  };
+  ## display manager: sddm
+  #services.displayManager.sddm.enable = true;
 
   # window manager: bspwm
   #services.xserver.desktopManager.xfce.enable = true;
@@ -805,25 +805,25 @@
     xsel                                    # Command-line program for getting and setting the contents of the X selection
     xvkbd                                   # Virtual keyboard for X window system
 
-    # wayland
-    clipman                                 # Simple clipboard manager for Wayland
-    #firefox-wayland                         # Web browser built from Firefox source tree
-    hyprland                                # Dynamic tiling Wayland compositor that doesn't sacrifice on its looks
-    hyprpaper                               # Blazing fast wayland wallpaper utility
-    hyprpicker                              # Wlroots-compatible Wayland color picker that does not suck
-    qt5.qtwayland                           # Cross-platform application framework for C++
-    qt6.qtwayland                           # Cross-platform application framework for C++
-    rofi-wayland                            # Window switcher, run dialog and dmenu replacement for Wayland
-    swww                                    # Efficient animated wallpaper daemon for wayland, controlled at runtime
-    waybar                                  # Highly customizable Wayland bar for Sway and Wlroots based compositors
-    wayland-protocols                       # Wayland protocol extensions
-    wayland-utils                           # Wayland utilities (wayland-info)
-    wl-clipboard                            # Command-line copy/paste utilities for Wayland
-    wl-color-picker                         # Wayland color picker that also works on wlroots
-    wlroots                                 # Modular Wayland compositor library
-    wofi                                    # Launcher/menu program for wlroots based wayland compositors such as sway
-    xdg-desktop-portal-hyprland             # xdg-desktop-portal backend for Hyprland
-    xwayland                                # X server for interfacing X11 apps with the Wayland protocol
+    ## wayland
+    #clipman                                 # Simple clipboard manager for Wayland
+    ##firefox-wayland                         # Web browser built from Firefox source tree
+    #hyprland                                # Dynamic tiling Wayland compositor that doesn't sacrifice on its looks
+    #hyprpaper                               # Blazing fast wayland wallpaper utility
+    #hyprpicker                              # Wlroots-compatible Wayland color picker that does not suck
+    #qt5.qtwayland                           # Cross-platform application framework for C++
+    #qt6.qtwayland                           # Cross-platform application framework for C++
+    #rofi-wayland                            # Window switcher, run dialog and dmenu replacement for Wayland
+    #swww                                    # Efficient animated wallpaper daemon for wayland, controlled at runtime
+    #waybar                                  # Highly customizable Wayland bar for Sway and Wlroots based compositors
+    #wayland-protocols                       # Wayland protocol extensions
+    #wayland-utils                           # Wayland utilities (wayland-info)
+    #wl-clipboard                            # Command-line copy/paste utilities for Wayland
+    #wl-color-picker                         # Wayland color picker that also works on wlroots
+    #wlroots                                 # Modular Wayland compositor library
+    #wofi                                    # Launcher/menu program for wlroots based wayland compositors such as sway
+    #xdg-desktop-portal-hyprland             # xdg-desktop-portal backend for Hyprland
+    #xwayland                                # X server for interfacing X11 apps with the Wayland protocol
 
     # applications
     ardour                                  # Multi-track hard disk recording software
