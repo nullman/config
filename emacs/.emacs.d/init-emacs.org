@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2024-06-15 16:15 (kyle)>
+  #+TIMESTAMP: <2024-06-17 18:24 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -7802,40 +7802,40 @@
         (org-visibility-mode 1))
     #+END_SRC
 
-*** Contacts
+*** +Contacts+
     :PROPERTIES:
     :CUSTOM_ID: org-mode-contacts
     :END:
 
-    #+BEGIN_SRC emacs-lisp
-      ;;------------------------------------------------------------------------------
-      ;;; Org Mode: Contacts
-      ;;------------------------------------------------------------------------------
-
-      (init-message 2 "Org Mode: Contacts")
-
-      (use-package org-contacts
-        :straight t
-        :after (org)
-        :custom
-        (org-contacts-files
-         (list (file-truename (expand-file-name "~/org/contacts.org")))))
-
+    #+BEGIN_SRC emacs-lisp :tangle no
       ;; ;;------------------------------------------------------------------------------
-      ;; ;;; Org Mode: VCARD
+      ;; ;;; Org Mode: Contacts
       ;; ;;------------------------------------------------------------------------------
 
-      ;; (init-message 3 "Org Mode: VCARD")
+      ;; (init-message 2 "Org Mode: Contacts")
 
-      ;; buggy; needs a maintainer
-
-      ;; (use-package org-vcard
+      ;; (use-package org-contacts
       ;;   :straight t
+      ;;   :after (org)
       ;;   :custom
-      ;;   (org-vcard-default-version "3.0")
-      ;;   (org-vcard-default-language "en")
-      ;;   (org-vcard-default-style "flat")
-      ;;   (org-vcard-include-import-unknowns t))
+      ;;   (org-contacts-files
+      ;;    (list (file-truename (expand-file-name "~/org/contacts.org")))))
+
+      ;; ;; ;;------------------------------------------------------------------------------
+      ;; ;; ;;; Org Mode: VCARD
+      ;; ;; ;;------------------------------------------------------------------------------
+
+      ;; ;; (init-message 3 "Org Mode: VCARD")
+
+      ;; ;; buggy; needs a maintainer
+
+      ;; ;; (use-package org-vcard
+      ;; ;;   :straight t
+      ;; ;;   :custom
+      ;; ;;   (org-vcard-default-version "3.0")
+      ;; ;;   (org-vcard-default-language "en")
+      ;; ;;   (org-vcard-default-style "flat")
+      ;; ;;   (org-vcard-include-import-unknowns t))
     #+END_SRC
 
 *** Present

@@ -5483,37 +5483,6 @@ heading, properties, source block with title comment, and test block."
   (org-visibility-mode 1))
 ;; Visibility:1 ends here
 
-;; [[file:init-emacs.org::*Contacts][Contacts:1]]
-;;------------------------------------------------------------------------------
-;;; Org Mode: Contacts
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Org Mode: Contacts")
-
-(use-package org-contacts
-  :straight t
-  :after (org)
-  :custom
-  (org-contacts-files
-   (list (file-truename (expand-file-name "~/org/contacts.org")))))
-
-;; ;;------------------------------------------------------------------------------
-;; ;;; Org Mode: VCARD
-;; ;;------------------------------------------------------------------------------
-
-;; (init-message 3 "Org Mode: VCARD")
-
-;; buggy; needs a maintainer
-
-;; (use-package org-vcard
-;;   :straight t
-;;   :custom
-;;   (org-vcard-default-version "3.0")
-;;   (org-vcard-default-language "en")
-;;   (org-vcard-default-style "flat")
-;;   (org-vcard-include-import-unknowns t))
-;; Contacts:1 ends here
-
 ;; [[file:init-emacs.org::*Present][Present:1]]
 ;;------------------------------------------------------------------------------
 ;;; Org Mode: Present
