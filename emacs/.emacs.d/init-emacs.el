@@ -11935,6 +11935,7 @@ paragraph or selected region."
           (narrow-to-region beg end)
           (dolist (x '(("✴" . "•")
                        ("…" . "...")
+                       ("—" . "---")
                        ("‘" . "'")
                        ("’" . "'")
                        ("“" . "\"")
@@ -16931,10 +16932,22 @@ USING is the remaining peg."
   :commands (game-master-assistant-random-query))
 
 (defun game-master-assistant-insert-names (arg)
+  "Insert ARG number of randomly generated names at point."
+  (interactive "p")
+  (dotimes (_ arg)
+    (insert (format "%s\n" (game-master-assistant-random-query "generated-name")))))
+
+(defun game-master-assistant-insert-short-names (arg)
   "Insert ARG number of randomly generated short names at point."
   (interactive "p")
   (dotimes (_ arg)
     (insert (format "%s\n" (game-master-assistant-random-query "generated-name-short")))))
+
+(defun game-master-assistant-insert-medium-names (arg)
+  "Insert ARG number of randomly generated medium names at point."
+  (interactive "p")
+  (dotimes (_ arg)
+    (insert (format "%s\n" (game-master-assistant-random-query "generated-name-medium")))))
 ;; game-master-assistant:1 ends here
 
 ;; [[file:init-emacs.org::*gcmh][gcmh:1]]
