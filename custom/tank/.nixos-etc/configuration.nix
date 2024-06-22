@@ -842,6 +842,7 @@
     inkscape                                # Vector graphics editor
     #kdenlive                                # Video editor
     libreoffice                             # Comprehensive, professional-quality productivity suite, a variant of openoffice.org
+    lmms                                    # DAW similar to FL Studio (music production software)
     mpv                                     # General-purpose media player, fork of MPlayer and mplayer2
     mupdf                                   # Lightweight PDF, XPS, and E-book viewer and toolkit written in portable C
     notepadqq                               # Notepad++-like editor for the Linux desktop
@@ -990,6 +991,7 @@
     element-desktop                         # A feature-rich client for Matrix.org
     filezilla                               # Graphical FTP, FTPS and SFTP client
     firefox                                 # Web browser built from Firefox source tree
+    freenet                                 # Decentralised and censorship-resistant network
     gajim                                   # Jabber client written in PyGTK
     google-chrome                           # Freeware web browser developed by Google
     kristall                                # Graphical small-internet client, supports gemini, http, https, gopher, finger
