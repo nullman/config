@@ -11943,6 +11943,7 @@ paragraph or selected region."
                        ("Æ" . "ae")
                        ("ﬁ" . "fi")
                        ("ﬂ" . "fl")
+                       ("ç" . "c")
                        ;;("—" . "-")
                        ))
             (goto-char (point-min))
