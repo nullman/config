@@ -133,6 +133,12 @@
     useXkbConfig = true;
   };
 
+  # graphics
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
+
   # dbus
   services.dbus.enable = true;
 
@@ -249,13 +255,6 @@
       "/var/spool"
       "/var/tmp"
     ];
-  };
-
-  # opengl
-  hardware.opengl = {
-    enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
   };
 
   # nvidia
@@ -1006,7 +1005,7 @@
     #sparkleshare                            # Share and collaborate by syncing with any Git repository instantly. Linux, macOS, and Windows
     syncterm                                # BBS terminal emulator
     telegram-desktop                        # Telegram Desktop messaging app
-    transmission-gtk                        # Fast, easy and free BitTorrent client
+    transmission_4-gtk                      # Fast, easy and free BitTorrent client
     tuba                                    # Browse the Fediverse
     #ungoogled-chromium                      # Open source web browser from Google, with dependencies on Google web services removed
     vdhcoapp                                # Companion application for the Video DownloadHelper browser add-on
