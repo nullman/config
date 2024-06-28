@@ -797,6 +797,7 @@
     xorg.libxcb                             #
     xorg.xbacklight                         #
     xorg.xev                                #
+    xorg.xf86inputsynaptics                 #
     xorg.xinit                              #
     xorg.xinput                             #
     xorg.xkill                              #
@@ -1002,6 +1003,7 @@
     pidgin                                  # Multi-protocol instant messaging client
     slack                                   # Desktop client for Slack
     simplex-chat-desktop                    # Desktop application for SimpleX Chat
+    #sparkleshare                            # Share and collaborate by syncing with any Git repository instantly. Linux, macOS, and Windows
     syncterm                                # BBS terminal emulator
     telegram-desktop                        # Telegram Desktop messaging app
     transmission-gtk                        # Fast, easy and free BitTorrent client

@@ -53,8 +53,8 @@
   ## open firewall ports
   #networking.firewall = {
   #  enable = true;
-  #  #allowedTCPPorts = [ 515 631 9100 ];
-  #  #allowedUDPPorts = [ 515 631 9100 ];
+  #  allowedTCPPorts = [ 515 631 9100 ];
+  #  allowedUDPPorts = [ 515 631 9100 ];
   #  checkReversePath = "loose";
   #};
 
@@ -747,9 +747,6 @@
     gtk3                                    # Multi-platform toolkit for creating graphical user interfaces
     gxmessage                               # GTK enabled dropin replacement for xmessage
     hicolor-icon-theme                      # Default fallback theme used by implementations of the icon theme specification
-    hyprland                                # Dynamic tiling Wayland compositor that doesn't sacrifice on its looks
-    hyprpaper                               # Blazing fast wayland wallpaper utility
-    hyprpicker                              # Wlroots-compatible Wayland color picker that does not suck
     i3-gaps                                 # Tiling window manager
     iwgtk                                   # Lightweight, graphical wifi management utility for Linux
     keychain                                # Keychain management tool
@@ -770,31 +767,22 @@
     pmount                                  # Mount removable devices as normal user
     polkit_gnome                            # Dbus session bus service that is used to bring up authentication dialogs
     psensor                                 # Graphical hardware monitoring application for Linux
-    qt5.qtwayland                           # Cross-platform application framework for C++
     qt6.qmake                               #
-    qt6.qtwayland                           # Cross-platform application framework for C++
     rofi                                    # Window switcher, run dialog and dmenu replacement
-    rofi-wayland                            # Window switcher, run dialog and dmenu replacement for Wayland
     rofimoji                                # Simple emoji and character picker for rofi
     scrot                                   # Command-line screen capture utility
     sxhkd                                   # Simple X hotkey daemon
     system-config-printer                   #
     tint2                                   # Simple panel/taskbar unintrusive and light (memory, cpu, aestetic)
     unclutter                               # Hides mouse pointer while not in use
-    #waybar                                  # Highly customizable Wayland bar for Sway and Wlroots based compositors
-    wl-color-picker                         # Wayland color picker that also works on wlroots
-    wlroots                                 # Modular Wayland compositor library
     wmname                                  # Prints or set the window manager name property of the root window
-    #wofi                                    # Launcher/menu program for wlroots based wayland compositors such as sway
     wmctrl                                  # CLI tool to interact with EWMH/NetWM compatible X Window Managers
     xfce.exo                                # Application library for Xfce
     xfce.xfce4-power-manager                # Power manager for the Xfce Desktop Environment
     xfce.xfce4-settings                     # Settings manager for Xfce
     xfce.xfconf                             # Simple client-server configuration storage and query system for Xfce
     xdg-desktop-portal-gtk                  # Desktop integration portals for sandboxed apps
-    xdg-desktop-portal-hyprland             # xdg-desktop-portal backend for Hyprland
     xdg-utils                               # Set of command line tools that assist applications with a variety of desktop integration tasks
-    xwayland                                # X server for interfacing X11 apps with the Wayland protocol
     yad                                     # GUI dialog tool for shell scripts
 
     # x11
@@ -808,6 +796,7 @@
     xorg.libxcb                             #
     xorg.xbacklight                         #
     xorg.xev                                #
+    xorg.xf86inputsynaptics                 #
     xorg.xinit                              #
     xorg.xinput                             #
     xorg.xkill                              #
@@ -833,6 +822,7 @@
     inkscape                                # Vector graphics editor
     #kdenlive                                # Video editor
     libreoffice                             # Comprehensive, professional-quality productivity suite, a variant of openoffice.org
+    lmms                                    # DAW similar to FL Studio (music production software)
     mpv                                     # General-purpose media player, fork of MPlayer and mplayer2
     mupdf                                   # Lightweight PDF, XPS, and E-book viewer and toolkit written in portable C
     notepadqq                               # Notepad++-like editor for the Linux desktop
@@ -981,7 +971,7 @@
     element-desktop                         # A feature-rich client for Matrix.org
     filezilla                               # Graphical FTP, FTPS and SFTP client
     firefox                                 # Web browser built from Firefox source tree
-    #firefox-wayland                         # Web browser built from Firefox source tree
+    freenet                                 # Decentralised and censorship-resistant network
     gajim                                   # Jabber client written in PyGTK
     google-chrome                           # Freeware web browser developed by Google
     kristall                                # Graphical small-internet client, supports gemini, http, https, gopher, finger
@@ -992,10 +982,12 @@
     pidgin                                  # Multi-protocol instant messaging client
     slack                                   # Desktop client for Slack
     simplex-chat-desktop                    # Desktop application for SimpleX Chat
+    #sparkleshare                            # Share and collaborate by syncing with any Git repository instantly. Linux, macOS, and Windows
     syncterm                                # BBS terminal emulator
     telegram-desktop                        # Telegram Desktop messaging app
     transmission-gtk                        # Fast, easy and free BitTorrent client
     tuba                                    # Browse the Fediverse
+    #ungoogled-chromium                      # Open source web browser from Google, with dependencies on Google web services removed
     vdhcoapp                                # Companion application for the Video DownloadHelper browser add-on
     zoom-us                                 # zoom.us video conferencing application
 
