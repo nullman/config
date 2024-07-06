@@ -445,6 +445,13 @@
     ensureDefaultPrinter = "Canon-MF210";
   };
 
+  # scanning
+  hardware.sane = {
+    enable = true;
+    netConf = "printer";
+    extraBackends = [ pkgs.cnijfilter2 ];
+  };
+
   # virtualization
   virtualisation.libvirtd.enable = true;
 

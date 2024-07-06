@@ -399,6 +399,9 @@
     ensureDefaultPrinter = "Canon-MF210";
   };
 
+  # scanning
+  hardware.sane.enable = true;
+
   ## virtualization
   #virtualisation.libvirtd.enable = true;
 
