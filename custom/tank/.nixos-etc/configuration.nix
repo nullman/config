@@ -1044,6 +1044,7 @@
     # development
     acme                                    # Multi-platform cross assembler for 6502/6510/65816 CPUs
     adb-sync                                # Tool to synchronise files between a PC and an Android devices using ADB (Android Debug Bridge)
+    amber-lang                              # Programming language compiled to bash
     android-studio                          # Official IDE for Android (stable channel)
     android-tools                           # Android SDK platform tools
     android-udev-rules                      # Android udev rules list aimed to be the most comprehensive on the net
@@ -1107,6 +1108,7 @@
     zlib                                    # Lossless data-compression library
 
     # ai
+    imaginer                                # Imaginer with AI
     ollama                                  # Get up and running with large language models locally
     tabby                                   # Self-hosted AI coding assistant
 
