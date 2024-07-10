@@ -1111,6 +1111,7 @@
     imaginer                                # Imaginer with AI
     ollama                                  # Get up and running with large language models locally
     tabby                                   # Self-hosted AI coding assistant
+    upscayl                                 # Free and Open Source AI Image Upscaler
 
     # zsh
     antibody                                # Fastest shell plugin manager
