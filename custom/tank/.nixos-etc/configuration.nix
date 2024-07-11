@@ -741,15 +741,14 @@
     dialog                                  # Display dialog boxes from shell
     dmenu                                   # Generic, highly customizable, and efficient menu for the X Window System
     dunst                                   # Lightweight and customizable notification daemon
+    eog                                     # GNOME image viewer
     evtest                                  # Simple tool for input event debugging
     eww                                     # Widget system made in Rust to create widgets for any WM
-    gnome-icon-theme                        # Collection of icons for the GNOME 2 desktop
-    gnome.eog                               # GNOME image viewer
-    gnome.gnome-keyring                     # Collection of components in GNOME that store secrets, passwords, keys, certificates and make them available to applications
     gnome.gnome-settings-daemon             #
-    gnome.gnome-themes-extra                #
     gnome.gvfs                              # Virtual Filesystem support library (full GNOME support)
-    gnome.zenity                            # Tool to display dialogs from the commandline and shell scripts
+    gnome-icon-theme                        # Collection of icons for the GNOME 2 desktop
+    gnome-keyring                           # Collection of components in GNOME that store secrets, passwords, keys, certificates and make them available to applications
+    gnome-themes-extra                      #
     gsimplecal                              # Lightweight calendar application written in C++ using GTK
     gtk3                                    # Multi-platform toolkit for creating graphical user interfaces
     gxmessage                               # GTK enabled dropin replacement for xmessage
@@ -791,6 +790,7 @@
     xdg-desktop-portal-gtk                  # Desktop integration portals for sandboxed apps
     xdg-utils                               # Set of command line tools that assist applications with a variety of desktop integration tasks
     yad                                     # GUI dialog tool for shell scripts
+    zenity                                  # Tool to display dialogs from the commandline and shell scripts
 
     # x11
     x2x                                     # Allows the keyboard, mouse on one X display to be used to control another X display
@@ -872,13 +872,13 @@
     dmg2img                                 # Apple's compressed dmg to standard (hfsplus) image disk file convert tool
     easytag                                 # View and edit tags for various audio files
     ffmpeg_6-full                           # Complete, cross-platform solution to record, convert and stream audio and video
+    file-roller                             # Archive manager for the GNOME desktop environment
     flameshot                               # Powerful yet simple to use screenshot software
     font-manager                            # Simple font management for GTK desktop environments
     fontpreview                             # Highly customizable and minimal font previewer written in bash
     fontforge-gtk                           # Font editor
     gcal                                    # Program for calculating and printing calendars
     glmark2                                 # OpenGL (ES) 2.0 benchmark
-    gnome.file-roller                       # Archive manager for the GNOME desktop environment
     gnome-frog                              # Intuitive text extraction tool (OCR) for GNOME desktop
     gparted                                 # Graphical disk partitioning tool
     grip id3lib                             # GTK-based audio CD player/ripper
