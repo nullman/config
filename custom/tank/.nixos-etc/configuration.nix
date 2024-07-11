@@ -854,7 +854,7 @@
     mupdf                                   # Lightweight PDF, XPS, and E-book viewer and toolkit written in portable C
     notepadqq                               # Notepad++-like editor for the Linux desktop
     #obs-studio                              # Free and open source software for video recording and live streaming
-    #(pkgs.wrapOBS {plugins = with pkgs.obs-studio-plugins; [ wlrobs ]; })
+    #(pkgs.wrapOBS { plugins = with pkgs.obs-studio-plugins; [ wlrobs ]; })
     qmplay2                                 # Qt-based Multimedia player
     reaper                                  # Digital audio workstation
     spotify                                 # Play music from the Spotify music service
