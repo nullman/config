@@ -293,6 +293,8 @@ alias ver="lsb_release -a"
 alias kernel="mhwd-kernel -li"
 #        system-info             inxi -Fx (display system information)
 alias system-info="sudo inxi -Fx"
+#        battery-info            display battery information
+alias battery-info="cat /sys/class/power_supply/BAT0/uevent"
 #        font-aliases            list font aliases
 alias font-aliases="cat /usr/share/fonts/misc/fonts.alias"
 #        dconf-watch             dconf watch /
@@ -420,10 +422,10 @@ alias terminal-colors="
 #        remove-org-font-files   remove org-src-fontification files
 alias remove-org-font-files="
     (
-        cd \${HOME} && \
+        cd \"\${HOME}\" && \
             for dir in config dev web ; do
-                [[ -d \${dir} ]] && \
-                    find \${HOME}/\${dir} -name '*org-src-fontification*' -print | \
+                [[ -d \"\${dir}\" ]] && \
+                    find \"\${HOME}/\${dir}\" -name '*org-src-fontification*' -print | \
                     xargs rm >/dev/null 2>&1
             done
     )"
@@ -2809,8 +2811,6 @@ alias nixrsu="
 alias nixcl="sudo -i nix-channel --list"
 #        nixcu                   nix-channel update
 alias nixcu="sudo -i nix-channel --update"
-#        nixs                    nix package search
-alias nixs="nix search nixpkgs"
 #        nixq                    nix-env --query (installed package search)
 alias nixq="nix-env --query"
 #        nixqa                   nix-env --query --available (package search)
