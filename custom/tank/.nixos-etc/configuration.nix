@@ -93,6 +93,7 @@
       "openssl-1.1.1w"
     ];
     packageOverrides = pkgs: {
+      python3 = pkgs.python311;
       nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
         inherit pkgs;
       };
@@ -332,7 +333,6 @@
   services.picom.enable = true;
 
   # pulse audio
-  sound.enable = true;
   hardware.pulseaudio.enable = true;
   hardware.pulseaudio.support32Bit = true;
   nixpkgs.config.pulseaudio = true;
