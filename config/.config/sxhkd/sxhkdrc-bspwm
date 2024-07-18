@@ -68,11 +68,11 @@
 
 # display sxhkd-bspwm keybindings
 super + ctrl + h
-    yad --text-info --width=1024 --height=768 --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail --filename="${HOME}/.config/sxhkd/sxhkdrc-bspwm-help"
+    yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null --filename="${HOME}/.config/sxhkd/sxhkdrc-bspwm-help"
 
 # display bspwm manual
 super + shift + h
-    man bspwm | yad --text-info --width=1024 --height=768 --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail
+    man bspwm | sed 's/\[[0-9;]*m//g' | yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
 
 # close/kill active program
 super + shift + {w,k}
@@ -85,7 +85,7 @@ super + shift + {w,k}
 # set window state
 super + ctrl + {t,shift + t,f,shift + f}
     bspc node --state {tiled,pseudo_tiled,fullscreen,floating} && \
-    notify-send --expire-time=2000 "State: $(bspc query --tree --node | jq --raw-output '.client.state')"
+    notify-send --expire-time=3000 "State: $(bspc query --tree --node | jq --raw-output '.client.state')"
 
 # # set node flags
 # super + ctrl + {m,x,y,z}
@@ -94,7 +94,7 @@ super + ctrl + {t,shift + t,f,shift + f}
 # alternate between tiled, stacked, and monocle layout
 super + ctrl + m
     bspc desktop --layout next && \
-    notify-send --expire-time=2000 "Layout: $(bspc query --tree --desktop | jq --raw-output '.layout')"
+    notify-send --expire-time=3000 "Layout: $(bspc query --tree --desktop | jq --raw-output '.layout')"
 
 #-------------------------------------------------------------------------------
 # Focus and Swap
@@ -168,7 +168,7 @@ super + {1-9,0}
 # send focused node to given desktop and follow
 super + shift + {1-9,0}
     bspc node --to-desktop '^{1-9,10}' --follow #&& \
-    #notify-send --expire-time=2000 "Node -> Desktop $(bspc query --tree --desktop | jq --raw-output '.name')"
+    #notify-send --expire-time=3000 "Node -> Desktop $(bspc query --tree --desktop | jq --raw-output '.name')"
 
 #-------------------------------------------------------------------------------
 # Preselect
@@ -221,12 +221,12 @@ super + ctrl + s : {i,k,j,l,I,K,J,L,Up,Down,Left,Right}
 # balance windows in current desktop
 super + ctrl + b
     bspc node @/ --balance && \
-    notify-send --expire-time=2000 'Windows Balanced'
+    notify-send --expire-time=3000 'Windows Balanced'
 
 # equalize windows in current desktop
 super + ctrl + e
     bspc node @/ --equalize && \\
-    notify-send --expire-time=2000 'Windows Equalized'
+    notify-send --expire-time=3000 'Windows Equalized'
 
 # # move a floating window
 # super + ctrl + {Up,Down,Left,Right}
