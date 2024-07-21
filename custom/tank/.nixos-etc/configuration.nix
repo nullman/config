@@ -93,7 +93,6 @@
       "openssl-1.1.1w"
     ];
     packageOverrides = pkgs: {
-      python3 = pkgs.python311;
       nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
         inherit pkgs;
       };
@@ -134,11 +133,11 @@
     useXkbConfig = true;
   };
 
-  # graphics
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
-  };
+  ## graphics
+  #hardware.graphics = {
+  #  enable = true;
+  #  enable32Bit = true;
+  #};
 
   # dbus
   services.dbus.enable = true;
@@ -645,6 +644,7 @@
     arandr                                  # Simple visual front end for XRandR
     aspell                                  # Spell checker for many languages
     aspellDicts.en                          # Aspell dictionary for English
+    auto-cpufreq                            # Automatic CPU speed & power optimizer for Linux
     bluez                                   # Official Linux Bluetooth protocol stack
     bluez-tools                             # Set of tools to manage bluetooth devices for linux
     brightnessctl                           # This program allows you read and control device brightness
@@ -699,6 +699,7 @@
     nmap                                    # Free and open source utility for network discovery and security auditing
     ntfsprogs                               # FUSE-based NTFS driver with full write support
     ntp                                     # Implementation of the Network Time Protocol
+    openssl                                 # Cryptographic library that implements the SSL and TLS protocols
     p7zip                                   # New p7zip fork with additional codecs and improvements (forked from https://sourceforge.net/projects/p7zip/)
     parted                                  # Create, destroy, resize, check, and copy partitions
     pciutils                                # Collection of programs for inspecting and manipulating configuration of PCI devices
@@ -741,13 +742,14 @@
     dialog                                  # Display dialog boxes from shell
     dmenu                                   # Generic, highly customizable, and efficient menu for the X Window System
     dunst                                   # Lightweight and customizable notification daemon
-    eog                                     # GNOME image viewer
     evtest                                  # Simple tool for input event debugging
     eww                                     # Widget system made in Rust to create widgets for any WM
+    gnome.eog                               # GNOME image viewer
+    gnome.gnome-keyring                     # Collection of components in GNOME that store secrets, passwords, keys, certificates and make them available to applications
     gnome.gnome-settings-daemon             #
     gnome.gvfs                              # Virtual Filesystem support library (full GNOME support)
+    gnome.zenity                            # Tool to display dialogs from the commandline and shell scripts
     gnome-icon-theme                        # Collection of icons for the GNOME 2 desktop
-    gnome-keyring                           # Collection of components in GNOME that store secrets, passwords, keys, certificates and make them available to applications
     gnome-themes-extra                      #
     gsimplecal                              # Lightweight calendar application written in C++ using GTK
     gtk3                                    # Multi-platform toolkit for creating graphical user interfaces
@@ -790,7 +792,6 @@
     xdg-desktop-portal-gtk                  # Desktop integration portals for sandboxed apps
     xdg-utils                               # Set of command line tools that assist applications with a variety of desktop integration tasks
     yad                                     # GUI dialog tool for shell scripts
-    zenity                                  # Tool to display dialogs from the commandline and shell scripts
 
     # x11
     x2x                                     # Allows the keyboard, mouse on one X display to be used to control another X display
@@ -865,6 +866,7 @@
     #xfce.thunar-media-tags-plugin           # Thunar plugin providing tagging and renaming features for media files
     #xfce.thunar-volman                      # Thunar extension for automatic management of removable drives and media
     ymuse                                   # GTK client for Music Player Daemon (MPD)
+    zathura                                 # Highly customizable and functional PDF viewer
 
     # utilities
     appimage-run                            #
@@ -872,13 +874,13 @@
     dmg2img                                 # Apple's compressed dmg to standard (hfsplus) image disk file convert tool
     easytag                                 # View and edit tags for various audio files
     ffmpeg_6-full                           # Complete, cross-platform solution to record, convert and stream audio and video
-    file-roller                             # Archive manager for the GNOME desktop environment
     flameshot                               # Powerful yet simple to use screenshot software
     font-manager                            # Simple font management for GTK desktop environments
     fontpreview                             # Highly customizable and minimal font previewer written in bash
     fontforge-gtk                           # Font editor
     gcal                                    # Program for calculating and printing calendars
     glmark2                                 # OpenGL (ES) 2.0 benchmark
+    gnome.file-roller                       # Archive manager for the GNOME desktop environment
     gnome-frog                              # Intuitive text extraction tool (OCR) for GNOME desktop
     gparted                                 # Graphical disk partitioning tool
     grip id3lib                             # GTK-based audio CD player/ripper
@@ -916,6 +918,7 @@
     mc                                      # File Manager and User Shell for the GNU Project, known as Midnight Commander
     mcabber                                 # Small Jabber console client
     mop                                     # Simple stock tracker implemented in go
+    ncmpcpp                                 # Featureful ncurses based MPD client inspired by ncmpc
     orpie                                   # Curses-based RPN calculator
     phetch                                  # Quick lil gopher client for your terminal, written in rust
     qodem                                   # Re-implementation of the DOS-era Qmodem serial communications package
@@ -1044,7 +1047,7 @@
     # development
     acme                                    # Multi-platform cross assembler for 6502/6510/65816 CPUs
     adb-sync                                # Tool to synchronise files between a PC and an Android devices using ADB (Android Debug Bridge)
-    amber-lang                              # Programming language compiled to bash
+    #amber-lang                              # Programming language compiled to bash
     android-studio                          # Official IDE for Android (stable channel)
     android-tools                           # Android SDK platform tools
     android-udev-rules                      # Android udev rules list aimed to be the most comprehensive on the net
