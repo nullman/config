@@ -131,11 +131,11 @@
     useXkbConfig = true;
   };
 
-  # graphics
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
-  };
+  ## graphics
+  #hardware.graphics = {
+  #  enable = true;
+  #  enable32Bit = true;
+  #};
 
   # dbus
   services.dbus.enable = true;
@@ -331,7 +331,6 @@
   services.picom.enable = true;
 
   # pulse audio
-  sound.enable = true;
   hardware.pulseaudio.enable = true;
   hardware.pulseaudio.support32Bit = true;
   nixpkgs.config.pulseaudio = true;
@@ -445,7 +444,11 @@
   };
 
   # scanning
-  hardware.sane.enable = true;
+  hardware.sane = {
+    enable = true;
+    netConf = "printer";
+    extraBackends = [ pkgs.cnijfilter2 ];
+  };
 
   # virtualization
   virtualisation.libvirtd.enable = true;
@@ -640,6 +643,7 @@
     arandr                                  # Simple visual front end for XRandR
     aspell                                  # Spell checker for many languages
     aspellDicts.en                          # Aspell dictionary for English
+    auto-cpufreq                            # Automatic CPU speed & power optimizer for Linux
     bluez                                   # Official Linux Bluetooth protocol stack
     bluez-tools                             # Set of tools to manage bluetooth devices for linux
     brightnessctl                           # This program allows you read and control device brightness
@@ -694,6 +698,7 @@
     nmap                                    # Free and open source utility for network discovery and security auditing
     ntfsprogs                               # FUSE-based NTFS driver with full write support
     ntp                                     # Implementation of the Network Time Protocol
+    openssl                                 # Cryptographic library that implements the SSL and TLS protocols
     p7zip                                   # New p7zip fork with additional codecs and improvements (forked from https://sourceforge.net/projects/p7zip/)
     parted                                  # Create, destroy, resize, check, and copy partitions
     pciutils                                # Collection of programs for inspecting and manipulating configuration of PCI devices
@@ -738,13 +743,13 @@
     dunst                                   # Lightweight and customizable notification daemon
     evtest                                  # Simple tool for input event debugging
     eww                                     # Widget system made in Rust to create widgets for any WM
-    gnome-icon-theme                        # Collection of icons for the GNOME 2 desktop
     gnome.eog                               # GNOME image viewer
     gnome.gnome-keyring                     # Collection of components in GNOME that store secrets, passwords, keys, certificates and make them available to applications
     gnome.gnome-settings-daemon             #
-    gnome.gnome-themes-extra                #
     gnome.gvfs                              # Virtual Filesystem support library (full GNOME support)
     gnome.zenity                            # Tool to display dialogs from the commandline and shell scripts
+    gnome-icon-theme                        # Collection of icons for the GNOME 2 desktop
+    gnome-themes-extra                      #
     gsimplecal                              # Lightweight calendar application written in C++ using GTK
     gtk3                                    # Multi-platform toolkit for creating graphical user interfaces
     gxmessage                               # GTK enabled dropin replacement for xmessage
@@ -829,7 +834,7 @@
     mupdf                                   # Lightweight PDF, XPS, and E-book viewer and toolkit written in portable C
     notepadqq                               # Notepad++-like editor for the Linux desktop
     #obs-studio                              # Free and open source software for video recording and live streaming
-    #(pkgs.wrapOBS {plugins = with pkgs.obs-studio-plugins; [ wlrobs ]; })
+    #(pkgs.wrapOBS { plugins = with pkgs.obs-studio-plugins; [ wlrobs ]; })
     qmplay2                                 # Qt-based Multimedia player
     reaper                                  # Digital audio workstation
     spotify                                 # Play music from the Spotify music service
@@ -840,6 +845,7 @@
     #xfce.thunar-media-tags-plugin           # Thunar plugin providing tagging and renaming features for media files
     #xfce.thunar-volman                      # Thunar extension for automatic management of removable drives and media
     ymuse                                   # GTK client for Music Player Daemon (MPD)
+    zathura                                 # Highly customizable and functional PDF viewer
 
     # utilities
     appimage-run                            #
@@ -891,6 +897,7 @@
     mc                                      # File Manager and User Shell for the GNU Project, known as Midnight Commander
     mcabber                                 # Small Jabber console client
     mop                                     # Simple stock tracker implemented in go
+    ncmpcpp                                 # Featureful ncurses based MPD client inspired by ncmpc
     orpie                                   # Curses-based RPN calculator
     phetch                                  # Quick lil gopher client for your terminal, written in rust
     qodem                                   # Re-implementation of the DOS-era Qmodem serial communications package
@@ -1019,6 +1026,7 @@
     # development
     acme                                    # Multi-platform cross assembler for 6502/6510/65816 CPUs
     adb-sync                                # Tool to synchronise files between a PC and an Android devices using ADB (Android Debug Bridge)
+    #amber-lang                              # Programming language compiled to bash
     android-studio                          # Official IDE for Android (stable channel)
     android-tools                           # Android SDK platform tools
     android-udev-rules                      # Android udev rules list aimed to be the most comprehensive on the net
