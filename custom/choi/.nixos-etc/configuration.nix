@@ -9,18 +9,18 @@
 { config, pkgs, ... }:
 
 {
-  ## imports
-  #imports = [
-  #  ./hardware-configuration.nix
-  #  #<home-manager/nixos>
-  #];
-
   # imports
   imports = [
     ./hardware-configuration.nix
-    ./hardware-encryption-configuration.nix
     #<home-manager/nixos>
   ];
+
+  ## imports
+  #imports = [
+  #  ./hardware-configuration.nix
+  #  ./hardware-encryption-configuration.nix
+  #  #<home-manager/nixos>
+  #];
 
   # systemd-boot EFI boot loader
   boot.loader = {
@@ -31,15 +31,27 @@
     efi.canTouchEfiVariables = true;
   };
   fileSystems."/".options = [ "relatime" ];
+  # grub MBR boot loader
+  boot.loader = {
+    grub = {
+      enable = true;
+      enableCryptodisk = true;
+      configurationLimit = 20;
+      device = "/dev/xvda";
+      useOSProber = true;
+      timeoutStyle = "hidden";
+      extraConfig = "GRUB_TIMEOUT=0";
+    };
+  };
+  fileSystems."/".options = [ "relatime" ];
 
   ## networking
   #networking = {
-  #  #wireless.iwd.enable = true;
+  #  useDHCP = false;
   #  networkmanager = {
   #    enable = true;
   #    wifi.backend = "iwd";
   #  };
-  #  useDHCP = false;
   #};
   #networking.hostName = "choi";
   #networking.interfaces.wlan0.useDHCP = true;
