@@ -22,15 +22,15 @@
   #  #<home-manager/nixos>
   #];
 
-  # systemd-boot EFI boot loader
-  boot.loader = {
-    systemd-boot = {
-      enable = true;
-      configurationLimit = 20;
-    };
-    efi.canTouchEfiVariables = true;
-  };
-  fileSystems."/".options = [ "relatime" ];
+  ## systemd-boot EFI boot loader
+  #boot.loader = {
+  #  systemd-boot = {
+  #    enable = true;
+  #    configurationLimit = 20;
+  #  };
+  #  efi.canTouchEfiVariables = true;
+  #};
+  #fileSystems."/".options = [ "relatime" ];
   # grub MBR boot loader
   boot.loader = {
     grub = {
