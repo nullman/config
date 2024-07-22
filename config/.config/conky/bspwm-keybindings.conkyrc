@@ -54,7 +54,7 @@ ${color2}${hr}${color}
 [Super + Alt] + Print  ${alignr}Screen Shapshot
 [Super + Control] + Print  ${alignr}Window Shapshot
 [Super + Shift] + Print  ${alignr}Region Shapshot
-[Super + Shift] + R/V  ${alignr}Reload SXHKD/Video
+[Super + Shift] + S/V  ${alignr}Reload SXHKD/Video
 [Super + Shift] + T/E/C  ${alignr}Reload Tint/EWW/Conky
 [Super + Control + Alt] + L/R  ${alignr}Volume Down/Up 10%
 [Super + Control + Alt] + M  ${alignr}MPD Play/Pause

@@ -283,10 +283,6 @@ super + shift + e
 super + shift + c
     (${HOME}/bin/system-wallpaper-displays &) && notify-send --expire-time=3000 'Reloading Conky'
 
-# set laptop resolution
-super + shift + l
-    xrandr -s 1920x1050 && notify-send --expire-time=3000 'Resolution: 1920x1050'
-
 # reset video
 super + shift + v
     xrandr --output $(xrandr | grep ' connected ' | sed 's/ .*//' | head -n 1) --auto && \
