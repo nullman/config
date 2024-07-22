@@ -16,12 +16,8 @@ _command() {
     command -v "$1" >/dev/null 2>&1
 }
 
-<<<<<<< HEAD
-xrandr --output Virtual-1 --mode 1920x1080 --primary >/dev/null 2>&1
-=======
 # set video resolution via xrandr
 [[ -x ${HOME}/.xrandr ]] && ${HOME}/.xrandr >/dev/null 2>&1
->>>>>>> cec9796bd3b6ec556c40920b096a4c76fbc17131
 
 # xresources
 _command xrdb && [[ -f /etc/X11/xinit/.Xresources ]] && xrdb -merge /etc/X11/xinit/.Xresources
