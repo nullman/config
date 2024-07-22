@@ -16,6 +16,9 @@ _command() {
     command -v "$1" >/dev/null 2>&1
 }
 
+# set video resolution via xrandr
+[[ -x ${HOME}/.xrandr ]] && ${HOME}/.xrandr >/dev/null 2>&1
+
 # xresources
 _command xrdb && [[ -f /etc/X11/xinit/.Xresources ]] && xrdb -merge /etc/X11/xinit/.Xresources
 _command xrdb && [[ -f ${HOME}.Xresources ]] && xrdb -merge ${HOME}/.Xresources
