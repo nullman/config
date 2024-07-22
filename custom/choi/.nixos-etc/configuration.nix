@@ -39,11 +39,14 @@
       configurationLimit = 20;
       device = "/dev/xvda";
       useOSProber = true;
-      timeoutStyle = "hidden";
-      extraConfig = "GRUB_TIMEOUT=0";
     };
   };
   fileSystems."/".options = [ "relatime" ];
+  boot.loader.grub.timeoutStyle = "hidden";
+  boot.loader.grub.extraConfig = ''
+    GRUB_TIMEOUT=0
+    GRUB_GFXMODE=1980x1050x32
+  '';
 
   ## networking
   #networking = {
