@@ -16,6 +16,8 @@ _command() {
     command -v "$1" >/dev/null 2>&1
 }
 
+xrandr --output Virtual-1 --mode 1920x1080 --primary >/dev/null 2>&1
+
 # xresources
 _command xrdb && [[ -f /etc/X11/xinit/.Xresources ]] && xrdb -merge /etc/X11/xinit/.Xresources
 _command xrdb && [[ -f ${HOME}.Xresources ]] && xrdb -merge ${HOME}/.Xresources
