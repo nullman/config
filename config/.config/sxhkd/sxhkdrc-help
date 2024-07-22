@@ -3,43 +3,47 @@ Simple X Hotkey Daemon Key Bindings
 
 System Tools
 
-| Super | Alt | Ctrl | Shift | Key    | Description                     |
-|-------+-----+------+-------+--------+---------------------------------|
-| Super | Alt |      |       | h      | Display Key Bindings            |
-| Super |     |      | Shift | h      | Display BSPWM Manual            |
-| Super | Alt |      |       | Space  | Desktop Application Launcher    |
-| Super | Alt |      |       | d      | Program Launcher                |
-| Super | Alt |      |       | a      | Group Application Launcher      |
-| Super | Alt |      |       | Return | Menu Launcher                   |
-| Super | Alt |      |       | w      | Window Selector                 |
-| Super | Alt |      |       | c      | Clipmenu Selector               |
-| Super | Alt |      |       | e      | Emoji Selector                  |
-| Super | Alt |      |       | o      | Bookmarks Selector              |
-| Super | Alt |      |       | ;      | Typer Selector                  |
-| Super | Alt |      |       | '      | Paste Selector                  |
-| Super | Alt |      |       | s      | Spell and Define Word           |
-| Super | Alt |      |       | p      | Bitwarden Selector              |
-| Super |     | Ctrl |       | p      | Generate Password               |
-| Super | Alt |      |       | \      | Display Time                    |
-| Super | Alt |      |       | y      | Git Sync Home                   |
-| Super | Alt |      |       | u      | Git Sync Doc                    |
-| Super | Alt |      |       | x      | Start Screensaver               |
-| Super |     |      | Shift | x      | Lock Screensaver                |
-| Super |     |      | Shift | q      | Lock, Logout, Reboot, Shutdown  |
-| Super |     |      | Shift | p      | Get XProp Class Name            |
-| Super |     |      | Shift | Delete | Kill Process Clicked            |
-| Super | Alt |      |       | Print  | Screen Snapshot                 |
-| Super |     | Ctrl |       | Print  | Window Snapshot                 |
-| Super |     |      | Shift | Print  | Region Snapshot                 |
-| Super |     |      | Shift | s      | Reload SXHKD                    |
-| Super |     |      | Shift | t      | Reload Tint                     |
-| Super |     |      | Shift | e      | Reload EWW                      |
-| Super |     |      | Shift | c      | Reload Conky                    |
-| Super |     |      | Shift | v      | Reset Video                     |
-| Super | Alt |      |       | b      | Connect to Bluetooth Headphones |
+|-------+-----+------+-------+--------+------------------------------------|
+| Super | Alt | Ctrl | Shift | Key    | Description                        |
+|-------+-----+------+-------+--------+------------------------------------|
+| Super | Alt |      |       | h      | Display Key Bindings               |
+| Super |     |      | Shift | h      | Display BSPWM Manual               |
+| Super | Alt |      |       | Space  | Desktop Application Launcher       |
+| Super | Alt |      |       | d      | Program Launcher                   |
+| Super | Alt |      |       | a      | Group Application Launcher         |
+| Super | Alt |      |       | Return | Menu Launcher                      |
+| Super | Alt |      |       | w      | Window Selector                    |
+| Super | Alt |      |       | c      | Clipmenu Selector                  |
+| Super | Alt |      |       | e      | Emoji Selector                     |
+| Super | Alt |      |       | o      | Bookmarks Selector                 |
+| Super | Alt |      |       | ;      | Typer Selector                     |
+| Super | Alt |      |       | '      | Paste Selector                     |
+| Super | Alt |      |       | s      | Spell and Define Word              |
+| Super | Alt |      |       | p      | Bitwarden Selector                 |
+| Super |     | Ctrl |       | p      | Generate Password                  |
+| Super | Alt |      |       | \      | Display Time                       |
+| Super | Alt |      |       | y      | Git Sync Home                      |
+| Super | Alt |      |       | u      | Git Sync Doc                       |
+| Super | Alt |      |       | x      | Start Screensaver                  |
+| Super |     |      | Shift | x      | Lock Screensaver                   |
+| Super |     |      | Shift | q      | Lock, Logout, Reboot, Shutdown     |
+| Super |     |      | Shift | p      | Get XProp Class Name               |
+| Super |     |      | Shift | Delete | Kill Process Clicked               |
+| Super | Alt |      |       | Print  | Screen Snapshot                    |
+| Super |     | Ctrl |       | Print  | Window Snapshot                    |
+| Super |     |      | Shift | Print  | Region Snapshot                    |
+| Super |     |      | Shift | s      | Reload SXHKD                       |
+| Super |     |      | Shift | t      | Reload Tint                        |
+| Super |     |      | Shift | e      | Reload EWW                         |
+| Super |     |      | Shift | c      | Reload Conky                       |
+| Super |     |      | Shift | v      | Reset Video                        |
+| Super |     |      | Shift | l      | Set laptop resolution to 1980x1050 |
+| Super | Alt |      |       | b      | Connect to Bluetooth Headphones    |
+|-------+-----+------+-------+--------+------------------------------------|
 
 Media
 
+|-------+-----+------+-------+--------+---------------------------|
 | Super | Alt | Ctrl | Shift | Key    | Description               |
 |-------+-----+------+-------+--------+---------------------------|
 | Super | Alt | Ctrl |       | Left   | Volume Down               |
@@ -53,9 +57,12 @@ Media
 | Super | Alt | Ctrl |       | x      | MP2: Stop Player          |
 | Super | Alt | Ctrl |       | b      | MP2: Play Next Song       |
 | Super | Alt | Ctrl |       | "      | MP2: Display Current Song |
+|-------+-----+------+-------+--------+---------------------------|
 
 Applications
 
+|-------+-----+------+-------+--------+-------------|
 | Super | Alt | Ctrl | Shift | Key    | Description |
 |-------+-----+------+-------+--------+-------------|
 | Super |     |      |       | Return | Terminal    |
+|-------+-----+------+-------+--------+-------------|

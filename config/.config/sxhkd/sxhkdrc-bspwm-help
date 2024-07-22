@@ -3,15 +3,18 @@ Simple X Hotkey Daemon Key Bindings for BSPWM
 
 General
 
+|-------+-----+------+-------+-----+----------------------------|
 | Super | Alt | Ctrl | Shift | Key | Description                |
 |-------+-----+------+-------+-----+----------------------------|
 | Super |     | Ctrl |       | h   | Display BSPWM Key Bindings |
 | Super |     |      | Shift | w   | Close Node                 |
 | Super |     |      | Shift | k   | Kill Node                  |
+|-------+-----+------+-------+-----+----------------------------|
 
 
 State
 
+|-------+-----+------+-------+-----+-----------------------|
 | Super | Alt | Ctrl | Shift | Key | Description           |
 |-------+-----+------+-------+-----+-----------------------|
 | Super |     | Ctrl |       | t   | Tiled Layout          |
@@ -20,9 +23,11 @@ State
 | Super |     | Ctrl | Shift | f   | Floating Layout       |
 | Super |     | Ctrl |       | m   | Toggle Monocle Layout |
 | Super |     | Ctrl | Shift | m   | Toggle Stacked Layout |
+|-------+-----+------+-------+-----+-----------------------|
 
 Focus and Swap
 
+|-------+-----+------+-------+---------+--------------------------------|
 | Super | Alt | Ctrl | Shift | Key     | Description                    |
 |-------+-----+------+-------+---------+--------------------------------|
 | Super |     |      |       | i,Up    | Focus Up Node                  |
@@ -50,14 +55,17 @@ Focus and Swap
 | Super |     |      |       | grave   | Focus Last Desktop             |
 | Super |     |      |       | 1-9,0   | Focus given Desktop            |
 | Super |     |      | Shift | 1-9,0   | Move Node to given Desktop     |
+|-------+-----+------+-------+---------+--------------------------------|
 
 Move and Resize
 
+|-------+-----+------+-------+-----+---------------------------|
 | Super | Alt | Ctrl | Shift | Key | Description               |
 |-------+-----+------+-------+-----+---------------------------|
 | Super |     | Ctrl |       | s   | Resize/Move Node Mode [1] |
 | Super |     | Ctrl |       | b   | Balance Nodes             |
 | Super |     | Ctrl |       | e   | Equalize Nodes            |
+|-------+-----+------+-------+-----+---------------------------|
 
 [1] After entering resize/move window mode, use i/I, k/K, j/J, and l/L to
 expand/contract the current window, and use Up, Down, Left, and Right arrow
