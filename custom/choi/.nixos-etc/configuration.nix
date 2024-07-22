@@ -327,27 +327,16 @@
   #  xwayland.enable = true;
   #};
 
-  ## display manager: lightdm
-  #services.xserver.displayManager.lightdm.greeters.slick = {
-  #  enable = true;
-  #  extraConfig = ''
-  #    [Greeter]
-  #    background=/etc/nixos/wallpapers/Fluorescence.jpg
-  #  '';
-  #};
-  ## display manager: sddm
-  #services.displayManager.sddm.enable = true;
-
   # display manager: lightdm
   services.xserver.displayManager.lightdm.greeters.slick = {
     enable = true;
     extraConfig = ''
       [Greeter]
       background=/etc/nixos/wallpapers/Fluorescence.jpg
-      [SeatDefaults]
-      display-setup-script=/etc/nixos/lightdm-display-setup-script
     '';
   };
+  ## display manager: sddm
+  #services.displayManager.sddm.enable = true;
 
   # window manager: bspwm
   #services.xserver.desktopManager.xfce.enable = true;
