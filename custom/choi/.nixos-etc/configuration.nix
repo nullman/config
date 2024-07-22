@@ -71,13 +71,13 @@
     nameservers = [ "192.168.1.1" "8.8.8.8" ];
   };
 
-  # open firewall ports
-  networking.firewall = {
-    enable = true;
-    allowedTCPPorts = [ 515 631 9100 ];
-    allowedUDPPorts = [ 515 631 9100 ];
-    checkReversePath = "loose";
-  };
+  ## open firewall ports
+  #networking.firewall = {
+  #  enable = true;
+  #  allowedTCPPorts = [ 515 631 9100 ];
+  #  allowedUDPPorts = [ 515 631 9100 ];
+  #  checkReversePath = "loose";
+  #};
 
   ## openssh server
   #services.openssh.enable = true;
@@ -343,9 +343,9 @@
   services.xserver.windowManager.bspwm.enable = true;
   services.displayManager.defaultSession = "none+bspwm";
 
-  # window manager: i3wm
-  services.xserver.windowManager.i3.enable = true;
-  services.xserver.windowManager.i3.package = pkgs.i3-gaps;
+  ## window manager: i3wm
+  #services.xserver.windowManager.i3.enable = true;
+  #services.xserver.windowManager.i3.package = pkgs.i3-gaps;
 
   # compositor: picom
   services.picom.enable = true;
@@ -852,106 +852,106 @@
     #xdg-desktop-portal-hyprland             # xdg-desktop-portal backend for Hyprland
     #xwayland                                # X server for interfacing X11 apps with the Wayland protocol
 
-    ## applications
-    #ardour                                  # Multi-track hard disk recording software
-    #audacious                               # Lightweight and versatile audio player
-    #audacity                                # Sound editor with graphical UI
-    #blender                                 # 3D Creation/Animation/Publishing System
-    #calibre                                 # Comprehensive e-book software
-    #celluloid                               # Simple GTK frontend for the mpv video player
-    #cider                                   # New look into listening and enjoying Apple Music in style and performance
-    #electrum                                # Lightweight Bitcoin wallet
-    #evince                                  # GNOME's document viewer
-    #freetube                                # Open Source YouTube app for privacy
-    #gimp                                    # GNU Image Manipulation Program
-    #gphoto2                                 # Ready to use set of digital camera software applications
-    #gphoto2fs                               # Fuse FS to mount a digital camera
-    #inkscape                                # Vector graphics editor
-    ##kdenlive                                # Video editor
-    #libreoffice                             # Comprehensive, professional-quality productivity suite, a variant of openoffice.org
-    #lmms                                    # DAW similar to FL Studio (music production software)
-    #mpv                                     # General-purpose media player, fork of MPlayer and mplayer2
-    #mupdf                                   # Lightweight PDF, XPS, and E-book viewer and toolkit written in portable C
-    #notepadqq                               # Notepad++-like editor for the Linux desktop
-    ##obs-studio                              # Free and open source software for video recording and live streaming
-    ##(pkgs.wrapOBS { plugins = with pkgs.obs-studio-plugins; [ wlrobs ]; })
-    #qmplay2                                 # Qt-based Multimedia player
-    #reaper                                  # Digital audio workstation
-    #spotify                                 # Play music from the Spotify music service
-    #vlc                                     # Cross-platform media player and streaming server
-    ##virt-viewer                             # Viewer for remote virtual machines
-    ##xfce.thunar                             # Xfce file manager
-    ##xfce.thunar-archive-plugin              # Thunar plugin providing file context menus for archives
-    ##xfce.thunar-media-tags-plugin           # Thunar plugin providing tagging and renaming features for media files
-    ##xfce.thunar-volman                      # Thunar extension for automatic management of removable drives and media
-    #ymuse                                   # GTK client for Music Player Daemon (MPD)
-    #zathura                                 # Highly customizable and functional PDF viewer
+    # applications
+    ardour                                  # Multi-track hard disk recording software
+    audacious                               # Lightweight and versatile audio player
+    audacity                                # Sound editor with graphical UI
+    blender                                 # 3D Creation/Animation/Publishing System
+    calibre                                 # Comprehensive e-book software
+    celluloid                               # Simple GTK frontend for the mpv video player
+    cider                                   # New look into listening and enjoying Apple Music in style and performance
+    electrum                                # Lightweight Bitcoin wallet
+    evince                                  # GNOME's document viewer
+    freetube                                # Open Source YouTube app for privacy
+    gimp                                    # GNU Image Manipulation Program
+    gphoto2                                 # Ready to use set of digital camera software applications
+    gphoto2fs                               # Fuse FS to mount a digital camera
+    inkscape                                # Vector graphics editor
+    #kdenlive                                # Video editor
+    libreoffice                             # Comprehensive, professional-quality productivity suite, a variant of openoffice.org
+    lmms                                    # DAW similar to FL Studio (music production software)
+    mpv                                     # General-purpose media player, fork of MPlayer and mplayer2
+    mupdf                                   # Lightweight PDF, XPS, and E-book viewer and toolkit written in portable C
+    notepadqq                               # Notepad++-like editor for the Linux desktop
+    #obs-studio                              # Free and open source software for video recording and live streaming
+    #(pkgs.wrapOBS { plugins = with pkgs.obs-studio-plugins; [ wlrobs ]; })
+    qmplay2                                 # Qt-based Multimedia player
+    reaper                                  # Digital audio workstation
+    spotify                                 # Play music from the Spotify music service
+    vlc                                     # Cross-platform media player and streaming server
+    #virt-viewer                             # Viewer for remote virtual machines
+    #xfce.thunar                             # Xfce file manager
+    #xfce.thunar-archive-plugin              # Thunar plugin providing file context menus for archives
+    #xfce.thunar-media-tags-plugin           # Thunar plugin providing tagging and renaming features for media files
+    #xfce.thunar-volman                      # Thunar extension for automatic management of removable drives and media
+    ymuse                                   # GTK client for Music Player Daemon (MPD)
+    zathura                                 # Highly customizable and functional PDF viewer
 
-    ## utilities
-    #appimage-run                            #
-    #bitwarden                               # A secure and free password manager for all of your devices
-    #dmg2img                                 # Apple's compressed dmg to standard (hfsplus) image disk file convert tool
-    #easytag                                 # View and edit tags for various audio files
-    #ffmpeg_6-full                           # Complete, cross-platform solution to record, convert and stream audio and video
-    #flameshot                               # Powerful yet simple to use screenshot software
-    #font-manager                            # Simple font management for GTK desktop environments
-    #fontpreview                             # Highly customizable and minimal font previewer written in bash
-    #fontforge-gtk                           # Font editor
-    #gcal                                    # Program for calculating and printing calendars
-    #glmark2                                 # OpenGL (ES) 2.0 benchmark
-    #gnome.file-roller                       # Archive manager for the GNOME desktop environment
-    #gnome-frog                              # Intuitive text extraction tool (OCR) for GNOME desktop
-    #gparted                                 # Graphical disk partitioning tool
-    #grip id3lib                             # GTK-based audio CD player/ripper
-    #gtkimageview                            # Image viewer widget for GTK
-    #handbrake libdvdcss libaacs libbluray   # Tool for converting video files and ripping DVDs
-    #livecaptions                            # Linux Desktop application that provides live captioning
-    #makemkv                                 # Convert blu-ray and dvd to mkv
-    #mediawriter                             # Tool to write images files to portable media
-    #meld                                    # Visual diff and merge tool
-    ##mtkclient                               #
-    #poppler_utils                           # PDF rendering library
-    #scrcpy                                  # Display and control Android devices over USB or TCP/IP
-    #simplescreenrecorder                    # Screen recorder for Linux
-    #upscayl                                 # Free and Open Source AI Image Upscaler
-    ##x48                                     #
+    # utilities
+    appimage-run                            #
+    bitwarden                               # A secure and free password manager for all of your devices
+    dmg2img                                 # Apple's compressed dmg to standard (hfsplus) image disk file convert tool
+    easytag                                 # View and edit tags for various audio files
+    ffmpeg_6-full                           # Complete, cross-platform solution to record, convert and stream audio and video
+    flameshot                               # Powerful yet simple to use screenshot software
+    font-manager                            # Simple font management for GTK desktop environments
+    fontpreview                             # Highly customizable and minimal font previewer written in bash
+    fontforge-gtk                           # Font editor
+    gcal                                    # Program for calculating and printing calendars
+    glmark2                                 # OpenGL (ES) 2.0 benchmark
+    gnome.file-roller                       # Archive manager for the GNOME desktop environment
+    gnome-frog                              # Intuitive text extraction tool (OCR) for GNOME desktop
+    gparted                                 # Graphical disk partitioning tool
+    grip id3lib                             # GTK-based audio CD player/ripper
+    gtkimageview                            # Image viewer widget for GTK
+    handbrake libdvdcss libaacs libbluray   # Tool for converting video files and ripping DVDs
+    livecaptions                            # Linux Desktop application that provides live captioning
+    makemkv                                 # Convert blu-ray and dvd to mkv
+    mediawriter                             # Tool to write images files to portable media
+    meld                                    # Visual diff and merge tool
+    #mtkclient                               #
+    poppler_utils                           # PDF rendering library
+    scrcpy                                  # Display and control Android devices over USB or TCP/IP
+    simplescreenrecorder                    # Screen recorder for Linux
+    upscayl                                 # Free and Open Source AI Image Upscaler
+    #x48                                     #
 
-    ## tui
-    #atuin                                   # Replacement for a shell history which records additional commands context with optional encrypted synchronization between machines
-    #bmon                                    # Network bandwidth monitor
-    #btop                                    # Monitor of resources
-    #calcurse                                # Calendar and scheduling application for the command line
-    #cmus                                    # Small, fast and powerful console music player for Linux and *BSD
-    #cointop                                 # Fastest and most interactive terminal based UI application for tracking cryptocurrencies
-    #du-dust                                 # du + rust = dust. Like du but more intuitive
-    #elinks                                  # Full-featured text-mode web browser
-    #gopher                                  # Ncurses gopher client
-    #gomuks                                  # A terminal based Matrix client written in Go
-    #hexedit                                 # View and edit files in hexadecimal or in ASCII
-    #hexyl                                   # Command-line hex viewer
-    #htop                                    # Interactive process viewer
-    #iftop                                   # Display bandwidth usage on a network interface
-    #irssi                                   # Terminal based IRC client
-    #links2                                  # Small browser with some graphics support
-    #lynx                                    # Text-mode web browser
-    #mc                                      # File Manager and User Shell for the GNU Project, known as Midnight Commander
-    #mcabber                                 # Small Jabber console client
-    #mop                                     # Simple stock tracker implemented in go
-    #ncmpcpp                                 # Featureful ncurses based MPD client inspired by ncmpc
-    #orpie                                   # Curses-based RPN calculator
-    #phetch                                  # Quick lil gopher client for your terminal, written in rust
-    #qodem                                   # Re-implementation of the DOS-era Qmodem serial communications package
-    #ranger                                  # File manager with minimalistic curses interface
-    #s-tui                                   # Stress-Terminal UI monitoring tool
-    #tig                                     # Text-mode interface for git
-    #tty-clock                               # Digital clock in ncurses
-    #ugrep                                   # Ultra fast grep with interactive query UI
-    #w3m                                     # Text-mode web browser
-    #wavemon                                 # Ncurses-based monitoring application for wireless network devices
-    #wordgrinder                             # Text-based word processor
-    #x3270                                   # IBM 3270 terminal emulator for the X Window System
-    #xplr                                    # Hackable, minimal, fast TUI file explorer
-    #zenith                                  # Sort of like top or htop but with zoom-able charts, network, and disk usage
+    # tui
+    atuin                                   # Replacement for a shell history which records additional commands context with optional encrypted synchronization between machines
+    bmon                                    # Network bandwidth monitor
+    btop                                    # Monitor of resources
+    calcurse                                # Calendar and scheduling application for the command line
+    cmus                                    # Small, fast and powerful console music player for Linux and *BSD
+    cointop                                 # Fastest and most interactive terminal based UI application for tracking cryptocurrencies
+    du-dust                                 # du + rust = dust. Like du but more intuitive
+    elinks                                  # Full-featured text-mode web browser
+    gopher                                  # Ncurses gopher client
+    gomuks                                  # A terminal based Matrix client written in Go
+    hexedit                                 # View and edit files in hexadecimal or in ASCII
+    hexyl                                   # Command-line hex viewer
+    htop                                    # Interactive process viewer
+    iftop                                   # Display bandwidth usage on a network interface
+    irssi                                   # Terminal based IRC client
+    links2                                  # Small browser with some graphics support
+    lynx                                    # Text-mode web browser
+    mc                                      # File Manager and User Shell for the GNU Project, known as Midnight Commander
+    mcabber                                 # Small Jabber console client
+    mop                                     # Simple stock tracker implemented in go
+    ncmpcpp                                 # Featureful ncurses based MPD client inspired by ncmpc
+    orpie                                   # Curses-based RPN calculator
+    phetch                                  # Quick lil gopher client for your terminal, written in rust
+    qodem                                   # Re-implementation of the DOS-era Qmodem serial communications package
+    ranger                                  # File manager with minimalistic curses interface
+    s-tui                                   # Stress-Terminal UI monitoring tool
+    tig                                     # Text-mode interface for git
+    tty-clock                               # Digital clock in ncurses
+    ugrep                                   # Ultra fast grep with interactive query UI
+    w3m                                     # Text-mode web browser
+    wavemon                                 # Ncurses-based monitoring application for wireless network devices
+    wordgrinder                             # Text-based word processor
+    x3270                                   # IBM 3270 terminal emulator for the X Window System
+    xplr                                    # Hackable, minimal, fast TUI file explorer
+    zenith                                  # Sort of like top or htop but with zoom-able charts, network, and disk usage
 
     # console
     argc                                    # Command-line options, arguments and sub-commands parser for bash
@@ -1009,36 +1009,36 @@
     yt-dlp                                  # Command-line tool to download videos from YouTube.com and other sites (youtube-dl fork)
     zoxide                                  # Fast cd command that learns your habits
 
-    ## internet
-    #betterbird                              # Betterbird is a fine-tuned version of Mozilla Thunderbird, Thunderbird on steroids, if you will
-    #bore-cli                                # Rust tool to create TCP tunnels
-    #brave                                   # Privacy-oriented browser for Desktop and Laptop computers
-    #chromium                                # Open source web browser from Google
-    #cointop                                 # Fastest and most interactive terminal based UI application for tracking cryptocurrencies
-    #dino                                    # Modern Jabber/XMPP Client using GTK/Vala
-    #discord                                 # All-in-one cross-platform voice and text chat for gamers
-    #element-desktop                         # A feature-rich client for Matrix.org
-    #filezilla                               # Graphical FTP, FTPS and SFTP client
-    #firefox                                 # Web browser built from Firefox source tree
-    #freenet                                 # Decentralised and censorship-resistant network
-    #gajim                                   # Jabber client written in PyGTK
-    #google-chrome                           # Freeware web browser developed by Google
-    #kristall                                # Graphical small-internet client, supports gemini, http, https, gopher, finger
-    ##magic-wormhole                          # Securely transfer data between computers
-    #mop                                     # Simple stock tracker implemented in go
-    #ncgopher                                # Gopher and gemini client for the modern internet
-    ##nyxt                                    # Infinitely extensible web-browser (with Lisp development files using WebKitGTK platform port)
-    #pidgin                                  # Multi-protocol instant messaging client
-    #slack                                   # Desktop client for Slack
-    #simplex-chat-desktop                    # Desktop application for SimpleX Chat
-    ##sparkleshare                            # Share and collaborate by syncing with any Git repository instantly. Linux, macOS, and Windows
-    #syncterm                                # BBS terminal emulator
-    #telegram-desktop                        # Telegram Desktop messaging app
-    #transmission_4-gtk                      # Fast, easy and free BitTorrent client
-    #tuba                                    # Browse the Fediverse
-    ##ungoogled-chromium                      # Open source web browser from Google, with dependencies on Google web services removed
-    #vdhcoapp                                # Companion application for the Video DownloadHelper browser add-on
-    #zoom-us                                 # zoom.us video conferencing application
+    # internet
+    betterbird                              # Betterbird is a fine-tuned version of Mozilla Thunderbird, Thunderbird on steroids, if you will
+    bore-cli                                # Rust tool to create TCP tunnels
+    brave                                   # Privacy-oriented browser for Desktop and Laptop computers
+    chromium                                # Open source web browser from Google
+    cointop                                 # Fastest and most interactive terminal based UI application for tracking cryptocurrencies
+    dino                                    # Modern Jabber/XMPP Client using GTK/Vala
+    discord                                 # All-in-one cross-platform voice and text chat for gamers
+    element-desktop                         # A feature-rich client for Matrix.org
+    filezilla                               # Graphical FTP, FTPS and SFTP client
+    firefox                                 # Web browser built from Firefox source tree
+    freenet                                 # Decentralised and censorship-resistant network
+    gajim                                   # Jabber client written in PyGTK
+    google-chrome                           # Freeware web browser developed by Google
+    kristall                                # Graphical small-internet client, supports gemini, http, https, gopher, finger
+    #magic-wormhole                          # Securely transfer data between computers
+    mop                                     # Simple stock tracker implemented in go
+    ncgopher                                # Gopher and gemini client for the modern internet
+    #nyxt                                    # Infinitely extensible web-browser (with Lisp development files using WebKitGTK platform port)
+    pidgin                                  # Multi-protocol instant messaging client
+    slack                                   # Desktop client for Slack
+    simplex-chat-desktop                    # Desktop application for SimpleX Chat
+    #sparkleshare                            # Share and collaborate by syncing with any Git repository instantly. Linux, macOS, and Windows
+    syncterm                                # BBS terminal emulator
+    telegram-desktop                        # Telegram Desktop messaging app
+    transmission_4-gtk                      # Fast, easy and free BitTorrent client
+    tuba                                    # Browse the Fediverse
+    #ungoogled-chromium                      # Open source web browser from Google, with dependencies on Google web services removed
+    vdhcoapp                                # Companion application for the Video DownloadHelper browser add-on
+    zoom-us                                 # zoom.us video conferencing application
 
     ## emulators
     #basiliskii                              # 68k Macintosh emulator
@@ -1063,71 +1063,71 @@
     #distrobox                               # Wrapper around podman or docker to create and start containers
     #podman                                  # Program for managing pods, containers and container images
 
-    ## development
-    #acme                                    # Multi-platform cross assembler for 6502/6510/65816 CPUs
-    #adb-sync                                # Tool to synchronise files between a PC and an Android devices using ADB (Android Debug Bridge)
-    ##amber-lang                              # Programming language compiled to bash
-    #android-studio                          # Official IDE for Android (stable channel)
-    #android-tools                           # Android SDK platform tools
-    #android-udev-rules                      # Android udev rules list aimed to be the most comprehensive on the net
-    #autoconf                                # Part of the GNU Build System
-    #automake                                # GNU standard-compliant makefile generator
-    #binutils                                # Tools for manipulating binaries (linker, assembler, etc.) (wrapper script)
-    #binutils-ia16                           #
-    #bison                                   # Yacc-compatible parser generator
-    #cc65                                    # C compiler for processors of 6502 family
-    #ccache                                  # Compiler cache for fast recompilation of C/C++ code
-    #clang                                   # C language family frontend for LLVM (wrapper script)
-    #cmake                                   # Cross-platform, open-source build system generator
-    #csvkit                                  # Suite of command-line tools for converting to and working with CSV
-    #ctags                                   # Tool for fast source code browsing (exuberant ctags)
-    #djgpp_i686                              # Complete 32-bit GNU-based development system for Intel x86 PCs running DOS
-    #flex                                    # Fast lexical analyser generator
-    #fpc                                     # Free Pascal Compiler from a source distribution
-    #gcc                                     # GNU Compiler Collection, version 13.2.0 (wrapper script)
-    #gcc-ia16                                # xss gcc-ia16
-    #github-desktop                          # GUI for managing Git and GitHub
-    #glibc                                   # GNU C Library
-    ##gmp                                     # GNU multiple precision arithmetic library
-    #gnumake                                 # Tool to control the generation of non-source files from sources
-    #gnuplot                                 # Portable command-line driven graphing utility for many platforms
-    #gpp                                     # General-purpose preprocessor with customizable syntax
-    #graphviz                                # Graph visualization tools
-    #gradle                                  # Enterprise-grade build system
-    #htmlq                                   # Like jq, but for HTML
-    #jdk                                     # Open-source Java Development Kit
-    ##jdk11                                   # Open-source Java Development Kit
-    ##jdk8                                    # Open-source Java Development Kit
-    #jetbrains.idea-community                # Free Java, Kotlin, Groovy and Scala IDE from jetbrains (built from source)
-    #jre                                     # Open-source Java Development Kit
-    #jq                                      # Lightweight and flexible command-line JSON processor
-    #jqp                                     # TUI playground to experiment with jq
-    #kotlin                                  # General purpose programming language
-    #lazygit                                 # Simple terminal UI for git commands
-    ##libmpc                                  # Library for multiprecision complex arithmetic with exact rounding
-    #m4                                      # GNU M4, a macro processor
-    ##mpfr                                    # Library for multiple-precision floating-point arithmetic
-    #nasm                                    # 80x86 and x86-64 assembler designed for portability and modularity
-    #node2nix                                # Generate Nix expressions to build NPM packages
-    #open-watcom-bin                         # Project to maintain and enhance the Watcom C, C++, and Fortran cross compilers and tools
-    ##open-watcom-v2                          # V2 fork of the Open Watcom suite of compilers and tools
-    #pandoc                                  # Conversion between documentation formats
-    #patch                                   # GNU Patch, a program to apply differences to files
-    #plantuml                                # Draw UML diagrams using a simple and human readable text description
-    #python311                               # High-level dynamically-typed programming language
-    #python311Packages.pip                   # PyPA recommended tool for installing Python packages
-    #racket                                  # Programmable programming language
-    #regina                                  # REXX interpreter
-    #ruby                                    # Object-oriented language for quick and easy programming
-    #rubyPackages.nokogiri                   #
-    #rustc                                   # Safe, concurrent, practical language (wrapper script)
-    #shellcheck                              # Shell script analysis tool
-    #tokei                                   # Program that allows you to count your code, quickly
-    #vlang                                   # Simple, fast, safe, compiled language for developing maintainable software
-    #x16-emulator                            # Official emulator of CommanderX16 8-bit computer
-    #x16-rom                                 # ROM file for CommanderX16 8-bit computer
-    #yq                                      # Command-line YAML/XML/TOML processor - jq wrapper for YAML, XML, TOML documents
-    #zlib                                    # Lossless data-compression library
+    # development
+    acme                                    # Multi-platform cross assembler for 6502/6510/65816 CPUs
+    adb-sync                                # Tool to synchronise files between a PC and an Android devices using ADB (Android Debug Bridge)
+    #amber-lang                              # Programming language compiled to bash
+    android-studio                          # Official IDE for Android (stable channel)
+    android-tools                           # Android SDK platform tools
+    android-udev-rules                      # Android udev rules list aimed to be the most comprehensive on the net
+    autoconf                                # Part of the GNU Build System
+    automake                                # GNU standard-compliant makefile generator
+    binutils                                # Tools for manipulating binaries (linker, assembler, etc.) (wrapper script)
+    binutils-ia16                           #
+    bison                                   # Yacc-compatible parser generator
+    cc65                                    # C compiler for processors of 6502 family
+    ccache                                  # Compiler cache for fast recompilation of C/C++ code
+    clang                                   # C language family frontend for LLVM (wrapper script)
+    cmake                                   # Cross-platform, open-source build system generator
+    csvkit                                  # Suite of command-line tools for converting to and working with CSV
+    ctags                                   # Tool for fast source code browsing (exuberant ctags)
+    djgpp_i686                              # Complete 32-bit GNU-based development system for Intel x86 PCs running DOS
+    flex                                    # Fast lexical analyser generator
+    fpc                                     # Free Pascal Compiler from a source distribution
+    gcc                                     # GNU Compiler Collection, version 13.2.0 (wrapper script)
+    gcc-ia16                                # xss gcc-ia16
+    github-desktop                          # GUI for managing Git and GitHub
+    glibc                                   # GNU C Library
+    #gmp                                     # GNU multiple precision arithmetic library
+    gnumake                                 # Tool to control the generation of non-source files from sources
+    gnuplot                                 # Portable command-line driven graphing utility for many platforms
+    gpp                                     # General-purpose preprocessor with customizable syntax
+    graphviz                                # Graph visualization tools
+    gradle                                  # Enterprise-grade build system
+    htmlq                                   # Like jq, but for HTML
+    jdk                                     # Open-source Java Development Kit
+    #jdk11                                   # Open-source Java Development Kit
+    #jdk8                                    # Open-source Java Development Kit
+    jetbrains.idea-community                # Free Java, Kotlin, Groovy and Scala IDE from jetbrains (built from source)
+    jre                                     # Open-source Java Development Kit
+    jq                                      # Lightweight and flexible command-line JSON processor
+    jqp                                     # TUI playground to experiment with jq
+    kotlin                                  # General purpose programming language
+    lazygit                                 # Simple terminal UI for git commands
+    #libmpc                                  # Library for multiprecision complex arithmetic with exact rounding
+    m4                                      # GNU M4, a macro processor
+    #mpfr                                    # Library for multiple-precision floating-point arithmetic
+    nasm                                    # 80x86 and x86-64 assembler designed for portability and modularity
+    node2nix                                # Generate Nix expressions to build NPM packages
+    open-watcom-bin                         # Project to maintain and enhance the Watcom C, C++, and Fortran cross compilers and tools
+    #open-watcom-v2                          # V2 fork of the Open Watcom suite of compilers and tools
+    pandoc                                  # Conversion between documentation formats
+    patch                                   # GNU Patch, a program to apply differences to files
+    plantuml                                # Draw UML diagrams using a simple and human readable text description
+    python311                               # High-level dynamically-typed programming language
+    python311Packages.pip                   # PyPA recommended tool for installing Python packages
+    racket                                  # Programmable programming language
+    regina                                  # REXX interpreter
+    ruby                                    # Object-oriented language for quick and easy programming
+    rubyPackages.nokogiri                   #
+    rustc                                   # Safe, concurrent, practical language (wrapper script)
+    shellcheck                              # Shell script analysis tool
+    tokei                                   # Program that allows you to count your code, quickly
+    vlang                                   # Simple, fast, safe, compiled language for developing maintainable software
+    x16-emulator                            # Official emulator of CommanderX16 8-bit computer
+    x16-rom                                 # ROM file for CommanderX16 8-bit computer
+    yq                                      # Command-line YAML/XML/TOML processor - jq wrapper for YAML, XML, TOML documents
+    zlib                                    # Lossless data-compression library
 
     ## ai
     #imaginer                                # Imaginer with AI
@@ -1143,26 +1143,26 @@
     # printing
     system-config-printer                   #
 
-    ## console hacks
-    #aalib                                   # ASCII art graphics library
-    #asciiquarium                            # Enjoy the mysteries of the sea from the safety of your own terminal!
-    #bb                                      # AA-lib demo
-    #bucklespring                            # Nostalgia bucklespring keyboard sound
-    #cbonsai                                 # Grow bonsai trees in your terminal
-    #cmatrix                                 # Simulates the falling characters theme from The Matrix movie
-    #cowsay                                  # Program which generates ASCII pictures of a cow with a message
-    #dwt1-shell-color-scripts                # Collection of shell color scripts collected by dt (Derek Taylor)
-    #figlet                                  # Program for making large letters out of ordinary text
-    #genact                                  # Nonsense activity generator
-    #hackertyper                             # C rewrite of hackertyper.net
-    #hollywood                               # Fill your console with Hollywood melodrama technobabble
-    #lolcat                                  # Rainbow version of cat
-    #rig                                     # Random identity generator
-    #sl                                      # Steam Locomotive runs across your terminal when you type 'sl'
-    #tty-clock                               # Digital clock in ncurses
+    # console hacks
+    aalib                                   # ASCII art graphics library
+    asciiquarium                            # Enjoy the mysteries of the sea from the safety of your own terminal!
+    bb                                      # AA-lib demo
+    bucklespring                            # Nostalgia bucklespring keyboard sound
+    cbonsai                                 # Grow bonsai trees in your terminal
+    cmatrix                                 # Simulates the falling characters theme from The Matrix movie
+    cowsay                                  # Program which generates ASCII pictures of a cow with a message
+    dwt1-shell-color-scripts                # Collection of shell color scripts collected by dt (Derek Taylor)
+    figlet                                  # Program for making large letters out of ordinary text
+    genact                                  # Nonsense activity generator
+    hackertyper                             # C rewrite of hackertyper.net
+    hollywood                               # Fill your console with Hollywood melodrama technobabble
+    lolcat                                  # Rainbow version of cat
+    rig                                     # Random identity generator
+    sl                                      # Steam Locomotive runs across your terminal when you type 'sl'
+    tty-clock                               # Digital clock in ncurses
 
-    ## latex
-    #texlive.combined.scheme-full            #
+    # latex
+    texlive.combined.scheme-full            #
 
     ## xscreensaver
     #xscreensaver                            # Set of screensavers
