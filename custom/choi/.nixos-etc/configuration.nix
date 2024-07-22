@@ -39,14 +39,11 @@
       configurationLimit = 20;
       device = "/dev/xvda";
       useOSProber = true;
+      timeoutStyle = "hidden";
+      extraConfig = "GRUB_TIMEOUT=0";
     };
   };
   fileSystems."/".options = [ "relatime" ];
-  boot.loader.grub.timeoutStyle = "hidden";
-  boot.loader.grub.extraConfig = ''
-    GRUB_TIMEOUT=0
-    GRUB_GFXMODE=1980x1050x32
-  '';
 
   ## networking
   #networking = {
@@ -855,40 +852,40 @@
     #xdg-desktop-portal-hyprland             # xdg-desktop-portal backend for Hyprland
     #xwayland                                # X server for interfacing X11 apps with the Wayland protocol
 
-    ## applications
-    #ardour                                  # Multi-track hard disk recording software
-    #audacious                               # Lightweight and versatile audio player
-    #audacity                                # Sound editor with graphical UI
-    #blender                                 # 3D Creation/Animation/Publishing System
-    #calibre                                 # Comprehensive e-book software
-    #celluloid                               # Simple GTK frontend for the mpv video player
-    #cider                                   # New look into listening and enjoying Apple Music in style and performance
-    #electrum                                # Lightweight Bitcoin wallet
-    #evince                                  # GNOME's document viewer
-    #freetube                                # Open Source YouTube app for privacy
-    #gimp                                    # GNU Image Manipulation Program
-    #gphoto2                                 # Ready to use set of digital camera software applications
-    #gphoto2fs                               # Fuse FS to mount a digital camera
-    #inkscape                                # Vector graphics editor
-    ##kdenlive                                # Video editor
-    #libreoffice                             # Comprehensive, professional-quality productivity suite, a variant of openoffice.org
-    #lmms                                    # DAW similar to FL Studio (music production software)
-    #mpv                                     # General-purpose media player, fork of MPlayer and mplayer2
-    #mupdf                                   # Lightweight PDF, XPS, and E-book viewer and toolkit written in portable C
-    #notepadqq                               # Notepad++-like editor for the Linux desktop
-    ##obs-studio                              # Free and open source software for video recording and live streaming
-    ##(pkgs.wrapOBS { plugins = with pkgs.obs-studio-plugins; [ wlrobs ]; })
-    #qmplay2                                 # Qt-based Multimedia player
-    #reaper                                  # Digital audio workstation
-    #spotify                                 # Play music from the Spotify music service
-    #vlc                                     # Cross-platform media player and streaming server
-    ##virt-viewer                             # Viewer for remote virtual machines
-    ##xfce.thunar                             # Xfce file manager
-    ##xfce.thunar-archive-plugin              # Thunar plugin providing file context menus for archives
-    ##xfce.thunar-media-tags-plugin           # Thunar plugin providing tagging and renaming features for media files
-    ##xfce.thunar-volman                      # Thunar extension for automatic management of removable drives and media
-    #ymuse                                   # GTK client for Music Player Daemon (MPD)
-    #zathura                                 # Highly customizable and functional PDF viewer
+    # applications
+    ardour                                  # Multi-track hard disk recording software
+    audacious                               # Lightweight and versatile audio player
+    audacity                                # Sound editor with graphical UI
+    blender                                 # 3D Creation/Animation/Publishing System
+    calibre                                 # Comprehensive e-book software
+    celluloid                               # Simple GTK frontend for the mpv video player
+    cider                                   # New look into listening and enjoying Apple Music in style and performance
+    electrum                                # Lightweight Bitcoin wallet
+    evince                                  # GNOME's document viewer
+    freetube                                # Open Source YouTube app for privacy
+    gimp                                    # GNU Image Manipulation Program
+    gphoto2                                 # Ready to use set of digital camera software applications
+    gphoto2fs                               # Fuse FS to mount a digital camera
+    inkscape                                # Vector graphics editor
+    #kdenlive                                # Video editor
+    libreoffice                             # Comprehensive, professional-quality productivity suite, a variant of openoffice.org
+    lmms                                    # DAW similar to FL Studio (music production software)
+    mpv                                     # General-purpose media player, fork of MPlayer and mplayer2
+    mupdf                                   # Lightweight PDF, XPS, and E-book viewer and toolkit written in portable C
+    notepadqq                               # Notepad++-like editor for the Linux desktop
+    #obs-studio                              # Free and open source software for video recording and live streaming
+    #(pkgs.wrapOBS { plugins = with pkgs.obs-studio-plugins; [ wlrobs ]; })
+    qmplay2                                 # Qt-based Multimedia player
+    reaper                                  # Digital audio workstation
+    spotify                                 # Play music from the Spotify music service
+    vlc                                     # Cross-platform media player and streaming server
+    #virt-viewer                             # Viewer for remote virtual machines
+    #xfce.thunar                             # Xfce file manager
+    #xfce.thunar-archive-plugin              # Thunar plugin providing file context menus for archives
+    #xfce.thunar-media-tags-plugin           # Thunar plugin providing tagging and renaming features for media files
+    #xfce.thunar-volman                      # Thunar extension for automatic management of removable drives and media
+    ymuse                                   # GTK client for Music Player Daemon (MPD)
+    zathura                                 # Highly customizable and functional PDF viewer
 
     # utilities
     appimage-run                            #
