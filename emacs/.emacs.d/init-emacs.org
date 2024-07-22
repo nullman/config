@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2024-06-29 12:38 (kyle)>
+  #+TIMESTAMP: <2024-07-21 23:11 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -3954,7 +3954,7 @@
         ;;(org-ellipsis " ")
         ;;(org-ellipsis " ")
         ;;(org-ellipsis " ")
-        (org-ellipsis " ")
+        (org-ellipsis " ▼")
         ;; return follows links
         ;;(org-return-follows-link t)
         ;; reverse `org-beginning-of-line' and `org-end-of-line' toggle order

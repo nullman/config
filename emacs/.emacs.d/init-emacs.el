@@ -2482,7 +2482,7 @@ KEYMAP defaults to `override-global-map'."
   ;;(org-ellipsis " ")
   ;;(org-ellipsis " ")
   ;;(org-ellipsis " ")
-  (org-ellipsis " ")
+  (org-ellipsis " ▼")
   ;; return follows links
   ;;(org-return-follows-link t)
   ;; reverse `org-beginning-of-line' and `org-end-of-line' toggle order

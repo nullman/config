@@ -855,40 +855,40 @@
     #xdg-desktop-portal-hyprland             # xdg-desktop-portal backend for Hyprland
     #xwayland                                # X server for interfacing X11 apps with the Wayland protocol
 
-    # applications
-    ardour                                  # Multi-track hard disk recording software
-    audacious                               # Lightweight and versatile audio player
-    audacity                                # Sound editor with graphical UI
-    blender                                 # 3D Creation/Animation/Publishing System
-    calibre                                 # Comprehensive e-book software
-    celluloid                               # Simple GTK frontend for the mpv video player
-    cider                                   # New look into listening and enjoying Apple Music in style and performance
-    electrum                                # Lightweight Bitcoin wallet
-    evince                                  # GNOME's document viewer
-    freetube                                # Open Source YouTube app for privacy
-    gimp                                    # GNU Image Manipulation Program
-    gphoto2                                 # Ready to use set of digital camera software applications
-    gphoto2fs                               # Fuse FS to mount a digital camera
-    inkscape                                # Vector graphics editor
-    #kdenlive                                # Video editor
-    libreoffice                             # Comprehensive, professional-quality productivity suite, a variant of openoffice.org
-    lmms                                    # DAW similar to FL Studio (music production software)
-    mpv                                     # General-purpose media player, fork of MPlayer and mplayer2
-    mupdf                                   # Lightweight PDF, XPS, and E-book viewer and toolkit written in portable C
-    notepadqq                               # Notepad++-like editor for the Linux desktop
-    #obs-studio                              # Free and open source software for video recording and live streaming
-    #(pkgs.wrapOBS { plugins = with pkgs.obs-studio-plugins; [ wlrobs ]; })
-    qmplay2                                 # Qt-based Multimedia player
-    reaper                                  # Digital audio workstation
-    spotify                                 # Play music from the Spotify music service
-    vlc                                     # Cross-platform media player and streaming server
-    #virt-viewer                             # Viewer for remote virtual machines
-    #xfce.thunar                             # Xfce file manager
-    #xfce.thunar-archive-plugin              # Thunar plugin providing file context menus for archives
-    #xfce.thunar-media-tags-plugin           # Thunar plugin providing tagging and renaming features for media files
-    #xfce.thunar-volman                      # Thunar extension for automatic management of removable drives and media
-    ymuse                                   # GTK client for Music Player Daemon (MPD)
-    zathura                                 # Highly customizable and functional PDF viewer
+    ## applications
+    #ardour                                  # Multi-track hard disk recording software
+    #audacious                               # Lightweight and versatile audio player
+    #audacity                                # Sound editor with graphical UI
+    #blender                                 # 3D Creation/Animation/Publishing System
+    #calibre                                 # Comprehensive e-book software
+    #celluloid                               # Simple GTK frontend for the mpv video player
+    #cider                                   # New look into listening and enjoying Apple Music in style and performance
+    #electrum                                # Lightweight Bitcoin wallet
+    #evince                                  # GNOME's document viewer
+    #freetube                                # Open Source YouTube app for privacy
+    #gimp                                    # GNU Image Manipulation Program
+    #gphoto2                                 # Ready to use set of digital camera software applications
+    #gphoto2fs                               # Fuse FS to mount a digital camera
+    #inkscape                                # Vector graphics editor
+    ##kdenlive                                # Video editor
+    #libreoffice                             # Comprehensive, professional-quality productivity suite, a variant of openoffice.org
+    #lmms                                    # DAW similar to FL Studio (music production software)
+    #mpv                                     # General-purpose media player, fork of MPlayer and mplayer2
+    #mupdf                                   # Lightweight PDF, XPS, and E-book viewer and toolkit written in portable C
+    #notepadqq                               # Notepad++-like editor for the Linux desktop
+    ##obs-studio                              # Free and open source software for video recording and live streaming
+    ##(pkgs.wrapOBS { plugins = with pkgs.obs-studio-plugins; [ wlrobs ]; })
+    #qmplay2                                 # Qt-based Multimedia player
+    #reaper                                  # Digital audio workstation
+    #spotify                                 # Play music from the Spotify music service
+    #vlc                                     # Cross-platform media player and streaming server
+    ##virt-viewer                             # Viewer for remote virtual machines
+    ##xfce.thunar                             # Xfce file manager
+    ##xfce.thunar-archive-plugin              # Thunar plugin providing file context menus for archives
+    ##xfce.thunar-media-tags-plugin           # Thunar plugin providing tagging and renaming features for media files
+    ##xfce.thunar-volman                      # Thunar extension for automatic management of removable drives and media
+    #ymuse                                   # GTK client for Music Player Daemon (MPD)
+    #zathura                                 # Highly customizable and functional PDF viewer
 
     # utilities
     appimage-run                            #
@@ -1066,71 +1066,71 @@
     #distrobox                               # Wrapper around podman or docker to create and start containers
     #podman                                  # Program for managing pods, containers and container images
 
-    # development
-    acme                                    # Multi-platform cross assembler for 6502/6510/65816 CPUs
-    adb-sync                                # Tool to synchronise files between a PC and an Android devices using ADB (Android Debug Bridge)
-    #amber-lang                              # Programming language compiled to bash
-    android-studio                          # Official IDE for Android (stable channel)
-    android-tools                           # Android SDK platform tools
-    android-udev-rules                      # Android udev rules list aimed to be the most comprehensive on the net
-    autoconf                                # Part of the GNU Build System
-    automake                                # GNU standard-compliant makefile generator
-    binutils                                # Tools for manipulating binaries (linker, assembler, etc.) (wrapper script)
-    binutils-ia16                           #
-    bison                                   # Yacc-compatible parser generator
-    cc65                                    # C compiler for processors of 6502 family
-    ccache                                  # Compiler cache for fast recompilation of C/C++ code
-    clang                                   # C language family frontend for LLVM (wrapper script)
-    cmake                                   # Cross-platform, open-source build system generator
-    csvkit                                  # Suite of command-line tools for converting to and working with CSV
-    ctags                                   # Tool for fast source code browsing (exuberant ctags)
-    djgpp_i686                              # Complete 32-bit GNU-based development system for Intel x86 PCs running DOS
-    flex                                    # Fast lexical analyser generator
-    fpc                                     # Free Pascal Compiler from a source distribution
-    gcc                                     # GNU Compiler Collection, version 13.2.0 (wrapper script)
-    gcc-ia16                                # xss gcc-ia16
-    github-desktop                          # GUI for managing Git and GitHub
-    glibc                                   # GNU C Library
-    #gmp                                     # GNU multiple precision arithmetic library
-    gnumake                                 # Tool to control the generation of non-source files from sources
-    gnuplot                                 # Portable command-line driven graphing utility for many platforms
-    gpp                                     # General-purpose preprocessor with customizable syntax
-    graphviz                                # Graph visualization tools
-    gradle                                  # Enterprise-grade build system
-    htmlq                                   # Like jq, but for HTML
-    jdk                                     # Open-source Java Development Kit
-    #jdk11                                   # Open-source Java Development Kit
-    #jdk8                                    # Open-source Java Development Kit
-    jetbrains.idea-community                # Free Java, Kotlin, Groovy and Scala IDE from jetbrains (built from source)
-    jre                                     # Open-source Java Development Kit
-    jq                                      # Lightweight and flexible command-line JSON processor
-    jqp                                     # TUI playground to experiment with jq
-    kotlin                                  # General purpose programming language
-    lazygit                                 # Simple terminal UI for git commands
-    #libmpc                                  # Library for multiprecision complex arithmetic with exact rounding
-    m4                                      # GNU M4, a macro processor
-    #mpfr                                    # Library for multiple-precision floating-point arithmetic
-    nasm                                    # 80x86 and x86-64 assembler designed for portability and modularity
-    node2nix                                # Generate Nix expressions to build NPM packages
-    open-watcom-bin                         # Project to maintain and enhance the Watcom C, C++, and Fortran cross compilers and tools
-    #open-watcom-v2                          # V2 fork of the Open Watcom suite of compilers and tools
-    pandoc                                  # Conversion between documentation formats
-    patch                                   # GNU Patch, a program to apply differences to files
-    plantuml                                # Draw UML diagrams using a simple and human readable text description
-    python311                               # High-level dynamically-typed programming language
-    python311Packages.pip                   # PyPA recommended tool for installing Python packages
-    racket                                  # Programmable programming language
-    regina                                  # REXX interpreter
-    ruby                                    # Object-oriented language for quick and easy programming
-    rubyPackages.nokogiri                   #
-    rustc                                   # Safe, concurrent, practical language (wrapper script)
-    shellcheck                              # Shell script analysis tool
-    tokei                                   # Program that allows you to count your code, quickly
-    vlang                                   # Simple, fast, safe, compiled language for developing maintainable software
-    x16-emulator                            # Official emulator of CommanderX16 8-bit computer
-    x16-rom                                 # ROM file for CommanderX16 8-bit computer
-    yq                                      # Command-line YAML/XML/TOML processor - jq wrapper for YAML, XML, TOML documents
-    zlib                                    # Lossless data-compression library
+    ## development
+    #acme                                    # Multi-platform cross assembler for 6502/6510/65816 CPUs
+    #adb-sync                                # Tool to synchronise files between a PC and an Android devices using ADB (Android Debug Bridge)
+    ##amber-lang                              # Programming language compiled to bash
+    #android-studio                          # Official IDE for Android (stable channel)
+    #android-tools                           # Android SDK platform tools
+    #android-udev-rules                      # Android udev rules list aimed to be the most comprehensive on the net
+    #autoconf                                # Part of the GNU Build System
+    #automake                                # GNU standard-compliant makefile generator
+    #binutils                                # Tools for manipulating binaries (linker, assembler, etc.) (wrapper script)
+    #binutils-ia16                           #
+    #bison                                   # Yacc-compatible parser generator
+    #cc65                                    # C compiler for processors of 6502 family
+    #ccache                                  # Compiler cache for fast recompilation of C/C++ code
+    #clang                                   # C language family frontend for LLVM (wrapper script)
+    #cmake                                   # Cross-platform, open-source build system generator
+    #csvkit                                  # Suite of command-line tools for converting to and working with CSV
+    #ctags                                   # Tool for fast source code browsing (exuberant ctags)
+    #djgpp_i686                              # Complete 32-bit GNU-based development system for Intel x86 PCs running DOS
+    #flex                                    # Fast lexical analyser generator
+    #fpc                                     # Free Pascal Compiler from a source distribution
+    #gcc                                     # GNU Compiler Collection, version 13.2.0 (wrapper script)
+    #gcc-ia16                                # xss gcc-ia16
+    #github-desktop                          # GUI for managing Git and GitHub
+    #glibc                                   # GNU C Library
+    ##gmp                                     # GNU multiple precision arithmetic library
+    #gnumake                                 # Tool to control the generation of non-source files from sources
+    #gnuplot                                 # Portable command-line driven graphing utility for many platforms
+    #gpp                                     # General-purpose preprocessor with customizable syntax
+    #graphviz                                # Graph visualization tools
+    #gradle                                  # Enterprise-grade build system
+    #htmlq                                   # Like jq, but for HTML
+    #jdk                                     # Open-source Java Development Kit
+    ##jdk11                                   # Open-source Java Development Kit
+    ##jdk8                                    # Open-source Java Development Kit
+    #jetbrains.idea-community                # Free Java, Kotlin, Groovy and Scala IDE from jetbrains (built from source)
+    #jre                                     # Open-source Java Development Kit
+    #jq                                      # Lightweight and flexible command-line JSON processor
+    #jqp                                     # TUI playground to experiment with jq
+    #kotlin                                  # General purpose programming language
+    #lazygit                                 # Simple terminal UI for git commands
+    ##libmpc                                  # Library for multiprecision complex arithmetic with exact rounding
+    #m4                                      # GNU M4, a macro processor
+    ##mpfr                                    # Library for multiple-precision floating-point arithmetic
+    #nasm                                    # 80x86 and x86-64 assembler designed for portability and modularity
+    #node2nix                                # Generate Nix expressions to build NPM packages
+    #open-watcom-bin                         # Project to maintain and enhance the Watcom C, C++, and Fortran cross compilers and tools
+    ##open-watcom-v2                          # V2 fork of the Open Watcom suite of compilers and tools
+    #pandoc                                  # Conversion between documentation formats
+    #patch                                   # GNU Patch, a program to apply differences to files
+    #plantuml                                # Draw UML diagrams using a simple and human readable text description
+    #python311                               # High-level dynamically-typed programming language
+    #python311Packages.pip                   # PyPA recommended tool for installing Python packages
+    #racket                                  # Programmable programming language
+    #regina                                  # REXX interpreter
+    #ruby                                    # Object-oriented language for quick and easy programming
+    #rubyPackages.nokogiri                   #
+    #rustc                                   # Safe, concurrent, practical language (wrapper script)
+    #shellcheck                              # Shell script analysis tool
+    #tokei                                   # Program that allows you to count your code, quickly
+    #vlang                                   # Simple, fast, safe, compiled language for developing maintainable software
+    #x16-emulator                            # Official emulator of CommanderX16 8-bit computer
+    #x16-rom                                 # ROM file for CommanderX16 8-bit computer
+    #yq                                      # Command-line YAML/XML/TOML processor - jq wrapper for YAML, XML, TOML documents
+    #zlib                                    # Lossless data-compression library
 
     ## ai
     #imaginer                                # Imaginer with AI
