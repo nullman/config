@@ -10,7 +10,8 @@ betterbird
 #thunderbird
 firefox
 ##chromium
-google-chrome-stable
+google-chrome
+#google-chrome-stable
 thunar
 ##pcmanfm
 ##spacefm
