@@ -2026,7 +2026,7 @@ alias rsync-media-get-morpheus="rsync -rlptx --progress morpheus:/home/data/medi
 alias rsync-media-get-morpheus-exclude="rsync -rlptx --progress -f'- /Repos/' -f'- /Software/' -f'- /Video/' morpheus:/home/data/media/ ${home}/data/media/"
 #        rsync-media-get-morpheus-mouse-delete  rsync morpheus:/home/data/media /home/data/media (specific sub-directories)
 alias rsync-media-get-morpheus-mouse-delete=" \
-    if [[ $(uname -n) == 'mouse ]] ; then
+    if [[ $(uname -n) == 'mouse' ]] ; then
         rsync -rlptx --progress --delete -f'- /Humor/' -f'- /Other/' morpheus:/home/data/media/Audio/ ${home}/data/media/Audio/ && \
         rsync -rlptx --progress --delete morpheus:/home/data/media/Audio/Music/ ${home}/data/media/Audio/Music/ && \
         rsync -rlptx --progress --delete \"morpheus:/home/data/media/Pictures Slide Show/\" \"${home}/data/media/Pictures Slide Show/\" && \
@@ -3161,9 +3161,9 @@ alias rpmq="rpm -q -a | grep"
 alias qdu="sudo qubes-dom0-update"
 #        qd-sync                 sync dom0 with personal
 alias qd-sync="
-    if [[ $(hostname) -eq dom ]] ; then
-        (cd \${HOME} && rm -r config && qvm-run --pass-io personal 'cd /home/user && tar zc --exclude=\".git*\" config' | tar zx)
-        (cd \${HOME} && rm -r config-private && qvm-run --pass-io personal 'cd /home/user && tar zc --exclude=\".git*\" config-private' | tar zx)
+    if [[ $(uname -n) == 'dom0' ]] ; then
+        (cd \${HOME} && rm -rf config && qvm-run --pass-io personal 'cd /home/user && tar zc --exclude=\".git*\" config' | tar zx)
+        (cd \${HOME} && rm -rf config-private && qvm-run --pass-io personal 'cd /home/user && tar zc --exclude=\".git*\" config-private' | tar zx)
         home-restow
     else
         echo \"Error: $0 can only be run on dom0\"
