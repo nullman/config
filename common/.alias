@@ -3158,7 +3158,16 @@ alias rpmq="rpm -q -a | grep"
 # qubes-dom0-update (Package Manager)
 #
 #        qdu                     qubes-dom0-update
-alias qdu="qubes-dom0-update --enablerepo=qubes-dom0-current-testing"
+alias qdu="sudo qubes-dom0-update"
+#        qd-sync                 sync dom0 with personal
+alias qd-sync="
+    if [[ $(hostname) -eq dom ]] ; then
+        (cd \${HOME} && rm -r config && qvm-run --pass-io personal 'cd /home/user && tar zc --exclude=\".git*\" config' | tar zx)
+        (cd \${HOME} && rm -r config-private && qvm-run --pass-io personal 'cd /home/user && tar zc --exclude=\".git*\" config-private' | tar zx)
+        home-restow
+    else
+        echo \"Error: $0 can only be run on dom0\"
+    fi"
 
 #
 # git

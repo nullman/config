@@ -1569,63 +1569,6 @@ Otherwise, `custom-tab-width' is used."
 (init-message 1 "Key Bindings")
 ;; Key Bindings:1 ends here
 
-;; [[file:init-emacs.org::*System Keys][System Keys:1]]
-;;------------------------------------------------------------------------------
-;;; Key Bindings: System Keys
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Key Bindings: System Keys")
-
-(defun custom-key-bindings-system-keys ()
-  "Set custom system key bindings."
-  (cond
-   ;; most of these are already set correctly for MacOS
-   (window-system-mac
-    ;; new buffer
-    (when (fboundp 'new-scratch)
-      (bind-keys* ("s-t" . new-scratch))))
-   ((or window-system-linux window-system-windows)
-    ;; cut
-    (if (fboundp 'kill-region-or-word)
-        (bind-keys* ("s-x" . kill-region-or-word))
-      (bind-keys* ("s-x" . kill-region)))
-    ;; copy
-    (bind-keys* ("s-c" . kill-ring-save))
-    ;; paste
-    (bind-keys* ("s-v" . yank))
-    ;; undo
-    (bind-keys* ("s-z" . undo))
-    ;; redo
-    (when (fboundp 'undo-tree-redo)
-      (bind-keys* ("s-y" . undo-tree-redo)))
-    ;; select all
-    (bind-keys* ("s-a" . mark-whole-buffer))
-    ;; find
-    (bind-keys* ("s-f" . isearch-forward))
-    ;; find next
-    (bind-keys* ("s-g" . isearch-forward))
-    ;; find previous
-    (bind-keys* ("s-r" . isearch-backward))
-    ;; open file
-    (bind-keys* ("s-o" . find-file))
-    ;; print
-    (bind-keys* ("s-p" . print-buffer))
-    ;; save buffer
-    (if (fboundp 'save-buffer-always)
-        (bind-keys* ("s-s" . save-buffer-always))
-      (bind-keys* ("s-s" . save-buffer)))
-    ;; new buffer
-    (when (fboundp 'new-scratch)
-      (bind-keys* ("s-t" . new-scratch)))
-    ;; close buffer
-    (bind-keys* ("s-w" . kill-current-buffer))
-    ;; set mark
-    (bind-keys* ("s-SPC" . set-mark-command)))))
-
-(init-message 3 "custom-key-bindings-system-keys")
-(custom-key-bindings-system-keys)
-;; System Keys:1 ends here
-
 ;; [[file:init-emacs.org::*Function Keys][Function Keys:1]]
 ;;------------------------------------------------------------------------------
 ;;; Key Bindings: Function Keys
