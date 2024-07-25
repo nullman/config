@@ -48,12 +48,12 @@ style = "Regular"
 [[keyboard.bindings]]
 action = "Paste"
 key = "V"
-mods = "Super"
+mods = "Control"
 
 [[keyboard.bindings]]
 action = "Copy"
 key = "C"
-mods = "Super"
+mods = "Control"
 
 [[keyboard.bindings]]
 action = "ResetFontSize"
