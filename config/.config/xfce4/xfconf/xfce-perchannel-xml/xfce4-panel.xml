@@ -31,7 +31,7 @@
     </property>
     <property name="plugin-2" type="empty">
       <property name="button-title" type="uint" value="3"/>
-      <property name="custom-title" type="string" value=""/>
+      <property name="custom-title" type="string" value="⏻"/>
     </property>
     <property name="plugin-3" type="empty"/>
     <property name="plugin-15" type="empty">
