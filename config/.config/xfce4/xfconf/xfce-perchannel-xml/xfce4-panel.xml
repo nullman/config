@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<channel name="xfce4-panel" version="1.0">
+  <property name="configver" type="empty"/>
+  <property name="panels" type="empty">
+    <property name="panel-1" type="empty">
+      <property name="position" type="string" value="p=8;x=960;y=1069"/>
+      <property name="length" type="empty"/>
+      <property name="position-locked" type="bool" value="true"/>
+      <property name="size" type="uint" value="20"/>
+      <property name="plugin-ids" type="array">
+        <value type="int" value="1"/>
+        <value type="int" value="4"/>
+        <value type="int" value="3"/>
+        <value type="int" value="15"/>
+        <value type="int" value="7"/>
+        <value type="int" value="8"/>
+        <value type="int" value="6"/>
+        <value type="int" value="5"/>
+        <value type="int" value="2"/>
+      </property>
+      <property name="mode" type="uint" value="0"/>
+    </property>
+    <property name="dark-mode" type="bool" value="true"/>
+  </property>
+  <property name="plugins" type="empty">
+    <property name="plugin-1" type="empty">
+      <property name="items" type="array">
+        <value type="string" value="17217749361.desktop"/>
+      </property>
+    </property>
+    <property name="plugin-2" type="empty">
+      <property name="button-title" type="uint" value="3"/>
+      <property name="custom-title" type="string" value=""/>
+    </property>
+    <property name="plugin-3" type="empty"/>
+    <property name="plugin-15" type="empty">
+      <property name="expand" type="empty"/>
+      <property name="style" type="empty"/>
+    </property>
+    <property name="plugin-4" type="empty">
+      <property name="rows" type="uint" value="1"/>
+    </property>
+    <property name="plugin-5" type="empty">
+      <property name="tooltip-format" type="string" value="%A %d %B %Y"/>
+      <property name="digital-format" type="string" value="%a %Y-%m-%d %H:%M"/>
+      <property name="mode" type="uint" value="2"/>
+    </property>
+    <property name="plugin-7" type="empty">
+      <property name="enable-keyboard-shortcuts" type="bool" value="true"/>
+    </property>
+    <property name="plugin-6" type="empty">
+      <property name="known-legacy-items" type="array">
+        <value type="string" value="xfce4-power-manager"/>
+        <value type="string" value="vmapp command"/>
+        <value type="string" value="qui-devices"/>
+        <value type="string" value="qui-updates"/>
+        <value type="string" value="qui-domains"/>
+        <value type="string" value="qui-clipboard"/>
+        <value type="string" value="qui-disk-space"/>
+      </property>
+    </property>
+    <property name="plugin-8" type="empty"/>
+  </property>
+</channel>
