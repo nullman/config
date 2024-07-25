@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2024-07-24 09:56 (kyle)>
+  #+TIMESTAMP: <2024-07-25 01:27 (kyle)>
 
 * Overview
   :PROPERTIES:
@@ -2981,68 +2981,66 @@
     (init-message 1 "Key Bindings")
   #+END_SRC
 
-*** +System Keys+
+*** System Keys
     :PROPERTIES:
     :CUSTOM_ID: key-bindings-system-keys
     :END:
 
-    Turned off in order to reserve the Super keybindings for the OS.
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Key Bindings: System Keys
+      ;;------------------------------------------------------------------------------
 
-    #+BEGIN_SRC emacs-lisp :tangle no
-      ;; ;;------------------------------------------------------------------------------
-      ;; ;;; Key Bindings: System Keys
-      ;; ;;------------------------------------------------------------------------------
+      (init-message 2 "Key Bindings: System Keys")
 
-      ;; (init-message 2 "Key Bindings: System Keys")
+      (defun custom-key-bindings-system-keys ()
+        "Set custom system key bindings."
+        (cond
+         ;; most of these are already set correctly for MacOS
+         (window-system-mac
+          ;; new buffer
+          (when (fboundp 'new-scratch)
+            (bind-keys* ("s-t" . new-scratch))))
+         ((or window-system-linux window-system-windows)
+          ;; cut
+          (if (fboundp 'kill-region-or-word)
+              (bind-keys* ("s-x" . kill-region-or-word))
+            (bind-keys* ("s-x" . kill-region)))
+          ;; copy
+          (bind-keys* ("s-c" . kill-ring-save))
+          ;; paste
+          (bind-keys* ("s-v" . yank))
+          ;; undo
+          (bind-keys* ("s-z" . undo))
+          ;; redo
+          (when (fboundp 'undo-tree-redo)
+            (bind-keys* ("s-y" . undo-tree-redo)))
+          ;; select all
+          (bind-keys* ("s-a" . mark-whole-buffer))
+          ;; find
+          (bind-keys* ("s-f" . isearch-forward))
+          ;; find next
+          (bind-keys* ("s-g" . isearch-forward))
+          ;; find previous
+          (bind-keys* ("s-r" . isearch-backward))
+          ;; open file
+          (bind-keys* ("s-o" . find-file))
+          ;; print
+          (bind-keys* ("s-p" . print-buffer))
+          ;; save buffer
+          (if (fboundp 'save-buffer-always)
+              (bind-keys* ("s-s" . save-buffer-always))
+            (bind-keys* ("s-s" . save-buffer)))
+          ;; new buffer
+          (when (fboundp 'new-scratch)
+            (bind-keys* ("s-t" . new-scratch)))
+          ;; close buffer
+          (bind-keys* ("s-w" . kill-current-buffer))
+          ;; set mark
+          (bind-keys* ("s-SPC" . set-mark-command)))))
 
-      ;; (defun custom-key-bindings-system-keys ()
-      ;;   "Set custom system key bindings."
-      ;;   (cond
-      ;;    ;; most of these are already set correctly for MacOS
-      ;;    (window-system-mac
-      ;;     ;; new buffer
-      ;;     (when (fboundp 'new-scratch)
-      ;;       (bind-keys* ("s-t" . new-scratch))))
-      ;;    ((or window-system-linux window-system-windows)
-      ;;     ;; cut
-      ;;     (if (fboundp 'kill-region-or-word)
-      ;;         (bind-keys* ("s-x" . kill-region-or-word))
-      ;;       (bind-keys* ("s-x" . kill-region)))
-      ;;     ;; copy
-      ;;     (bind-keys* ("s-c" . kill-ring-save))
-      ;;     ;; paste
-      ;;     (bind-keys* ("s-v" . yank))
-      ;;     ;; undo
-      ;;     (bind-keys* ("s-z" . undo))
-      ;;     ;; redo
-      ;;     (when (fboundp 'undo-tree-redo)
-      ;;       (bind-keys* ("s-y" . undo-tree-redo)))
-      ;;     ;; select all
-      ;;     (bind-keys* ("s-a" . mark-whole-buffer))
-      ;;     ;; find
-      ;;     (bind-keys* ("s-f" . isearch-forward))
-      ;;     ;; find next
-      ;;     (bind-keys* ("s-g" . isearch-forward))
-      ;;     ;; find previous
-      ;;     (bind-keys* ("s-r" . isearch-backward))
-      ;;     ;; open file
-      ;;     (bind-keys* ("s-o" . find-file))
-      ;;     ;; print
-      ;;     (bind-keys* ("s-p" . print-buffer))
-      ;;     ;; save buffer
-      ;;     (if (fboundp 'save-buffer-always)
-      ;;         (bind-keys* ("s-s" . save-buffer-always))
-      ;;       (bind-keys* ("s-s" . save-buffer)))
-      ;;     ;; new buffer
-      ;;     (when (fboundp 'new-scratch)
-      ;;       (bind-keys* ("s-t" . new-scratch)))
-      ;;     ;; close buffer
-      ;;     (bind-keys* ("s-w" . kill-current-buffer))
-      ;;     ;; set mark
-      ;;     (bind-keys* ("s-SPC" . set-mark-command)))))
-
-      ;; (init-message 3 "custom-key-bindings-system-keys")
-      ;; (custom-key-bindings-system-keys)
+      (init-message 3 "custom-key-bindings-system-keys")
+      (custom-key-bindings-system-keys)
     #+END_SRC
 
 *** Function Keys
@@ -3859,8 +3857,9 @@
       (defun custom-key-bindings-set-all ()
         "Set all custom key bindings."
 
-        (init-message 3 "custom-key-bindings-system-keys")
-        (custom-key-bindings-system-keys)
+        ;; Turned off in order to reserve the Super keybindings for the OS.
+        ;; (init-message 3 "custom-key-bindings-system-keys")
+        ;; (custom-key-bindings-system-keys)
 
         (init-message 3 "custom-key-bindings-function-keys")
         (custom-key-bindings-function-keys)

@@ -236,8 +236,8 @@ super + ctrl + e
 super + button{1,2,3}
     bspc grab_pointer {move,resize_side,resize_corner}
 
-super + !button{1,2,3}
-    bspc {track_pointer,track_pointer,track_pointer} %i %i
+# super + !button{1,2,3}
+#     bspc {track_pointer,track_pointer,track_pointer} %i %i
 
 super + @button{1,2,3}
     bspc {ungrab_pointer,ungrab_pointer,ungrab_pointer}

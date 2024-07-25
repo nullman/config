@@ -275,7 +275,12 @@ _command() {
 
 # simple x hotkey daemon (both standard and bspwm key bindings)
 # (might have been run already by .xprofile)
-_command sxhkd && pgrep -x sxhkd || sxhkd -c "${HOME}/.config/sxhkd/sxhkdrc{,-bspwm}" &
+_command sxhkd && pgrep -x sxhkd || sxhkd -c "${HOME}/.config/sxhkd/sxhkdrc" &
+if [[ $(uname -n) == 'dom0' ]] ; then
+    _command sxhkd && pgrep -x sxhkd-dom0 || sxhkd -c "${HOME}/.config/sxhkd/sxhkdrc-dom0" &
+else
+    _command sxhkd && pgrep -x sxhkd-bspwm || sxhkd -c "${HOME}/.config/sxhkd/sxhkdrc-bspwm" &
+fi
 
 # xfce settings
 #_command xfsettingsd && xfsettingsd &
