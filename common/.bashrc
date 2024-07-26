@@ -132,11 +132,11 @@ shopt -s checkwinsize
 [[ -f "/etc/bash-completion" ]] && source "/etc/bash-completion" 2>&1
 
 # perl modules
-#PATH="/home/kyle/perl5/bin${PATH:+:${PATH}}"; export PATH;
-#PERL5LIB="/home/kyle/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-#PERL_LOCAL_LIB_ROOT="/home/kyle/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-#PERL_MB_OPT="--install_base \"/home/kyle/perl5\""; export PERL_MB_OPT;
-#PERL_MM_OPT="INSTALL_BASE=/home/kyle/perl5"; export PERL_MM_OPT;
+#PATH="${HOME}/perl5/bin${PATH:+:${PATH}}"; export PATH;
+#PERL5LIB="${HOME}/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+#PERL_LOCAL_LIB_ROOT="${HOME}/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+#PERL_MB_OPT="--install_base \"${HOME}/perl5\""; export PERL_MB_OPT;
+#PERL_MM_OPT="INSTALL_BASE=${HOME}/perl5"; export PERL_MM_OPT;
 
 #===============================================================================
 # End of File

@@ -29,10 +29,10 @@ for line in ${launch} ; do
     if [[ $(command -v ${app}) ]] ; then
         if [[ ! $(pgrep -u ${USER} -f ${app}) ]] ; then
             if [[ "${app}" == "alacritty" ]] ; then
-                alacritty -e ${HOME}/bin/run-screen &
+                alacritty -e ${HOME}/bin/run-screen >/dev/null 2>&1 &
             else
                 #echo "${app}"
-                eval ${app} &
+                eval ${app} >/dev/null 2>&1 &
             fi
         fi
     else

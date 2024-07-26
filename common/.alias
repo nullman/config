@@ -2532,6 +2532,8 @@ alias startx-24="startx -- -depth 24"
 alias sur="sudo su -"
 #        suk                     su to kyle
 alias suk="sudo su - kyle"
+#        suu                     su to user
+alias suu="sudo su - user"
 
 #
 # update-alternatives

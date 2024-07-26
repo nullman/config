@@ -272,8 +272,8 @@ fi
 # # display weather
 # _command curl && curl --silent wttr.in 2>&1 | head -n 7
 
-# source xprofile if running on dom0 in Qubes OS
-[[ "$(uname -n)" == "dom0" ]] && [[ -f "${HOME}/.xprofile" ]] && source "${HOME}/.xprofile"
+# source xprofile if not already
+[[ -f "${HOME}/.xprofile" ]] && [[ -z "$(env | grep '.xprofile')" ]] && source "${HOME}/.xprofile"
 
 #===============================================================================
 # End of File
