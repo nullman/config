@@ -1,0 +1,31 @@
+#===============================================================================
+# .applications
+#
+# List of applications to display with *~/bin/application-launcher*.
+#===============================================================================
+
+alacritty
+emacs
+betterbird
+#thunderbird
+firefox
+##chromium
+google-chrome
+#google-chrome-stable
+thunar
+##pcmanfm
+##spacefm
+slack
+discord
+##tootle
+element-desktop
+dev.geopjr.Tuba
+gajim
+##pidgin
+##idea
+##lbry
+#syncterm
+
+#===============================================================================
+# End of File
+#===============================================================================
