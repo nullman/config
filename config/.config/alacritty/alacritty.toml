@@ -48,12 +48,17 @@ style = "Regular"
 [[keyboard.bindings]]
 action = "Paste"
 key = "V"
-mods = "Control"
+mods = "Control|Shift"
 
 [[keyboard.bindings]]
 action = "Copy"
 key = "C"
-mods = "Control"
+mods = "Control|Shift"
+
+[[keyboard.bindings]]
+action = "SpawnNewInstance"
+key = "Return"
+mods = "Control|Shift"
 
 [[keyboard.bindings]]
 action = "ResetFontSize"
