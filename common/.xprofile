@@ -17,7 +17,7 @@ _command() {
 }
 
 # exit if not running under X11
-[[ -n "$(xset q >/dev/null)" ]] && exit 1
+[[ -z "${DISPLAY}" ]] && return 1
 
 # set video resolution via xrandr
 [[ -x ${HOME}/.xrandr ]] && ${HOME}/.xrandr >/dev/null 2>&1

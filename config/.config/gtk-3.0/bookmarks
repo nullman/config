@@ -20,3 +20,4 @@ file:///home/data/media/Text/Manuals Manuals
 file:///mnt/synology mnt:synology
 smb://synology smb:synology
 smb://dozer/Share smb:dozer
+file:///home/user/QubesIncoming

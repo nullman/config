@@ -273,8 +273,8 @@ _command() {
 #     sleep ${delay} && eval "$@"
 # }
 
-# simple x hotkey daemon (both standard and bspwm key bindings)
-# (might have been run already by .xprofile)
+# simple x hotkey daemon
+# (might have been started already by .xprofile)
 _command sxhkd && pgrep -f "sxhkd -c ${HOME}/.config/sxhkd/sxhkdrc" || sxhkd -c "${HOME}/.config/sxhkd/sxhkdrc" &
 if [[ "$(uname -n)" == "dom0" ]] ; then
     _command sxhkd && pgrep -f "sxhkd -c ${HOME}/.config/sxhkd/sxhkdrc-dom0" || sxhkd -c "${HOME}/.config/sxhkd/sxhkdrc-dom0" &
@@ -305,8 +305,6 @@ elif _command lxpolkit ; then
 fi
 
 # compositor
-#_command manjaro-compositor && manjaro-compositor --start &
-#_command compton && compton -c &
 _command picom && picom -c &
 
 # system bar
@@ -321,7 +319,7 @@ _command picom && picom -c &
 # localize user system folders
 #_command xdg-user-dirs-gtk-update && xdg-user-dirs-gtk-update &
 
-# enable numlock [do not use on laptops without numpads]
+# enable numlock (do not use on laptops without numpads)
 #_command numlockx && numlockx &
 
 # screen saver
@@ -347,6 +345,25 @@ _command nitrogen && nitrogen --restore &
 
 # rebuild wm menu
 #sleep 10 && _command mmaker && mmaker --force openbox &
+
+# # qubes os specific items
+# # (found in /etc/xdg/autostart)
+# if [[ "$(uname -n)" == "dom0" ]] ; then
+#     # qubes qrexec policy agent
+#     /usr/lib/qubes/qrexec-policy-agent-autostart &
+#     # qubes application menu
+#     (systemctl --user import-environment XDG_CURRENT_DESKTOP XDG_DATA_HOME XDG_CONFIG_HOME XDG_STATE_HOME XDG_DATA_DIRS XDG_CONFIG_DIRS \
+#                XDG_CACHE_HOME XDG_RUNTIME_DIR XDG_SESSION_CLASS XDG_SESSION_DESKTOP XDG_SESSION_ID XDG_SESSION_PATH XDG_SESSION_TYPE
+#      systemctl --user start qubes-app-menu) &
+#     # qubes window icon receiver
+#     /usr/lib/qubes/icon-receiver &
+#     # retry qubes rpc prompts for input devices
+#     /usr/bin/qubes-input-trigger --all &
+#     # notify qubes vms about screen layout changes
+#     /usr/libexec/qubes/watch-screen-layout-changes qvm-start-gui --notify-monitor-layout --all &
+#     # update qubes specific xfce config
+#     /usr/lib/qubes/update-xfce-config &
+# fi
 
 # auto-start custom applications
 [[ -f "${HOME}/.config/bspwm/bspwmrc-applications" ]] && source "${HOME}/.config/bspwm/bspwmrc-applications"

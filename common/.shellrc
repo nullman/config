@@ -273,7 +273,7 @@ fi
 # _command curl && curl --silent wttr.in 2>&1 | head -n 7
 
 # source xprofile if not already and running in X11
-[[ -f "${HOME}/.xprofile" ]] && [[ -z "$(xset q >/dev/null)" ]] && [[ -z "$(env | grep '.xprofile')" ]] && source "${HOME}/.xprofile"
+[[ -f "${HOME}/.xprofile" ]] && [[ -n "${DISPLAY}" ]] && [[ -z "$(env | grep '.xprofile')" ]] && source "${HOME}/.xprofile"
 
 #===============================================================================
 # End of File
