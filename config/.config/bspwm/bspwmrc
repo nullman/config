@@ -275,11 +275,11 @@ _command() {
 
 # simple x hotkey daemon (both standard and bspwm key bindings)
 # (might have been run already by .xprofile)
-_command sxhkd && pgrep -x sxhkd || sxhkd -c "${HOME}/.config/sxhkd/sxhkdrc" &
-if [[ $(uname -n) == 'dom0' ]] ; then
-    _command sxhkd && pgrep -x sxhkd-dom0 || sxhkd -c "${HOME}/.config/sxhkd/sxhkdrc-dom0" &
+_command sxhkd && pgrep -f "sxhkd -c ${HOME}/.config/sxhkd/sxhkdrc" || sxhkd -c "${HOME}/.config/sxhkd/sxhkdrc" &
+if [[ "$(uname -n)" == "dom0" ]] ; then
+    _command sxhkd && pgrep -f "sxhkd -c ${HOME}/.config/sxhkd/sxhkdrc-dom0" || sxhkd -c "${HOME}/.config/sxhkd/sxhkdrc-dom0" &
 else
-    _command sxhkd && pgrep -x sxhkd-bspwm || sxhkd -c "${HOME}/.config/sxhkd/sxhkdrc-bspwm" &
+    _command sxhkd && pgrep -f "sxhkd -c ${HOME}/.config/sxhkd/sxhkdrc-bspwm" || sxhkd -c "${HOME}/.config/sxhkd/sxhkdrc-bspwm" &
 fi
 
 # xfce settings
@@ -294,12 +294,15 @@ fi
 #set-xkb &
 #xbindkeys &
 
-# gnome policykit authentation agent
-[[ -x /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 ]] && /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
-# gnome keyring
-#eval "$(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg)" &
-# lx policykit authentation agent
-#_command lxpolkit && lxpolkit &
+# policykit authentation agent
+if [[ -x /usr/libexec/xfce-polkit ]] ; then
+    /usr/libexec/xfce-polkit &
+elif [[ -x /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 ]] ; then
+    /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+    #eval "$(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg)" &
+elif _command lxpolkit ; then
+    lxpolkit &
+fi
 
 # compositor
 #_command manjaro-compositor && manjaro-compositor --start &

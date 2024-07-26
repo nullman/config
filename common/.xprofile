@@ -16,6 +16,9 @@ _command() {
     command -v "$1" >/dev/null 2>&1
 }
 
+# exit if not running under X11
+[[ -n "$(xset q >/dev/null)" ]] && exit 1
+
 # set video resolution via xrandr
 [[ -x ${HOME}/.xrandr ]] && ${HOME}/.xrandr >/dev/null 2>&1
 
@@ -27,8 +30,8 @@ _command xrdb && [[ -f ${HOME}.Xresources ]] && xrdb -merge ${HOME}/.Xresources
 _command xmodmap && [[ -f /etc/X11/xinit/.Xmodmap ]] && xmodmap /etc/X11/xinit/.Xmodmap
 _command xmodmap && [[ -f ${HOME}/.Xmodmap ]] && xmodmap ${HOME}/.Xmodmap
 
-# disable insert key
-_command xkbcomp && xkbcomp ${DISPLAY} - | sed 's/ Insert / NoSymbol /' | xkbcomp - ${DISPLAY} >/dev/null 2>&1
+# # disable insert key
+# _command xkbcomp && xkbcomp ${DISPLAY} - | sed 's/ Insert / NoSymbol /' | xkbcomp - ${DISPLAY} >/dev/null 2>&1
 
 # setxkbmap key behavior modifications
 #   caps lock  -> control
