@@ -10,8 +10,6 @@ betterbird
 #thunderbird
 firefox
 ##chromium
-google-chrome
-#google-chrome-stable
 thunar
 ##pcmanfm
 ##spacefm
@@ -23,6 +21,8 @@ dev.geopjr.Tuba
 gajim
 ##pidgin
 ##idea
+google-chrome
+#google-chrome-stable
 #syncterm
 
 #===============================================================================

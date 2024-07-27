@@ -28,12 +28,18 @@ for line in ${launch} ; do
     #echo "app: ${app}"
     if [[ "$(uname -n)" == "dom0" ]] ; then
         #echo "dom0: ${app}"
-        if [[ "${app:0:5}" == "dom0:" ]] ; then
-            ${app} >/dev/null 2>&1 &
-        elif [[ "${app:0:9}" == "personal:" ]] ; then
-            qvm-run personal "${app:9}" >/dev/null 2>&1 &
+        dt=$(echo "${app}" | sed 's/:.*$//')
+        vm=$(echo "${app}" | sed 's/^[^:]*:// ; s/:.*$//')
+        a=$(echo "${app}" | sed 's/^.*://')
+        #echo "desktop: ${dt}, vm: ${vm}, app: ${a}"
+        if [[ "${vm}" == "dom0" ]] ; then
+            bspc desktop --focus ${dt} && ${a} >/dev/null 2>&1 &
+            sleep 2s;
+        elif [[ "${vm}" == "personal" ]] ; then
+            bspc desktop --focus ${dt} && qvm-run personal "${a}" >/dev/null 2>&1 &
+            sleep 2s;
         else
-            ${app} >/dev/null 2>&1 &
+            echo "Bad input: ${app}"
         fi
     else
         if [[ $(command -v ${app}) ]] ; then

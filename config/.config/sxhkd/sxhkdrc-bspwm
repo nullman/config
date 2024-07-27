@@ -162,11 +162,11 @@ super + {_,shift + }Tab
     bspc {node -f last.leaf,desktop -f last}
 
 # focus given desktop
-super + {1-9,0,-,=}
+super + {1-9,0,minus,equal}
     bspc desktop --focus '^{1-9,10,11,12}'
 
 # send focused node to given desktop and follow
-super + shift + {1-9,0,-,=}
+super + shift + {1-9,0,minus,equal}
     bspc node --to-desktop '^{1-9,10,11,12}' --follow #&& \
     #notify-send --expire-time=3000 "Node -> Desktop $(bspc query --tree --desktop | jq --raw-output '.name')"
 
