@@ -57,7 +57,7 @@ _bc top_padding                0
 _bc right_padding              0
 #_bc bottom_padding             0
 #_bc bottom_padding             30       # room for tint2 system bar
-_bc bottom_padding             22       # room for eww system bar
+_bc bottom_padding             22       # room for xfce/eww system bar
 _bc left_padding               0
 
 # desktop settings
@@ -68,9 +68,9 @@ _bc border_width               4
 
 # pointer bindings
 _bc pointer_modifier           mod4
-_bc pointer_action1            move
-_bc pointer_action2            resize_side
-_bc pointer_action3            resize_corner
+_bc pointer_action1            resize_side
+_bc pointer_action1            resize_corner
+_bc pointer_action3            move
 
 # default colors
 #_bc normal_border_color        "#30302f"
@@ -88,7 +88,7 @@ _bc presel_feedback_color      "#5e81ac"
 # Monitors
 #-------------------------------------------------------------------------------
 
-bspc monitor -d 1 2 3 4 5 6 7 8 9 10
+bspc monitor -d 1 2 3 4 5 6 7 8 9 10 11 12
 #bspc monitor -d "1  " "2  " "3  " "4  " "5  " "6  " "7  " "8  " "9  " "10  "
 #bspc monitor -d "1  " "2  " "3  " "4  " "5  " "6  " "7  " "8  " "9  " "10  "
 
@@ -173,6 +173,10 @@ _br bluejeans-v2 desktop='^9' follow=on
 # 10: Games
 #bspc desktop 9 --layout stacked
 #_br syncterm desktop='^10' follow=on
+
+# 11: Virtual Machine 1
+
+# 12: Virtual Machine 2
 
 #-------------------------------------------------------------------------------
 # Application Rules

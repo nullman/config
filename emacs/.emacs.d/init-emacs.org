@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2024-07-25 01:27 (kyle)>
+  #+TIMESTAMP: <2024-07-26 18:44 (user)>
 
 * Overview
   :PROPERTIES:
@@ -1251,6 +1251,7 @@
                    ;; "Inconsolata-15"
                    ;; "BitstreamVeraSansMono Nerd Font Mono-14"
                    ((x-list-fonts "MesloLGS Nerd Font") "MesloLGS Nerd Font Mono-14")
+                   ((x-list-fonts "Dejavu Sans") "Dejavu Sans Mono-14")
                    ((x-list-fonts "Hack Nerd Font") "Hack Nerd Font Mono-14")
                    ((x-list-fonts "DroidSansMono Nerd Font") "DroidSansMono Nerd Font Mono-14")
                    ((x-list-fonts "Fira Code") "Fira Code Mono-14")
@@ -33836,6 +33837,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
                           ("repos" . "/home/data/media/Repos")
                           ("Downloads" . "~/Downloads")
                           ("Documents" . "~/Documents")
+                          ("QubesIncoming" . "~/QubesIncoming")
                           ("clisp" . "~/dev/clisp")
                           ;;("clojure" . "~/dev/clojure")
                           ("racket" . "~/dev/racket")
