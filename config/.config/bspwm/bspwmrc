@@ -182,9 +182,6 @@ _br bluejeans-v2 desktop='^9' follow=on
 # Application Rules
 #-------------------------------------------------------------------------------
 
-# tiled applications
-_br Emacs state=tiled
-
 # fullscreen applications
 _br bluejeans-v2 state=fullscreen
 _br Evince state=fullscreen
@@ -279,12 +276,12 @@ _command() {
 
 # simple x hotkey daemon
 # (might have been started already by .xprofile)
-_command sxhkd && pgrep -f "sxhkd -c ${HOME}/.config/sxhkd/sxhkdrc" || sxhkd -c "${HOME}/.config/sxhkd/sxhkdrc" &
 if [[ "$(uname -n)" == "dom0" ]] ; then
     _command sxhkd && pgrep -f "sxhkd -c ${HOME}/.config/sxhkd/sxhkdrc-dom0" || sxhkd -c "${HOME}/.config/sxhkd/sxhkdrc-dom0" &
 else
-    _command sxhkd && pgrep -f "sxhkd -c ${HOME}/.config/sxhkd/sxhkdrc-bspwm" || sxhkd -c "${HOME}/.config/sxhkd/sxhkdrc-bspwm" &
+    _command sxhkd && pgrep -f "sxhkd -c ${HOME}/.config/sxhkd/sxhkdrc" || sxhkd -c "${HOME}/.config/sxhkd/sxhkdrc" &
 fi
+_command sxhkd && pgrep -f "sxhkd -c ${HOME}/.config/sxhkd/sxhkdrc-bspwm" || sxhkd -c "${HOME}/.config/sxhkd/sxhkdrc-bspwm" &
 
 # xfce settings
 #_command xfsettingsd && xfsettingsd &
@@ -299,17 +296,14 @@ fi
 #xbindkeys &
 
 # policykit authentation agent
-if [[ -x /usr/libexec/xfce-polkit ]] ; then
-    /usr/libexec/xfce-polkit &
-elif [[ -x /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 ]] ; then
+if [[ -x /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 ]] ; then
     /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
     #eval "$(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg)" &
-elif _command lxpolkit ; then
-    lxpolkit &
 fi
+_command lxpolkit && lxpolkit &
 
 # compositor
-_command picom && picom -c &
+_command picom && picom -b &
 
 # system bar
 [[ -f "${HOME}/bin/system-bar" ]] && source "${HOME}/bin/system-bar"
@@ -357,7 +351,7 @@ _command nitrogen && nitrogen --restore &
 #     /usr/lib/qubes/qrexec-policy-agent-autostart &
 #     # qubes application menu
 #     (systemctl --user import-environment XDG_CURRENT_DESKTOP XDG_DATA_HOME XDG_CONFIG_HOME XDG_STATE_HOME XDG_DATA_DIRS XDG_CONFIG_DIRS \
-#                XDG_CACHE_HOME XDG_RUNTIME_DIR XDG_SESSION_CLASS XDG_SESSION_DESKTOP XDG_SESSION_ID XDG_SESSION_PATH XDG_SESSION_TYPE
+    #                XDG_CACHE_HOME XDG_RUNTIME_DIR XDG_SESSION_CLASS XDG_SESSION_DESKTOP XDG_SESSION_ID XDG_SESSION_PATH XDG_SESSION_TYPE
 #      systemctl --user start qubes-app-menu) &
 #     # qubes window icon receiver
 #     /usr/lib/qubes/icon-receiver &
