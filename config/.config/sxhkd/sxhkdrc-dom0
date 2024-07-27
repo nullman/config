@@ -138,7 +138,7 @@ super + alt + h
     yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null --filename="${HOME}/.config/sxhkd/sxhkdrc-help"
 
 # qubes os app menu
-super + Escape
+super + escape
     gdbus call --session --dest org.qubesos.appmenu --object-path "/org/qubesos/appmenu" --method org.freedesktop.Application.Activate "{}"
 
 # desktop application launcher
@@ -369,7 +369,7 @@ super + alt + ctrl + apostrophe
 
 # terminal
 super + Return
-    qvm-run personal alacritty
+    qvm-run personal /usr/bin/alacritty
 
 #===============================================================================
 # End of File

@@ -98,81 +98,125 @@ bspc monitor -d 1 2 3 4 5 6 7 8 9 10 11 12
 
 # 1: Terminal
 #bspc desktop 1 --layout stacked
-#_br URxvt desktop='^1' follow=on
-#_br Alacritty desktop='^1' follow=on
-#_br Termite desktop='^1' follow=on
+#_br 'Alacritty' desktop='^1' follow=on
+#_br 'personal:Alacritty' desktop='^1' follow=on
 
 # 2: Editor
 #bspc desktop 2 --layout stacked
-_br Emacs desktop='^2' follow=on
+_br 'Emacs' desktop='^2' follow=on
+_br 'personal:Emacs' desktop='^2' follow=on
 
 # 3: Email
 bspc desktop 3 --layout monocle
-_br thunderbird desktop='^3' follow=on
-_br betterbird desktop='^3' follow=on
-_br ms-outlook-nativefier desktop='^3' follow=on
+_br 'thunderbird' desktop='^3' follow=on
+_br 'personal:thunderbird' desktop='^3' follow=on
+_br 'betterbird' desktop='^3' follow=on
+_br 'personal:betterbird' desktop='^3' follow=on
+_br 'ms-outlook-nativefier' desktop='^3' follow=on
+_br 'personal:ms-outlook-nativefier' desktop='^3' follow=on
 
 # 4: Browser
 bspc desktop 4 --layout monocle
-_br firefox desktop='^4' follow=on
-_br LibreWolf desktop='^4' follow=on
-_br Brave-browser desktop='^4' follow=on
-_br vivaldi-stable desktop='^4' follow=on
-_br gopherus-sdl desktop='^4' follow=on
+_br 'firefox' desktop='^4' follow=on
+_br 'personal:firefox' desktop='^4' follow=on
+_br 'LibreWolf' desktop='^4' follow=on
+_br 'personal:LibreWolf' desktop='^4' follow=on
+_br 'Brave-browser' desktop='^4' follow=on
+_br 'personal:Brave-browser' desktop='^4' follow=on
+_br 'vivaldi-stable' desktop='^4' follow=on
+_br 'personal:vivaldi-stable' desktop='^4' follow=on
+_br 'gopherus-sdl' desktop='^4' follow=on
+_br 'personal:gopherus-sdl' desktop='^4' follow=on
 
 # 5: File Manager
 #bspc desktop 5 --layout stacked
-_br Thunar desktop='^5' follow=on
-_br Pcmanfm desktop='^5' follow=on
-_br Spacefm desktop='^5' follow=on
-_br Org.gnome.Nautilus desktop='^5' follow=on
-#_br Filezilla desktop='^5' follow=on
-_br Transmission-gtk desktop='^5' follow=on
-#_br balena-etcher-electron desktop='^5' follow=on
-#_br Ghb desktop='^5' follow=on
+_br 'Thunar' desktop='^5' follow=on
+_br 'personal:Thunar' desktop='^5' follow=on
+_br 'Pcmanfm' desktop='^5' follow=on
+_br 'personal:Pcmanfm' desktop='^5' follow=on
+_br 'Spacefm' desktop='^5' follow=on
+_br 'personal:Spacefm' desktop='^5' follow=on
+_br 'Org.gnome.Nautilus' desktop='^5' follow=on
+_br 'personal:Org.gnome.Nautilus' desktop='^5' follow=on
+#_br 'Filezilla' desktop='^5' follow=on
+#_br 'personal:Filezilla' desktop='^5' follow=on
+_br 'Transmission-gtk' desktop='^5' follow=on
+_br 'personal:Transmission-gtk' desktop='^5' follow=on
+#_br 'balena-etcher-electron' desktop='^5' follow=on
+#_br 'personal:balena-etcher-electron' desktop='^5' follow=on
+#_br 'Ghb' desktop='^5' follow=on
+#_br 'personal:Ghb' desktop='^5' follow=on
 
 # 6: Chat
 bspc desktop 6 --layout tiled
-_br Slack desktop='^6' follow=on
-_br discord desktop='^6' follow=on
+_br 'Slack' desktop='^6' follow=on
+_br 'personal:Slack' desktop='^6' follow=on
+_br 'discord' desktop='^6' follow=on
+_br 'personal:discord' desktop='^6' follow=on
 
 # 7: More Chat
 #bspc desktop 7 --layout stacked
-_br Pidgin desktop='^7' follow=on
-_br Tootle desktop='^7' follow=on
-_br Com.github.bleakgrey.tootle desktop='^7' follow=on
-_br Element desktop='^7' follow=on
-_br dev.geopjr.Tuba desktop='^7' follow=on
-_br Gajim desktop='^7' follow=on
+_br 'Pidgin' desktop='^7' follow=on
+_br 'personal:Pidgin' desktop='^7' follow=on
+_br 'Tootle' desktop='^7' follow=on
+_br 'personal:Tootle' desktop='^7' follow=on
+_br 'Com.github.bleakgrey.tootle' desktop='^7' follow=on
+_br 'personal:Com.github.bleakgrey.tootle' desktop='^7' follow=on
+_br 'Element' desktop='^7' follow=on
+_br 'personal:Element' desktop='^7' follow=on
+_br 'dev.geopjr.Tuba' desktop='^7' follow=on
+_br 'personal:dev.geopjr.Tuba' desktop='^7' follow=on
+_br 'Gajim' desktop='^7' follow=on
+_br 'personal:Gajim' desktop='^7' follow=on
 _br 'Hyperspace Desktop' desktop='^7' follow=on
-_br android-messages-desktop desktop='^7' follow=on
-_br teams-for-linux desktop='^7' follow=on
+_br 'personal:Hyperspace Desktop' desktop='^7' follow=on
+_br 'android-messages-desktop' desktop='^7' follow=on
+_br 'personal:android-messages-desktop' desktop='^7' follow=on
+_br 'teams-for-linux' desktop='^7' follow=on
+_br 'personal:teams-for-linux' desktop='^7' follow=on
 
 # 8: Development
 bspc desktop 8 --layout monocle
-_br jetbrains-idea desktop='^8' follow=on
-_br jetbrains-idea-ce desktop='^8' follow=on
-_br jetbrains-studio desktop='^8' follow=on
-#_br dosbox desktop='^8' follow=on
-#_br BasiliskII desktop='^8' follow=on
+_br 'jetbrains-idea' desktop='^8' follow=on
+_br 'personal:jetbrains-idea' desktop='^8' follow=on
+_br 'jetbrains-idea-ce' desktop='^8' follow=on
+_br 'personal:jetbrains-idea-ce' desktop='^8' follow=on
+_br 'jetbrains-studio' desktop='^8' follow=on
+_br 'personal:jetbrains-studio' desktop='^8' follow=on
+#_br 'dosbox' desktop='^8' follow=on
+#_br 'personal:dosbox' desktop='^8' follow=on
+#_br 'BasiliskII' desktop='^8' follow=on
+#_br 'personal:BasiliskII' desktop='^8' follow=on
 _br 'VirtualBox Manager' desktop='^8' follow=on
+_br 'personal:VirtualBox Manager' desktop='^8' follow=on
 _br 'VirtualBox Machine' desktop='^8' follow=on
+_br 'personal:VirtualBox Machine' desktop='^8' follow=on
 
 # 9: Image, Video, and Audio
 #bspc desktop 9 --layout stacked
-_br Chromium-browser desktop='^9' follow=on
-_br Google-chrome desktop='^9' follow=on
-_br Gimp-2.10 desktop='^9' follow=on
-_br Qmmp desktop='^9' follow=on
-_br mplayer2 desktop='^9' follow=on
-_br Lollypop desktop='^9' follow=on
-_br LBRY desktop='^9' follow=on
-_br spotify desktop='^9' follow=on
-_br bluejeans-v2 desktop='^9' follow=on
+_br 'Chromium-browser' desktop='^9' follow=on
+_br 'personal:Chromium-browser' desktop='^9' follow=on
+_br 'Google-chrome' desktop='^9' follow=on
+_br 'personal:Google-chrome' desktop='^9' follow=on
+_br 'Gimp-2.10' desktop='^9' follow=on
+_br 'personal:Gimp-2.10' desktop='^9' follow=on
+_br 'Qmmp' desktop='^9' follow=on
+_br 'personal:Qmmp' desktop='^9' follow=on
+_br 'mplayer2' desktop='^9' follow=on
+_br 'personal:mplayer2' desktop='^9' follow=on
+_br 'Lollypop' desktop='^9' follow=on
+_br 'personal:Lollypop' desktop='^9' follow=on
+_br 'LBRY' desktop='^9' follow=on
+_br 'personal:LBRY' desktop='^9' follow=on
+_br 'spotify' desktop='^9' follow=on
+_br 'personal:spotify' desktop='^9' follow=on
+_br 'bluejeans-v2' desktop='^9' follow=on
+_br 'personal:bluejeans-v2' desktop='^9' follow=on
 
 # 10: Games
 #bspc desktop 9 --layout stacked
-#_br syncterm desktop='^10' follow=on
+#_br 'syncterm' desktop='^10' follow=on
+#_br 'personal:syncterm' desktop='^10' follow=on
 
 # 11: Virtual Machine 1
 
@@ -182,75 +226,143 @@ _br bluejeans-v2 desktop='^9' follow=on
 # Application Rules
 #-------------------------------------------------------------------------------
 
+# tiled applications
+_br 'Emacs' state=tiled
+_br 'personal:Emacs' state=tiled
+
 # fullscreen applications
-_br bluejeans-v2 state=fullscreen
-_br Evince state=fullscreen
-_br Ghb state=fullscreen
-_br Gimp-2.10 state=fullscreen
-#_br jetbrains-idea state=fullscreen
-#_br jetbrains-idea-ce state=fullscreen
-#_br jetbrains-studio state=fullscreen
-#_br LBRY state=fullscreen
+_br 'bluejeans-v2' state=fullscreen
+_br 'personal:bluejeans-v2' state=fullscreen
+_br 'Evince' state=fullscreen
+_br 'personal:Evince' state=fullscreen
+_br 'Ghb' state=fullscreen
+_br 'personal:Ghb' state=fullscreen
+_br 'Gimp-2.10' state=fullscreen
+_br 'personal:Gimp-2.10' state=fullscreen
+#_br 'jetbrains-idea' state=fullscreen
+#_br 'personal:jetbrains-idea' state=fullscreen
+#_br 'jetbrains-idea-ce' state=fullscreen
+#_br 'personal:jetbrains-idea-ce' state=fullscreen
+#_br 'jetbrains-studio' state=fullscreen
+#_br 'personal:jetbrains-studio' state=fullscreen
 #_br 'Microsoft Teams' state=fullscreen
-_br mplayer2 state=fullscreen
-#_br spotify state=fullscreen
-_br vlc state=fullscreen
+#_br 'personal:Microsoft Teams' state=fullscreen
+_br 'mplayer2' state=fullscreen
+_br 'personal:mplayer2' state=fullscreen
+#_br 'spotify' state=fullscreen
+#_br 'personal:spotify' state=fullscreen
+_br 'vlc' state=fullscreen
+_br 'personal:vlc' state=fullscreen
 _br 'VirtualBox Manager' state=fullscreen
+_br 'personal:VirtualBox Manager' state=fullscreen
 _br 'VirtualBox Machine' state=fullscreen
-_br w40k.exe state=fullscreen
+_br 'personal:VirtualBox Machine' state=fullscreen
+_br 'w40k.exe' state=fullscreen
+_br 'personal:w40k.exe' state=fullscreen
 
 # floating applications
-_br alsamixer state=floating center=true
-_br arandr state=floating center=true
-_br Audacious state=floating sticky=true
-_br balena-etcher-electron state=floating center=true
-_br BasiliskII state=floating center=true
+_br 'alsamixer' state=floating center=true
+_br 'personal:alsamixer' state=floating center=true
+_br 'arandr' state=floating center=true
+_br 'personal:arandr' state=floating center=true
+_br 'Audacious' state=floating sticky=true
+_br 'personal:Audacious' state=floating sticky=true
+_br 'balena-etcher-electron' state=floating center=true
+_br 'personal:balena-etcher-electron' state=floating center=true
+_br 'BasiliskII' state=floating center=true
+_br 'personal:BasiliskII' state=floating center=true
 _br '.blueman-manager-wrapped' state=floating center=true
-_br Calamares state=floating center=true
-_br Clipgrab state=floating center=true
+_br 'personal:.blueman-manager-wrapped' state=floating center=true
+_br 'Calamares' state=floating center=true
+_br 'personal:Calamares' state=floating center=true
+_br 'Clipgrab' state=floating center=true
+_br 'personal:Clipgrab' state=floating center=true
 _br 'Cisco AnyConnect Secure Mobility Client' state=floating center=true
-#_br dosbox state=floating center=true
-_br feh state=floating center=true
+_br 'personal:Cisco AnyConnect Secure Mobility Client' state=floating center=true
+#_br 'dosbox' state=floating center=true
+#_br 'personal:dosbox' state=floating center=true
+_br 'feh' state=floating center=true
+_br 'personal:feh' state=floating center=true
 _br 'File Transfer*' state=floating center=true
-_br Font-manager state=floating center=true
-_br Font-viewer state=floating center=true
-_br Galculator state=floating center=true
-_br Gnome-disks state=floating center=true
-_br GParted state=floating center=true
-_br Gxmessage state=floating center=true
+_br 'personal:File Transfer*' state=floating center=true
+_br 'Font-manager' state=floating center=true
+_br 'personal:Font-manager' state=floating center=true
+_br 'Font-viewer' state=floating center=true
+_br 'personal:Font-viewer' state=floating center=true
+_br 'Galculator' state=floating center=true
+_br 'personal:Galculator' state=floating center=true
+_br 'Gnome-disks' state=floating center=true
+_br 'personal:Gnome-disks' state=floating center=true
+_br 'GParted' state=floating center=true
+_br 'personal:GParted' state=floating center=true
+_br 'Gxmessage' state=floating center=true
+_br 'personal:Gxmessage' state=floating center=true
 _br '(?i)gsimplecal' state=floating center=true
-_br iwgtk state=floating center=true
-#_br jetbrains-idea state=floating center=true
-#_br jetbrains-idea-ce state=floating center=true
-#_br jetbrains-studio state=floating center=true
-_br Lightdm-gtk-greeter-settings state=floating center=true
-_br Lxappearance state=floating center=true
-_br Manjaro-hello state=floating center=true
+_br 'personal:(?i)gsimplecal' state=floating center=true
+_br 'iwgtk' state=floating center=true
+_br 'personal:iwgtk' state=floating center=true
+#_br 'jetbrains-idea' state=floating center=true
+#_br 'personal:jetbrains-idea' state=floating center=true
+#_br 'jetbrains-idea-ce' state=floating center=true
+#_br 'personal:jetbrains-idea-ce' state=floating center=true
+#_br 'jetbrains-studio' state=floating center=true
+#_br 'personal:jetbrains-studio' state=floating center=true
+_br 'Lightdm-gtk-greeter-settings' state=floating center=true
+_br 'personal:Lightdm-gtk-greeter-settings' state=floating center=true
+_br 'Lxappearance' state=floating center=true
+_br 'personal:Lxappearance' state=floating center=true
+_br 'Manjaro-hello' state=floating center=true
+_br 'personal:Manjaro-hello' state=floating center=true
 _br 'Manjaro Settings Manager' state=floating center=true
-_br mpv state=floating center=true sticky=on
+_br 'personal:Manjaro Settings Manager' state=floating center=true
+_br 'mpv' state=floating center=true sticky=on
+_br 'personal:mpv' state=floating center=true sticky=on
 _br 'MuseScore: Play Panel' state=floating center=true sticky=on
-_br Nitrogen state=floating center=true
-_br oblogout state=floating center=true
-_br octopi state=floating center=true
+_br 'personal:MuseScore: Play Panel' state=floating center=true sticky=on
+_br 'Nitrogen' state=floating center=true
+_br 'personal:Nitrogen' state=floating center=true
+_br 'oblogout' state=floating center=true
+_br 'personal:oblogout' state=floating center=true
+_br 'octopi' state=floating center=true
+_br 'personal:octopi' state=floating center=true
 _br 'About Pale Moon' state=floating center=true
-_br Pamac-manager state=floating center=true
-_br Paprefs state=floating center=true
-_br Pavucontrol state=floating center=true
-_br Qmmp state=floating sticky=true
-_br qt5ct state=floating sticky=true
-_br Qtconfig-qt4 state=floating sticky=true
-_br Simple-scan state=floating center=true
+_br 'personal:About Pale Moon' state=floating center=true
+_br 'Pamac-manager' state=floating center=true
+_br 'personal:Pamac-manager' state=floating center=true
+_br 'Paprefs' state=floating center=true
+_br 'personal:Paprefs' state=floating center=true
+_br 'Pavucontrol' state=floating center=true
+_br 'personal:Pavucontrol' state=floating center=true
+_br 'Qmmp' state=floating sticky=true
+_br 'personal:Qmmp' state=floating sticky=true
+_br 'qt5ct' state=floating sticky=true
+_br 'personal:qt5ct' state=floating sticky=true
+_br 'Qtconfig-qt4' state=floating sticky=true
+_br 'personal:Qtconfig-qt4' state=floating sticky=true
+_br 'Simple-scan' state=floating center=true
+_br 'personal:Simple-scan' state=floating center=true
 _br '(?i)System-config-printer.py' state=floating center=true
-_br Skype state=floating center=true
-_br syncterm state=floating center=true
-_br Thus state=floating center=true
-_br Tint2conf state=floating center=true
-_br Timeset-gui state=floating center=true
+_br 'personal:(?i)System-config-printer.py' state=floating center=true
+_br 'Skype' state=floating center=true
+_br 'personal:Skype' state=floating center=true
+_br 'syncterm' state=floating center=true
+_br 'personal:syncterm' state=floating center=true
+_br 'Thus' state=floating center=true
+_br 'personal:Thus' state=floating center=true
+_br 'Tint2conf' state=floating center=true
+_br 'personal:Tint2conf' state=floating center=true
+_br 'Timeset-gui' state=floating center=true
+_br 'personal:Timeset-gui' state=floating center=true
 _br '(?i)virtualbox' state=floating center=true
-_br X48 state=floating center=true
-_br Xfburn state=floating center=true
-_br Xfce4-settings-manager state=floating center=true
-_br Yad state=floating center=true
+_br 'personal:(?i)virtualbox' state=floating center=true
+_br 'X48' state=floating center=true
+_br 'personal:X48' state=floating center=true
+_br 'Xfburn' state=floating center=true
+_br 'personal:Xfburn' state=floating center=true
+_br 'Xfce4-settings-manager' state=floating center=true
+_br 'personal:Xfce4-settings-manager' state=floating center=true
+_br 'Yad' state=floating center=true
+_br 'personal:Yad' state=floating center=true
 
 #-------------------------------------------------------------------------------
 # Auto-Start Standard Applications
