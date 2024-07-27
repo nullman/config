@@ -139,12 +139,12 @@ super + alt + h
 
 # qubes os app menu
 super + ctrl + space
-    gdbus call --session --dest org.qubesos.appmenu --object-path "/org/qubesos/appmenu" --method org.freedesktop.Application.Activate "{}"
+    gdbus call --session --dest org.qubesos.appmenu --object-path '/org/qubesos/appmenu' --method org.freedesktop.Application.Activate '{}'
 
 # desktop application launcher
 super + alt + space
     rofi -modi drun -show drun
-    #rofi -show combi -modes combi -combi-modes "window,drun"
+    #rofi -show combi -modes combi -combi-modes 'window,drun'
 
 # program launcher
 super + alt + d
@@ -190,7 +190,7 @@ super + alt + s
 # bitwarden selector (clear clipboard after 60 seconds)
 # first login using 'bw login'
 super + alt + p
-    qvm-run personal "???/bwmenu --clear 60"
+    qvm-run personal "bwmenu --clear 60"
 
 # # generate password
 # super + ctrl + p
@@ -200,16 +200,16 @@ super + alt + p
 
 # # generate password
 # super + ctrl + p
-#     qvm-run personal "/home/user/bin/password-phrase 6 hyphen true | tr -d '\n' | xclip -selection clipboard &&
+#     qvm-run personal "/home/user/bin/password-phrase 6 hyphen true | tr -d '\n' | xclip -selection clipboard && \
 #     notify-send --expire-time=3000 'Random password phrase on clipboard'"
 
 # generate password
 super + ctrl + p
-    qvm-run personal "/home/user/bin/rofi-menu password && /usr/sbin/notify-send --expire-time=3000 'Random password phrase on clipboard'"
+    qvm-run personal "/home/user/bin/rofi-menu password && notify-send --expire-time=3000 'Random password phrase on clipboard'"
 
 # display time
 super + alt + backslash
-    printf "$(date '+%Y-%m-%d')\n $(date '+%H:%M:%S')" |
+    printf "$(date '+%Y-%m-%d')\n $(date '+%H:%M:%S')" | \
     yad --text-info --width=532 --height=240 --wrap --no-buttons --timeout=3 --fontname='MesloLGS Nerd Font Mono 64' 2>/dev/null
 
 # # edit with emacs
@@ -254,15 +254,15 @@ super + shift + Delete
 
 # snapshot of entire screen
 super + alt + Print
-    qvm-run personal "???/scrot --exec 'mv $f ~/Pictures/' && /usr/sbin/notify-send --expire-time=3000 'Screen snapshot saved'"
+    qvm-run personal "scrot --exec 'mv $f ~/Pictures/' && notify-send --expire-time=3000 'Screen snapshot saved'"
 
 # snapshot of active window
 super + ctrl + Print
-    qvm-run personal "???/scrot --focused --exec 'mv $f ~/Pictures/' && /usr/sbin/notify-send --expire-time=3000 'Window snapshot saved'"
+    qvm-run personal "scrot --focused --exec 'mv $f ~/Pictures/' && notify-send --expire-time=3000 'Window snapshot saved'"
 
 # snapshot of selected region
 super + shift + Print
-    qvm-run personal "???/scrot --select --freeze --exec 'mv $f ~/Pictures/' && /usr/sbin/notify-send --expire-time=3000 'Region snapshot saved'"
+    qvm-run personal "scrot --select --freeze --exec 'mv $f ~/Pictures/' && notify-send --expire-time=3000 'Region snapshot saved'"
 
 # reload sxhkd
 super + shift + s
@@ -315,53 +315,53 @@ super + alt + ctrl + Right
 
 # mpc control
 super + alt + ctrl + m
-    qvm-run personal "???/mpc toggle && /usr/sbin/notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+    qvm-run personal "mpc toggle && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 super + alt + ctrl + comma
-    qvm-run personal "???/mpc prev && /usr/sbin/notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+    qvm-run personal "mpc prev && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 super + alt + ctrl + period
-    qvm-run personal "???/mpc next && /usr/sbin/notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+    qvm-run personal "mpc next && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 super + alt + ctrl + slash
-    qvm-run personal "/usr/sbin/notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+    qvm-run personal "notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 
 # mpc control (media keys)
 XF86AudioPrev
-    qvm-run personal "???/mpc prev && /usr/sbin/notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+    qvm-run personal "mpc prev && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 XF86AudioPlay
-    qvm-run personal "???/mpc play && /usr/sbin/notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+    qvm-run personal "mpc play && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 XF86AudioStop
-    qvm-run personal "???/mpc stop && /usr/sbin/notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+    qvm-run personal "mpc stop && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 XF86AudioNext
-    qvm-run personal "???/mpc next && /usr/sbin/notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+    qvm-run personal "mpc next && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 
 # # spotify control
 # Shift+Alt + a
-#     qvm-run personal "???/dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && /usr/sbin/notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+#     qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 # Shift+Alt + s
-#     qvm-run personal "???/dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && /usr/sbin/notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+#     qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 # Shift+Alt + d
-#     qvm-run personal "???/dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && /usr/sbin/notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+#     qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 # Shift+Alt + f
-#     qvm-run personal "???/dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && /usr/sbin/notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+#     qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 # XF86AudioPrevious
-#     qvm-run personal "???/dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && /usr/sbin/notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+#     qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 # XF86AudioPlay
-#     qvm-run personal "???/dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && /usr/sbin/notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+#     qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 # XF86AudioStop
-#     qvm-run personal "???/dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && /usr/sbin/notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+#     qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 # XF86AudioNext
-#     qvm-run personal "???/dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && /usr/sbin/notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+#     qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 
 # media player control
 super + alt + ctrl + z
-    qvm-run personal "???/qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && /usr/sbin/notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+    qvm-run personal "qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 super + alt + ctrl + c
-    qvm-run personal "???/qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && /usr/sbin/notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+    qvm-run personal "qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 super + alt + ctrl + x
-    qvm-run personal "???/qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && /usr/sbin/notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+    qvm-run personal "qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 super + alt + ctrl + b
-    qvm-run personal "???/qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && /usr/sbin/notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+    qvm-run personal "qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 super + alt + ctrl + apostrophe
-    qvm-run personal "/usr/sbin/notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+    qvm-run personal "notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 
 #-------------------------------------------------------------------------------
 # Applications

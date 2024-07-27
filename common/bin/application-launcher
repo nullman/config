@@ -27,11 +27,11 @@ for line in ${launch} ; do
     app=$(echo "${line}" | sed 's/^.*|\(.*\)|$/\1/')
     #echo "app: ${app}"
     if [[ "$(uname -n)" == "dom0" ]] ; then
-        #echo "${app}"
+        #echo "dom0: ${app}"
         if [[ "${app:0:5}" == "dom0:" ]] ; then
             ${app} >/dev/null 2>&1 &
         elif [[ "${app:0:9}" == "personal:" ]] ; then
-            qvm-run personal "${app:9} >/dev/null 2>&1 &"
+            qvm-run personal "${app:9}" >/dev/null 2>&1 &
         else
             ${app} >/dev/null 2>&1 &
         fi
