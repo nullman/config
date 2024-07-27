@@ -218,11 +218,11 @@ super + alt + backslash
 
 # git synchronize config
 super + alt + y
-    qvm-run personal source "/home/user/.funct" && (git-sync-config && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
+    qvm-run personal (source "/home/user/.funct" && (git-sync-config && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null)
 
 # git synchronize extra
 super + alt + u
-    qvm-run personal source "/home/user/.funct" && (git-sync-extra && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
+    qvm-run personal "source \"/home/user/.funct\" && (git-sync-extra && echo \"Done\") 2>&1 | yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"
 
 # start screen saver
 super + alt + x
@@ -369,7 +369,7 @@ super + alt + ctrl + apostrophe
 
 # terminal
 super + Return
-    qvm-run personal /usr/bin/alacritty
+    qvm-run personal
 
 #===============================================================================
 # End of File
