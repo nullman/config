@@ -49,19 +49,7 @@ _command setxkbmap && setxkbmap -option 'shift:both_capslock,caps:ctrl_modifier'
 # _command xbindkeys && [[ -f ${HOME}/.xbindkeysrc ]] && xbindkeys >/dev/null 2>&1
 
 # sxhkd
-if _command sxhkd && [[ -f ${HOME}/.config/sxhkd/sxhkdrc ]] ; then
-    (
-        pkill -u ${USER} sxhkd >/dev/null 2>&1
-        if [[ "$(uname -n)" == "dom0" ]] ; then
-            sxhkd -c "${HOME}/.config/sxhkd/sxhkdrc-dom0" >/dev/null 2>&1 &
-        else
-            sxhkd -c "${HOME}/.config/sxhkd/sxhkdrc" >/dev/null 2>&1 &
-        fi
-        if [[ "${XDG_SESSION_DESKTOP: -5}" == "bspwm" ]] ; then
-            sxhkd -c "${HOME}/.config/sxhkd/sxhkdrc-bspwm" >/dev/null 2>&1 &
-        fi
-    ) &
-fi
+[[ -f "${HOME}/bin/run-sxhkd" ]] && ${HOME}/bin/run-sxhkd
 
 # set no energy saving, mouse acceleration rate, and keyboard acceleration rate
 _command xset && xset -dpms s off b off m 2/1 4 r rate 500 35 >/dev/null 2>&1
@@ -87,7 +75,7 @@ _command xset && xset -dpms s off b off m 2/1 4 r rate 500 35 >/dev/null 2>&1
 #${HOME}/bin/run-app
 
 # run applications
-#[[ -f ${HOME}/.xprofile-applications ]] && source ${HOME}/.xprofile-applications 2>&1
+#[[ -f ${HOME}/.xprofile-applications ]] && source ${HOME}/.xprofile-applications >/dev/null 2>&1
 
 # start wm
 #[[ -z "$(greppr window_manager)" ]] || ps ux | grep -v grep | grep -q window_manager || (exec $(getpr window_manager) &) >/dev/null 2>&1

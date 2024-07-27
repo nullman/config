@@ -170,29 +170,29 @@ super + shift + {1-9,0,-,=}
     bspc node --to-desktop '^{1-9,10,11,12}' --follow #&& \
     #notify-send --expire-time=3000 "Node -> Desktop $(bspc query --tree --desktop | jq --raw-output '.name')"
 
-#-------------------------------------------------------------------------------
-# Preselect
-#-------------------------------------------------------------------------------
+# #-------------------------------------------------------------------------------
+# # Preselect
+# #-------------------------------------------------------------------------------
 
-# preselect direction
-super + ctrl + {i,k,j,l}
-    bspc node --presel-dir {north,south,west,east}
+# # preselect direction
+# super + ctrl + {i,k,j,l}
+#     bspc node --presel-dir {north,south,west,east}
 
-# preselect ratio
-super + ctrl + {1-9}
-    bspc node --presel-ratio 0.{1-9}
+# # preselect ratio
+# super + ctrl + {1-9}
+#     bspc node --presel-ratio 0.{1-9}
 
-# send current window to preselected space
-super + shift + m
-    bspc node --to-node last.!automatic --follow
+# # send current window to preselected space
+# super + shift + m
+#     bspc node --to-node last.!automatic --follow
 
-# cancel preselection for focused node
-super + ctrl + space
-    bspc node --presel-dir cancel
+# # cancel preselection for focused node
+# super + ctrl + space
+#     bspc node --presel-dir cancel
 
-# # cancel preselection for focused desktop
-# super + ctrl + shift + space
-#     bspc query --nodes --desktop | xargs -I id --max-args=1 bspc node id --presel-dir cancel
+# # # cancel preselection for focused desktop
+# # super + ctrl + shift + space
+# #     bspc query --nodes --desktop | xargs -I id --max-args=1 bspc node id --presel-dir cancel
 
 #-------------------------------------------------------------------------------
 # Move and Resize

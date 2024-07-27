@@ -388,12 +388,7 @@ _command() {
 
 # simple x hotkey daemon
 # (might have been started already by .xprofile)
-if [[ "$(uname -n)" == "dom0" ]] ; then
-    _command sxhkd && pgrep -f "sxhkd -c ${HOME}/.config/sxhkd/sxhkdrc-dom0" || sxhkd -c "${HOME}/.config/sxhkd/sxhkdrc-dom0" &
-else
-    _command sxhkd && pgrep -f "sxhkd -c ${HOME}/.config/sxhkd/sxhkdrc" || sxhkd -c "${HOME}/.config/sxhkd/sxhkdrc" &
-fi
-_command sxhkd && pgrep -f "sxhkd -c ${HOME}/.config/sxhkd/sxhkdrc-bspwm" || sxhkd -c "${HOME}/.config/sxhkd/sxhkdrc-bspwm" &
+[[ -f "${HOME}/bin/run-sxhkd" ]] && ${HOME}/bin/run-sxhkd &
 
 # xfce settings
 #_command xfsettingsd && xfsettingsd &

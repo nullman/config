@@ -138,59 +138,64 @@ super + alt + h
     yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null --filename="${HOME}/.config/sxhkd/sxhkdrc-help"
 
 # qubes os app menu
-super + escape
+super + Escape
     gdbus call --session --dest org.qubesos.appmenu --object-path "/org/qubesos/appmenu" --method org.freedesktop.Application.Activate "{}"
+
+# dom0 desktop application launcher
+super + ctrl + space
+    rofi -modi drun -show drun
+    #rofi -show combi -modes combi -combi-modes "window,drun"
 
 # desktop application launcher
 super + alt + space
-    qvm-run personal rofi -modi drun -show drun
-    #qvm-run personal rofi -show combi -modes combi -combi-modes "window,drun"
+    qvm-run personal "rofi -modi drun -show drun"
+    #qvm-run personal "rofi -show combi -modes combi -combi-modes \"window,drun\""
 
 # program launcher
 super + alt + d
-    qvm-run personal rofi -modi run -show run
+    qvm-run personal "rofi -modi run -show run"
 
 # application group launcher
 super + alt + a
-    qvm-run personal /home/user/bin/application-launcher
+    qvm-run personal "/home/user/bin/application-launcher"
 
 # menu launcher
 super + alt + Return
-    qvm-run personal /home/user/bin/rofi-menu
+    qvm-run personal "/home/user/bin/rofi-menu"
 
 # window selector
 super + alt + w
-    qvm-run personal rofi -modi window -show window
+    qvm-run personal "rofi -modi window -show window"
 
 # clipmenu selector
 super + alt + c
-    qvm-run personal CM_LAUNCHER=rofi clipmenu
+    qvm-run personal "CM_LAUNCHER=rofi clipmenu"
 
 # emoji selector
 super + alt + e
-    qvm-run personal rofimoji --typer xdotool --clipboarder xsel --skin-tone neutral
-    #qvm-run personal rofimoji --action print --skin-tone neutral | tr -d '\n' | xsel && xsel --output | xsel --clipboard
+    qvm-run personal "rofimoji --typer xdotool --clipboarder xsel --skin-tone neutral"
+    #qvm-run personal "rofimoji --action print --skin-tone neutral | tr -d '\n' | xsel && xsel --output | xsel --clipboard"
 
 # bookmarks selector
 super + alt + o
-    qvm-run personal /home/user/bin/rofi-menu bookmarks
+    qvm-run personal "/home/user/bin/rofi-menu bookmarks"
 
 # typer selector
 super + alt + semicolon
-    qvm-run personal /home/user/bin/rofi-typer
+    qvm-run personal "/home/user/bin/rofi-typer"
 
 # paste selector
 super + alt + apostrophe
-    qvm-run personal /home/user/bin/rofi-menu paste
+    qvm-run personal "/home/user/bin/rofi-menu paste"
 
 # spell and define word
 super + alt + s
-    qvm-run personal /home/user/bin/rofi-menu spell
+    qvm-run personal "/home/user/bin/rofi-menu spell"
 
 # bitwarden selector (clear clipboard after 60 seconds)
 # first login using 'bw login'
 super + alt + p
-    qvm-run personal bwmenu --clear 60
+    qvm-run personal "bwmenu --clear 60"
 
 # # generate password
 # super + ctrl + p
@@ -200,29 +205,29 @@ super + alt + p
 
 # # generate password
 # super + ctrl + p
-#     qvm-run personal /home/user/bin/password-phrase 6 hyphen true | tr -d '\n' | xclip -selection clipboard && \
-#     notify-send --expire-time=3000 'Random password phrase on clipboard'
+#     qvm-run personal "/home/user/bin/password-phrase 6 hyphen true | tr -d '\n' | xclip -selection clipboard &&
+#     notify-send --expire-time=3000 'Random password phrase on clipboard'"
 
 # generate password
 super + ctrl + p
-    qvm-run personal /home/user/bin/rofi-menu password && notify-send --expire-time=3000 'Random password phrase on clipboard'
+    qvm-run personal "/home/user/bin/rofi-menu password && notify-send --expire-time=3000 'Random password phrase on clipboard'"
 
 # display time
 super + alt + backslash
-    qvm-run personal printf "$(date '+%Y-%m-%d')\n $(date '+%H:%M:%S')" | \
-    yad --text-info --width=532 --height=240 --wrap --no-buttons --timeout=3 --fontname="MesloLGS Nerd Font Mono 64" 2>/dev/null
+    qvm-run personal "printf \"$(date '+%Y-%m-%d')\n $(date '+%H:%M:%S')\" |
+    yad --text-info --width=532 --height=240 --wrap --no-buttons --timeout=3 --fontname='MesloLGS Nerd Font Mono 64' 2>/dev/null"
 
 # # edit with emacs
 # super + alt + e
-#     qvm-run personal emacsclient --eval '(emacs-everywhere)'
+#     qvm-run personal "emacsclient --eval '(emacs-everywhere)'"
 
 # git synchronize config
 super + alt + y
-    qvm-run personal (source "/home/user/.funct" && (git-sync-config && echo "Done") 2>&1 | yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null)
+    qvm-run personal "source '/home/user/.funct' && (git-sync-config && echo 'Done') 2>&1 | yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"
 
 # git synchronize extra
 super + alt + u
-    qvm-run personal "source \"/home/user/.funct\" && (git-sync-extra && echo \"Done\") 2>&1 | yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"
+    qvm-run personal "source '/home/user/.funct' && (git-sync-extra && echo 'Done') 2>&1 | yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"
 
 # start screen saver
 super + alt + x
@@ -246,27 +251,27 @@ super + shift + q
 
 # get xprop class name
 super + shift + p
-    qvm-run personal xprop | grep '^WM_CLASS' | yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
+    qvm-run personal "xprop | grep '^WM_CLASS' | yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"
 
 # kill process clicked
 super + shift + Delete
-    qvm-run personal xkill
+    qvm-run personal "xkill"
 
 # snapshot of entire screen
 super + alt + Print
-    qvm-run personal scrot --exec 'mv $f ~/Pictures/' && notify-send --expire-time=3000 'Screen snapshot saved'
+    qvm-run personal "scrot --exec 'mv $f ~/Pictures/' && notify-send --expire-time=3000 'Screen snapshot saved'"
 
 # snapshot of active window
 super + ctrl + Print
-    qvm-run personal scrot --focused --exec 'mv $f ~/Pictures/' && notify-send --expire-time=3000 'Window snapshot saved'
+    qvm-run personal "scrot --focused --exec 'mv $f ~/Pictures/' && notify-send --expire-time=3000 'Window snapshot saved'"
 
 # snapshot of selected region
 super + shift + Print
-    qvm-run personal scrot --select --freeze --exec 'mv $f ~/Pictures/' && notify-send --expire-time=3000 'Region snapshot saved'
+    qvm-run personal "scrot --select --freeze --exec 'mv $f ~/Pictures/' && notify-send --expire-time=3000 'Region snapshot saved'"
 
 # reload sxhkd
 super + shift + s
-    pkill -SIGUSR1 -u ${USER} sxhkd && notify-send --expire-time=3000 'Reloading SXHKD'
+    ${HOME}/bin/run-sxhkd && notify-send --expire-time=3000 'Reloading SXHKD'
 
 # # reload tint2
 # super + shift + t
@@ -315,53 +320,53 @@ super + alt + ctrl + Right
 
 # mpc control
 super + alt + ctrl + m
-    qvm-run personal mpc toggle && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    qvm-run personal "mpc toggle && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 super + alt + ctrl + comma
-    qvm-run personal mpc prev && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    qvm-run personal "mpc prev && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 super + alt + ctrl + period
-    qvm-run personal mpc next && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    qvm-run personal "mpc next && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 super + alt + ctrl + slash
-    qvm-run personal notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    qvm-run personal "notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 
 # mpc control (media keys)
 XF86AudioPrev
-    qvm-run personal mpc prev && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    qvm-run personal "mpc prev && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 XF86AudioPlay
-    qvm-run personal mpc play && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    qvm-run personal "mpc play && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 XF86AudioStop
-    qvm-run personal mpc stop && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    qvm-run personal "mpc stop && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 XF86AudioNext
-    qvm-run personal mpc next && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    qvm-run personal "mpc next && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 
 # # spotify control
 # Shift+Alt + a
-#     qvm-run personal dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+#     qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 # Shift+Alt + s
-#     qvm-run personal dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+#     qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 # Shift+Alt + d
-#     qvm-run personal dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+#     qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 # Shift+Alt + f
-#     qvm-run personal dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+#     qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 # XF86AudioPrevious
-#     qvm-run personal dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+#     qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 # XF86AudioPlay
-#     qvm-run personal dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+#     qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 # XF86AudioStop
-#     qvm-run personal dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+#     qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 # XF86AudioNext
-#     qvm-run personal dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+#     qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 
 # media player control
 super + alt + ctrl + z
-    qvm-run personal qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    qvm-run personal "qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 super + alt + ctrl + c
-    qvm-run personal qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    qvm-run personal "qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 super + alt + ctrl + x
-    qvm-run personal qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    qvm-run personal "qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 super + alt + ctrl + b
-    qvm-run personal qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    qvm-run personal "qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 super + alt + ctrl + apostrophe
-    qvm-run personal notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    qvm-run personal "notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 
 #-------------------------------------------------------------------------------
 # Applications
@@ -369,7 +374,7 @@ super + alt + ctrl + apostrophe
 
 # terminal
 super + Return
-    qvm-run personal
+    qvm-run personal ""
 
 #===============================================================================
 # End of File
