@@ -275,8 +275,6 @@ _br 'Calamares' state=floating center=true
 _br 'personal\:Calamares' state=floating center=true
 _br 'Clipgrab' state=floating center=true
 _br 'personal\:Clipgrab' state=floating center=true
-_br 'Cisco AnyConnect Secure Mobility Client' state=floating center=true
-_br 'personal\:Cisco AnyConnect Secure Mobility Client' state=floating center=true
 #_br 'dosbox' state=floating center=true
 #_br 'personal\:dosbox' state=floating center=true
 _br 'feh' state=floating center=true
@@ -411,10 +409,10 @@ _command lxpolkit && lxpolkit &
 _command picom && picom -b &
 
 # system bar
-[[ -f "${HOME}/bin/system-bar" ]] && source "${HOME}/bin/system-bar"
+#[[ -f "${HOME}/bin/system-bar" ]] && source "${HOME}/bin/system-bar"
 
 # system wallpaper displays
-[[ -f "${HOME}/bin/system-wallpaper-displays" ]] && source "${HOME}/bin/system-wallpaper-displays"
+#[[ -f "${HOME}/bin/system-wallpaper-displays" ]] && source "${HOME}/bin/system-wallpaper-displays"
 
 # full-screen task-switcher
 #_command skippy-xd && skippy-xd --config "${HOME}/.config/skippy-xd/skippy-xd.rc" --start-daemon &
@@ -449,24 +447,56 @@ _command nitrogen && nitrogen --restore &
 # rebuild wm menu
 #sleep 10 && _command mmaker && mmaker --force openbox &
 
-# # qubes os specific items
-# # (found in /etc/xdg/autostart)
-# if [[ "$(uname -n)" == "dom0" ]] ; then
-#     # qubes qrexec policy agent
-#     /usr/lib/qubes/qrexec-policy-agent-autostart &
-#     # qubes application menu
-#     (systemctl --user import-environment XDG_CURRENT_DESKTOP XDG_DATA_HOME XDG_CONFIG_HOME XDG_STATE_HOME XDG_DATA_DIRS XDG_CONFIG_DIRS \
-#                XDG_CACHE_HOME XDG_RUNTIME_DIR XDG_SESSION_CLASS XDG_SESSION_DESKTOP XDG_SESSION_ID XDG_SESSION_PATH XDG_SESSION_TYPE
-#      systemctl --user start qubes-app-menu) &
-#     # qubes window icon receiver
-#     /usr/lib/qubes/icon-receiver &
-#     # retry qubes rpc prompts for input devices
-#     /usr/bin/qubes-input-trigger --all &
-#     # notify qubes vms about screen layout changes
-#     /usr/libexec/qubes/watch-screen-layout-changes qvm-start-gui --notify-monitor-layout --all &
-#     # update qubes specific xfce config
-#     /usr/lib/qubes/update-xfce-config &
-# fi
+# qubes os specific items
+# (found in /etc/xdg/autostart)
+if [[ "$(uname -n)" == "dom0" ]] && [[ "${XDG_SESSION_DESKTOP}" == "bspwm" ]] ; then
+    # qubes qrexec policy agent
+    /usr/lib/qubes/qrexec-policy-agent-autostart &
+    # qubes application menu
+    (systemctl --user import-environment XDG_CURRENT_DESKTOP XDG_DATA_HOME XDG_CONFIG_HOME XDG_STATE_HOME XDG_DATA_DIRS XDG_CONFIG_DIRS \
+               XDG_CACHE_HOME XDG_RUNTIME_DIR XDG_SESSION_CLASS XDG_SESSION_DESKTOP XDG_SESSION_ID XDG_SESSION_PATH XDG_SESSION_TYPE
+     systemctl --user start qubes-app-menu) &
+    # qubes window icon receiver
+    /usr/lib/qubes/icon-receiver &
+    # retry qubes rpc prompts for input devices
+    /usr/bin/qubes-input-trigger --all &
+    # notify qubes vms about screen layout changes
+    /usr/libexec/qubes/watch-screen-layout-changes qvm-start-gui --notify-monitor-layout --all &
+    # update qubes specific xfce config
+    /usr/lib/qubes/update-xfce-config &
+    # clipboard tray
+    systemctl --user start qubes-widget@qui-clipboard &
+    # devices tray
+    systemctl --user start qubes-widget@qui-devices &
+    # disk space tray
+    systemctl --user start qubes-widget@qui-disk-space &
+    # domains tray
+    systemctl --user start qubes-widget@qui-domains &
+    # updates tray
+    systemctl --user start qubes-widget@qui-updates &
+    # qubes vm block attach home
+    (for device in $(/usr/bin/qvm-block list --all | grep -e 'Unknown device' -e 'personal' | sed 's/ .*$//') ; do
+         /usr/bin/qvm-block detach personal ${device}
+     done
+     /usr/bin/qvm-block attach --persistent --option frontend-dev=xvdz personal $(/usr/bin/qvm-block list dom0 | grep 'dom0' | sed 's/ .*$//')) &
+    # qubes gui/audio daemon
+    qvm-start-daemon --all --watch &
+    #qvm-start-daemon --all --watch --kde &
+    # xfce notification daemon
+    /usr/lib64/xfce4/notifyd/xfce4-notifyd &
+    # xfce power manager
+    xfce4-power-manager &
+    # xflock4
+    xss-lock xflock4 &
+    # policykit authentation agent
+    /usr/libexec/xfce-polkit &
+    # xfce settings daemon
+    xfsettingsd &
+    # xscreensaver
+    /usr/libexec/xscreensaver-autostart &
+    # launch screensaver and locker
+    xscreensaver -no-splash &
+fi
 
 # auto-start custom applications
 [[ -f "${HOME}/.config/bspwm/bspwmrc-applications" ]] && source "${HOME}/.config/bspwm/bspwmrc-applications"
