@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+#===============================================================================
+# run-sxhkd
+#
+# Run sxhkd.
+#
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
+#===============================================================================
+
+pkill -u ${USER} sxhkd >/dev/null 2>&1
+
+if [[ "$(uname -n)" == "dom0" ]] ; then
+    sxhkd -c "${HOME}/.config/sxhkd/sxhkdrc-dom0" >/dev/null 2>&1 &
+else
+    sxhkd -c "${HOME}/.config/sxhkd/sxhkdrc" >/dev/null 2>&1 &
+fi
+
+if [[ "${XDG_SESSION_DESKTOP: -5}" == "bspwm" ]] || [[ "${XDG_SESSION_DESKTOP}" == "xfce" ]] ; then
+    sxhkd -c "${HOME}/.config/sxhkd/sxhkdrc-bspwm" >/dev/null 2>&1 &
+fi
+
+#===============================================================================
+# End of File
+#===============================================================================

@@ -141,23 +141,18 @@ super + alt + h
 super + Escape
     gdbus call --session --dest org.qubesos.appmenu --object-path "/org/qubesos/appmenu" --method org.freedesktop.Application.Activate "{}"
 
-# dom0 desktop application launcher
+# desktop application launcher
 super + ctrl + space
     rofi -modi drun -show drun
     #rofi -show combi -modes combi -combi-modes "window,drun"
 
-# desktop application launcher
-super + alt + space
-    qvm-run personal "rofi -modi drun -show drun"
-    #qvm-run personal "rofi -show combi -modes combi -combi-modes \"window,drun\""
-
 # program launcher
 super + alt + d
-    qvm-run personal "rofi -modi run -show run"
+    rofi -modi run -show run
 
 # application group launcher
 super + alt + a
-    qvm-run personal "/home/user/bin/application-launcher"
+    ${HOME}/bin/application-launcher
 
 # menu launcher
 super + alt + Return
@@ -165,11 +160,11 @@ super + alt + Return
 
 # window selector
 super + alt + w
-    qvm-run personal "rofi -modi window -show window"
+    rofi -modi window -show window
 
 # clipmenu selector
 super + alt + c
-    qvm-run personal "CM_LAUNCHER=rofi clipmenu"
+    CM_LAUNCHER=rofi clipmenu
 
 # emoji selector
 super + alt + e
@@ -214,8 +209,8 @@ super + ctrl + p
 
 # display time
 super + alt + backslash
-    qvm-run personal "printf \"$(date '+%Y-%m-%d')\n $(date '+%H:%M:%S')\" |
-    yad --text-info --width=532 --height=240 --wrap --no-buttons --timeout=3 --fontname='MesloLGS Nerd Font Mono 64' 2>/dev/null"
+    printf "$(date '+%Y-%m-%d')\n $(date '+%H:%M:%S')" |
+    yad --text-info --width=532 --height=240 --wrap --no-buttons --timeout=3 --fontname='MesloLGS Nerd Font Mono 64' 2>/dev/null
 
 # # edit with emacs
 # super + alt + e
@@ -251,11 +246,11 @@ super + shift + q
 
 # get xprop class name
 super + shift + p
-    qvm-run personal "xprop | grep '^WM_CLASS' | yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"
+    xprop | grep '^WM_CLASS' | yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
 
 # kill process clicked
 super + shift + Delete
-    qvm-run personal "xkill"
+    xkill
 
 # snapshot of entire screen
 super + alt + Print
@@ -372,7 +367,11 @@ super + alt + ctrl + apostrophe
 # Applications
 #-------------------------------------------------------------------------------
 
-# terminal
+# terminal (dom0)
+super + ctrl + Return
+
+
+# terminal (personal)
 super + Return
     qvm-run personal ""
 

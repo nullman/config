@@ -4,27 +4,28 @@
 # List of applications to display with *~/bin/application-launcher*.
 #===============================================================================
 
-alacritty
-emacs
-betterbird
-#thunderbird
-firefox
-##chromium
-google-chrome
-#google-chrome-stable
-thunar
-##pcmanfm
-##spacefm
-slack
-discord
-##tootle
-element-desktop
-dev.geopjr.Tuba
-gajim
-##pidgin
-##idea
-##lbry
-#syncterm
+dom0:qubes-qube-manager
+dom0:alacritty
+personal:alacritty
+personal:emacs
+personal:betterbird
+#personal:thunderbird
+personal:firefox
+##personal:chromium
+personal:google-chrome
+#personal:google-chrome-stable
+personal:thunar
+##personal:pcmanfm
+##personal:spacefm
+personal:slack
+personal:discord
+##personal:tootle
+personal:element-desktop
+personal:dev.geopjr.Tuba
+personal:gajim
+##personal:pidgin
+##personal:idea
+#personal:syncterm
 
 #===============================================================================
 # End of File

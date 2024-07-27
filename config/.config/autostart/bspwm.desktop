@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=BSPWM
+Comment=Tiling Window Manager
+Exec=bspwm
+Type=Application
+Terminal=false
+StartupNotify=false

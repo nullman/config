@@ -206,8 +206,6 @@ _br 'mplayer2' desktop='^9' follow=on
 _br 'personal:mplayer2' desktop='^9' follow=on
 _br 'Lollypop' desktop='^9' follow=on
 _br 'personal:Lollypop' desktop='^9' follow=on
-_br 'LBRY' desktop='^9' follow=on
-_br 'personal:LBRY' desktop='^9' follow=on
 _br 'spotify' desktop='^9' follow=on
 _br 'personal:spotify' desktop='^9' follow=on
 _br 'bluejeans-v2' desktop='^9' follow=on

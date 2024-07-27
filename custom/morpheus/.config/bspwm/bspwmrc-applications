@@ -52,7 +52,6 @@ _command firefox && _delay 1 firefox &
 #_command pidgin && _delay 10 pidgin &
 #_command gajim && _delay 10 gajim &
 #_command idea && _delay 10 idea &
-#_command lbry && _delay 1 lbry &
 #_command syncterm && _delay 1 syncterm &
 
 # launch application launcher

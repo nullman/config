@@ -54,7 +54,6 @@ _command xautolock && xautolock -time 30 -locker 'xscreensaver-command -lock' & 
 ##_command pidgin && _delay 20 pidgin &
 ##_command idea && _delay 10 idea &
 ##_command google-chrome-stable && _delay 1 google-chrome-stable &
-##_command lbry && _delay 1 lbry &
 ##_command syncterm && _delay 1 syncterm &
 
 # launch application launcher
