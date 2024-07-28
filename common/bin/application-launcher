@@ -28,19 +28,29 @@ for line in ${launch} ; do
     #echo "app: ${app}"
     if [[ "$(uname -n)" == "dom0" ]] ; then
         #echo "dom0: ${app}"
-        dt=$(echo "${app}" | sed 's/:.*$//')
-        vm=$(echo "${app}" | sed 's/^[^:]*:// ; s/:.*$//')
+        vm=$(echo "${app}" | sed 's/:.*$//')
         a=$(echo "${app}" | sed 's/^.*://')
-        #echo "desktop: ${dt}, vm: ${vm}, app: ${a}"
+        #echo "vm: ${vm}, app: ${a}"
         if [[ "${vm}" == "dom0" ]] ; then
-            bspc desktop --focus ${dt} && ${a} >/dev/null 2>&1 &
-            sleep 2s;
+            ${a} >/dev/null 2>&1 &
         elif [[ "${vm}" == "personal" ]] ; then
-            bspc desktop --focus ${dt} && qvm-run personal "${a}" >/dev/null 2>&1 &
-            sleep 2s;
+            qvm-run personal "${a}" >/dev/null 2>&1 &
         else
             echo "Bad input: ${app}"
         fi
+        # dt=$(echo "${app}" | sed 's/:.*$//')
+        # vm=$(echo "${app}" | sed 's/^[^:]*:// ; s/:.*$//')
+        # a=$(echo "${app}" | sed 's/^.*://')
+        # #echo "desktop: ${dt}, vm: ${vm}, app: ${a}"
+        # if [[ "${vm}" == "dom0" ]] ; then
+        #     bspc desktop --focus ${dt} && ${a} >/dev/null 2>&1 &
+        #     sleep 2s;
+        # elif [[ "${vm}" == "personal" ]] ; then
+        #     bspc desktop --focus ${dt} && qvm-run personal "${a}" >/dev/null 2>&1 &
+        #     sleep 2s;
+        # else
+        #     echo "Bad input: ${app}"
+        # fi
     else
         if [[ $(command -v ${app}) ]] ; then
             if [[ ! $(pgrep -u ${USER} -f ${app}) ]] ; then

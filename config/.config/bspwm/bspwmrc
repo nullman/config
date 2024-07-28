@@ -388,9 +388,10 @@ _command nitrogen && nitrogen --restore &
 #     xscreensaver -no-splash &
 # fi
 
-# xfce in qubes os
+# qubes os
 if [[ "$(uname -n)" == "dom0" ]] && [[ "${XDG_SESSION_DESKTOP}" == "bspwm" ]] ; then
     xfce4-session &
+    bspc config external_rules_command ${HOME}/.config/bspwm/bspwm-external-rules &
 fi
 
 # auto-start custom applications

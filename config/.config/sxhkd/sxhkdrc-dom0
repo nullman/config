@@ -1,7 +1,7 @@
 #===============================================================================
 # .config/sxhkd/sxhkdrc-dom0
 #
-# Simple X Hotkey Daemon Configuration for dom0 in Qubes OS
+# Simple X Hotkey Daemon configuration for dom0 in Qubes OS.
 #
 # To specify a key, you can use 'xbindkeys --key' or 'xbindkeys --multikey'
 # and put one of the two lines in this file. Or use 'xev -event keyboard' to
@@ -83,26 +83,26 @@ control + alt + {Up,Down,Left,Right}
 #-------------------------------------------------------------------------------
 
 XF86AudioMute
-    #pamixer --toggle-mute && notify-send --expire-time=3000 --replace-id 1 "$(pamixer --get-mute | sed 's/false/Unmuted/ ; s/true/Muted/')"
-    pactl -- set-sink-mute 0 toggle && notify-send --expire-time=3000 --replace-id 1 "$(pactl -- get-sink-mute 0) | sed 's/no/Unmuted/ ; s/yes/Muted/')"
+    #pamixer --toggle-mute && notify-send --expire-time=3000 --replace-id=1 "$(pamixer --get-mute | sed 's/false/Unmuted/ ; s/true/Muted/')"
+    pactl -- set-sink-mute 0 toggle && notify-send --expire-time=3000 --replace-id=1 "$(pactl -- get-sink-mute 0  | sed 's/Mute: no/Unmuted/ ; s/Mute: yes/Muted/')"
 
 XF86AudioLowerVolume
-    #pamixer --decrease 2 && notify-send --expire-time=3000 --replace-id 2 "$(pamixer --get-volume | sed 's/^/Volume: /')"
-    pactl -- set-sink-volume 0 -2% && notify-send --expire-time=3000 --replace-id 2 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
+    #pamixer --decrease 2 && notify-send --expire-time=3000 --replace-id=2 "$(pamixer --get-volume | sed 's/^/Volume: /')"
+    pactl -- set-sink-volume 0 -2% && notify-send --expire-time=3000 --replace-id=2 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
 
 XF86AudioRaiseVolume
-    #pamixer --increase 2 && notify-send --expire-time=3000 --replace-id 2 "$(pamixer --get-volume | sed 's/^/Volume: /')"
-    pactl -- set-sink-volume 0 +2% && notify-send --expire-time=3000 --replace-id 2 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
+    #pamixer --increase 2 && notify-send --expire-time=3000 --replace-id=2 "$(pamixer --get-volume | sed 's/^/Volume: /')"
+    pactl -- set-sink-volume 0 +2% && notify-send --expire-time=3000 --replace-id=2 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
 
 # XF86AudioMicMute
 
 XF86MonBrightnessUp
-    #light -A 2 && notify-send --expire-time=3000 --replace-id 3 "Brightness: $(light -G | sed 's/\.[0-9]*$//')"
-    xbacklight -inc 2 && notify-send --expire-time=3000 --replace-id 3 'Brightness Up'
+    #light -A 2 && notify-send --expire-time=3000 --replace-id=3 "Brightness: $(light -G | sed 's/\.[0-9]*$//')"
+    xbacklight -inc 2 && notify-send --expire-time=3000 --replace-id=3 'Brightness Up'
 
 XF86MonBrightnessDown
-    #light -U 2 && notify-send --expire-time=3000 --replace-id 3 "Brightness: $(light -G | sed 's/\.[0-9]*$//')"
-    xbacklight -dec 2 && notify-send --expire-time=3000 --replace-id 3 'Brightness Down'
+    #light -U 2 && notify-send --expire-time=3000 --replace-id=3 "Brightness: $(light -G | sed 's/\.[0-9]*$//')"
+    xbacklight -dec 2 && notify-send --expire-time=3000 --replace-id=3 'Brightness Down'
 
 # XF86Display
 
@@ -115,19 +115,37 @@ XF86MonBrightnessDown
 # XF86Favorites
 
 XF86TouchpadToggle
-    touchpad-toggle && notify-send --expire-time=3000 --replace-id 4 'Toggle Touchpad'
+    touchpad-toggle && notify-send --expire-time=3000 --replace-id=4 'Toggle Touchpad'
 
 # XF86AudioPlay
-#     playerctl play && notify-send --expire-time=3000 --replace-id 5 'Play Audio'
+#     playerctl play && notify-send --expire-time=3000 --replace-id=5 'Play Audio'
 
 # XF86AudioPause
-#     playerctl pause && notify-send --expire-time=3000 --replace-id 5 'Pause Audio'
+#     playerctl pause && notify-send --expire-time=3000 --replace-id=5 'Pause Audio'
 
 # XF86AudioNext
-#     playerctl next && notify-send --expire-time=3000 --replace-id 5 'Next Song'
+#     playerctl next && notify-send --expire-time=3000 --replace-id=5 'Next Song'
 
 # XF86AudioPrev
-#     playerctl previous && notify-send --expire-time=3000 --replace-id 5 'Previous Song'
+#     playerctl previous && notify-send --expire-time=3000 --replace-id=5 'Previous Song'
+
+#-------------------------------------------------------------------------------
+# Media Key Alternatives
+#-------------------------------------------------------------------------------
+
+# volume control
+super + alt + ctrl + Up
+    pactl -- set-sink-mute 0 toggle && notify-send --expire-time=3000 --replace-id=1 "$(pactl -- get-sink-mute 0  | sed 's/Mute: no/Unmuted/ ; s/Mute: yes/Muted/')"
+super + alt + ctrl + Left
+    pactl -- set-sink-volume 0 -2% && notify-send --expire-time=3000 --replace-id=2 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
+super + alt + ctrl + Right
+    pactl -- set-sink-volume 0 +2% && notify-send --expire-time=3000 --replace-id=2 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
+
+# screen brightness
+super + alt + ctrl + Prior
+    xbacklight -inc 2 && notify-send --expire-time=3000 --replace-id=3 'Brightness Up'
+super + alt + ctrl + Next
+    xbacklight -dec 2 && notify-send --expire-time=3000 --replace-id=3 'Brightness Down'
 
 #-------------------------------------------------------------------------------
 # System Tools
@@ -138,13 +156,16 @@ super + alt + h
     yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null --filename="${HOME}/.config/sxhkd/sxhkdrc-help"
 
 # qubes os app menu
-super + ctrl + space
+super + ctrl + Escape
     gdbus call --session --dest org.qubesos.appmenu --object-path '/org/qubesos/appmenu' --method org.freedesktop.Application.Activate '{}'
 
 # desktop application launcher
-super + alt + space
+super + ctrl + space
     rofi -modi drun -show drun
-    #rofi -show combi -modes combi -combi-modes 'window,drun'
+
+# desktop application launcher
+super + alt + space
+    qvm-run personal "rofi -modi drun -show drun"
 
 # program launcher
 super + alt + d
@@ -305,63 +326,55 @@ super + shift + alt + b
 # Media
 #-------------------------------------------------------------------------------
 
-# volume control
-super + alt + ctrl + Up
-    pactl -- set-sink-mute 0 toggle && notify-send --expire-time=3000 --replace-id 1 "$(pactl -- get-sink-mute 0) | sed 's/no/Unmuted/ ; s/yes/Muted/')"
-super + alt + ctrl + Left
-    pactl -- set-sink-volume 0 -2% && notify-send --expire-time=3000 --replace-id 2 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
-super + alt + ctrl + Right
-    pactl -- set-sink-volume 0 +2% && notify-send --expire-time=3000 --replace-id 2 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
-
 # mpc control
 super + alt + ctrl + m
-    qvm-run personal "mpc toggle && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+    qvm-run personal "mpc toggle && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 super + alt + ctrl + comma
-    qvm-run personal "mpc prev && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+    qvm-run personal "mpc prev && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 super + alt + ctrl + period
-    qvm-run personal "mpc next && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+    qvm-run personal "mpc next && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 super + alt + ctrl + slash
-    qvm-run personal "notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+    qvm-run personal "notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 
 # mpc control (media keys)
 XF86AudioPrev
-    qvm-run personal "mpc prev && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+    qvm-run personal "mpc prev && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 XF86AudioPlay
-    qvm-run personal "mpc play && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+    qvm-run personal "mpc play && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 XF86AudioStop
-    qvm-run personal "mpc stop && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+    qvm-run personal "mpc stop && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 XF86AudioNext
-    qvm-run personal "mpc next && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+    qvm-run personal "mpc next && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 
 # # spotify control
 # Shift+Alt + a
-#     qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+#     qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 # Shift+Alt + s
-#     qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+#     qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 # Shift+Alt + d
-#     qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+#     qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 # Shift+Alt + f
-#     qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+#     qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 # XF86AudioPrevious
-#     qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+#     qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 # XF86AudioPlay
-#     qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+#     qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 # XF86AudioStop
-#     qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+#     qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 # XF86AudioNext
-#     qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+#     qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 
 # media player control
 super + alt + ctrl + z
-    qvm-run personal "qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+    qvm-run personal "qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 super + alt + ctrl + c
-    qvm-run personal "qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+    qvm-run personal "qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 super + alt + ctrl + x
-    qvm-run personal "qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+    qvm-run personal "qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 super + alt + ctrl + b
-    qvm-run personal "qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+    qvm-run personal "qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 super + alt + ctrl + apostrophe
-    qvm-run personal "notify-send --expire-time=5000 --replace-id 5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+    qvm-run personal "notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 
 #-------------------------------------------------------------------------------
 # Applications
