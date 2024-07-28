@@ -271,7 +271,7 @@ super + shift + p
 
 # kill process clicked
 super + shift + Delete
-    xkill
+    qvm-run personal "xkill"
 
 # snapshot of entire screen
 super + alt + Print

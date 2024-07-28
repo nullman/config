@@ -67,7 +67,7 @@ _bc window_gap                 4
 _bc border_width               4
 
 # pointer bindings
-_bc pointer_modifier           mod4
+_bc pointer_modifier           mod1
 _bc pointer_action1            resize_side
 _bc pointer_action1            resize_corner
 _bc pointer_action3            move
@@ -165,7 +165,6 @@ _br 'Qmmp' desktop='^9' follow=on
 _br 'mplayer2' desktop='^9' follow=on
 _br 'Lollypop' desktop='^9' follow=on
 _br 'spotify' desktop='^9' follow=on
-_br 'bluejeans-v2' desktop='^9' follow=on
 
 # 10: Games
 #bspc desktop 9 --layout stacked
@@ -276,70 +275,94 @@ _command() {
 # (might have been started already by .xprofile)
 [[ -f "${HOME}/bin/run-sxhkd" ]] && ${HOME}/bin/run-sxhkd &
 
-# xfce settings
-#_command xfsettingsd && xfsettingsd &
+# qubes os
+if [[ "$(uname -n)" == "dom0" ]] ; then
+    # qubes vm block attach home
+    (for device in $(/usr/bin/qvm-block list --all | grep -e 'Unknown device' -e 'personal' | sed 's/ .*$//') ; do
+         /usr/bin/qvm-block detach personal ${device}
+     done
+     /usr/bin/qvm-block attach --persistent --option frontend-dev=xvdz personal $(/usr/bin/qvm-block list dom0 | grep 'dom0' | sed 's/ .*$//')) &
 
-# ssh-agent
-#_command ssh-agent && ssh-agent &
-#_command ssh-add && ssh-add &
+    # compositor
+    _command picom && picom -b &
 
-# key bindings
-#xmodmap "${HOME}/.xmodmaprc" &
-#set-xkb &
-#xbindkeys &
+    # xfce session
+    _command xfce4-session && xfce4-session &
 
-# policykit authentation agent
-if [[ -x /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 ]] ; then
-    /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
-    #eval "$(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg)" &
+    # hide mouse when not in use
+    _command unclutter && unclutter &
+
+    # custom bspwm external rules to handle vm classes
+    bspc config external_rules_command ${HOME}/.config/bspwm/bspwm-external-rules &
 fi
-_command lxpolkit && lxpolkit &
 
-# compositor
-_command picom && picom -b &
+# other os
+if [[ "$(uname -n)" != "dom0" ]] ; then
+    # xfce settings
+    #_command xfsettingsd && xfsettingsd &
 
-# system bar
-#[[ -f "${HOME}/bin/system-bar" ]] && source "${HOME}/bin/system-bar"
+    # ssh-agent
+    #_command ssh-agent && ssh-agent &
+    #_command ssh-add && ssh-add &
 
-# system wallpaper displays
-#[[ -f "${HOME}/bin/system-wallpaper-displays" ]] && source "${HOME}/bin/system-wallpaper-displays"
+    # key bindings
+    #xmodmap "${HOME}/.xmodmaprc" &
+    #set-xkb &
+    #xbindkeys &
 
-# full-screen task-switcher
-#_command skippy-xd && skippy-xd --config "${HOME}/.config/skippy-xd/skippy-xd.rc" --start-daemon &
+    # policykit authentation agent
+    if [[ -x /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 ]] ; then
+        /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+        #eval "$(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg)" &
+    fi
+    _command lxpolkit && lxpolkit &
 
-# localize user system folders
-#_command xdg-user-dirs-gtk-update && xdg-user-dirs-gtk-update &
+    # compositor
+    _command picom && picom -b &
 
-# enable numlock (do not use on laptops without numpads)
-#_command numlockx && numlockx &
+    # system bar
+    [[ -f "${HOME}/bin/system-bar" ]] && source "${HOME}/bin/system-bar"
 
-# screen saver
-#_command xautolock && xautolock -time 30 -locker blurlock & # lock screen after 30 minutes
+    # system wallpaper displays
+    [[ -f "${HOME}/bin/system-wallpaper-displays" ]] && source "${HOME}/bin/system-wallpaper-displays"
 
-# tell firefox to match theme
-#_command ff-theme-util && ff-theme-util &
+    # full-screen task-switcher
+    #_command skippy-xd && skippy-xd --config "${HOME}/.config/skippy-xd/skippy-xd.rc" --start-daemon &
 
-# clipmenu
-_command clipmenud && clipmenud &
+    # localize user system folders
+    #_command xdg-user-dirs-gtk-update && xdg-user-dirs-gtk-update &
 
-# eject-applet
-#_command eject-applet && eject-applet &
+    # enable numlock (do not use on laptops without numpads)
+    #_command numlockx && numlockx &
 
-# set cursor theme
-_command fix_xcursor && fix_xcursor &
+    # screen saver
+    #_command xautolock && xautolock -time 30 -locker blurlock & # lock screen after 30 minutes
 
-# hide mouse when not in use
-_command unclutter && unclutter &
+    # tell firefox to match theme
+    #_command ff-theme-util && ff-theme-util &
 
-# wallpaper manager
-_command nitrogen && nitrogen --restore &
+    # clipmenu
+    _command clipmenud && clipmenud &
 
-# rebuild wm menu
-#sleep 10 && _command mmaker && mmaker --force openbox &
+    # eject-applet
+    #_command eject-applet && eject-applet &
+
+    # set cursor theme
+    _command fix_xcursor && fix_xcursor &
+
+    # hide mouse when not in use
+    _command unclutter && unclutter &
+
+    # wallpaper manager
+    _command nitrogen && nitrogen --restore &
+
+    # rebuild wm menu
+    #sleep 10 && _command mmaker && mmaker --force openbox &
+fi
 
 # # qubes os specific items
 # # (found in /etc/xdg/autostart)
-# if [[ "$(uname -n)" == "dom0" ]] && [[ "${XDG_SESSION_DESKTOP}" == "bspwm" ]] ; then
+# if [[ "$(uname -n)" == "dom0" ]] ; then
 #     # qubes qrexec policy agent
 #     /usr/lib/qubes/qrexec-policy-agent-autostart &
 #     # qubes application menu
@@ -387,12 +410,6 @@ _command nitrogen && nitrogen --restore &
 #     # launch screensaver and locker
 #     xscreensaver -no-splash &
 # fi
-
-# qubes os
-if [[ "$(uname -n)" == "dom0" ]] && [[ "${XDG_SESSION_DESKTOP}" == "bspwm" ]] ; then
-    xfce4-session &
-    bspc config external_rules_command ${HOME}/.config/bspwm/bspwm-external-rules &
-fi
 
 # auto-start custom applications
 [[ -f "${HOME}/.config/bspwm/bspwmrc-applications" ]] && source "${HOME}/.config/bspwm/bspwmrc-applications"
