@@ -121,11 +121,12 @@ export LESS="--CLEAR-SCREEN --quit-if-one-screen --ignore-case --jump-target=10 
 export MANPAGER="less"
 #_command bat && export BAT_THEME="ansi-dark" && export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 export PROCESS_SHELL="$(ps -hp $$ | awk '{print $5}')"
-export EDITOR="emacs-edit"              # default terminal editor
+export EDITOR="${HOME}/bin/emacs-edit"  # default terminal editor
 export VISUAL="${EDITOR}"               # default GUI editor
 #export EDITOR="emacsclient -t -a emacs" # default terminal editor
 #export VISUAL="emacsclient -c -a emacs" # default GUI editor
-export GIT_EDITOR="emacs-edit-wait"
+export SUDO_EDITOR="${HOME}/bin/emacs-edit-wait"
+export GIT_EDITOR="${HOME}/bin/emacs-edit-wait"
 export BROWSER="firefox"
 export NNTPSERVER="netnews.comcast.net"
 #export NNTPSERVER="news.usenetserver.com"
