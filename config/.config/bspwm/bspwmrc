@@ -167,12 +167,14 @@ _br 'Lollypop' desktop='^9' follow=on
 _br 'spotify' desktop='^9' follow=on
 
 # 10: Games
-#bspc desktop 9 --layout stacked
+#bspc desktop 10 --layout stacked
 #_br 'syncterm' desktop='^10' follow=on
 
 # 11: Virtual Machine 1
+#bspc desktop 11 --layout stacked
 
 # 12: Virtual Machine 2
+#bspc desktop 12 --layout stacked
 
 #-------------------------------------------------------------------------------
 # Application Rules
@@ -198,6 +200,7 @@ _br 'VirtualBox Machine' state=fullscreen
 _br 'w40k.exe' state=fullscreen
 
 # floating applications
+_br 'About Pale Moon' state=floating center=true
 _br 'alsamixer' state=floating center=true
 _br 'arandr' state=floating center=true
 _br 'Audacious' state=floating sticky=true
@@ -229,10 +232,11 @@ _br 'MuseScore: Play Panel' state=floating center=true sticky=on
 _br 'Nitrogen' state=floating center=true
 _br 'oblogout' state=floating center=true
 _br 'octopi' state=floating center=true
-_br 'About Pale Moon' state=floating center=true
 _br 'Pamac-manager' state=floating center=true
 _br 'Paprefs' state=floating center=true
 _br 'Pavucontrol' state=floating center=true
+_br 'Qubes-app-menu' state=floating rectangle=640x480+0+$(xdotool getdisplaygeometry | cut -d ' ' -f 1)
+_br 'Qubes-update-gui' state=floating center=true
 _br 'Qmmp' state=floating sticky=true
 _br 'qt5ct' state=floating sticky=true
 _br 'Qtconfig-qt4' state=floating sticky=true
@@ -277,11 +281,14 @@ _command() {
 
 # qubes os
 if [[ "$(uname -n)" == "dom0" ]] ; then
-    # qubes vm block attach home
-    (for device in $(/usr/bin/qvm-block list --all | grep -e 'Unknown device' -e 'personal' | sed 's/ .*$//') ; do
-         /usr/bin/qvm-block detach personal ${device}
+    # qubes volume block device attach home partition to personal
+    (for device in $(qvm-block list --all | grep -e 'Unknown device' -e 'personal' | sed 's/ .*$//') ; do
+         qvm-block detach personal ${device}
      done
-     /usr/bin/qvm-block attach --persistent --option frontend-dev=xvdz personal $(/usr/bin/qvm-block list dom0 | grep 'dom0' | sed 's/ .*$//')) &
+     qvm-block attach --persistent --option frontend-dev=xvdz personal $(qvm-block list dom0 | grep 'dom0' | sed 's/ .*$//')) &
+
+    # qubes usb device attach bluetooth to personal
+    qvm-usb attach --persistent personal  $(qvm-usb list sys-net | grep '8087:0aaa' | sed 's/ .*$//') &
 
     # compositor
     _command picom && picom -b &

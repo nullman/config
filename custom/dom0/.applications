@@ -17,9 +17,9 @@ personal:element-desktop
 personal:dev.geopjr.Tuba
 personal:gajim
 personal:google-chrome
-dom0:qubes-qube-manager
-dom0:alacritty
 ##personal:syncterm
+#dom0:qubes-qube-manager
+#dom0:alacritty
 
 #===============================================================================
 # End of File

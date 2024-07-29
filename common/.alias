@@ -1873,7 +1873,7 @@ alias mpd-service-disable="systemctl --user disable mpd"
 #        mpd-service-restart     systemctl --user restart mpd
 alias mpd-service-restart="systemctl --user restart mpd"
 #        mpc-status              display artist and title of current song
-alias mpc-status="notify-send --expire-time=5000 --replace-id 5 \"\$(\${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')\""
+alias mpc-status="notify-send --expire-time=5000 --replace-id=5 \"\$(\${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')\""
 #        mpc-update              update mpc database
 alias mpc-update="mpc --wait update"
 
@@ -3137,6 +3137,18 @@ alias dpkg-reinstall="
     esac"
 
 #
+# dnf package mangement (fedora)
+#
+#        dnfh                    dnf help
+alias dnfh="dnf --help"
+#        dnfs                    dnf search
+alias dnfs="dnf search"
+#        dnfi                    dnf install
+alias dnfi="sudo dnf install"
+#        dnfr                    dnf remove
+alias dnfi="sudo dnf remove"
+
+#
 # yum package mangement (fedora/redhat)
 #
 #        yumh                    yum help
@@ -3157,12 +3169,14 @@ alias rpmuf="rpm -U -v -h --force"
 alias rpmq="rpm -q -a | grep"
 
 #
-# qubes-dom0-update (Package Manager)
+# qubes os
 #
 #        qdu                     qubes-dom0-update
 alias qdu="sudo qubes-dom0-update"
 #        qdut                    qubes-dom0-update with testing repo
 alias qdut="sudo qubes-dom0-update --enablerepo=qubes-dom0-current-testing"
+#        qvmcp                   qvm-copy-to-vm personal
+alias qvmcp="qvm-copy-to-vm personal"
 #        qd-sync                 sync dom0 with personal
 alias qd-sync="
     if [[ \"$(uname -n)\" == \"dom0\" ]] ; then
@@ -3170,7 +3184,7 @@ alias qd-sync="
         (cd \${HOME} && rm -rf config-private && qvm-run --pass-io personal 'cd /home/user && tar zc --exclude=\".git*\" config-private' | tar zx)
         home-restow
     else
-        echo \"Error: $0 can only be run on dom0\"
+        echo \"Error: qd-sync can only be run on dom0\"
     fi"
 
 #

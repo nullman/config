@@ -20,7 +20,7 @@ _delay() {
     sleep ${delay} && eval "$@"
 }
 
-# initialize background applications and services
+# run background applications and services
 #_command xscreensaver && xscreensaver -no-splash &
 #_command xautolock && xautolock -time 30 -locker 'xscreensaver-command -lock' & # lock screen after 30 minutes
 #_command xautolock && xautolock -time 30 -locker blurlock & # lock screen after 30 minutes
@@ -33,7 +33,7 @@ _delay() {
 # delay so that networking has time to connect
 #_delay 0
 
-# initialize foreground applications
+# run foreground applications
 #_command alacritty && alacritty -e ${HOME}/bin/run-screen &
 #_command emacs && _delay 1 emacs &
 ##_command thunderbird && _delay 1 thunderbird &
@@ -59,7 +59,11 @@ _delay() {
 # start services
 #systemctl --user start dovecot &
 
-# launch application launcher
+# run dom0 applications
+_command  &&  &
+_command qubes-qube-manager && qubes-qube-manager &
+
+# run application launcher
 _command ${HOME}/bin/application-launcher && ${HOME}/bin/application-launcher &
 
 #===============================================================================
