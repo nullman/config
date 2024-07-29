@@ -1,0 +1,97 @@
+#!/usr/bin/env bash
+#===============================================================================
+# .config/bspwm/bspwm-external-rules
+#
+# Custom external rules for BSPWM.
+#
+# Reference: https://www.reddit.com/r/bspwm/comments/hrugh9/create_rule_using_window_title_instead_of_class/
+#===============================================================================
+
+wid=$1
+class=$2
+instance=$3
+rules=$4
+
+#title="$(xprop -id ${wid} WM_NAME | sed 's/^.* = \"\(.*\)\"$/\1/')"
+
+#echo "wid: ${wid}, class: ${class}, instance: ${instance}, title: ${title}, rules: ${rules}" >> bspwm_external_rules.log
+#echo "wid: ${wid}, class: ${class}, instance: ${instance}, rules: ${rules}" >> bspwm_external_rules.log
+
+# default rules
+echo "state=tiled follow=on"
+
+# Application Desktop Assignments
+
+# 1: Terminal
+#
+# 2: Editor
+[[ "${class}" == "personal:Emacs" ]] && echo "desktop=^2"
+
+# 3: Email
+[[ "${class}" == "personal:thunderbird" ]] && echo "desktop=^3"
+[[ "${class}" == "personal:betterbird" ]] && echo "desktop=^3"
+
+# 4: Browser
+[[ "${class}" == "personal:firefox" ]] && echo "desktop=^4"
+[[ "${class}" == "personal:LibreWolf" ]] && echo "desktop=^4"
+[[ "${class}" == "personal:Brave-browser" ]] && echo "desktop=^4"
+[[ "${class}" == "personal:vivaldi-stable" ]] && echo "desktop=^4"
+[[ "${class}" == "personal:gopherus-sdl" ]] && echo "desktop=^4"
+
+# File Manager
+[[ "${class}" == "personal:Thunar" ]] && echo "desktop=^5"
+[[ "${class}" == "personal:Pcmanfm" ]] && echo "desktop=^5"
+[[ "${class}" == "personal:Spacefm" ]] && echo "desktop=^5"
+[[ "${class}" == "personal:Transmission-gtk" ]] && echo "desktop=^5"
+
+# Chat
+[[ "${class}" == "personal:Slack" ]] && echo "desktop=^6"
+[[ "${class}" == "personal:discord" ]] && echo "desktop=^6"
+
+# More Chat
+[[ "${class}" == "personal:Pidgin" ]] && echo "desktop=^7"
+[[ "${class}" == "personal:Tootle" ]] && echo "desktop=^7"
+[[ "${class}" == "personal:Com.github.bleakgrey.tootle" ]] && echo "desktop=^7"
+[[ "${class}" == "personal:Element" ]] && echo "desktop=^7"
+[[ "${class}" == "personal:dev.geopjr.Tuba" ]] && echo "desktop=^7"
+[[ "${class}" == "personal:Gajim" ]] && echo "desktop=^7"
+[[ "${class}" == "personal:Hyperspace Desktop" ]] && echo "desktop=^7"
+[[ "${class}" == "personal:android-messages-desktop" ]] && echo "desktop=^7"
+[[ "${class}" == "personal:teams-for-linux" ]] && echo "desktop=^7"
+
+# 8: Development
+[[ "${class}" == "personal:jetbrains-idea" ]] && echo "desktop=^8"
+[[ "${class}" == "personal:jetbrains-idea-ce" ]] && echo "desktop=^8"
+[[ "${class}" == "personal:jetbrains-studio" ]] && echo "desktop=^8"
+
+# 9: Image, Video, and Audio
+[[ "${class}" == "personal:Chromium-browser" ]] && echo "desktop=^9"
+[[ "${class}" == "personal:Google-chrome" ]] && echo "desktop=^9"
+[[ "${class}" == "personal:Gimp-2.10" ]] && echo "desktop=^9"
+[[ "${class}" == "personal:Qmmp" ]] && echo "desktop=^9"
+[[ "${class}" == "personal:spotify" ]] && echo "desktop=^9"
+
+# 10: dom0
+[[ "${class}" == "Qube Manager" ]] && echo "desktop=^10"
+[[ "${class}" == "Alacritty" ]] && echo "desktop=^10"
+
+# 11: Virtual Machine 1
+
+# 12: Virtual Machine 1
+
+# Application Rules
+
+# floating applications
+[[ "${class: -8}" == "Nitrogen" ]] && echo "state=floating center=true"
+[[ "${class: -7}" == "Paprefs" ]] && echo "state=floating center=true"
+[[ "${class: -11}" == "Pavucontrol" ]] && echo "state=floating center=true"
+[[ "${class: -14}" == "Qubes-app-menu" ]] && echo "state=floating rectangle=640x480+0+$(xrandr --current | head -n 1 | sed 's/^.*current [0-9]* x // ; s/,.*$//')"
+[[ "${class: -16}" == "Qubes-update-gui" ]] && echo "state=floating center=true"
+[[ "${class: -8}" == "syncterm" ]] && echo "state=floating center=true"
+[[ "${class: -3}" == "X48" ]] && echo "state=floating center=true"
+[[ "${class: -22}" == "Xfce4-settings-manager" ]] && echo "state=floating center=true"
+[[ "${class: -3}" == "Yad" ]] && echo "state=floating center=true"
+
+#===============================================================================
+# End of File
+#===============================================================================

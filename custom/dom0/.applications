@@ -7,17 +7,15 @@
 personal:alacritty
 personal:emacs
 personal:betterbird
-##personal:thunderbird
 personal:firefox
-##personal:chromium
 personal:thunar
-personal:slack
 personal:discord
 personal:element-desktop
 personal:dev.geopjr.Tuba
 personal:gajim
-personal:google-chrome
-##personal:syncterm
+personal:google-chrome-stable
+personal:slack
+
 #dom0:qubes-qube-manager
 #dom0:alacritty
 

@@ -288,13 +288,13 @@ if [[ "$(uname -n)" == "dom0" ]] ; then
      qvm-block attach --persistent --option frontend-dev=xvdz personal $(qvm-block list dom0 | grep 'dom0' | sed 's/ .*$//')) &
 
     # qubes usb device attach bluetooth to personal
-    qvm-usb attach --persistent personal  $(qvm-usb list sys-net | grep '8087:0aaa' | sed 's/ .*$//') &
+    qvm-usb attach --persistent personal $(qvm-usb list sys-net | grep '8087:0aaa' | sed 's/ .*$//') &
 
     # compositor
     _command picom && picom -b &
 
     # xfce session
-    _command xfce4-session && xfce4-session &
+    xfce4-session && xfce4-session &
 
     # hide mouse when not in use
     _command unclutter && unclutter &

@@ -34,17 +34,21 @@ for line in ${launch} ; do
         if [[ "${vm}" == "dom0" ]] ; then
             ${a} >/dev/null 2>&1 &
         elif [[ "${vm}" == "personal" ]] ; then
-            qvm-run personal "${a}" >/dev/null 2>&1 &
+            if [[ "${app}" == "alacritty" ]] ; then
+                qvm-run personal "\${HOME}/bin/run-screen" >/dev/null 2>&1 &
+            else
+                qvm-run personal "${a}" >/dev/null 2>&1 &
+            fi
         else
             echo "Bad input: ${app}"
         fi
     else
         if [[ $(command -v ${app}) ]] ; then
             if [[ ! $(pgrep -u ${USER} -f ${app}) ]] ; then
+                #echo "${app}"
                 if [[ "${app}" == "alacritty" ]] ; then
                     alacritty -e ${HOME}/bin/run-screen >/dev/null 2>&1 &
                 else
-                    #echo "${app}"
                     eval ${app} >/dev/null 2>&1 &
                 fi
             fi
