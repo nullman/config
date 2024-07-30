@@ -13,11 +13,11 @@ personal:discord
 personal:element-desktop
 personal:dev.geopjr.Tuba
 personal:gajim
-personal:google-chrome-stable
+#personal:google-chrome-stable
 personal:slack
 
-#dom0:qubes-qube-manager
-#dom0:alacritty
+dom0:qubes-qube-manager
+dom0:alacritty
 
 #===============================================================================
 # End of File

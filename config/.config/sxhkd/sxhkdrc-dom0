@@ -328,23 +328,23 @@ super + shift + alt + b
 
 # mpc control
 super + alt + ctrl + m
-    qvm-run personal "mpc toggle && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+    qvm-run personal "mpc toggle && notify-send --expire-time=5000 --replace-id=5 \"\$(\${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')\""
 super + alt + ctrl + comma
-    qvm-run personal "mpc prev && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+    qvm-run personal "mpc prev && notify-send --expire-time=5000 --replace-id=5 \"\$(\${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')\""
 super + alt + ctrl + period
-    qvm-run personal "mpc next && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+    qvm-run personal "mpc next && notify-send --expire-time=5000 --replace-id=5 \"\$(\${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')\""
 super + alt + ctrl + slash
-    qvm-run personal "notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+    qvm-run personal "notify-send --expire-time=5000 --replace-id=5 \"\$(\${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')\""
 
 # mpc control (media keys)
 XF86AudioPrev
-    qvm-run personal "mpc prev && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+    qvm-run personal "mpc prev && notify-send --expire-time=5000 --replace-id=5 \"\$(\${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')\""
 XF86AudioPlay
-    qvm-run personal "mpc play && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+    qvm-run personal "mpc play && notify-send --expire-time=5000 --replace-id=5 \"\$(\${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')\""
 XF86AudioStop
-    qvm-run personal "mpc stop && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+    qvm-run personal "mpc stop && notify-send --expire-time=5000 --replace-id=5 \"\$(\${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')\""
 XF86AudioNext
-    qvm-run personal "mpc next && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
+    qvm-run personal "mpc next && notify-send --expire-time=5000 --replace-id=5 \"\$(\${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')\""
 
 # # spotify control
 # Shift+Alt + a

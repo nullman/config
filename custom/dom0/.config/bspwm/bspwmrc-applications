@@ -68,7 +68,7 @@ _command alacritty && alacritty &
 _command qubes-qube-manager && qubes-qube-manager &
 
 # run application launcher
-_command ${HOME}/bin/application-launcher && ${HOME}/bin/application-launcher &
+qvm-run personal "\${HOME}/bin/application-launcher" &
 
 #===============================================================================
 # End of File
