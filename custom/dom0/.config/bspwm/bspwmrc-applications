@@ -64,8 +64,8 @@ systemctl --user enable --now mpd &
 systemctl --user enable --now mpdris &
 
 # run dom0 applications
-_command alacritty && alacritty &
 _command qubes-qube-manager && qubes-qube-manager &
+_command alacritty && alacritty &
 
 # run application launcher
 qvm-run personal "\${HOME}/bin/application-launcher" &

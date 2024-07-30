@@ -3148,7 +3148,7 @@ alias dnfs="dnf search"
 #        dnfi                    dnf install
 alias dnfi="sudo dnf install"
 #        dnfr                    dnf remove
-alias dnfi="sudo dnf remove"
+alias dnfr="sudo dnf remove"
 
 #
 # yum package mangement (fedora/redhat)
