@@ -9,12 +9,12 @@ personal:emacs
 personal:betterbird
 personal:firefox
 personal:thunar
+personal:slack
 personal:discord
 personal:element-desktop
 personal:dev.geopjr.Tuba
 personal:gajim
 #personal:google-chrome-stable
-personal:slack
 
 dom0:qubes-qube-manager
 dom0:alacritty

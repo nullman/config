@@ -35,9 +35,9 @@ for line in ${launch} ; do
             ${a} >/dev/null 2>&1 &
         elif [[ "${vm}" == "personal" ]] ; then
             if [[ "${app}" == "alacritty" ]] ; then
-                qvm-run personal "\${HOME}/bin/run-screen" >/dev/null 2>&1 &
+                qvm-run personal "alacritty -e \${HOME}/bin/run-screen &" >/dev/null 2>&1 &
             else
-                qvm-run personal "${a}" >/dev/null 2>&1 &
+                qvm-run personal "${a} &" >/dev/null 2>&1 &
             fi
         else
             echo "Bad input: ${app}"

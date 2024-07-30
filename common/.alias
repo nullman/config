@@ -324,8 +324,6 @@ alias ewwrs="(eww --restart open bar && sleep 1 && \
 alias xrdb-list="xrdb -query -all"
 #        xrdb-merge-home         merge ~/.Xresource settings into xrdb
 alias xrdb-merge-home="xrdb -merge \${HOME}/.Xresources"
-#        jctl                    systemd journal (explainations, current boot, priority errors+)
-alias jctl="journalctl -b -x -p 3"
 #        brh                     broot -h (show hidden files/directories)
 alias brh="br -h"
 #        find-duplicate-files    find duplicate files, recursively, starting from current directory
@@ -604,8 +602,12 @@ alias systemctl-restart="sudo systemctl restart"
 alias scram="sudo systemctl restart '*.automount'"
 #        systemctl-restart-automounts  restart automounts
 alias systemctl-restart-automounts="sudo systemctl restart '*.automount'"
+#        jc                      systemd journal (explainations, current boot, priority errors+)
+alias jc="sudo journalctl -b -x -p 3"
+#        jcfu                    tail journal for service
+alias jcfu="sudo journalctl --follow --unit"
 #        journalctl-follow-unit  tail journal for service
-alias journalctl-follow-unit="journalctl --follow --unit"
+alias journalctl-follow-unit="sudo journalctl --follow --unit"
 
 #
 # network
@@ -3333,7 +3335,7 @@ alias git-setup-config="
     git config branch.master.merge refs/heads/master"
 #        git-howto               print standard git process flow
 alias git-howto="
-    cat <<EOF
+    cat << EOF
 Create task/bug branch from develop:
   git checkout -b BRANCH develop
 Make changes and commit them to local branch:
@@ -3480,7 +3482,7 @@ alias git-check-home="
 #
 #        script-head             print a standard script header
 alias script-head="
-    cat <<EOF
+    cat << EOF
 #!/usr/bin/env bash
 #===============================================================================
 # script_name
@@ -3493,7 +3495,7 @@ EOF
 "
 #        script-tail             print a standard script footer
 alias script-tail="
-    cat <<EOF
+    cat << EOF
 #===============================================================================
 # End of File
 #===============================================================================
@@ -3629,7 +3631,7 @@ alias copy-wallpapers="
 #!alias make-ssh-config-external="
 #!    o=\${HOME}/.ssh/config
 #!    if [[ ! -e \${o} ]] ; then
-#!        cat > \${o} <<EOF
+#!        cat << EOF > \${o}
 #!# hosts
 #!host firewall
 #!  hostname nullware.com
