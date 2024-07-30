@@ -98,77 +98,77 @@ bspc monitor -d 1 2 3 4 5 6 7 8 9 10 11 12
 
 # 1: Terminal
 #bspc desktop 1 --layout stacked
-#_br 'Alacritty' desktop='^1' follow=on
+#_br 'Alacritty' desktop=^1 follow=on
 
 # 2: Editor
 #bspc desktop 2 --layout stacked
-_br 'Emacs' desktop='^2' follow=on
+_br 'Emacs' desktop=^2 follow=on
 
 # 3: Email
 bspc desktop 3 --layout monocle
-_br 'thunderbird' desktop='^3' follow=on
-_br 'betterbird' desktop='^3' follow=on
-_br 'ms-outlook-nativefier' desktop='^3' follow=on
+_br 'thunderbird' desktop=^3 follow=on
+_br 'betterbird' desktop=^3 follow=on
+_br 'ms-outlook-nativefier' desktop=^3 follow=on
 
 # 4: Browser
 bspc desktop 4 --layout monocle
-_br 'firefox' desktop='^4' follow=on
-_br 'LibreWolf' desktop='^4' follow=on
-_br 'Brave-browser' desktop='^4' follow=on
-_br 'vivaldi-stable' desktop='^4' follow=on
-_br 'gopherus-sdl' desktop='^4' follow=on
+_br 'firefox' desktop=^4 follow=on
+_br 'LibreWolf' desktop=^4 follow=on
+_br 'Brave-browser' desktop=^4 follow=on
+_br 'vivaldi-stable' desktop=^4 follow=on
+_br 'gopherus-sdl' desktop=^4 follow=on
 
 # 5: File Manager
 #bspc desktop 5 --layout stacked
-_br 'Thunar' desktop='^5' follow=on
-_br 'Pcmanfm' desktop='^5' follow=on
-_br 'Spacefm' desktop='^5' follow=on
-_br 'Org.gnome.Nautilus' desktop='^5' follow=on
-#_br 'Filezilla' desktop='^5' follow=on
-_br 'Transmission-gtk' desktop='^5' follow=on
-#_br 'balena-etcher-electron' desktop='^5' follow=on
-#_br 'Ghb' desktop='^5' follow=on
+_br 'Thunar' desktop=^5 follow=on
+_br 'Pcmanfm' desktop=^5 follow=on
+_br 'Spacefm' desktop=^5 follow=on
+_br 'Org.gnome.Nautilus' desktop=^5 follow=on
+#_br 'Filezilla' desktop=^5 follow=on
+_br 'Transmission-gtk' desktop=^5 follow=on
+#_br 'balena-etcher-electron' desktop=^5 follow=on
+#_br 'Ghb' desktop=^5 follow=on
 
 # 6: Chat
 bspc desktop 6 --layout tiled
-_br 'Slack' desktop='^6' follow=on
-_br 'discord' desktop='^6' follow=on
+_br 'Slack' desktop=^6 follow=on
+_br 'discord' desktop=^6 follow=on
 
 # 7: More Chat
 #bspc desktop 7 --layout stacked
-_br 'Pidgin' desktop='^7' follow=on
-_br 'Tootle' desktop='^7' follow=on
-_br 'Com.github.bleakgrey.tootle' desktop='^7' follow=on
-_br 'Element' desktop='^7' follow=on
-_br 'dev.geopjr.Tuba' desktop='^7' follow=on
-_br 'Gajim' desktop='^7' follow=on
-_br 'Hyperspace Desktop' desktop='^7' follow=on
-_br 'android-messages-desktop' desktop='^7' follow=on
-_br 'teams-for-linux' desktop='^7' follow=on
+_br 'Pidgin' desktop=^7 follow=on
+_br 'Tootle' desktop=^7 follow=on
+_br 'Com.github.bleakgrey.tootle' desktop=^7 follow=on
+_br 'Element' desktop=^7 follow=on
+_br 'dev.geopjr.Tuba' desktop=^7 follow=on
+_br 'Gajim' desktop=^7 follow=on
+_br 'Hyperspace Desktop' desktop=^7 follow=on
+_br 'android-messages-desktop' desktop=^7 follow=on
+_br 'teams-for-linux' desktop=^7 follow=on
 
 # 8: Development
 bspc desktop 8 --layout monocle
-_br 'jetbrains-idea' desktop='^8' follow=on
-_br 'jetbrains-idea-ce' desktop='^8' follow=on
-_br 'jetbrains-studio' desktop='^8' follow=on
-#_br 'dosbox' desktop='^8' follow=on
-#_br 'BasiliskII' desktop='^8' follow=on
-_br 'VirtualBox Manager' desktop='^8' follow=on
-_br 'VirtualBox Machine' desktop='^8' follow=on
+_br 'jetbrains-idea' desktop=^8 follow=on
+_br 'jetbrains-idea-ce' desktop=^8 follow=on
+_br 'jetbrains-studio' desktop=^8 follow=on
+#_br 'dosbox' desktop=^8 follow=on
+#_br 'BasiliskII' desktop=^8 follow=on
+_br 'VirtualBox Manager' desktop=^8 follow=on
+_br 'VirtualBox Machine' desktop=^8 follow=on
 
 # 9: Image, Video, and Audio
 #bspc desktop 9 --layout stacked
-_br 'Chromium-browser' desktop='^9' follow=on
-_br 'Google-chrome' desktop='^9' follow=on
-_br 'Gimp-2.10' desktop='^9' follow=on
-_br 'Qmmp' desktop='^9' follow=on
-_br 'mplayer2' desktop='^9' follow=on
-_br 'Lollypop' desktop='^9' follow=on
-_br 'spotify' desktop='^9' follow=on
+_br 'Chromium-browser' desktop=^9 follow=on
+_br 'Google-chrome' desktop=^9 follow=on
+_br 'Gimp-2.10' desktop=^9 follow=on
+_br 'Qmmp' desktop=^9 follow=on
+_br 'mplayer2' desktop=^9 follow=on
+_br 'Lollypop' desktop=^9 follow=on
+_br 'spotify' desktop=^9 follow=on
 
 # 10: Games
 #bspc desktop 10 --layout stacked
-#_br 'syncterm' desktop='^10' follow=on
+#_br 'syncterm' desktop=^10 follow=on
 
 # 11: Virtual Machine 1
 #bspc desktop 11 --layout stacked
@@ -252,6 +252,7 @@ _br 'X48' state=floating center=true
 _br 'Xfburn' state=floating center=true
 _br 'Xfce4-settings-manager' state=floating center=true
 _br 'Yad' state=floating center=true
+_br 'File Transfer*' state=floating center=true
 
 #-------------------------------------------------------------------------------
 # Auto-Start Standard Applications
