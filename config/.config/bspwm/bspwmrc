@@ -293,7 +293,7 @@ if [[ "$(uname -n)" == "dom0" ]] ; then
     qvm-usb attach --persistent personal $(qvm-usb list sys-net | grep '8087:0aaa' | sed 's/ .*$//') &
 
     # compositor
-    _command picom && picom -b &
+    #_command picom && picom -b &
 
     # xfce session
     xfce4-session && xfce4-session &
