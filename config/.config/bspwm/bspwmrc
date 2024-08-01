@@ -169,7 +169,6 @@ _br 'spotify' desktop=^9 follow=on
 
 # 10: Administration/General
 #bspc desktop 10 --layout stacked
-_br 'qubes-qube-manager' desktop=^10 follow=on
 
 # 11: Virtual Machine 1
 #bspc desktop 11 --layout stacked

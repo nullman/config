@@ -16,8 +16,8 @@ personal:dev.geopjr.Tuba
 personal:gajim
 #personal:google-chrome-stable
 
-dom0:qubes-qube-manager
-dom0:alacritty
+#dom0:qubes-qube-manager
+#dom0:alacritty
 
 #===============================================================================
 # End of File

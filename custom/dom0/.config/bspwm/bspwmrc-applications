@@ -60,12 +60,17 @@ _delay() {
 systemctl enable --now bluetooth &
 systemctl enable --now blueman-mechanism &
 systemctl enable --now dovecot &
+systemctl --user enable --now clipmenud &
 systemctl --user enable --now mpd &
 systemctl --user enable --now mpdris &
 
 # run dom0 applications
-_command qubes-qube-manager && qubes-qube-manager &
-_command alacritty && alacritty &
+(
+    bspc desktop --focus 10
+    _command qubes-qube-manager && qubes-qube-manager
+    _command alacritty && alacritty
+    bspc desktop --focus 1
+) &
 
 # run application launcher
 qvm-run personal "\${HOME}/bin/application-launcher" &
