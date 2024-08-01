@@ -3190,6 +3190,14 @@ alias qd-sync="
     else
         echo \"Error: qd-sync can only be run on dom0\"
     fi"
+#        qd-copy-rebos-to-arch   copy rebos files from personal to arch
+alias qd-copy-rebos-to-arch="
+    if [[ \"$(uname -n)\" == \"dom0\" ]] ; then
+        qvm-run --pass-io personal 'cat /home/user/config/config/.config/rebos/gen.toml' | cat > ${HOME}/config/config/.config/rebos/gen.toml
+        cat ${HOME}/config/config/.config/rebos/gen.toml | qvm-run --pass-io arch 'cat > /home/user/.config/rebos/gen.toml'
+    else
+        echo \"Error: qd-copy-rebos-to-arch can only be run on dom0\"
+    fi"
 
 #
 # git
