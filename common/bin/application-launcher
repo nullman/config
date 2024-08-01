@@ -29,18 +29,18 @@ for line in ${launch} ; do
     if [[ "$(uname -n)" == "dom0" ]] ; then
         #echo "dom0: ${app}"
         vm=$(echo "${app}" | sed 's/:.*$//')
-        a=$(echo "${app}" | sed 's/^.*://')
-        #echo "vm: ${vm}, app: ${a}"
+        app=$(echo "${app}" | sed 's/^.*://')
+        #echo "vm: ${vm}, app: ${app}"
         if [[ "${vm}" == "dom0" ]] ; then
-            ${a} >/dev/null 2>&1 &
+            ${app} >/dev/null 2>&1 &
         elif [[ "${vm}" == "personal" ]] ; then
             if [[ "${app}" == "alacritty" ]] ; then
                 qvm-run personal "alacritty -e /home/user/bin/run-screen" >/dev/null 2>&1 &
             else
-                qvm-run personal "${a}" >/dev/null 2>&1 &
+                qvm-run personal "${app}" >/dev/null 2>&1 &
             fi
         else
-            echo "Bad input: ${app}"
+            echo "Bad input: ${vm}:${app}"
         fi
     else
         if [[ $(command -v ${app}) ]] ; then
