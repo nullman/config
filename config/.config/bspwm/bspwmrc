@@ -146,13 +146,14 @@ _br 'Hyperspace Desktop' desktop=^7 follow=on
 _br 'android-messages-desktop' desktop=^7 follow=on
 _br 'teams-for-linux' desktop=^7 follow=on
 
-# 8: Development
+# 8: Development/Games
 bspc desktop 8 --layout monocle
 _br 'jetbrains-idea' desktop=^8 follow=on
 _br 'jetbrains-idea-ce' desktop=^8 follow=on
 _br 'jetbrains-studio' desktop=^8 follow=on
 #_br 'dosbox' desktop=^8 follow=on
 #_br 'BasiliskII' desktop=^8 follow=on
+#_br 'syncterm' desktop=^8 follow=on
 _br 'VirtualBox Manager' desktop=^8 follow=on
 _br 'VirtualBox Machine' desktop=^8 follow=on
 
@@ -166,9 +167,9 @@ _br 'mplayer2' desktop=^9 follow=on
 _br 'Lollypop' desktop=^9 follow=on
 _br 'spotify' desktop=^9 follow=on
 
-# 10: Games
+# 10: Administration/General
 #bspc desktop 10 --layout stacked
-#_br 'syncterm' desktop=^10 follow=on
+_br 'qubes-qube-manager' desktop=^10 follow=on
 
 # 11: Virtual Machine 1
 #bspc desktop 11 --layout stacked

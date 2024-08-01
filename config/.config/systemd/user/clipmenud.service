@@ -1,0 +1,25 @@
+#===============================================================================
+# .config/systemd/user/clipmenud.service
+#
+# Configuration for systemd user clipmenud service.
+#
+# Enable:   systemctl --user enable clipmenud.service
+# Start:    systemctl --user start clipmenud.service
+# Stop:     systemctl --user stop clipmenud.service
+# Disable:  systemctl --user disable clipmenud.service
+#
+# Reference: https://wiki.archlinux.org/index.php/Systemd/User
+#===============================================================================
+
+[Unit]
+Description=Clipboard Management Using Dmenu (clipmenud)
+
+[Service]
+ExecStart=/usr/sbin/clipmenud
+
+[Install]
+WantedBy=default.target
+
+#===============================================================================
+# End of File
+#===============================================================================
