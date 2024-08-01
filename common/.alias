@@ -2927,10 +2927,12 @@ alias debo="deborphan"
 alias pmu="sudo pacman -Syu --noconfirm"
 #        pmuf                    pacman -Syyu (update packages with forced refresh)
 alias pmuf="sudo pacman -Syyu --noconfirm"
-#        pmi                     pacman -Sy (install package)
-alias pmi="sudo pacman -Sy --needed --noconfirm"
-#        pmir                    pacman -Sy (reinstall package)
-alias pmir="sudo pacman -Sy --noconfirm"
+#        pmi                     pacman -S (install package)
+alias pmi="sudo pacman -S --needed --noconfirm"
+#        pmic                    pacman -S (install package with confirmation)
+alias pmic="sudo pacman -S --needed"
+#        pmir                    pacman -S (reinstall package)
+alias pmir="sudo pacman -S --noconfirm"
 #        pmr                     pacman -Rns (remove package and configuration files)
 alias pmr="sudo pacman -R --nosave --recursive --noconfirm"
 #        pms                     pacman -Ss (search packages)
@@ -3014,12 +3016,12 @@ alias pacman-clear-cache="
 alias yau="yay -Syu --noconfirm"
 #        yauf                    yay -Syyu (update packages with forced refresh)
 alias yauf="yay -Syyu --noconfirm"
-#        yai                     yay -Sy (install package)
-alias yai="yay -Sy --needed --noconfirm"
-#        yaic                    yay -Sy (install package with confirmation)
-alias yaic="yay -Sy --needed"
-#        yair                    yay -Sy (reinstall package)
-alias yair="yay -Sy --noconfirm"
+#        yai                     yay -S (install package)
+alias yai="yay -S --needed --noconfirm"
+#        yaic                    yay -S (install package with confirmation)
+alias yaic="yay -S --needed"
+#        yair                    yay -S (reinstall package)
+alias yair="yay -S --noconfirm"
 #        yar                     yay -Rns (remove package and configuration files)
 alias yar="yay -R --nosave --recursive --noconfirm"
 #        yas                     yay -Ss (search packages)
