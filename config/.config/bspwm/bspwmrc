@@ -113,6 +113,7 @@ _br 'ms-outlook-nativefier' desktop=^3 follow=on
 # 4: Browser
 bspc desktop 4 --layout monocle
 _br 'firefox' desktop=^4 follow=on
+_br 'firefox-esr' desktop=^4 follow=on
 _br 'LibreWolf' desktop=^4 follow=on
 _br 'Brave-browser' desktop=^4 follow=on
 _br 'vivaldi-stable' desktop=^4 follow=on
