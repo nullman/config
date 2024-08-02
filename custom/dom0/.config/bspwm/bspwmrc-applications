@@ -57,12 +57,12 @@ _delay() {
 ##_command syncterm && _delay 1 syncterm &
 
 # start services
-systemctl enable --now bluetooth &
-systemctl enable --now blueman-mechanism &
-systemctl enable --now dovecot &
-systemctl --user enable --now clipmenud &
-systemctl --user enable --now mpd &
-systemctl --user enable --now mpdris &
+qvm-run personal "systemctl start bluetooth" &
+qvm-run personal "systemctl start blueman-mechanism" &
+qvm-run personal "systemctl start dovecot" &
+qvm-run personal "systemctl --user start clipmenud" &
+qvm-run personal "systemctl --user start mpd" &
+qvm-run personal "systemctl --user start mpdris" &
 
 # run dom0 applications
 (
