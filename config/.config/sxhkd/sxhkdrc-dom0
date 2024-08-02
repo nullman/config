@@ -185,7 +185,7 @@ super + alt + w
 
 # clipmenu selector
 super + alt + c
-    CM_LAUNCHER=rofi clipmenu
+    qvm-run personal "CM_LAUNCHER=rofi clipmenu"
 
 # emoji selector
 super + alt + e
