@@ -56,13 +56,13 @@ _delay() {
 ##_command google-chrome-stable && _delay 1 google-chrome-stable &
 ##_command syncterm && _delay 1 syncterm &
 
-# start services
-qvm-run personal "systemctl start bluetooth" &
-qvm-run personal "systemctl start blueman-mechanism" &
-qvm-run personal "systemctl start dovecot" &
-qvm-run personal "systemctl --user start clipmenud" &
-qvm-run personal "systemctl --user start mpd" &
-qvm-run personal "systemctl --user start mpdris" &
+# # start services
+# qvm-run personal "systemctl start bluetooth" &
+# qvm-run personal "systemctl start blueman-mechanism" &
+# qvm-run personal "systemctl start dovecot" &
+# qvm-run personal "systemctl --user start clipmenud" &
+# qvm-run personal "systemctl --user start mpd" &
+# qvm-run personal "systemctl --user start mpdris" &
 
 # run dom0 applications
 (
