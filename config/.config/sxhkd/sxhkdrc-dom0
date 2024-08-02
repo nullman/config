@@ -98,11 +98,13 @@ XF86AudioRaiseVolume
 
 XF86MonBrightnessUp
     #light -A 2 && notify-send --expire-time=3000 --replace-id=3 "Brightness: $(light -G | sed 's/\.[0-9]*$//')"
-    xbacklight -inc 2 && notify-send --expire-time=3000 --replace-id=3 'Brightness Up'
+    #xbacklight -inc 2 && notify-send --expire-time=3000 --replace-id=3 'Brightness Up'
+    notify-send --expire-time=3000 --replace-id=3 "$(brightness eDP-1 +0.2)"
 
 XF86MonBrightnessDown
     #light -U 2 && notify-send --expire-time=3000 --replace-id=3 "Brightness: $(light -G | sed 's/\.[0-9]*$//')"
-    xbacklight -dec 2 && notify-send --expire-time=3000 --replace-id=3 'Brightness Down'
+    #xbacklight -dec 2 && notify-send --expire-time=3000 --replace-id=3 'Brightness Down'
+    notify-send --expire-time=3000 --replace-id=3 "$(brightness eDP-1 -0.2)"
 
 # XF86Display
 
@@ -143,9 +145,9 @@ super + alt + ctrl + Right
 
 # screen brightness
 super + alt + ctrl + Prior
-    xbacklight -inc 2 && notify-send --expire-time=3000 --replace-id=3 'Brightness Up'
+    notify-send --expire-time=3000 --replace-id=3 "$(brightness eDP-1 +0.2)"
 super + alt + ctrl + Next
-    xbacklight -dec 2 && notify-send --expire-time=3000 --replace-id=3 'Brightness Down'
+    notify-send --expire-time=3000 --replace-id=3 "$(brightness eDP-1 -0.2)"
 
 #-------------------------------------------------------------------------------
 # System Tools
