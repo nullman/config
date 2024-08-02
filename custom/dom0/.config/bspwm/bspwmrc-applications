@@ -68,7 +68,7 @@ qvm-run personal "systemctl --user start mpdris" &
 (
     bspc desktop --focus 10
     qubes-qube-manager &
-    alacritty &
+    sleep 2s ; alacritty &
 ) &
 
 # run application launcher

@@ -43,7 +43,8 @@ _bc click_to_focus             any
 _bc swallow_first_click        false
 _bc focus_follows_pointer      false
 _bc pointer_follows_monitor    true
-_bc ignore_ewmh_focus          true
+#_bc ignore_ewmh_focus          true
+_bc ignore_ewmh_focus          false
 _bc ignore_ewmh_fullscreen     none
 _bc ignore_ewmh_struts         false
 _bc center_pseudo_tiled        true
@@ -113,6 +114,7 @@ _br 'ms-outlook-nativefier' desktop=^3 follow=on
 # 4: Browser
 bspc desktop 4 --layout monocle
 _br 'firefox' desktop=^4 follow=on
+_br 'Firefox' desktop=^4 follow=on
 _br 'firefox-esr' desktop=^4 follow=on
 _br 'LibreWolf' desktop=^4 follow=on
 _br 'Brave-browser' desktop=^4 follow=on
@@ -241,6 +243,7 @@ _br 'Qubes-update-gui' state=floating center=true
 _br 'Qmmp' state=floating sticky=true
 _br 'qt5ct' state=floating sticky=true
 _br 'Qtconfig-qt4' state=floating sticky=true
+_br 'Rofi' state=floating center=true
 _br 'Simple-scan' state=floating center=true
 _br '(?i)System-config-printer.py' state=floating center=true
 _br 'Skype' state=floating center=true

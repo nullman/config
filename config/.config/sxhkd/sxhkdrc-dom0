@@ -163,15 +163,15 @@ super + ctrl + Escape
 
 # desktop application launcher
 super + ctrl + space
-    rofi -modi drun -show drun
+    rofi -normal-window -modi drun -show drun
 
 # desktop application launcher
 super + alt + space
-    qvm-run personal "rofi -modi drun -show drun"
+    qvm-run personal "rofi -normal-window -modi drun -show drun"
 
 # program launcher
 super + alt + d
-    rofi -modi run -show run
+    qvm-run personal "rofi -normal-window -modi run -show run"
 
 # application group launcher
 super + alt + a
@@ -183,11 +183,11 @@ super + alt + Return
 
 # window selector
 super + alt + w
-    rofi -modi window -show window
+    rofi -normal-window -modi window -show window
 
 # clipmenu selector
 super + alt + c
-    qvm-run personal "CM_LAUNCHER=rofi clipmenu"
+    qvm-run personal "CM_LAUNCHER=rofi -normal-window clipmenu"
 
 # emoji selector
 super + alt + e
@@ -273,7 +273,7 @@ super + shift + p
 
 # kill process clicked
 super + shift + Delete
-    qvm-run personal "xkill"
+    notify-send --expire-time=3000 "Click window to kill" && qvm-run personal "xkill"
 
 # snapshot of entire screen
 super + alt + Print
