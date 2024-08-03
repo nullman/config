@@ -293,7 +293,10 @@ if [[ "$(uname -n)" == "dom0" ]] ; then
      qvm-block attach --persistent --option frontend-dev=xvdz personal $(qvm-block list dom0 | grep 'dom0' | sed 's/ .*$//')) &
 
     # qubes usb device attach bluetooth to personal
-    qvm-usb attach --persistent personal $(qvm-usb list sys-net | grep '8087:0aaa' | sed 's/ .*$//') &
+    (for device in $(qvm-usb list --all | grep -e 'Unknown device' -e 'personal' | sed 's/ .*$//') ; do
+         qvm-usb detach personal ${device}
+     done
+     qvm-usb attach --persistent personal $(qvm-usb list sys-net | grep '8087:0aaa' | sed 's/ .*$//')) &
 
     # compositor
     #_command picom && picom -b &
