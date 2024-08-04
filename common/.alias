@@ -343,6 +343,8 @@ alias pi-serial-number="echo \$(cat /sys/firmware/devicetree/base/serial-number)
 alias nf="neofetch"
 #        shred-device            shred device (one random pass, one zero pass)
 alias shred-device="sudo shred -v -n1 --random-source=/dev/urandom -z"
+#        microsoft-license       cat /sys/firmware/acpi/tables/MSDM
+alias microsoft-license="sudo cat /sys/firmware/acpi/tables/MSDM ; echo"
 
 #
 # general (external)

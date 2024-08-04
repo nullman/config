@@ -171,7 +171,7 @@ _br 'Lollypop' desktop=^9 follow=on
 _br 'spotify' desktop=^9 follow=on
 
 # 10: Administration/General
-bspc desktop 10 --layout monocle
+bspc desktop 10 --layout tiled
 
 # 11: Virtual Machine 1
 #bspc desktop 11 --layout stacked
@@ -221,7 +221,7 @@ _br 'Galculator' state=floating center=true
 _br 'Gnome-disks' state=floating center=true
 _br 'GParted' state=floating center=true
 _br 'Gxmessage' state=floating center=true
-_br '(?i)gsimplecal' state=floating center=true
+_br 'gsimplecal' state=floating center=true
 _br 'iwgtk' state=floating center=true
 #_br 'jetbrains-idea' state=floating center=true
 #_br 'jetbrains-idea-ce' state=floating center=true
@@ -245,12 +245,12 @@ _br 'qt5ct' state=floating sticky=true
 _br 'Qtconfig-qt4' state=floating sticky=true
 _br 'Rofi' state=floating center=true
 _br 'Simple-scan' state=floating center=true
-_br '(?i)System-config-printer.py' state=floating center=true
+_br 'System-config-printer.py' state=floating center=true
 _br 'Skype' state=floating center=true
 _br 'Thus' state=floating center=true
 _br 'Tint2conf' state=floating center=true
 _br 'Timeset-gui' state=floating center=true
-_br '(?i)virtualbox' state=floating center=true
+_br 'virtualbox' state=floating center=true
 _br 'X48' state=floating center=true
 _br 'Xfburn' state=floating center=true
 _br 'Xfce4-settings-manager' state=floating center=true
