@@ -1368,9 +1368,9 @@ git-sync-config() {
                     ln -sf config-private/common/.addressbook
             )
         fi
-        # only update xscreensaver preferences on tank
+        # only update xscreensaver preferences on tank (and archlinux for qubes os)
         if [[ -f "${HOME}/.xscreensaver" ]] && [[ ! -L "${HOME}/.xscreensaver" ]] && \
-               [[ "$(uname -n)" == "tank" ]] ; then
+               [[ "$(uname -n)" == "tank" || "$(uname -n)" == "archlinux" ]] ; then
             echo "Update .xscreensaver..."
             (
                 cd "${HOME}" && \

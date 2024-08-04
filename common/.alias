@@ -915,7 +915,7 @@ alias adb-sync-home-pages-put="
     indir=\"\${HOME}/config/common/home-pages\"
     outdir=\"/sdcard/Download/\"
     adb-sync --delete \"\${indir}\" \"\${outdir}\""
-    #outdir=\$(echo \"/storage/\$(adb shell ls -1 /storage/ | grep -v emulated | grep -v self)/Download/\")
+    #!outdir=\$(echo \"/storage/\$(adb shell ls -1 /storage/ | grep -v emulated | grep -v self)/Download/\")
     #!adb-sync --show-progress --del push \"\${indir}\" \"\${outdir}\""
 #        adb-sync-music-put       copy /home/data/media/Audio/Music from computer to device
 alias adb-sync-music-put="
@@ -925,7 +925,7 @@ alias adb-sync-music-put="
     find \"\${indir}/Playlists/\" -name \"*.m3u\" | while read -r file ; do
         adb push \"\${file}\" \"\${outdir}\"
     done"
-    #outdir=\$(echo \"/storage/\$(adb shell ls -1 /storage/ | grep -v emulated | grep -v self)/Music/\")
+    #!outdir=\$(echo \"/storage/\$(adb shell ls -1 /storage/ | grep -v emulated | grep -v self)/Music/\")
     #!adb-sync --show-progress --del push \"\${indir}/Music/\" \"\${outdir}\"
     #!adb-sync \"\${indir}/Music/Playlists/\" \"\${outdir}\""
 #        adb-sync-download-get    copy backup files from device to computer
@@ -2388,12 +2388,12 @@ alias sc20="\${HOME}/bin/screen-app 20"
 #!#        sctun                   screen ssh tunnels
 #!alias sctun="
 #!    screen -t shell 31 ssh -C -L 6670:irc.freenode.net:6667 \${nullwareip} && sleep 0.5 && \
-    #!      screen -t shell 32 ssh -C -L 8993:imap.gmail.com:993 \${nullwareip} && sleep 0.5 && \
-    #!      screen -t shell 33 ssh -C -L 8587:smtp.gmail.com:587 \${nullwareip} && sleep 0.5 && \
-    #!      screen -t shell 34 ssh -C -L 8222:crypticspace.com:5222 \${nullwareip}"
+#!      screen -t shell 32 ssh -C -L 8993:imap.gmail.com:993 \${nullwareip} && sleep 0.5 && \
+#!      screen -t shell 33 ssh -C -L 8587:smtp.gmail.com:587 \${nullwareip} && sleep 0.5 && \
+#!      screen -t shell 34 ssh -C -L 8222:crypticspace.com:5222 \${nullwareip}"
 #!    screen -t shell 32 ssh -C -L 8143:morpheus:143 \${nullwareip} && sleep 0.5 && \
-    #!      screen -t shell 33 ssh -C -L 8995:pop.gmail.com:995 \${nullwareip} && sleep 0.5 && \
-    #!      screen -t shell 35 ssh -C -L 8389:ldap.scheduleworld.com:389 \${nullwareip} && \
+#!      screen -t shell 33 ssh -C -L 8995:pop.gmail.com:995 \${nullwareip} && sleep 0.5 && \
+#!      screen -t shell 35 ssh -C -L 8389:ldap.scheduleworld.com:389 \${nullwareip} && \
 
 #
 # service control
@@ -2702,37 +2702,37 @@ alias xrandr-resolution="xrandr | sed -n 's/^.* current //p' | sed 's/,.*$// ; s
 #
 # xscreensaver
 #
-#        sson                    turn screensaver on
-alias sson="
-    rm -f \${HOME}/.noscreensaver
-    \${HOME}/bin/ssaverauto >/dev/null 2>&1"
-#        ssoff                   turn screensaver off
-alias ssoff="
-    touch \${HOME}/.noscreensaver
-    fuser -k -SIGTERM \${HOME}/bin/ssaver >/dev/null 2>&1
-    fuser -k -SIGTERM /usr/bin/xscreensaver >/dev/null 2>&1
-    fuser -k -SIGTERM /usr/bin/xlock >/dev/null 2>&1
-    fuser -k -SIGTERM /usr/bin/electricsheep >/dev/null 2>&1
-    fuser -k -SIGTERM /usr/bin/xautolock >/dev/null 2>&1
-    fuser -k -SIGKILL \${HOME}/bin/ssaver >/dev/null 2>&1
-    fuser -k -SIGKILL /usr/bin/xscreensaver >/dev/null 2>&1
-    fuser -k -SIGKILL /usr/bin/xlock >/dev/null 2>&1
-    fuser -k -SIGKILL /usr/bin/electricsheep >/dev/null 2>&1
-    fuser -k -SIGKILL /usr/bin/xautolock >/dev/null 2>&1"
-#        ssrs                    restart screensaver
-alias ssrs="
-    fuser -k -SIGTERM \${HOME}/bin/ssaver >/dev/null 2>&1
-    fuser -k -SIGTERM /usr/bin/xscreensaver >/dev/null 2>&1
-    fuser -k -SIGTERM /usr/bin/xlock >/dev/null 2>&1
-    fuser -k -SIGTERM /usr/bin/electricsheep >/dev/null 2>&1
-    fuser -k -SIGTERM /usr/bin/xautolock >/dev/null 2>&1
-    fuser -k -SIGKILL \${HOME}/bin/ssaver >/dev/null 2>&1
-    fuser -k -SIGKILL /usr/bin/xscreensaver >/dev/null 2>&1
-    fuser -k -SIGKILL /usr/bin/xlock >/dev/null 2>&1
-    fuser -k -SIGKILL /usr/bin/electricsheep >/dev/null 2>&1
-    fuser -k -SIGKILL /usr/bin/xautolock >/dev/null 2>&1
-    rm -f \${HOME}/.noscreensaver
-    \${HOME}/bin/ssaverauto >/dev/null 2>&1"
+#!#        sson                    turn screensaver on
+#!alias sson="
+#!    rm -f \${HOME}/.noscreensaver
+#!    \${HOME}/bin/ssaverauto >/dev/null 2>&1"
+#!#        ssoff                   turn screensaver off
+#!alias ssoff="
+#!    touch \${HOME}/.noscreensaver
+#!    fuser -k -SIGTERM \${HOME}/bin/ssaver >/dev/null 2>&1
+#!    fuser -k -SIGTERM /usr/bin/xscreensaver >/dev/null 2>&1
+#!    fuser -k -SIGTERM /usr/bin/xlock >/dev/null 2>&1
+#!    fuser -k -SIGTERM /usr/bin/electricsheep >/dev/null 2>&1
+#!    fuser -k -SIGTERM /usr/bin/xautolock >/dev/null 2>&1
+#!    fuser -k -SIGKILL \${HOME}/bin/ssaver >/dev/null 2>&1
+#!    fuser -k -SIGKILL /usr/bin/xscreensaver >/dev/null 2>&1
+#!    fuser -k -SIGKILL /usr/bin/xlock >/dev/null 2>&1
+#!    fuser -k -SIGKILL /usr/bin/electricsheep >/dev/null 2>&1
+#!    fuser -k -SIGKILL /usr/bin/xautolock >/dev/null 2>&1"
+#!#        ssrs                    restart screensaver
+#!alias ssrs="
+#!    fuser -k -SIGTERM \${HOME}/bin/ssaver >/dev/null 2>&1
+#!    fuser -k -SIGTERM /usr/bin/xscreensaver >/dev/null 2>&1
+#!    fuser -k -SIGTERM /usr/bin/xlock >/dev/null 2>&1
+#!    fuser -k -SIGTERM /usr/bin/electricsheep >/dev/null 2>&1
+#!    fuser -k -SIGTERM /usr/bin/xautolock >/dev/null 2>&1
+#!    fuser -k -SIGKILL \${HOME}/bin/ssaver >/dev/null 2>&1
+#!    fuser -k -SIGKILL /usr/bin/xscreensaver >/dev/null 2>&1
+#!    fuser -k -SIGKILL /usr/bin/xlock >/dev/null 2>&1
+#!    fuser -k -SIGKILL /usr/bin/electricsheep >/dev/null 2>&1
+#!    fuser -k -SIGKILL /usr/bin/xautolock >/dev/null 2>&1
+#!    rm -f \${HOME}/.noscreensaver
+#!    \${HOME}/bin/ssaverauto >/dev/null 2>&1"
 #        xsc                     run xscreensaver in the background
 alias xsc="xscreensaver -no-splash & >/dev/null 2>&1"
 #        xscrs                   restart xscreensaver
@@ -2744,12 +2744,8 @@ alias xscrs="
 alias xscd="xscreensaver-demo"
 #        xscl                    xscreensaver lock display
 alias xscl="xscreensaver-command -lock & >/dev/null 2>&1"
-#!#        cpxsc                   copy .xscreensaver to nobody and root
-#!alias cpxsc="
-#!    cp -p ${home}/somebody/.xscreensaver /
-#!    cp -p ${home}/somebody/.xscreensaver /root
-#!    chown nobody:nobody /.xscreensaver
-#!    chown root:root /root/.xscreensaver"
+#        xsc-diff                show any modifications to ~/.xscreensaver
+alias xsc-diff="diff \${HOME}/config-private/common/.xscreensaver \${HOME}/.xscreensaver"
 #
 # slideshows and webcams
 #
@@ -2757,15 +2753,15 @@ alias xscl="xscreensaver-command -lock & >/dev/null 2>&1"
 alias sschbg="chbg -randomize -interval 30.00 -R"
 #! add the following to .xscreensaver:
 #!  default-n:        "SlideShow (chbg)" \
-    #!                    chbg -xscreensaver -randomize -interval 0.30 \
-    #!                    -R \"/home/data/media/Pictures Slide Show/Nasa/\"     \n\
-    #        ssfeh                   slideshow using feh
+#!                    chbg -xscreensaver -randomize -interval 0.30 \
+#!                    -R \"/home/data/media/Pictures Slide Show/Nasa/\"     \n\
+#        ssfeh                   slideshow using feh
 alias ssfeh="feh --title \"Slideshow\" -F -x -z -D 30.00 -r"
 #! add the following to .xscreensaver:
 #!  default-n:        "SlideShow (feh)" \
-    #!                    feh --title "Slideshow" -F -x -D 0.30 \
-    #!                    -r \"/home/data/media/Pictures Slide Show/Nasa/\"     \n\
-    #!       ssapp                   slideshow application
+#!                    feh --title "Slideshow" -F -x -D 0.30 \
+#!                    -r \"/home/data/media/Pictures Slide Show/Nasa/\"     \n\
+#!       ssapp                   slideshow application
 ssapp="feh --title \"Slideshow\" -F -x -z -D 30.00 -r"
 #        sspersonal              personal slideshow
 alias sspersonal="${ssapp} \"${home}/data/media/Pictures Slide Show/Personal/\""
