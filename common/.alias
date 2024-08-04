@@ -3177,27 +3177,40 @@ alias rpmq="rpm -q -a | grep"
 #
 #        qdu                     qubes-dom0-update
 alias qdu="sudo qubes-dom0-update"
+#        qdus                    qubes-dom0-update --action=search
+alias qdus="sudo qubes-dom0-update --action=search"
 #        qdut                    qubes-dom0-update with testing repo
 alias qdut="sudo qubes-dom0-update --enablerepo=qubes-dom0-current-testing"
 #        qvmcp                   qvm-copy-to-vm personal
 alias qvmcp="qvm-copy-to-vm personal"
-#        qd-sync                 sync dom0 with personal
+#        qd-sync                 copy personal config to dom0
 alias qd-sync="
     if [[ \"$(uname -n)\" == \"dom0\" ]] ; then
-        (cd \${HOME} && rm -rf config && qvm-run --pass-io personal 'cd /home/user && tar zc --exclude=\".git*\" config' | tar zx)
-        (cd \${HOME} && rm -rf config-private && qvm-run --pass-io personal 'cd /home/user && tar zc --exclude=\".git*\" config-private' | tar zx)
+        (cd \${HOME} && rm -rf \${HOME}/config && qvm-run --pass-io personal 'cd /home/user && tar zc --exclude=\".git*\" config' | tar zx)
+        (cd \${HOME} && rm -rf \${HOME}/config-private && qvm-run --pass-io personal 'cd /home/user && tar zc --exclude=\".git*\" config-private' | tar zx)
         home-restow
     else
         echo \"Error: qd-sync can only be run on dom0\"
     fi"
-#        qd-copy-rebos-to-arch   copy rebos files from personal to arch
-alias qd-copy-rebos-to-arch="
+#        qd-copy-nasa            copy nasa pictures from personal to dom0
+alias qd-copy-nasa="
     if [[ \"$(uname -n)\" == \"dom0\" ]] ; then
-        qvm-run --pass-io personal 'cat /home/user/config/config/.config/rebos/gen.toml' | cat > ${HOME}/config/config/.config/rebos/gen.toml
-        cat ${HOME}/config/config/.config/rebos/gen.toml | qvm-run --pass-io arch 'cat > /home/user/.config/rebos/gen.toml'
+        sudo mkdir -p \"/home/data/media/Pictures Slide Show\"
+        sudo chown -R $(id -un):$(id -un) \"/home/data\"
+        (cd \"/home/data/media/Pictures Slide Show/\" && \
+            rm -rf \"/home/data/media/Pictures Slide Show/Nasa\" && \
+            qvm-run --pass-io personal 'cd \"/home/data/media/Pictures Slide Show\" && tar zc Nasa' | tar zx)
     else
-        echo \"Error: qd-copy-rebos-to-arch can only be run on dom0\"
+        echo \"Error: qd-copy-nasa can only be run on dom0\"
     fi"
+#!#        qd-copy-rebos-to-arch   copy rebos files from personal to arch
+#!alias qd-copy-rebos-to-arch="
+#!    if [[ \"$(uname -n)\" == \"dom0\" ]] ; then
+#!        qvm-run --pass-io personal 'cat /home/user/config/config/.config/rebos/gen.toml' | cat > ${HOME}/config/config/.config/rebos/gen.toml
+#!        cat ${HOME}/config/config/.config/rebos/gen.toml | qvm-run --pass-io arch 'cat > /home/user/.config/rebos/gen.toml'
+#!    else
+#!        echo \"Error: qd-copy-rebos-to-arch can only be run on dom0\"
+#!    fi"
 
 #
 # git
