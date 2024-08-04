@@ -1169,6 +1169,10 @@ alias cdcc="cd ${config}/custom/\$(uname -n)"
 alias cdcem="cd ${config}/emacs/.emacs.d"
 #        cdcp                    cd ~/config-private
 alias cdcp="cd ${config}-private"
+#        cdcon                   cd ~/.config
+alias cdcon="cd \${HOME}/.config"
+#        cdcon-xfce              cd ~/.config/xfce4/xfconf/xfce-perchannel-xml
+alias cdcon-xfce="cd \${HOME}/.config/xfce4/xfconf/xfce-perchannel-xml"
 #        cdem                    cd ~/.emacs.d
 alias cdem="cd \${HOME}/.emacs.d"
 #        cdemlm                  cd ~/.emacs.d/local-modules

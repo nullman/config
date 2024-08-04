@@ -171,7 +171,7 @@ _br 'Lollypop' desktop=^9 follow=on
 _br 'spotify' desktop=^9 follow=on
 
 # 10: Administration/General
-#bspc desktop 10 --layout stacked
+bspc desktop 10 --layout monocle
 
 # 11: Virtual Machine 1
 #bspc desktop 11 --layout stacked
@@ -247,7 +247,6 @@ _br 'Rofi' state=floating center=true
 _br 'Simple-scan' state=floating center=true
 _br '(?i)System-config-printer.py' state=floating center=true
 _br 'Skype' state=floating center=true
-_br 'syncterm' state=floating center=true
 _br 'Thus' state=floating center=true
 _br 'Tint2conf' state=floating center=true
 _br 'Timeset-gui' state=floating center=true
@@ -257,7 +256,8 @@ _br 'Xfburn' state=floating center=true
 _br 'Xfce4-settings-manager' state=floating center=true
 _br 'Xscreensaver-settings' state=floating center=true
 _br 'Yad' state=floating center=true
-_br 'File Transfer*' state=floating center=true
+_br 'zenity' state=floating center=true
+_br 'Zenity' state=floating center=true
 
 #-------------------------------------------------------------------------------
 # Auto-Start Standard Applications

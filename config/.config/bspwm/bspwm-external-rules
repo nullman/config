@@ -115,7 +115,6 @@ echo "state=tiled follow=on"
 [[ "${class}" == "Simple-scan" ]] || [[ "${class}" == "personal:Simple-scan" ]] && echo "state=floating center=true"
 [[ "${class}" == "(?i)System-config-printer.py" ]] || [[ "${class}" == "personal:(?i)System-config-printer.py" ]] && echo "state=floating center=true"
 [[ "${class}" == "Skype" ]] || [[ "${class}" == "personal:Skype" ]] && echo "state=floating center=true"
-[[ "${class}" == "syncterm" ]] || [[ "${class}" == "personal:syncterm" ]] && echo "state=floating center=true"
 [[ "${class}" == "Thus" ]] || [[ "${class}" == "personal:Thus" ]] && echo "state=floating center=true"
 [[ "${class}" == "Tint2conf" ]] || [[ "${class}" == "personal:Tint2conf" ]] && echo "state=floating center=true"
 [[ "${class}" == "Timeset-gui" ]] || [[ "${class}" == "personal:Timeset-gui" ]] && echo "state=floating center=true"
@@ -125,7 +124,8 @@ echo "state=tiled follow=on"
 [[ "${class}" == "Xfce4-settings-manager" ]] || [[ "${class}" == "personal:Xfce4-settings-manager" ]] && echo "state=floating center=true"
 [[ "${class}" == "Xscreensaver-settings" ]] || [[ "${class}" == "personal:Xscreensaver-settings" ]] && echo "state=floating center=true"
 [[ "${class}" == "Yad" ]] || [[ "${class}" == "personal:Yad" ]] && echo "state=floating center=true"
-[[ "${class}" == "File Transfer*" ]] || [[ "${class}" == "personal:File Transfer*" ]] && echo "state=floating center=true"
+[[ "${class}" == "zenity" ]] || [[ "${class}" == "personal:zenity" ]] && echo "state=floating center=true"
+[[ "${class}" == "Zenity" ]] || [[ "${class}" == "personal:Zenity" ]] && echo "state=floating center=true"
 
 
 #===============================================================================

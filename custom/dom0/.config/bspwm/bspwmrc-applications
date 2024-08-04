@@ -59,13 +59,13 @@ _delay() {
 # run dom0 applications
 bspc desktop --focus 10
 qubes-qube-manager &
-alacritty &
+sleep 10s && alacritty &
 
 # run application launcher
 (
-    sleep 4s ; \
+    sleep 12s ; \
         bspc desktop --focus 1 ; \
-        qvm-run personal "\${HOME}/bin/application-launcher"
+        qvm-run personal "\${HOME}/bin/application-launcher" &
 ) &
 
 #===============================================================================
