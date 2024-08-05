@@ -82,7 +82,7 @@ alfug() {
 #        pathcmd                 find path of command
 pathcmd() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 COMMAND [PATH...]"
+        echo "Usage: pathcmd COMMAND [PATH...]"
         echo "  COMMAND  command to find"
         echo "  PATH     additional path locations to search"
     else
@@ -108,7 +108,7 @@ pathcmd() {
 #        parentdir               get parent dir
 parentdir() {
     if [[ $# -gt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 [DIR]"
+        echo "Usage: parentdir [DIR]"
         echo "  DIR  directory to get the parent directory of (defaults to current dir)."
     else
         if [[ $# -eq 0 ]] ; then
@@ -134,7 +134,7 @@ parentdir() {
 #        pstest                  test if a user application is currently running
 pstest() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 QUERY"
+        echo "Usage: pstest QUERY"
         echo "Test if a user applicaiton containing QUERY is currently running."
         echo "  QUERY  query string to search for"
     else
@@ -161,7 +161,7 @@ keypress() {
 #        changelog               add a line to a CHANGELOG file in path
 changelog() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 TEXT..."
+        echo "Usage: changelog TEXT..."
     else
         file="CHANGELOG"
         # find changelog file
@@ -279,7 +279,7 @@ host-ping() {
 #        fnd                     find files
 fnd() {
     if [[ $# -lt 1 ]] || [[ $# -gt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 QUERY [DIR]"
+        echo "Usage: fnd QUERY [DIR]"
     else
         query="$1"
         shift
@@ -294,7 +294,7 @@ fnd() {
 #        fndg                    find files with grep
 fndg() {
     if [[ $# -lt 2 ]] || [[ $# -gt 3 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 QUERY GREP [DIR]"
+        echo "Usage: fndg QUERY GREP [DIR]"
     else
         query="$1"
         shift
@@ -311,7 +311,7 @@ fndg() {
 #        wcdir                   word (line) count a directory
 wcdir() {
     if [[ $# -gt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 [DIR]"
+        echo "Usage: wcdir [DIR]"
     else
         if [[ $# -eq 0 ]] ; then
             dir="."
@@ -324,7 +324,7 @@ wcdir() {
 #        dtloop                  datetime stamp looping
 dtloop() {
     if [[ $# -gt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 [DELAY]"
+        echo "Usage: dtloop [DELAY]"
         echo "Output the current date-time in a loop."
         echo "  DELAY  time between outputs (defaults to 5s)"
     else
@@ -342,7 +342,7 @@ dtloop() {
 #        kmg                     convert bytes into KB, MB, GB, or TB as appropriate
 kmg() {
     if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 NUM"
+        echo "Usage: kmg NUM"
     else
         k=$(echo "scale=2; $1 / 1024" | bc)
         kf=$(echo "$1 / 1024" | bc)
@@ -381,7 +381,7 @@ prompt() {
 #        mail-file               mail a file (uuencoded)
 mail-file() {
     if [[ $# -lt 3 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 FILE SUBJECT ADDRESS..."
+        echo "Usage: mail-file FILE SUBJECT ADDRESS..."
     else
         file="$1"
         shift
@@ -393,7 +393,7 @@ mail-file() {
 #        speak-url               speak a url
 speak-url() {
     if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 URL"
+        echo "Usage: speak-url URL"
     else
         lynx --dump "$1" |
             sed 's/\[.*\]//g ; s/[^0-9a-zA-Z \?\,\.\;\:]//g ; /^References$/,$d' |
@@ -446,7 +446,7 @@ colorscript-slideshow() {
 
     _usage() {
         cat <<EOF
-Usage: $1 [OPTIONS]
+Usage: colorscript-slideshow [OPTIONS]
 Run colorscript scripts.
 OPTIONS:
   -o, --once        run each script one time
@@ -491,13 +491,13 @@ EOF
                 shift
                 ;;
             -h|--help)
-                _usage $0
+                _usage
                 shift
                 return 0
                 ;;
             *)
-                printf "%s: unrecognized option '%s'\n\n" "$(basename $0)" "$1"
-                _usage $0
+                printf "colorscript-slideshow: unrecognized option '%s'\n\n" "$1"
+                _usage colorscript-slideshow
                 return 1
                 ;;
         esac
@@ -518,7 +518,7 @@ EOF
 #        ansi                    display an ANSI text graphic file at 1200 baud
 ansi() {
     if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 FILE"
+        echo "Usage: ansi FILE"
         echo "Display an ANSI text graphic file at 1200 baud."
     else
         iconv -f 437 "$1" | pv --quiet --rate-limit 1200
@@ -527,7 +527,7 @@ ansi() {
 #        ansi-slideshow          display a slideshow of all ANSI text graphic files in given directory
 ansi-slideshow() {
     if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 DIR"
+        echo "Usage: ansi-slideshow DIR"
         echo "Display a slideshow of all ANSI text graphic files in given directory."
     else
         find "$1" -iname *".ANS" -print | sort --random-sort | while read -r file ; do
@@ -539,13 +539,13 @@ ansi-slideshow() {
 #        wordle-match            list wordle words matching given pattern
 wordle-match() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 LENGTH EXCLUDE INCLUDE MATCH"
+        echo "Usage: wordle-match LENGTH EXCLUDE INCLUDE MATCH"
         echo "Search for Wordle words matching given pattern."
         echo "  LENGTH   length of words to consider"
         echo "  EXCLUDE  letters to exclude"
         echo "  INCLUDE  letters to include"
         echo "  MATCH    letters and positions to match (regexp)"
-        echo "Example: $0 5 abc def ...gh"
+        echo "Example: wordle-match 5 abc def ...gh"
     else
         cmd="cat ~/doc/information/words.txt | grep '^.\{$1\}$' | tr 'A-Z' 'a-z'"
         if [[ $# -gt 1 ]] ; then
@@ -566,7 +566,7 @@ wordle-match() {
 #        play-youtube-desktop    play a youtube video on the desktop background
 play-youtube-desktop() {
     if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 VIDEOID"
+        echo "Usage: play-youtube-desktop VIDEOID"
         echo "Play YouTube video on desktop background."
     else
         xwinwrap -ni -g $(xwininfo -root | grep geometry | cut -c 13-) \
@@ -581,10 +581,10 @@ play-youtube-desktop() {
 #        dos-to-linux            convert a dos text file CR+LF to linux LF format
 dos-to-linux() {
     if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 FILE"
+        echo "Usage: dos-to-linux FILE"
         echo "Convert FILE from DOS format to Linux format."
         echo "Convert multiple files using something like:"
-        echo "  ls -1 | while read -r f ; do $0 \$f ; done"
+        echo "  ls -1 | while read -r f ; do dos-to-linux \$f ; done"
     else
         sed -i 's/\r$//' "$1"
     fi
@@ -592,10 +592,10 @@ dos-to-linux() {
 #        linux-to-dos            convert a linux text file LF to dos CR+LF format
 linux-to-dos() {
     if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 FILE"
+        echo "Usage: linux-to-dos FILE"
         echo "Convert FILE from Linux format to DOS format."
         echo "Convert multiple files using something like:"
-        echo "  ls -1 | while read -r f ; do $0 \$f ; done"
+        echo "  ls -1 | while read -r f ; do linux-to-dos \$f ; done"
     else
         sed -i 's/$/\r/' "$1"
     fi
@@ -657,7 +657,7 @@ uncompress-dir-tree() {
 #        lns-dir                 make links to every file in a directory
 lns-dir() {
     if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 DIR"
+        echo "Usage: lns-dir DIR"
     else
         $(pathcmd ls) -1 "$1" | while read -r a ; do
             ln -s "$1/${a}" ${a}
@@ -667,7 +667,7 @@ lns-dir() {
 #        flatten-dir             flatten directory
 flatten-dir() {
     if [[ $# -ne 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 INDIR OUTDIR"
+        echo "Usage: flatten-dir INDIR OUTDIR"
     else
         indir="$1"
         outdir="$2"
@@ -691,7 +691,7 @@ flatten-dir() {
 sed-dir() {
     tmp=temp$$
     if [[ $# -lt 1 ]] || [[ $# -gt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 SCRIPT [DIR]"
+        echo "Usage: sed-dir SCRIPT [DIR]"
         echo "Apply sed SCRIPT to all files in current directory or DIR."
     else
         script="$1"
@@ -725,7 +725,7 @@ sed-dir() {
 #        convert-video-to-mp4      convert all videos in current directory to mp4 videos
 convert-video-to-mp4() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 FILE..."
+        echo "Usage: convert-video-to-mp4 FILE..."
         echo "Convert all FILEs to mp4 video."
     else
         files=("$@")
@@ -742,7 +742,7 @@ convert-video-to-mp4() {
 #        convert-video-to-mp3    convert video to audio mp3
 convert-video-to-mp3() {
     if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 FILE"
+        echo "Usage: convert-video-to-mp3 FILE"
         echo "Convert a video to an audio only mp3 with 192K bitrate."
     else
         infile="$1"
@@ -753,7 +753,7 @@ convert-video-to-mp3() {
 #        convert-video-to-720p   convert blu-ray 1080p video to 720p
 convert-video-to-720p() {
     if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 FILE"
+        echo "Usage: convert-video-to-720p FILE"
         echo "Convert a blu-ray 1080p video to 720p."
     else
         infile="$1"
@@ -772,7 +772,7 @@ convert-video-to-720p() {
 #        comp                    compress (tar then gzip)
 comp() {
     if [[ $# -lt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 ARCHIVE FILE..."
+        echo "Usage: comp ARCHIVE FILE..."
     else
         arch="$1"
         shift
@@ -782,7 +782,7 @@ comp() {
 #        uncomp                  uncompress (ungzip then untar)
 uncomp() {
     if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 FILE"
+        echo "Usage: uncomp FILE"
     else
         file="$1"
         if [[ -f "${file}" ]] ; then
@@ -813,7 +813,7 @@ uncomp() {
 #        unparrar                un-par-rar (par2 then unrar)
 unparrar() {
     if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 FILE"
+        echo "Usage: unparrar FILE"
     else
         par2 r "$1."*".PAR2"
         unrar e "$1.part"*".rar"
@@ -826,7 +826,7 @@ unparrar() {
 #        encrypt                 encrypt file
 encrypt() {
     if [[ $# -lt 2 ]] || [[ $# -gt 3 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 INFILE OUTFILE [PASSWORD]"
+        echo "Usage: encrypt INFILE OUTFILE [PASSWORD]"
     else
         infile="$1"
         shift
@@ -843,7 +843,7 @@ encrypt() {
 #        decrypt                 decrypt file
 decrypt() {
     if [[ $# -lt 2 ]] || [[ $# -gt 3 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 INFILE OUTFILE [PASSWORD]"
+        echo "Usage: decrypt INFILE OUTFILE [PASSWORD]"
     else
         infile="$1"
         shift
@@ -919,7 +919,7 @@ delete-broken-symlinks() {
 
     _usage() {
         cat <<EOF
-Usage: $0 DIR [OPTIONS]
+Usage: delete-broken-symlinks DIR [OPTIONS]
 Delete broken symlinks in DIR.
 OPTIONS:
   DIR              directory to search in
@@ -936,7 +936,7 @@ EOF
                 shift
                 ;;
             -h|--help)
-                _usage $0
+                _usage
                 return 0
                 ;;
             *)
@@ -944,7 +944,7 @@ EOF
                     dir="${opt}"
                     shift
                 else
-                    _usage $0
+                    _usage
                     return 1
                 fi
                 ;;
@@ -952,7 +952,7 @@ EOF
     done
 
     if [[ -z "${dir}" ]] ; then
-        _usage $0
+        _usage
         return 1
     fi
 
@@ -968,7 +968,7 @@ EOF
 #        longevity               clean out old files
 longevity() {
     if [[ $# -ne 3 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 DIR PATTERN DAYS"
+        echo "Usage: longevity DIR PATTERN DAYS"
         echo "Delete all files matching PATTERN in DIR older than DAYS."
         echo "  DIR      top level directory to search"
         echo "  PATTERN  file pattern to match on"
@@ -1010,7 +1010,7 @@ EOF
 #        ssh-key-copy            copy ssh key authorization to remote server
 ssh-key-copy() {
     if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 [USER@]SERVER"
+        echo "Usage: ssh-key-copy [USER@]SERVER"
     else
         ssh "$1" '[[ ! -d .ssh ]] && mkdir -p .ssh && chmod 700 .ssh'
         find "${HOME}/.ssh/" -name "*.pub" | while read file ; do
@@ -1022,7 +1022,7 @@ ssh-key-copy() {
 #!# this version does not work on macos
 #!ssh-key-copy() {
 #!    if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-#!        echo "Usage: $0 [USER@]SERVER"
+#!        echo "Usage: ssh-key-copy [USER@]SERVER"
 #!    else
 #!        ssh-copy-id -i "${HOME}/.ssh/id_dsa.pub" "$1"
 #!        ssh-copy-id -i "${HOME}/.ssh/id_rsa.pub" "$1"
@@ -1031,7 +1031,7 @@ ssh-key-copy() {
 #        ssh-urxvt-copy          copy urxvt terminfo data to remote server
 ssh-urxvt-copy() {
     if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 [USER@]SERVER"
+        echo "Usage: ssh-urxvt-copy [USER@]SERVER"
     else
         infocmp urxvt | \
             ssh "$1" 'cat > /tmp/terminfo && mkdir -p .terminfo && \
@@ -1100,7 +1100,7 @@ disk-uuid() {
 #        web-search              google search
 web-search() {
     if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 QUERY"
+        echo "Usage: web-search QUERY"
     else
         web "http://www.google.com/search?num=50&q=$1"
     fi
@@ -1108,7 +1108,7 @@ web-search() {
 #        leach                   leach files from the web
 leach() {
     if [[ $# -lt 1 ]] || [[ $# -gt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 URL [PATTERN[,...]]"
+        echo "Usage: leach URL [PATTERN[,...]]"
     else
         url="$1"
         shift
@@ -1127,7 +1127,7 @@ leach() {
 #        make-cert               make ssl certificate
 make-cert() {
     if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 NAME"
+        echo "Usage: make-cert NAME"
     else
         name="$1"
         openssl req -new > "${name}.cert.csr"
@@ -1143,7 +1143,7 @@ make-cert() {
 #!#
 #!pmi() {
 #!    if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-#!        echo "Usage: $0 PACKAGE"
+#!        echo "Usage: pmi PACKAGE"
 #!    else
 #!        pamac install --no-confirm "$1" || pamac build --no-confirm "$1"
 #!    fi
@@ -1151,7 +1151,7 @@ make-cert() {
 #        yasg                    yay search with grep
 yasg() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 SEARCH GREP"
+        echo "Usage: yasg SEARCH GREP"
     else
         s="$1"
         shift
@@ -1161,7 +1161,7 @@ yasg() {
 #        yass                    yay specific search
 yass() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 SEARCH"
+        echo "Usage: yass SEARCH"
     else
         yay -Ss "$*" | sed -n ":a ; /^[a-z]*\/$* / { N ; s/\n// ; p ; d ; ba }"
     fi
@@ -1169,7 +1169,7 @@ yass() {
 #        yasi                    yay search installed packages
 yasi() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 SEARCH"
+        echo "Usage: yasi SEARCH"
     else
         yay -Ss "$*" | sed -n ":a ; { N ; s/\n// ; p ; d ; ba }" | grep " (Installed"
     fi
@@ -1177,7 +1177,7 @@ yasi() {
 #        yasis                   yay specific search installed packages
 yasis() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 SEARCH"
+        echo "Usage: yasis SEARCH"
     else
         yay -Ss "$*" | sed -n ":a ; /^[a-z]*\/$* / { N ; s/\n// ; p ; d ; ba }" | grep " (Installed"
     fi
@@ -1190,7 +1190,7 @@ yasis() {
 #
 acsg() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 QUERY"
+        echo "Usage: acsg QUERY"
     else
         apt-cache search "$1" | grep -i "^$1"
     fi
@@ -1202,7 +1202,7 @@ acsg() {
 #        nixs                    nixos search
 nixs() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 SEARCH"
+        echo "Usage: nixs SEARCH"
     else
         s="$1"
         shift
@@ -1213,7 +1213,7 @@ nixs() {
 #        nixss                   nixos specific search
 nixss() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 SEARCH"
+        echo "Usage: nixss SEARCH"
     else
         s="$1"
         shift
@@ -1224,7 +1224,7 @@ nixss() {
 #        nixsi                   nixos search installed packages
 nixsi() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 SEARCH"
+        echo "Usage: nixsi SEARCH"
     else
         nix-store --quiet -q --references /run/current-system/sw 2>/dev/null | sed 's/^[^-]*-// ; /^warning:/d' | grep -i "$*" | sort
     fi
@@ -1232,7 +1232,7 @@ nixsi() {
 #        nixsg                   nixos search with grep
 nixsg() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 SEARCH GREP"
+        echo "Usage: nixsg SEARCH GREP"
     else
         s="$1"
         shift
@@ -1246,9 +1246,22 @@ nixsg() {
 #        nixfi                   nix-locate package of installed file
 nixfi() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 FILE"
+        echo "Usage: nixfi FILE"
     else
         readlink -e $(which $*)
+    fi
+}
+
+#
+# qubes os
+#
+#        qd-copy-from-vm           copy something from a vm to dom0
+qd-copy-from-vm() {
+    if [[ $# -lt 3 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] || [[ "$(uname -n)" != "dom0" ]] ; then
+        echo "Usage: qd-copy-from-vm VM PATH FILE"
+        echo "Can only be run on dom0"
+    else
+        qvm-run --pass-io "$1" "cd \"$2\" && tar zc \"$3\"" | tar zx
     fi
 }
 
@@ -1262,7 +1275,7 @@ dvd-titles() {
 #        dvd-encode              encode a dvd track
 dvd-encode() {
     if [[ $# -lt 1 ]] || [[ $# -gt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 TRACK [FILE]"
+        echo "Usage: dvd-encode TRACK [FILE]"
     else
         track="$1"
         unshift
@@ -1310,7 +1323,7 @@ git-branch-prompt() {
 #        gitcouo                 git checkout BRANCH and pull origin BRANCH
 gitcouo() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 BRANCH"
+        echo "Usage: gitcouo BRANCH"
         echo "  BRANCH  branch to checkout and pull"
     else
         branch="$1"
@@ -1368,9 +1381,9 @@ git-sync-config() {
                     ln -sf config-private/common/.addressbook
             )
         fi
-        # only update xscreensaver preferences on tank (and archlinux for qubes os)
+        # only update xscreensaver preferences on tank
         if [[ -f "${HOME}/.xscreensaver" ]] && [[ ! -L "${HOME}/.xscreensaver" ]] && \
-               [[ "$(uname -n)" == "tank" || "$(uname -n)" == "archlinux" ]] ; then
+               [[ "$(uname -n)" == "tank" ]] ; then
             echo "Update .xscreensaver..."
             (
                 cd "${HOME}" && \
@@ -1402,7 +1415,7 @@ git-sync-home() {
 #        backup-files            backup a file or directory to /home/backup
 backup-files() {
     if [[ $# -lt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 PREFIX FILE..."
+        echo "Usage: backup-files PREFIX FILE..."
     else
         # get parameters
         pre="$1"
@@ -1418,7 +1431,7 @@ backup-files() {
 #!#        rsyncbi               rsync backup system (incremental)
 #!rsyncbi() {
 #!    if [[ $# -gt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-#!        echo "Usage: $0 [PATH] [DEST]"
+#!        echo "Usage: rsyncbi [PATH] [DEST]"
 #!        echo "Backup system to server."
 #!        echo "  PATH  local path to backup (defaults to '/')."
 #!        echo "  DEST  path to destination directory or:"
@@ -1463,11 +1476,11 @@ backup-files() {
 #!#        copy-system             copy system files
 #!copy-system() {
 #!    if [[ $# -ne 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-#!        echo "Usage: $0 SOURCE DEST"
+#!        echo "Usage: copy-system SOURCE DEST"
 #!        echo "Copy system to destination path."
 #!        echo "  SOURCE  source path for system directories"
 #!        echo "  DEST    destination path"
-#!        echo "Example: $0 / /mnt/dest"
+#!        echo "Example: copy-system / /mnt/dest"
 #!    else
 #!        src="$1"
 #!        shift
@@ -1543,7 +1556,7 @@ backup-files() {
 #!#        copy-home               copy key home files from a remote source to ${HOME}
 #!copy-home() {
 #!    if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-#!        echo "Usage: $0 [USER@]SOURCE [init]"
+#!        echo "Usage: copy-home [USER@]SOURCE [init]"
 #!        echo "Copy key home files from a remote SOURCE to ${HOME}."
 #!        echo "  USER    optional user to connect with using ssh"
 #!        echo "  SOURCE  source IP address"
@@ -1582,7 +1595,7 @@ backup-files() {
 #!#        rsync-home              rsync home files from one location with another
 #!rsync-home() {
 #!    if [[ $# -lt 2 ]] || [[ $# -gt 3 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-#!        echo "Usage: $0 [USER@]SOURCE [USER@]DEST [init]"
+#!        echo "Usage: rsync-home [USER@]SOURCE [USER@]DEST [init]"
 #!        echo "Synchronize key home files from one location to another."
 #!        echo "  USER    optional user to connect with using ssh"
 #!        echo "  SOURCE  source location"
@@ -1730,7 +1743,7 @@ rsync-install() {
 #        jar-version             display java version used to build jars
 jar-version() {
     if [[ $# -gt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 [DIR [PATTERN]]"
+        echo "Usage: jar-version [DIR [PATTERN]]"
         echo "Display Java version used to build jar files in DIR matching PATTERN."
         echo "  DIR      defaults to '.'"
         echo "  PATTERN  defaults to '*.jar'"
@@ -1759,7 +1772,7 @@ jar-version() {
 #        adb-log-app             show adb log for specific app
 adb-log-app() {
     if [[ $# -lt 1 ]] || [[ $# -gt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: $0 [PARAMS] PACKAGE"
+        echo "Usage: adb-log-app [PARAMS] PACKAGE"
         echo "Dump the ADB log for a specific PACKAGE."
         echo "Optional PARAMS can be any ADB params, such as:"
         echo "  -e         emulator"
@@ -2046,7 +2059,7 @@ home-restow() {
 #     )
 
 #     if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-#         echo "Usage: $0 [--optional]"
+#         echo "Usage: arch-initialize [--optional]"
 #         echo "  -o,--optional  install optional packages instead"
 #         return 1
 #     fi
@@ -2232,7 +2245,7 @@ home-restow() {
 #     )
 
 #     if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-#         echo "Usage: $0 [--optional]"
+#         echo "Usage: manjaro-initialize [--optional]"
 #         echo "  -o,--optional  install optional packages instead"
 #         return 1
 #     fi
