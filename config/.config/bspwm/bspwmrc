@@ -201,6 +201,7 @@ _br 'vlc' state=fullscreen
 _br 'VirtualBox Manager' state=fullscreen
 _br 'VirtualBox Machine' state=fullscreen
 _br 'w40k.exe' state=fullscreen
+_br 'windows-7' state=fullscreen
 
 # floating applications
 _br 'About Pale Moon' state=floating center=true
