@@ -158,6 +158,10 @@ super + alt + ctrl + Next
 super + alt + h
     yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null --filename="${HOME}/.config/sxhkd/sxhkdrc-help"
 
+# window, desktop application, and program launcher/switcher
+super + space
+    rofi -show combi -modes combi -combi-modes 'window,drun,run'
+
 # desktop application launcher
 super + alt + space
     rofi -modi drun -show drun
