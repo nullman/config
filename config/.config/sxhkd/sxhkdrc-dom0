@@ -321,10 +321,10 @@ super + shift + v
 # connect to sennheiser hd350bt headphones
 super + alt + b
     notify-send --expire-time=3000 'Connecting to Sennheiser HD 350BT Headphones' && \
-    bluetoothctl connect 80:C3:BA:0E:CB:E5
+    qvm-run personal "bluetoothctl connect 80:C3:BA:0E:CB:E5"
 super + shift + alt + b
     notify-send --expire-time=3000 'Disconnecting from Sennheiser HD 350BT Headphones' && \
-    bluetoothctl disconnect 80:C3:BA:0E:CB:E5
+    qvm-run personal "bluetoothctl disconnect 80:C3:BA:0E:CB:E5"
 
 # # nixos-rebuild switch
 # super + alt + ctrl + r
