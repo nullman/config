@@ -12,6 +12,7 @@
 
 [core]
     autocrlf = input
+    safecrlf = false
 
 [init]
     defaultBranch = master

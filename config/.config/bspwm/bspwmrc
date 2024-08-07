@@ -127,10 +127,6 @@ _br 'Thunar' desktop=^5 follow=on
 _br 'Pcmanfm' desktop=^5 follow=on
 _br 'Spacefm' desktop=^5 follow=on
 _br 'Org.gnome.Nautilus' desktop=^5 follow=on
-#_br 'Filezilla' desktop=^5 follow=on
-_br 'Transmission-gtk' desktop=^5 follow=on
-#_br 'balena-etcher-electron' desktop=^5 follow=on
-#_br 'Ghb' desktop=^5 follow=on
 
 # 6: Chat
 bspc desktop 6 --layout tiled
