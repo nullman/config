@@ -65,7 +65,8 @@ sleep 6s && alacritty &
 (
     sleep 8s ; \
         bspc desktop --focus 1 ; \
-        qvm-run personal "\${HOME}/bin/application-launcher" &
+        ${HOME}/bin/application-launcher &
+        #qvm-run personal "\${HOME}/bin/application-launcher" &
 ) &
 
 #===============================================================================

@@ -139,11 +139,6 @@ export GOPATH="${HOME}/gocode"
 export SDKMAN_DIR="${HOME}/.sdkman"
 export GEM_HOME="$(_command ruby && ruby -e 'print Gem.user_dir')"
 
-# dark mode
-export GTK_THEME=Adwaita:dark
-export GTK2_RC_FILES=/usr/share/themes/Adwaita-dark/gtk-2.0/gtkrc
-export QT_STYLE_OVERRIDE=adwaita-dark
-
 # android
 [[ -d "/usr/local/share/android-sdk" ]] && export ANDROID_SDK="/usr/local/share/android-sdk"
 [[ -d "${HOME}/Library/Android/sdk" ]] && export ANDROID_SDK="${HOME}/Library/Android/sdk"
