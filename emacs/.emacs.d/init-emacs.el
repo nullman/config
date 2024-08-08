@@ -3400,7 +3400,7 @@ Example: To sort using `string<' use the following call:
                       (replace-regexp-in-string
                        "^[\*]*[ \t]*" ""
                        (buffer-substring-no-properties
-                        (point-at-bol) (point-at-eol))))
+                        (line-beginning-position) (line-end-position))))
                     (lambda (a b) (funcall ,(cadddr x) a b))
                     ,@(cddddr x))))
         (cl-case type
@@ -3494,7 +3494,7 @@ by ASCII code. Otherwise, default SORT-TYPE is \"(nil ?f nil
             ;; find minimum indent of entire element block
             (while (and (not (eobp))
                         (eq type (org-element-type (org-element-at-point))))
-              (when (and (not (= (point-at-bol) (point-at-eol)))
+              (when (and (not (= (line-beginning-position) (line-end-position)))
                          (re-search-forward "^ *" (line-end-position) :noerror)
                          (< (current-column) indent-min))
                 (setq indent-min (current-column)))
@@ -3538,7 +3538,7 @@ and X clipboard, indenting and cleaning up links."
         (when (= indent-min fill-column)
           (goto-char (point-min))
           (while (not (eobp))
-            (when (and (not (= (point-at-bol) (point-at-eol)))
+            (when (and (not (= (line-beginning-position) (line-end-position)))
                        (re-search-forward "^ *" (line-end-position) :noerror)
                        (< (current-column) indent-min))
               (setq indent-min (current-column)))
@@ -3665,8 +3665,8 @@ If BEG and END are given, only that region is exported."
 (defun org-toggle-headline-checkbox (&optional beg end)
   "Toggle between an Org headline and checkbox on current line or region."
   (interactive)
-  (let ((beg (or beg (if (use-region-p) (region-beginning) (point-at-bol))))
-        (end (or end (if (use-region-p) (region-end) (point-at-eol)))))
+  (let ((beg (or beg (if (use-region-p) (region-beginning) (line-beginning-position))))
+        (end (or end (if (use-region-p) (region-end) (line-end-position)))))
     (deactivate-mark)
     (save-mark-and-excursion
       (save-restriction
@@ -11200,7 +11200,7 @@ update the URL to the new location."
   (let ((url-regexp "https?:\/\/\\(www\.\\)?[-a-zA-Z0-9@:%._\+~#=]\\{1,256\\}\.[a-zA-Z0-9()]\\{1,6\\}\\b\\([-a-zA-Z0-9()@:%_\+.~#?&//=]*\\)"))
     (save-mark-and-excursion
       (forward-line 0)
-      (when (re-search-forward url-regexp (point-at-eol))
+      (when (re-search-forward url-regexp (line-end-position))
         (let* ((start (match-beginning 0))
                (end (match-end 0))
                (url (match-string-no-properties 0))
@@ -11315,7 +11315,7 @@ If BUFFER is nil, use `current-buffer'."
                                   (set-buffer buffer)
                                   (goto-char (point-min))
                                   (string-to-number
-                                   (buffer-substring-no-properties (point-at-bol) (point-at-eol))))))
+                                   (buffer-substring-no-properties (line-beginning-position) (line-end-position))))))
                      (when (not (= code 200))
                        (push (append (reverse (cdr (reverse (car x))))
                                      (list code)) failures))
@@ -12878,27 +12878,6 @@ it is longer."
 
 (init-message 3 "Functions: External Program Functions: set-arch-package-description")
 
-;; old version
-;; (defun set-arch-package-description ()
-;;   "Set Arch OS package description for package install command found on current line."
-;;   (interactive "*")
-;;   (save-mark-and-excursion
-;;     (forward-line 0)
-;;     (when (and
-;;            (re-search-forward "\\b\\(pacman\\|yay\\|yaourt\\|pamac\\)\\([ \t]+\\(-S\\|install\\|build\\)\\)\\([ \t]+-[^ \t]*\\)*" (point-at-eol) :noerror)
-;;            (re-search-forward "[ \t]*\\b\\([^ \t]+\\)\\b" (point-at-eol) :noerror))
-;;       (let ((package (match-string-no-properties 1)))
-;;         ;; remove any existing description
-;;         (if (re-search-forward "#" (point-at-eol) :noerror)
-;;             (progn
-;;               (delete-region (point) (line-end-position))
-;;               (insert " "))
-;;           (progn
-;;             (end-of-line)
-;;             (insert " # ")))
-;;         (insert-arch-package-description package)
-;;         (align-comments)))))
-
 (defun set-arch-package-description (&optional fast)
   "Set Arch OS package description for package found on current line.
 
@@ -12906,18 +12885,32 @@ If FAST is non-nil, `org-table-align' will not be called before
 or after."
   (interactive "*")
   (save-mark-and-excursion
-    (unless fast
-      (org-table-align))
-    (forward-line 0)
-    (let ((package (re-search-forward "|[^|]*|[^|]*|[ \t]*\\([^ \t|]*\\)[ \t]*|[^|]*|[^|]*|" (point-at-eol))))
-      (let ((package (match-string-no-properties 1)))
-        ;; remove any existing description
+    (cond
+     ((org-table-p)
+      (unless fast
+        (org-table-align))
+      (forward-line 0)
+      (when (re-search-forward "|[^|]*|[^|]*|[ \t]*\\([^ \t|]*\\)[ \t]*|[^|]*|[^|]*|" (line-end-position) :noerror)
+        (let ((package (match-string-no-properties 1)))
+          ;; remove any existing description
+          (forward-line 0)
+          (re-search-forward "|[^|]*|[^|]*|[^|]*|[^|]*|" (line-end-position))
+          (org-table-blank-field)
+          (insert-arch-package-description package 80)
+          (unless fast
+            (org-table-align)))))
+     (t
+      (forward-line 0)
+      (unless (re-search-forward "^[ \t]*#" (line-end-position) :noerror)
         (forward-line 0)
-        (re-search-forward "|[^|]*|[^|]*|[^|]*|[^|]*|" (point-at-eol))
-        (org-table-blank-field)
-        (insert-arch-package-description package 80)
-        (unless fast
-          (org-table-align))))))
+        (when (re-search-forward "\\([^ \t]+\\)" (line-end-position) :noerror)
+          (let ((package (match-string-no-properties 1)))
+            ;; remove any existing description
+            (forward-line 0)
+            (when (re-search-forward "#" (line-end-position) :noerror)
+              (kill-region (1- (point)) (line-end-position)))
+            (comment-indent)
+            (insert-arch-package-description package 80))))))))
 ;; set-arch-package-description:1 ends here
 
 ;; [[file:init-emacs.org::*define-word][define-word:2]]
@@ -13897,7 +13890,7 @@ Becomes:
                    (end (cdr bounds)))
               (align-regexp beg end comment-regexp)))
            (t
-            (align-regexp (point-at-bol) (point-at-eol) comment-regexp))))))
+            (align-regexp (line-beginning-position) (line-end-position) comment-regexp))))))
     (goto-char point)))
 ;; align-comments:1 ends here
 
@@ -21109,7 +21102,7 @@ Commands:
         (forward-line 0)
         (while (and (not (bobp))
                     (not (looking-at "^GO$")))
-          (while (re-search-forward (concat sql-prompt-regexp "[ \t]*") (point-at-eol) :noerror)
+          (while (re-search-forward (concat sql-prompt-regexp "[ \t]*") (line-end-position) :noerror)
             (replace-match ""))
           (forward-line -1))))
     output)

@@ -122,7 +122,9 @@ alias sra="source \${HOME}/bin/run-app"
 #        loc                     locate file (case insensitive)
 alias loc="locate -i"
 #        udb                     update locate database
-alias udb="sudo updatedb"
+alias udb="sudo updatedb --prune-bind-mounts no && \
+    [ -e '/rw/config/rc.local.d/plocate.rc' ] && \
+    sudo cp -p /var/lib/plocate/plocate.db /rw/config/rc.local.d/plocate.db"
 #        psa                     ps -e -o pid,ppid,user,args (all processes)
 alias psa="ps -e -o pid,ppid,user,args"
 #        psaf                    ps -e -o pid,ppid,user,args --forest (all processes)
