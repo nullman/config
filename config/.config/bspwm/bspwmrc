@@ -43,8 +43,8 @@ _bc click_to_focus             any
 _bc swallow_first_click        false
 _bc focus_follows_pointer      false
 _bc pointer_follows_monitor    true
-#_bc ignore_ewmh_focus          true
-_bc ignore_ewmh_focus          false
+_bc ignore_ewmh_focus          true
+#_bc ignore_ewmh_focus          false
 _bc ignore_ewmh_fullscreen     none
 _bc ignore_ewmh_struts         false
 _bc center_pseudo_tiled        true

@@ -109,10 +109,8 @@ _libadd() {
 export USERNAME="${USER}"
 export HOSTNAME="$(uname -n)"
 export home="${HOME}"
-#export DISPLAY=":0.0"
 [[ "${USER}" == "root" ]] && export DISPLAY=":0.0"
 [[ -z "${REAL_TERM}" ]] && export REAL_TERM="${TERM}" # keep original TERM value for scripts to use
-#[[ "${TERM}" == "urxvt-256color" ]] && export TERM="urxvt"
 [[ -z "${TERM}" ]] && export TERM="xterm-256color" # act like xterm with color support
 export TERMINAL="${TERM}"
 export PAGER="less"
@@ -129,7 +127,6 @@ export SUDO_EDITOR="vim"
 export GIT_EDITOR="${HOME}/bin/emacs-edit-wait"
 _command firefox-esr && export BROWSER="firefox-esr"
 _command firefox && export BROWSER="firefox"
-export NNTPSERVER="netnews.comcast.net"
 #export NNTPSERVER="news.usenetserver.com"
 export EMAIL="kylewsherman@gmail.com"
 #export MAIL="/var/mail/${USER}"
@@ -141,6 +138,11 @@ export GOROOT="/usr/lib/go"
 export GOPATH="${HOME}/gocode"
 export SDKMAN_DIR="${HOME}/.sdkman"
 export GEM_HOME="$(_command ruby && ruby -e 'print Gem.user_dir')"
+
+# dark mode
+export GTK_THEME=Adwaita:dark
+export GTK2_RC_FILES=/usr/share/themes/Adwaita-dark/gtk-2.0/gtkrc
+export QT_STYLE_OVERRIDE=adwaita-dark
 
 # android
 [[ -d "/usr/local/share/android-sdk" ]] && export ANDROID_SDK="/usr/local/share/android-sdk"
