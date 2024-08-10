@@ -12855,15 +12855,17 @@ it is longer."
                             (command-path "pamac"))))
       (if package-manager
           (let ((cmd (format
-                      "%s %s %s | sed -n '/^[a-z]*\\/%s /{n;p}' | tr -d '\\n' | tr -s '[:blank:]'"
+                      ;;"%s %s %s | sed -n '/^[a-z]*\\/%s /{n;p}' | tr -d '\\n' | tr -s '[:blank:]'"
+                      "%s %s %s | sed -n ':a ; /^[a-z]*\\/%s / { n ; p }'"
                       package-manager
                       (if (string= (substring package-manager -5) "pamac")
                           "search -a"
                         "-Ss")
                       package
+                      package
                       package)))
             (message "Searching for Arch package: %s" cmd)
-            (let ((desc (string-trim (shell-command-to-string cmd))))
+            (let* ((desc (string-trim (shell-command-to-string cmd))))
               (insert (if (and max-length
                                (> (length desc) max-length))
                           (concat (substring desc 0 (- max-length 3)) "...")
@@ -12890,11 +12892,11 @@ or after."
       (unless fast
         (org-table-align))
       (forward-line 0)
-      (when (re-search-forward "|[^|]*|[^|]*|[ \t]*\\([^ \t|]*\\)[ \t]*|[^|]*|[^|]*|" (line-end-position) :noerror)
+      (when (re-search-forward "|[^|]*|[^|]*|[ \t]*\\([^ \t|]*\\)[ \t]*|[^|]*|" (line-end-position) :noerror)
         (let ((package (match-string-no-properties 1)))
           ;; remove any existing description
           (forward-line 0)
-          (re-search-forward "|[^|]*|[^|]*|[^|]*|[^|]*|" (line-end-position))
+          (re-search-forward "|[^|]*|[^|]*|[^|]*|" (line-end-position))
           (org-table-blank-field)
           (insert-arch-package-description package 80)
           (unless fast
