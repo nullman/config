@@ -2016,10 +2016,9 @@ arch-initialize() {
     initial=(
         "arch-group"
         "arch-sudoers"
-        "arch-sysctl"
+        "arch-sysctl-conf"
         "arch-systemd"
         #"arch-locale"
-        "arch-sysctl-conf"
         "arch-package-managers"
     )
 
