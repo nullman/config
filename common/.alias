@@ -297,6 +297,8 @@ alias kernel="mhwd-kernel -li"
 alias system-info="sudo inxi -Fx"
 #        battery-info            display battery information
 alias battery-info="cat /sys/class/power_supply/BAT0/uevent"
+#        hdp                     hdparm -t --direct
+alias hdp="hdparm -t --direct"
 #        font-aliases            list font aliases
 alias font-aliases="cat /usr/share/fonts/misc/fonts.alias"
 #        dconf-watch             dconf watch /
