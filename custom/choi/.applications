@@ -7,23 +7,17 @@
 alacritty
 emacs
 #betterbird
-#thunderbird
+##thunderbird
 firefox
 ##chromium
-google-chrome
-##google-chrome-stable
 thunar
-##pcmanfm
-##spacefm
-slack
-discord
-##tootle
-element-desktop
-dev.geopjr.Tuba
-gajim
-##pidgin
-##idea
-#syncterm
+#slack
+#discord
+#element-desktop
+#dev.geopjr.Tuba
+#gajim
+##google-chrome
+google-chrome-stable
 
 #===============================================================================
 # End of File

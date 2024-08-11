@@ -296,8 +296,8 @@ if [[ "$(uname -n)" == "dom0" ]] ; then
      done
      qvm-usb attach --persistent personal $(qvm-usb list sys-net | grep '8087:0aaa' | sed 's/ .*$//')) &
 
-    # compositor
-    #_command picom && picom -b &
+    # # compositor
+    # _command picom && picom -b &
 
     # xfce session
     xfce4-session && xfce4-session &
@@ -331,10 +331,10 @@ if [[ "$(uname -n)" != "dom0" ]] ; then
     _command lxpolkit && lxpolkit &
 
     # compositor
-    _command picom && picom -b &
+    #_command picom && picom -b &
 
     # system bar
-    [[ -f "${HOME}/bin/system-bar" ]] && source "${HOME}/bin/system-bar"
+    #[[ -f "${HOME}/bin/system-bar" ]] && source "${HOME}/bin/system-bar"
 
     # system wallpaper displays
     [[ -f "${HOME}/bin/system-wallpaper-displays" ]] && source "${HOME}/bin/system-wallpaper-displays"
@@ -367,7 +367,7 @@ if [[ "$(uname -n)" != "dom0" ]] ; then
     _command unclutter && unclutter &
 
     # wallpaper manager
-    _command nitrogen && nitrogen --restore &
+    #_command nitrogen && nitrogen --restore &
 
     # rebuild wm menu
     #sleep 10 && _command mmaker && mmaker --force openbox &
