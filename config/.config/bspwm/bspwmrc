@@ -333,6 +333,9 @@ if [[ "$(uname -n)" != "dom0" ]] ; then
     # compositor
     #_command picom && picom -b &
 
+    # xfce session
+    xfce4-session && xfce4-session &
+
     # system bar
     #[[ -f "${HOME}/bin/system-bar" ]] && source "${HOME}/bin/system-bar"
 
