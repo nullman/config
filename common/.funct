@@ -1991,6 +1991,38 @@ home-restow() {
     [[ -d "$(configdir)-private" ]] && stow --dir="$(configdir)-private" --target="${HOME}" --restow "common" "emacs"
     [[ -d "$(configdir)-private" ]] && stow --dir="$(configdir)-private" --target="${HOME}" --no-folding --restow "config" "local"
 }
+#!#        arch-install-packages  install arch packages
+#!arch-install-packages() {
+#!    _getpackages() {
+#!        local file="${HOME}/org/personal.org"
+#!        local regexp="/^[ \t]*#\+NAME: $1\$/,/^\*/{print \$0}"
+#!        awk "${regexp}" "${file}" | tail -n +4 | head -n -1 | \
+#!            grep -v "^ *|---" | grep -v "^ *| x |" | \
+#!            cut -d '|' -f 4 | sed 's/^ *// ; s/ *$//'
+#!    }
+#!
+#!    repocmd="yay -Sy --needed --noconfirm --answerdiff None --answerclean None --mflags \"--noconfirm\""
+#!    cmdsize=10
+#!
+#!    if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+#!        echo "Usage: arch-initialize [--optional]"
+#!        echo "  -o,--optional  install optional packages instead"
+#!        return 1
+#!    fi
+#!
+#!    if [[ "$1" == "-o" ]] || [[ "$1" == "--optional" ]] ; then
+#!        packagesname="arch-optional-packages"
+#!    else
+#!        packagesname="arch-packages"
+#!    fi
+#!
+#!    packages=($(_getpackages ${packagesname}))
+#!
+#!    for x in $(seq 0 $((${#packages[@]} / ${cmdsize}))) ; do
+#!        echo "${repocmd} $(echo ${packages[@]:$((x * ${cmdsize})):${cmdsize}})"
+#!        [[ -z "${DEUBG}" ]] && eval "${repocmd} $(echo ${packages[@]:$((x * ${cmdsize})):${cmdsize}})"
+#!    done
+#!}
 #        arch-initialize      install arch packages and setup arch system
 arch-initialize() {
     _getsection() {
