@@ -296,11 +296,8 @@ if [[ "$(uname -n)" == "dom0" ]] ; then
      done
      qvm-usb attach --persistent personal $(qvm-usb list sys-net | grep '8087:0aaa' | sed 's/ .*$//')) &
 
-    # # compositor
-    # _command picom && picom -b &
-
     # xfce session
-    xfce4-session && xfce4-session &
+    _command xfce4-session && xfce4-session &
 
     # hide mouse when not in use
     _command unclutter && unclutter &
@@ -324,20 +321,17 @@ if [[ "$(uname -n)" != "dom0" ]] ; then
     #xbindkeys &
 
     # policykit authentation agent
-    if [[ -x /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 ]] ; then
-        /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
-        #eval "$(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg)" &
-    fi
-    _command lxpolkit && lxpolkit &
+    #if [[ -x /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 ]] ; then
+    #    /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+    #    #eval "$(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg)" &
+    #fi
+    #_command lxpolkit && lxpolkit &
 
     # compositor
-    #_command picom && picom -b &
-
-    # xfce session
-    xfce4-session && xfce4-session &
+    _command picom && picom -b &
 
     # system bar
-    #[[ -f "${HOME}/bin/system-bar" ]] && source "${HOME}/bin/system-bar"
+    [[ -f "${HOME}/bin/system-bar" ]] && source "${HOME}/bin/system-bar"
 
     # system wallpaper displays
     [[ -f "${HOME}/bin/system-wallpaper-displays" ]] && source "${HOME}/bin/system-wallpaper-displays"

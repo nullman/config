@@ -613,9 +613,13 @@ alias systemctl-restart-automounts="sudo systemctl restart '*.automount'"
 #        jc                      systemd journal (explainations, current boot, priority errors+)
 alias jc="sudo journalctl -b -x -p 3"
 #        jcfu                    tail journal for service
-alias jcfu="sudo journalctl --follow --unit"
+alias jcfu="sudo journalctl --follow -u"
 #        journalctl-follow-unit  tail journal for service
-alias journalctl-follow-unit="sudo journalctl --follow --unit"
+alias journalctl-follow-unit="sudo journalctl --follow -u"
+#        jcfuu                   tail journal for user service
+alias jcfuu="journalctl --follow --user -u"
+#        journalctl-follow-user-unit  tail journal for user service
+alias journalctl-follow-user-unit="journalctl --follow --user -u"
 
 #
 # network
@@ -2971,8 +2975,10 @@ alias pacman-rm-old="sudo pacman -Sc"
 alias pacman-rm-orphans="sudo pacman -Rns \$(pacman -Qtdq)"
 #        pacman-rm-lock          pacman delete db lock
 alias pacman-rm-lock="sudo rm /var/lib/pacman/db.lck"
-#        pacman-reset-mirrors    pacman reset and rebuild mirrors list
-alias pacman-reset-mirrors="sudo pacman-mirrors --geoip"
+#        pacman-reset-mirrors-geoip  pacman reset and rebuild mirrors list by geo ip
+alias pacman-reset-mirrors-geoip="sudo pacman-mirrors --geoip"
+#        pacman-reset-mirrors-rate  pacman reset and rebuild mirrors list by rate in the us
+alias pacman-reset-mirrors-us-rate="sudo reflector -a 10 -c us -f 5 --sort rate --save /etc/pacman.d/mirrorlist"
 #        pacman-reset-repository  pacman reset and rebuild repository (used to recover from an invalid state)
 alias pacman-reset-repository="
     # reset mirrors
