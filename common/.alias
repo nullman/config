@@ -297,6 +297,8 @@ alias kernel="mhwd-kernel -li"
 alias system-info="sudo inxi -Fx"
 #        battery-info            display battery information
 alias battery-info="cat /sys/class/power_supply/BAT0/uevent"
+#        graphics-cards          display graphics cards
+alias graphics-cards="lspci -k | grep -A 2 -E '(VGA|3D)'"
 #        hdp                     hdparm -t --direct
 alias hdp="hdparm -t --direct"
 #        font-aliases            list font aliases
