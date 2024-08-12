@@ -331,7 +331,10 @@ if [[ "$(uname -n)" != "dom0" ]] ; then
     _command picom && picom -b &
 
     # system bar
-    [[ -f "${HOME}/bin/system-bar" ]] && source "${HOME}/bin/system-bar"
+    #[[ -f "${HOME}/bin/system-bar" ]] && source "${HOME}/bin/system-bar"
+
+    # system bar: xfce4 panel
+    _command xfce4-panel && xfce4-panel &
 
     # system wallpaper displays
     [[ -f "${HOME}/bin/system-wallpaper-displays" ]] && source "${HOME}/bin/system-wallpaper-displays"
