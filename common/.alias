@@ -317,9 +317,9 @@ alias dos-format-720="sudo ufiformat -f 720 -v "
 alias dos-format-1440="sudo ufiformat -f 1440 -v "
 #        make-floppy-image       mkfs.msdos -C floppy.dsk 1440
 alias make-floppy-image="mkfs.msdos -C floppy.dsk 1440"
-#        fdisk-list              sudo fdisk -l
+#        fdisk-list              fdisk -l
 alias fdisk-list="sudo fdisk -l"
-#        dd-sync                 sudo dd bs=4M conv=fdatasync status=progress
+#        dd-sync                 dd bs=4M conv=fdatasync status=progress
 alias dd-sync="sudo dd bs=4M conv=fdatasync status=progress"
 #        sxhkdrs                 sxhkd restart
 alias sxhkdrs="pkill -SIGUSR1 -u \${USER} sxhkd"
@@ -357,6 +357,12 @@ alias ff="fastfetch"
 alias shred-device="sudo shred -v -n1 --random-source=/dev/urandom -z"
 #        microsoft-license       cat /sys/firmware/acpi/tables/MSDM
 alias microsoft-license="sudo cat /sys/firmware/acpi/tables/MSDM ; echo"
+#        grubmc                  grub-mkconfig
+alias grubmc="sudo grub-mkconfig -o /boot/grub/grub.cfg"
+#        grub2mc                 grub2-mkconfig
+alias grub2mc="sudo grub2-mkconfig -o /boot/grub2/grub.cfg"
+#        mkinit                  mkinitcpio -P
+alias mkinit="sudo mkinitcpio -P"
 
 #
 # general (external)
@@ -794,6 +800,70 @@ alias readme-centericq="zpager \$(locate centericq | grep README.gz)"
 alias readme-irssi="zpager \$(locate irssi | grep README.gz)"
 
 #
+# edit
+#
+#        edit                    edit
+alias edit="\${EDITOR}"
+#        sudoedit                sudo edit
+alias sudoedit="\${SUDO_EDITOR}"
+#        ed                      edit
+alias ed="edit"
+#        sued                    sudo edit
+alias sued="sudoedit"
+#!#        emacs                   emacs (text mode)
+#!alias emacs="emacs --no-site-file -nw"
+#        emacs-debug             emacs --debug-init
+alias emacs-debug="emacs --no-site-file -nw --debug-init"
+#!#        xemacs                  xemacs (text mode)
+#!alias xemacs="xemacs --no-site-file -nw"
+#        emacs-comp              emacs batch-byte-compile
+alias emacs-comp="emacs --no-init-file --no-site-file -batch -f batch-byte-compile"
+#        vi                      vim
+alias vi="vim"
+#        edsshak                 edit ~/.ssh/authorized_keys
+alias edsshak="edit \${HOME}/.ssh/authorized_keys"
+#        edsshc                  edit ~/.ssh/config
+alias edsshc="edit \${HOME}/.ssh/config"
+#        edsshkh                 edit ~/.ssh/known_hosts
+alias edsshkh="edit \${HOME}/.ssh/known_hosts"
+#        edxsc                   edit ~/.xscreensaver
+alias edxsc="edit \${HOME}/.xscreensaver"
+#        edeap                   edit /etc/apt/preferences
+alias edeap="sudoedit /etc/apt/preferences"
+#        edeas                   edit /etc/apt/sources.list
+alias edeas="sudoedit /etc/apt/sources.list"
+#        edeba                   edit /etc/bashrc
+alias edeba="sudoedit /etc/bashrc"
+#        ededg                   edit /etc/default/grub
+alias ededg="sudoedit /etc/default/grub"
+#        edefs                   edit /etc/fstab
+alias edefs="sudoedit /etc/fstab"
+#        edegr                   edit /etc/group
+alias edegr="sudoedit /etc/group"
+#        edeho                   edit /etc/hosts
+alias edeho="sudoedit /etc/hosts ; cat /etc/hosts > \${HOME}/.hosts"
+#        edeldm                  edit /etc/lightdm/lightdm.conf
+alias edeldm="sudoedit /etc/lightdm/lightdm.conf"
+#        edeldmg                 edit /etc/lightdm/lightdm-gtk-greeter.conf
+alias edeldmg="sudoedit /etc/lightdm/lightdm-gtk-greeter.conf"
+#        edemki                  edit /etc/mkinitcpio.conf
+alias edemki="sudoedit /etc/mkinitcpio.conf"
+#        edenc                   edit /etc/nixos/configuration.nix
+alias edenc="sudoedit /etc/nixos/configuration.nix"
+#        edenh                   edit /etc/nixos/hardware-configuration.nix
+alias edenh="sudoedit /etc/nixos/hardware-configuration.nix"
+#        edepw                   edit /etc/passwd
+alias edepw="sudoedit /etc/passwd"
+#        edepr                   edit /etc/profile
+alias edepr="sudoedit /etc/profile"
+#        ederc                   edit /etc/rc.conf
+alias ederc="sudoedit /etc/rc.conf"
+#        eders                   edit /etc/resolv.conf
+alias eders="sudoedit /etc/resolv.conf"
+#        edesh                   edit /etc/shadow
+alias edesh="sudoedit /etc/shadow"
+
+#
 # applications (general)
 #
 #!#        xterm                   xterm (with options set)
@@ -1045,6 +1115,8 @@ alias cdbin="cd /bin"
 alias cdbt="cd /boot"
 #        cdbtg                   cd /boot/grub
 alias cdbtg="cd /boot/grub"
+#        cdbtg2                  cd /boot/grub2
+alias cdbtg2="cd /boot/grub2"
 #        cddata                  cd /home/data
 alias cddata="cd ${home}/data"
 #        cdbakup                 cd /home/data/backup
@@ -1409,167 +1481,6 @@ alias dus="du -s -h"
 alias dusb="du -s -h -b"
 #        duss                    du -s -h * | sort -h -r | head -n 40
 alias duss="du -s -h * | sort -h -r | head -n 40"
-
-#
-# edit
-#
-#        edit                    edit
-alias edit="\${EDITOR}"
-#        ed                      edit
-alias ed="edit"
-#!#        emacs                   emacs (text mode)
-#!alias emacs="emacs --no-site-file -nw"
-#        emacs-debug             emacs --debug-init
-alias emacs-debug="emacs --no-site-file -nw --debug-init"
-#!#        xemacs                  xemacs (text mode)
-#!alias xemacs="xemacs --no-site-file -nw"
-#        emacs-comp              emacs batch-byte-compile
-alias emacs-comp="emacs --no-init-file --no-site-file -batch -f batch-byte-compile"
-#        vi                      vim
-alias vi="vim"
-#        edal                    edit ~/.alias
-alias edal="edit \${HOME}/.alias"
-#        edalw                   edit ~/.alias-work
-alias edalw="edit \${HOME}/.alias-work"
-#        edba                    edit ~/.bashrc
-alias edba="edit \${HOME}/.bashrc"
-#        edca                    edit ~/.centericq/actions
-alias edca="edit \${HOME}/.centericq/actions"
-#        edce                    edit ~/.centericq/external
-alias edce="edit \${HOME}/.centericq/external"
-#        edfu                    edit ~/.funct
-alias edfu="edit \${HOME}/.funct"
-#        edfuw                   edit ~/.funct-work
-alias edfuw="edit \${HOME}/.funct-work"
-#        edemi                   edit ~/.emacs.d/init.el
-alias edemi="edit \${HOME}/.emacs.d/init.el"
-#        edemie                  edit ~/.emacs.d/init-emacs.org
-alias edemie="edit \${HOME}/.emacs.d/init-emacs.org"
-#        edho                    edit ~/.hosts
-alias edho="edit \${HOME}/.hosts"
-#        edhos                   edit ~/.hosts_ssmedia
-alias edhos="edit \${HOME}/.hosts_ssmedia"
-#        edkey                   edit ~/.keylaunchrc
-alias edkey="edit \${HOME}/.keylaunchrc"
-#        edm                     edit ~/.menu
-alias edm="edit \${HOME}/.menu"
-#        edmw                    edit ~/.menu-work
-alias edmw="edit \${HOME}/.menu-work"
-#        edoff                   edit ~/.offlineimaprc
-alias edoff="edit \${HOME}/.offlineimaprc"
-#!#        edrp                    edit ~/.ratpoisonrc
-#!alias edrp="edit \${HOME}/.ratpoisonrc"
-#!#        edrpb                   edit ~/.ratpoisonrc-bindings
-#!alias edrpb="edit \${HOME}/.ratpoisonrc-bindings"
-#        edsc                    edit ~/.screenrc
-alias edsc="edit \${HOME}/.screenrc"
-#        edscb                   edit ~/.screenrc-bindings
-alias edscb="edit \${HOME}/.screenrc-bindings"
-#        edsca                   edit ~/.screenrc-applications
-alias edsca="edit \${HOME}/.screenrc-applications"
-#        edsh                    edit ~/.shellrc
-alias edsh="edit \${HOME}/.shellrc"
-#        edshw                   edit ~/.shellrc-work
-alias edshw="edit \${HOME}/.shellrc-work"
-#        edsshak                 edit ~/.ssh/authorized_keys
-alias edsshak="edit \${HOME}/.ssh/authorized_keys"
-#        edsshc                  edit ~/.ssh/config
-alias edsshc="edit \${HOME}/.ssh/config"
-#        edsshkh                 edit ~/.ssh/known_hosts
-alias edsshkh="edit \${HOME}/.ssh/known_hosts"
-#        edvim                   edit ~/.vimrc
-alias edvim="edit \${HOME}/.vimrc"
-#        edxi                    edit ~/.xinitrc
-alias edxi="edit \${HOME}/.xinitrc"
-#        edxbk                   edit ~/.xbindkeysrc
-alias edxbk="edit \${HOME}/.xbindkeysrc"
-#        edxm                    edit ~/.Xmodmap
-alias edxm="edit \${HOME}/.Xmodmap"
-#        edpr                    edit ~/.xprofile
-alias edpr="edit \${HOME}/.xprofile"
-#        edxr                    edit ~/.Xresources
-alias edxr="edit \${HOME}/.Xresources"
-#        edxmame                 edit ~/.xmame/xmamerc
-alias edxmame="edit \${HOME}/.xmame/xmamerc"
-#        edxsc                   edit ~/.xscreensaver
-alias edxsc="edit \${HOME}/.xscreensaver"
-#        edxs                    edit ~/.xsession
-alias edxs="edit \${HOME}/.xsession"
-#        edsa                    edit ~/bin/screen-app
-alias edsa="edit \${HOME}/bin/screen-app"
-#        edra                    edit ~/bin/run-app
-alias edra="edit \${HOME}/bin/run-app"
-#!#        edrpm                   edit ~/bin/ratpoison-menu
-#!alias edrpm="edit \${HOME}/bin/ratpoison-menu"
-#!#        edrpw                   edit ~/bin/ratpoison-windows
-#!alias edrpw="edit \${HOME}/bin/ratpoison-windows"
-#        edbgc                   edit /boot/grub/grub.conf
-alias edbgc="edit /boot/grub/grub.conf"
-#        edbgm                   edit /boot/grub/menu.lst
-alias edbgm="edit /boot/grub/menu.lst"
-#        edeap                   edit /etc/apt/preferences
-alias edeap="edit /etc/apt/preferences"
-#        edeas                   edit /etc/apt/sources.list
-alias edeas="edit /etc/apt/sources.list"
-#        edeba                   edit /etc/bashrc
-alias edeba="edit /etc/bashrc"
-#        edeex                   edit /etc/exports
-alias edeex="edit /etc/exports"
-#        edefs                   edit /etc/fstab
-alias edefs="edit /etc/fstab"
-#        edegr                   edit /etc/group
-alias edegr="edit /etc/group"
-#        edeho                   edit /etc/hosts
-alias edeho="edit /etc/hosts ; cat /etc/hosts > \${HOME}/.hosts"
-#        edemc                   edit /etc/make.conf
-alias edemc="edit /etc/make.conf"
-#        edema                   edit /etc/modules.autoload
-alias edema="edit /etc/modules.autoload"
-#        edmotd                  edit /etc/motd
-alias edmotd="edit /etc/motd"
-#        edenc                   edit /etc/nixos/configuration.nix
-alias edenc="edit /etc/nixos/configuration.nix"
-#        edenh                   edit /etc/nixos/hardware-configuration.nix
-alias edenh="edit /etc/nixos/hardware-configuration.nix"
-#        edepw                   edit /etc/passwd
-alias edepw="edit /etc/passwd"
-#        edepr                   edit /etc/profile
-alias edepr="edit /etc/profile"
-#        ederc                   edit /etc/rc.conf
-alias ederc="edit /etc/rc.conf"
-#        eders                   edit /etc/resolv.conf
-alias eders="edit /etc/resolv.conf"
-#        edesh                   edit /etc/shadow
-alias edesh="edit /etc/shadow"
-#!#        edexc                   edit /etc/X11/xorg.conf
-#!alias edexc="edit /etc/X11/xorg.conf"
-#!#        edexf                   edit /etc/X11/XF86Config
-#!alias edexf="edit /etc/X11/XF86Config"
-#!#        edexa                   edit /etc/X11/xdm/Xaccess
-#!alias edexa="edit /etc/X11/xdm/Xaccess"
-#!#!#        edexs                   edit /etc/X11/xdm/Xsession
-#!#!alias edexs="edit /etc/X11/xdm/Xsession"
-#!#        edexi                   edit /etc/X11/xinit/xinitrc
-#!alias edexi="edit /etc/X11/xinit/xinitrc"
-#!#        edexv                   edit /etc/X11/xinit/xserverrc
-#!alias edexv="edit /etc/X11/xinit/xserverrc"
-#!#        edeni                   edit /etc/network/interfaces
-#!alias edeni="edit /etc/network/interfaces"
-#!#        edexdm                  ecit /etc/X11/startDM.sh
-#!alias edexdm="edit /etc/X11/startDM.sh"
-#!#        edexx                   edit /usr/X11R6/bin/startx
-#!alias edexx="edit /usr/X11R6/bin/startx"
-#!
-#!#        edepp                   edit /etc/apt/preferences
-#!alias edepp="edit /etc/apt/preferences"
-#!#        edeps                   edit /etc/apt/sources.list
-#!alias edeps="edit /etc/apt/sources.list"
-#!#        edekxs                  edit /etc/kde2/kdm/Xsession
-#!alias edekxs="edit /etc/kde2/kdm/Xsession"
-#!#        edekxp                  edit /etc/kde2/kdm/Xsetup
-#!alias edekxp="edit /etc/kde2/kdm/Xsetup"
-#!#        edekxv                  edit /etc/kde2/kdm/Xservers
-#!alias edekxv="edit /etc/kde2/kdm/Xservers"
 
 #
 # emacs
