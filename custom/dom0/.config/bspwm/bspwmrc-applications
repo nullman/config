@@ -61,15 +61,14 @@ bspc desktop --focus 10
 qubes-qube-manager &
 sleep 6s && alacritty &
 
-# prompt for keyring authentication on personal vm
-qvm-run personal "keyring get SecretService \$(id -un)" &
-
-# run application launcher
+# run personal vm applications
 (
-    sleep 8s ; \
-        bspc desktop --focus 1 ; \
-        ${HOME}/bin/application-launcher &
-        #qvm-run personal "\${HOME}/bin/application-launcher" &
+    # prompt for keyring authentication on personal vm
+    qvm-run personal "keyring get SecretService \$(id -un)"
+
+    # run application launcher
+    bspc desktop --focus 1
+    ${HOME}/bin/application-launcher &
 ) &
 
 #===============================================================================
