@@ -63,12 +63,13 @@ sleep 6s && alacritty &
 
 # run personal vm applications
 (
-    # prompt for keyring authentication on personal vm
-    qvm-run personal "keyring get SecretService \$(id -un)"
-
     # run application launcher
-    bspc desktop --focus 1
-    ${HOME}/bin/application-launcher &
+    sleep 8s ; \
+        bspc desktop --focus 1 ; \
+        ${HOME}/bin/application-launcher &
+
+    # prompt for keyring authentication on personal vm
+    qvm-run personal "keyring get SecretService \$(id -un)" &
 ) &
 
 #===============================================================================
