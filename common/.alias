@@ -2168,7 +2168,8 @@ alias rsync-sdi-put-windows-sd="
     [[ -d \${dir1} ]] && dir=\${dir1}
     [[ -d \${dir2} ]] && dir=\${dir2}
     if [[ -d \${dir} ]] ; then
-        rsync -rLtxW --size-only --progress --delete \"${home}/data/Snappy Driver Installer/\" \"\${dir}/Snappy Driver Installer/\"
+        #rsync -rLtxW --size-only --progress --delete \"${home}/data/Snappy Driver Installer/\" \"\${dir}/Snappy Driver Installer/\"
+        rsync -rLtxW --size-only --progress --delete \"/mnt/synology/media/Snappy Driver Installer/\" \"\${dir}/Snappy Driver Installer/\"
         sync
     else
         echo \"Error: \${usb} USB not found\"
@@ -2570,7 +2571,8 @@ alias wine-fallout-setup="
     sed -i 's/^master_patches=.*$/master_patches=C:\\\\GOG Games\\\\Fallout\\\\DATA\r/' \"\${file}\"
     "
 #        wine-sdi                wine snappy driver installer
-alias wine-sdi="(cd \"${home}/data/Snappy Driver Installer\" ; WINEPREFIX=\${HOME}/.wine-sdi wine64 \"SDI_x64_R2009.exe\" &)"
+#!alias wine-sdi="(cd \"${home}/data/Snappy Driver Installer\" ; WINEPREFIX=\${HOME}/.wine-sdi wine \"SDI_x64_R2009.exe\" &)"
+alias wine-sdi="(cd \"/mnt/synology/media/Snappy Driver Installer\" ; WINEPREFIX=\${HOME}/.wine-sdi wine \"SDI_x64_R2009.exe\" &)"
 #        wine-tta                wine through the ages
 alias wine-tta="WINEPREFIX=\${HOME}/.wine-tta wine \"C:\GOG Games\Through the Ages\ThroughTheAges_gog.exe\" &"
 #        wine-winamp             winamp
