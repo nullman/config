@@ -30,18 +30,19 @@
       configurationLimit = 20;
       device = "/dev/sda";
       useOSProber = true;
+      timeoutStyle = "hidden";
+      extraConfig = "GRUB_TIMEOUT=0";
     };
   };
   fileSystems."/".options = [ "relatime" ];
 
   # networking
   networking = {
-    #wireless.iwd.enable = true;
+    useDHCP = false;
     networkmanager = {
       enable = true;
       wifi.backend = "iwd";
     };
-    useDHCP = false;
   };
   networking.hostName = "morpheus";
 
@@ -96,17 +97,17 @@
   };
   nixpkgs.overlays = [
     (final: prev: {
-      binutils-ia16 = prev.callPackage /home/kyle/.nixos/pkgs/binutils-ia16 {};
-      djgpp_i586 = prev.callPackage /home/kyle/.nixos/pkgs/djgpp { targetArchitecture = "i586"; };
-      djgpp_i686 = prev.callPackage /home/kyle/.nixos/pkgs/djgpp { targetArchitecture = "i686"; };
-      gcc-ia16 = prev.callPackage /home/kyle/.nixos/pkgs/gcc-ia16 {};
-      #mtkclient = prev.callPackage /home/kyle/.nixos/pkgs/mtkclient {};
-      #stow = prev.callPackage /home/kyle/.nixos/pkgs/stow {};
-      syncterm = prev.callPackage /home/kyle/.nixos/pkgs/syncterm {};
-      #vdhcoapp = prev.callPackage /home/kyle/.nixos/pkgs/vdhcoapp {};
-      #x48 = prev.callPackage /home/kyle/.nixos/pkgs/x48 {};
-      bspwm = prev.callPackage /home/kyle/code/github-nullman/bspwm {};
-      #services.xserver.windowManager.bspwm = prev.callPackage /home/kyle/code/nixpkgs/pkgs/applications/window-managers/bspwm.nix {};
+      binutils-ia16 = prev.callPackage /home/user/.nixos/pkgs/binutils-ia16 {};
+      djgpp_i586 = prev.callPackage /home/user/.nixos/pkgs/djgpp { targetArchitecture = "i586"; };
+      djgpp_i686 = prev.callPackage /home/user/.nixos/pkgs/djgpp { targetArchitecture = "i686"; };
+      gcc-ia16 = prev.callPackage /home/user/.nixos/pkgs/gcc-ia16 {};
+      #mtkclient = prev.callPackage /home/user/.nixos/pkgs/mtkclient {};
+      #stow = prev.callPackage /home/user/.nixos/pkgs/stow {};
+      syncterm = prev.callPackage /home/user/.nixos/pkgs/syncterm {};
+      #vdhcoapp = prev.callPackage /home/user/.nixos/pkgs/vdhcoapp {};
+      #x48 = prev.callPackage /home/user/.nixos/pkgs/x48 {};
+      bspwm = prev.callPackage /home/user/code/github-nullman/bspwm {};
+      #services.xserver.windowManager.bspwm = prev.callPackage /home/user/code/nixpkgs/pkgs/applications/window-managers/bspwm.nix {};
     })
   ];
 
@@ -487,7 +488,7 @@
   # mpd
   services.mpd = {
     enable = true;
-    user = "kyle";
+    user = "user";
     musicDirectory = "/home/data/media/Audio/MPD";
     playlistDirectory = "/home/data/media/Audio/Playlists";
     extraConfig = ''
@@ -527,12 +528,12 @@
   ## };
 
   # user account
-  users.groups.kyle = {
-    name = "kyle";
+  users.groups.user = {
+    name = "user";
     gid = 1000;
   };
-  users.users.kyle = {
-    group = "kyle";
+  users.users.user = {
+    group = "user";
     uid = 1000;
     isNormalUser = true;
     shell = "/run/current-system/sw/bin/zsh";
@@ -561,7 +562,7 @@
   # home-manager = {
   #   #useGlobalPkgs = true;
   #   #useUserPackages = true;
-  #   users.kyle = { pkgs, ... }: {
+  #   users.user = { pkgs, ... }: {
   #     home.stateVersion = "23.05";        # same as system.stateVersion
   #     home.packages = with pkgs.nur.repos.wolfangaukang; [ vdhcoapp ];
   #   };
@@ -571,9 +572,9 @@
   services.rpcbind.enable = true;         # needed for NFS
   systemd.mounts = let commonMountOptions = {
     mountConfig = {
-      Options = "vers=3.0,credentials=/home/kyle/.synology-mount-credentials,iocharset=utf8,rw,file_mode=0777,dir_mode=0777,relatime,nofail";
+      Options = "credentials=/home/user/.synology-mount-credentials,uid=1000,gid=1000,iocharset=utf8,rw,noatime,nofail";
+      #Options = "credentials=/home/user/.synology-mount-credentials,uid=1000,gid=1000,iocharset=utf8,rw,noatime,nofail,x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
       TimeoutSec = 30;
-      #Options = "vers=3.0,credentials=/home/kyle/.synology-mount-credentials,iocharset=utf8,rw,file_mode=0777,dir_mode=0777,relatime,x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
       Type = "cifs";
     };
   };

@@ -1376,10 +1376,10 @@ alias chownrr="sudo chown -R root:root"
 alias chowna="sudo chown admin:admin"
 #        chownar                 chown -R admin:admin
 alias chownar="sudo chown -R admin:admin"
-#        chownk                  chown kyle:kyle
-alias chownk="sudo chown kyle:kyle"
-#        chownkr                 chown -R kyle:kyle
-alias chownkr="sudo chown -R kyle:kyle"
+#        chownu                  chown user:user
+alias chownu="sudo chown user:user"
+#        chownur                 chown -R user:user
+alias chownur="sudo chown -R user:user"
 
 #
 # ckermit
@@ -1916,11 +1916,11 @@ alias lprn2="lpr -o number-up=2 -o page-border=single"
 # rdesktop
 #
 #        rdd                     rdesktop dozer (1024x768)
-alias rdd="rdesktop -u kyle -g 1024x768 -z -a16 dozer"
+alias rdd="rdesktop -u user -g 1024x768 -z -a16 dozer"
 #        rdd8                    rdesktop dozer (800x600)
-alias rdd8="rdesktop -u kyle -g 800x600 -z -a16 dozer"
+alias rdd8="rdesktop -u user -g 800x600 -z -a16 dozer"
 #        rddf                    rdesktop dozer (full)
-alias rddf="rdesktop -u kyle -f -z -a16 dozer"
+alias rddf="rdesktop -u user -f -z -a16 dozer"
 
 #
 # remind
@@ -2466,8 +2466,6 @@ alias startx-24="startx -- -depth 24"
 #
 #        sur                     su to root
 alias sur="sudo su -"
-#        suk                     su to kyle
-alias suk="sudo su - kyle"
 #        suu                     su to user
 alias suu="sudo su - user"
 
@@ -2760,7 +2758,7 @@ alias nix-store-cleanup="
     nix-collect-garbage --delete-older-than 30d && \
     nix-store --optimise"
 #        nix-scp-index-to-mouse  scp nix-index to mouse
-alias nix-scp-index-to-mouse="scp -r .cache/nix-index mouse:/home/kyle/.cache/"
+alias nix-scp-index-to-mouse="scp -r .cache/nix-index mouse:/home/user/.cache/"
 #
 # NixOS Development
 #
@@ -3121,6 +3119,7 @@ alias qd-sync="
     if [[ \"$(uname -n)\" == \"dom0\" ]] ; then
         (cd \${HOME} && rm -rf \${HOME}/config && qvm-run --pass-io personal 'cd /home/user && tar zc --exclude=\".git*\" config' | tar zx)
         (cd \${HOME} && rm -rf \${HOME}/config-private && qvm-run --pass-io personal 'cd /home/user && tar zc --exclude=\".git*\" config-private' | tar zx)
+        sudo cp \${HOME}/config/config/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/
         home-restow
     else
         echo \"Error: qd-sync can only be run on dom0\"
