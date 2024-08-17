@@ -236,6 +236,7 @@ _br 'Pamac-manager' state=floating center=true
 _br 'Paprefs' state=floating center=true
 _br 'Pavucontrol' state=floating center=true
 _br 'Qubes-app-menu' state=floating rectangle=640x480+0+$(($(xdotool getdisplaygeometry | cut -d ' ' -f 1) - 20))
+_br 'qubes-qube-manager' state=floating center=true
 _br 'Qubes-update-gui' state=floating center=true
 _br 'Qmmp' state=floating sticky=true
 _br 'qt5ct' state=floating sticky=true
