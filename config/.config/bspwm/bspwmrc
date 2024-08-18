@@ -198,8 +198,10 @@ _br 'vlc' state=fullscreen
 _br 'VirtualBox Manager' state=fullscreen
 _br 'VirtualBox Machine' state=fullscreen
 _br 'w40k.exe' state=fullscreen
-_br 'windows-7' state=fullscreen
 _br 'windows-xp' state=fullscreen
+_br 'windows-7' state=fullscreen
+_br 'windows-10' state=fullscreen
+_br 'windows-11' state=fullscreen
 
 # floating applications
 _br 'About Pale Moon' state=floating center=true
@@ -237,6 +239,7 @@ _br 'octopi' state=floating center=true
 _br 'Pamac-manager' state=floating center=true
 _br 'Paprefs' state=floating center=true
 _br 'Pavucontrol' state=floating center=true
+_br 'Qube Manager' state=floating center=true
 _br 'Qube Settings' state=floating center=true
 _br 'Qubes-app-menu' state=floating rectangle=640x480+0-20
 _br 'qubes-qube-manager' state=floating center=true
