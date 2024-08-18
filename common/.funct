@@ -1155,7 +1155,7 @@ yasg() {
     else
         s="$1"
         shift
-        yay -Ss "${s}" | sed -n ":a ; { N ; s/\n */ | / ; p ; d ; ba }" | grep -i "$*"
+        yay -Ss "${s}" 2>/dev/null | sed -n ":a ; { N ; s/\n */ | / ; p ; d ; ba }" | grep -i "$*"
     fi
 }
 #        yass                    yay specific search
@@ -1163,7 +1163,7 @@ yass() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: yass SEARCH"
     else
-        yay -Ss "$*" | sed -n ":a ; /^[a-z]*\/$* / { N ; s/\n */ | / ; p ; d ; ba }"
+        yay -Ss "$*" 2>/dev/null | sed -n ":a ; /^[a-z]*\/$* / { N ; s/\n */ | / ; p ; d ; ba }"
     fi
 }
 #        yasi                    yay search installed packages
@@ -1171,7 +1171,7 @@ yasi() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: yasi SEARCH"
     else
-        yay -Ss "$*" | sed -n ":a ; { N ; s/\n */ | / ; p ; d ; ba }" | grep " (Installed"
+        yay -Ss "$*" 2>/dev/null | sed -n ":a ; { N ; s/\n */ | / ; p ; d ; ba }" | grep " (Installed"
     fi
 }
 #        yasis                   yay specific search installed packages
@@ -1179,7 +1179,7 @@ yasis() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: yasis SEARCH"
     else
-        yay -Ss "$*" | sed -n ":a ; /^[a-z]*\/$* / { N ; s/\n */ | / ; p ; d ; ba }" | grep " (Installed"
+        yay -Ss "$*" 2>/dev/null | sed -n ":a ; /^[a-z]*\/$* / { N ; s/\n */ | / ; p ; d ; ba }" | grep " (Installed"
     fi
 }
 
@@ -1768,6 +1768,22 @@ home-restow() {
 #!        [[ -z "${DEUBG}" ]] && eval "${repocmd} $(echo ${packages[@]:$((x * ${cmdsize})):${cmdsize}})"
 #!    done
 #!}
+#        qubes-arch-packages  dump arch package install commands to paste into a qubes vm
+qubes-arch-packages() {
+    DEBUG=1              # remove to eval commands, instead of just printing them
+    repocmd="yay -S --needed --noconfirm"
+    cmdsize=10
+
+    packages=($(awk "/^[ \t]*#\+NAME: qubes-arch-packages\$/,/^\*/{print \$0}" \
+                    "${HOME}/org/personal.org" | tail -n +4 | head -n -1 | \
+                    grep -v "^ *|---" | grep -v "^ *| x |" | \
+                    cut -d '|' -f 4 | sed 's/^ *// ; s/ *$//'))
+
+    for x in $(seq 0 $((${#packages[@]} / ${cmdsize}))) ; do
+        echo "${repocmd} $(echo ${packages[@]:$((x * ${cmdsize})):${cmdsize}})"
+        [ -z "${DEBUG}" ] && eval "${repocmd} $(echo ${packages[@]:$((x * ${cmdsize})):${cmdsize}})"
+    done
+}
 #        arch-initialize      install arch packages and setup arch system
 arch-initialize() {
     _getsection() {

@@ -58,18 +58,18 @@ _delay() {
 
 # run dom0 applications
 bspc desktop --focus 10
-qubes-qube-manager &
+qubes-qube-manager ; bspc --state tiled &
 sleep 6s && alacritty &
 
 # run personal vm applications
 (
+    # prompt for keyring authentication on personal vm
+    qvm-run personal "keyring get SecretService \$(id -un)" &
+
     # run application launcher
     sleep 8s ; \
         bspc desktop --focus 1 ; \
         ${HOME}/bin/application-launcher &
-
-    # prompt for keyring authentication on personal vm
-    qvm-run personal "keyring get SecretService \$(id -un)" &
 ) &
 
 #===============================================================================

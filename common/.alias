@@ -2956,7 +2956,7 @@ alias yair="yay -S --noconfirm"
 #        yar                     yay -Rns (remove package and configuration files)
 alias yar="yay -R --nosave --recursive --noconfirm"
 #        yas                     yay -Ss (search packages)
-alias yas="yay -Ss"
+alias yas="yay -Ss 2>/dev/null"
 #        yaf                     yay -F (search files)
 alias yaf="yay -F"
 #        yaq                     yay -Q (query installed packages)
@@ -2970,7 +2970,7 @@ alias yaln="yay -Qqettn"
 #        yalf                    yay -Qqettm (list installed foreign/AUR packages)
 alias yalf="yay -Qqettm"
 #        yals                    yay -Qs (search installed packages)
-alias yals="yay -Qs"
+alias yals="yay -Qs 2>/dev/null"
 #        yaps                    yay -Ps (print package statistics)
 alias yaps="yay -Ps"
 #        yalz                    yay list installed packages by size
