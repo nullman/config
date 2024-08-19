@@ -259,6 +259,7 @@ _br 'virtualbox' state=floating center=true
 _br 'X48' state=floating center=true
 _br 'Xfburn' state=floating center=true
 _br 'Xfce4-settings-manager' state=floating center=true
+_br 'Xfsettingsd' state=floating center=true
 _br 'Xscreensaver-settings' state=floating center=true
 _br 'Yad' state=floating center=true
 _br 'zenity' state=floating center=true
