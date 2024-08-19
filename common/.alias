@@ -3117,9 +3117,12 @@ alias qvmcp="qvm-copy-to-vm personal"
 #        qd-sync                 copy personal config to dom0
 alias qd-sync="
     if [[ \"$(uname -n)\" == \"dom0\" ]] ; then
-        (cd \${HOME} && rm -rf \${HOME}/config && qvm-run --pass-io personal 'cd /home/user && tar zc --exclude=\".git*\" config' | tar zx)
-        (cd \${HOME} && rm -rf \${HOME}/config-private && qvm-run --pass-io personal 'cd /home/user && tar zc --exclude=\".git*\" config-private' | tar zx)
-        sudo cp \${HOME}/config/config/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/
+        (cd \${HOME} && rm -rf \${HOME}/config.old && mv \${HOME}/config \${HOME}/config.old && \
+            qvm-run --pass-io personal 'cd /home/user && tar zc --exclude=\".git*\" config' | tar zx)
+        (cd \${HOME} && rm -rf \${HOME}/config-private.old && mv \${HOME}/config-private \${HOME}/config-private.old && \
+            qvm-run --pass-io personal 'cd /home/user && tar zc --exclude=\".git*\" config-private' | tar zx)
+        sudo cp \${HOME}/config/config/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml \
+            /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/
         home-restow
     else
         echo \"Error: qd-sync can only be run on dom0\"
