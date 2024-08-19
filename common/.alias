@@ -3124,6 +3124,10 @@ alias qd-sync="
     else
         echo \"Error: qd-sync can only be run on dom0\"
     fi"
+#        qd-copy-windows-tools   copy qubes-windows-tools from personal to dom0
+alias qd-copy-windows-tools="
+    qvm-run --pass-io personal 'cd \"/home/data/media/Software/Linux\" && \
+        tar zc qubes-windows-tools-4.1.69-1.fc37.noarch.rpm' | tar zx"
 #        qd-copy-nasa            copy nasa pictures from personal to dom0
 alias qd-copy-nasa="
     if [[ \"$(uname -n)\" == \"dom0\" ]] ; then

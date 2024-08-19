@@ -242,6 +242,7 @@ _br 'Pavucontrol' state=floating center=true
 _br 'Qube Manager' state=floating center=true
 _br 'Qube Settings' state=floating center=true
 _br 'Qubes-app-menu' state=floating rectangle=640x480+0-20
+_br 'Qubes-global-config' state=floating center=true
 _br 'qubes-qube-manager' state=floating center=true
 _br 'Qubes-update-gui' state=floating center=true
 _br 'Qmmp' state=floating sticky=true
