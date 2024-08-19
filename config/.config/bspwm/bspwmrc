@@ -304,11 +304,8 @@ if [[ "$(uname -n)" == "dom0" ]] ; then
      done
      qvm-usb attach --persistent personal $(qvm-usb list sys-net | grep '8087:0aaa' | sed 's/ .*$//')) &
 
-    # # xfce session
-    # _command xfce4-session && xfce4-session &
-
-    # system bar: xfce4 panel
-    _command xfce4-panel && xfce4-panel &
+    # xfce session
+    _command xfce4-session && xfce4-session &
 
     # hide mouse when not in use
     _command unclutter && unclutter &
