@@ -60,12 +60,12 @@ _delay() {
 bspc desktop --focus 10
 #(bspc rule --add --one-shot 'qubes-qube-manager' --state tiled && qubes-qube-manager) &
 qubes-qube-manager &
-sleep 4s && bspc node --state tiled
+sleep 6s && bspc node --state tiled
 alacritty &
 
 # run personal vm applications
 (
-    sleep 2s && (
+    sleep 10s && (
         bspc desktop --focus 1
 
         # prompt for keyring authentication on personal vm

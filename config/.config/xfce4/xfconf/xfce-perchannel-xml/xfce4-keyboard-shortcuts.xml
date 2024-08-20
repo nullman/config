@@ -134,8 +134,8 @@
       <property name="override" type="bool" value="true"/>
     </property>
   </property>
-  <property name="providers" type="array">
-    <value type="string" value="xfwm4"/>
-    <value type="string" value="commands"/>
-  </property>
+  <!-- <property name="providers" type="array"> -->
+  <!--   <value type="string" value="xfwm4"/> -->
+  <!--   <value type="string" value="commands"/> -->
+  <!-- </property> -->
 </channel>

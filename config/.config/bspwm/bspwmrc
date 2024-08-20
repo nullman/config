@@ -308,6 +308,9 @@ if [[ "$(uname -n)" == "dom0" ]] ; then
     # xfce session
     _command xfce4-session && xfce4-session &
 
+    # # system bar: xfce4 panel
+    # _command xfce4-panel && xfce4-panel &
+
     # hide mouse when not in use
     _command unclutter && unclutter &
 
@@ -382,8 +385,7 @@ if [[ "$(uname -n)" != "dom0" ]] ; then
     #sleep 10 && _command mmaker && mmaker --force openbox &
 fi
 
-# # qubes os specific items
-# # (found in /etc/xdg/autostart)
+# # qubes os specific items (found in /etc/xdg/autostart)
 # if [[ "$(uname -n)" == "dom0" ]] ; then
 #     # qubes qrexec policy agent
 #     /usr/lib/qubes/qrexec-policy-agent-autostart &
