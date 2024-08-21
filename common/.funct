@@ -1514,7 +1514,8 @@ rsync-install() {
     syncdir 'Hypervisor/SmartOS' 'Hypervisor' '*.iso'
     syncdir 'Hypervisor/VMware ESXi (vSphere Hypervisor)' 'Hypervisor' '*.iso'
     syncdir 'Hypervisor/XCP NG' 'Hypervisor' '*.iso'
-    syncdir 'Linux/Linux OS' 'Linux' '[^Q]*.iso' # Qubes does not work with Ventoy
+    #syncdir 'Linux/Linux OS' 'Linux' '[^Q]*.iso' # Qubes does not work with Ventoy
+    syncdir 'Linux/Linux OS' 'Linux' '*.iso'
     #syncdir 'Linux/Linux OS' 'Linux' 'ArchLinux*.iso'
     #syncdir 'Linux/Linux OS' 'Linux' 'CentOS*.iso'
     #syncdir 'Linux/Linux OS' 'Linux' 'Debian*.iso'

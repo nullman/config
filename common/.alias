@@ -2344,16 +2344,6 @@ alias sc20="\${HOME}/bin/screen-app 20"
 #!alias zope-restart-debug="sudo /etc/init.d/zope stop ; /etc/init.d/zope start -D"
 
 #
-# sftp (external)
-#
-#!#        sftpx                   sftp nullware.com
-#!alias sftpx="echo 'sftp:nullware.com' ; sftp \${nullwareip}"
-#!#        sftpxr                  sftp nullware.com
-#!alias sftpxr="echo 'sftp:nullware.com:root' ; sftp root@\${nullwareip}"
-#!#        sftpxk                  sftp nullware.com
-#!alias sftpxk="echo 'sftp:nullware.com:kyle' ; sftp kyle@\${nullwareip}"
-
-#
 # sftp (internal)
 #
 #        sftpapoc                sftp apoc
@@ -2368,32 +2358,14 @@ alias sftpneo="echo 'sftp:neo' ; sftp neo"
 alias sftptank="echo 'sftp:tank' ; sftp tank"
 
 #
-# ssh logons (external)
+# sftp (external)
 #
-#!#        sshx                  ssh nullware.com
-#!alias sshx="echo 'ssh:nullware.com' ; ssh \${nullwareip}"
-#!#        sshxr                 ssh nullware.com
-#!alias sshxr="echo 'ssh:nullware.com:root' ; ssh -l root \${nullwareip}"
-#!#        sshxk                 ssh nullware.com
-#!alias sshxk="echo 'ssh:nullware.com:kyle' ; ssh -l kyle \${nullwareip}"
-#        ssh-nullware            ssh nullware.com
-alias ssh-nullware="echo 'ssh:kyle@nullware.com' ; ssh kyle@\${nullwareip}"
-#        ssh-roguery             ssh -p 1337 nullman@roguery.xibb.net
-alias ssh-roguery="echo 'nullman@roguery.xibb.net' ; ssh -p 1337 nullman@roguery.xibb.net"
-#!#
-#!# ssh tunnels (external)
-#!#
-#!#        ssh-tunnel-irc          ssh tunnel irc (freenode.net)
-#!alias ssh-tunnel-irc="ssh -L 6670:irc.freenode.net:6667 \${nullwareip}"
-#!#!alias ssh-tunnel-irc="ssh -L 6667:irc.freenode.net:6667 \${nullwareip}"
-#!#        ssh-tunnel-imap         ssh tunnel imap (home)
-#!alias ssh-tunnel-imap="ssh -L 8143:morpheus:143 \${nullwareip}"
-#!#        ssh-tunnel-gmail        ssh tunnel gmail pop
-#!alias ssh-tunnel-gmail="ssh -L 8995:pop.gmail.com:995 \${nullwareip}"
-#!#        ssh-tunnel-ldap         ssh tunnel scheduleworld ldap
-#!alias ssh-tunnel-ldap="ssh -L 8389:ldap.scheduleworld.com:389 \${nullwareip}"
-#!#        ssh-tunnel-sshw         ssh tunnel ssh through work pc
-#!alias ssh-tunnel-sshw="ssh -L 2222:\${nullwareip}:22 kyle-work"
+#!#        sftpx                   sftp nullware.com
+#!alias sftpx="echo 'sftp:nullware.com' ; sftp \${nullwareip}"
+#!#        sftpxr                  sftp nullware.com
+#!alias sftpxr="echo 'sftp:nullware.com:root' ; sftp root@\${nullwareip}"
+#!#        sftpxk                  sftp nullware.com
+#!alias sftpxk="echo 'sftp:nullware.com:kyle' ; sftp kyle@\${nullwareip}"
 
 #
 # ssh
@@ -2436,6 +2408,8 @@ alias ssh-pimodem="echo 'ssh:pi@pimodem' ; ssh pi@pimodem"
 alias ssh-raspad="echo 'ssh:raspad-usb' ; ssh pi@raspad-usb"
 #        ssh-retropie            ssh retropie
 alias ssh-retropie="echo 'ssh:retropie' ; ssh pi@retropie"
+#        ssh-synology            ssh synology
+alias ssh-synology="echo 'ssh:synology' ; ssh kyle-admin@synology"
 #        ssh-switch              ssh switch
 alias ssh-switch="echo 'ssh:switch' ; ssh switch"
 #        ssh-tank                ssh tank
@@ -2444,6 +2418,34 @@ alias ssh-tank="echo 'ssh:tank' ; ssh tank"
 alias ssh-tank2="echo 'ssh:tank' ; ssh 192.168.1.61"
 #        ssh-trinity             ssh trinity
 alias ssh-trinity="echo 'ssh:trinity' ; ssh trinity"
+
+#
+# ssh logons (external)
+#
+#!#        sshx                  ssh nullware.com
+#!alias sshx="echo 'ssh:nullware.com' ; ssh \${nullwareip}"
+#!#        sshxr                 ssh nullware.com
+#!alias sshxr="echo 'ssh:nullware.com:root' ; ssh -l root \${nullwareip}"
+#!#        sshxk                 ssh nullware.com
+#!alias sshxk="echo 'ssh:nullware.com:kyle' ; ssh -l kyle \${nullwareip}"
+#        ssh-nullware            ssh nullware.com
+alias ssh-nullware="echo 'ssh:kyle@nullware.com' ; ssh kyle@\${nullwareip}"
+#        ssh-roguery             ssh -p 1337 nullman@roguery.xibb.net
+alias ssh-roguery="echo 'nullman@roguery.xibb.net' ; ssh -p 1337 nullman@roguery.xibb.net"
+#!#
+#!# ssh tunnels (external)
+#!#
+#!#        ssh-tunnel-irc          ssh tunnel irc (freenode.net)
+#!alias ssh-tunnel-irc="ssh -L 6670:irc.freenode.net:6667 \${nullwareip}"
+#!#!alias ssh-tunnel-irc="ssh -L 6667:irc.freenode.net:6667 \${nullwareip}"
+#!#        ssh-tunnel-imap         ssh tunnel imap (home)
+#!alias ssh-tunnel-imap="ssh -L 8143:morpheus:143 \${nullwareip}"
+#!#        ssh-tunnel-gmail        ssh tunnel gmail pop
+#!alias ssh-tunnel-gmail="ssh -L 8995:pop.gmail.com:995 \${nullwareip}"
+#!#        ssh-tunnel-ldap         ssh tunnel scheduleworld ldap
+#!alias ssh-tunnel-ldap="ssh -L 8389:ldap.scheduleworld.com:389 \${nullwareip}"
+#!#        ssh-tunnel-sshw         ssh tunnel ssh through work pc
+#!alias ssh-tunnel-sshw="ssh -L 2222:\${nullwareip}:22 kyle-work"
 
 #
 # ssh run commands
