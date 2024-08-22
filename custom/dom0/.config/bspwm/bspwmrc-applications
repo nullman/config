@@ -68,6 +68,9 @@ alacritty &
     sleep 10s && (
         bspc desktop --focus 1
 
+        # # prompt for keyring authentication on personal vm
+        # qvm-run personal "keyring get SecretService \$(id -un)" &
+
         # start user services
         qvm-run personal "systemctl --user enable --now clipmenud" &
         qvm-run personal "systemctl --user enable --now mpd" &
@@ -75,9 +78,6 @@ alacritty &
 
         # run application launcher
         ${HOME}/bin/application-launcher &
-
-        # prompt for keyring authentication on personal vm
-        sleep 10s && qvm-run personal "keyring get SecretService \$(id -un)" &
      )
 ) &
 
