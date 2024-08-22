@@ -3116,6 +3116,8 @@ alias qdus="sudo qubes-dom0-update --action=search"
 alias qdut="sudo qubes-dom0-update --enablerepo=qubes-dom0-current-testing"
 #        qvmcp                   qvm-copy-to-vm personal
 alias qvmcp="qvm-copy-to-vm personal"
+#!#        qcpvm                   copy X11 clipboard into qubes clipboard
+#!alias qcpvm="xsel > /var/run/qubes/qubes-clipboard.bin && echo -n dom0 > /var/run/qubes/qubes-clipboard.bin.source"
 #        qd-sync                 copy personal config to dom0
 alias qd-sync="
     if [[ \"$(uname -n)\" == \"dom0\" ]] ; then
