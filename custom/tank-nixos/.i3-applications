@@ -1,0 +1,59 @@
+#===============================================================================
+# .i3-applications
+#
+# Configuration for i3 initial applications.
+#===============================================================================
+
+# check if executable command is found in the path
+_command() {
+    command -v "$1" >/dev/null 2>&1
+}
+
+# delay running a command (SECONDS COMMAND)
+_delay() {
+    local delay=$1
+    shift
+    sleep ${delay} && eval "$@"
+}
+
+# run background applications and services
+_command xscreensaver && i3-msg "exec --no-startup-id xscreensaver -no-splash"
+#_command xautolock && i3-msg "exec --no-startup-id xautolock -time 30 -locker blurlock" # lock screen after 30 minutes
+_command xautolock && i3-msg "exec --no-startup-id xautolock -time 30 -locker 'xscreensaver-command -lock'" # lock screen after 30 minutes
+#i3-msg "exec --no-startup-id mpd ${HOME}/.mpd/mpd.conf"
+#i3-msg "exec --no-startup-id dropbox start"
+#i3-msg "exec --no-startup-id barriers --config ${HOME}/.barrier.conf"
+#i3-msg "exec --no-startup-id barrierc SERVER"
+#i3-msg "exec --no-startup-id run-app"
+
+# delay so that networking has time to connect
+#_delay 0
+
+# run foreground applications
+#_command alacritty && i3-msg "exec --no-startup-id alacritty -e ${HOME}/bin/run-screen"
+#_command emacs && i3-msg "exec --no-startup-id _delay 1 emacs"
+##_command thunderbird && i3-msg "exec --no-startup-id _delay 1 thunderbird"
+#_command betterbird && i3-msg "exec --no-startup-id _delay 1 betterbird"
+#_command firefox && i3-msg "exec --no-startup-id _delay 1 firefox"
+##_command chromium && i3-msg "exec --no-startup-id _delay 1 chromium"
+#_command thunar && i3-msg "exec --no-startup-id _delay 1 thunar"
+##_command pcmanfm && i3-msg "exec --no-startup-id _delay 1 pcmanfm"
+##_command spacefm && i3-msg "exec --no-startup-id _delay 1 spacefm"
+#_command slack && i3-msg "exec --no-startup-id _delay 1 slack"
+#_command discord && i3-msg "exec --no-startup-id _delay 10 discord"
+##_command tootle && i3-msg "exec --no-startup-id _delay 1 tootle"
+#_command element-desktop && i3-msg "exec --no-startup-id _delay 1 element-desktop"
+#_command dev.geoprj.Tuba && i3-msg "exec --no-startup-id _delay 10 dev.geoprj.Tuba"
+#_command gajim && i3-msg "exec --no-startup-id _delay 20 gajim"
+##_command pidgin && i3-msg "exec --no-startup-id _delay 20 pidgin"
+##_command idea && i3-msg "exec --no-startup-id _delay 10 idea"
+
+# example using a saved i3 workspace via the i3-save-tree command
+# i3-msg "workspace 1 ; append_layout /home/user/.i3/worspace-1.json"
+
+# run application launcher
+_command ${HOME}/bin/application-launcher && ${HOME}/bin/application-launcher &
+
+#===============================================================================
+# End of File
+#===============================================================================
