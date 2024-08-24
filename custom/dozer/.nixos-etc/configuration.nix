@@ -109,7 +109,7 @@
       syncterm = prev.callPackage /home/user/.nixos/pkgs/syncterm {};
       #vdhcoapp = prev.callPackage /home/user/.nixos/pkgs/vdhcoapp {};
       #x48 = prev.callPackage /home/user/.nixos/pkgs/x48 {};
-      bspwm = prev.callPackage /home/user/code/github-nullman/bspwm {};
+      #bspwm = prev.callPackage /home/user/code/github-nullman/bspwm {};
       #services.xserver.windowManager.bspwm = prev.callPackage /home/user/code/nixpkgs/pkgs/applications/window-managers/bspwm.nix {};
     })
   ];
@@ -578,8 +578,8 @@
   services.rpcbind.enable = true;         # needed for NFS
   systemd.mounts = let commonMountOptions = {
     mountConfig = {
-      Options = "credentials=/home/user/.synology-mount-credentials,uid=1000,gid=1000,iocharset=utf8,rw,noatime,nofail";
-      #Options = "credentials=/home/user/.synology-mount-credentials,uid=1000,gid=1000,iocharset=utf8,rw,noatime,nofail,x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
+      Options = "vers=3.0,credentials=/home/user/.synology-mount-credentials,uid=1000,gid=1000,iocharset=utf8,sec=ntlmv2,rw,noatime,nofail";
+      #Options = "vers=3.0,credentials=/home/user/.synology-mount-credentials,uid=1000,gid=1000,iocharset=utf8,sec=ntlmv2,rw,noatime,nofail,x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
       TimeoutSec = 30;
       Type = "cifs";
     };
