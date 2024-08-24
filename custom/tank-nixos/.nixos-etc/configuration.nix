@@ -332,11 +332,9 @@
   ##services.xserver.desktopManager.xfce.enable = true;
   #services.xserver.windowManager.bspwm.enable = true;
   #services.displayManager.defaultSession = "none+bspwm";
-
   ## window manager: i3wm
   #services.xserver.windowManager.i3.enable = true;
   #services.xserver.windowManager.i3.package = pkgs.i3-gaps;
-
   # window manager: xfce
   services.xserver.desktopManager.xfce.enable = true;
   services.displayManager.defaultSession = "xfce";
