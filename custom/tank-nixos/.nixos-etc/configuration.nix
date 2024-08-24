@@ -121,7 +121,7 @@
       syncterm = prev.callPackage /home/user/.nixos/pkgs/syncterm {};
       #vdhcoapp = prev.callPackage /home/user/.nixos/pkgs/vdhcoapp {};
       #x48 = prev.callPackage /home/user/.nixos/pkgs/x48 {};
-      bspwm = prev.callPackage /home/user/code/github-nullman/bspwm {};
+      #bspwm = prev.callPackage /home/user/code/github-nullman/bspwm {};
       #services.xserver.windowManager.bspwm = prev.callPackage /home/user/code/nixpkgs/pkgs/applications/window-managers/bspwm.nix {};
     })
   ];
