@@ -2722,7 +2722,83 @@ alias xwit="xwininfo -tree -root"
 alias geometry="xwininfo -root | grep geometry"
 
 #
-# NixOS
+# debian
+#
+#        install-debian          run custom debian installation script
+alias install-debian="sudo bash -c \"bash <(curl -s http://kylesherman.net/init/debian.sh)\""
+#        install-gemini          run custom gemini installation script
+alias install-gemini="sudo bash -c \"bash <(curl -s http://kylesherman.net/init/gemini.sh)\""
+#        debver                  debian version
+alias debver="cat /etc/debian_version"
+#        urc                     update-rc.d
+alias rcu="update-rc.d"
+#        kernel-mpkg             make-kpkg buildpackage
+alias kernel-mpkg="make-kpkg buildpackage"
+#        deb-cache-delete        delete /var/cache/apt/archives/*.deb
+alias deb-cache-delete="find /var/cache/apt/archives/ -name *.deb -print0 | xargs -0 -L 1 rm -f"
+#        cid                     checkinstall -D (create deb)
+alias cid="checkinstall -D make install"
+#        gpgdeb                  install debian gpg key
+alias gpgdeb="
+    gpg --keyserver subkeys.pgp.net --recv-keys 2D230C5F
+    gpg --export 084750FC01A6D388A643D869010908312D230C5F | sudo apt-key add -"
+#        debo                    deborphan (see orphaned packages)
+alias debo="deborphan"
+
+#
+# ubuntu
+#
+#        dpkg-make-installed-packages  make ~/installed-packages file
+alias dpkg-make-installed-packages="dpkg --get-selections > \${HOME}/installed-packages"
+#        dpkg-install-packages   install all deb packages in ~/installed-packages
+alias dpkg-install-packages="cat \${HOME}/installed-packages | xargs apt-get install -y"
+#        dpkg-config-fonts       configure fixed fonts in ubuntu
+alias dpkg-config-fonts="
+    dpkg-reconfigure fontconfig-config
+    dpkg-reconfigure fontconfig"
+#        dpkg-config-dash        change sh to use bash instead of dash
+alias dpkg-config-dash="dpkg-reconfigure dash"
+#        ubuntu-system-setup     initial system setup in ubuntu
+alias ubuntu-system-setup="
+    sudo bash -c \"
+        apt-get -y install linuxlogo && \
+          echo '-L ubuntu' > /etc/linux_logo.conf
+        linuxlogo > /etc/motd
+        linuxlogo > /etc/motd.tail
+    \""
+#        medibuntu-install       install medibuntu sources
+alias medibuntu-install="
+    sudo bash -c \"
+        wget http://www.medibuntu.org/sources.list.d/\$(lsb_release -cs).list \
+          -O /etc/apt/sources.list.d/medibuntu.list && \
+          apt-get --quiet update && \
+          apt-get --yes --quiet --allow-unauthenticated install medibuntu-keyring && \
+          apt-get --quiet update
+     \""
+#        ubuntu-release-upgrade  install ubuntu release upgrade
+alias ubuntu-release-upgrade="sudo do-release-upgrade"
+
+#
+# guix
+#
+guixrebuildbefore="
+    [[ -d \${HOME}/.guix-etc ]] && sudo cp -L -v \${HOME}/.guix-etc/* /etc/"
+#        guixrs                  guix reconfigure system
+#!alias guixrs="sudo -E guix system reconfigure \${HOME}/.config/guix/system.scm"
+alias guixrs="
+    ${guixrebuildbefore}
+    sudo guix system reconfigure /etc/config.scm"
+#        guixs                   guix package search
+alias guixs="guix search"
+#        guixf                   guix-locate file search
+alias guixf="guix-locate -w"
+#        guix-store-query        guix-store installed package location query
+alias guix-store-query="guix-store -q -R /run/current-system | grep"
+#!#        guix-shell-development  guix-shell ~/.guixos/shell.guix
+#!alias guix-shell-development="guix-shell \${HOME}/.guixos/shell.guix"
+
+#
+# nixos
 #
 nixrebuildbefore="
     [[ -d \${HOME}/.nixos-etc ]] && sudo cp -L -v \${HOME}/.nixos-etc/* /etc/nixos/"
@@ -2777,79 +2853,6 @@ alias nix-run-ruby="nix-shell -p \"ruby.withPackages (ps: with ps; [ nokogiri ])
 alias nix-run-foundryvtt="NIXPKGS_ALLOW_UNFREE=1 nix-shell -p steam-run --run \"steam-run \${HOME}/foundry/foundryvtt\""
 #        nix-run-gcs             nix-shell run gcs (gurps character sheet)
 alias nix-run-gcs="NIXPKGS_ALLOW_UNFREE=1 nix-shell -p steam-run --run \"steam-run \${HOME}/gurps/gcs\" ; rm -f \${HOME}/.local/share/applications/com.trollworks.gcs.desktop"
-
-#
-# Guix
-#
-#!#        guixrs                  guix reconfigure system
-#!alias guixrs="sudo -E guix system reconfigure \${HOME}/.config/guix/system.scm"
-#!#!#        guixcu                  guix-channel update
-#!#!alias guixcu="guix-channel --update"
-#!#        guixs                   guix package search
-#!alias guixs="guix search"
-#!#        guixf                   guix-locate file search
-#!alias guixf="guix-locate -w"
-#!#        guix-store-query        guix-store installed package location query
-#!alias guix-store-query="guix-store -q -R /run/current-system | grep"
-#!#        guix-shell-development  guix-shell ~/.guixos/shell.guix
-#!alias guix-shell-development="guix-shell \${HOME}/.guixos/shell.guix"
-
-#
-# ubuntu
-#
-#        dpkg-make-installed-packages  make ~/installed-packages file
-alias dpkg-make-installed-packages="dpkg --get-selections > \${HOME}/installed-packages"
-#        dpkg-install-packages   install all deb packages in ~/installed-packages
-alias dpkg-install-packages="cat \${HOME}/installed-packages | xargs apt-get install -y"
-#        dpkg-config-fonts       configure fixed fonts in ubuntu
-alias dpkg-config-fonts="
-    dpkg-reconfigure fontconfig-config
-    dpkg-reconfigure fontconfig"
-#        dpkg-config-dash        change sh to use bash instead of dash
-alias dpkg-config-dash="dpkg-reconfigure dash"
-#        ubuntu-system-setup     initial system setup in ubuntu
-alias ubuntu-system-setup="
-    sudo bash -c \"
-        apt-get -y install linuxlogo && \
-          echo '-L ubuntu' > /etc/linux_logo.conf
-        linuxlogo > /etc/motd
-        linuxlogo > /etc/motd.tail
-    \""
-#        medibuntu-install       install medibuntu sources
-alias medibuntu-install="
-    sudo bash -c \"
-        wget http://www.medibuntu.org/sources.list.d/\$(lsb_release -cs).list \
-          -O /etc/apt/sources.list.d/medibuntu.list && \
-          apt-get --quiet update && \
-          apt-get --yes --quiet --allow-unauthenticated install medibuntu-keyring && \
-          apt-get --quiet update
-     \""
-#        ubuntu-release-upgrade  install ubuntu release upgrade
-alias ubuntu-release-upgrade="sudo do-release-upgrade"
-
-#
-# debian
-#
-#        install-debian          run custom debian installation script
-alias install-debian="sudo bash -c \"bash <(curl -s http://kylesherman.net/init/debian.sh)\""
-#        install-gemini          run custom gemini installation script
-alias install-gemini="sudo bash -c \"bash <(curl -s http://kylesherman.net/init/gemini.sh)\""
-#        debver                  debian version
-alias debver="cat /etc/debian_version"
-#        urc                     update-rc.d
-alias rcu="update-rc.d"
-#        kernel-mpkg             make-kpkg buildpackage
-alias kernel-mpkg="make-kpkg buildpackage"
-#        deb-cache-delete        delete /var/cache/apt/archives/*.deb
-alias deb-cache-delete="find /var/cache/apt/archives/ -name *.deb -print0 | xargs -0 -L 1 rm -f"
-#        cid                     checkinstall -D (create deb)
-alias cid="checkinstall -D make install"
-#        gpgdeb                  install debian gpg key
-alias gpgdeb="
-    gpg --keyserver subkeys.pgp.net --recv-keys 2D230C5F
-    gpg --export 084750FC01A6D388A643D869010908312D230C5F | sudo apt-key add -"
-#        debo                    deborphan (see orphaned packages)
-alias debo="deborphan"
 
 #
 # pacman (Package Manager)
