@@ -55,15 +55,20 @@
  xdisorg
  xfce)
 
+(define transform
+  (options->transformation '((with-graft . "mesa=nvda"))))
+
 (operating-system
- (kernel linux)
+ (kernel linux-lts)
  (kernel-arguments
-  (list
-   "nvidia_drm.modeset=1"
-   "rd.driver.blacklist=nouveau"
-   "modprobe.blacklist=nouveau"))
+  (cons*
+   ;;"nvidia_drm.modeset=1"
+   ;;"rd.driver.blacklist=nouveau"
+   "modprobe.blacklist=nouveau"
+   %default-kernel-arguments))
+ (kernel-loadable-modules '(nvidia-driver))
  (initrd microcode-initrd)
- (firmware (list linux-firmware))
+ (firmware '(linux-firmware))
 
  (host-name "tank")
  (timezone "America/Los_Angeles")
@@ -82,17 +87,16 @@
  ;;              (keyboard-layout keyboard-layout)))
 
  (mapped-devices
-  (list
-   (mapped-device
-    (source (uuid "c0997efd-36fa-4bb7-9922-8a7cc6832837"))
-    ;;(source "/dev/nvme0n1p2")
-    (target "luks-root")
-    (type luks-device-mapping))
-   (mapped-device
-    (source (uuid "5c93d084-63b5-4298-b9ee-a879aa7cc65e"))
-    ;;(source "/dev/nvme0n1p1")
-    (target "luks-home")
-    (type luks-device-mapping))))
+  '((mapped-device
+     (source (uuid "c0997efd-36fa-4bb7-9922-8a7cc6832837"))
+     ;;(source "/dev/nvme0n1p2")
+     (target "luks-root")
+     (type luks-device-mapping))
+    (mapped-device
+     (source (uuid "5c93d084-63b5-4298-b9ee-a879aa7cc65e"))
+     ;;(source "/dev/nvme0n1p1")
+     (target "luks-home")
+     (type luks-device-mapping))))
 
  (file-systems
   (cons*
@@ -126,107 +130,114 @@
     (password (crypt "user" "user"))
     (group "users")
     (supplementary-groups
-     (list
-      ;;"adbusers"
-      "audio"
-      "cdrom"
-      "disk"
-      ;;"docker"
-      "floppy"
-      "input"
-      "kvm"
-      ;;"libvirtd"
-      "lp"
-      ;;"mlocate"
-      "netdev"
-      ;;"networkmanager"
-      "scanner"
-      "users"
-      "video"
-      "wheel")))
+     '(;;"adbusers"
+       "audio"
+       "cdrom"
+       "disk"
+       ;;"docker"
+       "floppy"
+       "input"
+       "kvm"
+       ;;"libvirtd"
+       "lp"
+       ;;"mlocate"
+       "netdev"
+       ;;"networkmanager"
+       "scanner"
+       "users"
+       "video"
+       "wheel")))
    %base-user-accounts))
 
  (packages
   (append
-   (list
-    adwaita-icon-theme
-    alacritty
-    arandr
-    aspell
-    aspell-dict-en
-    ;;betterbird
-    bc
-    bspwm
-    btop
-    clipmenu
-    conky
-    curl
-    dialog
-    dmenu
-    dovecot
-    emacs
-    eog
-    fastfetch
-    ;;firefox
-    ;;fortunes-jkirchartz
-    gcc-toolchain
-    git
-    gnome-themes-extra
-    gvfs
-    gxmessage
-    htop
-    inxi
-    ispell
-    librewolf
-    lxappearance
-    neofetch
-    nitrogen
-    nmap
-    openssh
-    openssl
-    plocate
-    rofi
-    rsync
-    screen
-    scrot
-    stow
-    system-config-printer
-    sxhkd
-    thunar
-    thunar-archive-plugin
-    thunar-media-tags-plugin
-    thunar-vcs-plugin
-    thunar-volman
-    unclutter
-    vim
-    w3m
-    wget
-    wmctrl
-    xclip
-    xdo
-    xdotool
-    xclip
-    xfce4-panel
-    xkill
-    xprop
-    xrandr
-    xscreensaver
-    xsel
-    yad
-    zenity)
-   (list (replace-mesa glmark2))
+   '(adwaita-icon-theme
+     alacritty
+     arandr
+     aspell
+     aspell-dict-en
+     ;;betterbird
+     bc
+     bspwm
+     btop
+     clipmenu
+     conky
+     curl
+     dialog
+     dmenu
+     dovecot
+     emacs
+     eog
+     fastfetch
+     ;;firefox
+     ;;fortunes-jkirchartz
+     gcc-toolchain
+     git
+     gnome-themes-extra
+     gvfs
+     gxmessage
+     htop
+     inxi
+     ispell
+     librewolf
+     lxappearance
+     neofetch
+     nitrogen
+     nmap
+     openssh
+     openssl
+     plocate
+     rofi
+     rsync
+     screen
+     scrot
+     stow
+     system-config-printer
+     sxhkd
+     thunar
+     thunar-archive-plugin
+     thunar-media-tags-plugin
+     thunar-vcs-plugin
+     thunar-volman
+     unclutter
+     vim
+     w3m
+     wget
+     wmctrl
+     xclip
+     xdo
+     xdotool
+     xclip
+     xfce4-panel
+     xkill
+     xprop
+     xrandr
+     xscreensaver
+     xsel
+     yad
+     zenity)
+   '((replace-mesa glmark2))
    %base-packages))
 
  (services
   (cons*
+   (simple-service
+    'custom-udev-rules udev-service-type
+    '(nvidia-driver))
+   (service kernel-module-loader-service-type
+            '("ipmi_devintf"
+              "nvidia"
+              "nvidia_modeset"
+              "nvidia_uvm"))
    (service nvidia-service-type)
    ;;(service gnome-desktop-service-type
    ;;         (gnome-desktop-configuration (gnome (replace-mesa gnome))))
    (service xfce-desktop-service-type)
+   (service lightdm-service-type)
    (set-xorg-configuration
     (xorg-configuration
      (keyboard-layout keyboard-layout)
-     (modules (cons nvda %default-xorg-modules))
+     (modules (cons* nvidia-driver %default-xorg-modules))
      (drivers '("nvidia"))))
    %desktop-services))
 

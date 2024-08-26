@@ -2787,7 +2787,9 @@ guixrebuildbefore="
 #!alias guixrs="sudo -E guix system reconfigure \${HOME}/.config/guix/system.scm"
 alias guixrs="
     ${guixrebuildbefore}
-    sudo guix system reconfigure /etc/config.scm"
+    sudo -i guix system reconfigure /etc/config.scm"
+#        guixp                   guix pull
+alias guixp="sudo -i guix pull"
 #        guixs                   guix package search
 alias guixs="guix search"
 #        guixf                   guix-locate file search
