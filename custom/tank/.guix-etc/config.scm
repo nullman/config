@@ -7,6 +7,7 @@
 ;;==============================================================================
 
 (use-modules
+ (guix transformations)
  (gnu)
  (gnu packages gl)
  (gnu packages gnome)
@@ -19,7 +20,7 @@
  (gnu packages tls)
  (gnu packages xorg)
  (gnu services xorg)
- (nongnu packages linux)
+ (nongnu system linux)
  (nongnu system linux-initrd)
  (nongnu packages nvidia)
  (nongnu services nvidia))

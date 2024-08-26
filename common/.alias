@@ -2784,10 +2784,10 @@ alias ubuntu-release-upgrade="sudo do-release-upgrade"
 guixrebuildbefore="
     [[ -d \${HOME}/.guix-etc ]] && sudo cp -L -v \${HOME}/.guix-etc/* /etc/"
 #        guixrs                  guix reconfigure system
-#!alias guixrs="sudo -E guix system reconfigure \${HOME}/.config/guix/system.scm"
 alias guixrs="
     ${guixrebuildbefore}
-    sudo -i guix system reconfigure /etc/config.scm"
+    sudo guix time-machine -C /etc/channels.scm -- system reconfigure /etc/config.scm"
+#!    sudo guix system reconfigure /etc/config.scm"
 #        guixp                   guix pull
 alias guixp="sudo -i guix pull"
 #        guixs                   guix package search
