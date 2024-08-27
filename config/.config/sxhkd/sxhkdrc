@@ -295,11 +295,11 @@ super + shift + s
 #     xdo below -t $(xdo id -n root) $(xdo id -N tint2)) &) && \
 #     notify-send --expire-time=3000 'Reloading Tint'
 
-# reload eww
-super + shift + e
-    eww --restart open bar && sleep 1 && \
-    xdo below -t $(xdo id -n root) $(xdo id -n eww) && \
-    notify-send --expire-time=3000 'Reloading EWW'
+# # reload eww
+# super + shift + e
+#     eww --restart open bar && sleep 1 && \
+#     xdo below -t $(xdo id -n root) $(xdo id -n eww) && \
+#     notify-send --expire-time=3000 'Reloading EWW'
 
 # reload conky
 super + shift + c

@@ -9,18 +9,17 @@
 { config, pkgs, ... }:
 
 {
-  ## imports
-  #imports = [
-  #  ./hardware-configuration.nix
-  #  #<home-manager/nixos>
-  #];
-
   # imports
   imports = [
     ./hardware-configuration.nix
-    ./hardware-encryption-configuration.nix
     #<home-manager/nixos>
   ];
+  ## imports
+  #imports = [
+  #  ./hardware-configuration.nix
+  #  ./hardware-encryption-configuration.nix
+  #  #<home-manager/nixos>
+  #];
 
   # systemd-boot EFI boot loader
   boot.loader = {
@@ -308,7 +307,8 @@
   #};
 
   # display manager: lightdm
-  services.xserver.displayManager.lightdm.greeters.slick = {
+  #services.xserver.displayManager.lightdm.greeters.slick = {
+  services.xserver.displayManager.lightdm.greeters.gtk = {
     enable = true;
     extraConfig = ''
       [Greeter]
@@ -327,28 +327,32 @@
   services.xserver.windowManager.i3.enable = true;
   services.xserver.windowManager.i3.package = pkgs.i3-gaps;
 
+  # window manager: xfce
+  services.xserver.desktopManager.xfce.enable = true;
+  #services.displayManager.defaultSession = "xfce";
+
   # compositor: picom
   services.picom.enable = true;
 
-  # pulse audio
-  hardware.pulseaudio.enable = true;
-  hardware.pulseaudio.support32Bit = true;
-  nixpkgs.config.pulseaudio = true;
-  #hardware.pulseaudio.extraConfig = "load-module module-combine-sink";
-  #hardware.pulseaudio.extraConfig = "unload-module module-suspend-on-idle";
-  security.rtkit.enable = true;
-  hardware.bluetooth.hsphfpd.enable = true;
-
-  ## pipewire
-  #sound.enable = true;
+  ## pulse audio
+  #hardware.pulseaudio.enable = true;
+  #hardware.pulseaudio.support32Bit = true;
+  #nixpkgs.config.pulseaudio = true;
+  ##hardware.pulseaudio.extraConfig = "load-module module-combine-sink";
+  ##hardware.pulseaudio.extraConfig = "unload-module module-suspend-on-idle";
   #security.rtkit.enable = true;
-  #services.pipewire = {
-  #  enable = true;
-  #  alsa.enable = true;
-  #  alsa.support32Bit = true;
-  #  pulse.enable = true;
-  #  jack.enable = true;
-  #};
+  #hardware.bluetooth.hsphfpd.enable = true;
+
+  # pipewire
+  sound.enable = true;
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    jack.enable = true;
+  };
 
   # bluetooth
   hardware.bluetooth = {
@@ -543,7 +547,8 @@
     group = "user";
     uid = 1000;
     isNormalUser = true;
-    shell = "/run/current-system/sw/bin/zsh";
+    shell = "/run/current-system/sw/bin/bash";
+    #shell = "/run/current-system/sw/bin/zsh";
     initialPassword = "nixos";
     extraGroups = [
       "adbusers"
@@ -737,7 +742,7 @@
     bsp-layout                              # Manage layouts in bspwm
     clipit                                  # Lightweight GTK Clipboard Manager
     conky                                   # Advanced, highly configurable system monitor based on torsmo
-    dconf                                   #
+    dconf
     dialog                                  # Display dialog boxes from shell
     dmenu                                   # Generic, highly customizable, and efficient menu for the X Window System
     dunst                                   # Lightweight and customizable notification daemon
@@ -785,12 +790,70 @@
     wmname                                  # Prints or set the window manager name property of the root window
     wmctrl                                  # CLI tool to interact with EWMH/NetWM compatible X Window Managers
     xfce.exo                                # Application library for Xfce
+    xfce.xfce4-panel                        # Panel for the Xfce desktop environment
     xfce.xfce4-power-manager                # Power manager for the Xfce Desktop Environment
     xfce.xfce4-settings                     # Settings manager for Xfce
     xfce.xfconf                             # Simple client-server configuration storage and query system for Xfce
+    xfce.libxfce4ui
+    xfce.libxfce4util
+    xfce.xfce4-appfinder
+    xfce.xfce4-battery-plugin
+    xfce.xfce4-clipman-plugin
+    xfce.xfce4-cpufreq-plugin
+    xfce.xfce4-cpugraph-plugin
+    xfce.xfce4-datetime-plugin
+    xfce.xfce4-dict
+    xfce.xfce4-fsguard-plugin
+    xfce.xfce4-genmon-plugin
+    xfce.xfce4-mailwatch-plugin
+    xfce.xfce4-mpc-plugin
+    xfce.xfce4-netload-plugin
+    xfce.xfce4-notes-plugin
+    xfce.xfce4-notifyd
+    xfce.xfce4-pulseaudio-plugin
+    xfce.xfce4-sensors-plugin
+    xfce.xfce4-systemload-plugin
+    xfce.xfce4-taskmanager
+    xfce.xfce4-time-out-plugin
+    xfce.xfce4-timer-plugin
+    xfce.xfce4-volumed-pulse
+    xfce.xfce4-weather-plugin
+    xfce.xfce4-whiskermenu-plugin
+    xfce.xfce4-windowck-plugin
+    xfce.xfce4-xkb-plugin
     xdg-desktop-portal-gtk                  # Desktop integration portals for sandboxed apps
     xdg-utils                               # Set of command line tools that assist applications with a variety of desktop integration tasks
     yad                                     # GUI dialog tool for shell scripts
+
+    ## xfce panel
+    #xfce.xfce4-panel                        # Panel for the Xfce desktop environment
+    #xfce.libxfce4ui
+    #xfce.libxfce4util
+    #xfce.xfce4-appfinder
+    #xfce.xfce4-battery-plugin
+    #xfce.xfce4-clipman-plugin
+    #xfce.xfce4-cpufreq-plugin
+    #xfce.xfce4-cpugraph-plugin
+    #xfce.xfce4-datetime-plugin
+    #xfce.xfce4-dict
+    #xfce.xfce4-fsguard-plugin
+    #xfce.xfce4-genmon-plugin
+    #xfce.xfce4-mailwatch-plugin
+    #xfce.xfce4-mpc-plugin
+    #xfce.xfce4-netload-plugin
+    #xfce.xfce4-notes-plugin
+    #xfce.xfce4-notifyd
+    #xfce.xfce4-pulseaudio-plugin
+    #xfce.xfce4-sensors-plugin
+    #xfce.xfce4-systemload-plugin
+    #xfce.xfce4-taskmanager
+    #xfce.xfce4-time-out-plugin
+    #xfce.xfce4-timer-plugin
+    #xfce.xfce4-volumed-pulse
+    #xfce.xfce4-weather-plugin
+    #xfce.xfce4-whiskermenu-plugin
+    #xfce.xfce4-windowck-plugin
+    #xfce.xfce4-xkb-plugin
 
     # x11
     x2x                                     # Allows the keyboard, mouse on one X display to be used to control another X display
@@ -992,7 +1055,7 @@
     # internet
     betterbird                              # Betterbird is a fine-tuned version of Mozilla Thunderbird, Thunderbird on steroids, if you will
     bore-cli                                # Rust tool to create TCP tunnels
-    brave                                   # Privacy-oriented browser for Desktop and Laptop computers
+    #brave                                   # Privacy-oriented browser for Desktop and Laptop computers
     chromium                                # Open source web browser from Google
     cointop                                 # Fastest and most interactive terminal based UI application for tracking cryptocurrencies
     dino                                    # Modern Jabber/XMPP Client using GTK/Vala

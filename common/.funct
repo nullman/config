@@ -1197,6 +1197,10 @@ acsg() {
 }
 
 #
+# guix
+#
+
+#
 # nixos
 #
 #        nixs                    nixos search
@@ -1207,7 +1211,8 @@ nixs() {
         s="$1"
         shift
         #nix --extra-experimental-features "nix-command flakes" search nixpkgs "${s}"
-        nix search --quiet nixpkgs "${s}" 2>/dev/null | sed '/^warning:/d' | head -n -1
+        #nix search --quiet nixpkgs "${s}" 2>/dev/null | sed '/^warning:/d' | head -n -1
+        nix search --quiet nixpkgs "${s}"
     fi
 }
 #        nixss                   nixos specific search
@@ -1218,7 +1223,8 @@ nixss() {
         s="$1"
         shift
         #nix --extra-experimental-features "nix-command flakes" search nixpkgs "\.${s}$"
-        nix search --quiet nixpkgs "nixpkgs\.${s}$" 2>/dev/null | sed '/^warning:/d' | head -n -1
+        #nix search --quiet nixpkgs "nixpkgs\.${s}$" 2>/dev/null | sed '/^warning:/d' | head -n -1
+        nix search --quiet nixpkgs "nixpkgs\.${s}$"
     fi
 }
 #        nixsi                   nixos search installed packages
@@ -1226,7 +1232,8 @@ nixsi() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: nixsi SEARCH"
     else
-        nix-store --quiet -q --references /run/current-system/sw 2>/dev/null | sed 's/^[^-]*-// ; /^warning:/d' | grep -i "$*" | sort
+        #nix-store --quiet -q --references /run/current-system/sw 2>/dev/null | sed 's/^[^-]*-// ; /^warning:/d' | grep -i "$*" | sort
+        nix-store --quiet -q --references /run/current-system/sw | grep -i "$*" | sort
     fi
 }
 #        nixsg                   nixos search with grep
