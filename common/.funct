@@ -1203,40 +1203,25 @@ acsg() {
 #
 # nixos
 #
-#        nixs                    nixos search
-nixs() {
-    if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: nixs SEARCH"
-    else
-        s="$1"
-        shift
-        #nix --extra-experimental-features "nix-command flakes" search nixpkgs "${s}"
-        #nix search --quiet nixpkgs "${s}" 2>/dev/null | sed '/^warning:/d' | head -n -1
-        nix search --quiet nixpkgs "${s}"
-    fi
-}
-#        nixss                   nixos specific search
+#        nixss                   nix specific search
 nixss() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: nixss SEARCH"
     else
         s="$1"
         shift
-        #nix --extra-experimental-features "nix-command flakes" search nixpkgs "\.${s}$"
-        #nix search --quiet nixpkgs "nixpkgs\.${s}$" 2>/dev/null | sed '/^warning:/d' | head -n -1
         nix search --quiet nixpkgs "nixpkgs\.${s}$"
     fi
 }
-#        nixsi                   nixos search installed packages
+#        nixsi                   nix search installed packages
 nixsi() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: nixsi SEARCH"
     else
-        #nix-store --quiet -q --references /run/current-system/sw 2>/dev/null | sed 's/^[^-]*-// ; /^warning:/d' | grep -i "$*" | sort
         nix-store --quiet -q --references /run/current-system/sw | grep -i "$*" | sort
     fi
 }
-#        nixsg                   nixos search with grep
+#        nixsg                   nix search with grep
 nixsg() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: nixsg SEARCH GREP"
@@ -1244,13 +1229,12 @@ nixsg() {
         s="$1"
         shift
         tmpfile="$(mktemp)"
-        #nix --extra-experimental-features "nix-command flakes" search nixpkgs "${s}" > "${tmpfile}"
         nix search --quiet nixpkgs "${s}" 2>/dev/null | head -n -1 > "${tmpfile}"
         sed -n ":a ; /^\* / { N ; s/\n// ; p ; d ; ba }" "${tmpfile}" | grep -i "$*"
         rm "${tmpfile}"
     fi
 }
-#        nixfi                   nix-locate package of installed file
+#        nixfi                   nix locate package of installed file
 nixfi() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: nixfi FILE"

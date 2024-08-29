@@ -12928,26 +12928,15 @@ or after."
 Optional parameter, MAX-LENGTH will truncate the description if
 it is longer."
   (interactive "*")
-  (call-process "nix" nil t nil "search" "--quiet" "nixpkgs"
-                (format "\"\\.%s$\"" package)
-                "2>/dev/null"))
-
-;; (defun insert-nix-package-description (package &optional max-length)
-;;   "Insert Nix package description for given PACKAGE.
-
-;; Optional parameter, MAX-LENGTH will truncate the description if
-;; it is longer."
-;;   (interactive "*")
-;;     (let ((cmd (format
-;;                 "nix search --quiet nixpkgs \"\\.%s$\" 2>/dev/null | sed '/^warning:/d' | head -n -1 | tail -n 1"
-;;                 package)))
-;;       (message "Searching for Nix package: %s" cmd)
-;;       (call-process "date" nil t nil "+%Y-%m-%d")
-;;       (let ((desc (string-trim (shell-command-to-string cmd))))
-;;         (insert (if (and max-length
-;;                          (> (length desc) max-length))
-;;                     (concat (substring desc 0 (- max-length 3)) "...")
-;;                   desc))))))
+  (let ((cmd (format
+              "nix search --quiet nixpkgs \"\\.%s$\" | tail -n 1"
+              package)))
+    (message "Searching for Nix package: %s" cmd)
+    (let ((desc (string-trim (shell-command-to-string cmd))))
+      (insert (if (and max-length
+                       (> (length desc) max-length))
+                  (concat (substring desc 0 (- max-length 3)) "...")
+                desc)))))
 ;; insert-nix-package-description:1 ends here
 
 ;; [[file:init-emacs.org::*set-nix-package-description][set-nix-package-description:1]]
