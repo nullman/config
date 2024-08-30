@@ -12929,7 +12929,7 @@ Optional parameter, MAX-LENGTH will truncate the description if
 it is longer."
   (interactive "*")
   (let ((cmd (format
-              "nix search --quiet nixpkgs \"\\.%s$\" | tail -n 1"
+              "nix search --quiet nixpkgs \"x86_64-linux\\.%s$\" 2>/dev/null | tail -n 1"
               package)))
     (message "Searching for Nix package: %s" cmd)
     (let ((desc (string-trim (shell-command-to-string cmd))))
