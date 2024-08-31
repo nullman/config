@@ -16759,6 +16759,57 @@ USING is the remaining peg."
 ;;               ("C-c C-w" . elfeed-tube-mpv-where)))
 ;; elfeed-tube:1 ends here
 
+;; [[file:init-emacs.org::*ellama][ellama:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: ellama
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Packages: ellama")
+
+(use-package ellama
+  :straight t
+  :after llm-ollama
+  :init
+  (setopt ellama-keymap-prefix "C-c e")
+  (setopt ellama-language "English")
+  (setopt ellama-auto-scroll t)
+  (setopt ellama-long-lines-length 80)
+  (setopt ellama-fill-paragraphs t)
+  ;;(setopt ellama-naming-scheme 'ellama-generate-name-by-words)
+  ;;(setopt ellama-naming-scheme 'ellama-generate-name-by-llm)
+  (setopt ellama-naming-scheme 'ellama-generate-name-by-time)
+  (setopt ellama-provider
+          (make-llm-ollama
+           :chat-model "llama2-uncensored:latest"
+           :embedding-model "nomic-embed-text"
+           :default-chat-non-standard-params '(("num_ctx" . 8192))))
+  ;; (setopt ellama-naming-provider
+  ;;         (make-llm-ollama
+  ;;          :chat-model "llama2-uncensored:latest"
+  ;;          :embedding-model "nomic-embed-text"
+  ;;          :default-chat-non-standard-params '(("stop" . ("\n")))))
+  (setopt ellama-translation-provider (make-llm-ollama
+                                       :chat-model "phi3:14b"
+                                       :embedding-model "nomic-embed-text"))
+  (setopt ellama-providers
+          '(("llama2-uncensored" . (make-llm-ollama
+                                    :chat-model "llama2-uncensored:latest"
+                                    :embedding-model "nomic-embed-text"
+                                    :default-chat-non-standard-params '(("num_ctx" . 8192))))
+            ("codellama" . (make-llm-ollama
+                            :chat-model "codellama:7b"
+                            :embedding-model "nomic-embed-text"
+                            :default-chat-non-standard-params '(("num_ctx" . 8192))))
+            ("llama3" . (make-llm-ollama
+                         :chat-model "llama3:8b"
+                         :embedding-model "nomic-embed-text"
+                         :default-chat-non-standard-params '(("num_ctx" . 8192))))
+            ("llama3-chatqa" . (make-llm-ollama
+                                :chat-model "llama3-chatqa"
+                                :embedding-model "nomic-embed-text"
+                                :default-chat-non-standard-params '(("num_ctx" . 8192)))))))
+;; ellama:1 ends here
+
 ;; [[file:init-emacs.org::*elnode][elnode:1]]
 ;;------------------------------------------------------------------------------
 ;;; Packages: elnode

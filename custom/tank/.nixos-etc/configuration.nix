@@ -515,6 +515,11 @@
 
   virtualisation.docker.enable = true;
 
+  services.ollama = {
+    enable = true;
+    acceleration = "cuda";
+  };
+
   # mpd
   services.mpd = {
     enable = true;
@@ -1195,6 +1200,7 @@
     docker-compose                          # Docker CLI plugin to define and run multi-container applications with Docker
 
     # ai
+    alpaca                                  # Ollama client made with GTK4 and Adwaita
     imaginer                                # Imaginer with AI
     ollama                                  # Get up and running with large language models locally
     tabby                                   # Self-hosted AI coding assistant
