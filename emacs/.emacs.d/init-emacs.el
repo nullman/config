@@ -16800,10 +16800,10 @@ USING is the remaining peg."
                             :chat-model "codellama:7b"
                             :embedding-model "nomic-embed-text"
                             :default-chat-non-standard-params '(("num_ctx" . 8192))))
-            ("llama3" . (make-llm-ollama
-                         :chat-model "llama3:8b"
-                         :embedding-model "nomic-embed-text"
-                         :default-chat-non-standard-params '(("num_ctx" . 8192))))
+            ("llama3:8b" . (make-llm-ollama
+                            :chat-model "llama3:8b"
+                            :embedding-model "nomic-embed-text"
+                            :default-chat-non-standard-params '(("num_ctx" . 8192))))
             ("llama3-chatqa" . (make-llm-ollama
                                 :chat-model "llama3-chatqa"
                                 :embedding-model "nomic-embed-text"

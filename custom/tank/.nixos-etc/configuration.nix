@@ -1017,6 +1017,7 @@
     wordgrinder                             # Text-based word processor
     x3270                                   # IBM 3270 terminal emulator for the X Window System
     xplr                                    # Hackable, minimal, fast TUI file explorer
+    yazi                                    # Blazing fast terminal file manager written in Rust, based on async I/O
     zenith                                  # Sort of like top or htop but with zoom-able charts, network, and disk usage
 
     # console
@@ -1032,6 +1033,7 @@
     cool-retro-term                         # Manage your dotfiles across multiple machines, securely
     ddgr                                    # Terminal emulator which mimics the old cathode display
     dict                                    # Dict protocol server and client
+    diskonaut                               # Terminal disk space navigator
     element                                 # Periodic table on the command line
     eza                                     # Modern, maintained replacement for ls
     f3                                      # Fight Flash Fraud

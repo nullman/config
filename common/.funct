@@ -1203,6 +1203,16 @@ acsg() {
 #
 # nixos
 #
+#        nixs                    nix search
+nixs() {
+    if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+        echo "Usage: nixs SEARCH"
+    else
+        s="$1"
+        shift
+        nix search --quiet nixpkgs "${s}" 2>/dev/null | grep -v "warning:"
+    fi
+}
 #        nixss                   nix specific search
 nixss() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
@@ -1210,7 +1220,7 @@ nixss() {
     else
         s="$1"
         shift
-        nix search --quiet nixpkgs "nixpkgs\.${s}$"
+        nix search --quiet nixpkgs "\.${s}$" 2>/dev/null | grep -v "warning:"
     fi
 }
 #        nixsi                   nix search installed packages

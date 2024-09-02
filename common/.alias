@@ -2820,8 +2820,6 @@ alias nixrsu="
     ${nixrebuildbefore}
     sudo -i nixos-rebuild switch --upgrade
     ${nixrebuildafter}"
-#        nixs                    nix search
-alias nixs="nix search --quiet nixpkgs"
 #        nixp                    nix-shell -p (install package)
 alias nixp="nix-shell -p"
 #        nixcl                   nix-channel list

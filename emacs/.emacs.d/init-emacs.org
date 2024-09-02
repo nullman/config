@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2024-08-30 23:37 (user)>
+  #+TIMESTAMP: <2024-09-01 10:32 (user)>
 
 * Overview
   :PROPERTIES:
@@ -24858,10 +24858,10 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
                                   :chat-model "codellama:7b"
                                   :embedding-model "nomic-embed-text"
                                   :default-chat-non-standard-params '(("num_ctx" . 8192))))
-                  ("llama3" . (make-llm-ollama
-                               :chat-model "llama3:8b"
-                               :embedding-model "nomic-embed-text"
-                               :default-chat-non-standard-params '(("num_ctx" . 8192))))
+                  ("llama3:8b" . (make-llm-ollama
+                                  :chat-model "llama3:8b"
+                                  :embedding-model "nomic-embed-text"
+                                  :default-chat-non-standard-params '(("num_ctx" . 8192))))
                   ("llama3-chatqa" . (make-llm-ollama
                                       :chat-model "llama3-chatqa"
                                       :embedding-model "nomic-embed-text"
