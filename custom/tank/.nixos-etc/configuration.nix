@@ -766,7 +766,7 @@
     bsp-layout                              # Manage layouts in bspwm
     clipit                                  # Lightweight GTK Clipboard Manager
     conky                                   # Advanced, highly configurable system monitor based on torsmo
-    dconf
+    dconf                                   #
     dialog                                  # Display dialog boxes from shell
     dmenu                                   # Generic, highly customizable, and efficient menu for the X Window System
     dunst                                   # Lightweight and customizable notification daemon
@@ -818,33 +818,33 @@
     xfce.xfce4-power-manager                # Power manager for the Xfce Desktop Environment
     xfce.xfce4-settings                     # Settings manager for Xfce
     xfce.xfconf                             # Simple client-server configuration storage and query system for Xfce
-    xfce.libxfce4ui
-    xfce.libxfce4util
-    xfce.xfce4-appfinder
-    xfce.xfce4-battery-plugin
-    xfce.xfce4-clipman-plugin
-    xfce.xfce4-cpufreq-plugin
-    xfce.xfce4-cpugraph-plugin
-    xfce.xfce4-datetime-plugin
-    xfce.xfce4-dict
-    xfce.xfce4-fsguard-plugin
-    xfce.xfce4-genmon-plugin
-    xfce.xfce4-mailwatch-plugin
-    xfce.xfce4-mpc-plugin
-    xfce.xfce4-netload-plugin
-    xfce.xfce4-notes-plugin
-    xfce.xfce4-notifyd
-    xfce.xfce4-pulseaudio-plugin
-    xfce.xfce4-sensors-plugin
-    xfce.xfce4-systemload-plugin
-    xfce.xfce4-taskmanager
-    xfce.xfce4-time-out-plugin
-    xfce.xfce4-timer-plugin
-    xfce.xfce4-volumed-pulse
-    xfce.xfce4-weather-plugin
-    xfce.xfce4-whiskermenu-plugin
-    xfce.xfce4-windowck-plugin
-    xfce.xfce4-xkb-plugin
+    xfce.libxfce4ui                         # Widgets library for Xfce
+    xfce.libxfce4util                       # Extension library for Xfce
+    xfce.xfce4-appfinder                    # Appfinder for the Xfce4 Desktop Environment
+    xfce.xfce4-battery-plugin               # Battery plugin for Xfce panel
+    xfce.xfce4-clipman-plugin               # Clipboard manager for Xfce panel
+    xfce.xfce4-cpufreq-plugin               # CPU Freq load plugin for Xfce panel
+    xfce.xfce4-cpugraph-plugin              # CPU graph show for Xfce panel
+    xfce.xfce4-datetime-plugin              # Shows the date and time in the panel, and a calendar appears when you left-cl...
+    xfce.xfce4-dict                         # Dictionary Client for the Xfce desktop environment
+    xfce.xfce4-fsguard-plugin               # Filesystem usage monitor plugin for the Xfce panel
+    xfce.xfce4-genmon-plugin                # Generic monitor plugin for the Xfce panel
+    xfce.xfce4-mailwatch-plugin             # Mail watcher plugin for Xfce panel
+    xfce.xfce4-mpc-plugin                   # MPD plugin for Xfce panel
+    xfce.xfce4-netload-plugin               # Internet load speed plugin for Xfce4 panel
+    xfce.xfce4-notes-plugin                 # Sticky notes plugin for Xfce panel
+    xfce.xfce4-notifyd                      # Simple notification daemon for Xfce
+    xfce.xfce4-pulseaudio-plugin            # Adjust the audio volume of the PulseAudio sound system
+    xfce.xfce4-sensors-plugin               # Panel plug-in for different sensors using acpi, lm_sensors and hddtemp
+    xfce.xfce4-systemload-plugin            # System load plugin for Xfce panel
+    xfce.xfce4-taskmanager                  # Easy to use task manager for Xfce
+    xfce.xfce4-time-out-plugin              # Panel plug-in to take periodical breaks from the computer
+    xfce.xfce4-timer-plugin                 # Simple countdown and alarm plugin for the Xfce panel
+    xfce.xfce4-volumed-pulse                # Volume keys control daemon for Xfce using pulseaudio
+    xfce.xfce4-weather-plugin               # Weather plugin for the Xfce desktop environment
+    xfce.xfce4-whiskermenu-plugin           # Alternate application launcher for Xfce
+    xfce.xfce4-windowck-plugin              # Xfce panel plugin for displaying window title and buttons
+    xfce.xfce4-xkb-plugin                   # Allows you to setup and use multiple keyboard layouts
     xdg-desktop-portal-gtk                  # Desktop integration portals for sandboxed apps
     xdg-utils                               # Set of command line tools that assist applications with a variety of desktop integration tasks
     yad                                     # GUI dialog tool for shell scripts

@@ -264,7 +264,8 @@
   };
 
   # display manager: lightdm
-  services.xserver.displayManager.lightdm.greeters.slick = {
+  #services.xserver.displayManager.lightdm.greeters.slick = {
+  services.xserver.displayManager.lightdm.greeters.gtk = {
     enable = true;
     extraConfig = ''
       [Greeter]
@@ -298,9 +299,9 @@
   #security.rtkit.enable = true;
   #services.pipewire = {
   #  enable = true;
+  #  pulse.enable = true;
   #  alsa.enable = true;
   #  alsa.support32Bit = true;
-  #  pulse.enable = true;
   #  jack.enable = true;
   #};
 
@@ -453,14 +454,14 @@
     musicDirectory = "/home/data/media/Audio/MPD";
     playlistDirectory = "/home/data/media/Audio/Playlists";
     extraConfig = ''
+      #audio_output {
+      #  type "pulse"
+      #  name "PulseAudio Output"
+      #}
       audio_output {
-        type "pulse"
-        name "PulseAudio Output"
+        type "pipewire"
+        name "PipeWire Output"
       }
-      # audio_output {
-      #   type "pipewire"
-      #   name "PipeWire Output"
-      # }
     '';
   };
 
@@ -497,7 +498,8 @@
     group = "user";
     uid = 1000;
     isNormalUser = true;
-    shell = "/run/current-system/sw/bin/zsh";
+    shell = "/run/current-system/sw/bin/bash";
+    #shell = "/run/current-system/sw/bin/zsh";
     initialPassword = "nixos";
     extraGroups = [
       "adbusers"
@@ -739,9 +741,37 @@
     wmname                                  # Prints or set the window manager name property of the root window
     wmctrl                                  # CLI tool to interact with EWMH/NetWM compatible X Window Managers
     xfce.exo                                # Application library for Xfce
+    xfce.xfce4-panel                        # Panel for the Xfce desktop environment
     xfce.xfce4-power-manager                # Power manager for the Xfce Desktop Environment
     xfce.xfce4-settings                     # Settings manager for Xfce
     xfce.xfconf                             # Simple client-server configuration storage and query system for Xfce
+    xfce.libxfce4ui                         # Widgets library for Xfce
+    xfce.libxfce4util                       # Extension library for Xfce
+    xfce.xfce4-appfinder                    # Appfinder for the Xfce4 Desktop Environment
+    xfce.xfce4-battery-plugin               # Battery plugin for Xfce panel
+    xfce.xfce4-clipman-plugin               # Clipboard manager for Xfce panel
+    xfce.xfce4-cpufreq-plugin               # CPU Freq load plugin for Xfce panel
+    xfce.xfce4-cpugraph-plugin              # CPU graph show for Xfce panel
+    xfce.xfce4-datetime-plugin              # Shows the date and time in the panel, and a calendar appears when you left-cl...
+    xfce.xfce4-dict                         # Dictionary Client for the Xfce desktop environment
+    xfce.xfce4-fsguard-plugin               # Filesystem usage monitor plugin for the Xfce panel
+    xfce.xfce4-genmon-plugin                # Generic monitor plugin for the Xfce panel
+    xfce.xfce4-mailwatch-plugin             # Mail watcher plugin for Xfce panel
+    xfce.xfce4-mpc-plugin                   # MPD plugin for Xfce panel
+    xfce.xfce4-netload-plugin               # Internet load speed plugin for Xfce4 panel
+    xfce.xfce4-notes-plugin                 # Sticky notes plugin for Xfce panel
+    xfce.xfce4-notifyd                      # Simple notification daemon for Xfce
+    xfce.xfce4-pulseaudio-plugin            # Adjust the audio volume of the PulseAudio sound system
+    xfce.xfce4-sensors-plugin               # Panel plug-in for different sensors using acpi, lm_sensors and hddtemp
+    xfce.xfce4-systemload-plugin            # System load plugin for Xfce panel
+    xfce.xfce4-taskmanager                  # Easy to use task manager for Xfce
+    xfce.xfce4-time-out-plugin              # Panel plug-in to take periodical breaks from the computer
+    xfce.xfce4-timer-plugin                 # Simple countdown and alarm plugin for the Xfce panel
+    xfce.xfce4-volumed-pulse                # Volume keys control daemon for Xfce using pulseaudio
+    xfce.xfce4-weather-plugin               # Weather plugin for the Xfce desktop environment
+    xfce.xfce4-whiskermenu-plugin           # Alternate application launcher for Xfce
+    xfce.xfce4-windowck-plugin              # Xfce panel plugin for displaying window title and buttons
+    xfce.xfce4-xkb-plugin                   # Allows you to setup and use multiple keyboard layouts
     xdg-desktop-portal-gtk                  # Desktop integration portals for sandboxed apps
     xdg-utils                               # Set of command line tools that assist applications with a variety of desktop integration tasks
     yad                                     # GUI dialog tool for shell scripts
@@ -781,23 +811,23 @@
     #gphoto2                                 # Ready to use set of digital camera software applications
     #gphoto2fs                               # Fuse FS to mount a digital camera
     #inkscape                                # Vector graphics editor
-    ##kdenlive                                # Video editor
+    #kdenlive glaxnimate                     # Video editor
     #libreoffice                             # Comprehensive, professional-quality productivity suite, a variant of openoffice.org
     #lmms                                    # DAW similar to FL Studio (music production software)
     #mpv                                     # General-purpose media player, fork of MPlayer and mplayer2
     #mupdf                                   # Lightweight PDF, XPS, and E-book viewer and toolkit written in portable C
     #notepadqq                               # Notepad++-like editor for the Linux desktop
-    ##obs-studio                              # Free and open source software for video recording and live streaming
-    ##(pkgs.wrapOBS { plugins = with pkgs.obs-studio-plugins; [ wlrobs ]; })
+    #obs-studio                              # Free and open source software for video recording and live streaming
+    #(pkgs.wrapOBS { plugins = with pkgs.obs-studio-plugins; [ wlrobs ]; })
     #qmplay2                                 # Qt-based Multimedia player
     #reaper                                  # Digital audio workstation
     #spotify                                 # Play music from the Spotify music service
     #vlc                                     # Cross-platform media player and streaming server
-    ##virt-viewer                             # Viewer for remote virtual machines
-    ##xfce.thunar                             # Xfce file manager
-    ##xfce.thunar-archive-plugin              # Thunar plugin providing file context menus for archives
-    ##xfce.thunar-media-tags-plugin           # Thunar plugin providing tagging and renaming features for media files
-    ##xfce.thunar-volman                      # Thunar extension for automatic management of removable drives and media
+    #virt-viewer                             # Viewer for remote virtual machines
+    #xfce.thunar                             # Xfce file manager
+    #xfce.thunar-archive-plugin              # Thunar plugin providing file context menus for archives
+    #xfce.thunar-media-tags-plugin           # Thunar plugin providing tagging and renaming features for media files
+    #xfce.thunar-volman                      # Thunar extension for automatic management of removable drives and media
     #ymuse                                   # GTK client for Music Player Daemon (MPD)
     #zathura                                 # Highly customizable and functional PDF viewer
 
@@ -865,6 +895,7 @@
     wordgrinder                             # Text-based word processor
     x3270                                   # IBM 3270 terminal emulator for the X Window System
     xplr                                    # Hackable, minimal, fast TUI file explorer
+    yazi                                    # Blazing fast terminal file manager written in Rust, based on async I/O
     zenith                                  # Sort of like top or htop but with zoom-able charts, network, and disk usage
 
     # console
@@ -880,6 +911,7 @@
     cool-retro-term                         # Manage your dotfiles across multiple machines, securely
     ddgr                                    # Terminal emulator which mimics the old cathode display
     dict                                    # Dict protocol server and client
+    diskonaut                               # Terminal disk space navigator
     element                                 # Periodic table on the command line
     eza                                     # Modern, maintained replacement for ls
     f3                                      # Fight Flash Fraud
@@ -926,7 +958,7 @@
     # internet
     betterbird                              # Betterbird is a fine-tuned version of Mozilla Thunderbird, Thunderbird on steroids, if you will
     bore-cli                                # Rust tool to create TCP tunnels
-    brave                                   # Privacy-oriented browser for Desktop and Laptop computers
+    #brave                                   # Privacy-oriented browser for Desktop and Laptop computers
     chromium                                # Open source web browser from Google
     cointop                                 # Fastest and most interactive terminal based UI application for tracking cryptocurrencies
     dino                                    # Modern Jabber/XMPP Client using GTK/Vala
@@ -938,14 +970,14 @@
     gajim                                   # Jabber client written in PyGTK
     google-chrome                           # Freeware web browser developed by Google
     kristall                                # Graphical small-internet client, supports gemini, http, https, gopher, finger
-    #magic-wormhole                          # Securely transfer data between computers
+    magic-wormhole                          # Securely transfer data between computers
     mop                                     # Simple stock tracker implemented in go
     ncgopher                                # Gopher and gemini client for the modern internet
-    #nyxt                                    # Infinitely extensible web-browser (with Lisp development files using WebKitGTK platform port)
+    nyxt                                    # Infinitely extensible web-browser (with Lisp development files using WebKitGTK platform port)
     pidgin                                  # Multi-protocol instant messaging client
     slack                                   # Desktop client for Slack
     simplex-chat-desktop                    # Desktop application for SimpleX Chat
-    #sparkleshare                            # Share and collaborate by syncing with any Git repository instantly. Linux, macOS, and Windows
+    sparkleshare                            # Share and collaborate by syncing with any Git repository instantly. Linux, macOS, and Windows
     syncterm                                # BBS terminal emulator
     telegram-desktop                        # Telegram Desktop messaging app
     transmission_4-gtk                      # Fast, easy and free BitTorrent client
@@ -969,7 +1001,7 @@
     #virt-manager                            # Desktop user interface for managing virtual machines
     #virt-viewer                             # Viewer for remote virtual machines
     #virtualbox                              # PC emulator
-    ##wine                                    # Open Source implementation of the Windows API on top of X, OpenGL, and Unix
+    #wine                                    # Open Source implementation of the Windows API on top of X, OpenGL, and Unix
     #wineWowPackages.stable                  # Open Source implementation of the Windows API on top of X, OpenGL, and Unix
     #winetricks                              # Script to install DLLs needed to work around problems in Wine
 
@@ -1002,7 +1034,7 @@
     #gcc-ia16                                # xss gcc-ia16
     #github-desktop                          # GUI for managing Git and GitHub
     #glibc                                   # GNU C Library
-    ##gmp                                     # GNU multiple precision arithmetic library
+    #gmp                                     # GNU multiple precision arithmetic library
     #gnumake                                 # Tool to control the generation of non-source files from sources
     #gnuplot                                 # Portable command-line driven graphing utility for many platforms
     #gpp                                     # General-purpose preprocessor with customizable syntax
@@ -1018,13 +1050,13 @@
     #jqp                                     # TUI playground to experiment with jq
     #kotlin                                  # General purpose programming language
     #lazygit                                 # Simple terminal UI for git commands
-    ##libmpc                                  # Library for multiprecision complex arithmetic with exact rounding
+    #libmpc                                  # Library for multiprecision complex arithmetic with exact rounding
     #m4                                      # GNU M4, a macro processor
-    ##mpfr                                    # Library for multiple-precision floating-point arithmetic
+    #mpfr                                    # Library for multiple-precision floating-point arithmetic
     #nasm                                    # 80x86 and x86-64 assembler designed for portability and modularity
     #node2nix                                # Generate Nix expressions to build NPM packages
     #open-watcom-bin                         # Project to maintain and enhance the Watcom C, C++, and Fortran cross compilers and tools
-    ##open-watcom-v2                          # V2 fork of the Open Watcom suite of compilers and tools
+    #open-watcom-v2                          # V2 fork of the Open Watcom suite of compilers and tools
     #pandoc                                  # Conversion between documentation formats
     #patch                                   # GNU Patch, a program to apply differences to files
     #plantuml                                # Draw UML diagrams using a simple and human readable text description
@@ -1070,7 +1102,7 @@
     tty-clock                               # Digital clock in ncurses
 
     # latex
-    texlive.combined.scheme-full            #
+    texlivePackages.scheme-full             # full scheme (everything)
 
     # xscreensaver
     xscreensaver                            # Set of screensavers
