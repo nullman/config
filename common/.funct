@@ -431,6 +431,110 @@ colors() {
         echo; echo
     done
 }
+
+#        distribution            show linux distribution
+distribution () {
+    # source: https://github.com/ChrisTitusTech/mybash/blob/main/.bashrc
+    local dist="unknown"
+
+    if [ -r "/etc/os-release" ] ; then
+        source "/etc/os-release"
+        case ${ID} in
+            arch|manjaro)
+                dist="arch"
+                ;;
+            fedora|rhel|centos)
+                dist="redhat"
+                ;;
+            gentoo)
+                dist="gentoo"
+                ;;
+            nixos)
+                dist="nixos"
+                ;;
+            slackware)
+                dist="slackware"
+                ;;
+            sles|opensuse*)
+                dist="suse"
+                ;;
+            ubuntu|debian)
+                dist="debian"
+                ;;
+            *)
+                if [ -n "${ID_LIKE}" ] ; then
+                    case ${ID_LIKE} in
+                        *arch*)
+                            dist="arch"
+                            ;;
+                        *fedora*|*rhel*|*centos*)
+                            dist="redhat"
+                            ;;
+                        *sles*|*opensuse*)
+                            dist="suse"
+                            ;;
+                        *ubuntu*|*debian*)
+                            dist="debian"
+                            ;;
+                        *gentoo*)
+                            dist="gentoo"
+                            ;;
+                        *slackware*)
+                            dist="slackware"
+                            ;;
+                    esac
+                fi
+                ;;
+        esac
+    fi
+
+    echo ${dist}
+}
+
+#        ver                     show linux version
+ver() {
+    # source: https://github.com/ChrisTitusTech/mybash/blob/main/.bashrc
+    local dist
+    dist="$(distribution)"
+
+    case ${dist} in
+        "arch")
+            cat "/etc/os-release"
+            ;;
+        "debian")
+            lsb_release -a
+            ;;
+        "gentoo")
+            cat "/etc/gentoo-release"
+            ;;
+        "nixos")
+            sed -n "s/^PRETTY_NAME=\"\(.*\)\"/\1/p" "/etc/os-release"
+            ;;
+        "redhat")
+            if [ -s "/etc/redhat-release" ] ; then
+                cat "/etc/redhat-release"
+            else
+                cat "/etc/issue"
+            fi
+            uname -a
+            ;;
+        "slackware")
+            cat "/etc/slackware-version"
+            ;;
+        "suse")
+            cat "/etc/SuSE-release"
+            ;;
+        *)
+            if [ -s "/etc/issue" ] ; then
+                cat "/etc/issue"
+            else
+                echo "Error: Unknown distribution"
+                exit 1
+            fi
+            ;;
+    esac
+}
+
 #        colorscript-slideshow   run all colorscript scripts
 colorscript-slideshow() {
     once=1

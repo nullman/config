@@ -33,12 +33,15 @@ export COLOR_LIGHT_CYAN="\[\033[1;36m\]"
 export COLOR_LIGHT_GRAY="\[\033[0;37m\]"
 export COLOR_WHITE="\[\033[1;37m\]"
 
+# source system bashrc
+[[ -f "/etc/bashrc" ]] && source "/etc/bashrc" 2>&1
+
 # keep original TERM value for scripts to use
 export REAL_TERM="${TERM}"
 # act like xterm with color support
 export TERM="xterm-256color"
 
-# only run if terminal is interactive
+# continue only if terminal is interactive
 [[ "$-" == "*i*" ]] && return 0
 
 # add to the run path
@@ -51,13 +54,19 @@ os="$(uname -s)"
 # set environmental vars
 export SHELL="$(command -v bash)"
 
+# auto-completion: ignore case
+bind "set completion-ignore-case on"
+# auto-completion: single tab list
+bind "set show-all-if-ambiguous on"
+
 # command history
 export HISTFILE="${HOME}/.cache/bash_history"
 export HISTSIZE="10000"
 export SAVEHIST="10000"
-export HISTCONTROL="ignoredups"
+export HISTCONTROL="erasedups:ignoredups:ignorespace"
 export HISTORY_IGNORE="(ls|pwd|history|h|cd|cd -|cd ..|cdd|exit|reboot|sudo reboot)"
 shopt -s histappend    # allow multiple terminals to write to the history file
+PROMPT_COMMAND='history -a'  # this terminal should append to the history file
 
 # enable fzf fuzzy matching
 if [[ "${os}" == "Darwin" ]] ; then

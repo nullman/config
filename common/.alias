@@ -291,8 +291,6 @@ alias debug-off="export LD_DEBUG="
 #!alias alsa-reset="sudo alsa force-reload"
 #        pulse-reset             restart pulseaudio sound
 alias pulse-reset="pkill -u \${USER} pulseaudio ; sleep 2 ; pulseaudio --daemonize=no &"
-#        ver                     distribution version
-alias ver="lsb_release -a"
 #        kernel                  kernel version
 alias kernel="mhwd-kernel -li"
 #        system-info             inxi -Fx (display system information)
@@ -2728,8 +2726,6 @@ alias geometry="xwininfo -root | grep geometry"
 alias install-debian="sudo bash -c \"bash <(curl -s http://kylesherman.net/init/debian.sh)\""
 #        install-gemini          run custom gemini installation script
 alias install-gemini="sudo bash -c \"bash <(curl -s http://kylesherman.net/init/gemini.sh)\""
-#        debver                  debian version
-alias debver="cat /etc/debian_version"
 #        urc                     update-rc.d
 alias rcu="update-rc.d"
 #        kernel-mpkg             make-kpkg buildpackage

@@ -688,6 +688,7 @@
     emacs                                   # Extensible, customizable GNU text editor
     exfat                                   # Free exFAT file system implementation
     exfatprogs                              # exFAT filesystem userspace utilities
+    fastfetch                               # Like neofetch, but much faster because written in C
     file                                    # Program that shows the type of files
     findutils                               # GNU Find Utilities, the basic directory searching utilities of the GNU operating system
     fortune                                 # Program that displays a pseudorandom message from a database of quotations
@@ -720,6 +721,7 @@
     man-pages                               # Linux development manual pages
     menumaker                               # Heuristics-driven menu generator for several window managers
     mtools                                  # Utilities to access MS-DOS disks
+    multitail                               # tail on Steroids
     neofetch                                # Fast, highly customizable system info script
     nettools                                # Set of tools for controlling the network subsystem in Linux
     nfs-utils                               # Linux user-space NFS utilities
@@ -750,6 +752,7 @@
     tmux                                    # Terminal multiplexer
     traceroute                              # Tracks the route taken by packets over an IP network
     trash-cli                               # Command line interface to the freedesktop.org trashcan
+    tree                                    # Command to produce a depth indented directory listing
     ufiformat                               # Low-level disk formatting utility for USB floppy drives
     unzip                                   # Extraction utility for archives compressed in .zip format
     usbutils                                # Tools for working with USB devices, such as lsusb
@@ -956,6 +959,7 @@
     # utilities
     appimage-run                            #
     bitwarden                               # A secure and free password manager for all of your devices
+    cherrytree                              # Hierarchical note taking application
     dmg2img                                 # Apple's compressed dmg to standard (hfsplus) image disk file convert tool
     easytag                                 # View and edit tags for various audio files
     ffmpeg_6-full                           # Complete, cross-platform solution to record, convert and stream audio and video

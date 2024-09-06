@@ -5,6 +5,11 @@ configuration {
     columns: 1;
     font: "System San Francisco Display 24";
     show-icons: true;
+    icon-theme: "Papirus";
+    display-drun: " ";
+    display-run: " ";
+    display-combi: " ";
+    display-window: "﩯 ";
 }
 
 * {
