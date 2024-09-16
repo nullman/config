@@ -102,6 +102,7 @@
   nixpkgs.overlays = [
     (final: prev: {
       binutils-ia16 = prev.callPackage /home/user/.nixos/pkgs/binutils-ia16 {};
+      crexx = prev.callPackage /home/user/.nixos/pkgs/crexx {};
       djgpp_i586 = prev.callPackage /home/user/.nixos/pkgs/djgpp { targetArchitecture = "i586"; };
       djgpp_i686 = prev.callPackage /home/user/.nixos/pkgs/djgpp { targetArchitecture = "i686"; };
       gcc-ia16 = prev.callPackage /home/user/.nixos/pkgs/gcc-ia16 {};
@@ -353,25 +354,33 @@
   # compositor: picom
   services.picom.enable = true;
 
-  # pulse audio
-  hardware.pulseaudio.enable = true;
-  hardware.pulseaudio.support32Bit = true;
-  nixpkgs.config.pulseaudio = true;
-  #hardware.pulseaudio.extraConfig = "load-module module-combine-sink";
-  #hardware.pulseaudio.extraConfig = "unload-module module-suspend-on-idle";
-  security.rtkit.enable = true;
-  hardware.bluetooth.hsphfpd.enable = true;
-
-  ## pipewire
-  #sound.enable = true;
+  ## pulse audio
+  #hardware.pulseaudio.enable = true;
+  #hardware.pulseaudio.support32Bit = true;
+  #nixpkgs.config.pulseaudio = true;
+  ##hardware.pulseaudio.extraConfig = "load-module module-combine-sink";
+  ##hardware.pulseaudio.extraConfig = "unload-module module-suspend-on-idle";
   #security.rtkit.enable = true;
-  #services.pipewire = {
-  #  enable = true;
-  #  pulse.enable = true;
-  #  alsa.enable = true;
-  #  alsa.support32Bit = true;
-  #  jack.enable = true;
-  #};
+  #hardware.bluetooth.hsphfpd.enable = true;
+
+  # pipewire
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    pulse.enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    #jack.enable = true;
+    # wireplumber.extraConfig.bluetoothEnhancements = {
+    #   "monitor.bluez.properties" = {
+    #     "bluez5.enable-sbc-xq" = true;
+    #     "bluez5.enable-msbc" = true;
+    #     "bluez5.enable-hw-volume" = true;
+    #     "bluez5.roles" = [ "hsp_hs" "hsp_ag" "hfp_hf" "hfp_ag" ];
+    #   };
+    # };
+  };
+  hardware.bluetooth.hsphfpd.enable = false;
 
   # bluetooth
   hardware.bluetooth = {
@@ -527,10 +536,10 @@
     musicDirectory = "/home/data/media/Audio/MPD";
     playlistDirectory = "/home/data/media/Audio/Playlists";
     extraConfig = ''
-      #audio_output {
+      # audio_output {
       #  type "pulse"
       #  name "PulseAudio Output"
-      #}
+      # }
       audio_output {
         type "pipewire"
         name "PipeWire Output"
@@ -733,11 +742,13 @@
     p7zip                                   # New p7zip fork with additional codecs and improvements (forked from https://sourceforge.net/projects/p7zip/)
     parted                                  # Create, destroy, resize, check, and copy partitions
     pciutils                                # Collection of programs for inspecting and manipulating configuration of PCI devices
-    pipewire                                # Server and user space API to deal with multimedia pipelines
+    #pipewire                                # Server and user space API to deal with multimedia pipelines
     pkg-config                              # Tool that allows packages to find out information about other packages (wrapper script)
     psmisc                                  # Set of small useful utilities that use the proc filesystem (such as fuser, killall and pstree)
-    pulseaudio                              # Sound server for POSIX and Win32 systems
-    pulseaudio-ctl                          # Control pulseaudio volume from the shell or mapped to keyboard shortcuts. No need for alsa-utils
+    #pulseaudio                              # Sound server for POSIX and Win32 systems
+    #pulseaudio-ctl                          # Control pulseaudio volume from the shell or mapped to keyboard shortcuts. No need for alsa-utils
+    #pw-volume                               # Basic interface to PipeWire volume controls
+    #pwvucontrol                             # Pipewire Volume Control
     ripgrep                                 # Utility that combines the usability of The Silver Searcher with the raw speed of grep
     rsync                                   # Fast incremental file transfer utility
     samba                                   # Standard Windows interoperability suite of programs for Linux and Unix
@@ -996,7 +1007,7 @@
     du-dust                                 # du + rust = dust. Like du but more intuitive
     elinks                                  # Full-featured text-mode web browser
     gopher                                  # Ncurses gopher client
-    gomuks                                  # A terminal based Matrix client written in Go
+    #gomuks                                  # A terminal based Matrix client written in Go
     hexedit                                 # View and edit files in hexadecimal or in ASCII
     hexyl                                   # Command-line hex viewer
     htop                                    # Interactive process viewer
@@ -1100,6 +1111,7 @@
     mop                                     # Simple stock tracker implemented in go
     ncgopher                                # Gopher and gemini client for the modern internet
     nyxt                                    # Infinitely extensible web-browser (with Lisp development files using WebKitGTK platform port)
+    opensnitch opensnitch-ui                # Application firewall
     pidgin                                  # Multi-protocol instant messaging client
     slack                                   # Desktop client for Slack
     simplex-chat-desktop                    # Desktop application for SimpleX Chat
@@ -1151,6 +1163,7 @@
     ccache                                  # Compiler cache for fast recompilation of C/C++ code
     clang                                   # C language family frontend for LLVM (wrapper script)
     cmake                                   # Cross-platform, open-source build system generator
+    #crexx                                   #
     csvkit                                  # Suite of command-line tools for converting to and working with CSV
     ctags                                   # Tool for fast source code browsing (exuberant ctags)
     djgpp_i686                              # Complete 32-bit GNU-based development system for Intel x86 PCs running DOS
@@ -1206,7 +1219,7 @@
     docker-compose                          # Docker CLI plugin to define and run multi-container applications with Docker
 
     # ai
-    alpaca                                  # Ollama client made with GTK4 and Adwaita
+    #alpaca                                  # Ollama client made with GTK4 and Adwaita
     imaginer                                # Imaginer with AI
     ollama                                  # Get up and running with large language models locally
     tabby                                   # Self-hosted AI coding assistant
@@ -1287,7 +1300,7 @@
   system.copySystemConfiguration = true;
 
   # nixos system version
-  system.stateVersion = "23.05";
+  system.stateVersion = "24.05";
 }
 
 #===============================================================================

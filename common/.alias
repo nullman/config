@@ -525,13 +525,13 @@ alias nitrogen-metcalfe-green="
 #!#        beep-loop               beep console until a key is pressed
 #!alias beep-loop=""
 #        click                   play click test sound with paplay
-alias click="paplay \${HOME}/sounds/click.wav"
+alias click="paplay \${HOME}/sounds/click.wav >/dev/null 2>&1 || pw-play \${HOME}/sounds/click.wav >/dev/null 2>&1"
 #        beep                    play beep test sound with paplay
-alias beep="paplay \${HOME}/sounds/shortbeep.wav"
+alias beep="paplay \${HOME}/sounds/shortbeep.wav >/dev/null 2>&1 || pw-play \${HOME}/sounds/shortbeep.wav >/dev/null 2>&1"
 #        beep-ten                play beep test sound with paplay ten times
 alias beep-ten="
     for ((x = 1; x < 10; x++)) ; do
-        paplay \${HOME}/sounds/shortbeep.wav
+        paplay \${HOME}/sounds/shortbeep.wav >/dev/null 2>&1 || pw-play \${HOME}/sounds/shortbeep.wav >/dev/null 2>&1
         sleep 1
     done"
 
