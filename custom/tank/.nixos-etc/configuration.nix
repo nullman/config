@@ -354,44 +354,53 @@
   # compositor: picom
   services.picom.enable = true;
 
-  ## pulse audio
-  #hardware.pulseaudio.enable = true;
-  #hardware.pulseaudio.support32Bit = true;
-  #nixpkgs.config.pulseaudio = true;
-  ##hardware.pulseaudio.extraConfig = "load-module module-combine-sink";
-  ##hardware.pulseaudio.extraConfig = "unload-module module-suspend-on-idle";
-  #security.rtkit.enable = true;
-  #hardware.bluetooth.hsphfpd.enable = true;
-
-  # pipewire
-  security.rtkit.enable = true;
-  services.pipewire = {
+  # pulse audio
+  hardware.pulseaudio = {
     enable = true;
-    pulse.enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    #jack.enable = true;
-    # wireplumber.extraConfig.bluetoothEnhancements = {
-    #   "monitor.bluez.properties" = {
-    #     "bluez5.enable-sbc-xq" = true;
-    #     "bluez5.enable-msbc" = true;
-    #     "bluez5.enable-hw-volume" = true;
-    #     "bluez5.roles" = [ "hsp_hs" "hsp_ag" "hfp_hf" "hfp_ag" ];
-    #   };
-    # };
+    support32Bit = true;
   };
-  hardware.bluetooth.hsphfpd.enable = false;
+  nixpkgs.config.pulseaudio = true;
+  # hardware.pulseaudio.extraConfig = ''
+  #   load-module module-combine-sink
+  #   unload-module module-suspend-on-idle
+  #   load-module module-switch-on-connect
+  #   load-module module-bluetooth-policy
+  #   load-module module-bluetooth-discover
+  # '';
+  #hardware.pulseaudio.extraModules = [ pkgs.pulseaudio-modules-bt ];
+  security.rtkit.enable = true;
+  hardware.bluetooth.hsphfpd.enable = true;
+
+  ## pipewire
+  #security.rtkit.enable = true;
+  #services.pipewire = {
+  #  enable = true;
+  #  pulse.enable = true;
+  #  alsa.enable = true;
+  #  alsa.support32Bit = true;
+  #  jack.enable = true;
+  #  wireplumber.extraConfig.bluetoothEnhancements = {
+  #    "monitor.bluez.properties" = {
+  #      "bluez5.enable-sbc-xq" = true;
+  #      "bluez5.enable-msbc" = true;
+  #      "bluez5.enable-hw-volume" = true;
+  #      "bluez5.roles" = [ "hsp_hs" "hsp_ag" "hfp_hf" "hfp_ag" ];
+  #    };
+  #  };
+  #};
+  #hardware.bluetooth.hsphfpd.enable = false;
+  #systemd.user.services.pipewire-pulse.path = [ pkgs.pulseaudio ];
 
   # bluetooth
   hardware.bluetooth = {
     enable = true;
     #hsphfpd.enable = true;                # pulse audio
     #hsphfpd.enable = false;               # pipewire
-    settings = {
-      General = {
-        Enable = "Source,Sink,Media,Socket";
-      };
-    };
+    # settings = {
+    #   General = {
+    #     Enable = "Source,Sink,Media,Socket";
+    #   };
+    # };
   };
   services.blueman.enable = true;
 
@@ -537,8 +546,8 @@
     playlistDirectory = "/home/data/media/Audio/Playlists";
     extraConfig = ''
       # audio_output {
-      #  type "pulse"
-      #  name "PulseAudio Output"
+      #   type "pulse"
+      #   name "PulseAudio Output"
       # }
       audio_output {
         type "pipewire"
@@ -684,6 +693,7 @@
     auto-cpufreq                            # Automatic CPU speed & power optimizer for Linux
     bluez                                   # Official Linux Bluetooth protocol stack
     bluez-tools                             # Set of tools to manage bluetooth devices for linux
+    #binsider                                # Analyzer of executables using a terminal user interface
     brightnessctl                           # This program allows you read and control device brightness
     bzip2                                   # High-quality data compression program
     clipmenu                                # Clipboard management using dmenu
@@ -742,13 +752,12 @@
     p7zip                                   # New p7zip fork with additional codecs and improvements (forked from https://sourceforge.net/projects/p7zip/)
     parted                                  # Create, destroy, resize, check, and copy partitions
     pciutils                                # Collection of programs for inspecting and manipulating configuration of PCI devices
-    #pipewire                                # Server and user space API to deal with multimedia pipelines
     pkg-config                              # Tool that allows packages to find out information about other packages (wrapper script)
+    #pipewire                                # Server and user space API to deal with multimedia pipelines
     psmisc                                  # Set of small useful utilities that use the proc filesystem (such as fuser, killall and pstree)
+    pulseaudioFull                          # Sound server for POSIX and Win32 systems
     #pulseaudio                              # Sound server for POSIX and Win32 systems
     #pulseaudio-ctl                          # Control pulseaudio volume from the shell or mapped to keyboard shortcuts. No need for alsa-utils
-    #pw-volume                               # Basic interface to PipeWire volume controls
-    #pwvucontrol                             # Pipewire Volume Control
     ripgrep                                 # Utility that combines the usability of The Silver Searcher with the raw speed of grep
     rsync                                   # Fast incremental file transfer utility
     samba                                   # Standard Windows interoperability suite of programs for Linux and Unix
@@ -942,12 +951,14 @@
     cider                                   # New look into listening and enjoying Apple Music in style and performance
     electrum                                # Lightweight Bitcoin wallet
     evince                                  # GNOME's document viewer
+    freecad                                 # General purpose Open Source 3D CAD/MCAD/CAx/CAE/PLM modeler
     freetube                                # Open Source YouTube app for privacy
     gimp                                    # GNU Image Manipulation Program
     gphoto2                                 # Ready to use set of digital camera software applications
     gphoto2fs                               # Fuse FS to mount a digital camera
     inkscape                                # Vector graphics editor
     kdenlive glaxnimate                     # Video editor
+    kicad                                   # Open Source Electronics Design Automation suite
     libreoffice                             # Comprehensive, professional-quality productivity suite, a variant of openoffice.org
     lmms                                    # DAW similar to FL Studio (music production software)
     mpv                                     # General-purpose media player, fork of MPlayer and mplayer2

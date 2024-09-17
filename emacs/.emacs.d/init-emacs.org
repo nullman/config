@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2024-09-01 10:32 (user)>
+  #+TIMESTAMP: <2024-09-17 10:06 (user)>
 
 * Overview
   :PROPERTIES:
@@ -813,7 +813,10 @@
         :straight t
         :demand t)
       (use-package diminish
-        :straight (diminish :type git :host github :repo "myrjola/diminish.el"))
+        :straight (diminish
+                   :type git
+                   :host github
+                   :repo "myrjola/diminish.el"))
       (use-package f
         :straight t
         :demand t)
@@ -4688,9 +4691,11 @@
       ;;   ;; original author is not maintaining the code
       ;;   ;; :straight (org-make-toc :type git :host github :repo "alphapapa/org-make-toc")
       ;;   ;; forked branch fixes a bug
-      ;;   :straight (org-make-toc :type git :host github
-      ;;                           :repo "nullman/org-make-toc"
-      ;;                           :branch "fix/no-auto-save-temp-file")
+      ;;   :straight (org-make-toc
+      ;;              :type git
+      ;;              :host github
+      ;;              :repo "nullman/org-make-toc"
+      ;;              :branch "fix/no-auto-save-temp-file")
       ;;   :hook (org-mode . org-make-toc-mode)
       ;;   :custom
       ;;   (org-make-toc-link-type-fn #'org-make-toc--link-entry-custom)
@@ -22415,7 +22420,10 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         ;; (init-message 3 "Completions: company/ivy/counsel/swiper: ivy")
 
         ;; (use-package ivy
-        ;;   :straight (ivy :type git :host github :repo "abo-abo/swiper")
+        ;;   :straight (ivy
+        ;;              :type git
+        ;;              :host github
+        ;;              :repo "abo-abo/swiper")
         ;;   :demand t
         ;;   :diminish ivy-mode
         ;;   :commands (ivy-mode)
@@ -22525,7 +22533,10 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         ;; (init-message 3 "Completions: company/ivy/counsel/swiper: counsel")
 
         ;; (use-package counsel
-        ;;   :straight (counsel :type git :host github :repo "abo-abo/swiper")
+        ;;   :straight (counsel
+        ;;              :type git
+        ;;              :host github
+        ;;              :repo "abo-abo/swiper")
         ;;   :after (ivy)
         ;;   :bind* (("M-x" . counsel-M-x)
         ;;           ;;([remap list-buffers] . counsel-switch-buffer) ; default: `list-buffers'
@@ -22562,7 +22573,10 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         ;; (init-message 3 "Completions: company/ivy/counsel/swiper: swiper")
 
         ;; (use-package swiper
-        ;;   :straight (swiper :type git :host github :repo "abo-abo/swiper")
+        ;;   :straight (swiper
+        ;;              :type git
+        ;;              :host github
+        ;;              :repo "abo-abo/swiper")
         ;;   :after (ivy)
         ;;   :bind* ("C-'" . swiper))            ; default: `isearch-forward-regexp'
       #+END_SRC
@@ -22839,7 +22853,9 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
 
         (use-package consult
           :straight (consult-custom
-                     :type git :host github :repo "minad/consult"
+                     :type git
+                     :host github
+                     :repo "minad/consult"
                      :pre-build "git checkout 0.17")
           :after (vertico)
           :bind (;; C-c bindings (mode-specific-map)
@@ -23075,7 +23091,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
 
       https://github.com/minad/corfu
 
-      #+BEGIN_SRC emacs-lisp
+      #+BEGIN_SRC emacs-lisp :tangle no
         ;;------------------------------------------------------------------------------
         ;;;; Completions: vertico/consult/company: corfu
         ;;------------------------------------------------------------------------------
@@ -23238,7 +23254,10 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
 
       ;; (let ((emacs-2048 (make-symbol "2048")))
       ;;   (use-package emacs-2048
-      ;;     :straight (emacs-2048 :type git :host github :repo "sprang/emacs-2048")))
+      ;;     :straight (emacs-2048
+      ;;                :type git
+      ;;                :host github
+      ;;                :repo "sprang/emacs-2048")))
     #+END_SRC
 
 *** +abook+
@@ -24103,7 +24122,10 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;;                                      #'lsp-completion-at-point))))
 
       ;; (use-package codeium
-      ;;   :straight (codeium :type git :host github :repo "Exafunction/codeium.el")
+      ;;   :straight (codeium
+      ;;              :type git
+      ;;              :host github
+      ;;              :repo "Exafunction/codeium.el")
       ;;   :hook (prog-mode . custom-codeium-mode-hook) ; use with programming modes only
       ;;   ;; :init
       ;;   ;; ;; ;; use globally
@@ -24542,6 +24564,30 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         :demand t
         :bind* (([remap kill-ring-save] . easy-kill)
                 ([remap mark-sexp] . easy-mark)))
+    #+END_SRC
+
+*** eat
+    :PROPERTIES:
+    :CUSTOM_ID: packages-eat
+    :END:
+
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Packages: eat
+      ;;------------------------------------------------------------------------------
+
+      (init-message 2 "Packages: eat")
+
+      (use-package eat
+        :straight (eat
+                   :type git
+                   :host codeberg
+                   :repo "akib/emacs-eat"
+                   :files ("*.el" ("term" "term/*.el") "*.texi"
+                           "*.ti" ("terminfo/e" "terminfo/e/*")
+                           ("terminfo/65" "terminfo/65/*")
+                           ("integration" "integration/*")
+                           (:exclude ".dir-locals.el" "*-tests.el"))))
     #+END_SRC
 
 *** editorconfig
@@ -25026,7 +25072,10 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       (init-message 2 "Packages: epaint")
 
       (use-package epaint
-        :straight (:type git :host github :repo "chuntaro/epaint"))
+        :straight (epaint
+                   :type git
+                   :host github
+                   :repo "chuntaro/epaint"))
     #+END_SRC
 
 *** eperiodic
@@ -25184,7 +25233,10 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;; (init-message 2 "Packages: explain-pause-mode")
 
       ;; (use-package explain-pause-mode
-      ;;   :straight (explain-pause-mode :type git :host github :repo "lastquestion/explain-pause-mode")
+      ;;   :straight (explain-pause-mode
+      ;;              :type git
+      ;;              :host github
+      ;;              :repo "lastquestion/explain-pause-mode")
       ;;   :config
       ;;   (explain-pause-mode))
     #+END_SRC
@@ -25989,7 +26041,10 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       (init-message 2 "Modules: ini")
 
       (use-package ini
-        :straight (ini :type git :host github :repo "daniel-ness/ini.el")
+        :straight (ini
+                   :type git
+                   :host github
+                   :repo "daniel-ness/ini.el")
         :commands (ini-decode
                    ini-encode))
     #+END_SRC
@@ -27792,7 +27847,10 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;; ;;------------------------------------------------------------------------------
 
       ;; (use-package magit-popup
-      ;;   :straight (magit-popup :type git :host github :repo "magit/magit-popup"))
+      ;;   :straight (magit-popup
+      ;;              :type git
+      ;;              :host github
+      ;;              :repo "magit/magit-popup"))
     #+END_SRC
 
 *** +planner+
@@ -28186,7 +28244,10 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;;   :straight t)
 
       ;; (use-package remind-bindings
-      ;;   :straight (remind-bindings :type git :host github :repo "mtekman/remind-bindings.el")
+      ;;   :straight (remind-bindings
+      ;;              :type git
+      ;;              :host github
+      ;;              :repo "mtekman/remind-bindings.el")
       ;;   :hook (after-init . remind-bindings-initialise)
       ;;   :bind (("C-c M-d" . remind-bindings-toggle-buffer)
       ;;          ("C-c C-M-d" . remind-bindings-specific-mode))
@@ -28983,7 +29044,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       (init-message 2 "Modules: spinner")
 
       (use-package spinner
-        :straight (spinner :type git :host github :repo "Malabarba/spinner.el"))
+        :straight t)
     #+END_SRC
 
 *** sudoku
@@ -29001,7 +29062,10 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       (init-message 2 "Modules: sudoku")
 
       (use-package sudoku
-        :straight (sudoku :type git :host github :repo "zevlg/sudoku.el")
+        :straight (sudoku
+                   :type git
+                   :host github
+                   :repo "zevlg/sudoku.el")
         :commands (sudoku))
     #+END_SRC
 
@@ -29013,19 +29077,22 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
     An SVG version of the titular HTML5 game.
 
     #+BEGIN_SRC emacs-lisp
-            ;;------------------------------------------------------------------------------
-            ;;; Packages: svg-2048
-            ;;------------------------------------------------------------------------------
+      ;;------------------------------------------------------------------------------
+      ;;; Packages: svg-2048
+      ;;------------------------------------------------------------------------------
 
-            (init-message 2 "Packages: svg-2048")
+      (init-message 2 "Packages: svg-2048")
 
-            (use-package svg-2048
-              :straight (:type git :host github :repo "wasamasa/svg-2048")
-              :bind (:map svg-2048-mode-map
-                          ("<left>" . svg-2048-move-left)
-                          ("<right>" . svg-2048-move-right)
-                          ("<up>" . svg-2048-move-up)
-                          ("<down>" . svg-2048-move-down)))
+      (use-package svg-2048
+        :straight (svg-2048
+                   :type git
+                   :host github
+                   :repo "wasamasa/svg-2048")
+        :bind (:map svg-2048-mode-map
+                    ("<left>" . svg-2048-move-left)
+                    ("<right>" . svg-2048-move-right)
+                    ("<up>" . svg-2048-move-up)
+                    ("<down>" . svg-2048-move-down)))
     #+END_SRC
 
 *** svg-clock
@@ -29512,7 +29579,10 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       (init-message 2 "Modules: undo-tree")
 
       (use-package undo-tree
-        :straight (undo-tree :type git :host github :repo "apchamberlain/undo-tree.el")
+        :straight (undo-tree
+                   :type git
+                   :host github
+                   :repo "apchamberlain/undo-tree.el")
         :demand t
         :diminish undo-tree-mode
         :bind* (("<M-mouse-5>" . undo-tree-redo)

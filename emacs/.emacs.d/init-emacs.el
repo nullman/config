@@ -224,7 +224,10 @@ Skips checks if run on Windows or Mac."
   :straight t
   :demand t)
 (use-package diminish
-  :straight (diminish :type git :host github :repo "myrjola/diminish.el"))
+  :straight (diminish
+             :type git
+             :host github
+             :repo "myrjola/diminish.el"))
 (use-package f
   :straight t
   :demand t)
@@ -15637,7 +15640,9 @@ USING is the remaining peg."
 
 (use-package consult
   :straight (consult-custom
-             :type git :host github :repo "minad/consult"
+             :type git
+             :host github
+             :repo "minad/consult"
              :pre-build "git checkout 0.17")
   :after (vertico)
   :bind (;; C-c bindings (mode-specific-map)
@@ -15748,82 +15753,6 @@ USING is the remaining peg."
   ;; advise `yas-expand-snippet'
   (advice-add 'yas-expand-snippet :around #'force-completing-read-default))
 ;; consult:1 ends here
-
-;; [[file:init-emacs.org::*corfu][corfu:1]]
-;;------------------------------------------------------------------------------
-;;;; Completions: vertico/consult/company: corfu
-;;------------------------------------------------------------------------------
-
-(init-message 3 "Completions: vertico/consult/company: corfu")
-
-(use-package corfu
-  :straight t
-  :after (compat)
-  ;; ;; enable only for certain modes
-  ;; :hook ((prog-mode . corfu-mode)
-  ;;        (shell-mode . corfu-mode)
-  ;;        (eshell-mode . corfu-mode))
-  :bind (:map corfu-map
-              ("C-SPC" . corfu-insert-separator)
-              ("M-SPC" . corfu-insert-separator)
-              ("RET" . nil)             ; enter does not complete
-              ;; ("S-RET" . corfu-insert)
-              ("C-n" . corfu-next)
-              ("M-k" . corfu-next)
-              ("C-p" . corfu-previous)
-              ("M-i" . corfu-previous)
-              ("TAB" . corfu-complete)
-              ("<tab>" . corfu-complete))
-  :custom
-  (corfu-cycle nil)                 ; disable cycling for `corfu-next/previous'
-  ;;(corfu-auto t)                    ; enable auto completion
-  ;;(corfu-auto-prefix 3)             ; auto complete after a number of typed characters
-  ;;(corfu-auto-delay 1.0)            ; auto complete after a delay
-  (corfu-auto nil)                    ; disable auto completion
-  (corfu-separator ?\s)             ; whitespace is orderless field separator
-  (corfu-quit-at-boundary 'separator) ; quit at completion boundary
-  (corfu-quit-no-match nil)         ; do not quit if there is no match
-  (corfu-preview-current 'insert)   ; insert current candidate preview
-  (corfu-preselect-first nil)       ; disable candidate preselection
-  (corfu-on-exact-match nil)        ; configure handling of exact matches
-  (corfu-echo-documentation 0.25)   ; enable documentation in the echo area
-  (corfu-scroll-margin 5)           ; use scroll margin
-  :init
-  (global-corfu-mode 1)
-  ;;(corfu-history-mode 1)
-  :config
-  (defun custom-corfu-eshell-mode-hook ()
-    (setq-local corfu-auto nil
-                corfu-quit-at-boundary t
-                corfu-quit-no-match t)
-    (corfu-mode 1))
-  (add-hook 'eshell-mode-hook #'custom-corfu-eshell-mode-hook))
-
-;; ;;------------------------------------------------------------------------------
-;; ;;;; corfu-doc
-;; ;;------------------------------------------------------------------------------
-
-;; (init-message 3 "corfu-doc")
-
-;; ;; popup documentation for completion candidates
-;; (use-package corfu-doc
-;;   :straight t
-;;   :after (corfu)
-;;   :hook (corfu-mode . corfu-doc-mode)
-;;   :bind (:map corfu-map
-;;               ("M-p" . corfu-doc-scroll-down)
-;;               ("M-n" . corfu-doc-scroll-up)
-;;               ("M-d" . corfu-doc-toggle)))
-
-;; (init-message 3 "corfu-doc-terminal")
-
-;; ;; make `corfu-doc' work in terminal
-;; (use-package corfu-doc-terminal
-;;   :straight (corfu-doc-terminal :type git :repo "https://codeberg.org/akib/emacs-corfu-doc-terminal.git")
-;;   :init
-;;   (unless (display-graphic-p)
-;;     (corfu-doc-terminal-mode 1)))
-;; corfu:1 ends here
 
 ;; [[file:init-emacs.org::*cape][cape:1]]
 ;;==============================================================================
@@ -16584,6 +16513,25 @@ USING is the remaining peg."
           ([remap mark-sexp] . easy-mark)))
 ;; easy-kill:1 ends here
 
+;; [[file:init-emacs.org::*eat][eat:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: eat
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Packages: eat")
+
+(use-package eat
+  :straight (eat
+             :type git
+             :host codeberg
+             :repo "akib/emacs-eat"
+             :files ("*.el" ("term" "term/*.el") "*.texi"
+                     "*.ti" ("terminfo/e" "terminfo/e/*")
+                     ("terminfo/65" "terminfo/65/*")
+                     ("integration" "integration/*")
+                     (:exclude ".dir-locals.el" "*-tests.el"))))
+;; eat:1 ends here
+
 ;; [[file:init-emacs.org::*editorconfig][editorconfig:1]]
 ;;------------------------------------------------------------------------------
 ;;; Packages: editorconfig
@@ -16861,7 +16809,10 @@ USING is the remaining peg."
 (init-message 2 "Packages: epaint")
 
 (use-package epaint
-  :straight (:type git :host github :repo "chuntaro/epaint"))
+  :straight (epaint
+             :type git
+             :host github
+             :repo "chuntaro/epaint"))
 ;; epaint:1 ends here
 
 ;; [[file:init-emacs.org::*eperiodic][eperiodic:1]]
@@ -17305,7 +17256,10 @@ back to the previous non-whitespace character. See also
 (init-message 2 "Modules: ini")
 
 (use-package ini
-  :straight (ini :type git :host github :repo "daniel-ness/ini.el")
+  :straight (ini
+             :type git
+             :host github
+             :repo "daniel-ness/ini.el")
   :commands (ini-decode
              ini-encode))
 ;; ini:1 ends here
@@ -18936,7 +18890,7 @@ Do not perform the search on very large files (to avoid a delay when loaded)."
 (init-message 2 "Modules: spinner")
 
 (use-package spinner
-  :straight (spinner :type git :host github :repo "Malabarba/spinner.el"))
+  :straight t)
 ;; spinner:1 ends here
 
 ;; [[file:init-emacs.org::*sudoku][sudoku:1]]
@@ -18947,7 +18901,10 @@ Do not perform the search on very large files (to avoid a delay when loaded)."
 (init-message 2 "Modules: sudoku")
 
 (use-package sudoku
-  :straight (sudoku :type git :host github :repo "zevlg/sudoku.el")
+  :straight (sudoku
+             :type git
+             :host github
+             :repo "zevlg/sudoku.el")
   :commands (sudoku))
 ;; sudoku:1 ends here
 
@@ -18959,7 +18916,10 @@ Do not perform the search on very large files (to avoid a delay when loaded)."
 (init-message 2 "Packages: svg-2048")
 
 (use-package svg-2048
-  :straight (:type git :host github :repo "wasamasa/svg-2048")
+  :straight (svg-2048
+             :type git
+             :host github
+             :repo "wasamasa/svg-2048")
   :bind (:map svg-2048-mode-map
               ("<left>" . svg-2048-move-left)
               ("<right>" . svg-2048-move-right)
@@ -19142,7 +19102,10 @@ otherwise run `find-file-as-root'."
 (init-message 2 "Modules: undo-tree")
 
 (use-package undo-tree
-  :straight (undo-tree :type git :host github :repo "apchamberlain/undo-tree.el")
+  :straight (undo-tree
+             :type git
+             :host github
+             :repo "apchamberlain/undo-tree.el")
   :demand t
   :diminish undo-tree-mode
   :bind* (("<M-mouse-5>" . undo-tree-redo)

@@ -600,12 +600,12 @@ alias scle="systemctl list-unit-files --state enabled && systemctl --user list-u
 alias systemctl-list-enabled="systemctl list-unit-files --state enabled && systemctl --user list-unit-files --state enabled"
 #        systemctl-list-grep     list all services with grep
 alias systemctl-list-grep="(systemctl list-unit-files && systemctl --user list-unit-files) | grep -i"
-#        sce                     enable service
-alias sce="sudo systemctl enable --now"
+#!#        sce                     enable service
+#!alias sce="sudo systemctl enable --now"
 #        systemctl-enable        enable service
 alias systemctl-enable="sudo systemctl enable --now"
-#        scd                     disable service
-alias scd="sudo systemctl disable"
+#!#        scd                     disable service
+#!alias scd="sudo systemctl disable"
 #        systemctl-disable       disable service
 alias systemctl-disable="sudo systemctl disable"
 #        scur                    reload user service definitions
