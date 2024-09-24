@@ -396,11 +396,12 @@
     enable = true;
     #hsphfpd.enable = true;                # pulse audio
     #hsphfpd.enable = false;               # pipewire
-    # settings = {
-    #   General = {
-    #     Enable = "Source,Sink,Media,Socket";
-    #   };
-    # };
+    settings = {
+      General = {
+        Enable = "Source,Sink,Media,Socket";
+        #ControllerMode = "bredr";
+      };
+    };
   };
   services.blueman.enable = true;
 
