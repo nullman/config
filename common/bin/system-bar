@@ -37,6 +37,7 @@ _command nm-applet && (_delay ${delay} pkill -u ${USER} nm-applet ; nm-applet) &
 _command xfce4-power-manager && (_delay ${delay} pkill -u ${USER} xfce4-power-manager ; xfce4-power-manager) &
 #_command volumeicon && (_delay ${delay} pkill -u ${USER} volumeicon ; volumeicon) &
 #_command sbxkb && (_delay ${delay} pkill -u ${USER} sbxkb ; sbxkb) &
+_command kdeconnect-indicator && (_delay ${delay} pkill -u ${USER} kdeconnect-indicator ; kdeconnect-indicator) &
 
 #===============================================================================
 # End of File
