@@ -786,6 +786,7 @@
     ufiformat                               # Low-level disk formatting utility for USB floppy drives
     unzip                                   # Extraction utility for archives compressed in .zip format
     usbutils                                # Tools for working with USB devices, such as lsusb
+    veracrypt                               # Free Open-Source filesystem on-the-fly encryption
     vim                                     # Most popular clone of the VI editor
     wget                                    # Tool for retrieving files using HTTP, HTTPS, and FTP
     woeusb                                  # Create bootable USB disks from Windows ISO images
