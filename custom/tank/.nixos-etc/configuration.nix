@@ -52,8 +52,8 @@
   # open firewall ports
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 515 631 9100 ];
-    allowedUDPPorts = [ 515 631 9100 ];
+    #allowedTCPPorts = [ 515 631 9100 ];
+    #allowedUDPPorts = [ 515 631 9100 ];
     allowedUDPPortRanges = [
       { from = 1714; to = 1764; }
       { from = 1714; to = 1764; }
@@ -363,20 +363,20 @@
   services.picom.enable = true;
 
   ## pulse audio
+  #security.rtkit.enable = true;
   #hardware.pulseaudio = {
   #  enable = true;
   #  support32Bit = true;
   #};
   #nixpkgs.config.pulseaudio = true;
-  ## hardware.pulseaudio.extraConfig = ''
-  ##   load-module module-combine-sink
-  ##   unload-module module-suspend-on-idle
-  ##   load-module module-switch-on-connect
-  ##   load-module module-bluetooth-policy
-  ##   load-module module-bluetooth-discover
-  ## '';
-  ##hardware.pulseaudio.extraModules = [ pkgs.pulseaudio-modules-bt ];
-  #security.rtkit.enable = true;
+  #hardware.pulseaudio.extraConfig = ''
+  #  load-module module-combine-sink
+  #  unload-module module-suspend-on-idle
+  #  load-module module-switch-on-connect
+  #  load-module module-bluetooth-policy
+  #  load-module module-bluetooth-discover
+  #'';
+  #hardware.pulseaudio.extraModules = [ pkgs.pulseaudio-modules-bt ];
   #hardware.bluetooth.hsphfpd.enable = true;
 
   # pipewire
@@ -397,11 +397,12 @@
     };
   };
   hardware.bluetooth.hsphfpd.enable = false;
-  systemd.user.services.pipewire-pulse.path = [ pkgs.pulseaudio ];
+  #systemd.user.services.pipewire-pulse.path = [ pkgs.pulseaudio ];
 
   # bluetooth
   hardware.bluetooth = {
     enable = true;
+    powerOnBoot = true;
     #hsphfpd.enable = true;                # pulse audio
     #hsphfpd.enable = false;               # pipewire
     settings = {
