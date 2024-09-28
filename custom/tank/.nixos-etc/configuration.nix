@@ -396,6 +396,7 @@
       };
     };
   };
+  hardware.pulseaudio.enable = false;
   hardware.bluetooth.hsphfpd.enable = false;
   #systemd.user.services.pipewire-pulse.path = [ pkgs.pulseaudio ];
 
@@ -407,9 +408,15 @@
     #hsphfpd.enable = false;               # pipewire
     settings = {
       General = {
-        Enable = "Source,Sink,Media,Socket";
+        #Enable = "Source,Sink,Media,Socket";
         #ControllerMode = "bredr";
+        Name = "Computer";
+        ControllerMode = "dual";
+        FastConnectable = "true";
+        Experimental = "true";
       };
+      Policy = { AutoEnable = "true"; };
+      LE = { EnableAdvMonInterleaveScan = "true"; };
     };
   };
   services.blueman.enable = true;
@@ -762,6 +769,7 @@
     openssl                                 # Cryptographic library that implements the SSL and TLS protocols
     p7zip                                   # New p7zip fork with additional codecs and improvements (forked from https://sourceforge.net/projects/p7zip/)
     parted                                  # Create, destroy, resize, check, and copy partitions
+    pavucontrol                             # PulseAudio Volume Control
     pciutils                                # Collection of programs for inspecting and manipulating configuration of PCI devices
     pkg-config                              # Tool that allows packages to find out information about other packages (wrapper script)
     #pipewire                                # Server and user space API to deal with multimedia pipelines
