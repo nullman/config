@@ -396,9 +396,8 @@
       };
     };
   };
-  hardware.pulseaudio.enable = false;
   hardware.bluetooth.hsphfpd.enable = false;
-  #systemd.user.services.pipewire-pulse.path = [ pkgs.pulseaudio ];
+  systemd.user.services.pipewire-pulse.path = [ pkgs.pulseaudio ];
 
   # bluetooth
   hardware.bluetooth = {
@@ -408,15 +407,9 @@
     #hsphfpd.enable = false;               # pipewire
     settings = {
       General = {
-        #Enable = "Source,Sink,Media,Socket";
+        Enable = "Source,Sink,Media,Socket";
         #ControllerMode = "bredr";
-        Name = "Computer";
-        ControllerMode = "dual";
-        FastConnectable = "true";
-        Experimental = "true";
       };
-      Policy = { AutoEnable = "true"; };
-      LE = { EnableAdvMonInterleaveScan = "true"; };
     };
   };
   services.blueman.enable = true;
@@ -769,7 +762,7 @@
     openssl                                 # Cryptographic library that implements the SSL and TLS protocols
     p7zip                                   # New p7zip fork with additional codecs and improvements (forked from https://sourceforge.net/projects/p7zip/)
     parted                                  # Create, destroy, resize, check, and copy partitions
-    pavucontrol                             # PulseAudio Volume Control
+    #pavucontrol                             # PulseAudio Volume Control
     pciutils                                # Collection of programs for inspecting and manipulating configuration of PCI devices
     pkg-config                              # Tool that allows packages to find out information about other packages (wrapper script)
     #pipewire                                # Server and user space API to deal with multimedia pipelines
@@ -968,11 +961,15 @@
     blender                                 # 3D Creation/Animation/Publishing System
     calibre                                 # Comprehensive e-book software
     celluloid                               # Simple GTK frontend for the mpv video player
+    cheesecutter                            # Tracker program for composing music for the SID chip
     cider                                   # New look into listening and enjoying Apple Music in style and performance
     electrum                                # Lightweight Bitcoin wallet
     evince                                  # GNOME's document viewer
     freecad                                 # General purpose Open Source 3D CAD/MCAD/CAx/CAE/PLM modeler
     freetube                                # Open Source YouTube app for privacy
+    furnace                                 # Multi-system chiptune tracker compatible with DefleMask modules
+    #goattracker                             # Crossplatform music editor for creating Commodore 64 music. Uses reSID librar...
+    goattracker-stereo                      # Crossplatform music editor for creating Commodore 64 music. Uses reSID librar...
     gimp                                    # GNU Image Manipulation Program
     gphoto2                                 # Ready to use set of digital camera software applications
     gphoto2fs                               # Fuse FS to mount a digital camera
