@@ -16304,6 +16304,58 @@ USING is the remaining peg."
   :bind* ("M-#" . calc-dispatch))
 ;; calc:1 ends here
 
+;; [[file:init-emacs.org::*casual-calc][casual-calc:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: casual-calc
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Packages: casual-calc")
+
+(use-package casual-calc
+  :straight (casual-calc
+             :type git
+             :host github
+             :repo "kickingvegas/casual-calc")
+  :after (calc casual-lib)
+  :bind (:map calc-mode-map
+              ("C-o" . casual-calc-tmenu))
+  :bind (:map calc-alg-map
+              ("C-o" . casual-calc-tmenu)))
+;; casual-calc:1 ends here
+
+;; [[file:init-emacs.org::*casual-dired][casual-dired:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: casual-dired
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Packages: casual-dired")
+
+(use-package casual-dired
+  :straight (casual-dired
+             :type git
+             :host github
+             :repo "kickingvegas/casual-dired")
+  :after (dired casual-lib)
+  :bind (:map dired-mode-map
+              ("C-o" . casual-dired-tmenu)
+              ("s" . casual-dired-sort-by-tmenu)
+              ("/" . casual-dired-search-replace-tmenu)))
+;; casual-dired:1 ends here
+
+;; [[file:init-emacs.org::*casual-lib][casual-lib:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: casual-lib
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Packages: casual-lib")
+
+(use-package casual-lib
+  :straight (casual-lib
+             :type git
+             :host github
+             :repo "kickingvegas/casual-lib"))
+;; casual-lib:1 ends here
+
 ;; [[file:init-emacs.org::*cedet/semantic][cedet/semantic:1]]
 ;;------------------------------------------------------------------------------
 ;;; Packages: cedet/semantic
