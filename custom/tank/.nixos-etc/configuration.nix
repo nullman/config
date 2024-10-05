@@ -1015,6 +1015,7 @@
     gtkimageview                            # Image viewer widget for GTK
     handbrake libdvdcss libaacs libbluray   # Tool for converting video files and ripping DVDs
     kdeconnect                              # KDE Connect provides several features to integrate your phone and your computer
+    libation                                # Audible audiobook manager
     livecaptions                            # Linux Desktop application that provides live captioning
     makemkv                                 # Convert blu-ray and dvd to mkv
     mediawriter                             # Tool to write images files to portable media
