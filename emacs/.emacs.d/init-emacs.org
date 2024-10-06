@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2024-10-02 00:15 (user)>
+  #+TIMESTAMP: <2024-10-05 14:26 (user)>
 
 * Overview
   :PROPERTIES:
@@ -24037,6 +24037,25 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         :bind* ("M-#" . calc-dispatch))
     #+END_SRC
 
+*** casual-lib
+    :PROPERTIES:
+    :CUSTOM_ID: packages-casual-lib
+    :END:
+
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Packages: casual-lib
+      ;;------------------------------------------------------------------------------
+
+      (init-message 2 "Packages: casual-lib")
+
+      (use-package casual-lib
+        :straight (casual-lib
+                   :type git
+                   :host github
+                   :repo "kickingvegas/casual-lib"))
+    #+END_SRC
+
 *** casual-calc
     :PROPERTIES:
     :CUSTOM_ID: packages-casual-calc
@@ -24083,25 +24102,6 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
                     ("C-o" . casual-dired-tmenu)
                     ("s" . casual-dired-sort-by-tmenu)
                     ("/" . casual-dired-search-replace-tmenu)))
-    #+END_SRC
-
-*** casual-lib
-    :PROPERTIES:
-    :CUSTOM_ID: packages-casual-lib
-    :END:
-
-    #+BEGIN_SRC emacs-lisp
-      ;;------------------------------------------------------------------------------
-      ;;; Packages: casual-lib
-      ;;------------------------------------------------------------------------------
-
-      (init-message 2 "Packages: casual-lib")
-
-      (use-package casual-lib
-        :straight (casual-lib
-                   :type git
-                   :host github
-                   :repo "kickingvegas/casual-lib"))
     #+END_SRC
 
 *** cedet/semantic

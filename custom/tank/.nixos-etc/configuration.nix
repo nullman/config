@@ -356,6 +356,8 @@
 
       START_CHARGE_THRESH_BAT0 = 40;   # 40 and bellow battery starts to charge
       STOP_CHARGE_THRESH_BAT0 = 80;    # 80 and above battery stops charging
+
+      USB_BLACKLIST_BTUSB = 1;         # make sure bluetooth still works
     };
   };
 

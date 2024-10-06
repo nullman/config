@@ -16304,6 +16304,20 @@ USING is the remaining peg."
   :bind* ("M-#" . calc-dispatch))
 ;; calc:1 ends here
 
+;; [[file:init-emacs.org::*casual-lib][casual-lib:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: casual-lib
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Packages: casual-lib")
+
+(use-package casual-lib
+  :straight (casual-lib
+             :type git
+             :host github
+             :repo "kickingvegas/casual-lib"))
+;; casual-lib:1 ends here
+
 ;; [[file:init-emacs.org::*casual-calc][casual-calc:1]]
 ;;------------------------------------------------------------------------------
 ;;; Packages: casual-calc
@@ -16341,20 +16355,6 @@ USING is the remaining peg."
               ("s" . casual-dired-sort-by-tmenu)
               ("/" . casual-dired-search-replace-tmenu)))
 ;; casual-dired:1 ends here
-
-;; [[file:init-emacs.org::*casual-lib][casual-lib:1]]
-;;------------------------------------------------------------------------------
-;;; Packages: casual-lib
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Packages: casual-lib")
-
-(use-package casual-lib
-  :straight (casual-lib
-             :type git
-             :host github
-             :repo "kickingvegas/casual-lib"))
-;; casual-lib:1 ends here
 
 ;; [[file:init-emacs.org::*cedet/semantic][cedet/semantic:1]]
 ;;------------------------------------------------------------------------------
