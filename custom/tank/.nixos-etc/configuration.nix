@@ -357,7 +357,7 @@
       START_CHARGE_THRESH_BAT0 = 40;   # 40 and bellow battery starts to charge
       STOP_CHARGE_THRESH_BAT0 = 80;    # 80 and above battery stops charging
 
-      USB_BLACKLIST_BTUSB = 1;         # make sure bluetooth still works
+      #USB_BLACKLIST_BTUSB = 1;         # make sure bluetooth still works
     };
   };
 
@@ -397,6 +397,14 @@
         "bluez5.roles" = [ "a2dp_sink" "a2dp_source" "bap_sink" "bap_source" "hsp_hs" "hsp_ag" "hfp_hf" "hfp_ag" ];
       };
     };
+    extraConfig.pipewire."92-low-latency" = {
+      context.properties = {
+        default.clock.rate = 48000;
+        default.clock.quantum = 32;
+        default.clock.min-quantum = 32;
+        default.clock.max-quantum = 32;
+      };
+    };
   };
   hardware.bluetooth.hsphfpd.enable = false;
   systemd.user.services.pipewire-pulse.path = [ pkgs.pulseaudio ];
@@ -407,12 +415,6 @@
     powerOnBoot = true;
     #hsphfpd.enable = true;                # pulse audio
     #hsphfpd.enable = false;               # pipewire
-    settings = {
-      General = {
-        Enable = "Source,Sink,Media,Socket";
-        #ControllerMode = "bredr";
-      };
-    };
   };
   services.blueman.enable = true;
 
