@@ -73,8 +73,8 @@
 
   # sysctl settings
   boot.kernel.sysctl = {
-    "fs.file-max" = 524288;        # open file descriptors limit (star citizen)
-    "vm.max_map_count" = 16777216; # maxmimum number of "memory map areas" a process can have (star citizen)
+    #"fs.file-max" = 524288;        # open file descriptors limit (star citizen)
+    #"vm.max_map_count" = 16777216; # maxmimum number of "memory map areas" a process can have (star citizen)
     "vm.swappiness" = 0;           # only use swap if needed; cat /proc/sys/vm/swappiness
     "vm.vfs_cache_pressure" = 50;  # cache inode and dentry information; cat /proc/sys/vm/vfs_cache_pressure
   };
@@ -397,14 +397,14 @@
         "bluez5.roles" = [ "a2dp_sink" "a2dp_source" "bap_sink" "bap_source" "hsp_hs" "hsp_ag" "hfp_hf" "hfp_ag" ];
       };
     };
-    extraConfig.pipewire."92-low-latency" = {
-      context.properties = {
-        default.clock.rate = 48000;
-        default.clock.quantum = 32;
-        default.clock.min-quantum = 32;
-        default.clock.max-quantum = 32;
-      };
-    };
+    # extraConfig.pipewire."92-low-latency" = {
+    #   context.properties = {
+    #     default.clock.rate = 48000;
+    #     default.clock.quantum = 32;
+    #     default.clock.min-quantum = 32;
+    #     default.clock.max-quantum = 32;
+    #   };
+    # };
   };
   hardware.bluetooth.hsphfpd.enable = false;
   systemd.user.services.pipewire-pulse.path = [ pkgs.pulseaudio ];
@@ -1160,6 +1160,7 @@
     zoom-us                                 # zoom.us video conferencing application
 
     # emulators
+    anbox                                   # Android in a box
     basiliskii                              # 68k Macintosh emulator
     dosbox                                  # DOS emulator
     dosbox-x                                # Cross-platform DOS emulator based on the DOSBox project

@@ -369,8 +369,8 @@ alias mkinit="sudo mkinitcpio -P"
 #!alias youtube-dl-best="youtube-dl -f bestvideo+bestaudio"
 #        yt-dl
 alias ytdl="
-    yt-dlp --format \"bv*+ba/b\" \
-           --format-sort \"res:1080,res:720,res:480\" \
+    yt-dlp --format 'bv*+ba/b' \
+           --format-sort 'res:1080,res:720,res:480,vcodec:h264,acodec:m4a' \
            --output \"%(channel)s - %(release_date>%Y-%m-%d,upload_date>%Y-%m-%d|Unknown)s - %(title)s.%(ext)s\""
 #        weather                 weather report
 alias weather="curl --silent wttr.in | head -n -2"

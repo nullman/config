@@ -207,8 +207,8 @@ for ((x = 0; x < ${#videos[@]}; x += 1)) ; do
         echo
         echo "${url}"
         echo
-        yt-dlp --format "bv*+ba/b" \
-               --format-sort "res:1080,res:720,res:480" \
+        yt-dlp --format 'bv*+ba/b' \
+               --format-sort 'res:1080,res:720,res:480,vcodec:h264,acodec:m4a' \
                --output "${origdir}/${name}.%(ext)s" \
                "${url}"
         origfile=$(find "${origdir}" -name "${escname}\.*")
