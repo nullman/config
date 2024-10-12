@@ -115,9 +115,9 @@
       djgpp_i686 = prev.callPackage /home/user/.nixos/pkgs/djgpp { targetArchitecture = "i686"; };
       gcc-ia16 = prev.callPackage /home/user/.nixos/pkgs/gcc-ia16 {};
       #mtkclient = prev.callPackage /home/user/.nixos/pkgs/mtkclient {};
+      play = prev.callPackage /home/user/.nixos/pkgs/play {};
       #stow = prev.callPackage /home/user/.nixos/pkgs/stow {};
       syncterm = prev.callPackage /home/user/.nixos/pkgs/syncterm {};
-      #vdhcoapp = prev.callPackage /home/user/.nixos/pkgs/vdhcoapp {};
       #x48 = prev.callPackage /home/user/.nixos/pkgs/x48 {};
       #bspwm = prev.callPackage /home/user/code/github-nullman/bspwm {};
       #services.xserver.windowManager.bspwm = prev.callPackage /home/user/code/nixpkgs/pkgs/applications/window-managers/bspwm.nix {};
@@ -1052,6 +1052,7 @@
     mc                                      # File Manager and User Shell for the GNU Project, known as Midnight Commander
     mcabber                                 # Small Jabber console client
     mop                                     # Simple stock tracker implemented in go
+    #play
     ncmpcpp                                 # Featureful ncurses based MPD client inspired by ncmpc
     orpie                                   # Curses-based RPN calculator
     phetch                                  # Quick lil gopher client for your terminal, written in rust
@@ -1212,6 +1213,7 @@
     gmp                                     # GNU multiple precision arithmetic library
     gnumake                                 # Tool to control the generation of non-source files from sources
     gnuplot                                 # Portable command-line driven graphing utility for many platforms
+    go                                      # Go Programming language
     gpp                                     # General-purpose preprocessor with customizable syntax
     graphviz                                # Graph visualization tools
     gradle                                  # Enterprise-grade build system
