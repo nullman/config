@@ -1,4 +1,4 @@
-﻿;; [[file:init-emacs.org::*Bookmarks][Bookmarks:2]]
+;; [[file:init-emacs.org::*Bookmarks][Bookmarks:2]]
 ;;;; Emacs Bookmark Format Version 1;;;; -*- coding: utf-8-emacs; mode: lisp-data -*-
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
 (
@@ -41,5 +41,6 @@
  ("Planet m68k" (location . "gemini://m68k.info/") (handler . elpher-bookmark-jump))
  ;;("System Crafters" (location . "gemini://systemcrafters.cc") (handler . elpher-bookmark-jump))
  ;;("Writing a Gemini Server" (location . "gemini://bcalderon.io/writing-a-gemini-server") (handler . elpher-bookmark-jump))
+ ("Zerock (L29)" (location . "gemini://retro.inetcc.org/~zerock/") (handler . elpher-bookmark-jump))
  )
 ;; Bookmarks:2 ends here
