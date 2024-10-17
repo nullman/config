@@ -705,6 +705,7 @@
     aspell                                  # Spell checker for many languages
     aspellDicts.en                          # Aspell dictionary for English
     auto-cpufreq                            # Automatic CPU speed & power optimizer for Linux
+    bandwhich                               # CLI utility for displaying current network utilization
     bluez                                   # Official Linux Bluetooth protocol stack
     bluez-tools                             # Set of tools to manage bluetooth devices for linux
     #binsider                                # Analyzer of executables using a terminal user interface
@@ -1052,7 +1053,7 @@
     mc                                      # File Manager and User Shell for the GNU Project, known as Midnight Commander
     mcabber                                 # Small Jabber console client
     mop                                     # Simple stock tracker implemented in go
-    #play
+    #play                                    # A TUI playground for your favorite programs, such as grep, sed and awk
     ncmpcpp                                 # Featureful ncurses based MPD client inspired by ncmpc
     orpie                                   # Curses-based RPN calculator
     phetch                                  # Quick lil gopher client for your terminal, written in rust
@@ -1203,6 +1204,7 @@
     #crexx                                   #
     csvkit                                  # Suite of command-line tools for converting to and working with CSV
     ctags                                   # Tool for fast source code browsing (exuberant ctags)
+    djgpp_i586                              # Complete 32-bit GNU-based development system for Intel x86 PCs running DOS
     djgpp_i686                              # Complete 32-bit GNU-based development system for Intel x86 PCs running DOS
     flex                                    # Fast lexical analyser generator
     fpc                                     # Free Pascal Compiler from a source distribution
