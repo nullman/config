@@ -755,6 +755,7 @@
     man-db                                  # Implementation of the standard Unix documentation system accessed using the man command
     man-pages                               # Linux development manual pages
     menumaker                               # Heuristics-driven menu generator for several window managers
+    moreutils                               # Growing collection of the unix tools that nobody thought to write long ago wh...
     mtools                                  # Utilities to access MS-DOS disks
     multitail                               # tail on Steroids
     neofetch                                # Fast, highly customizable system info script
