@@ -760,6 +760,11 @@ alias iwrs="
     sudo systemctl start iwd"
 #        iw-nullman              iw connect to nullman wifi
 alias iw-nullman="iwctl station device ${networkdevice} connect nullman"
+#
+# qemu networking
+#
+#        qemu-random-mac         generate a random mac address for use with qemu
+alias qemu-random-mac="printf \"52:54:%02x:%02x:%02x:%02x\n\" \$((\${RANDOM} & 0xff)) \$((\${RANDOM} & 0xff)) \$((\${RANDOM} & 0xff)) \$((\${RANDOM} & 0xff))"
 
 #
 # bluetooth
