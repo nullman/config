@@ -117,7 +117,6 @@ _br 'firefox' desktop=^4 follow=on
 _br 'Firefox' desktop=^4 follow=on
 _br 'firefox-esr' desktop=^4 follow=on
 _br 'LibreWolf' desktop=^4 follow=on
-_br 'Brave-browser' desktop=^4 follow=on
 _br 'vivaldi-stable' desktop=^4 follow=on
 _br 'gopherus-sdl' desktop=^4 follow=on
 
@@ -160,6 +159,7 @@ _br 'VirtualBox Machine' desktop=^8 follow=on
 #bspc desktop 9 --layout stacked
 _br 'Chromium-browser' desktop=^9 follow=on
 _br 'Google-chrome' desktop=^9 follow=on
+_br 'Brave-browser' desktop=^9 follow=on
 _br 'Gimp-2.10' desktop=^9 follow=on
 _br 'Qmmp' desktop=^9 follow=on
 _br 'mplayer2' desktop=^9 follow=on

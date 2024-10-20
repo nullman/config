@@ -546,11 +546,11 @@ assign [class="VirtualBox Machine"] $workspace8
 # 9: Image, Video, and Audio
 assign [class="Chromium"] $workspace9
 assign [class="Google-chrome"] $workspace9
+assign [class="Brave-browser"] $workspace9
 assign [class="Gimp-2.10"] $workspace9
 assign [class="Qmmp"] $workspace9
 assign [class="mplayer2"] $workspace9
 assign [class="Lollypop"] $workspace9
-assign [class="LBRY"] $workspace9
 assign [class="spotify"] $workspace9
 assign [class="bluejeans-v2"] $workspace9
 
