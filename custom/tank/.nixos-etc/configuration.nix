@@ -179,7 +179,48 @@
   services.gnome.gnome-settings-daemon.enable = true;
 
   # gnome policy kit
-  security.polkit.enable = true;
+  security.polkit = {
+    enable = true;
+    extraConfig = ''
+      polkit.addRule(function(action, subject) {
+          if (action.id.indexOf("org.freedesktop.udisks2.") == 0 &&
+              subject.isInGroup("wheel")) {
+              return polkit.Result.YES;
+          }
+      });
+
+      polkit.addRule(function(action, subject) {
+          if ((action.id == "org.freedesktop.login1.power-off" ||
+               action.id == "org.freedesktop.login1.power-off-multiple-sessions" ||
+               action.id == "org.freedesktop.login1.reboot" ||
+               action.id == "org.freedesktop.login1.reboot-multiple-sessions" ||
+               action.id == "org.freedesktop.login1.hibernate" ||
+               action.id == "org.freedesktop.login1.suspend") &&
+              subject.isInGroup("users")) {
+              return polkit.Result.YES;
+          }
+      });
+
+      polkit.addRule(function(action, subject) {
+          if ((action.id == "org.freedesktop.upower.hibernate" ||
+               action.id == "org.freedesktop.upower.suspend") &&
+              subject.isInGroup("users")) {
+              return polkit.Result.YES;
+          }
+      });
+
+      /* allow users of network group to use blueman feature requiring root without authentication */
+      polkit.addRule(function(action, subject) {
+          if ((action.id == "org.blueman.network.setup" ||
+               action.id == "org.blueman.dhcp.client" ||
+               action.id == "org.blueman.rfkill.setstate" ||
+               action.id == "org.blueman.pppd.pppconnect") &&
+              subject.isInGroup("network")) {
+              return polkit.Result.YES;
+          }
+      });
+    '';
+  };
   systemd = {
     user.services.polkit-gnome-authentication-agent-1 = {
       description = "polkit-gnome-authentication-agent-1";
@@ -1132,7 +1173,7 @@
     # internet
     betterbird                              # Betterbird is a fine-tuned version of Mozilla Thunderbird, Thunderbird on steroids, if you will
     bore-cli                                # Rust tool to create TCP tunnels
-    #brave                                   # Privacy-oriented browser for Desktop and Laptop computers
+    brave                                   # Privacy-oriented browser for Desktop and Laptop computers
     chromium                                # Open source web browser from Google
     cointop                                 # Fastest and most interactive terminal based UI application for tracking cryptocurrencies
     dino                                    # Modern Jabber/XMPP Client using GTK/Vala
@@ -1142,7 +1183,7 @@
     firefox                                 # Web browser built from Firefox source tree
     freenet                                 # Decentralised and censorship-resistant network
     gajim                                   # Jabber client written in PyGTK
-    google-chrome                           # Freeware web browser developed by Google
+    #google-chrome                           # Freeware web browser developed by Google
     kristall                                # Graphical small-internet client, supports gemini, http, https, gopher, finger
     magic-wormhole                          # Securely transfer data between computers
     mop                                     # Simple stock tracker implemented in go
