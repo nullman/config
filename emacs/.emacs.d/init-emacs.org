@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2024-10-12 20:01 (user)>
+  #+TIMESTAMP: <2024-10-20 22:25 (user)>
 
 * Overview
   :PROPERTIES:
@@ -23652,7 +23652,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         :init (bash-completion-setup))
     #+END_SRC
 
-*** bbdb
+*** +bbdb+
     :PROPERTIES:
     :CUSTOM_ID: modules-bbdb
     :END:
@@ -23661,174 +23661,174 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
 
     http://savannah.nongnu.org/projects/bbdb/
 
-    #+BEGIN_SRC emacs-lisp
-      ;;------------------------------------------------------------------------------
-      ;;; Packages: bbdb
-      ;;------------------------------------------------------------------------------
-
-      (init-message 2 "Modules: bbdb")
-
-      (use-package bbdb
-        :straight t
-        :init
-        ;;(bbdb-initialize)
-        ;;(bbdb-initialize 'gnus 'message 'sc 'w3)
-        (bbdb-initialize 'gnus 'message 'sc)
-        :config
-        ;; the following settings were copied from here:
-        ;; http://emacs-fu.blogspot.com/2009/08/managing-e-mail-addresses-with-bbdb.html
-        ;; TODO: look at these settings
-        (setq bbdb-offer-save 1 ;; 1 means save-without-asking
-
-              bbdb-use-pop-up t      ;; allow popups for addresses
-              bbdb-electric-p t      ;; be disposable with SPC
-              bbdb-popup-target-lines 1 ;; very small
-
-              bbdb-dwim-net-address-allow-redundancy t ;; always use full name
-              bbdb-quiet-about-name-mismatches 2 ;; show name-mismatches 2 secs
-
-              bbdb-always-add-address t ;; add new addresses to existing contacts automatically
-              bbdb-canonicalize-redundant-nets-p t ;; x@foo.bar.cx => x@bar.cx
-
-              bbdb-completion-type nil ;; complete on anything
-
-              bbdb-complete-name-allow-cycling t ;; cycle through matches (only partially works)
-
-              bbbd-message-caching-enabled t ;; be fast
-              bbdb-use-alternate-names t     ;; use AKA
-
-              bbdb-elided-display t ;; single-line addresses
-
-              ;; auto-create addresses from mail
-              bbdb/mail-auto-create-p 'bbdb-ignore-some-messages-hook
-              bbdb-ignore-some-messages-alist ;; don't ask about fake addresses
-              ;; NOTE: there can be only one entry per header (such as To, From)
-              ;; http://flex.ee.uec.ac.jp/texi/bbdb/bbdb_11.html
-
-              '(("From" . "no.?reply\\|DAEMON\\|daemon\\|facebookmail\\|twitter"))))
-
+    #+BEGIN_SRC emacs-lisp :tangle no
       ;; ;;------------------------------------------------------------------------------
-      ;; ;;;; lookout
+      ;; ;;; Packages: bbdb
       ;; ;;------------------------------------------------------------------------------
 
-      ;; (init-message 3 "lookout")
+      ;; (init-message 2 "Modules: bbdb")
 
-      ;; ;; setup lookout for CSV import/export
-      ;; (use-package lookout
-      ;;   :straight (:type built-in)
-      ;;   :after (bbdb)
+      ;; (use-package bbdb
+      ;;   :straight t
+      ;;   :init
+      ;;   ;;(bbdb-initialize)
+      ;;   ;;(bbdb-initialize 'gnus 'message 'sc 'w3)
+      ;;   (bbdb-initialize 'gnus 'message 'sc)
       ;;   :config
-      ;;   (progn
-      ;;     ;; Thunderbird CSV fields:
-      ;;     ;;
-      ;;     ;; First Name, Last Name, Display Name, Nickname, Primary Email, Secondary
-      ;;     ;; Email, Work Phone, Home Phone, Fax Number, Pager Number, Mobile Number,
-      ;;     ;; Home Address, Home Address 2, Home City, Home State, Home ZipCode, Home
-      ;;     ;; Country, Work Address, Work Address 2, Work City, Work State, Work
-      ;;     ;; ZipCode, Work Country, Job Title, Department, Organization, Web Page 1,
-      ;;     ;; Web Page 2, Birth Year, Birth Month, Birth Day, Custom 1, Custom 2,
-      ;;     ;; Custom 3, Custom 4, Notes
+      ;;   ;; the following settings were copied from here:
+      ;;   ;; http://emacs-fu.blogspot.com/2009/08/managing-e-mail-addresses-with-bbdb.html
+      ;;   ;; TODO: look at these settings
+      ;;   (setq bbdb-offer-save 1 ;; 1 means save-without-asking
 
-      ;;     (defconst lookout-bbdb-mapping-table-thunderbird-english
-      ;;       '(("lastname" "Last Name")
-      ;;         ("firstname" "First Name")
-      ;;         ("company" "Organization" "Department" "Job Title")
-      ;;         ("net" "Primary Email" "Secondary Email")
-      ;;         ("phones" "Mobile Number" "Work Phone" "Home Phone")
-      ;;         ("addr1" "Home Address" "Home Address 2" "Home City" "Home State" "Home ZipCode" "Home Country")
-      ;;         ("addr2" "Work Address" "Work Address 2" "Work City" "Work State" "Work ZipCode" "Work Country")
-      ;;         ("addr3" "addr3")
-      ;;         ("notes" "Notes")
-      ;;         ("otherfields" "" ""))
-      ;;       ;; ("otherfields"
-      ;;       ;;  "group" "group"))
-      ;;       "Mapping table, usable for input from Thunderbird CSV export.")
-      ;;     (setq lookout-bbdb-mapping-table 'lookout-bbdb-mapping-table-thunderbird-english)
+      ;;         bbdb-use-pop-up t      ;; allow popups for addresses
+      ;;         bbdb-electric-p t      ;; be disposable with SPC
+      ;;         bbdb-popup-target-lines 1 ;; very small
 
-      ;;     ;; Outlook CSV fields:
-      ;;     ;;
-      ;;     ;; Title, First Name, Middle Name, Last Name, Suffix, Company, Department,
-      ;;     ;; Job Title, Business Street, Business Street 2, Business Street 3,
-      ;;     ;; Business City, Business State, Business Postal Code, Business Country,
-      ;;     ;; Home Street, Home Street 2, Home Street 3, Home City, Home State, Home
-      ;;     ;; Postal Code, Home Country, Other Street, Other Street 2, Other Street
-      ;;     ;; 3, Other City, Other State, Other Postal Code, Other Country,
-      ;;     ;; Assistant's Phone, Business Fax, Business Phone, Business Phone 2,
-      ;;     ;; Callback, Car Phone, Company Main Phone, Home Fax, Home Phone, Home
-      ;;     ;; Phone 2, ISDN, Mobile Phone, Other Fax, Other Phone, Pager, Primary
-      ;;     ;; Phone, Radio Phone, TTY/TDD Phone, Telex, Account, Anniversary,
-      ;;     ;; Assistant's Name, Billing Information, Birthday, Business Address PO
-      ;;     ;; Box, Categories, Children, Directory Server, E-mail Address, E-mail
-      ;;     ;; Type, E-mail Display Name, E-mail 2 Address, E-mail 2 Type, E-mail 2
-      ;;     ;; Display Name, E-mail 3 Address, E-mail 3 Type, E-mail 3 Display Name,
-      ;;     ;; Gender, Government ID Number, Hobby, Home Address PO Box, Initials,
-      ;;     ;; Internet Free Busy, Keywords, Language, Location, Manager's Name,
-      ;;     ;; Mileage, Notes, Office Location, Organizational ID Number, Other
-      ;;     ;; Address PO Box, Priority, Private, Profession, Referred By,
-      ;;     ;; Sensitivity, Spouse, User 1, User 2, User 3, User 4, Web Page
+      ;;         bbdb-dwim-net-address-allow-redundancy t ;; always use full name
+      ;;         bbdb-quiet-about-name-mismatches 2 ;; show name-mismatches 2 secs
 
-      ;;     (defconst lookout-bbdb-mapping-table-outlook-english
-      ;;       '(("lastname" "Last Name" "Suffix")
-      ;;         ("firstname" "Title" "First Name" "Middle Name")
-      ;;         ("company" "Company" "Department" "Job Title")
-      ;;         ("net" "E-mail Address" "E-mail 2 Address" "E-mail 3 Address")
-      ;;         ("phones" "Business Phone" "Business Phone 2"
-      ;;          "Home Phone" "Home Phone 2" "Mobile Phone" "Other Phone"
-      ;;          "Assistant's Phone" "Business Fax" "Car Phone" "Callback"
-      ;;          "Home Fax" "Other Fax" "Pager" "Primary Phone" "Radio Phone"
-      ;;          "TTY/TDD Phone" "Telex")
-      ;;         ("addr1" "Business Street" "Business Address PO Box" "Business Street 2" "Business Street 3"
-      ;;          "Business City" "Business State" "Business Postal Code" "Business Country")
-      ;;         ("addr2" "Home Street" "Home Address PO Box" "Home Street 2" "Home Street 3"
-      ;;          "Home City" "Home State" "Home Postal Code" "Home Country")
-      ;;         ("addr3" "Other Street" "Other Address PO Box" "Other Street 2" "Other Street 3"
-      ;;          "Other City" "Other State" "Other Postal Code" "Other Country")
-      ;;         ("notes" "Notes")
-      ;;         ("otherfields" "" ""))
-      ;;       ;; ("otherfields"
-      ;;       ;;  "Account" "Anniversary" "Assistant's Name" "Billing Information"
-      ;;       ;;  "Birthday" "Categories" "Children" "Directory Server" "Gender"
-      ;;       ;;  "Government ID Number" "Hobby" "Initials" "Internet Free Busy"
-      ;;       ;;  "Keywords" "Language" "Location" "Manager's Name" "Mileage"
-      ;;       ;;  "Office Location" "Organizational ID Number" "Priority" "Private"
-      ;;       ;;  "Profession" "Referred By" "Sensitivity" "Spouse"
-      ;;       ;;  "User 1" "User 2" "User 3" "User 4" "Web Page"))
-      ;;       "Mapping table, usable for input from Outlook CSV export.")
-      ;;     (setq lookout-bbdb-mapping-table 'lookout-bbdb-mapping-table-outlook-english)
+      ;;         bbdb-always-add-address t ;; add new addresses to existing contacts automatically
+      ;;         bbdb-canonicalize-redundant-nets-p t ;; x@foo.bar.cx => x@bar.cx
 
-      ;;     ;; (defconst lookout-bbdb-mapping-table-outlook-german
-      ;;     ;;   '(("lastname" "Nachname" "Suffix")
-      ;;     ;;     ("firstname" "Vorname" "Weitere Vornamen")
-      ;;     ;;     ("company" "Firma" "Abteilung" "Position")
-      ;;     ;;     ("net" "E-Mail-Adresse" "E-Mail 2: Adresse" "E-Mail 3: Adresse")
-      ;;     ;;     ("phones" "Telefon geschäftlich" "Telefon geschäftlich 2"
-      ;;     ;;      "Telefon privat" "Telefon privat 2" "Mobiltelefon" "Weiteres Telefon"
-      ;;     ;;      "Telefon Assistent" "Fax geschäftlich" "Autotelefon" "Telefon Firma"
-      ;;     ;;      "Fax privat" "Weiteres Fax" "Pager" "Haupttelefon" "Mobiltelefon 2"
-      ;;     ;;      "Telefon für Hörbehinderte" "Telex")
-      ;;     ;;     ("addr1" "Straße geschäftlich" "Straße geschäftlich 2"
-      ;;     ;;      "Straße geschäftlich 3" "Postleitzahl geschäftlich" "Ort geschäftlich"
-      ;;     ;;      "Region geschäftlich" "Land geschäftlich")
-      ;;     ;;     ("addr2" "Straße privat" "Straße privat 2" "Straße privat 3"
-      ;;     ;;      "Postleitzahl privat" "Ort privat" "Region privat" "Land privat")
-      ;;     ;;     ("addr3" "Weitere Straße" "Weitere Straße 2" "Weitere Straße 3"
-      ;;     ;;      "Weitere Postleitzahl" "Weiterer Ort" "Weitere Region" "Weiteres Land")
-      ;;     ;;     ("aka" "FIXME")
-      ;;     ;;     ("notes" "Notizen")
-      ;;     ;;     ("otherfields"
-      ;;     ;;      "Rückmeldung" "Abrechnungsinformation" "Benutzer 1"
-      ;;     ;;      "Benutzer 2" "Benutzer 3" "Benutzer 4" "Beruf" "Büro"
-      ;;     ;;      "Empfohlen von" "Geburtstag" "Geschlecht" "Hobby" "Initialen"
-      ;;     ;;      "Internet-Frei/Gebucht" "Jahrestag" "Kategorien" "Kinder" "Konto"
-      ;;     ;;      "Name Assistent" "Name des/der Vorgesetzten"
-      ;;     ;;      "Organisations-Nr." "Ort" "Partner" "Postfach" "Priorität" "Privat"
-      ;;     ;;      "Regierungs-Nr." "Reisekilometer" "Sprache" "Stichwörter"
-      ;;     ;;      "Vertraulichkeit" "Verzeichnisserver" "Webseite"))
-      ;;     ;;   "Sample mapping table, usable for input from German M$ Outlook.")
+      ;;         bbdb-completion-type nil ;; complete on anything
 
-      ;;     ;; alias for compatibility
-      ;;     ;;(defalias 'bbdb-add-new-field 'bbdb-insert-new-field)
-      ;;     ))
+      ;;         bbdb-complete-name-allow-cycling t ;; cycle through matches (only partially works)
+
+      ;;         bbbd-message-caching-enabled t ;; be fast
+      ;;         bbdb-use-alternate-names t     ;; use AKA
+
+      ;;         bbdb-elided-display t ;; single-line addresses
+
+      ;;         ;; auto-create addresses from mail
+      ;;         bbdb/mail-auto-create-p 'bbdb-ignore-some-messages-hook
+      ;;         bbdb-ignore-some-messages-alist ;; don't ask about fake addresses
+      ;;         ;; NOTE: there can be only one entry per header (such as To, From)
+      ;;         ;; http://flex.ee.uec.ac.jp/texi/bbdb/bbdb_11.html
+
+      ;;         '(("From" . "no.?reply\\|DAEMON\\|daemon\\|facebookmail\\|twitter"))))
+
+      ;; ;; ;;------------------------------------------------------------------------------
+      ;; ;; ;;;; lookout
+      ;; ;; ;;------------------------------------------------------------------------------
+
+      ;; ;; (init-message 3 "lookout")
+
+      ;; ;; ;; setup lookout for CSV import/export
+      ;; ;; (use-package lookout
+      ;; ;;   :straight (:type built-in)
+      ;; ;;   :after (bbdb)
+      ;; ;;   :config
+      ;; ;;   (progn
+      ;; ;;     ;; Thunderbird CSV fields:
+      ;; ;;     ;;
+      ;; ;;     ;; First Name, Last Name, Display Name, Nickname, Primary Email, Secondary
+      ;; ;;     ;; Email, Work Phone, Home Phone, Fax Number, Pager Number, Mobile Number,
+      ;; ;;     ;; Home Address, Home Address 2, Home City, Home State, Home ZipCode, Home
+      ;; ;;     ;; Country, Work Address, Work Address 2, Work City, Work State, Work
+      ;; ;;     ;; ZipCode, Work Country, Job Title, Department, Organization, Web Page 1,
+      ;; ;;     ;; Web Page 2, Birth Year, Birth Month, Birth Day, Custom 1, Custom 2,
+      ;; ;;     ;; Custom 3, Custom 4, Notes
+
+      ;; ;;     (defconst lookout-bbdb-mapping-table-thunderbird-english
+      ;; ;;       '(("lastname" "Last Name")
+      ;; ;;         ("firstname" "First Name")
+      ;; ;;         ("company" "Organization" "Department" "Job Title")
+      ;; ;;         ("net" "Primary Email" "Secondary Email")
+      ;; ;;         ("phones" "Mobile Number" "Work Phone" "Home Phone")
+      ;; ;;         ("addr1" "Home Address" "Home Address 2" "Home City" "Home State" "Home ZipCode" "Home Country")
+      ;; ;;         ("addr2" "Work Address" "Work Address 2" "Work City" "Work State" "Work ZipCode" "Work Country")
+      ;; ;;         ("addr3" "addr3")
+      ;; ;;         ("notes" "Notes")
+      ;; ;;         ("otherfields" "" ""))
+      ;; ;;       ;; ("otherfields"
+      ;; ;;       ;;  "group" "group"))
+      ;; ;;       "Mapping table, usable for input from Thunderbird CSV export.")
+      ;; ;;     (setq lookout-bbdb-mapping-table 'lookout-bbdb-mapping-table-thunderbird-english)
+
+      ;; ;;     ;; Outlook CSV fields:
+      ;; ;;     ;;
+      ;; ;;     ;; Title, First Name, Middle Name, Last Name, Suffix, Company, Department,
+      ;; ;;     ;; Job Title, Business Street, Business Street 2, Business Street 3,
+      ;; ;;     ;; Business City, Business State, Business Postal Code, Business Country,
+      ;; ;;     ;; Home Street, Home Street 2, Home Street 3, Home City, Home State, Home
+      ;; ;;     ;; Postal Code, Home Country, Other Street, Other Street 2, Other Street
+      ;; ;;     ;; 3, Other City, Other State, Other Postal Code, Other Country,
+      ;; ;;     ;; Assistant's Phone, Business Fax, Business Phone, Business Phone 2,
+      ;; ;;     ;; Callback, Car Phone, Company Main Phone, Home Fax, Home Phone, Home
+      ;; ;;     ;; Phone 2, ISDN, Mobile Phone, Other Fax, Other Phone, Pager, Primary
+      ;; ;;     ;; Phone, Radio Phone, TTY/TDD Phone, Telex, Account, Anniversary,
+      ;; ;;     ;; Assistant's Name, Billing Information, Birthday, Business Address PO
+      ;; ;;     ;; Box, Categories, Children, Directory Server, E-mail Address, E-mail
+      ;; ;;     ;; Type, E-mail Display Name, E-mail 2 Address, E-mail 2 Type, E-mail 2
+      ;; ;;     ;; Display Name, E-mail 3 Address, E-mail 3 Type, E-mail 3 Display Name,
+      ;; ;;     ;; Gender, Government ID Number, Hobby, Home Address PO Box, Initials,
+      ;; ;;     ;; Internet Free Busy, Keywords, Language, Location, Manager's Name,
+      ;; ;;     ;; Mileage, Notes, Office Location, Organizational ID Number, Other
+      ;; ;;     ;; Address PO Box, Priority, Private, Profession, Referred By,
+      ;; ;;     ;; Sensitivity, Spouse, User 1, User 2, User 3, User 4, Web Page
+
+      ;; ;;     (defconst lookout-bbdb-mapping-table-outlook-english
+      ;; ;;       '(("lastname" "Last Name" "Suffix")
+      ;; ;;         ("firstname" "Title" "First Name" "Middle Name")
+      ;; ;;         ("company" "Company" "Department" "Job Title")
+      ;; ;;         ("net" "E-mail Address" "E-mail 2 Address" "E-mail 3 Address")
+      ;; ;;         ("phones" "Business Phone" "Business Phone 2"
+      ;; ;;          "Home Phone" "Home Phone 2" "Mobile Phone" "Other Phone"
+      ;; ;;          "Assistant's Phone" "Business Fax" "Car Phone" "Callback"
+      ;; ;;          "Home Fax" "Other Fax" "Pager" "Primary Phone" "Radio Phone"
+      ;; ;;          "TTY/TDD Phone" "Telex")
+      ;; ;;         ("addr1" "Business Street" "Business Address PO Box" "Business Street 2" "Business Street 3"
+      ;; ;;          "Business City" "Business State" "Business Postal Code" "Business Country")
+      ;; ;;         ("addr2" "Home Street" "Home Address PO Box" "Home Street 2" "Home Street 3"
+      ;; ;;          "Home City" "Home State" "Home Postal Code" "Home Country")
+      ;; ;;         ("addr3" "Other Street" "Other Address PO Box" "Other Street 2" "Other Street 3"
+      ;; ;;          "Other City" "Other State" "Other Postal Code" "Other Country")
+      ;; ;;         ("notes" "Notes")
+      ;; ;;         ("otherfields" "" ""))
+      ;; ;;       ;; ("otherfields"
+      ;; ;;       ;;  "Account" "Anniversary" "Assistant's Name" "Billing Information"
+      ;; ;;       ;;  "Birthday" "Categories" "Children" "Directory Server" "Gender"
+      ;; ;;       ;;  "Government ID Number" "Hobby" "Initials" "Internet Free Busy"
+      ;; ;;       ;;  "Keywords" "Language" "Location" "Manager's Name" "Mileage"
+      ;; ;;       ;;  "Office Location" "Organizational ID Number" "Priority" "Private"
+      ;; ;;       ;;  "Profession" "Referred By" "Sensitivity" "Spouse"
+      ;; ;;       ;;  "User 1" "User 2" "User 3" "User 4" "Web Page"))
+      ;; ;;       "Mapping table, usable for input from Outlook CSV export.")
+      ;; ;;     (setq lookout-bbdb-mapping-table 'lookout-bbdb-mapping-table-outlook-english)
+
+      ;; ;;     ;; (defconst lookout-bbdb-mapping-table-outlook-german
+      ;; ;;     ;;   '(("lastname" "Nachname" "Suffix")
+      ;; ;;     ;;     ("firstname" "Vorname" "Weitere Vornamen")
+      ;; ;;     ;;     ("company" "Firma" "Abteilung" "Position")
+      ;; ;;     ;;     ("net" "E-Mail-Adresse" "E-Mail 2: Adresse" "E-Mail 3: Adresse")
+      ;; ;;     ;;     ("phones" "Telefon geschäftlich" "Telefon geschäftlich 2"
+      ;; ;;     ;;      "Telefon privat" "Telefon privat 2" "Mobiltelefon" "Weiteres Telefon"
+      ;; ;;     ;;      "Telefon Assistent" "Fax geschäftlich" "Autotelefon" "Telefon Firma"
+      ;; ;;     ;;      "Fax privat" "Weiteres Fax" "Pager" "Haupttelefon" "Mobiltelefon 2"
+      ;; ;;     ;;      "Telefon für Hörbehinderte" "Telex")
+      ;; ;;     ;;     ("addr1" "Straße geschäftlich" "Straße geschäftlich 2"
+      ;; ;;     ;;      "Straße geschäftlich 3" "Postleitzahl geschäftlich" "Ort geschäftlich"
+      ;; ;;     ;;      "Region geschäftlich" "Land geschäftlich")
+      ;; ;;     ;;     ("addr2" "Straße privat" "Straße privat 2" "Straße privat 3"
+      ;; ;;     ;;      "Postleitzahl privat" "Ort privat" "Region privat" "Land privat")
+      ;; ;;     ;;     ("addr3" "Weitere Straße" "Weitere Straße 2" "Weitere Straße 3"
+      ;; ;;     ;;      "Weitere Postleitzahl" "Weiterer Ort" "Weitere Region" "Weiteres Land")
+      ;; ;;     ;;     ("aka" "FIXME")
+      ;; ;;     ;;     ("notes" "Notizen")
+      ;; ;;     ;;     ("otherfields"
+      ;; ;;     ;;      "Rückmeldung" "Abrechnungsinformation" "Benutzer 1"
+      ;; ;;     ;;      "Benutzer 2" "Benutzer 3" "Benutzer 4" "Beruf" "Büro"
+      ;; ;;     ;;      "Empfohlen von" "Geburtstag" "Geschlecht" "Hobby" "Initialen"
+      ;; ;;     ;;      "Internet-Frei/Gebucht" "Jahrestag" "Kategorien" "Kinder" "Konto"
+      ;; ;;     ;;      "Name Assistent" "Name des/der Vorgesetzten"
+      ;; ;;     ;;      "Organisations-Nr." "Ort" "Partner" "Postfach" "Priorität" "Privat"
+      ;; ;;     ;;      "Regierungs-Nr." "Reisekilometer" "Sprache" "Stichwörter"
+      ;; ;;     ;;      "Vertraulichkeit" "Verzeichnisserver" "Webseite"))
+      ;; ;;     ;;   "Sample mapping table, usable for input from German M$ Outlook.")
+
+      ;; ;;     ;; alias for compatibility
+      ;; ;;     ;;(defalias 'bbdb-add-new-field 'bbdb-insert-new-field)
+      ;; ;;     ))
     #+END_SRC
 
 *** beacon
