@@ -13,7 +13,6 @@ _command() {
 }
 
 # shell colors
-# shell colors
 export COLOR_DEFAULT="\[\033[0m\]"      # light yellow
 export COLOR_BLACK="\[\033[0;30m\]"
 export COLOR_DARK_GRAY="\[\033[1;30m\]"
@@ -54,10 +53,12 @@ os="$(uname -s)"
 # set environmental vars
 export SHELL="$(command -v bash)"
 
-# auto-completion: ignore case
-bind "set completion-ignore-case on"
-# auto-completion: single tab list
-bind "set show-all-if-ambiguous on"
+if [[ -z "${INSIDE_EMACS}" ]] ; then
+    # auto-completion: ignore case
+    bind "set completion-ignore-case on"
+    # auto-completion: single tab list
+    bind "set show-all-if-ambiguous on"
+fi
 
 # command history
 export HISTFILE="${HOME}/.cache/bash_history"
@@ -69,18 +70,20 @@ shopt -s histappend    # allow multiple terminals to write to the history file
 PROMPT_COMMAND='history -a'  # this terminal should append to the history file
 
 # enable fzf fuzzy matching
-if [[ "${os}" == "Darwin" ]] ; then
-    [[ -d "/usr/local/opt/fzf/bin" ]] && [[ ! "${PATH}" == */usr/local/opt/fzf/bin* ]] && export PATH="${PATH}:/usr/local/opt/fzf/bin"
-    [[ -f "/usr/local/opt/fzf/shell/key-bindings.bash" ]] && source "/usr/local/opt/fzf/shell/key-bindings.bash" 2>&1
-    [[ -f "/usr/local/opt/fzf/shell/completion.bash" ]] && source "/usr/local/opt/fzf/shell/completion.bash" 2>&1
-elif $(uname -v | grep -q 'NixOS') ; then
-    if _command fzf-share ; then
-        source "$(fzf-share)/key-bindings.bash"
-        source "$(fzf-share)/completion.bash"
+if [[ -z "${INSIDE_EMACS}" ]] ; then
+    if [[ "${os}" == "Darwin" ]] ; then
+        [[ -d "/usr/local/opt/fzf/bin" ]] && [[ ! "${PATH}" == */usr/local/opt/fzf/bin* ]] && export PATH="${PATH}:/usr/local/opt/fzf/bin"
+        [[ -f "/usr/local/opt/fzf/shell/key-bindings.bash" ]] && source "/usr/local/opt/fzf/shell/key-bindings.bash" 2>&1
+        [[ -f "/usr/local/opt/fzf/shell/completion.bash" ]] && source "/usr/local/opt/fzf/shell/completion.bash" 2>&1
+    elif $(uname -v | grep -q 'NixOS') ; then
+        if _command fzf-share ; then
+            source "$(fzf-share)/key-bindings.bash"
+            source "$(fzf-share)/completion.bash"
+        fi
+    else
+        [[ -f "/usr/share/fzf/key-bindings.bash" ]] && source "/usr/share/fzf/key-bindings.bash" 2>&1
+        [[ -f "/usr/share/fzf/completion.bash" ]] && source "/usr/share/fzf/completion.bash" 2>&1
     fi
-else
-    [[ -f "/usr/share/fzf/key-bindings.bash" ]] && source "/usr/share/fzf/key-bindings.bash" 2>&1
-    [[ -f "/usr/share/fzf/completion.bash" ]] && source "/usr/share/fzf/completion.bash" 2>&1
 fi
 
 # fix home/end keys in screen/tmux
