@@ -63,8 +63,16 @@
   # open firewall ports
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 515 631 9100 ];
-    allowedUDPPorts = [ 515 631 9100 ];
+    #allowedTCPPorts = [ 515 631 9100 ];
+    #allowedUDPPorts = [ 515 631 9100 ];
+    allowedUDPPortRanges = [
+      { from = 1714; to = 1764; }
+      { from = 1714; to = 1764; }
+    ];
+    allowedTCPPortRanges = [
+      { from = 1714; to = 1764; }
+      { from = 1714; to = 1764; }
+    ];
     checkReversePath = "loose";
   };
   #networking.firewall.allowedTCPPorts = [ 30000 ]; # Foundry VTT
@@ -76,8 +84,8 @@
 
   # sysctl settings
   boot.kernel.sysctl = {
-    "fs.file-max" = 524288;        # open file descriptors limit (star citizen)
-    "vm.max_map_count" = 16777216; # maxmimum number of "memory map areas" a process can have (star citizen)
+    #"fs.file-max" = 524288;        # open file descriptors limit (star citizen)
+    #"vm.max_map_count" = 16777216; # maxmimum number of "memory map areas" a process can have (star citizen)
     "vm.swappiness" = 0;           # only use swap if needed; cat /proc/sys/vm/swappiness
     "vm.vfs_cache_pressure" = 50;  # cache inode and dentry information; cat /proc/sys/vm/vfs_cache_pressure
   };
@@ -113,13 +121,14 @@
   nixpkgs.overlays = [
     (final: prev: {
       binutils-ia16 = prev.callPackage /home/user/.nixos/pkgs/binutils-ia16 {};
+      crexx = prev.callPackage /home/user/.nixos/pkgs/crexx {};
       djgpp_i586 = prev.callPackage /home/user/.nixos/pkgs/djgpp { targetArchitecture = "i586"; };
       djgpp_i686 = prev.callPackage /home/user/.nixos/pkgs/djgpp { targetArchitecture = "i686"; };
       gcc-ia16 = prev.callPackage /home/user/.nixos/pkgs/gcc-ia16 {};
       #mtkclient = prev.callPackage /home/user/.nixos/pkgs/mtkclient {};
+      play = prev.callPackage /home/user/.nixos/pkgs/play {};
       #stow = prev.callPackage /home/user/.nixos/pkgs/stow {};
       syncterm = prev.callPackage /home/user/.nixos/pkgs/syncterm {};
-      #vdhcoapp = prev.callPackage /home/user/.nixos/pkgs/vdhcoapp {};
       #x48 = prev.callPackage /home/user/.nixos/pkgs/x48 {};
       #bspwm = prev.callPackage /home/user/code/github-nullman/bspwm {};
       #services.xserver.windowManager.bspwm = prev.callPackage /home/user/code/nixpkgs/pkgs/applications/window-managers/bspwm.nix {};
@@ -181,7 +190,48 @@
   services.gnome.gnome-settings-daemon.enable = true;
 
   # gnome policy kit
-  security.polkit.enable = true;
+  security.polkit = {
+    enable = true;
+    extraConfig = ''
+      polkit.addRule(function(action, subject) {
+          if (action.id.indexOf("org.freedesktop.udisks2.") == 0 &&
+              subject.isInGroup("wheel")) {
+              return polkit.Result.YES;
+          }
+      });
+
+      polkit.addRule(function(action, subject) {
+          if ((action.id == "org.freedesktop.login1.power-off" ||
+               action.id == "org.freedesktop.login1.power-off-multiple-sessions" ||
+               action.id == "org.freedesktop.login1.reboot" ||
+               action.id == "org.freedesktop.login1.reboot-multiple-sessions" ||
+               action.id == "org.freedesktop.login1.hibernate" ||
+               action.id == "org.freedesktop.login1.suspend") &&
+              subject.isInGroup("users")) {
+              return polkit.Result.YES;
+          }
+      });
+
+      polkit.addRule(function(action, subject) {
+          if ((action.id == "org.freedesktop.upower.hibernate" ||
+               action.id == "org.freedesktop.upower.suspend") &&
+              subject.isInGroup("users")) {
+              return polkit.Result.YES;
+          }
+      });
+
+      /* allow users of network group to use blueman feature requiring root without authentication */
+      polkit.addRule(function(action, subject) {
+          if ((action.id == "org.blueman.network.setup" ||
+               action.id == "org.blueman.dhcp.client" ||
+               action.id == "org.blueman.rfkill.setstate" ||
+               action.id == "org.blueman.pppd.pppconnect") &&
+              subject.isInGroup("network")) {
+              return polkit.Result.YES;
+          }
+      });
+    '';
+  };
   systemd = {
     user.services.polkit-gnome-authentication-agent-1 = {
       description = "polkit-gnome-authentication-agent-1";
@@ -344,16 +394,23 @@
   services.picom.enable = true;
 
   # pulse audio
-  hardware.pulseaudio.enable = true;
-  hardware.pulseaudio.support32Bit = true;
-  nixpkgs.config.pulseaudio = true;
-  #hardware.pulseaudio.extraConfig = "load-module module-combine-sink";
-  #hardware.pulseaudio.extraConfig = "unload-module module-suspend-on-idle";
   security.rtkit.enable = true;
+  hardware.pulseaudio = {
+    enable = true;
+    support32Bit = true;
+  };
+  nixpkgs.config.pulseaudio = true;
+  hardware.pulseaudio.extraConfig = ''
+    load-module module-combine-sink
+    unload-module module-suspend-on-idle
+    load-module module-switch-on-connect
+    load-module module-bluetooth-policy
+    load-module module-bluetooth-discover
+  '';
+  hardware.pulseaudio.extraModules = [ pkgs.pulseaudio-modules-bt ];
   hardware.bluetooth.hsphfpd.enable = true;
 
   ## pipewire
-  #sound.enable = true;
   #security.rtkit.enable = true;
   #services.pipewire = {
   #  enable = true;
@@ -361,18 +418,32 @@
   #  alsa.enable = true;
   #  alsa.support32Bit = true;
   #  jack.enable = true;
+  #  wireplumber.extraConfig.bluetoothEnhancements = {
+  #    "monitor.bluez.properties" = {
+  #      "bluez5.enable-sbc-xq" = true;
+  #      "bluez5.enable-msbc" = true;
+  #      "bluez5.enable-hw-volume" = true;
+  #      "bluez5.roles" = [ "a2dp_sink" "a2dp_source" "bap_sink" "bap_source" "hsp_hs" "hsp_ag" "hfp_hf" "hfp_ag" ];
+  #    };
+  #  };
+  #  # extraConfig.pipewire."92-low-latency" = {
+  #  #   context.properties = {
+  #  #     default.clock.rate = 48000;
+  #  #     default.clock.quantum = 32;
+  #  #     default.clock.min-quantum = 32;
+  #  #     default.clock.max-quantum = 32;
+  #  #   };
+  #  # };
   #};
+  #hardware.bluetooth.hsphfpd.enable = false;
+  #systemd.user.services.pipewire-pulse.path = [ pkgs.pulseaudio ];
 
   # bluetooth
   hardware.bluetooth = {
     enable = true;
+    powerOnBoot = true;
     #hsphfpd.enable = true;                # pulse audio
     #hsphfpd.enable = false;               # pipewire
-    settings = {
-      General = {
-        Enable = "Source,Sink,Media,Socket";
-      };
-    };
   };
   services.blueman.enable = true;
 
@@ -512,10 +583,10 @@
   #  musicDirectory = "/home/data/media/Audio/MPD";
   #  playlistDirectory = "/home/data/media/Audio/Playlists";
   #  extraConfig = ''
-  #    #audio_output {
-  #    #  type "pulse"
-  #    #  name "PulseAudio Output"
-  #    #}
+  #    # audio_output {
+  #    #   type "pulse"
+  #    #   name "PulseAudio Output"
+  #    # }
   #    audio_output {
   #      type "pipewire"
   #      name "PipeWire Output"
@@ -658,12 +729,15 @@
     aspell                                  # Spell checker for many languages
     aspellDicts.en                          # Aspell dictionary for English
     auto-cpufreq                            # Automatic CPU speed & power optimizer for Linux
+    bandwhich                               # CLI utility for displaying current network utilization
     bluez                                   # Official Linux Bluetooth protocol stack
     bluez-tools                             # Set of tools to manage bluetooth devices for linux
+    #binsider                                # Analyzer of executables using a terminal user interface
     brightnessctl                           # This program allows you read and control device brightness
     bzip2                                   # High-quality data compression program
     clipmenu                                # Clipboard management using dmenu
     cifs-utils                              # Tools for managing Linux CIFS client filesystems
+    comma                                   # Runs programs without installing them
     coreutils                               # GNU Core Utilities
     curl                                    # Command line tool for transferring files with URL syntax
     direnv                                  # Shell extension that manages your environment
@@ -673,6 +747,7 @@
     emacs                                   # Extensible, customizable GNU text editor
     exfat                                   # Free exFAT file system implementation
     exfatprogs                              # exFAT filesystem userspace utilities
+    fastfetch                               # Like neofetch, but much faster because written in C
     file                                    # Program that shows the type of files
     findutils                               # GNU Find Utilities, the basic directory searching utilities of the GNU operating system
     fortune                                 # Program that displays a pseudorandom message from a database of quotations
@@ -685,6 +760,7 @@
     gnutar                                  # GNU implementation of the `tar' archiver
     gzip                                    # GNU zip compression program
     hdparm                                  # Tool to get/set ATA/SATA drive parameters under Linux
+    helvum                                  # GTK patchbay for pipewire
     hfsprogs                                # HFS/HFS+ user space utils
     imagemagick                             # Software suite to create, edit, compose, or convert bitmap images
     imwheel                                 # Mouse wheel configuration tool for XFree86/Xorg
@@ -704,7 +780,9 @@
     man-db                                  # Implementation of the standard Unix documentation system accessed using the man command
     man-pages                               # Linux development manual pages
     menumaker                               # Heuristics-driven menu generator for several window managers
+    moreutils                               # Growing collection of the unix tools that nobody thought to write long ago wh...
     mtools                                  # Utilities to access MS-DOS disks
+    multitail                               # tail on Steroids
     neofetch                                # Fast, highly customizable system info script
     nettools                                # Set of tools for controlling the network subsystem in Linux
     nfs-utils                               # Linux user-space NFS utilities
@@ -715,12 +793,14 @@
     openssl                                 # Cryptographic library that implements the SSL and TLS protocols
     p7zip                                   # New p7zip fork with additional codecs and improvements (forked from https://sourceforge.net/projects/p7zip/)
     parted                                  # Create, destroy, resize, check, and copy partitions
+    #pavucontrol                             # PulseAudio Volume Control
     pciutils                                # Collection of programs for inspecting and manipulating configuration of PCI devices
-    pipewire                                # Server and user space API to deal with multimedia pipelines
     pkg-config                              # Tool that allows packages to find out information about other packages (wrapper script)
+    #pipewire                                # Server and user space API to deal with multimedia pipelines
     psmisc                                  # Set of small useful utilities that use the proc filesystem (such as fuser, killall and pstree)
-    pulseaudio                              # Sound server for POSIX and Win32 systems
-    pulseaudio-ctl                          # Control pulseaudio volume from the shell or mapped to keyboard shortcuts. No need for alsa-utils
+    #pulseaudioFull                          # Sound server for POSIX and Win32 systems
+    #pulseaudio                              # Sound server for POSIX and Win32 systems
+    #pulseaudio-ctl                          # Control pulseaudio volume from the shell or mapped to keyboard shortcuts. No need for alsa-utils
     ripgrep                                 # Utility that combines the usability of The Silver Searcher with the raw speed of grep
     rsync                                   # Fast incremental file transfer utility
     samba                                   # Standard Windows interoperability suite of programs for Linux and Unix
@@ -735,9 +815,11 @@
     tmux                                    # Terminal multiplexer
     traceroute                              # Tracks the route taken by packets over an IP network
     trash-cli                               # Command line interface to the freedesktop.org trashcan
+    tree                                    # Command to produce a depth indented directory listing
     ufiformat                               # Low-level disk formatting utility for USB floppy drives
     unzip                                   # Extraction utility for archives compressed in .zip format
     usbutils                                # Tools for working with USB devices, such as lsusb
+    veracrypt                               # Free Open-Source filesystem on-the-fly encryption
     vim                                     # Most popular clone of the VI editor
     wget                                    # Tool for retrieving files using HTTP, HTTPS, and FTP
     woeusb                                  # Create bootable USB disks from Windows ISO images
@@ -880,15 +962,21 @@
     blender                                 # 3D Creation/Animation/Publishing System
     calibre                                 # Comprehensive e-book software
     celluloid                               # Simple GTK frontend for the mpv video player
+    cheesecutter                            # Tracker program for composing music for the SID chip
     cider                                   # New look into listening and enjoying Apple Music in style and performance
     electrum                                # Lightweight Bitcoin wallet
     evince                                  # GNOME's document viewer
+    freecad                                 # General purpose Open Source 3D CAD/MCAD/CAx/CAE/PLM modeler
     freetube                                # Open Source YouTube app for privacy
+    furnace                                 # Multi-system chiptune tracker compatible with DefleMask modules
+    #goattracker                             # Crossplatform music editor for creating Commodore 64 music. Uses reSID librar...
+    goattracker-stereo                      # Crossplatform music editor for creating Commodore 64 music. Uses reSID librar...
     gimp                                    # GNU Image Manipulation Program
     gphoto2                                 # Ready to use set of digital camera software applications
     gphoto2fs                               # Fuse FS to mount a digital camera
     inkscape                                # Vector graphics editor
     kdenlive glaxnimate                     # Video editor
+    kicad                                   # Open Source Electronics Design Automation suite
     libreoffice                             # Comprehensive, professional-quality productivity suite, a variant of openoffice.org
     lmms                                    # DAW similar to FL Studio (music production software)
     mpv                                     # General-purpose media player, fork of MPlayer and mplayer2
@@ -911,6 +999,7 @@
     # utilities
     appimage-run                            #
     bitwarden                               # A secure and free password manager for all of your devices
+    cherrytree                              # Hierarchical note taking application
     dmg2img                                 # Apple's compressed dmg to standard (hfsplus) image disk file convert tool
     easytag                                 # View and edit tags for various audio files
     ffmpeg_6-full                           # Complete, cross-platform solution to record, convert and stream audio and video
@@ -926,6 +1015,8 @@
     grip id3lib                             # GTK-based audio CD player/ripper
     gtkimageview                            # Image viewer widget for GTK
     handbrake libdvdcss libaacs libbluray   # Tool for converting video files and ripping DVDs
+    kdeconnect                              # KDE Connect provides several features to integrate your phone and your computer
+    libation                                # Audible audiobook manager
     livecaptions                            # Linux Desktop application that provides live captioning
     makemkv                                 # Convert blu-ray and dvd to mkv
     mediawriter                             # Tool to write images files to portable media
@@ -947,7 +1038,7 @@
     du-dust                                 # du + rust = dust. Like du but more intuitive
     elinks                                  # Full-featured text-mode web browser
     gopher                                  # Ncurses gopher client
-    gomuks                                  # A terminal based Matrix client written in Go
+    #gomuks                                  # A terminal based Matrix client written in Go
     hexedit                                 # View and edit files in hexadecimal or in ASCII
     hexyl                                   # Command-line hex viewer
     htop                                    # Interactive process viewer
@@ -958,6 +1049,7 @@
     mc                                      # File Manager and User Shell for the GNU Project, known as Midnight Commander
     mcabber                                 # Small Jabber console client
     mop                                     # Simple stock tracker implemented in go
+    #play                                    # A TUI playground for your favorite programs, such as grep, sed and awk
     ncmpcpp                                 # Featureful ncurses based MPD client inspired by ncmpc
     orpie                                   # Curses-based RPN calculator
     phetch                                  # Quick lil gopher client for your terminal, written in rust
@@ -1035,7 +1127,7 @@
     # internet
     betterbird                              # Betterbird is a fine-tuned version of Mozilla Thunderbird, Thunderbird on steroids, if you will
     bore-cli                                # Rust tool to create TCP tunnels
-    #brave                                   # Privacy-oriented browser for Desktop and Laptop computers
+    brave                                   # Privacy-oriented browser for Desktop and Laptop computers
     chromium                                # Open source web browser from Google
     cointop                                 # Fastest and most interactive terminal based UI application for tracking cryptocurrencies
     dino                                    # Modern Jabber/XMPP Client using GTK/Vala
@@ -1045,12 +1137,13 @@
     firefox                                 # Web browser built from Firefox source tree
     freenet                                 # Decentralised and censorship-resistant network
     gajim                                   # Jabber client written in PyGTK
-    google-chrome                           # Freeware web browser developed by Google
+    #google-chrome                           # Freeware web browser developed by Google
     kristall                                # Graphical small-internet client, supports gemini, http, https, gopher, finger
     magic-wormhole                          # Securely transfer data between computers
     mop                                     # Simple stock tracker implemented in go
     ncgopher                                # Gopher and gemini client for the modern internet
     nyxt                                    # Infinitely extensible web-browser (with Lisp development files using WebKitGTK platform port)
+    opensnitch opensnitch-ui                # Application firewall
     pidgin                                  # Multi-protocol instant messaging client
     slack                                   # Desktop client for Slack
     simplex-chat-desktop                    # Desktop application for SimpleX Chat
@@ -1061,9 +1154,11 @@
     tuba                                    # Browse the Fediverse
     #ungoogled-chromium                      # Open source web browser from Google, with dependencies on Google web services removed
     vdhcoapp                                # Companion application for the Video DownloadHelper browser add-on
+    webwormhole                             # Send files using peer authenticated WebRTC
     zoom-us                                 # zoom.us video conferencing application
 
     # emulators
+    anbox                                   # Android in a box
     basiliskii                              # 68k Macintosh emulator
     dosbox                                  # DOS emulator
     dosbox-x                                # Cross-platform DOS emulator based on the DOSBox project
@@ -1102,8 +1197,10 @@
     ccache                                  # Compiler cache for fast recompilation of C/C++ code
     clang                                   # C language family frontend for LLVM (wrapper script)
     cmake                                   # Cross-platform, open-source build system generator
+    #crexx                                   #
     csvkit                                  # Suite of command-line tools for converting to and working with CSV
     ctags                                   # Tool for fast source code browsing (exuberant ctags)
+    djgpp_i586                              # Complete 32-bit GNU-based development system for Intel x86 PCs running DOS
     djgpp_i686                              # Complete 32-bit GNU-based development system for Intel x86 PCs running DOS
     flex                                    # Fast lexical analyser generator
     fpc                                     # Free Pascal Compiler from a source distribution
@@ -1114,6 +1211,7 @@
     gmp                                     # GNU multiple precision arithmetic library
     gnumake                                 # Tool to control the generation of non-source files from sources
     gnuplot                                 # Portable command-line driven graphing utility for many platforms
+    go                                      # Go Programming language
     gpp                                     # General-purpose preprocessor with customizable syntax
     graphviz                                # Graph visualization tools
     gradle                                  # Enterprise-grade build system
@@ -1153,7 +1251,7 @@
     zlib                                    # Lossless data-compression library
 
     # ai
-    alpaca                                  # Ollama client made with GTK4 and Adwaita
+    #alpaca                                  # Ollama client made with GTK4 and Adwaita
     imaginer                                # Imaginer with AI
     ollama                                  # Get up and running with large language models locally
     tabby                                   # Self-hosted AI coding assistant
@@ -1234,7 +1332,7 @@
   system.copySystemConfiguration = true;
 
   # nixos system version
-  system.stateVersion = "23.05";
+  system.stateVersion = "24.05";
 }
 
 #===============================================================================

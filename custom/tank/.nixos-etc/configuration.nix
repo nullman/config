@@ -52,8 +52,8 @@
   # open firewall ports
   networking.firewall = {
     enable = true;
-    #allowedTCPPorts = [ 515 631 9100 ];
-    #allowedUDPPorts = [ 515 631 9100 ];
+    allowedTCPPorts = [ 515 631 9100 ];
+    allowedUDPPorts = [ 515 631 9100 ];
     allowedUDPPortRanges = [
       { from = 1714; to = 1764; }
       { from = 1714; to = 1764; }
@@ -94,6 +94,8 @@
     nvidia.acceptLicense = true;
     joypixels.acceptLicense = true;
     permittedInsecurePackages = [
+      "betterbird-115.9.0"
+      "betterbird-unwrapped-115.9.0"
       "electron-12.2.3"
       "electron-24.8.6"
       "openssl-1.1.1w"
@@ -754,6 +756,7 @@
     bzip2                                   # High-quality data compression program
     clipmenu                                # Clipboard management using dmenu
     cifs-utils                              # Tools for managing Linux CIFS client filesystems
+    comma                                   # Runs programs without installing them
     coreutils                               # GNU Core Utilities
     curl                                    # Command line tool for transferring files with URL syntax
     direnv                                  # Shell extension that manages your environment

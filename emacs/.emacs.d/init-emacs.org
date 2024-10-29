@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2024-10-20 22:25 (user)>
+  #+TIMESTAMP: <2024-10-28 23:23 (user)>
 
 * Overview
   :PROPERTIES:
@@ -2600,6 +2600,8 @@
     :PROPERTIES:
     :CUSTOM_ID: environment-mode-line
     :END:
+
+    Custom mode line mode. Replaced by [[doom-modeline][=doom-modeline=]].
 
     #+BEGIN_SRC emacs-lisp :tangle no
       ;; ;;------------------------------------------------------------------------------
@@ -27770,6 +27772,8 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
     :CUSTOM_ID: packages-olivetti
     :END:
 
+    Minor mode to automatically balance window margins.
+
     #+BEGIN_SRC emacs-lisp
       ;;------------------------------------------------------------------------------
       ;;; Packages: olivetti
@@ -29743,7 +29747,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         :straight t
         :custom
         (visual-fill-column-center-text t)
-        (visual-fill-column-width 120))
+        (visual-fill-column-width 80))
     #+END_SRC
 
 *** w3m

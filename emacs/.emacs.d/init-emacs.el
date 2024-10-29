@@ -19019,7 +19019,7 @@ otherwise run `find-file-as-root'."
   :straight t
   :custom
   (visual-fill-column-center-text t)
-  (visual-fill-column-width 120))
+  (visual-fill-column-width 80))
 ;; visual-fill-column:1 ends here
 
 ;; [[file:init-emacs.org::*w3m][w3m:2]]

@@ -443,14 +443,23 @@ distribution () {
             arch|manjaro)
                 dist="arch"
                 ;;
-            fedora|rhel|centos)
-                dist="redhat"
+            debian|ubuntu)
+                dist="debian"
                 ;;
             gentoo)
                 dist="gentoo"
                 ;;
+            guix)
+                dist="guix"
+                ;;
             nixos)
                 dist="nixos"
+                ;;
+            qubes)
+                dist="qubes"
+                ;;
+            rhel|fedora|centos)
+                dist="redhat"
                 ;;
             slackware)
                 dist="slackware"
@@ -458,29 +467,35 @@ distribution () {
             sles|opensuse*)
                 dist="suse"
                 ;;
-            ubuntu|debian)
-                dist="debian"
-                ;;
             *)
                 if [ -n "${ID_LIKE}" ] ; then
                     case ${ID_LIKE} in
-                        *arch*)
+                        *arch*|*manjaro*)
                             dist="arch"
                             ;;
-                        *fedora*|*rhel*|*centos*)
-                            dist="redhat"
-                            ;;
-                        *sles*|*opensuse*)
-                            dist="suse"
-                            ;;
-                        *ubuntu*|*debian*)
+                        *debian*|*ubuntu*)
                             dist="debian"
                             ;;
                         *gentoo*)
                             dist="gentoo"
                             ;;
+                        *guix*)
+                            dist="guix"
+                            ;;
+                        *nixos*)
+                            dist="nixos"
+                            ;;
+                        *qubes*)
+                            dist="qubes"
+                            ;;
+                        *rhel*|*fedora*|*centos*)
+                            dist="redhat"
+                            ;;
                         *slackware*)
                             dist="slackware"
+                            ;;
+                        *sles*|*opensuse*)
+                            dist="suse"
                             ;;
                     esac
                 fi
@@ -1291,7 +1306,6 @@ yasis() {
 # debian
 #
 #        acsg                    apt-cache search with grep
-#
 acsg() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: acsg QUERY"
@@ -1300,9 +1314,17 @@ acsg() {
     fi
 }
 
+if [[ "$(distribution)" == "guix" ]] ; then
 #
 # guix
 #
+#        ,                       temporarily install and run program
+function , {
+    pkg_ver="$(set -o pipefail; guix locate "$1" | grep /bin/ | head -1 | cut -f1)"
+    pkg="$(echo $pkg_ver | cut -d@ -f1)"
+    test -n "$pkg" && guix shell "$pkg" -- "$@"
+}
+fi
 
 #
 # nixos
