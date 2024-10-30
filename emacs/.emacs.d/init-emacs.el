@@ -946,40 +946,45 @@ Common values:
 ;; General:29 ends here
 
 ;; [[file:init-emacs.org::*General][General:30]]
+;; display fill column indictator in programming modes
+(add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
+;; General:30 ends here
+
+;; [[file:init-emacs.org::*General][General:31]]
 ;; set default comment column for in-line comments
 (setq comment-column 40)
 (setq-default comment-column comment-column)
 ;; set default comment fill column for in-line comments
 (setq comment-fill-column nil)
 (setq-default comment-fill-column comment-fill-column)
-;; General:30 ends here
-
-;; [[file:init-emacs.org::*General][General:31]]
-;; turn on goal column support
-(put 'set-goal-column 'disabled nil)
 ;; General:31 ends here
 
 ;; [[file:init-emacs.org::*General][General:32]]
+;; turn on goal column support
+(put 'set-goal-column 'disabled nil)
+;; General:32 ends here
+
+;; [[file:init-emacs.org::*General][General:33]]
 ;; insert one space after a sentence when filling text
 (setq sentence-end-double-space nil)
 ;; insert one space after a colon when filling text
 (setq colon-double-space nil)
-;; General:32 ends here
+;; General:33 ends here
 
-;; [[file:init-emacs.org::*General][General:34]]
+;; [[file:init-emacs.org::*General][General:35]]
 ;; highlight matching parenthesis
 (show-paren-mode 1)
 (set-face-foreground 'show-paren-match color-paren)
 (set-face-attribute 'show-paren-match nil :weight 'extra-bold)
-;; General:34 ends here
-
-;; [[file:init-emacs.org::*General][General:35]]
-;; highlight tabs
-(setq highlight-tabs t)
-(setq-default highlight-tabs highlight-tabs)
 ;; General:35 ends here
 
 ;; [[file:init-emacs.org::*General][General:36]]
+;; highlight tabs
+(setq highlight-tabs t)
+(setq-default highlight-tabs highlight-tabs)
+;; General:36 ends here
+
+;; [[file:init-emacs.org::*General][General:37]]
 ;; ;; highlight trailing white spaces
 ;; (setq show-trailing-whitespace t)
 ;; (setq-default show-trailing-whitespace show-trailing-whitespace)
@@ -992,68 +997,68 @@ Common values:
         (newline-mark 10 [182 10]) ; 10 linefeed '\n', 182 ??? '¶'
         (tab-mark 9 [9655 9] [92 9])))    ; 9 tab '\t', 9655 '▷', 92 backslash '\'
 (global-whitespace-mode 1)              ; enable whitespace mode everywhere
-;; General:36 ends here
-
-;; [[file:init-emacs.org::*General][General:37]]
-;; highlight current line
-(hl-line-mode 1)
-(global-hl-line-mode 1)
 ;; General:37 ends here
 
 ;; [[file:init-emacs.org::*General][General:38]]
-;; turn on global font lock mode and syntax highlighting
-(global-font-lock-mode 1)
-(setq font-lock-maximum-decoration t)
+;; highlight current line
+(hl-line-mode 1)
+(global-hl-line-mode 1)
 ;; General:38 ends here
 
 ;; [[file:init-emacs.org::*General][General:39]]
-;; replace highlighted text with typed text
-(delete-selection-mode 1)
+;; turn on global font lock mode and syntax highlighting
+(global-font-lock-mode 1)
+(setq font-lock-maximum-decoration t)
 ;; General:39 ends here
 
 ;; [[file:init-emacs.org::*General][General:40]]
+;; replace highlighted text with typed text
+(delete-selection-mode 1)
+;; General:40 ends here
+
+;; [[file:init-emacs.org::*General][General:41]]
 ;; ;; set comment start (default) and padding
 ;; (setq comment-start "#"
 ;;       comment-padding " ")
 ;; set comment style
 (setq comment-style 'indent)
-;; General:40 ends here
-
-;; [[file:init-emacs.org::*General][General:41]]
-(setq enable-recursive-minibuffers t)
-(minibuffer-depth-indicate-mode 1)
 ;; General:41 ends here
 
-;; [[file:init-emacs.org::*General][General:43]]
+;; [[file:init-emacs.org::*General][General:42]]
+(setq enable-recursive-minibuffers t)
+(minibuffer-depth-indicate-mode 1)
+;; General:42 ends here
+
+;; [[file:init-emacs.org::*General][General:44]]
 ;; make apropos command search all symbols
 (setq apropos-do-all t)
 
 ;; make apropos command list results by relevance
 (setq apropos-sort-by-scores t
       apropos-documentation-sort-by-scores t)
-;; General:43 ends here
+;; General:44 ends here
 
-;; [[file:init-emacs.org::*General][General:44]]
+;; [[file:init-emacs.org::*General][General:45]]
 ;; display customize menu entries and tag names as symbols
 (setq custom-unlispify-menu-entries nil
       custom-unlispify-tag-names nil)
 (setq-default custom-unlispify-menu-entries custom-unlispify-menu-entries
               custom-unlispify-tag-names custom-unlispify-tag-names)
-;; General:44 ends here
-
-;; [[file:init-emacs.org::*General][General:45]]
-;; set grep command
-(setq grep-command "grep -n -H -i -r -e ")
 ;; General:45 ends here
 
 ;; [[file:init-emacs.org::*General][General:46]]
+;; set grep command
+(setq grep-command "grep -n -H -i -r -e ")
+;; General:46 ends here
+
+;; [[file:init-emacs.org::*General][General:47]]
 ;; email settings
 (setq mail-sources `((pop :server "pop.gmail.com" :port 995
                           :user ,user-mail-address
                           :connection ssl :leave t)))
-;; General:46 ends here
+;; General:47 ends here
 
-;; [[file:init-emacs.org::*General][General:47]]
+;; [[file:init-emacs.org::*General][General:48]]
 ;; set default browser
 ;;(setq browse-url-browser-function #'browse-url-default-browser)
 ;;(setq browse-url-generic-program "x-www-browser")
@@ -1067,24 +1072,24 @@ Common values:
       browse-url-firefox-new-window-is-tab t)
 ;; set secondary browser
 (setq browse-url-secondary-browser-function #'browse-url-default-browser)
-;; General:47 ends here
+;; General:48 ends here
 
-;; [[file:init-emacs.org::*General][General:48]]
+;; [[file:init-emacs.org::*General][General:49]]
 ;; when deleting an active region via single character deletion command,
 ;; do not save to kill ring
 (setq delete-active-region t)
-;; General:48 ends here
+;; General:49 ends here
 
-;; [[file:init-emacs.org::*General][General:51]]
+;; [[file:init-emacs.org::*General][General:52]]
 ;; always recenter after `occur-mode-goto-occurrence'
 (defun occur-mode-goto-occurrence--recenter (&optional arg)
   "Recenter when an `occur' result is selected."
   (recenter))
 ;; advise `occur-mode-goto-occurrence'
 (advice-add 'occur-mode-goto-occurrence :after #'occur-mode-goto-occurrence--recenter)
-;; General:51 ends here
+;; General:52 ends here
 
-;; [[file:init-emacs.org::*General][General:52]]
+;; [[file:init-emacs.org::*General][General:53]]
 ;; set display-time-world time zones
 (setq display-time-world-list
       '(("Etc/UTC" "UTC")
@@ -1095,7 +1100,7 @@ Common values:
         ("Europe/London" "London")
         ("Europe/Paris" "Paris")
         ("Asia/Tokyo" "Tokyo")))
-;; General:52 ends here
+;; General:53 ends here
 
 ;; [[file:init-emacs.org::*System][System:1]]
 ;;------------------------------------------------------------------------------
@@ -16134,19 +16139,19 @@ USING is the remaining peg."
   :bind* ("M-#" . calc-dispatch))
 ;; calc:1 ends here
 
-;; [[file:init-emacs.org::*casual-lib][casual-lib:1]]
+;; [[file:init-emacs.org::*casual][casual:1]]
 ;;------------------------------------------------------------------------------
-;;; Packages: casual-lib
+;;; Packages: casual
 ;;------------------------------------------------------------------------------
 
-(init-message 2 "Packages: casual-lib")
+(init-message 2 "Packages: casual")
 
-(use-package casual-lib
-  :straight (casual-lib
+(use-package casual
+  :straight (casual
              :type git
              :host github
-             :repo "kickingvegas/casual-lib"))
-;; casual-lib:1 ends here
+             :repo "kickingvegas/casual"))
+;; casual:1 ends here
 
 ;; [[file:init-emacs.org::*casual-calc][casual-calc:1]]
 ;;------------------------------------------------------------------------------

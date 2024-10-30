@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2024-10-28 23:23 (user)>
+  #+TIMESTAMP: <2024-10-29 01:04 (user)>
 
 * Overview
   :PROPERTIES:
@@ -1861,6 +1861,13 @@
       ;; set default fill column for `auto-fill-mode' mode and `fill-paragraph'
       (setq fill-column custom-fill-column)
       (setq-default fill-column fill-column)
+    #+END_SRC
+
+    Display fill column indictator in programming modes.
+
+    #+BEGIN_SRC emacs-lisp
+      ;; display fill column indictator in programming modes
+      (add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
     #+END_SRC
 
     Set default right-margin comment indent column to 40. Have
@@ -24040,23 +24047,23 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         :bind* ("M-#" . calc-dispatch))
     #+END_SRC
 
-*** casual-lib
+*** casual
     :PROPERTIES:
-    :CUSTOM_ID: packages-casual-lib
+    :CUSTOM_ID: packages-casual
     :END:
 
     #+BEGIN_SRC emacs-lisp
       ;;------------------------------------------------------------------------------
-      ;;; Packages: casual-lib
+      ;;; Packages: casual
       ;;------------------------------------------------------------------------------
 
-      (init-message 2 "Packages: casual-lib")
+      (init-message 2 "Packages: casual")
 
-      (use-package casual-lib
-        :straight (casual-lib
+      (use-package casual
+        :straight (casual
                    :type git
                    :host github
-                   :repo "kickingvegas/casual-lib"))
+                   :repo "kickingvegas/casual"))
     #+END_SRC
 
 *** casual-calc
