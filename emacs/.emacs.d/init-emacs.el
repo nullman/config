@@ -6455,45 +6455,45 @@ If OWNED is non-nil, add an Owned column to the table."
                :publishing-directory "~/public_gopher/sites/nullman"
                :publishing-function org-website-gopher-publish-to-gopher
                :recursive t)
-              ;; nulldot site
-              ("nulldot" :components ("nulldot-shared"
-                                      "nulldot-assets"
-                                      "nulldot-site"
-                                      "nulldot-site-statics"
-                                      ;;"nulldot-site-rss"
-                                      "rsync"))
-              ("nulldot-shared"
+              ;; blog site
+              ("blog" :components ("blog-shared"
+                                   "blog-assets"
+                                   "blog-site"
+                                   "blog-site-statics"
+                                   ;;"blog-site-rss"
+                                   "rsync"))
+              ("blog-shared"
                :base-directory "~/web/sites/shared"
                :base-extension ,shared-extension
-               :publishing-directory "~/web/sites/nulldot/site"
+               :publishing-directory "~/web/sites/blog/site"
                :publishing-function org-publish-attachment
                :recursive t)
-              ("nulldot-assets"
-               :base-directory "~/web/sites/nulldot/assets"
+              ("blog-assets"
+               :base-directory "~/web/sites/blog/assets"
                :base-extension ,assets-extension
-               :publishing-directory "~/web/sites/nulldot/site"
+               :publishing-directory "~/web/sites/blog/site"
                :publishing-function org-publish-attachment
                :recursive t)
-              ("nulldot-site"
-               :base-directory "~/web/sites/nulldot/site"
+              ("blog-site"
+               :base-directory "~/web/sites/blog/site"
                :base-extension ,site-extension
-               :publishing-directory "~/public_html/sites/nulldot"
+               :publishing-directory "~/public_html/sites/blog"
                :publishing-function org-website-html-publish-to-html
                :recursive t)
-              ("nulldot-site-statics"
-               :base-directory "~/web/sites/nulldot/site"
+              ("blog-site-statics"
+               :base-directory "~/web/sites/blog/site"
                :base-extension ,statics-extension
-               :publishing-directory "~/public_html/sites/nulldot"
+               :publishing-directory "~/public_html/sites/blog"
                :publishing-function org-publish-attachment
                :recursive t)
-              ;; nulldot-site-rss is no longer used as the rss feed is generated from a tangle block in nulldot.org
-              ;; ("nulldot-site-rss"
-              ;;  :base-directory "~/web/sites/nulldot/site"
+              ;; blog-site-rss is no longer used as the rss feed is generated from a tangle block in blog.org
+              ;; ("blog-site-rss"
+              ;;  :base-directory "~/web/sites/blog/site"
               ;;  :base-extension ,site-extension
               ;;  :rss-extension "rss"
-              ;;  :rss-feed-url "http://nulldot.net/"
-              ;;  :rss-image-url "http://nulldot.net/img/image.png"
-              ;;  :publishing-directory "~/public_html/sites/nulldot"
+              ;;  :rss-feed-url "http://blog.nullman.net/"
+              ;;  :rss-image-url "http://blog.nullman.net/img/image.png"
+              ;;  :publishing-directory "~/public_html/sites/blog"
               ;;  :publishing-function org-website-rss-publish-to-rss
               ;;  :exclude "."
               ;;  :include ("index.org"))
@@ -6598,11 +6598,11 @@ If OWNED is non-nil, add an Owned column to the table."
       ;; links
       (setq org-link-abbrev-alist
             (append
-             ;; inernal links
+             ;; internal links
              '(("about" . "http://nullman.net/about/")
-               ("blog" . "%(org-website-blog-url)")
+               ("blog" . "http://blog.nullman.net/")
+               ("blog-post" . "%(org-website-blog-url)")
                ("emacs" . "http://nullman.net/emacs/")
-               ("nulldot" . "http://nulldot.net/")
                ("nullman" . "http://nullman.net/")
                ("pet-peeves" . "http://nullman.net/rants/pet-peeves.html")
                ("powerhouse" . "http://powerhouse.nullware.com/")
@@ -6636,7 +6636,7 @@ If OWNED is non-nil, add an Owned column to the table."
 ;; standard menu list
 (defconst org-website-menu-list
   '((:home . (:name "Home" :title "Home Page" :url "http://nullman.net/"))
-    (:blog . (:name "Blog" :title "Personal Blog" :url "http://nulldot.net/"))
+    (:blog . (:name "Blog" :title "Personal Blog" :url "http://blog.nullman.net/"))
     (:applications . (:name "Applications" :title "Nullware Applications" :url "http://nullware.com/"))
     (:emacs . (:name "Emacs" :title "Emacs Customizations" :url "http://nullman.net/emacs/"))
     (:projects . (:name "Projects" :title "Computer Programming Projects" :url "http://nullman.net/projects/"))
@@ -6673,7 +6673,7 @@ Format: ((TAG . (:name NAME :title TITLE :url URL)) ... )")
 ;; gopher menu list
 (defconst org-website-gopher-menu-list
   '((:home . (:name "Home" :title "Home Page" :selector "/nullman/index.gopher"))
-    (:blog . (:name "Blog" :title "Personal Blog" :selector "/nulldot/index.gopher"))
+    (:blog . (:name "Blog" :title "Personal Blog" :selector "/blog/index.gopher"))
     (:applications . (:name "Applications" :title "Nullware Applications" :selector "/nullware/index.gopher"))
     (:emacs . (:name "Emacs" :title "Emacs Customizations" :selector "/nullman/emacs/index.gopher"))
     (:projects . (:name "Projects" :title "Computer Programming Projects" :selector "/nullman/projects/index.gopher"))
@@ -6778,14 +6778,18 @@ Format: ((TAG . (:name NAME :title TITLE :selector SELECTOR)) ... )")
 
 (init-message 3 "Org Website: Functions: Blog URL")
 
-(defun org-website-blog-url (name)
-  "Return URL of given blog NAME."
+(defun org-website-blog-url (&optional name)
+  "Return URL of given blog NAME.
+
+If NAME is non-nil, return base URL."
   (let ((parts (split-string name ".")))
     (concat
-     "http://nulldot.net/"
+     "http://blog.nullman.net/"
      (nth 0 parts) "/"
      (nth 1 parts) "/"
      name ".html")))
+
+(put #'org-website-blog-url 'org-link-abbrev-safe t)
 ;; Blog URL:1 ends here
 
 ;; [[file:init-emacs.org::*Is Blog Post][Is Blog Post:1]]
@@ -7004,7 +7008,7 @@ INFO is a plist holding export options."
      "  <meta name=\"robots\" content=\"all\" />\n"
      "  <meta name=\"google-site-verification\" content=\"" (org-website-get-property-element property-list :google-site-verification) "\" />\n"
      "\n"
-     "  <link rel=\"alternate\" type=\"application/rss+xml\" title=\"RSS Feed\" href=\"http://nulldot.net/index.rss\" />\n"
+     "  <link rel=\"alternate\" type=\"application/rss+xml\" title=\"RSS Feed\" href=\"http://blog.nullman.net/index.rss\" />\n"
      "  <link rel=\"author\" href=\"http://nullman.net/about.html\" />\n"
      "  <link rel=\"home\" href=\"/\" />\n"
      (cond
@@ -7080,7 +7084,7 @@ INFO is a plist holding export options."
           "      <div class=\"search\">\n"
           "        <form method=\"get\" action=\"http://www.google.com/search\">\n"
           "          <fieldset>\n"
-          "            <input type=\"hidden\" name=\"q\" value=\"site:http://nullman.net/ OR site:http://nulldot.net/ OR site:http://nullware.com/\" />\n"
+          "            <input type=\"hidden\" name=\"q\" value=\"site:http://blog.nullman.net/ OR site:http://nullman.net/ OR site:http://nullware.com/\" />\n"
           "            <input type=\"hidden\" name=\"hl\" value=\"en\" />\n"
           "            <input type=\"text\" name=\"q\" maxlength=\"2048\" value=\"\" title=\"Search\" style=\"width: 5.5em\" />\n"
           "            <input type=\"image\" name=\"btnG\" src=\"/img/search.png\" alt=\"Search\" style=\"height: 100%; vertical-align: middle\" />\n"
@@ -7097,7 +7101,7 @@ INFO is a plist holding export options."
        "")
      ;; main content
      (cond
-      ((string= site "nulldot")
+      ((string= site "blog")
        (org-website-html-blog-contents-template contents info property-list))
       ((string= site "kylesherman")
        (concat
@@ -7207,7 +7211,7 @@ PROPERTY-LIST is the list of org properties found in INFO."
     (concat
      ;; menu-index (right blog menu)
      (with-temp-buffer
-       (insert-file-contents "~/web/sites/nulldot/site/menu-index.html-nopub")
+       (insert-file-contents "~/web/sites/blog/site/menu-index.html-nopub")
        (goto-char (point-min))
        (while (re-search-forward "^" nil :noerror)
          (replace-match "    "))
@@ -7235,33 +7239,7 @@ PROPERTY-LIST is the list of org properties found in INFO."
           "\n"
           ;; tags
           "      <div class=\"tags\">Tags: " (org-website-get-property-element property-list :tags) "</div>\n"
-          "\n"
-          ;; ;; disqus comments
-          ;; "      <!-- comments start -->\n"
-          ;; "\n"
-          ;; "      <div id=\"comments\">\n"
-          ;; "\n"
-          ;; "        <div id=\"disqus_thread\"></div>\n"
-          ;; "\n"
-          ;; "        <script><!--\n"
-          ;; "          var disqus_config = function () {\n"
-          ;; "            this.page.url = \"" (org-website-get-url property-list) "\";\n"
-          ;; "            this.page.identifier = \"" (org-website-get-property-element property-list :uuid) "\";\n"
-          ;; "          };\n"
-          ;; "          (function() {\n"
-          ;; "            var d = document, s = d.createElement('script');\n"
-          ;; "            s.src = '//nulldot.disqus.com/embed.js';\n"
-          ;; "            s.setAttribute('data-timestamp', +new Date());\n"
-          ;; "            (d.head || d.body).appendChild(s);\n"
-          ;; "          })();\n"
-          ;; "        // --></script>\n"
-          ;; "\n"
-          ;; "        <noscript>Please enable JavaScript to view the <a href=\"https://disqus.com/?ref_noscript\">comments powered by Disqus.</a></noscript>\n"
-          ;; "\n"
-          ;; "      </div>\n"
-          ;; "\n"
-          ;; "      <!-- comments end -->\n"
-          )
+          "\n")
        "")
      "\n"
      "    </div>\n"
@@ -7643,7 +7621,7 @@ INFO is a plist holding export options."
        "")
      ;; main content
      (cond
-      ((string= site "nulldot")
+      ((string= site "blog")
        (org-website-gopher-blog-contents-template contents info property-list))
       (t
        (concat contents "\n")))
@@ -7890,7 +7868,7 @@ If TITLE is nil, caller is prompted for one."
   (interactive "sTitle: ")
   (save-match-data
     (setq title (titleize title))
-    (find-file "~/web/org/nulldot.org")
+    (find-file "~/web/org/blog.org")
     (goto-char (point-min))
     (re-search-forward "^\*\*\* Blog Posts$")
     (org-forward-heading-same-level 1 t)
@@ -7900,7 +7878,7 @@ If TITLE is nil, caller is prompted for one."
            (time (format-time-string "%Y.%m.%d.%H%M" ts))
            (name (concat time "-" (org-generate-custom-id-from-title title)))
            (path (format-time-string "%Y/%m" ts))
-           (file (concat "~/web/sites/nulldot/site/" path "/" name ".org"))
+           (file (concat "~/web/sites/blog/site/" path "/" name ".org"))
            (posted (format-time-string "%Y-%m-%d %H:%M" ts)))
       (insert
        (concat
@@ -7943,7 +7921,7 @@ If TITLE is nil, caller is prompted for one."
 
 Set blog timestamp to `current-time' or DATE, if non-nil."
   (interactive)
-  (when (string= (expand-file-name "~/web/org/nulldot.org") buffer-file-name)
+  (when (string= (expand-file-name "~/web/org/blog.org") buffer-file-name)
     (save-mark-and-excursion
       (save-match-data
         (let* ((case-fold-search t)
@@ -7954,7 +7932,7 @@ Set blog timestamp to `current-time' or DATE, if non-nil."
                (time (format-time-string "%Y.%m.%d.%H%M" ts))
                (name (concat time "-" (org-generate-custom-id-from-title title)))
                (path (format-time-string "%Y/%m" ts))
-               (file (concat "~/web/sites/nulldot/site/" path "/" name ".org"))
+               (file (concat "~/web/sites/blog/site/" path "/" name ".org"))
                (posted (format-time-string "%Y-%m-%d %H:%M" ts)))
           (goto-char start)
           ;; heading
@@ -21716,8 +21694,8 @@ Commands:
      ("Force Publish" "(org-website-publish-async nil t)" "Force publish entire website.")
      ("nullman" "(org-website-publish-async \"nullman\")" "Publish nullman website.")
      ("nullman (Force)" "(org-website-publish-async \"nullman\" t)" "Force publish nullman website.")
-     ("nulldot" "(org-website-publish-async \"nulldot\")" "Publish nulldot website.")
-     ("nulldot (Force)" "(org-website-publish-async \"nulldot\" t)" "Force publish nulldot website.")
+     ("blog" "(org-website-publish-async \"blog\")" "Publish blog website.")
+     ("blog (Force)" "(org-website-publish-async \"blog\" t)" "Force publish blog website.")
      ("nullware" "(org-website-publish-async \"nullware\")" "Publish nullware website.")
      ("nullware (Force)" "(org-website-publish-async \"nullware\" t)" "Force publish nullware website.")
      ("kylesherman" "(org-website-publish-async \"kylesherman\")" "Publish kylesherman website.")
@@ -21729,8 +21707,8 @@ Commands:
      ("Force All" "(org-website-tangle-publish-async nil t)" "Force tangle and publish entire website asynchronously.")
      ("nullman" "(org-website-tangle-publish-async \"nullman\")" "Tangle and publish nullman website.")
      ("nullman (Force)" "(org-website-tangle-publish-async \"nullman\" t)" "Force tangle and publish nullman website.")
-     ("nulldot" "(org-website-tangle-publish-async \"nulldot\")" "Tangle and publish nulldot website.")
-     ("nulldot (Force)" "(org-website-tangle-publish-async \"nulldot\" t)" "Force tangle and publish nulldot website.")
+     ("blog" "(org-website-tangle-publish-async \"blog\")" "Tangle and publish blog website.")
+     ("blog (Force)" "(org-website-tangle-publish-async \"blog\" t)" "Force tangle and publish blog website.")
      ("nullware" "(org-website-tangle-publish-async \"nullware\")" "Tangle and publish nullware website.")
      ("nullware (Force)" "(org-website-tangle-publish-async \"nullware\" t)" "Force tangle and publish nullware website.")
      ("kylesherman" "(org-website-tangle-publish-async \"kylesherman\")" "Tangle and publish kylesherman website.")
@@ -22228,9 +22206,7 @@ Commands:
   ;; (setq gnus-posting-styles
   ;;       '((".*"
   ;;          (name user-full-name)
-  ;;          ("X-URL" "http://nulldot.org/"))
-  ;;         ("work"
-  ;;          (address "kyle.sherman@dowjones.com"))))
+  ;;          ("X-URL" "http://nullman.net/"))))
 
   ;; send mail function
   ;; (setq send-mail-function #'sendmail-send-it

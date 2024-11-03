@@ -1,4 +1,4 @@
-﻿;; [[file:init-emacs.org::*elfeed][elfeed:2]]
+;; [[file:init-emacs.org::*elfeed][elfeed:2]]
 ;; Elfeed Bookmarks File
 (
  ;; Emacs
@@ -61,6 +61,6 @@
  (:name "XKCD Comic" :html "https://xkcd.com/" :rss "https://xkcd.com/atom.xml" :tag "comic")
  (:name "Nerdy Entertainment Community" :html "https://nerdyentertainment.locals.com/" :rss "https://nerdyentertainment.locals.com/feed" :tag "blog")
  ;; Personal
- (:name "Nulldot Blog" :html "http://nulldot.net/" :rss "http://nulldot.net/index.rss" :tag "dev")
+ (:name "Nullman Blog" :html "http://blog.nullman.net/" :rss "http://blog.nullman.net/index.rss" :tag "dev")
  ))
 ;; elfeed:2 ends here

@@ -1979,7 +1979,7 @@ alias rsync-media-put-morpheus-delete="rsync -rlptx --progress --delete ${home}/
 #        rsync-media-put-synology  rsync /home/data/media /mnt/synology/media
 alias rsync-media-put-synology="
     find ${home}/data/media/ -mindepth 1 -maxdepth 1 -type d -not -regex '^\.+$' | sort | while read -r dir ; do
-        rsync -r --munge-links --size-only --progress --delete \
+        rsync -r --munge-links --size-only --progress \
             -f'- /Graphic/ASCII-ANSI/' \
             \"\${dir}\" /mnt/synology/media
     done"

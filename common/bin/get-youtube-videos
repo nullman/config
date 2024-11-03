@@ -28,7 +28,7 @@ channels=(
     "Computer/Development | Matt Heffernan Slithy Games                  | https://www.youtube.com/c/slithymatt/videos"
     "Computer/Development | Molly Rocket                                 | https://www.youtube.com/@MollyRocket/videos"
     "Computer/Development | NCOT Technology                              | https://www.youtube.com/@ncot_tech/videos"
-    "Computer/Development | NDC Conferences                              | https://www.youtube.com/c/NDCConferences/videos"
+#?    "Computer/Development | NDC Conferences                              | https://www.youtube.com/c/NDCConferences/videos"
     "Computer/Development | Nir Lichtman                                 | https://www.youtube.com/@nirlichtman/videos"
     "Computer/Development | PCRetroProgrammer                            | https://www.youtube.com/@pcretroprogrammer2656/videos"
     "Computer/Development | Racket                                       | https://www.youtube.com/@racketlang/videos"
@@ -101,6 +101,7 @@ channels=(
 #?    "Computer/Retro       | Chyrosran22                                  | https://www.youtube.com/user/Chyrosran22/videos"
     "Computer/Retro       | Computer History Archives Project            | https://www.youtube.com/@ComputerHistoryArchivesProject/videos"
     "Computer/Retro       | Dan Wood                                     | https://www.youtube.com/@danwood_uk/videos"
+    "Computer/Retro       | deramp5113                                   | https://www.youtube.com/@deramp5113/videos"
     "Computer/Retro       | DJ Sures                                     | https://www.youtube.com/@DJSures/videos"
     "Computer/Retro       | Doctor Volt                                  | https://www.youtube.com/c/DoctorVolt/videos"
     "Computer/Retro       | Epictronics                                   | https://www.youtube.com/@Epictronics1/videos"
@@ -230,6 +231,8 @@ _download() {
                 --format-sort 'res:1080,res:720,res:480,vcodec:h264,acodec:m4a' \
                 --playlist-reverse \
                 ${archive} \
+                --paths \"temp:/tmp\" \
+                --paths \"home:${path}\" \
                 --output \"${name} - %(release_date>%Y-%m-%d,upload_date>%Y-%m-%d|Unknown)s - %(title)s.%(ext)s\" \
                 '${url}'"
                 #--format 'bv*+ba/b' \
@@ -241,7 +244,7 @@ _download() {
             echo "${url} -> ${path}"
             echo
             mkdir -p "${path}"
-            cd "${path}" && eval "${cmd}"
+            eval "${cmd}"
         fi
     done
 }
