@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2024-11-03 00:39 (user)>
+  #+TIMESTAMP: <2024-11-03 13:21 (user)>
 
 * Overview
   :PROPERTIES:
@@ -8996,6 +8996,10 @@
   Org Website is a collection of my customization's to =org-babel= to generate
   my website from =org-mode= files.
 
+  Required OS binaries:
+
+  - libxslt
+
   #+BEGIN_SRC emacs-lisp
     ;;==============================================================================
     ;;; Org Website
@@ -9608,7 +9612,7 @@
           "Return URL of given blog NAME.
 
         If NAME is non-nil, return base URL."
-          (let ((parts (split-string name ".")))
+          (let ((parts (split-string name "[.]")))
             (concat
              "http://blog.nullman.net/"
              (nth 0 parts) "/"

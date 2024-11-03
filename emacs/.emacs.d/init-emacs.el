@@ -6782,7 +6782,7 @@ Format: ((TAG . (:name NAME :title TITLE :selector SELECTOR)) ... )")
   "Return URL of given blog NAME.
 
 If NAME is non-nil, return base URL."
-  (let ((parts (split-string name ".")))
+  (let ((parts (split-string name "[.]")))
     (concat
      "http://blog.nullman.net/"
      (nth 0 parts) "/"

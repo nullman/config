@@ -789,6 +789,7 @@
     kitty                                   # Modern, hackable, featureful, OpenGL based terminal emulator
     languagetool                            # Proofreading program for English, French German, Polish, and more
     libnotify                               # Library that sends desktop notifications to a notification daemon
+    libxslt                                 # C library and tools to do XSL transformations
     light                                   # GNU/Linux application to control backlights
     lm_sensors                              # Tools for reading hardware sensors
     lsb-release                             # Prints certain LSB (Linux Standard Base) and Distribution information
