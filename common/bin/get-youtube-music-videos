@@ -7,13 +7,12 @@
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
-basedir="/mnt/synology/video/Music"
-#basedir="${HOME}/synology/video/Music"
-origdir="${basedir}/Video (Original)"
-mp4dir="${basedir}/Video"
+basedir="/mnt/synology/video/Music/Video"
+#basedir="${HOME}/synology/video/Music/Video"
+ytdlp="$(command -v yt-dlp)"
+#ytdlp="${HOME}/code/yt-dlp/yt-dlp"
 
-mkdir -p "${origdir}"
-mkdir -p "${mp4dir}"
+mkdir -p "${basedir}"
 
 videos=(
     "1975, The - Love it If We Made It                                   | https://Www.youtube.com/watch?v=1Wl1B7DPegc"
@@ -39,6 +38,7 @@ videos=(
     "Brandi Carlile - The Joke                                           | https://www.youtube.com/watch?v=5r6A2NexF88"
     "Brandi Carlile - The Joke (LIVE at the 61st GRAMMYs)                | https://www.youtube.com/watch?v=KJqL1yIm9e0"
     "Brandi Carlile - The Story                                          | https://www.youtube.com/watch?v=o8pQLtHTPaI"
+    "Buggles, The - Video Killed the Radio Star                          | https://www.youtube.com/watch?v=W8r-tXRLazs"
     "Cold War Kids - First                                               | https://www.youtube.com/watch?v=3_mmnFtiB48"
     "Communards, The - Don't Leave Me This Way (With Sarah Jane Morris)  | https://www.youtube.com/watch?v=1RHBAd5YUR8"
     "Cowboy Junkies - Sweet Jane                                         | https://www.youtube.com/watch?v=Fa9nN3G2CSg"
@@ -203,25 +203,18 @@ for ((x = 0; x < ${#videos[@]}; x += 1)) ; do
     url=$(echo "${video}" | cut -d '|' -f 2)
     escname=$(echo ${name} | sed 's/\[/\\\[/g ; s/\]/\\\]/g')
     echo "| ${name} | ${url} |"
-    if [[ -z $(find "${origdir}" -name "${escname}\.*") ]] ; then
+    if [[ -z $(find "${basedir}" -name "${escname}\.*") ]] ; then
+        cmd="${ytdlp} \
+            --format-sort 'res:1080,res:720,res:480,vcodec:h264,acodec:m4a' \
+            --paths \"temp:/tmp\" \
+            --paths \"home:${basedir}\" \
+            --output \"${name} - %(release_date>%Y-%m-%d,upload_date>%Y-%m-%d|Unknown)s - %(title)s.%(ext)s\" \
+            --output \"${name}.%(ext)s\" \
+            '${url}'"
         echo
         echo "${url}"
         echo
-        yt-dlp --format 'bv*+ba/b' \
-               --format-sort 'res:1080,res:720,res:480,vcodec:h264,acodec:m4a' \
-               --paths \"temp:/tmp\" \
-               --paths \"home:${origdir}\" \
-               --output "${name}.%(ext)s" \
-               "${url}"
-        origfile=$(find "${origdir}" -name "${escname}\.*")
-        mp4file="${mp4dir}/${name}.mp4"
-        echo
-        echo "${origfile} --> ${mp4file}"
-        echo
-        ffmpeg -n -i "${origfile}" \
-               -c:v libx264 \
-               -c:a m4a \
-               "${mp4file}"
+        eval "${cmd}"
     fi
 done
 
