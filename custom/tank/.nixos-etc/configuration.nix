@@ -558,6 +558,7 @@
     thunar-media-tags-plugin
     thunar-volman
   ];
+  programs.xfconf.enable = true;         # save preferences
   services.gvfs.enable = true;           # mount, trash, and other functionality
   services.tumbler.enable = true;        # thumbnail support for images
 
@@ -1039,10 +1040,6 @@
     spotify                                 # Play music from the Spotify music service
     vlc                                     # Cross-platform media player and streaming server
     virt-viewer                             # Viewer for remote virtual machines
-    xfce.thunar                             # Xfce file manager
-    xfce.thunar-archive-plugin              # Thunar plugin providing file context menus for archives
-    xfce.thunar-media-tags-plugin           # Thunar plugin providing tagging and renaming features for media files
-    xfce.thunar-volman                      # Thunar extension for automatic management of removable drives and media
     ymuse                                   # GTK client for Music Player Daemon (MPD)
     zathura                                 # Highly customizable and functional PDF viewer
 

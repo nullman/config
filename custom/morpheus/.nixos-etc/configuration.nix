@@ -49,8 +49,8 @@
   ## open firewall ports
   #networking.firewall = {
   #  enable = true;
-  #  #allowedTCPPorts = [ 515 631 9100 ];
-  #  #allowedUDPPorts = [ 515 631 9100 ];
+  #  allowedTCPPorts = [ 515 631 9100 ];
+  #  allowedUDPPorts = [ 515 631 9100 ];
   #  allowedUDPPortRanges = [
   #    { from = 1714; to = 1764; }
   #    { from = 1714; to = 1764; }
@@ -90,6 +90,8 @@
     nvidia.acceptLicense = true;
     joypixels.acceptLicense = true;
     permittedInsecurePackages = [
+      "betterbird-115.9.0"
+      "betterbird-unwrapped-115.9.0"
       "electron-12.2.3"
       "electron-24.8.6"
       "openssl-1.1.1w"
@@ -525,6 +527,7 @@
     thunar-media-tags-plugin
     thunar-volman
   ];
+  programs.xfconf.enable = true;         # save preferences
   services.gvfs.enable = true;           # mount, trash, and other functionality
   services.tumbler.enable = true;        # thumbnail support for images
 
@@ -751,6 +754,7 @@
     kitty                                   # Modern, hackable, featureful, OpenGL based terminal emulator
     languagetool                            # Proofreading program for English, French German, Polish, and more
     libnotify                               # Library that sends desktop notifications to a notification daemon
+    libxslt                                 # C library and tools to do XSL transformations
     light                                   # GNU/Linux application to control backlights
     lm_sensors                              # Tools for reading hardware sensors
     lsb-release                             # Prints certain LSB (Linux Standard Base) and Distribution information
@@ -951,10 +955,6 @@
     spotify                                 # Play music from the Spotify music service
     vlc                                     # Cross-platform media player and streaming server
     virt-viewer                             # Viewer for remote virtual machines
-    xfce.thunar                             # Xfce file manager
-    xfce.thunar-archive-plugin              # Thunar plugin providing file context menus for archives
-    xfce.thunar-media-tags-plugin           # Thunar plugin providing tagging and renaming features for media files
-    xfce.thunar-volman                      # Thunar extension for automatic management of removable drives and media
     ymuse                                   # GTK client for Music Player Daemon (MPD)
     zathura                                 # Highly customizable and functional PDF viewer
 
