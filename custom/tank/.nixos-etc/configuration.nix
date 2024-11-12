@@ -1027,7 +1027,7 @@
     gphoto2fs                               # Fuse FS to mount a digital camera
     inkscape                                # Vector graphics editor
     kdenlive glaxnimate                     # Video editor
-    kicad                                   # Open Source Electronics Design Automation suite
+    kicad ngspice                           # Open Source Electronics Design Automation suite
     libreoffice                             # Comprehensive, professional-quality productivity suite, a variant of openoffice.org
     lmms                                    # DAW similar to FL Studio (music production software)
     mpv                                     # General-purpose media player, fork of MPlayer and mplayer2
