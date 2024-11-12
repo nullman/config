@@ -1167,6 +1167,7 @@
     qemu_kvm                                # Generic and open source machine emulator and virtualizer
     quickemu                                # Quickly create and run optimised Windows, macOS and Linux virtual machines
     quickgui                                # Flutter frontend for quickemu
+    scummvm                                 # Program to run certain classic graphical point-and-click adventure games (suc...
     tiny8086                                # Open-source small 8086 emulator
     uae                                     # Ultimate/Unix/Unusable Amiga Emulator
     vice                                    # Emulators for a variety of 8-bit Commodore computers
