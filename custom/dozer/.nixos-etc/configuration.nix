@@ -948,7 +948,7 @@
     gphoto2fs                               # Fuse FS to mount a digital camera
     inkscape                                # Vector graphics editor
     kdenlive glaxnimate                     # Video editor
-    kicad                                   # Open Source Electronics Design Automation suite
+    kicad ngspice                           # Open Source Electronics Design Automation suite
     libreoffice                             # Comprehensive, professional-quality productivity suite, a variant of openoffice.org
     lmms                                    # DAW similar to FL Studio (music production software)
     mpv                                     # General-purpose media player, fork of MPlayer and mplayer2
@@ -1132,6 +1132,8 @@
     dosbox-x                                # Cross-platform DOS emulator based on the DOSBox project
     gnome.gnome-boxes                       # Simple GNOME 3 application to access remote or virtual systems
     mame                                    # Multi-purpose emulation framework
+    pcem                                    # Emulator for IBM PC computers and clones
+    rpcemu                                  # Risc PC Emulator
     qemu_kvm                                # Generic and open source machine emulator and virtualizer
     quickemu                                # Quickly create and run optimised Windows, macOS and Linux virtual machines
     quickgui                                # Flutter frontend for quickemu

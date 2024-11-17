@@ -7,14 +7,12 @@
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
-basedir="/mnt/synology/video/Music/Video"
-#basedir="${HOME}/synology/video/Music/Video"
+basedir="/mnt/synology/video/Music"
+#basedir="${HOME}/synology/video/Music"
 ytdlp="$(command -v yt-dlp)"
 #ytdlp="${HOME}/code/yt-dlp/yt-dlp"
 
-mkdir -p "${basedir}"
-
-videos=(
+videolist=(
     "1975, The - Love it If We Made It                                   | https://Www.youtube.com/watch?v=1Wl1B7DPegc"
     "1975, The - Somebody Else                                           | https://www.youtube.com/watch?v=Bimd2nZirT4"
     "1975, The - The Sound                                               | https://www.youtube.com/watch?v=FSnAllHtG70"
@@ -161,6 +159,7 @@ videos=(
     "Sinéad O'Connor - Mandinka                                          | https://www.youtube.com/watch?v=Gf_RHVjPrHY"
     "Sinéad O'Connor - Nothing Compares 2 U                              | https://www.youtube.com/watch?v=0-EF60neguk"
     "Stacey Q - Two of Hearts                                            | https://www.youtube.com/watch?v=lfBdGT4dn4E"
+    "Stellar - Violent                                                   | https://www.youtube.com/watch?v=U-VQVC7Miqo"
     "Styx - Mr. Roboto                                                   | https://www.youtube.com/watch?v=uc6f_2nPSX8"
     "Taco - Puttin' on the Ritz                                          | https://www.youtube.com/watch?v=YsGjFh1ke44"
     "Taylor Swift - Anti-Hero                                            | https://www.youtube.com/watch?v=b1kbLwvqugk"
@@ -199,26 +198,49 @@ videos=(
     "Weeknd, The - The Hills                                             | https://www.youtube.com/watch?v=yzTuBuRdAyA"
 )
 
-for ((x = 0; x < ${#videos[@]}; x += 1)) ; do
-    video=$(echo "${videos[$x]}" | sed 's/ *|/|/g ; s/| */|/g')
-    name=$(echo "${video}" | cut -d '|' -f 1)
-    url=$(echo "${video}" | cut -d '|' -f 2)
-    escname=$(echo ${name} | sed 's/\[/\\\[/g ; s/\]/\\\]/g')
-    echo "| ${name} | ${url} |"
-    if [[ -z $(find "${basedir}" -name "${escname}\.*") ]] ; then
-        cmd="${ytdlp} \
+ambientlist=(
+    "3ildcat - SK61 1 Hour Keyboard Typing Sounds                        | https://www.youtube.com/watch?v=8pBFfBZrbJM"
+    "Beeble - Didn't Know Commodore 64 Had that Bass                     | https://www.youtube.com/watch?v=3FsOvdrnBYA"
+    "BlackAtom Productions - Vintage Dot Matrix Printer Sounds           | https://www.youtube.com/watch?v=FFrHnyuxcB4"
+    "Double Bass Quintet - Pink Panther Theme                            | https://www.youtube.com/watch?v=SRIIO408ats"
+    "Ewan Dobson - Time 2, Guitar                                        | https://www.youtube.com/watch?v=eXqPYte8tvc"
+    "Mr. Trololo                                                         | https://www.youtube.com/watch?v=oavMtUWDBTM"
+    "Reinhardt Buhr - Ambient Melodic House, Live Looping                | https://www.youtube.com/watch?v=5FCf7gEt3W8"
+    "Underworld - Cowgirl                                                | https://www.youtube.com/watch?v=5TySnF_Pb3M"
+    "WDR Klassik - James-Bond-Medley für Orchester, Part 1               | https://www.youtube.com/watch?v=HRCMJ2hkcRs"
+    "WDR Klassik - James-Bond-Medley für Orchester, Part 2               | https://www.youtube.com/watch?v=q3hRFa24ksE"
+    "WDR Klassik - James-Bond-Medley für Orchester, Part 3               | https://www.youtube.com/watch?v=FQZmAhMUEvY"
+)
+
+fetch() {
+    local dir="$1"
+    shift
+    local list=("${@}")
+    mkdir -p "${dir}"
+    for ((x = 0; x < ${#list[@]}; x += 1)) ; do
+        video=$(echo "${list[$x]}" | sed 's/ *|/|/g ; s/| */|/g')
+        name=$(echo "${video}" | cut -d '|' -f 1)
+        url=$(echo "${video}" | cut -d '|' -f 2)
+        escname=$(echo ${name} | sed 's/\[/\\\[/g ; s/\]/\\\]/g')
+        echo "| ${name} | ${url} |"
+        if [[ -z $(find "${dir}" -name "${escname}\.*") ]] ; then
+            cmd="${ytdlp} \
             --format-sort 'res:1080,res:720,res:480,vcodec:h264,acodec:m4a' \
             --paths \"temp:/tmp\" \
-            --paths \"home:${basedir}\" \
+            --paths \"home:${dir}\" \
             --output \"${name} - %(release_date>%Y-%m-%d,upload_date>%Y-%m-%d|Unknown)s - %(title)s.%(ext)s\" \
             --output \"${name}.%(ext)s\" \
             '${url}'"
-        echo
-        echo "${url}"
-        echo
-        eval "${cmd}"
-    fi
-done
+            echo
+            echo "${url}"
+            echo
+            eval "${cmd}"
+        fi
+    done
+}
+
+fetch "${basedir}/Video" "${videolist[@]}"
+fetch "${basedir}/Ambient" "${ambientlist[@]}"
 
 exit 0
 

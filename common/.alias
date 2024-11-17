@@ -2535,6 +2535,8 @@ alias vncsk="vncserver -kill :1"
 #
 #!#        winetricks-update       download latest version of winetricks
 #!alias winetricks-update="wget http://www.kegel.com/wine/winetricks -O \${HOME}/bin/vendor/winetricks"
+#        wine-amiga-forever      wine retro amiga forever
+alias wine-amiga-forever="WINEPREFIX=${HOME}/.wine-amiga-forever wine explorer \"C:\Program Files/Cloanto/Amiga Forever/AmigaForever.exe\" &"
 #        wine-aol                wine retro aol
 alias wine-aol="WINEPREFIX=${HOME}/.wine-aol wine explorer \"C:\Program Files (x86)/Re-AOL\AOL.EXE\" &"
 #        wine-bookshelf          wine microsoft bookshelf 2000

@@ -1184,7 +1184,7 @@
     firefox                                 # Web browser built from Firefox source tree
     freenet                                 # Decentralised and censorship-resistant network
     gajim                                   # Jabber client written in PyGTK
-    #google-chrome                           # Freeware web browser developed by Google
+    google-chrome                           # Freeware web browser developed by Google
     kristall                                # Graphical small-internet client, supports gemini, http, https, gopher, finger
     magic-wormhole                          # Securely transfer data between computers
     mop                                     # Simple stock tracker implemented in go
@@ -1211,6 +1211,8 @@
     dosbox-x                                # Cross-platform DOS emulator based on the DOSBox project
     gnome.gnome-boxes                       # Simple GNOME 3 application to access remote or virtual systems
     mame                                    # Multi-purpose emulation framework
+    pcem                                    # Emulator for IBM PC computers and clones
+    rpcemu                                  # Risc PC Emulator
     qemu_kvm                                # Generic and open source machine emulator and virtualizer
     quickemu                                # Quickly create and run optimised Windows, macOS and Linux virtual machines
     quickgui                                # Flutter frontend for quickemu
