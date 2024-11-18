@@ -3,6 +3,22 @@
 #
 # Simple X Hotkey Daemon configuration.
 #
+# Dependancies:
+#   bluetoothctl
+#   bwmenu
+#   light
+#   mpc
+#   pamixer
+#   qdbus
+#   rofi
+#   rofimoji
+#   scrot
+#   xkill
+#   xprop
+#   xrandr
+#   xvkbd
+#   yad
+#
 # To specify a key, you can use 'xbindkeys --key' or 'xbindkeys --multikey'
 # and put one of the two lines in this file. Or use 'xev -event keyboard' to
 # get the keysym names.
@@ -310,13 +326,21 @@ super + shift + v
     xrandr --output $(xrandr | grep ' connected ' | sed 's/ .*//' | head -n 1) --auto && \
     notify-send --expire-time=3000 'Resetting video'
 
-# connect to sennheiser hd350bt headphones
+# # connect to sennheiser hd350bt headphones
+# super + alt + b
+#     notify-send --expire-time=3000 'Connecting to Sennheiser HD 350BT Headphones' && \
+#     bluetoothctl connect 80:C3:BA:0E:CB:E5
+# super + shift + alt + b
+#     notify-send --expire-time=3000 'Disconnecting from Sennheiser HD 350BT Headphones' && \
+#     bluetoothctl disconnect 80:C3:BA:0E:CB:E5
+
+# connect to powerbeats pro headphones
 super + alt + b
-    notify-send --expire-time=3000 'Connecting to Sennheiser HD 350BT Headphones' && \
-    bluetoothctl connect 80:C3:BA:0E:CB:E5
+    notify-send --expire-time=3000 'Connecting to Powerbeats Pro Headphones' && \
+    bluetoothctl connect 14:1A:97:05:81:4C
 super + shift + alt + b
-    notify-send --expire-time=3000 'Disconnecting from Sennheiser HD 350BT Headphones' && \
-    bluetoothctl disconnect 80:C3:BA:0E:CB:E5
+    notify-send --expire-time=3000 'Disconnecting from Powerbeats Pro Headphones' && \
+    bluetoothctl disconnect 14:1A:97:05:81:4C
 
 # nixos-rebuild switch
 super + alt + ctrl + r
@@ -340,7 +364,7 @@ super + alt + ctrl + slash
 XF86AudioPrev
     mpc prev && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 XF86AudioPlay
-    mpc play && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    mpc toggle && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 XF86AudioStop
     mpc stop && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 XF86AudioNext

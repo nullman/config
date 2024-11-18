@@ -4,7 +4,8 @@
 #
 # Launch an emacs editor, using emacs server if found.
 #
-# Requires: lsof
+# Dependencies:
+#   lsof
 #
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================

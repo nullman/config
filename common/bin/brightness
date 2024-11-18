@@ -4,7 +4,7 @@
 #
 # Modify screen brightness up or down using xrandr.
 #
-# Requires:
+# Dependencies:
 #   bc
 #   xrandr
 #
