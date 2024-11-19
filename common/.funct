@@ -30,50 +30,50 @@ configdir() {
 #
 #        fuh                     funct help
 alias fuh="
-    cat ${HOME}/.funct ${HOME}/.funct-work 2>/dev/null | \
-      grep '^[[:space:]]*#' | grep -v '^[[:space:]]*#!' | sed 's/^[[:space:]]*#//' | ${PAGER}"
+    cat \${HOME}/.funct \${HOME}/.funct-work 2>/dev/null | \
+      grep '^[[:space:]]*#' | grep -v '^[[:space:]]*#!' | sed 's/^[[:space:]]*#//' | \${PAGER}"
 #        fuhl                    funct help (long)
 alias fuhl="
-    cat ${HOME}/.funct ${HOME}/.funct-work 2>/dev/null | \
-      grep -v '^[[:space:]]*#!' | grep -v '^[[:space:]]*#  ' | sed s/^[[:space:]]*#// | ${PAGER}"
+    cat \${HOME}/.funct \${HOME}/.funct-work 2>/dev/null | \
+      grep -v '^[[:space:]]*#!' | grep -v '^[[:space:]]*#  ' | sed s/^[[:space:]]*#// | \${PAGER}"
 #        fuhg                    funct help with grep
 alias fuhg="
-    cat ${HOME}/.funct ${HOME}/.funct-work 2>/dev/null | \
+    cat \${HOME}/.funct \${HOME}/.funct-work 2>/dev/null | \
       grep '^[[:space:]]*#' | grep -v '^[[:space:]]*#!' | sed 's/^[[:space:]]*#//' | grep -i"
 #        alfuhg                  alias and funct help with grep
 alfuhg() {
     for file in ".alias" ".alias-work" ; do
         [[ -f "${HOME}/${file}" ]] && \
             echo "Aliases (${file}):" && \
-            cat "${HOME}/${file}" | grep '^[[:space:]]*#' | grep -v '^[[:space:]]*#!' | sed 's/^[[:space:]]*#//' | grep -i "$1"
+            grep '^[[:space:]]*#' "${HOME}/${file}" | grep -v '^[[:space:]]*#!' | sed 's/^[[:space:]]*#//' | grep -i "$1"
     done
     for file in ".funct" ".funct-work" ; do
         [[ -f "${HOME}/${file}" ]] && \
             echo "Functions (${file}):" && \
-            cat "${HOME}/${file}" | grep '^[[:space:]]*#' | grep -v '^[[:space:]]*#!' | sed 's/^[[:space:]]*#//' | grep -i "$1"
+            grep '^[[:space:]]*#' "${HOME}/${file}" | grep -v '^[[:space:]]*#!' | sed 's/^[[:space:]]*#//' | grep -i "$1"
     done
 }
 #!#        alfuhlg                 alias and funct help (long) with grep
 #!alfuhlg() {
 #!    echo "Aliases:"
-#!    cat "${HOME}/.alias" | grep -v '^[[:space:]]*#!' | grep -v '^[[:space:]]*#  ' | sed 's/^[[:space:]]*#//' | grep -i "$1"
+#!    grep -v '^[[:space:]]*#!' "${HOME}/.alias" | grep -v '^[[:space:]]*#  ' | sed 's/^[[:space:]]*#//' | grep -i "$1"
 #!    echo "Functions:"
-#!    cat "${HOME}/.funct" | grep -v '^[[:space:]]*#!' | grep -v '^[[:space:]]*#  ' | sed 's/^[[:space:]]*#//' | grep -i "$1"
+#!    grep -v '^[[:space:]]*#!' "${HOME}/.funct" | grep -v '^[[:space:]]*#  ' | sed 's/^[[:space:]]*#//' | grep -i "$1"
 #!}
 #        alg                     alias grep
 alg() {
-    cat "${HOME}/.alias" | sed -n '/^[[:space:]]*#[[:space:]].*'$1'/,/"$/p'
+    sed -n '/^[[:space:]]*#[[:space:]].*'"$1"'/,/"$/p' "${HOME}/.alias"
 }
 #        fug                     funct grep
 fug() {
-    cat "${HOME}/.funct" | sed -n '/^#[[:space:]].*'$1'/,/^}$/p'
+    sed -n '/^#[[:space:]].*'"$1"'/,/^}$/p' "${HOME}/.funct"
 }
 #        alfug                   alias and funct grep
 alfug() {
     echo "Aliases:"
-    cat "${HOME}/.alias" | sed -n '/^#[[:space:]].*'$1'/,/"$/p'
+    sed -n '/^#[[:space:]].*'"$1"'/,/"$/p' "${HOME}/.alias"
     echo "Functions:"
-    cat "${HOME}/.funct" | sed -n '/^#[[:space:]].*'$1'/,/^}$/p'
+    sed -n '/^#[[:space:]].*'"$1"'/,/^}$/p' "${HOME}/.funct"
 }
 
 #
@@ -95,13 +95,12 @@ pathcmd() {
                 paths="${path}:${PATH}"
             done
         fi
-        loc=
-        echo "${paths}" | sed 's/:/\n/g' | while read -r dir ; do
-            if [[ -x "${dir}/${cmd}" ]] && [[ -z "${loc}" ]] ; then
-                loc="${dir}/${cmd}"
-            fi
-        done
-        echo "${loc}"
+        loc=$(echo "${paths}" | sed 's/:/\n/g' | while read -r dir ; do
+                  if [[ -x "${dir}/${cmd}" ]] ; then
+                      echo "${dir}/${cmd}"
+                  fi
+              done)
+        [[ -n "${loc}" ]] && echo "${loc}"
         return $(test -z "${loc}")
     fi
 }
@@ -208,15 +207,15 @@ changelog() {
 #        random                  random number
 random() {
     if [[ $# -eq 0 ]] ; then
-        echo "$((${RANDOM} % 10))"
+        echo "$((RANDOM % 10))"
     else
-        echo "$((${RANDOM} % $1))"
+        echo "$((RANDOM % $1))"
     fi
 }
 #        filename                get real file/dir name of running script
 filename() {
     orig="$1"
-    dir=$(cd $(dirname "${orig}") ; pwd)
+    dir=$(cd "$(dirname "${orig}")" && pwd)
     file=$(basename "${orig}")
     full="${dir}/${file}"
     realfull=$(realpath "${orig}")
@@ -766,9 +765,31 @@ uncompress-dir-tree() {
     read -r a
     case "${a}" in
         y|Y)
-            find . -iname *".zip" -print | while read file ; do
+            find . -iname "*.zip" -print | while read -r file ; do
+                echo "${file}"
                 dir="${file:0:-4}"
                 mkdir "${dir}" && unzip -n -d "${dir}" "${file}" && rm "${file}"
+            done
+            ;;
+    esac
+}
+#        convert-7z-to-zip-dir-tree  convert all 7z files in given directory tree to zip
+convert-7z-to-zip-dir-tree() {
+    echo "You are about to convert the 7z files found in the current directory"
+    echo "'$(pwd)' and all of its children to zip files."
+    echo "Only .7z files are considered."
+    echo -n "Do you wish to proceed? [yN] "
+    read -r a
+    case "${a}" in
+        y|Y)
+            tmpdir="$(mktemp -d)"
+            find . -iname "*.7z" -print | head -n 1 | while read -r file ; do
+                echo "${file}"
+                base=$(basename "${file}")
+                new="${base:0:-3}.zip"
+                mkdir "${tmpdir}" && cp "${file}" "${tmpdir}/${base}" && cd "${tmpdir}" && \
+                    pk7zip -d "${base}" && zip -r "${new}" ./* && \
+                    cd .. && cp "${tmpdir}/${new}" . && rm -rf "${tmpdir}"
             done
             ;;
     esac
@@ -778,8 +799,8 @@ lns-dir() {
     if [[ $# -ne 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: lns-dir DIR"
     else
-        $(pathcmd ls) -1 "$1" | while read -r a ; do
-            ln -s "$1/${a}" ${a}
+        $(pathcmd ls) -1 "$1" | while read -r file ; do
+            ln -s "$1/${file}" "${file}"
         done
     fi
 }
@@ -795,20 +816,19 @@ flatten-dir() {
         elif [[ ! -d "${outdir}" ]] ; then
             echo "Error finding '${outdir}' directory"
         else
-            outdir=$(cd "${outdir}" ; pwd)
-            pushd "${indir}"
-            find . -type f | while read f ; do
-                o=$(echo "${f}" | cut -c 3- | tr '/' '_')
-                o="${outdir}/${o}"
-                cp -u "${f}" "${o}"
+            outdir=$(cd "${outdir}" && pwd)
+            pushd "${indir}" || return
+            find . -type f | while read -r file ; do
+                output=$(echo "${file}" | cut -c 3- | tr '/' '_')
+                output="${outdir}/${output}"
+                cp -u "${file}" "${output}"
             done
-            popd
+            popd || return
         fi
     fi
 }
 #        sed-dir                 apply sed to all files in directory
 sed-dir() {
-    tmp=temp$$
     if [[ $# -lt 1 ]] || [[ $# -gt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: sed-dir SCRIPT [DIR]"
         echo "Apply sed SCRIPT to all files in current directory or DIR."
@@ -820,7 +840,7 @@ sed-dir() {
         else
             dir="$1"
         fi
-        dir=$(cd "${dir}" ; pwd)
+        dir=$(cd "${dir}" && pwd)
         echo "You are about to apply SED script '$1'"
         echo "to all files in directory '${dir}'."
         echo -n "Do you wish to proceed? [yN] "
@@ -829,7 +849,7 @@ sed-dir() {
             y|Y)
                 (
                     cd "${dir}" && \
-                        find . -mindepth 1 -maxdepth 1 -type f | while read file ; do
+                        find . -mindepth 1 -maxdepth 1 -type f | while read -r file ; do
                             echo "${file}"
                             sed -i "${script}" "${file}"
                         done

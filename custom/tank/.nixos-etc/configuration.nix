@@ -846,6 +846,7 @@
     woeusb                                  # Create bootable USB disks from Windows ISO images
     xz                                      # General-purpose data compression software, successor of LZMA
     ydotool                                 # Generic Linux command-line automation tool
+    zip                                     # Compressor/archiver for creating and modifying zipfiles
 
     # window manager
     adapta-gtk-theme                        # Adaptive GTK theme based on Material Design Guidelines
