@@ -2639,19 +2639,19 @@ KEYMAP defaults to `override-global-map'."
         (org-babel-tangle-file init-emacs-true-file-name))))
   (add-hook 'after-save-hook #'after-save-hook--generate-init-emacs-elisp-file :append)
 
-  (defun org-insert-heading--fix-newline-bug (orig-fun &rest args)
-    "Fix extra newline bug in org."
-    ;; make sure empty lines above new headline are not removed
-    (if (= (point) (line-beginning-position))
-        (let ((start (point)))
-          (apply orig-fun args)
-          (forward-line 0)
-          (while (< (point) start)
-            (newline))
-          (goto-char (line-end-position)))
-      (apply orig-fun args)))
-  ;; advise `org-insert-heading' to fix extra newline bug
-  (advice-add 'org-insert-heading :around #'org-insert-heading--fix-newline-bug)
+  ;; (defun org-insert-heading--fix-newline-bug (orig-fun &rest args)
+  ;;   "Fix extra newline bug in org."
+  ;;   ;; make sure empty lines above new headline are not removed
+  ;;   (if (= (point) (line-beginning-position))
+  ;;       (let ((start (point)))
+  ;;         (apply orig-fun args)
+  ;;         (forward-line 0)
+  ;;         (while (< (point) start)
+  ;;           (newline))
+  ;;         (goto-char (line-end-position)))
+  ;;     (apply orig-fun args)))
+  ;; ;; advise `org-insert-heading' to fix extra newline bug
+  ;; (advice-add 'org-insert-heading :around #'org-insert-heading--fix-newline-bug)
 
   ;; (defun org-fixup-indentation--unindent (diff)
   ;;   "Unindent org begin/end blocks, keywords, and paragraphs."
@@ -19513,6 +19513,7 @@ otherwise run `find-file-as-root'."
   ;;:bind* ("C-x j" . dired-jump)
   :bind (:map dired-mode-map
               ("e" . wdired-change-to-wdired-mode)
+              ("C-a" . dired-mwim-beginning-of-line)
               ("C-c C-z f" . browse-url-of-dired-file))
   :custom
   ;; only prompt once for recursive deletes
@@ -19557,6 +19558,14 @@ otherwise run `find-file-as-root'."
           ("\\.tar\\.zst\\'" . "tar -cf - %i | zstd -19 -o %o")
           ("\\.zst\\'" . "zstd -19 %i -o %o")
           ("\\.zip\\'" . "zip %o -r --filesync %i")))
+
+  (defun dired-mwim-beginning-of-line ()
+    (interactive)
+    (let ((regexp (rx (seq (= 4 digit) "-" (= 2 digit) "-" (= 2 digit)
+                           (one-or-more space)))))
+      (if (= (line-beginning-position) (point))
+          (re-search-forward regexp (line-end-position) :noerror)
+        (forward-line 0))))
 
   (defun dired-move-to-top ()
     (interactive)
