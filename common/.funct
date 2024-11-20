@@ -1642,13 +1642,14 @@ rsync-install() {
         local query="$3"
         mkdir -p "${dest}/${ddir}"
         (
-            cd "${root}/${sdir}"
-            find . -mindepth 1 -maxdepth 1 -name "${query}" -printf '%P\n' | while read src ; do
-                local dst=$(echo "${src}" | sed "s/ /-/g")
-                echo "Syncing \"${root}/${sdir}/${src}\" \"${dest}/${ddir}/${dst}\""
-                #rsync -rLtxc "${root}/${sdir}/${src}" "${dest}/${ddir}/${dst}"
-                rsync -rLtxW --size-only --progress "${root}/${sdir}/${src}" "${dest}/${ddir}/${dst}"
-            done
+            cd "${root}/${sdir}" && \
+                find . -mindepth 1 -maxdepth 1 -name "${query}" -printf '%P\n' | while read -r src ; do
+                    #dst=$(echo "${src}" | sed "s/ /-/g")
+                    dst="${src// /-}"
+                    echo "Syncing \"${root}/${sdir}/${src}\" \"${dest}/${ddir}/${dst}\""
+                    #rsync -rLtxc "${root}/${sdir}/${src}" "${dest}/${ddir}/${dst}"
+                    rsync -rLtxW --size-only --progress "${root}/${sdir}/${src}" "${dest}/${ddir}/${dst}"
+                done
         )
     }
 
@@ -1691,13 +1692,13 @@ jar-version() {
         pattern="$2"
         [[ -z "${pattern}" ]] && pattern="*.jar"
         tmpdir="$(mktemp -d)"
-        find "${dir}" -name "${pattern}" -type f | while read jar ; do
+        find "${dir}" -name "${pattern}" -type f | while read -r jar ; do
             mkdir -p "${tmpdir}"
             cp "${jar}" "${tmpdir}/"
             (
-                cd "${tmpdir}"
-                unzip "${jar}" >/dev/null
-                echo "${jar} $(grep '^Created-By' 'META-INF/MANIFEST.MF' | sed 's/^Created-By: // ; s/ (Sun.*$//')"
+                cd "${tmpdir}" && \
+                    unzip "${jar}" >/dev/null && \
+                    echo "${jar} $(grep '^Created-By' 'META-INF/MANIFEST.MF' | sed 's/^Created-By: // ; s/ (Sun.*$//')"
             )
             rm -rf "${tmpdir}"
         done | column --table
@@ -1804,7 +1805,7 @@ home-initialize() {
             (
                 cd "${HOME}" && \
                     mkdir -p "${backupdir}" && \
-                    for file in ${backupfiles[@]} ; do
+                    for file in "${backupfiles[@]}" ; do
                         if [[ -e "${file}" ]] ; then
                             echo "  ${file} ==> ${backupdir}"
                             mv "${file}" "${backupdir}/"
@@ -1817,7 +1818,7 @@ home-initialize() {
             mkdir -p "${HOME}/.emacs.d"
             mkdir -p "${HOME}/.local/share/applications"
             find "$(configdir)/config/.config" -mindepth 1 -maxdepth 1 -type d | \
-                while read dir ; do
+                while read -r dir ; do
                     bn=$(basename "${dir}")
                     mkdir -p "${HOME}/.config/${bn}"
                 done
@@ -1834,7 +1835,7 @@ home-initialize() {
             echo "Making other symlinks..."
             (
                 cd "${HOME}" && \
-                    for file in ${symlinkdirs[@]} ; do
+                    for file in "${symlinkdirs[@]}" ; do
                         if [[ -d "${file}" ]] ; then
                             echo "  ${file}"
                             ln -sf "${file}" .
@@ -1851,7 +1852,7 @@ home-restow() {
     mkdir -p "${HOME}/.emacs.d"
     mkdir -p "${HOME}/.local/share/applications"
     find "$(configdir)/config/.config" -mindepth 1 -type d | \
-        while read dir ; do
+        while read -r dir ; do
             bn=$(basename "${dir}")
             mkdir -p "${HOME}/.config/${bn}"
         done
@@ -1925,9 +1926,9 @@ qubes-arch-packages() {
                     grep -v "^ *|---" | grep -v "^ *| x |" | \
                     cut -d '|' -f 4 | sed 's/^ *// ; s/ *$//'))
 
-    for x in $(seq 0 $((${#packages[@]} / ${cmdsize}))) ; do
-        echo "${repocmd} $(echo ${packages[@]:$((x * ${cmdsize})):${cmdsize}})"
-        [ -z "${DEBUG}" ] && eval "${repocmd} $(echo ${packages[@]:$((x * ${cmdsize})):${cmdsize}})"
+    for x in $(seq 0 $((${#packages[@]} / cmdsize))) ; do
+        echo "${repocmd} $(echo ${packages[@]:$((x * cmdsize)):${cmdsize}})"
+        [ -z "${DEBUG}" ] && eval "${repocmd} $(echo ${packages[@]:$((x * cmdsize)):${cmdsize}})"
     done
 }
 #        arch-initialize      install arch packages and setup arch system
@@ -2026,7 +2027,7 @@ arch-initialize() {
     echo
 
     if [[ ${opt} -eq 0 ]] ; then
-        for section in ${initial[@]} ; do
+        for section in "${initial[@]}" ; do
             echo
             echo "========== ${section} =========="
             echo
@@ -2044,9 +2045,9 @@ arch-initialize() {
     echo
     echo "========== Repo Packages =========="
     echo
-    for x in $(seq 0 $((${#packages[@]} / ${cmdsize}))) ; do
-        echo "${repocmd} $(echo ${packages[@]:$((x * ${cmdsize})):${cmdsize}})"
-        eval "${repocmd} $(echo ${packages[@]:$((x * ${cmdsize})):${cmdsize}})"
+    for x in $(seq 0 $((${#packages[@]} / cmdsize))) ; do
+        echo "${repocmd} $(echo ${packages[@]:$((x * cmdsize)):${cmdsize}})"
+        eval "${repocmd} $(echo ${packages[@]:$((x * cmdsize)):${cmdsize}})"
     done
 
     for section in ${sections[@]} ; do
