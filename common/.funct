@@ -127,7 +127,7 @@ parentdir() {
         if [[ ${#pd} -gt 1 ]] ; then
             pd=${pd:0:$((${#pd} - 1))}
         fi
-        echo ${pd}
+        echo "${pd}"
     fi
 }
 #        pstest                  test if a user application is currently running
@@ -137,7 +137,7 @@ pstest() {
         echo "Test if a user applicaiton containing QUERY is currently running."
         echo "  QUERY  query string to search for"
     else
-        pgrep -u ${USER} -f -i "$1" >/dev/null
+        pgrep -u "${USER}" -f -i "$1" >/dev/null
     fi
 }
 #        iscommand               check if executable command is found in the path
@@ -176,7 +176,7 @@ changelog() {
                 echo "Temp file '${tmp}' exists"
             else
                 (
-                    echo "$(date '+%Y-%m-%d'): $@" > ${tmp} && \
+                    echo "$(date '+%Y-%m-%d'): $*" > "${tmp}" && \
                         echo "" >> "${tmp}" && \
                         cat "${file}" >> "${tmp}" && \
                         mv "${tmp}" "${file}"
@@ -236,8 +236,10 @@ filename() {
 }
 #        in-screen               return wether or not terminal is running in screen
 in-screen() {
-    cmd=$(ps -o comm -p $(ps -o ppid -p $$ --no-headers) --no-headers)
-    [[ "${cmd}" == "screen" ]] && echo "screen"
+    pid=$(ps -o ppid -p $$ --no-headers)
+    term=$(ps -o comm -p ${pid} --no-headers)
+    [[ "${term}" == "screen" ]] && echo "screen" && return 0
+    return 1
 }
 #        term-name               return current terminal name or screen
 term-name() {
@@ -334,7 +336,7 @@ dtloop() {
         fi
         while true ; do
             date '+%Y-%m-%d %H:%M:%S'
-            sleep ${delay}
+            sleep "${delay}"
         done
     fi
 }
@@ -407,7 +409,7 @@ generate-qrc() {
 colors() {
     local fgc bgc vals seq0
 
-    printf "Color escapes are %s\n" '\e[${value};...;${value}m'
+    printf "Color escapes are %s\n" '\e[VALUE;...;VALUEm'
     printf "Values 30..37 are \e[33mforeground colors\e[m\n"
     printf "Values 40..47 are \e[43mbackground colors\e[m\n"
     printf "Value  1 gives a  \e[1mbold-faced look\e[m\n\n"
@@ -555,10 +557,7 @@ colorscript-slideshow() {
     random=0
     delay=2
 
-    oldIFS=${IFS}
-    IFS=$'\n'
     list=($(colorscript --list | tail -n +2))
-    IFS=${oldIFS}
     length=$((${#list[@]} - 1)) # there is a bug where the last script does not work
     bad=(32 33 34)
 
@@ -577,13 +576,13 @@ EOF
     _show() {
         local num="$1"
         # ignore scripts that never end
-        if [[ ! " ${bad[@]} " =~ " ${num} " ]] ; then
+        if [[ ! " ${bad[*]} " =~ " ${num} " ]] ; then
             clear
             echo
             echo "${list[${num}]}"
             echo
-            colorscript exec ${num}
-            sleep ${delay}
+            colorscript exec "${num}"
+            sleep "${delay}"
         fi
     }
 
@@ -623,13 +622,13 @@ EOF
 
     if [[ ${random} -eq 1 ]] ; then
         while true ; do
-            _show $((${RANDOM} % length + 1))
+            _show $((RANDOM % length + 1))
         done
     elif [[ ${once} -eq 1 ]] ; then
-        for x in $(seq ${length}) ; do _show ${x} ; done
+        for x in $(seq ${length}) ; do _show "${x}" ; done
     else
         while true ; do
-            for x in $(seq ${length}) ; do _show ${x} ; done
+            for x in $(seq ${length}) ; do _show "${x}" ; done
         done
     fi
 }
@@ -648,7 +647,7 @@ ansi-slideshow() {
         echo "Usage: ansi-slideshow DIR"
         echo "Display a slideshow of all ANSI text graphic files in given directory."
     else
-        find "$1" -iname *".ANS" -print | sort --random-sort | while read -r file ; do
+        find "$1" -iname "*.ANS" -print | sort --random-sort | while read -r file ; do
             iconv -f 437 "${file}" | pv --quiet --rate-limit 1200
             sleep 10
         done
@@ -687,7 +686,7 @@ play-youtube-desktop() {
         echo "Usage: play-youtube-desktop VIDEOID"
         echo "Play YouTube video on desktop background."
     else
-        xwinwrap -ni -g $(xwininfo -root | grep geometry | cut -c 13-) \
+        xwinwrap -ni -g "$(xwininfo -root | grep geometry | cut -c 13-)" \
                  -s -st -sp -b -nf -ov -- mpv --profile=wallpaper \
                  -wid WID "https://youtu.be/$1" loop 0
     fi
@@ -759,7 +758,7 @@ upper-dir() {
 #        uncompress-dir-tree     uncompress all zip files in given directory tree
 uncompress-dir-tree() {
     echo "You are about to uncompress the contents of the current directory"
-    echo "'$(pwd)' and all of its children, and delete the original files."
+    echo "'$(pwd)', and all of its children, and delete the original files."
     echo "Only .zip files are considered."
     echo -n "Do you wish to proceed? [yN] "
     read -r a
@@ -776,20 +775,22 @@ uncompress-dir-tree() {
 #        convert-7z-to-zip-dir-tree  convert all 7z files in given directory tree to zip
 convert-7z-to-zip-dir-tree() {
     echo "You are about to convert the 7z files found in the current directory"
-    echo "'$(pwd)' and all of its children to zip files."
+    echo "'$(pwd)', and all of its children, to zip files."
     echo "Only .7z files are considered."
     echo -n "Do you wish to proceed? [yN] "
     read -r a
     case "${a}" in
         y|Y)
             tmpdir="$(mktemp -d)"
-            find . -iname "*.7z" -print | head -n 1 | while read -r file ; do
+            find . -iname "*.7z" -print | while read -r file ; do
                 echo "${file}"
+                dir=$(dirname "${file}")
                 base=$(basename "${file}")
                 new="${base:0:-3}.zip"
-                mkdir "${tmpdir}" && cp "${file}" "${tmpdir}/${base}" && cd "${tmpdir}" && \
-                    pk7zip -d "${base}" && zip -r "${new}" ./* && \
-                    cd .. && cp "${tmpdir}/${new}" . && rm -rf "${tmpdir}"
+                cp "${file}" "${tmpdir}/${base}" && pushd "${tmpdir}" && \
+                    7z x "${base}" && rm "${base}" && zip -r "${new}" ./* && \
+                    popd && cp "${tmpdir}/${new}" "${dir}/${new}" && \
+                    rm -rf "${tmpdir}" && rm "${file}"
             done
             ;;
     esac
@@ -926,22 +927,22 @@ uncomp() {
         file="$1"
         if [[ -f "${file}" ]] ; then
             case "${file}" in
-                *.tar.bz2)   tar xjf ${file}    ;;
-                *.tar.gz)    tar xzf ${file}    ;;
-                *.tar.xz)    tar xJf ${file}    ;;
-                *.tar.zst)   unzstd ${file}     ;;
-                *.bz2)       bunzip2 ${file}    ;;
-                *.rar)       unrar x ${file}    ;;
-                *.gz)        gunzip ${file}     ;;
-                *.xz)        unxz ${file}       ;;
-                *.zst)       unzstd ${file}     ;;
-                *.tar)       tar xf ${file}     ;;
-                *.tbz2)      tar xjf ${file}    ;;
-                *.tgz)       tar xzf ${file}    ;;
-                *.zip)       unzip ${file}      ;;
-                *.Z)         uncompress ${file} ;;
-                *.7z)        7z x ${file}       ;;
-                *.deb)       ar x ${file}       ;;
+                *.tar.bz2)   tar xjf "${file}"    ;;
+                *.tar.gz)    tar xzf "${file}"    ;;
+                *.tar.xz)    tar xJf "${file}"    ;;
+                *.tar.zst)   unzstd "${file}"     ;;
+                *.bz2)       bunzip2 "${file}"    ;;
+                *.rar)       unrar x "${file}"    ;;
+                *.gz)        gunzip "${file}"     ;;
+                *.xz)        unxz "${file}"       ;;
+                *.zst)       unzstd "${file}"     ;;
+                *.tar)       tar xf "${file}"     ;;
+                *.tbz2)      tar xjf "${file}"    ;;
+                *.tgz)       tar xzf "${file}"    ;;
+                *.zip)       unzip "${file}"      ;;
+                *.Z)         uncompress "${file}" ;;
+                *.7z)        7z x "${file}"       ;;
+                *.deb)       ar x "${file}"       ;;
                 *)           echo "'${file}' cannot be uncompressed by uncomp" ;;
             esac
         else
@@ -1097,7 +1098,7 @@ EOF
 
     echo "Deleting broken symlinks in '${dir}'..."
     cmd="find -L \"${dir}\" ${opts} -name . -o -type l -print"
-    eval "${cmd}" | while read file ; do
+    eval "${cmd}" | while read -r file ; do
         if [[ -L "${file}" ]] && [[ ! -e "${file}" ]] ; then
             echo "  ${file}"
             rm "${file}"
@@ -1122,7 +1123,7 @@ longevity() {
         read -r a
         case "${a}" in
             y|Y)
-                find ${dir} -mtime +${days} -type f -iname '${pattern}' -exec rm {} \;
+                find "${dir}" -mtime +${days} -type f -iname "${pattern}" -exec rm {} \;
                 ;;
         esac
     fi
@@ -1152,7 +1153,7 @@ ssh-key-copy() {
         echo "Usage: ssh-key-copy [USER@]SERVER"
     else
         ssh "$1" '[[ ! -d .ssh ]] && mkdir -p .ssh && chmod 700 .ssh'
-        find "${HOME}/.ssh/" -name "*.pub" | while read file ; do
+        find "${HOME}/.ssh/" -name "*.pub" | while read -r file ; do
             cat "${file}" | ssh "$1" 'cat >> .ssh/authorized_keys ; \
                 chmod 600 .ssh/authorized_keys'
         done
@@ -1202,25 +1203,25 @@ disk-uuid() {
     output=$(
         (
             unset extendeds
-            for extended in $(cat /proc/partitions | grep -v '[0-9]$' | awk '{print $4}' | grep '^[sh]d') ; do
-                id=$(parted /dev/${extended} print | grep extended | awk '{print $1}' 2>/dev/null)
+            grep -v '[0-9]$' /proc/partitions | awk '{print $4}' | grep '^[sh]d' | while read -r extended ; do
+                id=$(parted "/dev/${extended}" print | grep extended | awk '{print $1}' 2>/dev/null)
                 if [[ -n "${id}" ]] ; then
                     echo "${extended}${id}_EXT_none_none"
                     extendeds="${extendeds} ${extended}${id}"
                 fi
             done
-            for swap in $(cat /proc/swaps | grep [0-9] | awk '{print $1}') ; do
-                drive=$(echo $swap | cut -d/ -f 3)
-                id=$(vol_id -u $swaps 2>/dev/nul)
+            grep '[0-9]' /proc/swaps | awk '{print $1}' | while read -r swap ; do
+                drive=$(echo "${swap}" | cut -d/ -f 3)
+                uuid=$(vol_id -u "${swap}" 2>/dev/null)
                 echo "${drive}_SWAP_none_${uuid}"
             done
-            for partition in $(cat /proc/partitions | grep '[0-9]$' | awk '{print $4}') ; do
+            grep '[0-9]$' /proc/partitions | awk '{print $4}' | while read -r partition ; do
                 for extended in ${extendeds} ; do
                     [[ "${partition}" == "${extended}" ]] && unset partition
                 done
                 if [[ -n "${partition}" ]] ; then
-                    mount=$(df -l -x tmpfs -x usbfs | grep -w ${partition} | awk '{print $6}')
-                    uuid=$(vol_id -u /dev/${partition} 2>/dev/nul)
+                    mount=$(df -l -x tmpfs -x usbfs | grep -w "${partition}" | awk '{print $6}')
+                    uuid=$(vol_id -u "/dev/${partition}" 2>/dev/null)
                     [[ -n "${mount}" ]] && echo "${partition}_REG_${mount}_${uuid}"
                 fi
             done
@@ -1341,7 +1342,7 @@ if [[ "$(distribution)" == "guix" ]] ; then
 #        ,                       temporarily install and run program
 function , {
     pkg_ver="$(set -o pipefail; guix locate "$1" | grep /bin/ | head -1 | cut -f1)"
-    pkg="$(echo $pkg_ver | cut -d@ -f1)"
+    pkg="$(echo ${pkg_ver} | cut -d@ -f1)"
     test -n "$pkg" && guix shell "$pkg" -- "$@"
 }
 fi
@@ -1395,7 +1396,7 @@ nixfi() {
     if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: nixfi FILE"
     else
-        readlink -e $(which $*)
+        readlink -e $(which $@)
     fi
 }
 
@@ -1479,22 +1480,19 @@ gitcouo() {
 }
 #        _gitsync                pull, commit, and push given home git repositories
 _gitsync() {
-    dirs=("$@")
-
-    commit=$()
-
-    for dir in ${dirs[@]} ; do
+    for dir in "$@" ; do
         if [[ -d "${HOME}/${dir}" ]] ; then
             # remove org font files
             echo "Removing org font files..."
-            find "${HOME}/${dir}" -name '*org-src-fontification*' -print | \
-                xargs rm >/dev/null 2>&1
+            find "${HOME}/${dir}" -name '*org-src-fontification*' -print0 | \
+                xargs -0 rm >/dev/null 2>&1
 
             # pull (update) home git repository (from origin)
             echo "Pulling '${dir}' from origin..."
             (cd "${HOME}/${dir}" && git pull origin)
 
-            if $(cd "${HOME}/${dir}" && git config --get remote.origin.url | grep -q "^git@") ; then
+            check=$(cd "${HOME}/${dir}" && git config --get remote.origin.url | grep "^git@")
+            if [[ -n "${check}" ]] ; then
                 # commit (check in) home git repositories (default update)
                 echo "Committing '${dir}'..."
                 (cd "${HOME}/${dir}" && git commit -a -m "Update")
@@ -1525,7 +1523,7 @@ git-sync-config() {
             (
                 cd "${HOME}" && \
                     cp .addressbook config-private/common/ && \
-                    ln -sf config-private/common/.addressbook
+                    ln -sf config-private/common/.addressbook .
             )
         fi
         # only update xscreensaver preferences on tank
@@ -1535,7 +1533,7 @@ git-sync-config() {
             (
                 cd "${HOME}" && \
                     cp .xscreensaver config-private/common/ && \
-                    ln -sf config-private/common/.xscreensaver
+                    ln -sf config-private/common/.xscreensaver .
             )
         fi
     fi
