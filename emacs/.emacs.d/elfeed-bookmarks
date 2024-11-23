@@ -1,7 +1,6 @@
 ;; [[file:init-emacs.org::*elfeed][elfeed:2]]
 ;; Elfeed Bookmarks File
-(
- ;; Emacs
+(;; Emacs
  (:name "Reddit Emacs Channel" :html "https://www.reddit.com/" :rss "https://www.reddit.com/r/emacs.rss" :tag "emacs")
  (:name "Planet Emacslife" :html "https://planet.emacslife.com/" :rss "https://planet.emacslife.com/atom.xml" :tag "emacs")
  (:name "Emacs Redux" :html "https://emacsredux.com/" :rss "https://emacsredux.com/atom.xml" :tag "emacs")
@@ -62,5 +61,5 @@
  (:name "Nerdy Entertainment Community" :html "https://nerdyentertainment.locals.com/" :rss "https://nerdyentertainment.locals.com/feed" :tag "blog")
  ;; Personal
  (:name "Nullman Blog" :html "http://blog.nullman.net/" :rss "http://blog.nullman.net/index.rss" :tag "dev")
- ))
+ )
 ;; elfeed:2 ends here

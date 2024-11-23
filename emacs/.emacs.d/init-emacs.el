@@ -15632,8 +15632,7 @@ USING is the remaining peg."
          ("C-c h" . consult-history)
          ("C-c m" . consult-mode-command)
          ("C-c k" . consult-kmacro))
-  :bind* (
-          ("C-'" . consult-line)                    ; default: `isearch-forward-regexp'
+  :bind* (("C-'" . consult-line)                    ; default: `isearch-forward-regexp'
           ;; C-x bindings (ctl-x-map)
           ("C-x M-:" . consult-complex-command)     ; default: `repeat-complex-command'
           ("C-x b" . consult-buffer)                ; default: `switch-to-buffer'
@@ -16941,17 +16940,16 @@ USING is the remaining peg."
   :config
   ;; flatland theme
   (setq htmlize-face-overrides
-        '(
-          font-lock-comment-face (:foreground "#798188")
-          font-lock-string-face (:foreground "#cfe2f2")
-          font-lock-keyword-face (:foreground "#fa9a4b" :weight bold)
-          font-lock-builtin-face (:foreground "#fa9a4b" :weight bold)
-          font-lock-function-name-face (:foreground "#72aaca")
-          font-lock-variable-name-face (:foreground "#f6f080")
-          font-lock-type-face (:foreground "#72aaca")
-          font-lock-constant-face (:foreground "#b9d977")
-          font-lock-warning-face (:foreground "#f1e94b" :weight bold)
-          default (:foreground "green" :background "black"))))
+        '( font-lock-comment-face (:foreground "#798188")
+           font-lock-string-face (:foreground "#cfe2f2")
+           font-lock-keyword-face (:foreground "#fa9a4b" :weight bold)
+           font-lock-builtin-face (:foreground "#fa9a4b" :weight bold)
+           font-lock-function-name-face (:foreground "#72aaca")
+           font-lock-variable-name-face (:foreground "#f6f080")
+           font-lock-type-face (:foreground "#72aaca")
+           font-lock-constant-face (:foreground "#b9d977")
+           font-lock-warning-face (:foreground "#f1e94b" :weight bold)
+           default (:foreground "green" :background "black"))))
 ;; htmlize:1 ends here
 
 ;; [[file:init-emacs.org::*hungry-delete][hungry-delete:1]]
@@ -18584,8 +18582,7 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
   (replacer-trigger-end " ")
   ;; set trigger keys and replacements
   (replacer-replacements
-   '(
-     ;; help
+   '(;; help
      ("h" . replacer-help)
      ("help" . replacer-help)
      ;; insert
@@ -21582,8 +21579,7 @@ Commands:
 ;; load menu
 (auto-menu
  "Load"
- `(
-   ;;("Restore Context" "context-restore" "Restore previous context save.")
+ `(;;("Restore Context" "context-restore" "Restore previous context save.")
    ("Home Files..."
     ,(auto-menu-file '((".alias" . "~/.alias")
                        (".alias-local" . "~/.alias-local")
@@ -22393,8 +22389,7 @@ Commands:
     "Return a nickname based on machine name.
 
 Defaults to \"nullman\" if no match is found."
-    (let* ((server-nick '(
-                          ;;("tank.nullware.com" . "nulltank")
+    (let* ((server-nick '(;;("tank.nullware.com" . "nulltank")
                           ;;("tank" . "nulltank")
                           ;;("neo.nullware.com" . "nullhome")
                           ;;("neo" . "nullhome")

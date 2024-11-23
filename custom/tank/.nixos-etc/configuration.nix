@@ -1070,6 +1070,7 @@
     makemkv                                 # Convert blu-ray and dvd to mkv
     mediawriter                             # Tool to write images files to portable media
     meld                                    # Visual diff and merge tool
+    mission-center                          # Monitor your CPU, Memory, Disk, Network and GPU usage
     #mtkclient                               #
     poppler_utils                           # PDF rendering library
     scrcpy                                  # Display and control Android devices over USB or TCP/IP
