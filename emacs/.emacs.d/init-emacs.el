@@ -19580,6 +19580,18 @@ otherwise run `find-file-as-root'."
   (define-key dired-mode-map [remap end-of-buffer] 'dired-move-to-bottom))
 
 ;;------------------------------------------------------------------------------
+;;;; wdired
+;;------------------------------------------------------------------------------
+
+(init-message 3 "wdired")
+
+;; make dired use a single buffer
+(use-package wdired
+  :straight (:type built-in)
+  :bind (:map wdired-mode-map
+              ("C-a" . dired-mwim-beginning-of-line)))
+
+;;------------------------------------------------------------------------------
 ;;;; dired-single
 ;;------------------------------------------------------------------------------
 

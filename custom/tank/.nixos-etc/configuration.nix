@@ -1200,6 +1200,7 @@
     syncterm                                # BBS terminal emulator
     telegram-desktop                        # Telegram Desktop messaging app
     transmission_4-gtk                      # Fast, easy and free BitTorrent client
+    tribler                                 # Decentralised P2P filesharing client based on the Bittorrent protocol
     tuba                                    # Browse the Fediverse
     #ungoogled-chromium                      # Open source web browser from Google, with dependencies on Google web services removed
     vdhcoapp                                # Companion application for the Video DownloadHelper browser add-on
