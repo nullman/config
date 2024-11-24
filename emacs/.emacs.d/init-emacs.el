@@ -4161,7 +4161,7 @@ If BUFFER is nil, current buffer is used."
 ;;                (let (eldoc-documentation-function)
 ;;                  (eldoc-print-current-symbol-info))))
 ;;              ((or
-;;                (string= lang "c") ;; http://github.com/nflath/c-eldoc
+;;                (string= lang "c") ;; https://github.com/nflath/c-eldoc
 ;;                (string= lang "C")) (when (require 'c-eldoc nil :no-error)
 ;;                (c-eldoc-print-current-symbol-info)))
 ;;              ;; https://github.com/zenozeng/css-eldoc
@@ -6179,7 +6179,7 @@ followed by the card name."
 (init-message 3 "Org Mode: Magic the Gathering: mtg-set-to-table")
 
 (defun mtg-set-to-table (&optional owned)
-  "Convert `http://gatherer.wizards.com/' set checklist list to table.
+  "Convert 'https://gatherer.wizards.com/' set checklist list to table.
 
 If OWNED is non-nil, add an Owned column to the table."
   (interactive "P")
@@ -6288,7 +6288,7 @@ If OWNED is non-nil, add an Owned column to the table."
   "Look up ITEM in the DDO Wiki and return information about it."
   (interactive "sDDO Item Name: ")
   (save-current-buffer
-    (let* ((url (url-encode-url (concat "http://ddowiki.com/index.php?search=" item)))
+    (let* ((url (url-encode-url (concat "https://ddowiki.com/index.php?search=" item)))
            (buffer (url-retrieve-synchronously url))
            (enchantments ""))
       (when buffer
@@ -6486,17 +6486,6 @@ If OWNED is non-nil, add an Owned column to the table."
                :publishing-directory "~/public_html/sites/blog"
                :publishing-function org-publish-attachment
                :recursive t)
-              ;; blog-site-rss is no longer used as the rss feed is generated from a tangle block in blog.org
-              ;; ("blog-site-rss"
-              ;;  :base-directory "~/web/sites/blog/site"
-              ;;  :base-extension ,site-extension
-              ;;  :rss-extension "rss"
-              ;;  :rss-feed-url "http://blog.nullman.net/"
-              ;;  :rss-image-url "http://blog.nullman.net/img/image.png"
-              ;;  :publishing-directory "~/public_html/sites/blog"
-              ;;  :publishing-function org-website-rss-publish-to-rss
-              ;;  :exclude "."
-              ;;  :include ("index.org"))
               ;; nullware site
               ("nullware" :components ("nullware-shared"
                                        "nullware-assets"
@@ -6610,11 +6599,11 @@ If OWNED is non-nil, add an Owned column to the table."
                ("rants" . "http://nullman.net/rants/")
                ("tutorials" . "http://nullman.net/tutorials/"))
              ;; external links
-             '(("cowiki" . "http://www.champions-online-wiki.com/wiki/")
-               ("google" . "http://www.google.com/search?q=%h")
-               ("urban" . "http://www.urbandictionary.com/define.php?term=")
-               ("wiki" . "http://en.wikipedia.org/wiki/Special:Search?search=")
-               ("word" . "http://en.wiktionary.org/wiki/")
+             '(("cowiki" . "https://web.archive.org/web/20130208031659/https://www.champions-online-wiki.com/wiki/")
+               ("google" . "https://www.google.com/search?q=%h")
+               ("urban" . "https://www.urbandictionary.com/define.php?term=")
+               ("wiki" . "https://en.wikipedia.org/wiki/Special:Search?search=")
+               ("word" . "https://en.wiktionary.org/wiki/")
                ("youtube" . "https://www.youtube.com/watch?v="))))
 
       ;; use h1 tags for top level headlines (instead of h2)
@@ -6657,15 +6646,15 @@ Format: ((TAG . (:name NAME :title TITLE :url URL)) ... )")
 
 ;; shermanwest menu list
 (defconst org-website-shermanwest-menu-list
-  '((:home . (:name "Home" :title "Home Page" :url "http://shermanwest.com/"))
-    (:pictures . (:name "Pictures" :title "Condo Pictures" :url "http://www.flickr.com/photos/nullman/sets/72157603365914146/show/"))
-    (:directions . (:name "Directions" :title "Sherman West Directions" :url "http://shermanwest.com/directions.html"))
-    (:restaurants . (:name "Restaurants" :title "San Diego Restaurants" :url "http://shermanwest.com/restaurants.html"))
-    (:bars . (:name "Bars" :title "San Diego Bars" :url "http://shermanwest.com/bars.html"))
-    (:attractions . (:name "Attractions" :title "San Diego Attractions" :url "http://shermanwest.com/attractions.html"))
-    (:shopping . (:name "Shopping" :title "San Diego Shopping" :url "http://shermanwest.com/shopping.html"))
-    (:rules . (:name "Rules" :title "House Rules" :url "http://shermanwest.com/rules.html"))
-    (:guestbook . (:name "Guestbook" :title "Guestbook" :url "http://shermanwest.com/guestbook.html")))
+  '((:home . (:name "Home" :title "Home Page" :url "xxx://shermanwest.com/"))
+    (:pictures . (:name "Pictures" :title "Condo Pictures" :url "https://www.flickr.com/photos/nullman/sets/72157603365914146/show/"))
+    (:directions . (:name "Directions" :title "Sherman West Directions" :url "xxx://shermanwest.com/directions.html"))
+    (:restaurants . (:name "Restaurants" :title "San Diego Restaurants" :url "xxx://shermanwest.com/restaurants.html"))
+    (:bars . (:name "Bars" :title "San Diego Bars" :url "xxx://shermanwest.com/bars.html"))
+    (:attractions . (:name "Attractions" :title "San Diego Attractions" :url "xxx://shermanwest.com/attractions.html"))
+    (:shopping . (:name "Shopping" :title "San Diego Shopping" :url "xxx://shermanwest.com/shopping.html"))
+    (:rules . (:name "Rules" :title "House Rules" :url "xxx://shermanwest.com/rules.html"))
+    (:guestbook . (:name "Guestbook" :title "Guestbook" :url "xxx://shermanwest.com/guestbook.html")))
   "Website Sherman West menu list.
 
 Format: ((TAG . (:name NAME :title TITLE :url URL)) ... )")
@@ -6977,7 +6966,7 @@ PUB-DIR is the publishing directory."
 (init-message 3 "Org Website: Publish HTML: Template")
 
 ;; custom html template
-;; INFO reference: http://orgmode.org/worg/dev/org-export-reference.html
+;; INFO reference: https://orgmode.org/worg/dev/org-export-reference.html
 (defun org-website-html-template (contents info)
   "Return complete document string after HTML conversion.
 
@@ -6993,7 +6982,7 @@ INFO is a plist holding export options."
      ;; "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
      ;; "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n"
      "<!DOCTYPE html>\n"
-     (format "<html xmlns=\"http://www.w3.org/1999/xhtml\" lang=\"%s\">\n" (org-website-get-property-element property-list :language))
+     (format "<html xmlns=\"https://www.w3.org/1999/xhtml/\" lang=\"%s\">\n" (org-website-get-property-element property-list :language))
      "\n"
      "<head>\n"
      "\n"
@@ -7009,7 +6998,7 @@ INFO is a plist holding export options."
      "  <meta name=\"google-site-verification\" content=\"" (org-website-get-property-element property-list :google-site-verification) "\" />\n"
      "\n"
      "  <link rel=\"alternate\" type=\"application/rss+xml\" title=\"RSS Feed\" href=\"http://blog.nullman.net/index.rss\" />\n"
-     "  <link rel=\"author\" href=\"http://nullman.net/about.html\" />\n"
+     "  <link rel=\"author\" href=\"http://nullman.net/about/\" />\n"
      "  <link rel=\"home\" href=\"/\" />\n"
      (cond
       ((and (string= site "kylesherman") (string= title "Resume"))
@@ -7082,7 +7071,7 @@ INFO is a plist holding export options."
           "      <!-- search start -->\n"
           "\n"
           "      <div class=\"search\">\n"
-          "        <form method=\"get\" action=\"http://www.google.com/search\">\n"
+          "        <form method=\"get\" action=\"https://www.google.com/search\">\n"
           "          <fieldset>\n"
           "            <input type=\"hidden\" name=\"q\" value=\"site:http://blog.nullman.net/ OR site:http://nullman.net/ OR site:http://nullware.com/\" />\n"
           "            <input type=\"hidden\" name=\"hl\" value=\"en\" />\n"
@@ -7142,17 +7131,17 @@ INFO is a plist holding export options."
         "\n"
         "      <div class=\"validator\">\n"
         "        <a title=\"Check the validity of this page using W3C's unified validator\"\n"
-        (format "           href=\"http://validator.w3.org/unicorn/check?ucn_task=conformance&amp;ucn_uri=%s\">unicorn</a>\n" (org-website-get-property-element property-list :link-home))
+        (format "           href=\"https://validator.w3.org/unicorn/check?ucn_task=conformance&amp;ucn_uri=%s\">unicorn</a>\n" (org-website-get-property-element property-list :link-home))
         "      </div>\n"
         "\n"
         "      <div class=\"validator\">\n"
         "        <a title=\"Check the validity of this page's XHTML\"\n"
-        "           href=\"http://validator.w3.org/check?uri=referer\">xhtml</a>\n"
+        "           href=\"https://validator.w3.org/check?uri=referer\">xhtml</a>\n"
         "      </div>\n"
         "\n"
         "      <div class=\"validator\">\n"
         "        <a title=\"Check the validity of this page's CSS\"\n"
-        "           href=\"http://jigsaw.w3.org/css-validator/check/referer\">css</a>\n"
+        "           href=\"https://jigsaw.w3.org/css-validator/check/referer\">css</a>\n"
         "      </div>\n"
         "\n"
         "      <div class=\"validator\">\n"
@@ -7163,7 +7152,7 @@ INFO is a plist holding export options."
         "      <!--\n"
         "      <div class=\"validator\">\n"
         "        <a title=\"Check the accessibility of this page according to U.S. Section 508\"\n"
-        (format "           href=\"http://www.contentquality.com/mynewtester/cynthia.exe?Url1=%s\">508</a>\n" (org-website-get-property-element property-list :link-home))
+        (format "           href=\"https://www.contentquality.com/mynewtester/cynthia.exe?Url1=%s\">508</a>\n" (org-website-get-property-element property-list :link-home))
         "      </div>\n"
         "      -->\n"
         "\n"
@@ -7172,7 +7161,7 @@ INFO is a plist holding export options."
         "        " (org-website-get-property-element property-list :copyright) "<br />\n"
         "        <span class=\"license\">Creative Commons\n"
         "        <a title=\"View details of the license of this site\"\n"
-        "           href=\"http://creativecommons.org/licenses/by-nc-sa/3.0/\">\n"
+        "           href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/\">\n"
         "          Attribution-NonCommercial-ShareAlike\n"
         "        </a> license</span></span>\n"
         "      </div>\n"
@@ -7196,7 +7185,7 @@ INFO is a plist holding export options."
 (init-message 3 "Org Website: Publish HTML: Blog Contents Template")
 
 ;; custom blog contents html template
-;; INFO reference: http://orgmode.org/worg/dev/org-export-reference.html
+;; INFO reference: https://orgmode.org/worg/dev/org-export-reference.html
 (defun org-website-html-blog-contents-template (contents info property-list)
   "Return blog contents string after HTML conversion.
 
@@ -7436,7 +7425,7 @@ PUB-DIR is the publishing directory."
 (init-message 3 "Org Website: Publish RSS: Template")
 
 ;; custom rss template
-;; INFO reference: http://orgmode.org/worg/dev/org-export-reference.html
+;; INFO reference: https://orgmode.org/worg/dev/org-export-reference.html
 (defun org-website-rss-template (contents info)
   "Return complete document string after RSS conversion.
 
@@ -7450,14 +7439,14 @@ INFO is a plist holding export options."
     ;;(message "%S" property-list)
     (concat
      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-     "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n"
-     "         xmlns=\"http://purl.org/rss/1.0/\"\n"
-     "         xmlns:slash=\"http://purl.org/rss/1.0/modules/slash/\"\n"
-     "         xmlns:taxo=\"http://purl.org/rss/1.0/modules/taxonomy/\"\n"
-     "         xmlns:dc=\"http://purl.org/dc/elements/1.1/\"\n"
-     "         xmlns:syn=\"http://purl.org/rss/1.0/modules/syndication/\"\n"
-     "         xmlns:admin=\"http://webns.net/mvcb/\"\n"
-     "         xmlns:feedburner=\"http://rssnamespace.org/feedburner/ext/1.0\">\n\n"
+     "<rdf:RDF xmlns:rdf=\"https://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n"
+     "         xmlns=\"https://purl.org/rss/1.0/\"\n"
+     "         xmlns:slash=\"https://purl.org/rss/1.0/modules/slash/\"\n"
+     "         xmlns:taxo=\"https://purl.org/rss/1.0/modules/taxonomy/\"\n"
+     "         xmlns:dc=\"https://purl.org/dc/elements/1.1/\"\n"
+     "         xmlns:syn=\"https://purl.org/rss/1.0/modules/syndication/\"\n"
+     "         xmlns:admin=\"https://webns.net/mvcb/\"\n"
+     "         xmlns:feedburner=\"https://rssnamespace.org/feedburner/ext/1.0\">\n\n"
      "  <channel rdf:about=\"" link-home "\">\n"
      "    <title>" title "</title>\n"
      "    <link>" link-home "</link>\n"
@@ -7588,7 +7577,7 @@ PUB-DIR is the publishing directory."
 (init-message 3 "Org Website: Publish Gopher: Template")
 
 ;; custom gopher template
-;; INFO reference: http://orgmode.org/worg/dev/org-export-reference.html
+;; INFO reference: https://orgmode.org/worg/dev/org-export-reference.html
 (defun org-website-gopher-template (contents info)
   "Return complete document string after Gopher conversion.
 
@@ -7637,7 +7626,7 @@ INFO is a plist holding export options."
         (format "%s\t%s\t%s\t%s\n"
                 gopher-type-html-file
                 "Creative Commons Attribution-NonCommercial-ShareAlike license"
-                "http://creativecommons.org/licenses/by-nc-sa/3.0/"
+                "https://creativecommons.org/licenses/by-nc-sa/3.0/"
                 gopher-port))))
      )))
 ;; Template:1 ends here
@@ -11601,7 +11590,7 @@ Or any coding system returned by `list-coding-systems'."
 
 (init-message 3 "Functions: Text Conversion Functions: titleize")
 
-;; rules found here: http://titlecapitalization.com/
+;; rules found here: https://web.archive.org/web/20180330211500/http://titlecapitalization.com/
 (defun titleize (string &optional cmos do-not-cap-ends)
   "Capitalize STRING according to titling conventions.
 
@@ -12709,7 +12698,7 @@ of 'symbol with capitalized words, and insert the result."
            "you may not use this file except in compliance with the License."
            "You may obtain a copy of the License at"
            ""
-           "    http://www.apache.org/licenses/LICENSE-2.0"
+           "    https://www.apache.org/licenses/LICENSE-2.0"
            ""
            "Unless required by applicable law or agreed to in writing, software"
            "distributed under the License is distributed on an \"AS IS\" BASIS,"
@@ -15119,13 +15108,9 @@ for 1, 5, 10, 50, 100, 500, and 1,000."
 (defun flesch-readability-index (&optional beg end)
   "Compute the Flesch Readability Index of the current region or entire buffer.
 
-The Flesch Readability Index is defined on wikipedia here:
+Flesch Readability Index:
 
-  http://en.wikipedia.org/wiki/Flesch-Kincaid_Readability_Test
-
-This function provides that index following the guidelines presented here:
-
-  http://cs.boisestate.edu/~amit/teaching/125/lab/p4.html
+  https://en.wikipedia.org/wiki/Flesch%E2%80%93Kincaid_readability_tests
 
 Guidelines:
 
@@ -15134,12 +15119,12 @@ Guidelines:
     actual English word.
 
   - Count all syllables in each word. To make this simple, use
-    the following rules. Each group of adjacent
-    vowels (a,e,i,o,u,y) counts as one syllable (for example, the
-    \"ea\" in \"real\" contributes one syllable, but the \"e..a\"
-    in \"regal\" count as two syllables). However, an \"e\" at
-    the end of a word doesn't count as a syllable. For example,
-    the word \"eagle\" would be one syllable by Flesch's rules.
+    the following rules. Each group of adjacent vowels (a, e, i,
+    o, u, y) counts as one syllable (for example, the \"ea\" in
+    \"real\" contributes one syllable, but the \"e..a\" in
+    \"regal\" count as two syllables). However, an \"e\" at the
+    end of a word doesn't count as a syllable. For example, the
+    word \"eagle\" would be one syllable by Flesch's rules.
     However, the word \"intrigue\" is three syllables (since the
     e is preceded by a vowel). Also, each word has at least one
     syllable, even if the previous rules give a count of zero.

@@ -9,14 +9,14 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2024-11-23 12:48 (user)>
+  #+TIMESTAMP: <2024-11-23 17:51 (user)>
 
 * Overview
   :PROPERTIES:
   :CUSTOM_ID: overview
   :END:
 
-  This Emacs configuration is in [[http://orgmode.org/][Org]]/[[http://orgmode.org/worg/org-contrib/babel/][Babel]] 'literate' programming style.
+  This Emacs configuration is in [[https://orgmode.org/][Org]]/[[https://orgmode.org/worg/org-contrib/babel/][Babel]] 'literate' programming style.
 
   This file, *init-emacs.org*, is converted (automatically on save) into
   *init-emacs.el*, which is then compiled into *init-emacs.elc* using
@@ -28,8 +28,8 @@
 
   It was inspired and influenced by the [[http://eschulte.github.io/emacs24-starter-kit/][Emacs Starter Kit]] and Grant Rettke's
   [[https://github.com/grettke/home][Creation and Conservation of Computer Files (C3F)]] Emacs setup. Grant's post on
-  [[http://www.reddit.com/r/emacs/comments/2a29au/creation_and_conservation_of_computer_files_c3f/][reddit]] motivated me to convert my (over 10 years old and over 10K lines long)
-  Emacs configuration system to an [[http://orgmode.org/][Org]]/[[http://orgmode.org/worg/org-contrib/babel/][Babel]] based one.
+  [[https://www.reddit.com/r/emacs/comments/2a29au/creation_and_conservation_of_computer_files_c3f/][reddit]] motivated me to convert my (over 10 years old and over 10K lines long)
+  Emacs configuration system to an [[https://orgmode.org/][Org]]/[[https://orgmode.org/worg/org-contrib/babel/][Babel]] based one.
 
   #+BEGIN_QUOTE
   Emacs outshines all other editing software in approximately the same way that
@@ -611,8 +611,8 @@
       ;; (init-message 2 "Package Manager: Quelpa")
 
       ;; ;; set package archives (no ELPA)
-      ;; (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-      ;;                          ("melpa" . "http://melpa.org/packages/")))
+      ;; (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
+      ;;                          ("melpa" . "https://melpa.org/packages/")))
 
       ;; ;; initialize package
       ;; (package-initialize)
@@ -624,7 +624,7 @@
       ;; ;; initialize `quelpa' to fetch and build packages
       ;; (unless (package-installed-p 'quelpa)
       ;;   (with-temp-buffer
-      ;;     (url-insert-file-contents "https://github.com/quelpa/quelpa/raw/master/quelpa.el")
+      ;;     (url-insert-file-contents "https://raw.githubusercontent.com/quelpa/quelpa/master/quelpa.el")
       ;;     (eval-buffer)
       ;;     (quelpa-self-upgrade)))
 
@@ -661,7 +661,7 @@
 
       ;; ;; if package is not installed, install it
       ;; (unless (require 'package nil :no-error)
-      ;;   (let ((buffer (url-retrieve-synchronously "http://tromey.com/elpa/package-install.el")))
+      ;;   (let ((buffer (url-retrieve-synchronously "https://tromey.com/elpa/package-install.el")))
       ;;     (with-current-buffer buffer
       ;;       (goto-char (point-min))
       ;;       (re-search-forward "^$" nil 'move)
@@ -680,11 +680,10 @@
       ;; ;; initialize package system
       ;; (require 'package)
       ;; (setq package-enable-at-startup nil
-      ;;       ;; package-archives '(("org" . "http://orgmode.org/elpa/")
-      ;;       ;;                    ("gnu" . "http://elpa.gnu.org/packages/")
-      ;;       ;;                    ("melpa" . "http://melpa.org/packages/"))
-      ;;       package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-      ;;                          ("melpa" . "http://melpa.org/packages/"))
+      ;;       ;; package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
+      ;;       ;;                    ("melpa" . "https://melpa.org/packages/"))
+      ;;       package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
+      ;;                          ("melpa" . "https://melpa.org/packages/"))
       ;;       package-user-dir emacs-package-dir)
       ;; (package-initialize)
 
@@ -1352,7 +1351,7 @@
         ;; ;;   :init (load-theme 'gruber-darker :no-error))
 
         ;; ;; ;; dracula theme
-        ;; ;; ;; https://draculatheme.com/emacs/
+        ;; ;; ;; https://draculatheme.com/emacs
         ;; ;; (use-package dracula-theme
         ;; ;;   :straight t
         ;; ;;   :init (load-theme 'dracula :no-error))
@@ -6151,7 +6150,7 @@
         ;;                (let (eldoc-documentation-function)
         ;;                  (eldoc-print-current-symbol-info))))
         ;;              ((or
-        ;;                (string= lang "c") ;; http://github.com/nflath/c-eldoc
+        ;;                (string= lang "c") ;; https://github.com/nflath/c-eldoc
         ;;                (string= lang "C")) (when (require 'c-eldoc nil :no-error)
         ;;                (c-eldoc-print-current-symbol-info)))
         ;;              ;; https://github.com/zenozeng/css-eldoc
@@ -7960,8 +7959,8 @@
       ;;   :after (org soap-client)
       ;;   :commands (org-jira org-jira-mode org-jira-get-projects)
       ;;   :config
-      ;;   ;; BuzzFeed Jira Server
-      ;;   (setq jiralib-url "https://buzzfeed.atlassian.net"))
+      ;;   ;; Jira Server
+      ;;   (setq jiralib-url "JIRA_SERVER_URL"))
 
       ;; ;; requires soap client
       ;; (use-package soap-client
@@ -8754,7 +8753,7 @@
         (init-message 3 "Org Mode: Magic the Gathering: mtg-set-to-table")
 
         (defun mtg-set-to-table (&optional owned)
-          "Convert `http://gatherer.wizards.com/' set checklist list to table.
+          "Convert 'https://gatherer.wizards.com/' set checklist list to table.
 
         If OWNED is non-nil, add an Owned column to the table."
           (interactive "P")
@@ -8923,7 +8922,7 @@
           "Look up ITEM in the DDO Wiki and return information about it."
           (interactive "sDDO Item Name: ")
           (save-current-buffer
-            (let* ((url (url-encode-url (concat "http://ddowiki.com/index.php?search=" item)))
+            (let* ((url (url-encode-url (concat "https://ddowiki.com/index.php?search=" item)))
                    (buffer (url-retrieve-synchronously url))
                    (enchantments ""))
               (when buffer
@@ -9150,17 +9149,6 @@
                        :publishing-directory "~/public_html/sites/blog"
                        :publishing-function org-publish-attachment
                        :recursive t)
-                      ;; blog-site-rss is no longer used as the rss feed is generated from a tangle block in blog.org
-                      ;; ("blog-site-rss"
-                      ;;  :base-directory "~/web/sites/blog/site"
-                      ;;  :base-extension ,site-extension
-                      ;;  :rss-extension "rss"
-                      ;;  :rss-feed-url "http://blog.nullman.net/"
-                      ;;  :rss-image-url "http://blog.nullman.net/img/image.png"
-                      ;;  :publishing-directory "~/public_html/sites/blog"
-                      ;;  :publishing-function org-website-rss-publish-to-rss
-                      ;;  :exclude "."
-                      ;;  :include ("index.org"))
                       ;; nullware site
                       ("nullware" :components ("nullware-shared"
                                                "nullware-assets"
@@ -9274,11 +9262,11 @@
                        ("rants" . "http://nullman.net/rants/")
                        ("tutorials" . "http://nullman.net/tutorials/"))
                      ;; external links
-                     '(("cowiki" . "http://www.champions-online-wiki.com/wiki/")
-                       ("google" . "http://www.google.com/search?q=%h")
-                       ("urban" . "http://www.urbandictionary.com/define.php?term=")
-                       ("wiki" . "http://en.wikipedia.org/wiki/Special:Search?search=")
-                       ("word" . "http://en.wiktionary.org/wiki/")
+                     '(("cowiki" . "https://web.archive.org/web/20130208031659/https://www.champions-online-wiki.com/wiki/")
+                       ("google" . "https://www.google.com/search?q=%h")
+                       ("urban" . "https://www.urbandictionary.com/define.php?term=")
+                       ("wiki" . "https://en.wikipedia.org/wiki/Special:Search?search=")
+                       ("word" . "https://en.wiktionary.org/wiki/")
                        ("youtube" . "https://www.youtube.com/watch?v="))))
 
               ;; use h1 tags for top level headlines (instead of h2)
@@ -9326,15 +9314,15 @@
 
         ;; shermanwest menu list
         (defconst org-website-shermanwest-menu-list
-          '((:home . (:name "Home" :title "Home Page" :url "http://shermanwest.com/"))
-            (:pictures . (:name "Pictures" :title "Condo Pictures" :url "http://www.flickr.com/photos/nullman/sets/72157603365914146/show/"))
-            (:directions . (:name "Directions" :title "Sherman West Directions" :url "http://shermanwest.com/directions.html"))
-            (:restaurants . (:name "Restaurants" :title "San Diego Restaurants" :url "http://shermanwest.com/restaurants.html"))
-            (:bars . (:name "Bars" :title "San Diego Bars" :url "http://shermanwest.com/bars.html"))
-            (:attractions . (:name "Attractions" :title "San Diego Attractions" :url "http://shermanwest.com/attractions.html"))
-            (:shopping . (:name "Shopping" :title "San Diego Shopping" :url "http://shermanwest.com/shopping.html"))
-            (:rules . (:name "Rules" :title "House Rules" :url "http://shermanwest.com/rules.html"))
-            (:guestbook . (:name "Guestbook" :title "Guestbook" :url "http://shermanwest.com/guestbook.html")))
+          '((:home . (:name "Home" :title "Home Page" :url "xxx://shermanwest.com/"))
+            (:pictures . (:name "Pictures" :title "Condo Pictures" :url "https://www.flickr.com/photos/nullman/sets/72157603365914146/show/"))
+            (:directions . (:name "Directions" :title "Sherman West Directions" :url "xxx://shermanwest.com/directions.html"))
+            (:restaurants . (:name "Restaurants" :title "San Diego Restaurants" :url "xxx://shermanwest.com/restaurants.html"))
+            (:bars . (:name "Bars" :title "San Diego Bars" :url "xxx://shermanwest.com/bars.html"))
+            (:attractions . (:name "Attractions" :title "San Diego Attractions" :url "xxx://shermanwest.com/attractions.html"))
+            (:shopping . (:name "Shopping" :title "San Diego Shopping" :url "xxx://shermanwest.com/shopping.html"))
+            (:rules . (:name "Rules" :title "House Rules" :url "xxx://shermanwest.com/rules.html"))
+            (:guestbook . (:name "Guestbook" :title "Guestbook" :url "xxx://shermanwest.com/guestbook.html")))
           "Website Sherman West menu list.
 
         Format: ((TAG . (:name NAME :title TITLE :url URL)) ... )")
@@ -9856,7 +9844,7 @@
         (init-message 3 "Org Website: Publish HTML: Template")
 
         ;; custom html template
-        ;; INFO reference: http://orgmode.org/worg/dev/org-export-reference.html
+        ;; INFO reference: https://orgmode.org/worg/dev/org-export-reference.html
         (defun org-website-html-template (contents info)
           "Return complete document string after HTML conversion.
 
@@ -9872,7 +9860,7 @@
              ;; "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
              ;; "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n"
              "<!DOCTYPE html>\n"
-             (format "<html xmlns=\"http://www.w3.org/1999/xhtml\" lang=\"%s\">\n" (org-website-get-property-element property-list :language))
+             (format "<html xmlns=\"https://www.w3.org/1999/xhtml/\" lang=\"%s\">\n" (org-website-get-property-element property-list :language))
              "\n"
              "<head>\n"
              "\n"
@@ -9888,7 +9876,7 @@
              "  <meta name=\"google-site-verification\" content=\"" (org-website-get-property-element property-list :google-site-verification) "\" />\n"
              "\n"
              "  <link rel=\"alternate\" type=\"application/rss+xml\" title=\"RSS Feed\" href=\"http://blog.nullman.net/index.rss\" />\n"
-             "  <link rel=\"author\" href=\"http://nullman.net/about.html\" />\n"
+             "  <link rel=\"author\" href=\"http://nullman.net/about/\" />\n"
              "  <link rel=\"home\" href=\"/\" />\n"
              (cond
               ((and (string= site "kylesherman") (string= title "Resume"))
@@ -9961,7 +9949,7 @@
                   "      <!-- search start -->\n"
                   "\n"
                   "      <div class=\"search\">\n"
-                  "        <form method=\"get\" action=\"http://www.google.com/search\">\n"
+                  "        <form method=\"get\" action=\"https://www.google.com/search\">\n"
                   "          <fieldset>\n"
                   "            <input type=\"hidden\" name=\"q\" value=\"site:http://blog.nullman.net/ OR site:http://nullman.net/ OR site:http://nullware.com/\" />\n"
                   "            <input type=\"hidden\" name=\"hl\" value=\"en\" />\n"
@@ -10021,17 +10009,17 @@
                 "\n"
                 "      <div class=\"validator\">\n"
                 "        <a title=\"Check the validity of this page using W3C's unified validator\"\n"
-                (format "           href=\"http://validator.w3.org/unicorn/check?ucn_task=conformance&amp;ucn_uri=%s\">unicorn</a>\n" (org-website-get-property-element property-list :link-home))
+                (format "           href=\"https://validator.w3.org/unicorn/check?ucn_task=conformance&amp;ucn_uri=%s\">unicorn</a>\n" (org-website-get-property-element property-list :link-home))
                 "      </div>\n"
                 "\n"
                 "      <div class=\"validator\">\n"
                 "        <a title=\"Check the validity of this page's XHTML\"\n"
-                "           href=\"http://validator.w3.org/check?uri=referer\">xhtml</a>\n"
+                "           href=\"https://validator.w3.org/check?uri=referer\">xhtml</a>\n"
                 "      </div>\n"
                 "\n"
                 "      <div class=\"validator\">\n"
                 "        <a title=\"Check the validity of this page's CSS\"\n"
-                "           href=\"http://jigsaw.w3.org/css-validator/check/referer\">css</a>\n"
+                "           href=\"https://jigsaw.w3.org/css-validator/check/referer\">css</a>\n"
                 "      </div>\n"
                 "\n"
                 "      <div class=\"validator\">\n"
@@ -10042,7 +10030,7 @@
                 "      <!--\n"
                 "      <div class=\"validator\">\n"
                 "        <a title=\"Check the accessibility of this page according to U.S. Section 508\"\n"
-                (format "           href=\"http://www.contentquality.com/mynewtester/cynthia.exe?Url1=%s\">508</a>\n" (org-website-get-property-element property-list :link-home))
+                (format "           href=\"https://www.contentquality.com/mynewtester/cynthia.exe?Url1=%s\">508</a>\n" (org-website-get-property-element property-list :link-home))
                 "      </div>\n"
                 "      -->\n"
                 "\n"
@@ -10051,7 +10039,7 @@
                 "        " (org-website-get-property-element property-list :copyright) "<br />\n"
                 "        <span class=\"license\">Creative Commons\n"
                 "        <a title=\"View details of the license of this site\"\n"
-                "           href=\"http://creativecommons.org/licenses/by-nc-sa/3.0/\">\n"
+                "           href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/\">\n"
                 "          Attribution-NonCommercial-ShareAlike\n"
                 "        </a> license</span></span>\n"
                 "      </div>\n"
@@ -10080,7 +10068,7 @@
         (init-message 3 "Org Website: Publish HTML: Blog Contents Template")
 
         ;; custom blog contents html template
-        ;; INFO reference: http://orgmode.org/worg/dev/org-export-reference.html
+        ;; INFO reference: https://orgmode.org/worg/dev/org-export-reference.html
         (defun org-website-html-blog-contents-template (contents info property-list)
           "Return blog contents string after HTML conversion.
 
@@ -10365,7 +10353,7 @@
         (init-message 3 "Org Website: Publish RSS: Template")
 
         ;; custom rss template
-        ;; INFO reference: http://orgmode.org/worg/dev/org-export-reference.html
+        ;; INFO reference: https://orgmode.org/worg/dev/org-export-reference.html
         (defun org-website-rss-template (contents info)
           "Return complete document string after RSS conversion.
 
@@ -10379,14 +10367,14 @@
             ;;(message "%S" property-list)
             (concat
              "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-             "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n"
-             "         xmlns=\"http://purl.org/rss/1.0/\"\n"
-             "         xmlns:slash=\"http://purl.org/rss/1.0/modules/slash/\"\n"
-             "         xmlns:taxo=\"http://purl.org/rss/1.0/modules/taxonomy/\"\n"
-             "         xmlns:dc=\"http://purl.org/dc/elements/1.1/\"\n"
-             "         xmlns:syn=\"http://purl.org/rss/1.0/modules/syndication/\"\n"
-             "         xmlns:admin=\"http://webns.net/mvcb/\"\n"
-             "         xmlns:feedburner=\"http://rssnamespace.org/feedburner/ext/1.0\">\n\n"
+             "<rdf:RDF xmlns:rdf=\"https://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n"
+             "         xmlns=\"https://purl.org/rss/1.0/\"\n"
+             "         xmlns:slash=\"https://purl.org/rss/1.0/modules/slash/\"\n"
+             "         xmlns:taxo=\"https://purl.org/rss/1.0/modules/taxonomy/\"\n"
+             "         xmlns:dc=\"https://purl.org/dc/elements/1.1/\"\n"
+             "         xmlns:syn=\"https://purl.org/rss/1.0/modules/syndication/\"\n"
+             "         xmlns:admin=\"https://webns.net/mvcb/\"\n"
+             "         xmlns:feedburner=\"https://rssnamespace.org/feedburner/ext/1.0\">\n\n"
              "  <channel rdf:about=\"" link-home "\">\n"
              "    <title>" title "</title>\n"
              "    <link>" link-home "</link>\n"
@@ -10542,7 +10530,7 @@
         (init-message 3 "Org Website: Publish Gopher: Template")
 
         ;; custom gopher template
-        ;; INFO reference: http://orgmode.org/worg/dev/org-export-reference.html
+        ;; INFO reference: https://orgmode.org/worg/dev/org-export-reference.html
         (defun org-website-gopher-template (contents info)
           "Return complete document string after Gopher conversion.
 
@@ -10591,7 +10579,7 @@
                 (format "%s\t%s\t%s\t%s\n"
                         gopher-type-html-file
                         "Creative Commons Attribution-NonCommercial-ShareAlike license"
-                        "http://creativecommons.org/licenses/by-nc-sa/3.0/"
+                        "https://creativecommons.org/licenses/by-nc-sa/3.0/"
                         gopher-port))))
              )))
       #+END_SRC
@@ -11015,8 +11003,8 @@
 
       Un-flatten a list into a tree.
 
-      Author: http://emacs.stackexchange.com/users/2462/bburns-km
-      Source: http://emacs.stackexchange.com/a/18914
+      Author: https://emacs.stackexchange.com/users/2462/brian-burns
+      Source: https://emacs.stackexchange.com/questions/17622/how-can-i-walk-an-org-mode-tree/18914#18914
 
       #+BEGIN_SRC emacs-lisp
         ;;------------------------------------------------------------------------------
@@ -11637,7 +11625,7 @@
         #     # doesn't give it to you.
         #     #
         #     # The Options directive is both complicated and important. Please see
-        #     # http://httpd.apache.org/docs/2.4/mod/core.html#options
+        #     # https://httpd.apache.org/docs/2.4/mod/core.html#options
         #     # for more information.
         #     #
         #     Options Indexes FollowSymLinks
@@ -11722,7 +11710,7 @@
         #     # exist in your server's namespace, but do not anymore. The client
         #     # will make a new request for the document at its new location.
         #     # Example:
-        #     # Redirect permanent /foo http://www.example.com/bar
+        #     # Redirect permanent /foo https://www.example.com/bar
 
         #     #
         #     # Alias: Maps web paths into filesystem paths and is used to
@@ -11836,7 +11824,7 @@
         # #ErrorDocument 500 "The server made a boo boo."
         # #ErrorDocument 404 /missing.html
         # #ErrorDocument 404 "/cgi-bin/missing_handler.pl"
-        # #ErrorDocument 402 http://www.example.com/subscription_info.html
+        # #ErrorDocument 402 https://www.example.com/subscription_info.html
         # #
 
         # #
@@ -11932,7 +11920,7 @@
         # ExpiresByType text/css "access plus 1 day"
         # ExpiresByType text/js "access plus 1 day"
 
-        # # special mine type for icons (http://www.iana.org/assignments/media-types/image/vnd.microsoft.icon)
+        # # special mine type for icons (https://www.iana.org/assignments/media-types/image/vnd.microsoft.icon)
         # AddType image/vnd.microsoft.icon .ico
         # ExpiresByType image/vnd.microsoft.icon "access plus 3 months"
 
@@ -11956,61 +11944,6 @@
 
         #     Redirect permanent / http://athruz.com/
         # </VirtualHost>
-
-        # # # site: barland
-
-        # # <VirtualHost *>
-        # #     ServerName barland.net
-        # #     ServerAlias barland.net *.barland.net
-        # #     ServerAdmin webmaster@nullware.com
-
-        # #     ProxyPass / http://barland.net/
-        # #     ProxyPassReverse / http://barland.net/
-        # # </VirtualHost>
-
-        # # # site: colleenbarland
-
-        # # <VirtualHost *>
-        # #     ServerName colleenbarland.com
-        # #     ServerAlias colleenbarland.com *.colleenbarland.com
-        # #     ServerAdmin webmaster@nullware.com
-
-        # #     ProxyPass / http://colleenbarland.com/
-        # #     ProxyPassReverse / http://colleenbarland.com/
-        # # </VirtualHost>
-
-        # # # site: colleensherman
-
-        # # <VirtualHost *>
-        # #     ServerName colleensherman.com
-        # #     ServerAlias colleensherman.com *.colleensherman.com colleensherman.org *.colleensherman.org colleensherman.net *.colleensherman.net
-        # #     ServerAdmin webmaster@nullware.com
-
-        # #     ProxyPass / http://colleensherman.com/
-        # #     ProxyPassReverse / http://colleensherman.com/
-        # # </VirtualHost>
-
-        # # # site: dowat
-
-        # # <VirtualHost *>
-        # #     ServerName dowat.com
-        # #     ServerAlias dowat.com *.dowat.com dowat.org *.dowat.org dowat.net *.dowat.net
-        # #     ServerAdmin webmaster@nullware.com
-
-        # #     ProxyPass / http://dowat.com/
-        # #     ProxyPassReverse / http://dowat.com/
-        # # </VirtualHost>
-
-        # # # site: keehn
-
-        # # <VirtualHost *>
-        # #     ServerName keehn.net
-        # #     ServerAlias keehn.net *.keehn.net
-        # #     ServerAdmin webmaster@nullware.com
-
-        # #     ProxyPass / http://keehn.net/
-        # #     ProxyPassReverse / http://keehn.net/
-        # # </VirtualHost>
 
         # # site: kylesherman
 
@@ -12037,48 +11970,6 @@
         #     ServerAdmin webmaster@nullware.com
 
         #     Redirect permanent / http://kylesherman.net/
-        # </VirtualHost>
-
-        # # # site: nulldigital
-
-        # # <VirtualHost *>
-        # #     ServerName nulldigital.com
-        # #     ServerAlias nulldigital.com *.nulldigital.com
-        # #     ServerAdmin webmaster@nullware.com
-
-        # # #    ProxyPass / http://nulldigital.com00/
-        # # #    ProxyPassReverse / http://nulldigital.com00/
-        # #     ProxyPass / http://192.168.0.41/
-        # #     ProxyPassReverse / http://192.168.0.41/
-        # # </VirtualHost>
-
-        # # site: nulldot
-
-        # <VirtualHost *>
-        #     ServerName nulldot.net
-        #     ServerAlias nulldot.net *.nulldot.net
-        #     ServerAdmin webmaster@nullware.com
-
-        #     ProxyPass / http://localhost/sites/nulldot/
-        #     ProxyPassReverse / http://localhost/sites/nulldot/
-        # #    ProxyPass / http://nulldot.com:81/
-        # #    ProxyPassReverse / http://nulldot.com:81/
-        # </VirtualHost>
-
-        # <VirtualHost *>
-        #     ServerName nulldot.com
-        #     ServerAlias nulldot.com *.nulldot.com
-        #     ServerAdmin webmaster@nullware.com
-
-        #     Redirect permanent / http://nulldot.net/
-        # </VirtualHost>
-
-        # <VirtualHost *>
-        #     ServerName nulldot.org
-        #     ServerAlias nulldot.org *.nulldot.org
-        #     ServerAdmin webmaster@nullware.com
-
-        #     Redirect permanent / http://nulldot.net/
         # </VirtualHost>
 
         # # site: nullman
@@ -12112,8 +12003,6 @@
         # #
         # ##    ProxyPass / http://nullman.com:81/
         # ##    ProxyPassReverse / http://nullman.com:81/
-        # ##    ProxyPass /misc_ http://nullman.com/misc_
-        # ##    ProxyPass /p_ http://nullman.com/p_
         # ##    RewriteEngine on
         # ##    RewriteRule ^/(.*) http://nullman.com:81/$1 [P,L]
         # #</VirtualHost>
@@ -12201,17 +12090,6 @@
         #     ServerAdmin webmaster@nullware.com
 
         #     Redirect permanent / http://nullware.com/
-        # </VirtualHost>
-
-        # # site: shermanwest
-
-        # <VirtualHost *>
-        #     ServerName shermanwest.com
-        #     ServerAlias shermanwest.com *.shermanwest.com
-        #     ServerAdmin webmaster@nullware.com
-
-        #     ProxyPass / http://localhost/sites/shermanwest/
-        #     ProxyPassReverse / http://localhost/sites/shermanwest/
         # </VirtualHost>
         # EOF
 
@@ -12419,9 +12297,7 @@
 
       Byte compiled version of =eval-after-load=.
 
-      Source: http://www.lunaryorn.com/2013/06/25/introducing-with-eval-after-load.html
-      Source: http://www.lunaryorn.com/2013/05/01/byte-compiling-eval-after-load.html
-      Source: http://lists.gnu.org/archive/html/bug-gnu-emacs/2012-11/msg01262.html
+      Source: https://lists.gnu.org/archive/html/bug-gnu-emacs/2012-11/msg01262.html
 
       #+BEGIN_SRC emacs-lisp
         ;;------------------------------------------------------------------------------
@@ -17094,7 +16970,7 @@
 
         (init-message 3 "Functions: Text Conversion Functions: titleize")
 
-        ;; rules found here: http://titlecapitalization.com/
+        ;; rules found here: https://web.archive.org/web/20180330211500/http://titlecapitalization.com/
         (defun titleize (string &optional cmos do-not-cap-ends)
           "Capitalize STRING according to titling conventions.
 
@@ -18393,7 +18269,7 @@
                    "you may not use this file except in compliance with the License."
                    "You may obtain a copy of the License at"
                    ""
-                   "    http://www.apache.org/licenses/LICENSE-2.0"
+                   "    https://www.apache.org/licenses/LICENSE-2.0"
                    ""
                    "Unless required by applicable law or agreed to in writing, software"
                    "distributed under the License is distributed on an \"AS IS\" BASIS,"
@@ -20389,8 +20265,6 @@
 
       Reformat (pretty-print) JSON block.
 
-      Source: http://stefan.arentz.ca/beautify-json-in-emacs.html
-
       No longer needed as this function comes with =json-mode=.
 
       #+BEGIN_SRC emacs-lisp :tangle no
@@ -21562,13 +21436,9 @@
         (defun flesch-readability-index (&optional beg end)
           "Compute the Flesch Readability Index of the current region or entire buffer.
 
-        The Flesch Readability Index is defined on wikipedia here:
+        Flesch Readability Index:
 
-          http://en.wikipedia.org/wiki/Flesch-Kincaid_Readability_Test
-
-        This function provides that index following the guidelines presented here:
-
-          http://cs.boisestate.edu/~amit/teaching/125/lab/p4.html
+          https://en.wikipedia.org/wiki/Flesch%E2%80%93Kincaid_readability_tests
 
         Guidelines:
 
@@ -21577,12 +21447,12 @@
             actual English word.
 
           - Count all syllables in each word. To make this simple, use
-            the following rules. Each group of adjacent
-            vowels (a,e,i,o,u,y) counts as one syllable (for example, the
-            \"ea\" in \"real\" contributes one syllable, but the \"e..a\"
-            in \"regal\" count as two syllables). However, an \"e\" at
-            the end of a word doesn't count as a syllable. For example,
-            the word \"eagle\" would be one syllable by Flesch's rules.
+            the following rules. Each group of adjacent vowels (a, e, i,
+            o, u, y) counts as one syllable (for example, the \"ea\" in
+            \"real\" contributes one syllable, but the \"e..a\" in
+            \"regal\" count as two syllables). However, an \"e\" at the
+            end of a word doesn't count as a syllable. For example, the
+            word \"eagle\" would be one syllable by Flesch's rules.
             However, the word \"intrigue\" is three syllables (since the
             e is preceded by a vowel). Also, each word has at least one
             syllable, even if the previous rules give a count of zero.
@@ -21719,8 +21589,8 @@
 
       Buffer types out as you hit keyboard buttons.
 
-      Author: http://www.reddit.com/user/zk_phi
-      Source: http://www.reddit.com/r/emacs/comments/1orlrr/anyone_familiar_with_something_like_this_for/ccuxj9w
+      Author: https://www.reddit.com/user/zk_phi
+      Source: https://www.reddit.com/r/emacs/comments/1orlrr/anyone_familiar_with_something_like_this_for/ccuxj9w
       Based on: https://github.com/natw/keyboard_cat.vim
 
       #+BEGIN_SRC emacs-lisp
@@ -23276,7 +23146,6 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
 
     Setup abbreviation mode, including auto load and save of abbreviations file.
 
-    https://www.ux.uis.no/unix-drift/doc/emacs/emacs_27.html
     https://www.emacswiki.org/emacs/AbbrevMode
 
     #+BEGIN_SRC emacs-lisp
@@ -24101,7 +23970,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
 
     Collection of Emacs Development Environment Tools (CEDET/Semantic).
 
-    http://cedet.sourceforge.net/
+    https://cedet.sourceforge.net/
 
     #+BEGIN_SRC emacs-lisp
       ;;------------------------------------------------------------------------------
@@ -24503,7 +24372,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
     :CUSTOM_ID: modules-demo-it
     :END:
 
-    Pragmatically create demonstrations. [[http://github.com/howardabrams/demo-it][See the web page for examples.]]
+    Pragmatically create demonstrations. [[https://github.com/howardabrams/demo-it][See the web page for examples.]]
 
     #+BEGIN_SRC emacs-lisp
       ;;------------------------------------------------------------------------------
@@ -24829,7 +24698,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
        (:name "Kitchin Group" :html "https://kitchingroup.cheme.cmu.edu/blog/" :rss "https://kitchingroup.cheme.cmu.edu/blog/feed/index.xml" :tag "emacs")
        (:name "Karthinks" :html "https://karthinks.com/" :rss "https://karthinks.com/index.xml" :tag "emacs")
        ;; Linux
-       (:name "Reddit Linux Channel" :html "https://www.reddit.com/r/linux." :rss "https://www.reddit.com/r/linux.rss" :tag "linux")
+       (:name "Reddit Linux Channel" :html "https://www.reddit.com/r/linux/" :rss "https://www.reddit.com/r/linux.rss" :tag "linux")
        (:name "It's FOSS" :html "https://itsfoss.com/all-blog-posts/" :rss "https://itsfoss.com/feed/" :tag "linux")
        (:name "Linux Journal" :html "https://www.linuxjournal.com/news/" :rss "https://www.linuxjournal.com/node/feed" :tag "linux")
        (:name "Arch News" :html "https://www.archlinux.org/news/" :rss "https://www.archlinux.org/feeds/news/" :tag "linux")
