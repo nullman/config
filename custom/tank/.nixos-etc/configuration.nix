@@ -1049,6 +1049,7 @@
     appimage-run                            #
     bitwarden                               # A secure and free password manager for all of your devices
     cherrytree                              # Hierarchical note taking application
+    czkawka                                 # Simple, fast and easy to use app to remove unnecessary files from your computer
     dmg2img                                 # Apple's compressed dmg to standard (hfsplus) image disk file convert tool
     easytag                                 # View and edit tags for various audio files
     ffmpeg_6-full                           # Complete, cross-platform solution to record, convert and stream audio and video

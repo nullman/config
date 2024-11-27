@@ -158,11 +158,10 @@ Skips checks if run on Windows or Mac."
 
 ;; initialize package system
 (require 'package)
-;; (setq package-archives '(("melpa" . "https://melpa.org/packages/")
-;;                          ("elpa" . "https://elpa.gnu.org/packages/"))
 (setq package-archives '(("elpa" . "https://elpa.gnu.org/packages/")
                          ("nongnu" . "https://elpa.nongnu.org/nongnu/"))
       native-comp-async-report-warnings-errors nil)
+;;                         ("melpa" . "https://melpa.org/packages/"))
 
 ;; bootstrap
 (defvar bootstrap-version)
@@ -16101,58 +16100,6 @@ USING is the remaining peg."
   :bind* ("M-#" . calc-dispatch))
 ;; calc:1 ends here
 
-;; [[file:init-emacs.org::*casual][casual:1]]
-;;------------------------------------------------------------------------------
-;;; Packages: casual
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Packages: casual")
-
-(use-package casual
-  :straight (casual
-             :type git
-             :host github
-             :repo "kickingvegas/casual"))
-;; casual:1 ends here
-
-;; [[file:init-emacs.org::*casual-calc][casual-calc:1]]
-;;------------------------------------------------------------------------------
-;;; Packages: casual-calc
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Packages: casual-calc")
-
-(use-package casual-calc
-  :straight (casual-calc
-             :type git
-             :host github
-             :repo "kickingvegas/casual-calc")
-  :after (calc casual-lib)
-  :bind (:map calc-mode-map
-              ("C-o" . casual-calc-tmenu))
-  :bind (:map calc-alg-map
-              ("C-o" . casual-calc-tmenu)))
-;; casual-calc:1 ends here
-
-;; [[file:init-emacs.org::*casual-dired][casual-dired:1]]
-;;------------------------------------------------------------------------------
-;;; Packages: casual-dired
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Packages: casual-dired")
-
-(use-package casual-dired
-  :straight (casual-dired
-             :type git
-             :host github
-             :repo "kickingvegas/casual-dired")
-  :after (dired casual-lib)
-  :bind (:map dired-mode-map
-              ("C-o" . casual-dired-tmenu)
-              ("s" . casual-dired-sort-by-tmenu)
-              ("/" . casual-dired-search-replace-tmenu)))
-;; casual-dired:1 ends here
-
 ;; [[file:init-emacs.org::*cedet/semantic][cedet/semantic:1]]
 ;;------------------------------------------------------------------------------
 ;;; Packages: cedet/semantic
@@ -16289,6 +16236,17 @@ USING is the remaining peg."
 (use-package demo-it
   :straight t)
 ;; demo-it:1 ends here
+
+;; [[file:init-emacs.org::*dslide][dslide:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: dslide
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Packages: dslide")
+
+(use-package dslide
+  :straight t)
+;; dslide:1 ends here
 
 ;; [[file:init-emacs.org::*doom-modeline][doom-modeline:1]]
 ;;------------------------------------------------------------------------------
@@ -16575,36 +16533,32 @@ USING is the remaining peg."
   ;;(setopt ellama-naming-scheme 'ellama-generate-name-by-words)
   ;;(setopt ellama-naming-scheme 'ellama-generate-name-by-llm)
   (setopt ellama-naming-scheme 'ellama-generate-name-by-time)
-  (setopt ellama-provider
-          (make-llm-ollama
-           :chat-model "llama2-uncensored:latest"
-           :embedding-model "nomic-embed-text"
-           :default-chat-non-standard-params '(("num_ctx" . 8192))))
-  ;; (setopt ellama-naming-provider
-  ;;         (make-llm-ollama
-  ;;          :chat-model "llama2-uncensored:latest"
-  ;;          :embedding-model "nomic-embed-text"
-  ;;          :default-chat-non-standard-params '(("stop" . ("\n")))))
   (setopt ellama-translation-provider (make-llm-ollama
                                        :chat-model "phi3:14b"
                                        :embedding-model "nomic-embed-text"))
   (setopt ellama-providers
-          '(("llama2-uncensored" . (make-llm-ollama
-                                    :chat-model "llama2-uncensored:latest"
-                                    :embedding-model "nomic-embed-text"
-                                    :default-chat-non-standard-params '(("num_ctx" . 8192))))
-            ("codellama" . (make-llm-ollama
-                            :chat-model "codellama:7b"
-                            :embedding-model "nomic-embed-text"
-                            :default-chat-non-standard-params '(("num_ctx" . 8192))))
-            ("llama3:8b" . (make-llm-ollama
-                            :chat-model "llama3:8b"
-                            :embedding-model "nomic-embed-text"
-                            :default-chat-non-standard-params '(("num_ctx" . 8192))))
-            ("llama3-chatqa" . (make-llm-ollama
-                                :chat-model "llama3-chatqa"
-                                :embedding-model "nomic-embed-text"
-                                :default-chat-non-standard-params '(("num_ctx" . 8192)))))))
+          '(("llama2-uncensored" .
+             (make-llm-ollama
+              :chat-model "llama2-uncensored:latest"
+              :embedding-model "nomic-embed-text"
+              :default-chat-non-standard-params '(("num_ctx" . 8192))))
+            ("codellama" .
+             (make-llm-ollama
+              :chat-model "codellama:7b"
+              :embedding-model "nomic-embed-text"
+              :default-chat-non-standard-params '(("num_ctx" . 8192))))
+            ("llama3:8b" .
+             (make-llm-ollama
+              :chat-model "llama3:8b"
+              :embedding-model "nomic-embed-text"
+              :default-chat-non-standard-params '(("num_ctx" . 8192))))
+            ("llama3-chatqa" .
+             (make-llm-ollama
+              :chat-model "llama3-chatqa"
+              :embedding-model "nomic-embed-text"
+              :default-chat-non-standard-params '(("num_ctx" . 8192))))))
+  ;; set default provider to first in list
+  (setopt ellama-provider (eval (cdar ellama-providers))))
 ;; ellama:1 ends here
 
 ;; [[file:init-emacs.org::*elnode][elnode:1]]
@@ -16855,6 +16809,25 @@ USING is the remaining peg."
   :config
   (gcmh-mode 1))
 ;; gcmh:1 ends here
+
+;; [[file:init-emacs.org::*GPTel][GPTel:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: GPTel
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Packages: GPTel")
+
+(use-package gptel
+  :straight t
+  :custom
+  (gptel-backend (gptel-make-ollama "Code Llama"
+                   :stream t
+                   :models '("llama2-uncensored:latest"
+                             "codellama:7b"
+                             "llama3:8b"
+                             "llama3-chatqa")))
+  (gptel-model "llama2-uncensored:latest"))
+;; GPTel:1 ends here
 
 ;; [[file:init-emacs.org::*guix][guix:1]]
 ;;------------------------------------------------------------------------------
