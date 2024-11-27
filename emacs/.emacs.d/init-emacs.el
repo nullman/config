@@ -16537,14 +16537,14 @@ USING is the remaining peg."
                                        :chat-model "phi3:14b"
                                        :embedding-model "nomic-embed-text"))
   (setopt ellama-providers
-          '(("llama2-uncensored" .
-             (make-llm-ollama
-              :chat-model "llama2-uncensored:latest"
-              :embedding-model "nomic-embed-text"
-              :default-chat-non-standard-params '(("num_ctx" . 8192))))
-            ("codellama" .
+          '(("codellama" .
              (make-llm-ollama
               :chat-model "codellama:7b"
+              :embedding-model "nomic-embed-text"
+              :default-chat-non-standard-params '(("num_ctx" . 8192))))
+            ("llama2-uncensored" .
+             (make-llm-ollama
+              :chat-model "llama2-uncensored:latest"
               :embedding-model "nomic-embed-text"
               :default-chat-non-standard-params '(("num_ctx" . 8192))))
             ("llama3:8b" .
@@ -16809,25 +16809,6 @@ USING is the remaining peg."
   :config
   (gcmh-mode 1))
 ;; gcmh:1 ends here
-
-;; [[file:init-emacs.org::*GPTel][GPTel:1]]
-;;------------------------------------------------------------------------------
-;;; Packages: GPTel
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Packages: GPTel")
-
-(use-package gptel
-  :straight t
-  :custom
-  (gptel-backend (gptel-make-ollama "Code Llama"
-                   :stream t
-                   :models '("llama2-uncensored:latest"
-                             "codellama:7b"
-                             "llama3:8b"
-                             "llama3-chatqa")))
-  (gptel-model "llama2-uncensored:latest"))
-;; GPTel:1 ends here
 
 ;; [[file:init-emacs.org::*guix][guix:1]]
 ;;------------------------------------------------------------------------------
@@ -17525,7 +17506,7 @@ And the line would be overlaid like:
            (album-width (/ available-width 3))
            (string
             (concat
-             (format "% 4d.%.2d  "
+             (format "% 4d:%.2d  "
                      (/ (or (plist-get plist 'Time) 0) 60)
                      (mod (or (plist-get plist 'Time) 0) 60))
              (mingus-truncate-string

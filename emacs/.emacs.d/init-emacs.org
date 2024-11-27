@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2024-11-26 15:59 (user)>
+  #+TIMESTAMP: <2024-11-26 23:45 (user)>
 
 * Overview
   :PROPERTIES:
@@ -24837,14 +24837,14 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
                                              :chat-model "phi3:14b"
                                              :embedding-model "nomic-embed-text"))
         (setopt ellama-providers
-                '(("llama2-uncensored" .
-                   (make-llm-ollama
-                    :chat-model "llama2-uncensored:latest"
-                    :embedding-model "nomic-embed-text"
-                    :default-chat-non-standard-params '(("num_ctx" . 8192))))
-                  ("codellama" .
+                '(("codellama" .
                    (make-llm-ollama
                     :chat-model "codellama:7b"
+                    :embedding-model "nomic-embed-text"
+                    :default-chat-non-standard-params '(("num_ctx" . 8192))))
+                  ("llama2-uncensored" .
+                   (make-llm-ollama
+                    :chat-model "llama2-uncensored:latest"
                     :embedding-model "nomic-embed-text"
                     :default-chat-non-standard-params '(("num_ctx" . 8192))))
                   ("llama3:8b" .
@@ -25501,7 +25501,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;;   (golden-ratio-mode))
     #+END_SRC
 
-*** GPTel
+*** +GPTel+
     :PROPERTIES:
     :CUSTOM_ID: packages-gptel
     :END:
@@ -25509,23 +25509,23 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
     A simple Large Language Model chat client, with support for multiple
     models/backends.
 
-    #+BEGIN_SRC emacs-lisp
-      ;;------------------------------------------------------------------------------
-      ;;; Packages: GPTel
-      ;;------------------------------------------------------------------------------
+    #+BEGIN_SRC emacs-lisp :tangle no
+      ;; ;;------------------------------------------------------------------------------
+      ;; ;;; Packages: GPTel
+      ;; ;;------------------------------------------------------------------------------
 
-      (init-message 2 "Packages: GPTel")
+      ;; (init-message 2 "Packages: GPTel")
 
-      (use-package gptel
-        :straight t
-        :custom
-        (gptel-backend (gptel-make-ollama "Code Llama"
-                         :stream t
-                         :models '("llama2-uncensored:latest"
-                                   "codellama:7b"
-                                   "llama3:8b"
-                                   "llama3-chatqa")))
-        (gptel-model "llama2-uncensored:latest"))
+      ;; (use-package gptel
+      ;;   :straight t
+      ;;   :custom
+      ;;   (gptel-backend (gptel-make-ollama "Code Llama"
+      ;;                    :stream t
+      ;;                    :models '("codellama:7b"
+      ;;                              "llama2-uncensored:latest"
+      ;;                              "llama3:8b"
+      ;;                              "llama3-chatqa")))
+      ;;   (gptel-model "codellama:7b"))
     #+END_SRC
 
 *** guix
@@ -26615,7 +26615,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
                  (album-width (/ available-width 3))
                  (string
                   (concat
-                   (format "% 4d.%.2d  "
+                   (format "% 4d:%.2d  "
                            (/ (or (plist-get plist 'Time) 0) 60)
                            (mod (or (plist-get plist 'Time) 0) 60))
                    (mingus-truncate-string
