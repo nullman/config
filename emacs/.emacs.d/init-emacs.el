@@ -16524,41 +16524,76 @@ USING is the remaining peg."
 (use-package ellama
   :straight t
   :after llm-ollama
-  :init
-  (setopt ellama-keymap-prefix "C-c e")
-  (setopt ellama-language "English")
-  (setopt ellama-auto-scroll t)
-  (setopt ellama-long-lines-length 80)
-  (setopt ellama-fill-paragraphs t)
-  ;;(setopt ellama-naming-scheme 'ellama-generate-name-by-words)
-  ;;(setopt ellama-naming-scheme 'ellama-generate-name-by-llm)
-  (setopt ellama-naming-scheme 'ellama-generate-name-by-time)
-  (setopt ellama-translation-provider (make-llm-ollama
-                                       :chat-model "phi3:14b"
-                                       :embedding-model "nomic-embed-text"))
-  (setopt ellama-providers
-          '(("codellama" .
-             (make-llm-ollama
-              :chat-model "codellama:7b"
-              :embedding-model "nomic-embed-text"
-              :default-chat-non-standard-params '(("num_ctx" . 8192))))
-            ("llama2-uncensored" .
-             (make-llm-ollama
-              :chat-model "llama2-uncensored:latest"
-              :embedding-model "nomic-embed-text"
-              :default-chat-non-standard-params '(("num_ctx" . 8192))))
-            ("llama3:8b" .
-             (make-llm-ollama
-              :chat-model "llama3:8b"
-              :embedding-model "nomic-embed-text"
-              :default-chat-non-standard-params '(("num_ctx" . 8192))))
-            ("llama3-chatqa" .
-             (make-llm-ollama
-              :chat-model "llama3-chatqa"
-              :embedding-model "nomic-embed-text"
-              :default-chat-non-standard-params '(("num_ctx" . 8192))))))
+  ;; :init
+  ;; (setopt ellama-keymap-prefix "C-c e")
+  ;; (setopt ellama-language "English")
+  ;; (setopt ellama-auto-scroll t)
+  ;; (setopt ellama-long-lines-length 80)
+  ;; (setopt ellama-fill-paragraphs t)
+  ;; ;;(setopt ellama-naming-scheme 'ellama-generate-name-by-words)
+  ;; ;;(setopt ellama-naming-scheme 'ellama-generate-name-by-llm)
+  ;; (setopt ellama-naming-scheme 'ellama-generate-name-by-time)
+  ;; (setopt ellama-translation-provider (make-llm-ollama
+  ;;                                      :chat-model "phi3:14b"
+  ;;                                      :embedding-model "nomic-embed-text"))
+  ;; (setopt ellama-providers
+  ;;         '(("codellama" .
+  ;;            (make-llm-ollama
+  ;;             :chat-model "codellama:7b"
+  ;;             :embedding-model "nomic-embed-text"
+  ;;             :default-chat-non-standard-params '(("num_ctx" . 8192))))
+  ;;           ("llama2-uncensored" .
+  ;;            (make-llm-ollama
+  ;;             :chat-model "llama2-uncensored:latest"
+  ;;             :embedding-model "nomic-embed-text"
+  ;;             :default-chat-non-standard-params '(("num_ctx" . 8192))))
+  ;;           ("llama3:8b" .
+  ;;            (make-llm-ollama
+  ;;             :chat-model "llama3:8b"
+  ;;             :embedding-model "nomic-embed-text"
+  ;;             :default-chat-non-standard-params '(("num_ctx" . 8192))))
+  ;;           ("llama3-chatqa" .
+  ;;            (make-llm-ollama
+  ;;             :chat-model "llama3-chatqa"
+  ;;             :embedding-model "nomic-embed-text"
+  ;;             :default-chat-non-standard-params '(("num_ctx" . 8192))))))
+  ;; ;; set default provider to first in list
+  ;; (setopt ellama-provider (eval (cdar ellama-providers))))
+  :custom
+  (ellama-keymap-prefix "C-c e")
+  (ellama-language "English")
+  (ellama-auto-scroll t)
+  (ellama-long-lines-length 80)
+  (ellama-fill-paragraphs t)
+  ;;(ellama-naming-scheme 'ellama-generate-name-by-words)
+  ;;(ellama-naming-scheme 'ellama-generate-name-by-llm)
+  (ellama-naming-scheme 'ellama-generate-name-by-time)
+  (ellama-translation-provider (make-llm-ollama
+                                :chat-model "phi3:14b"
+                                :embedding-model "nomic-embed-text"))
+  (ellama-providers
+   '(("codellama" .
+      (make-llm-ollama
+       :chat-model "codellama:7b"
+       :embedding-model "nomic-embed-text"
+       :default-chat-non-standard-params '(("num_ctx" . 8192))))
+     ("llama2-uncensored" .
+      (make-llm-ollama
+       :chat-model "llama2-uncensored:latest"
+       :embedding-model "nomic-embed-text"
+       :default-chat-non-standard-params '(("num_ctx" . 8192))))
+     ("llama3:8b" .
+      (make-llm-ollama
+       :chat-model "llama3:8b"
+       :embedding-model "nomic-embed-text"
+       :default-chat-non-standard-params '(("num_ctx" . 8192))))
+     ("llama3-chatqa" .
+      (make-llm-ollama
+       :chat-model "llama3-chatqa"
+       :embedding-model "nomic-embed-text"
+       :default-chat-non-standard-params '(("num_ctx" . 8192))))))
   ;; set default provider to first in list
-  (setopt ellama-provider (eval (cdar ellama-providers))))
+  (ellama-provider (eval (cdar ellama-providers))))
 ;; ellama:1 ends here
 
 ;; [[file:init-emacs.org::*elnode][elnode:1]]
