@@ -829,6 +829,7 @@
     woeusb                                  # Create bootable USB disks from Windows ISO images
     xz                                      # General-purpose data compression software, successor of LZMA
     ydotool                                 # Generic Linux command-line automation tool
+    zip                                     # Compressor/archiver for creating and modifying zipfiles
 
     # window manager
     adapta-gtk-theme                        # Adaptive GTK theme based on Material Design Guidelines
@@ -857,6 +858,7 @@
     i3-gaps                                 # Tiling window manager
     iwgtk                                   # Lightweight, graphical wifi management utility for Linux
     keychain                                # Keychain management tool
+    #libsForQt5.qt5.qttools                  # Cross-platform application framework for C++
     lightdm                                 # Cross-desktop display manager
     lightdm-slick-greeter                   # Slick-looking LightDM greeter
     lxappearance                            # Lightweight program for configuring the theme and fonts of gtk applications
@@ -885,10 +887,6 @@
     wmname                                  # Prints or set the window manager name property of the root window
     wmctrl                                  # CLI tool to interact with EWMH/NetWM compatible X Window Managers
     xfce.exo                                # Application library for Xfce
-    xfce.xfce4-panel                        # Panel for the Xfce desktop environment
-    xfce.xfce4-power-manager                # Power manager for the Xfce Desktop Environment
-    xfce.xfce4-settings                     # Settings manager for Xfce
-    xfce.xfconf                             # Simple client-server configuration storage and query system for Xfce
     xfce.libxfce4ui                         # Widgets library for Xfce
     xfce.libxfce4util                       # Extension library for Xfce
     xfce.xfce4-appfinder                    # Appfinder for the Xfce4 Desktop Environment
@@ -905,8 +903,11 @@
     xfce.xfce4-netload-plugin               # Internet load speed plugin for Xfce4 panel
     xfce.xfce4-notes-plugin                 # Sticky notes plugin for Xfce panel
     xfce.xfce4-notifyd                      # Simple notification daemon for Xfce
+    xfce.xfce4-panel                        # Panel for the Xfce desktop environment
+    xfce.xfce4-power-manager                # Power manager for the Xfce Desktop Environment
     xfce.xfce4-pulseaudio-plugin            # Adjust the audio volume of the PulseAudio sound system
     xfce.xfce4-sensors-plugin               # Panel plug-in for different sensors using acpi, lm_sensors and hddtemp
+    xfce.xfce4-settings                     # Settings manager for Xfce
     xfce.xfce4-systemload-plugin            # System load plugin for Xfce panel
     xfce.xfce4-taskmanager                  # Easy to use task manager for Xfce
     xfce.xfce4-time-out-plugin              # Panel plug-in to take periodical breaks from the computer
@@ -916,6 +917,7 @@
     xfce.xfce4-whiskermenu-plugin           # Alternate application launcher for Xfce
     xfce.xfce4-windowck-plugin              # Xfce panel plugin for displaying window title and buttons
     xfce.xfce4-xkb-plugin                   # Allows you to setup and use multiple keyboard layouts
+    xfce.xfconf                             # Simple client-server configuration storage and query system for Xfce
     xdg-desktop-portal-gtk                  # Desktop integration portals for sandboxed apps
     xdg-utils                               # Set of command line tools that assist applications with a variety of desktop integration tasks
     yad                                     # GUI dialog tool for shell scripts
@@ -1000,6 +1002,7 @@
     appimage-run                            #
     bitwarden                               # A secure and free password manager for all of your devices
     cherrytree                              # Hierarchical note taking application
+    czkawka                                 # Simple, fast and easy to use app to remove unnecessary files from your computer
     dmg2img                                 # Apple's compressed dmg to standard (hfsplus) image disk file convert tool
     easytag                                 # View and edit tags for various audio files
     ffmpeg_6-full                           # Complete, cross-platform solution to record, convert and stream audio and video
@@ -1021,6 +1024,7 @@
     makemkv                                 # Convert blu-ray and dvd to mkv
     mediawriter                             # Tool to write images files to portable media
     meld                                    # Visual diff and merge tool
+    mission-center                          # Monitor your CPU, Memory, Disk, Network and GPU usage
     #mtkclient                               #
     poppler_utils                           # PDF rendering library
     scrcpy                                  # Display and control Android devices over USB or TCP/IP
@@ -1137,7 +1141,7 @@
     firefox                                 # Web browser built from Firefox source tree
     freenet                                 # Decentralised and censorship-resistant network
     gajim                                   # Jabber client written in PyGTK
-    #google-chrome                           # Freeware web browser developed by Google
+    google-chrome                           # Freeware web browser developed by Google
     kristall                                # Graphical small-internet client, supports gemini, http, https, gopher, finger
     magic-wormhole                          # Securely transfer data between computers
     mop                                     # Simple stock tracker implemented in go
@@ -1151,6 +1155,7 @@
     syncterm                                # BBS terminal emulator
     telegram-desktop                        # Telegram Desktop messaging app
     transmission_4-gtk                      # Fast, easy and free BitTorrent client
+    tribler                                 # Decentralised P2P filesharing client based on the Bittorrent protocol
     tuba                                    # Browse the Fediverse
     #ungoogled-chromium                      # Open source web browser from Google, with dependencies on Google web services removed
     vdhcoapp                                # Companion application for the Video DownloadHelper browser add-on

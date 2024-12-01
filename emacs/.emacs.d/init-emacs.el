@@ -16521,6 +16521,13 @@ USING is the remaining peg."
 
 (init-message 2 "Packages: ellama")
 
+(defun custom-make-llm-ollama (chat-model)
+  "Custom version of `make-llm-ollama'."
+  (make-llm-ollama
+   :chat-model chat-model
+   :embedding-model "nomic-embed-text"
+   :default-chat-non-standard-params '(("num_ctx" . 8192))))
+
 (use-package ellama
   :straight t
   :after llm-ollama
@@ -16572,26 +16579,17 @@ USING is the remaining peg."
                                 :chat-model "phi3:14b"
                                 :embedding-model "nomic-embed-text"))
   (ellama-providers
-   '(("codellama" .
-      (make-llm-ollama
-       :chat-model "codellama:7b"
-       :embedding-model "nomic-embed-text"
-       :default-chat-non-standard-params '(("num_ctx" . 8192))))
-     ("llama2-uncensored" .
-      (make-llm-ollama
-       :chat-model "llama2-uncensored:latest"
-       :embedding-model "nomic-embed-text"
-       :default-chat-non-standard-params '(("num_ctx" . 8192))))
-     ("llama3:8b" .
-      (make-llm-ollama
-       :chat-model "llama3:8b"
-       :embedding-model "nomic-embed-text"
-       :default-chat-non-standard-params '(("num_ctx" . 8192))))
-     ("llama3-chatqa" .
-      (make-llm-ollama
-       :chat-model "llama3-chatqa"
-       :embedding-model "nomic-embed-text"
-       :default-chat-non-standard-params '(("num_ctx" . 8192))))))
+   `(("codellama" . ,(custom-make-llm-ollama "codellama:7b"))
+     ("llama2-uncensored" . ,(custom-make-llm-ollama "llama2-uncensored:latest"))
+     ("qwen2.5-coder:7b" . ,(custom-make-llm-ollama "qwen2.5-coder:7b"))
+     ("qwen2.5-coder:14b" . ,(custom-make-llm-ollama "qwen2.5-coder:14b"))
+     ("qwen2.5-coder:32b" . ,(custom-make-llm-ollama "qwen2.5-coder:32b"))
+     ("qwen2.5:7b" . ,(custom-make-llm-ollama "qwen2.5:7b"))
+     ("qwen2.5:14b" . ,(custom-make-llm-ollama "qwen2.5:14b"))
+     ("qwen2.5:32b" . ,(custom-make-llm-ollama "qwen2.5:32b"))
+     ;;("qwen2.5:72b" . ,(custom-make-llm-ollama "qwen2.5:72b"))
+     ("llama3:8b" . ,(custom-make-llm-ollama "llama3:8b"))
+     ("llama3-chatqa" . ,(custom-make-llm-ollama "llama3-chatqa"))))
   ;; set default provider to first in list
   (ellama-provider (eval (cdar ellama-providers))))
 ;; ellama:1 ends here

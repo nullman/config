@@ -28,7 +28,6 @@ _command() {
 }
 
 # shell colors
-# shell colors
 export COLOR_DEFAULT="\[\033[0m\]"      # light yellow
 export COLOR_BLACK="\[\033[0;30m\]"
 export COLOR_DARK_GRAY="\[\033[1;30m\]"
@@ -148,11 +147,11 @@ export LC_COLLATE=C                     # set directory sorting to ASCII order
 [[ -d "/usr/local/share/android-sdk" ]] && export ANDROID_SDK="/usr/local/share/android-sdk"
 [[ -d "${HOME}/Library/Android/sdk" ]] && export ANDROID_SDK="${HOME}/Library/Android/sdk"
 [[ -d "${HOME}/android-sdk" ]] && export ANDROID_SDK="${HOME}/android-sdk"
-export ANDROID_SDK_ROOT="${ANDROID_SDK}"
+[[ -n "${ANDROID_SDK}" ]] && export ANDROID_SDK_ROOT="${ANDROID_SDK}"
 [[ -d "/usr/local/share/android-ndk" ]] && export ANDROID_NDK="/usr/local/share/android-ndk"
 [[ -d "${HOME}/Library/Android/sdk/ndk-bundle" ]] && export ANDROID_SDK="${HOME}/Library/Android/sdk/ndk-bundle"
 [[ -d "${HOME}/android-sdk/ndk-bundle" ]] && export ANDROID_NDK="${HOME}/android-sdk/ndk-bundle"
-export ANDROID_NDK_HOME="${ANDROID_NDK}"
+[[ -n "${ANDROID_NDK}" ]] && export ANDROID_NDK_HOME="${ANDROID_NDK}"
 
 # path additions
 # path addition "befores" in reverse order

@@ -758,6 +758,7 @@
     clipmenu                                # Clipboard management using dmenu
     cifs-utils                              # Tools for managing Linux CIFS client filesystems
     comma                                   # Runs programs without installing them
+    coolercontrol.coolercontrol-gui         # Monitor and control your cooling devices (GUI)
     coreutils                               # GNU Core Utilities
     curl                                    # Command line tool for transferring files with URL syntax
     direnv                                  # Shell extension that manages your environment
