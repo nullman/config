@@ -1,4 +1,4 @@
-﻿;; [[file:init-emacs.org::*Early Init][Early Init:1]]
+;; [[file:init-emacs.org::*Early Init][Early Init:1]]
 ;; -*- mode: emacs-lisp; lexical-binding: t; no-byte-compile: t -*-
 ;;==============================================================================
 ;;; early-init.el
@@ -12,10 +12,6 @@
 ;;
 ;; init-emacs.org => early-init.el
 ;;==============================================================================
-
-;; macro combining `setq' and `setq-default'
-;; FIXME
-;;(defmacro setq-customize (
 
 ;; disable default emacs package handling (needed for straight)
 (setq package-enable-at-startup nil)

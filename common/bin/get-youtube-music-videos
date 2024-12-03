@@ -13,6 +13,7 @@ ytdlp="$(command -v yt-dlp)"
 #ytdlp="${HOME}/code/yt-dlp/yt-dlp"
 
 videolist=(
+    "Earth, Wind & Fire - September                                      | https://www.youtube.com/watch?v=Gs069dndIYk"
     "'Til Tuesday - Voices Carry                                         | https://www.youtube.com/watch?v=uejh-bHa4To"
     "1975, The - Love it If We Made It                                   | https://Www.youtube.com/watch?v=1Wl1B7DPegc"
     "1975, The - Somebody Else                                           | https://www.youtube.com/watch?v=Bimd2nZirT4"

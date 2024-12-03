@@ -19,7 +19,7 @@ _command() {
 #! set variables
 #!
 #!       home
-home="$(cd ${HOME} ; cd .. ; pwd)"
+home="$(cd ${HOME} && cd .. && pwd)"
 #!       operating system (Linux, Windows_NT, Darwin, Haiku)
 os="$(uname -s)"
 #!       config directory
@@ -817,14 +817,10 @@ alias sudoedit="\${SUDO_EDITOR}"
 alias ed="edit"
 #        sued                    sudo edit
 alias sued="sudoedit"
-#!#        emacs                   emacs (text mode)
-#!alias emacs="emacs --no-site-file -nw"
 #        emacs-debug             emacs --debug-init
-alias emacs-debug="emacs --no-site-file -nw --debug-init"
-#!#        xemacs                  xemacs (text mode)
-#!alias xemacs="xemacs --no-site-file -nw"
+alias emacs-debug="emacs --debug-init"
 #        emacs-comp              emacs batch-byte-compile
-alias emacs-comp="emacs --no-init-file --no-site-file -batch -f batch-byte-compile"
+alias emacs-comp="emacs --no-init-file --no-site-file --batch --funcall batch-byte-compile"
 #        vi                      vim
 alias vi="vim"
 #        edsshak                 edit ~/.ssh/authorized_keys

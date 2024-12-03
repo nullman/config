@@ -16516,82 +16516,60 @@ USING is the remaining peg."
 
 ;; [[file:init-emacs.org::*ellama][ellama:1]]
 ;;------------------------------------------------------------------------------
-;;; Packages: ellama
+        ;;; Packages: ellama
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Packages: ellama")
 
-(defun custom-make-llm-ollama (chat-model)
-  "Custom version of `make-llm-ollama'."
-  (make-llm-ollama
-   :chat-model chat-model
-   :embedding-model "nomic-embed-text"
-   :default-chat-non-standard-params '(("num_ctx" . 8192))))
+(use-package llm-ollama
+  :straight (:type built-in))
 
 (use-package ellama
   :straight t
   :after llm-ollama
-  ;; :init
-  ;; (setopt ellama-keymap-prefix "C-c e")
-  ;; (setopt ellama-language "English")
-  ;; (setopt ellama-auto-scroll t)
-  ;; (setopt ellama-long-lines-length 80)
-  ;; (setopt ellama-fill-paragraphs t)
-  ;; ;;(setopt ellama-naming-scheme 'ellama-generate-name-by-words)
-  ;; ;;(setopt ellama-naming-scheme 'ellama-generate-name-by-llm)
-  ;; (setopt ellama-naming-scheme 'ellama-generate-name-by-time)
-  ;; (setopt ellama-translation-provider (make-llm-ollama
-  ;;                                      :chat-model "phi3:14b"
-  ;;                                      :embedding-model "nomic-embed-text"))
+  ;;:commands (ellama-chat ellama-provider-select)
+  :init
+  (setopt ellama-keymap-prefix "C-c e")
+  (setopt ellama-language "English")
+  (setopt ellama-auto-scroll t)
+  (setopt ellama-long-lines-length 80)
+  (setopt ellama-fill-paragraphs t)
+  ;;(setopt ellama-naming-scheme 'ellama-generate-name-by-words)
+  ;;(setopt ellama-naming-scheme 'ellama-generate-name-by-llm)
+  (setopt ellama-naming-scheme 'ellama-generate-name-by-time)
+  (setopt ellama-provider
+          (make-llm-ollama
+           :chat-model "llama3:8b-instruct-q8_0"
+           :embedding-model "nomic-embed-text"
+           :default-chat-non-standard-params '(("num_ctx" . 8192))))
+  (setopt ellama-summarization-provider
+          (make-llm-ollama
+           :chat-model "qwen2.5:3b"
+           :embedding-model "nomic-embed-text"
+           :default-chat-non-standard-params '(("num_ctx" . 32768))))
+  (setopt ellama-coding-provider
+          (make-llm-ollama
+           :chat-model "qwen2.5-coder:3b"
+           :embedding-model "nomic-embed-text"
+           :default-chat-non-standard-params '(("num_ctx" . 32768))))
+  (setopt ellama-translation-provider
+          (make-llm-ollama
+           :chat-model "qwen2.5:3b"
+           :embedding-model "nomic-embed-text"
+           :default-chat-non-standard-params '(("num_ctx" . 32768))))
   ;; (setopt ellama-providers
-  ;;         '(("codellama" .
-  ;;            (make-llm-ollama
-  ;;             :chat-model "codellama:7b"
-  ;;             :embedding-model "nomic-embed-text"
-  ;;             :default-chat-non-standard-params '(("num_ctx" . 8192))))
-  ;;           ("llama2-uncensored" .
-  ;;            (make-llm-ollama
-  ;;             :chat-model "llama2-uncensored:latest"
-  ;;             :embedding-model "nomic-embed-text"
-  ;;             :default-chat-non-standard-params '(("num_ctx" . 8192))))
-  ;;           ("llama3:8b" .
-  ;;            (make-llm-ollama
-  ;;             :chat-model "llama3:8b"
-  ;;             :embedding-model "nomic-embed-text"
-  ;;             :default-chat-non-standard-params '(("num_ctx" . 8192))))
-  ;;           ("llama3-chatqa" .
-  ;;            (make-llm-ollama
-  ;;             :chat-model "llama3-chatqa"
-  ;;             :embedding-model "nomic-embed-text"
-  ;;             :default-chat-non-standard-params '(("num_ctx" . 8192))))))
-  ;; ;; set default provider to first in list
-  ;; (setopt ellama-provider (eval (cdar ellama-providers))))
-  :custom
-  (ellama-keymap-prefix "C-c e")
-  (ellama-language "English")
-  (ellama-auto-scroll t)
-  (ellama-long-lines-length 80)
-  (ellama-fill-paragraphs t)
-  ;;(ellama-naming-scheme 'ellama-generate-name-by-words)
-  ;;(ellama-naming-scheme 'ellama-generate-name-by-llm)
-  (ellama-naming-scheme 'ellama-generate-name-by-time)
-  (ellama-translation-provider (make-llm-ollama
-                                :chat-model "phi3:14b"
-                                :embedding-model "nomic-embed-text"))
-  (ellama-providers
-   `(("codellama" . ,(custom-make-llm-ollama "codellama:7b"))
-     ("llama2-uncensored" . ,(custom-make-llm-ollama "llama2-uncensored:latest"))
-     ("qwen2.5-coder:7b" . ,(custom-make-llm-ollama "qwen2.5-coder:7b"))
-     ("qwen2.5-coder:14b" . ,(custom-make-llm-ollama "qwen2.5-coder:14b"))
-     ("qwen2.5-coder:32b" . ,(custom-make-llm-ollama "qwen2.5-coder:32b"))
-     ("qwen2.5:7b" . ,(custom-make-llm-ollama "qwen2.5:7b"))
-     ("qwen2.5:14b" . ,(custom-make-llm-ollama "qwen2.5:14b"))
-     ("qwen2.5:32b" . ,(custom-make-llm-ollama "qwen2.5:32b"))
-     ;;("qwen2.5:72b" . ,(custom-make-llm-ollama "qwen2.5:72b"))
-     ("llama3:8b" . ,(custom-make-llm-ollama "llama3:8b"))
-     ("llama3-chatqa" . ,(custom-make-llm-ollama "llama3-chatqa"))))
-  ;; set default provider to first in list
-  (ellama-provider (eval (cdar ellama-providers))))
+  ;;         (("codellama" . (make-llm-ollama "codellama:7b"))
+  ;;          ("llama2-uncensored" . (make-llm-ollama "llama2-uncensored:latest"))
+  ;;          ("qwen2.5-coder:7b" . (make-llm-ollama "qwen2.5-coder:7b"))
+  ;;          ("qwen2.5-coder:14b" . (make-llm-ollama "qwen2.5-coder:14b"))
+  ;;          ("qwen2.5-coder:32b" . (make-llm-ollama "qwen2.5-coder:32b"))
+  ;;          ("qwen2.5:7b" . (make-llm-ollama "qwen2.5:7b"))
+  ;;          ("qwen2.5:14b" . (make-llm-ollama "qwen2.5:14b"))
+  ;;          ("qwen2.5:32b" . (make-llm-ollama "qwen2.5:32b"))
+  ;;          ;;("qwen2.5:72b" . (make-llm-ollama "qwen2.5:72b"))
+  ;;          ("llama3:8b" . (make-llm-ollama "llama3:8b"))
+  ;;          ("llama3-chatqa" . (make-llm-ollama "llama3-chatqa"))))
+  )
 ;; ellama:1 ends here
 
 ;; [[file:init-emacs.org::*elnode][elnode:1]]
