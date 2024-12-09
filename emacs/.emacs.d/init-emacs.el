@@ -16540,6 +16540,7 @@ USING is the remaining peg."
   (setopt ellama-provider
           (make-llm-ollama
            :chat-model "llama3:8b-instruct-q8_0"
+           ;;:chat-model "artifish/llama3.2-uncensored:latest"
            :embedding-model "nomic-embed-text"
            :default-chat-non-standard-params '(("num_ctx" . 8192))))
   (setopt ellama-summarization-provider

@@ -1314,6 +1314,7 @@
     #alpaca                                  # Ollama client made with GTK4 and Adwaita
     imaginer                                # Imaginer with AI
     ollama                                  # Get up and running with large language models locally
+    open-webui                              # Comprehensive suite for LLMs with a user-friendly WebUI
     tabby                                   # Self-hosted AI coding assistant
     upscayl                                 # Free and Open Source AI Image Upscaler
 
