@@ -18633,8 +18633,6 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
   (save-place-limit 100)
   (save-place-ignore-files-regexp
    (rx (or
-        ;; ignore org files so as to not conflict with `org-visibility'
-        (seq ".org" eol)
         ;; ignore ~/.cddb files
         "/.cddb/")))
   :init (save-place-mode 1)

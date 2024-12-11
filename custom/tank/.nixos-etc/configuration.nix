@@ -1280,6 +1280,7 @@
     jq                                      # Lightweight and flexible command-line JSON processor
     jqp                                     # TUI playground to experiment with jq
     kotlin                                  # General purpose programming language
+    lazarus lazarus-qt                      # Graphical IDE for the FreePascal language
     lazygit                                 # Simple terminal UI for git commands
     libmpc                                  # Library for multiprecision complex arithmetic with exact rounding
     m4                                      # GNU M4, a macro processor
