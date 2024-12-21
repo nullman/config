@@ -1282,6 +1282,7 @@
     kotlin                                  # General purpose programming language
     lazarus lazarus-qt                      # Graphical IDE for the FreePascal language
     lazygit                                 # Simple terminal UI for git commands
+    lazyjournal                             # TUI for journalctl, file system logs, as well as Docker and Podman containers
     libmpc                                  # Library for multiprecision complex arithmetic with exact rounding
     m4                                      # GNU M4, a macro processor
     mpfr                                    # Library for multiple-precision floating-point arithmetic

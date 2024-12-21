@@ -16522,7 +16522,7 @@ USING is the remaining peg."
 (init-message 2 "Packages: ellama")
 
 (use-package llm-ollama
-  :straight (:type built-in))
+  :straight t)
 
 (use-package ellama
   :straight t
@@ -16558,19 +16558,16 @@ USING is the remaining peg."
            :chat-model "qwen2.5:3b"
            :embedding-model "nomic-embed-text"
            :default-chat-non-standard-params '(("num_ctx" . 32768))))
-  ;; (setopt ellama-providers
-  ;;         (("codellama" . (make-llm-ollama "codellama:7b"))
-  ;;          ("llama2-uncensored" . (make-llm-ollama "llama2-uncensored:latest"))
-  ;;          ("qwen2.5-coder:7b" . (make-llm-ollama "qwen2.5-coder:7b"))
-  ;;          ("qwen2.5-coder:14b" . (make-llm-ollama "qwen2.5-coder:14b"))
-  ;;          ("qwen2.5-coder:32b" . (make-llm-ollama "qwen2.5-coder:32b"))
-  ;;          ("qwen2.5:7b" . (make-llm-ollama "qwen2.5:7b"))
-  ;;          ("qwen2.5:14b" . (make-llm-ollama "qwen2.5:14b"))
-  ;;          ("qwen2.5:32b" . (make-llm-ollama "qwen2.5:32b"))
-  ;;          ;;("qwen2.5:72b" . (make-llm-ollama "qwen2.5:72b"))
-  ;;          ("llama3:8b" . (make-llm-ollama "llama3:8b"))
-  ;;          ("llama3-chatqa" . (make-llm-ollama "llama3-chatqa"))))
-  )
+  (setopt ellama-providers
+          '(("llama3:8b-instruct-q8_0" . (make-llm-ollama "llama3:8b-instruct-q8_0"))
+            ("llama3:8b" . (make-llm-ollama "llama3:8b"))
+            ("llama3-chatqa" . (make-llm-ollama "llama3-chatqa"))
+            ("llama2-uncensored" . (make-llm-ollama "llama2-uncensored:latest"))
+            ("codellama" . (make-llm-ollama "codellama:7b"))
+            ("qwen2.5-coder:7b" . (make-llm-ollama "qwen2.5-coder:7b"))
+            ;;("qwen2.5-coder:14b" . (make-llm-ollama "qwen2.5-coder:14b"))
+            ;;("qwen2.5-coder:32b" . (make-llm-ollama "qwen2.5-coder:32b"))
+            ("qwen2.5:7b" . (make-llm-ollama "qwen2.5:7b")))))
 ;; ellama:1 ends here
 
 ;; [[file:init-emacs.org::*elnode][elnode:1]]
