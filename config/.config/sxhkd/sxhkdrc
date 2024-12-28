@@ -159,6 +159,8 @@ super + alt + ctrl + Left
     pamixer --decrease 2 && notify-send --expire-time=3000 --replace-id=2 "$(pamixer --get-volume | sed 's/^/Volume: /')"
 super + alt + ctrl + Right
     pamixer --increase 2 && notify-send --expire-time=3000 --replace-id=2 "$(pamixer --get-volume | sed 's/^/Volume: /')"
+super + alt + ctrl + Down
+    ffplay -nodisp -autoexit "${HOME}/sounds/bottles.wav"
 
 # screen brightness
 super + alt + ctrl + Prior

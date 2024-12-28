@@ -683,6 +683,7 @@
     clipmenu                                # Clipboard management using dmenu
     cifs-utils                              # Tools for managing Linux CIFS client filesystems
     comma                                   # Runs programs without installing them
+    coolercontrol.coolercontrol-gui         # Monitor and control your cooling devices (GUI)
     coreutils                               # GNU Core Utilities
     curl                                    # Command line tool for transferring files with URL syntax
     direnv                                  # Shell extension that manages your environment
@@ -1155,7 +1156,9 @@
     #jq                                      # Lightweight and flexible command-line JSON processor
     #jqp                                     # TUI playground to experiment with jq
     #kotlin                                  # General purpose programming language
+    #lazarus lazarus-qt                      # Graphical IDE for the FreePascal language
     #lazygit                                 # Simple terminal UI for git commands
+    ##lazyjournal                             # TUI for journalctl, file system logs, as well as Docker and Podman containers
     #libmpc                                  # Library for multiprecision complex arithmetic with exact rounding
     #m4                                      # GNU M4, a macro processor
     #mpfr                                    # Library for multiple-precision floating-point arithmetic

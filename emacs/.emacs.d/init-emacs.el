@@ -16521,14 +16521,15 @@ USING is the remaining peg."
 
 (init-message 2 "Packages: ellama")
 
-(use-package llm-ollama
-  :straight t)
+;; (use-package llm-ollama
+;;   :straight t)
 
 (use-package ellama
   :straight t
-  :after llm-ollama
+  ;;:after llm-ollama
   ;;:commands (ellama-chat ellama-provider-select)
   :init
+  (require 'llm-ollama)
   (setopt ellama-keymap-prefix "C-c e")
   (setopt ellama-language "English")
   (setopt ellama-auto-scroll t)
