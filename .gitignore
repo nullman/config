@@ -18,8 +18,8 @@ CVS
 
 # svn version control files
 \.svn
-_darcs
 \.hg
+_darcs
 
 # emacs backup files
 *~
