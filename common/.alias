@@ -2846,7 +2846,7 @@ alias nix-store-cleanup-30d="
     nix-store --optimise"
 #        nix-store-cleanup-all   nix-store delete all old generations, garbage collect, and optimize
 alias nix-store-cleanup-all="
-    sudo nix-env --profile /nix/var/nix/profiles/system --delete-old && \
+    sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations +1 && \
     nix-collect-garbage --delete-old && \
     nix-store --optimise"
 #        nix-scp-index-to-mouse  scp nix-index to mouse
