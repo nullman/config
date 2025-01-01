@@ -14,7 +14,6 @@
     ./hardware-configuration.nix
     #<home-manager/nixos>
   ];
-
   ## imports
   #imports = [
   #  ./hardware-configuration.nix
@@ -49,21 +48,21 @@
   };
   networking.hostName = "dozer";
 
-  ## open firewall ports
-  #networking.firewall = {
-  #  enable = true;
-  #  allowedTCPPorts = [ 515 631 9100 ];
-  #  allowedUDPPorts = [ 515 631 9100 ];
-  #  allowedUDPPortRanges = [
-  #    { from = 1714; to = 1764; }
-  #    { from = 1714; to = 1764; }
-  #  ];
-  #  allowedTCPPortRanges = [
-  #    { from = 1714; to = 1764; }
-  #    { from = 1714; to = 1764; }
-  #  ];
-  #  checkReversePath = "loose";
-  #};
+  # open firewall ports
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [ 515 631 9100 ];
+    allowedUDPPorts = [ 515 631 9100 ];
+    allowedUDPPortRanges = [
+      { from = 1714; to = 1764; }
+      { from = 1714; to = 1764; }
+    ];
+    allowedTCPPortRanges = [
+      { from = 1714; to = 1764; }
+      { from = 1714; to = 1764; }
+    ];
+    checkReversePath = "loose";
+  };
 
   # openssh server
   services.openssh.enable = true;
@@ -354,11 +353,11 @@
     };
   };
 
-  # wayland/hyprland
-  programs.hyprland = {
-    enable = true;
-    xwayland.enable = true;
-  };
+  ## wayland/hyprland
+  #programs.hyprland = {
+  #  enable = true;
+  #  xwayland.enable = true;
+  #};
 
   # display manager: lightdm
   #services.xserver.displayManager.lightdm.greeters.slick = {
@@ -369,6 +368,8 @@
       background=/etc/nixos/wallpapers/Fluorescence.jpg
     '';
   };
+  ## display manager: sddm
+  #services.displayManager.sddm.enable = true;
 
   # window manager: bspwm
   #services.xserver.desktopManager.xfce.enable = true;
@@ -379,53 +380,78 @@
   services.xserver.windowManager.i3.enable = true;
   services.xserver.windowManager.i3.package = pkgs.i3-gaps;
 
+  # window manager: xfce
+  services.xserver.desktopManager.xfce.enable = true;
+  #services.displayManager.defaultSession = "xfce";
+
+  #services.tlp = {
+  #  enable = true;
+  #  settings = {
+  #    CPU_SCALING_GOVERNOR_ON_AC = "performance";
+  #    CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+  #
+  #    CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
+  #    CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
+  #
+  #    CPU_MIN_PERF_ON_AC = 0;
+  #    CPU_MAX_PERF_ON_AC = 100;
+  #    CPU_MIN_PERF_ON_BAT = 0;
+  #    CPU_MAX_PERF_ON_BAT = 20;
+  #
+  #    START_CHARGE_THRESH_BAT0 = 40;   # 40 and bellow battery starts to charge
+  #    STOP_CHARGE_THRESH_BAT0 = 80;    # 80 and above battery stops charging
+  #
+  #    #USB_BLACKLIST_BTUSB = 1;         # make sure bluetooth still works
+  #  };
+  #};
+
   # compositor: picom
   services.picom.enable = true;
 
-  # pulse audio
-  security.rtkit.enable = true;
-  hardware.pulseaudio = {
-    enable = true;
-    support32Bit = true;
-  };
-  nixpkgs.config.pulseaudio = true;
-  hardware.pulseaudio.extraConfig = ''
-    load-module module-combine-sink
-    unload-module module-suspend-on-idle
-    load-module module-switch-on-connect
-    load-module module-bluetooth-policy
-    load-module module-bluetooth-discover
-  '';
-  hardware.pulseaudio.extraModules = [ pkgs.pulseaudio-modules-bt ];
-  hardware.bluetooth.hsphfpd.enable = true;
-
-  ## pipewire
+  ## pulse audio
   #security.rtkit.enable = true;
-  #services.pipewire = {
+  #hardware.pulseaudio = {
   #  enable = true;
-  #  pulse.enable = true;
-  #  alsa.enable = true;
-  #  alsa.support32Bit = true;
-  #  jack.enable = true;
-  #  wireplumber.extraConfig.bluetoothEnhancements = {
-  #    "monitor.bluez.properties" = {
-  #      "bluez5.enable-sbc-xq" = true;
-  #      "bluez5.enable-msbc" = true;
-  #      "bluez5.enable-hw-volume" = true;
-  #      "bluez5.roles" = [ "a2dp_sink" "a2dp_source" "bap_sink" "bap_source" "hsp_hs" "hsp_ag" "hfp_hf" "hfp_ag" ];
-  #    };
-  #  };
-  #  # extraConfig.pipewire."92-low-latency" = {
-  #  #   context.properties = {
-  #  #     default.clock.rate = 48000;
-  #  #     default.clock.quantum = 32;
-  #  #     default.clock.min-quantum = 32;
-  #  #     default.clock.max-quantum = 32;
-  #  #   };
-  #  # };
+  #  support32Bit = true;
   #};
-  #hardware.bluetooth.hsphfpd.enable = false;
-  #systemd.user.services.pipewire-pulse.path = [ pkgs.pulseaudio ];
+  #nixpkgs.config.pulseaudio = true;
+  #hardware.pulseaudio.extraConfig = ''
+  #  load-module module-combine-sink
+  #  unload-module module-suspend-on-idle
+  #  load-module module-switch-on-connect
+  #  load-module module-bluetooth-policy
+  #  load-module module-bluetooth-discover
+  #'';
+  #hardware.pulseaudio.extraModules = [ pkgs.pulseaudio-modules-bt ];
+  #hardware.bluetooth.hsphfpd.enable = true;
+
+  # pipewire
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    pulse.enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    jack.enable = true;
+    wireplumber.extraConfig.bluetoothEnhancements = {
+      "monitor.bluez.properties" = {
+        "bluez5.enable-sbc-xq" = true;
+        "bluez5.enable-msbc" = true;
+        "bluez5.enable-hw-volume" = true;
+        "bluez5.roles" = [ "a2dp_sink" "a2dp_source" "bap_sink" "bap_source" "hsp_hs" "hsp_ag" "hfp_hf" "hfp_ag" ];
+      };
+    };
+    # extraConfig.pipewire."92-low-latency" = {
+    #   context.properties = {
+    #     default.clock.rate = 48000;
+    #     default.clock.quantum = 32;
+    #     default.clock.min-quantum = 32;
+    #     default.clock.max-quantum = 32;
+    #   };
+    # };
+  };
+  hardware.bluetooth.hsphfpd.enable = false;
+  systemd.user.services.pipewire-pulse.path = [ pkgs.pulseaudio ];
 
   # bluetooth
   hardware.bluetooth = {
@@ -436,11 +462,11 @@
   };
   services.blueman.enable = true;
 
-  # touchpad
-  services.libinput.enable = true;
+  ## touchpad
+  #services.libinput.enable = true;
 
-  # light
-  programs.light.enable = true;
+  ## light
+  #programs.light.enable = true;
 
   # fonts
   fonts = {
@@ -565,6 +591,11 @@
   # };
 
   virtualisation.docker.enable = true;
+
+  services.ollama = {
+    enable = true;
+    acceleration = "cuda";
+  };
 
   # mpd
   services.mpd = {
@@ -772,7 +803,7 @@
     man-db                                  # Implementation of the standard Unix documentation system accessed using the man command
     man-pages                               # Linux development manual pages
     menumaker                               # Heuristics-driven menu generator for several window managers
-    micro-with-xclip                        # Modern and intuitive terminal-based text editor
+    micro                                   # Modern and intuitive terminal-based text editor
     moreutils                               # Growing collection of the unix tools that nobody thought to write long ago wh...
     mtools                                  # Utilities to access MS-DOS disks
     multitail                               # tail on Steroids
@@ -911,6 +942,36 @@
     xdg-utils                               # Set of command line tools that assist applications with a variety of desktop integration tasks
     yad                                     # GUI dialog tool for shell scripts
 
+    ## xfce panel
+    #xfce.xfce4-panel                        # Panel for the Xfce desktop environment
+    #xfce.libxfce4ui                         # Widgets library for Xfce
+    #xfce.libxfce4util                       # Extension library for Xfce
+    #xfce.xfce4-appfinder                    # Appfinder for the Xfce4 Desktop Environment
+    #xfce.xfce4-battery-plugin               # Battery plugin for Xfce panel
+    #xfce.xfce4-clipman-plugin               # Clipboard manager for Xfce panel
+    #xfce.xfce4-cpufreq-plugin               # CPU Freq load plugin for Xfce panel
+    #xfce.xfce4-cpugraph-plugin              # CPU graph show for Xfce panel
+    #xfce.xfce4-datetime-plugin              # Shows the date and time in the panel, and a calendar appears when you left-cl...
+    #xfce.xfce4-dict                         # Dictionary Client for the Xfce desktop environment
+    #xfce.xfce4-fsguard-plugin               # Filesystem usage monitor plugin for the Xfce panel
+    #xfce.xfce4-genmon-plugin                # Generic monitor plugin for the Xfce panel
+    #xfce.xfce4-mailwatch-plugin             # Mail watcher plugin for Xfce panel
+    #xfce.xfce4-mpc-plugin                   # MPD plugin for Xfce panel
+    #xfce.xfce4-netload-plugin               # Internet load speed plugin for Xfce4 panel
+    #xfce.xfce4-notes-plugin                 # Sticky notes plugin for Xfce panel
+    #xfce.xfce4-notifyd                      # Simple notification daemon for Xfce
+    #xfce.xfce4-pulseaudio-plugin            # Adjust the audio volume of the PulseAudio sound system
+    #xfce.xfce4-sensors-plugin               # Panel plug-in for different sensors using acpi, lm_sensors and hddtemp
+    #xfce.xfce4-systemload-plugin            # System load plugin for Xfce panel
+    #xfce.xfce4-taskmanager                  # Easy to use task manager for Xfce
+    #xfce.xfce4-time-out-plugin              # Panel plug-in to take periodical breaks from the computer
+    #xfce.xfce4-timer-plugin                 # Simple countdown and alarm plugin for the Xfce panel
+    #xfce.xfce4-volumed-pulse                # Volume keys control daemon for Xfce using pulseaudio
+    #xfce.xfce4-weather-plugin               # Weather plugin for the Xfce desktop environment
+    #xfce.xfce4-whiskermenu-plugin           # Alternate application launcher for Xfce
+    #xfce.xfce4-windowck-plugin              # Xfce panel plugin for displaying window title and buttons
+    #xfce.xfce4-xkb-plugin                   # Allows you to setup and use multiple keyboard layouts
+
     # x11
     x2x                                     # Allows the keyboard, mouse on one X display to be used to control another X display
     xclip                                   # Tool to access the X clipboard from a console application
@@ -930,6 +991,25 @@
     xorg.xwininfo                           #
     xsel                                    # Command-line program for getting and setting the contents of the X selection
     xvkbd                                   # Virtual keyboard for X window system
+
+    ## wayland
+    #clipman                                 # Simple clipboard manager for Wayland
+    #hyprland                                # Dynamic tiling Wayland compositor that doesn't sacrifice on its looks
+    #hyprpaper                               # Blazing fast wayland wallpaper utility
+    #hyprpicker                              # Wlroots-compatible Wayland color picker that does not suck
+    #qt5.qtwayland                           # Cross-platform application framework for C++
+    #qt6.qtwayland                           # Cross-platform application framework for C++
+    #rofi-wayland                            # Window switcher, run dialog and dmenu replacement for Wayland
+    #swww                                    # Efficient animated wallpaper daemon for wayland, controlled at runtime
+    #waybar                                  # Highly customizable Wayland bar for Sway and Wlroots based compositors
+    #wayland-protocols                       # Wayland protocol extensions
+    #wayland-utils                           # Wayland utilities (wayland-info)
+    #wl-clipboard                            # Command-line copy/paste utilities for Wayland
+    #wl-color-picker                         # Wayland color picker that also works on wlroots
+    #wlroots                                 # Modular Wayland compositor library
+    #wofi                                    # Launcher/menu program for wlroots based wayland compositors such as sway
+    #xdg-desktop-portal-hyprland             # xdg-desktop-portal backend for Hyprland
+    #xwayland                                # X server for interfacing X11 apps with the Wayland protocol
 
     # applications
     ardour                                  # Multi-track hard disk recording software
@@ -1229,6 +1309,18 @@
     x16-rom                                 # ROM file for CommanderX16 8-bit computer
     yq                                      # Command-line YAML/XML/TOML processor - jq wrapper for YAML, XML, TOML documents
     zlib                                    # Lossless data-compression library
+
+    # docker
+    docker                                  # Open source project to pack, ship and run any application as a lightweight co...
+    docker-compose                          # Docker CLI plugin to define and run multi-container applications with Docker
+
+    # ai
+    #alpaca                                  # Ollama client made with GTK4 and Adwaita
+    imaginer                                # Imaginer with AI
+    ollama                                  # Get up and running with large language models locally
+    open-webui                              # Comprehensive suite for LLMs with a user-friendly WebUI
+    tabby                                   # Self-hosted AI coding assistant
+    upscayl                                 # Free and Open Source AI Image Upscaler
 
     # zsh
     antibody                                # Fastest shell plugin manager
