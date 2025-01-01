@@ -2839,10 +2839,15 @@ alias nixqa="nix-env --query --available"
 alias nixf="nix-locate -w"
 #        nix-store-query         nix-store installed package location query
 alias nix-store-query="nix-store -q -R /run/current-system | grep"
-#        nix-store-cleanup       nix-store delete old generations, garbage collect, and optimize
-alias nix-store-cleanup="
+#        nix-store-cleanup-30d   nix-store delete older than 30 days generations, garbage collect, and optimize
+alias nix-store-cleanup-30d="
     sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations 30d && \
     nix-collect-garbage --delete-older-than 30d && \
+    nix-store --optimise"
+#        nix-store-cleanup-all   nix-store delete all old generations, garbage collect, and optimize
+alias nix-store-cleanup-all="
+    sudo nix-env --profile /nix/var/nix/profiles/system --delete-old && \
+    nix-collect-garbage --delete-old && \
     nix-store --optimise"
 #        nix-scp-index-to-mouse  scp nix-index to mouse
 alias nix-scp-index-to-mouse="scp -r .cache/nix-index mouse:/home/user/.cache/"
