@@ -412,8 +412,8 @@ case "${menu}" in
         ;;
 
     typer)
-        # run typer
-        ${HOME}/bin/typer
+        # run rofi-typer
+        ${HOME}/bin/rofi-typer
         ;;
 
     unicode)

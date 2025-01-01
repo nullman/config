@@ -4,10 +4,13 @@
 #
 # Present a menu of things to type in the active window.
 #
-# ~/.rofi-typer must exists with key/value pairs:
+# ~/.rofi-typer must exist with key/value pairs:
 #
 #   key1 = value1
 #   key2 = value2
+#
+# Required tools:
+#   xdo
 #
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
