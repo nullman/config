@@ -159,7 +159,7 @@ Skips checks if run on Windows or Mac."
 ;; initialize package system
 (require 'package)
 (setq package-archives '(("elpa" . "https://elpa.gnu.org/packages/")
-                         ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
+                         ("nongnu" . "https://elpa.nongnu.org/nongnu/"))
       native-comp-async-report-warnings-errors nil)
 ;;                         ("melpa" . "https://melpa.org/packages/"))
 
