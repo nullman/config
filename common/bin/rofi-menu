@@ -5,7 +5,18 @@
 # Present a menu of rofi menus.
 #
 # Symbols:  ☰  |    | ✂ ⎘ 󰄶   󰅌 󰅍 󰨸 󱉥 󱉦 󱉧 󱉨 󱉫 󱉬  | 
-# Symbols: 󰍹    |  |    󱇠  | 󰆧 |  |   󰝚 | 󰛇 | 󰃃 󰃀 | 󰯫 󰈍   󰀬 
+# Symbols: 󰍹    |  |    󱇠  | 󰆧 |  |   󰝚 | 󰛇 | 󰃃 󰃀 | 󰯫 󰈍   󰀬  ꓴ
+#
+# Required tools:
+#   cool-retro-term
+#   curl
+#   dosbox
+#   ffplay
+#   rofi
+#   trans
+#   unipicker
+#   vncviewer
+#   xdg-utils
 #
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
@@ -25,6 +36,7 @@ MENU:
   contacts   Contacts
   crt        Cool Retro Term
   dosbox     DOSBox Emulator
+  emoji      Emoji Search
   git        Synchronize Repositories
   paste      Paste Strings
   password   Generate Password
@@ -34,6 +46,7 @@ MENU:
   spell      Spell Check & Definition
   ssh        SSH into Systems
   typer      Type Strings
+  unicode    Unicode Search
   vnc        VNC into Systems
 EOF
 }
@@ -47,6 +60,7 @@ if [[ $# -lt 1 ]] ; then
         "󰈍	Contacts"
         "󰍹	CRT"
         "	DOSBox"
+        "😃	Emoji"
         "	Git"
         "	Paste"
         "	Password"
@@ -56,6 +70,7 @@ if [[ $# -lt 1 ]] ; then
         "	Spell"
         "	SSH"
         "	Typer"
+        "ꓴ	Unicode"
         "󰛇	VNC"
     )
     menu=$(printf "%s\n" "${menus[@]}" | rofi -dmenu -i -p "	Menu")
@@ -167,6 +182,11 @@ case "${menu}" in
         if [[ -n "${sel}" ]] ; then
             (dosbox -conf "${HOME}/.dosbox/dosbox-0.74-3.conf" -conf "${HOME}/.dosbox/dosbox-${sel}.conf" &)
         fi
+        ;;
+
+    emoji)
+        # run rofimoji
+        rofimoji --typer xdotool --clipboarder xsel --skin-tone neutral
         ;;
 
     git)
@@ -371,10 +391,10 @@ case "${menu}" in
     ssh)
         if [[ $# -lt 2 ]] ; then
             servers=(
-                "kyle@morpheus"
-                "kyle@mouse"
-                "kyle@nullware"
-                "kyle@switch"
+                "user@morpheus"
+                "user@mouse"
+                "user@nullware"
+                "user@switch"
                 "pi@pimodem"
                 "pi@raspad"
                 "pi@raspad-usb"
@@ -394,6 +414,11 @@ case "${menu}" in
     typer)
         # run typer
         ${HOME}/bin/typer
+        ;;
+
+    unicode)
+        # run unipicker
+        unipicker --command "rofi -dmenu -i -p U	Unicode" --copy-command 'xsel'
         ;;
 
     vnc)

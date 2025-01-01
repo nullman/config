@@ -841,6 +841,7 @@
     trash-cli                               # Command line interface to the freedesktop.org trashcan
     tree                                    # Command to produce a depth indented directory listing
     ufiformat                               # Low-level disk formatting utility for USB floppy drives
+    unipicker                               # CLI utility for searching unicode characters by description and optionally co...
     unzip                                   # Extraction utility for archives compressed in .zip format
     usbutils                                # Tools for working with USB devices, such as lsusb
     veracrypt                               # Free Open-Source filesystem on-the-fly encryption

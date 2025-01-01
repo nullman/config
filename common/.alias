@@ -512,6 +512,14 @@ alias nitrogen-metcalfe-green="
     fi"
 
 #
+# text
+#
+#        unicode                 pick unicode, type it, and copy it to clipboard
+alias unicode="unipicker --command \"rofi -dmenu -i -p U	Unicode\" --copy-command 'xsel'"
+#        emoji                   pick emoji, type it, and copy it to clipboard
+alias emoji="rofimoji --typer xdotool --clipboarder xsel --skin-tone neutral"
+
+#
 # sounds
 #
 #!#        beep                    beep console
