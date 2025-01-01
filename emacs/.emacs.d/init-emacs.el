@@ -158,11 +158,10 @@ Skips checks if run on Windows or Mac."
 
 ;; initialize package system
 (require 'package)
-;;(require 'comp)
 (setq package-archives '(("elpa" . "https://elpa.gnu.org/packages/")
                          ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
+      native-comp-async-report-warnings-errors nil)
 ;;                         ("melpa" . "https://melpa.org/packages/"))
-;;      native-comp-async-report-warnings-errors nil)
 
 ;; bootstrap
 (defvar bootstrap-version)

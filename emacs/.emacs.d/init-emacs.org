@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2025-01-01 15:15 (user)>
+  #+TIMESTAMP: <2025-01-01 15:19 (user)>
 
 * Overview
   :PROPERTIES:
@@ -557,11 +557,10 @@
 
       ;; initialize package system
       (require 'package)
-      ;;(require 'comp)
       (setq package-archives '(("elpa" . "https://elpa.gnu.org/packages/")
                                ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
+            native-comp-async-report-warnings-errors nil)
       ;;                         ("melpa" . "https://melpa.org/packages/"))
-      ;;      native-comp-async-report-warnings-errors nil)
 
       ;; bootstrap
       (defvar bootstrap-version)
