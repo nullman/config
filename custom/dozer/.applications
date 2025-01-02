@@ -5,7 +5,7 @@
 #===============================================================================
 
 alacritty
-#emacs
+emacs
 #betterbird
 ##thunderbird
 firefox
@@ -23,7 +23,7 @@ thunar
 ##idea
 ##google-chrome
 ##google-chrome-stable
-#brave
+brave
 #syncterm
 
 #===============================================================================
