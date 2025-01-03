@@ -75,7 +75,7 @@ if [[ -n "$4" ]] ; then
 fi
 
 mc=3D$(mcookie)
-#xauth add $(hostname)/unix${display} . ${mc}
+#xauth add $(uname -n)/unix${display} . ${mc}
 #xauth add localhost/unix${display} . ${mc}
 
 echo "Xnest -geometry ${geometry}+0+0 -depth ${depth} ${display} -ac"
@@ -86,7 +86,7 @@ echo "${window_manager}"
 ${window_manager}
 kill $!
 
-#xauth remove $(hostname)/unix${display} localhost/unix${display}
+#xauth remove $(uname -n)/unix${display} localhost/unix${display}
 
 #===============================================================================
 # End of File

@@ -1035,7 +1035,7 @@ show-port() {
 #        show-stats               show system statistics
 show-stats() {
     echo "Server Name: $(uname -n)"
-    echo "Server IP:   $(net lookup $(hostname))"
+    echo "Server IP:   $(net lookup $(uname -n))"
     echo "Logins:      $(who | wc | awk '{print $1}')"
     echo "Users:       $(who | sort | awk '{print $1}' | uniq | wc | awk '{print $1}')"
     echo "Load:       $(uptime | cut -d, -f4 | cut -d: -f2)"

@@ -766,6 +766,7 @@
     dos2unix                                # Convert text files with DOS or Mac line breaks to Unix line breaks and vice versa
     dosfstools                              # Utilities for creating and checking FAT and VFAT file systems
     duf                                     # Disk Usage/Free Utility
+    efibootmgr                              # Linux user-space application to modify the Intel Extensible Firmware Interfac...
     emacs                                   # Extensible, customizable GNU text editor
     exfat                                   # Free exFAT file system implementation
     exfatprogs                              # exFAT filesystem userspace utilities

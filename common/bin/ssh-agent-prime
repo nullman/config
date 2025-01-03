@@ -10,7 +10,7 @@
 # Site: http://www.cvrti.utah.edu/~dustman/no-more-pw-ssh/
 #===============================================================================
 
-file=${HOME}/.ssh-agent-info-$(hostname)
+file=${HOME}/.ssh-agent-info-$(uname -n)
 ssh-agent > ${file}
 chmod 600 ${file}
 source ${file}
