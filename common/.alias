@@ -1968,24 +1968,42 @@ alias rmi="rm -i"
 #
 #        rsync-rlptx             rsync -rlptx --progress
 alias rsync-rlptx="rsync -rlptx --progress"
-#        rsync-media-get-morpheus  rsync morpheus:/home/data/media /home/data/media
-alias rsync-media-get-morpheus="rsync -rlptx --progress morpheus:/home/data/media/ ${home}/data/media/"
-#        rsync-media-get-morpheus-exclude  rsync morpheus:/home/data/media /home/data/media (minus software and video directories)
-alias rsync-media-get-morpheus-exclude="rsync -rlptx --progress -f'- /Repos/' -f'- /Software/' -f'- /Video/' morpheus:/home/data/media/ ${home}/data/media/"
-#        rsync-media-get-morpheus-mouse-delete  rsync morpheus:/home/data/media /home/data/media (specific sub-directories)
-alias rsync-media-get-morpheus-mouse-delete=" \
+#!#        rsync-media-get-morpheus  rsync morpheus:/home/data/media /home/data/media
+#!alias rsync-media-get-morpheus="rsync -rlptx --progress morpheus:/home/data/media/ ${home}/data/media/"
+#!#        rsync-media-get-morpheus-exclude  rsync morpheus:/home/data/media /home/data/media (minus software and video directories)
+#!alias rsync-media-get-morpheus-exclude="rsync -rlptx --progress -f'- /Repos/' -f'- /Software/' -f'- /Video/' morpheus:/home/data/media/ ${home}/data/media/"
+#!#        rsync-media-get-morpheus-mouse-delete  rsync morpheus:/home/data/media /home/data/media (specific sub-directories)
+#!alias rsync-media-get-morpheus-mouse-delete=" \
+#!    if [[ $(uname -n) == 'mouse' ]] ; then
+#!        rsync -rlptx --progress --delete -f'- /Humor/' -f'- /Other/' morpheus:/home/data/media/Audio/ ${home}/data/media/Audio/ && \
+#!        rsync -rlptx --progress --delete morpheus:/home/data/media/Audio/Music/ ${home}/data/media/Audio/Music/ && \
+#!        rsync -rlptx --progress --delete \"morpheus:/home/data/media/Pictures Slide Show/\" \"${home}/data/media/Pictures Slide Show/\" && \
+#!        #rsync -rlptx --progress --delete morpheus:/home/data/media/Repos/ ${home}/data/media/Repos/ && \
+#!        rsync -rlptx --progress --delete morpheus:/home/data/media/Text/ ${home}/data/media/Text/ && \
+#!        rsync -rlptx --progress --delete -f'- /Adult/' -f'- /Development/' morpheus:/home/data/media/Video/ ${home}/data/media/Video/
+#!    fi"
+#!#        rsync-media-put-morpheus  rsync /home/data/media morpheus:/home/data/media
+#!alias rsync-media-put-morpheus="rsync -rlptx --progress ${home}/data/media/ morpheus:/home/data/media/"
+#!#        rsync-media-put-morpheus-delete  rsync /home/data/media morpheus:/home/data/media
+#!alias rsync-media-put-morpheus-delete="rsync -rlptx --progress --delete ${home}/data/media/ morpheus:/home/data/media/"
+#        rsync-media-get-dozer  rsync dozer:/home/data/media /home/data/media
+alias rsync-media-get-dozer="rsync -rlptx --progress dozer:/home/data/media/ ${home}/data/media/"
+#        rsync-media-get-dozer-exclude  rsync dozer:/home/data/media /home/data/media (minus software and video directories)
+alias rsync-media-get-dozer-exclude="rsync -rlptx --progress -f'- /Repos/' -f'- /Software/' -f'- /Video/' dozer:/home/data/media/ ${home}/data/media/"
+#        rsync-media-get-dozer-mouse-delete  rsync dozer:/home/data/media /home/data/media (specific sub-directories)
+alias rsync-media-get-dozer-mouse-delete=" \
     if [[ $(uname -n) == 'mouse' ]] ; then
-        rsync -rlptx --progress --delete -f'- /Humor/' -f'- /Other/' morpheus:/home/data/media/Audio/ ${home}/data/media/Audio/ && \
-        rsync -rlptx --progress --delete morpheus:/home/data/media/Audio/Music/ ${home}/data/media/Audio/Music/ && \
-        rsync -rlptx --progress --delete \"morpheus:/home/data/media/Pictures Slide Show/\" \"${home}/data/media/Pictures Slide Show/\" && \
-        #rsync -rlptx --progress --delete morpheus:/home/data/media/Repos/ ${home}/data/media/Repos/ && \
-        rsync -rlptx --progress --delete morpheus:/home/data/media/Text/ ${home}/data/media/Text/ && \
-        rsync -rlptx --progress --delete -f'- /Adult/' -f'- /Development/' morpheus:/home/data/media/Video/ ${home}/data/media/Video/
+        rsync -rlptx --progress --delete -f'- /Humor/' -f'- /Other/' dozer:/home/data/media/Audio/ ${home}/data/media/Audio/ && \
+        rsync -rlptx --progress --delete dozer:/home/data/media/Audio/Music/ ${home}/data/media/Audio/Music/ && \
+        rsync -rlptx --progress --delete \"dozer:/home/data/media/Pictures Slide Show/\" \"${home}/data/media/Pictures Slide Show/\" && \
+        #rsync -rlptx --progress --delete dozer:/home/data/media/Repos/ ${home}/data/media/Repos/ && \
+        rsync -rlptx --progress --delete dozer:/home/data/media/Text/ ${home}/data/media/Text/ && \
+        rsync -rlptx --progress --delete -f'- /Adult/' -f'- /Development/' dozer:/home/data/media/Video/ ${home}/data/media/Video/
     fi"
-#        rsync-media-put-morpheus  rsync /home/data/media morpheus:/home/data/media
-alias rsync-media-put-morpheus="rsync -rlptx --progress ${home}/data/media/ morpheus:/home/data/media/"
-#        rsync-media-put-morpheus-delete  rsync /home/data/media morpheus:/home/data/media
-alias rsync-media-put-morpheus-delete="rsync -rlptx --progress --delete ${home}/data/media/ morpheus:/home/data/media/"
+#        rsync-media-put-dozer  rsync /home/data/media dozer:/home/data/media
+alias rsync-media-put-dozer="rsync -rlptx --progress ${home}/data/media/ dozer:/home/data/media/"
+#        rsync-media-put-dozer-delete  rsync /home/data/media dozer:/home/data/media
+alias rsync-media-put-dozer-delete="rsync -rlptx --progress --delete ${home}/data/media/ dozer:/home/data/media/"
 #        rsync-media-put-synology  rsync /home/data/media /mnt/synology/media
 alias rsync-media-put-synology="
     find ${home}/data/media/ -mindepth 1 -maxdepth 1 -type d -not -regex '^\.+$' | sort | while read -r dir ; do
@@ -2002,52 +2020,52 @@ alias rsync-media-put-synology-delete="
             \"\${dir}\" /mnt/synology/media
     done"
 #!            -f'- /Audio/Music/' -f'- /Graphic/ASCII-ANSI/' -f'- /iTunes/' -f'- /Music/' \
-#        rsync-text-get-morpheus  rsync morpheus:/home/data/media/Text /home/data/media/Text
-alias rsync-text-get-morpheus="rsync -rlptx --progress morpheus:/home/data/media/Text/ ${home}/data/media/Text/"
-#        rsync-text-put-morpheus  rsync /home/data/media/Text morpheus:/home/data/media/Text
-alias rsync-text-put-morpheus="rsync -rlptx --progress ${home}/data/media/Text/ morpheus:/home/data/media/Text/"
-#        rsync-books-get-morpheus  rsync morpheus:/home/data/media/Text/Books /home/data/media/Text/Books
-alias rsync-books-get-morpheus=" \
-    mkdir -p ${home}/data/media/Text/Books && \
-    rsync -rlptx --progress morpheus:/home/data/media/Text/Books/ ${home}/data/media/Text/Books/"
-#        rsync-audio-get-morpheus  rsync morpheus:/home/data/media/Audio /home/data/media/Audio
-alias rsync-audio-get-morpheus="rsync -rlptx --progress morpheus:/home/data/media/Audio/ ${home}/data/media/Audio/"
-#        rsync-audio-put-morpheus  rsync morpheus:/home/data/media/Audio /home/data/media/Audio
-alias rsync-audio-put-morpheus="rsync -rlptx --progress morpheus:/home/data/media/Audio/ ${home}/data/media/Audio/"
-#        rsync-music-get-morpheus  rsync morpheus:/home/data/media/Audio/Music /home/data/media/Audio/Music
-alias rsync-music-get-morpheus=" \
-    rsync -rlptx --progress morpheus:/home/data/media/Audio/Music/ ${home}/data/media/Audio/Music/ && \
-    rsync -rlptx --progress morpheus:/home/data/media/Audio/Playlists/ ${home}/data/media/Audio/Playlists/"
-#        rsync-music-put-morpheus  rsync /home/data/media/Audio/Music morpheus:/home/data/media/Audio/Music
-alias rsync-music-put-morpheus=" \
-    rsync -rlptx --progress ${home}/data/media/Audio/Music/ morpheus:${home}/data/media/Audio/Music/ && \
-    rsync -rlptx --progress ${home}/data/media/Audio/Playlists/ morpheus:${home}/data/media/Audio/Playlists/"
+#!#        rsync-text-get-morpheus  rsync morpheus:/home/data/media/Text /home/data/media/Text
+#!alias rsync-text-get-morpheus="rsync -rlptx --progress morpheus:/home/data/media/Text/ ${home}/data/media/Text/"
+#!#        rsync-text-put-morpheus  rsync /home/data/media/Text morpheus:/home/data/media/Text
+#!alias rsync-text-put-morpheus="rsync -rlptx --progress ${home}/data/media/Text/ morpheus:/home/data/media/Text/"
+#!#        rsync-books-get-morpheus  rsync morpheus:/home/data/media/Text/Books /home/data/media/Text/Books
+#!alias rsync-books-get-morpheus=" \
+#!    mkdir -p ${home}/data/media/Text/Books && \
+#!    rsync -rlptx --progress morpheus:/home/data/media/Text/Books/ ${home}/data/media/Text/Books/"
+#!#        rsync-audio-get-morpheus  rsync morpheus:/home/data/media/Audio /home/data/media/Audio
+#!alias rsync-audio-get-morpheus="rsync -rlptx --progress morpheus:/home/data/media/Audio/ ${home}/data/media/Audio/"
+#!#        rsync-audio-put-morpheus  rsync morpheus:/home/data/media/Audio /home/data/media/Audio
+#!alias rsync-audio-put-morpheus="rsync -rlptx --progress morpheus:/home/data/media/Audio/ ${home}/data/media/Audio/"
+#!#        rsync-music-get-morpheus  rsync morpheus:/home/data/media/Audio/Music /home/data/media/Audio/Music
+#!alias rsync-music-get-morpheus=" \
+#!    rsync -rlptx --progress morpheus:/home/data/media/Audio/Music/ ${home}/data/media/Audio/Music/ && \
+#!    rsync -rlptx --progress morpheus:/home/data/media/Audio/Playlists/ ${home}/data/media/Audio/Playlists/"
+#!#        rsync-music-put-morpheus  rsync /home/data/media/Audio/Music morpheus:/home/data/media/Audio/Music
+#!alias rsync-music-put-morpheus=" \
+#!    rsync -rlptx --progress ${home}/data/media/Audio/Music/ morpheus:${home}/data/media/Audio/Music/ && \
+#!    rsync -rlptx --progress ${home}/data/media/Audio/Playlists/ morpheus:${home}/data/media/Audio/Playlists/"
 #        rsync-music-put-colleen  rsync /home/data/media/Audio/Music colleen:/home/data/media/Audio/Music
 alias rsync-music-put-colleen=" \
     rsync -rlptx --progress ${home}/data/media/Audio/Music/ colleen:${home}/data/media/Audio/Music/ && \
     rsync -rlptx --progress ${home}/data/media/Audio/Playlists/ colleen:${home}/data/media/Audio/Playlists/"
 #        rsync-music-put-synology  rsync /home/data/media/Audio/Music /mnt/synology/music
 alias rsync-music-put-synology="rsync -r --munge-links --size-only --progress ${home}/data/media/Audio/Music/ /mnt/synology/music/"
-#        rsync-video-get-morpheus  rsync morpheus:/home/data/media/Video /home/data/media/Video
-alias rsync-video-get-morpheus="rsync -rlptx --progress morpheus:/home/data/media/Video/ ${home}/data/media/Video/"
-#        rsync-video-put-morpheus  rsync morpheus:/home/data/media/Video /home/data/media/Video
-alias rsync-video-put-morpheus="rsync -rlptx --progress morpheus:/home/data/media/Video/ ${home}/data/media/Video/"
-#        rsync-amazon-get-morpheus  rsync "morpheus:/home/data/media/incoming/Music/Amazon MP3" "${HOME}/Music/Amazon MP3"
-alias rsync-amazon-get-morpheus="rsync -rlptx --progress \"morpheus:/home/data/media/incoming/Music/Amazon MP3\" \"\${HOME}/Music/\""
-#        rsync-amazon-put-morpheus  rsync "${HOME}/Music/Amazon MP3" "morpheus:/home/data/media/incoming/Music/Amazon MP3"
-alias rsync-amazon-put-morpheus="rsync -rlptx --progress \"\${HOME}/Music/Amazon MP3\" \"morpheus:${home}/data/media/incoming/Music\""
-#        rsync-repos-get-morpheus  rsync morpheus:/home/data/media/Repos /home/data/media/Repos
-alias rsync-repos-get-morpheus="rsync -rlptx --progress morpheus:/home/data/media/Repos/ ${home}/data/media/Repos/"
-#        rsync-repos-put-morpheus  rsync /home/data/media/Repos morpheus:/home/data/media/Repos
-alias rsync-repos-put-morpheus="rsync -rlptx --progress ${home}/data/media/Repos/ morpheus:${home}/data/media/Repos/"
+#!#        rsync-video-get-morpheus  rsync morpheus:/home/data/media/Video /home/data/media/Video
+#!alias rsync-video-get-morpheus="rsync -rlptx --progress morpheus:/home/data/media/Video/ ${home}/data/media/Video/"
+#!#        rsync-video-put-morpheus  rsync morpheus:/home/data/media/Video /home/data/media/Video
+#!alias rsync-video-put-morpheus="rsync -rlptx --progress morpheus:/home/data/media/Video/ ${home}/data/media/Video/"
+#!#        rsync-amazon-get-morpheus  rsync "morpheus:/home/data/media/incoming/Music/Amazon MP3" "${HOME}/Music/Amazon MP3"
+#!alias rsync-amazon-get-morpheus="rsync -rlptx --progress \"morpheus:/home/data/media/incoming/Music/Amazon MP3\" \"\${HOME}/Music/\""
+#!#        rsync-amazon-put-morpheus  rsync "${HOME}/Music/Amazon MP3" "morpheus:/home/data/media/incoming/Music/Amazon MP3"
+#!alias rsync-amazon-put-morpheus="rsync -rlptx --progress \"\${HOME}/Music/Amazon MP3\" \"morpheus:${home}/data/media/incoming/Music\""
+#!#        rsync-repos-get-morpheus  rsync morpheus:/home/data/media/Repos /home/data/media/Repos
+#!alias rsync-repos-get-morpheus="rsync -rlptx --progress morpheus:/home/data/media/Repos/ ${home}/data/media/Repos/"
+#!#        rsync-repos-put-morpheus  rsync /home/data/media/Repos morpheus:/home/data/media/Repos
+#!alias rsync-repos-put-morpheus="rsync -rlptx --progress ${home}/data/media/Repos/ morpheus:${home}/data/media/Repos/"
 #        rsync-repos-put-colleen  rsync /home/data/media/Repos colleen:/home/data/media/Repos
 alias rsync-repos-put-colleen="rsync -rlptx --progress ${home}/data/media/Repos/ colleen:${home}/data/media/Repos/"
 #!#        rsync-playlists-put-pi  rsync /home/data/media/Audio/Playlists pimodem:/media/playlists
 #!alias rsync-playlists-put-pi="rsync -rlptx --progress ${home}/data/media/Audio/Playlists/ pi@pimodem:/media/playlists/"
 #!#        rsync-org-put-dropbox  rsync ${HOME}/org/* ${HOME}/Dropbox/Org/
 #!alias rsync-org-put-dropbox="[[ -d \${HOME}/Dropbox/Org ]] && rsync -aAXv --delete \${HOME}/org/* \${HOME}/Dropbox/Org/"
-#        rsync-aerial-get-morpheus  rsync morpheus:/home/data/media/Video/Aerial /home/data/media/Video/Aerial
-alias rsync-aerial-get-morpheus="rsync -rlptx --progress morpheus:/home/data/media/Video/Aerial/ ${home}/data/media/Video/Aerial/"
+#!#        rsync-aerial-get-morpheus  rsync morpheus:/home/data/media/Video/Aerial /home/data/media/Video/Aerial
+#!alias rsync-aerial-get-morpheus="rsync -rlptx --progress morpheus:/home/data/media/Video/Aerial/ ${home}/data/media/Video/Aerial/"
 #        rsync-common-put-media-delete rsync ${HOME}/doc/icons/ and ${HOME}/doc/images/ to /home/data/media/Graphic/
 alias rsync-common-put-media-delete=" \
     rsync -rlptx --progress --delete \"\${HOME}/doc/icons/\" ${home}/data/media/Graphic/Icons/Common/ && \
