@@ -31,6 +31,32 @@
   };
   fileSystems."/".options = [ "relatime" ];
 
+  # add windows boot option
+  boot.loader.systemd-boot = {
+    extraFiles."efi/shell.efi" = "${pkgs.edk2-uefi-shell}/shell.efi";
+    extraEntries = {
+      "windows.conf" =
+        let
+          # To determine the name of the windows boot drive, boot into edk2 first, then run
+          # `map -c` to get drive aliases, and try out running `FS1:`, then `ls EFI` to check
+          # which alias corresponds to which EFI partition.
+          boot-drive = "HD1c65535a2";
+        in
+        ''
+          title Windows Bootloader
+          efi /efi/shell.efi
+          #options -nointerrupt -nomap -noversion ${boot-drive}:EFI\Microsoft\Boot\Bootmgfw.efi
+          options -nointerrupt -nomap -noversion ${boot-drive}:ESD\Windows\efi\boot\bootx64.efi
+          sort-key y_windows
+        '';
+      "edk2-uefi-shell.conf" = ''
+        title EDK2 UEFI Shell
+        efi /efi/shell.efi
+        sort-key z_edk2
+      '';
+    };
+  };
+
   swapDevices = [
     {
       device = "/home/swapfile";

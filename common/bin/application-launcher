@@ -48,6 +48,7 @@ for line in ${launch} ; do
                 #echo "${app}"
                 if [[ "${app}" == "alacritty" ]] ; then
                     alacritty -e ${HOME}/bin/run-screen >/dev/null 2>&1 &
+                    sleep 1
                 else
                     eval ${app} >/dev/null 2>&1 &
                 fi
