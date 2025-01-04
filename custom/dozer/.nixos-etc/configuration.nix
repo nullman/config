@@ -621,7 +621,7 @@
   services.ollama = {
     enable = true;
     acceleration = "cuda";
-    home = "/home/data/ollama";
+    home = "/home/ollama";
   };
 
   # mpd
