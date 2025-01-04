@@ -690,6 +690,7 @@
     dos2unix                                # Convert text files with DOS or Mac line breaks to Unix line breaks and vice versa
     dosfstools                              # Utilities for creating and checking FAT and VFAT file systems
     duf                                     # Disk Usage/Free Utility
+    efibootmgr                              # Linux user-space application to modify the Intel Extensible Firmware Interfac...
     emacs                                   # Extensible, customizable GNU text editor
     exfat                                   # Free exFAT file system implementation
     exfatprogs                              # exFAT filesystem userspace utilities
@@ -778,6 +779,8 @@
 
     # window manager
     adapta-gtk-theme                        # Adaptive GTK theme based on Material Design Guidelines
+    adwaita-icon-theme-legacy               # Fullcolor icon theme providing fallback for legacy apps
+    adwaita-qt adwaita-qt6                  # Style to bend Qt applications to look like they belong into GNOME Shell
     blueman                                 # GTK-based Bluetooth Manager
     bspwm                                   # Tiling window manager based on binary space partitioning
     bsp-layout                              # Manage layouts in bspwm

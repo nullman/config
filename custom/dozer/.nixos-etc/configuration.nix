@@ -621,6 +621,7 @@
   services.ollama = {
     enable = true;
     acceleration = "cuda";
+    home = "/home/data/ollama";
   };
 
   # mpd
@@ -881,6 +882,8 @@
 
     # window manager
     adapta-gtk-theme                        # Adaptive GTK theme based on Material Design Guidelines
+    adwaita-icon-theme-legacy               # Fullcolor icon theme providing fallback for legacy apps
+    adwaita-qt adwaita-qt6                  # Style to bend Qt applications to look like they belong into GNOME Shell
     blueman                                 # GTK-based Bluetooth Manager
     bspwm                                   # Tiling window manager based on binary space partitioning
     bsp-layout                              # Manage layouts in bspwm

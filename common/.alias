@@ -120,7 +120,7 @@ alias sepr="source /etc/profile"
 #        sra                     source ~/bin/run-app
 alias sra="source \${HOME}/bin/run-app"
 #        loc                     locate file (case insensitive)
-alias loc="locate -i"
+alias loc="sudo locate -i"
 #        udb                     update locate database
 alias udb="sudo updatedb --prune-bind-mounts no --add-prunepaths /rw && \
     [ -e '/rw/config/rc.local.d/plocate.rc' ] && \
