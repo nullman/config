@@ -45,8 +45,8 @@
         ''
           title Windows Bootloader
           efi /efi/shell.efi
-          #options -nointerrupt -nomap -noversion ${boot-drive}:EFI\Microsoft\Boot\Bootmgfw.efi
-          options -nointerrupt -nomap -noversion ${boot-drive}:ESD\Windows\efi\boot\bootx64.efi
+          options -nointerrupt -nomap -noversion ${boot-drive}:EFI\Microsoft\Boot\Bootmgfw.efi
+          #options -nointerrupt -nomap -noversion ${boot-drive}:ESD\Windows\efi\boot\bootx64.efi
           sort-key y_windows
         '';
       "edk2-uefi-shell.conf" = ''
