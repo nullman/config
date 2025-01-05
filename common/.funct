@@ -790,8 +790,9 @@ convert-7z-to-zip-dir-tree() {
                 cp "${file}" "${tmpdir}/${base}" && pushd "${tmpdir}" && \
                     7z x "${base}" && rm "${base}" && zip -r "${new}" ./* && \
                     popd && cp "${tmpdir}/${new}" "${dir}/${new}" && \
-                    rm -rf "${tmpdir}" && rm "${file}"
+                    rm "${file}"
             done
+            rm -rf "${tmpdir}"
             ;;
     esac
 }
