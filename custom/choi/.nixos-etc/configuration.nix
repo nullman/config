@@ -856,6 +856,7 @@
     dialog                                  # Display dialog boxes from shell
     dmenu                                   # Generic, highly customizable, and efficient menu for the X Window System
     dunst                                   # Lightweight and customizable notification daemon
+    ##eog                                     # GNOME image viewer
     evtest                                  # Simple tool for input event debugging
     eww                                     # Widget system made in Rust to create widgets for any WM
     gnome.eog                               # GNOME image viewer
@@ -863,6 +864,8 @@
     gnome.gnome-settings-daemon             #
     gnome.gvfs                              # Virtual Filesystem support library (full GNOME support)
     gnome.zenity                            # Tool to display dialogs from the commandline and shell scripts
+    ##gnome-keyring                           # Collection of components in GNOME that store secrets, passwords, keys, certificates and make them available to applications
+    ##gnome-settings-daemon                   #
     gnome-icon-theme                        # Collection of icons for the GNOME 2 desktop
     gnome-themes-extra                      #
     gsimplecal                              # Lightweight calendar application written in C++ using GTK
@@ -877,6 +880,7 @@
     lightdm-slick-greeter                   # Slick-looking LightDM greeter
     lxappearance                            # Lightweight program for configuring the theme and fonts of gtk applications
     mesa-demos                              # Collection of demos and test programs for OpenGL and Mesa
+    mission-center                          # Monitor your CPU, Memory, Disk, Network and GPU usage
     ncpamixer                               # Terminal mixer for PulseAudio inspired by pavucontrol
     networkmanager                          # Network configuration and management tool
     networkmanagerapplet                    # NetworkManager control applet for GNOME
@@ -935,6 +939,7 @@
     xdg-desktop-portal-gtk                  # Desktop integration portals for sandboxed apps
     xdg-utils                               # Set of command line tools that assist applications with a variety of desktop integration tasks
     yad                                     # GUI dialog tool for shell scripts
+    ##zenity                                  # Tool to display dialogs from the commandline and shell scripts
 
     # x11
     x2x                                     # Allows the keyboard, mouse on one X display to be used to control another X display
@@ -1020,6 +1025,7 @@
     dmg2img                                 # Apple's compressed dmg to standard (hfsplus) image disk file convert tool
     easytag                                 # View and edit tags for various audio files
     ffmpeg_6-full                           # Complete, cross-platform solution to record, convert and stream audio and video
+    ##file-roller                             # Archive manager for the GNOME desktop environment
     flameshot                               # Powerful yet simple to use screenshot software
     font-manager                            # Simple font management for GTK desktop environments
     fontpreview                             # Highly customizable and minimal font previewer written in bash
@@ -1040,6 +1046,7 @@
     meld                                    # Visual diff and merge tool
     mission-center                          # Monitor your CPU, Memory, Disk, Network and GPU usage
     #mtkclient                               #
+    ##plasma5Packages.kdeconnect-kde          # KDE Connect provides several features to integrate your phone and your computer
     poppler_utils                           # PDF rendering library
     scrcpy                                  # Display and control Android devices over USB or TCP/IP
     simplescreenrecorder                    # Screen recorder for Linux
@@ -1168,6 +1175,7 @@
     sparkleshare                            # Share and collaborate by syncing with any Git repository instantly. Linux, macOS, and Windows
     syncterm                                # BBS terminal emulator
     telegram-desktop                        # Telegram Desktop messaging app
+    ##thunderbird                             # Full-featured e-mail client
     transmission_4-gtk                      # Fast, easy and free BitTorrent client
     tribler                                 # Decentralised P2P filesharing client based on the Bittorrent protocol
     tuba                                    # Browse the Fediverse
@@ -1182,6 +1190,7 @@
     #dosbox                                  # DOS emulator
     #dosbox-x                                # Cross-platform DOS emulator based on the DOSBox project
     #gnome.gnome-boxes                       # Simple GNOME 3 application to access remote or virtual systems
+    ###gnome-boxes                             # Simple GNOME 3 application to access remote or virtual systems
     #mame                                    # Multi-purpose emulation framework
     #pcem                                    # Emulator for IBM PC computers and clones
     #rpcemu                                  # Risc PC Emulator
@@ -1358,6 +1367,7 @@
 
   # nixos system version
   system.stateVersion = "24.05";
+
 }
 
 #===============================================================================
