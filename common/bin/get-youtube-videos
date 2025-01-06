@@ -265,7 +265,7 @@ _download() {
     done
 }
 
-archive="--download-archive '"${HOME}/.yt-dlp-download-archive"'"
+archive="--download-archive '"${HOME}/config-private/config/.yt-dlp-download-archive"'"
 
 # handle command line arguments
 while true ; do
