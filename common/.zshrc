@@ -18,7 +18,7 @@ export REAL_TERM="${TERM}"
 export TERM="xterm-256color"
 
 # only run if terminal is interactive
-[[ $- == *i* ]] && return 0
+[[ $- == *i* ]] || return 0
 
 # add to the run path
 export runpath="${runpath}:${HOME}/.zshrc"

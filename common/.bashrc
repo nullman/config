@@ -41,7 +41,7 @@ export REAL_TERM="${TERM}"
 export TERM="xterm-256color"
 
 # continue only if terminal is interactive
-[[ $- == *i* ]] && return 0
+[[ $- == *i* ]] || return 0
 
 # add to the run path
 export runpath="${runpath}:${HOME}/.bashrc"
