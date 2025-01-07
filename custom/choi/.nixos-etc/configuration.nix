@@ -1034,7 +1034,7 @@
     fontforge-gtk                           # Font editor
     gcal                                    # Program for calculating and printing calendars
     glmark2                                 # OpenGL (ES) 2.0 benchmark
-    gnome.file-roller                       # Archive manager for the GNOME desktop environment
+    #gnome.file-roller                       # Archive manager for the GNOME desktop environment
     gnome-frog                              # Intuitive text extraction tool (OCR) for GNOME desktop
     gparted                                 # Graphical disk partitioning tool
     grip id3lib                             # GTK-based audio CD player/ripper
@@ -1044,6 +1044,7 @@
     libation                                # Audible audiobook manager
     livecaptions                            # Linux Desktop application that provides live captioning
     makemkv                                 # Convert blu-ray and dvd to mkv
+    mate.engrampa                           # Archive Manager for MATE
     mediawriter                             # Tool to write images files to portable media
     meld                                    # Visual diff and merge tool
     mission-center                          # Monitor your CPU, Memory, Disk, Network and GPU usage
@@ -1054,6 +1055,7 @@
     simplescreenrecorder                    # Screen recorder for Linux
     upscayl                                 # Free and Open Source AI Image Upscaler
     #x48                                     #
+    xarchiver                               # GTK frontend to 7z,zip,rar,tar,bzip2, gzip,arj, lha, rpm and deb (open and ex...
 
     # tui
     atuin                                   # Replacement for a shell history which records additional commands context with optional encrypted synchronization between machines
