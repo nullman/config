@@ -771,6 +771,7 @@
   environment.systemPackages = with pkgs; [
     # system
     acpi                                    # Show battery status and other ACPI information
+    aha                                     # ANSI HTML Adapter
     alacritty                               # Cross-platform, GPU-accelerated terminal emulator
     arandr                                  # Simple visual front end for XRandR
     aspell                                  # Spell checker for many languages

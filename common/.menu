@@ -102,8 +102,8 @@ Screen (restart)|xterm -bg #000000 -fg #bbc2cf -fn xft:hack +sb -rightbar -geome
 ssaver:
 xscreensaver|xscreensaver-command -lock
 xscreensaver setup|xscreensaver-demo
-xscreensaver on|rm -f /home/kyle/.noscreensaver ; source /home/kyle/bin/ssaverauto
-xscreensaver off|touch /home/kyle/.noscreensaver ; fuser -k /home/kyle/bin/ssaver ; fuser -k /usr/bin/xscreensaver ; fuser -k /usr/bin/xlock ; fuser -k /usr/bin/electricsheep
+xscreensaver on|rm -f /home/user/.noscreensaver ; source /home/user/bin/ssaverauto
+xscreensaver off|touch /home/user/.noscreensaver ; fuser -k /home/user/bin/ssaver ; fuser -k /usr/bin/xscreensaver ; fuser -k /usr/bin/xlock ; fuser -k /usr/bin/electricsheep
 xlock|xlock -mode flame
 
 #===============================================================================

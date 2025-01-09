@@ -373,7 +373,7 @@ alias ytdl="
            --format-sort 'res:1080,res:720,res:480,vcodec:h264,acodec:m4a' \
            --output \"%(channel)s - %(release_date>%Y-%m-%d,upload_date>%Y-%m-%d|Unknown)s - %(title)s.%(ext)s\""
 #        weather                 weather report
-alias weather="curl --silent wttr.in | head -n -2"
+alias weather="curl --silent \"wttr.in/San+Diego?u\" | head -n -2"
 #        termbin                 send content to termbin.com
 alias termbin="nc termbin.com 9999"
 #        tb                      send content to termbin.com
@@ -921,6 +921,8 @@ alias mca="mc -a"
 alias centericqa="centericq -a"
 #        centericq-unsent        find unset messages in centericq
 alias centericq-unsent="find \${HOME}/.centericq/ -name offline"
+#        view                    view image (using eye of gnome)
+alias view="eog"
 #        motora                  motor -a (asci characters only)
 alias motora="motor -a"
 #        seti                    run setiathome in the background
@@ -995,7 +997,7 @@ alias adb-screenshot-landscape="(
     name=android-device-screenshot-\$(date '+%Y-%m-%d-%H%M%S').png
     adb shell screencap -p /sdcard/screen.png &&
     adb pull /sdcard/screen.png \${name} &&
-    convert \${name} -rotate 270 \${name}.tmp && mv \${name}.tmp \${name}"
+    magick \${name} -rotate 270 \${name}.tmp && mv \${name}.tmp \${name}"
 #!#        adb-animation         abd animation
 #!alias adb-animation="
 #!    adb shell screenrecord /sdcard/animation.mp4 &&

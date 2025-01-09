@@ -1,9 +1,16 @@
 conky.config = {
 alignment = 'top_middle',
 background = true,
-color2 = '2ECC71',
+color1 = 'ff0000',
+color2 = '00ff00',
+color3 = 'ffff00',
+color4 = '6464ff',
+color5 = 'ff00ff',
+color6 = '00ffff',
+color7 = 'ffffff',
+color8 = '000000',
 cpu_avg_samples = 2,
-default_color = 'E0E2E3',
+default_color = 'ffffff',
 double_buffer = true,
 font = 'Mono:size=12',
 gap_x = 25,
@@ -15,10 +22,11 @@ own_window = true,
 own_window_class = 'Conky',
 own_window_type = 'override',
 own_window_transparent = true,
-update_interval = 60.0,
-update_interval_on_battery = 300.0,
+update_interval = 2.0,
+update_interval_on_battery = 10.0,
 use_xft = true,
 }
 conky.text = [[
-${texeci 600 remind ${HOME}/.reminders | fold -w 72 -s}
+${execpi 600 remind ${HOME}/.reminders | fold -w 72 -s | sed 's/\(\w*\?\): /\${color2}\1:\${color} /g ; \
+s/^\(Reminders for .*\) (today):$/\${alignc}\${font MesloLGS Nerd Font:bold:size=16}\1\${font}\n\${color2}\${hr}\${color}/'}
 ]]
