@@ -16,7 +16,6 @@ font = 'MesloLGS Nerd Font:size=12',
 gap_x = 20,
 gap_y = 40,
 minimum_width = 480,
-minimum_height = 960,
 no_buffers = true,
 own_window = true,
 own_window_class = 'Conky',
@@ -29,44 +28,44 @@ use_xft = true,
 conky.text = [[
 ${alignc}${font MesloLGS Nerd Font:bold:size=16}K E Y   B I N D I N G S${font}
 ${color2}${hr}${color}
-${color2}[Super + Alt] + H${color}  ${alignr}Display Key Bindings
-${color2}[Super + Ctrl] + H${color}  ${alignr}Display BSPWM Key Bindings
-${color2}[Super/Alt] + Tab${color}  ${alignr}Focus Next Node (Any/Desktop)
-${color2}[Super/Alt + Shift] + Tab${color}  ${alignr}Focus Prev Node (Any/Desktop)
-${color2}[Super/Alt] + Grave${color}  ${alignr}Focus Last Desktop/Node
-${color2}[Super + Alt] + L/R${color}  ${alignr}Focus L/R Desktop
-${color2}[Super + Shift] + L/R${color}  ${alignr}Send to L/R Desktop
-${color2}[Super] + 1..0${color}  ${alignr}Focus given Desktop
-${color2}[Super + Shift] + 1..0${color}  ${alignr}Send to given Desktop
-${color2}[Super + Shift] + W${color}  ${alignr}Close Node
-${color2}[Super + Shift] + Q${color}  ${alignr}Kill Node
-${color2}[Super + Ctrl] + M${color}  ${alignr}Tiled/Stacked/Monocle Layout
-${color2}[Super + Ctrl] + T/F${color}  ${alignr}Tiled/Fullscreen Layout
-${color2}[Super + Ctrl + Shift] + T/F${color}  ${alignr}Pseudo-Tiled/Floating Layout
-${color2}[Super] + I/K/J/L${color}  ${alignr}Focus Node in Direction
-${color2}[Super + Shift] + I/K/J/L${color}  ${alignr}Swap Node in Direction
-${color2}[Super] + ./,${color}  ${alignr}Circulate Nodes Forward/Backward
-${color2}[Super + Shift] + ./,${color}  ${alignr}Swap Node Forward/Backward
-${color2}[Super + Shift] + G${color}  ${alignr}Swap Node with First Child
-${color2}[Super + Control] + S${color}  ${alignr}Resize and Move Mode
-${color2}[Super + Control] + B/E${color}  ${alignr}Balance/Equalize Nodes
-${color2}[Super + Alt] + Spc/D/A/Ret${color}  ${alignr}App/Program/Group/Menu
-${color2}[Super + Alt] + W/C/E/O${color}  ${alignr}Window/Clip/Emoji/Bookmarks
-${color2}[Super + Alt] + ;/'/P${color}  ${alignr}Typer/Paste/Bitwarden
-${color2}[Super + Alt] + \${color}  ${alignr}Display Time
-${color2}[Super + Alt] + Y/U${color}  ${alignr}Git Sync Home/Doc
-${color2}[Super + Alt] + S/X${color}  ${alignr}Start/Lock Screensaver
-${color2}[Super + Shift] + Q${color}  ${alignr}Lock, Logout, Reboot, Shutdown
-${color2}[Super + Shift] + P${color}  ${alignr}Get XProp Class Name
-${color2}[Super + Shift] + Delete${color}  ${alignr}Kill Process Clicked
-${color2}[Super + Alt] + Print${color}  ${alignr}Screen Shapshot
-${color2}[Super + Control] + Print${color}  ${alignr}Window Shapshot
-${color2}[Super + Shift] + Print${color}  ${alignr}Region Shapshot
-${color2}[Super + Shift] + S/V${color}  ${alignr}Reload SXHKD/Video
-${color2}[Super + Shift] + T/E/C${color}  ${alignr}Reload Tint/EWW/Conky
-${color2}[Super + Control + Alt] + L/R${color}  ${alignr}Volume Down/Up 10%
-${color2}[Super + Control + Alt] + M${color}  ${alignr}MPD Play/Pause
-${color2}[Super + Control + Alt] + ,/.${color}  ${alignr}MPD Prev/Next
-${color2}[Super + Control + Alt] + /${color}  ${alignr}MPD Playing
-${color2}[Super] + Ret${color}  ${alignr}Terminal
+${color2}Spr + Alt + H${color}  ${alignr}Display Key Bindings
+${color2}Spr + Ctrl + H${color}  ${alignr}Display BSPWM Key Bindings
+${color2}Spr/Alt + Tab${color}  ${alignr}Focus Next Node (Any/Desktop)
+${color2}Spr/Alt + Shft + Tab${color}  ${alignr}Focus Prev Node (Any/Desktop)
+${color2}Spr/Alt + Grave${color}  ${alignr}Focus Last Desktop/Node
+${color2}Spr + Alt + L/R${color}  ${alignr}Focus L/R Desktop
+${color2}Spr + Shft + L/R${color}  ${alignr}Send to L/R Desktop
+${color2}Spr + 1..0${color}  ${alignr}Focus given Desktop
+${color2}Spr + Shft + 1..0${color}  ${alignr}Send to given Desktop
+${color2}Spr + Shft + W${color}  ${alignr}Close Node
+${color2}Spr + Shft + Q${color}  ${alignr}Kill Node
+${color2}Spr + Ctrl + M${color}  ${alignr}Tiled/Stacked/Monocle Layout
+${color2}Spr + Ctrl + T/F${color}  ${alignr}Tiled/Fullscreen Layout
+${color2}Spr + Ctrl + Shft + T/F${color}  ${alignr}Pseudo-Tiled/Floating Layout
+${color2}Spr + I/K/J/L${color}  ${alignr}Focus Node in Direction
+${color2}Spr + Shft + I/K/J/L${color}  ${alignr}Swap Node in Direction
+${color2}Spr + ./,${color}  ${alignr}Circulate Nodes Forward/Backward
+${color2}Spr + Shft + ./,${color}  ${alignr}Swap Node Forward/Backward
+${color2}Spr + Shft + G${color}  ${alignr}Swap Node with First Child
+${color2}Spr + Ctrl + S${color}  ${alignr}Resize and Move Mode
+${color2}Spr + Ctrl + B/E${color}  ${alignr}Balance/Equalize Nodes
+${color2}Spr + Alt + Spc/D/A/Ret${color}  ${alignr}App/Program/Group/Menu
+${color2}Spr + Alt + W/C/E/O${color}  ${alignr}Window/Clip/Emoji/Bookmarks
+${color2}Spr + Alt + ;/'/P${color}  ${alignr}Typer/Paste/Bitwarden
+${color2}Spr + Alt + \${color}  ${alignr}Display Time
+${color2}Spr + Alt + Y/U${color}  ${alignr}Git Sync Home/Doc
+${color2}Spr + Alt + S/X${color}  ${alignr}Start/Lock Screensaver
+${color2}Spr + Shft + Q${color}  ${alignr}Lock, Logout, Reboot, Shutdown
+${color2}Spr + Shft + P${color}  ${alignr}Get XProp Class Name
+${color2}Spr + Shft + Delete${color}  ${alignr}Kill Process Clicked
+${color2}Spr + Alt + Print${color}  ${alignr}Screen Shapshot
+${color2}Spr + Ctrl + Print${color}  ${alignr}Window Shapshot
+${color2}Spr + Shft + Print${color}  ${alignr}Region Shapshot
+${color2}Spr + Shft + S/V${color}  ${alignr}Reload SXHKD/Video
+${color2}Spr + Shft + T/E/C${color}  ${alignr}Reload Tint/EWW/Conky
+${color2}Spr + Ctrl + Alt + L/R${color}  ${alignr}Volume Down/Up 10%
+${color2}Spr + Ctrl + Alt + M${color}  ${alignr}MPD Play/Pause
+${color2}Spr + Ctrl + Alt + ,/.${color}  ${alignr}MPD Prev/Next
+${color2}Spr + Ctrl + Alt + /${color}  ${alignr}MPD Playing
+${color2}Spr + Ret${color}  ${alignr}Terminal
 ]]

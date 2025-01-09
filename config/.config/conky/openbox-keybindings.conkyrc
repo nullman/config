@@ -16,7 +16,6 @@ font = 'MesloLGS Nerd Font:size=12',
 gap_x = 20,
 gap_y = 40,
 minimum_width = 480,
-minimum_height = 960,
 no_buffers = true,
 own_window = true,
 own_window_class = 'Conky',
@@ -29,41 +28,41 @@ use_xft = true,
 conky.text = [[
 ${alignc}${font MesloLGS Nerd Font:bold:size=16}K E Y   B I N D I N G S${font}
 ${color2}${hr}${color}
-${color2}[Super] + Esc${color}  ${alignr}Application Menu
-${color2}[Alt] + Space${color}  ${alignr}Window Menu
-${color2}[Super/Alt] + Tab${color}  ${alignr}Next Window
-${color2}[Super/Alt + Shift] + Tab${color}  ${alignr}Previous Window
-${color2}[Super + Alt] + L/R${color}  ${alignr}Goto L/R Desktop
-${color2}[Super + Shift] + L/R${color}  ${alignr}Send to L/R Desktop
-${color2}[Super] + 1..0${color}  ${alignr}Goto NUM Desktop
-${color2}[Super + Shift] + 1..0${color}  ${alignr}Send to NUM Desktop
-${color2}[Super + Shift] + D${color}  ${alignr}Toggle Show Desktop
-${color2}[Super + Shift] + W${color}  ${alignr}Close Window
-${color2}[Super + Shift] + Q${color}  ${alignr}Kill Window
-${color2}[Super] + I/K/J/L${color}  ${alignr}Focus Window
-${color2}[Super + Shift] + I/K/J/L${color}  ${alignr}Move Window
-${color2}[Super + Control] + I/K/J/L${color}  ${alignr}Resize Window
-${color2}[Super + Alt] + Up${color}  ${alignr}Toggle Maximize
-${color2}[Super + Alt] + Down${color}  ${alignr}Iconify
-${color2}[Super + Alt] + F${color}  ${alignr}Toggle Fullscreen
-${color2}[Super + Alt] + R${color}  ${alignr}Resize
-${color2}[Super + Alt] + M${color}  ${alignr}Move
-${color2}[Super + Shift] + R${color}  ${alignr}Reload Key Bindings
-${color2}[Super + Shift] + T${color}  ${alignr}Reload Tint
-${color2}[Super + Shift] + E${color}  ${alignr}Lock, Logout, Reboot, Shutdown
-${color2}[Super + Shift] + P${color}  ${alignr}X-Prop
-${color2}[Super + Shift] + Delete${color}  ${alignr}X-Kill
-${color2}[Super + Alt] + Print${color}  ${alignr}Screen Shapshot
-${color2}[Super + Control] + Print${color}  ${alignr}Window Shapshot
-${color2}[Super + Shift] + Print${color}  ${alignr}Region Shapshot
-${color2}[Super + Alt] + T/Return${color}  ${alignr}Terminal
-${color2}[Super + Alt] + Space${color}  ${alignr}Rofi: drun
-${color2}[Super + Alt] + D${color}  ${alignr}Rofi: run
-${color2}[Super + Alt] + S${color}  ${alignr}Screensaver
-${color2}[Super + Alt] + X${color}  ${alignr}Screensaver Lock
-${color2}[Super + Control + Alt] + M${color}  ${alignr}MPC Toggle
-${color2}[Super + Control + Alt] + ,${color}  ${alignr}MPC Prev
-${color2}[Super + Control + Alt] + .${color}  ${alignr}MPC Next
-${color2}[Super + Control + Alt] + \${color}  ${alignr}MPC Playing
-${color2}[Super + Alt] + H${color}  ${alignr}Show Key Bindings
+${color2}Spr + Esc${color}  ${alignr}Application Menu
+${color2}Alt + Space${color}  ${alignr}Window Menu
+${color2}Spr/Alt + Tab${color}  ${alignr}Next Window
+${color2}Spr/Alt + Shft + Tab${color}  ${alignr}Previous Window
+${color2}Spr + Alt + L/R${color}  ${alignr}Goto L/R Desktop
+${color2}Spr + Shft + L/R${color}  ${alignr}Send to L/R Desktop
+${color2}Spr + 1..0${color}  ${alignr}Goto NUM Desktop
+${color2}Spr + Shft + 1..0${color}  ${alignr}Send to NUM Desktop
+${color2}Spr + Shft + D${color}  ${alignr}Toggle Show Desktop
+${color2}Spr + Shft + W${color}  ${alignr}Close Window
+${color2}Spr + Shft + Q${color}  ${alignr}Kill Window
+${color2}Spr + I/K/J/L${color}  ${alignr}Focus Window
+${color2}Spr + Shft + I/K/J/L${color}  ${alignr}Move Window
+${color2}Spr + Ctrl + I/K/J/L${color}  ${alignr}Resize Window
+${color2}Spr + Alt + Up${color}  ${alignr}Toggle Maximize
+${color2}Spr + Alt + Down${color}  ${alignr}Iconify
+${color2}Spr + Alt + F${color}  ${alignr}Toggle Fullscreen
+${color2}Spr + Alt + R${color}  ${alignr}Resize
+${color2}Spr + Alt + M${color}  ${alignr}Move
+${color2}Spr + Shft + R${color}  ${alignr}Reload Key Bindings
+${color2}Spr + Shft + T${color}  ${alignr}Reload Tint
+${color2}Spr + Shft + E${color}  ${alignr}Lock, Logout, Reboot, Shutdown
+${color2}Spr + Shft + P${color}  ${alignr}X-Prop
+${color2}Spr + Shft + Delete${color}  ${alignr}X-Kill
+${color2}Spr + Alt + Print${color}  ${alignr}Screen Shapshot
+${color2}Spr + Ctrl + Print${color}  ${alignr}Window Shapshot
+${color2}Spr + Shft + Print${color}  ${alignr}Region Shapshot
+${color2}Spr + Alt + T/Return${color}  ${alignr}Terminal
+${color2}Spr + Alt + Space${color}  ${alignr}Rofi: drun
+${color2}Spr + Alt + D${color}  ${alignr}Rofi: run
+${color2}Spr + Alt + S${color}  ${alignr}Screensaver
+${color2}Spr + Alt + X${color}  ${alignr}Screensaver Lock
+${color2}Spr + Ctrl + Alt + M${color}  ${alignr}MPC Toggle
+${color2}Spr + Ctrl + Alt + ,${color}  ${alignr}MPC Prev
+${color2}Spr + Ctrl + Alt + .${color}  ${alignr}MPC Next
+${color2}Spr + Ctrl + Alt + \${color}  ${alignr}MPC Playing
+${color2}Spr + Alt + H${color}  ${alignr}Show Key Bindings
 ]]

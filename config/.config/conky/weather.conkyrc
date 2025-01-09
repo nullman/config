@@ -12,11 +12,10 @@ color8 = '000000',
 cpu_avg_samples = 2,
 default_color = 'ffffff',
 double_buffer = true,
-font = 'MesloLGS Nerd Font:size=12',
+font = 'MesloLGS Nerd Font Mono:size=12',
 gap_x = 20,
 gap_y = 40,
-minimum_width = 240,
-minimum_height = 126,
+minimum_width = 480,
 no_buffers = true,
 own_window = true,
 own_window_class = 'Conky',
@@ -27,5 +26,5 @@ update_interval_on_battery = 10.0,
 use_xft = true,
 }
 conky.text = [[
-${texeci 1800 ${HOME}/bin/conky-weather-report}
+${execpi 1800 ${HOME}/bin/conky-weather-report}
 ]]
