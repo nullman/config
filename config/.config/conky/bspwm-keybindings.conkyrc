@@ -15,7 +15,8 @@ double_buffer = true,
 font = 'MesloLGS Nerd Font:size=12',
 gap_x = 20,
 gap_y = 40,
-minimum_width = 400,
+minimum_width = 480,
+minimum_height = 960,
 no_buffers = true,
 own_window = true,
 own_window_class = 'Conky',
@@ -39,9 +40,9 @@ ${color2}[Super] + 1..0${color}  ${alignr}Focus given Desktop
 ${color2}[Super + Shift] + 1..0${color}  ${alignr}Send to given Desktop
 ${color2}[Super + Shift] + W${color}  ${alignr}Close Node
 ${color2}[Super + Shift] + Q${color}  ${alignr}Kill Node
-${color2}[Super + Ctrl] + M${color}  ${alignr}Toggle Tiled/Stacked/Monocle Layout
-${color2}[Super + Ctrl] + T/F${color}  ${alignr}Set Tiled/Fullscreen Layout
-${color2}[Super + Ctrl + Shift] + T/F${color}  ${alignr}Set Pseudo-Tiled/Floating Layout
+${color2}[Super + Ctrl] + M${color}  ${alignr}Tiled/Stacked/Monocle Layout
+${color2}[Super + Ctrl] + T/F${color}  ${alignr}Tiled/Fullscreen Layout
+${color2}[Super + Ctrl + Shift] + T/F${color}  ${alignr}Pseudo-Tiled/Floating Layout
 ${color2}[Super] + I/K/J/L${color}  ${alignr}Focus Node in Direction
 ${color2}[Super + Shift] + I/K/J/L${color}  ${alignr}Swap Node in Direction
 ${color2}[Super] + ./,${color}  ${alignr}Circulate Nodes Forward/Backward
