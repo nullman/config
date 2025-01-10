@@ -137,6 +137,7 @@ _br 'discord' desktop=^6 follow=on
 _br 'Pidgin' desktop=^7 follow=on
 _br 'Tootle' desktop=^7 follow=on
 _br 'Com.github.bleakgrey.tootle' desktop=^7 follow=on
+_br 'nheko' desktop=^7 follow=on
 _br 'Element' desktop=^7 follow=on
 _br 'dev.geopjr.Tuba' desktop=^7 follow=on
 _br 'Gajim' desktop=^7 follow=on

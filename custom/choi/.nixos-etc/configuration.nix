@@ -119,6 +119,7 @@
       "betterbird-unwrapped-115.9.0"
       "electron-12.2.3"
       "electron-24.8.6"
+      "olm-3.2.16"
       "openssl-1.1.1w"
     ];
     packageOverrides = pkgs: {
@@ -735,6 +736,7 @@
   environment.systemPackages = with pkgs; [
     # system
     acpi                                    # Show battery status and other ACPI information
+    aha                                     # ANSI HTML Adapter
     alacritty                               # Cross-platform, GPU-accelerated terminal emulator
     arandr                                  # Simple visual front end for XRandR
     aspell                                  # Spell checker for many languages
@@ -801,6 +803,7 @@
     neofetch                                # Fast, highly customizable system info script
     nettools                                # Set of tools for controlling the network subsystem in Linux
     nfs-utils                               # Linux user-space NFS utilities
+    nitch                                   # Incredibly fast system fetch written in nim
     nix-index                               # Files database for nixpkgs
     nmap                                    # Free and open source utility for network discovery and security auditing
     ntfsprogs                               # FUSE-based NTFS driver with full write support
@@ -1171,6 +1174,7 @@
     magic-wormhole                          # Securely transfer data between computers
     mop                                     # Simple stock tracker implemented in go
     ncgopher                                # Gopher and gemini client for the modern internet
+    nheko                                   # Desktop client for the Matrix protocol
     nyxt                                    # Infinitely extensible web-browser (with Lisp development files using WebKitGTK platform port)
     opensnitch opensnitch-ui                # Application firewall
     pidgin                                  # Multi-protocol instant messaging client

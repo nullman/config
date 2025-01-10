@@ -12,7 +12,8 @@ personal:firefox
 personal:thunar
 personal:slack
 personal:discord
-personal:element-desktop
+personal:nheko
+#personal:element-desktop
 personal:dev.geopjr.Tuba
 personal:gajim
 #personal:google-chrome

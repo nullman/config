@@ -527,6 +527,7 @@ assign [class="discord"] $workspace6
 assign [class="Pidgin"] $workspace7
 assign [class="Tootle"] $workspace7
 assign [class="Com.github.bleakgrey.tootle"] $workspace7
+assign [class="nheko"] $workspace7
 assign [class="Element"] $workspace7
 assign [class="dev.geopjr.Tuba"] $workspace7
 assign [class="Gajim"] $workspace7

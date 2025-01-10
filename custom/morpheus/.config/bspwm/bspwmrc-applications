@@ -20,7 +20,7 @@ _delay() {
     sleep ${delay} && eval "$@"
 }
 
-# initialize background applications and services
+# run background applications and services
 _command xscreensaver && xscreensaver -no-splash &
 #_command xautolock && xautolock -time 30 -locker blurlock & # lock screen after 30 minutes
 #_command xautolock && xautolock -time 30 -locker 'xscreensaver-command -lock' & # lock screen after 30 minutes
@@ -32,7 +32,7 @@ _command xscreensaver && xscreensaver -no-splash &
 _command barrier && barrier &
 #_command emacs && emacs --daemon &
 
-# initialize foreground applications
+# run foreground applications
 _command alacritty && alacritty -e ${HOME}/bin/run-screen &
 #_command emacs && _delay 1 emacs &
 #_command thunderbird && _delay 1 thunderbird &
@@ -47,6 +47,7 @@ _command firefox && _delay 1 firefox &
 #_command discord && _delay 1 discord &
 #_command tootle && _delay 10 tootle &
 #_command com.github.bleakgrey.tootle && _delay 10 com.github.bleakgrey.tootle &
+#_command nheko && _delay 1 nheko &
 #_command element-desktop && _delay 1 element-desktop &
 #_command dev.geopjr.Tuba && _delay 10 dev.geopjr.Tuba &
 #_command pidgin && _delay 10 pidgin &
@@ -54,7 +55,7 @@ _command firefox && _delay 1 firefox &
 #_command idea && _delay 10 idea &
 #_command syncterm && _delay 1 syncterm &
 
-# launch application launcher
+# run application launcher
 #_command ${HOME}/bin/application-launcher && ${HOME}/bin/application-launcher &
 
 #===============================================================================
