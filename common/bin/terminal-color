@@ -1,0 +1,285 @@
+#!/usr/bin/env bash
+#===============================================================================
+# terminal-color
+#
+# Return hexidecimal color from given xterm-256 color code.
+#
+# Color Mapping Source: https://gist.github.com/MicahElliott/719710
+#
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
+#===============================================================================
+
+if [[ $# -lt 1 ]] || [[ $# -gt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+    cat <<EOF
+Usage: $(basename $0) COLOR
+Return hexidecimal color from given xterm-256 color code.
+  COLOR - an xterm-256 color code (0-255)
+EOF
+    exit 1
+fi
+
+case $(($1)) in
+    0) printf '000000' ;;
+    1) printf '800000' ;;
+    2) printf '008000' ;;
+    3) printf '808000' ;;
+    4) printf '000080' ;;
+    5) printf '800080' ;;
+    6) printf '008080' ;;
+    7) printf 'c0c0c0' ;;
+    8) printf '808080' ;;
+    9) printf 'ff0000' ;;
+    10) printf '00ff00' ;;
+    11) printf 'ffff00' ;;
+    12) printf '0000ff' ;;
+    13) printf 'ff00ff' ;;
+    14) printf '00ffff' ;;
+    15) printf 'ffffff' ;;
+    16) printf '000000' ;;
+    17) printf '00005f' ;;
+    18) printf '000087' ;;
+    19) printf '0000af' ;;
+    20) printf '0000d7' ;;
+    21) printf '0000ff' ;;
+    22) printf '005f00' ;;
+    23) printf '005f5f' ;;
+    24) printf '005f87' ;;
+    25) printf '005faf' ;;
+    26) printf '005fd7' ;;
+    27) printf '005fff' ;;
+    28) printf '008700' ;;
+    29) printf '00875f' ;;
+    30) printf '008787' ;;
+    31) printf '0087af' ;;
+    32) printf '0087d7' ;;
+    33) printf '0087ff' ;;
+    34) printf '00af00' ;;
+    35) printf '00af5f' ;;
+    36) printf '00af87' ;;
+    37) printf '00afaf' ;;
+    38) printf '00afd7' ;;
+    39) printf '00afff' ;;
+    40) printf '00d700' ;;
+    41) printf '00d75f' ;;
+    42) printf '00d787' ;;
+    43) printf '00d7af' ;;
+    44) printf '00d7d7' ;;
+    45) printf '00d7ff' ;;
+    46) printf '00ff00' ;;
+    47) printf '00ff5f' ;;
+    48) printf '00ff87' ;;
+    49) printf '00ffaf' ;;
+    50) printf '00ffd7' ;;
+    51) printf '00ffff' ;;
+    52) printf '5f0000' ;;
+    53) printf '5f005f' ;;
+    54) printf '5f0087' ;;
+    55) printf '5f00af' ;;
+    56) printf '5f00d7' ;;
+    57) printf '5f00ff' ;;
+    58) printf '5f5f00' ;;
+    59) printf '5f5f5f' ;;
+    60) printf '5f5f87' ;;
+    61) printf '5f5faf' ;;
+    62) printf '5f5fd7' ;;
+    63) printf '5f5fff' ;;
+    64) printf '5f8700' ;;
+    65) printf '5f875f' ;;
+    66) printf '5f8787' ;;
+    67) printf '5f87af' ;;
+    68) printf '5f87d7' ;;
+    69) printf '5f87ff' ;;
+    70) printf '5faf00' ;;
+    71) printf '5faf5f' ;;
+    72) printf '5faf87' ;;
+    73) printf '5fafaf' ;;
+    74) printf '5fafd7' ;;
+    75) printf '5fafff' ;;
+    76) printf '5fd700' ;;
+    77) printf '5fd75f' ;;
+    78) printf '5fd787' ;;
+    79) printf '5fd7af' ;;
+    80) printf '5fd7d7' ;;
+    81) printf '5fd7ff' ;;
+    82) printf '5fff00' ;;
+    83) printf '5fff5f' ;;
+    84) printf '5fff87' ;;
+    85) printf '5fffaf' ;;
+    86) printf '5fffd7' ;;
+    87) printf '5fffff' ;;
+    88) printf '870000' ;;
+    89) printf '87005f' ;;
+    90) printf '870087' ;;
+    91) printf '8700af' ;;
+    92) printf '8700d7' ;;
+    93) printf '8700ff' ;;
+    94) printf '875f00' ;;
+    95) printf '875f5f' ;;
+    96) printf '875f87' ;;
+    97) printf '875faf' ;;
+    98) printf '875fd7' ;;
+    99) printf '875fff' ;;
+    100) printf '878700' ;;
+    101) printf '87875f' ;;
+    102) printf '878787' ;;
+    103) printf '8787af' ;;
+    104) printf '8787d7' ;;
+    105) printf '8787ff' ;;
+    106) printf '87af00' ;;
+    107) printf '87af5f' ;;
+    108) printf '87af87' ;;
+    109) printf '87afaf' ;;
+    110) printf '87afd7' ;;
+    111) printf '87afff' ;;
+    112) printf '87d700' ;;
+    113) printf '87d75f' ;;
+    114) printf '87d787' ;;
+    115) printf '87d7af' ;;
+    116) printf '87d7d7' ;;
+    117) printf '87d7ff' ;;
+    118) printf '87ff00' ;;
+    119) printf '87ff5f' ;;
+    120) printf '87ff87' ;;
+    121) printf '87ffaf' ;;
+    122) printf '87ffd7' ;;
+    123) printf '87ffff' ;;
+    124) printf 'af0000' ;;
+    125) printf 'af005f' ;;
+    126) printf 'af0087' ;;
+    127) printf 'af00af' ;;
+    128) printf 'af00d7' ;;
+    129) printf 'af00ff' ;;
+    130) printf 'af5f00' ;;
+    131) printf 'af5f5f' ;;
+    132) printf 'af5f87' ;;
+    133) printf 'af5faf' ;;
+    134) printf 'af5fd7' ;;
+    135) printf 'af5fff' ;;
+    136) printf 'af8700' ;;
+    137) printf 'af875f' ;;
+    138) printf 'af8787' ;;
+    139) printf 'af87af' ;;
+    140) printf 'af87d7' ;;
+    141) printf 'af87ff' ;;
+    142) printf 'afaf00' ;;
+    143) printf 'afaf5f' ;;
+    144) printf 'afaf87' ;;
+    145) printf 'afafaf' ;;
+    146) printf 'afafd7' ;;
+    147) printf 'afafff' ;;
+    148) printf 'afd700' ;;
+    149) printf 'afd75f' ;;
+    150) printf 'afd787' ;;
+    151) printf 'afd7af' ;;
+    152) printf 'afd7d7' ;;
+    153) printf 'afd7ff' ;;
+    154) printf 'afff00' ;;
+    155) printf 'afff5f' ;;
+    156) printf 'afff87' ;;
+    157) printf 'afffaf' ;;
+    158) printf 'afffd7' ;;
+    159) printf 'afffff' ;;
+    160) printf 'd70000' ;;
+    161) printf 'd7005f' ;;
+    162) printf 'd70087' ;;
+    163) printf 'd700af' ;;
+    164) printf 'd700d7' ;;
+    165) printf 'd700ff' ;;
+    166) printf 'd75f00' ;;
+    167) printf 'd75f5f' ;;
+    168) printf 'd75f87' ;;
+    169) printf 'd75faf' ;;
+    170) printf 'd75fd7' ;;
+    171) printf 'd75fff' ;;
+    172) printf 'd78700' ;;
+    173) printf 'd7875f' ;;
+    174) printf 'd78787' ;;
+    175) printf 'd787af' ;;
+    176) printf 'd787d7' ;;
+    177) printf 'd787ff' ;;
+    178) printf 'd7af00' ;;
+    179) printf 'd7af5f' ;;
+    180) printf 'd7af87' ;;
+    181) printf 'd7afaf' ;;
+    182) printf 'd7afd7' ;;
+    183) printf 'd7afff' ;;
+    184) printf 'd7d700' ;;
+    185) printf 'd7d75f' ;;
+    186) printf 'd7d787' ;;
+    187) printf 'd7d7af' ;;
+    188) printf 'd7d7d7' ;;
+    189) printf 'd7d7ff' ;;
+    190) printf 'd7ff00' ;;
+    191) printf 'd7ff5f' ;;
+    192) printf 'd7ff87' ;;
+    193) printf 'd7ffaf' ;;
+    194) printf 'd7ffd7' ;;
+    195) printf 'd7ffff' ;;
+    196) printf 'ff0000' ;;
+    197) printf 'ff005f' ;;
+    198) printf 'ff0087' ;;
+    199) printf 'ff00af' ;;
+    200) printf 'ff00d7' ;;
+    201) printf 'ff00ff' ;;
+    202) printf 'ff5f00' ;;
+    203) printf 'ff5f5f' ;;
+    204) printf 'ff5f87' ;;
+    205) printf 'ff5faf' ;;
+    206) printf 'ff5fd7' ;;
+    207) printf 'ff5fff' ;;
+    208) printf 'ff8700' ;;
+    209) printf 'ff875f' ;;
+    210) printf 'ff8787' ;;
+    211) printf 'ff87af' ;;
+    212) printf 'ff87d7' ;;
+    213) printf 'ff87ff' ;;
+    214) printf 'ffaf00' ;;
+    215) printf 'ffaf5f' ;;
+    216) printf 'ffaf87' ;;
+    217) printf 'ffafaf' ;;
+    218) printf 'ffafd7' ;;
+    219) printf 'ffafff' ;;
+    220) printf 'ffd700' ;;
+    221) printf 'ffd75f' ;;
+    222) printf 'ffd787' ;;
+    223) printf 'ffd7af' ;;
+    224) printf 'ffd7d7' ;;
+    225) printf 'ffd7ff' ;;
+    226) printf 'ffff00' ;;
+    227) printf 'ffff5f' ;;
+    228) printf 'ffff87' ;;
+    229) printf 'ffffaf' ;;
+    230) printf 'ffffd7' ;;
+    231) printf 'ffffff' ;;
+    232) printf '080808' ;;
+    233) printf '121212' ;;
+    234) printf '1c1c1c' ;;
+    235) printf '262626' ;;
+    236) printf '303030' ;;
+    237) printf '3a3a3a' ;;
+    238) printf '444444' ;;
+    239) printf '4e4e4e' ;;
+    240) printf '585858' ;;
+    241) printf '626262' ;;
+    242) printf '6c6c6c' ;;
+    243) printf '767676' ;;
+    244) printf '808080' ;;
+    245) printf '8a8a8a' ;;
+    246) printf '949494' ;;
+    247) printf '9e9e9e' ;;
+    248) printf 'a8a8a8' ;;
+    249) printf 'b2b2b2' ;;
+    250) printf 'bcbcbc' ;;
+    251) printf 'c6c6c6' ;;
+    252) printf 'd0d0d0' ;;
+    253) printf 'dadada' ;;
+    254) printf 'e4e4e4' ;;
+    255) printf 'eeeeee' ;;
+    *) exit 1 ;;
+esac
+
+exit 0
+
+#===============================================================================
+# End of File
+#===============================================================================

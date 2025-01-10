@@ -3,21 +3,24 @@ BASE_FILE="/tmp/conky-weather"
 ESC=$(printf '\33')
 
 curl --silent "wttr.in/San+Diego?u" | head -n 7 > "${BASE_FILE}.txt"
-#curl --silent "wttr.in/San+Diego?u" | head -n -2 > "${BASE_FILE}.txt"
+
 sed "s/^Weather report: .*$/\${goto 50}\${font MesloLGS Nerd Font:bold:size=16}San Diego\${font}/ ; \
     s/${ESC}\[0m/\${font}\${color}/g ; \
     s/${ESC}\[1m/\${font MesloLGS Nerd Font Mono:bold}/g ; \
-    s/${ESC}\[38;5;046m/\${color \#00FF00}/g ; \
-    s/${ESC}\[38;5;082m/\${color \#5FFF00}/g ; \
-    s/${ESC}\[38;5;118m/\${color \#5FFF87}/g ; \
-    s/${ESC}\[38;5;154m/\${color \#87FF87}/g ; \
-    s/${ESC}\[38;5;190m/\${color \#D7FF00}/g ; \
-    s/${ESC}\[38;5;196m/\${color \#FF0000}/g ; \
-    s/${ESC}\[38;5;202m/\${color \#D75F87}/g ; \
-    s/${ESC}\[38;5;208m/\${color \#FF8700}/g ; \
-    s/${ESC}\[38;5;220m/\${color \#D7D787}/g ; \
-    s/${ESC}\[38;5;226m/\${color \#FFFF00}/g" \
-    "${BASE_FILE}.txt" > "${BASE_FILE}.conky"
+    s/${ESC}\[38;5;\([0-9]\{3\}\)m/\${color _\1_}/g" \
+    "${BASE_FILE}.txt" | \
+    while IFS= read -r line; do
+        echo "${line}" | sed 's/_\([0-9]\{3\}\)_/\n\1\n/g' | \
+            while IFS= read -r token ; do
+                if [[ "${token}" =~ ^[0-9]{3}$ ]] ; then
+                    echo -n "$(/home/user/bin/terminal-color ${token})"
+                else
+                    echo -n "${token}"
+                fi
+            done
+        echo
+    done > "${BASE_FILE}.conky"
+
 cat "${BASE_FILE}.conky"
 
 # # png version [not working]
