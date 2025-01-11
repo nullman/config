@@ -3003,7 +3003,7 @@ If BUFFER is nil, current buffer is used."
 (init-message 3 "Org Mode: Functions: org-get-file-data")
 
 (defun org-get-file-data (file &optional path)
-  "Return tree structure version of given Org FILE.
+  "Return tree structure version of given org FILE.
 
 PATH is an optional list of headlines to match starting from the
 top level.
@@ -3140,7 +3140,7 @@ Output format:
 (init-message 3 "Org Mode: Functions: org-get-buffer-data")
 
 (defun org-get-buffer-data (buffer &optional path with-markers)
-  "Return tree structure version of given Org BUFFER.
+  "Return tree structure version of given org BUFFER.
 
 PATH is an optional list of headlines to match starting from the
 top level.
@@ -3523,7 +3523,7 @@ by ASCII code. Otherwise, default SORT-TYPE is \"(nil ?f nil
 (init-message 3 "Org Mode: Functions: org-copy-to-clipboard")
 
 (defun org-copy-to-clipboard (&optional beg end)
-  "Copy `org-mode' region (or entire buffer) to the `kill-ring'
+  "Copy org region (or entire buffer) to the `kill-ring'
 and X clipboard, indenting and cleaning up links."
   (interactive)
   (let ((beg (or beg (if (use-region-p) (region-beginning) (point-min))))
@@ -3670,7 +3670,7 @@ If BEG and END are given, only that region is exported."
 (init-message 3 "Org Mode: Functions: org-toggle-headline-checkbox")
 
 (defun org-toggle-headline-checkbox (&optional beg end)
-  "Toggle between an Org headline and checkbox on current line or region."
+  "Toggle between an org headline and checkbox on current line or region."
   (interactive)
   (let ((beg (or beg (if (use-region-p) (region-beginning) (line-beginning-position))))
         (end (or end (if (use-region-p) (region-end) (line-end-position)))))
@@ -3702,7 +3702,7 @@ If BEG and END are given, only that region is exported."
 (init-message 3 "Org Mode: Functions: org-table-remove-commas")
 
 (defun org-table-remove-commas ()
-  "Remove all commas in current Org table."
+  "Remove all commas in current org table."
   (interactive)
   (save-mark-and-excursion
     (save-match-data
@@ -3846,14 +3846,14 @@ same directory as the org-buffer and insert a link to this file."
 (init-message 3 "Org Mode: Functions: org-convert-headings-from-odd-indented-to-oddeven-unindented")
 
 (defun org-convert-headings-from-odd-indented-to-oddeven-unindented (&optional buffer)
-  "Convert Org BUFFER from having only odd heading levels and
+  "Convert org BUFFER from having only odd heading levels and
 indented body data (`org-odd-levels-only' and
 `org-adapt-indentation') to having odd and even heading levels
 and non-indented body data (`org-indent-mode').
 
 If BUFFER is nil, current buffer is used."
   (unless (derived-mode-p 'org-mode)
-    (user-error "Not an Org buffer"))
+    (user-error "Not an org buffer"))
   (with-current-buffer (or buffer (current-buffer))
     (save-mark-and-excursion
       (goto-char (point-min))
@@ -3883,14 +3883,14 @@ If BUFFER is nil, current buffer is used."
 (init-message 3 "Org Mode: Functions: org-convert-headings-from-oddeven-unindented-to-odd-indented")
 
 (defun org-convert-headings-from-oddeven-unindented-to-odd-indented (&optional buffer)
-  "Convert Org BUFFER from having odd and even heading levels and
+  "Convert org BUFFER from having odd and even heading levels and
   non-indented body data (`org-indent-mode') to having only odd
   heading levels and intended body data (`org-odd-levels-only'
   and `org-adapt-indentation').
 
   If BUFFER is nil, current buffer is used."
   (unless (derived-mode-p 'org-mode)
-    (user-error "Not an Org buffer"))
+    (user-error "Not an org buffer"))
   (with-current-buffer (or buffer (current-buffer))
     (save-mark-and-excursion
       (goto-char (point-min))
@@ -3991,6 +3991,19 @@ If BUFFER is nil, current buffer is used."
       (insert x)
       (newline))))
 ;; org-insert-toc-header:1 ends here
+
+;; [[file:init-emacs.org::*org-convert-markdown-to-org][org-convert-markdown-to-org:1]]
+;;------------------------------------------------------------------------------
+;;;; Org Mode: Functions: org-convert-markdown-to-org
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Org Mode: Functions: org-convert-markdown-to-org")
+
+(defun org-convert-markdown-to-org (beg end)
+  "Convert region from markdown to org syntax."
+  (interactive "r")
+  (shell-command-on-region beg end "pandoc -f markdown -t org" t t))
+;; org-convert-markdown-to-org:1 ends here
 
 ;; [[file:init-emacs.org::*Hook][Hook:1]]
 ;;------------------------------------------------------------------------------

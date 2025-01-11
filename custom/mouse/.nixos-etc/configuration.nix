@@ -954,6 +954,7 @@
     #glmark2                                 # OpenGL (ES) 2.0 benchmark
     ##gnome.file-roller                       # Archive manager for the GNOME desktop environment
     #gnome-frog                              # Intuitive text extraction tool (OCR) for GNOME desktop
+    #goldendict-ng                           # Advanced multi-dictionary lookup program
     #gparted                                 # Graphical disk partitioning tool
     #grip id3lib                             # GTK-based audio CD player/ripper
     #gtkimageview                            # Image viewer widget for GTK
