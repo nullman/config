@@ -73,6 +73,14 @@ ${color2}I/O:${color}  ${goto 50}${diskio /dev/disk/by-label/root}  ${goto 130}$
 #${color2}W:${color}  ${goto 40}${diskio_write /dev/disk/by-label/root}  ${goto 130}${color6}${diskiograph_write /dev/disk/by-label/root 15,- 333333 FFFFFF}
 
 # network
+${voffset 10}${color}${font MesloLGS Nerd Font:bold:size=12}${font}  ${alignr}${color2}Up:${color} ${totalup enp2s0}  ${color2}Dn:${color} ${totaldown enp2s0}
+${color2}Up:${color}  ${goto 40}${upspeed enp2s0}  ${goto 130}${color6}${upspeedgraph enp2s0 15,- 333333 FFFFFF}
+${color2}Dn:${color}  ${goto 40}${downspeed enp2s0}  ${goto 130}${color6}${downspeedgraph enp2s0 15,- 333333 FFFFFF}
+#${color2}Up${color}  ${alignr}${upspeed enp2s0}
+#${color}${upspeedgraph enp2s0}
+#${color2}Down${color}  ${alignr}${downspeed enp2s0}
+#${color}${downspeedgraph enp2s0}
+# network
 ${voffset 10}${color}${font MesloLGS Nerd Font:bold:size=12}${font}  ${alignr}${color2}Up:${color} ${totalup wlan0}  ${color2}Dn:${color} ${totaldown wlan0}
 ${color2}Up:${color}  ${goto 40}${upspeed wlan0}  ${goto 130}${color6}${upspeedgraph wlan0 15,- 333333 FFFFFF}
 ${color2}Dn:${color}  ${goto 40}${downspeed wlan0}  ${goto 130}${color6}${downspeedgraph wlan0 15,- 333333 FFFFFF}
