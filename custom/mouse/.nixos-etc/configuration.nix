@@ -44,8 +44,8 @@
   ## open firewall ports
   #networking.firewall = {
   #  enable = true;
-  #  allowedTCPPorts = [ 515 631 9100 ];
-  #  allowedUDPPorts = [ 515 631 9100 ];
+  #  allowedTCPPorts = [ 515 631 9100 24800 ];
+  #  allowedUDPPorts = [ 515 631 9100 24800 ];
   #  allowedUDPPortRanges = [
   #    { from = 1714; to = 1764; }
   #    { from = 1714; to = 1764; }
@@ -979,15 +979,12 @@
 
     ## applications
     #ardour                                  # Multi-track hard disk recording software
-    #audacious                               # Lightweight and versatile audio player
     #audacity                                # Sound editor with graphical UI
     #blender                                 # 3D Creation/Animation/Publishing System
     #calibre                                 # Comprehensive e-book software
-    #celluloid                               # Simple GTK frontend for the mpv video player
     #cheesecutter                            # Tracker program for composing music for the SID chip
     #cider                                   # New look into listening and enjoying Apple Music in style and performance
     #electrum                                # Lightweight Bitcoin wallet
-    #evince                                  # GNOME's document viewer
     #freecad                                 # General purpose Open Source 3D CAD/MCAD/CAx/CAE/PLM modeler
     #freetube                                # Open Source YouTube app for privacy
     #furnace                                 # Multi-system chiptune tracker compatible with DefleMask modules
@@ -1001,26 +998,21 @@
     #kicad ngspice                           # Open Source Electronics Design Automation suite
     #libreoffice                             # Comprehensive, professional-quality productivity suite, a variant of openoffice.org
     #lmms                                    # DAW similar to FL Studio (music production software)
-    #mpv                                     # General-purpose media player, fork of MPlayer and mplayer2
-    #mupdf                                   # Lightweight PDF, XPS, and E-book viewer and toolkit written in portable C
-    #notepadqq                               # Notepad++-like editor for the Linux desktop
     #obs-studio                              # Free and open source software for video recording and live streaming
     #(pkgs.wrapOBS { plugins = with pkgs.obs-studio-plugins; [ wlrobs ]; })
-    #qmplay2                                 # Qt-based Multimedia player
     #reaper                                  # Digital audio workstation
     #spotify                                 # Play music from the Spotify music service
-    #vlc                                     # Cross-platform media player and streaming server
-    #virt-viewer                             # Viewer for remote virtual machines
-    #ymuse                                   # GTK client for Music Player Daemon (MPD)
-    #zathura                                 # Highly customizable and functional PDF viewer
 
     ## utilities
     #appimage-run                            #
+    #audacious                               # Lightweight and versatile audio player
     #bitwarden                               # A secure and free password manager for all of your devices
+    #celluloid                               # Simple GTK frontend for the mpv video player
     #cherrytree                              # Hierarchical note taking application
     #czkawka                                 # Simple, fast and easy to use app to remove unnecessary files from your computer
     #dmg2img                                 # Apple's compressed dmg to standard (hfsplus) image disk file convert tool
     #easytag                                 # View and edit tags for various audio files
+    #evince                                  # GNOME's document viewer
     #ffmpeg_6-full                           # Complete, cross-platform solution to record, convert and stream audio and video
     ###file-roller                             # Archive manager for the GNOME desktop environment
     #flameshot                               # Powerful yet simple to use screenshot software
@@ -1044,14 +1036,22 @@
     #mediawriter                             # Tool to write images files to portable media
     #meld                                    # Visual diff and merge tool
     #mission-center                          # Monitor your CPU, Memory, Disk, Network and GPU usage
+    #mpv                                     # General-purpose media player, fork of MPlayer and mplayer2
     ##mtkclient                               #
+    #mupdf                                   # Lightweight PDF, XPS, and E-book viewer and toolkit written in portable C
+    #notepadqq                               # Notepad++-like editor for the Linux desktop
     ###plasma5Packages.kdeconnect-kde          # KDE Connect provides several features to integrate your phone and your computer
     #poppler_utils                           # PDF rendering library
+    #qmplay2                                 # Qt-based Multimedia player
     #scrcpy                                  # Display and control Android devices over USB or TCP/IP
     #simplescreenrecorder                    # Screen recorder for Linux
     #upscayl                                 # Free and Open Source AI Image Upscaler
+    #vlc                                     # Cross-platform media player and streaming server
+    #virt-viewer                             # Viewer for remote virtual machines
     ##x48                                     #
     #xarchiver                               # GTK frontend to 7z,zip,rar,tar,bzip2, gzip,arj, lha, rpm and deb (open and ex...
+    #ymuse                                   # GTK client for Music Player Daemon (MPD)
+    #zathura                                 # Highly customizable and functional PDF viewer
 
     # tui
     atuin                                   # Replacement for a shell history which records additional commands context with optional encrypted synchronization between machines
