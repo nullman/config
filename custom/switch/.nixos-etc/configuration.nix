@@ -324,6 +324,11 @@
       background=/etc/nixos/wallpapers/Fluorescence.jpg
     '';
   };
+  services.displayManager.autoLogin = {
+    enable = true;
+    user = "user";
+  };
+
   ## display manager: sddm
   #services.displayManager.sddm.enable = true;
 
