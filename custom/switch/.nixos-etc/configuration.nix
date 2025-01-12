@@ -1108,29 +1108,29 @@
     #webwormhole                             # Send files using peer authenticated WebRTC
     #zoom-us                                 # zoom.us video conferencing application
 
-    ## emulators
-    #anbox                                   # Android in a box
-    #basiliskii                              # 68k Macintosh emulator
-    #dosbox                                  # DOS emulator
-    #dosbox-x                                # Cross-platform DOS emulator based on the DOSBox project
-    #gnome.gnome-boxes                       # Simple GNOME 3 application to access remote or virtual systems
-    ###gnome-boxes                             # Simple GNOME 3 application to access remote or virtual systems
-    #mame                                    # Multi-purpose emulation framework
-    #pcem                                    # Emulator for IBM PC computers and clones
-    #rpcemu                                  # Risc PC Emulator
-    #qemu_kvm                                # Generic and open source machine emulator and virtualizer
-    #quickemu                                # Quickly create and run optimised Windows, macOS and Linux virtual machines
-    #quickgui                                # Flutter frontend for quickemu
-    #scummvm                                 # Program to run certain classic graphical point-and-click adventure games (suc...
-    #tiny8086                                # Open-source small 8086 emulator
-    #uae                                     # Ultimate/Unix/Unusable Amiga Emulator
-    #vice                                    # Emulators for a variety of 8-bit Commodore computers
-    #virt-manager                            # Desktop user interface for managing virtual machines
-    #virt-viewer                             # Viewer for remote virtual machines
-    #virtualbox                              # PC emulator
-    #wine                                    # Open Source implementation of the Windows API on top of X, OpenGL, and Unix
-    #wineWowPackages.stable                  # Open Source implementation of the Windows API on top of X, OpenGL, and Unix
-    #winetricks                              # Script to install DLLs needed to work around problems in Wine
+    # emulators
+    anbox                                   # Android in a box
+    basiliskii                              # 68k Macintosh emulator
+    dosbox                                  # DOS emulator
+    dosbox-x                                # Cross-platform DOS emulator based on the DOSBox project
+    gnome.gnome-boxes                       # Simple GNOME 3 application to access remote or virtual systems
+    ##gnome-boxes                             # Simple GNOME 3 application to access remote or virtual systems
+    mame                                    # Multi-purpose emulation framework
+    pcem                                    # Emulator for IBM PC computers and clones
+    rpcemu                                  # Risc PC Emulator
+    qemu_kvm                                # Generic and open source machine emulator and virtualizer
+    quickemu                                # Quickly create and run optimised Windows, macOS and Linux virtual machines
+    quickgui                                # Flutter frontend for quickemu
+    scummvm                                 # Program to run certain classic graphical point-and-click adventure games (suc...
+    tiny8086                                # Open-source small 8086 emulator
+    uae                                     # Ultimate/Unix/Unusable Amiga Emulator
+    vice                                    # Emulators for a variety of 8-bit Commodore computers
+    virt-manager                            # Desktop user interface for managing virtual machines
+    virt-viewer                             # Viewer for remote virtual machines
+    virtualbox                              # PC emulator
+    wine                                    # Open Source implementation of the Windows API on top of X, OpenGL, and Unix
+    wineWowPackages.stable                  # Open Source implementation of the Windows API on top of X, OpenGL, and Unix
+    winetricks                              # Script to install DLLs needed to work around problems in Wine
 
     ## containers
     #distrobox                               # Wrapper around podman or docker to create and start containers
