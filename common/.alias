@@ -1994,15 +1994,15 @@ alias rsync-rlptx="rsync -rlptx --progress"
 alias rsync-media-get-dozer="rsync -rlptx --progress dozer:/home/data/media/ ${home}/data/media/"
 #        rsync-media-get-dozer-exclude  rsync dozer:/home/data/media /home/data/media (minus software and video directories)
 alias rsync-media-get-dozer-exclude="rsync -rlptx --progress -f'- /Repos/' -f'- /Software/' -f'- /Video/' dozer:/home/data/media/ ${home}/data/media/"
-#        rsync-media-get-dozer-mouse-delete  rsync dozer:/home/data/media /home/data/media (specific sub-directories)
-alias rsync-media-get-dozer-mouse-delete=" \
+#        rsync-media-get-dozer-limited-delete  rsync dozer:/home/data/media /home/data/media (specific sub-directories)
+alias rsync-media-get-dozer-limited-delete=" \
     if [[ $(uname -n) == 'mouse' ]] ; then
         rsync -rlptx --progress --delete -f'- /Humor/' -f'- /Other/' dozer:/home/data/media/Audio/ ${home}/data/media/Audio/ && \
         rsync -rlptx --progress --delete dozer:/home/data/media/Audio/Music/ ${home}/data/media/Audio/Music/ && \
         rsync -rlptx --progress --delete \"dozer:/home/data/media/Pictures Slide Show/\" \"${home}/data/media/Pictures Slide Show/\" && \
         #rsync -rlptx --progress --delete dozer:/home/data/media/Repos/ ${home}/data/media/Repos/ && \
         rsync -rlptx --progress --delete dozer:/home/data/media/Text/ ${home}/data/media/Text/ && \
-        rsync -rlptx --progress --delete -f'- /Adult/' -f'- /Development/' dozer:/home/data/media/Video/ ${home}/data/media/Video/
+        rsync -rlptx --progress --delete dozer:/home/data/media/Video/ ${home}/data/media/Video/
     fi"
 #        rsync-media-put-dozer  rsync /home/data/media dozer:/home/data/media
 alias rsync-media-put-dozer="rsync -rlptx --progress ${home}/data/media/ dozer:/home/data/media/"
