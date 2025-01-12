@@ -27,8 +27,7 @@ _command xscreensaver && xscreensaver -no-splash &
 #_command mpd && mpd ${HOME}/.mpd/mpd.conf &
 #_command dropbox && dropbox start &
 #_command barriers && barriers --config ${HOME}/.barrier.conf &
-#_command barrierc && barrierc SERVER &
-_command barrier && barrier &
+_command barrierc && barrierc dozer &
 #_command emacs && emacs --daemon &
 
 # run foreground applications
