@@ -1289,9 +1289,9 @@
     yq                                      # Command-line YAML/XML/TOML processor - jq wrapper for YAML, XML, TOML documents
     zlib                                    # Lossless data-compression library
 
-    # containers
-    distrobox                               # Wrapper around podman or docker to create and start containers
-    podman                                  # Program for managing pods, containers and container images
+    ## containers
+    #distrobox                               # Wrapper around podman or docker to create and start containers
+    #podman                                  # Program for managing pods, containers and container images
 
     ## docker
     #docker                                  # Open source project to pack, ship and run any application as a lightweight co...

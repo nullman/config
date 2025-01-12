@@ -13,7 +13,6 @@ ytdlp="$(command -v yt-dlp)"
 #ytdlp="${HOME}/code/yt-dlp/yt-dlp"
 
 videolist=(
-    "Earth, Wind & Fire - September                                      | https://www.youtube.com/watch?v=Gs069dndIYk"
     "'Til Tuesday - Voices Carry                                         | https://www.youtube.com/watch?v=uejh-bHa4To"
     "1975, The - Love it If We Made It                                   | https://Www.youtube.com/watch?v=1Wl1B7DPegc"
     "1975, The - Somebody Else                                           | https://www.youtube.com/watch?v=Bimd2nZirT4"
@@ -69,6 +68,7 @@ videolist=(
     "Dua Lipa - Illusion                                                 | https://www.youtube.com/watch?v=a9cyG_yfh1k"
     "Dua Lipa - Levitating (Feat. DaBaby)                                | https://www.youtube.com/watch?v=TUVcZfQe-Kw"
     "Dua Lipa - Love Again                                               | https://www.youtube.com/watch?v=BC19kwABFwc"
+    "Earth, Wind & Fire - September                                      | https://www.youtube.com/watch?v=Gs069dndIYk"
     "Electric Light Orchestra - Don't Bring Me Down Remix (With Shuffle Girls) | https://www.youtube.com/watch?v=FuiMQPc5aKA"
     "Electric Light Orchestra - Mr. Blue Sky                             | https://www.youtube.com/watch?v=aQUlA8Hcv4s"
     "Elton John - Don't Let the Sun Go Down on Me (Remastered 1995)      | https://www.youtube.com/watch?v=TxipVM_0CBA"
@@ -101,6 +101,7 @@ videolist=(
     "Frida - I Know There's Something Going On                           | https://www.youtube.com/watch?v=p98PjtSfNWo"
     "George Michael, Elton John - Don't Let the Sun Go Down on Me (Live) | https://www.youtube.com/watch?v=RsKqMNDoR4o"
     "Glen Phillips - All I Want                                          | https://www.youtube.com/watch?v=fpJuCgyGq04"
+    "Golden Earring - Twilight Zone                                      | https://www.youtube.com/watch?v=wIaaBuGNwNw"
     "Goo Goo Dolls - Iris                                                | https://www.youtube.com/watch?v=NdYWuo9OFAw"
     "Goo Goo Dolls - Name                                                | https://www.youtube.com/watch?v=yQOBUrRaPU0"
     "Goo Goo Dolls - Slide                                               | https://www.youtube.com/watch?v=yP4qdefD2To"
@@ -280,6 +281,7 @@ fetch() {
         echo "| ${name} | ${url} |"
         if [[ -z $(find "${dir}" -name "${escname}\.*") ]] ; then
             cmd="${ytdlp} \
+            --cookies-from-browser firefox \
             --format-sort 'res:1080,res:720,res:480,vcodec:h264,acodec:m4a' \
             --paths \"temp:/tmp\" \
             --paths \"home:${dir}\" \
