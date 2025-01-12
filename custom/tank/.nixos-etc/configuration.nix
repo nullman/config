@@ -52,19 +52,16 @@
   # open firewall ports
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 515 631 9100 ];
+    allowedTCPPorts = [ 515 631 9100  ];
     #allowedUDPPorts = [ 515 631 9100 ];
     allowedTCPPortRanges = [
-      { from = 1714; to = 1764; }
       { from = 1714; to = 1764; }
     ];
     #allowedUDPPortRanges = [
     #  { from = 1714; to = 1764; }
-    #  { from = 1714; to = 1764; }
     #];
     checkReversePath = "loose";
   };
-  #networking.firewall.allowedTCPPorts = [ 30000 ]; # Foundry VTT
 
   ## openssh server
   #services.openssh.enable = true;
