@@ -1158,41 +1158,45 @@
     yt-dlp                                  # Command-line tool to download videos from YouTube.com and other sites (youtube-dl fork)
     zoxide                                  # Fast cd command that learns your habits
 
-    # internet
-    betterbird                              # Betterbird is a fine-tuned version of Mozilla Thunderbird, Thunderbird on steroids, if you will
-    bore-cli                                # Rust tool to create TCP tunnels
-    brave                                   # Privacy-oriented browser for Desktop and Laptop computers
-    chromium                                # Open source web browser from Google
-    cointop                                 # Fastest and most interactive terminal based UI application for tracking cryptocurrencies
-    dino                                    # Modern Jabber/XMPP Client using GTK/Vala
-    discord                                 # All-in-one cross-platform voice and text chat for gamers
-    element-desktop                         # A feature-rich client for Matrix.org
-    filezilla                               # Graphical FTP, FTPS and SFTP client
-    firefox                                 # Web browser built from Firefox source tree
-    freenet                                 # Decentralised and censorship-resistant network
-    gajim                                   # Jabber client written in PyGTK
-    google-chrome                           # Freeware web browser developed by Google
-    kristall                                # Graphical small-internet client, supports gemini, http, https, gopher, finger
-    magic-wormhole                          # Securely transfer data between computers
-    mop                                     # Simple stock tracker implemented in go
-    ncgopher                                # Gopher and gemini client for the modern internet
-    nheko                                   # Desktop client for the Matrix protocol
-    nyxt                                    # Infinitely extensible web-browser (with Lisp development files using WebKitGTK platform port)
-    opensnitch opensnitch-ui                # Application firewall
-    pidgin                                  # Multi-protocol instant messaging client
-    slack                                   # Desktop client for Slack
-    simplex-chat-desktop                    # Desktop application for SimpleX Chat
-    sparkleshare                            # Share and collaborate by syncing with any Git repository instantly. Linux, macOS, and Windows
-    syncterm                                # BBS terminal emulator
-    telegram-desktop                        # Telegram Desktop messaging app
-    ##thunderbird                             # Full-featured e-mail client
-    transmission_4-gtk                      # Fast, easy and free BitTorrent client
-    tribler                                 # Decentralised P2P filesharing client based on the Bittorrent protocol
-    tuba                                    # Browse the Fediverse
-    #ungoogled-chromium                      # Open source web browser from Google, with dependencies on Google web services removed
-    vdhcoapp                                # Companion application for the Video DownloadHelper browser add-on
-    webwormhole                             # Send files using peer authenticated WebRTC
-    zoom-us                                 # zoom.us video conferencing application
+    ## internet
+    #betterbird                              # Betterbird is a fine-tuned version of Mozilla Thunderbird, Thunderbird on steroids, if you will
+    #bore-cli                                # Rust tool to create TCP tunnels
+    #brave                                   # Privacy-oriented browser for Desktop and Laptop computers
+    #chromium                                # Open source web browser from Google
+    #cointop                                 # Fastest and most interactive terminal based UI application for tracking cryptocurrencies
+    #dino                                    # Modern Jabber/XMPP Client using GTK/Vala
+    #discord                                 # All-in-one cross-platform voice and text chat for gamers
+    #element-desktop                         # A feature-rich client for Matrix.org
+    #filezilla                               # Graphical FTP, FTPS and SFTP client
+    #firefox                                 # Web browser built from Firefox source tree
+    #freenet                                 # Decentralised and censorship-resistant network
+    #gajim                                   # Jabber client written in PyGTK
+    #google-chrome                           # Freeware web browser developed by Google
+    #kristall                                # Graphical small-internet client, supports gemini, http, https, gopher, finger
+    #magic-wormhole                          # Securely transfer data between computers
+    #mop                                     # Simple stock tracker implemented in go
+    #ncgopher                                # Gopher and gemini client for the modern internet
+    #nheko                                   # Desktop client for the Matrix protocol
+    #nyxt                                    # Infinitely extensible web-browser (with Lisp development files using WebKitGTK platform port)
+    #opensnitch opensnitch-ui                # Application firewall
+    #pidgin                                  # Multi-protocol instant messaging client
+    #slack                                   # Desktop client for Slack
+    #simplex-chat-desktop                    # Desktop application for SimpleX Chat
+    #sparkleshare                            # Share and collaborate by syncing with any Git repository instantly. Linux, macOS, and Windows
+    #syncterm                                # BBS terminal emulator
+    #telegram-desktop                        # Telegram Desktop messaging app
+    ###thunderbird                             # Full-featured e-mail client
+    #transmission_4-gtk                      # Fast, easy and free BitTorrent client
+    #tribler                                 # Decentralised P2P filesharing client based on the Bittorrent protocol
+    #tuba                                    # Browse the Fediverse
+    ##ungoogled-chromium                      # Open source web browser from Google, with dependencies on Google web services removed
+    #vdhcoapp                                # Companion application for the Video DownloadHelper browser add-on
+    #webwormhole                             # Send files using peer authenticated WebRTC
+    #zoom-us                                 # zoom.us video conferencing application
+    brave
+    firefox
+    ncgopher
+    syncterm
 
     # emulators
     anbox                                   # Android in a box
