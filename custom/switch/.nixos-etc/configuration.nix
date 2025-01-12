@@ -1370,7 +1370,16 @@
     #steam                                   # Digital distribution platform
     #steam-tui                               # Rust TUI client for steamcmd
 
-
+    (pkgs.retroarch.override {
+      cores = with libretro; [
+        atari800
+        beetle-psx-hw
+        dosbox
+        genesis-plus-gx
+        mame
+        snes9x
+      ];
+    })
   ];
 
   # copy nixos configuration on rebuild
