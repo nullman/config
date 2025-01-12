@@ -404,9 +404,9 @@
   services.xserver.windowManager.bspwm.enable = true;
   services.displayManager.defaultSession = "none+bspwm";
 
-  # window manager: i3wm
-  services.xserver.windowManager.i3.enable = true;
-  services.xserver.windowManager.i3.package = pkgs.i3-gaps;
+  ## window manager: i3wm
+  #services.xserver.windowManager.i3.enable = true;
+  #services.xserver.windowManager.i3.package = pkgs.i3-gaps;
 
   # window manager: xfce
   services.xserver.desktopManager.xfce.enable = true;
@@ -1441,6 +1441,17 @@
     shattered-pixel-dungeon                 # Traditional roguelike game with pixel-art graphics and simple interface
     steam                                   # Digital distribution platform
     steam-tui                               # Rust TUI client for steamcmd
+
+    #(pkgs.retroarch.override {
+    #  cores = with libretro; [
+    #    atari800
+    #    beetle-psx-hw
+    #    dosbox
+    #    genesis-plus-gx
+    #    mame
+    #    snes9x
+    #  ];
+    #})
   ];
 
   # copy nixos configuration on rebuild
