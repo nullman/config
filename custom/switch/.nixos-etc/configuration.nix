@@ -713,6 +713,7 @@
     aspellDicts.en                          # Aspell dictionary for English
     auto-cpufreq                            # Automatic CPU speed & power optimizer for Linux
     bandwhich                               # CLI utility for displaying current network utilization
+    barrier                                 # Open-source KVM software
     bluez                                   # Official Linux Bluetooth protocol stack
     bluez-tools                             # Set of tools to manage bluetooth devices for linux
     #binsider                                # Analyzer of executables using a terminal user interface

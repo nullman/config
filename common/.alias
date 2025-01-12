@@ -649,11 +649,13 @@ alias netdev="echo \"\$(ip route get 1.1.1.1 | awk '{print \$5}')\""
 #        netip                   show ip address of main network device
 alias netip="ifconfig ${networkdevice} | grep 'inet [0-9]' | sed 's/^.*inet // ; s/ .*$//'"
 #        netinfo                 show network info of main network device
-alias netinfo="iwctl device ${networkdevice} show"
-#!alias netinfo="nmcli device show ${networkdevice}"
+#!alias netinfo="iwctl device ${networkdevice} show"
+alias netinfo="nmcli device show ${networkdevice}"
 #        netdns                  show dns routers of main network device
-alias netdns="iwctl station ${networkdevice} show | grep 'IPv4 address'"
-#!alias netdns="nmcli device show ${networkdevice} | grep IP4\.DNS"
+#!alias netdns="iwctl station ${networkdevice} show | grep 'IPv4 address'"
+alias netdns="nmcli device show ${networkdevice} | grep IP4\.DNS"
+#        netdns-flush            flush dns cache
+alias netdns-flush="sudo nscd -i hosts"
 #        ns                      netstat
 alias ns="sudo netstat"
 #        nsap                    netstat (all sockets, programs)
