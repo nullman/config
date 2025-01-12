@@ -2715,7 +2715,7 @@ alias xscd="xscreensaver-demo"
 #        xscl                    xscreensaver lock display
 alias xscl="xscreensaver-command -lock & >/dev/null 2>&1"
 #        xsc-diff                show any modifications to ~/.xscreensaver
-alias xsc-diff="diff \${HOME}/config-private/common/.xscreensaver \${HOME}/.xscreensaver"
+alias xsc-diff="diff \${HOME}/config/common/.xscreensaver \${HOME}/.xscreensaver"
 #
 # slideshows and webcams
 #
@@ -3415,21 +3415,6 @@ alias gitcoh="
     git clone \${GIT_REPOSITORY_CONFIG_PRIVATE} ${config}-private"
 #        gitcihu                 commit (check in) home git repository (default update)
 alias gitcihu="
-    #if [[ -L \${HOME}/.cron -a -f ${config}/custom/\$(uname -n)/.cron ]] ; then
-    #    crontab -l > ${config}/custom/\$(uname -n)/.cron
-    #fi
-    if [[ -d ${config}-private ]] && [[ -f \${HOME}/.addressbook ]] && [[ ! -L \${HOME}/.addressbook ]] ; then
-        pushd \${HOME}
-        cp .addressbook config-private/common/
-        ln -sf config-private/common/.addressbook
-        popd
-    fi
-    if [[ -d ${config}-private ]] && [[ -f \${HOME}/.xscreensaver ]] && [[ ! -L \${HOME}/.xscreensaver ]] ; then
-        pushd \${HOME}
-        cp .xscreensaver config-private/common/
-        ln -sf config-private/common/.xscreensaver
-        popd
-    fi
     (cd ${config} && git commit -a -m 'Update')
     ([[ -d ${config}-private ]] && cd ${config}-private && git commit -a -m 'Update')"
 #        gituoh                  pull (update) home git repository (from origin)

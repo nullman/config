@@ -1510,8 +1510,18 @@ git-sync-config() {
     # output datetime
     date '+%Y-%m-%d %H:%M:%S'
 
-    # sync config repositories
-    _gitsync "config" "config-private"
+    if [[ -d "$(configdir)" ]] ; then
+        # only update xscreensaver preferences on tank or dozer
+        if [[ -f "${HOME}/.xscreensaver" ]] && [[ ! -L "${HOME}/.xscreensaver" ]] && \
+               [[ "$(uname -n)" == "tank" || "$(uname -n)" == "dozer" ]] ; then
+            echo "Update .xscreensaver..."
+            (
+                cd "${HOME}" && \
+                    cp .xscreensaver $(configdir)/common/ && \
+                    ln -sf $(configdir)/common/.xscreensaver .
+            )
+        fi
+    fi
 
     if [[ -d "$(configdir)-private" ]] ; then
         #if [[ -L .cron ]] && [[ -f config-private/custom/$(uname -n)/.cron ]] ; then
@@ -1523,21 +1533,14 @@ git-sync-config() {
             echo "Update .addressbook..."
             (
                 cd "${HOME}" && \
-                    cp .addressbook config-private/common/ && \
-                    ln -sf config-private/common/.addressbook .
-            )
-        fi
-        # only update xscreensaver preferences on tank
-        if [[ -f "${HOME}/.xscreensaver" ]] && [[ ! -L "${HOME}/.xscreensaver" ]] && \
-               [[ "$(uname -n)" == "tank" ]] ; then
-            echo "Update .xscreensaver..."
-            (
-                cd "${HOME}" && \
-                    cp .xscreensaver config-private/common/ && \
-                    ln -sf config-private/common/.xscreensaver .
+                    cp .addressbook $(configdir)-private/common/ && \
+                    ln -sf $(configdir)-private/common/.addressbook .
             )
         fi
     fi
+
+    # sync config repositories
+    _gitsync "config" "config-private"
 }
 #        git-sync-extra          pull, commit, and push extra home git repositories
 git-sync-extra() {
