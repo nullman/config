@@ -1,0 +1,428 @@
+# XScreenSaver Preferences File
+# Written by xscreensaver-settings 6.08 for user on Sun Nov 24 14:05:32 2024.
+# https://www.jwz.org/xscreensaver/
+
+timeout:	0:30:00
+cycle:		0:10:00
+lock:		True
+lockTimeout:	2:00:00
+passwdTimeout:	0:00:20
+visualID:	default
+installColormap:    True
+verbose:	False
+splash:		False
+splashDuration:	0:00:05
+demoCommand:	xscreensaver-demo
+nice:		10
+fade:		True
+unfade:		False
+fadeSeconds:	0:00:01
+ignoreUninstalledPrograms:False
+dpmsEnabled:	False
+dpmsQuickOff:	False
+dpmsStandby:	2:00:00
+dpmsSuspend:	2:00:00
+dpmsOff:	4:00:00
+grabDesktopImages:  False
+grabVideoFrames:    False
+chooseRandomImages: True
+imageDirectory:	/home/data/media/Pictures Slide Show/Nasa/
+
+mode:		random
+selected:	1
+
+textMode:	program
+textLiteral:	XScreenSaver
+textFile:	/usr/share/doc/xserver-common/copyright
+textProgram:	fortune
+textURL:	http://planet.debian.org/rss20.xml
+dialogTheme:	default
+settingsGeom:	366,165 1920,8
+
+programs:								      \
+		   "ATV4-1080" 	atv4-1080				    \n\
+		     "ATV4-4k" 	atv4-4k					    \n\
+-		 "Qix (solid)" 	qix -root -delay 10471 -segments 100 -solid \n\
+-	   "Qix (transparent)" 	qix -root -count 4 -solid -transparent	    \n\
+-		"Qix (linear)" 	qix -root -count 2 -delay 2000 -segments      \
+				  250 -size 100 -linear -transparent	      \
+				  -solid				    \n\
+- mono: 	   "Qix (xor)" 	qix -root -linear -count 5 -size 200	      \
+				  -spread 30 -segments 75 -solid -xor	    \n\
+-	  "Attraction (balls)" 	attraction -root -mode balls		    \n\
+-	  "Attraction (lines)" 	attraction -root -mode lines -points 3	      \
+				  -segments 200				    \n\
+-	   "Attraction (poly)" 	attraction -root -mode polygons		    \n\
+-	"Attraction (splines)" 	attraction -root -mode splines -segments      \
+				  300					    \n\
+-	"Attraction (orbital)" 	attraction -root -mode lines -radius 300      \
+				  -orbit -vmult 0.5			    \n\
+				pyro --root				    \n\
+				rocks --root				    \n\
+-				helix --root				    \n\
+-				pedal --root				    \n\
+				rorschach -root -offset 7		    \n\
+-				hopalong --root				    \n\
+-				greynetic --root			    \n\
+				imsmap --root				    \n\
+				slidescreen -root -delay 25280 -grid-size     \
+				  128					    \n\
+				decayscreen --root			    \n\
+				jigsaw --root				    \n\
+-				blitspin -root -grab			    \n\
+-				slip --root				    \n\
+-				distort --root				    \n\
+				spotlight --root			    \n\
+-	      "Ripples (oily)" 	ripples -root -oily -light 2		    \n\
+	      "Ripples (stir)" 	ripples -root -oily -light 2 -stir	    \n\
+	   "Ripples (desktop)" 	ripples -root -water -light 6		    \n\
+-				hypercube --root			    \n\
+-				hyperball --root			    \n\
+-				halo --root				    \n\
+				maze -root -grid-size 20 -ignorant	    \n\
+-				noseguy --root				    \n\
+				flame --root				    \n\
+				lmorph --root				    \n\
+-				deco --root				    \n\
+-				moire --root				    \n\
+-				moire2 --root				    \n\
+				lightning --root			    \n\
+				strange --root				    \n\
+-				spiral --root				    \n\
+-				laser --root				    \n\
+-				grav --root				    \n\
+-	       "Grav (trails)" 	grav -root -trail -decay		    \n\
+				drift --root				    \n\
+				ifs --root				    \n\
+				julia --root				    \n\
+-				penrose --root				    \n\
+-				sierpinski --root			    \n\
+-				braid --root				    \n\
+-				galaxy --root				    \n\
+-				bouboule --root				    \n\
+				swirl --root				    \n\
+-				flag -root -text "`/usr/games/fortune`"	    \n\
+-				sphere --root				    \n\
+-				forest --root				    \n\
+-				lisa --root				    \n\
+-				lissie --root				    \n\
+-				goop -root -max-velocity 0.5 -elasticity      \
+				  0.9					    \n\
+-				starfish --root				    \n\
+-	     "Starfish (blob)" 	starfish -root -blob			    \n\
+-				munch --root				    \n\
+-				fadeplot --root				    \n\
+				coral -root -delay 0			    \n\
+-				mountain --root				    \n\
+-				triangle -root -delay 1			    \n\
+				worm --root				    \n\
+-				rotor --root				    \n\
+				ant --root				    \n\
+-				demon --root				    \n\
+-				loop --root				    \n\
+-				vines --root				    \n\
+-				kaleidescope --root			    \n\
+				xjack --root				    \n\
+				xlyap -root -randomize			    \n\
+-				cynosure --root				    \n\
+-				flow --root				    \n\
+-				epicycle --root				    \n\
+				interference --root			    \n\
+-				truchet -root -randomize		    \n\
+				bsod --root				    \n\
+-				crystal --root				    \n\
+				discrete --root				    \n\
+				kumppa --root				    \n\
+-				rd-bomb --root				    \n\
+-	    "RD-Bomb (mobile)" 	rd-bomb -root -speed 1 -size 0.1	    \n\
+-				sonar --root				    \n\
+-				t3d --root				    \n\
+				penetrate --root			    \n\
+-				deluxe --root				    \n\
+-				compass --root				    \n\
+-				squiral --root				    \n\
+				xflame --root				    \n\
+				wander --root				    \n\
+-	      "Wander (spots)" 	wander -root -reset 100000 -length 10000      \
+				  -circles -size 10			    \n\
+-				critical --root				    \n\
+				phosphor -root -delay 61554 -scale 4	      \
+				  -ticks 11 -program fortune		    \n\
+				xmatrix -root -delay 16526 -density 42	    \n\
+-				petri -root -size 2 -count 20		    \n\
+-		     "Petri 2" 	petri -root -minlifespeed 0.02		      \
+				  -maxlifespeed 0.03 -minlifespan 1	      \
+				  -maxlifespan 1 -instantdeathchan 0	      \
+				  -minorchan 0 -anychan 0.3		    \n\
+				shadebobs --root			    \n\
+-				ccurve --root				    \n\
+-				blaster --root				    \n\
+				bumps --root				    \n\
+				xteevee --root				    \n\
+-				xspirograph --root			    \n\
+-				nerverot --root				    \n\
+-	    "NerveRot (dense)" 	nerverot -root -count 1000		    \n\
+-	    "NerveRot (thick)" 	nerverot -root -count 100 -line-width 4	      \
+				  -max-nerve-radius 0.8 -nervousness 0.5      \
+				  -db					    \n\
+				xrayswarm --root			    \n\
+	      "Zoom (Fatbits)" 	zoom -root -pixspacex 0 -pixspacey 0	    \n\
+	       "Zoom (Lenses)" 	zoom -root -lenses -pixspacex 0		      \
+				  -pixspacey 0				    \n\
+-				rotzoomer --root			    \n\
+-	  "RotZoomer (mobile)" 	rotzoomer -root -move			    \n\
+	   "RotZoomer (sweep)" 	rotzoomer -root -sweep			    \n\
+				whirlwindwarp --root			    \n\
+-				whirlygig --root			    \n\
+-				speedmine --root			    \n\
+-		   "SpeedWorm" 	speedmine -root -worm			    \n\
+-				vermiculate --root			    \n\
+  color: 			bubbles --root				    \n\
+  Best: 			webcollage --root			    \n\
+  Default-N:  "WebCollage (whacked)"					      \
+				  webcollage -root -filter "vidwhacker	      \
+				  -stdin -stdout -directory /tmp"	    \n\
+  default-n: 			vidwhacker --root			    \n\
+  GL: 				gears --root				    \n\
+  GL: 	   "Gears (planetary)" 	gears -root -planetary			    \n\
+- GL: 				superquadrics --root			    \n\
+- GL: 				morph3d --root				    \n\
+  GL: 				cage --root				    \n\
+- GL: 				moebius --root				    \n\
+- GL: 				stairs --root				    \n\
+- GL: 				pipes --root				    \n\
+- GL: 				sproingies --root			    \n\
+- GL: 				rubik --root				    \n\
+  GL: 				atlantis --root				    \n\
+- GL: 				lament --root				    \n\
+- GL: 				bubble3d --root				    \n\
+  GL: 				glplanet -root -delay 20000		    \n\
+- GL: 				pulsar --root				    \n\
+- GL: 	   "Pulsar (textures)" 	pulsar -root -texture -mipmap		      \
+				  -texture_quality -light -fog		    \n\
+- GL: 				extrusion --root			    \n\
+- GL: 				sierpinski3d --root			    \n\
+- GL: 				gflux --root				    \n\
+- GL: 				stonerview --root			    \n\
+  GL: 				starwars --root				    \n\
+- GL: 				gltext -root -text "`/usr/games/fortune`"   \n\
+- GL: 	      "GLText (clock)" 	gltext -text "%A%n%d %b %Y%n%r" --root	    \n\
+- GL: 				molecule --root				    \n\
+- GL: 	    "Molecule (lumpy)" 	molecule -root -no-bonds -no-labels	    \n\
+- GL: 				dangerball --root			    \n\
+- GL: 				circuit --root				    \n\
+-				xdaliclock -root -builtin3 -cycle	    \n\
+-				xearth -nofork -nostars -ncolors 50	      \
+				  -night 3 -wait 0 -timewarp 400.0 -pos	      \
+				  sunrel/38/-30				    \n\
+				xplanetbg -xscreensaver -projection	      \
+				  orthographic -wait 1 -timewarp 400	    \n\
+-				ssystem -fullscreen :32			    \n\
+-				xmountains -b -M -Z 0 -r 1		    \n\
+-	    "XMountains (top)" 	xmountains -b -M -Z 0 -r 1 -m		    \n\
+-				xaos -fullscreen -autopilot -nogui -delay     \
+				  10000 -maxframerate 30		    \n\
+				xfishtank -f 15 -b 32 -r .15 -d -s	    \n\
+-				xsnow					    \n\
+-				goban --root				    \n\
+-				electricsheep --root 1 --nick nullman	      \
+				  --nrepeats 1				    \n\
+-				cosmos --root				    \n\
+- GL: 				sphereEversion --root			    \n\
+-				twang -root -delay 5000			    \n\
+-				apollonian --root			    \n\
+				euler2d --root				    \n\
+	     "Euler2d (dense)" 	euler2d -root -count 4000 -eulertail 400      \
+				  -ncolors 230				    \n\
+-				juggle --root				    \n\
+-				polyominoes --root			    \n\
+				thornbird --root			    \n\
+-				fluidballs --root			    \n\
+				anemone --root				    \n\
+- GL: 				menger --root				    \n\
+- GL: 		"GFlux (grab)" 	gflux -root -mode grab			    \n\
+- GL: 				engine --root				    \n\
+- GL: 				flipscreen3d --root			    \n\
+  GL: 				glsnake --root				    \n\
+- GL: 				boxed --root				    \n\
+- GL: 				glforestfire -root -delay 10609 -count	      \
+				  3339 -trees 13 -fog			    \n\
+- GL: 				sballs --root				    \n\
+- GL: 				cubenetic --root			    \n\
+- GL: 				spheremonics --root			    \n\
+- GL: 				lavalite -root -count 5 -resolution 37	      \
+				  -style classic			    \n\
+- GL: 				queens --root				    \n\
+- GL: 				endgame --root				    \n\
+				xanalogtv --root			    \n\
+-				halftone --root				    \n\
+				metaballs --root			    \n\
+				eruption --root				    \n\
+-				popsquares --root			    \n\
+-				barcode --root				    \n\
+-				piecewise --root			    \n\
+				cloudlife --root			    \n\
+				fontglide -root -page			    \n\
+	"FontGlide (scroller)" 	fontglide -root -scroll			    \n\
+				apple2 --root				    \n\
+				pong --root				    \n\
+- GL: 				flurry -root -preset random		    \n\
+- GL: 				glblur --root				    \n\
+- GL: 				atunnel --root				    \n\
+  GL: 				flyingtoasters --root			    \n\
+  GL: 				bouncingcow --root			    \n\
+- GL: 				jigglypuff -root -random		    \n\
+- GL: 				klein -root -random			    \n\
+- GL: 	"HyperTorus (striped)" 	hypertorus --root			    \n\
+- GL: 	  "HyperTorus (solid)" 	hypertorus -root -solid -transp		    \n\
+  GL: 				glmatrix -root -speed 4			    \n\
+- GL: 				cubestorm --root			    \n\
+  GL: 				glknots --root				    \n\
+- GL: 				blocktube --root			    \n\
+- GL: 				flipflop --root				    \n\
+- GL: 				antspotlight --root			    \n\
+  GL: 				glslideshow --root			    \n\
+- GL: 				polytopes --root			    \n\
+- GL: 				gleidescope --root			    \n\
+- GL: 				mirrorblob --root			    \n\
+- GL: "MirrorBlob (color only)" mirrorblob -root -colour -no-texture	    \n\
+- GL: 				blinkbox --root				    \n\
+  GL: 				fireflies --root			    \n\
+-				mismunch --root				    \n\
+				wormhole --root				    \n\
+				pacman --root				    \n\
+- GL: 	 "GLForestFire (rain)" 	glforestfire -root -rain		    \n\
+- GL: 				noof --root				    \n\
+-				fuzzyflakes --root			    \n\
+  GL: 				polyhedra --root			    \n\
+- GL: 				antinspect --root			    \n\
+  GL: 				providence --root			    \n\
+- default-n: "SlideShow (chbg)" chbg -xscreensaver -randomize -interval	      \
+				  0.30 -R				      \
+				  /home/data/media/pictures_slide_show/Nasa/ \n\
+-				anemotaxis --root			    \n\
+-				memscroller --root			    \n\
+				substrate --root			    \n\
+	 "Substrate (circles)" 	substrate -root -circle-percent 33	    \n\
+				intermomentary --root			    \n\
+				interaggregate --root			    \n\
+-				fireworkx --root			    \n\
+				fiberlamp --root			    \n\
+-				boxfit --root				    \n\
+-				celtic --root				    \n\
+- GL: 	"Pinion (large gears)" 	pinion --root				    \n\
+- GL: 	"Pinion (small gears)" 	pinion -root -size 0.2 -scroll 0.3	    \n\
+  GL: 				boing -root -lighting -smooth		    \n\
+- GL: 				carousel --root				    \n\
+- GL: 				fliptext --root				    \n\
+- GL: 				antmaze --root				    \n\
+  GL: 				tangram --root				    \n\
+- GL: 				crackberg -root -flat -lit -crack -color      \
+				  random				    \n\
+  GL: 				glhanoi --root				    \n\
+  GL: 				cube21 -root -colormode six		    \n\
+- GL: 				timetunnel --root			    \n\
+  GL: 				juggler3d --root			    \n\
+- GL: 				cyclone -r				    \n\
+- GL: 				euphoria --root				    \n\
+- GL: 				fieldlines --root			    \n\
+- GL: 				flocks -r -o 5				    \n\
+- GL: 				flux -r -i 11 -P 1			    \n\
+- GL: 				helios --root				    \n\
+- GL: 				hyperspace --root			    \n\
+- GL: 				lattice --root				    \n\
+- GL: 				plasma --root				    \n\
+- GL: 				skyrocket --root			    \n\
+- GL: 				solarwinds -r -R 1			    \n\
+- GL: 				colorfire -r				    \n\
+- GL: 		"Hufo's Smoke" 	hufo_smoke --root			    \n\
+- GL: 	       "Hufo's Tunnel" 	hufo_tunnel --root			    \n\
+- GL: 				sundancer2 --root			    \n\
+- GL: 			"BioF" 	biof -r					    \n\
+- GL: 		 "BusySpheres" 	busyspheres --root			    \n\
+  GL: 		 "SpirographX" 	spirographx -r				    \n\
+- GL: 		  "MatrixView" 	matrixview --root			    \n\
+				attraction --root			    \n\
+				qix --root				    \n\
+				ripples --root				    \n\
+- GL: 				dnalogo --root				    \n\
+				zoom --root				    \n\
+  GL: 				hypertorus --root			    \n\
+  GL: 				surfaces --root				    \n\
+				abstractile --root			    \n\
+  GL: 				pinion --root				    \n\
+  GL: 				glschool --root				    \n\
+  GL: 				topblock --root				    \n\
+  GL: 				cubicgrid --root			    \n\
+				cwaves --root				    \n\
+  GL: 				glcells --root				    \n\
+  GL: 				lockward --root				    \n\
+				m6502 --root				    \n\
+  GL: 				moebiusgears --root			    \n\
+  GL: 				voronoi --root				    \n\
+  GL: 				hypnowheel --root			    \n\
+-				lcdscrub --root				    \n\
+  GL: 				photopile --root			    \n\
+  GL: 				skytentacles --root			    \n\
+  GL: 				rubikblocks --root			    \n\
+- GL: 				companioncube --root			    \n\
+  GL: 				hilbert --root				    \n\
+  GL: 				tronbit --root				    \n\
+  GL: 				geodesic --root				    \n\
+				hexadrop --root				    \n\
+  GL: 				kaleidocycle --root			    \n\
+  GL: 				quasicrystal --root			    \n\
+  GL: 				unknownpleasures --root			    \n\
+				binaryring --root			    \n\
+  GL: 				cityflow --root				    \n\
+  GL: 				geodesicgears --root			    \n\
+- GL: 				projectiveplane --root			    \n\
+  GL: 				romanboy --root				    \n\
+				tessellimage --root			    \n\
+  GL: 				winduprobot --root			    \n\
+  GL: 				splitflap --root			    \n\
+  GL: 				cubestack --root			    \n\
+  GL: 				cubetwist --root			    \n\
+  GL: 				discoball --root			    \n\
+  GL: 				dymaxionmap --root			    \n\
+  GL: 				energystream --root			    \n\
+  GL: 				hexstrut --root				    \n\
+  GL: 				hydrostat --root			    \n\
+  GL: 				raverhoop --root			    \n\
+  GL: 				splodesic --root			    \n\
+  GL: 				unicrud --root				    \n\
+  GL: 				esper --root				    \n\
+- GL: 				vigilance --root			    \n\
+  GL: 				crumbler --root				    \n\
+- GL: 				maze3d --root				    \n\
+- GL: 				peepers --root				    \n\
+  GL: 				razzledazzle --root			    \n\
+-				filmleader --root			    \n\
+-				glitchpeg --root			    \n\
+				vfeedback --root			    \n\
+- GL: 				handsy --root				    \n\
+  GL: 				deepstars --root			    \n\
+  GL: 				gravitywell --root			    \n\
+				scooter --root				    \n\
+  GL: 				etruscanvenus --root			    \n\
+  GL: 				gibson --root				    \n\
+  GL: 				beats --root				    \n\
+- GL: 				covid19 --root				    \n\
+- GL: 				headroom --root				    \n\
+  GL: 				sphereeversion --root			    \n\
+				binaryhorizon --root			    \n\
+				marbling --root				    \n\
+  GL: 				mapscroller --root			    \n\
+- GL: 				squirtorus --root			    \n\
+- GL: 				chompytower --root			    \n\
+  GL: 				nakagin --root				    \n\
+  GL: 				hextrail --root				    \n\
+  GL: 				cubocteversion --root			    \n\
+				droste --root				    \n\
+  GL: 				papercube --root			    \n\
+- GL: 				skulloop --root				    \n\
+
+
+pointerHysteresis:  10
+authWarningSlack:   20
+
