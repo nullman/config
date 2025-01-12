@@ -1369,6 +1369,8 @@
     #shattered-pixel-dungeon                 # Traditional roguelike game with pixel-art graphics and simple interface
     #steam                                   # Digital distribution platform
     #steam-tui                               # Rust TUI client for steamcmd
+
+
   ];
 
   # copy nixos configuration on rebuild
