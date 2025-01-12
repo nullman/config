@@ -44,16 +44,16 @@
   ## open firewall ports
   #networking.firewall = {
   #  enable = true;
-  #  allowedTCPPorts = [ 515 631 9100 24800 ];
-  #  allowedUDPPorts = [ 515 631 9100 24800 ];
-  #  allowedUDPPortRanges = [
-  #    { from = 1714; to = 1764; }
-  #    { from = 1714; to = 1764; }
-  #  ];
+  #  allowedTCPPorts = [ 515 631 9100 ];
+  #  #allowedUDPPorts = [ 515 631 9100 ];
   #  allowedTCPPortRanges = [
   #    { from = 1714; to = 1764; }
   #    { from = 1714; to = 1764; }
   #  ];
+  #  #allowedUDPPortRanges = [
+  #  #  { from = 1714; to = 1764; }
+  #  #  { from = 1714; to = 1764; }
+  #  #];
   #  checkReversePath = "loose";
   #};
 
