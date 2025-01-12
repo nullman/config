@@ -28,11 +28,11 @@ _command xscreensaver && xscreensaver -no-splash &
 #_command dropbox && dropbox start &
 #_command barriers && barriers --config ${HOME}/.barrier.conf &
 #_command barrierc && barrierc SERVER &
-#_command barrier && barrier &
+_command barrier && barrier &
 #_command emacs && emacs --daemon &
 
 # delay so that networking has time to connect
-_delay 10
+#_delay 10
 
 # run foreground applications
 #_command alacritty && alacritty -e ${HOME}/bin/run-screen &
