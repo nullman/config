@@ -352,7 +352,7 @@
     load-module module-bluetooth-policy
     load-module module-bluetooth-discover
   '';
-  hardware.pulseaudio.extraModules = [ pkgs.pulseaudio-modules-bt ];
+  #hardware.pulseaudio.extraModules = [ pkgs.pulseaudio-modules-bt ];
   hardware.bluetooth.hsphfpd.enable = true;
 
   ## pipewire
@@ -1132,10 +1132,6 @@
     wineWowPackages.stable                  # Open Source implementation of the Windows API on top of X, OpenGL, and Unix
     winetricks                              # Script to install DLLs needed to work around problems in Wine
 
-    ## containers
-    #distrobox                               # Wrapper around podman or docker to create and start containers
-    #podman                                  # Program for managing pods, containers and container images
-
     ## development
     #acme                                    # Multi-platform cross assembler for 6502/6510/65816 CPUs
     #adb-sync                                # Tool to synchronise files between a PC and an Android devices using ADB (Android Debug Bridge)
@@ -1206,6 +1202,22 @@
     #x16-rom                                 # ROM file for CommanderX16 8-bit computer
     #yq                                      # Command-line YAML/XML/TOML processor - jq wrapper for YAML, XML, TOML documents
     #zlib                                    # Lossless data-compression library
+
+    ## containers
+    #distrobox                               # Wrapper around podman or docker to create and start containers
+    #podman                                  # Program for managing pods, containers and container images
+
+    ## docker
+    #docker                                  # Open source project to pack, ship and run any application as a lightweight co...
+    #docker-compose                          # Docker CLI plugin to define and run multi-container applications with Docker
+
+    ## ai
+    ##alpaca                                  # Ollama client made with GTK4 and Adwaita
+    #imaginer                                # Imaginer with AI
+    #ollama                                  # Get up and running with large language models locally
+    #open-webui                              # Comprehensive suite for LLMs with a user-friendly WebUI
+    #tabby                                   # Self-hosted AI coding assistant
+    #upscayl                                 # Free and Open Source AI Image Upscaler
 
     ## zsh
     #antibody                                # Fastest shell plugin manager
