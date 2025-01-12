@@ -89,6 +89,7 @@
     ];
     checkReversePath = "loose";
   };
+  #networking.firewall.allowedTCPPorts = [ 30000 ]; # Foundry VTT
 
   # openssh server
   services.openssh.enable = true;
@@ -883,6 +884,45 @@
     ydotool                                 # Generic Linux command-line automation tool
     zip                                     # Compressor/archiver for creating and modifying zipfiles
 
+    # x11
+    x2x                                     # Allows the keyboard, mouse on one X display to be used to control another X display
+    xclip                                   # Tool to access the X clipboard from a console application
+    xdo                                     # Small X utility to perform elementary actions on windows
+    xorg.libX11                             #
+    xorg.libX11.dev                         #
+    xorg.libXft                             #
+    xorg.libXinerama                        #
+    xorg.libxcb                             #
+    xorg.xbacklight                         #
+    xorg.xev                                #
+    xorg.xf86inputsynaptics                 #
+    xorg.xinit                              #
+    xorg.xinput                             #
+    xorg.xkill                              #
+    xorg.xprop                              #
+    xorg.xwininfo                           #
+    xsel                                    # Command-line program for getting and setting the contents of the X selection
+    xvkbd                                   # Virtual keyboard for X window system
+
+    ## wayland
+    #clipman                                 # Simple clipboard manager for Wayland
+    #hyprland                                # Dynamic tiling Wayland compositor that doesn't sacrifice on its looks
+    #hyprpaper                               # Blazing fast wayland wallpaper utility
+    #hyprpicker                              # Wlroots-compatible Wayland color picker that does not suck
+    #qt5.qtwayland                           # Cross-platform application framework for C++
+    #qt6.qtwayland                           # Cross-platform application framework for C++
+    #rofi-wayland                            # Window switcher, run dialog and dmenu replacement for Wayland
+    #swww                                    # Efficient animated wallpaper daemon for wayland, controlled at runtime
+    #waybar                                  # Highly customizable Wayland bar for Sway and Wlroots based compositors
+    #wayland-protocols                       # Wayland protocol extensions
+    #wayland-utils                           # Wayland utilities (wayland-info)
+    #wl-clipboard                            # Command-line copy/paste utilities for Wayland
+    #wl-color-picker                         # Wayland color picker that also works on wlroots
+    #wlroots                                 # Modular Wayland compositor library
+    #wofi                                    # Launcher/menu program for wlroots based wayland compositors such as sway
+    #xdg-desktop-portal-hyprland             # xdg-desktop-portal backend for Hyprland
+    #xwayland                                # X server for interfacing X11 apps with the Wayland protocol
+
     # window manager
     adapta-gtk-theme                        # Adaptive GTK theme based on Material Design Guidelines
     adw-gtk3                                # Theme from libadwaita ported to GTK-3
@@ -1011,45 +1051,6 @@
     #xfce.xfce4-whiskermenu-plugin           # Alternate application launcher for Xfce
     #xfce.xfce4-windowck-plugin              # Xfce panel plugin for displaying window title and buttons
     #xfce.xfce4-xkb-plugin                   # Allows you to setup and use multiple keyboard layouts
-
-    # x11
-    x2x                                     # Allows the keyboard, mouse on one X display to be used to control another X display
-    xclip                                   # Tool to access the X clipboard from a console application
-    xdo                                     # Small X utility to perform elementary actions on windows
-    xorg.libX11                             #
-    xorg.libX11.dev                         #
-    xorg.libXft                             #
-    xorg.libXinerama                        #
-    xorg.libxcb                             #
-    xorg.xbacklight                         #
-    xorg.xev                                #
-    xorg.xf86inputsynaptics                 #
-    xorg.xinit                              #
-    xorg.xinput                             #
-    xorg.xkill                              #
-    xorg.xprop                              #
-    xorg.xwininfo                           #
-    xsel                                    # Command-line program for getting and setting the contents of the X selection
-    xvkbd                                   # Virtual keyboard for X window system
-
-    ## wayland
-    #clipman                                 # Simple clipboard manager for Wayland
-    #hyprland                                # Dynamic tiling Wayland compositor that doesn't sacrifice on its looks
-    #hyprpaper                               # Blazing fast wayland wallpaper utility
-    #hyprpicker                              # Wlroots-compatible Wayland color picker that does not suck
-    #qt5.qtwayland                           # Cross-platform application framework for C++
-    #qt6.qtwayland                           # Cross-platform application framework for C++
-    #rofi-wayland                            # Window switcher, run dialog and dmenu replacement for Wayland
-    #swww                                    # Efficient animated wallpaper daemon for wayland, controlled at runtime
-    #waybar                                  # Highly customizable Wayland bar for Sway and Wlroots based compositors
-    #wayland-protocols                       # Wayland protocol extensions
-    #wayland-utils                           # Wayland utilities (wayland-info)
-    #wl-clipboard                            # Command-line copy/paste utilities for Wayland
-    #wl-color-picker                         # Wayland color picker that also works on wlroots
-    #wlroots                                 # Modular Wayland compositor library
-    #wofi                                    # Launcher/menu program for wlroots based wayland compositors such as sway
-    #xdg-desktop-portal-hyprland             # xdg-desktop-portal backend for Hyprland
-    #xwayland                                # X server for interfacing X11 apps with the Wayland protocol
 
     # applications
     ardour                                  # Multi-track hard disk recording software
