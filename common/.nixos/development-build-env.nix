@@ -22,18 +22,29 @@ let e = pkgs.buildFHSEnv {
         gmp gmp.dev
         isl
         libffi libffi.dev
+        #libGL
         libmpc
         libxcrypt
-        mpfr mpfr.dev
+        lua
+        mpfr
+        ncurses ncurses.dev
+        readline readline.dev
+        SDL2 SDL2.dev
+        SDL2_mixer SDL2_mixer.dev
         xz xz.dev
         zlib zlib.dev
 
         # xorg
+        xorg.libX11 xorg.libX11.dev
         xorg.libxcb xorg.libxcb.dev
+        xorg.libXext xorg.libXext.dev
         xorg.libXinerama xorg.libXinerama.dev
+        xorg.libXrandr xorg.libXrandr.dev
+        xorg.libXt xorg.libXt.dev
         xorg.xcbutil xorg.xcbutil.dev
         xorg.xcbutilkeysyms xorg.xcbutilkeysyms.dev
         xorg.xcbutilwm xorg.xcbutilwm.dev
+        xorg.xorgproto
 
         # toolchain
         asciidoc
@@ -46,6 +57,7 @@ let e = pkgs.buildFHSEnv {
         stdenv.cc
         stdenv.cc.libc stdenv.cc.libc_dev
         texinfo
+        xorg.imake
 
         # test harnesses
         autogen

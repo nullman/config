@@ -2866,7 +2866,7 @@ alias nixq="nix-env --query"
 #        nixqa                   nix-env --query --available (package search)
 alias nixqa="nix-env --query --available"
 #        nixf                    nix-locate file search
-alias nixf="nix-locate -w"
+alias nixf="nix-locate --whole-name"
 #        nix-store-query         nix-store installed package location query
 alias nix-store-query="nix-store -q -R /run/current-system | grep"
 #        nix-store-cleanup-30d   nix-store delete older than 30 days generations, garbage collect, and optimize
