@@ -1,5 +1,5 @@
 # XScreenSaver Preferences File
-# Written by xscreensaver-settings 6.08 for user on Sun Nov 24 14:05:32 2024.
+# Written by xscreensaver-settings 6.08 for user on Mon Jan 13 19:06:54 2025.
 # https://www.jwz.org/xscreensaver/
 
 timeout:	0:30:00
@@ -37,7 +37,7 @@ textFile:	/usr/share/doc/xserver-common/copyright
 textProgram:	fortune
 textURL:	http://planet.debian.org/rss20.xml
 dialogTheme:	default
-settingsGeom:	366,165 1920,8
+settingsGeom:	686,345 1023,418
 
 programs:								      \
 		   "ATV4-1080" 	atv4-1080				    \n\
@@ -281,7 +281,8 @@ programs:								      \
 - GL: 				blocktube --root			    \n\
 - GL: 				flipflop --root				    \n\
 - GL: 				antspotlight --root			    \n\
-  GL: 				glslideshow --root			    \n\
+  GL: 				glslideshow --root --duration 80 --zoom	      \
+				  80 --pan 20 --fade 10			    \n\
 - GL: 				polytopes --root			    \n\
 - GL: 				gleidescope --root			    \n\
 - GL: 				mirrorblob --root			    \n\
@@ -425,4 +426,3 @@ programs:								      \
 
 pointerHysteresis:  10
 authWarningSlack:   20
-
