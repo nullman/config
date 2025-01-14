@@ -5,17 +5,21 @@
 # Get images from DistroTube's wallpaper collection.
 #
 # Reference: https://gitlab.com/dwt1/wallpapers
+# Reference: https://github.com/w3dg/wallpapers
 #
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
 # Example URL: https://gitlab.com/dwt1/wallpapers/raw/master/0001.jpg
+#domain="https://gitlab.com"
+#baseurl="${domain}/dwt1/wallpapers"
+#imageurl="${baseurl}/raw/master"
 
-domain="https://gitlab.com"
-baseurl="${domain}/dwt1/wallpapers"
-imageurl="${baseurl}/raw/master"
+# Example URL: https://raw.githubusercontent.com/w3dg/wallpapers/refs/heads/main/0001.jpg
+domain="https://raw.githubusercontent.com"
+baseurl="${domain}/w3dg/wallpapers"
+imageurl="${baseurl}/refs/heads/main"
 dir="/home/data/media/Graphic/Backgrounds/DistroTube"
-
 echo "Note: When fetching all new images, the last one tried will error as it won't exist."
 
 if [[ $# -ne 0 ]] ; then
@@ -31,14 +35,19 @@ fi
 
 while true ; do
     padded="0000${num}"
-    file="${padded: -4}.jpg"
+    file="${padded: -4}"
     echo "Fetching wallpaper: ${file}"
     url="${imageurl}/${file}"
-    wget "${url}" -O "${dir}/${file}"
+    wget "${url}.jpg" -O "${dir}/${file}.jpg"
     rc=$?
     if [[ ${rc} != 0 ]] ; then
-        rm "${dir}/${file}"
-        exit 1
+        rm "${dir}/${file}.jpg"
+        wget "${url}.png" -O "${dir}/${file}.png"
+        rc=$?
+        if [[ ${rc} != 0 ]] ; then
+            rm "${dir}/${file}.png"
+            exit 1
+        fi
     fi
     [[ ${loop} == 0 ]] && exit 0
     num=$((num + 1))

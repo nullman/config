@@ -1226,6 +1226,8 @@
     betterbird                              # Betterbird is a fine-tuned version of Mozilla Thunderbird, Thunderbird on steroids, if you will
     bore-cli                                # Rust tool to create TCP tunnels
     brave                                   # Privacy-oriented browser for Desktop and Laptop computers
+    bruno                                   # Open-source IDE For exploring and testing APIs
+    bruno-cli                               # CLI of the open-source IDE For exploring and testing APIs
     chromium                                # Open source web browser from Google
     cointop                                 # Fastest and most interactive terminal based UI application for tracking cryptocurrencies
     dino                                    # Modern Jabber/XMPP Client using GTK/Vala
