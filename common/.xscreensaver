@@ -282,7 +282,7 @@ programs:								      \
 - GL: 				flipflop --root				    \n\
 - GL: 				antspotlight --root			    \n\
   GL: 				glslideshow --root --duration 80 --zoom	      \
-				  80 --pan 20 --fade 10			    \n\
+				  80 --pan 20 --fade 4			    \n\
 - GL: 				polytopes --root			    \n\
 - GL: 				gleidescope --root			    \n\
 - GL: 				mirrorblob --root			    \n\
