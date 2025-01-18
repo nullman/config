@@ -14,12 +14,13 @@ ua="Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)"
 num=$(($(find "${dir}/" -type f | wc -l) / 5 + 1))
 
 while true ; do
-    if [[ num -gt 1 ]] ; then
+    if [[ ${num} -gt 1 ]] ; then
         index="${urlbase}/page/${num}"
     else
         index="${urlbase}/"
     fi
     echo "Downloading index: ${index}"
+    count=0
     curl -s -A "${ua}" "${index}" | \
         sed 's/\(http[^" ]*\)/|\1|/g' | \
         tr '|' '\n' | \
@@ -27,8 +28,10 @@ while true ; do
         while read -r url ; do
             echo "Downloading: ${url}"
             curl -s -A "${ua}" "${url}" -O
+            count=$((count + 1))
+            echo "Count: ${count}"
         done
-    [[ $? -ne 0 ]] && exit 0
+    [[ ${count} -eq 0 ]] && exit 0
     num=$((num + 1))
 done
 

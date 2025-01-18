@@ -1,5 +1,5 @@
 # XScreenSaver Preferences File
-# Written by xscreensaver-settings 6.08 for user on Thu Jan 16 09:36:59 2025.
+# Written by xscreensaver-settings 6.08 for user on Sat Jan 18 09:51:42 2025.
 # https://www.jwz.org/xscreensaver/
 
 timeout:	0:30:00
@@ -26,7 +26,7 @@ dpmsOff:	4:00:00
 grabDesktopImages:  False
 grabVideoFrames:    False
 chooseRandomImages: True
-imageDirectory:	/home/data/media/Pictures Slide Show/Nasa/
+imageDirectory:	/home/data/media/Pictures Slide Show/XScreenSaver/
 
 mode:		random
 selected:	1

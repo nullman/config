@@ -899,6 +899,7 @@
     xorg.xkill                              #
     xorg.xprop                              #
     xorg.xwininfo                           #
+    xprintidle                              # Utility that queries the X server for the user's idle time and prints it to s...
     xsel                                    # Command-line program for getting and setting the contents of the X selection
     xvkbd                                   # Virtual keyboard for X window system
 

@@ -81,6 +81,8 @@ alias a="alias"
 alias ua="unalias"
 #        f                       declare -f (show function definition)
 alias f="declare -f"
+#        shell                   show current shell command
+alias shell="echo \$0"
 #        x                       exit shell
 alias x="exit"
 #        c                       clear shell buffer
@@ -1999,7 +2001,7 @@ alias rsync-media-get-dozer-curated-delete=" \
     if [[ $(uname -n) == 'mouse' ]] ; then
         rsync -rlptx --progress --delete -f'- /Humor/' -f'- /Other/' dozer:/home/data/media/Audio/ ${home}/data/media/Audio/ && \
         rsync -rlptx --progress --delete dozer:/home/data/media/Audio/Music/ ${home}/data/media/Audio/Music/ && \
-        rsync -rlptx --progress --delete \"dozer:/home/data/media/Pictures Slide Show/\" \"${home}/data/media/Pictures Slide Show/\" && \
+        rsync -rlptx --progress --delete --copy-links \"dozer:/home/data/media/Pictures Slide Show/\" \"${home}/data/media/Pictures Slide Show/\" && \
         rsync -rlptx --progress --delete dozer:/home/data/media/Repos/ ${home}/data/media/Repos/ && \
         rsync -rlptx --progress --delete dozer:/home/data/media/Text/ ${home}/data/media/Text/ && \
         rsync -rlptx --progress --delete dozer:/home/data/media/Video/ ${home}/data/media/Video/
@@ -2010,7 +2012,7 @@ alias rsync-media-get-dozer-curated-delete=" \
 alias rsync-media-put-switch-curated-delete=" \
     rsync -rlptx --progress --delete -f'- /Humor/' -f'- /Other/' /home/data/media/Audio/ switch-direct:/home/data/media/Audio/ && \
     rsync -rlptx --progress --delete /home/data/media/Audio/Music/ switch-direct:/home/data/media/Audio/Music/ && \
-    rsync -rlptx --progress --delete \"/home/data/media/Pictures Slide Show/\" \"switch-direct:/home/data/media/Pictures Slide Show/\" && \
+    rsync -rlptx --progress --delete --copy-links \"/home/data/media/Pictures Slide Show/\" \"switch-direct:/home/data/media/Pictures Slide Show/\" && \
     rsync -rlptx --progress --delete /home/data/media/Repos/ switch-direct:/home/data/media/Repos/ && \
     rsync -rlptx --progress --delete /home/data/media/Text/ switch-direct:/home/data/media/Text/ && \
     rsync -rlptx --progress --delete /home/data/media/Video/ switch-direct:/home/data/media/Video/"
@@ -2607,6 +2609,8 @@ alias wine-fallout-setup="
     sed -i 's/^master_dat=.*$/master_dat=C:\\\\GOG Games\\\\Fallout\\\\MASTER.DAT\r/' \"\${file}\"
     sed -i 's/^master_patches=.*$/master_patches=C:\\\\GOG Games\\\\Fallout\\\\DATA\r/' \"\${file}\"
     "
+#        wine-lcars              wine lcars screen saver
+alias wine-lcars="WINEPREFIX=\${HOME}/.wine-lcars wine \"C:\/windows\system32\System47.scr\" /s &"
 #        wine-sdi                wine snappy driver installer
 #!alias wine-sdi="(cd \"${home}/data/Snappy Driver Installer\" ; WINEPREFIX=\${HOME}/.wine-sdi wine \"SDI_x64_R2009.exe\" &)"
 alias wine-sdi="(cd \"/mnt/synology/media/Snappy Driver Installer\" ; WINEPREFIX=\${HOME}/.wine-sdi wine \"SDI_x64_R2009.exe\" &)"

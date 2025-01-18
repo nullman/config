@@ -19,8 +19,7 @@
 #   WINEARCH=win32 WINEPREFIX=~/.wine-lcars wine system47\ v2.2_setup.exe
 #
 # Test install:
-#   WINEARCH=win32 WINEPREFIX=~/.wine-lcars wine \
-#       ~/.wine-lcars/drive_c/windows/system32/System47.scr /s
+#   WINEARCH=win32 WINEPREFIX=~/.wine-lcars wine "C:\windows\system32\System47.scr" /s
 #===============================================================================
 
 export DISPLAY=:0
@@ -32,7 +31,7 @@ IDLE_TIME=$((TIME_OUT * 60 * 1000))
 
 # sequence to execute when timeout triggers
 trigger_cmd() {
-    WINEPREFIX='/home/user/.wine-lcars' wine '/home/user/.wine-lcars/drive_c/windows/system32/System47.scr' /s
+    WINEPREFIX='/home/user/.wine-lcars' wine 'C:\windows\system32\System47.scr' /s
 }
 
 sleep_time=${IDLE_TIME}
