@@ -265,7 +265,7 @@ super + alt + u
 
 # start screen saver
 super + alt + x
-    xscreensaver-command -activate
+    sleep 2 ; xscreensaver-command -activate
 
 # start screen saver in lock mode
 super + shift + x
