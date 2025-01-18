@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+#===============================================================================
+# get-windows-images
+#
+# Download Windows Spotlight images.
+#
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
+#===============================================================================
+
+urlbase="https://windows10spotlight.com"
+dir="/home/data/media/Graphic/Backgrounds/Windows"
+ua="Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)"
+
+num=$(($(find "${dir}/" -type f | wc -l) / 5 + 1))
+
+while true ; do
+    if [[ num -gt 1 ]] ; then
+        index="${urlbase}/page/${num}"
+    else
+        index="${urlbase}/"
+    fi
+    echo "Downloading index: ${index}"
+    curl -s -A "${ua}" "${index}" | \
+        sed 's/\(http[^" ]*\)/|\1|/g' | \
+        tr '|' '\n' | \
+        sed -n '/[0-9a-f]\{32\}\.jpg/p' | \
+        while read -r url ; do
+            echo "Downloading: ${url}"
+            curl -s -A "${ua}" "${url}" -O
+        done
+    [[ $? -ne 0 ]] && exit 0
+    num=$((num + 1))
+done
+
+#===============================================================================
+# End of File
+#===============================================================================

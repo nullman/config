@@ -13,7 +13,7 @@
 #
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #
-# Copyright (C) 2006 Kyle W T Sherman
+# Copyright © 1996-2025 Kyle W T Sherman
 #
 # This program is free software; you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -67,7 +67,7 @@ EOF
             # usage
             echo "License:"
             cat <<EOF
-  Copyright (C) 2006 Kyle W T Sherman
+  Copyright © 1996-2025 Kyle W T Sherman
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -97,7 +97,7 @@ EOF
                 echo "Cannot create '${menufile}' because that file already exists"
                 exit 1
             fi
-            cat > ${menufile} <<EOF
+            cat <<EOF > "${menufile}"
 # menu file
 
 # Sections start with a name that ends with a colon and end with an empty
@@ -185,7 +185,7 @@ ssaver:
   xscreensaver|xscreensaver-command -lock
   xscreensaver setup|xscreensaver-demo
   xscreensaver on|rm -f ${HOME}/.noscreensaver ; source ${HOME}/bin/ssaverauto
-  xscreensaver off|touch ${HOME}/.noscreensaver ; fuser -k -SIGTERM /home/kyle/bin/ssaver ; fuser -k -SIGTERM /usr/bin/xscreensaver ; fuser -k -SIGTERM /usr/bin/xlock ; fuser -k -SIGTERM /usr/bin/electricsheep ; fuser -k -SIGKILL /home/kyle/bin/ssaver ; fuser -k -SIGKILL /usr/bin/xscreensaver ; fuser -k -SIGKILL /usr/bin/xlock ; fuser -k -SIGKILL /usr/bin/electricsheep
+  xscreensaver off|touch ${HOME}/.noscreensaver ; fuser -k -SIGTERM /home/user/bin/ssaver ; fuser -k -SIGTERM /usr/bin/xscreensaver ; fuser -k -SIGTERM /usr/bin/xlock ; fuser -k -SIGTERM /usr/bin/electricsheep ; fuser -k -SIGKILL /home/user/bin/ssaver ; fuser -k -SIGKILL /usr/bin/xscreensaver ; fuser -k -SIGKILL /usr/bin/xlock ; fuser -k -SIGKILL /usr/bin/electricsheep
   xlock|xlock -mode flame
 EOF
             exit 0

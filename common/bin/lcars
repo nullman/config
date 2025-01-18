@@ -1,7 +1,27 @@
 #!/usr/bin/env bash
+#===============================================================================
+# lcars
+#
+# Run LCARS screen saver.
 #
 # Author: Chris Titus
 # URL: https://christitus.com/lcars-screensaver/#script-creation
+#
+# Dependencies: xscreensaver xprintidle
+#
+# Download LCARS:
+#   https://www.mewho.com/system47/
+#
+# Configure wine:
+#   WINEARCH=win32 WINEPREFIX=~/.wine-lcars winecfg /v winxp
+#
+# Install LCARS:
+#   WINEARCH=win32 WINEPREFIX=~/.wine-lcars wine system47\ v2.2_setup.exe
+#
+# Test install:
+#   WINEARCH=win32 WINEPREFIX=~/.wine-lcars wine \
+#       ~/.wine-lcars/drive_c/windows/system32/System47.scr /s
+#===============================================================================
 
 export DISPLAY=:0
 
@@ -12,7 +32,7 @@ IDLE_TIME=$((TIME_OUT * 60 * 1000))
 
 # sequence to execute when timeout triggers
 trigger_cmd() {
-    WINEPREFIX=/home/kyle/.wine-lcars wine '/home/kyle/.wine-lcars/drive_c/windows/system32/System47.scr' /s
+    WINEPREFIX='/home/user/.wine-lcars' wine '/home/user/.wine-lcars/drive_c/windows/system32/System47.scr' /s
 }
 
 sleep_time=${IDLE_TIME}
@@ -28,7 +48,11 @@ while sleep $(((sleep_time + 999) / 1000)) ; do
         fi
     else
         triggered=false
-        # give 100 ms buffer to avoid franticloops shortly before triggers
+        # give 100 ms buffer to avoid frantic loops shortly before triggers
         sleep_time=$((IDLE_TIME - idle + 100))
     fi
 done
+
+#===============================================================================
+# End of File
+#===============================================================================
