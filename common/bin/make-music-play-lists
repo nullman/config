@@ -12,7 +12,7 @@
 #genres=("Classic%Rock" "Classical%-%Instrumental" "Country" "Hard%Rock" "Pop%-%Dance" "R&B" "Rap" "Reggae" "Rock%-%Alternative" "Techno%-%Electronic")
 genres=("Classic%Rock" "Country" "Hard%Rock" "Pop%-%Dance" "R&B" "Rap" "Reggae" "Rock%-%Alternative")
 
-tmpfile="__temp__"
+tmpfile="__tmpfile__"
 
 musicdir="/home/data/media/Audio/MPD"    # music directory
 pldir="/home/data/media/Audio/Playlists" # play list directory
@@ -29,90 +29,58 @@ fi
 pushd "${musicdir}" >/dev/null 2>&1
 
 #===============================================================================
-# albums
+# albums and singles (in random order)
 #===============================================================================
 
-[[ -f "${pldir}/${tmpfile}" ]] && rm -f "${pldir}/${tmpfile}"
-for d in Albums ; do
-    for gn in ${genres[@]} ; do
-        gd=$(echo "${gn}" | sed "s/\%/ /g")
-        find "${d}/${gd}/" -type f >> "${pldir}/${tmpfile}"
-    done
+rm -f "${pldir}/raw_albums.m3u"
+rm -f "${pldir}/raw_singles.m3u"
+rm -f "${pldir}/raw_all.m3u"
+
+for gn in ${genres[@]} ; do
+    gd="${gn//\%/ }"
+    find "Albums/${gd}/" -type f >> "${pldir}/raw_albums.m3u"
+    find "Singles/${gd}/" -type f >> "${pldir}/raw_singles.m3u"
+done
+for file in albums singles ; do
+    sort --random-sort < "${pldir}/raw_${file}.m3u" > "${pldir}/${tmpfile}"
+    mv "${pldir}/${tmpfile}" "${pldir}/raw_${file}.m3u"
+    cat "${pldir}/raw_${file}.m3u" >> "${pldir}/raw_all.m3u"
 done
 
-if [[ -f "${pldir}/${tmpfile}" ]] ; then
-    cat "${pldir}/${tmpfile}" | sort > "${pldir}/raw_albums.m3u"
-    cat "${pldir}/raw_albums.m3u" > "${pldir}/raw_all.m3u"
-fi
-
-#===============================================================================
-# singles
-#===============================================================================
-
-[[ -f "${pldir}/${tmpfile}" ]] && rm -f "${pldir}/${tmpfile}"
-for d in Singles ; do
-    for gn in ${genres[@]} ; do
-        gd=$(echo "${gn}" | sed 's/\%/ /g')
-        find "${d}/${gd}/" -type f >> "${pldir}/${tmpfile}"
-    done
-done
-
-if [[ -f "${pldir}/${tmpfile}" ]] ; then
-    cat "${pldir}/${tmpfile}" | sort > "${pldir}/raw_singles.m3u"
-    cat "${pldir}/raw_singles.m3u" >> "${pldir}/raw_all.m3u"
-fi
-
-#===============================================================================
-# sort all
-#===============================================================================
-
-cat "${pldir}/raw_all.m3u" > "${pldir}/${tmpfile}"
+sort --random-sort < "${pldir}/raw_all.m3u" > "${pldir}/${tmpfile}"
 mv "${pldir}/${tmpfile}" "${pldir}/raw_all.m3u"
+
+#===============================================================================
+# windows versions
+#===============================================================================
+
+# sed 's/^\/\_links\/music\//N\:\\/ ; s/\//\\/g' "${pldir}/raw_albums.m3u" > "${pldir}/win_albums.m3u"
+# sed 's/^\/_links\/music\//N\:\\/ ; s/\//\\/g' "${pldir}/raw_singles.m3u" > "${pldir}/win_singles.m3u"
+# sed 's/^\/_links\/music\//N\:\\/ ; s/\//\\/g' "${pldir}/raw_all.m3u" > "${pldir}/win_all.m3u"
+
+#===============================================================================
+# albums and singles (in sorted order)
+#===============================================================================
+
+sort -t / -k 3 < "${pldir}/raw_albums.m3u" > "${pldir}/sorted_albums.m3u"
+sort -t / -k 3 < "${pldir}/raw_singles.m3u" > "${pldir}/sorted_singles.m3u"
+sort -t / -k 3 < "${pldir}/raw_all.m3u" > "${pldir}/sorted_all.m3u"
 
 #===============================================================================
 # genres
 #===============================================================================
 
-rm "${pldir}/genre_"*.m3u
-for d in Albums Singles ; do
+rm -f "${pldir}/genre_"*.m3u
+for d in Albums Singles MODs ; do
     for gn in $(find "${d}/" -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | sed 's/ /\%/g') ; do
-        [[ -f "${pldir}/${tmpfile}" ]] && rm -f "${pldir}/${tmpfile}"
-        gd=$(echo "${gn}" | sed "s/\%/ /g")
+        rm -f "${pldir}/${tmpfile}"
+        #gd=$(echo "${gn}" | sed "s/\%/ /g")
+        gd="${gn//\%/ }"
         find "${d}/${gd}/" -type f >> "${pldir}/${tmpfile}"
         n=$(echo "${gn}" | tr '[:upper:]' '[:lower:]' | sed 's/\%/_/g ; s/_-_/-/g')
-        [[ -e "${pldir}/${tmpfile}" ]] && cat "${pldir}/${tmpfile}" | sort >> "${pldir}/genre_${n}.m3u"
+        [[ -e "${pldir}/${tmpfile}" ]] && sort -t / -k 3 < "${pldir}/${tmpfile}" >> "${pldir}/genre_${n}.m3u"
     done
 done
-
-#===============================================================================
-# windows versions and copy files to public directory
-#===============================================================================
-
-# cat "${pldir}/raw_albums.m3u" | sed 's/^\/\_links\/music\//N\:\\/' | sed 's/\//\\/g' > "${pldir}/win_albums.m3u"
-# cat "${pldir}/raw_singles.m3u" | sed 's/^\/_links\/music\//N\:\\/' | sed 's/\//\\/g' > "${pldir}/win_singles.m3u"
-# cat "${pldir}/raw_all.m3u" | sed 's/^\/_links\/music\//N\:\\/' | sed 's/\//\\/g' > "${pldir}/win_all.m3u"
-
-#===============================================================================
-# sorted versions
-#===============================================================================
-
-cat "${pldir}/raw_albums.m3u" | sort -t / -k 3 > "${pldir}/sorted_albums.m3u"
-cat "${pldir}/raw_singles.m3u" | sort -t / -k 3 > "${pldir}/sorted_singles.m3u"
-cat "${pldir}/raw_all.m3u" | sort -t / -k 3 > "${pldir}/sorted_all.m3u"
-
-#===============================================================================
-# copy files to public directory
-#===============================================================================
-
-# cp "${pldir}/raw_albums.m3u" "${pubdir}/raw_albums.m3u"
-# cp "${pldir}/raw_singles.m3u" "${pubdir}/raw_singles.m3u"
-# cp "${pldir}/raw_all.m3u" "${pubdir}/raw_all.m3u"
-# cp "${pldir}/sorted_albums.m3u" "${pubdir}/sorted_albums.m3u"
-# cp "${pldir}/sorted_singles.m3u" "${pubdir}/sorted_singles.m3u"
-# cp "${pldir}/sorted_all.m3u" "${pubdir}/sorted_all.m3u"
-# cp "${pldir}/win_albums.m3u" "${pubdir}/win_albums.m3u"
-# cp "${pldir}/win_singles.m3u" "${pubdir}/win_singles.m3u"
-# cp "${pldir}/win_all.m3u" "${pubdir}/win_all.m3u"
 
 #===============================================================================
 # custom playlists
@@ -131,27 +99,27 @@ find Singles -name "*\.mp3" -mtime -730 -print | sort -t / -k 3 > "${pldir}/rece
 find Albums -name "*\.mp3" -mtime -730 -print | sort -t / -k 3 >> "${pldir}/recently_added_24mo.m3u"
 
 # ratings lists (in random order)
-echo -n "" > "${pldir}/rated_normal.m3u"
-echo -n "" > "${pldir}/rated_good.m3u"
-echo -n "" > "${pldir}/rated_all.m3u"
+rm "${pldir}/rated_normal.m3u"
+rm "${pldir}/rated_good.m3u"
+rm "${pldir}/rated_all.m3u"
 for r in $(seq 1 5) ; do
-    cp "${ratingsdir}/songs-rated-${r}" "${pldir}/rated_${r}.m3u"
-    [[ ${r} -ge 3 ]] && cat "${ratingsdir}/songs-rated-${r}" | sort --random-sort >> "${pldir}/rated_normal.m3u"
-    [[ ${r} -ge 4 ]] && cat "${ratingsdir}/songs-rated-${r}" | sort --random-sort >> "${pldir}/rated_good.m3u"
-    cat "${ratingsdir}/songs-rated-${r}" | sort --random-sort >> "${pldir}/rated_all.m3u"
+    sort -t / -k 3 < "${ratingsdir}/songs-rated-${r}" > "${pldir}/rated_${r}.m3u"
+    [[ ${r} -ge 3 ]] && cat "${ratingsdir}/songs-rated-${r}" >> "${pldir}/rated_normal.m3u"
+    [[ ${r} -ge 4 ]] && cat "${ratingsdir}/songs-rated-${r}" >> "${pldir}/rated_good.m3u"
+    cat "${ratingsdir}/songs-rated-${r}" >> "${pldir}/rated_all.m3u"
 done
 
 # unrated list
-echo -n "" > "${pldir}/unrated.m3u"
+rm -f "${pldir}/unrated.m3u"
 while read s ; do
     d=$(grep -F "${s}" "${pldir}/rated_all.m3u")
     [[ -z "${d}" ]] && echo "${s}" >> "${pldir}/unrated.m3u"
-done < "${pldir}/sorted_all.m3u"
+done < "${pldir}/raw_all.m3u"
 
 # randomize some playlists
 for s in "rated_normal.m3u" "rated_good.m3u" "rated_all.m3u" "unrated.m3u" ; do
-    cp "${pldir}/${s}" "${pldir}/${tmpfile}" && \
-        cat "${pldir}/${tmpfile}" | sort --random-sort > "${pldir}/${s}"
+    sort --random-sort < "${pldir}/${s}" > "${pldir}/${tmpfile}"
+    mv "${pldir}/${tmpfile}" "${pldir}/${s}"
 done
 
 # rated good and unrated interleaved
@@ -161,7 +129,7 @@ paste -d '\n' "${pldir}/rated_normal.m3u" "${pldir}/unrated.m3u" | sed '/^$/d' >
 # clean up
 #===============================================================================
 
-[[ -f "${pldir}/${tmpfile}" ]] && rm -f "${pldir}/${tmpfile}"
+rm -f "${pldir}/${tmpfile}"
 
 popd >/dev/null 2>&1
 

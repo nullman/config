@@ -2,7 +2,7 @@
 #===============================================================================
 # get-nasa-pictures
 #
-# Grab the latest images from Nasa's picture of the day.
+# Download Nasa "picture of the day" images.
 #
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
@@ -10,7 +10,7 @@
 urlbase="https://apod.nasa.gov/apod"
 archive="${urlbase}/archivepix.html"
 root="/home/data/media/Nasa Pictures/apod"
-index="/tmp/nasa-pictures-index.$$"
+index="$(mktemp)"
 
 wget "${archive}" -q -O - | grep 'href="ap' | sed 's/^.*\"ap/ap/ ; s/\".*$//' > "${index}"
 

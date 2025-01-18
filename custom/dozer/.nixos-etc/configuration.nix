@@ -1251,7 +1251,7 @@
     sparkleshare                            # Share and collaborate by syncing with any Git repository instantly. Linux, macOS, and Windows
     syncterm                                # BBS terminal emulator
     telegram-desktop                        # Telegram Desktop messaging app
-    ##thunderbird                             # Full-featured e-mail client
+    thunderbird                             # Full-featured e-mail client
     transmission_4-gtk                      # Fast, easy and free BitTorrent client
     tribler                                 # Decentralised P2P filesharing client based on the Bittorrent protocol
     tuba                                    # Browse the Fediverse

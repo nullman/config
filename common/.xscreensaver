@@ -1,5 +1,5 @@
 # XScreenSaver Preferences File
-# Written by xscreensaver-settings 6.08 for user on Mon Jan 13 19:06:54 2025.
+# Written by xscreensaver-settings 6.08 for user on Thu Jan 16 09:36:59 2025.
 # https://www.jwz.org/xscreensaver/
 
 timeout:	0:30:00
@@ -282,7 +282,7 @@ programs:								      \
 - GL: 				flipflop --root				    \n\
 - GL: 				antspotlight --root			    \n\
   GL: 				glslideshow --root --duration 80 --zoom	      \
-				  80 --pan 20 --fade 4			    \n\
+				  100 --pan 20 --fade 0			    \n\
 - GL: 				polytopes --root			    \n\
 - GL: 				gleidescope --root			    \n\
 - GL: 				mirrorblob --root			    \n\
@@ -426,3 +426,4 @@ programs:								      \
 
 pointerHysteresis:  10
 authWarningSlack:   20
+
