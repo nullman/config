@@ -29,7 +29,6 @@ while true ; do
             echo "Downloading: ${url}"
             curl -s -A "${ua}" "${url}" -O
             count=$((count + 1))
-            echo "Count: ${count}"
         done
     [[ ${count} -eq 0 ]] && exit 0
     num=$((num + 1))
