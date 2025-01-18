@@ -1,8 +1,8 @@
 #!/usr/bin/env perl
 #===============================================================================
-# fetch-podcasts
+# get-podcasts
 #
-# Fetch podcasts in RSS feeds, contained in an OPML file.
+# Download podcasts in RSS feeds, contained in an OPML file.
 #
 # See usage() or run with no paramaters to see usage information.
 #
@@ -92,10 +92,10 @@ while (my $infile = pop(@infiles)) {
 
                     # verbose mode output
                     if ($verbose) {
-                        print("Fetching: " . $urlenc . "\n");
+                        print("Downloading: " . $urlenc . "\n");
                     }
 
-                    # fetch enclosure using wget
+                    # download enclosure using wget
                     system("wget", "-nc", "--tries=" . $retries, "--timeout=" . $timeout, $urlenc);
 
                     $j++;
@@ -115,8 +115,8 @@ while (my $infile = pop(@infiles)) {
 #===============================================================================
 
 sub usage {
-    print("Usage: fetch-podcasts [OPTIONS] FILE...\n");
-    print("Fetch podcasts in RSS feeds, contained in an OPML FILE.\n");
+    print("Usage: get-podcasts [OPTIONS] FILE...\n");
+    print("Download podcasts in RSS feeds, contained in an OPML FILE.\n");
     print("  OPTIONS:\n");
     print("    -h, --help       this help\n");
     print("    -v, --verbose    verbose output\n");
