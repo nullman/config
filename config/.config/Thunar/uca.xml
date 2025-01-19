@@ -35,7 +35,7 @@
         <name>Open Dir in Emacs</name>
         <submenu></submenu>
         <unique-id>1676218516586732-1</unique-id>
-        <command>emacsclient --alternate-editor=vim %D</command>
+        <command>emacsclient --alternate-editor=vim %d</command>
         <description>Open Dir in Emacs</description>
         <range>*</range>
         <patterns>*</patterns>
