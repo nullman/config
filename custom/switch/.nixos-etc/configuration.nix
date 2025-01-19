@@ -314,11 +314,11 @@
   #};
 
   # display manager: lightdm
-  #services.xserver.displayManager.lightdm.greeters.slick = {
   services.xserver.displayManager.lightdm.greeters.gtk = {
     enable = true;
     extraConfig = ''
       [Greeter]
+      user-background = false
       background=/etc/nixos/wallpapers/Fluorescence.jpg
     '';
   };
@@ -1020,6 +1020,7 @@
     czkawka                                 # Simple, fast and easy to use app to remove unnecessary files from your computer
     dmg2img                                 # Apple's compressed dmg to standard (hfsplus) image disk file convert tool
     easytag                                 # View and edit tags for various audio files
+    #etcher                                  #
     evince                                  # GNOME's document viewer
     ffmpeg_6-full                           # Complete, cross-platform solution to record, convert and stream audio and video
     ##file-roller                             # Archive manager for the GNOME desktop environment
@@ -1031,6 +1032,7 @@
     glmark2                                 # OpenGL (ES) 2.0 benchmark
     #gnome.file-roller                       # Archive manager for the GNOME desktop environment
     gnome-frog                              # Intuitive text extraction tool (OCR) for GNOME desktop
+    gnome-multi-writer                      # Tool for writing an ISO file to multiple USB devices at once
     goldendict-ng                           # Advanced multi-dictionary lookup program
     gparted                                 # Graphical disk partitioning tool
     grip id3lib                             # GTK-based audio CD player/ripper

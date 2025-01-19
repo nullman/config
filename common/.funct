@@ -784,12 +784,11 @@ convert-7z-to-zip-dir-tree() {
             tmpdir="$(mktemp -d)"
             find . -iname "*.7z" -print | while read -r file ; do
                 echo "${file}"
-                dir=$(dirname "${file}")
                 base=$(basename "${file}")
                 new="${base:0:-3}.zip"
                 cp "${file}" "${tmpdir}/${base}" && pushd "${tmpdir}" && \
                     7z x "${base}" && rm "${base}" && zip -r "${new}" ./* && \
-                    popd && cp "${tmpdir}/${new}" "${dir}/${new}" && \
+                    popd && cp "${tmpdir}/${new}" "./${new}" && \
                     rm "${file}"
             done
             rm -rf "${tmpdir}"
