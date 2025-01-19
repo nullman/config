@@ -508,8 +508,8 @@
     extraBackends = [ pkgs.cnijfilter2 ];
   };
 
-  ## virtualization
-  #virtualisation.libvirtd.enable = true;
+  # virtualization
+  virtualisation.libvirtd.enable = true;
 
   # thunar
   programs.thunar.enable = true;
