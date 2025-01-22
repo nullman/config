@@ -1091,6 +1091,7 @@
     ##plasma5Packages.kdeconnect-kde          # KDE Connect provides several features to integrate your phone and your computer
     poppler_utils                           # PDF rendering library
     qmplay2                                 # Qt-based Multimedia player
+    rpi-imager                              # Raspberry Pi Imaging Utility
     scrcpy                                  # Display and control Android devices over USB or TCP/IP
     simplescreenrecorder                    # Screen recorder for Linux
     upscayl                                 # Free and Open Source AI Image Upscaler

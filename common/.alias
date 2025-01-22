@@ -367,8 +367,7 @@ alias grub2mc="sudo grub2-mkconfig -o /boot/grub2/grub.cfg"
 alias mkinit="sudo mkinitcpio -P"
 #        remove-user-login-background
 alias remove-user-login-background="
-    sudo sed -i '/^BackgroundFile=.*$/d' \
-        /var/lib/AccountsService/users/\${USER}"
+    sudo sed -i '/^BackgroundFile=.*$/d' /var/lib/AccountsService/users/\${USER}"
 
 #
 # general (external)
@@ -2613,10 +2612,11 @@ alias wine-fallout-setup="
     sed -i 's/^critter_dat=.*$/critter_dat=C:\\\\GOG Games\\\\Fallout\\\\CRITTER.DAT\r/' \"\${file}\"
     sed -i 's/^critter_patches=.*$/critter_patches=C:\\\\GOG Games\\\\Fallout\\\\DATA\r/' \"\${file}\"
     sed -i 's/^master_dat=.*$/master_dat=C:\\\\GOG Games\\\\Fallout\\\\MASTER.DAT\r/' \"\${file}\"
-    sed -i 's/^master_patches=.*$/master_patches=C:\\\\GOG Games\\\\Fallout\\\\DATA\r/' \"\${file}\"
-    "
+    sed -i 's/^master_patches=.*$/master_patches=C:\\\\GOG Games\\\\Fallout\\\\DATA\r/' \"\${file}\""
 #        wine-lcars              wine lcars screen saver
-alias wine-lcars="WINEPREFIX=\${HOME}/.wine-lcars wine \"C:\/windows\system32\System47.scr\" /s &"
+alias wine-lcars="WINEPREFIX=\${HOME}/.wine-lcars wine \"C:\windows\system32\System47.scr\" /s &"
+#        wine-ltspice            wine ltspice
+alias wine-ltspice="WINEPREFIX=\${HOME}/.wine-ltspice wine64 \"C:\Program Files\ADI\LTspice\LTspice.exe\" &"
 #        wine-sdi                wine snappy driver installer
 #!alias wine-sdi="(cd \"${home}/data/Snappy Driver Installer\" ; WINEPREFIX=\${HOME}/.wine-sdi wine \"SDI_x64_R2009.exe\" &)"
 alias wine-sdi="(cd \"/mnt/synology/media/Snappy Driver Installer\" ; WINEPREFIX=\${HOME}/.wine-sdi wine \"SDI_x64_R2009.exe\" &)"
