@@ -712,12 +712,12 @@ alias ping-tank="ping 192.168.1.32"
 alias ping-apoc="ping 192.168.1.34"
 #        ping-trinity            ping trinity
 alias ping-trinity="ping 192.168.1.36"
+#        ping-choi               ping choi
+alias ping-choi="ping 192.168.1.38"
+#        ping-choi-direct        ping choi-direct
+alias ping-choi-direct="ping 192.168.1.39"
 #        ping-dozer              ping dozer
 alias ping-dozer="ping 192.168.1.40"
-#        ping-choi               ping choi
-alias ping-choi="ping 192.168.1.42"
-#        ping-choi-direct        ping choi-direct
-alias ping-choi-direct="ping 192.168.1.43"
 #        ping-switch             ping switch
 alias ping-switch="ping 192.168.1.44"
 #        ping-mouse              ping mouse
@@ -726,10 +726,10 @@ alias ping-mouse="ping 192.168.1.50"
 alias ping-raspad="ping 192.168.1.54"
 #        ping-raspad-usb         ping raspad-usb
 alias ping-raspad-usb="ping 192.168.1.55"
-#        ping-retropie           ping retropie
-alias ping-retropie="ping 192.168.1.56"
-#        ping-retropie-direct    ping retropie-direct
-alias ping-retropie-direct="ping 192.168.1.57"
+#        ping-smith           ping smith
+alias ping-smith="ping 192.168.1.56"
+#        ping-smith-direct    ping smith-direct
+alias ping-smith-direct="ping 192.168.1.57"
 #        ping-retro              ping retro
 alias ping-retro="ping 192.168.1.62"
 #        ping-dns1               ping dns server 1
@@ -2442,22 +2442,18 @@ alias ssh-morpheus="echo 'ssh:morpheus' ; ssh morpheus"
 alias ssh-morpheusgit="echo 'ssh:git@morpheus' ; ssh -l git morpheus"
 #        ssh-mouse               ssh mouse
 alias ssh-mouse="echo 'ssh:mouse' ; ssh mouse"
-#        ssh-neo                 ssh neo
-alias ssh-neo="echo 'ssh:neo' ; ssh neo"
+#!#        ssh-neo                 ssh neo
+#!alias ssh-neo="echo 'ssh:neo' ; ssh neo"
 #        ssh-pimodem             ssh pimodem
 alias ssh-pimodem="echo 'ssh:pi@pimodem' ; ssh pi@pimodem"
 #        ssh-raspad              ssh raspad
 alias ssh-raspad="echo 'ssh:raspad-usb' ; ssh pi@raspad-usb"
-#        ssh-retropie            ssh retropie
-alias ssh-retropie="echo 'ssh:retropie' ; ssh pi@retropie"
+#        ssh-smith               ssh smith
+alias ssh-smith="echo 'ssh:smith' ; ssh smith-direct"
 #        ssh-synology            ssh synology
 alias ssh-synology="echo 'ssh:synology' ; ssh kyle-admin@synology"
 #        ssh-switch              ssh switch
-alias ssh-switch="echo 'ssh:switch' ; ssh switch"
-#        ssh-tank                ssh tank
-alias ssh-tank="echo 'ssh:tank' ; ssh tank"
-#        ssh-tank2               ssh tank (2nd nic)
-alias ssh-tank2="echo 'ssh:tank' ; ssh 192.168.1.61"
+alias ssh-switch="echo 'ssh:switch-direct' ; ssh switch-direct"
 #        ssh-trinity             ssh trinity
 alias ssh-trinity="echo 'ssh:trinity' ; ssh trinity"
 
