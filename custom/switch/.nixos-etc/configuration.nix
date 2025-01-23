@@ -1211,6 +1211,7 @@
     ##gnome-boxes                             # Simple GNOME 3 application to access remote or virtual systems
     mame                                    # Multi-purpose emulation framework
     pcem                                    # Emulator for IBM PC computers and clones
+    pw3270                                  # 3270 Emulator for gtk
     rpcemu                                  # Risc PC Emulator
     qemu_kvm                                # Generic and open source machine emulator and virtualizer
     quickemu                                # Quickly create and run optimised Windows, macOS and Linux virtual machines
