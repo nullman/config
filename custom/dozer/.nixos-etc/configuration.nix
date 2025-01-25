@@ -782,6 +782,7 @@
     bluez-tools                             # Set of tools to manage bluetooth devices for linux
     #binsider                                # Analyzer of executables using a terminal user interface
     brightnessctl                           # This program allows you read and control device brightness
+    bsd-finger                              # User information lookup program
     bzip2                                   # High-quality data compression program
     clipmenu                                # Clipboard management using dmenu
     cifs-utils                              # Tools for managing Linux CIFS client filesystems

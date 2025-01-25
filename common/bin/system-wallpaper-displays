@@ -26,11 +26,15 @@ _command conky && pkill -u ${USER} conky
 _command conky && [[ -f "${HOME}/.config/conky/system-info.conkyrc" ]] && \
     conky --config="${HOME}/.config/conky/system-info.conkyrc" &
 _command conky && [[ -f "${HOME}/.config/conky/bspwm-keybindings.conkyrc" ]] && \
-    [[ $(yres) -ge 1024 ]] && conky --config="${HOME}/.config/conky/bspwm-keybindings.conkyrc" &
+    [[ $(yres) -ge 1024 ]] && \
+    conky --config="${HOME}/.config/conky/bspwm-keybindings.conkyrc" &
 _command conky && [[ -f "${HOME}/.config/conky/reminders.conkyrc" ]] && \
-    [[ $(xres) -ge 1600 ]] && conky --config="${HOME}/.config/conky/reminders.conkyrc" &
+    [[ $(xres) -ge 1600 ]] && \
+    (conky --config="${HOME}/.config/conky/reminders.conkyrc" ; \
+     conky --config="${HOME}/.config/conky/weather-graph.conkyrc") &
 _command conky && [[ -f "${HOME}/.config/conky/weather.conkyrc" ]] && \
-    [[ $(yres) -ge 1440 ]] && conky --config="${HOME}/.config/conky/weather.conkyrc" &
+    [[ $(yres) -ge 1440 ]] && \
+    conky --config="${HOME}/.config/conky/weather.conkyrc" &
 
 #===============================================================================
 # End of File
