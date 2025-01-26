@@ -28,7 +28,8 @@ _command xscreensaver && xscreensaver -no-splash &
 #_command dropbox && dropbox start &
 #_command barriers && barriers --config ${HOME}/.barrier.conf &
 #_command barrierc && barrierc dozer &
-_command barrier && barrier &
+_command barrierc && barrierc --daemon --debug INFO --restart dozer &
+#_command barrier && barrier &
 #_command emacs && emacs --daemon &
 
 # run foreground applications
