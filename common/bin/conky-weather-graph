@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 finger ^san_diego@graph.no | head -n -1 | \
-    sed "s/^\(    .*\)$/\${color2}\1\${color}/ ; \
+    sed "s/#/%/g ; \
+        s/^\(    .*\)$/\${color2}\1\${color}/ ; \
         s/^ 'F\(.*\)$/\${color2} °F\1\${color}/ ; \
         s/^\( [0-9]\{2\}\)/\${color2}\1\${color}/ ; \
         s/^\(.*:\)\(.*\)$/\${color2}\1\${color}\2/ ; \

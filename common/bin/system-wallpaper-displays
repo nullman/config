@@ -32,9 +32,9 @@ _command conky && [[ -f "${HOME}/.config/conky/reminders.conkyrc" ]] && \
     [[ $(xres) -ge 1600 ]] && \
     (conky --config="${HOME}/.config/conky/reminders.conkyrc" ; \
      conky --config="${HOME}/.config/conky/weather-graph.conkyrc") &
-_command conky && [[ -f "${HOME}/.config/conky/weather.conkyrc" ]] && \
+_command conky && [[ -f "${HOME}/.config/conky/weather-report.conkyrc" ]] && \
     [[ $(yres) -ge 1440 ]] && \
-    conky --config="${HOME}/.config/conky/weather.conkyrc" &
+    conky --config="${HOME}/.config/conky/weather-report.conkyrc" &
 
 #===============================================================================
 # End of File
