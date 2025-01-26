@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+[Desktop Entry]
+Name=Alacritty
+GenericName=Terminal
+Comment=A fast, cross-platform, OpenGL terminal emulator
+Exec=alacritty -e ${HOME}/bin/run-screen
+Type=Application
+Icon=Alacritty
+Terminal=false
+Categories=System;TerminalEmulator;
+StartupWMClass=Alacritty
