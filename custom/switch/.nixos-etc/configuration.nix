@@ -1326,6 +1326,7 @@
     # console hacks
     aalib                                   # ASCII art graphics library
     asciiquarium                            # Enjoy the mysteries of the sea from the safety of your own terminal!
+    astroterm                               # Celestial viewer for the terminal, written in C
     bb                                      # AA-lib demo
     bucklespring                            # Nostalgia bucklespring keyboard sound
     cbonsai                                 # Grow bonsai trees in your terminal

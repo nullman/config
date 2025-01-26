@@ -7,9 +7,7 @@
 # Select "Host Interface" and set "Interface Name" to "tap0" in VirtualBox
 # settings. Run this script as root before launching the virtual machine.
 #
-# Dependencies:
-#   bridge-utils
-#   uml-utilities
+# Dependencies: bridge-utils uml-utilities
 #
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================

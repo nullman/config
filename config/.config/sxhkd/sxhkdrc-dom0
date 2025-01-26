@@ -3,7 +3,7 @@
 #
 # Simple X Hotkey Daemon configuration for dom0 in Qubes OS.
 #
-# Dependancies:
+# Dependencies:
 #   bluetoothctl
 #   bwmenu
 #   light
