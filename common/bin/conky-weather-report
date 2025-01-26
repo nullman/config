@@ -31,3 +31,36 @@ cat "${basefile}.conky"
 # #firefox --new-instance --screenshot "${basefile}.png" "file://${basefile}.html"
 # chromium --headless --disable-gpu --screenshot="${basefile}.png" "file://${basefile}.html" >/dev/null 2>&1
 # magick "${basefile}.png" -transparent black "${basefile}.png"
+
+basefile="/tmp/conky-weather"
+esc=$(printf '\33')
+
+curl --silent "wttr.in/San+Diego?u" | head -n 7 > "${basefile}.txt"
+
+sed "s/^Weather report: .*$/\${goto 50}\${font MesloLGS Nerd Font:bold:size=16}San Diego\${font}/ ; \
+    s/${esc}\[0m/\${font}\${color}/g ; \
+    s/${esc}\[1m/\${font MesloLGS Nerd Font Mono:bold}/g ; \
+    s/${esc}\[38;5;\([0-9]\{3\}\)m/\${color _\1_}/g ; \
+    s/${esc}\[38;5;\([0-9]\{3\}\);1m/\${color _\1_}\${font MesloLGS Nerd Font Mono:bold}/g" \
+    "${basefile}.txt" | \
+    while IFS= read -r line; do
+        echo "${line}" | sed 's/_\([0-9]\{3\}\)_/\n\1\n/g' | \
+            while IFS= read -r token ; do
+                if [[ "${token}" =~ ^[0-9]{3}$ ]] ; then
+                    echo -n "$(/home/user/bin/terminal-color ${token})"
+                else
+                    echo -n "${token}"
+                fi
+            done
+        echo
+    done > "${basefile}.conky"
+
+cat "${basefile}.conky"
+
+# # png version [not working]
+# curl --silent "wttr.in/San+Diego?u" | head -n -2 > "${basefile}.txt"
+# cat "${basefile}.txt" | aha --black --style 'font-size:1em' > "${basefile}.html"
+# #magick -density 300 "${basefile}.html" "${basefile}.png"
+# #firefox --new-instance --screenshot "${basefile}.png" "file://${basefile}.html"
+# chromium --headless --disable-gpu --screenshot="${basefile}.png" "file://${basefile}.html" >/dev/null 2>&1
+# magick "${basefile}.png" -transparent black "${basefile}.png"

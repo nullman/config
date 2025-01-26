@@ -1,5 +1,5 @@
 conky.config = {
-  alignment = 'bottom_right',
+  alignment = 'bottom_middle',
   background = true,
   color1 = 'ff0000',
   color2 = '00ff00',
@@ -15,7 +15,8 @@ conky.config = {
   font = 'MesloLGS Nerd Font Mono:size=12',
   gap_x = 20,
   gap_y = 40,
-  minimum_width = 240,
+  minimum_height = 480,
+  minimum_width = 480,
   no_buffers = true,
   own_window = true,
   own_window_class = 'Conky',
@@ -26,5 +27,5 @@ conky.config = {
   use_xft = true,
 }
 conky.text = [[
-${execpi 1800 ${HOME}/bin/conky-weather}
+${execpi 1800 ${HOME}/bin/conky-weather-graph}
 ]]
