@@ -3,7 +3,7 @@
 Name=Alacritty
 GenericName=Terminal
 Comment=A fast, cross-platform, OpenGL terminal emulator
-Exec=alacritty -e ${HOME}/bin/run-screen
+Exec=alacritty -o "font.size = 24.0" -e "\${HOME}/bin/run-screen"
 Type=Application
 Icon=Alacritty
 Terminal=false
