@@ -18,6 +18,7 @@ screen -t shell 6 ${SHELL}
 screen -t shell 7 ${SHELL}
 screen -t shell 8 ${SHELL}
 screen -t shell 9 ${SHELL}
+screen -t mvs-tk5 10 ${SHELL} -c "cd /home/mvs-tk5 ; steam-run ./mvs"
 #screen -t mvs-tk5 10 ${SHELL} -c "cd /home/mvs-tk5 ; NIXPKGS_ALLOW_UNFREE=1 nix-shell -p steam-run --run 'steam-run ./mvs'"
 #screen -t calculator 19 orpie
 #screen -t spell 20 ispell -a
