@@ -922,10 +922,10 @@ alias news="tin -r -q"
 alias rss="snownews"
 #        spell                   run ispell
 alias spell="ispell"
-#!#        calc                    run orpie
-#!alias calc="orpie"
-#        calc                    run rpncalc
-alias calc="rpncalc"
+#        calc                    run orpie
+alias calc="orpie"
+#!#        calc                    run rpncalc
+#!alias calc="rpncalc"
 #        mca                     run midnight commander in ascii mode
 alias mca="mc -a"
 #        centericqa              centericq -a (asci characters only)
@@ -936,8 +936,8 @@ alias centericq-unsent="find \${HOME}/.centericq/ -name offline"
 alias view="eog"
 #        motora                  motor -a (asci characters only)
 alias motora="motor -a"
-#        seti                    run setiathome in the background
-alias seti="(cd \${HOME}/setiathome ; setiathome -email -nice 19) &"
+#        mvs-tk5                 mvs-tk5 (ibm system-370 mvs)
+alias mvs-tk5="(cd /home/mvs-tk5 && ./mvs)"
 #!#        freenet-config          configure freenet
 #!alias freenet-config="ebuild /usr/portage/net-p2p/freenet/freenet-0.5.2.1-r8.ebuild config"
 #!#        centericq-fix-source    fix source code for centericq
