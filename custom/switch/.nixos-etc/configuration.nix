@@ -41,19 +41,19 @@
   };
   networking.hostName = "switch";
 
-  # open firewall ports
-  networking.firewall = {
-    enable = true;
-    allowedTCPPorts = [ 515 631 9100 24800 ];
-    #allowedUDPPorts = [ 515 631 9100 ];
-    allowedTCPPortRanges = [
-      { from = 1714; to = 1764; }
-    ];
-    #allowedUDPPortRanges = [
-    #  { from = 1714; to = 1764; }
-    #];
-    checkReversePath = "loose";
-  }; # Barrier
+  ## open firewall ports
+  #networking.firewall = {
+  #  enable = true;
+  #  allowedTCPPorts = [ 515 631 9100 3270 24800 ];
+  #  #allowedUDPPorts = [ 515 631 9100 ];
+  #  allowedTCPPortRanges = [
+  #    { from = 1714; to = 1764; }
+  #  ];
+  #  #allowedUDPPortRanges = [
+  #  #  { from = 1714; to = 1764; }
+  #  #];
+  #  checkReversePath = "loose";
+  #}; # MVS-TK5, Barrier
 
   # openssh server
   services.openssh.enable = true;
