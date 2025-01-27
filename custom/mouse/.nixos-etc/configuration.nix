@@ -812,6 +812,7 @@
     x2x                                     # Allows the keyboard, mouse on one X display to be used to control another X display
     xclip                                   # Tool to access the X clipboard from a console application
     xdo                                     # Small X utility to perform elementary actions on windows
+    xdotool                                 # Fake keyboard/mouse input, window management, and more
     xorg.libX11                             #
     xorg.libX11.dev                         #
     xorg.libXft                             #

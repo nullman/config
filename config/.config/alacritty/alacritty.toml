@@ -101,3 +101,4 @@ multiplier = 1
 
 [window]
 opacity = 0.85
+startup_mode = "Maximized"
