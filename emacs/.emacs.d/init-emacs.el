@@ -16529,7 +16529,7 @@ USING is the remaining peg."
 
 ;; [[file:init-emacs.org::*ellama][ellama:1]]
 ;;------------------------------------------------------------------------------
-        ;;; Packages: ellama
+;;; Packages: ellama
 ;;------------------------------------------------------------------------------
 
 (init-message 2 "Packages: ellama")
@@ -16553,6 +16553,7 @@ USING is the remaining peg."
   (setopt ellama-naming-scheme 'ellama-generate-name-by-time)
   (setopt ellama-provider
           (make-llm-ollama
+           ;;:chat-model "deepseek-r1:7b"
            :chat-model "llama3:8b-instruct-q8_0"
            ;;:chat-model "artifish/llama3.2-uncensored:latest"
            :embedding-model "nomic-embed-text"
@@ -16573,7 +16574,9 @@ USING is the remaining peg."
            :embedding-model "nomic-embed-text"
            :default-chat-non-standard-params '(("num_ctx" . 32768))))
   (setopt ellama-providers
-          '(("llama3:8b-instruct-q8_0" . (make-llm-ollama "llama3:8b-instruct-q8_0"))
+          '(("deepseek-r1:7b" . (make-llm-ollama "deepseek-r1:7b"))
+            ("deepseek-r1:14b" . (make-llm-ollama "deepseek-r1:14b"))
+            ("llama3:8b-instruct-q8_0" . (make-llm-ollama "llama3:8b-instruct-q8_0"))
             ("llama3:8b" . (make-llm-ollama "llama3:8b"))
             ("llama3-chatqa" . (make-llm-ollama "llama3-chatqa"))
             ("llama2-uncensored" . (make-llm-ollama "llama2-uncensored:latest"))

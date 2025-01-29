@@ -2079,7 +2079,7 @@ alias rsync-music-put-synology="rsync -r --munge-links --size-only --progress ${
 #!alias rsync-org-put-dropbox="[[ -d \${HOME}/Dropbox/Org ]] && rsync -aAXv --delete \${HOME}/org/* \${HOME}/Dropbox/Org/"
 #!#        rsync-aerial-get-morpheus  rsync morpheus:/home/data/media/Video/Aerial /home/data/media/Video/Aerial
 #!alias rsync-aerial-get-morpheus="rsync -rlptx --progress morpheus:/home/data/media/Video/Aerial/ ${home}/data/media/Video/Aerial/"
-#        rsync-common-put-media-delete rsync ${HOME}/doc/icons/ and ${HOME}/doc/images/ to /home/data/media/Graphic/
+#        rsync-common-put-media-delete rsync ${HOME}/doc/icons and ${HOME}/doc/images to /home/data/media/Graphic
 alias rsync-common-put-media-delete=" \
     rsync -rlptx --progress --delete \"\${HOME}/doc/icons/\" ${home}/data/media/Graphic/Icons/Common/ && \
     rsync -rlptx --progress --delete \"\${HOME}/doc/images/\" ${home}/data/media/Graphic/Images/Common/"
@@ -2100,7 +2100,7 @@ alias rsync-music-put-music-sd=" \
     else
         echo \"Error: \${usb} USB not found\"
     fi"
-#        rsync-win-apps-put-win_apps-sd  rsync /home/data/media/Software/Windows*/* /media/WIN_APPS/Windows*/
+#        rsync-win-apps-put-win_apps-sd  rsync /home/data/media/Software/Windows* /media/WIN_APPS/Windows*
 alias rsync-win-apps-put-win_apps-sd="
     usb=WIN_APPS
     dir1=/media/\${usb}
@@ -2115,7 +2115,7 @@ alias rsync-win-apps-put-win_apps-sd="
     else
         echo \"Error: \${usb} USB not found\"
     fi"
-#        rsync-windows-put-windows-sd  rsync /home/data/media/Software/Windows*/* /media/WINDOWS/Windows*/
+#        rsync-windows-put-windows-sd  rsync /home/data/media/Software/Windows* /media/WINDOWS/Windows*
 alias rsync-windows-put-windows-sd="
     usb=WINDOWS
     dir1=/media/\${usb}
@@ -2130,7 +2130,7 @@ alias rsync-windows-put-windows-sd="
     else
         echo \"Error: \${usb} USB not found\"
     fi"
-#        rsync-t43-os2-put-t43-os2-sd  rsync /home/data/media/Software/(Thinkpad T43|OS2)/* /media/T43_OS2/(Thinkpad T43|OS2)/
+#        rsync-t43-os2-put-t43-os2-sd  rsync /home/data/media/Software/(Thinkpad T43|OS2) /media/T43_OS2/(Thinkpad T43|OS2)
 alias rsync-t43-os2-put-t43-os2-sd=" \
     usb=T43_OS2
     dir1=/media/\${usb}
@@ -2145,7 +2145,7 @@ alias rsync-t43-os2-put-t43-os2-sd=" \
     else
         echo \"Error: \${usb} USB not found\"
     fi"
-#        rsync-mac-put-mac_apps-sd  rsync /home/data/media/Software/Macintosh/* /media/MAC_APPS/Macintosh/
+#        rsync-mac-put-mac_apps-sd  rsync /home/data/media/Software/Macintosh /media/MAC_APPS/Macintosh
 alias rsync-mac-put-mac_apps-sd=" \
     usb=MAC_APPS/Macintosh
     dir1=/media/\${usb}
@@ -2161,7 +2161,7 @@ alias rsync-mac-put-mac_apps-sd=" \
     else
         echo \"Error: \${usb} USB not found\"
     fi"
-#        rsync-c64-put-sd16      rsync ${HOME}/C64/* /media/C64/
+#        rsync-c64-put-sd16      rsync ${HOME}/C64 /media/C64
 alias rsync-c64-put-sd16="
     usb=C64
     dir1=/media/\${usb}
@@ -2175,7 +2175,7 @@ alias rsync-c64-put-sd16="
     else
         echo \"Error: \${usb} USB not found\"
     fi"
-#        rsync-c64-put-sd128     rsync ${HOME}/C64/* /media/C64/
+#        rsync-c64-put-sd128     rsync ${HOME}/C64 /media/C64
 alias rsync-c64-put-sd128="
     usb=C64
     dir1=/media/\${usb}
@@ -2189,7 +2189,7 @@ alias rsync-c64-put-sd128="
     else
         echo \"Error: \${usb} USB not found\"
     fi"
-#        rsync-adult-put-adult-sd  rsync /home/data/media/Video/Adult/* /media/ADULT/
+#        rsync-adult-put-adult-sd  rsync /home/data/media/Video/Adult /media/ADULT
 alias rsync-adult-put-adult-sd="
     usb=ADULT
     dir1=/media/\${usb}
@@ -2198,12 +2198,28 @@ alias rsync-adult-put-adult-sd="
     [[ -d \${dir1} ]] && dir=\${dir1}
     [[ -d \${dir2} ]] && dir=\${dir2}
     if [[ -d \${dir} ]] ; then
-        rsync -rLtxW --size-only --progress --delete -f='- \#recycle' ${home}/data/media/Video/Adult/ \${dir}/
+        #rsync -rLtxW --size-only --progress --delete -f='- \#recycle' \"${home}/data/media/Video/Adult/\" \"\${dir}/\"
+        rsync -rLtxW --size-only --progress --delete -f='- \#recycle' \"/mnt/synology/adult/\" \"\${dir}/\"
         sync
     else
         echo \"Error: \${usb} USB not found\"
     fi"
-#        rsync-sdi-put-windows-sd  rsync /home/data/Snappy Driver Installer/* /media/WINDOWS/Snappy Driver Installer/
+#        rsync-sdi-get-windows-sd  rsync /media/WINDOWS/Snappy Driver Installer /home/data/Snappy Driver Installer
+alias rsync-sdi-get-windows-sd="
+    usb=WINDOWS
+    dir1=/media/\${usb}
+    dir2=/run/media/\${USER}/\${usb}
+    dir=''
+    [[ -d \${dir1} ]] && dir=\${dir1}
+    [[ -d \${dir2} ]] && dir=\${dir2}
+    if [[ -d \${dir} ]] ; then
+        #rsync -rLtxW --size-only --progress --delete \"\${dir}/Snappy Driver Installer/\" \"${home}/data/Snappy Driver Installer/\"
+        rsync -rLtxW --size-only --progress --delete \"\${dir}/Snappy Driver Installer/\" \"/mnt/synology/media/Snappy Driver Installer/\"
+        sync
+    else
+        echo \"Error: \${usb} USB not found\"
+    fi"
+#        rsync-sdi-put-windows-sd  rsync /home/data/Snappy Driver Installer /media/WINDOWS/Snappy Driver Installer
 alias rsync-sdi-put-windows-sd="
     usb=WINDOWS
     dir1=/media/\${usb}
