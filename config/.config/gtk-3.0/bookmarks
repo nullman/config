@@ -20,5 +20,4 @@ file:///home/data/media/Text/Books Books
 file:///home/data/media/Text/Magazines Magazines
 file:///home/data/media/Text/Manuals Manuals
 file:///mnt/synology mnt:synology
-smb://synology smb:synology
-smb://dozer/Share smb:dozer
+sftp://smith-direct/home/virtual1403/output sftp:virtual1403
