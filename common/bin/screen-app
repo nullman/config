@@ -69,7 +69,7 @@ case "$1" in
     calc|orpie) screen -t calculator 19 orpie ;;
     rpncalc) screen -t calculator 19 rpncalc ;;
     spell|ispell) screen -t spell 20 ispell -a ;;
-    mvstk5) screen -t mvs-tk5 10 ${SHELL} -c "cd /home/mvs-tk5 && ./mvs" ;;
+    mvstk5) screen -t mvs-tk5 10 ${SHELL} -c "cd ${HOME}/mvs-tk5 && ./mvs" ;;
     0) screen -t shell 0 ${SHELL} ;;
     1) screen -t shell 1 ${SHELL} ;;
     2) screen -t shell 2 ${SHELL} ;;
