@@ -2337,6 +2337,8 @@ alias scorpie="\${HOME}/bin/screen-app orpie"
 alias scrpncalc="\${HOME}/bin/screen-app rpncalc"
 #        scspell                 screen-app spell
 alias scspell="\${HOME}/bin/screen-app spell"
+#        scmvstk5                screen-app mvstk5
+alias scmvstk5="\${HOME}/bin/screen-app mvstk5"
 #        sc0                     screen-app 0
 alias sc0="\${HOME}/bin/screen-app 0"
 #        sc1                     screen-app 1
