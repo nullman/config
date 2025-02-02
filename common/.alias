@@ -3549,15 +3549,18 @@ alias web-generate-game="(cd \${HOME}/web/bin && ./generate-game && ./publish --
 # backup
 #
 #!       rsyncexclusions         default rsync exclusions
-#!rsyncexclusions="-f'- /cdrom/**' -f'- /dev/**' -f'- /lost+found' -f'- /media/**' -f'- /mnt/**' -f'- /nix/store/**' -f'- /proc/**' -f'- /run/**' -f'- /sys/**' -f'- /tmp/**' -f'- /var/log/**' -f'- /var/tmp/**' -f'- /home/*/.cache/**' -f'- /home/*/.ccache/**' -f'- /home/*/.gradle' -f'- /home/*/.gvfs' -f'- /home/*/.local/**' -f'- /home/*/.lutris-cache' -f'- /home/*/.npm' -f'- /home/*/.thumbnails/**' -f'- /home/backup/**' -f'- /home/*/Downloads/**' -f'- /home/*/Games/**' -f'- /home/data/media/Software'"
-rsyncexclusions="-f'- /cdrom/**' -f'- /dev/**' -f'- /lost+found' -f'- /media/**' -f'- /mnt/**' -f'- /nix/store/**' -f'- /proc/**' -f'- /run/**' -f'- /sys/**' -f'- /tmp/**' -f'- /var/log/**' -f'- /var/tmp/**' -f'- /home/*/.cache/**' -f'- /home/*/.ccache/**' -f'- /home/*/.gradle' -f'- /home/*/.gvfs' -f'- /home/*/.local/**' -f'- /home/*/.lutris-cache' -f'- /home/*/.npm' -f'- /home/*/.thumbnails/**' -f'- /home/backup/**'"
+rsyncexclusions=" \
+    -f'- /cdrom/**' -f'- /dev/**' -f'- /lost+found' -f'- /media/**' -f'- /mnt/**' -f'- /nix/store/**' -f'- /proc/**' \
+    -f'- /run/**' -f'- /sys/**' -f'- /tmp/**' -f'- /var/lib/private/**' -f'- /var/log/**' -f'- /var/tmp/**' \
+    -f'- /home/swapfile' -f'- /home/*/.cache/**' -f'- /home/*/.ccache/**' -f'- /home/*/.gradle' -f'- /home/*/.gvfs' \
+    -f'- /home/*/.local/share/Steam/**' -f'- /home/*/.local/share/lutris/**' -f'- /home/*/.npm' -f'- /home/*/.thumbnails/**' -f'- /home/backup/**'"
 #!
 #        rsbid                   backup entire system to usb drive
 #!alias rsbid="sudo rsync -aAXv --delete ${rsyncexclusions} / /run/media/\${USER}/backup/\$(uname -n)"
 alias rsbid="
     #basedir=/run/media/\${USER}
     #dir=\${basedir}/\$(cd \${basedir} && \$(pathcmd ls) -1)/\$(uname -n)
-    basedir=/run/media/\${USER}/Backup
+    basedir=/run/media/\${USER}/backup
     dir=\${basedir}/\$(uname -n)
     if [[ -d \${dir} ]] ; then
         sudo rsync -aAXv --delete-before ${rsyncexclusions} / \${dir}
