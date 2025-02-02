@@ -245,6 +245,7 @@ _download() {
         if [[ -z "${listname}" || "${name}" == "${listname}" ]] ; then
             path="${basedir}/${dir}/${name}"
             cmd="${ytdlp} \
+                --cookies-from-browser firefox \
                 --format-sort 'res:1080,res:720,res:480,vcodec:h264,acodec:m4a' \
                 --playlist-reverse \
                 ${archive} \
