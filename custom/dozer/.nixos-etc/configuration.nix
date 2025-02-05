@@ -938,16 +938,16 @@
     dialog                                  # Display dialog boxes from shell
     dmenu                                   # Generic, highly customizable, and efficient menu for the X Window System
     dunst                                   # Lightweight and customizable notification daemon
-    ##eog                                     # GNOME image viewer
+    eog                                     # GNOME image viewer
     evtest                                  # Simple tool for input event debugging
     eww                                     # Widget system made in Rust to create widgets for any WM
-    gnome.eog                               # GNOME image viewer
-    gnome.gnome-keyring                     # Collection of components in GNOME that store secrets, passwords, keys, certificates and make them available to applications
-    gnome.gnome-settings-daemon             #
+    ##gnome.eog                               # GNOME image viewer
+    ##gnome.gnome-keyring                     # Collection of components in GNOME that store secrets, passwords, keys, certificates and make them available to applications
+    ##gnome.gnome-settings-daemon             #
     gnome.gvfs                              # Virtual Filesystem support library (full GNOME support)
-    gnome.zenity                            # Tool to display dialogs from the commandline and shell scripts
-    ##gnome-keyring                           # Collection of components in GNOME that store secrets, passwords, keys, certificates and make them available to applications
-    ##gnome-settings-daemon                   #
+    ##gnome.zenity                            # Tool to display dialogs from the commandline and shell scripts
+    gnome-keyring                           # Collection of components in GNOME that store secrets, passwords, keys, certificates and make them available to applications
+    gnome-settings-daemon                   #
     gnome-icon-theme                        # Collection of icons for the GNOME 2 desktop
     gnome-themes-extra                      #
     gsimplecal                              # Lightweight calendar application written in C++ using GTK
@@ -975,7 +975,7 @@
     picom                                   # Fork of XCompMgr, a sample compositing manager for X servers
     pmount                                  # Mount removable devices as normal user
     polkit_gnome                            # Dbus session bus service that is used to bring up authentication dialogs
-    psensor                                 # Graphical hardware monitoring application for Linux
+    #psensor                                 # Graphical hardware monitoring application for Linux
     qt6.qmake                               #
     rofi                                    # Window switcher, run dialog and dmenu replacement
     rofimoji                                # Simple emoji and character picker for rofi
@@ -1021,7 +1021,7 @@
     xdg-desktop-portal-gtk                  # Desktop integration portals for sandboxed apps
     xdg-utils                               # Set of command line tools that assist applications with a variety of desktop integration tasks
     yad                                     # GUI dialog tool for shell scripts
-    ##zenity                                  # Tool to display dialogs from the commandline and shell scripts
+    zenity                                  # Tool to display dialogs from the commandline and shell scripts
 
     ## xfce panel
     #xfce.xfce4-panel                        # Panel for the Xfce desktop environment
@@ -1106,7 +1106,7 @@
     grip id3lib                             # GTK-based audio CD player/ripper
     gtkimageview                            # Image viewer widget for GTK
     handbrake libdvdcss libaacs libbluray   # Tool for converting video files and ripping DVDs
-    kdeconnect                              # KDE Connect provides several features to integrate your phone and your computer
+    ##kdeconnect                              # KDE Connect provides several features to integrate your phone and your computer
     libation                                # Audible audiobook manager
     livecaptions                            # Linux Desktop application that provides live captioning
     makemkv                                 # Convert blu-ray and dvd to mkv
@@ -1118,7 +1118,7 @@
     #mtkclient                               #
     mupdf                                   # Lightweight PDF, XPS, and E-book viewer and toolkit written in portable C
     notepadqq                               # Notepad++-like editor for the Linux desktop
-    ##plasma5Packages.kdeconnect-kde          # KDE Connect provides several features to integrate your phone and your computer
+    plasma5Packages.kdeconnect-kde          # KDE Connect provides several features to integrate your phone and your computer
     poppler_utils                           # PDF rendering library
     qmplay2                                 # Qt-based Multimedia player
     rpi-imager                              # Raspberry Pi Imaging Utility
@@ -1229,7 +1229,7 @@
     zoxide                                  # Fast cd command that learns your habits
 
     # internet
-    betterbird                              # Betterbird is a fine-tuned version of Mozilla Thunderbird, Thunderbird on steroids, if you will
+    #betterbird                              # Betterbird is a fine-tuned version of Mozilla Thunderbird, Thunderbird on steroids, if you will
     bore-cli                                # Rust tool to create TCP tunnels
     brave                                   # Privacy-oriented browser for Desktop and Laptop computers
     bruno                                   # Open-source IDE For exploring and testing APIs
@@ -1271,8 +1271,8 @@
     basiliskii                              # 68k Macintosh emulator
     dosbox                                  # DOS emulator
     dosbox-x                                # Cross-platform DOS emulator based on the DOSBox project
-    gnome.gnome-boxes                       # Simple GNOME 3 application to access remote or virtual systems
-    ##gnome-boxes                             # Simple GNOME 3 application to access remote or virtual systems
+    ##gnome.gnome-boxes                       # Simple GNOME 3 application to access remote or virtual systems
+    gnome-boxes                             # Simple GNOME 3 application to access remote or virtual systems
     mame                                    # Multi-purpose emulation framework
     pcem                                    # Emulator for IBM PC computers and clones
     pw3270                                  # 3270 Emulator for gtk

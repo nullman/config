@@ -16553,8 +16553,8 @@ USING is the remaining peg."
   (setopt ellama-naming-scheme 'ellama-generate-name-by-time)
   (setopt ellama-provider
           (make-llm-ollama
-           ;;:chat-model "deepseek-r1:7b"
-           :chat-model "llama3:8b-instruct-q8_0"
+           :chat-model "deepseek-r1:7b"
+           ;;:chat-model "llama3:8b-instruct-q8_0"
            ;;:chat-model "artifish/llama3.2-uncensored:latest"
            :embedding-model "nomic-embed-text"
            :default-chat-non-standard-params '(("num_ctx" . 8192))))

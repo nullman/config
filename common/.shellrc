@@ -275,7 +275,7 @@ fi
 # _command colorscript && colorscript random 2>&1
 
 # # display weather
-# _command curl && curl --silent "wttr.in/92116?uT" 2>&1 | head -n 7
+# _command curl && curl --silent "wttr.in/San+Diego?uT" 2>&1 | head -n 7
 
 # source xprofile if not already and running in X11
 [[ -f "${HOME}/.xprofile" ]] && [[ -n "${DISPLAY}" ]] && [[ -z "$(env | grep '^runpath=.*\.xprofile')" ]] && source "${HOME}/.xprofile"
