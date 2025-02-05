@@ -2,7 +2,7 @@
 basefile="/tmp/conky-weather-report"
 esc=$(printf '\33')
 
-curl --silent "wttr.in/San+Diego?u" | head -n 7 > "${basefile}.txt"
+curl --silent "wttr.in/92116?u" | head -n 7 > "${basefile}.txt"
 
 sed "s/^Weather report: .*$/\${goto 50}\${font MesloLGS Nerd Font:bold:size=16}San Diego\${font}/ ; \
     s/${esc}\[0m/\${font}\${color}/g ; \
@@ -25,7 +25,7 @@ sed "s/^Weather report: .*$/\${goto 50}\${font MesloLGS Nerd Font:bold:size=16}S
 cat "${basefile}.conky"
 
 # # png version [not working]
-# curl --silent "wttr.in/San+Diego?u" | head -n -2 > "${basefile}.txt"
+# curl --silent "wttr.in/92116?u" | head -n -2 > "${basefile}.txt"
 # cat "${basefile}.txt" | aha --black --style 'font-size:1em' > "${basefile}.html"
 # #magick -density 300 "${basefile}.html" "${basefile}.png"
 # #firefox --new-instance --screenshot "${basefile}.png" "file://${basefile}.html"
