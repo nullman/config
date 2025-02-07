@@ -169,6 +169,32 @@ super + alt + ctrl + Next
     light -U 2 && notify-send --expire-time=3000 --replace-id=3 "Brightness: $(light -G | sed 's/\.[0-9]*$//')"
 
 #-------------------------------------------------------------------------------
+# Wooting Lekker Keyboard Media Keys
+#-------------------------------------------------------------------------------
+
+# volume control
+super + Insert
+    pamixer --toggle-mute && notify-send --expire-time=3000 --replace-id=1 "$(pamixer --get-mute | sed 's/false/Unmuted/ ; s/true/Muted/')"
+super + Home
+    pamixer --decrease 2 && notify-send --expire-time=3000 --replace-id=2 "$(pamixer --get-volume | sed 's/^/Volume: /')"
+super + Prior
+    pamixer --increase 2 && notify-send --expire-time=3000 --replace-id=2 "$(pamixer --get-volume | sed 's/^/Volume: /')"
+
+# screen brightness
+super + Print
+    light -A 2 && notify-send --expire-time=3000 --replace-id=3 "Brightness: $(light -G | sed 's/\.[0-9]*$//')"
+super + Pause
+    light -U 2 && notify-send --expire-time=3000 --replace-id=3 "Brightness: $(light -G | sed 's/\.[0-9]*$//')"
+
+# mpc control
+super + Delete
+    mpc prev && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+super + End
+    mpc toggle && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+super + Next
+    mpc next && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+
+#-------------------------------------------------------------------------------
 # System Tools
 #-------------------------------------------------------------------------------
 

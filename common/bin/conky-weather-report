@@ -1,33 +1,18 @@
 #!/usr/bin/env bash
-basefile="/tmp/conky-weather-report"
-esc=$(printf '\33')
+data=$(${HOME}/bin/system-bar-weather full $1)
 
-curl --silent "wttr.in/San+Diego?u" | head -n 7 > "${basefile}.txt"
+icon=$(echo "${data}" | sed -n 1p)
+temp=$(echo "${data}" | sed -n 2p | sed 's/[FC]$//')
+short=$(echo "${data}" | sed -n 3p)
+desc=$(echo "${data}" | sed -n 4p)
+high=`echo "${desc}" | sed 's/^.*High: \\([0-9]\\+\\).*$/\1/'`
+low=`echo "${desc}" | sed 's/^.*Low: \\([0-9]\\+\\).*$/\1/'`
+rest=`echo "${desc}" | sed 's/^.*Low: [0-9]\\+ [FC] //'`
 
-sed "s/^Weather report: .*$/\${goto 50}\${font MesloLGS Nerd Font:bold:size=16}San Diego\${font}/ ; \
-    s/${esc}\[0m/\${font}\${color}/g ; \
-    s/${esc}\[1m/\${font MesloLGS Nerd Font Mono:bold}/g ; \
-    s/${esc}\[38;5;\([0-9]\{3\}\)m/\${color _\1_}/g ; \
-    s/${esc}\[38;5;\([0-9]\{3\}\);1m/\${color _\1_}\${font MesloLGS Nerd Font Mono:bold}/g" \
-    "${basefile}.txt" | \
-    while IFS= read -r line; do
-        echo "${line}" | sed 's/_\([0-9]\{3\}\)_/\n\1\n/g' | \
-            while IFS= read -r token ; do
-                if [[ "${token}" =~ ^[0-9]{3}$ ]] ; then
-                    echo -n "$(/home/user/bin/terminal-color ${token})"
-                else
-                    echo -n "${token}"
-                fi
-            done
-        echo
-    done > "${basefile}.conky"
-
-cat "${basefile}.conky"
-
-# # png version [not working]
-# curl --silent "wttr.in/San+Diego?u" | head -n -2 > "${basefile}.txt"
-# cat "${basefile}.txt" | aha --black --style 'font-size:1em' > "${basefile}.html"
-# #magick -density 300 "${basefile}.html" "${basefile}.png"
-# #firefox --new-instance --screenshot "${basefile}.png" "file://${basefile}.html"
-# chromium --headless --disable-gpu --screenshot="${basefile}.png" "file://${basefile}.html" >/dev/null 2>&1
-# magick "${basefile}.png" -transparent black "${basefile}.png"
+printf "\${color}\${font MesloLGS Nerd Font:bold:size=16}San Diego\${font}\n"
+printf "\${color}\${font MesloLGS Nerd Font:bold:size=64}${icon}\${font}"
+printf "\${voffset -40}\${alignc}\${color}\${font MesloLGS Nerd Font:bold:size=48}${temp}°\${font}\n"
+printf "\${voffset -40}\${alignr}\${color}${short}\n"
+printf "\${alignr}\${color2}High: \${color}${high}°\n"
+printf "\${alignr}\${color2}Low: \${color}${low}°\n"
+printf "\${alignr}\${color}${rest}\n"

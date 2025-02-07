@@ -14,7 +14,7 @@ conky.config = {
   double_buffer = true,
   font = 'MesloLGS Nerd Font Mono:size=12',
   gap_x = 20,
-  gap_y = 40,
+  gap_y = 50,
   minimum_width = 240,
   no_buffers = true,
   own_window = true,
@@ -26,5 +26,5 @@ conky.config = {
   use_xft = true,
 }
 conky.text = [[
-${execpi 1800 ${HOME}/bin/conky-weather-report}
+${execpi 1800 ${HOME}/bin/conky-weather-report 92116}
 ]]
