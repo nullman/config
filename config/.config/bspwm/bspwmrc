@@ -129,6 +129,7 @@ _br 'Org.gnome.Nautilus' desktop=^5 follow=on
 
 # 6: Chat
 bspc desktop 6 --layout tiled
+_br 'quassel' desktop=^6 follow=on
 _br 'Slack' desktop=^6 follow=on
 _br 'discord' desktop=^6 follow=on
 
