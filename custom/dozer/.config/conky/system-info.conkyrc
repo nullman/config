@@ -51,18 +51,18 @@ ${color6}${cpugraph 15,- 333333 FFFFFF}
 #${color Gray}10 [${freq_g 10}] ${cpu 10}% ${cpubar cpu10}
 #${color Gray}11 [${freq_g 11}] ${cpu 11}% ${cpubar cpu11}
 #${color Gray}12 [${freq_g 12}] ${cpu 12}% ${cpubar cpu12}
-${color2}${top name 1}  ${alignr}${top cpu 1}%
-${color2}${top name 2}  ${alignr}${top cpu 2}%
-${color2}${top name 3}  ${alignr}${top cpu 3}%
-${color2}${top name 4}  ${alignr}${top cpu 4}%
+${color}${top name 1}  ${alignr}${top cpu 1}%
+${color}${top name 2}  ${alignr}${top cpu 2}%
+${color}${top name 3}  ${alignr}${top cpu 3}%
+${color}${top name 4}  ${alignr}${top cpu 4}%
 
 # ram
 ${voffset 10}${color}${font MesloLGS Nerd Font:bold:size=12}${font}  ${alignc}${mem} / ${memmax}  ${alignr}${memperc}%
 ${color3}${membar}
-${color2}${top_mem name 1}  ${alignr}${top_mem mem_res 1}
-${color2}${top_mem name 2}  ${alignr}${top_mem mem_res 2}
-${color2}${top_mem name 3}  ${alignr}${top_mem mem_res 3}
-${color2}${top_mem name 4}  ${alignr}${top_mem mem_res 4}
+${color}${top_mem name 1}  ${alignr}${top_mem mem_res 1}
+${color}${top_mem name 2}  ${alignr}${top_mem mem_res 2}
+${color}${top_mem name 3}  ${alignr}${top_mem mem_res 3}
+${color}${top_mem name 4}  ${alignr}${top_mem mem_res 4}
 
 # disk
 ${voffset 10}${color}${font MesloLGS Nerd Font:bold:size=12}󰆼 /${font}  ${alignc}${fs_used /} / ${fs_size /}  ${alignr}${fs_used_perc /}%
