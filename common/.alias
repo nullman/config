@@ -741,7 +741,7 @@ alias ping-dns2="ping 24.31.3.9"
 #        ping-gateway            ping gateway
 alias ping-gateway="ping 24.31.20.1"
 #        ping-nullware           ping nullware
-alias ping-nullware="ping \${nullwareip}"
+alias ping-nullware="ping ${nullwareip}"
 #        ping-google             ping google.com
 alias ping-google="ping google.com"
 #        ping-googleip           ping google.com by ip address
@@ -2315,8 +2315,10 @@ alias scmail="\${HOME}/bin/screen-app mail"
 alias scim="\${HOME}/bin/screen-app im"
 #        scirc                   screen-app irc
 alias scirc="\${HOME}/bin/screen-app irc"
-#        scircm                  screen-app irc (on morpheus)
-alias scircm="screen -t irc 13 ssh morpheus -t '\${HOME}/bin/run-screen -p irc'"
+#        scirc-morpheus          screen-app irc (on morpheus)
+alias scirc-morpheus="screen -t irc 13 ssh morpheus -t '\${HOME}/bin/run-screen -p irc'"
+#        scirc-smith             screen-app irc (on smith)
+alias scirc-smith="screen -t irc 13 ssh smith-direct -t '\${HOME}/bin/run-screen -p irc'"
 #        scweb                   screen-app web
 alias scweb="\${HOME}/bin/screen-app web"
 #        scnews                  screen-app news
@@ -2383,13 +2385,13 @@ alias sc19="\${HOME}/bin/screen-app 19"
 alias sc20="\${HOME}/bin/screen-app 20"
 #!#        sctun                   screen ssh tunnels
 #!alias sctun="
-#!    screen -t shell 31 ssh -C -L 6670:irc.freenode.net:6667 \${nullwareip} && sleep 0.5 && \
-#!      screen -t shell 32 ssh -C -L 8993:imap.gmail.com:993 \${nullwareip} && sleep 0.5 && \
-#!      screen -t shell 33 ssh -C -L 8587:smtp.gmail.com:587 \${nullwareip} && sleep 0.5 && \
-#!      screen -t shell 34 ssh -C -L 8222:crypticspace.com:5222 \${nullwareip}"
-#!    screen -t shell 32 ssh -C -L 8143:morpheus:143 \${nullwareip} && sleep 0.5 && \
-#!      screen -t shell 33 ssh -C -L 8995:pop.gmail.com:995 \${nullwareip} && sleep 0.5 && \
-#!      screen -t shell 35 ssh -C -L 8389:ldap.scheduleworld.com:389 \${nullwareip} && \
+#!    screen -t shell 31 ssh -C -L 6670:irc.freenode.net:6667 ${nullwareip} && sleep 0.5 && \
+#!      screen -t shell 32 ssh -C -L 8993:imap.gmail.com:993 ${nullwareip} && sleep 0.5 && \
+#!      screen -t shell 33 ssh -C -L 8587:smtp.gmail.com:587 ${nullwareip} && sleep 0.5 && \
+#!      screen -t shell 34 ssh -C -L 8222:crypticspace.com:5222 ${nullwareip}"
+#!    screen -t shell 32 ssh -C -L 8143:morpheus:143 ${nullwareip} && sleep 0.5 && \
+#!      screen -t shell 33 ssh -C -L 8995:pop.gmail.com:995 ${nullwareip} && sleep 0.5 && \
+#!      screen -t shell 35 ssh -C -L 8389:ldap.scheduleworld.com:389 ${nullwareip} && \
 
 #
 # service control
@@ -2423,11 +2425,11 @@ alias sftptank="echo 'sftp:tank' ; sftp tank"
 # sftp (external)
 #
 #!#        sftpx                   sftp nullware.com
-#!alias sftpx="echo 'sftp:nullware.com' ; sftp \${nullwareip}"
+#!alias sftpx="echo 'sftp:nullware.com' ; sftp ${nullwareip}"
 #!#        sftpxr                  sftp nullware.com
-#!alias sftpxr="echo 'sftp:nullware.com:root' ; sftp root@\${nullwareip}"
+#!alias sftpxr="echo 'sftp:nullware.com:root' ; sftp root@${nullwareip}"
 #!#        sftpxk                  sftp nullware.com
-#!alias sftpxk="echo 'sftp:nullware.com:kyle' ; sftp kyle@\${nullwareip}"
+#!alias sftpxk="echo 'sftp:nullware.com:kyle' ; sftp kyle@${nullwareip}"
 
 #
 # ssh
@@ -2481,29 +2483,29 @@ alias ssh-trinity="echo 'ssh:trinity' ; ssh trinity"
 # ssh logons (external)
 #
 #!#        sshx                  ssh nullware.com
-#!alias sshx="echo 'ssh:nullware.com' ; ssh \${nullwareip}"
+#!alias sshx="echo 'ssh:nullware.com' ; ssh ${nullwareip}"
 #!#        sshxr                 ssh nullware.com
-#!alias sshxr="echo 'ssh:nullware.com:root' ; ssh -l root \${nullwareip}"
+#!alias sshxr="echo 'ssh:nullware.com:root' ; ssh -l root ${nullwareip}"
 #!#        sshxk                 ssh nullware.com
-#!alias sshxk="echo 'ssh:nullware.com:kyle' ; ssh -l kyle \${nullwareip}"
+#!alias sshxk="echo 'ssh:nullware.com:kyle' ; ssh -l kyle ${nullwareip}"
 #        ssh-nullware            ssh nullware.com
-alias ssh-nullware="echo 'ssh:kyle@nullware.com' ; ssh kyle@\${nullwareip}"
+alias ssh-nullware="echo 'ssh:kyle@nullware.com' ; ssh kyle@${nullwareip}"
 #        ssh-roguery             ssh -p 1337 nullman@roguery.xibb.net
 alias ssh-roguery="echo 'nullman@roguery.xibb.net' ; ssh -p 1337 nullman@roguery.xibb.net"
 #!#
 #!# ssh tunnels (external)
 #!#
 #!#        ssh-tunnel-irc          ssh tunnel irc (freenode.net)
-#!alias ssh-tunnel-irc="ssh -L 6670:irc.freenode.net:6667 \${nullwareip}"
-#!#!alias ssh-tunnel-irc="ssh -L 6667:irc.freenode.net:6667 \${nullwareip}"
+#!alias ssh-tunnel-irc="ssh -L 6670:irc.freenode.net:6667 ${nullwareip}"
+#!#!alias ssh-tunnel-irc="ssh -L 6667:irc.freenode.net:6667 ${nullwareip}"
 #!#        ssh-tunnel-imap         ssh tunnel imap (home)
-#!alias ssh-tunnel-imap="ssh -L 8143:morpheus:143 \${nullwareip}"
+#!alias ssh-tunnel-imap="ssh -L 8143:morpheus:143 ${nullwareip}"
 #!#        ssh-tunnel-gmail        ssh tunnel gmail pop
-#!alias ssh-tunnel-gmail="ssh -L 8995:pop.gmail.com:995 \${nullwareip}"
+#!alias ssh-tunnel-gmail="ssh -L 8995:pop.gmail.com:995 ${nullwareip}"
 #!#        ssh-tunnel-ldap         ssh tunnel scheduleworld ldap
-#!alias ssh-tunnel-ldap="ssh -L 8389:ldap.scheduleworld.com:389 \${nullwareip}"
+#!alias ssh-tunnel-ldap="ssh -L 8389:ldap.scheduleworld.com:389 ${nullwareip}"
 #!#        ssh-tunnel-sshw         ssh tunnel ssh through work pc
-#!alias ssh-tunnel-sshw="ssh -L 2222:\${nullwareip}:22 kyle-work"
+#!alias ssh-tunnel-sshw="ssh -L 2222:${nullwareip}:22 kyle-work"
 
 #
 # ssh run commands

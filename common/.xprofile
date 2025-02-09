@@ -91,6 +91,9 @@ if [[ -n "$(pgrep -x i3)" ]] || [[ -n "$(pgrep -x bspwm)" ]] ; then
     export _JAVA_AWT_WM_NONREPARENTING=1
 fi
 
+# use qt5ct for Qt themeing
+export QT_QPA_PLATFORMTHEME="qt5ct"
+
 # restore rotation
 #[[ -x ${HOME}/.raspad-rotate-restore ]] && ${HOME}/.raspad-rotate-restore
 

@@ -120,6 +120,7 @@ videolist=(
     "John Travolta and Olivia Newton John - You're the One that I Want   | https://www.youtube.com/watch?v=itRFjzQICJU"
     "KNULP - Wish You Were Here (Pink Floyd Cover)                       | https://www.youtube.com/watch?v=-jqXZTxLzPo"
     "Kate Bush - Running Up that Hill                                    | https://www.youtube.com/watch?v=wp43OdtAAkM"
+    "Katy Perry - California Gurls (Feat. Snoop Dogg)                    | https://www.youtube.com/watch?v=F57P9C4SAW4"
     "Kenny Loggins - Footloose                                           | https://www.youtube.com/watch?v=ltrMfT4Qz5Y"
     "Kim Carnes - Bette Davis Eyes                                       | https://www.youtube.com/watch?v=EPOIS5taqA8"
     "Kool & The Gang - Celebration                                       | https://www.youtube.com/watch?v=3GwjfUFyY6M"
@@ -298,7 +299,7 @@ fetch() {
 }
 
 fetch "${basedir}/Video" "${videolist[@]}"
-fetch "${basedir}/Ambient" "${ambientlist[@]}"
+fetch "${basedir}/Ambient/General" "${ambientlist[@]}"
 
 exit 0
 

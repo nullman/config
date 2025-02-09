@@ -9,7 +9,8 @@
 #   key1 = value1
 #   key2 = value2
 #
-# Required tools:
+# Required utilities:
+#   rofi
 #   xdo
 #
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>

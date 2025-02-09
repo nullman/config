@@ -225,8 +225,13 @@ super + ctrl + b
 
 # equalize windows in current desktop
 super + ctrl + e
-    bspc node @/ --equalize && \\
+    bspc node @/ --equalize && \
     notify-send --expire-time=3000 'Windows Equalized'
+
+# rotate windows in current desktop
+super + ctrl + r
+    bspc node @/ --rotate 90 && \
+    notify-send --expire-time=3000 'Windows Rotated'
 
 # # move a floating window
 # super + ctrl + {Up,Down,Left,Right}

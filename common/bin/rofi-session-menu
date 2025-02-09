@@ -4,6 +4,9 @@
 #
 # Present a Window Manager Session Menu using rofi.
 #
+# Required utilities:
+#   rofi
+#
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 # Original Author: manjaro-openbox-scripts:rofr.sh
 #===============================================================================

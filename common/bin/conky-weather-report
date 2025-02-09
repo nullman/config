@@ -10,9 +10,9 @@ low=`echo "${desc}" | sed 's/^.*Low: \\([0-9]\\+\\).*$/\1/'`
 rest=`echo "${desc}" | sed 's/^.*Low: [0-9]\\+ [FC] //'`
 
 printf "\${color}\${font MesloLGS Nerd Font:bold:size=16}San Diego\${font}"
-printf "\${alignr}\${color}\${font MesloLGS Nerd Font:bold:size=56}${temp}°\${font}\n"
+printf "\${alignr}\${color}\${font MesloLGS Nerd Font:bold:size=64}${temp}°\${font}\n"
 printf "\${voffset -40}\${color}\${font MesloLGS Nerd Font:bold:size=64}${icon}\${font}"
-printf "\${voffset -20}\${alignr}\${color}${short}\n"
+printf "\${voffset -10}\${alignr}\${color}${short}\n"
 printf "\${alignr}\${color2}High: \${color}${high}°\n"
 printf "\${alignr}\${color2}Low: \${color}${low}°\n"
 printf "\${color}${rest}\n"

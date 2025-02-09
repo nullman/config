@@ -892,6 +892,7 @@
     iwgtk                                   # Lightweight, graphical wifi management utility for Linux
     keychain                                # Keychain management tool
     #libsForQt5.qt5.qttools                  # Cross-platform application framework for C++
+    libsForQt5.qt5ct                        # Qt5 Configuration Tool
     lightdm                                 # Cross-desktop display manager
     lightdm-slick-greeter                   # Slick-looking LightDM greeter
     lxappearance                            # Lightweight program for configuring the theme and fonts of gtk applications
@@ -1186,6 +1187,7 @@
     #nyxt                                    # Infinitely extensible web-browser (with Lisp development files using WebKitGTK platform port)
     #opensnitch opensnitch-ui                # Application firewall
     #pidgin                                  # Multi-protocol instant messaging client
+    #quasselClient                           # Qt/KDE distributed IRC client supporting a remote daemon
     #slack                                   # Desktop client for Slack
     #simplex-chat-desktop                    # Desktop application for SimpleX Chat
     #sparkleshare                            # Share and collaborate by syncing with any Git repository instantly. Linux, macOS, and Windows

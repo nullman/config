@@ -7,7 +7,7 @@
 # Symbols:  ☰  |    | ✂ ⎘ 󰄶   󰅌 󰅍 󰨸 󱉥 󱉦 󱉧 󱉨 󱉫 󱉬  | 
 # Symbols: 󰍹    |  |    󱇠  | 󰆧 |  |   󰝚 | 󰛇 | 󰃃 󰃀 | 󰯫 󰈍   󰀬  ꓴ
 #
-# Required tools:
+# Required utilities:
 #   cool-retro-term
 #   curl
 #   dosbox
@@ -391,14 +391,13 @@ case "${menu}" in
     ssh)
         if [[ $# -lt 2 ]] ; then
             servers=(
-                "user@morpheus"
                 "user@mouse"
-                "user@nullware"
-                "user@switch"
+                "user@smith-direct"
+                "user@switch-direct"
                 "pi@pimodem"
                 "pi@raspad"
                 "pi@raspad-usb"
-                "pi@retropie"
+                "kyle@159.203.165.79"
             )
             sel=$(printf "%s\n" "${servers[@]}" | rofi -dmenu -i -p "	SSH")
         else
@@ -424,11 +423,11 @@ case "${menu}" in
     vnc)
         if [[ $# -lt 2 ]] ; then
             servers=(
-                "switch"
                 "pimodem"
                 "raspad"
                 "raspad-usb"
-                "retropie"
+                "switch-direct"
+                "smith-direct"
             )
             sel=$(printf "%s\n" "${servers[@]}" | rofi -dmenu -i -p "󰛇	VNC")
         else
