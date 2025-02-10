@@ -37,7 +37,7 @@ ChatLine#invite { foreground: #9a9996; }
 
 // Sender Colors
 Palette {
-    sender-color-self: #000000;
+    sender-color-self: #f8e45c;
     sender-color-00: #cc0000;
     sender-color-01: #006cad;
     sender-color-02: #4d9900;
