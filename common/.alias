@@ -1301,12 +1301,6 @@ alias cdemm="cd \${HOME}/.emacs.d/modules"
 alias cddl="cd \${HOME}/Downloads"
 #        cdb                     cd ~/bin
 alias cdb="cd \${HOME}/bin"
-#        cdcode                  cd ~/code
-alias cdcode="cd \${HOME}/code"
-#        cdgithub                cd ~/code/github-nullman
-alias cdgithub="cd \${HOME}/code/github-nullman"
-#!#        cdgitlab                cd ~/code/gitlab-kylesherman
-#!alias cdgitlab="cd \${HOME}/code/gitlab-kylesherman"
 #        cddoc                   cd ~/doc
 alias cddoc="cd \${HOME}/doc"
 #        cddev                   cd ~/dev
@@ -1319,6 +1313,12 @@ alias cdo="cd \${HOME}/org"
 alias cdprj="cd \${HOME}/prj"
 #        cdprjjs                 cd ~/prj/javascript
 alias cdprjjs="cd \${HOME}/prj/javascript"
+#        cdsrc                   cd ~/src
+alias cdsrc="cd \${HOME}/src"
+#        cdgithub                cd ~/src/github-nullman
+alias cdgithub="cd \${HOME}/src/github-nullman"
+#!#        cdgitlab                cd ~/src/gitlab-kylesherman
+#!alias cdgitlab="cd \${HOME}/src/gitlab-kylesherman"
 #        cdt                     cd ~/tmp
 alias cdt="cd \${HOME}/tmp"
 #        cd_                     cd ~/tmp/_____
@@ -3727,7 +3727,7 @@ alias make-dict-words="sudo wget https://gist.githubusercontent.com/wchargin/892
 #
 #        x16-setup               git clone commander x16 repos and make
 alias x16-setup="
-    basedir=\${HOME}/code
+    basedir=\${HOME}/src
     cc65dir=\${basedir}/cc65
     x16dir=\${basedir}/commander-x16
     (
@@ -3747,7 +3747,7 @@ alias x16-setup="
     )"
 #        x16-update              git pull commander x16 repos and make
 alias x16-update="
-    basedir=\${HOME}/code
+    basedir=\${HOME}/src
     cc65dir=\${basedir}/cc65
     x16dir=\${basedir}/commander-x16
     (
@@ -3763,7 +3763,7 @@ alias x16-update="
     )"
 #        x16-emu                 commander x16 emulator
 #!alias x16-emu="x16emu -rom /usr/share/x16-rom/rom.bin"
-alias x16-emu="x16emu -rom \${HOME}/code/commander-x16/x16-rom/rom.bin"
+alias x16-emu="x16emu -rom \${HOME}/srcCode/commander-x16/x16-rom/rom.bin"
 
 #!
 #!==============================================================================

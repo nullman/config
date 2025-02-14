@@ -10,7 +10,7 @@
 basedir="/mnt/synology/video/Music"
 #basedir="${HOME}/synology/video/Music"
 ytdlp="$(command -v yt-dlp)"
-#ytdlp="${HOME}/code/yt-dlp/yt-dlp"
+#ytdlp="${HOME}/src/yt-dlp/yt-dlp"
 
 videolist=(
     "'Til Tuesday - Voices Carry                                         | https://www.youtube.com/watch?v=uejh-bHa4To"

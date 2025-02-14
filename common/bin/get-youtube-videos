@@ -10,7 +10,7 @@
 basedir="/mnt/synology/video"
 #basedir="${HOME}/synology/video"
 ytdlp="$(command -v yt-dlp)"
-#ytdlp="${HOME}/code/yt-dlp/yt-dlp"
+#ytdlp="${HOME}/src/yt-dlp/yt-dlp"
 
 channels=(
     "Computer/Demo        | Commodore 64 Demos                           | https://www.youtube.com/playlist?list=PLnmLOQIDmUvVn43FHdakSTY_W_EuoVwnT"

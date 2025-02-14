@@ -144,8 +144,8 @@
       #stow = prev.callPackage /home/user/.nixos/pkgs/stow {};
       syncterm = prev.callPackage /home/user/.nixos/pkgs/syncterm {};
       #x48 = prev.callPackage /home/user/.nixos/pkgs/x48 {};
-      #bspwm = prev.callPackage /home/user/code/github-nullman/bspwm {};
-      #services.xserver.windowManager.bspwm = prev.callPackage /home/user/code/nixpkgs/pkgs/applications/window-managers/bspwm.nix {};
+      #bspwm = prev.callPackage /home/user/src/github-nullman/bspwm {};
+      #services.xserver.windowManager.bspwm = prev.callPackage /home/user/src/nixpkgs/pkgs/applications/window-managers/bspwm.nix {};
     })
   ];
 
