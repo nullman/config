@@ -12,20 +12,21 @@
 
 { pkgs ? import <nixpkgs> {} }:
 
-let e = pkgs.buildFHSEnv {
-      name = "gcc-ia16-build-env";
-      pkgs.overlays = [
-        (final: prev: {
-          binutils-ia16 = prev.callPackage /home/kyle/.nixos/pkgs/binutils-ia16 {};
-          gcc-ia16 = prev.callPackage /home/kyle/.nixos/pkgs/gcc-ia16 {};
-        })
-      ];
-      targetPkgs = pkgs: with pkgs; [
-        binutils-ia16
-        gcc-ia16
-        glibc
-      ];
-    };
+let
+  e = pkgs.buildFHSEnv {
+    name = "gcc-ia16-build-env";
+    pkgs.overlays = [
+      (final: prev: {
+        binutils-ia16 = prev.callPackage /home/user/.nixos/pkgs/binutils-ia16 {};
+        gcc-ia16 = prev.callPackage /home/user/.nixos/pkgs/gcc-ia16 {};
+      })
+    ];
+    targetPkgs = pkgs: with pkgs; [
+      binutils-ia16
+      gcc-ia16
+      glibc
+    ];
+  };
 in e.env
 
 #===============================================================================

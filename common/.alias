@@ -2594,8 +2594,10 @@ alias vncsk="vncserver -kill :1"
 #!alias winetricks-update="wget http://www.kegel.com/wine/winetricks -O \${HOME}/bin/vendor/winetricks"
 #        wine-amiga-forever      wine retro amiga forever
 alias wine-amiga-forever="WINEPREFIX=${HOME}/.wine-amiga-forever wine explorer \"C:\Program Files/Cloanto/Amiga Forever/AmigaForever.exe\" &"
-#        wine-aol                wine retro aol
-alias wine-aol="WINEPREFIX=${HOME}/.wine-aol wine explorer \"C:\Program Files (x86)/Re-AOL\AOL.EXE\" &"
+#!#        wine-aol                wine retro aol
+#!alias wine-aol="WINEPREFIX=${HOME}/.wine-aol wine explorer \"C:\Program Files (x86)\Re-AOL\AOL.EXE\" &"
+#        wine-aol                wine nina aol
+alias wine-aol="WINEPREFIX=${HOME}/.wine-aol wine explorer \"C:\users\user\AppData\Local\AOL\AIM\aim.exe\" &"
 #        wine-bookshelf          wine microsoft bookshelf 2000
 alias wine-bookshelf="WINEPREFIX=${HOME}/.wine-bookshelf2000 wine \"C:\Program Files (x86)\Microsoft Reference\Bookshelf 2000\bshelf2k.exe\" &"
 #        wine-civ                wine civilization
@@ -2914,10 +2916,18 @@ alias nix-scp-index-to-mouse="scp -r .cache/nix-index mouse:/home/user/.cache/"
 #
 #        nix-shell-development   nix-shell ~/.nixos/development-build-env.nix
 alias nix-shell-development="nix-shell \${HOME}/.nixos/development-build-env.nix"
+#!#        nix-shell-ruby          nix-shell with ruby packages
+#!alias nix-shell-ruby="nix-shell -p \"ruby.withPackages (ps: with ps; [ \
+#!        nokogiri \
+#!    ])\""
 #        nix-shell-ruby          nix-shell with ruby packages
-alias nix-shell-ruby="nix-shell -p \"ruby.withPackages (ps: with ps; [ nokogiri ])\""
+alias nix-shell-ruby="nix-shell \${HOME}/.nixos/ruby-env/ruby-env.nix"
+#!#        nix-run-ruby            nix-shell --run with ruby packages
+#!alias nix-run-ruby="nix-shell -p \"ruby.withPackages (ps: with ps; [ \
+#!        nokogiri \
+#!    ])\" --run"
 #        nix-run-ruby            nix-shell --run with ruby packages
-alias nix-run-ruby="nix-shell -p \"ruby.withPackages (ps: with ps; [ nokogiri ])\" --run"
+alias nix-run-ruby="nix-shell \${HOME}/.nixos/ruby-env/ruby-env.nix --run"
 #
 # NixOS Run Applications
 #

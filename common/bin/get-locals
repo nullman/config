@@ -34,13 +34,15 @@
 $VERBOSE = true;
 
 # requires
-require 'rubygems'
-require 'fileutils'
-require 'tempfile'
-require 'net/http'
-require 'open-uri'
-require 'nokogiri'
+#require 'cloudflare_clearance'
 require 'cgi/escape'
+require 'fileutils'
+require 'mechanize'
+require 'net/http'
+require 'nokogiri'
+require 'open-uri'
+require 'rubygems'
+require 'tempfile'
 
 $config_file = "#{Dir.home}/.locals"
 $html_header = '<!DOCTYPE html>' + "\n" + '<html xmlns="http://www.w3.org/1999/xhtml" lang="en">'
@@ -164,6 +166,9 @@ system('mkdir', '-p', $posts_dir)
 #$post_list_file = Tempfile.new('post_list_file')
 $post_list_file = "#{$posts_dir}/post_list_file"
 
+$agent = Mechanize.new
+#$clearance = nil
+
 def save_cookies(cookies)
   file = File.open($cookie_file, 'w')
   File.chmod(0600, file)
@@ -181,20 +186,41 @@ def load_cookies()
   return cookies.join('; ')
 end
 
+# def login()
+#   if !File.exist?($cookie_file) then
+#     puts('Logging in...')
+#     response = Net::HTTP.post_form(URI($auth_url), 'username' => $username, 'password' => $password)
+#     if response.is_a?(Net::HTTPSuccess) then
+#       puts('Successful login')
+#       save_cookies(response.get_fields('set-cookie'))
+#     else
+#       puts('Error logging in')
+#       if File.exist?($cookie_file) then
+#         File.delete($cookie_file)
+#       end
+#       exit 1
+#     end
+#   end
+# end
+
+# def clearance()
+#   url = "#{$base_url}/newsfeed"
+#   driver = CloudflareClearance::Driver::Selenium.new
+#   $clearance = CloudflareClearance::Clearance.new(url, driver: driver)
+# end
+
 def login()
-  if !File.exist?($cookie_file) then
-    puts('Logging in...')
-    response = Net::HTTP.post_form(URI($auth_url), 'username' => $username, 'password' => $password)
-    if response.is_a?(Net::HTTPSuccess) then
-      puts('Successful login')
-      save_cookies(response.get_fields('set-cookie'))
-    else
-      puts('Error logging in')
-      if File.exist?($cookie_file) then
-        File.delete($cookie_file)
-      end
-      exit 1
-    end
+  page = $agent.get($auth_url)
+  form = page.form_with(:id => "loginForm")
+  form.field_with(:id => "username").value = $username
+  form.field_with(:id => "password").value = $password
+  response = $agent.submit(form)
+  if response.is_a?(Net::HTTPSuccess) then
+    puts('Successful login')
+    #clearance()
+  else
+    puts('Error logging in')
+    exit 1
   end
 end
 
@@ -228,10 +254,9 @@ def fetch_post_urls()
   file = File.open($post_list_file, 'w') {}
   # TODO: Add support for $count = 'all' and $count = 'missing'
   while !url.empty? && line_count($post_list_file) < $count do
-    puts("URL: #{url}")
     file = File.open($post_list_file, 'a')
-    #sleep(10)                            # prevent 429 Too Many Requests error
-    doc = Nokogiri::HTML(URI.open(url, 'User-Agent' => $user_agent, 'Cookie' => cookies))
+    #doc = Nokogiri::HTML(URI.open(url, 'User-Agent' => $user_agent, 'Cookie' => cookies))
+    doc = Nokogiri::HTML($agent.get(url))
     doc.xpath("//div/@data-post-url").each do |link|
       puts("Link: #{link.content}")
       file.puts(link.content)
@@ -441,9 +466,8 @@ def fetch_posts()
     end
 
     post_name = url.sub(/^.*\/([^\/]*)$/, '\1')
-    #sleep(10)                            # prevent 429 Too Many Requests error
-    puts("URL: #{url}")
-    doc = Nokogiri::HTML(URI.open(url, 'User-Agent' => $user_agent, 'Cookie' => cookies))
+    #doc = Nokogiri::HTML(URI.open(url, 'User-Agent' => $user_agent, 'Cookie' => cookies))
+    doc = Nokogiri::HTML($agent.get(url))
     id = doc.xpath("//div/@data-id").first.content.strip
 
     puts("Post ID: #{id}, URL: #{url}")

@@ -209,7 +209,7 @@ _br 'windows-11' state=fullscreen
 _br 'About Pale Moon' state=floating center=true
 _br 'alsamixer' state=floating center=true
 _br 'arandr' state=floating center=true
-_br 'Audacious' state=floating sticky=true
+_br 'Audacious' state=floating sticky=true center=false
 _br 'balena-etcher-electron' state=floating center=true
 _br 'BasiliskII' state=floating center=true
 _br '.blueman-manager-wrapped' state=floating center=true

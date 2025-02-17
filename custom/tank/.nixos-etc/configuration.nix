@@ -91,38 +91,14 @@
     nvidia.acceptLicense = true;
     joypixels.acceptLicense = true;
     permittedInsecurePackages = [
-      "betterbird-115.9.0"
-      "betterbird-unwrapped-115.9.0"
-      "electron-12.2.3"
-      "electron-24.8.6"
       "olm-3.2.16"
-      "openssl-1.1.1w"
     ];
     packageOverrides = pkgs: {
       nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
         inherit pkgs;
       };
-      # ruby = pkgs.ruby.withPackages (p: with p; [ nokogiri ]) {
-      #   inherit pkgs;
-      # };
     };
   };
-  nixpkgs.overlays = [
-    (final: prev: {
-      binutils-ia16 = prev.callPackage /home/user/.nixos/pkgs/binutils-ia16 {};
-      crexx = prev.callPackage /home/user/.nixos/pkgs/crexx {};
-      djgpp_i586 = prev.callPackage /home/user/.nixos/pkgs/djgpp { targetArchitecture = "i586"; };
-      djgpp_i686 = prev.callPackage /home/user/.nixos/pkgs/djgpp { targetArchitecture = "i686"; };
-      gcc-ia16 = prev.callPackage /home/user/.nixos/pkgs/gcc-ia16 {};
-      #mtkclient = prev.callPackage /home/user/.nixos/pkgs/mtkclient {};
-      play = prev.callPackage /home/user/.nixos/pkgs/play {};
-      #stow = prev.callPackage /home/user/.nixos/pkgs/stow {};
-      syncterm = prev.callPackage /home/user/.nixos/pkgs/syncterm {};
-      #x48 = prev.callPackage /home/user/.nixos/pkgs/x48 {};
-      #bspwm = prev.callPackage /home/user/src/github-nullman/bspwm {};
-      #services.xserver.windowManager.bspwm = prev.callPackage /home/user/src/nixpkgs/pkgs/applications/window-managers/bspwm.nix {};
-    })
-  ];
 
   # time zone
   time.timeZone = "US/Pacific";
@@ -304,6 +280,24 @@
       "/var/tmp"
     ];
   };
+  # package overlays
+
+  nixpkgs.overlays = [
+    (final: prev: {
+      binutils-ia16 = prev.callPackage /home/user/.nixos/pkgs/binutils-ia16 {};
+      crexx = prev.callPackage /home/user/.nixos/pkgs/crexx {};
+      djgpp_i586 = prev.callPackage /home/user/.nixos/pkgs/djgpp { targetArchitecture = "i586"; };
+      djgpp_i686 = prev.callPackage /home/user/.nixos/pkgs/djgpp { targetArchitecture = "i686"; };
+      gcc-ia16 = prev.callPackage /home/user/.nixos/pkgs/gcc-ia16 {};
+      #mtkclient = prev.callPackage /home/user/.nixos/pkgs/mtkclient {};
+      play = prev.callPackage /home/user/.nixos/pkgs/play {};
+      #rubyPackages.mechanize = prev.callPackage /home/user/.nixos/pkgs/rubyPackages/mechanize {};
+      syncterm = prev.callPackage /home/user/.nixos/pkgs/syncterm {};
+      #x48 = prev.callPackage /home/user/.nixos/pkgs/x48 {};
+      #bspwm = prev.callPackage /home/user/src/github-nullman/bspwm {};
+      #services.xserver.windowManager.bspwm = prev.callPackage /home/user/src/nixpkgs/pkgs/applications/window-managers/bspwm.nix {};
+    })
+  ];
 
   # nvidia
   services.xserver.videoDrivers = [ "nvidia" ];
@@ -1277,6 +1271,7 @@
     binutils                                # Tools for manipulating binaries (linker, assembler, etc.) (wrapper script)
     binutils-ia16                           #
     bison                                   # Yacc-compatible parser generator
+    bundix                                  # Creates Nix packages from Gemfiles
     cc65                                    # C compiler for processors of 6502 family
     ccache                                  # Compiler cache for fast recompilation of C/C++ code
     clang                                   # C language family frontend for LLVM (wrapper script)
@@ -1326,7 +1321,9 @@
     racket                                  # Programmable programming language
     regina                                  # REXX interpreter
     ruby                                    # Object-oriented language for quick and easy programming
-    rubyPackages.nokogiri                   #
+    #rubyPackages.cloudflare_clearance       #
+    #rubyPackages.mechanize                  #
+    #rubyPackages.nokogiri                   #
     rustc                                   # Safe, concurrent, practical language (wrapper script)
     shellcheck                              # Shell script analysis tool
     tokei                                   # Program that allows you to count your code, quickly
