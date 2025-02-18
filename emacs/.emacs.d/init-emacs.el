@@ -5484,7 +5484,7 @@ heading, properties, source block with title comment, and test block."
 
 (use-package org-visibility
   :straight t
-  ;;:load-path (lambda () (file-truename (expand-file-name "~/code/github-nullman/emacs-org-visibility")))
+  ;;:load-path (lambda () (file-truename (expand-file-name "~/src/github-nullman/emacs-org-visibility")))
   :after (org)
   :demand t
   :bind* (:map org-visibility-mode-map
@@ -5493,7 +5493,7 @@ heading, properties, source block with title comment, and test block."
   :custom
   ;; list of directories and files to automatically persist and restore visibility state of
   (org-visibility-include-paths `(,(file-truename "~/.emacs.d/init-emacs.org")
-                                  ,(file-truename "~/code/github-nullman")
+                                  ,(file-truename "~/src/github-nullman")
                                   ,(file-truename "~/dev")
                                   ,(file-truename "~/doc/bbs")
                                   ,(file-truename "~/org")
@@ -16801,7 +16801,7 @@ USING is the remaining peg."
 (init-message 2 "Packages: game-master-assistant")
 
 (use-package game-master-assistant
-  :load-path (lambda () (file-truename (expand-file-name "~/code/github-nullman/emacs-game-master-assistant")))
+  :load-path (lambda () (file-truename (expand-file-name "~/src/github-nullman/emacs-game-master-assistant")))
   :commands (game-master-assistant-random-query))
 
 (defun game-master-assistant-insert-names (arg)
@@ -18469,7 +18469,7 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
   ;; enable projectile globally
   (projectile-mode)
   :config
-  (dolist (x '("~/dev" "~/code" "~/web"))
+  (dolist (x '("~/dev" "~/src" "~/web"))
     (when (file-directory-p x)
       (add-to-list 'projectile-project-search-path x))))
 
@@ -21509,9 +21509,9 @@ Commands:
                     ("bbs" . "~/doc/bbs")
                     ("dev" . "~/dev")
                     ("prj" . "~/prj")
-                    ("code" . "~/code")
-                    ("github" . "~/code/github-nullman")
-                    ;;("gitlab" . "~/code/gitlab-kylesherman")
+                    ("src" . "~/src")
+                    ("github" . "~/src/github-nullman")
+                    ;;("gitlab" . "~/src/gitlab-kylesherman")
                     ("media" . "/home/data/media")
                     ("music" . "/home/data/media/Audio/Music")
                     ("text" . "/home/data/media/Text")
