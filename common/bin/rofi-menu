@@ -391,8 +391,8 @@ case "${menu}" in
     ssh)
         if [[ $# -lt 2 ]] ; then
             servers=(
+                "user@kali-direct"
                 "user@mouse"
-                "user@smith-direct"
                 "user@switch-direct"
                 "pi@pimodem"
                 "pi@raspad"
@@ -423,11 +423,11 @@ case "${menu}" in
     vnc)
         if [[ $# -lt 2 ]] ; then
             servers=(
+                "kali-direct"
                 "pimodem"
                 "raspad"
                 "raspad-usb"
                 "switch-direct"
-                "smith-direct"
             )
             sel=$(printf "%s\n" "${servers[@]}" | rofi -dmenu -i -p "󰛇	VNC")
         else

@@ -720,6 +720,8 @@ alias ping-choi="ping 192.168.1.38"
 alias ping-choi-direct="ping 192.168.1.39"
 #        ping-dozer              ping dozer
 alias ping-dozer="ping 192.168.1.40"
+#        ping-smith           ping smith
+alias ping-smith="ping 192.168.1.42"
 #        ping-switch             ping switch
 alias ping-switch="ping 192.168.1.44"
 #        ping-mouse              ping mouse
@@ -728,10 +730,10 @@ alias ping-mouse="ping 192.168.1.50"
 alias ping-raspad="ping 192.168.1.54"
 #        ping-raspad-usb         ping raspad-usb
 alias ping-raspad-usb="ping 192.168.1.55"
-#        ping-smith           ping smith
-alias ping-smith="ping 192.168.1.56"
-#        ping-smith-direct    ping smith-direct
-alias ping-smith-direct="ping 192.168.1.57"
+#        ping-kali               ping kali
+alias ping-kali="ping 192.168.1.56"
+#        ping-kali-direct        ping kali-direct
+alias ping-kali-direct="ping 192.168.1.57"
 #        ping-retro              ping retro
 alias ping-retro="ping 192.168.1.62"
 #        ping-dns1               ping dns server 1
@@ -2317,8 +2319,8 @@ alias scim="\${HOME}/bin/screen-app im"
 alias scirc="\${HOME}/bin/screen-app irc"
 #        scirc-morpheus          screen-app irc (on morpheus)
 alias scirc-morpheus="screen -t irc 13 ssh morpheus -t '\${HOME}/bin/run-screen -p irc'"
-#        scirc-smith             screen-app irc (on smith)
-alias scirc-smith="screen -t irc 13 ssh smith-direct -t '\${HOME}/bin/run-screen -p irc'"
+#        scirc-kali              screen-app irc (on kali)
+alias scirc-kali="screen -t irc 13 ssh kali-direct -t '\${HOME}/bin/run-screen -p irc'"
 #        scweb                   screen-app web
 alias scweb="\${HOME}/bin/screen-app web"
 #        scnews                  screen-app news
@@ -2470,8 +2472,8 @@ alias ssh-mouse="echo 'ssh:mouse' ; ssh mouse"
 alias ssh-pimodem="echo 'ssh:pi@pimodem' ; ssh pi@pimodem"
 #        ssh-raspad              ssh raspad
 alias ssh-raspad="echo 'ssh:raspad-usb' ; ssh pi@raspad-usb"
-#        ssh-smith               ssh smith
-alias ssh-smith="echo 'ssh:smith' ; ssh smith-direct"
+#        ssh-kali                ssh kali
+alias ssh-kali="echo 'ssh:kali' ; ssh kali-direct"
 #        ssh-synology            ssh synology
 alias ssh-synology="echo 'ssh:synology' ; ssh kyle-admin@synology"
 #        ssh-switch              ssh switch

@@ -1092,6 +1092,7 @@
     fontpreview                             # Highly customizable and minimal font previewer written in bash
     fontforge-gtk                           # Font editor
     gcal                                    # Program for calculating and printing calendars
+    geekbench                               # Cross-platform benchmark
     glmark2                                 # OpenGL (ES) 2.0 benchmark
     #gnome.file-roller                       # Archive manager for the GNOME desktop environment
     gnome-frog                              # Intuitive text extraction tool (OCR) for GNOME desktop
@@ -1349,9 +1350,6 @@
     racket                                  # Programmable programming language
     regina                                  # REXX interpreter
     ruby                                    # Object-oriented language for quick and easy programming
-    #rubyPackages.cloudflare_clearance       #
-    #rubyPackages.mechanize                  #
-    #rubyPackages.nokogiri                   #
     rustc                                   # Safe, concurrent, practical language (wrapper script)
     shellcheck                              # Shell script analysis tool
     tokei                                   # Program that allows you to count your code, quickly

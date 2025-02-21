@@ -20,4 +20,4 @@ file:///home/data/media/Text/Books Books
 file:///home/data/media/Text/Magazines Magazines
 file:///home/data/media/Text/Manuals Manuals
 file:///mnt/synology mnt:synology
-sftp://smith-direct/home/virtual1403/output sftp:virtual1403
+sftp://kali-direct/home/virtual1403/output sftp:virtual1403

@@ -134,7 +134,7 @@ ChatLine::nick[sender="0f"]   { foreground: palette(sender-color-0f); }
 
 // BufferView Colors
 ChatListItem { foreground: #deddda; }
-ChatListItem[state="inactive"] { foreground: #3d3846; }
+ChatListItem[state="inactive"] { foreground: #77767b; }
 ChatListItem[state="channel-event"] { foreground: #57e389; }
 ChatListItem[state="unread-message"] { foreground: #62a0ea; }
 ChatListItem[state="highlighted"] { foreground: #ffa348; }
