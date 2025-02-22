@@ -1663,18 +1663,56 @@ rsync-install() {
     syncdir 'Hypervisor/SmartOS' 'Hypervisor' '*.iso'
     syncdir 'Hypervisor/VMware ESXi (vSphere Hypervisor)' 'Hypervisor' '*.iso'
     syncdir 'Hypervisor/XCP NG' 'Hypervisor' '*.iso'
-    #syncdir 'Linux/Linux OS' 'Linux' '[^Q]*.iso' # Qubes does not work with Ventoy
     syncdir 'Linux/Linux OS' 'Linux' '*.iso'
-    #syncdir 'Linux/Linux OS' 'Linux' 'ArchLinux*.iso'
-    #syncdir 'Linux/Linux OS' 'Linux' 'CentOS*.iso'
-    #syncdir 'Linux/Linux OS' 'Linux' 'Debian*.iso'
-    #syncdir 'Linux/Linux OS' 'Linux' 'Guix*.iso'
-    #syncdir 'Linux/Linux OS' 'Linux' 'NixOS*.iso'
-    #syncdir 'Linux/Linux OS' 'Linux' 'PCLinuxOS*.iso'
-    #syncdir 'Linux/Linux OS' 'Linux' 'Rocky*.iso'
-    #syncdir 'Linux/Linux OS' 'Linux' 'Tails*.iso'
-    #syncdir 'Linux/Linux OS' 'Linux' 'Ubuntu*.iso'
     syncdir 'OS2/ArcaOS/ArcaOS-5.0.5' 'Other' '*.iso'
+    syncdir 'Windows XP, 7, 10/Windows OS' 'Windows' '*.iso'
+    sync
+}
+#        rsync-iodd              rsync software ISOs to mounted iodd drive
+rsync-iodd() {
+    root="/home/data/media/Software"
+    dest="/run/media/${USER}/iodd"
+    syncdir() {
+        local sdir="$1"
+        local ddir="$2"
+        local query="$3"
+        mkdir -p "${dest}/${ddir}"
+        (
+            cd "${root}/${sdir}" && \
+                find . -mindepth 1 -maxdepth 1 -name "${query}" -printf '%P\n' | while read -r src ; do
+                    #dst=$(echo "${src}" | sed "s/ /-/g")
+                    dst="${src// /-}"
+                    echo "Syncing \"${root}/${sdir}/${src}\" \"${dest}/${ddir}/${dst}\""
+                    #rsync -rLtxc "${root}/${sdir}/${src}" "${dest}/${ddir}/${dst}"
+                    rsync -rLtxW --size-only --progress "${root}/${sdir}/${src}" "${dest}/${ddir}/${dst}"
+                done
+        )
+    }
+
+    syncdir 'Amiga/Amiga Forever' 'Amiga' '*.iso'
+    syncdir 'Amiga/Amiga OS' 'Amiga' '*.iso'
+    syncdir 'Android/Android x86' 'Android' '*.iso'
+    syncdir 'Boot Tools' 'Boot-Tools' '*.iso'
+    syncdir 'BSD' 'BSD' '*.iso'
+    syncdir 'DOSBox/DOSBox' 'DOS' '*.iso'
+    syncdir 'FreeDOS/FeeDOS 1.3 Live CD' 'FreeDOS' '*.iso'
+    syncdir 'Haiku/Haiku OS' 'Haiku' '*.iso'
+    syncdir 'Hypervisor/OpenIndiana' 'Hypervisor' '*.iso'
+    syncdir 'Hypervisor/SmartOS' 'Hypervisor' '*.iso'
+    syncdir 'Hypervisor/VMware ESXi (vSphere Hypervisor)' 'Hypervisor' '*.iso'
+    syncdir 'Hypervisor/XCP NG' 'Hypervisor' '*.iso'
+    syncdir 'Linux/Linux OS' 'Linux' '*.iso'
+    syncdir 'Linux/Qubes OS' 'Linux' '*.iso'
+    syncdir 'Linux/Legacy/Debian 1.3' 'Linux (Legacy)/Debian' '*.iso'
+    syncdir 'Linux/Legacy/Debian 2.0' 'Linux (Legacy)/Debian' '*.iso'
+    syncdir 'Linux/Legacy/Debian 2.1' 'Linux (Legacy)/Debian' '*.iso'
+    syncdir 'Linux/Legacy/PiTuX (Micro Serial Terminal Linux)' 'Linux (Legacy)/PiTuX (Micro Serial Terminal Linux)' '*.iso'
+    syncdir 'Linux/Legacy/TinyCore' 'Linux (Legacy)/TinyCore' '*.iso'
+    syncdir 'Machintosh/Macintosh OS 9 (PPC)' 'Machintosh/Macintosh OS 9 (PPC)' '*.iso'
+    syncdir 'Machintosh/Macintosh OS X' 'Machintosh/Macintosh OS X' '*.iso'
+    syncdir 'NextStep' 'NextStep/OpenStep OS' '*.iso'
+    syncdir 'OS2/ArcaOS/ArcaOS-5.0.5' 'Other' '*.iso'
+    syncdir 'ReactOS' 'ReactOS' '*.iso'
     syncdir 'Windows XP, 7, 10/Windows OS' 'Windows' '*.iso'
     sync
 }
