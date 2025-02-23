@@ -1695,7 +1695,7 @@ rsync-iodd() {
     syncdir 'Boot Tools' 'Boot-Tools' '*.iso'
     syncdir 'BSD' 'BSD' '*.iso'
     syncdir 'DOSBox/DOSBox' 'DOS' '*.iso'
-    syncdir 'FreeDOS/FeeDOS 1.3 Live CD' 'FreeDOS' '*.iso'
+    syncdir 'FreeDOS/FreeDOS 1.3 Live CD' 'FreeDOS' '*.iso'
     syncdir 'Haiku/Haiku OS' 'Haiku' '*.iso'
     syncdir 'Hypervisor/OpenIndiana' 'Hypervisor' '*.iso'
     syncdir 'Hypervisor/SmartOS' 'Hypervisor' '*.iso'
@@ -1708,12 +1708,14 @@ rsync-iodd() {
     syncdir 'Linux/Legacy/Debian 2.1' 'Linux (Legacy)/Debian' '*.iso'
     syncdir 'Linux/Legacy/PiTuX (Micro Serial Terminal Linux)' 'Linux (Legacy)/PiTuX (Micro Serial Terminal Linux)' '*.iso'
     syncdir 'Linux/Legacy/TinyCore' 'Linux (Legacy)/TinyCore' '*.iso'
-    syncdir 'Machintosh/Macintosh OS 9 (PPC)' 'Machintosh/Macintosh OS 9 (PPC)' '*.iso'
-    syncdir 'Machintosh/Macintosh OS X' 'Machintosh/Macintosh OS X' '*.iso'
+    syncdir 'Macintosh/Macintosh OS/Macintosh OS 9 (PPC)' 'Macintosh/Macintosh OS 9 (PPC)' '*.iso'
+    syncdir 'Macintosh/Macintosh OS/Macintosh OS X' 'Macintosh/Macintosh OS X' '*.iso'
     syncdir 'NextStep' 'NextStep/OpenStep OS' '*.iso'
     syncdir 'OS2/ArcaOS/ArcaOS-5.0.5' 'Other' '*.iso'
     syncdir 'ReactOS' 'ReactOS' '*.iso'
     syncdir 'Windows XP, 7, 10/Windows OS' 'Windows' '*.iso'
+    syncdir 'Windows XP, 7, 10/Windows OS/Windows XP Delta Edition' 'Windows/Windows XP Delta' '*.iso'
+    syncdir 'Windows XP, 7, 10/Windows OS/Windows XP Epsilon Edition' 'Windows/Windows XP Epsilon' '*.iso'
     sync
 }
 
