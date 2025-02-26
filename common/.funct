@@ -1015,6 +1015,14 @@ kkg() {
 khg() {
     pkill -SIGHUP -f -i "$1"
 }
+#        psk                     process kill (SIGTERM) with fzf selection
+psk() {
+    ps -U "${USER}" -o pid,command | grep -i "$1" | fzf --multi | awk '{print $1}' | xargs kill -SIGTERM
+}
+#        pskk                    process kill (SIGKILL) with fzf selection
+pskk() {
+    ps -U "${USER}" -o pid,command | grep -i "$1" | fzf --multi | awk '{print $1}' | xargs kill -SIGKILL
+}
 
 #
 # admin tools

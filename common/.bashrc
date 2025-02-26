@@ -13,7 +13,7 @@ _command() {
 }
 
 # shell colors
-export COLOR_DEFAULT="\[\033[0m\]"      # light yellow
+export COLOR_DEFAULT="\[\033[0m\]"
 export COLOR_BLACK="\[\033[0;30m\]"
 export COLOR_DARK_GRAY="\[\033[1;30m\]"
 export COLOR_RED="\[\033[0;31m\]"
@@ -69,7 +69,10 @@ export HISTORY_IGNORE="(ls|pwd|history|h|cd|cd -|cd ..|cdd|exit|reboot|sudo rebo
 shopt -s histappend    # allow multiple terminals to write to the history file
 PROMPT_COMMAND='history -a'  # this terminal should append to the history file
 
-# enable fzf fuzzy matching
+# enable fzf fuzzy auto-completion and key bindings
+# CTRL-T  paste the selected file path into the command line
+# CTRL-R  paste the selected command from history into the command line
+# ALT-C   cd into the selected directory
 if [[ -z "${INSIDE_EMACS}" ]] ; then
     if [[ "${os}" == "Darwin" ]] ; then
         [[ -d "/usr/local/opt/fzf/bin" ]] && [[ ! "${PATH}" == */usr/local/opt/fzf/bin* ]] && export PATH="${PATH}:/usr/local/opt/fzf/bin"
