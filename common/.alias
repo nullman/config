@@ -1227,6 +1227,8 @@ alias cdm="cd /media"
 alias cdmnt="cd /mnt"
 #        cdsadult                cd /mnt/synology/adult
 alias cdsadult="cd /mnt/synology/adult"
+#        cdsincoming             cd /mnt/synology/incoming
+alias cdsincoming="cd /mnt/synology/incoming"
 #        cdsmedia                cd /mnt/synology/media
 alias cdsmedia="cd /mnt/synology/media"
 #        cdsmusic                cd /mnt/synology/music

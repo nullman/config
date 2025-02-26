@@ -718,6 +718,11 @@
     })
 
     (commonMountOptions // {
+      what = "//synology/incoming";
+      where = "/mnt/synology/incoming";
+    })
+
+    (commonMountOptions // {
       what = "//synology/media";
       where = "/mnt/synology/media";
     })
@@ -747,6 +752,7 @@
 
   in [
     (commonAutoMountOptions // { where = "/mnt/synology/adult"; })
+    (commonAutoMountOptions // { where = "/mnt/synology/incoming"; })
     (commonAutoMountOptions // { where = "/mnt/synology/media"; })
     (commonAutoMountOptions // { where = "/mnt/synology/music"; })
     (commonAutoMountOptions // { where = "/mnt/synology/photo"; })
