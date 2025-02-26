@@ -94,6 +94,27 @@ if [[ -n "${STY}" ]] || [[ -n "${TMUX}" ]] ; then
     bindkey "\e[4~" end-of-line
 fi
 
+# enable fzf fuzzy auto-completion and key bindings
+# CTRL-T  paste the selected file path into the command line
+# CTRL-R  paste the selected command from history into the command line
+# ALT-C   cd into the selected directory
+if [[ -z "${INSIDE_EMACS}" ]] ; then
+    if [[ "${os}" == "Darwin" ]] ; then
+        [[ -d "/usr/local/opt/fzf/bin" ]] && [[ ! "${PATH}" == */usr/local/opt/fzf/bin* ]] && export PATH="${PATH}:/usr/local/opt/fzf/bin"
+        [[ -f "/usr/local/opt/fzf/shell/key-bindings.zsh" ]] && source "/usr/local/opt/fzf/shell/key-bindings.zsh" 2>&1
+        [[ -f "/usr/local/opt/fzf/shell/completion.zsh" ]] && source "/usr/local/opt/fzf/shell/completion.zsh" 2>&1
+    elif $(uname -v | grep -q 'NixOS') ; then
+        if _command fzf-share ; then
+            source "$(fzf-share)/key-bindings.zsh"
+            source "$(fzf-share)/completion.zsh"
+        fi
+    else
+        [[ -f "/usr/share/fzf/key-bindings.zsh" ]] && source "/usr/share/fzf/key-bindings.zsh" 2>&1
+        [[ -f "/usr/share/fzf/completion.zsh" ]] && source "/usr/share/fzf/completion.zsh" 2>&1
+    fi
+fi
+export FZF_DEFAULT_OPTS="--layout=reverse --border=bold"
+
 # # compinstall # very slow (takes a full second to run)
 # autoload -U compinit
 # zstyle :compinstall filename "${HOME}/.zshrc"

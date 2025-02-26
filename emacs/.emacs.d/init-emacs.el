@@ -1512,10 +1512,10 @@ Otherwise, `custom-tab-width' is used."
 (use-package eshell
   :straight (:type built-in)
   :hook (eshell-first-time-mode . custom-eshell-first-time-mode-hook)
-  ;; :bind (:map eshell-mode-map
-  ;;             ([remap beginning-of-line] . eshell-bol)
-  ;;             ([remap move-beginning-of-line] . eshell-bol)
-  ;;             ("C-r" . counsel-esh-history))
+  ;; :bind* (:map eshell-mode-map
+  ;;              ([remap beginning-of-line] . eshell-bol)
+  ;;              ([remap move-beginning-of-line] . eshell-bol)
+  ;;              ("C-r" . counsel-esh-history))
   :custom
   (eshell-history-size custom-terminal-history-size)
   (eshell-buffer-maximum-lines custom-terminal-maximum-lines)
@@ -1647,6 +1647,7 @@ Otherwise, `custom-tab-width' is used."
     (bind-keys ("<f1>" . help-for-help)))
   (when (fboundp 'help-command)
     (bind-keys ("S-<f1>" . help-command)))
+  ;; <f2> `modus-themes-toggle'
   (when (fboundp 'kmacro-start-macro-or-insert-counter)
     (bind-keys ("<f3>" . kmacro-start-macro-or-insert-counter))) ; default: `kmacro-start-macro-or-insert-counter'
   (when (fboundp 'kmacro-end-or-call-macro)
@@ -1665,8 +1666,8 @@ Otherwise, `custom-tab-width' is used."
   ;;   (bind-keys ("<f7>" . web-query-word-at-point)))
   (when (fboundp 'web-query)
     (bind-keys ("<S-f7>" . web-query)))
-  (when (fboundp 'neotree)
-    (bind-keys ("<f8>" . neotree)))
+  ;;(when (fboundp 'neotree)
+  ;;  (bind-keys ("<f8>" . neotree)))
   (when (fboundp 'cycle-buffer-backward)
     (bind-keys ("<f9>" . cycle-buffer-backward)))
   (when (fboundp 'cycle-buffer-backward-permissive)
@@ -1781,13 +1782,13 @@ KEYMAP defaults to `override-global-map'."
 
     ;; window resize keys
     (when (fboundp 'window-shrink-vertically)
-      (bind-keys :map keymap ("C-M-S-i" . window-shrink-vertically)))
+      (bind-keys* :map keymap ("C-M-s-i" . window-shrink-vertically)))
     (when (fboundp 'window-enlarge-vertically)
-      (bind-keys :map keymap ("C-M-S-k" . window-enlarge-vertically)))
+      (bind-keys* :map keymap ("C-M-s-k" . window-enlarge-vertically)))
     (when (fboundp 'window-shrink-horizontally)
-      (bind-keys :map keymap ("C-M-S-j" . window-shrink-horizontally)))
+      (bind-keys* :map keymap ("C-M-s-j" . window-shrink-horizontally)))
     (when (fboundp 'window-enlarge-horizontally)
-      (bind-keys :map keymap ("C-M-S-l" . window-enlarge-horizontally)))
+      (bind-keys* :map keymap ("C-M-s-l" . window-enlarge-horizontally)))
 
     ;; move line up
     (when (fboundp 'move-line-up)
@@ -1815,208 +1816,208 @@ KEYMAP defaults to `override-global-map'."
 
   ;; newline
   (when (fboundp 'insert-line-below)
-    (bind-keys ("C-M-<return>" . insert-line-below)))
+    (bind-keys* ("C-M-<return>" . insert-line-below)))
 
   ;; set mark
-  (bind-keys ("C-SPC" . set-mark-command)) ; default: `set-mark-command'
+  (bind-keys* ("C-SPC" . set-mark-command)) ; default: `set-mark-command'
 
   ;; set rectangle mark
   (when (fboundp 'cua-set-rectangle-mark)
-    (bind-keys ("C-x rm" . cua-set-rectangle-mark)
-               ("C-M-SPC" . cua-set-rectangle-mark))) ; default: `mark-sexp'
+    (bind-keys* ("C-x rm" . cua-set-rectangle-mark)
+                ("C-M-SPC" . cua-set-rectangle-mark))) ; default: `mark-sexp'
 
   ;; yank as rectangle
   (when (fboundp 'yank-as-rectangle)
-    (bind-keys ("C-x r C-y" . yank-as-rectangle)))
-    ;; (bind-keys ("C-x r C-y" . yank-as-rectangle)
-    ;;            ("C-M-y" . yank-as-rectangle)))
+    (bind-keys* ("C-x r C-y" . yank-as-rectangle)))
+    ;; (bind-keys* ("C-x r C-y" . yank-as-rectangle)
+    ;;             ("C-M-y" . yank-as-rectangle)))
 
   ;; just one space
   (when (fboundp 'just-one-space)
-    (bind-keys ("C-x C-SPC" . just-one-space))) ; default: `pop-global-mark'
+    (bind-keys* ("C-x C-SPC" . just-one-space))) ; default: `pop-global-mark'
 
   ;; help
-  (bind-keys ("C-x C-h" . help-command)
-             ("C-x ?" . help))
+  (bind-keys* ("C-x C-h" . help-command)
+              ("C-x ?" . help))
 
   ;; describe function or variable at point
   (when (fboundp 'describe-function-or-variable-at-point)
-    (bind-keys ("C-h z" . describe-function-or-variable-at-point)
-               ("C-x C-h z" . describe-function-or-variable-at-point)))
+    (bind-keys* ("C-h z" . describe-function-or-variable-at-point)
+                ("C-x C-h z" . describe-function-or-variable-at-point)))
 
   ;; shortdoc
   (when (fboundp 'shortdoc-display-group)
-    (bind-keys ("C-h D" . shortdoc-display-group)
-               ("C-x C-h D" . shortdoc-display-group)))
+    (bind-keys* ("C-h D" . shortdoc-display-group)
+                ("C-x C-h D" . shortdoc-display-group)))
 
   ;; ;; smart M-x
   ;; (when (fboundp 'smex)
-  ;;   (bind-keys ("M-x" . smex))) ; default: `execute-extended-command'
+  ;;   (bind-keys* ("M-x" . smex))) ; default: `execute-extended-command'
   ;; (when (fboundp 'smex-major-mode-commands)
-  ;;   (bind-keys ("M-X" . smex-major-mode-commands))) ; default: `execute-extended-command'
+  ;;   (bind-keys* ("M-X" . smex-major-mode-commands))) ; default: `execute-extended-command'
 
   ;; ;; alternates for M-x
-  ;; (bind-keys ("C-x C-m" . execute-extended-command)) ; default: Prefix Command
+  ;; (bind-keys* ("C-x C-m" . execute-extended-command)) ; default: Prefix Command
 
   ;; menubar
   (when (fboundp 'tmm-menubar)
-    (bind-keys ("C-M-z" . tmm-menubar)))
+    (bind-keys* ("C-M-z" . tmm-menubar)))
 
   ;; force save maybe
   (when (fboundp 'save-buffer-always-maybe)
-    (bind-keys ("C-x C-s" . save-buffer-always-maybe))) ; default: `save-buffer'
+    (bind-keys* ("C-x C-s" . save-buffer-always-maybe))) ; default: `save-buffer'
 
   ;; ;; bs-show (buffer select)
   ;; (when (fboundp 'bs-show)
-  ;;   (bind-keys ("C-x C-b" . bs-show))) ; default: `list-buffers'
+  ;;   (bind-keys* ("C-x C-b" . bs-show))) ; default: `list-buffers'
 
   ;; cycle to previous buffer
-  (bind-keys ("C-`" . mode-line-other-buffer))
+  (bind-keys* ("C-`" . mode-line-other-buffer))
 
   ;; bury buffer
-  (bind-keys ("C-c y" . bury-buffer))
-  (bind-keys ("C-c C-y" . bury-buffer)) ; default: `org-evaluate-time-range'
+  (bind-keys* ("C-c y" . bury-buffer))
+  (bind-keys* ("C-c C-y" . bury-buffer)) ; default: `org-evaluate-time-range'
 
   ;; revert buffer
-  (bind-keys ("C-c r" . revert-buffer))
-  (bind-keys ("C-c C-r" . revert-buffer))
+  (bind-keys* ("C-c r" . revert-buffer))
+  (bind-keys* ("C-c C-r" . revert-buffer))
 
   ;; diff buffer
-  (bind-keys ("C-c d" . diff-current-buffer))
+  (bind-keys* ("C-c d" . diff-current-buffer))
 
   ;; mark full word
   (when (fboundp 'mark-full-word)
-    (bind-keys ("M-@" . mark-full-word))) ; default: `mark-word'
+    (bind-keys* ("M-@" . mark-full-word))) ; default: `mark-word'
 
   ;; ;; expand region
   ;; (when (fboundp 'er/expand-region)
-  ;;   (bind-keys ("C-=" . er/expand-region)   ; default: `count-lines-region'
-  ;;              ("C-+" . er/contract-region) ; default: `count-lines-region'
-  ;;              ("C-M-SPC" . er/expand-region) ; default: `mark-sexp'
-  ;;              ("C-M-S-SPC" . er/contract-region)))
+  ;;   (bind-keys* ("C-=" . er/expand-region)   ; default: `count-lines-region'
+  ;;               ("C-+" . er/contract-region) ; default: `count-lines-region'
+  ;;               ("C-M-SPC" . er/expand-region) ; default: `mark-sexp'
+  ;;               ("C-M-S-SPC" . er/contract-region)))
 
   ;; regexp replace
-  (bind-keys ("M-&" . replace-regexp)) ; default: `async-shell-command'
+  (bind-keys* ("M-&" . replace-regexp)) ; default: `async-shell-command'
 
   ;; insert menu prompt
   (when (fboundp 'insert-menu-prompt)
-    (bind-keys ("C-x i" . insert-menu-prompt))) ; default: `insert-file'
+    (bind-keys* ("C-x i" . insert-menu-prompt))) ; default: `insert-file'
 
   ;; split windows
-  (bind-keys ("M-1" . delete-other-windows)) ; default: `digit-argument'
-  (bind-keys ("M-2" . split-window-horizontally)) ; default: `digit-argument'
-  (bind-keys ("M-3" . split-window-vertically)) ; default: `digit-argument'
+  (bind-keys* ("M-1" . delete-other-windows)) ; default: `digit-argument'
+  (bind-keys* ("M-2" . split-window-horizontally)) ; default: `digit-argument'
+  (bind-keys* ("M-3" . split-window-vertically)) ; default: `digit-argument'
   (unbind-key "M-4")                          ; default: `digit-argument'
   (if (fboundp 'swap-windows)
-      (bind-keys ("M-4" . swap-windows))) ; default: `digit-argument'
+      (bind-keys* ("M-4" . swap-windows))) ; default: `digit-argument'
   (unbind-key "M-5")                    ; default: `digit-argument'
   (when (fboundp 'toggle-window-split)
-    (bind-keys ("M-5" . toggle-window-split))) ; default: `split-line'
-  (bind-keys ("M-6" . switch-to-buffer-other-window)) ; default: `digit-argument'
+    (bind-keys* ("M-5" . toggle-window-split))) ; default: `split-line'
+  (bind-keys* ("M-6" . switch-to-buffer-other-window)) ; default: `digit-argument'
   (unbind-key "M-7")                    ; default: `digit-argument'
   (unbind-key "M-8")                    ; default: `digit-argument'
   (unbind-key "M-8")                    ; default: `digit-argument'
   (when (fboundp 'kill-other-window-buffer)
-    (bind-keys ("M-8" . kill-other-window-buffer))) ; default: `digit-argument'
+    (bind-keys* ("M-8" . kill-other-window-buffer))) ; default: `digit-argument'
   (unbind-key "M-9")                    ; default: `digit-argument'
   (when (fboundp 'kill-other-window-buffer-and-delete-window)
-    (bind-keys ("M-9" . kill-other-window-buffer-and-delete-window))) ; default: `digit-argument'
-  (bind-keys ("M-0" . delete-window)) ; default: `digit-argument'
+    (bind-keys* ("M-9" . kill-other-window-buffer-and-delete-window))) ; default: `digit-argument'
+  (bind-keys* ("M-0" . delete-window)) ; default: `digit-argument'
 
   ;; switch windows
-  ;; (bind-keys ("M-o" . other-window)) ; default: `facemenu-keymap'
+  ;; (bind-keys* ("M-o" . other-window)) ; default: `facemenu-keymap'
   (when (fboundp 'ace-window)
-    (bind-keys ("C-x o" . ace-window))) ; default: `other-window'
+    (bind-keys* ("C-x o" . ace-window))) ; default: `other-window'
 
   ;; swap windows
   (when (fboundp 'swap-windows)
-    (bind-keys ("C-x C-o" . swap-windows))) ; default: `delete-blank-lines'
+    (bind-keys* ("C-x C-o" . swap-windows))) ; default: `delete-blank-lines'
 
   ;; toggle window split
   (when (fboundp 'toggle-window-split)
-    (bind-keys ("C-x M-o" . toggle-window-split))) ; default: `split-line'
+    (bind-keys* ("C-x M-o" . toggle-window-split))) ; default: `split-line'
 
   ;; toggle truncate lines
-  (bind-keys ("C-$" . toggle-truncate-lines))
+  (bind-keys* ("C-$" . toggle-truncate-lines))
 
   ;; kill current buffer
-  (bind-keys ("C-x C-k" . kill-current-buffer)) ; default: `kmacro-keymap'
+  (bind-keys* ("C-x C-k" . kill-current-buffer)) ; default: `kmacro-keymap'
 
   ;; delete to end of line
   (when (fboundp 'delete-to-end-of-line)
-    (bind-keys ("C-k" . delete-to-end-of-line))) ; default: `kill-line'
+    (bind-keys* ("C-k" . delete-to-end-of-line))) ; default: `kill-line'
 
   ;; delete line
   (when (fboundp 'delete-line)
-    (bind-keys ("C-M-d" . delete-line))) ; default: `down-list'
+    (bind-keys* ("C-M-d" . delete-line))) ; default: `down-list'
 
   ;; delete word
   (when (fboundp 'delete-word)
-    (bind-keys ("M-d" . delete-word))) ; default: `kill-word'
+    (bind-keys* ("M-d" . delete-word))) ; default: `kill-word'
   (when (fboundp 'backward-delete-word)
-    (bind-keys ("C-<backspace>" . backward-delete-word))) ; default: `backward-kill-word'
+    (bind-keys* ("C-<backspace>" . backward-delete-word))) ; default: `backward-kill-word'
 
   ;; copy line
   (when (fboundp 'copy-line)
-    (bind-keys ("C-x C-y" . copy-line)))
+    (bind-keys* ("C-x C-y" . copy-line)))
 
   ;; cut line
   (when (fboundp 'cut-line)
-    (bind-keys ("C-x M-y" . cut-line)))
+    (bind-keys* ("C-x M-y" . cut-line)))
 
   ;; duplicate line
   (when (fboundp 'duplicate-line)
-    (bind-keys ("C-x C-d" . duplicate-line))) ; default: `list-directory'
+    (bind-keys* ("C-x C-d" . duplicate-line))) ; default: `list-directory'
 
   ;; ;; kill ring browser
   ;; (when (fboundp 'browse-kill-ring)
-  ;;   (bind-keys ("C-M-y" . browse-kill-ring)))
+  ;;   (bind-keys* ("C-M-y" . browse-kill-ring)))
 
   ;; join line
-  ;;(bind-keys ("C-M-j" . join-line))  ; default: `comment-indent-new-line'
-  (bind-keys ("C-x C-j" . join-line))
+  ;;(bind-keys* ("C-M-j" . join-line))  ; default: `comment-indent-new-line'
+  (bind-keys* ("C-x C-j" . join-line))
 
   ;; join next line
   (when (fboundp 'join-next-line)
-    ;;(bind-keys ("M-j" . join-next-line))) ; default: `indent-new-comment-line'
-    (bind-keys ("C-x j" . join-next-line))) ; also: `dired-jump'
+    ;;(bind-keys* ("M-j" . join-next-line))) ; default: `indent-new-comment-line'
+    (bind-keys* ("C-x j" . join-next-line))) ; also: `dired-jump'
 
   ;; enhanced titleize-word
   (when (fboundp 'titleize-word-enhanced)
-    (bind-keys ("M-t" . titleize-word-enhanced)) ; default: `transpose-words'
-    (bind-keys ("M-T" . titleize-line-or-region)))
+    (bind-keys* ("M-t" . titleize-word-enhanced)) ; default: `transpose-words'
+    (bind-keys* ("M-T" . titleize-line-or-region)))
 
   ;; describe text properties
-  (bind-keys ("C-x M-p" . describe-text-properties))
+  (bind-keys* ("C-x M-p" . describe-text-properties))
 
   ;; undo
-  (bind-keys ("C-_" . undo))
+  (bind-keys* ("C-_" . undo))
 
   ;; undo-redo
-  (bind-keys ("M-_" . undo-redo))
+  (bind-keys* ("M-_" . undo-redo))
 
   ;; goto last change (undo)
   (when (fboundp 'goto-last-change)
-    (bind-keys ("C-x C-_" . goto-last-change)))
+    (bind-keys* ("C-x C-_" . goto-last-change)))
 
   ;; jump to matching parenthesis
   (when (fboundp 'match-paren)
-    (bind-keys ("M-(" . match-paren)))
+    (bind-keys* ("M-(" . match-paren)))
 
   ;; evaluate current sexp
-  (bind-keys ("C-x C-e" . eval-current-sexp)) ; default: `eval-last-sexp'
+  (bind-keys* ("C-x C-e" . eval-current-sexp)) ; default: `eval-last-sexp'
   ;; \C-\M-x defaults to `eval-defun'
 
   ;; evaluate all sexp's in current buffer
   (when (fboundp 'eval-sexp-buffer)
-    (bind-keys ("C-x M-e" . eval-sexp-buffer)))
+    (bind-keys* ("C-x M-e" . eval-sexp-buffer)))
 
   ;; ;; indent current sexp
-  ;; (bind-keys ("C-M-q" . indent-current-sexp)) ; default: `indent-sexp' or `indent-pp-sexp'
+  ;; (bind-keys* ("C-M-q" . indent-current-sexp)) ; default: `indent-sexp' or `indent-pp-sexp'
 
   ;; ;; indent all sexp's in current buffer
   ;; (when (fboundp 'indent-sexp-buffer)
-  ;;   (bind-keys ("C-x M-q" . indent-sexp-buffer)))
+  ;;   (bind-keys* ("C-x M-q" . indent-sexp-buffer)))
 
   ;; comment and uncomment sexp's
   (when (fboundp 'comment-or-uncomment-sexp)
@@ -2024,61 +2025,61 @@ KEYMAP defaults to `override-global-map'."
 
   ;; indent region or thing
   (when (fboundp 'indent-region-or-thing)
-    (bind-keys ("C-M-\\" . indent-region-or-thing))) ; default: `indent-region'
+    (bind-keys* ("C-M-\\" . indent-region-or-thing))) ; default: `indent-region'
 
   ;; append equal characters up to column 80
   (when (fboundp 'append-equal-to-column-80)
-    (bind-keys ("C-c =" . append-equal-to-column-80)))
+    (bind-keys* ("C-c =" . append-equal-to-column-80)))
 
   ;; append dash characters up to column 80
   (when (fboundp 'append-dash-to-column-80)
-    (bind-keys ("C-c -" . append-dash-to-column-80)))
+    (bind-keys* ("C-c -" . append-dash-to-column-80)))
 
   ;; append asterisk characters up to column 80
   (when (fboundp 'append-asterisk-to-column-80)
-    (bind-keys ("C-c 8" . append-asterisk-to-column-80))
-    (bind-keys ("C-c *" . append-asterisk-to-column-80)))
+    (bind-keys* ("C-c 8" . append-asterisk-to-column-80))
+    (bind-keys* ("C-c *" . append-asterisk-to-column-80)))
 
   ;; add lisp comment block (equal)
   (when (fboundp 'insert-lisp-comment-block-equal)
-    (bind-keys ("C-c C-=" . insert-lisp-comment-block-equal)))
+    (bind-keys* ("C-c C-=" . insert-lisp-comment-block-equal)))
 
   ;; add lisp comment block (dash)
   (when (fboundp 'insert-lisp-comment-block-dash)
-    (bind-keys ("C-c C--" . insert-lisp-comment-block-dash)))
+    (bind-keys* ("C-c C--" . insert-lisp-comment-block-dash)))
 
   ;; align commands
-  (bind-keys ("C-c |" . align-current))
+  (bind-keys* ("C-c |" . align-current))
 
   ;; ;; hippie expand
   ;; (when (fboundp 'hippie-expand)
-  ;;   (bind-keys ("M-/" . hippie-expand))) ; default: `dabbrev-expand'
+  ;;   (bind-keys* ("M-/" . hippie-expand))) ; default: `dabbrev-expand'
 
   ;; ;; complete tag
   ;; (when (fboundp 'complete-tag)
-  ;;   (bind-keys ("C-M-/" . complete-tag)))
+  ;;   (bind-keys* ("C-M-/" . complete-tag)))
 
   ;; unset set-fill-column
   (unbind-key "C-x f")                  ; default: `set-fill-column'
 
   ;; compare windows
   (when (fboundp 'compare-windows)
-    (bind-keys ("C-c C-w" . compare-windows)))
+    (bind-keys* ("C-c C-w" . compare-windows)))
 
   ;; unfill paragraph
   (when (fboundp 'unfill-paragraph)
-    (bind-keys ("M-Q" . unfill-paragraph))) ; default: `fill-paragraph'
+    (bind-keys* ("M-Q" . unfill-paragraph))) ; default: `fill-paragraph'
 
   ;; ;; double-space punctuation
   ;; (when (fboundp 'double-space-punctuation)
-  ;;   (bind-keys ("C-M-q" . double-space-punctuation)))
+  ;;   (bind-keys* ("C-M-q" . double-space-punctuation)))
 
   ;; toggle pop-up shell
   (when (and (fboundp 'pop-up-shell) (fboundp 'pop-up-shell-toggle))
-    (bind-keys ("C-x C-]" . pop-up-shell-toggle)))
+    (bind-keys* ("C-x C-]" . pop-up-shell-toggle)))
 
   ;; describe character under cursor
-  (bind-keys ("C-x _" . describe-char)))
+  (bind-keys* ("C-x _" . describe-char)))
 
 (init-message 3 "custom-key-bindings-standard-keys")
 (custom-key-bindings-standard-keys)
@@ -2096,17 +2097,17 @@ KEYMAP defaults to `override-global-map'."
 
   ;; diary
   (when (fboundp 'diary)
-    (bind-keys ("C-x y" . diary)))
+    (bind-keys* ("C-x y" . diary)))
 
   ;; imenu
-  (bind-keys ("C-M-'" . imenu))
+  (bind-keys* ("C-M-'" . imenu))
 
   ;; isearch
   ;; ;; regular expression searches
   ;; (when (fboundp 'isearch-forward-regexp)
-  ;;   (bind-keys ("C-S" . isearch-forward-regexp)))
+  ;;   (bind-keys* ("C-S" . isearch-forward-regexp)))
   ;; (when (fboundp 'isearch-backward-regexp)
-  ;;   (bind-keys ("C-R" . isearch-backward-regexp)))
+  ;;   (bind-keys* ("C-R" . isearch-backward-regexp)))
   ;; activate `occur' from isearch
   (define-key isearch-mode-map (kbd "C-o")
     (lambda ()
@@ -2115,17 +2116,17 @@ KEYMAP defaults to `override-global-map'."
         (occur (if isearch-regexp isearch-string (regexp-quote isearch-string))))))
 
   ;; line number mode
-  (bind-keys ("C-x M-n" . display-line-numbers-mode))
+  (bind-keys* ("C-x M-n" . display-line-numbers-mode))
   (when (fboundp 'display-line-numbers-type-toggle)
-    (bind-keys ("C-x M-N" . display-line-numbers-type-toggle)))
+    (bind-keys* ("C-x M-N" . display-line-numbers-type-toggle)))
 
   ;; occur
   (when (fboundp 'occur)
-    ;;(bind-keys ("C-x u" . occur)) ; default: `undo'
-    (bind-keys ("C-c o" . occur)))
+    ;;(bind-keys* ("C-x u" . occur)) ; default: `undo'
+    (bind-keys* ("C-c o" . occur)))
 
   ;; shell
-  (bind-keys ("C-x !" . shell)))
+  (bind-keys* ("C-x !" . shell)))
 
 (init-message 3 "custom-key-bindings-modes-and-modules-keys")
 (custom-key-bindings-modes-and-modules-keys)
@@ -2145,259 +2146,259 @@ KEYMAP defaults to `override-global-map'."
   ;; "C-h e" defaults to `view-echo-area-messages'
   (unbind-key "C-h e")
   (define-prefix-command 'help-find-map nil "Help Find Commands")
-  (bind-keys :prefix "C-h e"
-             :prefix-map help-find-map
-             :menu-name "Help Find Commands"
-             ("e" . view-echo-area-messages)
-             ("f" . find-function)
-             ("k" . find-function-on-key)
-             ("l" . find-library)
-             ("v" . find-variable)
-             ("V" . apropos-value))
+  (bind-keys* :prefix "C-h e"
+              :prefix-map help-find-map
+              :menu-name "Help Find Commands"
+              ("e" . view-echo-area-messages)
+              ("f" . find-function)
+              ("k" . find-function-on-key)
+              ("l" . find-library)
+              ("v" . find-variable)
+              ("V" . apropos-value))
 
   ;; custom prefix launching point (M-space)
   (unbind-key "M-SPC")
   (define-prefix-command 'space-map nil "Space Prefix Launching Point")
-  (bind-keys :prefix "M-SPC"
-             :prefix-map space-map
-             :menu-name "Space Prefix Launching Point")
-  (bind-keys ("C-." . space-map))      ; in case the OS consumes M-SPC
+  (bind-keys* :prefix "M-SPC"
+              :prefix-map space-map
+              :menu-name "Space Prefix Launching Point")
+  (bind-keys* ("C-." . space-map))      ; in case the OS consumes M-SPC
 
   ;; menu
-  (bind-keys :map space-map ("M-SPC" . tmm-menubar))
+  (bind-keys* :map space-map ("M-SPC" . tmm-menubar))
 
   ;; buffer commands
-  (bind-keys :map space-map
-             :prefix "b"
-             :prefix-map space-buffer-map
-             :menu-name "Buffer Commands")
+  (bind-keys* :map space-map
+              :prefix "b"
+              :prefix-map space-buffer-map
+              :menu-name "Buffer Commands")
   (when (fboundp 'switch-to-messages)
-    (bind-keys :map space-buffer-map ("m" . switch-to-messages)))
+    (bind-keys* :map space-buffer-map ("m" . switch-to-messages)))
   (when (fboundp 'new-scratch)
-    (bind-keys :map space-buffer-map ("n" . new-scratch)))
+    (bind-keys* :map space-buffer-map ("n" . new-scratch)))
   (when (fboundp 'new-emacs-lisp-scratch)
-    (bind-keys :map space-buffer-map ("e" . new-emacs-lisp-scratch)))
+    (bind-keys* :map space-buffer-map ("e" . new-emacs-lisp-scratch)))
   (when (fboundp 'new-org-scratch)
-    (bind-keys :map space-buffer-map ("o" . new-org-scratch)))
+    (bind-keys* :map space-buffer-map ("o" . new-org-scratch)))
   (when (fboundp 'switch-to-scratch)
-    (bind-keys :map space-buffer-map ("s" . switch-to-scratch)))
+    (bind-keys* :map space-buffer-map ("s" . switch-to-scratch)))
   (when (fboundp 'switch-to-scratch-for-current-mode)
-    (bind-keys :map space-buffer-map ("c" . switch-to-scratch-for-current-mode)))
+    (bind-keys* :map space-buffer-map ("c" . switch-to-scratch-for-current-mode)))
 
   ;; command log commands
-  (bind-keys :map space-map
-             :prefix "c"
-             :prefix-map space-command-log-map
-             :menu-name "Command Log Commands"
-             ("c" . command-log-mode-on)
-             ("k" . command-log-mode-off)
-             ("l" . clm/command-log-clear))
+  (bind-keys* :map space-map
+              :prefix "c"
+              :prefix-map space-command-log-map
+              :menu-name "Command Log Commands"
+              ("c" . command-log-mode-on)
+              ("k" . command-log-mode-off)
+              ("l" . clm/command-log-clear))
 
   ;; git commands
-  (bind-keys :map space-map
-             :prefix "g"
-             :prefix-map space-git-map
-             :menu-name "Git Commands"
-             ("b" . magit-branch)
-             ("c" . magit-branch-or-checkout)
-             ("d" . magit-diff-unstaged)
-             ("f" . magit-fetch)
-             ("F" . magit-fetch-all)
-             ("p" . magit-pull-branch)
-             ("P" . magit-push-current)
-             ("r" . magit-rebase)
-             ("s" . magit-status))
+  (bind-keys* :map space-map
+              :prefix "g"
+              :prefix-map space-git-map
+              :menu-name "Git Commands"
+              ("b" . magit-branch)
+              ("c" . magit-branch-or-checkout)
+              ("d" . magit-diff-unstaged)
+              ("f" . magit-fetch)
+              ("F" . magit-fetch-all)
+              ("p" . magit-pull-branch)
+              ("P" . magit-push-current)
+              ("r" . magit-rebase)
+              ("s" . magit-status))
 
   ;; git log commands
-  (bind-keys :map space-git-map
-             :prefix "l"
-             :prefix-map space-git-log-map
-             :menu-name "Git Log Commands"
-             ("l" . magit-log-current)
-             ("f" . magit-log-buffer-file))
+  (bind-keys* :map space-git-map
+              :prefix "l"
+              :prefix-map space-git-log-map
+              :menu-name "Git Log Commands"
+              ("l" . magit-log-current)
+              ("f" . magit-log-buffer-file))
 
   ;; grep commands
-  (bind-keys :map space-map
-             :prefix "G"
-             :prefix-map space-grep-map
-             :menu-name "Grep Commands")
+  (bind-keys* :map space-map
+              :prefix "G"
+              :prefix-map space-grep-map
+              :menu-name "Grep Commands")
   (when (fboundp 'grep-bin)
-    (bind-keys :map space-grep-map ("b" . grep-bin)))
+    (bind-keys* :map space-grep-map ("b" . grep-bin)))
   (when (fboundp 'grep-clojure)
-    (bind-keys :map space-grep-map ("c" . grep-clojure)))
+    (bind-keys* :map space-grep-map ("c" . grep-clojure)))
   (when (fboundp 'grep-clisp)
-    (bind-keys :map space-grep-map ("l" . grep-clisp)))
+    (bind-keys* :map space-grep-map ("l" . grep-clisp)))
   (when (fboundp 'grep-elisp)
-    (bind-keys :map space-grep-map ("e" . grep-elisp)))
+    (bind-keys* :map space-grep-map ("e" . grep-elisp)))
   (when (fboundp 'grep-elisp-extended)
-    (bind-keys :map space-grep-map ("E" . grep-elisp-extended)))
+    (bind-keys* :map space-grep-map ("E" . grep-elisp-extended)))
   (when (fboundp 'grep-emacs-init)
-    (bind-keys :map space-grep-map ("i" . grep-emacs-init)))
+    (bind-keys* :map space-grep-map ("i" . grep-emacs-init)))
   (when (fboundp 'grep-home-init)
-    (bind-keys :map space-grep-map ("h" . grep-home-init)))
+    (bind-keys* :map space-grep-map ("h" . grep-home-init)))
   (when (fboundp 'grep-org)
-    (bind-keys :map space-grep-map ("o" . grep-org)))
+    (bind-keys* :map space-grep-map ("o" . grep-org)))
   (when (fboundp 'grep-python)
-    (bind-keys :map space-grep-map ("p" . grep-python)))
+    (bind-keys* :map space-grep-map ("p" . grep-python)))
   (when (fboundp 'grep-racket)
-    (bind-keys :map space-grep-map ("r" . grep-racket)))
+    (bind-keys* :map space-grep-map ("r" . grep-racket)))
   (when (fboundp 'grep-web)
-    (bind-keys :map space-grep-map ("w" . grep-web)))
+    (bind-keys* :map space-grep-map ("w" . grep-web)))
 
   ;; insert commands
-  (bind-keys :map space-map
-             :prefix "i"
-             :prefix-map space-insert-map
-             :menu-name "Insert Commands"
-             ("d" . insert-date)
-             ("t" . insert-datetime)
-             ("u" . insert-uuid))
+  (bind-keys* :map space-map
+              :prefix "i"
+              :prefix-map space-insert-map
+              :menu-name "Insert Commands"
+              ("d" . insert-date)
+              ("t" . insert-datetime)
+              ("u" . insert-uuid))
 
   ;; insert org-mode commands
-  (bind-keys :map space-insert-map
-             :prefix "o"
-             :prefix-map space-insert-org-map
-             :menu-name "Insert Org-Mode Commands"
-             ("b" . org-insert-literate-programming-src)
-             ("c" . org-insert-literate-programming-code-block)
-             ("e" . org-insert-literate-programming-src-emacs-lisp)
-             ("h" . org-insert-header)
-             ("i" . org-insert-literate-programming-init-emacs-block)
-             ("k" . org-insert-literate-programming-src-kotlin)
-             ("n" . org-insert-literate-programming-name)
-             ("p" . org-insert-literate-programming-project-euler-problem-block)
-             ("r" . org-insert-literate-programming-src-racket)
-             ("s" . org-insert-literate-programming-src-sh)
-             ("t" . org-insert-table))
+  (bind-keys* :map space-insert-map
+              :prefix "o"
+              :prefix-map space-insert-org-map
+              :menu-name "Insert Org-Mode Commands"
+              ("b" . org-insert-literate-programming-src)
+              ("c" . org-insert-literate-programming-code-block)
+              ("e" . org-insert-literate-programming-src-emacs-lisp)
+              ("h" . org-insert-header)
+              ("i" . org-insert-literate-programming-init-emacs-block)
+              ("k" . org-insert-literate-programming-src-kotlin)
+              ("n" . org-insert-literate-programming-name)
+              ("p" . org-insert-literate-programming-project-euler-problem-block)
+              ("r" . org-insert-literate-programming-src-racket)
+              ("s" . org-insert-literate-programming-src-sh)
+              ("t" . org-insert-table))
 
   ;; insert password commands
-  (bind-keys :map space-insert-map
-             :prefix "p"
-             :prefix-map space-insert-password-map
-             :menu-name "Insert Password Commands"
-             ("p" . insert-password)
-             ("h" . insert-password-phrase)
-             ("2" . insert-password-20)
-             ("3" . insert-password-phrase-3-space)
-             ("6" . insert-password-phrase-6-space)
-             ("-" . insert-password-phrase-6-hyphen-capitalize)
-             ("!" . insert-password-phrase-6-symbol-capitalize))
+  (bind-keys* :map space-insert-map
+              :prefix "p"
+              :prefix-map space-insert-password-map
+              :menu-name "Insert Password Commands"
+              ("p" . insert-password)
+              ("h" . insert-password-phrase)
+              ("2" . insert-password-20)
+              ("3" . insert-password-phrase-3-space)
+              ("6" . insert-password-phrase-6-space)
+              ("-" . insert-password-phrase-6-hyphen-capitalize)
+              ("!" . insert-password-phrase-6-symbol-capitalize))
 
   ;; miscellaneous commands
-  (bind-keys :map space-map
-             :prefix "m"
-             :prefix-map space-miscellaneous-map
-             :menu-name "Miscellaneous Commands"
-             ("b" . emacs-lisp-byte-compile)
-             ("c" . customize-group)
-             ("g" . magit-status)
-             ("m" . macrostep-mode)
-             ("s" . server-start-maybe)
-             ("w" . webjump)
-             ("x" . regexp-builder))
+  (bind-keys* :map space-map
+              :prefix "m"
+              :prefix-map space-miscellaneous-map
+              :menu-name "Miscellaneous Commands"
+              ("b" . emacs-lisp-byte-compile)
+              ("c" . customize-group)
+              ("g" . magit-status)
+              ("m" . macrostep-mode)
+              ("s" . server-start-maybe)
+              ("w" . webjump)
+              ("x" . regexp-builder))
 
   ;; miscellaneous display commands
-  (bind-keys :map space-miscellaneous-map
-             :prefix "d"
-             :prefix-map space-miscellaneous-display-map
-             :menu-name "Display Commands"
-             ("c" . list-colors-display)
-             ("f" . list-faces-display)
-             ("s" . list-character-sets)
-             ("w" . display-time-world))
+  (bind-keys* :map space-miscellaneous-map
+              :prefix "d"
+              :prefix-map space-miscellaneous-display-map
+              :menu-name "Display Commands"
+              ("c" . list-colors-display)
+              ("f" . list-faces-display)
+              ("s" . list-character-sets)
+              ("w" . display-time-world))
   (when (fboundp 'term-bash)
-    (bind-keys :map space-miscellaneous-display-map ("u" . list-charset-unicode)))
+    (bind-keys* :map space-miscellaneous-display-map ("u" . list-charset-unicode)))
 
   ;; miscellaneous eval commands
-  (bind-keys :map space-miscellaneous-map
-             :prefix "e"
-             :prefix-map space-miscellaneous-eval-map
-             :menu-name "Eval Commands"
-             ("b" . eval-buffer)
-             ("i" . ielm)
-             ("r" . eval-region))
+  (bind-keys* :map space-miscellaneous-map
+              :prefix "e"
+              :prefix-map space-miscellaneous-eval-map
+              :menu-name "Eval Commands"
+              ("b" . eval-buffer)
+              ("i" . ielm)
+              ("r" . eval-region))
 
   ;; miscellaneous format commands
-  (bind-keys :map space-miscellaneous-map
-             :prefix "f"
-             :prefix-map space-miscellaneous-format-map
-             :menu-name "Format Commands"
-             ("j" . json-pretty-print)
-             ("x" . xml-pretty-print))
+  (bind-keys* :map space-miscellaneous-map
+              :prefix "f"
+              :prefix-map space-miscellaneous-format-map
+              :menu-name "Format Commands"
+              ("j" . json-pretty-print)
+              ("x" . xml-pretty-print))
 
   ;; miscellaneous toggle commands
-  (bind-keys :map space-miscellaneous-map
-             :prefix "t"
-             :prefix-map space-miscellaneous-toggle-map
-             :menu-name "Toggle Commands"
-             ("d" . toggle-debug-on-error)
-             ("q" . toggle-debug-on-quit)
-             ("s" . toggle-case-fold-search)
-             ("t" . toggle-truncate-lines)
-             ("v" . visual-line-mode))
+  (bind-keys* :map space-miscellaneous-map
+              :prefix "t"
+              :prefix-map space-miscellaneous-toggle-map
+              :menu-name "Toggle Commands"
+              ("d" . toggle-debug-on-error)
+              ("q" . toggle-debug-on-quit)
+              ("s" . toggle-case-fold-search)
+              ("t" . toggle-truncate-lines)
+              ("v" . visual-line-mode))
 
   ;; package commands
-  (bind-keys :map space-map
-             :prefix "p"
-             :prefix-map space-package-map
-             :menu-name "Package Commands"
-             ("i" . package-install)
-             ("l" . package-list-packages-no-fetch)
-             ("L" . package-list-packages)
-             ("R" . straight-pull-recipe-repositories)
-             ("P" . straight-pull-all)
-             ("F" . straight-fetch-all))
+  (bind-keys* :map space-map
+              :prefix "p"
+              :prefix-map space-package-map
+              :menu-name "Package Commands"
+              ("i" . package-install)
+              ("l" . package-list-packages-no-fetch)
+              ("L" . package-list-packages)
+              ("R" . straight-pull-recipe-repositories)
+              ("P" . straight-pull-all)
+              ("F" . straight-fetch-all))
 
   ;; run commands
-  (bind-keys :map space-map
-             :prefix "r"
-             :prefix-map space-run-map
-             :menu-name "Run Commands")
+  (bind-keys* :map space-map
+              :prefix "r"
+              :prefix-map space-run-map
+              :menu-name "Run Commands")
   (when (and (fboundp 'safe-load) (boundp 'emacs-home-dir))
     (defun safe-load-init-elisp ()
       (safe-load (file-truename (expand-file-name "init.el" emacs-home-dir))))
-    (bind-keys :map space-run-map ("i" . safe-load-init-elisp)))
+    (bind-keys* :map space-run-map ("i" . safe-load-init-elisp)))
 
   ;; terminal commands
-  (bind-keys :map space-map
-             :prefix "t"
-             :prefix-map space-terminal-map
-             :menu-name "Terminal Commands"
-             ("a" . ansi-term)
-             ("e" . eshell)
-             ("s" . shell)
-             ("t" . term))
+  (bind-keys* :map space-map
+              :prefix "t"
+              :prefix-map space-terminal-map
+              :menu-name "Terminal Commands"
+              ("a" . ansi-term)
+              ("e" . eshell)
+              ("s" . shell)
+              ("t" . term))
   (when (fboundp 'term-bash)
-    (bind-keys :map space-terminal-map ("b" . term-bash)))
+    (bind-keys* :map space-terminal-map ("b" . term-bash)))
   (when (fboundp 'term-zsh)
-    (bind-keys :map space-terminal-map ("z" . term-zsh)))
+    (bind-keys* :map space-terminal-map ("z" . term-zsh)))
   (when (fboundp 'vterm)
-    (bind-keys :map space-terminal-map ("v" . vterm)))
+    (bind-keys* :map space-terminal-map ("v" . vterm)))
 
   ;; ;; window resize commands
-  ;; (bind-keys :map space-map
+  ;; (bind-keys* :map space-map
   ;;            :prefix "w"
   ;;            :prefix-map space-window-resize-map
   ;;            :menu-name "Window Resize")
   ;; (when (fboundp 'window-shrink-vertically)
-  ;;   (bind-keys :map space-window-resize-map ("i" . window-shrink-vertically)))
+  ;;   (bind-keys* :map space-window-resize-map ("i" . window-shrink-vertically)))
   ;; (when (fboundp 'window-enlarge-vertically)
-  ;;   (bind-keys :map space-window-resize-map ("k" . window-enlarge-vertically)))
+  ;;   (bind-keys* :map space-window-resize-map ("k" . window-enlarge-vertically)))
   ;; (when (fboundp 'window-shrink-horizontally)
-  ;;   (bind-keys :map space-window-resize-map ("j" . window-shrink-horizontally)))
+  ;;   (bind-keys* :map space-window-resize-map ("j" . window-shrink-horizontally)))
   ;; (when (fboundp 'window-enlarge-horizontally)
-  ;;   (bind-keys :map space-window-resize-map ("l" . window-enlarge-horizontally)))
+  ;;   (bind-keys* :map space-window-resize-map ("l" . window-enlarge-horizontally)))
 
   ;; browse-url commands
-  (bind-keys :map space-map
-             :prefix "z"
-             :prefix-map space-browse-url-map
-             :menu-name "Browse URL Commands"
-             ("." . browse-url-at-point)
-             ("b" . browse-url-of-buffer)
-             ("r" . browse-url-of-region)
-             ("u" . browse-url)
-             ("v" . browse-url-of-file)))
+  (bind-keys* :map space-map
+              :prefix "z"
+              :prefix-map space-browse-url-map
+              :menu-name "Browse URL Commands"
+              ("." . browse-url-at-point)
+              ("b" . browse-url-of-buffer)
+              ("r" . browse-url-of-region)
+              ("u" . browse-url)
+              ("v" . browse-url-of-file)))
 
 (init-message 3 "custom-key-bindings-grouped-prefix-keys")
 (custom-key-bindings-grouped-prefix-keys)
@@ -4015,51 +4016,51 @@ If BUFFER is nil, current buffer is used."
 (defun custom-org-mode-hook ()
   "Custom `org-mode' hook."
   ;; remappings
-  (bind-keys :map org-mode-map
-             ([remap org-metaleft] . org-safe-metaleft)
-             ([remap org-metaright] . org-safe-metaright)
-             ([remap org-metadown] . org-safe-metadown)
-             ([remap org-metaup] . org-safe-metaup)
-             ([remap org-shiftmetaleft] . org-safe-shiftmetaleft)
-             ([remap org-shiftmetaright] . org-safe-shiftmetaright)
-             ([remap org-shiftmetadown] . org-safe-shiftmetadown)
-             ([remap org-shiftmetaup] . org-safe-shiftmetaup))
+  (bind-keys* :map org-mode-map
+              ([remap org-metaleft] . org-safe-metaleft)
+              ([remap org-metaright] . org-safe-metaright)
+              ([remap org-metadown] . org-safe-metadown)
+              ([remap org-metaup] . org-safe-metaup)
+              ([remap org-shiftmetaleft] . org-safe-shiftmetaleft)
+              ([remap org-shiftmetaright] . org-safe-shiftmetaright)
+              ([remap org-shiftmetadown] . org-safe-shiftmetadown)
+              ([remap org-shiftmetaup] . org-safe-shiftmetaup))
   ;; local key bindings
-  (bind-keys :map org-mode-map
-             ("M-n" . scroll-up)
-             ("M-p" . scroll-down)
-             ("M-W" . org-copy-to-clipboard)
-             ("C-M-b" . org-metaleft)
-             ("C-M-f" . org-metaright)
-             ("C-M-n" . org-metadown)
-             ("C-M-p" . org-metaup)
-             ("C-M-B" . org-shiftmetaleft)
-             ("C-M-F" . org-shiftmetaright)
-             ("C-M-N" . org-shiftmetadown)
-             ("C-M-P" . org-shiftmetaup)
-             ;;("C-c C-<return>" . org-insert-heading)
-             ("C-c a" . org-agenda)
-             ("C-c l" . org-store-link)
-             ("C-c m" . org-insert-todo-heading)
-             ("C-c p" . org-priority)                                   ; "C-c ," gets overridden by `semantic-complete-analyze-inline'
-             ("C-c s" . org-sort-current)                               ; sort current level
-             ("C-c z" . org-agenda-archive-done-tasks)                  ; archive done tasks
-             ;;("C-c C-j" . counsel-org-goto)                           ; default: `org-goto'
-             ("C-c C-j" . consult-org-heading)                          ; default: `org-goto'
-             ;;("C-c C-z" . switch-to-lisp)                             ; default: `org-add-note'
-             ("C-c C-z" . geiser-mode-switch-to-repl)                   ; default: `org-add-note'
-             ("C-c C-x C-l" . org-toggle-link-display)                  ; toggle showing or hiding links
-             ("C-c C-x t" . org-toggle-headline-checkbox)               ; toggle between headline and checkbox
-             ("C-c C-x T" . org-toggle-literate-programming-code-block) ; toggle literate programming code block on/off
-             ("C-c C-x F" . org-fix-literate-programming-heading)       ; fix literate programming heading of current org section
-             ("C-c C-v q" . org-babel-tangle-block)                     ; tangle current source block
-             ("C-c C-v C-q" . org-babel-tangle-block))                  ; tangle current source block
+  (bind-keys* :map org-mode-map
+              ("M-n" . scroll-up)
+              ("M-p" . scroll-down)
+              ("M-W" . org-copy-to-clipboard)
+              ("C-M-b" . org-metaleft)
+              ("C-M-f" . org-metaright)
+              ("C-M-n" . org-metadown)
+              ("C-M-p" . org-metaup)
+              ("C-M-B" . org-shiftmetaleft)
+              ("C-M-F" . org-shiftmetaright)
+              ("C-M-N" . org-shiftmetadown)
+              ("C-M-P" . org-shiftmetaup)
+              ;;("C-c C-<return>" . org-insert-heading)
+              ("C-c a" . org-agenda)
+              ("C-c l" . org-store-link)
+              ("C-c m" . org-insert-todo-heading)
+              ("C-c p" . org-priority)                                   ; "C-c ," gets overridden by `semantic-complete-analyze-inline'
+              ("C-c s" . org-sort-current)                               ; sort current level
+              ("C-c z" . org-agenda-archive-done-tasks)                  ; archive done tasks
+              ;;("C-c C-j" . counsel-org-goto)                           ; default: `org-goto'
+              ("C-c C-j" . consult-org-heading)                          ; default: `org-goto'
+              ;;("C-c C-z" . switch-to-lisp)                             ; default: `org-add-note'
+              ("C-c C-z" . geiser-mode-switch-to-repl)                   ; default: `org-add-note'
+              ("C-c C-x C-l" . org-toggle-link-display)                  ; toggle showing or hiding links
+              ("C-c C-x t" . org-toggle-headline-checkbox)               ; toggle between headline and checkbox
+              ("C-c C-x T" . org-toggle-literate-programming-code-block) ; toggle literate programming code block on/off
+              ("C-c C-x F" . org-fix-literate-programming-heading)       ; fix literate programming heading of current org section
+              ("C-c C-v q" . org-babel-tangle-block)                     ; tangle current source block
+              ("C-c C-v C-q" . org-babel-tangle-block))                  ; tangle current source block
   ;; custom movement keys
   (custom-key-bindings-movement-keys org-mode-map)
 
   ;; ;; work functions
   ;; (when (fboundp 'work-linkify-jira-card)
-  ;;   (bind-keys :map org-mode-map ("C-c C-x L" . work-linkify-jira-card)))
+  ;;   (bind-keys* :map org-mode-map ("C-c C-x L" . work-linkify-jira-card)))
 
   ;; make sure tabs are not inserted
   (setq indent-tabs-mode nil)
@@ -15572,11 +15573,11 @@ USING is the remaining peg."
   :straight t
   :after (compat)
   :demand t
-  :bind (:map vertico-map
-              ("C-<return>" . vertico-exit-input) ; default: `vertico-exit'
-              ("M-<return>" . vertico-exit-input) ; default: `vertico-exit'
-              ("C-M-i" . vertico-scroll-down)     ; default: `completion-at-point' ("<prior>")
-              ("C-M-k" . vertico-scroll-up))      ; default: `kill-whole-line' ("<next>")
+  :bind* (:map vertico-map
+               ("C-<return>" . vertico-exit-input) ; default: `vertico-exit'
+               ("M-<return>" . vertico-exit-input) ; default: `vertico-exit'
+               ("C-M-i" . vertico-scroll-down)     ; default: `completion-at-point' ("<prior>")
+               ("C-M-k" . vertico-scroll-up))      ; default: `kill-whole-line' ("<next>")
   :init
   (vertico-mode))
 ;; vertico:1 ends here
@@ -16023,9 +16024,9 @@ USING is the remaining peg."
   :commands (list-buffers bs-show)
   :bind* (([remap list-buffers] . bs-show) ; default: `list-buffers'
           ("C-x C-b" . bs-show))           ; default: `list-buffers'
-  :bind (:map bs-mode-map
-              ("C-n" . bs-down)
-              ("C-p" . bs-up))
+  :bind* (:map bs-mode-map
+               ("C-n" . bs-down)
+               ("C-p" . bs-up))
   :config
   (defvar custom-bs-always-show-regexps
     ;;'("\\*\\(scratch\\|info\\|grep\\)\\*")
@@ -16389,12 +16390,12 @@ USING is the remaining peg."
 (use-package elfeed
   :straight t
   :commands (elfeed-bookmarks-edit)
-  :bind (:map elfeed-search-mode-map
-              ("h" . elfeed-search-mode-help)
-              ("?" . elfeed-search-mode-help))
-  :bind (:map elfeed-show-mode-map
-              ("h" . elfeed-show-mode-help)
-              ("?" . elfeed-show-mode-help))
+  :bind* (:map elfeed-search-mode-map
+               ("h" . elfeed-search-mode-help)
+               ("?" . elfeed-search-mode-help))
+  :bind* (:map elfeed-show-mode-map
+               ("h" . elfeed-show-mode-help)
+               ("?" . elfeed-show-mode-help))
   :custom
   ;; use curl utility to fetch feeds
   (elfeed-use-curl nil)
@@ -16511,20 +16512,20 @@ USING is the remaining peg."
 (use-package elfeed-tube
   :straight t
   :after elfeed
-  :bind (:map elfeed-search-mode-map
-              ("F" . elfeed-tube-fetch)
-              ([remap save-buffer] . elfeed-tube-save))
-  :bind (:map elfeed-show-mode-map
-              ("F" . elfeed-tube-fetch)
-              ([remap save-buffer] . elfeed-tube-save))
+  :bind* (:map elfeed-search-mode-map
+               ("F" . elfeed-tube-fetch)
+               ([remap save-buffer] . elfeed-tube-save))
+  :bind* (:map elfeed-show-mode-map
+               ("F" . elfeed-tube-fetch)
+               ([remap save-buffer] . elfeed-tube-save))
   :config
   (elfeed-tube-setup))
 
 ;; (use-package elfeed-tube-mpv
 ;;   :straight t
-;;   :bind (:map elfeed-show-mode-map
-;;               ("C-c C-f" . elfeed-tube-mpv-follow-mode)
-;;               ("C-c C-w" . elfeed-tube-mpv-where)))
+;;   :bind* (:map elfeed-show-mode-map
+;;                ("C-c C-f" . elfeed-tube-mpv-follow-mode)
+;;                ("C-c C-w" . elfeed-tube-mpv-where)))
 ;; elfeed-tube:1 ends here
 
 ;; [[file:init-emacs.org::*ellama][ellama:1]]
@@ -16836,6 +16837,57 @@ USING is the remaining peg."
   (gcmh-mode 1))
 ;; gcmh:1 ends here
 
+;; [[file:init-emacs.org::*google-gemini][google-gemini:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: google-gemini
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Packages: google-gemini")
+
+(use-package google-gemini
+  :straight (google-gemini
+             :type git
+             :host github
+             :repo "emacs-openai/google-gemini")
+  :custom
+  (google-gemini-key (with-temp-buffer
+                       (insert-file-contents "~/.google-gemini-api-key")
+                       (buffer-string))))
+;; google-gemini:1 ends here
+
+;; [[file:init-emacs.org::*gptel][gptel:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: gptel
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Packages: gptel")
+
+(use-package gptel
+  :straight t
+  :commands (gptel
+             gptel-menu
+             gptel-request
+             gptel-send)
+  :bind* ("C-<return>" . gptel-send)
+  :custom
+  (gptel-model "codellama:7b")
+  (gptel-log-level "debug")
+  :config
+  (setq gptel-ollama-backend (gptel-make-ollama "Ollama"
+                               :host "localhost:11434"
+                               :stream t
+                               :models '("codellama:7b"
+                                         "llama2-uncensored:latest"
+                                         "llama3:8b"
+                                         "llama3-chatqa")))
+  (setq gptel-gemini-backend (gptel-make-gemini "Gemini"
+                               :stream t
+                               :key (with-temp-buffer
+                                      (insert-file-contents "~/.google-gemini-api-key")
+                                      (buffer-string))))
+  (setq gptel-backend gptel-gemini-backend))
+;; gptel:1 ends here
+
 ;; [[file:init-emacs.org::*guix][guix:1]]
 ;;------------------------------------------------------------------------------
 ;;; Packages: guix
@@ -17043,8 +17095,8 @@ back to the previous non-whitespace character. See also
 
 (use-package isearch
   :straight (:type built-in)
-  :bind (:map isearch-mode-map
-              ("C-M-<backspace>" . isearch-clear))
+  :bind* (:map isearch-mode-map
+               ("C-M-<backspace>" . isearch-clear))
   :config
   (defun isearch-clear ()
     "Clear `isearch' search string."
@@ -17337,11 +17389,11 @@ And the line would be overlaid like:
   :diminish magit-auto-revert-mode
   :bind* (("C-x g" . magit-status)
           ("C-x M-g" . magit-dispatch))
-  :bind (:map magit-status-mode-map
-              ("W" . magit-toggle-whitespace)
-              ("C-c C-a" . magit-commit-amend-without-prompt))
-  :bind (:map magit-mode-map
-              ("v" . magit-visit-pull-request-url))
+  :bind* (:map magit-status-mode-map
+               ("W" . magit-toggle-whitespace)
+               ("C-c C-a" . magit-commit-amend-without-prompt))
+  :bind* (:map magit-mode-map
+               ("v" . magit-visit-pull-request-url))
   :custom
   ;; ;; use ivy
   ;; (magit-completing-read-function #'ivy-completing-read)
@@ -17434,29 +17486,29 @@ And the line would be overlaid like:
              mpd-execute-command
              mpd-get-status)
   :bind* ("C-x /" . mingus-switch-to-buffer)
-  :bind (:map mingus-global-map
-              ("<left>" . backward-char)
-              ("<right>" . forward-char)
-              ("<home>" . beginning-of-line)
-              ("<end>" . end-of-line)
-              ("C-c C-u" . mingus-mpc-update))
-  :bind (:map mingus-playlist-mode-map
-              ("SPC" . mingus-pause)
-              ("<left>" . backward-char)
-              ("<right>" . forward-char)
-              ("<home>" . beginning-of-line)
-              ("<end>" . end-of-line)
-              ("C-c C-e" . mingus-edit-id3v2)
-              ("C-c C-l" . mingus-get-lyrics)
-              ("C-c C-u" . mingus-mpc-update)
-              ("<f1>" . mingus-set-song-rating-1)
-              ("<f2>" . mingus-set-song-rating-2)
-              ("<f3>" . mingus-set-song-rating-3)
-              ("<f4>" . mingus-set-song-rating-4)
-              ("<f5>" . mingus-set-song-rating-5)
-              ("<f6>" . mingus-set-song-rating-0))
-  :bind (:map mingus-browse-mode-map
-              ("C-c C-u" . mingus-mpc-update))
+  :bind* (:map mingus-global-map
+               ("<left>" . backward-char)
+               ("<right>" . forward-char)
+               ("<home>" . beginning-of-line)
+               ("<end>" . end-of-line)
+               ("C-c C-u" . mingus-mpc-update))
+  :bind* (:map mingus-playlist-mode-map
+               ("SPC" . mingus-pause)
+               ("<left>" . backward-char)
+               ("<right>" . forward-char)
+               ("<home>" . beginning-of-line)
+               ("<end>" . end-of-line)
+               ("C-c C-e" . mingus-edit-id3v2)
+               ("C-c C-l" . mingus-get-lyrics)
+               ("C-c C-u" . mingus-mpc-update)
+               ("<f1>" . mingus-set-song-rating-1)
+               ("<f2>" . mingus-set-song-rating-2)
+               ("<f3>" . mingus-set-song-rating-3)
+               ("<f4>" . mingus-set-song-rating-4)
+               ("<f5>" . mingus-set-song-rating-5)
+               ("<f6>" . mingus-set-song-rating-0))
+  :bind* (:map mingus-browse-mode-map
+               ("C-c C-u" . mingus-mpc-update))
   :config
   ;; for some reason these are not being defined in libmpdee.el
   (defmacro _mpdgv () `(aref conn 0))
@@ -18361,11 +18413,11 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
 
 (use-package org-tree-slide
   :straight t
-  :bind (("S-<f8>" . org-tree-slide-mode)
-         ("C-<f8>" . org-tree-slide-skip-done-toggle))
-  :bind (:map org-tree-slide-mode-map
-              ("<f11>" . org-tree-slide-move-previous-tree)
-              ("<f12>" . org-tree-slide-move-next-tree))
+  :bind* (("S-<f8>" . org-tree-slide-mode)
+          ("C-<f8>" . org-tree-slide-skip-done-toggle))
+  :bind* (:map org-tree-slide-mode-map
+               ("<f11>" . org-tree-slide-move-previous-tree)
+               ("<f12>" . org-tree-slide-move-next-tree))
   :hook ((org-tree-slide-play . org-tree-slide-presentation-setup)
          (org-tree-slide-stop . org-tree-slide-presentation-reset))
   :custom
@@ -18745,11 +18797,11 @@ Do not perform the search on very large files (to avoid a delay when loaded)."
              :type git
              :host github
              :repo "wasamasa/svg-2048")
-  :bind (:map svg-2048-mode-map
-              ("<left>" . svg-2048-move-left)
-              ("<right>" . svg-2048-move-right)
-              ("<up>" . svg-2048-move-up)
-              ("<down>" . svg-2048-move-down)))
+  :bind* (:map svg-2048-mode-map
+               ("<left>" . svg-2048-move-left)
+               ("<right>" . svg-2048-move-right)
+               ("<up>" . svg-2048-move-up)
+               ("<down>" . svg-2048-move-down)))
 ;; svg-2048:1 ends here
 
 ;; [[file:init-emacs.org::*svg-clock][svg-clock:1]]
@@ -18987,9 +19039,9 @@ otherwise run `find-file-as-root'."
              w3m-search
              w3m-weather)
   :defines (w3m-use-tab-line)
-  :bind (:map w3m-mode-map
-              ("," . w3m-previous-buffer)
-              ("." . w3m-next-buffer))
+  :bind* (:map w3m-mode-map
+               ("," . w3m-previous-buffer)
+               ("." . w3m-next-buffer))
   :custom
   ;; directory of icon files
   (w3m-icon-directory "/usr/share/emacs-w3m/icon")
@@ -19025,9 +19077,9 @@ otherwise run `find-file-as-root'."
 ;;              w3m-session-load-always
 ;;              w3m-session-save
 ;;              w3m-session-save-always)
-;;   :bind (:map w3m-mode-map
-;;               ("S" . w3m-session-save)
-;;               ("L" . w3m-session-load))
+;;   :bind* (:map w3m-mode-map
+;;                ("S" . w3m-session-save)
+;;                ("L" . w3m-session-load))
 ;;   ;;:config
 ;;   ;;(setq w3m-session-file "~/.w3m-session")
 ;;   ;;(setq w3m-session-save-always nil)
@@ -19053,10 +19105,10 @@ otherwise run `find-file-as-root'."
              web-query-word-at-point
              web-query-symbol-by-mode
              web-query-symbol-by-mode-at-point)
-  :bind (;;("S-<f5>" . web-query-word-at-point)
-         ("S-<f6>" . web-query)
-         ("S-<f7>" . web-query-symbol-by-mode-at-point)
-         ("C-c w" . web-query)))
+  :bind* (;;("S-<f5>" . web-query-word-at-point)
+          ("S-<f6>" . web-query)
+          ("S-<f7>" . web-query-symbol-by-mode-at-point)
+          ("C-c w" . web-query)))
 ;; web-query:1 ends here
 
 ;; [[file:init-emacs.org::*webjump][webjump:1]]
@@ -19102,8 +19154,8 @@ otherwise run `find-file-as-root'."
 
 (use-package wgrep
   :straight t
-  :bind (:map grep-mode-map
-              ("C-x C-q" . wgrep-change-to-wgrep-mode))) ; same keybinding as `wdired-mode'
+  :bind* (:map grep-mode-map
+               ("C-x C-q" . wgrep-change-to-wgrep-mode))) ; same keybinding as `wdired-mode'
 ;; wgrep:1 ends here
 
 ;; [[file:init-emacs.org::*which-key][which-key:1]]
@@ -19397,12 +19449,12 @@ otherwise run `find-file-as-root'."
 (use-package calendar
   :straight (:type built-in)
   :bind* ("C-x c" . calendar)
-  :bind (:map calendar-mode-map
-              ;; scrolling keys
-              (">" . calendar-scroll-left)
-              ("<" . calendar-scroll-right)
-              ("C-x >" . calendar-scroll-left)
-              ("C-x <" . calendar-scroll-right))
+  :bind* (:map calendar-mode-map
+               ;; scrolling keys
+               (">" . calendar-scroll-left)
+               ("<" . calendar-scroll-right)
+               ("C-x >" . calendar-scroll-left)
+               ("C-x <" . calendar-scroll-right))
   :config
   ;; turn off diary entries view when calendar is run
   (setq calendar-view-diary-initially-flag nil)
@@ -19431,14 +19483,14 @@ otherwise run `find-file-as-root'."
   :commands (calendar-remind-lookup
              calendar-remind-visit
              calendar-remind-visit-insert)
-  :bind (:map calendar-mode-map
-              ;; remind lookup
-              ("<return>" . calendar-remind-lookup)
-              ("r" . calendar-remind-lookup)
-              ;;("SPC" . calendar-remind-lookup)
-              ;; remind visit
-              ("v" . calendar-remind-visit)
-              ("V" . calendar-remind-visit-insert)))
+  :bind* (:map calendar-mode-map
+               ;; remind lookup
+               ("<return>" . calendar-remind-lookup)
+               ("r" . calendar-remind-lookup)
+               ;;("SPC" . calendar-remind-lookup)
+               ;; remind visit
+               ("v" . calendar-remind-visit)
+               ("V" . calendar-remind-visit-insert)))
 ;; Calendar:1 ends here
 
 ;; [[file:init-emacs.org::*CSS Mode][CSS Mode:1]]
@@ -19471,10 +19523,10 @@ otherwise run `find-file-as-root'."
   :commands (dired dired-jump)
   ;;:hook (dired-mode . custom-dired-mode-hook)
   ;;:bind* ("C-x j" . dired-jump)
-  :bind (:map dired-mode-map
-              ("e" . wdired-change-to-wdired-mode)
-              ("C-a" . dired-mwim-beginning-of-line)
-              ("C-c C-z f" . browse-url-of-dired-file))
+  :bind* (:map dired-mode-map
+               ("e" . wdired-change-to-wdired-mode)
+               ("C-a" . dired-mwim-beginning-of-line)
+               ("C-c C-z f" . browse-url-of-dired-file))
   :custom
   ;; only prompt once for recursive deletes
   (dired-recursive-deletes 'top)
@@ -19548,8 +19600,8 @@ otherwise run `find-file-as-root'."
 ;; make dired use a single buffer
 (use-package wdired
   :straight (:type built-in)
-  :bind (:map wdired-mode-map
-              ("C-a" . dired-mwim-beginning-of-line)))
+  :bind* (:map wdired-mode-map
+               ("C-a" . dired-mwim-beginning-of-line)))
 
 ;;------------------------------------------------------------------------------
 ;;;; dired-single
@@ -19561,12 +19613,12 @@ otherwise run `find-file-as-root'."
 (use-package dired-single
   :straight t
   :commands (dired dired-jump)
-  :bind (:map dired-mode-map
-              ("<return>" . dired-single-buffer)
-              ("f" . dired-single-buffer)
-              ("^" . dired-single-buffer-up)
-              ("b" . dired-single-buffer-up)
-              ("<mouse-1>" . dired-single-buffer-mouse))
+  :bind* (:map dired-mode-map
+               ("<return>" . dired-single-buffer)
+               ("f" . dired-single-buffer)
+               ("^" . dired-single-buffer-up)
+               ("b" . dired-single-buffer-up)
+               ("<mouse-1>" . dired-single-buffer-mouse))
   :init
   (defun dired-single-buffer-up ()
     (interactive)
@@ -19604,8 +19656,8 @@ otherwise run `find-file-as-root'."
 (use-package dired-hide-dotfiles
   :straight t
   ;;:hook (dired-mode . dired-hide-dotfiles-mode)
-  :bind (:map dired-mode-map
-              ("H" . dired-hide-dotfiles-mode)))
+  :bind* (:map dired-mode-map
+               ("H" . dired-hide-dotfiles-mode)))
 
 ;; ;;------------------------------------------------------------------------------
 ;; ;;;; all-the-icons-dired
@@ -19629,8 +19681,9 @@ otherwise run `find-file-as-root'."
 
 (use-package dired-narrow
   :straight t
-  :bind (("C-c C-n" . dired-narrow)
-         ("C-c C-f" . dired-narrow-fuzzy)))
+  :bind* (:map dired-mode-map
+               ("C-c C-n" . dired-narrow)
+               ("C-c C-f" . dired-narrow-fuzzy)))
 ;; Dired:1 ends here
 
 ;; [[file:init-emacs.org::*Ediff][Ediff:1]]
@@ -19880,9 +19933,9 @@ otherwise run `find-file-as-root'."
 (use-package js2-refactor
   :straight t
   :after (js2-mode)
-  :bind (:map js2-mode-map
-              ("C-k" . js2r-kill)
-              ("M-." . nil))            ; unbind conflicting key
+  :bind* (:map js2-mode-map
+               ("C-k" . js2r-kill)
+               ("M-." . nil))            ; unbind conflicting key
   :config
   ;; set prefix key
   (js2r-add-keybindings-with-prefix "C-c C-r")
@@ -19921,27 +19974,27 @@ otherwise run `find-file-as-root'."
              js-send-last-sexp
              js-send-last-sexp-and-go
              js-load-file-and-go)
-  :bind (:map js2-mode-map
-              ("C-c C-c" . js-eval-sexp-and-go)
-              ("C-x C-e" . js-send-last-sexp)
-              ("C-M-x" . js-eval-sexp-and-go)
-              ("C-c b" . js-send-buffer)
-              ("C-c C-b" . js-send-buffer-and-go)
-              ("C-c C-k" . js-send-buffer-and-go)
-              ("C-c l" . js-load-file-and-go))
+  :bind* (:map js2-mode-map
+               ("C-c C-c" . js-eval-sexp-and-go)
+               ("C-x C-e" . js-send-last-sexp)
+               ("C-M-x" . js-eval-sexp-and-go)
+               ("C-c b" . js-send-buffer)
+               ("C-c C-b" . js-send-buffer-and-go)
+               ("C-c C-k" . js-send-buffer-and-go)
+               ("C-c l" . js-load-file-and-go))
   :config
   ;;(setq inferior-js-program-command "/usr/bin/java org.mozilla.javascript.tools.shell.Main")
   ;;(setq inferior-js-program-command "/usr/bin/rhino")
 
   ;; ;; key bindings
-  ;; (bind-keys :map js2-mode-map
-  ;;            ("C-c C-c" . js-eval-sexp-and-go)
-  ;;            ("C-x C-e" . js-send-last-sexp)
-  ;;            ("C-M-x" . js-eval-sexp-and-go)
-  ;;            ("C-c b" . js-send-buffer)
-  ;;            ("C-c C-b" . js-send-buffer-and-go)
-  ;;            ("C-c C-k" . js-send-buffer-and-go)
-  ;;            ("C-c l" . js-load-file-and-go))
+  ;; (bind-keys* :map js2-mode-map
+  ;;             ("C-c C-c" . js-eval-sexp-and-go)
+  ;;             ("C-x C-e" . js-send-last-sexp)
+  ;;             ("C-M-x" . js-eval-sexp-and-go)
+  ;;             ("C-c b" . js-send-buffer)
+  ;;             ("C-c C-b" . js-send-buffer-and-go)
+  ;;             ("C-c C-k" . js-send-buffer-and-go)
+  ;;             ("C-c l" . js-load-file-and-go))
 
   (defun js-eval-sexp ()
     "js-comint evaluate current sexp."
@@ -20026,9 +20079,9 @@ otherwise run `find-file-as-root'."
 
 (use-package pdf-tools
   :straight t
-  :bind (:map pdf-view-mode-map
-              ("C-s" . isearch-forward)
-              ("C-r" . isearch-backward))
+  :bind* (:map pdf-view-mode-map
+               ("C-s" . isearch-forward)
+               ("C-r" . isearch-backward))
   ;; :hook (pdf-view-mode . bms/pdf-midnite-amber) ; turn on midnight-mode for pdfs
   :config
   (pdf-tools-install))
@@ -20606,11 +20659,11 @@ Commands:
   :straight t
   :after (flyspell)
   :mode ("\\.rs\\'" . rust-mode)
-  :bind (:map rust-mode-map
-              ("C-c C-c" . rust-run)
-              ("C-c C-d" . rust-dbg-wrap-or-unwrap)
-              ("C-c C-f" . rust-format-buffer)
-              ("C-c C-n" . rust-goto-format-problem))
+  :bind* (:map rust-mode-map
+               ("C-c C-c" . rust-run)
+               ("C-c C-d" . rust-dbg-wrap-or-unwrap)
+               ("C-c C-f" . rust-format-buffer)
+               ("C-c C-n" . rust-goto-format-problem))
   :custom
   (rustic-lsp-client nil)
   :config
@@ -20869,11 +20922,11 @@ Commands:
     ;;(add-hook 'slime-mode-hook #'slime-highlight-edits-mode)
 
     ;; key bindings
-    (bind-keys :map slime-mode-map
-               ("C-c C-c" . slime-eval-sexp)
-               ("C-x C-e" . slime-eval-last-expression)
-               ("C-M-x" . slime-eval-sexp)
-               ("C-c C-k" . slime-eval-buffer))
+    (bind-keys* :map slime-mode-map
+                ("C-c C-c" . slime-eval-sexp)
+                ("C-x C-e" . slime-eval-last-expression)
+                ("C-M-x" . slime-eval-sexp)
+                ("C-c C-k" . slime-eval-buffer))
 
     ;; start inferior lisp job
     ;;(unless (comint-check-proc "*inferior-lisp*")
@@ -21032,12 +21085,12 @@ Commands:
 (use-package sqlup-mode
   :straight t
   :after (sql)
-  :bind (:map sql-mode-map
-              ("C-c b" . sqlup-capitalize-keywords-in-buffer)
-              ("C-c r" . sqlup-capitalize-keywords-in-region))
-  :bind (:map sql-interactive-mode-map
-              ("C-c b" . sqlup-capitalize-keywords-in-buffer)
-              ("C-c r" . sqlup-capitalize-keywords-in-region))
+  :bind* (:map sql-mode-map
+               ("C-c b" . sqlup-capitalize-keywords-in-buffer)
+               ("C-c r" . sqlup-capitalize-keywords-in-region))
+  :bind* (:map sql-interactive-mode-map
+               ("C-c b" . sqlup-capitalize-keywords-in-buffer)
+               ("C-c r" . sqlup-capitalize-keywords-in-region))
   :hook ((sql-mode . sqlup-mode)
          (sql-interactive-mode . sqlup-mode)))
 
@@ -21048,16 +21101,16 @@ Commands:
 (use-package sql-transform
   :straight t
   :after (sql)
-  :bind (:map sql-mode-map
-              ("C-c s" . sql-to-select)
-              ("C-c i" . sql-to-insert)
-              ("C-c u" . sql-to-update)
-              ("C-c d" . sql-to-delete))
-  :bind (:map sql-interactive-mode-map
-              ("C-c s" . sql-to-select)
-              ("C-c i" . sql-to-insert)
-              ("C-c u" . sql-to-update)
-              ("C-c d" . sql-to-delete)))
+  :bind* (:map sql-mode-map
+               ("C-c s" . sql-to-select)
+               ("C-c i" . sql-to-insert)
+               ("C-c u" . sql-to-update)
+               ("C-c d" . sql-to-delete))
+  :bind* (:map sql-interactive-mode-map
+               ("C-c s" . sql-to-select)
+               ("C-c i" . sql-to-insert)
+               ("C-c u" . sql-to-update)
+               ("C-c d" . sql-to-delete)))
 
 ;; ;;------------------------------------------------------------------------------
 ;; ;;;; mysql
@@ -21094,7 +21147,7 @@ Commands:
     (setq tab-width 8)
     (setq tab-stop-list (number-sequence 8 76 8))
     ;;(setq indent-tabs-mode t)           ; can insert TAB characters
-    ;;(bind-key "<tab>" 'indent-relative text-mode-map)
+    ;;(bind-key* "<tab>" 'indent-relative text-mode-map)
 
     ;; set default fill column for auto-fill mode
     (setq fill-column custom-fill-column)
@@ -21181,11 +21234,11 @@ Commands:
              :files ("tokens" "v-mode.el"))
   :after (flyspell)
   :mode ("\\.v?v\\.vsh\\'" . v-mode)
-  :bind (:map v-mode-map
-              ("C-c C-b" . v-project-build)
-              ("C-c C-c" . v-project-run)
-              ("C-c C-f" . v-format-buffer)
-              ("C-c C-f" . v-menu))
+  :bind* (:map v-mode-map
+               ("C-c C-b" . v-project-build)
+               ("C-c C-c" . v-project-run)
+               ("C-c C-f" . v-format-buffer)
+               ("C-c C-f" . v-menu))
   :config
   (defun custom-v-mode-hook ()
     ;; use spaces for tabs
@@ -21308,7 +21361,7 @@ Commands:
 
   (defun custom-nxml-mode-hook ()
     ;; do not use `indent-relative' for tab indenting
-    (bind-key "<tab>" 'indent-for-tab-command nxml-mode-map)
+    (bind-key* "<tab>" 'indent-for-tab-command nxml-mode-map)
 
     ;; turn off auto-fill mode
     (turn-off-auto-fill)
@@ -21997,11 +22050,11 @@ Commands:
 (use-package yasnippet
   :straight t
   :diminish yas-minor-mode
-  :bind (:map yas-minor-mode-map
-              ("C-c & n" . yas-new-snippet)
-              ("C-c & s" . yas-insert-snippet)
-              ("C-c & v" . yas-visit-snippet-file)
-              ("C-/" . yas-insert-snippet)) ; default: `undo-tree-undo'
+  :bind* (:map yas-minor-mode-map
+               ("C-c & n" . yas-new-snippet)
+               ("C-c & s" . yas-insert-snippet)
+               ("C-c & v" . yas-visit-snippet-file)
+               ("C-/" . yas-insert-snippet)) ; default: `undo-tree-undo'
   :config
   ;; turn on globally
   (yas-global-mode 1)
@@ -22081,7 +22134,7 @@ Commands:
   ;; ;;(cua-selection-mode 1) ; without C-x/c/v key bindings
   ;; (setq cua-delete-copy-to-register-0 t)
   ;; ;; key bindings
-  ;; (bind-keys ("C-@" . cua-set-mark))
+  ;; (bind-keys* ("C-@" . cua-set-mark))
 
   ;; ;; clipboard
   ;; (setq select-enable-clipboard t
@@ -22094,8 +22147,8 @@ Commands:
   ;; (timeclock-mode-line-display)
 
   ;; set page-up and page-down keys (again)
-  (bind-keys ("<next>" . scroll-up-enhanced)
-             ("<prior>" . scroll-down-enhanced)))
+  (bind-keys* ("<next>" . scroll-up-enhanced)
+              ("<prior>" . scroll-down-enhanced)))
 ;; Windows OS:1 ends here
 
 ;; [[file:init-emacs.org::*Gnus][Gnus:1]]
@@ -22382,7 +22435,7 @@ Defaults to \"nullman\" if no match is found."
     (let ((nick (erc-nick-from-system-name)))
       (erc-services-disable)
       (erc :server "localhost" :port "6667" :nick nick :password nil :full-name "Kyle Sherman"))))
-;;(bind-keys ("C-c el" . erc-localhost)))
+;;(bind-keys* ("C-c el" . erc-localhost)))
 ;; Localhost:1 ends here
 
 ;; [[file:init-emacs.org::*Localhost Bitlbee][Localhost Bitlbee:1]]
@@ -22439,7 +22492,7 @@ Defaults to \"nullman\" if no match is found."
     "Connect to irc.win.dowjones.net IRC server."
     (erc-services-disable)
     (erc :server "irc.win.dowjones.net" :port "6667" :nick "kyle" :password nil :full-name "Kyle Sherman")))
-;;(bind-keys ("C-c ew" . erc-work)))
+;;(bind-keys* ("C-c ew" . erc-work)))
 ;; Work:1 ends here
 
 ;; [[file:init-emacs.org::*Commands][Commands:1]]

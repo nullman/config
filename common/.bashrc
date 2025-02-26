@@ -88,6 +88,7 @@ if [[ -z "${INSIDE_EMACS}" ]] ; then
         [[ -f "/usr/share/fzf/completion.bash" ]] && source "/usr/share/fzf/completion.bash" 2>&1
     fi
 fi
+export FZF_DEFAULT_OPTS="--layout=reverse --border=bold"
 
 # fix home/end keys in screen/tmux
 if [[ -n "${STY}" ]] || [[ -n "${TMUX}" ]] ; then

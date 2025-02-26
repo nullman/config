@@ -1298,6 +1298,7 @@
     shellcheck                              # Shell script analysis tool
     tokei                                   # Program that allows you to count your code, quickly
     vlang                                   # Simple, fast, safe, compiled language for developing maintainable software
+    vscode                                  # Open source source code editor developed by Microsoft for Windows, Linux and ...
     x16-emulator                            # Official emulator of CommanderX16 8-bit computer
     x16-rom                                 # ROM file for CommanderX16 8-bit computer
     yq                                      # Command-line YAML/XML/TOML processor - jq wrapper for YAML, XML, TOML documents
