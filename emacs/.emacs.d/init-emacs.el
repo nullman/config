@@ -2027,26 +2027,26 @@ KEYMAP defaults to `override-global-map'."
   (when (fboundp 'indent-region-or-thing)
     (bind-keys* ("C-M-\\" . indent-region-or-thing))) ; default: `indent-region'
 
-  ;; append equal characters up to column 80
-  (when (fboundp 'append-equal-to-column-80)
-    (bind-keys ("C-c =" . append-equal-to-column-80)))
+  ;; ;; append equal characters up to column 80
+  ;; (when (fboundp 'append-equal-to-column-80)
+  ;;   (bind-keys ("C-c =" . append-equal-to-column-80)))
 
-  ;; append dash characters up to column 80
-  (when (fboundp 'append-dash-to-column-80)
-    (bind-keys ("C-c -" . append-dash-to-column-80)))
+  ;; ;; append dash characters up to column 80
+  ;; (when (fboundp 'append-dash-to-column-80)
+  ;;   (bind-keys ("C-c -" . append-dash-to-column-80)))
 
-  ;; append asterisk characters up to column 80
-  (when (fboundp 'append-asterisk-to-column-80)
-    (bind-keys ("C-c 8" . append-asterisk-to-column-80)
-               ("C-c *" . append-asterisk-to-column-80)))
+  ;; ;; append asterisk characters up to column 80
+  ;; (when (fboundp 'append-asterisk-to-column-80)
+  ;;   (bind-keys ("C-c 8" . append-asterisk-to-column-80)
+  ;;              ("C-c *" . append-asterisk-to-column-80)))
 
-  ;; add lisp comment block (equal)
-  (when (fboundp 'insert-lisp-comment-block-equal)
-    (bind-keys ("C-c C-=" . insert-lisp-comment-block-equal)))
+  ;; ;; add lisp comment block (equal)
+  ;; (when (fboundp 'insert-lisp-comment-block-equal)
+  ;;   (bind-keys ("C-c C-=" . insert-lisp-comment-block-equal)))
 
-  ;; add lisp comment block (dash)
-  (when (fboundp 'insert-lisp-comment-block-dash)
-    (bind-keys ("C-c C--" . insert-lisp-comment-block-dash)))
+  ;; ;; add lisp comment block (dash)
+  ;; (when (fboundp 'insert-lisp-comment-block-dash)
+  ;;   (bind-keys ("C-c C--" . insert-lisp-comment-block-dash)))
 
   ;; align commands
   (bind-keys ("C-c |" . align-current))
@@ -6069,9 +6069,9 @@ If HTML-FILE is nil, then output is returned."
   (interactive "*sNorthwestern Mutual Account Summary: ")
   (cl-labels
       ((date-to-year-month (date)
-                           (concat
-                            (substring date 6 10)
-                            (substring date 0 2))))
+         (concat
+          (substring date 6 10)
+          (substring date 0 2))))
     (let ((buffer (get-buffer "personal-encrypted.org.gpg"))
           (tables '("NWM_A40_344433"
                     "NWM_A40_344458"
@@ -6093,8 +6093,8 @@ If HTML-FILE is nil, then output is returned."
                   (push (replace-regexp-in-string "," "" (match-string 1)) balances))
                 tables))
       (with-current-buffer buffer
-        (do ((tables tables (cdr tables))
-             (balances (nreverse balances) (cdr balances)))
+        (cl-do ((tables tables (cdr tables))
+                (balances (nreverse balances) (cdr balances)))
             ((null tables))
           (goto-char (point-min))
           (re-search-forward (concat "^[ \t]*#\\+NAME: " (car tables) "$"))
