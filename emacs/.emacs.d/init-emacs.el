@@ -1875,15 +1875,15 @@ KEYMAP defaults to `override-global-map'."
   (bind-keys* ("C-`" . mode-line-other-buffer))
 
   ;; bury buffer
-  (bind-keys* ("C-c y" . bury-buffer))
-  (bind-keys* ("C-c C-y" . bury-buffer)) ; default: `org-evaluate-time-range'
+  (bind-keys ("C-c y" . bury-buffer))
+  (bind-keys ("C-c C-y" . bury-buffer)) ; default: `org-evaluate-time-range'
 
   ;; revert buffer
-  (bind-keys* ("C-c r" . revert-buffer))
-  (bind-keys* ("C-c C-r" . revert-buffer))
+  (bind-keys ("C-c r" . revert-buffer))
+  (bind-keys ("C-c C-r" . revert-buffer))
 
   ;; diff buffer
-  (bind-keys* ("C-c d" . diff-current-buffer))
+  (bind-keys ("C-c d" . diff-current-buffer))
 
   ;; mark full word
   (when (fboundp 'mark-full-word)
@@ -1984,8 +1984,8 @@ KEYMAP defaults to `override-global-map'."
 
   ;; enhanced titleize-word
   (when (fboundp 'titleize-word-enhanced)
-    (bind-keys* ("M-t" . titleize-word-enhanced)) ; default: `transpose-words'
-    (bind-keys* ("M-T" . titleize-line-or-region)))
+    (bind-keys* ("M-t" . titleize-word-enhanced) ; default: `transpose-words'
+                ("M-T" . titleize-line-or-region)))
 
   ;; describe text properties
   (bind-keys* ("C-x M-p" . describe-text-properties))
@@ -2029,27 +2029,27 @@ KEYMAP defaults to `override-global-map'."
 
   ;; append equal characters up to column 80
   (when (fboundp 'append-equal-to-column-80)
-    (bind-keys* ("C-c =" . append-equal-to-column-80)))
+    (bind-keys ("C-c =" . append-equal-to-column-80)))
 
   ;; append dash characters up to column 80
   (when (fboundp 'append-dash-to-column-80)
-    (bind-keys* ("C-c -" . append-dash-to-column-80)))
+    (bind-keys ("C-c -" . append-dash-to-column-80)))
 
   ;; append asterisk characters up to column 80
   (when (fboundp 'append-asterisk-to-column-80)
-    (bind-keys* ("C-c 8" . append-asterisk-to-column-80))
-    (bind-keys* ("C-c *" . append-asterisk-to-column-80)))
+    (bind-keys ("C-c 8" . append-asterisk-to-column-80)
+               ("C-c *" . append-asterisk-to-column-80)))
 
   ;; add lisp comment block (equal)
   (when (fboundp 'insert-lisp-comment-block-equal)
-    (bind-keys* ("C-c C-=" . insert-lisp-comment-block-equal)))
+    (bind-keys ("C-c C-=" . insert-lisp-comment-block-equal)))
 
   ;; add lisp comment block (dash)
   (when (fboundp 'insert-lisp-comment-block-dash)
-    (bind-keys* ("C-c C--" . insert-lisp-comment-block-dash)))
+    (bind-keys ("C-c C--" . insert-lisp-comment-block-dash)))
 
   ;; align commands
-  (bind-keys* ("C-c |" . align-current))
+  (bind-keys ("C-c |" . align-current))
 
   ;; ;; hippie expand
   ;; (when (fboundp 'hippie-expand)
@@ -2064,7 +2064,7 @@ KEYMAP defaults to `override-global-map'."
 
   ;; compare windows
   (when (fboundp 'compare-windows)
-    (bind-keys* ("C-c C-w" . compare-windows)))
+    (bind-keys ("C-c C-w" . compare-windows)))
 
   ;; unfill paragraph
   (when (fboundp 'unfill-paragraph)
@@ -2253,6 +2253,18 @@ KEYMAP defaults to `override-global-map'."
               ("d" . insert-date)
               ("t" . insert-datetime)
               ("u" . insert-uuid))
+
+  ;; insert code block commands
+  (bind-keys* :map space-insert-map
+              :prefix "c"
+              :prefix-map space-insert-code-block-map
+              :menu-name "Insert Code Block Commands"
+              ("=" . append-equal-to-column-80)
+              ("-" . append-dash-to-column-80)
+              ("8" . append-asterisk-to-column-80)
+              ("*" . append-asterisk-to-column-80)
+              ("L" . insert-lisp-comment-block-equal)
+              ("l" . insert-lisp-comment-block-dash))
 
   ;; insert org-mode commands
   (bind-keys* :map space-insert-map
@@ -8629,7 +8641,7 @@ The element with the highest result is returned with its score."
         (let ((char (if (and (> (length password) 0)
                              (< (length password) (1- length)))
                         (elt letters (random letters-size))
-                        (elt bookends (random bookends-size)))))
+                      (elt bookends (random bookends-size)))))
           (push char password)
           (when (member char numbers)
             (cl-incf number-count))
@@ -8645,17 +8657,21 @@ The element with the highest result is returned with its score."
   "Call `password' with LENGTH and put the result on the
 clipboard."
   (interactive "*nLength: ")
-  (with-temp-buffer
-    (insert (password length))
-    (clipboard-kill-region (point-min) (point-max))))
+  (let ((password (password length)))
+    (with-temp-buffer
+      (insert password)
+      (clipboard-kill-region (point-min) (point-max)))
+    password))
 
 (defun password-to-clipboard-20 ()
   "Call `password' with a LENGTH of 20 and put the result on the
 clipboard."
   (interactive "*")
-  (with-temp-buffer
-    (insert (password 20))
-    (clipboard-kill-region (point-min) (point-max))))
+  (let ((password (password 20)))
+    (with-temp-buffer
+      (insert password)
+      (clipboard-kill-region (point-min) (point-max)))
+    password))
 ;; password:1 ends here
 
 ;; [[file:init-emacs.org::*password-phrase][password-phrase:1]]
@@ -21968,7 +21984,7 @@ Commands:
    ("UUID" "insert-uuid" "Insert a UUID.")
    ("GUID" "insert-guid" "Insert a GUID.")
    ("Password" "insert-password-20" "Insert a random password (length 20).")
-   ("Password Phrase" "insert-password-phrase-6-symbol-capitalize" "Insert a random password phrase (six words, hyphenated, capitalized, with symbols).")
+   ("Password Phrase" "insert-password-phrase-6-hyphen-capitalize" "Insert a random password phrase (six words, hyphenated, and capitalized).")
    ("Figlet" "insert-figlet" "Insert figlet text.")
    ("Equals" "append-equal-to-column-80" "Append `=' characters up to column 80.")
    ("Dashes" "append-dash-to-column-80" "Append `-' characters up to column 80.")
