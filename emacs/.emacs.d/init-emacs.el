@@ -16884,7 +16884,7 @@ USING is the remaining peg."
              gptel-menu
              gptel-request
              gptel-send)
-  :bind* ("C-<return>" . gptel-send)
+  :bind* ("C-x C-<return>" . gptel-send)
   :custom
   (gptel-model "codellama:7b")
   (gptel-log-level "debug")

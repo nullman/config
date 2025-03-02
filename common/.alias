@@ -3566,10 +3566,11 @@ alias web-generate-game="(cd \${HOME}/web/bin && ./generate-game && ./publish --
 #
 #!       rsyncexclusions         default rsync exclusions
 rsyncexclusions=" \
-    -f'- /cdrom/**' -f'- /dev/**' -f'- /lost+found' -f'- /media/**' -f'- /mnt/**' -f'- /nix/store/**' -f'- /proc/**' \
+    -f'- /cache' -f'- /dev/**' -f'- /lost+found' -f'- /media/**' -f'- /mnt/**' -f'- /nix/store/**' -f'- /proc/**' \
     -f'- /run/**' -f'- /sys/**' -f'- /tmp/**' -f'- /var/lib/private/**' -f'- /var/log/**' -f'- /var/tmp/**' \
-    -f'- /home/swapfile' -f'- /home/*/.cache/**' -f'- /home/*/.ccache/**' -f'- /home/*/.gradle' -f'- /home/*/.gvfs' \
-    -f'- /home/*/.local/share/Steam/**' -f'- /home/*/.local/share/lutris/**' -f'- /home/*/.npm' -f'- /home/*/.thumbnails/**' -f'- /home/backup/**'"
+    -f'- /home/swapfile' -f'- /home/*/.cache' -f'- /home/*/.ccache' -f'- /home/*/.gradle' -f'- /home/*/.gvfs' \
+    -f'- /home/*/.local/share/Games/**' -f'- /home/*/.local/share/lutris/**' -f'- /home/*/.local/share/Steam/**' \
+    -f'- /home/*/.npm' -f'- /home/*/.thumbnails' -f'- /home/backup/**'"
 #!
 #        rsbid                   backup entire system to usb drive
 #!alias rsbid="sudo rsync -aAXv --delete ${rsyncexclusions} / /run/media/\${USER}/backup/\$(uname -n)"
