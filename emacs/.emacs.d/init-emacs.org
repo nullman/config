@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2025-02-28 15:25 (user)>
+  #+TIMESTAMP: <2025-03-04 19:00 (user)>
 
 * Overview
   :PROPERTIES:
@@ -3010,9 +3010,7 @@
             (bind-keys* ("s-t" . new-scratch))))
          ((or window-system-linux window-system-windows)
           ;; cut
-          (if (fboundp 'kill-region-or-word)
-              (bind-keys* ("s-x" . kill-region-or-word))
-            (bind-keys* ("s-x" . kill-region)))
+          (bind-keys* ("s-x" . kill-region))
           ;; copy
           (bind-keys* ("s-c" . kill-ring-save))
           ;; paste
@@ -3392,6 +3390,10 @@
           (bind-keys* ("M-d" . delete-word))) ; default: `kill-word'
         (when (fboundp 'backward-delete-word)
           (bind-keys* ("C-<backspace>" . backward-delete-word))) ; default: `backward-kill-word'
+
+        ;; kill region or backward kill word
+        (when (fboundp 'kill-region-or-backward-kill-word)
+          (bind-keys* ("C-w" . kill-region-or-backward-kill-word))) ; default `kill-region'
 
         ;; copy line
         (when (fboundp 'copy-line)
@@ -13585,19 +13587,19 @@
         ;;       (delete-char 1))))
       #+END_SRC
 
-***** kill-region-or-word
+***** kill-region-or-backward-kill-word
       :PROPERTIES:
-      :CUSTOM_ID: functions-emacs-functions-kill-region-or-word
+      :CUSTOM_ID: functions-emacs-functions-kill-region-or-backward-kill-word
       :END:
 
       #+BEGIN_SRC emacs-lisp
         ;;------------------------------------------------------------------------------
-        ;;;; Functions: Emacs Functions: kill-region-or-word
+        ;;;; Functions: Emacs Functions: kill-region-or-backward-kill-word
         ;;------------------------------------------------------------------------------
 
-        (init-message 3 "Functions: Emacs Functions: kill-region-or-word")
+        (init-message 3 "Functions: Emacs Functions: kill-region-or-backward-kill-word")
 
-        (defun kill-region-or-word ()
+        (defun kill-region-or-backward-kill-word ()
           "Call `kill-region' or `backward-kill-word' depending on
         whether or not a region is selected."
           (interactive "*")

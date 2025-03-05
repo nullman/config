@@ -1594,9 +1594,7 @@ Otherwise, `custom-tab-width' is used."
       (bind-keys* ("s-t" . new-scratch))))
    ((or window-system-linux window-system-windows)
     ;; cut
-    (if (fboundp 'kill-region-or-word)
-        (bind-keys* ("s-x" . kill-region-or-word))
-      (bind-keys* ("s-x" . kill-region)))
+    (bind-keys* ("s-x" . kill-region))
     ;; copy
     (bind-keys* ("s-c" . kill-ring-save))
     ;; paste
@@ -1956,6 +1954,10 @@ KEYMAP defaults to `override-global-map'."
     (bind-keys* ("M-d" . delete-word))) ; default: `kill-word'
   (when (fboundp 'backward-delete-word)
     (bind-keys* ("C-<backspace>" . backward-delete-word))) ; default: `backward-kill-word'
+
+  ;; kill region or backward kill word
+  (when (fboundp 'kill-region-or-backward-kill-word)
+    (bind-keys* ("C-w" . kill-region-or-backward-kill-word))) ; default `kill-region'
 
   ;; copy line
   (when (fboundp 'copy-line)
@@ -9188,21 +9190,21 @@ Use `describe-function' or `describe-variable' as appropriate."
     (move-to-column col)))
 ;; move-line-up:1 ends here
 
-;; [[file:init-emacs.org::*kill-region-or-word][kill-region-or-word:1]]
+;; [[file:init-emacs.org::*kill-region-or-backward-kill-word][kill-region-or-backward-kill-word:1]]
 ;;------------------------------------------------------------------------------
-;;;; Functions: Emacs Functions: kill-region-or-word
+;;;; Functions: Emacs Functions: kill-region-or-backward-kill-word
 ;;------------------------------------------------------------------------------
 
-(init-message 3 "Functions: Emacs Functions: kill-region-or-word")
+(init-message 3 "Functions: Emacs Functions: kill-region-or-backward-kill-word")
 
-(defun kill-region-or-word ()
+(defun kill-region-or-backward-kill-word ()
   "Call `kill-region' or `backward-kill-word' depending on
 whether or not a region is selected."
   (interactive "*")
   (if (use-region-p)
       (kill-region (point) (mark))
     (backward-kill-word 1)))
-;; kill-region-or-word:1 ends here
+;; kill-region-or-backward-kill-word:1 ends here
 
 ;; [[file:init-emacs.org::*kill-duplicate-lines][kill-duplicate-lines:1]]
 ;;------------------------------------------------------------------------------
