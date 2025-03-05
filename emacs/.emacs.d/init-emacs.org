@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2025-03-04 19:00 (user)>
+  #+TIMESTAMP: <2025-03-05 13:11 (user)>
 
 * Overview
   :PROPERTIES:
@@ -1828,14 +1828,14 @@
       (setq-default transient-mark-mode transient-mark-mode)
     #+END_SRC
 
-    Set default tab indentation and width to 4. Turn on auto-complete.
+    Set default tab indentation and width to 4.
 
     #+BEGIN_SRC emacs-lisp
       ;; set tab indentation, width, and convert tabs to spaces
-      (setq indent-tabs-mode nil              ; do not insert tab characters
-            tab-width 4                       ; default tab width is four spaces
-            standard-indent 4                 ; default margin-changing functions indent
-            tab-always-indent 'complete       ; tab key will try to auto-complete after auto-tabbing line
+      (setq indent-tabs-mode nil          ; do not insert tab characters
+            tab-width 4                   ; default tab width is four spaces
+            standard-indent 4             ; default margin-changing functions indent
+            tab-always-indent t           ; tab key will always indent
             tab-stop-list (number-sequence 4 180 4)) ; tab stops set to every 4 spaces
       (setq-default indent-tabs-mode indent-tabs-mode
                     tab-width tab-width
@@ -2570,7 +2570,7 @@
           (setq indent-tabs-mode enable       ; whether to insert tab characters
                 tab-width width               ; set tab width
                 standard-indent width         ; set margin-changing functions indent
-                tab-always-indent 'complete ; tab key will try to auto-complete after auto-tabbing line
+                tab-always-indent t           ; tab key will always indent
                 tab-stop-list (number-sequence width 180 width) ; set tab stops
                 backward-delete-char-untabify-method nil))) ; backspace will just delete one character
                 ;; backward-delete-char-untabify-method 'untabify))) ; backspace will turn a tab to many spaces, then delete one space
@@ -22214,7 +22214,7 @@
         ;;   :straight t
         ;;   :diminish company-mode
         ;;   :bind* (:map company-active-map
-        ;;                ("<tab>" . company-complete-selection)
+        ;;                ("C-<tab>" . company-complete-selection)
         ;;                ("C-n" . company-select-next)
         ;;                ("C-p" . company-select-previous)
         ;;                ("M-k" . company-select-next)
@@ -23008,8 +23008,8 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
                        ("M-k" . corfu-next)
                        ("C-p" . corfu-previous)
                        ("M-i" . corfu-previous)
-                       ("TAB" . corfu-complete)
-                       ("<tab>" . corfu-complete))
+                       ("C-TAB" . corfu-complete)
+                       ("C-<tab>" . corfu-complete))
           :custom
           (corfu-cycle nil)                 ; disable cycling for `corfu-next/previous'
           ;;(corfu-auto t)                    ; enable auto completion
@@ -27473,7 +27473,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         :straight t
         :bind* (([remap move-beginning-of-line] . mwim-beginning-of-line-or-code)
                 ([remap move-end-of-line] . mwim-end-of-line-or-code)
-                ("<C-tab>" . mwim)))
+                ("<C-M-tab>" . mwim)))
     #+END_SRC
 
 *** neotree
@@ -30111,7 +30111,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
           ;; (setq indent-tabs-mode nil        ; do not insert tab characters
           ;;       tab-width 4                 ; default tab width is four spaces
           ;;       standard-indent 4           ; default margin-changing functions indent
-          ;;       tab-always-indent complete  ; tab key will insert a tab
+          ;;       tab-always-indent t         ; tab key will indent
           ;;       tab-stop-list (number-sequence 4 180 4)) ; tab stops set to every 4 spaces
 
           ;; disable tabs
@@ -30220,7 +30220,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         :config
         ;; c style
         (defvar custom-c-style
-          '((c-tab-always-indent . 'complete)
+          '((c-tab-always-indent . t)
             (c-basic-offset . 4)
             (c-comment-only-line-offset . 0)
             (c-hanging-braces-alist . ((substatement-open after)
@@ -31936,7 +31936,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
 
         ;; define keys
         (local-set-key (kbd "<return>") 'newline-and-indent)
-        (local-set-key (kbd "S-<tab>") 'lisp-complete-symbol)
+        (local-set-key (kbd "C-<tab>") 'lisp-complete-symbol)
 
         ;; turn on flyspell
         (flyspell-prog-mode)
@@ -32022,8 +32022,8 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;;   :commands (lsp lsp-mode lsp-deferred)
       ;;   :bind* (:map lsp-mode-map
       ;;                ("M-RET" . lsp-execute-code-action))
-      ;;   ;;              ("TAB" . company-indent-or-complete-common)
-      ;;   ;;              ("<tab>" . company-indent-or-complete-common))
+      ;;   ;;              ("C-TAB" . company-indent-or-complete-common)
+      ;;   ;;              ("C-<tab>" . company-indent-or-complete-common))
       ;;   :hook ((lsp-mode . custom-lsp-mode-hook)
       ;;          (prog-mode . lsp-deferred))
       ;;   ;; (lsp-mode . company-mode))

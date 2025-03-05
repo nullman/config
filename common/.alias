@@ -1073,10 +1073,10 @@ alias aprl="sudo systemctl reload httpd.service"
 alias aps="sudo systemctl status httpd.service"
 #        edeac                   edit /etc/httpd/conf/httpd.conf
 alias edeac="ed /etc/httpd/conf/httpd.conf"
-#        apal                    tail -f -n 100 /var/log/httpd/access_log
-alias apal="tail -f -n 100 /var/log/httpd/access_log"
-#        apel                    tail -f -n 100 /var/log/httpd/error_log
-alias apel="tail -f -n 100 /var/log/httpd/error_log"
+#        apal                    less +F /var/log/httpd/access_log
+alias apal="less +F /var/log/httpd/access_log"
+#        apel                    less +F /var/log/httpd/error_log
+alias apel="less +F /var/log/httpd/error_log"
 #        aptop                   apachetop -f /var/log/httpd/access_log
 alias aptop="apachetop -f /var/log/httpd/access_log"
 

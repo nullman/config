@@ -922,10 +922,10 @@ Common values:
 
 ;; [[file:init-emacs.org::*General][General:28]]
 ;; set tab indentation, width, and convert tabs to spaces
-(setq indent-tabs-mode nil              ; do not insert tab characters
-      tab-width 4                       ; default tab width is four spaces
-      standard-indent 4                 ; default margin-changing functions indent
-      tab-always-indent 'complete       ; tab key will try to auto-complete after auto-tabbing line
+(setq indent-tabs-mode nil          ; do not insert tab characters
+      tab-width 4                   ; default tab width is four spaces
+      standard-indent 4             ; default margin-changing functions indent
+      tab-always-indent t           ; tab key will always indent
       tab-stop-list (number-sequence 4 180 4)) ; tab stops set to every 4 spaces
 (setq-default indent-tabs-mode indent-tabs-mode
               tab-width tab-width
@@ -1449,7 +1449,7 @@ Otherwise, `custom-tab-width' is used."
     (setq indent-tabs-mode enable       ; whether to insert tab characters
           tab-width width               ; set tab width
           standard-indent width         ; set margin-changing functions indent
-          tab-always-indent 'complete ; tab key will try to auto-complete after auto-tabbing line
+          tab-always-indent t           ; tab key will always indent
           tab-stop-list (number-sequence width 180 width) ; set tab stops
           backward-delete-char-untabify-method nil))) ; backspace will just delete one character
           ;; backward-delete-char-untabify-method 'untabify))) ; backspace will turn a tab to many spaces, then delete one space
@@ -18351,7 +18351,7 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
   :straight t
   :bind* (([remap move-beginning-of-line] . mwim-beginning-of-line-or-code)
           ([remap move-end-of-line] . mwim-end-of-line-or-code)
-          ("<C-tab>" . mwim)))
+          ("<C-M-tab>" . mwim)))
 ;; mwim:1 ends here
 
 ;; [[file:init-emacs.org::*neotree][neotree:1]]
@@ -19275,7 +19275,7 @@ otherwise run `find-file-as-root'."
     ;; (setq indent-tabs-mode nil        ; do not insert tab characters
     ;;       tab-width 4                 ; default tab width is four spaces
     ;;       standard-indent 4           ; default margin-changing functions indent
-    ;;       tab-always-indent complete  ; tab key will insert a tab
+    ;;       tab-always-indent t         ; tab key will indent
     ;;       tab-stop-list (number-sequence 4 180 4)) ; tab stops set to every 4 spaces
 
     ;; disable tabs
@@ -19340,7 +19340,7 @@ otherwise run `find-file-as-root'."
   :config
   ;; c style
   (defvar custom-c-style
-    '((c-tab-always-indent . 'complete)
+    '((c-tab-always-indent . t)
       (c-basic-offset . 4)
       (c-comment-only-line-offset . 0)
       (c-hanging-braces-alist . ((substatement-open after)
@@ -20179,7 +20179,7 @@ otherwise run `find-file-as-root'."
 
   ;; define keys
   (local-set-key (kbd "<return>") 'newline-and-indent)
-  (local-set-key (kbd "S-<tab>") 'lisp-complete-symbol)
+  (local-set-key (kbd "C-<tab>") 'lisp-complete-symbol)
 
   ;; turn on flyspell
   (flyspell-prog-mode)
