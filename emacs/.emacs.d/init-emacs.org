@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2025-03-05 13:11 (user)>
+  #+TIMESTAMP: <2025-03-05 20:05 (user)>
 
 * Overview
   :PROPERTIES:
@@ -1578,11 +1578,11 @@
 
           ;; load theme files before enabling
           ;;(modus-themes-load-themes)
-          ;;(load-theme 'modus-operandi :no-error)
-          (load-theme 'modus-vivendi :no-error)
-          :config
-          ;;(modus-themes-load-operandi)
-          (modus-themes-load-vivendi))
+          ;;(load-theme 'modus-operandi :no-confirm)
+          (load-theme 'modus-vivendi :no-confirm))
+          ;; :config
+          ;; ;;(modus-themes-load-operandi)
+          ;; (modus-themes-load-vivendi))
       #+END_SRC
 
 ***** Footer
@@ -6245,6 +6245,7 @@
              ("ssh" . "src sh")
              ("ssu" . "src sh :dir /sudo::")
              ("t" . "src text")
+             ("u" . "src conf-unix")
              ("v" . "verse")))
           :config
           ;; custom `org-tempo-add-block' with upcase headers

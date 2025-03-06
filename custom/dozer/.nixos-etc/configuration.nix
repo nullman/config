@@ -57,12 +57,12 @@
     };
   };
 
-  swapDevices = [
-    {
-      device = "/home/swapfile";
-      size = 32768;                     # 32 GB
-    }
-  ];
+  # swapDevices = [
+  #   {
+  #     device = "/home/swapfile";
+  #     size = 32768;                     # 32 GB
+  #   }
+  # ];
 
   # networking
   networking = {
@@ -981,6 +981,7 @@
     rofi                                    # Window switcher, run dialog and dmenu replacement
     rofimoji                                # Simple emoji and character picker for rofi
     scrot                                   # Command-line screen capture utility
+    seahorse                                # Application for managing encryption keys and passwords in the GnomeKeyring
     sxhkd                                   # Simple X hotkey daemon
     system-config-printer                   #
     tint2                                   # Simple panel/taskbar unintrusive and light (memory, cpu, aestetic)
@@ -1108,6 +1109,7 @@
     grip id3lib                             # GTK-based audio CD player/ripper
     gtkimageview                            # Image viewer widget for GTK
     handbrake libdvdcss libaacs libbluray   # Tool for converting video files and ripping DVDs
+    hpl                                     # Portable Implementation of the Linpack Benchmark for Distributed-Memory Compu...
     ##kdeconnect                              # KDE Connect provides several features to integrate your phone and your computer
     libation                                # Audible audiobook manager
     livecaptions                            # Linux Desktop application that provides live captioning
