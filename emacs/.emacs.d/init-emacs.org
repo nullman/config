@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2025-03-05 20:05 (user)>
+  #+TIMESTAMP: <2025-03-06 17:54 (user)>
 
 * Overview
   :PROPERTIES:
@@ -13605,7 +13605,7 @@
         whether or not a region is selected."
           (interactive "*")
           (if (use-region-p)
-              (kill-region (point) (mark))
+              (kill-region :ignore :ignore :region)
             (backward-kill-word 1)))
       #+END_SRC
 
@@ -22536,7 +22536,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         ;;           ([remap find-tag] . helm-etags-select)
         ;;           ([remap xref-find-definitions] . helm-etags-select))
         ;;   :bind* (:map helm-map
-        ;;                ("<tab>" . helm-execute-persistent-action)
+        ;;                ("C-<tab>" . helm-execute-persistent-action)
         ;;                ("M-i" . helm-previous-line)
         ;;                ("M-k" . helm-next-line)
         ;;                ("M-j" . left-char)
@@ -31937,7 +31937,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
 
         ;; define keys
         (local-set-key (kbd "<return>") 'newline-and-indent)
-        (local-set-key (kbd "C-<tab>") 'lisp-complete-symbol)
+        ;;(local-set-key (kbd "C-<tab>") 'lisp-complete-symbol)
 
         ;; turn on flyspell
         (flyspell-prog-mode)
@@ -32503,7 +32503,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         (defun custom-python-mode-hook ()
           ;; override some default keybindings
           (when (fboundp 'backward-delete-word)
-            (bind-keys* ("C-<backspace>" . backward-delete-word))) ; default: `py-hungry-delete-backwards'
+            (bind-keys ("C-<backspace>" . backward-delete-word))) ; default: `py-hungry-delete-backwards'
 
           ;; set indent offset
           (setq-local py-indent-offset custom-short-tab-width)
@@ -33318,7 +33318,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
           (setq tab-width 8)
           (setq tab-stop-list (number-sequence 8 76 8))
           ;;(setq indent-tabs-mode t)           ; can insert TAB characters
-          ;;(bind-key* "<tab>" 'indent-relative text-mode-map)
+          ;;(bind-key "<tab>" 'indent-relative text-mode-map)
 
           ;; set default fill column for auto-fill mode
           (setq fill-column custom-fill-column)
@@ -33685,7 +33685,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
 
         (defun custom-nxml-mode-hook ()
           ;; do not use `indent-relative' for tab indenting
-          (bind-key* "<tab>" 'indent-for-tab-command nxml-mode-map)
+          (bind-key "<tab>" 'indent-for-tab-command nxml-mode-map)
 
           ;; turn off auto-fill mode
           (turn-off-auto-fill)

@@ -9203,7 +9203,7 @@ Use `describe-function' or `describe-variable' as appropriate."
 whether or not a region is selected."
   (interactive "*")
   (if (use-region-p)
-      (kill-region (point) (mark))
+      (kill-region :ignore :ignore :region)
     (backward-kill-word 1)))
 ;; kill-region-or-backward-kill-word:1 ends here
 
@@ -20180,7 +20180,7 @@ otherwise run `find-file-as-root'."
 
   ;; define keys
   (local-set-key (kbd "<return>") 'newline-and-indent)
-  (local-set-key (kbd "C-<tab>") 'lisp-complete-symbol)
+  ;;(local-set-key (kbd "C-<tab>") 'lisp-complete-symbol)
 
   ;; turn on flyspell
   (flyspell-prog-mode)
@@ -20410,7 +20410,7 @@ Markdown files."
   (defun custom-python-mode-hook ()
     ;; override some default keybindings
     (when (fboundp 'backward-delete-word)
-      (bind-keys* ("C-<backspace>" . backward-delete-word))) ; default: `py-hungry-delete-backwards'
+      (bind-keys ("C-<backspace>" . backward-delete-word))) ; default: `py-hungry-delete-backwards'
 
     ;; set indent offset
     (setq-local py-indent-offset custom-short-tab-width)
@@ -21166,7 +21166,7 @@ Commands:
     (setq tab-width 8)
     (setq tab-stop-list (number-sequence 8 76 8))
     ;;(setq indent-tabs-mode t)           ; can insert TAB characters
-    ;;(bind-key* "<tab>" 'indent-relative text-mode-map)
+    ;;(bind-key "<tab>" 'indent-relative text-mode-map)
 
     ;; set default fill column for auto-fill mode
     (setq fill-column custom-fill-column)
@@ -21380,7 +21380,7 @@ Commands:
 
   (defun custom-nxml-mode-hook ()
     ;; do not use `indent-relative' for tab indenting
-    (bind-key* "<tab>" 'indent-for-tab-command nxml-mode-map)
+    (bind-key "<tab>" 'indent-for-tab-command nxml-mode-map)
 
     ;; turn off auto-fill mode
     (turn-off-auto-fill)

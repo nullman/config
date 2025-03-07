@@ -22,12 +22,17 @@
   #];
 
   # systemd-boot EFI boot loader
-  boot.loader = {
-    systemd-boot = {
-      enable = true;
-      configurationLimit = 20;
+  boot = {
+    loader = {
+      systemd-boot = {
+        enable = true;
+        configurationLimit = 20;
+      };
+      efi.canTouchEfiVariables = true;
     };
-    efi.canTouchEfiVariables = true;
+    initrd.preLVMCommands = ''
+      ${pkgs.kbd}/bin/setleds +num
+    '';
   };
   fileSystems."/".options = [ "relatime" ];
 
