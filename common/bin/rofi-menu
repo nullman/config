@@ -29,25 +29,26 @@ _usage() {
 Usage: $(basename "$0") [MENU]
 Present a menu of rofi menus.
 MENU:
-  NONE       Menu of Selections
-  term       Terminal
-  acronyms   Technology Acronyms
-  bookmarks  Bookmarks
-  contacts   Contacts
-  crt        Cool Retro Term
-  dosbox     DOSBox Emulator
-  emoji      Emoji Search
-  git        Synchronize Repositories
-  paste      Paste Strings
-  password   Generate Password
-  qemu       QEMU Emulator
-  rsync      Synchronize Files
-  sounds     Play Sounds
-  spell      Spell Check & Definition
-  ssh        SSH into Systems
-  typer      Type Strings
-  unicode    Unicode Search
-  vnc        VNC into Systems
+  NONE               Menu of Selections
+  term               Terminal
+  acronyms           Technology Acronyms
+  bookmarks          Bookmarks
+  bookmarks-keyword  Bookmarks Keyword
+  contacts           Contacts
+  crt                Cool Retro Term
+  dosbox             DOSBox Emulator
+  emoji              Emoji Search
+  git                Synchronize Repositories
+  paste              Paste Strings
+  password           Generate Password
+  qemu               QEMU Emulator
+  rsync              Synchronize Files
+  sounds             Play Sounds
+  spell              Spell Check & Definition
+  ssh                SSH into Systems
+  typer              Type Strings
+  unicode            Unicode Search
+  vnc                VNC into Systems
 EOF
 }
 
@@ -57,6 +58,7 @@ if [[ $# -lt 1 ]] ; then
         "	Term"
         "󰯫	Acronyms"
         "󰃃	Bookmarks"
+        "󰃃	Bookmarks Keyword"
         "󰈍	Contacts"
         "󰍹	CRT"
         "	DOSBox"
@@ -79,7 +81,7 @@ else
 fi
 
 # handle menu
-menu=$(printf "${menu}" | sed 's/^.*\t//' | tr '[:upper:]' '[:lower:]')
+menu=$(printf "${menu}" | sed 's/^.*\t//' | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
 #echo "${menu}"
 case "${menu}" in
     term)
@@ -103,6 +105,21 @@ case "${menu}" in
         # display bookmarks
         if [[ $# -lt 2 ]] ; then
             sel=$(cat "${HOME}/Documents/bookmarks.txt" | rofi -dmenu -i -p "󰃃	Bookmarks")
+        else
+            sel=$2
+        fi
+
+        # open bookmark
+        if [[ -n "${sel}" ]] ; then
+            url=$(printf "${sel}" | sed 's/^.* \([^ ]*$\)/\1/')
+            (xdg-open "${url}" &)
+        fi
+        ;;
+
+    bookmarks-keyword)
+        # display bookmarks having keywords
+        if [[ $# -lt 2 ]] ; then
+            sel=$(sed -n 's/^.* {\(.*\)}: /\1 -> /p' "${HOME}/Documents/bookmarks.txt" | sort | rofi -matching prefix -dmenu -i -p "󰃃	Bookmarks Keyword")
         else
             sel=$2
         fi

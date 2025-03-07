@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2025-03-06 17:54 (user)>
+  #+TIMESTAMP: <2025-03-07 13:52 (user)>
 
 * Overview
   :PROPERTIES:
@@ -8098,7 +8098,7 @@
           ,** Folder 2
           ,*** Bookmark 1
                 URI1
-          ,*** Bookmark 2 [bm2]
+          ,*** Bookmark 2 {bm2}
                 URI2
           ,** Folder 3
 
@@ -8119,10 +8119,10 @@
                        ((and (stringp (car bm)) (stringp (cadr bm)))
                         (let* ((title (car x))
                                (uri (cadr x))
-                               (keyword (if (string-match " \\[\\(.*\\)\\]$" title)
+                               (keyword (if (string-match " {\\(.*\\)}$" title)
                                             (match-string-no-properties 1 title)
                                           nil))
-                               (title (replace-regexp-in-string " \\[.*\\]$" "" title))
+                               (title (replace-regexp-in-string " {.*}$" "" title))
                                (entry (list :type "bookmark" :title title :uri uri)))
                           (when keyword
                             (setq entry (append entry (list :keyword keyword))))
@@ -8273,7 +8273,7 @@
                           (unless folder?
                             (insert
                              (if keyword
-                                 (format "%s > %s [%s]: %s\n" (path-string path) title keyword uri)
+                                 (format "%s > %s {%s}: %s\n" (path-string path) title keyword uri)
                                (format "%s > %s: %s\n" (path-string path) title uri))))
                           (when children
                             (let ((path (if root? (list root?)

@@ -5633,7 +5633,7 @@ Example input:
   ** Folder 2
   *** Bookmark 1
         URI1
-  *** Bookmark 2 [bm2]
+  *** Bookmark 2 {bm2}
         URI2
   ** Folder 3
 
@@ -5654,10 +5654,10 @@ Example output:
                ((and (stringp (car bm)) (stringp (cadr bm)))
                 (let* ((title (car x))
                        (uri (cadr x))
-                       (keyword (if (string-match " \\[\\(.*\\)\\]$" title)
+                       (keyword (if (string-match " {\\(.*\\)}$" title)
                                     (match-string-no-properties 1 title)
                                   nil))
-                       (title (replace-regexp-in-string " \\[.*\\]$" "" title))
+                       (title (replace-regexp-in-string " {.*}$" "" title))
                        (entry (list :type "bookmark" :title title :uri uri)))
                   (when keyword
                     (setq entry (append entry (list :keyword keyword))))
@@ -5794,7 +5794,7 @@ If TEXT-FILE is nil, then output is returned."
                   (unless folder?
                     (insert
                      (if keyword
-                         (format "%s > %s [%s]: %s\n" (path-string path) title keyword uri)
+                         (format "%s > %s {%s}: %s\n" (path-string path) title keyword uri)
                        (format "%s > %s: %s\n" (path-string path) title uri))))
                   (when children
                     (let ((path (if root? (list root?)

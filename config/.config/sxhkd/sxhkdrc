@@ -240,6 +240,10 @@ super + alt + e
 super + alt + o
     ${HOME}/bin/rofi-menu bookmarks
 
+# bookmarks keyword selector
+super + alt + ctrl + o
+    ${HOME}/bin/rofi-menu bookmarks-keyword
+
 # typer selector
 super + alt + semicolon
     ${HOME}/bin/rofi-typer
@@ -399,13 +403,13 @@ XF86AudioNext
     mpc next && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 
 # # spotify control
-# Shift+Alt + a
+# shift + alt + a
 #     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
-# Shift+Alt + s
+# shift + alt + s
 #     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
-# Shift+Alt + d
+# shift + alt + d
 #     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
-# Shift+Alt + f
+# shift + alt + f
 #     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 # XF86AudioPrevious
 #     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
