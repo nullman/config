@@ -13425,6 +13425,42 @@ user is prompted for the location."
 (init-message 2 "Functions: Code Formatting Functions")
 ;; Code Formatting Functions:1 ends here
 
+;; [[file:init-emacs.org::#functions-code-formatting-functions-indent-according-to-mode-fix-org-src-block-indentation][indent-according-to-mode--fix-org-src-block-indentation:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Code Formatting Functions: indent-according-to-mode--fix-org-src-block-indentation
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Code Formatting Functions: indent-according-to-mode--fix-org-src-block-indentation")
+
+(defun indent-according-to-mode--fix-org-src-block-indentation (&optional inhibit-widen)
+  "If inside an org source block, make sure no lines are less than the
+minimum indentation."
+  (save-window-excursion
+    (save-mark-and-excursion
+      (save-match-data
+        (when (and (eq major-mode 'org-mode)
+                   (eq (org-element-type (org-element-at-point)) 'src-block))
+          (condition-case nil
+              (let ((case-fold-search t)
+                    (re "^[ \t]*#\\+BEGIN_\\(\\sw+\\)"))
+                (forward-line 0)
+                (unless (looking-at re)
+                  (re-search-backward re))
+                (let ((indent (+ (org-current-text-indentation)
+                                 org-edit-src-content-indentation)))
+                  (forward-line 1)
+                  (while (not (looking-at "^[ \t]*#\\+END_\\(\\sw+\\)"))
+                    (let ((start (point)))
+                      (unless (looking-at "^[ \t]*$")
+                        (re-search-forward "[ \t]*" (line-end-position) :noerror)
+                        (while (< (- (point) start) indent)
+                          (insert " "))))
+                    (forward-line 1))))
+            ('error nil)))))))
+;; advise `indent-according-to-mode' to fix indentation
+(advice-add 'indent-according-to-mode :before #'indent-according-to-mode--fix-org-src-block-indentation)
+;; indent-according-to-mode--fix-org-src-block-indentation:1 ends here
+
 ;; [[file:init-emacs.org::#functions-code-formatting-functions-indent-region-or-thing][indent-region-or-thing:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Code Formatting Functions: indent-region-or-thing
