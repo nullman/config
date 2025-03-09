@@ -17316,7 +17316,10 @@ back to the previous non-whitespace character. See also
 (init-message 2 "Packages: lorem-ipsum")
 
 (use-package lorem-ipsum
-  :straight t)
+  :straight t
+  :init
+  (unless sentence-end-double-space
+    (defvar lorem-ipsum-sentence-separator " ")))
 ;; lorem-ipsum:1 ends here
 
 ;; [[file:init-emacs.org::#packages-lorem-ipsum-overlay][lorem-ipsum-overlay:1]]

@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2025-03-07 16:33 (user)>
+  #+TIMESTAMP: <2025-03-08 13:32 (user)>
 
 * Overview
   :PROPERTIES:
@@ -26354,7 +26354,10 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       (init-message 2 "Packages: lorem-ipsum")
 
       (use-package lorem-ipsum
-        :straight t)
+        :straight t
+        :init
+        (unless sentence-end-double-space
+          (defvar lorem-ipsum-sentence-separator " ")))
     #+END_SRC
 
 *** lorem-ipsum-overlay
