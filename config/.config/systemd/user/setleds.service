@@ -1,0 +1,28 @@
+#===============================================================================
+# .config/systemd/user/setleds.service
+#
+# Configuration for systemd user setleds service.
+#
+# Enable:   systemctl --user enable setleds.service
+# Start:    systemctl --user start setleds.service
+# Stop:     systemctl --user stop setleds.service
+# Disable:  systemctl --user disable setleds.service
+#
+# Reference: https://wiki.archlinux.org/index.php/Systemd/User
+#===============================================================================
+
+[Unit]
+Description=Turn Keyboard Num-Lock On
+
+[Service]
+User=user
+Type=oneshot
+RemainAfterExit=yes;
+ExecStart=/usr/sbin/setleds +num
+
+[Install]
+WantedBy=default.target
+
+#===============================================================================
+# End of File
+#===============================================================================

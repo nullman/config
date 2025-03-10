@@ -1,0 +1,26 @@
+#===============================================================================
+# .config/systemd/user/xscreensaver.service
+#
+# Configuration for systemd user xscreensaver service.
+#
+# Enable:   systemctl --user enable xscreensaver.service
+# Start:    systemctl --user start xscreensaver.service
+# Stop:     systemctl --user stop xscreensaver.service
+# Disable:  systemctl --user disable xscreensaver.service
+#
+# Reference: https://wiki.archlinux.org/index.php/Systemd/User
+#===============================================================================
+
+[Unit]
+Description=Extensible screen saver and screen locking framework
+
+[Service]
+User=user
+ExecStart=xscreensaver -no-splash
+
+[Install]
+WantedBy=default.target
+
+#===============================================================================
+# End of File
+#===============================================================================
