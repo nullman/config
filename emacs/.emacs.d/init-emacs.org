@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2025-03-09 18:52 (user)>
+  #+TIMESTAMP: <2025-03-10 12:07 (user)>
 
 * Overview
   :PROPERTIES:
@@ -34610,7 +34610,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
 * Snippets
   :PROPERTIES:
   :CUSTOM_ID: snippets
-  :header-args: :tangle yes :padline yes :comments no :results silent
+  :HEADER-ARGS: :tangle yes :padline yes :comments no :results silent
   :END:
 
   Custom snippets.
