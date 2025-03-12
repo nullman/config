@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2025-03-10 12:07 (user)>
+  #+TIMESTAMP: <2025-03-12 00:55 (user)>
 
 * Overview
   :PROPERTIES:
@@ -2833,10 +2833,10 @@
         (use-package eshell
           :straight (:type built-in)
           :hook (eshell-first-time-mode . custom-eshell-first-time-mode-hook)
-          ;; :bind* (:map eshell-mode-map
-          ;;              ([remap beginning-of-line] . eshell-bol)
-          ;;              ([remap move-beginning-of-line] . eshell-bol)
-          ;;              ("C-r" . counsel-esh-history))
+          ;; :bind (:map eshell-mode-map
+          ;;             ([remap beginning-of-line] . eshell-bol)
+          ;;             ([remap move-beginning-of-line] . eshell-bol)
+          ;;             ("C-r" . counsel-esh-history))
           :custom
           (eshell-history-size custom-terminal-history-size)
           (eshell-buffer-maximum-lines custom-terminal-maximum-lines)
@@ -3124,10 +3124,10 @@
         ;; ;; window move
         ;; (when (fboundp 'windmove-left)
         ;;   ;; shift arrow keys
-        ;;   (bind-keys ("S-<left>" . windmove-left)
-        ;;              ("S-<right>" . windmove-right)
-        ;;              ("S-<up>" . windmove-up)
-        ;;              ("S-<down>" . windmove-down)))
+        ;;   (bind-keys* ("S-<left>" . windmove-left)
+        ;;               ("S-<right>" . windmove-right)
+        ;;               ("S-<up>" . windmove-up)
+        ;;               ("S-<down>" . windmove-down)))
 
         ;; beginning of line
         (bind-keys* ("<home>" . beginning-of-line)) ; default: `move-beginning-of-line'
@@ -3942,10 +3942,10 @@
         :demand t
         :mode (("\\.org\\'" . org-mode)
                ("\\.org_archive\\'" . org-mode))
-        :bind* (("C-c a" . org-agenda)
-                ("C-c c" . org-capture)
-                ;;("C-c l" . org-store-link)
-                ("C-c j" . org-babel-tangle-jump-to-org))
+        :bind (("C-c a" . org-agenda)
+               ("C-c c" . org-capture)
+               ;;("C-c l" . org-store-link)
+               ("C-c j" . org-babel-tangle-jump-to-org))
         :custom
         ;; org directory
         (org-directory (file-truename (expand-file-name "~/org")))
@@ -7830,9 +7830,9 @@
         ;;:load-path (lambda () (file-truename (expand-file-name "~/src/github-nullman/emacs-org-visibility")))
         :after (org)
         :demand t
-        :bind* (:map org-visibility-mode-map
-                     ("C-x C-v" . org-visibility-force-save) ; default: `find-alternative-file'
-                     ("C-x M-v" . org-visibility-remove))    ; default: undefined
+        :bind (:map org-visibility-mode-map
+                    ("C-x C-v" . org-visibility-force-save) ; default: `find-alternative-file'
+                    ("C-x M-v" . org-visibility-remove))    ; default: undefined
         :custom
         ;; list of directories and files to automatically persist and restore visibility state of
         (org-visibility-include-paths `(,(file-truename "~/.emacs.d/init-emacs.org")
@@ -22202,9 +22202,9 @@
         (use-package auto-complete
           :straight (:type built-in)
           :diminish auto-complete-mode
-          :bind* (:map ac-complete-mode-map
-                       ("C-n" . ac-next)
-                       ("C-p" . ac-previous))
+          :bind (:map ac-complete-mode-map
+                      ("C-n" . ac-next)
+                      ("C-p" . ac-previous))
           :init
           ;; turn on auto-complete mode globally
           (global-auto-complete-mode 1)
@@ -22255,12 +22255,12 @@
         ;; (use-package company
         ;;   :straight t
         ;;   :diminish company-mode
-        ;;   :bind* (:map company-active-map
-        ;;                ("C-<tab>" . company-complete-selection)
-        ;;                ("C-n" . company-select-next)
-        ;;                ("C-p" . company-select-previous)
-        ;;                ("M-k" . company-select-next)
-        ;;                ("M-i" . company-select-previous))
+        ;;   :bind (:map company-active-map
+        ;;               ("C-<tab>" . company-complete-selection)
+        ;;               ("C-n" . company-select-next)
+        ;;               ("C-p" . company-select-previous)
+        ;;               ("M-k" . company-select-next)
+        ;;               ("M-i" . company-select-previous))
         ;;   :hook (prog-mode . company-mode)
         ;;   :custom
         ;;   (company-auto-commit nil)
@@ -22367,8 +22367,8 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         ;;   :bind* (("C-x C-r" . ivy-resume)      ; default: `find-file-read-only'
         ;;           ("C-x b" . ivy-switch-buffer) ; default: `switch-to-buffer'
         ;;           ("C-x O" . ivy-switch-buffer-other-window)) ; default: `other-window'
-        ;;   :bind* (:map ivy-mode-map
-        ;;                ("C-<return>" . ivy-immediate-done))
+        ;;   :bind (:map ivy-mode-map
+        ;;               ("C-<return>" . ivy-immediate-done))
         ;;   :custom
         ;;   ;; create file directories on non-match
         ;;   (ivy-magic-slash-non-match-action 'ivy-magic-slash-non-match-create)
@@ -22485,8 +22485,8 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         ;;           ("C-h l" . counsel-find-library)
         ;;           ("C-h C-i" . counsel-info-lookup-symbol)
         ;;           ("C-h u" . counsel-unicode-char))
-        ;;   :bind* (:map minibuffer-local-map
-        ;;                ("C-r" . counsel-minibuffer-history))
+        ;;   :bind (:map minibuffer-local-map
+        ;;               ("C-r" . counsel-minibuffer-history))
         ;;   :custom
         ;;   ;; format linux application names with name and comment only
         ;;   (counsel-linux-app-format-function #'counsel-linux-app-format-function-name-only)
@@ -22576,26 +22576,26 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         ;;           ([remap dabbrev-expand] . helm-dabbrev)
         ;;           ([remap find-tag] . helm-etags-select)
         ;;           ([remap xref-find-definitions] . helm-etags-select))
-        ;;   :bind* (:map helm-map
-        ;;                ("C-<tab>" . helm-execute-persistent-action)
-        ;;                ("M-i" . helm-previous-line)
-        ;;                ("M-k" . helm-next-line)
-        ;;                ("M-j" . left-char)
-        ;;                ("M-i" . right-char)
-        ;;                ("C-M-u" . backward-paragraph)
-        ;;                ("C-M-o" . forward-paragraph)
-        ;;                ("M-u" . left-word)
-        ;;                ("M-o" . right-word)
-        ;;                ("C-M-i" . helm-previous-page)
-        ;;                ("C-M-k" . helm-next-page)
-        ;;                ("C-M-j" . move-beginning-of-line)
-        ;;                ("C-M-l" . move-end-of-line)
-        ;;                ("?\\t" . helm-execute-persistent-action)
-        ;;                ("C-z" . helm-select-action)
-        ;;                ([remap previous-line] . helm-previous-line)
-        ;;                ([remap next-line] . helm-next-line)
-        ;;                ([remap previous-page] . helm-previous-line)
-        ;;                ([remap next-page] . helm-next-line))
+        ;;   :bind (:map helm-map
+        ;;               ("C-<tab>" . helm-execute-persistent-action)
+        ;;               ("M-i" . helm-previous-line)
+        ;;               ("M-k" . helm-next-line)
+        ;;               ("M-j" . left-char)
+        ;;               ("M-i" . right-char)
+        ;;               ("C-M-u" . backward-paragraph)
+        ;;               ("C-M-o" . forward-paragraph)
+        ;;               ("M-u" . left-word)
+        ;;               ("M-o" . right-word)
+        ;;               ("C-M-i" . helm-previous-page)
+        ;;               ("C-M-k" . helm-next-page)
+        ;;               ("C-M-j" . move-beginning-of-line)
+        ;;               ("C-M-l" . move-end-of-line)
+        ;;               ("?\\t" . helm-execute-persistent-action)
+        ;;               ("C-z" . helm-select-action)
+        ;;               ([remap previous-line] . helm-previous-line)
+        ;;               ([remap next-line] . helm-next-line)
+        ;;               ([remap previous-page] . helm-previous-line)
+        ;;               ([remap next-page] . helm-next-line))
         ;;   :init
         ;;   ;; turn on helm-mode
         ;;   (helm-mode 1)
@@ -22708,11 +22708,11 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
           :straight t
           :after (compat)
           :demand t
-          :bind* (:map vertico-map
-                       ("C-<return>" . vertico-exit-input) ; default: `vertico-exit'
-                       ("M-<return>" . vertico-exit-input) ; default: `vertico-exit'
-                       ("C-M-i" . vertico-scroll-down)     ; default: `completion-at-point' ("<prior>")
-                       ("C-M-k" . vertico-scroll-up))      ; default: `kill-whole-line' ("<next>")
+          :bind (:map vertico-map
+                      ("C-<return>" . vertico-exit-input) ; default: `vertico-exit'
+                      ("M-<return>" . vertico-exit-input) ; default: `vertico-exit'
+                      ("C-M-i" . vertico-scroll-down)     ; default: `completion-at-point' ("<prior>")
+                      ("C-M-k" . vertico-scroll-up))      ; default: `kill-whole-line' ("<next>")
           :init
           (vertico-mode))
       #+END_SRC
@@ -23041,17 +23041,17 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
           ;; :hook ((prog-mode . corfu-mode)
           ;;        (shell-mode . corfu-mode)
           ;;        (eshell-mode . corfu-mode))
-          :bind* (:map corfu-map
-                       ("C-SPC" . corfu-insert-separator)
-                       ("M-SPC" . corfu-insert-separator)
-                       ("RET" . nil)             ; enter does not complete
-                       ;; ("S-RET" . corfu-insert)
-                       ("C-n" . corfu-next)
-                       ("M-k" . corfu-next)
-                       ("C-p" . corfu-previous)
-                       ("M-i" . corfu-previous)
-                       ("C-TAB" . corfu-complete)
-                       ("C-<tab>" . corfu-complete))
+          :bind (:map corfu-map
+                      ("C-SPC" . corfu-insert-separator)
+                      ("M-SPC" . corfu-insert-separator)
+                      ("RET" . nil)             ; enter does not complete
+                      ;; ("S-RET" . corfu-insert)
+                      ("C-n" . corfu-next)
+                      ("M-k" . corfu-next)
+                      ("C-p" . corfu-previous)
+                      ("M-i" . corfu-previous)
+                      ("C-TAB" . corfu-complete)
+                      ("C-<tab>" . corfu-complete))
           :custom
           (corfu-cycle nil)                 ; disable cycling for `corfu-next/previous'
           ;;(corfu-auto t)                    ; enable auto completion
@@ -23088,10 +23088,10 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         ;;   :straight t
         ;;   :after (corfu)
         ;;   :hook (corfu-mode . corfu-doc-mode)
-        ;;   :bind* (:map corfu-map
-        ;;                ("M-p" . corfu-doc-scroll-down)
-        ;;                ("M-n" . corfu-doc-scroll-up)
-        ;;                ("M-d" . corfu-doc-toggle)))
+        ;;   :bind (:map corfu-map
+        ;;               ("M-p" . corfu-doc-scroll-down)
+        ;;               ("M-n" . corfu-doc-scroll-up)
+        ;;               ("M-d" . corfu-doc-toggle)))
 
         ;; (init-message 3 "corfu-doc-terminal")
 
@@ -23873,9 +23873,9 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         :commands (list-buffers bs-show)
         :bind* (([remap list-buffers] . bs-show) ; default: `list-buffers'
                 ("C-x C-b" . bs-show))           ; default: `list-buffers'
-        :bind* (:map bs-mode-map
-                     ("C-n" . bs-down)
-                     ("C-p" . bs-up))
+        :bind (:map bs-mode-map
+                    ("C-n" . bs-down)
+                    ("C-p" . bs-up))
         :config
         (defvar custom-bs-always-show-regexps
           ;;'("\\*\\(scratch\\|info\\|grep\\)\\*")
@@ -24014,10 +24014,10 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         ;;   ;;            :repo "kickingvegas/casual-calc")
         ;;   ;; :after (calc casual-lib)
         ;;   :after (calc)
-        ;;   :bind* (:map calc-mode-map
-        ;;                ("C-o" . casual-calc-tmenu))
-        ;;   :bind* (:map calc-alg-map
-        ;;                ("C-o" . casual-calc-tmenu)))
+        ;;   :bind (:map calc-mode-map
+        ;;               ("C-o" . casual-calc-tmenu))
+        ;;   :bind (:map calc-alg-map
+        ;;               ("C-o" . casual-calc-tmenu)))
       #+END_SRC
 
 ***** +casual-dired+
@@ -24040,10 +24040,10 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         ;;   ;;            :repo "kickingvegas/casual-dired")
         ;;   ;; :after (dired casual-lib)
         ;;   :after (dired)
-        ;;   :bind* (:map dired-mode-map
-        ;;                ("C-o" . casual-dired-tmenu)
-        ;;                ("s" . casual-dired-sort-by-tmenu)
-        ;;                ("/" . casual-dired-search-replace-tmenu)))
+        ;;   :bind (:map dired-mode-map
+        ;;               ("C-o" . casual-dired-tmenu)
+        ;;               ("s" . casual-dired-sort-by-tmenu)
+        ;;               ("/" . casual-dired-search-replace-tmenu)))
       #+END_SRC
 
 *** cedet/semantic
@@ -24673,12 +24673,12 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       (use-package elfeed
         :straight t
         :commands (elfeed-bookmarks-edit)
-        :bind* (:map elfeed-search-mode-map
-                     ("h" . elfeed-search-mode-help)
-                     ("?" . elfeed-search-mode-help))
-        :bind* (:map elfeed-show-mode-map
-                     ("h" . elfeed-show-mode-help)
-                     ("?" . elfeed-show-mode-help))
+        :bind (:map elfeed-search-mode-map
+                    ("h" . elfeed-search-mode-help)
+                    ("?" . elfeed-search-mode-help))
+        :bind (:map elfeed-show-mode-map
+                    ("h" . elfeed-show-mode-help)
+                    ("?" . elfeed-show-mode-help))
         :custom
         ;; use curl utility to fetch feeds
         (elfeed-use-curl nil)
@@ -24868,20 +24868,20 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       (use-package elfeed-tube
         :straight t
         :after elfeed
-        :bind* (:map elfeed-search-mode-map
-                     ("F" . elfeed-tube-fetch)
-                     ([remap save-buffer] . elfeed-tube-save))
-        :bind* (:map elfeed-show-mode-map
-                     ("F" . elfeed-tube-fetch)
-                     ([remap save-buffer] . elfeed-tube-save))
+        :bind (:map elfeed-search-mode-map
+                    ("F" . elfeed-tube-fetch)
+                    ([remap save-buffer] . elfeed-tube-save))
+        :bind (:map elfeed-show-mode-map
+                    ("F" . elfeed-tube-fetch)
+                    ([remap save-buffer] . elfeed-tube-save))
         :config
         (elfeed-tube-setup))
 
       ;; (use-package elfeed-tube-mpv
       ;;   :straight t
-      ;;   :bind* (:map elfeed-show-mode-map
-      ;;                ("C-c C-f" . elfeed-tube-mpv-follow-mode)
-      ;;                ("C-c C-w" . elfeed-tube-mpv-where)))
+      ;;   :bind (:map elfeed-show-mode-map
+      ;;               ("C-c C-f" . elfeed-tube-mpv-follow-mode)
+      ;;               ("C-c C-w" . elfeed-tube-mpv-where)))
     #+END_SRC
 
 *** ellama
@@ -25254,9 +25254,9 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
 
       (use-package expand-region
         :straight t
-        :bind* (("C-=" . er/expand-region)     ; default: `count-lines-region'
-                ("C-+" . er/contract-region))) ; default: `negative-argument'
-                ;;("C--" . er/contract-region))) ; default: `negative-argument'
+        :bind (("C-=" . er/expand-region)     ; default: `count-lines-region'
+               ("C-+" . er/contract-region))) ; default: `negative-argument'
+      ;;("C--" . er/contract-region))) ; default: `negative-argument'
     #+END_SRC
 
 *** +explain-pause-mode+
@@ -25994,8 +25994,8 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
 
       (use-package isearch
         :straight (:type built-in)
-        :bind* (:map isearch-mode-map
-                     ("C-M-<backspace>" . isearch-clear))
+        :bind (:map isearch-mode-map
+                    ("C-M-<backspace>" . isearch-clear))
         :config
         (defun isearch-clear ()
           "Clear `isearch' search string."
@@ -26520,11 +26520,11 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         :diminish magit-auto-revert-mode
         :bind* (("C-x g" . magit-status)
                 ("C-x M-g" . magit-dispatch))
-        :bind* (:map magit-status-mode-map
-                     ("W" . magit-toggle-whitespace)
-                     ("C-c C-a" . magit-commit-amend-without-prompt))
-        :bind* (:map magit-mode-map
-                     ("v" . magit-visit-pull-request-url))
+        :bind (:map magit-status-mode-map
+                    ("W" . magit-toggle-whitespace)
+                    ("C-c C-a" . magit-commit-amend-without-prompt))
+        :bind (:map magit-mode-map
+                    ("v" . magit-visit-pull-request-url))
         :custom
         ;; ;; use ivy
         ;; (magit-completing-read-function #'ivy-completing-read)
@@ -26647,30 +26647,32 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
                    mingus-truncate-string
                    mpd-execute-command
                    mpd-get-status)
-        :bind* ("C-x /" . mingus-switch-to-buffer)
-        :bind* (:map mingus-global-map
-                     ("<left>" . backward-char)
-                     ("<right>" . forward-char)
-                     ("<home>" . beginning-of-line)
-                     ("<end>" . end-of-line)
-                     ("C-c C-u" . mingus-mpc-update))
-        :bind* (:map mingus-playlist-mode-map
-                     ("SPC" . mingus-pause)
-                     ("<left>" . backward-char)
-                     ("<right>" . forward-char)
-                     ("<home>" . beginning-of-line)
-                     ("<end>" . end-of-line)
-                     ("C-c C-e" . mingus-edit-id3v2)
-                     ("C-c C-l" . mingus-get-lyrics)
-                     ("C-c C-u" . mingus-mpc-update)
-                     ("<f1>" . mingus-set-song-rating-1)
-                     ("<f2>" . mingus-set-song-rating-2)
-                     ("<f3>" . mingus-set-song-rating-3)
-                     ("<f4>" . mingus-set-song-rating-4)
-                     ("<f5>" . mingus-set-song-rating-5)
-                     ("<f6>" . mingus-set-song-rating-0))
-        :bind* (:map mingus-browse-mode-map
-                     ("C-c C-u" . mingus-mpc-update))
+        :bind ("C-x /" . mingus-switch-to-buffer)
+        :bind (:map mingus-global-map
+                    ("<left>" . backward-char)
+                    ("<right>" . forward-char)
+                    ("<home>" . beginning-of-line)
+                    ("<end>" . end-of-line)
+                    ("C-c C-u" . mingus-mpc-update))
+        :bind (:map mingus-playlist-mode-map
+                    ([remap move-line-up] . mingus-move-up)
+                    ([remap move-line-down] . mingus-move-down)
+                    ("SPC" . mingus-pause)
+                    ("<left>" . backward-char)
+                    ("<right>" . forward-char)
+                    ("<home>" . beginning-of-line)
+                    ("<end>" . end-of-line)
+                    ("C-c C-e" . mingus-edit-id3v2)
+                    ("C-c C-l" . mingus-get-lyrics)
+                    ("C-c C-u" . mingus-mpc-update)
+                    ("<f1>" . mingus-set-song-rating-1)
+                    ("<f2>" . mingus-set-song-rating-2)
+                    ("<f3>" . mingus-set-song-rating-3)
+                    ("<f4>" . mingus-set-song-rating-4)
+                    ("<f5>" . mingus-set-song-rating-5)
+                    ("<f6>" . mingus-set-song-rating-0))
+        :bind (:map mingus-browse-mode-map
+                    ("C-c C-u" . mingus-mpc-update))
         :config
         ;; for some reason these are not being defined in libmpdee.el
         (defmacro _mpdgv () `(aref conn 0))
@@ -26952,14 +26954,14 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
           (interactive)
           (cl-labels
               ((expand-mpd-file (file)
-                                (expand-file-name (concat mingus-mpd-music-dir file)))
+                 (expand-file-name (concat mingus-mpd-music-dir file)))
                (get-info (info field)
-                         (or (plist-get info field) ""))
+                 (or (plist-get info field) ""))
                (format-name (name)
-                            (substring (concat name ":      ") 0 8))
+                 (substring (concat name ":      ") 0 8))
                (genre-id-to-name (genres name)
-                                 (caar (remove-if-not (lambda (x) (= (cdr x) name))
-                                                      genres))))
+                 (caar (remove-if-not (lambda (x) (= (cdr x) name))
+                                      genres))))
             (let* ((buffer-name "*Mingus Edit ID3 Tags*")
                    (id3v2 "id3v2")
                    (file (plist-get (mingus-get-details) 'file))
@@ -27016,7 +27018,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
                                  :notify (lambda (&rest _)
                                            (cl-labels
                                                ((expand-mpd-file (file)
-                                                                 (expand-file-name (concat mingus-mpd-music-dir file))))
+                                                  (expand-file-name (concat mingus-mpd-music-dir file))))
                                              (let ((file (expand-mpd-file file)))
                                                (dolist (x (reverse fields)) ; reverse fields so file rename happens last
                                                  (let* ((field (car x))
@@ -27707,11 +27709,11 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
 
       (use-package org-tree-slide
         :straight t
-        :bind* (("S-<f8>" . org-tree-slide-mode)
-                ("C-<f8>" . org-tree-slide-skip-done-toggle))
-        :bind* (:map org-tree-slide-mode-map
-                     ("<f11>" . org-tree-slide-move-previous-tree)
-                     ("<f12>" . org-tree-slide-move-next-tree))
+        :bind (("S-<f8>" . org-tree-slide-mode)
+               ("C-<f8>" . org-tree-slide-skip-done-toggle))
+        :bind (:map org-tree-slide-mode-map
+                    ("<f11>" . org-tree-slide-move-previous-tree)
+                    ("<f12>" . org-tree-slide-move-next-tree))
         :hook ((org-tree-slide-play . org-tree-slide-presentation-setup)
                (org-tree-slide-stop . org-tree-slide-presentation-reset))
         :custom
@@ -27851,9 +27853,9 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;;   :straight t
       ;;   :hook ((lisp-data-mode . enable-paredit-mode)
       ;;          (scheme-mode . enable-paredit-mode))
-      ;;   :bind* (:map paredit-mode-map
-      ;;                ("{" . paredit-open-curly)
-      ;;                ("}" . paredit-close-curly))
+      ;;   :bind (:map paredit-mode-map
+      ;;               ("{" . paredit-open-curly)
+      ;;               ("}" . paredit-close-curly))
       ;;   :config
       ;;   (unless terminal-frame
       ;;     (bind-keys* :map paredit-mode-map
@@ -27960,8 +27962,8 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;;     :straight (:type built-in))
       ;;   (use-package planner-publish
       ;;     :straight (:type built-in)
-      ;;     :bind* (:map planner-publish-map
-      ;;                  ("n" . planner-goto-today))
+      ;;     :bind (:map planner-publish-map
+      ;;                 ("n" . planner-goto-today))
       ;;     :config
       ;;     (planner-option-customized #'planner-directory "~/plans")
       ;;     ;; (planner-option-customized 'planner-publishing-directory
@@ -28510,16 +28512,16 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;;   :straight (:type built-in)
       ;;   :commands (selected-minor-mode)
       ;;   :defines (selected-org-mode-map)
-      ;;   :bind* (:map select-keymap
-      ;;                ("q" . selected-off)
-      ;;                ("i" . indent-region)
-      ;;                ("u" . upcase-region)
-      ;;                ("d" . downcase-region)
-      ;;                ("w" . count-words-region)
-      ;;                ("m" . apply-macro-to-region-lines))
-      ;;   :bind* (:map selected-org-mode-map
-      ;;                ("c" . org-copy-to-clipboard)
-      ;;                ("t" . org-table-convert-region)))
+      ;;   :bind (:map select-keymap
+      ;;               ("q" . selected-off)
+      ;;               ("i" . indent-region)
+      ;;               ("u" . upcase-region)
+      ;;               ("d" . downcase-region)
+      ;;               ("w" . count-words-region)
+      ;;               ("m" . apply-macro-to-region-lines))
+      ;;   :bind (:map selected-org-mode-map
+      ;;               ("c" . org-copy-to-clipboard)
+      ;;               ("t" . org-table-convert-region)))
     #+END_SRC
 
 *** +session+
@@ -28563,17 +28565,17 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;;              simple-mpc-maybe-refresh-playlist
       ;;              simple-mpc-view-current-playlist)
       ;;   ;;:bind* ("C-x /" . simple-mpc-switch-to-current-playlist)
-      ;;   :bind* (:map simple-mpc-current-playlist-mode-map
-      ;;                ("g" . simple-mpc-recenter-playlist)
-      ;;                ("G" . simple-mpc-refresh-playlist)
-      ;;                ("C-c C-l" . simple-mpc-get-lyrics)
-      ;;                ("C-c C-u" . simple-mpc-mpd-update)
-      ;;                ("<f1>" . simple-mpc-set-song-rating-1)
-      ;;                ("<f2>" . simple-mpc-set-song-rating-2)
-      ;;                ("<f3>" . simple-mpc-set-song-rating-3)
-      ;;                ("<f4>" . simple-mpc-set-song-rating-4)
-      ;;                ("<f5>" . simple-mpc-set-song-rating-5)
-      ;;                ("<f6>" . simple-mpc-set-song-rating-0))
+      ;;   :bind (:map simple-mpc-current-playlist-mode-map
+      ;;               ("g" . simple-mpc-recenter-playlist)
+      ;;               ("G" . simple-mpc-refresh-playlist)
+      ;;               ("C-c C-l" . simple-mpc-get-lyrics)
+      ;;               ("C-c C-u" . simple-mpc-mpd-update)
+      ;;               ("<f1>" . simple-mpc-set-song-rating-1)
+      ;;               ("<f2>" . simple-mpc-set-song-rating-2)
+      ;;               ("<f3>" . simple-mpc-set-song-rating-3)
+      ;;               ("<f4>" . simple-mpc-set-song-rating-4)
+      ;;               ("<f5>" . simple-mpc-set-song-rating-5)
+      ;;               ("<f6>" . simple-mpc-set-song-rating-0))
       ;;   :config
       ;;   ;; custom playlist settings
       ;;   (setq simple-mpc-playlist-auto-refresh nil) ; do not auto refresh playlist
@@ -29004,9 +29006,9 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;; (use-package slack
       ;;   :straight (:type built-in)
       ;;   :commands (slack-start)
-      ;;   :bind* (:map slack-mode-map)
-      ;;   :bind* (:map slack-info-mode-map)
-      ;;   :bind* (:map slack-edit-message-mode-map)
+      ;;   :bind (:map slack-mode-map)
+      ;;   :bind (:map slack-info-mode-map)
+      ;;   :bind (:map slack-edit-message-mode-map)
       ;;   :init
       ;;   (setq slack-buffer-emojify t
       ;;         slack-prefer-current-team t)
@@ -29170,11 +29172,11 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
                    :type git
                    :host github
                    :repo "wasamasa/svg-2048")
-        :bind* (:map svg-2048-mode-map
-                     ("<left>" . svg-2048-move-left)
-                     ("<right>" . svg-2048-move-right)
-                     ("<up>" . svg-2048-move-up)
-                     ("<down>" . svg-2048-move-down)))
+        :bind (:map svg-2048-mode-map
+                    ("<left>" . svg-2048-move-left)
+                    ("<right>" . svg-2048-move-right)
+                    ("<up>" . svg-2048-move-up)
+                    ("<down>" . svg-2048-move-down)))
     #+END_SRC
 
 *** svg-clock
@@ -29796,9 +29798,9 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
                    w3m-search
                    w3m-weather)
         :defines (w3m-use-tab-line)
-        :bind* (:map w3m-mode-map
-                     ("," . w3m-previous-buffer)
-                     ("." . w3m-next-buffer))
+        :bind (:map w3m-mode-map
+                    ("," . w3m-previous-buffer)
+                    ("." . w3m-next-buffer))
         :custom
         ;; directory of icon files
         (w3m-icon-directory "/usr/share/emacs-w3m/icon")
@@ -29834,9 +29836,9 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;;              w3m-session-load-always
       ;;              w3m-session-save
       ;;              w3m-session-save-always)
-      ;;   :bind* (:map w3m-mode-map
-      ;;                ("S" . w3m-session-save)
-      ;;                ("L" . w3m-session-load))
+      ;;   :bind (:map w3m-mode-map
+      ;;               ("S" . w3m-session-save)
+      ;;               ("L" . w3m-session-load))
       ;;   ;;:config
       ;;   ;;(setq w3m-session-file "~/.w3m-session")
       ;;   ;;(setq w3m-session-save-always nil)
@@ -29992,8 +29994,8 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
 
       (use-package wgrep
         :straight t
-        :bind* (:map grep-mode-map
-                     ("C-x C-q" . wgrep-change-to-wgrep-mode))) ; same keybinding as `wdired-mode'
+        :bind (:map grep-mode-map
+                    ("C-x C-q" . wgrep-change-to-wgrep-mode))) ; same keybinding as `wdired-mode'
     #+END_SRC
 
 *** which-key
@@ -30399,12 +30401,12 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       (use-package calendar
         :straight (:type built-in)
         :bind* ("C-x c" . calendar)
-        :bind* (:map calendar-mode-map
-                     ;; scrolling keys
-                     (">" . calendar-scroll-left)
-                     ("<" . calendar-scroll-right)
-                     ("C-x >" . calendar-scroll-left)
-                     ("C-x <" . calendar-scroll-right))
+        :bind (:map calendar-mode-map
+                    ;; scrolling keys
+                    (">" . calendar-scroll-left)
+                    ("<" . calendar-scroll-right)
+                    ("C-x >" . calendar-scroll-left)
+                    ("C-x <" . calendar-scroll-right))
         :config
         ;; turn off diary entries view when calendar is run
         (setq calendar-view-diary-initially-flag nil)
@@ -30433,14 +30435,14 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         :commands (calendar-remind-lookup
                    calendar-remind-visit
                    calendar-remind-visit-insert)
-        :bind* (:map calendar-mode-map
-                     ;; remind lookup
-                     ("<return>" . calendar-remind-lookup)
-                     ("r" . calendar-remind-lookup)
-                     ;;("SPC" . calendar-remind-lookup)
-                     ;; remind visit
-                     ("v" . calendar-remind-visit)
-                     ("V" . calendar-remind-visit-insert)))
+        :bind (:map calendar-mode-map
+                    ;; remind lookup
+                    ("<return>" . calendar-remind-lookup)
+                    ("r" . calendar-remind-lookup)
+                    ;;("SPC" . calendar-remind-lookup)
+                    ;; remind visit
+                    ("v" . calendar-remind-visit)
+                    ("V" . calendar-remind-visit-insert)))
     #+END_SRC
 
 *** +Clojure Mode+
@@ -30544,10 +30546,10 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         :commands (dired dired-jump)
         ;;:hook (dired-mode . custom-dired-mode-hook)
         ;;:bind* ("C-x j" . dired-jump)
-        :bind* (:map dired-mode-map
-                     ("e" . wdired-change-to-wdired-mode)
-                     ("C-a" . dired-mwim-beginning-of-line)
-                     ("C-c C-z f" . browse-url-of-dired-file))
+        :bind (:map dired-mode-map
+                    ("e" . wdired-change-to-wdired-mode)
+                    ("C-a" . dired-mwim-beginning-of-line)
+                    ("C-c C-z f" . browse-url-of-dired-file))
         :custom
         ;; only prompt once for recursive deletes
         (dired-recursive-deletes 'top)
@@ -30621,8 +30623,8 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;; make dired use a single buffer
       (use-package wdired
         :straight (:type built-in)
-        :bind* (:map wdired-mode-map
-                     ("C-a" . dired-mwim-beginning-of-line)))
+        :bind (:map wdired-mode-map
+                    ("C-a" . dired-mwim-beginning-of-line)))
 
       ;;------------------------------------------------------------------------------
       ;;;; dired-single
@@ -30634,12 +30636,12 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       (use-package dired-single
         :straight t
         :commands (dired dired-jump)
-        :bind* (:map dired-mode-map
-                     ("<return>" . dired-single-buffer)
-                     ("f" . dired-single-buffer)
-                     ("^" . dired-single-buffer-up)
-                     ("b" . dired-single-buffer-up)
-                     ("<mouse-1>" . dired-single-buffer-mouse))
+        :bind (:map dired-mode-map
+                    ("<return>" . dired-single-buffer)
+                    ("f" . dired-single-buffer)
+                    ("^" . dired-single-buffer-up)
+                    ("b" . dired-single-buffer-up)
+                    ("<mouse-1>" . dired-single-buffer-mouse))
         :init
         (defun dired-single-buffer-up ()
           (interactive)
@@ -30677,8 +30679,8 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       (use-package dired-hide-dotfiles
         :straight t
         ;;:hook (dired-mode . dired-hide-dotfiles-mode)
-        :bind* (:map dired-mode-map
-                     ("H" . dired-hide-dotfiles-mode)))
+        :bind (:map dired-mode-map
+                    ("H" . dired-hide-dotfiles-mode)))
 
       ;; ;;------------------------------------------------------------------------------
       ;; ;;;; all-the-icons-dired
@@ -30702,9 +30704,9 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
 
       (use-package dired-narrow
         :straight t
-        :bind* (:map dired-mode-map
-                     ("C-c C-n" . dired-narrow)
-                     ("C-c C-f" . dired-narrow-fuzzy)))
+        :bind (:map dired-mode-map
+                    ("C-c C-n" . dired-narrow)
+                    ("C-c C-f" . dired-narrow-fuzzy)))
     #+END_SRC
 
 *** Ediff
@@ -31625,9 +31627,9 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       (use-package js2-refactor
         :straight t
         :after (js2-mode)
-        :bind* (:map js2-mode-map
-                     ("C-k" . js2r-kill)
-                     ("M-." . nil))            ; unbind conflicting key
+        :bind (:map js2-mode-map
+                    ("C-k" . js2r-kill)
+                    ("M-." . nil))            ; unbind conflicting key
         :config
         ;; set prefix key
         (js2r-add-keybindings-with-prefix "C-c C-r")
@@ -31666,14 +31668,14 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
                    js-send-last-sexp
                    js-send-last-sexp-and-go
                    js-load-file-and-go)
-        :bind* (:map js2-mode-map
-                     ("C-c C-c" . js-eval-sexp-and-go)
-                     ("C-x C-e" . js-send-last-sexp)
-                     ("C-M-x" . js-eval-sexp-and-go)
-                     ("C-c b" . js-send-buffer)
-                     ("C-c C-b" . js-send-buffer-and-go)
-                     ("C-c C-k" . js-send-buffer-and-go)
-                     ("C-c l" . js-load-file-and-go))
+        :bind (:map js2-mode-map
+                    ("C-c C-c" . js-eval-sexp-and-go)
+                    ("C-x C-e" . js-send-last-sexp)
+                    ("C-M-x" . js-eval-sexp-and-go)
+                    ("C-c b" . js-send-buffer)
+                    ("C-c C-b" . js-send-buffer-and-go)
+                    ("C-c C-k" . js-send-buffer-and-go)
+                    ("C-c l" . js-load-file-and-go))
         :config
         ;;(setq inferior-js-program-command "/usr/bin/java org.mozilla.javascript.tools.shell.Main")
         ;;(setq inferior-js-program-command "/usr/bin/rhino")
@@ -31885,9 +31887,9 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
 
       (use-package pdf-tools
         :straight t
-        :bind* (:map pdf-view-mode-map
-                     ("C-s" . isearch-forward)
-                     ("C-r" . isearch-backward))
+        :bind (:map pdf-view-mode-map
+                    ("C-s" . isearch-forward)
+                    ("C-r" . isearch-backward))
         ;; :hook (pdf-view-mode . bms/pdf-midnite-amber) ; turn on midnight-mode for pdfs
         :config
         (pdf-tools-install))
@@ -32065,10 +32067,10 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;;   ;;:after (company)
       ;;   :after (corfu)
       ;;   :commands (lsp lsp-mode lsp-deferred)
-      ;;   :bind* (:map lsp-mode-map
-      ;;                ("M-RET" . lsp-execute-code-action))
-      ;;   ;;              ("C-TAB" . company-indent-or-complete-common)
-      ;;   ;;              ("C-<tab>" . company-indent-or-complete-common))
+      ;;   :bind (:map lsp-mode-map
+      ;;               ("M-RET" . lsp-execute-code-action))
+      ;;   ;;             ("C-TAB" . company-indent-or-complete-common)
+      ;;   ;;             ("C-<tab>" . company-indent-or-complete-common))
       ;;   :hook ((lsp-mode . custom-lsp-mode-hook)
       ;;          (prog-mode . lsp-deferred))
       ;;   ;; (lsp-mode . company-mode))
@@ -32396,8 +32398,8 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;;          ("\\.python\\'" . python-mode))
       ;;   :commands (py--buffer-filename-remote-maybe)
       ;;   :functions (custom-python-mode-hook)
-      ;;   :bind* (:map python-mode-map
-      ;;                ("C-c C-z" . py-switch-to-python-eob-p))
+      ;;   :bind (:map python-mode-map
+      ;;               ("C-c C-z" . py-switch-to-python-eob-p))
       ;;   :config
       ;;   ;; use ipython
       ;;   (setq py-shell-name "ipython")
@@ -32837,11 +32839,11 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         :straight t
         :after (flyspell)
         :mode ("\\.rs\\'" . rust-mode)
-        :bind* (:map rust-mode-map
-                     ("C-c C-c" . rust-run)
-                     ("C-c C-d" . rust-dbg-wrap-or-unwrap)
-                     ("C-c C-f" . rust-format-buffer)
-                     ("C-c C-n" . rust-goto-format-problem))
+        :bind (:map rust-mode-map
+                    ("C-c C-c" . rust-run)
+                    ("C-c C-d" . rust-dbg-wrap-or-unwrap)
+                    ("C-c C-f" . rust-format-buffer)
+                    ("C-c C-n" . rust-goto-format-problem))
         :custom
         (rustic-lsp-client nil)
         :config
@@ -33293,12 +33295,12 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       (use-package sqlup-mode
         :straight t
         :after (sql)
-        :bind* (:map sql-mode-map
-                     ("C-c b" . sqlup-capitalize-keywords-in-buffer)
-                     ("C-c r" . sqlup-capitalize-keywords-in-region))
-        :bind* (:map sql-interactive-mode-map
-                     ("C-c b" . sqlup-capitalize-keywords-in-buffer)
-                     ("C-c r" . sqlup-capitalize-keywords-in-region))
+        :bind (:map sql-mode-map
+                    ("C-c b" . sqlup-capitalize-keywords-in-buffer)
+                    ("C-c r" . sqlup-capitalize-keywords-in-region))
+        :bind (:map sql-interactive-mode-map
+                    ("C-c b" . sqlup-capitalize-keywords-in-buffer)
+                    ("C-c r" . sqlup-capitalize-keywords-in-region))
         :hook ((sql-mode . sqlup-mode)
                (sql-interactive-mode . sqlup-mode)))
 
@@ -33309,16 +33311,16 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       (use-package sql-transform
         :straight t
         :after (sql)
-        :bind* (:map sql-mode-map
-                     ("C-c s" . sql-to-select)
-                     ("C-c i" . sql-to-insert)
-                     ("C-c u" . sql-to-update)
-                     ("C-c d" . sql-to-delete))
-        :bind* (:map sql-interactive-mode-map
-                     ("C-c s" . sql-to-select)
-                     ("C-c i" . sql-to-insert)
-                     ("C-c u" . sql-to-update)
-                     ("C-c d" . sql-to-delete)))
+        :bind (:map sql-mode-map
+                    ("C-c s" . sql-to-select)
+                    ("C-c i" . sql-to-insert)
+                    ("C-c u" . sql-to-update)
+                    ("C-c d" . sql-to-delete))
+        :bind (:map sql-interactive-mode-map
+                    ("C-c s" . sql-to-select)
+                    ("C-c i" . sql-to-insert)
+                    ("C-c u" . sql-to-update)
+                    ("C-c d" . sql-to-delete)))
 
       ;; ;;------------------------------------------------------------------------------
       ;; ;;;; mysql
@@ -33469,11 +33471,11 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
                    :files ("tokens" "v-mode.el"))
         :after (flyspell)
         :mode ("\\.v?v\\.vsh\\'" . v-mode)
-        :bind* (:map v-mode-map
-                     ("C-c C-b" . v-project-build)
-                     ("C-c C-c" . v-project-run)
-                     ("C-c C-f" . v-format-buffer)
-                     ("C-c C-f" . v-menu))
+        :bind (:map v-mode-map
+                    ("C-c C-b" . v-project-build)
+                    ("C-c C-c" . v-project-run)
+                    ("C-c C-f" . v-format-buffer)
+                    ("C-c C-f" . v-menu))
         :config
         (defun custom-v-mode-hook ()
           ;; use spaces for tabs
@@ -34656,11 +34658,11 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         (use-package yasnippet
           :straight t
           :diminish yas-minor-mode
-          :bind* (:map yas-minor-mode-map
-                       ("C-c & n" . yas-new-snippet)
-                       ("C-c & s" . yas-insert-snippet)
-                       ("C-c & v" . yas-visit-snippet-file)
-                       ("C-/" . yas-insert-snippet)) ; default: `undo-tree-undo'
+          :bind (:map yas-minor-mode-map
+                      ("C-c & n" . yas-new-snippet)
+                      ("C-c & s" . yas-insert-snippet)
+                      ("C-c & v" . yas-visit-snippet-file)
+                      ("C-/" . yas-insert-snippet)) ; default: `undo-tree-undo'
           :config
           ;; turn on globally
           (yas-global-mode 1)

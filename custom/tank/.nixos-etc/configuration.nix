@@ -1286,6 +1286,7 @@
     binutils-ia16                           #
     bison                                   # Yacc-compatible parser generator
     bundix                                  # Creates Nix packages from Gemfiles
+    c3c c3-lsp                              # Compiler for the C3 language
     cc65                                    # C compiler for processors of 6502 family
     ccache                                  # Compiler cache for fast recompilation of C/C++ code
     clang                                   # C language family frontend for LLVM (wrapper script)
@@ -1334,7 +1335,7 @@
     python311Packages.pip                   # PyPA recommended tool for installing Python packages
     racket                                  # Programmable programming language
     regina                                  # REXX interpreter
-    ruby                                    # Object-oriented language for quick and easy programming
+    ruby ruby-lsp                           # Object-oriented language for quick and easy programming
     rustc                                   # Safe, concurrent, practical language (wrapper script)
     shellcheck                              # Shell script analysis tool
     tokei                                   # Program that allows you to count your code, quickly
