@@ -1017,6 +1017,7 @@
     #lmms                                    # DAW similar to FL Studio (music production software)
     #obs-studio                              # Free and open source software for video recording and live streaming
     #(pkgs.wrapOBS { plugins = with pkgs.obs-studio-plugins; [ wlrobs ]; })
+    #openscad                                # 3D parametric model compiler
     #reaper                                  # Digital audio workstation
     #spotify                                 # Play music from the Spotify music service
 
