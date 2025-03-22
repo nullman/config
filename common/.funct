@@ -1268,6 +1268,11 @@ leach() {
         wget -r -p -L -nc -nH -np -q "${url}" "${pattern}"
     fi
 }
+#        upload-0x0              upload a file (or pipe) to 0x0.st
+upload-0x0() {
+    [[ -f "$1" ]] && op="cat"
+    "${op:-echo}" "${1:-$(cat -)}" | curl -F file='@-' "https://0x0.st"
+}
 
 #
 # ssl certificates

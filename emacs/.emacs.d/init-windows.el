@@ -1,4 +1,3 @@
-;; [[file:init-emacs.org::#init-windows-init][Windows Init:1]]
 ;; -*- mode: emacs-lisp; lexical-binding: t; no-byte-compile: t -*-
 ;;==============================================================================
 ;;; init-windows.el
@@ -26,4 +25,3 @@
 ;;==============================================================================
 ;;; init-windows.el ends here
 ;;==============================================================================
-;; Windows Init:1 ends here

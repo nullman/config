@@ -91,7 +91,7 @@ LEVEL is the indentation level."
 ;;------------------------------------------------------------------------------
 
 ;; reduce frequency of garbage collections
-(setq gc-cons-threshold (* 8 1024 1024)) ; default: 800000
+(setq gc-cons-threshold (* 80 1024 1024)) ; default: 800000
 ;; Set Emacs Lisp Garbage Collection Threshold:1 ends here
 
 ;; [[file:init-emacs.org::#start-ignore-errors-advice-wrapper][Ignore Errors Advice Wrapper:1]]
@@ -10858,6 +10858,29 @@ Add the following to your init.el file for this to work:
       (message "%s" face))
     face))
 ;; get-char-property-here:1 ends here
+
+;; [[file:init-emacs.org::#functions-emacs-functions-get-face-attribute][get-face-attribute:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Emacs Functions: get-face-attribute
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Emacs Functions: get-face-attribute")
+
+(defun get-face-attribute (face &rest props)
+  "Return list of properties (PROPS) for FACE.
+
+If PROPS is nil, return all properties."
+  (let ((face (or face 'font-lock-function-name-face))
+        (vals '()))
+    (dolist (prop (or props
+                      (sort (mapcar #'car face-attribute-name-alist)
+                            (lambda (a b)
+                              (string< (symbol-name a) (symbol-name b)))))
+                  vals)
+      (let ((val (face-attribute face prop nil t)))
+        (unless (eq val 'unspecified)
+          (push (cons prop val) vals))))))
+;; get-face-attribute:1 ends here
 
 ;; [[file:init-emacs.org::#functions-emacs-functions-comments-in-buffer][comments-in-buffer:1]]
 ;;------------------------------------------------------------------------------

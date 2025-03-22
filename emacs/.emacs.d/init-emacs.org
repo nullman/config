@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2025-03-12 00:55 (user)>
+  #+TIMESTAMP: <2025-03-22 16:23 (user)>
 
 * Overview
   :PROPERTIES:
@@ -32,11 +32,11 @@
   Emacs configuration system to an [[https://orgmode.org/][Org]]/[[https://orgmode.org/worg/org-contrib/babel/][Babel]] based one.
 
   #+BEGIN_QUOTE
-  Emacs outshines all other editing software in approximately the same way that
-  the noonday sun does the stars. It is not just bigger and brighter; it simply
-  makes everything else vanish.
+    Emacs outshines all other editing software in approximately the same way that
+    the noonday sun does the stars. It is not just bigger and brighter; it simply
+    makes everything else vanish.
 
-  -- Neal Stephenson, "In the Beginning was the Command Line"
+    -- Neal Stephenson, "In the Beginning was the Command Line"
   #+END_QUOTE
 
 * Information
@@ -124,207 +124,280 @@
 *** Early Init
     :PROPERTIES:
     :CUSTOM_ID: init-early-init
+    :HEADER-ARGS: :tangle ~/config/emacs/.emacs.d/early-init.el
     :END:
 
     Tangle *early-init.el* file.
 
-    #+BEGIN_SRC emacs-lisp :tangle ~/config/emacs/.emacs.d/early-init.el
-      ;; -*- mode: emacs-lisp; lexical-binding: t; no-byte-compile: t -*-
-      ;;==============================================================================
-      ;;; early-init.el
-      ;;
-      ;;; Early Emacs Initialization File
-      ;;
-      ;; Author: Kyle W T Sherman
-      ;;
-      ;; This file was generated from init-emacs.org and should not be edited
-      ;; manually.
-      ;;
-      ;; init-emacs.org => early-init.el
-      ;;==============================================================================
+***** Header
+      :PROPERTIES:
+      :CUSTOM_ID: init-header
+      :END:
 
-      ;; disable default emacs package handling (needed for straight)
-      (setq package-enable-at-startup nil)
+      #+BEGIN_SRC emacs-lisp
+        ;; -*- mode: emacs-lisp; lexical-binding: t; no-byte-compile: t -*-
+        ;;==============================================================================
+        ;;; early-init.el
+        ;;
+        ;;; Early Emacs Initialization File
+        ;;
+        ;; Author: Kyle W T Sherman
+        ;;
+        ;; This file was generated from init-emacs.org and should not be edited
+        ;; manually.
+        ;;
+        ;; init-emacs.org => early-init.el
+        ;;==============================================================================
+      #+END_SRC
 
-      ;; do not shrink frame to match font size
-      (setq frame-resize-pixelwise t)
+***** Colors
+      :PROPERTIES:
+      :CUSTOM_ID: init-early-init-colors
+      :END:
 
-      ;; suppress display compilation warnings
-      (setq warning-suppress-types '((comp)))
+      #+BEGIN_SRC emacs-lisp :var data=colors
+        ;;------------------------------------------------------------------------------
+        ;;; Constants: Colors
+        ;;------------------------------------------------------------------------------
 
-      ;;==============================================================================
-      ;;; early-init.el ends here
-      ;;==============================================================================
-    #+END_SRC
+        (mapc (lambda (x)
+                (let ((color (caddr x))
+                      (value (cadddr x)))
+                  (when (> (length color) 0)
+                    (set (intern color) value))))
+              (cdr data))
+      #+END_SRC
+
+***** Early
+      :PROPERTIES:
+      :CUSTOM_ID: init-early-init-early
+      :END:
+
+      #+BEGIN_SRC emacs-lisp
+        ;; disable default emacs package handling (needed for straight)
+        (setq package-enable-at-startup nil)
+
+        ;; do not resize frame to match font size
+        (setq frame-inhibit-implied-resize t)
+
+        ;; do not round frame resizes to match font size
+        (setq frame-resize-pixelwise t)
+
+        ;; prevent color flash when starting
+        (setq mode-line-format nil)
+        (set-face-attribute 'default nil :background `,color-background :foreground `,color-foreground)
+
+        ;; suppress display compilation warnings
+        (setq warning-suppress-types '((comp)))
+      #+END_SRC
+
+***** Footer
+      :PROPERTIES:
+      :CUSTOM_ID: init-early-init-footer
+      :END:
+
+      #+BEGIN_SRC emacs-lisp
+        ;;==============================================================================
+        ;;; early-init.el ends here
+        ;;==============================================================================
+      #+END_SRC
 
 *** Init
     :PROPERTIES:
     :CUSTOM_ID: init-init
+    :HEADER-ARGS: :tangle ~/config/emacs/.emacs.d/init.el
     :END:
 
     Tangle *init.el* bootstrap file.
 
-    #+BEGIN_SRC emacs-lisp :tangle ~/config/emacs/.emacs.d/init.el
-      ;; -*- mode: emacs-lisp; lexical-binding: t; no-byte-compile: t -*-
-      ;;==============================================================================
-      ;;; init.el
-      ;;
-      ;;; Bootstrap Emacs Initialization File
-      ;;
-      ;; Author: Kyle W T Sherman
-      ;;
-      ;; This file was generated from init-emacs.org and should not be edited
-      ;; manually.
-      ;;
-      ;; init-emacs.org => init.el
-      ;;==============================================================================
+***** Header
+      :PROPERTIES:
+      :CUSTOM_ID: init-init-header
+      :END:
 
-      ;;------------------------------------------------------------------------------
-      ;;; Org/Babel Bootstrap: Custom Tangle
-      ;;------------------------------------------------------------------------------
+      #+BEGIN_SRC emacs-lisp
+        ;; -*- mode: emacs-lisp; lexical-binding: t; no-byte-compile: t -*-
+        ;;==============================================================================
+        ;;; init.el
+        ;;
+        ;;; Bootstrap Emacs Initialization File
+        ;;
+        ;; Author: Kyle W T Sherman
+        ;;
+        ;; This file was generated from init-emacs.org and should not be edited
+        ;; manually.
+        ;;
+        ;; init-emacs.org => init.el
+        ;;==============================================================================
+      #+END_SRC
 
-      ;; (defun org-babel-generate-elisp-file (file &optional byte-compile force)
-      ;;   "Generate an emacs-lisp file from an org-babel FILE.
+***** +Bootstrap: Custom Tangle+
+      :PROPERTIES:
+      :CUSTOM_ID: init-init-bootstrap-custom-tangle
+      :END:
 
-      ;; Additionally, byte compile the file if BYTE-COMPILE is
-      ;; non-nil.
+      #+BEGIN_SRC emacs-lisp :tangle no
+        ;;------------------------------------------------------------------------------
+        ;;; Bootstrap: Custom Tangle
+        ;;------------------------------------------------------------------------------
 
-      ;; Process file even if timestamp is not newer than target if FORCE
-      ;; is non-nil."
-      ;;   (let* ((case-fold-search t)
-      ;;          (file-base (concat (file-name-directory user-init-file) "init-emacs"))
-      ;;          (file-org (file-truename (concat file-base ".org")))
-      ;;          (file-elisp (file-truename (concat file-base ".el")))
-      ;;          (file-comp (file-truename (concat file-base ".elc")))
-      ;;          (heading-regexp "^\*+ ")
-      ;;          (heading-comment-regexp "^\*+ COMMENT ")
-      ;;          (begin-regexp "^[ \t]*#\\+BEGIN_SRC emacs-lisp")
-      ;;          (begin-tangle-regexp "^[ \t]*#\\+BEGIN_SRC .*:tangle ")
-      ;;          (end-regexp "^[ \t]*#\\+END_SRC")
-      ;;          (indent-regexp "^  "))
-      ;;     ;; generate elisp file if needed
-      ;;     (when (or force
-      ;;               (not (file-exists-p file-elisp))
-      ;;               (file-newer-than-file-p file-org file-elisp))
-      ;;       (message "Writing %s..." file-elisp)
-      ;;       (with-temp-file file-elisp
-      ;;         (insert-file-contents file)
-      ;;         (goto-char (point-min))
-      ;;         (let (code
-      ;;               headings-counts
-      ;;               (level 1)
-      ;;               (comment-level 0)
-      ;;               (end-comment ""))
-      ;;           (while (not (eobp))
-      ;;             (cond
-      ;;              ;; comment heading
-      ;;              ((let ((case-fold-search nil))
-      ;;                 (looking-at heading-comment-regexp))
-      ;;               (setq level (/ (- (match-end 0) (line-beginning-position) 8) 2))
-      ;;               (when (or (zerop comment-level)
-      ;;                         (< level comment-level))
-      ;;                 (setq comment-level level))
-      ;;               (delete-region (line-beginning-position) (progn (forward-line 1) (point))))
-      ;;              ;; normal heading
-      ;;              ((looking-at heading-regexp)
-      ;;               (setq level (/ (- (match-end 0) (line-beginning-position)) 2))
-      ;;               (when (or (zerop comment-level)
-      ;;                         (<= level comment-level))
-      ;;                 (setq comment-level 0)
-      ;;                 (if (assoc level headings-counts)
-      ;;                     (setf (cdr (assoc level headings-counts))
-      ;;                           (cons (buffer-substring-no-properties (match-end 0) (line-end-position)) 1))
-      ;;                   (setq headings-counts (append headings-counts (list (cons level (cons "No heading" 1)))))))
-      ;;               (delete-region (line-beginning-position) (progn (forward-line 1) (point))))
-      ;;              ;; start of tangled source block
-      ;;              ((and (looking-at begin-regexp)
-      ;;                    (zerop comment-level)
-      ;;                    (not (looking-at begin-tangle-regexp))) ; skip blocks with their own tangle directive
-      ;;               (let* ((heading-count (cdr (assoc level headings-counts)))
-      ;;                      (heading (car heading-count))
-      ;;                      (count (cdr heading-count)))
-      ;;                 (delete-region (line-beginning-position) (progn (forward-line 1) (point)))
-      ;;                 (unless (bobp)
-      ;;                   (newline))
-      ;;                 (when (fboundp 'org-link-escape)
-      ;;                   (insert (format ";; [[file:%s::*%s][%s:%s]]\n" file-org (org-link-escape heading) heading count))
-      ;;                   (setq end-comment (format ";; %s:%s ends here\n" heading count))
-      ;;                   (cl-incf (cddr (assoc level headings-counts))))
-      ;;                 (setq code t)))
-      ;;              ;; end of tangled source block
-      ;;              ((and code
-      ;;                    (looking-at end-regexp))
-      ;;               (delete-region (line-beginning-position) (progn (forward-line 1) (point)))
-      ;;               (insert end-comment)
-      ;;               (setq code nil
-      ;;                     end-comment ""))
-      ;;              ;; inside tangled source block
-      ;;              (code
-      ;;               (when (looking-at indent-regexp)
-      ;;                 (delete-char (if (boundp 'org-edit-src-content-indentation)
-      ;;                                  org-edit-src-content-indentation
-      ;;                                2)))
-      ;;               (forward-line 1))
-      ;;              ;; outside tangled source block
-      ;;              (t
-      ;;               (delete-region (line-beginning-position) (progn (forward-line 1) (point))))))
-      ;;           (time-stamp))
-      ;;         (message "Wrote %s..." file-elisp)))
-      ;;     ;; byte compile elisp file if needed
-      ;;     (when (and byte-compile
-      ;;                (or (not (file-exists-p file-comp))
-      ;;                    (file-newer-than-file-p file-elisp file-comp)))
-      ;;       (byte-compile-file file-elisp))))
+        ;; (defun org-babel-generate-elisp-file (file &optional byte-compile force)
+        ;;   "Generate an emacs-lisp file from an org-babel FILE.
 
-      ;; ;; generate and load main init file
-      ;; (let* ((file-base (concat (file-name-directory user-init-file) "init-emacs"))
-      ;;        (file-org (file-truename (concat file-base ".org")))
-      ;;        (file-elisp (file-truename (concat file-base ".el")))
-      ;;        (file-comp (file-truename (concat file-base ".elc"))))
-      ;;   ;; do not try to byte compile the generated file as it will fail since our environment is not setup
-      ;;   (org-babel-generate-elisp-file file-org)
-      ;;   ;; delete any existing byte compiled init file to prevent an outdated version from loading
-      ;;   (when (file-exists-p file-comp)
-      ;;     (delete-file file-comp))
-      ;;   (if (file-exists-p file-elisp)
-      ;;       (load file-elisp)
-      ;;     (message "Error loading %s" file-elisp)))
+        ;; Additionally, byte compile the file if BYTE-COMPILE is
+        ;; non-nil.
 
-      ;;------------------------------------------------------------------------------
-      ;;; Org/Babel Bootstrap: Normal Tangle
-      ;;------------------------------------------------------------------------------
+        ;; Process file even if timestamp is not newer than target if FORCE
+        ;; is non-nil."
+        ;;   (let* ((case-fold-search t)
+        ;;          (file-base (concat (file-name-directory user-init-file) "init-emacs"))
+        ;;          (file-org (file-truename (concat file-base ".org")))
+        ;;          (file-elisp (file-truename (concat file-base ".el")))
+        ;;          (file-comp (file-truename (concat file-base ".elc")))
+        ;;          (heading-regexp "^\*+ ")
+        ;;          (heading-comment-regexp "^\*+ COMMENT ")
+        ;;          (begin-regexp "^[ \t]*#\\+BEGIN_SRC emacs-lisp")
+        ;;          (begin-tangle-regexp "^[ \t]*#\\+BEGIN_SRC .*:tangle ")
+        ;;          (end-regexp "^[ \t]*#\\+END_SRC")
+        ;;          (indent-regexp "^  "))
+        ;;     ;; generate elisp file if needed
+        ;;     (when (or force
+        ;;               (not (file-exists-p file-elisp))
+        ;;               (file-newer-than-file-p file-org file-elisp))
+        ;;       (message "Writing %s..." file-elisp)
+        ;;       (with-temp-file file-elisp
+        ;;         (insert-file-contents file)
+        ;;         (goto-char (point-min))
+        ;;         (let (code
+        ;;               headings-counts
+        ;;               (level 1)
+        ;;               (comment-level 0)
+        ;;               (end-comment ""))
+        ;;           (while (not (eobp))
+        ;;             (cond
+        ;;              ;; comment heading
+        ;;              ((let ((case-fold-search nil))
+        ;;                 (looking-at heading-comment-regexp))
+        ;;               (setq level (/ (- (match-end 0) (line-beginning-position) 8) 2))
+        ;;               (when (or (zerop comment-level)
+        ;;                         (< level comment-level))
+        ;;                 (setq comment-level level))
+        ;;               (delete-region (line-beginning-position) (progn (forward-line 1) (point))))
+        ;;              ;; normal heading
+        ;;              ((looking-at heading-regexp)
+        ;;               (setq level (/ (- (match-end 0) (line-beginning-position)) 2))
+        ;;               (when (or (zerop comment-level)
+        ;;                         (<= level comment-level))
+        ;;                 (setq comment-level 0)
+        ;;                 (if (assoc level headings-counts)
+        ;;                     (setf (cdr (assoc level headings-counts))
+        ;;                           (cons (buffer-substring-no-properties (match-end 0) (line-end-position)) 1))
+        ;;                   (setq headings-counts (append headings-counts (list (cons level (cons "No heading" 1)))))))
+        ;;               (delete-region (line-beginning-position) (progn (forward-line 1) (point))))
+        ;;              ;; start of tangled source block
+        ;;              ((and (looking-at begin-regexp)
+        ;;                    (zerop comment-level)
+        ;;                    (not (looking-at begin-tangle-regexp))) ; skip blocks with their own tangle directive
+        ;;               (let* ((heading-count (cdr (assoc level headings-counts)))
+        ;;                      (heading (car heading-count))
+        ;;                      (count (cdr heading-count)))
+        ;;                 (delete-region (line-beginning-position) (progn (forward-line 1) (point)))
+        ;;                 (unless (bobp)
+        ;;                   (newline))
+        ;;                 (when (fboundp 'org-link-escape)
+        ;;                   (insert (format ";; [[file:%s::*%s][%s:%s]]\n" file-org (org-link-escape heading) heading count))
+        ;;                   (setq end-comment (format ";; %s:%s ends here\n" heading count))
+        ;;                   (cl-incf (cddr (assoc level headings-counts))))
+        ;;                 (setq code t)))
+        ;;              ;; end of tangled source block
+        ;;              ((and code
+        ;;                    (looking-at end-regexp))
+        ;;               (delete-region (line-beginning-position) (progn (forward-line 1) (point)))
+        ;;               (insert end-comment)
+        ;;               (setq code nil
+        ;;                     end-comment ""))
+        ;;              ;; inside tangled source block
+        ;;              (code
+        ;;               (when (looking-at indent-regexp)
+        ;;                 (delete-char (if (boundp 'org-edit-src-content-indentation)
+        ;;                                  org-edit-src-content-indentation
+        ;;                                2)))
+        ;;               (forward-line 1))
+        ;;              ;; outside tangled source block
+        ;;              (t
+        ;;               (delete-region (line-beginning-position) (progn (forward-line 1) (point))))))
+        ;;           (time-stamp))
+        ;;         (message "Wrote %s..." file-elisp)))
+        ;;     ;; byte compile elisp file if needed
+        ;;     (when (and byte-compile
+        ;;                (or (not (file-exists-p file-comp))
+        ;;                    (file-newer-than-file-p file-elisp file-comp)))
+        ;;       (byte-compile-file file-elisp))))
 
-      (require 'ob-tangle)
-      (setq vc-follow-symlinks t)
+        ;; ;; generate and load main init file
+        ;; (let* ((file-base (concat (file-name-directory user-init-file) "init-emacs"))
+        ;;        (file-org (file-truename (concat file-base ".org")))
+        ;;        (file-elisp (file-truename (concat file-base ".el")))
+        ;;        (file-comp (file-truename (concat file-base ".elc"))))
+        ;;   ;; do not try to byte compile the generated file as it will fail since our environment is not setup
+        ;;   (org-babel-generate-elisp-file file-org)
+        ;;   ;; delete any existing byte compiled init file to prevent an outdated version from loading
+        ;;   (when (file-exists-p file-comp)
+        ;;     (delete-file file-comp))
+        ;;   (if (file-exists-p file-elisp)
+        ;;       (load file-elisp)
+        ;;     (message "Error loading %s" file-elisp)))
+      #+END_SRC
 
-      ;; generate (if needed) and load main init file
-      (let* ((file-base (concat (file-name-directory user-init-file) "init-emacs"))
-             (file-org (file-truename (concat file-base ".org")))
-             (file-elisp (file-truename (concat file-base ".el")))
-             (file-comp (file-truename (concat file-base ".elc"))))
-        ;; do not try to byte compile the generated file as it will fail since our environment is not setup
-        (when (file-newer-than-file-p file-org file-elisp)
-          (org-babel-tangle-file file-org))
-        ;; delete any existing byte compiled init file to prevent an outdated version from loading
-        (when (file-exists-p file-comp)
-          (delete-file file-comp))
-        (if (file-exists-p file-elisp)
-            (load file-elisp)
-          (message "Error loading %s" file-elisp)))
+***** Bootstrap: Normal Tangle
+      :PROPERTIES:
+      :CUSTOM_ID: init-init-bootstrap-normal-tangle
+      :END:
 
-      ;;==============================================================================
-      ;;; init.el ends here
-      ;;==============================================================================
-    #+END_SRC
+      #+BEGIN_SRC emacs-lisp
+        ;;------------------------------------------------------------------------------
+        ;;; Bootstrap: Normal Tangle
+        ;;------------------------------------------------------------------------------
+
+        (require 'ob-tangle)
+        (setq vc-follow-symlinks t)
+
+        ;; generate (if needed) and load main init file
+        (let* ((file-base (concat (file-name-directory user-init-file) "init-emacs"))
+               (file-org (file-truename (concat file-base ".org")))
+               (file-elisp (file-truename (concat file-base ".el")))
+               (file-comp (file-truename (concat file-base ".elc"))))
+          ;; do not try to byte compile the generated file as it will fail since our environment is not setup
+          (when (file-newer-than-file-p file-org file-elisp)
+            (org-babel-tangle-file file-org))
+          ;; delete any existing byte compiled init file to prevent an outdated version from loading
+          (when (file-exists-p file-comp)
+            (delete-file file-comp))
+          (if (file-exists-p file-elisp)
+              (load file-elisp)
+            (message "Error loading %s" file-elisp)))
+      #+END_SRC
+
+***** Footer
+      :PROPERTIES:
+      :CUSTOM_ID: init-init-footer
+      :END:
+
+      #+BEGIN_SRC emacs-lisp
+        ;;==============================================================================
+        ;;; init.el ends here
+        ;;==============================================================================
+      #+END_SRC
 
 *** Windows Init
     :PROPERTIES:
     :CUSTOM_ID: init-windows-init
+    :HEADER-ARGS: :tangle ~/config/emacs/.emacs.d/init-windows.el
     :END:
 
     Special init file for Windows machines where I run the MinGW version of Emacs.
 
-    #+BEGIN_SRC emacs-lisp :tangle ~/config/emacs/.emacs.d/init-windows.el
+    #+BEGIN_SRC emacs-lisp
       ;; -*- mode: emacs-lisp; lexical-binding: t; no-byte-compile: t -*-
       ;;==============================================================================
       ;;; init-windows.el
@@ -460,7 +533,7 @@
       ;;------------------------------------------------------------------------------
 
       ;; reduce frequency of garbage collections
-      (setq gc-cons-threshold (* 8 1024 1024)) ; default: 800000
+      (setq gc-cons-threshold (* 80 1024 1024)) ; default: 800000
     #+END_SRC
 
 *** Ignore Errors Advice Wrapper
@@ -10886,7 +10959,8 @@
 
         ;; (defun org-website-tangle-publish-async (&optional project force)
         ;;   "Tangle and publish org-website projects asynchronously.
-        ;; \nIf PROJECT is non-nil, only tangle/publish that project.
+
+        ;; If PROJECT is non-nil, only tangle/publish that project.
         ;; If FORCE is non-nil, force publish all files in project."
         ;;   (interactive)
         ;;   (message (concat "~/web/bin/website-tangle-publish"
@@ -14200,7 +14274,8 @@
 
         ;; (defun duplicate-sexp (&optional comment line)
         ;;   "Duplicate the sexp containing the point.
-        ;; \nIf COMMENT is non-nil, also comment out the original sexp.
+
+        ;; If COMMENT is non-nil, also comment out the original sexp.
         ;; If LINE is non-nil, duplicate the sexp at that line instead."
         ;;   (interactive "*")
         ;;   (let ((is-at-start-of-sexp
@@ -15727,6 +15802,35 @@
               (message "%s" face))
             face))
       #+END_SRC
+***** get-face-attribute
+      :PROPERTIES:
+      :CUSTOM_ID: functions-emacs-functions-get-face-attribute
+      :END:
+
+      See [[Font-Lock Faces]] for a list of possible faces to query.
+
+      #+BEGIN_SRC emacs-lisp
+        ;;------------------------------------------------------------------------------
+        ;;;; Functions: Emacs Functions: get-face-attribute
+        ;;------------------------------------------------------------------------------
+
+        (init-message 3 "Functions: Emacs Functions: get-face-attribute")
+
+        (defun get-face-attribute (face &rest props)
+          "Return list of properties (PROPS) for FACE.
+
+        If PROPS is nil, return all properties."
+          (let ((face (or face 'font-lock-function-name-face))
+                (vals '()))
+            (dolist (prop (or props
+                              (sort (mapcar #'car face-attribute-name-alist)
+                                    (lambda (a b)
+                                      (string< (symbol-name a) (symbol-name b)))))
+                          vals)
+              (let ((val (face-attribute face prop nil t)))
+                (unless (eq val 'unspecified)
+                  (push (cons prop val) vals))))))
+      #+END_SRC
 
 ***** comments-in-buffer
       :PROPERTIES:
@@ -16608,7 +16712,8 @@
 
           ;; (defun kill-or-bury-buffer (&optional no-prompt)
           ;;   "Either kill buffer or bury it depending on the name.
-          ;; \nBuffer names listed in `bury-buffer-names' are cleared and buried.
+
+          ;; Buffer names listed in `bury-buffer-names' are cleared and buried.
           ;; If NO-PROMPT is non-nil then current buffer is killed without prompting."
           ;;   (interactive)
           ;;   (if (member (buffer-name (current-buffer)) bury-buffer-names)
@@ -28693,7 +28798,8 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
 
       ;;   (defun simple-mpc-set-song-details ()
       ;;     "Set song details for each song in simple-mpc playlist buffer.
-      ;; \nProperties: album, artist, date, file, genre, modified,
+
+      ;; Properties: album, artist, date, file, genre, modified,
       ;; position, time, and title."
       ;;     (save-mark-and-excursion
       ;;       (with-current-buffer simple-mpc-current-playlist-buffer-name
@@ -28721,7 +28827,8 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
 
       ;;   (defun simple-mpc-get-song-details ()
       ;;     "Return an alist of properties of the song at the current position.
-      ;; \nSee `simple-mpc-set-song-details' for the list of properties
+
+      ;; See `simple-mpc-set-song-details' for the list of properties
       ;; returned."
       ;;     (get-text-property (line-beginning-position) 'details))
 
@@ -31425,7 +31532,8 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
 
       ;;               (defun flymake-java-ecj-cleanup ()
       ;;                 "Cleanup after `flymake-java-ecj-init'.
-      ;; \nDelete temp file and directories."
+
+      ;;               Delete temp file and directories."
       ;;                 (flymake-safe-delete-file flymake-temp-source-file-name)
       ;;                 (when flymake-temp-source-file-name
       ;;                   (flymake-safe-delete-directory (file-name-directory flymake-temp-source-file-name))))
@@ -36342,7 +36450,8 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
 
         ;; (defun refresh-etags (&optional extension)
         ;;   "Run etags on all peer files in current dir having EXTENSION and reload them silently.
-        ;; \nEXTENSION defaults to 'el'."
+
+        ;; EXTENSION defaults to 'el'."
         ;;   (interactive)
         ;;   (shell-command (format "etags *.%s" (or extension "el")))
         ;;   (let ((tags-revert-without-query t))
@@ -36351,7 +36460,8 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         ;; ;; refresh etags when tag not found (by Järneström Jonas)
         ;; (defun find-tag--refresh-etags (orig-fun &rest args)
         ;;   "Refresh etags and reload tags if tag not found, and redo find-tag.
-        ;; \nIf buffer is modified, ask about saving before running etags."
+
+        ;; If buffer is modified, ask about saving before running etags."
         ;;   (let ((extension (file-name-extension buffer-file-name)))
         ;;    (condition-case nil
         ;;        (apply orig-fun args)
