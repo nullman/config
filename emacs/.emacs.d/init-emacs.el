@@ -896,6 +896,9 @@ Common values:
 (setq scroll-margin 2)
 ;; turn off vertical auto-scroll
 (setq auto-window-vscroll nil)
+;; scroll by pixel
+(setq pixel-scroll-precision-mode t
+      pixel-scroll-precision-use-momentum nil)
 ;; General:23 ends here
 
 ;; [[file:init-emacs.org::#environment-general][General:24]]
@@ -1128,6 +1131,9 @@ Common values:
 
 ;; set max mark ring size
 (setq mark-ring-max 32)                 ; default: 16
+
+;; do not save duplicates
+(setq kill-do-not-save-duplicates t)
 ;; System:7 ends here
 
 ;; [[file:init-emacs.org::#environment-system][System:8]]
@@ -1210,6 +1216,8 @@ Common values:
   (large-file-warning-threshold (* 50 1000 1000))
   ;; all backup files should go into the system temp directory
   (backup-directory-alist `(("." . ,temporary-file-directory)))
+  ;; do not auto-save remote files
+  (remote-file-name-inhibit-auto-save t)
   ;; ask before closing emacs
   (kill-emacs-query-functions
    (cons (lambda () (yes-or-no-p "Really kill Emacs? "))
@@ -1303,6 +1311,9 @@ Common values:
 (use-package autorevert
   :straight (:type built-in)
   :custom
+  ;; auto-revert non-file buffers too
+  (global-auto-revert-non-file-buffers t)
+  :config
   ;; turn on auto buffer revert mode
   (global-auto-revert-mode 1))
 ;; Auto-Revert:1 ends here
@@ -4155,7 +4166,7 @@ If BUFFER is nil, current buffer is used."
       org-confirm-elisp-link-function nil)
 
 ;; exportable file types
-(setq 'org-export-backends '(ascii html icalendar latex md odt org))
+(setq org-export-backends '(ascii html icalendar latex md odt org))
 
 ;; ;; delete trailing white space on tangle
 ;; (add-hook 'org-babel-post-tangle-hook #'delete-trailing-whitespace)
@@ -17272,6 +17283,8 @@ back to the previous non-whitespace character. See also
              ispell-word)
   :bind (("<f6>" . ispell-word)
          ("<S-f6>" . ispell))
+  :custom
+  (ispell-dictionary "en_US")
   :config
   (setq ispell-enable-tex-parser t))
 ;; ispell:1 ends here
@@ -18681,7 +18694,8 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
   :bind* (("M-g r" . recentf)
           ("M-g M-r" . recentf))
   :custom
-  (recentf-max-menu-items 25)
+  (recentf-max-menu-items 300)
+  (recentf-exclude '("^/\\(?:ssh\\|su\\|sudo\\)?:"))
   :init
   (recentf-mode 1))
 ;; recentf:1 ends here

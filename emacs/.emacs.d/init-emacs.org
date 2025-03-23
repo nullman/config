@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2025-03-23 02:16 (user)>
+  #+TIMESTAMP: <2025-03-23 02:38 (user)>
 
 * Overview
   :PROPERTIES:
@@ -1863,6 +1863,9 @@
       (setq scroll-margin 2)
       ;; turn off vertical auto-scroll
       (setq auto-window-vscroll nil)
+      ;; scroll by pixel
+      (setq pixel-scroll-precision-mode t
+            pixel-scroll-precision-use-momentum nil)
     #+END_SRC
 
     Searches and matches should ignore case.
@@ -2217,7 +2220,8 @@
       (setq history-delete-duplicates t)      ; default: nil
     #+END_SRC
 
-    Increase the maximum size of the kill and mark rings.
+    Increase the maximum size of the kill and mark rings and do not save
+    duplicates.
 
     #+BEGIN_SRC emacs-lisp
       ;; set max kill ring size
@@ -2225,6 +2229,9 @@
 
       ;; set max mark ring size
       (setq mark-ring-max 32)                 ; default: 16
+
+      ;; do not save duplicates
+      (setq kill-do-not-save-duplicates t)
     #+END_SRC
 
     Make all calls to =yes-or-no-p= use =y-or-n-p= instead.
@@ -2327,6 +2334,8 @@
           (large-file-warning-threshold (* 50 1000 1000))
           ;; all backup files should go into the system temp directory
           (backup-directory-alist `(("." . ,temporary-file-directory)))
+          ;; do not auto-save remote files
+          (remote-file-name-inhibit-auto-save t)
           ;; ask before closing emacs
           (kill-emacs-query-functions
            (cons (lambda () (yes-or-no-p "Really kill Emacs? "))
@@ -2447,6 +2456,9 @@
         (use-package autorevert
           :straight (:type built-in)
           :custom
+          ;; auto-revert non-file buffers too
+          (global-auto-revert-non-file-buffers t)
+          :config
           ;; turn on auto buffer revert mode
           (global-auto-revert-mode 1))
       #+END_SRC
@@ -6224,7 +6236,7 @@
               org-confirm-elisp-link-function nil)
 
         ;; exportable file types
-        (setq 'org-export-backends '(ascii html icalendar latex md odt org))
+        (setq org-export-backends '(ascii html icalendar latex md odt org))
 
         ;; ;; delete trailing white space on tangle
         ;; (add-hook 'org-babel-post-tangle-hook #'delete-trailing-whitespace)
@@ -26298,6 +26310,8 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
                    ispell-word)
         :bind (("<f6>" . ispell-word)
                ("<S-f6>" . ispell))
+        :custom
+        (ispell-dictionary "en_US")
         :config
         (setq ispell-enable-tex-parser t))
     #+END_SRC
@@ -28408,7 +28422,8 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         :bind* (("M-g r" . recentf)
                 ("M-g M-r" . recentf))
         :custom
-        (recentf-max-menu-items 25)
+        (recentf-max-menu-items 300)
+        (recentf-exclude '("^/\\(?:ssh\\|su\\|sudo\\)?:"))
         :init
         (recentf-mode 1))
     #+END_SRC
