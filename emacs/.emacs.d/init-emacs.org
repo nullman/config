@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2025-03-23 01:18 (user)>
+  #+TIMESTAMP: <2025-03-23 02:16 (user)>
 
 * Overview
   :PROPERTIES:
@@ -1237,20 +1237,13 @@
                 x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING) ; data-type request for X selection
                 save-interprogram-paste-before-kill t                          ; save clipboard strings into kill ring before replacing them
                 mouse-yank-at-point t                                          ; mouse yank commands yank at point
-                interprogram-paste-function 'gui-selection-value)              ; function to call to get text cut from other programs
-          (setq-default select-enable-clipboard select-enable-clipboard
-                        select-enable-primary select-enable-primary
-                        x-select-request-type x-select-request-type
-                        save-interprogram-paste-before-kill save-interprogram-paste-before-kill
-                        mouse-yank-at-point mouse-yank-at-point))
+                interprogram-paste-function 'gui-selection-value))             ; function to call to get text cut from other programs
 
         ;; inverse video on
         (setq inverse-video t)
-        (setq-default inverse-video inverse-video)
 
         ;; visible bell
         (setq visible-bell t)
-        (setq-default visible-bell visible-bell)
 
         ;; turn off bell
         (setq ring-bell-function 'ignore)
@@ -1278,7 +1271,10 @@
         ;; make default frame size fullscreen
         ;;(add-to-list 'default-frame-alist '(fullscreen . maximized))
 
-        ;; do not shrink frame to match font size
+        ;; do not resize frame to match font size
+        (setq frame-inhibit-implied-resize t)
+
+        ;; do not round frame resizes to match font size
         (setq frame-resize-pixelwise t)
 
         ;; put current buffer name in title bar
@@ -1769,7 +1765,6 @@
     #+BEGIN_SRC emacs-lisp
       ;; do not parse comments in sexp's
       (setq parse-sexp-ignore-comments t)
-      (setq-default parse-sexp-ignore-comments parse-sexp-ignore-comments)
     #+END_SRC
 
     +Wrap lines by default.+
@@ -1898,7 +1893,6 @@
     #+BEGIN_SRC emacs-lisp
       ;; make current selection visible
       (transient-mark-mode 1)
-      (setq-default transient-mark-mode transient-mark-mode)
     #+END_SRC
 
     Set default tab indentation and width to 4.
@@ -1912,8 +1906,6 @@
             tab-stop-list (number-sequence 4 180 4)) ; tab stops set to every 4 spaces
       (setq-default indent-tabs-mode indent-tabs-mode
                     tab-width tab-width
-                    standard-indent standard-indent
-                    tab-always-indent tab-always-indent
                     tab-stop-list tab-stop-list)
     #+END_SRC
 
@@ -2074,8 +2066,6 @@
       ;; display customize menu entries and tag names as symbols
       (setq custom-unlispify-menu-entries nil
             custom-unlispify-tag-names nil)
-      (setq-default custom-unlispify-menu-entries custom-unlispify-menu-entries
-                    custom-unlispify-tag-names custom-unlispify-tag-names)
     #+END_SRC
 
     Set default =grep= command.
@@ -2284,7 +2274,6 @@
     #+BEGIN_SRC emacs-lisp
       ;; silence advice redefinition warnings
       (setq ad-redefinition-action 'accept)
-      (setq-default ad-redefinition-action ad-redefinition-action)
     #+END_SRC
 
 *** Files
@@ -2749,7 +2738,7 @@
       ;;           global-mode-string))          ; day, date, time
       ;;         #("-%-" 0 3 (help-echo "mouse-1: select (drag to resize), mouse-2 = C-x 1, mouse-3 = C-x 0"))
       ;;         mode-line-end-spaces))
-      ;; (set-default 'mode-line-format mode-line-format)
+      ;; (setq-default mode-line-format mode-line-format)
     #+END_SRC
 
     Set mode line for =projectile-mode=.
@@ -2811,7 +2800,6 @@
       ;;                                   (mouse-2 . mode-line-widen)))))
       ;;          #(")%]" 0 3
       ;;            (help-echo "mouse-1: select (drag to resize), mouse-2 = C-x 1, mouse-3 = C-x 0")))))
-      ;; (set-default 'mode-line-modes mode-line-modes)
 
       ;; ;; (setcar (last (car mode-line-modes))
       ;; ;;         '#(")%]" 0 3 (help-echo "mouse-1: select (drag to resize), mouse-2 = C-x 1, mouse-3 = C-x 0")))
@@ -2850,7 +2838,7 @@
       ;; ;;         (nthcdr 8 mode-line-format)))
 
       ;; ;; ;; set mode line
-      ;; ;; (set-default 'mode-line-format mode-line-format)
+      ;; ;; (setq-default mode-line-format mode-line-format)
     #+END_SRC
 
 *** Terminals
@@ -3947,6 +3935,28 @@
       (custom-key-bindings-grouped-prefix-keys)
     #+END_SRC
 
+*** Unbind Keys
+    :PROPERTIES:
+    :CUSTOM_ID: key-bindings-unbind-keys
+    :END:
+
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Key Bindings: Unbind Keys
+      ;;------------------------------------------------------------------------------
+
+      (init-message 2 "Key Bindings: Unbind Keys")
+
+      (defun custom-key-bindings-unbind-keys ()
+        "Unset some default key bindings."
+
+        (unbind-key "C-z")                    ; default: `suspend-frame'
+        (unbind-key "C-x C-z"))               ; default: `suspend-frame'
+
+      (init-message 3 "custom-key-bindings-unbind-keys")
+      (custom-key-bindings-unbind-keys)
+    #+END_SRC
+
 *** Set All Custom Key Bindings
     :PROPERTIES:
     :CUSTOM_ID: key-bindings-set-all-custom-key-bindings
@@ -3962,9 +3972,8 @@
       (defun custom-key-bindings-set-all ()
         "Set all custom key bindings."
 
-        ;; Turned off in order to reserve the Super keybindings for the OS.
-        ;; (init-message 3 "custom-key-bindings-system-keys")
-        ;; (custom-key-bindings-system-keys)
+        (init-message 3 "custom-key-bindings-system-keys")
+        (custom-key-bindings-system-keys)
 
         (init-message 3 "custom-key-bindings-function-keys")
         (custom-key-bindings-function-keys)
@@ -3982,7 +3991,10 @@
         (custom-key-bindings-modes-and-modules-keys)
 
         (init-message 3 "custom-key-bindings-grouped-prefix-keys")
-        (custom-key-bindings-grouped-prefix-keys))
+        (custom-key-bindings-grouped-prefix-keys)
+
+        (init-message 3 "custom-key-bindings-unbind-keys")
+        (custom-key-bindings-unbind-keys))
     #+END_SRC
 
 * Org Mode
@@ -6212,7 +6224,7 @@
               org-confirm-elisp-link-function nil)
 
         ;; exportable file types
-        (set-default 'org-export-backends '(ascii html icalendar latex md odt org))
+        (setq 'org-export-backends '(ascii html icalendar latex md odt org))
 
         ;; ;; delete trailing white space on tangle
         ;; (add-hook 'org-babel-post-tangle-hook #'delete-trailing-whitespace)
@@ -22114,6 +22126,21 @@
     (init-message 1 "Completions")
   #+END_SRC
 
+  General Completion Settings
+
+  #+BEGIN_SRC emacs-lisp
+    ;; ignore case
+    (setq completion-ignore-case t
+          read-buffer-completion-ignore-case t
+          read-file-name-completion-ignore-case t)
+
+    ;; display completions with details
+    (setq completions-detailed t)
+
+    ;; display completions horizontally
+    (setq completions-format 'horizontal)
+  #+END_SRC
+
 *** +ido+
     :PROPERTIES:
     :CUSTOM_ID: completions-ido
@@ -22308,36 +22335,36 @@
       (Should not be enabled at the same time as =company-mode=.)
 
       #+BEGIN_SRC emacs-lisp :tangle no
-        ;;------------------------------------------------------------------------------
-        ;;;; Completions: auto-complete: auto-complete
-        ;;------------------------------------------------------------------------------
+        ;; ;;------------------------------------------------------------------------------
+        ;; ;;;; Completions: auto-complete: auto-complete
+        ;; ;;------------------------------------------------------------------------------
 
-        (init-message 3 "Completions: auto-complete: auto-complete")
+        ;; (init-message 3 "Completions: auto-complete: auto-complete")
 
-        (use-package auto-complete
-          :straight (:type built-in)
-          :diminish auto-complete-mode
-          :bind (:map ac-complete-mode-map
-                      ("C-n" . ac-next)
-                      ("C-p" . ac-previous))
-          :init
-          ;; turn on auto-complete mode globally
-          (global-auto-complete-mode 1)
-          :config
-          ;; completion back-ends
-          (when (require 'auto-complete-config nil :no-error)
-            (ac-config-default))
-          (setq ac-sources '(ac-source-abbrev
-                             ac-source-dictionary
-                             ac-source-filename
-                             ac-source-files-in-current-dir
-                             ac-source-functions
-                             ac-source-variables
-                             ac-source-symbols
-                             ac-source-features
-                             ac-source-words-in-all-buffer
-                             ac-source-words-in-same-mode-buffers))
-          (setq-default ac-sources ac-sources))
+        ;; (use-package auto-complete
+        ;;   :straight (:type built-in)
+        ;;   :diminish auto-complete-mode
+        ;;   :bind (:map ac-complete-mode-map
+        ;;               ("C-n" . ac-next)
+        ;;               ("C-p" . ac-previous))
+        ;;   :init
+        ;;   ;; turn on auto-complete mode globally
+        ;;   (global-auto-complete-mode 1)
+        ;;   :config
+        ;;   ;; completion back-ends
+        ;;   (when (require 'auto-complete-config nil :no-error)
+        ;;     (ac-config-default))
+        ;;   (setq ac-sources '(ac-source-abbrev
+        ;;                      ac-source-dictionary
+        ;;                      ac-source-filename
+        ;;                      ac-source-files-in-current-dir
+        ;;                      ac-source-functions
+        ;;                      ac-source-variables
+        ;;                      ac-source-symbols
+        ;;                      ac-source-features
+        ;;                      ac-source-words-in-all-buffer
+        ;;                      ac-source-words-in-same-mode-buffers))
+        ;;   (setq-default ac-sources ac-sources))
       #+END_SRC
 
 *** +company/ivy/counsel/swiper+
@@ -22941,6 +22968,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
                   ("M-g i" . consult-imenu)
                   ("M-g I" . consult-imenu-multi)
                   ;; M-s bindings (search-map)
+                  ("M-s f" . consult-recent-file)
                   ("M-s d" . consult-find)
                   ("M-s D" . consult-locate)
                   ("M-s g" . consult-grep)

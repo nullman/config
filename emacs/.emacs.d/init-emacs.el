@@ -494,20 +494,13 @@ A fortune is added if FORTUNE is non-nil."
         x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING) ; data-type request for X selection
         save-interprogram-paste-before-kill t                          ; save clipboard strings into kill ring before replacing them
         mouse-yank-at-point t                                          ; mouse yank commands yank at point
-        interprogram-paste-function 'gui-selection-value)              ; function to call to get text cut from other programs
-  (setq-default select-enable-clipboard select-enable-clipboard
-                select-enable-primary select-enable-primary
-                x-select-request-type x-select-request-type
-                save-interprogram-paste-before-kill save-interprogram-paste-before-kill
-                mouse-yank-at-point mouse-yank-at-point))
+        interprogram-paste-function 'gui-selection-value))             ; function to call to get text cut from other programs
 
 ;; inverse video on
 (setq inverse-video t)
-(setq-default inverse-video inverse-video)
 
 ;; visible bell
 (setq visible-bell t)
-(setq-default visible-bell visible-bell)
 
 ;; turn off bell
 (setq ring-bell-function 'ignore)
@@ -535,7 +528,10 @@ A fortune is added if FORTUNE is non-nil."
 ;; make default frame size fullscreen
 ;;(add-to-list 'default-frame-alist '(fullscreen . maximized))
 
-;; do not shrink frame to match font size
+;; do not resize frame to match font size
+(setq frame-inhibit-implied-resize t)
+
+;; do not round frame resizes to match font size
 (setq frame-resize-pixelwise t)
 
 ;; put current buffer name in title bar
@@ -843,7 +839,6 @@ Common values:
 ;; [[file:init-emacs.org::#environment-general][General:13]]
 ;; do not parse comments in sexp's
 (setq parse-sexp-ignore-comments t)
-(setq-default parse-sexp-ignore-comments parse-sexp-ignore-comments)
 ;; General:13 ends here
 
 ;; [[file:init-emacs.org::#environment-general][General:14]]
@@ -917,7 +912,6 @@ Common values:
 ;; [[file:init-emacs.org::#environment-general][General:27]]
 ;; make current selection visible
 (transient-mark-mode 1)
-(setq-default transient-mark-mode transient-mark-mode)
 ;; General:27 ends here
 
 ;; [[file:init-emacs.org::#environment-general][General:28]]
@@ -929,8 +923,6 @@ Common values:
       tab-stop-list (number-sequence 4 180 4)) ; tab stops set to every 4 spaces
 (setq-default indent-tabs-mode indent-tabs-mode
               tab-width tab-width
-              standard-indent standard-indent
-              tab-always-indent tab-always-indent
               tab-stop-list tab-stop-list)
 ;; General:28 ends here
 
@@ -1041,8 +1033,6 @@ Common values:
 ;; display customize menu entries and tag names as symbols
 (setq custom-unlispify-menu-entries nil
       custom-unlispify-tag-names nil)
-(setq-default custom-unlispify-menu-entries custom-unlispify-menu-entries
-              custom-unlispify-tag-names custom-unlispify-tag-names)
 ;; General:45 ends here
 
 ;; [[file:init-emacs.org::#environment-general][General:46]]
@@ -1177,7 +1167,6 @@ Common values:
 ;; [[file:init-emacs.org::#environment-system][System:11]]
 ;; silence advice redefinition warnings
 (setq ad-redefinition-action 'accept)
-(setq-default ad-redefinition-action ad-redefinition-action)
 ;; System:11 ends here
 
 ;; [[file:init-emacs.org::#environment-files][Files:1]]
@@ -2428,6 +2417,23 @@ KEYMAP defaults to `override-global-map'."
 (custom-key-bindings-grouped-prefix-keys)
 ;; Grouped Prefix Keys:1 ends here
 
+;; [[file:init-emacs.org::#key-bindings-unbind-keys][Unbind Keys:1]]
+;;------------------------------------------------------------------------------
+;;; Key Bindings: Unbind Keys
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Key Bindings: Unbind Keys")
+
+(defun custom-key-bindings-unbind-keys ()
+  "Unset some default key bindings."
+
+  (unbind-key "C-z")                    ; default: `suspend-frame'
+  (unbind-key "C-x C-z"))               ; default: `suspend-frame'
+
+(init-message 3 "custom-key-bindings-unbind-keys")
+(custom-key-bindings-unbind-keys)
+;; Unbind Keys:1 ends here
+
 ;; [[file:init-emacs.org::#key-bindings-set-all-custom-key-bindings][Set All Custom Key Bindings:1]]
 ;;------------------------------------------------------------------------------
 ;;; Key Bindings: Set All Custom Key Bindings
@@ -2438,9 +2444,8 @@ KEYMAP defaults to `override-global-map'."
 (defun custom-key-bindings-set-all ()
   "Set all custom key bindings."
 
-  ;; Turned off in order to reserve the Super keybindings for the OS.
-  ;; (init-message 3 "custom-key-bindings-system-keys")
-  ;; (custom-key-bindings-system-keys)
+  (init-message 3 "custom-key-bindings-system-keys")
+  (custom-key-bindings-system-keys)
 
   (init-message 3 "custom-key-bindings-function-keys")
   (custom-key-bindings-function-keys)
@@ -2458,7 +2463,10 @@ KEYMAP defaults to `override-global-map'."
   (custom-key-bindings-modes-and-modules-keys)
 
   (init-message 3 "custom-key-bindings-grouped-prefix-keys")
-  (custom-key-bindings-grouped-prefix-keys))
+  (custom-key-bindings-grouped-prefix-keys)
+
+  (init-message 3 "custom-key-bindings-unbind-keys")
+  (custom-key-bindings-unbind-keys))
 ;; Set All Custom Key Bindings:1 ends here
 
 ;; [[file:init-emacs.org::#org-mode][Org Mode:1]]
@@ -4147,7 +4155,7 @@ If BUFFER is nil, current buffer is used."
       org-confirm-elisp-link-function nil)
 
 ;; exportable file types
-(set-default 'org-export-backends '(ascii html icalendar latex md odt org))
+(setq 'org-export-backends '(ascii html icalendar latex md odt org))
 
 ;; ;; delete trailing white space on tangle
 ;; (add-hook 'org-babel-post-tangle-hook #'delete-trailing-whitespace)
@@ -15642,6 +15650,19 @@ USING is the remaining peg."
 (init-message 1 "Completions")
 ;; Completions:1 ends here
 
+;; [[file:init-emacs.org::#completions][Completions:2]]
+;; ignore case
+(setq completion-ignore-case t
+      read-buffer-completion-ignore-case t
+      read-file-name-completion-ignore-case t)
+
+;; display completions with details
+(setq completions-detailed t)
+
+;; display completions horizontally
+(setq completions-format 'horizontal)
+;; Completions:2 ends here
+
 ;; [[file:init-emacs.org::#completions-vertico-consult-corfu][vertico/consult/corfu:1]]
 ;;------------------------------------------------------------------------------
 ;;; Completions: vertico/consult/corfu
@@ -15745,6 +15766,7 @@ USING is the remaining peg."
           ("M-g i" . consult-imenu)
           ("M-g I" . consult-imenu-multi)
           ;; M-s bindings (search-map)
+          ("M-s f" . consult-recent-file)
           ("M-s d" . consult-find)
           ("M-s D" . consult-locate)
           ("M-s g" . consult-grep)
