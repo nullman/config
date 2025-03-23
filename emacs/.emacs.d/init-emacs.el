@@ -1968,8 +1968,8 @@ KEYMAP defaults to `override-global-map'."
     (bind-keys* ("C-x M-y" . cut-line)))
 
   ;; duplicate line
-  (when (fboundp 'duplicate-line)
-    (bind-keys* ("C-x C-d" . duplicate-line))) ; default: `list-directory'
+  (when (fboundp 'duplicate-dwim)
+    (bind-keys* ("C-x C-d" . duplicate-dwim))) ; default: `list-directory'
 
   ;; ;; kill ring browser
   ;; (when (fboundp 'browse-kill-ring)
@@ -2195,6 +2195,16 @@ KEYMAP defaults to `override-global-map'."
               ("c" . command-log-mode-on)
               ("k" . command-log-mode-off)
               ("l" . clm/command-log-clear))
+
+  ;; find commands
+  (bind-keys* :map space-map
+              :prefix "f"
+              :prefix-map space-find-map
+              :menu-name "Find Commands"
+              ("a" . ag)
+              ("d" . find-name-dired)
+              ("f" . find)
+              ("g" . grep-find))
 
   ;; git commands
   (bind-keys* :map space-map
@@ -18646,6 +18656,8 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
 (use-package recentf
   :straight (:type built-in)
   :commands (recentf-mode)
+  :bind* (("M-g r" . recentf)
+          ("M-g M-r" . recentf))
   :custom
   (recentf-max-menu-items 25)
   :init
@@ -21623,49 +21635,48 @@ Commands:
 ;; dired menu
 (auto-menu
  "Dired"
- ;;(append '(("recent" "context-dired" "Run `cdired' to list recent files.")) ; no longer installed
- (auto-menu-dired `(("home" . "~/")
-                    ,(cons "emacs" emacs-home-dir)
-                    ;;,(cons "emacs-modules" (concat emacs-home-dir "/modules"))
-                    ;;,(cons "emacs-mode-abbrevs" (concat emacs-home-dir "/mode-abbrevs"))
-                    ;;,(cons "emacs-init" local-init-dir)
-                    ;;,(cons "emacs-modules" local-modules-dir)
-                    ;;,(cons "emacs-work-modules" local-work-modules-dir)
-                    ("config" . "~/config")
-                    ("config-private" . "~/config-private")
-                    ("bin" . "~/bin")
-                    ("org" . "~/org")
-                    ("web" . "~/web")
-                    ("web/org" . "~/web/org")
-                    ("public_html" . "~/public_html")
-                    ;;("plans" . "~/plans")
-                    ("reminders" . "~/reminders")
-                    ;;("wiki" . "~/wiki")
-                    ("doc" . "~/doc")
-                    ("bbs" . "~/doc/bbs")
-                    ("dev" . "~/dev")
-                    ("prj" . "~/prj")
-                    ("src" . "~/src")
-                    ("github" . "~/src/github-nullman")
-                    ;;("gitlab" . "~/src/gitlab-kylesherman")
-                    ("media" . "/home/data/media")
-                    ("music" . "/home/data/media/Audio/Music")
-                    ("text" . "/home/data/media/Text")
-                    ("softwre" . "/home/data/media/Software")
-                    ("repos" . "/home/data/media/Repos")
-                    ("Downloads" . "~/Downloads")
-                    ("Documents" . "~/Documents")
-                    ("QubesIncoming" . "~/QubesIncoming")
-                    ("clisp" . "~/dev/clisp")
-                    ;;("clojure" . "~/dev/clojure")
-                    ("racket" . "~/dev/racket")
-                    ("erlang" . "~/dev/erlang")
-                    ("basic" . "~/dev/basic")
-                    ("java" . "~/dev/java")
-                    ("javascript" . "~/dev/javascript")
-                    ("kotlin" . "~/dev/kotlin")
-                    ,(cons "emacs-help" (concat emacs-home-dir "/help")))))
-;;)
+ (append '(("recent" "recentf" "Open recent file."))
+         (auto-menu-dired `(("home" . "~/")
+                            ,(cons "emacs" emacs-home-dir)
+                            ;;,(cons "emacs-modules" (concat emacs-home-dir "/modules"))
+                            ;;,(cons "emacs-mode-abbrevs" (concat emacs-home-dir "/mode-abbrevs"))
+                            ;;,(cons "emacs-init" local-init-dir)
+                            ;;,(cons "emacs-modules" local-modules-dir)
+                            ;;,(cons "emacs-work-modules" local-work-modules-dir)
+                            ("config" . "~/config")
+                            ("config-private" . "~/config-private")
+                            ("bin" . "~/bin")
+                            ("org" . "~/org")
+                            ("web" . "~/web")
+                            ("web/org" . "~/web/org")
+                            ("public_html" . "~/public_html")
+                            ;;("plans" . "~/plans")
+                            ("reminders" . "~/reminders")
+                            ;;("wiki" . "~/wiki")
+                            ("doc" . "~/doc")
+                            ("bbs" . "~/doc/bbs")
+                            ("dev" . "~/dev")
+                            ("prj" . "~/prj")
+                            ("src" . "~/src")
+                            ("github" . "~/src/github-nullman")
+                            ;;("gitlab" . "~/src/gitlab-kylesherman")
+                            ("media" . "/home/data/media")
+                            ("music" . "/home/data/media/Audio/Music")
+                            ("text" . "/home/data/media/Text")
+                            ("softwre" . "/home/data/media/Software")
+                            ("repos" . "/home/data/media/Repos")
+                            ("Downloads" . "~/Downloads")
+                            ("Documents" . "~/Documents")
+                            ;;("QubesIncoming" . "~/QubesIncoming")
+                            ("clisp" . "~/dev/clisp")
+                            ("clojure" . "~/dev/clojure")
+                            ("racket" . "~/dev/racket")
+                            ("erlang" . "~/dev/erlang")
+                            ("basic" . "~/dev/basic")
+                            ("java" . "~/dev/java")
+                            ("javascript" . "~/dev/javascript")
+                            ("kotlin" . "~/dev/kotlin")
+                            ,(cons "emacs-help" (concat emacs-home-dir "/help"))))))
 ;; Dired Menu:1 ends here
 
 ;; [[file:init-emacs.org::#menus-load-menu][Load Menu:1]]
@@ -21715,17 +21726,18 @@ Commands:
    ("Bookmarks" "load-bookmarks" "Load `~/lynx_bookmarks.html' file.")
    ("Emacs Work Modules..."
     ,(auto-menu-file-dir local-work-modules-dir "\\.el\\'" "find-file" t))
-   ("Clojure Files..."
-    ,(auto-menu-file-dir "~/dev/clojure" "\\.clj\\'" "find-file" t))
    ("CLisp Files..."
     ,(auto-menu-file-dir "~/dev/clisp" "\\.lisp\\'" "find-file" t))
+   ("Clojure Files..."
+    ,(auto-menu-file-dir "~/dev/clojure" "\\.clj\\'" "find-file" t))
+   ("Racket Files..."
+    ,(auto-menu-file-dir "~/dev/racket" "\\.rkt\\'" "find-file" t))
    ("Erlang Files..."
     ,(auto-menu-file-dir "~/dev/erlang" "\\.erl\\'" "find-file" t))
    ("BASIC Files..."
     ,(auto-menu-file-dir "~/dev/basic" "\\.bas\\'" "find-file" t))
    ("Javascript Files..."
-    ,(auto-menu-file-dir "~/dev/javascript" "\\.js\\'" "find-file" t))
-   ))
+    ,(auto-menu-file-dir "~/dev/javascript" "\\.js\\'" "find-file" t))))
 ;; Load Menu:1 ends here
 
 ;; [[file:init-emacs.org::#menus-application-menu][Application Menu:1]]
@@ -21785,11 +21797,12 @@ Commands:
    ;;  ,(auto-menu-file-dir local-init-dir "\\.el\\'" "safe-load-compile"))
    ("Emacs Personal Modules..."
     ,(auto-menu-file-dir local-modules-dir "\\.el\\'" "safe-load-compile" t))
-   ("Clojure Files..."
-    ,(auto-menu-file-dir "~/dev/clojure" "\\.clj\\'" "slime-load-file" t))
    ("CLisp Files..."
     ,(auto-menu-file-dir "~/dev/clisp" "\\.lisp\\'" "slime-load-file" t))
-   ))
+   ("Clojure Files..."
+    ,(auto-menu-file-dir "~/dev/clojure" "\\.clj\\'" "slime-load-file" t))
+   ("Racket Files..."
+    ,(auto-menu-file-dir "~/dev/racket" "\\.rkt\\'" "slime-load-file" t))))
 ;; Run-File Menu:1 ends here
 
 ;; [[file:init-emacs.org::#menus-website-menu][Website Menu:1]]
@@ -21836,8 +21849,7 @@ Commands:
      ("Website to Morpheus" "org-website-rsync-to-morpheus-async" "Rsync website to morpheus server.")
      ("Website to DigitalOcean" "org-website-rsync-to-digitalocean-async" "Rsync website to DigitalOcean server.")
      ("Powerhouse to DigitalOcean" "(org-website-rsync-to-digitalocean-async \"powerhouse\")" "Rsync Powerhouse to DigitalOcean server.")
-     ("Bloodmoon to DigitalOcean" "(org-website-rsync-to-digitalocean-async \"bloodmoon\")" "Rsync Bloodmoon to DigitalOcean server.")))
-   ))
+     ("Bloodmoon to DigitalOcean" "(org-website-rsync-to-digitalocean-async \"bloodmoon\")" "Rsync Bloodmoon to DigitalOcean server.")))))
 ;; Website Menu:1 ends here
 
 ;; [[file:init-emacs.org::#menus-package-manager-menu][Package Manager Menu:1]]
@@ -21934,6 +21946,11 @@ Commands:
      ("Export Bookmarks to HTML" "(org-bookmarks-export-to-html \"~/org/bookmarks.org\" \"~/Documents/bookmarks.html\")" "Export bookmarks.org to ~/Documents/bookmarks.html.")
      ("Export Bookmarks to NYXT" "(org-bookmarks-export-to-nyxt \"~/org/bookmarks.org\" \"~/config/local/.local/share/nyxt/bookmarks.lisp\")" "Export bookmarks.org to ~/config/local/.local/share/nyxt/bookmarks.lisp.")
      ("Export Bookmarks to Chrome HTML" "(org-bookmarks-export-to-chrome-html \"~/org/bookmarks.org\" \"~/Documents/bookmarks-chrome.html\")" "Export bookmarks.org to ~/Documents/bookmarks-chrome.html.")))
+   ("Find"
+    (("AG" "ag" "Run `ag' to recursively search the contents of files.")
+     ("Dired Find" "find-name-dired" "Run `find-name-dired' to recursively find files outputting to a `dired' buffer.")
+     ("Find" "find" "Run `find' to recursively find files.")
+     ("Grep Find" "grep-find" "Run `grep-find' to recursively find files.")))
    ("Fonts"
     (("Hack Nerd Font Mono-12" "(set-frame-font \"Hack Nerd Font Mono-12\" nil t)" "Call `set-frame-font` to set the font to 'Hack Nerd Font Mono-12'.")
      ("Hack Nerd Font Mono-14" "(set-frame-font \"Hack Nerd Font Mono-14\" nil t)" "Call `set-frame-font` to set the font to 'Hack Nerd Font Mono-14'.")
@@ -21964,8 +21981,7 @@ Commands:
    ("Evaluate Buffer" "eval-buffer" "Run `eval-buffer' on the current buffer.")
    ("Customize Group" "customize-group" "Run `customize-group' function.")
    ("Regular Expression Builder" "regexp-builder" "Start Regular Expression Builder in current buffer.")
-   ("Restart Emacs Server" "server-start-maybe" "Restart Emacs server.")
-   ))
+   ("Restart Emacs Server" "server-start-maybe" "Restart Emacs server.")))
 ;;("Tip of the Day" "totd" "Display a random emacs command.")
 ;;("Visit Local TAGS" "(when (file-exists-p \"TAGS\") (visit-tags-table \"TAGS\" t))" "Visit local tags table.")
 ;;("Visit Home TAGS" "(when (file-exists-p \"~/TAGS\") (visit-tags-table \"~/TAGS\"))" "Visit home tags table.")
@@ -22061,8 +22077,7 @@ Commands:
    ("DB Change Log Legacy" "insert-db-change-log-template-line-legacy" "Insert template line for legacy DB change log.")
    ("Capture Table" "(table-capture (mark) (point) \"  \" \"\n\" 'left 20)" "Capture table from selected text.")
    ("Apostrophe" "(insert \"’\")" "Insert a fancy apostrophe `’'.")
-   ("Lexical Binding" "insert-lexical-binding" "Insert elisp lexical binding header.")
-   ))
+   ("Lexical Binding" "insert-lexical-binding" "Insert elisp lexical binding header.")))
 ;; ("Muse"
 ;;  ("Muse Header" "muse-header" "Insert Muse standard header line.")
 ;;  ("Muse Blog Header" "muse-blog-header" "Insert Muse blog header line."))
@@ -22668,62 +22683,6 @@ to the current ERC buffer."
   )
 ;; Modules:1 ends here
 
-;; [[file:init-emacs.org::#work-settings][Settings:1]]
-;;------------------------------------------------------------------------------
-;;; Work: Settings
-;;------------------------------------------------------------------------------
-
-(when work-system
-  (init-message 2 "Work: Settings")
-
-  ;; set default browser
-  (setq browse-url-browser-function #'browse-url-default-browser)
-
-  ;; set secondary browser
-  (setq browse-url-secondary-browser-function #'browse-url-default-browser)
-
-  ;; add perl files to remove-tabs-exceptions
-  (add-to-list 'remove-tabs-exceptions '(:file . "\\.t\\'") t)
-  (add-to-list 'remove-tabs-exceptions '(:file . "\\.tt\\'") t)
-  (add-to-list 'remove-tabs-exceptions '(:file . "\\.pm\\'") t)
-
-  ;; sql setup
-  (setq sql-product 'ms)
-  (setq sql-ms-program "sqlcmd")
-  ;; https://docs.microsoft.com/en-us/sql/tools/sqlcmd-utility?view=sql-server-ver15
-  ;; -I (enable quoted identifiers)
-  ;; -k[1 | 2] (remove or replace control characters)
-  ;; -s col_separator
-  ;; -w column_width
-  ;; -y variable_length_type_display_width
-  (setq sql-ms-options '("-I" "-k" "-s" "|"))
-
-  ;; database connections
-  (setq sql-connection-alist
-        '((dev (sql-product 'ms)
-               (sql-server "wk8683.infinitecampus.com")
-               (sql-port 1344)
-               (sql-database "CampusMasterMN")
-               (sql-user "dev")
-               (sql-password "devTest"))
-          (issuetest (sql-product 'ms)
-                     (sql-server "b4660797-app001.infinitecampus.com")
-                     (sql-port 1344)
-                     (sql-database "3384-littleton-20210801_2101")
-                     (sql-user "IssueTestUser-3384-littleton-20210801_2101-962")
-                     (sql-password "h*cjFmVd9S0Hoqui7GQpiZ%chEit@y"))))
-
-  (defun sql-ms-dev ()
-    "Connect to local dev database."
-    (interactive)
-    (sql-connect 'dev))
-
-  (defun sql-ms-issuetest ()
-    "Connect to issuetest database."
-    (interactive)
-    (sql-connect 'issuetest)))
-;; Settings:1 ends here
-
 ;; [[file:init-emacs.org::#work-functions][Functions:1]]
 ;;------------------------------------------------------------------------------
 ;;; Work: Functions
@@ -22732,86 +22691,6 @@ to the current ERC buffer."
 (when work-system
   (init-message 2 "Work: Functions"))
 ;; Functions:1 ends here
-
-;; [[file:init-emacs.org::#work-functions-work-insert-release-pr-list][+work-insert-release-pr-list+:1]]
-;;------------------------------------------------------------------------------
-;;;; Work: Functions: work-insert-release-pr-list
-;;------------------------------------------------------------------------------
-
-(when (and work-system
-           (fboundp 'work-git-commit-start-end-log)
-           (fboundp 'work-linkify-jira-card))
-  (init-message 3 "Work: Functions: work-insert-release-pr-list")
-
-  (defun work-insert-release-pr-list (&optional commit-start commit-end)
-    "Insert a list of pull requests between COMMIT-START and COMMIT-END."
-    (interactive)
-    (cl-labels
-        ;; clean up branch name
-        ((fix-branch ()
-                     ;; convert spaces to dashes
-                     (save-mark-and-excursion
-                       (save-match-data
-                         (while (re-search-forward " " (line-end-position) :noerror)
-                           (replace-match "-" t))))
-                     ;; remove brackets
-                     (save-mark-and-excursion
-                       (save-match-data
-                         (while (re-search-forward "\\(\\[\\|\\]\\)" (line-end-position) :noerror)
-                           (replace-match "" t))))))
-      (cl-multiple-value-bind (commit-start commit-end log)
-          (work-git-commit-start-end-log commit-start commit-end)
-        (let (prs)
-          (with-temp-buffer
-            (insert log)
-            ;; remove leading "feature/" text
-            (goto-char (point-min))
-            (while (re-search-forward "\\bfeature/" nil :noerror)
-              (replace-match ""))
-            ;; handle different project names
-            (goto-char (point-min))
-            (while (re-search-forward "\\[?\\b[Aa][Nn][Dd][Rr][Oo][Ii][Dd]-" nil :noerror)
-              (replace-match "ANDROID-" t)
-              (fix-branch)
-              (forward-line 0)
-              (when (re-search-forward "\\b\\(ANDROID-[[:digit:]]+\\)\\([a-zA-Z0-9-_\.]*\\)\\b" nil :noerror)
-                (cl-pushnew (match-string 0) prs :test 'string=))
-              (goto-char (line-end-position)))
-            (goto-char (point-min))
-            (while (re-search-forward "\\[?\\b[Aa][Dd][Ss][Gg][Rr][Oo][Uu][Pp]-" nil :noerror)
-              (replace-match "ADSGROUP-" t)
-              (fix-branch)
-              (forward-line 0)
-              (when (re-search-forward "\\b\\(ADSGROUP-[[:digit:]]+\\)\\([a-zA-Z0-9-_\.]*\\)\\b" nil :noerror)
-                (cl-pushnew (match-string 0) prs :test 'string=))
-              (goto-char (line-end-position)))
-            (goto-char (point-min))
-            (while (re-search-forward "\\[?\\b[Bb][Ff][Oo]-" nil :noerror)
-              (replace-match "BFO-" t)
-              (fix-branch)
-              (forward-line 0)
-              (when (re-search-forward "\\b\\(BFO-[[:digit:]]+\\)\\([a-zA-Z0-9-_\.]*\\)\\b" nil :noerror)
-                (cl-pushnew (match-string 0) prs :test 'string=))
-              (goto-char (line-end-position)))
-            (goto-char (point-min))
-            (while (re-search-forward "\\[?\\b[Qq][Uu][Ii][Zz]-" nil :noerror)
-              (replace-match "QUIZ-" t)
-              (fix-branch)
-              (forward-line 0)
-              (when (re-search-forward "\\b\\(QUIZ-[[:digit:]]+\\)\\([a-zA-Z0-9-_\.]*\\)\\b" nil :noerror)
-                (cl-pushnew (match-string 0) prs :test 'string=))
-              (goto-char (line-end-position))))
-          ;; output list
-          (when prs
-            (insert
-             (with-temp-buffer
-               (dolist (pr prs)
-                 (insert
-                  (concat "- " pr))
-                 (work-linkify-jira-card)
-                 (newline))
-               (buffer-string)))))))))
-;; +work-insert-release-pr-list+:1 ends here
 
 ;; [[file:init-emacs.org::#work-functions-work-fix-json-array][work-fix-json-array:1]]
 ;;------------------------------------------------------------------------------
@@ -22856,30 +22735,6 @@ to the current ERC buffer."
     (while (re-search-forward "'" nil :no-error)
       (replace-match "\""))))
 ;; work-fix-json-array:1 ends here
-
-;; [[file:init-emacs.org::#work-menu][Menu:1]]
-;;------------------------------------------------------------------------------
-;;; Work: Menu
-;;------------------------------------------------------------------------------
-
-(when work-system
-  (init-message 2 "Work: Menu")
-
-  ;; work menu
-  (auto-menu
-   "Work"
-   `(("Dired..."
-      ,(auto-menu-dired '(("work" . "~/work")
-                          ("Tomcat" . "~/ICAS-DEV-999.2.29/INFINITECAMPUS/tomcat/tigger-999.2.29")
-                          ("exceptionals-campus" . "~/work/exceptionals-campus")
-                          ("exceptionals-tl-ui" . "~/work/exceptionals-tl-ui")
-                          ("campus-5.0-apps" . "~/work/campus-5.0-apps"))))
-     ("org-copy-to-clipboard" "org-copy-to-clipboard" "Reformat and copy org region to clipboard.")
-     ("org-toggle-link-display" "org-toggle-link-display" "Toggle the literal or descriptive display of links.")
-     ("org-toggle-headline-checkbox" "org-toggle-headline-checkbox" "Toggle between an Org headline and checkbox on current line.")
-     ("org-table-remove-commas" "org-table-remove-commas" "Remove all commas in current Org table.")
-     ("org-table-convert-region" "org-table-convert-region" "Convert region to a table."))))
-;; Menu:1 ends here
 
 ;; [[file:init-emacs.org::#other][Other:1]]
 ;;==============================================================================
