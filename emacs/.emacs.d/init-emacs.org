@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2025-03-23 02:38 (user)>
+  #+TIMESTAMP: <2025-03-24 00:50 (user)>
 
 * Overview
   :PROPERTIES:
@@ -1277,6 +1277,9 @@
         ;; do not round frame resizes to match font size
         (setq frame-resize-pixelwise t)
 
+        ;; round window resizes to match font size
+        (setq window-resize-pixelwise nil)
+
         ;; put current buffer name in title bar
         (setq frame-title-format "%b")
 
@@ -1868,6 +1871,13 @@
             pixel-scroll-precision-use-momentum nil)
     #+END_SRC
 
+    Resize windows proportionally when splitting.
+
+    #+BEGIN_SRC emacs-lisp
+      ;; resize windows proportionally when splitting
+      (setq window-combination-resize t)
+    #+END_SRC
+
     Searches and matches should ignore case.
 
     #+BEGIN_SRC emacs-lisp
@@ -1967,6 +1977,14 @@
       ;; (setq sentence-end-double-space t)
       ;; ;; insert two spaces after a colon when filling text
       ;; (setq colon-double-space t)
+    #+END_SRC
+
+    Customize =duplicate-dwim=.
+
+    #+BEGIN_SRC emacs-lisp
+      ;; move point to last new line
+      (setq duplicate-line-final-position -1
+            duplicate-region-final-position -1)
     #+END_SRC
 
     Highlight matching parenthesis when the cursor is on one of them.
@@ -2075,7 +2093,8 @@
 
     #+BEGIN_SRC emacs-lisp
       ;; set grep command
-      (setq grep-command "grep -n -H -i -r -e ")
+      ;;(setq grep-command "grep -n -H -i -r -e ")
+      (setq grep-command "rg --line-number --smart-case --no-heading")
     #+END_SRC
 
     Set email sources.
@@ -2168,9 +2187,16 @@
       (init-message 2 "Environment: System")
     #+END_SRC
 
+    Constant for large sizes.
+
+    #+BEGIN_SRC emacs-lisp
+      (defvar large-threshold 10000
+        "An amount used to represent a large size threshold.")
+    #+END_SRC
+
     Optimize garbage collections.
 
-    #+BEGIN_SRC emacs-lisp :tangle no
+    #+BEGIN_SRC emacs-lisp
       ;; reduce frequency of garbage collections
       ;; this is handled in the Start section so it can take effect earlier
       ;; (setq gc-cons-threshold (* 8 1024 1024)) ; default: 800000
@@ -2192,7 +2218,7 @@
 
     #+BEGIN_SRC emacs-lisp
       ;; set max variable bindings
-      (setq max-specpdl-size 10000)           ; default: 1300
+      (setq max-specpdl-size large-threshold) ; default: 1300
     #+END_SRC
 
     Allow Emacs to use a larger number of recursions (depth) with =eval=, =apply=,
@@ -2200,14 +2226,14 @@
 
     #+BEGIN_SRC emacs-lisp
       ;; set max eval depth
-      (setq max-lisp-eval-depth 10000)        ; default: 600
+      (setq max-lisp-eval-depth large-threshold) ; default: 600
     #+END_SRC
 
     Prevent the message log from getting too large.
 
     #+BEGIN_SRC emacs-lisp
       ;; set max message log size
-      (setq message-log-max 10000)            ; default: 1000
+      (setq message-log-max large-threshold)  ; default: 1000
     #+END_SRC
 
     Increase the maximum size of history lists and remove duplicate entries.
@@ -2334,8 +2360,6 @@
           (large-file-warning-threshold (* 50 1000 1000))
           ;; all backup files should go into the system temp directory
           (backup-directory-alist `(("." . ,temporary-file-directory)))
-          ;; do not auto-save remote files
-          (remote-file-name-inhibit-auto-save t)
           ;; ask before closing emacs
           (kill-emacs-query-functions
            (cons (lambda () (yes-or-no-p "Really kill Emacs? "))
@@ -2397,6 +2421,13 @@
         (add-to-list 'file-coding-system-alist '("\\.BAT\\'" . dos))
         (add-to-list 'file-coding-system-alist '("\\.DO\\'" . dos))
         (add-to-list 'file-coding-system-alist '("\\.SYS\\'" . dos))
+      #+END_SRC
+
+      Do not auto-save remote files.
+
+      #+BEGIN_SRC emacs-lisp
+        ;; do not auto-save remote files
+        (setq remote-file-name-inhibit-auto-save t)
       #+END_SRC
 
 ***** Version Control
@@ -2880,8 +2911,8 @@
 
         (init-message 3 "Environment: Terminals: Configuration")
 
-        (setq custom-terminal-history-size 10000
-              custom-terminal-maximum-lines 10000)
+        (setq custom-terminal-history-size large-threshold
+              custom-terminal-maximum-lines large-threshold)
       #+END_SRC
 
 ***** eshell
@@ -3044,8 +3075,7 @@
        ("Planet m68k" (location . "gemini://m68k.info/") (handler . elpher-bookmark-jump))
        ;;("System Crafters" (location . "gemini://systemcrafters.cc") (handler . elpher-bookmark-jump))
        ;;("Writing a Gemini Server" (location . "gemini://bcalderon.io/writing-a-gemini-server") (handler . elpher-bookmark-jump))
-       ("Zerock (L29)" (location . "gemini://retro.inetcc.org/~zerock/") (handler . elpher-bookmark-jump))
-       )
+       ("Zerock (L29)" (location . "gemini://retro.inetcc.org/~zerock/") (handler . elpher-bookmark-jump)))
     #+END_SRC
 
 * Key Bindings
@@ -19043,7 +19073,7 @@
                    ;; add file
                    (push path files)))
                ;; build command
-               (let ((cmd (or grep-command "grep -n -H -i -e")))
+               (let ((cmd (or grep-command "grep -n -H -i -r -e")))
                  ;; add query
                  (setq cmd (concat cmd " \"" query "\""))
                  ;; add files
@@ -22592,7 +22622,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         ;;   :straight t
         ;;   :after (ivy)
         ;;   :init
-        ;;   (setq ivy-flx-limit 10000))
+        ;;   (setq ivy-flx-limit large-threshold))
 
         ;; ;; ;;------------------------------------------------------------------------------
         ;; ;; ;;;; ivy-hydra
@@ -24407,7 +24437,13 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         (compilation-scroll-output 'next-error)
         ;; skip info and warnings
         (compilation-skip-threshold 2)
+        ;; always kill a running process before starting a new one
+        (compilation-always-kill t)
+        ;; add ansi color to compliation output
+        (ansi-color-for-compilation-mode t)
         :config
+        (add-hook 'compilation-filter-hook #'ansi-color-compilation-filter)
+
         ;; display compilation time in compile log
         ;; source: https://emacs.stackexchange.com/questions/31493/print-elapsed-time-in-compilation-buffer/56130#56130
 
@@ -25467,22 +25503,61 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         (flycheck-package-setup))
     #+END_SRC
 
-*** flymake-cursor
+*** flymake
     :PROPERTIES:
-    :CUSTOM_ID: modules-flymake-cursor
+    :CUSTOM_ID: packages-flymake
     :END:
 
     Show flymake messages in the minibuffer after delay.
 
     #+BEGIN_SRC emacs-lisp
       ;;------------------------------------------------------------------------------
-      ;;; Packages: flymake-cursor
+      ;;; Packages: flymake
       ;;------------------------------------------------------------------------------
 
-      (init-message 2 "Modules: flymake-cursor")
+      (init-message 2 "Packages: flymake")
 
-      (use-package flymake-cursor
-        :straight t)
+      (use-package flymake
+        :straight t
+        :hook (prog-mode . flymake-mode)
+        :bind (:map flymake-mode-map
+                    ("M-8" . flymake-goto-next-error)
+                    ("M-7" . flymake-goto-prev-error)
+                    ("C-c ! n" . flymake-goto-next-error)
+                    ("C-c ! p" . flymake-goto-prev-error)
+                    ("C-c ! l" . flymake-show-buffer-diagnostics)
+                    ("C-c ! t" . flymake-toggle-diagnostics-at-eol))
+        :custom
+        (flymake-show-diagnostics-at-end-of-line nil)
+        (flymake-indicator-type (if window-system 'fringes 'margin))
+        (flymake-margin-indicators-string
+         `((error "!" compilation-error)
+           (warning "?" compilation-warning)
+           (note "i" compilation-info)))
+        :config
+        (defun flymake-toggle-diagnostics-at-eol ()
+          "Toggle display of Flymake diagnostics at end of line."
+          (interactive)
+          (setq flymake-show-diagnostics-at-end-of-line
+                (not flymake-show-diagnostics-at-end-of-line))
+          (flymake-mode -1)
+          (flymake-mode 1)
+          (message "Flymake diagnostics at end of line: %s"
+                   (if flymake-show-diagnostics-at-end-of-line
+                       "Enabled"
+                     "Disabled"))))
+
+      ;;------------------------------------------------------------------------------
+      ;;;; flymake-cursor
+      ;;
+      ;; Show `flymake-mode' errors for the current line in the message area.
+      ;;------------------------------------------------------------------------------
+
+      ;; (init-message 3 "flymake-cursor")
+
+      ;; (use-package flymake-cursor
+      ;;   :straight t
+      ;;   :after flymake)
     #+END_SRC
 
 *** flyspell
@@ -26055,6 +26130,8 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         :straight (:type built-in)
         :bind* ("C-x i" . ibuffer)            ; default: `insert-file'
         :commands (ibuffer)
+        :custom
+        (ibuffer-show-empty-filter-groups nil)
         :config
         ;; (add-to-list 'ibuffer-never-show-regexps "^\\*Apropos\\*$" t)
         ;; (add-to-list 'ibuffer-never-show-regexps "^\\*Compile-Log\\*$" t)
@@ -26074,38 +26151,48 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         ;; (add-to-list 'ibuffer-never-show-regexps "^\\*WoMan-Log*\\*$" t)
 
         ;; default groups for ibuffer
-        (setq ibuffer-saved-filters
+        (setq ibuffer-saved-filter-groups
               '(("default"
-                 ("c" (mode . c-mode))
-                 ("calendar" (or
-                              (name . "^\\*Calendar\\*$")
-                              (name . "^\\*Remind\\*$")
-                              (name . "^diary$")))
+                 ("emacs" (or (name . "^\\*scratch\\*$")
+                              (name . "^\\*Messages\\*$")
+                              (name . "^\\*Warnings\\*$")
+                              (name . "^\\*Shell Command Output\\*$")
+                              (name . "^\\*Async-native-compile-log\\*$")
+                              (name . "^\\*straight-")))
+                 ("calendar" (or (name . "^\\*Calendar\\*$")
+                                 (name . "^\\*Remind\\*$")
+                                 (name . "^diary$")))
+                 ("org" (or (mode . org-mode)
+                            (name . "^\\*Org Src")
+                            (name . "^\\*Org Agenda\\*$")))
                  ("dired" (mode . dired-mode))
-                 ("elisp" (mode . emacs-lisp-mode))
-                 ("emacs" (or
-                           (name . "^\\*scratch\\*$")
-                           (name . "^\\*Messages\\*$")))
+                 ("tramp" (name . "^\\*tramp.*"))
+                 ("terminal" (or (mode . term-mode)
+                                 (mode . shell-mode)
+                                 (mode . eshell-mode)))
                  ("erc" (mode . erc-mode))
-                 ("gnus" (or
-                          (mode . message-mode)
-                          (mode . bbdb-mode)
-                          (mode . mail-mode)
-                          (mode . gnus-group-mode)
-                          (mode . gnus-summary-mode)
-                          (mode . gnus-article-mode)
-                          (name . "^\\.bbdb$")
-                          (name . "^\\.newsrc-dribble")))
-                 ("java" (or
-                          (mode . java-mode)
-                          (mode . jde-mode)))
+                 ("gnus" (or (mode . message-mode)
+                             (mode . bbdb-mode)
+                             (mode . mail-mode)
+                             (mode . gnus-group-mode)
+                             (mode . gnus-summary-mode)
+                             (mode . gnus-article-mode)
+                             (name . "^\\.bbdb$")
+                             (name . "^\\.newsrc-dribble")))
+                 ("c" (mode . c-mode))
+                 ("elisp" (mode . emacs-lisp-mode))
+                 ("java" (or (mode . java-mode)
+                             (mode . jde-mode)))
                  ("kotlin" (mode . kotlin-mode))
                  ("lisp" (mode . lisp-mode))
-                 ("org" (mode . org-mode))
                  ("perl" (mode . perl-mode))
                  ("python" (mode . python-mode))
                  ("racket" (mode . racket-mode))
-                 ("ruby" (mode . ruby-mode)))))
+                 ("ruby" (mode . ruby-mode))
+                 ("ediff" (name . "^\\*[Ee]diff.*"))
+                 ("help" (or (name . "^\\*Help\\*$")
+                             (name . "^\\*info\\*$")
+                             (name . "^\\*helpful"))))))
 
         (defun custom-ibuffer-mode-hook ()
           (ibuffer-switch-to-saved-filter-groups "default"))
@@ -26310,8 +26397,6 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
                    ispell-word)
         :bind (("<f6>" . ispell-word)
                ("<S-f6>" . ispell))
-        :custom
-        (ispell-dictionary "en_US")
         :config
         (setq ispell-enable-tex-parser t))
     #+END_SRC
@@ -29201,11 +29286,16 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
 
       (use-package smerge-mode
         :straight (:type built-in)
+        :bind (:map smerge-mode-map
+                    ("C-c ^ u" . smerge-keep-upper)
+                    ("C-c ^ l" . smerge-keep-lower)
+                    ("C-c ^ n" . smerge-next)
+                    ("C-c ^ p" . smerge-prev))
         :init
         (defun smerge-mode-maybe ()
           "Auto turn on smerge mode when a file with merge conflicts is loaded.
       Do not perform the search on very large files (to avoid a delay when loaded)."
-          (when (<= (buffer-size) 10000)
+          (when (<= (buffer-size) large-threshold)
             (save-mark-and-excursion
               (save-match-data
                 (goto-char (point-min))
@@ -30224,6 +30314,23 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
                                  "San Diego"))
         ;; default language
         (wttrin-default-accept-language '("Accept-Language" . "en-US")))
+    #+END_SRC
+*** xref
+    :PROPERTIES:
+    :CUSTOM_ID: packages-xref
+    :END:
+
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Packages: xref
+      ;;------------------------------------------------------------------------------
+
+      (init-message 2 "Packages: xref")
+
+      (use-package xref
+        :straight t
+        :custom
+        (xref-search-program 'ripgrep))
     #+END_SRC
 
 *** +yascroll+

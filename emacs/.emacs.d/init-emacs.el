@@ -534,6 +534,9 @@ A fortune is added if FORTUNE is non-nil."
 ;; do not round frame resizes to match font size
 (setq frame-resize-pixelwise t)
 
+;; round window resizes to match font size
+(setq window-resize-pixelwise nil)
+
 ;; put current buffer name in title bar
 (setq frame-title-format "%b")
 
@@ -902,22 +905,27 @@ Common values:
 ;; General:23 ends here
 
 ;; [[file:init-emacs.org::#environment-general][General:24]]
-;; make searches case-insensitive
-(setq case-fold-search t)
+;; resize windows proportionally when splitting
+(setq window-combination-resize t)
 ;; General:24 ends here
 
-;; [[file:init-emacs.org::#environment-general][General:26]]
+;; [[file:init-emacs.org::#environment-general][General:25]]
+;; make searches case-insensitive
+(setq case-fold-search t)
+;; General:25 ends here
+
+;; [[file:init-emacs.org::#environment-general][General:27]]
 ;; highlight search matches
 (setq search-highlight nil
       query-replace-highlight nil)
-;; General:26 ends here
-
-;; [[file:init-emacs.org::#environment-general][General:27]]
-;; make current selection visible
-(transient-mark-mode 1)
 ;; General:27 ends here
 
 ;; [[file:init-emacs.org::#environment-general][General:28]]
+;; make current selection visible
+(transient-mark-mode 1)
+;; General:28 ends here
+
+;; [[file:init-emacs.org::#environment-general][General:29]]
 ;; set tab indentation, width, and convert tabs to spaces
 (setq indent-tabs-mode nil          ; do not insert tab characters
       tab-width 4                   ; default tab width is four spaces
@@ -927,9 +935,9 @@ Common values:
 (setq-default indent-tabs-mode indent-tabs-mode
               tab-width tab-width
               tab-stop-list tab-stop-list)
-;; General:28 ends here
+;; General:29 ends here
 
-;; [[file:init-emacs.org::#environment-general][General:29]]
+;; [[file:init-emacs.org::#environment-general][General:30]]
 ;; custom fill-column value
 (defconst custom-fill-column 78
   "Custom `fill-column' value.")
@@ -937,48 +945,54 @@ Common values:
 ;; set default fill column for `auto-fill-mode' mode and `fill-paragraph'
 (setq fill-column custom-fill-column)
 (setq-default fill-column fill-column)
-;; General:29 ends here
-
-;; [[file:init-emacs.org::#environment-general][General:30]]
-;; display fill column indictator in programming modes
-(add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
 ;; General:30 ends here
 
 ;; [[file:init-emacs.org::#environment-general][General:31]]
+;; display fill column indictator in programming modes
+(add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
+;; General:31 ends here
+
+;; [[file:init-emacs.org::#environment-general][General:32]]
 ;; set default comment column for in-line comments
 (setq comment-column 40)
 (setq-default comment-column comment-column)
 ;; set default comment fill column for in-line comments
 (setq comment-fill-column nil)
 (setq-default comment-fill-column comment-fill-column)
-;; General:31 ends here
-
-;; [[file:init-emacs.org::#environment-general][General:32]]
-;; turn on goal column support
-(put 'set-goal-column 'disabled nil)
 ;; General:32 ends here
 
 ;; [[file:init-emacs.org::#environment-general][General:33]]
+;; turn on goal column support
+(put 'set-goal-column 'disabled nil)
+;; General:33 ends here
+
+;; [[file:init-emacs.org::#environment-general][General:34]]
 ;; insert one space after a sentence when filling text
 (setq sentence-end-double-space nil)
 ;; insert one space after a colon when filling text
 (setq colon-double-space nil)
-;; General:33 ends here
+;; General:34 ends here
 
-;; [[file:init-emacs.org::#environment-general][General:35]]
+;; [[file:init-emacs.org::#environment-general][General:36]]
+;; move point to last new line
+(setq duplicate-line-final-position -1
+      duplicate-region-final-position -1)
+;; General:36 ends here
+
+;; [[file:init-emacs.org::#environment-general][General:37]]
 ;; highlight matching parenthesis
 (show-paren-mode 1)
 (set-face-foreground 'show-paren-match color-paren)
 (set-face-attribute 'show-paren-match nil :weight 'extra-bold)
-;; General:35 ends here
+;; General:37 ends here
 
-;; [[file:init-emacs.org::#environment-general][General:36]]
+;; [[file:init-emacs.org::#environment-general][General:38]]
 ;; highlight tabs
 (setq highlight-tabs t)
 (setq-default highlight-tabs highlight-tabs)
-;; General:36 ends here
+;; General:38 ends here
 
-;; [[file:init-emacs.org::#environment-general][General:37]]
+;; [[file:init-emacs.org::#environment-general][General:39]]
 ;; ;; highlight trailing white spaces
 ;; (setq show-trailing-whitespace t)
 ;; (setq-default show-trailing-whitespace show-trailing-whitespace)
@@ -991,66 +1005,67 @@ Common values:
         (newline-mark 10 [182 10]) ; 10 linefeed '\n', 182 ??? '¶'
         (tab-mark 9 [9655 9] [92 9])))    ; 9 tab '\t', 9655 '▷', 92 backslash '\'
 (global-whitespace-mode 1)              ; enable whitespace mode everywhere
-;; General:37 ends here
-
-;; [[file:init-emacs.org::#environment-general][General:38]]
-;; highlight current line
-(hl-line-mode 1)
-(global-hl-line-mode 1)
-;; General:38 ends here
-
-;; [[file:init-emacs.org::#environment-general][General:39]]
-;; turn on global font lock mode and syntax highlighting
-(global-font-lock-mode 1)
-(setq font-lock-maximum-decoration t)
 ;; General:39 ends here
 
 ;; [[file:init-emacs.org::#environment-general][General:40]]
-;; replace highlighted text with typed text
-(delete-selection-mode 1)
+;; highlight current line
+(hl-line-mode 1)
+(global-hl-line-mode 1)
 ;; General:40 ends here
 
 ;; [[file:init-emacs.org::#environment-general][General:41]]
+;; turn on global font lock mode and syntax highlighting
+(global-font-lock-mode 1)
+(setq font-lock-maximum-decoration t)
+;; General:41 ends here
+
+;; [[file:init-emacs.org::#environment-general][General:42]]
+;; replace highlighted text with typed text
+(delete-selection-mode 1)
+;; General:42 ends here
+
+;; [[file:init-emacs.org::#environment-general][General:43]]
 ;; ;; set comment start (default) and padding
 ;; (setq comment-start "#"
 ;;       comment-padding " ")
 ;; set comment style
 (setq comment-style 'indent)
-;; General:41 ends here
-
-;; [[file:init-emacs.org::#environment-general][General:42]]
-(setq enable-recursive-minibuffers t)
-(minibuffer-depth-indicate-mode 1)
-;; General:42 ends here
+;; General:43 ends here
 
 ;; [[file:init-emacs.org::#environment-general][General:44]]
+(setq enable-recursive-minibuffers t)
+(minibuffer-depth-indicate-mode 1)
+;; General:44 ends here
+
+;; [[file:init-emacs.org::#environment-general][General:46]]
 ;; make apropos command search all symbols
 (setq apropos-do-all t)
 
 ;; make apropos command list results by relevance
 (setq apropos-sort-by-scores t
       apropos-documentation-sort-by-scores t)
-;; General:44 ends here
-
-;; [[file:init-emacs.org::#environment-general][General:45]]
-;; display customize menu entries and tag names as symbols
-(setq custom-unlispify-menu-entries nil
-      custom-unlispify-tag-names nil)
-;; General:45 ends here
-
-;; [[file:init-emacs.org::#environment-general][General:46]]
-;; set grep command
-(setq grep-command "grep -n -H -i -r -e ")
 ;; General:46 ends here
 
 ;; [[file:init-emacs.org::#environment-general][General:47]]
+;; display customize menu entries and tag names as symbols
+(setq custom-unlispify-menu-entries nil
+      custom-unlispify-tag-names nil)
+;; General:47 ends here
+
+;; [[file:init-emacs.org::#environment-general][General:48]]
+;; set grep command
+;;(setq grep-command "grep -n -H -i -r -e ")
+(setq grep-command "rg --line-number --smart-case --no-heading")
+;; General:48 ends here
+
+;; [[file:init-emacs.org::#environment-general][General:49]]
 ;; email settings
 (setq mail-sources `((pop :server "pop.gmail.com" :port 995
                           :user ,user-mail-address
                           :connection ssl :leave t)))
-;; General:47 ends here
+;; General:49 ends here
 
-;; [[file:init-emacs.org::#environment-general][General:48]]
+;; [[file:init-emacs.org::#environment-general][General:50]]
 ;; set default browser
 ;;(setq browse-url-browser-function #'browse-url-default-browser)
 ;;(setq browse-url-generic-program "x-www-browser")
@@ -1064,24 +1079,24 @@ Common values:
       browse-url-firefox-new-window-is-tab t)
 ;; set secondary browser
 (setq browse-url-secondary-browser-function #'browse-url-default-browser)
-;; General:48 ends here
+;; General:50 ends here
 
-;; [[file:init-emacs.org::#environment-general][General:49]]
+;; [[file:init-emacs.org::#environment-general][General:51]]
 ;; when deleting an active region via single character deletion command,
 ;; do not save to kill ring
 (setq delete-active-region t)
-;; General:49 ends here
+;; General:51 ends here
 
-;; [[file:init-emacs.org::#environment-general][General:52]]
+;; [[file:init-emacs.org::#environment-general][General:54]]
 ;; always recenter after `occur-mode-goto-occurrence'
 (defun occur-mode-goto-occurrence--recenter (&optional arg)
   "Recenter when an `occur' result is selected."
   (recenter))
 ;; advise `occur-mode-goto-occurrence'
 (advice-add 'occur-mode-goto-occurrence :after #'occur-mode-goto-occurrence--recenter)
-;; General:52 ends here
+;; General:54 ends here
 
-;; [[file:init-emacs.org::#environment-general][General:53]]
+;; [[file:init-emacs.org::#environment-general][General:55]]
 ;; set display-time-world time zones
 (setq display-time-world-list
       '(("Etc/UTC" "UTC")
@@ -1092,7 +1107,7 @@ Common values:
         ("Europe/London" "London")
         ("Europe/Paris" "Paris")
         ("Asia/Tokyo" "Tokyo")))
-;; General:53 ends here
+;; General:55 ends here
 
 ;; [[file:init-emacs.org::#environment-system][System:1]]
 ;;------------------------------------------------------------------------------
@@ -1102,30 +1117,53 @@ Common values:
 (init-message 2 "Environment: System")
 ;; System:1 ends here
 
+;; [[file:init-emacs.org::#environment-system][System:2]]
+(defvar large-threshold 10000
+  "An amount used to represent a large size threshold.")
+;; System:2 ends here
+
 ;; [[file:init-emacs.org::#environment-system][System:3]]
-;; set max variable bindings
-(setq max-specpdl-size 10000)           ; default: 1300
+;; reduce frequency of garbage collections
+;; this is handled in the Start section so it can take effect earlier
+;; (setq gc-cons-threshold (* 8 1024 1024)) ; default: 800000
+
+;; run garbage collections when Emacs is backgrounded
+(defun garbage-collect-maybe ()
+  "Run `garbage-collect' if Emacs does not have focus."
+  (unless (frame-focus-state)
+    (garbage-collect)))
+;; advise `after-focus-change-function'
+(advice-add 'after-focus-change-function :after #'garbage-collect-maybe)
+
+;; ;; run garbage collections when Emacs is idle
+;; (cancel-function-timers #'garbage-collect)
+;; (run-with-idle-timer 20 :refresh #'garbage-collect)
 ;; System:3 ends here
 
 ;; [[file:init-emacs.org::#environment-system][System:4]]
-;; set max eval depth
-(setq max-lisp-eval-depth 10000)        ; default: 600
+;; set max variable bindings
+(setq max-specpdl-size large-threshold) ; default: 1300
 ;; System:4 ends here
 
 ;; [[file:init-emacs.org::#environment-system][System:5]]
-;; set max message log size
-(setq message-log-max 10000)            ; default: 1000
+;; set max eval depth
+(setq max-lisp-eval-depth large-threshold) ; default: 600
 ;; System:5 ends here
 
 ;; [[file:init-emacs.org::#environment-system][System:6]]
+;; set max message log size
+(setq message-log-max large-threshold)  ; default: 1000
+;; System:6 ends here
+
+;; [[file:init-emacs.org::#environment-system][System:7]]
 ;; set max history list size
 (setq history-length 250)               ; default: 30
 
 ;; remove duplicates from history lists
 (setq history-delete-duplicates t)      ; default: nil
-;; System:6 ends here
+;; System:7 ends here
 
-;; [[file:init-emacs.org::#environment-system][System:7]]
+;; [[file:init-emacs.org::#environment-system][System:8]]
 ;; set max kill ring size
 (setq kill-ring-max 100)                ; default: 60
 
@@ -1134,15 +1172,15 @@ Common values:
 
 ;; do not save duplicates
 (setq kill-do-not-save-duplicates t)
-;; System:7 ends here
-
-;; [[file:init-emacs.org::#environment-system][System:8]]
-;; change all calls to `yes-or-no-p' to `y-or-n-p'
-;; (fset 'yes-or-no-p 'y-or-n-p)
-(setq use-short-answers t)
 ;; System:8 ends here
 
 ;; [[file:init-emacs.org::#environment-system][System:9]]
+;; change all calls to `yes-or-no-p' to `y-or-n-p'
+;; (fset 'yes-or-no-p 'y-or-n-p)
+(setq use-short-answers t)
+;; System:9 ends here
+
+;; [[file:init-emacs.org::#environment-system][System:10]]
 ;; enable upercase region (C-x C-u)
 (put 'upcase-region 'disabled nil)
 
@@ -1154,9 +1192,9 @@ Common values:
 
 ;; turn off the disabling of certain commands
 (setq disabled-command-function nil)
-;; System:9 ends here
+;; System:10 ends here
 
-;; [[file:init-emacs.org::#environment-system][System:10]]
+;; [[file:init-emacs.org::#environment-system][System:11]]
 ;; turn off bidirectional paragraph formatting
 (setq bidi-paragraph-direction 'left-to-right)
 (setq-default bidi-paragraph-direction bidi-paragraph-direction)
@@ -1168,12 +1206,12 @@ Common values:
 ;; turn on `so-long-mode' for files with long lines to help with performance
 (when (version<= "27.1" emacs-version)
   (global-so-long-mode 1))
-;; System:10 ends here
+;; System:11 ends here
 
-;; [[file:init-emacs.org::#environment-system][System:11]]
+;; [[file:init-emacs.org::#environment-system][System:12]]
 ;; silence advice redefinition warnings
 (setq ad-redefinition-action 'accept)
-;; System:11 ends here
+;; System:12 ends here
 
 ;; [[file:init-emacs.org::#environment-files][Files:1]]
 ;;------------------------------------------------------------------------------
@@ -1216,8 +1254,6 @@ Common values:
   (large-file-warning-threshold (* 50 1000 1000))
   ;; all backup files should go into the system temp directory
   (backup-directory-alist `(("." . ,temporary-file-directory)))
-  ;; do not auto-save remote files
-  (remote-file-name-inhibit-auto-save t)
   ;; ask before closing emacs
   (kill-emacs-query-functions
    (cons (lambda () (yes-or-no-p "Really kill Emacs? "))
@@ -1270,6 +1306,11 @@ Common values:
 (add-to-list 'file-coding-system-alist '("\\.DO\\'" . dos))
 (add-to-list 'file-coding-system-alist '("\\.SYS\\'" . dos))
 ;; General:6 ends here
+
+;; [[file:init-emacs.org::#environment-files-general][General:7]]
+;; do not auto-save remote files
+(setq remote-file-name-inhibit-auto-save t)
+;; General:7 ends here
 
 ;; [[file:init-emacs.org::#environment-files-version-control][Version Control:1]]
 ;;------------------------------------------------------------------------------
@@ -1491,8 +1532,8 @@ Otherwise, `custom-tab-width' is used."
 
 (init-message 3 "Environment: Terminals: Configuration")
 
-(setq custom-terminal-history-size 10000
-      custom-terminal-maximum-lines 10000)
+(setq custom-terminal-history-size large-threshold
+      custom-terminal-maximum-lines large-threshold)
 ;; Configuration:1 ends here
 
 ;; [[file:init-emacs.org::#environment-terminals-eshell][eshell:1]]
@@ -13269,7 +13310,7 @@ MATCH is the file pattern to match."
            ;; add file
            (push path files)))
        ;; build command
-       (let ((cmd (or grep-command "grep -n -H -i -e")))
+       (let ((cmd (or grep-command "grep -n -H -i -r -e")))
          ;; add query
          (setq cmd (concat cmd " \"" query "\""))
          ;; add files
@@ -16305,7 +16346,13 @@ USING is the remaining peg."
   (compilation-scroll-output 'next-error)
   ;; skip info and warnings
   (compilation-skip-threshold 2)
+  ;; always kill a running process before starting a new one
+  (compilation-always-kill t)
+  ;; add ansi color to compliation output
+  (ansi-color-for-compilation-mode t)
   :config
+  (add-hook 'compilation-filter-hook #'ansi-color-compilation-filter)
+
   ;; display compilation time in compile log
   ;; source: https://emacs.stackexchange.com/questions/31493/print-elapsed-time-in-compilation-buffer/56130#56130
 
@@ -16872,16 +16919,55 @@ USING is the remaining peg."
   (flycheck-package-setup))
 ;; flycheck:1 ends here
 
-;; [[file:init-emacs.org::#modules-flymake-cursor][flymake-cursor:1]]
+;; [[file:init-emacs.org::#packages-flymake][flymake:1]]
 ;;------------------------------------------------------------------------------
-;;; Packages: flymake-cursor
+;;; Packages: flymake
 ;;------------------------------------------------------------------------------
 
-(init-message 2 "Modules: flymake-cursor")
+(init-message 2 "Packages: flymake")
 
-(use-package flymake-cursor
-  :straight t)
-;; flymake-cursor:1 ends here
+(use-package flymake
+  :straight t
+  :hook (prog-mode . flymake-mode)
+  :bind (:map flymake-mode-map
+              ("M-8" . flymake-goto-next-error)
+              ("M-7" . flymake-goto-prev-error)
+              ("C-c ! n" . flymake-goto-next-error)
+              ("C-c ! p" . flymake-goto-prev-error)
+              ("C-c ! l" . flymake-show-buffer-diagnostics)
+              ("C-c ! t" . flymake-toggle-diagnostics-at-eol))
+  :custom
+  (flymake-show-diagnostics-at-end-of-line nil)
+  (flymake-indicator-type (if window-system 'fringes 'margin))
+  (flymake-margin-indicators-string
+   `((error "!" compilation-error)
+     (warning "?" compilation-warning)
+     (note "i" compilation-info)))
+  :config
+  (defun flymake-toggle-diagnostics-at-eol ()
+    "Toggle display of Flymake diagnostics at end of line."
+    (interactive)
+    (setq flymake-show-diagnostics-at-end-of-line
+          (not flymake-show-diagnostics-at-end-of-line))
+    (flymake-mode -1)
+    (flymake-mode 1)
+    (message "Flymake diagnostics at end of line: %s"
+             (if flymake-show-diagnostics-at-end-of-line
+                 "Enabled"
+               "Disabled"))))
+
+;;------------------------------------------------------------------------------
+;;;; flymake-cursor
+;;
+;; Show `flymake-mode' errors for the current line in the message area.
+;;------------------------------------------------------------------------------
+
+;; (init-message 3 "flymake-cursor")
+
+;; (use-package flymake-cursor
+;;   :straight t
+;;   :after flymake)
+;; flymake:1 ends here
 
 ;; [[file:init-emacs.org::#modules-flyspell][flyspell:1]]
 ;;------------------------------------------------------------------------------
@@ -17150,6 +17236,8 @@ back to the previous non-whitespace character. See also
   :straight (:type built-in)
   :bind* ("C-x i" . ibuffer)            ; default: `insert-file'
   :commands (ibuffer)
+  :custom
+  (ibuffer-show-empty-filter-groups nil)
   :config
   ;; (add-to-list 'ibuffer-never-show-regexps "^\\*Apropos\\*$" t)
   ;; (add-to-list 'ibuffer-never-show-regexps "^\\*Compile-Log\\*$" t)
@@ -17169,38 +17257,48 @@ back to the previous non-whitespace character. See also
   ;; (add-to-list 'ibuffer-never-show-regexps "^\\*WoMan-Log*\\*$" t)
 
   ;; default groups for ibuffer
-  (setq ibuffer-saved-filters
+  (setq ibuffer-saved-filter-groups
         '(("default"
-           ("c" (mode . c-mode))
-           ("calendar" (or
-                        (name . "^\\*Calendar\\*$")
-                        (name . "^\\*Remind\\*$")
-                        (name . "^diary$")))
+           ("emacs" (or (name . "^\\*scratch\\*$")
+                        (name . "^\\*Messages\\*$")
+                        (name . "^\\*Warnings\\*$")
+                        (name . "^\\*Shell Command Output\\*$")
+                        (name . "^\\*Async-native-compile-log\\*$")
+                        (name . "^\\*straight-")))
+           ("calendar" (or (name . "^\\*Calendar\\*$")
+                           (name . "^\\*Remind\\*$")
+                           (name . "^diary$")))
+           ("org" (or (mode . org-mode)
+                      (name . "^\\*Org Src")
+                      (name . "^\\*Org Agenda\\*$")))
            ("dired" (mode . dired-mode))
-           ("elisp" (mode . emacs-lisp-mode))
-           ("emacs" (or
-                     (name . "^\\*scratch\\*$")
-                     (name . "^\\*Messages\\*$")))
+           ("tramp" (name . "^\\*tramp.*"))
+           ("terminal" (or (mode . term-mode)
+                           (mode . shell-mode)
+                           (mode . eshell-mode)))
            ("erc" (mode . erc-mode))
-           ("gnus" (or
-                    (mode . message-mode)
-                    (mode . bbdb-mode)
-                    (mode . mail-mode)
-                    (mode . gnus-group-mode)
-                    (mode . gnus-summary-mode)
-                    (mode . gnus-article-mode)
-                    (name . "^\\.bbdb$")
-                    (name . "^\\.newsrc-dribble")))
-           ("java" (or
-                    (mode . java-mode)
-                    (mode . jde-mode)))
+           ("gnus" (or (mode . message-mode)
+                       (mode . bbdb-mode)
+                       (mode . mail-mode)
+                       (mode . gnus-group-mode)
+                       (mode . gnus-summary-mode)
+                       (mode . gnus-article-mode)
+                       (name . "^\\.bbdb$")
+                       (name . "^\\.newsrc-dribble")))
+           ("c" (mode . c-mode))
+           ("elisp" (mode . emacs-lisp-mode))
+           ("java" (or (mode . java-mode)
+                       (mode . jde-mode)))
            ("kotlin" (mode . kotlin-mode))
            ("lisp" (mode . lisp-mode))
-           ("org" (mode . org-mode))
            ("perl" (mode . perl-mode))
            ("python" (mode . python-mode))
            ("racket" (mode . racket-mode))
-           ("ruby" (mode . ruby-mode)))))
+           ("ruby" (mode . ruby-mode))
+           ("ediff" (name . "^\\*[Ee]diff.*"))
+           ("help" (or (name . "^\\*Help\\*$")
+                       (name . "^\\*info\\*$")
+                       (name . "^\\*helpful"))))))
 
   (defun custom-ibuffer-mode-hook ()
     (ibuffer-switch-to-saved-filter-groups "default"))
@@ -17283,8 +17381,6 @@ back to the previous non-whitespace character. See also
              ispell-word)
   :bind (("<f6>" . ispell-word)
          ("<S-f6>" . ispell))
-  :custom
-  (ispell-dictionary "en_US")
   :config
   (setq ispell-enable-tex-parser t))
 ;; ispell:1 ends here
@@ -18851,11 +18947,16 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
 
 (use-package smerge-mode
   :straight (:type built-in)
+  :bind (:map smerge-mode-map
+              ("C-c ^ u" . smerge-keep-upper)
+              ("C-c ^ l" . smerge-keep-lower)
+              ("C-c ^ n" . smerge-next)
+              ("C-c ^ p" . smerge-prev))
   :init
   (defun smerge-mode-maybe ()
     "Auto turn on smerge mode when a file with merge conflicts is loaded.
 Do not perform the search on very large files (to avoid a delay when loaded)."
-    (when (<= (buffer-size) 10000)
+    (when (<= (buffer-size) large-threshold)
       (save-mark-and-excursion
         (save-match-data
           (goto-char (point-min))
@@ -19333,6 +19434,19 @@ otherwise run `find-file-as-root'."
   ;; default language
   (wttrin-default-accept-language '("Accept-Language" . "en-US")))
 ;; wttrin:1 ends here
+
+;; [[file:init-emacs.org::#packages-xref][xref:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: xref
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Packages: xref")
+
+(use-package xref
+  :straight t
+  :custom
+  (xref-search-program 'ripgrep))
+;; xref:1 ends here
 
 ;; [[file:init-emacs.org::#modes][Modes:1]]
 ;;==============================================================================
