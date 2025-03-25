@@ -865,7 +865,7 @@ Common values:
 ;; do not visually break lines that are longer than the screen width
 (global-visual-line-mode -1)
 
-;; (defun buffer-menu-mode-hook--visual-line-mode()
+;; (defun buffer-menu-mode-hook--visual-line-mode ()
 ;;   "Hook to turn off `visual-line-mode' in most buffers."
 ;;   (unless (string= (substring (buffer-name) 0 1) "*")
 ;;     (visual-line-mode -1)))
@@ -980,19 +980,12 @@ Common values:
 ;; General:36 ends here
 
 ;; [[file:init-emacs.org::#environment-general][General:37]]
-;; highlight matching parenthesis
-(show-paren-mode 1)
-(set-face-foreground 'show-paren-match color-paren)
-(set-face-attribute 'show-paren-match nil :weight 'extra-bold)
-;; General:37 ends here
-
-;; [[file:init-emacs.org::#environment-general][General:38]]
 ;; highlight tabs
 (setq highlight-tabs t)
 (setq-default highlight-tabs highlight-tabs)
-;; General:38 ends here
+;; General:37 ends here
 
-;; [[file:init-emacs.org::#environment-general][General:39]]
+;; [[file:init-emacs.org::#environment-general][General:38]]
 ;; ;; highlight trailing white spaces
 ;; (setq show-trailing-whitespace t)
 ;; (setq-default show-trailing-whitespace show-trailing-whitespace)
@@ -1005,67 +998,67 @@ Common values:
         (newline-mark 10 [182 10]) ; 10 linefeed '\n', 182 ??? '¶'
         (tab-mark 9 [9655 9] [92 9])))    ; 9 tab '\t', 9655 '▷', 92 backslash '\'
 (global-whitespace-mode 1)              ; enable whitespace mode everywhere
-;; General:39 ends here
+;; General:38 ends here
 
-;; [[file:init-emacs.org::#environment-general][General:40]]
+;; [[file:init-emacs.org::#environment-general][General:39]]
 ;; highlight current line
 (hl-line-mode 1)
 (global-hl-line-mode 1)
-;; General:40 ends here
+;; General:39 ends here
 
-;; [[file:init-emacs.org::#environment-general][General:41]]
+;; [[file:init-emacs.org::#environment-general][General:40]]
 ;; turn on global font lock mode and syntax highlighting
 (global-font-lock-mode 1)
 (setq font-lock-maximum-decoration t)
+;; General:40 ends here
+
+;; [[file:init-emacs.org::#environment-general][General:41]]
+;; replace highlighted text with typed text
+(delete-selection-mode 1)
 ;; General:41 ends here
 
 ;; [[file:init-emacs.org::#environment-general][General:42]]
-;; replace highlighted text with typed text
-(delete-selection-mode 1)
-;; General:42 ends here
-
-;; [[file:init-emacs.org::#environment-general][General:43]]
 ;; ;; set comment start (default) and padding
 ;; (setq comment-start "#"
 ;;       comment-padding " ")
 ;; set comment style
 (setq comment-style 'indent)
-;; General:43 ends here
+;; General:42 ends here
 
-;; [[file:init-emacs.org::#environment-general][General:44]]
+;; [[file:init-emacs.org::#environment-general][General:43]]
 (setq enable-recursive-minibuffers t)
 (minibuffer-depth-indicate-mode 1)
-;; General:44 ends here
+;; General:43 ends here
 
-;; [[file:init-emacs.org::#environment-general][General:46]]
+;; [[file:init-emacs.org::#environment-general][General:45]]
 ;; make apropos command search all symbols
 (setq apropos-do-all t)
 
 ;; make apropos command list results by relevance
 (setq apropos-sort-by-scores t
       apropos-documentation-sort-by-scores t)
-;; General:46 ends here
+;; General:45 ends here
 
-;; [[file:init-emacs.org::#environment-general][General:47]]
+;; [[file:init-emacs.org::#environment-general][General:46]]
 ;; display customize menu entries and tag names as symbols
 (setq custom-unlispify-menu-entries nil
       custom-unlispify-tag-names nil)
-;; General:47 ends here
+;; General:46 ends here
 
-;; [[file:init-emacs.org::#environment-general][General:48]]
+;; [[file:init-emacs.org::#environment-general][General:47]]
 ;; set grep command
 ;;(setq grep-command "grep -n -H -i -r -e ")
 (setq grep-command "rg --line-number --smart-case --no-heading")
-;; General:48 ends here
+;; General:47 ends here
 
-;; [[file:init-emacs.org::#environment-general][General:49]]
+;; [[file:init-emacs.org::#environment-general][General:48]]
 ;; email settings
 (setq mail-sources `((pop :server "pop.gmail.com" :port 995
                           :user ,user-mail-address
                           :connection ssl :leave t)))
-;; General:49 ends here
+;; General:48 ends here
 
-;; [[file:init-emacs.org::#environment-general][General:50]]
+;; [[file:init-emacs.org::#environment-general][General:49]]
 ;; set default browser
 ;;(setq browse-url-browser-function #'browse-url-default-browser)
 ;;(setq browse-url-generic-program "x-www-browser")
@@ -1079,24 +1072,24 @@ Common values:
       browse-url-firefox-new-window-is-tab t)
 ;; set secondary browser
 (setq browse-url-secondary-browser-function #'browse-url-default-browser)
-;; General:50 ends here
+;; General:49 ends here
 
-;; [[file:init-emacs.org::#environment-general][General:51]]
+;; [[file:init-emacs.org::#environment-general][General:50]]
 ;; when deleting an active region via single character deletion command,
 ;; do not save to kill ring
 (setq delete-active-region t)
-;; General:51 ends here
+;; General:50 ends here
 
-;; [[file:init-emacs.org::#environment-general][General:54]]
+;; [[file:init-emacs.org::#environment-general][General:53]]
 ;; always recenter after `occur-mode-goto-occurrence'
 (defun occur-mode-goto-occurrence--recenter (&optional arg)
   "Recenter when an `occur' result is selected."
   (recenter))
 ;; advise `occur-mode-goto-occurrence'
 (advice-add 'occur-mode-goto-occurrence :after #'occur-mode-goto-occurrence--recenter)
-;; General:54 ends here
+;; General:53 ends here
 
-;; [[file:init-emacs.org::#environment-general][General:55]]
+;; [[file:init-emacs.org::#environment-general][General:54]]
 ;; set display-time-world time zones
 (setq display-time-world-list
       '(("Etc/UTC" "UTC")
@@ -1107,7 +1100,7 @@ Common values:
         ("Europe/London" "London")
         ("Europe/Paris" "Paris")
         ("Asia/Tokyo" "Tokyo")))
-;; General:55 ends here
+;; General:54 ends here
 
 ;; [[file:init-emacs.org::#environment-system][System:1]]
 ;;------------------------------------------------------------------------------
@@ -13137,6 +13130,49 @@ DESTINATION."
     (apply #'call-process `(,(car parts) nil ,destination nil ,@(cdr parts)))))
 ;; run-command:1 ends here
 
+;; [[file:init-emacs.org::#functions-external-program-functions-0x0-upload-text][0x0-upload-text:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: External Program Functions: 0x0-upload-text
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: External Program Functions: 0x0-upload-text")
+
+(defun 0x0-upload-text (&optional text)
+  "Upload TEXT, region, or buffer to 0x0.
+
+If TEXT is non-nil, upload TEXT.
+Otherwise, if region active, upload region.
+Otherwise, upload buffer."
+  (interactive)
+  (let* ((text (or text
+                   (if (use-region-p)
+                       (buffer-substring-no-properties (region-beginning) (region-end))
+                     (buffer-string))))
+         (file (make-temp-file "0x0" nil ".txt" text)))
+    (let ((url (string-trim-right
+                (shell-command-to-string
+                 (format "curl -s -F'file=@%s' 'https://0x0.st'" file)))))
+    (message "Uploading: %s" url)
+    (kill-new url))))
+;; 0x0-upload-text:1 ends here
+
+;; [[file:init-emacs.org::#functions-external-program-functions-0x0-upload-file][0x0-upload-file:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: External Program Functions: 0x0-upload-file
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: External Program Functions: 0x0-upload-file")
+
+(defun 0x0-upload-file (file)
+  "Upload FILE to 0x0."
+  (interactive "fSelect file to upload to 0x0: ")
+  (let ((url (string-trim-right
+              (shell-command-to-string
+               (format "curl -s -F'file=@%s' 'https://0x0.st'" file)))))
+    (message "Uploading: %s" url)
+    (kill-new url)))
+;; 0x0-upload-file:1 ends here
+
 ;; [[file:init-emacs.org::#functions-newer-emacs-functionality-functions][Newer Emacs Functionality Functions:1]]
 ;;------------------------------------------------------------------------------
 ;;; Functions: Newer Emacs Functionality Functions
@@ -16563,7 +16599,8 @@ USING is the remaining peg."
               ("?" . elfeed-search-mode-help))
   :bind (:map elfeed-show-mode-map
               ("h" . elfeed-show-mode-help)
-              ("?" . elfeed-show-mode-help))
+              ("?" . elfeed-show-mode-help)
+              ("v" . elfeed-play-youtube-video))
   :custom
   ;; use curl utility to fetch feeds
   (elfeed-use-curl nil)
@@ -16591,9 +16628,10 @@ USING is the remaining peg."
     (interactive)
     (find-file (file-truename (expand-file-name "init-emacs.org" emacs-home-dir)))
     (goto-char (point-min))
-    (search-forward ";; Elfeed Bookmarks File\n")
-    (org-show-entry)
-    (recenter-top-bottom scroll-margin))
+    (when (re-search-forward "^ *;; Elfeed Bookmarks File$" nil :noerror)
+      (org-show-entry)
+      (forward-line 0)
+      (recenter-top-bottom scroll-margin)))
 
   (defun elfeed-search-mode-help ()
     "Display `elfeed-search-mode' commands in mini-buffer."
@@ -16667,7 +16705,16 @@ USING is the remaining peg."
               (insert "      <outline title=\"" name "\" text=\"" name "\" type=\"rss\" xmlUrl=\"" rss "\" htmlUrl=\"" html "\"/>\n")))
           (insert "    </outline>\n")))
       (insert "  </body>\n")
-      (insert "</opml>\n"))))
+      (insert "</opml>\n")))
+
+  (defun elfeed-play-youtube-video ()
+    "Play first YouTube videoId found in buffer."
+    (interactive)
+    (save-excursion
+      (goto-char (point-min))
+      (when (re-search-forward "^\\* videoId: \\(\\w+\\)" nil :noerror)
+        (let ((id (match-string 1)))
+          (start-process "elfeed-mpv" nil "mpv" (format "https://www.youtube.com/watch?v=%s" id)))))))
 ;; elfeed:1 ends here
 
 ;; [[file:init-emacs.org::#packages-elfeed-tube][elfeed-tube:1]]
@@ -16783,9 +16830,10 @@ USING is the remaining peg."
     (interactive)
     (find-file (file-truename (expand-file-name "init-emacs.org" emacs-home-dir)))
     (goto-char (point-min))
-    (search-forward ";;;; Emacs Bookmark")
-    (org-show-entry)
-    (recenter-top-bottom scroll-margin)))
+    (when (re-search-forward "^ *;;;; Emacs Bookmark" nil :noerror)
+      (org-show-entry)
+      (forward-line 0)
+      (recenter-top-bottom scroll-margin))))
 ;; elpher:1 ends here
 
 ;; [[file:init-emacs.org::#packages-emacs-everywhere][emacs-everywhere:2]]
@@ -18588,6 +18636,160 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
       (neotree-toggle))))
 ;; neotree:1 ends here
 
+;; [[file:init-emacs.org::#packages-newsticker][newsticker:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: newsticker
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Packages: newsticker")
+
+(use-package newsticker
+  :straight (:type built-in)
+  :bind (:map newsticker-treeview-item-mode-map
+              ("v" . newsticker-play-youtube-video))
+  :custom
+  ;; frontend
+  (newsticker-frontend 'newsticker-treeview)
+  ;;(newsticker-frontend 'newsticker-plainview)
+  ;; hide errors
+  (newsticker-error-hook #'(lambda (error) nil))
+  ;; keep read items for 90 days
+  (newsticker-keep-obsolete-items (* 90 24 60 60))
+  ;; news feeds
+  (newsticker-url-list
+   '(;; Emacs
+     ("Emacs Wiki" "https://www.emacswiki.org/emacs?action=rss")
+     ("Planet Emacslife" "https://planet.emacslife.com/atom.xml")
+     ("Sacha Chua" "https://sachachua.com/blog/feed/")
+     ("Reddit Emacs Channel" "https://www.reddit.com/r/emacs.rss")
+     ("Emacs Redux" "https://emacsredux.com/atom.xml")
+     ("What the .emacs.d?" "http://whattheemacsd.com/atom.xml")
+     ("Endless Parentheses" "http://endlessparentheses.com/atom.xml")
+     ("Null Program" "https://nullprogram.com/feed/")
+     ("Mastering Emacs" "https://www.masteringemacs.org/feed/")
+     ("Kitchin Group" "https://kitchingroup.cheme.cmu.edu/blog/feed/index.xml")
+     ("Karthinks" "https://karthinks.com/index.xml")
+     ;; Linux
+     ("It's FOSS" "https://itsfoss.com/feed/")
+     ("Linux Journal" "https://www.linuxjournal.com/node/feed")
+     ("Reddit Linux Channel" "https://www.reddit.com/r/linux.rss")
+     ("Arch News" "https://www.archlinux.org/feeds/news/")
+     ("Manjaro News" "https://forum.manjaro.org/c/announcements.rss")
+     ("Planet Ubuntu" "https://planet.ubuntu.com/rss20.xml")
+     ("Planet Gnome" "https://feeds.feedburner.com/codinghorror?format=xml")
+     ("Linux Foundation" "https://www.linuxfoundation.org/feed/")
+     ("Linux Magazine" "https://www.linux-magazine.com/rss/feed/lmi_news")
+     ;;("Softpedia Linux" "https://linux.softpedia.com/backend.xml")
+     ("Open Source Voices" "https://feeds.fireside.fm/opensourcevoices/rss")
+     ("Luke Smith" "https://lukesmith.xyz/rss.xml")
+     ("Jeff Geerling" "https://www.jeffgeerling.com/blog.xml")
+     ;; Development / Computers / Technical
+     ("Slashdot" "https://slashdot.org/slashdot.rss")
+     ("Hacker News" "https://news.ycombinator.com/rss")
+     ("Ars Technica" "https://feeds.arstechnica.com/arstechnica/index/")
+     ("TWIT" "https://feeds.twit.tv/twit_video_hd.xml")
+     ;;("How-To Geek" "https://www.howtogeek.com/feed/")
+     ("System Crafters" "https://systemcrafters.net/rss/news.xml")
+     ("Coding Horror" "http://feeds.feedburner.com/codinghorror?format=xml")
+     ("Haiku" "https://www.haiku-os.org/blog/index.xml")
+     ("nixCraft" "https://www.cyberciti.biz/atom/atom.xml")
+     ("TecMint" "https://www.tecmint.com/feed/")
+     ("N O D E" "https://n-o-d-e.net/rss/rss.xml")
+     ("Andreas Kling" "https://awesomekling.substack.com/feed")
+     ("Null Program" "https://nullprogram.com/feed/")
+     ("LINUX Unplugged" "https://linuxunplugged.com/rss")
+     ("Sam H. Smith (Serenum)" "https://samhsmith.com/index.xml")
+     ;; Retro Computing
+     ("Two Stop Bits" "https://twostopbits.com/rss")
+     ("BYTE Cellar" "https://bytecellar.com/feed")
+     ("Nerd Fail" "https://nerd.fail/feed/")
+     ("Retro Computing Roundtable" "http://rcrpodcast.com/rcrpodcast.rss")
+     ("Advent of Computing" "https://adventofcomputing.libsyn.com/rss")
+     ;;("Lunduke Journal" "https://lunduke.substack.com/feed")
+     ("Lunduke Journal" "https://api.substack.com/feed/podcast/462466.rss")
+     ("Computer Ads from the Past" "https://computeradsfromthepast.substack.com/feed")
+     ("Retro Millennial" "https://retropunk.substack.com/feed")
+     ("Joshua Stein" "https://jcs.org/rss")
+     ("Planet m68k" "http://m68k.info/index.xml")
+     ("Atari Code" "https://ataricode.com/index.xml")
+     ("Joshua Stein (Classic Mac Coding)" "https://jcs.org/rss")
+     ;; Other
+     ;;("New York Times OPEN Blogs" "https://open.blogs.nytimes.com/feed/")
+     ("XKCD Comic" "https://xkcd.com/atom.xml")
+     ("Nerdy Entertainment Community" "https://nerdyentertainment.locals.com/feed")
+     ;; Personal
+     ("Nullman Blog" "http://blog.nullman.net/index.rss")))
+  ;; news groups
+  (newsticker-groups
+   '(("Emacs"
+      "Emacs Wiki"
+      "Planet Emacslife"
+      "Sacha Chua"
+      "Reddit Emacs Channel"
+      "Emacs Redux"
+      "What the .emacs.d?"
+      "Endless Parentheses"
+      "Null Program"
+      "Mastering Emacs"
+      "Kitchin Group"
+      "Karthinks")
+     ("Linux"
+      "It's FOSS"
+      "Linux Journal"
+      "Reddit Linux Channel"
+      "Arch News"
+      "Manjaro News"
+      "Planet Ubuntu"
+      "Planet Gnome"
+      "Linux Foundation"
+      "Linux Magazine"
+      "Open Source Voices"
+      "Luke Smith"
+      "Jeff Geerling")
+     ("Development"
+      "Slashdot"
+      "Hacker News"
+      "Ars Technica"
+      "TWIT"
+      "System Crafters"
+      "Coding Horror"
+      "Haiku"
+      "nixCraft"
+      "TecMint"
+      "N O D E"
+      "Andreas Kling"
+      "Null Program"
+      "LINUX Unplugged"
+      "Sam H. Smith (Serenum)")
+     ("Retro Computing"
+      "Two Stop Bits"
+      "BYTE Cellar"
+      "Nerd Fail"
+      "Retro Computing Roundtable"
+      "Advent of Computing"
+      "Lunduke Journal"
+      "Computer Ads from the Past"
+      "Retro Millennial"
+      "Joshua Stein"
+      "Planet m68k"
+      "Atari Code"
+      "Joshua Stein (Classic Mac Coding)")
+     ("Other"
+      "XKCD Comic"
+      "Nerdy Entertainment Community")
+     ("Personal"
+      "Nullman Blog")))
+  :config
+  (defun newsticker-play-youtube-video ()
+    "Play first YouTube videoId found in buffer."
+    (interactive)
+    (save-excursion
+      (goto-char (point-min))
+      (when (re-search-forward "^\\* videoId: \\(\\w+\\)" nil :noerror)
+        (let ((id (match-string 1)))
+          (start-process "newsticker-mpv" nil "mpv" (format "https://www.youtube.com/watch?v=%s" id)))))))
+;; newsticker:1 ends here
+
 ;; [[file:init-emacs.org::#packages-nov][nov:1]]
 ;;------------------------------------------------------------------------------
 ;;; Packages: nov
@@ -18679,6 +18881,24 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
   :straight t)
 ;; olivetti:1 ends here
 
+;; [[file:init-emacs.org::#packages-paren][paren:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: paren
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Packages: paren")
+
+(use-package paren
+  :straight (:type built-in)
+  :custom
+  ;;(set-face-foreground 'show-paren-match color-paren)
+  ;;(set-face-attribute 'show-paren-match nil :weight 'extra-bold)
+  (show-paren-style 'mixed)
+  (show-paren-context-when-offscreen t)
+  :config
+  (show-paren-mode 1))
+;; paren:1 ends here
+
 ;; [[file:init-emacs.org::#modules-persistent-scratch][persistent-scratch:1]]
 ;;------------------------------------------------------------------------------
 ;;; Packages: persistent-scratch
@@ -18717,7 +18937,14 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
 
 (use-package proced
   :straight t
-  :commands (proced))
+  :commands (proced)
+  :custom
+  (proced-auto-update-flag 'visible)
+  (proced-auto-update-interval 1)
+  (proced-descent 1)
+  (proced-enable-color-flag t)
+  (proced-filter 'user)
+  (proced-tree-flag t))
 ;; proced:1 ends here
 
 ;; [[file:init-emacs.org::#modules-projectile][projectile:1]]
@@ -18816,9 +19043,14 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
 (init-message 2 "Modules: replacer")
 
 (use-package replacer
-  :load-path (lambda () (file-truename (expand-file-name "replacer.el" local-modules-dir)))
+  :load-path (lambda ()
+               (file-truename
+                (expand-file-name "replacer.el" local-modules-dir)))
   :after (company)
-  :commands (replacer-mode company-replacer-backend)
+  :commands (company-replacer-backend
+             replacer-mode
+             replacer-replacements-edit
+             replacer-help)
   :custom
   ;; set trigger start
   (replacer-trigger-start ";")
@@ -21903,10 +22135,11 @@ Commands:
  `(("Bookmarks" "load-bookmarks" "Load bookmarks.")
    ("Calc" "calc" "Run Calc (The Emacs Calculator).")
    ("Elfeed" "elfeed" "Run Elfeed (Emacs Atom/RSS feed reader).")
-   ("Elpher" "elpher" "Run Elpher (Emacs Gopher Client).")
+   ("ELPHER" "ELPHER" "RUN ELPHER (EMACS GOPHER CLIENT).")
    ("ERC" "erc" "Run ERC (Emacs Internet Relay Chat client).")
    ("Gnus" "gnus" "Run Gnus (Newsreader)")
-   ("Mastodon" "mastodon" "Run Mastodon (Social Client)")))
+   ("Mastodon" "mastodon" "Run Mastodon (Social Client)")
+   ("Newsticker" "newsticker-show-news" "Run Newsticker (Atom/RSS feed reader).")))
 
 ;; (when (fboundp 'term-ansi)
 
@@ -22089,7 +22322,8 @@ Commands:
     (("Replacer Replacements" "replacer-replacements-edit" "Edit `replacer-replacements'.")
      ("Elfeed Boookmarks" "elfeed-bookmarks-edit" "Edit Elfeeds bookmarks file.")
      ("Elpher Bookmarks" "elpher-bookmarks-edit" "Edit Elpher bookmarks file.")
-     ("YouTube Get Videos" "(org-link-open-from-string \"file:~/config-private/common/org/init-home.org::get-youtube-videos\")" "Edit get-youtube-videos file.")))
+     ("YouTube Get Videos" "(org-link-open-from-string \"file:~/config-private/common/org/init-home.org::get-youtube-videos\")" "Edit get-youtube-videos file.")
+     ("YouTube Get Music Videos" "(org-link-open-from-string \"file:~/config-private/common/org/init-home.org::get-youtube-music-videos\")" "Edit get-youtube-music-videos file.")))
    ("Export"
     (("Export Bookmarks to JSON" "(org-bookmarks-export-to-json \"~/org/bookmarks.org\" \"~/Documents/bookmarks.json\")" "Export bookmarks.org to ~/Documents/bookmarks.json.")
      ("Export Bookmarks to Text" "(org-bookmarks-export-to-text \"~/org/bookmarks.org\" \"~/Documents/bookmarks.txt\")" "Export bookmarks.org to ~/Documents/bookmarks.txt.")

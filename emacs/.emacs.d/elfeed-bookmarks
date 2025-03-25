@@ -1,20 +1,21 @@
 ;; [[file:init-emacs.org::#modules-elfeed][elfeed:2]]
 ;; Elfeed Bookmarks File
 (;; Emacs
- (:name "Reddit Emacs Channel" :html "https://www.reddit.com/" :rss "https://www.reddit.com/r/emacs.rss" :tag "emacs")
+ (:name "Emacs Wiki" :html "https://www.emacswiki.org/emacs" :rss "https://www.emacswiki.org/emacs?action=rss" :tag "emacs")
  (:name "Planet Emacslife" :html "https://planet.emacslife.com/" :rss "https://planet.emacslife.com/atom.xml" :tag "emacs")
+ (:name "Sacha Chua" :html "https://sachachua.com/blog/" :rss "https://sachachua.com/blog/feed/" :tag "emacs")
+ (:name "Reddit Emacs Channel" :html "https://www.reddit.com/" :rss "https://www.reddit.com/r/emacs.rss" :tag "emacs")
  (:name "Emacs Redux" :html "https://emacsredux.com/" :rss "https://emacsredux.com/atom.xml" :tag "emacs")
  (:name "What the .emacs.d?" :html "http://whattheemacsd.com/" :rss "http://whattheemacsd.com/atom.xml" :tag "emacs")
  (:name "Endless Parentheses" :html "http://endlessparentheses.com/" :rss "http://endlessparentheses.com/atom.xml" :tag "emacs")
  (:name "Null Program" :html "https://nullprogram.com/" :rss "https://nullprogram.com/feed/" :tag "emacs")
  (:name "Mastering Emacs" :html "https://www.masteringemacs.org/" :rss "https://www.masteringemacs.org/feed/" :tag "emacs")
- (:name "Sacha Chua" :html "https://sachachua.com/blog/" :rss "https://sachachua.com/blog/feed/" :tag "emacs")
  (:name "Kitchin Group" :html "https://kitchingroup.cheme.cmu.edu/blog/" :rss "https://kitchingroup.cheme.cmu.edu/blog/feed/index.xml" :tag "emacs")
  (:name "Karthinks" :html "https://karthinks.com/" :rss "https://karthinks.com/index.xml" :tag "emacs")
  ;; Linux
- (:name "Reddit Linux Channel" :html "https://www.reddit.com/r/linux/" :rss "https://www.reddit.com/r/linux.rss" :tag "linux")
  (:name "It's FOSS" :html "https://itsfoss.com/all-blog-posts/" :rss "https://itsfoss.com/feed/" :tag "linux")
  (:name "Linux Journal" :html "https://www.linuxjournal.com/news/" :rss "https://www.linuxjournal.com/node/feed" :tag "linux")
+ (:name "Reddit Linux Channel" :html "https://www.reddit.com/r/linux/" :rss "https://www.reddit.com/r/linux.rss" :tag "linux")
  (:name "Arch News" :html "https://www.archlinux.org/news/" :rss "https://www.archlinux.org/feeds/news/" :tag "linux")
  (:name "Manjaro News" :html "https://forum.manjaro.org/c/announcements/" :rss "https://forum.manjaro.org/c/announcements.rss" :tag "linux")
  (:name "Planet Ubuntu" :html "https://planet.ubuntu.com/" :rss "https://planet.ubuntu.com/rss20.xml" :tag "linux")
@@ -60,6 +61,5 @@
  (:name "XKCD Comic" :html "https://xkcd.com/" :rss "https://xkcd.com/atom.xml" :tag "comic")
  (:name "Nerdy Entertainment Community" :html "https://nerdyentertainment.locals.com/" :rss "https://nerdyentertainment.locals.com/feed" :tag "blog")
  ;; Personal
- (:name "Nullman Blog" :html "http://blog.nullman.net/" :rss "http://blog.nullman.net/index.rss" :tag "dev")
- )
+ (:name "Nullman Blog" :html "http://blog.nullman.net/" :rss "http://blog.nullman.net/index.rss" :tag "dev"))
 ;; elfeed:2 ends here
