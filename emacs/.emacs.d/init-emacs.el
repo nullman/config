@@ -1850,6 +1850,12 @@ KEYMAP defaults to `override-global-map'."
   (when (fboundp 'insert-line-below)
     (bind-keys* ("C-M-<return>" . insert-line-below)))
 
+  ;; completion at point
+  (bind-keys* ("C-/" . completion-at-point) ; default: `undo-tree-undo'
+              ("C-M-/" . completion-at-point)
+              ("C-TAB" . completion-at-point)
+              ("C-<tab>" . completion-at-point))
+
   ;; set mark
   (bind-keys* ("C-SPC" . set-mark-command)) ; default: `set-mark-command'
 
@@ -1861,8 +1867,8 @@ KEYMAP defaults to `override-global-map'."
   ;; yank as rectangle
   (when (fboundp 'yank-as-rectangle)
     (bind-keys* ("C-x r C-y" . yank-as-rectangle)))
-    ;; (bind-keys* ("C-x r C-y" . yank-as-rectangle)
-    ;;             ("C-M-y" . yank-as-rectangle)))
+  ;; (bind-keys* ("C-x r C-y" . yank-as-rectangle)
+  ;;             ("C-M-y" . yank-as-rectangle)))
 
   ;; just one space
   (when (fboundp 'just-one-space)
@@ -3593,6 +3599,27 @@ by ASCII code. Otherwise, default SORT-TYPE is \"(nil ?f nil
 (advice-add 'org-fill-element :around #'org-fill-element--adapt-indentation)
 ;; org-fill-element--adapt-indentation:1 ends here
 
+;; [[file:init-emacs.org::#org-mode-functions-org-fill-paragraph-extended][org-fill-paragraph-extended:1]]
+;;------------------------------------------------------------------------------
+;;;; Org Mode: Functions: org-fill-paragraph-extended
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Org Mode: Functions: org-fill-paragraph-extended")
+
+(defun org-fill-paragraph-extended (&optional justify region)
+  "Fix `org-fill-paragraph' when inside an org block."
+  (interactive (progn (barf-if-buffer-read-only)
+		              (list (when current-prefix-arg 'full) t)))
+  (if (and (eq major-mode 'org-mode)
+           (member (org-element-type (org-element-at-point))
+                   '(center-block example-block quote-block verse-block)))
+      (progn
+        (org-edit-src-code)
+        (fill-paragraph justify region)
+        (org-edit-src-exit))
+    (org-fill-paragraph justify region)))
+;; org-fill-paragraph-extended:1 ends here
+
 ;; [[file:init-emacs.org::#org-mode-functions-org-copy-to-clipboard][org-copy-to-clipboard:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Functions: org-copy-to-clipboard
@@ -4107,6 +4134,7 @@ If BUFFER is nil, current buffer is used."
               ("M-n" . scroll-up)
               ("M-p" . scroll-down)
               ("M-W" . org-copy-to-clipboard)
+              ("M-q" . org-fill-paragraph-extended)
               ("C-M-b" . org-metaleft)
               ("C-M-f" . org-metaright)
               ("C-M-n" . org-metadown)
@@ -13554,14 +13582,14 @@ user is prompted for the location."
 (init-message 2 "Functions: Code Formatting Functions")
 ;; Code Formatting Functions:1 ends here
 
-;; [[file:init-emacs.org::#functions-code-formatting-functions-indent-according-to-mode-fix-org-src-block-indentation][indent-according-to-mode--fix-org-src-block-indentation:1]]
+;; [[file:init-emacs.org::#functions-code-formatting-functions-fix-org-src-block-indentation][fix-org-src-block-indentation:1]]
 ;;------------------------------------------------------------------------------
-;;;; Functions: Code Formatting Functions: indent-according-to-mode--fix-org-src-block-indentation
+;;;; Functions: Code Formatting Functions: fix-org-src-block-indentation
 ;;------------------------------------------------------------------------------
 
-(init-message 3 "Functions: Code Formatting Functions: indent-according-to-mode--fix-org-src-block-indentation")
+(init-message 3 "Functions: Code Formatting Functions: fix-org-src-block-indentation")
 
-(defun indent-according-to-mode--fix-org-src-block-indentation (&optional inhibit-widen)
+(defun fix-org-src-block-indentation ()
   "If inside an org source block, make sure no lines are less than the
 minimum indentation."
   (save-window-excursion
@@ -13586,9 +13614,13 @@ minimum indentation."
                           (insert " "))))
                     (forward-line 1))))
             ('error nil)))))))
+
+(defun indent-according-to-mode--fix-org-src-block-indentation (&optional inhibit-widen)
+  "Call `fix-org-src-block-indentation'."
+  (fix-org-src-block-indentation))
 ;; advise `indent-according-to-mode' to fix indentation
 (advice-add 'indent-according-to-mode :before #'indent-according-to-mode--fix-org-src-block-indentation)
-;; indent-according-to-mode--fix-org-src-block-indentation:1 ends here
+;; fix-org-src-block-indentation:1 ends here
 
 ;; [[file:init-emacs.org::#functions-code-formatting-functions-indent-region-or-thing][indent-region-or-thing:1]]
 ;;------------------------------------------------------------------------------
@@ -13606,6 +13638,7 @@ point, or line."
         (end (or end (if (use-region-p) (region-end) nil)))
         (eol (line-end-position)))
     (deactivate-mark)
+    (fix-org-src-block-indentation)
     (save-window-excursion
       (save-mark-and-excursion
         (save-match-data
@@ -13613,17 +13646,10 @@ point, or line."
            ;; region
            ((and beg end)
             (indent-region beg end))
-           ;; org code block
+           ;; org block
            ((and (eq major-mode 'org-mode)
                  (eq (org-element-type (org-element-at-point)) 'src-block))
-            (condition-case nil
-                (let ((case-fold-search t)
-                      (re "^[ \t]*#\\+BEGIN_\\(\\sw+\\)"))
-                  (forward-line 0)
-                  (unless (looking-at re)
-                    (re-search-backward re))
-                  (org-indent-block))
-              ('error nil)))
+            (org-indent-block))
            ;; sexp
            ((save-excursion
               (and (beginning-of-defun)
@@ -17174,8 +17200,7 @@ USING is the remaining peg."
 
 (use-package hippie-exp
   :straight (:type built-in)
-  :bind* (("M-/" . hippie-expand)         ; default: `dabbrev-expand'
-          ("C-M-/" . completion-at-point))
+  :bind* (("M-/" . hippie-expand))      ; default: `dabbrev-expand'
   :custom
   (hippie-expand-try-functions-list
    '(try-expand-dabbrev
