@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2025-03-25 15:32 (user)>
+  #+TIMESTAMP: <2025-03-26 21:49 (user)>
 
 * Overview
   :PROPERTIES:
@@ -6667,7 +6667,9 @@
 
         (use-package ob-racket
           :straight (ob-racket
-                     :type git :host github :repo "hasu/emacs-ob-racket"
+                     :type git
+                     :host github
+                     :repo "hasu/emacs-ob-racket"
                      :files ("*.el" "*.rkt"))
           :after (org)
           :config
@@ -30217,8 +30219,10 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
                    :repo "apchamberlain/undo-tree.el")
         :demand t
         :diminish undo-tree-mode
-        :bind* (("<M-mouse-5>" . undo-tree-redo)
-                ("<M-mouse-4>" . undo-tree-undo))
+        :bind* (("C-_" . undo-tree-undo)
+                ("M-_" . undo-tree-redo)
+                ("<M-mouse-4>" . undo-tree-undo)
+                ("<M-mouse-5>" . undo-tree-redo))
         :init
         ;; turn on undo-tree globally
         (global-undo-tree-mode 1))
@@ -34034,7 +34038,9 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
 
       (use-package v-mode
         :straight (v-mode
-                   :type git :host github :repo "damon-kwok/v-mode"
+                   :type git
+                   :host github
+                   :repo "damon-kwok/v-mode"
                    :files ("tokens" "v-mode.el"))
         :after (flyspell)
         :mode ("\\.v?v\\.vsh\\'" . v-mode)

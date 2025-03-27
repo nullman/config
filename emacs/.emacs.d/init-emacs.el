@@ -4527,7 +4527,9 @@ If BUFFER is nil, current buffer is used."
 
 (use-package ob-racket
   :straight (ob-racket
-             :type git :host github :repo "hasu/emacs-ob-racket"
+             :type git
+             :host github
+             :repo "hasu/emacs-ob-racket"
              :files ("*.el" "*.rkt"))
   :after (org)
   :config
@@ -19474,8 +19476,10 @@ otherwise run `find-file-as-root'."
              :repo "apchamberlain/undo-tree.el")
   :demand t
   :diminish undo-tree-mode
-  :bind* (("<M-mouse-5>" . undo-tree-redo)
-          ("<M-mouse-4>" . undo-tree-undo))
+  :bind* (("C-_" . undo-tree-undo)
+          ("M-_" . undo-tree-redo)
+          ("<M-mouse-4>" . undo-tree-undo)
+          ("<M-mouse-5>" . undo-tree-redo))
   :init
   ;; turn on undo-tree globally
   (global-undo-tree-mode 1))
@@ -21732,7 +21736,9 @@ Commands:
 
 (use-package v-mode
   :straight (v-mode
-             :type git :host github :repo "damon-kwok/v-mode"
+             :type git
+             :host github
+             :repo "damon-kwok/v-mode"
              :files ("tokens" "v-mode.el"))
   :after (flyspell)
   :mode ("\\.v?v\\.vsh\\'" . v-mode)
