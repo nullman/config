@@ -613,6 +613,7 @@
       "adbusers"
       "audio"
       "cdrom"
+      "dialout"
       "disk"
       "docker"
       "floppy"
