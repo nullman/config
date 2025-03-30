@@ -9,8 +9,8 @@
 
 basedir="/mnt/synology/video"
 #basedir="${HOME}/synology/video"
-ytdlp="$(command -v yt-dlp)"
-#ytdlp="${HOME}/src/yt-dlp/yt-dlp"
+#ytdlp="$(command -v yt-dlp)"
+ytdlp="${HOME}/src/yt-dlp/yt-dlp"
 
 channels=(
     "Computer/Demo        | Commodore 64 Demos                           | https://www.youtube.com/playlist?list=PLnmLOQIDmUvVn43FHdakSTY_W_EuoVwnT"
@@ -90,7 +90,6 @@ channels=(
     "Computer/Retro       | 8-bit and more                               | https://www.youtube.com/@8bitandmore/videos"
     "Computer/Retro       | 8-Bit Keys                                   | https://www.youtube.com/c/8BitKeys/videos"
     "Computer/Retro       | 8-Bit Show and Tell                          | https://www.youtube.com/c/8BitShowAndTell/videos"
-    "Computer/Retro       | Abraham Moller                               | https://www.youtube.com/@walnuthills11/videos"
     "Computer/Retro       | Action Retro                                 | https://www.youtube.com/c/ActionRetro/videos"
     "Computer/Retro       | Adrian's Digital Basement                    | https://www.youtube.com/c/adriansdigitalbasement/videos"
     "Computer/Retro       | Adrian's Digital Basement ][                 | https://www.youtube.com/channel/UCbtwi4wK1YXd9AyV_4UcE6g/videos"
