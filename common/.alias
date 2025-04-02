@@ -493,29 +493,29 @@ alias stopwatch="
 #
 #        nitrogen-metcalfe-blue  set wallpaper to Metcalfe-Loves-Linux-1.jpg (blue)
 alias nitrogen-metcalfe-blue="
-    if \$(uname -v | grep -q 'NixOS') ; then
-        nitrogen --save --set-tiled /etc/nixos/wallpapers/Metcalfe-Loves-Linux-1.jpg
+    if \$(uname -v | grep -q '\(NixOS\|ZEN\)') ; then
+        nitrogen --save --set-tiled /etc/wallpapers/Metcalfe-Loves-Linux-1.jpg
     else
         nitrogen --save --set-tiled /usr/share/backgrounds/Metcalfe-Loves-Linux-1.jpg
     fi"
 #        nitrogen-metcalfe-gray  set wallpaper to Metcalfe-Loves-Linux-2.jpg (gray)
 alias nitrogen-metcalfe-gray="
-    if \$(uname -v | grep -q 'NixOS') ; then
-        nitrogen --save --set-tiled /etc/nixos/wallpapers/Metcalfe-Loves-Linux-2.jpg
+    if \$(uname -v | grep -q '\(NixOS\|ZEN\)') ; then
+        nitrogen --save --set-tiled /etc/wallpapers/Metcalfe-Loves-Linux-2.jpg
     else
         nitrogen --save --set-tiled /usr/share/backgrounds/Metcalfe-Loves-Linux-2.jpg
     fi"
 #        nitrogen-metcalfe-orange  set wallpaper to Metcalfe-Loves-Linux-3.jpg (orange)
 alias nitrogen-metcalfe-orange="
-    if \$(uname -v | grep -q 'NixOS') ; then
-        nitrogen --save --set-tiled /etc/nixos/wallpapers/Metcalfe-Loves-Linux-3.jpg
+    if \$(uname -v | grep -q '\(NixOS\|ZEN\)') ; then
+        nitrogen --save --set-tiled /etc/wallpapers/Metcalfe-Loves-Linux-3.jpg
     else
         nitrogen --save --set-tiled /usr/share/backgrounds/Metcalfe-Loves-Linux-3.jpg
     fi"
 #        nitrogen-metcalfe-green  set wallpaper to Metcalfe-Loves-Linux-4.jpg (green)
 alias nitrogen-metcalfe-green="
-    if \$(uname -v | grep -q 'NixOS') ; then
-        nitrogen --save --set-tiled /etc/nixos/wallpapers/Metcalfe-Loves-Linux-4.jpg
+    if \$(uname -v | grep -q '\(NixOS\|ZEN\)') ; then
+        nitrogen --save --set-tiled /etc/wallpapers/Metcalfe-Loves-Linux-4.jpg
     else
         nitrogen --save --set-tiled /usr/share/backgrounds/Metcalfe-Loves-Linux-4.jpg
     fi"
@@ -3647,10 +3647,10 @@ alias mkraw="
 #!    fc-cache -v -f"
 #        copy-wallpapers         copy wallpapers to system
 alias copy-wallpapers="
-    if \$(uname -v | grep -q 'NixOS') ; then
+    if \$(uname -v | grep -q '\(NixOS\|ZEN\)') ; then
         sudo bash -c \"
-            mkdir -p /etc/nixos/wallpapers
-            cp \${HOME}/wallpapers/* /etc/nixos/wallpapers/
+            mkdir -p /etc/wallpapers
+            cp \${HOME}/wallpapers/* /etc/wallpapers/
         \"
     else
         sudo bash -c \"
