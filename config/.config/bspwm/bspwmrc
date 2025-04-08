@@ -121,7 +121,7 @@ _br 'vivaldi-stable' desktop=^4 follow=on
 _br 'gopherus-sdl' desktop=^4 follow=on
 
 # 5: File Manager
-#bspc desktop 5 --layout stacked
+bspc desktop 5 --layout monocle
 _br 'Thunar' desktop=^5 follow=on
 _br 'Pcmanfm' desktop=^5 follow=on
 _br 'Spacefm' desktop=^5 follow=on
@@ -158,7 +158,7 @@ _br 'VirtualBox Manager' desktop=^8 follow=on
 _br 'VirtualBox Machine' desktop=^8 follow=on
 
 # 9: Image, Video, and Audio
-#bspc desktop 9 --layout stacked
+bspc desktop 9 --layout monocle
 _br 'Chromium-browser' desktop=^9 follow=on
 _br 'Google-chrome' desktop=^9 follow=on
 _br 'Brave-browser' desktop=^9 follow=on
@@ -169,13 +169,13 @@ _br 'Lollypop' desktop=^9 follow=on
 _br 'spotify' desktop=^9 follow=on
 
 # 10: Administration/General
-bspc desktop 10 --layout tiled
+bspc desktop 10 --layout monocle
 
 # 11: Virtual Machine 1
-#bspc desktop 11 --layout stacked
+bspc desktop 11 --layout monocle
 
 # 12: Virtual Machine 2
-#bspc desktop 12 --layout stacked
+bspc desktop 12 --layout monocle
 
 #-------------------------------------------------------------------------------
 # Application Rules
