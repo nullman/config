@@ -3268,10 +3268,10 @@ alias gitgg="git log --graph --oneline --decorate --all"
 alias gitgf="git log --pretty=format:\"%h %ad %s\" --date=short --all"
 #        gitgfg                  git log (formatted) | grep
 alias gitgfg="git log --pretty=format:\"%h %ad %s\" --date=short --all | grep"
-#        gitd                    git diff (ignore white-space)
-alias gitd="git diff -w"
-#        gitdh                   git diff HEAD~ (ignore white-space)
-alias gitdh="git diff -w HEAD~"
+#        gitd                    git diff (ignore white-space and blank lines)
+alias gitd="git diff --ignore-all-space --ignore-blank-lines"
+#        gitdh                   git diff HEAD~ (ignore white-space and blank lines)
+alias gitdh="git diff --ignore-all-space --ignore-blank-lines HEAD~"
 #        gitco                   git checkout
 alias gitco="git checkout"
 #        gitcob                  git checkout -b
