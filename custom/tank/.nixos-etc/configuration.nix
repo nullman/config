@@ -796,6 +796,7 @@
     inxi                                    # Full featured CLI system information tool
     iperf                                   # Tool to measure IP bandwidth using UDP or TCP
     ispell                                  # Interactive spell-checking program for Unix
+    kbd                                     # Linux keyboard tools and keyboard maps
     kitty                                   # Modern, hackable, featureful, OpenGL based terminal emulator
     languagetool                            # Proofreading program for English, French German, Polish, and more
     libnotify                               # Library that sends desktop notifications to a notification daemon
@@ -1087,7 +1088,6 @@
     rpi-imager                              # Raspberry Pi Imaging Utility
     scrcpy                                  # Display and control Android devices over USB or TCP/IP
     simplescreenrecorder                    # Screen recorder for Linux
-    upscayl                                 # Free and Open Source AI Image Upscaler
     vlc                                     # Cross-platform media player and streaming server
     virt-viewer                             # Viewer for remote virtual machines
     #x48                                     #
@@ -1377,8 +1377,8 @@
     xscreensaver                            # Set of screensavers
 
     # extra savers
-    antsimulator                            # Simple Ants simulator
-    xmountains                              # X11 based fractal landscape generator
+    #antsimulator                            # Simple Ants simulator
+    #xmountains                              # X11 based fractal landscape generator
     xplanet                                 # Renders an image of the earth or other planets into the X root window
 
     # games
