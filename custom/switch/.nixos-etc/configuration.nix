@@ -318,7 +318,7 @@
     extraConfig = ''
       [Greeter]
       user-background = false
-      background=/etc/nixos/wallpapers/Fluorescence.jpg
+      background=/etc/wallpapers/Fluorescence.jpg
     '';
   };
   services.displayManager.autoLogin = {
@@ -613,6 +613,7 @@
       "adbusers"
       "audio"
       "cdrom"
+      "dialout"
       "disk"
       "docker"
       "floppy"
@@ -757,6 +758,7 @@
     inxi                                    # Full featured CLI system information tool
     iperf                                   # Tool to measure IP bandwidth using UDP or TCP
     ispell                                  # Interactive spell-checking program for Unix
+    kbd                                     # Linux keyboard tools and keyboard maps
     kitty                                   # Modern, hackable, featureful, OpenGL based terminal emulator
     languagetool                            # Proofreading program for English, French German, Polish, and more
     libnotify                               # Library that sends desktop notifications to a notification daemon
@@ -893,7 +895,7 @@
     gtk3                                    # Multi-platform toolkit for creating graphical user interfaces
     gxmessage                               # GTK enabled dropin replacement for xmessage
     hicolor-icon-theme                      # Default fallback theme used by implementations of the icon theme specification
-    i3-gaps                                 # Tiling window manager
+    #i3-gaps                                 # Tiling window manager
     iwgtk                                   # Lightweight, graphical wifi management utility for Linux
     keychain                                # Keychain management tool
     #libsForQt5.qt5.qttools                  # Cross-platform application framework for C++
@@ -931,33 +933,13 @@
     xfce.libxfce4ui                         # Widgets library for Xfce
     xfce.libxfce4util                       # Extension library for Xfce
     xfce.xfce4-appfinder                    # Appfinder for the Xfce4 Desktop Environment
-    xfce.xfce4-battery-plugin               # Battery plugin for Xfce panel
-    xfce.xfce4-clipman-plugin               # Clipboard manager for Xfce panel
-    xfce.xfce4-cpufreq-plugin               # CPU Freq load plugin for Xfce panel
-    xfce.xfce4-cpugraph-plugin              # CPU graph show for Xfce panel
-    xfce.xfce4-datetime-plugin              # Shows the date and time in the panel, and a calendar appears when you left-cl...
     xfce.xfce4-dict                         # Dictionary Client for the Xfce desktop environment
-    xfce.xfce4-fsguard-plugin               # Filesystem usage monitor plugin for the Xfce panel
-    xfce.xfce4-genmon-plugin                # Generic monitor plugin for the Xfce panel
-    xfce.xfce4-mailwatch-plugin             # Mail watcher plugin for Xfce panel
-    xfce.xfce4-mpc-plugin                   # MPD plugin for Xfce panel
-    xfce.xfce4-netload-plugin               # Internet load speed plugin for Xfce4 panel
-    xfce.xfce4-notes-plugin                 # Sticky notes plugin for Xfce panel
     xfce.xfce4-notifyd                      # Simple notification daemon for Xfce
     xfce.xfce4-panel                        # Panel for the Xfce desktop environment
     xfce.xfce4-power-manager                # Power manager for the Xfce Desktop Environment
-    xfce.xfce4-pulseaudio-plugin            # Adjust the audio volume of the PulseAudio sound system
-    xfce.xfce4-sensors-plugin               # Panel plug-in for different sensors using acpi, lm_sensors and hddtemp
     xfce.xfce4-settings                     # Settings manager for Xfce
-    xfce.xfce4-systemload-plugin            # System load plugin for Xfce panel
     xfce.xfce4-taskmanager                  # Easy to use task manager for Xfce
-    xfce.xfce4-time-out-plugin              # Panel plug-in to take periodical breaks from the computer
-    xfce.xfce4-timer-plugin                 # Simple countdown and alarm plugin for the Xfce panel
     xfce.xfce4-volumed-pulse                # Volume keys control daemon for Xfce using pulseaudio
-    xfce.xfce4-weather-plugin               # Weather plugin for the Xfce desktop environment
-    xfce.xfce4-whiskermenu-plugin           # Alternate application launcher for Xfce
-    xfce.xfce4-windowck-plugin              # Xfce panel plugin for displaying window title and buttons
-    xfce.xfce4-xkb-plugin                   # Allows you to setup and use multiple keyboard layouts
     xfce.xfconf                             # Simple client-server configuration storage and query system for Xfce
     xdg-desktop-portal-gtk                  # Desktop integration portals for sandboxed apps
     xdg-utils                               # Set of command line tools that assist applications with a variety of desktop integration tasks
@@ -965,7 +947,6 @@
     zenity                                  # Tool to display dialogs from the commandline and shell scripts
 
     ## xfce panel
-    #xfce.xfce4-panel                        # Panel for the Xfce desktop environment
     #xfce.libxfce4ui                         # Widgets library for Xfce
     #xfce.libxfce4util                       # Extension library for Xfce
     #xfce.xfce4-appfinder                    # Appfinder for the Xfce4 Desktop Environment
@@ -982,6 +963,7 @@
     #xfce.xfce4-netload-plugin               # Internet load speed plugin for Xfce4 panel
     #xfce.xfce4-notes-plugin                 # Sticky notes plugin for Xfce panel
     #xfce.xfce4-notifyd                      # Simple notification daemon for Xfce
+    #xfce.xfce4-panel                        # Panel for the Xfce desktop environment
     #xfce.xfce4-pulseaudio-plugin            # Adjust the audio volume of the PulseAudio sound system
     #xfce.xfce4-sensors-plugin               # Panel plug-in for different sensors using acpi, lm_sensors and hddtemp
     #xfce.xfce4-systemload-plugin            # System load plugin for Xfce panel
@@ -1068,7 +1050,6 @@
     rpi-imager                              # Raspberry Pi Imaging Utility
     scrcpy                                  # Display and control Android devices over USB or TCP/IP
     simplescreenrecorder                    # Screen recorder for Linux
-    upscayl                                 # Free and Open Source AI Image Upscaler
     vlc                                     # Cross-platform media player and streaming server
     virt-viewer                             # Viewer for remote virtual machines
     #x48                                     #
@@ -1179,7 +1160,6 @@
     #bruno                                   # Open-source IDE For exploring and testing APIs
     ##bruno-cli                               # CLI of the open-source IDE For exploring and testing APIs
     #chromium                                # Open source web browser from Google
-    #cointop                                 # Fastest and most interactive terminal based UI application for tracking cryptocurrencies
     #dino                                    # Modern Jabber/XMPP Client using GTK/Vala
     #discord                                 # All-in-one cross-platform voice and text chat for gamers
     #element-desktop                         # A feature-rich client for Matrix.org
@@ -1190,7 +1170,6 @@
     #google-chrome                           # Freeware web browser developed by Google
     #kristall                                # Graphical small-internet client, supports gemini, http, https, gopher, finger
     #magic-wormhole                          # Securely transfer data between computers
-    #mop                                     # Simple stock tracker implemented in go
     #ncgopher                                # Gopher and gemini client for the modern internet
     #nheko                                   # Desktop client for the Matrix protocol
     #nyxt                                    # Infinitely extensible web-browser (with Lisp development files using WebKitGTK platform port)
@@ -1364,8 +1343,8 @@
     xscreensaver                            # Set of screensavers
 
     # extra savers
-    antsimulator                            # Simple Ants simulator
-    xmountains                              # X11 based fractal landscape generator
+    #antsimulator                            # Simple Ants simulator
+    #xmountains                              # X11 based fractal landscape generator
     xplanet                                 # Renders an image of the earth or other planets into the X root window
 
     # games

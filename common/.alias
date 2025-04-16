@@ -493,29 +493,29 @@ alias stopwatch="
 #
 #        nitrogen-metcalfe-blue  set wallpaper to Metcalfe-Loves-Linux-1.jpg (blue)
 alias nitrogen-metcalfe-blue="
-    if \$(uname -v | grep -q 'NixOS') ; then
-        nitrogen --save --set-tiled /etc/nixos/wallpapers/Metcalfe-Loves-Linux-1.jpg
+    if \$(uname -v | grep -q '\(NixOS\|ZEN\)') ; then
+        nitrogen --save --set-tiled /etc/wallpapers/Metcalfe-Loves-Linux-1.jpg
     else
         nitrogen --save --set-tiled /usr/share/backgrounds/Metcalfe-Loves-Linux-1.jpg
     fi"
 #        nitrogen-metcalfe-gray  set wallpaper to Metcalfe-Loves-Linux-2.jpg (gray)
 alias nitrogen-metcalfe-gray="
-    if \$(uname -v | grep -q 'NixOS') ; then
-        nitrogen --save --set-tiled /etc/nixos/wallpapers/Metcalfe-Loves-Linux-2.jpg
+    if \$(uname -v | grep -q '\(NixOS\|ZEN\)') ; then
+        nitrogen --save --set-tiled /etc/wallpapers/Metcalfe-Loves-Linux-2.jpg
     else
         nitrogen --save --set-tiled /usr/share/backgrounds/Metcalfe-Loves-Linux-2.jpg
     fi"
 #        nitrogen-metcalfe-orange  set wallpaper to Metcalfe-Loves-Linux-3.jpg (orange)
 alias nitrogen-metcalfe-orange="
-    if \$(uname -v | grep -q 'NixOS') ; then
-        nitrogen --save --set-tiled /etc/nixos/wallpapers/Metcalfe-Loves-Linux-3.jpg
+    if \$(uname -v | grep -q '\(NixOS\|ZEN\)') ; then
+        nitrogen --save --set-tiled /etc/wallpapers/Metcalfe-Loves-Linux-3.jpg
     else
         nitrogen --save --set-tiled /usr/share/backgrounds/Metcalfe-Loves-Linux-3.jpg
     fi"
 #        nitrogen-metcalfe-green  set wallpaper to Metcalfe-Loves-Linux-4.jpg (green)
 alias nitrogen-metcalfe-green="
-    if \$(uname -v | grep -q 'NixOS') ; then
-        nitrogen --save --set-tiled /etc/nixos/wallpapers/Metcalfe-Loves-Linux-4.jpg
+    if \$(uname -v | grep -q '\(NixOS\|ZEN\)') ; then
+        nitrogen --save --set-tiled /etc/wallpapers/Metcalfe-Loves-Linux-4.jpg
     else
         nitrogen --save --set-tiled /usr/share/backgrounds/Metcalfe-Loves-Linux-4.jpg
     fi"
@@ -3268,10 +3268,10 @@ alias gitgg="git log --graph --oneline --decorate --all"
 alias gitgf="git log --pretty=format:\"%h %ad %s\" --date=short --all"
 #        gitgfg                  git log (formatted) | grep
 alias gitgfg="git log --pretty=format:\"%h %ad %s\" --date=short --all | grep"
-#        gitd                    git diff (ignore white-space)
-alias gitd="git diff -w"
-#        gitdh                   git diff HEAD~ (ignore white-space)
-alias gitdh="git diff -w HEAD~"
+#        gitd                    git diff (ignore white-space and blank lines)
+alias gitd="git diff --ignore-all-space --ignore-blank-lines"
+#        gitdh                   git diff HEAD~ (ignore white-space and blank lines)
+alias gitdh="git diff --ignore-all-space --ignore-blank-lines HEAD~"
 #        gitco                   git checkout
 alias gitco="git checkout"
 #        gitcob                  git checkout -b
@@ -3647,10 +3647,10 @@ alias mkraw="
 #!    fc-cache -v -f"
 #        copy-wallpapers         copy wallpapers to system
 alias copy-wallpapers="
-    if \$(uname -v | grep -q 'NixOS') ; then
+    if \$(uname -v | grep -q '\(NixOS\|ZEN\)') ; then
         sudo bash -c \"
-            mkdir -p /etc/nixos/wallpapers
-            cp \${HOME}/wallpapers/* /etc/nixos/wallpapers/
+            mkdir -p /etc/wallpapers
+            cp \${HOME}/wallpapers/* /etc/wallpapers/
         \"
     else
         sudo bash -c \"
