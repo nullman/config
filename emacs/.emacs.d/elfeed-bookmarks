@@ -1,4 +1,4 @@
-;; [[file:init-emacs.org::#modules-elfeed][elfeed:2]]
+;; [[file:init-emacs.org::*elfeed][elfeed:2]]
 ;; Elfeed Bookmarks File
 (;; Emacs
  (:name "Reddit Emacs Channel" :html "https://www.reddit.com/" :rss "https://www.reddit.com/r/emacs.rss" :tag "emacs")
