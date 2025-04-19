@@ -1634,10 +1634,13 @@ Otherwise, `custom-tab-width' is used."
     ;; paste
     (bind-keys* ("s-v" . yank))
     ;; undo
-    (bind-keys* ("s-z" . undo))
+    (if (fboundp 'undo-tree-undo)
+        (bind-keys* ("s-z" . undo-tree-undo))
+      (bind-keys* ("s-z" . undo)))
     ;; redo
-    (when (fboundp 'undo-tree-redo)
-      (bind-keys* ("s-y" . undo-tree-redo)))
+    (if (fboundp 'undo-tree-redo)
+        (bind-keys* ("s-y" . undo-tree-redo))
+      (bind-keys* ("s-y" . undo-redo)))
     ;; select all
     (bind-keys* ("s-a" . mark-whole-buffer))
     ;; find
@@ -1851,7 +1854,7 @@ KEYMAP defaults to `override-global-map'."
     (bind-keys* ("C-M-<return>" . insert-line-below)))
 
   ;; completion at point
-  (bind-keys* ("C-/" . completion-at-point) ; default: `undo-tree-undo'
+  (bind-keys* ("C-/" . completion-at-point)
               ("C-M-/" . completion-at-point)
               ("C-TAB" . completion-at-point)
               ("C-<tab>" . completion-at-point))
@@ -2033,10 +2036,14 @@ KEYMAP defaults to `override-global-map'."
   (bind-keys* ("C-x M-p" . describe-text-properties))
 
   ;; undo
-  (bind-keys* ("C-_" . undo))
+  (if (fboundp 'undo-tree-undo)
+      (bind-keys* ("C-_" . undo-tree-undo))
+    (bind-keys* ("C-_" . undo)))
 
   ;; undo-redo
-  (bind-keys* ("M-_" . undo-redo))
+  (if (fboundp 'undo-tree-redo)
+      (bind-keys* ("M-_" . undo-tree-redo))
+    (bind-keys* ("M-_" . undo-redo)))
 
   ;; goto last change (undo)
   (when (fboundp 'goto-last-change)
@@ -17487,8 +17494,12 @@ back to the previous non-whitespace character. See also
   :config
   ;; key chords
   (key-chord-define-global ",." "<>\C-b")
-  (key-chord-define-global "hj" 'undo)
-  (key-chord-define-global "fg" 'undo-tree-redo)
+  (key-chord-define-global "hj" (if (fboundp 'undo-tree-undo)
+                                    'undo-tree-undo
+                                  'undo))
+  (key-chord-define-global "fg" (if (fboundp 'undo-tree-redo)
+                                    'undo-tree-redo
+                                    'undo-redo))
   (key-chord-define-global "jk" 'dabbrev-expand)
   (key-chord-define-global "cv" 'reindent-then-newline-and-indent)
   (key-chord-define-global "1q" "!")
