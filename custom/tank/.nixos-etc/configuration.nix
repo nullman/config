@@ -1019,6 +1019,7 @@
     audacity                                # Sound editor with graphical UI
     blender                                 # 3D Creation/Animation/Publishing System
     calibre                                 # Comprehensive e-book software
+    cantata                                 # Graphical client for MPD
     cheesecutter                            # Tracker program for composing music for the SID chip
     cider                                   # New look into listening and enjoying Apple Music in style and performance
     electrum                                # Lightweight Bitcoin wallet
