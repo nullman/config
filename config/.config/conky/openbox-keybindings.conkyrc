@@ -26,7 +26,7 @@ conky.config = {
   use_xft = true,
 }
 conky.text = [[
-${alignc}${font MesloLGS Nerd Font:bold:size=16}K E Y   B I N D I N G S${font}
+${alignc}${font MesloLGS Nerd Font:bold:size=16}O P E N B O X   K E Y   B I N D I N G S${font}
 ${color2}${hr}${color}
 ${color2}Spr + Esc${color}  ${alignr}Application Menu
 ${color2}Alt + Space${color}  ${alignr}Window Menu

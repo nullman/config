@@ -26,7 +26,7 @@ conky.config = {
   use_xft = true,
 }
 conky.text = [[
-${alignc}${font MesloLGS Nerd Font:bold:size=16}K E Y   B I N D I N G S${font}
+${alignc}${font MesloLGS Nerd Font:bold:size=16}B S P W M   K E Y   B I N D I N G S${font}
 ${color2}${hr}${color}
 ${color2}Spr + Alt + H${color}  ${alignr}Display Key Bindings
 ${color2}Spr + Ctrl + H${color}  ${alignr}Display BSPWM Key Bindings

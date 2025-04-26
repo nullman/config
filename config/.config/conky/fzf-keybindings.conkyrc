@@ -1,0 +1,34 @@
+conky.config = {
+  alignment = 'top_left',
+  background = true,
+  color1 = 'ff0000',
+  color2 = '00ff00',
+  color3 = 'ffff00',
+  color4 = '6464ff',
+  color5 = 'ff00ff',
+  color6 = '00ffff',
+  color7 = 'ffffff',
+  color8 = '000000',
+  cpu_avg_samples = 2,
+  default_color = 'ffffff',
+  double_buffer = true,
+  font = 'MesloLGS Nerd Font:size=12',
+  gap_x = 20,
+  gap_y = 40,
+  minimum_width = 480,
+  no_buffers = true,
+  own_window = true,
+  own_window_class = 'Conky',
+  own_window_type = 'override',
+  own_window_transparent = true,
+  update_interval = 2.0,
+  update_interval_on_battery = 10.0,
+  use_xft = true,
+}
+conky.text = [[
+${alignc}${font MesloLGS Nerd Font:bold:size=16}F Z F   K E Y   B I N D I N G S${font}
+${color2}${hr}${color}
+${color2}Ctrl + R${color}  ${alignr}Search Command History
+${color2}Ctrl + T${color}  ${alignr}Copy from Command History
+${color2}Alt + c${color}  ${alignr}Change Directory with Search
+]]
