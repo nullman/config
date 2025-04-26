@@ -89,6 +89,10 @@ if [[ -z "${INSIDE_EMACS}" ]] ; then
     fi
 fi
 export FZF_DEFAULT_OPTS="--layout=reverse --border=bold"
+echo "FZF Bindings:"
+echo "  C-R = Search Command History"
+echo "  C-T = Copy from Command History"
+echo "  A-c = Change Directory with Search"
 
 # fix home/end keys in screen/tmux
 if [[ -n "${STY}" ]] || [[ -n "${TMUX}" ]] ; then
