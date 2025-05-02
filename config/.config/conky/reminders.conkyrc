@@ -26,6 +26,6 @@ conky.config = {
   use_xft = true,
 }
 conky.text = [[
-${execpi 600 remind ${HOME}/.reminders | fold -w 72 -s | sed 's/\(\w*\?\): /\${color2}\1:\${color} /g ; \
+${execpi 600 remind ${HOME}/.reminders | sed '/^$/d' | fold -w 72 -s | sed 's/\(\w*\?\): /\${color2}\1:\${color} /g ; \
 s/^\(Reminders for .*\) (today):$/\${alignc}\${font MesloLGS Nerd Font:bold:size=16}\1\${font}\n\${color2}\${hr}\${color}/'}
 ]]
