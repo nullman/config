@@ -37,6 +37,7 @@ _command alacritty && alacritty -e ${HOME}/bin/run-screen &
 #_command emacs && _delay 1 emacs &
 #_command slack && _delay 1 slack &
 #_command thunderbird && _delay 1 thunderbird &
+#_command brave && _delay 1 brave &
 #_command firefox && _delay 1 firefox &
 #_command chromium && _delay 1 chromium &
 #_command thunar && _delay 1 thunar &

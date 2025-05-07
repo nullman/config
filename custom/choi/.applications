@@ -8,7 +8,8 @@ alacritty
 emacs
 #betterbird
 ##thunderbird
-firefox
+brave
+##firefox
 ##chromium
 thunar
 #slack
@@ -19,7 +20,6 @@ thunar
 #gajim
 ##google-chrome
 ##google-chrome-stable
-#brave
 
 #===============================================================================
 # End of File

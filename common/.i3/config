@@ -503,8 +503,6 @@ assign [class="betterbird"] $workspace3
 assign [class="ms-outlook-nativefier"] $workspace3
 
 # 4: Browser
-assign [class="firefox"] $workspace4
-assign [class="LibreWolf"] $workspace4
 assign [class="Brave-browser"] $workspace4
 assign [class="vivaldi-stable"] $workspace4
 assign [class="gopherus-sdl"] $workspace4
@@ -545,9 +543,10 @@ assign [class="VirtualBox Manager"] $workspace8
 assign [class="VirtualBox Machine"] $workspace8
 
 # 9: Image, Video, and Audio
+assign [class="firefox"] $workspace9
+assign [class="LibreWolf"] $workspace9
 assign [class="Chromium"] $workspace9
 assign [class="Google-chrome"] $workspace9
-assign [class="Brave-browser"] $workspace9
 assign [class="Gimp-2.10"] $workspace9
 assign [class="Qmmp"] $workspace9
 assign [class="mplayer2"] $workspace9

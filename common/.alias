@@ -908,8 +908,6 @@ alias lynx-useragent-mozilla="lynx -useragent=\"Mozilla/4.0 (compatible; MSIE 6.
 alias web="lynx -useragent=\"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)\""
 #        webb                    run lynx (bookmarks)
 alias webb="lynx -book -useragent=\"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)\""
-#        ff                      run firefox
-alias ff="firefox"
 #        news                    run tin
 alias news="tin -r -q"
 #!#        news                    run slrn (comcast)

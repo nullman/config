@@ -34,7 +34,8 @@ _command xautolock && i3-msg "exec --no-startup-id xautolock -time 30 -locker 'x
 #_command emacs && i3-msg "exec --no-startup-id _delay 1 emacs"
 ##_command thunderbird && i3-msg "exec --no-startup-id _delay 1 thunderbird"
 #_command betterbird && i3-msg "exec --no-startup-id _delay 1 betterbird"
-#_command firefox && i3-msg "exec --no-startup-id _delay 1 firefox"
+#_command brave && _delay 1 brave &
+##_command firefox && i3-msg "exec --no-startup-id _delay 1 firefox"
 ##_command chromium && i3-msg "exec --no-startup-id _delay 1 chromium"
 #_command thunar && i3-msg "exec --no-startup-id _delay 1 thunar"
 ##_command pcmanfm && i3-msg "exec --no-startup-id _delay 1 pcmanfm"

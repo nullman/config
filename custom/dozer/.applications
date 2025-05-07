@@ -8,7 +8,8 @@ alacritty
 emacs
 ##betterbird
 thunderbird
-firefox
+brave
+##firefox
 ##chromium
 thunar
 ##pcmanfm
@@ -25,7 +26,6 @@ gajim
 ##idea
 ##google-chrome
 ##google-chrome-stable
-brave
 #syncterm
 
 #===============================================================================

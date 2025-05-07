@@ -39,6 +39,7 @@ _command barrier && barrier &
 #_command emacs && _delay 1 emacs &
 #_command thunderbird && _delay 10 thunderbird &
 #_command betterbird && _delay 1 betterbird &
+#_command brave && _delay 1 brave &
 #_command firefox && _delay 1 firefox &
 #_command vivaldi && _delay 1 vivaldi &
 #_command chromium && _delay 1 chromium &
@@ -57,7 +58,6 @@ _command barrier && barrier &
 #_command idea && _delay 10 idea &
 #_command google-chrome && _delay 1 google-chrome &
 #_command google-chrome-stable && _delay 1 google-chrome-stable &
-#_command brave && _delay 1 brave &
 #_command syncterm && _delay 1 syncterm &
 
 # run application launcher
