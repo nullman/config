@@ -961,6 +961,7 @@
     rofimoji                                # Simple emoji and character picker for rofi
     scrot                                   # Command-line screen capture utility
     seahorse                                # Application for managing encryption keys and passwords in the GnomeKeyring
+    stumpwm stumpish                        # Tiling, keyboard driven window manager
     sxhkd                                   # Simple X hotkey daemon
     system-config-printer                   #
     tint2                                   # Simple panel/taskbar unintrusive and light (memory, cpu, aestetic)
