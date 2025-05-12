@@ -19473,29 +19473,6 @@ otherwise run `find-file-as-root'."
       (find-file-as-root))))
 ;; tramp:1 ends here
 
-;; [[file:init-emacs.org::#modules-undo-tree][undo-tree:1]]
-;;------------------------------------------------------------------------------
-;;; Packages: undo-tree
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modules: undo-tree")
-
-(use-package undo-tree
-  :straight (undo-tree
-             :type git
-             :host github
-             :repo "apchamberlain/undo-tree.el")
-  :demand t
-  :diminish undo-tree-mode
-  :bind* (("C-_" . undo-tree-undo)
-          ("M-_" . undo-tree-redo)
-          ("<M-mouse-4>" . undo-tree-undo)
-          ("<M-mouse-5>" . undo-tree-redo))
-  :init
-  ;; turn on undo-tree globally
-  (global-undo-tree-mode 1))
-;; undo-tree:1 ends here
-
 ;; [[file:init-emacs.org::#modules-vimish-fold][vimish-fold:1]]
 ;;------------------------------------------------------------------------------
 ;;; Packages: vimish-fold
