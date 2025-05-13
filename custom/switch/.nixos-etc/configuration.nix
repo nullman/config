@@ -236,10 +236,15 @@
   #   enableSSHSupport = true;
   # };
 
-  # # udev
+  # # udev rules: mount /media filesystem
   # services.udev.extraRules = ''
   #   ACTION=="add", SUBSYSTEMS=="usb", SUBSYSTEM=="block", ENV{ID_FS_USAGE}=="filesystem", RUN{program}+="${pkgs.systemd}/bin/systemd-mount --no-block --automount=yes --collect $devnode /media"
   # '';
+
+  # udev rules: Android Pixel 9a
+  services.udev.extraRules = ''
+    SUBSYSTEM=="usb", ATTR{idVendor}=="18d1", MODE="0666", GROUP="plugdev"
+  '';
 
   # shells
   programs.zsh.enable = true;
