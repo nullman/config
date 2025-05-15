@@ -1067,9 +1067,11 @@ Common values:
 ;;(setq browse-url-browser-function #'browse-url-generic)
 ;;(setq browse-url-browser-function #'eww-browse-url)
 ;;(setq browse-url-browser-function #'w3m-browse-url)
-(setq browse-url-browser-function #'browse-url-firefox
-      browse-url-new-window-flag t
-      browse-url-firefox-new-window-is-tab t)
+;;(setq browse-url-browser-function #'browse-url-firefox
+;;      browse-url-new-window-flag t
+;;      browse-url-firefox-new-window-is-tab t)
+(setq browse-url-browser-function #'browse-url-chrome
+      browse-url-chrome-program "brave")
 ;; set secondary browser
 (setq browse-url-secondary-browser-function #'browse-url-default-browser)
 ;; General:49 ends here
@@ -20032,7 +20034,8 @@ otherwise run `find-file-as-root'."
   ;; see `dired-guess-shell-alist-default' for default list
   (dired-guess-shell-alist-user
    '(("\\.pdf\\'" "evince")
-     ("\\.htm?l\\'" "firefox")
+     ;;("\\.htm?l\\'" "firefox")
+     ("\\.htm?l\\'" "brave")
      ("\\.doc?x\\'" "libreoffice --writer")
      ("\\.odt\\'" "libreoffice --writer")
      ("\\.p[bgpn]m\\'" "gpicview")
