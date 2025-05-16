@@ -1703,6 +1703,7 @@ rsync-iodd() {
     }
 
     syncdir 'Amiga/Amiga Forever' 'Amiga' '*.iso'
+    syncdir 'Amiga/Icaros' 'Amiga' '*.iso'
     syncdir 'Amiga/Amiga OS' 'Amiga' '*.iso'
     syncdir 'Android/Android x86' 'Android' '*.iso'
     syncdir 'Boot Tools' 'Boot-Tools' '*.iso'
