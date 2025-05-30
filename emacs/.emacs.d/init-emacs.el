@@ -2063,10 +2063,10 @@ KEYMAP defaults to `override-global-map'."
   (when (fboundp 'eval-sexp-buffer)
     (bind-keys* ("C-x M-e" . eval-sexp-buffer)))
 
-  ;; ;; indent current sexp
-  ;; (bind-keys* ("C-M-q" . indent-current-sexp)) ; default: `indent-sexp' or `indent-pp-sexp'
+  ;; indent current sexp
+  (bind-keys* ("C-M-q" . indent-sexp)) ; default: `indent-sexp' or `indent-pp-sexp'
 
-  ;; ;; indent all sexp's in current buffer
+  ;; indent all sexp's in current buffer
   ;; (when (fboundp 'indent-sexp-buffer)
   ;;   (bind-keys* ("C-x M-q" . indent-sexp-buffer)))
 
@@ -10250,31 +10250,6 @@ BUFFER defaults to the current buffer."
   (calc-eval-and-replace-region (line-beginning-position) (line-end-position)))
 ;; calc-eval-and-replace-line:1 ends here
 
-;; [[file:init-emacs.org::#functions-emacs-functions-indent-current-sexp][indent-current-sexp:1]]
-;;------------------------------------------------------------------------------
-;;;; Functions: Emacs Functions: indent-current-sexp
-;;------------------------------------------------------------------------------
-
-(init-message 3 "Functions: Emacs Functions: indent-current-sexp")
-
-(defun indent-current-sexp ()
-  "Indent current sexp."
-  (interactive "*")
-  (save-mark-and-excursion
-    (end-of-defun)
-    (let ((end (point)))
-      (beginning-of-defun)
-      ;; indent sexp
-      (indent-sexp nil)
-      ;; loop through every line checking for eol comments
-      (while (< (point) end)
-        (goto-char (line-end-position))
-        ;; if comment exists, indent it
-        (when (eq (get-text-property (point) 'face) 'font-lock-comment-face)
-          (comment-indent))
-        (forward-line 1)))))
-;; indent-current-sexp:1 ends here
-
 ;; [[file:init-emacs.org::#functions-emacs-functions-indent-sexp-buffer][indent-sexp-buffer:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Functions: Emacs Functions: indent-sexp-buffer
@@ -10294,7 +10269,8 @@ BUFFER defaults to the current buffer."
     (let ((count 0))
       (while (not (eobp))
         (forward-sexp 1)
-        (indent-current-sexp)
+        ;;(indent-current-sexp)
+        (indent-sexp)
         (cl-incf count))
       (message "Indented %d expressions." count))))
 ;; indent-sexp-buffer:1 ends here
