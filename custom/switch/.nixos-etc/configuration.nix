@@ -1166,6 +1166,7 @@
     #brave                                   # Privacy-oriented browser for Desktop and Laptop computers
     #bruno                                   # Open-source IDE For exploring and testing APIs
     ##bruno-cli                               # CLI of the open-source IDE For exploring and testing APIs
+    #carburetor tractor                      # Graphical settings app for Tractor in GTK
     #chromium                                # Open source web browser from Google
     #dino                                    # Modern Jabber/XMPP Client using GTK/Vala
     #discord                                 # All-in-one cross-platform voice and text chat for gamers
