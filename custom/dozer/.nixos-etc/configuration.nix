@@ -1372,8 +1372,9 @@
     docker-compose                          # Docker CLI plugin to define and run multi-container applications with Docker
 
     # ai
-    #alpaca                                  # Ollama client made with GTK4 and Adwaita
+    alpaca                                  # Ollama client made with GTK4 and Adwaita
     imaginer                                # Imaginer with AI
+    lmstudio                                # LM Studio is an easy to use desktop app for experimenting with local and open...
     ollama                                  # Get up and running with large language models locally
     open-webui                              # Comprehensive suite for LLMs with a user-friendly WebUI
     tabby                                   # Self-hosted AI coding assistant

@@ -1309,6 +1309,7 @@
     lazarus lazarus-qt                      # Graphical IDE for the FreePascal language
     lazygit                                 # Simple terminal UI for git commands
     #lazyjournal                             # TUI for journalctl, file system logs, as well as Docker and Podman containers
+    libedit                                 # Port of the NetBSD Editline library (libedit)
     libmpc                                  # Library for multiprecision complex arithmetic with exact rounding
     m4                                      # GNU M4, a macro processor
     mpfr                                    # Library for multiple-precision floating-point arithmetic
@@ -1343,8 +1344,9 @@
     docker-compose                          # Docker CLI plugin to define and run multi-container applications with Docker
 
     # ai
-    #alpaca                                  # Ollama client made with GTK4 and Adwaita
+    alpaca                                  # Ollama client made with GTK4 and Adwaita
     imaginer                                # Imaginer with AI
+    lmstudio                                # LM Studio is an easy to use desktop app for experimenting with local and open...
     ollama                                  # Get up and running with large language models locally
     open-webui                              # Comprehensive suite for LLMs with a user-friendly WebUI
     tabby                                   # Self-hosted AI coding assistant

@@ -133,11 +133,11 @@ export EMAIL="kylewsherman@gmail.com"
 unset MAIL
 #export MAILDIR="${HOME}/.maildir"
 #export MAILDIR="imap://morpheus.nullware.com/kyle"
-export LEDGER_FILE="${HOME}/ledger/checking-kyle.dat"
 #export GOROOT="/usr/lib/go"
 #export GOPATH="${HOME}/gocode"
 export SDKMAN_DIR="${HOME}/.sdkman"
 export GEM_HOME="$(_command ruby && ruby -e 'print Gem.user_dir')"
+export GTK_THEME=Adwaita-dark
 
 export LC_COLLATE=C                     # set directory sorting to ASCII order
 # colors for ls and grep commands
