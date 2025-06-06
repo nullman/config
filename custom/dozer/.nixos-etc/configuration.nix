@@ -1079,6 +1079,7 @@
     # utilities
     appimage-run                            #
     audacious                               # Lightweight and versatile audio player
+    blanket                                 # Listen to different sounds
     bitwarden                               # A secure and free password manager for all of your devices
     celluloid                               # Simple GTK frontend for the mpv video player
     cherrytree                              # Hierarchical note taking application

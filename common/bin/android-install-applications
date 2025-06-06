@@ -19,8 +19,8 @@ _isinstalled() {
     skip="false"
     for i in ${installed[@]} ; do
         if [[ "${i}" == "$1" ]] ; then
-             skip="true"
-             break;
+            skip="true"
+            break;
         fi
     done
     echo "${skip}"
@@ -39,15 +39,20 @@ for item in ${items[@]} ; do
     if [[ "$(_isinstalled \"${package}\")" = "true" ]] ; then
         echo "Already installed, skipping"
     else
-        case ${repo} in
-            GPS)
-                (adb shell am start "https://play.google.com/store/apps/details?id=${package}" &)
-                ;;
-            FD)
-                (adb shell am start "https://f-droid.org/en/packages/${package}/" &)
-                ;;
-        esac
-        sleep 3
+        # TODO: Add support for downloads 'D)'
+        if [[ "${repo}" == "GPS" || "${repo}" == "FD" ]] ; then
+            echo "Installing ${app} (${package})"
+            case ${repo} in
+                GPS)
+                    (adb shell am start "https://play.google.com/store/apps/details?id=${package}" &)
+                    ;;
+                FD)
+                    (adb shell am start "https://f-droid.org/en/packages/${package}/" &)
+                    ;;
+            esac
+            #sleep 3
+            echo "Press a key to continue" ; read a
+        fi
     fi
 done
 
