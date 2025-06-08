@@ -790,6 +790,7 @@
     nmap                                    # Free and open source utility for network discovery and security auditing
     ntfsprogs                               # FUSE-based NTFS driver with full write support
     ntp                                     # Implementation of the Network Time Protocol
+    opensnitch opensnitch-ui                # Application firewall
     openssl                                 # Cryptographic library that implements the SSL and TLS protocols
     p7zip                                   # New p7zip fork with additional codecs and improvements (forked from https://sourceforge.net/projects/p7zip/)
     parted                                  # Create, destroy, resize, check, and copy partitions
@@ -1149,6 +1150,8 @@
     sharutils                               # Tools for remote synchronization and `shell archives'
     smem                                    # Memory usage reporting tool that takes shared memory into account
     speedtest-cli                           # Command line interface for testing internet bandwidth using speedtest.net
+    stress                                  # Simple workload generator for POSIX systems. It imposes a configurable amount...
+    stress-ng                               # Stress test a computer system
     sysbench                                # Modular, cross-platform and multi-threaded benchmark tool
     sysstat                                 # Collection of performance monitoring tools for Linux (such as sar, iostat and pidstat)
     sysz                                    # Fzf terminal UI for systemctl

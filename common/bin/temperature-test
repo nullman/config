@@ -2,9 +2,9 @@
 #===============================================================================
 # temperature-test
 #
-# Run a temperature test.
+# Run a cpu temperature test.
 #
-# Dependencies: lm_sensors sysbench (or stress)
+# Dependencies: lm_sensors sysbench|stress-ng|stress
 #
 # (Based on Christopher Barnatt's version found in his ExplainingComputers
 # videos on Youtube.)
@@ -71,9 +71,13 @@ for x in $(seq ${count}) ; do
     echo -n "[${c: $((-${#count}))}/${count}] "
     _gettemp $1
     if [[ $(command -v sysbench) ]] ; then
-        sysbench --test=cpu --num-threads=${threads} --cpu-max-prime=25000 run >/dev/null 2>&1
-    else
+         sysbench --test=cpu --num-threads=${threads} --cpu-max-prime=25000 run >/dev/null 2>&1
+    elif [[ $(command -v stress-ng) ]] ; then
+        stress-ng --cpu ${threads} --timeout 10s >/dev/null 2>&1
+    elif [[ $(command -v stress) ]] ; then
         stress --cpu ${threads} --timeout 10s >/dev/null 2>&1
+    else
+        echo "No stress test application found: sysbench, stress-ng, or stress"
     fi
 done
 
