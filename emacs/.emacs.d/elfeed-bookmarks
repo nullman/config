@@ -17,7 +17,6 @@
  (:name "Linux Journal" :html "https://www.linuxjournal.com/news/" :rss "https://www.linuxjournal.com/node/feed" :tag "linux")
  (:name "Reddit Linux Channel" :html "https://www.reddit.com/r/linux/" :rss "https://www.reddit.com/r/linux.rss" :tag "linux")
  (:name "Arch News" :html "https://www.archlinux.org/news/" :rss "https://www.archlinux.org/feeds/news/" :tag "linux")
- (:name "Manjaro News" :html "https://forum.manjaro.org/c/announcements/" :rss "https://forum.manjaro.org/c/announcements.rss" :tag "linux")
  (:name "Planet Ubuntu" :html "https://planet.ubuntu.com/" :rss "https://planet.ubuntu.com/rss20.xml" :tag "linux")
  (:name "Planet Gnome" :html "https://planet.gnome.org/" :rss "https://feeds.feedburner.com/codinghorror?format=xml" :tag "linux")
  (:name "Linux Foundation" :html "https://www.linuxfoundation.org/" :rss "https://www.linuxfoundation.org/feed/" :tag "linux")

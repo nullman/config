@@ -1134,6 +1134,7 @@
     s-tui                                   # Stress-Terminal UI monitoring tool
     tig                                     # Text-mode interface for git
     tty-clock                               # Digital clock in ncurses
+    tuifimanager                            # Cross-platform terminal-based termux-oriented file manager
     ugrep                                   # Ultra fast grep with interactive query UI
     w3m                                     # Text-mode web browser
     wavemon                                 # Ncurses-based monitoring application for wireless network devices
@@ -1154,6 +1155,7 @@
     broot                                   # config-private/common/org loading ❯
     chezmoi                                 # Interactive tree view, a fuzzy search, a balanced BFS descent and customizable commands
     cool-retro-term                         # Manage your dotfiles across multiple machines, securely
+    cp437                                   # Emulates an old-style "code page 437" / "IBM-PC" character set terminal on a ...
     ddgr                                    # Terminal emulator which mimics the old cathode display
     dict                                    # Dict protocol server and client
     diskonaut                               # Terminal disk space navigator

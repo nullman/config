@@ -16089,6 +16089,17 @@ USING is the remaining peg."
   :load-path (lambda () (file-truename (expand-file-name "any-ini-mode.el" emacs-modules-dir))))
 ;; any-ini-mode:1 ends here
 
+;; [[file:init-emacs.org::#packages-asm-blox][asm-blox:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: asm-blox
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Packages: asm-blox")
+
+(use-package asm-blox
+  :straight t)
+;; asm-blox:1 ends here
+
 ;; [[file:init-emacs.org::#modules-async][async:1]]
 ;;------------------------------------------------------------------------------
 ;;; Packages: async

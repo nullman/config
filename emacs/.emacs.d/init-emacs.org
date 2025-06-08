@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2025-06-04 14:23 (user)>
+  #+TIMESTAMP: <2025-06-08 16:14 (user)>
 
 * Overview
   :PROPERTIES:
@@ -23718,6 +23718,25 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;;   ;; turn on anzu mode globally
       ;;   (global-anzu-mode 1))
     #+END_SRC
+*** asm-blox
+    :PROPERTIES:
+    :CUSTOM_ID: packages-asm-blox
+    :END:
+
+    Programming game inspired by WAT.
+
+    Manual: https://github.com/zkry/asm-blox/blob/master/doc/asm-blox.pdf
+
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Packages: asm-blox
+      ;;------------------------------------------------------------------------------
+
+      (init-message 2 "Packages: asm-blox")
+
+      (use-package asm-blox
+        :straight t)
+    #+END_SRC
 
 *** async
     :PROPERTIES:
@@ -25107,7 +25126,6 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
        (:name "Linux Journal" :html "https://www.linuxjournal.com/news/" :rss "https://www.linuxjournal.com/node/feed" :tag "linux")
        (:name "Reddit Linux Channel" :html "https://www.reddit.com/r/linux/" :rss "https://www.reddit.com/r/linux.rss" :tag "linux")
        (:name "Arch News" :html "https://www.archlinux.org/news/" :rss "https://www.archlinux.org/feeds/news/" :tag "linux")
-       (:name "Manjaro News" :html "https://forum.manjaro.org/c/announcements/" :rss "https://forum.manjaro.org/c/announcements.rss" :tag "linux")
        (:name "Planet Ubuntu" :html "https://planet.ubuntu.com/" :rss "https://planet.ubuntu.com/rss20.xml" :tag "linux")
        (:name "Planet Gnome" :html "https://planet.gnome.org/" :rss "https://feeds.feedburner.com/codinghorror?format=xml" :tag "linux")
        (:name "Linux Foundation" :html "https://www.linuxfoundation.org/" :rss "https://www.linuxfoundation.org/feed/" :tag "linux")
