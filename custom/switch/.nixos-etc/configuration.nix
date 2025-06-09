@@ -309,6 +309,10 @@
       variant = "";
       options = "shift:both_capslock,caps:ctrl_modifier";
     };
+    exportConfiguration = true;
+    displayManager.sessionCommands = ''
+      xmodmap -e "keycode 118 = NoSymbol"
+    '';
   };
 
   ## wayland/hyprland
@@ -845,8 +849,11 @@
     xorg.xf86inputsynaptics                 #
     xorg.xinit                              #
     xorg.xinput                             #
+    xorg.xkbcomp                            #
     xorg.xkill                              #
+    xorg.xmodmap                            #
     xorg.xprop                              #
+    xorg.xset                               #
     xorg.xwininfo                           #
     xprintidle                              # Utility that queries the X server for the user's idle time and prints it to s...
     xsel                                    # Command-line program for getting and setting the contents of the X selection

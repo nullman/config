@@ -696,14 +696,18 @@ alias asl="sudo arp-scan --localnet"
 alias ping-firewall="ping 192.168.1.1"
 #        ping-bridge             ping bridge
 alias ping-bridge="ping 192.168.1.2"
-#        ping-pimodem            ping pimodem
-alias ping-pimodem="ping 192.168.1.3"
+#        ping-inet               ping inet
+alias ping-inet="ping 192.168.1.3"
 #        ping-synologyx          ping synology
 alias ping-synologyx="ping 192.168.1.5"
 #        ping-synology           ping synology
 alias ping-synology="ping 192.168.1.6"
 #        ping-morpheus           ping morpheus
 alias ping-morpheus="ping 192.168.1.10"
+#        ping-pimodem            ping pimodem
+alias ping-pimodem="ping 192.168.1.12"
+#        ping-ice                ping ice
+alias ping-ice="ping 192.168.1.12"
 #        ping-printer            ping printer
 alias ping-printer="ping 192.168.1.16"
 #        ping-neo                ping neo
@@ -2094,8 +2098,8 @@ alias rsync-music-put-music-sd=" \
     [[ -d \${dir1} ]] && dir=\${dir1}
     [[ -d \${dir2} ]] && dir=\${dir2}
     if [[ -d \${dir} ]] ; then
-        rsync -rLtxW --size-only --progress --delete \${HOME}/.mpd/playlists/kyle.m3u \${dir}/
-        rsync -rLtxW --size-only --progress --delete \${HOME}/.mpd/playlists/rated_good.m3u \${dir}/
+        rsync -rLtxW --size-only --progress --delete ${home}/data/media/Audio/Playlists/kyle.m3u \${dir}/
+        rsync -rLtxW --size-only --progress --delete ${home}/data/media/Audio/Playlists/rated_good.m3u \${dir}/
         rsync -rLtxW --size-only --progress --delete ${home}/data/media/Audio/Music/* \${dir}/
         rsync -rLtxW --size-only --progress --delete ${home}/data/media/Audio/MODs \${dir}/
         sync
@@ -2470,6 +2474,8 @@ alias ssh-mouse="echo 'ssh:mouse' ; ssh mouse"
 #!alias ssh-neo="echo 'ssh:neo' ; ssh neo"
 #        ssh-pimodem             ssh pimodem
 alias ssh-pimodem="echo 'ssh:pi@pimodem' ; ssh pi@pimodem"
+#        ssh-ice                 ssh ice
+alias ssh-ice="echo 'ssh:ice' ; ssh ice"
 #        ssh-raspad              ssh raspad
 alias ssh-raspad="echo 'ssh:raspad-usb' ; ssh pi@raspad-usb"
 #        ssh-kali                ssh kali
