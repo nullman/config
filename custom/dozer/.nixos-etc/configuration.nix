@@ -658,6 +658,22 @@
   #  mailLocation = "maildir:~/Maildir";
   #};
 
+  services.searx = {
+    enable = true;
+    package = pkgs.searxng;
+    environmentFile = "/home/user/.searxng.env";
+    redisCreateLocally = true;
+    settings = {
+      general = {
+        debug = false;
+      };
+      server = {
+        bind_address = "127.0.0.1";
+        port = 8888;
+      };
+    };
+  };
+
   ## # gbar
   ## programs.gBar = {
   ##   enable = true;
