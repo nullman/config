@@ -413,9 +413,9 @@
   #services.xserver.windowManager.i3.enable = true;
   #services.xserver.windowManager.i3.package = pkgs.i3-gaps;
 
-  # window manager: xfce
-  services.xserver.desktopManager.xfce.enable = true;
-  #services.displayManager.defaultSession = "xfce";
+  ## window manager: xfce
+  #services.xserver.desktopManager.xfce.enable = true;
+  ##services.displayManager.defaultSession = "xfce";
 
   #services.tlp = {
   #  enable = true;
@@ -957,7 +957,7 @@
     dconf                                   #
     dialog                                  # Display dialog boxes from shell
     dmenu                                   # Generic, highly customizable, and efficient menu for the X Window System
-    dunst                                   # Lightweight and customizable notification daemon
+    #dunst                                   # Lightweight and customizable notification daemon
     eog                                     # GNOME image viewer
     evtest                                  # Simple tool for input event debugging
     eww                                     # Widget system made in Rust to create widgets for any WM
@@ -1114,6 +1114,7 @@
     gtkimageview                            # Image viewer widget for GTK
     handbrake libdvdcss libaacs libbluray   # Tool for converting video files and ripping DVDs
     hpl                                     # Portable Implementation of the Linpack Benchmark for Distributed-Memory Compu...
+    isoimagewriter                          # Program to write hybrid ISO files onto USB disks
     ##kdeconnect                              # KDE Connect provides several features to integrate your phone and your computer
     libation                                # Audible audiobook manager
     livecaptions                            # Linux Desktop application that provides live captioning
