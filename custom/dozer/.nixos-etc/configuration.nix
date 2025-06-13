@@ -973,7 +973,7 @@
     dconf                                   #
     dialog                                  # Display dialog boxes from shell
     dmenu                                   # Generic, highly customizable, and efficient menu for the X Window System
-    #dunst                                   # Lightweight and customizable notification daemon
+    dunst                                   # Lightweight and customizable notification daemon
     eog                                     # GNOME image viewer
     evtest                                  # Simple tool for input event debugging
     eww                                     # Widget system made in Rust to create widgets for any WM
