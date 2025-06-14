@@ -322,7 +322,8 @@ alias make-floppy-image="mkfs.msdos -C floppy.dsk 1440"
 #        fdisk-list              fdisk -l
 alias fdisk-list="sudo fdisk -l"
 #        dd-sync                 dd bs=4M conv=fdatasync status=progress
-alias dd-sync="sudo dd bs=4M conv=fdatasync status=progress"
+#!alias dd-sync="sudo dd bs=4M conv=fdatasync status=progress"
+alias dd-sync="sudo dd conv=fdatasync status=progress"
 #        sxhkdrs                 sxhkd restart
 alias sxhkdrs="pkill -SIGUSR1 -u \${USER} sxhkd"
 #        tint2rs                 tint2 restart
