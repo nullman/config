@@ -337,17 +337,23 @@ super + shift + Print
 super + shift + s
     ${HOME}/bin/run-sxhkd && notify-send --expire-time=3000 'Reloading SXHKD'
 
-# # reload tint2
+# # reload xfce-panel
+# super + shift + r
+#     ((pkill -u ${USER} xfce4-panel ; xfce4-panel && sleep 1 && \
+#     xdo below -t $(xdo id -n root) $(xdo id -N xfce4-panel)) &) && \
+#     notify-send --expire-time=3000 'Reloading XFCE Panel'
+
+# # reload tint2 panel
 # super + shift + t
 #     ((pkill -u ${USER} tint2 ; tint2 && sleep 1 && \
 #     xdo below -t $(xdo id -n root) $(xdo id -N tint2)) &) && \
 #     notify-send --expire-time=3000 'Reloading Tint'
 
-# # reload eww
-# super + shift + e
-#     eww --restart open bar && sleep 1 && \
-#     xdo below -t $(xdo id -n root) $(xdo id -n eww) && \
-#     notify-send --expire-time=3000 'Reloading EWW'
+# reload eww panel
+super + shift + e
+    eww --restart open bar && sleep 1 && \
+    xdo below -t $(xdo id -n root) $(xdo id -n eww) && \
+    notify-send --expire-time=3000 'Reloading EWW'
 
 # reload conky
 super + shift + c

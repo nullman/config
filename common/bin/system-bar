@@ -25,8 +25,8 @@ _delay() {
 # system bar
 #_command polybar && pkill -u ${USER} polybar ; polybar -c ${HOME}/.config/polybar/config openbox-bar &
 #_command tint2 && (pkill -u ${USER} tint2 ; tint2 && sleep 1 && xdo below -t $(xdo id -n root) $(xdo id -N Tint2)) & # status bar hidden when fullscreen
-#_command eww && (eww --restart open bar && sleep 1 && xdo below -t $(xdo id -n root) $(xdo id -n eww)) & # status bar hidden when fullscreen
-_command xfce4-panel && pkill -u ${USER} xfce4-panel ; xfce4-panel --disable-wm-check &
+_command eww && (eww --restart open bar && sleep 1 && xdo below -t $(xdo id -n root) $(xdo id -n eww)) & # status bar hidden when fullscreen
+#_command xfce4-panel && pkill -u ${USER} xfce4-panel ; xfce4-panel --disable-wm-check &
 
 # system bar applets
 _command clipit && (_delay ${delay} pkill -u ${USER} clipit ; clipit) &

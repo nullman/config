@@ -37,10 +37,10 @@
 ;;(defpoll weather :interval "600s" "curl --silent 'wttr.in/San+Diego?u&format=%c%t'")
 ;;(defpoll weather-status :interval "600s" "curl --silent 'wttr.in/San+Diego?u&format=%C+%t'")
 
-;;(defpoll wifi-strength :interval "2s" "nmcli -t -f SIGNAL,ACTIVE device wifi | awk -F ':' '{ if ($2 == \"yes\") print $1 }'")
-;;(defpoll wifi-status :interval "2s" "nmcli -t -f WIFI radio")
-(defpoll wifi-strength :interval "2s" "iwctl station wlan0 show | awk '{ if ($1 == \"RSSI\") print $2 }'")
-(defpoll wifi-status :interval "2s" "iwctl device wlan0 show | awk '{ if ($3 == \"Powered\") print $4 }'")
+(defpoll wifi-strength :interval "2s" "nmcli -t -f SIGNAL,ACTIVE device wifi | awk -F ':' '{ if ($2 == \"yes\") print $1 }'")
+(defpoll wifi-status :interval "2s" "nmcli -t -f WIFI radio")
+;;(defpoll wifi-strength :interval "2s" "iwctl station wlan0 show | awk '{ if ($1 == \"RSSI\") print $2 }'")
+;;(defpoll wifi-status :interval "2s" "iwctl device wlan0 show | awk '{ if ($3 == \"Powered\") print $4 }'")
 
 (defpoll bt-status :interval "2s" "[[ $(cat /sys/class/bluetooth/hci0/rfkill*/state) -eq 1 ]] && printf 'enabled' || printf 'disabled'")
 
@@ -127,31 +127,33 @@
               capacity < 80 ? "󰂁" :
               capacity < 90 ? "󰂂" : "󰁹"})))
 
-(defwidget wifi [status strength]
-  (box :class "label"
-       ;;:visible {strength == "" ? "false" : "true"}
-       :tooltip "WiFi strength: ${strength} dBm"
-       (button :onclick {status == "on" ? "iwctl device wlan0 set-property Powered off" : "iwctl device wlan0 set-property Powered on"}
-               :onrightclick "iwgtk &"
-               ;; symbols: 󰤮 󰤯 󰤟 󰤢 󰤥 󰤨 󰖩 󰑫 󰘊  
-               (label :text {strength == "" ? "󰤮" :
-                      strength < -90 ? "󰤯" :
-                      strength < -80 ? "󰤟" :
-                      strength < -70 ? "󰤢" :
-                      strength < -67 ? "󰤥" : "󰤨"}))))
-
-;; ;; network manager
+;; ;; iwgtk
 ;; (defwidget wifi [status strength]
 ;;   (box :class "label"
 ;;        ;;:visible {strength == "" ? "false" : "true"}
-;;        :tooltip "WiFi strength: ${strength}%"
-;;        (button :onclick {status == "enabled" ? "nmcli radio wifi off" : "nmcli radio wifi on"}
-;;                :onrightclick "nm-connection-editor &"
+;;        :tooltip "WiFi strength: ${strength} dBm"
+;;        (button :onclick {status == "on" ? "iwctl device wlan0 set-property Powered off" : "iwctl device wlan0 set-property Powered on"}
+;;                :onrightclick "iwgtk &"
+;;                ;; symbols: 󰤮 󰤯 󰤟 󰤢 󰤥 󰤨 󰖩 󰑫 󰘊  
 ;;                (label :text {strength == "" ? "󰤮" :
-;;                       strength < 21 ? "󰤯" :
-;;                       strength < 41 ? "󰤟" :
-;;                       strength < 61 ? "󰤢" :
-;;                       strength < 81 ? "󰤥" : "󰤨"}))))
+;;                       strength < -90 ? "󰤯" :
+;;                       strength < -80 ? "󰤟" :
+;;                       strength < -70 ? "󰤢" :
+;;                       strength < -67 ? "󰤥" : "󰤨"}))))
+
+;; network manager
+(defwidget wifi [status strength]
+  (box :class "label"
+       ;;:visible {strength == "" ? "false" : "true"}
+       :tooltip "WiFi strength: ${strength}%"
+       (button :onclick {status == "enabled" ? "nmcli radio wifi off" : "nmcli radio wifi on"}
+               :onrightclick "nm-connection-editor &"
+               ;; symbols: 󰤮 󰤯 󰤟 󰤢 󰤥 󰤨 󰖩 󰑫 󰘊  
+               (label :text {strength == "" ? "󰤮" :
+                      strength < 21 ? "󰤯" :
+                      strength < 41 ? "󰤟" :
+                      strength < 61 ? "󰤢" :
+                      strength < 81 ? "󰤥" : "󰤨"}))))
 
 (defwidget bluetooth [status]
   (box :class "label"
@@ -219,6 +221,8 @@
        (workspace :label "8  " :value "8" :onclick "bspc desktop --focus '^8'" :tooltip "Workspace 8")
        (workspace :label "9  " :value "9" :onclick "bspc desktop --focus '^9'" :tooltip "Workspace 9")
        (workspace :label "10  " :value "10" :onclick "bspc desktop --focus '^10'" :tooltip "Workspace 10")
+       (workspace :label "11  " :value "11" :onclick "bspc desktop --focus '^11'" :tooltip "Workspace 11")
+       (workspace :label "12  " :value "12" :onclick "bspc desktop --focus '^12'" :tooltip "Workspace 12")
        ;; weather
        (box :class "label"
             :tooltip weather-status
