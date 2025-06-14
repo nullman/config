@@ -30,6 +30,7 @@
 
 (defpoll mute :interval "500ms" "pamixer --get-mute")
 (defpoll volume :interval "500ms" "[[ $(pamixer --get-mute) == true ]] && echo '0' || pamixer --get-volume")
+(defpoll backlight :interval "3600s" "xbacklight -get")
 (defpoll brightness :interval "500ms" "light -G | sed 's/\.[0-9]*$//'")
 
 (defpoll weather :interval "600s" "~/bin/system-bar-weather icon 92116")
@@ -166,6 +167,7 @@
 
 (defwidget clock [min time]
            (box :class "label"
+                :tooltip "Calendar"
                 (button :onclick {calendar-is-open == "true" ?
                         "${EWW_CMD} close calendar && ${EWW_CMD} update calendar-is-open=false" :
                         "${EWW_CMD} open calendar && ${EWW_CMD} update calendar-is-open=true"}
@@ -255,7 +257,7 @@
                         :volume volume)
                 ;; brightness
                 (metric :label ""
-                        :value brightness
+                        :value {backlight == "" ? "" : brightness}
                         :onchange "light -S {}"
                         :tooltip "Brightness: ${brightness}%")
                 ;; ram
@@ -263,7 +265,7 @@
                 (metric :label ""
                         :value {EWW_RAM.used_mem_perc}
                         :onchange ""
-                        :tooltip "RAM Used: ${EWW_RAM.used_mem_perc}%")
+                        :tooltip "RAM Used: ${round(EWW_RAM.used_mem_perc, 0)}%")
                 ;; disk
                 ;; symbols: 󰆼 󰆼   󱘲  
                 (metric :label "󰆼"
