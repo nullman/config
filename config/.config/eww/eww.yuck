@@ -281,7 +281,11 @@
        ;; symbols:     
        ;; time
        (clock :min min
-              :time time)))
+              :time time)
+       ;; session
+       (box :class "label"
+            :tooltip "Session Lock, Logout, Suspend, Hibernate, Reboot, or Shutdown"
+            (button :onclick "/home/user/bin/rofi-session-menu -s &" "⏻"))))
 
 (defwidget bar []
   (centerbox :orientation "h"
