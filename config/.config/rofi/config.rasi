@@ -13,16 +13,16 @@ configuration {
 }
 
 * {
-    background:                      #222d32;
-    foreground:                      #8fa2ab;
-    bordercolor:                     #002b36;
+    background:                      #222D32;
+    foreground:                      #8FA2AB;
+    bordercolor:                     #002B36;
     separatorcolor:                  @bordercolor;
     normal-background:               @background;
     normal-foreground:               @foreground;
     alternate-normal-background:     @normal-background;
     alternate-normal-foreground:     @normal-foreground;
     selected-normal-background:      #364046;
-    selected-normal-foreground:      #cfd8dc;
+    selected-normal-foreground:      #CFD8DC;
     active-background:               @background;
     active-foreground:               @foreground;
     alternate-active-background:     @active-background;

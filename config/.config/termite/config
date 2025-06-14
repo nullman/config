@@ -47,13 +47,13 @@ cursor_blink = off
 [colors]
 # If both of these are unset, cursor falls back to the foreground color,
 # and cursor_foreground falls back to the background color.
-#cursor = #dcdccc
-#cursor_foreground = #dcdccc
+#cursor = #DCDCCC
+#cursor_foreground = #DCDCCC
 
-#foreground = #dcdccc
-#foreground_bold = #ffffff
-#background = #3f3f3f
-foreground = #bbc2cf
+#foreground = #DCDCCC
+#foreground_bold = #FFFFFF
+#background = #3F3F3F
+foreground = #BBC2CF
 #background = #000000
 
 # 20% background transparency (requires a compositor)
@@ -64,52 +64,52 @@ foreground = #bbc2cf
 background = rgba(25, 37, 43, 0.90)
 
 # If unset, will reverse foreground and background
-#highlight = #2f2f2f
+#highlight = #2F2F2F
 
 # Colors from color0 to color254 can be set
-#color0 = #3f3f3f
+#color0 = #3F3F3F
 #color1 = #705050
-#color2 = #60b48a
-#color3 = #dfaf8f
+#color2 = #60B48A
+#color3 = #DFAF8F
 #color4 = #506070
-#color5 = #dc8cc3
-#color6 = #8cd0d3
-#color7 = #dcdccc
+#color5 = #DC8CC3
+#color6 = #8CD0D3
+#color7 = #DCDCCC
 #color8 = #709080
-#color9 = #dca3a3
-#color10 = #c3bf9f
-#color11 = #f0dfaf
-#color12 = #94bff3
-#color13 = #ec93d3
-#color14 = #93e0e3
-#color15 = #ffffff
+#color9 = #DCA3A3
+#color10 = #C3BF9F
+#color11 = #F0DFAF
+#color12 = #94BFF3
+#color13 = #EC93D3
+#color14 = #93E0E3
+#color15 = #FFFFFF
 
 # regular colors
 color0  = #000000 # black
-color1  = #b40000 # red
-color2  = #00aa00 # green
-color3  = #aaaa00 # yellow
-color4  = #5555aa # blue
-color5  = #aa00aa # magenta
-color6  = #00aaaa # cyan
-color7  = #aaaaaa # white
+color1  = #B40000 # red
+color2  = #00AA00 # green
+color3  = #AAAA00 # yellow
+color4  = #5555AA # blue
+color5  = #AA00AA # magenta
+color6  = #00AAAA # cyan
+color7  = #AAAAAA # white
 # bright colors
 color8  = #555555 # black
-color9  = #ff0000 # red
-color10 = #00ff00 # green
-color11 = #ffff00 # yellow
-color12 = #6464ff # blue
-color13 = #ff00ff # magenta
-color14 = #00ffff # cyan
-color15 = #ffffff # white
+color9  = #FF0000 # red
+color10 = #00FF00 # green
+color11 = #FFFF00 # yellow
+color12 = #6464FF # blue
+color13 = #FF00FF # magenta
+color14 = #00FFFF # cyan
+color15 = #FFFFFF # white
 
 [hints]
 #font = Monospace 12
-#foreground = #dcdccc
-#background = #3f3f3f
-#active_foreground = #e68080
-#active_background = #3f3f3f
+#foreground = #DCDCCC
+#background = #3F3F3F
+#active_foreground = #E68080
+#active_background = #3F3F3F
 #padding = 2
-#border = #3f3f3f
+#border = #3F3F3F
 #border_width = 0.5
 #roundness = 2.0

@@ -74,16 +74,16 @@ _bc pointer_action1            resize_corner
 _bc pointer_action3            move
 
 # default colors
-#_bc normal_border_color        "#30302f"
+#_bc normal_border_color        "#30302F"
 #_bc active_border_color        "#474645"
-#_bc focused_border_color       "#817f7f"
-#_bc presel_feedback_color      "#f4d775"
+#_bc focused_border_color       "#817F7F"
+#_bc presel_feedback_color      "#F4D775"
 
 # custom colors
-_bc normal_border_color        "#4c566a"
-_bc active_border_color        "#1e1e1e"
-_bc focused_border_color       "#5e81ac"
-_bc presel_feedback_color      "#5e81ac"
+_bc normal_border_color        "#4C566A"
+_bc active_border_color        "#1E1E1E"
+_bc focused_border_color       "#5E81AC"
+_bc presel_feedback_color      "#5E81AC"
 
 #-------------------------------------------------------------------------------
 # Monitors

@@ -5,7 +5,8 @@
 /* Windows */
 
 .bar {
-    background-color: rgba(29, 29, 29, .60);
+    background-color: rgba(29, 29, 29, 0);
+    /* background-color: rgba(29, 29, 29, .6); */
     color: #AFAFAF;
     font-weight: bold;
 }
@@ -32,7 +33,8 @@
 
 .metric scale trough highlight {
     all: unset;
-    background-color: #D35D6E;
+    background-color: #FFBF00;
+    /* background-color: #D35D6E; */
     border-radius: 10px;
 }
 
@@ -40,7 +42,8 @@
 
 slider {
     all: unset;
-    color: #FFD5CD;
+    color: #FFBF00;
+    /* color: #FFD5CD; */
 }
 
 button:hover {

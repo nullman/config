@@ -30,10 +30,10 @@ border_content_tint_weight = 0
 background_content_tint_weight = 0
 background_color = #777777 20
 border_color = #777777 30
-background_color_hover = #aaaaaa 22
-border_color_hover = #eaeaea 44
+background_color_hover = #AAAAAA 22
+border_color_hover = #EAEAEA 44
 background_color_pressed = #555555 4
-border_color_pressed = #eaeaea 44
+border_color_pressed = #EAEAEA 44
 
 # Background 3: Active task
 rounded = 4
@@ -42,11 +42,11 @@ border_sides = TBLR
 border_content_tint_weight = 0
 background_content_tint_weight = 0
 background_color = #777777 20
-border_color = #ffffff 40
-background_color_hover = #aaaaaa 22
-border_color_hover = #eaeaea 44
+border_color = #FFFFFF 40
+background_color_hover = #AAAAAA 22
+border_color_hover = #EAEAEA 44
 background_color_pressed = #555555 4
-border_color_pressed = #eaeaea 44
+border_color_pressed = #EAEAEA 44
 
 # Background 4: Urgent task
 rounded = 4
@@ -54,12 +54,12 @@ border_width = 1
 border_sides = TBLR
 border_content_tint_weight = 0
 background_content_tint_weight = 0
-background_color = #aa4400 100
-border_color = #aa7733 100
-background_color_hover = #cc7700 100
-border_color_hover = #aa7733 100
+background_color = #AA4400 100
+border_color = #AA7733 100
+background_color_hover = #CC7700 100
+border_color_hover = #AA7733 100
 background_color_pressed = #555555 4
-border_color_pressed = #aa7733 100
+border_color_pressed = #AA7733 100
 
 # Background 5: Tooltip
 rounded = 0
@@ -69,9 +69,9 @@ border_content_tint_weight = 0
 background_content_tint_weight = 0
 background_color = #222222 100
 border_color = #333333 100
-background_color_hover = #ffffaa 100
+background_color_hover = #FFFFAA 100
 border_color_hover = #000000 100
-background_color_pressed = #ffffaa 100
+background_color_pressed = #FFFFAA 100
 border_color_pressed = #000000 100
 
 #-------------------------------------
@@ -141,8 +141,8 @@ taskbar_name_padding = 4 2
 taskbar_name_background_id = 0
 taskbar_name_active_background_id = 0
 taskbar_name_font = MesloLGS Nerd Font Mono 10
-taskbar_name_font_color = #e3e3e3 100
-taskbar_name_active_font_color = #ffffff 100
+taskbar_name_font_color = #E3E3E3 100
+taskbar_name_active_font_color = #FFFFFF 100
 taskbar_distribute_size = 0
 taskbar_sort_order = none
 task_align = left
@@ -161,7 +161,7 @@ task_font = MesloLGS Nerd Font Mono 10
 task_tooltip = 1
 task_thumbnail = 0
 task_thumbnail_size = 210
-task_font_color = #ffffff 100
+task_font_color = #FFFFFF 100
 task_background_id = 2
 task_active_background_id = 3
 task_urgent_background_id = 4
@@ -211,7 +211,7 @@ time2_format =
 time1_font = MesloLGS Nerd Font Mono 10
 time1_timezone =
 time2_timezone =
-clock_font_color = #ffffff 100
+clock_font_color = #FFFFFF 100
 clock_padding = 2 0
 clock_background_id = 0
 clock_tooltip =
@@ -231,7 +231,7 @@ battery_low_status = 10
 battery_low_cmd = [[ -e /sys/class/power_supply/BAT0 ]] && notify-send --expire-time=10000 "Battery is low!"
 battery_full_cmd =
 bat1_font = MesloLGS Nerd Font Mono 10
-battery_font_color = #ffffff 100
+battery_font_color = #FFFFFF 100
 bat1_format = %p %t
 bat2_format =
 battery_padding = 1 0
@@ -253,7 +253,7 @@ tooltip_show_timeout = 0.5
 tooltip_hide_timeout = 0.1
 tooltip_padding = 4 4
 tooltip_background_id = 5
-tooltip_font_color = #dddddd 100
+tooltip_font_color = #DDDDDD 100
 
 #-------------------------------------
 # Executor 1
@@ -274,7 +274,7 @@ execp_mclick_command =
 execp_uwheel_command =
 execp_dwheel_command =
 execp_font = MesloLGS Nerd Font Mono 10
-execp_font_color = #ffffff 100
+execp_font_color = #FFFFFF 100
 execp_padding = 2 0
 execp_background_id = 0
 execp_centered = 1

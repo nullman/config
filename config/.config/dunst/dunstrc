@@ -144,7 +144,8 @@ dmenu = $(command -v dmenu) -p dunst:
 
 # Browser for opening urls in context menu.
 #browser = palemoon
-browser = firefox
+#browser = firefox
+browser = brave
 
 # Align icons left/right/off
 icon_position = left
@@ -187,12 +188,12 @@ timeout = 10
 
 [urgency_normal]
 background = "#263238"
-foreground = "#f9faf9"
+foreground = "#F9FAF9"
 timeout = 10
 
 [urgency_critical]
-background = "#d62929"
-foreground = "#f9faf9"
+background = "#D62929"
+foreground = "#F9FAF9"
 timeout = 0
 
 # Every section that isn't one of the above is interpreted as a rules to
@@ -255,8 +256,8 @@ timeout = 0
 #    appname = claws-mail
 #    category = email.arrived
 #    urgency = normal
-#    background = "#2f899e"
-#    foreground = "#ffa247"
+#    background = "#2F899E"
+#    foreground = "#FFA247"
 #
 
 #[mute.sh]
@@ -268,41 +269,41 @@ timeout = 0
 #[JDownloader]
 #    appname = JDownloader
 #    category = JD
-#    background = "#ffa247"
-#    foreground = "#ffffff"
+#    background = "#FFA247"
+#    foreground = "#FFFFFF"
 #
 
 #[newsbeuter]
 #    summary = *Feeds*
-#    background = "#a8eb41"
-#    foreground = "#ffffff"
+#    background = "#A8EB41"
+#    foreground = "#FFFFFF"
 #
 
 [irc]
 appname = weechat
 timeout = 0
-background = "#0033bb"
-foreground = "#dddddd"
+background = "#0033BB"
+foreground = "#DDDDDD"
 
 [weechat hl]
 appname = weechat
 category = weechat.HL
-background = "#ff5c47"
-foreground = "#ffffff"
+background = "#FF5C47"
+foreground = "#FFFFFF"
 
 [weechat pn]
 appname = weechat
 category = weechat.PM
-background = "#d53b84"
-foreground = "#ffffff"
+background = "#D53B84"
+foreground = "#FFFFFF"
 
 #[CMUS]
 #    appname = CMUS
 #    category = cmus
-#    background = "#6c4ab7"
-#    foreground = "#ffe756"
+#    background = "#6C4AB7"
+#    foreground = "#FFE756"
 #
-#    background = "#30ab70"
-#    foreground = "#f67245"
+#    background = "#30AB70"
+#    foreground = "#F67245"
 
 # vim: ft=cfg

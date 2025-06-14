@@ -1,30 +1,30 @@
 conky.config = {
-    alignment = 'top_right',
-    background = true,
-    color1 = 'ff0000',
-    color2 = '00ff00',
-    color3 = 'ffff00',
-    color4 = '6464ff',
-    color5 = 'ff00ff',
-    color6 = '00ffff',
-    color7 = 'ffffff',
-    color8 = '000000',
-    cpu_avg_samples = 2,
-    default_color = 'ffffff',
-    double_buffer = true,
-    font = 'MesloLGS Nerd Font:size=12',
-    gap_x = 20,
-    gap_y = 40,
-    minimum_width = 240,
-    minimum_height = 480,
-    no_buffers = true,
-    own_window = true,
-    own_window_class = 'Conky',
-    own_window_type = 'override',
-    own_window_transparent = true,
-    update_interval = 1.0,
-    update_interval_on_battery = 5.0,
-    use_xft = true,
+  alignment = 'top_right',
+  background = true,
+  color1 = 'CC2E2E',
+  color2 = '2ECC71',
+  color3 = 'FFBF00',
+  color4 = '2E2ECC',
+  color5 = 'CC2ECC',
+  color6 = '2ECCCC',
+  color7 = 'EFEFEF',
+  color8 = '000000',
+  cpu_avg_samples = 2,
+  default_color = 'EFEFEF',
+  double_buffer = true,
+  font = 'MesloLGS Nerd Font:size=12',
+  gap_x = 20,
+  gap_y = 40,
+  minimum_width = 320,
+  minimum_height = 800,
+  no_buffers = true,
+  own_window = true,
+  own_window_class = 'Conky',
+  own_window_type = 'override',
+  own_window_transparent = true,
+  update_interval = 1.0,
+  update_interval_on_battery = 5.0,
+  use_xft = true,
 }
 
 conky.text = [[
@@ -51,18 +51,18 @@ ${color6}${cpugraph 15,- 333333 FFFFFF}
 #${color Gray}10 [${freq_g 10}] ${cpu 10}% ${cpubar cpu10}
 #${color Gray}11 [${freq_g 11}] ${cpu 11}% ${cpubar cpu11}
 #${color Gray}12 [${freq_g 12}] ${cpu 12}% ${cpubar cpu12}
-${color2}${top name 1}  ${alignr}${top cpu 1}%
-${color2}${top name 2}  ${alignr}${top cpu 2}%
-${color2}${top name 3}  ${alignr}${top cpu 3}%
-${color2}${top name 4}  ${alignr}${top cpu 4}%
+${color}${top name 1}  ${alignr}${top cpu 1}%
+${color}${top name 2}  ${alignr}${top cpu 2}%
+${color}${top name 3}  ${alignr}${top cpu 3}%
+${color}${top name 4}  ${alignr}${top cpu 4}%
 
 # ram
 ${voffset 10}${color}${font MesloLGS Nerd Font:bold:size=12}${font}  ${alignc}${mem} / ${memmax}  ${alignr}${memperc}%
 ${color3}${membar}
-${color2}${top_mem name 1}  ${alignr}${top_mem mem_res 1}
-${color2}${top_mem name 2}  ${alignr}${top_mem mem_res 2}
-${color2}${top_mem name 3}  ${alignr}${top_mem mem_res 3}
-${color2}${top_mem name 4}  ${alignr}${top_mem mem_res 4}
+${color}${top_mem name 1}  ${alignr}${top_mem mem_res 1}
+${color}${top_mem name 2}  ${alignr}${top_mem mem_res 2}
+${color}${top_mem name 3}  ${alignr}${top_mem mem_res 3}
+${color}${top_mem name 4}  ${alignr}${top_mem mem_res 4}
 
 ## disk
 #${voffset 10}${color}${font MesloLGS Nerd Font:bold:size=12}󰆼 /${font}  ${alignc}${fs_used /} / ${fs_size /}  ${alignr}${fs_used_perc /}%
@@ -80,7 +80,7 @@ ${color2}I/O:${color}  ${goto 50}${diskio /dev/disk/by-label/home}  ${goto 130}$
 #${color2}W:${color}  ${goto 40}${diskio_write /dev/disk/by-label/home}  ${goto 130}${color6}${diskiograph_write /dev/disk/by-label/home 15,- 333333 FFFFFF}
 
 # network
-${voffset 10}${color}${font MesloLGS Nerd Font:bold:size=12}${font}  ${alignr}${color2}Up:${color} ${totalup wlan0}  ${color2}Dn:${color} ${totaldown wlan0}
+${voffset 10}${color}${font MesloLGS Nerd Font:bold:size=12}󰖩${font}  ${alignr}${color2}Up:${color} ${totalup wlan0}  ${color2}Dn:${color} ${totaldown wlan0}
 ${color2}Up:${color}  ${goto 40}${upspeed wlan0}  ${goto 130}${color6}${upspeedgraph wlan0 15,- 333333 FFFFFF}
 ${color2}Dn:${color}  ${goto 40}${downspeed wlan0}  ${goto 130}${color6}${downspeedgraph wlan0 15,- 333333 FFFFFF}
 #${color2}Up${color}  ${alignr}${upspeed wlan0}

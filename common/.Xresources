@@ -12,74 +12,74 @@
 !! Custom Colors
 #define COLOR_BLACK_DARK    #000000
 #define COLOR_BLACK_LIGHT   #555555
-#define COLOR_RED_DARK      #b40000
-#define COLOR_RED_LIGHT     #ff0000
-#define COLOR_GREEN_DARK    #00aa00
-#define COLOR_GREEN_LIGHT   #00ff00
-#define COLOR_YELLOW_DARK   #aaaa00
-#define COLOR_YELLOW_LIGHT  #ffff00
-#define COLOR_BLUE_DARK     #5555aa
-#define COLOR_BLUE_LIGHT    #6464ff
-#define COLOR_MAGENTA_DARK  #aa00aa
-#define COLOR_MAGENTA_LIGHT #ff00ff
-#define COLOR_CYAN_DARK     #00aaaa
-#define COLOR_CYAN_LIGHT    #00ffff
-#define COLOR_WHITE_DARK    #aaaaaa
-#define COLOR_WHITE_LIGHT   #ffffff
-#define COLOR_PRIMARY       #bbc2cf
+#define COLOR_RED_DARK      #B40000
+#define COLOR_RED_LIGHT     #FF0000
+#define COLOR_GREEN_DARK    #00AA00
+#define COLOR_GREEN_LIGHT   #00FF00
+#define COLOR_YELLOW_DARK   #AAAA00
+#define COLOR_YELLOW_LIGHT  #FFFF00
+#define COLOR_BLUE_DARK     #5555AA
+#define COLOR_BLUE_LIGHT    #6464FF
+#define COLOR_MAGENTA_DARK  #AA00AA
+#define COLOR_MAGENTA_LIGHT #FF00FF
+#define COLOR_CYAN_DARK     #00AAAA
+#define COLOR_CYAN_LIGHT    #00FFFF
+#define COLOR_WHITE_DARK    #AAAAAA
+#define COLOR_WHITE_LIGHT   #FFFFFF
+#define COLOR_PRIMARY       #BBC2CF
 #define COLOR_SECONDARY     #798188
-#define COLOR_BACKGROUND    #09151b
-#define COLOR_BACKGROUND_TR [85]#09151b
-#define COLOR_BACKGROUND_HI #2b2c2b
-#define COLOR_EMPHASIZED    #ffff33
+#define COLOR_BACKGROUND    #09151B
+#define COLOR_BACKGROUND_TR [85]#09151B
+#define COLOR_BACKGROUND_HI #2B2C2B
+#define COLOR_EMPHASIZED    #FFFF33
 
 !! Alternate Colors
 !#define COLOR_BLACK_DARK    #232423
 !#define COLOR_BLACK_LIGHT   #282928
-!#define COLOR_RED_DARK      #ba2922
-!#define COLOR_RED_LIGHT     #cc372c
-!#define COLOR_GREEN_DARK    #7e807e
-!#define COLOR_GREEN_LIGHT   #8d8f8d
-!#define COLOR_YELLOW_DARK   #4c4f4d
-!#define COLOR_YELLOW_LIGHT  #4e524f
-!#define COLOR_BLUE_DARK     #16a085
-!#define COLOR_BLUE_LIGHT    #13bf9d
-!#define COLOR_MAGENTA_DARK  #43746a
-!#define COLOR_MAGENTA_LIGHT #487d72
-!#define COLOR_CYAN_DARK     #00cccc
-!#define COLOR_CYAN_LIGHT    #00d1d1
-!#define COLOR_WHITE_DARK    #e0e0e0
-!#define COLOR_WHITE_LIGHT   #e8e8e8
-!#define COLOR_PRIMARY       #bbc2cf
+!#define COLOR_RED_DARK      #BA2922
+!#define COLOR_RED_LIGHT     #CC372C
+!#define COLOR_GREEN_DARK    #7E807E
+!#define COLOR_GREEN_LIGHT   #8D8F8D
+!#define COLOR_YELLOW_DARK   #4C4F4D
+!#define COLOR_YELLOW_LIGHT  #4E524F
+!#define COLOR_BLUE_DARK     #16A085
+!#define COLOR_BLUE_LIGHT    #13BF9D
+!#define COLOR_MAGENTA_DARK  #43746A
+!#define COLOR_MAGENTA_LIGHT #487D72
+!#define COLOR_CYAN_DARK     #00CCCC
+!#define COLOR_CYAN_LIGHT    #00D1D1
+!#define COLOR_WHITE_DARK    #E0E0E0
+!#define COLOR_WHITE_LIGHT   #E8E8E8
+!#define COLOR_PRIMARY       #BBC2CF
 !#define COLOR_SECONDARY     #798188
-!#define COLOR_BACKGROUND    #09151b
-!#define COLOR_BACKGROUND_TR [85]#09151b
-!#define COLOR_BACKGROUND_HI #2b2c2b
-!#define COLOR_EMPHASIZED    #ffff33
+!#define COLOR_BACKGROUND    #09151B
+!#define COLOR_BACKGROUND_TR [85]#09151B
+!#define COLOR_BACKGROUND_HI #2B2C2B
+!#define COLOR_EMPHASIZED    #FFFF33
 
 !! DistroTube Colors
-!#define COLOR_BLACK_DARK    #1c1f24
-!#define COLOR_BLACK_LIGHT   #5b6268
-!#define COLOR_RED_DARK      #ff6c6b
-!#define COLOR_RED_LIGHT     #da8548
-!#define COLOR_GREEN_DARK    #98be65
-!#define COLOR_GREEN_LIGHT   #4db5bd
-!#define COLOR_YELLOW_DARK   #da8548
-!#define COLOR_YELLOW_LIGHT  #ecbe7b
-!#define COLOR_BLUE_DARK     #51afef
-!#define COLOR_BLUE_LIGHT    #3071db
-!#define COLOR_MAGENTA_DARK  #c678dd
-!#define COLOR_MAGENTA_LIGHT #a9a1e1
-!#define COLOR_CYAN_DARK     #5699af
-!#define COLOR_CYAN_LIGHT    #46d9ff
+!#define COLOR_BLACK_DARK    #1C1F24
+!#define COLOR_BLACK_LIGHT   #5B6268
+!#define COLOR_RED_DARK      #FF6C6B
+!#define COLOR_RED_LIGHT     #DA8548
+!#define COLOR_GREEN_DARK    #98BE65
+!#define COLOR_GREEN_LIGHT   #4DB5BD
+!#define COLOR_YELLOW_DARK   #DA8548
+!#define COLOR_YELLOW_LIGHT  #ECBE7B
+!#define COLOR_BLUE_DARK     #51AFEF
+!#define COLOR_BLUE_LIGHT    #3071DB
+!#define COLOR_MAGENTA_DARK  #C678DD
+!#define COLOR_MAGENTA_LIGHT #A9A1E1
+!#define COLOR_CYAN_DARK     #5699AF
+!#define COLOR_CYAN_LIGHT    #46D9FF
 !#define COLOR_WHITE_DARK    #202328
-!#define COLOR_WHITE_LIGHT   #dfdfdf
-!#define COLOR_PRIMARY       #bbc2cf
-!#define COLOR_SECONDARY     #bbc2cf
-!#define COLOR_BACKGROUND    #282c34
-!#define COLOR_BACKGROUND_TR [85]#282c34
-!#define COLOR_BACKGROUND_HI #282c34
-!#define COLOR_EMPHASIZED    #bbc2cf
+!#define COLOR_WHITE_LIGHT   #DFDFDF
+!#define COLOR_PRIMARY       #BBC2CF
+!#define COLOR_SECONDARY     #BBC2CF
+!#define COLOR_BACKGROUND    #282C34
+!#define COLOR_BACKGROUND_TR [85]#282C34
+!#define COLOR_BACKGROUND_HI #282C34
+!#define COLOR_EMPHASIZED    #BBC2CF
 
 !! Set Colors
 !! black dark/light
@@ -124,10 +124,10 @@
 !!------------------------------------------------------------------------------
 
 !! Emacs
-Emacs.foreground: #bbc2cf
-Emacs.background: #09151b
+Emacs.foreground: #BBC2CF
+Emacs.background: #09151B
 !Emacs.pointerColor: #798188
-Emacs.cursorColor: #ffff33
+Emacs.cursorColor: #FFFF33
 Emacs.cursorBlink: false
 Emacs.font: MesloLGS Nerd Font Mono 14
 Emacs.fullscreen: maximized
@@ -142,14 +142,14 @@ rofi.columns:      1
 rofi.font:         FONT_DIALOG
 rofi.show-icons:   true
 !! State:          bg,      fg,      bgalt,   hlbg,    hlfg
-!!rofi.color-normal: #222d32, #8fa2ab, #323d42, #364046, #cfd8dc
-!!rofi.color-urgent: #e53935, #8fa2ab, #f54945, #364046, #cfd8dc
-!!rofi.color-active: #222d32, #cfd8dc, #323d42, #364046, #cfd8dc
-rofi.color-normal: #222d32, #8fa2ab, #222d32, #364046, #cfd8dc
-rofi.color-urgent: #222d32, #8fa2ab, #222d32, #364046, #cfd8dc
-rofi.color-active: #222d32, #cfd8dc, #222d32, #364046, #cfd8dc
+!!rofi.color-normal: #222D32, #8FA2AB, #323D42, #364046, #CFD8DC
+!!rofi.color-urgent: #E53935, #8FA2AB, #F54945, #364046, #CFD8DC
+!!rofi.color-active: #222D32, #CFD8DC, #323D42, #364046, #CFD8DC
+rofi.color-normal: #222D32, #8FA2AB, #222D32, #364046, #CFD8DC
+rofi.color-urgent: #222D32, #8FA2AB, #222D32, #364046, #CFD8DC
+ROFI.COLOR-ACTIVE: #222D32, #CFD8DC, #222D32, #364046, #CFD8DC
 !!                 background, border, separator
-rofi.color-window: #222d32, #002b36, #002b36
+rofi.color-window: #222D32, #002B36, #002B36
 
 !! Xcursor
 Xcursor.theme: xcursor-breeze
