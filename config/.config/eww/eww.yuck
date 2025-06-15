@@ -14,8 +14,9 @@
 ;; Variables
 ;;------------------------------------------------------------------------------
 
-(defvar session-is-open false)
-(defvar calendar-is-open false)
+(defvar calendar-is-open "false")
+(defvar systray-is-open "false")
+(defvar session-is-open "false")
 
 ;;------------------------------------------------------------------------------
 ;; Polls
@@ -61,7 +62,7 @@
            (box :class "metric"
                 :visible {value == "" ? "false" : "true"}
                 :orientation "h"
-                :space-evenly false
+                :space-evenly "false"
                 :tooltip tooltip
                 (box :class "label" label)
                 (scale :min 0
@@ -74,7 +75,7 @@
            (box :class "metric"
                 :visible {value == "" ? "false" : "true"}
                 :orientation "h"
-                :space-evenly false
+                :space-evenly "false"
                 :tooltip tooltip
                 (box :class "label"
                      (button :onclick onclick
@@ -173,8 +174,8 @@
                         "${EWW_CMD} open calendar && ${EWW_CMD} update calendar-is-open=true"}
                         (box :class "label"
                              :orientation "h"
-                             :space-evenly false
-                             :spacing 10
+                             :space-evenly "false"
+                             :spacing "10"
                              ;; symbols: 󱑊 󱐿 󱑀 󱑁 󱑂 󱑃 󱑄 󱑅 󱑆 󱑇 󱑈 󱑉
                              (label :text {min == "" ? "" :
                                     min < 3  ? "󱑊" :
@@ -198,9 +199,9 @@
 (defwidget left-bar []
            (box :class "left-bar"
                 :orientation "h"
-                :space-evenly false
+                :space-evenly "false"
                 :halign "start"
-                :spacing 10
+                :spacing "10"
                 ;; application search
                 (box :class "label"
                      :tooltip "Application Search"
@@ -212,8 +213,8 @@
                 ;; window selector
                 (box :class "label"
                      :tooltip "Window Selector"
-                     (button :onclick "rofi -modi window -show window &" " "))
-                ;; symbols:                       
+                     (button :onclick "rofi -modi window -show window &" " "))
+                ;; symbols:                          
                 (workspace :label "1  " :value "1" :onclick "bspc desktop --focus '^1'" :tooltip "Workspace 1")
                 (workspace :label "2  " :value "2" :onclick "bspc desktop --focus '^2'" :tooltip "Workspace 2")
                 (workspace :label "3  " :value "3" :onclick "bspc desktop --focus '^3'" :tooltip "Workspace 3")
@@ -235,9 +236,9 @@
 (defwidget center-bar []
            (box :class "center-bar"
                 :orientation "h"
-                :space-evenly false
+                :space-evenly "false"
                 :halign "center"
-                :spacing 10
+                :spacing "10"
                 ;; music
                 (box :class "music-state"
                      :visible {music-info == "" ? "false" : "true"}
@@ -249,9 +250,9 @@
 (defwidget right-bar []
            (box :class "right-bar"
                 :orientation "h"
-                :space-evenly false
+                :space-evenly "false"
                 :halign "end"
-                :spacing 10
+                :spacing "10"
                 ;; volume
                 (volume :mute mute
                         :volume volume)
@@ -274,6 +275,12 @@
                         :tooltip "Disk Used: ${round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}%")
                 ;; systray
                 ;;(systray)
+                (box :class "label"
+                     :tooltip "System Tray"
+                     (button :onclick {systray-is-open == "true" ?
+                             "${EWW_CMD} close systray && ${EWW_CMD} update systray-is-open=false" :
+                             "${EWW_CMD} open systray --pos $(($(xdotool getmouselocation --shell | sed -n '/^X=/p' | sed 's/^X=//') - 10))x-30 && ${EWW_CMD} update systray-is-open=true"}
+                             ""))
                 ;; battery
                 (battery :status {EWW_BATTERY == "" ? "" : EWW_BATTERY.BAT0.status}
                          :capacity {EWW_BATTERY == "" ? "" : EWW_BATTERY.BAT0.capacity})
@@ -290,7 +297,7 @@
                 ;; session
                 (box :class "label"
                      :tooltip "Session Lock, Logout, Suspend, Hibernate, Reboot, or Shutdown"
-                     ;;(button :onclick "/home/user/bin/rofi-session-menu -s &" "⏻"))))
+                     ;;(button :onclick "~/bin/rofi-session-menu -s &" "⏻"))))
                      (button :onclick {session-is-open == "true" ?
                              "${EWW_CMD} close session && ${EWW_CMD} update session-is-open=false" :
                              "${EWW_CMD} open session && ${EWW_CMD} update session-is-open=true"}
@@ -305,68 +312,6 @@
 ;;------------------------------------------------------------------------------
 ;; Windows
 ;;------------------------------------------------------------------------------
-
-(defwindow session
-           :windowtype "dock"
-           :stacking "fg"
-           :geometry (geometry :x "-10px"
-                               :y "-30px"
-                               :width "0%"
-                               :height "0%"
-                               :anchor "bottom right")
-           (box :class "label"
-                :orientation "v"
-                :halign "left"
-                :space-evenly true
-                :spacing 10
-                (box :class "label"
-                     (button :onclick "${EWW_CMD} close session && ${EWW_CMD} update session-is-open=false && xscreensaver-command -lock"
-                             (box :class "label"
-                                  :orientation "h"
-                                  :space-evenly false
-                                  :spacing 10
-                                  (label :text "")
-                                  (label :text "Lock"))))
-                (box :class "label"
-                     (button :onclick "${EWW_CMD} close session && ${EWW_CMD} update session-is-open=false && loginctl terminate-session $(loginctl session-status | head -n 1 | awk '{print $1}')"
-                             (box :class "label"
-                                  :orientation "h"
-                                  :space-evenly false
-                                  :spacing 10
-                                  (label :text "󰈇")
-                                  (label :text "Logout"))))
-                (box :class "label"
-                     (button :onclick "${EWW_CMD} close session && ${EWW_CMD} update session-is-open=false && systemctl suspend"
-                             (box :class "label"
-                                  :orientation "h"
-                                  :space-evenly false
-                                  :spacing 10
-                                  (label :text "⏾")
-                                  (label :text "Suspend"))))
-                (box :class "label"
-                     (button :onclick "${EWW_CMD} close session && ${EWW_CMD} update session-is-open=false && systemctl hibernate"
-                             (box :class "label"
-                                  :orientation "h"
-                                  :space-evenly false
-                                  :spacing 10
-                                  (label :text "⏼")
-                                  (label :text "Hibernate"))))
-                (box :class "label"
-                     (button :onclick "${EWW_CMD} close session && ${EWW_CMD} update session-is-open=false && systemctl reboot"
-                             (box :class "label"
-                                  :orientation "h"
-                                  :space-evenly false
-                                  :spacing 10
-                                  (label :text "")
-                                  (label :text "Reboot"))))
-                (box :class "label"
-                     (button :onclick "${EWW_CMD} close session && ${EWW_CMD} update session-is-open=false && systemctl poweroff"
-                             (box :class "label"
-                                  :orientation "h"
-                                  :space-evenly false
-                                  :spacing 10
-                                  (label :text "⏻")
-                                  (label :text "Shutdown"))))))
 
 (defwindow calendar
            :windowtype "dock"
@@ -387,6 +332,81 @@
                           :show-heading "true"
                           :show-day-names "true")))
 ;;:onclick "remind ~/.reminders $(date -d {2}-$(({1}+1))-{0} '+%_d %b %Y') | fold -w 80 -s | yad --text-info --width=800 --height=600 --wrap --no-buttons 2>/dev/null")))
+
+(defwindow systray
+           :windowtype "dock"
+           :stacking "fg"
+           :geometry (geometry :x "-10px"
+                               :y "-30px"
+                               :width "0%"
+                               :height "0%"
+                               :anchor "bottom left")
+           (systray
+            :orientation "v"
+            :space-evenly "true"
+            :spacing "10"))
+
+(defwindow session
+           :windowtype "dock"
+           :stacking "fg"
+           :geometry (geometry :x "-10px"
+                               :y "-30px"
+                               :width "0%"
+                               :height "0%"
+                               :anchor "bottom right")
+           (box :class "label"
+                :orientation "v"
+                :halign "left"
+                :space-evenly "true"
+                :spacing "10"
+                (box :class "label"
+                     (button :onclick "${EWW_CMD} close session && ${EWW_CMD} update session-is-open=false && xscreensaver-command -lock"
+                             (box :class "label"
+                                  :orientation "h"
+                                  :space-evenly "false"
+                                  :spacing "10"
+                                  (label :text "")
+                                  (label :text "Lock"))))
+                (box :class "label"
+                     (button :onclick "${EWW_CMD} close session && ${EWW_CMD} update session-is-open=false && loginctl terminate-session $(loginctl session-status | head -n 1 | awk '{print $1}')"
+                             (box :class "label"
+                                  :orientation "h"
+                                  :space-evenly "false"
+                                  :spacing "10"
+                                  (label :text "󰈇")
+                                  (label :text "Logout"))))
+                (box :class "label"
+                     (button :onclick "${EWW_CMD} close session && ${EWW_CMD} update session-is-open=false && systemctl suspend"
+                             (box :class "label"
+                                  :orientation "h"
+                                  :space-evenly "false"
+                                  :spacing "10"
+                                  (label :text "⏾")
+                                  (label :text "Suspend"))))
+                (box :class "label"
+                     (button :onclick "${EWW_CMD} close session && ${EWW_CMD} update session-is-open=false && systemctl hibernate"
+                             (box :class "label"
+                                  :orientation "h"
+                                  :space-evenly "false"
+                                  :spacing "10"
+                                  (label :text "⏼")
+                                  (label :text "Hibernate"))))
+                (box :class "label"
+                     (button :onclick "${EWW_CMD} close session && ${EWW_CMD} update session-is-open=false && systemctl reboot"
+                             (box :class "label"
+                                  :orientation "h"
+                                  :space-evenly "false"
+                                  :spacing "10"
+                                  (label :text "")
+                                  (label :text "Reboot"))))
+                (box :class "label"
+                     (button :onclick "${EWW_CMD} close session && ${EWW_CMD} update session-is-open=false && systemctl poweroff"
+                             (box :class "label"
+                                  :orientation "h"
+                                  :space-evenly "false"
+                                  :spacing "10"
+                                  (label :text "⏻")
+                                  (label :text "Shutdown"))))))
 
 ;; (defwindow music
 ;;            :windowtype "dock"
@@ -418,7 +438,7 @@
 ;;                           :halign "fill"
 ;;                           :orientation "v"
 ;;                           :class "media-data-popup"
-;;                           :spacing 20
+;;                           :spacing "20"
 ;;                           (label :class "media-title-popup"
 ;;                                  :markup title-parsed
 ;;                                  :halign "center")
