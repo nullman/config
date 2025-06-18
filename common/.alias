@@ -1040,13 +1040,18 @@ alias adb-sync-home-pages-put="
 alias adb-sync-music-put="
     indir=\"${home}/data/media/Audio\"
     outdir=\"/sdcard/Music/\"
-    adb-sync --delete \"\${indir}/Music/\" \"\${outdir}\"
-    find \"\${indir}/Playlists/\" -name \"*.m3u\" | while read -r file ; do
-        adb push \"\${file}\" \"\${outdir}\"
-    done"
-    #!outdir=\$(echo \"/storage/\$(adb shell ls -1 /storage/ | grep -v emulated | grep -v self)/Music/\")
-    #!adb-sync --show-progress --del push \"\${indir}/Music/\" \"\${outdir}\"
-    #!adb-sync \"\${indir}/Music/Playlists/\" \"\${outdir}\""
+    tmpfile=\"\$(mktemp)\"
+    cat \"\${indir}/Playlists/rated_good.m3u\" | while read -r file ; do
+        echo adb shell \\\"mkdir -p \\\\\\\"\${outdir}\${file%/*}\\\\\\\"\\\" >> \"\${tmpfile}\"
+        echo adb push \\\"\${indir}/Music/\${file}\\\" \\\"\${outdir}\${file}\\\" >> \"\${tmpfile}\"
+    done
+    chmod +x \"\${tmpfile}\"
+    \"\${tmpfile}\"
+    adb push \"\${indir}/Playlists/rated_good.m3u\" \"\${outdir}\""
+    #!adb-sync --delete \"\${indir}/Music/\" \"\${outdir}\"
+    #!find \"\${indir}/Playlists/\" -name \"*.m3u\" | while read -r file ; do
+    #!    adb push \"\${file}\" \"\${outdir}\"
+    #!done"
 #        adb-sync-download-get    copy backup files from device to computer
 alias adb-sync-download-get="
     indir=\"/sdcard/Download/\"

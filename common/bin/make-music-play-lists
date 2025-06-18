@@ -103,10 +103,10 @@ rm "${pldir}/rated_normal.m3u"
 rm "${pldir}/rated_good.m3u"
 rm "${pldir}/rated_all.m3u"
 for r in $(seq 1 5) ; do
-    sort -t / -k 3 < "${ratingsdir}/songs-rated-${r}" > "${pldir}/rated_${r}.m3u"
-    [[ ${r} -ge 3 ]] && cat "${ratingsdir}/songs-rated-${r}" >> "${pldir}/rated_normal.m3u"
-    [[ ${r} -ge 4 ]] && cat "${ratingsdir}/songs-rated-${r}" >> "${pldir}/rated_good.m3u"
-    cat "${ratingsdir}/songs-rated-${r}" >> "${pldir}/rated_all.m3u"
+    sort -t / -k 3 < "${ratingsdir}/songs-rated-${r}" | grep '\.mp3$' > "${pldir}/rated_${r}.m3u"
+    [[ ${r} -ge 3 ]] && cat "${ratingsdir}/songs-rated-${r}" | grep '\.mp3$' >> "${pldir}/rated_normal.m3u"
+    [[ ${r} -ge 4 ]] && cat "${ratingsdir}/songs-rated-${r}" | grep '\.mp3$' >> "${pldir}/rated_good.m3u"
+    cat "${ratingsdir}/songs-rated-${r}" | grep '\.mp3$' >> "${pldir}/rated_all.m3u"
 done
 
 # unrated list
