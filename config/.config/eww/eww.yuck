@@ -87,10 +87,10 @@
                        :value {value == "" ? "0" : value}
                        :onchange onchange)))
 
-(defwidget workspace [label value onclick ?tooltip]
+(defwidget workspace [label value onclick ?onrightclick ?tooltip]
            (box :class {value == active-desktop ? "highlight" : "label"}
                 :tooltip tooltip
-                (button :onclick onclick label)))
+                (button :onclick onclick :onrightclick onrightclick label)))
 
 ;;------------------------------------------------------------------------------
 ;; Item Widgets
@@ -215,18 +215,18 @@
                      :tooltip "Window Selector"
                      (button :onclick "rofi -modi window -show window &" " "))
                 ;; symbols:                          
-                (workspace :label "1  " :value "1" :onclick "bspc desktop --focus '^1'" :tooltip "Workspace 1")
-                (workspace :label "2  " :value "2" :onclick "bspc desktop --focus '^2'" :tooltip "Workspace 2")
-                (workspace :label "3  " :value "3" :onclick "bspc desktop --focus '^3'" :tooltip "Workspace 3")
-                (workspace :label "4  " :value "4" :onclick "bspc desktop --focus '^4'" :tooltip "Workspace 4")
-                (workspace :label "5  " :value "5" :onclick "bspc desktop --focus '^5'" :tooltip "Workspace 5")
-                (workspace :label "6  " :value "6" :onclick "bspc desktop --focus '^6'" :tooltip "Workspace 6")
-                (workspace :label "7  " :value "7" :onclick "bspc desktop --focus '^7'" :tooltip "Workspace 7")
-                (workspace :label "8  " :value "8" :onclick "bspc desktop --focus '^8'" :tooltip "Workspace 8")
-                (workspace :label "9  " :value "9" :onclick "bspc desktop --focus '^9'" :tooltip "Workspace 9")
-                (workspace :label "10  " :value "10" :onclick "bspc desktop --focus '^10'" :tooltip "Workspace 10")
-                (workspace :label "11  " :value "11" :onclick "bspc desktop --focus '^11'" :tooltip "Workspace 11")
-                (workspace :label "12  " :value "12" :onclick "bspc desktop --focus '^12'" :tooltip "Workspace 12")
+                (workspace :label "1  " :value "1" :onclick "bspc desktop --focus '^1'" :onrightclick "bspc desktop --focus '^1' && bspc node --focus next.local.leaf" :tooltip "Workspace 1")
+                (workspace :label "2  " :value "2" :onclick "bspc desktop --focus '^2'" :onrightclick "bspc desktop --focus '^2' && bspc node --focus next.local.leaf" :tooltip "Workspace 2")
+                (workspace :label "3  " :value "3" :onclick "bspc desktop --focus '^3'" :onrightclick "bspc desktop --focus '^3' && bspc node --focus next.local.leaf" :tooltip "Workspace 3")
+                (workspace :label "4  " :value "4" :onclick "bspc desktop --focus '^4'" :onrightclick "bspc desktop --focus '^4' && bspc node --focus next.local.leaf" :tooltip "Workspace 4")
+                (workspace :label "5  " :value "5" :onclick "bspc desktop --focus '^5'" :onrightclick "bspc desktop --focus '^5' && bspc node --focus next.local.leaf" :tooltip "Workspace 5")
+                (workspace :label "6  " :value "6" :onclick "bspc desktop --focus '^6'" :onrightclick "bspc desktop --focus '^6' && bspc node --focus next.local.leaf" :tooltip "Workspace 6")
+                (workspace :label "7  " :value "7" :onclick "bspc desktop --focus '^7'" :onrightclick "bspc desktop --focus '^7' && bspc node --focus next.local.leaf" :tooltip "Workspace 7")
+                (workspace :label "8  " :value "8" :onclick "bspc desktop --focus '^8'" :onrightclick "bspc desktop --focus '^8' && bspc node --focus next.local.leaf" :tooltip "Workspace 8")
+                (workspace :label "9  " :value "9" :onclick "bspc desktop --focus '^9'" :onrightclick "bspc desktop --focus '^9' && bspc node --focus next.local.leaf" :tooltip "Workspace 9")
+                (workspace :label "10  " :value "10" :onclick "bspc desktop --focus '^10'" :onrightclick "bspc desktop --focus '^10' && bspc node --focus next.local.leaf" :tooltip "Workspace 10")
+                (workspace :label "11  " :value "11" :onclick "bspc desktop --focus '^11'" :onrightclick "bspc desktop --focus '^11' && bspc node --focus next.local.leaf" :tooltip "Workspace 11")
+                (workspace :label "12  " :value "12" :onclick "bspc desktop --focus '^12'" :onrightclick "bspc desktop --focus '^12' && bspc node --focus next.local.leaf" :tooltip "Workspace 12")
                 ;; weather
                 (box :class "label"
                      :tooltip weather-status

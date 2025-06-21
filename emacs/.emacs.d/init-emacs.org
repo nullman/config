@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2025-06-08 16:14 (user)>
+  #+TIMESTAMP: <2025-06-18 12:09 (user)>
 
 * Overview
   :PROPERTIES:
@@ -1379,7 +1379,7 @@
           80  = 20% transparency")
         (setq background-alpha (if (or window-system-mac window-system-windows)
                                    100        ; 0% transparency
-                                 85))         ; 10% transparency
+                                 85))         ; 15% transparency
         (set-frame-parameter (selected-frame) 'alpha background-alpha)
         (add-to-list 'default-frame-alist (cons 'alpha background-alpha))
 
@@ -1527,7 +1527,6 @@
         (use-package modus-themes
           :straight (:type built-in)
           :demand t
-          :bind ("<f2>" . modus-themes-toggle)
           :init
           ;; add customizations before loading
           (setq modus-themes-italic-constructs t
@@ -3165,7 +3164,7 @@
           (bind-keys ("<f1>" . help-for-help)))
         (when (fboundp 'help-command)
           (bind-keys ("S-<f1>" . help-command)))
-        ;; <f2> `modus-themes-toggle'
+        ;; <f2>
         (when (fboundp 'kmacro-start-macro-or-insert-counter)
           (bind-keys ("<f3>" . kmacro-start-macro-or-insert-counter))) ; default: `kmacro-start-macro-or-insert-counter'
         (when (fboundp 'kmacro-end-or-call-macro)

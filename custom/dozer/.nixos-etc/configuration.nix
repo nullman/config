@@ -1042,35 +1042,35 @@
     yad                                     # GUI dialog tool for shell scripts
     zenity                                  # Tool to display dialogs from the commandline and shell scripts
 
-    # xfce panel
-    xfce.libxfce4ui                         # Widgets library for Xfce
-    xfce.libxfce4util                       # Extension library for Xfce
-    xfce.xfce4-appfinder                    # Appfinder for the Xfce4 Desktop Environment
-    xfce.xfce4-battery-plugin               # Battery plugin for Xfce panel
-    xfce.xfce4-clipman-plugin               # Clipboard manager for Xfce panel
-    xfce.xfce4-cpufreq-plugin               # CPU Freq load plugin for Xfce panel
-    xfce.xfce4-cpugraph-plugin              # CPU graph show for Xfce panel
-    xfce.xfce4-datetime-plugin              # Shows the date and time in the panel, and a calendar appears when you left-cl...
-    xfce.xfce4-dict                         # Dictionary Client for the Xfce desktop environment
-    xfce.xfce4-fsguard-plugin               # Filesystem usage monitor plugin for the Xfce panel
-    xfce.xfce4-genmon-plugin                # Generic monitor plugin for the Xfce panel
-    xfce.xfce4-mailwatch-plugin             # Mail watcher plugin for Xfce panel
-    xfce.xfce4-mpc-plugin                   # MPD plugin for Xfce panel
-    xfce.xfce4-netload-plugin               # Internet load speed plugin for Xfce4 panel
-    xfce.xfce4-notes-plugin                 # Sticky notes plugin for Xfce panel
-    xfce.xfce4-notifyd                      # Simple notification daemon for Xfce
-    xfce.xfce4-panel                        # Panel for the Xfce desktop environment
-    xfce.xfce4-pulseaudio-plugin            # Adjust the audio volume of the PulseAudio sound system
-    xfce.xfce4-sensors-plugin               # Panel plug-in for different sensors using acpi, lm_sensors and hddtemp
-    xfce.xfce4-systemload-plugin            # System load plugin for Xfce panel
-    xfce.xfce4-taskmanager                  # Easy to use task manager for Xfce
-    xfce.xfce4-time-out-plugin              # Panel plug-in to take periodical breaks from the computer
-    xfce.xfce4-timer-plugin                 # Simple countdown and alarm plugin for the Xfce panel
-    xfce.xfce4-volumed-pulse                # Volume keys control daemon for Xfce using pulseaudio
-    xfce.xfce4-weather-plugin               # Weather plugin for the Xfce desktop environment
-    xfce.xfce4-whiskermenu-plugin           # Alternate application launcher for Xfce
-    xfce.xfce4-windowck-plugin              # Xfce panel plugin for displaying window title and buttons
-    xfce.xfce4-xkb-plugin                   # Allows you to setup and use multiple keyboard layouts
+    ## xfce panel
+    #xfce.libxfce4ui                         # Widgets library for Xfce
+    #xfce.libxfce4util                       # Extension library for Xfce
+    #xfce.xfce4-appfinder                    # Appfinder for the Xfce4 Desktop Environment
+    #xfce.xfce4-battery-plugin               # Battery plugin for Xfce panel
+    #xfce.xfce4-clipman-plugin               # Clipboard manager for Xfce panel
+    #xfce.xfce4-cpufreq-plugin               # CPU Freq load plugin for Xfce panel
+    #xfce.xfce4-cpugraph-plugin              # CPU graph show for Xfce panel
+    #xfce.xfce4-datetime-plugin              # Shows the date and time in the panel, and a calendar appears when you left-cl...
+    #xfce.xfce4-dict                         # Dictionary Client for the Xfce desktop environment
+    #xfce.xfce4-fsguard-plugin               # Filesystem usage monitor plugin for the Xfce panel
+    #xfce.xfce4-genmon-plugin                # Generic monitor plugin for the Xfce panel
+    #xfce.xfce4-mailwatch-plugin             # Mail watcher plugin for Xfce panel
+    #xfce.xfce4-mpc-plugin                   # MPD plugin for Xfce panel
+    #xfce.xfce4-netload-plugin               # Internet load speed plugin for Xfce4 panel
+    #xfce.xfce4-notes-plugin                 # Sticky notes plugin for Xfce panel
+    #xfce.xfce4-notifyd                      # Simple notification daemon for Xfce
+    #xfce.xfce4-panel                        # Panel for the Xfce desktop environment
+    #xfce.xfce4-pulseaudio-plugin            # Adjust the audio volume of the PulseAudio sound system
+    #xfce.xfce4-sensors-plugin               # Panel plug-in for different sensors using acpi, lm_sensors and hddtemp
+    #xfce.xfce4-systemload-plugin            # System load plugin for Xfce panel
+    #xfce.xfce4-taskmanager                  # Easy to use task manager for Xfce
+    #xfce.xfce4-time-out-plugin              # Panel plug-in to take periodical breaks from the computer
+    #xfce.xfce4-timer-plugin                 # Simple countdown and alarm plugin for the Xfce panel
+    #xfce.xfce4-volumed-pulse                # Volume keys control daemon for Xfce using pulseaudio
+    #xfce.xfce4-weather-plugin               # Weather plugin for the Xfce desktop environment
+    #xfce.xfce4-whiskermenu-plugin           # Alternate application launcher for Xfce
+    #xfce.xfce4-windowck-plugin              # Xfce panel plugin for displaying window title and buttons
+    #xfce.xfce4-xkb-plugin                   # Allows you to setup and use multiple keyboard layouts
 
     # applications
     ardour                                  # Multi-track hard disk recording software
@@ -1102,6 +1102,7 @@
 
     # utilities
     appimage-run                            #
+    asunder                                 # Graphical Audio CD ripper and encoder for Linux
     audacious                               # Lightweight and versatile audio player
     blanket                                 # Listen to different sounds
     bitwarden                               # A secure and free password manager for all of your devices

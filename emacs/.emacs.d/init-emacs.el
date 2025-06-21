@@ -626,7 +626,7 @@ Common values:
   80  = 20% transparency")
 (setq background-alpha (if (or window-system-mac window-system-windows)
                            100        ; 0% transparency
-                         85))         ; 10% transparency
+                         85))         ; 15% transparency
 (set-frame-parameter (selected-frame) 'alpha background-alpha)
 (add-to-list 'default-frame-alist (cons 'alpha background-alpha))
 
@@ -646,7 +646,6 @@ Common values:
 (use-package modus-themes
   :straight (:type built-in)
   :demand t
-  :bind ("<f2>" . modus-themes-toggle)
   :init
   ;; add customizations before loading
   (setq modus-themes-italic-constructs t
@@ -1684,7 +1683,7 @@ Otherwise, `custom-tab-width' is used."
     (bind-keys ("<f1>" . help-for-help)))
   (when (fboundp 'help-command)
     (bind-keys ("S-<f1>" . help-command)))
-  ;; <f2> `modus-themes-toggle'
+  ;; <f2>
   (when (fboundp 'kmacro-start-macro-or-insert-counter)
     (bind-keys ("<f3>" . kmacro-start-macro-or-insert-counter))) ; default: `kmacro-start-macro-or-insert-counter'
   (when (fboundp 'kmacro-end-or-call-macro)
