@@ -1263,6 +1263,7 @@
     #crexx                                   #
     csvkit                                  # Suite of command-line tools for converting to and working with CSV
     ctags                                   # Tool for fast source code browsing (exuberant ctags)
+    dbeaver-bin                             # Universal SQL Client for developers, DBA and analysts. Supports MySQL, Postgr...
     djgpp_i586                              # Complete 32-bit GNU-based development system for Intel x86 PCs running DOS
     djgpp_i686                              # Complete 32-bit GNU-based development system for Intel x86 PCs running DOS
     flex                                    # Fast lexical analyser generator
