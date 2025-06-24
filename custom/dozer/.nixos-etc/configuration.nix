@@ -1380,6 +1380,7 @@
     pandoc                                  # Conversion between documentation formats
     patch                                   # GNU Patch, a program to apply differences to files
     plantuml                                # Draw UML diagrams using a simple and human readable text description
+    pup                                     # Parsing HTML at the command line
     python311                               # High-level dynamically-typed programming language
     python311Packages.pip                   # PyPA recommended tool for installing Python packages
     racket                                  # Programmable programming language
