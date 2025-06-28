@@ -1344,6 +1344,7 @@
     ruby ruby-lsp                           # Object-oriented language for quick and easy programming
     rustc                                   # Safe, concurrent, practical language (wrapper script)
     shellcheck                              # Shell script analysis tool
+    swift                                   # Swift Programming Language
     tokei                                   # Program that allows you to count your code, quickly
     vlang                                   # Simple, fast, safe, compiled language for developing maintainable software
     vscode                                  # Open source source code editor developed by Microsoft for Windows, Linux and ...
