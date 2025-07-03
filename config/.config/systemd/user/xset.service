@@ -17,7 +17,7 @@ Description=Set mouse speed and keyboard rate
 [Service]
 User=user
 Type=oneshot
-ExecStart=xset -dpms s off b off m 2/1 4 r rate 500 35
+ExecStart=/usr/sbin/xset -dpms s off b off m 2/1 4 r rate 500 35
 
 [Install]
 WantedBy=default.target

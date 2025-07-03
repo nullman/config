@@ -1300,6 +1300,7 @@
     basiliskii                              # 68k Macintosh emulator
     dosbox                                  # DOS emulator
     dosbox-x                                # Cross-platform DOS emulator based on the DOSBox project
+    fsuae fsuae-launcher                    # Accurate, customizable Amiga Emulator
     ##gnome.gnome-boxes                       # Simple GNOME 3 application to access remote or virtual systems
     gnome-boxes                             # Simple GNOME 3 application to access remote or virtual systems
     mame                                    # Multi-purpose emulation framework
