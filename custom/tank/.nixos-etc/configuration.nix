@@ -1162,6 +1162,7 @@
     bitwarden-menu                          # Dmenu/Rofi frontend for managing Bitwarden vaults. Uses the Bitwarden CLI tool to interact with the Bitwarden database
     boxes                                   # Command line program which draws, removes, and repairs ASCII art boxes
     broot                                   # config-private/common/org loading ❯
+    caligula                                # User-friendly, lightweight TUI for disk imaging
     chezmoi                                 # Interactive tree view, a fuzzy search, a balanced BFS descent and customizable commands
     cool-retro-term                         # Manage your dotfiles across multiple machines, securely
     cp437                                   # Emulates an old-style "code page 437" / "IBM-PC" character set terminal on a ...
