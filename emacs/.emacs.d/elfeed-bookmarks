@@ -55,6 +55,7 @@
  (:name "Planet m68k" :html "https://m68k.info/" :rss "http://m68k.info/index.xml" :tag "retro")
  (:name "Atari Code" :html "https://ataricode.com/" :rss "https://ataricode.com/index.xml" :tag "retro")
  (:name "Joshua Stein (Classic Mac Coding)" :html "https://jcs.org/" :rss "https://jcs.org/rss" :tag "retro")
+ (:name "Nybbles and Bytes" :html "https://nybblesandbytes.net/" :rss "https://nybblesandbytes.net/blog/index.rss" :tag "retro")
  ;; Other
  ;;(:name "New York Times OPEN Blogs" :html "https://open.blogs.nytimes.com/" :rss "https://open.blogs.nytimes.com/feed/" :tag "blog")
  (:name "XKCD Comic" :html "https://xkcd.com/" :rss "https://xkcd.com/atom.xml" :tag "comic")

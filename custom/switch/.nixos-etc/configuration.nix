@@ -690,6 +690,11 @@
   #    what = "//synology/video";
   #    where = "/mnt/synology/video";
   #  })
+  #
+  #  (commonMountOptions // {
+  #    what = "//synology/zzz";
+  #    where = "/mnt/synology/zzz";
+  #  })
   #];
   #
   #systemd.automounts = let commonAutoMountOptions = {
@@ -706,6 +711,7 @@
   #  (commonAutoMountOptions // { where = "/mnt/synology/music"; })
   #  (commonAutoMountOptions // { where = "/mnt/synology/photo"; })
   #  (commonAutoMountOptions // { where = "/mnt/synology/video"; })
+  #  (commonAutoMountOptions // { where = "/mnt/synology/zzz"; })
   #];
 
   ## packages
@@ -1030,7 +1036,7 @@
     dmg2img                                 # Apple's compressed dmg to standard (hfsplus) image disk file convert tool
     easytag                                 # View and edit tags for various audio files
     #etcher                                  #
-    evince                                  # GNOME's document viewer
+    #evince                                  # GNOME's document viewer -- ISSUES PRINTING!
     ffmpeg_6-full                           # Complete, cross-platform solution to record, convert and stream audio and video
     ##file-roller                             # Archive manager for the GNOME desktop environment
     flameshot                               # Powerful yet simple to use screenshot software
@@ -1062,6 +1068,7 @@
     #mtkclient                               #
     mupdf                                   # Lightweight PDF, XPS, and E-book viewer and toolkit written in portable C
     notepadqq                               # Notepad++-like editor for the Linux desktop
+    papers                                  # GNOME's document viewer
     plasma5Packages.kdeconnect-kde          # KDE Connect provides several features to integrate your phone and your computer
     poppler_utils                           # PDF rendering library
     qmplay2                                 # Qt-based Multimedia player
@@ -1192,6 +1199,7 @@
     #freenet                                 # Decentralised and censorship-resistant network
     #gajim                                   # Jabber client written in PyGTK
     #google-chrome                           # Freeware web browser developed by Google
+    #gossip                                  # Desktop client for nostr, an open social media protocol
     #kristall                                # Graphical small-internet client, supports gemini, http, https, gopher, finger
     #magic-wormhole                          # Securely transfer data between computers
     #ncgopher                                # Gopher and gemini client for the modern internet

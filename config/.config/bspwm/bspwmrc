@@ -195,6 +195,7 @@ _br 'haiku' state=fullscreen
 #_br 'jetbrains-studio' state=fullscreen
 #_br 'Microsoft Teams' state=fullscreen
 _br 'mplayer2' state=fullscreen
+_br 'Papers' state=fullscreen
 #_br 'spotify' state=fullscreen
 _br 'vlc' state=fullscreen
 _br 'VirtualBox Manager' state=fullscreen

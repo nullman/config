@@ -1247,6 +1247,8 @@ alias cdsphoto="cd /mnt/synology/photo"
 alias cdsvideo="cd /mnt/synology/video"
 #        cdsmusicvideos          cd /mnt/synology/video/Music/Videos
 alias cdsmusicvideos="cd /mnt/synology/video/Music/Videos"
+#        cdszzz                  cd /mnt/synology/zzz
+alias cdszzz="cd /mnt/synology/zzz"
 #        cdopt                   cd /opt
 alias cdopt="cd /opt"
 #        cdpr                    cd /proc
