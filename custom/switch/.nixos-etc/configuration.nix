@@ -1030,6 +1030,7 @@
     audacious                               # Lightweight and versatile audio player
     blanket                                 # Listen to different sounds
     bitwarden                               # A secure and free password manager for all of your devices
+    brasero                                 # Gnome CD/DVD Burner
     celluloid                               # Simple GTK frontend for the mpv video player
     cherrytree                              # Hierarchical note taking application
     czkawka                                 # Simple, fast and easy to use app to remove unnecessary files from your computer
