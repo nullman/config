@@ -814,6 +814,7 @@
     kbd                                     # Linux keyboard tools and keyboard maps
     kitty                                   # Modern, hackable, featureful, OpenGL based terminal emulator
     languagetool                            # Proofreading program for English, French German, Polish, and more
+    lha                                     # LHa is an archiver and compressor using the LZSS and Huffman encoding compres...
     libnotify                               # Library that sends desktop notifications to a notification daemon
     libxslt                                 # C library and tools to do XSL transformations
     light                                   # GNU/Linux application to control backlights
