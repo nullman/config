@@ -262,7 +262,6 @@
   services.locate = {
     enable = true;
     package = pkgs.mlocate;
-    localuser = null;
     pruneBindMounts = true;
     prunePaths = [
       "/dev"
@@ -455,6 +454,13 @@
       #mononoki
       #mplus-outline-fonts.githubRelease
       nerdfonts
+      #nerd-fonts.meslo-lg
+      ##nerd-fonts.hack
+      ##nerd-fonts.droid-sans-mono
+      ##nerd-fonts.fira-code
+      #nerd-fonts._3270
+      #nerd-fonts._0xproto
+      #nerd-fonts.terminess-ttf
       noto-fonts
       noto-fonts-emoji
       #proggyfonts
@@ -1139,7 +1145,7 @@
     cp437                                   # Emulates an old-style "code page 437" / "IBM-PC" character set terminal on a ...
     ddgr                                    # Terminal emulator which mimics the old cathode display
     dict                                    # Dict protocol server and client
-    diskonaut                               # Terminal disk space navigator
+    #diskonaut                               # Terminal disk space navigator
     element                                 # Periodic table on the command line
     eza                                     # Modern, maintained replacement for ls
     f3                                      # Fight Flash Fraud
@@ -1147,9 +1153,9 @@
     frogmouth                               # Markdown browser for your terminal
     gcalcli                                 # CLI for Google Calendar
     gdu                                     # Disk usage analyzer with console interface
-    googler                                 # Google Search, Google Site Search, Google News from the terminal
+    #googler                                 # Google Search, Google Site Search, Google News from the terminal
     gpart                                   # Guess PC-type hard disk partitions
-    hardinfo                                # Display information about your hardware and operating system
+    #hardinfo                                # Display information about your hardware and operating system
     hyperfine                               # Command-line benchmarking tool
     id3v2                                   # Command line editor for id3v2 tags
     inetutils                               # Collection of common network programs
@@ -1245,7 +1251,6 @@
     quickgui                                # Flutter frontend for quickemu
     scummvm                                 # Program to run certain classic graphical point-and-click adventure games (suc...
     tiny8086                                # Open-source small 8086 emulator
-    uae                                     # Ultimate/Unix/Unusable Amiga Emulator
     vice                                    # Emulators for a variety of 8-bit Commodore computers
     virt-manager                            # Desktop user interface for managing virtual machines
     virt-viewer                             # Viewer for remote virtual machines
