@@ -1940,8 +1940,32 @@ home-restow() {
     [[ -d "$(configdir)-private" ]] && stow --dir="$(configdir)-private" --target="${HOME}" --restow "common" "emacs"
     [[ -d "$(configdir)-private" ]] && stow --dir="$(configdir)-private" --target="${HOME}" --no-folding --restow "config" "local"
 }
-#!#        arch-install-packages  install arch packages
-#!arch-install-packages() {
+#!#        qubes-arch-packages  dump arch package install commands to paste into a qubes vm
+#!qubes-arch-packages() {
+#!    DEBUG=1              # remove to eval commands, instead of just printing them
+#!    repocmd="yay -S --needed --noconfirm"
+#!    cmdsize=10
+#!
+#!    packages=($(awk "/^[ \t]*#\+NAME: qubes-arch-packages\$/,/^\*/{print \$0}" \
+#!                    "${HOME}/org/personal.org" | tail -n +4 | head -n -1 | \
+#!                    grep -v "^ *|---" | grep -v "^ *| x |" | \
+#!                    cut -d '|' -f 4 | sed 's/^ *// ; s/ *$//'))
+#!
+#!    for x in $(seq 0 $((${#packages[@]} / cmdsize))) ; do
+#!        echo "${repocmd} $(echo ${packages[@]:$((x * cmdsize)):${cmdsize}})"
+#!        [ -z "${DEBUG}" ] && eval "${repocmd} $(echo ${packages[@]:$((x * cmdsize)):${cmdsize}})"
+#!    done
+#!}
+#!#        arch-initialize      install arch packages and setup arch system
+#!arch-initialize() {
+#!    _getsection() {
+#!        local file="${HOME}/org/personal.org"
+#!        local regexp="/^[ \t]*#\+NAME: $1\$/,/^[ \t]*#\+END_SRC\$/{print \$0}"
+#!        awk "${regexp}" "${file}" | tail -n +3 | head -n -1 | sed 's/^[ \t]*//' | \
+#!            sed 's/--needed/--needed --answerdiff None --answerclean None --mflags \"--noconfirm\"/' | \
+#!            sed 's/yay /yes | yay /'
+#!    }
+#!
 #!    _getpackages() {
 #!        local file="${HOME}/org/personal.org"
 #!        local regexp="/^[ \t]*#\+NAME: $1\$/,/^\*/{print \$0}"
@@ -1950,8 +1974,54 @@ home-restow() {
 #!            cut -d '|' -f 4 | sed 's/^ *// ; s/ *$//'
 #!    }
 #!
+#!    #repocmd="sudo pacman -Sy --needed --noconfirm"
 #!    repocmd="yay -Sy --needed --noconfirm --answerdiff None --answerclean None --mflags \"--noconfirm\""
 #!    cmdsize=10
+#!
+#!    initial=(
+#!        "arch-group"
+#!        "arch-sudoers"
+#!        "arch-sysctl-conf"
+#!        "arch-systemd"
+#!        #"arch-locale"
+#!        "arch-package-managers"
+#!    )
+#!
+#!    standard=(
+#!        #"arch-lightdm-conf"
+#!        "arch-lightdm-gtk-greeter-conf"
+#!        #"arch-lightdm-slick-greeter-conf"
+#!        "arch-pkgfile"
+#!        "arch-copy-wallpapers"
+#!        "arch-fix-backgrounds"
+#!        "arch-set-background-image"
+#!        "arch-copy-fonts"
+#!        "arch-ssh-config"
+#!        "arch-networkmanager"
+#!        #"arch-configure-audacious"
+#!        #"arch-configure-irssi"
+#!        #"arch-configure-java-8-openjdk"
+#!        #"arch-configure-java-11-openjdk"
+#!        #"arch-configure-tlp"
+#!        #"arch-configure-x48"
+#!        "arch-configure-xscreensaver-aerial"
+#!        #"arch-configure-gsync"
+#!        "arch-configure-java-8-openjdk"
+#!        #"arch-configure-java-11-openjdk"
+#!        #"arch-printer-cannon"
+#!        #"arch-capslock-control"
+#!        "arch-capslock-control-terminal"
+#!        "arch-capslock-control-x11"
+#!        "arch-services"
+#!        "arch-user-services"
+#!        "arch-final"
+#!    )
+#!
+#!    optional=(
+#!        #"arch-configure-fingerprint"
+#!        "arch-configure-grip"
+#!        #"arch-configure-handbrake"
+#!    )
 #!
 #!    if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
 #!        echo "Usage: arch-initialize [--optional]"
@@ -1960,35 +2030,64 @@ home-restow() {
 #!    fi
 #!
 #!    if [[ "$1" == "-o" ]] || [[ "$1" == "--optional" ]] ; then
+#!        opt=1
+#!        sections=(${optional[@]})
 #!        packagesname="arch-optional-packages"
 #!    else
+#!        opt=0
+#!        sections=(${standard[@]})
 #!        packagesname="arch-packages"
 #!    fi
 #!
-#!    packages=($(_getpackages ${packagesname}))
+#!    echo "You are about to install a curated set of Arch packages and setup this system."
+#!    echo "This command is normally run once for a given system installation, but it is"
+#!    echo "safe to run multiple times to pick up new packages or configuration changes."
+#!    if [[ ${opt} -eq 1 ]] ; then
+#!        echo "The OPTIONAL parameter was given, so (only) optional packages will be installed."
+#!        echo "This should only be run after running this script without the OPTIONAL parameter."
+#!    fi
 #!
-#!    for x in $(seq 0 $((${#packages[@]} / ${cmdsize}))) ; do
-#!        echo "${repocmd} $(echo ${packages[@]:$((x * ${cmdsize})):${cmdsize}})"
-#!        [[ -z "${DEUBG}" ]] && eval "${repocmd} $(echo ${packages[@]:$((x * ${cmdsize})):${cmdsize}})"
+#!    echo
+#!    echo "========== Arch Initialization Script =========="
+#!    echo
+#!
+#!    if [[ ${opt} -eq 0 ]] ; then
+#!        for section in "${initial[@]}" ; do
+#!            echo
+#!            echo "========== ${section} =========="
+#!            echo
+#!            #echo "$(_getsection ${section})"
+#!            eval "$(_getsection ${section})"
+#!        done
+#!    fi
+#!
+#!    echo
+#!    echo "==========$([[ ${opt} -eq 1 ]] && echo ' Optional') Packages =========="
+#!    echo
+#!
+#!    # repo packages
+#!    packages=($(_getpackages ${packagesname}))
+#!    echo
+#!    echo "========== Repo Packages =========="
+#!    echo
+#!    for x in $(seq 0 $((${#packages[@]} / cmdsize))) ; do
+#!        echo "${repocmd} $(echo ${packages[@]:$((x * cmdsize)):${cmdsize}})"
+#!        eval "${repocmd} $(echo ${packages[@]:$((x * cmdsize)):${cmdsize}})"
 #!    done
+#!
+#!    for section in ${sections[@]} ; do
+#!        echo
+#!        echo "========== ${section} =========="
+#!        echo
+#!        #echo "$(_getsection ${section})"
+#!        eval "$(_getsection ${section})"
+#!    done
+#!
+#!    echo
+#!    echo "========== Arch Initialization Complete =========="
+#!    echo
 #!}
-#        qubes-arch-packages  dump arch package install commands to paste into a qubes vm
-qubes-arch-packages() {
-    DEBUG=1              # remove to eval commands, instead of just printing them
-    repocmd="yay -S --needed --noconfirm"
-    cmdsize=10
-
-    packages=($(awk "/^[ \t]*#\+NAME: qubes-arch-packages\$/,/^\*/{print \$0}" \
-                    "${HOME}/org/personal.org" | tail -n +4 | head -n -1 | \
-                    grep -v "^ *|---" | grep -v "^ *| x |" | \
-                    cut -d '|' -f 4 | sed 's/^ *// ; s/ *$//'))
-
-    for x in $(seq 0 $((${#packages[@]} / cmdsize))) ; do
-        echo "${repocmd} $(echo ${packages[@]:$((x * cmdsize)):${cmdsize}})"
-        [ -z "${DEBUG}" ] && eval "${repocmd} $(echo ${packages[@]:$((x * cmdsize)):${cmdsize}})"
-    done
-}
-#        arch-initialize      install arch packages and setup arch system
+#        arch-initialize      setup arch system
 arch-initialize() {
     _getsection() {
         local file="${HOME}/org/personal.org"
@@ -1997,18 +2096,6 @@ arch-initialize() {
             sed 's/--needed/--needed --answerdiff None --answerclean None --mflags \"--noconfirm\"/' | \
             sed 's/yay /yes | yay /'
     }
-
-    _getpackages() {
-        local file="${HOME}/org/personal.org"
-        local regexp="/^[ \t]*#\+NAME: $1\$/,/^\*/{print \$0}"
-        awk "${regexp}" "${file}" | tail -n +4 | head -n -1 | \
-            grep -v "^ *|---" | grep -v "^ *| x |" | \
-            cut -d '|' -f 4 | sed 's/^ *// ; s/ *$//'
-    }
-
-    #repocmd="sudo pacman -Sy --needed --noconfirm"
-    repocmd="yay -Sy --needed --noconfirm --answerdiff None --answerclean None --mflags \"--noconfirm\""
-    cmdsize=10
 
     initial=(
         "arch-group"
@@ -2057,55 +2144,23 @@ arch-initialize() {
 
     if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
         echo "Usage: arch-initialize [--optional]"
-        echo "  -o,--optional  install optional packages instead"
+        echo "  -o,--optional  optional setup"
         return 1
     fi
 
     if [[ "$1" == "-o" ]] || [[ "$1" == "--optional" ]] ; then
-        opt=1
-        sections=(${optional[@]})
-        packagesname="arch-optional-packages"
+        sections=(${initial[@]} ${standard[@]} ${optional[@]})
     else
-        opt=0
-        sections=(${standard[@]})
-        packagesname="arch-packages"
+        sections=(${initial[@]} ${standard[@]})
     fi
 
-    echo "You are about to install a curated set of Arch packages and setup this system."
+    echo "You are about to run a set of curated arch system modifications."
     echo "This command is normally run once for a given system installation, but it is"
-    echo "safe to run multiple times to pick up new packages or configuration changes."
-    if [[ ${opt} -eq 1 ]] ; then
-        echo "The OPTIONAL parameter was given, so (only) optional packages will be installed."
-        echo "This should only be run after running this script without the OPTIONAL parameter."
-    fi
+    echo "safe to run multiple times to pick up new configuration changes."
 
     echo
     echo "========== Arch Initialization Script =========="
     echo
-
-    if [[ ${opt} -eq 0 ]] ; then
-        for section in "${initial[@]}" ; do
-            echo
-            echo "========== ${section} =========="
-            echo
-            #echo "$(_getsection ${section})"
-            eval "$(_getsection ${section})"
-        done
-    fi
-
-    echo
-    echo "==========$([[ ${opt} -eq 1 ]] && echo ' Optional') Packages =========="
-    echo
-
-    # repo packages
-    packages=($(_getpackages ${packagesname}))
-    echo
-    echo "========== Repo Packages =========="
-    echo
-    for x in $(seq 0 $((${#packages[@]} / cmdsize))) ; do
-        echo "${repocmd} $(echo ${packages[@]:$((x * cmdsize)):${cmdsize}})"
-        eval "${repocmd} $(echo ${packages[@]:$((x * cmdsize)):${cmdsize}})"
-    done
 
     for section in ${sections[@]} ; do
         echo
@@ -2118,37 +2173,6 @@ arch-initialize() {
     echo
     echo "========== Arch Initialization Complete =========="
     echo
-    if [[ ${opt} -eq 0 ]] ; then
-        echo "Optional setup:"
-        echo
-        echo "SSH Daemon"
-        echo
-        echo "1) Edit /etc/ssh/sshd_config:"
-        echo
-        echo "------------------------------------------------------------------------------"
-        echo "# do not allow root logins"
-        echo "PermitRootLogin no"
-        echo
-        echo "# do not allow password logins (public key must be in authorized hosts file)"
-        echo "PasswordAuthentication no"
-        echo
-        echo "# allow X11 connections [optional]"
-        echo "X11Forwarding yes"
-        echo "------------------------------------------------------------------------------"
-        echo
-        echo "2) Enable sshd service:"
-        echo
-        echo "  sudo systemctl enable sshd.service"
-        echo "  sudo systemctl start sshd.service"
-        echo "  sudo systemctl status sshd.service"
-        echo
-        echo "3) Enable lightdm service:"
-        echo
-        echo "  sudo systemctl enable lightdm.service"
-        echo "  sudo systemctl start lightdm.service"
-        echo
-    fi
-    echo "End of Arch Installation Script"
 }
 
 #!
