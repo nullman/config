@@ -2472,6 +2472,10 @@ alias ssh-dozer="echo 'ssh:dozer' ; ssh dozer"
 alias ssh-firewall="echo 'ssh:admin@firewall' ; ssh -p 8022 admin@firewall"
 #        ssh-gemini              ssh gemini
 alias ssh-gemini="echo 'ssh:gemini' ; ssh gemini"
+#        ssh-ice                 ssh ice
+alias ssh-ice="echo 'ssh:ice' ; ssh ice"
+#        ssh-kali                ssh kali
+alias ssh-kali="echo 'ssh:kali' ; ssh kali-direct"
 #        ssh-morpheus            ssh morpheus
 alias ssh-morpheus="echo 'ssh:morpheus' ; ssh morpheus"
 #        ssh-morpheusgit         ssh morpheus:git
@@ -2482,12 +2486,10 @@ alias ssh-mouse="echo 'ssh:mouse' ; ssh mouse"
 #!alias ssh-neo="echo 'ssh:neo' ; ssh neo"
 #        ssh-pimodem             ssh pimodem
 alias ssh-pimodem="echo 'ssh:pi@pimodem' ; ssh pi@pimodem"
-#        ssh-ice                 ssh ice
-alias ssh-ice="echo 'ssh:ice' ; ssh ice"
 #        ssh-raspad              ssh raspad
 alias ssh-raspad="echo 'ssh:raspad-usb' ; ssh pi@raspad-usb"
-#        ssh-kali                ssh kali
-alias ssh-kali="echo 'ssh:kali' ; ssh kali-direct"
+#        ssh-retro               ssh retro
+alias ssh-retro="echo 'ssh:retro' ; ssh retro"
 #        ssh-synology            ssh synology
 alias ssh-synology="echo 'ssh:synology' ; ssh kyle-admin@synology"
 #        ssh-switch              ssh switch
