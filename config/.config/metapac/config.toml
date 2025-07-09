@@ -32,4 +32,4 @@ hostname_groups_enabled = true
 # paths starting without a / are relative to the groups folder
 # Default: None
 [hostname_groups]
-retro = ["base" "x11" "wm" "emulators"]
+retro = ["base", "x11", "wm", "emulators"]
