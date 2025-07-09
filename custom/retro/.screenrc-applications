@@ -1,0 +1,26 @@
+#===============================================================================
+# .screenrc-applications
+#
+# Configuration for screen initial applications.
+#
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
+#===============================================================================
+
+# start some shells and applications
+screen -t mon 0 nice htop
+#screen -t emacs 1 emacs --no-site-file -nw
+screen -t shell 1 ${SHELL}
+screen -t shell 2 ${SHELL}
+screen -t shell 3 ${SHELL}
+screen -t shell 4 ${SHELL}
+screen -t shell 5 ${SHELL}
+screen -t shell 6 ${SHELL}
+screen -t shell 7 ${SHELL}
+screen -t shell 8 ${SHELL}
+screen -t shell 9 ${SHELL}
+screen -t calculator 19 orpie
+screen -t spell 20 ispell -a
+
+#===============================================================================
+# End of File
+#===============================================================================
