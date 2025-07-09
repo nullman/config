@@ -1,0 +1,17 @@
+arch = [
+    "qt5-tools",
+    "qt6-tools",
+    "binutils",
+    "ccache",
+    "cmake",
+    "github-desktop",
+    "gradle",
+    "gradle-doc",
+    "ipython",
+    "jdk-openjdk",
+    "jdk11-openjdk",
+    "jdk17-openjdk",
+    "jdk8-openjdk",
+    "ruby",
+    "rustup",
+]

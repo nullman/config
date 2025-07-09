@@ -2136,43 +2136,58 @@ arch-initialize() {
         "arch-final"
     )
 
-    optional=(
-        #"arch-configure-fingerprint"
-        "arch-configure-grip"
-        #"arch-configure-handbrake"
-    )
+    sections=(${initial[@]} ${standard[@]})
 
-    if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
-        echo "Usage: arch-initialize [--optional]"
-        echo "  -o,--optional  optional setup"
-        return 1
-    fi
-
-    if [[ "$1" == "-o" ]] || [[ "$1" == "--optional" ]] ; then
-        sections=(${initial[@]} ${standard[@]} ${optional[@]})
-    else
-        sections=(${initial[@]} ${standard[@]})
-    fi
-
-    echo "You are about to run a set of curated arch system modifications."
+    echo "You are about to run a set of opinionated arch system modifications."
     echo "This command is normally run once for a given system installation, but it is"
     echo "safe to run multiple times to pick up new configuration changes."
+    echo -n "Continue (y/N)? " ; read a
 
-    echo
-    echo "========== Arch Initialization Script =========="
-    echo
+    if [[ "${a}" == "y" || "${a}" == "Y" ]] ; then
+        echo
+        echo "========== Arch Initialization Script =========="
+        echo
 
-    for section in ${sections[@]} ; do
+        for section in ${sections[@]} ; do
+            echo
+            echo "========== ${section} =========="
+            echo
+            #echo "$(_getsection ${section})"
+            eval "$(_getsection ${section})"
+        done
+
         echo
-        echo "========== ${section} =========="
+        echo "========== Arch Initialization Complete =========="
         echo
-        #echo "$(_getsection ${section})"
-        eval "$(_getsection ${section})"
+    fi
+}
+#        arch-make-metapac-groups  generate arch metapac package groups
+arch-make-metapac-groups() {
+    infile="${HOME}/org/personal.org"
+    regexp="/^[ \t]*#\+NAME: arch-packages\$/,/^\*/{print \$0}"
+    outdir="${HOME}/config/config/.config/metapac/groups"
+    mkdir -p "${outdir}"
+
+    _getgroups() {
+        awk "${regexp}" "${infile}" | tail -n +4 | head -n -1 | \
+            grep -v "^ *|---" | grep -v "^ *| *x *|" | \
+            cut -d '|' -f 3 | sort --unique | sed 's/^ *// ; s/ *$//'
+    }
+
+    _getpackages() {
+        awk "${regexp}" "${infile}" | tail -n +4 | head -n -1 | \
+            grep "^ *| *| $1 *|" | \
+            grep -v "^ *|---" | grep -v "^ *| *x *|" | \
+            cut -d '|' -f 4 | sed 's/^ */    \"/ ; s/ *$/\",/'
+    }
+
+    for group in $(_getgroups) ; do
+        printf "%s\n%s\n%s" \
+               "arch = [" \
+               "$(_getpackages ${group})" \
+               "]" \
+               > "${outdir}/${group}.toml"
     done
-
-    echo
-    echo "========== Arch Initialization Complete =========="
-    echo
 }
 
 #!

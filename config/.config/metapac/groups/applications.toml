@@ -1,0 +1,16 @@
+arch = [
+    "bitwarden",
+    "evince",
+    "font-manager",
+    "irssi",
+    "libreoffice-fresh",
+    "mc",
+    "mpc",
+    "mpd",
+    "mpdris2",
+    "nautilus",
+    "neofetch",
+    "notepadqq",
+    "ranger",
+    "remind",
+]
