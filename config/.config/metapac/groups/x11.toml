@@ -6,8 +6,6 @@ arch = [
     "xdg-utils",
     "xdo",
     "xdotool",
-    "xfce4",
-    "xfce4-goodies",
     "xfe",
     "xgetres",
     "xorg-xbacklight",
