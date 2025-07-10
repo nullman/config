@@ -1,0 +1,34 @@
+#===============================================================================
+# .config/systemd/user/resume.service
+#
+# Configuration for systemd user resume service.
+#
+# Enable:   systemctl --user enable resume.service
+# Start:    systemctl --user start resume.service
+# Stop:     systemctl --user stop resume.service
+# Disable:  systemctl --user disable resume.service
+#
+# Reference: https://wiki.archlinux.org/index.php/Systemd/User
+#===============================================================================
+
+[Unit]
+Description=Resume Actions
+Before=sleep.target
+StopWhenUnneeded=yes
+
+[Service]
+User=user
+Type=oneshot
+RemainAfterExit=yes
+#ExecStop=/usr/sbin/systemctl --user restart schkd
+ExecStop=/usr/sbin/systemctl --user restart setxkbmap
+ExecStop=/usr/sbin/systemctl --user restart xkbcomp
+ExecStop=/usr/sbin/systemctl --user restart xset
+#ExecStop=/usr/sbin/systemctl --user restart xbindkeys
+
+[Install]
+WantedBy=sleep.target
+
+#===============================================================================
+# End of File
+#===============================================================================
