@@ -30,7 +30,7 @@ _command eww && (eww --restart open bar && sleep 1 && xdo below -t $(xdo id -n r
 
 # system bar applets
 #_command clipit && (_delay ${delay} pkill -u ${USER} clipit ; clipit) &
-#_command pa-applet && (_delay ${delay} pkill -u ${USER} pa-applet ; pa-applet) &
+_command pa-applet && (_delay ${delay} pkill -u ${USER} pa-applet ; pa-applet) &
 _command blueman-applet && (_delay ${delay} pkill -u ${USER} blueman-applet ; blueman-applet) &
 _command nm-applet && (_delay ${delay} pkill -u ${USER} nm-applet ; nm-applet) &
 #_command pamac-tray && (_delay ${delay} pkill -u ${USER} pamac-tray ; pamac-tray) &

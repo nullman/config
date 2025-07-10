@@ -274,21 +274,25 @@
                         :onchange ""
                         :tooltip "Disk Used: ${round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}%")
                 ;; systray
-                ;;(systray)
-                (box :class "label"
-                     :tooltip "System Tray"
-                     (button :onclick {systray-is-open == "true" ?
-                             "${EWW_CMD} close systray && ${EWW_CMD} update systray-is-open=false" :
-                             "${EWW_CMD} open systray --pos $(($(xdotool getmouselocation --shell | sed -n '/^X=/p' | sed 's/^X=//') - 10))x-30 && ${EWW_CMD} update systray-is-open=true"}
-                             ""))
+                (systray
+                 :icon-size "14"
+                 :orientation "h"
+                 :space-evenly "true"
+                 :spacing "5")
+                ;; (box :class "label"
+                ;;      :tooltip "System Tray"
+                ;;      (button :onclick {systray-is-open == "true" ?
+                ;;              "${EWW_CMD} close systray && ${EWW_CMD} update systray-is-open=false" :
+                ;;              "${EWW_CMD} open systray --pos $(($(xdotool getmouselocation --shell | sed -n '/^X=/p' | sed 's/^X=//') - 10))x-30 && ${EWW_CMD} update systray-is-open=true"}
+                ;;              ""))
                 ;; battery
                 (battery :status {EWW_BATTERY == "" ? "" : EWW_BATTERY.BAT0.status}
                          :capacity {EWW_BATTERY == "" ? "" : EWW_BATTERY.BAT0.capacity})
                 ;; wifi
                 (wifi :status wifi-status
                       :strength wifi-strength)
-                ;; bluetooth
-                (bluetooth :status bt-status)
+                ;; ;; bluetooth
+                ;; (bluetooth :status bt-status)
                 ;; temperature
                 ;; symbols:     
                 ;; time
@@ -333,18 +337,18 @@
                           :show-day-names "true")))
 ;;:onclick "remind ~/.reminders $(date -d {2}-$(({1}+1))-{0} '+%_d %b %Y') | fold -w 80 -s | yad --text-info --width=800 --height=600 --wrap --no-buttons 2>/dev/null")))
 
-(defwindow systray
-           :windowtype "dock"
-           :stacking "fg"
-           :geometry (geometry :x "-10px"
-                               :y "-30px"
-                               :width "0%"
-                               :height "0%"
-                               :anchor "bottom left")
-           (systray
-            :orientation "v"
-            :space-evenly "true"
-            :spacing "10"))
+;; (defwindow systray
+;;            :windowtype "dock"
+;;            :stacking "fg"
+;;            :geometry (geometry :x "-10px"
+;;                                :y "-30px"
+;;                                :width "0%"
+;;                                :height "0%"
+;;                                :anchor "bottom left")
+;;            (systray
+;;             :orientation "v"
+;;             :space-evenly "true"
+;;             :spacing "10"))
 
 (defwindow session
            :windowtype "dock"
