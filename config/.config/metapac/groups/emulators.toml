@@ -3,7 +3,6 @@ arch = [
     "dosbox",
     "fs-uae",
     "fs-uae-launcher",
-    "linapple-git",
     "mame",
     "minivmac",
     "vice",
