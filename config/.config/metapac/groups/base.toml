@@ -30,6 +30,7 @@ arch = [
     "networkmanager",
     "nmap",
     "openssl",
+    "orpie",
     "os-prober",
     "pipewire",
     "pipewire-alsa",
@@ -57,5 +58,4 @@ arch = [
     "wireplumber",
     "xdg-utils",
     "yay",
-    "yay-debug",
 ]

@@ -3,7 +3,6 @@ arch = [
     "x2x-git",
     "xbindkeys",
     "xclip",
-    "xdg-utils",
     "xdo",
     "xdotool",
     "xfe",

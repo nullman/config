@@ -5,6 +5,7 @@ arch = [
     "irssi",
     "libreoffice-fresh",
     "mc",
+    "mop",
     "mpc",
     "mpd",
     "mpdris2",
