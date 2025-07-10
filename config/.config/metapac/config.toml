@@ -32,4 +32,5 @@ hostname_groups_enabled = true
 # paths starting without a / are relative to the groups folder
 # Default: None
 [hostname_groups]
-retro = ["base", "x11", "wm", "emulators"]
+tank = ["base", "system", "x11", "wayland", "wm", "xfce", "applications", "utilities", "internet", "development", "emulators", "console-hacks"]
+retro = ["base", "system", "x11", "wm", "emulators"]
