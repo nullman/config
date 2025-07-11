@@ -1,4 +1,7 @@
 arch = [
+    "bitwarden",
+    "font-manager",
+    "papers",
     "balena-etcher",
     "bat",
     "bitwarden-cli",

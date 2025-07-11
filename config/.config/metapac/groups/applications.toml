@@ -1,7 +1,4 @@
 arch = [
-    "bitwarden",
-    "evince",
-    "font-manager",
     "irssi",
     "libreoffice-fresh",
     "mc",
