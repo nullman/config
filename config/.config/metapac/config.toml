@@ -33,4 +33,4 @@ hostname_groups_enabled = true
 # Default: None
 [hostname_groups]
 tank = ["base", "system", "x11", "wayland", "window-manager", "xfce", "applications", "utilities", "internet", "development", "emulators", "console-hacks"]
-retro = ["base", "system", "x11", "window-manager", "emulators"]
+retro = ["base", "system", "x11", "window-manager", "xfce-panel", "emulators"]
