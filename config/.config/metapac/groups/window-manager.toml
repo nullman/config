@@ -10,6 +10,7 @@ arch = [
     "clipmenu-rofi",
     "conky",
     "dialog",
+    "dmenu",
     "dunst",
     "eject-applet",
     "eog",
