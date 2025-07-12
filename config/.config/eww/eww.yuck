@@ -273,12 +273,12 @@
                         :value {round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}
                         :onchange ""
                         :tooltip "Disk Used: ${round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}%")
-                ;; systray
-                (systray
-                 :icon-size "14"
-                 :orientation "h"
-                 :space-evenly "true"
-                 :spacing "5")
+                ;; ;; systray
+                ;; (systray
+                ;;  :icon-size "14"
+                ;;  :orientation "h"
+                ;;  :space-evenly "true"
+                ;;  :spacing "5")
                 ;; (box :class "label"
                 ;;      :tooltip "System Tray"
                 ;;      (button :onclick {systray-is-open == "true" ?
@@ -291,8 +291,8 @@
                 ;; wifi
                 (wifi :status wifi-status
                       :strength wifi-strength)
-                ;; ;; bluetooth
-                ;; (bluetooth :status bt-status)
+                ;; bluetooth
+                (bluetooth :status bt-status)
                 ;; temperature
                 ;; symbols:     
                 ;; time
