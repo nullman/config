@@ -2138,28 +2138,26 @@ arch-initialize() {
 
     sections=(${initial[@]} ${standard[@]})
 
-    echo "You are about to run a set of opinionated arch system modifications."
-    echo "This command is normally run once for a given system installation, but it is"
-    echo "safe to run multiple times to pick up new configuration changes."
-    echo -n "Continue (y/N)? " ; read a
-
-    if [[ "${a}" == "y" || "${a}" == "Y" ]] ; then
-        echo
-        echo "========== Arch Initialization Script =========="
-        echo
-
-        for section in ${sections[@]} ; do
-            echo
-            echo "========== ${section} =========="
-            echo
-            #echo "$(_getsection ${section})"
-            eval "$(_getsection ${section})"
-        done
-
-        echo
-        echo "========== Arch Initialization Complete =========="
-        echo
+    if [[ "$(distribution)" != "arch" ]] ; then
+        echo "Not running Arch"
+        return 1
     fi
+
+    echo
+    echo "========== Arch Initialization Script =========="
+    echo
+
+    for section in ${sections[@]} ; do
+        echo
+        echo "========== ${section} =========="
+        echo
+        #echo "$(_getsection ${section})"
+        eval "$(_getsection ${section})"
+    done
+
+    echo
+    echo "========== Arch Initialization Complete =========="
+    echo
 }
 #        arch-make-metapac-groups  generate arch metapac package groups
 arch-make-metapac-groups() {
