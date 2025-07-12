@@ -2113,7 +2113,7 @@ arch-initialize() {
         "arch-pkgfile"
         "arch-copy-wallpapers"
         "arch-fix-backgrounds"
-        "arch-set-background-image"
+        #"arch-set-background-image"
         "arch-copy-fonts"
         "arch-ssh-config"
         "arch-networkmanager"
