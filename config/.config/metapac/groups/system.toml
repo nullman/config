@@ -13,7 +13,7 @@ arch = [
     "bzip2",
     "cifs-utils",
     "cndrvcups-lb-bin",
-    "coolercontrold-bin",
+    "coolercontrol-bin",
     "cups",
     "davfs2",
     "debugedit",
