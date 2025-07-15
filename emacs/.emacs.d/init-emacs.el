@@ -15785,8 +15785,15 @@ USING is the remaining peg."
   :bind (:map vertico-map
               ("C-<return>" . vertico-exit-input) ; default: `vertico-exit'
               ("M-<return>" . vertico-exit-input) ; default: `vertico-exit'
-              ("C-M-i" . vertico-scroll-down)     ; default: `completion-at-point' ("<prior>")
-              ("C-M-k" . vertico-scroll-up))      ; default: `kill-whole-line' ("<next>")
+              ("M-i" . vertico-previous)
+              ("M-k" . vertico-next)
+              ("C-M-k" . vertico-scroll-down)     ; default: `completion-at-point' ("<prior>")
+              ("C-M-i" . vertico-scroll-up))      ; default: `kill-whole-line' ("<next>")
+  :bind (:map completion-list-mode-map
+              ("M-i" . previous-line-completion)
+              ("M-k" . next-line-completion)
+              ("C-M-i" . minibuffer-previous-completion)
+              ("C-M-k" . minibuffer-next-completion))
   :init
   (vertico-mode))
 ;; vertico:1 ends here
