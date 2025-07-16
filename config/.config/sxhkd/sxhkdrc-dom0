@@ -99,27 +99,20 @@ control + alt + {Up,Down,Left,Right}
 #-------------------------------------------------------------------------------
 
 XF86AudioMute
-    #pamixer --toggle-mute && notify-send --expire-time=3000 --replace-id=1 "$(pamixer --get-mute | sed 's/false/Unmuted/ ; s/true/Muted/')"
     pactl -- set-sink-mute 0 toggle && notify-send --expire-time=3000 --replace-id=1 "$(pactl -- get-sink-mute 0  | sed 's/Mute: no/Unmuted/ ; s/Mute: yes/Muted/')"
 
 XF86AudioLowerVolume
-    #pamixer --decrease 2 && notify-send --expire-time=3000 --replace-id=2 "$(pamixer --get-volume | sed 's/^/Volume: /')"
     pactl -- set-sink-volume 0 -2% && notify-send --expire-time=3000 --replace-id=2 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
 
 XF86AudioRaiseVolume
-    #pamixer --increase 2 && notify-send --expire-time=3000 --replace-id=2 "$(pamixer --get-volume | sed 's/^/Volume: /')"
     pactl -- set-sink-volume 0 +2% && notify-send --expire-time=3000 --replace-id=2 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
 
 # XF86AudioMicMute
 
 XF86MonBrightnessUp
-    #light -A 2 && notify-send --expire-time=3000 --replace-id=3 "Brightness: $(light -G | sed 's/\.[0-9]*$//')"
-    #xbacklight -inc 2 && notify-send --expire-time=3000 --replace-id=3 'Brightness Up'
     notify-send --expire-time=3000 --replace-id=3 "$(brightness eDP-1 +0.2)"
 
 XF86MonBrightnessDown
-    #light -U 2 && notify-send --expire-time=3000 --replace-id=3 "Brightness: $(light -G | sed 's/\.[0-9]*$//')"
-    #xbacklight -dec 2 && notify-send --expire-time=3000 --replace-id=3 'Brightness Down'
     notify-send --expire-time=3000 --replace-id=3 "$(brightness eDP-1 -0.2)"
 
 # XF86Display
@@ -166,6 +159,32 @@ super + alt + ctrl + Next
     notify-send --expire-time=3000 --replace-id=3 "$(brightness eDP-1 -0.2)"
 
 #-------------------------------------------------------------------------------
+# Wooting Lekker Keyboard Media Keys
+#-------------------------------------------------------------------------------
+
+# volume control
+super + Insert
+    pactl -- set-sink-mute 0 toggle && notify-send --expire-time=3000 --replace-id=1 "$(pactl -- get-sink-mute 0  | sed 's/Mute: no/Unmuted/ ; s/Mute: yes/Muted/')"
+super + Home
+    pactl -- set-sink-volume 0 -2% && notify-send --expire-time=3000 --replace-id=2 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
+super + Prior
+    pactl -- set-sink-volume 0 +2% && notify-send --expire-time=3000 --replace-id=2 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
+
+# screen brightness
+super + Print
+    notify-send --expire-time=3000 --replace-id=3 "$(brightness eDP-1 +0.2)"
+super + Pause
+    notify-send --expire-time=3000 --replace-id=3 "$(brightness eDP-1 -0.2)"
+
+# mpc control
+super + Delete
+    mpc prev && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+super + End
+    mpc toggle && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+super + Next
+    mpc next && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+
+#-------------------------------------------------------------------------------
 # System Tools
 #-------------------------------------------------------------------------------
 
@@ -177,56 +196,72 @@ super + alt + h
 super + ctrl + Escape
     gdbus call --session --dest org.qubesos.appmenu --object-path '/org/qubesos/appmenu' --method org.freedesktop.Application.Activate '{}'
 
-# desktop application launcher
+# desktop application launcher: dom0
 super + ctrl + space
     rofi -normal-window -modi drun -show drun
 
-# desktop application launcher
+# desktop application launcher: personal
 super + alt + space
     qvm-run personal "rofi -normal-window -modi drun -show drun"
 
-# program launcher
+# program launcher: dom0
+super + ctrl + d
+    rofi -normal-window -modi run -show run
+
+# program launcher: personal
 super + alt + d
     qvm-run personal "rofi -normal-window -modi run -show run"
 
-# application group launcher
+# application group launcher: personal
 super + alt + a
-    ${HOME}/bin/application-launcher
+    qvm-run personal "/home/user/bin/application-launcher"
 
-# menu launcher
+# menu launcher: personal
 super + alt + Return
     qvm-run personal "/home/user/bin/rofi-menu"
 
-# window selector
-super + alt + w
+# window selector: dom0
+super + ctrl + w
     rofi -normal-window -modi window -show window
 
-# clipmenu selector
+# window selector: personal
+super + alt + w
+    qvm-run personal "rofi -normal-window -modi window -show window"
+
+# window, desktop application, and program launcher/switcher: personal
+super + space
+    qvm-run personal "rofi -normal-window -show combi -modes combi -combi-modes 'window,drun,run'"
+
+# clipmenu selector: personal
 super + alt + c
     qvm-run personal "CM_LAUNCHER=rofi clipmenu"
 
-# emoji selector
+# emoji selector: personal
 super + alt + e
     qvm-run personal "/usr/sbin/rofimoji --typer xdotool --clipboarder xsel --skin-tone neutral"
     #qvm-run personal "/usr/sbin/rofimoji --action print --skin-tone neutral | tr -d '\n' | xsel && xsel --output | xsel --clipboard"
 
-# bookmarks selector
+# bookmarks selector: personal
 super + alt + o
     qvm-run personal "/home/user/bin/rofi-menu bookmarks"
 
-# typer selector
+# bookmarks keyword selector: personal
+super + alt + ctrl + o
+    qvm-run personal "/home/user/bin/rofi-menu bookmarks-keyword"
+
+# typer selector: personal
 super + alt + semicolon
     qvm-run personal "/home/user/bin/rofi-typer"
 
-# paste selector
+# paste selector: personal
 super + alt + apostrophe
     qvm-run personal "/home/user/bin/rofi-menu paste"
 
-# spell and define word
+# spell and define word: personal
 super + alt + s
     qvm-run personal "/home/user/bin/rofi-menu spell"
 
-# bitwarden selector (clear clipboard after 60 seconds)
+# bitwarden selector: personal (clear clipboard after 60 seconds)
 # first login using 'bw login'
 super + alt + p
     qvm-run personal "bwmenu --clear 60"
@@ -242,7 +277,7 @@ super + alt + p
 #     qvm-run personal "/home/user/bin/password-phrase 6 hyphen true | tr -d '\n' | xclip -selection clipboard && \
 #     notify-send --expire-time=3000 'Random password phrase on clipboard'"
 
-# generate password
+# generate password: personal
 super + ctrl + p
     qvm-run personal "/home/user/bin/rofi-menu password && notify-send --expire-time=3000 'Random password phrase on clipboard'"
 
@@ -251,23 +286,23 @@ super + alt + backslash
     printf "$(date '+%Y-%m-%d')\n $(date '+%H:%M:%S')" | \
     yad --text-info --width=532 --height=240 --wrap --no-buttons --timeout=3 --fontname='MesloLGS Nerd Font Mono 64' 2>/dev/null
 
-# # edit with emacs
+# # edit with emacs: personal
 # super + alt + e
 #     qvm-run personal "/usr/sbin/emacsclient --eval '(emacs-everywhere)'"
 
-# git synchronize config
+# git synchronize config: personal
 super + alt + y
     qvm-run personal "source '/home/user/.funct' && (git-sync-config && echo 'Done') 2>&1 | yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"
 
-# git synchronize extra
+# git synchronize extra: personal
 super + alt + u
     qvm-run personal "source '/home/user/.funct' && (git-sync-extra && echo 'Done') 2>&1 | yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"
 
-# start screen saver
+# start screen saver: dom0
 super + alt + x
     xscreensaver-command -activate
 
-# start screen saver in lock mode
+# start screen saver in lock mode: dom0
 super + shift + x
     xscreensaver-command -lock
 #    xlock
@@ -279,31 +314,31 @@ super + shift + x
 # super + ctrl + r
 #     systemctl --user restart setxkbmap xkbcomp xset && notify-send --expire-time=3000 'User services restarted'
 
-# session menu
+# session menu: dom0
 super + shift + q
     ${HOME}/bin/rofi-session-menu -s
 
-# get xprop class name
+# get xprop class name: dom0
 super + shift + p
     xprop | grep '^WM_CLASS' | yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
 
-# kill process clicked
+# kill process clicked: personal
 super + shift + Delete
     notify-send --expire-time=3000 "Click window to kill" && qvm-run personal "xkill"
 
-# snapshot of entire screen
+# snapshot of entire screen: personal
 super + alt + Print
     qvm-run personal "scrot --exec 'mv $f ~/Pictures/' && notify-send --expire-time=3000 'Screen snapshot saved'"
 
-# snapshot of active window
+# snapshot of active window: personal
 super + ctrl + Print
     qvm-run personal "scrot --focused --exec 'mv $f ~/Pictures/' && notify-send --expire-time=3000 'Window snapshot saved'"
 
-# snapshot of selected region
+# snapshot of selected region: personal
 super + shift + Print
     qvm-run personal "scrot --select --freeze --exec 'mv $f ~/Pictures/' && notify-send --expire-time=3000 'Region snapshot saved'"
 
-# reload sxhkd
+# reload sxhkd: dom0
 super + shift + s
     ${HOME}/bin/run-sxhkd && notify-send --expire-time=3000 'Reloading SXHKD'
 
@@ -313,28 +348,28 @@ super + shift + s
 #     xdo below -t $(xdo id -n root) $(xdo id -N xfce4-panel)) &) && \
 #     notify-send --expire-time=3000 'Reloading XFCE Panel'
 
-# # reload tint2
+# # reload tint2 panel
 # super + shift + t
 #     ((pkill -u ${USER} tint2 ; tint2 && sleep 1 && \
 #     xdo below -t $(xdo id -n root) $(xdo id -N tint2)) &) && \
 #     notify-send --expire-time=3000 'Reloading Tint'
 
-# # reload eww
-# super + shift + e
-#     eww --restart open bar && sleep 1 && \
-#     xdo below -t $(xdo id -n root) $(xdo id -n eww) && \
-#     notify-send --expire-time=3000 'Reloading EWW'
+# reload eww panel: personal
+super + shift + e
+    qvm-run personal "eww --restart open bar && sleep 1 && \
+        xdo below -t $(xdo id -n root) $(xdo id -n eww) && \
+        notify-send --expire-time=3000 'Reloading EWW'"
 
-# # reload conky
-# super + shift + c
-#     (${HOME}/bin/system-wallpaper-displays &) && notify-send --expire-time=3000 'Reloading Conky'
+# reload conky: personal
+super + shift + c
+    qvm-run personal "(/home/user/bin/system-wallpaper-displays &) && notify-send --expire-time=3000 'Reloading Conky'"
 
-# reset video
+# reset video: dom0
 super + shift + v
     xrandr --output $(xrandr | grep ' connected ' | sed 's/ .*//' | head -n 1) --auto && \
     notify-send --expire-time=3000 'Resetting video'
 
-# connect to sennheiser hd350bt headphones
+# connect to sennheiser hd350bt headphones: dom0
 super + alt + b
     notify-send --expire-time=3000 'Connecting to Sennheiser HD 350BT Headphones' && \
     bluetoothctl connect 80:C3:BA:0E:CB:E5
@@ -342,13 +377,13 @@ super + shift + alt + b
     notify-send --expire-time=3000 'Disconnecting from Sennheiser HD 350BT Headphones' && \
     bluetoothctl disconnect 80:C3:BA:0E:CB:E5
 
-# # connect to powerbeats pro headphones
-# super + alt + b
-#     notify-send --expire-time=3000 'Connecting to Powerbeats Pro Headphones' && \
-#     bluetoothctl connect 14:1A:97:05:81:4C
-# super + shift + alt + b
-#     notify-send --expire-time=3000 'Disconnecting from Powerbeats Pro Headphones' && \
-#     bluetoothctl disconnect 14:1A:97:05:81:4C
+# connect to powerbeats pro headphones: dom0
+super + ctrl + b
+    notify-send --expire-time=3000 'Connecting to Powerbeats Pro Headphones' && \
+    bluetoothctl connect 14:1A:97:05:81:4C
+super + shift + ctrl + b
+    notify-send --expire-time=3000 'Disconnecting from Powerbeats Pro Headphones' && \
+    bluetoothctl disconnect 14:1A:97:05:81:4C
 
 # # nixos-rebuild switch
 # super + alt + ctrl + r
@@ -358,7 +393,7 @@ super + shift + alt + b
 # Media
 #-------------------------------------------------------------------------------
 
-# mpc control
+# mpc control: personal
 super + alt + ctrl + m
     qvm-run personal "mpc toggle && notify-send --expire-time=5000 --replace-id=5 \"\$(\${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')\""
 super + alt + ctrl + comma
@@ -368,7 +403,7 @@ super + alt + ctrl + period
 super + alt + ctrl + slash
     qvm-run personal "notify-send --expire-time=5000 --replace-id=5 \"\$(\${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')\""
 
-# mpc control (media keys)
+# mpc control (media keys): personal
 XF86AudioPrev
     qvm-run personal "mpc prev && notify-send --expire-time=5000 --replace-id=5 \"\$(\${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')\""
 XF86AudioPlay
@@ -378,7 +413,7 @@ XF86AudioStop
 XF86AudioNext
     qvm-run personal "mpc next && notify-send --expire-time=5000 --replace-id=5 \"\$(\${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')\""
 
-# # spotify control
+# # spotify control: personal
 # Shift+Alt + a
 #     qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 # Shift+Alt + s
@@ -396,7 +431,7 @@ XF86AudioNext
 # XF86AudioNext
 #     qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 
-# media player control
+# media player control: personal
 super + alt + ctrl + z
     qvm-run personal "qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')""
 super + alt + ctrl + c
@@ -412,11 +447,11 @@ super + alt + ctrl + apostrophe
 # Applications
 #-------------------------------------------------------------------------------
 
-# terminal (dom0)
+# terminal: dom0
 super + ctrl + Return
     alacritty
 
-# terminal (personal)
+# terminal: personal
 super + Return
     qvm-run personal "/usr/sbin/alacritty"
 

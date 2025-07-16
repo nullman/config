@@ -202,10 +202,6 @@ super + Next
 super + alt + h
     yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null --filename="${HOME}/.config/sxhkd/sxhkdrc-help"
 
-# window, desktop application, and program launcher/switcher
-super + space
-    rofi -show combi -modes combi -combi-modes 'window,drun,run'
-
 # desktop application launcher
 super + alt + space
     rofi -modi drun -show drun
@@ -226,6 +222,10 @@ super + alt + Return
 # window selector
 super + alt + w
     rofi -modi window -show window
+
+# window, desktop application, and program launcher/switcher
+super + space
+    rofi -show combi -modes combi -combi-modes 'window,drun,run'
 
 # clipmenu selector
 super + alt + c
@@ -372,17 +372,17 @@ super + shift + alt + b
     notify-send --expire-time=3000 'Disconnecting from Sennheiser HD 350BT Headphones' && \
     bluetoothctl disconnect 80:C3:BA:0E:CB:E5
 
-# # connect to powerbeats pro headphones
-# super + alt + b
-#     notify-send --expire-time=3000 'Connecting to Powerbeats Pro Headphones' && \
-#     bluetoothctl connect 14:1A:97:05:81:4C
-# super + shift + alt + b
-#     notify-send --expire-time=3000 'Disconnecting from Powerbeats Pro Headphones' && \
-#     bluetoothctl disconnect 14:1A:97:05:81:4C
+# connect to powerbeats pro headphones
+super + ctrl + b
+    notify-send --expire-time=3000 'Connecting to Powerbeats Pro Headphones' && \
+    bluetoothctl connect 14:1A:97:05:81:4C
+super + shift + ctrl + b
+    notify-send --expire-time=3000 'Disconnecting from Powerbeats Pro Headphones' && \
+    bluetoothctl disconnect 14:1A:97:05:81:4C
 
-# nixos-rebuild switch
-super + alt + ctrl + r
-    sudo -i nixos-rebuild switch | yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
+# # nixos-rebuild switch
+# super + alt + ctrl + r
+#     sudo -i nixos-rebuild switch | yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
 
 #-------------------------------------------------------------------------------
 # Media
