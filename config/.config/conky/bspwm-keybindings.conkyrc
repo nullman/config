@@ -53,17 +53,17 @@ ${color2}Spr + Alt + Spc/D/A/Ret${color}  ${alignr}App/Program/Group/Menu
 ${color2}Spr + Alt + W/C/E/O${color}  ${alignr}Window/Clip/Emoji/Bookmarks
 ${color2}Spr + Alt + ;/'/P${color}  ${alignr}Typer/Paste/Bitwarden
 ${color2}Spr + Alt + \${color}  ${alignr}Display Time
-${color2}Spr + Alt + Y/U${color}  ${alignr}Git Sync Home/Doc
+${color2}Spr + Alt + Y/U${color}  ${alignr}Git Sync Config/Extra
 ${color2}Spr + Alt + S/X${color}  ${alignr}Start/Lock Screensaver
-${color2}Spr + Shft + Q${color}  ${alignr}Lock, Logout, Reboot, Shutdown
+${color2}Spr + Shft + Q${color}  ${alignr}Session Menu
 ${color2}Spr + Shft + P${color}  ${alignr}Get XProp Class Name
 ${color2}Spr + Shft + Delete${color}  ${alignr}Kill Process Clicked
 ${color2}Spr + Alt + Print${color}  ${alignr}Screen Shapshot
 ${color2}Spr + Ctrl + Print${color}  ${alignr}Window Shapshot
 ${color2}Spr + Shft + Print${color}  ${alignr}Region Shapshot
 ${color2}Spr + Shft + S/V${color}  ${alignr}Reload SXHKD/Video
-${color2}Spr + Shft + T/E/C${color}  ${alignr}Reload Tint/EWW/Conky
-${color2}Spr + Ctrl + Alt + L/R${color}  ${alignr}Volume Down/Up 10%
+${color2}Spr + Shft + R/T/E/C${color}  ${alignr}Reload Xfce/Tint/EWW/Conky
+${color2}Spr + Ctrl + Alt + ←/→${color}  ${alignr}Volume Down/Up 10%
 ${color2}Spr + Ctrl + Alt + M${color}  ${alignr}MPD Play/Pause
 ${color2}Spr + Ctrl + Alt + ,/.${color}  ${alignr}MPD Prev/Next
 ${color2}Spr + Ctrl + Alt + /${color}  ${alignr}MPD Playing
