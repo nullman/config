@@ -1,3 +1,16 @@
+# metapac's config.toml file (like this one) should be placed in the following location
+# dependent on the operating system as specified in the `dirs` crate:
+# | Platform | Value                                                 | Example                                                      |
+# | -------- | ----------------------------------------------------- | ------------------------------------------------------------ |
+# | Linux    | $XDG_CONFIG_HOME or $HOME/.config/metapac/config.toml | /home/alice/.config/metapac/config.toml                      |
+# | macOS    | $HOME/Library/Application Support/metapac/config.toml | /Users/Alice/Library/Application Support/metapac/config.toml |
+# | Windows  | {FOLDERID_RoamingAppData}\metapac\config.toml         | C:\Users\Alice\AppData\Roaming\metapac\config.toml           |
+
+# Backends to enable for most of metapac's behavior. See the README.md or
+# run `metapac backends` for the list of backend names
+# Default: []
+enabled_backends = ["arch"]
+
 # Backends to disable from all metapac behavior. See the README.md for
 # the list of backend names
 # Default: []
