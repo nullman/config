@@ -1,0 +1,30 @@
+#===============================================================================
+# .applications
+#
+# List of applications to display with ~/bin/application-launcher.
+#===============================================================================
+
+personal:alacritty
+personal:emacs
+personal:thunderbird
+#personal:betterbird
+personal:brave
+#personal:firefox
+#personal:firefox-esr
+personal:thunar
+personal::quasselclient
+personal:slack
+personal:discord
+personal:nheko
+#personal:element-desktop
+personal:dev.geopjr.Tuba
+personal:gajim
+#personal:google-chrome
+#personal:google-chrome-stable
+
+#dom0:qubes-qube-manager
+#dom0:alacritty
+
+#===============================================================================
+# End of File
+#===============================================================================
