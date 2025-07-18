@@ -22,5 +22,6 @@ arch = [
     "surf",
     "surfraw",
     "syncterm-src",
+    "translate-shell",
     "vdhcoapp-bin",
 ]
