@@ -27,8 +27,6 @@ arch = [
     "pipewire-pulse",
     "pkgfile",
     "plocate",
-    "pulseaudio-alsa",
-    "pulseaudio-bluetooth",
     "python",
     "python-pip",
     "reflector",
