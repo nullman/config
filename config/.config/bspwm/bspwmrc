@@ -125,7 +125,7 @@ _br 'Spacefm' desktop=^5 follow=on
 _br 'Org.gnome.Nautilus' desktop=^5 follow=on
 
 # 6: Chat
-bspc desktop 6 --layout tiled
+#bspc desktop 6 --layout tiled
 _br 'quassel' desktop=^6 follow=on
 _br 'Slack' desktop=^6 follow=on
 _br 'discord' desktop=^6 follow=on
@@ -169,7 +169,7 @@ _br 'Lollypop' desktop=^9 follow=on
 _br 'spotify' desktop=^9 follow=on
 
 # 10: Administration/General
-bspc desktop 10 --layout monocle
+#bspc desktop 10 --layout monocle
 
 # 11: Virtual Machine 1
 bspc desktop 11 --layout monocle
