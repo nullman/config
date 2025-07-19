@@ -466,14 +466,12 @@ alias stopwatch="
 # #        mount-synology          mount synology drives
 # alias mount-synology="
 #     sudo mkdir -p /mnt/synology
-#     sudo mkdir -p /mnt/synology/adult
 #     sudo mkdir -p /mnt/synology/media
 #     sudo mkdir -p /mnt/synology/music
 #     sudo mkdir -p /mnt/synology/photo
 #     sudo mkdir -p /mnt/synology/video
+#     sudo mkdir -p /mnt/synology/zzz
 #     #sudo chown -R \${USER}:\${USER} /mnt/synology
-#     sudo sh -c \"mount -t cifs //synology/adult /mnt/synology/adult -o \$(cat \${HOME}/.synology-mount-parameters)\"
-#     sleep 0.2
 #     sudo sh -c \"mount -t cifs //synology/media /mnt/synology/media -o \$(cat \${HOME}/.synology-mount-parameters)\"
 #     sleep 0.2
 #     sudo sh -c \"mount -t cifs //synology/music /mnt/synology/music -o \$(cat \${HOME}/.synology-mount-parameters)\"
@@ -481,13 +479,15 @@ alias stopwatch="
 #     sudo sh -c \"mount -t cifs //synology/photo /mnt/synology/photo -o \$(cat \${HOME}/.synology-mount-parameters)\"
 #     sleep 0.2
 #     sudo sh -c \"mount -t cifs //synology/video /mnt/synology/video -o \$(cat \${HOME}/.synology-mount-parameters)\""
+#     sleep 0.2
+#     sudo sh -c \"mount -t cifs //synology/zzz /mnt/synology/zzz -o \$(cat \${HOME}/.synology-mount-parameters)\"
 # #        umount-synology         umount synology drives
 # alias umount-synology="
-#     sudo umount /mnt/synology/adult
 #     sudo umount /mnt/synology/media
 #     sudo umount /mnt/synology/music
 #     sudo umount /mnt/synology/photo
-#     sudo umount /mnt/synology/video"
+#     sudo umount /mnt/synology/video
+#     sudo umount /mnt/synology/zzz"
 
 #
 # wallpaper
@@ -1233,8 +1233,6 @@ alias cdlm="cd /lib/modules/\$(uname -r)"
 alias cdm="cd /media"
 #        cdmnt                   cd /mnt
 alias cdmnt="cd /mnt"
-#        cdsadult                cd /mnt/synology/adult
-alias cdsadult="cd /mnt/synology/adult"
 #        cdsincoming             cd /mnt/synology/incoming
 alias cdsincoming="cd /mnt/synology/incoming"
 #        cdsmedia                cd /mnt/synology/media
@@ -2212,8 +2210,7 @@ alias rsync-adult-put-adult-sd="
     [[ -d \${dir1} ]] && dir=\${dir1}
     [[ -d \${dir2} ]] && dir=\${dir2}
     if [[ -d \${dir} ]] ; then
-        #rsync -rLtxW --size-only --progress --delete -f='- \#recycle' \"${home}/data/media/Video/Adult/\" \"\${dir}/\"
-        rsync -rLtxW --size-only --progress --delete -f='- \#recycle' \"/mnt/synology/adult/\" \"\${dir}/\"
+        rsync -rLtxW --size-only --progress --delete -f='- \#recycle' \"/mnt/synology/zzz/\" \"\${dir}/\"
         sync
     else
         echo \"Error: \${usb} USB not found\"
@@ -3236,18 +3233,18 @@ alias qd-sync="
     fi"
 #        qd-copy-windows-tools   copy qubes-windows-tools from personal to dom0
 alias qd-copy-windows-tools="
-    qvm-run --pass-io personal 'cd \"/home/data/media/Software/Linux\" && \
+    qvm-run --pass-io personal 'cd \"/home/data/media/Software/Hypervisor/Qubes OS\" && \
         tar zc qubes-windows-tools-4.1.69-1.fc37.noarch.rpm' | tar zx"
-#        qd-copy-nasa            copy nasa pictures from personal to dom0
-alias qd-copy-nasa="
+#        qd-copy-xscreensaver    copy xscreensaver slide show pictures from personal to dom0
+alias qd-copy-xscreensaver="
     if [[ \"$(uname -n)\" == \"dom0\" ]] ; then
+        sudo rm -rf \"/home/data/media/Pictures Slide Show\"
         sudo mkdir -p \"/home/data/media/Pictures Slide Show\"
         sudo chown -R $(id -un):$(id -un) \"/home/data\"
         (cd \"/home/data/media/Pictures Slide Show/\" && \
-            rm -rf \"/home/data/media/Pictures Slide Show/Nasa\" && \
-            qvm-run --pass-io personal 'cd \"/home/data/media/Pictures Slide Show\" && tar zc Nasa' | tar zx)
+            qvm-run --pass-io personal 'cd \"/home/data/media/Pictures Slide Show\" && tar zc XScreenSaver' | tar zx)
     else
-        echo \"Error: qd-copy-nasa can only be run on dom0\"
+        echo \"Error: qd-copy-xscreensaver can only be run on dom0\"
     fi"
 #!#        qd-copy-rebos-to-arch   copy rebos files from personal to arch
 #!alias qd-copy-rebos-to-arch="
