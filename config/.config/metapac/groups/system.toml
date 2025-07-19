@@ -15,7 +15,6 @@ arch = [
     "cndrvcups-lb-bin",
     "coolercontrol-bin",
     "cups",
-    "davfs2",
     "debugedit",
     "direnv",
     "dos2unix",
