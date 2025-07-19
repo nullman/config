@@ -4,6 +4,7 @@ arch = [
     "scrot",
     "sxhkd",
     "x2x-git",
+    "xautolock",
     "xclip",
     "xdo",
     "xdotool",
