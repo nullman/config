@@ -1422,7 +1422,16 @@ qd-copy-from-vm() {
         echo "Usage: qd-copy-from-vm VM PATH FILE"
         echo "Can only be run on dom0"
     else
-        qvm-run --pass-io "$1" "cd \"$2\" && tar zc \"$3\"" | tar zx
+        qvm-run --pass-io "$1" "tar -C \"$2\" -c \"$3\"" | tar -x
+    fi
+}
+#        qd-copy-to-vm             copy something from dom0 to a vm
+qd-copy-to-vm() {
+    if [[ $# -lt 3 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] || [[ "$(uname -n)" != "dom0" ]] ; then
+        echo "Usage: qd-copy-to-vm VM FILE PATH"
+        echo "Can only be run on dom0"
+    else
+        tar -cf - "$2" | qvm-run --pass-io "$1" "tar -C \"$3\" -xf -"
     fi
 }
 
@@ -1583,7 +1592,7 @@ backup-files() {
         shift
         arch="${pre}_$(date +'%Y-%m-%d_%H%M%S').tgz"
         # create gziped tar backup file
-        tar cvzplf "${arch}" "$@"
+        tar -cvzplf "${arch}" "$@"
         # move backup file to backup directory
         mkdir -p "/home/backup/${pre}"
         mv "${arch}" "/home/backup/${pre}"
@@ -1609,7 +1618,7 @@ rsync-bundle() {
     # cp "${HOME}/bin/make-etc-hosts" "${tmp}/"
     # package and encrypt bundle directory
     pushd "${root}"
-    tar cvfz "bundle.tgz" "bundle"
+    tar -cvfz "bundle.tgz" "bundle"
     #ccrypt -e "bundle.tgz"
     openssl enc -e -aes-256-cbc -md sha512 -pbkdf2 -iter 100000 -salt -in "bundle.tgz" -out "bundle.tgz.enc"
     # sync bundle to usb
@@ -1796,7 +1805,7 @@ Or copy bundle.tgz.enc from USB, decrypt it, and run scripts:
   mkdir -p ~/tmp && cd ~/tmp
   cp /media/FILES/bundle* .
   chmod +x ./bundle-decrypt && ./bundle-decrypt
-  tar xzf bundle.tgz
+  tar -xzf bundle.tgz
   mv bundle/.ssh ~/
 
 Checkout config and config-private:

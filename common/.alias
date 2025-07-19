@@ -1446,9 +1446,9 @@ alias unbzip="bzip2 -d -k"
 #!alias intar="
 #!    echo -n 'File(s) to tar: ' ; read -r a
 #!    echo -n 'Name of tar: ' ; read b
-#!    tar cvf - \"\${a}\" > \"\${b}\""
+#!    tar -cvf - \"\${a}\" > \"\${b}\""
 #        untar                   un-tar files
-alias untar="tar xvf"
+alias untar="tar -xvf"
 
 #
 # cp
@@ -3221,10 +3221,11 @@ alias qvmcp="qvm-copy-to-vm personal"
 #        qd-sync                 copy personal config to dom0
 alias qd-sync="
     if [[ \"$(uname -n)\" == \"dom0\" ]] ; then
-        (cd \${HOME} && rm -rf \${HOME}/config.old && mv \${HOME}/config \${HOME}/config.old && \
-            qvm-run --pass-io personal 'cd /home/user && tar zc --exclude=\".git*\" config' | tar zx)
-        (cd \${HOME} && rm -rf \${HOME}/config-private.old && mv \${HOME}/config-private \${HOME}/config-private.old && \
-            qvm-run --pass-io personal 'cd /home/user && tar zc --exclude=\".git*\" config-private' | tar zx)
+        (rm -rf \${HOME}/config.old && mv \${HOME}/config \${HOME}/config.old && \
+            qvm-run --pass-io personal 'tar -C /home/user -c --exclude=\".git*\" config' | tar -C \${HOME} -x)
+        (rm -rf \${HOME}/config-private.old && mv \${HOME}/config-private \${HOME}/config-private.old && \
+            qvm-run --pass-io personal 'tar -C /home/user -c --exclude=\".git*\" config-private' | tar \${HOME} -x)
+        tar -C \${HOME}/config/config/.config -cf - metapac | qvm-run --pass-io arch 'tar -C /home/user/.config -xf -'
         sudo cp \${HOME}/config/config/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml \
             /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/
         home-restow
@@ -3233,16 +3234,14 @@ alias qd-sync="
     fi"
 #        qd-copy-windows-tools   copy qubes-windows-tools from personal to dom0
 alias qd-copy-windows-tools="
-    qvm-run --pass-io personal 'cd \"/home/data/media/Software/Hypervisor/Qubes OS\" && \
-        tar zc qubes-windows-tools-4.1.69-1.fc37.noarch.rpm' | tar zx"
+    qvm-run --pass-io personal 'tar -C \"/home/data/media/Software/Hypervisor/Qubes OS\" -c qubes-windows-tools-4.1.69-1.fc37.noarch.rpm' | tar -x"
 #        qd-copy-xscreensaver    copy xscreensaver slide show pictures from personal to dom0
 alias qd-copy-xscreensaver="
     if [[ \"$(uname -n)\" == \"dom0\" ]] ; then
         sudo rm -rf \"/home/data/media/Pictures Slide Show\"
         sudo mkdir -p \"/home/data/media/Pictures Slide Show\"
         sudo chown -R $(id -un):$(id -un) \"/home/data\"
-        (cd \"/home/data/media/Pictures Slide Show/\" && \
-            qvm-run --pass-io personal 'cd \"/home/data/media/Pictures Slide Show\" && tar zc --dereference XScreenSaver' | tar zx)
+        qvm-run --pass-io personal 'tar -C \"/home/data/media/Pictures Slide Show\" -c --dereference XScreenSaver' | tar -C \"/home/data/media/Pictures Slide Show\" -x
     else
         echo \"Error: qd-copy-xscreensaver can only be run on dom0\"
     fi"

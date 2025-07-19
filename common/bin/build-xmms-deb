@@ -26,7 +26,7 @@ wget "http://xmms.org/files/1.2.x/${name}-${version}.tar.gz"
 
 if [[ -f "${name}-${version}.tar.gz" ]] ; then
     echo "Unpacking sources"
-    tar xvf "${name}-${version}.tar.gz"
+    tar -xvf "${name}-${version}.tar.gz"
     # change to source dir
     pushd "${name}-${version}"
     echo "Compiling sources"
