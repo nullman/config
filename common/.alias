@@ -3223,10 +3223,12 @@ alias qvmcp="qvm-copy-to-vm personal"
 #        qd-sync                 copy personal config to dom0
 alias qd-sync="
     if [[ \"$(uname -n)\" == \"dom0\" ]] ; then
-        (rm -rf \${HOME}/config.old && mv \${HOME}/config \${HOME}/config.old && \
-            qvm-run --pass-io personal 'tar -C /home/user -c --exclude=\".git*\" config' | tar -C \${HOME} -x)
-        (rm -rf \${HOME}/config-private.old && mv \${HOME}/config-private \${HOME}/config-private.old && \
-            qvm-run --pass-io personal 'tar -C /home/user -c --exclude=\".git*\" config-private' | tar \${HOME} -x)
+        rm -rf \${HOME}/config.old
+        mv -f \${HOME}/config \${HOME}/config.old
+        qvm-run --pass-io personal 'tar -C /home/user -c --exclude=\".git*\" config' | tar -C \${HOME} -x
+        rm -rf \${HOME}/config-private.old
+        mv -f \${HOME}/config-private \${HOME}/config-private.old
+        qvm-run --pass-io personal 'tar -C /home/user -c --exclude=\".git*\" config-private' | tar -C \${HOME} -x
         tar -C \${HOME}/config/config/.config -cf - metapac | qvm-run --pass-io arch 'tar -C /home/user/.config -xf -'
         sudo cp \${HOME}/config/config/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml \
             /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/
