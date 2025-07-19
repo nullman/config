@@ -1,0 +1,17 @@
+arch = [
+    "clipman",
+    "hyprland",
+    "hyprpaper",
+    "hyprpicker",
+    "rofi-wayland",
+    "swww",
+    "waybar",
+    "wayland",
+    "wayland-protocols",
+    "wayland-utils",
+    "wl-clipboard",
+    "wl-color-picker",
+    "wlroots",
+    "wofi",
+    "xorg-xwayland",
+]

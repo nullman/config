@@ -1,0 +1,16 @@
+arch = [
+    "aalib",
+    "asciiquarium",
+    "bullshit",
+    "cbonsai",
+    "cmatrix",
+    "cowsay",
+    "figlet",
+    "fortune-mod",
+    "genact",
+    "hacker-typer",
+    "hollywood",
+    "lolcat",
+    "rig",
+    "sl",
+]

@@ -1,0 +1,6 @@
+arch = [
+    "docker",
+    "docker-compose",
+    "distrobox",
+    "podman",
+]
