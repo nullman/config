@@ -11,6 +11,7 @@ arch = [
     "wayland-utils",
     "wl-clipboard",
     "wl-color-picker",
+    "wlroots0.19",
     "wofi",
     "xorg-xwayland",
 ]
