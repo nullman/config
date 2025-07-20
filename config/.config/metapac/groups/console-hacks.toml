@@ -1,6 +1,7 @@
 arch = [
     "aalib",
     "asciiquarium",
+    "bb",
     "bullshit",
     "cbonsai",
     "cmatrix",
@@ -11,5 +12,7 @@ arch = [
     "hollywood",
     "lolcat",
     "rig",
+    "shell-color-scripts-git",
     "sl",
+    "tty-clock",
 ]

@@ -8,6 +8,7 @@ arch = [
     "celluloid",
     "cherrytree",
     "cool-retro-term",
+    "czkawka-gui",
     "deadbeef",
     "dmg2img",
     "easytag",

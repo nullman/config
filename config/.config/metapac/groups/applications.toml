@@ -15,6 +15,7 @@ arch = [
     "inkscape",
     "kdenlive",
     "kicad",
+    "libreoffice",
     "lmms",
     "ngspice",
     "obs-studio",
