@@ -11,7 +11,6 @@ arch = [
     "furnace",
     "glaxnimate",
     "gphoto2",
-    "gphoto2fs",
     "gimp",
     "inkscape",
     "kdenlive",
