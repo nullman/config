@@ -354,20 +354,20 @@ super + shift + s
 #     xdo below -t $(xdo id -n root) $(xdo id -N tint2)) &) && \
 #     notify-send --expire-time=3000 'Reloading Tint'
 
-# reload eww panel: personal
-super + shift + e
-    qvm-run personal "eww --restart open bar && sleep 1 && \
-        xdo below -t $(xdo id -n root) $(xdo id -n eww) && \
-        notify-send --expire-time=3000 'Reloading EWW'"
+# # reload eww panel: personal
+# super + shift + e
+#     qvm-run personal "eww --restart open bar && sleep 1 && \
+#         xdo below -t $(xdo id -n root) $(xdo id -n eww) && \
+#         notify-send --expire-time=3000 'Reloading EWW'"
 
-# reload conky: personal
-super + shift + c
-    qvm-run personal "(/home/user/bin/system-wallpaper-displays &) && notify-send --expire-time=3000 'Reloading Conky'"
+# # reload conky: personal
+# super + shift + c
+#     qvm-run personal "(/home/user/bin/system-wallpaper-displays &) && notify-send --expire-time=3000 'Reloading Conky'"
 
-# reset video: dom0
-super + shift + v
-    xrandr --output $(xrandr | grep ' connected ' | sed 's/ .*//' | head -n 1) --auto && \
-    notify-send --expire-time=3000 'Resetting video'
+# # reset video: dom0
+# super + shift + v
+#     xrandr --output $(xrandr | grep ' connected ' | sed 's/ .*//' | head -n 1) --auto && \
+#     notify-send --expire-time=3000 'Resetting video'
 
 # connect to sennheiser hd350bt headphones: dom0
 super + alt + b

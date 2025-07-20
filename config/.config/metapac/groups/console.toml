@@ -3,8 +3,6 @@ arch = [
     "asciinema",
     "bat",
     "bc",
-    "bitwarden-cli",
-    "bitwarden-rofi",
     "boxes",
     "broot",
     "chezmoi",
@@ -38,7 +36,6 @@ arch = [
     "mtr",
     "navi",
     "nodejs-how2",
-    "ookla-speedtest-bin",
     "procs",
     "rar",
     "remind",
@@ -58,6 +55,5 @@ arch = [
     "translate-shell",
     "units",
     "yt-dlp",
-    "zenith-bin",
     "zoxide",
 ]

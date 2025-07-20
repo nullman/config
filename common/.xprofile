@@ -48,8 +48,8 @@ _command setxkbmap && setxkbmap -option 'shift:both_capslock,caps:ctrl_modifier'
 # pkill -u ${USER} xbindkeys >/dev/null 2>&1
 # _command xbindkeys && [[ -f ${HOME}/.xbindkeysrc ]] && xbindkeys >/dev/null 2>&1
 
-# sxhkd
-[[ -f "${HOME}/bin/run-sxhkd" ]] && ${HOME}/bin/run-sxhkd
+# # sxhkd
+# [[ -f "${HOME}/bin/run-sxhkd" ]] && ${HOME}/bin/run-sxhkd
 
 # set no energy saving, mouse acceleration rate, and keyboard acceleration rate
 _command xset && xset -dpms s off b off m 2/1 4 r rate 500 35 >/dev/null 2>&1

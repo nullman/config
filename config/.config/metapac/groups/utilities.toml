@@ -45,6 +45,7 @@ arch = [
     "timg",
     "virt-viewer",
     "vlc",
+    "x48ng",
     "xpdf",
     "xarchiver",
     "ymuse",

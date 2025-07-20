@@ -1,7 +1,7 @@
 arch = [
     "betterbird-bin",
     "brave-bin",
-    "bruno",
+    "bruno-bin",
     "carburetor",
     "dino",
     "discord",
@@ -12,7 +12,6 @@ arch = [
     "gajim",
     "gnu-netcat",
     "gopherus",
-    "gossip",
     "hyperspace-bin",
     "kristall",
     "magic-wormhole",
@@ -24,7 +23,6 @@ arch = [
     "quassel-client",
     "simplex-chat-bin",
     "slack-bin",
-    "sparkleshare",
     "surf",
     "surfraw",
     "syncterm",
@@ -35,5 +33,4 @@ arch = [
     "tribler-bin",
     "tuba",
     "vdhcoapp",
-    "zoom",
 ]
