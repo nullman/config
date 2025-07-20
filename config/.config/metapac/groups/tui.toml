@@ -28,7 +28,6 @@ arch = [
     "superfile",
     "tig",
     "tilde",
-    "tty-clock",
     "tuifimanager",
     "ugrep",
     "w3m",
