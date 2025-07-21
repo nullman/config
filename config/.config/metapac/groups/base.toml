@@ -34,6 +34,7 @@ arch = [
     "rxvt-unicode",
     "smartmontools",
     "stow",
+    "sudo",
     "terminus-font",
     "usbutils",
     "vim",

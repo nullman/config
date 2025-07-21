@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+#===============================================================================
+# rofi-qubes-drun
+#
+# Custom rofi drun for Qubes OS.
+#
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
+#===============================================================================
+
+set -euo pipefail
+
+vm=$({ qvm-ls | sed -n 's/^\([^ ]*\) *Running *AppVM .*$/\1/p' ;
+       qvm-ls | grep -v ' Running ' | sed -n 's/^\([^ ]*\) .* AppVM .*$/\1/p' ;
+     } | rofi -dmenu -i -p "Qubes VM")
+vm="${vm}: "
+
+rofi -normal-window -modi drun -show drun -filter "${vm}"
+
+exit 0
+
+#===============================================================================
+# End of File
+#===============================================================================

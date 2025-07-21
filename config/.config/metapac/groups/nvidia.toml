@@ -1,0 +1,6 @@
+arch = [
+    "lib32-nvidia-utils",
+    "nvidia",
+    "nvidia-settings",
+    "nvidia-utils",
+]

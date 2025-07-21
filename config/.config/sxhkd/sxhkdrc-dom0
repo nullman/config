@@ -197,8 +197,14 @@ super + ctrl + Escape
     gdbus call --session --dest org.qubesos.appmenu --object-path '/org/qubesos/appmenu' --method org.freedesktop.Application.Activate '{}'
 
 # desktop application launcher: dom0
+#super + ctrl + space
+#    rofi -normal-window -modi drun -show drun
 super + ctrl + space
-    rofi -normal-window -modi drun -show drun
+    (vm=$({ \
+        qvm-ls | sed -n 's/^\([^ ]*\) *Running *AppVM .*$/\1/p' ; \
+        qvm-ls | grep -v ' Running ' | sed -n 's/^\([^ ]*\) .* AppVM .*$/\1/p' ; } | \
+    rofi -dmenu -i -p "Qubes VM") && \
+    rofi -normal-window -modi drun -show drun -filter "$(printf ${vm} | sed 's/$/: /')")
 
 # desktop application launcher: personal
 super + alt + space

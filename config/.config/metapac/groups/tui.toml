@@ -21,6 +21,7 @@ arch = [
     "phetch",
     "ranger",
     "s-tui",
+    "speedometer",
     "superfile",
     "tig",
     "ugrep",
