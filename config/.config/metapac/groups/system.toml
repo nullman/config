@@ -2,6 +2,7 @@ arch = [
     "7zip",
     "acpi",
     "aha",
+    "arch-wiki-docs",
     "aspell-en",
     "auto-cpufreq",
     "bandwhich",

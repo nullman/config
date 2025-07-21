@@ -24,6 +24,7 @@ arch = [
     "superfile",
     "tig",
     "ugrep",
+    "visidata",
     "w3m",
     "wavemon",
     "wordgrinder",

@@ -1,4 +1,5 @@
 arch = [
+    "alpine",
     "argc",
     "asciinema",
     "bat",
@@ -36,6 +37,7 @@ arch = [
     "mtr",
     "navi",
     "nodejs-how2",
+    "phoronix-test-suite",
     "procs",
     "rar",
     "remind",
