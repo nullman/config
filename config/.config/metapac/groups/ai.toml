@@ -1,11 +1,8 @@
 arch = [
-    "alpaca-ai",
     "imaginer",
     "lmstudio",
     "ollama",
     "ollama-docs",
-    "open-webui",
-    "tabby",
     "fortunecraft",
     "upscayl-bin",
 ]
