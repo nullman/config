@@ -1452,7 +1452,7 @@ qd-sync() {
         sudo cp "${HOME}/config/config/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml" \
             "/etc/xdg/xfce4/xfconf/xfce-perchannel-xml/"
         [[ "$1" == "arch" ]] && tar -C "${HOME}/config/config/.config" -cf - metapac-arch | qvm-run --pass-io arch 'tar -C "/home/user/.config" -xf -'
-        [[ "$1" == "apt" ]] && tar -C "${HOME}/config/config/.config" -cf - metapac-apt | qvm-run --pass-io debian 'tar -C "/home/user/.config" -xf -'
+        [[ "$1" == "debian" ]] && tar -C "${HOME}/config/config/.config" -cf - metapac-apt | qvm-run --pass-io debian 'tar -C "/home/user/.config" -xf -'
         home-restow
     fi
 }
