@@ -200,11 +200,7 @@ super + ctrl + Escape
 #super + ctrl + space
 #    rofi -normal-window -modi drun -show drun
 super + ctrl + space
-    (vm=$({ \
-        qvm-ls | sed -n 's/^\([^ ]*\) *Running *AppVM .*$/\1/p' ; \
-        qvm-ls | grep -v ' Running ' | sed -n 's/^\([^ ]*\) .* AppVM .*$/\1/p' ; } | \
-    rofi -dmenu -i -p "Qubes VM") && \
-    rofi -normal-window -modi drun -show drun -filter "$(printf ${vm} | sed 's/$/: /')")
+    ${HOME}/bin/rofi-qubes-drun
 
 # desktop application launcher: personal
 super + alt + space
