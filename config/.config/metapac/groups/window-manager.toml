@@ -24,6 +24,7 @@ arch = [
     "gnome-settings-daemon",
     "gnome-themes-extra",
     "gsimplecal",
+    "gst-plugin-qml6",
     "gxmessage",
     "kdeconnect",
     "lightdm",

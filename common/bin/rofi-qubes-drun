@@ -9,12 +9,23 @@
 
 set -euo pipefail
 
-vm=$({ qvm-ls | sed -n 's/^\([^ ]*\) *Running *AppVM .*$/\1/p' ;
-       qvm-ls | grep -v ' Running ' | sed -n 's/^\([^ ]*\) .* AppVM .*$/\1/p' ;
-     } | rofi -dmenu -i -p "Qubes VM")
-vm="${vm}: "
+# vm=$({ echo "[none]" ;
+#        qvm-ls | sed -n 's/^\([^ ]*\) *Running *AppVM .*$/\1/p' ;
+#        qvm-ls | grep -v ' Running ' | sed -n 's/^\([^ ]*\) .* AppVM .*$/\1/p' ;
+#        qvm-ls | sed -n 's/^\([^ ]*\) *Running *TemplateVM .*$/\1/p' ;
+#        qvm-ls | grep -v ' Running ' | sed -n 's/^\([^ ]*\) .* TemplateVM .*$/\1/p' ;
+#      } | rofi -dmenu -i -p "Qubes VM")
 
-rofi -normal-window -modi drun -show drun -filter "${vm}"
+vm=$({ echo "[none]" ;
+       qvm-ls --fields NAME,CLASS | tail -n +2 | grep -v '^dom0' | sed 's/ \+/ [/ ; s/$/]/' ;
+     } | rofi -dmenu -i -p "Qubes VM")
+
+if [[ "${vm}" == "[none]" ]] ; then
+    rofi -normal-window -modi drun -show drun
+else
+    vm=$(printf "${vm}" | sed 's/ \[.*$//')
+    rofi -normal-window -modi drun -show drun -filter "${vm}: "
+fi
 
 exit 0
 
