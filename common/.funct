@@ -1434,6 +1434,28 @@ qd-copy-to-vm() {
         tar -cf - "$2" | qvm-run --pass-io "$1" "tar -C \"$3\" -xf -"
     fi
 }
+#        qd-sync                   copy personal config to dom0
+qd-sync() {
+    if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] || [[ "$(uname -n)" != "dom0" ]] ; then
+        echo "Usage: qd-sync [OS]"
+        echo "OS:"
+        echo "  arch"
+        echo "  debian"
+        [[ "$(uname -n)" != "dom0" ]] && echo "Error: Can only be run on dom0"
+    else
+        rm -rf "${HOME}/config.old"
+        mv -f "${HOME}/config" "${HOME}/config.old"
+        qvm-run --pass-io personal 'tar -C /home/user -c --exclude=\".git*\" config' | tar -C "${HOME}" -x
+        rm -rf "${HOME}/config-private.old"
+        mv -f "${HOME}/config-private" "${HOME}/config-private.old"
+        qvm-run --pass-io personal 'tar -C /home/user -c --exclude=\".git*\" config-private' | tar -C "${HOME}" -x
+        sudo cp "${HOME}/config/config/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml" \
+            "/etc/xdg/xfce4/xfconf/xfce-perchannel-xml/"
+        [[ "$1" == "arch" ]] && tar -C "${HOME}/config/config/.config" -cf - metapac-arch | qvm-run --pass-io arch 'tar -C "/home/user/.config" -xf -'
+        [[ "$1" == "apt" ]] && tar -C "${HOME}/config/config/.config" -cf - metapac-apt | qvm-run --pass-io debian 'tar -C "/home/user/.config" -xf -'
+        home-restow
+    fi
+}
 
 #
 # dvd encode

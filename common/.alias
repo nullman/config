@@ -3220,22 +3220,6 @@ alias qdus="sudo qubes-dom0-update --action=search"
 alias qvmcp="qvm-copy-to-vm personal"
 #!#        qcpvm                   copy X11 clipboard into qubes clipboard
 #!alias qcpvm="xsel > /var/run/qubes/qubes-clipboard.bin && echo -n dom0 > /var/run/qubes/qubes-clipboard.bin.source"
-#        qd-sync                 copy personal config to dom0
-alias qd-sync="
-    if [[ \"$(uname -n)\" == \"dom0\" ]] ; then
-        rm -rf \${HOME}/config.old
-        mv -f \${HOME}/config \${HOME}/config.old
-        qvm-run --pass-io personal 'tar -C /home/user -c --exclude=\".git*\" config' | tar -C \${HOME} -x
-        rm -rf \${HOME}/config-private.old
-        mv -f \${HOME}/config-private \${HOME}/config-private.old
-        qvm-run --pass-io personal 'tar -C /home/user -c --exclude=\".git*\" config-private' | tar -C \${HOME} -x
-        tar -C \${HOME}/config/config/.config -cf - metapac* | qvm-run --pass-io arch 'tar -C /home/user/.config -xf -'
-        sudo cp \${HOME}/config/config/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml \
-            /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/
-        home-restow
-    else
-        echo \"Error: qd-sync can only be run on dom0\"
-    fi"
 #        qd-copy-windows-tools   copy qubes-windows-tools from personal to dom0
 alias qd-copy-windows-tools="
     qvm-run --pass-io personal 'tar -C \"/home/data/media/Software/Hypervisor/Qubes OS\" -c qubes-windows-tools-4.1.69-1.fc37.noarch.rpm' | tar -x"
