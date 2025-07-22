@@ -9,7 +9,7 @@
 # Backends to enable for most of metapac's behavior. See the README.md or
 # run `metapac backends` for the list of backend names
 # Default: []
-enabled_backends = ["arch"]
+enabled_backends = ["apt", "arch"]
 
 # Backends to disable from all metapac behavior. See the README.md for
 # the list of backend names
@@ -46,4 +46,5 @@ hostname_groups_enabled = true
 # Default: None
 [hostname_groups]
 arch = ["base", "system", "x11", "window-manager", "applications", "utilities", "tui", "console", "internet", "emulators", "development", "containers", "ai", "console-hacks", "zsh", "qubes"]
+debian = ["base", "system"]#, "x11", "window-manager", "applications", "utilities", "tui", "console", "internet", "emulators", "development", "containers", "ai", "console-hacks", "zsh", "qubes"]
 retro = ["base", "system", "x11", "window-manager", "emulators"]

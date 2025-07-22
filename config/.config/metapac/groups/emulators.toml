@@ -1,3 +1,18 @@
+apt = [
+    "basiliskii-git",
+    "dosbox",
+    "fs-uae",
+    "fs-uae-launcher",
+    "linapple-git",
+    "mame",
+    "minivmac",
+    "vice",
+    "wine",
+    "wine-gecko",
+    "wine-mono",
+    "winetricks",
+]
+
 arch = [
     "basiliskii-git",
     "dosbox",
@@ -12,3 +27,4 @@ arch = [
     "wine-mono",
     "winetricks",
 ]
+

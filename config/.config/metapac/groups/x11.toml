@@ -1,3 +1,33 @@
+apt = [
+    "arandr",
+    "imwheel",
+    "scrot",
+    "sxhkd",
+    "x2x-git",
+    "xautolock",
+    "xclip",
+    "xdo",
+    "xdotool",
+    "xgetres",
+    "xorg-server",
+    "xorg-setxkbmap",
+    "xorg-xbacklight",
+    "xorg-xev",
+    "xorg-xinit",
+    "xorg-xinput",
+    "xorg-xkbcomp",
+    "xorg-xkill",
+    "xorg-xmodmap",
+    "xorg-xprop",
+    "xorg-xrandr",
+    "xorg-xset",
+    "xorg-xwininfo",
+    "xprintidle",
+    "xsel",
+    "xterm",
+    "xvkbd",
+]
+
 arch = [
     "arandr",
     "imwheel",
@@ -27,3 +57,4 @@ arch = [
     "xterm",
     "xvkbd",
 ]
+

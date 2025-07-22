@@ -3229,7 +3229,7 @@ alias qd-sync="
         rm -rf \${HOME}/config-private.old
         mv -f \${HOME}/config-private \${HOME}/config-private.old
         qvm-run --pass-io personal 'tar -C /home/user -c --exclude=\".git*\" config-private' | tar -C \${HOME} -x
-        tar -C \${HOME}/config/config/.config -cf - metapac | qvm-run --pass-io arch 'tar -C /home/user/.config -xf -'
+        tar -C \${HOME}/config/config/.config -cf - metapac* | qvm-run --pass-io arch 'tar -C /home/user/.config -xf -'
         sudo cp \${HOME}/config/config/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml \
             /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/
         home-restow

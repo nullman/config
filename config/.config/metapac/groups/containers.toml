@@ -1,6 +1,14 @@
+apt = [
+    "docker",
+    "docker-compose",
+    "distrobox",
+    "podman",
+]
+
 arch = [
     "docker",
     "docker-compose",
     "distrobox",
     "podman",
 ]
+

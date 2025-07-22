@@ -1,3 +1,36 @@
+apt = [
+    "ardour",
+    "audacity",
+    "blender",
+    "calibre",
+    "cantata",
+    "drawing",
+    "electrum",
+    "focuswriter",
+    "foliate",
+    "freecad",
+    "freemind-bin",
+    "freetube-bin",
+    "fritzing",
+    "furnace",
+    "gimp",
+    "inkscape",
+    "kdenlive",
+    "kicad",
+    "kicad-library",
+    "kiwix-desktop",
+    "kiwix-tools",
+    "libreoffice-still",
+    "lmms",
+    "logisim-evolution-bin",
+    "ngspice",
+    "obs-studio",
+    "openscad",
+    "reaper",
+    "shortwave",
+    "spotify",
+]
+
 arch = [
     "ardour",
     "audacity",
@@ -30,3 +63,4 @@ arch = [
     "shortwave",
     "spotify",
 ]
+
