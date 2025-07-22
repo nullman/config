@@ -1,0 +1,19 @@
+apt = [
+    "aalib",
+    "asciiquarium",
+    "bb",
+    "bullshit",
+    "cbonsai",
+    "cmatrix",
+    "cowsay",
+    "figlet",
+    "genact",
+    "hacker-typer",
+    "hollywood",
+    "lolcat",
+    "rig",
+    "shell-color-scripts-git",
+    "sl",
+    "tty-clock",
+]
+

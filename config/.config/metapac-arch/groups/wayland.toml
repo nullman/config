@@ -1,21 +1,3 @@
-apt = [
-    "clipman",
-    "hyprland",
-    "hyprpaper",
-    "hyprpicker",
-    "rofi-wayland",
-    "swww",
-    "waybar",
-    "wayland",
-    "wayland-protocols",
-    "wayland-utils",
-    "wl-clipboard",
-    "wl-color-picker",
-    "wlroots0.19",
-    "wofi",
-    "xorg-xwayland",
-]
-
 arch = [
     "clipman",
     "hyprland",

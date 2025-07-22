@@ -1,0 +1,10 @@
+apt = [
+    "antibody-bin",
+    "autojump",
+    "ttf-meslo-nerd-font-powerlevel10k",
+    "zsh",
+    "zsh-autosuggestions",
+    "zsh-syntax-highlighting",
+    "zsh-theme-powerlevel10k",
+]
+

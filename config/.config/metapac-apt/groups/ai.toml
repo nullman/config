@@ -1,0 +1,9 @@
+apt = [
+    "imaginer",
+    "lmstudio",
+    "ollama",
+    "ollama-docs",
+    "fortunecraft",
+    "upscayl-bin",
+]
+

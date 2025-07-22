@@ -9,7 +9,7 @@
 # Backends to enable for most of metapac's behavior. See the README.md or
 # run `metapac backends` for the list of backend names
 # Default: []
-enabled_backends = ["apt", "arch"]
+enabled_backends = ["apt"]
 
 # Backends to disable from all metapac behavior. See the README.md for
 # the list of backend names
@@ -21,7 +21,7 @@ enabled_backends = ["apt", "arch"]
 # metapac to use.
 # Must be one of: ["pacman", "pamac", "paru", "pikaur", "yay"]
 # Default: "pacman"
-arch_package_manager = "yay"
+#arch_package_manager = "yay"
 
 # Since VSCode and VSCodium both operate on the same package database
 # they are mutually exclusive and so you must pick which one you want
@@ -45,6 +45,4 @@ hostname_groups_enabled = true
 # paths starting without a / are relative to the groups folder
 # Default: None
 [hostname_groups]
-arch = ["base", "system", "x11", "window-manager", "applications", "utilities", "tui", "console", "internet", "emulators", "development", "containers", "ai", "console-hacks", "zsh", "qubes"]
 debian = ["base", "system"]#, "x11", "window-manager", "applications", "utilities", "tui", "console", "internet", "emulators", "development", "containers", "ai", "console-hacks", "zsh", "qubes"]
-retro = ["base", "system", "x11", "window-manager", "emulators"]

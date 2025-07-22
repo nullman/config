@@ -1,0 +1,7 @@
+apt = [
+    "pipewire-qubes",
+    "qubes-vm-dependencies",
+    "qubes-vm-recommended",
+    "qubes-vm-repo",
+]
+

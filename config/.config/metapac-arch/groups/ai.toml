@@ -1,12 +1,3 @@
-apt = [
-    "imaginer",
-    "lmstudio",
-    "ollama",
-    "ollama-docs",
-    "fortunecraft",
-    "upscayl-bin",
-]
-
 arch = [
     "imaginer",
     "lmstudio",
