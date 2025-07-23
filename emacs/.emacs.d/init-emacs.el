@@ -20838,17 +20838,6 @@ Markdown files."
   )
 ;; Perl Mode:1 ends here
 
-;; [[file:init-emacs.org::#modes-plantuml-mode][PlantUML Mode:1]]
-;;------------------------------------------------------------------------------
-;;; Modes: PlantUML Mode
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modes: PlantUML Mode")
-
-(use-package plantuml-mode
-  :straight t)
-;; PlantUML Mode:1 ends here
-
 ;; [[file:init-emacs.org::#modes-python-mode][Python Mode:1]]
 ;;------------------------------------------------------------------------------
 ;;; Modes: Python Mode
