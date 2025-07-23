@@ -173,6 +173,7 @@ _br 'spotify' desktop=^9 follow=on
 
 # 11: Virtual Machine 1
 bspc desktop 11 --layout monocle
+_br 'windows-7' desktop=^11 follow=on
 
 # 12: Virtual Machine 2
 bspc desktop 12 --layout monocle
