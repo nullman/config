@@ -668,11 +668,6 @@
   #
   #in [
   #  (commonMountOptions // {
-  #    what = "//synology/adult";
-  #    where = "/mnt/synology/adult";
-  #  })
-  #
-  #  (commonMountOptions // {
   #    what = "//synology/incoming";
   #    where = "/mnt/synology/incoming";
   #  })
@@ -711,7 +706,6 @@
   #};
   #
   #in [
-  #  (commonAutoMountOptions // { where = "/mnt/synology/adult"; })
   #  (commonAutoMountOptions // { where = "/mnt/synology/incoming"; })
   #  (commonAutoMountOptions // { where = "/mnt/synology/media"; })
   #  (commonAutoMountOptions // { where = "/mnt/synology/music"; })
@@ -733,7 +727,6 @@
     acpi                                    # Show battery status and other ACPI information
     aha                                     # ANSI HTML Adapter
     alacritty                               # Cross-platform, GPU-accelerated terminal emulator
-    arandr                                  # Simple visual front end for XRandR
     aspell                                  # Spell checker for many languages
     aspellDicts.en                          # Aspell dictionary for English
     auto-cpufreq                            # Automatic CPU speed & power optimizer for Linux
@@ -794,7 +787,6 @@
     man                                     # Implementation of the standard Unix documentation system accessed using the man command
     man-db                                  # Implementation of the standard Unix documentation system accessed using the man command
     man-pages                               # Linux development manual pages
-    menumaker                               # Heuristics-driven menu generator for several window managers
     micro                                   # Modern and intuitive terminal-based text editor
     moreutils                               # Growing collection of the unix tools that nobody thought to write long ago wh...
     mtools                                  # Utilities to access MS-DOS disks
@@ -827,6 +819,7 @@
     shc                                     # Shell Script Compiler
     silver-searcher                         # Code-searching tool similar to ack, but faster
     stow                                    # Tool for managing the installation of multiple software packages in the same run-time directory tree
+    system-config-printer                   #
     texinfo                                 # GNU documentation system
     tldr                                    # Simplified and community-driven man pages
     tlp                                     # Advanced Power Management for Linux
@@ -848,6 +841,7 @@
     zip                                     # Compressor/archiver for creating and modifying zipfiles
 
     # x11
+    arandr                                  # Simple visual front end for XRandR
     x2x                                     # Allows the keyboard, mouse on one X display to be used to control another X display
     xclip                                   # Tool to access the X clipboard from a console application
     xdo                                     # Small X utility to perform elementary actions on windows
@@ -929,6 +923,7 @@
     lightdm                                 # Cross-desktop display manager
     lightdm-slick-greeter                   # Slick-looking LightDM greeter
     lxappearance                            # Lightweight program for configuring the theme and fonts of gtk applications
+    menumaker                               # Heuristics-driven menu generator for several window managers
     mesa-demos                              # Collection of demos and test programs for OpenGL and Mesa
     mission-center                          # Monitor your CPU, Memory, Disk, Network and GPU usage
     ncpamixer                               # Terminal mixer for PulseAudio inspired by pavucontrol
@@ -970,6 +965,8 @@
     xfce.xfconf                             # Simple client-server configuration storage and query system for Xfce
     xdg-desktop-portal-gtk                  # Desktop integration portals for sandboxed apps
     xdg-utils                               # Set of command line tools that assist applications with a variety of desktop integration tasks
+    xplanet                                 # Renders an image of the earth or other planets into the X root window
+    xscreensaver                            # Set of screensavers
     yad                                     # GUI dialog tool for shell scripts
     zenity                                  # Tool to display dialogs from the commandline and shell scripts
 
@@ -1040,6 +1037,7 @@
     brasero                                 # Gnome CD/DVD Burner
     celluloid                               # Simple GTK frontend for the mpv video player
     cherrytree                              # Hierarchical note taking application
+    cool-retro-term                         # Manage your dotfiles across multiple machines, securely
     czkawka                                 # Simple, fast and easy to use app to remove unnecessary files from your computer
     dmg2img                                 # Apple's compressed dmg to standard (hfsplus) image disk file convert tool
     easytag                                 # View and edit tags for various audio files
@@ -1055,6 +1053,7 @@
     geekbench                               # Cross-platform benchmark
     glmark2                                 # OpenGL (ES) 2.0 benchmark
     #gnome.file-roller                       # Archive manager for the GNOME desktop environment
+    gnome-disk-utility                      # Udisks graphical front-end
     gnome-frog                              # Intuitive text extraction tool (OCR) for GNOME desktop
     gnome-multi-writer                      # Tool for writing an ISO file to multiple USB devices at once
     goldendict-ng                           # Advanced multi-dictionary lookup program
@@ -1095,6 +1094,7 @@
     bmon                                    # Network bandwidth monitor
     btop                                    # Monitor of resources
     calcurse                                # Calendar and scheduling application for the command line
+    caligula                                # User-friendly, lightweight TUI for disk imaging
     cmus                                    # Small, fast and powerful console music player for Linux and *BSD
     cointop                                 # Fastest and most interactive terminal based UI application for tracking cryptocurrencies
     du-dust                                 # du + rust = dust. Like du but more intuitive
@@ -1139,9 +1139,7 @@
     bitwarden-menu                          # Dmenu/Rofi frontend for managing Bitwarden vaults. Uses the Bitwarden CLI tool to interact with the Bitwarden database
     boxes                                   # Command line program which draws, removes, and repairs ASCII art boxes
     broot                                   # config-private/common/org loading ❯
-    caligula                                # User-friendly, lightweight TUI for disk imaging
     chezmoi                                 # Interactive tree view, a fuzzy search, a balanced BFS descent and customizable commands
-    cool-retro-term                         # Manage your dotfiles across multiple machines, securely
     cp437                                   # Emulates an old-style "code page 437" / "IBM-PC" character set terminal on a ...
     ddgr                                    # Terminal emulator which mimics the old cathode display
     dict                                    # Dict protocol server and client
@@ -1191,6 +1189,25 @@
     yt-dlp                                  # Command-line tool to download videos from YouTube.com and other sites (youtube-dl fork)
     zoxide                                  # Fast cd command that learns your habits
 
+    # console hacks
+    aalib                                   # ASCII art graphics library
+    asciiquarium                            # Enjoy the mysteries of the sea from the safety of your own terminal!
+    #astroterm                               # Celestial viewer for the terminal, written in C
+    bb                                      # AA-lib demo
+    bucklespring                            # Nostalgia bucklespring keyboard sound
+    cbonsai                                 # Grow bonsai trees in your terminal
+    cmatrix                                 # Simulates the falling characters theme from The Matrix movie
+    cowsay                                  # Program which generates ASCII pictures of a cow with a message
+    dwt1-shell-color-scripts                # Collection of shell color scripts collected by dt (Derek Taylor)
+    figlet                                  # Program for making large letters out of ordinary text
+    genact                                  # Nonsense activity generator
+    hackertyper                             # C rewrite of hackertyper.net
+    hollywood                               # Fill your console with Hollywood melodrama technobabble
+    lolcat                                  # Rainbow version of cat
+    rig                                     # Random identity generator
+    sl                                      # Steam Locomotive runs across your terminal when you type 'sl'
+    tty-clock                               # Digital clock in ncurses
+
     ## internet
     ##betterbird                              # Betterbird is a fine-tuned version of Mozilla Thunderbird, Thunderbird on steroids, if you will
     #bore-cli                                # Rust tool to create TCP tunnels
@@ -1209,6 +1226,7 @@
     #google-chrome                           # Freeware web browser developed by Google
     #gossip                                  # Desktop client for nostr, an open social media protocol
     #kristall                                # Graphical small-internet client, supports gemini, http, https, gopher, finger
+    #ladybird
     #magic-wormhole                          # Securely transfer data between computers
     #ncgopher                                # Gopher and gemini client for the modern internet
     #nheko                                   # Desktop client for the Matrix protocol
@@ -1328,6 +1346,8 @@
     rustc                                   # Safe, concurrent, practical language (wrapper script)
     shellcheck                              # Shell script analysis tool
     swift                                   # Swift Programming Language
+    texliveFull                             # TeX Live environment
+    texlivePackages.scheme-full             # full scheme (everything)
     tokei                                   # Program that allows you to count your code, quickly
     vlang                                   # Simple, fast, safe, compiled language for developing maintainable software
     vscode                                  # Open source source code editor developed by Microsoft for Windows, Linux and ...
@@ -1338,11 +1358,9 @@
 
     ## containers
     #distrobox                               # Wrapper around podman or docker to create and start containers
-    #podman                                  # Program for managing pods, containers and container images
-
-    ## docker
     #docker                                  # Open source project to pack, ship and run any application as a lightweight co...
     #docker-compose                          # Docker CLI plugin to define and run multi-container applications with Docker
+    #podman                                  # Program for managing pods, containers and container images
 
     ## ai
     #alpaca                                  # Ollama client made with GTK4 and Adwaita
@@ -1357,40 +1375,6 @@
     antibody                                # Fastest shell plugin manager
     meslo-lgs-nf                            # Meslo Nerd Font patched for Powerlevel10k
     zsh                                     # Z shell
-
-    # printing
-    system-config-printer                   #
-
-    # console hacks
-    aalib                                   # ASCII art graphics library
-    asciiquarium                            # Enjoy the mysteries of the sea from the safety of your own terminal!
-    #astroterm                               # Celestial viewer for the terminal, written in C
-    bb                                      # AA-lib demo
-    bucklespring                            # Nostalgia bucklespring keyboard sound
-    cbonsai                                 # Grow bonsai trees in your terminal
-    cmatrix                                 # Simulates the falling characters theme from The Matrix movie
-    cowsay                                  # Program which generates ASCII pictures of a cow with a message
-    dwt1-shell-color-scripts                # Collection of shell color scripts collected by dt (Derek Taylor)
-    figlet                                  # Program for making large letters out of ordinary text
-    genact                                  # Nonsense activity generator
-    hackertyper                             # C rewrite of hackertyper.net
-    hollywood                               # Fill your console with Hollywood melodrama technobabble
-    lolcat                                  # Rainbow version of cat
-    rig                                     # Random identity generator
-    sl                                      # Steam Locomotive runs across your terminal when you type 'sl'
-    tty-clock                               # Digital clock in ncurses
-
-    # latex
-    texliveFull                             # TeX Live environment
-    texlivePackages.scheme-full             # full scheme (everything)
-
-    # xscreensaver
-    xscreensaver                            # Set of screensavers
-
-    # extra savers
-    #antsimulator                            # Simple Ants simulator
-    #xmountains                              # X11 based fractal landscape generator
-    xplanet                                 # Renders an image of the earth or other planets into the X root window
 
     # games
     alephone                                # Aleph One is the open source continuation of Bungie’s Marathon 2 game engine
