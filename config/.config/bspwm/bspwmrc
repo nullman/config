@@ -138,6 +138,7 @@ _br 'Com.github.bleakgrey.tootle' desktop=^7 follow=on
 _br 'nheko' desktop=^7 follow=on
 _br 'Element' desktop=^7 follow=on
 _br 'dev.geopjr.Tuba' desktop=^7 follow=on
+_br 'gajim' desktop=^7 follow=on
 _br 'Gajim' desktop=^7 follow=on
 _br 'Hyperspace Desktop' desktop=^7 follow=on
 _br 'android-messages-desktop' desktop=^7 follow=on
