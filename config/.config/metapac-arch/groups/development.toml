@@ -6,6 +6,7 @@ arch = [
     "android-tools",
     "android-udev",
     "autoconf",
+    "autoconf-archive",
     "automake",
     "better-adb-sync-git",
     "binutils",
