@@ -45,6 +45,7 @@ arch = [
     "gradle",
     "gradle-doc",
     "graphviz",
+    "guile",
     "hq",
     "htmlq",
     "intellij-idea-community-edition",
