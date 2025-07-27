@@ -68,6 +68,7 @@ alacritty &
 
 # run personal vm applications
 (
+    qvm-start personal
     sleep 10s && (
         bspc desktop --focus 1
 
