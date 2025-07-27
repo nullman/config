@@ -1,4 +1,5 @@
 arch = [
+    "chatbox-bin",
     "imaginer",
     "lmstudio",
     "ollama",
