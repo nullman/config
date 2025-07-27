@@ -2005,6 +2005,16 @@ make-metapac-groups() {
         done
     done
 }
+#        ollama-model-install  install ollama models
+ollama-model-install() {
+    awk "/^[ \t]*#\+NAME: ollama-models\$/,/^\*/{print \$0}" \
+        "${HOME}/org/personal.org" | \
+        sed -n 's/^ *// ; s/ *#.*$// ; /^ollama pull/p' | \
+        while read -r cmd ; do
+            echo "${cmd}"
+            eval "${cmd}"
+        done
+}
 #        arch-initialize      setup arch system
 arch-initialize() {
     _getsection() {

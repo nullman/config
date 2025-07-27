@@ -3243,6 +3243,18 @@ alias qd-copy-xscreensaver="
 #!    fi"
 
 #
+# metapac (Multi-Backend Declarative Package Manager)
+#
+#        mps                     metapac sync (install packages from groups)
+alias mps="metapac sync"
+#        mpum                    metapac unmanaged (show unmanaged packages that are installed)
+alias mpum="metapac unmanaged"
+#        mpc                     metapac clean (uninstall unmanaged packages)
+alias mpc="metapac clean"
+#        mpcc                    metapac clean cache (delete cached files)
+alias mpcc="metapac clean-cache"
+
+#
 # git
 #
 #        git-prompt              show git branch name in terminal prompt

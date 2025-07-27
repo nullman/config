@@ -1,0 +1,27 @@
+#===============================================================================
+# .config/systemd/user/mpd.service
+#
+# Configuration for systemd user mpd service.
+#
+# Enable:   systemctl --user enable mpd.service
+# Start:    systemctl --user start mpd.service
+# Stop:     systemctl --user stop mpd.service
+# Disable:  systemctl --user disable mpd.service
+#
+# Reference: https://wiki.archlinux.org/index.php/Systemd/User
+#===============================================================================
+
+[Unit]
+Description=Music Player Daemon (mpd)
+
+[Service]
+User=user
+#ExecStart=/usr/sbin/mpd --no-daemon %h/.mpd/mpd.conf
+ExecStart=/usr/sbin/mpd --no-daemon
+
+[Install]
+WantedBy=default.target
+
+#===============================================================================
+# End of File
+#===============================================================================
