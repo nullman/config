@@ -12,6 +12,7 @@ arch = [
     "gajim",
     "gnu-netcat",
     "gopherus",
+    "gossip-bin",
     "hyperspace-bin",
     "kristall",
     "ladybird",
