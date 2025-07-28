@@ -154,6 +154,7 @@ _br 'jetbrains-studio' desktop=^8 follow=on
 #_br 'syncterm' desktop=^8 follow=on
 _br 'VirtualBox Manager' desktop=^8 follow=on
 _br 'VirtualBox Machine' desktop=^8 follow=on
+_br 'xyz.chatboxapp.app' desktop=^8 follow=on
 
 # 9: Image, Video, and Audio
 bspc desktop 9 --layout monocle
