@@ -430,7 +430,7 @@
   #    CPU_MIN_PERF_ON_BAT = 0;
   #    CPU_MAX_PERF_ON_BAT = 20;
   #
-  #    START_CHARGE_THRESH_BAT0 = 40;   # 40 and bellow battery starts to charge
+  #    START_CHARGE_THRESH_BAT0 = 60;   # 60 and bellow battery starts to charge
   #    STOP_CHARGE_THRESH_BAT0 = 80;    # 80 and above battery stops charging
   #
   #    #USB_BLACKLIST_BTUSB = 1;         # make sure bluetooth still works
@@ -1308,7 +1308,7 @@
     google-chrome                           # Freeware web browser developed by Google
     gossip                                  # Desktop client for nostr, an open social media protocol
     kristall                                # Graphical small-internet client, supports gemini, http, https, gopher, finger
-    ladybird
+    ladybird                                # Browser using the SerenityOS LibWeb engine with a Qt or Cocoa GUI
     magic-wormhole                          # Securely transfer data between computers
     ncgopher                                # Gopher and gemini client for the modern internet
     nheko                                   # Desktop client for the Matrix protocol
@@ -1442,6 +1442,7 @@
 
     # ai
     alpaca                                  # Ollama client made with GTK4 and Adwaita
+    chatbox                                 # AI client application and smart assistant
     imaginer                                # Imaginer with AI
     lmstudio                                # LM Studio is an easy to use desktop app for experimenting with local and open...
     ollama                                  # Get up and running with large language models locally
