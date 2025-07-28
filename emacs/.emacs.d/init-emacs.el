@@ -16799,10 +16799,7 @@ USING is the remaining peg."
   (setopt ellama-naming-scheme 'ellama-generate-name-by-time)
   (setopt ellama-provider
           (make-llm-ollama
-           :chat-model "llama3.2:1b"
-           ;;:chat-model "llama3:8b-instruct-q8_0"
-           ;;:chat-model "deepseek-r1:7b"
-           ;;:chat-model "artifish/llama3.2-uncensored:latest"
+           :chat-model "llama3.2:3b"
            :embedding-model "nomic-embed-text"
            :default-chat-non-standard-params '(("num_ctx" . 8192))))
   (setopt ellama-summarization-provider
@@ -16821,12 +16818,7 @@ USING is the remaining peg."
            :embedding-model "nomic-embed-text"
            :default-chat-non-standard-params '(("num_ctx" . 32768))))
   (setopt ellama-providers
-          '(("deepseek-r1:7b" . (make-llm-ollama "deepseek-r1:7b"))
-            ("deepseek-r1:14b" . (make-llm-ollama "deepseek-r1:14b"))
-            ("deepseek-v2:16b" . (make-llm-ollama "deepseek-v2:16b"))
-            ("deepseek-coder:1.3b" . (make-llm-ollama "deepseek-coder:1.3b"))
-            ("deepseek-coder-v2:16b" . (make-llm-ollama "deepseek-coder-v2:16b"))
-            ("llama3.2:1b" . (make-llm-ollama "llama3.2:1b"))
+          '(("llama3.2:1b" . (make-llm-ollama "llama3.2:1b"))
             ("llama3.2:3b" . (make-llm-ollama "llama3.2:3b"))
             ;;("llama3:8b-instruct-q8_0" . (make-llm-ollama "llama3:8b-instruct-q8_0"))
             ;;("llama3:8b" . (make-llm-ollama "llama3:8b"))
