@@ -88,6 +88,8 @@
     nvidia.acceptLicense = true;
     joypixels.acceptLicense = true;
     permittedInsecurePackages = [
+      "electron-33.4.11"
+      "ladybird-0-unstable-2024-11-21"
       "olm-3.2.16"
     ];
     packageOverrides = pkgs: {
@@ -261,6 +263,7 @@
   # locate
   services.locate = {
     enable = true;
+    localuser = null;
     package = pkgs.mlocate;
     pruneBindMounts = true;
     prunePaths = [
@@ -1227,6 +1230,7 @@
     #gossip                                  # Desktop client for nostr, an open social media protocol
     #kristall                                # Graphical small-internet client, supports gemini, http, https, gopher, finger
     #ladybird                                # Browser using the SerenityOS LibWeb engine with a Qt or Cocoa GUI
+    #localsend                               # Open source cross-platform alternative to AirDrop
     #magic-wormhole                          # Securely transfer data between computers
     #ncgopher                                # Gopher and gemini client for the modern internet
     #nheko                                   # Desktop client for the Matrix protocol
@@ -1364,7 +1368,7 @@
 
     ## ai
     #alpaca                                  # Ollama client made with GTK4 and Adwaita
-    #chatbox                                 # AI client application and smart assistant
+    ##chatbox                                 # AI client application and smart assistant
     #imaginer                                # Imaginer with AI
     #lmstudio                                # LM Studio is an easy to use desktop app for experimenting with local and open...
     #ollama                                  # Get up and running with large language models locally

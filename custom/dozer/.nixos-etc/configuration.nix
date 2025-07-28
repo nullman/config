@@ -1312,6 +1312,7 @@
     gossip                                  # Desktop client for nostr, an open social media protocol
     kristall                                # Graphical small-internet client, supports gemini, http, https, gopher, finger
     ladybird                                # Browser using the SerenityOS LibWeb engine with a Qt or Cocoa GUI
+    localsend                               # Open source cross-platform alternative to AirDrop
     magic-wormhole                          # Securely transfer data between computers
     ncgopher                                # Gopher and gemini client for the modern internet
     nheko                                   # Desktop client for the Matrix protocol
