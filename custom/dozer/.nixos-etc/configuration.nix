@@ -121,6 +121,8 @@
     nvidia.acceptLicense = true;
     joypixels.acceptLicense = true;
     permittedInsecurePackages = [
+      "electron-33.4.11"
+      "ladybird-0-unstable-2024-11-21"
       "olm-3.2.16"
     ];
     packageOverrides = pkgs: {
@@ -294,6 +296,7 @@
   # locate
   services.locate = {
     enable = true;
+    localuser = null;
     package = pkgs.mlocate;
     pruneBindMounts = true;
     prunePaths = [
@@ -1442,7 +1445,7 @@
 
     # ai
     alpaca                                  # Ollama client made with GTK4 and Adwaita
-    chatbox                                 # AI client application and smart assistant
+    #chatbox                                 # AI client application and smart assistant
     imaginer                                # Imaginer with AI
     lmstudio                                # LM Studio is an easy to use desktop app for experimenting with local and open...
     ollama                                  # Get up and running with large language models locally
