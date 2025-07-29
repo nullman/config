@@ -45,5 +45,5 @@ hostname_groups_enabled = true
 # paths starting without a / are relative to the groups folder
 # Default: None
 [hostname_groups]
-arch = ["base", "system", "x11", "window-manager", "applications", "utilities", "tui", "console", "internet", "emulators", "development", "containers", "ai", "console-hacks", "zsh", "qubes"]
+arch = ["base", "system", "x11", "window-manager", "applications", "utilities", "tui", "console", "internet", "emulators", "development", "containers", "ai", "console-hacks", "zsh", "qubes", "games"]
 retro = ["base", "system", "x11", "window-manager", "emulators"]

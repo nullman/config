@@ -72,8 +72,8 @@ alacritty -e ${HOME}/bin/run-screen &
     sleep 10s && (
         bspc desktop --focus 1
 
-        # # prompt for keyring authentication on personal vm
-        # qvm-run personal "keyring get SecretService \$(id -un)" &
+        # prompt for keyring authentication on personal vm
+        qvm-run personal "keyring get SecretService \$(id -un)" >/dev/null 2>&1 &
 
         # start user services
         qvm-run personal "systemctl --user enable --now clipmenud" &
