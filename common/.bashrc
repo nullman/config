@@ -33,7 +33,7 @@ export COLOR_LIGHT_GRAY="\[\033[0;37m\]"
 export COLOR_WHITE="\[\033[1;37m\]"
 
 # source system bashrc
-[[ -f "/etc/bashrc" ]] && source "/etc/bashrc" 2>&1
+[ -f "/etc/bashrc" ] && source "/etc/bashrc" 2>&1
 
 # keep original TERM value for scripts to use
 export REAL_TERM="${TERM}"
@@ -41,7 +41,7 @@ export REAL_TERM="${TERM}"
 export TERM="xterm-256color"
 
 # continue only if terminal is interactive
-[[ $- == *i* ]] || return 0
+[ $- == *i* ] || return 0
 
 # add to the run path
 export runpath="${runpath}:${HOME}/.bashrc"
@@ -53,7 +53,7 @@ os="$(uname -s)"
 # set environmental vars
 export SHELL="$(command -v bash)"
 
-if [[ -z "${INSIDE_EMACS}" ]] ; then
+if [ -z "${INSIDE_EMACS}" ] ; then
     # auto-completion: ignore case
     bind "set completion-ignore-case on"
     # auto-completion: single tab list
@@ -73,31 +73,31 @@ PROMPT_COMMAND='history -a'  # this terminal should append to the history file
 # CTRL-T  paste the selected file path into the command line
 # CTRL-R  paste the selected command from history into the command line
 # ALT-C   cd into the selected directory
-if [[ -z "${INSIDE_EMACS}" ]] ; then
-    if [[ "${os}" == "Darwin" ]] ; then
-        [[ -d "/usr/local/opt/fzf/bin" ]] && [[ ! "${PATH}" == */usr/local/opt/fzf/bin* ]] && export PATH="${PATH}:/usr/local/opt/fzf/bin"
-        [[ -f "/usr/local/opt/fzf/shell/key-bindings.bash" ]] && source "/usr/local/opt/fzf/shell/key-bindings.bash" 2>&1
-        [[ -f "/usr/local/opt/fzf/shell/completion.bash" ]] && source "/usr/local/opt/fzf/shell/completion.bash" 2>&1
+if [ -z "${INSIDE_EMACS}" ] ; then
+    if [ "${os}" == "Darwin" ] ; then
+        [ -d "/usr/local/opt/fzf/bin" ] && [ ! "${PATH}" == */usr/local/opt/fzf/bin* ] && export PATH="${PATH}:/usr/local/opt/fzf/bin"
+        [ -f "/usr/local/opt/fzf/shell/key-bindings.bash" ] && source "/usr/local/opt/fzf/shell/key-bindings.bash" 2>&1
+        [ -f "/usr/local/opt/fzf/shell/completion.bash" ] && source "/usr/local/opt/fzf/shell/completion.bash" 2>&1
     elif $(uname -v | grep -q 'NixOS') ; then
         if _command fzf-share ; then
             source "$(fzf-share)/key-bindings.bash"
             source "$(fzf-share)/completion.bash"
         fi
     else
-        [[ -f "/usr/share/fzf/key-bindings.bash" ]] && source "/usr/share/fzf/key-bindings.bash" 2>&1
-        [[ -f "/usr/share/fzf/completion.bash" ]] && source "/usr/share/fzf/completion.bash" 2>&1
+        [ -f "/usr/share/fzf/key-bindings.bash" ] && source "/usr/share/fzf/key-bindings.bash" 2>&1
+        [ -f "/usr/share/fzf/completion.bash" ] && source "/usr/share/fzf/completion.bash" 2>&1
     fi
 fi
 export FZF_DEFAULT_OPTS="--layout=reverse --border=bold"
 
 # fix home/end keys in screen/tmux
-if [[ -n "${STY}" ]] || [[ -n "${TMUX}" ]] ; then
+if [ -n "${STY}" ] || [ -n "${TMUX}" ] ; then
     bind '"\e[1~":"\eOH"'
     bind '"\e[4~":"\eOF"'
 fi
 
 # set prompt
-if [[ -n "${INSIDE_EMACS}" ]] ; then
+if [ -n "${INSIDE_EMACS}" ] ; then
     # set emacs prompt to: path $
     #export PS1="\w \\$ "
     # set emacs prompt to: path git-branch $
@@ -124,13 +124,13 @@ fi
 # make backspace key work in terminal
 #stty erase ^H
 #stty erase ^?
-#[[ -z "$(greppr erase)" ]] || stty erase $(getpr erase)
+#[ -z "$(greppr erase)" ] || stty erase $(getpr erase)
 
 # set tabs
 _command stty && stty tabs
 
 # make terminals not beep
-[[ "${os}" == "Windows_NT" ]] || _command setterm && setterm -blength 0 >/dev/null 2>&1
+[ "${os}" == "Windows_NT" ] || _command setterm && setterm -blength 0 >/dev/null 2>&1
 
 # set umask
 umask 0022
@@ -142,10 +142,10 @@ shopt -s autocd
 shopt -s checkwinsize
 
 # source shellrc
-[[ -f "${HOME}/.shellrc" ]] && source "${HOME}/.shellrc"
+[ -f "${HOME}/.shellrc" ] && source "${HOME}/.shellrc"
 
 # run bash completion
-[[ -f "/etc/bash-completion" ]] && source "/etc/bash-completion" 2>&1
+[ -f "/etc/bash-completion" ] && source "/etc/bash-completion" 2>&1
 
 # perl modules
 #PATH="${HOME}/perl5/bin${PATH:+:${PATH}}"; export PATH;

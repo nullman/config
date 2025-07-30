@@ -10,10 +10,10 @@
 #===============================================================================
 
 # source funct
-[[ -f "${HOME}/.funct" ]] && source "${HOME}/.funct"
+[ -f "${HOME}/.funct" ] && source "${HOME}/.funct"
 
 # source alias
-[[ -f "${HOME}/.alias" ]] && source "${HOME}/.alias"
+[ -f "${HOME}/.alias" ] && source "${HOME}/.alias"
 
 # add to the run path
 export runpath="${runpath}:${HOME}/.shellrc"
@@ -49,14 +49,14 @@ export COLOR_WHITE="\[\033[1;37m\]"
 
 # add path entry before or after existing path entries, preventing duplicates
 _pathadd() {
-    if [[ -d "$1" ]] ; then
+    if [ -d "$1" ] ; then
         local p=$(cd "$1" && pwd)
-        if [[ -n "${p}" ]] ; then
-            if [[ -z "${PATH}" ]] ; then
+        if [ -n "${p}" ] ; then
+            if [ -z "${PATH}" ] ; then
                 PATH="${p}"
             else
                 local newpath=$(echo ":${PATH}:" | sed "s%:${p}:%:%g ; s%^:%% ; s%:$%%")
-                if [[ "$2" == "before" ]] ; then
+                if [ "$2" == "before" ] ; then
                     PATH="${p}:${newpath}"
                 else
                     PATH="${newpath}:${p}"
@@ -68,14 +68,14 @@ _pathadd() {
 
 # add infopath entry before or after existing infopath entries, preventing duplicates
 _infopathadd() {
-    if [[ -d "$1" ]] ; then
+    if [ -d "$1" ] ; then
         local p=$(cd "$1" && pwd)
-        if [[ -n "${p}" ]] ; then
-            if [[ -z "${INFOPATH}" ]] ; then
+        if [ -n "${p}" ] ; then
+            if [ -z "${INFOPATH}" ] ; then
                 INFOPATH="${p}"
             else
                 local newinfopath=$(echo ":${INFOPATH}:" | sed "s%:${p}:%:%g ; s%^:%% ; s%:$%%")
-                if [[ "$2" == "before" ]] ; then
+                if [ "$2" == "before" ] ; then
                     INFOPATH="${p}:${newinfopath}"
                 else
                     INFOPATH="${newinfopath}:${p}"
@@ -87,14 +87,14 @@ _infopathadd() {
 
 # add library entry before or after existing LD_LIBRARY_PATH entries, preventing duplicates
 _libadd() {
-    if [[ -d "$1" ]] ; then
+    if [ -d "$1" ] ; then
         local p=$(cd "$1" && pwd)
-        if [[ -n "${p}" ]] ; then
-            if [[ -z "${LD_LIBRARY_PATH}" ]] ; then
+        if [ -n "${p}" ] ; then
+            if [ -z "${LD_LIBRARY_PATH}" ] ; then
                 LD_LIBRARY_PATH="${p}"
             else
                 local newpath=$(echo ":${LD_LIBRARY_PATH}:" | sed "s%:${p}:%:%g ; s%^:%% ; s%:$%%")
-                if [[ "$2" == "before" ]] ; then
+                if [ "$2" == "before" ] ; then
                     LD_LIBRARY_PATH="${p}:${newpath}"
                 else
                     LD_LIBRARY_PATH="${newpath}:${p}"
@@ -108,9 +108,9 @@ _libadd() {
 export USERNAME="${USER}"
 export HOSTNAME="$(uname -n)"
 export home="${HOME}"
-[[ "${USER}" == "root" ]] && export DISPLAY=":0.0"
-[[ -z "${REAL_TERM}" ]] && export REAL_TERM="${TERM}" # keep original TERM value for scripts to use
-[[ -z "${TERM}" ]] && export TERM="xterm-256color" # act like xterm with color support
+[ "${USER}" == "root" ] && export DISPLAY=":0.0"
+[ -z "${REAL_TERM}" ] && export REAL_TERM="${TERM}" # keep original TERM value for scripts to use
+[ -z "${TERM}" ] && export TERM="xterm-256color" # act like xterm with color support
 export TERMINAL="${TERM}"
 export PAGER="less"
 export ZPAGER="zless"
@@ -146,26 +146,26 @@ export LC_COLLATE=C                     # set directory sorting to ASCII order
 #export LS_COLORS='no=00:fi=00:di=00;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.bz2=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.jpg=01;35:*.jpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.avi=01;35:*.fli=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.ogg=01;35:*.mp3=01;35:*.wav=01;35:*.xml=00;31:'
 
 # android
-[[ -d "/usr/local/share/android-sdk" ]] && export ANDROID_SDK="/usr/local/share/android-sdk"
-[[ -d "${HOME}/Library/Android/sdk" ]] && export ANDROID_SDK="${HOME}/Library/Android/sdk"
-[[ -d "${HOME}/android-sdk" ]] && export ANDROID_SDK="${HOME}/android-sdk"
-[[ -n "${ANDROID_SDK}" ]] && export ANDROID_SDK_ROOT="${ANDROID_SDK}"
-[[ -d "/usr/local/share/android-ndk" ]] && export ANDROID_NDK="/usr/local/share/android-ndk"
-[[ -d "${HOME}/Library/Android/sdk/ndk-bundle" ]] && export ANDROID_SDK="${HOME}/Library/Android/sdk/ndk-bundle"
-[[ -d "${HOME}/android-sdk/ndk-bundle" ]] && export ANDROID_NDK="${HOME}/android-sdk/ndk-bundle"
-[[ -n "${ANDROID_NDK}" ]] && export ANDROID_NDK_HOME="${ANDROID_NDK}"
+[ -d "/usr/local/share/android-sdk" ] && export ANDROID_SDK="/usr/local/share/android-sdk"
+[ -d "${HOME}/Library/Android/sdk" ] && export ANDROID_SDK="${HOME}/Library/Android/sdk"
+[ -d "${HOME}/android-sdk" ] && export ANDROID_SDK="${HOME}/android-sdk"
+[ -n "${ANDROID_SDK}" ] && export ANDROID_SDK_ROOT="${ANDROID_SDK}"
+[ -d "/usr/local/share/android-ndk" ] && export ANDROID_NDK="/usr/local/share/android-ndk"
+[ -d "${HOME}/Library/Android/sdk/ndk-bundle" ] && export ANDROID_SDK="${HOME}/Library/Android/sdk/ndk-bundle"
+[ -d "${HOME}/android-sdk/ndk-bundle" ] && export ANDROID_NDK="${HOME}/android-sdk/ndk-bundle"
+[ -n "${ANDROID_NDK}" ] && export ANDROID_NDK_HOME="${ANDROID_NDK}"
 
 # path additions
 # path addition "befores" in reverse order
-[[ -d "/usr/games" ]] && _pathadd "/usr/games" before
-[[ -d "/usr/local/games" ]] && _pathadd "/usr/local/games" before
-[[ "${os}" == "Darwin" ]] && [[ -d "/usr/local/opt/coreutils/libexec/gnubin" ]] && _pathadd "/usr/local/opt/coreutils/libexec/gnubin" before
-[[ -d "/bin" ]] && _pathadd "/bin" before
-[[ -d "/usr/bin" ]] && _pathadd "/usr/bin" before
-[[ -d "/usr/local/bin" ]] && _pathadd "/usr/local/bin" before
-[[ -d "/sbin" ]] && _pathadd "/sbin" before
-[[ -d "/usr/sbin" ]] && _pathadd "/usr/sbin" before
-[[ -d "/usr/local/sbin" ]] && _pathadd "/usr/local/sbin" before
+[ -d "/usr/games" ] && _pathadd "/usr/games" before
+[ -d "/usr/local/games" ] && _pathadd "/usr/local/games" before
+[ "${os}" == "Darwin" ] && [ -d "/usr/local/opt/coreutils/libexec/gnubin" ] && _pathadd "/usr/local/opt/coreutils/libexec/gnubin" before
+[ -d "/bin" ] && _pathadd "/bin" before
+[ -d "/usr/bin" ] && _pathadd "/usr/bin" before
+[ -d "/usr/local/bin" ] && _pathadd "/usr/local/bin" before
+[ -d "/sbin" ] && _pathadd "/sbin" before
+[ -d "/usr/sbin" ] && _pathadd "/usr/sbin" before
+[ -d "/usr/local/sbin" ] && _pathadd "/usr/local/sbin" before
 # path addition "afters" in order
 _pathadd "${HOME}/bin"
 _pathadd "${HOME}/bin/vendor"
@@ -175,10 +175,10 @@ _pathadd "${ANDROID_SDK}/emulator"
 _pathadd "${ANDROID_SDK}/tools"
 _pathadd "${ANDROID_SDK}/tools/bin"
 _pathadd "${ANDROID_SDK}/platform-tools"
-[[ -d "${ANDROID_SDK}/build-tools" ]] && BUILD_TOOLS_DIR="$(find ${ANDROID_SDK}/build-tools -mindepth 1 -maxdepth 1 -type d | sort -n | tail -n 1)"
+[ -d "${ANDROID_SDK}/build-tools" ] && BUILD_TOOLS_DIR="$(find ${ANDROID_SDK}/build-tools -mindepth 1 -maxdepth 1 -type d | sort -n | tail -n 1)"
 _pathadd "${BUILD_TOOLS_DIR}"
 _pathadd "${HOME}/android-studio/bin"
-_command ruby && [[ -d "${HOME}/.local/share/gem/ruby" ]] && _pathadd "$(find ${HOME}/.local/share/gem/ruby -mindepth 1 -maxdepth 1 -type d | sort -n | tail -n 1)/bin"
+_command ruby && [ -d "${HOME}/.local/share/gem/ruby" ] && _pathadd "$(find ${HOME}/.local/share/gem/ruby -mindepth 1 -maxdepth 1 -type d | sort -n | tail -n 1)/bin"
 _pathadd "${HOME}/src/cc65/bin"
 _pathadd "${HOME}/src/commander-x16/x16-emulator"
 _pathadd "${HOME}/coursera/algs4/bin"
@@ -203,14 +203,14 @@ export INFOPATH
 
 # set screen temp dir
 export SCREENDIR="${HOME}/.screendir"
-[[ -d "${SCREENDIR}" ]] || mkdir -p -m 700 "${SCREENDIR}"
+[ -d "${SCREENDIR}" ] || mkdir -p -m 700 "${SCREENDIR}"
 
 # # ssh-agent
 # #pstest ssh-add || ssh-add >/dev/null 2>&1
 # pstest ssh-agent || ssh-agent >/dev/null 2>&1
 
 # # keychain for one-time entry of ssh passphrase
-# [[ -d "${HOME}/.ssh" ]] && eval "$(keychain --quiet --eval id_rsa)"
+# [ -d "${HOME}/.ssh" ] && eval "$(keychain --quiet --eval id_rsa)"
 
 # set XDG user directories
 export XDG_CONFIG_HOME="${HOME}/.config"
@@ -220,14 +220,14 @@ export XDG_STATE_HOME="${HOME}/.local/state"
 export XDG_DOWNLOAD_DIR="${HOME}/Downloads"
 
 # add flatpak support
-[[ -d "/var/lib/flatpak/exports/share" ]] && export XDG_DATA_DIRS="${XDG_DATA_DIRS}:${HOME}/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share"
+[ -d "/var/lib/flatpak/exports/share" ] && export XDG_DATA_DIRS="${XDG_DATA_DIRS}:${HOME}/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share"
 
 # set GTK (NixOS)
-#[[ -d "/run/current-system/sw"]] && export GTK_DATA_PREFIX="/run/current-system/sw"
+#[ -d "/run/current-system/sw"]] && export GTK_DATA_PREFIX="/run/current-system/sw"
 
 # set java home
-[[ "${os}" == "Linux" ]] && _command java && export JAVA_HOME="$(java -XshowSettings:properties -version >/dev/null 2>&1 | grep 'java.home' | sed 's/^.* = //')"
-[[ "${os}" == "Darwin" ]] && [[ -x /usr/libexec/java_home ]] && export JAVA_HOME="$(/usr/libexec/java_home)"
+[ "${os}" == "Linux" ] && _command java && export JAVA_HOME="$(java -XshowSettings:properties -version >/dev/null 2>&1 | grep 'java.home' | sed 's/^.* = //')"
+[ "${os}" == "Darwin" ] && [ -x /usr/libexec/java_home ] && export JAVA_HOME="$(/usr/libexec/java_home)"
 
 # # set oracle environment
 # source /etc/.oracle_profile
@@ -235,38 +235,38 @@ export XDG_DOWNLOAD_DIR="${HOME}/Downloads"
 # set vitualenv environment
 export WORKON_HOME="${HOME}/.virtualenvs"
 export PROJECT_HOME="${HOME}/.virtualenv-projects"
-[[ -x "/usr/local/bin/virtualenvwrapper.sh" ]] && source "/usr/local/bin/virtualenvwrapper.sh" 2>&1
+[ -x "/usr/local/bin/virtualenvwrapper.sh" ] && source "/usr/local/bin/virtualenvwrapper.sh" 2>&1
 
 # set prodvd key
 export CDR_SECURITY="8:dvd,clone:sparc-sun-solaris2,i386-pc-solaris2,i586-pc-linux\,powerpc-apple,hppa,powerpc-ibm-aix,i386-unknown-freebsd,i386-unknown-openbsd,i38\6-unknown-netbsd,powerpc-apple-netbsd,i386-pc-bsdi,mips-sgi-irix,i386-pc-sco:1.11\::1093000000:::private/research/educational_non-commercial_use:9vl2T2kP6w6O4h.bXu\et8hP1Z3H5erm3qWmxhbcr.fHvuN8ZJbhQUWBzjAc"
 
 # # set ocaml package manager environment
-# [[ -x "${HOME}/.opam/opam-init/init.sh" ]] && source "${HOME}/.opam/opam-init/init.sh" >/dev/null 2>&1
+# [ -x "${HOME}/.opam/opam-init/init.sh" ] && source "${HOME}/.opam/opam-init/init.sh" >/dev/null 2>&1
 
 # nvm
-[[ -f "/usr/share/nvm/init-nvm.sh" ]] && source "/usr/share/nvm/init-nvm.sh" 2>&1
+[ -f "/usr/share/nvm/init-nvm.sh" ] && source "/usr/share/nvm/init-nvm.sh" 2>&1
 # move nvm bin path after sbin
 nvmpath=$(echo ":${PATH}:" | grep -E ":${HOME}/\.nvm/[^:]*:" | sed "s%^.*:\\(${HOME}/\.nvm/[^:]*\\):.*$%\1%")
-if [[ -n "${nvmpath}" ]] ; then
+if [ -n "${nvmpath}" ] ; then
     newpath=$(echo ":${PATH}:" | sed "s%:${HOME}/\.nvm/[^:]*:%:%g ; s%^:%% ; s%:$%%")
     export PATH=$(echo ${newpath} | sed "s%^\\(.*/sbin:\\)\\(.*\\)$%\1${nvmpath}:\2%")
 fi
 
 # opam (ocaml package manager)
-#[[ "${SHELL: -4}" == "bash" ]] && [[ -f "${HOME}/.opam/opam-init/init.sh" ]] && source "${HOME}/.opam/opam-init/init.sh" 2>&1
-#[[ "${SHELL: -3}" == "zsh" ]] && [[ -f "${HOME}/.opam/opam-init/init.zsh" ]] && source "${HOME}/.opam/opam-init/init.zsh" 2>&1
+#[ "${SHELL: -4}" == "bash" ] && [ -f "${HOME}/.opam/opam-init/init.sh" ] && source "${HOME}/.opam/opam-init/init.sh" 2>&1
+#[ "${SHELL: -3}" == "zsh" ] && [ -f "${HOME}/.opam/opam-init/init.zsh" ] && source "${HOME}/.opam/opam-init/init.zsh" 2>&1
 
 # # run-app
-# [[ -x "${HOME}/bin/run-app" ]] && ${HOME}/bin/run-app 2>&1
+# [ -x "${HOME}/bin/run-app" ] && ${HOME}/bin/run-app 2>&1
 
 # broot
-[[ -f "${HOME}/.config/broot/launcher/bash/br" ]] && source "${HOME}/.config/broot/launcher/bash/br" 2>&1
+[ -f "${HOME}/.config/broot/launcher/bash/br" ] && source "${HOME}/.config/broot/launcher/bash/br" 2>&1
 
 # source work shellrc
-[[ -e "${HOME}/.work" ]] && [[ -f "${HOME}/.shellrc-work" ]] && source "${HOME}/.shellrc-work"
+[ -e "${HOME}/.work" ] && [ -f "${HOME}/.shellrc-work" ] && source "${HOME}/.shellrc-work"
 
 # source secure environment settings
-[[ -f "${HOME}/.secure-env" ]] && source "${HOME}/.secure-env"
+[ -f "${HOME}/.secure-env" ] && source "${HOME}/.secure-env"
 
 # display something
 
@@ -280,7 +280,7 @@ fi
 # _command curl && curl --silent "wttr.in/San+Diego?uT" 2>&1 | head -n 7
 
 # source xprofile if not already and running in X11
-[[ -f "${HOME}/.xprofile" ]] && [[ -n "${DISPLAY}" ]] && [[ -z "$(env | grep '^runpath=.*\.xprofile')" ]] && source "${HOME}/.xprofile"
+[ -f "${HOME}/.xprofile" ] && [ -n "${DISPLAY}" ] && [ -z "$(env | grep '^runpath=.*\.xprofile')" ] && source "${HOME}/.xprofile"
 
 #===============================================================================
 # End of File

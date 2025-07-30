@@ -13,10 +13,10 @@ account="$1"
 log=${HOME}/.offlineimap.log
 
 # run offlineimap
-if [[ ! -f ${HOME}/.noofflineimap ]] ; then
-    if [[ -z "$(ps -ef | grep -v grep | grep /usr/bin/offlineimap)" ]] ; then
+if [ ! -f ${HOME}/.noofflineimap ] ; then
+    if [ -z "$(ps -ef | grep -v grep | grep /usr/bin/offlineimap)" ] ; then
         #logger -i -t offlineimap "Starting offlineimap..."
-        if [[ -z "${account}" ]] ; then
+        if [ -z "${account}" ] ; then
             #/usr/bin/offlineimap -u Noninteractive.Quiet
             /usr/bin/offlineimap -1 -o -u Noninteractive.Basic > ${log} 2>&1
         else

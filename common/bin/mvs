@@ -37,7 +37,7 @@ _loop() {
     local basedir="$1"
 
     # traverse directories
-    if [[ ${recursive} -eq 1 ]] ; then
+    if [ ${recursive} -eq 1 ] ; then
         find . -mindepth 1 -maxdepth 1 -type d -printf '%P\n' | while read dir ; do
             echo "${basedir}/${dir}"
             (cd "${dir}" && _loop "${basedir}/${dir}")
@@ -47,10 +47,10 @@ _loop() {
     # handle files
     find . -mindepth 1 -maxdepth 1 -printf '%P\n' | while read file1 ; do
         local file2=$(echo "${file1}" | sed "s/${pat1}/${pat2}/g")
-        if [[ "${file1}" != "${file2}" ]] ; then
+        if [ "${file1}" != "${file2}" ] ; then
             echo "${basedir}/${file1} => ${basedir}/${file2}"
             local git=$(git ls-files "${file1}" 2>/dev/null)
-            if [[ -n "${git}" ]] ; then
+            if [ -n "${git}" ] ; then
                 git mv "${file1}" "${file2}"
             else
                 mv "${file1}" "${file2}"
@@ -59,7 +59,7 @@ _loop() {
     done
 }
 
-while [[ $# -gt 0 ]] ; do
+while [ $# -gt 0 ] ; do
     opt="$1"
     case "${opt}" in
         -r|--recursive)
@@ -71,10 +71,10 @@ while [[ $# -gt 0 ]] ; do
             exit 0
             ;;
         *)
-            if [[ -z "${pat1}" ]] ; then
+            if [ -z "${pat1}" ] ; then
                 pat1="${opt}"
                 shift
-            elif [[ -z "${pat2}" ]] ; then
+            elif [ -z "${pat2}" ] ; then
                 pat2="${opt}"
                 shift
             else
@@ -85,7 +85,7 @@ while [[ $# -gt 0 ]] ; do
     esac
 done
 
-if [[ -z "${pat1}" ]] || [[ -z "${pat2}" ]] ; then
+if [ -z "${pat1}" ] || [ -z "${pat2}" ] ; then
     _usage $0
     exit 1
 fi

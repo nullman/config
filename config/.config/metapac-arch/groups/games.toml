@@ -1,0 +1,20 @@
+arch = [
+    "0ad",
+    "celeste64-bin",
+    "dwarffortress",
+    "frozen-bubble",
+    "luanti",
+    "lutris",
+    "osu-lazer-bin",
+    "pingus",
+    "pysolfc",
+    "rocksndiamonds",
+    "supertux",
+    "supertuxkart",
+    "tuxracer",
+    "unciv",
+    "wesnoth",
+    "xgalaga++",
+    "xonotic",
+]
+

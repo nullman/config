@@ -93,10 +93,10 @@ CXMAME|cxmame
 Ms Pacman|xmame.x11 mspacman
 
 term:
-XTerm|xterm -bg #000000 -fg #bbc2cf -fn xft:hack +sb -rightbar -geometry 88x39
-Screen (connect)|xterm -bg #000000 -fg #bbc2cf -fn xft:hack +sb -rightbar -geometry 88x39
+XTerm|xterm -bg #000000 -fg #BBC2CF -fn xft:hack +sb -rightbar -geometry 88x39
+Screen (connect)|xterm -bg #000000 -fg #BBC2CF -fn xft:hack +sb -rightbar -geometry 88x39
 -e screen -x
-Screen (restart)|xterm -bg #000000 -fg #bbc2cf -fn xft:hack +sb -rightbar -geometry 88x39
+Screen (restart)|xterm -bg #000000 -fg #BBC2CF -fn xft:hack +sb -rightbar -geometry 88x39
 -e screen -A -D -RR
 
 ssaver:

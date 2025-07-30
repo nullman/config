@@ -25,7 +25,7 @@
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
-if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
     cat <<EOF
 Usage: $(basename $0) SCREENSAVER [OPTION...]
 Run a SCREENSAVER passing any OPTIONs to it.
@@ -61,7 +61,7 @@ case "$1" in
         ;;
     xlock)
         # xlock
-        if [[ -z "$3" ]] ; then
+        if [ -z "$3" ] ; then
             ld=${lock}
         else
             ld="$3"
@@ -72,7 +72,7 @@ case "$1" in
         ;;
     slideshow)
         # slideshow
-        if [[ -z "$3" ]] ; then
+        if [ -z "$3" ] ; then
             wait=${delay}
         else
             wait="$3"
@@ -102,7 +102,7 @@ case "$1" in
     # specific savers
     blank)
         # xlock blank
-        if [[ -z "$2" ]] ; then
+        if [ -z "$2" ] ; then
             ld=${lock}
         else
             ld="$2"
@@ -113,7 +113,7 @@ case "$1" in
         ;;
     flame)
         # xlock flame
-        if [[ -z "$2" ]] ; then
+        if [ -z "$2" ] ; then
             ld=${lock}
         else
             ld="$2"
@@ -130,7 +130,7 @@ case "$1" in
         ;;
     pictures)
         # slideshow (pictures)
-        if [[ -z "$2" ]] ; then
+        if [ -z "$2" ] ; then
             wait=${delay}
         else
             wait="$2"
@@ -144,7 +144,7 @@ case "$1" in
         ;;
     nasa)
         # slideshow (nasa)
-        if [[ -z "$2" ]] ; then
+        if [ -z "$2" ] ; then
             wait=${delay}
         else
             wait="$2"

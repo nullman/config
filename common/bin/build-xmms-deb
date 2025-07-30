@@ -24,7 +24,7 @@ pushd "${tmp}"
 echo "Downloading ${name} sources"
 wget "http://xmms.org/files/1.2.x/${name}-${version}.tar.gz"
 
-if [[ -f "${name}-${version}.tar.gz" ]] ; then
+if [ -f "${name}-${version}.tar.gz" ] ; then
     echo "Unpacking sources"
     tar -xvf "${name}-${version}.tar.gz"
     # change to source dir

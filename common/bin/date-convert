@@ -9,7 +9,7 @@
 
 tmp="/tmp/date-convert-$$"
 
-cat > "${tmp}" <<EOF
+cat <<EOF > "${tmp}"
 (require 'calendar)
 
 ;; use current date if no date is given on the command line

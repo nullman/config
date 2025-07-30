@@ -13,7 +13,7 @@ case "${BLOCK_BUTTON}" in
     3) playerctl next ;;
 esac
 
-if [[ $(echo "${mpc}" | wc -l) == 3 ]] ; then
+if [ $(echo "${mpc}" | wc -l) == 3 ] ; then
     song=$(echo "${mpc}" | sed -n 1p)
     #echo "${song}"
     status=$(echo "${mpc}" | sed -n 2p)
@@ -26,11 +26,11 @@ if [[ $(echo "${mpc}" | wc -l) == 3 ]] ; then
     pct="0${pct}"
     pct="${pct: -3}"
     #echo "${pct}"
-    if [[ "${playpause}" == "playing" ]] ; then
+    if [ "${playpause}" == "playing" ] ; then
         #echo "${song}  ${num}  ${pct}"
         #echo "${song} ${num} ${pct} ⏵"
         echo "${song} ${num} ${pct}  "
-    elif [[ "${playpause}" == "paused" ]] ; then
+    elif [ "${playpause}" == "paused" ] ; then
         #echo "${song}  ${num}  ${pct}"
         #echo "${song} ${num} ${pct} ⏸"
         echo "${song} ${num} ${pct}  "

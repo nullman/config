@@ -13,7 +13,7 @@
 # CLOJURE_JAR=${CLOJURE_DIR}/target/clojure-lang-1.0-SNAPSHOT.jar
 # CLOJURE_CONTRIB_DIR=${HOME}/doc/development/clojure/clojure-contrib/src
 
-# if [[ $# -eq 0 ]] ; then
+# if [ $# -eq 0 ] ; then
 #     java -cp "/usr/share/java/jline-0.9.94.jar:${CLOJURE_JAR}:${CLOJURE_CONTRIB_DIR}" jline.ConsoleRunner clojure.lang.Repl
 # else
 #     script="$1"
@@ -28,7 +28,7 @@ CLOJURE_CONTRIB_SRC_DIR="${ROOT_DIR}/clojure-contrib/src"
 #CLOJURE_CONTRIB_JARS="$(find ${ROOT_DIR}/clojure-contrib/modules -name *.jar)"
 CLOJURE_CONTRIB_JARS=""
 
-if [[ $# -eq 0 ]] ; then
+if [ $# -eq 0 ] ; then
     # java -server \
         #   -Xms32m -Xmx512m \
         #   -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8888 \

@@ -23,7 +23,7 @@ case "${a}" in
 esac
 
 echo "  bw.conf"
-sudo bash -c "cat > '${cadir}/bw.conf'" <<'EOF'
+cat <<EOF | sudo tee "${cadir}/bw.conf"
 <IfModule mod_bw.c>
     # turn on bandwith limiting
     BandwidthModule On
@@ -40,7 +40,7 @@ sudo bash -c "cat > '${cadir}/bw.conf'" <<'EOF'
 EOF
 
 echo "  expires.conf"
-sudo bash -c "cat > '${cadir}/expires.conf'" <<'EOF'
+cat <<EOF | sudo tee "${cadir}/expires.conf"
 <IfModule mod_expires.c>
     # enable the directives - assuming they're not enabled globally
     ExpiresActive on
@@ -67,7 +67,7 @@ sudo bash -c "cat > '${cadir}/expires.conf'" <<'EOF'
 EOF
 
 echo "  proxy.conf"
-sudo bash -c "cat > '${cadir}/proxy.conf'" <<'EOF'
+cat <<EOF | sudo tee "${cadir}/proxy.conf"
 <IfModule mod_proxy.c>
     # If you want to use apache2 as a forward proxy, uncomment the
     # 'ProxyRequests On' line and the <Proxy *> block below.
@@ -108,7 +108,7 @@ sudo bash -c "cat > '${cadir}/proxy.conf'" <<'EOF'
 EOF
 
 echo "  userdir.conf"
-sudo bash -c "cat > '${cadir}/userdir.conf'" <<'EOF'
+cat <<EOF | sudo tee "${cadir}/userdir.conf"
 <IfModule mod_userdir.c>
     UserDir public_html
     UserDir disabled root
@@ -129,7 +129,7 @@ sudo bash -c "cat > '${cadir}/userdir.conf'" <<'EOF'
 EOF
 
 echo "  javascript-common.conf"
-sudo bash -c "cat > '${cadir}/javascript-common.conf'" <<'EOF'
+cat <<EOF | sudo tee "${cadir}/javascript-common.conf"
 Alias /javascript /usr/share/javascript/
 
 <Directory "/usr/share/javascript/">

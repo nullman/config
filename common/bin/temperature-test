@@ -17,18 +17,18 @@ opts=
 help=0
 
 # check for prerequisite applicaitons
-if [[ ! $(command -v sensors) ]] ; then
+if [ ! $(command -v sensors) ] ; then
     echo "lm_sensors is not installed"
     exit 1
 fi
 
-if [[ ! $(command -v sysbench) ]] && [[ ! $(command -v stress) ]] ; then
+if [ ! $(command -v sysbench) ] && [ ! $(command -v stress) ] ; then
     echo "sysbench and stress are not installed"
     exit 1
 fi
 
 # args
-while [[ $# -gt 0 ]] ; do
+while [ $# -gt 0 ] ; do
     key="$1"
     case "${key}" in
         -c|--count)
@@ -48,7 +48,7 @@ while [[ $# -gt 0 ]] ; do
 done
 
 # help
-if [[ ${help} -eq 1 ]] ; then
+if [ ${help} -eq 1 ] ; then
     echo "Usage: $(basename $0) [OPTIONS]"
     echo "  OPTIONS:"
     echo "    -c, --count       number of 10 second tests to run [6]"
@@ -70,11 +70,11 @@ for x in $(seq ${count}) ; do
     c="00000${x}"
     echo -n "[${c: $((-${#count}))}/${count}] "
     _gettemp $1
-    if [[ $(command -v sysbench) ]] ; then
+    if [ $(command -v sysbench) ] ; then
          sysbench --test=cpu --num-threads=${threads} --cpu-max-prime=25000 run >/dev/null 2>&1
-    elif [[ $(command -v stress-ng) ]] ; then
+    elif [ $(command -v stress-ng) ] ; then
         stress-ng --cpu ${threads} --timeout 10s >/dev/null 2>&1
-    elif [[ $(command -v stress) ]] ; then
+    elif [ $(command -v stress) ] ; then
         stress --cpu ${threads} --timeout 10s >/dev/null 2>&1
     else
         echo "No stress test application found: sysbench, stress-ng, or stress"

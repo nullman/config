@@ -14,7 +14,7 @@ mkdir -p "${dir}"
 pushd "${dir}" && (
 
     # check for first run
-    if [[ ! -d "${dir}/src" ]] ; then
+    if [ ! -d "${dir}/src" ] ; then
 
         # install required apps
         sudo apt-get install sun-java6-jdk ant git-core maven2
@@ -61,7 +61,7 @@ pushd "${dir}" && (
     rm -f clojure-contrib.jar ; ln -s ./src/clojure-contrib/target/clojure-contrib*.jar clojure-contrib.jar
 
     # copy emacs files to emacs modules directory
-    if [[ -d "${elisp}" ]] ; then
+    if [ -d "${elisp}" ] ; then
         cp -Rp ./src/clojure-mode/clojure-mode.el "${elisp}/"
         cp -Rp ./src/slime/* "${elisp}/slime/"
         cp -Rp ./src/swank-clojure/swank-clojure.el "${elisp}/"

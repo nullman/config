@@ -7,7 +7,7 @@
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
-[[ $(mpc | wc -l) != 3 ]] && echo -n "-" && exit 1
+[ $(mpc | wc -l) != 3 ] && echo -n "-" && exit 1
 
 song=$(mpc -f '[[%artist% - ]%title%]|[%file%]' | sed -n 1p)
 status=$(mpc | sed -n 2p)
@@ -19,7 +19,7 @@ pct="${pct: -3}"
 file=$(mpc -f '%file%' | sed -n 1p)
 rating=$(grep -F "${file}" ${HOME}/.song-ratings/* | sed 's/^.*songs-rated-\([0-9]\).*$/\1/')
 
-if [[ "$1" == "--verbose" ]] ; then
+if [ "$1" == "--verbose" ] ; then
     artist=$(mpc -f '%artist%' | sed -n 1p)
     album=$(mpc -f '%album%' | sed -n 1p)
     title=$(mpc -f '%title%' | sed -n 1p)

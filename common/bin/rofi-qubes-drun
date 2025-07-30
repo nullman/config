@@ -20,7 +20,7 @@ vm=$({ echo "[none]" ;
        qvm-ls --fields NAME,CLASS | tail -n +2 | grep -v '^dom0' | sed 's/ \+/ [/ ; s/$/]/' ;
      } | rofi -dmenu -i -p "Qubes VM")
 
-if [[ "${vm}" == "[none]" ]] ; then
+if [ "${vm}" == "[none]" ] ; then
     rofi -normal-window -modi drun -show drun
 else
     vm=$(printf "${vm}" | sed 's/ \[.*$//')

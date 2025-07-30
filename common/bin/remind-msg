@@ -14,7 +14,7 @@ fparam=""
 
 
 # help
-if [[ $# -lt 1 ]] || [[ $# -gt 4 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+if [ $# -lt 1 ] || [ $# -gt 4 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
     cat <<EOF
 Usage: $(basename $0) TYPE [MONTH DAY YEAR]
 Output a remind message line of given TYPE for optional MONTH, DAY, and YEAR.
@@ -34,9 +34,9 @@ day=$(date '+%d')
 year=$(date '+%Y')
 
 # override date with opitonal parameters
-if [[ -n "$2" ]] ; then mon="$2" ; fi
-if [[ -n "$3" ]] ; then day="$3" ; fi
-if [[ -n "$4" ]] ; then year="$4" ; fi
+if [ -n "$2" ] ; then mon="$2" ; fi
+if [ -n "$3" ] ; then day="$3" ; fi
+if [ -n "$4" ] ; then year="$4" ; fi
 
 # output the requested msg line
 case "$1" in
@@ -50,7 +50,7 @@ case "$1" in
         ;;
     fortune-year)
         fort=$(command -v fortune)
-        if [[ -n "$2" ]] ; then year="$2" ; fi
+        if [ -n "$2" ] ; then year="$2" ; fi
         for n in $(seq 0 364) ; do
             d=$(date '+%b %d %Y' --date="${year}0101 ${n} day")
             echo

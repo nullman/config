@@ -206,7 +206,7 @@ genres=(
     "191 Psybient"
 )
 
-if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
     cat <<EOF
 Usage: $(basename $0) FILE [FILE...]
 Edit id3 tags of given files.
@@ -214,12 +214,12 @@ EOF
     exit 1
 fi
 
-if [[ ! -f "$1" ]] ; then
+if [ ! -f "$1" ] ; then
     echo "File does not exist: $1"
     exit 1
 fi
 
-while [[ $# -gt 0 ]] ; do
+while [ $# -gt 0 ] ; do
     # get id3 tag data
     id3info "$1" > "${tmpfile}"
     file=$(sed -n 's/^\*\*\* Tag information for //p' ${tmpfile})
@@ -259,15 +259,15 @@ while [[ $# -gt 0 ]] ; do
     newfile="${newfile:0:-4}.mp3"
 
     # update id3 tags in original file
-    [[ "${artist}" != "${newartist}" ]] && id3tag --artist="${newartist}" "${file}"
-    [[ "${album}" != "${newalbum}" ]] && id3tag --album="${newalbum}" "${file}"
-    [[ "${title}" != "${newtitle}" ]] && id3tag --song="${newtitle}" "${file}"
-    [[ "${track}" != "${newtrack}" ]] && id3tag --track="${newtrack:0:2}" --total="${newtrack:3:2}" "${file}"
-    [[ "${year}" != "${newyear}" ]] && id3tag --year="${newyear}" "${file}"
-    [[ "${genre}" != "${newgenre}" ]] && id3tag --genre="${newgenre}" "${file}"
+    [ "${artist}" != "${newartist}" ] && id3tag --artist="${newartist}" "${file}"
+    [ "${album}" != "${newalbum}" ] && id3tag --album="${newalbum}" "${file}"
+    [ "${title}" != "${newtitle}" ] && id3tag --song="${newtitle}" "${file}"
+    [ "${track}" != "${newtrack}" ] && id3tag --track="${newtrack:0:2}" --total="${newtrack:3:2}" "${file}"
+    [ "${year}" != "${newyear}" ] && id3tag --year="${newyear}" "${file}"
+    [ "${genre}" != "${newgenre}" ] && id3tag --genre="${newgenre}" "${file}"
 
     # update file name
-    [[ "${file}" != "${newfile}" ]] && mv "${file}" "${newfile}"
+    [ "${file}" != "${newfile}" ] && mv "${file}" "${newfile}"
 
     # clean up
     rm -f "${tmpfile}"

@@ -23,12 +23,12 @@ case "${a}" in
 esac
 
 echo "  kylesherman"
-sudo bash -c "cat > '${sadir}/kylesherman'" <<'EOF'
+cat <<EOF | sudo tee "${sadir}/kylesherman"
 <VirtualHost *>
     ServerName kylesherman.net
     ServerAlias kylesherman.net *.kylesherman.net
     ServerAdmin webmaster@nullware.com
-    DocumentRoot /home/kyle/public_html/sites/kylesherman/
+    DocumentRoot /home/user/public_html/sites/kylesherman/
     #ProxyPass / http://localhost/~kyle/sites/kylesherman/
     #ProxyPassReverse / http://localhost/~kyle/sites/kylesherman/
 </VirtualHost>
@@ -49,7 +49,7 @@ sudo bash -c "cat > '${sadir}/kylesherman'" <<'EOF'
 EOF
 
 # echo "  nulldigital"
-# sudo bash -c "cat > '${sadir}/nulldigital'" <<'EOF'
+# cat <<EOF | sudo tee "${sadir}/nulldigital"
 # <VirtualHost *>
 #     ServerName nulldigital.com
 #     ServerAlias nulldigital.com *.nulldigital.com
@@ -63,12 +63,12 @@ EOF
 # EOF
 
 echo "  nulldot"
-sudo bash -c "cat > '${sadir}/nulldot'" <<'EOF'
+cat <<EOF | sudo tee "${sadir}/nulldot"
 <VirtualHost *>
     ServerName nulldot.net
     ServerAlias nulldot.net *.nulldot.net
     ServerAdmin webmaster@nullware.com
-    DocumentRoot /home/kyle/public_html/sites/nulldot/
+    DocumentRoot /home/user/public_html/sites/nulldot/
     #ProxyPass / http://localhost/~kyle/sites/nulldot/
     #ProxyPassReverse / http://localhost/~kyle/sites/nulldot/
 </VirtualHost>
@@ -89,7 +89,7 @@ sudo bash -c "cat > '${sadir}/nulldot'" <<'EOF'
 EOF
 
 echo "  nullman"
-sudo bash -c "cat > '${sadir}/nullman'" <<'EOF'
+cat <<EOF | sudo tee "${sadir}/nullman"
 #<VirtualHost *>
 #    ServerName nullman.com
 #    ServerAlias nullman.com *.nullman.com
@@ -129,7 +129,7 @@ sudo bash -c "cat > '${sadir}/nullman'" <<'EOF'
     ServerName nullman.net
     ServerAlias nullman.net *.nullman.net
     ServerAdmin webmaster@nullware.com
-    DocumentRoot /home/kyle/public_html/sites/nullman/
+    DocumentRoot /home/user/public_html/sites/nullman/
     #ProxyPass / http://localhost/~kyle/sites/nullman/
     #ProxyPassReverse / http://localhost/~kyle/sites/nullman/
 </VirtualHost>
@@ -150,11 +150,11 @@ sudo bash -c "cat > '${sadir}/nullman'" <<'EOF'
 EOF
 
 echo "  nullware"
-sudo bash -c "cat > '${sadir}/nullware'" <<'EOF'
+cat <<EOF | sudo tee "${sadir}/nullware"
 <VirtualHost *>
     ServerName fortunequote.nullware.com
     ServerAdmin webmaster@nullware.com
-    DocumentRoot /home/kyle/public_html/sites/nullware/fortunequote/
+    DocumentRoot /home/user/public_html/sites/nullware/fortunequote/
     #ProxyPass / http://localhost/~kyle/sites/nullware/fortunequote/
     #ProxyPassReverse / http://localhost/~kyle/sites/nullware/fortunequote/
 </VirtualHost>
@@ -168,7 +168,7 @@ sudo bash -c "cat > '${sadir}/nullware'" <<'EOF'
 <VirtualHost *>
     ServerName powerhouse.nullware.com
     ServerAdmin webmaster@nullware.com
-    DocumentRoot /home/kyle/public_html/sites/nullware/powerhouse/
+    DocumentRoot /home/user/public_html/sites/nullware/powerhouse/
     #ProxyPass / http://localhost/~kyle/sites/nullware/powerhouse/
     #ProxyPassReverse / http://localhost/~kyle/sites/nullware/powerhouse/
 </VirtualHost>
@@ -182,7 +182,7 @@ sudo bash -c "cat > '${sadir}/nullware'" <<'EOF'
 <VirtualHost *>
     ServerName bloodmoon.nullware.com
     ServerAdmin webmaster@nullware.com
-    DocumentRoot /home/kyle/public_html/sites/nullware/bloodmoon/
+    DocumentRoot /home/user/public_html/sites/nullware/bloodmoon/
     #ProxyPass / http://localhost/~kyle/sites/nullware/bloodmoon/
     #ProxyPassReverse / http://localhost/~kyle/sites/nullware/bloodmoon/
     ProxyPass /server/ http://localhost:8031/
@@ -199,7 +199,7 @@ sudo bash -c "cat > '${sadir}/nullware'" <<'EOF'
     ServerName nullware.com
     ServerAlias nullware.com *.nullware.com
     ServerAdmin webmaster@nullware.com
-    DocumentRoot /home/kyle/public_html/sites/nullware/
+    DocumentRoot /home/user/public_html/sites/nullware/
     #ProxyPass / http://localhost/~kyle/sites/nullware/
     #ProxyPassReverse / http://localhost/~kyle/sites/nullware/
 </VirtualHost>

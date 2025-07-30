@@ -30,7 +30,7 @@
 (defpoll music-state :interval "2s" "mpc | sed -n 2p | sed 's/^\[\(.*\)\].*$/\1/' | grep -q '^\\[playing\\]' && echo '' || echo ''")
 
 (defpoll mute :interval "500ms" "pamixer --get-mute")
-(defpoll volume :interval "500ms" "[[ $(pamixer --get-mute) == true ]] && echo '0' || pamixer --get-volume")
+(defpoll volume :interval "500ms" "[ $(pamixer --get-mute) == true ] && echo '0' || pamixer --get-volume")
 (defpoll backlight :interval "3600s" "xbacklight -get")
 (defpoll brightness :interval "500ms" "light -G | sed 's/\.[0-9]*$//'")
 
@@ -45,7 +45,7 @@
 ;;(defpoll wifi-strength :interval "2s" "iwctl station wlan0 show | awk '{ if ($1 == \"RSSI\") print $2 }'")
 ;;(defpoll wifi-status :interval "2s" "iwctl device wlan0 show | awk '{ if ($3 == \"Powered\") print $4 }'")
 
-(defpoll bt-status :interval "2s" "[[ $(cat /sys/class/bluetooth/hci0/rfkill*/state) -eq 1 ]] && printf 'enabled' || printf 'disabled'")
+(defpoll bt-status :interval "2s" "[ $(cat /sys/class/bluetooth/hci0/rfkill*/state) -eq 1 ] && printf 'enabled' || printf 'disabled'")
 
 (defpoll time :interval "500ms" "date '+%a %Y-%m-%d %H:%M'")
 ;;(defpoll hour :interval "500ms" "date '+%I'")

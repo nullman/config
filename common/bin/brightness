@@ -9,7 +9,7 @@
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
-if [[ $# -lt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+if [ $# -lt 2 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
     cat <<EOF
 Usage: $(basename $0) DISPLAY +VAL | -VAL
 Increment or decrement brightness by +VAL or -VAL.

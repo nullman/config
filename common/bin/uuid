@@ -8,13 +8,13 @@
 #===============================================================================
 
 # first try using uuidgen
-if [[ -x /usr/bin/uuidgen ]] ; then
+if [ -x /usr/bin/uuidgen ] ; then
     uuidgen
     exit 0
 fi
 
 # if uuidgen is not found, then try using mcookie
-if [[ -x /usr/bin/mcookie ]] ; then
+if [ -x /usr/bin/mcookie ] ; then
     id=$(mcookie)
     echo "${id:0:8}-${id:8:4}-${id:12:4}-${id:16:4}-${id:20:12}"
     exit 0

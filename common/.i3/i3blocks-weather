@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 METRIC=0                                # should be 0 or 1; 0 for F, 1 for C
 
-if [[ $# -ne 1 ]] ; then
+if [ $# -ne 1 ] ; then
     echo "Usage: $(basename $0) LOCATION_CODE"
     echo "  LOCATION_CODE  ZIP Code"
     exit 1

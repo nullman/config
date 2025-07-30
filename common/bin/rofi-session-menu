@@ -29,7 +29,7 @@ EOF
 }
 
 # handle no arguments given
-if [[ $# -lt 1 ]] ; then
+if [ $# -lt 1 ] ; then
     _usage
     exit 1
 fi

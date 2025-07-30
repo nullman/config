@@ -9,9 +9,9 @@
 
 # set screen temp dir
 export SCREENDIR=${HOME}/.screendir
-[[ -d ${SCREENDIR} ]] || mkdir -p -m 700 ${SCREENDIR}
+[ -d ${SCREENDIR} ] || mkdir -p -m 700 ${SCREENDIR}
 
-if [[ $(pgrep -x -u ${USER} screen) ]] ; then
+if [ $(pgrep -x -u ${USER} screen) ] ; then
     screen -wipe
     screen -x "$@"
 else

@@ -13,7 +13,7 @@ apps=$(cat ${HOME}/.applications | sed -n '/^[^ #]/p')
 
 cmd="yad --width=512 --height=384 --list --checklist --column 'Run' --column 'Application' 2>/dev/null"
 for app in ${apps} ; do
-    if [[ ! -f ${HOME}/.dev ]] || [[ "${app}" == "alacritty" ]] || [[ "${app}" == "emacs" ]] ; then
+    if [ ! -f ${HOME}/.dev ] || [ "${app}" == "alacritty" ] || [ "${app}" == "emacs" ] ; then
         cmd="${cmd} TRUE ${app}"
     else
         cmd="${cmd} FALSE ${app}"
@@ -26,15 +26,15 @@ launch=$(eval "${cmd} 2>/dev/null")
 for line in ${launch} ; do
     app=$(echo "${line}" | sed 's/^.*|\(.*\)|$/\1/')
     #echo "app: ${app}"
-    if [[ "$(uname -n)" == "dom0" ]] ; then
+    if [ "$(uname -n)" == "dom0" ] ; then
         #echo "dom0: ${app}"
         vm=$(echo "${app}" | sed 's/:.*$//')
         app=$(echo "${app}" | sed 's/^.*://')
         #echo "vm: ${vm}, app: ${app}"
-        if [[ "${vm}" == "dom0" ]] ; then
+        if [ "${vm}" == "dom0" ] ; then
             ${app} >/dev/null 2>&1 &
-        elif [[ "${vm}" == "personal" ]] ; then
-            if [[ "${app}" == "alacritty" ]] ; then
+        elif [ "${vm}" == "personal" ] ; then
+            if [ "${app}" == "alacritty" ] ; then
                 qvm-run personal "alacritty -e ${HOME}/bin/run-screen" >/dev/null 2>&1 &
             else
                 qvm-run personal "${app}" >/dev/null 2>&1 &
@@ -43,10 +43,10 @@ for line in ${launch} ; do
             echo "Bad input: ${vm}:${app}"
         fi
     else
-        if [[ $(command -v ${app}) ]] ; then
-            if [[ ! $(pgrep -u ${USER} -f ${app}) ]] ; then
+        if [ $(command -v ${app}) ] ; then
+            if [ ! $(pgrep -u ${USER} -f ${app}) ] ; then
                 #echo "${app}"
-                if [[ "${app}" == "alacritty" ]] ; then
+                if [ "${app}" == "alacritty" ] ; then
                     alacritty -e ${HOME}/bin/run-screen >/dev/null 2>&1 &
                     sleep 1
                 else

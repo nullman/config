@@ -21,7 +21,7 @@ for page in $(cat "${index}") ; do
         file="${root}/${image}"
         dir=$(dirname "${file}")
         mkdir -p "${dir}"
-        if [[ -f "${file}" ]] ; then
+        if [ -f "${file}" ] ; then
             echo "All images downloaded"
             exit 1
         fi

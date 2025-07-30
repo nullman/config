@@ -239,7 +239,7 @@ bindsym $super+Shift+r restart
 
 # exit i3 (log out of X session)
 #bindsym $super+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
-#bindsym $super+Shift+e exec sh -c "[[ $(echo -e \"NO\nYES\" | dmenu -sb '#FF6600' -i -p 'Really exit i3 X session?') == 'YES' ]] && i3-msg exit"
+#bindsym $super+Shift+e exec sh -c "[ $(echo -e \"NO\nYES\" | dmenu -sb '#FF6600' -i -p 'Really exit i3 X session?') == 'YES' ] && i3-msg exit"
 bindsym $super+Shift+e mode "$mode_exit"
 set $mode_exit Really exit i3 X session?  (y)es  (n)o
 mode "$mode_exit" {
@@ -252,7 +252,7 @@ mode "$mode_exit" {
 }
 
 # lock screen
-bindsym $super+$alt+x exec sh -c "[[ -n \"$(ps aux | grep -v grep | grep xscreensaver)\" ]] && xscreensaver-command -lock || blurlock"
+bindsym $super+$alt+x exec sh -c "[ -n \"$(ps aux | grep -v grep | grep xscreensaver)\" ] && xscreensaver-command -lock || blurlock"
 
 # set shut down, restart, and locking features
 bindsym $super+Shift+x mode "$mode_system"

@@ -38,7 +38,7 @@ case "${cmd}" in
     eliza-fortune|ef)
         echo "${msg}" | elizatalk
         # random chance to add a fortune (based on seconds)
-        if [[ $(_random 10) -eq 0 ]] ; then
+        if [ $(_random 10) -eq 0 ] ; then
             case "$(_random 18)" in
                 0) echo "Here's a quote for you..." ;;
                 1) echo "What do you think of this quote?" ;;
@@ -64,23 +64,23 @@ case "${cmd}" in
         ;;
     # today's reminders
     today|y)
-        remind "${HOME}/.reminders_bot" "${msg}" 2>/dev/null | sed 's/^Reminders for/Today in history: / ; s/ (today):$// ; /^$/d'
+        remind "${HOME}/.reminders-bot" "${msg}" 2>/dev/null | sed 's/^Reminders for/Today in history: / ; s/ (today):$// ; /^$/d'
         ;;
     # fortune
     fortune|f)
         # generate list of fortune file options
         unset fopt
         for f in $(fortune -f 2>&1 | cut -f 7- -d ' ') ; do
-            if [[ -n "${fopt}" ]] ; then
+            if [ -n "${fopt}" ] ; then
                 fopt="${fopt} ${f}"
             else
                 fopt="${f}"
             fi
         done
-        if [[ "${msg}" == "help" ]] ; then
+        if [ "${msg}" == "help" ] ; then
             echo "Fortune file options: ${fopt}"
             echo "Anything else performs a query in all fortune files."
-        elif [[ -n "${msg}" ]] ; then
+        elif [ -n "${msg}" ] ; then
             if $(echo "${fopt}" | grep -q "${msg}") ; then
                 # if fortune file option is given, then use
                 fortune ${fparam} "${msg}" 2>/dev/null | sed -e 's/\t/    /g'
@@ -88,7 +88,7 @@ case "${cmd}" in
                 # else, query for keyword
                 #fortune ${fparam} -m "${msg}" 2>/dev/null | sed -e 's/\t/    /g ; s/^%$//'
                 fortune ${fparam} -m "${msg}" 2>/dev/null > ${tmp}
-                if [[ -n "$(cat ${tmp})" ]] ; then
+                if [ -n "$(cat ${tmp})" ] ; then
                     strfile "${tmp}" >/dev/null
                     fortune "${tmp}" | sed -e 's/\t/    /g ; s/^%$//'
                 fi
@@ -100,10 +100,10 @@ case "${cmd}" in
         ;;
     # quote
     quote|q)
-        if [[ -n "${msg}" ]] ; then
+        if [ -n "${msg}" ] ; then
             # query for keyword, then return random quote
             fortune "${HOME}/quotes" -m "${msg}" 2>/dev/null > ${tmp}
-            if [[ -n "$(cat ${tmp})" ]] ; then
+            if [ -n "$(cat ${tmp})" ] ; then
                 strfile "${tmp}" >/dev/null
                 fortune "${tmp}" | sed -e 's/\t/    /g ; s/^%$//'
             fi
@@ -151,7 +151,7 @@ case "${cmd}" in
         # key/value base dir
         base="${HOME}/key-value"
         # standardize user's nick (im login)
-        if [[ "${CONTACT_NICK}" == "" ]] ; then
+        if [ "${CONTACT_NICK}" == "" ] ; then
             nick=${USER}
         else
             nick=$(echo ${CONTACT_NICK} | tr --delete --complement '[A-Za-z0-9_]' | tr '[A-Z]' '[a-z]')
@@ -191,10 +191,10 @@ case "${cmd}" in
             help|-h|--help|"") op="help" ;;
         esac
         # perform action
-        if [[ "${op}" == "help" ]] ; then
+        if [ "${op}" == "help" ] ; then
             # show help
             ${HOME}/bin/key-value --help
-        elif [[ "${file}" == "$(echo ${file} | tr --delete --complement '[A-Za-z0-9_]')" ]] ; then
+        elif [ "${file}" == "$(echo ${file} | tr --delete --complement '[A-Za-z0-9_]')" ] ; then
             # if valid file name, call key-value script to handle request
             ${HOME}/bin/key-value "${op}" "${file}" "${msg[@]}"
         else

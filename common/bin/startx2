@@ -7,7 +7,7 @@
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
-if [[ $# -lt 1 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
     echo "Usage: $(basename $0) COMMAND..."
     echo "Launch a second X environment and run COMMANDs."
     echo "Example: cd /path/to/halflife ; $0 wine -- hl.exe -console"

@@ -22,7 +22,7 @@ ratingsdir="${HOME}/.song-ratings"       # ratings directory
 # setup
 #===============================================================================
 
-if [[ ! -d "${musicdir}" ]] ; then
+if [ ! -d "${musicdir}" ] ; then
     echo "Error: Could not find music directory: ${musicdir}"
     exit 1
 fi
@@ -78,7 +78,7 @@ for d in Albums Singles MODs ; do
         gd="${gn//\%/ }"
         find "${d}/${gd}/" -type f >> "${pldir}/${tmpfile}"
         n=$(echo "${gn}" | tr '[:upper:]' '[:lower:]' | sed 's/\%/_/g ; s/_-_/-/g')
-        [[ -e "${pldir}/${tmpfile}" ]] && sort -t / -k 3 < "${pldir}/${tmpfile}" >> "${pldir}/genre_${n}.m3u"
+        [ -e "${pldir}/${tmpfile}" ] && sort -t / -k 3 < "${pldir}/${tmpfile}" >> "${pldir}/genre_${n}.m3u"
     done
 done
 
@@ -104,8 +104,8 @@ rm "${pldir}/rated_good.m3u"
 rm "${pldir}/rated_all.m3u"
 for r in $(seq 1 5) ; do
     sort -t / -k 3 < "${ratingsdir}/songs-rated-${r}" | grep '\.mp3$' > "${pldir}/rated_${r}.m3u"
-    [[ ${r} -ge 3 ]] && cat "${ratingsdir}/songs-rated-${r}" | grep '\.mp3$' >> "${pldir}/rated_normal.m3u"
-    [[ ${r} -ge 4 ]] && cat "${ratingsdir}/songs-rated-${r}" | grep '\.mp3$' >> "${pldir}/rated_good.m3u"
+    [ ${r} -ge 3 ] && cat "${ratingsdir}/songs-rated-${r}" | grep '\.mp3$' >> "${pldir}/rated_normal.m3u"
+    [ ${r} -ge 4 ] && cat "${ratingsdir}/songs-rated-${r}" | grep '\.mp3$' >> "${pldir}/rated_good.m3u"
     cat "${ratingsdir}/songs-rated-${r}" | grep '\.mp3$' >> "${pldir}/rated_all.m3u"
 done
 
@@ -113,7 +113,7 @@ done
 rm -f "${pldir}/unrated.m3u"
 while read s ; do
     d=$(grep -F "${s}" "${pldir}/rated_all.m3u")
-    [[ -z "${d}" ]] && echo "${s}" >> "${pldir}/unrated.m3u"
+    [ -z "${d}" ] && echo "${s}" >> "${pldir}/unrated.m3u"
 done < "${pldir}/raw_all.m3u"
 
 # randomize some playlists

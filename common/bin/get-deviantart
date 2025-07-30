@@ -7,7 +7,7 @@
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
-if [[ $# -lt 1 ]] || [[ $# -gt 2 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+if [ $# -lt 1 ] || [ $# -gt 2 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
     cat <<EOF
 Usage: $(basename $0) DIRECTORY [DATE]
 Get pictures from 'deviantart.com' DIRECTORY starting at DATE.
@@ -43,7 +43,7 @@ fi
 
 dir="$1"
 
-if [[ -z "$2" ]] ; then
+if [ -z "$2" ] ; then
     bd=$(date +%Y%m%d)
 else
     bd=$(date --date="$2" +%Y%m%d)
@@ -58,7 +58,7 @@ pushd ${dir}
 mkdir _temp_
 cd _temp_
 
-while [[ ${bts} -lt ${lts} ]] ; do
+while [ ${bts} -lt ${lts} ] ; do
     echo "${bd} (${os})"
     ets=$((${bts} + 86400))
 
@@ -66,7 +66,7 @@ while [[ ${bts} -lt ${lts} ]] ; do
     source _temp1_ | grep deviantart.com/i/ | sed 's/.*src\=\"\([^\"]*\)\".*/\1/ ; s/^/wget -nc /' > _temp2_
     source _temp2_
 
-    if [[ $(cat _temp2_ | wc -l) -ge 24 ]] ; then
+    if [ $(cat _temp2_ | wc -l) -ge 24 ] ; then
         os=$((${os} + 24))
     else
         os=0
@@ -76,7 +76,7 @@ while [[ ${bts} -lt ${lts} ]] ; do
     mvs "" "${bd}_"
     mv * ..
 
-    if [[ ${os} -eq 0 ]] ; then
+    if [ ${os} -eq 0 ] ; then
         bd=$(date --date="${bd} + 1 day" +%Y%m%d)
         bts=$(date --date="${bd}" +%s)
     fi

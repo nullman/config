@@ -218,7 +218,7 @@ termcapinfo linux*|xterm*|rxvt*|urxvt*|gnome-terminal*|alacritty*|termite*|termi
 # 9   select 9
 # I   login on
 # O   login off
-# ]]   paste .
+# ]   paste .
 #
 
 # And here are the default bind commands if you need them:

@@ -237,7 +237,7 @@ _download() {
     archive="$1"
     listname="$2"
 
-    [[ -n "${listname}" ]] && echo "List: ${listname}"
+    [ -n "${listname}" ] && echo "List: ${listname}"
 
     for ((x = 0; x < ${#channels[@]}; x += 1)) ; do
         channel=$(echo "${channels[$x]}" | sed 's/ *|/|/g ; s/| */|/g')
@@ -245,7 +245,7 @@ _download() {
         name=$(echo "${channel}" | cut -d '|' -f 2)
         url=$(echo "${channel}" | cut -d '|' -f 3)
         echo "| ${dir} | ${name} | ${url} |"
-        if [[ -z "${listname}" || "${name}" == "${listname}" ]] ; then
+        if [ -z "${listname}" || "${name}" == "${listname}" ] ; then
             path="${basedir}/${dir}/${name}"
             cmd="${ytdlp} \
                 --cookies-from-browser brave \
@@ -283,7 +283,7 @@ while true ; do
             ;;
         -r|--restart)
             listname=
-            if [[ -n "$2" ]] ; then
+            if [ -n "$2" ] ; then
                 listname="$2"
                 shift
             fi
@@ -312,7 +312,7 @@ while true ; do
 done
 
 listname=
-[[ -n "$1" ]] && listname="$1"
+[ -n "$1" ] && listname="$1"
 _download "${archive}" "${listname}"
 
 exit 0

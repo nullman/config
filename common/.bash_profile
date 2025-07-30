@@ -12,7 +12,7 @@ export runpath="${runpath}:${HOME}/.bash_profile"
 logger "Running: ${HOME}/.bash_profile"
 
 # source bashrc
-[[ -f "${HOME}/.bashrc" ]] && source "${HOME}/.bashrc"
+[ -f "${HOME}/.bashrc" ] && source "${HOME}/.bashrc"
 
 #===============================================================================
 # End of File

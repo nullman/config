@@ -18,7 +18,7 @@ export REAL_TERM="${TERM}"
 export TERM="xterm-256color"
 
 # only run if terminal is interactive
-[[ $- == *i* ]] || return 0
+[ $- == *i* ] || return 0
 
 # add to the run path
 export runpath="${runpath}:${HOME}/.zshrc"
@@ -64,32 +64,32 @@ POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
 # plugins
 zp="${HOME}/.zsh-plugins"
 zpb="${HOME}/.zsh-plugins-bundle"
-if [[ -f "${zp}" ]] ; then
+if [ -f "${zp}" ] ; then
     # build plugin bundle if needed
-    if [[ ! -f "${zpb}" ]] || [[ "${zpb}" -ot "${zp}" ]] || [[ $(wc -c < "${zpb}") -eq 0 ]] ; then
+    if [ ! -f "${zpb}" ] || [ "${zpb}" -ot "${zp}" ] || [ $(wc -c < "${zpb}") -eq 0 ] ; then
         antibody bundle < "${zp}" > "${zpb}"
     fi
 
     # source plugins
-    [[ -f "${zpb}" ]] && source "${zpb}" 2>&1
+    [ -f "${zpb}" ] && source "${zpb}" 2>&1
 fi
 
 # set prompt
-if [[ -n "${INSIDE_EMACS}" ]] ; then
+if [ -n "${INSIDE_EMACS}" ] ; then
     # use simple prompt, if run from within emacs
-    [[ -f "${HOME}/.p10k-simple.zsh" ]] && source "${HOME}/.p10k-simple.zsh" 2>&1
+    [ -f "${HOME}/.p10k-simple.zsh" ] && source "${HOME}/.p10k-simple.zsh" 2>&1
     #export TERM=eterm-256color
     unset zle_bracketed_paste
 else
     # enable powerlevel10k instant prompt
-    [[ -f "${XDG_CACHE_HOME:-${HOME}/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]] && \
+    [ -f "${XDG_CACHE_HOME:-${HOME}/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ] && \
         source "${XDG_CACHE_HOME:-${HOME}/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" 2>&1
     # customize prompt via 'p10k configure' or edit ~/.p10k.zsh
-    [[ -f "${HOME}/.p10k.zsh" ]] && source "${HOME}/.p10k.zsh"
+    [ -f "${HOME}/.p10k.zsh" ] && source "${HOME}/.p10k.zsh"
 fi
 
 # fix home/end keys in screen/tmux
-if [[ -n "${STY}" ]] || [[ -n "${TMUX}" ]] ; then
+if [ -n "${STY}" ] || [ -n "${TMUX}" ] ; then
     bindkey "\e[1~" beginning-of-line
     bindkey "\e[4~" end-of-line
 fi
@@ -98,19 +98,19 @@ fi
 # CTRL-T  paste the selected file path into the command line
 # CTRL-R  paste the selected command from history into the command line
 # ALT-C   cd into the selected directory
-if [[ -z "${INSIDE_EMACS}" ]] ; then
-    if [[ "${os}" == "Darwin" ]] ; then
-        [[ -d "/usr/local/opt/fzf/bin" ]] && [[ ! "${PATH}" == */usr/local/opt/fzf/bin* ]] && export PATH="${PATH}:/usr/local/opt/fzf/bin"
-        [[ -f "/usr/local/opt/fzf/shell/key-bindings.zsh" ]] && source "/usr/local/opt/fzf/shell/key-bindings.zsh" 2>&1
-        [[ -f "/usr/local/opt/fzf/shell/completion.zsh" ]] && source "/usr/local/opt/fzf/shell/completion.zsh" 2>&1
+if [ -z "${INSIDE_EMACS}" ] ; then
+    if [ "${os}" == "Darwin" ] ; then
+        [ -d "/usr/local/opt/fzf/bin" ] && [ ! "${PATH}" == */usr/local/opt/fzf/bin* ] && export PATH="${PATH}:/usr/local/opt/fzf/bin"
+        [ -f "/usr/local/opt/fzf/shell/key-bindings.zsh" ] && source "/usr/local/opt/fzf/shell/key-bindings.zsh" 2>&1
+        [ -f "/usr/local/opt/fzf/shell/completion.zsh" ] && source "/usr/local/opt/fzf/shell/completion.zsh" 2>&1
     elif $(uname -v | grep -q 'NixOS') ; then
         if _command fzf-share ; then
             source "$(fzf-share)/key-bindings.zsh"
             source "$(fzf-share)/completion.zsh"
         fi
     else
-        [[ -f "/usr/share/fzf/key-bindings.zsh" ]] && source "/usr/share/fzf/key-bindings.zsh" 2>&1
-        [[ -f "/usr/share/fzf/completion.zsh" ]] && source "/usr/share/fzf/completion.zsh" 2>&1
+        [ -f "/usr/share/fzf/key-bindings.zsh" ] && source "/usr/share/fzf/key-bindings.zsh" 2>&1
+        [ -f "/usr/share/fzf/completion.zsh" ] && source "/usr/share/fzf/completion.zsh" 2>&1
     fi
 fi
 export FZF_DEFAULT_OPTS="--layout=reverse --border=bold"
@@ -134,10 +134,10 @@ export FZF_DEFAULT_OPTS="--layout=reverse --border=bold"
 bindkey '^ ' autosuggest-accept     # ctrl+space key to accept auto-suggestion
 bindkey '^[[7~' beginning-of-line   # home key to move to beginning-of-line
 bindkey '^[[H' beginning-of-line    # home key to move to beginning-of-line
-[[ -n "${terminfo[khome]}" ]] && bindkey "${terminfo[khome]}" beginning-of-line # [home] to move to beginning-of-line
+[ -n "${terminfo[khome]}" ] && bindkey "${terminfo[khome]}" beginning-of-line # [home] to move to beginning-of-line
 bindkey '^[[8~' end-of-line             # end key to move to end-of-line
 bindkey '^[[F' end-of-line              # end key to move to end-of-line
-[[ -n "${terminfo[kend]}" ]] && bindkey "${terminfo[kend]}" end-of-line # [end] to move to end-of-line
+[ -n "${terminfo[kend]}" ] && bindkey "${terminfo[kend]}" end-of-line # [end] to move to end-of-line
 bindkey '^[[2~' overwrite-mode    # insert key to toggle overwrite mode
 bindkey '^[[3~' delete-char       # delete key to delete one character forward
 bindkey '^[[C' forward-char       # right key to move forward one character
@@ -153,10 +153,10 @@ bindkey '^[[1;5C' forward-word    # ctrl+down key to move forward one word
 bindkey '^H' backward-kill-word   # ctrl+backspace key to delete previous word
 bindkey '^[[Z' undo               # shift+tab key to undo
 
-if [[ "${os}" == "Linux" ]] ; then
+if [ "${os}" == "Linux" ] ; then
     ## bind up and down arrow keys to history substring search
-    #[[ -n "${terminfo[kcuu1]}" ]] && bindkey "${terminfo[kcuu1]}" history-substring-search-up # [up] to search substring history backwards
-    #[[ -n "${terminfo[kcud1]}" ]] && bindkey "${terminfo[kcud1]}" history-substring-search-down # [down] to search substring history forwards
+    #[ -n "${terminfo[kcuu1]}" ] && bindkey "${terminfo[kcuu1]}" history-substring-search-up # [up] to search substring history backwards
+    #[ -n "${terminfo[kcud1]}" ] && bindkey "${terminfo[kcud1]}" history-substring-search-down # [down] to search substring history forwards
     #bindkey '^[[A' history-substring-search-up # up key to search substring history backwards
     #bindkey '^[[B' history-substring-search-down # down to search substring history forwards
 
@@ -170,7 +170,7 @@ fi
 # make backspace key work in terminal
 #stty erase ^H
 #stty erase ^?
-#[[ -z "$(greppr erase)" ]] || stty erase $(getpr erase)
+#[ -z "$(greppr erase)" ] || stty erase $(getpr erase)
 
 # set tabs
 _command stty && stty tabs
@@ -182,7 +182,7 @@ umask 0022
 typeset -g POWERLEVEL9K_INSTANT_PROMPT="quiet"
 
 # source shellrc
-[[ -f "${HOME}/.shellrc" ]] && source "${HOME}/.shellrc" 2>&1
+[ -f "${HOME}/.shellrc" ] && source "${HOME}/.shellrc" 2>&1
 
 #===============================================================================
 # End of File

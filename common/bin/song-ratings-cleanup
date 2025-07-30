@@ -51,7 +51,7 @@ _dryrun() {
     echo
     for file in ${files} ; do
         for song in $(cat "${dir}/${file}") ; do
-            if [[ ! -e "${musicdir}/${song}" ]] ; then
+            if [ ! -e "${musicdir}/${song}" ] ; then
                 echo "${file}: ${song}"
             fi
         done
@@ -65,7 +65,7 @@ _process() {
         local tmpfile="${tmpdir}/${file}"
         touch ${tmpfile}
         for song in $(cat "${dir}/${file}") ; do
-            if [[ -e "${musicdir}/${song}" ]] ; then
+            if [ -e "${musicdir}/${song}" ] ; then
                 echo "${song}" >> ${tmpfile}
             else
                 ${quiet} || echo "Removed missing song: ${song}"
@@ -77,13 +77,13 @@ _process() {
 }
 
 # dry run
-if [[ ${quiet} = false ]] && ([[ ${dryrun} = true ]] || [[ ${yes} = false ]]) ; then
+if [ ${quiet} = false ] && ([ ${dryrun} = true ] || [ ${yes} = false ]) ; then
     _dryrun
 fi
 
 # remove bad songs
-if [[ ${dryrun} = false ]] ; then
-    if [[ ${yes} = true ]] ; then
+if [ ${dryrun} = false ] ; then
+    if [ ${yes} = true ] ; then
         _process
     else
         echo

@@ -39,8 +39,8 @@ triggered=false
 
 while sleep $(((sleep_time + 999) / 1000)) ; do
     idle=$(xprintidle)
-    if [[ ${idle} -ge ${IDLE_TIME} ]] ; then
-        if [[ ${triggered} -eq false ]] ; then
+    if [ ${idle} -ge ${IDLE_TIME} ] ; then
+        if [ ${triggered} -eq false ] ; then
             trigger_cmd
             triggered=true
             sleep_time=${IDLE_TIME}
