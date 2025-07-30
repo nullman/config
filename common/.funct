@@ -1552,32 +1552,34 @@ _gitsync() {
 git-sync-config() {
     # output datetime
     date '+%Y-%m-%d %H:%M:%S'
+    hn="$(uname -n)"
 
     if [ -d "$(configdir)" ] ; then
         # only update xscreensaver preferences on tank or dozer
-        if [ -f "${HOME}/.xscreensaver" ] && [ ! -L "${HOME}/.xscreensaver" ] && \
-               [ "$(uname -n)" == "tank" || "$(uname -n)" == "dozer" ] ; then
-            echo "Update .xscreensaver..."
-            (
-                cd "${HOME}" && \
-                    cp .xscreensaver $(configdir)/common/ && \
-                    ln -sf $(configdir)/common/.xscreensaver .
-            )
+        if [ -f "${HOME}/.xscreensaver" ] && [ ! -L "${HOME}/.xscreensaver" ] ; then
+            if [ "${hn}" == "tank" ] || [ "${hn}" == "personal" ] || [ "${hn}" == "dozer" ] ; then
+                echo "Update .xscreensaver..."
+                (
+                    cd "${HOME}" && \
+                        cp ".xscreensaver" "$(configdir)/common/" && \
+                        ln -sf "$(configdir)/common/.xscreensaver" .
+                )
+            fi
         fi
     fi
 
     if [ -d "$(configdir)-private" ] ; then
-        #if [ -L .cron ] && [ -f config-private/custom/$(uname -n)/.cron ] ; then
+        #if [ -L ".cron" ] && [ -f "config-private/custom/$(uname -n)/.cron" ] ; then
         #    echo "Update crontab..."
-        #    crontab -l > config-private/custom/$(uname -n)/.cron
+        #    crontab -l > "config-private/custom/$(uname -n)/.cron"
         #fi
         # update addressbook
         if [ -f "${HOME}/.addressbook" ] && [ ! -L "${HOME}/.addressbook" ] ; then
             echo "Update .addressbook..."
             (
                 cd "${HOME}" && \
-                    cp .addressbook $(configdir)-private/common/ && \
-                    ln -sf $(configdir)-private/common/.addressbook .
+                    cp ".addressbook" "$(configdir)-private/common/" && \
+                    ln -sf "$(configdir)-private/common/.addressbook" .
             )
         fi
     fi
