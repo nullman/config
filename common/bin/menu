@@ -44,7 +44,7 @@ section="main"
 key=""
 
 # get parameters
-while [[ -n "$1" ]] ; do
+while [ -n "$1" ] ; do
 
     case "$1" in
 
@@ -89,11 +89,11 @@ EOF
         -c|--create)
             shift
             # create new menu file
-            if [[ $# -gt 0 ]] ; then
+            if [ $# -gt 0 ] ; then
                 menufile="$1"
                 shift
             fi
-            if [[ -e "${menufile}" ]] ; then
+            if [ -e "${menufile}" ] ; then
                 echo "Cannot create '${menufile}' because that file already exists"
                 exit 1
             fi
@@ -185,7 +185,7 @@ ssaver:
   xscreensaver|xscreensaver-command -lock
   xscreensaver setup|xscreensaver-demo
   xscreensaver on|rm -f ${HOME}/.noscreensaver ; source ${HOME}/bin/ssaverauto
-  xscreensaver off|touch ${HOME}/.noscreensaver ; fuser -k -SIGTERM /home/user/bin/ssaver ; fuser -k -SIGTERM /usr/bin/xscreensaver ; fuser -k -SIGTERM /usr/bin/xlock ; fuser -k -SIGTERM /usr/bin/electricsheep ; fuser -k -SIGKILL /home/user/bin/ssaver ; fuser -k -SIGKILL /usr/bin/xscreensaver ; fuser -k -SIGKILL /usr/bin/xlock ; fuser -k -SIGKILL /usr/bin/electricsheep
+  xscreensaver off|touch ${HOME}/.noscreensaver ; fuser -k -SIGTERM ${HOME}/bin/ssaver ; fuser -k -SIGTERM /usr/bin/xscreensaver ; fuser -k -SIGTERM /usr/bin/xlock ; fuser -k -SIGTERM /usr/bin/electricsheep ; fuser -k -SIGKILL ${HOME}/bin/ssaver ; fuser -k -SIGKILL /usr/bin/xscreensaver ; fuser -k -SIGKILL /usr/bin/xlock ; fuser -k -SIGKILL /usr/bin/electricsheep
   xlock|xlock -mode flame
 EOF
             exit 0
@@ -194,7 +194,7 @@ EOF
         -s|--section)
             shift
             # get section name from parameter if one is given
-            if [[ $# -gt 0 ]] ; then
+            if [ $# -gt 0 ] ; then
                 section="$1"
                 shift
             fi
@@ -202,7 +202,7 @@ EOF
 
         *)
             # set menu file
-            if [[ $# -gt 0 ]] ; then
+            if [ $# -gt 0 ] ; then
                 menufile="$1"
                 shift
             fi
@@ -214,7 +214,7 @@ done
 #tput init
 
 # check that menufile exists
-if [[ ! -e ${menufile} ]] ; then
+if [ ! -e ${menufile} ] ; then
     echo "Could not find menu file '${menufile}'"
     exit 1
 fi
@@ -287,19 +287,19 @@ done
 maxrow=$((${x} - 1))
 
 # if no rows found then exit
-if [[ ${maxrow} -lt ${row} ]] ; then
+if [ ${maxrow} -lt ${row} ] ; then
     exit 1
 fi
 
 # get offset for centering
 len=0
 for ((x = 0; x < ${#display[@]}; x += 1)) ; do
-    if [[ ${#display[${x}]} -gt ${len} ]] ; then
+    if [ ${#display[${x}]} -gt ${len} ] ; then
         len=${#display[${x}]}
     fi
 done
 offset=$(((${cols} - ${len}) / 2))
-if [[ ${offset} -lt 0 ]] ; then offset=0 ; fi
+if [ ${offset} -lt 0 ] ; then offset=0 ; fi
 spc='' ; for ((x = 0; x < ${offset}; x += 1)) ; do spc+=' ' ; done
 
 # clear screen
@@ -314,7 +314,7 @@ tput cup 1 0
 
 # print display
 for ((x = 0; x < ${#display[@]}; x += 1)) ; do
-    if [[ "${row}" == "${x}" ]] ; then
+    if [ "${row}" == "${x}" ] ; then
         echo -n "${spc}" ; tput ${boldon} ; echo "${display[${x}]}" ; tput ${boldoff}
     else
         echo -n "${spc}" ; echo "${display[${x}]}"
@@ -324,14 +324,14 @@ done
 # print info
 info="q=quit  up/down=movement  enter=select  u=up"
 offset=$(((${cols} - ${#info}) / 2))
-if [[ ${offset} -lt 0 ]] ; then offset=0 ; fi
+if [ ${offset} -lt 0 ] ; then offset=0 ; fi
 infospc='' ; for ((x = 0; x < ${offset}; x += 1)) ; do infospc+=' ' ; done
 echo
 echo -n "${infospc}"
 echo "q=quit  up/down=movement  enter=select  u=up"
 
 # main section
-while [[ "${key}" != "q" ]] ; do
+while [ "${key}" != "q" ] ; do
     oldrow=${row}
     # get keypress
     read -n 1 -s key
@@ -359,7 +359,7 @@ while [[ "${key}" != "q" ]] ; do
                 !)
                     # if command starts with an explaination point then we run
                     # a new instance of menu
-                    if [[ "${command[${row}]:1:2}" == "/" ]] ; then
+                    if [ "${command[${row}]:1:2}" == "/" ] ; then
                         exec $0 "${command[$row]:1}"
                     else
                         exec $0 "${HOME}/${command[$row]:1}"
@@ -377,11 +377,11 @@ while [[ "${key}" != "q" ]] ; do
     esac
 
     # fix row
-    if [[ ${row} -lt 0 ]] ; then row=0 ; fi
-    if [[ ${row} -gt ${maxrow} ]] ; then row=${maxrow} ; fi
+    if [ ${row} -lt 0 ] ; then row=0 ; fi
+    if [ ${row} -gt ${maxrow} ] ; then row=${maxrow} ; fi
 
     # redraw if necessary
-    if [[ ${row} -ne ${oldrow} ]] ; then
+    if [ ${row} -ne ${oldrow} ] ; then
         tput cup $((${oldrow} + 1)) 0
         echo -n "${spc}" ; echo "${display[$oldrow]}"
         tput cup $((${row} + 1)) 0

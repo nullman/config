@@ -7,9 +7,9 @@
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
-if [[ $(command -v audacious) ]] ; then
+if [ $(command -v audacious) ] ; then
     audacious --enqueue "$@"
-elif [[ $(command -v audacious2) ]] ; then
+elif [ $(command -v audacious2) ] ; then
     audacious2 --enqueue "$@"
 fi
 

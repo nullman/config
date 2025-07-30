@@ -3,9 +3,9 @@
 #
 # Uses acpi to get the status of the battery.
 
-[[ -n "${BLOCK_INSTANCE}" ]] && num=${BLOCK_INSTANCE} || num=0
+[ -n "${BLOCK_INSTANCE}" ] && num=${BLOCK_INSTANCE} || num=0
 desc=$(acpi -b | grep "Battery ${num}:" | grep -v "rate information unavailable")
-[[ -z "${desc}" ]] && exit 0
+[ -z "${desc}" ] && exit 0
 status=$(echo "${desc}" | sed 's/^.*: \([^,]*\),.*$/\1/')
 percent=$(echo "${desc}" | sed 's/^.*, \(.*\)%.*$/\1/')
 remaining=$(echo "${desc}" | sed 's/^.*,.*, \(..:..\).*$/\1/')
@@ -15,17 +15,17 @@ color=""
 #echo "Percent: ${percent}"
 #echo "Remaining: ${remaining}"
 
-if [[ "${status}" == "Discharging" ]] ; then
-    if [[ ${percent} -lt 20 ]] ; then
+if [ "${status}" == "Discharging" ] ; then
+    if [ ${percent} -lt 20 ] ; then
         text=""
         color="#FF0000"
-    elif [[ ${percent} -lt 40 ]] ; then
+    elif [ ${percent} -lt 40 ] ; then
         text=""
         color="#FFAE00"
-    elif [[ ${percent} -lt 60 ]] ; then
+    elif [ ${percent} -lt 60 ] ; then
         text=""
         color="#FFF600"
-    elif [[ ${percent} -lt 80 ]] ; then
+    elif [ ${percent} -lt 80 ] ; then
         text=""
         color="#A8FF00"
     else
@@ -37,7 +37,7 @@ fi
 
 text="${text} ${percent}%"
 
-if [[ -n "$(echo ${remaining} | grep -v '^Battery')" ]] ; then
+if [ -n "$(echo ${remaining} | grep -v '^Battery')" ] ; then
     long="${text} (${remaining})"
 else
     long="${text}"
@@ -45,8 +45,8 @@ fi
 
 echo "${long}"
 echo "${text}"
-[[ -n "${color}" ]] && echo "${color}"
+[ -n "${color}" ] && echo "${color}"
 
-[[ ${percent} -lt 5 ]] && exit 33
+[ ${percent} -lt 5 ] && exit 33
 
 exit 0

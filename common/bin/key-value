@@ -11,7 +11,7 @@
 base="${HOME}/key-value"
 
 # make sure base dir exists
-if [[ ! -d ${base} ]] ; then
+if [ ! -d ${base} ] ; then
     mkdir -p "${base}"
 fi
 
@@ -60,7 +60,7 @@ newkey=$(echo ${newkey} | tr --delete --complement '[A-Za-z0-9_]')
 
 # temp file
 temp="${file}.tmp$$"
-if [[ -e ${base}/${temp} ]] ; then
+if [ -e ${base}/${temp} ] ; then
     echo "ERROR: Temp file '${temp}' already exists"
     exit 1
 fi
@@ -74,7 +74,7 @@ fi
 # echo newkey: ${newkey}
 
 # usage/help
-if [[ ${help} -eq 1 ]] ; then
+if [ ${help} -eq 1 ] ; then
     cat <<EOF
 Usage: $(basename $0) OPERATION (FILE|DIR) ARGUMENT...
 Interface to a key-value data dictionary.
@@ -124,14 +124,14 @@ EOF
 fi
 
 # make sure file does not go outside of base dir
-if [[ "${file}" != "$(echo ${file} | sed 's/\.\.//g')" ]] ; then
+if [ "${file}" != "$(echo ${file} | sed 's/\.\.//g')" ] ; then
     echo "ERROR: File '${file}' contains '..' which is not allowed"
     exit 1
 fi
 
 # handle list
-if [[ "${op}" == "list" ]] ; then
-    if [[ -d "${base}/${file}" ]] ; then
+if [ "${op}" == "list" ] ; then
+    if [ -d "${base}/${file}" ] ; then
         ls -1 "${base}/${file}"
     else
         echo "ERROR: Argument '${file}' is not a directory"
@@ -143,10 +143,10 @@ fi
 # for other operations, check that file exists
 case "${op}" in
     create)
-        if [[ ! -e "${base}/${file}" ]] ; then
-            if [[ ! -d "${base}/${file}" ]] ; then
+        if [ ! -e "${base}/${file}" ] ; then
+            if [ ! -d "${base}/${file}" ] ; then
                 dir=$(echo "${base}/${file}" | sed 's/\/[^\/]\+$//')
-                if [[ -d "${dir}" ]] ; then
+                if [ -d "${dir}" ] ; then
                     touch "${base}/${file}"
                     echo "Created: ${file}"
                 else
@@ -161,13 +161,13 @@ case "${op}" in
         exit 1
         ;;
     drop)
-        if [[ -e "${base}/${file}" ]] ; then
-            if [[ ! -d "${base}/${file}" ]] ; then
-                if [[ "${key}" == "drop" ]] ; then
+        if [ -e "${base}/${file}" ] ; then
+            if [ ! -d "${base}/${file}" ] ; then
+                if [ "${key}" == "drop" ] ; then
                     rm "${base}/${file}"
                     echo "Dropped: ${file}"
                 else
-                    if [[ -z "${key}" ]] ; then
+                    if [ -z "${key}" ] ; then
                         echo "ERROR: Keyword 'drop' not given"
                     else
                         echo "ERROR: Keyword '${key}' was not 'drop'"
@@ -182,7 +182,7 @@ case "${op}" in
         exit 1
         ;;
     *)
-        if [[ ! -f "${base}/${file}" ]] ; then
+        if [ ! -f "${base}/${file}" ] ; then
             echo "ERROR: File '${file}' does not exist"
             exit 1
         fi

@@ -129,7 +129,7 @@ EOF
 }
 
 # handle arguments
-if [[ $# -lt 1 ]] ; then
+if [ $# -lt 1 ] ; then
     # if no arguments given, prompt user with selector for key
     (sleep 0.1 ; xdo key_press -k ${prefixcode} ; xdo key_release -k ${prefixcode}) &
     key=$(cat "${conf}" | rofi -dmenu -i -p "󰪛	Key / Value")
@@ -145,7 +145,7 @@ value=$(grep "^${key} *=" "${conf}" | sed 's/^.*= *//')
 for ((x=0; x<${#value}; x++)) ; do
     ascii=$(printf "%d\n" "'${value:$x:1}")
     code=${keycode[${ascii}]}
-    if [[ "${#code}" -gt 2 ]] ; then
+    if [ "${#code}" -gt 2 ] ; then
         code1="${code:0:2}"
         code2="${code:3:2}"
         #echo "${code1} - ${code2}"

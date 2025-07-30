@@ -23,7 +23,7 @@ home="$(cd ${HOME} && cd .. && pwd)"
 #!       operating system (Linux, Windows_NT, Darwin, Haiku)
 os="$(uname -s)"
 #!       config directory
-config="\${HOME}/$([[ $(uname -o) == 'Haiku' ]] && echo 'haiku-config' || echo 'config')"
+config="\${HOME}/$([ $(uname -o) == 'Haiku' ] && echo 'haiku-config' || echo 'config')"
 #!       terminal
 terminal="alacritty"
 #!       network device
@@ -61,16 +61,16 @@ alias alhg="
 #        al                      source alias and funct scripts
 alias al="
     for file in \".alias\" \".funct\" \".alias-work\" \".funct-work\" ; do
-        [[ -f \${HOME}/\${file} ]] && source \${HOME}/\${file}
+        [ -f \${HOME}/\${file} ] && source \${HOME}/\${file}
     done"
 #        spr                     source profile (.shellrc)
-alias spr="[[ -f \${HOME}/.shellrc ]] && source \${HOME}/.shellrc"
+alias spr="[ -f \${HOME}/.shellrc ] && source \${HOME}/.shellrc"
 #        sxpr                    source .xprofile
-alias sxpr="[[ -f \${HOME}/.xprofile ]] && source \${HOME}/.xprofile"
+alias sxpr="[ -f \${HOME}/.xprofile ] && source \${HOME}/.xprofile"
 #        sba                     source .bashrc
-alias sba="[[ -f \${HOME}/.bashrc ]] && source \${HOME}/.bashrc"
+alias sba="[ -f \${HOME}/.bashrc ] && source \${HOME}/.bashrc"
 #        szsh                    source .zsh
-alias szsh="[[ -f \${HOME}/.zshrc ]] && source \${HOME}/.zshrc"
+alias szsh="[ -f \${HOME}/.zshrc ] && source \${HOME}/.zshrc"
 
 #
 # general (basic)
@@ -450,7 +450,7 @@ alias remove-org-font-files="
     (
         cd \"\${HOME}\" && \
             for dir in config dev web ; do
-                [[ -d \"\${dir}\" ]] && \
+                [ -d \"\${dir}\" ] && \
                     find \"\${HOME}/\${dir}\" -name '*org-src-fontification*' -print | \
                     xargs rm >/dev/null 2>&1
             done
@@ -1454,7 +1454,7 @@ alias untar="tar -xvf"
 # cp
 #
 #        cp                      copy (no dereference)
-[[ "${os}" != "Darwin" ]] && alias cp="cp -d"
+[ "${os}" != "Darwin" ] && alias cp="cp -d"
 #        cpr                     copy (recursive, no dereference)
 alias cpr="cp -R -d"
 #        cprp                    copy (recursive, preserve, no dereference)
@@ -1539,13 +1539,13 @@ alias emacs-cvs-build="
 alias emacs-install-v8="
     dir=v8-tmp
     pushd \${HOME}/.emacs.d/
-    if [[ -d \${dir} ]] ; then
+    if [ -d \${dir} ] ; then
         svn checkout http://v8.googlecode.com/svn/trunk/ \${dir}
     else
         svn update \${dir}
     fi
     (cd \${dir} && make dependencies && make native)
-    [[ -d \${dir}/out/native/ ]] && mv \${dir}/out/native v8
+    [ -d \${dir}/out/native/ ] && mv \${dir}/out/native v8
     rm -rf \${dir}
     popd"
 
@@ -1711,7 +1711,7 @@ alias egrep="grep -E -I --color=auto"
 #
 #        java-set-env-java8      set java environment to java 8
 alias java-set-env-java8="
-    if [[ $(uname -s) == 'Darwin' ]] ; then
+    if [ $(uname -s) == 'Darwin' ] ; then
         export JAVA_HOME=\"\$(/usr/libexec/java_home -v 1.8)\"
     else
         sudo archlinux-java set java-8-openjdk && \
@@ -1719,7 +1719,7 @@ alias java-set-env-java8="
     fi"
 #        java-set-env-java11     set java environment to java 11
 alias java-set-env-java11="
-    if [[ $(uname -s) == 'Darwin' ]] ; then
+    if [ $(uname -s) == 'Darwin' ] ; then
         export JAVA_HOME=\"\$(/usr/libexec/java_home -v 11)\"
     else
         sudo archlinux-java set java-11-openjdk && \
@@ -1727,7 +1727,7 @@ alias java-set-env-java11="
     fi"
 #        java-set-env-java18     set java environment to java 18
 alias java-set-env-java18="
-    if [[ $(uname -s) == 'Darwin' ]] ; then
+    if [ $(uname -s) == 'Darwin' ] ; then
         export JAVA_HOME=\"\$(/usr/libexec/java_home -v 18)\"
     else
         sudo archlinux-java set java-18-openjdk && \
@@ -1784,8 +1784,8 @@ alias llmotd="
 unalias ls >/dev/null 2>&1
 if ! _command exa ; then
     #        ls_                     ls (classify, columns, literal, human-readable, directories-first, auto-color)
-    [[ "${os}" != "Darwin" ]] && alias ls_="ls -F -C -N -h --group-directories-first --color=auto"
-    [[ "${os}" == "Darwin" ]] && alias ls_="gls -F -C -N -h --group-directories-first --color=auto"
+    [ "${os}" != "Darwin" ] && alias ls_="ls -F -C -N -h --group-directories-first --color=auto"
+    [ "${os}" == "Darwin" ] && alias ls_="gls -F -C -N -h --group-directories-first --color=auto"
     #        la                      ls -F -C -N -h --color=auto
     alias la="ls_"
     #        lsa                     ls -A (allmost-all)
@@ -1999,7 +1999,7 @@ alias rsync-rlptx="rsync -rlptx --progress"
 #!alias rsync-media-get-morpheus-exclude="rsync -rlptx --progress -f'- /Repos/' -f'- /Software/' -f'- /Video/' morpheus:/home/data/media/ ${home}/data/media/"
 #!#        rsync-media-get-morpheus-mouse-delete  rsync morpheus:/home/data/media /home/data/media (specific sub-directories)
 #!alias rsync-media-get-morpheus-mouse-delete=" \
-#!    if [[ $(uname -n) == 'mouse' ]] ; then
+#!    if [ $(uname -n) == 'mouse' ] ; then
 #!        rsync -rlptx --progress --delete -f'- /Humor/' -f'- /Other/' morpheus:/home/data/media/Audio/ ${home}/data/media/Audio/ && \
 #!        rsync -rlptx --progress --delete morpheus:/home/data/media/Audio/Music/ ${home}/data/media/Audio/Music/ && \
 #!        rsync -rlptx --progress --delete \"morpheus:/home/data/media/Pictures Slide Show/\" \"${home}/data/media/Pictures Slide Show/\" && \
@@ -2017,7 +2017,7 @@ alias rsync-media-get-dozer="rsync -rlptx --progress dozer:/home/data/media/ ${h
 alias rsync-media-get-dozer-limited="rsync -rlptx --progress -f'- /Repos/' -f'- /Software/' -f'- /Video/' dozer:/home/data/media/ ${home}/data/media/"
 #        rsync-media-get-dozer-curated-delete  rsync dozer:/home/data/media /home/data/media (specific sub-directories)
 alias rsync-media-get-dozer-curated-delete=" \
-    if [[ $(uname -n) == 'mouse' ]] ; then
+    if [ $(uname -n) == 'mouse' ] ; then
         rsync -rlptx --progress --delete -f'- /Humor/' -f'- /Other/' dozer:/home/data/media/Audio/ ${home}/data/media/Audio/ && \
         rsync -rlptx --progress --delete dozer:/home/data/media/Audio/Music/ ${home}/data/media/Audio/Music/ && \
         rsync -rlptx --progress --delete --copy-links \"dozer:/home/data/media/Pictures Slide Show/\" \"${home}/data/media/Pictures Slide Show/\" && \
@@ -2088,7 +2088,7 @@ alias rsync-music-put-synology="rsync -r --munge-links --size-only --progress ${
 #!#        rsync-playlists-put-pi  rsync /home/data/media/Audio/Playlists pimodem:/media/playlists
 #!alias rsync-playlists-put-pi="rsync -rlptx --progress ${home}/data/media/Audio/Playlists/ pi@pimodem:/media/playlists/"
 #!#        rsync-org-put-dropbox  rsync ${HOME}/org/* ${HOME}/Dropbox/Org/
-#!alias rsync-org-put-dropbox="[[ -d \${HOME}/Dropbox/Org ]] && rsync -aAXv --delete \${HOME}/org/* \${HOME}/Dropbox/Org/"
+#!alias rsync-org-put-dropbox="[ -d \${HOME}/Dropbox/Org ] && rsync -aAXv --delete \${HOME}/org/* \${HOME}/Dropbox/Org/"
 #!#        rsync-aerial-get-morpheus  rsync morpheus:/home/data/media/Video/Aerial /home/data/media/Video/Aerial
 #!alias rsync-aerial-get-morpheus="rsync -rlptx --progress morpheus:/home/data/media/Video/Aerial/ ${home}/data/media/Video/Aerial/"
 #        rsync-common-put-media-delete rsync ${HOME}/doc/icons and ${HOME}/doc/images to /home/data/media/Graphic
@@ -2101,9 +2101,9 @@ alias rsync-music-put-music-sd=" \
     dir1=/media/\${usb}
     dir2=/run/media/\${USER}/\${usb}
     dir=''
-    [[ -d \${dir1} ]] && dir=\${dir1}
-    [[ -d \${dir2} ]] && dir=\${dir2}
-    if [[ -d \${dir} ]] ; then
+    [ -d \${dir1} ] && dir=\${dir1}
+    [ -d \${dir2} ] && dir=\${dir2}
+    if [ -d \${dir} ] ; then
         rsync -rLtxW --size-only --progress --delete ${home}/data/media/Audio/Playlists/kyle.m3u \${dir}/
         rsync -rLtxW --size-only --progress --delete ${home}/data/media/Audio/Playlists/rated_good.m3u \${dir}/
         rsync -rLtxW --size-only --progress --delete ${home}/data/media/Audio/Music/* \${dir}/
@@ -2118,9 +2118,9 @@ alias rsync-win-apps-put-win_apps-sd="
     dir1=/media/\${usb}
     dir2=/run/media/\${USER}/\${usb}
     dir=''
-    [[ -d \${dir1} ]] && dir=\${dir1}
-    [[ -d \${dir2} ]] && dir=\${dir2}
-    if [[ -d \${dir} ]] ; then
+    [ -d \${dir1} ] && dir=\${dir1}
+    [ -d \${dir2} ] && dir=\${dir2}
+    if [ -d \${dir} ] ; then
         rsync -rLtxW --size-only --progress --delete -f'- Windows OS/' -f'- Partitions/' ${home}/data/media/Software/Windows* \${dir}/
         rsync -rLtxW --size-only --progress --delete ${home}/data/media/Repos/DOS ${home}/data/media/Repos/FreeDOS \${dir}/
         sync
@@ -2133,9 +2133,9 @@ alias rsync-windows-put-windows-sd="
     dir1=/media/\${usb}
     dir2=/run/media/\${USER}/\${usb}
     dir=''
-    [[ -d \${dir1} ]] && dir=\${dir1}
-    [[ -d \${dir2} ]] && dir=\${dir2}
-    if [[ -d \${dir} ]] ; then
+    [ -d \${dir1} ] && dir=\${dir1}
+    [ -d \${dir2} ] && dir=\${dir2}
+    if [ -d \${dir} ] ; then
         rsync -rLtxW --size-only --progress --delete -f'- Windows OS/' -f'- Partitions/' ${home}/data/media/Software/Windows* \${dir}/
         rsync -rLtxW --size-only --progress --delete ${home}/data/media/Repos/DOS ${home}/data/media/Repos/FreeDOS \${dir}/
         sync
@@ -2148,9 +2148,9 @@ alias rsync-t43-os2-put-t43-os2-sd=" \
     dir1=/media/\${usb}
     dir2=/run/media/\${USER}/\${usb}
     dir=''
-    [[ -d \${dir1} ]] && dir=\${dir1}
-    [[ -d \${dir2} ]] && dir=\${dir2}
-    if [[ -d \${dir} ]] ; then
+    [ -d \${dir1} ] && dir=\${dir1}
+    [ -d \${dir2} ] && dir=\${dir2}
+    if [ -d \${dir} ] ; then
         rsync -rLtxW --size-only --progress --delete -f'- ArcaOS/' -f'- CDs/' -f'- OS2/' ${home}/data/media/Software/OS2/* \${dir}/OS2/
         rsync -rLtxW --size-only --progress --delete \"${home}/data/media/Software/Thinkpad T43\" \${dir}/
         sync
@@ -2163,9 +2163,9 @@ alias rsync-mac-put-mac_apps-sd=" \
     dir1=/media/\${usb}
     dir2=/run/media/\${USER}/\${usb}
     dir=''
-    [[ -d \${dir1} ]] && dir=\${dir1}
-    [[ -d \${dir2} ]] && dir=\${dir2}
-    if [[ -d \${dir} ]] ; then
+    [ -d \${dir1} ] && dir=\${dir1}
+    [ -d \${dir2} ] && dir=\${dir2}
+    if [ -d \${dir} ] ; then
         rsync -rLtxW --size-only --progress --delete -f'- FINDER.DAT' ${home}/data/media/Software/Macintosh/68000 \${dir}/
         rsync -rLtxW --size-only --progress --delete -f'- FINDER.DAT' ${home}/data/media/Software/Macintosh/OS\ X \${dir}/
         rsync -rLtxW --size-only --progress --delete -f'- FINDER.DAT' ${home}/data/media/Software/Macintosh/PPC \${dir}/
@@ -2179,9 +2179,9 @@ alias rsync-c64-put-sd16="
     dir1=/media/\${usb}
     dir2=/run/media/\${USER}/\${usb}
     dir=''
-    [[ -d \${dir1} ]] && dir=\${dir1}
-    [[ -d \${dir2} ]] && dir=\${dir2}
-    if [[ -d \${dir} ]] ; then
+    [ -d \${dir1} ] && dir=\${dir1}
+    [ -d \${dir2} ] && dir=\${dir2}
+    if [ -d \${dir} ] ; then
         rsync -rLtxW --size-only --progress --delete -f'- TOSEC/' ${home}/data/media/Repos/C64/* \${dir}/
         sync
     else
@@ -2193,9 +2193,9 @@ alias rsync-c64-put-sd128="
     dir1=/media/\${usb}
     dir2=/run/media/\${USER}/\${usb}
     dir=''
-    [[ -d \${dir1} ]] && dir=\${dir1}
-    [[ -d \${dir2} ]] && dir=\${dir2}
-    if [[ -d \${dir} ]] ; then
+    [ -d \${dir1} ] && dir=\${dir1}
+    [ -d \${dir2} ] && dir=\${dir2}
+    if [ -d \${dir} ] ; then
         rsync -rLtxW --size-only --progress --delete ${home}/data/media/Repos/C64/* \${dir}/
         sync
     else
@@ -2207,9 +2207,9 @@ alias rsync-adult-put-adult-sd="
     dir1=/media/\${usb}
     dir2=/run/media/\${USER}/\${usb}
     dir=''
-    [[ -d \${dir1} ]] && dir=\${dir1}
-    [[ -d \${dir2} ]] && dir=\${dir2}
-    if [[ -d \${dir} ]] ; then
+    [ -d \${dir1} ] && dir=\${dir1}
+    [ -d \${dir2} ] && dir=\${dir2}
+    if [ -d \${dir} ] ; then
         rsync -rLtxW --size-only --progress --delete -f='- \#recycle' \"/mnt/synology/zzz/\" \"\${dir}/\"
         sync
     else
@@ -2221,9 +2221,9 @@ alias rsync-sdi-get-windows-sd="
     dir1=/media/\${usb}
     dir2=/run/media/\${USER}/\${usb}
     dir=''
-    [[ -d \${dir1} ]] && dir=\${dir1}
-    [[ -d \${dir2} ]] && dir=\${dir2}
-    if [[ -d \${dir} ]] ; then
+    [ -d \${dir1} ] && dir=\${dir1}
+    [ -d \${dir2} ] && dir=\${dir2}
+    if [ -d \${dir} ] ; then
         #rsync -rLtxW --size-only --progress --delete \"\${dir}/Snappy Driver Installer/\" \"${home}/data/Snappy Driver Installer/\"
         rsync -rLtxW --size-only --progress --delete \"\${dir}/Snappy Driver Installer/\" \"/mnt/synology/media/Snappy Driver Installer/\"
         sync
@@ -2236,9 +2236,9 @@ alias rsync-sdi-put-windows-sd="
     dir1=/media/\${usb}
     dir2=/run/media/\${USER}/\${usb}
     dir=''
-    [[ -d \${dir1} ]] && dir=\${dir1}
-    [[ -d \${dir2} ]] && dir=\${dir2}
-    if [[ -d \${dir} ]] ; then
+    [ -d \${dir1} ] && dir=\${dir1}
+    [ -d \${dir2} ] && dir=\${dir2}
+    if [ -d \${dir} ] ; then
         #rsync -rLtxW --size-only --progress --delete \"${home}/data/Snappy Driver Installer/\" \"\${dir}/Snappy Driver Installer/\"
         rsync -rLtxW --size-only --progress --delete \"/mnt/synology/media/Snappy Driver Installer/\" \"\${dir}/Snappy Driver Installer/\"
         sync
@@ -2672,13 +2672,13 @@ alias wine-winamp="WINEPREFIX=\${HOME}/.wine-winamp wine \"C:\Program Files (x86
 #!
 #        x2xm1                   x2x to mouse1
 alias x2xm1="
-    [[ -z \"\$(ps -af | grep -v grep | grep x2x | grep \${USER} | grep mouse1)\" ]] && ( \
+    [ -z \"\$(ps -af | grep -v grep | grep x2x | grep \${USER} | grep mouse1)\" ] && ( \
         ssh mouse1 'DISPLAY=:0 /usr/X11R6/bin/xhost +\$(uname -n)' ;
         x2x -west -noautoup -resurface -to mouse1:0
     ) &"
 #        x2xm2                   x2x to mouse2
 alias x2xm2="
-    [[ -z \"\$(ps -af | grep -v grep | grep x2x | grep \${USER} | grep mouse2)\" ]] && ( \
+    [ -z \"\$(ps -af | grep -v grep | grep x2x | grep \${USER} | grep mouse2)\" ] && ( \
         ssh mouse2 'DISPLAY=:0 /usr/X11R6/bin/xhost +\$(uname -n)' ;
         x2x -west -noautoup -resurface -to mouse2:0
     ) &"
@@ -2862,7 +2862,7 @@ alias ubuntu-release-upgrade="sudo do-release-upgrade"
 # guix
 #
 guixrebuildbefore="
-    [[ -d \${HOME}/.guix-etc ]] && sudo cp -L -v \${HOME}/.guix-etc/* /etc/"
+    [ -d \${HOME}/.guix-etc ] && sudo cp -L -v \${HOME}/.guix-etc/* /etc/"
 #        guixrs                  guix reconfigure system
 alias guixrs="
     ${guixrebuildbefore}
@@ -2883,13 +2883,13 @@ alias guix-store-query="guix-store -q -R /run/current-system | grep"
 # nixos
 #
 nixrebuildbefore="
-    [[ -d \${HOME}/.nixos-etc ]] && sudo cp -L -v \${HOME}/.nixos-etc/* /etc/nixos/"
+    [ -d \${HOME}/.nixos-etc ] && sudo cp -L -v \${HOME}/.nixos-etc/* /etc/nixos/"
 nixrebuildafter="
     # link downloadhelper coapp for firefox
     dstdir=\${HOME}/.mozilla/native-messaging-hosts/
     srcdir=\$(nix-store -q -R /run/current-system | grep vdhcoapp)
     srcfile=\${srcdir}/lib/mozilla/native-messaging-hosts/net.downloadhelper.coapp.json
-    [[ -d \${srcdir} ]] && [[ -d \${dstdir} ]] && ln -s -f \${srcfile} \${dstdir}"
+    [ -d \${srcdir} ] && [ -d \${dstdir} ] && ln -s -f \${srcfile} \${dstdir}"
 #        nixrs                   nixos-rebuild switch
 alias nixrs="
     ${nixrebuildbefore}
@@ -3225,7 +3225,7 @@ alias qd-copy-windows-tools="
     qvm-run --pass-io personal 'tar -C \"/home/data/media/Software/Hypervisor/Qubes OS\" -c qubes-windows-tools-4.1.69-1.fc37.noarch.rpm' | tar -x"
 #        qd-copy-xscreensaver    copy xscreensaver slide show pictures from personal to dom0
 alias qd-copy-xscreensaver="
-    if [[ \"$(uname -n)\" == \"dom0\" ]] ; then
+    if [ \"$(uname -n)\" == \"dom0\" ] ; then
         sudo rm -rf \"/home/data/media/Pictures Slide Show\"
         sudo mkdir -p \"/home/data/media/Pictures Slide Show\"
         sudo chown -R $(id -un):$(id -un) \"/home/data\"
@@ -3235,7 +3235,7 @@ alias qd-copy-xscreensaver="
     fi"
 #!#        qd-copy-rebos-to-arch   copy rebos files from personal to arch
 #!alias qd-copy-rebos-to-arch="
-#!    if [[ \"$(uname -n)\" == \"dom0\" ]] ; then
+#!    if [ \"$(uname -n)\" == \"dom0\" ] ; then
 #!        qvm-run --pass-io personal 'cat /home/user/config/config/.config/rebos/gen.toml' | cat > ${HOME}/config/config/.config/rebos/gen.toml
 #!        cat ${HOME}/config/config/.config/rebos/gen.toml | qvm-run --pass-io arch 'cat > /home/user/.config/rebos/gen.toml'
 #!    else
@@ -3450,7 +3450,7 @@ export GIT_REPOSITORY_HAIKU="git@github.com:nullman/haiku.git"
 #        gitsh                   status home (config, config-private) git repositories
 alias gitsh="
     (echo '~/config status' && cd ${config} && git status)
-    ([[ -d ${config}-private ]] && echo '~/config-private status' && cd ${config}-private && git status)"
+    ([ -d ${config}-private ] && echo '~/config-private status' && cd ${config}-private && git status)"
 #        gitcoh                  clone home (config, config-private) git repositories
 alias gitcoh="
     git clone \${GIT_REPOSITORY_CONFIG} ${config}
@@ -3458,15 +3458,15 @@ alias gitcoh="
 #        gitcihu                 commit (check in) home git repository (default update)
 alias gitcihu="
     (cd ${config} && git commit -a -m 'Update')
-    ([[ -d ${config}-private ]] && cd ${config}-private && git commit -a -m 'Update')"
+    ([ -d ${config}-private ] && cd ${config}-private && git commit -a -m 'Update')"
 #        gituoh                  pull (update) home git repository (from origin)
 alias gituoh="
     (cd ${config} && git pull origin)
-    ([[ -d ${config}-private ]] && cd ${config}-private && git pull origin)"
+    ([ -d ${config}-private ] && cd ${config}-private && git pull origin)"
 #        gitpoh                  push home git repository (to origin)
 alias gitpoh="
     (cd ${config} && git push origin)
-    ([[ -d ${config}-private ]] && cd ${config}-private && git push origin)"
+    ([ -d ${config}-private ] && cd ${config}-private && git push origin)"
 #        gitsdev                 status dev git repository
 alias gitsdev="(cd \${HOME}/dev && removeorgfontfiles && git status)"
 #        gitcodev                clone dev git repository
@@ -3495,7 +3495,7 @@ alias gitpoweb="(cd \${HOME}/web && git push origin)"
 alias gituoall="
     dirs=('config' 'config-private' 'dev' 'doc' 'web')
     for dir in \${dirs[@]} ; do
-        if [[ -d \${HOME}/\${dir} ]] ; then
+        if [ -d \${HOME}/\${dir} ] ; then
             echo \"Pulling '\${dir}'...\"
             (cd \${HOME}/\${dir} && git pull origin)
         fi
@@ -3510,7 +3510,7 @@ alias gitpohaiku="(cd \${HOME}/haiku && git push origin)"
 alias git-check-home="
     dirs=('config' 'config-private' 'dev' 'doc' 'web')
     for dir in \${dirs[@]} ; do
-        if [[ -d \${HOME}/\${dir} ]] ; then
+        if [ -d \${HOME}/\${dir} ] ; then
             (cd \${HOME}/\${dir} && grep -r '^<<<<<<< HEAD')
         fi
     done"
@@ -3577,7 +3577,7 @@ alias rsbid="
     #dir=\${basedir}/\$(cd \${basedir} && \$(pathcmd ls) -1)/\$(uname -n)
     basedir=/run/media/\${USER}/backup
     dir=\${basedir}/\$(uname -n)
-    if [[ -d \${dir} ]] ; then
+    if [ -d \${dir} ] ; then
         sudo rsync -aAXv --delete-before ${rsyncexclusions} / \${dir}
     else
         echo \"Cannot find backup directory: \${dir}\"
@@ -3589,7 +3589,7 @@ alias rsbidsome="
     #dir=\${basedir}/\$(cd \${basedir} && \$(pathcmd ls) -1)/\$(uname -n)
     basedir=/run/media/\${USER}/Backup
     dir=\${basedir}/\$(uname -n)
-    if [[ -d \${dir} ]] ; then
+    if [ -d \${dir} ] ; then
         echo 'Backing up:'
         for d in \"etc\" \"home\" \"root\" \"opt\" ; do
             echo \"  /\${d} => \${dir}/\"
@@ -3664,7 +3664,7 @@ alias copy-wallpapers="
 #!alias copy-skins="sudo cp -Rp \${HOME}/documents/Skins/* /usr/share/xmms/Skins/"
 #!#        copy-icewm              copy icewm settings to ~/
 #!alias copy-icewm="
-#!    if [[ ! -e \${HOME}/.icewm ]] ; then
+#!    if [ ! -e \${HOME}/.icewm ] ; then
 #!        sudo cp -R /etc/X11/icewm \${HOME}/.icewm
 #!    else
 #!        echo '${HOME}/.icewm already exists'
@@ -3672,7 +3672,7 @@ alias copy-wallpapers="
 #!#        make-ssh-config-external make ~/.ssh/config file (external access)
 #!alias make-ssh-config-external="
 #!    o=\${HOME}/.ssh/config
-#!    if [[ ! -e \${o} ]] ; then
+#!    if [ ! -e \${o} ] ; then
 #!        cat <<EOF > \${o}
 #!# hosts
 #!host firewall
@@ -3709,7 +3709,7 @@ alias make-ssh-config="
     esac"
 #!#        make-linuxlogo          setup linux logo
 #!alias make-linuxlogo="
-#!    if [[ -x \$(pathcmd linux_logo) ]] ; then
+#!    if [ -x \$(pathcmd linux_logo) ] ; then
 #!        linux_logo > /etc/motd
 #!        cp -p /etc/inittab /etc/inittab.backup
 #!        cat /etc/inittab.backup | sed 's%respawn:/sbin/getty 38400 tty%respawn:/sbin/getty -f /etc/issue.linuxlogo 38400 tty%' > /etc/inittab
@@ -3721,7 +3721,7 @@ alias make-dict-words="sudo wget https://gist.githubusercontent.com/wchargin/892
 #!#        make-run-on-wakeup-script make /etc/pm/sleep.d/50-run-on-wakup
 #!alias make-run-on-wakeup-script="
 #!    o=/etc/pm/sleep.d/50-run-on-wakup
-#!    if [[ ! -e \${o} ]] ; then
+#!    if [ ! -e \${o} ] ; then
 #!        sudo bash -c \"
 #!            echo '#!/bin/sh' > \${o}
 #!            echo 'case \\\$1 in' >> \${o}

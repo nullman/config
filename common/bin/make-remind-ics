@@ -11,14 +11,14 @@
 remfile=${HOME}/.reminders
 
 # output directory
-outdir=${HOME}/reminders_ics
+outdir=${HOME}/reminders-ics
 mkdir -p ${outdir}
 
 # daily reminders file
-daily=reminders_daily
+daily=reminders-daily
 
 # config remind file and include
-configfile=reminders_config
+configfile=reminders-config
 configinclude=$(cat ${remfile} | grep "^INCLUDE" | grep ${configfile})
 
 # script file
@@ -34,10 +34,10 @@ echo "Creating ICS files from reminders..."
 
 # create an ics file for every INCLUDE (except for config)
 for include in $(cat ${remfile} | grep "^INCLUDE " | grep -v ${configfile}) ; do
-    if [[ "${include}" != "INCLUDE" ]] ; then
+    if [ "${include}" != "INCLUDE" ] ; then
         file=$(basename ${include})
         # check for optional parameter limiting to just one file
-        if [[ "$1" == "" ]] || [[ "$1" == "${file}" ]] ; then
+        if [ "$1" == "" ] || [ "$1" == "${file}" ] ; then
             echo "Creating ${file}.ics"
             # create remind script
             echo "${configinclude}" > ${script}

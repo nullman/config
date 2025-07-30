@@ -239,7 +239,7 @@ for ((x = 0; x < ${#videos[@]}; x += 1)) ; do
     url=$(echo "${video}" | cut -d '|' -f 3)
     echo "| ${name} | ${dir} | ${url} |"
     path="${basedir}/${dir}/${name}.mov"
-    if [[ ! -f "${path}" ]] ; then
+    if [ ! -f "${path}" ] ; then
         echo
         echo "${url} -> ${path}"
         echo

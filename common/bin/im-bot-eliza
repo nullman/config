@@ -35,7 +35,7 @@ else
     # # get rest of msg
     # msg=(${msg[@]:1})
     # remove '.' from command, if needed
-    if [[ "${cmd:0:1}" == "." ]] ; then
+    if [ "${cmd:0:1}" == "." ] ; then
         cmd="${cmd:1}"
     fi
     # main command handler

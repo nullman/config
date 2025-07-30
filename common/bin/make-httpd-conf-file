@@ -8,10 +8,10 @@
 #===============================================================================
 
 # backup original httpd.conf
-[[ -e /etc/httpd/conf/httpd.conf.orig ]] || sudo cp /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.conf.orig
+[ -e /etc/httpd/conf/httpd.conf.orig ] || sudo cp /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.conf.orig
 
 # create httpd.conf
-sudo bash -c "cat > '/etc/httpd/conf/httpd.conf'" <<'EOF'
+cat <<EOF | sudo tee "/etc/httpd/conf/httpd.conf"
 #
 # This is the main Apache HTTP server configuration file. It contains the
 # configuration directives that give the server its instructions.

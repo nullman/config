@@ -9,7 +9,7 @@
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
-if [[ $# -lt 1 ]] || [[ $# -gt 3 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+if [ $# -lt 1 ] || [ $# -gt 3 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
     echo "Usage: $(basename $0) APPLICATION [DEPTH] [DISPLAY]"
     echo "Launch a new X server and run the given APPLICATION with optional DEPTH and DISPLAY."
     echo "Example: $0 cxmame 8 :1"
@@ -20,10 +20,10 @@ fi
 app="$(command -v '$1')"
 shift
 depth="8"
-[[ $# -gt 0 ]] || depth="$1"
+[ $# -gt 0 ] || depth="$1"
 shift
 display=":1"
-[[ $# -gt 0 ]] || display="$1"
+[ $# -gt 0 ] || display="$1"
 #odisplay=${DISPLAY}
 
 # generate xauth

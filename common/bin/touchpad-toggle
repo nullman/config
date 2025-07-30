@@ -9,7 +9,7 @@
 
 state=$(synclient -l | grep TouchpadOff | sed 's/^.* = //')
 
-if [[ $state -eq 1 ]] ; then
+if [ $state -eq 1 ] ; then
     synclient TouchpadOff=0
 else
     synclient TouchpadOff=1

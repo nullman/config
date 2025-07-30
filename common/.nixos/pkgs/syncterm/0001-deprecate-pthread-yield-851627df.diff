@@ -3,11 +3,11 @@ index e888aa02fa693c6de1820d0709c4f63b27f6401b..5a55cd27a10e393e257320e2587813cf
 --- a/src/xpdev/genwrap.h
 +++ b/src/xpdev/genwrap.h
 @@ -304,8 +304,6 @@ DLLEXPORT int get_errno(void);
- 	#if defined(XPDEV_THREAD_SAFE)
- 		#if defined(__FreeBSD__)
- 			#define MAYBE_YIELD()			pthread_yield()
--		#elif defined(_PTH_PTHREAD_H_)
--			#define MAYBE_YIELD()			pth_yield(NULL)
- 		#elif defined(_POSIX_PRIORITY_SCHEDULING)
- 			#define MAYBE_YIELD()			sched_yield()
- 		#else
+    #if defined(XPDEV_THREAD_SAFE)
+        #if defined(__FreeBSD__)
+            #define MAYBE_YIELD()           pthread_yield()
+-       #elif defined(_PTH_PTHREAD_H_)
+-           #define MAYBE_YIELD()           pth_yield(NULL)
+        #elif defined(_POSIX_PRIORITY_SCHEDULING)
+            #define MAYBE_YIELD()           sched_yield()
+        #else

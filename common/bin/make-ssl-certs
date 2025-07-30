@@ -101,7 +101,7 @@ case "${a}" in
                 ;;
         esac
 
-        if [[ -e server.csr ]] ; then
+        if [ -e server.csr ] ; then
             echo
             echo "Sign the certificate request (server.csr)..."
             echo "  /usr/local/bin/sign.sh server.csr"

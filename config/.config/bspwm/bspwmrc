@@ -296,10 +296,10 @@ _command() {
 
 # simple x hotkey daemon
 # (might have been started already by .xprofile)
-[[ -f "${HOME}/bin/run-sxhkd" ]] && ${HOME}/bin/run-sxhkd &
+[ -f "${HOME}/bin/run-sxhkd" ] && ${HOME}/bin/run-sxhkd &
 
 # qubes os
-if [[ "$(uname -n)" == "dom0" ]] ; then
+if [ "$(uname -n)" == "dom0" ] ; then
     # qubes volume block device attach home partition to personal
     (for device in $(qvm-block list --all | grep -e 'Unknown device' -e 'personal' | sed 's/ .*$//') ; do
          qvm-block detach personal ${device}
@@ -326,7 +326,7 @@ if [[ "$(uname -n)" == "dom0" ]] ; then
 fi
 
 # other os
-if [[ "$(uname -n)" != "dom0" ]] ; then
+if [ "$(uname -n)" != "dom0" ] ; then
     # xfce settings
     #_command xfsettingsd && xfsettingsd &
 
@@ -340,7 +340,7 @@ if [[ "$(uname -n)" != "dom0" ]] ; then
     #xbindkeys &
 
     # policykit authentation agent
-    #if [[ -x /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 ]] ; then
+    #if [ -x /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 ] ; then
     #    /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
     #    #eval "$(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg)" &
     #fi
@@ -350,10 +350,10 @@ if [[ "$(uname -n)" != "dom0" ]] ; then
     _command picom && picom -b &
 
     # system bar
-    [[ -f "${HOME}/bin/system-bar" ]] && source "${HOME}/bin/system-bar"
+    [ -f "${HOME}/bin/system-bar" ] && source "${HOME}/bin/system-bar"
 
     # system wallpaper displays
-    [[ -f "${HOME}/bin/system-wallpaper-displays" ]] && source "${HOME}/bin/system-wallpaper-displays"
+    [ -f "${HOME}/bin/system-wallpaper-displays" ] && source "${HOME}/bin/system-wallpaper-displays"
 
     # full-screen task-switcher
     #_command skippy-xd && skippy-xd --config "${HOME}/.config/skippy-xd/skippy-xd.rc" --start-daemon &
@@ -390,7 +390,7 @@ if [[ "$(uname -n)" != "dom0" ]] ; then
 fi
 
 # auto-start custom applications
-[[ -f "${HOME}/.config/bspwm/bspwmrc-applications" ]] && source "${HOME}/.config/bspwm/bspwmrc-applications"
+[ -f "${HOME}/.config/bspwm/bspwmrc-applications" ] && source "${HOME}/.config/bspwm/bspwmrc-applications"
 
 #===============================================================================
 # End of File

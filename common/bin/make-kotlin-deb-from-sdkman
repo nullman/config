@@ -25,7 +25,7 @@ cp -Rv ${IN}/license/* ${OUT}/usr/share/doc/kotlin/
 
 # make deb control file
 mkdir -v ${OUT}/DEBIAN
-cat > ${OUT}/DEBIAN/control <<EOF
+cat <<EOF > ${OUT}/DEBIAN/control
 Package: kotlin
 Version: ${VERSION}
 Section: java

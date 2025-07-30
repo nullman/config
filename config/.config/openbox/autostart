@@ -37,7 +37,7 @@ _command sxhkd && sxhkd -c "${HOME}/.config/sxhkd/sxhkdrc" &
 #xbindkeys &
 
 # gnome policykit authentation agent
-[[ -x /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 ]] && /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+[ -x /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 ] && /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 # gnome keyring
 #eval "$(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg)" &
 # lx policykit authentation agent
@@ -48,10 +48,10 @@ _command sxhkd && sxhkd -c "${HOME}/.config/sxhkd/sxhkdrc" &
 _command compton && compton -c &
 
 # system bar
-[[ -f "${HOME}/bin/system-bar" ]] && source "${HOME}/bin/system-bar"
+[ -f "${HOME}/bin/system-bar" ] && source "${HOME}/bin/system-bar"
 
 # system wallpaper displays
-[[ -f "${HOME}/bin/system-wallpaper-displays" ]] && source "${HOME}/bin/system-wallpaper-displays"
+[ -f "${HOME}/bin/system-wallpaper-displays" ] && source "${HOME}/bin/system-wallpaper-displays"
 
 # full-screen task-switcher
 #_command skippy-xd && skippy-xd --config "${HOME}/.config/skippy-xd/skippy-xd.rc" --start-daemon &
@@ -81,7 +81,7 @@ _command nitrogen && nitrogen --restore &
 #sleep 10 && _command mmaker && mmaker --force openbox &
 
 # initialize custom applications
-[[ -f "${HOME}/.openbox-applications" ]] && source "${HOME}/.openbox-applications"
+[ -f "${HOME}/.openbox-applications" ] && source "${HOME}/.openbox-applications"
 
 #===============================================================================
 # End of File

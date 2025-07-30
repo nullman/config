@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 METRIC=0                                # should be 0 for F or 1 for C
 
-if [[ $# -ne 2 ]] || [[ "$1" != "status" && "$1" != "icon" && "$1" != "both" && "$1" != "full" ]] ; then
+if [ $# -ne 2 ] || [ "$1" != "status" && "$1" != "icon" && "$1" != "both" && "$1" != "full" ] ; then
     echo "Usage: $(basename $0) (status|icon|both|full) LOCATION_CODE"
     echo "  status         Return short text description"
     echo "  icon           Return icon and temperature"

@@ -7,14 +7,14 @@
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
-if [[ ! -d .svn ]] ; then
+if [ ! -d .svn ] ; then
     echo "ERROR: Not in an SVN directory"
     exit 1
 fi
 
 rev="--revision HEAD"
 
-if [[ $# -eq 0 ]] ; then
+if [ $# -eq 0 ] ; then
     cat <<EOF
 Usage: $(basename $0) [OPTION] FILE
   OPTION:

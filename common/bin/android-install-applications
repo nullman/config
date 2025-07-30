@@ -18,7 +18,7 @@ installed=($(adb shell pm list packages | sed 's/^package:/"/ ; s/$/"/'))
 _isinstalled() {
     skip="false"
     for i in ${installed[@]} ; do
-        if [[ "${i}" == "$1" ]] ; then
+        if [ "${i}" == "$1" ] ; then
             skip="true"
             break;
         fi
@@ -36,11 +36,11 @@ for item in ${items[@]} ; do
     repo=$(_getfield "${item}" 3)
     package=$(_getfield "${item}" 4)
     echo "${app} (${package})"
-    if [[ "$(_isinstalled \"${package}\")" = "true" ]] ; then
+    if [ "$(_isinstalled \"${package}\")" = "true" ] ; then
         echo "Already installed, skipping"
     else
         # TODO: Add support for downloads 'D)'
-        if [[ "${repo}" == "GPS" || "${repo}" == "FD" ]] ; then
+        if [ "${repo}" == "GPS" || "${repo}" == "FD" ] ; then
             echo "Installing ${app} (${package})"
             case ${repo} in
                 GPS)
