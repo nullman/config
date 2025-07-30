@@ -9,6 +9,7 @@ arch = [
     "pingus",
     "pysolfc",
     "rocksndiamonds",
+    "steam",
     "supertux",
     "supertuxkart",
     "tuxracer",
