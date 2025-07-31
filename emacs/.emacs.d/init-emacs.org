@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2025-07-28 13:17 (user)>
+  #+TIMESTAMP: <2025-07-31 11:52 (user)>
 
 * Overview
   :PROPERTIES:
@@ -24280,11 +24280,32 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;; (init-message 2 "Packages: casual")
 
       ;; (use-package casual
-      ;;   :straight (casual
-      ;;              :type git
-      ;;              :host github
-      ;;              :repo "kickingvegas/casual"))
+      ;;   :straight t)
+      ;;   ;; :straight (casual
+      ;;   ;;            :type git
+      ;;   ;;            :host github
+      ;;   ;;            :repo "kickingvegas/casual"))
     #+END_SRC
+
+***** +casual-agenda+
+      :PROPERTIES:
+      :CUSTOM_ID: packages-casual-casual-agenda
+      :END:
+
+      #+BEGIN_SRC emacs-lisp :tangle no
+        ;; ;;------------------------------------------------------------------------------
+        ;; ;;;; Packages: casual: casual-agenda
+        ;; ;;------------------------------------------------------------------------------
+
+        ;; (init-message 3 "Packages: casual: casual-agenda")
+
+        ;; (use-package casual-agenda
+        ;;   :after (casual org-agenda)
+        ;;   :bind (:map org-agenda-mode-map
+        ;;               ("C-o" . casual-agenda-tmenu))) ; default: `org-open-line'
+        ;; ;; ("C-c C-j" . org-agenda-clock-goto)
+        ;; ;; ("J" . bookmark-jump)))
+      #+END_SRC
 
 ***** +casual-calc+
       :PROPERTIES:
