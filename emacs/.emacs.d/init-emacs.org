@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2025-07-31 11:52 (user)>
+  #+TIMESTAMP: <2025-08-01 13:28 (user)>
 
 * Overview
   :PROPERTIES:
@@ -2083,8 +2083,8 @@
 
     #+BEGIN_SRC emacs-lisp
       ;; set grep command
-      ;;(setq grep-command "grep -n -H -i -r -e ")
-      (setq grep-command "rg --line-number --smart-case --no-heading")
+      (setq grep-command "grep -n -H -i -r -e ")
+      ;;(setq grep-command "rg --line-number --smart-case --no-heading ")
     #+END_SRC
 
     Set email sources.

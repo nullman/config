@@ -1046,8 +1046,8 @@ Common values:
 
 ;; [[file:init-emacs.org::#environment-general][General:47]]
 ;; set grep command
-;;(setq grep-command "grep -n -H -i -r -e ")
-(setq grep-command "rg --line-number --smart-case --no-heading")
+(setq grep-command "grep -n -H -i -r -e ")
+;;(setq grep-command "rg --line-number --smart-case --no-heading ")
 ;; General:47 ends here
 
 ;; [[file:init-emacs.org::#environment-general][General:48]]
