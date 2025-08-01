@@ -1244,6 +1244,7 @@
     #syncterm                                # BBS terminal emulator
     #telegram-desktop                        # Telegram Desktop messaging app
     #thunderbird                             # Full-featured e-mail client
+    #tor-browser-bundle-bin                  # Privacy-focused browser routing traffic through the Tor network
     #transmission_4-gtk                      # Fast, easy and free BitTorrent client
     #tribler                                 # Decentralised P2P filesharing client based on the Bittorrent protocol
     #tuba                                    # Browse the Fediverse
