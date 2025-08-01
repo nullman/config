@@ -32,6 +32,7 @@ arch = [
     "syncterm",
     "telegram-desktop",
     "thunderbird-bin",
+    "tor-browser-bin",
     "tractor",
     "transmission-gtk",
     "tribler-bin",
