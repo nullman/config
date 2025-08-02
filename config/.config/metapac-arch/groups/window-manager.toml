@@ -47,6 +47,8 @@ arch = [
     "rofi",
     "rofimoji",
     "seahorse",
+    "stumpwm",
+    "stumpwm-contrib",
     "sysstat",
     "thunar",
     "thunar-archive-plugin",
