@@ -28,18 +28,18 @@ _command conky && \
         conky --config="${HOME}/.config/conky/system-info.conkyrc" &
     fi
 _command conky && \
-    if [ -f "${HOME}/.config/conky/bspwm-keybindings.conkyrc" && \
+    if [ -f "${HOME}/.config/conky/bspwm-keybindings.conkyrc" ] && \
               $(yres) -ge 1024 ] ; then
         conky --config="${HOME}/.config/conky/bspwm-keybindings.conkyrc" &
     fi
 _command conky && \
-    if [ -f "${HOME}/.config/conky/reminders.conkyrc" && \
+    if [ -f "${HOME}/.config/conky/reminders.conkyrc" ] && \
               $(xres) -ge 1600 ] ; then
         (conky --config="${HOME}/.config/conky/reminders.conkyrc" ; \
          conky --config="${HOME}/.config/conky/weather-graph.conkyrc") &
     fi
 _command conky && \
-    if [ -f "${HOME}/.config/conky/weather-report.conkyrc" && \
+    if [ -f "${HOME}/.config/conky/weather-report.conkyrc" ] && \
               $(yres) -ge 1440 ] ; then
         (conky --config="${HOME}/.config/conky/fzf-keybindings.conkyrc" ; \
          conky --config="${HOME}/.config/conky/weather-report.conkyrc") &
