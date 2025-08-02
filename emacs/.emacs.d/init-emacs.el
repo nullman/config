@@ -17160,7 +17160,8 @@ USING is the remaining peg."
                                :stream t
                                :models '("codellama:7b"
                                          "llama2-uncensored:latest"
-                                         "llama3:8b"
+                                         "llama3.2:3b"
+                                         "llama3.2:1b"
                                          "llama3-chatqa")))
   (setq gptel-gemini-backend (gptel-make-gemini "Gemini"
                                :stream t
