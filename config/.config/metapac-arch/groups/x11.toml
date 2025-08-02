@@ -10,6 +10,7 @@ arch = [
     "xdotool",
     "xgetres",
     "xorg-server",
+    "xorg-server-xephyr",
     "xorg-setxkbmap",
     "xorg-xbacklight",
     "xorg-xev",

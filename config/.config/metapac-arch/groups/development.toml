@@ -80,6 +80,7 @@ arch = [
     "ruby",
     "ruby-lsp",
     "rust",
+    "sbcl",
     "shellcheck",
     "swift-bin",
     "tass64",
