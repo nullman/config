@@ -1947,8 +1947,8 @@ KEYMAP defaults to `override-global-map'."
 
   ;; split windows
   (bind-keys* ("M-1" . delete-other-windows)) ; default: `digit-argument'
-  (bind-keys* ("M-2" . split-window-horizontally)) ; default: `digit-argument'
-  (bind-keys* ("M-3" . split-window-vertically)) ; default: `digit-argument'
+  (bind-keys* ("M-2" . split-window-below)) ; default: `digit-argument'
+  (bind-keys* ("M-3" . split-window-right)) ; default: `digit-argument'
   (unbind-key "M-4")                          ; default: `digit-argument'
   (if (fboundp 'swap-windows)
       (bind-keys* ("M-4" . swap-windows))) ; default: `digit-argument'

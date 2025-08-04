@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2025-08-01 22:59 (user)>
+  #+TIMESTAMP: <2025-08-02 22:55 (user)>
 
 * Overview
   :PROPERTIES:
@@ -3443,8 +3443,8 @@
 
         ;; split windows
         (bind-keys* ("M-1" . delete-other-windows)) ; default: `digit-argument'
-        (bind-keys* ("M-2" . split-window-horizontally)) ; default: `digit-argument'
-        (bind-keys* ("M-3" . split-window-vertically)) ; default: `digit-argument'
+        (bind-keys* ("M-2" . split-window-below)) ; default: `digit-argument'
+        (bind-keys* ("M-3" . split-window-right)) ; default: `digit-argument'
         (unbind-key "M-4")                          ; default: `digit-argument'
         (if (fboundp 'swap-windows)
             (bind-keys* ("M-4" . swap-windows))) ; default: `digit-argument'

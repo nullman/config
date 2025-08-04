@@ -2684,6 +2684,22 @@ alias x2xm2="
     ) &"
 
 #
+# Xephyr
+#
+#        xephyr                  alias for Xephyr
+alias xephyr="Xephyr"
+#        xephyr-1                create a full screen X11 with DISPLAY=:1
+alias xephyr-1="
+    res=$(xrandr | sed -n 's/^.* current //p' | sed 's/,.*$// ; s/ x /x/')
+    Xephyr -ac -br -noreset -screen ${res} :1"
+#        xephyr-1-640x480        create a 640x480 X11 with DISPLAY=:1
+alias xephyr-1-640x480="Xephyr -ac -br -noreset -screen 640x480 :1"
+#        xephyr-1-800x600        create an 800x600 X11 with DISPLAY=:1
+alias xephyr-1-800x600="Xephyr -ac -br -noreset -screen 800x600 :1"
+#        xephyr-1-1024x768        create a 1024x768 X11 with DISPLAY=:1
+alias xephyr-1-1024x768="Xephyr -ac -br -noreset -screen 1024x768 :1"
+
+#
 # xmms
 #
 #        xmmsdi                  xmms streaming digitally imported (trance 56k)
@@ -2698,6 +2714,10 @@ alias xmmsa="xmms ${home}/data/media/Audio/Playlists/albums.m3u &"
 #
 # xrandr
 #
+#        resolution              current monitor resultion
+alias resolution="xrandr | sed -n 's/^.* current //p' | sed 's/,.*$//'"
+#        xrandr-resolution       current monitor resultion
+alias xrandr-resolution="xrandr | sed -n 's/^.* current //p' | sed 's/,.*$//'"
 #        xrandr-reset            reset monitors
 #!alias xrandr-reset="xrandr --auto"
 alias xrandr-reset="xrandr --output \$(xrandr | grep ' connected ' | sed 's/ .*//' | head -n 1) --auto"
@@ -2713,8 +2733,6 @@ alias xrandr-inverted="xrandr --output \$(xrandr | grep ' connected ' | sed 's/ 
 alias xrandr-left="xrandr --output \$(xrandr | grep ' connected ' | sed 's/ .*//' | head -n 1) --rotate left"
 #        xrandr-right            rotate display to its right viewing angle
 alias xrandr-right="xrandr --output \$(xrandr | grep ' connected ' | sed 's/ .*//' | head -n 1) --rotate right"
-#        xrandr-resolution       current monitor resultion
-alias xrandr-resolution="xrandr | sed -n 's/^.* current //p' | sed 's/,.*$// ; s/ x / /'"
 
 #
 # xscreensaver
