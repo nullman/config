@@ -29,7 +29,7 @@ arch = [
     "slack-bin",
     "surf",
     "surfraw",
-    "syncterm",
+    "syncterm-git",
     "telegram-desktop",
     "thunderbird-bin",
     "tor-browser-bin",
