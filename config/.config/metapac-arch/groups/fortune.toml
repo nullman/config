@@ -1,0 +1,16 @@
+arch = [
+    "fortune-mod-archlinux",
+    "fortune-mod-asoiaf",
+    "fortune-mod-bofh-excuses",
+    "fortune-mod-confucius",
+    "fortune-mod-farscape",
+    "fortune-mod-firefly",
+    "fortune-mod-futurama",
+    "fortune-mod-hackers",
+    "fortune-mod-hitchhiker",
+    "fortune-mod-montypython",
+    "fortune-mod-off",
+    "fortune-mod-starwars",
+    "fortune-mod-xfiles",
+]
+

@@ -28,7 +28,6 @@ arch = [
     "firewalld",
     "flatpak",
     "fortune-mod",
-    "fortune-mod-firefly",
     "fwupd",
     "fzf",
     "gvfs-smb",
