@@ -1,0 +1,214 @@
+;;; -*- mode: lisp; -*-
+;;==============================================================================
+;; StumpWM Configuration
+;;
+;; Inspired by Gavinok: https://github.com/Gavinok/stump-conf/config
+;;
+;; Author: Author: Kyle W T Sherman <kylewsherman@gmail.com>
+;;==============================================================================
+
+(in-package :stumpwm)
+(setf *default-package* :stumpwm)
+(setf *startup-message* nil)
+
+;; debug
+(setq *debug-level* 5)
+;;(redirect-all-output (data-dir-file "stumpwm_config.log"))
+
+;;------------------------------------------------------------------------------
+;; Helper Functions
+;;------------------------------------------------------------------------------
+
+(defun define-key-top-root (key command)
+  "Define `*top-map*' and `*root-map*' keys at the same time."
+  ;;(define-key *top-map* (kbd (concat "s-" key)) command)
+  (define-key *root-map* (kbd key) command))
+
+;; (defmacro define-keymap-bindings (map &rest bindings)
+;;   (let ((def (if (equal map "*top-map*")
+;;                  'define-key-top-root
+;;                'define-key)))
+;;     `(setf ,map
+;;            (let ((m (make-sparse-keymap)))
+;;              ,@(loop for x = bindings then (cddr x)
+;;                      while x
+;;                      collect `(,def m ,(first x) ,(second x))))
+;;            m)))
+
+;; (defun commandp (command)
+;;   "Return whether COMMAND is in the environment PATH and executable."
+;;   (> (string-length
+;;       (run-shell-command (concat "command -v " command " >/dev/null 2>&1") t))
+;;      0))
+
+;;------------------------------------------------------------------------------
+;; Settings
+;;------------------------------------------------------------------------------
+
+(set-font "-xos4-terminus-medium-r-normal--14-140-72-72-c-80-iso8859-15")
+
+(setf *colors*
+      '("#3F3F3F"                       ; black
+        "#705050"                       ; red
+        "#60B48A"                       ; green
+        "#DFAF8F"                       ; yellow
+        "#506070"                       ; blue
+        "#DC8CC3"                       ; magenta
+        "#8CD0D3"                       ; cyan
+        "#DCDCCC"))                     ; white
+(update-color-map (current-screen))
+
+(setf *bar-med-color* "^B^8")
+(setf *bar-hi-color* "^B^3")
+(setf *bar-crit-color* "^B^1")
+
+(setf *group-format* "%n: %t")
+;;(setf *window-format* "%m%s%50t")
+(setf *window-format* "%t")
+
+(setf *message-window-gravity* :top-right
+      *window-border-style* :thin
+      *message-window-padding* 4
+      *maxsize-border-width* 4
+      *normal-border-width* 4
+      *transient-border-width* 4
+      *float-window-border* 4
+      *float-window-title-height* 4
+      *float-window-modifier* :super
+      *rotation-focus-policy* :master-or-follow
+      *mouse-focus-policy* :click)
+
+;; set head-placement-policy, overflow-policy, master-layout, and
+;; default-split-ratio
+;;(set-dynamic-group-initial-values nil nil nil 0.7)
+(setf *default-group-type* "Dynamic")
+;;(setf *dynamic-group-master-split-ratio* 0.7)
+
+(setf *mode-line-background-color* (car *colors*)
+      *mode-line-foreground-color* (car (last *colors*))
+      *mode-line-timeout* 1)
+
+(setf *input-window-gravity* :center
+      *message-window-input-gravity* :top-right
+      *input-completion-show-empty* t)
+
+(when *initializing*
+  (gnew-dynamic "emacs")
+  (gkill-other)
+  (gnew-dynamic "term")
+  (gnewbg-dynamic "email")
+  (gnewbg-dynamic "browser")
+  (gnewbg-dynamic "files")
+  (gnewbg-dynamic "social")
+  (gnewbg-dynamic "extra")
+  (gnewbg-dynamic "dev")
+  (gnewbg-dynamic "media")
+  (gnewbg-dynamic "admin")
+  (gnewbg-dynamic "virtual1")
+  (gnewbg-dynamic "virtual2"))
+
+;;------------------------------------------------------------------------------
+;; Keybindings
+;;------------------------------------------------------------------------------
+
+;;(set-prefix-key (kbd "s-z"))
+(set-prefix-key (kbd "C-z"))
+(setf *help-keys* '("?" "C-h"))
+
+(setf *top-map* (make-sparse-keymap))
+(setf *root-map* (make-sparse-keymap))
+
+(define-key *top-map* *escape-key* '*root-map*)
+
+(define-key-top-root "h" '*help-map*)
+
+(define-key-top-root "S-w" "delete-window")
+(define-key-top-root "S-k" "kill-window")
+
+(define-key-top-root "C-s" "hsplit")
+(define-key-top-root "C-v" "vsplit")
+(define-key-top-root "C-f" "fullscreen")
+(define-key-top-root "C-i" "info")
+(define-key-top-root "C-r" "refresh")
+(define-key-top-root "C-RET" "raise-window")
+
+;; Frames and Windows (Applications)
+
+(define-key *top-map* (kbd "M-TAB") "next")
+(define-key *top-map* (kbd "M-S-TAB") "prev")
+(define-key *top-map* (kbd "M-`") "other-window")
+
+(define-key-top-root "w" "windowlist")
+(define-key-top-root "Left" "move-focus left")
+(define-key-top-root "Right" "move-focus right")
+(define-key-top-root "Up" "move-focus up")
+(define-key-top-root "Down" "move-focus down")
+(define-key-top-root "j" "move-focus left")
+(define-key-top-root "l" "move-focus right")
+(define-key-top-root "i" "move-focus up")
+(define-key-top-root "k" "move-focus down")
+(define-key-top-root "S-Left" "exchange-direction left")
+(define-key-top-root "S-Right" "exchange-direction right")
+(define-key-top-root "S-Up" "exchange-direction up")
+(define-key-top-root "S-Down" "exchange-direction down")
+(define-key-top-root "S-j" "exchange-direction left")
+(define-key-top-root "S-l" "exchange-direction right")
+(define-key-top-root "S-i" "exchange-direction up")
+(define-key-top-root "S-k" "exchange-direction down")
+
+(define-key-top-root "," "rotate-windows backward")
+(define-key-top-root "." "rotate-windows forward")
+
+;; Groups (Desktops)
+
+(define-key *top-map* (kbd "S-TAB") "gnext")
+(define-key *top-map* (kbd "S-S-TAB") "gprev")
+(define-key *top-map* (kbd "S-`") "gother")
+
+(define-key-top-root "C-w" "grouplist")
+(define-key-top-root "M-Left" "gprev")
+(define-key-top-root "M-Right" "gnext")
+(define-key-top-root "M-Up" "sprev")
+(define-key-top-root "M-Down" "snext")
+(define-key-top-root "M-j" "gprev")
+(define-key-top-root "M-l" "gnext")
+(define-key-top-root "M-i" "sprev")
+(define-key-top-root "M-k" "snext")
+(define-key-top-root "M-S-Left" "gprev-with-window")
+(define-key-top-root "M-S-Right" "gnext-with-window")
+(define-key-top-root "M-S-j" "gprev-with-window")
+(define-key-top-root "M-S-l" "gnext-with-window")
+
+(define-key-top-root "1" "gselect 1")
+(define-key-top-root "2" "gselect 2")
+(define-key-top-root "3" "gselect 3")
+(define-key-top-root "4" "gselect 4")
+(define-key-top-root "5" "gselect 5")
+(define-key-top-root "6" "gselect 6")
+(define-key-top-root "7" "gselect 7")
+(define-key-top-root "8" "gselect 8")
+(define-key-top-root "9" "gselect 9")
+(define-key-top-root "0" "gselect 10")
+(define-key-top-root "-" "gselect 11")
+(define-key-top-root "=" "gselect 12")
+
+(define-key-top-root "S-1" "gmove-and-follow 1")
+(define-key-top-root "S-2" "gmove-and-follow 2")
+(define-key-top-root "S-3" "gmove-and-follow 3")
+(define-key-top-root "S-4" "gmove-and-follow 4")
+(define-key-top-root "S-5" "gmove-and-follow 5")
+(define-key-top-root "S-6" "gmove-and-follow 6")
+(define-key-top-root "S-7" "gmove-and-follow 7")
+(define-key-top-root "S-8" "gmove-and-follow 8")
+(define-key-top-root "S-9" "gmove-and-follow 9")
+(define-key-top-root "S-0" "gmove-and-follow 10")
+(define-key-top-root "S--" "gmove-and-follow 11")
+(define-key-top-root "S-=" "gmove-and-follow 12")
+
+;; Applications
+
+(define-key-top-root "M-t" "exec alacritty")
+
+;;==============================================================================
+;; End of File
+;;==============================================================================
