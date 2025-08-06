@@ -27,7 +27,6 @@ arch = [
     "fastfetch",
     "firewalld",
     "flatpak",
-    "fortune-mod",
     "fwupd",
     "fzf",
     "gvfs-smb",

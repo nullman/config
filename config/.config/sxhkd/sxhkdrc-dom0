@@ -450,11 +450,11 @@ super + alt + ctrl + apostrophe
 #-------------------------------------------------------------------------------
 
 # terminal: dom0
-super + ctrl + Return
+super + ctrl + t
     alacritty
 
 # terminal: personal
-super + Return
+super + alt + t
     qvm-run personal "/usr/sbin/alacritty"
 
 #===============================================================================
