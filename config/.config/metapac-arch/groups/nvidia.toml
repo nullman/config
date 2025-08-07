@@ -1,7 +1,7 @@
 arch = [
+    "cuda",
     "lib32-nvidia-utils",
     "nvidia",
-    "nvidia-settings",
     "nvidia-utils",
     "xf86-video-intel",
 ]
