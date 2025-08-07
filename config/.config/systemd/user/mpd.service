@@ -15,7 +15,6 @@
 Description=Music Player Daemon (mpd)
 
 [Service]
-User=user
 #ExecStart=/usr/sbin/mpd --no-daemon %h/.mpd/mpd.conf
 ExecStart=/usr/sbin/mpd --no-daemon
 

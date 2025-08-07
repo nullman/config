@@ -15,7 +15,6 @@
 Description=Turn Keyboard Num-Lock On
 
 [Service]
-User=user
 Type=oneshot
 RemainAfterExit=yes;
 ExecStart=/usr/sbin/setleds +num

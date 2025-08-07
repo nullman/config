@@ -15,7 +15,6 @@
 Description=Extensible screen saver and screen locking framework
 
 [Service]
-User=user
 ExecStart=/usr/sbin/xscreensaver -no-splash
 
 [Install]

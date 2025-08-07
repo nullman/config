@@ -15,7 +15,6 @@
 Description=Keyboard Mappings: Both Shift Keys -> CapsLock, CapsLock -> Control
 
 [Service]
-User=user
 Type=oneshot
 ExecStart=/usr/sbin/setxkbmap -option 'shift:both_capslock,caps:ctrl_modifier'
 

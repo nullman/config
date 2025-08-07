@@ -17,7 +17,6 @@ Before=sleep.target
 StopWhenUnneeded=yes
 
 [Service]
-User=user
 Type=oneshot
 RemainAfterExit=yes
 #ExecStop=/usr/sbin/systemctl --user restart schkd

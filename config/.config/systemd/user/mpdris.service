@@ -15,7 +15,6 @@
 Description=MPRIS 2 support for mpd
 
 [Service]
-User=user
 ExecStart=/usr/sbin/mpDris2
 
 [Install]

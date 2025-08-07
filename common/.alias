@@ -3656,11 +3656,6 @@ alias mkraw="
 #!            cp /root/.hosts /etc/hosts
 #!            ;;
 #!    esac"
-#!#        copy-fonts              copy fonts
-#!alias copy-fonts="
-#!    mkdir -p \${HOME}/.local/share/fonts
-#!    cp ${config}-private/common/fonts/* \${HOME}/.local/share/fonts/
-#!    fc-cache -v -f"
 #        copy-wallpapers         copy wallpapers to system
 alias copy-wallpapers="
     if \$(uname -v | grep -q '\(NixOS\|ZEN\)') ; then

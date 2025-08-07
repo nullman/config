@@ -15,7 +15,6 @@
 Description=A Grabbing Keys Program for X
 
 [Service]
-User=user
 ExecStart=/usr/sbin/sxhkd -c ${HOME}/.config/sxhkd/sxhkdrc $([ "${XDG_CURRENT_DESKTOP}" == "Bspwm" ] && echo "-c ${HOME}/.config/sxhkd/sxhkdrc-bspwm")
 
 [Install]

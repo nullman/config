@@ -15,7 +15,6 @@
 Description=Keyboard Mappings: Disable Insert Key
 
 [Service]
-User=user
 Type=oneshot
 ExecStart=/usr/sbin/xkbcomp ${DISPLAY} - | sed 's/ Insert / NoSymbol /' | xkbcomp - ${DISPLAY}
 

@@ -8,8 +8,9 @@
 
 gtk-theme-name="Adwaita-dark"
 #gtk-theme-name="Adapta-Nokto-Eta-Maia"
-gtk-icon-theme-name="Adwaita"
-gtk-font-name="System San Francisco Display 12"
+gtk-icon-theme-name="GNOME"
+gtk-font-name="Sans Regular 12"
+#gtk-font-name="System San Francisco Display 12"
 gtk-cursor-theme-name="xcursor-breeze"
 gtk-cursor-theme-size=0
 gtk-toolbar-style=GTK_TOOLBAR_BOTH
