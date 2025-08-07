@@ -3,5 +3,6 @@ arch = [
     "nvidia",
     "nvidia-settings",
     "nvidia-utils",
+    "xf86-video-intel",
 ]
 
