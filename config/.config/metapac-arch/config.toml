@@ -46,5 +46,5 @@ hostname_groups_enabled = true
 # Default: None
 [hostname_groups]
 arch = ["base", "system", "x11", "window-manager", "applications", "utilities", "tui", "console", "internet", "emulators", "development", "containers", "ai", "console-hacks", "zsh", "fortune", "qubes", "games"]
-dozer = ["base", "system", "x11", "window-manager", "applications", "utilities", "tui", "console", "internet", "emulators", "development", "containers", "ai", "console-hacks", "zsh", "fortune", "games"]
+dozer = ["base", "system", "x11", "window-manager", "applications", "utilities", "tui", "console", "internet", "emulators", "development", "containers", "ai", "console-hacks", "zsh", "fortune", "nvidia470", "games"]
 retro = ["base", "system", "x11", "window-manager", "emulators"]
