@@ -2690,7 +2690,7 @@ alias x2xm2="
 alias xephyr="Xephyr"
 #        xephyr-1                create a full screen X11 with DISPLAY=:1
 alias xephyr-1="
-    res=$(xrandr | sed -n 's/^.* current //p' | sed 's/,.*$// ; s/ x /x/')
+    res=\"\$(xrandr | sed -n 's/^.* current //p' | sed 's/,.*$// ; s/ x /x/')\"
     Xephyr -ac -br -noreset -screen ${res} :1"
 #        xephyr-1-640x480        create a 640x480 X11 with DISPLAY=:1
 alias xephyr-1-640x480="Xephyr -ac -br -noreset -screen 640x480 :1"
