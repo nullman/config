@@ -1292,49 +1292,74 @@ make-cert() {
 #
 # arch
 #
-#!#        pmi                     pamac install or build
-#!#
-#!pmi() {
-#!    if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
-#!        echo "Usage: pmi PACKAGE"
-#!    else
-#!        pamac install --no-confirm "$1" || pamac build --no-confirm "$1"
-#!    fi
-#!}
-#        yasg                    yay search with grep
-yasg() {
+#        pisg                    pikaur search with grep
+pisg() {
     if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
-        echo "Usage: yasg SEARCH GREP"
+        echo "Usage: pisg SEARCH GREP"
     else
         s="$1"
         shift
-        yay -Ss "${s}" 2>/dev/null | sed -n ":a ; { N ; s/\n */ | / ; p ; d ; ba }" | grep -i "$*"
+        pikaur -Ss "${s}" 2>/dev/null | sed -n ":a ; { N ; s/\n */ | / ; p ; d ; ba }" | grep -i "$*"
     fi
 }
-#        yass                    yay specific search
-yass() {
+#        piss                    pikaur specific search
+piss() {
     if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
-        echo "Usage: yass SEARCH"
+        echo "Usage: piss SEARCH"
     else
-        yay -Ss "$*" 2>/dev/null | sed -n ":a ; /^[a-z]*\/$* / { N ; s/\n */ | / ; p ; d ; ba }"
+        pikaur -Ss "$*" 2>/dev/null | sed -n ":a ; /^[a-z]*\/$* / { N ; s/\n */ | / ; p ; d ; ba }"
     fi
 }
-#        yasi                    yay search installed packages
-yasi() {
+#        pisi                    pikaur search installed packages
+pisi() {
     if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
-        echo "Usage: yasi SEARCH"
+        echo "Usage: pisi SEARCH"
     else
-        yay -Ss "$*" 2>/dev/null | sed -n ":a ; { N ; s/\n */ | / ; p ; d ; ba }" | grep " (Installed"
+        pikaur -Ss "$*" 2>/dev/null | sed -n ":a ; { N ; s/\n */ | / ; p ; d ; ba }" | grep " (Installed"
     fi
 }
-#        yasis                   yay specific search installed packages
-yasis() {
+#        pisis                   pikaur specific search installed packages
+pisis() {
     if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
-        echo "Usage: yasis SEARCH"
+        echo "Usage: pisis SEARCH"
     else
-        yay -Ss "$*" 2>/dev/null | sed -n ":a ; /^[a-z]*\/$* / { N ; s/\n */ | / ; p ; d ; ba }" | grep " (Installed"
+        pikaur -Ss "$*" 2>/dev/null | sed -n ":a ; /^[a-z]*\/$* / { N ; s/\n */ | / ; p ; d ; ba }" | grep " (Installed"
     fi
 }
+#!#        yasg                    yay search with grep
+#!yasg() {
+#!    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+#!        echo "Usage: yasg SEARCH GREP"
+#!    else
+#!        s="$1"
+#!        shift
+#!        yay -Ss "${s}" 2>/dev/null | sed -n ":a ; { N ; s/\n */ | / ; p ; d ; ba }" | grep -i "$*"
+#!    fi
+#!}
+#!#        yass                    yay specific search
+#!yass() {
+#!    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+#!        echo "Usage: yass SEARCH"
+#!    else
+#!        yay -Ss "$*" 2>/dev/null | sed -n ":a ; /^[a-z]*\/$* / { N ; s/\n */ | / ; p ; d ; ba }"
+#!    fi
+#!}
+#!#        yasi                    yay search installed packages
+#!yasi() {
+#!    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+#!        echo "Usage: yasi SEARCH"
+#!    else
+#!        yay -Ss "$*" 2>/dev/null | sed -n ":a ; { N ; s/\n */ | / ; p ; d ; ba }" | grep " (Installed"
+#!    fi
+#!}
+#!#        yasis                   yay specific search installed packages
+#!yasis() {
+#!    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+#!        echo "Usage: yasis SEARCH"
+#!    else
+#!        yay -Ss "$*" 2>/dev/null | sed -n ":a ; /^[a-z]*\/$* / { N ; s/\n */ | / ; p ; d ; ba }" | grep " (Installed"
+#!    fi
+#!}
 
 #
 # debian
@@ -2056,7 +2081,8 @@ arch-initialize() {
         #"arch-configure-x48"
         "arch-configure-xscreensaver-aerial"
         "arch-bluetooth-audio"
-        "arch-printer-cannon"
+        "arch-printer"
+        "arch-synology-mounts"
         #"arch-capslock-control"
         "arch-capslock-control-terminal"
         "arch-capslock-control-x11"
