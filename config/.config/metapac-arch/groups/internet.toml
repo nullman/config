@@ -8,7 +8,6 @@ arch = [
     "discord",
     "element-desktop",
     "filezilla",
-    "firefox",
     "flashplugin",
     "gajim",
     "gnu-netcat",
@@ -38,5 +37,6 @@ arch = [
     "tribler-bin",
     "tuba",
     "vdhcoapp",
+    "waterfox-bin",
 ]
 
