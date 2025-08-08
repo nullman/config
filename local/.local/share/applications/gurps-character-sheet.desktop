@@ -1,9 +1,0 @@
-[Desktop Entry]
-Name=GURPS Character Sheet
-Comment=GURPS Character Sheet is an interactive character sheet editor for the GURPS Fourth Edition roleplaying game.
-Exec=sh -c "steam-run \\${HOME}/gurps/gcs ; rm \\${HOME}/.local/share/applications/com.trollworks.gcs.desktop"
-Type=Application
-Icon=com.trollworks.gcs
-Terminal=false
-StartupNotify=true
-Categories=Application;Game;

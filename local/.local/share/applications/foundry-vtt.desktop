@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Foundry VTT
 Comment=Foundry Virtual Tabletop
-Exec=sh -c "steam-run \\${HOME}/foundry/foundryvtt"
+Exec=sh -c "\\${HOME}/foundry/foundryvtt"
 Type=Application
 Icon="\\${HOME}/foundry/foundryvtt.png"
 Terminal=false

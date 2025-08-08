@@ -1,9 +1,0 @@
-[Desktop Entry]
-Name=x48 (HP48gx Calculator)
-Comment=HP48gx Calculator
-Exec=x48 -smallFont fixed -mediumFont fixed -largeFont fixed -connFont fixed
-Type=Application
-Icon=accessories-calculator
-Terminal=false
-StartupNotify=true
-Categories=Utility;Calculator;
