@@ -314,6 +314,9 @@ if [ "$(uname -n)" == "dom0" ] ; then
     # # system bar
     # _command xfce4-panel && xfce4-panel &
 
+    # system wallpaper displays
+    [ -f "${HOME}/bin/system-wallpaper-displays" ] && source "${HOME}/bin/system-wallpaper-displays"
+
     # hide mouse when not in use
     _command unclutter && unclutter &
 
