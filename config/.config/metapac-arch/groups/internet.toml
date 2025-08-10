@@ -8,6 +8,7 @@ arch = [
     "discord",
     "element-desktop",
     "filezilla",
+    "firefox",
     "flashplugin",
     "gajim",
     "gnu-netcat",
