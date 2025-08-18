@@ -22,8 +22,8 @@ videolist=(
     "A-Ha - Take on Me                                                   | https://www.youtube.com/watch?v=djV11Xbc914"
     "Alannah Myles - Black Velvet                                        | https://www.youtube.com/watch?v=tkXNEmtf9tk"
     "AWOLNATION - Burn it Down                                           | https://www.youtube.com/watch?v=XcClvRt9g2Q"
-    "AWOLNATION – I Am                                                   | https://www.youtube.com/watch?v=QLZkf6HvO2Q"
-    "AWOLNATION – Hollow Moon (Bad Wolf)                                 | https://www.youtube.com/watch?v=i2PsXT88UeU"
+    "AWOLNATION - I Am                                                   | https://www.youtube.com/watch?v=QLZkf6HvO2Q"
+    "AWOLNATION - Hollow Moon (Bad Wolf)                                 | https://www.youtube.com/watch?v=i2PsXT88UeU"
     "AWOLNATION - Jailbreak (Audio)                                      | https://www.youtube.com/watch?v=sKaNpKQt-T8"
     "AWOLNATION - Jump on My Shoulders (Lyrics)                          | https://www.youtube.com/watch?v=hEzubO8dKdA"
     "AWOLNATION - Kill Your Heroes                                       | https://www.youtube.com/watch?v=L4MzF53je5M"
@@ -346,7 +346,7 @@ fetch() {
         url=$(echo "${video}" | cut -d '|' -f 2)
         escname=$(echo ${name} | sed 's/\[/\\\[/g ; s/\]/\\\]/g')
         echo "| ${name} | ${url} |"
-        if [ -z $(find "${dir}" -name "${escname}\.*") ] ; then
+        if [[ -z $(find "${dir}" -name "${escname}\.*") ]] ; then
             cmd="${ytdlp} \
             --cookies-from-browser brave \
             --format-sort 'res:1080,res:720,res:480,vcodec:h264,acodec:m4a' \
