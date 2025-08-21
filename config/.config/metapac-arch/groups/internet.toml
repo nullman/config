@@ -16,7 +16,6 @@ arch = [
     "gossip-bin",
     "hyperspace-bin",
     "kristall",
-    "ladybird",
     "localsend-bin",
     "magic-wormhole",
     "nheko",
