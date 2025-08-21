@@ -2201,7 +2201,7 @@ alias rsync-c64-put-sd128="
     else
         echo \"Error: \${usb} USB not found\"
     fi"
-#        rsync-adult-put-adult-sd  rsync /home/data/media/Video/Adult /media/ADULT
+#        rsync-adult-put-adult-sd  rsync /mnt/synology/zzz /media/ADULT
 alias rsync-adult-put-adult-sd="
     usb=ADULT
     dir1=/media/\${usb}
