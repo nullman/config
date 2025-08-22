@@ -3024,46 +3024,46 @@ alias pacman-clear-cache="
     rm -rf \${HOME}/.cache/sessions/*"
 
 #
-# pikaur (Package Manager)
+# yay (Package Manager)
 #
-#        piu                     pikaur -Syu (update packages with refresh)
-alias piu="pikaur -Syu --noconfirm"
-#        piuf                    pikaur -Syyu (update packages with forced refresh)
-alias piuf="pikaur -Syyu --noconfirm"
-#        pii                     pikaur -S (install package)
-alias pii="pikaur -S --needed --noconfirm"
-#        piic                    pikaur -S (install package with confirmation)
-alias piic="pikaur -S --needed"
-#        piir                    pikaur -S (reinstall package)
-alias piir="pikaur -S --noconfirm"
-#        pir                     pikaur -Rns (remove package and configuration files)
-alias pir="pikaur -R --nosave --recursive --noconfirm"
-#        pis                     pikaur -Ss (search packages)
-alias pis="pikaur -Ss 2>/dev/null"
-#        pif                     pikaur -F (search files)
-alias pif="pikaur -F"
-#        piq                     pikaur -Q (query installed packages)
-alias piq="pikaur -Q"
-#        piqi                    pikaur -Qi (query installed packages with info)
-alias piqi="pikaur -Qi"
-#        pil                     pikaur -Qqett (list installed packages)
-alias pil="pikaur -Qqett"
-#        piln                    pikaur -Qqettn (list installed native packages)
-alias piln="pikaur -Qqettn"
-#        pilf                    pikaur -Qqettm (list installed foreign/AUR packages)
-alias pilf="pikaur -Qqettm"
-#        pils                    pikaur -Qs (search installed packages)
-alias pils="pikaur -Qs 2>/dev/null"
-#        pips                    pikaur -Ps (print package statistics)
-alias pips="pikaur -Ps"
-#        pilz                    pikaur list installed packages by size
-alias pilz="LC_ALL=C pikaur -Qi | awk '/^Name/{name=\$3} /^Installed Size/{print \$4\$5, name}' | sort -h"
-#        pilzz                   expac list installed packages and dependencies by size
-alias pilzz="expac -S -H M '%k\t%n' | sort -h"
-#        pikaur-rm-old           remove old packages
-alias pikaur-rm-old="pikaur -Sc"
-#        pikaur-rm-orphans       remove orphaned packages
-alias pikaur-rm-orphans="sudo pacman -Rns \$(pacman -Qtdq)"
+#        yau                     yay -Syu (update packages with refresh)
+alias yau="yay -Syu --noconfirm"
+#        yauf                    yay -Syyu (update packages with forced refresh)
+alias yauf="yay -Syyu --noconfirm"
+#        yai                     yay -S (install package)
+alias yai="yay -S --needed --noconfirm"
+#        yaic                    yay -S (install package with confirmation)
+alias yaic="yay -S --needed"
+#        yair                    yay -S (reinstall package)
+alias yair="yay -S --noconfirm"
+#        yar                     yay -Rns (remove package and configuration files)
+alias yar="yay -R --nosave --recursive --noconfirm"
+#        yas                     yay -Ss (search packages)
+alias yas="yay -Ss 2>/dev/null"
+#        yaf                     yay -F (search files)
+alias yaf="yay -F"
+#        yaq                     yay -Q (query installed packages)
+alias yaq="yay -Q"
+#        yaqi                    yay -Qi (query installed packages with info)
+alias yaqi="yay -Qi"
+#        yal                     yay -Qqett (list installed packages)
+alias yal="yay -Qqett"
+#        yaln                    yay -Qqettn (list installed native packages)
+alias yaln="yay -Qqettn"
+#        yalf                    yay -Qqettm (list installed foreign/AUR packages)
+alias yalf="yay -Qqettm"
+#        yals                    yay -Qs (search installed packages)
+alias yals="yay -Qs 2>/dev/null"
+#        yaps                    yay -Ps (print package statistics)
+alias yaps="yay -Ps"
+#        yalz                    yay list installed packages by size
+alias yalz="LC_ALL=C yay -Qi | awk '/^Name/{name=\$3} /^Installed Size/{print \$4\$5, name}' | sort -h"
+#        yalzz                   expac list installed packages and dependencies by size
+alias yalzz="expac -S -H M '%k\t%n' | sort -h"
+#        yay-rm-old              remove old yay packages
+alias yay-rm-old="yay -Sc"
+#        yay-rm-orphans          remove orphaned yay packages
+alias yay-rm-orphans="yay -Rns \$(yay -Qtdq)"
 
 #
 # apt package mangement (debian/ubuntu)
