@@ -32,7 +32,8 @@ retro = ["base", "system", "x11", "window-manager", "emulators"]
 # Must be one of: ["pacman", "pamac", "paru", "pikaur", "yay"]
 # Default: "pacman"
 #package_manager = "pikaur"
-package_manager = "paru"
+#package_manager = "paru"
+package_manager = "yay"
 
 [flatpak]
 # Whether to default to installing flatpak packages systemwide or for the
