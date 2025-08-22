@@ -2056,6 +2056,7 @@ arch-initialize() {
         "arch-group"
         "arch-sudoers"
         "arch-sysctl-conf"
+        "arch-make-jobs"
         "arch-systemd"
         #"arch-locale"
         "arch-package-managers"
