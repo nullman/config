@@ -20,9 +20,9 @@ hostname_groups_enabled = true
 # Which group files apply for which hostnames
 # paths starting without a / are relative to the groups folder
 # Default: None
-arch = ["base", "system", "x11", "window-manager", "applications", "utilities", "tui", "console", "internet", "emulators", "development", "containers", "ai", "console-hacks", "zsh", "fortune", "qubes", "games"]
-dozer = ["base", "system", "x11", "window-manager", "xfce-panel", "applications", "utilities", "tui", "console", "internet", "emulators", "development", "containers", "ai", "console-hacks", "zsh", "fortune", "nvidia470", "games"]
-mouse = ["base", "system", "x11", "window-manager", "xfce-panel", "emulators"]
+arch = ["base", "system", "x11", "window-manager", "xfce-panel", "applications", "utilities", "tui", "console", "console-hacks", "internet", "emulators", "development", "development-x", "containers", "ai", "zsh", "fortune", "games", "qubes"]
+dozer = ["base", "system", "x11", "window-manager", "xfce-panel", "applications", "utilities", "tui", "console", "console-hacks", "internet", "emulators", "development", "development-x", "containers", "ai", "zsh", "fortune", "games", "nvidia470"]
+mouse = ["base", "system", "x11", "window-manager", "xfce-panel", "utilities", "tui", "console", "console-hacks", "emulators", "development", "fortune"]
 retro = ["base", "system", "x11", "window-manager", "xfce-panel", "emulators"]
 
 [arch]
