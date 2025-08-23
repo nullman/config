@@ -22,8 +22,8 @@ hostname_groups_enabled = true
 # Default: None
 arch = ["base", "system", "x11", "window-manager", "applications", "utilities", "tui", "console", "internet", "emulators", "development", "containers", "ai", "console-hacks", "zsh", "fortune", "qubes", "games"]
 dozer = ["base", "system", "x11", "window-manager", "xfce-panel", "applications", "utilities", "tui", "console", "internet", "emulators", "development", "containers", "ai", "console-hacks", "zsh", "fortune", "nvidia470", "games"]
-mouse = ["base", "system", "x11", "window-manager", "emulators"]
-retro = ["base", "system", "x11", "window-manager", "emulators"]
+mouse = ["base", "system", "x11", "window-manager", "xfce-panel", "emulators"]
+retro = ["base", "system", "x11", "window-manager", "xfce-panel", "emulators"]
 
 [arch]
 # Since pacman, pamac, paru, pikaur and yay all operate on the same package database
