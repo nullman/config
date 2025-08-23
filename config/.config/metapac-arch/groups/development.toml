@@ -1,9 +1,5 @@
 arch = [
     "acme",
-    "android-studio",
-    "android-sdk-build-tools",
-    "android-sdk-platform-tools",
-    "android-tools",
     "android-udev",
     "autoconf",
     "autoconf-archive",
@@ -48,7 +44,6 @@ arch = [
     "guile",
     "hq",
     "htmlq",
-    "intellij-idea-community-edition",
     "ipython",
     "jdk-openjdk",
     "jq",
