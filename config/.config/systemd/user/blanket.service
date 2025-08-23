@@ -1,0 +1,27 @@
+#===============================================================================
+# .config/systemd/user/blanket.service
+#
+# Configuration for systemd user blanket restart service.
+#
+# Enable:   systemctl --user enable blanket.service
+# Start:    systemctl --user start blanket.service
+# Stop:     systemctl --user stop blanket.service
+# Disable:  systemctl --user disable blanket.service
+#
+# Reference: https://wiki.archlinux.org/index.php/Systemd/User
+#===============================================================================
+
+[Unit]
+Description=Blanket restart service
+
+[Service]
+ExecStart=/usr/sbin/blanket --hidden
+Restart=always
+RuntimeMaxSec=8h
+
+[Install]
+WantedBy=default.target
+
+#===============================================================================
+# End of File
+#===============================================================================

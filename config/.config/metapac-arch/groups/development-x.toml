@@ -1,0 +1,8 @@
+arch = [
+    "android-studio",
+    "android-sdk-build-tools",
+    "android-sdk-platform-tools",
+    "android-tools",
+    "intellij-idea-community-edition",
+]
+
