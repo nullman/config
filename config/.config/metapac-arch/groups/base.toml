@@ -2,6 +2,7 @@ arch = [
     "alacritty",
     "base",
     "base-devel",
+    "chaotic-mirrorlist",
     "coreutils",
     "curl",
     "efibootmgr",
