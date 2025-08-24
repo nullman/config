@@ -23,6 +23,7 @@ arch = [
     "gcalcli",
     "gdu",
     "geekbench",
+    "glmark2",
     "googler",
     "gpart",
     "hardinfo2",

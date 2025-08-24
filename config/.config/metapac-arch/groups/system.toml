@@ -33,6 +33,7 @@ arch = [
     "helvum",
     "hfsprogs",
     "htop",
+    "id3lib",
     "iftop",
     "imagemagick",
     "inxi",
