@@ -22,7 +22,7 @@ hostname_groups_enabled = true
 # Default: None
 arch = ["base", "system", "x11", "window-manager", "xfce-panel", "applications", "utilities", "tui", "console", "console-hacks", "internet", "emulators", "development", "development-x", "containers", "ai", "zsh", "fortune", "games", "qubes"]
 dozer = ["base", "system", "x11", "window-manager", "xfce-panel", "applications", "utilities", "tui", "console", "console-hacks", "internet", "emulators", "development", "development-x", "containers", "ai", "zsh", "fortune", "games", "nvidia470"]
-mouse = ["base", "system", "x11", "window-manager", "xfce-panel", "tui", "console", "console-hacks", "emulators", "fortune"]
+mouse = ["base", "system", "x11", "window-manager", "xfce-panel", "tui", "console", "console-hacks", "emulators", "fortune", "minimal"]
 retro = ["base", "system", "x11", "window-manager", "xfce-panel", "emulators"]
 
 [arch]
