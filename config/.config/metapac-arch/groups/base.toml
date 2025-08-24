@@ -23,7 +23,6 @@ arch = [
     "networkmanager",
     "openssl",
     "os-prober",
-    "pikaur",
     "pipewire",
     "pipewire-alsa",
     "pipewire-jack",
