@@ -31,8 +31,6 @@ retro = ["base", "system", "x11", "window-manager", "xfce-panel", "emulators"]
 # metapac to use.
 # Must be one of: ["pacman", "pamac", "paru", "pikaur", "yay"]
 # Default: "pacman"
-#package_manager = "pikaur"
-#package_manager = "paru"
 package_manager = "yay"
 
 [flatpak]
