@@ -15,6 +15,7 @@ arch = [
     "eject-applet",
     "eog",
     "evtest",
+    "eww",
     "gconf",
     "gksu",
     "gnome-disk-utility",
