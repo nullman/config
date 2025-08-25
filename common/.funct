@@ -2019,8 +2019,7 @@ make-metapac-groups() {
             cut -d '|' -f 4 | sed 's/^ */    \"/ ; s/ *$/\",/'
     }
 
-    #for backend in "arch" "debian" ; do
-    for backend in "arch" ; do
+    for backend in "apt" "arch" ; do
         outdir="${HOME}/config/config/.config/metapac-${backend}/groups"
         mkdir -p "${outdir}"
         for group in $(_getgroups ${backend}) ; do
@@ -2079,7 +2078,7 @@ arch-initialize() {
         #"arch-configure-irssi"
         #"arch-configure-java-8-openjdk"
         #"arch-configure-java-11-openjdk"
-        #"arch-configure-tlp"
+        "arch-configure-tlp"
         #"arch-configure-x48"
         "arch-configure-xscreensaver-aerial"
         "arch-bluetooth-audio"
