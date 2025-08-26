@@ -1292,72 +1292,72 @@ make-cert() {
 #
 # arch
 #
-#        pisg                    pikaur search with grep
-pisg() {
+#        yasg                    yay search with grep
+yasg() {
     if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
-        echo "Usage: pisg SEARCH GREP"
+        echo "Usage: yasg SEARCH GREP"
     else
         s="$1"
         shift
-        pikaur -Ss "${s}" 2>/dev/null | sed -n ":a ; { N ; s/\n */ | / ; p ; d ; ba }" | grep -i "$*"
+        yay -Ss "${s}" 2>/dev/null | sed -n ":a ; { N ; s/\n */ | / ; p ; d ; ba }" | grep -i "$*"
     fi
 }
-#        piss                    pikaur specific search
-piss() {
+#        yass                    yay specific search
+yass() {
     if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
-        echo "Usage: piss SEARCH"
+        echo "Usage: yass SEARCH"
     else
-        pikaur -Ss "$*" 2>/dev/null | sed -n ":a ; /^[a-z]*\/$* / { N ; s/\n */ | / ; p ; d ; ba }"
+        yay -Ss "$*" 2>/dev/null | sed -n ":a ; /^[a-z]*\/$* / { N ; s/\n */ | / ; p ; d ; ba }"
     fi
 }
-#        pisi                    pikaur search installed packages
-pisi() {
+#        yasi                    yay search installed packages
+yasi() {
     if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
-        echo "Usage: pisi SEARCH"
+        echo "Usage: yasi SEARCH"
     else
-        pikaur -Ss "$*" 2>/dev/null | sed -n ":a ; { N ; s/\n */ | / ; p ; d ; ba }" | grep " (Installed"
+        yay -Ss "$*" 2>/dev/null | sed -n ":a ; { N ; s/\n */ | / ; p ; d ; ba }" | grep " (Installed"
     fi
 }
-#        pisis                   pikaur specific search installed packages
-pisis() {
+#        yasis                   yay specific search installed packages
+yasis() {
     if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
-        echo "Usage: pisis SEARCH"
+        echo "Usage: yasis SEARCH"
     else
-        pikaur -Ss "$*" 2>/dev/null | sed -n ":a ; /^[a-z]*\/$* / { N ; s/\n */ | / ; p ; d ; ba }" | grep " (Installed"
+        yay -Ss "$*" 2>/dev/null | sed -n ":a ; /^[a-z]*\/$* / { N ; s/\n */ | / ; p ; d ; ba }" | grep " (Installed"
     fi
 }
-#!#        yasg                    yay search with grep
-#!yasg() {
+#!#        pisg                    pikaur search with grep
+#!pisg() {
 #!    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
-#!        echo "Usage: yasg SEARCH GREP"
+#!        echo "Usage: pisg SEARCH GREP"
 #!    else
 #!        s="$1"
 #!        shift
-#!        yay -Ss "${s}" 2>/dev/null | sed -n ":a ; { N ; s/\n */ | / ; p ; d ; ba }" | grep -i "$*"
+#!        pikaur -Ss "${s}" 2>/dev/null | sed -n ":a ; { N ; s/\n */ | / ; p ; d ; ba }" | grep -i "$*"
 #!    fi
 #!}
-#!#        yass                    yay specific search
-#!yass() {
+#!#        piss                    pikaur specific search
+#!piss() {
 #!    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
-#!        echo "Usage: yass SEARCH"
+#!        echo "Usage: piss SEARCH"
 #!    else
-#!        yay -Ss "$*" 2>/dev/null | sed -n ":a ; /^[a-z]*\/$* / { N ; s/\n */ | / ; p ; d ; ba }"
+#!        pikaur -Ss "$*" 2>/dev/null | sed -n ":a ; /^[a-z]*\/$* / { N ; s/\n */ | / ; p ; d ; ba }"
 #!    fi
 #!}
-#!#        yasi                    yay search installed packages
-#!yasi() {
+#!#        pisi                    pikaur search installed packages
+#!pisi() {
 #!    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
-#!        echo "Usage: yasi SEARCH"
+#!        echo "Usage: pisi SEARCH"
 #!    else
-#!        yay -Ss "$*" 2>/dev/null | sed -n ":a ; { N ; s/\n */ | / ; p ; d ; ba }" | grep " (Installed"
+#!        pikaur -Ss "$*" 2>/dev/null | sed -n ":a ; { N ; s/\n */ | / ; p ; d ; ba }" | grep " (Installed"
 #!    fi
 #!}
-#!#        yasis                   yay specific search installed packages
-#!yasis() {
+#!#        pisis                   pikaur specific search installed packages
+#!pisis() {
 #!    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
-#!        echo "Usage: yasis SEARCH"
+#!        echo "Usage: pisis SEARCH"
 #!    else
-#!        yay -Ss "$*" 2>/dev/null | sed -n ":a ; /^[a-z]*\/$* / { N ; s/\n */ | / ; p ; d ; ba }" | grep " (Installed"
+#!        pikaur -Ss "$*" 2>/dev/null | sed -n ":a ; /^[a-z]*\/$* / { N ; s/\n */ | / ; p ; d ; ba }" | grep " (Installed"
 #!    fi
 #!}
 

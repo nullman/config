@@ -14,9 +14,9 @@ use warnings;
 
 for (my $i = 1; $i <= 64; $i++) {
     print(substr('    ' . $i, -5) . " = " . chr($i) . chr(9));
-    print(substr('    ' . $i+64, -5) . " = " . chr($i+64) . chr(9));
-    print(substr('    ' . $i+128, -5) . " = " . chr($i+128) . chr(9));
-    print(substr('    ' . $i+192, -5) . " = " . chr($i+192) . chr(10));
+    print(substr('    ' . $i + 64, -5) . " = " . chr($i + 64) . chr(9));
+    print(substr('    ' . $i + 128, -5) . " = " . chr($i + 128) . chr(9));
+    print(substr('    ' . $i + 192, -5) . " = " . chr($i + 192) . chr(10));
 }
 
 #===============================================================================

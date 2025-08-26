@@ -3066,6 +3066,10 @@ alias yalzz="expac -S -H M '%k\t%n' | sort -h"
 alias yay-rm-old="yay -Sc"
 #        yay-rm-orphans          remove orphaned yay packages
 alias yay-rm-orphans="yay -Rns \$(yay -Qtdq)"
+#        yay-set-settings        set yay settings
+alias yay-set-settings="yay -S --noconfirm \
+    --answerclean None --answerdiff None --answeredit None \
+    --noremovemake --norebuild --save"
 
 #
 # apt package mangement (debian/ubuntu)
