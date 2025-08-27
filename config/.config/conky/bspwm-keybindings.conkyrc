@@ -63,7 +63,7 @@ ${color2}Spr + Ctrl + Print${color}  ${alignr}Window Shapshot
 ${color2}Spr + Shft + Print${color}  ${alignr}Region Shapshot
 ${color2}Spr + Shft + S/V${color}  ${alignr}Reload SXHKD/Video
 ${color2}Spr + Shft + R/T/E/C${color}  ${alignr}Reload Xfce/Tint/EWW/Conky
-${color2}Spr + Ctrl + Alt + ←/→${color}  ${alignr}Volume Down/Up 10%
+${color2}Spr + Ctrl + Alt + ←/→${color}  ${alignr}Volume Down/Up
 ${color2}Spr + Ctrl + Alt + M${color}  ${alignr}MPD Play/Pause
 ${color2}Spr + Ctrl + Alt + ,/.${color}  ${alignr}MPD Prev/Next
 ${color2}Spr + Ctrl + Alt + /${color}  ${alignr}MPD Playing

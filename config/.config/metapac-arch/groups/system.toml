@@ -92,6 +92,7 @@ arch = [
     "unipicker",
     "unison",
     "veracrypt",
+    "vtop",
     "wipe",
     "woeusb",
     "ydotool",

@@ -39,7 +39,8 @@ if [ -e "/sys/class/power_supply/BAT0" ] ; then
 fi
 #_command volumeicon && (_delay ${delay} pkill -u ${USER} volumeicon ; volumeicon) &
 #_command sbxkb && (_delay ${delay} pkill -u ${USER} sbxkb ; sbxkb) &
-_command kdeconnect-indicator && (_delay ${delay} pkill -u ${USER} kdeconnect-indicator ; kdeconnect-indicator) &
+#_command kdeconnect-indicator && (_delay ${delay} pkill -u ${USER} kdeconnect-indicator ; kdeconnect-indicator) &
+_command localsend && (_delay ${delay} pkill -u ${USER} localsend ; localsend --hidden) &
 
 #===============================================================================
 # End of File
