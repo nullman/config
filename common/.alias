@@ -1998,7 +1998,7 @@ alias rsync-rlptx="rsync -rlptx --progress"
 #        rsync-media-get-dozer  rsync dozer:/home/data/media /home/data/media
 alias rsync-media-get-dozer="rsync -rlptx --progress dozer:/home/data/media/ ${home}/data/media/"
 #        rsync-media-get-dozer-limited  rsync dozer:/home/data/media /home/data/media (minus software and video directories)
-alias rsync-media-get-dozer-limited="rsync -rlptx --progress -f'- /Repos/' -f'- /Software/' -f'- /Video/' dozer:/home/data/media/ ${home}/data/media/"
+alias rsync-media-get-dozer-limited="rsync -rlptx --progress -f'- /Software/' -f'- /Video/' dozer:/home/data/media/ ${home}/data/media/"
 #        rsync-media-get-dozer-curated-delete  rsync dozer:/home/data/media /home/data/media (specific sub-directories)
 alias rsync-media-get-dozer-curated-delete=" \
     if [ $(uname -n) == 'mouse' ] ; then
