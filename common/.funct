@@ -421,7 +421,7 @@ check-urls() {
                 wget -q --no-cache --timeout=10 "${url}" || \
                     printf 'Error: %s\n' "${url}"
             done
-        printf "\nDone\n"
+        printf 'Done%*s\n' 76
     fi
 }
 #        colors                  show terminal colors

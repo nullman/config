@@ -19,5 +19,5 @@ file:///home/data/media/Software/Linux Linux
 file:///home/data/media/Text/Books Books
 file:///home/data/media/Text/Magazines Magazines
 file:///home/data/media/Text/Manuals Manuals
-file:///mnt/synology mnt:synology
+file:///mnt/synology Synology
 sftp://kali-direct/home/virtual1403/output sftp:virtual1403
