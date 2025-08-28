@@ -28,7 +28,7 @@ config="\${HOME}/$([ $(uname -o) == 'Haiku' ] && echo 'haiku-config' || echo 'co
 terminal="alacritty"
 #!       network device
 networkdevice="$(_command ip && ip route get 192.168.0.1 2>/dev/null | awk '{print $5}')"
-#!       nullwareip
+#!       nullware IP
 nullwareip="159.203.165.79"
 
 #===============================================================================
@@ -262,7 +262,7 @@ alias terminal-dimensions="
     echo \"width:  \$(tput cols)\"
     echo \"height: \$(tput lines)\""
 #        bookmarks-check         check validity of all bookmarks
-alias bookmarks-check="wget --spider --force-html -i \${HOME}/bookmarks.html"
+alias bookmarks-check="wget --spider --force-html -i \${HOME}/config/common/home-pages/bookmarks.html"
 #        count                   count lines
 alias count="wc -l"
 #        rmkvm                   remove kvm kernel module (so virtualbox can run)

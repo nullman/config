@@ -74,6 +74,7 @@ arch = [
     "x16-emulator-bin",
     "x16-rom-bin",
     "x48ng",
+    "ymuse",
     "yq",
     "zlib",
 ]

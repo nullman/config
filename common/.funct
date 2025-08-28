@@ -13,14 +13,19 @@
 #!
 [ -f "/usr/share/doc/cdargs/examples/cdargs-bash.sh" ] && \
     source "/usr/share/doc/cdargs/examples/cdargs-bash.sh"
-#
-# helper functions
-#
-#        config directory
+#!
+#! helper functions
+#!
+#!        config directory
 configdir() {
     echo "${HOME}/$([ $(uname -o) == 'Haiku' ] && echo 'haiku-config' || echo 'config')"
 }
-#
+#!
+#! set variables
+#!
+#!       user-agent
+useragent="Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0; WOW64; Trident/4.0; SLCC1)"
+
 #===============================================================================
 # Function Definitions
 #===============================================================================
@@ -391,6 +396,10 @@ mail-file() {
         (uuencode "${file}" "${file}") | mailx -s "${sub}" "$@"
     fi
 }
+#        generate-qrc            generate QR code from given URL, text, or VCARD
+generate-qrc() {
+    printf '%s' "$@" | curl -F-=\<- qrenco.de
+}
 #        speak-url               speak a url
 speak-url() {
     if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
@@ -401,9 +410,19 @@ speak-url() {
             festival --tts
     fi
 }
-#        generate-qrc            generate QR code from given URL, text, or VCARD
-generate-qrc() {
-    printf "$@" | curl -F-=\<- qrenco.de
+#        check-urls              check validity of all URLs found in given FILE
+check-urls() {
+    if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+        echo "Usage: check-urls FILE"
+    else
+        hq -f "$1" a attr href | grep '://' | while read -r url ; do
+                printf 'Checking: %s\r' "${url}"
+                #wget -q --no-cache --timeout=10 --user-agent="${useragent}" "${url}" || \
+                wget -q --no-cache --timeout=10 "${url}" || \
+                    printf 'Error: %s\n' "${url}"
+            done
+        printf "\nDone\n"
+    fi
 }
 #        colors                  show terminal colors
 colors() {

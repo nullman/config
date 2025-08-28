@@ -5,7 +5,7 @@
 # Present a menu of rofi menus.
 #
 # Symbols:  ☰  |    | ✂ ⎘ 󰄶   󰅌 󰅍 󰨸 󱉥 󱉦 󱉧 󱉨 󱉫 󱉬  | 
-# Symbols: 󰍹    |  |    󱇠  | 󰆧 |  |   󰝚 | 󰛇 | 󰃃 󰃀 | 󰯫 󰈍   󰀬  ꓴ
+# Symbols: 󰍹    |  |    󱇠  | 󰆧 |  |   󰝚 | 󰛇 | 󰃃 󰃀 | 󰯫 󰈍   󰀬  ꓴ | ⌂
 #
 # Required utilities:
 #   cool-retro-term
@@ -30,7 +30,7 @@ Usage: $(basename "$0") [MENU]
 Present a menu of rofi menus.
 MENU:
   NONE                Menu of Selections
-  term                Terminal
+  terminal            Terminal
   acronyms-computing  Acronyms: Computing
   bookmarks           Bookmarks
   bookmarks-keyword   Bookmarks: Keyword
@@ -39,6 +39,7 @@ MENU:
   dosbox              DOSBox Emulator
   emoji               Emoji Search
   git                 Synchronize Repositories
+  home                Home Page Bookmarks
   paste               Paste Strings
   password            Generate Password
   qemu                QEMU Emulator
@@ -55,7 +56,7 @@ EOF
 # handle no arguments given
 if [ $# -lt 1 ] ; then
     menus=(
-        "	Term"
+        "	Terminal"
         "󰯫	Acronyms: Computing"
         "󰃃	Bookmarks"
         "󰃃	Bookmarks: Keyword"
@@ -64,27 +65,28 @@ if [ $# -lt 1 ] ; then
         "	DOSBox"
         "😃	Emoji"
         "	Git"
+        "⌂	Home"
         "	Paste"
         "	Password"
         "󰆧	Qemu"
         "	Rsync"
-        "	Sounds"
+        "󰝚	Sounds"
         "	Spell"
         "	SSH"
         "	Typer"
-        "ꓴ	Unicode"
+        "U	Unicode"
         "󰛇	VNC"
     )
-    menu=$(printf "%s\n" "${menus[@]}" | rofi -dmenu -i -p "	Menu")
+    menu=$(printf '%s\n' "${menus[@]}" | rofi -dmenu -i -p "	Menu")
 else
     menu=$1
 fi
 
 # handle menu
-menu=$(printf "${menu}" | sed 's/^.*\t//' | tr '[:upper:]' '[:lower:]' | tr -d ':' | tr ' ' '-')
+menu=$(printf '%s' "${menu}" | sed 's/^.*\t//' | tr '[:upper:]' '[:lower:]' | tr -d ':' | tr ' ' '-')
 #echo "${menu}"
 case "${menu}" in
-    term)
+    terminal)
         (alacritty &)
         ;;
 
@@ -111,7 +113,7 @@ case "${menu}" in
 
         # open bookmark
         if [ -n "${sel}" ] ; then
-            url=$(printf "${sel}" | sed 's/^.* \([^ ]*$\)/\1/')
+            url=$(printf '%s' "${sel}" | sed 's/^.* \([^ ]*$\)/\1/')
             (xdg-open "${url}" &)
         fi
         ;;
@@ -126,7 +128,7 @@ case "${menu}" in
 
         # open bookmark
         if [ -n "${sel}" ] ; then
-            url=$(printf "${sel}" | sed 's/^.* \([^ ]*$\)/\1/')
+            url=$(printf '%s' "${sel}" | sed 's/^.* \([^ ]*$\)/\1/')
             (xdg-open "${url}" &)
         fi
         ;;
@@ -141,7 +143,7 @@ case "${menu}" in
 
         # open contact
         if [ -n "${sel}" ] ; then
-            sel=$(printf "${sel}" | sed 's/(/\\(/ ; s/)/\\)/')
+            sel=$(printf '%s' "${sel}" | sed 's/(/\\(/ ; s/)/\\)/')
             awk '
                 BEGIN { FS="\n"; RS=""; OFS="\n"; ORS="\n" }
                 {
@@ -220,6 +222,22 @@ case "${menu}" in
         fi
         ;;
 
+    home)
+        # display home page bookmarks
+        if [ $# -lt 2 ] ; then
+            sel=$(cat "${HOME}/home-pages/"{home,dev}.html | sed -n '/<a id=/p' | sed 's/^.*<a id=\"id__\(.*\)__\([^"]*\)\".*$/\1: \2/; s/_/ /g' | rofi -dmenu -i -p "⌂	Home Page")
+        else
+            sel=$2
+        fi
+
+        # open bookmark
+        if [ -n "${sel}" ] ; then
+            id=$(printf '%s' "${sel}" | sed 's/ /_/g ; s/:_/__/ ; s/^/id__/')
+            url=$(grep "${id}" "${HOME}/home-pages/"{home,dev}.html | sed 's/^.* href=\"\([^"]*\)\".*$/\1/')
+            (xdg-open "${url}" &)
+        fi
+        ;;
+
     paste)
         # display paste options
         if [ $# -lt 2 ] ; then
@@ -230,7 +248,7 @@ case "${menu}" in
 
         # copy paste selection to the clipboard
         if [ -n "${sel}" ] ; then
-            printf "${sel}" | xsel && xsel --output | xsel --clipboard
+            printf '%s' "${sel}" | xsel && xsel --output | xsel --clipboard
         fi
         ;;
 
@@ -251,10 +269,10 @@ case "${menu}" in
         if [ -n "${sel}" ] ; then
             case "${sel}" in
                 "6 Capitalized/Hyphenated Word Phrase")
-                    printf "$(${HOME}/bin/password-phrase 6 hyphen true)" | xsel && xsel --output | xsel --clipboard
+                    printf '%s' "$(${HOME}/bin/password-phrase 6 hyphen true)" | xsel && xsel --output | xsel --clipboard
                     ;;
                 "4 Capitalized/Hyphenated Word Phrase")
-                    printf "$(${HOME}/bin/password-phrase 4 hyphen true)" | xsel && xsel --output | xsel --clipboard
+                    printf '%s' "$(${HOME}/bin/password-phrase 4 hyphen true)" | xsel && xsel --output | xsel --clipboard
                     ;;
                 "20 Letters/Numbers/Symbols")
                     tr --delete --complement 'a-zA-Z0-9!@#$%^&*-_=+;:,<.>/?' < /dev/urandom | \
@@ -314,7 +332,7 @@ case "${menu}" in
             else
                 local opts=("${up}" "$(cd "${selpath}" && find . -mindepth 1 -maxdepth 1 -type f -not -regex '^\.+$' | sed 's%./%%' | sort)")
             fi
-            sel=$(printf '%s\n' "${opts[@]}" | rofi -dmenu -i -p "	Sounds")
+            sel=$(printf '%s\n' "${opts[@]}" | rofi -dmenu -i -p "󰝚	Sounds")
         }
 
         _killffplay() {
@@ -346,7 +364,7 @@ case "${menu}" in
                     _select
                 fi
 
-                sel=$(printf "${sel}" | sed 's%^\[%% ; s%\]$%%')
+                sel=$(printf '%s' "${sel}" | sed 's%^\[%% ; s%\]$%%')
                 selpath="${sounddir}/${sel}"
 
                 if [ "${sel}" == "${stop}" ] ; then
@@ -373,7 +391,7 @@ case "${menu}" in
 
                 # handle playing a sound file
                 _killffplay
-                if $(printf "${sel}" | grep -q "Ambient Sound Effects") ; then
+                if $(printf '%s' "${sel}" | grep -q "Ambient Sound Effects") ; then
                     echo "Playing: ${sel} (in a loop)"
                     ffplay -nodisp -loop 0 "${selpath}"
                 else
@@ -392,14 +410,14 @@ case "${menu}" in
             sel=$2
         fi
 
-        res=$(printf "${sel}" | ispell -a | tail -n -1)
+        res=$(printf '%s' "${sel}" | ispell -a | tail -n -1)
 
         word=""
         case "${res:0:1}" in
             \*) word="${sel}" ;;
             \+) word="${res:1}" ;;
             \#) yad --title "Word" --text "Word ${sel} was not found" --fontname='MesloLGS Nerd Font Mono 14' 2>/dev/null ;;
-            \?|\&) word=$(printf "${res}" | sed 's/^.*: // ; s/, */,/g' | tr ',' '\n' | rofi -dmenu -i -p "	Select Word to Define") ;;
+            \?|\&) word=$(printf '%s' "${res}" | sed 's/^.*: // ; s/, */,/g' | tr ',' '\n' | rofi -dmenu -i -p "	Select Word to Define") ;;
         esac
 
         [ -n "${word}" ] && trans -no-ansi "${word}" | yad --title "Definition" --text-info --width=1024 --height=768 --wrap --no-buttons --wrap --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
@@ -416,7 +434,7 @@ case "${menu}" in
                 "pi@raspad-usb"
                 "kyle@159.203.165.79"
             )
-            sel=$(printf "%s\n" "${servers[@]}" | rofi -dmenu -i -p "	SSH")
+            sel=$(printf '%s\n' "${servers[@]}" | rofi -dmenu -i -p "	SSH")
         else
             sel=$2
         fi
@@ -446,7 +464,7 @@ case "${menu}" in
                 "raspad-usb"
                 "switch-direct"
             )
-            sel=$(printf "%s\n" "${servers[@]}" | rofi -dmenu -i -p "󰛇	VNC")
+            sel=$(printf '%s\n' "${servers[@]}" | rofi -dmenu -i -p "󰛇	VNC")
         else
             sel=$2
         fi
