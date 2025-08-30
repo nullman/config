@@ -49,7 +49,7 @@ arch = [
     "smem",
     "speedtest-cli",
     "stress",
-    "sttr",
+    "sttr-bin",
     "sysbench",
     "testdisk",
     "textual-paint",

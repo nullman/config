@@ -30,7 +30,7 @@ arch = [
     "gxmessage",
     "lightdm",
     "lightdm-gtk-greeter",
-    "localsend",
+    "localsend-bin",
     "lxappearance",
     "menumaker",
     "mesa-demos",
