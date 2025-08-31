@@ -38,6 +38,7 @@ arch = [
     "ncpamixer",
     "network-manager-applet",
     "nitrogen",
+    "pa-applet-git",
     "paprefs",
     "pasystray",
     "pavucontrol",

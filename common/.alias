@@ -465,31 +465,6 @@ alias stopwatch="
         date -u -d @\$((ts - start)) '+%H:%M:%S'
         sleep 1s
     done"
-#!#        mount-synology          mount synology drives
-#!alias mount-synology="
-#!    sudo mkdir -p /mnt/synology
-#!    sudo mkdir -p /mnt/synology/media
-#!    sudo mkdir -p /mnt/synology/music
-#!    sudo mkdir -p /mnt/synology/photo
-#!    sudo mkdir -p /mnt/synology/video
-#!    sudo mkdir -p /mnt/synology/zzz
-#!    #sudo chown -R \${USER}:\${USER} /mnt/synology
-#!    sudo sh -c \"mount -t cifs //synology/media /mnt/synology/media -o \$(cat \${HOME}/.synology-mount-parameters)\"
-#!    sleep 0.2
-#!    sudo sh -c \"mount -t cifs //synology/music /mnt/synology/music -o \$(cat \${HOME}/.synology-mount-parameters)\"
-#!    sleep 0.2
-#!    sudo sh -c \"mount -t cifs //synology/photo /mnt/synology/photo -o \$(cat \${HOME}/.synology-mount-parameters)\"
-#!    sleep 0.2
-#!    sudo sh -c \"mount -t cifs //synology/video /mnt/synology/video -o \$(cat \${HOME}/.synology-mount-parameters)\""
-#!    sleep 0.2
-#!    sudo sh -c \"mount -t cifs //synology/zzz /mnt/synology/zzz -o \$(cat \${HOME}/.synology-mount-parameters)\"
-#!#        umount-synology         umount synology drives
-#!alias umount-synology="
-#!    sudo umount /mnt/synology/media
-#!    sudo umount /mnt/synology/music
-#!    sudo umount /mnt/synology/photo
-#!    sudo umount /mnt/synology/video
-#!    sudo umount /mnt/synology/zzz"
 
 #
 # wallpaper
