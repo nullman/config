@@ -17756,8 +17756,8 @@ And the line would be overlaid like:
   :after (persist)
   :config
   (let* ((env (expand-file-name "~/.mastodon"))
-         (url (string-trim (shell-command-to-string (concat "sed -n 's/emacs.ch-url=//p' " env))))
-         (username (string-trim (shell-command-to-string (concat "sed -n 's/emacs.ch-username=//p' " env)))))
+         (url (string-trim (shell-command-to-string (concat "sed -n 's/mastodon-url=//p' " env))))
+         (username (string-trim (shell-command-to-string (concat "sed -n 's/mastodon-username=//p' " env)))))
     (setq mastodon-instance-url url
           mastodon-active-user username)))
 ;; mastodon:1 ends here

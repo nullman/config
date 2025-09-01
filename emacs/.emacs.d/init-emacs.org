@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2025-08-02 22:55 (user)>
+  #+TIMESTAMP: <2025-08-31 16:23 (user)>
 
 * Overview
   :PROPERTIES:
@@ -27012,8 +27012,8 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         :after (persist)
         :config
         (let* ((env (expand-file-name "~/.mastodon"))
-               (url (string-trim (shell-command-to-string (concat "sed -n 's/emacs.ch-url=//p' " env))))
-               (username (string-trim (shell-command-to-string (concat "sed -n 's/emacs.ch-username=//p' " env)))))
+               (url (string-trim (shell-command-to-string (concat "sed -n 's/mastodon-url=//p' " env))))
+               (username (string-trim (shell-command-to-string (concat "sed -n 's/mastodon-username=//p' " env)))))
           (setq mastodon-instance-url url
                 mastodon-active-user username)))
     #+END_SRC

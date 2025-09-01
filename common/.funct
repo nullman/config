@@ -2078,7 +2078,7 @@ arch-initialize() {
         "arch-make-jobs"
         "arch-systemd"
         #"arch-locale"
-        "arch-package-managers"
+        #"arch-package-managers"
     )
 
     standard=(
