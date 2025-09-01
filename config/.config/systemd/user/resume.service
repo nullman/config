@@ -19,7 +19,8 @@ StopWhenUnneeded=yes
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-#ExecStop=/usr/sbin/systemctl --user restart schkd
+ExecStop=/usr/sbin/systemctl --user restart numlockx
+#ExecStop=/usr/sbin/systemctl --user restart sxhkd
 ExecStop=/usr/sbin/systemctl --user restart setxkbmap
 ExecStop=/usr/sbin/systemctl --user restart xkbcomp
 ExecStop=/usr/sbin/systemctl --user restart xset

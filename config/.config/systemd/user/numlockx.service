@@ -1,12 +1,12 @@
 #===============================================================================
-# .config/systemd/user/setleds.service
+# .config/systemd/user/numlockx.service
 #
-# Configuration for systemd user setleds service.
+# Configuration for systemd user numlockx service.
 #
-# Enable:   systemctl --user enable setleds.service
-# Start:    systemctl --user start setleds.service
-# Stop:     systemctl --user stop setleds.service
-# Disable:  systemctl --user disable setleds.service
+# Enable:   systemctl --user enable numlockx.service
+# Start:    systemctl --user start numlockx.service
+# Stop:     systemctl --user stop numlockx.service
+# Disable:  systemctl --user disable numlockx.service
 #
 # Reference: https://wiki.archlinux.org/index.php/Systemd/User
 #===============================================================================
@@ -17,7 +17,7 @@ Description=Turn Keyboard Num-Lock On
 [Service]
 Type=oneshot
 RemainAfterExit=yes;
-ExecStart=/usr/sbin/setleds +num
+ExecStart=/usr/sbin/numlockx
 
 [Install]
 WantedBy=default.target

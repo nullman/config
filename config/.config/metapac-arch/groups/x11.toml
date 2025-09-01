@@ -1,6 +1,7 @@
 arch = [
     "arandr",
     "imwheel",
+    "numlockx",
     "scrot",
     "sxhkd",
     "x2x-git",
