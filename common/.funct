@@ -2067,7 +2067,7 @@ arch-initialize() {
         local file="${HOME}/org/personal.org"
         local regexp="/^[ \t]*#\+NAME: $1\$/,/^[ \t]*#\+END_SRC\$/{print \$0}"
         awk "${regexp}" "${file}" | tail -n +3 | head -n -1 | sed 's/^[ \t]*//' | \
-            sed 's/--needed/--needed --answerdiff None --answerclean None --mflags \"--noconfirm\"/' | \
+            sed 's/--needed/--needed --answerclean None --mflags \"--noconfirm\"/' | \
             sed 's/yay /yes | yay /'
     }
 
@@ -2082,9 +2082,7 @@ arch-initialize() {
     )
 
     standard=(
-        #"arch-lightdm-conf"
         "arch-lightdm-gtk-greeter-conf"
-        #"arch-lightdm-slick-greeter-conf"
         "arch-pkgfile"
         "arch-copy-wallpapers"
         "arch-fix-backgrounds"

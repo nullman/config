@@ -3043,8 +3043,8 @@ alias yay-rm-old="yay -Sc"
 alias yay-rm-orphans="yay -Rns \$(yay -Qtdq)"
 #        yay-set-settings        set yay settings
 alias yay-set-settings="yay -S \
-    --answerclean None --answerdiff None --answeredit None \
-    --noremovemake --norebuild --save"
+    --answerclean None --answeredit None \
+    --noanswerdiff --noremovemake --norebuild --save"
 
 #
 # apt package mangement (debian/ubuntu)
