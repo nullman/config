@@ -68,7 +68,9 @@ _command xset && xset -dpms s off b off m 2/1 4 r rate 500 35 >/dev/null 2>&1
 # fi
 
 # turn numlock on
-_command numlockx && numlockx
+if [ "$(uname -n)" == "dozer" ] ; then
+    _command numlockx && numlockx
+fi
 
 # xhost
 #_command xhost && xhost +localhost >/dev/null 2>&1
