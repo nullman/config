@@ -41,7 +41,6 @@ arch = [
     "phoronix-test-suite",
     "procs",
     "rar",
-    "remind",
     "sad",
     "sd",
     "sendmail",
