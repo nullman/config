@@ -51,7 +51,6 @@ arch = [
     "mplayer",
     "mpv",
     "nasm",
-    "notepadqq",
     "openwatcom-v2",
     "pandoc-bin",
     "papers",
