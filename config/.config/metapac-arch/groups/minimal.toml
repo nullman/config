@@ -9,6 +9,7 @@ arch = [
     "bison",
     "bitwarden",
     "blanket",
+    "brave-bin",
     "bucklespring",
     "cc65",
     "ccache",
