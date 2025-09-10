@@ -67,6 +67,7 @@ arch = [
     "texlive-fontsextra",
     "texlive-latexextra",
     "texlive-pictures",
+    "translate-shell",
     "vasm",
     "vlang",
     "vlc",
