@@ -87,6 +87,7 @@ arch = [
     "terminology",
     "texlive-bin",
     "texlive-fontsextra",
+    "texlive-fontsrecommended",
     "texlive-latexextra",
     "texlive-pictures",
     "tokei",
