@@ -595,7 +595,7 @@ EOF
     _show() {
         local num="$1"
         # ignore scripts that never end
-        if [ ! " ${bad[*]} " =~ " ${num} " ] ; then
+        if [[ ! " ${bad[*]} " =~ " ${num} " ]] ; then
             clear
             echo
             echo "${list[${num}]}"

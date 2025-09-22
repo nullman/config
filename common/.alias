@@ -2252,6 +2252,8 @@ alias sctop="\${HOME}/bin/screen-app top"
 alias schtop="\${HOME}/bin/screen-app htop"
 #        scbtop                  screen-app btop
 alias scbtop="\${HOME}/bin/screen-app btop"
+#        scbpytop                screen-app bpytop
+alias scbpytop="\${HOME}/bin/screen-app bpytop"
 #        sczenith                screen-app zenith
 alias sczenith="\${HOME}/bin/screen-app zenith"
 #        scifmon                 screen-app ifmon
