@@ -25,7 +25,7 @@ arch = [
     "quassel-client",
     "searxng-git",
     "simplex-chat-bin",
-    "slack-bin",
+    "slack-desktop",
     "surf",
     "surfraw",
     "syncterm-git",
