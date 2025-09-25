@@ -10,6 +10,7 @@ arch = [
     "barrier-headless",
     "bluez",
     "bluez-utils",
+    "bpytop",
     "brightnessctl",
     "btop",
     "bzip2",

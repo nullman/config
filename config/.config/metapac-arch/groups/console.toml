@@ -26,6 +26,7 @@ arch = [
     "glmark2",
     "googler",
     "gpart",
+    "gping",
     "hardinfo2",
     "hdparm",
     "hyperfine",

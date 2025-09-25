@@ -45,6 +45,7 @@ arch = [
     "ventoy-bin",
     "virt-viewer",
     "vlc",
+    "vlc-plugins-all",
     "x48ng",
     "xpdf",
     "xarchiver",
