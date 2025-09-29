@@ -2195,6 +2195,7 @@ alias rsync-foundry-put-nullware="
         \"${nullwareip}:/home/kyle/foundry/\"
     rsync -rlptx --delete --force \
         --exclude=\".git*\" \
+        --exclude=\"Config/admin.txt\" \
         --exclude=\"Config/license.json\" \
         --rsh=\"ssh -l kyle\" \
         --progress \
