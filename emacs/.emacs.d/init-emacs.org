@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2025-08-31 16:23 (user)>
+  #+TIMESTAMP: <2025-09-30 23:31 (user)>
 
 * Overview
   :PROPERTIES:
@@ -6402,19 +6402,19 @@
              ("ea" . "export ascii")
              ("eh" . "export html")
              ("el" . "export latex")
-             ("o" . "src org")
              ("q" . "quote")
              ("s" . "src")
              ("sel" . "src emacs-lisp")
              ("sk" . "src kotlin")
              ("sl" . "src latex")
+             ("so" . "src org")
              ("spy" . "src python")
              ("sql" . "src sql")
              ("sr" . "src racket")
              ("ssh" . "src sh")
              ("ssu" . "src sh :dir /sudo::")
-             ("t" . "src text")
-             ("u" . "src conf-unix")
+             ("st" . "src text")
+             ("su" . "src conf-unix")
              ("v" . "verse")))
           :config
           ;; custom `org-tempo-add-block' with upcase headers
