@@ -11,7 +11,7 @@
 export SCREENDIR=${HOME}/.screendir
 [ -d ${SCREENDIR} ] || mkdir -p -m 700 ${SCREENDIR}
 
-if [ $(pgrep -x -u ${USER} screen) ] ; then
+if pgrep -u ${USER} -x screen ; then
     screen -wipe
     screen -x "$@"
 else

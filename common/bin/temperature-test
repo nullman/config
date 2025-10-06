@@ -70,11 +70,11 @@ for x in $(seq ${count}) ; do
     c="00000${x}"
     echo -n "[${c: $((-${#count}))}/${count}] "
     _gettemp $1
-    if [ $(command -v sysbench) ] ; then
+    if command -v sysbench ; then
          sysbench --test=cpu --num-threads=${threads} --cpu-max-prime=25000 run >/dev/null 2>&1
-    elif [ $(command -v stress-ng) ] ; then
+    elif command -v stress-ng ; then
         stress-ng --cpu ${threads} --timeout 10s >/dev/null 2>&1
-    elif [ $(command -v stress) ] ; then
+    elif command -v stress ; then
         stress --cpu ${threads} --timeout 10s >/dev/null 2>&1
     else
         echo "No stress test application found: sysbench, stress-ng, or stress"
