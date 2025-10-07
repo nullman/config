@@ -33,7 +33,6 @@ arch = [
     "mplayer",
     "mpv",
     "mupdf-tools",
-    "notepadqq",
     "papers",
     "qmmp",
     "qmplay2",

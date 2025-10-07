@@ -3102,19 +3102,19 @@ top level.
 
 Output format:
 
-  (((\"KEY1\" . VALUE1)
-    (\"KEY2\" . VALUE2)
-    (\"KEY3\" . VALUE3))
-   ((HEADLINE1)
-    (HEADLINE2
-     (HEADLINE21 . BODY21))
-    (HEADLINE3
-     (HEADLINE31
-      (HEADLINE311 . BODY311)
-      (HEADLINE312 . BODY312))
-     (HEADLINE32
-      (HEADLINE321 . BODY321)
-      (HEADLINE322 . BODY322)))))"
+  (((\"KEY-1\" . VALUE-1)
+    (\"KEY-2\" . VALUE-2)
+    (\"KEY-3\" . VALUE-3))
+   ((HEADLINE-1)
+    (HEADLINE-2
+     (HEADLINE-21 . BODY-21))
+    (HEADLINE-3
+     (HEADLINE-31
+      (HEADLINE-311 . BODY-311)
+      (HEADLINE-312 . BODY-312))
+     (HEADLINE-32
+      (HEADLINE-321 . BODY-321)
+      (HEADLINE-322 . BODY-322)))))"
   (let* ((property-headline-regexp "^[ \t]*\\** Org\\([ \t]*:noexport:\\)?$")
          (property-regexp "^[ \t]*#\\+\\(.*\\): \\(.*\\)$")
          (property-drawer-regexp "[ \t]*:PROPERTIES:.*:END:[ \t]*")
@@ -3242,35 +3242,35 @@ values in output.
 
 Output format:
 
-  (((\"KEY1\" . VALUE1)
-    (\"KEY2\" . VALUE2)
-    (\"KEY3\" . VALUE3))
-   ((HEADLINE1)
-    (HEADLINE2
-     (HEADLINE21 . BODY21))
-    (HEADLINE3
-     (HEADLINE31
-      (HEADLINE311 . BODY311)
-      (HEADLINE312 . BODY312))
-     (HEADLINE32
-      (HEADLINE321 . BODY321)
-      (HEADLINE322 . BODY322)))))
+  (((\"KEY-1\" . VALUE-1)
+    (\"KEY-2\" . VALUE-2)
+    (\"KEY-3\" . VALUE-3))
+   ((HEADLINE-1)
+    (HEADLINE-2
+     (HEADLINE-21 . BODY-21))
+    (HEADLINE-3
+     (HEADLINE-31
+      (HEADLINE-311 . BODY-311)
+      (HEADLINE-312 . BODY-312))
+     (HEADLINE-32
+      (HEADLINE-321 . BODY-321)
+      (HEADLINE-322 . BODY-322)))))
 
 Output format if WITH-MARKERS is non-nil:
 
-  (((\"KEY1\" . VALUE1)
-    (\"KEY2\" . VALUE2)
-    (\"KEY3\" . VALUE3))
-   ((HEADLINE1 . MARKER1)
-    (HEADLINE2 . MARKER2
-     (HEADLINE21 . MARKER21 . BODY21))
-    (HEADLINE3 . MARKER3
-     (HEADLINE31 . MARKER31
-      (HEADLINE311 . MARKER311 . BODY311)
-      (HEADLINE312 . MARKER312 . BODY312))
-     (HEADLINE32 . MARKER32
-      (HEADLINE321 . MARKER321 . BODY321)
-      (HEADLINE322 . MARKER322 . BODY322)))))"
+  (((\"KEY-1\" . VALUE-1)
+    (\"KEY-2\" . VALUE-2)
+    (\"KEY-3\" . VALUE-3))
+   ((HEADLINE-1 . MARKER-1)
+    (HEADLINE-2 . MARKER-2
+     (HEADLINE-21 . MARKER-21 . BODY-21))
+    (HEADLINE-3 . MARKER-3
+     (HEADLINE-31 . MARKER-31
+      (HEADLINE-311 . MARKER-311 . BODY-311)
+      (HEADLINE-312 . MARKER-312 . BODY-312))
+     (HEADLINE-32 . MARKER-32
+      (HEADLINE-321 . MARKER-321 . BODY-321)
+      (HEADLINE-322 . MARKER-322 . BODY-322)))))"
   (let* ((property-headline-regexp "^[ \t]*\\** Org\\([ \t]*:noexport:\\)?$")
          (property-regexp "^[ \t]*#\\+\\(.*\\): \\(.*\\)$")
          (property-drawer-regexp "[ \t]*:PROPERTIES:.*:END:[ \t]*")
@@ -4504,7 +4504,7 @@ If BUFFER is nil, current buffer is used."
 
 ;; [[file:init-emacs.org::#org-mode-babel-tangle-generate-pdf-from-tex][Tangle Generate PDF from TEX:1]]
 ;;------------------------------------------------------------------------------
-  ;;;; Org Mode: Babel: Tangle Generate PDF from TEX
+;;;; Org Mode: Babel: Tangle Generate PDF from TEX
 ;;------------------------------------------------------------------------------
 
 (init-message 3 "Org Mode: Babel: Tangle Generate PDF from TEX")
