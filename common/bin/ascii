@@ -12,11 +12,14 @@ BEGIN { $^W = 1; }
 use strict;
 use warnings;
 
-for (my $i = 1; $i <= 64; $i++) {
-    print(substr('    ' . $i, -5) . " = " . chr($i) . chr(9));
-    print(substr('    ' . $i + 64, -5) . " = " . chr($i + 64) . chr(9));
-    print(substr('    ' . $i + 128, -5) . " = " . chr($i + 128) . chr(9));
-    print(substr('    ' . $i + 192, -5) . " = " . chr($i + 192) . chr(10));
+for (my $i = 1; $i <= 32; $i++) {
+    my $j = $i + 32;
+    my $k = $j + 32;
+    my $l = $k + 32;
+    print(sprintf("  0x%02X  %-3d = %s%s", $i, $i, chr($i), chr(9)));
+    print(sprintf("  0x%02X  %-3d = %s%s", $j, $j, chr($j), chr(9)));
+    print(sprintf("  0x%02X  %-3d = %s%s", $k, $k, chr($k), chr(9)));
+    print(sprintf("  0x%02X  %-3d = %s%s", $l, $l, chr($l), chr(10)));
 }
 
 #===============================================================================

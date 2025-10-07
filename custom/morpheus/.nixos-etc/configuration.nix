@@ -1049,6 +1049,7 @@
     # tui
     atuin                                   # Replacement for a shell history which records additional commands context with optional encrypted synchronization between machines
     bmon                                    # Network bandwidth monitor
+    bpytop                                  #
     btop                                    # Monitor of resources
     calcurse                                # Calendar and scheduling application for the command line
     caligula                                # User-friendly, lightweight TUI for disk imaging
@@ -1198,6 +1199,7 @@
     syncterm                                # BBS terminal emulator
     telegram-desktop                        # Telegram Desktop messaging app
     thunderbird                             # Full-featured e-mail client
+    tor-browser-bundle-bin                  # Privacy-focused browser routing traffic through the Tor network
     transmission_4-gtk                      # Fast, easy and free BitTorrent client
     tribler                                 # Decentralised P2P filesharing client based on the Bittorrent protocol
     tuba                                    # Browse the Fediverse

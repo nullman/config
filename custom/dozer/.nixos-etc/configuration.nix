@@ -1177,6 +1177,7 @@
     # tui
     atuin                                   # Replacement for a shell history which records additional commands context with optional encrypted synchronization between machines
     bmon                                    # Network bandwidth monitor
+    bpytop                                  #
     btop                                    # Monitor of resources
     calcurse                                # Calendar and scheduling application for the command line
     caligula                                # User-friendly, lightweight TUI for disk imaging

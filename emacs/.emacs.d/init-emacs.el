@@ -12962,7 +12962,7 @@ it is longer."
                             (command-path "pamac"))))
       (if package-manager
           (let ((cmd (format
-                      "%s %s %s 2>/dev/null | grep -A 2 '/%s ' | sed -n ':a ; /^[a-z]*\\/%s / { n ; p }'"
+                      "%s %s %s 2>/dev/null | sed 's/\\x1b\\][^\\\\]*\\\\//g' | grep -A 2 '/%s ' | sed -n ':a ; /^[a-z]*\\/%s / { n ; p }'"
                       package-manager
                       (if (string= (substring package-manager -5) "pamac")
                           "search -a"

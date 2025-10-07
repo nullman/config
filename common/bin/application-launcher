@@ -47,13 +47,13 @@ for line in ${launch} ; do
         fi
     else
         if command -v "${app}" ; then
-            if pgrep -u ${USER} -f "${app}" ; then
+            if ! pgrep -u ${USER} -x "${app}" ; then
                 #echo "${app}"
                 if [ "${app}" == "alacritty" ] ; then
                     alacritty -e ${HOME}/bin/run-screen >/dev/null 2>&1 &
                     sleep 1
                 else
-                    eval "${app}" >/dev/null 2>&1 &
+                    eval ${app} >/dev/null 2>&1 &
                 fi
             fi
         else
