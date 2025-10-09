@@ -1,18 +1,21 @@
 #!/usr/bin/env bash
 data=$(${HOME}/bin/system-bar-weather full $1)
 
-icon=$(echo "${data}" | sed -n 1p)
-temp=$(echo "${data}" | sed -n 2p | sed 's/[FC]$//')
-short=$(echo "${data}" | sed -n 3p)
-desc=$(echo "${data}" | sed -n 4p)
-high=`echo "${desc}" | sed 's/^.*High: \\([0-9]\\+\\).*$/\1/'`
-low=`echo "${desc}" | sed 's/^.*Low: \\([0-9]\\+\\).*$/\1/'`
-rest=`echo "${desc}" | sed 's/^.*Low: [0-9]\\+ [FC] //'`
+icon=$(echo "${data}" | sed -n 's/^Icon: //p')
+temp=$(echo "${data}" | sed -n 's/^Temperature: //p' | sed 's/^\+// ; s/°[FC]$//')
+desc=$(echo "${data}" | sed -n 's/^Description: //p')
+wind=$(echo "${data}" | sed -n 's/^Wind: //p')
+prec=$(echo "${data}" | sed -n 's/^Precipitation: //p')
+pres=$(echo "${data}" | sed -n 's/^Pressure: //p')
+uv=$(echo "${data}" | sed -n 's/^UV: //p')
+moon=$(echo "${data}" | sed -n 's/^Moon: //p')
 
 printf "\${color}\${font MesloLGS Nerd Font:bold:size=16}San Diego\${font}"
 printf "\${alignr}\${color}\${font MesloLGS Nerd Font:bold:size=64}${temp}°\${font}\n"
 printf "\${voffset -40}\${color}\${font MesloLGS Nerd Font:bold:size=64}${icon}\${font}"
-printf "\${voffset -10}\${alignr}\${color}${short}\n"
-printf "\${alignr}\${color2}High: \${color}${high}°\n"
-printf "\${alignr}\${color2}Low: \${color}${low}°\n"
-printf "\${color}${rest}\n"
+printf "\${voffset -10}\${alignr}\${color}${desc}\n"
+printf "\${alignr}\${color}${wind}\n"
+printf "\${alignr}\${color}${prec}\n"
+printf "\${alignr}\${color}${pres}\n"
+printf "\${alignr}\${color2}UV: \${color}${uv}\n"
+printf "\${voffset -20}\${color}\${font MesloLGS Nerd Font:bold:size=32}${moon}\${font}"

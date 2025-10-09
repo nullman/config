@@ -21,7 +21,7 @@
 
 (defun define-key-top-root (key command)
   "Define `*top-map*' and `*root-map*' keys at the same time."
-  ;;(define-key *top-map* (kbd (concat "s-" key)) command)
+  (define-key *top-map* (kbd (concat "s-" key)) command)
   (define-key *root-map* (kbd key) command))
 
 ;; (defmacro define-keymap-bindings (map &rest bindings)
@@ -40,6 +40,12 @@
 ;;   (> (string-length
 ;;       (run-shell-command (concat "command -v " command " >/dev/null 2>&1") t))
 ;;      0))
+
+(defun run-shell-command-from-home (cmd &optional collect-output-p)
+  "Call `run-shell-command' with the HOME env path appended to CMD."
+  (run-shell-command
+   (concatenate 'string (getenv "HOME") cmd)
+   collect-output-p))
 
 ;;------------------------------------------------------------------------------
 ;; Settings
@@ -78,6 +84,9 @@
       *rotation-focus-policy* :master-or-follow
       *mouse-focus-policy* :click)
 
+(setf *run-or-raise-all-groups* t
+      *run-or-raise-all-screens* t)
+
 ;; set head-placement-policy, overflow-policy, master-layout, and
 ;; default-split-ratio
 ;;(set-dynamic-group-initial-values nil nil nil 0.7)
@@ -111,9 +120,9 @@
 ;; Keybindings
 ;;------------------------------------------------------------------------------
 
-;;(set-prefix-key (kbd "s-z"))
-(set-prefix-key (kbd "C-z"))
-(setf *help-keys* '("?" "C-h"))
+(set-prefix-key (kbd "s-z"))
+;;(set-prefix-key (kbd "C-z"))
+(setf *help-keys* '("?" "c-h"))
 
 (setf *top-map* (make-sparse-keymap))
 (setf *root-map* (make-sparse-keymap))
@@ -122,8 +131,10 @@
 
 (define-key-top-root "h" '*help-map*)
 
-(define-key-top-root "S-w" "delete-window")
-(define-key-top-root "S-k" "kill-window")
+(define-key-top-root ":" "exec")
+;;(define-key-top-root "R" "reload")
+(define-key-top-root "R" "loadrc")
+(define-key-top-root "V" "version")
 
 (define-key-top-root "C-s" "hsplit")
 (define-key-top-root "C-v" "vsplit")
@@ -134,11 +145,14 @@
 
 ;; Frames and Windows (Applications)
 
-(define-key *top-map* (kbd "M-TAB") "next")
-(define-key *top-map* (kbd "M-S-TAB") "prev")
+(define-key *top-map* (kbd "M-Tab") "next")
+(define-key *top-map* (kbd "M-ISO_Left_Tab") "prev")
 (define-key *top-map* (kbd "M-`") "other-window")
 
 (define-key-top-root "w" "windowlist")
+(define-key-top-root "W" "delete-window")
+(define-key-top-root "S-Delete" "kill-window")
+(define-key-top-root "P" "list-window-properties")
 (define-key-top-root "Left" "move-focus left")
 (define-key-top-root "Right" "move-focus right")
 (define-key-top-root "Up" "move-focus up")
@@ -147,23 +161,23 @@
 (define-key-top-root "l" "move-focus right")
 (define-key-top-root "i" "move-focus up")
 (define-key-top-root "k" "move-focus down")
-(define-key-top-root "S-Left" "exchange-direction left")
-(define-key-top-root "S-Right" "exchange-direction right")
-(define-key-top-root "S-Up" "exchange-direction up")
-(define-key-top-root "S-Down" "exchange-direction down")
-(define-key-top-root "S-j" "exchange-direction left")
-(define-key-top-root "S-l" "exchange-direction right")
-(define-key-top-root "S-i" "exchange-direction up")
-(define-key-top-root "S-k" "exchange-direction down")
+(define-key-top-root "ISO_Left_Left" "exchange-direction left")
+(define-key-top-root "ISO_Left_Right" "exchange-direction right")
+(define-key-top-root "ISO_Left_Up" "exchange-direction up")
+(define-key-top-root "ISO_Left_Down" "exchange-direction down")
+(define-key-top-root "J" "exchange-direction left")
+(define-key-top-root "L" "exchange-direction right")
+(define-key-top-root "I" "exchange-direction up")
+(define-key-top-root "K" "exchange-direction down")
 
 (define-key-top-root "," "rotate-windows backward")
 (define-key-top-root "." "rotate-windows forward")
 
 ;; Groups (Desktops)
 
-(define-key *top-map* (kbd "S-TAB") "gnext")
-(define-key *top-map* (kbd "S-S-TAB") "gprev")
-(define-key *top-map* (kbd "S-`") "gother")
+(define-key *top-map* (kbd "s-TAB") "gnext")
+(define-key *top-map* (kbd "s-ISO_Left_TAB") "gprev")
+(define-key *top-map* (kbd "s-`") "gother")
 
 (define-key-top-root "C-w" "grouplist")
 (define-key-top-root "M-Left" "gprev")
@@ -174,10 +188,10 @@
 (define-key-top-root "M-l" "gnext")
 (define-key-top-root "M-i" "sprev")
 (define-key-top-root "M-k" "snext")
-(define-key-top-root "M-S-Left" "gprev-with-window")
-(define-key-top-root "M-S-Right" "gnext-with-window")
-(define-key-top-root "M-S-j" "gprev-with-window")
-(define-key-top-root "M-S-l" "gnext-with-window")
+(define-key-top-root "M-ISO_Left_Left" "gprev-with-window")
+(define-key-top-root "M-ISO_Left_Right" "gnext-with-window")
+(define-key-top-root "M-ISO_Left_j" "gprev-with-window")
+(define-key-top-root "M-ISO_Left_l" "gnext-with-window")
 
 (define-key-top-root "1" "gselect 1")
 (define-key-top-root "2" "gselect 2")
@@ -192,22 +206,62 @@
 (define-key-top-root "-" "gselect 11")
 (define-key-top-root "=" "gselect 12")
 
-(define-key-top-root "S-1" "gmove-and-follow 1")
-(define-key-top-root "S-2" "gmove-and-follow 2")
-(define-key-top-root "S-3" "gmove-and-follow 3")
-(define-key-top-root "S-4" "gmove-and-follow 4")
-(define-key-top-root "S-5" "gmove-and-follow 5")
-(define-key-top-root "S-6" "gmove-and-follow 6")
-(define-key-top-root "S-7" "gmove-and-follow 7")
-(define-key-top-root "S-8" "gmove-and-follow 8")
-(define-key-top-root "S-9" "gmove-and-follow 9")
-(define-key-top-root "S-0" "gmove-and-follow 10")
-(define-key-top-root "S--" "gmove-and-follow 11")
-(define-key-top-root "S-=" "gmove-and-follow 12")
+(define-key-top-root "!" "gmove-and-follow 1")
+(define-key-top-root "@" "gmove-and-follow 2")
+(define-key-top-root "#" "gmove-and-follow 3")
+(define-key-top-root "$" "gmove-and-follow 4")
+(define-key-top-root "%" "gmove-and-follow 5")
+(define-key-top-root "^" "gmove-and-follow 6")
+(define-key-top-root "&" "gmove-and-follow 7")
+(define-key-top-root "*" "gmove-and-follow 8")
+(define-key-top-root "(" "gmove-and-follow 9")
+(define-key-top-root ")" "gmove-and-follow 10")
+(define-key-top-root "_" "gmove-and-follow 11")
+(define-key-top-root "+" "gmove-and-follow 12")
 
 ;; Applications
 
 (define-key-top-root "M-t" "exec alacritty")
+
+;;------------------------------------------------------------------------------
+;; Launch Applications
+;;------------------------------------------------------------------------------
+
+;; keybindings
+(run-shell-command-from-home "/bin/run-sxhkd &"))
+
+;; policykit authentation agent
+(run-shell-command "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &")
+
+;; compositor
+(run-shell-command "picom -b &")
+
+;; system bar
+(run-shell-command-from-home "/bin/system-bar"))
+
+;; system wallpaper displays
+(run-shell-command-from-home "/bin/system-wallpaper-displays"))
+
+;; clipmenu
+(run-shell-command "clipmenud &")
+
+;; set cursor theme
+(run-shell-command "fix_xcursor &")
+
+;; hide mouse when not in use
+(run-shell-command "unclutter &")
+
+;; wallpaper manager
+(run-shell-command "nitrogen --restore &")
+
+;; screen saver
+(run-shell-command "xscreensaver -no-splash &")
+
+;; barrier software kvm on certain machines
+;;(run-shell-command "barrier &")
+
+;; application launcher
+(run-shell-command-from-home "/bin/application-launcher &"))
 
 ;;==============================================================================
 ;; End of File

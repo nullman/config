@@ -26,5 +26,5 @@ conky.config = {
   use_xft = true,
 }
 conky.text = [[
-${execpi 1800 ${HOME}/bin/conky-weather-graph}
+${execpi 1800 ${HOME}/bin/conky-weather-graph San+Diego}
 ]]

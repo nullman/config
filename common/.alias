@@ -382,8 +382,10 @@ alias ytdl="
     yt-dlp --format 'bv*+ba/b' \
            --format-sort 'res:1080,res:720,res:480,vcodec:h264,acodec:m4a' \
            --output \"%(channel)s - %(release_date>%Y-%m-%d,upload_date>%Y-%m-%d|Unknown)s - %(title)s.%(ext)s\""
-#        weather                 weather report
+#        weather                 weather
 alias weather="curl --silent \"wttr.in/San+Diego?u\" | head -n -2"
+#        weather-report          weather report
+alias weather-report="curl --silent \"v2d.wttr.in/San+Diego?u\" | head -n -2"
 #        weather-graph           weather graph
 alias weather-graph="finger ^san_diego@graph.no | head -n -1"
 #        termbin                 send content to termbin.com

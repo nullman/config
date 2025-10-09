@@ -76,19 +76,13 @@ fi
 #_command xhost && xhost +localhost >/dev/null 2>&1
 #_command xhost && xhost +mouse1 >/dev/null 2>&1
 
-# run-app
-#${HOME}/bin/run-app
-
-# run applications
-#[ -f ${HOME}/.xprofile-applications ] && source ${HOME}/.xprofile-applications >/dev/null 2>&1
-
 # start wm
 #[ -z "$(greppr window_manager)" ] || ps ux | grep -v grep | grep -q window_manager || (exec $(getpr window_manager) &) >/dev/null 2>&1
 
 # select a window manager
 #exec selectwm
 
-if [ -n "$(pgrep -x i3)" ] || [ -n "$(pgrep -x bspwm)" ] ; then
+if pgrep -x i3 || pgrep -x bspwm ; then
     # https://wiki.archlinux.org/title/bspwm#Problems_with_Java_applications
     # set window manager name so that java applications work
     _command wmname && wmname LG3D

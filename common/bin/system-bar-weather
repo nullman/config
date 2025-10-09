@@ -1,72 +1,48 @@
 #!/usr/bin/env bash
-METRIC=0                                # should be 0 for F or 1 for C
-
-if [ $# -ne 2 ] || [ "$1" != "status" && "$1" != "icon" && "$1" != "both" && "$1" != "full" ] ; then
+if [ $# -ne 2 ] || ([ "$1" != "status" ] && [ "$1" != "icon" ] && [ "$1" != "both" ] && [ "$1" != "full" ]) ; then
     echo "Usage: $(basename $0) (status|icon|both|full) LOCATION_CODE"
     echo "  status         Return short text description"
     echo "  icon           Return icon and temperature"
     echo "  both           Return both icon and short text"
     echo "  full           Return all information"
-    echo "  LOCATION_CODE  ZIP Code"
+    echo "  LOCATION_CODE  City or ZIP Code"
     exit 1
 fi
 
 type="$1"
-loc="$2"
-data=$(curl -s "http://rss.accuweather.com/rss/liveweather_rss.asp?metric=${METRIC}&locCode=${loc}")
-title=$(echo "${data}" | sed -n '/<title>Currently: .*<\/title>/p' | sed 's/^.*<title>Currently: // ; s/<\/title>.*$//')
-desc=$(echo "${data}" | sed -n '/<description>High: .*<\/description>/p' | sed 's/^.*<description>// ; s/&lt.*$//' | head -n 1)
-short=$(echo "${title}" | sed 's/: .*$//')
-temp=$(echo "${title}" | sed 's/^.*: //')
+shift
+loc="$*"
+data="$(curl --silent 'wttr.in/'"${loc}"'?uT&format=+%C|+%t|+%w|+%p|+%P|+%u|+%m' | sed 's/^ // ; s/| /|/g')"
+desc=$(echo "${data}" | cut -d '|' -f 1)
+temp=$(echo "${data}" | cut -d '|' -f 2)
+wind=$(echo "${data}" | cut -d '|' -f 3)
+prec=$(echo "${data}" | cut -d '|' -f 4)
+pres=$(echo "${data}" | cut -d '|' -f 5)
+uv=$(echo "${data}" | cut -d '|' -f 6)
+moon=$(echo "${data}" | cut -d '|' -f 7)
 
-case "${short}" in
-    "Sunny") icon="" ;;
-    "Mostly Sunny") icon="" ;;
-    "Partly Sunny") icon="" ;;
-    "Hazy Sunshine") icon="" ;;
-    "Hot") icon="" ;;
-    "Intermittent Clouds") icon="" ;;
-    "Cloudy") icon="" ;;
-    "Mostly Cloudy") icon="" ;;
-    "Dreary (Overcast)") icon="" ;;
-    "Fog") icon="" ;;
-    "Rain") icon="" ;;
-    "Showers") icon="" ;;
-    "Partly Cloudy w/ Showers") icon="" ;;
-    "Mostly Cloudy w/ Showers") icon="" ;;
-    "Partly Sunny w/ Showers") icon="" ;;
-    "T-Storms" | "Thunderstorms") icon="" ;;
-    "Mostly Cloudy w/ T-Storms") icon="" ;;
-    "Partly Cloudy w/ T-Storms") icon="" ;;
-    "Partly Sunny w/ T-Storms") icon="" ;;
-    "Windy") icon="" ;;
-    "Flurries") icon="" ;;
-    "Mostly Cloudy w/ Flurries") icon="" ;;
-    "Snow") icon="" ;;
-    "Mostly Cloudy w/ Snow") icon="" ;;
-    "Partly Sunny w/ Flurries") icon="" ;;
-    "Ice") icon="" ;;
-    "Sleet") icon="" ;;
-    "Freezing Rain") icon="" ;;
-    "Rain and Snow") icon="" ;;
-    "Cold") icon="" ;;
-    "Clear") icon="" ;;
-    "Mostly Clear") icon="" ;;
-    "Partly Cloudy") icon="" ;;
-    "Intermittent Clouds") icon="" ;;
-    "Hazy Moonlight") icon="" ;;
+case "${desc}" in
+    "Overcast") icon="" ;;
+    "Partly cloudy") icon="" ;;
     *) notify-send -u critical "Unknown weather: ${desc}" ;;
 esac
 
-#echo "data: ${data}"
-#echo "title: ${title}"
-#echo "desc: ${desc}"
-#echo "short: ${short}"
-#echo "temp: ${temp}"
+case "moon" in
+    🌑) moon="○" ;;
+    🌒) moon="☽" ;;
+    🌓) moon="◑" ;;
+    🌔) moon="◑" ;;
+    🌕) moon="●" ;;
+    🌖) moon="◐" ;;
+    🌗) moon="◐" ;;
+    🌘) moon="☾" ;;
+esac
+
+echo "${data}"
 
 case "${type}" in
-    "status") printf "${title}" ;;
-    "icon") printf "${icon}  ${temp}" ;;
-    "both") printf "${icon}  ${title}" ;;
-    "full") printf "${icon}\n${temp}\n${short}\n${desc}\n" ;;
+    "status") printf '%s  %s' "${temp}" "${desc}" ;;
+    "icon") printf '%s  %s' "${icon}" "${temp}" ;;
+    "both") printf '%s  %s  %s' "${icon}" "${temp}" "${desc}" ;;
+    "full") printf 'Icon: %s\nTemperature: %s\nDescription: %s\nWind: %s\nPrecipitation: %s\nPressure: %s\nUV: %s\nMoon: %s\n' "${icon}" "${temp}" "${desc}" "${wind}" "${prec}" "${pres}" "${uv}" "${moon}" ;;
 esac
