@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-finger ^san_diego@graph.no | head -n -1 | \
+finger ^san_diego@graph.no | head -n -1 | tail -n +2 | \
     sed "s/#/%/g ; \
         s/^\(    .*\)$/\${color2}\1\${color}/ ; \
         s/^ 'F\(.*\)$/\${color2} °F\1\${color}/ ; \

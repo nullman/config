@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 if [ $# -ne 2 ] || ([ "$1" != "status" ] && [ "$1" != "icon" ] && [ "$1" != "both" ] && [ "$1" != "full" ]) ; then
-    echo "Usage: $(basename $0) (status|icon|both|full) LOCATION_CODE"
-    echo "  status         Return short text description"
-    echo "  icon           Return icon and temperature"
-    echo "  both           Return both icon and short text"
-    echo "  full           Return all information"
-    echo "  LOCATION_CODE  City or ZIP Code"
+    echo "Usage: $(basename $0) (status|icon|both|full) LOCATION"
+    echo "  status    Return short text description"
+    echo "  icon      Return icon and temperature"
+    echo "  both      Return both icon and short text"
+    echo "  full      Return all information"
+    echo "  LOCATION  City or ZIP Code"
     exit 1
 fi
 
@@ -22,8 +22,12 @@ uv=$(echo "${data}" | cut -d '|' -f 6)
 moon=$(echo "${data}" | cut -d '|' -f 7)
 
 case "${desc}" in
-    "Overcast") icon="" ;;
+    "Light rain") icon="" ;;
+    "Light snow") icon="" ;;
+    "Mist") icon="?" ;;
+    "Overcast") icon="" ;;
     "Partly cloudy") icon="" ;;
+    "Sunny") icon="" ;;
     *) notify-send -u critical "Unknown weather: ${desc}" ; echo "Unknown weather: ${desc}" >> ~/weather-errors ;;
 esac
 

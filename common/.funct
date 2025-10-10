@@ -451,13 +451,12 @@ colors() {
         echo; echo
     done
 }
-
 #        distribution            show linux distribution
-distribution () {
+distribution() {
     # source: https://github.com/ChrisTitusTech/mybash/blob/main/.bashrc
     local dist="unknown"
 
-    if [ -r "/etc/os-release" ] ; then
+    if [ -f "/etc/os-release" ] ; then
         source "/etc/os-release"
         case ${ID} in
             arch|manjaro)
@@ -1291,6 +1290,51 @@ leach() {
 upload-0x0() {
     [ -f "$1" ] && op="cat"
     "${op:-echo}" "${1:-$(cat -)}" | curl -F file='@-' "https://0x0.st"
+}
+#        weather                 weather report
+weather() {
+    if [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+        echo "Usage: weather LOCATION"
+        echo "  LOCATION  City or ZIP Code"
+    else
+        if [ -z "$1" ] ; then
+            loc="San+Diego"
+        else
+            loc="$(echo \"$*\" | sed 's/ /+/g')"
+        fi
+
+        curl --silent "wttr.in/${loc}?u" | head -n -2
+    fi
+}
+#        weather-graph           graphical weather report
+weather-graph() {
+    if [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+        echo "Usage: weather-graph LOCATION"
+        echo "  LOCATION  City or ZIP Code"
+    else
+        if [ -z "$1" ] ; then
+            loc="San+Diego"
+        else
+            loc="$(echo \"$*\" | sed 's/ /+/g')"
+        fi
+
+        curl --silent "v2d.wttr.in/${loc}?u" | head -n -2
+    fi
+}
+#        weather-meteogram       meteogram weather graph
+weather-meteogram() {
+    if [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+        echo "Usage: weather-meteogram LOCATION"
+        echo "  LOCATION  City or ZIP Code"
+    else
+        if [ -z "$1" ] ; then
+            loc="san_diego"
+        else
+            loc="$(echo \"$*\" | sed 's/ /_/g' | tr 'A-Z' 'a-z')"
+        fi
+
+        finger "^${loc}@graph.no" | head -n -1 | tail -n +2
+    fi
 }
 
 #
