@@ -28,17 +28,17 @@ case "${desc}" in
 esac
 
 case "moon" in
-    🌑) moon="○" ;;
-    🌒) moon="☽" ;;
-    🌓) moon="◑" ;;
-    🌔) moon="◑" ;;
-    🌕) moon="●" ;;
-    🌖) moon="◐" ;;
-    🌗) moon="◐" ;;
-    🌘) moon="☾" ;;
+    "🌑") moon="" ;;
+    "🌒") moon="" ;;
+    "🌓") moon="" ;;
+    "🌔") moon="" ;;
+    "🌕") moon="" ;;
+    "🌖") moon="" ;;
+    "🌗") moon="" ;;
+    "🌘") moon="" ;;
 esac
 
-echo "${data}"
+#echo "${data}"
 
 case "${type}" in
     "status") printf '%s  %s' "${temp}" "${desc}" ;;
