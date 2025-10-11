@@ -15,7 +15,7 @@ conky.config = {
   font = 'MesloLGS Nerd Font Mono:size=12',
   gap_x = 20,
   gap_y = 40,
-  minimum_width = 320,
+  minimum_width = 400,
   no_buffers = true,
   own_window = true,
   own_window_class = 'Conky',

@@ -135,6 +135,9 @@ _command stty && stty tabs
 # set umask
 umask 0022
 
+# turn on auto typeo fixing
+shopt -s cdspell
+
 # turn on auto cd
 shopt -s autocd
 

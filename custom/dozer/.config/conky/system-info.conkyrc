@@ -15,7 +15,7 @@ conky.config = {
   font = 'MesloLGS Nerd Font:size=12',
   gap_x = 20,
   gap_y = 40,
-  minimum_width = 320,
+  minimum_width = 400,
   minimum_height = 800,
   no_buffers = true,
   own_window = true,
@@ -29,10 +29,10 @@ conky.config = {
 
 conky.text = [[
 # date and time
-${voffset 0}${color2}${font MesloLGS Nerd Font:size=16}${time %A}${font} \
-${voffset -8}${alignr}${color}${font MesloLGS Nerd Font:size=38}${time %e}${font}
-${voffset -30}${color}${font MesloLGS Nerd Font:size=18}${time %b}${font} \
-${voffset -3} ${color}${font MesloLGS Nerd Font:size=20}${time %Y}${font}${color2}${hr}
+${voffset 0}${color2}${font MesloLGS Nerd Font:bold:size=16}${time %A}${font} \
+${voffset -8}${alignr}${color}${font MesloLGS Nerd Font:bold:size=38}${time %e}${font}
+${voffset -30}${color}${font MesloLGS Nerd Font:bold:size=18}${time %b}${font} \
+${voffset -3} ${color}${font MesloLGS Nerd Font:bold:size=20}${time %Y}${font}${color2}${hr}
 
 # cpu
 #${voffset 10}${color}${font MesloLGS Nerd Font:bold:size=12}󰍛${font}  ${alignc}${freq_g} GHz  ${alignr}${cpu}%

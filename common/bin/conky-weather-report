@@ -10,12 +10,12 @@ pres=$(echo "${data}" | sed -n 's/^Pressure: //p')
 uv=$(echo "${data}" | sed -n 's/^UV: //p')
 moon=$(echo "${data}" | sed -n 's/^Moon: //p')
 
-printf "\${color}\${font MesloLGS Nerd Font:bold:size=16}San Diego\${font}"
-printf "\${alignr}\${color}\${font MesloLGS Nerd Font:bold:size=64}${temp}°\${font}\n"
-printf "\${voffset -40}\${color}\${font MesloLGS Nerd Font:bold:size=64}${icon}\${font}"
+printf "\${color}\${font MesloLGS Nerd Font Mono:bold:size=24}San Diego\${font}"
+printf "\${voffset -24}\${alignr}\${color}\${font MesloLGS Nerd Font Mono:bold:size=64}${temp}°\${font}\n"
+printf "\${voffset -32}\${color}\${font MesloLGS Nerd Font:bold:size=64}${icon}\${font}"
+#printf "\${color}\${font MesloLGS Nerd Font:bold:size=64}${moon}\${font}"
 printf "\${voffset -10}\${alignr}\${color}${desc}\n"
 printf "\${alignr}\${color}${wind}\n"
 printf "\${alignr}\${color}${prec}\n"
 printf "\${alignr}\${color}${pres}\n"
 printf "\${alignr}\${color2}UV: \${color}${uv}\n"
-#printf "\${voffset -20}\${color}\${font MesloLGS Nerd Font:bold:size=32}${moon}\${font}"

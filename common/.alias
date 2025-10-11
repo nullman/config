@@ -563,22 +563,22 @@ alias chsh-zsh="
 #
 # processes
 #
-#        lver                    linux/kernel version
-alias lver="cat /proc/version"
-#        mem                     memory info
-alias mem="cat /proc/meminfo"
+#        linuxver                linux/kernel version
+alias linuxver="cat /proc/version"
+#        memory                  memory info
+alias memory="cat /proc/meminfo"
 #        cpu                     cpu info
 alias cpu="cat /proc/cpuinfo"
-#        mod                     modules list
-alias mod="cat /proc/modules"
-#        fs                      file systems list
-alias fs="cat /proc/filesystems"
-#        part                    hard disk partitions list
-alias part="cat /proc/partitions"
+#        modules                 modules list
+alias modules="cat /proc/modules"
+#        filesystems             file systems list
+alias filesystems="cat /proc/filesystems"
+#        partitions              hard disk partitions list
+alias partitions="cat /proc/partitions"
 #        pci                     pci bus info
 alias pci="cat /proc/pci"
-#        dev                     devices list
-alias dev="cat /proc/devices"
+#        devices                 devices list
+alias devices="cat /proc/devices"
 
 #
 # services (daemons)

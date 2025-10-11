@@ -1294,8 +1294,8 @@ upload-0x0() {
 #        weather                 weather report
 weather() {
     if [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
-        echo "Usage: weather LOCATION"
-        echo "  LOCATION  City or ZIP Code"
+        echo "Usage: weather [LOCATION]"
+        echo "  LOCATION  City or ZIP Code (default: San Diego)"
     else
         if [ -z "$1" ] ; then
             loc="San+Diego"
@@ -1309,8 +1309,8 @@ weather() {
 #        weather-graph           graphical weather report
 weather-graph() {
     if [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
-        echo "Usage: weather-graph LOCATION"
-        echo "  LOCATION  City or ZIP Code"
+        echo "Usage: weather-graph [LOCATION]"
+        echo "  LOCATION  City or ZIP Code (default: San Diego)"
     else
         if [ -z "$1" ] ; then
             loc="San+Diego"
@@ -1323,17 +1323,34 @@ weather-graph() {
 }
 #        weather-meteogram       meteogram weather graph
 weather-meteogram() {
+    local utf=0
+    local loc="san_diego"
+
     if [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
-        echo "Usage: weather-meteogram LOCATION"
-        echo "  LOCATION  City or ZIP Code"
+        echo "Usage: weather-meteogram [-u,--utf8] [LOCATION]"
+        echo "  -u,--utf8  Convert weather icons to UTF-8 glyphs"
+        echo "  LOCATION   City or ZIP Code (default: San Diego)"
     else
+        if [ "$1" == "-u" ] || [ "$1" == "--utf8" ] ; then
+            utf=1
+            shift
+        fi
+
         if [ -z "$1" ] ; then
             loc="san_diego"
         else
-            loc="$(echo \"$*\" | sed 's/ /_/g' | tr 'A-Z' 'a-z')"
+            loc="$(echo \"$*\" | sed 's/ /_/g' | tr '[:upper:]' '[:lower:]')"
         fi
 
-        finger "^${loc}@graph.no" | head -n -1 | tail -n +2
+        if [ $utf -eq 0 ] ; then
+            finger "^${loc}@graph.no" | head -n -1 | tail -n +2
+        else
+            finger "^${loc}@graph.no" | head -n -1 | tail -n +2 | \
+                sed "s/^   -=/   %%/ ; s/=-   $/%%   / ; s/=V=//g ; \
+                s/-//g ; s/\^//g ; s/=//g ; s/#//g ; \
+                s/|//g ; s/!//g ; s/\*//g ; \
+                s/^   %%/   -=/ ; s/%%   $/=-   /"
+        fi
     fi
 }
 

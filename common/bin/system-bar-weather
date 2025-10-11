@@ -22,11 +22,16 @@ uv=$(echo "${data}" | cut -d '|' -f 6)
 moon=$(echo "${data}" | cut -d '|' -f 7)
 
 case "${desc}" in
+    "Clear") icon="" ;;
+    "Haze") icon="" ;;
     "Light rain") icon="" ;;
     "Light snow") icon="" ;;
     "Mist") icon="?" ;;
     "Overcast") icon="" ;;
     "Partly cloudy") icon="" ;;
+    "Patchy light rain") icon="" ;;
+    "Patchy rain nearby") icon="" ;;
+    "Smoke") icon="" ;;
     "Sunny") icon="" ;;
     *) notify-send -u critical "Unknown weather: ${desc}" ; echo "Unknown weather: ${desc}" >> ~/weather-errors ;;
 esac
