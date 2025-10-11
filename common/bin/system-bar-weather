@@ -53,5 +53,6 @@ case "${type}" in
     "status") printf '%s  %s' "${temp}" "${desc}" ;;
     "icon") printf '%s  %s' "${icon}" "${temp}" ;;
     "both") printf '%s  %s  %s' "${icon}" "${temp}" "${desc}" ;;
-    "full") printf 'Icon: %s\nTemperature: %s\nDescription: %s\nWind: %s\nPrecipitation: %s\nPressure: %s\nUV: %s\nMoon: %s\n' "${icon}" "${temp}" "${desc}" "${wind}" "${prec}" "${pres}" "${uv}" "${moon}" ;;
+    "full") printf 'Icon: %s\nTemperature: %s\nDescription: %s\nWind: %s\nPrecipitation: %s\nPressure: %s\nUV: %s\nMoon: %s\n' \
+                   "${icon}" "${temp}" "${desc}" "${wind}" "${prec}" "${pres}" "${uv}" "${moon}" ;;
 esac
