@@ -38,7 +38,7 @@
 ;; (defun commandp (command)
 ;;   "Return whether COMMAND is in the environment PATH and executable."
 ;;   (> (string-length
-;;       (run-shell-command (concat "command -v " command " >/dev/null 2>&1") t))
+;;       (run-shell-command (concat "command -v " command) t))
 ;;      0))
 
 (defun run-shell-command-from-home (cmd &optional collect-output-p)
@@ -93,17 +93,14 @@
 (setf *default-group-type* "Dynamic")
 ;;(setf *dynamic-group-master-split-ratio* 0.7)
 
-(setf *mode-line-background-color* (car *colors*)
-      *mode-line-foreground-color* (car (last *colors*))
-      *mode-line-timeout* 1)
-
 (setf *input-window-gravity* :center
       *message-window-input-gravity* :top-right
       *input-completion-show-empty* t)
 
+;; groups (virtual screens)
 (when *initializing*
   (gnew-dynamic "emacs")
-  (gkill-other)
+  (gkill-other)                    ; remove default group which is not dynamic
   (gnew-dynamic "term")
   (gnewbg-dynamic "email")
   (gnewbg-dynamic "browser")
@@ -115,6 +112,38 @@
   (gnewbg-dynamic "admin")
   (gnewbg-dynamic "virtual1")
   (gnewbg-dynamic "virtual2"))
+
+;;------------------------------------------------------------------------------
+;; Mode-Line
+;;------------------------------------------------------------------------------
+
+(stumpwm:add-to-load-path "${HOME}/src/stumpwm-contrib/modeline/stumptray")
+(setf *mode-line-background-color* (car *colors*)
+      *mode-line-foreground-color* (car (last *colors*))
+      *mode-line-timeout* 1)
+(run-commands "mode-line")
+(load-module "stumptray")
+(stumptray:stumptray)
+
+;;------------------------------------------------------------------------------
+;; Modules
+;;------------------------------------------------------------------------------
+
+;; gaps
+(stumpwm:add-to-load-path "${HOME}/src/stumpwm-contrib/util/swm-gaps")
+(load-module "swm-gaps")
+(setf swm-gaps:*head-gaps-size* 0)      ; monitor borders
+(setf swm-gaps:*inner-gaps-size* 4)     ; window borders
+(setf swm-gaps:*outer-gaps-size* 0)     ; additional outer window borders
+(run-commands "toggle-gaps")
+
+;; ttf fonts
+(stumpwm:add-to-load-path "${HOME}/src/stumpwm-contrib/util/ttf-fonts")
+(load-module "ttf-fonts")
+(setf xft:*font-dirs* '("${HOME}/.local/share/fonts"))
+(setf clx-truetype:+font-cache-filename+ "${HOME}/.cache/stumpwm-font-cache")
+(xft:cache-fonts)
+(set-font (make-instance 'xft:font :family "MesloLGS Mono" :subfamily "Regular" :size "14")
 
 ;;------------------------------------------------------------------------------
 ;; Keybindings
@@ -228,40 +257,7 @@
 ;;------------------------------------------------------------------------------
 
 ;; keybindings
-(run-shell-command-from-home "/bin/run-sxhkd &"))
-
-;; policykit authentation agent
-(run-shell-command "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &")
-
-;; compositor
-(run-shell-command "picom -b &")
-
-;; system bar
-(run-shell-command-from-home "/bin/system-bar"))
-
-;; system wallpaper displays
-(run-shell-command-from-home "/bin/system-wallpaper-displays"))
-
-;; clipmenu
-(run-shell-command "clipmenud &")
-
-;; set cursor theme
-(run-shell-command "fix_xcursor &")
-
-;; hide mouse when not in use
-(run-shell-command "unclutter &")
-
-;; wallpaper manager
-(run-shell-command "nitrogen --restore &")
-
-;; screen saver
-(run-shell-command "xscreensaver -no-splash &")
-
-;; barrier software kvm on certain machines
-;;(run-shell-command "barrier &")
-
-;; application launcher
-(run-shell-command-from-home "/bin/application-launcher &"))
+(run-shell-command-from-home ".vm-applications"))
 
 ;;==============================================================================
 ;; End of File

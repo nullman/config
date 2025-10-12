@@ -1,11 +1,8 @@
 #!/usr/bin/env bash
 #===============================================================================
-# bspwmrc-applications
+# .wm-applications-machine
 #
-# Binary Space Partitioning Window Manager (bspwm) auto-start applications
-# script.
-#
-# Reference: https://github.com/baskerville/bspwm
+# Launch machine-specific window manager applications.
 #===============================================================================
 
 # check if executable command is found in the path
@@ -27,31 +24,26 @@ _command xscreensaver && xscreensaver -no-splash &
 #_command mpd && mpd ${HOME}/.mpd/mpd.conf &
 #_command dropbox && dropbox start &
 #_command barriers && barriers --config ${HOME}/.barrier.conf &
-#_command barrierc && barrierc SERVER &
+#_command barrierc && barrierc dozer &
+_command barrier && barrier &
 #_command emacs && emacs --daemon &
 
 # run foreground applications
 _command alacritty && alacritty -e ${HOME}/bin/run-screen &
 #_command emacs && _delay 1 emacs &
+#_command slack && _delay 1 slack &
 #_command thunderbird && _delay 1 thunderbird &
-#_command betterbird && _delay 1 betterbird &
-_command brave && _delay 1 brave &
+#_command brave && _delay 1 brave &
 #_command firefox && _delay 1 firefox &
-#_command vivaldi && _delay 1 vivaldi &
 #_command chromium && _delay 1 chromium &
 #_command thunar && _delay 1 thunar &
 #_command pcmanfm && _delay 1 pcmanfm &
 #_command spacefm && _delay 1 spacefm &
-#_command slack && _delay 1 slack &
+#_command idea && _delay 10 idea &
 #_command discord && _delay 1 discord &
 #_command tootle && _delay 10 tootle &
 #_command com.github.bleakgrey.tootle && _delay 10 com.github.bleakgrey.tootle &
-#_command nheko && _delay 1 nheko &
-#_command element-desktop && _delay 1 element-desktop &
 #_command dev.geopjr.Tuba && _delay 10 dev.geopjr.Tuba &
-#_command pidgin && _delay 10 pidgin &
-#_command gajim && _delay 10 gajim &
-#_command idea && _delay 10 idea &
 #_command syncterm && _delay 1 syncterm &
 
 # run application launcher

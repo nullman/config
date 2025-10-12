@@ -82,7 +82,7 @@ fi
 # select a window manager
 #exec selectwm
 
-if pgrep -x i3 || pgrep -x bspwm ; then
+if pgrep -x i3 >/dev/null || pgrep -x bspwm >/dev/null ; then
     # https://wiki.archlinux.org/title/bspwm#Problems_with_Java_applications
     # set window manager name so that java applications work
     _command wmname && wmname LG3D

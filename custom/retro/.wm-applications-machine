@@ -1,11 +1,8 @@
 #!/usr/bin/env bash
 #===============================================================================
-# bspwmrc-applications
+# .wm-applications-machine
 #
-# Binary Space Partitioning Window Manager (bspwm) auto-start applications
-# script.
-#
-# Reference: https://github.com/baskerville/bspwm
+# Launch machine-specific window manager applications.
 #===============================================================================
 
 # check if executable command is found in the path
@@ -27,13 +24,11 @@ _command xscreensaver && xscreensaver -no-splash &
 #_command mpd && mpd ${HOME}/.mpd/mpd.conf &
 #_command dropbox && dropbox start &
 #_command barriers && barriers --config ${HOME}/.barrier.conf &
-#_command barrierc && barrierc dozer &
-_command barrierc && barrierc --daemon --debug INFO --restart dozer &
-#_command barrier && barrier &
+#_command barrierc && barrierc SERVER &
 #_command emacs && emacs --daemon &
 
 # run foreground applications
-_command alacritty && alacritty -e ${HOME}/bin/run-screen &
+#_command alacritty && alacritty -e ${HOME}/bin/run-screen &
 #_command emacs && _delay 1 emacs &
 #_command slack && _delay 1 slack &
 #_command thunderbird && _delay 1 thunderbird &
