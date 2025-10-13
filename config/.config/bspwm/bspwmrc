@@ -149,8 +149,6 @@ _br 'teams-for-linux' desktop=^7 follow=on
 
 # 8: Development/Games
 bspc desktop 8 --layout monocle
-_br 'VirtualBox Machine' desktop=^8 follow=on
-_br 'VirtualBox Manager' desktop=^8 follow=on
 _br 'jetbrains-idea' desktop=^8 follow=on
 _br 'jetbrains-idea-ce' desktop=^8 follow=on
 _br 'jetbrains-studio' desktop=^8 follow=on
@@ -179,6 +177,8 @@ _br 'windows-7' desktop=^11 follow=on
 
 # 12: Virtual Machine 2
 bspc desktop 12 --layout monocle
+_br 'VirtualBox Machine' desktop=^12 follow=on
+_br 'VirtualBox Manager' desktop=^12 follow=on
 
 #-------------------------------------------------------------------------------
 # Application Rules

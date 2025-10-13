@@ -2,7 +2,9 @@
 ;;==============================================================================
 ;; StumpWM Configuration
 ;;
-;; Inspired by Gavinok: https://github.com/Gavinok/stump-conf/config
+;; Reference examples:
+;;   https://github.com/Gavinok/stump-conf/config
+;;   https://github.com/stumpwm/stumpwm/blob/master/sample-stumpwmrc.lisp
 ;;
 ;; Author: Author: Kyle W T Sherman <kylewsherman@gmail.com>
 ;;==============================================================================
@@ -97,21 +99,21 @@
       *message-window-input-gravity* :top-right
       *input-completion-show-empty* t)
 
-;; groups (virtual screens)
+;; groups (desktops)
 (when *initializing*
-  (gnew-dynamic "emacs")
+  (gnew-dynamic "editor")
   (gkill-other)                    ; remove default group which is not dynamic
-  (gnew-dynamic "term")
-  (gnewbg-dynamic "email")
-  (gnewbg-dynamic "browser")
-  (gnewbg-dynamic "files")
-  (gnewbg-dynamic "social")
-  (gnewbg-dynamic "extra")
-  (gnewbg-dynamic "dev")
-  (gnewbg-dynamic "media")
-  (gnewbg-dynamic "admin")
-  (gnewbg-dynamic "virtual1")
-  (gnewbg-dynamic "virtual2"))
+  (gnew-dynamic "term")            ; terminal/console
+  (gnewbg-dynamic "email")         ; email clients
+  (gnewbg-dynamic "browser")       ; browsers
+  (gnewbg-dynamic "file")          ; file managers
+  (gnewbg-dynamic "social")        ; chat clients
+  (gnewbg-dynamic "extra")         ; more chat clients
+  (gnewbg-dynamic "dev")           ; development
+  (gnewbg-dynamic "media")         ; image, video, and audio
+  (gnewbg-dynamic "admin")         ; administration, games, general
+  (gnewbg-dynamic "virtual1")      ; virtual machine 1
+  (gnewbg-dynamic "virtual2"))     ; virtual machine 2
 
 ;;------------------------------------------------------------------------------
 ;; Mode-Line
@@ -143,7 +145,7 @@
 (setf xft:*font-dirs* '("${HOME}/.local/share/fonts"))
 (setf clx-truetype:+font-cache-filename+ "${HOME}/.cache/stumpwm-font-cache")
 (xft:cache-fonts)
-(set-font (make-instance 'xft:font :family "MesloLGS Mono" :subfamily "Regular" :size "14")
+(set-font (make-instance 'xft:font :family "MesloLGS Mono" :subfamily "Regular" :size "14"))
 
 ;;------------------------------------------------------------------------------
 ;; Keybindings
@@ -172,7 +174,7 @@
 (define-key-top-root "C-r" "refresh")
 (define-key-top-root "C-RET" "raise-window")
 
-;; Frames and Windows (Applications)
+;; frames and windows (applications)
 
 (define-key *top-map* (kbd "M-Tab") "next")
 (define-key *top-map* (kbd "M-ISO_Left_Tab") "prev")
@@ -202,7 +204,7 @@
 (define-key-top-root "," "rotate-windows backward")
 (define-key-top-root "." "rotate-windows forward")
 
-;; Groups (Desktops)
+;; groups (desktops)
 
 (define-key *top-map* (kbd "s-TAB") "gnext")
 (define-key *top-map* (kbd "s-ISO_Left_TAB") "gprev")
@@ -248,16 +250,75 @@
 (define-key-top-root "_" "gmove-and-follow 11")
 (define-key-top-root "+" "gmove-and-follow 12")
 
-;; Applications
+;; applications
 
 (define-key-top-root "M-t" "exec alacritty")
+
+;;------------------------------------------------------------------------------
+;; Application Groups (Desktops)
+;;------------------------------------------------------------------------------
+
+(clear-window-placement-rules)
+(define-frame-preference "editor"
+                         (0 :raise nil :class "Editor"))
+(define-frame-preference "email"
+                         (0 :raise nil :class "thunderbird")
+                         (0 :raise nil :class "betterbird")
+                         (1 :raise nil :class "ms-outlook-nativefier"))
+(define-frame-preference "browser"
+                         (0 :raise nil :class "Brave-browser")
+                         (0 :raise nil :class "vivaldi-stable")
+                         (1 :raise nil :class "gopherus-sdl"))
+(define-frame-preference "file"
+                         (0 :raise nil :class "Thunar")
+                         (0 :raise nil :class "Pcmanfm")
+                         (0 :raise nil :class "Spacefm")
+                         (0 :raise nil :class "Org.gnome.Nautilus"))
+(define-frame-preference "social"
+                         (0 :raise nil :class "quassel")
+                         (1 :raise nil :class "Slack")
+                         (2 :raise nil :class "discord"))
+(define-frame-preference "extra"
+                         (0 :raise nil :class "nheko")
+                         (1 :raise nil :class "dev.geopjr.Tuba")
+                         (2 :raise nil :class "gajim")
+                         (3 :raise nil :class "Tootle")
+                         (3 :raise nil :class "Com.github.bleakgrey.tootle")
+                         (3 :raise nil :class "Element")
+                         (3 :raise nil :class "Hyperspace Desktop")
+                         (3 :raise nil :class "Pidgin")
+                         (3 :raise nil :class "android-messages-desktop")
+                         (3 :raise nil :class "gossip")
+                         (3 :raise nil :class "teams-for-linux"))
+(define-frame-preference "dev"
+                         (0 :raise nil :class "jetbrains-idea")
+                         (0 :raise nil :class "jetbrains-idea-ce")
+                         (0 :raise nil :class "jetbrains-studio")
+                         (1 :raise nil :class "xyz.chatboxapp.app"))
+(define-frame-preference "media"
+                         (0 :raise nil :class "Chromium-browser")
+                         (0 :raise nil :class "Google-chrome")
+                         (0 :raise nil :class "Firefox")
+                         (0 :raise nil :class "firefox")
+                         (0 :raise nil :class "firefox-esr")
+                         (0 :raise nil :class "LibreWolf")
+                         (0 :raise nil :class "Lollypop")
+                         (1 :raise nil :class "Qmmp")
+                         (1 :raise nil :class "mplayer2")
+                         (2 :raise nil :class "spotify")
+                         (3 :raise nil :class "Gimp-2.10"))
+(define-frame-preference "virtual1"
+                         (0 :raise nil :class "windows-7"))
+(define-frame-preference "virtual2"
+                         (0 :raise nil :class "VirtualBox Manager")
+                         (1 :raise nil :class "VirtualBox Machine"))
 
 ;;------------------------------------------------------------------------------
 ;; Launch Applications
 ;;------------------------------------------------------------------------------
 
 ;; keybindings
-(run-shell-command-from-home ".vm-applications"))
+(run-shell-command-from-home ".wm-applications"))
 
 ;;==============================================================================
 ;; End of File

@@ -24,6 +24,7 @@ moon=$(echo "${data}" | cut -d '|' -f 7)
 case "${desc}" in
     "Clear") icon="" ;;
     "Cloudy") icon="" ;;
+    "Fog") icon="" ;;
     "Haze") icon="" ;;
     "Light rain") icon="" ;;
     "Light snow") icon="" ;;
@@ -34,7 +35,10 @@ case "${desc}" in
     "Patchy rain nearby") icon="" ;;
     "Smoke") icon="" ;;
     "Sunny") icon="" ;;
-    *) notify-send -u critical "Unknown weather: ${desc}" ; echo "Unknown weather: ${desc}" >> ~/weather-errors ;;
+    *)
+        notify-send -u critical "Unknown weather: ${desc}"
+        curl --silent v2d.wttr.in/san_diego?u | sed -n '/Weather:/p' >> ~/weather-errors
+        ;;
 esac
 
 case "moon" in

@@ -80,7 +80,9 @@ if [ "$(uname -n)" != "dom0" ] ; then
     _command picom && picom -b &
 
     # system bar
-    [ -f "${HOME}/bin/system-bar" ] && source "${HOME}/bin/system-bar"
+    if ! pgrep -x stumpwm >/dev/null ; then
+        [ -f "${HOME}/bin/system-bar" ] && source "${HOME}/bin/system-bar"
+    fi
 
     # system wallpaper displays
     [ -f "${HOME}/bin/system-wallpaper-displays" ] && source "${HOME}/bin/system-wallpaper-displays"
@@ -120,7 +122,7 @@ if [ "$(uname -n)" != "dom0" ] ; then
 fi
 
 # launch custom machine-specific applications
-_command ${HOME}/.wm-applications-machine && ${HOME}/.wm-applications-machine
+[ -x "${HOME}/.wm-applications-machine" ] && ${HOME}/.wm-applications-machine
 
 #===============================================================================
 # End of File
