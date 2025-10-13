@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #===============================================================================
-# .wm-applications
+# run-wm-applications
 #
 # Launch Standard Window Manager Applicaitons
 #

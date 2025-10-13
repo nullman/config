@@ -17,6 +17,16 @@
 (setq *debug-level* 5)
 ;;(redirect-all-output (data-dir-file "stumpwm_config.log"))
 
+;; quicklisp
+;; (let ((quicklisp-setup-file
+;;        (merge-pathnames "quicklisp/setup.lisp")
+;;        (user-homedir-pathname)))
+;;   (when (probe-file quicklisp-setup-file)
+;;     (load quicklisp-setup-file)))
+(let ((quicklisp-setup-file "~/quicklisp/setup.lisp"))
+  (when (probe-file quicklisp-setup-file)
+    (load quicklisp-setup-file)))
+
 ;;------------------------------------------------------------------------------
 ;; Helper Functions
 ;;------------------------------------------------------------------------------
@@ -46,7 +56,7 @@
 (defun run-shell-command-from-home (cmd &optional collect-output-p)
   "Call `run-shell-command' with the HOME env path appended to CMD."
   (run-shell-command
-   (concatenate 'string (getenv "HOME") cmd)
+   (concatenate 'string (getenv "HOME") "/" cmd)
    collect-output-p))
 
 ;;------------------------------------------------------------------------------
@@ -101,51 +111,19 @@
 
 ;; groups (desktops)
 (when *initializing*
-  (gnew-dynamic "editor")
+  (gnew-dynamic "Editor")
   (gkill-other)                    ; remove default group which is not dynamic
-  (gnew-dynamic "term")            ; terminal/console
-  (gnewbg-dynamic "email")         ; email clients
-  (gnewbg-dynamic "browser")       ; browsers
-  (gnewbg-dynamic "file")          ; file managers
-  (gnewbg-dynamic "social")        ; chat clients
-  (gnewbg-dynamic "extra")         ; more chat clients
-  (gnewbg-dynamic "dev")           ; development
-  (gnewbg-dynamic "media")         ; image, video, and audio
-  (gnewbg-dynamic "admin")         ; administration, games, general
-  (gnewbg-dynamic "virtual1")      ; virtual machine 1
-  (gnewbg-dynamic "virtual2"))     ; virtual machine 2
-
-;;------------------------------------------------------------------------------
-;; Mode-Line
-;;------------------------------------------------------------------------------
-
-(stumpwm:add-to-load-path "${HOME}/src/stumpwm-contrib/modeline/stumptray")
-(setf *mode-line-background-color* (car *colors*)
-      *mode-line-foreground-color* (car (last *colors*))
-      *mode-line-timeout* 1)
-(run-commands "mode-line")
-(load-module "stumptray")
-(stumptray:stumptray)
-
-;;------------------------------------------------------------------------------
-;; Modules
-;;------------------------------------------------------------------------------
-
-;; gaps
-(stumpwm:add-to-load-path "${HOME}/src/stumpwm-contrib/util/swm-gaps")
-(load-module "swm-gaps")
-(setf swm-gaps:*head-gaps-size* 0)      ; monitor borders
-(setf swm-gaps:*inner-gaps-size* 4)     ; window borders
-(setf swm-gaps:*outer-gaps-size* 0)     ; additional outer window borders
-(run-commands "toggle-gaps")
-
-;; ttf fonts
-(stumpwm:add-to-load-path "${HOME}/src/stumpwm-contrib/util/ttf-fonts")
-(load-module "ttf-fonts")
-(setf xft:*font-dirs* '("${HOME}/.local/share/fonts"))
-(setf clx-truetype:+font-cache-filename+ "${HOME}/.cache/stumpwm-font-cache")
-(xft:cache-fonts)
-(set-font (make-instance 'xft:font :family "MesloLGS Mono" :subfamily "Regular" :size "14"))
+  (gnew-dynamic "Term")            ; terminal/console
+  (gnewbg-dynamic "Email")         ; email clients
+  (gnewbg-dynamic "Browser")       ; browsers
+  (gnewbg-dynamic "File")          ; file managers
+  (gnewbg-dynamic "Social")        ; chat clients
+  (gnewbg-dynamic "Extra")         ; more chat clients
+  (gnewbg-dynamic "Dev")           ; development
+  (gnewbg-dynamic "Media")         ; image, video, and audio
+  (gnewbg-dynamic "Admin")         ; administration, games, general
+  (gnewbg-dynamic "Virtual1")      ; virtual machine 1
+  (gnewbg-dynamic "Virtual2"))     ; virtual machine 2
 
 ;;------------------------------------------------------------------------------
 ;; Keybindings
@@ -157,12 +135,13 @@
 
 (setf *top-map* (make-sparse-keymap))
 (setf *root-map* (make-sparse-keymap))
+(setf *help-map* (make-sparse-keymap))
 
 (define-key *top-map* *escape-key* '*root-map*)
 
 (define-key-top-root "h" '*help-map*)
 
-(define-key-top-root ":" "exec")
+(define-key-top-root ":" "eval")
 ;;(define-key-top-root "R" "reload")
 (define-key-top-root "R" "loadrc")
 (define-key-top-root "V" "version")
@@ -192,10 +171,10 @@
 (define-key-top-root "l" "move-focus right")
 (define-key-top-root "i" "move-focus up")
 (define-key-top-root "k" "move-focus down")
-(define-key-top-root "ISO_Left_Left" "exchange-direction left")
-(define-key-top-root "ISO_Left_Right" "exchange-direction right")
-(define-key-top-root "ISO_Left_Up" "exchange-direction up")
-(define-key-top-root "ISO_Left_Down" "exchange-direction down")
+(define-key-top-root "S-Left" "exchange-direction left")
+(define-key-top-root "S-Right" "exchange-direction right")
+(define-key-top-root "S-Up" "exchange-direction up")
+(define-key-top-root "S-Down" "exchange-direction down")
 (define-key-top-root "J" "exchange-direction left")
 (define-key-top-root "L" "exchange-direction right")
 (define-key-top-root "I" "exchange-direction up")
@@ -207,7 +186,7 @@
 ;; groups (desktops)
 
 (define-key *top-map* (kbd "s-TAB") "gnext")
-(define-key *top-map* (kbd "s-ISO_Left_TAB") "gprev")
+(define-key *top-map* (kbd "s-ISO_Left_Tab") "gprev")
 (define-key *top-map* (kbd "s-`") "gother")
 
 (define-key-top-root "C-w" "grouplist")
@@ -219,10 +198,10 @@
 (define-key-top-root "M-l" "gnext")
 (define-key-top-root "M-i" "sprev")
 (define-key-top-root "M-k" "snext")
-(define-key-top-root "M-ISO_Left_Left" "gprev-with-window")
-(define-key-top-root "M-ISO_Left_Right" "gnext-with-window")
-(define-key-top-root "M-ISO_Left_j" "gprev-with-window")
-(define-key-top-root "M-ISO_Left_l" "gnext-with-window")
+(define-key-top-root "M-S-Left" "gprev-with-window")
+(define-key-top-root "M-S-Right" "gnext-with-window")
+(define-key-top-root "M-J" "gprev-with-window")
+(define-key-top-root "M-L" "gnext-with-window")
 
 (define-key-top-root "1" "gselect 1")
 (define-key-top-root "2" "gselect 2")
@@ -259,66 +238,111 @@
 ;;------------------------------------------------------------------------------
 
 (clear-window-placement-rules)
-(define-frame-preference "editor"
-                         (0 :raise nil :class "Editor"))
-(define-frame-preference "email"
-                         (0 :raise nil :class "thunderbird")
-                         (0 :raise nil :class "betterbird")
-                         (1 :raise nil :class "ms-outlook-nativefier"))
-(define-frame-preference "browser"
-                         (0 :raise nil :class "Brave-browser")
-                         (0 :raise nil :class "vivaldi-stable")
-                         (1 :raise nil :class "gopherus-sdl"))
-(define-frame-preference "file"
-                         (0 :raise nil :class "Thunar")
-                         (0 :raise nil :class "Pcmanfm")
-                         (0 :raise nil :class "Spacefm")
-                         (0 :raise nil :class "Org.gnome.Nautilus"))
-(define-frame-preference "social"
-                         (0 :raise nil :class "quassel")
-                         (1 :raise nil :class "Slack")
-                         (2 :raise nil :class "discord"))
-(define-frame-preference "extra"
-                         (0 :raise nil :class "nheko")
-                         (1 :raise nil :class "dev.geopjr.Tuba")
-                         (2 :raise nil :class "gajim")
-                         (3 :raise nil :class "Tootle")
-                         (3 :raise nil :class "Com.github.bleakgrey.tootle")
-                         (3 :raise nil :class "Element")
-                         (3 :raise nil :class "Hyperspace Desktop")
-                         (3 :raise nil :class "Pidgin")
-                         (3 :raise nil :class "android-messages-desktop")
-                         (3 :raise nil :class "gossip")
-                         (3 :raise nil :class "teams-for-linux"))
-(define-frame-preference "dev"
-                         (0 :raise nil :class "jetbrains-idea")
-                         (0 :raise nil :class "jetbrains-idea-ce")
-                         (0 :raise nil :class "jetbrains-studio")
-                         (1 :raise nil :class "xyz.chatboxapp.app"))
-(define-frame-preference "media"
-                         (0 :raise nil :class "Chromium-browser")
-                         (0 :raise nil :class "Google-chrome")
-                         (0 :raise nil :class "Firefox")
-                         (0 :raise nil :class "firefox")
-                         (0 :raise nil :class "firefox-esr")
-                         (0 :raise nil :class "LibreWolf")
-                         (0 :raise nil :class "Lollypop")
-                         (1 :raise nil :class "Qmmp")
-                         (1 :raise nil :class "mplayer2")
-                         (2 :raise nil :class "spotify")
-                         (3 :raise nil :class "Gimp-2.10"))
-(define-frame-preference "virtual1"
-                         (0 :raise nil :class "windows-7"))
-(define-frame-preference "virtual2"
-                         (0 :raise nil :class "VirtualBox Manager")
-                         (1 :raise nil :class "VirtualBox Machine"))
+(define-frame-preference "Editor"
+                         (0 :raise :lock :class "Editor"))
+(define-frame-preference "Email"
+                         (0 :raise :lock :class "thunderbird")
+                         (0 :raise :lock :class "betterbird")
+                         (1 :raise :lock :class "ms-outlook-nativefier"))
+(define-frame-preference "Browser"
+                         (0 :raise :lock :class "Brave-browser")
+                         (0 :raise :lock :class "vivaldi-stable")
+                         (1 :raise :lock :class "gopherus-sdl"))
+(define-frame-preference "File"
+                         (0 :raise :lock :class "Thunar")
+                         (0 :raise :lock :class "Pcmanfm")
+                         (0 :raise :lock :class "Spacefm")
+                         (0 :raise :lock :class "Org.gnome.Nautilus"))
+(define-frame-preference "Social"
+                         (0 :raise :lock :class "quassel")
+                         (1 :raise :lock :class "Slack")
+                         (2 :raise :lock :class "discord"))
+(define-frame-preference "Extra"
+                         (0 :raise :lock :class "nheko")
+                         (1 :raise :lock :class "dev.geopjr.Tuba")
+                         (2 :raise :lock :class "gajim")
+                         (3 :raise :lock :class "Tootle")
+                         (3 :raise :lock :class "Com.github.bleakgrey.tootle")
+                         (3 :raise :lock :class "Element")
+                         (3 :raise :lock :class "Hyperspace Desktop")
+                         (3 :raise :lock :class "Pidgin")
+                         (3 :raise :lock :class "android-messages-desktop")
+                         (3 :raise :lock :class "gossip")
+                         (3 :raise :lock :class "teams-for-linux"))
+(define-frame-preference "Dev"
+                         (0 :raise :lock :class "jetbrains-idea")
+                         (0 :raise :lock :class "jetbrains-idea-ce")
+                         (0 :raise :lock :class "jetbrains-studio")
+                         (1 :raise :lock :class "xyz.chatboxapp.app"))
+(define-frame-preference "Media"
+                         (0 :raise :lock :class "Chromium-browser")
+                         (0 :raise :lock :class "Google-chrome")
+                         (0 :raise :lock :class "Firefox")
+                         (0 :raise :lock :class "firefox")
+                         (0 :raise :lock :class "firefox-esr")
+                         (0 :raise :lock :class "LibreWolf")
+                         (0 :raise :lock :class "Lollypop")
+                         (1 :raise :lock :class "Qmmp")
+                         (1 :raise :lock :class "mplayer2")
+                         (2 :raise :lock :class "spotify")
+                         (3 :raise :lock :class "Gimp-2.10"))
+(define-frame-preference "Virtual1"
+                         (0 :raise :lock :class "windows-7"))
+(define-frame-preference "Virtual2"
+                         (0 :raise :lock :class "VirtualBox Manager")
+                         (1 :raise :lock :class "VirtualBox Machine"))
+
+;;------------------------------------------------------------------------------
+;; Mode-Line (System Tray)
+;;------------------------------------------------------------------------------
+
+;;(add-to-load-path "${HOME}/src/stumpwm-contrib/modeline/stumptray")
+(ql:quickload "xembed")
+(setf *mode-line-position* :bottom
+      *mode-line-background-color* (car *colors*)
+      *mode-line-foreground-color* (car (last *colors*))
+      *mode-line-pad-x* 4
+      *mode-line-pad-y* 4
+      *mode-line-timeout* 2
+      *group-format* "%t"
+      *window-format* "%n: %30t"
+      *time-modeline-string* "%a %Y-%m-%d %H:%M")
+;;(run-commands "mode-line")
+;;(toggle-mode-line (current-screen))
+(loop for screen in *screen-list* do
+      (loop for head in (screen-heads screen) do
+            (enable-mode-line screen head t)))
+(load-module "stumptray")
+(stumptray:stumptray)
+
+;;------------------------------------------------------------------------------
+;; Modules
+;;------------------------------------------------------------------------------
+
+;; gaps
+;;(add-to-load-path "${HOME}/src/stumpwm-contrib/util/swm-gaps")
+(load-module "swm-gaps")
+(setf swm-gaps:*head-gaps-size* 0)      ; monitor borders
+(setf swm-gaps:*inner-gaps-size* 4)     ; window borders
+(setf swm-gaps:*outer-gaps-size* 0)     ; additional outer window borders
+(run-commands "toggle-gaps")
+
+;; ;; ttf fonts
+;; ;;(add-to-load-path "${HOME}/src/stumpwm-contrib/util/ttf-fonts")
+;; (ql:quickload "clx-truetype")
+;; (load-module "ttf-fonts")
+;; (setf xft:*font-dirs* '("${HOME}/.local/share/fonts"))
+;; (setf clx-truetype:+font-cache-filename+ "${HOME}/.cache/stumpwm-font-cache")
+;; (xft:cache-fonts)
+;; (set-font (make-instance 'xft:font :family "MesloLGS Mono" :subfamily "Regular" :size "14"))
 
 ;;------------------------------------------------------------------------------
 ;; Launch Applications
 ;;------------------------------------------------------------------------------
 
-;; keybindings
-(run-shell-command-from-home ".wm-applications"))
+(when *initializing*
+  ;; standard window manager applications
+  (run-shell-command-from-home "bin/run-wm-applications"))
 
 ;;==============================================================================
 ;; End of File

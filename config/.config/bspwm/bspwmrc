@@ -272,7 +272,7 @@ _br 'zenity' state=floating center=true
 # Launch Applications
 #-------------------------------------------------------------------------------
 
-[ -f "${HOME}/.wm-applications" ] && source "${HOME}/.wm-applications"
+[ -f "${HOME}/bin/run-wm-applications" ] && ${HOME}/bin/run-wm-applications
 
 #===============================================================================
 # End of File
