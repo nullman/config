@@ -13,7 +13,7 @@ type="$1"
 shift
 loc="$*"
 data="$(curl --silent 'wttr.in/'"${loc}"'?uT&format=+%C|+%t|+%w|+%p|+%P|+%u|+%m' | sed 's/^ // ; s/| /|/g')"
-desc=$(echo "${data}" | cut -d '|' -f 1)
+desc=$(echo "${data}" | cut -d '|' -f 1 | sed 's/\<./\u&/g')
 temp=$(echo "${data}" | cut -d '|' -f 2)
 wind=$(echo "${data}" | cut -d '|' -f 3)
 prec=$(echo "${data}" | cut -d '|' -f 4)
@@ -26,13 +26,13 @@ case "${desc}" in
     "Cloudy") icon="" ;;
     "Fog") icon="" ;;
     "Haze") icon="" ;;
-    "Light rain") icon="" ;;
-    "Light snow") icon="" ;;
+    "Light Rain") icon="" ;;
+    "Light Snow") icon="" ;;
     "Mist") icon="?" ;;
     "Overcast") icon="" ;;
-    "Partly cloudy") icon="" ;;
-    "Patchy light rain") icon="" ;;
-    "Patchy rain nearby") icon="" ;;
+    "Partly Cloudy") icon="" ;;
+    "Patchy Light Rain") icon="" ;;
+    "Patchy Rain Nearby") icon="" ;;
     "Smoke") icon="" ;;
     "Sunny") icon="" ;;
     *)
