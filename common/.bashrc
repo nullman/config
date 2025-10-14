@@ -12,6 +12,16 @@ _command() {
     command -v "$1" >/dev/null 2>&1
 }
 
+# run executable command if found in the path
+_run() {
+    command -v "$1" >/dev/null 2>&1 && "$@"
+}
+
+# source script if found in the path
+_source() {
+    [ -f "$1" ] && source "$@"
+}
+
 # shell colors
 export COLOR_DEFAULT="\[\033[0m\]"
 export COLOR_BLACK="\[\033[0;30m\]"
@@ -33,7 +43,7 @@ export COLOR_LIGHT_GRAY="\[\033[0;37m\]"
 export COLOR_WHITE="\[\033[1;37m\]"
 
 # source system bashrc
-[ -f "/etc/bashrc" ] && source "/etc/bashrc" 2>&1
+_source "/etc/bashrc" 2>&1
 
 # keep original TERM value for scripts to use
 export REAL_TERM="${TERM}"
@@ -76,16 +86,16 @@ PROMPT_COMMAND='history -a'  # this terminal should append to the history file
 if [ -z "${INSIDE_EMACS}" ] ; then
     if [ "${os}" == "Darwin" ] ; then
         [ -d "/usr/local/opt/fzf/bin" ] && [ ! "${PATH}" == */usr/local/opt/fzf/bin* ] && export PATH="${PATH}:/usr/local/opt/fzf/bin"
-        [ -f "/usr/local/opt/fzf/shell/key-bindings.bash" ] && source "/usr/local/opt/fzf/shell/key-bindings.bash" 2>&1
-        [ -f "/usr/local/opt/fzf/shell/completion.bash" ] && source "/usr/local/opt/fzf/shell/completion.bash" 2>&1
+        _source "/usr/local/opt/fzf/shell/key-bindings.bash" 2>&1
+        _source "/usr/local/opt/fzf/shell/completion.bash" 2>&1
     elif $(uname -v | grep -q 'NixOS') ; then
         if _command fzf-share ; then
-            source "$(fzf-share)/key-bindings.bash"
-            source "$(fzf-share)/completion.bash"
+            _source "$(fzf-share)/key-bindings.bash"
+            _source "$(fzf-share)/completion.bash"
         fi
     else
-        [ -f "/usr/share/fzf/key-bindings.bash" ] && source "/usr/share/fzf/key-bindings.bash" 2>&1
-        [ -f "/usr/share/fzf/completion.bash" ] && source "/usr/share/fzf/completion.bash" 2>&1
+        _source "/usr/share/fzf/key-bindings.bash" 2>&1
+        _source "/usr/share/fzf/completion.bash" 2>&1
     fi
 fi
 export FZF_DEFAULT_OPTS="--layout=reverse --border=bold"
@@ -127,10 +137,10 @@ fi
 #[ -z "$(greppr erase)" ] || stty erase $(getpr erase)
 
 # set tabs
-_command stty && stty tabs
+_run stty tabs
 
 # make terminals not beep
-[ "${os}" == "Windows_NT" ] || _command setterm && setterm -blength 0 >/dev/null 2>&1
+[ "${os}" == "Windows_NT" ] || _run setterm -blength 0 >/dev/null 2>&1
 
 # set umask
 umask 0022
@@ -145,10 +155,10 @@ shopt -s autocd
 shopt -s checkwinsize
 
 # source shellrc
-[ -f "${HOME}/.shellrc" ] && source "${HOME}/.shellrc"
+_source "${HOME}/.shellrc"
 
 # run bash completion
-[ -f "/etc/bash-completion" ] && source "/etc/bash-completion" 2>&1
+_source "/etc/bash-completion" 2>&1
 
 # perl modules
 #PATH="${HOME}/perl5/bin${PATH:+:${PATH}}"; export PATH;

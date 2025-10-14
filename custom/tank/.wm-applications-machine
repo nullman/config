@@ -10,6 +10,18 @@ _command() {
     command -v "$1" >/dev/null 2>&1
 }
 
+# run executable command if found in the path
+_run() {
+    command -v "$1" >/dev/null 2>&1 && "$@"
+}
+
+# run executable command if found in the path and not already running
+_once() {
+    if command -v "$1" >/dev/null 2>&1 && ! pidof -q "$1" ; then
+        "$@" &
+    fi
+}
+
 # delay running a command (SECONDS COMMAND)
 _delay() {
     local delay=$1
@@ -18,46 +30,46 @@ _delay() {
 }
 
 # run background applications and services
-_command xscreensaver && xscreensaver -no-splash &
-#_command xautolock && xautolock -time 30 -locker blurlock & # lock screen after 30 minutes
-_command xautolock && xautolock -time 30 -locker 'xscreensaver-command -lock' & # lock screen after 30 minutes
-#_command mpd && mpd ${HOME}/.mpd/mpd.conf &
-#_command dropbox && dropbox start &
-#_command barriers && barriers --config ${HOME}/.barrier.conf &
-#_command barrierc && barrierc SERVER &
-#_command emacs && emacs --daemon &
+_once xscreensaver -no-splash &
+#_once xautolock -time 30 -locker blurlock & # lock screen after 30 minutes
+_once xautolock -time 30 -locker 'xscreensaver-command -lock' & # lock screen after 30 minutes
+#_once mpd ${HOME}/.mpd/mpd.conf &
+#_once dropbox start &
+#_once barriers --config ${HOME}/.barrier.conf &
+#_once barrierc SERVER &
+#_once emacs --daemon &
 
 # delay so that networking has time to connect
 #_delay 10
 
 # run foreground applications
-#_command alacritty && alacritty -e ${HOME}/bin/run-screen &
-#_command emacs && _delay 1 emacs &
-##_command thunderbird && _delay 1 thunderbird &
-#_command betterbird && _delay 1 betterbird &
-#_command brave && _delay 1 brave &
-##_command firefox && _delay 1 firefox &
-##_command vivaldi && _delay 1 vivaldi &
-##_command chromium && _delay 1 chromium &
-#_command thunar && _delay 1 thunar &
-##_command pcmanfm && _delay 1 pcmanfm &
-##_command spacefm && _delay 1 spacefm &
-#_command slack && _delay 1 slack &
-#_command discord && _delay 10 discord &
-##_command tootle && _delay 1 tootle &
-##_command com.github.bleakgrey.tootle && _delay 1 com.github.bleakgrey.tootle &
-#_command nheko && _delay 1 nheko &
-##_command element-desktop && _delay 1 element-desktop &
-#_command dev.geopjr.Tuba && _delay 10 dev.geopjr.Tuba &
-#_command gajim && _delay 20 gajim &
-##_command pidgin && _delay 20 pidgin &
-##_command idea && _delay 10 idea &
-##_command google-chrome && _delay 1 google-chrome &
-##_command google-chrome-stable && _delay 1 google-chrome-stable &
-##_command syncterm && _delay 1 syncterm &
+#_once && alacritty -e ${HOME}/bin/run-screen &
+#_delay 1 _once emacs &
+##_delay 1 _once thunderbird &
+#_delay 1 _once betterbird &
+#_delay 1 _once brave &
+##_delay 1 _once firefox &
+##_delay 1 _once vivaldi &
+##_delay 1 _once chromium &
+#_delay 1 _once thunar &
+##_delay 1 _once pcmanfm &
+##_delay 1 _once spacefm &
+#_delay 1 _once slack &
+#_delay 10 _once discord &
+##_delay 1 _once tootle &
+##_delay 1 _once com.github.bleakgrey.tootle &
+#_delay 1 _once nheko &
+##_delay 1 _once element-desktop &
+#_delay 10 _once dev.geopjr.Tuba &
+#_delay 20 _once gajim &
+##_delay 20 _once pidgin &
+##_delay 10 _once idea &
+##_delay 1 _once google-chrome &
+##_delay 1 _once google-chrome-stable &
+##_delay 1 _once syncterm &
 
 # run application launcher
-_command ${HOME}/bin/application-launcher && ${HOME}/bin/application-launcher &
+_run ${HOME}/bin/application-launcher &
 
 #===============================================================================
 # End of File

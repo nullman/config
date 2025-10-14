@@ -14,6 +14,18 @@ _command() {
     command -v "$1" >/dev/null 2>&1
 }
 
+# run executable command if found in the path and not already running
+_once() {
+    if command -v "$1" >/dev/null 2>&1 && ! pidof -q "$1" ; then
+        "$@" &
+    fi
+}
+
+# source script if found in the path
+_source() {
+    [ -f "$1" ] && source "$@"
+}
+
 # delay running a command (SECONDS COMMAND)
 _delay() {
     local delay=$1
@@ -22,14 +34,14 @@ _delay() {
 }
 
 # simple x hotkey daemon
-_command sxhkd && sxhkd -c "${HOME}/.config/sxhkd/sxhkdrc" &
+_once sxhkd -c "${HOME}/.config/sxhkd/sxhkdrc" &
 
 # xfce settings
-#_command xfsettingsd && xfsettingsd &
+#_once xfsettingsd &
 
 # ssh-agent
-#_command ssh-agent && ssh-agent &
-#_command ssh-add && ssh-add &
+#_once ssh-agent &
+#_once ssh-add &
 
 # key bindings
 #xmodmap "${HOME}/.xmodmaprc" &
@@ -41,47 +53,47 @@ _command sxhkd && sxhkd -c "${HOME}/.config/sxhkd/sxhkdrc" &
 # gnome keyring
 #eval "$(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg)" &
 # lx policykit authentation agent
-#_command lxpolkit && lxpolkit &
+#_once lxpolkit &
 
 # compositor
-#_command manjaro-compositor && manjaro-compositor --start &
-_command compton && compton -c &
+#_once manjaro-compositor --start &
+_once compton -c &
 
 # system bar
-[ -f "${HOME}/bin/system-bar" ] && source "${HOME}/bin/system-bar"
+_source "${HOME}/bin/system-bar"
 
 # system wallpaper displays
-[ -f "${HOME}/bin/system-wallpaper-displays" ] && source "${HOME}/bin/system-wallpaper-displays"
+_source "${HOME}/bin/system-wallpaper-displays"
 
 # full-screen task-switcher
-#_command skippy-xd && skippy-xd --config "${HOME}/.config/skippy-xd/skippy-xd.rc" --start-daemon &
+#_once skippy-xd --config "${HOME}/.config/skippy-xd/skippy-xd.rc" --start-daemon &
 
 # localize user system folders
-#_command xdg-user-dirs-gtk-update && xdg-user-dirs-gtk-update &
+#_once xdg-user-dirs-gtk-update &
 
 # enable numlock [do not use on laptops without numpads]
-#_command numlockx && numlockx &
+#_once numlockx &
 
 # screen saver
-#_command xautolock && xautolock -time 30 -locker blurlock & # lock screen after 30 minutes
+#_once xautolock -time 30 -locker blurlock & # lock screen after 30 minutes
 
 # tell firefox to match theme
-#_command ff-theme-util && ff-theme-util &
+#_once ff-theme-util &
 
 # set cursor theme
-_command fix_xcursor && fix_xcursor &
+_once fix_xcursor &
 
 # hide mouse when not in use
-_command unclutter && unclutter &
+_once unclutter &
 
 # wallpaper manager
-_command nitrogen && nitrogen --restore &
+_once nitrogen --restore &
 
 # rebuild wm menu
-#sleep 10 && _command mmaker && mmaker --force openbox &
+#sleep 10 && _once mmaker --force openbox &
 
 # initialize custom applications
-[ -f "${HOME}/.openbox-applications" ] && source "${HOME}/.openbox-applications"
+_source "${HOME}/.openbox-applications"
 
 #===============================================================================
 # End of File

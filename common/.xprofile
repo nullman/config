@@ -7,14 +7,24 @@
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
-# add to the run path
-export runpath="${runpath}:${HOME}/.xprofile"
-logger "Running: ${HOME}/.xprofile"
-
 # check if executable command is found in the path
 _command() {
     command -v "$1" >/dev/null 2>&1
 }
+
+# run executable command if found in the path
+_run() {
+    command -v "$1" >/dev/null 2>&1 && "$@"
+}
+
+# source script if found in the path
+_source() {
+    [ -f "$1" ] && source "$@"
+}
+
+# add to the run path
+export runpath="${runpath}:${HOME}/.xprofile"
+logger "Running: ${HOME}/.xprofile"
 
 # exit if not running under X11
 [ -z "${DISPLAY}" ] && return 1
@@ -36,45 +46,45 @@ _command xmodmap && [ -f ${HOME}/.Xmodmap ] && xmodmap ${HOME}/.Xmodmap
 # setxkbmap key behavior modifications
 #   caps lock  -> control
 #   both shift -> toggle caps lock
-_command setxkbmap && setxkbmap -option 'shift:both_capslock,caps:ctrl_modifier'
+_run setxkbmap -option 'shift:both_capslock,caps:ctrl_modifier'
 
 # # setxkbmap key behavior modifications
 # #   caps lock  -> control
 # #   both shift -> toggle caps lock
 # #   shift      -> cancel caps lock
-# _command setxkbmap && setxkbmap -option 'shift:both_capslock_cancel,caps:ctrl_modifier'
+# _run setxkbmap -option 'shift:both_capslock_cancel,caps:ctrl_modifier'
 
 # # xbindkeys
 # pkill -u ${USER} xbindkeys >/dev/null 2>&1
-# _command xbindkeys && [ -f ${HOME}/.xbindkeysrc ] && xbindkeys >/dev/null 2>&1
+# [ -f ${HOME}/.xbindkeysrc ] && _run xbindkeys >/dev/null 2>&1
 
 # # sxhkd
-# [ -f "${HOME}/bin/run-sxhkd" ] && ${HOME}/bin/run-sxhkd
+# _run ${HOME}/bin/run-sxhkd
 
 # set no energy saving, mouse acceleration rate, and keyboard acceleration rate
-_command xset && xset -dpms s off b off m 2/1 4 r rate 500 35 >/dev/null 2>&1
+_run xset -dpms s off b off m 2/1 4 r rate 500 35 >/dev/null 2>&1
 
 # # set mouse scrolling speed
-# _command imwheel && imwheel -b 4 8 >/dev/null 2>&1
+# _run imwheel -b 4 8 >/dev/null 2>&1
 
 # set background color and mouse pointer
-#_command xsetroot && xsetroot -solid black -cursor_name left_ptr >/dev/null 2>&1
+#_run xsetroot -solid black -cursor_name left_ptr >/dev/null 2>&1
 
 # # set no energy saving, mouse acceleration rate, and keyboard acceleration rate
 # if [ -n "$(greppr screen_blank)" ] ; then
-#     _command xset && xset -dpms s on b off m 2/1 4 r rate 500 35 >/dev/null 2>&1
+#     _run xset -dpms s on b off m 2/1 4 r rate 500 35 >/dev/null 2>&1
 # else
-#     _command xset && xset -dpms s off b off m 2/1 4 r rate 500 35 >/dev/null 2>&1
+#     _run xset -dpms s off b off m 2/1 4 r rate 500 35 >/dev/null 2>&1
 # fi
 
 # turn numlock on
 if [ "$(uname -n)" == "dozer" ] ; then
-    _command numlockx && numlockx
+    _run numlockx
 fi
 
 # xhost
-#_command xhost && xhost +localhost >/dev/null 2>&1
-#_command xhost && xhost +mouse1 >/dev/null 2>&1
+#_run xhost +localhost >/dev/null 2>&1
+#_run xhost +mouse1 >/dev/null 2>&1
 
 # start wm
 #[ -z "$(greppr window_manager)" ] || ps ux | grep -v grep | grep -q window_manager || (exec $(getpr window_manager) &) >/dev/null 2>&1
@@ -82,19 +92,11 @@ fi
 # select a window manager
 #exec selectwm
 
-if pgrep -x i3 >/dev/null || pgrep -x bspwm >/dev/null ; then
-    # https://wiki.archlinux.org/title/bspwm#Problems_with_Java_applications
-    # set window manager name so that java applications work
-    _command wmname && wmname LG3D
-    # fix java app not refreshing issue in tiling window managers
-    export _JAVA_AWT_WM_NONREPARENTING=1
-fi
-
 # use qt5ct for Qt themeing
 export QT_QPA_PLATFORMTHEME="qt5ct"
 
 # restore rotation
-#[ -x ${HOME}/.raspad-rotate-restore ] && ${HOME}/.raspad-rotate-restore
+# _source ${HOME}/.raspad-rotate-restore
 
 #===============================================================================
 # End of File

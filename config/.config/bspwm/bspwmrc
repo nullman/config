@@ -8,9 +8,9 @@
 # Reference: https://gitlab.com/protesilaos/dotfiles/-/blob/v2.2.0/bspwm/.config/bspwm/bspwmrc
 #===============================================================================
 
-# check if executable command is found in the path
-_command() {
-    command -v "$1" >/dev/null 2>&1
+# run executable command if found in the path
+_run() {
+    command -v "$1" >/dev/null 2>&1 && "$@"
 }
 
 # bspc config
@@ -22,6 +22,15 @@ _bc() {
 _br() {
     bspc rule --add "$@"
 }
+
+# env setup
+export XDG_CURRENT_DESKTOP='bspwm'
+
+# https://wiki.archlinux.org/title/bspwm#Problems_with_Java_applications
+# set window manager name so that java applications work
+_run wmname LG3D
+# fix java app not refreshing issue in tiling window managers
+export _JAVA_AWT_WM_NONREPARENTING=1
 
 #-------------------------------------------------------------------------------
 # Configuration
@@ -126,13 +135,13 @@ _br 'Pcmanfm' desktop=^5 follow=on
 _br 'Spacefm' desktop=^5 follow=on
 _br 'Thunar' desktop=^5 follow=on
 
-# 6: Chat
+# 6: Social 1
 #bspc desktop 6 --layout tiled
-_br 'Slack' desktop=^6 follow=on
 _br 'discord' desktop=^6 follow=on
 _br 'quassel' desktop=^6 follow=on
+_br 'Slack' desktop=^6 follow=on
 
-# 7: More Chat
+# 7: Social 2
 #bspc desktop 7 --layout stacked
 _br 'Com.github.bleakgrey.tootle' desktop=^7 follow=on
 _br 'Element' desktop=^7 follow=on
@@ -147,14 +156,14 @@ _br 'gossip' desktop=^7 follow=on
 _br 'nheko' desktop=^7 follow=on
 _br 'teams-for-linux' desktop=^7 follow=on
 
-# 8: Development/Games
+# 8: Development
 bspc desktop 8 --layout monocle
 _br 'jetbrains-idea' desktop=^8 follow=on
 _br 'jetbrains-idea-ce' desktop=^8 follow=on
 _br 'jetbrains-studio' desktop=^8 follow=on
 _br 'xyz.chatboxapp.app' desktop=^8 follow=on
 
-# 9: Image, Video, and Audio
+# 9: Media: Image, Video, and Audio
 bspc desktop 9 --layout monocle
 _br 'Chromium-browser' desktop=^9 follow=on
 _br 'Firefox' desktop=^9 follow=on
@@ -168,7 +177,7 @@ _br 'firefox-esr' desktop=^9 follow=on
 _br 'mplayer2' desktop=^9 follow=on
 _br 'spotify' desktop=^9 follow=on
 
-# 10: Administration/General
+# 10: General, Administration, Games
 #bspc desktop 10 --layout monocle
 
 # 11: Virtual Machine 1
@@ -272,7 +281,7 @@ _br 'zenity' state=floating center=true
 # Launch Applications
 #-------------------------------------------------------------------------------
 
-[ -f "${HOME}/bin/run-wm-applications" ] && ${HOME}/bin/run-wm-applications
+_run ${HOME}/bin/run-wm-applications
 
 #===============================================================================
 # End of File

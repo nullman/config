@@ -10,9 +10,16 @@
 # delay before launching applets
 delay=0
 
-# check if executable command is found in the path
-_command() {
-    command -v "$1" >/dev/null 2>&1
+# run executable command if found in the path
+_run() {
+    command -v "$1" >/dev/null 2>&1 && "$@"
+}
+
+# run executable command if found in the path and not already running
+_once() {
+    if command -v "$1" >/dev/null 2>&1 && ! pidof -q "$1" ; then
+        "$@" &
+    fi
 }
 
 # delay running a command (SECONDS COMMAND)
@@ -23,24 +30,24 @@ _delay() {
 }
 
 # system bar
-#_command polybar && pkill -u ${USER} polybar ; polybar -c ${HOME}/.config/polybar/config openbox-bar &
-#_command tint2 && (pkill -u ${USER} tint2 ; tint2 && sleep 1 && xdo below -t $(xdo id -n root) $(xdo id -N Tint2)) & # status bar hidden when fullscreen
-#_command eww && (eww --restart open bar && sleep 1 && xdo below -t $(xdo id -n root) $(xdo id -n eww)) & # status bar hidden when fullscreen
-_command xfce4-panel && pkill -u ${USER} xfce4-panel ; xfce4-panel --disable-wm-check &
+#pkill -u ${USER} polybar ; _once polybar -c ${HOME}/.config/polybar/config openbox-bar &
+#(pkill -u ${USER} tint2 ; _once tint2 && sleep 1 && xdo below -t $(xdo id -n root) $(xdo id -N Tint2)) & # status bar hidden when fullscreen
+#(_run eww --restart open bar && sleep 1 && xdo below -t $(xdo id -n root) $(xdo id -n eww)) & # status bar hidden when fullscreen
+pkill -u ${USER} xfce4-panel ; _once xfce4-panel --disable-wm-check &
 
 # system bar applets
-#_command clipit && (_delay ${delay} pkill -u ${USER} clipit ; clipit) &
-_command pa-applet && (_delay ${delay} pkill -u ${USER} pa-applet ; pa-applet) &
-_command blueman-applet && (_delay ${delay} pkill -u ${USER} blueman-applet ; blueman-applet) &
-_command nm-applet && (_delay ${delay} pkill -u ${USER} nm-applet ; nm-applet) &
-#_command pamac-tray && (_delay ${delay} pkill -u ${USER} pamac-tray ; pamac-tray) &
+#(_delay ${delay} pkill -u ${USER} clipit ; _once clipit) &
+(_delay ${delay} pkill -u ${USER} pa-applet ; _once pa-applet) &
+(_delay ${delay} pkill -u ${USER} blueman-applet ; _once blueman-applet) &
+(_delay ${delay} pkill -u ${USER} nm-applet ; _once nm-applet) &
+#(_delay ${delay} pkill -u ${USER} pamac-tray ; _once pamac-tray) &
 if [ -e "/sys/class/power_supply/BAT0" ] ; then
-    _command xfce4-power-manager && (_delay ${delay} pkill -u ${USER} xfce4-power-manager ; xfce4-power-manager) &
+    (_delay ${delay} pkill -u ${USER} xfce4-power-manager ; _once xfce4-power-manager) &
 fi
-#_command volumeicon && (_delay ${delay} pkill -u ${USER} volumeicon ; volumeicon) &
-#_command sbxkb && (_delay ${delay} pkill -u ${USER} sbxkb ; sbxkb) &
-#_command kdeconnect-indicator && (_delay ${delay} pkill -u ${USER} kdeconnect-indicator ; kdeconnect-indicator) &
-_command localsend && (_delay ${delay} pkill -u ${USER} localsend ; localsend --hidden) &
+#(_delay ${delay} pkill -u ${USER} volumeicon ; _once volumeicon) &
+#(_delay ${delay} pkill -u ${USER} sbxkb ; _once sbxkb) &
+#(_delay ${delay} pkill -u ${USER} kdeconnect-indicator ; _once kdeconnect-indicator) &
+(_delay ${delay} pkill -u ${USER} localsend ; _once localsend --hidden) &
 
 #===============================================================================
 # End of File

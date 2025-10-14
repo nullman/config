@@ -12,34 +12,35 @@ _command() {
     command -v "$1" >/dev/null 2>&1
 }
 
+# run executable command if found in the path
+_run() {
+    command -v "$1" >/dev/null 2>&1 && "$@"
+}
+
 xres=$(xrandr | sed -n 's/^.* current //p' | sed 's/^\([0-9]\+\) x \([0-9]\+\).*$/\1/')
 yres=$(xrandr | sed -n 's/^.* current //p' | sed 's/^\([0-9]\+\) x \([0-9]\+\).*$/\2/')
 
 echo "xres: ${xres}, yres: ${yres}"
 
 # conky displays on wallpaper
-_command conky && pkill -u ${USER} conky
-_command conky && \
-    if [ -f "${HOME}/.config/conky/system-info.conkyrc" ] ; then
-        conky --config="${HOME}/.config/conky/system-info.conkyrc" >/dev/null 2>&1 &
-    fi
-_command conky && \
-    if [ -f "${HOME}/.config/conky/bspwm-keybindings.conkyrc" ] && \
-           [ ${yres} -ge 1024 ] ; then
-        conky --config="${HOME}/.config/conky/bspwm-keybindings.conkyrc" >/dev/null 2>&1 &
-    fi
-_command conky && \
-    if [ -f "${HOME}/.config/conky/reminders.conkyrc" ] && \
-           [ ${xres} -ge 1600 ] ; then
-        (conky --config="${HOME}/.config/conky/reminders.conkyrc" ; \
-         conky --config="${HOME}/.config/conky/weather-graph.conkyrc") >/dev/null 2>&1 &
-    fi
-_command conky && \
-    if [ -f "${HOME}/.config/conky/weather-report.conkyrc" ] && \
-           [ ${yres} -ge 1440 ] ; then
-        (conky --config="${HOME}/.config/conky/fzf-keybindings.conkyrc" ; \
-         conky --config="${HOME}/.config/conky/weather-report.conkyrc") >/dev/null 2>&1 &
-    fi
+pkill -u ${USER} conky
+if [ -f "${HOME}/.config/conky/system-info.conkyrc" ] ; then
+    _run conky --config="${HOME}/.config/conky/system-info.conkyrc" >/dev/null 2>&1 &
+fi
+if [ -f "${HOME}/.config/conky/bspwm-keybindings.conkyrc" ] && \
+       [ ${yres} -ge 1024 ] ; then
+    _run conky --config="${HOME}/.config/conky/bspwm-keybindings.conkyrc" >/dev/null 2>&1 &
+fi
+if [ -f "${HOME}/.config/conky/reminders.conkyrc" ] && \
+       [ ${xres} -ge 1600 ] ; then
+    (_run conky --config="${HOME}/.config/conky/reminders.conkyrc" ; \
+     _run conky --config="${HOME}/.config/conky/weather-graph.conkyrc") >/dev/null 2>&1 &
+fi
+if [ -f "${HOME}/.config/conky/weather-report.conkyrc" ] && \
+       [ ${yres} -ge 1440 ] ; then
+    (_run conky --config="${HOME}/.config/conky/fzf-keybindings.conkyrc" ; \
+     _run conky --config="${HOME}/.config/conky/weather-report.conkyrc") >/dev/null 2>&1 &
+fi
 
 #===============================================================================
 # End of File

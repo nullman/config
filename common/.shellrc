@@ -9,22 +9,19 @@
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
-# source funct
-[ -f "${HOME}/.funct" ] && source "${HOME}/.funct"
-
-# source alias
-[ -f "${HOME}/.alias" ] && source "${HOME}/.alias"
-
-# add to the run path
-export runpath="${runpath}:${HOME}/.shellrc"
-logger "Running: ${HOME}/.shellrc"
-
-# operating system
-os="$(uname -s)"
-
 # check if executable command is found in the path
 _command() {
     command -v "$1" >/dev/null 2>&1
+}
+
+# run executable command if found in the path
+_run() {
+    command -v "$1" >/dev/null 2>&1 && "$@"
+}
+
+# source script if found in the path
+_source() {
+    [ -f "$1" ] && source "$@"
 }
 
 # shell colors
@@ -46,6 +43,19 @@ export COLOR_CYAN="\[\033[0;36m\]"
 export COLOR_LIGHT_CYAN="\[\033[1;36m\]"
 export COLOR_LIGHT_GRAY="\[\033[0;37m\]"
 export COLOR_WHITE="\[\033[1;37m\]"
+
+# source funct
+_source "${HOME}/.funct"
+
+# source alias
+_source "${HOME}/.alias"
+
+# add to the run path
+export runpath="${runpath}:${HOME}/.shellrc"
+logger "Running: ${HOME}/.shellrc"
+
+# operating system
+os="$(uname -s)"
 
 # add path entry before or after existing path entries, preventing duplicates
 _pathadd() {
@@ -136,7 +146,7 @@ unset MAIL
 #export GOROOT="/usr/lib/go"
 #export GOPATH="${HOME}/gocode"
 export SDKMAN_DIR="${HOME}/.sdkman"
-export GEM_HOME="$(_command ruby && ruby -e 'print Gem.user_dir')"
+export GEM_HOME="$(_run ruby -e 'print Gem.user_dir')"
 export GTK_THEME=Adwaita:dark
 export GTK2_RC_FILES=/usr/share/themes/Adwaita-dark/gtk-2.0/gtkrc
 export QT_STYLE_OVERRIDE=Adwaita-Dark
@@ -235,16 +245,16 @@ export XDG_DOWNLOAD_DIR="${HOME}/Downloads"
 # set vitualenv environment
 export WORKON_HOME="${HOME}/.virtualenvs"
 export PROJECT_HOME="${HOME}/.virtualenv-projects"
-[ -x "/usr/local/bin/virtualenvwrapper.sh" ] && source "/usr/local/bin/virtualenvwrapper.sh" 2>&1
+_source "/usr/local/bin/virtualenvwrapper.sh" 2>&1
 
 # set prodvd key
 export CDR_SECURITY="8:dvd,clone:sparc-sun-solaris2,i386-pc-solaris2,i586-pc-linux\,powerpc-apple,hppa,powerpc-ibm-aix,i386-unknown-freebsd,i386-unknown-openbsd,i38\6-unknown-netbsd,powerpc-apple-netbsd,i386-pc-bsdi,mips-sgi-irix,i386-pc-sco:1.11\::1093000000:::private/research/educational_non-commercial_use:9vl2T2kP6w6O4h.bXu\et8hP1Z3H5erm3qWmxhbcr.fHvuN8ZJbhQUWBzjAc"
 
 # # set ocaml package manager environment
-# [ -x "${HOME}/.opam/opam-init/init.sh" ] && source "${HOME}/.opam/opam-init/init.sh" >/dev/null 2>&1
+# _source "${HOME}/.opam/opam-init/init.sh" >/dev/null 2>&1
 
 # nvm
-[ -f "/usr/share/nvm/init-nvm.sh" ] && source "/usr/share/nvm/init-nvm.sh" 2>&1
+_source "/usr/share/nvm/init-nvm.sh" 2>&1
 # move nvm bin path after sbin
 nvmpath=$(echo ":${PATH}:" | grep -E ":${HOME}/\.nvm/[^:]*:" | sed "s%^.*:\\(${HOME}/\.nvm/[^:]*\\):.*$%\1%")
 if [ -n "${nvmpath}" ] ; then
@@ -256,31 +266,28 @@ fi
 #[ "${SHELL: -4}" == "bash" ] && [ -f "${HOME}/.opam/opam-init/init.sh" ] && source "${HOME}/.opam/opam-init/init.sh" 2>&1
 #[ "${SHELL: -3}" == "zsh" ] && [ -f "${HOME}/.opam/opam-init/init.zsh" ] && source "${HOME}/.opam/opam-init/init.zsh" 2>&1
 
-# # run-app
-# [ -x "${HOME}/bin/run-app" ] && ${HOME}/bin/run-app 2>&1
-
 # broot
-[ -f "${HOME}/.config/broot/launcher/bash/br" ] && source "${HOME}/.config/broot/launcher/bash/br" 2>&1
+_source "${HOME}/.config/broot/launcher/bash/br" 2>&1
 
 # source work shellrc
-[ -e "${HOME}/.work" ] && [ -f "${HOME}/.shellrc-work" ] && source "${HOME}/.shellrc-work"
+[ -e "${HOME}/.work" ] && _source "${HOME}/.shellrc-work"
 
 # source secure environment settings
-[ -f "${HOME}/.secure-env" ] && source "${HOME}/.secure-env"
+_source "${HOME}/.secure-env"
 
 # display something
 
 # display system information
-#_command neofetch && neofetch 2>&1 # too slow
+#_run neofetch 2>&1 # too slow
 
 # # display color script
-# _command colorscript && colorscript random 2>&1
+# _run colorscript random 2>&1
 
 # # display weather
-# _command curl && curl --silent "wttr.in/San+Diego?uT" 2>&1 | head -n 7
+# _run curl --silent "wttr.in/San+Diego?uT" 2>&1 | head -n 7
 
 # source xprofile if not already and running in X11
-[ -f "${HOME}/.xprofile" ] && [ -n "${DISPLAY}" ] && [ -z "$(env | grep '^runpath=.*\.xprofile')" ] && source "${HOME}/.xprofile"
+[ -n "${DISPLAY}" ] && [ -z "$(env | grep '^runpath=.*\.xprofile')" ] && _source "${HOME}/.xprofile"
 
 #===============================================================================
 # End of File

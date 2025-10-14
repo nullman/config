@@ -9,6 +9,11 @@ _command() {
     command -v "$1" >/dev/null 2>&1
 }
 
+# run executable command if found in the path
+_run() {
+    command -v "$1" >/dev/null 2>&1 && "$@"
+}
+
 # delay running a command (SECONDS COMMAND)
 _delay() {
     local delay=$1
@@ -54,7 +59,7 @@ _command xautolock && i3-msg "exec --no-startup-id xautolock -time 30 -locker 'x
 # i3-msg "workspace 1 ; append_layout /home/user/.i3/worspace-1.json"
 
 # run application launcher
-_command ${HOME}/bin/application-launcher && ${HOME}/bin/application-launcher &
+_run ${HOME}/bin/application-launcher &
 
 #===============================================================================
 # End of File

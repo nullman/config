@@ -14,6 +14,23 @@ _command() {
     command -v "$1" >/dev/null 2>&1
 }
 
+# run executable command if found in the path
+_run() {
+    command -v "$1" >/dev/null 2>&1 && "$@"
+}
+
+# run executable command if found in the path and not already running
+_once() {
+    if command -v "$1" >/dev/null 2>&1 && ! pidof -q "$1" ; then
+        "$@" &
+    fi
+}
+
+# source script if found in the path
+_source() {
+    [ -f "$1" ] && source "$@"
+}
+
 # # delay running a command (SECONDS COMMAND)
 # _delay() {
 #     local delay=$1
@@ -23,7 +40,7 @@ _command() {
 
 # simple x hotkey daemon
 # (might have been started already by .xprofile)
-[ -f "${HOME}/bin/run-sxhkd" ] && ${HOME}/bin/run-sxhkd &
+_run ${HOME}/bin/run-sxhkd &
 
 # qubes os
 if [ "$(uname -n)" == "dom0" ] ; then
@@ -40,16 +57,16 @@ if [ "$(uname -n)" == "dom0" ] ; then
      qvm-usb attach --persistent personal $(qvm-usb list sys-net | grep '8087:0aaa' | sed 's/ .*$//')) &
 
     # xfce session
-    _command xfce4-session && xfce4-session &
+    _once xfce4-session &
 
     # # system bar
-    # _command xfce4-panel && xfce4-panel &
+    # _once xfce4-panel &
 
     # # system wallpaper displays
-    # [ -f "${HOME}/bin/system-wallpaper-displays" ] && source "${HOME}/bin/system-wallpaper-displays"
+    # _source "${HOME}/bin/system-wallpaper-displays"
 
     # hide mouse when not in use
-    _command unclutter && unclutter &
+    _once unclutter &
 
     # custom bspwm external rules to handle vm classes
     bspc config external_rules_command ${HOME}/.config/bspwm/bspwm-external-rules &
@@ -58,11 +75,11 @@ fi
 # other os
 if [ "$(uname -n)" != "dom0" ] ; then
     # xfce settings
-    #_command xfsettingsd && xfsettingsd &
+    #_once xfsettingsd &
 
     # ssh-agent
-    #_command ssh-agent && ssh-agent &
-    #_command ssh-add && ssh-add &
+    #_once ssh-agent &
+    #_once ssh-add &
 
     # key bindings
     #xmodmap "${HOME}/.xmodmaprc" &
@@ -74,55 +91,55 @@ if [ "$(uname -n)" != "dom0" ] ; then
         /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
         #eval "$(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg)" &
     fi
-    #_command lxpolkit && lxpolkit &
+    #_once lxpolkit &
 
     # compositor
-    _command picom && picom -b &
+    _once picom -b &
 
     # system bar
     if ! pgrep -x stumpwm >/dev/null ; then
-        [ -f "${HOME}/bin/system-bar" ] && source "${HOME}/bin/system-bar"
+        _source "${HOME}/bin/system-bar"
     fi
 
     # system wallpaper displays
-    [ -f "${HOME}/bin/system-wallpaper-displays" ] && source "${HOME}/bin/system-wallpaper-displays"
+    _source "${HOME}/bin/system-wallpaper-displays"
 
     # full-screen task-switcher
-    #_command skippy-xd && skippy-xd --config "${HOME}/.config/skippy-xd/skippy-xd.rc" --start-daemon &
+    #_once skippy-xd --config "${HOME}/.config/skippy-xd/skippy-xd.rc" --start-daemon &
 
     # localize user system folders
-    #_command xdg-user-dirs-gtk-update && xdg-user-dirs-gtk-update &
+    #_once xdg-user-dirs-gtk-update &
 
     # tell firefox to match theme
-    #_command ff-theme-util && ff-theme-util &
+    #_once ff-theme-util &
 
     # clipmenu
-    _command clipmenud && clipmenud &
+    _once clipmenud &
 
     # eject-applet
-    #_command eject-applet && eject-applet &
+    #_once eject-applet &
 
     # set cursor theme
-    _command fix_xcursor && fix_xcursor &
+    _once fix_xcursor &
 
     # hide mouse when not in use
-    _command unclutter && unclutter &
+    _once unclutter &
 
     # wallpaper manager
-    _command nitrogen && nitrogen --restore &
+    _once nitrogen --restore &
 
     # screen saver
-    #_command xscreensaver && xscreensaver -no-splash &
+    #_once xscreensaver -no-splash &
 
     # screen saver
-    #_command xautolock && xautolock -time 30 -locker blurlock & # lock screen after 30 minutes
+    #_once xautolock -time 30 -locker blurlock & # lock screen after 30 minutes
 
     # rebuild wm menu
-    #sleep 10 && _command mmaker && mmaker --force openbox &
+    #sleep 10 && _once mmaker --force openbox &
 fi
 
 # launch custom machine-specific applications
-[ -x "${HOME}/.wm-applications-machine" ] && ${HOME}/.wm-applications-machine
+_run ${HOME}/.wm-applications-machine
 
 #===============================================================================
 # End of File
