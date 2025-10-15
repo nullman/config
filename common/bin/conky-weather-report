@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-data=$(${HOME}/bin/system-bar-weather full $1)
+data=$(${HOME}/bin/system-bar-weather full "$@")
 
 icon=$(echo "${data}" | sed -n 's/^Icon: //p')
 temp=$(echo "${data}" | sed -n 's/^Temperature: //p' | sed 's/^\+// ; s/°[FC]$//')

@@ -14,16 +14,15 @@ General
 
 State
 
-|-------+-----+------+-------+-----+-----------------------|
-| Super | Alt | Ctrl | Shift | Key | Description           |
-|-------+-----+------+-------+-----+-----------------------|
-| Super |     | Ctrl |       | t   | Tiled Layout          |
-| Super |     | Ctrl | Shift | t   | Pseudo-Tiled Layout   |
-| Super |     | Ctrl |       | f   | Fullscreen Layout     |
-| Super |     | Ctrl | Shift | f   | Floating Layout       |
-| Super |     | Ctrl |       | m   | Toggle Monocle Layout |
-| Super |     | Ctrl | Shift | m   | Toggle Stacked Layout |
-|-------+-----+------+-------+-----+-----------------------|
+|-------+-----+------+-------+-----+-----------------------------------------|
+| Super | Alt | Ctrl | Shift | Key | Description                             |
+|-------+-----+------+-------+-----+-----------------------------------------|
+| Super |     | Ctrl |       | t   | Tiled Layout                            |
+| Super |     | Ctrl | Shift | t   | Pseudo-Tiled Layout                     |
+| Super |     | Ctrl |       | f   | Fullscreen Layout                       |
+| Super |     | Ctrl | Shift | f   | Floating Layout                         |
+| Super |     | Ctrl |       | m   | Toggle Layout (Tiled, Stacked, Monocle) |
+|-------+-----+------+-------+-----+-----------------------------------------|
 
 Focus and Swap
 

@@ -12,7 +12,7 @@ fi
 type="$1"
 shift
 loc="$*"
-data="$(curl --silent 'wttr.in/'"${loc}"'?uT&format=+%C|+%t|+%w|+%p|+%P|+%u|+%m' | sed 's/^ // ; s/| /|/g')"
+data=$(curl --silent "wttr.in/${loc}?uT&format=%C|%t|%w|%p|%P|%u|%m" | sed 's/^ //')
 desc=$(echo "${data}" | cut -d '|' -f 1 | sed 's/\<./\u&/g')
 temp=$(echo "${data}" | cut -d '|' -f 2)
 wind=$(echo "${data}" | cut -d '|' -f 3)

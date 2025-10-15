@@ -38,9 +38,9 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 
 # general settings
 _bc split_ratio                0.5
-#_bc stacked_layout             true
+_bc stacked_layout             true
 _bc stacked_direction          east
-_bc stacked_ratio              0.7
+_bc stacked_ratio              0.62     # golden ratio
 _bc automatic_scheme           alternate
 #_bc initial_polarity           first_child
 _bc initial_polarity           second_child
@@ -109,11 +109,11 @@ bspc monitor -d 1 2 3 4 5 6 7 8 9 10 11 12
 #-------------------------------------------------------------------------------
 
 # 1: Terminal
-#bspc desktop 1 --layout stacked
+bspc desktop 1 --layout stacked
 #_br 'Alacritty' desktop=^1 follow=on
 
 # 2: Editor
-#bspc desktop 2 --layout stacked
+bspc desktop 2 --layout stacked
 _br 'Emacs' desktop=^2 follow=on
 
 # 3: Email
@@ -136,13 +136,13 @@ _br 'Spacefm' desktop=^5 follow=on
 _br 'Thunar' desktop=^5 follow=on
 
 # 6: Social 1
-#bspc desktop 6 --layout tiled
+bspc desktop 6 --layout stacked
 _br 'discord' desktop=^6 follow=on
 _br 'quassel' desktop=^6 follow=on
 _br 'Slack' desktop=^6 follow=on
 
 # 7: Social 2
-#bspc desktop 7 --layout stacked
+bspc desktop 7 --layout stacked
 _br 'Com.github.bleakgrey.tootle' desktop=^7 follow=on
 _br 'Element' desktop=^7 follow=on
 _br 'Gajim' desktop=^7 follow=on
@@ -178,7 +178,7 @@ _br 'mplayer2' desktop=^9 follow=on
 _br 'spotify' desktop=^9 follow=on
 
 # 10: General, Administration, Games
-#bspc desktop 10 --layout monocle
+bspc desktop 10 --layout monocle
 
 # 11: Virtual Machine 1
 bspc desktop 11 --layout monocle
@@ -194,7 +194,7 @@ _br 'VirtualBox Manager' desktop=^12 follow=on
 #-------------------------------------------------------------------------------
 
 # tiled applications
-_br 'Emacs' state=tiled
+#_br 'Emacs' state=tiled
 
 # fullscreen applications
 _br 'bluejeans-v2' state=fullscreen
