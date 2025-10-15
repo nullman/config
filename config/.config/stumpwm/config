@@ -2,9 +2,8 @@
 ;;==============================================================================
 ;; StumpWM Configuration
 ;;
-;; Reference examples:
-;;   https://github.com/Gavinok/stump-conf/config
-;;   https://github.com/stumpwm/stumpwm/blob/master/sample-stumpwmrc.lisp
+;; Reference: https://github.com/stumpwm/stumpwm/blob/master/sample-stumpwmrc.lisp
+;; Reference: https://github.com/Gavinok/stump-conf/config
 ;;
 ;; Author: Author: Kyle W T Sherman <kylewsherman@gmail.com>
 ;;==============================================================================

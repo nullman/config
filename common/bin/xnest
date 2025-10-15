@@ -38,8 +38,8 @@ Start a nested X running WM of optional SIZE and DEPTH.
     wmaker
     Xwnc
 Defaults: xnest WM :1 ${geometry} ${depth}
-Example: xnest blackbox :1
-         xnest blackbox :1 1024x768 16
+Example: xnest bspwm :1
+         xnest bspwm :1 1024x768 16
 EOF
     exit 1
 fi

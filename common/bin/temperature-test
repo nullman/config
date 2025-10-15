@@ -12,17 +12,22 @@
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
+# check if executable command is found in the path
+_command() {
+    command -v "$1" >/dev/null 2>&1
+}
+
 count=6
 opts=
 help=0
 
 # check for prerequisite applicaitons
-if ! command -v sensors ; then
+if ! _command sensors ; then
     echo "lm_sensors is not installed"
     exit 1
 fi
 
-if ! command -v sysbench && ! command -v stress ; then
+if ! _command sysbench && ! _command stress ; then
     echo "sysbench and stress are not installed"
     exit 1
 fi
@@ -70,11 +75,11 @@ for x in $(seq ${count}) ; do
     c="00000${x}"
     echo -n "[${c: $((-${#count}))}/${count}] "
     _gettemp $1
-    if command -v sysbench ; then
+    if _command sysbench ; then
          sysbench --test=cpu --num-threads=${threads} --cpu-max-prime=25000 run >/dev/null 2>&1
-    elif command -v stress-ng ; then
+    elif _command stress-ng ; then
         stress-ng --cpu ${threads} --timeout 10s >/dev/null 2>&1
-    elif command -v stress ; then
+    elif _command stress ; then
         stress --cpu ${threads} --timeout 10s >/dev/null 2>&1
     else
         echo "No stress test application found: sysbench, stress-ng, or stress"

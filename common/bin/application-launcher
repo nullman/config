@@ -46,7 +46,7 @@ for line in ${launch} ; do
             echo "Bad input: ${vm}:${app}"
         fi
     else
-         if command -v "${app}" >/dev/null ] ; then
+         if command -v "${app}" >/dev/null ; then
             if ! pgrep -u ${USER} -x "${app}" >/dev/null ; then
                 #echo "${app}"
                 if [ "${app}" == "alacritty" ] ; then

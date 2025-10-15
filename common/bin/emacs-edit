@@ -9,6 +9,11 @@
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
+# check if executable command is found in the path
+_command() {
+    command -v "$1" >/dev/null 2>&1
+}
+
 # return wether or not terminal is running in screen
 if [ -n "$(ps -o comm= -p $(ps -o ppid= -p $$))" ] ; then
     inscreen=true
@@ -34,7 +39,7 @@ fi
 [ -n "${DEBUG}" ] && echo "vi: ${vi}"
 
 # find alternate editor (vi/vim)
-if command -v vim ; then
+if _command vim ; then
     alt="vim"
 else
     alt="vi"
@@ -77,10 +82,10 @@ if [ -n "${socketname}" ] ; then
     emacsclient ${wait} --socket-name "${socketname}" --alternate-editor=${alt} "$@"
 else
     if [ ${vi} == true ] ; then
-        if command -v vim ; then
+        if _command vim ; then
             # launch vim
             vim "$@"
-        elif command -v vi ; then
+        elif _command vi ; then
             # launch vi
             vi "$@"
         else
