@@ -193,9 +193,6 @@ _br 'VirtualBox Manager' desktop=^12 follow=on
 # Application Rules
 #-------------------------------------------------------------------------------
 
-# tiled applications
-#_br 'Emacs' state=tiled
-
 # fullscreen applications
 _br 'bluejeans-v2' state=fullscreen
 _br 'Evince' state=fullscreen
