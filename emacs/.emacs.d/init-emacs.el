@@ -18191,57 +18191,6 @@ Use text properties to mark the line then call `mingus-set-NP-mark'."
 
   (init-message 3 "Mingus Fetch Lyrics Commands")
 
-  ;; ;; TODO: add ability to query multiple lyric sites when a result is not found on one
-  ;; (defun mingus-get-lyrics ()
-  ;;   "Get lyrics (original non-api version)."
-  ;;   (interactive)
-  ;;   (let ((details (mingus-get-details)))
-  ;;     (when details
-  ;;       (let ((artist (plist-get details 'Artist))
-  ;;             (title (plist-get details 'Title))
-  ;;             (site "azlyrics.com")
-  ;;             ;;(site "allthelyrics.com")
-  ;;             ;;(site "lyricwiki.org")
-  ;;             ;;(site "lyrics.wikia.com")
-  ;;             (user-agent "Mozilla/4.0 (MSIE 6.0; Windows NT 5.0)")
-  ;;             (referer "http://www.google.com/")
-  ;;             (file (shell-command-to-string "echo -n /tmp/mingus-lyrics-$$.html")))
-  ;;         ;; remove ", The" from artist
-  ;;         (setq artist (replace-regexp-in-string artist ", The$" ""))
-  ;;         ;; remove anything in parenthesis from title
-  ;;         (setq title (replace-regexp-in-string title " ?([^)]*)" ""))
-  ;;         (let ((query (concat "http://www.google.com/search?q="
-  ;;                              "lyrics "
-  ;;                              "\"" artist "\" "
-  ;;                              "\"" title "\" "
-  ;;                              "site:" site
-  ;;                              "&btnI=Search")))
-  ;;           (call-process "wget" nil nil nil
-  ;;                         "--no-verbose"
-  ;;                         "--convert-links"
-  ;;                         (concat "--user-agent=" user-agent)
-  ;;                         (concat "--referer=" referer)
-  ;;                         "-O" file
-  ;;                         query)
-  ;;           (browse-url (concat "file://" file))
-  ;;           ;; clean up response
-  ;;           (fundamental-mode)
-  ;;           (setq buffer-read-only nil)
-  ;;           (buffer-disable-undo)
-  ;;           (when (re-search-forward "You must enable javascript to view this page." nil :noerror)
-  ;;             (goto-char (line-end-position))
-  ;;             (forward-line 1)
-  ;;             (delete-region (point-min) (point)))
-  ;;           (when (re-search-forward "External links" nil :noerror)
-  ;;             (forward-line 0)
-  ;;             (delete-region (point) (point-max)))
-  ;;           (goto-char (point-min))
-  ;;           (while (re-search-forward "phone Send" nil :noerror)
-  ;;             (delete-region (line-beginning-position) (1+ (line-end-position))))
-  ;;           (setq buffer-read-only nil)
-  ;;           (goto-char (point-min))
-  ;;           )))))
-
   (defun mingus-get-lyrics-azlyrics (artist title)
     "Return the lyrics for a song matching ARTIST and TITLE
 by scraping the azlyrics.com site."
@@ -18256,7 +18205,8 @@ by scraping the azlyrics.com site."
            (feat-regexp "<span class=\"feat\">\\(.*\\)</span>")
            (site "azlyrics.com")
            ;;(user-agent "Mozilla/4.0 (MSIE 6.0; Windows NT 5.0)")
-           (user-agent "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0; WOW64; Trident/4.0; SLCC1)")
+           ;;(user-agent "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0; WOW64; Trident/4.0; SLCC1)")
+           (user-agent "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36")
            (referer "http://www.google.com/")
            (search-file (shell-command-to-string "echo -n /tmp/mingus-search-$$.html"))
            (lyrics-file (shell-command-to-string "echo -n /tmp/mingus-lyrics-$$.html"))
@@ -18281,8 +18231,8 @@ by scraping the azlyrics.com site."
                     (concat "--referer=" referer)
                     "-O" search-file
                     query)
-      (message "query: %s" query)
-      (message "wget call: wget --no-verbose --convert-links --user-agent=\"%s\" --referer=%s -O %s %s" user-agent referer search-file query)
+      (message "Query: %s" query)
+      (message "Command: wget --no-verbose --convert-links --user-agent=\"%s\" --referer=\"%s\" -O \"%s\" \"%s\"" user-agent referer search-file query)
       (with-temp-buffer
         (buffer-disable-undo)
         (condition-case err
@@ -18375,7 +18325,8 @@ by scraping the metrolyrics.com site."
            (ending-spaces-regexp " +$")
            (site "metrolyrics.com")
            ;;(user-agent "Mozilla/4.0 (MSIE 6.0; Windows NT 5.0)")
-           (user-agent "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0; WOW64; Trident/4.0; SLCC1)")
+           ;;(user-agent "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0; WOW64; Trident/4.0; SLCC1)")
+           (user-agent "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36")
            (referer "http://www.google.com/")
            (file (shell-command-to-string "echo -n /tmp/mingus-lyrics-$$.html"))
            (parsed-title
@@ -18397,8 +18348,8 @@ by scraping the metrolyrics.com site."
                     (concat "--referer=" referer)
                     "-O" file
                     query)
-      (message "query: %s" query)
-      (message "wget call: wget --no-verbose --convert-links --user-agent=\"%s\" --referer=%s -O %s %s" user-agent referer file query)
+      (message "Query: %s" query)
+      (message "Command: wget --no-verbose --convert-links --user-agent=\"%s\" --referer=\"%s\" -O \"%s\" \"%s\"" user-agent referer file query)
       (with-temp-buffer
         (buffer-disable-undo)
         (condition-case err

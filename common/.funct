@@ -24,7 +24,8 @@ configdir() {
 #! set variables
 #!
 #!       user-agent
-useragent="Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0; WOW64; Trident/4.0; SLCC1)"
+#!useragent="Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0; WOW64; Trident/4.0; SLCC1)"
+useragent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
 
 #===============================================================================
 # Function Definitions
@@ -1290,6 +1291,31 @@ leach() {
 upload-0x0() {
     [ -f "$1" ] && op="cat"
     "${op:-echo}" "${1:-$(cat -)}" | curl -F file='@-' "https://0x0.st"
+}
+#        lyrics                  fetch lyrics
+lyrics() {
+    if [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+        echo "Usage: lyrics [ARTIST TITLE]"
+        echo "  ARTIST  Song artist"
+        echo "  TITLE   Song title"
+        echo "Defaults to querying mpd for the current song"
+    else
+        if [ -n "$1" ] && [ -n "$2" ] ; then
+            artist="$1"
+            title="$2"
+        else
+            artist="$(mpc -f '%artist%' | head -n 1)"
+            title="$(mpc -f '%title%' | head -n 1)"
+        fi
+        #wget --no-verbose --convert-links --user-agent="${useragent}" --referer="http://www.google.com/" -O "${file}" "http://www.google.com/search?q=lyrics \"${artist}\" \"${title}\" site:azlyrics.com&btnI=Search"
+        url=$(wget --quiet --user-agent="${useragent}" \
+                   --referer="http://www.google.com/" -O - \
+                   "http://www.google.com/search?q=lyrics \"${artist}\" \"${title}\" site:azlyrics.com&btnI=Search" | \
+                  sed 's%^.*\"\(https://www.azlyrics.com/[^\"]*\)\".*$%\1%')
+        lyrics=$(wget --quiet --user-agent="${useragent}" -O - "${url}" | \
+                     sed -n '/<!-- Usage of azlyrics.com.*$/,/<!-- MxM banner -->/p' | sed 's/<br>//g ; s/<\/div>//' | head -n -6 | tail -n +2)
+        printf '%s - %s\n\n%s\n' "${artist}" "${title}" "${lyrics}"
+    fi
 }
 #        weather                 weather report
 weather() {
