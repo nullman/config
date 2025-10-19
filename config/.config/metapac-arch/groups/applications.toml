@@ -25,6 +25,7 @@ arch = [
     "logisim-evolution-bin",
     "ngspice",
     "obs-studio",
+    "obsidian",
     "openscad",
     "reaper",
     "shortwave",

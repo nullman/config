@@ -368,9 +368,11 @@ alias grubmc="sudo grub-mkconfig -o /boot/grub/grub.cfg"
 alias grub2mc="sudo grub2-mkconfig -o /boot/grub2/grub.cfg"
 #        mkinit                  mkinitcpio -P
 alias mkinit="sudo mkinitcpio -P"
-#        remove-user-login-background
+#        remove-user-login-background  remove custom user login background
 alias remove-user-login-background="
     sudo sed -i '/^BackgroundFile=.*$/d' /var/lib/AccountsService/users/\${USER}"
+#        exiftool-remove-all-metadata  remove all metadata in given video
+alias exiftool-remove-all-metadata="exiftool -all="
 
 #
 # general (external)

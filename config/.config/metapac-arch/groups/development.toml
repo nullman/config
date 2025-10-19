@@ -74,6 +74,7 @@ arch = [
     "pup",
     "qt5-tools",
     "qt6-tools",
+    "quicklisp",
     "racket",
     "regina-rexx",
     "regina-rexx-doc",

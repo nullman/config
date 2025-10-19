@@ -39,6 +39,7 @@ arch = [
     "mtr",
     "navi",
     "nodejs-how2",
+    "perl-image-exiftool",
     "phoronix-test-suite",
     "procs",
     "rar",
