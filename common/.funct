@@ -672,33 +672,6 @@ ansi-slideshow() {
         done
     fi
 }
-#        wordle-match            list wordle words matching given pattern
-wordle-match() {
-    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
-        echo "Usage: wordle-match LENGTH EXCLUDE INCLUDE MATCH"
-        echo "Search for Wordle words matching given pattern."
-        echo "  LENGTH   length of words to consider"
-        echo "  EXCLUDE  letters to exclude"
-        echo "  INCLUDE  letters to include"
-        echo "  MATCH    letters and positions to match (regexp)"
-        echo "Example: wordle-match 5 abc def ...gh"
-    else
-        cmd="cat ~/doc/information/words.txt | grep '^.\{$1\}$' | tr 'A-Z' 'a-z'"
-        if [ $# -gt 1 ] ; then
-            cmd="${cmd} | grep --color=never -v '[$2]'"
-        fi
-        if [ $# -gt 2 ] ; then
-            for x in $(echo "$3" | grep -o '.') ; do
-                cmd="${cmd} | grep --color=never '${x}'"
-            done
-        fi
-        if [ $# -gt 3 ] ; then
-            cmd="${cmd} | grep --color=never '$4'"
-        fi
-        #echo "${cmd}"
-        eval "${cmd}"
-    fi
-}
 #        play-youtube-desktop    play a youtube video on the desktop background
 play-youtube-desktop() {
     if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then

@@ -11,7 +11,7 @@
 #===============================================================================
 
 # im-bot command
-bot="$(dirname $0)/im-bot"
+bot="$(dirname $(readlink -f $0))/im-bot"
 
 # command list
 cmdlist="|help|.h|eliza|.e|today|.y|fortune|.f|quote|.q|google|.g|lucky|.l|calc|.c|date|.d|time|.t|uptime|.up|uuid|.u|key|.k|keym|.km|keyc|.kc|"
