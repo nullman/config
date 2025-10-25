@@ -78,6 +78,53 @@
 # Reference: https://my-take-on.tech/2020/07/03/some-tricks-for-sxhkd-and-bspwm/
 #===============================================================================
 
+# # convert "SHOW, The S##E## - TITLE" to "The SHOW S##E##: TITLE"
+# super + alt + bracketright
+#     xdo key_press -k 22 \
+#     xdo key_release -k 22 \
+#     xdo key_press -k 22 \
+#     xdo key_release -k 22 \
+#     xdo key_press -k 113 \
+#     xdo key_release -k 113 \
+#     xdo key_press -k 50 ; xdo key_press -k 47 \
+#     xdo key_release -k 47 ; xdo key_release -k 50 \
+#     xdo key_press -k 113 \
+#     xdo key_release -k 113 \
+#     xdo key_press -k 113 \
+#     xdo key_release -k 113 \
+#     xdo key_press -k 113 \
+#     xdo key_release -k 113 \
+#     xdo key_press -k 113 \
+#     xdo key_release -k 113 \
+#     xdo key_press -k 113 \
+#     xdo key_release -k 113 \
+#     xdo key_press -k 113 \
+#     xdo key_release -k 113 \
+#     xdo key_press -k 113 \
+#     xdo key_release -k 113 \
+#     xdo key_press -k 113 \
+#     xdo key_release -k 113 \
+#     xdo key_press -k 22 \
+#     xdo key_release -k 22 \
+#     xdo key_press -k 22 \
+#     xdo key_release -k 22 \
+#     xdo key_press -k 22 \
+#     xdo key_release -k 22 \
+#     xdo key_press -k 22 \
+#     xdo key_release -k 22 \
+#     xdo key_press -k 22 \
+#     xdo key_release -k 22 \
+#     xdo key_press -k 110 \
+#     xdo key_release -k 110 \
+#     xdo key_press -k 50 ; xdo key_press -k 28 \
+#     xdo key_release -k 28 ; xdo key_release -k 50 \
+#     xdo key_press -k 43 \
+#     xdo key_release -k 43 \
+#     xdo key_press -k 26 \
+#     xdo key_release -k 26 \
+#     xdo key_press -k 65 \
+#     xdo key_release -k 65
+
 #-------------------------------------------------------------------------------
 # Remappings
 #-------------------------------------------------------------------------------

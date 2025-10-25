@@ -1,6 +1,5 @@
 arch = [
     "arandr",
-    "atbswp",
     "imwheel",
     "numlockx",
     "scrot",
