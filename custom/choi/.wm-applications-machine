@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+#===============================================================================
+# .wm-applications-machine
+#
+# Launch machine-specific window manager applications.
+#===============================================================================
+
+# run executable command if found in the path
+_run() {
+    command -v "$1" >/dev/null 2>&1 && "$@"
+}
+
+# run executable command if found in the path and not already running
+_once() {
+    if command -v "$1" >/dev/null 2>&1 && ! pidof -q "$1" ; then
+        "$@" &
+    fi
+}
+
+# delay running a command (SECONDS COMMAND)
+_delay() {
+    local delay=$1
+    shift
+    sleep ${delay} && eval "$@"
+}
+
+# run background applications and services
+_once xscreensaver -no-splash &
+#_once xautolock -time 30 -locker blurlock & # lock screen after 30 minutes
+#_once xautolock -time 30 -locker 'xscreensaver-command -lock' & # lock screen after 30 minutes
+#_once mpd ${HOME}/.mpd/mpd.conf &
+#_once dropbox start &
+#_once barriers --config ${HOME}/.barrier.conf &
+#_once barrierc SERVER &
+#_once emacs --daemon &
+
+# delay so that networking has time to connect
+#_delay 0
+
+# run application launcher
+_run ${HOME}/bin/application-launcher &
+
+#===============================================================================
+# End of File
+#===============================================================================
