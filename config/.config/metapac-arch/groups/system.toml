@@ -8,6 +8,7 @@ arch = [
     "bandwhich",
     "barrier",
     "barrier-headless",
+    "bind",
     "bluez",
     "bluez-utils",
     "bpytop",

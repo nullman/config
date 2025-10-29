@@ -727,7 +727,7 @@ alias ping-nullware="ping ${nullwareip}"
 #        ping-google             ping google.com
 alias ping-google="ping google.com"
 #        ping-googleip           ping google.com by ip address
-alias ping-googleip="ping 142.250.217.142"
+alias ping-googleip="ping 172.217.12.142"
 #        traceroute-google       traceroute google.com
 alias traceroute-google="traceroute google.com"
 #        ping-uswest             ping uswest.net
