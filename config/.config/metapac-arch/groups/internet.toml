@@ -23,6 +23,7 @@ arch = [
     "pepper-flash",
     "pidgin",
     "quassel-client",
+    "quassel-core",
     "searxng-git",
     "simplex-chat-bin",
     "slack-desktop",
