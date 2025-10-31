@@ -12,7 +12,7 @@ arch = [
     "daktilo",
     "ddgr",
     "devtoolbox",
-    "dict",
+    "dict-git",
     "diskonaut",
     "element",
     "eza",
