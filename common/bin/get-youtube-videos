@@ -13,8 +13,8 @@ ytdlp="$(command -v yt-dlp)"
 #ytdlp="${HOME}/src/yt-dlp/yt-dlp"
 
 channels=(
-    "Computer/Demo        | Commodore 64 Demos                           | https://www.youtube.com/playlist?list=PLnmLOQIDmUvVn43FHdakSTY_W_EuoVwnT"
-    "Computer/Demo        | Commodore Amiga Demos                        | https://www.youtube.com/playlist?list=PLnmLOQIDmUvUgbvY-Jq0txuYWYgWVcOOS"
+#?    "Computer/Demo        | Commodore 64 Demos                           | https://www.youtube.com/playlist?list=PLnmLOQIDmUvVn43FHdakSTY_W_EuoVwnT"
+#?    "Computer/Demo        | Commodore Amiga Demos                        | https://www.youtube.com/playlist?list=PLnmLOQIDmUvUgbvY-Jq0txuYWYgWVcOOS"
     "Computer/Development | AngeTheGreat                                 | https://www.youtube.com/channel/UCV0t1y4h_6-2SqEpXBXgwFQ/videos"
     "Computer/Development | Baggers                                      | https://www.youtube.com/user/CBaggers/videos"
     "Computer/Development | Clean Code                                   | https://www.youtube.com/playlist?list=PLmmYSbUCWJ4x1GO839azG_BBw8rkh-zOj"
