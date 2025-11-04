@@ -270,6 +270,7 @@ _br 'mpv' state=floating center=true sticky=on
 _br 'oblogout' state=floating center=true
 _br 'octopi' state=floating center=true
 _br 'qt5ct' state=floating sticky=true
+_br 'qt6ct' state=floating sticky=true
 _br 'qubes-qube-manager' state=floating center=true
 _br 'virtualbox' state=floating center=true
 _br 'zenity' state=floating center=true
