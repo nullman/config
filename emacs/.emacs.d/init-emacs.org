@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2025-10-16 10:14 (user)>
+  #+TIMESTAMP: <2025-11-05 10:28 (user)>
 
 * Overview
   :PROPERTIES:
@@ -9188,6 +9188,48 @@
           (insert ")"))
       #+END_SRC
 
+*** GURPS
+    :PROPERTIES:
+    :CUSTOM_ID: org-mode-gurps
+    :END:
+
+    Dungeons and Dragons Online related functions.
+
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Org Mode: GURPS
+      ;;------------------------------------------------------------------------------
+
+      (init-message 2 "Org Mode: GURPS")
+    #+END_SRC
+
+***** gurps-convert-number-to-symbol
+      :PROPERTIES:
+      :CUSTOM_ID: org-mode-gurps-gurps-convert-number-to-symbol
+      :END:
+
+      #+BEGIN_SRC emacs-lisp
+        ;;------------------------------------------------------------------------------
+        ;;;; Org Mode: GURPS: gurps-convert-number-to-symbol
+        ;;------------------------------------------------------------------------------
+
+        (init-message 3 "Org Mode: GURPS: gurps-convert-number-to-symbol")
+
+        (defun gurps-convert-number-to-symbol ()
+          "Convert digits 1-5 to their GURPS advantage type symbol."
+          (interactive "*")
+          (let ((conversions
+                 '(("1" . "")
+                    ("2" . "")
+                    ("3" . "")
+                    ("4" . "")
+                    ("5" . "⚡"))))
+            (save-mark-and-excursion
+              (dolist (x conversions)
+                (replace-regexp-in-region (car x) (cdr x)
+                                          (line-beginning-position)
+                                          (line-end-position))))))
+      #+END_SRC
 * Org Website
   :PROPERTIES:
   :CUSTOM_ID: org-website

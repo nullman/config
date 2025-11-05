@@ -6476,6 +6476,37 @@ If OWNED is non-nil, add an Owned column to the table."
   (insert ")"))
 ;; ddo-fix-wiki-description:1 ends here
 
+;; [[file:init-emacs.org::#org-mode-gurps][GURPS:1]]
+;;------------------------------------------------------------------------------
+;;; Org Mode: GURPS
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Org Mode: GURPS")
+;; GURPS:1 ends here
+
+;; [[file:init-emacs.org::#org-mode-gurps-gurps-convert-number-to-symbol][gurps-convert-number-to-symbol:1]]
+;;------------------------------------------------------------------------------
+;;;; Org Mode: GURPS: gurps-convert-number-to-symbol
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Org Mode: GURPS: gurps-convert-number-to-symbol")
+
+(defun gurps-convert-number-to-symbol ()
+  "Convert digits 1-5 to their GURPS advantage type symbol."
+  (interactive "*")
+  (let ((conversions
+         '(("1" . "")
+            ("2" . "")
+            ("3" . "")
+            ("4" . "")
+            ("5" . "⚡"))))
+    (save-mark-and-excursion
+      (dolist (x conversions)
+        (replace-regexp-in-region (car x) (cdr x)
+                                  (line-beginning-position)
+                                  (line-end-position))))))
+;; gurps-convert-number-to-symbol:1 ends here
+
 ;; [[file:init-emacs.org::#org-website][Org Website:1]]
 ;;==============================================================================
 ;;; Org Website
