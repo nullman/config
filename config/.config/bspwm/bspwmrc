@@ -109,11 +109,11 @@ bspc monitor -d 1 2 3 4 5 6 7 8 9 10 11 12
 #-------------------------------------------------------------------------------
 
 # 1: Terminal
-bspc desktop 1 --layout stacked
+#bspc desktop 1 --layout stacked
 #_br 'Alacritty' desktop=^1 follow=on
 
 # 2: Editor
-bspc desktop 2 --layout stacked
+#bspc desktop 2 --layout stacked
 _br 'Emacs' desktop=^2 follow=on
 
 # 3: Email
@@ -136,13 +136,13 @@ _br 'Spacefm' desktop=^5 follow=on
 _br 'Thunar' desktop=^5 follow=on
 
 # 6: Social 1
-bspc desktop 6 --layout stacked
+#bspc desktop 6 --layout stacked
 _br 'discord' desktop=^6 follow=on
 _br 'quassel' desktop=^6 follow=on
 _br 'Slack' desktop=^6 follow=on
 
 # 7: Social 2
-bspc desktop 7 --layout stacked
+#bspc desktop 7 --layout stacked
 _br 'Com.github.bleakgrey.tootle' desktop=^7 follow=on
 _br 'Element' desktop=^7 follow=on
 _br 'Gajim' desktop=^7 follow=on

@@ -56,6 +56,9 @@ if [ "$(uname -n)" == "dom0" ] ; then
      done
      qvm-usb attach --persistent personal $(qvm-usb list sys-net | grep '8087:0aaa' | sed 's/ .*$//')) &
 
+    # desktop 10 is used for Qube Manager and dom0 terminal
+    bspc config desktop 10 --layout tiled
+
     # xfce session
     _once xfce4-session &
 
