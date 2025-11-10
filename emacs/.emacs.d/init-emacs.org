@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2025-11-05 23:08 (user)>
+  #+TIMESTAMP: <2025-11-10 12:23 (user)>
 
 * Overview
   :PROPERTIES:
@@ -4474,7 +4474,7 @@
         ;; archive done tasks
         (defun org-agenda-archive-done-tasks ()
           "Archive DONE tasks."
-          (interactive)
+          (interactive "*")
           (org-map-entries #'org-archive-subtree "/DONE" 'file))
 
         ;; auto-save archive files
@@ -5499,7 +5499,7 @@
         by TODO status, then by priority, then by timestamp, and finally
         by ASCII code. Otherwise, default SORT-TYPE is \"(nil ?f nil
         #'string<)\" which is to sort by ASCII code."
-          (interactive)
+          (interactive "*")
           (when (derived-mode-p 'org-mode)
             (let ((sort-types (or sort-types
                                   (if (and (eq (car (org-element-at-point)) 'headline)
@@ -5650,7 +5650,7 @@
         (defun org-fix-custom-ids (&optional beg end)
           "Fix CUSTOM_ID tags in region (or entire buffer), by lower casing them and
         replacing spaces with dashes."
-          (interactive)
+          (interactive "*")
           (let ((case-fold-search t)
                 (beg (or beg (if (use-region-p) (region-beginning) (point-min))))
                 (end (or end (if (use-region-p) (region-end) (point-max))))
@@ -5765,7 +5765,7 @@
 
         (defun org-toggle-headline-checkbox (&optional beg end)
           "Toggle between an org headline and checkbox on current line or region."
-          (interactive)
+          (interactive "*")
           (let ((beg (or beg (if (use-region-p) (region-beginning) (line-beginning-position))))
                 (end (or end (if (use-region-p) (region-end) (line-end-position)))))
             (deactivate-mark)
@@ -5804,12 +5804,41 @@
 
         (defun org-table-remove-commas ()
           "Remove all commas in current org table."
-          (interactive)
+          (interactive "*")
           (save-mark-and-excursion
             (save-match-data
               (goto-char (org-table-begin))
               (while (re-search-forward "," (org-table-end) :noerror)
                 (replace-match "")))))
+      #+END_SRC
+
+***** org-table-add-column-from-point
+      :PROPERTIES:
+      :CUSTOM_ID: org-mode-functions-org-table-add-column-from-point
+      :END:
+
+      Add fields at point as a new column to table above.
+
+      #+BEGIN_SRC emacs-lisp
+        ;;------------------------------------------------------------------------------
+        ;;;; Org Mode: Functions: org-table-add-column-from-point
+        ;;------------------------------------------------------------------------------
+
+        (init-message 3 "Org Mode: Functions: org-table-add-column-from-point")
+
+        (defun org-table-add-column-from-point (fields)
+          "Add a number of FIELDS at point as a new column to table above."
+          (interactive "*NFields: ")
+          (save-mark-and-excursion
+            (dotimes (_ fields)
+              (kill-region (line-beginning-position) (line-end-position))
+              (forward-line (- fields))
+              (end-of-line)
+              (insert "|")
+              (yank)
+              (forward-line (1+ fields)))
+            (dotimes (_ fields)
+              (delete-region (point) (progn (forward-line -1) (point))))))
       #+END_SRC
 
 ***** org-days-between-dates

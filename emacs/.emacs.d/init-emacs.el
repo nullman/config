@@ -2926,7 +2926,7 @@ DATA should have been made by `org-outline-overlay-data'."
   ;; archive done tasks
   (defun org-agenda-archive-done-tasks ()
     "Archive DONE tasks."
-    (interactive)
+    (interactive "*")
     (org-map-entries #'org-archive-subtree "/DONE" 'file))
 
   ;; auto-save archive files
@@ -3561,7 +3561,7 @@ SORT-TYPE is \"?o ?p ?t (nil ?f nil #'string<)\" which is to sort
 by TODO status, then by priority, then by timestamp, and finally
 by ASCII code. Otherwise, default SORT-TYPE is \"(nil ?f nil
 #'string<)\" which is to sort by ASCII code."
-  (interactive)
+  (interactive "*")
   (when (derived-mode-p 'org-mode)
     (let ((sort-types (or sort-types
                           (if (and (eq (car (org-element-at-point)) 'headline)
@@ -3686,7 +3686,7 @@ and X clipboard, indenting and cleaning up links."
 (defun org-fix-custom-ids (&optional beg end)
   "Fix CUSTOM_ID tags in region (or entire buffer), by lower casing them and
 replacing spaces with dashes."
-  (interactive)
+  (interactive "*")
   (let ((case-fold-search t)
         (beg (or beg (if (use-region-p) (region-beginning) (point-min))))
         (end (or end (if (use-region-p) (region-end) (point-max))))
@@ -3784,7 +3784,7 @@ If BEG and END are given, only that region is exported."
 
 (defun org-toggle-headline-checkbox (&optional beg end)
   "Toggle between an org headline and checkbox on current line or region."
-  (interactive)
+  (interactive "*")
   (let ((beg (or beg (if (use-region-p) (region-beginning) (line-beginning-position))))
         (end (or end (if (use-region-p) (region-end) (line-end-position)))))
     (deactivate-mark)
@@ -3816,13 +3816,35 @@ If BEG and END are given, only that region is exported."
 
 (defun org-table-remove-commas ()
   "Remove all commas in current org table."
-  (interactive)
+  (interactive "*")
   (save-mark-and-excursion
     (save-match-data
       (goto-char (org-table-begin))
       (while (re-search-forward "," (org-table-end) :noerror)
         (replace-match "")))))
 ;; org-table-remove-commas:1 ends here
+
+;; [[file:init-emacs.org::#org-mode-functions-org-table-add-column-from-point][org-table-add-column-from-point:1]]
+;;------------------------------------------------------------------------------
+;;;; Org Mode: Functions: org-table-add-column-from-point
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Org Mode: Functions: org-table-add-column-from-point")
+
+(defun org-table-add-column-from-point (fields)
+  "Add a number of FIELDS at point as a new column to table above."
+  (interactive "*NFields: ")
+  (save-mark-and-excursion
+    (dotimes (_ fields)
+      (kill-region (line-beginning-position) (line-end-position))
+      (forward-line (- fields))
+      (end-of-line)
+      (insert "|")
+      (yank)
+      (forward-line (1+ fields)))
+    (dotimes (_ fields)
+      (delete-region (point) (progn (forward-line -1) (point))))))
+;; org-table-add-column-from-point:1 ends here
 
 ;; [[file:init-emacs.org::#org-mode-functions-org-days-between-dates][org-days-between-dates:1]]
 ;;------------------------------------------------------------------------------
