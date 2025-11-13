@@ -6518,11 +6518,11 @@ If OWNED is non-nil, add an Owned column to the table."
   (interactive "*")
   (let ((conversions
          '(("1" . "")
-            ("2" . "")
-            ("3" . "")
-            ("4" . "")
-            ("5" . "")
-            ("6" . "󰜃"))))
+           ("2" . "")
+           ("3" . "")
+           ("4" . "")
+           ("5" . "")
+           ("6" . "󰜃"))))
     (save-mark-and-excursion
       (dolist (x conversions)
         (replace-regexp-in-region (car x) (cdr x)
