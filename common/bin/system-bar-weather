@@ -36,8 +36,9 @@ case "${desc}" in
     "Smoke") icon="" ;;
     "Sunny") icon="" ;;
     *)
-        notify-send -u critical "Unknown weather: ${desc}"
-        curl --silent v2d.wttr.in/san_diego?u | sed -n '/Weather:/p' >> ~/weather-errors
+        #notify-send -u critical "Unknown weather: ${desc}"
+        #curl --silent v2d.wttr.in/san_diego?u | sed -n '/Weather:/p' >> ~/weather-errors
+        echo "${data}" >> ~/weather-errors
         ;;
 esac
 
