@@ -6517,7 +6517,7 @@ If OWNED is non-nil, add an Owned column to the table."
   "Convert digits 1-5 to their GURPS advantage type symbol."
   (interactive "*")
   (let ((conversions
-         '(("1" . "")
+         '(("1" . "󰢚")
            ("2" . "")
            ("3" . "")
            ("4" . "")
