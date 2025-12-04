@@ -36,6 +36,7 @@ arch = [
     "helvum",
     "hfsprogs",
     "htop",
+    "hw-probe",
     "id3lib",
     "iftop",
     "imagemagick",
