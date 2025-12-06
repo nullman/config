@@ -373,6 +373,8 @@ alias remove-user-login-background="
     sudo sed -i '/^BackgroundFile=.*$/d' /var/lib/AccountsService/users/\${USER}"
 #        exiftool-remove-all-metadata  remove all metadata in given video
 alias exiftool-remove-all-metadata="exiftool -all="
+#        ntfsfix-iodd            ntfsfix device with iodd label
+alias ntfsfix-iodd="ntfsfix -d $(blkid --match-token LABEL=iodd --output device)"
 
 #
 # general (external)
