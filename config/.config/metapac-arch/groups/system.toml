@@ -25,7 +25,7 @@ arch = [
     "dosfstools",
     "duf",
     "emacs",
-    "exfat-utils",
+    "exfatprogs",
     "expac",
     "fastfetch",
     "firewalld",

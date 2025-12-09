@@ -42,7 +42,6 @@ arch = [
     "sxiv",
     "timg",
     "ventoy-bin",
-    "virt-viewer",
     "vlc",
     "vlc-plugins-all",
     "x48ng",

@@ -21,7 +21,7 @@ hostname_groups_enabled = true
 # paths starting without a / are relative to the groups folder
 # Default: None
 arch = ["base", "system", "x11", "window-manager", "xfwm", "xfce-panel", "applications", "utilities", "tui", "console", "console-hacks", "internet", "emulators", "development", "containers", "ai", "zsh", "fortune", "games", "qubes"]
-dozer = ["base", "system", "x11", "window-manager", "xfwm", "xfce-panel", "applications", "utilities", "tui", "console", "console-hacks", "internet", "emulators", "development", "containers", "ai", "zsh", "fortune", "games", "nvidia470"]
+dozer = ["base", "system", "x11", "window-manager", "xfwm", "xfce-panel", "applications", "utilities", "tui", "console", "console-hacks", "internet", "emulators", "virtual", "development", "containers", "ai", "zsh", "fortune", "games", "nvidia470"]
 switch = ["base", "system", "x11", "window-manager", "xfwm", "xfce-panel", "applications", "utilities", "tui", "console", "console-hacks", "internet", "emulators", "fortune", "minimal"]
 mouse = ["base", "system", "x11", "window-manager", "xfwm", "xfce-panel", "emulators", "fortune", "minimal"]
 retro = ["base", "system", "x11", "window-manager", "xfwm", "xfce-panel", "emulators"]
