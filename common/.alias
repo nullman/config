@@ -2200,7 +2200,8 @@ alias rsync-foundry-put-nullware="
         --rsh=\"ssh -l kyle\" \
         --progress \
         \"${HOME}/foundrydata/\" \
-        \"${nullwareip}:/home/kyle/foundrydata/\""
+        \"${nullwareip}:/home/kyle/foundrydata/\"
+    ssh ${nullwareip} pm2 restart foundry --update-env"
 
 #
 # ruby
