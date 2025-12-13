@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2025-11-19 15:16 (user)>
+  #+TIMESTAMP: <2025-12-12 11:48 (user)>
 
 * Overview
   :PROPERTIES:
@@ -6678,7 +6678,8 @@
                 (output "*PDFLaTeX Output*"))
             (when (string= (file-name-extension filename) "tex")
               (shell-command
-               (concat "pdflatex -output-directory=" temporary-file-directory
+               (concat "pdflatex"
+                       " -output-directory=" temporary-file-directory
                        " -halt-on-error \"" filename "\" && "
                        "cp \"" temporary-file-directory
                        (file-name-sans-extension

@@ -4538,7 +4538,8 @@ If BUFFER is nil, current buffer is used."
         (output "*PDFLaTeX Output*"))
     (when (string= (file-name-extension filename) "tex")
       (shell-command
-       (concat "pdflatex -output-directory=" temporary-file-directory
+       (concat "pdflatex"
+               " -output-directory=" temporary-file-directory
                " -halt-on-error \"" filename "\" && "
                "cp \"" temporary-file-directory
                (file-name-sans-extension
