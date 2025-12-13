@@ -97,7 +97,7 @@ if [ "$(uname -n)" != "dom0" ] ; then
     #_once lxpolkit &
 
     # compositor
-    _once picom -b &
+    _once picom -b --animations &
 
     # system bar
     if ! pgrep -x stumpwm >/dev/null ; then

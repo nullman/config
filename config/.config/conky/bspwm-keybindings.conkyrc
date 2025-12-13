@@ -33,12 +33,11 @@ ${color2}Spr + Ctrl + H${color}  ${alignr}Display BSPWM Key Bindings
 ${color2}Spr/Alt + Tab${color}  ${alignr}Focus Next Node (Any/Desktop)
 ${color2}Spr/Alt + Shft + Tab${color}  ${alignr}Focus Prev Node (Any/Desktop)
 ${color2}Spr/Alt + Grave${color}  ${alignr}Focus Last Desktop/Node
-${color2}Spr + Alt + L/R${color}  ${alignr}Focus L/R Desktop
-${color2}Spr + Shft + L/R${color}  ${alignr}Send to L/R Desktop
+${color2}Spr + Alt + ←/→${color}  ${alignr}Focus L/R Desktop
+${color2}Spr + Shft + ←/→${color}  ${alignr}Send to L/R Desktop
 ${color2}Spr + 1..0${color}  ${alignr}Focus given Desktop
 ${color2}Spr + Shft + 1..0${color}  ${alignr}Send to given Desktop
-${color2}Spr + Shft + W${color}  ${alignr}Close Node
-${color2}Spr + Shft + Q${color}  ${alignr}Kill Node
+${color2}Spr + Shft + W/K${color}  ${alignr}Close/Kill Node
 ${color2}Spr + Ctrl + M${color}  ${alignr}Tiled/Stacked/Monocle Layout
 ${color2}Spr + Ctrl + T/F${color}  ${alignr}Tiled/Fullscreen Layout
 ${color2}Spr + Ctrl + Shft + T/F${color}  ${alignr}Pseudo-Tiled/Floating Layout
@@ -47,6 +46,7 @@ ${color2}Spr + Shft + I/K/J/L${color}  ${alignr}Swap Node in Direction
 ${color2}Spr + ./,${color}  ${alignr}Circulate Nodes Forward/Backward
 ${color2}Spr + Shft + ./,${color}  ${alignr}Swap Node Forward/Backward
 ${color2}Spr + Shft + G${color}  ${alignr}Swap Node with First Child
+${color2}Spr + Ctrl + Alt + ←/→/U/D${color}  ${alignr}Resize
 ${color2}Spr + Ctrl + S${color}  ${alignr}Resize and Move Mode
 ${color2}Spr + Ctrl + B/E${color}  ${alignr}Balance/Equalize Nodes
 ${color2}Spr + Alt + Spc/D/A/Ret${color}  ${alignr}App/Program/Group/Menu
@@ -63,7 +63,9 @@ ${color2}Spr + Ctrl + Print${color}  ${alignr}Window Shapshot
 ${color2}Spr + Shft + Print${color}  ${alignr}Region Shapshot
 ${color2}Spr + Shft + S/V${color}  ${alignr}Reload SXHKD/Video
 ${color2}Spr + Shft + R/T/E/C${color}  ${alignr}Reload Xfce/Tint/EWW/Conky
-${color2}Spr + Ctrl + Alt + ←/→${color}  ${alignr}Volume Down/Up
+${color2}Spr + Ctrl + Alt + PgUp/PgDn${color}  ${alignr}Brightness Up/Down
+${color2}Spr + Ctrl + Alt + Home/End${color}  ${alignr}Volume Down/Up
+${color2}Spr + Ctrl + Alt + Ins/Del${color}  ${alignr}Mute/Play Sound
 ${color2}Spr + Ctrl + Alt + M${color}  ${alignr}MPD Play/Pause
 ${color2}Spr + Ctrl + Alt + ,/.${color}  ${alignr}MPD Prev/Next
 ${color2}Spr + Ctrl + Alt + /${color}  ${alignr}MPD Playing

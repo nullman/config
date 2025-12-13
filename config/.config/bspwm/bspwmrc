@@ -220,6 +220,7 @@ _br '.blueman-manager-wrapped' state=floating center=true
 _br 'About Pale Moon' state=floating center=true
 _br 'Audacious' state=floating sticky=true center=false
 _br 'BasiliskII' state=floating center=true
+_br 'Blueman-manager' state=floating center=true
 _br 'Calamares' state=floating center=true
 _br 'Clipgrab' state=floating center=true
 _br 'File Transfer*' state=floating center=true
@@ -235,9 +236,10 @@ _br 'Manjaro Settings Manager' state=floating center=true
 _br 'Manjaro-hello' state=floating center=true
 _br 'MuseScore: Play Panel' state=floating center=true sticky=on
 _br 'Nitrogen' state=floating center=true
+_br 'Nm-connection-editor' state=floating center=true
 _br 'Pamac-manager' state=floating center=true
 _br 'Paprefs' state=floating center=true
-_br 'Pavucontrol' state=floating center=true
+_br 'Pavucontrol:pavucontrol' state=floating center=true
 _br 'Qmmp' state=floating sticky=true
 _br 'Qtconfig-qt4' state=floating sticky=true
 _br 'Qube Manager' state=floating center=true
@@ -252,6 +254,7 @@ _br 'System-config-printer.py' state=floating center=true
 _br 'Thus' state=floating center=true
 _br 'Timeset-gui' state=floating center=true
 _br 'Tint2conf' state=floating center=true
+_br 'Wrapper-2.0' state=floating center=true
 _br 'X48' state=floating center=true
 _br 'Xfburn' state=floating center=true
 _br 'Xfce4-panel' state=floating center=true

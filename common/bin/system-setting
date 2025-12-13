@@ -1,0 +1,114 @@
+#!/usr/bin/env bash
+#===============================================================================
+# system-setting
+#
+# Modify system volume or brightness.
+#
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
+#===============================================================================
+
+REPLACE_ID=1
+EXPIRE_TIME=5000
+
+# check if executable command is found in the path
+_command() {
+    command -v "$1" >/dev/null 2>&1
+}
+
+# run executable command if found in the path
+_run() {
+    command -v "$1" >/dev/null 2>&1 && "$@"
+}
+
+if [ $# -lt 2 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    echo "Usage: $(basename $0) SETTING CHANGE"
+    echo "Make a CHANGE to a system SETTING."
+    echo "Examples:"
+    echo "  volume up"
+    echo "  volume down"
+    echo "  volume mute"
+    echo "  volume unmute"
+    echo "  volume toggle-mute"
+    echo "  brightness up"
+    echo "  brightness down"
+    exit 1
+fi
+
+notify-send-volume() {
+    local volume=$(pamixer --get-volume)
+    case $1 in
+        mute)
+            _run notify-send --expire-time=${EXPIRE_TIME} --replace-id=${REPLACE_ID} --icon="volume-$1" "Muted"
+            ;;
+
+        unmute)
+            _run notify-send --expire-time=${EXPIRE_TIME} --replace-id=${REPLACE_ID} --hint=int:value:"${volume}" --icon="volume-$1" "Unmuted"
+            ;;
+
+        *)
+            _run notify-send --expire-time=${EXPIRE_TIME} --replace-id=${REPLACE_ID} --hint=int:value:"${volume}" --icon="volume-$1" "Volume $1"
+            ;;
+    esac
+}
+
+notify-send-brightness() {
+    local brightness=$(light -G | sed 's/\.[0-9]*$//')
+    _run notify-send --expire-time=${EXPIRE_TIME} --replace-id=${REPLACE_ID} --hint=int:value:"${brightness}" --icon="brightness-$1" "Brightness $1"
+}
+
+case $1 in
+    volume)
+        _command pamixer || (echo "Missing pamixer command" ; exit 1)
+        case $2 in
+            up)
+                pamixer --unmute
+                pamixer --increase 2 --allow-boost
+                notify-send-volume $2
+                ;;
+
+            down)
+                pamixer --unmute
+                pamixer --decrease 2 --allow-boost
+                notify-send-volume $2
+                ;;
+
+            mute)
+                pamixer --mute
+                notify-send-volume $2
+                ;;
+
+            unmute)
+                pamixer --unmute
+                notify-send-volume $2
+                ;;
+
+            toggle-mute)
+                pamixer --toggle-mute
+                if $(pamixer --get-mute) ; then
+                    notify-send-volume mute
+                else
+                    notify-send-volume unmute
+                fi
+                ;;
+        esac
+        ;;
+
+    brightness)
+        _command light || (echo "Missing light command" ; exit 1)
+        case $2 in
+            up)
+                light -A 2
+                notify-send-brightness $2
+                ;;
+
+            down)
+                light -U 2
+                notify-send-brightness $2
+                ;;
+        esac
+        ;;
+esac
+
+#===============================================================================
+# End of File
+#===============================================================================

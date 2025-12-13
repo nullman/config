@@ -74,7 +74,7 @@ super + ctrl + h
 super + shift + h
     man bspwm | sed 's/\[[0-9;]*m//g' | yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
 
-# close/kill active program
+# close/kill node
 super + shift + {w,k}
     bspc node --{close,kill}
 
@@ -198,12 +198,28 @@ super + shift + {1-9,0,minus,equal}
 # Move and Resize
 #-------------------------------------------------------------------------------
 
+# shrink window width
+super + ctrl + alt + Left
+	bspc node --resize right -40 0 ; bspc node --resize left -40 0
+
+# expand window width
+super + ctrl + alt + Right
+	bspc node --resize right 40 0 ; bspc node --resize left 40 0
+
+# shrink window height
+super + ctrl + alt + Up
+	bspc node --resize top 0 -40 ; bspc node --resize bottom -40 0
+
+# expand window height
+super + ctrl + alt + Down
+	bspc node --resize top 0 40 ; bspc node --resize bottom 40 0
+
 # resize window:
 #   outward with lowercase i/k/j/l keys
 #   inward with uppercase I/K/J/L keys
 # move floating window with arrow keys
 super + ctrl + s : {i,k,j,l,I,K,J,L,Up,Down,Left,Right}
-    n=20 ; \
+    n=40 ; \
     bspc node \
     { --resize top      0 -$n , \
       --resize bottom   0  $n , \

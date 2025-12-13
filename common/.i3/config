@@ -303,23 +303,23 @@ mode "resize" {
 #-------------------------------------------------------------------------------
 
 # pulse audio controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume $(pactl info | grep '^Default Sink: ' | sed 's/^Default Sink: //') +5% ; exec notify-send 'Volume Up'     # increase sound volume
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume $(pactl info | grep '^Default Sink: ' | sed 's/^Default Sink: //') -5% ; exec notify-send 'Volume Down'   # decrease sound volume
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute $(pactl info | grep "^Default Sink: " | sed 's/^Default Sink: //') toggle ; exec notify-send 'Toggle Mute'         # mute sound
-bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute $(pactl info | grep "^Default Source: " | sed 's/^Default Source: //') toggle ; exec notify-send 'Toggle Mic' # mute mic
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume $(pactl info | grep '^Default Sink: ' | sed 's/^Default Sink: //') +5% ; exec notify-send --expire-time=3000 'Volume Up'     # increase sound volume
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume $(pactl info | grep '^Default Sink: ' | sed 's/^Default Sink: //') -5% ; exec notify-send --expire-time=3000 'Volume Down'   # decrease sound volume
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute $(pactl info | grep "^Default Sink: " | sed 's/^Default Sink: //') toggle ; exec notify-send --expire-time=3000 'Toggle Mute'         # mute sound
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute $(pactl info | grep "^Default Source: " | sed 's/^Default Source: //') toggle ; exec notify-send --expire-time=3000 'Toggle Mic' # mute mic
 
 # sreen brightness controls
-bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 10 ; exec notify-send 'Brightness Up'     # increase screen brightness
-bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10 ; exec notify-send 'Brightness Down' # decrease screen brightness
+bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 10 ; exec notify-send --expire-time=3000 'Brightness Up'     # increase screen brightness
+bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10 ; exec notify-send --expire-time=3000 'Brightness Down' # decrease screen brightness
 
 # touchpad controls
-bindsym XF86TouchpadToggle exec --no-startup-id touchpad-toggle ; exec notify-send 'Toggle Touchpad' # toggle touchpad
+bindsym XF86TouchpadToggle exec --no-startup-id touchpad-toggle ; exec notify-send --expire-time=3000 'Toggle Touchpad' # toggle touchpad
 
 # media player controls
-bindsym XF86AudioPlay exec --no-startup-id playerctl play ; exec notify-send 'Play Audio'        # play audio
-bindsym XF86AudioPause exec --no-startup-id playerctl pause ; exec notify-send 'Pause Audio'     # pause audio
-bindsym XF86AudioNext exec --no-startup-id playerctl next ; exec notify-send 'Next Song'         # jump to next song
-bindsym XF86AudioPrev exec --no-startup-id playerctl previous ; exec notify-send 'Previous Song' # jump to previous song
+bindsym XF86AudioPlay exec --no-startup-id playerctl play ; exec notify-send --expire-time=3000 'Play Audio'        # play audio
+bindsym XF86AudioPause exec --no-startup-id playerctl pause ; exec notify-send --expire-time=3000 'Pause Audio'     # pause audio
+bindsym XF86AudioNext exec --no-startup-id playerctl next ; exec notify-send --expire-time=3000 'Next Song'         # jump to next song
+bindsym XF86AudioPrev exec --no-startup-id playerctl previous ; exec notify-send --expire-time=3000 'Previous Song' # jump to previous song
 
 #-------------------------------------------------------------------------------
 # Color Palette
@@ -604,6 +604,7 @@ for_window [class="Paprefs"] floating enable
 for_window [class="Pavucontrol"] floating enable
 for_window [class="Qmmp"] floating enable sticky enable border normal
 for_window [class="qt5ct"] floating enable sticky enable border normal
+for_window [class="qt6ct"] floating enable sticky enable border normal
 for_window [class="Qtconfig-qt4"] floating enable sticky enable border normal
 for_window [class="Simple-scan"] floating enable border normal
 for_window [class="(?i)System-config-printer.py"] floating enable border normal
@@ -640,7 +641,7 @@ for_window [class="Yad"] floating enable
 #bindsym $super+F5 exec terminal -e 'mocp'
 #bindsym $super+t exec --no-startup-id pkill -u ${USER} compton
 #bindsym $super+Ctrl+t exec --no-startup-id compton -b
-#bindsym $super+Shift+d --release exec "pkill -u ${USER} dunst ; exec notify-send 'Reconfiguring Dunst'"
+#bindsym $super+Shift+d --release exec "pkill -u ${USER} dunst ; exec notify-send --expire-time=3000 'Reconfiguring Dunst'"
 
 # screen snapshots
 bindsym Print exec --no-startup-id i3-scrot # full screen snapshot
@@ -660,7 +661,7 @@ bindsym $super+$alt+k --release exec --no-startup-id xkill
 
 # simple x hotkey daemon (both standard and bspwm key bindings)
 # (might have been run already by .xprofile)
-# pgrep -x sxhkd || exec --no-startup-id sxhkd -c "${HOME}/.config/sxhkd/sxhkdrc{,-i3}"
+# pgrep -x sxhkd >/dev/null || exec --no-startup-id sxhkd -c "${HOME}/.config/sxhkd/sxhkdrc{,-i3}"
 #exec --no-startup-id sxhkd -c "${HOME}/.config/sxhkd/sxhkdrc{,-i3}"
 exec --no-startup-id sxhkd -c "${HOME}/.config/sxhkd/sxhkdrc"
 

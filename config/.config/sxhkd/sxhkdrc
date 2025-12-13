@@ -146,29 +146,21 @@ control + alt + {Up,Down,Left,Right}
 #-------------------------------------------------------------------------------
 
 XF86AudioMute
-    pamixer --toggle-mute && notify-send --expire-time=3000 --replace-id=1 "$(pamixer --get-mute | sed 's/false/Unmuted/ ; s/true/Muted/')"
-    #pactl -- set-sink-mute 0 toggle && notify-send --expire-time=3000 --replace-id=1 "$(pactl -- get-sink-mute 0)"
-    #wpctl set-mute 49 toggle && notify-send --expire-time=3000 --replace-id=1 "$(wpctl get-volume ???)"
+    ${HOME}/bin/system-setting volume toggle-mute
 
 XF86AudioLowerVolume
-    pamixer --decrease 2 && notify-send --expire-time=3000 --replace-id=2 "$(pamixer --get-volume | sed 's/^/Volume: /')"
-    #pactl -- set-sink-volume 0 -2% && notify-send --expire-time=3000 --replace-id=2 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
-    #wpctl set-volume 49 2%- && notify-send --expire-time=3000 --replace-id=2 "$(wpctl get-volume ???)"
+    ${HOME}/bin/system-setting volume down
 
 XF86AudioRaiseVolume
-    pamixer --increase 2 && notify-send --expire-time=3000 --replace-id=2 "$(pamixer --get-volume | sed 's/^/Volume: /')"
-    #pactl -- set-sink-volume 0 +2% && notify-send --expire-time=3000 --replace-id=2 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
-    #wpctl set-volume 49 2%+ && notify-send --expire-time=3000 --replace-id=2 "$(wpctl get-volume ???)"
+    ${HOME}/bin/system-setting volume up
 
 # XF86AudioMicMute
 
 XF86MonBrightnessUp
-    light -A 2 && notify-send --expire-time=3000 --replace-id=3 "Brightness: $(light -G | sed 's/\.[0-9]*$//')"
-    #xbacklight -inc 2 && notify-send --expire-time=3000 --replace-id=3 'Brightness Up'
+    ${HOME}/bin/system-setting brightness up
 
 XF86MonBrightnessDown
-    light -U 2 && notify-send --expire-time=3000 --replace-id=3 "Brightness: $(light -G | sed 's/\.[0-9]*$//')"
-    #xbacklight -dec 2 && notify-send --expire-time=3000 --replace-id=3 'Brightness Down'
+    ${HOME}/bin/system-setting brightness down
 
 # XF86Display
 
@@ -200,20 +192,20 @@ XF86TouchpadToggle
 #-------------------------------------------------------------------------------
 
 # volume control
-super + alt + ctrl + Up
-    pamixer --toggle-mute && notify-send --expire-time=3000 --replace-id=1 "$(pamixer --get-mute | sed 's/false/Unmuted/ ; s/true/Muted/')"
-super + alt + ctrl + Left
-    pamixer --decrease 2 && notify-send --expire-time=3000 --replace-id=2 "$(pamixer --get-volume | sed 's/^/Volume: /')"
-super + alt + ctrl + Right
-    pamixer --increase 2 && notify-send --expire-time=3000 --replace-id=2 "$(pamixer --get-volume | sed 's/^/Volume: /')"
-super + alt + ctrl + Down
+super + alt + ctrl + Insert
+    ${HOME}/bin/system-setting volume toggle-mute
+super + alt + ctrl + Home
+    ${HOME}/bin/system-setting volume down
+super + alt + ctrl + End
+    ${HOME}/bin/system-setting volume up
+super + alt + ctrl + Delete
     ffplay -nodisp -autoexit "${HOME}/sounds/bottles.wav"
 
 # screen brightness
 super + alt + ctrl + Prior
-    light -A 2 && notify-send --expire-time=3000 --replace-id=3 "Brightness: $(light -G | sed 's/\.[0-9]*$//')"
+    ${HOME}/bin/system-setting brightness up
 super + alt + ctrl + Next
-    light -U 2 && notify-send --expire-time=3000 --replace-id=3 "Brightness: $(light -G | sed 's/\.[0-9]*$//')"
+    ${HOME}/bin/system-setting brightness down
 
 #-------------------------------------------------------------------------------
 # Wooting Lekker Keyboard Media Keys
@@ -221,17 +213,17 @@ super + alt + ctrl + Next
 
 # volume control
 super + Insert
-    pamixer --toggle-mute && notify-send --expire-time=3000 --replace-id=1 "$(pamixer --get-mute | sed 's/false/Unmuted/ ; s/true/Muted/')"
+    ${HOME}/bin/system-setting volume toggle-mute
 super + Home
-    pamixer --decrease 2 && notify-send --expire-time=3000 --replace-id=2 "$(pamixer --get-volume | sed 's/^/Volume: /')"
+    ${HOME}/bin/system-setting volume down
 super + Prior
-    pamixer --increase 2 && notify-send --expire-time=3000 --replace-id=2 "$(pamixer --get-volume | sed 's/^/Volume: /')"
+    ${HOME}/bin/system-setting volume up
 
 # screen brightness
 super + Print
-    light -A 2 && notify-send --expire-time=3000 --replace-id=3 "Brightness: $(light -G | sed 's/\.[0-9]*$//')"
+    ${HOME}/bin/system-setting brightness up
 super + Pause
-    light -U 2 && notify-send --expire-time=3000 --replace-id=3 "Brightness: $(light -G | sed 's/\.[0-9]*$//')"
+    ${HOME}/bin/system-setting brightness down
 
 # mpc control
 super + Delete
@@ -385,7 +377,7 @@ super + shift + s
     ${HOME}/bin/run-sxhkd && notify-send --expire-time=3000 'Reloading SXHKD'
 
 # reload system tray (xfce-panel)
-super + shift + t
+super + shift + r
     ((pkill -u ${USER} xfce4-panel ; xfce4-panel && sleep 1 && \
     xdo below -t $(xdo id -n root) $(xdo id -N xfce4-panel)) &) && \
     notify-send --expire-time=3000 'Reloading XFCE Panel'
@@ -397,7 +389,7 @@ super + shift + t
 #     notify-send --expire-time=3000 'Reloading Tint'
 
 # # reload system tray (eww)
-# super + shift + t
+# super + shift + e
 #     eww --restart open bar && sleep 1 && \
 #     xdo below -t $(xdo id -n root) $(xdo id -n eww) && \
 #     notify-send --expire-time=3000 'Reloading EWW'
