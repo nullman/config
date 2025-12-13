@@ -173,19 +173,19 @@ XF86MonBrightnessDown
 # XF86Favorites
 
 XF86TouchpadToggle
-    touchpad-toggle && notify-send --expire-time=3000 --replace-id=4 'Toggle Touchpad'
+    touchpad-toggle && notify-send --expire-time=3000 --replace-id=1 'Toggle Touchpad'
 
 # XF86AudioPlay
-#     playerctl play && notify-send --expire-time=3000 --replace-id=5 'Play Audio'
+#     playerctl play && notify-send --expire-time=3000 --replace-id=2 'Play Audio'
 
 # XF86AudioPause
-#     playerctl pause && notify-send --expire-time=3000 --replace-id=5 'Pause Audio'
+#     playerctl pause && notify-send --expire-time=3000 --replace-id=2 'Pause Audio'
 
 # XF86AudioNext
-#     playerctl next && notify-send --expire-time=3000 --replace-id=5 'Next Song'
+#     playerctl next && notify-send --expire-time=3000 --replace-id=2 'Next Song'
 
 # XF86AudioPrev
-#     playerctl previous && notify-send --expire-time=3000 --replace-id=5 'Previous Song'
+#     playerctl previous && notify-send --expire-time=3000 --replace-id=2 'Previous Song'
 
 #-------------------------------------------------------------------------------
 # Media Key Alternatives
@@ -227,11 +227,11 @@ super + Pause
 
 # mpc control
 super + Delete
-    mpc prev && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    mpc prev && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 super + End
-    mpc toggle && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    mpc toggle && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 super + Next
-    mpc next && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    mpc next && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 
 #-------------------------------------------------------------------------------
 # System Tools
@@ -429,53 +429,53 @@ super + shift + ctrl + b
 
 # mpc control
 super + alt + ctrl + m
-    mpc toggle && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    mpc toggle && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 super + alt + ctrl + comma
-    mpc prev && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    mpc prev && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 super + alt + ctrl + period
-    mpc next && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    mpc next && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 super + alt + ctrl + slash
-    notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 
 # mpc control (media keys)
 XF86AudioPrev
-    mpc prev && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    mpc prev && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 XF86AudioPlay
-    mpc toggle && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    mpc toggle && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 XF86AudioStop
-    mpc stop && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    mpc stop && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 XF86AudioNext
-    mpc next && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    mpc next && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 
 # # spotify control
 # shift + alt + a
-#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 # shift + alt + s
-#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 # shift + alt + d
-#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 # shift + alt + f
-#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 # XF86AudioPrevious
-#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 # XF86AudioPlay
-#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 # XF86AudioStop
-#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 # XF86AudioNext
-#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 
 # media player control
 super + alt + ctrl + z
-    qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 super + alt + ctrl + c
-    qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 super + alt + ctrl + x
-    qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 super + alt + ctrl + b
-    qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 super + alt + ctrl + apostrophe
-    notify-send --expire-time=5000 --replace-id=5 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 
 #-------------------------------------------------------------------------------
 # Applications
