@@ -38,9 +38,9 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 
 # general settings
 _bc split_ratio                0.5
-_bc stacked_layout             true
-_bc stacked_direction          east
-_bc stacked_ratio              0.62     # golden ratio
+#_bc stacked_layout             true
+#_bc stacked_direction          east
+#_bc stacked_ratio              0.62     # golden ratio
 _bc automatic_scheme           alternate
 #_bc initial_polarity           first_child
 _bc initial_polarity           second_child

@@ -48,7 +48,7 @@ while getopts ":drwsh" opt ; do
             ;;
         s)
             # symbols:  |   󰈆 󰈇  | ⏾ | ⏼ |    | ⏻
-            sel=$(printf "\tLock\n󰈇\tLogout\n⏾\tSuspend\n⏾⏼\tSuspend/Hibernate\n⏼\tHibernate\n\tReboot\n⏻\tShutdown" | \
+            sel=$(printf "\tLock\n󰈇\tLogout\n⏾\tSuspend\n⏾⏼\tSuspend/Hibernate\n⏼\tHibernate\n\tRestart WM\n\tReboot\n⏻\tShutdown" | \
                       rofi -dmenu -i -p 'Session' -width 20 -padding 20 -lines 4)
             case "${sel}" in
                 *Lock) xscreensaver-command -lock ;;
@@ -56,6 +56,7 @@ while getopts ":drwsh" opt ; do
                 *Suspend) systemctl suspend ;;
                 *Suspend/Hibernate) systemctl suspend-then-hibernate ;;
                 *Hibernate) systemctl hibernate ;;
+                *"Restart WM") bspc wm -r ;;
                 *Reboot) systemctl reboot ;;
                 *Shutdown) systemctl poweroff ;;
             esac

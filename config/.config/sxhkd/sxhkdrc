@@ -146,21 +146,21 @@ control + alt + {Up,Down,Left,Right}
 #-------------------------------------------------------------------------------
 
 XF86AudioMute
-    ${HOME}/bin/system-setting volume toggle-mute
+    ${HOME}/bin/system-setting 'volume' 'toggle-mute'
 
 XF86AudioLowerVolume
-    ${HOME}/bin/system-setting volume down
+    ${HOME}/bin/system-setting 'volume' 'down'
 
 XF86AudioRaiseVolume
-    ${HOME}/bin/system-setting volume up
+    ${HOME}/bin/system-setting 'volume' 'up'
 
 # XF86AudioMicMute
 
-XF86MonBrightnessUp
-    ${HOME}/bin/system-setting brightness up
-
 XF86MonBrightnessDown
-    ${HOME}/bin/system-setting brightness down
+    ${HOME}/bin/system-setting 'brightness' 'down'
+
+XF86MonBrightnessUp
+    ${HOME}/bin/system-setting 'brightness' 'up'
 
 # XF86Display
 
@@ -193,11 +193,11 @@ XF86TouchpadToggle
 
 # volume control
 super + alt + ctrl + Insert
-    ${HOME}/bin/system-setting volume toggle-mute
+    ${HOME}/bin/system-setting volume 'toggle-mute'
 super + alt + ctrl + Home
-    ${HOME}/bin/system-setting volume down
-super + alt + ctrl + End
     ${HOME}/bin/system-setting volume up
+super + alt + ctrl + End
+    ${HOME}/bin/system-setting volume down
 super + alt + ctrl + Delete
     ffplay -nodisp -autoexit "${HOME}/sounds/bottles.wav"
 
@@ -213,11 +213,11 @@ super + alt + ctrl + Next
 
 # volume control
 super + Insert
-    ${HOME}/bin/system-setting volume toggle-mute
+    ${HOME}/bin/system-setting volume 'toggle-mute'
 super + Home
-    ${HOME}/bin/system-setting volume down
-super + Prior
     ${HOME}/bin/system-setting volume up
+super + Prior
+    ${HOME}/bin/system-setting volume down
 
 # screen brightness
 super + Print
@@ -240,6 +240,11 @@ super + Next
 # display sxhkd keybindings
 super + alt + h
     yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null --filename="${HOME}/.config/sxhkd/sxhkdrc-help"
+    #ps -o args --no-headers -p $(pgrep -f sxhkd) | \
+    #sed 's/^.* //' | xargs cat | \
+    #awk '/^[A-Za-z]/ && last { printf "%-40s | %-40s\n", $0, last } { last="" } /^#/ { last=substr($0, 3) }' | \
+    #column -t -s '|' | \
+    #rofi -font 'System San Francisco Display 12' -dmenu -i -p "SXHKD Keybindings"
 
 # desktop application launcher
 super + alt + space

@@ -51,8 +51,12 @@ Media
 |-------+-----+------+-------+--------+---------------------------|
 | Super | Alt | Ctrl | Shift | Key    | Description               |
 |-------+-----+------+-------+--------+---------------------------|
-| Super | Alt | Ctrl |       | Left   | Volume Down               |
-| Super | Alt | Ctrl |       | Right  | Volume Up                 |
+| Super | Alt | Ctrl |       | PgUp   | Brightness Up             |
+| Super | Alt | Ctrl |       | PgDn   | Brightness Down           |
+| Super | Alt | Ctrl |       | Home   | Volume Up                 |
+| Super | Alt | Ctrl |       | End    | Volume Down               |
+| Super | Alt | Ctrl |       | Insert | Toggle Mute               |
+| Super | Alt | Ctrl |       | Delete | Play Sound                |
 | Super | Alt | Ctrl |       | m      | MPD: Play/Pause Song      |
 | Super | Alt | Ctrl |       | Comma  | MPD: Play Previous Song   |
 | Super | Alt | Ctrl |       | Period | MPD: Play Next Song       |
