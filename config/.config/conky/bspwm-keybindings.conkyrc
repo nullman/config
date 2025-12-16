@@ -46,7 +46,7 @@ ${color2}Spr + Shft + I/K/J/L${color}  ${alignr}Swap Node in Direction
 ${color2}Spr + ./,${color}  ${alignr}Circulate Nodes Forward/Backward
 ${color2}Spr + Shft + ./,${color}  ${alignr}Swap Node Forward/Backward
 ${color2}Spr + Shft + G${color}  ${alignr}Swap Node with First Child
-${color2}Spr + Ctrl + Alt + ←/→/U/D${color}  ${alignr}Resize
+${color2}Spr + Ctrl + Alt + ←/→/↑/↓${color}  ${alignr}Resize
 ${color2}Spr + Ctrl + S${color}  ${alignr}Resize and Move Mode
 ${color2}Spr + Ctrl + B/E${color}  ${alignr}Balance/Equalize Nodes
 ${color2}Spr + Alt + Spc/D/A/Ret${color}  ${alignr}App/Program/Group/Menu
