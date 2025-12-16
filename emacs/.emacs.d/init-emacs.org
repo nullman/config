@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2025-12-12 11:48 (user)>
+  #+TIMESTAMP: <2025-12-16 11:27 (user)>
 
 * Overview
   :PROPERTIES:
@@ -1320,8 +1320,9 @@
                    ;; "Inconsolata-15"
                    ;; "BitstreamVeraSansMono Nerd Font Mono-14"
                    ((x-list-fonts "MesloLGS Nerd Font") "MesloLGS Nerd Font Mono-14")
-                   ((x-list-fonts "Dejavu Sans") "Dejavu Sans Mono-14")
+                   ((x-list-fonts "NotoMono Nerd Font") "NotoMono Nerd Font Mono-14")
                    ((x-list-fonts "Hack Nerd Font") "Hack Nerd Font Mono-14")
+                   ((x-list-fonts "Dejavu Sans") "Dejavu Sans Mono-14")
                    ((x-list-fonts "DroidSansMono Nerd Font") "DroidSansMono Nerd Font Mono-14")
                    ((x-list-fonts "Fira Code") "Fira Code Mono-14")
                    (t

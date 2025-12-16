@@ -572,8 +572,9 @@ A fortune is added if FORTUNE is non-nil."
            ;; "Inconsolata-15"
            ;; "BitstreamVeraSansMono Nerd Font Mono-14"
            ((x-list-fonts "MesloLGS Nerd Font") "MesloLGS Nerd Font Mono-14")
-           ((x-list-fonts "Dejavu Sans") "Dejavu Sans Mono-14")
+           ((x-list-fonts "NotoMono Nerd Font") "NotoMono Nerd Font Mono-14")
            ((x-list-fonts "Hack Nerd Font") "Hack Nerd Font Mono-14")
+           ((x-list-fonts "Dejavu Sans") "Dejavu Sans Mono-14")
            ((x-list-fonts "DroidSansMono Nerd Font") "DroidSansMono Nerd Font Mono-14")
            ((x-list-fonts "Fira Code") "Fira Code Mono-14")
            (t

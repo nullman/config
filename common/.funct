@@ -2166,6 +2166,7 @@ arch-initialize() {
         "arch-capslock-control-x11"
         "arch-services"
         "arch-user-services"
+        "arch-settings"
         "arch-final"
     )
 
