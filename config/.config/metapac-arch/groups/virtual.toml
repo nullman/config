@@ -1,0 +1,19 @@
+arch = [
+    "edk2-ovmf",
+    "guestfs-tools",
+    "libosinfo",
+    "qemu-base",
+    "qemu-desktop",
+    "qemu-emulators-full",
+    "qemu-img",
+    "qtemu-git",
+    "swtpm",
+    "tuned",
+    "virt-install",
+    "virt-manager",
+    "virt-viewer",
+    "virtio-win",
+    "virtualbox",
+    "virtualbox-host-modules-arch",
+]
+
