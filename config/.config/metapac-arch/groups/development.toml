@@ -95,9 +95,6 @@ arch = [
     "vasm",
     "vlang",
     "vlink",
-    "x16-docs-bin",
-    "x16-emulator-bin",
-    "x16-rom-bin",
     "yq",
     "zlib",
 ]

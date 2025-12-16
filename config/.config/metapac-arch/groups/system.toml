@@ -87,7 +87,6 @@ arch = [
     "termite",
     "the_silver_searcher",
     "tldr",
-    "tlp",
     "tmux",
     "tmux-plugin-manager",
     "traceroute",
