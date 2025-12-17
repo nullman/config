@@ -153,6 +153,8 @@ alias hn="uname -n"
 alias una="uname -a"
 #        path                    show path
 alias path="echo \${PATH}"
+#        hni                     hostname -i
+alias hni="hostname -i"
 #        ifconfig                ifconfig
 alias ifc="ifconfig"
 #        ipa                     ip address
@@ -1823,7 +1825,7 @@ alias mpd-service-disable="systemctl --user disable mpd"
 #        mpd-service-restart     systemctl --user restart mpd
 alias mpd-service-restart="systemctl --user restart mpd"
 #        mpc-status              display artist and title of current song
-alias mpc-status="notify-send --expire-time=5000 --replace-id=5 \"\$(\${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')\""
+alias mpc-status="notify-send --expire-time=5000 --replace-id=2 \"\$(\${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')\""
 #        mpc-update              update mpc database
 alias mpc-update="mpc --wait update"
 

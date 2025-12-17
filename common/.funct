@@ -1147,10 +1147,10 @@ EOF
 #
 # ssh
 #
-#        ssh-key-copy            copy ssh key authorization to remote server
+#        ssh-key-copy            copy ssh key authorization to remote computer
 ssh-key-copy() {
     if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
-        echo "Usage: ssh-key-copy [USER@]SERVER"
+        echo "Usage: ssh-key-copy [USER@]HOSTNAME"
     else
         ssh "$1" '[ ! -d .ssh ] && mkdir -p .ssh && chmod 700 .ssh'
         find "${HOME}/.ssh/" -name "*.pub" | while read -r file ; do
@@ -1162,20 +1162,43 @@ ssh-key-copy() {
 #!# this version does not work on macos
 #!ssh-key-copy() {
 #!    if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
-#!        echo "Usage: ssh-key-copy [USER@]SERVER"
+#!        echo "Usage: ssh-key-copy [USER@]HOSTNAME"
 #!    else
 #!        ssh-copy-id -i "${HOME}/.ssh/id_dsa.pub" "$1"
 #!        ssh-copy-id -i "${HOME}/.ssh/id_rsa.pub" "$1"
 #!    fi
 #!}
-#        ssh-urxvt-copy          copy urxvt terminfo data to remote server
-ssh-urxvt-copy() {
+#        ssh-copy-dir            copy ~/.ssh directory to remote computer
+ssh-copy-dir() {
     if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
-        echo "Usage: ssh-urxvt-copy [USER@]SERVER"
+        echo "Usage: ssh-copy-dir [USER@]HOSTNAME"
     else
-        infocmp urxvt | \
-            ssh "$1" 'cat > /tmp/terminfo && mkdir -p .terminfo && \
-              tic /tmp/terminfo && rm -f /tmp/terminfo'
+        scp -r "${HOME}/.ssh" "$1"
+    fi
+}
+#        ssh-copy-auth           copy auth/secure files to remote computer
+ssh-copy-auth() {
+    if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+        echo "Usage: ssh-copy-dir [USER@]HOSTNAME"
+    else
+        readarray -d @ -t parts <<< "$1"
+        if [ ${#parts[*]} -gt 1 ] ; then
+            user="${parts[0]}"
+        else
+            user="${USER}"
+        fi
+        for file in .authinfo.gpg \
+                        .google-gemini-api-key \
+                        .mastodon \
+                        .netrc \
+                        .paste-strings \
+                        .rofi-typer \
+                        .secure-env \
+                        .synology-mount-credentials \
+                        .synology-mount-parameters ; do
+            scp "${HOME}/${file}" "$1:/home/${user}/"
+        done
+        scp -r "${HOME}/.syncterm" "$1:/home/${user}/"
     fi
 }
 

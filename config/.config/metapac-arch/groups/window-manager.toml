@@ -45,6 +45,7 @@ arch = [
     "pinta",
     "playerctl",
     "polkit-gnome",
+    "polybar",
     "qt5ct",
     "qt6ct",
     "rofi",

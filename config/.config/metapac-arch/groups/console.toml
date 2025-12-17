@@ -15,7 +15,6 @@ arch = [
     "dict-git",
     "diskonaut",
     "element",
-    "eza",
     "f3",
     "fd",
     "file-roller",

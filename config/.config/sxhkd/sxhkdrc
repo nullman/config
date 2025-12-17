@@ -280,6 +280,10 @@ super + alt + e
     rofimoji --typer xdotool --clipboarder xsel --skin-tone neutral
     #rofimoji --action print --skin-tone neutral | tr -d '\n' | xsel && xsel --output | xsel --clipboard
 
+# unipicker selector
+super + alt + u
+    unipicker --command "rofi -dmenu -i -p 'Unicode'" --copy-command 'xsel'
+
 # bookmarks selector
 super + alt + o
     ${HOME}/bin/rofi-menu bookmarks
@@ -334,7 +338,7 @@ super + alt + y
     source "${HOME}/.funct" && (git-sync-config && echo 'Done') 2>&1 | yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
 
 # git synchronize extra
-super + alt + u
+super + shift + alt + y
     source "${HOME}/.funct" && (git-sync-extra && echo 'Done') 2>&1 | yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
 
 # start screen saver
@@ -381,11 +385,17 @@ super + shift + Print
 super + shift + s
     ${HOME}/bin/run-sxhkd && notify-send --expire-time=3000 'Reloading SXHKD'
 
-# reload system tray (xfce-panel)
+# reload system tray (polybar)
 super + shift + r
-    ((pkill -u ${USER} xfce4-panel ; xfce4-panel && sleep 1 && \
-    xdo below -t $(xdo id -n root) $(xdo id -N xfce4-panel)) &) && \
-    notify-send --expire-time=3000 'Reloading XFCE Panel'
+    ((pkill -u ${USER} polybar ; polybar && sleep 1 && \
+    xdo below -t $(xdo id -n root) $(xdo id -N polybar)) &) && \
+    notify-send --expire-time=3000 'Reloading Polybar'
+
+# # reload system tray (xfce-panel)
+# super + shift + r
+#     ((pkill -u ${USER} xfce4-panel ; xfce4-panel && sleep 1 && \
+#     xdo below -t $(xdo id -n root) $(xdo id -N xfce4-panel)) &) && \
+#     notify-send --expire-time=3000 'Reloading XFCE Panel'
 
 # # reload system tray (tint2)
 # super + shift + t

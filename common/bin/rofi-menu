@@ -452,7 +452,7 @@ case "${menu}" in
 
     unicode)
         # run unipicker
-        unipicker --command "rofi -dmenu -i -p U	Unicode" --copy-command 'xsel'
+        unipicker --command "rofi -dmenu -i -p 'U	Unicode'" --copy-command 'xsel'
         ;;
 
     vnc)
