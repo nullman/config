@@ -49,7 +49,7 @@ _bc borderless_monocle         false
 _bc gapless_monocle            false
 _bc single_monocle             true
 _bc click_to_focus             any
-_bc swallow_first_click        false
+_bc swallow_first_click        true
 _bc focus_follows_pointer      false
 _bc pointer_follows_monitor    true
 _bc ignore_ewmh_focus          true
@@ -67,7 +67,7 @@ _bc top_padding                0
 _bc right_padding              0
 #_bc bottom_padding             0
 #_bc bottom_padding             30       # room for tint2 system bar
-_bc bottom_padding             22       # room for xfce/eww system bar
+_bc bottom_padding             22       # room for polybar/xfce/eww system bar
 _bc left_padding               0
 
 # desktop settings
@@ -99,7 +99,8 @@ _bc presel_feedback_color      "#5E81AC"
 #-------------------------------------------------------------------------------
 
 # symbols:                          
-bspc monitor -d 1 2 3 4 5 6 7 8 9 10 11 12
+#bspc monitor -d 1 2 3 4 5 6 7 8 9 10 11 12
+bspc monitor -d            
 #bspc monitor -d "1  " "2  " "3  " "4  " "5  " "6  " "7  " "8  " "9  " "10  " "11  " "12  "
 #bspc monitor -d "1  " "2  " "3  " "4  " "5  " "6  " "7  " "8  " "9  " "10  "
 #bspc monitor -d "1  " "2  " "3  " "4  " "5  " "6  " "7  " "8  " "9  " "10  "
@@ -238,6 +239,7 @@ _br 'MuseScore: Play Panel' state=floating center=true sticky=on
 _br 'Nitrogen' state=floating center=true
 _br 'Nm-connection-editor' state=floating center=true
 _br 'Pamac-manager' state=floating center=true
+_br 'Orage' state=floating center=true
 _br 'Paprefs' state=floating center=true
 _br 'Pavucontrol:pavucontrol' state=floating center=true
 _br 'Qmmp' state=floating sticky=true
