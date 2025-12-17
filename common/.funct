@@ -2064,6 +2064,9 @@ home-initialize() {
 }
 #        home-restow             restow links from ~/ to ~/config and ~/config-private dirs
 home-restow() {
+    xss="${HOME}/.xscreensaver"
+    xssbak="${HOME}/.xscreensaver.bak"
+
     # create stow target directories
     echo "Creating stow target directories..."
     mkdir -p "${HOME}/.emacs.d"
@@ -2094,11 +2097,13 @@ home-restow() {
     # restow
     echo "Restowing packages..."
     (cd "${HOME}" && ln -s -f config/.stow-global-ignore .)
+    [ -f "${xss}" ] && [ ! -L "${xss}" ] && mv "${xss}" "${xssbak}"
     stow --dir="$(configdir)" --target="${HOME}" --restow "common" "emacs"
     stow --dir="$(configdir)" --target="${HOME}" --no-folding --restow "config" "local"
     stow --dir="$(configdir)/custom" --target="${HOME}" --no-folding --restow "$(uname -n)"
     [ -d "$(configdir)-private" ] && stow --dir="$(configdir)-private" --target="${HOME}" --restow "common" "emacs"
     [ -d "$(configdir)-private" ] && stow --dir="$(configdir)-private" --target="${HOME}" --no-folding --restow "config" "local"
+    [ -f "${xssbak}" ] && rm "${xss}" && mv "${xssbak}" "${xss}"
 }
 #        make-metapac-groups  generate metapac package groups
 make-metapac-groups() {
