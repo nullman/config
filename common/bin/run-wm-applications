@@ -71,8 +71,8 @@ if [ "$(uname -n)" == "dom0" ] ; then
     # hide mouse when not in use
     _once unclutter &
 
-    # custom bspwm external rules to handle vm classes
-    bspc config external_rules_command ${HOME}/.config/bspwm/bspwm-external-rules &
+    # custom bspwm external rules to handle vm classes in qubes os
+    bspc config external_rules_command ${HOME}/.config/bspwm/bspwm-external-rules-qubes &
 fi
 
 # other os
