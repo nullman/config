@@ -8,15 +8,15 @@
 #===============================================================================
 
 if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
-    echo "Usage: wordle-match LENGTH EXCLUDE INCLUDE MATCH"
+    echo "Usage: wordle-match MATCH EXCLUDE INCLUDE"
     echo "Search for Wordle words matching given pattern."
-    echo "  LENGTH   length of words to consider"
+    echo "  MATCH    letters and positions to match (regexp)"
     echo "  EXCLUDE  letters to exclude"
     echo "  INCLUDE  letters to include"
-    echo "  MATCH    letters and positions to match (regexp)"
-    echo "Example: wordle-match 5 abc def ...gh"
+    echo "Example: wordle-match ..... abc def"
 else
-    cmd="cat $(dirname $(readlink -f $0))/words.txt | grep '^.\{$1\}$' | tr 'A-Z' 'a-z'"
+    size=${#1}
+    cmd="cat $(dirname $(readlink -f $0))/words.txt | grep '^.\{${size}\}$' | tr 'A-Z' 'a-z' | grep --color=never '$1'"
     if [ $# -gt 1 ] ; then
         cmd="${cmd} | grep --color=never -v '[$2]'"
     fi
@@ -24,9 +24,6 @@ else
         for x in $(echo "$3" | grep -o '.') ; do
             cmd="${cmd} | grep --color=never '${x}'"
         done
-    fi
-    if [ $# -gt 3 ] ; then
-        cmd="${cmd} | grep --color=never '$4'"
     fi
     #echo "${cmd}"
     eval "${cmd}"
