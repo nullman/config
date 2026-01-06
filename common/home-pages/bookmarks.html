@@ -328,6 +328,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:%20(function()%20{%20var%20allFrms%20=%20document.forms;%20var%20numFrms%20=%20allFrms.length;%20if%20(numFrms%20==%200)%20{%20alert('No%20forms%20were%20found%20on%20this%20webpage.');%20}%20var%20frmNum%20=%200;%20while%20(frmNum%20&amp;lt;%20numFrms)%20{%20var%20msg%20=%20'';%20if%20(frmNum%20==%200)%20{%20if%20(numFrms%20==%201)%20{%20msg%20=%20'1%20form%20was%20found%20on%20this%20webpage.%20It';%20}%20else%20{%20msg%20=%20numFrms%20+%20'%20forms%20were%20found%20on%20this%20webpage.%20';%20}%20}%20if%20(numFrms%20&amp;gt;%201)%20{%20msg%20+=%20'Form%20#'%20+%20(frmNum%20+%201)%20+%20'%20of%20'%20+%20numFrms;%20}%20var%20frm%20=%20allFrms[frmNum];%20var%20frmType%20=%20(typeof%20frm.method%20==%20'string')%20?%20frm.method.toUpperCase().replace(/^\s+|\s+$/g,%20'')%20:%20'';%20var%20frmAction%20=%20(typeof%20frm.action%20==%20'string')%20?%20frm.action.toLowerCase().replace(/^\s+|\s+$/g,%20'')%20:%20'';%20if%20((frmType%20==%20'GET')%20||%20(frmType%20==%20'POST'))%20{%20msg%20+=%20'%20uses%20a%20'%20+%20frmType%20+%20'%20request.'%20}%20else%20{%20msg%20+=%20'%20uses%20an%20unknown%20request%20type%20of%20\''%20+%20frmType%20+%20'\'.'%20}%20msg%20+=%20'\nHere%20is%20the%20URL%20for%20its%20current%20values'%20+%20((frmType%20==%20'POST')%20?%20'%20(converted%20to%20a%20GET%20request):'%20:%20':');%20var%20url%20=%20frmAction;%20var%20allCtrls%20=%20frm.elements;%20for%20(ctrlNum%20=%200;%20ctrlNum%20&amp;lt;%20allCtrls.length;%20ctrlNum++)%20{%20var%20ctrl%20=%20allCtrls[ctrlNum];%20var%20ctrlType%20=%20ctrl.type;%20if%20(typeof%20ctrlType%20!=%20'undefined')%20{%20ctrlType%20=%20ctrlType.toLowerCase();%20if%20((ctrlType%20!=%20'submit')%20&amp;&amp;%20(ctrlType%20!=%20'reset')%20&amp;&amp;%20(ctrlType%20!=%20'image')%20&amp;&amp;%20(ctrlType%20!=%20'button')%20&amp;&amp;%20%20(((ctrlType%20!=%20'checkbox')%20&amp;&amp;%20(ctrlType%20!=%20'radio'))%20||%20(ctrl.checked%20!=%20false)))%20{%20url%20+=%20(url.indexOf('?')%20&amp;gt;%200)%20?%20'&amp;'%20:%20'?';%20url%20+=%20ctrl.name%20+%20'='%20+%20encodeURIComponent(ctrl.value);%20}%20}%20}%20if%20(frmType%20==%20'POST')%20{%20url%20=%20'https://www.gettopost.com/gettopost.html?src=bookmarklet1&amp;url='%20+%20url;%20}%20if%20(!window.prompt(msg,%20url))%20{%20break;%20}%20frmNum++;%20}%20})();">Get Form URLs</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.webbloatscore.com/">Web Bloat Score Calculator</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://d3ward.github.io/toolz/adblock">Test Ad Block</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.nerdfonts.com/cheat-sheet">Nerd Fonts: Cheat Sheet</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://fontawesome.com/cheatsheet">Font-Awesome Cheat-Sheet</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.amp-what.com/">&amp;what: Discover Unicode &amp; HTML Character Entities</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://unicode-table.com/">Unicode Character Table</a><br />
@@ -5891,6 +5892,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#id__bookmarks_menu__software__desktop_environments_/_window_managers__x11__kde">[ KDE ]</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#id__bookmarks_menu__software__desktop_environments_/_window_managers__x11__xfce">[ XFCE ]</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#id__bookmarks_menu__software__desktop_environments_/_window_managers__x11__bspwm">[ BSPWM ]</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#id__bookmarks_menu__software__desktop_environments_/_window_managers__x11__i3">[ i3 ]</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#id__bookmarks_menu__software__desktop_environments_/_window_managers__x11__openbox">[ Openbox ]</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#id__bookmarks_menu__software__desktop_environments_/_window_managers__x11__stumpwm:_common_lisp_based_tiling_wm">[ StumpWM: Common Lisp Based Tiling WM ]</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#id__bookmarks_menu__software__desktop_environments_/_window_managers__x11__enlightenment">[ Enlightenment ]</a><br />
@@ -5955,6 +5957,9 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/janleigh/dotfiles/blob/master/cfg/bspwm/bspwmrc">janleigh: BSPWM</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/siduck/dotfiles">siduck: BSPWM</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/raexera/tokyo">raexera: BSPWM Tokyo</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3 id="id__bookmarks_menu__software__desktop_environments_/_window_managers__x11__i3">i3</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://i3wm.org/">i3</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/ViliamV/stacki3">stacki3: Stack Layout for i3/Sway WM</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/nwg-piotr/autotiling">autotiling: Script for sway and i3 to automatically switch the horizontal/vertical window split orientation</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3 id="id__bookmarks_menu__software__desktop_environments_/_window_managers__x11__openbox">Openbox</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://openbox.org/">Openbox</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.devpy.me/your-guide-to-a-comfortable-linux-desktop-with-openbox/">Your Guide to a Comfortable Linux Desktop With Openbox</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3 id="id__bookmarks_menu__software__desktop_environments_/_window_managers__x11__stumpwm:_common_lisp_based_tiling_wm">StumpWM: Common Lisp Based Tiling WM</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#id__bookmarks_menu__software__desktop_environments_/_window_managers__x11__stumpwm:_common_lisp_based_tiling_wm__configurations">[ Configurations ]</a><br />
@@ -5983,9 +5988,12 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://docs.maxxinteractive.com/">MaXX Interactive Desktop</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/jcs/progman">progman: A simple X11 window manager modeled after the Windows 3 era</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3 id="id__bookmarks_menu__software__desktop_environments_/_window_managers__wayland">Wayland</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#id__bookmarks_menu__software__desktop_environments_/_window_managers__wayland__hyprland">[ Hyprland ]</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#id__bookmarks_menu__software__desktop_environments_/_window_managers__wayland__sway">[ Sway ]</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3 id="id__bookmarks_menu__software__desktop_environments_/_window_managers__wayland__hyprland">Hyprland</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/hyprwm/Hyprland">Hyprland</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://omarchy.org/">Omarchy: Opinionated Arch/Hyprland Setup</a><br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://swaywm.org/">Sway</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3 id="id__bookmarks_menu__software__desktop_environments_/_window_managers__wayland__sway">Sway</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://swaywm.org/">Sway</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/ViliamV/stacki3">stacki3: Stack Layout for i3/Sway WM</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/nwg-piotr/autotiling">autotiling: Script for sway and i3 to automatically switch the horizontal/vertical window split orientation</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/YaLTeR/niri">niri: A Scrollable-Tiling Wayland Compositor</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/riverwm/river">River: A Dynamic Tiling Wayland Compositor</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/WayfireWM/wayfire">Wayfire: A Modular and Extensible Wayland Compositor</a><br />
@@ -6874,7 +6882,10 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.msi.com/page/afterburner">MSI Afterburner</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://unigine.com/">Unigine Suite</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.futuremark.com/">FutureMark Suite</a><br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3 id="id__bookmarks_menu__software__fonts">Fonts</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.fontsquirrel.com/fonts/Droid-Sans-Mono">Droid Sans Mono Font Family</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3 id="id__bookmarks_menu__software__fonts">Fonts</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#id__bookmarks_menu__software__fonts__nerd_fonts">[ Nerd Fonts ]</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3 id="id__bookmarks_menu__software__fonts__nerd_fonts">Nerd Fonts</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.nerdfonts.com/">Nerd Fonts</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.nerdfonts.com/cheat-sheet">Nerd Fonts: Cheat Sheet</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.fontsquirrel.com/fonts/Droid-Sans-Mono">Droid Sans Mono Font Family</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.download-free-fonts.com/details/37300/sfns-system-san-francisco-display">System San Francisco Display</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://fontawesome.com/">Font Awesome</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://sourcefoundry.org/hack/">Hack</a><br />
@@ -10358,6 +10369,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#id__bookmarks_menu__gaming__pen_and_paper_games_(ttrpgs)__games__classical_fantasy__ironsworn">[ Ironsworn ]</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#id__bookmarks_menu__gaming__pen_and_paper_games_(ttrpgs)__games__classical_fantasy__fate">[ Fate ]</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3 id="id__bookmarks_menu__gaming__pen_and_paper_games_(ttrpgs)__games__classical_fantasy__dungeons_and_dragons">Dungeons and Dragons</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.americanroads.us/DandD/DnD_Basic_Rules_Holmes.pdf">D&amp;D Basic Rules</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://docs.preterhuman.net/images/2/28/TSR_1071_Rules_Cyclopedia.pdf">Dungeons &amp; Dragons: Rules Cyclopedia (PDF)</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.hamesucken.com/combat.html">D&amp;D Combat in One Page</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://donjon.bin.sh/5e/monsters/">5e Monster List</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3 id="id__bookmarks_menu__gaming__pen_and_paper_games_(ttrpgs)__games__classical_fantasy__pathfinder">Pathfinder</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://2e.aonprd.com/PlayersGuide.aspx">Player's Guide</a><br />
@@ -10558,7 +10570,8 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.drivethrurpg.com/product/116380/">Library of Names</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.jorvikvikingcentre.co.uk/wp-content/uploads/2020/03/Viking-names.pdf">Voyager Viking Names (PDF)</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://deckanddicegames.com/quartershots01/">QuarterShots: Roads &amp; Ruins</a><br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3 id="id__bookmarks_menu__gaming__pen_and_paper_games_(ttrpgs)__modules">Modules</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.drivethrurpg.com/product/82766/Tomes-of-Adventure-Morsons-Manor">Tomes of Adventure, Morson's Manor</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3 id="id__bookmarks_menu__gaming__pen_and_paper_games_(ttrpgs)__modules">Modules</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://1shotadventures.com/">1Shot Adventures: A collection of free RPG adventures... and the design behind them</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.drivethrurpg.com/product/82766/Tomes-of-Adventure-Morsons-Manor">Tomes of Adventure, Morson's Manor</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3 id="id__bookmarks_menu__gaming__pen_and_paper_games_(ttrpgs)__offline_tools">Offline Tools</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#id__bookmarks_menu__gaming__pen_and_paper_games_(ttrpgs)__offline_tools__foundry_virtual_tabletop">[ Foundry Virtual Tabletop ]</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3 id="id__bookmarks_menu__gaming__pen_and_paper_games_(ttrpgs)__offline_tools__foundry_virtual_tabletop">Foundry Virtual Tabletop</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#id__bookmarks_menu__gaming__pen_and_paper_games_(ttrpgs)__offline_tools__foundry_virtual_tabletop__infinite_dungeons_for_your_foundry_vtt_games">[ Infinite Dungeons For Your Foundry VTT Games ]</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foundryvtt.com/">Foundry Virtual Tabletop</a><br />
@@ -10569,11 +10582,14 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/League-of-Foundry-Developers/FoundryVTT-Module-Template">FoundryVTT-Module-Template: A Template Repository for FoundryVTT Module Development that Comes with Versioned CI/CD</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3 id="id__bookmarks_menu__gaming__pen_and_paper_games_(ttrpgs)__offline_tools__foundry_virtual_tabletop__infinite_dungeons_for_your_foundry_vtt_games">Infinite Dungeons For Your Foundry VTT Games</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.youtube.com/watch?v=cVo8zeIlsiU">Infinite Dungeons For Your Foundry VTT Games</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://watabou.itch.io/one-page-dungeon">One Page Dungeon</a><br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://augurvtt.com/">The Augur: Mapping, Character Avatar Customization, Character Sheets, Journaling, a Bestiary, etc</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://augurvtt.com/">The Augur: Mapping, Character Avatar Customization, Character Sheets, Journaling, a Bestiary, etc ($50)</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.wonderdraft.net/">Wonderdraft: Mapping Tool</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://pcgen.org/">PCGen: A D20 RPG Character Creator</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/PCGen/pcgen">PCGen: Main Code and Data Development for PCGen</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://worldographer.com/">Worldographer: RPG Map Software ($70)</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.hexographer.com/">Hexographer: World/Starmap/Wilderness Map Creation Software</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://hextml.playest.net/">Hexml</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://cone.itch.io/hex-kit">Hex Kit: Hex Mapping Software (Win, Mac, Linux) ($15)</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3 id="id__bookmarks_menu__gaming__pen_and_paper_games_(ttrpgs)__online_tools">Online Tools</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#id__bookmarks_menu__gaming__pen_and_paper_games_(ttrpgs)__online_tools__watabous_procgen_arcana">[ Watabou's Procgen Arcana ]</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://forge-vtt.com/">The Forge (Foundry VTT Host)</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://anydice.com/">AnyDice</a><br />
@@ -10991,6 +11007,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.onesuite.com/">OneSuite</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.visible.com/">Visible Wireless</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://jmp.chat/">JMP: Your Phone Number on Every Device</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.phreeli.com/">Phreeli: Privacy by Design Wireless</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3 id="id__bookmarks_menu__business__medical">Medical</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.allina.com/ahs/AMC.nsf/page/AMC_Coon_Rapids">Allina Medical Clinic</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.aetna.com/">Aetna</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3 id="id__bookmarks_menu__business__publishing">Publishing</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.lulu.com/">Lulu</a><br />
@@ -11577,6 +11594,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3 id="id__bookmarks_menu__shopping__gaming__dice__noble_knight_games">Noble Knight Games</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.nobleknight.com/SC/Dice">Noble Knight Games: Dice</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.nobleknight.com/SC/Dice?material=material_type__%23__metal">Noble Knight Games: Metal Dice</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://uniquedice.com/products/roulette-dice">Roulette Dice</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.mathartfun.com/DiceShop.html">The Dice Shop</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3 id="id__bookmarks_menu__shopping__gaming__card_sleeves">Card Sleeves</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.bcwsupplies.com/">BCW Supplies: Collectible Supplies</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.bcwsupplies.com/card-sleeves">Standard Card Sleeves (2 5/8" X 3 5/8")</a><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.bcwsupplies.com/board-game-sleeves-70mm-x-120mm">Board Game Sleeves: Tarot Card Size (70MM X 120MM)</a><br />
@@ -12187,7 +12205,7 @@
 &nbsp;&nbsp;<h2 id="id__other_bookmarks">Other Bookmarks</h2>&nbsp;&nbsp;<h2 id="id__mobile_bookmarks">Mobile Bookmarks</h2></div>
 
 
-<div id="footer">Last Modified: 2025-12-09 19:47</div>
+<div id="footer">Last Modified: 2026-01-05 22:16</div>
 
 </body>
 
