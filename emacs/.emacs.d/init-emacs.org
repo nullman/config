@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2025-12-16 11:27 (user)>
+  #+TIMESTAMP: <2026-01-08 13:24 (user)>
 
 * Overview
   :PROPERTIES:
@@ -34731,10 +34731,13 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
                                   ("github" . "~/src/github-nullman")
                                   ;;("gitlab" . "~/src/gitlab-kylesherman")
                                   ("media" . "/home/data/media")
-                                  ("music" . "/home/data/media/Audio/Music")
-                                  ("text" . "/home/data/media/Text")
-                                  ("softwre" . "/home/data/media/Software")
-                                  ("repos" . "/home/data/media/Repos")
+                                  ("Music" . "/home/data/media/Audio/Music")
+                                  ("Text" . "/home/data/media/Text")
+                                  ("Books" . "/home/data/media/Text/Books")
+                                  ("Computer" . "/home/data/media/Text/Books/Computer")
+                                  ("LaTeX" . "/home/data/media/Text/Books/Computer/LaTeX")
+                                  ("Softwre" . "/home/data/media/Software")
+                                  ("Repos" . "/home/data/media/Repos")
                                   ("Downloads" . "~/Downloads")
                                   ("Documents" . "~/Documents")
                                   ;;("QubesIncoming" . "~/QubesIncoming")
