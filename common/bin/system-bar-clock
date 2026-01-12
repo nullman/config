@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-time=$(date '+%a %Y-%m-%d %H:%M')
+#time=$(date '+%a %Y-%m-%d %H:%M')
+time=$(date '+%a %b %d %H:%M')
 hour=$(date '+%I')
 
 # symbols: 󱑊 󱐿 󱑀 󱑁 󱑂 󱑃 󱑄 󱑅 󱑆 󱑇 󱑈 󱑉
