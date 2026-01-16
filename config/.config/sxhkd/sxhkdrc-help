@@ -35,9 +35,7 @@ System Tools
 | Super |     | Ctrl |       | Print  | Window Snapshot                     |
 | Super |     |      | Shift | Print  | Region Snapshot                     |
 | Super |     |      | Shift | s      | Reload SXHKD                        |
-| Super |     |      | Shift | r      | Reload Xfce                         |
-| Super |     |      | Shift | t      | Reload Tint                         |
-| Super |     |      | Shift | e      | Reload EWW                          |
+| Super |     |      | Shift | r      | Reload System Tray                         |
 | Super |     |      | Shift | c      | Reload Conky                        |
 | Super |     |      | Shift | v      | Reset Video                         |
 | Super | Alt |      |       | b      | Connect to Sennheiser Headphones    |
