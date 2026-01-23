@@ -11794,8 +11794,8 @@ be automatically capitalized."
         (words-short
          '(;; english
            "a" "an" "and" "as" "at" "be" "but" "by" "for" "from" "in" "into"
-           "is" "it" "it's" "nor" "o'" "on" "or" "of" "onto" "per" "so" "the"
-           "that" "to" "yet" "upon" "vs" "via" "with"
+           "is" "it" "its" "it's" "nor" "o'" "on" "or" "of" "onto" "per" "so"
+           "the" "that" "to" "yet" "upon" "vs" "via" "with"
            ;; spanish
            "a" "al" "an" "asi" "como" "con" "de" "el" "en" "es" "esa" "ese"
            "la" "las" "lo" "los" "ni" "o" "para" "pero" "por" "que" "ser"
