@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2026-01-22 17:08 (user)>
+  #+TIMESTAMP: <2026-01-25 01:35 (user)>
 
 * Overview
   :PROPERTIES:
@@ -93,14 +93,14 @@
     | Bright Yellow Highlight            |                 | color-paren      | #ffff33  |
     | White Mouse                        |                 | color-mouse      | #ffffff  |
     |------------------------------------+-----------------+------------------+----------|
-    | Outline Level 1                    | goldenrod       | color-1          | #daa520  |
-    | Outline Level 2                    | light goldenrod | color-2          | #eedd82  |
-    | Outline Level 3                    | yellow green    | color-3          | #9acd32  |
-    | Outline Level 4                    | light salmon    | color-4          | #ffa07a  |
+    | Outline Level 1                    | light goldenrod | color-1          | #eedd82  |
+    | Outline Level 2                    | light salmon    | color-2          | #ffa07a  |
+    | Outline Level 3                    | light green     | color-3          | #90ee90  |
+    | Outline Level 4                    | light sky blue  | color-4          | #87cefa  |
     | Outline Level 5                    | tan             | color-5          | #d2b48c  |
-    | Outline Level 6                    | light green     | color-6          | #90ee90  |
-    | Outline Level 7                    | coral           | color-7          | #ff7f50  |
-    | Outline Level 8                    | wheat           | color-8          | #f5deb3  |
+    | Outline Level 6                    | aquamarine      | color-6          | #7fffd4  |
+    | Outline Level 7                    | pale violet red | color-7          | #db7093  |
+    | Outline Level 8                    | cadet blue      | color-8          | #5f9ea0  |
     |------------------------------------+-----------------+------------------+----------|
 
     #+BEGIN_SRC emacs-lisp :var data=colors
@@ -4158,15 +4158,15 @@
         ;; faces
         (custom-set-faces
          `(org-ellipsis ((t (:underline nil))))
-         `(org-block ((t (:inherit shadow :foreground ,color-foreground)))))
-        ;;  `(org-level-1 ((t (:foreground ,color-1))))
-        ;;  `(org-level-2 ((t (:foreground ,color-2))))
-        ;;  `(org-level-3 ((t (:foreground ,color-3))))
-        ;;  `(org-level-4 ((t (:foreground ,color-4))))
-        ;;  `(org-level-5 ((t (:foreground ,color-5))))
-        ;;  `(org-level-6 ((t (:foreground ,color-6))))
-        ;;  `(org-level-7 ((t (:foreground ,color-7))))
-        ;;  `(org-level-8 ((t (:foreground ,color-8)))))
+         `(org-block ((t (:inherit shadow :foreground ,color-foreground))))
+         `(org-level-1 ((t (:foreground ,color-1))))
+         `(org-level-2 ((t (:foreground ,color-2))))
+         `(org-level-3 ((t (:foreground ,color-3))))
+         `(org-level-4 ((t (:foreground ,color-4))))
+         `(org-level-5 ((t (:foreground ,color-5))))
+         `(org-level-6 ((t (:foreground ,color-6))))
+         `(org-level-7 ((t (:foreground ,color-7))))
+         `(org-level-8 ((t (:foreground ,color-8)))))
 
         ;; set file apps
         (when window-system
