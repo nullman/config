@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2026-01-25 01:35 (user)>
+  #+TIMESTAMP: <2026-01-26 10:50 (user)>
 
 * Overview
   :PROPERTIES:
@@ -4092,6 +4092,8 @@
         :custom
         ;; org directory
         (org-directory (file-truename (expand-file-name "~/org")))
+        ;; turn off element cache as it slows down emacs with large files
+        (org-element-use-cache nil)
         ;; ;; use org indent mode
         ;; (org-indent-mode 1)
         ;; indent blocks to outline node level

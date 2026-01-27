@@ -2556,6 +2556,8 @@ KEYMAP defaults to `override-global-map'."
   :custom
   ;; org directory
   (org-directory (file-truename (expand-file-name "~/org")))
+  ;; turn off element cache as it slows down emacs with large files
+  (org-element-use-cache nil)
   ;; ;; use org indent mode
   ;; (org-indent-mode 1)
   ;; indent blocks to outline node level
