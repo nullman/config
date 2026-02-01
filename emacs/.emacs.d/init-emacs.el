@@ -2557,7 +2557,7 @@ KEYMAP defaults to `override-global-map'."
   ;; org directory
   (org-directory (file-truename (expand-file-name "~/org")))
   ;; turn off element cache as it slows down emacs with large files
-  (org-element-use-cache nil)
+  ;;(org-element-use-cache nil) ;; prevents org-babel-tangle-block from working
   ;; ;; use org indent mode
   ;; (org-indent-mode 1)
   ;; indent blocks to outline node level

@@ -40,7 +40,6 @@ package_manager = "yay"
 # current user. This setting can be overridden on a per-package basis using
 # { systemwide = false|true }.
 # Default: true
-systemwide = true
 
 [vscode]
 # Since VSCode and VSCodium both operate on the same package database
