@@ -399,6 +399,7 @@ fetch() {
         echo "| ${name} | ${url} |"
         if [[ -z $(find "${dir}" -name "${escname}\.*") ]] ; then
             cmd="${ytdlp} \
+            --preset-alias sleep \
             --cookies-from-browser brave \
             --format-sort 'res:1080,res:720,res:480,vcodec:h264,acodec:m4a' \
             --paths \"temp:/tmp\" \
