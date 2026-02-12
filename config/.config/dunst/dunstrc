@@ -1,8 +1,8 @@
 [global]
-frame_width = 1
+frame_width = 5
 frame_color = "#788388"
 
-font = Noto Sans 10
+font = Noto Sans 12
 
 # Allow a small subset of html markup:
 #   <b>bold</b>
@@ -66,7 +66,7 @@ ignore_newline = no
 # the top and down respectevly.
 # The width can be negative. In this case the actual width is the
 # screen width minus the width defined in within the geometry option.
-geometry = "0x4-25+25"
+geometry = "0x4-50+50"
 
 # Shrink window if it's smaller than the width. Will be ignored if
 # width is 0.
@@ -164,19 +164,21 @@ max_icon_size=128
 # Xev might be helpful to find names for keys.
 
 # Close notification.
-close = mod1+space
+#close = mod1+space
+close = mod4+n
 
 # Close all notifications.
-# close_all = ctrl+shift+space
-close_all = ctrl+mod1+space
+#close_all = ctrl+shift+space
+close_all = mod4+shift+n
 
 # Redisplay last message(s).
 # On the US keyboard layout "grave" is normally above TAB and left
 # of "1".
-history = ctrl+mod4+h
+#history = ctrl+mod4+h
+history = mod4+ctrl+n
 
 # Context menu.
-context = ctrl+mod1+c
+#context = ctrl+mod1+c
 
 # IMPORTANT: colors have to be defined in quotation marks.
 # Otherwise the "#" and following would be interpreted as a comment.
@@ -184,12 +186,12 @@ context = ctrl+mod1+c
 [urgency_low]
 background = "#263238"
 foreground = "#556064"
-timeout = 10
+timeout = 5
 
 [urgency_normal]
 background = "#263238"
 foreground = "#F9FAF9"
-timeout = 10
+timeout = 5
 
 [urgency_critical]
 background = "#D62929"
@@ -279,23 +281,23 @@ timeout = 0
 #    foreground = "#FFFFFF"
 #
 
-[irc]
-appname = weechat
-timeout = 0
-background = "#0033BB"
-foreground = "#DDDDDD"
+# [irc]
+# appname = weechat
+# timeout = 0
+# background = "#0033BB"
+# foreground = "#DDDDDD"
 
-[weechat hl]
-appname = weechat
-category = weechat.HL
-background = "#FF5C47"
-foreground = "#FFFFFF"
+# [weechat hl]
+# appname = weechat
+# category = weechat.HL
+# background = "#FF5C47"
+# foreground = "#FFFFFF"
 
-[weechat pn]
-appname = weechat
-category = weechat.PM
-background = "#D53B84"
-foreground = "#FFFFFF"
+# [weechat pn]
+# appname = weechat
+# category = weechat.PM
+# background = "#D53B84"
+# foreground = "#FFFFFF"
 
 #[CMUS]
 #    appname = CMUS

@@ -291,7 +291,7 @@ videolist=(
     "Portugal, The Man - Live in the Moment                              | https://www.youtube.com/watch?v=Hha0bwVvGmY"
     "Quarterflash - Harden My Heart                                      | https://www.youtube.com/watch?v=OqeKV2UYq1Q"
     "Queen - Another One Bites the Dust                                  | https://www.youtube.com/watch?v=rY0WxgSXdEE"
-    "Queen – Bohemian Rhapsody                                           | https://www.youtube.com/watch?v=fJ9rUzIMcZQ"
+    "Queen -- Bohemian Rhapsody                                           | https://www.youtube.com/watch?v=fJ9rUzIMcZQ"
     "Queen - Crazy Little Thing Called Love                              | https://www.youtube.com/watch?v=zO6D_BAuYCI"
     "Queen - Under Pressure (Feat. David Bowie)                          | https://www.youtube.com/watch?v=a01QQZyl-_I"
     "R.E.M. - Driver 8                                                   | https://www.youtube.com/watch?v=wuFId1RYSZE"
@@ -361,6 +361,7 @@ videolist=(
     "Weeknd, The - Save Your Tears                                       | https://www.youtube.com/watch?v=XXYlFuWEuKI"
     "Weeknd, The - Starboy (Feat. Daft Punk)                             | https://www.youtube.com/watch?v=34Na4j8AVgA"
     "Weeknd, The - The Hills                                             | https://www.youtube.com/watch?v=yzTuBuRdAyA"
+    "Wolfsheim - Find You're Here & Find You're Gone                     | https://www.youtube.com/watch?v=aNczZ99bMe8"
     "Yazoo - Don't Go                                                    | https://www.youtube.com/watch?v=_sQGwDeambg"
 )
 
@@ -399,7 +400,6 @@ fetch() {
         echo "| ${name} | ${url} |"
         if [[ -z $(find "${dir}" -name "${escname}\.*") ]] ; then
             cmd="${ytdlp} \
-            --preset-alias sleep \
             --cookies-from-browser brave \
             --format-sort 'res:1080,res:720,res:480,vcodec:h264,acodec:m4a' \
             --paths \"temp:/tmp\" \
@@ -407,6 +407,7 @@ fetch() {
             --output \"${name} - %(release_date>%Y-%m-%d,upload_date>%Y-%m-%d|Unknown)s - %(title)s.%(ext)s\" \
             --output \"${name}.%(ext)s\" \
             '${url}'"
+            #--preset-alias sleep \
             echo
             echo "${url}"
             echo
