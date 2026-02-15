@@ -280,9 +280,13 @@ super + alt + e
     rofimoji --typer xdotool --clipboarder xsel --skin-tone neutral
     #rofimoji --action print --skin-tone neutral | tr -d '\n' | xsel && xsel --output | xsel --clipboard
 
-# unipicker selector
+# unicode selector
 super + alt + u
-    unipicker --command "rofi -dmenu -i -p 'Unicode'" --copy-command 'xsel'
+    ${HOME}/bin/rofi-menu unicode
+
+# footnote symbol selector
+super + shift + alt + u
+    ${HOME}/bin/rofi-menu footnotes
 
 # bookmarks selector
 super + alt + o

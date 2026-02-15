@@ -5,7 +5,7 @@
 # Present a menu of rofi menus.
 #
 # Symbols:  ☰  |    | ✂ ⎘ 󰄶   󰅌 󰅍 󰨸 󱉥 󱉦 󱉧 󱉨 󱉫 󱉬  | 
-# Symbols: 󰍹    |  |    󱇠  | 󰆧 |  |   󰝚 | 󰛇 | 󰃃 󰃀 | 󰯫 󰈍   󰀬  ꓴ | ⌂
+# Symbols: 󰍹    |  |    󱇠  | 󰆧 |  |   󰝚 | 󰛇 | 󰃃 󰃀 | 󰯫 󰈍   󰀬  ꓴ | ⌂ | 󰽒
 #
 # Required utilities:
 #   cool-retro-term
@@ -38,6 +38,7 @@ MENU:
   crt                 Cool Retro Term
   dosbox              DOSBox Emulator
   emoji               Emoji Search
+  footnotes           Footnote Symbols
   git                 Synchronize Repositories
   home                Home Page Bookmarks
   paste               Paste Strings
@@ -64,6 +65,7 @@ if [ $# -lt 1 ] ; then
         "󰍹	CRT"
         "	DOSBox"
         "😃	Emoji"
+        "󰽒	Footnotes"
         "	Git"
         "⌂	Home"
         "	Paste"
@@ -77,7 +79,7 @@ if [ $# -lt 1 ] ; then
         "U	Unicode"
         "󰛇	VNC"
     )
-    menu=$(printf '%s\n' "${menus[@]}" | rofi -dmenu -i -p "	Menu")
+    menu=$(printf '%s\n' "${menus[@]}" | rofi -dmenu -i -p '	Menu')
 else
     menu=$1
 fi
@@ -99,14 +101,14 @@ case "${menu}" in
                     s%—%%g ; s%</ul>%% ; s%</\?b>%%g ; s%\&amp;%\&% ;
                     s%<sup .*</sup>%%g ; s%</div>%%g ; s%</a>$%% ;
                     s%<a [^>]*>%% ; s%</a>%: %' |
-                grep -v '^<li>' | rofi -dmenu -i -p "󰯫	Acronyms: Computing" &
+                grep -v '^<li>' | rofi -dmenu -i -p '󰯫	Acronyms: Computing' &
         )
         ;;
 
     bookmarks)
         # display bookmarks
         if [ $# -lt 2 ] ; then
-            sel=$(cat "${HOME}/Documents/bookmarks.txt" | rofi -font 'System San Francisco Display 12' -dmenu -i -p "󰃃	Bookmarks")
+            sel=$(cat "${HOME}/Documents/bookmarks.txt" | rofi -font 'System San Francisco Display 12' -dmenu -i -p '󰃃	Bookmarks')
         else
             sel=$2
         fi
@@ -121,7 +123,7 @@ case "${menu}" in
     bookmarks-keyword)
         # display bookmarks having keywords
         if [ $# -lt 2 ] ; then
-            sel=$(sed -n 's/^.* {\(.*\)}: /\1 -> /p' "${HOME}/Documents/bookmarks.txt" | sort | rofi -font 'System San Francisco Display 12' -matching prefix -dmenu -i -p "󰃃	Bookmarks: Keyword")
+            sel=$(sed -n 's/^.* {\(.*\)}: /\1 -> /p' "${HOME}/Documents/bookmarks.txt" | sort | rofi -font 'System San Francisco Display 12' -matching prefix -dmenu -i -p '󰃃	Bookmarks: Keyword')
         else
             sel=$2
         fi
@@ -136,7 +138,7 @@ case "${menu}" in
     contacts)
         # display contacts
         if [ $# -lt 2 ] ; then
-            sel=$(grep '^\*\*\*\*\* ' "${HOME}/org/contacts.org" | sed 's/^\*\*\*\*\* //' | rofi -dmenu -i -p "󰈍	Contacts")
+            sel=$(grep '^\*\*\*\*\* ' "${HOME}/org/contacts.org" | sed 's/^\*\*\*\*\* //' | rofi -dmenu -i -p '󰈍	Contacts')
         else
             sel=$2
         fi
@@ -174,7 +176,7 @@ case "${menu}" in
                 "IBM 3278"
                 "Futuristic"
             )
-            sel=$(printf '%s\n' "${profiles[@]}" | rofi -dmenu -i -p "󰍹	Cool Retro Term")
+            sel=$(printf '%s\n' "${profiles[@]}" | rofi -dmenu -i -p '󰍹	Cool Retro Term')
         else
             sel=$2
         fi
@@ -191,7 +193,7 @@ case "${menu}" in
             sel=$(
                 cd "${HOME}/.dosbox" &&
                     find -mindepth 1 -maxdepth 1 -name 'dosbox-*' -not -regex '\./dosbox-0.*' |
-                        sed 's%^\./dosbox-\(.*\)\.conf%\1%' | rofi -dmenu -i -p "	DOSBox"
+                        sed 's%^\./dosbox-\(.*\)\.conf%\1%' | rofi -dmenu -i -p '	DOSBox'
                )
         else
             sel=$2
@@ -208,10 +210,31 @@ case "${menu}" in
         rofimoji --typer xdotool --clipboarder xsel --skin-tone neutral
         ;;
 
+    footnotes)
+        # copy selected footnote symbol to the clipboard
+        footnotes=(
+            "✱	Asterisk"
+            "†	Dagger"
+            "‡	Double Dagger"
+            "§	Section Mark"
+            "¶	Paragraph Symbol"
+            "‖	Parallel Lines"
+            "#	Number Sign"
+            "✱✱	Double Asterisk"
+            "††	Double Dagger"
+            "‡‡	Double Double Dagger"
+            "§§	Double Section Mark"
+            "¶¶	Double Paragraph Symbol"
+            "‖‖	Double Parallel Lines"
+            "##	Double Number Sign"
+        )
+        printf '%s\n' "${footnotes[@]}" | rofi -dmenu -i -p '󰽒	Footnotes' | sed -z 's/\t.*$// ; s/\\n$//' | xsel && xsel --output | xsel --clipboard
+        ;;
+
     git)
         # display git repositories
         if [ $# -lt 2 ] ; then
-            sel=$(grep "# *git-sync" "${HOME}/.funct" | cut -d " " -f 9 | rofi -dmenu -i -p "	Git")
+            sel=$(grep "# *git-sync" "${HOME}/.funct" | cut -d " " -f 9 | rofi -dmenu -i -p '	Git')
         else
             sel=$2
         fi
@@ -225,7 +248,7 @@ case "${menu}" in
     home)
         # display home page bookmarks
         if [ $# -lt 2 ] ; then
-            sel=$(cat "${HOME}/home-pages/"{home,dev}.html | sed -n '/<a id=/p' | sed 's/^.*<a id=\"id__\(.*\)__\([^"]*\)\".*$/\1: \2/; s/_/ /g' | rofi -dmenu -i -p "⌂	Home Page")
+            sel=$(cat "${HOME}/home-pages/"{home,dev}.html | sed -n '/<a id=/p' | sed 's/^.*<a id=\"id__\(.*\)__\([^"]*\)\".*$/\1: \2/; s/_/ /g' | rofi -dmenu -i -p '⌂	Home Page')
         else
             sel=$2
         fi
@@ -241,7 +264,7 @@ case "${menu}" in
     paste)
         # display paste options
         if [ $# -lt 2 ] ; then
-            sel=$(cat "${HOME}/.paste-strings" | rofi -dmenu -i -p "	Paste")
+            sel=$(cat "${HOME}/.paste-strings" | rofi -dmenu -i -p '	Paste')
         else
             sel=$2
         fi
@@ -260,7 +283,7 @@ case "${menu}" in
                 "4 Capitalized/Hyphenated Word Phrase"
                 "20 Letters/Numbers/Symbols"
             )
-            sel=$(printf '%s\n' "${passwords[@]}" | rofi -dmenu -i -p "	Password")
+            sel=$(printf '%s\n' "${passwords[@]}" | rofi -dmenu -i -p '	Password')
         else
             sel=$2
         fi
@@ -286,7 +309,7 @@ case "${menu}" in
         # generate and display a list of qemu emulators
         if [ $# -lt 2 ] ; then
             sel=$(
-                cd "${HOME}/qemu" && find . -mindepth 1 -maxdepth 1 -type d -not -regex '^\.+$' | sed 's%\./%%' | sort | rofi -dmenu -i -p "󰆧	Qemu")
+                cd "${HOME}/qemu" && find . -mindepth 1 -maxdepth 1 -type d -not -regex '^\.+$' | sed 's%\./%%' | sort | rofi -dmenu -i -p '󰆧	Qemu')
         else
             sel=$2
         fi
@@ -300,7 +323,7 @@ case "${menu}" in
     rsync)
         # display rsync targets
         if [ $# -lt 2 ] ; then
-            sel=$(grep "^# *rsync-" ${HOME}/.alias | cut -d " " -f 9 | rofi -dmenu -i -p "	Rsync")
+            sel=$(grep "^# *rsync-" ${HOME}/.alias | cut -d " " -f 9 | rofi -dmenu -i -p '	Rsync')
         else
             sel=$2
         fi
@@ -332,7 +355,7 @@ case "${menu}" in
             else
                 local opts=("${up}" "$(cd "${selpath}" && find . -mindepth 1 -maxdepth 1 -type f -not -regex '^\.+$' | sed 's%./%%' | sort)")
             fi
-            sel=$(printf '%s\n' "${opts[@]}" | rofi -dmenu -i -p "󰝚	Sounds")
+            sel=$(printf '%s\n' "${opts[@]}" | rofi -dmenu -i -p '󰝚	Sounds')
         }
 
         _killffplay() {
@@ -417,7 +440,7 @@ case "${menu}" in
             \*) word="${sel}" ;;
             \+) word="${res:1}" ;;
             \#) yad --title "Word" --text "Word ${sel} was not found" --fontname='MesloLGS Nerd Font Mono 14' 2>/dev/null ;;
-            \?|\&) word=$(printf '%s' "${res}" | sed 's/^.*: // ; s/, */,/g' | tr ',' '\n' | rofi -dmenu -i -p "	Select Word to Define") ;;
+            \?|\&) word=$(printf '%s' "${res}" | sed 's/^.*: // ; s/, */,/g' | tr ',' '\n' | rofi -dmenu -i -p '	Select Word to Define') ;;
         esac
 
         [ -n "${word}" ] && trans -no-ansi "${word}" | yad --title "Definition" --text-info --width=1024 --height=768 --wrap --no-buttons --wrap --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
@@ -434,7 +457,7 @@ case "${menu}" in
                 "pi@raspad-usb"
                 "kyle@159.203.165.79"
             )
-            sel=$(printf '%s\n' "${servers[@]}" | rofi -dmenu -i -p "	SSH")
+            sel=$(printf '%s\n' "${servers[@]}" | rofi -dmenu -i -p '	SSH')
         else
             sel=$2
         fi
@@ -464,7 +487,7 @@ case "${menu}" in
                 "raspad-usb"
                 "switch-direct"
             )
-            sel=$(printf '%s\n' "${servers[@]}" | rofi -dmenu -i -p "󰛇	VNC")
+            sel=$(printf '%s\n' "${servers[@]}" | rofi -dmenu -i -p '󰛇	VNC')
         else
             sel=$2
         fi
