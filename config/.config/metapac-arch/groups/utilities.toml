@@ -19,6 +19,7 @@ arch = [
     "gnome-multi-writer",
     "gparted",
     "gphoto2",
+    "grip",
     "gtkimageview",
     "handbrake",
     "isoimagewriter",

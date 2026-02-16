@@ -248,6 +248,7 @@ _download() {
         if [ -z "${listname}" ] || [ "${name}" == "${listname}" ] ; then
             path="${basedir}/${dir}/${name}"
             cmd="${ytdlp} \
+                --preset-alias sleep \
                 --cookies-from-browser firefox \
                 --format-sort 'res:1080,res:720,res:480,vcodec:h264,acodec:m4a' \
                 --playlist-reverse \
@@ -257,7 +258,6 @@ _download() {
                 --paths \"home:${path}\" \
                 --output \"${name} - %(release_date>%Y-%m-%d,upload_date>%Y-%m-%d|Unknown)s - %(title)s.%(ext)s\" \
                 '${url}'"
-                #--preset-alias sleep \
                 #--format 'bv*+ba/b' \
                 #--format-sort 'res:1080,res:720,res:480' \
                 # mkv
