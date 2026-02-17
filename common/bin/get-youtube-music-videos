@@ -291,7 +291,7 @@ videolist=(
     "Portugal, The Man - Live in the Moment                              | https://www.youtube.com/watch?v=Hha0bwVvGmY"
     "Quarterflash - Harden My Heart                                      | https://www.youtube.com/watch?v=OqeKV2UYq1Q"
     "Queen - Another One Bites the Dust                                  | https://www.youtube.com/watch?v=rY0WxgSXdEE"
-    "Queen -- Bohemian Rhapsody                                           | https://www.youtube.com/watch?v=fJ9rUzIMcZQ"
+    "Queen - Bohemian Rhapsody                                           | https://www.youtube.com/watch?v=fJ9rUzIMcZQ"
     "Queen - Crazy Little Thing Called Love                              | https://www.youtube.com/watch?v=zO6D_BAuYCI"
     "Queen - Under Pressure (Feat. David Bowie)                          | https://www.youtube.com/watch?v=a01QQZyl-_I"
     "R.E.M. - Driver 8                                                   | https://www.youtube.com/watch?v=wuFId1RYSZE"
@@ -367,7 +367,8 @@ videolist=(
 
 ambientlist=(
     "3ildcat - SK61 1 Hour Keyboard Typing Sounds                        | https://www.youtube.com/watch?v=8pBFfBZrbJM"
-    "Amoda Session - Hypnotic Dark House, Sound Without Exit Points      | https://www.youtube.com/watch?v=h8-KKdhgpuc"
+    "Hypnotic Dark House - Sound Without Exit Points                     | https://www.youtube.com/watch?v=h8-KKdhgpuc"
+    "Hypnotic Dark House - Special Selfies from Dark vs. Light, When Time Found Us | https://www.youtube.com/watch?v=BC3DhVbo1fU"
     "Beeble - Didn't Know Commodore 64 Had that Bass                     | https://www.youtube.com/watch?v=3FsOvdrnBYA"
     "BlackAtom Productions - Vintage Dot Matrix Printer Sounds           | https://www.youtube.com/watch?v=FFrHnyuxcB4"
     "Classical Music to Cure Brain Rot                                   | https://www.youtube.com/watch?v=bFgkUKvlcXs"
@@ -401,13 +402,15 @@ fetch() {
         if [[ -z $(find "${dir}" -name "${escname}\.*") ]] ; then
             cmd="${ytdlp} \
             --preset-alias sleep \
-            --cookies-from-browser brave \
-            --format-sort 'res:1080,res:720,res:480,vcodec:h264,acodec:m4a' \
+            --cookies-from-browser brave+gnomekeyring \
+            --format 'bv*+ba/b' \
+            --format-sort 'res:1080,vcodec:h264,acodec:m4a' \
             --paths \"temp:/tmp\" \
             --paths \"home:${dir}\" \
             --output \"${name} - %(release_date>%Y-%m-%d,upload_date>%Y-%m-%d|Unknown)s - %(title)s.%(ext)s\" \
             --output \"${name}.%(ext)s\" \
             '${url}'"
+            #--format-sort 'res:1080,vcodec:h264,acodec:m4a' \
             echo
             echo "${url}"
             echo

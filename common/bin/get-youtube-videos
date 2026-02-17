@@ -249,8 +249,8 @@ _download() {
             path="${basedir}/${dir}/${name}"
             cmd="${ytdlp} \
                 --preset-alias sleep \
-                --cookies-from-browser firefox \
-                --format-sort 'res:1080,res:720,res:480,vcodec:h264,acodec:m4a' \
+                --cookies-from-browser brave+gnomekeyring \
+                --format-sort 'res:1080,vcodec:h264,acodec:m4a' \
                 --playlist-reverse \
                 --write-description \
                 ${archive} \
@@ -258,8 +258,8 @@ _download() {
                 --paths \"home:${path}\" \
                 --output \"${name} - %(release_date>%Y-%m-%d,upload_date>%Y-%m-%d|Unknown)s - %(title)s.%(ext)s\" \
                 '${url}'"
+                #--cookies-from-browser firefox \
                 #--format 'bv*+ba/b' \
-                #--format-sort 'res:1080,res:720,res:480' \
                 # mkv
                 #--format 'h264+aac' \
                 #--output \"${name} - %(release_date>%Y-%m-%d,upload_date>%Y-%m-%d|Unknown)s - %(title)s.mp4\" \
