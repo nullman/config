@@ -27,6 +27,7 @@ Start a nested X running WM of optional SIZE and DEPTH.
   WM options:
     afterstep
     blackbox
+    dwm
     fluxbox
     fvwm2
     gnome
@@ -52,6 +53,7 @@ esac
 case "$1" in
     afterstep) window_manager="afterstep -d ${display}" ;;
     blackbox) window_manager="blackbox -display ${display}" ;;
+    dwm) window_manager="DISPLAY=${display} exec dwm" ;;
     fluxbox) window_manager="fluxbox -display ${display}" ;;
     fvwm2) window_manager="fvwm2 -display ${display}" ;;
     gnome) window_manager="gnome-session --display ${display}" ;;
