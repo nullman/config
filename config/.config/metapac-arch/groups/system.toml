@@ -71,6 +71,7 @@ arch = {
     "nitch",
     "nmap",
     "ntfs-3g",
+    "ocaml-csexp",
     "orpie",
     "pamixer",
     "parted",
