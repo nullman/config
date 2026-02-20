@@ -1,4 +1,5 @@
-arch = [
+arch = {
+  packages = [
     "fortune-mod-archlinux",
     "fortune-mod-asoiaf",
     "fortune-mod-bofh-excuses",
@@ -12,5 +13,8 @@ arch = [
     "fortune-mod-off",
     "fortune-mod-starwars",
     "fortune-mod-xfiles",
-]
+
+  ]
+}
+
 

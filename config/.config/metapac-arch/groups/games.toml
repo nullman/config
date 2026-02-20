@@ -1,4 +1,5 @@
-arch = [
+arch = {
+  packages = [
     "0ad",
     "celeste64-bin",
     "dwarffortress",
@@ -17,5 +18,8 @@ arch = [
     "wesnoth",
     "xgalaga++",
     "xonotic",
-]
+
+  ]
+}
+
 

@@ -1,4 +1,5 @@
-arch = [
+arch = {
+  packages = [
     "alacritty",
     "base",
     "base-devel",
@@ -46,5 +47,8 @@ arch = [
     "wireplumber",
     "xdg-utils",
     "yay",
-]
+
+  ]
+}
+
 

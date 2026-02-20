@@ -1,4 +1,5 @@
-arch = [
+arch = {
+  packages = [
     "arandr",
     "imwheel",
     "numlockx",
@@ -28,5 +29,8 @@ arch = [
     "xsel",
     "xterm",
     "xvkbd",
-]
+
+  ]
+}
+
 

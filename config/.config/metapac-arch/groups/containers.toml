@@ -1,7 +1,11 @@
-arch = [
+arch = {
+  packages = [
     "distrobox",
     "docker",
     "docker-compose",
     "podman",
-]
+
+  ]
+}
+
 

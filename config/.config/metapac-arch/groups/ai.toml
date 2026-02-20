@@ -1,4 +1,5 @@
-arch = [
+arch = {
+  packages = [
     "chatbox-bin",
     "imaginer",
     "lmstudio",
@@ -6,5 +7,8 @@ arch = [
     "ollama-docs",
     "fortunecraft",
     "upscayl-bin",
-]
+
+  ]
+}
+
 

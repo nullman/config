@@ -1,4 +1,5 @@
-arch = [
+arch = {
+  packages = [
     "aalib",
     "asciiquarium",
     "bb",
@@ -16,5 +17,8 @@ arch = [
     "shell-color-scripts-git",
     "sl",
     "tty-clock",
-]
+
+  ]
+}
+
 

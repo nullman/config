@@ -1,4 +1,5 @@
-arch = [
+arch = {
+  packages = [
     "cuda",
     "lib32-nvidia-470xx-utils",
     "nvidia-470xx-dkms",
@@ -6,5 +7,8 @@ arch = [
     "nvidia-prime",
     "opencl-nvidia-470xx",
     "xf86-video-intel",
-]
+
+  ]
+}
+
 

@@ -1,4 +1,5 @@
-arch = [
+arch = {
+  packages = [
     "acme",
     "android-sdk-build-tools",
     "android-sdk-platform-tools",
@@ -97,5 +98,8 @@ arch = [
     "vlink",
     "yq",
     "zlib",
-]
+
+  ]
+}
+
 

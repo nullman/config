@@ -1,4 +1,8 @@
-arch = [
+arch = {
+  packages = [
     "tlp",
-]
+
+  ]
+}
+
 

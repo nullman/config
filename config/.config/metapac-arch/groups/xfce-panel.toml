@@ -1,4 +1,5 @@
-arch = [
+arch = {
+  packages = [
     "orage",
     "xfce4-appfinder",
     "xfce4-battery-plugin",
@@ -26,5 +27,8 @@ arch = [
     "xfce4-whiskermenu-plugin",
     "xfce4-windowck-plugin",
     "xfce4-xkb-plugin",
-]
+
+  ]
+}
+
 

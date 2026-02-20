@@ -1,4 +1,5 @@
-arch = [
+arch = {
+  packages = [
     "atuin",
     "binsider",
     "bmon",
@@ -31,5 +32,8 @@ arch = [
     "xplr",
     "yazi",
     "zenith-bin",
-]
+
+  ]
+}
+
 

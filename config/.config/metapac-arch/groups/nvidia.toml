@@ -1,8 +1,12 @@
-arch = [
+arch = {
+  packages = [
     "cuda",
     "lib32-nvidia-utils",
     "nvidia",
     "nvidia-utils",
     "xf86-video-intel",
-]
+
+  ]
+}
+
 

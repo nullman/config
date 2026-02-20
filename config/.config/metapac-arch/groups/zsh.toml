@@ -1,4 +1,5 @@
-arch = [
+arch = {
+  packages = [
     "antibody-bin",
     "autojump",
     "ttf-meslo-nerd-font-powerlevel10k",
@@ -6,5 +7,8 @@ arch = [
     "zsh-autosuggestions",
     "zsh-syntax-highlighting",
     "zsh-theme-powerlevel10k",
-]
+
+  ]
+}
+
 

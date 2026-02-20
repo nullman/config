@@ -2126,15 +2126,18 @@ make-metapac-groups() {
             cut -d '|' -f 4 | sed 's/^ */    \"/ ; s/ *$/\",/'
     }
 
-    for backend in "apt" "arch" ; do
+    #for backend in "apt" "arch" ; do
+    for backend in "arch" ; do
         outdir="${HOME}/config/config/.config/metapac-${backend}/groups"
         mkdir -p "${outdir}"
         for group in $(_getgroups ${backend}) ; do
             printf "" > "${outdir}/${group}.toml"
             printf "%s\n%s\n%s\n\n" \
-                   "${backend} = [" \
+                   "${backend} = {" \
+                   "  packages = [" \
                    "$(_getpackages ${backend} "${group}")" \
-                   "]" \
+                   "  ]" \
+                   "}" \
                    >> "${outdir}/${group}.toml"
         done
     done

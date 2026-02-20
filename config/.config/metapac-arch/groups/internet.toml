@@ -1,4 +1,5 @@
-arch = [
+arch = {
+  packages = [
     "betterbird-bin",
     "brave-bin",
     "bruno-bin",
@@ -39,5 +40,8 @@ arch = [
     "tuba",
     "vdhcoapp",
     "waterfox-bin",
-]
+
+  ]
+}
+
 

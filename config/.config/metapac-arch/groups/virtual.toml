@@ -1,4 +1,5 @@
-arch = [
+arch = {
+  packages = [
     "edk2-ovmf",
     "guestfs-tools",
     "libosinfo",
@@ -15,5 +16,8 @@ arch = [
     "virtio-win",
     "virtualbox",
     "virtualbox-host-modules-arch",
-]
+
+  ]
+}
+
 

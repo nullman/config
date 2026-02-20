@@ -1,4 +1,5 @@
-arch = [
+arch = {
+  packages = [
     "alpine",
     "argc",
     "asciinema",
@@ -60,5 +61,8 @@ arch = [
     "units",
     "yt-dlp",
     "zoxide",
-]
+
+  ]
+}
+
 

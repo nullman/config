@@ -1,4 +1,5 @@
-arch = [
+arch = {
+  packages = [
     "ardour",
     "audacity",
     "blender",
@@ -30,5 +31,8 @@ arch = [
     "reaper",
     "shortwave",
     "spotify",
-]
+
+  ]
+}
+
 

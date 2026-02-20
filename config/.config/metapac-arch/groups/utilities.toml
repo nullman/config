@@ -1,4 +1,5 @@
-arch = [
+arch = {
+  packages = [
     "asunder",
     "audacious",
     "balena-etcher",
@@ -50,5 +51,8 @@ arch = [
     "xarchiver",
     "ymuse-bin",
     "zathura",
-]
+
+  ]
+}
+
 

@@ -1,4 +1,5 @@
-arch = [
+arch = {
+  packages = [
     "basiliskii-git",
     "dosbox",
     "fs-uae",
@@ -10,5 +11,8 @@ arch = [
     "wine-gecko",
     "wine-mono",
     "winetricks",
-]
+
+  ]
+}
+
 

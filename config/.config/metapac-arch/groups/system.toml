@@ -1,4 +1,5 @@
-arch = [
+arch = {
+  packages = [
     "7zip",
     "acpi",
     "aha",
@@ -101,5 +102,8 @@ arch = [
     "woeusb",
     "ydotool",
     "zip",
-]
+
+  ]
+}
+
 
