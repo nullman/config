@@ -720,26 +720,16 @@ alias ping-kali="ping 192.168.1.56"
 alias ping-kali-direct="ping 192.168.1.57"
 #        ping-retro              ping retro
 alias ping-retro="ping 192.168.1.62"
-#        ping-dns1               ping dns server 1
-alias ping-dns1="ping 24.31.3.8"
-#        ping-dns2               ping dns server 2
-alias ping-dns2="ping 24.31.3.9"
+#        ping-ip                 ping 8.8.8.8
+alias ping-ip="ping 8.8.8.8"
 #        ping-gateway            ping gateway
 alias ping-gateway="ping 24.31.20.1"
 #        ping-nullware           ping nullware
 alias ping-nullware="ping ${nullwareip}"
 #        ping-google             ping google.com
 alias ping-google="ping google.com"
-#        ping-googleip           ping google.com by ip address
-alias ping-googleip="ping 172.217.12.142"
 #        traceroute-google       traceroute google.com
 alias traceroute-google="traceroute google.com"
-#        ping-uswest             ping uswest.net
-alias ping-uswest="ping uswest.net"
-#        ping-uswestip           ping uswest.net by ip address
-alias ping-uswestip="ping 204.147.80.81"
-#        traceroute-uswest       traceroute uswest.net
-alias traceroute-uswest="traceroute uswest.net"
 #        ipaddress               display external IP address
 alias ipaddress="curl http://httpbin.org/get --silent | jq --raw-output .origin"
 #        icanhazip               display external IP address
