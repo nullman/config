@@ -9855,6 +9855,8 @@ Cursor is left at current column in newly created line."
   (interactive "*")
   (with-temp-buffer
     (yank)
+    (when (looking-at "^$")
+      (delete-char -1))
     (goto-char (point-min))
     (rectangle-mark-mode 1)
     (let ((width 0))

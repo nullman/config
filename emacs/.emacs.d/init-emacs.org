@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2026-02-01 15:10 (user)>
+  #+TIMESTAMP: <2026-03-03 22:18 (user)>
 
 * Overview
   :PROPERTIES:
@@ -14525,6 +14525,8 @@
           (interactive "*")
           (with-temp-buffer
             (yank)
+            (when (looking-at "^$")
+              (delete-char -1))
             (goto-char (point-min))
             (rectangle-mark-mode 1)
             (let ((width 0))
