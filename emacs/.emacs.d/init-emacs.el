@@ -2558,8 +2558,8 @@ KEYMAP defaults to `override-global-map'."
   (org-directory (file-truename (expand-file-name "~/org")))
   ;; turn off element cache as it slows down emacs with large files
   ;;(org-element-use-cache nil) ;; prevents org-babel-tangle-block from working
-  ;; ;; use org indent mode
-  ;; (org-indent-mode 1)
+  ;; turn on `org-indent-mode'
+  ;;(org-startup-indented t)
   ;; indent blocks to outline node level
   (org-adapt-indentation t)
   ;; ;; do not indent blocks to outline node level
