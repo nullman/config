@@ -2621,6 +2621,13 @@ KEYMAP defaults to `override-global-map'."
      (refile . "Refiled on %t")
      (clock-out . "")))
   :config
+  ;; add bullets to paragraph separaters for bullet lists
+  (setq org-element-paragraph-separate
+        (replace-regexp-in-string
+         "\\[-\\+\\*\\]"
+         "[-+*•]"
+         org-element-paragraph-separate))
+
   ;; faces
   (custom-set-faces
    `(org-ellipsis ((t (:underline nil))))
@@ -2733,19 +2740,19 @@ KEYMAP defaults to `override-global-map'."
         (org-babel-tangle-file init-emacs-true-file-name))))
   (add-hook 'after-save-hook #'after-save-hook--generate-init-emacs-elisp-file :append)
 
-  ;; (defun org-insert-heading--fix-newline-bug (orig-fun &rest args)
-  ;;   "Fix extra newline bug in org."
-  ;;   ;; make sure empty lines above new headline are not removed
-  ;;   (if (= (point) (line-beginning-position))
-  ;;       (let ((start (point)))
-  ;;         (apply orig-fun args)
-  ;;         (forward-line 0)
-  ;;         (while (< (point) start)
-  ;;           (newline))
-  ;;         (goto-char (line-end-position)))
-  ;;     (apply orig-fun args)))
-  ;; ;; advise `org-insert-heading' to fix extra newline bug
-  ;; (advice-add 'org-insert-heading :around #'org-insert-heading--fix-newline-bug)
+  (defun org-insert-heading--fix-newline-bug (orig-fun &rest args)
+    "Fix extra newline bug in org."
+    ;; make sure empty lines above new headline are not removed
+    (if (= (point) (line-beginning-position))
+        (let ((start (point)))
+          (apply orig-fun args)
+          (forward-line 0)
+          (while (< (point) start)
+            (newline))
+          (goto-char (line-end-position)))
+      (apply orig-fun args)))
+  ;; advise `org-insert-heading' to fix extra newline bug
+  (advice-add 'org-insert-heading :around #'org-insert-heading--fix-newline-bug)
 
   ;; (defun org-fixup-indentation--unindent (diff)
   ;;   "Unindent org begin/end blocks, keywords, and paragraphs."

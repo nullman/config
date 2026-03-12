@@ -2909,9 +2909,9 @@ alias nix-run-gcs="NIXPKGS_ALLOW_UNFREE=1 nix-shell -p steam-run --run \"steam-r
 # pacman (Package Manager)
 #
 #        pmu                     pacman -Syu (update packages with refresh)
-alias pmu="sudo pacman -Syu --noconfirm"
+alias pmu="sudo pacman -Syu --noconfirm ; source \${HOME}/.xprofile"
 #        pmuf                    pacman -Syyu (update packages with forced refresh)
-alias pmuf="sudo pacman -Syyu --noconfirm"
+alias pmuf="sudo pacman -Syyu --noconfirm ; source \${HOME}/.xprofile"
 #        pmi                     pacman -S (install package)
 alias pmi="sudo pacman -S --needed --noconfirm"
 #        pmic                    pacman -S (install package with confirmation)
@@ -3000,9 +3000,9 @@ alias pacman-clear-cache="
 # yay (Package Manager)
 #
 #        yau                     yay -Syu (update packages with refresh)
-alias yau="yay -Syu --noconfirm"
+alias yau="yay -Syu --noconfirm ; source \${HOME}/.xprofile"
 #        yauf                    yay -Syyu (update packages with forced refresh)
-alias yauf="yay -Syyu --noconfirm"
+alias yauf="yay -Syyu --noconfirm ; source \${HOME}/.xprofile"
 #        yai                     yay -S (install package)
 alias yai="yay -S --needed --noconfirm"
 #        yaic                    yay -S (install package with confirmation)
