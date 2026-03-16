@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2026-03-12 11:56 (user)>
+  #+TIMESTAMP: <2026-03-15 16:51 (user)>
 
 * Overview
   :PROPERTIES:
@@ -26668,8 +26668,8 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
                    ispell-word)
         :bind (("<f6>" . ispell-word)
                ("<S-f6>" . ispell))
-        :config
-        (setq ispell-enable-tex-parser t))
+        :custom
+        (ispell-personal-dictionary "~/.ispell_default"))
     #+END_SRC
 
 *** +jinx+

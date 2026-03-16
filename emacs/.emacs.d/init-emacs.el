@@ -17523,8 +17523,8 @@ back to the previous non-whitespace character. See also
              ispell-word)
   :bind (("<f6>" . ispell-word)
          ("<S-f6>" . ispell))
-  :config
-  (setq ispell-enable-tex-parser t))
+  :custom
+  (ispell-personal-dictionary "~/.ispell_default"))
 ;; ispell:1 ends here
 
 ;; [[file:init-emacs.org::#modules-json][json:1]]
