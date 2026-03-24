@@ -2391,13 +2391,18 @@ KEYMAP defaults to `override-global-map'."
               ("i" . ielm)
               ("r" . eval-region))
 
-  ;; miscellaneous format commands
+  ;; miscellaneous set fill column commands
   (bind-keys* :map space-miscellaneous-map
               :prefix "f"
-              :prefix-map space-miscellaneous-format-map
-              :menu-name "Format Commands"
-              ("j" . json-pretty-print)
-              ("x" . xml-pretty-print))
+              :prefix-map space-miscellaneous-fill-column-map
+              :menu-name "Fill-Column Commands"
+              ("d" . fill-column-default)
+              ("4" . fill-column-40)
+              ("6" . fill-column-60)
+              ("7" . fill-column-78)
+              ("8" . fill-column-80)
+              ("1" . fill-column-100)
+              ("2" . fill-column-120))
 
   ;; miscellaneous toggle commands
   (bind-keys* :map space-miscellaneous-map
@@ -2421,6 +2426,14 @@ KEYMAP defaults to `override-global-map'."
               ("R" . straight-pull-recipe-repositories)
               ("P" . straight-pull-all)
               ("F" . straight-fetch-all))
+
+  ;; miscellaneous pretty-print commands
+  (bind-keys* :map space-miscellaneous-map
+              :prefix "P"
+              :prefix-map space-miscellaneous-pretty-print-map
+              :menu-name "Pretty-Print Commands"
+              ("j" . json-pretty-print)
+              ("x" . xml-pretty-print))
 
   ;; run commands
   (bind-keys* :map space-map
@@ -3629,75 +3642,80 @@ by ASCII code. Otherwise, default SORT-TYPE is \"(nil ?f nil
   (interactive (progn (barf-if-buffer-read-only)
 		              (list (when current-prefix-arg 'full) t)))
   (when (eq major-mode 'org-mode)
-    (save-mark-and-excursion
-      (let ((type (org-element-type (org-element-at-point))))
-        (cond
-         ((member type '(center-block example-block quote-block verse-block))
-          (org-edit-src-code)
-          (fill-paragraph justify region)
-          (org-edit-src-exit))
-         ((eq type 'table-row)
-          (cl-labels
-              ((boundry (dir)
-                 (save-excursion
-                   (next-line dir)
-                   (while (and (eq (org-element-type (org-element-at-point))
-                                   'table-row)
-                               (cl-set-difference (string-to-list
-                                                   (substring-no-properties
-                                                    (save-excursion
-                                                      (org-table-get-field))))
-                                                  '(32 43 45)))
-                     (next-line dir))
-                   (next-line (- dir))
-                   (cl-case dir
-                     (1
-                      (re-search-forward "|")
-                      (forward-char -2))
-                     (-1
-                      (re-search-backward "|")
-                      (forward-char 2)))
-                   (point))))
-            (let* ((fc fill-column)
-                   (beg (boundry -1))
-                   (end (boundry 1))
-                   (lines-before (count-lines beg end))
-                   (lines-after lines-before))
-              (kill-rectangle beg end)
-              (with-temp-buffer
-                ;;(with-current-buffer "*scratch*"
-                (setq fill-column fc)
-                (yank-rectangle)
-                (fill-paragraph justify)
-                (setq lines-after (count-lines (point-min) (point-max)))
-                (goto-char (point-min))
-                (rectangle-mark-mode 1)
-                (let ((width 0))
-                  (while (not (eobp))
-                    (end-of-line)
-                    (when (> (current-column) width)
-                      (setq width (current-column)))
-                    (forward-line 1))
-                  (forward-line 0)
-                  (rectangle-right-char width))
-                (kill-rectangle (point-min) (point)))
-              (goto-char beg)
-              (next-line (1- lines-before))
-              (while (< (count-lines beg (point)) lines-after)
-                (org-table-insert-row :below))
-              (while (and (> (count-lines beg (point)) lines-after)
-                          (not (cl-set-difference (string-to-list
-                                                   (buffer-substring-no-properties
-                                                    (line-beginning-position)
-                                                    (line-end-position)))
-                                                  '(32 124))))
-                (org-table-kill-row)
-                (next-line -1))
-              (goto-char beg)
+    (let ((type (org-element-type (org-element-at-point))))
+      (cond
+       ((member type '(center-block example-block quote-block verse-block))
+        (org-edit-src-code)
+        (fill-paragraph justify region)
+        (org-edit-src-exit))
+       ((eq type 'table-row)
+        (cl-labels
+            ((boundry (dir)
+               (save-excursion
+                 (next-line dir)
+                 (while (and (eq (org-element-type (org-element-at-point))
+                                 'table-row)
+                             (cl-set-difference (string-to-list
+                                                 (substring-no-properties
+                                                  (save-excursion
+                                                    (org-table-get-field))))
+                                                '(32 43 45)))
+                   (next-line dir))
+                 (next-line (- dir))
+                 (cl-case dir
+                   (1
+                    (re-search-forward "|")
+                    (forward-char -2))
+                   (-1
+                    (re-search-backward "|")
+                    (forward-char 2)))
+                 (point))))
+          (let* ((fc fill-column)
+                 (beg (boundry -1))
+                 (col (org-table-current-column))
+                 (line (org-table-current-line))
+                 (end (boundry 1))
+                 (lines-before (count-lines beg end))
+                 (lines-after lines-before))
+            (kill-rectangle beg end)
+            (org-table-align)
+            (with-temp-buffer
+              ;;(with-current-buffer "*scratch*"
+              (setq fill-column fc)
               (yank-rectangle)
-              (org-table-align))))
-         (t
-          (org-fill-paragraph justify region)))))))
+              (fill-paragraph justify)
+              (setq lines-after (count-lines (point-min) (point-max)))
+              (goto-char (point-min))
+              (rectangle-mark-mode 1)
+              (let ((width 0))
+                (while (not (eobp))
+                  (end-of-line)
+                  (when (> (current-column) width)
+                    (setq width (current-column)))
+                  (forward-line 1))
+                (forward-line 0)
+                (rectangle-right-char width))
+              (kill-rectangle (point-min) (point)))
+            (org-table-goto-line line)
+            (org-table-goto-column col)
+            (setq beg (point))
+            (next-line (1- lines-before))
+            (while (< (count-lines beg (1+ (point))) lines-after)
+              (org-table-insert-row :below))
+            (while (and (> (count-lines beg (1+ (point))) lines-after)
+                        (not (cl-set-difference (string-to-list
+                                                 (buffer-substring-no-properties
+                                                  (line-beginning-position)
+                                                  (line-end-position)))
+                                                '(32 124))))
+              (org-table-kill-row)
+              (next-line -1))
+            (org-table-goto-line line)
+            (org-table-goto-column col)
+            (yank-rectangle)
+            (org-table-align))))
+       (t
+        (org-fill-paragraph justify region))))))
 ;; org-fill-paragraph-extended:1 ends here
 
 ;; [[file:init-emacs.org::#org-mode-functions-org-copy-to-clipboard][org-copy-to-clipboard:1]]
@@ -11589,6 +11607,29 @@ If BUFFER is nil, use `current-buffer'."
     (org-mode)
     (setq buffer-read-only t)))
 ;; url-test:1 ends here
+
+;; [[file:init-emacs.org::#functions-emacs-functions-fill-column][fill-column:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Emacs Functions: fill-column
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Emacs Functions: fill-column")
+
+(defmacro fill-column-width (width)
+  "Return fill-column-WIDTH function."
+  `(defun ,(intern (format "fill-column-%s" width)) ()
+     ,(format "Set buffer local `fill-column' to %s." width)
+     (interactive)
+     (setq fill-column ,width)))
+
+(fill-column-width 78)
+(defalias 'fill-column-default #'fill-column-78)
+(fill-column-width 40)
+(fill-column-width 60)
+(fill-column-width 80)
+(fill-column-width 100)
+(fill-column-width 120)
+;; fill-column:1 ends here
 
 ;; [[file:init-emacs.org::#functions-emacs-grouped-functions][Emacs Grouped Functions:1]]
 ;;------------------------------------------------------------------------------
