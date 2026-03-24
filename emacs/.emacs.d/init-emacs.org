@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2026-03-24 02:07 (user)>
+  #+TIMESTAMP: <2026-03-24 11:02 (user)>
 
 * Overview
   :PROPERTIES:
@@ -5620,15 +5620,16 @@
                          (point))))
                   (let* ((fc fill-column)
                          (beg (boundry -1))
-                         (col (org-table-current-column))
-                         (line (org-table-current-line))
                          (end (boundry 1))
+                         (col (progn (goto-char beg)
+                                     (org-table-current-column)))
+                         (line (progn (goto-char beg)
+                                      (org-table-current-line)))
                          (lines-before (count-lines beg end))
                          (lines-after lines-before))
                     (kill-rectangle beg end)
                     (org-table-align)
                     (with-temp-buffer
-                      ;;(with-current-buffer "*scratch*"
                       (setq fill-column fc)
                       (yank-rectangle)
                       (fill-paragraph justify)
