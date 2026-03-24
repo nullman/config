@@ -3628,14 +3628,76 @@ by ASCII code. Otherwise, default SORT-TYPE is \"(nil ?f nil
   "Fix `org-fill-paragraph' when inside an org block."
   (interactive (progn (barf-if-buffer-read-only)
 		              (list (when current-prefix-arg 'full) t)))
-  (if (and (eq major-mode 'org-mode)
-           (member (org-element-type (org-element-at-point))
-                   '(center-block example-block quote-block verse-block)))
-      (progn
-        (org-edit-src-code)
-        (fill-paragraph justify region)
-        (org-edit-src-exit))
-    (org-fill-paragraph justify region)))
+  (when (eq major-mode 'org-mode)
+    (save-mark-and-excursion
+      (let ((type (org-element-type (org-element-at-point))))
+        (cond
+         ((member type '(center-block example-block quote-block verse-block))
+          (org-edit-src-code)
+          (fill-paragraph justify region)
+          (org-edit-src-exit))
+         ((eq type 'table-row)
+          (cl-labels
+              ((boundry (dir)
+                 (save-excursion
+                   (next-line dir)
+                   (while (and (eq (org-element-type (org-element-at-point))
+                                   'table-row)
+                               (cl-set-difference (string-to-list
+                                                   (substring-no-properties
+                                                    (save-excursion
+                                                      (org-table-get-field))))
+                                                  '(32 43 45)))
+                     (next-line dir))
+                   (next-line (- dir))
+                   (cl-case dir
+                     (1
+                      (re-search-forward "|")
+                      (forward-char -2))
+                     (-1
+                      (re-search-backward "|")
+                      (forward-char 2)))
+                   (point))))
+            (let* ((fc fill-column)
+                   (beg (boundry -1))
+                   (end (boundry 1))
+                   (lines-before (count-lines beg end))
+                   (lines-after lines-before))
+              (kill-rectangle beg end)
+              (with-temp-buffer
+                ;;(with-current-buffer "*scratch*"
+                (setq fill-column fc)
+                (yank-rectangle)
+                (fill-paragraph justify)
+                (setq lines-after (count-lines (point-min) (point-max)))
+                (goto-char (point-min))
+                (rectangle-mark-mode 1)
+                (let ((width 0))
+                  (while (not (eobp))
+                    (end-of-line)
+                    (when (> (current-column) width)
+                      (setq width (current-column)))
+                    (forward-line 1))
+                  (forward-line 0)
+                  (rectangle-right-char width))
+                (kill-rectangle (point-min) (point)))
+              (goto-char beg)
+              (next-line (1- lines-before))
+              (while (< (count-lines beg (point)) lines-after)
+                (org-table-insert-row :below))
+              (while (and (> (count-lines beg (point)) lines-after)
+                          (not (cl-set-difference (string-to-list
+                                                   (buffer-substring-no-properties
+                                                    (line-beginning-position)
+                                                    (line-end-position)))
+                                                  '(32 124))))
+                (org-table-kill-row)
+                (next-line -1))
+              (goto-char beg)
+              (yank-rectangle)
+              (org-table-align))))
+         (t
+          (org-fill-paragraph justify region)))))))
 ;; org-fill-paragraph-extended:1 ends here
 
 ;; [[file:init-emacs.org::#org-mode-functions-org-copy-to-clipboard][org-copy-to-clipboard:1]]
