@@ -9703,17 +9703,20 @@ If REVERSE is non-nil, then sort in reverse order."
 
 (defun delete-word (arg)
   "Delete characters forward until encountering the end of the
-type of character on point. Types are: whitespace, alphanumeric,
-and symbol/other.
+type of character on point. Types are: whitespace, newline,
+alphanumeric, and symbol/other.
+
 With argument ARG, do this that many times."
   (interactive "p")
-  (let ((whitespace-regexp "[ \t\n]")
+  (let ((whitespace-regexp "[ \t]")
+        (newline-regexp "[\n]")
         (alphanumeric-regexp "[[:alnum:]-_]"))
     (dotimes (_ arg)
       (delete-region
        (point)
        (save-mark-and-excursion
          (let ((type (cond ((looking-at whitespace-regexp) :whitespace)
+                           ((looking-at newline-regexp) :newline)
                            ((looking-at alphanumeric-regexp) :alphanumeric)
                            (t :other)))
                (char (char-after)))
@@ -9721,6 +9724,7 @@ With argument ARG, do this that many times."
            (while (and (not (eobp))
                        (cl-case type
                          (:whitespace (looking-at whitespace-regexp))
+                         (:newline (looking-at newline-regexp))
                          (:alphanumeric (looking-at alphanumeric-regexp))
                          (:other (= char (char-after)))))
              (forward-char 1))
@@ -9736,11 +9740,13 @@ With argument ARG, do this that many times."
 
 (defun backward-delete-word (arg)
   "Delete characters backward until encountering the end of the
-type of character on point. Types are: whitespace, alphanumeric,
-and symbol/other.
+type of character on point. Types are: whitespace, newline,
+alphanumeric, and symbol/other.
+
 With argument ARG, do this that many times."
   (interactive "p")
-  (let ((whitespace-regexp "[ \t\n]")
+  (let ((whitespace-regexp "[ \t]")
+        (newline-regexp "[\n]")
         (alphanumeric-regexp "[[:alnum:]-_]"))
     (dotimes (_ arg)
       (delete-region
@@ -9748,6 +9754,7 @@ With argument ARG, do this that many times."
          (backward-char 1)
          (let ((type (cond ((bobp) :bobp)
                            ((looking-at whitespace-regexp) :whitespace)
+                           ((looking-at newline-regexp) :newline)
                            ((looking-at alphanumeric-regexp) :alphanumeric)
                            (t :other)))
                (char (char-after)))
@@ -9756,6 +9763,7 @@ With argument ARG, do this that many times."
              (while (cl-case type
                       (:bobp nil)
                       (:whitespace (looking-at whitespace-regexp))
+                      (:newline (looking-at newline-regexp))
                       (:alphanumeric (looking-at alphanumeric-regexp))
                       (:other (= char (char-after))))
                (if (bobp)

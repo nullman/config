@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2026-03-24 11:02 (user)>
+  #+TIMESTAMP: <2026-03-25 14:13 (user)>
 
 * Overview
   :PROPERTIES:
@@ -14289,17 +14289,20 @@
 
         (defun delete-word (arg)
           "Delete characters forward until encountering the end of the
-        type of character on point. Types are: whitespace, alphanumeric,
-        and symbol/other.
+        type of character on point. Types are: whitespace, newline,
+        alphanumeric, and symbol/other.
+
         With argument ARG, do this that many times."
           (interactive "p")
-          (let ((whitespace-regexp "[ \t\n]")
+          (let ((whitespace-regexp "[ \t]")
+                (newline-regexp "[\n]")
                 (alphanumeric-regexp "[[:alnum:]-_]"))
             (dotimes (_ arg)
               (delete-region
                (point)
                (save-mark-and-excursion
                  (let ((type (cond ((looking-at whitespace-regexp) :whitespace)
+                                   ((looking-at newline-regexp) :newline)
                                    ((looking-at alphanumeric-regexp) :alphanumeric)
                                    (t :other)))
                        (char (char-after)))
@@ -14307,6 +14310,7 @@
                    (while (and (not (eobp))
                                (cl-case type
                                  (:whitespace (looking-at whitespace-regexp))
+                                 (:newline (looking-at newline-regexp))
                                  (:alphanumeric (looking-at alphanumeric-regexp))
                                  (:other (= char (char-after)))))
                      (forward-char 1))
@@ -14327,11 +14331,13 @@
 
         (defun backward-delete-word (arg)
           "Delete characters backward until encountering the end of the
-        type of character on point. Types are: whitespace, alphanumeric,
-        and symbol/other.
+        type of character on point. Types are: whitespace, newline,
+        alphanumeric, and symbol/other.
+
         With argument ARG, do this that many times."
           (interactive "p")
-          (let ((whitespace-regexp "[ \t\n]")
+          (let ((whitespace-regexp "[ \t]")
+                (newline-regexp "[\n]")
                 (alphanumeric-regexp "[[:alnum:]-_]"))
             (dotimes (_ arg)
               (delete-region
@@ -14339,6 +14345,7 @@
                  (backward-char 1)
                  (let ((type (cond ((bobp) :bobp)
                                    ((looking-at whitespace-regexp) :whitespace)
+                                   ((looking-at newline-regexp) :newline)
                                    ((looking-at alphanumeric-regexp) :alphanumeric)
                                    (t :other)))
                        (char (char-after)))
@@ -14347,6 +14354,7 @@
                      (while (cl-case type
                               (:bobp nil)
                               (:whitespace (looking-at whitespace-regexp))
+                              (:newline (looking-at newline-regexp))
                               (:alphanumeric (looking-at alphanumeric-regexp))
                               (:other (= char (char-after))))
                        (if (bobp)
