@@ -39,7 +39,6 @@ arch = {
     "tribler-bin",
     "tuba",
     "vdhcoapp",
-    "waterfox-bin",
 
   ]
 }
