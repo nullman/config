@@ -32,8 +32,8 @@ _once xscreensaver -no-splash &
 #_once dropbox start &
 #_once barriers --config ${HOME}/.barrier.conf &
 #_once barrierc dozer &
-_once barrierc --daemon --debug INFO --restart dozer &
-#_once barrier &
+#_once barrierc --daemon --debug INFO --restart dozer &
+_once barrier &
 #_once emacs --daemon &
 
 # run foreground applications
