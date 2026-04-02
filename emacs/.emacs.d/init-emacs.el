@@ -4297,10 +4297,9 @@ If BUFFER is nil, current buffer is used."
   ;; turn off auto-save
   (auto-save-mode nil)
 
-  ;; turn off flyspell
-  ;; (when (fboundp 'flyspell-mode-off)
-  ;;   (flyspell-mode-off))
-  )
+  ;; turn on flyspell
+  (when (fboundp 'flyspell-mode)
+    (flyspell-mode 1)))
 
 (use-package org
   :straight (:type built-in)
@@ -20010,7 +20009,7 @@ otherwise run `find-file-as-root'."
     ;; ;; turn off auto newlines
     ;; (setq c-auto-newline nil)
 
-    ;; turn on flyspell
+    ;; turn on flyspell for comments and strings only
     (when (boundp 'flyspell-prog-mode)
       (flyspell-prog-mode))
 
@@ -20349,8 +20348,9 @@ otherwise run `find-file-as-root'."
 
   :config
   (defun custom-erlang-hook ()
-    ;; turn on flyspell
-    (flyspell-prog-mode))
+    ;; turn on flyspell for comments and strings only
+    (when (boundp 'flyspell-prog-mode)
+      (flyspell-prog-mode)))
   (add-hook 'erlang-hook #'custom-erlang-hook)
 
   ;; remove trailing blanks
@@ -20360,31 +20360,6 @@ otherwise run `find-file-as-root'."
   ;;(add-hook 'erlang-mode-hook #'install-remove-tabs)
   )
 ;; Erlang Mode:1 ends here
-
-;; [[file:init-emacs.org::#modes-fundamental-mode][Fundamental Mode:1]]
-;;------------------------------------------------------------------------------
-;;; Modes: Fundamental Mode
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Modes: Fundamental Mode")
-
-;; fundamental-mode
-
-;; make sure tabs are not inserted
-(setq indent-tabs-mode nil)
-
-;; ;; turn off auto-fill
-;; (turn-off-auto-fill)
-
-;; turn off auto-save
-(auto-save-mode nil)
-
-;; remove trailing blanks
-;;(add-hook 'fundamental-mode-hook #'install-remove-trailing-blanks)
-
-;; remove tabs
-;;(add-hook 'fundamental-mode-hook #'install-remove-tabs)
-;; Fundamental Mode:1 ends here
 
 ;; [[file:init-emacs.org::#modes-geiser-racket-scheme-repl][Geiser (Racket Scheme REPL):1]]
 ;;------------------------------------------------------------------------------
@@ -20781,8 +20756,9 @@ otherwise run `find-file-as-root'."
   (local-set-key (kbd "<return>") 'newline-and-indent)
   ;;(local-set-key (kbd "C-<tab>") 'lisp-complete-symbol)
 
-  ;; turn on flyspell
-  (flyspell-prog-mode)
+  ;; turn on flyspell for comments and strings only
+  (when (boundp 'flyspell-prog-mode)
+    (flyspell-prog-mode))
 
   ;; initialize eldoc
   (eldoc-mode 1)
@@ -20935,8 +20911,9 @@ Markdown files."
     (setq perl-indent-continued-arguments t)
     (setq perl-continued-statement-offset 4)
 
-    ;; turn on flyspell
-    (flyspell-prog-mode))
+    ;; turn on flyspell for comments and strings only
+    (when (boundp 'flyspell-prog-mode)
+      (flyspell-prog-mode)))
   (add-hook 'perl-mode-hook #'custom-perl-mode-hook)
 
   (defun perl-mode-maybe ()
@@ -21145,13 +21122,10 @@ Commands:
     (define-key ruby-mode-map (kbd "{") 'self-insert-command)
     (define-key ruby-mode-map (kbd "}") 'self-insert-command)
 
-    ;; turn on flyspell
+    ;; turn on flyspell for comments and strings only
     (when (boundp 'flyspell-prog-mode)
       (flyspell-prog-mode)))
   (add-hook 'ruby-mode-hook #'custom-ruby-mode-hook :append)
-
-  ;; turn on flyspell
-  (flyspell-prog-mode)
 
   ;; FIXME: No longer works
   ;; (use-package flymake
@@ -21290,13 +21264,10 @@ Commands:
     ;; (define-key rust-mode-map (kbd "{") 'self-insert-command)
     ;; (define-key rust-mode-map (kbd "}") 'self-insert-command)
 
-    ;; turn on flyspell
+    ;; turn on flyspell for comments and strings only
     (when (boundp 'flyspell-prog-mode)
       (flyspell-prog-mode)))
   (add-hook 'rust-mode-hook #'custom-rust-mode-hook :append)
-
-  ;; turn on flyspell
-  (flyspell-prog-mode)
 
   ;; FIXME: No longer works
   ;; (use-package flymake
@@ -21865,7 +21836,7 @@ Commands:
     ;; (define-key v-mode-map (kbd "{") 'self-insert-command)
     ;; (define-key v-mode-map (kbd "}") 'self-insert-command)
 
-    ;; turn on flyspell
+    ;; turn on flyspell for comments and strings only
     (when (boundp 'flyspell-prog-mode)
       (flyspell-prog-mode)))
   (add-hook 'v-mode-hook #'custom-v-mode-hook :append)
@@ -21975,8 +21946,9 @@ Commands:
     ;; turn off auto-fill mode
     (turn-off-auto-fill)
 
-    ;; turn on flyspell
-    (flyspell-prog-mode)
+    ;; turn on flyspell for comments and strings only
+    (when (boundp 'flyspell-prog-mode)
+      (flyspell-prog-mode))
 
     ;; turn on auto-completion
     (setq nxml-slash-auto-complete-flag t)
@@ -22059,6 +22031,41 @@ Commands:
   :mode (("\\.yaml\\'" . yaml-mode)
          ("\\.yml\\'" . yaml-mode)))
 ;; YAML Mode:1 ends here
+
+;; [[file:init-emacs.org::#modes-global-mode][Global Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: Global Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: Global Mode")
+
+(defun global-mode-hook ()
+  ;; make sure tabs are not inserted
+  (setq indent-tabs-mode nil)
+
+  ;; remove trailing blanks
+  ;;(install-remove-trailing-blanks)
+
+  ;; remove tabs (all but makefile-mode)
+  ;;(unless (derived-mode-p 'make-mode)
+  ;;  (install-remove-tabs))
+
+  ;; turn off auto-fill
+  ;;(turn-off-auto-fill)
+
+  ;; turn off auto-save
+  (auto-save-mode nil)
+
+  ;; turn on flyspell
+  (when (boundp 'flyspell-mode)
+    (flyspell-mode 1))
+
+  ;; set local key bindings
+  ;; this is no longer used
+  ;; (safe-load "keys-local")
+  )
+(add-hook 'after-change-major-mode-hook #'global-mode-hook)
+;; Global Mode:1 ends here
 
 ;; [[file:init-emacs.org::#menus][Menus:1]]
 ;;==============================================================================

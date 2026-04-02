@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2026-03-25 14:13 (user)>
+  #+TIMESTAMP: <2026-04-02 13:50 (user)>
 
 * Overview
   :PROPERTIES:
@@ -6352,10 +6352,9 @@
         ;; turn off auto-save
         (auto-save-mode nil)
 
-        ;; turn off flyspell
-        ;; (when (fboundp 'flyspell-mode-off)
-        ;;   (flyspell-mode-off))
-        )
+        ;; turn on flyspell
+        (when (fboundp 'flyspell-mode)
+          (flyspell-mode 1)))
 
       (use-package org
         :straight (:type built-in)
@@ -31150,7 +31149,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
           ;; ;; turn off auto newlines
           ;; (setq c-auto-newline nil)
 
-          ;; turn on flyspell
+          ;; turn on flyspell for comments and strings only
           (when (boundp 'flyspell-prog-mode)
             (flyspell-prog-mode))
 
@@ -31606,8 +31605,9 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
 
         :config
         (defun custom-erlang-hook ()
-          ;; turn on flyspell
-          (flyspell-prog-mode))
+          ;; turn on flyspell for comments and strings only
+          (when (boundp 'flyspell-prog-mode)
+            (flyspell-prog-mode)))
         (add-hook 'erlang-hook #'custom-erlang-hook)
 
         ;; remove trailing blanks
@@ -31616,38 +31616,6 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         ;; remove tabs
         ;;(add-hook 'erlang-mode-hook #'install-remove-tabs)
         )
-    #+END_SRC
-
-*** Fundamental Mode
-    :PROPERTIES:
-    :CUSTOM_ID: modes-fundamental-mode
-    :END:
-
-    Fundamental Mode
-
-    #+BEGIN_SRC emacs-lisp
-      ;;------------------------------------------------------------------------------
-      ;;; Modes: Fundamental Mode
-      ;;------------------------------------------------------------------------------
-
-      (init-message 2 "Modes: Fundamental Mode")
-
-      ;; fundamental-mode
-
-      ;; make sure tabs are not inserted
-      (setq indent-tabs-mode nil)
-
-      ;; ;; turn off auto-fill
-      ;; (turn-off-auto-fill)
-
-      ;; turn off auto-save
-      (auto-save-mode nil)
-
-      ;; remove trailing blanks
-      ;;(add-hook 'fundamental-mode-hook #'install-remove-trailing-blanks)
-
-      ;; remove tabs
-      ;;(add-hook 'fundamental-mode-hook #'install-remove-tabs)
     #+END_SRC
 
 *** Geiser (Racket Scheme REPL)
@@ -32799,8 +32767,9 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         (local-set-key (kbd "<return>") 'newline-and-indent)
         ;;(local-set-key (kbd "C-<tab>") 'lisp-complete-symbol)
 
-        ;; turn on flyspell
-        (flyspell-prog-mode)
+        ;; turn on flyspell for comments and strings only
+        (when (boundp 'flyspell-prog-mode)
+          (flyspell-prog-mode))
 
         ;; initialize eldoc
         (eldoc-mode 1)
@@ -33122,8 +33091,9 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
           (setq perl-indent-continued-arguments t)
           (setq perl-continued-statement-offset 4)
 
-          ;; turn on flyspell
-          (flyspell-prog-mode))
+          ;; turn on flyspell for comments and strings only
+          (when (boundp 'flyspell-prog-mode)
+            (flyspell-prog-mode)))
         (add-hook 'perl-mode-hook #'custom-perl-mode-hook)
 
         (defun perl-mode-maybe ()
@@ -33525,13 +33495,10 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
           (define-key ruby-mode-map (kbd "{") 'self-insert-command)
           (define-key ruby-mode-map (kbd "}") 'self-insert-command)
 
-          ;; turn on flyspell
+          ;; turn on flyspell for comments and strings only
           (when (boundp 'flyspell-prog-mode)
             (flyspell-prog-mode)))
         (add-hook 'ruby-mode-hook #'custom-ruby-mode-hook :append)
-
-        ;; turn on flyspell
-        (flyspell-prog-mode)
 
         ;; FIXME: No longer works
         ;; (use-package flymake
@@ -33677,13 +33644,10 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
           ;; (define-key rust-mode-map (kbd "{") 'self-insert-command)
           ;; (define-key rust-mode-map (kbd "}") 'self-insert-command)
 
-          ;; turn on flyspell
+          ;; turn on flyspell for comments and strings only
           (when (boundp 'flyspell-prog-mode)
             (flyspell-prog-mode)))
         (add-hook 'rust-mode-hook #'custom-rust-mode-hook :append)
-
-        ;; turn on flyspell
-        (flyspell-prog-mode)
 
         ;; FIXME: No longer works
         ;; (use-package flymake
@@ -34309,7 +34273,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
           ;; (define-key v-mode-map (kbd "{") 'self-insert-command)
           ;; (define-key v-mode-map (kbd "}") 'self-insert-command)
 
-          ;; turn on flyspell
+          ;; turn on flyspell for comments and strings only
           (when (boundp 'flyspell-prog-mode)
             (flyspell-prog-mode)))
         (add-hook 'v-mode-hook #'custom-v-mode-hook :append)
@@ -34552,8 +34516,9 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
           ;; turn off auto-fill mode
           (turn-off-auto-fill)
 
-          ;; turn on flyspell
-          (flyspell-prog-mode)
+          ;; turn on flyspell for comments and strings only
+          (when (boundp 'flyspell-prog-mode)
+            (flyspell-prog-mode))
 
           ;; turn on auto-completion
           (setq nxml-slash-auto-complete-flag t)
@@ -34664,36 +34629,46 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;;   :mode ("\\.yuck\\'" . yuck-mode))
     #+END_SRC
 
-*** +Global Mode+
+*** Global Mode
     :PROPERTIES:
     :CUSTOM_ID: modes-global-mode
     :END:
 
     Global Mode (global-mode-hook) configuration.
 
-    #+BEGIN_SRC emacs-lisp :tangle no
-      ;; ;;------------------------------------------------------------------------------
-      ;; ;;; Modes: Global Mode
-      ;; ;;------------------------------------------------------------------------------
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Modes: Global Mode
+      ;;------------------------------------------------------------------------------
 
-      ;; (init-message 2 "Modes: Global Mode")
+      (init-message 2 "Modes: Global Mode")
 
-      ;; (defun global-mode-hook ()
-      ;;   ;; remove trailing blanks
-      ;;   ;;(install-remove-trailing-blanks)
+      (defun global-mode-hook ()
+        ;; make sure tabs are not inserted
+        (setq indent-tabs-mode nil)
 
-      ;;   ;; remove tabs (all but makefile-mode)
-      ;;   ;;(unless (derived-mode-p 'make-mode)
-      ;;   ;;  (install-remove-tabs))
+        ;; remove trailing blanks
+        ;;(install-remove-trailing-blanks)
 
-      ;;   ;; turn on spell mode
-      ;;   ;;(flyspell-mode 1)
+        ;; remove tabs (all but makefile-mode)
+        ;;(unless (derived-mode-p 'make-mode)
+        ;;  (install-remove-tabs))
 
-      ;;   ;; set local key bindings
-      ;;   ;; this is no longer used
-      ;;   ;; (safe-load "keys-local")
-      ;;   )
-      ;; (add-hook 'after-change-major-mode-hook #'global-mode-hook)
+        ;; turn off auto-fill
+        ;;(turn-off-auto-fill)
+
+        ;; turn off auto-save
+        (auto-save-mode nil)
+
+        ;; turn on flyspell
+        (when (boundp 'flyspell-mode)
+          (flyspell-mode 1))
+
+        ;; set local key bindings
+        ;; this is no longer used
+        ;; (safe-load "keys-local")
+        )
+      (add-hook 'after-change-major-mode-hook #'global-mode-hook)
     #+END_SRC
 
 * Menus
