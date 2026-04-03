@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2026-04-02 13:50 (user)>
+  #+TIMESTAMP: <2026-04-03 13:28 (user)>
 
 * Overview
   :PROPERTIES:
@@ -2352,7 +2352,9 @@
           ;; increase maximum file size (in bytes) to open before confirmation is requested
           (large-file-warning-threshold (* 50 1000 1000))
           ;; all backup files should go into the system temp directory
-          (backup-directory-alist `(("." . ,temporary-file-directory)))
+          (backup-directory-alist `((".*" . ,temporary-file-directory)))
+          ;; all auto-save files should go into the system temp directory
+          ;;(auto-save-file-name-transforms `((".*" . ,temporary-file-directory t)))
           ;; ask before closing emacs
           (kill-emacs-query-functions
            (cons (lambda () (yes-or-no-p "Really kill Emacs? "))
@@ -4151,6 +4153,10 @@
         ;; time stamp settings
         (org-display-custom-times t)
         (org-time-stamp-custom-formats '("<%Y-%m-%d %a>" . "<%Y-%m-%d %a %H:%M>"))
+        ;; add bullets to paragraph separaters for bullet lists
+        (org-element-paragraph-separate
+         (replace-regexp-in-string "\\[-\\+\\*\\]" "[-+*•]"
+                                   org-element-paragraph-separate))
         ;; always show lineage
         (org-show-context-detail
          '((default . lineage)
@@ -4170,13 +4176,6 @@
            (refile . "Refiled on %t")
            (clock-out . "")))
         :config
-        ;; add bullets to paragraph separaters for bullet lists
-        (setq org-element-paragraph-separate
-              (replace-regexp-in-string
-               "\\[-\\+\\*\\]"
-               "[-+*•]"
-               org-element-paragraph-separate))
-
         ;; faces
         (custom-set-faces
          `(org-ellipsis ((t (:underline nil))))

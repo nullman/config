@@ -1248,7 +1248,9 @@ Common values:
   ;; increase maximum file size (in bytes) to open before confirmation is requested
   (large-file-warning-threshold (* 50 1000 1000))
   ;; all backup files should go into the system temp directory
-  (backup-directory-alist `(("." . ,temporary-file-directory)))
+  (backup-directory-alist `((".*" . ,temporary-file-directory)))
+  ;; all auto-save files should go into the system temp directory
+  ;;(auto-save-file-name-transforms `((".*" . ,temporary-file-directory t)))
   ;; ask before closing emacs
   (kill-emacs-query-functions
    (cons (lambda () (yes-or-no-p "Really kill Emacs? "))
@@ -2615,6 +2617,10 @@ KEYMAP defaults to `override-global-map'."
   ;; time stamp settings
   (org-display-custom-times t)
   (org-time-stamp-custom-formats '("<%Y-%m-%d %a>" . "<%Y-%m-%d %a %H:%M>"))
+  ;; add bullets to paragraph separaters for bullet lists
+  (org-element-paragraph-separate
+   (replace-regexp-in-string "\\[-\\+\\*\\]" "[-+*•]"
+                             org-element-paragraph-separate))
   ;; always show lineage
   (org-show-context-detail
    '((default . lineage)
@@ -2634,13 +2640,6 @@ KEYMAP defaults to `override-global-map'."
      (refile . "Refiled on %t")
      (clock-out . "")))
   :config
-  ;; add bullets to paragraph separaters for bullet lists
-  (setq org-element-paragraph-separate
-        (replace-regexp-in-string
-         "\\[-\\+\\*\\]"
-         "[-+*•]"
-         org-element-paragraph-separate))
-
   ;; faces
   (custom-set-faces
    `(org-ellipsis ((t (:underline nil))))
