@@ -538,7 +538,8 @@ A fortune is added if FORTUNE is non-nil."
 (setq window-resize-pixelwise nil)
 
 ;; put current buffer name in title bar
-(setq frame-title-format "%b")
+;; this creates undesired Minibuf-1 temporary files
+;;(setq frame-title-format "%b")
 
 ;; mouse button one drags the scroll bar
 (bind-keys* ([vertical-scroll-bar down-mouse-1] . scroll-bar-drag))
