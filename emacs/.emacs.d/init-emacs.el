@@ -6274,63 +6274,6 @@ If HTML-FILE is nil, then output is returned."
     (switch-to-buffer target-buffer)))
 ;; export-taxes:1 ends here
 
-;; [[file:init-emacs.org::#org-mode-finances-nwm-add-monthly-account-data][nwm-add-monthly-account-data:1]]
-;;------------------------------------------------------------------------------
-;;;; Org Mode: Finances: nwm-add-monthly-account-data
-;;------------------------------------------------------------------------------
-
-(init-message 3 "Org Mode: Finances: nwm-add-monthly-account-data")
-
-(defun nwm-add-monthly-account-data (data)
-  "Add Northwestern Mutual monthly entries for all accounts found in DATA."
-  (interactive "*sNorthwestern Mutual Account Summary: ")
-  (cl-labels
-      ((date-to-year-month (date)
-         (concat
-          (substring date 6 10)
-          (substring date 0 2))))
-    (let ((buffer (get-buffer "personal-encrypted.org.gpg"))
-          (tables '("NWM_A40_344433"
-                    "NWM_A40_344458"
-                    "NWM_A40_345190"
-                    "NWM_B40_300756"
-                    "NWM_B40_300798"
-                    "NWM_PX1_012685"
-                    "NWM_PX1_012692"))
-          date
-          balances)
-      (with-temp-buffer
-        (insert data)
-        (goto-char (point-min))
-        (re-search-forward "^Period Ending: ")
-        (setq date (date-to-year-month
-                    (buffer-substring-no-properties (point) (line-end-position))))
-        (mapcar (lambda (x)
-                  (re-search-forward "%\\([0-9,]*\.[0-9][0-9]\\)[0-9.]*%")
-                  (push (replace-regexp-in-string "," "" (match-string 1)) balances))
-                tables))
-      (with-current-buffer buffer
-        (cl-do ((tables tables (cdr tables))
-                (balances (nreverse balances) (cdr balances)))
-            ((null tables))
-          (goto-char (point-min))
-          (re-search-forward (concat "^[ \t]*#\\+NAME: " (car tables) "$"))
-          (goto-char (org-table-end))
-          (forward-line -4)
-          (org-table-insert-row)
-          (org-table-goto-column 1)
-          (insert "#")
-          (org-table-goto-column 2)
-          (insert date)
-          (org-table-goto-column 4)
-          (insert (car balances))
-          (org-table-recalculate)
-          (re-search-forward (concat "^[ \t]*#\\+NAME: " (car tables) "_STATS$"))
-          (forward-line 1)
-          (org-table-recalculate)
-          (org-table-recalculate))))))
-;; nwm-add-monthly-account-data:1 ends here
-
 ;; [[file:init-emacs.org::#org-mode-magic-the-gathering][Magic the Gathering:1]]
 ;;------------------------------------------------------------------------------
 ;;; Org Mode: Magic the Gathering
