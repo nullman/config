@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2026-04-05 17:26 (user)>
+  #+TIMESTAMP: <2026-04-06 16:16 (user)>
 
 * Overview
   :PROPERTIES:
@@ -8956,66 +8956,71 @@
         ;;           (org-table-recalculate))))))
       #+END_SRC
 
-***** +fid-add-monthly-account-data+
+***** fidelity-add-monthly-account-data
       :PROPERTIES:
-      :CUSTOM_ID: org-mode-finances-fid-add-monthly-account-data
+      :CUSTOM_ID: org-mode-finances-fidelity-add-monthly-account-data
       :END:
 
-      #+BEGIN_SRC emacs-lisp :tangle no
-        ;; ;;------------------------------------------------------------------------------
-        ;; ;;;; Org Mode: Finances: fid-add-monthly-account-data
-        ;; ;;------------------------------------------------------------------------------
+      #+BEGIN_SRC emacs-lisp
+        ;;------------------------------------------------------------------------------
+        ;;;; Org Mode: Finances: fidelity-add-monthly-account-data
+        ;;------------------------------------------------------------------------------
 
-        ;; (init-message 3 "Org Mode: Finances: fid-add-monthly-account-data")
+        (init-message 3 "Org Mode: Finances: fidelity-add-monthly-account-data")
 
-        ;; (defun fid-add-monthly-account-data (data)
-        ;;   "Add Fidelity monthly entries for all accounts found in DATA."
-        ;;   (interactive "*Fidelity Account Summary: ")
-        ;;   (let ((buffer (get-buffer "personal-encrypted.org.gpg"))
-        ;;         (accounts '("658-414534"
-        ;;                     "658-414535"
-        ;;                     "658-414536"
-        ;;                     "658-414537"
-        ;;                     "658-414538"))
-        ;;         date
-        ;;         balances)
-        ;;     (with-temp-buffer
-        ;;       (insert data)
-        ;;       (goto-char (point-min))
-        ;;       (re-search-forward "^INVESTMENT REPORT")
-        ;;       (forward-line 1)
-        ;;       (setq date (format-time-string
-        ;;                   "%Y-%m"
-        ;;                   (date-to-time
-        ;;                    (concat
-        ;;                     (buffer-substring-no-properties
-        ;;                      (point)
-        ;;                      (- (re-search-forward " - " (line-end-position)) 3))
-        ;;                     " 00:00:00"))))
-        ;;       (mapcar (lambda (x)
-        ;;                 (re-search-forward "%\\([0-9,]*\.[0-9][0-9]\\)[0-9.]*%")
-        ;;                 (push (replace-regexp-in-string "," "" (match-string 1)) balances))
-        ;;               accounts))
-        ;;     (with-current-buffer buffer
-        ;;       (cl-do ((accounts accounts (cdr accounts))
-        ;;               (balances (nreverse balances) (cdr balances)))
-        ;;           ((null accounts))
-        ;;         (goto-char (point-min))
-        ;;         (re-search-forward (concat "^[ \t]*#\\+NAME: " (car accounts) "$"))
-        ;;         (goto-char (org-table-end))
-        ;;         (forward-line -4)
-        ;;         (org-table-insert-row)
-        ;;         (org-table-goto-column 1)
-        ;;         (insert "#")
-        ;;         (org-table-goto-column 2)
-        ;;         (insert date)
-        ;;         (org-table-goto-column 4)
-        ;;         (insert (car balances))
-        ;;         (org-table-recalculate)
-        ;;         (re-search-forward (concat "^[ \t]*#\\+NAME: " (car accounts) "_STATS$"))
-        ;;         (forward-line 1)
-        ;;         (org-table-recalculate)
-        ;;         (org-table-recalculate)))))
+        (defun fidelity-add-monthly-account-data (data)
+          "Add Fidelity monthly entries for all accounts found in DATA."
+          (interactive "*sFidelity Account Summary: ")
+          (let ((buffer (get-buffer "personal-encrypted.org.gpg"))
+                (accounts '("FID_658_414536"
+                            "FID_658_414534"
+                            "FID_658_414535"
+                            "FID_658_414537"
+                            "FID_658_414538"))
+                date
+                balances)
+            (with-temp-buffer
+              (insert data)
+              (goto-char (point-min))
+              (re-search-forward "^INVESTMENT REPORT$")
+              (forward-line 1)
+              (setq date (format-time-string
+                          "%Y%m"
+                          (date-to-time
+                           (concat
+                            (buffer-substring-no-properties
+                             (point)
+                             (- (re-search-forward " - " (line-end-position)) 3))
+                            " 00:00:00"))))
+              (re-search-forward "^Portfolio Summary$")
+              (re-search-forward "Ending Value$")
+              (forward-line 1)
+              (mapcar (lambda (x)
+                        (re-search-forward ".*\\.[0-9][0-9]\$?\\([0-9,]*\.[0-9][0-9]\\)")
+                        (push (replace-regexp-in-string "," "" (match-string 1)) balances))
+                      accounts))
+            (with-current-buffer buffer
+              (cl-do ((accounts accounts (cdr accounts))
+                      (balances (nreverse balances) (cdr balances)))
+                  ((null accounts))
+                (goto-char (point-min))
+                (re-search-forward (concat "^[ \t]*#\\+NAME: " (car accounts) "$"))
+                (goto-char (org-table-end))
+                (forward-line -4)
+                (org-table-insert-row)
+                (org-table-goto-column 1)
+                (insert "#")
+                (org-table-goto-column 2)
+                (insert date)
+                (org-table-goto-column 4)
+                (insert (car balances))
+                (org-table-recalculate)
+                (re-search-forward (concat "^[ \t]*#\\+NAME: " (car accounts) "_STATS$"))
+                (forward-line 5)
+                (org-table-recalculate '(16))))
+            (re-search-forward (concat "^[ \t]*#\\+NAME: FID_SUMMARY$"))
+            (forward-line 4)
+            (org-table-recalculate '(16))))))
       #+END_SRC
 
 *** Magic the Gathering

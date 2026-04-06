@@ -6274,6 +6274,68 @@ If HTML-FILE is nil, then output is returned."
     (switch-to-buffer target-buffer)))
 ;; export-taxes:1 ends here
 
+;; [[file:init-emacs.org::#org-mode-finances-fidelity-add-monthly-account-data][fidelity-add-monthly-account-data:1]]
+;;------------------------------------------------------------------------------
+;;;; Org Mode: Finances: fidelity-add-monthly-account-data
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Org Mode: Finances: fidelity-add-monthly-account-data")
+
+(defun fidelity-add-monthly-account-data (data)
+  "Add Fidelity monthly entries for all accounts found in DATA."
+  (interactive "*sFidelity Account Summary: ")
+  (let ((buffer (get-buffer "personal-encrypted.org.gpg"))
+        (accounts '("FID_658_414536"
+                    "FID_658_414534"
+                    "FID_658_414535"
+                    "FID_658_414537"
+                    "FID_658_414538"))
+        date
+        balances)
+    (with-temp-buffer
+      (insert data)
+      (goto-char (point-min))
+      (re-search-forward "^INVESTMENT REPORT$")
+      (forward-line 1)
+      (setq date (format-time-string
+                  "%Y%m"
+                  (date-to-time
+                   (concat
+                    (buffer-substring-no-properties
+                     (point)
+                     (- (re-search-forward " - " (line-end-position)) 3))
+                    " 00:00:00"))))
+      (re-search-forward "^Portfolio Summary$")
+      (re-search-forward "Ending Value$")
+      (forward-line 1)
+      (mapcar (lambda (x)
+                (re-search-forward ".*\\.[0-9][0-9]\$?\\([0-9,]*\.[0-9][0-9]\\)")
+                (push (replace-regexp-in-string "," "" (match-string 1)) balances))
+              accounts))
+    (with-current-buffer buffer
+      (cl-do ((accounts accounts (cdr accounts))
+              (balances (nreverse balances) (cdr balances)))
+          ((null accounts))
+        (goto-char (point-min))
+        (re-search-forward (concat "^[ \t]*#\\+NAME: " (car accounts) "$"))
+        (goto-char (org-table-end))
+        (forward-line -4)
+        (org-table-insert-row)
+        (org-table-goto-column 1)
+        (insert "#")
+        (org-table-goto-column 2)
+        (insert date)
+        (org-table-goto-column 4)
+        (insert (car balances))
+        (org-table-recalculate)
+        (re-search-forward (concat "^[ \t]*#\\+NAME: " (car accounts) "_STATS$"))
+        (forward-line 5)
+        (org-table-recalculate '(16))))
+    (re-search-forward (concat "^[ \t]*#\\+NAME: FID_SUMMARY$"))
+    (forward-line 4)
+    (org-table-recalculate '(16))))))
+;; fidelity-add-monthly-account-data:1 ends here
+
 ;; [[file:init-emacs.org::#org-mode-magic-the-gathering][Magic the Gathering:1]]
 ;;------------------------------------------------------------------------------
 ;;; Org Mode: Magic the Gathering
