@@ -9,8 +9,8 @@
 
 basedir="/mnt/synology/video"
 #basedir="${HOME}/synology/video"
-#ytdlp="$(command -v yt-dlp)"
-ytdlp="${HOME}/src/yt-dlp/yt-dlp"
+ytdlp="$(command -v yt-dlp)"
+#ytdlp="${HOME}/src/yt-dlp/yt-dlp"
 
 channels=(
 #?    "Computer/Demo        | Commodore 64 Demos                           | https://www.youtube.com/playlist?list=PLnmLOQIDmUvVn43FHdakSTY_W_EuoVwnT"
@@ -35,7 +35,6 @@ channels=(
     "Computer/Development | Molly Rocket                                 | https://www.youtube.com/@MollyRocket/videos"
     "Computer/Development | NCOT Technology                              | https://www.youtube.com/@ncot_tech/videos"
 #?    "Computer/Development | NDC Conferences                              | https://www.youtube.com/c/NDCConferences/videos"
-    "Computer/Development | Nic Barker                                   | https://www.youtube.com/@nicbarkeragain/videos"
     "Computer/Development | Nir Lichtman                                 | https://www.youtube.com/@nirlichtman/videos"
     "Computer/Development | PCRetroProgrammer                            | https://www.youtube.com/@pcretroprogrammer2656/videos"
     "Computer/Development | Racket                                       | https://www.youtube.com/@racketlang/videos"
@@ -184,6 +183,7 @@ channels=(
     "Computer/Retro       | Wrangler Amiga                               | https://www.youtube.com/@wrangleramiga896/videos"
     "Electronic           | GreatScott!                                  | https://www.youtube.com/@greatscottlab/videos"
 #?    "Game                 | Actualol                                     | https://www.youtube.com/@actualol/videos"
+    "Game                 | Brian's Channel                              | https://www.youtube.com/@cowanb65/videos"
     "Game                 | Critical Role > Campaign 1 > Vox Machina     | https://www.youtube.com/playlist?list=PL1tiwbzkOjQz7D0l_eLJGAISVtcL7oRu_"
     "Game                 | Critical Role > Campaign 2 > The Mighty Nein | https://www.youtube.com/playlist?list=PL1tiwbzkOjQxD0jjAE7PsWoaCrs0EkBH2"
     "Game                 | Critical Role > Campaign 3 > Bells Hells     | https://www.youtube.com/playlist?list=PL1tiwbzkOjQydg3QOkBLG9OYqWJ0dwlxF"
@@ -251,7 +251,7 @@ _download() {
             path="${basedir}/${dir}/${name}"
             cmd="${ytdlp} \
                 --preset-alias sleep \
-                --cookies-from-browser brave+gnomekeyring \
+                --cookies-from-browser firefox \
                 --format-sort 'res:1080,vcodec:h264,acodec:m4a' \
                 --playlist-reverse \
                 --write-description \
@@ -260,7 +260,8 @@ _download() {
                 --paths \"home:${path}\" \
                 --output \"${name} - %(release_date>%Y-%m-%d,upload_date>%Y-%m-%d|Unknown)s - %(title)s.%(ext)s\" \
                 '${url}'"
-                #--cookies-from-browser firefox \
+                #--format 'bestvideo[height<=1080]+bestaudio/best[height<=1080]' \
+                #--cookies-from-browser brave+gnomekeyring \
                 #--format 'bv*+ba/b' \
                 # mkv
                 #--format 'h264+aac' \

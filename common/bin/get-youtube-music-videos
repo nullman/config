@@ -402,7 +402,7 @@ fetch() {
         if [[ -z $(find "${dir}" -name "${escname}\.*") ]] ; then
             cmd="${ytdlp} \
             --preset-alias sleep \
-            --cookies-from-browser brave+gnomekeyring \
+            --cookies-from-browser firefox \
             --format 'bv*+ba/b' \
             --format-sort 'res:1080,vcodec:h264,acodec:m4a' \
             --paths \"temp:/tmp\" \
@@ -410,7 +410,6 @@ fetch() {
             --output \"${name} - %(release_date>%Y-%m-%d,upload_date>%Y-%m-%d|Unknown)s - %(title)s.%(ext)s\" \
             --output \"${name}.%(ext)s\" \
             '${url}'"
-            #--format-sort 'res:1080,vcodec:h264,acodec:m4a' \
             echo
             echo "${url}"
             echo
