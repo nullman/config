@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2026-04-06 16:16 (user)>
+  #+TIMESTAMP: <2026-04-08 11:10 (user)>
 
 * Overview
   :PROPERTIES:
@@ -1281,8 +1281,7 @@
         (setq window-resize-pixelwise nil)
 
         ;; put current buffer name in title bar
-        ;; this creates undesired Minibuf-1 temporary files
-        ;;(setq frame-title-format "%b")
+        (setq frame-title-format "%b")
 
         ;; mouse button one drags the scroll bar
         (bind-keys* ([vertical-scroll-bar down-mouse-1] . scroll-bar-drag))
@@ -2353,7 +2352,7 @@
           ;; increase maximum file size (in bytes) to open before confirmation is requested
           (large-file-warning-threshold (* 50 1000 1000))
           ;; all backup files should go into the system temp directory
-          (backup-directory-alist `((".*" . ,temporary-file-directory)))
+          (backup-directory-alist `(("." . ,temporary-file-directory)))
           ;; all auto-save files should go into the system temp directory
           ;;(auto-save-file-name-transforms `((".*" . ,temporary-file-directory t)))
           ;; ask before closing emacs
@@ -2567,15 +2566,15 @@
 
         (use-package savehist
           :straight (:type built-in)
+          :commands (savehist-mode)
           :custom
           (savehist-save-minibuffer-history 1)
           (savehist-additional-variables '(search-ring regexp-search-ring))
           :init
           ;; save minibuffer history
-          (when (fboundp 'savehist-mode)
-            (when-lock-file-acquired (expand-file-name "emacs-minibuffer-history-lock-file"
-                                                       temporary-file-directory)
-              (savehist-mode 1))))
+          (when-lock-file-acquired (expand-file-name "emacs-minibuffer-history-lock-file"
+                                                     temporary-file-directory)
+            (savehist-mode 1)))
       #+END_SRC
 
 *** Buffers and Windows
@@ -9020,7 +9019,7 @@
                 (org-table-recalculate '(16))))
             (re-search-forward (concat "^[ \t]*#\\+NAME: FID_SUMMARY$"))
             (forward-line 4)
-            (org-table-recalculate '(16))))))
+            (org-table-recalculate '(16))))
       #+END_SRC
 
 *** Magic the Gathering

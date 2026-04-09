@@ -538,8 +538,7 @@ A fortune is added if FORTUNE is non-nil."
 (setq window-resize-pixelwise nil)
 
 ;; put current buffer name in title bar
-;; this creates undesired Minibuf-1 temporary files
-;;(setq frame-title-format "%b")
+(setq frame-title-format "%b")
 
 ;; mouse button one drags the scroll bar
 (bind-keys* ([vertical-scroll-bar down-mouse-1] . scroll-bar-drag))
@@ -1249,7 +1248,7 @@ Common values:
   ;; increase maximum file size (in bytes) to open before confirmation is requested
   (large-file-warning-threshold (* 50 1000 1000))
   ;; all backup files should go into the system temp directory
-  (backup-directory-alist `((".*" . ,temporary-file-directory)))
+  (backup-directory-alist `(("." . ,temporary-file-directory)))
   ;; all auto-save files should go into the system temp directory
   ;;(auto-save-file-name-transforms `((".*" . ,temporary-file-directory t)))
   ;; ask before closing emacs
@@ -1415,15 +1414,15 @@ Common values:
 
 (use-package savehist
   :straight (:type built-in)
+  :commands (savehist-mode)
   :custom
   (savehist-save-minibuffer-history 1)
   (savehist-additional-variables '(search-ring regexp-search-ring))
   :init
   ;; save minibuffer history
-  (when (fboundp 'savehist-mode)
-    (when-lock-file-acquired (expand-file-name "emacs-minibuffer-history-lock-file"
-                                               temporary-file-directory)
-      (savehist-mode 1))))
+  (when-lock-file-acquired (expand-file-name "emacs-minibuffer-history-lock-file"
+                                             temporary-file-directory)
+    (savehist-mode 1)))
 ;; Minibuffer History:1 ends here
 
 ;; [[file:init-emacs.org::#environment-buffers-and-windows][Buffers and Windows:1]]
@@ -6333,7 +6332,7 @@ If HTML-FILE is nil, then output is returned."
         (org-table-recalculate '(16))))
     (re-search-forward (concat "^[ \t]*#\\+NAME: FID_SUMMARY$"))
     (forward-line 4)
-    (org-table-recalculate '(16))))))
+    (org-table-recalculate '(16))))
 ;; fidelity-add-monthly-account-data:1 ends here
 
 ;; [[file:init-emacs.org::#org-mode-magic-the-gathering][Magic the Gathering:1]]
