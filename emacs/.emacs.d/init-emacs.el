@@ -1250,7 +1250,12 @@ Common values:
   ;; all backup files should go into the system temp directory
   (backup-directory-alist `(("." . ,temporary-file-directory)))
   ;; all auto-save files should go into the system temp directory
-  ;;(auto-save-file-name-transforms `((".*" . ,temporary-file-directory t)))
+  (auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
+  ;; all lock files should go into the system temp directory
+  (lock-file-name-transforms
+   `(("^/.*/\$$[^/]+\$$$"
+      ,(expand-file-name "\\1" temporary-file-directory)
+      t)))
   ;; ask before closing emacs
   (kill-emacs-query-functions
    (cons (lambda () (yes-or-no-p "Really kill Emacs? "))
