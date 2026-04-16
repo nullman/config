@@ -2404,6 +2404,7 @@ KEYMAP defaults to `override-global-map'."
               :prefix-map space-miscellaneous-fill-column-map
               :menu-name "Fill-Column Commands"
               ("d" . fill-column-default)
+              ("2" . fill-column-20)
               ("4" . fill-column-40)
               ("6" . fill-column-60)
               ("7" . fill-column-78)
@@ -2622,10 +2623,6 @@ KEYMAP defaults to `override-global-map'."
   ;; time stamp settings
   (org-display-custom-times t)
   (org-time-stamp-custom-formats '("<%Y-%m-%d %a>" . "<%Y-%m-%d %a %H:%M>"))
-  ;; add bullets to paragraph separaters for bullet lists
-  (org-element-paragraph-separate
-   (replace-regexp-in-string "\\[-\\+\\*\\]" "[-+*•]"
-                             org-element-paragraph-separate))
   ;; always show lineage
   (org-show-context-detail
    '((default . lineage)
@@ -2645,6 +2642,11 @@ KEYMAP defaults to `override-global-map'."
      (refile . "Refiled on %t")
      (clock-out . "")))
   :config
+  ;; add bullets to paragraph separaters for bullet lists
+  (setq org-element-paragraph-separate
+        (replace-regexp-in-string "\\[-\\+\\*\\]" "[-+*•]"
+                                  org-element-paragraph-separate))
+
   ;; faces
   (custom-set-faces
    `(org-ellipsis ((t (:underline nil))))
@@ -11641,6 +11643,7 @@ If BUFFER is nil, use `current-buffer'."
 
 (fill-column-width 78)
 (defalias 'fill-column-default #'fill-column-78)
+(fill-column-width 20)
 (fill-column-width 40)
 (fill-column-width 60)
 (fill-column-width 80)
