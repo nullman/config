@@ -1226,19 +1226,10 @@ Common values:
 (use-package files
   :straight (:type built-in)
   :custom
-  ;; do not make backup files
-  (make-backup-files nil)
-  (backup-inhibited t)
   ;; reuse existing buffers, following file links
   (find-file-existing-other-name t)
   ;; end files with a newline
   (require-final-newline t)
-  ;; do not make auto-save files
-  (auto-save-default nil)
-  ;; disable auto-save list
-  (auto-save-list-file-prefix nil)
-  ;; delete auto-save files
-  (delete-auto-save-files t)
   ;; enable file local variables
   (enable-local-variables t)
   ;; enable directory local variables
@@ -1247,15 +1238,26 @@ Common values:
   (enable-local-eval 'maybe)
   ;; increase maximum file size (in bytes) to open before confirmation is requested
   (large-file-warning-threshold (* 50 1000 1000))
+  ;; do not make backup files
+  (make-backup-files nil)
+  (backup-inhibited t)
   ;; all backup files should go into the system temp directory
   (backup-directory-alist `(("." . ,temporary-file-directory)))
+  ;; do not make auto-save files
+  (auto-save-default nil)
+  ;; disable auto-save list
+  ;;(auto-save-list-file-prefix nil)
+  ;; delete auto-save files
+  (delete-auto-save-files t)
   ;; all auto-save files should go into the system temp directory
   (auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
+  ;; disable lock files
+  (create-lockfiles nil)
   ;; all lock files should go into the system temp directory
   (lock-file-name-transforms
    `(("^/.*/\$$[^/]+\$$$"
       ,(expand-file-name "\\1" temporary-file-directory)
-      t)))
+      :uniqueify)))
   ;; ask before closing emacs
   (kill-emacs-query-functions
    (cons (lambda () (yes-or-no-p "Really kill Emacs? "))
