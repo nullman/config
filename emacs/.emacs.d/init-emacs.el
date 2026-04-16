@@ -2646,7 +2646,7 @@ KEYMAP defaults to `override-global-map'."
   :config
   ;; add bullets to paragraph separaters for bullet lists
   (setq org-element-paragraph-separate
-        (replace-regexp-in-string "\\[-\\+\\*\\]" "[-+*•]"
+        (replace-regexp-in-string "\\[-\\+\\*\\]" "[-+*•◦]"
                                   org-element-paragraph-separate))
 
   ;; faces
