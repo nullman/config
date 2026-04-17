@@ -2411,8 +2411,7 @@ KEYMAP defaults to `override-global-map'."
               ("6" . fill-column-60)
               ("7" . fill-column-78)
               ("8" . fill-column-80)
-              ("1" . fill-column-100)
-              ("2" . fill-column-120))
+              ("1" . fill-column-100))
 
   ;; miscellaneous toggle commands
   (bind-keys* :map space-miscellaneous-map
@@ -3655,16 +3654,27 @@ by ASCII code. Otherwise, default SORT-TYPE is \"(nil ?f nil
         (org-edit-src-exit))
        ((eq type 'table-row)
         (cl-labels
-            ((boundry (dir)
+            ((full ()
+               (and (eq (org-element-type (org-element-at-point))
+                        'table-row)
+                    (cl-set-difference (string-to-list
+                                        (substring-no-properties
+                                         (save-excursion
+                                           (org-table-get-field))))
+                                       '(32 43 45))))
+             (empty ()
+               (and (eq (org-element-type (org-element-at-point))
+                        'table-row)
+                    (not
+                     (cl-set-difference (string-to-list
+                                         (substring-no-properties
+                                          (save-excursion
+                                            (org-table-get-field))))
+                                        '(32 43 45)))))
+             (boundry (dir)
                (save-excursion
                  (next-line dir)
-                 (while (and (eq (org-element-type (org-element-at-point))
-                                 'table-row)
-                             (cl-set-difference (string-to-list
-                                                 (substring-no-properties
-                                                  (save-excursion
-                                                    (org-table-get-field))))
-                                                '(32 43 45)))
+                 (while (and (not (bobp)) (not (eobp)) (full))
                    (next-line dir))
                  (next-line (- dir))
                  (cl-case dir
@@ -3674,15 +3684,27 @@ by ASCII code. Otherwise, default SORT-TYPE is \"(nil ?f nil
                    (-1
                     (re-search-backward "|")
                     (forward-char 2)))
+                 (point)))
+             (bottom ()
+               (save-excursion
+                 (next-line 1)
+                 (while (and (not (bobp)) (not (eobp)) (full))
+                   (next-line 1))
+                 (while (and (not (bobp)) (not (eobp)) (empty))
+                   (next-line 1))
+                 (next-line -2)
+                 (re-search-forward "|")
+                 (forward-char -2)
                  (point))))
           (let* ((fc fill-column)
                  (beg (boundry -1))
                  (end (boundry 1))
+                 (bot (bottom))
                  (col (progn (goto-char beg)
                              (org-table-current-column)))
                  (line (progn (goto-char beg)
                               (org-table-current-line)))
-                 (lines-before (count-lines beg end))
+                 (lines-before (count-lines beg bot))
                  (lines-after lines-before))
             (kill-rectangle beg end)
             (org-table-align)
