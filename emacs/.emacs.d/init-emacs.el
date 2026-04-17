@@ -3647,6 +3647,8 @@ by ASCII code. Otherwise, default SORT-TYPE is \"(nil ?f nil
   (when (eq major-mode 'org-mode)
     (let ((type (org-element-type (org-element-at-point))))
       (cond
+       ((use-region-p)
+        (org-fill-paragraph justify region))
        ((member type '(center-block example-block quote-block verse-block))
         (org-edit-src-code)
         (fill-paragraph justify region)
