@@ -1250,14 +1250,14 @@ Common values:
   ;; delete auto-save files
   (delete-auto-save-files t)
   ;; all auto-save files should go into the system temp directory
-  (auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
+  ;;(auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
   ;; disable lock files
   (create-lockfiles nil)
   ;; all lock files should go into the system temp directory
   (lock-file-name-transforms
    `(("^/.*/\$$[^/]+\$$$"
       ,(expand-file-name "\\1" temporary-file-directory)
-      :uniqueify)))
+      t)))
   ;; ask before closing emacs
   (kill-emacs-query-functions
    (cons (lambda () (yes-or-no-p "Really kill Emacs? "))
@@ -2644,11 +2644,6 @@ KEYMAP defaults to `override-global-map'."
      (refile . "Refiled on %t")
      (clock-out . "")))
   :config
-  ;; add bullets to paragraph separaters for bullet lists
-  (setq org-element-paragraph-separate
-        (replace-regexp-in-string "\\[-\\+\\*\\]" "[-+*•◦]"
-                                  org-element-paragraph-separate))
-
   ;; faces
   (custom-set-faces
    `(org-ellipsis ((t (:underline nil))))
@@ -4303,11 +4298,19 @@ If BUFFER is nil, current buffer is used."
   (turn-off-auto-fill)
 
   ;; turn off auto-save
-  (auto-save-mode nil)
+  ;;(auto-save-mode -1)
+
+  ;; disable lock files
+  ;;(create-lockfiles nil)
 
   ;; turn on flyspell
   (when (fboundp 'flyspell-mode)
-    (flyspell-mode 1)))
+    (flyspell-mode 1))
+
+  ;; add bullets to paragraph separaters for bullet lists
+  (setq org-element-paragraph-separate
+        (replace-regexp-in-string "\\[-\\+\\*\\]" "[-+*•◦]"
+                                  org-element-paragraph-separate)))
 
 (use-package org
   :straight (:type built-in)
@@ -4341,29 +4344,32 @@ If BUFFER is nil, current buffer is used."
   :after (org))
 
 ;; babel settings
-;; do not set `org-src-fontify-natively' to true as this breaks org-table-align->font-lock-fontify-region
-;; `org-src-fontify-natively' also creates temp files that are not always cleaned up
-(setq org-use-property-inheritance t
-      org-babel-use-quick-and-dirty-noweb-expansion t
-      org-src-tab-acts-natively t
-      org-src-preserve-indentation nil
-      org-src-fontify-natively t
-      org-src-ask-before-returning-to-edit-buffer nil
-      org-src-strip-leading-and-trailing-blank-lines t
-      org-src-window-setup 'current-window
-      org-confirm-babel-evaluate nil
-      org-confirm-shell-link-function nil
-      org-confirm-elisp-link-function nil)
+(use-package org
+  :straight (:type built-in)
+  :config
+  ;; do not set `org-src-fontify-natively' to true as this breaks org-table-align->font-lock-fontify-region
+  ;; `org-src-fontify-natively' also creates temp files that are not always cleaned up
+  (setq org-use-property-inheritance t
+        org-babel-use-quick-and-dirty-noweb-expansion t
+        org-src-tab-acts-natively t
+        org-src-preserve-indentation nil
+        org-src-fontify-natively t
+        org-src-ask-before-returning-to-edit-buffer nil
+        org-src-strip-leading-and-trailing-blank-lines t
+        org-src-window-setup 'current-window
+        org-confirm-babel-evaluate nil
+        org-confirm-shell-link-function nil
+        org-confirm-elisp-link-function nil)
 
-;; exportable file types
-(setq org-export-backends '(ascii html icalendar latex md odt org))
+  ;; exportable file types
+  (setq org-export-backends '(ascii html icalendar latex md odt org))
 
-;; ;; delete trailing white space on tangle
-;; (add-hook 'org-babel-post-tangle-hook #'delete-trailing-whitespace)
-;; (add-hook 'org-babel-post-tangle-hook #'save-buffer :append)
+  ;; ;; delete trailing white space on tangle
+  ;; (add-hook 'org-babel-post-tangle-hook #'delete-trailing-whitespace)
+  ;; (add-hook 'org-babel-post-tangle-hook #'save-buffer :append)
 
-;; update images in buffer after evaluation
-(add-hook 'org-babel-after-execute-hook #'org-display-inline-images :append)
+  ;; update images in buffer after evaluation
+  (add-hook 'org-babel-after-execute-hook #'org-display-inline-images :append))
 
 ;; org-eldoc is just too buggy with org-babel
 ;; Examples:
@@ -22068,7 +22074,7 @@ Commands:
   ;;(turn-off-auto-fill)
 
   ;; turn off auto-save
-  (auto-save-mode nil)
+  ;;(auto-save-mode -1)
 
   ;; turn on flyspell
   (when (boundp 'flyspell-mode)
