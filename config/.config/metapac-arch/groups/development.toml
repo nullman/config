@@ -91,6 +91,7 @@ arch = {
     "texlive-fontsextra",
     "texlive-fontsrecommended",
     "texlive-latexextra",
+    "texlive-plaingeneric",
     "texlive-pictures",
     "tokei",
     "vasm",
