@@ -294,11 +294,11 @@ alias debug-on="export LD_DEBUG=files"
 #        debug-off               turn off files (library modules) debugging info
 alias debug-off="export LD_DEBUG="
 #!#        alsa-reset            restart alsa sound
-#!alias alsa-reset="sudo pkill -u \${USER} pulseaudio ; sudo alsa force-reload"
+#!alias alsa-reset="sudo pkill -f -u \${USER} pulseaudio ; sudo alsa force-reload"
 #!#        alsa-reset            restart alsa sound
 #!alias alsa-reset="sudo alsa force-reload"
 #        pulse-reset             restart pulseaudio sound
-alias pulse-reset="pkill -u \${USER} pulseaudio ; sleep 2 ; pulseaudio --daemonize=no &"
+alias pulse-reset="pkill -f -u \${USER} pulseaudio ; sleep 2 ; pulseaudio --daemonize=no &"
 #        kernel                  kernel version
 alias kernel="mhwd-kernel -li"
 #        system-info             inxi -Fx (display system information)
@@ -331,12 +331,12 @@ alias dd-sync="sudo dd conv=fdatasync status=progress"
 #        sxhkdrs                 sxhkd restart
 alias sxhkdrs="pkill -SIGUSR1 -u \${USER} sxhkd"
 #        tint2rs                 tint2 restart
-alias tint2rs="(pkill -u \${USER} tint2 ; tint2 && sleep 1 && \
+alias tint2rs="(pkill -f -u \${USER} tint2 ; tint2 && sleep 1 && \
     xdo below -t \$(xdo id -n root) \$(xdo id -N Tint2)) &"
 #        ewwrs                   eww restart
 alias ewwrs="(eww --restart open bar && sleep 1 && \
     xdo below -t \$(xdo id -n root) \$(xdo id -n eww))"
-#!alias ewwrs="(pkill -u \${USER} eww ; eww --restart open bar && sleep 1 && \
+#!alias ewwrs="(pkill -f -u \${USER} eww ; eww --restart open bar && sleep 1 && \
 #        xrdb-list               list custom .Xresource settings
 alias xrdb-list="xrdb -query -all"
 #        xrdb-merge-home         merge ~/.Xresource settings into xrdb

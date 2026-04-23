@@ -40,7 +40,7 @@ ${color2}Spr + Shft + 1..0${color}  ${alignr}Send to given Desktop
 ${color2}Spr + Shft + W/K${color}  ${alignr}Close/Kill Node
 ${color2}Spr + Ctrl + M${color}  ${alignr}Tiled/Stacked/Monocle Layout
 ${color2}Spr + Ctrl + T/F${color}  ${alignr}Tiled/Fullscreen Layout
-${color2}Spr + Ctrl + Shft + T/F${color}  ${alignr}Pseudo-Tiled/Floating Layout
+${color2}Spr + Ctrl + Shft + T/F${color}  ${alignr}Pseudo-Tiled/Float Layout
 ${color2}Spr + I/K/J/L${color}  ${alignr}Focus Node in Direction
 ${color2}Spr + Shft + I/K/J/L${color}  ${alignr}Swap Node in Direction
 ${color2}Spr + ./,${color}  ${alignr}Circulate Nodes Forward/Backward
@@ -61,8 +61,7 @@ ${color2}Spr + Shft + Delete${color}  ${alignr}Kill Process Clicked
 ${color2}Spr + Alt + Print${color}  ${alignr}Screen Shapshot
 ${color2}Spr + Ctrl + Print${color}  ${alignr}Window Shapshot
 ${color2}Spr + Shft + Print${color}  ${alignr}Region Shapshot
-${color2}Spr + Shft + S/V${color}  ${alignr}Reload SXHKD/Video
-${color2}Spr + Shft + R/T/E/C${color}  ${alignr}Reload Xfce/Tint/EWW/Conky
+${color2}Spr + Shft + S/R/C/V${color}  ${alignr}Reload SXHKD/Bar/Conky/Video
 ${color2}Spr + Ctrl + Alt + PgUp/PgDn${color}  ${alignr}Brightness Up/Down
 ${color2}Spr + Ctrl + Alt + Home/End${color}  ${alignr}Volume Down/Up
 ${color2}Spr + Ctrl + Alt + Ins/Del${color}  ${alignr}Mute/Play Sound

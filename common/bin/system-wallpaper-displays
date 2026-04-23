@@ -23,7 +23,7 @@ yres=$(xrandr | sed -n 's/^.* current //p' | sed 's/^\([0-9]\+\) x \([0-9]\+\).*
 echo "xres: ${xres}, yres: ${yres}"
 
 # conky displays on wallpaper
-pkill -u ${USER} conky
+pkill -f -u ${USER} conky
 if [ -f "${HOME}/.config/conky/system-info.conkyrc" ] ; then
     _run conky --config="${HOME}/.config/conky/system-info.conkyrc" >/dev/null 2>&1 &
 fi

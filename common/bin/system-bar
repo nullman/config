@@ -30,25 +30,25 @@ _delay() {
 }
 
 # system bar
-#pkill -u ${USER} polybar ; _once polybar -c ${HOME}/.config/polybar/config openbox-bar &
-#(pkill -u ${USER} tint2 ; _once tint2 && sleep 1 && xdo below -t $(xdo id -n root) $(xdo id -N Tint2)) & # status bar hidden when fullscreen
+#pkill -f -u ${USER} polybar ; _once polybar -c ${HOME}/.config/polybar/config openbox-bar &
+#(pkill -f -u ${USER} tint2 ; _once tint2 && sleep 1 && xdo below -t $(xdo id -n root) $(xdo id -N Tint2)) & # status bar hidden when fullscreen
 #(_run eww --restart open bar && sleep 1 && xdo below -t $(xdo id -n root) $(xdo id -n eww)) & # status bar hidden when fullscreen
-#pkill -u ${USER} xfce4-panel ; _once xfce4-panel --disable-wm-check &
-pkill -u ${USER} polybar ; _once polybar &
+#pkill -f -u ${USER} xfce4-panel ; _once xfce4-panel --disable-wm-check &
+pkill -f -u ${USER} polybar ; _once polybar &
 
 # system bar applets
-#(_delay ${delay} pkill -u ${USER} clipit ; _once clipit) &
-(_delay ${delay} pkill -u ${USER} pa-applet ; _once pa-applet) &
-(_delay ${delay} pkill -u ${USER} blueman-applet ; _once blueman-applet) &
-(_delay ${delay} pkill -u ${USER} nm-applet ; _once nm-applet) &
-#(_delay ${delay} pkill -u ${USER} pamac-tray ; _once pamac-tray) &
+#(_delay ${delay} pkill -f -u ${USER} clipit ; _once clipit) &
+(_delay ${delay} pkill -f -u ${USER} pa-applet ; _once pa-applet) &
+(_delay ${delay} pkill -f -u ${USER} blueman-applet ; _once blueman-applet) &
+(_delay ${delay} pkill -f -u ${USER} nm-applet ; _once nm-applet) &
+#(_delay ${delay} pkill -f -u ${USER} pamac-tray ; _once pamac-tray) &
 if [ -e "/sys/class/power_supply/BAT0" ] ; then
-    (_delay ${delay} pkill -u ${USER} xfce4-power-manager ; _once xfce4-power-manager) &
+    (_delay ${delay} pkill -f -u ${USER} xfce4-power-manager ; _once xfce4-power-manager) &
 fi
-#(_delay ${delay} pkill -u ${USER} volumeicon ; _once volumeicon) &
-#(_delay ${delay} pkill -u ${USER} sbxkb ; _once sbxkb) &
-#(_delay ${delay} pkill -u ${USER} kdeconnect-indicator ; _once kdeconnect-indicator) &
-(_delay ${delay} pkill -u ${USER} localsend ; _once localsend --hidden) &
+#(_delay ${delay} pkill -f -u ${USER} volumeicon ; _once volumeicon) &
+#(_delay ${delay} pkill -f -u ${USER} sbxkb ; _once sbxkb) &
+#(_delay ${delay} pkill -f -u ${USER} kdeconnect-indicator ; _once kdeconnect-indicator) &
+(_delay ${delay} pkill -f -u ${USER} localsend ; _once localsend --hidden) &
 
 #===============================================================================
 # End of File
