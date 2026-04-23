@@ -8,7 +8,7 @@
 #===============================================================================
 
 REPLACE_ID=1
-EXPIRE_TIME=5000
+EXPIRE_TIME=5000                        # 5 seconds
 
 # check if executable command is found in the path
 _command() {
@@ -31,6 +31,7 @@ if [ $# -lt 2 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
     echo "  volume toggle-mute"
     echo "  brightness up"
     echo "  brightness down"
+    echo "  display toggle"
     exit 1
 fi
 
@@ -104,6 +105,18 @@ case $1 in
             down)
                 light -U 2
                 notify-send-brightness $2
+                ;;
+        esac
+        ;;
+    display)
+        _command xrandr || (echo "Missing xrandr command" ; exit 1)
+        case $2 in
+            toggle)
+                if $(xrandr --query | grep " connected [0-9]" | grep -q "^HDMI-1-0") ; then
+                    xrandr --output HDMI-1-0 --off
+                else
+                    xrandr --output HDMI-1-0 --auto
+                fi
                 ;;
         esac
         ;;

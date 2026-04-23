@@ -1,0 +1,16 @@
+arch = {
+  packages = [
+    "cuda",
+    "egl-gbm",
+    "lib32-nvidia-580xx-utils",
+    "nvidia-580xx-dkms",
+    "nvidia-580xx-settings",
+    "nvidia-580xx-utils",
+    "nvidia-prime",
+    "opencl-nvidia-580xx",
+    "xf86-video-intel",
+
+  ]
+}
+
+

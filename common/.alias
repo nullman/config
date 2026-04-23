@@ -2909,17 +2909,15 @@ alias nix-run-gcs="NIXPKGS_ALLOW_UNFREE=1 nix-shell -p steam-run --run \"steam-r
 # pacman (Package Manager)
 #
 #        pmu                     pacman -Syu (update packages with refresh)
-alias pmu="sudo pacman -Syu --noconfirm ; source \${HOME}/.xprofile"
+alias pmu="sudo pacman -Syu ; source \${HOME}/.xprofile"
 #        pmuf                    pacman -Syyu (update packages with forced refresh)
-alias pmuf="sudo pacman -Syyu --noconfirm ; source \${HOME}/.xprofile"
+alias pmuf="sudo pacman -Syyu ; source \${HOME}/.xprofile"
 #        pmi                     pacman -S (install package)
-alias pmi="sudo pacman -S --needed --noconfirm"
-#        pmic                    pacman -S (install package with confirmation)
-alias pmic="sudo pacman -S --needed"
+alias pmi="sudo pacman -S --needed"
 #        pmir                    pacman -S (reinstall package)
-alias pmir="sudo pacman -S --noconfirm"
+alias pmir="sudo pacman -S"
 #        pmr                     pacman -Rns (remove package and configuration files)
-alias pmr="sudo pacman -R --nosave --recursive --noconfirm"
+alias pmr="sudo pacman -R --nosave --recursive"
 #        pms                     pacman -Ss (search packages)
 alias pms="pacman -Ss"
 #        pmf                     pacman -F (search files)
@@ -3000,17 +2998,15 @@ alias pacman-clear-cache="
 # yay (Package Manager)
 #
 #        yau                     yay -Syu (update packages with refresh)
-alias yau="yay -Syu --noconfirm ; source \${HOME}/.xprofile"
+alias yau="yay -Syu ; source \${HOME}/.xprofile"
 #        yauf                    yay -Syyu (update packages with forced refresh)
-alias yauf="yay -Syyu --noconfirm ; source \${HOME}/.xprofile"
+alias yauf="yay -Syyu ; source \${HOME}/.xprofile"
 #        yai                     yay -S (install package)
-alias yai="yay -S --needed --noconfirm"
-#        yaic                    yay -S (install package with confirmation)
-alias yaic="yay -S --needed"
+alias yai="yay -S --needed"
 #        yair                    yay -S (reinstall package)
-alias yair="yay -S --noconfirm"
+alias yair="yay -S"
 #        yar                     yay -Rns (remove package and configuration files)
-alias yar="yay -R --nosave --recursive --noconfirm"
+alias yar="yay -R --nosave --recursive"
 #        yas                     yay -Ss (search packages)
 alias yas="yay -Ss 2>/dev/null"
 #        yaf                     yay -F (search files)
