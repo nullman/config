@@ -112,10 +112,10 @@ case $1 in
         _command xrandr || (echo "Missing xrandr command" ; exit 1)
         case $2 in
             toggle)
-                if $(xrandr --query | grep " connected [0-9]" | grep -q "^HDMI-1-0") ; then
-                    xrandr --output HDMI-1-0 --off
-                else
+                if $(xrandr --listactivemonitors | grep -q "^Monitors: 1$") ; then
                     xrandr --output HDMI-1-0 --auto
+                else
+                    xrandr --output HDMI-1-0 --off
                 fi
                 ;;
         esac
