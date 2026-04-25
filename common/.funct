@@ -2197,7 +2197,9 @@ arch-initialize() {
         "arch-capslock-control-x11"
         "arch-services"
         "arch-user-services"
-        "arch-settings"
+        "arch-settings-gtk"
+        "arch-settings-qt5ct"
+        "arch-settings-qt6ct"
         "arch-final"
     )
 

@@ -34,8 +34,8 @@
 (defpoll backlight :interval "3600s" "xbacklight -get")
 (defpoll brightness :interval "500ms" "light -G | sed 's/\.[0-9]*$//'")
 
-(defpoll weather :interval "600s" "~/bin/system-bar-weather icon 92116")
-(defpoll weather-status :interval "600s" "~/bin/system-bar-weather status 92116")
+(defpoll weather :interval "1800s" "~/bin/system-bar-weather icon 92116")
+(defpoll weather-status :interval "1800s" "~/bin/system-bar-weather status 92116")
 
 ;;(defpoll weather :interval "600s" "curl --silent 'wttr.in/San+Diego?u&format=%c%t'")
 ;;(defpoll weather-status :interval "600s" "curl --silent 'wttr.in/San+Diego?u&format=%C+%t'")
@@ -103,7 +103,7 @@
             :value volume
             :onchange "pactl -- set-sink-volume 0 {}%"
             :onclick "pactl -- set-sink-mute 0 toggle"
-            :onrightclick "pavucontrol &"
+            :onrightclick "pavucontrol & disown"
             :tooltip "Volume: ${volume}%"))
 
 (defwidget battery [status capacity]
@@ -136,7 +136,7 @@
 ;;                 ;;:visible {strength == "" ? "false" : "true"}
 ;;                 :tooltip "WiFi strength: ${strength} dBm"
 ;;                 (button :onclick {status == "on" ? "iwctl device wlan0 set-property Powered off" : "iwctl device wlan0 set-property Powered on"}
-;;                         :onrightclick "iwgtk &"
+;;                         :onrightclick "iwgtk & disown"
 ;;                         ;; symbols: 󰤮 󰤯 󰤟 󰤢 󰤥 󰤨 󰖩 󰑫 󰘊  
 ;;                         (label :text {strength == "" ? "󰤮" :
 ;;                                strength < -90 ? "󰤯" :
@@ -150,7 +150,7 @@
                 ;;:visible {strength == "" ? "false" : "true"}
                 :tooltip "WiFi strength: ${strength}%"
                 (button :onclick {status == "enabled" ? "nmcli radio wifi off" : "nmcli radio wifi on"}
-                        :onrightclick "nm-connection-editor &"
+                        :onrightclick "nm-connection-editor & disown"
                         ;; symbols: 󰤮 󰤯 󰤟 󰤢 󰤥 󰤨 󰖩 󰑫 󰘊  
                         (label :text {strength == "" ? "󰤮" :
                                strength < 21 ? "󰤯" :
@@ -205,7 +205,7 @@
                 ;; application search
                 (box :class "label"
                      :tooltip "Application Search"
-                     (button :onclick "rofi -modi drun -show drun &" " "))
+                     (button :onclick "rofi -modi drun -show drun & disown" " "))
                 ;; launcher menu
                 ;; (box :class "label"
                 ;;      :tooltip "Launcher Menu"
@@ -213,7 +213,7 @@
                 ;; window selector
                 (box :class "label"
                      :tooltip "Window Selector"
-                     (button :onclick "rofi -modi window -show window &" " "))
+                     (button :onclick "rofi -modi window -show window & disown" " "))
                 ;; symbols:                          
                 (workspace :label "1  " :value "1" :onclick "bspc desktop --focus '^1'" :onrightclick "bspc desktop --focus '^1' && bspc node --focus next.local.leaf" :tooltip "Workspace 1")
                 (workspace :label "2  " :value "2" :onclick "bspc desktop --focus '^2'" :onrightclick "bspc desktop --focus '^2' && bspc node --focus next.local.leaf" :tooltip "Workspace 2")
@@ -301,7 +301,7 @@
                 ;; session
                 (box :class "label"
                      :tooltip "Session Lock, Logout, Suspend, Hibernate, Reboot, or Shutdown"
-                     ;;(button :onclick "~/bin/rofi-session-menu -s &" "⏻"))))
+                     ;;(button :onclick "~/bin/rofi-session-menu -s & disown" "⏻"))))
                      (button :onclick {session-is-open == "true" ?
                              "${EWW_CMD} close session && ${EWW_CMD} update session-is-open=false" :
                              "${EWW_CMD} open session && ${EWW_CMD} update session-is-open=true"}

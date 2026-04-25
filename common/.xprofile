@@ -87,7 +87,7 @@ fi
 #_run xhost +mouse1 >/dev/null 2>&1
 
 # start wm
-#[ -z "$(greppr window_manager)" ] || ps ux | grep -v grep | grep -q window_manager || (exec $(getpr window_manager) &) >/dev/null 2>&1
+#[ -z "$(greppr window_manager)" ] || ps ux | grep -v grep | grep -q window_manager || (exec $(getpr window_manager) & disown) >/dev/null 2>&1
 
 # select a window manager
 #exec selectwm

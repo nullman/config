@@ -156,12 +156,12 @@ Skips checks if run on Windows or Mac."
 
 (init-message 2 "Package Manager: Straight")
 
-;; initialize package system
-(require 'package)
-(setq package-archives '(("elpa" . "https://elpa.gnu.org/packages/")
-                         ("nongnu" . "https://elpa.nongnu.org/nongnu/"))
-      native-comp-async-report-warnings-errors nil)
-;;                         ("melpa" . "https://melpa.org/packages/"))
+;; ;; initialize package system
+;; (require 'package)
+;; (setq package-archives '(("elpa" . "https://elpa.gnu.org/packages/")
+;;                          ("nongnu" . "https://elpa.nongnu.org/nongnu/"))
+;;       native-comp-async-report-warnings-errors nil)
+;; ;;                         ("melpa" . "https://melpa.org/packages/"))
 
 ;; bootstrap
 (defvar bootstrap-version)
@@ -187,6 +187,9 @@ Skips checks if run on Windows or Mac."
 
 ;; turn off package file modification check at startup
 (setq straight-check-for-modifications '(find-when-checking check-on-save))
+
+;; allow built-in packages to upgrade
+(setq package-install-upgrade-built-in t)
 
 ;; update recipe repositories
 ;;(straight-pull-recipe-repositories)
@@ -16120,7 +16123,7 @@ USING is the remaining peg."
           ("M-s" . consult-history)                 ; default: `next-matching-history-element'
           ("M-r" . consult-history))                ; default: `previous-matching-history-element'
   ;; enable automatic preview at point in the *Completions* buffer
-  :hook (completion-list-mode . consult-preview-at-point-mode)
+  ;;:hook (completion-list-mode . consult-preview-at-point-mode)
   :init
   ;; improve the register preview for `consult-register' and the emacs built-ins
   (setq register-preview-function #'consult-register-format
@@ -16995,63 +16998,6 @@ USING is the remaining peg."
 ;;               ("C-c C-w" . elfeed-tube-mpv-where)))
 ;; elfeed-tube:1 ends here
 
-;; [[file:init-emacs.org::#packages-ellama][ellama:1]]
-;;------------------------------------------------------------------------------
-;;; Packages: ellama
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Packages: ellama")
-
-;; (use-package llm-ollama
-;;   :straight t)
-
-(use-package ellama
-  :straight t
-  ;;:after llm-ollama
-  ;;:commands (ellama-chat ellama-provider-select)
-  :init
-  (require 'llm-ollama)
-  (setopt ellama-keymap-prefix "C-c e")
-  (setopt ellama-language "English")
-  (setopt ellama-auto-scroll t)
-  (setopt ellama-long-lines-length 80)
-  (setopt ellama-fill-paragraphs t)
-  ;;(setopt ellama-naming-scheme 'ellama-generate-name-by-words)
-  ;;(setopt ellama-naming-scheme 'ellama-generate-name-by-llm)
-  (setopt ellama-naming-scheme 'ellama-generate-name-by-time)
-  (setopt ellama-provider
-          (make-llm-ollama
-           :chat-model "llama3.2:3b"
-           :embedding-model "nomic-embed-text"
-           :default-chat-non-standard-params '(("num_ctx" . 8192))))
-  (setopt ellama-summarization-provider
-          (make-llm-ollama
-           :chat-model "qwen2.5:3b"
-           :embedding-model "nomic-embed-text"
-           :default-chat-non-standard-params '(("num_ctx" . 32768))))
-  (setopt ellama-coding-provider
-          (make-llm-ollama
-           :chat-model "qwen2.5-coder:3b"
-           :embedding-model "nomic-embed-text"
-           :default-chat-non-standard-params '(("num_ctx" . 32768))))
-  (setopt ellama-translation-provider
-          (make-llm-ollama
-           :chat-model "qwen2.5:3b"
-           :embedding-model "nomic-embed-text"
-           :default-chat-non-standard-params '(("num_ctx" . 32768))))
-  (setopt ellama-providers
-          '(("llama3.2:1b" . (make-llm-ollama "llama3.2:1b"))
-            ("llama3.2:3b" . (make-llm-ollama "llama3.2:3b"))
-            ;;("llama3:8b-instruct-q8_0" . (make-llm-ollama "llama3:8b-instruct-q8_0"))
-            ;;("llama3:8b" . (make-llm-ollama "llama3:8b"))
-            ;;("llama3-chatqa" . (make-llm-ollama "llama3-chatqa"))
-            ("llama2-uncensored" . (make-llm-ollama "llama2-uncensored:latest"))
-            ("codellama" . (make-llm-ollama "codellama:7b"))
-            ("qwen2.5-coder:3b" . (make-llm-ollama "qwen2.5-coder:3b"))
-            ("qwen2.5-coder:7b" . (make-llm-ollama "qwen2.5-coder:7b"))
-            ("qwen2.5:7b" . (make-llm-ollama "qwen2.5:7b")))))
-;; ellama:1 ends here
-
 ;; [[file:init-emacs.org::#modules-elnode][elnode:1]]
 ;;------------------------------------------------------------------------------
 ;;; Packages: elnode
@@ -17199,8 +17145,8 @@ USING is the remaining peg."
 (init-message 2 "Modules: flycheck")
 
 (use-package flycheck
-  :straight t
-  :hook (after-init . global-flycheck-mode))
+  :straight t)
+  ;;:hook (after-init . global-flycheck-mode))
 
 ;;------------------------------------------------------------------------------
 ;;;; flycheck-package
@@ -17908,7 +17854,7 @@ And the line would be overlaid like:
 
 (use-package magit
   :straight t
-  ;; :after (ivy)
+  :after (transient)
   :diminish magit-auto-revert-mode
   :bind* (("C-x g" . magit-status)
           ("C-x M-g" . magit-dispatch))
@@ -19555,6 +19501,17 @@ Do not perform the search on very large files (to avoid a delay when loaded)."
         time-stamp-format "%Y-%02m-%02d %02H:%02M (%u)")
   (add-hook 'before-save-hook #'time-stamp))
 ;; time-stamp:1 ends here
+
+;; [[file:init-emacs.org::#packages-transient][transient:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: transient
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Packages: transient")
+
+(use-package transient
+  :straight t)
+;; transient:1 ends here
 
 ;; [[file:init-emacs.org::#modules-tramp][tramp:1]]
 ;;------------------------------------------------------------------------------
