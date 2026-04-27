@@ -71,6 +71,9 @@ pow_detach_msg "Screen session of \$LOGNAME \$:cr:\$:nl:ended."
 #blankerprg clockywock
 #idle 3600
 
+# terminal
+term screen-256color
+
 #-------------------------------------------------------------------------------
 # Xterm Terminal Settings
 #-------------------------------------------------------------------------------

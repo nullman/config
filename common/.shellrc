@@ -119,9 +119,9 @@ export USERNAME="${USER}"
 export HOSTNAME="$(uname -n)"
 export home="${HOME}"
 [ "${USER}" == "root" ] && export DISPLAY=":0.0"
-[ -z "${REAL_TERM}" ] && export REAL_TERM="${TERM}" # keep original TERM value for scripts to use
-[ -z "${TERM}" ] && export TERM="xterm-256color" # act like xterm with color support
-export TERMINAL="${TERM}"
+#[ -z "${REAL_TERM}" ] && export REAL_TERM="${TERM}" # keep original TERM value for scripts to use
+#[ -z "${TERM}" ] && export TERM="xterm-256color" # act like xterm with color support
+#export TERMINAL="${TERM}"
 export PAGER="less"
 export ZPAGER="zless"
 export LESS="--CLEAR-SCREEN --quit-if-one-screen --ignore-case --jump-target=10 --LONG-PROMPT --RAW-CONTROL-CHARS --no-init --tilde --shift 4"

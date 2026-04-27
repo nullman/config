@@ -2416,12 +2416,21 @@ KEYMAP defaults to `override-global-map'."
               ("8" . fill-column-80)
               ("1" . fill-column-100))
 
+  ;; miscellaneous pretty-print commands
+  (bind-keys* :map space-miscellaneous-map
+              :prefix "P"
+              :prefix-map space-miscellaneous-pretty-print-map
+              :menu-name "Pretty-Print Commands"
+              ("j" . json-pretty-print)
+              ("x" . xml-pretty-print))
+
   ;; miscellaneous toggle commands
   (bind-keys* :map space-miscellaneous-map
               :prefix "t"
               :prefix-map space-miscellaneous-toggle-map
               :menu-name "Toggle Commands"
               ("d" . toggle-debug-on-error)
+              ("f" . flycheck-mode)
               ("q" . toggle-debug-on-quit)
               ("s" . toggle-case-fold-search)
               ("t" . toggle-truncate-lines)
@@ -2438,14 +2447,6 @@ KEYMAP defaults to `override-global-map'."
               ("R" . straight-pull-recipe-repositories)
               ("P" . straight-pull-all)
               ("F" . straight-fetch-all))
-
-  ;; miscellaneous pretty-print commands
-  (bind-keys* :map space-miscellaneous-map
-              :prefix "P"
-              :prefix-map space-miscellaneous-pretty-print-map
-              :menu-name "Pretty-Print Commands"
-              ("j" . json-pretty-print)
-              ("x" . xml-pretty-print))
 
   ;; run commands
   (bind-keys* :map space-map

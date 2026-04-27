@@ -1,6 +1,8 @@
 arch = {
   packages = [
     "chatbox-bin",
+    "hfdownloader",
+    "ik-llama.cpp-cuda",
     "imaginer",
     "lmstudio",
     "ollama",

@@ -45,10 +45,10 @@ export COLOR_WHITE="\[\033[1;37m\]"
 # source system bashrc
 _source "/etc/bashrc" 2>&1
 
-# keep original TERM value for scripts to use
-export REAL_TERM="${TERM}"
-# act like xterm with color support
-export TERM="xterm-256color"
+# # keep original TERM value for scripts to use
+# export REAL_TERM="${TERM}"
+# # act like xterm with color support
+# export TERM="xterm-256color"
 
 # continue only if terminal is interactive
 [[ $- == *i* ]] || return 0
