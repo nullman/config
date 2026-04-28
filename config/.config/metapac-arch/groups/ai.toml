@@ -6,6 +6,7 @@ arch = {
     "imaginer",
     "lmstudio",
     "ollama",
+    "ollama-cuda",
     "ollama-docs",
     "fortunecraft",
     "upscayl-bin",

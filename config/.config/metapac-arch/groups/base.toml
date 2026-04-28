@@ -10,6 +10,7 @@ arch = {
     "efibootmgr",
     "git",
     "gst-plugin-pipewire",
+    "gum",
     "inetutils",
     "intel-media-driver",
     "intel-ucode",
