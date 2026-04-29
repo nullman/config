@@ -2176,7 +2176,7 @@ arch-initialize() {
 
     standard=(
         "arch-polkit"
-        "arch-lightdm-gtk-greeter-conf"
+        "arch-lightdm"
         "arch-pkgfile"
         "arch-copy-wallpapers"
         "arch-fix-backgrounds"
@@ -2193,7 +2193,7 @@ arch-initialize() {
         #"arch-configure-x48"
         "arch-configure-xscreensaver-aerial"
         "arch-bluetooth-audio"
-        "arch-printer"
+        #"arch-printer"
         "arch-synology-mounts"
         #"arch-capslock-control"
         "arch-capslock-control-terminal"
