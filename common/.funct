@@ -2168,8 +2168,9 @@ arch-initialize() {
         "arch-sysctl-conf"
         "arch-make-jobs"
         "arch-systemd"
-        #"arch-locale"
-        #"arch-package-managers"
+        "arch-capslock-control-terminal"
+        "arch-capslock-control-x11"
+        "arch-package-managers"
     )
 
     standard=(
