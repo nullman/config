@@ -2175,6 +2175,7 @@ arch-initialize() {
     )
 
     standard=(
+        "arch-polkit"
         "arch-lightdm-gtk-greeter-conf"
         "arch-pkgfile"
         "arch-copy-wallpapers"
