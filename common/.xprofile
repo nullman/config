@@ -78,10 +78,9 @@ _run xset -dpms s off b off m 2/1 4 r rate 500 35 >/dev/null 2>&1
 # fi
 
 # turn numlock on
-#if [ "$(uname -n)" == "dozer" ] ; then
-#    _run numlockx
-#fi
-_run numlockx
+if [ ! "$(uname -n)" == "mouse" ] ; then
+    _run numlockx
+fi
 
 # xhost
 #_run xhost +localhost >/dev/null 2>&1
