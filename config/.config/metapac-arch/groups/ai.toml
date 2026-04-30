@@ -4,7 +4,7 @@ arch = {
     "hfdownloader",
     "ik-llama.cpp-cuda",
     "imaginer",
-    "lmstudio",
+    "lmstudio-bin",
     "ollama",
     "ollama-cuda",
     "ollama-docs",

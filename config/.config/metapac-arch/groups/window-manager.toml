@@ -45,7 +45,7 @@ arch = {
     "picom",
     "pinta",
     "playerctl",
-    "polkit-gnome",
+    "polkit",
     "polybar",
     "qt5ct",
     "qt6ct",

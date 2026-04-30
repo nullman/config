@@ -38,7 +38,6 @@ arch = {
     "transmission-gtk",
     "tribler-bin",
     "tuba",
-    "vdhcoapp",
     "waterfox",
 
   ]
