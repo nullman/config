@@ -3190,7 +3190,7 @@ alias qd-copy-xscreensaver="
         sudo rm -rf \"/home/data/media/Pictures Slide Show\"
         sudo mkdir -p \"/home/data/media/Pictures Slide Show\"
         sudo chown -R $(id -un):$(id -un) \"/home/data\"
-        qvm-run --pass-io personal 'tar -C \"/home/data/media/Pictures Slide Show\" -c --dereference XScreenSaver' | tar -C \"/home/data/media/Pictures Slide Show\" -x
+        qvm-run --pass-io personal 'tar -C \"/home/data/media\" -c --dereference \"Pictures Slide Show/XScreenSaver\"' | tar -C \"/home/data/media/\" -x
     else
         echo \"Error: qd-copy-xscreensaver can only be run on dom0\"
     fi"
