@@ -178,11 +178,11 @@ super + Pause
 
 # mpc control
 super + Delete
-    mpc prev && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    qvm-run personal "mpc prev" && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 super + End
-    mpc toggle && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    qvm-run personal "mpc toggle" && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 super + Next
-    mpc next && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    qvm-run personal "mpc next" && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
 
 #-------------------------------------------------------------------------------
 # System Tools
@@ -197,8 +197,6 @@ super + ctrl + Escape
     gdbus call --session --dest org.qubesos.appmenu --object-path '/org/qubesos/appmenu' --method org.freedesktop.Application.Activate '{}'
 
 # desktop application launcher: dom0
-#super + ctrl + space
-#    rofi -normal-window -modi drun -show drun
 super + ctrl + space
     ${HOME}/bin/rofi-qubes-drun
 
@@ -242,6 +240,14 @@ super + alt + c
 super + alt + e
     qvm-run personal "/usr/sbin/rofimoji --typer xdotool --clipboarder xsel --skin-tone neutral"
     #qvm-run personal "/usr/sbin/rofimoji --action print --skin-tone neutral | tr -d '\n' | xsel && xsel --output | xsel --clipboard"
+
+# unicode selector: personal
+super + alt + u
+    qvm-run personal "/home/user/bin/rofi-menu unicode"
+
+# footnote symbol selector: personal
+super + shift + alt + u
+    qvm-run personal "/home/user/bin/rofi-menu footnotes"
 
 # bookmarks selector: personal
 super + alt + o
