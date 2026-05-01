@@ -1428,40 +1428,83 @@ yasis() {
         yay -Ss "$*" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a ; /^[a-z]*\/$* / { N ; s/\n */ | / ; p ; d ; ba }" | grep " (Installed"
     fi
 }
-#!#        pisg                    pikaur search with grep
-#!pisg() {
-#!    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
-#!        echo "Usage: pisg SEARCH GREP"
-#!    else
-#!        s="$1"
-#!        shift
-#!        pikaur -Ss "${s}" 2>/dev/null | sed -n ":a ; { N ; s/\n */ | / ; p ; d ; ba }" | grep -i "$*"
-#!    fi
-#!}
-#!#        piss                    pikaur specific search
-#!piss() {
-#!    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
-#!        echo "Usage: piss SEARCH"
-#!    else
-#!        pikaur -Ss "$*" 2>/dev/null | sed -n ":a ; /^[a-z]*\/$* / { N ; s/\n */ | / ; p ; d ; ba }"
-#!    fi
-#!}
-#!#        pisi                    pikaur search installed packages
-#!pisi() {
-#!    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
-#!        echo "Usage: pisi SEARCH"
-#!    else
-#!        pikaur -Ss "$*" 2>/dev/null | sed -n ":a ; { N ; s/\n */ | / ; p ; d ; ba }" | grep " (Installed"
-#!    fi
-#!}
-#!#        pisis                   pikaur specific search installed packages
-#!pisis() {
-#!    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
-#!        echo "Usage: pisis SEARCH"
-#!    else
-#!        pikaur -Ss "$*" 2>/dev/null | sed -n ":a ; /^[a-z]*\/$* / { N ; s/\n */ | / ; p ; d ; ba }" | grep " (Installed"
-#!    fi
-#!}
+#        arch-initialize      setup arch system
+arch-initialize() {
+    _getsection() {
+        local file="${HOME}/org/personal.org"
+        local regexp="/^[ \t]*#\+NAME: $1\$/,/^[ \t]*#\+END_SRC\$/{print \$0}"
+        awk "${regexp}" "${file}" | tail -n +3 | head -n -1 | sed 's/^[ \t]*//'
+        #awk "${regexp}" "${file}" | tail -n +3 | head -n -1 | sed 's/^[ \t]*//' | \
+            #    sed 's/--needed/--needed --mflags \"--noconfirm\"/' | \
+            #    sed 's/yay /yes | yay /'
+    }
+
+    initial=(
+        "arch-group"
+        "arch-sudoers"
+        "arch-sysctl-conf"
+        "arch-make-jobs"
+        "arch-systemd"
+        "arch-capslock-control-terminal"
+        "arch-capslock-control-x11"
+        "arch-package-managers"
+    )
+
+    standard=(
+        "arch-polkit"
+        "arch-lightdm"
+        "arch-pkgfile"
+        "arch-copy-wallpapers"
+        "arch-fix-backgrounds"
+        #"arch-set-background-image"
+        "arch-fonts"
+        "arch-ssh-config"
+        "arch-networkmanager"
+        #"arch-configure-audacious"
+        #"arch-configure-gsync"
+        #"arch-configure-irssi"
+        #"arch-configure-java-8-openjdk"
+        #"arch-configure-java-11-openjdk"
+        "arch-configure-tlp"
+        #"arch-configure-x48"
+        "arch-configure-xscreensaver-aerial"
+        "arch-bluetooth-audio"
+        #"arch-printer"
+        "arch-synology-mounts"
+        #"arch-capslock-control"
+        "arch-capslock-control-terminal"
+        "arch-capslock-control-x11"
+        "arch-services"
+        "arch-user-services"
+        "arch-settings-gtk"
+        "arch-settings-qt5ct"
+        "arch-settings-qt6ct"
+        "arch-final"
+    )
+
+    sections=(${initial[@]} ${standard[@]})
+
+    if [ "$(distribution)" != "arch" ] ; then
+        echo "Not running Arch"
+        return 1
+    fi
+
+    echo
+    echo "========== Arch Initialization Script =========="
+    echo
+
+    for section in ${sections[@]} ; do
+        echo
+        echo "========== ${section} =========="
+        echo
+        #echo "$(_getsection ${section})"
+        eval "$(_getsection ${section})"
+    done
+
+    echo
+    echo "========== Arch Initialization Complete =========="
+    echo
+}
 
 #
 # debian
@@ -1547,7 +1590,7 @@ nixfi() {
 qd-copy-from-vm() {
     if [ $# -lt 3 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] || [ "$(uname -n)" != "dom0" ] ; then
         echo "Usage: qd-copy-from-vm VM PATH FILE"
-        echo "Can only be run on dom0"
+        [ "$(uname -n)" != "dom0" ] && echo "Error: Can only be run on dom0"
     else
         qvm-run --pass-io "$1" "tar -C \"$2\" -c \"$3\"" | tar -x
     fi
@@ -1556,7 +1599,7 @@ qd-copy-from-vm() {
 qd-copy-to-vm() {
     if [ $# -lt 3 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] || [ "$(uname -n)" != "dom0" ] ; then
         echo "Usage: qd-copy-to-vm VM FILE PATH"
-        echo "Can only be run on dom0"
+        [ "$(uname -n)" != "dom0" ] && echo "Error: Can only be run on dom0"
     else
         tar -cf - "$2" | qvm-run --pass-io "$1" "tar -C \"$3\" -xf -"
     fi
@@ -1582,6 +1625,47 @@ qd-sync() {
         [ "$1" == "debian" ] && tar -C "${HOME}/config/config/.config" -cf - metapac-debian | qvm-run --pass-io debian 'tar -C "/home/user/.config" -xf -'
         home-restow
     fi
+}
+#        qubes-dom0-initialize  setup dom0
+qubes-dom0-initialize() {
+    _getsection() {
+        local file="${HOME}/org/personal.org"
+        local regexp="/^[ \t]*#\+NAME: $1\$/,/^[ \t]*#\+END_SRC\$/{print \$0}"
+        awk "${regexp}" "${file}" | tail -n +3 | head -n -1 | sed 's/^[ \t]*//'
+    }
+
+    sections=(
+        "qubes-time"
+        "qubes-repo-contrib"
+        "qubes-packages"
+        "qubes-terminal"
+        "qubes-x11"
+        "qubes-battery"
+        "qubes-dark-mode"
+        "qubes-pc-speaker"
+        "qubes-lightdm"
+    )
+
+    if [ "$(uname -n)" != "dom0" ] ; then
+        echo "Error: Can only be run on dom0"
+        return 1
+    fi
+
+    echo
+    echo "========== Qubes dom0 Initialization Script =========="
+    echo
+
+    for section in ${sections[@]} ; do
+        echo
+        echo "========== ${section} =========="
+        echo
+        echo "$(_getsection ${section})"
+        eval "$(_getsection ${section})"
+    done
+
+    echo
+    echo "========== Qubes dom0 Initialization Complete =========="
+    echo
 }
 
 #
@@ -2151,83 +2235,6 @@ ollama-model-install() {
             echo "${cmd}"
             eval "${cmd}"
         done
-}
-#        arch-initialize      setup arch system
-arch-initialize() {
-    _getsection() {
-        local file="${HOME}/org/personal.org"
-        local regexp="/^[ \t]*#\+NAME: $1\$/,/^[ \t]*#\+END_SRC\$/{print \$0}"
-        awk "${regexp}" "${file}" | tail -n +3 | head -n -1 | sed 's/^[ \t]*//'
-        #awk "${regexp}" "${file}" | tail -n +3 | head -n -1 | sed 's/^[ \t]*//' | \
-        #    sed 's/--needed/--needed --mflags \"--noconfirm\"/' | \
-        #    sed 's/yay /yes | yay /'
-    }
-
-    initial=(
-        "arch-group"
-        "arch-sudoers"
-        "arch-sysctl-conf"
-        "arch-make-jobs"
-        "arch-systemd"
-        "arch-capslock-control-terminal"
-        "arch-capslock-control-x11"
-        "arch-package-managers"
-    )
-
-    standard=(
-        "arch-polkit"
-        "arch-lightdm"
-        "arch-pkgfile"
-        "arch-copy-wallpapers"
-        "arch-fix-backgrounds"
-        #"arch-set-background-image"
-        "arch-fonts"
-        "arch-ssh-config"
-        "arch-networkmanager"
-        #"arch-configure-audacious"
-        #"arch-configure-gsync"
-        #"arch-configure-irssi"
-        #"arch-configure-java-8-openjdk"
-        #"arch-configure-java-11-openjdk"
-        "arch-configure-tlp"
-        #"arch-configure-x48"
-        "arch-configure-xscreensaver-aerial"
-        "arch-bluetooth-audio"
-        #"arch-printer"
-        "arch-synology-mounts"
-        #"arch-capslock-control"
-        "arch-capslock-control-terminal"
-        "arch-capslock-control-x11"
-        "arch-services"
-        "arch-user-services"
-        "arch-settings-gtk"
-        "arch-settings-qt5ct"
-        "arch-settings-qt6ct"
-        "arch-final"
-    )
-
-    sections=(${initial[@]} ${standard[@]})
-
-    if [ "$(distribution)" != "arch" ] ; then
-        echo "Not running Arch"
-        return 1
-    fi
-
-    echo
-    echo "========== Arch Initialization Script =========="
-    echo
-
-    for section in ${sections[@]} ; do
-        echo
-        echo "========== ${section} =========="
-        echo
-        #echo "$(_getsection ${section})"
-        eval "$(_getsection ${section})"
-    done
-
-    echo
-    echo "========== Arch Initialization Complete =========="
-    echo
 }
 
 #!

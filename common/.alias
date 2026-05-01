@@ -2913,6 +2913,35 @@ alias nix-run-foundryvtt="NIXPKGS_ALLOW_UNFREE=1 nix-shell -p steam-run --run \"
 alias nix-run-gcs="NIXPKGS_ALLOW_UNFREE=1 nix-shell -p steam-run --run \"steam-run \${HOME}/gurps/gcs\" ; rm -f \${HOME}/.local/share/applications/com.trollworks.gcs.desktop"
 
 #
+# qubes os
+#
+#        qdu                     qubes-dom0-update
+alias qdu="sudo qubes-dom0-update"
+#        qdur                    qubes-dom0-update --action=remove
+alias qdur="sudo qubes-dom0-update --action=remove"
+#        qdus                    qubes-dom0-update --action=search
+alias qdus="sudo qubes-dom0-update --action=search"
+#!#        qdut                    qubes-dom0-update with testing repo
+#!alias qdut="sudo qubes-dom0-update --enablerepo=qubes-dom0-current-testing"
+#        qvmcp                   qvm-copy-to-vm personal
+alias qvmcp="qvm-copy-to-vm personal"
+#!#        qcpvm                   copy X11 clipboard into qubes clipboard
+#!alias qcpvm="xsel > /var/run/qubes/qubes-clipboard.bin && echo -n dom0 > /var/run/qubes/qubes-clipboard.bin.source"
+#        qd-copy-windows-tools   copy qubes-windows-tools from personal to dom0
+alias qd-copy-windows-tools="
+    qvm-run --pass-io personal 'tar -C \"/home/data/media/Software/Hypervisor/Qubes OS\" -c qubes-windows-tools-4.1.69-1.fc37.noarch.rpm' | tar -x"
+#        qd-copy-slide-show      copy xscreensaver slide show pictures from personal to dom0
+alias qd-copy-slide-show="
+    if [ \"$(uname -n)\" != \"dom0\" ] ; then
+        echo \"Error: Can only be run on dom0\"
+    else
+        sudo rm -rf \"/home/data/media/Pictures Slide Show\"
+        sudo mkdir -p \"/home/data/media/Pictures Slide Show\"
+        sudo chown -R $(id -un):$(id -un) \"/home/data\"
+        qvm-run --pass-io personal 'tar -C \"/home/data/media\" -c --dereference \"Pictures Slide Show/XScreenSaver\"' | tar -C \"/home/data/media/\" -x
+    fi"
+
+#
 # pacman (Package Manager)
 #
 #        pmu                     pacman -Syu (update packages with refresh)
@@ -3165,43 +3194,6 @@ alias rpmu="rpm -U -v -h"
 alias rpmuf="rpm -U -v -h --force"
 #        rpmq                    rpm query all with grep
 alias rpmq="rpm -q -a | grep"
-
-#
-# qubes os
-#
-#        qdu                     qubes-dom0-update
-alias qdu="sudo qubes-dom0-update"
-#        qdur                    qubes-dom0-update --action=remove
-alias qdur="sudo qubes-dom0-update --action=remove"
-#        qdus                    qubes-dom0-update --action=search
-alias qdus="sudo qubes-dom0-update --action=search"
-#!#        qdut                    qubes-dom0-update with testing repo
-#!alias qdut="sudo qubes-dom0-update --enablerepo=qubes-dom0-current-testing"
-#        qvmcp                   qvm-copy-to-vm personal
-alias qvmcp="qvm-copy-to-vm personal"
-#!#        qcpvm                   copy X11 clipboard into qubes clipboard
-#!alias qcpvm="xsel > /var/run/qubes/qubes-clipboard.bin && echo -n dom0 > /var/run/qubes/qubes-clipboard.bin.source"
-#        qd-copy-windows-tools   copy qubes-windows-tools from personal to dom0
-alias qd-copy-windows-tools="
-    qvm-run --pass-io personal 'tar -C \"/home/data/media/Software/Hypervisor/Qubes OS\" -c qubes-windows-tools-4.1.69-1.fc37.noarch.rpm' | tar -x"
-#        qd-copy-xscreensaver    copy xscreensaver slide show pictures from personal to dom0
-alias qd-copy-xscreensaver="
-    if [ \"$(uname -n)\" == \"dom0\" ] ; then
-        sudo rm -rf \"/home/data/media/Pictures Slide Show\"
-        sudo mkdir -p \"/home/data/media/Pictures Slide Show\"
-        sudo chown -R $(id -un):$(id -un) \"/home/data\"
-        qvm-run --pass-io personal 'tar -C \"/home/data/media\" -c --dereference \"Pictures Slide Show/XScreenSaver\"' | tar -C \"/home/data/media/\" -x
-    else
-        echo \"Error: qd-copy-xscreensaver can only be run on dom0\"
-    fi"
-#!#        qd-copy-rebos-to-arch   copy rebos files from personal to arch
-#!alias qd-copy-rebos-to-arch="
-#!    if [ \"$(uname -n)\" == \"dom0\" ] ; then
-#!        qvm-run --pass-io personal 'cat /home/user/config/config/.config/rebos/gen.toml' | cat > ${HOME}/config/config/.config/rebos/gen.toml
-#!        cat ${HOME}/config/config/.config/rebos/gen.toml | qvm-run --pass-io arch 'cat > /home/user/.config/rebos/gen.toml'
-#!    else
-#!        echo \"Error: qd-copy-rebos-to-arch can only be run on dom0\"
-#!    fi"
 
 #
 # metapac (Multi-Backend Declarative Package Manager)
