@@ -44,17 +44,24 @@ _run ${HOME}/bin/run-sxhkd &
 
 # qubes os
 if [ "$(uname -n)" == "dom0" ] ; then
-    # qubes volume block device attach home partition to personal
-    (for device in $(qvm-block list --all | grep -e 'Unknown device' -e 'personal' | sed 's/ .*$//') ; do
-         qvm-block detach personal ${device}
-     done
-     qvm-block attach --persistent --option frontend-dev=xvdz personal $(qvm-block list dom0 | grep 'dom0' | sed 's/ .*$//')) &
+    # # qubes volume block device attach home partition to personal
+    # (
+    #     for device in $(qvm-block list --all | grep -e 'Unknown device' -e 'personal' | sed 's/ .*$//') ; do
+    #         qvm-block detach personal ${device}
+    #     done
+    #     qvm-block attach --option frontend-dev=xvdz personal $(qvm-block list dom0 | grep 'dom0 home' | sed 's/ .*$//')
+    # ) &
 
-    # qubes usb device attach bluetooth to personal
-    (for device in $(qvm-usb list --all | grep -e 'Unknown device' -e 'personal' | sed 's/ .*$//') ; do
-         qvm-usb detach personal ${device}
-     done
-     qvm-usb attach --persistent personal $(qvm-usb list sys-net | grep '8087:0aaa' | sed 's/ .*$//')) &
+    # qubes usb devices
+    (
+        for device in $(qvm-usb list --all | grep -e 'Unknown device' -e 'personal' | sed 's/ .*$//') ; do
+            qvm-usb detach personal ${device}
+        done
+        # attach bluetooth to personal
+        qvm-usb attach personal $(qvm-usb list sys-net | grep 'Bluetooth' | sed 's/ .*$//')
+        # attach camera to personal
+        qvm-usb attach personal $(qvm-usb list sys-net | grep 'Camera' | sed 's/ .*$//')
+    ) &
 
     # desktop 10 is used for Qube Manager and dom0 terminal
     bspc config desktop 10 --layout tiled

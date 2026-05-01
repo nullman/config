@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 #===============================================================================
-# .config/bspwm/bspwm-external-rules
+# .config/bspwm/bspwm-external-rules-qubes
 #
-# Custom external rules for BSPWM.
+# Custom external rules for BSPWM running in Qubes OS.
 #
 # Rules are generated from ${HOME}/config/config/.config/bspwm/bspwmrc
 #
