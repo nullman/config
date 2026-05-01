@@ -16,7 +16,7 @@ _run() {
 # run executable command if found in the path and not already running
 _once() {
     if command -v "$1" >/dev/null 2>&1 && ! pidof -q "$1" ; then
-        "$@" &
+        "$@"
     fi
 }
 
@@ -41,7 +41,7 @@ _delay() {
 #_delay 0
 
 # run dom0 applications
-bspc desktop --focus 10
+bspc desktop --focus ^10
 #(bspc rule --add --one-shot 'qubes-qube-manager' --state tiled && qubes-qube-manager) &
 qubes-qube-manager &
 sleep 6s && bspc node --state tiled
@@ -51,7 +51,7 @@ alacritty -e ${HOME}/bin/run-screen &
 (
     qvm-start personal
     sleep 10s && (
-        bspc desktop --focus 1
+        bspc desktop --focus ^1
 
         # prompt for keyring authentication on personal vm
         qvm-run personal "keyring get SecretService \$(id -un)" 2>/dev/null &

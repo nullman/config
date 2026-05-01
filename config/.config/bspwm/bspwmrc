@@ -111,40 +111,41 @@ bspc monitor -d            
 #-------------------------------------------------------------------------------
 
 # 1: Terminal
-#bspc desktop 1 --layout stacked
+#bspc desktop ^1 --layout stacked
 #_br 'Alacritty' desktop=^1 follow=on
 
 # 2: Editor
-#bspc desktop 2 --layout stacked
+#bspc desktop ^2 --layout stacked
 _br 'Emacs' desktop=^2 follow=on
 
 # 3: Email
-bspc desktop 3 --layout monocle
+bspc desktop ^3 --layout monocle
+_br 'thunderbird' desktop=^3 follow=on
+_br 'org.mozilla.thunderbird' desktop=^3 follow=on
 _br 'betterbird' desktop=^3 follow=on
 _br 'ms-outlook-nativefier' desktop=^3 follow=on
-_br 'thunderbird' desktop=^3 follow=on
 
 # 4: Browser
-bspc desktop 4 --layout monocle
+bspc desktop ^4 --layout monocle
 _br 'Brave-browser' desktop=^4 follow=on
 _br 'gopherus-sdl' desktop=^4 follow=on
 _br 'vivaldi-stable' desktop=^4 follow=on
 
 # 5: File Manager
-bspc desktop 5 --layout monocle
+bspc desktop ^5 --layout monocle
 _br 'Org.gnome.Nautilus' desktop=^5 follow=on
 _br 'Pcmanfm' desktop=^5 follow=on
 _br 'Spacefm' desktop=^5 follow=on
 _br 'Thunar' desktop=^5 follow=on
 
 # 6: Social 1
-#bspc desktop 6 --layout stacked
+#bspc desktop ^6 --layout stacked
 _br 'discord' desktop=^6 follow=on
 _br 'quassel' desktop=^6 follow=on
 _br 'Slack' desktop=^6 follow=on
 
 # 7: Social 2
-#bspc desktop 7 --layout stacked
+#bspc desktop ^7 --layout stacked
 _br 'Com.github.bleakgrey.tootle' desktop=^7 follow=on
 _br 'Element' desktop=^7 follow=on
 _br 'Gajim' desktop=^7 follow=on
@@ -159,14 +160,14 @@ _br 'nheko' desktop=^7 follow=on
 _br 'teams-for-linux' desktop=^7 follow=on
 
 # 8: Development
-bspc desktop 8 --layout monocle
+bspc desktop ^8 --layout monocle
 _br 'jetbrains-idea' desktop=^8 follow=on
 _br 'jetbrains-idea-ce' desktop=^8 follow=on
 _br 'jetbrains-studio' desktop=^8 follow=on
 _br 'xyz.chatboxapp.app' desktop=^8 follow=on
 
 # 9: Media: Image, Video, and Audio
-bspc desktop 9 --layout monocle
+bspc desktop ^9 --layout monocle
 _br 'Chromium-browser' desktop=^9 follow=on
 _br 'Firefox' desktop=^9 follow=on
 _br 'Gimp-2.10' desktop=^9 follow=on
@@ -180,14 +181,14 @@ _br 'mplayer2' desktop=^9 follow=on
 _br 'spotify' desktop=^9 follow=on
 
 # 10: General, Administration, Games
-bspc desktop 10 --layout monocle
+bspc desktop ^10 --layout monocle
 
 # 11: Virtual Machine 1
-bspc desktop 11 --layout monocle
+bspc desktop ^11 --layout monocle
 _br 'windows-7' desktop=^11 follow=on
 
 # 12: Virtual Machine 2
-bspc desktop 12 --layout monocle
+bspc desktop ^12 --layout monocle
 _br 'VirtualBox Machine' desktop=^12 follow=on
 _br 'VirtualBox Manager' desktop=^12 follow=on
 

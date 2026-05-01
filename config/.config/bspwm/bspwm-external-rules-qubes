@@ -27,9 +27,10 @@ echo "state=tiled follow=on"
 #-------------------------------------------------------------------------------
 
 [[ "${class}" == "Emacs" ]] || [[ "${class}" == "personal:Emacs" ]] && echo "desktop=^2 follow=on"
+[[ "${class}" == "thunderbird" ]] || [[ "${class}" == "personal:thunderbird" ]] && echo "desktop=^3 follow=on"
+[[ "${class}" == "org.mozilla.thunderbird" ]] || [[ "${class}" == "personal:org.mozilla.thunderbird" ]] && echo "desktop=^3 follow=on"
 [[ "${class}" == "betterbird" ]] || [[ "${class}" == "personal:betterbird" ]] && echo "desktop=^3 follow=on"
 [[ "${class}" == "ms-outlook-nativefier" ]] || [[ "${class}" == "personal:ms-outlook-nativefier" ]] && echo "desktop=^3 follow=on"
-[[ "${class}" == "thunderbird" ]] || [[ "${class}" == "personal:thunderbird" ]] && echo "desktop=^3 follow=on"
 [[ "${class}" == "Brave-browser" ]] || [[ "${class}" == "personal:Brave-browser" ]] && echo "desktop=^4 follow=on"
 [[ "${class}" == "gopherus-sdl" ]] || [[ "${class}" == "personal:gopherus-sdl" ]] && echo "desktop=^4 follow=on"
 [[ "${class}" == "vivaldi-stable" ]] || [[ "${class}" == "personal:vivaldi-stable" ]] && echo "desktop=^4 follow=on"

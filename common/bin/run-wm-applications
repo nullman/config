@@ -64,7 +64,7 @@ if [ "$(uname -n)" == "dom0" ] ; then
     ) &
 
     # desktop 10 is used for Qube Manager and dom0 terminal
-    bspc config desktop 10 --layout tiled
+    bspc config desktop ^10 --layout tiled
 
     # xfce session
     _once xfce4-session &
