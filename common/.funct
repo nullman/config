@@ -1635,36 +1635,78 @@ qubes-dom0-initialize() {
     }
 
     sections=(
-        "qubes-time"
-        "qubes-repo-contrib"
-        "qubes-packages"
-        "qubes-terminal"
-        "qubes-x11"
-        "qubes-battery"
-        "qubes-dark-mode"
-        "qubes-pc-speaker"
-        "qubes-lightdm"
+        "qubes-dom0-time"
+        "qubes-dom0-repo-contrib"
+        "qubes-dom0-packages"
+        "qubes-dom0-terminal"
+        "qubes-dom0-x11"
+        "qubes-dom0-battery"
+        "qubes-dom0-dark-mode"
+        "qubes-dom0-pc-speaker"
+        "qubes-dom0-lightdm"
     )
 
-    if [ "$(uname -n)" != "dom0" ] ; then
-        echo "Error: Can only be run on dom0"
+    if [ "$(distribution)" != "qubes" || "$(uname -n)" != "dom0" ] ; then
+        echo "Error: Can only be run on Qubes OS: dom0"
         return 1
     fi
 
     echo
-    echo "========== Qubes dom0 Initialization Script =========="
+    echo "========== Qubes OS: dom0 Initialization Script =========="
     echo
 
     for section in ${sections[@]} ; do
         echo
         echo "========== ${section} =========="
         echo
-        echo "$(_getsection ${section})"
+        #echo "$(_getsection ${section})"
         eval "$(_getsection ${section})"
     done
 
     echo
-    echo "========== Qubes dom0 Initialization Complete =========="
+    echo "========== Qubes OS: dom0 Initialization Complete =========="
+    echo
+}
+#        qubes-personal-initialize  setup dom0
+qubes-personal-initialize() {
+    _getsection() {
+        local file="${HOME}/org/personal.org"
+        local regexp="/^[ \t]*#\+NAME: $1\$/,/^[ \t]*#\+END_SRC\$/{print \$0}"
+        awk "${regexp}" "${file}" | tail -n +3 | head -n -1 | sed 's/^[ \t]*//'
+    }
+
+    sections=(
+        "qubes-personal-initial"
+        "qubes-personal-aerial"
+        "qubes-personal-bluetooth"
+        "qubes-personal-printers"
+        "qubes-personal-dark-mode"
+        "qubes-personal-locate"
+        "qubes-personal-synology"
+        "qubes-personal-xfce"
+        "qubes-personal-ollama"
+        "qubes-personal-final"
+    )
+
+    if [ "$(distribution)" != "qubes" || "$(uname -n)" != "dom0" ] ; then
+        echo "Error: Can only be run on Qubes OS: personal"
+        return 1
+    fi
+
+    echo
+    echo "========== Qubes OS: personal Initialization Script =========="
+    echo
+
+    for section in ${sections[@]} ; do
+        echo
+        echo "========== ${section} =========="
+        echo
+        #echo "$(_getsection ${section})"
+        eval "$(_getsection ${section})"
+    done
+
+    echo
+    echo "========== Qubes OS: personal Initialization Complete =========="
     echo
 }
 
