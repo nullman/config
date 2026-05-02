@@ -121,7 +121,7 @@ _br 'Emacs' desktop=^2 follow=on
 # 3: Email
 bspc desktop ^3 --layout monocle
 _br 'thunderbird' desktop=^3 follow=on
-_br 'org.mozilla.thunderbird' desktop=^3 follow=on
+_br 'org.mozilla.Thunderbird' desktop=^3 follow=on
 _br 'betterbird' desktop=^3 follow=on
 _br 'ms-outlook-nativefier' desktop=^3 follow=on
 

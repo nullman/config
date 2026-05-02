@@ -47,6 +47,8 @@ arch = {
     "playerctl",
     "polkit",
     "polybar",
+    "qt5-tools",
+    "qt6-tools",
     "qt5ct",
     "qt6ct",
     "rofi",

@@ -3,8 +3,6 @@ arch = {
     "alacritty",
     "base",
     "base-devel",
-    "chaotic-keyring",
-    "chaotic-mirrorlist",
     "coreutils",
     "curl",
     "efibootmgr",

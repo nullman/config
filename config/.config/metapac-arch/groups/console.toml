@@ -5,6 +5,7 @@ arch = {
     "asciinema",
     "bat",
     "bc",
+    "bitwarden-menu-git",
     "boxes",
     "broot",
     "chezmoi",

@@ -73,8 +73,6 @@ arch = {
     "perl-text-aspell",
     "plantuml",
     "pup",
-    "qt5-tools",
-    "qt6-tools",
     "quicklisp",
     "racket",
     "regina-rexx",
