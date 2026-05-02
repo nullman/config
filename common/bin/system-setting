@@ -108,6 +108,7 @@ case $1 in
                 ;;
         esac
         ;;
+
     display)
         _command xrandr || (echo "Missing xrandr command" ; exit 1)
         case $2 in
