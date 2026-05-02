@@ -4,6 +4,7 @@ arch = {
     "lib32-nvidia-utils",
     "nvidia",
     "nvidia-utils",
+    "ollama-cuda",
     "xf86-video-intel",
 
   ]

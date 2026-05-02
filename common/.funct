@@ -1428,7 +1428,7 @@ yasis() {
         yay -Ss "$*" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a ; /^[a-z]*\/$* / { N ; s/\n */ | / ; p ; d ; ba }" | grep " (Installed"
     fi
 }
-#        arch-initialize      setup arch system
+#        arch-initialize         initial setup of an arch system
 arch-initialize() {
     _getsection() {
         local file="${HOME}/org/personal.org"
@@ -1586,7 +1586,7 @@ nixfi() {
 #
 # qubes os
 #
-#        qd-copy-from-vm           copy something from a vm to dom0
+#        qd-copy-from-vm         copy something from a vm to dom0
 qd-copy-from-vm() {
     if [ $# -lt 3 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] || [ "$(uname -n)" != "dom0" ] ; then
         echo "Usage: qd-copy-from-vm VM PATH FILE"
@@ -1595,7 +1595,7 @@ qd-copy-from-vm() {
         qvm-run --pass-io "$1" "tar -C \"$2\" -c \"$3\"" | tar -x
     fi
 }
-#        qd-copy-to-vm             copy something from dom0 to a vm
+#        qd-copy-to-vm           copy something from dom0 to a vm
 qd-copy-to-vm() {
     if [ $# -lt 3 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] || [ "$(uname -n)" != "dom0" ] ; then
         echo "Usage: qd-copy-to-vm VM FILE PATH"
@@ -1604,7 +1604,7 @@ qd-copy-to-vm() {
         tar -cf - "$2" | qvm-run --pass-io "$1" "tar -C \"$3\" -xf -"
     fi
 }
-#        qd-sync                   copy personal config to dom0
+#        qd-sync                 copy personal config to dom0
 qd-sync() {
     if [ "$1" == "-h" ] || [ "$1" == "--help" ] || [ "$(uname -n)" != "dom0" ] ; then
         echo "Usage: qd-sync [OS]"
@@ -1626,7 +1626,7 @@ qd-sync() {
         home-restow
     fi
 }
-#        qubes-dom0-initialize  setup dom0
+#        qubes-dom0-initialize   initial setup of dom0
 qubes-dom0-initialize() {
     _getsection() {
         local file="${HOME}/org/personal.org"
@@ -1667,7 +1667,7 @@ qubes-dom0-initialize() {
     echo "========== Qubes OS: dom0 Initialization Complete =========="
     echo
 }
-#        qubes-personal-initialize  setup dom0
+#        qubes-personal-initialize  initial setup of personal vm
 qubes-personal-initialize() {
     _getsection() {
         local file="${HOME}/org/personal.org"
