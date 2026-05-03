@@ -42,10 +42,10 @@ _delay() {
 
 # run dom0 applications
 bspc desktop --focus ^10
+bspc node --state tiled
 #(bspc rule --add --one-shot 'qubes-qube-manager' --state tiled && qubes-qube-manager) &
 qubes-qube-manager &
-sleep 6s && bspc node --state tiled
-alacritty -e ${HOME}/bin/run-screen &
+sleep 6s && alacritty -e ${HOME}/bin/run-screen &
 
 # run personal vm applications
 (

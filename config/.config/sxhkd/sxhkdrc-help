@@ -25,7 +25,7 @@ System Tools
 | Super |     | Ctrl |       | p      | Generate Password                   |
 | Super | Alt |      |       | \      | Display Time                        |
 | Super | Alt |      |       | y      | Git Synchronize Config              |
-| Super | Alt |      |       | u      | Git Synchronize Extra               |
+| Super | Alt |      | Shift | y      | Git Synchronize Extra               |
 | Super | Alt |      |       | x      | Start Screensaver                   |
 | Super |     |      | Shift | x      | Lock Screensaver                    |
 | Super |     |      | Shift | q      | Session Menu                        |

@@ -456,7 +456,7 @@ super + alt + ctrl + apostrophe
 
 # terminal: dom0
 super + ctrl + t
-    "/usr/bin/alacritty"
+    alacritty
 
 # terminal: personal
 super + alt + t
