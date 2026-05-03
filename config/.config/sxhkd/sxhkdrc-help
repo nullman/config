@@ -17,12 +17,12 @@ System Tools
 | Super | Alt |      |       | c      | Clipmenu Selector                   |
 | Super | Alt |      |       | e      | Emoji Selector                      |
 | Super | Alt |      |       | o      | Bookmarks Selector                  |
-| Super | Alt | Ctrl |       | o      | Bookmarks Keyword Selector          |
+| Super | Alt |      | Shift | o      | Bookmarks Keyword Selector          |
 | Super | Alt |      |       | ;      | Typer Selector                      |
 | Super | Alt |      |       | '      | Paste Selector                      |
 | Super | Alt |      |       | s      | Spell and Define Word               |
 | Super | Alt |      |       | p      | Bitwarden Selector                  |
-| Super |     | Ctrl |       | p      | Generate Password                   |
+| Super | Alt |      | Shift | p      | Generate Password                   |
 | Super | Alt |      |       | \      | Display Time                        |
 | Super | Alt |      |       | y      | Git Synchronize Config              |
 | Super | Alt |      | Shift | y      | Git Synchronize Extra               |
@@ -40,8 +40,8 @@ System Tools
 | Super |     |      | Shift | v      | Reset Video                         |
 | Super | Alt |      |       | b      | Connect to Sennheiser Headphones    |
 | Super | Alt |      | Shift | b      | Disconnect to Sennheiser Headphones |
-| Super |     | Ctrl |       | b      | Connect to Powerbeats Headphones    |
-| Super |     | Ctrl | Shift | b      | Disconnect to Powerbeats Headphones |
+| Super | Alt |      |       | n      | Connect to Powerbeats Headphones    |
+| Super | Alt |      | Shift | n      | Disconnect to Powerbeats Headphones |
 |-------+-----+------+-------+--------+-------------------------------------|
 
 Media

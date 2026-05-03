@@ -287,7 +287,7 @@ super + alt + u
     ${HOME}/bin/rofi-menu unicode
 
 # footnote symbol selector
-super + shift + alt + u
+super + alt + shift + u
     ${HOME}/bin/rofi-menu footnotes
 
 # bookmarks selector
@@ -295,7 +295,7 @@ super + alt + o
     ${HOME}/bin/rofi-menu bookmarks
 
 # bookmarks keyword selector
-super + alt + ctrl + o
+super + alt + shift + o
     ${HOME}/bin/rofi-menu bookmarks-keyword
 
 # typer selector
@@ -316,18 +316,18 @@ super + alt + p
     bwmenu --clear 60
 
 # # generate password
-# super + ctrl + p
+# super + alt + shift + p
 #     tr --delete --complement 'a-zA-Z0-9!@#$%^&*-_=+;:,<.>/?' < /dev/urandom | \
 #     head --bytes 14 | xclip -selection clipboard && \
 #     notify-send --expire-time=3000 'Random password generated on clipboard'
 
 # # generate password
-# super + ctrl + p
+# super + alt + shift + p
 #     ${HOME}/bin/password-phrase 6 hyphen true | tr -d '\n' | xclip -selection clipboard && \
 #     notify-send --expire-time=3000 'Random password phrase on clipboard'
 
 # generate password
-super + ctrl + p
+super + alt + shift + p
     ${HOME}/bin/rofi-menu password && notify-send --expire-time=3000 'Random password phrase on clipboard'
 
 # display time
@@ -344,12 +344,12 @@ super + alt + y
     source "${HOME}/.funct" && (git-sync-config && echo 'Done') 2>&1 | yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
 
 # git synchronize extra
-super + shift + alt + y
+super + alt + shift + y
     source "${HOME}/.funct" && (git-sync-extra && echo 'Done') 2>&1 | yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
 
 # start screen saver
 super + alt + x
-    sleep 2 ; xscreensaver-command -activate
+    xscreensaver-command -activate
 
 # start screen saver in lock mode
 super + shift + x
@@ -428,15 +428,15 @@ super + shift + v
 super + alt + b
     notify-send --expire-time=3000 'Connecting to Sennheiser HD 350BT Headphones' && \
     bluetoothctl connect 80:C3:BA:0E:CB:E5
-super + shift + alt + b
+super + alt + shift + b
     notify-send --expire-time=3000 'Disconnecting from Sennheiser HD 350BT Headphones' && \
     bluetoothctl disconnect 80:C3:BA:0E:CB:E5
 
 # connect to powerbeats pro headphones
-super + ctrl + b
+super + alt + n
     notify-send --expire-time=3000 'Connecting to Powerbeats Pro Headphones' && \
     bluetoothctl connect 14:1A:97:05:81:4C
-super + shift + ctrl + b
+super + alt + shift + n
     notify-send --expire-time=3000 'Disconnecting from Powerbeats Pro Headphones' && \
     bluetoothctl disconnect 14:1A:97:05:81:4C
 

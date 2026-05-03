@@ -245,7 +245,7 @@ super + alt + u
     qvm-run personal "/home/user/bin/rofi-menu unicode"
 
 # footnote symbol selector: personal
-super + shift + alt + u
+super + alt + shift + u
     qvm-run personal "/home/user/bin/rofi-menu footnotes"
 
 # bookmarks selector: personal
@@ -253,7 +253,7 @@ super + alt + o
     qvm-run personal "/home/user/bin/rofi-menu bookmarks"
 
 # bookmarks keyword selector: personal
-super + shift + alt + o
+super + alt + shift + o
     qvm-run personal "/home/user/bin/rofi-menu bookmarks-keyword"
 
 # typer selector: personal
@@ -274,18 +274,18 @@ super + alt + p
     qvm-run personal "bwmenu --clear 60"
 
 # # generate password
-# super + ctrl + p
+# super + alt + shift + p
 #     tr --delete --complement 'a-zA-Z0-9!@#$%^&*-_=+;:,<.>/?' < /dev/urandom | \
 #     head --bytes 14 | xclip -selection clipboard && \
 #     notify-send --expire-time=3000 'Random password generated on clipboard'
 
 # # generate password
-# super + ctrl + p
+# super + alt + shift + p
 #     qvm-run personal "/home/user/bin/password-phrase 6 hyphen true | tr -d '\n' | xclip -selection clipboard && \
 #     notify-send --expire-time=3000 'Random password phrase on clipboard'"
 
 # generate password: personal
-super + ctrl + p
+super + alt + shift + p
     qvm-run personal "/home/user/bin/rofi-menu password && notify-send --expire-time=3000 'Random password phrase on clipboard'"
 
 # display time
@@ -302,7 +302,7 @@ super + alt + y
     qvm-run personal "source '/home/user/.funct' && (git-sync-config && echo 'Done') 2>&1 | yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"
 
 # git synchronize extra: personal
-super + shift + alt + y
+super + alt + shift + y
     qvm-run personal "source '/home/user/.funct' && (git-sync-extra && echo 'Done') 2>&1 | yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"
 
 # start screen saver: dom0
@@ -376,35 +376,19 @@ super + shift + s
 #     xrandr --output $(xrandr | grep ' connected ' | sed 's/ .*//' | head -n 1) --auto && \
 #     notify-send --expire-time=3000 'Resetting video'
 
-# # connect to sennheiser hd350bt headphones: dom0
-# super + alt + b
-#     notify-send --expire-time=3000 'Connecting to Sennheiser HD 350BT Headphones' && \
-#     bluetoothctl connect 80:C3:BA:0E:CB:E5
-# super + shift + alt + b
-#     notify-send --expire-time=3000 'Disconnecting from Sennheiser HD 350BT Headphones' && \
-#     bluetoothctl disconnect 80:C3:BA:0E:CB:E5
-
-# # connect to powerbeats pro headphones: dom0
-# super + ctrl + b
-#     notify-send --expire-time=3000 'Connecting to Powerbeats Pro Headphones' && \
-#     bluetoothctl connect 14:1A:97:05:81:4C
-# super + shift + ctrl + b
-#     notify-send --expire-time=3000 'Disconnecting from Powerbeats Pro Headphones' && \
-#     bluetoothctl disconnect 14:1A:97:05:81:4C
-
 # connect to sennheiser hd350bt headphones: personal
 super + alt + b
     notify-send --expire-time=3000 'Connecting to Sennheiser HD 350BT Headphones' && \
     qvm-run personal "bluetoothctl connect 80:C3:BA:0E:CB:E5"
-super + shift + alt + b
+super + alt + shift + b
     notify-send --expire-time=3000 'Disconnecting from Sennheiser HD 350BT Headphones' && \
     qvm-run personal "bluetoothctl disconnect 80:C3:BA:0E:CB:E5"
 
 # connect to powerbeats pro headphones: personal
-super + ctrl + b
+super + alt + n
     notify-send --expire-time=3000 'Connecting to Powerbeats Pro Headphones' && \
     qvm-run personal "bluetoothctl connect 14:1A:97:05:81:4C"
-super + shift + ctrl + b
+super + alt + shift + n
     notify-send --expire-time=3000 'Disconnecting from Powerbeats Pro Headphones' && \
     qvm-run personal "bluetoothctl disconnect 14:1A:97:05:81:4C"
 
@@ -471,7 +455,7 @@ super + alt + ctrl + apostrophe
 #-------------------------------------------------------------------------------
 
 # terminal: dom0
-super + ctrl + t
+super + alt + shift + t
     alacritty
 
 # terminal: personal
