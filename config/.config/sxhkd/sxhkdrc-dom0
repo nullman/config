@@ -376,21 +376,37 @@ super + shift + s
 #     xrandr --output $(xrandr | grep ' connected ' | sed 's/ .*//' | head -n 1) --auto && \
 #     notify-send --expire-time=3000 'Resetting video'
 
-# connect to sennheiser hd350bt headphones: dom0
+# # connect to sennheiser hd350bt headphones: dom0
+# super + alt + b
+#     notify-send --expire-time=3000 'Connecting to Sennheiser HD 350BT Headphones' && \
+#     bluetoothctl connect 80:C3:BA:0E:CB:E5
+# super + shift + alt + b
+#     notify-send --expire-time=3000 'Disconnecting from Sennheiser HD 350BT Headphones' && \
+#     bluetoothctl disconnect 80:C3:BA:0E:CB:E5
+
+# # connect to powerbeats pro headphones: dom0
+# super + ctrl + b
+#     notify-send --expire-time=3000 'Connecting to Powerbeats Pro Headphones' && \
+#     bluetoothctl connect 14:1A:97:05:81:4C
+# super + shift + ctrl + b
+#     notify-send --expire-time=3000 'Disconnecting from Powerbeats Pro Headphones' && \
+#     bluetoothctl disconnect 14:1A:97:05:81:4C
+
+# connect to sennheiser hd350bt headphones: personal
 super + alt + b
     notify-send --expire-time=3000 'Connecting to Sennheiser HD 350BT Headphones' && \
-    bluetoothctl connect 80:C3:BA:0E:CB:E5
+    qvm-run personal "bluetoothctl connect 80:C3:BA:0E:CB:E5"
 super + shift + alt + b
     notify-send --expire-time=3000 'Disconnecting from Sennheiser HD 350BT Headphones' && \
-    bluetoothctl disconnect 80:C3:BA:0E:CB:E5
+    qvm-run personal "bluetoothctl disconnect 80:C3:BA:0E:CB:E5"
 
-# connect to powerbeats pro headphones: dom0
+# connect to powerbeats pro headphones: personal
 super + ctrl + b
     notify-send --expire-time=3000 'Connecting to Powerbeats Pro Headphones' && \
-    bluetoothctl connect 14:1A:97:05:81:4C
+    qvm-run personal "bluetoothctl connect 14:1A:97:05:81:4C"
 super + shift + ctrl + b
     notify-send --expire-time=3000 'Disconnecting from Powerbeats Pro Headphones' && \
-    bluetoothctl disconnect 14:1A:97:05:81:4C
+    qvm-run personal "bluetoothctl disconnect 14:1A:97:05:81:4C"
 
 # # nixos-rebuild switch
 # super + alt + ctrl + r

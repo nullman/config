@@ -54,17 +54,14 @@ if [ "$(uname -n)" == "dom0" ] ; then
 
     # qubes usb devices
     (
-        for device in $(qvm-usb list --all | grep -e 'Unknown device' -e 'personal' | sed 's/ .*$//') ; do
-            qvm-usb detach personal ${device}
-        done
+        #for device in $(qvm-usb list --all | grep -e 'Unknown device' -e 'personal' | sed 's/ .*$//') ; do
+        #    qvm-usb detach personal ${device}
+        #done
         # attach bluetooth to personal
         qvm-usb attach personal $(qvm-usb list sys-net | grep 'Bluetooth' | sed 's/ .*$//')
         # attach camera to personal
         qvm-usb attach personal $(qvm-usb list sys-net | grep 'Camera' | sed 's/ .*$//')
     ) &
-
-    # desktop 10 is used for Qube Manager and dom0 terminal
-    bspc config desktop ^10 --layout tiled
 
     # xfce session
     _once xfce4-session &
