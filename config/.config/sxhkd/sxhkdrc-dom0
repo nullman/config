@@ -253,7 +253,7 @@ super + alt + o
     qvm-run personal "/home/user/bin/rofi-menu bookmarks"
 
 # bookmarks keyword selector: personal
-super + alt + ctrl + o
+super + shift + alt + o
     qvm-run personal "/home/user/bin/rofi-menu bookmarks-keyword"
 
 # typer selector: personal
@@ -302,7 +302,7 @@ super + alt + y
     qvm-run personal "source '/home/user/.funct' && (git-sync-config && echo 'Done') 2>&1 | yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"
 
 # git synchronize extra: personal
-super + alt + u
+super + shift + alt + y
     qvm-run personal "source '/home/user/.funct' && (git-sync-extra && echo 'Done') 2>&1 | yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"
 
 # start screen saver: dom0
@@ -456,7 +456,7 @@ super + alt + ctrl + apostrophe
 
 # terminal: dom0
 super + ctrl + t
-    alacritty
+    "/usr/bin/alacritty"
 
 # terminal: personal
 super + alt + t

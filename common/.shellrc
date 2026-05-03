@@ -149,7 +149,8 @@ export SDKMAN_DIR="${HOME}/.sdkman"
 export GEM_HOME="$(_run ruby -e 'print Gem.user_dir')"
 export GTK_THEME=Adwaita:dark
 export GTK2_RC_FILES=/usr/share/themes/Adwaita-dark/gtk-2.0/gtkrc
-export QT_STYLE_OVERRIDE=Adwaita-Dark
+export QT_STYLE_OVERRIDE=Adwaita-dark
+export QT_QPA_PLATFORMTHEME=gtk2
 export LC_COLLATE=C                     # set directory sorting to ASCII order
 # colors for ls and grep commands
 #export CLICOLOR=1
