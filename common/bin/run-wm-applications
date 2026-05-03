@@ -52,16 +52,16 @@ if [ "$(uname -n)" == "dom0" ] ; then
     #     qvm-block attach --option frontend-dev=xvdz personal $(qvm-block list dom0 | grep 'dom0 home' | sed 's/ .*$//')
     # ) &
 
-    # qubes usb devices
-    (
-        #for device in $(qvm-usb list --all | grep -e 'Unknown device' -e 'personal' | sed 's/ .*$//') ; do
-        #    qvm-usb detach personal ${device}
-        #done
-        # attach bluetooth to personal
-        qvm-usb attach personal $(qvm-usb list sys-net | grep 'Bluetooth' | sed 's/ .*$//')
-        # attach camera to personal
-        qvm-usb attach personal $(qvm-usb list sys-net | grep 'Camera' | sed 's/ .*$//')
-    ) &
+    # # qubes usb devices
+    # (
+    #     for device in $(qvm-usb list --all | grep -e 'Unknown device' -e 'personal' | sed 's/ .*$//') ; do
+    #        qvm-usb detach personal ${device}
+    #     done
+    #     # attach bluetooth to personal
+    #     qvm-usb attach personal $(qvm-usb list sys-net | grep 'Bluetooth' | sed 's/ .*$//')
+    #     # attach camera to personal
+    #     qvm-usb attach personal $(qvm-usb list sys-net | grep 'Camera' | sed 's/ .*$//')
+    # ) &
 
     # xfce session
     _once xfce4-session &
