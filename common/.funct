@@ -1679,12 +1679,13 @@ qubes-personal-initialize() {
         "qubes-personal-initial"
         "qubes-personal-aerial"
         "qubes-personal-bluetooth"
-        "qubes-personal-printers"
         "qubes-personal-dark-mode"
+        "qubes-personal-home-mount"
         "qubes-personal-locate"
+        "qubes-personal-ollama"
+        "qubes-personal-printers"
         "qubes-personal-synology"
         "qubes-personal-xfce"
-        "qubes-personal-ollama"
         "qubes-personal-final"
     )
 

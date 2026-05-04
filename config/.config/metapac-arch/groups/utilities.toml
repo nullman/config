@@ -14,6 +14,7 @@ arch = {
     "dmg2img",
     "easytag",
     "engrampa",
+    "ffmpeg",
     "fim",
     "flameshot",
     "font-manager",

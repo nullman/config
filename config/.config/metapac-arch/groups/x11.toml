@@ -27,7 +27,6 @@ arch = {
     "xorg-xwininfo",
     "xprintidle",
     "xsel",
-    "xterm",
     "xvkbd",
 
   ]

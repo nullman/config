@@ -163,6 +163,20 @@ videolist=(
     "Howard Jones - No One is to Blame                                   | https://www.youtube.com/watch?v=pekhxxngQ3s"
     "Human League, The - Don't You Want Me                               | https://www.youtube.com/watch?v=uPudE8nDog0"
     "Iggy Pop - Candy                                                    | https://www.youtube.com/watch?v=6bLOjmY--TA"
+    "Imagine Dragons - Bad Liar                                          | https://www.youtube.com/watch?v=I-QfPUz1es8"
+    "Imagine Dragons - Believer                                          | https://www.youtube.com/watch?v=7wtfhZwyrcc"
+    "Imagine Dragons - Bones                                             | https://www.youtube.com/watch?v=TO-_3tck2tg"
+    "Imagine Dragons - Demons                                            | https://www.youtube.com/watch?v=mWRsgZuwf_8"
+    "Imagine Dragons - Enemy                                             | https://www.youtube.com/watch?v=D9G1VOjN_84"
+    "Imagine Dragons - Eyes Closed                                       | https://www.youtube.com/watch?v=v08qmr8m_-w"
+    "Imagine Dragons - It's Time                                         | https://www.youtube.com/watch?v=sENM2wA_FTg"
+    "Imagine Dragons - Natural                                           | https://www.youtube.com/watch?v=0I647GU3Jsc"
+    "Imagine Dragons - Radioactive                                       | https://www.youtube.com/watch?v=ktvTqknDobU"
+    "Imagine Dragons - Sharks                                            | https://www.youtube.com/watch?v=Te3_VlimRw0"
+    "Imagine Dragons - Take Me to the Beach (Feat. Ado)                  | https://www.youtube.com/watch?v=5Duje_sZko8"
+    "Imagine Dragons - Thunder                                           | https://www.youtube.com/watch?v=fKopy74weus"
+    "Imagine Dragons - Whatever it Takes                                 | https://www.youtube.com/watch?v=gOsM-DYAEhY"
+    "Imagine Dragons - Wrecked                                           | https://www.youtube.com/watch?v=Y2NkuFIlLEo"
     "Imogen Heap - Hide and Seek                                         | https://www.youtube.com/watch?v=UYIAfiVGluk"
     "J. Geils Band, The - Centerfold                                     | https://www.youtube.com/watch?v=BqDjMZKf-wg"
     "J. Geils Band, The - Freeze Frame                                   | https://www.youtube.com/watch?v=wHo43B6nu60"
@@ -401,10 +415,13 @@ fetch() {
         echo "| ${name} | ${url} |"
         if [[ -z $(find "${dir}" -name "${escname}\.*") ]] ; then
             cmd="${ytdlp} \
-            --preset-alias sleep \
+            --sleep-requests 0.8 \
+            --sleep-interval \$((8 + RANDOM % 5)) \
+            --max-sleep-interval \$((18 + RANDOM % 5)) \
+            --sleep-subtitles \$((4 + RANDOM % 3)) \
             --cookies-from-browser firefox \
             --format 'bv*+ba/b' \
-            --format-sort 'res:1080,vcodec:h264,acodec:m4a' \
+            --format-sort 'res:1080,vcodec:avc1,acodec:mp4a' \
             --paths \"temp:/tmp\" \
             --paths \"home:${dir}\" \
             --output \"${name} - %(release_date>%Y-%m-%d,upload_date>%Y-%m-%d|Unknown)s - %(title)s.%(ext)s\" \
@@ -413,6 +430,7 @@ fetch() {
             echo
             echo "${url}"
             echo
+            #echo "${cmd}"
             eval "${cmd}"
         fi
     done
