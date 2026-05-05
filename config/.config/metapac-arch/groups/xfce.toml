@@ -1,5 +1,10 @@
 arch = {
   packages = [
+    "exo",
+    "garcon",
+    "mousepad",
+    "parole",
+    "ristretto",
     "xfburn",
     "xfce4-artwork",
     "xfce4-diskperf-plugin",

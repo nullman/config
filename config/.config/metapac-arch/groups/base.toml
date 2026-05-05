@@ -28,6 +28,7 @@ arch = {
     "networkmanager",
     "openssl",
     "os-prober",
+    "pacman-contrib",
     "pipewire",
     "pipewire-alsa",
     "pipewire-jack",
@@ -35,6 +36,7 @@ arch = {
     "pkgfile",
     "plocate",
     "rsync",
+    "rust",
     "rxvt-unicode",
     "smartmontools",
     "stow",
@@ -46,6 +48,7 @@ arch = {
     "wget",
     "wireless_tools",
     "wireplumber",
+    "wpa_supplicant",
     "xdg-utils",
     "yay",
 
