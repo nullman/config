@@ -1476,9 +1476,9 @@ arch-initialize() {
         "arch-capslock-control-x11"
         "arch-services"
         "arch-user-services"
-        "arch-settings-gtk"
-        "arch-settings-qt5ct"
-        "arch-settings-qt6ct"
+        #"arch-settings-gtk"
+        #"arch-settings-qt5ct"
+        #"arch-settings-qt6ct"
         "arch-final"
     )
 
@@ -2210,6 +2210,8 @@ home-restow() {
                     "gtk-3.0/gtk.css" \
                     "gtk-3.0/settings.ini" \
                     "gtk-4.0/settings.ini" \
+                    "qt5ct/qt5ct.conf" \
+                    "qt6ct/qt6ct.conf" \
                     "xfce4/xfconf/xfce-perchannel-xml/keyboards.xml" \
                     "xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml" \
                     "xfce4/xfconf/xfce-perchannel-xml/xfce4-power-manager.xml" \

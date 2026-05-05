@@ -72,7 +72,6 @@ arch = {
     "tumbler",
     "unclutter",
     "vibrancy-colors",
-    "webkit2gtk",
     "wmctrl",
     "wmname",
     "xdg-desktop-portal-gnome",

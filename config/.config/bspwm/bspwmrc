@@ -185,7 +185,10 @@ bspc desktop ^10 --layout monocle
 
 # 11: Virtual Machine 1
 bspc desktop ^11 --layout monocle
+_br 'windows-xp' desktop=^11 follow=on
 _br 'windows-7' desktop=^11 follow=on
+_br 'windows-10' desktop=^11 follow=on
+_br 'windows-11' desktop=^11 follow=on
 
 # 12: Virtual Machine 2
 bspc desktop ^12 --layout monocle
