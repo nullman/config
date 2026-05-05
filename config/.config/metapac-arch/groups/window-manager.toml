@@ -6,6 +6,7 @@ arch = {
     "adwaita-qt5",
     "adwaita-qt6",
     "blueman",
+    "brightnessctl",
     "bspwm",
     "clipmenu-rofi",
     "conky",

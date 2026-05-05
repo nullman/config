@@ -13,7 +13,6 @@ arch = {
     "bluez",
     "bluez-utils",
     "bpytop",
-    "brightnessctl",
     "btop",
     "bzip2",
     "cifs-utils",

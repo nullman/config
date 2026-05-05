@@ -10,7 +10,6 @@ arch = {
     "hyprpicker",
     "mako",
     "niri",
-    "rofi-wayland",
     "slurp",
     "sway",
     "swaybg",
