@@ -1,6 +1,5 @@
 arch = {
   packages = [
-    "brightnessctl",
     "clipman",
     "foot",
     "fuzzel",
