@@ -77,9 +77,11 @@ _run xset -dpms s off b off m 2/1 4 r rate 500 35 >/dev/null 2>&1
 #     _run xset -dpms s off b off m 2/1 4 r rate 500 35 >/dev/null 2>&1
 # fi
 
-# turn numlock on
-if [ ! "$(uname -n)" == "mouse" ] ; then
-    _run numlockx
+# turn numlock on (or off)
+if [ "$(uname -n)" == "mouse" ] ; then
+    _run numlockx off
+else
+    _run numlockx on
 fi
 
 # xhost
