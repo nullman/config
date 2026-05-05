@@ -16,7 +16,6 @@ arch = {
     "brightnessctl",
     "btop",
     "bzip2",
-    "chbg",
     "cifs-utils",
     "cndrvcups-lb-bin",
     "coolercontrol-bin",
