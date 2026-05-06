@@ -1679,7 +1679,7 @@ qubes-personal-initialize() {
         "qubes-personal-initial"
         "qubes-personal-aerial"
         "qubes-personal-bluetooth"
-        "qubes-personal-dark-mode"
+        "qubes-personal-environment"
         "qubes-personal-home-mount"
         "qubes-personal-locate"
         "qubes-personal-ollama"

@@ -8,6 +8,7 @@ arch = {
     "curl",
     "efibootmgr",
     "git",
+    "go",
     "gst-plugin-pipewire",
     "gum",
     "inetutils",
