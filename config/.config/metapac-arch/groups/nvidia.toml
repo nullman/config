@@ -3,6 +3,7 @@ arch = {
     "cuda",
     "lib32-nvidia-utils",
     "nvidia",
+    "nvidia-settings",
     "nvidia-utils",
     "ollama-cuda",
     "xf86-video-intel",

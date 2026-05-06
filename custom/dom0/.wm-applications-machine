@@ -45,13 +45,14 @@ bspc desktop ^10 --layout tiled
 bspc desktop --focus ^10
 #(bspc rule --add --one-shot 'qubes-qube-manager' --state tiled && qubes-qube-manager) &
 qubes-qube-manager &
-sleep 6s && bspc node --state tiled
+sleep 6s
+bspc node --state tiled
 alacritty -e ${HOME}/bin/run-screen &
 
 # run personal vm applications
 (
     qvm-start personal
-    sleep 10s && (
+    sleep 12s && (
         bspc desktop --focus ^1
 
         # prompt for keyring authentication on personal vm
