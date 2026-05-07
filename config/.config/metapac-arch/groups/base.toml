@@ -52,6 +52,7 @@ arch = {
     "wpa_supplicant",
     "xdg-utils",
     "yay",
+    "yay-debug",
 
   ]
 }
