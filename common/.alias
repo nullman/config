@@ -2014,26 +2014,20 @@ alias rsync-music-put-synology="rsync -r --munge-links --size-only --progress ${
 alias rsync-common-put-media-delete=" \
     rsync -rlptx --progress --delete \"\${HOME}/doc/icons/\" ${home}/data/media/Graphic/Icons/Common/ && \
     rsync -rlptx --progress --delete \"\${HOME}/doc/images/\" ${home}/data/media/Graphic/Images/Common/"
-#!#        rsync-library-put-iodd  rsync LIBRARY /media/iodd
-#!alias rsync-library-put-iodd="
-#!    usb=iodd
-#!    dir1=/media/\${usb}
-#!    dir2=/run/media/\${USER}/\${usb}
-#!    dir=''
-#!    [ -d \${dir1} ] && dir=\${dir1}
-#!    [ -d \${dir2} ] && dir=\${dir2}
-#!    if [ -d \${dir} ] ; then
-#!        rsync -rLtxW --size-only --progress \"${home}/data/media/Software/Amiga/Amiga Forever/amiga-forever-11-plus.iso\" \${dir}/Amiga/
-#!        rsync -rLtxW --size-only --progress \"${home}/data/media/Software/Amiga/Icaros/icaros-pc-i386.iso\" \${dir}/Amiga/
-#!        #rsync -rLtxW --size-only --progress --delete ${home}/data/media/Software/ \${dir}/
-#!        #rsync -rLtxW --size-only --progress --delete ${home}/data/media/Software/ \${dir}/
-#!        #rsync -rLtxW --size-only --progress --delete ${home}/data/media/Software/ \${dir}/
-#!        #rsync -rLtxW --size-only --progress --delete ${home}/data/media/Software/ \${dir}/
-#!        #rsync -rLtxW --size-only --progress --delete ${home}/data/media/Software/ \${dir}/
-#!        sync
-#!    else
-#!        echo \"Error: \${usb} USB not found\"
-#!    fi"
+#        rsync-software-put-iodd  rsync Software /media/iodd
+alias rsync-software-put-iodd="
+    usb=iodd
+    dir1=/media/\${usb}
+    dir2=/run/media/\${USER}/\${usb}
+    dir=''
+    [ -d \${dir1} ] && dir=\${dir1}
+    [ -d \${dir2} ] && dir=\${dir2}
+    if [ -d \${dir} ] ; then
+        rsync -rLtxW --size-only --progress --delete ${home}/data/media/Software/ \${dir}/Software/
+        sync
+    else
+        echo \"Error: \${usb} USB not found\"
+    fi"
 #        rsync-music-put-music-sd  rsync /home/data/media/Audio/Music /media/MUSIC
 alias rsync-music-put-music-sd=" \
     usb=MUSIC
