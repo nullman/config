@@ -17,7 +17,6 @@ arch = {
     "bzip2",
     "cifs-utils",
     "cndrvcups-lb-bin",
-    "coolercontrol-bin",
     "cups",
     "debugedit",
     "direnv",
