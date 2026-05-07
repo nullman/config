@@ -95,6 +95,7 @@ arch = {
     "woeusb",
     "ydotool",
     "zip",
+    "unzip",
 
   ]
 }
