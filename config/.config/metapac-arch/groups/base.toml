@@ -31,6 +31,8 @@ arch = {
     "openssl",
     "os-prober",
     "pacman-contrib",
+    "paru",
+    "paru-debug",
     "pipewire",
     "pipewire-alsa",
     "pipewire-jack",
@@ -54,8 +56,6 @@ arch = {
     "wireplumber",
     "wpa_supplicant",
     "xdg-utils",
-    "yay",
-    "yay-debug",
 
   ]
 }
