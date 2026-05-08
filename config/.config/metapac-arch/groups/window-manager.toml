@@ -5,6 +5,8 @@ arch = {
     "adwaita-dark",
     "adwaita-qt5",
     "adwaita-qt6",
+    "barrier",
+    "barrier-headless",
     "blueman",
     "brightnessctl",
     "bspwm",
