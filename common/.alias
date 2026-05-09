@@ -3069,6 +3069,50 @@ alias yay-set-settings="yay -S \
     --noanswerdiff --noremovemake --norebuild --save"
 
 #
+# paru (Package Manager)
+#
+#        pau                     paru -Syu (update packages with refresh)
+alias pau="paru -Syu ; source \${HOME}/.xprofile"
+#        pauf                    paru -Syyu (update packages with forced refresh)
+alias pauf="paru -Syyu ; source \${HOME}/.xprofile"
+#        pai                     paru -S (install package)
+alias pai="paru -S --needed"
+#        pair                    paru -S (reinstall package)
+alias pair="paru -S"
+#        par                     paru -Rns (remove package and configuration files)
+alias par="paru -R --nosave --recursive"
+#        pas                     paru -Ss (search packages)
+alias pas="paru -Ss 2>/dev/null"
+#        paf                     paru -F (search files)
+alias paf="paru -F"
+#        paq                     paru -Q (query installed packages)
+alias paq="paru -Q"
+#        paqi                    paru -Qi (query installed packages with info)
+alias paqi="paru -Qi"
+#        pal                     paru -Qqett (list installed packages)
+alias pal="paru -Qqett"
+#        paln                    paru -Qqettn (list installed native packages)
+alias paln="paru -Qqettn"
+#        palf                    paru -Qqettm (list installed foreign/AUR packages)
+alias palf="paru -Qqettm"
+#        pals                    paru -Qs (search installed packages)
+alias pals="paru -Qs 2>/dev/null"
+#        paps                    paru -Ps (print package statistics)
+alias paps="paru -Ps"
+#        palz                    paru list installed packages by size
+alias palz="LC_ALL=C paru -Qi | awk '/^Name/{name=\$3} /^Installed Size/{print \$4\$5, name}' | sort -h"
+#        palzz                   expac list installed packages and dependencies by size
+alias palzz="expac -S -H M '%k\t%n' | sort -h"
+#        paru-rm-old             remove old paru packages
+alias paru-rm-old="paru -Sc"
+#        paru-rm-orphans         remove orphaned paru packages
+alias paru-rm-orphans="paru -Rns \$(paru -Qtdq)"
+#        paru-set-settings       set paru settings
+alias paru-set-settings="paru -S \
+    --answerclean None --answeredit None \
+    --noanswerdiff --noremovemake --norebuild --save"
+
+#
 # apt package mangement (debian/ubuntu)
 #
 #        agh                     apt-get help

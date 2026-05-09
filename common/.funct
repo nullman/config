@@ -1394,38 +1394,72 @@ make-cert() {
 #
 # arch
 #
-#        yasg                    yay search with grep
-yasg() {
+#!#        yasg                    yay search with grep
+#!yasg() {
+#!    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+#!        echo "Usage: yasg SEARCH GREP"
+#!    else
+#!        s="$1"
+#!        shift
+#!        yay -Ss "${s}" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a ; { N ; s/\n */ | / ; p ; d ; ba }" | grep -i "$*"
+#!    fi
+#!}
+#!#        yass                    yay specific search
+#!yass() {
+#!    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+#!        echo "Usage: yass SEARCH"
+#!    else
+#!        yay -Ss "$*" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a ; /^[a-z]*\/$* / { N ; s/\n */ | / ; p ; d ; ba }"
+#!    fi
+#!}
+#!#        yasi                    yay search installed packages
+#!yasi() {
+#!    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+#!        echo "Usage: yasi SEARCH"
+#!    else
+#!        yay -Ss "$*" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a ; { N ; s/\n */ | / ; p ; d ; ba }" | grep " (Installed"
+#!    fi
+#!}
+#!#        yasis                   yay specific search installed packages
+#!yasis() {
+#!    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+#!        echo "Usage: yasis SEARCH"
+#!    else
+#!        yay -Ss "$*" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a ; /^[a-z]*\/$* / { N ; s/\n */ | / ; p ; d ; ba }" | grep " (Installed"
+#!    fi
+#!}
+#        yasg                    paru search with grep
+pasg() {
     if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
-        echo "Usage: yasg SEARCH GREP"
+        echo "Usage: pasg SEARCH GREP"
     else
         s="$1"
         shift
-        yay -Ss "${s}" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a ; { N ; s/\n */ | / ; p ; d ; ba }" | grep -i "$*"
+        paru -Ss "${s}" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a ; { N ; s/\n */ | / ; p ; d ; ba }" | grep -i "$*"
     fi
 }
-#        yass                    yay specific search
-yass() {
+#        pass                    paru specific search
+pass() {
     if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
-        echo "Usage: yass SEARCH"
+        echo "Usage: pass SEARCH"
     else
-        yay -Ss "$*" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a ; /^[a-z]*\/$* / { N ; s/\n */ | / ; p ; d ; ba }"
+        paru -Ss "$*" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a ; /^[a-z]*\/$* / { N ; s/\n */ | / ; p ; d ; ba }"
     fi
 }
-#        yasi                    yay search installed packages
-yasi() {
+#        pasi                    paru search installed packages
+pasi() {
     if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
-        echo "Usage: yasi SEARCH"
+        echo "Usage: pasi SEARCH"
     else
-        yay -Ss "$*" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a ; { N ; s/\n */ | / ; p ; d ; ba }" | grep " (Installed"
+        paru -Ss "$*" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a ; { N ; s/\n */ | / ; p ; d ; ba }" | grep " (Installed"
     fi
 }
-#        yasis                   yay specific search installed packages
-yasis() {
+#        pasis                   paru specific search installed packages
+pasis() {
     if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
-        echo "Usage: yasis SEARCH"
+        echo "Usage: pasis SEARCH"
     else
-        yay -Ss "$*" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a ; /^[a-z]*\/$* / { N ; s/\n */ | / ; p ; d ; ba }" | grep " (Installed"
+        paru -Ss "$*" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a ; /^[a-z]*\/$* / { N ; s/\n */ | / ; p ; d ; ba }" | grep " (Installed"
     fi
 }
 #        arch-initialize         initial setup of an arch system
@@ -1434,9 +1468,6 @@ arch-initialize() {
         local file="${HOME}/org/personal.org"
         local regexp="/^[ \t]*#\+NAME: $1\$/,/^[ \t]*#\+END_SRC\$/{print \$0}"
         awk "${regexp}" "${file}" | tail -n +3 | head -n -1 | sed 's/^[ \t]*//'
-        #awk "${regexp}" "${file}" | tail -n +3 | head -n -1 | sed 's/^[ \t]*//' | \
-            #    sed 's/--needed/--needed --mflags \"--noconfirm\"/' | \
-            #    sed 's/yay /yes | yay /'
     }
 
     initial=(

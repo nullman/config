@@ -194,6 +194,7 @@ _br 'windows-11' desktop=^11 follow=on
 bspc desktop ^12 --layout monocle
 _br 'VirtualBox Machine' desktop=^12 follow=on
 _br 'VirtualBox Manager' desktop=^12 follow=on
+_br 'omarchy' desktop=^12 follow=on
 
 #-------------------------------------------------------------------------------
 # Application Rules

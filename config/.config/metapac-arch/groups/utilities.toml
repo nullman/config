@@ -36,6 +36,7 @@ arch = {
     "mplayer",
     "mpv",
     "mupdf-tools",
+    "nodejs-lts-jod",
     "papers",
     "qmmp",
     "qmplay2",
