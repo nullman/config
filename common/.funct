@@ -2274,13 +2274,15 @@ make-metapac-groups() {
     }
 
     _getgroups() {
-        awk "$(_getregexp "$1")" "${infile}" | grep -v "^\*" \
+        awk "$(_getregexp "$1")" "${infile}" | \
+            grep -v "^\*" | grep -v "^ *#+NAME: " | grep -v "^ *| *X *|" | \
             grep -v "^ *|---" | grep -v "^ *| *x *|" | \
             cut -d '|' -f 3 | sort --unique | sed 's/^ *// ; s/ *$//'
     }
 
     _getpackages() {
-        awk "$(_getregexp "$1")" "${infile}" | grep -v "^\*" | \
+        awk "$(_getregexp "$1")" "${infile}" | \
+            grep -v "^\*" | grep -v "^ *#+NAME: " | grep -v "^ *| *X *|" | \
             grep "^ *| *| $2 *|" | \
             grep -v "^ *|---" | grep -v "^ *| *x *|" | \
             cut -d '|' -f 4 | sed 's/^ */    \"/ ; s/ *$/\",/'
