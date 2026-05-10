@@ -2,6 +2,7 @@ arch = {
   packages = [
     "asunder",
     "audacious",
+    "audacious-plugins",
     "balena-etcher",
     "bitwarden",
     "blanket",

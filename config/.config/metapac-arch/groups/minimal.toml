@@ -1,6 +1,7 @@
 arch = {
   packages = [
     "audacious",
+    "audacious-plugins",
     "brave-bin",
     "cliamp",
     "cmus",
