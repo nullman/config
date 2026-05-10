@@ -6,6 +6,7 @@ arch = {
     "fs-uae-launcher",
     "linapple-git",
     "mame",
+    "minivmac",
     "vice",
     "wine",
     "wine-gecko",
