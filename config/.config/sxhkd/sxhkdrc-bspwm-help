@@ -46,8 +46,8 @@ Focus and Swap
 | Super | Alt |      |       | j,Left  | Focus Previous Desktop         |
 | Super | Alt |      |       | i,Up    | Focus Next Monitor             |
 | Super | Alt |      |       | k,Down  | Focus Previous Monitor         |
-| Super |     |      |       | Tab     | Focus Older Node               |
-| Super |     |      | Shift | Tab     | Focus Newer Node               |
+| Super |     |      |       | Tab     | Focus Next Node in Desktop     |
+| Super |     |      | Shift | Tab     | Focus Previous Node in Desktop |
 | Super |     |      |       | grave   | Focus Last Desktop             |
 | Super |     |      |       | 1-9,0   | Focus given Desktop            |
 | Super |     |      | Shift | 1-9,0   | Move Node to given Desktop     |

@@ -143,19 +143,19 @@ super + alt + shift + {i,k}
 super + alt + shift + {Up,Down}
     bspc node --to-monitor {prev,next} --follow
 
-# # focus next/previous node in current desktop
-# alt + {_,shift + }Tab
-#     bspc node --focus {next,prev}.local.leaf
+# focus next/previous node in current desktop
+super + {_,shift + }Tab
+    bspc node --focus {next,prev}.local.leaf
 
 # # focus next/previous node in all desktops and monitors
 # super + {_,shift + }Tab
 #     bspc node --focus {next,prev}
 
-# focus older/newer node in focus history in all desktops and monitors
-super + {_,shift + }Tab
-    bspc wm --record-history off ; \
-    bspc node --focus {older,newer}.leaf ; \
-    bspc wm --record-history on
+# # focus older/newer node in focus history in all desktops and monitors
+# super + {_,shift + }Tab
+#     bspc wm --record-history off ; \
+#     bspc node --focus {older,newer}.leaf ; \
+#     bspc wm --record-history on
 
 # # focus last node/desktop
 # {alt,super} + grave
