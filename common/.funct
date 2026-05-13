@@ -114,7 +114,7 @@ pathcmd() {
 parentdir() {
     if [ $# -gt 2 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
         echo "Usage: parentdir [DIR]"
-        echo "  DIR  directory to get the parent directory of (defaults to current dir)."
+        echo "  DIR  directory to get the parent directory of (defaults to current dir)"
     else
         if [ $# -eq 0 ] ; then
             pd="$1"
@@ -1496,6 +1496,7 @@ arch-initialize() {
         #"arch-configure-irssi"
         #"arch-configure-java-8-openjdk"
         #"arch-configure-java-11-openjdk"
+        "arch-configure-ollama"
         "arch-configure-tlp"
         #"arch-configure-x48"
         "arch-configure-xscreensaver-aerial"
@@ -1651,10 +1652,19 @@ qd-sync() {
         mv -f "${HOME}/config-private" "${HOME}/config-private.old"
         qvm-run --pass-io personal 'tar -C /home/user -c --exclude=\".git*\" config-private' | tar -C "${HOME}" -x
         sudo cp "${HOME}/config/config/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml" \
-            "/etc/xdg/xfce4/xfconf/xfce-perchannel-xml/"
+             "/etc/xdg/xfce4/xfconf/xfce-perchannel-xml/"
         [ "$1" == "arch" ] && tar -C "${HOME}/config/config/.config" -cf - metapac-arch | qvm-run --pass-io arch 'tar -C "/home/user/.config" -xf -'
         [ "$1" == "debian" ] && tar -C "${HOME}/config/config/.config" -cf - metapac-debian | qvm-run --pass-io debian 'tar -C "/home/user/.config" -xf -'
         home-restow
+    fi
+}
+#        qubes-set-tmp-size      set size of RAM /tmp for current qube
+qubes-set-tmp-size() {
+    if [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+        echo "Usage: qubes-set-tmp-size [SIZE]"
+        echo "SIZE  new size of /tmp (defaults to 1G)"
+    else
+        sudo mount -o remount,size=$1 /tmp
     fi
 }
 #        qubes-dom0-initialize   initial setup of dom0

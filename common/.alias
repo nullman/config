@@ -1952,6 +1952,8 @@ alias edreminders="
 #
 # rm
 #
+#        rm                      remove --preserve-root
+alias rm="rm --preserve-root=all"
 #        del                     remove
 alias del="rm"
 #        rmi                     interactive remove
