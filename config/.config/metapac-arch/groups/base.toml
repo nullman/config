@@ -32,7 +32,6 @@ arch = {
     "os-prober",
     "pacman-contrib",
     "paru",
-    "paru-debug",
     "pipewire",
     "pipewire-alsa",
     "pipewire-jack",

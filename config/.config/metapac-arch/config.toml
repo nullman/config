@@ -26,7 +26,7 @@ dozer = ["base", "system", "x11", "wayland", "window-manager", "fonts", "applica
 switch = ["base", "system", "x11", "window-manager", "fonts", "applications", "utilities", "tui", "console", "console-hacks", "internet", "emulators", "fortune", "minimal"]
 mouse = ["base", "system", "x11", "wayland", "window-manager", "fonts", "emulators", "fortune", "minimal", "laptop"]
 retro = ["base", "system", "x11", "window-manager", "fonts", "emulators"]
-tank = ["base", "system", "x11", "wayland", "window-manager", "fonts", "applications", "utilities", "tui", "console", "console-hacks", "internet", "emulators", "development", "containers", "ai", "fortune", "games", "laptop", "nvidia580"]
+tank = ["base", "system", "x11", "wayland", "window-manager", "fonts", "applications", "utilities", "tui", "console", "console-hacks", "internet", "emulators", "development", "containers", "ai", "fortune", "laptop", "nvidia580"]
 
 [arch]
 # Since pacman, pamac, paru, pikaur and yay all operate on the same package database
