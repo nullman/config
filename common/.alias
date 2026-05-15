@@ -1070,6 +1070,12 @@ alias sslcert="
     esac"
 
 #
+# brave browser
+#
+#        brave-clear-lock        clear brave browser lock
+alias brave-clear-lock="rm \${HOME}/.config/BraveSoftware/Brave-Browser/SingletonLock"
+
+#
 # c/c++
 #
 #        mcm                     make clean && make
