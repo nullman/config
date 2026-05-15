@@ -13182,6 +13182,7 @@ it is longer."
                            nil
                          path))))
     (let ((package-manager (or
+                            (command-path "paru")
                             (command-path "yay")
                             (command-path "yaourt")
                             (command-path "pacman")

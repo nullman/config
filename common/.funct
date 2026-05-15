@@ -1451,7 +1451,7 @@ pasi() {
     if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
         echo "Usage: pasi SEARCH"
     else
-        paru -Ss "$*" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a ; { N ; s/\n */ | / ; p ; d ; ba }" | grep " (Installed"
+        paru -Ss "$*" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a ; { N ; s/\n */ | / ; p ; d ; ba }" | grep " \[Installed\]"
     fi
 }
 #        pasis                   paru specific search installed packages
@@ -1459,7 +1459,7 @@ pasis() {
     if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
         echo "Usage: pasis SEARCH"
     else
-        paru -Ss "$*" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a ; /^[a-z]*\/$* / { N ; s/\n */ | / ; p ; d ; ba }" | grep " (Installed"
+        paru -Ss "$*" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a ; /^[a-z]*\/$* / { N ; s/\n */ | / ; p ; d ; ba }" | grep " \[Installed\]"
     fi
 }
 #        arch-initialize         initial setup of an arch system
