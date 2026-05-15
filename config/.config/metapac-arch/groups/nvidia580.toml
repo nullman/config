@@ -7,6 +7,7 @@ arch = {
     "nvidia-580xx-settings",
     "nvidia-580xx-utils",
     "nvidia-prime",
+    "ollama-cuda",
     "opencl-nvidia-580xx",
     "xf86-video-intel",
 

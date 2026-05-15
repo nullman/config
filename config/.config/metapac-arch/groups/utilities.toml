@@ -40,7 +40,7 @@ arch = {
     "nodejs-lts-jod",
     "papers",
     "qmmp",
-    "qmplay2",
+    "qmplay2-git",
     "rpi-imager",
     "scrcpy",
     "sox",

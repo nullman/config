@@ -37,6 +37,7 @@ arch = {
     "fpc",
     "freebasic",
     "gcc",
+    "gcc12",
     "github-desktop",
     "glibc",
     "gmp",
