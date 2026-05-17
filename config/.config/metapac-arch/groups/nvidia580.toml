@@ -1,13 +1,13 @@
 arch = {
   packages = [
-    "cuda",
+    "cuda12.0",
     "egl-gbm",
     "lib32-nvidia-580xx-utils",
     "nvidia-580xx-dkms",
     "nvidia-580xx-settings",
     "nvidia-580xx-utils",
     "nvidia-prime",
-    "ollama-cuda",
+    "ollama-cuda12-bin",
     "opencl-nvidia-580xx",
     "xf86-video-intel",
 
