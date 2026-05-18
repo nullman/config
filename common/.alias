@@ -2186,23 +2186,24 @@ alias rsync-sdi-put-windows-sd="
     else
         echo \"Error: \${usb} USB not found\"
     fi"
-#        rsync-foundry-put-nullware rsync ${HOME}/foundry nullware:/home/kyle/foundry
-alias rsync-foundry-put-nullware="
-    rsync -rlptx --delete --force \
-        --exclude=\".git*\" \
-        --rsh=\"ssh -l kyle\" \
-        --progress \
-        \"${HOME}/foundry/\" \
-        \"${nullwareip}:/home/kyle/foundry/\"
-    rsync -rlptx --delete --force \
-        --exclude=\".git*\" \
-        --exclude=\"Config/admin.txt\" \
-        --exclude=\"Config/license.json\" \
-        --rsh=\"ssh -l kyle\" \
-        --progress \
-        \"${HOME}/foundrydata/\" \
-        \"${nullwareip}:/home/kyle/foundrydata/\"
-    ssh ${nullwareip} pm2 restart foundry --update-env"
+#!#        rsync-foundry-put-nullware rsync ${HOME}/foundry nullware:/home/user/foundry
+#!alias rsync-foundry-put-nullware="
+#!    ssh ${nullwareip} pm2 stop foundry
+#!    rsync -rlptx --delete --force \
+#!        --exclude=\".git*\" \
+#!        --rsh=\"ssh -l kyle\" \
+#!        --progress \
+#!        \"${HOME}/foundry/\" \
+#!        \"${nullwareip}:/home/user/foundry/\"
+#!    rsync -rlptx --delete --force \
+#!        --exclude=\".git*\" \
+#!        --exclude=\"Config/admin.txt\" \
+#!        --exclude=\"Config/license.json\" \
+#!        --rsh=\"ssh -l kyle\" \
+#!        --progress \
+#!        \"${HOME}/foundrydata/\" \
+#!        \"${nullwareip}:/home/user/foundrydata/\"
+#!    ssh ${nullwareip} pm2 restart foundry --update-env"
 
 #
 # ruby
@@ -2581,9 +2582,9 @@ alias wine-ddo-cp="WINEPREFIX=\${HOME}/.wine-ddocp wine \"C:\Games\DDOCharGen\DD
 #!#        eve-copy-settings       copy eve settings
 #!alias eve-copy-settings="
 #!    cp -R \"\${HOME}/Downloads/EVE/CCP/EVE/c_program_files_ccp_eve_tranquility/settings\" \
-    #!      \"\${HOME}/.wine-eve/drive_c/windows/profiles/kyle/Local Settings/Application Data/CCP/EVE/c_program_files_ccp_eve_tranquility/\"
+    #!      \"\${HOME}/.wine-eve/drive_c/windows/profiles/user/Local Settings/Application Data/CCP/EVE/c_program_files_ccp_eve_tranquility/\"
 #!    cp -R \"\${HOME}/Downloads/EVE/CCP/EVE/c_users_kyle_program_files_eve_tranquility/settings\" \
-    #!      \"\${HOME}/.wine-eve2/drive_c/windows/profiles/kyle/Local Settings/Application Data/CCP/EVE/c_program_files_ccp_eve_tranquility/\""
+    #!      \"\${HOME}/.wine-eve2/drive_c/windows/profiles/user/Local Settings/Application Data/CCP/EVE/c_program_files_ccp_eve_tranquility/\""
 #        wine-fallout            wine fallout
 alias wine-fallout="WINEPREFIX=\${HOME}/.wine-fallout wine \"C:\GOG Games\Games\\Fallout\FalloutLauncher.exe\" &"
 #        wine-fallout-setup      configure fallout.cfg file
