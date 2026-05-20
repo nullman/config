@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2026-05-15 11:49 (user)>
+  #+TIMESTAMP: <2026-05-19 22:03 (user)>
 
 * Overview
   :PROPERTIES:
@@ -5648,6 +5648,7 @@
                          (re-search-forward "|")
                          (forward-char -2)
                          (point))))
+                  (org-table-align)
                   (let* ((fc fill-column)
                          (beg (boundry -1))
                          (end (boundry 1))
@@ -34956,6 +34957,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
                                   ;;("wiki" . "~/wiki")
                                   ("doc" . "~/doc")
                                   ("bbs" . "~/doc/bbs")
+                                  ("games" . "~/doc/games")
                                   ("dev" . "~/dev")
                                   ("prj" . "~/prj")
                                   ("src" . "~/src")
