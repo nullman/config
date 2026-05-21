@@ -8,11 +8,12 @@
 
 # start some shells and applications
 #screen -t mon 0 nice top
-screen -t mon 0 nice htop
+#screen -t mon 0 nice htop
 #screen -t mon 0 nice btop
 #screen -t mon 0 nice bpytop -lc
 #screen -t mon 0 nice zenith
 ##screen -t mon 0 nice slmon
+screen -t mon 0 nice xentop
 #screen -t emacs 1 emacs --no-site-file -nw
 screen -t shell 1 ${SHELL}
 screen -t shell 2 ${SHELL}
