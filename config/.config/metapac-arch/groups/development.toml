@@ -92,6 +92,7 @@ arch = {
     "vasm",
     "vlang",
     "vlink",
+    "vscodium",
     "yq",
     "zlib",
 

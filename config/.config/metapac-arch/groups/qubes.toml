@@ -350,6 +350,7 @@ arch = {
     "vlc",
     "vlc-plugins-all",
     "vlink",
+    "vscodium",
     "vtop",
     "w3m",
     "wget",
