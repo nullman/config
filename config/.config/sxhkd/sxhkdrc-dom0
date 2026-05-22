@@ -290,8 +290,8 @@ super + alt + shift + p
 
 # display time
 super + alt + backslash
-    printf "$(date '+%Y-%m-%d')\n $(date '+%H:%M:%S')" | \
-    yad --text-info --width=532 --height=240 --wrap --no-buttons --timeout=3 --fontname='MesloLGS Nerd Font Mono 64' 2>/dev/null
+    printf " $(date '+%A')\n$(date '+%Y-%m-%d')\n $(date '+%H:%M:%S')" | \
+    yad --text-info --width=532 --height=360 --no-buttons --timeout=3 --fontname='MesloLGS Nerd Font Mono 64' 2>/dev/null
 
 # # edit with emacs: personal
 # super + alt + e
