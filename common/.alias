@@ -2260,6 +2260,8 @@ alias scbtop="\${HOME}/bin/screen-app btop"
 alias scbpytop="\${HOME}/bin/screen-app bpytop"
 #        sczenith                screen-app zenith
 alias sczenith="\${HOME}/bin/screen-app zenith"
+#        scxentop                screen-app xentop
+alias scxentop="\${HOME}/bin/screen-app xentop"
 #        scifmon                 screen-app ifmon
 alias scifmon="\${HOME}/bin/screen-app ifmon"
 #        sciftop                 screen-app iftop

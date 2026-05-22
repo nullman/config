@@ -20,6 +20,7 @@ Launch APPLICATION in a specific screen window.
     mon    bpytop               0
     mon    zenith               0
     mon    slmon                0
+    mon    xentop               0
     em     emacs                1
     1      shell                1
     2      shell                2
@@ -49,12 +50,13 @@ EOF
 fi
 
 case "$1" in
-    mon|top) screen -t mon 0 top ;;
-    htop) screen -t mon 0 htop ;;
+    top) screen -t mon 0 top ;;
+    mon|htop) screen -t mon 0 htop ;;
     btop) screen -t mon 0 btop ;;
     bpytop) screen -t mon 0 bpytop -lc ;;
     zenith) screen -t mon 0 zenith ;;
     slmon) screen -t mon 0 slmon ;;
+    xentop) screen -t mon 0 xentop ;;
     em|emacs) screen -t emacs 1 emacs --no-site-file -nw ;;
     ifmon|iftop) screen -t ifmon 10 nice iftop ;;
     mail|pine) screen -t mail 11 pine ;;
