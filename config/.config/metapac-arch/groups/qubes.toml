@@ -304,6 +304,7 @@ arch = {
     "stow",
     "sudo",
     "swift-bin",
+    "system-config-printer",
     "sysz",
     "tass64",
     "terminology",
