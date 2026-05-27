@@ -9,8 +9,8 @@
 
 basedir="/mnt/synology/video/Music"
 #basedir="${HOME}/synology/video/Music"
-#ytdlp="$(command -v yt-dlp)"
-ytdlp="${HOME}/src/yt-dlp/yt-dlp"
+ytdlp="$(command -v yt-dlp)"
+#ytdlp="${HOME}/src/yt-dlp/yt-dlp"
 
 videolist=(
     "'Til Tuesday - Voices Carry                                         | https://www.youtube.com/watch?v=uejh-bHa4To"
@@ -157,6 +157,7 @@ videolist=(
     "Heart - Magic Man (1976)                                            | https://www.youtube.com/watch?v=A99bkAcLIas"
     "Heart - Never                                                       | https://www.youtube.com/watch?v=zWzy5q_M5Ho"
     "Heart - Nothin' at All                                              | https://www.youtube.com/watch?v=Y2lXKZ9Zksg"
+    "Heart - Stairway to Heaven (Live at Kennedy Center Honors)          | https://www.youtube.com/watch?v=LFxOaDeJmXk"
     "Heart - These Dreams                                                | https://www.youtube.com/watch?v=41P8UxneDJE"
     "Heart - What About Love?                                            | https://www.youtube.com/watch?v=KE5GGMhmo-M"
     "Heart - Who Will You Run To?                                        | https://www.youtube.com/watch?v=fM44F-M78Vs"

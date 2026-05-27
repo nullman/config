@@ -199,8 +199,8 @@ alias xkb-rules="\${PAGER} /usr/share/X11/xkb/rules/base.lst"
 alias diffc="diff -c"
 #        xd                      xxdiff (X based diff app)
 alias xd="xxdiff"
-#        xl                      xlock (lock the screen)
-alias xl="xlock -nice 1 +usefirst -mode flame"
+#!#        xl                      xlock (lock the screen)
+#!alias xl="xlock -nice 1 +usefirst -mode flame"
 #        xkeys                   list x11 keys
 alias xkeys="\${PAGER} /usr/include/X11/keysumdef.h"
 #        setdate                 set system date using ntpdate
