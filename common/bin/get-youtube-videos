@@ -71,6 +71,7 @@ channels=(
     "Computer/General     | Jake@Linux                                   | https://www.youtube.com/@JakeLinux/videos"
 #?    "Computer/General     | PCWorld                                      | https://www.youtube.com/pcworld/videos"
     "Computer/General     | Stephen's Tech Talks                         | https://www.youtube.com/@stephenstechtalks5377/videos"
+    "Computer/General     | tony-btw                                     | https://www.youtube.com/@tony-btw/videos"
     "Computer/Graphics    | pwnisher                                     | https://www.youtube.com/@pwnisher/videos"
     "Computer/Hardware    | Artem Kalinchuk - Retro Tech Revival         | https://www.youtube.com/@artemkalinchuk/videos"
     "Computer/Hardware    | Ben Eater                                    | https://www.youtube.com/c/BenEater/videos"
@@ -257,7 +258,7 @@ _download() {
                 --playlist-reverse \
                 --write-description \
                 ${archive} \
-                --paths \"temp:/tmp\" \
+                --paths \"temp:\${HOME}/tmp\" \
                 --paths \"home:${path}\" \
                 --output \"${name} - %(release_date>%Y-%m-%d,upload_date>%Y-%m-%d|Unknown)s - %(title)s.%(ext)s\" \
                 '${url}'"

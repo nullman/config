@@ -89,6 +89,7 @@ arch = {
     "dotnet-runtime",
     "dotnet-sdk",
     "duf",
+    "dysk",
     "easytag",
     "emacs",
     "eog",

@@ -423,7 +423,7 @@ fetch() {
             --cookies-from-browser firefox \
             --format 'bv*+ba/b' \
             --format-sort 'res:1080,vcodec:avc1,acodec:mp4a' \
-            --paths \"temp:/tmp\" \
+            --paths \"temp:\${HOME}/tmp\" \
             --paths \"home:${dir}\" \
             --output \"${name} - %(release_date>%Y-%m-%d,upload_date>%Y-%m-%d|Unknown)s - %(title)s.%(ext)s\" \
             --output \"${name}.%(ext)s\" \
