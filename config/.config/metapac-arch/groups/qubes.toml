@@ -272,6 +272,7 @@ arch = {
     "qubes-vm-dependencies",
     "qubes-vm-recommended",
     "qubes-vm-repo",
+    "qubes-vm-thunar",
     "quicklisp",
     "racket",
     "ranger",
