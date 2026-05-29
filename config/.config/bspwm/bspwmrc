@@ -186,6 +186,7 @@ bspc desktop ^10 --layout monocle
 # 11: Virtual Machine 1
 bspc desktop ^11 --layout monocle
 _br 'arch-gpu' desktop=^11 follow=on
+_br 'guix' desktop=^11 follow=on
 _br 'haiku' desktop=^11 follow=on
 _br 'omarchy' desktop=^11 follow=on
 _br 'VirtualBox Machine' desktop=^11 follow=on
