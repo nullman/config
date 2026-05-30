@@ -505,6 +505,8 @@ super + alt + ctrl + apostrophe
 # terminal
 super + alt + t
     alacritty
+super + Return
+    alacritty
 
 #===============================================================================
 # End of File

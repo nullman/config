@@ -79,9 +79,9 @@ _bc border_width               4
 
 # pointer bindings
 _bc pointer_modifier           mod1
-_bc pointer_action1            resize_side
-_bc pointer_action1            resize_corner
-_bc pointer_action3            move
+_bc pointer_action1            move
+_bc pointer_action3            resize_side
+_bc pointer_action3            resize_corner
 
 # default colors
 #_bc normal_border_color        "#30302F"

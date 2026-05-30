@@ -66,6 +66,49 @@ if [ "$(uname -n)" == "dom0" ] ; then
     # xfce session
     _once xfce4-session &
 
+    # gnome keyring
+    _once gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg &
+
+    # qubes qrexec policy agent
+    _once /usr/lib/qubes/qrexec-policy-agent-autostart &
+
+    # qubes device agent
+    _once /usr/lib/qubes/qrexec-device-agent-autostart &
+
+    # qubes window icon receiver
+    _once /usr/lib/qubes/icon-receiver &
+
+    # retry qubes rpc prompts for input devices
+    _once /usr/bin/qubes-input-trigger --all --wait-for-gui &
+
+    # qubes screen layout watcher
+    _once /usr/libexec/qubes/watch-screen-layout-changes qvm-start-gui --notify-monitor-layout --all &
+
+    # qubes clipboard tray
+    systemctl --user start qubes-widget@qui-clipboard &
+
+    # qubes devices tray
+    systemctl --user start qubes-widget@qui-devices &
+
+    # qubes disk space tray
+    systemctl --user start qubes-widget@qui-disk-space &
+
+    # qubes domains tray
+    systemctl --user start qubes-widget@qui-domains &
+
+    # qubes updates tray
+    systemctl --user start qubes-widget@qui-updates &
+
+    # qubes gui/audio daemon for qubes vms
+    qvm-start-daemon --all --watch &
+
+    # user folders update
+    xdg-user-dirs-gtk-update &
+
+    # qubes application menu
+    # icon: qubes-logo
+    # command: gdbus call --session --dest org.qubesos.appmenu --object-path "/org/qubesos/appmenu" --method org.freedesktop.Application.Activate "{}"
+
     # # system bar
     # _once xfce4-panel &
 

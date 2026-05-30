@@ -461,6 +461,8 @@ super + alt + shift + t
 # terminal: personal
 super + alt + t
     qvm-run personal "/usr/sbin/alacritty"
+super + Return
+    qvm-run personal "/usr/sbin/alacritty"
 
 #===============================================================================
 # End of File

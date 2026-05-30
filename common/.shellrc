@@ -142,7 +142,7 @@ export EMAIL="kylewsherman@gmail.com"
 #export MAIL="/var/mail/${USER}"
 unset MAIL
 #export MAILDIR="${HOME}/.maildir"
-#export MAILDIR="imap://morpheus.nullware.com/kyle"
+#export MAILDIR="imap://morpheus.nullware.com/user"
 #export GOROOT="/usr/lib/go"
 #export GOPATH="${HOME}/gocode"
 export SDKMAN_DIR="${HOME}/.sdkman"
@@ -286,6 +286,13 @@ _source "${HOME}/.secure-env"
 
 # # display weather
 # _run curl --silent "wttr.in/San+Diego?uT" 2>&1 | head -n 7
+
+# restart user services if personal vm is restarted in qubes os
+if [ "$(uname -n)" == "personal" ] ; then
+   pgrep -u ${USER} -f clipmenud >/dev/null || systemctl --user enable --now clipmenud &
+   pgrep -u ${USER} -f mpd >/dev/null || systemctl --user enable --now mpd &
+   pgrep -u ${USER} -f mpDris2 >/dev/null || systemctl --user enable --now mpdris &
+fi
 
 # source xprofile if not already and running in X11
 [ -n "${DISPLAY}" ] && [ -z "$(env | grep '^runpath=.*\.xprofile')" ] && _source "${HOME}/.xprofile"
