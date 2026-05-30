@@ -192,7 +192,8 @@ super + alt + h
     yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null --filename="${HOME}/.config/sxhkd/sxhkdrc-help"
 
 # qubes os app menu
-super + ctrl + Escape
+#super + ctrl + Escape
+super + alt + q
     gdbus call --session --dest org.qubesos.appmenu --object-path '/org/qubesos/appmenu' --method org.freedesktop.Application.Activate '{}'
 
 # desktop application launcher: dom0
