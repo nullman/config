@@ -32,7 +32,7 @@ _delay() {
 # qubes os
 if [ "$(uname -n)" == "dom0" ] ; then
     #pkill -u ${USER} xfce4-panel ; _once xfce4-panel &
-    pkill -u ${USER} polybar ; _once polybar -c ${XDG_CONFIG_HOME}/polybar/dom0-config.ini >/dev/null 2>&1 &
+    pkill -u ${USER} polybar ; sleep 1s && _once polybar -c ${HOME}/.config/polybar/dom0-config.ini >/dev/null 2>&1 &
 fi
 
 # other os
