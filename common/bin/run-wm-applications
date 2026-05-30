@@ -110,8 +110,7 @@ if [ "$(uname -n)" == "dom0" ] ; then
 
     # system bar
     if ! pgrep -x stumpwm >/dev/null ; then
-        # _once xfce4-panel &
-        _once polybar --config=${XDG_CONFIG_HOME}/polybar/dom0-config.ini >/dev/null 2>&1 &
+        _source "${HOME}/bin/system-bar"
     fi
 
     # # system wallpaper displays

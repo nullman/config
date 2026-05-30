@@ -351,11 +351,7 @@ super + shift + s
 
 # reload system tray (polybar)
 super + shift + r
-    ((pkill -u ${USER} polybar \
-    polybar --config="${XDG_CONFIG_HOME}/polybar/dom0-config.ini" && \
-    sleep 1 && \
-    xdo below -t $(xdo id -n root) $(xdo id -N polybar)) &) && \
-    notify-send --expire-time=3000 'Reloading Polybar'
+    ${HOME}/bin/system-bar && notify-send --expire-time=3000 'Reloading Polybar'
 
 # # reload xfce-panel
 # super + shift + r

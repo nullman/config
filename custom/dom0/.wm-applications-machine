@@ -41,16 +41,13 @@ _once xautolock -time 30 -locker 'xscreensaver-command -lock' & # lock screen af
 #_delay 0
 
 # run dom0 applications
-(
-    bspc desktop ^10 --layout tiled
-    bspc desktop --focus ^10
-    # (bspc rule --add --one-shot 'qubes-qube-manager' --state tiled && qubes-qube-manager) & # did not work
-    qubes-qube-manager &
-    sleep 6s
-    bspc desktop --focus ^10
-    bspc node --state tiled
-    alacritty -e ${HOME}/bin/run-screen &
-) &
+bspc desktop ^10 --layout tiled
+bspc desktop --focus ^10
+# (bspc rule --add --one-shot 'qubes-qube-manager' --state tiled && qubes-qube-manager) & # did not work
+qubes-qube-manager &
+sleep 6s
+bspc node --state tiled
+alacritty -e ${HOME}/bin/run-screen &
 
 # run personal vm applications
 (
@@ -68,7 +65,7 @@ _once xautolock -time 30 -locker 'xscreensaver-command -lock' & # lock screen af
 
         # run application launcher
         _run ${HOME}/bin/application-launcher &
-     )
+    )
 ) &
 
 #===============================================================================
