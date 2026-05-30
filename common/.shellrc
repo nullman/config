@@ -289,9 +289,9 @@ _source "${HOME}/.secure-env"
 
 # restart user services if personal vm is restarted in qubes os
 if [ "$(uname -n)" == "personal" ] ; then
-   pgrep -u ${USER} -f clipmenud >/dev/null || systemctl --user enable --now clipmenud &
-   pgrep -u ${USER} -f mpd >/dev/null || systemctl --user enable --now mpd &
-   pgrep -u ${USER} -f mpDris2 >/dev/null || systemctl --user enable --now mpdris &
+   pgrep -u ${USER} -f clipmenud >/dev/null || systemctl --user enable --now clipmenud & disown
+   pgrep -u ${USER} -f mpd >/dev/null || systemctl --user enable --now mpd & disown
+   pgrep -u ${USER} -f mpDris2 >/dev/null || systemctl --user enable --now mpdris & disown
 fi
 
 # source xprofile if not already and running in X11

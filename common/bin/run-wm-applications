@@ -64,7 +64,7 @@ if [ "$(uname -n)" == "dom0" ] ; then
     # ) &
 
     # xfce session
-    _once xfce4-session &
+    #_once xfce4-session &
 
     # gnome keyring
     _once gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg &
@@ -105,18 +105,23 @@ if [ "$(uname -n)" == "dom0" ] ; then
     # user folders update
     xdg-user-dirs-gtk-update &
 
-    # qubes application menu
-    # icon: qubes-logo
-    # command: gdbus call --session --dest org.qubesos.appmenu --object-path "/org/qubesos/appmenu" --method org.freedesktop.Application.Activate "{}"
+    # notifications
+    _once dunst &
 
-    # # system bar
-    # _once xfce4-panel &
+    # system bar
+    if ! pgrep -x stumpwm >/dev/null ; then
+        # _once xfce4-panel &
+        _once polybar --config=${XDG_CONFIG_HOME}/polybar/dom0-config.ini >/dev/null 2>&1 &
+    fi
 
     # # system wallpaper displays
     # _source "${HOME}/bin/system-wallpaper-displays"
 
     # hide mouse when not in use
     _once unclutter &
+
+    # wallpaper manager
+    _once nitrogen --restore &
 
     # custom bspwm external rules to handle vm classes in qubes os
     bspc config external_rules_command ${HOME}/.config/bspwm/bspwm-external-rules-qubes &

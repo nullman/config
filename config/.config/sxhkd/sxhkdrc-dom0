@@ -349,6 +349,14 @@ super + shift + Print
 super + shift + s
     ${HOME}/bin/run-sxhkd && notify-send --expire-time=3000 'Reloading SXHKD'
 
+# reload system tray (polybar)
+super + shift + r
+    ((pkill -u ${USER} polybar \
+    polybar --config="${XDG_CONFIG_HOME}/polybar/dom0-config.ini" && \
+    sleep 1 && \
+    xdo below -t $(xdo id -n root) $(xdo id -N polybar)) &) && \
+    notify-send --expire-time=3000 'Reloading Polybar'
+
 # # reload xfce-panel
 # super + shift + r
 #     ((pkill -u ${USER} xfce4-panel ; xfce4-panel && sleep 1 && \
