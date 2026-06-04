@@ -21,16 +21,16 @@ Type=oneshot
 RemainAfterExit=yes
 
 # turn keyboard num-lock on
-ExecStop=/usr/sbin/numlockx
+ExecStop=/bin/bash -c "while [ ! -S /tmp/.X11-unix/X0 ]; do sleep 1; done; /usr/sbin/numlockx"
 
 # make capslock act like control; make both shift keys toggle capslock
-ExecStop=/usr/sbin/setxkbmap -option 'shift:both_capslock,caps:ctrl_modifier'
+ExecStop=/bin/bash -c "while [ ! -S /tmp/.X11-unix/X0 ]; do sleep 1; done; /usr/sbin/setxkbmap -option 'shift:both_capslock,caps:ctrl_modifier'"
 
 # # disable insert key
-# ExecStop=/usr/sbin/xkbcomp ${DISPLAY} - | sed 's/ Insert / NoSymbol /' | xkbcomp - ${DISPLAY}
+# ExecStop=/bin/bash -c "while [ ! -S /tmp/.X11-unix/X0 ]; do sleep 1; done; /usr/sbin/xkbcomp ${DISPLAY} - | sed 's/ Insert / NoSymbol /' | xkbcomp - ${DISPLAY}"
 
 # set mouse speed and keyboard rate
-ExecStop=/usr/sbin/xset -dpms s off b off m 2/1 4 r rate 500 35
+ExecStop=/bin/bash -c "while [ ! -S /tmp/.X11-unix/X0 ]; do sleep 1; done; /usr/sbin/xset -dpms s off b off m 2/1 4 r rate 500 35"
 
 [Install]
 WantedBy=sleep.target
