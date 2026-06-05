@@ -56,25 +56,25 @@ _run setxkbmap -option 'shift:both_capslock,caps:ctrl_modifier'
 
 # # xbindkeys
 # pkill -u ${USER} xbindkeys >/dev/null 2>&1
-# [ -f ${HOME}/.xbindkeysrc ] && _run xbindkeys >/dev/null 2>&1
+# [ -f ${HOME}/.xbindkeysrc ] && _run xbindkeys
 
 # # sxhkd
 # _run ${HOME}/bin/run-sxhkd
 
 # set no energy saving, mouse acceleration rate, and keyboard acceleration rate
-_run xset -dpms s off b off m 2/1 4 r rate 500 35 >/dev/null 2>&1
+_run xset -dpms s off b off m 2/1 4 r rate 500 35
 
 # # set mouse scrolling speed
-# _run imwheel -b 4 8 >/dev/null 2>&1
+# _run imwheel -b 4 8
 
 # set background color and mouse pointer
-#_run xsetroot -solid black -cursor_name left_ptr >/dev/null 2>&1
+#_run xsetroot -solid black -cursor_name left_ptr
 
 # # set no energy saving, mouse acceleration rate, and keyboard acceleration rate
 # if [ -n "$(greppr screen_blank)" ] ; then
-#     _run xset -dpms s on b off m 2/1 4 r rate 500 35 >/dev/null 2>&1
+#     _run xset -dpms s on b off m 2/1 4 r rate 500 35
 # else
-#     _run xset -dpms s off b off m 2/1 4 r rate 500 35 >/dev/null 2>&1
+#     _run xset -dpms s off b off m 2/1 4 r rate 500 35
 # fi
 
 # turn numlock on (or off)
@@ -85,8 +85,8 @@ else
 fi
 
 # xhost
-#_run xhost +localhost >/dev/null 2>&1
-#_run xhost +mouse1 >/dev/null 2>&1
+#_run xhost +localhost
+#_run xhost +mouse1
 
 # start wm
 #[ -z "$(greppr window_manager)" ] || ps ux | grep -v grep | grep -q window_manager || (exec $(getpr window_manager) & disown) >/dev/null 2>&1

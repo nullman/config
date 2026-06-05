@@ -1688,7 +1688,7 @@ qubes-dom0-initialize() {
         "qubes-dom0-lightdm"
     )
 
-    if [ "$(distribution)" != "qubes" || "$(uname -n)" != "dom0" ] ; then
+    if [ "$(distribution)" != "qubes" ] || [ "$(uname -n)" != "dom0" ] ; then
         echo "Error: Can only be run on Qubes OS: dom0"
         return 1
     fi
