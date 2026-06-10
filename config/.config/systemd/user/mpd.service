@@ -15,8 +15,8 @@
 Description=Music Player Daemon (mpd)
 
 [Service]
-#ExecStart=/usr/sbin/mpd --no-daemon %h/.mpd/mpd.conf
-ExecStart=/usr/sbin/mpd --no-daemon
+#ExecStart=mpd --no-daemon %h/.mpd/mpd.conf
+ExecStart=mpd --no-daemon
 
 [Install]
 WantedBy=default.target

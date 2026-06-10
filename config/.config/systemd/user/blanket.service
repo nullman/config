@@ -15,7 +15,7 @@
 Description=Blanket restart service
 
 [Service]
-ExecStart=/usr/sbin/blanket --hidden
+ExecStart=blanket --hidden
 Restart=always
 RuntimeMaxSec=8h
 
