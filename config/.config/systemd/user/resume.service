@@ -20,18 +20,21 @@ StopWhenUnneeded=yes
 Type=oneshot
 RemainAfterExit=yes
 
+# delay until X11 is running
+ExecStop=bash -c "while [ ! -S /tmp/.X11-unix/X0 ]; do sleep 1; done; sleep 5"
+
 # turn keyboard num-lock on
-ExecStop=/bin/bash -c "while [ ! -S /tmp/.X11-unix/X0 ]; do sleep 1; done; numlockx"
+ExecStop=bash -c "while [ ! -S /tmp/.X11-unix/X0 ]; do sleep 1; done; numlockx"
 
 # make capslock act like control; make both shift keys toggle capslock
-ExecStop=/bin/bash -c "while [ ! -S /tmp/.X11-unix/X0 ]; do sleep 1; done; setxkbmap -option 'shift:both_capslock,caps:ctrl_modifier'"
+ExecStop=bash -c "while [ ! -S /tmp/.X11-unix/X0 ]; do sleep 1; done; setxkbmap -option 'shift:both_capslock,caps:ctrl_modifier'"
 
 # # disable insert key
-# ExecStop=/bin/bash -c "while [ ! -S /tmp/.X11-unix/X0 ]; do sleep 1; done; xkbcomp ${DISPLAY} - | sed 's/ Insert / NoSymbol /' | xkbcomp - ${DISPLAY}"
-ExecStop=/bin/bash -c "while [ ! -S /tmp/.X11-unix/X0 ]; do sleep 1; done; xmodmap -e 'keycode 118 ='"
+# ExecStop=bash -c "while [ ! -S /tmp/.X11-unix/X0 ]; do sleep 1; done; xkbcomp ${DISPLAY} - | sed 's/ Insert / NoSymbol /' | xkbcomp - ${DISPLAY}"
+ExecStop=bash -c "while [ ! -S /tmp/.X11-unix/X0 ]; do sleep 1; done; xmodmap -e 'keycode 118 ='"
 
 # set mouse speed and keyboard rate
-ExecStop=/bin/bash -c "while [ ! -S /tmp/.X11-unix/X0 ]; do sleep 1; done; xset -dpms s off b off m 2/1 4 r rate 500 35"
+ExecStop=bash -c "while [ ! -S /tmp/.X11-unix/X0 ]; do sleep 1; done; xset -dpms s off b off m 2/1 4 r rate 500 35"
 
 [Install]
 WantedBy=sleep.target
