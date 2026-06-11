@@ -38,6 +38,13 @@ else
 fi
 [ -n "${DEBUG}" ] && echo "vi: ${vi}"
 
+# find emacs
+if _command emacs ; then
+    ed="emacs"
+else
+    vi=true
+fi
+
 # find alternate editor (vi/vim)
 if _command vim ; then
     alt="vim"
@@ -47,11 +54,6 @@ fi
 [ -n "${DEBUG}" ] && echo "alternate editor: ${alt}"
 
 # get emacsclient socket name
-# if [ "$(uname -s)" == "Darwin" ] ; then
-#     socketname=$(lsof -w -c /emacs/i | grep '/run/user/[0-9]*/emacs/server' | tr -s ' ' | cut -d' ' -f8 | head -n 1)
-# else
-#     socketname=$(lsof -w -c /emacs/i | grep '/run/user/[0-9]*/emacs/server' | tr -s ' ' | cut -d' ' -f9 | head -n 1)
-# fi
 socketname="/run/user/$(id -u)/emacs/server"
 [ -n "${DEBUG}" ] && echo "socketname: ${socketname}"
 
@@ -73,7 +75,7 @@ if [ -n "${DEBUG}" ] ; then
 fi
 
 # if emacs client is running...
-if [ -n "${socketname}" ] ; then
+if [ -S "${socketname}" ] ; then
     # if screen is running, switch to emacs window
     if [ ${screen} == true ] ; then
         screen -X select emacs
