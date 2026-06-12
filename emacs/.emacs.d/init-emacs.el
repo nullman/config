@@ -2410,6 +2410,7 @@ KEYMAP defaults to `override-global-map'."
               :menu-name "Fill-Column Commands"
               ("d" . fill-column-default)
               ("2" . fill-column-20)
+              ("3" . fill-column-30)
               ("4" . fill-column-40)
               ("6" . fill-column-60)
               ("7" . fill-column-78)
@@ -11681,6 +11682,7 @@ If BUFFER is nil, use `current-buffer'."
 (fill-column-width 78)
 (defalias 'fill-column-default #'fill-column-78)
 (fill-column-width 20)
+(fill-column-width 30)
 (fill-column-width 40)
 (fill-column-width 60)
 (fill-column-width 80)
