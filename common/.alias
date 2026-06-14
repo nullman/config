@@ -3036,50 +3036,6 @@ alias pacman-clear-cache="
     rm -rf \${HOME}/.cache/sessions/*"
 
 #
-# yay (Package Manager)
-#
-#        yau                     yay -Syu (update packages with refresh)
-alias yau="yay -Syu ; source \${HOME}/.xprofile"
-#        yauf                    yay -Syyu (update packages with forced refresh)
-alias yauf="yay -Syyu ; source \${HOME}/.xprofile"
-#        yai                     yay -S (install package)
-alias yai="yay -S --needed"
-#        yair                    yay -S (reinstall package)
-alias yair="yay -S"
-#        yar                     yay -Rns (remove package and configuration files)
-alias yar="yay -R --nosave --recursive"
-#        yas                     yay -Ss (search packages)
-alias yas="yay -Ss 2>/dev/null"
-#        yaf                     yay -F (search files)
-alias yaf="yay -F"
-#        yaq                     yay -Q (query installed packages)
-alias yaq="yay -Q"
-#        yaqi                    yay -Qi (query installed packages with info)
-alias yaqi="yay -Qi"
-#        yal                     yay -Qqett (list installed packages)
-alias yal="yay -Qqett"
-#        yaln                    yay -Qqettn (list installed native packages)
-alias yaln="yay -Qqettn"
-#        yalf                    yay -Qqettm (list installed foreign/AUR packages)
-alias yalf="yay -Qqettm"
-#        yals                    yay -Qs (search installed packages)
-alias yals="yay -Qs 2>/dev/null"
-#        yaps                    yay -Ps (print package statistics)
-alias yaps="yay -Ps"
-#        yalz                    yay list installed packages by size
-alias yalz="LC_ALL=C yay -Qi | awk '/^Name/{name=\$3} /^Installed Size/{print \$4\$5, name}' | sort -h"
-#        yalzz                   expac list installed packages and dependencies by size
-alias yalzz="expac -S -H M '%k\t%n' | sort -h"
-#        yay-rm-old              remove old yay packages
-alias yay-rm-old="yay -Sc"
-#        yay-rm-orphans          remove orphaned yay packages
-alias yay-rm-orphans="yay -Rns \$(yay -Qtdq)"
-#        yay-set-settings        set yay settings
-alias yay-set-settings="yay -S \
-    --answerclean None --answeredit None \
-    --noanswerdiff --noremovemake --norebuild --save"
-
-#
 # paru (Package Manager)
 #
 #        pau                     paru -Syu (update packages with refresh)
@@ -3217,32 +3173,16 @@ alias dpkg-reinstall="
 #
 #        dnfh                    dnf help
 alias dnfh="dnf --help"
-#        dnfs                    dnf search
-alias dnfs="dnf search"
+#        dnfu                    dnf upgrade
+alias dnfu="sudo dnf upgrade"
+#        dnfsu                   dnf system-upgrade
+alias dnfsu="sudo dnf system-upgrade"
 #        dnfi                    dnf install
 alias dnfi="sudo dnf install"
 #        dnfr                    dnf remove
 alias dnfr="sudo dnf remove"
-
-#
-# yum package mangement (fedora/redhat)
-#
-#        yumh                    yum help
-alias yumh="yum --help"
-#        yums                    yum search
-alias yums="yum search"
-#        yumi                    yum install
-alias yumi="sudo yum install"
-
-#
-# rpm package mangement
-#
-#        rpmu                    rpm update
-alias rpmu="rpm -U -v -h"
-#        rpmuf                   rpm update (force)
-alias rpmuf="rpm -U -v -h --force"
-#        rpmq                    rpm query all with grep
-alias rpmq="rpm -q -a | grep"
+#        dnfs                    dnf search
+alias dnfs="dnf search"
 
 #
 # metapac (Multi-Backend Declarative Package Manager)

@@ -1428,7 +1428,7 @@ make-cert() {
 #!        yay -Ss "$*" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a ; /^[a-z]*\/$* / { N ; s/\n */ | / ; p ; d ; ba }" | grep " (Installed"
 #!    fi
 #!}
-#        yasg                    paru search with grep
+#        pasg                    paru search with grep
 pasg() {
     if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
         echo "Usage: pasg SEARCH GREP"
@@ -1547,6 +1547,44 @@ acsg() {
         echo "Usage: acsg QUERY"
     else
         apt-cache search "$1" | grep -i "^$1"
+    fi
+}
+
+#
+# fedora
+#
+#        dnfsg                    dnf search with grep
+dnfsg() {
+    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+        echo "Usage: dnfsg SEARCH GREP"
+    else
+        s="$1"
+        shift
+        dnf search "${s}" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a ; { N ; s/\n */ | / ; p ; d ; ba }" | grep -i "$*"
+    fi
+}
+#        dnfss                    dnf specific search
+dnfss() {
+    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+        echo "Usage: dnfss SEARCH"
+    else
+        dnf search --name "$*" 2>/dev/null | sed -n '/Matched fields: name (exact)/,/Matched fields: name/{//!p}'
+    fi
+}
+#        dnfsi                    dnf search installed packages
+dnfsi() {
+    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+        echo "Usage: dnfsi SEARCH"
+    else
+        dnf list 2>/dev/null | grep "$*" | cut -d " " -f 1
+    fi
+}
+#        dnfsis                   dnf specific search installed packages
+dnfsis() {
+    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+        echo "Usage: dnfsis SEARCH"
+    else
+        dnf list 2>/dev/null | cut -d " " -f 1 | grep "^$*\..*$"
     fi
 }
 
