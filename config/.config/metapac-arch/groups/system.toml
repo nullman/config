@@ -46,6 +46,7 @@ arch = {
     "ispell",
     "jdk-openjdk",
     "keychain",
+    "kitty",
     "languagetool",
     "ldns",
     "lhasa",
