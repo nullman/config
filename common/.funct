@@ -1681,6 +1681,7 @@ qd-sync() {
         echo "OS:"
         echo "  arch"
         echo "  debian"
+        echo "  fedora"
         [ "$(uname -n)" != "dom0" ] && echo "Error: Can only be run on dom0"
     else
         rm -rf "${HOME}/config.old"
@@ -1692,8 +1693,8 @@ qd-sync() {
         sudo cp "${HOME}/config/config/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml" \
              "/etc/xdg/xfce4/xfconf/xfce-perchannel-xml/"
         [ "$1" == "arch" ] && tar -C "${HOME}/config/config/.config" -cf - metapac-arch | qvm-run --pass-io arch 'tar -C "/home/user/.config" -xf -'
-        [ "$1" == "debian" ] && tar -C "${HOME}/config/config/.config" -cf - metapac-debian | qvm-run --pass-io debian 'tar -C "/home/user/.config" -xf -'
-        [ "$1" == "fedora" ] && tar -C "${HOME}/config/config/.config" -cf - metapac-fedora | qvm-run --pass-io fedora 'tar -C "/home/user/.config" -xf -'
+        [ "$1" == "debian" ] && tar -C "${HOME}/config/config/.config" -cf - metapac-apt | qvm-run --pass-io debian 'tar -C "/home/user/.config" -xf -'
+        [ "$1" == "fedora" ] && tar -C "${HOME}/config/config/.config" -cf - metapac-dnf | qvm-run --pass-io fedora 'tar -C "/home/user/.config" -xf -'
         home-restow
     fi
 }
@@ -2341,7 +2342,7 @@ make-metapac-groups() {
     }
 
     #for backend in "apt" "arch" ; do
-    for backend in "arch" "fedora" ; do
+    for backend in "arch" "dnf" ; do
         outdir="${HOME}/config/config/.config/metapac-${backend}/groups"
         mkdir -p "${outdir}"
         for group in $(_getgroups ${backend}) ; do

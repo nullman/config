@@ -95,8 +95,8 @@ fi
 # select a window manager
 #exec selectwm
 
-# use qt5ct for Qt themeing
-export QT_QPA_PLATFORMTHEME="qt5ct"
+# use qt6ct for Qt themeing
+export QT_QPA_PLATFORMTHEME="qt6ct"
 
 # restore rotation
 # _source ${HOME}/.raspad-rotate-restore

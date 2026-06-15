@@ -359,9 +359,10 @@ super + shift + x
 #    ssaverauto --lock
 #    xscreensaver-command -lock
 
-# # restart user services (caps-lock and insert key changes)
-# super + ctrl + r
-#     systemctl --user restart setxkbmap xkbcomp xset && notify-send --expire-time=3000 'User services restarted'
+# restart x11 resume service (caps-lock, insert key, keyboard & mouse speed)
+super + shift + backslash
+    systemctl --user restart resume && notify-send --expire-time=3000 'X11 resume service restarted'
+    #systemctl --user restart setxkbmap xkbcomp xset && notify-send --expire-time=3000 'User services restarted'
 
 # session menu
 super + shift + q
