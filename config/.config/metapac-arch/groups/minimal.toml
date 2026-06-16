@@ -32,7 +32,7 @@ arch = {
     "w3m",
     "wordgrinder",
     "x48ng",
-    "ymuse-bin",
+    "ymuse",
     "zlib",
 
   ]

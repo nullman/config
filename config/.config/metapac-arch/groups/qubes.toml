@@ -382,7 +382,7 @@ arch = {
     "xterm",
     "yad",
     "ydotool",
-    "ymuse-bin",
+    "ymuse",
     "yq",
     "yt-dlp",
     "zenity",
