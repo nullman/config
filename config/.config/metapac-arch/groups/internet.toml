@@ -1,6 +1,7 @@
 arch = {
   packages = [
     "brave-bin",
+    "brave-origin-bin",
     "bruno-bin",
     "carburetor",
     "copyparty",
