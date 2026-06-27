@@ -2409,6 +2409,7 @@ KEYMAP defaults to `override-global-map'."
               :prefix-map space-miscellaneous-fill-column-map
               :menu-name "Fill-Column Commands"
               ("d" . fill-column-default)
+              ("w" . fill-column-width)
               ("2" . fill-column-20)
               ("3" . fill-column-30)
               ("4" . fill-column-40)
@@ -11665,30 +11666,43 @@ If BUFFER is nil, use `current-buffer'."
     (setq buffer-read-only t)))
 ;; url-test:1 ends here
 
-;; [[file:init-emacs.org::#functions-emacs-functions-fill-column][fill-column:1]]
+;; [[file:init-emacs.org::#functions-emacs-functions-fill-column-width][fill-column-width:1]]
 ;;------------------------------------------------------------------------------
-;;;; Functions: Emacs Functions: fill-column
+;;;; Functions: Emacs Functions: fill-column-width
 ;;------------------------------------------------------------------------------
 
-(init-message 3 "Functions: Emacs Functions: fill-column")
+(init-message 3 "Functions: Emacs Functions: fill-column-width")
 
-(defmacro fill-column-width (width)
+(defun fill-column-width (width)
+  "Set fill-column to WIDTH."
+  (interactive "*NWidth: ")
+  (setq fill-column width))
+;; fill-column-width:1 ends here
+
+;; [[file:init-emacs.org::#functions-emacs-functions-generate-fill-column-width][generate-fill-column-width:1]]
+;;------------------------------------------------------------------------------
+;;;; Functions: Emacs Functions: generate-fill-column-width
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Functions: Emacs Functions: generate-fill-column-width")
+
+(defmacro generate-fill-column-width (width)
   "Return fill-column-WIDTH function."
   `(defun ,(intern (format "fill-column-%s" width)) ()
      ,(format "Set buffer local `fill-column' to %s." width)
      (interactive)
      (setq fill-column ,width)))
 
-(fill-column-width 78)
+(generate-fill-column-width 78)
 (defalias 'fill-column-default #'fill-column-78)
-(fill-column-width 20)
-(fill-column-width 30)
-(fill-column-width 40)
-(fill-column-width 60)
-(fill-column-width 80)
-(fill-column-width 100)
-(fill-column-width 120)
-;; fill-column:1 ends here
+(generate-fill-column-width 20)
+(generate-fill-column-width 30)
+(generate-fill-column-width 40)
+(generate-fill-column-width 60)
+(generate-fill-column-width 80)
+(generate-fill-column-width 100)
+(generate-fill-column-width 120)
+;; generate-fill-column-width:1 ends here
 
 ;; [[file:init-emacs.org::#functions-emacs-grouped-functions][Emacs Grouped Functions:1]]
 ;;------------------------------------------------------------------------------
