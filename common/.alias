@@ -2993,11 +2993,7 @@ alias pacman-reset-mirrors-geoip="sudo pacman-mirrors --geoip"
 alias pacman-reset-mirrors-us-rate="sudo reflector -a 10 -c us -f 5 --sort rate --save /etc/pacman.d/mirrorlist"
 #        pacman-reset-repository  pacman reset and rebuild repository (used to recover from an invalid state)
 alias pacman-reset-repository="
-    # reset mirrors
-    sudo pacman-mirrors --geoip
-
     # update keyring
-    #sudo pacman -Sy archlinux-keyring manjaro-keyring
     sudo pacman -Sy archlinux-keyring
     sudo rm -rf /etc/pacman.d/gnupg
     sudo rm -rf /root/.gnupg
