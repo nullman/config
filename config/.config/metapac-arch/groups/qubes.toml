@@ -253,6 +253,7 @@ arch = {
     "patch",
     "perl-lwp-protocol-https",
     "perl-text-aspell",
+    "picocom",
     "pipewire",
     "pipewire-alsa",
     "pipewire-jack",

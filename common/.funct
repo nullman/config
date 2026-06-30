@@ -1394,6 +1394,40 @@ make-cert() {
 #
 # arch
 #
+#        pmsg                    pacman search with grep
+pmsg() {
+    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+        echo "Usage: pmsg SEARCH GREP"
+    else
+        s="$1"
+        shift
+        pacman -Ss "${s}" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a ; { N ; s/\n */ | / ; p ; d ; ba }" | grep -i "$*"
+    fi
+}
+#        pmss                    pacman specific search
+pmss() {
+    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+        echo "Usage: pmss SEARCH"
+    else
+        pacman -Ss "$*" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a ; /^[a-z]*\/$* / { N ; s/\n */ | / ; p ; d ; ba }"
+    fi
+}
+#        pmsi                    pacman search installed packages
+pmsi() {
+    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+        echo "Usage: pmsi SEARCH"
+    else
+        pacman -Ss "$*" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a ; { N ; s/\n */ | / ; p ; d ; ba }" | grep " \[Installed\]"
+    fi
+}
+#        pmsis                   pacman specific search installed packages
+pmsis() {
+    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+        echo "Usage: pmsis SEARCH"
+    else
+        pacman -Ss "$*" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a ; /^[a-z]*\/$* / { N ; s/\n */ | / ; p ; d ; ba }" | grep " \[Installed\]"
+    fi
+}
 #!#        yasg                    yay search with grep
 #!yasg() {
 #!    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
