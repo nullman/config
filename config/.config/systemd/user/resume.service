@@ -24,7 +24,7 @@ RemainAfterExit=yes
 ExecStop=bash -c "while [ ! -S /tmp/.X11-unix/X0 ]; do sleep 1; done; sleep 5"
 
 # turn keyboard num-lock on
-ExecStop=bash -c "while [ ! -S /tmp/.X11-unix/X0 ]; do sleep 1; done; numlockx"
+ExecStop=bash -c "while [ ! -S /tmp/.X11-unix/X0 ]; do sleep 1; done; [ \"$(uname -n)\" == \"mouse\" ] || numlockx on"
 
 # make capslock act like control; make both shift keys toggle capslock
 ExecStop=bash -c "while [ ! -S /tmp/.X11-unix/X0 ]; do sleep 1; done; setxkbmap -option 'shift:both_capslock,caps:ctrl_modifier'"

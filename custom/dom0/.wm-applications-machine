@@ -27,8 +27,12 @@ _delay() {
     sleep ${delay} && eval "$@"
 }
 
-# turn numlock on
-_run numlockx on
+# turn numlock on (or off)
+if [ "\$(uname -n)" == "mouse" ] ; then
+    _run numlockx off
+else
+    _run numlockx on
+fi
 
 # run background applications and services
 _once xscreensaver -no-splash &
