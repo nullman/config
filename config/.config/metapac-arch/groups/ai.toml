@@ -1,9 +1,6 @@
 arch = {
   packages = [
     "chatbox-bin",
-    "hfdownloader",
-    "imaginer",
-    "lmstudio-bin",
     "ollama",
     "ollama-docs",
     "fortunecraft",

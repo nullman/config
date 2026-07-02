@@ -3177,8 +3177,10 @@ alias dnfsu="sudo dnf system-upgrade"
 alias dnfi="sudo dnf install"
 #        dnfr                    dnf remove
 alias dnfr="sudo dnf remove"
-#        dnfs                    dnf search
+#        dnfs                    dnf search packages
 alias dnfs="dnf search"
+#        dnff                    dnf search files
+alias dnff="dnf provides"
 
 #
 # metapac (Multi-Backend Declarative Package Manager)

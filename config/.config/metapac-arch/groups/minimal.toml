@@ -1,9 +1,12 @@
 arch = {
   packages = [
+    "adw-gtk-theme",
+    "adwaita-qt5-git",
+    "adwaita-qt6-git",
     "audacious",
     "audacious-plugins",
     "brave-bin",
-    "cliamp",
+    "clipmenu",
     "cmus",
     "cool-retro-term",
     "cowsay",
@@ -32,7 +35,6 @@ arch = {
     "w3m",
     "wordgrinder",
     "x48ng",
-    "ymuse",
     "zlib",
 
   ]
