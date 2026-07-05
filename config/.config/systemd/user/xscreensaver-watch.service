@@ -18,7 +18,7 @@ Description=Watch xscreensaver for UNLOCK
 ExecStart=bash -c 'DISPLAY=:0 \
                    xscreensaver-command -watch | while read -r line ; do \
                        if echo "$line" | grep -q "^UNBLANK" ; then \
-                           numlockx ; \
+                           [ "$(uname -n)" == "mouse" ] || numlockx on ; \
                            setxkbmap -option "shift:both_capslock,caps:ctrl_modifier" ; \
                            xmodmap -e "keycode 118 =" ; \
                            xset -dpms s off b off m 2/1 4 r rate 500 35 ; \
