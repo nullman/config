@@ -27,12 +27,12 @@ _delay() {
     sleep ${delay} && eval "$@"
 }
 
-# turn numlock on (or off)
-if [ "\$(uname -n)" == "mouse" ] ; then
-    _run numlockx off
-else
-    _run numlockx on
-fi
+# # turn numlock on (or off)
+# if [ "\$(uname -n)" == "mouse" ] ; then
+#     _run numlockx off
+# else
+#     _run numlockx on
+# fi
 
 # run background applications and services
 _once xscreensaver -no-splash &
@@ -52,14 +52,14 @@ bspc desktop ^10 --layout tiled
 bspc desktop --focus ^10
 # (bspc rule --add --one-shot 'qubes-qube-manager' --state tiled && qubes-qube-manager) & # did not work
 qubes-qube-manager &
-sleep 6s
+sleep 10s
 bspc node --state tiled
 alacritty -e ${HOME}/bin/run-screen &
 
 # run personal vm applications
 (
     qvm-start personal
-    sleep 12s && (
+    sleep 16s && (
         bspc desktop --focus ^1
 
         # prompt for keyring authentication on personal vm
