@@ -13,7 +13,7 @@ _run() {
 # run executable command if found in the path and not already running
 _once() {
     if command -v "$1" >/dev/null 2>&1 && ! pidof -q "$1" ; then
-        "$@" &
+        "$@"
     fi
 }
 
@@ -25,7 +25,7 @@ _delay() {
 }
 
 # run background applications and services
-_once xscreensaver -no-splash &
+#_once xscreensaver -no-splash &
 #_once xautolock -time 30 -locker blurlock & # lock screen after 30 minutes
 #_once xautolock -time 30 -locker 'xscreensaver-command -lock' & # lock screen after 30 minutes
 #_once mpd ${HOME}/.mpd/mpd.conf &
