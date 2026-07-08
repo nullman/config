@@ -26,7 +26,7 @@ _source() {
 export runpath="${runpath}:${HOME}/.xprofile"
 logger "Running: ${HOME}/.xprofile"
 
-# exit if not running under X11
+# exit if not running under a display manager
 [ -z "${DISPLAY}" ] && return 1
 
 # set video resolution via xrandr
@@ -63,7 +63,7 @@ _run setxkbmap -option 'shift:both_capslock,caps:ctrl_modifier'
 # _run ${HOME}/bin/run-sxhkd
 
 # set no energy saving, mouse acceleration rate, and keyboard acceleration rate
-_run xset -dpms s off b off m 2/1 4 r rate 500 35
+_run xset s off b off m 2/1 4 r rate 500 35
 
 # # set mouse scrolling speed
 # _run imwheel -b 4 8
@@ -88,15 +88,6 @@ fi
 # xhost
 #_run xhost +localhost
 #_run xhost +mouse1
-
-# start wm
-#[ -z "$(greppr window_manager)" ] || ps ux | grep -v grep | grep -q window_manager || (exec $(getpr window_manager) & disown) >/dev/null 2>&1
-
-# select a window manager
-#exec selectwm
-
-# use qt6ct for Qt themeing
-export QT_QPA_PLATFORMTHEME="qt6ct"
 
 # restore rotation
 # _source ${HOME}/.raspad-rotate-restore

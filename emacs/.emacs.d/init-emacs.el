@@ -1,5 +1,5 @@
 ;; [[file:init-emacs.org::#constants-colors][Colors:1]]
-(let ((data '(("Color" "Name" "Symbol" "Hex Code") ("Adwaita Dark Background (Original)" "" "" "#29353b") ("Adwaita Dark Background (Darker)" "" "" "#19252b") ("Adwaita Dark Background (Darkest)" "" "color-background" "#09151b") ("White Foreground" "" "color-foreground" "#bbc2cf") ("White Foreground Accent" "" "" "#798188") ("Yellow Cursor" "" "color-cursor" "#eeee22") ("Bright Yellow Highlight" "" "color-paren" "#ffff33") ("White Mouse" "" "color-mouse" "#ffffff") ("Outline Level 1" "pale yellow" "color-1" "#eeffaa") ("Outline Level 2" "light salmon" "color-2" "#ffbbaa") ("Outline Level 3" "sky blue" "color-3" "#aaeeff") ("Outline Level 4" "light green" "color-4" "#bbffaa") ("Outline Level 5" "navajo white" "color-5" "#ffeebb") ("Outline Level 6" "plum" "color-6" "#ffaacc") ("Outline Level 7" "pale turquoise" "color-7" "#bbffee") ("Outline Level 8" "pale green" "color-8" "#99ffbb"))))
+(let ((data '(("Color" "Name" "Symbol" "Hex Code") ("Adwaita Dark Background (Original)" "" "" "#29353b") ("Adwaita Dark Background (Darker)" "" "" "#19252b") ("Adwaita Dark Background (Darkest)" "" "" "#09151b") ("Flatland Background" "" "color-background" "#26292c") ("Flatland Foreground" "" "" "#f8f8f8") ("Flatland Cursor" "" "" "#bbbcbd") ("Gray/Blue Background" "" "" "#1b303d") ("White Foreground" "" "color-foreground" "#bbc2cf") ("White Foreground Accent" "" "" "#798188") ("Yellow Cursor" "" "color-cursor" "#eeee22") ("Bright Yellow Highlight" "" "color-paren" "#ffff33") ("White Mouse" "" "color-mouse" "#ffffff") ("Outline Level 1" "pale yellow" "color-1" "#eeffaa") ("Outline Level 2" "light salmon" "color-2" "#ffbbaa") ("Outline Level 3" "sky blue" "color-3" "#aaeeff") ("Outline Level 4" "light green" "color-4" "#bbffaa") ("Outline Level 5" "navajo white" "color-5" "#ffeebb") ("Outline Level 6" "plum" "color-6" "#ffaacc") ("Outline Level 7" "pale turquoise" "color-7" "#bbffee") ("Outline Level 8" "pale green" "color-8" "#99ffbb"))))
 ;;------------------------------------------------------------------------------
 ;;; Constants: Colors
 ;;------------------------------------------------------------------------------
@@ -498,7 +498,8 @@ A fortune is added if FORTUNE is non-nil."
   (defalias 'gui-selection-value 'x-cut-buffer-or-selection-value))
 
 ;; clipboard
-(when (string= window-system "x")
+;;(when (string= window-system "x")
+(when (or window-system-x window-system-wayland)
   (setq select-enable-clipboard t                                      ; cutting and pasting uses clipboard
         select-enable-primary t                                        ; cutting and pasting uses primary selection
         x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING) ; data-type request for X selection
@@ -572,7 +573,7 @@ A fortune is added if FORTUNE is non-nil."
                (set-face-attribute 'fixed-pitch nil :font font)
                (set-face-attribute 'variable-pitch nil :font font)))
   (cl-case window-system
-    (x
+    ((x pgtk)
      (condition-case nil
          (set-font
           (cond
@@ -635,11 +636,9 @@ Common values:
   90  = 10% transparency
   85  = 15% transparency
   80  = 20% transparency")
-(setq background-alpha (if (or window-system-mac
-                               window-system-windows
-                               window-system-wayland)
-                           100        ; 0% transparency
-                         85))         ; 15% transparency
+(setq background-alpha (if window-system-x
+                           85         ; 15% transparency
+                         100))        ; 0% transparency
 (set-frame-parameter (selected-frame) 'alpha background-alpha)
 (add-to-list 'default-frame-alist (cons 'alpha background-alpha))
 
@@ -671,6 +670,8 @@ Common values:
         modus-themes-variable-pitch-ui nil
         modus-themes-inhibit-reload t ; only applies to `customize-set-variable' and related
         modus-themes-fringes nil ; {nil,'subtle,'intense}
+        modus-themes-custom-auto-reload t
+        modus-themes-disable-other-themes t
 
         ;; Options for `modus-themes-lang-checkers' are either nil (the
         ;; default), or a list of properties that may include any of those
@@ -775,17 +776,18 @@ Common values:
         ;;'((t . (rainbow)))
         '((t . ()))
 
-        modus-themes-vivendi-color-overrides ; override some main colors
-        `((bg-main . ,color-background)
-          (fg-main . ,color-foreground)))
+        modus-vivendi-palette-overrides ; override some main colors
+        `((bg-main ,color-background)
+          (fg-main ,color-foreground)
+          (cursor ,color-cursor)))
 
   ;; load theme files before enabling
   ;;(modus-themes-load-themes)
   ;;(load-theme 'modus-operandi :no-confirm)
   (load-theme 'modus-vivendi :no-confirm))
-  ;; :config
-  ;; ;;(modus-themes-load-operandi)
-  ;; (modus-themes-load-vivendi))
+;; :config
+;; ;;(modus-themes-load-operandi)
+;; (modus-themes-load-vivendi))
 ;; Modus Themes:1 ends here
 
 ;; [[file:init-emacs.org::#environment-settings-gui-footer][Footer:1]]
@@ -1976,8 +1978,10 @@ KEYMAP defaults to `override-global-map'."
     (bind-keys* ("C-x M-y" . cut-line)))
 
   ;; duplicate line
-  (when (fboundp 'duplicate-dwim)
-    (bind-keys* ("C-x C-d" . duplicate-dwim))) ; default: `list-directory'
+  (when (fboundp 'duplicate-line)
+    (bind-keys* ("C-x C-d" . duplicate-line))) ; default: `list-directory'
+  ;; (when (fboundp 'duplicate-dwim)
+  ;;   (bind-keys* ("C-x C-d" . duplicate-dwim))) ; default: `list-directory'
 
   ;; ;; kill ring browser
   ;; (when (fboundp 'browse-kill-ring)
@@ -16723,7 +16727,7 @@ USING is the remaining peg."
   ;; :config
   ;; ;; install fonts, if needed
   ;; (let ((font-dest (cl-case window-system
-  ;;                    (x  (concat (or (getenv "XDG_DATA_HOME")
+  ;;                    ((x pgtk) (concat (or (getenv "XDG_DATA_HOME")
   ;;                                    (concat (getenv "HOME") "/.local/share"))
   ;;                                "/fonts/"))
   ;;                    (mac (concat (getenv "HOME") "/Library/Fonts/"))
@@ -20603,6 +20607,17 @@ otherwise run `find-file-as-root'."
   (setq json-encoding-default-indentation "    "
         json-encoding-pretty-print t))
 ;; JSON Mode:1 ends here
+
+;; [[file:init-emacs.org::#modes-kdl-mode][KDL Mode:1]]
+;;------------------------------------------------------------------------------
+;;; Modes: KDL Mode
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modes: KDL Mode")
+
+(use-package kdl-mode
+  :straight t)
+;; KDL Mode:1 ends here
 
 ;; [[file:init-emacs.org::#modes-latex][LaTeX:1]]
 ;;------------------------------------------------------------------------------

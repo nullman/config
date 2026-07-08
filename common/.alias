@@ -2947,6 +2947,20 @@ alias qd-copy-slide-show="
     fi"
 
 #
+# niri window manager
+#
+#        niri-validate           niri validate
+alias niri-validate="niri validate"
+#        niri-windows            niri msg windows
+alias niri-windows="niri msg windows"
+#        niri-workspaces         niri msg workspaces
+alias niri-workspaces="niri msg workspaces"
+#        niri-pick-window        niri msg pick-window
+alias niri-pick-window="niri msg pick-window"
+#        niri-pick-color         niri msg pick-color
+alias niri-pick-color="niri msg pick-color"
+
+#
 # pacman (Package Manager)
 #
 #        pmu                     pacman -Syu (update packages with refresh)
