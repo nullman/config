@@ -291,24 +291,31 @@ Skips checks if run on Windows or Mac."
 
 ;; [[file:init-emacs.org::#environment-environment][Environment:6]]
 ;; determine if running on a Linux X display
-(defconst window-system-linux
+(defconst window-system-x
   (string= window-system "x")
   "Non-nil if running on a Linux X display.")
 ;; Environment:6 ends here
 
 ;; [[file:init-emacs.org::#environment-environment][Environment:7]]
+;; determine if running on a Linux Wayland display
+(defconst window-system-wayland
+  (string= window-system "pgtk")
+  "Non-nil if running on a Linux Wayland display.")
+;; Environment:7 ends here
+
+;; [[file:init-emacs.org::#environment-environment][Environment:8]]
 ;; determine if running on a work system
 (defconst work-system
   (file-exists-p "~/.work")
   "Non-nil if running on a work system.")
-;; Environment:7 ends here
-
-;; [[file:init-emacs.org::#environment-environment][Environment:8]]
-;; cd to home
-(cd "~")
 ;; Environment:8 ends here
 
 ;; [[file:init-emacs.org::#environment-environment][Environment:9]]
+;; cd to home
+(cd "~")
+;; Environment:9 ends here
+
+;; [[file:init-emacs.org::#environment-environment][Environment:10]]
 ;; shell environment
 (setq shell-file-name (or (getenv "SHELL") "/bin/bash")
       shell-command-switch "-c"
@@ -324,9 +331,9 @@ Skips checks if run on Windows or Mac."
 (when window-system-mac
   (add-to-list 'exec-path "/usr/local/sbin")
   (add-to-list 'exec-path "/usr/local/bin"))
-;; Environment:9 ends here
+;; Environment:10 ends here
 
-;; [[file:init-emacs.org::#environment-environment][Environment:10]]
+;; [[file:init-emacs.org::#environment-environment][Environment:11]]
 ;; set object print depth (do not abbreviate printed objects)
 (setq print-length nil
       print-level nil
@@ -335,7 +342,7 @@ Skips checks if run on Windows or Mac."
 
 ;; ;; turn off print header
 ;; (setq ps-print-header nil)
-;; Environment:10 ends here
+;; Environment:11 ends here
 
 ;; [[file:init-emacs.org::#environment-global-variables][Global Variables:1]]
 ;;------------------------------------------------------------------------------
@@ -628,7 +635,9 @@ Common values:
   90  = 10% transparency
   85  = 15% transparency
   80  = 20% transparency")
-(setq background-alpha (if (or window-system-mac window-system-windows)
+(setq background-alpha (if (or window-system-mac
+                               window-system-windows
+                               window-system-wayland)
                            100        ; 0% transparency
                          85))         ; 15% transparency
 (set-frame-parameter (selected-frame) 'alpha background-alpha)
@@ -1625,64 +1634,6 @@ Otherwise, `custom-tab-width' is used."
 (init-message 1 "Key Bindings")
 ;; Key Bindings:1 ends here
 
-;; [[file:init-emacs.org::#key-bindings-system-keys][System Keys:1]]
-;;------------------------------------------------------------------------------
-;;; Key Bindings: System Keys
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Key Bindings: System Keys")
-
-(defun custom-key-bindings-system-keys ()
-  "Set custom system key bindings."
-  (cond
-   ;; most of these are already set correctly for MacOS
-   (window-system-mac
-    ;; new buffer
-    (when (fboundp 'new-scratch)
-      (bind-keys* ("s-t" . new-scratch))))
-   ((or window-system-linux window-system-windows)
-    ;; cut
-    (bind-keys* ("s-x" . kill-region))
-    ;; copy
-    (bind-keys* ("s-c" . kill-ring-save))
-    ;; paste
-    (bind-keys* ("s-v" . yank))
-    ;; undo
-    (if (fboundp 'undo-tree-undo)
-        (bind-keys* ("s-z" . undo-tree-undo))
-      (bind-keys* ("s-z" . undo)))
-    ;; redo
-    (if (fboundp 'undo-tree-redo)
-        (bind-keys* ("s-y" . undo-tree-redo))
-      (bind-keys* ("s-y" . undo-redo)))
-    ;; select all
-    (bind-keys* ("s-a" . mark-whole-buffer))
-    ;; find
-    (bind-keys* ("s-f" . isearch-forward))
-    ;; find next
-    (bind-keys* ("s-g" . isearch-forward))
-    ;; find previous
-    (bind-keys* ("s-r" . isearch-backward))
-    ;; open file
-    (bind-keys* ("s-o" . find-file))
-    ;; print
-    (bind-keys* ("s-p" . print-buffer))
-    ;; save buffer
-    (if (fboundp 'save-buffer-always)
-        (bind-keys* ("s-s" . save-buffer-always))
-      (bind-keys* ("s-s" . save-buffer)))
-    ;; new buffer
-    (when (fboundp 'new-scratch)
-      (bind-keys* ("s-t" . new-scratch)))
-    ;; close buffer
-    (bind-keys* ("s-w" . kill-current-buffer))
-    ;; set mark
-    (bind-keys* ("s-SPC" . set-mark-command)))))
-
-(init-message 3 "custom-key-bindings-system-keys")
-(custom-key-bindings-system-keys)
-;; System Keys:1 ends here
-
 ;; [[file:init-emacs.org::#key-bindings-function-keys][Function Keys:1]]
 ;;------------------------------------------------------------------------------
 ;;; Key Bindings: Function Keys
@@ -2532,8 +2483,8 @@ KEYMAP defaults to `override-global-map'."
 (defun custom-key-bindings-set-all ()
   "Set all custom key bindings."
 
-  (init-message 3 "custom-key-bindings-system-keys")
-  (custom-key-bindings-system-keys)
+  ;; (init-message 3 "custom-key-bindings-system-keys")
+  ;; (custom-key-bindings-system-keys)
 
   (init-message 3 "custom-key-bindings-function-keys")
   (custom-key-bindings-function-keys)

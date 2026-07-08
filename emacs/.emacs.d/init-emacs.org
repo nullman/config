@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2026-06-27 16:59 (user)>
+  #+TIMESTAMP: <2026-07-07 20:45 (user)>
 
 * Overview
   :PROPERTIES:
@@ -963,9 +963,18 @@
 
     #+BEGIN_SRC emacs-lisp
       ;; determine if running on a Linux X display
-      (defconst window-system-linux
+      (defconst window-system-x
         (string= window-system "x")
         "Non-nil if running on a Linux X display.")
+    #+END_SRC
+
+    Determine if running on a Linux Wayland display.
+
+    #+BEGIN_SRC emacs-lisp
+      ;; determine if running on a Linux Wayland display
+      (defconst window-system-wayland
+        (string= window-system "pgtk")
+        "Non-nil if running on a Linux Wayland display.")
     #+END_SRC
 
     Determine if running on a work computer.
@@ -1381,7 +1390,9 @@
           90  = 10% transparency
           85  = 15% transparency
           80  = 20% transparency")
-        (setq background-alpha (if (or window-system-mac window-system-windows)
+        (setq background-alpha (if (or window-system-mac
+                                       window-system-windows
+                                       window-system-wayland)
                                    100        ; 0% transparency
                                  85))         ; 15% transparency
         (set-frame-parameter (selected-frame) 'alpha background-alpha)
@@ -3096,67 +3107,67 @@
     (init-message 1 "Key Bindings")
   #+END_SRC
 
-*** System Keys
+*** +System Keys+
     :PROPERTIES:
     :CUSTOM_ID: key-bindings-system-keys
     :END:
 
-    #+BEGIN_SRC emacs-lisp
-      ;;------------------------------------------------------------------------------
-      ;;; Key Bindings: System Keys
-      ;;------------------------------------------------------------------------------
+    #+BEGIN_SRC emacs-lisp :tangle no
+      ;; ;;------------------------------------------------------------------------------
+      ;; ;;; Key Bindings: System Keys
+      ;; ;;------------------------------------------------------------------------------
 
-      (init-message 2 "Key Bindings: System Keys")
+      ;; (init-message 2 "Key Bindings: System Keys")
 
-      (defun custom-key-bindings-system-keys ()
-        "Set custom system key bindings."
-        (cond
-         ;; most of these are already set correctly for MacOS
-         (window-system-mac
-          ;; new buffer
-          (when (fboundp 'new-scratch)
-            (bind-keys* ("s-t" . new-scratch))))
-         ((or window-system-linux window-system-windows)
-          ;; cut
-          (bind-keys* ("s-x" . kill-region))
-          ;; copy
-          (bind-keys* ("s-c" . kill-ring-save))
-          ;; paste
-          (bind-keys* ("s-v" . yank))
-          ;; undo
-          (if (fboundp 'undo-tree-undo)
-              (bind-keys* ("s-z" . undo-tree-undo))
-            (bind-keys* ("s-z" . undo)))
-          ;; redo
-          (if (fboundp 'undo-tree-redo)
-              (bind-keys* ("s-y" . undo-tree-redo))
-            (bind-keys* ("s-y" . undo-redo)))
-          ;; select all
-          (bind-keys* ("s-a" . mark-whole-buffer))
-          ;; find
-          (bind-keys* ("s-f" . isearch-forward))
-          ;; find next
-          (bind-keys* ("s-g" . isearch-forward))
-          ;; find previous
-          (bind-keys* ("s-r" . isearch-backward))
-          ;; open file
-          (bind-keys* ("s-o" . find-file))
-          ;; print
-          (bind-keys* ("s-p" . print-buffer))
-          ;; save buffer
-          (if (fboundp 'save-buffer-always)
-              (bind-keys* ("s-s" . save-buffer-always))
-            (bind-keys* ("s-s" . save-buffer)))
-          ;; new buffer
-          (when (fboundp 'new-scratch)
-            (bind-keys* ("s-t" . new-scratch)))
-          ;; close buffer
-          (bind-keys* ("s-w" . kill-current-buffer))
-          ;; set mark
-          (bind-keys* ("s-SPC" . set-mark-command)))))
+      ;; (defun custom-key-bindings-system-keys ()
+      ;;   "Set custom system key bindings."
+      ;;   (cond
+      ;;    ;; most of these are already set correctly for MacOS
+      ;;    (window-system-mac
+      ;;     ;; new buffer
+      ;;     (when (fboundp 'new-scratch)
+      ;;       (bind-keys* ("s-t" . new-scratch))))
+      ;;    ((or window-system-x window-system-wayland window-system-windows)
+      ;;     ;; cut
+      ;;     (bind-keys* ("s-x" . kill-region))
+      ;;     ;; copy
+      ;;     (bind-keys* ("s-c" . kill-ring-save))
+      ;;     ;; paste
+      ;;     (bind-keys* ("s-v" . yank))
+      ;;     ;; undo
+      ;;     (if (fboundp 'undo-tree-undo)
+      ;;         (bind-keys* ("s-z" . undo-tree-undo))
+      ;;       (bind-keys* ("s-z" . undo)))
+      ;;     ;; redo
+      ;;     (if (fboundp 'undo-tree-redo)
+      ;;         (bind-keys* ("s-y" . undo-tree-redo))
+      ;;       (bind-keys* ("s-y" . undo-redo)))
+      ;;     ;; select all
+      ;;     (bind-keys* ("s-a" . mark-whole-buffer))
+      ;;     ;; find
+      ;;     (bind-keys* ("s-f" . isearch-forward))
+      ;;     ;; find next
+      ;;     (bind-keys* ("s-g" . isearch-forward))
+      ;;     ;; find previous
+      ;;     (bind-keys* ("s-r" . isearch-backward))
+      ;;     ;; open file
+      ;;     (bind-keys* ("s-o" . find-file))
+      ;;     ;; print
+      ;;     (bind-keys* ("s-p" . print-buffer))
+      ;;     ;; save buffer
+      ;;     (if (fboundp 'save-buffer-always)
+      ;;         (bind-keys* ("s-s" . save-buffer-always))
+      ;;       (bind-keys* ("s-s" . save-buffer)))
+      ;;     ;; new buffer
+      ;;     (when (fboundp 'new-scratch)
+      ;;       (bind-keys* ("s-t" . new-scratch)))
+      ;;     ;; close buffer
+      ;;     (bind-keys* ("s-w" . kill-current-buffer))
+      ;;     ;; set mark
+      ;;     (bind-keys* ("s-SPC" . set-mark-command)))))
 
-      (init-message 3 "custom-key-bindings-system-keys")
-      (custom-key-bindings-system-keys)
+      ;; (init-message 3 "custom-key-bindings-system-keys")
+      ;; (custom-key-bindings-system-keys)
     #+END_SRC
 
 *** Function Keys
@@ -4048,8 +4059,8 @@
       (defun custom-key-bindings-set-all ()
         "Set all custom key bindings."
 
-        (init-message 3 "custom-key-bindings-system-keys")
-        (custom-key-bindings-system-keys)
+        ;; (init-message 3 "custom-key-bindings-system-keys")
+        ;; (custom-key-bindings-system-keys)
 
         (init-message 3 "custom-key-bindings-function-keys")
         (custom-key-bindings-function-keys)
@@ -28503,7 +28514,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;; (init-message 2 "Modules: openwith")
 
       ;; (use-package openwith
-      ;;   :when window-system-linux
+      ;;   :when (or window-system-x window-system-wayland)
       ;;   :straight t
       ;;   ;;:straight (openwith :type git :host github :repo "emacsmirror/openwith")
       ;;   :commands (openwith-make-extension-regexp)
