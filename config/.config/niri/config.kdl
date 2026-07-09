@@ -390,7 +390,7 @@ window-rule {
 window-rule {
     match app-id="Alacritty"
     default-column-width { proportion 1.0; }
-    open-on-workspace "term"
+    //open-on-workspace "term"
 }
 
 window-rule {
