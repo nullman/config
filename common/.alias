@@ -27,7 +27,7 @@ config="\${HOME}/$([ $(uname -o) == 'Haiku' ] && echo 'haiku-config' || echo 'co
 #!       terminal
 terminal="alacritty"
 #!       network device
-networkdevice="$(_command ip && ip route get 192.168.0.1 2>/dev/null | awk '{print $5}')"
+networkdevice="$(_command ip && ip route get 192.168.1.1 2>/dev/null | awk '{print $3}')"
 #!       nullware IP
 nullwareip="159.203.165.79"
 
@@ -638,13 +638,13 @@ alias netdev="echo \"\$(ip route get 1.1.1.1 | awk '{print \$5}')\""
 #        netip                   show ip address of main network device
 alias netip="ifconfig ${networkdevice} | grep 'inet [0-9]' | sed 's/^.*inet // ; s/ .*$//'"
 #        netinfo                 show network info of main network device
-#!alias netinfo="iwctl device ${networkdevice} show"
 alias netinfo="nmcli device show ${networkdevice}"
 #        netdns                  show dns routers of main network device
-#!alias netdns="iwctl station ${networkdevice} show | grep 'IPv4 address'"
-alias netdns="nmcli device show ${networkdevice} | grep IP4\.DNS"
-#        netdns-flush            flush dns cache
-alias netdns-flush="sudo nscd -i hosts"
+alias netdns="nmcli device show ${networkdevice} | grep '^IP4\.DNS'"
+#        netdns-flush            flush dns caches and restart systemd-resolved
+alias netdns-flush="sudo resolvectl flush-caches ; sudo systemctl restart systemd-resolved"
+#        dig-firewall            search firewall dns
+alias dig-firewall="dig @192.168.1.1"
 #        ns                      netstat
 alias ns="sudo netstat"
 #        nsap                    netstat (all sockets, programs)
@@ -708,6 +708,8 @@ alias ping-dozer="ping 192.168.1.40"
 alias ping-smith="ping 192.168.1.42"
 #        ping-switch             ping switch
 alias ping-switch="ping 192.168.1.44"
+#        ping-switch-direct      ping switch (direct)
+alias ping-switch-direct="ping 192.168.1.45"
 #        ping-mouse              ping mouse
 alias ping-mouse="ping 192.168.1.50"
 #        ping-raspad             ping raspad
@@ -738,25 +740,11 @@ alias icanhazip="curl http://icanhazip.com --silent"
 # network manager
 #
 #        nmrs                    network manager restart
-alias nmrs="
-    sudo systemctl stop NetworkManager
-    sudo systemctl stop iwd
-    sleep 5s
-    sudo systemctl start iwd
-    sleep 5s
-    sudo systemctl start NetworkManager"
-#        nm-nullman              network manager connect to nullman wifi
-alias nm-nullman="nmcli -a device wifi connect nullman"
-#
-# iwd
-#
-#        iwrs                    iw restart
-alias iwrs="
-    sudo systemctl stop iwd
-    sleep 5s
-    sudo systemctl start iwd"
-#        iw-nullman              iw connect to nullman wifi
-alias iw-nullman="iwctl station device ${networkdevice} connect nullman"
+alias nmrs="sudo systemctl restart NetworkManager"
+#        nm-nullman-connect      network manager connect to nullman wifi
+alias nm-nullman-connect="nmcli -a device wifi connect nullman"
+#        nm-nullman-disconnect   network manager disconnect from nullman wifi
+alias nm-nullman-disconnect="nmcli connect down nullman"
 #
 # qemu networking
 #
