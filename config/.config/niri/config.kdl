@@ -129,9 +129,9 @@ layout {
         // Proportion sets the width as a fraction of the output width, taking gaps into account.
         // For example, you can perfectly fit four windows sized "proportion 0.25" on an output.
         // The default preset widths are 1/3, 1/2 and 2/3 of the output.
-        proportion 0.33333
+        //proportion 0.33333
         proportion 0.5
-        proportion 0.66667
+        //proportion 0.66667
         proportion 1.0
 
         // Fixed sets the width in logical pixels exactly.
@@ -284,8 +284,8 @@ recent-windows {
     }
 
     binds {
-        Alt+Tab         { next-window              scope="output"; }
-        Alt+Shift+Tab   { previous-window          scope="output"; }
+        Alt+Tab         { next-window     scope="output"; }
+        Alt+Shift+Tab   { previous-window scope="output"; }
 
         Mod+Tab         { next-window; }
         Mod+Shift+Tab   { previous-window; }
@@ -305,8 +305,7 @@ workspace "vm"
 
 // startup applications
 spawn-at-startup "waybar"
-spawn-at-startup "gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg"
-// spawn-sh-at-startup ""
+spawn-sh-at-startup "gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg"
 
 // do not show hotkey list on startup
 hotkey-overlay {
@@ -389,19 +388,16 @@ window-rule {
 
 window-rule {
     match app-id="Alacritty"
-    default-column-width { proportion 1.0; }
     //open-on-workspace "term"
 }
 
 window-rule {
     match app-id="emacs"
-    default-column-width { proportion 1.0; }
     open-on-workspace "edit"
 }
 
 window-rule {
     match app-id="net.thunderbird.Thunderbird"
-    default-column-width { proportion 1.0; }
     open-on-workspace "email"
 }
 
@@ -411,31 +407,28 @@ window-rule {
     match app-id="Google-chrome"
     match app-id="LibreWolf"
     match app-id="brave-browser"
-    default-column-width { proportion 1.0; }
     open-on-workspace "browse"
 }
 
 window-rule {
-    match app-id="Org.gnome.Nautilus"
+    match app-id="org.gnome.Nautilus"
     match app-id="Pcmanfm"
     match app-id="Spacefm"
     match app-id="thunar"
-    default-column-width { proportion 1.0; }
     open-on-workspace "file"
 }
 
 window-rule {
-    match app-id="Com.github.bleakgrey.tootle"
+    match app-id="com.github.bleakgrey.tootle"
     match app-id="Element"
     match app-id="Gajim"
     match app-id="Pidgin"
-    match app-id="Slack"
+    match app-id="slack"
     match app-id="dev.geopjr.Tuba"
     match app-id="discord"
     match app-id="gossip"
     match app-id="nheko"
     match app-id="quassel"
-    default-column-width { proportion 1.0; }
     open-on-workspace "chat"
 }
 
@@ -444,7 +437,6 @@ window-rule {
     match app-id="jetbrains-idea-ce"
     match app-id="jetbrains-studio"
     match app-id="xyz.chatboxapp.app"
-    default-column-width { proportion 1.0; }
     open-on-workspace "dev"
 }
 
@@ -453,21 +445,13 @@ window-rule {
     match app-id="mplayer2"
     match app-id="Qmmp"
     match app-id="spotify"
-    default-column-width { proportion 1.0; }
     open-on-workspace "video"
 }
 
 window-rule {
     match app-id="VirtualBox Machine"
     match app-id="VirtualBox Manager"
-    default-column-width { proportion 1.0; }
     open-on-workspace "vm"
-}
-
-window-rule {
-    match app-id=""
-    default-column-width { proportion 1.0; }
-    open-on-workspace ""
 }
 
 binds {
@@ -508,21 +492,21 @@ binds {
 
     // Example media keys mapping using playerctl.
     // This will work with any MPRIS-enabled media player.
-    XF86AudioPlay        allow-when-locked=true { spawn-sh "playerctl play-pause"; }
-    XF86AudioStop        allow-when-locked=true { spawn-sh "playerctl stop"; }
-    XF86AudioPrev        allow-when-locked=true { spawn-sh "playerctl previous"; }
-    XF86AudioNext        allow-when-locked=true { spawn-sh "playerctl next"; }
+    XF86AudioPlay allow-when-locked=true { spawn-sh "playerctl play-pause"; }
+    XF86AudioStop allow-when-locked=true { spawn-sh "playerctl stop"; }
+    XF86AudioPrev allow-when-locked=true { spawn-sh "playerctl previous"; }
+    XF86AudioNext allow-when-locked=true { spawn-sh "playerctl next"; }
 
     // Example brightness key mappings for brightnessctl.
     // You can use regular spawn with multiple arguments too (to avoid going through "sh"),
     // but you need to manually put each argument in separate "" quotes.
-    XF86MonBrightnessUp allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "+10%"; }
+    XF86MonBrightnessUp   allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "+10%"; }
     XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "10%-"; }
 
     // Open/close the Overview: a zoomed-out view of workspaces and windows.
     // You can also move the mouse into the top-left hot corner,
     // or do a four-finger swipe up on a touchpad.
-    Mod+Z repeat=false { toggle-overview; }
+    Mod+Space repeat=false { toggle-overview; }
 
     Mod+W repeat=false { close-window; }
 
@@ -608,10 +592,12 @@ binds {
     // Mod+Ctrl+Page_Down { move-window-to-workspace-down; }
     // ...
 
-    Mod+Shift+Page_Up   { move-workspace-up; }
-    Mod+Shift+Page_Down { move-workspace-down; }
+    // Mod+Shift+Page_Up   { move-workspace-up; }
+    // Mod+Shift+Page_Down { move-workspace-down; }
     // Mod+Shift+U         { move-workspace-up; }
     // Mod+Shift+O         { move-workspace-down; }
+    Mod+Ctrl+Page_Up       { move-workspace-up; }
+    Mod+Ctrl+Page_Down     { move-workspace-down; }
 
     // You can bind mouse wheel scroll ticks using the following syntax.
     // These binds will change direction based on the natural-scroll setting.
@@ -662,6 +648,7 @@ binds {
     Mod+7 { focus-workspace 7; }
     Mod+8 { focus-workspace 8; }
     Mod+9 { focus-workspace 9; }
+    Mod+0 { focus-workspace 10; }
     Mod+Ctrl+1 { move-column-to-workspace 1; }
     Mod+Ctrl+2 { move-column-to-workspace 2; }
     Mod+Ctrl+3 { move-column-to-workspace 3; }
@@ -671,6 +658,7 @@ binds {
     Mod+Ctrl+7 { move-column-to-workspace 7; }
     Mod+Ctrl+8 { move-column-to-workspace 8; }
     Mod+Ctrl+9 { move-column-to-workspace 9; }
+    Mod+Ctrl+0 { move-column-to-workspace 10; }
 
     // Alternatively, there are commands to move just a single window:
     // Mod+Ctrl+1 { move-window-to-workspace 1; }
