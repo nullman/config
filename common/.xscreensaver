@@ -4,8 +4,8 @@
 
 timeout:	0:30:00
 cycle:		0:10:00
-lock:		True
-lockTimeout:	2:00:00
+lock:		False
+lockTimeout:	1:00:00
 passwdTimeout:	0:00:20
 visualID:	default
 installColormap:    True
@@ -426,4 +426,3 @@ programs:								      \
 
 pointerHysteresis:  10
 authWarningSlack:   20
-
