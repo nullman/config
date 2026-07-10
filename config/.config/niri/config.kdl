@@ -284,11 +284,11 @@ recent-windows {
     }
 
     binds {
-        Alt+Tab         { next-window     scope="output"; }
-        Alt+Shift+Tab   { previous-window scope="output"; }
+        Alt+Tab         { next-window     scope="workspace"; }
+        Alt+Shift+Tab   { previous-window scope="workspace"; }
 
-        Mod+Tab         { next-window; }
-        Mod+Shift+Tab   { previous-window; }
+        Mod+Tab         { next-window     scope="output"; }
+        Mod+Shift+Tab   { previous-window scope="output"; }
     }
 }
 
@@ -299,12 +299,12 @@ workspace "email"
 workspace "browse"
 workspace "file"
 workspace "chat"
-//workspace "dev"
+workspace "dev"
 //workspace "video"
 //workspace "vm"
 
 // startup applications
-spawn-at-startup "waybar"
+//spawn-at-startup "waybar"
 
 // do not show hotkey list on startup
 hotkey-overlay {
@@ -494,10 +494,10 @@ binds {
     Mod+Shift+W repeat=false { close-window; }
     Super+Shift+X hotkey-overlay-title="Screen Lock" { spawn "swaylock"; }
     Super+Shift+Q hotkey-overlay-title="Session Menu" { spawn-sh "${HOME}/bin/rofi-session-menu -s"; }
-    Mod+D hotkey-overlay-title="Program Launcher" { spawn-sh "rofi -modi run -show run"; }
+    Mod+D hotkey-overlay-title="Program Launcher" { spawn "rofi" "-modi" "run" "-show" "run"; }
     Mod+Ctrl+a hotkey-overlay-title="Application Group Launcher" { spawn-sh "${HOME}/bin/application-launcher"; }
     Mod+Ctrl+P hotkey-overlay-title="Window Properties" { spawn-sh "notify-send --expire-time=3000 'Select window' ; niri msg pick-window | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"; }
-    Mod+Ctrl+W hotkey-overlay-title="Window Selector" { spawn-sh "rofi -modi window -show window"; }
+    Mod+Ctrl+W hotkey-overlay-title="Window Selector" { spawn "rofi" "-modi" "window" "-show" "window"; }
     Mod+Ctrl+backslash hotkey-overlay-title="Display Time" {
         spawn-sh "printf \"$(date '+%Y-%m-%d')\n $(date '+%H:%M:%S')\" | GDK_BACKEND=x11 yad --text-info --width=532 --height=240 --wrap --no-buttons --timeout=3 --fontname='MesloLGS Nerd Font Mono 64' 2>/dev/null"
     }
@@ -512,17 +512,17 @@ binds {
     // The allow-when-locked=true property makes them work even when the session is locked.
     // Using spawn-sh allows to pass multiple arguments together with the command.
     // "-l 1.0" limits the volume to 100%.
-    XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+ -l 1.0"; }
-    XF86AudioLowerVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-"; }
-    XF86AudioMute        allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; }
-    XF86AudioMicMute     allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
+    XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+" "-l" "1.0"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; }
+    XF86AudioMute        allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
+    XF86AudioMicMute     allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
 
     // Example media keys mapping using playerctl.
     // This will work with any MPRIS-enabled media player.
-    XF86AudioPlay allow-when-locked=true { spawn-sh "playerctl play-pause"; }
-    XF86AudioStop allow-when-locked=true { spawn-sh "playerctl stop"; }
-    XF86AudioPrev allow-when-locked=true { spawn-sh "playerctl previous"; }
-    XF86AudioNext allow-when-locked=true { spawn-sh "playerctl next"; }
+    XF86AudioPlay allow-when-locked=true { spawn "playerctl" "play-pause"; }
+    XF86AudioStop allow-when-locked=true { spawn "playerctl" "stop"; }
+    XF86AudioPrev allow-when-locked=true { spawn "playerctl" "previous"; }
+    XF86AudioNext allow-when-locked=true { spawn "playerctl" "next"; }
 
     // Example brightness key mappings for brightnessctl.
     // You can use regular spawn with multiple arguments too (to avoid going through "sh"),
