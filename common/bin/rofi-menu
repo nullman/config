@@ -24,13 +24,14 @@
 set -eu #o pipefail
 
 prompt="rofi -dmenu -i -p"
-promptfont="rofi -dmenu -font 'System San Francisco Display 12' -i -p"
-promptfontprefix="rofi -dmenu -font 'System San Francisco Display 12' -matching prefix -i -p"
+promptprefix="rofi -dmenu -matching prefix -i -p"
 
 if [ "${XDG_SESSION_TYPE}" == "wayland" ] ; then
     clip="wl-copy"
+    typer="wtype"
 else
     clip="xsel && xsel --output | xsel --clipboard"
+    typer="xdotool"
 fi
 
 # display usage information
@@ -118,7 +119,7 @@ case "${menu}" in
     bookmarks)
         # display bookmarks
         if [ $# -lt 2 ] ; then
-            sel=$(cat "${HOME}/Documents/bookmarks.txt" | ${promptfont} '󰃃	Bookmarks')
+            sel=$(cat "${HOME}/Documents/bookmarks.txt" | ${prompt} '󰃃	Bookmarks')
         else
             sel=$2
         fi
@@ -133,7 +134,7 @@ case "${menu}" in
     bookmarks-keyword)
         # display bookmarks having keywords
         if [ $# -lt 2 ] ; then
-            sel=$(sed -n 's/^.* {\(.*\)}: /\1 -> /p' "${HOME}/Documents/bookmarks.txt" | sort | ${promptfontprefix} '󰃃	Bookmarks: Keyword')
+            sel=$(sed -n 's/^.* {\(.*\)}: /\1 -> /p' "${HOME}/Documents/bookmarks.txt" | sort | ${promptprefix} '󰃃	Bookmarks: Keyword')
         else
             sel=$2
         fi
@@ -218,9 +219,9 @@ case "${menu}" in
     emoji)
         # run rofimoji
         if [ "${XDG_SESSION_TYPE}" == "wayland" ] ; then
-            rofimoji --typer wtype --clipboarder wl-copy --action type copy --skin-tone neutral
+            rofimoji --typer wtype --clipboarder wl-copy --action copy --skin-tone neutral
         else
-            rofimoji --typer xdotool --clipboarder xsel --action type copy --skin-tone neutral
+            rofimoji --typer xdotool --clipboarder xsel --action copy --skin-tone neutral
         fi
         ;;
 
@@ -242,7 +243,7 @@ case "${menu}" in
             "‖‖	Double Parallel Lines"
             "##	Double Number Sign"
         )
-        $(printf '%s\n' "${footnotes[@]}" | $(${prompt} '󰽒	Footnotes') | sed -z 's/\t.*$// ; s/\\n$//' | ${clip})
+        $(printf '%s\n' "${footnotes[@]}" | ${prompt} '󰽒	Footnotes' | sed -z 's/\t.*$// ; s/\\n$//' | ${clip})
         ;;
 
     git)
@@ -453,7 +454,7 @@ case "${menu}" in
             \*) word="${sel}" ;;
             \+) word="${res:1}" ;;
             \#) GDK_BACKEND=x11 yad --title "Word" --text "Word ${sel} was not found" --fontname='MesloLGS Nerd Font Mono 14' 2>/dev/null ;;
-            \?|\&) word=$(printf '%s' "${res}" | sed 's/^.*: // ; s/, */,/g' | tr ',' '\n' | ${promptfont} '	Select Word to Define') ;;
+            \?|\&) word=$(printf '%s' "${res}" | sed 's/^.*: // ; s/, */,/g' | tr ',' '\n' | ${prompt} '	Select Word to Define') ;;
         esac
 
         [ -n "${word}" ] && trans -no-ansi "${word}" | GDK_BACKEND=x11 yad --title "Definition" --text-info --width=1024 --height=768 --wrap --no-buttons --wrap --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null

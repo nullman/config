@@ -299,9 +299,9 @@ workspace "email"
 workspace "browse"
 workspace "file"
 workspace "chat"
-workspace "dev"
-workspace "video"
-workspace "vm"
+//workspace "dev"
+//workspace "video"
+//workspace "vm"
 
 // startup applications
 spawn-at-startup "waybar"
@@ -423,6 +423,7 @@ window-rule {
     match app-id="Pcmanfm"
     match app-id="Spacefm"
     match app-id="thunar"
+    match app-id="org.gnome.Papers"
     default-column-width { proportion 1.0; }
     open-on-workspace "file"
 }
@@ -478,35 +479,34 @@ binds {
     // Most actions that you can bind here can also be invoked programmatically with
     // `niri msg action do-something`.
 
-    // Mod-Shift-/, which is usually the same as Mod-?,
-    // shows a list of important hotkeys.
-    Mod+Shift+Slash { show-hotkey-overlay; }
-    Mod+H { show-hotkey-overlay; }
-
-    // Suggested binds for running programs: terminal, app launcher, screen locker.
-    Mod+Return hotkey-overlay-title="Open a Terminal: alacritty" { spawn "alacritty"; }
-    Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
-    Super+Shift+X hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
-
-    Super+Alt+backslash hotkey-overlay-title="Display Time" {
-        spawn-sh "printf \"$(date '+%Y-%m-%d')\n $(date '+%H:%M:%S')\" | GDK_BACKEND=x11 yad --text-info --width=532 --height=240 --wrap --no-buttons --timeout=3 --fontname='MesloLGS Nerd Font Mono 64' 2>/dev/null"
-    }
-    Super+Alt+y hotkey-overlay-title="Git Sync: Config" {
-        spawn-sh "source \"${HOME}/.funct\" && (git-sync-config && echo 'Done') 2>&1 | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"
-    }
-    Super+Alt+Shift+y hotkey-overlay-title="Git Sync: Extra" {
-        spawn-sh "source \"${HOME}/.funct\" && (git-sync-extra && echo 'Done') 2>&1 | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"
-    }
-
-    Super+Alt+Return { spawn-sh "${HOME}/bin/rofi-menu"; }
-
-    Mod+Shift+P { spawn-sh "niri msg pick-window"; }
-    Mod+Shift+Q { spawn-sh "${HOME}/bin/rofi-session-menu -s"; }
-
     // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument. It's passed verbatim to `sh -c`.
     // For example, this is a standard bind to toggle the screen reader (orca).
     /-Super+Alt+S allow-when-locked=true hotkey-overlay-title=null { spawn-sh "pkill orca || exec orca"; }
+
+    Mod+Shift+Slash { show-hotkey-overlay; } // shows a list of important hotkeys.
+    Mod+H { show-hotkey-overlay; }
+
+    Mod+Return hotkey-overlay-title="Alacritty Terminal" { spawn "alacritty"; }
+    Mod+Ctrl+Return hotkey-overlay-title="Custom Menu" { spawn-sh "${HOME}/bin/rofi-menu"; }
+    Mod+Space repeat=false { toggle-overview; } // zoomed-out view of workspaces and windows; can also move the mouse into the top-left hot corner or do a four-finger swipe up on a touchpad
+    Mod+Ctrl+Space hotkey-overlay-title="Desktop Application Launcher" { spawn "rofi" "-modi" "drun" "-show" "drun"; }
+    Mod+Shift+W repeat=false { close-window; }
+    Super+Shift+X hotkey-overlay-title="Screen Lock" { spawn "swaylock"; }
+    Super+Shift+Q hotkey-overlay-title="Session Menu" { spawn-sh "${HOME}/bin/rofi-session-menu -s"; }
+    Mod+D hotkey-overlay-title="Program Launcher" { spawn-sh "rofi -modi run -show run"; }
+    Mod+Ctrl+a hotkey-overlay-title="Application Group Launcher" { spawn-sh "${HOME}/bin/application-launcher"; }
+    Mod+Ctrl+P hotkey-overlay-title="Window Properties" { spawn-sh "notify-send --expire-time=3000 'Select window' ; niri msg pick-window | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"; }
+    Mod+Ctrl+W hotkey-overlay-title="Window Selector" { spawn-sh "rofi -modi window -show window"; }
+    Mod+Ctrl+backslash hotkey-overlay-title="Display Time" {
+        spawn-sh "printf \"$(date '+%Y-%m-%d')\n $(date '+%H:%M:%S')\" | GDK_BACKEND=x11 yad --text-info --width=532 --height=240 --wrap --no-buttons --timeout=3 --fontname='MesloLGS Nerd Font Mono 64' 2>/dev/null"
+    }
+    Mod+Ctrl+y hotkey-overlay-title="Git Sync: Config" {
+        spawn-sh "source \"${HOME}/.funct\" && (git-sync-config && echo 'Done') 2>&1 | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"
+    }
+    Mod+Ctrl+Shift+y hotkey-overlay-title="Git Sync: Extra" {
+        spawn-sh "source \"${HOME}/.funct\" && (git-sync-extra && echo 'Done') 2>&1 | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"
+    }
 
     // Example volume keys mappings for PipeWire & WirePlumber.
     // The allow-when-locked=true property makes them work even when the session is locked.
@@ -529,13 +529,6 @@ binds {
     // but you need to manually put each argument in separate "" quotes.
     XF86MonBrightnessUp   allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "+10%"; }
     XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "10%-"; }
-
-    // Open/close the Overview: a zoomed-out view of workspaces and windows.
-    // You can also move the mouse into the top-left hot corner,
-    // or do a four-finger swipe up on a touchpad.
-    Mod+Space repeat=false { toggle-overview; }
-
-    Mod+W repeat=false { close-window; }
 
     /-Mod+O { toggle-window-rule-opacity; }
 
