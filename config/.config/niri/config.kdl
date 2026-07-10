@@ -305,7 +305,6 @@ workspace "vm"
 
 // startup applications
 spawn-at-startup "waybar"
-spawn-sh-at-startup "gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg"
 
 // do not show hotkey list on startup
 hotkey-overlay {
@@ -384,6 +383,11 @@ window-rule {
 /-window-rule {
     geometry-corner-radius 12
     clip-to-geometry true
+}
+
+window-rule {
+    match app-id="Yad"
+    open-floating true
 }
 
 window-rule {
@@ -482,8 +486,22 @@ binds {
     // Suggested binds for running programs: terminal, app launcher, screen locker.
     Mod+Return hotkey-overlay-title="Open a Terminal: alacritty" { spawn "alacritty"; }
     Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
-    Super+Ctrl+X hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
-    Mod+P { spawn-sh "niri msg pick-window"; }
+    Super+Shift+X hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
+
+    Super+Alt+backslash hotkey-overlay-title="Display Time" {
+        spawn-sh "printf \"$(date '+%Y-%m-%d')\n $(date '+%H:%M:%S')\" | GDK_BACKEND=x11 yad --text-info --width=532 --height=240 --wrap --no-buttons --timeout=3 --fontname='MesloLGS Nerd Font Mono 64' 2>/dev/null"
+    }
+    Super+Alt+y hotkey-overlay-title="Git Sync: Config" {
+        spawn-sh "source \"${HOME}/.funct\" && (git-sync-config && echo 'Done') 2>&1 | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"
+    }
+    Super+Alt+Shift+y hotkey-overlay-title="Git Sync: Extra" {
+        spawn-sh "source \"${HOME}/.funct\" && (git-sync-extra && echo 'Done') 2>&1 | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"
+    }
+
+    Super+Alt+Return { spawn-sh "${HOME}/bin/rofi-menu"; }
+
+    Mod+Shift+P { spawn-sh "niri msg pick-window"; }
+    Mod+Shift+Q { spawn-sh "${HOME}/bin/rofi-session-menu -s"; }
 
     // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument. It's passed verbatim to `sh -c`.
@@ -759,7 +777,7 @@ binds {
     Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
 
     // The quit action will show a confirmation dialog to avoid accidental exits.
-    Mod+Shift+Q { quit; }
+    /-Mod+Shift+Q { quit; }
     /-Ctrl+Alt+Delete { quit; }
 
     // Powers off the monitors. To turn them back on, do any input like
