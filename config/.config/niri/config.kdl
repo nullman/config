@@ -448,13 +448,13 @@ binds {
     Super+Alt+Period { expel-window-from-column; }
 
     // cycle through widths set in preset-column-widths
-    Super+R       { switch-preset-column-width; }
     Super+Space   { switch-preset-column-width; }
+    Super+R       { switch-preset-column-width; }
     Super+Shift+R { switch-preset-column-width-back; }
 
-    Super+Ctrl+M     { expand-column-to-available-width; }
-    Super+Ctrl+W     { maximize-window-to-edges; }
-    Super+Ctrl+F     { fullscreen-window; }
+    Super+Ctrl+M { expand-column-to-available-width; }
+    Super+Ctrl+W { maximize-window-to-edges; }
+    Super+Ctrl+F { fullscreen-window; }
 
     Super+Ctrl+C { center-column; }
 
@@ -470,7 +470,7 @@ binds {
     Super+Ctrl+T { toggle-column-tabbed-display; }
 
     // turn off keyboard inhibiting a vm or other app has turned on
-    Super+Escape hotkey-overlay-title="Toggle Keyboard Shortcuts Inhibiting" allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
+    Super+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
 }
 
 //======================================================================
