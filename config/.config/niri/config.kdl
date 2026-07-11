@@ -126,6 +126,7 @@ workspace "dev"
 
 // startup applications
 //spawn-at-startup "waybar"
+spawn-sh-at-startup "xscreensaver --splash"
 
 // do not show hotkey list on startup
 hotkey-overlay {
@@ -314,9 +315,9 @@ binds {
     Super+Alt+S           hotkey-overlay-title="Spell and Define Word"                             { spawn-sh "${HOME}/bin/rofi-menu spell"; }
     // bitwarden selector
     Super+Alt+Shift+P     hotkey-overlay-title="Generate Password"                                 { spawn-sh "${HOME}/bin/rofi-menu password"; }
-    Super+Ctrl+Backslash  hotkey-overlay-title="Display Time"                                      { spawn-sh "printf \"$(date '+%Y-%m-%d')\n $(date '+%H:%M:%S')\" | GDK_BACKEND=x11 yad --text-info --width=532 --height=240 --wrap --no-buttons --timeout=3 --fontname='MesloLGS Nerd Font Mono 64' 2>/dev/null"; }
-    Super+Ctrl+Y          hotkey-overlay-title="Git Sync: Config"                                  { spawn-sh "source \"${HOME}/.funct\" && (git-sync-config && echo 'Done') 2>&1 | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"; }
-    Super+Ctrl+Shift+Y    hotkey-overlay-title="Git Sync: Extra"                                   { spawn-sh "source \"${HOME}/.funct\" && (git-sync-extra && echo 'Done') 2>&1 | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"; }
+    Super+Alt+Backslash   hotkey-overlay-title="Display Time"                                      { spawn-sh "printf \"$(date '+%Y-%m-%d')\n $(date '+%H:%M:%S')\" | GDK_BACKEND=x11 yad --text-info --width=532 --height=240 --wrap --no-buttons --timeout=3 --fontname='MesloLGS Nerd Font Mono 64' 2>/dev/null"; }
+    Super+Alt+Y           hotkey-overlay-title="Git Sync: Config"                                  { spawn-sh "source \"${HOME}/.funct\" && (git-sync-config && echo 'Done') 2>&1 | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"; }
+    Super+Alt+Shift+Y     hotkey-overlay-title="Git Sync: Extra"                                   { spawn-sh "source \"${HOME}/.funct\" && (git-sync-extra && echo 'Done') 2>&1 | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"; }
     Super+Alt+X           hotkey-overlay-title="Activate XScreenSaver"                             { spawn "xscreensaver-command" "-activate"; }
     Super+Shift+X         hotkey-overlay-title="Screen Lock"                                       { spawn "swaylock"; }
     Super+Shift+W         hotkey-overlay-title="Close Window" repeat=false                         { close-window; }

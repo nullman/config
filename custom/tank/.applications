@@ -7,26 +7,14 @@
 alacritty
 emacs
 thunderbird
-##betterbird
-brave
-##firefox
-##chromium
+brave-browser
 thunar
-##pcmanfm
-##spacefm
-quasselclient
+Discord
 slack
-discord
-##tootle
-nheko
-##element-desktop
-dev.geopjr.Tuba
 gajim
-##pidgin
-##idea
-##google-chrome
-##google-chrome-stable
-#syncterm
+dev.geopjr.Tuba
+nheko
+quasselclient
 
 #===============================================================================
 # End of File
