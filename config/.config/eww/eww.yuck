@@ -24,8 +24,8 @@
 
 (defpoll active-desktop :interval "500ms" "bspc query -D -d --names")
 
-(defpoll music-info :interval "2s" "~/bin/mpc-playing")
-;;(defpoll music-info :interval "2s" "~/bin/mpc-playing | awk -F ' - ' '{ if (length($2) <= 40) { print $2 } else { print substr($2, 0, 40)\"...\" } }'")
+(defpoll music-info :interval "2s" "~/bin/mpd-playing")
+;;(defpoll music-info :interval "2s" "~/bin/mpd-playing | awk -F ' - ' '{ if (length($2) <= 40) { print $2 } else { print substr($2, 0, 40)\"...\" } }'")
 ;; symbols:    
 (defpoll music-state :interval "2s" "mpc | sed -n 2p | sed 's/^\[\(.*\)\].*$/\1/' | grep -q '^\\[playing\\]' && echo '' || echo ''")
 
@@ -110,7 +110,7 @@
            (box :class "label"
                 :visible {capacity == "" ? "false" : "true"}
                 :tooltip "${capacity}%, ${status}"
-                ;; symbols: 󰁺 󰁻 󰁼 󰁽 󰁾 󰁿 󰂀 󰂁 󰂂 󰁹 󰂆 󰂇 󰂈 󰂉 󰂊 󰂋 󰂅 󰂄
+                ;; symbols: 󰁺 󰁻 󰁼 󰁽 󰁾 󰁿 󰂀 󰂁 󰂂 󰁹 󰂆 󰂇 󰂈 󰂉 󰂊 󰂋 󰂅 󰂄     
                 (label :text {capacity == "" ? " " :
                        status == "Charging" && capacity < 18 ? "󰂆" :
                        status == "Charging" && capacity < 30 ? "󰂇" :

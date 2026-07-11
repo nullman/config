@@ -257,8 +257,8 @@ binds {
     // to Alt when running as a winit window
 
     // help
-    Super+Alt+Shift+Slash { show-hotkey-overlay; }
-    Super+Alt+H { show-hotkey-overlay; }
+    Super+Shift+Slash { show-hotkey-overlay; }
+    Super+H           { show-hotkey-overlay; }
 
     // media keys: brightness
     XF86MonBrightnessUp   allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "+10%"; }
@@ -271,9 +271,9 @@ binds {
     XF86AudioMicMute     allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
 
     // media keys: audio play
+    XF86AudioPrev allow-when-locked=true { spawn "playerctl" "previous"; }
     XF86AudioPlay allow-when-locked=true { spawn "playerctl" "play-pause"; }
     XF86AudioStop allow-when-locked=true { spawn "playerctl" "stop"; }
-    XF86AudioPrev allow-when-locked=true { spawn "playerctl" "previous"; }
     XF86AudioNext allow-when-locked=true { spawn "playerctl" "next"; }
 
     // wooting lekker keyboard media keys: brightness
@@ -281,13 +281,13 @@ binds {
     Super+Pause allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "10%-"; }
 
     // wooting lekker keyboard media keys: volume
-    Super+Home    allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"; }
-    Super+Page_Up allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; }
     Super+Insert  allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
+    Super+Home    allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; }
+    Super+Page_Up allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"; }
 
     // wooting lekker keyboard media keys: audio play
-    Super+End       allow-when-locked=true { spawn "playerctl" "play-pause"; }
     Super+Delete    allow-when-locked=true { spawn "playerctl" "previous"; }
+    Super+End       allow-when-locked=true { spawn "playerctl" "play-pause"; }
     Super+Page_Down allow-when-locked=true { spawn "playerctl" "next"; }
 
     // screenshots
@@ -296,52 +296,53 @@ binds {
     Super+Shift+Print { screenshot; }
 
     // applications & utilities
-    Super+Space           hotkey-overlay-title="Toggle Overview" repeat=false                      { toggle-overview; }
-    Super+Alt+Space       hotkey-overlay-title="Window, Desktop Application, and Program Launcher" { spawn "rofi" "-show" "combi" "-modes" "combi" "-combi-modes" "'window,drun,run'"; }
-    Super+Return          hotkey-overlay-title="Alacritty Terminal"                                { spawn "alacritty"; }
-    Super+Alt+D           hotkey-overlay-title="Desktop Application Launcher"                      { spawn "rofi" "-modi" "drun" "-show" "drun"; }
-    Super+Alt+Shift+D     hotkey-overlay-title="Program Launcher"                                  { spawn "rofi" "-modi" "run" "-show" "run"; }
-    Super+Alt+A           hotkey-overlay-title="Application Group Launcher"                        { spawn-sh "${HOME}/bin/application-launcher"; }
-    Super+Alt+Return      hotkey-overlay-title="Menu Launcher"                                     { spawn-sh "${HOME}/bin/rofi-menu"; }
-    Super+Alt+W           hotkey-overlay-title="Window Selector"                                   { spawn "rofi" "-modi" "window" "-show" "window"; }
-    //Super+Alt+C         hotkey-overlay-title="Clipboard Selector"                                { }
-    Super+Alt+E           hotkey-overlay-title="Emoji Selector"                                    { spawn-sh "${HOME}/bin/rofi-menu emoji"; }
-    Super+Alt+U           hotkey-overlay-title="Unicode Selector"                                  { spawn-sh "${HOME}/bin/rofi-menu unicode"; }
-    Super+Alt+Shift+U     hotkey-overlay-title="Footnote Symbol Selector"                          { spawn-sh "${HOME}/bin/rofi-menu footnotes"; }
-    Super+Alt+O           hotkey-overlay-title="Bookmarks Selector"                                { spawn-sh "${HOME}/bin/rofi-menu bookmarks"; }
-    Super+Alt+Shift+O     hotkey-overlay-title="Bookmarks Keyword Selector"                        { spawn-sh "${HOME}/bin/rofi-menu bookmarks-keyword"; }
-    Super+Alt+SemiColon   hotkey-overlay-title="Typer Selector"                                    { spawn-sh "${HOME}/bin/rofi-typer"; }
-    Super+Alt+Apostrophe  hotkey-overlay-title="Paste Selector"                                    { spawn-sh "${HOME}/bin/rofi-menu paste"; }
-    Super+Alt+S           hotkey-overlay-title="Spell and Define Word"                             { spawn-sh "${HOME}/bin/rofi-menu spell"; }
+    Super+Ctrl+Space hotkey-overlay-title="Toggle Overview" repeat=false                      { toggle-overview; }
+    Super+Alt+Space  hotkey-overlay-title="Window, Desktop Application, and Program Launcher" { spawn "rofi" "-show" "combi" "-modes" "combi" "-combi-modes" "'window,drun,run'"; }
+    Super+Return     hotkey-overlay-title="Alacritty Terminal"                                { spawn "alacritty"; }
+    Super+D          hotkey-overlay-title="Desktop Application Launcher"                      { spawn "rofi" "-modi" "drun" "-show" "drun"; }
+    Super+Shift+D    hotkey-overlay-title="Program Launcher"                                  { spawn "rofi" "-modi" "run" "-show" "run"; }
+    Super+A          hotkey-overlay-title="Application Group Launcher"                        { spawn-sh "${HOME}/bin/application-launcher"; }
+    Super+Alt+Return hotkey-overlay-title="Menu Launcher"                                     { spawn-sh "${HOME}/bin/rofi-menu"; }
+    Super+W          hotkey-overlay-title="Window Selector"                                   { spawn "rofi" "-modi" "window" "-show" "window"; }
+    //Super+Alt+C    hotkey-overlay-title="Clipboard Selector"                                { }
+    Super+E          hotkey-overlay-title="Emoji Selector"                                    { spawn-sh "${HOME}/bin/rofi-menu emoji"; }
+    Super+U          hotkey-overlay-title="Unicode Selector"                                  { spawn-sh "${HOME}/bin/rofi-menu unicode"; }
+    Super+Shift+U    hotkey-overlay-title="Footnote Symbol Selector"                          { spawn-sh "${HOME}/bin/rofi-menu footnotes"; }
+    Super+O          hotkey-overlay-title="Bookmarks Selector"                                { spawn-sh "${HOME}/bin/rofi-menu bookmarks"; }
+    Super+Shift+O    hotkey-overlay-title="Bookmarks Keyword Selector"                        { spawn-sh "${HOME}/bin/rofi-menu bookmarks-keyword"; }
+    Super+SemiColon  hotkey-overlay-title="Typer Selector"                                    { spawn-sh "${HOME}/bin/rofi-typer"; }
+    Super+Apostrophe hotkey-overlay-title="Paste Selector"                                    { spawn-sh "${HOME}/bin/rofi-menu paste"; }
+    Super+S          hotkey-overlay-title="Spell and Define Word"                             { spawn-sh "${HOME}/bin/rofi-menu spell"; }
     // bitwarden selector
-    Super+Alt+Shift+P     hotkey-overlay-title="Generate Password"                                 { spawn-sh "${HOME}/bin/rofi-menu password"; }
-    Super+Alt+Backslash   hotkey-overlay-title="Display Time"                                      { spawn-sh "printf \"$(date '+%Y-%m-%d')\n $(date '+%H:%M:%S')\" | GDK_BACKEND=x11 yad --text-info --width=532 --height=240 --wrap --no-buttons --timeout=3 --fontname='MesloLGS Nerd Font Mono 64' 2>/dev/null"; }
-    Super+Alt+Y           hotkey-overlay-title="Git Sync: Config"                                  { spawn-sh "source \"${HOME}/.funct\" && (git-sync-config && echo 'Done') 2>&1 | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"; }
-    Super+Alt+Shift+Y     hotkey-overlay-title="Git Sync: Extra"                                   { spawn-sh "source \"${HOME}/.funct\" && (git-sync-extra && echo 'Done') 2>&1 | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"; }
-    Super+Alt+X           hotkey-overlay-title="Activate XScreenSaver"                             { spawn "xscreensaver-command" "-activate"; }
-    Super+Shift+X         hotkey-overlay-title="Screen Lock"                                       { spawn "swaylock"; }
-    Super+Shift+W         hotkey-overlay-title="Close Window" repeat=false                         { close-window; }
-    Super+Shift+Q         hotkey-overlay-title="Session Menu"                                      { spawn-sh "${HOME}/bin/rofi-session-menu -s"; }
-    Super+Shift+P         hotkey-overlay-title="Window Properties"                                 { spawn-sh "notify-send --expire-time=3000 'Select window' ; niri msg pick-window | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"; }
-    Super+Shift+C         hotkey-overlay-title="Color Picker"                                      { spawn-sh "notify-send --expire-time=3000 'Select color' ; niri msg pick-color | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"; }
+    Super+P          hotkey-overlay-title="Generate Password"                                 { spawn-sh "${HOME}/bin/rofi-menu password"; }
+    Super+Backslash  hotkey-overlay-title="Display Time"                                      { spawn-sh "printf \"$(date '+%Y-%m-%d')\n $(date '+%H:%M:%S')\" | GDK_BACKEND=x11 yad --text-info --width=532 --height=240 --wrap --no-buttons --timeout=3 --fontname='MesloLGS Nerd Font Mono 64' 2>/dev/null"; }
+    Super+Y          hotkey-overlay-title="Git Sync: Config"                                  { spawn-sh "source \"${HOME}/.funct\" && (git-sync-config && echo 'Done') 2>&1 | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"; }
+    Super+Shift+Y    hotkey-overlay-title="Git Sync: Extra"                                   { spawn-sh "source \"${HOME}/.funct\" && (git-sync-extra && echo 'Done') 2>&1 | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"; }
+    Super+X          hotkey-overlay-title="Activate XScreenSaver"                             { spawn "xscreensaver-command" "-activate"; }
+    Super+Shift+X    hotkey-overlay-title="Screen Lock"                                       { spawn "swaylock"; }
+    Super+Shift+W    hotkey-overlay-title="Close Window" repeat=false                         { close-window; }
+    Super+Shift+Q    hotkey-overlay-title="Session Menu"                                      { spawn-sh "${HOME}/bin/rofi-session-menu -s"; }
+    Super+Shift+P    hotkey-overlay-title="Window Properties"                                 { spawn-sh "notify-send --expire-time=3000 'Select window' ; niri msg pick-window | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"; }
+    Super+Shift+C    hotkey-overlay-title="Color Picker"                                      { spawn-sh "notify-send --expire-time=3000 'Select color' ; niri msg pick-color | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"; }
+    Super+Shift+V    hotkey-overlay-title="Validate Niri Config"                              { spawn-sh "niri validate 2>&1 | ansi2txt | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"; }
 
     // mpd controls
-    Super+Alt+Ctrl+M      hotkey-overlay-title="mpd: Play/Pause" { spawn-sh "mpc toggle && notify-send --expire-time=5000 --replace-id=2 \"$(${HOME}/bin/mpc-playing)\""; }
-    Super+Alt+Ctrl+Comma  hotkey-overlay-title="mpd: Previous"   { spawn-sh "mpc prev && notify-send --expire-time=5000 --replace-id=2 \"$(${HOME}/bin/mpc-playing)\""; }
-    Super+Alt+Ctrl+Period hotkey-overlay-title="mpd: Next"       { spawn-sh "mpc next && notify-send --expire-time=5000 --replace-id=2 \"$(${HOME}/bin/mpc-playing)\""; }
-    Super+Alt+Ctrl+Slash  hotkey-overlay-title="mpd: Notify"     { spawn-sh "notify-send --expire-time=5000 --replace-id=2 \"$(${HOME}/bin/mpc-playing)\""; }
+    Super+Alt+Ctrl+M      hotkey-overlay-title="mpd: Play/Pause" { spawn-sh "mpc toggle && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg \"$(${HOME}/bin/mpd-playing --notify-title)\" \"$(${HOME}/bin/mpd-playing --notify-body)\""; }
+    Super+Alt+Ctrl+Comma  hotkey-overlay-title="mpd: Previous"   { spawn-sh "mpc prev && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg \"$(${HOME}/bin/mpd-playing --notify-title)\" \"$(${HOME}/bin/mpd-playing --notify-body)\""; }
+    Super+Alt+Ctrl+Period hotkey-overlay-title="mpd: Next"       { spawn-sh "mpc next && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg \"$(${HOME}/bin/mpd-playing --notify-title)\" \"$(${HOME}/bin/mpd-playing --notify-body)\""; }
+    Super+Alt+Ctrl+Slash  hotkey-overlay-title="mpd: Notify"     { spawn-sh "notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg \"$(${HOME}/bin/mpd-playing --notify-title)\" \"$(${HOME}/bin/mpd-playing --notify-body)\""; }
 
     // connect to sennheiser hd350bt headphones
-    Super+Alt+B hotkey-overlay-title="Connect to Sennheiser HD350BT Headphones" { spawn-sh "notify-send --expire-time=3000 'Connecting to Sennheiser HD 350BT Headphones' && bluetoothctl connect 80:C3:BA:0E:CB:E5"; }
-    Super+Alt+Shift+B hotkey-overlay-title="Disconnect from Sennheiser HD350BT Headphones" { spawn-sh "notify-send --expire-time=3000 'Disconnecting from Sennheiser HD 350BT Headphones' && bluetoothctl disconnect 80:C3:BA:0E:CB:E5"; }
+    Super+B       hotkey-overlay-title="Connect to Sennheiser HD350BT Headphones"      { spawn-sh "notify-send --expire-time=3000 'Connecting to Sennheiser HD 350BT Headphones' && bluetoothctl connect 80:C3:BA:0E:CB:E5"; }
+    Super+Shift+B hotkey-overlay-title="Disconnect from Sennheiser HD350BT Headphones" { spawn-sh "notify-send --expire-time=3000 'Disconnecting from Sennheiser HD 350BT Headphones' && bluetoothctl disconnect 80:C3:BA:0E:CB:E5"; }
 
     // connect to powerbeats pro headphones
-    Super+Alt+N hotkey-overlay-title="Connect to Powerbeats Pro Headphones" { spawn-sh "notify-send --expire-time=3000 'Connecting to Powerbeats Pro Headphones' && bluetoothctl connect 14:1A:97:05:81:4C"; }
-    Super+Alt+Shift+N hotkey-overlay-title="Disconnect from Powerbeats Pro Headphones" { spawn-sh "notify-send --expire-time=3000 'Disconnecting from Powerbeats Pro Headphones' && bluetoothctl disconnect 14:1A:97:05:81:4C"; }
+    Super+N       hotkey-overlay-title="Connect to Powerbeats Pro Headphones"      { spawn-sh "notify-send --expire-time=3000 'Connecting to Powerbeats Pro Headphones' && bluetoothctl connect 14:1A:97:05:81:4C"; }
+    Super+Shift+N hotkey-overlay-title="Disconnect from Powerbeats Pro Headphones" { spawn-sh "notify-send --expire-time=3000 'Disconnecting from Powerbeats Pro Headphones' && bluetoothctl disconnect 14:1A:97:05:81:4C"; }
 
     // window manager controls
 
-    Alt+grave { focus-workspace-previous; }
+    Alt+grave   { focus-workspace-previous; }
     Super+grave { focus-workspace-previous; }
 
     Super+Up    { focus-window-up; }
@@ -447,11 +448,10 @@ binds {
     Super+Alt+Period { expel-window-from-column; }
 
     // cycle through widths set in preset-column-widths
-    Super+Alt+R { switch-preset-column-width; }
-    // cycling through the presets in reverse order is also possible
-    Super+Alt+Shift+R { switch-preset-column-width-back; }
+    Super+R       { switch-preset-column-width; }
+    Super+Space   { switch-preset-column-width; }
+    Super+Shift+R { switch-preset-column-width-back; }
 
-    Super+Ctrl+Space { maximize-column; }
     Super+Ctrl+M     { expand-column-to-available-width; }
     Super+Ctrl+W     { maximize-window-to-edges; }
     Super+Ctrl+F     { fullscreen-window; }

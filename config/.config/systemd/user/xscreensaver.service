@@ -16,6 +16,7 @@ Description=Extensible screen saver and screen locking framework
 
 [Service]
 ExecStart=xscreensaver -no-splash
+Restart=always
 
 [Install]
 WantedBy=default.target

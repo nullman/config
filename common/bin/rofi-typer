@@ -12,6 +12,7 @@
 # Required utilities:
 #   rofi
 #   xdo
+#   wtype
 #
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
@@ -139,26 +140,32 @@ else
     key=$1
 fi
 
-# lookup value and type it in active window using xdo
-value=$(grep "^${key} *=" "${conf}" | sed 's/^.*= *//')
-#echo "${key}	${value}"
-for ((x=0; x<${#value}; x++)) ; do
-    ascii=$(printf "%d\n" "'${value:$x:1}")
-    code=${keycode[${ascii}]}
-    if [ "${#code}" -gt 2 ] ; then
-        code1="${code:0:2}"
-        code2="${code:3:2}"
-        #echo "${code1} - ${code2}"
-        xdo key_press -k ${code1}
-        xdo key_press -k ${code2}
-        xdo key_release -k ${code2}
-        xdo key_release -k ${code1}
-    else
-        #echo "${code}"
-        xdo key_press -k ${code}
-        xdo key_release -k ${code}
-    fi
-done
+if [ "${XDG_SESSION_TYPE}" == "wayland" ] ; then
+    # lookup value and type it in active window using wtype
+    value=$(grep "^${key} *=" "${conf}" | sed 's/^.*= *//')
+    wtype "${value}"
+else
+    # lookup value and type it in active window using xdo
+    value=$(grep "^${key} *=" "${conf}" | sed 's/^.*= *//')
+    #echo "${key}	${value}"
+    for ((x=0; x<${#value}; x++)) ; do
+        ascii=$(printf "%d\n" "'${value:$x:1}")
+        code=${keycode[${ascii}]}
+        if [ "${#code}" -gt 2 ] ; then
+            code1="${code:0:2}"
+            code2="${code:3:2}"
+            #echo "${code1} - ${code2}"
+            xdo key_press -k ${code1}
+            xdo key_press -k ${code2}
+            xdo key_release -k ${code2}
+            xdo key_release -k ${code1}
+        else
+            #echo "${code}"
+            xdo key_press -k ${code}
+            xdo key_release -k ${code}
+        fi
+    done
+fi
 
 exit 0
 

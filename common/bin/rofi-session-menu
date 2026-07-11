@@ -56,7 +56,6 @@ while getopts ":drwsh" opt ; do
                 *Suspend) systemctl suspend ;;
                 *Suspend/Hibernate) systemctl suspend-then-hibernate ;;
                 *Hibernate) systemctl hibernate ;;
-                *"Restart WM") bspc wm -r ;;
                 *Reboot) systemctl reboot ;;
                 *Shutdown) systemctl poweroff ;;
             esac

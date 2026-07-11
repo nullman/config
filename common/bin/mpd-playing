@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #===============================================================================
-# mpc-playing
+# mpd-playing
 #
 # Print currently playing Music Player Daemon song.
 #
@@ -8,9 +8,10 @@
 #===============================================================================
 
 if [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
-    echo "Usage: $(basename $0) [-1] [-v,--verbose]"
-    echo "  -1            - Output on one line"
-    echo "  -v,--verbose  - Verbose output"
+    echo "Usage: $(basename $0) [-nt,--notify-title] [-nb,--notify-body] [-v,--verbose]"
+    echo "  -nt,--notify-title - Title for notify-send"
+    echo "  -nb,--notify-body  - Body for notify-send"
+    echo "  -v,--verbose       - Verbose output"
     exit 0
 fi
 
@@ -30,21 +31,23 @@ file=$(mpc -f '%file%' | sed -n 1p)
 rating=$(grep -F "${file}" ${HOME}/.song-ratings/* | sed 's/^.*songs-rated-\([0-9]\).*$/\1/')
 
 if [ "$1" == "-v" ] || [ "$1" == "--verbose" ] ; then
-    echo "Artist: ${artist}"
-    echo "Album: ${album}"
-    echo "Title: ${title}"
-    echo "Rating: ${rating}"
-    echo "State: ${state}"
-    echo "Number: ${num}"
-    echo "Percentage: ${pct}"
-    echo "File: ${file}"
+    printf 'Artist: %s\n' "${artist}"
+    printf 'Album: %s\n' "${album}"
+    printf 'Title: %s\n' "${title}"
+    printf 'Rating: %s\n' "${rating}"
+    printf 'State: %s\n' "${state}"
+    printf 'Number: %s\n' "${num}"
+    printf 'Percentage: %s\n' "${pct}"
+    printf 'File: %s\n' "${file}"
     exit 0
 fi
 
-if [ "$1" == "-1" ] ; then
-    printf '%s [%s] %s %s' "${song}" "${rating}" "${num}" "${pct}"
+if [ "$1" == "-nt" ] || [ "$1" == "--notify-title" ] ; then
+    printf '%s' "${title}"
+elif [ "$1" == "-nb" ] || [ "$1" == "--notify-body" ] ; then
+    printf '%s\n[%s] %s %s' "${artist}" "${rating}" "${num}" "${pct}"
 else
-    printf '%s\n%s\n[%s] %s %s' "${title}" "${artist}" "${rating}" "${num}" "${pct}"
+    printf '%s [%s] %s %s\n' "${song}" "${rating}" "${num}" "${pct}"
 fi
 
 #===============================================================================
