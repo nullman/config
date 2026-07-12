@@ -298,11 +298,11 @@ binds {
     // applications & utilities
     Super+Ctrl+Space hotkey-overlay-title="Toggle Overview" repeat=false                      { toggle-overview; }
     Super+Alt+Space  hotkey-overlay-title="Window, Desktop Application, and Program Launcher" { spawn "rofi" "-show" "combi" "-modes" "combi" "-combi-modes" "'window,drun,run'"; }
-    Super+Return     hotkey-overlay-title="Alacritty Terminal"                                { spawn "alacritty"; }
+    Super+T          hotkey-overlay-title="Alacritty Terminal"                                { spawn "alacritty"; }
     Super+D          hotkey-overlay-title="Desktop Application Launcher"                      { spawn "rofi" "-modi" "drun" "-show" "drun"; }
     Super+Shift+D    hotkey-overlay-title="Program Launcher"                                  { spawn "rofi" "-modi" "run" "-show" "run"; }
     Super+A          hotkey-overlay-title="Application Group Launcher"                        { spawn-sh "${HOME}/bin/application-launcher"; }
-    Super+Alt+Return hotkey-overlay-title="Menu Launcher"                                     { spawn-sh "${HOME}/bin/rofi-menu"; }
+    Super+Return     hotkey-overlay-title="Menu Launcher"                                     { spawn-sh "${HOME}/bin/rofi-menu"; }
     Super+W          hotkey-overlay-title="Window Selector"                                   { spawn "rofi" "-modi" "window" "-show" "window"; }
     //Super+Alt+C    hotkey-overlay-title="Clipboard Selector"                                { }
     Super+E          hotkey-overlay-title="Emoji Selector"                                    { spawn-sh "${HOME}/bin/rofi-menu emoji"; }
@@ -345,37 +345,37 @@ binds {
     Alt+grave   { focus-workspace-previous; }
     Super+grave { focus-workspace-previous; }
 
-    Super+Up    { focus-window-up; }
-    Super+Down  { focus-window-down; }
-    Super+I     { focus-window-up; }
-    Super+K     { focus-window-down; }
+    //Super+Up    { focus-window-up; }
+    //Super+Down  { focus-window-down; }
+    //Super+I     { focus-window-up; }
+    //Super+K     { focus-window-down; }
 
-    Super+Alt+Left  { focus-column-left; }
-    Super+Alt+Right { focus-column-right; }
-    Super+Alt+Up    { focus-workspace-up; }
-    Super+Alt+Down  { focus-workspace-down; }
-    Super+Alt+J     { focus-column-left; }
-    Super+Alt+L     { focus-column-right; }
-    Super+Alt+I     { focus-workspace-up; }
-    Super+Alt+K     { focus-workspace-down; }
-    Super+Alt+Home  { focus-column-first; }
-    Super+Alt+End   { focus-column-last; }
+    Super+Left  { focus-column-left; }
+    Super+Right { focus-column-right; }
+    Super+Up    { focus-workspace-up; }
+    Super+Down  { focus-workspace-down; }
+    Super+J     { focus-column-left; }
+    Super+L     { focus-column-right; }
+    Super+I     { focus-workspace-up; }
+    Super+K     { focus-workspace-down; }
+    //Super+Home  { focus-column-first; }
+    //Super+End   { focus-column-last; }
 
-    Super+Shift+Up    { move-window-up; }
-    Super+Shift+Down  { move-window-down; }
-    Super+Shift+I     { move-window-up; }
-    Super+Shift+K     { move-window-down; }
+    //Super+Shift+Up    { move-window-up; }
+    //Super+Shift+Down  { move-window-down; }
+    //Super+Shift+I     { move-window-up; }
+    //Super+Shift+K     { move-window-down; }
 
-    Super+Alt+Shift+Left  { move-column-left; }
-    Super+Alt+Shift+Right { move-column-right; }
-    Super+Alt+Shift+Up    { move-column-to-workspace-up; }
-    Super+Alt+Shift+Down  { move-column-to-workspace-down; }
-    Super+Alt+Shift+J     { move-column-left; }
-    Super+Alt+Shift+L     { move-column-right; }
-    Super+Alt+Shift+I     { move-column-to-workspace-up; }
-    Super+Alt+Shift+K     { move-column-to-workspace-down; }
-    Super+Alt+Shift+Home  { move-column-to-first; }
-    Super+Alt+Shift+End   { move-column-to-last; }
+    Super+Shift+Left  { move-column-left; }
+    Super+Shift+Right { move-column-right; }
+    Super+Shift+Up    { move-column-to-workspace-up; }
+    Super+Shift+Down  { move-column-to-workspace-down; }
+    Super+Shift+J     { move-column-left; }
+    Super+Shift+L     { move-column-right; }
+    Super+Shift+I     { move-column-to-workspace-up; }
+    Super+Shift+K     { move-column-to-workspace-down; }
+    //Super+Shift+Home  { move-column-to-first; }
+    //Super+Shift+End   { move-column-to-last; }
 
     Super+Ctrl+Left  { focus-monitor-left; }
     Super+Ctrl+Right { focus-monitor-right; }
@@ -395,8 +395,8 @@ binds {
     Super+Ctrl+Shift+I     { move-column-to-monitor-up; }
     Super+Ctrl+Shift+K     { move-column-to-monitor-down; }
 
-    Super+Alt+Shift+Page_Up         { move-workspace-up; }
-    Super+Alt+Shift+Page_Down       { move-workspace-down; }
+    Super+Shift+Page_Up        { move-workspace-up; }
+    Super+Shift+Page_Down      { move-workspace-down; }
     Super+Ctrl+Shift+Page_Up   { move-workspace-to-monitor-left; }
     Super+Ctrl+Shift+Page_Down { move-workspace-to-monitor-right; }
 
@@ -405,15 +405,15 @@ binds {
     Super+Shift+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
     Super+Shift+WheelScrollUp   cooldown-ms=150 { move-column-to-workspace-up; }
 
-    Super+Alt+WheelScrollLeft        { focus-column-left; }
-    Super+Alt+WheelScrollRight       { focus-column-right; }
-    Super+Alt+Shift+WheelScrollLeft  { move-column-left; }
-    Super+Alt+Shift+WheelScrollRight { move-column-right; }
+    Super+WheelScrollLeft        { focus-column-left; }
+    Super+WheelScrollRight       { focus-column-right; }
+    Super+Shift+WheelScrollLeft  { move-column-left; }
+    Super+Shift+WheelScrollRight { move-column-right; }
 
-    Super+Alt+WheelScrollUp         { focus-column-left; }
-    Super+Alt+WheelScrollDown       { focus-column-right; }
-    Super+Alt+Shift+WheelScrollUp   { move-column-left; }
-    Super+Alt+Shift+WheelScrollDown { move-column-right; }
+    Super+Ctrl+WheelScrollUp         { focus-column-left; }
+    Super+Ctrl+WheelScrollDown       { focus-column-right; }
+    Super+Ctrl+Shift+WheelScrollUp   { move-column-left; }
+    Super+Ctrl+Shift+WheelScrollDown { move-column-right; }
 
     Super+1 { focus-workspace 1; }
     Super+2 { focus-workspace 2; }
@@ -439,13 +439,13 @@ binds {
 
     // if the window is alone, they will consume it into the nearby column to the side
     // if the window is already in a column, they will expel it out
-    Super+Alt+BracketLeft  { consume-or-expel-window-left; }
-    Super+Alt+BracketRight { consume-or-expel-window-right; }
+    Super+BracketLeft  { consume-or-expel-window-left; }
+    Super+BracketRight { consume-or-expel-window-right; }
 
     // consume one window from the right to the bottom of the focused column
-    Super+Alt+Comma  { consume-window-into-column; }
+    Super+Comma  { consume-window-into-column; }
     // expel the bottom window from the focused column to the right
-    Super+Alt+Period { expel-window-from-column; }
+    Super+Period { expel-window-from-column; }
 
     // cycle through widths set in preset-column-widths
     Super+Space   { switch-preset-column-width; }
