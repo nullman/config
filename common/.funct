@@ -2375,12 +2375,14 @@ make-metapac-groups() {
             cut -d '|' -f 4 | sed 's/^ */    \"/ ; s/ *$/\",/'
     }
 
-    #for backend in "apt" "arch" ; do
-    for backend in "arch" "dnf" ; do
-        outdir="${HOME}/config/config/.config/metapac-${backend}/groups"
-        mkdir -p "${outdir}"
+    outdir="${HOME}/config/config/.config/metapac/groups"
+    mkdir -p "${outdir}"
+    find "${outdir}/" -iname "*.toml" -print | while read -r file ; do
+        rm -r "${file}"
+    done
+
+    for backend in "arch" "dnf" "flatpak" "snap" ; do
         for group in $(_getgroups ${backend}) ; do
-            printf "" > "${outdir}/${group}.toml"
             printf "%s\n%s\n%s\n\n" \
                    "${backend} = {" \
                    "  packages = [" \

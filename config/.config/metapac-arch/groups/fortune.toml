@@ -1,8 +1,0 @@
-arch = {
-  packages = [
-    "fortune-mod-off",
-
-  ]
-}
-
-

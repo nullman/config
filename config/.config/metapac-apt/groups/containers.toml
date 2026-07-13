@@ -1,7 +1,0 @@
-apt = [
-    "docker",
-    "docker-compose",
-    "distrobox",
-    "podman",
-]
-

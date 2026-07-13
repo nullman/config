@@ -126,7 +126,7 @@ workspace "dev"
 
 // startup applications
 //spawn-at-startup "waybar"
-spawn-sh-at-startup "xscreensaver --splash"
+//spawn-sh-at-startup "xscreensaver --splash"
 
 // do not show hotkey list on startup
 hotkey-overlay {
@@ -319,6 +319,7 @@ binds {
     Super+Y          hotkey-overlay-title="Git Sync: Config"                                  { spawn-sh "source \"${HOME}/.funct\" && (git-sync-config && echo 'Done') 2>&1 | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"; }
     Super+Shift+Y    hotkey-overlay-title="Git Sync: Extra"                                   { spawn-sh "source \"${HOME}/.funct\" && (git-sync-extra && echo 'Done') 2>&1 | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"; }
     Super+X          hotkey-overlay-title="Activate XScreenSaver"                             { spawn "xscreensaver-command" "-activate"; }
+    Super+Alt+X      hotkey-overlay-title="XScreenSaver Demo"                                 { spawn "xscreensaver-demo"; }
     Super+Shift+X    hotkey-overlay-title="Screen Lock"                                       { spawn "swaylock"; }
     Super+Shift+W    hotkey-overlay-title="Close Window" repeat=false                         { close-window; }
     Super+Shift+Q    hotkey-overlay-title="Session Menu"                                      { spawn-sh "${HOME}/bin/rofi-session-menu -s"; }

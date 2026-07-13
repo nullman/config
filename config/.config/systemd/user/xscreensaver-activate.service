@@ -1,0 +1,26 @@
+#===============================================================================
+# .config/systemd/user/xscreensaver-activate.service
+#
+# Configuration for systemd user xscreensaver service.
+#
+# Enable:   systemctl --user enable xscreensaver-activate.service
+# Start:    systemctl --user start xscreensaver-activate.service
+# Stop:     systemctl --user stop xscreensaver-activate.service
+# Disable:  systemctl --user disable xscreensaver-activate.service
+#
+# Reference: https://wiki.archlinux.org/index.php/Systemd/User
+#===============================================================================
+
+[Unit]
+Description=Activate xscreensaver on wayland after 10 minutes
+
+[Service]
+ExecStart=swayidle timeout 600 'xscreensaver-command -activate'
+Restart=always
+
+[Install]
+WantedBy=default.target
+
+#===============================================================================
+# End of File
+#===============================================================================
