@@ -114,15 +114,16 @@ recent-windows {
 }
 
 // named workspaces
-workspace "term"
-workspace "edit"
-workspace "email"
-workspace "browse"
-workspace "file"
-workspace "chat"
-workspace "dev"
-//workspace "video"
-//workspace "vm"
+//           
+workspace "term"   // ""
+workspace "edit"   // ""
+workspace "email"  // ""
+workspace "browse" // ""
+workspace "file"   // ""
+workspace "chat"   // ""
+workspace "dev"    // ""
+//workspace "video"  // ""
+//workspace "vm"     // ""
 
 // startup applications
 //spawn-at-startup "waybar"
@@ -351,32 +352,36 @@ binds {
     //Super+I     { focus-window-up; }
     //Super+K     { focus-window-down; }
 
-    Super+Left  { focus-column-left; }
-    Super+Right { focus-column-right; }
-    Super+Up    { focus-workspace-up; }
-    Super+Down  { focus-workspace-down; }
-    Super+J     { focus-column-left; }
-    Super+L     { focus-column-right; }
-    Super+I     { focus-workspace-up; }
-    Super+K     { focus-workspace-down; }
-    //Super+Home  { focus-column-first; }
-    //Super+End   { focus-column-last; }
+    Super+Left      { focus-column-left; }
+    Super+Right     { focus-column-right; }
+    Super+Up        { focus-workspace-up; }
+    Super+Down      { focus-workspace-down; }
+    Super+J         { focus-column-left; }
+    Super+L         { focus-column-right; }
+    Super+I         { focus-workspace-up; }
+    Super+K         { focus-workspace-down; }
+    Super+Alt+Left  { focus-column-first; }
+    Super+Alt+Right { focus-column-last; }
+    Super+Alt+J     { focus-column-first; }
+    Super+Alt+L     { focus-column-last; }
 
     //Super+Shift+Up    { move-window-up; }
     //Super+Shift+Down  { move-window-down; }
     //Super+Shift+I     { move-window-up; }
     //Super+Shift+K     { move-window-down; }
 
-    Super+Shift+Left  { move-column-left; }
-    Super+Shift+Right { move-column-right; }
-    Super+Shift+Up    { move-column-to-workspace-up; }
-    Super+Shift+Down  { move-column-to-workspace-down; }
-    Super+Shift+J     { move-column-left; }
-    Super+Shift+L     { move-column-right; }
-    Super+Shift+I     { move-column-to-workspace-up; }
-    Super+Shift+K     { move-column-to-workspace-down; }
-    //Super+Shift+Home  { move-column-to-first; }
-    //Super+Shift+End   { move-column-to-last; }
+    Super+Shift+Left      { move-column-left; }
+    Super+Shift+Right     { move-column-right; }
+    Super+Shift+Up        { move-column-to-workspace-up; }
+    Super+Shift+Down      { move-column-to-workspace-down; }
+    Super+Shift+J         { move-column-left; }
+    Super+Shift+L         { move-column-right; }
+    Super+Shift+I         { move-column-to-workspace-up; }
+    Super+Shift+K         { move-column-to-workspace-down; }
+    Super+Alt+Shift+Left  { move-column-to-first; }
+    Super+Alt+Shift+Right { move-column-to-last; }
+    Super+Alt+Shift+J     { move-column-to-first; }
+    Super+Alt+Shift+L     { move-column-to-last; }
 
     Super+Ctrl+Left  { focus-monitor-left; }
     Super+Ctrl+Right { focus-monitor-right; }
