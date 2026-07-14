@@ -9,8 +9,10 @@ emacs
 thunderbird
 brave-browser
 thunar
-discord
-com.slack.Slack
+#discord
+flatpak run com.discordapp.Discord
+#slack
+flatpak run com.slack.Slack
 gajim
 dev.geopjr.Tuba
 nheko

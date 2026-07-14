@@ -9,6 +9,10 @@
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
+orig_ifs="$IFS"
+IFS=$'\n'
+flatpak="flatpak run "
+
 apps=$(cat ${HOME}/.applications | sed -n '/^[^ #]/p')
 
 # prompt for keyring authentication on personal vm
@@ -17,12 +21,13 @@ apps=$(cat ${HOME}/.applications | sed -n '/^[^ #]/p')
 cmd="GDK_BACKEND=x11 yad --width=512 --height=512 --list --checklist --column 'Run' --column 'Application' 2>/dev/null"
 for app in ${apps} ; do
     if [ ! -f ${HOME}/.dev ] || [ "${app}" == "alacritty" ] || [ "${app}" == "emacs" ] ; then
-        cmd="${cmd} TRUE ${app}"
+        cmd="${cmd} TRUE '${app}'"
     else
-        cmd="${cmd} FALSE ${app}"
+        cmd="${cmd} FALSE '${app}'"
     fi
 done
 
+#echo "${cmd}"
 #eval "${cmd} 2>/dev/null"
 launch=$(eval "${cmd} 2>/dev/null")
 
@@ -38,29 +43,30 @@ for line in ${launch} ; do
             "${app}" >/dev/null 2>&1 &
         elif [ "${vm}" == "personal" ] ; then
             if [ "${app}" == "alacritty" ] ; then
-                qvm-run personal "alacritty -e \${HOME}/bin/run-screen" >/dev/null 2>&1 &
+                qvm-run personal "alacritty -e \${HOME}/bin/run-screen" >/dev/null 2>&1 & disown
             else
-                qvm-run personal "${app}" >/dev/null 2>&1 &
+                qvm-run personal "${app}" >/dev/null 2>&1 & disown
             fi
         else
             echo "Bad input: ${vm}:${app}"
         fi
     else
-         if command -v "${app}" >/dev/null ; then
-            if ! pgrep -u ${USER} -x "${app}" >/dev/null ; then
-                #echo "${app}"
-                if [ "${app}" == "alacritty" ] ; then
-                    alacritty -e ${HOME}/bin/run-screen >/dev/null 2>&1 &
-                    sleep 1
-                else
-                    eval ${app} >/dev/null 2>&1 &
-                fi
+        #echo "${app}"
+        if [ "${app::${#flatpak}}" == "${flatpak}" ] && \
+               ! pgrep -u "${USER}" -f "${app:${#flatpak}}" >/dev/null ; then
+            eval ${app} >/dev/null 2>&1 & disown
+        elif ! pgrep -u "${USER}" -f "${app}" >/dev/null ; then
+            if [ "${app}" == "alacritty" ] ; then
+                alacritty -e ${HOME}/bin/run-screen >/dev/null 2>&1 & disown
+                sleep 1
+            else
+                eval ${app} >/dev/null 2>&1 & disown
             fi
-        else
-            notify-send --urgency critical "${app} not installed"
         fi
     fi
 done
+
+IFS="${orig_ifs}"
 
 #===============================================================================
 # End of File
