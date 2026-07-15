@@ -161,6 +161,7 @@ window-rule {
 
 window-rule {
     match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    match app-id="Yad"
     open-floating true
 }
 
@@ -170,8 +171,9 @@ window-rule {
 }
 
 window-rule {
-    match app-id="Yad"
-    open-floating true
+    match app-id="x48"
+    match app-id="x48ng"
+    default-column-width { proportion 0.25; }
 }
 
 window-rule {

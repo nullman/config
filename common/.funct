@@ -2356,6 +2356,11 @@ home-restow() {
 make-metapac-groups() {
     infile="${HOME}/org/personal.org"
 
+    _getrepos() {
+        awk "/^[ \t]*#\+NAME: $1-repos\$/,/^\*/{print \$0}" "${infile}" | \
+            grep -v "^\*" | grep -v "^ *#" | sed 's/^ */    /'
+    }
+
     _getregexp() {
         printf "/^[ \t]*#\+NAME: %s-packages\$/,/^\*/{print \$0}" "$1"
     }
@@ -2375,18 +2380,55 @@ make-metapac-groups() {
             cut -d '|' -f 4 | sed 's/^ */    \"/ ; s/ *$/\",/'
     }
 
+    _getflatpaks() {
+        _getpackages "$1" "$2" | sed 's/^ *"/    { name = "system:/ ; s/",/", options = { remote = "flathub" } },/'
+    }
+
     outdir="${HOME}/config/config/.config/metapac/groups"
     mkdir -p "${outdir}"
     find "${outdir}/" -iname "*.toml" -print | while read -r file ; do
         rm -r "${file}"
     done
 
-    for backend in "arch" "dnf" "flatpak" "snap" ; do
+    for backend in "arch" "snap" ; do
         for group in $(_getgroups ${backend}) ; do
-            printf "%s\n%s\n%s\n\n" \
+            repos="$(_getrepos ${backend})"
+            printf "%s\n%s\n%s\n%s\n%s\n\n" \
                    "${backend} = {" \
                    "  packages = [" \
                    "$(_getpackages ${backend} "${group}")" \
+                   "  ]" \
+                   "}" \
+                   >> "${outdir}/${group}.toml"
+        done
+    done
+
+    for backend in "dnf" ; do
+        for group in $(_getgroups ${backend}) ; do
+            repos="$(_getrepos ${backend})"
+            printf "%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n\n" \
+                   "${backend} = {" \
+                   "  repos = [" \
+                   "$(_getrepos ${backend})" \
+                   "  ], " \
+                   "  packages = [" \
+                   "$(_getpackages ${backend} "${group}")" \
+                   "  ]" \
+                   "}" \
+                   >> "${outdir}/${group}.toml"
+        done
+    done
+
+    for backend in "flatpak" ; do
+        for group in $(_getgroups ${backend}) ; do
+            repos="$(_getrepos ${backend})"
+            printf "%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n\n" \
+                   "${backend} = {" \
+                   "  repos = [" \
+                   "$(_getrepos ${backend})" \
+                   "  ], " \
+                   "  packages = [" \
+                   "$(_getflatpaks ${backend} "${group}")" \
                    "  ]" \
                    "}" \
                    >> "${outdir}/${group}.toml"
