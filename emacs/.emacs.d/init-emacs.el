@@ -17049,6 +17049,49 @@ USING is the remaining peg."
 ;;               ("C-c C-w" . elfeed-tube-mpv-where)))
 ;; elfeed-tube:1 ends here
 
+;; [[file:init-emacs.org::#packages-ellama][ellama:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: ellama
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Packages: ellama")
+
+(use-package ellama
+  :straight t
+  :bind ("C-c e" . ellama)
+  :hook (org-ctrl-c-ctrl-c-hook . ellama-chat-send-last-message)
+  :config
+  (ellama-setup-agentic-coding)
+  (ellama-context-header-line-global-mode +1)
+  (ellama-session-header-line-global-mode +1)
+  :init
+  (require 'llm-ollama)
+  (setopt ellama-language "English")
+  (setopt ellama-auto-scroll t)
+  (setopt ellama-long-lines-length 80)
+  (setopt ellama-fill-paragraphs t)
+  ;;(setopt ellama-naming-scheme 'ellama-generate-name-by-words)
+  ;;(setopt ellama-naming-scheme 'ellama-generate-name-by-llm)
+  (setopt ellama-naming-scheme 'ellama-generate-name-by-time)
+  :init
+  (setopt ellama-provider
+          (make-llm-ollama
+           :chat-model "qwen3.5:4b"
+           :embedding-model "nomic-embed-text"))
+  (setopt ellama-coding-provider
+          (make-llm-ollama
+           :chat-model "qwen2.5-coder:3b"
+           :embedding-model "nomic-embed-text"))
+  (setopt ellama-translation-provider
+          (make-llm-ollama
+           :chat-model "qwen3.5:4b"
+           :embedding-model "nomic-embed-text"))
+  (setopt ellama-providers
+          '(("qwen3.5:4b" . (make-llm-ollama "qwen3.5:4b"))
+            ("qwen2.5-coder:3b" . (make-llm-ollama "qwen2.5-coder:3b"))
+            ("llama3.2-uncensored" . (make-llm-ollama "artifish/llama3.2-uncensored")))))
+;; ellama:1 ends here
+
 ;; [[file:init-emacs.org::#modules-elnode][elnode:1]]
 ;;------------------------------------------------------------------------------
 ;;; Packages: elnode

@@ -307,7 +307,7 @@ binds {
     Super+A          hotkey-overlay-title="Application Group Launcher"                        { spawn-sh "${HOME}/bin/application-launcher"; }
     Super+Return     hotkey-overlay-title="Menu Launcher"                                     { spawn-sh "${HOME}/bin/rofi-menu"; }
     Super+W          hotkey-overlay-title="Window Selector"                                   { spawn "rofi" "-modi" "window" "-show" "window"; }
-    //Super+Alt+C    hotkey-overlay-title="Clipboard Selector"                                { }
+    Super+C          hotkey-overlay-title="Clipboard Selector"                                { spawn-sh "${HOME}/bin/rofi-menu clipboard"; }
     Super+E          hotkey-overlay-title="Emoji Selector"                                    { spawn-sh "${HOME}/bin/rofi-menu emoji"; }
     Super+U          hotkey-overlay-title="Unicode Selector"                                  { spawn-sh "${HOME}/bin/rofi-menu unicode"; }
     Super+Shift+U    hotkey-overlay-title="Footnote Symbol Selector"                          { spawn-sh "${HOME}/bin/rofi-menu footnotes"; }

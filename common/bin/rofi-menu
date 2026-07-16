@@ -45,6 +45,7 @@ MENU:
   acronyms-computing  Acronyms: Computing
   bookmarks           Bookmarks
   bookmarks-keyword   Bookmarks: Keyword
+  clipboard           Clipboard
   contacts            Contacts
   crt                 Cool Retro Term
   dosbox              DOSBox Emulator
@@ -72,6 +73,7 @@ if [ $# -lt 1 ] ; then
         "󰯫	Acronyms: Computing"
         "󰃃	Bookmarks"
         "󰃃	Bookmarks: Keyword"
+        "󰆒	Clipboard"
         "󰈍	Contacts"
         "󰍹	CRT"
         "	DOSBox"
@@ -100,7 +102,7 @@ menu=$(printf '%s' "${menu}" | sed 's/^.*\t//' | tr '[:upper:]' '[:lower:]' | tr
 #echo "${menu}"
 case "${menu}" in
     terminal)
-        (alacritty &)
+        (alacritty & disown)
         ;;
 
     acronyms-computing)
@@ -112,7 +114,7 @@ case "${menu}" in
                     s%—%%g ; s%</ul>%% ; s%</\?b>%%g ; s%\&amp;%\&% ;
                     s%<sup .*</sup>%%g ; s%</div>%%g ; s%</a>$%% ;
                     s%<a [^>]*>%% ; s%</a>%: %' |
-                grep -v '^<li>' | $(${prompt} '󰯫	Acronyms: Computing') &
+                grep -v '^<li>' | $(${prompt} '󰯫	Acronyms: Computing')
         )
         ;;
 
@@ -127,14 +129,15 @@ case "${menu}" in
         # open bookmark
         if [ -n "${sel}" ] ; then
             url=$(printf '%s' "${sel}" | sed 's/^.* \([^ ]*$\)/\1/')
-            (xdg-open "${url}" &)
+            (xdg-open "${url}" & disown)
         fi
         ;;
 
     bookmarks-keyword)
         # display bookmarks having keywords
         if [ $# -lt 2 ] ; then
-            sel=$(sed -n 's/^.* {\(.*\)}: /\1 -> /p' "${HOME}/Documents/bookmarks.txt" | sort | ${promptprefix} '󰃃	Bookmarks: Keyword')
+            sel=$(sed -n 's/^.* {\(.*\)}: /\1 -> /p' "${HOME}/Documents/bookmarks.txt" | \
+                      sort | ${promptprefix} '󰃃	Bookmarks: Keyword')
         else
             sel=$2
         fi
@@ -142,14 +145,41 @@ case "${menu}" in
         # open bookmark
         if [ -n "${sel}" ] ; then
             url=$(printf '%s' "${sel}" | sed 's/^.* \([^ ]*$\)/\1/')
-            (xdg-open "${url}" &)
+            (xdg-open "${url}" & disown)
         fi
+        ;;
+
+    clipboard)
+        case "${XDG_SESSION_TYPE}" in
+            wayland)
+                # display clipboard
+                if [ $# -lt 2 ] ; then
+                    sel=$(dms clipboard history | \
+                              awk '/^ID: /{ key=$0; getline; print key $0; next } { print }' | \
+                              grep '| text |' | sed 's/^ID: // ; s/ | text | .*  /: /' | \
+                              ${promptprefix} '󰆒	Clipboard')
+                else
+                    sel=$2
+                fi
+
+                # paste clip
+                if [ -n "${sel}" ] ; then
+                    id=$(printf '%s' "${sel}" | sed 's/^\([0-9]\+\).*$/\1/')
+                    dms clipboard get ${id} --copy && dms clipboard paste
+                fi
+                ;;
+
+            *)
+                CM_LAUNCHER=rofi clipmenu
+                ;;
+        esac
         ;;
 
     contacts)
         # display contacts
         if [ $# -lt 2 ] ; then
-            sel=$(grep '^\*\*\*\*\* ' "${HOME}/org/contacts.org" | sed 's/^\*\*\*\*\* //' | ${prompt} '󰈍	Contacts')
+            sel=$(grep '^\*\*\*\*\* ' "${HOME}/org/contacts.org" | \
+                      sed 's/^\*\*\*\*\* //' | ${prompt} '󰈍	Contacts')
         else
             sel=$2
         fi
@@ -169,7 +199,10 @@ case "${menu}" in
                         }
                     }
                 }' "${HOME}/org/contacts.org" | \
-                    GDK_BACKEND=x11 yad --text-info --width=1600 --height=1000 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
+                    (GDK_BACKEND=x11 \
+                         yad --text-info --width=1600 --height=1000 \
+                         --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' \
+                         --tail 2>/dev/null & disown)
         fi
         ;;
 
@@ -194,7 +227,7 @@ case "${menu}" in
 
         # launch cool-retro-term using selected profile
         if [ -n "${sel}" ] ; then
-            (cool-retro-term --profile "${sel}" &)
+            (cool-retro-term --profile "${sel}" & disown)
         fi
         ;;
 
@@ -212,16 +245,16 @@ case "${menu}" in
 
         # launch selected dosbox emulator
         if [ -n "${sel}" ] ; then
-            (dosbox -conf "${HOME}/.dosbox/dosbox-0.74-3.conf" -conf "${HOME}/.dosbox/dosbox-${sel}.conf" &)
+            (dosbox -conf "${HOME}/.dosbox/dosbox-0.74-3.conf" -conf "${HOME}/.dosbox/dosbox-${sel}.conf" & disown)
         fi
         ;;
 
     emoji)
         # run rofimoji
         if [ "${XDG_SESSION_TYPE}" == "wayland" ] ; then
-            rofimoji --typer wtype --clipboarder wl-copy --action copy --skin-tone neutral
+            (rofimoji --typer wtype --clipboarder wl-copy --action copy --skin-tone neutral & disown)
         else
-            rofimoji --typer xdotool --clipboarder xsel --action copy --skin-tone neutral
+            (rofimoji --typer xdotool --clipboarder xsel --action copy --skin-tone neutral & disown)
         fi
         ;;
 
@@ -243,7 +276,7 @@ case "${menu}" in
             "‖‖	Double Parallel Lines"
             "##	Double Number Sign"
         )
-        $(printf '%s\n' "${footnotes[@]}" | ${prompt} '󰽒	Footnotes' | sed -z 's/\t.*$// ; s/\\n$//' | ${clip})
+        (printf '%s\n' "${footnotes[@]}" | ${prompt} '󰽒	Footnotes' | sed -z 's/\t.*$// ; s/\\n$//' | ${clip})
         ;;
 
     git)
@@ -256,14 +289,16 @@ case "${menu}" in
 
         # synchronize with selected git repository
         if [ -n "${sel}" ] ; then
-            source "${HOME}/.funct" && (eval "${sel}" && echo "Done") 2>&1 | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
+            (source "${HOME}/.funct" && (eval "${sel}" && echo "Done") 2>&1 | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null & disown)
         fi
         ;;
 
     home)
         # display home page bookmarks
         if [ $# -lt 2 ] ; then
-            sel=$(cat "${HOME}/home-pages/"{home,dev}.html | sed -n '/<a id=/p' | sed 's/^.*<a id=\"id__\(.*\)__\([^"]*\)\".*$/\1: \2/; s/_/ /g' | ${prompt} '⌂	Home Page')
+            sel=$(cat "${HOME}/home-pages/"{home,dev}.html | sed -n '/<a id=/p' | \
+                      sed 's/^.*<a id=\"id__\(.*\)__\([^"]*\)\".*$/\1: \2/; s/_/ /g' | \
+                      ${prompt} '⌂	Home Page')
         else
             sel=$2
         fi
@@ -272,7 +307,7 @@ case "${menu}" in
         if [ -n "${sel}" ] ; then
             id=$(printf '%s' "${sel}" | sed 's/ /_/g ; s/:_/__/ ; s/^/id__/')
             url=$(grep "${id}" "${HOME}/home-pages/"{home,dev}.html | sed 's/^.* href=\"\([^"]*\)\".*$/\1/')
-            (xdg-open "${url}" &)
+            (xdg-open "${url}" & disown)
         fi
         ;;
 
@@ -286,7 +321,7 @@ case "${menu}" in
 
         # copy paste selection to the clipboard
         if [ -n "${sel}" ] ; then
-            $(printf '%s' "${sel}" | ${clip})
+            (printf '%s' "${sel}" | ${clip})
         fi
         ;;
 
@@ -307,13 +342,13 @@ case "${menu}" in
         if [ -n "${sel}" ] ; then
             case "${sel}" in
                 "6 Capitalized/Hyphenated Word Phrase")
-                    $(printf '%s' "$(${HOME}/bin/password-phrase 6 hyphen true)" | ${clip})
+                    (printf '%s' "$(${HOME}/bin/password-phrase 6 hyphen true)" | ${clip})
                     ;;
                 "4 Capitalized/Hyphenated Word Phrase")
-                    $(printf '%s' "$(${HOME}/bin/password-phrase 4 hyphen true)" | ${clip})
+                    (printf '%s' "$(${HOME}/bin/password-phrase 4 hyphen true)" | ${clip})
                     ;;
                 "20 Letters/Numbers/Symbols")
-                    $(tr --delete --complement 'a-zA-Z0-9!@#$%^&*-_=+;:,<.>/?' < /dev/urandom | head --bytes 20 | ${clip})
+                    (tr --delete --complement 'a-zA-Z0-9!@#$%^&*-_=+;:,<.>/?' < /dev/urandom | head --bytes 20 | ${clip})
                     ;;
             esac
         fi
@@ -323,14 +358,15 @@ case "${menu}" in
         # generate and display a list of qemu emulators
         if [ $# -lt 2 ] ; then
             sel=$(
-                cd "${HOME}/qemu" && find . -mindepth 1 -maxdepth 1 -type d -not -regex '^\.+$' | sed 's%\./%%' | sort | ${prompt} '󰆧	Qemu')
+                cd "${HOME}/qemu" && find . -mindepth 1 -maxdepth 1 -type d -not -regex '^\.+$' | \
+                        sed 's%\./%%' | sort | ${prompt} '󰆧	Qemu')
         else
             sel=$2
         fi
 
         # launch selected qemu emulator
         if [ -n "${sel}" ] ; then
-            (cd "${HOME}/qemu/${sel}" && ./run &)
+            (cd "${HOME}/qemu/${sel}" && ./run & disown)
         fi
         ;;
 
@@ -346,7 +382,7 @@ case "${menu}" in
         if [ -n "${sel}" ] ; then
             home="$(cd ${HOME} ; cd .. ; pwd)"
             cmd=$(cat "${HOME}/.alias" | sed ':a;N;$!ba;s/\\\n//g' | sed -n '/alias '"${sel}"'/p' | sed 's/^alias '"${sel}"'="// ; s/"$//')
-            (eval "${cmd}" && echo "Done") 2>&1 | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
+            ((eval "${cmd}" && echo "Done") 2>&1 | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null & disown)
         fi
         ;;
 
@@ -430,10 +466,10 @@ case "${menu}" in
                 _killffplay
                 if $(printf '%s' "${sel}" | grep -q "Ambient Sound Effects") ; then
                     echo "Playing: ${sel} (in a loop)"
-                    ffplay -nodisp -loop 0 "${selpath}"
+                    (ffplay -nodisp -loop 0 "${selpath}" & disown)
                 else
                     echo "Playing: ${sel}"
-                    ffplay -nodisp -autoexit "${selpath}"
+                    (ffplay -nodisp -autoexit "${selpath}" & disown)
                 fi
                 break
             done
@@ -457,7 +493,11 @@ case "${menu}" in
             \?|\&) word=$(printf '%s' "${res}" | sed 's/^.*: // ; s/, */,/g' | tr ',' '\n' | ${prompt} '	Select Word to Define') ;;
         esac
 
-        [ -n "${word}" ] && trans -no-ansi "${word}" | GDK_BACKEND=x11 yad --title "Definition" --text-info --width=1024 --height=768 --wrap --no-buttons --wrap --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
+        [ -n "${word}" ] && trans -no-ansi "${word}" | \
+                (GDK_BACKEND=x11 \
+                     yad --title "Definition" --text-info \
+                     --width=1024 --height=768 --wrap --no-buttons \
+                     --wrap --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null & disown)
         ;;
 
     ssh)
@@ -478,7 +518,7 @@ case "${menu}" in
 
         # launch selected ssh connection
         if [ -n "${sel}" ] ; then
-            (alacritty -t "SSH ${sel}" -e "ssh" "${sel}" &)
+            (alacritty -t "SSH ${sel}" -e "ssh" "${sel}" & disown)
         fi
         ;;
 
@@ -490,9 +530,9 @@ case "${menu}" in
     unicode)
         # run unipicker
         if [ "${XDG_SESSION_TYPE}" == "wayland" ] ; then
-            unipicker --command "${prompt} 'U	Unicode'" --copy-command 'wl-copy'
+            (unipicker --command "${prompt} 'U	Unicode'" --copy-command 'wl-copy' & disown)
         else
-            unipicker --command "${prompt} 'U	Unicode'" --copy-command 'xsel'
+            (unipicker --command "${prompt} 'U	Unicode'" --copy-command 'xsel' & disown)
         fi
         ;;
 
@@ -512,7 +552,7 @@ case "${menu}" in
 
         # launch selected vnc connection
         if [ -n "${sel}" ] ; then
-            (vncviewer "${sel}:0" &)
+            (vncviewer "${sel}:0" & disown)
         fi
         ;;
 esac
