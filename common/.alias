@@ -1809,7 +1809,7 @@ alias mpd-service-disable="systemctl --user disable mpd"
 #        mpd-service-restart     systemctl --user restart mpd
 alias mpd-service-restart="systemctl --user restart mpd"
 #        mpc-status              display artist and title of current song
-alias mpc-status="notify-send --expire-time=5000 --replace-id=2 \"\$(\${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')\""
+alias mpc-status="notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg \"$(${HOME}/bin/mpd-playing --notify-title)\" \"$(${HOME}/bin/mpd-playing --notify-body)\""
 #        mpc-update              update mpc database
 alias mpc-update="mpc --wait update"
 
@@ -1988,7 +1988,8 @@ alias rsync-media-put-synology="
         rsync -r --munge-links --size-only --progress \
             -f'- /Graphic/ASCII-ANSI/' \
             \"\${dir}\" /mnt/synology/media
-    done"
+    done
+    rsync -r --munge-links --size-only --progress ${home}/data/backup /mnt/synology/media/Backup"
 #!            -f'- /Audio/Music/' -f'- /Graphic/ASCII-ANSI/' -f'- /iTunes/' -f'- /Music/' \
 #        rsync-media-put-synology-delete  rsync /home/data/media /mnt/synology/media
 alias rsync-media-put-synology-delete="
@@ -1996,7 +1997,8 @@ alias rsync-media-put-synology-delete="
         rsync -r --munge-links --size-only --progress --delete \
             -f'- /Graphic/ASCII-ANSI/' \
             \"\${dir}\" /mnt/synology/media
-    done"
+    done
+    rsync -r --munge-links --size-only --progress --delete ${home}/data/backup /mnt/synology/media/Backup"
 #        rsync-media-put-synology-delete-dry-run  rsync /home/data/media /mnt/synology/media
 alias rsync-media-put-synology-delete-dry-run="
     find ${home}/data/media/ -mindepth 1 -maxdepth 1 -type d -not -regex '^\.+$' | sort | while read -r dir ; do
@@ -3175,6 +3177,8 @@ alias dnfh="dnf --help"
 alias dnfu="sudo dnf upgrade"
 #        dnfsu                   dnf system-upgrade
 alias dnfsu="sudo dnf system-upgrade"
+#        dnfds                   dnf distro-sync
+alais dnfds="sudo dnf distro-sync"
 #        dnfi                    dnf install
 alias dnfi="sudo dnf install"
 #        dnfr                    dnf remove
