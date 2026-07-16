@@ -32,6 +32,13 @@ input {
     }
 }
 
+switch-events {
+    lid-close { spawn "swaylock"; }
+    //lid-open { }
+    //tablet-mode-on { spawn "bash" "-c" "gsettings set org.gnome.desktop.a11y.applications screen-keyboard-enabled true"; }
+    //tablet-mode-off { spawn "bash" "-c" "gsettings set org.gnome.desktop.a11y.applications screen-keyboard-enabled false"; }
+}
+
 // list outputs with ~niri msg outpus~
 /-output "eDP-1" {
     mode "1920x1080@120.030"
