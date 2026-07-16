@@ -383,7 +383,8 @@ case "${menu}" in
         # synchronize with selected rsync targets
         if [ -n "${sel}" ] ; then
             home="$(cd ${HOME} ; cd .. ; pwd)"
-            cmd=$(cat "${HOME}/.alias" | sed ':a;N;$!ba;s/\\\n//g' | sed -n '/alias '"${sel}"'/p' | sed 's/^alias '"${sel}"'="// ; s/"$//')
+            cmd=$(cat "${HOME}/.alias" | awk "/alias ${sel}=/,/^#/" | head -n -1 | sed '1s/^.*"//; s/\"$// ; s/\\"/\"/g ; s/\\\$/$/g')
+            echo "${cmd}"
             ((eval "${cmd}" && echo "Done") 2>&1 | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null & disown)
         fi
         ;;

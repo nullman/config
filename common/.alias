@@ -3178,7 +3178,7 @@ alias dnfu="sudo dnf upgrade"
 #        dnfsu                   dnf system-upgrade
 alias dnfsu="sudo dnf system-upgrade"
 #        dnfds                   dnf distro-sync
-alais dnfds="sudo dnf distro-sync"
+alias dnfds="sudo dnf distro-sync"
 #        dnfi                    dnf install
 alias dnfi="sudo dnf install"
 #        dnfr                    dnf remove
