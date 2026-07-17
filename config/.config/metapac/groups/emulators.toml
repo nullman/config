@@ -1,0 +1,37 @@
+arch = {
+  packages = [
+    "dosbox",
+    "fs-uae",
+    "fs-uae-launcher",
+    "mame",
+    "snowemu",
+    "vice",
+    "wine",
+    "wine-gecko",
+    "wine-mono",
+    "winetricks",
+  ]
+}
+
+dnf = {
+  repos = [
+    "copr.fedorainfracloud.org/avengemedia/danklinux",
+    "copr.fedorainfracloud.org/avengemedia/dms [eternal_deps]",
+    "copr.fedorainfracloud.org/errornointernet/packages",
+    "copr.fedorainfracloud.org/komapro/metapac",
+    "copr.fedorainfracloud.org/rok/vdhcoapp",
+    "copr.fedorainfracloud.org/skidnik/clipmenu",
+  ], 
+  packages = [
+    "BasiliskII",
+    "dosbox",
+    "fs-uae",
+    "fs-uae-launcher",
+    "mame",
+    "vice",
+    "wine",
+    "wine-mono",
+    "winetricks",
+  ]
+}
+

@@ -1,0 +1,61 @@
+arch = {
+  packages = [
+    "exo",
+    "garcon",
+    "mousepad",
+    "parole",
+    "ristretto",
+    "xfburn",
+    "xfce4-artwork",
+    "xfce4-diskperf-plugin",
+    "xfce4-eyes-plugin",
+    "xfce4-mount-plugin",
+    "xfce4-places-plugin",
+    "xfce4-screensaver",
+    "xfce4-screenshooter",
+    "xfce4-session",
+    "xfce4-settings",
+    "xfce4-smartbookmark-plugin",
+    "xfce4-verve-plugin",
+    "xfce4-wavelan-plugin",
+    "xfconf",
+    "xfdesktop",
+    "xfwm4",
+    "xfwm4-themes",
+  ]
+}
+
+dnf = {
+  repos = [
+    "copr.fedorainfracloud.org/avengemedia/danklinux",
+    "copr.fedorainfracloud.org/avengemedia/dms [eternal_deps]",
+    "copr.fedorainfracloud.org/errornointernet/packages",
+    "copr.fedorainfracloud.org/komapro/metapac",
+    "copr.fedorainfracloud.org/rok/vdhcoapp",
+    "copr.fedorainfracloud.org/skidnik/clipmenu",
+  ], 
+  packages = [
+    "exo",
+    "garcon",
+    "mousepad",
+    "parole",
+    "ristretto",
+    "xfburn",
+    "xfce4-diskperf-plugin",
+    "xfce4-eyes-plugin",
+    "xfce4-mount-plugin",
+    "xfce4-places-plugin",
+    "xfce4-screensaver",
+    "xfce4-screenshooter",
+    "xfce4-session",
+    "xfce4-settings",
+    "xfce4-smartbookmark-plugin",
+    "xfce4-verve-plugin",
+    "xfce4-wavelan-plugin",
+    "xfconf",
+    "xfdesktop",
+    "xfwm4",
+    "xfwm4-themes",
+  ]
+}
+

@@ -1,0 +1,52 @@
+arch = {
+  packages = [
+    "0ad",
+    "dwarffortress",
+    "falcond",
+    "falcond-gui",
+    "falcond-profiles",
+    "gamescope",
+    "heroic-games-launcher-bin",
+    "luanti",
+    "lutris",
+    "mangohud",
+    "osu-lazer-bin",
+    "pingus",
+    "pysolfc",
+    "rocksndiamonds",
+    "steam",
+    "supertux",
+    "supertuxkart",
+    "tuxracer",
+    "umu-launcher",
+    "unciv-bin",
+    "wesnoth",
+    "xonotic",
+  ]
+}
+
+dnf = {
+  repos = [
+    "copr.fedorainfracloud.org/avengemedia/danklinux",
+    "copr.fedorainfracloud.org/avengemedia/dms [eternal_deps]",
+    "copr.fedorainfracloud.org/errornointernet/packages",
+    "copr.fedorainfracloud.org/komapro/metapac",
+    "copr.fedorainfracloud.org/rok/vdhcoapp",
+    "copr.fedorainfracloud.org/skidnik/clipmenu",
+  ], 
+  packages = [
+    "dwarffortress",
+    "gamescope",
+    "luanti",
+    "lutris",
+    "mangohud",
+    "pingus",
+    "rocksndiamonds",
+    "steam",
+    "supertux",
+    "supertuxkart",
+    "wesnoth",
+    "xonotic",
+  ]
+}
+

@@ -1,0 +1,30 @@
+arch = {
+  packages = [
+    "egl-gbm",
+    "lib32-nvidia-470xx-utils",
+    "nvidia-470xx-dkms",
+    "nvidia-470xx-settings",
+    "nvidia-470xx-utils",
+    "nvidia-prime",
+    "opencl-nvidia-470xx",
+    "xf86-video-intel",
+  ]
+}
+
+dnf = {
+  repos = [
+    "copr.fedorainfracloud.org/avengemedia/danklinux",
+    "copr.fedorainfracloud.org/avengemedia/dms [eternal_deps]",
+    "copr.fedorainfracloud.org/errornointernet/packages",
+    "copr.fedorainfracloud.org/komapro/metapac",
+    "copr.fedorainfracloud.org/rok/vdhcoapp",
+    "copr.fedorainfracloud.org/skidnik/clipmenu",
+  ], 
+  packages = [
+    "akmod-nvidia-470xx",
+    "nvidia-gpu-firmware",
+    "xorg-x11-drv-nvidia-470xx",
+    "xorg-x11-drv-nvidia-470xx-cuda",
+  ]
+}
+

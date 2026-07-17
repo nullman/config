@@ -1,0 +1,52 @@
+# metapac's config.toml file (like this one) should be placed in the following location
+# dependent on the operating system as specified in the `dirs` crate:
+# | Platform | Value                                                 | Example                                                      |
+# | -------- | ----------------------------------------------------- | ------------------------------------------------------------ |
+# | Linux    | $XDG_CONFIG_HOME or $HOME/.config/metapac/config.toml | /home/alice/.config/metapac/config.toml                      |
+# | macOS    | $HOME/Library/Application Support/metapac/config.toml | /Users/Alice/Library/Application Support/metapac/config.toml |
+# | Windows  | {FOLDERID_RoamingAppData}\metapac\config.toml         | C:\Users\Alice\AppData\Roaming\metapac\config.toml           |
+
+# Backends to enable. These will be merged with any hostname-specific backends
+# from the [hostname_enabled_backends] config table.
+# Default: []
+enabled_backends = []
+
+# If this is `false` all toml files recursively found in the groups folder
+# will be used as group files.
+# If this is `true` then the [hostname_groups] config table will be used to
+# decide which group files to use per hostname.
+# Default: false
+hostname_groups_enabled = true
+
+# Backends to enable per hostname. These will be merged with the base
+# `enabled_backends` config.
+# Default: None
+[hostname_enabled_backends]
+arch = ["arch"]
+choi = ["arch"]
+dozer = ["arch"]
+switch = ["arch"]
+mouse = ["arch"]
+retro = ["arch"]
+tank = ["dnf", "flatpak", "snap"]
+
+# Which group files will be used per hostname. Subject to `hostname_groups_enabled`.
+# Relative paths are relative to the groups folder.
+# Default: None
+[hostname_groups]
+arch = ["qubes"]
+choi = ["base", "system", "x11", "wayland", "window-manager", "fonts", "applications", "utilities", "tui", "console", "console-hacks", "internet", "emulators", "development", "containers", "ai", "fortune", "games", "nvidia470"]
+dozer = ["base", "system", "x11", "wayland", "window-manager", "fonts", "applications", "utilities", "tui", "console", "console-hacks", "internet", "emulators", "virtual", "development", "containers", "ai", "fortune", "games", "nvidia470"]
+fedora = ["qubes"]
+switch = ["base", "system", "x11", "window-manager", "fonts", "applications", "utilities", "tui", "console", "console-hacks", "internet", "emulators", "fortune", "minimal"]
+mouse = ["base", "system", "x11", "wayland", "window-manager", "fonts", "emulators", "fortune", "minimal",]
+retro = ["base", "system", "x11", "window-manager", "fonts", "emulators"]
+tank = ["base", "system", "x11", "wayland", "window-manager", "fonts", "applications", "utilities", "tui", "console", "console-hacks", "internet", "emulators", "virtual", "development", "containers", "games", "nvidia580", "flatpak", "snap"]
+
+[arch]
+# Since pacman, pamac, paru, pikaur and yay all operate on the same package database
+# they are mutually exclusive and so you must pick which one you want
+# metapac to use.
+# Must be one of: ["pacman", "pamac", "paru", "pikaur", "yay"]
+# Default: "pacman"
+package_manager = "paru"

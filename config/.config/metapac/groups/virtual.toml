@@ -1,0 +1,48 @@
+arch = {
+  packages = [
+    "edk2-ovmf",
+    "guestfs-tools",
+    "libosinfo",
+    "qemu-base",
+    "qemu-desktop",
+    "qemu-emulators-full",
+    "qemu-img",
+    "qtemu-git",
+    "swtpm",
+    "virt-install",
+    "virt-manager",
+    "virt-viewer",
+    "virtio-win",
+    "virtualbox",
+    "virtualbox-host-modules-arch",
+    "vm-curator",
+    "vm-curator-gtk",
+  ]
+}
+
+dnf = {
+  repos = [
+    "copr.fedorainfracloud.org/avengemedia/danklinux",
+    "copr.fedorainfracloud.org/avengemedia/dms [eternal_deps]",
+    "copr.fedorainfracloud.org/errornointernet/packages",
+    "copr.fedorainfracloud.org/komapro/metapac",
+    "copr.fedorainfracloud.org/rok/vdhcoapp",
+    "copr.fedorainfracloud.org/skidnik/clipmenu",
+  ], 
+  packages = [
+    "bridge-utils",
+    "dmidecode",
+    "edk2-ovmf",
+    "guestfs-tools",
+    "iptables-nft",
+    "libosinfo",
+    "qemu-kvm",
+    "qemu-img",
+    "qemu-ui-opengl",
+    "swtpm",
+    "virt-install",
+    "virt-manager",
+    "virt-viewer",
+  ]
+}
+

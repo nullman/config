@@ -1,0 +1,10 @@
+arch = {
+  packages = [
+    "chatbox-bin",
+    "ollama",
+    "ollama-docs",
+    "fortunecraft",
+    "upscayl-bin",
+  ]
+}
+

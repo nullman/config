@@ -1,0 +1,56 @@
+arch = {
+  packages = [
+    "arandr",
+    "imwheel",
+    "numlockx",
+    "scrot",
+    "sxhkd",
+    "x2x-git",
+    "xautolock",
+    "xclip",
+    "xdo",
+    "xdotool",
+    "xgetres",
+    "xorg-server",
+    "xorg-server-xephyr",
+    "xorg-setxkbmap",
+    "xorg-xbacklight",
+    "xorg-xev",
+    "xorg-xinit",
+    "xorg-xinput",
+    "xorg-xkbcomp",
+    "xorg-xkill",
+    "xorg-xmodmap",
+    "xorg-xprop",
+    "xorg-xrandr",
+    "xorg-xset",
+    "xorg-xwininfo",
+    "xprintidle",
+    "xsel",
+    "xvkbd",
+  ]
+}
+
+dnf = {
+  repos = [
+    "copr.fedorainfracloud.org/avengemedia/danklinux",
+    "copr.fedorainfracloud.org/avengemedia/dms [eternal_deps]",
+    "copr.fedorainfracloud.org/errornointernet/packages",
+    "copr.fedorainfracloud.org/komapro/metapac",
+    "copr.fedorainfracloud.org/rok/vdhcoapp",
+    "copr.fedorainfracloud.org/skidnik/clipmenu",
+  ], 
+  packages = [
+    "arandr",
+    "imwheel",
+    "numlockx",
+    "scrot",
+    "sxhkd",
+    "xautolock",
+    "xclip",
+    "xdotool",
+    "xsel",
+    "xvkbd",
+  ]
+}
+

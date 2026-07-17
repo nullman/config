@@ -1,0 +1,19 @@
+flatpak = {
+  repos = [
+    { name = "system:fedora", options = { url = "oci+https://registry.fedoraproject.org" } },
+    { name = "system:flathub", options = { url = "https://dl.flathub.org/repo/" } },
+  ], 
+  packages = [
+    { name = "system:com.discordapp.Discord", options = { remote = "flathub" } },
+    { name = "system:com.geekbench.Geekbench6", options = { remote = "flathub" } },
+    { name = "system:com.rafaelmardojai.Blanket", options = { remote = "flathub" } },
+    { name = "system:com.slack.Slack", options = { remote = "flathub" } },
+    { name = "system:com.spotify.Client", options = { remote = "flathub" } },
+    { name = "system:com.visualstudio.code", options = { remote = "flathub" } },
+    { name = "system:io.gitlab.adhami3310.Impression", options = { remote = "flathub" } },
+    { name = "system:io.sourceforge.pysolfc.PySolFC", options = { remote = "flathub" } },
+    { name = "system:org.torproject.torbrowser-launcher", options = { remote = "flathub" } },
+    { name = "system:us.zoom.Zoom", options = { remote = "flathub" } },
+  ]
+}
+
