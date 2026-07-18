@@ -6,6 +6,7 @@ flatpak = {
   packages = [
     { name = "system:com.discordapp.Discord", options = { remote = "flathub" } },
     { name = "system:com.geekbench.Geekbench6", options = { remote = "flathub" } },
+    { name = "system:com.notepadqq.Notepadqq", options = { remote = "flathub" } },
     { name = "system:com.rafaelmardojai.Blanket", options = { remote = "flathub" } },
     { name = "system:com.slack.Slack", options = { remote = "flathub" } },
     { name = "system:com.spotify.Client", options = { remote = "flathub" } },

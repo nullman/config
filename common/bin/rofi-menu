@@ -298,7 +298,7 @@ case "${menu}" in
     home)
         # display home page bookmarks
         if [ $# -lt 2 ] ; then
-            sel=$(cat "${HOME}/home-pages/"{home,dev}.html | sed -n '/<a id=/p' | \
+            sel=$(cat "${HOME}/home-pages/"{home,dev,game}.html | sed -n '/<a id=/p' | \
                       sed 's/^.*<a id=\"id__\(.*\)__\([^"]*\)\".*$/\1: \2/; s/_/ /g' | \
                       ${prompt} '⌂  Home Page')
         else
@@ -308,7 +308,7 @@ case "${menu}" in
         # open bookmark
         if [ -n "${sel}" ] ; then
             id=$(printf '%s' "${sel}" | sed 's/ /_/g ; s/:_/__/ ; s/^/id__/')
-            url=$(grep "${id}" "${HOME}/home-pages/"{home,dev}.html | sed 's/^.* href=\"\([^"]*\)\".*$/\1/')
+            url=$(grep "${id}" "${HOME}/home-pages/"{home,devk,game}.html | sed 's/^.* href=\"\([^"]*\)\".*$/\1/')
             (xdg-open "${url}" & disown)
         fi
         ;;
@@ -486,7 +486,7 @@ case "${menu}" in
             sel=$2
         fi
 
-        res=$(printf '%s' "${sel}" | ispell -a | tail -n -1)
+        res=$(printf '%s' "${sel}" | ispell -a | head -n 2 | tail -n -1)
 
         word=""
         case "${res:0:1}" in

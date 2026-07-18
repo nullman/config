@@ -2,6 +2,7 @@ arch = {
   packages = [
     "aalib",
     "asciiquarium",
+    "bucklespring",
     "cmatrix",
     "cowsay",
     "figlet",

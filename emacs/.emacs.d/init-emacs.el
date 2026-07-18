@@ -1074,18 +1074,9 @@ Common values:
 
 ;; [[file:init-emacs.org::#environment-general][General:49]]
 ;; set default browser
-;;(setq browse-url-browser-function #'browse-url-default-browser)
-;;(setq browse-url-generic-program "x-www-browser")
-;;(setq browse-url-generic-program "w3m")
-;;(setq browse-url-generic-program "mozilla")
-;;(setq browse-url-browser-function #'browse-url-generic)
-;;(setq browse-url-browser-function #'eww-browse-url)
-;;(setq browse-url-browser-function #'w3m-browse-url)
-;;(setq browse-url-browser-function #'browse-url-firefox
-;;      browse-url-new-window-flag t
-;;      browse-url-firefox-new-window-is-tab t)
 (setq browse-url-browser-function #'browse-url-chrome
-      browse-url-chrome-program "brave")
+      browse-url-chrome-program (or (executable-find "brave")
+                                    (executable-find "brave-browser")))
 ;; set secondary browser
 (setq browse-url-secondary-browser-function #'browse-url-default-browser)
 ;; General:49 ends here

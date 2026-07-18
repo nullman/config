@@ -121,13 +121,14 @@ recent-windows {
 }
 
 // named workspaces
-//           
+// symbols:                          
 workspace "term"   // ""
 workspace "edit"   // ""
 workspace "email"  // ""
 workspace "browse" // ""
 workspace "file"   // ""
 workspace "chat"   // ""
+workspace "ai"     // ""
 workspace "dev"    // ""
 //workspace "video"  // ""
 //workspace "vm"     // ""
@@ -245,20 +246,26 @@ window-rule {
 }
 
 window-rule {
-    match app-id="Gimp-2.10"
-    match app-id="mplayer2"
-    match app-id="Qmmp"
-    match app-id="spotify"
-    default-column-width { proportion 0.5; }
-    open-on-workspace "video"
+    match app-id="LM-Studio"
+    default-column-width { proportion 1.0; }
+    open-on-workspace "ai"
 }
 
-window-rule {
-    match app-id="VirtualBox Machine"
-    match app-id="VirtualBox Manager"
-    default-column-width { proportion 1.0; }
-    open-on-workspace "vm"
-}
+// window-rule {
+//     match app-id="Gimp-2.10"
+//     match app-id="mplayer2"
+//     match app-id="Qmmp"
+//     match app-id="spotify"
+//     default-column-width { proportion 0.5; }
+//     open-on-workspace "video"
+// }
+
+// window-rule {
+//     match app-id="VirtualBox Machine"
+//     match app-id="VirtualBox Manager"
+//     default-column-width { proportion 1.0; }
+//     open-on-workspace "vm"
+// }
 
 binds {
     // use ~wev~ to find XKB key names
