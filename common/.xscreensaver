@@ -1,8 +1,8 @@
 # XScreenSaver Preferences File
-# Written by xscreensaver-settings 6.08 for user on Sat Jan 18 09:51:42 2025.
+# Written by xscreensaver-demo 6.15-1.fc44 for user on Sun Jul 19 22:21:45 2026.
 # https://www.jwz.org/xscreensaver/
 
-timeout:	0:30:00
+timeout:	0:10:00
 cycle:		0:10:00
 lock:		False
 lockTimeout:	1:00:00
@@ -37,7 +37,7 @@ textFile:	/usr/share/doc/xserver-common/copyright
 textProgram:	fortune
 textURL:	http://planet.debian.org/rss20.xml
 dialogTheme:	default
-settingsGeom:	686,345 1023,418
+settingsGeom:	0,0 1023,418
 
 programs:								      \
 		   "ATV4-1080" 	atv4-1080				    \n\
@@ -422,7 +422,45 @@ programs:								      \
 				droste --root				    \n\
   GL: 				papercube --root			    \n\
 - GL: 				skulloop --root				    \n\
+  GL: 				starnest --root				    \n\
+  GL: 				alienbeacon --root			    \n\
+  GL: 				topologica --root			    \n\
+  GL: 				fluxcore --root				    \n\
+  GL: 				gimbalharmonics --root			    \n\
+  GL: 				protophore --root			    \n\
+  GL: 				skyline --root				    \n\
+  GL: 				driftclouds --root			    \n\
+  GL: 				elementalring --root			    \n\
+  GL: 				prococean --root			    \n\
+  GL: 				synthwavecity --root			    \n\
+  GL: 				batteredplanet --root			    \n\
+  GL: 				goldenapollian --root			    \n\
+  GL: 				neontriangulator --root			    \n\
+  GL: 				stripeytorus --root			    \n\
+  GL: 				stardome --root				    \n\
+  GL: 				logarithmiccircles --root		    \n\
+  GL: 				neongravity --root			    \n\
+  GL: 				trainmandala --root			    \n\
+  GL: 				highvoltage --root			    \n\
+  GL: 				kallisti --root				    \n\
+  GL: 				klondike --root				    \n\
+  GL: 				selfreflect --root			    \n\
+  GL: 				truchetzoom --root			    \n\
+  GL: 				bestill --root				    \n\
+  GL: 				bubblecolors --root			    \n\
+  GL: 				darktransit --root			    \n\
+  GL: 				downfall --root				    \n\
+  GL: 				dumpsterfire --root			    \n\
+  GL: 				hexplasma --root			    \n\
+  GL: 				hopffibration --root			    \n\
+  GL: 				noxfire --root				    \n\
+  GL: 				platonicfolding --root			    \n\
+  GL: 				rigrekt --root				    \n\
+  GL: 				trizm --root				    \n\
+  GL: 				universeball --root			    \n\
+  GL: 				worldpieces --root			    \n\
 
 
 pointerHysteresis:  10
 authWarningSlack:   20
+
