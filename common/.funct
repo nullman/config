@@ -1933,8 +1933,8 @@ git-sync-config() {
                 echo "Update .xscreensaver..."
                 (
                     cd "${HOME}" && \
-                        cp ".xscreensaver" "$(configdir)/common/" && \
-                        ln -sf "$(configdir)/common/.xscreensaver" .
+                        mv ".xscreensaver" "$(configdir)/common/" && \
+                        home-restow
                 )
             fi
         fi
