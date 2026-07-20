@@ -51,6 +51,7 @@ dnf = {
     "xdotool",
     "xsel",
     "xvkbd",
+    "xrandr",
   ]
 }
 

@@ -98,7 +98,8 @@ dnf = {
     "usbutils",
     "wget2-wget",
     "wpa_supplicant",
-    "xdg-utils",
+    "zram-generator",
+    "zram-generator-defaults",
   ]
 }
 

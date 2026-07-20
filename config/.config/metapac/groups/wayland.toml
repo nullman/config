@@ -52,6 +52,7 @@ dnf = {
     "swaylock",
     "waybar",
     "wayland-utils",
+    "wev",
     "wmenu",
     "wtype",
     "wl-clipboard",

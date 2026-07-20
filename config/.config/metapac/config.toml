@@ -35,13 +35,13 @@ tank = ["dnf", "flatpak", "snap"]
 # Default: None
 [hostname_groups]
 arch = ["qubes"]
-choi = ["base", "system", "x11", "wayland", "window-manager", "fonts", "applications", "utilities", "tui", "console", "console-hacks", "internet", "emulators", "development", "containers", "ai", "fortune", "games", "nvidia470"]
-dozer = ["base", "system", "x11", "wayland", "window-manager", "fonts", "applications", "utilities", "tui", "console", "console-hacks", "internet", "emulators", "virtual", "development", "containers", "ai", "fortune", "games", "nvidia470"]
+choi = ["base", "system", "x11", "wayland", "window-manager", "fonts", "applications", "utilities", "tui", "console", "console-hacks", "internet", "emulators", "containers", "development", "ai", "fortune", "games", "nvidia470"]
+dozer = ["base", "system", "x11", "wayland", "window-manager", "fonts", "applications", "utilities", "tui", "console", "console-hacks", "internet", "emulators", "virtual", "containers", "development", "ai", "fortune", "games", "nvidia470"]
 fedora = ["qubes"]
 switch = ["base", "system", "x11", "window-manager", "fonts", "applications", "utilities", "tui", "console", "console-hacks", "internet", "emulators", "fortune", "minimal"]
 mouse = ["base", "system", "x11", "wayland", "window-manager", "fonts", "emulators", "fortune", "minimal",]
 retro = ["base", "system", "x11", "window-manager", "fonts", "emulators"]
-tank = ["base", "system", "x11", "wayland", "window-manager", "fonts", "applications", "utilities", "tui", "console", "console-hacks", "internet", "emulators", "virtual", "development", "containers", "games", "nvidia580", "flatpak", "snap"]
+tank = ["base", "system", "x11", "wayland", "window-manager", "gnome", "fonts", "applications", "utilities", "tui", "console", "console-hacks", "internet", "emulators", "virtual", "containers", "development", "games", "nvidia580", "flatpak", "snap"]
 
 [arch]
 # Since pacman, pamac, paru, pikaur and yay all operate on the same package database

@@ -124,9 +124,9 @@ recent-windows {
 // symbols:                          
 workspace "term"   // ""
 workspace "edit"   // ""
-workspace "email"  // ""
-workspace "browse" // ""
 workspace "file"   // ""
+workspace "browse" // ""
+workspace "email"  // ""
 workspace "chat"   // ""
 workspace "ai"     // ""
 workspace "dev"    // ""
