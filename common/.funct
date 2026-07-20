@@ -1934,7 +1934,7 @@ git-sync-config() {
                 (
                     cd "${HOME}" && \
                         mv ".xscreensaver" "$(configdir)/common/" && \
-                        home-restow
+                        ln -sf "$(configdir)/common/.xscreensaver" .
                 )
             fi
         fi
@@ -2310,7 +2310,7 @@ home-initialize() {
 #        home-restow             restow links from ~/ to ~/config and ~/config-private dirs
 home-restow() {
     xss="${HOME}/.xscreensaver"
-    xssbak="${HOME}/.xscreensaver.bak"
+    xssbak="${HOME}/.xscreensaver-$(date '+%Y%m%d%H%M%S')"
 
     # create stow target directories
     echo "Creating stow target directories..."
@@ -2345,6 +2345,7 @@ home-restow() {
     echo "Restowing packages..."
     (cd "${HOME}" && ln -s -f config/.stow-global-ignore .)
     [ -f "${xss}" ] && [ ! -L "${xss}" ] && mv "${xss}" "${xssbak}"
+    [ -L "${xss}" ] && rm "${xss}"
     stow --dir="$(configdir)" --target="${HOME}" --restow "common" "emacs"
     stow --dir="$(configdir)" --target="${HOME}" --no-folding --restow "config" "local"
     stow --dir="$(configdir)/custom" --target="${HOME}" --no-folding --restow "$(uname -n)"

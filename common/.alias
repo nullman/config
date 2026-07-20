@@ -806,8 +806,8 @@ alias sued="sudoedit"
 alias emacs-debug="emacs --debug-init"
 #        emacs-comp              emacs batch-byte-compile
 alias emacs-comp="emacs --no-init-file --no-site-file --batch --funcall batch-byte-compile"
-#        vi                      vim
-alias vi="vim"
+#!#        vi                      vim
+#!alias vi="vim"
 #        edsshak                 edit ~/.ssh/authorized_keys
 alias edsshak="edit \${HOME}/.ssh/authorized_keys"
 #        edsshc                  edit ~/.ssh/config
