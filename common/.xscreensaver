@@ -1,5 +1,5 @@
 # XScreenSaver Preferences File
-# Written by xscreensaver-demo 6.15-1.fc44 for user on Mon Jul 20 15:40:14 2026.
+# Written by xscreensaver-demo 6.15-1.fc44 for user on Tue Jul 21 13:40:19 2026.
 # https://www.jwz.org/xscreensaver/
 
 timeout:	10:00:00
@@ -37,7 +37,7 @@ textFile:	/usr/share/doc/xserver-common/copyright
 textProgram:	fortune
 textURL:	http://planet.debian.org/rss20.xml
 dialogTheme:	default
-settingsGeom:	0,0 1023,418
+settingsGeom:	0,0 0,0
 
 programs:								      \
 		   "ATV4-1080" 	atv4-1080				    \n\
@@ -74,8 +74,8 @@ programs:								      \
 -				distort --root				    \n\
 				spotlight --root			    \n\
 -	      "Ripples (oily)" 	ripples -root -oily -light 2		    \n\
-	      "Ripples (stir)" 	ripples -root -oily -light 2 -stir	    \n\
-	   "Ripples (desktop)" 	ripples -root -water -light 6		    \n\
+-	      "Ripples (stir)" 	ripples -root -oily -light 2 -stir	    \n\
+-	   "Ripples (desktop)" 	ripples -root -water -light 6		    \n\
 -				hypercube --root			    \n\
 -				hyperball --root			    \n\
 -				halo --root				    \n\
@@ -166,8 +166,8 @@ programs:								      \
 				  -max-nerve-radius 0.8 -nervousness 0.5      \
 				  -db					    \n\
 				xrayswarm --root			    \n\
-	      "Zoom (Fatbits)" 	zoom -root -pixspacex 0 -pixspacey 0	    \n\
-	       "Zoom (Lenses)" 	zoom -root -lenses -pixspacex 0		      \
+-	      "Zoom (Fatbits)" 	zoom -root -pixspacex 0 -pixspacey 0	    \n\
+-	       "Zoom (Lenses)" 	zoom -root -lenses -pixspacex 0		      \
 				  -pixspacey 0				    \n\
 -				rotzoomer --root			    \n\
 -	  "RotZoomer (mobile)" 	rotzoomer -root -move			    \n\
@@ -178,13 +178,16 @@ programs:								      \
 -		   "SpeedWorm" 	speedmine -root -worm			    \n\
 -				vermiculate --root			    \n\
   color: 			bubbles --root				    \n\
-  Best: 			webcollage --root			    \n\
-  Default-N:  "WebCollage (whacked)"					      \
-				  webcollage -root -filter "vidwhacker	      \
-				  -stdin -stdout -directory /tmp"	    \n\
+  Best: 			webcollage --root -directory		      \
+				  "/home/data/media/Pictures Slide	      \
+				  Show/XScreenSaver/"			    \n\
+- Default-N:  "WebCollage (whacked)"					      \
+				  webcollage --root -directory		      \
+				  "/home/data/media/Pictures Slide	      \
+				  Show/XScreenSaver/"			    \n\
   default-n: 			vidwhacker --root			    \n\
   GL: 				gears --root				    \n\
-  GL: 	   "Gears (planetary)" 	gears -root -planetary			    \n\
+- GL: 	   "Gears (planetary)" 	gears -root -planetary			    \n\
 - GL: 				superquadrics --root			    \n\
 - GL: 				morph3d --root				    \n\
   GL: 				cage --root				    \n\
@@ -195,7 +198,7 @@ programs:								      \
 - GL: 				rubik --root				    \n\
   GL: 				atlantis --root				    \n\
 - GL: 				lament --root				    \n\
-- GL: 				bubble3d --root				    \n\
+  GL: 				bubble3d --root				    \n\
   GL: 				glplanet -root -delay 20000		    \n\
 - GL: 				pulsar --root				    \n\
 - GL: 	   "Pulsar (textures)" 	pulsar -root -texture -mipmap		      \
@@ -263,7 +266,7 @@ programs:								      \
 -				piecewise --root			    \n\
 				cloudlife --root			    \n\
 				fontglide -root -page			    \n\
-	"FontGlide (scroller)" 	fontglide -root -scroll			    \n\
+-	"FontGlide (scroller)" 	fontglide -root -scroll			    \n\
 				apple2 --root				    \n\
 				pong --root				    \n\
 - GL: 				flurry -root -preset random		    \n\
@@ -278,7 +281,7 @@ programs:								      \
   GL: 				glmatrix -root -speed 4			    \n\
 - GL: 				cubestorm --root			    \n\
   GL: 				glknots --root				    \n\
-- GL: 				blocktube --root			    \n\
+  GL: 				blocktube --root			    \n\
 - GL: 				flipflop --root				    \n\
 - GL: 				antspotlight --root			    \n\
   GL: 				glslideshow --root --duration 80 --zoom	      \
@@ -304,7 +307,7 @@ programs:								      \
 -				anemotaxis --root			    \n\
 -				memscroller --root			    \n\
 				substrate --root			    \n\
-	 "Substrate (circles)" 	substrate -root -circle-percent 33	    \n\
+-	 "Substrate (circles)" 	substrate -root -circle-percent 33	    \n\
 				intermomentary --root			    \n\
 				interaggregate --root			    \n\
 -				fireworkx --root			    \n\
@@ -314,7 +317,7 @@ programs:								      \
 - GL: 	"Pinion (large gears)" 	pinion --root				    \n\
 - GL: 	"Pinion (small gears)" 	pinion -root -size 0.2 -scroll 0.3	    \n\
   GL: 				boing -root -lighting -smooth		    \n\
-- GL: 				carousel --root				    \n\
+  GL: 				carousel --root				    \n\
 - GL: 				fliptext --root				    \n\
 - GL: 				antmaze --root				    \n\
   GL: 				tangram --root				    \n\
@@ -343,7 +346,7 @@ programs:								      \
 - GL: 		 "BusySpheres" 	busyspheres --root			    \n\
   GL: 		 "SpirographX" 	spirographx -r				    \n\
 - GL: 		  "MatrixView" 	matrixview --root			    \n\
-				attraction --root			    \n\
+				attraction --root --mode lines		    \n\
 				qix --root				    \n\
 				ripples --root				    \n\
 - GL: 				dnalogo --root				    \n\
@@ -360,7 +363,7 @@ programs:								      \
   GL: 				lockward --root				    \n\
 				m6502 --root				    \n\
   GL: 				moebiusgears --root			    \n\
-  GL: 				voronoi --root				    \n\
+- GL: 				voronoi --root				    \n\
   GL: 				hypnowheel --root			    \n\
 -				lcdscrub --root				    \n\
   GL: 				photopile --root			    \n\
@@ -382,12 +385,12 @@ programs:								      \
 				tessellimage --root			    \n\
   GL: 				winduprobot --root			    \n\
   GL: 				splitflap --root			    \n\
-  GL: 				cubestack --root			    \n\
-  GL: 				cubetwist --root			    \n\
+- GL: 				cubestack --root			    \n\
+- GL: 				cubetwist --root			    \n\
   GL: 				discoball --root			    \n\
   GL: 				dymaxionmap --root			    \n\
   GL: 				energystream --root			    \n\
-  GL: 				hexstrut --root				    \n\
+- GL: 				hexstrut --root				    \n\
   GL: 				hydrostat --root			    \n\
   GL: 				raverhoop --root			    \n\
   GL: 				splodesic --root			    \n\
@@ -404,7 +407,7 @@ programs:								      \
 - GL: 				handsy --root				    \n\
   GL: 				deepstars --root			    \n\
   GL: 				gravitywell --root			    \n\
-				scooter --root				    \n\
+-				scooter --root				    \n\
   GL: 				etruscanvenus --root			    \n\
   GL: 				gibson --root				    \n\
   GL: 				beats --root				    \n\
@@ -441,7 +444,7 @@ programs:								      \
   GL: 				logarithmiccircles --root		    \n\
   GL: 				neongravity --root			    \n\
   GL: 				trainmandala --root			    \n\
-  GL: 				highvoltage --root			    \n\
+- GL: 				highvoltage --root			    \n\
   GL: 				kallisti --root				    \n\
   GL: 				klondike --root				    \n\
   GL: 				selfreflect --root			    \n\
@@ -450,7 +453,7 @@ programs:								      \
   GL: 				bubblecolors --root			    \n\
   GL: 				darktransit --root			    \n\
   GL: 				downfall --root				    \n\
-  GL: 				dumpsterfire --root			    \n\
+- GL: 				dumpsterfire --root			    \n\
   GL: 				hexplasma --root			    \n\
   GL: 				hopffibration --root			    \n\
   GL: 				noxfire --root				    \n\
