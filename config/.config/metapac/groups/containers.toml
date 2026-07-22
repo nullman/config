@@ -21,6 +21,7 @@ dnf = {
     "docker-cli",
     "docker-compose",
     "podman",
+    "toolbox",
   ]
 }
 

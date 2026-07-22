@@ -95,10 +95,14 @@ dnf = {
     "stow",
     "sudo",
     "terminus-fonts",
+    "tiwilink-firmware",
     "usbutils",
     "wget2-wget",
     "wpa_supplicant",
     "zram-generator",
+    "uresourced",
+    "usb_modeswitch",
+    "util-linux",
     "zram-generator-defaults",
   ]
 }

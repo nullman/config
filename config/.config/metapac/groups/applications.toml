@@ -67,6 +67,7 @@ dnf = {
     "ngspice",
     "obs-studio",
     "openscad",
+    "unoconv",
   ]
 }
 
