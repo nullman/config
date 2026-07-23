@@ -67,6 +67,8 @@ dnf = {
     "ngspice",
     "obs-studio",
     "openscad",
+    "libreoffice-calc",
+    "libreoffice-emailmerge",
     "unoconv",
   ]
 }

@@ -36,6 +36,7 @@ dnf = {
   ], 
   packages = [
     "dwarffortress",
+    "gamemode",
     "gamescope",
     "luanti",
     "lutris",

@@ -75,8 +75,8 @@ dnf = {
     "deadbeef",
     "dmg2img",
     "easytag",
-    "engrampa",
     "flameshot",
+    "file-roller",
     "gcal",
     "gnome-multi-writer",
     "goldendict-ng",
@@ -97,7 +97,10 @@ dnf = {
     "qmmp",
     "qmplay2",
     "rpi-imager",
+    "showtime",
+    "simple-scan",
     "simplescreenrecorder",
+    "snapshot",
     "sox",
     "sxiv",
     "timg",
@@ -105,7 +108,6 @@ dnf = {
     "vlc",
     "vlc-plugins-all",
     "xpdf",
-    "xarchiver",
     "zathura",
   ]
 }

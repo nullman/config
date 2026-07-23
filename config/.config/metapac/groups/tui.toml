@@ -59,6 +59,7 @@ dnf = {
     "mcabber",
     "ncdu",
     "ncmpcpp",
+    "pinfo",
     "ranger",
     "s-tui",
     "tig",

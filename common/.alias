@@ -653,6 +653,10 @@ alias nsap="sudo netstat -a -p"
 alias nstup="sudo netstat -t -u -p"
 #        nstupl                  netstat (tcp, udp, programs, listening)
 alias nstupl="sudo netstat -t -u -p -l"
+#        nstupln                  netstat (tcp, udp, programs, listening, numeric addresses)
+alias nstupln="sudo netstat -t -u -p -l -n"
+#        ns-grep-port             netstat (tcp, udp, programs, listening, numeric addresses) with grep
+alias ns-grep-port="sudo netstat -t -u -p -l -n | grep"
 #        lsofi                   lsof -i (list open files matching given internet address)
 alias lsofi="sudo lsof -i"
 #        lsofg                   lsof with grep (list open files matching given query)
@@ -667,8 +671,8 @@ alias nmlp="nmap -p 1-65535 localhost"
 alias nmp="nmap -p 1-65535"
 #        nmu                     nmap with udp
 alias nmu="nmap -sS -sU"
-#        asl                     arp-scan --localnet
-alias asl="sudo arp-scan --localnet"
+#!#        asl                     arp-scan --localnet
+#!alias asl="sudo arp-scan --localnet"
 #
 # network (ping, traceroute, external ip address)
 #

@@ -23,8 +23,10 @@ dnf = {
   packages = [
     "akmod-nvidia-470xx",
     "nvidia-gpu-firmware",
+    "nvtop",
     "xorg-x11-drv-nvidia-470xx",
     "xorg-x11-drv-nvidia-470xx-cuda",
+    "egl-wayland",
   ]
 }
 

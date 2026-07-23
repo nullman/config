@@ -121,6 +121,7 @@ dnf = {
     "gtk2",
     "gtk3",
     "gtk4",
+    "kvantum",
     "libgnome-keyring",
     "lxappearance",
     "mesa-demos",
@@ -157,6 +158,8 @@ dnf = {
     "xscreensaver-gl-extras",
     "yad",
     "zenity",
+    "pinentry-gnome3",
+    "qt6-qtbase",
   ]
 }
 

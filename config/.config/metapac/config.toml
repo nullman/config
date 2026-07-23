@@ -41,7 +41,7 @@ fedora = ["qubes"]
 switch = ["base", "system", "x11", "window-manager", "fonts", "applications", "utilities", "tui", "console", "console-hacks", "internet", "emulators", "fortune", "minimal"]
 mouse = ["base", "system", "x11", "wayland", "window-manager", "fonts", "emulators", "fortune", "minimal",]
 retro = ["base", "system", "x11", "window-manager", "fonts", "emulators"]
-tank = ["base", "system", "x11", "wayland", "window-manager", "gnome", "fonts", "applications", "utilities", "tui", "console", "console-hacks", "internet", "emulators", "virtual", "containers", "development", "games", "nvidia580", "flatpak", "snap"]
+tank = ["base", "system", "x11", "wayland", "window-manager", "fonts", "applications", "utilities", "tui", "console", "console-hacks", "internet", "emulators", "virtual", "containers", "development", "ai", "games", "nvidia580", "fedora", "flatpak", "snap"]
 
 [arch]
 # Since pacman, pamac, paru, pikaur and yay all operate on the same package database

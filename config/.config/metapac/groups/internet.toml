@@ -67,6 +67,7 @@ dnf = {
     "transmission-gtk",
     "tuba",
     "vdhcoapp",
+    "google-chrome-canary",
   ]
 }
 
