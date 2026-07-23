@@ -50,6 +50,7 @@ dnf = {
     "copr.fedorainfracloud.org/skidnik/clipmenu",
   ], 
   packages = [
+    "brave-browser",
     "brave-origin",
     "dino",
     "filezilla",
@@ -67,6 +68,8 @@ dnf = {
     "transmission-gtk",
     "tuba",
     "vdhcoapp",
+    "at-spi2-atk",
+    "cyrus-sasl-plain",
     "google-chrome-canary",
   ]
 }

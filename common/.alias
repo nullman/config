@@ -3191,6 +3191,10 @@ alias dnfr="sudo dnf remove"
 alias dnfs="dnf search"
 #        dnff                    dnf search files
 alias dnff="dnf provides"
+#        dnf-requires            dnf repoquery --requires
+alias dnf-requires="dnf repoquery --requires"
+#        dnf-whatrequires        dnf repoquery --installed --whatrequires
+alias dnf-whatrequires="dnf repoquery --installed --whatrequires"
 
 #
 # metapac (Multi-Backend Declarative Package Manager)

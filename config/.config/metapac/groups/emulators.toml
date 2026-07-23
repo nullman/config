@@ -32,6 +32,7 @@ dnf = {
     "wine",
     "wine-mono",
     "winetricks",
+    "dosbox-staging",
   ]
 }
 

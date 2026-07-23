@@ -69,7 +69,13 @@ dnf = {
   ], 
   packages = [
     "alacritty",
+    "attr",
+    "bash",
+    "bash-color-prompt",
+    "bash-completion",
+    "btrfs-progs",
     "coreutils",
+    "cryptsetup",
     "curl",
     "efibootmgr",
     "file",

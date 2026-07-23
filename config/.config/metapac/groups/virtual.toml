@@ -46,6 +46,7 @@ dnf = {
     "virt-manager",
     "virt-viewer",
     "virtualbox-guest-additions",
+    "dnsmasq",
     "e2fsprogs",
     "ntfsprogs",
     "vte-profile",

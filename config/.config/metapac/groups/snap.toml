@@ -2,6 +2,7 @@ snap = {
   packages = [
     "libation",
     "bare",
+    "core20",
     "core24",
     "gnome-46-2404",
     "gtk-common-themes",

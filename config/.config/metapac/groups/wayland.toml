@@ -40,6 +40,9 @@ dnf = {
   ], 
   packages = [
     "clipman",
+    "dankcalendar-git",
+    "dms",
+    "dms-greeter",
     "foot",
     "fuzzel",
     "grim",
