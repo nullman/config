@@ -1,5 +1,5 @@
 # XScreenSaver Preferences File
-# Written by xscreensaver-demo 6.15-1.fc44 for user on Tue Jul 21 13:40:19 2026.
+# Written by xscreensaver-demo 6.15-1.fc44 for user on Thu Jul 23 12:36:00 2026.
 # https://www.jwz.org/xscreensaver/
 
 timeout:	10:00:00
@@ -455,7 +455,7 @@ programs:								      \
   GL: 				downfall --root				    \n\
 - GL: 				dumpsterfire --root			    \n\
   GL: 				hexplasma --root			    \n\
-  GL: 				hopffibration --root			    \n\
+- GL: 				hopffibration --root			    \n\
   GL: 				noxfire --root				    \n\
   GL: 				platonicfolding --root			    \n\
   GL: 				rigrekt --root				    \n\
