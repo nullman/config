@@ -98,22 +98,22 @@ control + alt + {Up,Down,Left,Right}
 # Media Keys
 #-------------------------------------------------------------------------------
 
-XF86AudioMute
-    ${HOME}/bin/system-setting 'volume' 'toggle-mute'
-
-XF86AudioLowerVolume
-    ${HOME}/bin/system-setting 'volume' 'down'
-
-XF86AudioRaiseVolume
-    ${HOME}/bin/system-setting 'volume' 'up'
-
-# XF86AudioMicMute
+XF86MonBrightnessUp
+    ${HOME}/bin/system-setting 'brightness' 'up'
 
 XF86MonBrightnessDown
     ${HOME}/bin/system-setting 'brightness' 'down'
 
-XF86MonBrightnessUp
-    ${HOME}/bin/system-setting 'brightness' 'up'
+XF86AudioRaiseVolume
+    ${HOME}/bin/system-setting 'volume' 'up'
+
+XF86AudioLowerVolume
+    ${HOME}/bin/system-setting 'volume' 'down'
+
+XF86AudioMute
+    ${HOME}/bin/system-setting 'volume' 'toggle-mute'
+
+# XF86AudioMicMute
 
 # XF86Display
 XF86Display
@@ -143,36 +143,8 @@ XF86TouchpadToggle
 #     playerctl previous && notify-send --expire-time=3000 --replace-id=2 'Previous Song'
 
 #-------------------------------------------------------------------------------
-# Media Key Alternatives
-#-------------------------------------------------------------------------------
-
-# volume control
-super + alt + ctrl + Insert
-    ${HOME}/bin/system-setting volume 'toggle-mute'
-super + alt + ctrl + Home
-    ${HOME}/bin/system-setting volume up
-super + alt + ctrl + End
-    ${HOME}/bin/system-setting volume down
-super + alt + ctrl + Delete
-    ffplay -nodisp -autoexit "${HOME}/sounds/bottles.wav"
-
-# screen brightness
-super + alt + ctrl + Prior
-    ${HOME}/bin/system-setting brightness up
-super + alt + ctrl + Next
-    ${HOME}/bin/system-setting brightness down
-
-#-------------------------------------------------------------------------------
 # Wooting Lekker Keyboard Media Keys
 #-------------------------------------------------------------------------------
-
-# volume control
-super + Insert
-    ${HOME}/bin/system-setting volume 'toggle-mute'
-super + Home
-    ${HOME}/bin/system-setting volume up
-super + Prior
-    ${HOME}/bin/system-setting volume down
 
 # screen brightness
 super + Print
@@ -180,20 +152,48 @@ super + Print
 super + Pause
     ${HOME}/bin/system-setting brightness down
 
+# volume control
+super + Home
+    ${HOME}/bin/system-setting volume up
+super + Prior
+    ${HOME}/bin/system-setting volume down
+super + Insert
+    ${HOME}/bin/system-setting volume 'toggle-mute'
+
 # mpc control
 super + Delete
-    mpc prev && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    mpc prev && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
 super + End
-    mpc toggle && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    mpc toggle && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
 super + Next
-    mpc next && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    mpc next && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
+
+#-------------------------------------------------------------------------------
+# Media Key Alternatives
+#-------------------------------------------------------------------------------
+
+# screen brightness
+super + alt + ctrl + Prior
+    ${HOME}/bin/system-setting brightness up
+super + alt + ctrl + Next
+    ${HOME}/bin/system-setting brightness down
+
+# volume control
+super + alt + ctrl + Home
+    ${HOME}/bin/system-setting volume up
+super + alt + ctrl + End
+    ${HOME}/bin/system-setting volume down
+super + alt + ctrl + Insert
+    ${HOME}/bin/system-setting volume 'toggle-mute'
+super + alt + ctrl + Delete
+    ffplay -nodisp -autoexit "${HOME}/sounds/bottles.wav"
 
 #-------------------------------------------------------------------------------
 # System Tools
 #-------------------------------------------------------------------------------
 
 # display sxhkd keybindings
-super + alt + h
+super + {h, shift + slash}
     GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null --filename="${HOME}/.config/sxhkd/sxhkdrc-help"
     #ps -o args --no-headers -p $(pgrep -f sxhkd) | \
     #sed 's/^.* //' | xargs cat | \
@@ -203,109 +203,108 @@ super + alt + h
 
 # desktop application launcher
 super + alt + space
-    rofi -modi drun -show drun
-    #rofi -show combi -modes combi -combi-modes 'window,drun,run'
+    rofi -normal-window -modi drun -show drun
 
 # program launcher
-super + alt + d
-    rofi -modi run -show run
+super + d
+    rofi -normal-window -modi run -show run
 
 # application group launcher
-super + alt + a
+super + a
     ${HOME}/bin/application-launcher
 
 # menu launcher
-super + alt + Return
+super + Return
     ${HOME}/bin/rofi-menu
 
 # window selector
-super + alt + w
+super + w
     rofi -modi window -show window
 
-# window, desktop application, and program launcher/switcher
-super + space
-    rofi -show combi -modes combi -combi-modes 'window,drun,run'
-
 # clipmenu selector
-super + alt + c
+super + c
     CM_LAUNCHER=rofi clipmenu
 
 # emoji selector
-super + alt + e
+super + e
     rofimoji --typer xdotool --clipboarder xsel --skin-tone neutral
     #rofimoji --action print --skin-tone neutral | tr -d '\n' | xsel && xsel --output | xsel --clipboard
 
 # unicode selector
-super + alt + u
+super + u
     ${HOME}/bin/rofi-menu unicode
 
 # footnote symbol selector
-super + alt + shift + u
+super + shift + u
     ${HOME}/bin/rofi-menu footnotes
 
 # bookmarks selector
-super + alt + o
+super + o
     ${HOME}/bin/rofi-menu bookmarks
 
 # bookmarks keyword selector
-super + alt + shift + o
+super + shift + o
     ${HOME}/bin/rofi-menu bookmarks-keyword
 
 # typer selector
-super + alt + semicolon
+super + semicolon
     ${HOME}/bin/rofi-typer
 
 # paste selector
-super + alt + apostrophe
+super + apostrophe
     ${HOME}/bin/rofi-menu paste
 
 # spell and define word
-super + alt + s
+super + s
     ${HOME}/bin/rofi-menu spell
 
 # bitwarden selector (clear clipboard after 60 seconds)
 # first login using 'bw login'
-super + alt + p
+super + p
     bwmenu --clear 60
 
 # # generate password
-# super + alt + shift + p
+# super + shift + p
 #     tr --delete --complement 'a-zA-Z0-9!@#$%^&*-_=+;:,<.>/?' < /dev/urandom | \
 #     head --bytes 14 | xclip -selection clipboard && \
 #     notify-send --expire-time=3000 'Random password generated on clipboard'
 
 # # generate password
-# super + alt + shift + p
+# super + shift + p
 #     ${HOME}/bin/password-phrase 6 hyphen true | tr -d '\n' | xclip -selection clipboard && \
 #     notify-send --expire-time=3000 'Random password phrase on clipboard'
 
 # generate password
-super + alt + shift + p
+super + shift + p
     ${HOME}/bin/rofi-menu password && notify-send --expire-time=3000 'Random password phrase on clipboard'
 
 # display time
-super + alt + backslash
+super + backslash
     printf "$(date '+%Y-%m-%d')\n $(date '+%H:%M:%S')" | \
     yad --text-info --width=532 --height=240 --wrap --no-buttons --timeout=3 --fontname='MesloLGS Nerd Font Mono 64' 2>/dev/null
 
 # # edit with emacs
-# super + alt + e
+# super + e
 #     emacsclient --eval '(emacs-everywhere)'
 
 # git synchronize config
-super + alt + y
+super + y
     source "${HOME}/.funct" && (git-sync-config && echo 'Done') 2>&1 | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
 
 # git synchronize extra
-super + alt + shift + y
+super + shift + y
     source "${HOME}/.funct" && (git-sync-extra && echo 'Done') 2>&1 | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
 
 # start screen saver
-super + alt + x
+super + x
     xscreensaver-command -activate
 
-# start screen saver in lock mode
+# start screen saver demo
 super + shift + x
+    xscreensaver-demo
+
+# start screen saver in lock mode
+super + ctrl + x
     xscreensaver-command -lock
 #    xlock
 #    xlock -mode flame
@@ -313,7 +312,7 @@ super + shift + x
 #    xscreensaver-command -lock
 
 # restart x11 resume service (caps-lock, insert key, keyboard & mouse speed)
-super + shift + backslash
+super + ctrl + backslash
     systemctl --user restart resume && notify-send --expire-time=3000 'X11 resume service restarted'
     #systemctl --user restart setxkbmap xkbcomp xset && notify-send --expire-time=3000 'User services restarted'
 
@@ -323,10 +322,10 @@ super + shift + q
 
 # get xprop class name
 super + shift + p
-    xprop | grep '^WM_CLASS' | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
+    xprop | grep '^WM_CLASS' | GDK_BACKEND=x11 yad --text-info --width=480 --height=360 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
 
 # kill process clicked
-super + shift + Delete
+super + ctrl + Delete
     xkill
 
 # snapshot of entire screen
@@ -377,23 +376,23 @@ super + shift + v
     notify-send --expire-time=3000 'Resetting video'
 
 # connect to sennheiser hd350bt headphones
-super + alt + b
+super + b
     notify-send --expire-time=3000 'Connecting to Sennheiser HD 350BT Headphones' && \
     bluetoothctl connect 80:C3:BA:0E:CB:E5
-super + alt + shift + b
+super + shift + b
     notify-send --expire-time=3000 'Disconnecting from Sennheiser HD 350BT Headphones' && \
     bluetoothctl disconnect 80:C3:BA:0E:CB:E5
 
 # connect to powerbeats pro headphones
-super + alt + n
+super + n
     notify-send --expire-time=3000 'Connecting to Powerbeats Pro Headphones' && \
     bluetoothctl connect 14:1A:97:05:81:4C
-super + alt + shift + n
+super + shift + n
     notify-send --expire-time=3000 'Disconnecting from Powerbeats Pro Headphones' && \
     bluetoothctl disconnect 14:1A:97:05:81:4C
 
 # # nixos-rebuild switch
-# super + alt + ctrl + r
+# super + shift + r
 #     sudo -i nixos-rebuild switch | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
 
 #-------------------------------------------------------------------------------
@@ -402,53 +401,53 @@ super + alt + shift + n
 
 # mpc control
 super + alt + ctrl + m
-    mpc toggle && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    mpc toggle && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
 super + alt + ctrl + comma
-    mpc prev && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    mpc prev && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
 super + alt + ctrl + period
-    mpc next && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    mpc next && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
 super + alt + ctrl + slash
-    notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
 
 # mpc control (media keys)
 XF86AudioPrev
-    mpc prev && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    mpc prev && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
 XF86AudioPlay
-    mpc toggle && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    mpc toggle && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
 XF86AudioStop
-    mpc stop && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    mpc stop && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
 XF86AudioNext
-    mpc next && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/mpc-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    mpc next && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
 
 # # spotify control
-# shift + alt + a
-#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
-# shift + alt + s
-#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
-# shift + alt + d
-#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
-# shift + alt + f
-#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+# super + alt + ctrl + a
+#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/spotify-playing)"
+# super + alt + ctrl + s
+#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/spotify-playing)"
+# super + alt + ctrl + d
+#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/spotify-playing)"
+# super + alt + ctrl + f
+#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/spotify-playing)"
 # XF86AudioPrevious
-#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/spotify-playing)"
 # XF86AudioPlay
-#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/spotify-playing)"
 # XF86AudioStop
-#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/spotify-playing)"
 # XF86AudioNext
-#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/spotify-playing)"
 
 # media player control
 super + alt + ctrl + z
-    qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/spotify-playing)"
 super + alt + ctrl + c
-    qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/spotify-playing)"
 super + alt + ctrl + x
-    qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/spotify-playing)"
 super + alt + ctrl + b
-    qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/spotify-playing)"
 super + alt + ctrl + apostrophe
-    notify-send --expire-time=5000 --replace-id=2 "$(${HOME}/bin/spotify-playing | sed 's/ - /\n/ ; s/\[/\n\[/')"
+    notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/spotify-playing)"
 
 #-------------------------------------------------------------------------------
 # Applications
@@ -456,8 +455,6 @@ super + alt + ctrl + apostrophe
 
 # terminal
 super + alt + t
-    alacritty
-super + Return
     alacritty
 
 #===============================================================================

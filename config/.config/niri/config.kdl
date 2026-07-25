@@ -65,7 +65,9 @@ layout {
 
     focus-ring {
         width 4
-        active-color "#7fc8ff"
+        //active-color "#7fc8ff"         // cyan (default)
+        //active-color "#d0bcff"         // purple
+        active-color "#42a5f5"          // blue
         inactive-color "#505050"
     }
 
@@ -162,10 +164,10 @@ window-rule {
     clip-to-geometry true
 }
 
-window-rule {
-    match app-id=r#"^org\.wezfurlong\.wezterm$"#
-    default-column-width {}
-}
+//window-rule {
+//    match app-id=r#"^org\.wezfurlong\.wezterm$"#
+//    default-column-width {}
+//}
 
 window-rule {
     match app-id=r#"firefox$"# title="^Picture-in-Picture$"
@@ -268,7 +270,7 @@ window-rule {
 // }
 
 binds {
-    // use ~wev~ to find XKB key names
+    // use the wev command to find XKB key names
     //
     // "Mod" is a special modifier equal to Super when running on a TTY, and
     // to Alt when running as a winit window
@@ -298,14 +300,24 @@ binds {
     Super+Pause allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "10%-"; }
 
     // wooting lekker keyboard media keys: volume
-    Super+Insert  allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
-    Super+Home    allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; }
     Super+Page_Up allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"; }
+    Super+Home    allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; }
+    Super+Insert  allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
 
     // wooting lekker keyboard media keys: audio play
     Super+Delete    allow-when-locked=true { spawn "playerctl" "previous"; }
     Super+End       allow-when-locked=true { spawn "playerctl" "play-pause"; }
     Super+Page_Down allow-when-locked=true { spawn "playerctl" "next"; }
+
+    // media key alternatives: brightness
+    Super+Alt+Ctrl+Page_Up   allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "+10%"; }
+    Super+Alt+Ctrl+Page_Down allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "10%-"; }
+
+    // media key alternatives: volume
+    Super+Alt+Ctrl+Home   allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"; }
+    Super+Alt+Ctrl+End    allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; }
+    Super+Alt+Ctrl+Insert allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
+    Super+Alt+Ctrl+Delete allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
 
     // screenshots
     Super+Alt+Print   { screenshot-screen; }
@@ -314,13 +326,11 @@ binds {
 
     // applications & utilities
     Super+Ctrl+Space hotkey-overlay-title="Toggle Overview" repeat=false                      { toggle-overview; }
-    Super+Alt+Space  hotkey-overlay-title="Window, Desktop Application, and Program Launcher" { spawn "rofi" "-show" "combi" "-modes" "combi" "-combi-modes" "'window,drun,run'"; }
-    Super+T          hotkey-overlay-title="Alacritty Terminal"                                { spawn "alacritty"; }
-    Super+D          hotkey-overlay-title="Desktop Application Launcher"                      { spawn "rofi" "-modi" "drun" "-show" "drun"; }
-    Super+Shift+D    hotkey-overlay-title="Program Launcher"                                  { spawn "rofi" "-modi" "run" "-show" "run"; }
+    Super+Alt+Space  hotkey-overlay-title="Desktop Application Launcher"                      { spawn "rofi" "-normal-window" "-modi" "drun" "-show" "drun"; }
+    Super+D          hotkey-overlay-title="Program Launcher"                                  { spawn "rofi" "-normal-window" "-modi" "run" "-show" "run"; }
     Super+A          hotkey-overlay-title="Application Group Launcher"                        { spawn-sh "${HOME}/bin/application-launcher"; }
     Super+Return     hotkey-overlay-title="Menu Launcher"                                     { spawn-sh "${HOME}/bin/rofi-menu"; }
-    Super+W          hotkey-overlay-title="Window Selector"                                   { spawn "rofi" "-modi" "window" "-show" "window"; }
+    Super+W          hotkey-overlay-title="Window Selector"                                   { spawn "rofi" "-normal-window" "-modi" "window" "-show" "window"; }
     Super+C          hotkey-overlay-title="Clipboard Selector"                                { spawn-sh "${HOME}/bin/rofi-menu clipboard"; }
     Super+E          hotkey-overlay-title="Emoji Selector"                                    { spawn-sh "${HOME}/bin/rofi-menu emoji"; }
     Super+U          hotkey-overlay-title="Unicode Selector"                                  { spawn-sh "${HOME}/bin/rofi-menu unicode"; }
@@ -336,13 +346,16 @@ binds {
     Super+Y          hotkey-overlay-title="Git Sync: Config"                                  { spawn-sh "source \"${HOME}/.funct\" && (git-sync-config && echo 'Done') 2>&1 | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"; }
     Super+Shift+Y    hotkey-overlay-title="Git Sync: Extra"                                   { spawn-sh "source \"${HOME}/.funct\" && (git-sync-extra && echo 'Done') 2>&1 | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"; }
     Super+X          hotkey-overlay-title="Activate XScreenSaver"                             { spawn "xscreensaver-command" "-activate"; }
-    Super+Alt+X      hotkey-overlay-title="XScreenSaver Demo"                                 { spawn "xscreensaver-demo"; }
-    Super+Shift+X    hotkey-overlay-title="Screen Lock"                                       { spawn "swaylock"; }
+    Super+Shift+X    hotkey-overlay-title="XScreenSaver Demo"                                 { spawn "xscreensaver-demo"; }
+    Super+Ctrl+X     hotkey-overlay-title="Lock Screen"                                       { spawn "swaylock"; }
     Super+Shift+W    hotkey-overlay-title="Close Window" repeat=false                         { close-window; }
     Super+Shift+Q    hotkey-overlay-title="Session Menu"                                      { spawn-sh "${HOME}/bin/rofi-session-menu -s"; }
-    Super+Shift+P    hotkey-overlay-title="Window Properties"                                 { spawn-sh "notify-send --expire-time=3000 'Select window' ; niri msg pick-window | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"; }
-    Super+Shift+C    hotkey-overlay-title="Color Picker"                                      { spawn-sh "notify-send --expire-time=3000 'Select color' ; niri msg pick-color | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"; }
+    Super+Shift+P    hotkey-overlay-title="Window Properties"                                 { spawn-sh "notify-send --expire-time=3000 'Select window' ; niri msg pick-window | GDK_BACKEND=x11 yad --text-info --width=480 --height=360 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"; }
+    Super+Shift+C    hotkey-overlay-title="Color Picker"                                      { spawn-sh "notify-send --expire-time=3000 'Select color' ; niri msg pick-color | GDK_BACKEND=x11 yad --text-info --width=480 --height=360 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"; }
     Super+Shift+V    hotkey-overlay-title="Validate Niri Config"                              { spawn-sh "niri validate 2>&1 | ansi2txt | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"; }
+
+    // applications
+    Super+T          hotkey-overlay-title="Alacritty Terminal"                                { spawn "alacritty"; }
 
     // mpd controls
     Super+Alt+Ctrl+M      hotkey-overlay-title="mpd: Play/Pause" { spawn-sh "mpc toggle && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg \"$(${HOME}/bin/mpd-playing --notify-title)\" \"$(${HOME}/bin/mpd-playing --notify-body)\""; }

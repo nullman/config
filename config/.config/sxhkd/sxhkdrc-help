@@ -6,43 +6,44 @@ System Tools
 |-------+-----+------+-------+--------+-------------------------------------|
 | Super | Alt | Ctrl | Shift | Key    | Description                         |
 |-------+-----+------+-------+--------+-------------------------------------|
-| Super | Alt |      |       | h      | Display Key Bindings                |
+| Super |     |      |       | h      | Display Key Bindings                |
 | Super |     |      | Shift | h      | Display BSPWM Manual                |
 | Super | Alt |      |       | Space  | Desktop Application Launcher        |
-| Super | Alt |      |       | d      | Program Launcher                    |
-| Super | Alt |      |       | a      | Group Application Launcher          |
-| Super | Alt |      |       | Return | Menu Launcher                       |
-| Super | Alt |      |       | w      | Window Selector                     |
+| Super |     |      |       | d      | Program Launcher                    |
+| Super |     |      |       | a      | Group Application Launcher          |
+| Super |     |      |       | Return | Menu Launcher                       |
+| Super |     |      |       | w      | Window Selector                     |
 | Super |     |      |       | Space  | Window/Desktop/Program Selector     |
-| Super | Alt |      |       | c      | Clipmenu Selector                   |
-| Super | Alt |      |       | e      | Emoji Selector                      |
-| Super | Alt |      |       | o      | Bookmarks Selector                  |
-| Super | Alt |      | Shift | o      | Bookmarks Keyword Selector          |
-| Super | Alt |      |       | ;      | Typer Selector                      |
-| Super | Alt |      |       | '      | Paste Selector                      |
-| Super | Alt |      |       | s      | Spell and Define Word               |
-| Super | Alt |      |       | p      | Bitwarden Selector                  |
-| Super | Alt |      | Shift | p      | Generate Password                   |
-| Super | Alt |      |       | \      | Display Time                        |
-| Super | Alt |      |       | y      | Git Synchronize Config              |
-| Super | Alt |      | Shift | y      | Git Synchronize Extra               |
-| Super | Alt |      |       | x      | Start Screensaver                   |
-| Super |     |      | Shift | x      | Lock Screensaver                    |
-| Super |     |      | Shift | q      | Session Menu                        |
-| Super |     |      | Shift | p      | Get XProp Class Name                |
-| Super |     |      | Shift | Delete | Kill Process Clicked                |
-| Super | Alt |      |       | Print  | Screen Snapshot                     |
-| Super |     | Ctrl |       | Print  | Window Snapshot                     |
+| Super |     |      |       | c      | Clipmenu Selector                   |
+| Super |     |      |       | e      | Emoji Selector                      |
+| Super |     |      |       | o      | Bookmarks Selector                  |
+| Super |     |      | Shift | o      | Bookmarks Keyword Selector          |
+| Super |     |      |       | ;      | Typer Selector                      |
+| Super |     |      |       | '      | Paste Selector                      |
+| Super |     |      |       | s      | Spell and Define Word               |
+| Super |     |      |       | p      | Bitwarden Selector                  |
+| Super |     |      | Shift | p      | Generate Password                   |
+| Super |     |      |       | \      | Display Time                        |
+| Super |     |      |       | y      | Git Synchronize Config              |
+| Super |     |      | Shift | y      | Git Synchronize Extra               |
+| Super |     |      |       | x      | Start Screensaver                   |
+| Super |     | Ctrl |       | x      | Lock Screensaver                    |
+| Super |     | Ctrl |       | q      | Session Menu                        |
+| Super |     | Ctrl |       | p      | Get XProp Class Name                |
+| Super |     | Ctrl |       | Delete | Kill Process Clicked                |
+| Super |     |      |       | Print  | Screen Snapshot                     |
+| Super | Alt |      |       | Print  | Window Snapshot                     |
 | Super |     |      | Shift | Print  | Region Snapshot                     |
-| Super |     |      | Shift | s      | Reload SXHKD                        |
-| Super |     |      | Shift | r      | Reload System Tray                  |
-| Super |     |      | Shift | c      | Reload Conky                        |
-| Super |     |      | Shift | v      | Reset Video                         |
-| Super | Alt |      |       | b      | Connect to Sennheiser Headphones    |
-| Super | Alt |      | Shift | b      | Disconnect to Sennheiser Headphones |
-| Super | Alt |      |       | n      | Connect to Powerbeats Headphones    |
-| Super | Alt |      | Shift | n      | Disconnect to Powerbeats Headphones |
+| Super |     | Ctrl |       | s      | Reload SXHKD                        |
+| Super |     | Ctrl |       | r      | Reload System Tray                  |
+| Super |     | Ctrl |       | c      | Reload Conky                        |
+| Super |     | Ctrl |       | v      | Reset Video                         |
+| Super |     | Ctrl |       | b      | Connect to Sennheiser Headphones    |
+| Super |     | Ctrl | Shift | b      | Disconnect to Sennheiser Headphones |
+| Super |     | Ctrl |       | n      | Connect to Powerbeats Headphones    |
+| Super |     | Ctrl | Shift | n      | Disconnect to Powerbeats Headphones |
 |-------+-----+------+-------+--------+-------------------------------------|
+#+TBLFM:
 
 Media
 
@@ -71,6 +72,5 @@ Applications
 |-------+-----+------+-------+--------+-------------|
 | Super | Alt | Ctrl | Shift | Key    | Description |
 |-------+-----+------+-------+--------+-------------|
-| Super | Alt |      |       | t      | Terminal    |
-| Super |     |      |       | Return | Terminal    |
+| Super |     |      |       | t      | Terminal    |
 |-------+-----+------+-------+--------+-------------|
