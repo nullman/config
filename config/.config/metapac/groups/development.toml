@@ -139,6 +139,7 @@ dnf = {
     "sbcl",
     "ShellCheck",
     "terminology",
+    "texinfo",
     "texlive",
     "texlive-fontawesome",
     "tokei",
