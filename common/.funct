@@ -1894,6 +1894,15 @@ gitcouo() {
         git checkout "${branch}" && git pull origin "${branch}"
     fi
 }
+#        git-retag               git tag -d x48ng-1.3.0 ; git push origin :x48ng-1.3.0 ; git tag x48ng-1.3.0 ; git push origin x48ng-1.3.0
+git-retag() {
+    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+        echo "Usage: git-retag TAG"
+        echo "  TAG  tag to delete and recreate"
+    else
+        git tag -d "$1" ; git push origin :"$1" ; git tag "$1" ; git push origin "$1"
+    fi
+}
 #        _gitsync                pull, commit, and push given home git repositories
 _gitsync() {
     for dir in "$@" ; do

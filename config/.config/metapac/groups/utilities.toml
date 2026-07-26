@@ -108,6 +108,7 @@ dnf = {
     "unison",
     "vlc",
     "vlc-plugins-all",
+    "x48ng",
     "xpdf",
     "zathura",
   ]

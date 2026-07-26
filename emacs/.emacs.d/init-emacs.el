@@ -211,43 +211,30 @@ Skips checks if run on Windows or Mac."
 (init-message 2 "Environment: Init Packages")
 
 ;; load packages that are used for initialization
-(use-package async
-  :straight t)
+(use-package compat :straight t)
+(use-package transient :straight t)
+(use-package dash :straight t :demand t)
+(use-package f :straight t :demand t)
+(use-package s :straight t :demand t)
+(use-package seq :straight (:type built-in))
+(use-package subr-x :straight (:type built-in))
+(use-package cl-generic :straight (:type built-in))
+(use-package cl-macs :straight (:type built-in))
+(use-package async :straight t)
 (use-package bind-key
   :straight t
   :custom
   ;; extract docstrings from lambdas, closures and keymaps if possible
   (bind-key-describe-special-forms t))
-(use-package cl-generic
-  :straight (:type built-in))
-(use-package cl-macs
-  :straight (:type built-in))
-(use-package dash
-  :straight t
-  :demand t)
 (use-package diminish
   :straight (diminish
              :type git
              :host github
              :repo "myrjola/diminish.el"))
-(use-package f
-  :straight t
-  :demand t)
-(use-package s
-  :straight t
-  :demand t)
-(use-package seq
-  :straight (:type built-in))
-(use-package subr-x
-  :straight (:type built-in))
-(use-package org
-  :straight (:type built-in))
-(use-package org-table
-  :straight (:type built-in))
-(use-package ob-tangle
-  :straight (:type built-in))
-(use-package ox
-  :straight (:type built-in))
+(use-package org :straight (:type built-in))
+(use-package org-table :straight (:type built-in))
+(use-package ob-tangle :straight (:type built-in))
+(use-package ox :straight (:type built-in))
 ;; Init Packages:1 ends here
 
 ;; [[file:init-emacs.org::#environment-environment][Environment:1]]
@@ -19586,17 +19573,6 @@ Do not perform the search on very large files (to avoid a delay when loaded)."
         time-stamp-format "%Y-%02m-%02d %02H:%02M (%u)")
   (add-hook 'before-save-hook #'time-stamp))
 ;; time-stamp:1 ends here
-
-;; [[file:init-emacs.org::#packages-transient][transient:1]]
-;;------------------------------------------------------------------------------
-;;; Packages: transient
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Packages: transient")
-
-(use-package transient
-  :straight t)
-;; transient:1 ends here
 
 ;; [[file:init-emacs.org::#modules-tramp][tramp:1]]
 ;;------------------------------------------------------------------------------
