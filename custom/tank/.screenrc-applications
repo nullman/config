@@ -23,7 +23,8 @@ screen -t shell 6 ${SHELL}
 screen -t shell 7 ${SHELL}
 screen -t shell 8 ${SHELL}
 screen -t shell 9 ${SHELL}
-#screen -t ifmon 10 nice iftop
+#screen -t ipmon 10 iftop
+screen -t nvmon 10 nvtop
 #screen -t mail 11 pine
 #screen -t im 12 centericq -a
 #screen -t irc 13 irssi

@@ -2258,8 +2258,12 @@ alias sczenith="\${HOME}/bin/screen-app zenith"
 alias scxentop="\${HOME}/bin/screen-app xentop"
 #        scifmon                 screen-app ifmon
 alias scifmon="\${HOME}/bin/screen-app ifmon"
-#        sciftop                 screen-app iftop
-alias sciftop="\${HOME}/bin/screen-app iftop"
+#        sciptop                 screen-app iptop
+alias sciptop="\${HOME}/bin/screen-app iptop"
+#        scnvtop                 screen-app nvtop
+alias scnvtop="\${HOME}/bin/screen-app nvtop"
+#        scnvmon                 screen-app nvmon
+alias scnvmon="\${HOME}/bin/screen-app nvmon"
 #        scem                    screen-app emacs
 alias scem="\${HOME}/bin/screen-app emacs"
 #        scmail                  screen-app mail

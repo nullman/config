@@ -31,7 +31,8 @@ Launch APPLICATION in a specific screen window.
     7      shell                7
     8      shell                8
     9      shell                9
-    ifmon  iftop               10
+    ipmon  iftop               10
+    nvmon  nvtop               10
     mail   pine                11
     im     centerim            12
     irc    irssi               13
@@ -58,7 +59,8 @@ case "$1" in
     slmon) screen -t mon 0 slmon ;;
     xentop) screen -t mon 0 xentop ;;
     em|emacs) screen -t emacs 1 emacs --no-site-file -nw ;;
-    ifmon|iftop) screen -t ifmon 10 nice iftop ;;
+    ipmon|iftop) screen -t ipmon 10 iftop ;;
+    nvmon|nvtop) screen -t nvmon 10 nvtop ;;
     mail|pine) screen -t mail 11 pine ;;
     im|centerim) screen -t im 12 centerim -a ;;
     irc|irssi) screen -t irc 13 irssi ;;
