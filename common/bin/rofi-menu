@@ -157,12 +157,13 @@ case "${menu}" in
                 # display clipboard
                 if [ $# -lt 2 ] ; then
                     sel=$(dms clipboard history | \
-                              awk '/^ID: /{ key=$0; getline; print key $0; next } { print }' | \
-                              grep '| text |' | sed 's/^ID: // ; s/ | text | .*  /: /' | \
+                              awk '/^ID: [0-9]+ \| text \|/{ key=$0; getline; print key $0; next }' | \
+                              sed 's/^ID: // ; s/ | text | .*  /: /' | \
                               ${promptprefix} '󰆒  Clipboard')
                 else
                     sel=$2
                 fi
+                echo "$sel"
 
                 # paste clip
                 if [ -n "${sel}" ] ; then

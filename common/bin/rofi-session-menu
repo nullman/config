@@ -48,10 +48,10 @@ while getopts ":drwsh" opt ; do
             ;;
         s)
             # symbols:  |   󰈆 󰈇  | ⏾ | ⏼ |    | ⏻
-            sel=$(printf "\tLock\n󰈇\tLogout\n⏾\tSuspend\n⏾⏼\tSuspend/Hibernate\n⏼\tHibernate\n\tRestart WM\n\tReboot\n⏻\tShutdown" | \
+            sel=$(printf "\tLock\n󰈇\tLogout\n⏾\tSuspend\n⏾⏼\tSuspend/Hibernate\n⏼\tHibernate\n\tReboot\n⏻\tShutdown" | \
                       rofi -dmenu -i -p 'Session' -width 20 -padding 20 -lines 4)
             case "${sel}" in
-                *Lock) xscreensaver-command -lock ;;
+                *Lock) if [ "${XDG_SESSION_TYPE}" == "wayland" ] ; then swaylock ; else xscreensaver-command -lock ; fi ;;
                 *Logout) loginctl terminate-session $(loginctl session-status | head -n 1 | awk '{print $1}') ;;
                 *Suspend) systemctl suspend ;;
                 *Suspend/Hibernate) systemctl suspend-then-hibernate ;;
