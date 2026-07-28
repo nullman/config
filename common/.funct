@@ -1594,15 +1594,16 @@ dnfsg() {
     else
         s="$1"
         shift
-        dnf search "${s}" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a ; { N ; s/\n */ | / ; p ; d ; ba }" | grep -i "$*"
+        dnf search "${s}" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a ; { N ; s/\n */ | / ; p ; d ; ba }" | grep -i --color=never "$*"
     fi
 }
-#        dnfss                    dnf specific search
+#        dnfss                    dnf specific search (starts with)
 dnfss() {
     if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
         echo "Usage: dnfss SEARCH"
     else
-        dnf search --name "$*" 2>/dev/null | sed -n '/Matched fields: name (exact)/,/Matched fields: name/{//!p}'
+        #dnf search --name "$*" 2>/dev/null | sed -n '/Matched fields: name (exact)/,/Matched fields: name/{//!p}'
+        dnf search --name "$*" 2>/dev/null | grep -i --color=never "^ $*"
     fi
 }
 #        dnfsi                    dnf search installed packages
@@ -1610,15 +1611,15 @@ dnfsi() {
     if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
         echo "Usage: dnfsi SEARCH"
     else
-        dnf list 2>/dev/null | grep "$*" | cut -d " " -f 1
+        dnf list --installed 2>/dev/null | grep --color=never "$*" | sed 's/ [^ ]\+$//'
     fi
 }
-#        dnfsis                   dnf specific search installed packages
+#        dnfsis                   dnf specific search (starts with) installed packages
 dnfsis() {
     if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
         echo "Usage: dnfsis SEARCH"
     else
-        dnf list 2>/dev/null | cut -d " " -f 1 | grep "^$*\..*$"
+        dnf list --installed 2>/dev/null | grep -i --color=never "^$*" |  sed 's/ [^ ]\+$//'
     fi
 }
 
