@@ -11637,6 +11637,38 @@ If BUFFER is nil, use `current-buffer'."
 (generate-fill-column-width 120)
 ;; generate-fill-column-width:1 ends here
 
+;; [[file:init-emacs.org::#functions-org-table-delete-rows-not-in-other-table][org-table-delete-rows-not-in-other-table:1]]
+;;------------------------------------------------------------------------------
+;;; Functions: org-table-delete-rows-not-in-other-table
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Functions: org-table-delete-rows-not-in-other-table")
+
+(defun org-table-remove-not-in-other-table ()
+  "Delete all rows in current table/column whose field values are not in
+table in `other-window'."
+  (interactive "*")
+  (save-mark-and-excursion
+    (let ((col1 (org-table-current-column)))
+      (unless (org-table-p)
+        (user-error "Cursor is not in an org-table"))
+      (other-window 1)
+      (unless (org-table-p)
+        (user-error "Cursor of `other-window' is not in an org-table"))
+      (let* ((col2 (org-table-current-column))
+             (data (mapcar (lambda (x)
+                             (substring-no-properties (nth (1- col2) x)))
+                           (remove 'hline (org-table-to-lisp)))))
+        (other-window -1)
+        (goto-char (org-table-begin))
+        (while (org-table-p)
+          (if (member (string-trim (substring-no-properties
+                                    (org-table-get-field col1)))
+                      data)
+              (next-line)
+            (org-table-kill-row)))))))
+;; org-table-delete-rows-not-in-other-table:1 ends here
+
 ;; [[file:init-emacs.org::#functions-emacs-grouped-functions][Emacs Grouped Functions:1]]
 ;;------------------------------------------------------------------------------
 ;;; Functions: Emacs Grouped Functions

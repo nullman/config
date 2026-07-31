@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2026-07-25 23:31 (user)>
+  #+TIMESTAMP: <2026-07-30 18:31 (user)>
 
 * Overview
   :PROPERTIES:
@@ -17047,6 +17047,43 @@
         (generate-fill-column-width 100)
         (generate-fill-column-width 120)
       #+END_SRC
+
+*** org-table-delete-rows-not-in-other-table
+    :PROPERTIES:
+    :CUSTOM_ID: functions-org-table-delete-rows-not-in-other-table
+    :END:
+
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Functions: org-table-delete-rows-not-in-other-table
+      ;;------------------------------------------------------------------------------
+
+      (init-message 2 "Functions: org-table-delete-rows-not-in-other-table")
+
+      (defun org-table-remove-not-in-other-table ()
+        "Delete all rows in current table/column whose field values are not in
+      table in `other-window'."
+        (interactive "*")
+        (save-mark-and-excursion
+          (let ((col1 (org-table-current-column)))
+            (unless (org-table-p)
+              (user-error "Cursor is not in an org-table"))
+            (other-window 1)
+            (unless (org-table-p)
+              (user-error "Cursor of `other-window' is not in an org-table"))
+            (let* ((col2 (org-table-current-column))
+                   (data (mapcar (lambda (x)
+                                   (substring-no-properties (nth (1- col2) x)))
+                                 (remove 'hline (org-table-to-lisp)))))
+              (other-window -1)
+              (goto-char (org-table-begin))
+              (while (org-table-p)
+                (if (member (string-trim (substring-no-properties
+                                          (org-table-get-field col1)))
+                            data)
+                    (next-line)
+                  (org-table-kill-row)))))))
+    #+END_SRC
 
 *** Emacs Grouped Functions
     :PROPERTIES:
