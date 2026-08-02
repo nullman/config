@@ -1971,18 +1971,18 @@ alias rmi="rm -i"
 #        rsync-rlptx             rsync -rlptx --progress
 alias rsync-rlptx="rsync -rlptx --progress"
 #        rsync-media-get-synology  rsync /mnt/synology/media /home/data/media
-alias rsync-media-get-synology="rsync -rlptx --progress /mnt/synology/media/ ${home}/data/media/"
+alias rsync-media-get-synology="rsync -r --size-only --progress /mnt/synology/media/ ${home}/data/media/"
 #        rsync-media-get-synology-limited  rsync /mnt/synology/media /home/data/media (minus software and video directories)
-alias rsync-media-get-synology-limited="rsync -rlptx --progress -f'- /Software/' -f'- /Video/' /mnt/synology/media/ ${home}/data/media/"
+alias rsync-media-get-synology-limited="rsync -r --size-only --progress -f'- /Software/' -f'- /Video/' /mnt/synology/media/ ${home}/data/media/"
 #        rsync-media-get-synology-curated-delete  rsync /mnt/synology/media /home/data/media (specific sub-directories)
 alias rsync-media-get-synology-curated-delete=" \
     if [ $(uname -n) == 'mouse' ] ; then
-        rsync -rlptx --progress --delete -f'- /Humor/' -f'- /Other/' /mnt/synology/media/Audio/ ${home}/data/media/Audio/ && \
-        rsync -rlptx --progress --delete /mnt/synology/media/Audio/Music/ ${home}/data/media/Audio/Music/ && \
-        rsync -rlptx --progress --delete --copy-links \"/mnt/synology/media/Pictures Slide Show/\" \"${home}/data/media/Pictures Slide Show/\" && \
-        rsync -rlptx --progress --delete /mnt/synology/media/Repos/ ${home}/data/media/Repos/ && \
-        rsync -rlptx --progress --delete /mnt/synology/media/Text/ ${home}/data/media/Text/ && \
-        rsync -rlptx --progress --delete /mnt/synology/media/Video/ ${home}/data/media/Video/
+        rsync -r --size-only --progress --delete -f'- /Humor/' -f'- /Other/' /mnt/synology/media/Audio/ ${home}/data/media/Audio/ && \
+        rsync -r --size-only --progress --delete /mnt/synology/media/Audio/Music/ ${home}/data/media/Audio/Music/ && \
+        rsync -r --size-only --progress --delete --copy-links \"/mnt/synology/media/Pictures Slide Show/\" \"${home}/data/media/Pictures Slide Show/\" && \
+        rsync -r --size-only --progress --delete /mnt/synology/media/Repos/ ${home}/data/media/Repos/ && \
+        rsync -r --size-only --progress --delete /mnt/synology/media/Text/ ${home}/data/media/Text/ && \
+        rsync -r --size-only --progress --delete /mnt/synology/media/Video/ ${home}/data/media/Video/
     else
         echo \"This should only be run on mouse!\"
     fi"
