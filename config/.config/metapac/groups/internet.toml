@@ -56,7 +56,7 @@ dnf = {
     "filezilla",
     "firefox",
     "gajim",
-    "google-chrome",
+    "google-chrome-stable",
     "nheko",
     "pidgin",
     "quassel-client",
