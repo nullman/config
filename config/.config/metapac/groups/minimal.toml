@@ -75,6 +75,7 @@ dnf = {
     "vlc",
     "w3m",
     "wordgrinder",
+    "x48ng",
   ]
 }
 
