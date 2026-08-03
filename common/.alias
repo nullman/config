@@ -1984,7 +1984,7 @@ alias rsync-media-get-synology-curated-delete=" \
         rsync -r --size-only --copy-links --progress --delete \"/mnt/synology/media/Pictures Personal/\" \"${home}/data/media/Pictures Personal/\" && \
         rsync -r --size-only --copy-links --progress --delete \"/mnt/synology/media/Pictures Slide Show/\" \"${home}/data/media/Pictures Slide Show/\" && \
         rsync -r --size-only --copy-links --progress --delete /mnt/synology/media/Repos/ ${home}/data/media/Repos/ && \
-        rsync -r --size-only --copy-links --progress --delete /mnt/synology/media/Text/ ${home}/data/media/Text/ && \
+        rsync -r --size-only --copy-links --progress --delete /mnt/synology/media/Text/ ${home}/data/media/Text/
     else
         echo \"This should only be run on mouse!\"
     fi"
