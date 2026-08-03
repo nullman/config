@@ -1,11 +1,8 @@
 #!/usr/bin/env bash
 #===============================================================================
-# bspwmrc-applications
+# .wm-applications-machine
 #
-# Binary Space Partitioning Window Manager (bspwm) auto-start applications
-# script.
-#
-# Reference: https://github.com/baskerville/bspwm
+# Launch machine-specific window manager applications.
 #===============================================================================
 
 # run executable command if found in the path
@@ -37,36 +34,26 @@ _once xautolock -time 30 -locker 'xscreensaver-command -lock' & # lock screen af
 #_once barrierc SERVER &
 #_once emacs --daemon &
 
-# delay so that networking has time to connect
-#_delay 0
+# run foreground applications
+_once alacritty -e ${HOME}/bin/run-screen &
+#_delay 1 _once emacs &
+#_delay 1 _once slack &
+#_delay 1 _once thunderbird &
+#_delay 1 _once brave &
+#_delay 1 _once firefox &
+#_delay 1 _once chromium &
+#_delay 1 _once thunar &
+#_delay 1 _once pcmanfm &
+#_delay 1 _once spacefm &
+#_delay 10 _once idea &
+#_delay 1 _once discord &
+#_delay 10 _once tootle &
+#_delay 10 _once com.github.bleakgrey.tootle &
+#_delay 10 _once dev.geopjr.Tuba &
+#_delay 1 _once syncterm &
 
-# run dom0 applications
-bspc desktop ^10 --layout tiled
-bspc desktop --focus ^10
-# (bspc rule --add --one-shot 'qubes-qube-manager' --state tiled && qubes-qube-manager) & # did not work
-qubes-qube-manager &
-sleep 10s
-bspc node --state tiled
-alacritty -e ${HOME}/bin/run-screen &
-
-# run personal vm applications
-(
-    qvm-start personal
-    sleep 16s && (
-        bspc desktop --focus ^1
-
-        # prompt for keyring authentication on personal vm
-        qvm-run personal "keyring get SecretService \$(id -un)" 2>/dev/null &
-
-        # start user services
-        qvm-run personal "systemctl --user enable --now clipmenud" &
-        qvm-run personal "systemctl --user enable --now mpd" &
-        qvm-run personal "systemctl --user enable --now mpdris" &
-
-        # run application launcher
-        _run ${HOME}/bin/application-launcher &
-    )
-) &
+# run application launcher
+#_run ${HOME}/bin/application-launcher &
 
 #===============================================================================
 # End of File
