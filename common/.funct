@@ -1198,7 +1198,6 @@ ssh-copy-auth() {
                         .synology-mount-parameters ; do
             scp "${HOME}/${file}" "$1:/home/${user}/"
         done
-        scp -r "${HOME}/.syncterm" "$1:/home/${user}/"
     fi
 }
 
