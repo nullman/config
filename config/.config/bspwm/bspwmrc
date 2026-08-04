@@ -101,7 +101,7 @@ _bc presel_feedback_color      "#5E81AC"
 
 # symbols:                          
 #bspc monitor -d 1 2 3 4 5 6 7 8 9 10 11 12
-bspc monitor -d            
+bspc monitor -d            
 #bspc monitor -d "1  " "2  " "3  " "4  " "5  " "6  " "7  " "8  " "9  " "10  " "11  " "12  "
 #bspc monitor -d "1  " "2  " "3  " "4  " "5  " "6  " "7  " "8  " "9  " "10  "
 #bspc monitor -d "1  " "2  " "3  " "4  " "5  " "6  " "7  " "8  " "9  " "10  "
@@ -118,12 +118,12 @@ bspc monitor -d            
 #bspc desktop ^2 --layout stacked
 _br 'Emacs' desktop=^2 follow=on
 
-# 3: Email
+# 3: File Manager
 bspc desktop ^3 --layout monocle
-_br 'thunderbird' desktop=^3 follow=on
-_br 'org.mozilla.Thunderbird' desktop=^3 follow=on
-_br 'betterbird' desktop=^3 follow=on
-_br 'ms-outlook-nativefier' desktop=^3 follow=on
+_br 'Org.gnome.Nautilus' desktop=^3 follow=on
+_br 'Pcmanfm' desktop=^3 follow=on
+_br 'Spacefm' desktop=^3 follow=on
+_br 'Thunar' desktop=^3 follow=on
 
 # 4: Browser
 bspc desktop ^4 --layout monocle
@@ -131,12 +131,12 @@ _br 'Brave-browser' desktop=^4 follow=on
 _br 'gopherus-sdl' desktop=^4 follow=on
 _br 'vivaldi-stable' desktop=^4 follow=on
 
-# 5: File Manager
+# 5: Email
 bspc desktop ^5 --layout monocle
-_br 'Org.gnome.Nautilus' desktop=^5 follow=on
-_br 'Pcmanfm' desktop=^5 follow=on
-_br 'Spacefm' desktop=^5 follow=on
-_br 'Thunar' desktop=^5 follow=on
+_br 'thunderbird' desktop=^5 follow=on
+_br 'org.mozilla.Thunderbird' desktop=^5 follow=on
+_br 'betterbird' desktop=^5 follow=on
+_br 'ms-outlook-nativefier' desktop=^5 follow=on
 
 # 6: Social 1
 #bspc desktop ^6 --layout stacked
