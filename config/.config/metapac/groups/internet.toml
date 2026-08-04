@@ -70,7 +70,6 @@ dnf = {
     "vdhcoapp",
     "at-spi2-atk",
     "cyrus-sasl-plain",
-    "google-chrome-canary",
   ]
 }
 

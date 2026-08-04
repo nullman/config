@@ -49,7 +49,6 @@ dnf = {
     "copr.fedorainfracloud.org/skidnik/clipmenu",
   ], 
   packages = [
-    "adw-gtk3-theme",
     "audacious",
     "audacious-plugins",
     "brave-origin",
