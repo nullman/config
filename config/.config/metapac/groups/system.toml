@@ -201,6 +201,7 @@ dnf = {
     "cups-filters",
     "iproute",
     "quota",
+    "gsl",
     "gvfs",
     "gvfs-smb",
     "helvum",
