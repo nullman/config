@@ -79,7 +79,7 @@ _run xset s off b off m 2/1 4 r rate 500 35
 # fi
 
 # turn numlock on (or off)
-if [ "$(uname -n)" == "mouse" ] ; then
+if [ "$(uname -n)" == "mouse" ] || [ "$(uname -n)" == "bane" ] ; then
     _run numlockx off
 else
     _run numlockx on

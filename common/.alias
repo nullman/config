@@ -1976,7 +1976,7 @@ alias rsync-media-get-synology="rsync -r --size-only --progress /mnt/synology/me
 alias rsync-media-get-synology-limited="rsync -r --size-only --progress -f'- /Software/' -f'- /Video/' /mnt/synology/media/ ${home}/data/media/"
 #        rsync-media-get-synology-curated-delete  rsync /mnt/synology/media /home/data/media (specific sub-directories)
 alias rsync-media-get-synology-curated-delete=" \
-    if [ $(uname -n) == 'mouse' ] ; then
+    if [ \"$(uname -n)\" == \"mouse\" ] || [ \"$(uname -n)\" == \"bane\" ] ; then
         rsync -r --size-only --copy-links --progress --delete /mnt/synology/media/Audio/ ${home}/data/media/Audio/ && \
         rsync -r --size-only --copy-links --progress --delete /mnt/synology/media/Graphic/ ${home}/data/media/Graphic/ && \
         rsync -r --size-only --copy-links --progress --delete \"/mnt/synology/media/Nasa Pictures/\" \"${home}/data/media/Nasa Pictures/\" && \
