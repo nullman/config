@@ -1,0 +1,23 @@
+input {
+    keyboard {
+        // fetch xkb settings from org.freedesktop.locale1; set with ~localectl set-x11-keymap~
+        xkb { }
+
+        repeat-delay 500
+        repeat-rate  35
+
+        // enable numlock on startup
+        numlock
+    }
+
+    touchpad {
+        tap
+        natural-scroll
+    }
+
+    mouse {
+    }
+
+    trackpoint {
+    }
+}
