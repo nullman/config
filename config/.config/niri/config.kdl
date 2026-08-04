@@ -24,7 +24,7 @@ include "input.kdl"
 
     touchpad {
         tap
-        //natural-scroll
+        natural-scroll
     }
 
     mouse {
