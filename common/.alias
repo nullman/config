@@ -1821,7 +1821,7 @@ alias mpd-service-disable="systemctl --user disable mpd"
 #        mpd-service-restart     systemctl --user restart mpd
 alias mpd-service-restart="systemctl --user restart mpd"
 #        mpd-notify              display artist and title of current song
-alias mpd-notify="notify-send --app-name=\"mpd\" --expire-time=5000 $([ \"${XDG_SESSION_TYPE}\" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg \"$(${HOME}/bin/mpd-playing --notify-title)\" \"$(${HOME}/bin/mpd-playing --notify-body)\""
+alias mpd-notify="notify-send --app-name=\"mpd\" --expire-time=5000 \$([ \"\${XDG_SESSION_TYPE}\" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg \"\$(\${HOME}/bin/mpd-playing --notify-title)\" \"\$(\${HOME}/bin/mpd-playing --notify-body)\""
 #        mpc-update              update mpc database
 alias mpc-update="mpc --wait update"
 
@@ -1971,9 +1971,9 @@ alias rmi="rm -i"
 #        rsync-rlptx             rsync -rlptx --progress
 alias rsync-rlptx="rsync -rlptx --progress"
 #        rsync-media-get-synology  rsync /mnt/synology/media /home/data/media
-alias rsync-media-get-synology="rsync -r --size-only --progress /mnt/synology/media/ ${home}/data/media/"
+alias rsync-media-get-synology="rsync -r --size-only --copy-links --progress /mnt/synology/media/ ${home}/data/media/"
 #        rsync-media-get-synology-limited  rsync /mnt/synology/media /home/data/media (minus software and video directories)
-alias rsync-media-get-synology-limited="rsync -r --size-only --progress -f'- /Software/' -f'- /Video/' /mnt/synology/media/ ${home}/data/media/"
+alias rsync-media-get-synology-limited="rsync -r --size-only --copy-links --progress -f'- /Software/' -f'- /Video/' /mnt/synology/media/ ${home}/data/media/"
 #        rsync-media-get-synology-curated-delete  rsync /mnt/synology/media /home/data/media (specific sub-directories)
 alias rsync-media-get-synology-curated-delete=" \
     if [ \"$(uname -n)\" == \"mouse\" ] || [ \"$(uname -n)\" == \"bane\" ] ; then
@@ -1985,8 +1985,6 @@ alias rsync-media-get-synology-curated-delete=" \
         rsync -r --size-only --copy-links --progress --delete \"/mnt/synology/media/Pictures Slide Show/\" \"${home}/data/media/Pictures Slide Show/\" && \
         rsync -r --size-only --copy-links --progress --delete /mnt/synology/media/Repos/ ${home}/data/media/Repos/ && \
         rsync -r --size-only --copy-links --progress --delete /mnt/synology/media/Text/ ${home}/data/media/Text/
-    else
-        echo \"This should only be run on mouse!\"
     fi"
 #        rsync-media-put-synology  rsync /home/data/media /mnt/synology/media
 alias rsync-media-put-synology="

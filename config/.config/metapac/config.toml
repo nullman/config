@@ -23,7 +23,7 @@ hostname_groups_enabled = true
 # Default: None
 [hostname_enabled_backends]
 arch = ["arch"]
-bane = ["dnf"]
+bane = ["dnf", "flatpak", "snap"]]
 choi = ["arch"]
 dozer = ["arch"]
 switch = ["arch"]
