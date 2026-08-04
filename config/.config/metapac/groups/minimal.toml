@@ -63,6 +63,7 @@ dnf = {
     "ranger",
     "speedtest-cli",
     "texlive",
+    "thunderbird",
     "translate-shell",
     "vlc",
     "w3m",
