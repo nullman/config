@@ -8,7 +8,9 @@
 //   https://niri-wm.github.io/niri/Configuration:-Introduction
 //======================================================================
 
-input {
+include "input.kdl"
+
+/-input {
     keyboard {
         // fetch xkb settings from org.freedesktop.locale1; set with ~localectl set-x11-keymap~
         xkb { }
@@ -359,18 +361,18 @@ binds {
     Super+T          hotkey-overlay-title="Alacritty Terminal"                                { spawn "alacritty"; }
 
     // mpd controls
-    Super+Alt+Ctrl+M      hotkey-overlay-title="mpd: Play/Pause" { spawn-sh "mpc toggle && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg \"$(${HOME}/bin/mpd-playing --notify-title)\" \"$(${HOME}/bin/mpd-playing --notify-body)\""; }
-    Super+Alt+Ctrl+Comma  hotkey-overlay-title="mpd: Previous"   { spawn-sh "mpc prev && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg \"$(${HOME}/bin/mpd-playing --notify-title)\" \"$(${HOME}/bin/mpd-playing --notify-body)\""; }
-    Super+Alt+Ctrl+Period hotkey-overlay-title="mpd: Next"       { spawn-sh "mpc next && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg \"$(${HOME}/bin/mpd-playing --notify-title)\" \"$(${HOME}/bin/mpd-playing --notify-body)\""; }
-    Super+Alt+Ctrl+Slash  hotkey-overlay-title="mpd: Notify"     { spawn-sh "notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg \"$(${HOME}/bin/mpd-playing --notify-title)\" \"$(${HOME}/bin/mpd-playing --notify-body)\""; }
+    Super+Alt+Ctrl+M      hotkey-overlay-title="mpd: Play/Pause" { spawn-sh "mpc toggle && notify-send --app-name='mpd: Toggle Play/Pause' --expire-time=5000 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg \"$(${HOME}/bin/mpd-playing --notify-title)\" \"$(${HOME}/bin/mpd-playing --notify-body)\""; }
+    Super+Alt+Ctrl+Comma  hotkey-overlay-title="mpd: Previous"   { spawn-sh "mpc prev && notify-send --app-name='mpd: Previous Song' --expire-time=5000 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg \"$(${HOME}/bin/mpd-playing --notify-title)\" \"$(${HOME}/bin/mpd-playing --notify-body)\""; }
+    Super+Alt+Ctrl+Period hotkey-overlay-title="mpd: Next"       { spawn-sh "mpc next && notify-send --app-name='mpd: Next Song' --expire-time=5000 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg \"$(${HOME}/bin/mpd-playing --notify-title)\" \"$(${HOME}/bin/mpd-playing --notify-body)\""; }
+    Super+Alt+Ctrl+Slash  hotkey-overlay-title="mpd: Notify"     { spawn-sh "notify-send --app-name='mpd: Notify' --expire-time=5000 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg \"$(${HOME}/bin/mpd-playing --notify-title)\" \"$(${HOME}/bin/mpd-playing --notify-body)\""; }
 
     // connect to sennheiser hd350bt headphones
-    Super+B       hotkey-overlay-title="Connect to Sennheiser HD350BT Headphones"      { spawn-sh "notify-send --expire-time=3000 'Connecting to Sennheiser HD 350BT Headphones' && bluetoothctl connect 80:C3:BA:0E:CB:E5"; }
-    Super+Shift+B hotkey-overlay-title="Disconnect from Sennheiser HD350BT Headphones" { spawn-sh "notify-send --expire-time=3000 'Disconnecting from Sennheiser HD 350BT Headphones' && bluetoothctl disconnect 80:C3:BA:0E:CB:E5"; }
+    Super+B       hotkey-overlay-title="Connect to Sennheiser HD350BT Headphones"      { spawn-sh "bluetoothctl connect 80:C3:BA:0E:CB:E5"; }
+    Super+Shift+B hotkey-overlay-title="Disconnect from Sennheiser HD350BT Headphones" { spawn-sh "bluetoothctl disconnect 80:C3:BA:0E:CB:E5"; }
 
     // connect to powerbeats pro headphones
-    Super+N       hotkey-overlay-title="Connect to Powerbeats Pro Headphones"      { spawn-sh "notify-send --expire-time=3000 'Connecting to Powerbeats Pro Headphones' && bluetoothctl connect 14:1A:97:05:81:4C"; }
-    Super+Shift+N hotkey-overlay-title="Disconnect from Powerbeats Pro Headphones" { spawn-sh "notify-send --expire-time=3000 'Disconnecting from Powerbeats Pro Headphones' && bluetoothctl disconnect 14:1A:97:05:81:4C"; }
+    Super+N       hotkey-overlay-title="Connect to Powerbeats Pro Headphones"      { spawn-sh "bluetoothctl connect 14:1A:97:05:81:4C"; }
+    Super+Shift+N hotkey-overlay-title="Disconnect from Powerbeats Pro Headphones" { spawn-sh "bluetoothctl disconnect 14:1A:97:05:81:4C"; }
 
     // window manager controls
 
