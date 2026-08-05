@@ -469,12 +469,18 @@ alias stopwatch="
     done"
 #        iommu-list              list iommu devices
 alias iommu-list="
-    for d in /sys/kernel/iommu_groups/*/devices/* ; do
-      n=\"${d#*/iommu_groups/*/devices/*}\"
-      n=\"${n%%/*}\"
-      printf \"IOMMU Group %s\" \"${n}\"
-      lspci -nns \"${d##*/}\"
-    done"
+    if [ -d /sys/kernel/iommu_groups ] ; then
+        for group in \$(find /sys/kernel/iommu_groups/* -maxdepth 0 -type d | sed 's%/sys/kernel/iommu_groups/%%' | sort -n) ; do
+            printf \"\nIOMMU Group: %s\n\" \"\${group}\"
+            for device in /sys/kernel/iommu_groups/\${group}/devices/* ; do
+                device=\"\${device#/sys/kernel/iommu_groups/\${group}/devices/}\"
+                lspci -nns \"\${device##*/}\"
+            done
+        done
+    else
+        echo \"Kernel does not support IOMMU\"
+        echo \"Add intel_iommu=on or amd_iommu=on kernel parameters\"
+    fi"
 #        create-media-links      create links in /home/data/medai
 alias create-media-links="
     dir=\"${home}/data/media\"
