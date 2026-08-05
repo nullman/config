@@ -46,6 +46,7 @@ dnf = {
   packages = [
     "audacious",
     "audacious-plugins",
+    "bc",
     "brave-browser",
     "brave-origin",
     "cmus",
@@ -77,9 +78,6 @@ dnf = {
     "w3m",
     "wordgrinder",
     "x48ng",
-    "bc",
-    "libreoffice-calc",
-    "libreoffice-emailmerge",
   ]
 }
 
