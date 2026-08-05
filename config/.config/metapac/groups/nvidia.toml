@@ -23,7 +23,6 @@ dnf = {
   packages = [
     "akmod-nvidia",
     "egl-gbm",
-    "nvidia-gpu-firmware",
     "nvtop",
     "xorg-x11-drv-nvidia",
     "xorg-x11-drv-nvidia-cuda",

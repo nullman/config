@@ -48,8 +48,6 @@ dnf = {
     "supertuxkart",
     "wesnoth",
     "xonotic",
-    "mesa-dri-drivers",
-    "mesa-vulkan-drivers",
   ]
 }
 

@@ -21,8 +21,6 @@ dnf = {
     "docker-cli",
     "docker-compose",
     "moby-engine",
-    "podman",
-    "toolbox",
   ]
 }
 

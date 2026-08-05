@@ -34,10 +34,7 @@ dnf = {
     "dmidecode",
     "edk2-ovmf",
     "guestfs-tools",
-    "iptables-nft",
     "libosinfo",
-    "open-vm-tools-desktop",
-    "qemu-guest-agent",
     "qemu-kvm",
     "qemu-img",
     "qemu-ui-opengl",
@@ -45,11 +42,6 @@ dnf = {
     "virt-install",
     "virt-manager",
     "virt-viewer",
-    "virtualbox-guest-additions",
-    "dnsmasq",
-    "e2fsprogs",
-    "ntfsprogs",
-    "vte-profile",
   ]
 }
 

@@ -97,13 +97,9 @@ dnf = {
     "lsd",
     "miller",
     "minicom",
-    "mpage",
-    "mtr",
     "navi",
     "ocrmypdf",
     "pandoc-pdf",
-    "paps",
-    "perl-Image-ExifTool",
     "phoronix-test-suite",
     "picocom",
     "procs",
@@ -121,8 +117,8 @@ dnf = {
     "units",
     "yt-dlp",
     "zoxide",
-    "lrzsz",
     "pandoc-cli",
+    "perl-Image-ExifTool",
   ]
 }
 

@@ -68,8 +68,6 @@ dnf = {
     "transmission-gtk",
     "tuba",
     "vdhcoapp",
-    "at-spi2-atk",
-    "cyrus-sasl-plain",
   ]
 }
 
