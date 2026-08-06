@@ -36,9 +36,9 @@ if [ "${XDG_SESSION_TYPE}" == "wayland" ] ; then
     typer="wtype"
 else
     clip="xsel && xsel --output | xsel --clipboard"
-    screenshotregion="scrot --select --freeze --exec 'mv $f ~/Pictures/' && notify-send --expire-time=3000 'Region screenshot saved'"
-    screenshotscreen="scrot --exec 'mv $f ~/Pictures/' && notify-send --expire-time=3000 'Screen screenshot saved'"
-    screenshotwindow="scrot --focused --exec 'mv $f ~/Pictures/' && notify-send --expire-time=3000 'Window screenshot saved'"
+    screenshotregion="scrot --select --freeze --exec 'mv \$f ~/Pictures/' && notify-send --expire-time=3000 'Screenshot (region) saved'"
+    screenshotscreen="scrot --exec 'mv \$f ~/Pictures/' && notify-send --expire-time=3000 'Screenshot (screen) saved'"
+    screenshotwindow="scrot --focused --exec 'mv \$f ~/Pictures/' && notify-send --expire-time=3000 'Screenshot (window) saved'"
     typer="xdotool"
 fi
 
@@ -423,7 +423,11 @@ case "${menu}" in
                     eval "${screenshotwindow}" & disown
                     ;;
                 region)
-                    eval "${screenshotregion}" & disown
+                    if [ "${QUBES_ENV_SOURCED}" ] ; then
+                        notify-send --expire-time=3000 'Screenshot of region not supported under QubesOS'
+                    else
+                        eval "${screenshotregion}" & disown
+                    fi
                     ;;
             esac
         fi

@@ -290,15 +290,18 @@ _source "${HOME}/.secure-env"
 # _run curl --silent "wttr.in/San+Diego?uT" 2>&1 | head -n 7
 
 # restart user services if personal vm is restarted in qubes os
-if [ "$(uname -n)" == "personal" ] ; then
+if [ "${QUBES_ENV_SOURCED}" ] && [ "$(uname -n)" == "personal" ] ; then
    pgrep -u ${USER} -f clipmenud >/dev/null || systemctl --user enable --now clipmenud & disown
    pgrep -u ${USER} -f mpd >/dev/null || systemctl --user enable --now mpd & disown
    pgrep -u ${USER} -f mpDris2 >/dev/null || systemctl --user enable --now mpdris & disown
 fi
 
-# source xprofile if not already and running in X11
+# source xprofile if not already, and running in X11
 [ -n "${DISPLAY}" ] && [ "${XDG_SESSION_TYPE}" != "wayland" ] && \
     [ -z "$(env | grep '^runpath=.*\.xprofile')" ] && _source "${HOME}/.xprofile"
+
+# cd to home in case home directory is mounted late
+cd
 
 #===============================================================================
 # End of File

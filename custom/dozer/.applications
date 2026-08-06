@@ -6,27 +6,15 @@
 
 alacritty
 emacs
-##betterbird
 thunderbird
 brave
-##firefox
-##chromium
 thunar
-##pcmanfm
-##spacefm
 quasselclient
 slack
 discord
-##tootle
 nheko
-##element-desktop
 dev.geopjr.Tuba
 gajim
-##pidgin
-##idea
-##google-chrome
-##google-chrome-stable
-#syncterm
 
 #===============================================================================
 # End of File

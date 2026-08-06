@@ -110,9 +110,9 @@ alt + grave
 
 # focus/swap node in given direction in current desktop
 super + {_,shift + }{Left,Right}
-    bspc node --{focus,swap} {prev,next}
+    bspc node --{focus,swap} {prev,next}.local.leaf
 super + {_,shift + }{j,l}
-    bspc node --{focus,swap} {prev,next}
+    bspc node --{focus,swap} {prev,next}.local.leaf
 
 # rotate/swap nodes in given direction in current desktop
 super + {_,shift + }{comma,period}
