@@ -2013,7 +2013,7 @@ alias rsync-media-get-synology-limited="rsync -rptx --size-only --progress -f'- 
 alias rsync-media-get-synology-curated-delete=" \
     if [ \"$(uname -n)\" == \"mouse\" ] || [ \"$(uname -n)\" == \"bane\" ] ; then
         rsync -rptx --size-only --progress --delete /mnt/synology/media/Audio/ ${home}/data/media/Audio/ && \
-        rsync -rptx --size-only --progress --delete /mnt/synology/media/Graphic/ ${home}/data/media/Graphic/ && \
+        #rsync -rptx --size-only --progress --delete /mnt/synology/media/Graphic/ ${home}/data/media/Graphic/ && \
         rsync -rptx --size-only --progress --delete \"/mnt/synology/media/Nasa Pictures/\" \"${home}/data/media/Nasa Pictures/\" && \
         rsync -rptx --size-only --progress --delete /mnt/synology/media/Pictures/ ${home}/data/media/Pictures/ && \
         rsync -rptx --size-only --progress --delete \"/mnt/synology/media/Pictures Personal/\" \"${home}/data/media/Pictures Personal/\" && \
