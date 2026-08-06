@@ -68,11 +68,11 @@
 
 # display sxhkd-bspwm keybindings
 super + ctrl + h
-    yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null --filename="${HOME}/.config/sxhkd/sxhkdrc-bspwm-help"
+    GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null --filename="${HOME}/.config/sxhkd/sxhkdrc-bspwm-help"
 
 # display bspwm manual
 super + shift + h
-    man bspwm | sed 's/\[[0-9;]*m//g' | yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
+    man bspwm | sed 's/\[[0-9;]*m//g' | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
 
 # close/kill node
 super + shift + {w,k}
@@ -83,8 +83,8 @@ super + shift + {w,k}
 #-------------------------------------------------------------------------------
 
 # set window state
-super + ctrl + {t,shift + t,f,shift + f}
-    bspc node --state {tiled,pseudo_tiled,fullscreen,floating} && \
+super + ctrl + {t,f,v}
+    bspc node --state {tiled,fullscreen,floating} && \
     notify-send --expire-time=3000 "State: $(bspc query --tree --node | jq --raw-output '.client.state')"
 
 # # set node flags
@@ -100,11 +100,19 @@ super + ctrl + m
 # Focus and Swap
 #-------------------------------------------------------------------------------
 
+# focus next/previous node in current desktop
+alt + {_,shift + }Tab
+    bspc node --focus {next,prev}.local.leaf
+
+# focus last node in current desktop
+alt + grave
+    bspc node --focus last.leaf
+
 # focus/swap node in given direction in current desktop
-super + {_,shift + }{i,k,j,l}
-    bspc node --{focus,swap} {north,south,west,east}
-super + {_,shift + }{Up,Down,Left,Right}
-    bspc node --{focus,swap} {north,south,west,east}
+super + {_,shift + }{Left,Right}
+    bspc node --{focus,swap} {prev,next}
+super + {_,shift + }{j,l}
+    bspc node --{focus,swap} {prev,next}
 
 # rotate/swap nodes in given direction in current desktop
 super + {_,shift + }{comma,period}
@@ -112,58 +120,20 @@ super + {_,shift + }{comma,period}
     #bspc node {@/ --circulate,--swap} {backward,forward}
 
 # swap node with first child node in current desktop
-super + shift + g
+super + ctrl + g
     bspc node --swap first.local
 
-# # focus node for given path jump
-# super + {p,b,comma,period}
-#     bspc node --focus {parent,brother,first,second}
-
 # focus next/previous desktop in current monitor
-super + alt + {j,l}
-    bspc desktop --focus {prev,next}.local
-super + alt + {Left,Right}
-    bspc desktop --focus {prev,next}.local
-
-# send focused node to next/previous desktop in current monitor and follow
-super + alt + shift + {j,l}
-    bspc node --to-desktop {prev,next}.local --follow
-super + alt + shift + {Left,Right}
-    bspc node --to-desktop {prev,next}.local --follow
-
-# focus next/previous monitor
-super + alt + {i,k}
-    bspc monitor --focus {prev,next}
-super + alt + {Up,Down}
-    bspc monitor --focus {prev,next}
-
-# send focused node to next/previous monitor
-super + alt + shift + {i,k}
-    bspc node --to-monitor {prev,next} --follow
-super + alt + shift + {Up,Down}
-    bspc node --to-monitor {prev,next} --follow
-
-# focus next/previous node in current desktop
 super + {_,shift + }Tab
-    bspc node --focus {next,prev}.local.leaf
-
-# # focus next/previous node in all desktops and monitors
-# super + {_,shift + }Tab
-#     bspc node --focus {next,prev}
-
-# # focus older/newer node in focus history in all desktops and monitors
-# super + {_,shift + }Tab
-#     bspc wm --record-history off ; \
-#     bspc node --focus {older,newer}.leaf ; \
-#     bspc wm --record-history on
-
-# # focus last node/desktop
-# {alt,super} + grave
-#     bspc {node -f last.leaf,desktop -f last}
+    bspc desktop --focus {next,prev}.local
+super + {Up,Down}
+    bspc desktop --focus {prev,next}.local
+super + {i,k}
+    bspc desktop --focus {prev,next}.local
 
 # focus last desktop
 super + grave
-    bspc desktop -f last
+    bspc desktop --focus last
 
 # focus given desktop
 super + {1-9,0,minus,equal}
@@ -174,48 +144,38 @@ super + shift + {1-9,0,minus,equal}
     bspc node --to-desktop '^{1-9,10,11,12}' --follow #&& \
     #notify-send --expire-time=3000 "Node -> Desktop $(bspc query --tree --desktop | jq --raw-output '.name')"
 
-# #-------------------------------------------------------------------------------
-# # Preselect
-# #-------------------------------------------------------------------------------
+# send focused node to next/previous desktop in current monitor and follow
+super + shift + {Up,Down}
+    bspc node --to-desktop {prev,next}.local --follow
+super + shift + {i,k}
+    bspc node --to-desktop {prev,next}.local --follow
 
-# # preselect direction
-# super + ctrl + {i,k,j,l}
-#     bspc node --presel-dir {north,south,west,east}
+# focus next/previous monitor
+super + {Prior,Next}
+    bspc monitor --focus {prev,next}
 
-# # preselect ratio
-# super + ctrl + {1-9}
-#     bspc node --presel-ratio 0.{1-9}
-
-# # send current window to preselected space
-# super + shift + m
-#     bspc node --to-node last.!automatic --follow
-
-# # cancel preselection for focused node
-# super + ctrl + space
-#     bspc node --presel-dir cancel
-
-# # # cancel preselection for focused desktop
-# # super + ctrl + shift + space
-# #     bspc query --nodes --desktop | xargs -I id --max-args=1 bspc node id --presel-dir cancel
+# send focused node to next/previous monitor
+super + shift + {Prior,Next}
+    bspc node --to-monitor {prev,next} --follow
 
 #-------------------------------------------------------------------------------
 # Move and Resize
 #-------------------------------------------------------------------------------
 
 # shrink window width
-super + ctrl + alt + Left
+super + ctrl + minus
 	bspc node --resize right -40 0 ; bspc node --resize left -40 0
 
 # expand window width
-super + ctrl + alt + Right
+super + ctrl + equal
 	bspc node --resize right 40 0 ; bspc node --resize left 40 0
 
 # shrink window height
-super + ctrl + alt + Up
+super + ctrl + shift + minus
 	bspc node --resize top 0 -40 ; bspc node --resize bottom -40 0
 
 # expand window height
-super + ctrl + alt + Down
+super + ctrl + shift + equal
 	bspc node --resize top 0 40 ; bspc node --resize bottom 40 0
 
 # resize window:

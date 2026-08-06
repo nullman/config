@@ -162,11 +162,11 @@ super + Insert
 
 # mpc control
 super + Delete
-    mpc prev && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
+    mpc prev && notify-send --app-name="mpd" --expire-time=5000 $([ "${XDG_SESSION_TYPE}" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
 super + End
-    mpc toggle && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
+    mpc toggle && notify-send --app-name="mpd" --expire-time=5000 $([ "${XDG_SESSION_TYPE}" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
 super + Next
-    mpc next && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
+    mpc next && notify-send --app-name="mpd" --expire-time=5000 $([ "${XDG_SESSION_TYPE}" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
 
 #-------------------------------------------------------------------------------
 # Media Key Alternatives
@@ -258,24 +258,13 @@ super + apostrophe
 super + s
     ${HOME}/bin/rofi-menu spell
 
-# bitwarden selector (clear clipboard after 60 seconds)
-# first login using 'bw login'
-super + p
-    bwmenu --clear 60
-
-# # generate password
-# super + shift + p
-#     tr --delete --complement 'a-zA-Z0-9!@#$%^&*-_=+;:,<.>/?' < /dev/urandom | \
-#     head --bytes 14 | xclip -selection clipboard && \
-#     notify-send --expire-time=3000 'Random password generated on clipboard'
-
-# # generate password
-# super + shift + p
-#     ${HOME}/bin/password-phrase 6 hyphen true | tr -d '\n' | xclip -selection clipboard && \
-#     notify-send --expire-time=3000 'Random password phrase on clipboard'
+# # bitwarden selector (clear clipboard after 60 seconds)
+# # first login using 'bw login'
+# super + p
+#     bwmenu --clear 60
 
 # generate password
-super + shift + p
+super + p
     ${HOME}/bin/rofi-menu password && notify-send --expire-time=3000 'Random password phrase on clipboard'
 
 # display time
@@ -299,22 +288,13 @@ super + shift + y
 super + x
     xscreensaver-command -activate
 
-# start screen saver demo
-super + shift + x
-    xscreensaver-demo
-
 # start screen saver in lock mode
-super + ctrl + x
+super + shift + x
     xscreensaver-command -lock
 #    xlock
 #    xlock -mode flame
 #    ssaverauto --lock
 #    xscreensaver-command -lock
-
-# restart x11 resume service (caps-lock, insert key, keyboard & mouse speed)
-super + ctrl + backslash
-    systemctl --user restart resume && notify-send --expire-time=3000 'X11 resume service restarted'
-    #systemctl --user restart setxkbmap xkbcomp xset && notify-send --expire-time=3000 'User services restarted'
 
 # session menu
 super + shift + q
@@ -325,7 +305,7 @@ super + shift + p
     xprop | grep '^WM_CLASS' | GDK_BACKEND=x11 yad --text-info --width=480 --height=360 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
 
 # kill process clicked
-super + ctrl + Delete
+super + shift + Delete
     xkill
 
 # snapshot of entire screen
@@ -375,6 +355,11 @@ super + shift + v
     xrandr --output $(xrandr | grep ' connected ' | sed 's/ .*//' | head -n 1) --auto && \
     notify-send --expire-time=3000 'Resetting video'
 
+# restart x11 resume service (caps-lock, insert key, keyboard & mouse speed)
+super + shift + backslash
+    systemctl --user restart resume && notify-send --expire-time=3000 'X11 resume service restarted'
+    #systemctl --user restart setxkbmap xkbcomp xset && notify-send --expire-time=3000 'User services restarted'
+
 # connect to sennheiser hd350bt headphones
 super + b
     notify-send --expire-time=3000 'Connecting to Sennheiser HD 350BT Headphones' && \
@@ -401,53 +386,53 @@ super + shift + n
 
 # mpc control
 super + alt + ctrl + m
-    mpc toggle && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
+    mpc toggle && notify-send --app-name="mpd" --expire-time=5000 $([ "${XDG_SESSION_TYPE}" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
 super + alt + ctrl + comma
-    mpc prev && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
+    mpc prev && notify-send --app-name="mpd" --expire-time=5000 $([ "${XDG_SESSION_TYPE}" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
 super + alt + ctrl + period
-    mpc next && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
+    mpc next && notify-send --app-name="mpd" --expire-time=5000 $([ "${XDG_SESSION_TYPE}" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
 super + alt + ctrl + slash
-    notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
+    notify-send --app-name="mpd" --expire-time=5000 $([ "${XDG_SESSION_TYPE}" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
 
 # mpc control (media keys)
 XF86AudioPrev
-    mpc prev && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
+    mpc prev && notify-send --app-name="mpd" --expire-time=5000 $([ "${XDG_SESSION_TYPE}" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
 XF86AudioPlay
-    mpc toggle && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
+    mpc toggle && notify-send --app-name="mpd" --expire-time=5000 $([ "${XDG_SESSION_TYPE}" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
 XF86AudioStop
-    mpc stop && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
+    mpc stop && notify-send --app-name="mpd" --expire-time=5000 $([ "${XDG_SESSION_TYPE}" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
 XF86AudioNext
-    mpc next && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
+    mpc next && notify-send --app-name="mpd" --expire-time=5000 $([ "${XDG_SESSION_TYPE}" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
 
 # # spotify control
 # super + alt + ctrl + a
-#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/spotify-playing)"
+#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --app-name=spotify --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/spotify-playing)"
 # super + alt + ctrl + s
-#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/spotify-playing)"
+#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --app-name=spotify --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/spotify-playing)"
 # super + alt + ctrl + d
-#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/spotify-playing)"
+#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --app-name=spotify --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/spotify-playing)"
 # super + alt + ctrl + f
-#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/spotify-playing)"
+#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --app-name=spotify --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/spotify-playing)"
 # XF86AudioPrevious
-#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/spotify-playing)"
+#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --app-name=spotify --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/spotify-playing)"
 # XF86AudioPlay
-#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/spotify-playing)"
+#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --app-name=spotify --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/spotify-playing)"
 # XF86AudioStop
-#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/spotify-playing)"
+#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --app-name=spotify --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/spotify-playing)"
 # XF86AudioNext
-#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/spotify-playing)"
+#     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --app-name=spotify --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/spotify-playing)"
 
 # media player control
 super + alt + ctrl + z
-    qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/spotify-playing)"
+    qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --app-name=spotify --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/spotify-playing)"
 super + alt + ctrl + c
-    qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/spotify-playing)"
+    qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --app-name=spotify --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/spotify-playing)"
 super + alt + ctrl + x
-    qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/spotify-playing)"
+    qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --app-name=spotify --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/spotify-playing)"
 super + alt + ctrl + b
-    qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/spotify-playing)"
+    qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --app-name=spotify --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/spotify-playing)"
 super + alt + ctrl + apostrophe
-    notify-send --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/spotify-playing)"
+    notify-send --app-name=spotify --expire-time=5000 --replace-id=2 --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/spotify-playing)"
 
 #-------------------------------------------------------------------------------
 # Applications

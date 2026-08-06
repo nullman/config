@@ -21,27 +21,27 @@ System Tools
 | Super |     |      |       | ;      | Typer Selector                      |
 | Super |     |      |       | '      | Paste Selector                      |
 | Super |     |      |       | s      | Spell and Define Word               |
-| Super |     |      |       | p      | Bitwarden Selector                  |
-| Super |     |      | Shift | p      | Generate Password                   |
+| Super |     |      |       | p      | Generate Password                   |
 | Super |     |      |       | \      | Display Time                        |
 | Super |     |      |       | y      | Git Synchronize Config              |
 | Super |     |      | Shift | y      | Git Synchronize Extra               |
-| Super |     |      |       | x      | Start Screensaver                   |
-| Super |     | Ctrl |       | x      | Lock Screensaver                    |
-| Super |     | Ctrl |       | q      | Session Menu                        |
-| Super |     | Ctrl |       | p      | Get XProp Class Name                |
-| Super |     | Ctrl |       | Delete | Kill Process Clicked                |
-| Super |     |      |       | Print  | Screen Snapshot                     |
-| Super | Alt |      |       | Print  | Window Snapshot                     |
+| Super |     |      |       | x      | Activate Screensaver                |
+| Super |     |      | Shift | x      | Lock Screen                         |
+| Super |     |      | Shift | q      | Session Menu                        |
+| Super |     |      | Shift | p      | Get XProp Class Name                |
+| Super |     |      | Shift | Delete | Kill Process Clicked                |
+| Super | Alt |      |       | Print  | Screen Snapshot                     |
+| Super |     | Ctrl |       | Print  | Window Snapshot                     |
 | Super |     |      | Shift | Print  | Region Snapshot                     |
-| Super |     | Ctrl |       | s      | Reload SXHKD                        |
-| Super |     | Ctrl |       | r      | Reload System Tray                  |
-| Super |     | Ctrl |       | c      | Reload Conky                        |
-| Super |     | Ctrl |       | v      | Reset Video                         |
-| Super |     | Ctrl |       | b      | Connect to Sennheiser Headphones    |
-| Super |     | Ctrl | Shift | b      | Disconnect to Sennheiser Headphones |
-| Super |     | Ctrl |       | n      | Connect to Powerbeats Headphones    |
-| Super |     | Ctrl | Shift | n      | Disconnect to Powerbeats Headphones |
+| Super |     |      | Shift | s      | Reload SXHKD                        |
+| Super |     |      | Shift | r      | Reload System Tray                  |
+| Super |     |      | Shift | c      | Reload Conky                        |
+| Super |     |      | Shift | v      | Reset Video                         |
+| Super |     |      | Shift | \      | Reset X11 Settings                  |
+| Super |     |      |       | b      | Connect to Sennheiser Headphones    |
+| Super |     |      | Shift | b      | Disconnect to Sennheiser Headphones |
+| Super |     |      |       | n      | Connect to Powerbeats Headphones    |
+| Super |     |      | Shift | n      | Disconnect to Powerbeats Headphones |
 |-------+-----+------+-------+--------+-------------------------------------|
 #+TBLFM:
 

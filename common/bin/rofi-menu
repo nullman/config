@@ -5,7 +5,7 @@
 # Present a menu of rofi menus.
 #
 # Symbols:  ☰  |    | ✂ ⎘ 󰄶   󰅌 󰅍 󰨸 󱉥 󱉦 󱉧 󱉨 󱉫 󱉬  | 
-# Symbols: 󰍹    |  |    󱇠  | 󰆧 |  |   󰝚 | 󰛇 | 󰃃 󰃀 | 󰯫 󰈍   󰀬  ꓴ | ⌂ | 󰽒
+# Symbols: 󰍹    |  |    󱇠  | 󰆧 |  |   󰝚 | 󰛇 | 󰃃 󰃀 | 󰯫 󰈍   󰀬  ꓴ | ⌂ | 󰽒 | 
 #
 # Required utilities:
 #   cool-retro-term
@@ -30,9 +30,15 @@ promptfontprefix="rofi -dmenu -font 'MesloLGS Nerd Font Mono 12' -matching prefi
 
 if [ "${XDG_SESSION_TYPE}" == "wayland" ] ; then
     clip="wl-copy"
+    screenshotregion=""
+    screenshotscreen=""
+    screenshotwindow=""
     typer="wtype"
 else
     clip="xsel && xsel --output | xsel --clipboard"
+    screenshotregion="scrot --select --freeze --exec 'mv $f ~/Pictures/' && notify-send --expire-time=3000 'Region screenshot saved'"
+    screenshotscreen="scrot --exec 'mv $f ~/Pictures/' && notify-send --expire-time=3000 'Screen screenshot saved'"
+    screenshotwindow="scrot --focused --exec 'mv $f ~/Pictures/' && notify-send --expire-time=3000 'Window screenshot saved'"
     typer="xdotool"
 fi
 
@@ -59,6 +65,7 @@ MENU:
   password            Generate Password
   qemu                QEMU Emulator
   rsync               Synchronize Files
+  screenshot          Screenshot
   sounds              Play Sounds
   spell               Spell Check & Definition
   ssh                 SSH into Systems
@@ -87,6 +94,7 @@ if [ $# -lt 1 ] ; then
         "	Password"
         "󰆧	Qemu"
         "	Rsync"
+        "	Screenshot"
         "󰝚	Sounds"
         "	Spell"
         "	SSH"
@@ -387,6 +395,37 @@ case "${menu}" in
             cmd=$(cat "${HOME}/.alias" | awk "/alias ${sel}=/,/^#/" | head -n -1 | sed '1s/^.*"//; s/\"$// ; s/\\"/\"/g ; s/\\\$/$/g')
             echo "${cmd}"
             ((eval "${cmd}" && echo "Done") 2>&1 | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null & disown)
+        fi
+        ;;
+
+    screenshot)
+        screenshots=(
+            "Screen"
+            "Window"
+            "Region"
+        )
+
+        # display screenshot options
+        if [ $# -lt 2 ] ; then
+            sel=$(printf '%s\n' "${screenshots[@]}" | ${prompt} '  Screenshot')
+        else
+            sel=$2
+        fi
+
+        # run screenshot command
+        if [ -n "${sel}" ] ; then
+            sel=$(printf "%s" "${sel}" | tr '[:upper:]' '[:lower:]')
+            case "${sel}" in
+                screen)
+                    eval "${screenshotscreen}" & disown
+                    ;;
+                window)
+                    eval "${screenshotwindow}" & disown
+                    ;;
+                region)
+                    eval "${screenshotregion}" & disown
+                    ;;
+            esac
         fi
         ;;
 

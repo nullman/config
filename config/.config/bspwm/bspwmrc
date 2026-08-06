@@ -63,12 +63,10 @@ _bc remove_unplugged_monitors  true
 _bc merge_overlapping_monitors true
 
 # monitor and desktop settings
-_bc top_padding                0
+# xfce=22, eww=22, tint2=30, polybar=28
+_bc top_padding                28
 _bc right_padding              0
-#_bc bottom_padding             0
-#_bc bottom_padding             30       # room for tint2 system bar
-_bc bottom_padding             28       # room for polybar system bar
-#_bc bottom_padding             22       # room for xfce/eww system bar
+_bc bottom_padding             0
 _bc left_padding               0
 
 # desktop settings
