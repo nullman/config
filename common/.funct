@@ -1726,9 +1726,9 @@ qd-sync() {
         qvm-run --pass-io personal 'tar -C /home/user -c --exclude=\".git*\" config-private' | tar -C "${HOME}" -x
         sudo cp "${HOME}/config/config/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml" \
              "/etc/xdg/xfce4/xfconf/xfce-perchannel-xml/"
-        [ "$1" == "arch" ] && tar -C "${HOME}/config/config/.config" -cf - metapac-arch | qvm-run --pass-io arch 'tar -C "/home/user/.config" -xf -'
-        [ "$1" == "debian" ] && tar -C "${HOME}/config/config/.config" -cf - metapac-apt | qvm-run --pass-io debian 'tar -C "/home/user/.config" -xf -'
-        [ "$1" == "fedora" ] && tar -C "${HOME}/config/config/.config" -cf - metapac-dnf | qvm-run --pass-io fedora 'tar -C "/home/user/.config" -xf -'
+        [ "$1" == "arch" ] && tar -C "${HOME}/config/config/.config" -cf - metapac | qvm-run --pass-io arch 'tar -C "/home/user/.config" -xf -'
+        [ "$1" == "debian" ] && tar -C "${HOME}/config/config/.config" -cf - metapac | qvm-run --pass-io debian 'tar -C "/home/user/.config" -xf -'
+        [ "$1" == "fedora" ] && tar -C "${HOME}/config/config/.config" -cf - metapac | qvm-run --pass-io fedora 'tar -C "/home/user/.config" -xf -'
         home-restow
     fi
 }
