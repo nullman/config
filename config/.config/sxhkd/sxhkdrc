@@ -355,11 +355,6 @@ super + shift + v
     xrandr --output $(xrandr | grep ' connected ' | sed 's/ .*//' | head -n 1) --auto && \
     notify-send --expire-time=3000 'Resetting video'
 
-# restart x11 resume service (caps-lock, insert key, keyboard & mouse speed)
-super + shift + backslash
-    systemctl --user restart resume && notify-send --expire-time=3000 'X11 resume service restarted'
-    #systemctl --user restart setxkbmap xkbcomp xset && notify-send --expire-time=3000 'User services restarted'
-
 # connect to sennheiser hd350bt headphones
 super + b
     notify-send --expire-time=3000 'Connecting to Sennheiser HD 350BT Headphones' && \

@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+#===============================================================================
+# set-x11-settings
+#
+# Set X11 keyboard and mouse settings.
+#
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
+#===============================================================================
+
+# turn keyboard num-lock on
+[ "$(uname -n)" == "mouse" ] || [ "$(uname -n)" == "bane" ] || numlockx on
+
+# make capslock act like control; make both shift keys toggle capslock
+setxkbmap -option 'shift:both_capslock,caps:ctrl_modifier'
+
+# disable insert key
+# xkbcomp ${DISPLAY} - | sed 's/ Insert / NoSymbol /' | xkbcomp - ${DISPLAY}
+xmodmap -e 'keycode 118 ='
+
+# set mouse speed and keyboard rate
+xset -dpms s off b off m 2/1 4 r rate 500 35
+
+#===============================================================================
+# End of File
+#===============================================================================

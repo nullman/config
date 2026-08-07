@@ -1757,9 +1757,8 @@ qubes-dom0-initialize() {
         "qubes-dom0-x11"
         "qubes-dom0-battery"
         "qubes-dom0-dark-mode"
-        #"qubes-dom0-restore-settings"
-        #"qubes-dom0-event-listener"
-        "qubes-dom0-set-x11-settings"
+        "qubes-dom0-resume-service"
+        "qubes-dom0-wooting-service"
         "qubes-dom0-pc-speaker"
         "qubes-dom0-lightdm"
     )
