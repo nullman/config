@@ -155,6 +155,7 @@ _br 'Element' desktop=^7 follow=on
 _br 'Gajim' desktop=^7 follow=on
 _br 'Hyperspace Desktop' desktop=^7 follow=on
 _br 'Pidgin' desktop=^7 follow=on
+_br 'python' desktop=^7 follow=on   # Gajim presents as python for some reason
 _br 'Tootle' desktop=^7 follow=on
 _br 'android-messages-desktop' desktop=^7 follow=on
 _br 'dev.geopjr.Tuba' desktop=^7 follow=on
