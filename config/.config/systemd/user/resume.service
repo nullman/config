@@ -21,20 +21,25 @@ Type=oneshot
 RemainAfterExit=yes
 
 # delay until X11 is running
-ExecStop=bash -c "while [ ! -S /tmp/.X11-unix/X0 ]; do sleep 1; done; sleep 5"
+#ExecStop=bash -c "while [ ! -S /tmp/.X11-unix/X0 ]; do sleep 1; done; sleep 5"
+ExecStop=bash -c "while [ ! -S /tmp/.X11-unix/X0 ]; do sleep 1; done"
 
 # turn keyboard num-lock on
-ExecStop=bash -c "while [ ! -S /tmp/.X11-unix/X0 ]; do sleep 1; done; [ \"$(uname -n)\" == \"mouse\" ] || [ \"$(uname -n)\" == \"bane\" ] || numlockx on"
+#ExecStop=bash -c "while [ ! -S /tmp/.X11-unix/X0 ]; do sleep 1; done; [ \"$(uname -n)\" == \"mouse\" ] || [ \"$(uname -n)\" == \"bane\" ] || numlockx on"
+ExecStop=bash -c "[ \"$(uname -n)\" == \"mouse\" ] || [ \"$(uname -n)\" == \"bane\" ] || numlockx on"
 
 # make capslock act like control; make both shift keys toggle capslock
-ExecStop=bash -c "while [ ! -S /tmp/.X11-unix/X0 ]; do sleep 1; done; setxkbmap -option 'shift:both_capslock,caps:ctrl_modifier'"
+#ExecStop=bash -c "while [ ! -S /tmp/.X11-unix/X0 ]; do sleep 1; done; setxkbmap -option 'shift:both_capslock,caps:ctrl_modifier'"
+ExecStop=bash -c "setxkbmap -option 'shift:both_capslock,caps:ctrl_modifier'"
 
 # # disable insert key
 # ExecStop=bash -c "while [ ! -S /tmp/.X11-unix/X0 ]; do sleep 1; done; xkbcomp ${DISPLAY} - | sed 's/ Insert / NoSymbol /' | xkbcomp - ${DISPLAY}"
-ExecStop=bash -c "while [ ! -S /tmp/.X11-unix/X0 ]; do sleep 1; done; xmodmap -e 'keycode 118 ='"
+#ExecStop=bash -c "while [ ! -S /tmp/.X11-unix/X0 ]; do sleep 1; done; xmodmap -e 'keycode 118 ='"
+ExecStop=bash -c "xmodmap -e 'keycode 118 ='"
 
 # set mouse speed and keyboard rate
-ExecStop=bash -c "while [ ! -S /tmp/.X11-unix/X0 ]; do sleep 1; done; xset -dpms s off b off m 2/1 4 r rate 500 35"
+#ExecStop=bash -c "while [ ! -S /tmp/.X11-unix/X0 ]; do sleep 1; done; xset -dpms s off b off m 2/1 4 r rate 500 35"
+ExecStop=bash -c "xset -dpms s off b off m 2/1 4 r rate 500 35"
 
 [Install]
 WantedBy=sleep.target
