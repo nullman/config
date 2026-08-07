@@ -87,11 +87,17 @@ _bc pointer_action3            resize_corner
 #_bc focused_border_color       "#817F7F"
 #_bc presel_feedback_color      "#F4D775"
 
+# custom colors (original)
+#_bc normal_border_color        "#4C566A"
+#_bc active_border_color        "#1E1E1E"
+#_bc focused_border_color       "#5E81AC"
+#_bc presel_feedback_color      "#5E81AC"
+
 # custom colors
-_bc normal_border_color        "#4C566A"
-_bc active_border_color        "#1E1E1E"
-_bc focused_border_color       "#5E81AC"
-_bc presel_feedback_color      "#5E81AC"
+_bc normal_border_color        "#21527A"
+_bc active_border_color        "#317CB8"
+_bc focused_border_color       "#42A5F5"
+_bc presel_feedback_color      "#42A5F5"
 
 #-------------------------------------------------------------------------------
 # Monitors
@@ -253,7 +259,7 @@ _br 'Qmmp' state=floating sticky=true
 _br 'Qtconfig-qt4' state=floating sticky=true
 _br 'Qube Manager' state=floating center=true
 _br 'Qube Settings' state=floating center=true
-_br 'Qubes-app-menu' state=floating rectangle=640x480+0-20
+_br 'Qubes-app-menu' state=floating rectangle=640x480+0+20
 _br 'Qubes-global-config' state=floating center=true
 _br 'Qubes-update-gui' state=floating center=true
 _br 'Rofi' state=floating center=true

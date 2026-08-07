@@ -106,7 +106,7 @@ alt + {_,shift + }Tab
 
 # focus last node in current desktop
 alt + grave
-    bspc node --focus last.leaf
+    bspc node --focus last.local.leaf
 
 # focus/swap node in given direction in current desktop
 super + {_,shift + }{Left,Right}

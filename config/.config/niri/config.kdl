@@ -67,18 +67,18 @@ layout {
 
     focus-ring {
         width 4
-        //active-color "#7fc8ff"         // cyan (default)
-        //active-color "#d0bcff"         // purple (dms default)
-        active-color "#42a5f5"          // blue
+        //active-color "#7FC8FF"         // cyan (default)
+        //active-color "#D0BCFF"         // purple (dms default)
+        active-color "#42A5F5"          // blue
         inactive-color "#505050"
     }
 
     border {
         off
         width 4
-        active-color "#ffc87f"
+        active-color "#FFC87F"
         inactive-color "#505050"
-        urgent-color "#9b0000"
+        urgent-color "#9B0000"
     }
 
     shadow {
@@ -104,8 +104,8 @@ recent-windows {
     open-delay-ms 150
 
     highlight {
-        active-color "#999999ff"
-        urgent-color "#ff9999ff"
+        active-color "#999999FF"
+        urgent-color "#FF9999FF"
         padding 30
         corner-radius 0
     }
@@ -349,8 +349,7 @@ binds {
     Super+Y          hotkey-overlay-title="Git Sync: Config"                                  { spawn-sh "source \"${HOME}/.funct\" && (git-sync-config && echo 'Done') 2>&1 | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"; }
     Super+Shift+Y    hotkey-overlay-title="Git Sync: Extra"                                   { spawn-sh "source \"${HOME}/.funct\" && (git-sync-extra && echo 'Done') 2>&1 | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"; }
     Super+X          hotkey-overlay-title="Activate XScreenSaver"                             { spawn "xscreensaver-command" "-activate"; }
-    Super+Shift+X    hotkey-overlay-title="XScreenSaver Demo"                                 { spawn "xscreensaver-demo"; }
-    Super+Ctrl+X     hotkey-overlay-title="Lock Screen"                                       { spawn "swaylock"; }
+    Super+Shift+X    hotkey-overlay-title="Lock Screen"                                       { spawn "swaylock"; }
     Super+Shift+W    hotkey-overlay-title="Close Window" repeat=false                         { close-window; }
     Super+Shift+Q    hotkey-overlay-title="Session Menu"                                      { spawn-sh "${HOME}/bin/rofi-session-menu -s"; }
     Super+Shift+P    hotkey-overlay-title="Window Properties"                                 { spawn-sh "pipe='/tmp/yad-pipe' ; mkfifo ${pipe} ; (tail -f ${pipe} | GDK_BACKEND=x11 yad --text-info --width=480 --height=360 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null &) ; printf 'Select window...\n\n' > ${pipe} ; niri msg pick-window >> ${pipe}"; }

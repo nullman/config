@@ -2972,6 +2972,12 @@ alias qvmcp="qvm-copy-to-vm personal"
 #        qd-copy-windows-tools   copy qubes-windows-tools from personal to dom0
 alias qd-copy-windows-tools="
     qvm-run --pass-io personal 'tar -C \"/home/data/media/Software/Hypervisor/Qubes OS\" -c qubes-windows-tools-4.1.69-1.fc37.noarch.rpm' | tar -x"
+#        qd-copy-qvm-create-windows-qube  copy qvm-create-windows-qube from windows-mgmt qube
+alias qd-copy-qvm-create-windows-qube="
+    qvm-run -p --filter-escape-chars --no-color-output 'windows-mgmt' \
+    \"cat '/home/user/qvm-create-windows-qube/qvm-create-windows-qube'\" | \
+    sudo tee /usr/bin/qvm-create-windows-cube > /dev/null
+    sudo chmod +x /usr/bin/qvm-create-windows-cube"
 #        qd-copy-slide-show      copy xscreensaver slide show pictures from personal to dom0
 alias qd-copy-slide-show="
     if [ \"$(uname -n)\" != \"dom0\" ] ; then

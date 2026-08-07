@@ -102,6 +102,9 @@ if [ "$(uname -n)" == "dom0" ] ; then
     # qubes gui/audio daemon for qubes vms
     qvm-start-daemon --all --watch &
 
+    # qubes app-menu
+    qubes-app-menu --background &
+
     # user folders update
     xdg-user-dirs-gtk-update &
 

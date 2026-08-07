@@ -26,32 +26,33 @@ State
 
 Focus and Swap
 
-|-------+-----+------+-------+---------+--------------------------------|
-| Super | Alt | Ctrl | Shift | Key     | Description                    |
-|-------+-----+------+-------+---------+--------------------------------|
-| Super |     |      |       | i,Up    | Focus Up Node                  |
-| Super |     |      |       | k,Down  | Focus Down Node                |
-| Super |     |      |       | j,Left  | Focus Left Node                |
-| Super |     |      |       | l,Right | Focus Right Node               |
-| Super |     |      | Shift | i,Up    | Swap Node Up                   |
-| Super |     |      | Shift | k,Down  | Swap Node Down                 |
-| Super |     |      | Shift | j,Left  | Swap Node Right                |
-| Super |     |      | Shift | l,Right | Swap Node Left                 |
-| Super |     |      |       | period  | Circulate Nodes Forward        |
-| Super |     |      | Shift | period  | Swap Node Forward              |
-| Super |     |      |       | comma   | Circulate Nodes Backward       |
-| Super |     |      | Shift | comma   | Swap Node Backward             |
-| Super |     |      | Shift | g       | Swap Node with First Child     |
-| Super | Alt |      |       | l,Right | Focus Next Desktop             |
-| Super | Alt |      |       | j,Left  | Focus Previous Desktop         |
-| Super | Alt |      |       | i,Up    | Focus Next Monitor             |
-| Super | Alt |      |       | k,Down  | Focus Previous Monitor         |
-| Super |     |      |       | Tab     | Focus Next Node in Desktop     |
-| Super |     |      | Shift | Tab     | Focus Previous Node in Desktop |
-| Super |     |      |       | grave   | Focus Last Desktop             |
-| Super |     |      |       | 1-9,0   | Focus given Desktop            |
-| Super |     |      | Shift | 1-9,0   | Move Node to given Desktop     |
-|-------+-----+------+-------+---------+--------------------------------|
+|-------+-----+------+-------+---------+----------------------------|
+| Super | Alt | Ctrl | Shift | Key     | Description                |
+|-------+-----+------+-------+---------+----------------------------|
+| Super |     |      |       | j,Left  | Focus Node: Previous       |
+| Super |     |      |       | l,Right | Focus Node: Next           |
+| Super |     |      | Shift | j,Left  | Swap Node: Previous        |
+| Super |     |      | Shift | l,Right | Swap Node: Next            |
+| Super |     |      |       | period  | Circulate Node: Forward    |
+| Super |     |      | Shift | period  | Swap Node: Forward         |
+| Super |     |      |       | comma   | Circulate Node: Backward   |
+| Super |     |      | Shift | comma   | Swap Node: Backward        |
+| Super |     | Ctrl |       | g       | Swap Node with First Child |
+| Super |     |      |       | i,Up    | Focus Desktop: Previous    |
+| Super |     |      |       | k,Down  | Focus Desktop: Next        |
+| Super |     |      | Shift | i,Up    | Swap Node: Previous        |
+| Super |     |      | Shift | k,Down  | Swap Node: Next            |
+| Super |     |      |       | PgUp    | Focus Monitor: Previous    |
+| Super |     |      |       | PgDn    | Focus Monitor: Next        |
+| Super |     |      |       | Tab     | Focus Desktop: Next        |
+| Super |     |      | Shift | Tab     | Focus Desktop: Previous    |
+|       | Alt |      |       | Tab     | Focus Node: Next           |
+|       | Alt |      | Shift | Tab     | Focus Node: Previous       |
+|       | Alt |      |       | grave   | Focus Node: Last           |
+| Super |     |      |       | grave   | Focus Desktop: Last        |
+| Super |     |      |       | 1-9,0   | Focus Desktop: #           |
+| Super |     |      | Shift | 1-9,0   | Move Node to Desktop: #    |
+|-------+-----+------+-------+---------+----------------------------|
 
 Move and Resize
 
