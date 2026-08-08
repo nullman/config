@@ -355,6 +355,10 @@ super + shift + v
     xrandr --output $(xrandr | grep ' connected ' | sed 's/ .*//' | head -n 1) --auto && \
     notify-send --expire-time=3000 'Resetting video'
 
+# set X11 caps-lock, insert key, keyboard, and mouse speed
+super + shift + backslash
+    (${HOME}/bin/set-x11-settings) && notify-send --expire-time=3000 'X11 settings applied'
+
 # connect to sennheiser hd350bt headphones
 super + b
     notify-send --expire-time=3000 'Connecting to Sennheiser HD 350BT Headphones' && \

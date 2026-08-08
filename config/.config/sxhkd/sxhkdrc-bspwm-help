@@ -37,7 +37,6 @@ Focus and Swap
 | Super |     |      | Shift | period  | Swap Node: Forward         |
 | Super |     |      |       | comma   | Circulate Node: Backward   |
 | Super |     |      | Shift | comma   | Swap Node: Backward        |
-| Super |     | Ctrl |       | g       | Swap Node with First Child |
 | Super |     |      |       | i,Up    | Focus Desktop: Previous    |
 | Super |     |      |       | k,Down  | Focus Desktop: Next        |
 | Super |     |      | Shift | i,Up    | Swap Node: Previous        |

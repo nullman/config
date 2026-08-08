@@ -83,7 +83,7 @@ super + shift + {w,k}
 #-------------------------------------------------------------------------------
 
 # set window state
-super + ctrl + {t,f,v}
+super + ctrl + {t,f,g}
     bspc node --state {tiled,fullscreen,floating} && \
     notify-send --expire-time=3000 "State: $(bspc query --tree --node | jq --raw-output '.client.state')"
 
@@ -119,9 +119,9 @@ super + {_,shift + }{comma,period}
     bspc node {'focused.!floating.!fullscreen.window#@/' --circulate,--swap} {backward,forward}
     #bspc node {@/ --circulate,--swap} {backward,forward}
 
-# swap node with first child node in current desktop
-super + ctrl + g
-    bspc node --swap first.local
+# # swap node with first child node in current desktop
+# super + ctrl + g
+#     bspc node --swap first.local
 
 # focus next/previous desktop in current monitor
 super + {_,shift + }Tab
