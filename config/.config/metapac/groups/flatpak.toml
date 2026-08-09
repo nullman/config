@@ -1,7 +1,7 @@
 flatpak = {
   repos = [
-    { name = "system:fedora", options = { url = "oci+https://registry.fedoraproject.org" } },
     { name = "system:flathub", options = { url = "https://dl.flathub.org/repo/" } },
+    { name = "system:fedora", options = { url = "oci+https://registry.fedoraproject.org" } },
   ], 
   packages = [
     { name = "system:ai.lmstudio.lm-studio", options = { remote = "flathub" } },

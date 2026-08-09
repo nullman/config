@@ -773,17 +773,15 @@ convert-7z-to-zip-dir-tree() {
     read -r a
     case "${a}" in
         y|Y)
-            tmpdir="$(mktemp -d)"
             find . -iname "*.7z" -print | while read -r file ; do
+                tmpdir="$(mktemp -d)"
                 echo "${file}"
-                base=$(basename "${file}")
-                new="${base:0:-3}.zip"
-                cp "${file}" "${tmpdir}/${base}" && pushd "${tmpdir}" && \
-                    7z x "${base}" && rm "${base}" && zip -r "${new}" ./* && \
-                    popd && cp "${tmpdir}/${new}" "./${new}" && \
-                    rm "${file}"
+                old=$(readlink -f "${file}")
+                new="${old:0:-3}.zip"
+                pushd "${tmpdir}" && 7z x "${old}" && zip -r "${new}" ./* && \
+                    rm "${old}" && popd
+                rm -rf "${tmpdir}"
             done
-            rm -rf "${tmpdir}"
             ;;
     esac
 }
