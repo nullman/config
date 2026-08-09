@@ -300,9 +300,6 @@ fi
 [ -n "${DISPLAY}" ] && [ "${XDG_SESSION_TYPE}" != "wayland" ] && \
     [ -z "$(env | grep '^runpath=.*\.xprofile')" ] && _source "${HOME}/.xprofile"
 
-# cd to home in case home directory is mounted late
-cd
-
 #===============================================================================
 # End of File
 #===============================================================================
