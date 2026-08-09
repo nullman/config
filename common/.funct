@@ -584,7 +584,7 @@ colorscript-slideshow() {
         cat <<EOF
 Usage: colorscript-slideshow [OPTIONS]
 Run colorscript scripts.
-OPTIONS:
+Options:
   -o, --once        run each script one time
   -c, --continuous  run all scripts in a continuous loop
   -r, --random      run scripts randomly
@@ -1059,7 +1059,7 @@ delete-broken-symlinks() {
         cat <<EOF
 Usage: delete-broken-symlinks DIR [OPTIONS]
 Delete broken symlinks in DIR.
-OPTIONS:
+Options:
   DIR              directory to search in
   -h, --help       show this help
   -r, --recursive  recurse into sub-directories

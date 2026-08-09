@@ -11,41 +11,41 @@ if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
     cat <<EOF
 Usage: $(basename $0) APPLICATION
 Launch APPLICATION in a specific screen window.
-  APPLICATION options:
-    app    application       window
-    -----  ----------------  ------
-    mon    top                  0
-    mon    htop                 0
-    mon    btop                 0
-    mon    bpytop               0
-    mon    zenith               0
-    mon    slmon                0
-    mon    xentop               0
-    em     emacs                1
-    1      shell                1
-    2      shell                2
-    3      shell                3
-    4      shell                4
-    5      shell                5
-    6      shell                6
-    7      shell                7
-    8      shell                8
-    9      shell                9
-    ipmon  iftop               10
-    nvmon  nvtop               10
-    mail   pine                11
-    im     centerim            12
-    irc    irssi               13
-    web    lynx                14
-    news   tin                 15
-    rss    snownews            16
-    stocks mop                 17
-    crypto cointop             18
-    cal    wyrd                18
-    calc   orpie               19
-    calc   rpncalc             19
-    spell  ispell              20
-    mvstk5 mvs-tk5             10
+APPLICATION options:
+  app    application       window
+  -----  ----------------  ------
+  mon    top                  0
+  mon    htop                 0
+  mon    btop                 0
+  mon    bpytop               0
+  mon    zenith               0
+  mon    slmon                0
+  mon    xentop               0
+  em     emacs                1
+  1      shell                1
+  2      shell                2
+  3      shell                3
+  4      shell                4
+  5      shell                5
+  6      shell                6
+  7      shell                7
+  8      shell                8
+  9      shell                9
+  ipmon  iftop               10
+  nvmon  nvtop               10
+  mail   pine                11
+  im     centerim            12
+  irc    irssi               13
+  web    lynx                14
+  news   tin                 15
+  rss    snownews            16
+  stocks mop                 17
+  crypto cointop             18
+  cal    wyrd                18
+  calc   orpie               19
+  calc   rpncalc             19
+  spell  ispell              20
+  mvstk5 mvs-tk5             10
 EOF
     exit 1
 fi
@@ -101,7 +101,7 @@ case "$1" in
         ${HOME}/bin/screen_app mon
         ${HOME}/bin/screen_app emacs
         ${HOME}/bin/screen_app mail
-        ${HOME}/bin/screen_app ifmon
+        ${HOME}/bin/screen_app ipmon
         ${HOME}/bin/screen_app im
         ${HOME}/bin/screen_app irc
         ${HOME}/bin/screen_app web
@@ -123,7 +123,7 @@ case "$1" in
         ${HOME}/bin/screen_app 7
         ${HOME}/bin/screen_app 8
         ${HOME}/bin/screen_app 9
-        ${HOME}/bin/screen_app ifmon
+        ${HOME}/bin/screen_app ipmon
         ${HOME}/bin/screen_app mail
         ${HOME}/bin/screen_app im
         ${HOME}/bin/screen_app irc

@@ -11,18 +11,18 @@ if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
     cat <<EOF
 Usage: $(basename $0) APPLICATION [OPTION...] [PARAMETER...]
 Run APPLICATION in the root window.
-  APPLICATION options:
-    xplanet MODE [PARMETER]...
-      MODE       random, earth, earth_clouds, eclipse, saturn
-      PARAMETER  any additional xplanet parameter
-                 e.g. -output \"img.png\" -geometry 1024x768
-    xplanetr MODE LONGITUDE [PARAMETER]...
-      MODE       [same as above]
-      LONGITUDE  current longitude in rotation
-      PARAMETER  any additional xplanet parameters
-    xfishtank
-    xpenguins [MODE]
-      MODE  default, big, bill
+APPLICATION options:
+  xplanet MODE [PARMETER]...
+    MODE       random, earth, earth_clouds, eclipse, saturn
+    PARAMETER  any additional xplanet parameter
+               e.g. -output \"img.png\" -geometry 1024x768
+  xplanetr MODE LONGITUDE [PARAMETER]...
+    MODE       [same as above]
+    LONGITUDE  current longitude in rotation
+    PARAMETER  any additional xplanet parameters
+  xfishtank
+  xpenguins [MODE]
+    MODE  default, big, bill
 See root_background_list file for more applications.
 EOF
     exit 1

@@ -5,7 +5,7 @@
 # Query google calculator.
 #
 # Options:
-#   exp  - expression to query
+#   exp - expression to query
 #
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================

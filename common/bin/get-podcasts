@@ -117,12 +117,12 @@ while (my $infile = pop(@infiles)) {
 sub usage {
     print("Usage: get-podcasts [OPTIONS] FILE...\n");
     print("Download podcasts in RSS feeds, contained in an OPML FILE.\n");
-    print("  OPTIONS:\n");
-    print("    -h, --help       this help\n");
-    print("    -v, --verbose    verbose output\n");
-    print("    -d, --directory  root path for downloads\n");
-    print("    -r, --retries    number of retries to download a file\n");
-    print("    -t, --timeout    request timeouts in seconds\n");
+    print("Options:\n");
+    print("  -h, --help       this help\n");
+    print("  -v, --verbose    verbose output\n");
+    print("  -d, --directory  root path for downloads\n");
+    print("  -r, --retries    number of retries to download a file\n");
+    print("  -t, --timeout    request timeouts in seconds\n");
     exit(1);
 }
 

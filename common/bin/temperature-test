@@ -55,9 +55,9 @@ done
 # help
 if [ ${help} -eq 1 ] ; then
     echo "Usage: $(basename $0) [OPTIONS]"
-    echo "  OPTIONS:"
-    echo "    -c, --count       number of 10 second tests to run [6]"
-    echo "    -f, --fahrenheit  show temperatures in degrees fahrenheit"
+    echo "Options:"
+    echo "  -c, --count       number of 10 second tests to run [6]"
+    echo "  -f, --fahrenheit  show temperatures in degrees fahrenheit"
     exit 1
 fi
 

@@ -114,12 +114,12 @@ if $type == $arg_help or $site.nil?
 Usage: #{$basename} SITE [OPTION]
 Fetch posts from Locals.
 Options:
-  -h, --help        = This usage text
-  -m, --missing     = Fetch all missing posts [default]
-  -a, --all         = Fetch all posts, even if previously fetched
-  -C, --continue ID = Continue fetching from previous run, starting at ID
-  -c, --count COUNT = Fetch COUNT number of posts
-  -r, --rss COUNT   = Fetch COUNT number of posts and generate an RSS feed
+  -h, --help         this usage text
+  -m, --missing      fetch all missing posts [default]
+  -a, --all          fetch all posts, even if previously fetched
+  -C, --continue ID  continue fetching from previous run, starting at ID
+  -c, --count COUNT  fetch COUNT number of posts
+  -r, --rss COUNT    fetch COUNT number of posts and generate an RSS feed
 EOF
   if File.exist?($config_file) then
     puts "Sites:"

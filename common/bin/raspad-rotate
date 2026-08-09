@@ -28,12 +28,12 @@ _usage() {
     cat <<EOF
 Usage: $(basename "$0") [OPTIONS]
 Rotate Raspad device.
-OPTIONS:
-  -n|--normal    rotate normal
-  -i|--inverted  rotate inverted
-  -l|--left      rotate left
-  -r|--right     rotate right
-  -h|--help      show help (this message)
+Options:
+  -n, --normal    rotate normal
+  -i, --inverted  rotate inverted
+  -l, --left      rotate left
+  -r, --right     rotate right
+  -h, --help      show help (this message)
 EOF
 }
 

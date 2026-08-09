@@ -230,7 +230,7 @@ _usage() {
     cat <<EOF
 Usage: $(basename $0) [OPTIONS] [CHANNEL]
 Grab the latest YouTube videos from a curated list.
-  OPTIONS:
+Options:
   -l, --list             display video list names
   -r, --restart          download any missing videos from all lists
   -r, --restart CHANNEL  download any missing videos from CHANNEL

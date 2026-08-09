@@ -19,7 +19,7 @@ _usage() {
     cat <<EOF
 Usage: $(basename "$0") [OPTIONS]
 Present a Window Manager Session Menu using rofi.
-OPTIONS:
+Options:
   -d  show drun menu
   -r  show run menu
   -w  show window switcher

@@ -9,10 +9,10 @@
 
 if [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
     cat <<EOF
-Usage: $(basename $0) [-e | --extended]
+Usage: $(basename $0) [-e,--extended]
 Print ASCII table.
 Options:
-  -e | --extended = also print the extended ASCII table
+  -e, --extended  also print the extended ASCII table
 EOF
     exit 1
 fi

@@ -29,19 +29,19 @@ if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
     cat <<EOF
 Usage: $(basename $0) SCREENSAVER [OPTION...]
 Run a SCREENSAVER passing any OPTIONs to it.
-  SCREENSAVER options:
-    xscreensaver
-    xlock MODE [LOCK]
-    slideshow DIR [DELAY]
-    movie FILE
-    flash FILE
-    blank [LOCK]
-    flame [LOCK]
-    electric_sheep
-    pictures [DELAY]
-    nasa [DELAY]
-  MODE  xlock mode
-  LOCK  time in seconds before the screen locks
+SCREENSAVER options:
+  xscreensaver
+  xlock MODE [LOCK]
+  slideshow DIR [DELAY]
+  movie FILE
+  flash FILE
+  blank [LOCK]
+  flame [LOCK]
+  electric_sheep
+  pictures [DELAY]
+  nasa [DELAY]
+MODE  xlock mode
+LOCK  time in seconds before the screen locks
 EOF
     exit 1
 fi

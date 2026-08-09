@@ -11,32 +11,32 @@ if [ $# -lt 1 ] || [ $# -gt 2 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; th
     cat <<EOF
 Usage: $(basename $0) DIRECTORY [DATE]
 Get pictures from 'deviantart.com' DIRECTORY starting at DATE.
-  DIRECTORY options:
-    3d
-    abstract
-    automotive
-    dark
-    dualdisplay
-    fantasy
-    females
-    freehand
-    games
-    widescreen
-    light
-    apple
-    males
-    medieval
-    minimalistic
-    movies
-    photomanip
-    political
-    psychedelic
-    scenery
-    scifi
-    technical
-    tiles
-    unfinished
-  DATE  First date to process (in YYYYMMDD format)
+DIRECTORY options:
+  3d
+  abstract
+  automotive
+  dark
+  dualdisplay
+  fantasy
+  females
+  freehand
+  games
+  widescreen
+  light
+  apple
+  males
+  medieval
+  minimalistic
+  movies
+  photomanip
+  political
+  psychedelic
+  scenery
+  scifi
+  technical
+  tiles
+  unfinished
+DATE  First date to process (in YYYYMMDD format)
 EOF
     exit 1
 fi

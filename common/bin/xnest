@@ -24,20 +24,20 @@ if [ $# -lt 1 ] || [ $# -gt 4 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; th
     cat <<EOF
 Usage: $(basename $0) WM [DISPLAY [SIZE [DEPTH]]]
 Start a nested X running WM of optional SIZE and DEPTH.
-  WM options:
-    afterstep
-    blackbox
-    dwm
-    fluxbox
-    fvwm2
-    gnome
-    ion
-    kde
-    mwm
-    openbox
-    twm
-    wmaker
-    Xwnc
+WM options:
+  afterstep
+  blackbox
+  dwm
+  fluxbox
+  fvwm2
+  gnome
+  ion
+  kde
+  mwm
+  openbox
+  twm
+  wmaker
+  Xwnc
 Defaults: xnest WM :1 ${geometry} ${depth}
 Example: xnest bspwm :1
          xnest bspwm :1 1024x768 16
