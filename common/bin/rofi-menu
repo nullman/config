@@ -287,7 +287,7 @@ case "${menu}" in
             "‖‖	Double Parallel Lines"
             "##	Double Number Sign"
         )
-        (printf '%s\n' "${footnotes[@]}" | ${prompt} '󰽒  Footnotes' | sed -z 's/\t.*$// ; s/\\n$//' | ${clip})
+        (printf '%s\n' "${footnotes[@]}" | ${prompt} '󰽒  Footnotes' | sed -z 's/\t.*$// ; s/\\n$//' | eval "${clip}")
         ;;
 
     git)
@@ -332,7 +332,7 @@ case "${menu}" in
 
         # copy paste selection to the clipboard
         if [ -n "${sel}" ] ; then
-            (printf '%s' "${sel}" | ${clip})
+            (printf '%s' "${sel}" | eval "${clip}")
         fi
         ;;
 
@@ -353,13 +353,13 @@ case "${menu}" in
         if [ -n "${sel}" ] ; then
             case "${sel}" in
                 "6 Capitalized/Hyphenated Word Phrase")
-                    (printf '%s' "$(${HOME}/bin/password-phrase 6 hyphen true)" | ${clip})
+                    (printf '%s' "$(${HOME}/bin/password-phrase 6 hyphen true)" | eval "${clip}")
                     ;;
                 "4 Capitalized/Hyphenated Word Phrase")
-                    (printf '%s' "$(${HOME}/bin/password-phrase 4 hyphen true)" | ${clip})
+                    (printf '%s' "$(${HOME}/bin/password-phrase 4 hyphen true)" | eval "${clip}")
                     ;;
                 "20 Letters/Numbers/Symbols")
-                    (tr --delete --complement 'a-zA-Z0-9!@#$%^&*-_=+;:,<.>/?' < /dev/urandom | head --bytes 20 | ${clip})
+                    (tr --delete --complement 'a-zA-Z0-9!@#$%^&*-_=+;:,<.>/?' < /dev/urandom | head --bytes 20 | eval "${clip}")
                     ;;
             esac
         fi

@@ -1730,6 +1730,21 @@ qd-sync() {
         home-restow
     fi
 }
+#        qd-set-windows-vm-features-and-prefs  set features and prefs on given windows vm
+qd-set-windows-vm-features-and-prefs() {
+    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+        echo "Usage: qd-set-windows-vm-features-and-prefs VM"
+    else
+        qvm-features "$1" audio-model ich6
+        qvm-features "$1" stubdom-qrexec 1
+        qvm-features "$1" timezone localtime
+        qvm-features "$1" timer-period 1000
+        qvm-features "$1" out.latency 10000
+        qvm-features "$1" out.buffer-length 4000
+        qvm-prefs "$1" qrexec_timeout 7200
+        qvm-prefs "$1" default_user user
+    fi
+}
 #        qubes-set-tmp-size      set size of RAM /tmp for current qube
 qubes-set-tmp-size() {
     if [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
@@ -1804,7 +1819,7 @@ qubes-personal-initialize() {
         "qubes-personal-final"
     )
 
-    if [ "$(distribution)" != "qubes" || "$(uname -n)" != "dom0" ] ; then
+    if [ "$(distribution)" != "qubes" || "$(uname -n)" != "personal" ] ; then
         echo "Error: Can only be run on Qubes OS: personal"
         return 1
     fi

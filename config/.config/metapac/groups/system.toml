@@ -82,6 +82,7 @@ arch = {
     "tldr",
     "tmux",
     "traceroute",
+    "tree",
     "unifetch",
     "unipicker",
     "unrar",

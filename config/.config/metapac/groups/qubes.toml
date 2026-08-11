@@ -288,6 +288,7 @@ arch = {
     "traceroute",
     "translate-shell",
     "transmission-gtk",
+    "tree",
     "ttf-bitstream-vera",
     "ttf-dejavu",
     "ttf-inconsolata",
