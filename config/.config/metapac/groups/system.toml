@@ -95,7 +95,6 @@ arch = {
     "smbclient",
     "stow",
     "sudo",
-    "system",
     "system-config-printer",
     "terminus-font",
     "the_silver_searcher",
