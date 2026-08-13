@@ -2,7 +2,6 @@ arch = {
   packages = [
     "0ad",
     "dwarffortress",
-    "gamescope",
     "luanti",
     "lutris",
     "mangohud",
@@ -14,6 +13,7 @@ arch = {
     "supertuxkart",
     "umu-launcher",
     "wesnoth",
+    "0ad-data",
     "libxmp",
     "pysolfc-cardsets",
     "python-attrs",

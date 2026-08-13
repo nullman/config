@@ -1709,11 +1709,7 @@ qd-copy-to-vm() {
 #        qd-sync                 copy personal config to dom0
 qd-sync() {
     if [ "$1" == "-h" ] || [ "$1" == "--help" ] || [ "$(uname -n)" != "dom0" ] ; then
-        echo "Usage: qd-sync [OS]"
-        echo "OS:"
-        echo "  arch"
-        echo "  debian"
-        echo "  fedora"
+        echo "Usage: qd-sync [VM]"
         [ "$(uname -n)" != "dom0" ] && echo "Error: Can only be run on dom0"
     else
         rm -rf "${HOME}/config.old"
@@ -1724,9 +1720,7 @@ qd-sync() {
         qvm-run --pass-io personal 'tar -C /home/user -c --exclude=\".git*\" config-private' | tar -C "${HOME}" -x
         sudo cp "${HOME}/config/config/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml" \
              "/etc/xdg/xfce4/xfconf/xfce-perchannel-xml/"
-        [ "$1" == "arch" ] && tar -C "${HOME}/config/config/.config" -cf - metapac | qvm-run --pass-io arch 'tar -C "/home/user/.config" -xf -'
-        [ "$1" == "debian" ] && tar -C "${HOME}/config/config/.config" -cf - metapac | qvm-run --pass-io debian 'tar -C "/home/user/.config" -xf -'
-        [ "$1" == "fedora" ] && tar -C "${HOME}/config/config/.config" -cf - metapac | qvm-run --pass-io fedora 'tar -C "/home/user/.config" -xf -'
+        tar -C "${HOME}/config/config/.config" -cf - metapac | qvm-run --pass-io "$1" 'tar -C "/home/user/.config" -xf -'
         home-restow
     fi
 }

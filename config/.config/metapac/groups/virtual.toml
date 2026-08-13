@@ -11,6 +11,9 @@ arch = {
     "virt-install",
     "virt-manager",
     "virt-viewer",
+    "virtualbox",
+    "libguestfs",
+    "yara",
   ]
 }
 

@@ -17,7 +17,9 @@ arch = {
     "ngspice",
     "shortwave",
     "spotify",
+    "gst-plugins-bad",
     "kicad-library",
+    "zbar",
   ]
 }
 

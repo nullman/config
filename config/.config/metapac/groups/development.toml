@@ -33,6 +33,7 @@ arch = {
     "fpc",
     "freebasic",
     "gcc",
+    "gcc-ia16",
     "github-desktop",
     "glibc",
     "gmp",
