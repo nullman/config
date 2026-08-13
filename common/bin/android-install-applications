@@ -26,7 +26,7 @@ _isinstalled() {
     echo "${skip}"
 }
 
-file="${HOME}/org/personal.org"
+file="${HOME}/org/computer.org"
 regexp="/^[ \t]*#\+NAME: android-applications\$/,/^\*/{print \$0}"
 items=$(awk "${regexp}" "${file}" | tail -n +5 | head -n -2 | sed '/|--/d ; s/ //g ; s/^|// ; s/|$//')
 #echo "${items}" | while read item ; do

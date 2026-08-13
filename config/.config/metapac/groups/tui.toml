@@ -6,7 +6,6 @@ arch = {
     "calcurse",
     "caligula",
     "cmus",
-    "cointop",
     "elinks",
     "gomuks",
     "hexedit",
@@ -18,20 +17,14 @@ arch = {
     "mcabber",
     "ncdu",
     "ncmpcpp",
-    "phetch",
     "ranger",
     "s-tui",
-    "speedometer",
     "superfile",
     "tig",
     "ugrep",
     "visidata",
     "w3m",
-    "wavemon",
     "wordgrinder",
-    "xplr",
-    "yazi",
-    "zenith-bin",
   ]
 }
 

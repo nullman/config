@@ -1496,7 +1496,7 @@ pasis() {
 #        arch-initialize         initial setup of an arch system
 arch-initialize() {
     _getsection() {
-        local file="${HOME}/org/personal.org"
+        local file="${HOME}/org/computer.org"
         local regexp="/^[ \t]*#\+NAME: $1\$/,/^[ \t]*#\+END_SRC\$/{print \$0}"
         awk "${regexp}" "${file}" | tail -n +3 | head -n -1 | sed 's/^[ \t]*//'
     }
@@ -1757,7 +1757,7 @@ qubes-set-tmp-size() {
 #        qubes-dom0-initialize   initial setup of dom0
 qubes-dom0-initialize() {
     _getsection() {
-        local file="${HOME}/org/personal.org"
+        local file="${HOME}/org/computer.org"
         local regexp="/^[ \t]*#\+NAME: $1\$/,/^[ \t]*#\+END_SRC\$/{print \$0}"
         awk "${regexp}" "${file}" | tail -n +3 | head -n -1 | sed 's/^[ \t]*//'
     }
@@ -1800,7 +1800,7 @@ qubes-dom0-initialize() {
 #        qubes-personal-initialize  initial setup of personal vm
 qubes-personal-initialize() {
     _getsection() {
-        local file="${HOME}/org/personal.org"
+        local file="${HOME}/org/computer.org"
         local regexp="/^[ \t]*#\+NAME: $1\$/,/^[ \t]*#\+END_SRC\$/{print \$0}"
         awk "${regexp}" "${file}" | tail -n +3 | head -n -1 | sed 's/^[ \t]*//'
     }
@@ -2376,7 +2376,7 @@ home-restow() {
 }
 #        make-metapac-groups  generate metapac package groups
 make-metapac-groups() {
-    infile="${HOME}/org/personal.org"
+    infile="${HOME}/org/computer.org"
 
     _getrepos() {
         awk "/^[ \t]*#\+NAME: $1-repos\$/,/^\*/{print \$0}" "${infile}" | \
@@ -2460,7 +2460,7 @@ make-metapac-groups() {
 #        ollama-model-install  install ollama models
 ollama-model-install() {
     awk "/^[ \t]*#\+NAME: ollama-models\$/,/^\*/{print \$0}" \
-        "${HOME}/org/personal.org" | \
+        "${HOME}/org/computer.org" | \
         sed -n 's/^ *// ; s/ *#.*$// ; /^ollama pull/p' | \
         while read -r cmd ; do
             echo "${cmd}"

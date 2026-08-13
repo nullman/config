@@ -1,5 +1,6 @@
 arch = {
   packages = [
+    "pipewire-qubes",
     "7zip",
     "aalib",
     "acme",
@@ -217,7 +218,6 @@ arch = {
     "pipewire-alsa",
     "pipewire-jack",
     "pipewire-pulse",
-    "pipewire-qubes",
     "pkgfile",
     "plantuml",
     "plocate",
@@ -406,6 +406,7 @@ dnf = {
     "duf",
     "easytag",
     "emacs",
+    "engrampa",
     "eog",
     "ethtool",
     "evince",
@@ -554,6 +555,7 @@ dnf = {
     "traceroute",
     "translate-shell",
     "transmission-gtk",
+    "tree",
     "bitstream-vera-fonts-all",
     "dejavu-fonts-all",
     "google-noto-fonts-all",

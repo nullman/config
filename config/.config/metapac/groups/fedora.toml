@@ -180,7 +180,6 @@ dnf = {
     "systemtap",
     "tiwilink-firmware",
     "toolbox",
-    "tree",
     "unoconv",
     "yelp",
     "zram-generator",

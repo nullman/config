@@ -7,16 +7,12 @@ arch = {
     "qemu-desktop",
     "qemu-emulators-full",
     "qemu-img",
-    "qtemu-git",
     "swtpm",
     "virt-install",
     "virt-manager",
     "virt-viewer",
-    "virtio-win",
     "virtualbox",
     "virtualbox-host-modules-arch",
-    "vm-curator",
-    "vm-curator-gtk",
   ]
 }
 

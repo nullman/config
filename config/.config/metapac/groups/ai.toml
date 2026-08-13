@@ -4,7 +4,6 @@ arch = {
     "ollama",
     "ollama-docs",
     "fortunecraft",
-    "upscayl-bin",
   ]
 }
 
