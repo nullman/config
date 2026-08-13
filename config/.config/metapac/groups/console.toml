@@ -30,7 +30,6 @@ arch = {
     "perl-image-exiftool",
     "picocom",
     "procs",
-    "rar",
     "sad",
     "sd",
     "sharutils",
