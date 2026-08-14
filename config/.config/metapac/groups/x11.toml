@@ -9,6 +9,7 @@ arch = {
     "xorg-server-xephyr",
     "xorg-setxkbmap",
     "xorg-xev",
+    "xorg-xrandr",
     "xsel",
     "xterm",
   ]
@@ -25,17 +26,14 @@ dnf = {
     "copr.fedorainfracloud.org/skidnik/clipmenu",
   ], 
   packages = [
-    "arandr",
-    "imwheel",
-    "numlockx",
     "scrot",
-    "sxhkd",
-    "xautolock",
     "xclip",
     "xdotool",
-    "xsel",
-    "xvkbd",
+    "xorg-server",
+    "xorg-server-xephyr",
+    "xorg-setxkbmap",
     "xrandr",
+    "xsel",
   ]
 }
 
