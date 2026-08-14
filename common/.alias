@@ -2993,6 +2993,10 @@ alias qd-copy-slide-show="
         sudo chown -R $(id -un):$(id -un) \"/home/data\"
         qvm-run --pass-io personal 'tar -C \"/home/data/media\" -c --dereference \"Pictures Slide Show/XScreenSaver\"' | tar -C \"/home/data/media/\" -x
     fi"
+#        qubes-set-bluetooth-key-hd350bt  set HD350BT headphones bluetooth key
+alias qubes-set-bluetooth-key-hd350bt="
+    key=$(sudo cat '/var/lib/bluetooth/64:5D:86:0D:3B:BB/80:C3:BA:0E:CB:E5/info' | grep '^Key=') && \
+        sudo sed -i \"s/^Key=.*$/${key}/\" '/rw/config/rc.local.d/bluetooth.rc'"
 
 #
 # niri window manager
