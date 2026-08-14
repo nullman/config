@@ -294,6 +294,7 @@ if [ "${QUBES_ENV_SOURCED}" ] && [ "$(uname -n)" == "personal" ] ; then
    pgrep -u ${USER} -f clipmenud >/dev/null || systemctl --user enable --now clipmenud & disown
    pgrep -u ${USER} -f mpd >/dev/null || systemctl --user enable --now mpd & disown
    pgrep -u ${USER} -f mpDris2 >/dev/null || systemctl --user enable --now mpdris & disown
+   pgrep -u ${USER} -f espanso >/dev/null || systemctl --user enable --now espanso & disown
 fi
 
 # source xprofile if not already, and running in X11

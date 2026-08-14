@@ -1,6 +1,7 @@
 arch = {
   packages = [
     "clipman",
+    "espanso-wayland-git",
     "foot",
     "fuzzel",
     "grim",

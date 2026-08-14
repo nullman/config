@@ -1,5 +1,6 @@
 arch = {
   packages = [
+    "espanso-x11-git",
     "scrot",
     "xclip",
     "xdo",

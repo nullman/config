@@ -1,6 +1,7 @@
 arch = {
   packages = [
     "egl-gbm",
+    "lact",
     "lib32-nvidia-470xx-utils",
     "nvidia-470xx-dkms",
     "nvidia-470xx-settings",

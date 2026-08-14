@@ -1533,6 +1533,7 @@ arch-initialize() {
         "arch-configure-xscreensaver-aerial"
         "arch-bluetooth-audio"
         #"arch-printer"
+        "arch-espanso"
         "arch-synology-mounts"
         #"arch-capslock-control"
         "arch-capslock-control-terminal"

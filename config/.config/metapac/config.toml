@@ -40,11 +40,11 @@ arch = ["qubes", "system", "x11", "wm", "fonts", "applications", "utilities", "t
 bane = ["base", "base-wm", "system", "x11", "wayland", "wm", "fonts", "emulators", "fortune", "minimal", "fedora"]
 choi = ["base", "base-wm", "system", "x11", "wayland", "wm", "fonts", "applications", "utilities", "tui", "console", "console-hacks", "internet", "emulators", "containers", "development", "ai", "fortune", "games", "nvidia470"]
 dozer = ["base", "base-wm", "system", "x11", "wayland", "wm", "fonts", "applications", "utilities", "tui", "console", "console-hacks", "internet", "emulators", "virtual", "containers", "development", "ai", "fortune", "games", "nvidia470"]
-fedora = ["qubes", "fedora", "system", "x11", "wm", "fonts", "applications", "utilities", "tui", "console", "console-hacks", "internet", "emulators", "virtual", "containers", "development", "ai", "fortune", "games"]
+fedora = ["qubes", "fedora-xfce", "system", "x11", "wm", "fonts", "applications", "utilities", "tui", "console", "console-hacks", "internet", "emulators", "virtual", "containers", "development", "ai", "fortune", "games"]
 switch = ["base", "base-wm", "system", "x11", "wm", "fonts", "applications", "utilities", "tui", "console", "console-hacks", "internet", "emulators", "fortune", "minimal"]
 mouse = ["base", "base-wm", "system", "x11", "wayland", "wm", "fonts", "emulators", "fortune", "minimal"]
 retro = ["base", "base-wm", "system", "x11", "wm", "fonts", "emulators"]
-tank = ["base", "base-wm", "system", "x11", "wayland", "wm", "fonts", "applications", "utilities", "tui", "console", "console-hacks", "internet", "emulators", "virtual", "containers", "development", "ai", "games", "nvidia580", "fedora", "flatpak", "snap"]
+tank = ["fedora-gnome", "flatpak", "snap", "base", "base-wm", "system", "x11", "wayland", "wm", "fonts", "applications", "utilities", "tui", "console", "console-hacks", "internet", "emulators", "virtual", "containers", "development", "ai", "games", "nvidia580"]
 
 [arch]
 # Since pacman, pamac, paru, pikaur and yay all operate on the same package database

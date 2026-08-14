@@ -2,6 +2,7 @@ arch = {
   packages = [
     "cuda",
     "egl-gbm",
+    "lact",
     "lib32-nvidia-utils",
     "nvidia",
     "nvidia-settings",
