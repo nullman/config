@@ -3031,8 +3031,12 @@ alias pms="pacman -Ss"
 alias pmf="pacman -F"
 #        pmq                     pacman -Q (query installed packages)
 alias pmq="pacman -Q"
-#        pmqi                    pacman -Qi (query installed packages with info)
+#        pmqi                    pacman -Qi (query installed packages: info)
 alias pmqi="pacman -Qi"
+#        pmql                    pacman -Ql (query installed packages: file list)
+alias pmql="pacman -Ql"
+#        pmqo                    pacman -Qo (query installed packages: file name owner)
+alias pmqo="pacman -Qo"
 #        pml                     pacman -Qqett (list installed packages)
 alias pml="pacman -Qqett"
 #        pmln                    pacman -Qqettn (list installed native packages)
@@ -3116,8 +3120,12 @@ alias pas="paru -Ss 2>/dev/null"
 alias paf="paru -F"
 #        paq                     paru -Q (query installed packages)
 alias paq="paru -Q"
-#        paqi                    paru -Qi (query installed packages with info)
+#        paqi                    paru -Qi (query installed packages: info)
 alias paqi="paru -Qi"
+#        paql                    paru -Ql (query installed packages: file list)
+alias paql="paru -Ql"
+#        paqo                    paru -Qo (query installed packages: file name owner)
+alias paqo="paru -Qo"
 #        pal                     paru -Qqett (list installed packages)
 alias pal="paru -Qqett"
 #        paln                    paru -Qqettn (list installed native packages)

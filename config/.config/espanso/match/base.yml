@@ -1,0 +1,46 @@
+# Espanso Match File
+#
+# Documentation: https://espanso.org/docs/
+#
+# yaml-language-server: $schema=https://raw.githubusercontent.com/espanso/espanso/dev/schemas/match.schema.json
+#
+# For a complete introduction, visit the official docs at: https://espanso.org/docs/
+#
+# You can use this file to define the base matches (aka snippets)
+# that will be available in every application when using espanso.
+#
+# Matches are substitution rules: when you type the "trigger" string
+# it gets replaced by the "replace" string.
+
+matches:
+
+  # text replacement
+  - trigger: ":test "
+    replace: "TEST"
+
+  # date
+  - trigger: ";date "
+    replace: ""
+    vars:
+      - name: dateymd
+        type: shell
+        params:
+          cmd: "date '+%Y-%m-%d'"
+
+  # date and time
+  - trigger: ";dt "
+    replace: ""
+    vars:
+      - name: datetime
+        type: date
+        params:
+          format: "%Y-%m-%d %H:%M:%S"
+
+  # output shell command
+  - trigger: ";shell "
+    replace: ""
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: "echo 'Hello from your shell'"
