@@ -146,7 +146,7 @@ _br 'ms-outlook-nativefier' desktop=^5 follow=on
 #bspc desktop ^6 --layout stacked
 _br 'discord' desktop=^6 follow=on
 _br 'quassel' desktop=^6 follow=on
-_br 'Slack' desktop=^6 follow=on
+_br 'slack' desktop=^6 follow=on
 
 # 7: Social 2
 #bspc desktop ^7 --layout stacked

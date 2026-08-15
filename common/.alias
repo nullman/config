@@ -1714,8 +1714,6 @@ alias grepp="grep -H -n"
 alias grepi="grep -H -n -i"
 #        grepir                  grep -i -r (case-insensitive, recursive)
 alias grepir="grep -H -n -i -r"
-#        fgrep                   fgrep (no binaries, auto-color)
-alias fgrep="fgrep -I --color=auto"
 #        egrep                   grep (extended-regexp, no binaries, auto-color)
 alias egrep="grep -E -I --color=auto"
 
