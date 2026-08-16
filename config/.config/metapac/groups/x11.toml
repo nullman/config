@@ -5,6 +5,7 @@ arch = {
     "xclip",
     "xdo",
     "xdotool",
+    "xf86-video-intel",
     "xgetres",
     "xorg-server",
     "xorg-server-xephyr",

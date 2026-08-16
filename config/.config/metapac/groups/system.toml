@@ -111,6 +111,7 @@ arch = {
     "unzip",
     "usbutils",
     "vim",
+    "vulkan-intel",
     "wget",
     "wipe",
     "wireplumber",

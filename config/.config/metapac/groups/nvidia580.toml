@@ -10,7 +10,6 @@ arch = {
     "nvidia-prime",
     "ollama-cuda12-bin",
     "opencl-nvidia-580xx",
-    "xf86-video-intel",
   ]
 }
 
