@@ -1218,6 +1218,8 @@ Common values:
 (use-package files
   :straight (:type built-in)
   :custom
+  ;; show hidden files in the GTK file chooser
+  (x-gtk-show-hidden-files t)
   ;; reuse existing buffers, following file links
   (find-file-existing-other-name t)
   ;; end files with a newline
@@ -1388,16 +1390,6 @@ Common values:
                                        "\\.diary\\|\\diary\\|\\.bbdb"
                                        "\\)$"))
   :init
-  ;; desktop history
-  ;; (when-lock-file-acquired (expand-file-name "emacs-desktop-history-lock-file"
-  ;;                                            temporary-file-directory)
-  ;;   (desktop-save-mode 1)
-  ;;   (add-to-list 'desktop-globals-to-save 'file-name-history t)
-  ;;   (add-to-list 'desktop-modes-not-to-save 'Info-mode t)
-  ;;   (add-to-list 'desktop-modes-not-to-save 'info-lookup-mode t)
-  ;;   ;;(add-to-list 'desktop-modes-not-to-save 'dired-mode t)
-  ;;   ;;(add-to-list 'desktop-modes-not-to-save 'fundamental-mode t)
-  ;;   ))
   (desktop-save-mode 1)
   (add-to-list 'desktop-globals-to-save 'file-name-history t)
   (add-to-list 'desktop-modes-not-to-save 'Info-mode t)
