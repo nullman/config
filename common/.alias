@@ -374,7 +374,7 @@ alias mkinit="sudo mkinitcpio -P"
 alias remove-user-login-background="
     sudo sed -i '/^BackgroundFile=.*$/d' /var/lib/AccountsService/users/\${USER}"
 #        exiftool-remove-all-metadata  remove all metadata in given video
-alias exiftool-remove-all-metadata="exiftool -all="
+alias exiftool-remove-all-metadata="exiftool -all= -overwrite_original_in_place"
 #        ntfsfix-iodd            ntfsfix device with iodd label
 alias ntfsfix-iodd="sudo ntfsfix -d \$(sudo blkid --match-token LABEL=iodd --output device)"
 
@@ -1716,6 +1716,8 @@ alias grepi="grep -H -n -i"
 alias grepir="grep -H -n -i -r"
 #        egrep                   grep (extended-regexp, no binaries, auto-color)
 alias egrep="grep -E -I --color=auto"
+#        hl                      rg --passthru (highlight matching lines)
+alias hl="rg --passthru"
 
 #
 # java
@@ -1956,6 +1958,14 @@ alias pl-delete="pilot-xfer --port=/dev/ttyUSB0 --delete"
 alias lps="lpstat -t -d"
 #        lprn2                   lpr n-up 2
 alias lprn2="lpr -o number-up=2 -o page-border=single"
+
+#
+# pv
+#
+#        slowcat                 slow version of cat
+alias slowcat="pv --line-mode --rate-limit 5 --quiet"
+#        timer                   second timer
+alias timer="pv --timer"
 
 #
 # ratpoison

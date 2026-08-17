@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2026-08-15 23:41 (user)>
+  #+TIMESTAMP: <2026-08-16 21:24 (user)>
 
 * Overview
   :PROPERTIES:
@@ -31602,9 +31602,12 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         ;; supplemental rules for suggested commands based on file extensions
         ;; see `dired-guess-shell-alist-default' for default list
         (dired-guess-shell-alist-user
-         '(("\\.pdf\\'" "evince")
+         '(
+           ;;("\\.pdf\\'" "evince")
+           ("\\.pdf\\'" "papers")
            ;;("\\.htm?l\\'" "firefox")
-           ("\\.htm?l\\'" "brave")
+           ;;("\\.htm?l\\'" "brave")
+           ("\\.htm?l\\'" "xdg-open")
            ("\\.doc?x\\'" "libreoffice --writer")
            ("\\.odt\\'" "libreoffice --writer")
            ("\\.p[bgpn]m\\'" "gpicview")

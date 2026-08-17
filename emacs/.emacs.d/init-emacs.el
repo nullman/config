@@ -20196,9 +20196,12 @@ otherwise run `find-file-as-root'."
   ;; supplemental rules for suggested commands based on file extensions
   ;; see `dired-guess-shell-alist-default' for default list
   (dired-guess-shell-alist-user
-   '(("\\.pdf\\'" "evince")
+   '(
+     ;;("\\.pdf\\'" "evince")
+     ("\\.pdf\\'" "papers")
      ;;("\\.htm?l\\'" "firefox")
-     ("\\.htm?l\\'" "brave")
+     ;;("\\.htm?l\\'" "brave")
+     ("\\.htm?l\\'" "xdg-open")
      ("\\.doc?x\\'" "libreoffice --writer")
      ("\\.odt\\'" "libreoffice --writer")
      ("\\.p[bgpn]m\\'" "gpicview")

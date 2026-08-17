@@ -1,0 +1,100 @@
+#!/usr/bin/env bash
+#===============================================================================
+# exiftool-set-metadata
+#
+# Clear video file metadata and set the title to the filename minus the year
+# and extension.
+#
+# Expected year format: (YYYY)
+#
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
+#===============================================================================
+
+# exiftool -all= -overwrite_original_in_place -title
+
+set -euo pipefail
+
+recursive=0
+files=()
+
+_usage() {
+    cat <<EOF
+Usage: $(basename $0) [OPTIONS] [FILE...]
+
+Clear video file metadata and set the title to the filename minus the year
+and extension.
+
+Options:
+  FILE...          one or more files (or directories) to process
+  -h, --help       show this help
+  -r, --recursive  recurse into sub-directories
+EOF
+}
+
+_process() {
+    local file="$1"
+
+    echo "${file}"
+
+    if $(file "${file}" | grep -iq " media ") ; then
+        local title=$(echo "${file}" | sed 's/([[:digit:]]\{4\})// ; s/\.[^.]*$//')
+        exiftool -all= -overwrite_original_in_place -title="${title}" "${file}"
+    fi
+}
+
+_loop() {
+    local basedir="$1"
+
+    # traverse directories
+    if [ ${recursive} -eq 1 ] ; then
+        find . -mindepth 1 -maxdepth 1 -type d -printf '%P\n' | while read dir ; do
+            echo "${basedir}/${dir}"
+            (cd "${dir}" && _loop "${basedir}/${dir}")
+        done
+    fi
+
+    # handle files
+    find . -mindepth 1 -maxdepth 1 -type f -printf '%P\n' | while read file ; do
+        _process "${file}"
+    done
+}
+
+while [ $# -gt 0 ] ; do
+    opt="$1"
+    case "${opt}" in
+        -r|--recursive)
+            recursive=1
+            shift
+            ;;
+        -h|--help)
+            _usage $0
+            exit 0
+            ;;
+        *)
+            if [ -e "${opt}" ] ; then
+                files+="${opt}"
+                shift
+            else
+                _usage $0
+                exit 1
+            fi
+            ;;
+    esac
+done
+
+if [ ${#files[@]} -eq 0 ] ; then
+    _usage $0
+    exit 1
+fi
+
+for file in "${files[@]}" ; do
+    if [ -d "${file}" ] ; then
+        _loop "${file}"
+    else
+        _process "${file}"
+    fi
+done
+
+#===============================================================================
+# End of File
+#===============================================================================
