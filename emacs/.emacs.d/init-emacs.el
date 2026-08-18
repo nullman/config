@@ -1637,7 +1637,7 @@ Otherwise, `custom-tab-width' is used."
   ;; (when (fboundp 'web-query-word-at-point)
   ;;   (bind-keys ("<f7>" . web-query-word-at-point)))
   (when (fboundp 'web-query)
-    (bind-keys ("<S-f7>" . web-query)))
+    (bind-keys ("<S-<f7>" . web-query)))
   ;;(when (fboundp 'neotree)
   ;;  (bind-keys ("<f8>" . neotree)))
   (when (fboundp 'cycle-buffer-backward)
@@ -17372,24 +17372,31 @@ USING is the remaining peg."
              gptel-request
              gptel-send)
   :bind* ("C-x C-<return>" . gptel-send)
+  :hook (gptel-mode . visual-line-mode)
   :custom
-  (gptel-model "codellama:7b")
+  (gptel-model "qwen3-coder:30b")
   (gptel-log-level "debug")
   :config
-  (setq gptel-ollama-backend (gptel-make-ollama "Ollama"
-                               :host "localhost:11434"
-                               :stream t
-                               :models '("codellama:7b"
-                                         "llama2-uncensored:latest"
-                                         "llama3.2:3b"
-                                         "llama3.2:1b"
-                                         "llama3-chatqa")))
-  (setq gptel-gemini-backend (gptel-make-gemini "Gemini"
-                               :stream t
-                               :key (with-temp-buffer
-                                      (insert-file-contents "~/.google-gemini-api-key")
-                                      (buffer-string))))
-  (setq gptel-backend gptel-gemini-backend))
+  (setq gptel-ollama-backend
+        (gptel-make-ollama "Ollama"
+          :host "localhost:11434"
+          :stream t
+          :models '("qwen2.5-coder:3b"
+                    "qwen2.5-coder:7b"
+                    "qwen3-coder:30b"
+                    "artifish/llama3.2-uncensored:latest"
+                    "qwen3:8b"
+                    "qwen3.6:27b"
+                    "qwen3-embedding:8b")))
+  (setq gptel-gemini-backend
+        (gptel-make-gemini "Gemini"
+          :stream t
+          :models '("gemini-pro-latest")
+          :key (with-temp-buffer
+                 (insert-file-contents "~/.google-gemini-api-key")
+                 (buffer-string))))
+  (setq gptel-backend gptel-ollama-backend))
+;;(setq gptel-backend gptel-gemini-backend))
 ;; gptel:1 ends here
 
 ;; [[file:init-emacs.org::#packages-guix][guix:1]]
