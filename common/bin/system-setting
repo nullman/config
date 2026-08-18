@@ -63,13 +63,13 @@ case $1 in
         case $2 in
             up)
                 pamixer --unmute
-                pamixer --increase 2 --allow-boost
+                pamixer --increase 5 --allow-boost
                 notify-send-volume $2
                 ;;
 
             down)
                 pamixer --unmute
-                pamixer --decrease 2 --allow-boost
+                pamixer --decrease 5 --allow-boost
                 notify-send-volume $2
                 ;;
 

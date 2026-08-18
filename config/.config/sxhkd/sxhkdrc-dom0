@@ -104,10 +104,10 @@ XF86MonBrightnessDown
     notify-send --expire-time=3000 --replace-id=1 "$(${HOME}/bin/brightness eDP-1 -0.2)"
 
 XF86AudioRaiseVolume
-    pactl -- set-sink-volume 0 +2% && notify-send --expire-time=3000 --replace-id=1 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
+    pactl -- set-sink-volume 0 +5% && notify-send --expire-time=3000 --replace-id=1 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
 
 XF86AudioLowerVolume
-    pactl -- set-sink-volume 0 -2% && notify-send --expire-time=3000 --replace-id=1 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
+    pactl -- set-sink-volume 0 -5% && notify-send --expire-time=3000 --replace-id=1 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
 
 XF86AudioMute
     pactl -- set-sink-mute 0 toggle && notify-send --expire-time=3000 --replace-id=1 "$(pactl -- get-sink-mute 0  | sed 's/Mute: no/Unmuted/ ; s/Mute: yes/Muted/')"
@@ -151,9 +151,9 @@ super + Pause
 
 # volume control
 super + Home
-    pactl -- set-sink-volume 0 -2% && notify-send --expire-time=3000 --replace-id=1 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
+    pactl -- set-sink-volume 0 -5% && notify-send --expire-time=3000 --replace-id=1 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
 super + Prior
-    pactl -- set-sink-volume 0 +2% && notify-send --expire-time=3000 --replace-id=1 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
+    pactl -- set-sink-volume 0 +5% && notify-send --expire-time=3000 --replace-id=1 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
 super + Insert
     pactl -- set-sink-mute 0 toggle && notify-send --expire-time=3000 --replace-id=1 "$(pactl -- get-sink-mute 0  | sed 's/Mute: no/Unmuted/ ; s/Mute: yes/Muted/')"
 
@@ -177,9 +177,9 @@ super + alt + ctrl + Next
 
 # volume control
 super + alt + ctrl + Home
-    pactl -- set-sink-volume 0 +2% && notify-send --expire-time=3000 --replace-id=1 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
+    pactl -- set-sink-volume 0 +5% && notify-send --expire-time=3000 --replace-id=1 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
 super + alt + ctrl + End
-    pactl -- set-sink-volume 0 -2% && notify-send --expire-time=3000 --replace-id=1 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
+    pactl -- set-sink-volume 0 -5% && notify-send --expire-time=3000 --replace-id=1 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
 super + alt + ctrl + Insert
     pactl -- set-sink-mute 0 toggle && notify-send --expire-time=3000 --replace-id=1 "$(pactl -- get-sink-mute 0  | sed 's/Mute: no/Unmuted/ ; s/Mute: yes/Muted/')"
 #super + alt + ctrl + Delete
