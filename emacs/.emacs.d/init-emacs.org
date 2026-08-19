@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2026-08-18 02:21 (user)>
+  #+TIMESTAMP: <2026-08-18 15:48 (user)>
 
 * Overview
   :PROPERTIES:
@@ -31906,6 +31906,12 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
           (local-set-key (kbd "C-c C-s") 'geiser-insert-sigma))
         (add-hook 'geiser-mode-hook #'custom-geiser-mode-hook)
         (add-hook 'geiser-repl-mode-hook #'custom-geiser-mode-hook))
+
+        ;; (defun geiser-repl-maybe-send--end-of-buffer ()
+        ;;   "Move cursor to end of REPL buffer after eval."
+        ;;   (end-of-buffer))
+        ;; ;; advise `geiser-repl-maybe-send'
+        ;; (advice-add 'geiser-repl-maybe-send :after #'geiser-repl-maybe-send--end-of-buffer))
 
       (use-package geiser-racket
         :straight t

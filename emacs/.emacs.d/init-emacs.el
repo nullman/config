@@ -20453,6 +20453,12 @@ otherwise run `find-file-as-root'."
   (add-hook 'geiser-mode-hook #'custom-geiser-mode-hook)
   (add-hook 'geiser-repl-mode-hook #'custom-geiser-mode-hook))
 
+  ;; (defun geiser-repl-maybe-send--end-of-buffer ()
+  ;;   "Move cursor to end of REPL buffer after eval."
+  ;;   (end-of-buffer))
+  ;; ;; advise `geiser-repl-maybe-send'
+  ;; (advice-add 'geiser-repl-maybe-send :after #'geiser-repl-maybe-send--end-of-buffer))
+
 (use-package geiser-racket
   :straight t
   :after (geiser)
