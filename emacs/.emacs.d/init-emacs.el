@@ -17410,6 +17410,37 @@ USING is the remaining peg."
   :straight t)
 ;; guix:1 ends here
 
+;; [[file:init-emacs.org::#modules-helpful][helpful:1]]
+;;------------------------------------------------------------------------------
+;;; Packages: helpful
+;;------------------------------------------------------------------------------
+
+(init-message 2 "Modules: helpful")
+
+(use-package helpful
+  :straight t
+  :demand t
+  :bind* (([remap describe-function] . helpful-callable)
+          ([remap describe-variable] . helpful-variable)
+          ([remap describe-key] . helpful-key)
+          ("C-h C-d" . helpful-at-point) ; default: `view-emacs-debugging'
+          ("C-h F" . helpful-function) ; default: `Info-goto-emacs-command-node'
+          ("C-h C" . helpful-command)) ; default: `describe-coding-system'
+  :config
+  (defun helpful-callable--other-buffer (symbol)
+    "Switch back to `other-buffer' after helpful window is displayed and updated."
+    ;; make sure helpful buffer is active
+    (when helpful--sym
+      (other-window 1)))
+  ;; advise helpful functions to switch back to previous buffer
+  (advice-add 'helpful-callable :after #'helpful-callable--other-buffer)
+  (advice-add 'helpful-variable :after #'helpful-callable--other-buffer)
+  (advice-add 'helpful-key :after #'helpful-callable--other-buffer)
+  (advice-add 'helpful-at-point :after #'helpful-callable--other-buffer)
+  (advice-add 'helpful-function :after #'helpful-callable--other-buffer)
+  (advice-add 'helpful-command :after #'helpful-callable--other-buffer))
+;; helpful:1 ends here
+
 ;; [[file:init-emacs.org::#packages-hide-mode-line][hide-mode-line:1]]
 ;;------------------------------------------------------------------------------
 ;;; Packages: hide-mode-line

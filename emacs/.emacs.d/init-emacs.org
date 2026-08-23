@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2026-08-18 15:48 (user)>
+  #+TIMESTAMP: <2026-08-22 21:24 (user)>
 
 * Overview
   :PROPERTIES:
@@ -23234,6 +23234,8 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         ;;   :custom
         ;;   ;; format linux application names with name and comment only
         ;;   (counsel-linux-app-format-function #'counsel-linux-app-format-function-name-only)
+        ;;   (counsel-describe-function-function #'helpful-callable)
+        ;;   (counsel-describe-variable-function #'helpful-variable)
         ;;   :config
         ;;   ;; do not start searches with ^
         ;;   (setq ivy-initial-inputs-alist nil))
@@ -25625,15 +25627,15 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
        (:name "Kitchin Group" :html "https://kitchingroup.cheme.cmu.edu/blog/" :rss "https://kitchingroup.cheme.cmu.edu/blog/feed/index.xml" :tag "emacs")
        (:name "Karthinks" :html "https://karthinks.com/" :rss "https://karthinks.com/index.xml" :tag "emacs")
        ;; Linux
-       (:name "It's FOSS" :html "https://itsfoss.com/all-blog-posts/" :rss "https://itsfoss.com/feed/" :tag "linux")
        (:name "Linux Journal" :html "https://www.linuxjournal.com/news/" :rss "https://www.linuxjournal.com/node/feed" :tag "linux")
+       (:name "It's FOSS" :html "https://itsfoss.com/all-blog-posts/" :rss "https://itsfoss.com/feed/" :tag "linux")
+       (:name "Bleeping Computer: Liux & Unix" :html "https://www.bleepingcomputer.com/forums/f/11/linux-unix/" :rss "https://www.bleepingcomputer.com/forum11.xml" :tag "linux")
        (:name "Reddit Linux Channel" :html "https://www.reddit.com/r/linux/" :rss "https://www.reddit.com/r/linux.rss" :tag "linux")
        (:name "Arch News" :html "https://www.archlinux.org/news/" :rss "https://www.archlinux.org/feeds/news/" :tag "linux")
-       (:name "Planet Ubuntu" :html "https://planet.ubuntu.com/" :rss "https://planet.ubuntu.com/rss20.xml" :tag "linux")
-       (:name "Planet Gnome" :html "https://planet.gnome.org/" :rss "https://feeds.feedburner.com/codinghorror?format=xml" :tag "linux")
+       ;;(:name "Planet Ubuntu" :html "https://planet.ubuntu.com/" :rss "https://planet.ubuntu.com/rss20.xml" :tag "linux")
+       ;;(:name "Planet Gnome" :html "https://planet.gnome.org/" :rss "https://feeds.feedburner.com/codinghorror?format=xml" :tag "linux")
        (:name "Linux Foundation" :html "https://www.linuxfoundation.org/" :rss "https://www.linuxfoundation.org/feed/" :tag "linux")
        (:name "Linux Magazine" :html "https://www.linux-magazine.com/" :rss "https://www.linux-magazine.com/rss/feed/lmi_news" :tag "linux")
-       ;;(:name "Softpedia Linux" :html "https://linux.softpedia.com/" :rss "https://linux.softpedia.com/backend.xml" :tag "linux")
        (:name "Open Source Voices" :html "https://www.opensourcevoices.org/" :rss "https://feeds.fireside.fm/opensourcevoices/rss" :tag "linux")
        (:name "Luke Smith" :html "https://lukesmith.xyz/" :rss "https://lukesmith.xyz/rss.xml" :tag "linux")
        (:name "Jeff Geerling" :html "https://www.jeffgeerling.com/" :rss "https://www.jeffgeerling.com/blog.xml" :tag "linux")
@@ -25643,11 +25645,11 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
        (:name "Hacker News" :html "https://news.ycombinator.com/" :rss "https://news.ycombinator.com/rss" :tag "dev")
        (:name "Ars Technica" :html "https://www.arstechnica.com/" :rss "https://feeds.arstechnica.com/arstechnica/index/" :tag "dev")
        (:name "TWIT" :html "https://www.twit.tv/" :rss "https://feeds.twit.tv/twit_video_hd.xml" :tag "dev")
-       ;;(:name "How-To Geek" :html "https://www.howtogeek.com/" :rss "https://www.howtogeek.com/feed/" :tag "dev")
+       (:name "Bleeping Computer" :html "https://www.bleepingcomputer.com/" :rss "https://www.bleepingcomputer.com/feed/" :tag "dev")
        (:name "System Crafters" :html "https://systemcrafters.net/" :rss "https://systemcrafters.net/rss/news.xml" :tag "dev")
        (:name "Coding Horror" :html "https://blog.codinghorror.com/" :rss "http://feeds.feedburner.com/codinghorror?format=xml" :tag "dev")
        (:name "Haiku" :html "https://www.haiku-os.org/blog/" :rss "https://www.haiku-os.org/blog/index.xml" :tag "dev")
-       (:name "nixCraft" :html "https://www.cyberciti.biz/" :rss "https://www.cyberciti.biz/atom/atom.xml" :tag "dev")
+       ;;(:name "nixCraft" :html "https://www.cyberciti.biz/" :rss "https://www.cyberciti.biz/atom/atom.xml" :tag "dev")
        (:name "TecMint" :html "https://www.tecmint.com/" :rss "https://www.tecmint.com/feed/" :tag "dev")
        (:name "N O D E" :html "https://n-o-d-e.net/" :rss "https://n-o-d-e.net/rss/rss.xml" :tag "dev")
        (:name "Andreas Kling" :html "https://awesomekling.substack.com/" :rss "https://awesomekling.substack.com/feed" :tag "dev")
@@ -25669,6 +25671,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
        (:name "Atari Code" :html "https://ataricode.com/" :rss "https://ataricode.com/index.xml" :tag "retro")
        (:name "Joshua Stein (Classic Mac Coding)" :html "https://jcs.org/" :rss "https://jcs.org/rss" :tag "retro")
        (:name "Nybbles and Bytes" :html "https://nybblesandbytes.net/" :rss "https://nybblesandbytes.net/blog/index.rss" :tag "retro")
+       (:name "Bleeping Computer: DOS, PDA, Other" :html "https://www.bleepingcomputer.com/forums/f/10/dospdaother/" :rss "https://www.bleepingcomputer.com/forum10.xml" :tag "retro")
        ;; Other
        ;;(:name "New York Times OPEN Blogs" :html "https://open.blogs.nytimes.com/" :rss "https://open.blogs.nytimes.com/feed/" :tag "blog")
        (:name "XKCD Comic" :html "https://xkcd.com/" :rss "https://xkcd.com/atom.xml" :tag "comic")
@@ -26531,42 +26534,42 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         :straight t)
     #+END_SRC
 
-*** +helpful+
+*** helpful
     :PROPERTIES:
     :CUSTOM_ID: modules-helpful
     :END:
 
     A better help buffer.
 
-    #+BEGIN_SRC emacs-lisp :tangle no
-      ;; ;;------------------------------------------------------------------------------
-      ;; ;;; Packages: helpful
-      ;; ;;------------------------------------------------------------------------------
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Packages: helpful
+      ;;------------------------------------------------------------------------------
 
-      ;; (init-message 2 "Modules: helpful")
+      (init-message 2 "Modules: helpful")
 
-      ;; (use-package helpful
-      ;;   :straight t
-      ;;   :demand t
-      ;;   :bind* (([remap describe-function] . helpful-callable)
-      ;;           ([remap describe-variable] . helpful-variable)
-      ;;           ([remap describe-key] . helpful-key)
-      ;;           ("C-h C-d" . helpful-at-point) ; default: `view-emacs-debugging'
-      ;;           ("C-h F" . helpful-function) ; default: `Info-goto-emacs-command-node'
-      ;;           ("C-h C" . helpful-command)) ; default: `describe-coding-system'
-      ;;   :config
-      ;;   (defun helpful-callable--other-buffer (symbol)
-      ;;     "Switch back to `other-buffer' after helpful window is displayed and updated."
-      ;;     ;; make sure helpful buffer is active
-      ;;     (when helpful--sym
-      ;;       (other-window 1)))
-      ;;   ;; advise helpful functions to switch back to previous buffer
-      ;;   (advice-add 'helpful-callable :after #'helpful-callable--other-buffer)
-      ;;   (advice-add 'helpful-variable :after #'helpful-callable--other-buffer)
-      ;;   (advice-add 'helpful-key :after #'helpful-callable--other-buffer)
-      ;;   (advice-add 'helpful-at-point :after #'helpful-callable--other-buffer)
-      ;;   (advice-add 'helpful-function :after #'helpful-callable--other-buffer)
-      ;;   (advice-add 'helpful-command :after #'helpful-callable--other-buffer))
+      (use-package helpful
+        :straight t
+        :demand t
+        :bind* (([remap describe-function] . helpful-callable)
+                ([remap describe-variable] . helpful-variable)
+                ([remap describe-key] . helpful-key)
+                ("C-h C-d" . helpful-at-point) ; default: `view-emacs-debugging'
+                ("C-h F" . helpful-function) ; default: `Info-goto-emacs-command-node'
+                ("C-h C" . helpful-command)) ; default: `describe-coding-system'
+        :config
+        (defun helpful-callable--other-buffer (symbol)
+          "Switch back to `other-buffer' after helpful window is displayed and updated."
+          ;; make sure helpful buffer is active
+          (when helpful--sym
+            (other-window 1)))
+        ;; advise helpful functions to switch back to previous buffer
+        (advice-add 'helpful-callable :after #'helpful-callable--other-buffer)
+        (advice-add 'helpful-variable :after #'helpful-callable--other-buffer)
+        (advice-add 'helpful-key :after #'helpful-callable--other-buffer)
+        (advice-add 'helpful-at-point :after #'helpful-callable--other-buffer)
+        (advice-add 'helpful-function :after #'helpful-callable--other-buffer)
+        (advice-add 'helpful-command :after #'helpful-callable--other-buffer))
     #+END_SRC
 
 *** hide-mode-line
