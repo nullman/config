@@ -248,7 +248,7 @@ case "${menu}" in
             sel=$(
                 cd "${HOME}/.dosbox" &&
                     find -mindepth 1 -maxdepth 1 -name 'dosbox-*' -not -regex '\./dosbox-0.*' |
-                        sed 's%^\./dosbox-\(.*\)\.conf%\1%' | $(${prompt} '  DOSBox')
+                        sed 's%^\./dosbox-\(.*\)\.conf%\1%' | ${prompt} '  DOSBox'
                )
         else
             sel=$2
