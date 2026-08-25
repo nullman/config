@@ -13,6 +13,8 @@ ytdlp="$(command -v yt-dlp)"
 #ytdlp="${HOME}/src/yt-dlp/yt-dlp"
 
 channels=(
+    "Commercials          | arwuns                                       | https://www.youtube.com/@arwuns/videos"
+    "Commercials          | Nostalgic X'er                               | https://www.youtube.com/@NostalgicXer-dd3kx/videos"
 #?    "Computer/Demo        | Commodore 64 Demos                           | https://www.youtube.com/playlist?list=PLnmLOQIDmUvVn43FHdakSTY_W_EuoVwnT"
 #?    "Computer/Demo        | Commodore Amiga Demos                        | https://www.youtube.com/playlist?list=PLnmLOQIDmUvUgbvY-Jq0txuYWYgWVcOOS"
     "Computer/Development | Alpha Brains Courses                         | https://www.youtube.com/@alphabrainscourses/videos"
