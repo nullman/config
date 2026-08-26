@@ -6,6 +6,8 @@ arch = {
     "ttf-dejavu",
     "ttf-inconsolata",
     "ttf-linux-libertine",
+    "ttf-meslo-nerd",
+    "ttf-nerd-fonts-symbols",
   ]
 }
 
@@ -25,6 +27,8 @@ dnf = {
     "google-noto-fonts-all",
     "levien-inconsolata-fonts",
     "linux-libertine-fonts-all",
+    "ttf-meslo-nerd",
+    "ttf-nerd-fonts-symbols",
   ]
 }
 
