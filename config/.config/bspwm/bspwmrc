@@ -233,30 +233,42 @@ _br 'windows-11' state=fullscreen
 # floating applications
 _br '.blueman-manager-wrapped' state=floating center=true
 _br 'About Pale Moon' state=floating center=true
-_br 'Audacious' state=floating sticky=true center=false
+_br 'alsamixer' state=floating center=true
+_br 'arandr' state=floating center=true
+_br 'Audacious' state=floating sticky=true
+_br 'balena-etcher-electron' state=floating center=true
 _br 'BasiliskII' state=floating center=true
 _br 'Blueman-manager' state=floating center=true
 _br 'Calamares' state=floating center=true
 _br 'Clipgrab' state=floating center=true
+_br 'feh' state=floating center=true
 _br 'File Transfer*' state=floating center=true
 _br 'Font-manager' state=floating center=true
 _br 'Font-viewer' state=floating center=true
 _br 'GParted' state=floating center=true
 _br 'Galculator' state=floating center=true
+_br 'Galendae' state=floating
 _br 'Gnome-disks' state=floating center=true
+_br 'Gsimplecal' state=floating
 _br 'Gxmessage' state=floating center=true
+_br 'iwgtk' state=floating center=true
 _br 'Lightdm-gtk-greeter-settings' state=floating center=true
 _br 'Lxappearance' state=floating center=true
 _br 'Manjaro Settings Manager' state=floating center=true
 _br 'Manjaro-hello' state=floating center=true
+_br 'mpv' state=floating center=true sticky=on
 _br 'MuseScore: Play Panel' state=floating center=true sticky=on
 _br 'Nitrogen' state=floating center=true
 _br 'Nm-connection-editor' state=floating center=true
 _br 'Pamac-manager' state=floating center=true
+_br 'oblogout' state=floating center=true
+_br 'octopi' state=floating center=true
 _br 'Orage' state=floating center=true
 _br 'Paprefs' state=floating center=true
 _br 'Pavucontrol:pavucontrol' state=floating center=true
 _br 'Qmmp' state=floating sticky=true
+_br 'qt5ct' state=floating sticky=true
+_br 'qt6ct' state=floating sticky=true
 _br 'Qtconfig-qt4' state=floating sticky=true
 _br 'Qube Manager' state=floating center=true
 _br 'Qube Settings' state=floating center=true
@@ -270,6 +282,7 @@ _br 'System-config-printer.py' state=floating center=true
 _br 'Thus' state=floating center=true
 _br 'Timeset-gui' state=floating center=true
 _br 'Tint2conf' state=floating center=true
+_br 'virtualbox' state=floating center=true
 _br 'Wrapper-2.0' state=floating center=true
 _br 'X48' state=floating center=true
 _br 'Xfburn' state=floating center=true
@@ -279,19 +292,6 @@ _br 'Xfsettingsd' state=floating center=true
 _br 'Xscreensaver-settings' state=floating center=true
 _br 'Yad' state=floating center=true
 _br 'Zenity' state=floating center=true
-_br 'alsamixer' state=floating center=true
-_br 'arandr' state=floating center=true
-_br 'balena-etcher-electron' state=floating center=true
-_br 'feh' state=floating center=true
-_br 'gsimplecal' state=floating center=true
-_br 'iwgtk' state=floating center=true
-_br 'mpv' state=floating center=true sticky=on
-_br 'oblogout' state=floating center=true
-_br 'octopi' state=floating center=true
-_br 'qt5ct' state=floating sticky=true
-_br 'qt6ct' state=floating sticky=true
-_br 'virtualbox' state=floating center=true
-_br 'zenity' state=floating center=true
 
 #-------------------------------------------------------------------------------
 # Launch Applications
