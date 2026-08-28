@@ -132,6 +132,7 @@ _br 'Thunar' desktop=^3 follow=on
 # 4: Browser
 bspc desktop ^4 --layout monocle
 _br 'Brave-browser' desktop=^4 follow=on
+_br 'Brave-origin' desktop=^4 follow=on
 _br 'gopherus-sdl' desktop=^4 follow=on
 _br 'vivaldi-stable' desktop=^4 follow=on
 
@@ -284,6 +285,7 @@ _br 'Timeset-gui' state=floating center=true
 _br 'Tint2conf' state=floating center=true
 _br 'virtualbox' state=floating center=true
 _br 'Wrapper-2.0' state=floating center=true
+_br 'writerdeck' state=floating center=true
 _br 'X48' state=floating center=true
 _br 'Xfburn' state=floating center=true
 _br 'Xfce4-panel' state=floating center=true

@@ -8,6 +8,7 @@ arch = {
     "ttf-linux-libertine",
     "ttf-meslo-nerd",
     "ttf-nerd-fonts-symbols",
+    "ttf-nerd-fonts-symbols-common",
   ]
 }
 
@@ -29,6 +30,7 @@ dnf = {
     "linux-libertine-fonts-all",
     "ttf-meslo-nerd",
     "ttf-nerd-fonts-symbols",
+    "ttf-nerd-fonts-symbols-common",
   ]
 }
 
