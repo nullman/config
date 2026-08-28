@@ -1061,11 +1061,14 @@ Common values:
 
 ;; [[file:init-emacs.org::#environment-general][General:49]]
 ;; set default browser
-(setq browse-url-browser-function #'browse-url-chrome
-      browse-url-chrome-program (or (executable-find "brave")
-                                    (executable-find "brave-browser")))
+(setq browse-url-browser-function #'browse-url-default-browser)
 ;; set secondary browser
-(setq browse-url-secondary-browser-function #'browse-url-default-browser)
+(setq browse-url-secondary-browser-function #'browse-url-chrome
+      browse-url-chrome-program (or (executable-find "brave")
+                                    (executable-find "brave-browser")
+                                    (executable-find "brave-origin")
+                                    (executable-find "chrome")
+                                    (executable-find "chromium")))
 ;; General:49 ends here
 
 ;; [[file:init-emacs.org::#environment-general][General:50]]
@@ -19589,7 +19592,7 @@ Do not perform the search on very large files (to avoid a delay when loaded)."
   :init
   (setq time-stamp-line-limit 50
         time-stamp-start "[Tt][Ii][Mm][Ee][-]?[Ss][Tt][Aa][Mm][Pp]:[ \t]+\\\\?[\"<]+"
-        time-stamp-format "%Y-%02m-%02d %02H:%02M (%u)")
+        time-stamp-format "%Y-%02m-%02d %02H:%02M (%l)")
   (add-hook 'before-save-hook #'time-stamp))
 ;; time-stamp:1 ends here
 

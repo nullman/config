@@ -143,9 +143,11 @@ startup_notification = false
 dmenu = $(command -v dmenu) -p dunst:
 
 # Browser for opening urls in context menu.
+browser = xdg-open
 #browser = palemoon
 #browser = firefox
-browser = brave
+#browser = brave
+#browser = brave-origin
 
 # Align icons left/right/off
 icon_position = left

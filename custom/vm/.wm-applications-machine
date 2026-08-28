@@ -47,7 +47,8 @@ _once alacritty -e ${HOME}/bin/run-screen &
 _delay 1 _once emacs &
 #_delay 1 _once thunderbird &
 #_delay 1 _once betterbird &
-_delay 1 _once brave &
+#_delay 1 _once brave &
+_delay 1 _once brave-origin &
 #_delay 1 _once firefox &
 #_delay 1 _once vivaldi &
 #_delay 1 _once chromium &

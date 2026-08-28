@@ -36,21 +36,6 @@ _once xautolock -time 30 -locker 'xscreensaver-command -lock' & # lock screen af
 
 # run foreground applications
 _once alacritty -e ${HOME}/bin/run-screen &
-#_delay 1 _once emacs &
-#_delay 1 _once slack &
-#_delay 1 _once thunderbird &
-_delay 1 _once brave &
-#_delay 1 _once firefox &
-#_delay 1 _once chromium &
-#_delay 1 _once thunar &
-#_delay 1 _once pcmanfm &
-#_delay 1 _once spacefm &
-#_delay 10 _once idea &
-#_delay 1 _once discord &
-#_delay 10 _once tootle &
-#_delay 10 _once com.github.bleakgrey.tootle &
-#_delay 10 _once dev.geopjr.Tuba &
-#_delay 1 _once syncterm &
 
 # run application launcher
 #_run ${HOME}/bin/application-launcher &
