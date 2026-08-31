@@ -30,20 +30,15 @@ dnf = {
   ], 
   packages = [
     "pipewire-qubes",
+    "qubes-core-agent-networking",
+    "qubes-core-agent-passwordless-root",
     "qubes-db-vm",
     "qubes-gpg-split",
     "qubes-img-converter",
     "qubes-pdf-converter",
     "qubes-usb-proxy",
-    "qubes-vm-core",
     "qubes-vm-dependencies",
-    "qubes-vm-gui",
-    "qubes-vm-kernel-support",
-    "qubes-vm-networking",
-    "qubes-vm-passwordless-root",
     "qubes-vm-recommended",
-    "qubes-vm-repo",
-    "qubes-vm-utils",
   ]
 }
 

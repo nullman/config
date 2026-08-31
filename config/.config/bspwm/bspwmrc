@@ -274,9 +274,12 @@ _br 'qt6ct' state=floating sticky=true
 _br 'Qtconfig-qt4' state=floating sticky=true
 _br 'Qube Manager' state=floating center=true
 _br 'Qube Settings' state=floating center=true
+_br 'Qubes Backup VMs' state=floating center=true
 _br 'Qubes-app-menu' state=floating rectangle=640x480+0+20
 _br 'Qubes-global-config' state=floating center=true
+#_br 'qubes-qube-manager' state=floating center=true
 _br 'Qubes-update-gui' state=floating center=true
+_br 'qvm-template-gui' state=floating center=true
 _br 'Rofi' state=floating center=true
 _br 'Simple-scan' state=floating center=true
 _br 'Skype' state=floating center=true

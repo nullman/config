@@ -92,7 +92,6 @@ dnf = {
     "thunar-vcs-plugin",
     "thunar-volman",
     "tigervnc",
-    "tinysparql",
     "tk",
     "tumbler",
     "unclutter-xfixes",

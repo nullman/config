@@ -29,11 +29,12 @@ dnf = {
   ], 
   packages = [
     "scrot",
+    "setxkbmap",
     "xclip",
     "xdotool",
-    "xorg-server",
-    "xorg-server-xephyr",
-    "xorg-setxkbmap",
+    "xev",
+    "xorg-x11-server",
+    "xorg-x11-server-Xephyr",
     "xrandr",
     "xsel",
   ]

@@ -219,7 +219,6 @@ dnf = {
     "openssh-clients",
     "openssh-server",
     "openssl",
-    "orpie",
     "parted",
     "pipewire-alsa",
     "pipewire-config-raop",
@@ -257,7 +256,7 @@ dnf = {
     "tree",
     "ufiformat",
     "unipicker",
-    "unixodbc",
+    "unixODBC",
     "unzip",
     "usbutils",
     "vim-enhanced",
@@ -278,7 +277,6 @@ dnf = {
     "helvum",
     "id3lib",
     "pciutils",
-    "python-wxpython",
     "wireplumber",
   ]
 }

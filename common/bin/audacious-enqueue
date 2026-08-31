@@ -14,7 +14,7 @@ _command() {
 
 if _command audacious ; then
     audacious --enqueue "$@"
-elif _command audacious2 ] ; then
+elif _command audacious2 ; then
     audacious2 --enqueue "$@"
 fi
 

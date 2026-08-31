@@ -11,7 +11,7 @@
 
 if [ $# -lt 2 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
     cat <<EOF
-Usage: $(basename $0) DISPLAY +VAL | -VAL
+Usage: $(basename "$0") DISPLAY +VAL | -VAL
 Increment or decrement brightness by +VAL or -VAL.
 DISPLAY can be determined with: xrandr -q | grep 'connected primary' | sed 's/ .*$//'
 VAL should be 0.05 to 0.2 or so.
@@ -23,7 +23,7 @@ display=$1
 val=$2
 brightness="$(xrandr --verbose --current | grep "^${display} " -A 5 | tail -n 1 | sed 's/^.*Brightness: //')"
 value=$(echo "${brightness} ${val}" | bc)
-xrandr --output ${display} --brightness ${value}
+xrandr --output "${display}" --brightness "${value}"
 
 echo "Brightness: ${value}"
 

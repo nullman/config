@@ -28,9 +28,6 @@ dnf = {
     "google-noto-fonts-all",
     "levien-inconsolata-fonts",
     "linux-libertine-fonts-all",
-    "ttf-meslo-nerd",
-    "ttf-nerd-fonts-symbols",
-    "ttf-nerd-fonts-symbols-common",
   ]
 }
 

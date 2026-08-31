@@ -13,15 +13,15 @@ orig_ifs="$IFS"
 IFS=$'\n'
 flatpak="flatpak run "
 
-apps=$(cat ${HOME}/.applications | sed -n '/^[^ #]/p')
+apps=$(cat "${HOME}/.applications" | sed -n '/^[^ #]/p')
 
 # prompt for keyring authentication
-[ "$(hostname)" == "personal" ] && keyring get SecretService $(id -un) 2>/dev/null &
-[ "$(hostname)" == "work" ] && keyring get SecretService $(id -un) 2>/dev/null &
+[ "$(hostname)" == "personal" ] && keyring get SecretService "$(id -un)" 2>/dev/null &
+[ "$(hostname)" == "work" ] && keyring get SecretService "$(id -un)" 2>/dev/null &
 
 cmd="GDK_BACKEND=x11 yad --width=512 --height=512 --list --checklist --column 'Run' --column 'Application' 2>/dev/null"
 for app in ${apps} ; do
-    if [ ! -f ${HOME}/.dev ] || [ "${app}" == "alacritty" ] || [ "${app}" == "emacs" ] ; then
+    if [ ! -f "${HOME}/.dev" ] || [ "${app}" == "alacritty" ] || [ "${app}" == "emacs" ] ; then
         cmd="${cmd} TRUE '${app}'"
     else
         cmd="${cmd} FALSE '${app}'"
@@ -55,13 +55,13 @@ for line in ${launch} ; do
         #echo "${app}"
         if [ "${app::${#flatpak}}" == "${flatpak}" ] && \
                ! pgrep -u "${USER}" -f "${app:${#flatpak}}" >/dev/null ; then
-            eval ${app} >/dev/null 2>&1 & disown
+            eval "${app}" >/dev/null 2>&1 & disown
         elif ! pgrep -u "${USER}" -f "${app}" >/dev/null ; then
             if [ "${app}" == "alacritty" ] ; then
-                alacritty -e ${HOME}/bin/run-screen >/dev/null 2>&1 & disown
+                alacritty -e "${HOME}/bin/run-screen" >/dev/null 2>&1 & disown
                 sleep 1
             else
-                eval ${app} >/dev/null 2>&1 & disown
+                eval "${app}" >/dev/null 2>&1 & disown
             fi
         fi
     fi
