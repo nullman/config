@@ -51,7 +51,7 @@ while [ -n "$1" ]; do
         -h|--help)
             # usage
             cat <<EOF
-Usage: $(basename $0) [OPTION] [FILE]
+Usage: $(basename "$0") [OPTION] [FILE]
 Present user with a menu of commands to run.
   OPTION is one of:
     -c, --create   create an initial menu file
@@ -346,7 +346,7 @@ while [ "${key}" != "q" ]; do
            ;;
         D|u|U)
             # left arrow or U
-            exec $0 "${menufile}"
+            exec "$0" "${menufile}"
            ;;
         ""|C)
             # return or right arrow
@@ -354,15 +354,15 @@ while [ "${key}" != "q" ]; do
             case "${command[${row}]:0:1}" in
                 :)
                     # if command starts with a colon then we switch to a new section
-                    exec $0 --section "${command[$row]:1}" "${menufile}"
+                    exec "$0" --section "${command[$row]:1}" "${menufile}"
                    ;;
                 !)
                     # if command starts with an explaination point then we run
                     # a new instance of menu
                     if [ "${command[${row}]:1:2}" == "/" ]; then
-                        exec $0 "${command[$row]:1}"
+                        exec "$0" "${command[$row]:1}"
                     else
-                        exec $0 "${HOME}/${command[$row]:1}"
+                        exec "$0" "${HOME}/${command[$row]:1}"
                     fi
                    ;;
                 *)

@@ -11,7 +11,7 @@
 
 if [ $# -lt 1 ] || [ $# -gt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
     cat <<EOF
-Usage: $(basename $0) COLOR
+Usage: $(basename "$0") COLOR
 Return hexidecimal color from given xterm-256 color code.
   COLOR - an xterm-256 color code (0-255)
 EOF

@@ -1682,7 +1682,7 @@ nixfi() {
     if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: nixfi FILE"
     else
-        readlink -e $(which $@)
+        readlink -e "$(which \"$@\")"
     fi
 }
 

@@ -76,7 +76,7 @@ fi
 # usage/help
 if [ ${help} -eq 1 ]; then
     cat <<EOF
-Usage: $(basename $0) OPERATION (FILE|DIR) ARGUMENT...
+Usage: $(basename "$0") OPERATION (FILE|DIR) ARGUMENT...
 Interface to a key-value data dictionary.
 
   OPERATION options (abbreviations in parenthesis):

@@ -22,7 +22,7 @@ depth=$(xwininfo -root | grep Depth | sed 's/Depth: //; s/ //g')
 
 if [ $# -lt 1 ] || [ $# -gt 4 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
     cat <<EOF
-Usage: $(basename $0) WM [DISPLAY [SIZE [DEPTH]]]
+Usage: $(basename \"$0\") WM [DISPLAY [SIZE [DEPTH]]]
 Start a nested X running WM of optional SIZE and DEPTH.
 WM options:
   afterstep

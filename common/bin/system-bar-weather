@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 if [ $# -ne 2 ] || ([ "$1" != "status" ] && [ "$1" != "icon" ] && [ "$1" != "both" ] && [ "$1" != "full" ]); then
-    echo "Usage: $(basename $0) (status|icon|both|full) LOCATION"
+    echo "Usage: $(basename \"$0\") (status|icon|both|full) LOCATION"
     echo "  status    Return short text description"
     echo "  icon      Return icon and temperature"
     echo "  both      Return both icon and short text"

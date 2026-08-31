@@ -197,7 +197,7 @@ super + {h, shift + slash}
     GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null --filename="${HOME}/.config/sxhkd/sxhkdrc-help"
     #ps -o args --no-headers -p $(pgrep -f sxhkd) | \
     #sed 's/^.* //' | xargs cat | \
-    #awk '/^[A-Za-z]/ && last { printf "%-40s | %-40s\n", $0, last } { last="" } /^#/ { last=substr($0, 3) }' | \
+    #awk '/^[A-Za-z]/ && last { printf "%-40s | %-40s\n", \"$0\", last } { last="" } /^#/ { last=substr($0, 3) }' | \
     #column -t -s '|' | \
     #rofi -font 'System San Francisco Display 12' -dmenu -i -p "SXHKD Keybindings"
 

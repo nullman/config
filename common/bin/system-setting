@@ -21,7 +21,7 @@ _run() {
 }
 
 if [ $# -lt 2 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
-    echo "Usage: $(basename $0) SETTING CHANGE"
+    echo "Usage: $(basename \"$0\") SETTING CHANGE"
     echo "Make a CHANGE to a system SETTING."
     echo "Examples:"
     echo "  volume up"

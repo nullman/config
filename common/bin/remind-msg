@@ -16,13 +16,13 @@ fparam=""
 # help
 if [ $# -lt 1 ] || [ $# -gt 4 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
     cat <<EOF
-Usage: $(basename $0) TYPE [MONTH DAY YEAR]
+Usage: $(basename "$0") TYPE [MONTH DAY YEAR]
 Output a remind message line of given TYPE for optional MONTH, DAY, and YEAR.
 TYPE options:
   fortune
   weather
 
-Usage: $(basename $0) fortune-year YEAR
+Usage: $(basename "$0") fortune-year YEAR
 Output fortune message lines for an entire year.
 EOF
     exit 1

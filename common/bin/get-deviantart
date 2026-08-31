@@ -9,7 +9,7 @@
 
 if [ $# -lt 1 ] || [ $# -gt 2 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
     cat <<EOF
-Usage: $(basename $0) DIRECTORY [DATE]
+Usage: $(basename "$0") DIRECTORY [DATE]
 Get pictures from 'deviantart.com' DIRECTORY starting at DATE.
 DIRECTORY options:
   3d

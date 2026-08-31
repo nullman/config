@@ -9,7 +9,7 @@
 
 if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
     cat <<EOF
-Usage: $(basename $0) APPLICATION [OPTION...] [PARAMETER...]
+Usage: $(basename "$0") APPLICATION [OPTION...] [PARAMETER...]
 Run APPLICATION in the root window.
 APPLICATION options:
   xplanet MODE [PARMETER]...
@@ -120,7 +120,7 @@ fi
 # if the app is already running we exit
 [ -z "$(ps -ef | grep -v grep | grep -v \"$0\" | grep ${USER} | grep \"${app}\")" ] || exit 1
 sleep 2
-[ -z "$(ps -ef | grep -v grep | grep -v "$0" |  grep ${USER} | grep \"${app}\")" ] || exit 1
+[ -z "$(ps -ef | grep -v grep | grep -v \"$0\" |  grep ${USER} | grep \"${app}\")" ] || exit 1
 
 # check for certain random modes
 if [ "${app}" == "xplanet" ]; then

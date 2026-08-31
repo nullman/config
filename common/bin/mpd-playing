@@ -8,7 +8,7 @@
 #===============================================================================
 
 if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
-    echo "Usage: $(basename $0) [-nt,--notify-title] [-nb,--notify-body] [-v,--verbose]"
+    echo "Usage: $(basename \"$0\") [-nt,--notify-title] [-nb,--notify-body] [-v,--verbose]"
     echo "  -nt,--notify-title - Title for notify-send"
     echo "  -nb,--notify-body  - Body for notify-send"
     echo "  -v,--verbose       - Verbose output"

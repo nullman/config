@@ -9,7 +9,7 @@
 
 if [ $# -lt 1 ] || [ $# -gt 2 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
     cat <<EOF
-Usage: $(basename $0) GROUP [FILTER]
+Usage: $(basename "$0") GROUP [FILTER]
 Get news binaries from GROUP with FILTER using brag.
   GROUP examples:
     alt.binaries.dvd.erotica

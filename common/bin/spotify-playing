@@ -13,13 +13,13 @@
 # /:title/ { t=1; next }
 # a && /string/ {
 #     sub(/^.*string /, "")
-#     artist=$0
+#     artist="$0"
 #     a=0
 #     next
 # }
 # t && /string/ {
 #     sub(/^.*string /, "")
-#     title=$0
+#     title="$0"
 #     t=0
 #     next
 # }
@@ -30,11 +30,11 @@
 qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.freedesktop.DBus.Properties.Get org.mpris.MediaPlayer2.Player Metadata | awk '
 /:artist:/ {
     sub(/^.*: /, "")
-    artist=$0
+    artist="$0"
 }
 /:title:/ {
     sub(/^.*: /, "")
-    title=$0
+    title="$0"
 }
 END {
     printf("%s: %s\n", artist, title)

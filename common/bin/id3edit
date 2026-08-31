@@ -208,7 +208,7 @@ genres=(
 
 if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
     cat <<EOF
-Usage: $(basename $0) FILE [FILE...]
+Usage: $(basename "$0") FILE [FILE...]
 Edit id3 tags of given files.
 EOF
     exit 1

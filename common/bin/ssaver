@@ -27,7 +27,7 @@
 
 if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
     cat <<EOF
-Usage: $(basename $0) SCREENSAVER [OPTION...]
+Usage: $(basename "$0") SCREENSAVER [OPTION...]
 Run a SCREENSAVER passing any OPTIONs to it.
 SCREENSAVER options:
   xscreensaver

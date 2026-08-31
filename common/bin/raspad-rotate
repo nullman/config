@@ -14,7 +14,7 @@
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
-name="$(basename $0)"
+name="$(basename \"$0\")"
 persist_file="${HOME}/.raspad-rotate-restore"
 output="HDMI-1"
 device="ILITEK ILITEK-TP"

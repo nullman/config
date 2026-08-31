@@ -19,7 +19,7 @@ files=()
 
 _usage() {
     cat <<EOF
-Usage: $(basename $0) [OPTIONS] [FILE...]
+Usage: $(basename "$0") [OPTIONS] [FILE...]
 
 Clear video file metadata and set the title to the filename minus the year
 and extension.
@@ -68,7 +68,7 @@ while [ $# -gt 0 ]; do
             shift
            ;;
         -h|--help)
-            _usage $0
+            _usage "$0"
             exit 0
            ;;
         *)
@@ -76,7 +76,7 @@ while [ $# -gt 0 ]; do
                 files+="${opt}"
                 shift
             else
-                _usage $0
+                _usage "$0"
                 exit 1
             fi
            ;;
@@ -84,7 +84,7 @@ while [ $# -gt 0 ]; do
 done
 
 if [ ${#files[@]} -eq 0 ]; then
-    _usage $0
+    _usage "$0"
     exit 1
 fi
 
