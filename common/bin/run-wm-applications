@@ -21,7 +21,7 @@ _run() {
 
 # run executable command if found in the path and not already running
 _once() {
-    if command -v "$1" >/dev/null 2>&1 && ! pidof -q "$1" ; then
+    if command -v "$1" >/dev/null 2>&1 && ! pidof -q "$1"; then
         "$@"
     fi
 }
@@ -43,10 +43,10 @@ _source() {
 _run ${HOME}/bin/run-sxhkd &
 
 # qubes os
-if [ "$(uname -n)" == "dom0" ] ; then
+if [ "$(uname -n)" == "dom0" ]; then
     # # qubes volume block device attach home partition to personal
     # (
-    #     for device in $(qvm-block list --all | grep -e 'Unknown device' -e 'personal' | sed 's/ .*$//') ; do
+    #     for device in $(qvm-block list --all | grep -e 'Unknown device' -e 'personal' | sed 's/ .*$//'); do
     #         qvm-block detach personal ${device}
     #     done
     #     qvm-block attach --option frontend-dev=xvdz personal $(qvm-block list dom0 | grep 'dom0 home' | sed 's/ .*$//')
@@ -54,7 +54,7 @@ if [ "$(uname -n)" == "dom0" ] ; then
 
     # # qubes usb devices
     # (
-    #     for device in $(qvm-usb list --all | grep -e 'Unknown device' -e 'personal' | sed 's/ .*$//') ; do
+    #     for device in $(qvm-usb list --all | grep -e 'Unknown device' -e 'personal' | sed 's/ .*$//'); do
     #        qvm-usb detach personal ${device}
     #     done
     #     # attach bluetooth to personal
@@ -112,7 +112,7 @@ if [ "$(uname -n)" == "dom0" ] ; then
     _once dunst &
 
     # system bar
-    if ! pgrep -x stumpwm >/dev/null ; then
+    if ! pgrep -x stumpwm >/dev/null; then
         _source "${HOME}/bin/system-bar"
     fi
 
@@ -130,7 +130,7 @@ if [ "$(uname -n)" == "dom0" ] ; then
 fi
 
 # other os
-if [ "$(uname -n)" != "dom0" ] ; then
+if [ "$(uname -n)" != "dom0" ]; then
     # xfce settings
     #_once xfsettingsd &
 
@@ -144,7 +144,7 @@ if [ "$(uname -n)" != "dom0" ] ; then
     #xbindkeys &
 
     # policykit authentation agent
-    if [ -x /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 ] ; then
+    if [ -x /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 ]; then
         /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
         #eval "$(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg)" &
     fi
@@ -157,7 +157,7 @@ if [ "$(uname -n)" != "dom0" ] ; then
     _once dunst &
 
     # system bar
-    if ! pgrep -x stumpwm >/dev/null ; then
+    if ! pgrep -x stumpwm >/dev/null; then
         _source "${HOME}/bin/system-bar"
     fi
 

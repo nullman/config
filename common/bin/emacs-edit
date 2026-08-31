@@ -15,7 +15,7 @@ _command() {
 }
 
 # return wether or not terminal is running in screen
-if [ -n "$(ps -o comm= -p $(ps -o ppid= -p $$))" ] ; then
+if [ -n "$(ps -o comm= -p $(ps -o ppid= -p $$))" ]; then
     inscreen=true
 else
     inscreen=false
@@ -23,7 +23,7 @@ fi
 [ -n "${DEBUG}" ] && echo "inscreen: ${inscreen}"
 
 # set optional wait state
-if [ -n "${WAIT}" ] ; then
+if [ -n "${WAIT}" ]; then
     wait=""
 else
     wait="--no-wait"
@@ -31,7 +31,7 @@ fi
 [ -n "${DEBUG}" ] && echo "wait: ${wait}"
 
 # set optional vi fallback state
-if [ -n "${VI}" ] ; then
+if [ -n "${VI}" ]; then
     vi=true
 else
     vi=false
@@ -39,14 +39,14 @@ fi
 [ -n "${DEBUG}" ] && echo "vi: ${vi}"
 
 # find emacs
-if _command emacs ; then
+if _command emacs; then
     ed="emacs"
 else
     vi=true
 fi
 
 # find alternate editor (vi/vim)
-if _command vim ; then
+if _command vim; then
     alt="vim"
 else
     alt="vi"
@@ -59,9 +59,9 @@ socketname="/run/user/$(id -u)/emacs/server"
 
 # determine if screen is running under this user and if emacs is running under it
 screen=false
-if [ ${inscreen} == true ] ; then
-    if [ -n "$(ps -e -o pid,ppid,user,args | grep -v grep | grep ${USER} | grep -i screen)" ] ; then
-        if [ -n "$(ps -e -o pid,ppid,user,args | grep -v grep | grep ${USER} | grep emacs | grep '\-nw')" ] ; then
+if [ ${inscreen} == true ]; then
+    if [ -n "$(ps -e -o pid,ppid,user,args | grep -v grep | grep ${USER} | grep -i screen)" ]; then
+        if [ -n "$(ps -e -o pid,ppid,user,args | grep -v grep | grep ${USER} | grep emacs | grep '\-nw')" ]; then
             screen=true
         fi
     fi
@@ -69,25 +69,25 @@ fi
 [ -n "${DEBUG}" ] && echo "screen: ${screen}"
 
 # pause if debugging
-if [ -n "${DEBUG}" ] ; then
+if [ -n "${DEBUG}" ]; then
     echo "Press return to start editor"
     read -r a
 fi
 
 # if emacs client is running...
-if [ -S "${socketname}" ] ; then
+if [ -S "${socketname}" ]; then
     # if screen is running, switch to emacs window
-    if [ ${screen} == true ] ; then
+    if [ ${screen} == true ]; then
         screen -X select emacs
     fi
     # run emacsclient
     emacsclient ${wait} --socket-name "${socketname}" --alternate-editor=${alt} "$@"
 else
-    if [ ${vi} == true ] ; then
-        if _command vim ; then
+    if [ ${vi} == true ]; then
+        if _command vim; then
             # launch vim
             vim "$@"
-        elif _command vi ; then
+        elif _command vi; then
             # launch vi
             vi "$@"
         else

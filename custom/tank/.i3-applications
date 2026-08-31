@@ -56,7 +56,7 @@ _command xautolock && i3-msg "exec --no-startup-id xautolock -time 30 -locker 'x
 ##_command idea && i3-msg "exec --no-startup-id _delay 10 idea"
 
 # example using a saved i3 workspace via the i3-save-tree command
-# i3-msg "workspace 1 ; append_layout /home/user/.i3/worspace-1.json"
+# i3-msg "workspace 1; append_layout /home/user/.i3/worspace-1.json"
 
 # run application launcher
 _run ${HOME}/bin/application-launcher &

@@ -8,29 +8,29 @@
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
-echo -n "Download all the pictures from a Canon S-100? [yN] " ; read -r a
+echo -n "Download all the pictures from a Canon S-100? [yN] "; read -r a
 case "${a}" in
     y|Y)
         echo
         gphoto2 -P
         echo
         gphoto2 --show-info 1-$(find . -name '*.JPG' | wc -l | sed 's/ //g') > __photo_info__
-        ;;
+       ;;
     *)
         echo
-        echo -n "Download picture info from a Canon S-100? [yN] " ; read -r a
+        echo -n "Download picture info from a Canon S-100? [yN] "; read -r a
         case "${a}" in
             y|Y)
                 echo
                 gphoto2 --show-info 1-$(find . -name '*.JPG' | wc -l | sed 's/ //g') > __photo_info__
                 echo
                 echo "Saved as __photo_info__"
-                ;;
+               ;;
         esac
 esac
 
 echo
-echo -n "Rename picture files using the timestamps in __photo_info__? [yN] " ; read -r a
+echo -n "Rename picture files using the timestamps in __photo_info__? [yN] "; read -r a
 case "${a}" in
     y|Y)
         echo
@@ -60,7 +60,7 @@ case "${a}" in
         echo
         echo "Deleting __photo_info__"
         rm __photo_info__
-        ;;
+       ;;
 esac
 
 echo

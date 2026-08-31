@@ -21,12 +21,12 @@ unset DISPLAY
 tmpfile="$(mktemp)"
 lisp="(progn (switch-to-buffer (generate-new-buffer \"*stdin*\")) (insert-file \"${tmpfile}\") (end-of-buffer) (normal-mode))"
 
-if [ ! -t 0 ] ; then
+if [ ! -t 0 ]; then
     # data from stdin
 
     cat > "${tmpfile}"
 
-    if (emacsclient -a emacs -e "${lisp}" "${@}" >/dev/null) ; then
+    if (emacsclient -a emacs -e "${lisp}" "${@}" >/dev/null); then
         echo "Failed to import your data into Emacs"
     fi
 
@@ -34,7 +34,7 @@ if [ ! -t 0 ] ; then
 else
     # nothing from stdin, use parameters
 
-    if [ $# -gt 0 ] ; then
+    if [ $# -gt 0 ]; then
         emacsclient -n -a emacs "${@}" >/dev/null
     fi
 fi

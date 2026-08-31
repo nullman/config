@@ -7,7 +7,7 @@
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
-if [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
     echo "Usage: $(basename $0) [-nt,--notify-title] [-nb,--notify-body] [-v,--verbose]"
     echo "  -nt,--notify-title - Title for notify-send"
     echo "  -nb,--notify-body  - Body for notify-send"
@@ -30,7 +30,7 @@ pct="${pct: -3}"
 file=$(mpc -f '%file%' | sed -n 1p)
 rating=$(grep -F "${file}" ${HOME}/.song-ratings/* | sed 's/^.*songs-rated-\([0-9]\).*$/\1/')
 
-if [ "$1" == "-v" ] || [ "$1" == "--verbose" ] ; then
+if [ "$1" == "-v" ] || [ "$1" == "--verbose" ]; then
     printf 'Artist: %s\n' "${artist}"
     printf 'Album: %s\n' "${album}"
     printf 'Title: %s\n' "${title}"
@@ -42,9 +42,9 @@ if [ "$1" == "-v" ] || [ "$1" == "--verbose" ] ; then
     exit 0
 fi
 
-if [ "$1" == "-nt" ] || [ "$1" == "--notify-title" ] ; then
+if [ "$1" == "-nt" ] || [ "$1" == "--notify-title" ]; then
     printf '%s' "${title}"
-elif [ "$1" == "-nb" ] || [ "$1" == "--notify-body" ] ; then
+elif [ "$1" == "-nb" ] || [ "$1" == "--notify-body" ]; then
     printf '%s\n[%s] %s %s' "${artist}" "${rating}" "${num}" "${pct}"
 else
     printf '%s [%s] %s %s\n' "${song}" "${rating}" "${num}" "${pct}"

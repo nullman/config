@@ -206,7 +206,7 @@ launcher_item_app = /usr/share/applications/firefox.desktop
 # Clock
 #-------------------------------------
 
-time1_format = %a %Y-%m-%d %H:%M
+time1_format = %a %b %d %H:%M
 time2_format =
 time1_font = MesloLGS Nerd Font Mono 10
 time1_timezone =

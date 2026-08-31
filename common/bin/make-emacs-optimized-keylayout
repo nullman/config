@@ -7,7 +7,7 @@
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
-if [ "${OSTYPE}" != "darwin"* ] ; then
+if [ "${OSTYPE}" != "darwin"* ]; then
     echo "This script is for MacOS only"
     exit 1
 fi

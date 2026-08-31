@@ -21,7 +21,7 @@ set -euo pipefail
 
 conf="${HOME}/.rofi-typer"
 
-prefixcode=47      # ;
+prefixcode=47      #;
 
 keycode[32]=65     # [Space]
 keycode[33]=50:10  # !
@@ -50,7 +50,7 @@ keycode[55]=16     # 7
 keycode[56]=17     # 8
 keycode[57]=18     # 9
 keycode[58]=50:47  # :
-keycode[59]=47     # ;
+keycode[59]=47     #;
 keycode[60]=50:59  # <
 keycode[61]=21     # =
 keycode[62]=50:60  # >
@@ -130,9 +130,9 @@ EOF
 }
 
 # handle arguments
-if [ $# -lt 1 ] ; then
+if [ $# -lt 1 ]; then
     # if no arguments given, prompt user with selector for key
-    (sleep 0.1 ; xdo key_press -k ${prefixcode} ; xdo key_release -k ${prefixcode}) &
+    (sleep 0.1; xdo key_press -k ${prefixcode}; xdo key_release -k ${prefixcode}) &
     key=$(cat "${conf}" | rofi -dmenu -i -p "󰪛	Key / Value")
     key=$(echo "${key}" | sed 's/ *=.*$//')
 else
@@ -140,7 +140,7 @@ else
     key=$1
 fi
 
-if [ "${XDG_SESSION_TYPE}" == "wayland" ] ; then
+if [ "${XDG_SESSION_TYPE}" == "wayland" ]; then
     # lookup value and type it in active window using wtype
     value=$(grep "^${key} *=" "${conf}" | sed 's/^.*= *//')
     wtype "${value}"
@@ -148,10 +148,10 @@ else
     # lookup value and type it in active window using xdo
     value=$(grep "^${key} *=" "${conf}" | sed 's/^.*= *//')
     #echo "${key}	${value}"
-    for ((x=0; x<${#value}; x++)) ; do
+    for ((x=0; x<${#value}; x++)); do
         ascii=$(printf "%d\n" "'${value:$x:1}")
         code=${keycode[${ascii}]}
-        if [ "${#code}" -gt 2 ] ; then
+        if [ "${#code}" -gt 2 ]; then
             code1="${code:0:2}"
             code2="${code:3:2}"
             #echo "${code1} - ${code2}"

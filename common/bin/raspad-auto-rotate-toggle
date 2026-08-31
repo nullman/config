@@ -9,13 +9,13 @@
 
 persist_file="${HOME}/.raspad-rotate-restore"
 
-if pgrep -u ${USER} -f auto-rotator ; then
+if pgrep -u ${USER} -f auto-rotator; then
     kill $(pgrep -u ${USER} -f auto-rotator)
-    dunstify --timeout=3000 "Auto-rotation: OFF"
+    notify-send --expire-time=3000 "Auto-rotation: OFF"
 else
     DISPLAY=:0.0 /usr/bin/python3 /usr/local/bin/auto-rotator &
     rm "${persist_file}"
-    dunstify --timeout=3000 "Auto-rotation: ON"
+    notify-send --expire-time=3000 "Auto-rotation: ON"
 fi
 
 #===============================================================================

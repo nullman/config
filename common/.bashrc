@@ -63,7 +63,7 @@ os="$(uname -s)"
 # set environmental vars
 export SHELL="$(command -v bash)"
 
-if [ -z "${INSIDE_EMACS}" ] ; then
+if [ -z "${INSIDE_EMACS}" ]; then
     # auto-completion: ignore case
     bind "set completion-ignore-case on"
     # auto-completion: single tab list
@@ -83,13 +83,13 @@ PROMPT_COMMAND='history -a'  # this terminal should append to the history file
 # CTRL-T  paste the selected file path into the command line
 # CTRL-R  paste the selected command from history into the command line
 # ALT-C   cd into the selected directory
-if [ -z "${INSIDE_EMACS}" ] ; then
-    if [ "${os}" == "Darwin" ] ; then
+if [ -z "${INSIDE_EMACS}" ]; then
+    if [ "${os}" == "Darwin" ]; then
         [ -d "/usr/local/opt/fzf/bin" ] && [ ! "${PATH}" == */usr/local/opt/fzf/bin* ] && export PATH="${PATH}:/usr/local/opt/fzf/bin"
         _source "/usr/local/opt/fzf/shell/key-bindings.bash" 2>&1
         _source "/usr/local/opt/fzf/shell/completion.bash" 2>&1
-    elif $(uname -v | grep -q 'NixOS') ; then
-        if _command fzf-share ; then
+    elif $(uname -v | grep -q 'NixOS'); then
+        if _command fzf-share; then
             _source "$(fzf-share)/key-bindings.bash"
             _source "$(fzf-share)/completion.bash"
         fi
@@ -101,13 +101,13 @@ fi
 export FZF_DEFAULT_OPTS="--layout=reverse --border=bold"
 
 # fix home/end keys in screen/tmux
-if [ -n "${STY}" ] || [ -n "${TMUX}" ] ; then
+if [ -n "${STY}" ] || [ -n "${TMUX}" ]; then
     bind '"\e[1~":"\eOH"'
     bind '"\e[4~":"\eOF"'
 fi
 
 # set prompt
-if [ -n "${INSIDE_EMACS}" ] ; then
+if [ -n "${INSIDE_EMACS}" ]; then
     # set emacs prompt to: path $
     #export PS1="\w \\$ "
     # set emacs prompt to: path git-branch $

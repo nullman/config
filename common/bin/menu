@@ -13,7 +13,7 @@
 #
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #
-# Copyright © 1996-2025 Kyle W T Sherman
+# Copyright © 1996-2026 Kyle W T Sherman
 #
 # This program is free software; you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -44,7 +44,7 @@ section="main"
 key=""
 
 # get parameters
-while [ -n "$1" ] ; do
+while [ -n "$1" ]; do
 
     case "$1" in
 
@@ -61,13 +61,13 @@ Present user with a menu of commands to run.
   FILE  menu definitions file (defaults to '~/.menu').
 EOF
             exit 1
-            ;;
+           ;;
 
         -l|--license)
             # usage
             echo "License:"
             cat <<EOF
-  Copyright © 1996-2025 Kyle W T Sherman
+  Copyright © 1996-2026 Kyle W T Sherman
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -84,16 +84,16 @@ EOF
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 EOF
             exit 0
-            ;;
+           ;;
 
         -c|--create)
             shift
             # create new menu file
-            if [ $# -gt 0 ] ; then
+            if [ $# -gt 0 ]; then
                 menufile="$1"
                 shift
             fi
-            if [ -e "${menufile}" ] ; then
+            if [ -e "${menufile}" ]; then
                 echo "Cannot create '${menufile}' because that file already exists"
                 exit 1
             fi
@@ -178,35 +178,35 @@ mame:
 
 term:
   XTerm|xterm $(cat ${HOME}/.xterm_options)
-  Screen (connect)|xterm $(cat ${HOME}/.xterm_options ; echo -n "-e screen -x")
-  Screen (restart)|xterm $(cat ${HOME}/.xterm_options ; echo -n "-e screen -A -D -RR")
+  Screen (connect)|xterm $(cat ${HOME}/.xterm_options; echo -n "-e screen -x")
+  Screen (restart)|xterm $(cat ${HOME}/.xterm_options; echo -n "-e screen -A -D -RR")
 
 ssaver:
   xscreensaver|xscreensaver-command -lock
   xscreensaver setup|xscreensaver-demo
-  xscreensaver on|rm -f ${HOME}/.noscreensaver ; source ${HOME}/bin/ssaverauto
-  xscreensaver off|touch ${HOME}/.noscreensaver ; fuser -k -SIGTERM ${HOME}/bin/ssaver ; fuser -k -SIGTERM /usr/bin/xscreensaver ; fuser -k -SIGTERM /usr/bin/xlock ; fuser -k -SIGTERM /usr/bin/electricsheep ; fuser -k -SIGKILL ${HOME}/bin/ssaver ; fuser -k -SIGKILL /usr/bin/xscreensaver ; fuser -k -SIGKILL /usr/bin/xlock ; fuser -k -SIGKILL /usr/bin/electricsheep
+  xscreensaver on|rm -f ${HOME}/.noscreensaver; source ${HOME}/bin/ssaverauto
+  xscreensaver off|touch ${HOME}/.noscreensaver; fuser -k -SIGTERM ${HOME}/bin/ssaver; fuser -k -SIGTERM /usr/bin/xscreensaver; fuser -k -SIGTERM /usr/bin/xlock; fuser -k -SIGTERM /usr/bin/electricsheep; fuser -k -SIGKILL ${HOME}/bin/ssaver; fuser -k -SIGKILL /usr/bin/xscreensaver; fuser -k -SIGKILL /usr/bin/xlock; fuser -k -SIGKILL /usr/bin/electricsheep
   xlock|xlock -mode flame
 EOF
             exit 0
-            ;;
+           ;;
 
         -s|--section)
             shift
             # get section name from parameter if one is given
-            if [ $# -gt 0 ] ; then
+            if [ $# -gt 0 ]; then
                 section="$1"
                 shift
             fi
-            ;;
+           ;;
 
         *)
             # set menu file
-            if [ $# -gt 0 ] ; then
+            if [ $# -gt 0 ]; then
                 menufile="$1"
                 shift
             fi
-            ;;
+           ;;
     esac
 
 done
@@ -214,7 +214,7 @@ done
 #tput init
 
 # check that menufile exists
-if [ ! -e ${menufile} ] ; then
+if [ ! -e ${menufile} ]; then
     echo "Could not find menu file '${menufile}'"
     exit 1
 fi
@@ -255,31 +255,31 @@ sedparse+=':$/!d
 # get block
 block=$(cat ${menufile} | sed -e '$a\\n' | sed -n "${sedparse}")
 
-#for line in ${block} ; do
+#for line in ${block}; do
 #    echo "${line}"
 #done
 
 # create display array
 x=0
-for line in ${block} ; do
+for line in ${block}; do
     # set display to the part before the pipe and convert @@ to spaces
-    display[${x}]=$(echo "${line}" | sed 's/^\([^|]*\)|\(.*\)$/\1/ ; s/@@/ /g')
+    display[${x}]=$(echo "${line}" | sed 's/^\([^|]*\)|\(.*\)$/\1/; s/@@/ /g')
     x=$((${x} + 1))
 done
 
-#for ((x = 0; x < ${#display[@]}; x++)) ; do
+#for ((x = 0; x < ${#display[@]}; x++)); do
 #    echo "${display[$x]}"
 #done
 
 # create command array
 x=0
-for line in ${block} ; do
+for line in ${block}; do
     # set command to the part after the pipe and convert @@ to spaces
-    command[${x}]=$(echo "${line}" | sed 's/^\([^|]*\)|\(.*\)$/\2/ ; s/@@/ /g')
+    command[${x}]=$(echo "${line}" | sed 's/^\([^|]*\)|\(.*\)$/\2/; s/@@/ /g')
     x=$((${x} + 1))
 done
 
-#for ((x = 0; x < ${#display[@]}; x += 1)) ; do
+#for ((x = 0; x < ${#display[@]}; x += 1)); do
 #    echo "${command[${x}]}"
 #done
 
@@ -287,20 +287,20 @@ done
 maxrow=$((${x} - 1))
 
 # if no rows found then exit
-if [ ${maxrow} -lt ${row} ] ; then
+if [ ${maxrow} -lt ${row} ]; then
     exit 1
 fi
 
 # get offset for centering
 len=0
-for ((x = 0; x < ${#display[@]}; x += 1)) ; do
-    if [ ${#display[${x}]} -gt ${len} ] ; then
+for ((x = 0; x < ${#display[@]}; x += 1)); do
+    if [ ${#display[${x}]} -gt ${len} ]; then
         len=${#display[${x}]}
     fi
 done
 offset=$(((${cols} - ${len}) / 2))
-if [ ${offset} -lt 0 ] ; then offset=0 ; fi
-spc='' ; for ((x = 0; x < ${offset}; x += 1)) ; do spc+=' ' ; done
+if [ ${offset} -lt 0 ]; then offset=0; fi
+spc=''; for ((x = 0; x < ${offset}; x += 1)); do spc+=' '; done
 
 # clear screen
 tput clear
@@ -313,25 +313,25 @@ tput cup 1 0
 #echo
 
 # print display
-for ((x = 0; x < ${#display[@]}; x += 1)) ; do
-    if [ "${row}" == "${x}" ] ; then
-        echo -n "${spc}" ; tput ${boldon} ; echo "${display[${x}]}" ; tput ${boldoff}
+for ((x = 0; x < ${#display[@]}; x += 1)); do
+    if [ "${row}" == "${x}" ]; then
+        echo -n "${spc}"; tput ${boldon}; echo "${display[${x}]}"; tput ${boldoff}
     else
-        echo -n "${spc}" ; echo "${display[${x}]}"
+        echo -n "${spc}"; echo "${display[${x}]}"
     fi
 done
 
 # print info
 info="q=quit  up/down=movement  enter=select  u=up"
 offset=$(((${cols} - ${#info}) / 2))
-if [ ${offset} -lt 0 ] ; then offset=0 ; fi
-infospc='' ; for ((x = 0; x < ${offset}; x += 1)) ; do infospc+=' ' ; done
+if [ ${offset} -lt 0 ]; then offset=0; fi
+infospc=''; for ((x = 0; x < ${offset}; x += 1)); do infospc+=' '; done
 echo
 echo -n "${infospc}"
 echo "q=quit  up/down=movement  enter=select  u=up"
 
 # main section
-while [ "${key}" != "q" ] ; do
+while [ "${key}" != "q" ]; do
     oldrow=${row}
     # get keypress
     read -n 1 -s key
@@ -339,15 +339,15 @@ while [ "${key}" != "q" ] ; do
         A)
             # up arrow
             row=$((${row} - 1))
-            ;;
+           ;;
         B)
             # down arrow
             row=$((${row} + 1))
-            ;;
+           ;;
         D|u|U)
             # left arrow or U
             exec $0 "${menufile}"
-            ;;
+           ;;
         ""|C)
             # return or right arrow
             clear
@@ -355,37 +355,37 @@ while [ "${key}" != "q" ] ; do
                 :)
                     # if command starts with a colon then we switch to a new section
                     exec $0 --section "${command[$row]:1}" "${menufile}"
-                    ;;
+                   ;;
                 !)
                     # if command starts with an explaination point then we run
                     # a new instance of menu
-                    if [ "${command[${row}]:1:2}" == "/" ] ; then
+                    if [ "${command[${row}]:1:2}" == "/" ]; then
                         exec $0 "${command[$row]:1}"
                     else
                         exec $0 "${HOME}/${command[$row]:1}"
                     fi
-                    ;;
+                   ;;
                 *)
                     # otherwise, run the command
                     echo
                     echo "Running: ${command[${row}]}"
                     echo
-                    eval ${command[${row}]} ; exit 0
-                    ;;
+                    eval ${command[${row}]}; exit 0
+                   ;;
             esac
-            ;;
+           ;;
     esac
 
     # fix row
-    if [ ${row} -lt 0 ] ; then row=0 ; fi
-    if [ ${row} -gt ${maxrow} ] ; then row=${maxrow} ; fi
+    if [ ${row} -lt 0 ]; then row=0; fi
+    if [ ${row} -gt ${maxrow} ]; then row=${maxrow}; fi
 
     # redraw if necessary
-    if [ ${row} -ne ${oldrow} ] ; then
+    if [ ${row} -ne ${oldrow} ]; then
         tput cup $((${oldrow} + 1)) 0
-        echo -n "${spc}" ; echo "${display[$oldrow]}"
+        echo -n "${spc}"; echo "${display[$oldrow]}"
         tput cup $((${row} + 1)) 0
-        echo -n "${spc}" ; tput ${boldon} ; echo "${display[$row]}" ; tput ${boldoff}
+        echo -n "${spc}"; tput ${boldon}; echo "${display[$row]}"; tput ${boldoff}
     fi
 done
 

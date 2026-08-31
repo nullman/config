@@ -13,7 +13,7 @@ export SCREENDIR=${HOME}/.screendir
 
 cd
 
-if pgrep -u ${USER} -x screen ; then
+if pgrep -u ${USER} -x screen; then
     screen -wipe
     screen -x "$@"
 else

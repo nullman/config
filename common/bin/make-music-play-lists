@@ -22,7 +22,7 @@ ratingsdir="${HOME}/.song-ratings"       # ratings directory
 # setup
 #===============================================================================
 
-if [ ! -d "${musicdir}" ] ; then
+if [ ! -d "${musicdir}" ]; then
     echo "Error: Could not find music directory: ${musicdir}"
     exit 1
 fi
@@ -36,12 +36,12 @@ rm -f "${pldir}/raw_albums.m3u"
 rm -f "${pldir}/raw_singles.m3u"
 rm -f "${pldir}/raw_all.m3u"
 
-for gn in ${genres[@]} ; do
+for gn in ${genres[@]}; do
     gd="${gn//\%/ }"
     find "Albums/${gd}/" -type f >> "${pldir}/raw_albums.m3u"
     find "Singles/${gd}/" -type f >> "${pldir}/raw_singles.m3u"
 done
-for file in albums singles ; do
+for file in albums singles; do
     sort --random-sort < "${pldir}/raw_${file}.m3u" > "${pldir}/${tmpfile}"
     mv "${pldir}/${tmpfile}" "${pldir}/raw_${file}.m3u"
     cat "${pldir}/raw_${file}.m3u" >> "${pldir}/raw_all.m3u"
@@ -54,9 +54,9 @@ mv "${pldir}/${tmpfile}" "${pldir}/raw_all.m3u"
 # windows versions
 #===============================================================================
 
-# sed 's/^\/\_links\/music\//N\:\\/ ; s/\//\\/g' "${pldir}/raw_albums.m3u" > "${pldir}/win_albums.m3u"
-# sed 's/^\/_links\/music\//N\:\\/ ; s/\//\\/g' "${pldir}/raw_singles.m3u" > "${pldir}/win_singles.m3u"
-# sed 's/^\/_links\/music\//N\:\\/ ; s/\//\\/g' "${pldir}/raw_all.m3u" > "${pldir}/win_all.m3u"
+# sed 's/^\/\_links\/music\//N\:\\/; s/\//\\/g' "${pldir}/raw_albums.m3u" > "${pldir}/win_albums.m3u"
+# sed 's/^\/_links\/music\//N\:\\/; s/\//\\/g' "${pldir}/raw_singles.m3u" > "${pldir}/win_singles.m3u"
+# sed 's/^\/_links\/music\//N\:\\/; s/\//\\/g' "${pldir}/raw_all.m3u" > "${pldir}/win_all.m3u"
 
 #===============================================================================
 # albums and singles (in sorted order)
@@ -71,13 +71,13 @@ sort -t / -k 3 < "${pldir}/raw_all.m3u" > "${pldir}/sorted_all.m3u"
 #===============================================================================
 
 rm -f "${pldir}/genre_"*.m3u
-for d in Albums Singles MODs ; do
-    for gn in $(find "${d}/" -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | sed 's/ /\%/g') ; do
+for d in Albums Singles MODs; do
+    for gn in $(find "${d}/" -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | sed 's/ /\%/g'); do
         rm -f "${pldir}/${tmpfile}"
         #gd=$(echo "${gn}" | sed "s/\%/ /g")
         gd="${gn//\%/ }"
         find "${d}/${gd}/" -type f >> "${pldir}/${tmpfile}"
-        n=$(echo "${gn}" | tr '[:upper:]' '[:lower:]' | sed 's/\%/_/g ; s/_-_/-/g')
+        n=$(echo "${gn}" | tr '[:upper:]' '[:lower:]' | sed 's/\%/_/g; s/_-_/-/g')
         [ -e "${pldir}/${tmpfile}" ] && sort -t / -k 3 < "${pldir}/${tmpfile}" >> "${pldir}/genre_${n}.m3u"
     done
 done
@@ -102,7 +102,7 @@ find Albums -name "*\.mp3" -mtime -730 -print | sort -t / -k 3 >> "${pldir}/rece
 rm "${pldir}/rated_normal.m3u"
 rm "${pldir}/rated_good.m3u"
 rm "${pldir}/rated_all.m3u"
-for r in $(seq 1 5) ; do
+for r in $(seq 1 5); do
     sort -t / -k 3 < "${ratingsdir}/songs-rated-${r}" | grep '\.mp3$' > "${pldir}/rated_${r}.m3u"
     [ ${r} -ge 3 ] && cat "${ratingsdir}/songs-rated-${r}" | grep '\.mp3$' >> "${pldir}/rated_normal.m3u"
     [ ${r} -ge 4 ] && cat "${ratingsdir}/songs-rated-${r}" | grep '\.mp3$' >> "${pldir}/rated_good.m3u"
@@ -111,13 +111,13 @@ done
 
 # unrated list
 rm -f "${pldir}/unrated.m3u"
-while read s ; do
+while read -r s; do
     d=$(grep -F "${s}" "${pldir}/rated_all.m3u")
     [ -z "${d}" ] && echo "${s}" >> "${pldir}/unrated.m3u"
 done < "${pldir}/raw_all.m3u"
 
 # randomize some playlists
-for s in "rated_normal.m3u" "rated_good.m3u" "rated_all.m3u" "unrated.m3u" ; do
+for s in "rated_normal.m3u" "rated_good.m3u" "rated_all.m3u" "unrated.m3u"; do
     sort --random-sort < "${pldir}/${s}" > "${pldir}/${tmpfile}"
     mv "${pldir}/${tmpfile}" "${pldir}/${s}"
 done

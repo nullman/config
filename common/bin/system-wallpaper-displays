@@ -24,21 +24,21 @@ echo "xres: ${xres}, yres: ${yres}"
 
 # conky displays on wallpaper
 pkill -u ${USER} conky
-if [ -f "${HOME}/.config/conky/system-info.conkyrc" ] ; then
+if [ -f "${HOME}/.config/conky/system-info.conkyrc" ]; then
     _run conky --config="${HOME}/.config/conky/system-info.conkyrc" >/dev/null 2>&1 &
 fi
 if [ -f "${HOME}/.config/conky/bspwm-keybindings.conkyrc" ] && \
-       [ ${yres} -ge 1024 ] ; then
+       [ ${yres} -ge 1024 ]; then
     _run conky --config="${HOME}/.config/conky/bspwm-keybindings.conkyrc" >/dev/null 2>&1 &
 fi
 if [ -f "${HOME}/.config/conky/reminders.conkyrc" ] && \
-       [ ${xres} -ge 1600 ] ; then
-    (_run conky --config="${HOME}/.config/conky/reminders.conkyrc" ; \
+       [ ${xres} -ge 1600 ]; then
+    (_run conky --config="${HOME}/.config/conky/reminders.conkyrc"; \
      _run conky --config="${HOME}/.config/conky/weather-graph.conkyrc") >/dev/null 2>&1 &
 fi
 if [ -f "${HOME}/.config/conky/weather-report.conkyrc" ] && \
-       [ ${yres} -ge 1440 ] ; then
-    (_run conky --config="${HOME}/.config/conky/fzf-keybindings.conkyrc" ; \
+       [ ${yres} -ge 1440 ]; then
+    (_run conky --config="${HOME}/.config/conky/fzf-keybindings.conkyrc"; \
      _run conky --config="${HOME}/.config/conky/weather-report.conkyrc") >/dev/null 2>&1 &
 fi
 

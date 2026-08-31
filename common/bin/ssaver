@@ -25,7 +25,7 @@
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
-if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
     cat <<EOF
 Usage: $(basename $0) SCREENSAVER [OPTION...]
 Run a SCREENSAVER passing any OPTIONs to it.
@@ -58,10 +58,10 @@ case "$1" in
         fuser -k -SIGTERM /usr/bin/xscreensaver
         fuser -k -SIGKILL /usr/bin/xscreensaver
         nice -n 1 xscreensaver -no-splash
-        ;;
+       ;;
     xlock)
         # xlock
-        if [ -z "$3" ] ; then
+        if [ -z "$3" ]; then
             ld=${lock}
         else
             ld="$3"
@@ -69,10 +69,10 @@ case "$1" in
         fuser -k -SIGTERM /usr/bin/xlock
         fuser -k -SIGKILL /usr/bin/xlock
         xlock -nice 1 +usefirst -lockdelay ${ld} -mode $2
-        ;;
+       ;;
     slideshow)
         # slideshow
-        if [ -z "$3" ] ; then
+        if [ -z "$3" ]; then
             wait=${delay}
         else
             wait="$3"
@@ -86,23 +86,23 @@ case "$1" in
         fuser -k -SIGTERM /usr/bin/feh
         fuser -k -SIGKILL /usr/bin/feh
         feh --title "Slideshow" -F -x -z -D ${wait} -r $2
-        ;;
+       ;;
     movie)
         # play movie
         fuser -k -SIGTERM /usr/bin/mpeg2dec_onroot
         fuser -k -SIGKILL /usr/bin/mpeg2dec_onroot
         mpeg2dec_onroot $2
-        ;;
+       ;;
     flash)
         # play flash
         kill -SIGTERM $(ps -ef | grep -v grep | grep ${USER} | grep "gflashplayer -root" | cut -c 10-15)
         kill -SIGKILL $(ps -ef | grep -v grep | grep ${USER} | grep "gflashplayer -root" | cut -c 10-15)
         gflashplayer -root $2
-        ;;
+       ;;
     # specific savers
     blank)
         # xlock blank
-        if [ -z "$2" ] ; then
+        if [ -z "$2" ]; then
             ld=${lock}
         else
             ld="$2"
@@ -110,10 +110,10 @@ case "$1" in
         fuser -k -SIGTERM /usr/bin/xlock
         fuser -k -SIGKILL /usr/bin/xlock
         xlock -nice 1 +usefirst -lockdelay ${ld} -mode blank
-        ;;
+       ;;
     flame)
         # xlock flame
-        if [ -z "$2" ] ; then
+        if [ -z "$2" ]; then
             ld=${lock}
         else
             ld="$2"
@@ -121,16 +121,16 @@ case "$1" in
         fuser -k -SIGTERM /usr/bin/xlock
         fuser -k -SIGKILL /usr/bin/xlock
         xlock -nice 1 +usefirst -lockdelay ${ld} -mode flame
-        ;;
+       ;;
     electricsheep)
         # electricsheep
         fuser -k -SIGTERM /usr/bin/electricsheep
         fuser -k -SIGKILL /usr/bin/electricsheep
         electricsheep --nice 1 --root 1 --nick nullman --nrepeats 1 --zoom 1
-        ;;
+       ;;
     pictures)
         # slideshow (pictures)
-        if [ -z "$2" ] ; then
+        if [ -z "$2" ]; then
             wait=${delay}
         else
             wait="$2"
@@ -141,10 +141,10 @@ case "$1" in
         fuser -k -SIGTERM /usr/bin/feh
         fuser -k -SIGKILL /usr/bin/feh
         feh --title "Slideshow" -F -x -z -D ${wait} -r "/home/data/media/Pictures Slide Show/"
-        ;;
+       ;;
     nasa)
         # slideshow (nasa)
-        if [ -z "$2" ] ; then
+        if [ -z "$2" ]; then
             wait=${delay}
         else
             wait="$2"
@@ -155,7 +155,7 @@ case "$1" in
         fuser -k -SIGTERM /usr/bin/feh
         fuser -k -SIGKILL /usr/bin/feh
         feh --title "Slideshow" -F -x -z -D ${wait} -r "/home/data/media/Nasa Pictures/"
-        ;;
+       ;;
 esac
 
 #===============================================================================

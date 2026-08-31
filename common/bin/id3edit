@@ -206,7 +206,7 @@ genres=(
     "191 Psybient"
 )
 
-if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
     cat <<EOF
 Usage: $(basename $0) FILE [FILE...]
 Edit id3 tags of given files.
@@ -214,12 +214,12 @@ EOF
     exit 1
 fi
 
-if [ ! -f "$1" ] ; then
+if [ ! -f "$1" ]; then
     echo "File does not exist: $1"
     exit 1
 fi
 
-while [ $# -gt 0 ] ; do
+while [ $# -gt 0 ]; do
     # get id3 tag data
     id3info "$1" > "${tmpfile}"
     file=$(sed -n 's/^\*\*\* Tag information for //p' ${tmpfile})

@@ -8,12 +8,12 @@
 ;; Author: Author: Kyle W T Sherman <kylewsherman@gmail.com>
 ;;==============================================================================
 
-(in-package :stumpwm)
-(setf *default-package* :stumpwm)
-(setf *startup-message* nil)
+ (in-package :stumpwm)
+ (setf *default-package* :stumpwm)
+ (setf *startup-message* nil)
 
 ;; debug
-(setq *debug-level* 5)
+ (setq *debug-level* 5)
 ;;(redirect-all-output (data-dir-file "stumpwm_config.log"))
 
 ;; quicklisp
@@ -22,18 +22,18 @@
 ;;        (user-homedir-pathname)))
 ;;   (when (probe-file quicklisp-setup-file)
 ;;     (load quicklisp-setup-file)))
-(let ((quicklisp-setup-file "~/quicklisp/setup.lisp"))
-  (when (probe-file quicklisp-setup-file)
-    (load quicklisp-setup-file)))
+ (let ((quicklisp-setup-file "~/quicklisp/setup.lisp"))
+   (when (probe-file quicklisp-setup-file)
+     (load quicklisp-setup-file)))
 
 ;;------------------------------------------------------------------------------
 ;; Helper Functions
 ;;------------------------------------------------------------------------------
 
-(defun define-key-top-root (key command)
-  "Define `*top-map*' and `*root-map*' keys at the same time."
-  (define-key *top-map* (kbd (concat "s-" key)) command)
-  (define-key *root-map* (kbd key) command))
+ (defun define-key-top-root (key command)
+   "Define `*top-map*' and `*root-map*' keys at the same time."
+   (define-key *top-map* (kbd (concat "s-" key)) command)
+   (define-key *root-map* (kbd key) command))
 
 ;; (defmacro define-keymap-bindings (map &rest bindings)
 ;;   (let ((def (if (equal map "*top-map*")
@@ -52,267 +52,267 @@
 ;;       (run-shell-command (concat "command -v " command) t))
 ;;      0))
 
-(defun run-shell-command-from-home (cmd &optional collect-output-p)
-  "Call `run-shell-command' with the HOME env path appended to CMD."
-  (run-shell-command
-   (concatenate 'string (getenv "HOME") "/" cmd)
-   collect-output-p))
+ (defun run-shell-command-from-home (cmd &optional collect-output-p)
+   "Call `run-shell-command' with the HOME env path appended to CMD."
+   (run-shell-command
+    (concatenate 'string (getenv "HOME") "/" cmd)
+    collect-output-p))
 
 ;;------------------------------------------------------------------------------
 ;; Settings
 ;;------------------------------------------------------------------------------
 
-(set-font "-xos4-terminus-medium-r-normal--14-140-72-72-c-80-iso8859-15")
+ (set-font "-xos4-terminus-medium-r-normal--14-140-72-72-c-80-iso8859-15")
 
-(setf *colors*
-      '("#3F3F3F"                       ; black
-        "#705050"                       ; red
-        "#60B48A"                       ; green
-        "#DFAF8F"                       ; yellow
-        "#506070"                       ; blue
-        "#DC8CC3"                       ; magenta
-        "#8CD0D3"                       ; cyan
-        "#DCDCCC"))                     ; white
-(update-color-map (current-screen))
+ (setf *colors*
+       '("#3F3F3F"                      ; black
+         "#705050"                      ; red
+         "#60B48A"                      ; green
+         "#DFAF8F"                      ; yellow
+         "#506070"                      ; blue
+         "#DC8CC3"                      ; magenta
+         "#8CD0D3"                      ; cyan
+         "#DCDCCC"))                    ; white
+ (update-color-map (current-screen))
 
-(setf *bar-med-color* "^B^8")
-(setf *bar-hi-color* "^B^3")
-(setf *bar-crit-color* "^B^1")
+ (setf *bar-med-color* "^B^8")
+ (setf *bar-hi-color* "^B^3")
+ (setf *bar-crit-color* "^B^1")
 
-(setf *group-format* "%n: %t")
+ (setf *group-format* "%n: %t")
 ;;(setf *window-format* "%m%s%50t")
-(setf *window-format* "%t")
+ (setf *window-format* "%t")
 
-(setf *message-window-gravity* :top-right
-      *window-border-style* :thin
-      *message-window-padding* 4
-      *maxsize-border-width* 4
-      *normal-border-width* 4
-      *transient-border-width* 4
-      *float-window-border* 4
-      *float-window-title-height* 4
-      *float-window-modifier* :super
-      *rotation-focus-policy* :master-or-follow
-      *mouse-focus-policy* :click)
+ (setf *message-window-gravity* :top-right
+       *window-border-style* :thin
+       *message-window-padding* 4
+       *maxsize-border-width* 4
+       *normal-border-width* 4
+       *transient-border-width* 4
+       *float-window-border* 4
+       *float-window-title-height* 4
+       *float-window-modifier* :super
+       *rotation-focus-policy* :master-or-follow
+       *mouse-focus-policy* :click)
 
-(setf *run-or-raise-all-groups* t
-      *run-or-raise-all-screens* t)
+ (setf *run-or-raise-all-groups* t
+       *run-or-raise-all-screens* t)
 
 ;; set head-placement-policy, overflow-policy, master-layout, and
 ;; default-split-ratio
 ;;(set-dynamic-group-initial-values nil nil nil 0.7)
-(setf *default-group-type* "Dynamic")
+ (setf *default-group-type* "Dynamic")
 ;;(setf *dynamic-group-master-split-ratio* 0.7)
 
-(setf *input-window-gravity* :center
-      *message-window-input-gravity* :top-right
-      *input-completion-show-empty* t)
+ (setf *input-window-gravity* :center
+       *message-window-input-gravity* :top-right
+       *input-completion-show-empty* t)
 
 ;; groups (desktops)
-(when *initializing*
-  (gnew-dynamic "Editor")
-  (gkill-other)                    ; remove default group which is not dynamic
-  (gnew-dynamic "Term")            ; terminal/console
-  (gnewbg-dynamic "Email")         ; email clients
-  (gnewbg-dynamic "Browser")       ; browsers
-  (gnewbg-dynamic "File")          ; file managers
-  (gnewbg-dynamic "Social")        ; chat clients
-  (gnewbg-dynamic "Extra")         ; more chat clients
-  (gnewbg-dynamic "Dev")           ; development
-  (gnewbg-dynamic "Media")         ; image, video, and audio
-  (gnewbg-dynamic "Admin")         ; administration, games, general
-  (gnewbg-dynamic "Virtual1")      ; virtual machine 1
-  (gnewbg-dynamic "Virtual2"))     ; virtual machine 2
+ (when *initializing*
+   (gnew-dynamic "Editor")
+   (gkill-other)                   ; remove default group which is not dynamic
+   (gnew-dynamic "Term")           ; terminal/console
+   (gnewbg-dynamic "Email")        ; email clients
+   (gnewbg-dynamic "Browser")      ; browsers
+   (gnewbg-dynamic "File")         ; file managers
+   (gnewbg-dynamic "Social")       ; chat clients
+   (gnewbg-dynamic "Extra")        ; more chat clients
+   (gnewbg-dynamic "Dev")          ; development
+   (gnewbg-dynamic "Media")        ; image, video, and audio
+   (gnewbg-dynamic "Admin")        ; administration, games, general
+   (gnewbg-dynamic "Virtual1")     ; virtual machine 1
+   (gnewbg-dynamic "Virtual2"))    ; virtual machine 2
 
 ;;------------------------------------------------------------------------------
 ;; Keybindings
 ;;------------------------------------------------------------------------------
 
-(set-prefix-key (kbd "s-z"))
+ (set-prefix-key (kbd "s-z"))
 ;;(set-prefix-key (kbd "C-z"))
-(setf *help-keys* '("?" "c-h"))
+ (setf *help-keys* '("?" "c-h"))
 
-(setf *top-map* (make-sparse-keymap))
-(setf *root-map* (make-sparse-keymap))
-(setf *help-map* (make-sparse-keymap))
+ (setf *top-map* (make-sparse-keymap))
+ (setf *root-map* (make-sparse-keymap))
+ (setf *help-map* (make-sparse-keymap))
 
-(define-key *top-map* *escape-key* '*root-map*)
+ (define-key *top-map* *escape-key* '*root-map*)
 
-(define-key-top-root "h" '*help-map*)
+ (define-key-top-root "h" '*help-map*)
 
-(define-key-top-root ":" "eval")
+ (define-key-top-root ":" "eval")
 ;;(define-key-top-root "R" "reload")
-(define-key-top-root "R" "loadrc")
-(define-key-top-root "V" "version")
+ (define-key-top-root "R" "loadrc")
+ (define-key-top-root "V" "version")
 
-(define-key-top-root "C-s" "hsplit")
-(define-key-top-root "C-v" "vsplit")
-(define-key-top-root "C-f" "fullscreen")
-(define-key-top-root "C-i" "info")
-(define-key-top-root "C-r" "refresh")
-(define-key-top-root "C-RET" "raise-window")
+ (define-key-top-root "C-s" "hsplit")
+ (define-key-top-root "C-v" "vsplit")
+ (define-key-top-root "C-f" "fullscreen")
+ (define-key-top-root "C-i" "info")
+ (define-key-top-root "C-r" "refresh")
+ (define-key-top-root "C-RET" "raise-window")
 
 ;; frames and windows (applications)
 
-(define-key *top-map* (kbd "M-Tab") "next")
-(define-key *top-map* (kbd "M-ISO_Left_Tab") "prev")
-(define-key *top-map* (kbd "M-`") "other-window")
+ (define-key *top-map* (kbd "M-Tab") "next")
+ (define-key *top-map* (kbd "M-ISO_Left_Tab") "prev")
+ (define-key *top-map* (kbd "M-`") "other-window")
 
-(define-key-top-root "w" "windowlist")
-(define-key-top-root "W" "delete-window")
-(define-key-top-root "S-Delete" "kill-window")
-(define-key-top-root "P" "list-window-properties")
-(define-key-top-root "Left" "move-focus left")
-(define-key-top-root "Right" "move-focus right")
-(define-key-top-root "Up" "move-focus up")
-(define-key-top-root "Down" "move-focus down")
-(define-key-top-root "j" "move-focus left")
-(define-key-top-root "l" "move-focus right")
-(define-key-top-root "i" "move-focus up")
-(define-key-top-root "k" "move-focus down")
-(define-key-top-root "S-Left" "exchange-direction left")
-(define-key-top-root "S-Right" "exchange-direction right")
-(define-key-top-root "S-Up" "exchange-direction up")
-(define-key-top-root "S-Down" "exchange-direction down")
-(define-key-top-root "J" "exchange-direction left")
-(define-key-top-root "L" "exchange-direction right")
-(define-key-top-root "I" "exchange-direction up")
-(define-key-top-root "K" "exchange-direction down")
+ (define-key-top-root "w" "windowlist")
+ (define-key-top-root "W" "delete-window")
+ (define-key-top-root "S-Delete" "kill-window")
+ (define-key-top-root "P" "list-window-properties")
+ (define-key-top-root "Left" "move-focus left")
+ (define-key-top-root "Right" "move-focus right")
+ (define-key-top-root "Up" "move-focus up")
+ (define-key-top-root "Down" "move-focus down")
+ (define-key-top-root "j" "move-focus left")
+ (define-key-top-root "l" "move-focus right")
+ (define-key-top-root "i" "move-focus up")
+ (define-key-top-root "k" "move-focus down")
+ (define-key-top-root "S-Left" "exchange-direction left")
+ (define-key-top-root "S-Right" "exchange-direction right")
+ (define-key-top-root "S-Up" "exchange-direction up")
+ (define-key-top-root "S-Down" "exchange-direction down")
+ (define-key-top-root "J" "exchange-direction left")
+ (define-key-top-root "L" "exchange-direction right")
+ (define-key-top-root "I" "exchange-direction up")
+ (define-key-top-root "K" "exchange-direction down")
 
-(define-key-top-root "," "rotate-windows backward")
-(define-key-top-root "." "rotate-windows forward")
+ (define-key-top-root "," "rotate-windows backward")
+ (define-key-top-root "." "rotate-windows forward")
 
 ;; groups (desktops)
 
-(define-key *top-map* (kbd "s-TAB") "gnext")
-(define-key *top-map* (kbd "s-ISO_Left_Tab") "gprev")
-(define-key *top-map* (kbd "s-`") "gother")
+ (define-key *top-map* (kbd "s-TAB") "gnext")
+ (define-key *top-map* (kbd "s-ISO_Left_Tab") "gprev")
+ (define-key *top-map* (kbd "s-`") "gother")
 
-(define-key-top-root "C-w" "grouplist")
-(define-key-top-root "M-Left" "gprev")
-(define-key-top-root "M-Right" "gnext")
-(define-key-top-root "M-Up" "sprev")
-(define-key-top-root "M-Down" "snext")
-(define-key-top-root "M-j" "gprev")
-(define-key-top-root "M-l" "gnext")
-(define-key-top-root "M-i" "sprev")
-(define-key-top-root "M-k" "snext")
-(define-key-top-root "M-S-Left" "gprev-with-window")
-(define-key-top-root "M-S-Right" "gnext-with-window")
-(define-key-top-root "M-J" "gprev-with-window")
-(define-key-top-root "M-L" "gnext-with-window")
+ (define-key-top-root "C-w" "grouplist")
+ (define-key-top-root "M-Left" "gprev")
+ (define-key-top-root "M-Right" "gnext")
+ (define-key-top-root "M-Up" "sprev")
+ (define-key-top-root "M-Down" "snext")
+ (define-key-top-root "M-j" "gprev")
+ (define-key-top-root "M-l" "gnext")
+ (define-key-top-root "M-i" "sprev")
+ (define-key-top-root "M-k" "snext")
+ (define-key-top-root "M-S-Left" "gprev-with-window")
+ (define-key-top-root "M-S-Right" "gnext-with-window")
+ (define-key-top-root "M-J" "gprev-with-window")
+ (define-key-top-root "M-L" "gnext-with-window")
 
-(define-key-top-root "1" "gselect 1")
-(define-key-top-root "2" "gselect 2")
-(define-key-top-root "3" "gselect 3")
-(define-key-top-root "4" "gselect 4")
-(define-key-top-root "5" "gselect 5")
-(define-key-top-root "6" "gselect 6")
-(define-key-top-root "7" "gselect 7")
-(define-key-top-root "8" "gselect 8")
-(define-key-top-root "9" "gselect 9")
-(define-key-top-root "0" "gselect 10")
-(define-key-top-root "-" "gselect 11")
-(define-key-top-root "=" "gselect 12")
+ (define-key-top-root "1" "gselect 1")
+ (define-key-top-root "2" "gselect 2")
+ (define-key-top-root "3" "gselect 3")
+ (define-key-top-root "4" "gselect 4")
+ (define-key-top-root "5" "gselect 5")
+ (define-key-top-root "6" "gselect 6")
+ (define-key-top-root "7" "gselect 7")
+ (define-key-top-root "8" "gselect 8")
+ (define-key-top-root "9" "gselect 9")
+ (define-key-top-root "0" "gselect 10")
+ (define-key-top-root "-" "gselect 11")
+ (define-key-top-root "=" "gselect 12")
 
-(define-key-top-root "!" "gmove-and-follow 1")
-(define-key-top-root "@" "gmove-and-follow 2")
-(define-key-top-root "#" "gmove-and-follow 3")
-(define-key-top-root "$" "gmove-and-follow 4")
-(define-key-top-root "%" "gmove-and-follow 5")
-(define-key-top-root "^" "gmove-and-follow 6")
-(define-key-top-root "&" "gmove-and-follow 7")
-(define-key-top-root "*" "gmove-and-follow 8")
-(define-key-top-root "(" "gmove-and-follow 9")
-(define-key-top-root ")" "gmove-and-follow 10")
-(define-key-top-root "_" "gmove-and-follow 11")
-(define-key-top-root "+" "gmove-and-follow 12")
+ (define-key-top-root "!" "gmove-and-follow 1")
+ (define-key-top-root "@" "gmove-and-follow 2")
+ (define-key-top-root "#" "gmove-and-follow 3")
+ (define-key-top-root "$" "gmove-and-follow 4")
+ (define-key-top-root "%" "gmove-and-follow 5")
+ (define-key-top-root "^" "gmove-and-follow 6")
+ (define-key-top-root "&" "gmove-and-follow 7")
+ (define-key-top-root "*" "gmove-and-follow 8")
+ (define-key-top-root "(" "gmove-and-follow 9")
+ (define-key-top-root ")" "gmove-and-follow 10")
+ (define-key-top-root "_" "gmove-and-follow 11")
+ (define-key-top-root "+" "gmove-and-follow 12")
 
 ;; applications
 
-(define-key-top-root "M-t" "exec alacritty")
+ (define-key-top-root "M-t" "exec alacritty")
 
 ;;------------------------------------------------------------------------------
 ;; Application Groups (Desktops)
 ;;------------------------------------------------------------------------------
 
-(clear-window-placement-rules)
-(define-frame-preference "Editor"
-                         (0 :raise :lock :class "Editor"))
-(define-frame-preference "Email"
-                         (0 :raise :lock :class "thunderbird")
-                         (0 :raise :lock :class "betterbird")
-                         (1 :raise :lock :class "ms-outlook-nativefier"))
-(define-frame-preference "Browser"
-                         (0 :raise :lock :class "Brave-browser")
-                         (0 :raise :lock :class "vivaldi-stable")
-                         (1 :raise :lock :class "gopherus-sdl"))
-(define-frame-preference "File"
-                         (0 :raise :lock :class "Thunar")
-                         (0 :raise :lock :class "Pcmanfm")
-                         (0 :raise :lock :class "Spacefm")
-                         (0 :raise :lock :class "Org.gnome.Nautilus"))
-(define-frame-preference "Social"
-                         (0 :raise :lock :class "quassel")
-                         (1 :raise :lock :class "Slack")
-                         (2 :raise :lock :class "discord"))
-(define-frame-preference "Extra"
-                         (0 :raise :lock :class "nheko")
-                         (1 :raise :lock :class "dev.geopjr.Tuba")
-                         (2 :raise :lock :class "gajim")
-                         (3 :raise :lock :class "Tootle")
-                         (3 :raise :lock :class "Com.github.bleakgrey.tootle")
-                         (3 :raise :lock :class "Element")
-                         (3 :raise :lock :class "Hyperspace Desktop")
-                         (3 :raise :lock :class "Pidgin")
-                         (3 :raise :lock :class "android-messages-desktop")
-                         (3 :raise :lock :class "gossip")
-                         (3 :raise :lock :class "teams-for-linux"))
-(define-frame-preference "Dev"
-                         (0 :raise :lock :class "jetbrains-idea")
-                         (0 :raise :lock :class "jetbrains-idea-ce")
-                         (0 :raise :lock :class "jetbrains-studio")
-                         (1 :raise :lock :class "xyz.chatboxapp.app"))
-(define-frame-preference "Media"
-                         (0 :raise :lock :class "Chromium-browser")
-                         (0 :raise :lock :class "Google-chrome")
-                         (0 :raise :lock :class "Firefox")
-                         (0 :raise :lock :class "firefox")
-                         (0 :raise :lock :class "firefox-esr")
-                         (0 :raise :lock :class "LibreWolf")
-                         (0 :raise :lock :class "Lollypop")
-                         (1 :raise :lock :class "Qmmp")
-                         (1 :raise :lock :class "mplayer2")
-                         (2 :raise :lock :class "spotify")
-                         (3 :raise :lock :class "Gimp-2.10"))
-(define-frame-preference "Virtual1"
-                         (0 :raise :lock :class "windows-7"))
-(define-frame-preference "Virtual2"
-                         (0 :raise :lock :class "VirtualBox Manager")
-                         (1 :raise :lock :class "VirtualBox Machine"))
+ (clear-window-placement-rules)
+ (define-frame-preference "Editor"
+                          (0 :raise :lock :class "Editor"))
+ (define-frame-preference "Email"
+                          (0 :raise :lock :class "thunderbird")
+                          (0 :raise :lock :class "betterbird")
+                          (1 :raise :lock :class "ms-outlook-nativefier"))
+ (define-frame-preference "Browser"
+                          (0 :raise :lock :class "Brave-browser")
+                          (0 :raise :lock :class "vivaldi-stable")
+                          (1 :raise :lock :class "gopherus-sdl"))
+ (define-frame-preference "File"
+                          (0 :raise :lock :class "Thunar")
+                          (0 :raise :lock :class "Pcmanfm")
+                          (0 :raise :lock :class "Spacefm")
+                          (0 :raise :lock :class "Org.gnome.Nautilus"))
+ (define-frame-preference "Social"
+                          (0 :raise :lock :class "quassel")
+                          (1 :raise :lock :class "Slack")
+                          (2 :raise :lock :class "discord"))
+ (define-frame-preference "Extra"
+                          (0 :raise :lock :class "nheko")
+                          (1 :raise :lock :class "dev.geopjr.Tuba")
+                          (2 :raise :lock :class "gajim")
+                          (3 :raise :lock :class "Tootle")
+                          (3 :raise :lock :class "Com.github.bleakgrey.tootle")
+                          (3 :raise :lock :class "Element")
+                          (3 :raise :lock :class "Hyperspace Desktop")
+                          (3 :raise :lock :class "Pidgin")
+                          (3 :raise :lock :class "android-messages-desktop")
+                          (3 :raise :lock :class "gossip")
+                          (3 :raise :lock :class "teams-for-linux"))
+ (define-frame-preference "Dev"
+                          (0 :raise :lock :class "jetbrains-idea")
+                          (0 :raise :lock :class "jetbrains-idea-ce")
+                          (0 :raise :lock :class "jetbrains-studio")
+                          (1 :raise :lock :class "xyz.chatboxapp.app"))
+ (define-frame-preference "Media"
+                          (0 :raise :lock :class "Chromium-browser")
+                          (0 :raise :lock :class "Google-chrome")
+                          (0 :raise :lock :class "Firefox")
+                          (0 :raise :lock :class "firefox")
+                          (0 :raise :lock :class "firefox-esr")
+                          (0 :raise :lock :class "LibreWolf")
+                          (0 :raise :lock :class "Lollypop")
+                          (1 :raise :lock :class "Qmmp")
+                          (1 :raise :lock :class "mplayer2")
+                          (2 :raise :lock :class "spotify")
+                          (3 :raise :lock :class "Gimp-2.10"))
+ (define-frame-preference "Virtual1"
+                          (0 :raise :lock :class "windows-7"))
+ (define-frame-preference "Virtual2"
+                          (0 :raise :lock :class "VirtualBox Manager")
+                          (1 :raise :lock :class "VirtualBox Machine"))
 
 ;;------------------------------------------------------------------------------
 ;; Mode-Line (System Tray)
 ;;------------------------------------------------------------------------------
 
 ;;(add-to-load-path "${HOME}/src/stumpwm-contrib/modeline/stumptray")
-(ql:quickload "xembed")
-(setf *mode-line-position* :bottom
-      *mode-line-background-color* (car *colors*)
-      *mode-line-foreground-color* (car (last *colors*))
-      *mode-line-pad-x* 4
-      *mode-line-pad-y* 4
-      *mode-line-timeout* 2
-      *group-format* "%t"
-      *window-format* "%n: %30t"
-      *time-modeline-string* "%a %Y-%m-%d %H:%M")
+ (ql:quickload "xembed")
+ (setf *mode-line-position* :bottom
+       *mode-line-background-color* (car *colors*)
+       *mode-line-foreground-color* (car (last *colors*))
+       *mode-line-pad-x* 4
+       *mode-line-pad-y* 4
+       *mode-line-timeout* 2
+       *group-format* "%t"
+       *window-format* "%n: %30t"
+       *time-modeline-string* "%a %b %d %H:%M")
 ;;(run-commands "mode-line")
 ;;(toggle-mode-line (current-screen))
-(loop for screen in *screen-list* do
-      (loop for head in (screen-heads screen) do
-            (enable-mode-line screen head t)))
-(load-module "stumptray")
-(stumptray:stumptray)
+ (loop for screen in *screen-list* do
+       (loop for head in (screen-heads screen) do
+             (enable-mode-line screen head t)))
+ (load-module "stumptray")
+ (stumptray:stumptray)
 
 ;;------------------------------------------------------------------------------
 ;; Modules
@@ -320,14 +320,14 @@
 
 ;; gaps
 ;;(add-to-load-path "${HOME}/src/stumpwm-contrib/util/swm-gaps")
-(load-module "swm-gaps")
-(setf swm-gaps:*head-gaps-size* 0)      ; monitor borders
-(setf swm-gaps:*inner-gaps-size* 4)     ; window borders
-(setf swm-gaps:*outer-gaps-size* 0)     ; additional outer window borders
-(run-commands "toggle-gaps")
+ (load-module "swm-gaps")
+ (setf swm-gaps:*head-gaps-size* 0)     ; monitor borders
+ (setf swm-gaps:*inner-gaps-size* 4)    ; window borders
+ (setf swm-gaps:*outer-gaps-size* 0)    ; additional outer window borders
+ (run-commands "toggle-gaps")
 
-;; ;; ttf fonts
-;; ;;(add-to-load-path "${HOME}/src/stumpwm-contrib/util/ttf-fonts")
+;;;; ttf fonts
+;;;;(add-to-load-path "${HOME}/src/stumpwm-contrib/util/ttf-fonts")
 ;; (ql:quickload "clx-truetype")
 ;; (load-module "ttf-fonts")
 ;; (setf xft:*font-dirs* '("${HOME}/.local/share/fonts"))
@@ -339,9 +339,9 @@
 ;; Launch Applications
 ;;------------------------------------------------------------------------------
 
-(when *initializing*
+ (when *initializing*
   ;; standard window manager applications
-  (run-shell-command-from-home "bin/run-wm-applications"))
+   (run-shell-command-from-home "bin/run-wm-applications"))
 
 ;;==============================================================================
 ;; End of File

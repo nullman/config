@@ -20,8 +20,8 @@ apps=$(cat "${HOME}/.applications" | sed -n '/^[^ #]/p')
 [ "$(hostname)" == "work" ] && keyring get SecretService "$(id -un)" 2>/dev/null &
 
 cmd="GDK_BACKEND=x11 yad --width=512 --height=512 --list --checklist --column 'Run' --column 'Application' 2>/dev/null"
-for app in ${apps} ; do
-    if [ ! -f "${HOME}/.dev" ] || [ "${app}" == "alacritty" ] || [ "${app}" == "emacs" ] ; then
+for app in ${apps}; do
+    if [ ! -f "${HOME}/.dev" ] || [ "${app}" == "alacritty" ] || [ "${app}" == "emacs" ]; then
         cmd="${cmd} TRUE '${app}'"
     else
         cmd="${cmd} FALSE '${app}'"
@@ -32,18 +32,18 @@ done
 #eval "${cmd} 2>/dev/null"
 launch=$(eval "${cmd} 2>/dev/null")
 
-for line in ${launch} ; do
+for line in ${launch}; do
     app=$(echo "${line}" | sed 's/^.*|\(.*\)|$/\1/')
     #echo "app: ${app}"
-    if [ "$(uname -n)" == "dom0" ] ; then
+    if [ "$(uname -n)" == "dom0" ]; then
         #echo "dom0: ${app}"
         vm=$(echo "${app}" | sed 's/:.*$//')
         app=$(echo "${app}" | sed 's/^.*://')
         #echo "vm: ${vm}, app: ${app}"
-        if [ "${vm}" == "dom0" ] ; then
+        if [ "${vm}" == "dom0" ]; then
             "${app}" >/dev/null 2>&1 &
-        elif [ "${vm}" == "personal" ] ; then
-            if [ "${app}" == "alacritty" ] ; then
+        elif [ "${vm}" == "personal" ]; then
+            if [ "${app}" == "alacritty" ]; then
                 qvm-run personal "alacritty -e \${HOME}/bin/run-screen" >/dev/null 2>&1 & disown
             else
                 qvm-run personal "${app}" >/dev/null 2>&1 & disown
@@ -54,10 +54,10 @@ for line in ${launch} ; do
     else
         #echo "${app}"
         if [ "${app::${#flatpak}}" == "${flatpak}" ] && \
-               ! pgrep -u "${USER}" -f "${app:${#flatpak}}" >/dev/null ; then
+               ! pgrep -u "${USER}" -f "${app:${#flatpak}}" >/dev/null; then
             eval "${app}" >/dev/null 2>&1 & disown
-        elif ! pgrep -u "${USER}" -f "${app}" >/dev/null ; then
-            if [ "${app}" == "alacritty" ] ; then
+        elif ! pgrep -u "${USER}" -f "${app}" >/dev/null; then
+            if [ "${app}" == "alacritty" ]; then
                 alacritty -e "${HOME}/bin/run-screen" >/dev/null 2>&1 & disown
                 sleep 1
             else

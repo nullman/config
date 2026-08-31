@@ -2,7 +2,7 @@
 data=$(${HOME}/bin/system-bar-weather full "$@")
 
 icon=$(echo "${data}" | sed -n 's/^Icon: //p')
-temp=$(echo "${data}" | sed -n 's/^Temperature: //p' | sed 's/^\+// ; s/°[FC]$//')
+temp=$(echo "${data}" | sed -n 's/^Temperature: //p' | sed 's/^\+//; s/°[FC]$//')
 desc=$(echo "${data}" | sed -n 's/^Description: //p')
 wind=$(echo "${data}" | sed -n 's/^Wind: //p')
 prec=$(echo "${data}" | sed -n 's/^Precipitation: //p')

@@ -14,7 +14,7 @@ file=${HOME}/.ssh-agent-info-$(uname -n)
 ssh-agent > ${file}
 chmod 600 ${file}
 source ${file}
-for i in identity id_dsa id_rsa ; do
+for i in identity id_dsa id_rsa; do
     ssh-add ${HOME}/.ssh/${i}
 done
 

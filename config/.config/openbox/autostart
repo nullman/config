@@ -16,8 +16,8 @@ _command() {
 
 # run executable command if found in the path and not already running
 _once() {
-    if command -v "$1" >/dev/null 2>&1 && ! pidof -q "$1" ; then
-        "$@" &
+    if command -v "$1" >/dev/null 2>&1 && ! pidof -q "$1"; then
+        "$@"
     fi
 }
 

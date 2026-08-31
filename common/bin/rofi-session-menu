@@ -29,41 +29,41 @@ EOF
 }
 
 # handle no arguments given
-if [ $# -lt 1 ] ; then
+if [ $# -lt 1 ]; then
     _usage
     exit 1
 fi
 
 # handle command line arguments
-while getopts ":drwsh" opt ; do
+while getopts ":drwsh" opt; do
     case "${opt}" in
         d)
             rofi -modi drun -show drun
-            ;;
+           ;;
         r)
             rofi -modi run -show run
-            ;;
+           ;;
         w)
             rofi -modi window -show window
-            ;;
+           ;;
         s)
             # symbols:  |   󰈆 󰈇  | ⏾ | ⏼ |    | ⏻
             sel=$(printf "\tLock\n󰈇\tLogout\n⏾\tSuspend\n⏾⏼\tSuspend/Hibernate\n⏼\tHibernate\n\tReboot\n⏻\tShutdown" | \
                       rofi -dmenu -i -p 'Session' -width 20 -padding 20 -lines 4)
             case "${sel}" in
-                *Lock) if [ "${XDG_SESSION_TYPE}" == "wayland" ] ; then swaylock ; else xscreensaver-command -lock ; fi ;;
-                *Logout) loginctl terminate-session $(loginctl session-status | head -n 1 | awk '{print $1}') ;;
-                *Suspend) systemctl suspend ;;
-                *Suspend/Hibernate) systemctl suspend-then-hibernate ;;
-                *Hibernate) systemctl hibernate ;;
-                *Reboot) systemctl reboot ;;
-                *Shutdown) systemctl poweroff ;;
+                *Lock) if [ "${XDG_SESSION_TYPE}" == "wayland" ]; then swaylock; else xscreensaver-command -lock; fi;;
+                *Logout) loginctl terminate-session $(loginctl session-status | head -n 1 | awk '{print $1}');;
+                *Suspend) systemctl suspend;;
+                *Suspend/Hibernate) systemctl suspend-then-hibernate;;
+                *Hibernate) systemctl hibernate;;
+                *Reboot) systemctl reboot;;
+                *Shutdown) systemctl poweroff;;
             esac
-            ;;
+           ;;
         h)
             _usage
             exit 0
-            ;;
+           ;;
         *)
 
             echo -e "Invalid option: -${OPTARG}" >&2

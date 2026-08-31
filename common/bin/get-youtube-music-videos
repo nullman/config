@@ -408,13 +408,13 @@ fetch() {
     shift
     local list=("${@}")
     mkdir -p "${dir}"
-    for ((x = 0; x < ${#list[@]}; x += 1)) ; do
-        video=$(echo "${list[$x]}" | sed 's/ *|/|/g ; s/| */|/g')
+    for ((x = 0; x < ${#list[@]}; x += 1)); do
+        video=$(echo "${list[$x]}" | sed 's/ *|/|/g; s/| */|/g')
         name=$(echo "${video}" | cut -d '|' -f 1)
         url=$(echo "${video}" | cut -d '|' -f 2)
-        escname=$(echo ${name} | sed 's/\[/\\\[/g ; s/\]/\\\]/g')
+        escname=$(echo ${name} | sed 's/\[/\\\[/g; s/\]/\\\]/g')
         echo "| ${name} | ${url} |"
-        if [[ -z $(find "${dir}" -name "${escname}\.*") ]] ; then
+        if [[ -z $(find "${dir}" -name "${escname}\.*") ]]; then
             cmd="${ytdlp} \
             --sleep-requests 0.8 \
             --sleep-interval \$((8 + RANDOM % 5)) \

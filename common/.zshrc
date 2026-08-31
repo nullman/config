@@ -64,9 +64,9 @@ POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
 # plugins
 zp="${HOME}/.zsh-plugins"
 zpb="${HOME}/.zsh-plugins-bundle"
-if [ -f "${zp}" ] ; then
+if [ -f "${zp}" ]; then
     # build plugin bundle if needed
-    if [ ! -f "${zpb}" ] || [ "${zpb}" -ot "${zp}" ] || [ $(wc -c < "${zpb}") -eq 0 ] ; then
+    if [ ! -f "${zpb}" ] || [ "${zpb}" -ot "${zp}" ] || [ $(wc -c < "${zpb}") -eq 0 ]; then
         antibody bundle < "${zp}" > "${zpb}"
     fi
 
@@ -75,7 +75,7 @@ if [ -f "${zp}" ] ; then
 fi
 
 # set prompt
-if [ -n "${INSIDE_EMACS}" ] ; then
+if [ -n "${INSIDE_EMACS}" ]; then
     # use simple prompt, if run from within emacs
     [ -f "${HOME}/.p10k-simple.zsh" ] && source "${HOME}/.p10k-simple.zsh" 2>&1
     #export TERM=eterm-256color
@@ -89,7 +89,7 @@ else
 fi
 
 # fix home/end keys in screen/tmux
-if [ -n "${STY}" ] || [ -n "${TMUX}" ] ; then
+if [ -n "${STY}" ] || [ -n "${TMUX}" ]; then
     bindkey "\e[1~" beginning-of-line
     bindkey "\e[4~" end-of-line
 fi
@@ -98,13 +98,13 @@ fi
 # CTRL-T  paste the selected file path into the command line
 # CTRL-R  paste the selected command from history into the command line
 # ALT-C   cd into the selected directory
-if [ -z "${INSIDE_EMACS}" ] ; then
-    if [ "${os}" == "Darwin" ] ; then
+if [ -z "${INSIDE_EMACS}" ]; then
+    if [ "${os}" == "Darwin" ]; then
         [ -d "/usr/local/opt/fzf/bin" ] && [ ! "${PATH}" == */usr/local/opt/fzf/bin* ] && export PATH="${PATH}:/usr/local/opt/fzf/bin"
         [ -f "/usr/local/opt/fzf/shell/key-bindings.zsh" ] && source "/usr/local/opt/fzf/shell/key-bindings.zsh" 2>&1
         [ -f "/usr/local/opt/fzf/shell/completion.zsh" ] && source "/usr/local/opt/fzf/shell/completion.zsh" 2>&1
-    elif $(uname -v | grep -q 'NixOS') ; then
-        if _command fzf-share ; then
+    elif $(uname -v | grep -q 'NixOS'); then
+        if _command fzf-share; then
             source "$(fzf-share)/key-bindings.zsh"
             source "$(fzf-share)/completion.zsh"
         fi
@@ -153,7 +153,7 @@ bindkey '^[[1;5C' forward-word    # ctrl+down key to move forward one word
 bindkey '^H' backward-kill-word   # ctrl+backspace key to delete previous word
 bindkey '^[[Z' undo               # shift+tab key to undo
 
-if [ "${os}" == "Linux" ] ; then
+if [ "${os}" == "Linux" ]; then
     ## bind up and down arrow keys to history substring search
     #[ -n "${terminfo[kcuu1]}" ] && bindkey "${terminfo[kcuu1]}" history-substring-search-up # [up] to search substring history backwards
     #[ -n "${terminfo[kcud1]}" ] && bindkey "${terminfo[kcud1]}" history-substring-search-down # [down] to search substring history forwards

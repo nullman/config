@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-if [ $# -ne 2 ] || ([ "$1" != "status" ] && [ "$1" != "icon" ] && [ "$1" != "both" ] && [ "$1" != "full" ]) ; then
+if [ $# -ne 2 ] || ([ "$1" != "status" ] && [ "$1" != "icon" ] && [ "$1" != "both" ] && [ "$1" != "full" ]); then
     echo "Usage: $(basename $0) (status|icon|both|full) LOCATION"
     echo "  status    Return short text description"
     echo "  icon      Return icon and temperature"
@@ -22,43 +22,43 @@ uv=$(echo "${data}" | cut -d '|' -f 6)
 moon=$(echo "${data}" | cut -d '|' -f 7)
 
 case "${desc}" in
-    "Clear") icon="" ;;
-    "Cloudy") icon="" ;;
-    "Fog") icon="" ;;
-    "Haze") icon="" ;;
-    "Light Rain") icon="" ;;
-    "Light Snow") icon="" ;;
-    "Mist") icon="?" ;;
-    "Overcast") icon="" ;;
-    "Partly Cloudy") icon="" ;;
-    "Patchy Light Rain") icon="" ;;
-    "Patchy Rain Nearby") icon="" ;;
-    "Smoke") icon="" ;;
-    "Sunny") icon="" ;;
+    "Clear") icon="";;
+    "Cloudy") icon="";;
+    "Fog") icon="";;
+    "Haze") icon="";;
+    "Light Rain") icon="";;
+    "Light Snow") icon="";;
+    "Mist") icon="?";;
+    "Overcast") icon="";;
+    "Partly Cloudy") icon="";;
+    "Patchy Light Rain") icon="";;
+    "Patchy Rain Nearby") icon="";;
+    "Smoke") icon="";;
+    "Sunny") icon="";;
     *)
-        #notify-send -u critical "Unknown weather: ${desc}"
+        #notify-send --urgency critical "Unknown weather: ${desc}"
         #curl --silent v2d.wttr.in/san_diego?u | sed -n '/Weather:/p' >> ~/weather-errors
         echo "${data}" >> ~/weather-errors
-        ;;
+       ;;
 esac
 
 case "moon" in
-    "🌑") moon="" ;;
-    "🌒") moon="" ;;
-    "🌓") moon="" ;;
-    "🌔") moon="" ;;
-    "🌕") moon="" ;;
-    "🌖") moon="" ;;
-    "🌗") moon="" ;;
-    "🌘") moon="" ;;
+    "🌑") moon="";;
+    "🌒") moon="";;
+    "🌓") moon="";;
+    "🌔") moon="";;
+    "🌕") moon="";;
+    "🌖") moon="";;
+    "🌗") moon="";;
+    "🌘") moon="";;
 esac
 
 #echo "${data}"
 
 case "${type}" in
-    "status") printf '%s  %s' "${temp}" "${desc}" ;;
-    "icon") printf '%s  %s' "${icon}" "${temp}" ;;
-    "both") printf '%s  %s  %s' "${icon}" "${temp}" "${desc}" ;;
+    "status") printf '%s  %s' "${temp}" "${desc}";;
+    "icon") printf '%s  %s' "${icon}" "${temp}";;
+    "both") printf '%s  %s  %s' "${icon}" "${temp}" "${desc}";;
     "full") printf 'Icon: %s\nTemperature: %s\nDescription: %s\nWind: %s\nPrecipitation: %s\nPressure: %s\nUV: %s\nMoon: %s\n' \
-                   "${icon}" "${temp}" "${desc}" "${wind}" "${prec}" "${pres}" "${uv}" "${moon}" ;;
+                   "${icon}" "${temp}" "${desc}" "${wind}" "${prec}" "${pres}" "${uv}" "${moon}";;
 esac

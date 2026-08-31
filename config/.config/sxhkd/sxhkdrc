@@ -28,7 +28,7 @@
 #   HOTKEY
 #       [;]COMMAND
 #
-#   HOTKEY      := CHORD_1 ; CHORD_2 ; ... ; CHORD_n
+#   HOTKEY      := CHORD_1; CHORD_2; ...; CHORD_n
 #   CHORD_i     := [MODIFIERS_i +] [~][@]KEYSYM_i
 #   MODIFIERS_i := MODIFIER_i1 + MODIFIER_i2 + ... + MODIFIER_ik
 #
@@ -330,13 +330,13 @@ super + shift + r
 
 # # reload system tray (xfce-panel)
 # super + shift + r
-#     ((pkill -u ${USER} xfce4-panel ; xfce4-panel && sleep 1 && \
+#     ((pkill -u ${USER} xfce4-panel; xfce4-panel && sleep 1 && \
 #     xdo below -t $(xdo id -n root) $(xdo id -N xfce4-panel)) &) && \
 #     notify-send --expire-time=3000 'Reloading XFCE Panel'
 
 # # reload system tray (tint2)
 # super + shift + t
-#     ((pkill -u ${USER} tint2 ; tint2 && sleep 1 && \
+#     ((pkill -u ${USER} tint2; tint2 && sleep 1 && \
 #     xdo below -t $(xdo id -n root) $(xdo id -N tint2)) &) && \
 #     notify-send --expire-time=3000 'Reloading Tint'
 

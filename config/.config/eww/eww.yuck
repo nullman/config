@@ -14,130 +14,130 @@
 ;; Variables
 ;;------------------------------------------------------------------------------
 
-(defvar calendar-is-open "false")
-(defvar systray-is-open "false")
-(defvar session-is-open "false")
+ (defvar calendar-is-open "false")
+ (defvar systray-is-open "false")
+ (defvar session-is-open "false")
 
 ;;------------------------------------------------------------------------------
 ;; Polls
 ;;------------------------------------------------------------------------------
 
-(defpoll active-desktop :interval "500ms" "bspc query -D -d --names")
+ (defpoll active-desktop :interval "500ms" "bspc query -D -d --names")
 
-(defpoll music-info :interval "2s" "~/bin/mpd-playing")
+ (defpoll music-info :interval "2s" "~/bin/mpd-playing")
 ;;(defpoll music-info :interval "2s" "~/bin/mpd-playing | awk -F ' - ' '{ if (length($2) <= 40) { print $2 } else { print substr($2, 0, 40)\"...\" } }'")
 ;; symbols:    
-(defpoll music-state :interval "2s" "mpc | sed -n 2p | sed 's/^\[\(.*\)\].*$/\1/' | grep -q '^\\[playing\\]' && echo '' || echo ''")
+ (defpoll music-state :interval "2s" "mpc | sed -n 2p | sed 's/^\[\(.*\)\].*$/\1/' | grep -q '^\\[playing\\]' && echo '' || echo ''")
 
-(defpoll mute :interval "500ms" "pamixer --get-mute")
-(defpoll volume :interval "500ms" "[ $(pamixer --get-mute) == true ] && echo '0' || pamixer --get-volume")
-(defpoll backlight :interval "3600s" "xbacklight -get")
-(defpoll brightness :interval "500ms" "light -G | sed 's/\.[0-9]*$//'")
+ (defpoll mute :interval "500ms" "pamixer --get-mute")
+ (defpoll volume :interval "500ms" "[ $(pamixer --get-mute) == true ] && echo '0' || pamixer --get-volume")
+ (defpoll backlight :interval "3600s" "xbacklight -get")
+ (defpoll brightness :interval "500ms" "light -G | sed 's/\.[0-9]*$//'")
 
-(defpoll weather :interval "1800s" "~/bin/system-bar-weather icon 92116")
-(defpoll weather-status :interval "1800s" "~/bin/system-bar-weather status 92116")
+ (defpoll weather :interval "1800s" "~/bin/system-bar-weather icon 92116")
+ (defpoll weather-status :interval "1800s" "~/bin/system-bar-weather status 92116")
 
 ;;(defpoll weather :interval "600s" "curl --silent 'wttr.in/San+Diego?u&format=%c%t'")
 ;;(defpoll weather-status :interval "600s" "curl --silent 'wttr.in/San+Diego?u&format=%C+%t'")
 
-(defpoll wifi-strength :interval "2s" "nmcli -t -f SIGNAL,ACTIVE device wifi | awk -F ':' '{ if ($2 == \"yes\") print $1 }'")
-(defpoll wifi-status :interval "2s" "nmcli -t -f WIFI radio")
+ (defpoll wifi-strength :interval "2s" "nmcli -t -f SIGNAL,ACTIVE device wifi | awk -F ':' '{ if ($2 == \"yes\") print $1 }'")
+ (defpoll wifi-status :interval "2s" "nmcli -t -f WIFI radio")
 ;;(defpoll wifi-strength :interval "2s" "iwctl station wlan0 show | awk '{ if ($1 == \"RSSI\") print $2 }'")
 ;;(defpoll wifi-status :interval "2s" "iwctl device wlan0 show | awk '{ if ($3 == \"Powered\") print $4 }'")
 
-(defpoll bt-status :interval "2s" "[ $(cat /sys/class/bluetooth/hci0/rfkill*/state) -eq 1 ] && printf 'enabled' || printf 'disabled'")
+ (defpoll bt-status :interval "2s" "[ $(cat /sys/class/bluetooth/hci0/rfkill*/state) -eq 1 ] && printf 'enabled' || printf 'disabled'")
 
-(defpoll time :interval "500ms" "date '+%a %Y-%m-%d %H:%M'")
+ (defpoll time :interval "500ms" "date '+%a %Y-%m-%d %H:%M'")
 ;;(defpoll hour :interval "500ms" "date '+%I'")
-(defpoll min :interval "500ms" "date '+%M'")
-(defpoll year :interval "3600s" "date '+%Y'")
-(defpoll month :interval "3600s" "date '+%m'")
-(defpoll day :interval "3600s" "date '+%d'")
+ (defpoll min :interval "500ms" "date '+%M'")
+ (defpoll year :interval "3600s" "date '+%Y'")
+ (defpoll month :interval "3600s" "date '+%m'")
+ (defpoll day :interval "3600s" "date '+%d'")
 
 ;;------------------------------------------------------------------------------
 ;; Helper Widgets
 ;;------------------------------------------------------------------------------
 
-(defwidget metric [label value onchange ?tooltip]
-           (box :class "metric"
-                :visible {value == "" ? "false" : "true"}
-                :orientation "h"
-                :space-evenly "false"
-                :tooltip tooltip
-                (box :class "label" label)
-                (scale :min 0
-                       :max 101
-                       :active {onchange != ""}
-                       :value {value == "" ? "0" : value}
-                       :onchange onchange)))
+ (defwidget metric [label value onchange ?tooltip]
+            (box :class "metric"
+                 :visible {value == "" ? "false" : "true"}
+                 :orientation "h"
+                 :space-evenly "false"
+                 :tooltip tooltip
+                 (box :class "label" label)
+                 (scale :min 0
+                        :max 101
+                        :active {onchange != ""}
+                        :value {value == "" ? "0" : value}
+                        :onchange onchange)))
 
-(defwidget metric-onclick [label value onchange onclick ?onrightclick ?tooltip]
-           (box :class "metric"
-                :visible {value == "" ? "false" : "true"}
-                :orientation "h"
-                :space-evenly "false"
-                :tooltip tooltip
-                (box :class "label"
-                     (button :onclick onclick
-                             :onrightclick onrightclick
-                             label))
-                (scale :min 0
-                       :max 101
-                       :active {onchange != ""}
-                       :value {value == "" ? "0" : value}
-                       :onchange onchange)))
+ (defwidget metric-onclick [label value onchange onclick ?onrightclick ?tooltip]
+            (box :class "metric"
+                 :visible {value == "" ? "false" : "true"}
+                 :orientation "h"
+                 :space-evenly "false"
+                 :tooltip tooltip
+                 (box :class "label"
+                      (button :onclick onclick
+                              :onrightclick onrightclick
+                              label))
+                 (scale :min 0
+                        :max 101
+                        :active {onchange != ""}
+                        :value {value == "" ? "0" : value}
+                        :onchange onchange)))
 
-(defwidget workspace [label value onclick ?onrightclick ?tooltip]
-           (box :class {value == active-desktop ? "highlight" : "label"}
-                :tooltip tooltip
-                (button :onclick onclick :onrightclick onrightclick label)))
+ (defwidget workspace [label value onclick ?onrightclick ?tooltip]
+            (box :class {value == active-desktop ? "highlight" : "label"}
+                 :tooltip tooltip
+                 (button :onclick onclick :onrightclick onrightclick label)))
 
 ;;------------------------------------------------------------------------------
 ;; Item Widgets
 ;;------------------------------------------------------------------------------
 
-(defwidget volume [mute volume]
-           (metric-onclick
+ (defwidget volume [mute volume]
+            (metric-onclick
             ;; symbols: 🔊       󰕾 󰕿 󰖀 | 🔇 󰖁
-            :label {mute == "true" ? "󰖁" : "󰖀"}
-            :value volume
-            :onchange "pactl -- set-sink-volume 0 {}%"
-            :onclick "pactl -- set-sink-mute 0 toggle"
-            :onrightclick "pavucontrol & disown"
-            :tooltip "Volume: ${volume}%"))
+             :label {mute == "true" ? "󰖁" : "󰖀"}
+             :value volume
+             :onchange "pactl -- set-sink-volume 0 {}%"
+             :onclick "pactl -- set-sink-mute 0 toggle"
+             :onrightclick "pavucontrol & disown"
+             :tooltip "Volume: ${volume}%"))
 
-(defwidget battery [status capacity]
-           (box :class "label"
-                :visible {capacity == "" ? "false" : "true"}
-                :tooltip "${capacity}%, ${status}"
+ (defwidget battery [status capacity]
+            (box :class "label"
+                 :visible {capacity == "" ? "false" : "true"}
+                 :tooltip "${capacity}%, ${status}"
                 ;; symbols: 󰁺 󰁻 󰁼 󰁽 󰁾 󰁿 󰂀 󰂁 󰂂 󰁹 󰂆 󰂇 󰂈 󰂉 󰂊 󰂋 󰂅 󰂄     
-                (label :text {capacity == "" ? " " :
-                       status == "Charging" && capacity < 18 ? "󰂆" :
-                       status == "Charging" && capacity < 30 ? "󰂇" :
-                       status == "Charging" && capacity < 42 ? "󰂈" :
-                       status == "Charging" && capacity < 54 ? "󰂉" :
-                       status == "Charging" && capacity < 66 ? "󰂊" :
-                       status == "Charging" && capacity < 78 ? "󰂋" :
-                       status == "Charging" && capacity < 90 ? "󰂅" :
-                       status == "Charging" ? "󰁹" :
-                       capacity < 10 ? "󰁺" :
-                       capacity < 20 ? "󰁻" :
-                       capacity < 30 ? "󰁼" :
-                       capacity < 40 ? "󰁽" :
-                       capacity < 50 ? "󰁾" :
-                       capacity < 60 ? "󰁿" :
-                       capacity < 70 ? "󰂀" :
-                       capacity < 80 ? "󰂁" :
-                       capacity < 90 ? "󰂂" : "󰁹"})))
+                 (label :text {capacity == "" ? " " :
+                        status == "Charging" && capacity < 18 ? "󰂆" :
+                        status == "Charging" && capacity < 30 ? "󰂇" :
+                        status == "Charging" && capacity < 42 ? "󰂈" :
+                        status == "Charging" && capacity < 54 ? "󰂉" :
+                        status == "Charging" && capacity < 66 ? "󰂊" :
+                        status == "Charging" && capacity < 78 ? "󰂋" :
+                        status == "Charging" && capacity < 90 ? "󰂅" :
+                        status == "Charging" ? "󰁹" :
+                        capacity < 10 ? "󰁺" :
+                        capacity < 20 ? "󰁻" :
+                        capacity < 30 ? "󰁼" :
+                        capacity < 40 ? "󰁽" :
+                        capacity < 50 ? "󰁾" :
+                        capacity < 60 ? "󰁿" :
+                        capacity < 70 ? "󰂀" :
+                        capacity < 80 ? "󰂁" :
+                        capacity < 90 ? "󰂂" : "󰁹"})))
 
-;; ;; iwgtk
+;;;; iwgtk
 ;; (defwidget wifi [status strength]
 ;;            (box :class "label"
-;;                 ;;:visible {strength == "" ? "false" : "true"}
+;;                ;;:visible {strength == "" ? "false" : "true"}
 ;;                 :tooltip "WiFi strength: ${strength} dBm"
 ;;                 (button :onclick {status == "on" ? "iwctl device wlan0 set-property Powered off" : "iwctl device wlan0 set-property Powered on"}
 ;;                         :onrightclick "iwgtk & disown"
-;;                         ;; symbols: 󰤮 󰤯 󰤟 󰤢 󰤥 󰤨 󰖩 󰑫 󰘊  
+;;                        ;; symbols: 󰤮 󰤯 󰤟 󰤢 󰤥 󰤨 󰖩 󰑫 󰘊  
 ;;                         (label :text {strength == "" ? "󰤮" :
 ;;                                strength < -90 ? "󰤯" :
 ;;                                strength < -80 ? "󰤟" :
@@ -145,135 +145,135 @@
 ;;                                strength < -67 ? "󰤥" : "󰤨"}))))
 
 ;; network manager
-(defwidget wifi [status strength]
-           (box :class "label"
+ (defwidget wifi [status strength]
+            (box :class "label"
                 ;;:visible {strength == "" ? "false" : "true"}
-                :tooltip "WiFi strength: ${strength}%"
-                (button :onclick {status == "enabled" ? "nmcli radio wifi off" : "nmcli radio wifi on"}
-                        :onrightclick "nm-connection-editor & disown"
+                 :tooltip "WiFi strength: ${strength}%"
+                 (button :onclick {status == "enabled" ? "nmcli radio wifi off" : "nmcli radio wifi on"}
+                         :onrightclick "nm-connection-editor & disown"
                         ;; symbols: 󰤮 󰤯 󰤟 󰤢 󰤥 󰤨 󰖩 󰑫 󰘊  
-                        (label :text {strength == "" ? "󰤮" :
-                               strength < 21 ? "󰤯" :
-                               strength < 41 ? "󰤟" :
-                               strength < 61 ? "󰤢" :
-                               strength < 81 ? "󰤥" : "󰤨"}))))
+                         (label :text {strength == "" ? "󰤮" :
+                                strength < 21 ? "󰤯" :
+                                strength < 41 ? "󰤟" :
+                                strength < 61 ? "󰤢" :
+                                strength < 81 ? "󰤥" : "󰤨"}))))
 
-(defwidget bluetooth [status]
-           (box :class "label"
+ (defwidget bluetooth [status]
+            (box :class "label"
                 ;;:visible {status == "" ? "false" : "true"}
-                :tooltip "Bluetooth status: ${status}"
-                (button :onrightclick "blueman-manager &"
+                 :tooltip "Bluetooth status: ${status}"
+                 (button :onrightclick "blueman-manager &"
                         ;; symbols:   󰂯 󰂰 󰂱 󰂲 󰂳 󰂴
-                        (label :text {status == "enabled" ? "" : "󰂯"}))))
+                         (label :text {status == "enabled" ? "" : "󰂯"}))))
 
-(defwidget clock [min time]
-           (box :class "label"
-                :tooltip "Calendar"
-                (button :onclick {calendar-is-open == "true" ?
-                        "${EWW_CMD} close calendar && ${EWW_CMD} update calendar-is-open=false" :
-                        "${EWW_CMD} open calendar && ${EWW_CMD} update calendar-is-open=true"}
-                        (box :class "label"
-                             :orientation "h"
-                             :space-evenly "false"
-                             :spacing "10"
+ (defwidget clock [min time]
+            (box :class "label"
+                 :tooltip "Calendar"
+                 (button :onclick {calendar-is-open == "true" ?
+                         "${EWW_CMD} close calendar && ${EWW_CMD} update calendar-is-open=false" :
+                         "${EWW_CMD} open calendar && ${EWW_CMD} update calendar-is-open=true"}
+                         (box :class "label"
+                              :orientation "h"
+                              :space-evenly "false"
+                              :spacing "10"
                              ;; symbols: 󱑊 󱐿 󱑀 󱑁 󱑂 󱑃 󱑄 󱑅 󱑆 󱑇 󱑈 󱑉
-                             (label :text {min == "" ? "" :
-                                    min < 3  ? "󱑊" :
-                                    min < 8 ? "󱐿" :
-                                    min < 13 ? "󱑀" :
-                                    min < 18 ? "󱑁" :
-                                    min < 23 ? "󱑂" :
-                                    min < 28 ? "󱑃" :
-                                    min < 33 ? "󱑄" :
-                                    min < 38 ? "󱑅" :
-                                    min < 43 ? "󱑆" :
-                                    min < 48 ? "󱑇" :
-                                    min < 53 ? "󱑈" :
-                                    min < 58 ? "󱑉" : "󱑊"})
-                             (label :text "${time}")))))
+                              (label :text {min == "" ? "" :
+                                     min < 3  ? "󱑊" :
+                                     min < 8 ? "󱐿" :
+                                     min < 13 ? "󱑀" :
+                                     min < 18 ? "󱑁" :
+                                     min < 23 ? "󱑂" :
+                                     min < 28 ? "󱑃" :
+                                     min < 33 ? "󱑄" :
+                                     min < 38 ? "󱑅" :
+                                     min < 43 ? "󱑆" :
+                                     min < 48 ? "󱑇" :
+                                     min < 53 ? "󱑈" :
+                                     min < 58 ? "󱑉" : "󱑊"})
+                              (label :text "${time}")))))
 
 ;;------------------------------------------------------------------------------
 ;; Section Widgets
 ;;------------------------------------------------------------------------------
 
-(defwidget left-bar []
-           (box :class "left-bar"
-                :orientation "h"
-                :space-evenly "false"
-                :halign "start"
-                :spacing "10"
+ (defwidget left-bar []
+            (box :class "left-bar"
+                 :orientation "h"
+                 :space-evenly "false"
+                 :halign "start"
+                 :spacing "10"
                 ;; application search
-                (box :class "label"
-                     :tooltip "Application Search"
-                     (button :onclick "rofi -modi drun -show drun & disown" " "))
+                 (box :class "label"
+                      :tooltip "Application Search"
+                      (button :onclick "rofi -modi drun -show drun & disown" " "))
                 ;; launcher menu
                 ;; (box :class "label"
                 ;;      :tooltip "Launcher Menu"
                 ;;      (button :onclick "~/bin/rofi-menu" " "))
                 ;; window selector
-                (box :class "label"
-                     :tooltip "Window Selector"
-                     (button :onclick "rofi -modi window -show window & disown" " "))
+                 (box :class "label"
+                      :tooltip "Window Selector"
+                      (button :onclick "rofi -modi window -show window & disown" " "))
                 ;; symbols:                          
-                (workspace :label "1  " :value "1" :onclick "bspc desktop --focus '^1'" :onrightclick "bspc desktop --focus '^1' && bspc node --focus next.local.leaf" :tooltip "Workspace 1")
-                (workspace :label "2  " :value "2" :onclick "bspc desktop --focus '^2'" :onrightclick "bspc desktop --focus '^2' && bspc node --focus next.local.leaf" :tooltip "Workspace 2")
-                (workspace :label "3  " :value "3" :onclick "bspc desktop --focus '^3'" :onrightclick "bspc desktop --focus '^3' && bspc node --focus next.local.leaf" :tooltip "Workspace 3")
-                (workspace :label "4  " :value "4" :onclick "bspc desktop --focus '^4'" :onrightclick "bspc desktop --focus '^4' && bspc node --focus next.local.leaf" :tooltip "Workspace 4")
-                (workspace :label "5  " :value "5" :onclick "bspc desktop --focus '^5'" :onrightclick "bspc desktop --focus '^5' && bspc node --focus next.local.leaf" :tooltip "Workspace 5")
-                (workspace :label "6  " :value "6" :onclick "bspc desktop --focus '^6'" :onrightclick "bspc desktop --focus '^6' && bspc node --focus next.local.leaf" :tooltip "Workspace 6")
-                (workspace :label "7  " :value "7" :onclick "bspc desktop --focus '^7'" :onrightclick "bspc desktop --focus '^7' && bspc node --focus next.local.leaf" :tooltip "Workspace 7")
-                (workspace :label "8  " :value "8" :onclick "bspc desktop --focus '^8'" :onrightclick "bspc desktop --focus '^8' && bspc node --focus next.local.leaf" :tooltip "Workspace 8")
-                (workspace :label "9  " :value "9" :onclick "bspc desktop --focus '^9'" :onrightclick "bspc desktop --focus '^9' && bspc node --focus next.local.leaf" :tooltip "Workspace 9")
-                (workspace :label "10  " :value "10" :onclick "bspc desktop --focus '^10'" :onrightclick "bspc desktop --focus '^10' && bspc node --focus next.local.leaf" :tooltip "Workspace 10")
-                (workspace :label "11  " :value "11" :onclick "bspc desktop --focus '^11'" :onrightclick "bspc desktop --focus '^11' && bspc node --focus next.local.leaf" :tooltip "Workspace 11")
-                (workspace :label "12  " :value "12" :onclick "bspc desktop --focus '^12'" :onrightclick "bspc desktop --focus '^12' && bspc node --focus next.local.leaf" :tooltip "Workspace 12")))
+                 (workspace :label "1  " :value "1" :onclick "bspc desktop --focus '^1'" :onrightclick "bspc desktop --focus '^1' && bspc node --focus next.local.leaf" :tooltip "Workspace 1")
+                 (workspace :label "2  " :value "2" :onclick "bspc desktop --focus '^2'" :onrightclick "bspc desktop --focus '^2' && bspc node --focus next.local.leaf" :tooltip "Workspace 2")
+                 (workspace :label "3  " :value "3" :onclick "bspc desktop --focus '^3'" :onrightclick "bspc desktop --focus '^3' && bspc node --focus next.local.leaf" :tooltip "Workspace 3")
+                 (workspace :label "4  " :value "4" :onclick "bspc desktop --focus '^4'" :onrightclick "bspc desktop --focus '^4' && bspc node --focus next.local.leaf" :tooltip "Workspace 4")
+                 (workspace :label "5  " :value "5" :onclick "bspc desktop --focus '^5'" :onrightclick "bspc desktop --focus '^5' && bspc node --focus next.local.leaf" :tooltip "Workspace 5")
+                 (workspace :label "6  " :value "6" :onclick "bspc desktop --focus '^6'" :onrightclick "bspc desktop --focus '^6' && bspc node --focus next.local.leaf" :tooltip "Workspace 6")
+                 (workspace :label "7  " :value "7" :onclick "bspc desktop --focus '^7'" :onrightclick "bspc desktop --focus '^7' && bspc node --focus next.local.leaf" :tooltip "Workspace 7")
+                 (workspace :label "8  " :value "8" :onclick "bspc desktop --focus '^8'" :onrightclick "bspc desktop --focus '^8' && bspc node --focus next.local.leaf" :tooltip "Workspace 8")
+                 (workspace :label "9  " :value "9" :onclick "bspc desktop --focus '^9'" :onrightclick "bspc desktop --focus '^9' && bspc node --focus next.local.leaf" :tooltip "Workspace 9")
+                 (workspace :label "10  " :value "10" :onclick "bspc desktop --focus '^10'" :onrightclick "bspc desktop --focus '^10' && bspc node --focus next.local.leaf" :tooltip "Workspace 10")
+                 (workspace :label "11  " :value "11" :onclick "bspc desktop --focus '^11'" :onrightclick "bspc desktop --focus '^11' && bspc node --focus next.local.leaf" :tooltip "Workspace 11")
+                 (workspace :label "12  " :value "12" :onclick "bspc desktop --focus '^12'" :onrightclick "bspc desktop --focus '^12' && bspc node --focus next.local.leaf" :tooltip "Workspace 12")))
 
-(defwidget center-bar []
-           (box :class "center-bar"
-                :orientation "h"
-                :space-evenly "false"
-                :halign "center"
-                :spacing "10"
+ (defwidget center-bar []
+            (box :class "center-bar"
+                 :orientation "h"
+                 :space-evenly "false"
+                 :halign "center"
+                 :spacing "10"
                 ;; music
-                (box :class "music-state"
-                     :visible {music-info == "" ? "false" : "true"}
-                     (button :onclick "mpc toggle" music-state))
-                (box :class "music-info"
-                     :visible {music-info == "" ? "false" : "true"}
-                     (button :onclick "mpc toggle" music-info))))
+                 (box :class "music-state"
+                      :visible {music-info == "" ? "false" : "true"}
+                      (button :onclick "mpc toggle" music-state))
+                 (box :class "music-info"
+                      :visible {music-info == "" ? "false" : "true"}
+                      (button :onclick "mpc toggle" music-info))))
 
-(defwidget right-bar []
-           (box :class "right-bar"
-                :orientation "h"
-                :space-evenly "false"
-                :halign "end"
-                :spacing "10"
+ (defwidget right-bar []
+            (box :class "right-bar"
+                 :orientation "h"
+                 :space-evenly "false"
+                 :halign "end"
+                 :spacing "10"
                 ;; weather
-                (box :class "label"
-                     :tooltip weather-status
-                     (button :onclick "curl --silent 'wttr.in/San+Diego?uT' | head -n -2 | yad --text-info --width=1140 --height=840 --wrap --no-buttons 2>/dev/null"
-                             weather))
+                 (box :class "label"
+                      :tooltip weather-status
+                      (button :onclick "curl --silent 'wttr.in/San+Diego?uT' | head -n -2 | yad --text-info --width=1140 --height=840 --wrap --no-buttons 2>/dev/null"
+                              weather))
                 ;; volume
-                (volume :mute mute
-                        :volume volume)
+                 (volume :mute mute
+                         :volume volume)
                 ;; brightness
-                (metric :label ""
-                        :value {backlight == "" ? "" : brightness}
-                        :onchange "light -S {}"
-                        :tooltip "Brightness: ${brightness}%")
+                 (metric :label ""
+                         :value {backlight == "" ? "" : brightness}
+                         :onchange "light -S {}"
+                         :tooltip "Brightness: ${brightness}%")
                 ;; ram
                 ;; symbols:   󰍛
-                (metric :label ""
-                        :value {EWW_RAM.used_mem_perc}
-                        :onchange ""
-                        :tooltip "RAM Used: ${round(EWW_RAM.used_mem_perc, 0)}%")
+                 (metric :label ""
+                         :value {EWW_RAM.used_mem_perc}
+                         :onchange ""
+                         :tooltip "RAM Used: ${round(EWW_RAM.used_mem_perc, 0)}%")
                 ;; disk
                 ;; symbols: 󰆼 󰆼   󱘲  
-                (metric :label "󰆼"
-                        :value {round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}
-                        :onchange ""
-                        :tooltip "Disk Used: ${round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}%")
-                ;; ;; systray
+                 (metric :label "󰆼"
+                         :value {round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}
+                         :onchange ""
+                         :tooltip "Disk Used: ${round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}%")
+                ;;;; systray
                 ;; (systray
                 ;;  :icon-size "14"
                 ;;  :orientation "h"
@@ -286,55 +286,55 @@
                 ;;              "${EWW_CMD} open systray --pos $(($(xdotool getmouselocation --shell | sed -n '/^X=/p' | sed 's/^X=//') - 10))x-30 && ${EWW_CMD} update systray-is-open=true"}
                 ;;              ""))
                 ;; battery
-                (battery :status {EWW_BATTERY == "" ? "" : EWW_BATTERY.BAT0.status}
-                         :capacity {EWW_BATTERY == "" ? "" : EWW_BATTERY.BAT0.capacity})
+                 (battery :status {EWW_BATTERY == "" ? "" : EWW_BATTERY.BAT0.status}
+                          :capacity {EWW_BATTERY == "" ? "" : EWW_BATTERY.BAT0.capacity})
                 ;; wifi
-                (wifi :status wifi-status
-                      :strength wifi-strength)
+                 (wifi :status wifi-status
+                       :strength wifi-strength)
                 ;; bluetooth
-                (bluetooth :status bt-status)
+                 (bluetooth :status bt-status)
                 ;; temperature
                 ;; symbols:     
                 ;; time
-                (clock :min min
-                       :time time)
+                 (clock :min min
+                        :time time)
                 ;; session
-                (box :class "label"
-                     :tooltip "Session Lock, Logout, Suspend, Hibernate, Reboot, or Shutdown"
+                 (box :class "label"
+                      :tooltip "Session Lock, Logout, Suspend, Hibernate, Reboot, or Shutdown"
                      ;;(button :onclick "~/bin/rofi-session-menu -s & disown" "⏻"))))
-                     (button :onclick {session-is-open == "true" ?
-                             "${EWW_CMD} close session && ${EWW_CMD} update session-is-open=false" :
-                             "${EWW_CMD} open session && ${EWW_CMD} update session-is-open=true"}
-                             "⏻"))))
+                      (button :onclick {session-is-open == "true" ?
+                              "${EWW_CMD} close session && ${EWW_CMD} update session-is-open=false" :
+                              "${EWW_CMD} open session && ${EWW_CMD} update session-is-open=true"}
+                              "⏻"))))
 
-(defwidget bar []
-           (centerbox :orientation "h"
-                      (left-bar)
-                      (center-bar)
-                      (right-bar)))
+ (defwidget bar []
+            (centerbox :orientation "h"
+                       (left-bar)
+                       (center-bar)
+                       (right-bar)))
 
 ;;------------------------------------------------------------------------------
 ;; Windows
 ;;------------------------------------------------------------------------------
 
-(defwindow calendar
-           :windowtype "dock"
-           :stacking "fg"
-           :geometry (geometry :x "-10px"
-                               :y "-30px"
-                               :width "500px"
-                               :height "220px"
-                               :anchor "bottom right")
-           (box :class "bar"
-                :orientation "h"
-                :valign "fill"
-                :halign "fill"
-                (calendar :year year
-                          :month month
-                          :day day
-                          :show-details "true"
-                          :show-heading "true"
-                          :show-day-names "true")))
+ (defwindow calendar
+            :windowtype "dock"
+            :stacking "fg"
+            :geometry (geometry :x "-10px"
+                                :y "-30px"
+                                :width "500px"
+                                :height "220px"
+                                :anchor "bottom right")
+            (box :class "bar"
+                 :orientation "h"
+                 :valign "fill"
+                 :halign "fill"
+                 (calendar :year year
+                           :month month
+                           :day day
+                           :show-details "true"
+                           :show-heading "true"
+                           :show-day-names "true")))
 ;;:onclick "remind ~/.reminders $(date -d {2}-$(({1}+1))-{0} '+%_d %b %Y') | fold -w 80 -s | yad --text-info --width=800 --height=600 --wrap --no-buttons 2>/dev/null")))
 
 ;; (defwindow systray
@@ -350,67 +350,67 @@
 ;;             :space-evenly "true"
 ;;             :spacing "10"))
 
-(defwindow session
-           :windowtype "dock"
-           :stacking "fg"
-           :geometry (geometry :x "-10px"
-                               :y "-30px"
-                               :width "0%"
-                               :height "0%"
-                               :anchor "bottom right")
-           (box :class "label"
-                :orientation "v"
-                :halign "left"
-                :space-evenly "true"
-                :spacing "10"
-                (box :class "label"
-                     (button :onclick "${EWW_CMD} close session && ${EWW_CMD} update session-is-open=false && xscreensaver-command -lock"
-                             (box :class "label"
-                                  :orientation "h"
-                                  :space-evenly "false"
-                                  :spacing "10"
-                                  (label :text "")
-                                  (label :text "Lock"))))
-                (box :class "label"
-                     (button :onclick "${EWW_CMD} close session && ${EWW_CMD} update session-is-open=false && loginctl terminate-session $(loginctl session-status | head -n 1 | awk '{print $1}')"
-                             (box :class "label"
-                                  :orientation "h"
-                                  :space-evenly "false"
-                                  :spacing "10"
-                                  (label :text "󰈇")
-                                  (label :text "Logout"))))
-                (box :class "label"
-                     (button :onclick "${EWW_CMD} close session && ${EWW_CMD} update session-is-open=false && systemctl suspend"
-                             (box :class "label"
-                                  :orientation "h"
-                                  :space-evenly "false"
-                                  :spacing "10"
-                                  (label :text "⏾")
-                                  (label :text "Suspend"))))
-                (box :class "label"
-                     (button :onclick "${EWW_CMD} close session && ${EWW_CMD} update session-is-open=false && systemctl hibernate"
-                             (box :class "label"
-                                  :orientation "h"
-                                  :space-evenly "false"
-                                  :spacing "10"
-                                  (label :text "⏼")
-                                  (label :text "Hibernate"))))
-                (box :class "label"
-                     (button :onclick "${EWW_CMD} close session && ${EWW_CMD} update session-is-open=false && systemctl reboot"
-                             (box :class "label"
-                                  :orientation "h"
-                                  :space-evenly "false"
-                                  :spacing "10"
-                                  (label :text "")
-                                  (label :text "Reboot"))))
-                (box :class "label"
-                     (button :onclick "${EWW_CMD} close session && ${EWW_CMD} update session-is-open=false && systemctl poweroff"
-                             (box :class "label"
-                                  :orientation "h"
-                                  :space-evenly "false"
-                                  :spacing "10"
-                                  (label :text "⏻")
-                                  (label :text "Shutdown"))))))
+ (defwindow session
+            :windowtype "dock"
+            :stacking "fg"
+            :geometry (geometry :x "-10px"
+                                :y "-30px"
+                                :width "0%"
+                                :height "0%"
+                                :anchor "bottom right")
+            (box :class "label"
+                 :orientation "v"
+                 :halign "left"
+                 :space-evenly "true"
+                 :spacing "10"
+                 (box :class "label"
+                      (button :onclick "${EWW_CMD} close session && ${EWW_CMD} update session-is-open=false && xscreensaver-command -lock"
+                              (box :class "label"
+                                   :orientation "h"
+                                   :space-evenly "false"
+                                   :spacing "10"
+                                   (label :text "")
+                                   (label :text "Lock"))))
+                 (box :class "label"
+                      (button :onclick "${EWW_CMD} close session && ${EWW_CMD} update session-is-open=false && loginctl terminate-session $(loginctl session-status | head -n 1 | awk '{print $1}')"
+                              (box :class "label"
+                                   :orientation "h"
+                                   :space-evenly "false"
+                                   :spacing "10"
+                                   (label :text "󰈇")
+                                   (label :text "Logout"))))
+                 (box :class "label"
+                      (button :onclick "${EWW_CMD} close session && ${EWW_CMD} update session-is-open=false && systemctl suspend"
+                              (box :class "label"
+                                   :orientation "h"
+                                   :space-evenly "false"
+                                   :spacing "10"
+                                   (label :text "⏾")
+                                   (label :text "Suspend"))))
+                 (box :class "label"
+                      (button :onclick "${EWW_CMD} close session && ${EWW_CMD} update session-is-open=false && systemctl hibernate"
+                              (box :class "label"
+                                   :orientation "h"
+                                   :space-evenly "false"
+                                   :spacing "10"
+                                   (label :text "⏼")
+                                   (label :text "Hibernate"))))
+                 (box :class "label"
+                      (button :onclick "${EWW_CMD} close session && ${EWW_CMD} update session-is-open=false && systemctl reboot"
+                              (box :class "label"
+                                   :orientation "h"
+                                   :space-evenly "false"
+                                   :spacing "10"
+                                   (label :text "")
+                                   (label :text "Reboot"))))
+                 (box :class "label"
+                      (button :onclick "${EWW_CMD} close session && ${EWW_CMD} update session-is-open=false && systemctl poweroff"
+                              (box :class "label"
+                                   :orientation "h"
+                                   :space-evenly "false"
+                                   :spacing "10"
+                                   (label :text "⏻")
+                                   (label :text "Shutdown"))))))
 
 ;; (defwindow music
 ;;            :windowtype "dock"
@@ -492,19 +492,19 @@
 ;;                                       :orientation "h"
 ;;                                       :onchange "scripts/media-control --seek {} ${media-bar-is-active-popup}")))))
 
-(defwindow bar
-           :monitor "0"
-           :windowtype "dock"
-           :stacking "bg"
-           :wm-ignore "true"
-           :geometry (geometry :x "0%"
-                               :y "0%"
-                               :width "100%"
-                               :height "12px"
-                               :anchor "bottom center")
-           :reserve (struts :side "bottom"
-                            :distance "14px")
-           (bar))
+ (defwindow bar
+            :monitor "0"
+            :windowtype "dock"
+            :stacking "bg"
+            :wm-ignore "true"
+            :geometry (geometry :x "0%"
+                                :y "0%"
+                                :width "100%"
+                                :height "12px"
+                                :anchor "bottom center")
+            :reserve (struts :side "bottom"
+                             :distance "14px")
+            (bar))
 
 ;;==============================================================================
 ;; End of File

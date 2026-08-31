@@ -7,7 +7,7 @@
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
-if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
     echo "Usage: wordle-match MATCH EXCLUDE INCLUDE"
     echo "Search for Wordle words matching given pattern."
     echo "  MATCH    letters and positions to match (regexp)"
@@ -17,11 +17,11 @@ if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
 else
     size=${#1}
     cmd="cat $(dirname $(readlink -f $0))/words.txt | grep '^.\{${size}\}$' | tr 'A-Z' 'a-z' | grep --color=never '$1'"
-    if [ $# -gt 1 ] ; then
+    if [ $# -gt 1 ]; then
         cmd="${cmd} | grep --color=never -v '[$2]'"
     fi
-    if [ $# -gt 2 ] ; then
-        for x in $(echo "$3" | grep -o '.') ; do
+    if [ $# -gt 2 ]; then
+        for x in $(echo "$3" | grep -o '.'); do
             cmd="${cmd} | grep --color=never '${x}'"
         done
     fi

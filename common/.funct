@@ -48,12 +48,12 @@ alias fuhg="
       grep '^[[:space:]]*#' | grep -v '^[[:space:]]*#!' | sed 's/^[[:space:]]*#//' | grep -i"
 #        alfuhg                  alias and funct help with grep
 alfuhg() {
-    for file in ".alias" ".alias-work" ; do
+    for file in ".alias" ".alias-work"; do
         [ -f "${HOME}/${file}" ] && \
             echo "Aliases (${file}):" && \
             grep '^[[:space:]]*#' "${HOME}/${file}" | grep -v '^[[:space:]]*#!' | sed 's/^[[:space:]]*#//' | grep -i "$1"
     done
-    for file in ".funct" ".funct-work" ; do
+    for file in ".funct" ".funct-work"; do
         [ -f "${HOME}/${file}" ] && \
             echo "Functions (${file}):" && \
             grep '^[[:space:]]*#' "${HOME}/${file}" | grep -v '^[[:space:]]*#!' | sed 's/^[[:space:]]*#//' | grep -i "$1"
@@ -87,22 +87,22 @@ alfug() {
 #
 #        pathcmd                 find path of command
 pathcmd() {
-    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: pathcmd COMMAND [PATH...]"
         echo "  COMMAND  command to find"
         echo "  PATH     additional path locations to search"
     else
         cmd="$1"
         shift
-        if [ $# -eq 0 ] ; then
+        if [ $# -eq 0 ]; then
             paths="${PATH}"
         else
-            for path in "$@" ; do
+            for path in "$@"; do
                 paths="${path}:${PATH}"
             done
         fi
-        loc=$(echo "${paths}" | sed 's/:/\n/g' | while read -r dir ; do
-                  if [ -x "${dir}/${cmd}" ] ; then
+        loc=$(echo "${paths}" | sed 's/:/\n/g' | while read -r dir; do
+                  if [ -x "${dir}/${cmd}" ]; then
                       echo "${dir}/${cmd}"
                   fi
               done)
@@ -112,25 +112,25 @@ pathcmd() {
 }
 #        parentdir               get parent dir
 parentdir() {
-    if [ $# -gt 2 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -gt 2 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: parentdir [DIR]"
         echo "  DIR  directory to get the parent directory of (defaults to current dir)"
     else
-        if [ $# -eq 0 ] ; then
+        if [ $# -eq 0 ]; then
             pd="$1"
         else
             pd="$(pwd)"
         fi
         # remove any trailing /'s
-        while [ ${#pd} -gt 0 ] && [ "${pd: -1}" == "/" ] ; do
+        while [ ${#pd} -gt 0 ] && [ "${pd: -1}" == "/" ]; do
             pd=${pd:0:$((${#pd} - 1))}
         done
         # remove ending characters until a / is reached
-        while [ ${#pd} -gt 0 ] && [ "${pd: -1}" != "/" ] ; do
+        while [ ${#pd} -gt 0 ] && [ "${pd: -1}" != "/" ]; do
             pd=${pd:0:$((${#pd} - 1))}
         done
         # remove final /
-        if [ ${#pd} -gt 1 ] ; then
+        if [ ${#pd} -gt 1 ]; then
             pd=${pd:0:$((${#pd} - 1))}
         fi
         echo "${pd}"
@@ -138,7 +138,7 @@ parentdir() {
 }
 #        pstest                  test if a user application is currently running
 pstest() {
-    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: pstest QUERY"
         echo "Test if a user applicaiton containing QUERY is currently running."
         echo "  QUERY  query string to search for"
@@ -165,20 +165,20 @@ keypress() {
 }
 #        changelog               add a line to a CHANGELOG file in path
 changelog() {
-    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: changelog TEXT..."
     else
         file="CHANGELOG"
         # find changelog file
         dir="$(pwd)"
-        while [ ! -e "${dir}/${file}" ] && [ "${dir}" != "/" ] ; do
+        while [ ! -e "${dir}/${file}" ] && [ "${dir}" != "/" ]; do
             dir=$(parentdir "${dir}")
         done
         # if CHANGELOG found, then add comment
-        if [ -e "${dir}/${file}" ] ; then
+        if [ -e "${dir}/${file}" ]; then
             tmp="${dir}/${file}.tmp$$"
             file="${dir}/${file}"
-            if [ -e "${tmp}" ] ; then
+            if [ -e "${tmp}" ]; then
                 echo "Temp file '${tmp}' exists"
             else
                 (
@@ -199,12 +199,12 @@ changelog() {
 #
 #!#        cv                      run cdargs and cd to the result
 #!cv() {
-#!    if [ $# -eq 0 ] ; then
+#!    if [ $# -eq 0 ]; then
 #!        dir=
 #!    elif
 #!        dir=$(grep "^$1 " "$HOME/.cdargs" | cut -d " " -f 2)
 #!    fi
-#!    if [ -n "${dir}" ] ; then
+#!    if [ -n "${dir}" ]; then
 #!        cd "${dir}"
 #!    else
 #!        cdargs "$1" && cd "$(cat "$HOME/.cdargsresult")"
@@ -212,7 +212,7 @@ changelog() {
 #!}
 #        random                  random number
 random() {
-    if [ $# -eq 0 ] ; then
+    if [ $# -eq 0 ]; then
         echo "$((RANDOM % 10))"
     else
         echo "$((RANDOM % $1))"
@@ -226,7 +226,7 @@ filename() {
     full="${dir}/${file}"
     realfull=$(realpath "${orig}")
     realdir=$(realpath "${dir}")
-    if [ "${full}" != "${realfull}" ] ; then
+    if [ "${full}" != "${realfull}" ]; then
         echo "Orig:      ${orig}"
         echo "Full:      ${full}"
         echo "Dir:       ${dir}"
@@ -253,9 +253,9 @@ term-name() {
     screen="$(in-screen)"
     cmd=$(ps -o comm -p $$ --no-headers)
     case "${cmd}" in
-        bash|tsh|csh|zsh|fish) term="${cmd}" ;;
+        bash|tsh|csh|zsh|fish) term="${cmd}";;
     esac
-    if [ -n "${screen}" ] ; then
+    if [ -n "${screen}" ]; then
         echo "${screen}|${term}"
     else
         echo "${term}"
@@ -285,12 +285,12 @@ host-ping() {
 }
 #        fnd                     find files
 fnd() {
-    if [ $# -lt 1 ] || [ $# -gt 2 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -lt 1 ] || [ $# -gt 2 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: fnd QUERY [DIR]"
     else
         query="$1"
         shift
-        if [ $# -eq 0 ] ; then
+        if [ $# -eq 0 ]; then
             dir="."
         else
             dir="$1"
@@ -300,14 +300,14 @@ fnd() {
 }
 #        fndg                    find files with grep
 fndg() {
-    if [ $# -lt 2 ] || [ $# -gt 3 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -lt 2 ] || [ $# -gt 3 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: fndg QUERY GREP [DIR]"
     else
         query="$1"
         shift
         grep="$1"
         shift
-        if [ $# -eq 0 ] ; then
+        if [ $# -eq 0 ]; then
             dir="."
         else
             dir="$1"
@@ -317,10 +317,10 @@ fndg() {
 }
 #        wcdir                   word (line) count a directory
 wcdir() {
-    if [ $# -gt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -gt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: wcdir [DIR]"
     else
-        if [ $# -eq 0 ] ; then
+        if [ $# -eq 0 ]; then
             dir="."
         else
             dir="$1"
@@ -330,17 +330,17 @@ wcdir() {
 }
 #        dtloop                  datetime stamp looping
 dtloop() {
-    if [ $# -gt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -gt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: dtloop [DELAY]"
         echo "Output the current date-time in a loop."
         echo "  DELAY  time between outputs (defaults to 5s)"
     else
-        if [ $# -eq 0 ] ; then
+        if [ $# -eq 0 ]; then
             delay="5s"
         else
             delay="$1"
         fi
-        while true ; do
+        while true; do
             date '+%Y-%m-%d %H:%M:%S'
             sleep "${delay}"
         done
@@ -348,7 +348,7 @@ dtloop() {
 }
 #        kmg                     convert bytes into KB, MB, GB, or TB as appropriate
 kmg() {
-    if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: kmg NUM"
     else
         k=$(echo "scale=2; $1 / 1024" | bc)
@@ -359,13 +359,13 @@ kmg() {
         gf=$(echo "${m} / 1024" | bc)
         t=$(echo "scale=2; ${g} / 1024" | bc)
         tf=$(echo "${g} / 1024" | bc)
-        if [ ${kf} -lt 1 ] ; then
+        if [ ${kf} -lt 1 ]; then
             echo "$1B"
-        elif [ ${mf} -lt 1 ] ; then
+        elif [ ${mf} -lt 1 ]; then
             echo "${k}KB"
-        elif [ ${gf} -lt 1 ] ; then
+        elif [ ${gf} -lt 1 ]; then
             echo "${m}MB"
-        elif [ ${tf} -lt 1 ] ; then
+        elif [ ${tf} -lt 1 ]; then
             echo "${g}GB"
         else
             echo "${t}TB"
@@ -382,12 +382,12 @@ prompt() {
     echo -n "Execute command line? [Yn] "
     read -r a
     case "${a}" in
-        y|Y|"") ("$@") ;;
+        y|Y|"") ("$@");;
     esac
 }
 #        mail-file               mail a file (uuencoded)
 mail-file() {
-    if [ $# -lt 3 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -lt 3 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: mail-file FILE SUBJECT ADDRESS..."
     else
         file="$1"
@@ -403,20 +403,20 @@ generate-qrc() {
 }
 #        speak-url               speak a url
 speak-url() {
-    if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: speak-url URL"
     else
         lynx --dump "$1" |
-            sed 's/\[.*\]//g ; s/[^0-9a-zA-Z \?\,\.\;\:]//g ; /^References$/,$d' |
+            sed 's/\[.*\]//g; s/[^0-9a-zA-Z \?\,\.\;\:]//g; /^References$/,$d' |
             festival --tts
     fi
 }
 #        check-urls              check validity of all URLs found in given FILE
 check-urls() {
-    if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: check-urls FILE"
     else
-        hq -f "$1" a attr href | grep '://' | while read -r url ; do
+        hq -f "$1" a attr href | grep '://' | while read -r url; do
                 printf 'Checking: %s\r' "${url}"
                 #wget -q --no-cache --timeout=10 --user-agent="${useragent}" "${url}" || \
                 wget -q --no-cache --timeout=10 "${url}" || \
@@ -435,9 +435,9 @@ colors() {
     printf "Value  1 gives a  \e[1mbold-faced look\e[m\n\n"
 
     # foreground colors
-    for fgc in {30..37} ; do
+    for fgc in {30..37}; do
         # background colors
-        for bgc in {40..47} ; do
+        for bgc in {40..47}; do
             fgc=${fgc#37} # white
             bgc=${bgc#40} # black
 
@@ -457,69 +457,69 @@ distribution() {
     # source: https://github.com/ChrisTitusTech/mybash/blob/main/.bashrc
     local dist="unknown"
 
-    if [ -f "/etc/os-release" ] ; then
+    if [ -f "/etc/os-release" ]; then
         source "/etc/os-release"
         case ${ID} in
             arch|manjaro)
                 dist="arch"
-                ;;
+               ;;
             debian|ubuntu)
                 dist="debian"
-                ;;
+               ;;
             gentoo)
                 dist="gentoo"
-                ;;
+               ;;
             guix)
                 dist="guix"
-                ;;
+               ;;
             nixos)
                 dist="nixos"
-                ;;
+               ;;
             qubes)
                 dist="qubes"
-                ;;
+               ;;
             rhel|fedora|centos)
                 dist="redhat"
-                ;;
+               ;;
             slackware)
                 dist="slackware"
-                ;;
+               ;;
             sles|opensuse*)
                 dist="suse"
-                ;;
+               ;;
             *)
-                if [ -n "${ID_LIKE}" ] ; then
+                if [ -n "${ID_LIKE}" ]; then
                     case ${ID_LIKE} in
                         *arch*|*manjaro*)
                             dist="arch"
-                            ;;
+                           ;;
                         *debian*|*ubuntu*)
                             dist="debian"
-                            ;;
+                           ;;
                         *gentoo*)
                             dist="gentoo"
-                            ;;
+                           ;;
                         *guix*)
                             dist="guix"
-                            ;;
+                           ;;
                         *nixos*)
                             dist="nixos"
-                            ;;
+                           ;;
                         *qubes*)
                             dist="qubes"
-                            ;;
+                           ;;
                         *rhel*|*fedora*|*centos*)
                             dist="redhat"
-                            ;;
+                           ;;
                         *slackware*)
                             dist="slackware"
-                            ;;
+                           ;;
                         *sles*|*opensuse*)
                             dist="suse"
-                            ;;
+                           ;;
                     esac
                 fi
-                ;;
+               ;;
         esac
     fi
 
@@ -535,38 +535,38 @@ ver() {
     case ${dist} in
         "arch")
             cat "/etc/os-release"
-            ;;
+           ;;
         "debian")
             lsb_release -a
-            ;;
+           ;;
         "gentoo")
             cat "/etc/gentoo-release"
-            ;;
+           ;;
         "nixos")
             sed -n "s/^PRETTY_NAME=\"\(.*\)\"/\1/p" "/etc/os-release"
-            ;;
+           ;;
         "redhat")
-            if [ -s "/etc/redhat-release" ] ; then
+            if [ -s "/etc/redhat-release" ]; then
                 cat "/etc/redhat-release"
             else
                 cat "/etc/issue"
             fi
             uname -a
-            ;;
+           ;;
         "slackware")
             cat "/etc/slackware-version"
-            ;;
+           ;;
         "suse")
             cat "/etc/SuSE-release"
-            ;;
+           ;;
         *)
-            if [ -s "/etc/issue" ] ; then
+            if [ -s "/etc/issue" ]; then
                 cat "/etc/issue"
             else
                 echo "Error: Unknown distribution"
                 exit 1
             fi
-            ;;
+           ;;
     esac
 }
 
@@ -595,7 +595,7 @@ EOF
     _show() {
         local num="$1"
         # ignore scripts that never end
-        if [[ ! " ${bad[*]} " =~ " ${num} " ]] ; then
+        if [[ ! " ${bad[*]} " =~ " ${num} " ]]; then
             clear
             echo
             echo "${list[${num}]}"
@@ -605,55 +605,55 @@ EOF
         fi
     }
 
-    while [ $# -gt 0 ] ; do
+    while [ $# -gt 0 ]; do
         opt="$1"
 
         case "${opt}" in
             -o|--once)
                 once=1
                 shift
-                ;;
+               ;;
             -c|--continuous)
                 once=0
                 shift
-                ;;
+               ;;
             -r|--random)
                 random=1
                 shift
-                ;;
+               ;;
             -d|--delay)
                 delay="$2"
                 shift
                 shift
-                ;;
+               ;;
             -h|--help)
                 _usage
                 shift
                 return 0
-                ;;
+               ;;
             *)
                 printf "colorscript-slideshow: unrecognized option '%s'\n\n" "$1"
                 _usage colorscript-slideshow
                 return 1
-                ;;
+               ;;
         esac
     done
 
-    if [ ${random} -eq 1 ] ; then
-        while true ; do
+    if [ ${random} -eq 1 ]; then
+        while true; do
             _show $((RANDOM % length + 1))
         done
-    elif [ ${once} -eq 1 ] ; then
-        for x in $(seq ${length}) ; do _show "${x}" ; done
+    elif [ ${once} -eq 1 ]; then
+        for x in $(seq ${length}); do _show "${x}"; done
     else
-        while true ; do
-            for x in $(seq ${length}) ; do _show "${x}" ; done
+        while true; do
+            for x in $(seq ${length}); do _show "${x}"; done
         done
     fi
 }
 #        ansi                    display an ANSI text graphic file at 1200 baud
 ansi() {
-    if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: ansi FILE"
         echo "Display an ANSI text graphic file at 1200 baud."
     else
@@ -662,11 +662,11 @@ ansi() {
 }
 #        ansi-slideshow          display a slideshow of all ANSI text graphic files in given directory
 ansi-slideshow() {
-    if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: ansi-slideshow DIR"
         echo "Display a slideshow of all ANSI text graphic files in given directory."
     else
-        find "$1" -iname "*.ANS" -print | sort --random-sort | while read -r file ; do
+        find "$1" -iname "*.ANS" -print | sort --random-sort | while read -r file; do
             iconv -f 437 "${file}" | pv --quiet --rate-limit 1200
             sleep 10
         done
@@ -674,7 +674,7 @@ ansi-slideshow() {
 }
 #        play-youtube-desktop    play a youtube video on the desktop background
 play-youtube-desktop() {
-    if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: play-youtube-desktop VIDEOID"
         echo "Play YouTube video on desktop background."
     else
@@ -689,22 +689,22 @@ play-youtube-desktop() {
 #
 #        dos-to-linux            convert a dos text file CR+LF to linux LF format
 dos-to-linux() {
-    if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: dos-to-linux FILE"
         echo "Convert FILE from DOS format to Linux format."
         echo "Convert multiple files using something like:"
-        echo "  ls -1 | while read -r f ; do dos-to-linux \$f ; done"
+        echo "  ls -1 | while read -r f; do dos-to-linux \$f; done"
     else
         sed -i 's/\r$//' "$1"
     fi
 }
 #        linux-to-dos            convert a linux text file LF to dos CR+LF format
 linux-to-dos() {
-    if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: linux-to-dos FILE"
         echo "Convert FILE from Linux format to DOS format."
         echo "Convert multiple files using something like:"
-        echo "  ls -1 | while read -r f ; do linux-to-dos \$f ; done"
+        echo "  ls -1 | while read -r f; do linux-to-dos \$f; done"
     else
         sed -i 's/$/\r/' "$1"
     fi
@@ -717,15 +717,15 @@ lower-dir() {
     read -r a
     case "${a}" in
         y|Y)
-            find . -depth -type d | while read -r infile ; do
+            find . -depth -type d | while read -r infile; do
                 outfile=$(echo "${infile}" | tr '[:upper:]' '[:lower:]')
                 mv -fv "${infile}" "${outfile}"
             done
-            find . -depth -type f | while read -r infile ; do
+            find . -depth -type f | while read -r infile; do
                 outfile=$(echo "${infile}" | tr '[:upper:]' '[:lower:]')
                 mv -fv "${infile}" "${outfile}"
             done
-            ;;
+           ;;
     esac
 }
 #        upper-dir                convert dir to uppercase
@@ -736,15 +736,15 @@ upper-dir() {
     read -r a
     case "${a}" in
         y|Y)
-            find . -depth -type d | while read -r infile ; do
+            find . -depth -type d | while read -r infile; do
                 outfile=$(echo "${infile}" | tr '[:lower:]' '[:upper:]')
                 mv -fv "${infile}" "${outfile}"
             done
-            find . -depth -type f | while read -r infile ; do
+            find . -depth -type f | while read -r infile; do
                 outfile=$(echo "${infile}" | tr '[:lower:]' '[:upper:]')
                 mv -fv "${infile}" "${outfile}"
             done
-            ;;
+           ;;
     esac
 }
 #        uncompress-dir-tree     uncompress all zip files in given directory tree
@@ -756,12 +756,12 @@ uncompress-dir-tree() {
     read -r a
     case "${a}" in
         y|Y)
-            find . -iname "*.zip" -print | while read -r file ; do
+            find . -iname "*.zip" -print | while read -r file; do
                 echo "${file}"
                 dir="${file:0:-4}"
                 mkdir "${dir}" && unzip -n -d "${dir}" "${file}" && rm "${file}"
             done
-            ;;
+           ;;
     esac
 }
 #        convert-7z-to-zip-dir-tree  convert all 7z files in given directory tree to zip
@@ -773,7 +773,7 @@ convert-7z-to-zip-dir-tree() {
     read -r a
     case "${a}" in
         y|Y)
-            find . -iname "*.7z" -print | while read -r file ; do
+            find . -iname "*.7z" -print | while read -r file; do
                 tmpdir="$(mktemp -d)"
                 echo "${file}"
                 old=$(readlink -f "${file}")
@@ -782,34 +782,34 @@ convert-7z-to-zip-dir-tree() {
                     rm "${old}" && popd
                 rm -rf "${tmpdir}"
             done
-            ;;
+           ;;
     esac
 }
 #        lns-dir                 make links to every file in a directory
 lns-dir() {
-    if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: lns-dir DIR"
     else
-        $(pathcmd ls) -1 "$1" | while read -r file ; do
+        $(pathcmd ls) -1 "$1" | while read -r file; do
             ln -s "$1/${file}" "${file}"
         done
     fi
 }
 #        flatten-dir             flatten directory
 flatten-dir() {
-    if [ $# -ne 2 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -ne 2 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: flatten-dir INDIR OUTDIR"
     else
         indir="$1"
         outdir="$2"
-        if [ ! -d "${indir}" ] ; then
+        if [ ! -d "${indir}" ]; then
             echo "Error finding '${indir}' directory"
-        elif [ ! -d "${outdir}" ] ; then
+        elif [ ! -d "${outdir}" ]; then
             echo "Error finding '${outdir}' directory"
         else
             outdir=$(cd "${outdir}" && pwd)
             pushd "${indir}" || return
-            find . -type f | while read -r file ; do
+            find . -type f | while read -r file; do
                 output=$(echo "${file}" | cut -c 3- | tr '/' '_')
                 output="${outdir}/${output}"
                 cp -u "${file}" "${output}"
@@ -820,13 +820,13 @@ flatten-dir() {
 }
 #        sed-dir                 apply sed to all files in directory
 sed-dir() {
-    if [ $# -lt 1 ] || [ $# -gt 2 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -lt 1 ] || [ $# -gt 2 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: sed-dir SCRIPT [DIR]"
         echo "Apply sed SCRIPT to all files in current directory or DIR."
     else
         script="$1"
         shift
-        if [ $# -eq 0 ] ; then
+        if [ $# -eq 0 ]; then
             dir="."
         else
             dir="$1"
@@ -840,12 +840,12 @@ sed-dir() {
             y|Y)
                 (
                     cd "${dir}" && \
-                        find . -mindepth 1 -maxdepth 1 -type f | while read -r file ; do
+                        find . -mindepth 1 -maxdepth 1 -type f | while read -r file; do
                             echo "${file}"
                             sed -i "${script}" "${file}"
                         done
                 )
-                ;;
+               ;;
         esac
     fi
 }
@@ -854,12 +854,12 @@ sed-dir() {
 #
 #        convert-video-to-mp4      convert all videos in current directory to mp4 videos
 convert-video-to-mp4() {
-    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: convert-video-to-mp4 FILE..."
         echo "Convert all FILEs to mp4 video."
     else
         files=("$@")
-        for infile in "${files[@]}" ; do
+        for infile in "${files[@]}"; do
             outfile=$(echo "${infile}" | sed 's/\..*$/.mp4/')
             echo "${infile} -> ${outfile}"
             ffmpeg -n -i "${infile}" \
@@ -871,7 +871,7 @@ convert-video-to-mp4() {
 }
 #        convert-video-to-mp3    convert video to audio mp3
 convert-video-to-mp3() {
-    if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: convert-video-to-mp3 FILE"
         echo "Convert a video to an audio only mp3 with 192K bitrate."
     else
@@ -882,7 +882,7 @@ convert-video-to-mp3() {
 }
 #        convert-video-to-720p   convert blu-ray 1080p video to 720p
 convert-video-to-720p() {
-    if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: convert-video-to-720p FILE"
         echo "Convert a blu-ray 1080p video to 720p."
     else
@@ -901,7 +901,7 @@ convert-video-to-720p() {
 #
 #        comp                    compress (tar then gzip)
 comp() {
-    if [ $# -lt 2 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -lt 2 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: comp ARCHIVE FILE..."
     else
         arch="$1"
@@ -911,29 +911,29 @@ comp() {
 }
 #        uncomp                  uncompress (ungzip then untar)
 uncomp() {
-    if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: uncomp FILE"
     else
         file="$1"
-        if [ -f "${file}" ] ; then
+        if [ -f "${file}" ]; then
             case "${file}" in
-                *.tar.bz2)   tar xjf "${file}"    ;;
-                *.tar.gz)    tar xzf "${file}"    ;;
-                *.tar.xz)    tar xJf "${file}"    ;;
-                *.tar.zst)   unzstd "${file}"     ;;
-                *.bz2)       bunzip2 "${file}"    ;;
-                *.rar)       unrar x "${file}"    ;;
-                *.gz)        gunzip "${file}"     ;;
-                *.xz)        unxz "${file}"       ;;
-                *.zst)       unzstd "${file}"     ;;
-                *.tar)       tar xf "${file}"     ;;
-                *.tbz2)      tar xjf "${file}"    ;;
-                *.tgz)       tar xzf "${file}"    ;;
-                *.zip)       unzip "${file}"      ;;
-                *.Z)         uncompress "${file}" ;;
-                *.7z)        7z x "${file}"       ;;
-                *.deb)       ar x "${file}"       ;;
-                *)           echo "'${file}' cannot be uncompressed by uncomp" ;;
+                *.tar.bz2)   tar xjf "${file}"   ;;
+                *.tar.gz)    tar xzf "${file}"   ;;
+                *.tar.xz)    tar xJf "${file}"   ;;
+                *.tar.zst)   unzstd "${file}"    ;;
+                *.bz2)       bunzip2 "${file}"   ;;
+                *.rar)       unrar x "${file}"   ;;
+                *.gz)        gunzip "${file}"    ;;
+                *.xz)        unxz "${file}"      ;;
+                *.zst)       unzstd "${file}"    ;;
+                *.tar)       tar xf "${file}"    ;;
+                *.tbz2)      tar xjf "${file}"   ;;
+                *.tgz)       tar xzf "${file}"   ;;
+                *.zip)       unzip "${file}"     ;;
+                *.Z)         uncompress "${file}";;
+                *.7z)        7z x "${file}"      ;;
+                *.deb)       ar x "${file}"      ;;
+                *)           echo "'${file}' cannot be uncompressed by uncomp";;
             esac
         else
             echo "'${file}' is not a valid file"
@@ -942,7 +942,7 @@ uncomp() {
 }
 #        unparrar                un-par-rar (par2 then unrar)
 unparrar() {
-    if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: unparrar FILE"
     else
         par2 r "$1."*".PAR2"
@@ -955,14 +955,14 @@ unparrar() {
 #
 #        encrypt                 encrypt file
 encrypt() {
-    if [ $# -lt 2 ] || [ $# -gt 3 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -lt 2 ] || [ $# -gt 3 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: encrypt INFILE OUTFILE [PASSWORD]"
     else
         infile="$1"
         shift
         outfile="$1"
         shift
-        if [ $# -eq 0 ] ; then
+        if [ $# -eq 0 ]; then
             read -r -s -p 'Password: ' pw
         else
             pw="$1"
@@ -972,14 +972,14 @@ encrypt() {
 }
 #        decrypt                 decrypt file
 decrypt() {
-    if [ $# -lt 2 ] || [ $# -gt 3 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -lt 2 ] || [ $# -gt 3 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: decrypt INFILE OUTFILE [PASSWORD]"
     else
         infile="$1"
         shift
         outfile="$1"
         shift
-        if [ $# -eq 0 ] ; then
+        if [ $# -eq 0 ]; then
             read -r -s -p 'Password: ' pw
         else
             pw="$1"
@@ -1047,7 +1047,7 @@ fsck-shutdown() {
     case "${a}" in
         y|Y)
             sudo touch /forcefsck && sudo reboot
-            ;;
+           ;;
     esac
 }
 #        delete-broken-symlinks  find and delete broken symlinks in given directory
@@ -1066,38 +1066,38 @@ Options:
 EOF
     }
 
-    while [ $# -gt 0 ] ; do
+    while [ $# -gt 0 ]; do
         opt="$1"
         case "${opt}" in
             -r|--recursive)
                 opts=""
                 shift
-                ;;
+               ;;
             -h|--help)
                 _usage
                 return 0
-                ;;
+               ;;
             *)
-                if [ -z "${dir}" ] ; then
+                if [ -z "${dir}" ]; then
                     dir="${opt}"
                     shift
                 else
                     _usage
                     return 1
                 fi
-                ;;
+               ;;
         esac
     done
 
-    if [ -z "${dir}" ] ; then
+    if [ -z "${dir}" ]; then
         _usage
         return 1
     fi
 
     echo "Deleting broken symlinks in '${dir}'..."
     cmd="find -L \"${dir}\" ${opts} -name . -o -type l -print"
-    eval "${cmd}" | while read -r file ; do
-        if [ -L "${file}" ] && [ ! -e "${file}" ] ; then
+    eval "${cmd}" | while read -r file; do
+        if [ -L "${file}" ] && [ ! -e "${file}" ]; then
             echo "  ${file}"
             rm "${file}"
         fi
@@ -1105,7 +1105,7 @@ EOF
 }
 #        longevity               clean out old files
 longevity() {
-    if [ $# -ne 3 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -ne 3 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: longevity DIR PATTERN DAYS"
         echo "Delete all files matching PATTERN in DIR older than DAYS."
         echo "  DIR      top level directory to search"
@@ -1122,7 +1122,7 @@ longevity() {
         case "${a}" in
             y|Y)
                 find "${dir}" -mtime +${days} -type f -iname "${pattern}" -exec rm {} \;
-                ;;
+               ;;
         esac
     fi
 }
@@ -1147,19 +1147,19 @@ EOF
 #
 #        ssh-key-copy            copy ssh key authorization to remote computer
 ssh-key-copy() {
-    if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: ssh-key-copy [USER@]HOSTNAME"
     else
         ssh "$1" '[ ! -d .ssh ] && mkdir -p .ssh && chmod 700 .ssh'
-        find "${HOME}/.ssh/" -name "*.pub" | while read -r file ; do
-            cat "${file}" | ssh "$1" 'cat >> .ssh/authorized_keys ; \
+        find "${HOME}/.ssh/" -name "*.pub" | while read -r file; do
+            cat "${file}" | ssh "$1" 'cat >> .ssh/authorized_keys; \
                 chmod 600 .ssh/authorized_keys'
         done
     fi
 }
 #!# this version does not work on macos
 #!ssh-key-copy() {
-#!    if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+#!    if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
 #!        echo "Usage: ssh-key-copy [USER@]HOSTNAME"
 #!    else
 #!        ssh-copy-id -i "${HOME}/.ssh/id_dsa.pub" "$1"
@@ -1168,7 +1168,7 @@ ssh-key-copy() {
 #!}
 #        ssh-copy-dir            copy ~/.ssh directory to remote computer
 ssh-copy-dir() {
-    if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: ssh-copy-dir [USER@]HOSTNAME"
     else
         scp -r "${HOME}/.ssh" "$1"
@@ -1176,11 +1176,11 @@ ssh-copy-dir() {
 }
 #        ssh-copy-auth           copy auth/secure files to remote computer
 ssh-copy-auth() {
-    if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: ssh-copy-dir [USER@]HOSTNAME"
     else
         readarray -d @ -t parts <<< "$1"
-        if [ ${#parts[*]} -gt 1 ] ; then
+        if [ ${#parts[*]} -gt 1 ]; then
             user="${parts[0]}"
         else
             user="${USER}"
@@ -1193,7 +1193,7 @@ ssh-copy-auth() {
                         .rofi-typer \
                         .secure-env \
                         .synology-mount-credentials \
-                        .synology-mount-parameters ; do
+                        .synology-mount-parameters; do
             scp "${HOME}/${file}" "$1:/home/${user}/"
         done
     fi
@@ -1223,23 +1223,23 @@ disk-uuid() {
     output=$(
         (
             unset extendeds
-            grep -v '[0-9]$' /proc/partitions | awk '{print $4}' | grep '^[sh]d' | while read -r extended ; do
+            grep -v '[0-9]$' /proc/partitions | awk '{print $4}' | grep '^[sh]d' | while read -r extended; do
                 id=$(parted "/dev/${extended}" print | grep extended | awk '{print $1}' 2>/dev/null)
-                if [ -n "${id}" ] ; then
+                if [ -n "${id}" ]; then
                     echo "${extended}${id}_EXT_none_none"
                     extendeds="${extendeds} ${extended}${id}"
                 fi
             done
-            grep '[0-9]' /proc/swaps | awk '{print $1}' | while read -r swap ; do
+            grep '[0-9]' /proc/swaps | awk '{print $1}' | while read -r swap; do
                 drive=$(echo "${swap}" | cut -d/ -f 3)
                 uuid=$(vol_id -u "${swap}" 2>/dev/null)
                 echo "${drive}_SWAP_none_${uuid}"
             done
-            grep '[0-9]$' /proc/partitions | awk '{print $4}' | while read -r partition ; do
-                for extended in ${extendeds} ; do
+            grep '[0-9]$' /proc/partitions | awk '{print $4}' | while read -r partition; do
+                for extended in ${extendeds}; do
                     [ "${partition}" == "${extended}" ] && unset partition
                 done
-                if [ -n "${partition}" ] ; then
+                if [ -n "${partition}" ]; then
                     mount=$(df -l -x tmpfs -x usbfs | grep -w "${partition}" | awk '{print $6}')
                     uuid=$(vol_id -u "/dev/${partition}" 2>/dev/null)
                     [ -n "${mount}" ] && echo "${partition}_REG_${mount}_${uuid}"
@@ -1248,7 +1248,7 @@ disk-uuid() {
         ) | sort)
     (
         echo "PARTITION TYPE MOUNT UUID"
-        for line in ${output} ; do
+        for line in ${output}; do
             echo "${line}" | sed 's/_/ /g'
         done
     ) | column --table
@@ -1259,7 +1259,7 @@ disk-uuid() {
 #
 #        web-search              google search
 web-search() {
-    if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: web-search QUERY"
     else
         web "http://www.google.com/search?num=50&q=$1"
@@ -1267,12 +1267,12 @@ web-search() {
 }
 #        leach                   leach files from the web
 leach() {
-    if [ $# -lt 1 ] || [ $# -gt 2 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -lt 1 ] || [ $# -gt 2 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: leach URL [PATTERN[,...]]"
     else
         url="$1"
         shift
-        if [ $# -eq 0 ] ; then
+        if [ $# -eq 0 ]; then
             pattern=
         else
             pattern="-A $1"
@@ -1287,13 +1287,13 @@ upload-0x0() {
 }
 #        lyrics                  fetch lyrics
 lyrics() {
-    if [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: lyrics [ARTIST TITLE]"
         echo "  ARTIST  Song artist"
         echo "  TITLE   Song title"
         echo "Defaults to querying mpd for the current song"
     else
-        if [ -n "$1" ] && [ -n "$2" ] ; then
+        if [ -n "$1" ] && [ -n "$2" ]; then
             artist="$1"
             title="$2"
         else
@@ -1306,17 +1306,17 @@ lyrics() {
                    "http://www.google.com/search?q=lyrics \"${artist}\" \"${title}\" site:azlyrics.com&btnI=Search" | \
                   sed 's%^.*\"\(https://www.azlyrics.com/[^\"]*\)\".*$%\1%')
         lyrics=$(wget --quiet --user-agent="${useragent}" -O - "${url}" | \
-                     sed -n '/<!-- Usage of azlyrics.com.*$/,/<!-- MxM banner -->/p' | sed 's/<br>//g ; s/<\/div>//' | head -n -6 | tail -n +2)
+                     sed -n '/<!-- Usage of azlyrics.com.*$/,/<!-- MxM banner -->/p' | sed 's/<br>//g; s/<\/div>//' | head -n -6 | tail -n +2)
         printf '%s - %s\n\n%s\n' "${artist}" "${title}" "${lyrics}"
     fi
 }
 #        weather                 weather report
 weather() {
-    if [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: weather [LOCATION]"
         echo "  LOCATION  City or ZIP Code (default: San Diego)"
     else
-        if [ -z "$1" ] ; then
+        if [ -z "$1" ]; then
             loc="San+Diego"
         else
             loc="$(echo \"$*\" | sed 's/ /+/g')"
@@ -1327,11 +1327,11 @@ weather() {
 }
 #        weather-graph           graphical weather report
 weather-graph() {
-    if [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: weather-graph [LOCATION]"
         echo "  LOCATION  City or ZIP Code (default: San Diego)"
     else
-        if [ -z "$1" ] ; then
+        if [ -z "$1" ]; then
             loc="San+Diego"
         else
             loc="$(echo \"$*\" | sed 's/ /+/g')"
@@ -1345,30 +1345,30 @@ weather-meteogram() {
     local utf=0
     local loc="san_diego"
 
-    if [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: weather-meteogram [-u,--utf8] [LOCATION]"
         echo "  -u,--utf8  Convert weather icons to UTF-8 glyphs"
         echo "  LOCATION   City or ZIP Code (default: San Diego)"
     else
-        if [ "$1" == "-u" ] || [ "$1" == "--utf8" ] ; then
+        if [ "$1" == "-u" ] || [ "$1" == "--utf8" ]; then
             utf=1
             shift
         fi
 
-        if [ -z "$1" ] ; then
+        if [ -z "$1" ]; then
             loc="san_diego"
         else
             loc="$(echo \"$*\" | sed 's/ /_/g' | tr '[:upper:]' '[:lower:]')"
         fi
 
-        if [ $utf -eq 0 ] ; then
+        if [ $utf -eq 0 ]; then
             finger "^${loc}@graph.no" | head -n -1 | tail -n +2
         else
             finger "^${loc}@graph.no" | head -n -1 | tail -n +2 | \
-                sed "s/^   -=/   %%/ ; s/=-   $/%%   / ; s/=V=//g ; \
-                s/-//g ; s/\^//g ; s/=//g ; s/#//g ; \
-                s/|//g ; s/!//g ; s/\*//g ; \
-                s/^   %%/   -=/ ; s/%%   $/=-   /"
+                sed "s/^   -=/   %%/; s/=-   $/%%   /; s/=V=//g; \
+                s/-//g; s/\^//g; s/=//g; s/#//g; \
+                s/|//g; s/!//g; s/\*//g; \
+                s/^   %%/   -=/; s/%%   $/=-   /"
         fi
     fi
 }
@@ -1378,7 +1378,7 @@ weather-meteogram() {
 #
 #        make-cert               make ssl certificate
 make-cert() {
-    if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: make-cert NAME"
     else
         name="$1"
@@ -1393,104 +1393,104 @@ make-cert() {
 #
 #        pmsg                    pacman search with grep
 pmsg() {
-    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: pmsg SEARCH GREP"
     else
         s="$1"
         shift
-        pacman -Ss "${s}" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a ; { N ; s/\n */ | / ; p ; d ; ba }" | grep -i "$*"
+        pacman -Ss "${s}" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a; { N; s/\n */ | /; p; d; ba }" | grep -i "$*"
     fi
 }
 #        pmss                    pacman specific search
 pmss() {
-    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: pmss SEARCH"
     else
-        pacman -Ss "$*" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a ; /^[a-z]*\/$* / { N ; s/\n */ | / ; p ; d ; ba }"
+        pacman -Ss "$*" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a; /^[a-z]*\/$* / { N; s/\n */ | /; p; d; ba }"
     fi
 }
 #        pmsi                    pacman search installed packages
 pmsi() {
-    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: pmsi SEARCH"
     else
-        pacman -Ss "$*" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a ; { N ; s/\n */ | / ; p ; d ; ba }" | grep " \[Installed\]"
+        pacman -Ss "$*" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a; { N; s/\n */ | /; p; d; ba }" | grep " \[Installed\]"
     fi
 }
 #        pmsis                   pacman specific search installed packages
 pmsis() {
-    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: pmsis SEARCH"
     else
-        pacman -Ss "$*" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a ; /^[a-z]*\/$* / { N ; s/\n */ | / ; p ; d ; ba }" | grep " \[Installed\]"
+        pacman -Ss "$*" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a; /^[a-z]*\/$* / { N; s/\n */ | /; p; d; ba }" | grep " \[Installed\]"
     fi
 }
 #!#        yasg                    yay search with grep
 #!yasg() {
-#!    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+#!    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
 #!        echo "Usage: yasg SEARCH GREP"
 #!    else
 #!        s="$1"
 #!        shift
-#!        yay -Ss "${s}" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a ; { N ; s/\n */ | / ; p ; d ; ba }" | grep -i "$*"
+#!        yay -Ss "${s}" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a; { N; s/\n */ | /; p; d; ba }" | grep -i "$*"
 #!    fi
 #!}
 #!#        yass                    yay specific search
 #!yass() {
-#!    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+#!    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
 #!        echo "Usage: yass SEARCH"
 #!    else
-#!        yay -Ss "$*" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a ; /^[a-z]*\/$* / { N ; s/\n */ | / ; p ; d ; ba }"
+#!        yay -Ss "$*" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a; /^[a-z]*\/$* / { N; s/\n */ | /; p; d; ba }"
 #!    fi
 #!}
 #!#        yasi                    yay search installed packages
 #!yasi() {
-#!    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+#!    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
 #!        echo "Usage: yasi SEARCH"
 #!    else
-#!        yay -Ss "$*" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a ; { N ; s/\n */ | / ; p ; d ; ba }" | grep " (Installed"
+#!        yay -Ss "$*" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a; { N; s/\n */ | /; p; d; ba }" | grep " (Installed"
 #!    fi
 #!}
 #!#        yasis                   yay specific search installed packages
 #!yasis() {
-#!    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+#!    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
 #!        echo "Usage: yasis SEARCH"
 #!    else
-#!        yay -Ss "$*" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a ; /^[a-z]*\/$* / { N ; s/\n */ | / ; p ; d ; ba }" | grep " (Installed"
+#!        yay -Ss "$*" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a; /^[a-z]*\/$* / { N; s/\n */ | /; p; d; ba }" | grep " (Installed"
 #!    fi
 #!}
 #        pasg                    paru search with grep
 pasg() {
-    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: pasg SEARCH GREP"
     else
         s="$1"
         shift
-        paru -Ss "${s}" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a ; { N ; s/\n */ | / ; p ; d ; ba }" | grep -i "$*"
+        paru -Ss "${s}" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a; { N; s/\n */ | /; p; d; ba }" | grep -i "$*"
     fi
 }
 #        pass                    paru specific search
 pass() {
-    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: pass SEARCH"
     else
-        paru -Ss "$*" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a ; /^[a-z]*\/$* / { N ; s/\n */ | / ; p ; d ; ba }"
+        paru -Ss "$*" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a; /^[a-z]*\/$* / { N; s/\n */ | /; p; d; ba }"
     fi
 }
 #        pasi                    paru search installed packages
 pasi() {
-    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: pasi SEARCH"
     else
-        paru -Ss "$*" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a ; { N ; s/\n */ | / ; p ; d ; ba }" | grep " \[Installed\]"
+        paru -Ss "$*" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a; { N; s/\n */ | /; p; d; ba }" | grep " \[Installed\]"
     fi
 }
 #        pasis                   paru specific search installed packages
 pasis() {
-    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: pasis SEARCH"
     else
-        paru -Ss "$*" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a ; /^[a-z]*\/$* / { N ; s/\n */ | / ; p ; d ; ba }" | grep " \[Installed\]"
+        paru -Ss "$*" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a; /^[a-z]*\/$* / { N; s/\n */ | /; p; d; ba }" | grep " \[Installed\]"
     fi
 }
 #        arch-initialize         initial setup of an arch system
@@ -1548,7 +1548,7 @@ arch-initialize() {
 
     sections=(${initial[@]} ${standard[@]})
 
-    if [ "$(distribution)" != "arch" ] ; then
+    if [ "$(distribution)" != "arch" ]; then
         echo "Not running Arch"
         return 1
     fi
@@ -1557,7 +1557,7 @@ arch-initialize() {
     echo "========== Arch Initialization Script =========="
     echo
 
-    for section in ${sections[@]} ; do
+    for section in ${sections[@]}; do
         echo
         echo "========== ${section} =========="
         echo
@@ -1575,7 +1575,7 @@ arch-initialize() {
 #
 #        acsg                    apt-cache search with grep
 acsg() {
-    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: acsg QUERY"
     else
         apt-cache search "$1" | grep -i "^$1"
@@ -1587,17 +1587,17 @@ acsg() {
 #
 #        dnfsg                    dnf search with grep
 dnfsg() {
-    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: dnfsg SEARCH GREP"
     else
         s="$1"
         shift
-        dnf search "${s}" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a ; { N ; s/\n */ | / ; p ; d ; ba }" | grep -i --color=never "$*"
+        dnf search "${s}" 2>/dev/null | sed 's/\x1b\][^\\]*\\//g' | sed -n ":a; { N; s/\n */ | /; p; d; ba }" | grep -i --color=never "$*"
     fi
 }
 #        dnfss                    dnf specific search (starts with)
 dnfss() {
-    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: dnfss SEARCH"
     else
         #dnf search --name "$*" 2>/dev/null | sed -n '/Matched fields: name (exact)/,/Matched fields: name/{//!p}'
@@ -1606,7 +1606,7 @@ dnfss() {
 }
 #        dnfsi                    dnf search installed packages
 dnfsi() {
-    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: dnfsi SEARCH"
     else
         dnf list --installed 2>/dev/null | grep --color=never "$*" | sed 's/ [^ ]\+$//'
@@ -1614,14 +1614,14 @@ dnfsi() {
 }
 #        dnfsis                   dnf specific search (starts with) installed packages
 dnfsis() {
-    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: dnfsis SEARCH"
     else
         dnf list --installed 2>/dev/null | grep -i --color=never "^$*" |  sed 's/ [^ ]\+$//'
     fi
 }
 
-if [ "$(distribution)" == "guix" ] ; then
+if [ "$(distribution)" == "guix" ]; then
 #
 # guix
 #
@@ -1638,7 +1638,7 @@ fi
 #
 #        nixs                    nix search
 nixs() {
-    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: nixs SEARCH"
     else
         s="$1"
@@ -1648,7 +1648,7 @@ nixs() {
 }
 #        nixss                   nix specific search
 nixss() {
-    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: nixss SEARCH"
     else
         s="$1"
@@ -1658,7 +1658,7 @@ nixss() {
 }
 #        nixsi                   nix search installed packages
 nixsi() {
-    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: nixsi SEARCH"
     else
         nix-store --quiet -q --references /run/current-system/sw | grep -i "$*" | sort
@@ -1666,20 +1666,20 @@ nixsi() {
 }
 #        nixsg                   nix search with grep
 nixsg() {
-    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: nixsg SEARCH GREP"
     else
         s="$1"
         shift
         tmpfile="$(mktemp)"
         nix search --quiet nixpkgs "${s}" 2>/dev/null | head -n -1 > "${tmpfile}"
-        sed -n ":a ; /^\* / { N ; s/\n// ; p ; d ; ba }" "${tmpfile}" | grep -i "$*"
+        sed -n ":a; /^\* / { N; s/\n//; p; d; ba }" "${tmpfile}" | grep -i "$*"
         rm "${tmpfile}"
     fi
 }
 #        nixfi                   nix locate package of installed file
 nixfi() {
-    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: nixfi FILE"
     else
         readlink -e $(which $@)
@@ -1691,7 +1691,7 @@ nixfi() {
 #
 #        qd-copy-from-vm         copy something from a vm to dom0
 qd-copy-from-vm() {
-    if [ $# -lt 3 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] || [ "$(uname -n)" != "dom0" ] ; then
+    if [ $# -lt 3 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] || [ "$(uname -n)" != "dom0" ]; then
         echo "Usage: qd-copy-from-vm VM PATH FILE"
         [ "$(uname -n)" != "dom0" ] && echo "Error: Can only be run on dom0"
     else
@@ -1700,7 +1700,7 @@ qd-copy-from-vm() {
 }
 #        qd-copy-to-vm           copy something from dom0 to a vm
 qd-copy-to-vm() {
-    if [ $# -lt 3 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] || [ "$(uname -n)" != "dom0" ] ; then
+    if [ $# -lt 3 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] || [ "$(uname -n)" != "dom0" ]; then
         echo "Usage: qd-copy-to-vm VM FILE PATH"
         [ "$(uname -n)" != "dom0" ] && echo "Error: Can only be run on dom0"
     else
@@ -1709,7 +1709,7 @@ qd-copy-to-vm() {
 }
 #        qd-sync                 copy personal config to dom0
 qd-sync() {
-    if [ "$1" == "-h" ] || [ "$1" == "--help" ] || [ "$(uname -n)" != "dom0" ] ; then
+    if [ "$1" == "-h" ] || [ "$1" == "--help" ] || [ "$(uname -n)" != "dom0" ]; then
         echo "Usage: qd-sync [VM]"
         [ "$(uname -n)" != "dom0" ] && echo "Error: Can only be run on dom0"
     else
@@ -1721,7 +1721,7 @@ qd-sync() {
         qvm-run --pass-io personal 'tar -C /home/user -c --exclude=\".git*\" config-private' | tar -C "${HOME}" -x
         sudo cp "${HOME}/config/config/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml" \
              "/etc/xdg/xfce4/xfconf/xfce-perchannel-xml/"
-        if [ -n "$1" ] ; then
+        if [ -n "$1" ]; then
             tar -C "${HOME}/config/config/.config" -cf - metapac | qvm-run --pass-io "$1" 'tar -C "/home/user/.config" -xf -'
         fi
         home-restow
@@ -1729,7 +1729,7 @@ qd-sync() {
 }
 #        qd-set-windows-vm-features-and-prefs  set features and prefs on given windows vm
 qd-set-windows-vm-features-and-prefs() {
-    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: qd-set-windows-vm-features-and-prefs VM"
     else
         qvm-features "$1" audio-model ich6
@@ -1744,7 +1744,7 @@ qd-set-windows-vm-features-and-prefs() {
 }
 #        qubes-set-tmp-size      set size of RAM /tmp for current qube
 qubes-set-tmp-size() {
-    if [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: qubes-set-tmp-size [SIZE]"
         echo "SIZE  new size of /tmp (defaults to 1G)"
     else
@@ -1773,7 +1773,7 @@ qubes-dom0-initialize() {
         "qubes-dom0-lightdm"
     )
 
-    if [ "$(distribution)" != "qubes" ] || [ "$(uname -n)" != "dom0" ] ; then
+    if [ "$(distribution)" != "qubes" ] || [ "$(uname -n)" != "dom0" ]; then
         echo "Error: Can only be run on Qubes OS: dom0"
         return 1
     fi
@@ -1782,7 +1782,7 @@ qubes-dom0-initialize() {
     echo "========== Qubes OS: dom0 Initialization Script =========="
     echo
 
-    for section in ${sections[@]} ; do
+    for section in ${sections[@]}; do
         echo
         echo "========== ${section} =========="
         echo
@@ -1816,7 +1816,7 @@ qubes-personal-initialize() {
         "qubes-personal-final"
     )
 
-    if [ "$(distribution)" != "qubes" || "$(uname -n)" != "personal" ] ; then
+    if [ "$(distribution)" != "qubes" || "$(uname -n)" != "personal" ]; then
         echo "Error: Can only be run on Qubes OS: personal"
         return 1
     fi
@@ -1825,7 +1825,7 @@ qubes-personal-initialize() {
     echo "========== Qubes OS: personal Initialization Script =========="
     echo
 
-    for section in ${sections[@]} ; do
+    for section in ${sections[@]}; do
         echo
         echo "========== ${section} =========="
         echo
@@ -1847,12 +1847,12 @@ dvd-titles() {
 }
 #        dvd-encode              encode a dvd track
 dvd-encode() {
-    if [ $# -lt 1 ] || [ $# -gt 2 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -lt 1 ] || [ $# -gt 2 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: dvd-encode TRACK [FILE]"
     else
         track="$1"
         unshift
-        if [ $# -eq 0 ] ; then
+        if [ $# -eq 0 ]; then
             file="dvdvideo.avi"
         else
             file="$1"
@@ -1887,7 +1887,7 @@ git-branch() {
 #        git-branch-prompt       git branch name for terminal prompt
 git-branch-prompt() {
     gitbranch=$(git-branch)
-    if [ -z "${gitbranch}" ] ; then
+    if [ -z "${gitbranch}" ]; then
         echo ""
     else
         echo "  ${gitbranch}"
@@ -1895,7 +1895,7 @@ git-branch-prompt() {
 }
 #        gitcouo                 git checkout BRANCH and pull origin BRANCH
 gitcouo() {
-    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: gitcouo BRANCH"
         echo "  BRANCH  branch to checkout and pull"
     else
@@ -1903,19 +1903,19 @@ gitcouo() {
         git checkout "${branch}" && git pull origin "${branch}"
     fi
 }
-#        git-retag               git tag -d x48ng-1.3.0 ; git push origin :x48ng-1.3.0 ; git tag x48ng-1.3.0 ; git push origin x48ng-1.3.0
+#        git-retag               git tag -d x48ng-1.3.0; git push origin :x48ng-1.3.0; git tag x48ng-1.3.0; git push origin x48ng-1.3.0
 git-retag() {
-    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: git-retag TAG"
         echo "  TAG  tag to delete and recreate"
     else
-        git tag -d "$1" ; git push origin :"$1" ; git tag "$1" ; git push origin "$1"
+        git tag -d "$1"; git push origin :"$1"; git tag "$1"; git push origin "$1"
     fi
 }
 #        _gitsync                pull, commit, and push given home git repositories
 _gitsync() {
-    for dir in "$@" ; do
-        if [ -d "${HOME}/${dir}" ] ; then
+    for dir in "$@"; do
+        if [ -d "${HOME}/${dir}" ]; then
             # remove org font files
             echo "Removing org font files..."
             find "${HOME}/${dir}" -name '*org-src-fontification*' -print0 | \
@@ -1926,7 +1926,7 @@ _gitsync() {
             (cd "${HOME}/${dir}" && git pull origin)
 
             check=$(cd "${HOME}/${dir}" && git config --get remote.origin.url | grep "^git@")
-            if [ -n "${check}" ] ; then
+            if [ -n "${check}" ]; then
                 # commit (check in) home git repositories (default update)
                 echo "Committing '${dir}'..."
                 (cd "${HOME}/${dir}" && git commit -a -m "Update")
@@ -1944,10 +1944,10 @@ git-sync-config() {
     date '+%Y-%m-%d %H:%M:%S'
     hn="$(uname -n)"
 
-    if [ -d "$(configdir)" ] ; then
+    if [ -d "$(configdir)" ]; then
         # only update xscreensaver preferences on tank or dozer
-        if [ -f "${HOME}/.xscreensaver" ] && [ ! -L "${HOME}/.xscreensaver" ] ; then
-            if [ "${hn}" == "tank" ] || [ "${hn}" == "personal" ] || [ "${hn}" == "dozer" ] ; then
+        if [ -f "${HOME}/.xscreensaver" ] && [ ! -L "${HOME}/.xscreensaver" ]; then
+            if [ "${hn}" == "tank" ] || [ "${hn}" == "personal" ] || [ "${hn}" == "dozer" ]; then
                 echo "Update .xscreensaver..."
                 (
                     cd "${HOME}" && \
@@ -1958,13 +1958,13 @@ git-sync-config() {
         fi
     fi
 
-    if [ -d "$(configdir)-private" ] ; then
-        #if [ -L ".cron" ] && [ -f "config-private/custom/$(uname -n)/.cron" ] ; then
+    if [ -d "$(configdir)-private" ]; then
+        #if [ -L ".cron" ] && [ -f "config-private/custom/$(uname -n)/.cron" ]; then
         #    echo "Update crontab..."
         #    crontab -l > "config-private/custom/$(uname -n)/.cron"
         #fi
         # update addressbook
-        if [ -f "${HOME}/.addressbook" ] && [ ! -L "${HOME}/.addressbook" ] ; then
+        if [ -f "${HOME}/.addressbook" ] && [ ! -L "${HOME}/.addressbook" ]; then
             echo "Update .addressbook..."
             (
                 cd "${HOME}" && \
@@ -1998,7 +1998,7 @@ git-sync-home() {
 #
 #        backup-files            backup a file or directory to /home/backup
 backup-files() {
-    if [ $# -lt 2 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -lt 2 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: backup-files PREFIX FILE..."
     else
         # get parameters
@@ -2016,7 +2016,7 @@ backup-files() {
 rsync-bundle() {
     # check destination
     dest="/run/media/${USER}/FILES"
-    if [ ! -d "${dest}" ] ; then
+    if [ ! -d "${dest}" ]; then
         echo "Could not find mounted USB at '${dest}'"
         return 1
     fi
@@ -2047,7 +2047,7 @@ rsync-bundle() {
 rsync-cruzer() {
     # check destination
     dest="/run/media/${USER}/Ventoy"
-    if [ ! -d ${dest} ] ; then
+    if [ ! -d ${dest} ]; then
         echo "Could not find mounted USB at ${dest}"
         return 1
     fi
@@ -2063,7 +2063,7 @@ rsync-cruzer() {
         "${root}/Super Grub2 "*.iso
         "${root}/System Rescue "*.iso
     )
-    for file in "${files[@]}" ; do
+    for file in "${files[@]}"; do
         #rsynW -rLtxc --progress --delete "${file}" "${dest}/"
         rsynW -rLtxW --size-only --progress --delete "${file}" "${dest}/"
     done
@@ -2082,7 +2082,7 @@ rsync-install() {
         mkdir -p "${dest}/${ddir}"
         (
             cd "${root}/${sdir}" && \
-                find . -mindepth 1 -maxdepth 1 -name "${query}" -printf '%P\n' | while read -r src ; do
+                find . -mindepth 1 -maxdepth 1 -name "${query}" -printf '%P\n' | while read -r src; do
                     #dst=$(echo "${src}" | sed "s/ /-/g")
                     dst="${src// /-}"
                     echo "Syncing \"${root}/${sdir}/${src}\" \"${dest}/${ddir}/${dst}\""
@@ -2115,7 +2115,7 @@ rsync-iodd() {
         mkdir -p "${dest}/${ddir}"
         (
             cd "${root}/${sdir}" && \
-                find . -mindepth 1 -maxdepth 1 -name "${query}" -printf '%P\n' | while read -r src ; do
+                find . -mindepth 1 -maxdepth 1 -name "${query}" -printf '%P\n' | while read -r src; do
                     #dst=$(echo "${src}" | sed "s/ /-/g")
                     dst="${src// /-}"
                     echo "Syncing \"${root}/${sdir}/${src}\" \"${dest}/${ddir}/${dst}\""
@@ -2161,7 +2161,7 @@ rsync-iodd() {
 #
 #        jar-version             display java version used to build jars
 jar-version() {
-    if [ $# -gt 2 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -gt 2 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: jar-version [DIR [PATTERN]]"
         echo "Display Java version used to build jar files in DIR matching PATTERN."
         echo "  DIR      defaults to '.'"
@@ -2172,13 +2172,13 @@ jar-version() {
         pattern="$2"
         [ -z "${pattern}" ] && pattern="*.jar"
         tmpdir="$(mktemp -d)"
-        find "${dir}" -name "${pattern}" -type f | while read -r jar ; do
+        find "${dir}" -name "${pattern}" -type f | while read -r jar; do
             mkdir -p "${tmpdir}"
             cp "${jar}" "${tmpdir}/"
             (
                 cd "${tmpdir}" && \
                     unzip "${jar}" >/dev/null && \
-                    echo "${jar} $(grep '^Created-By' 'META-INF/MANIFEST.MF' | sed 's/^Created-By: // ; s/ (Sun.*$//')"
+                    echo "${jar} $(grep '^Created-By' 'META-INF/MANIFEST.MF' | sed 's/^Created-By: //; s/ (Sun.*$//')"
             )
             rm -rf "${tmpdir}"
         done | column --table
@@ -2190,14 +2190,14 @@ jar-version() {
 #
 #        adb-log-app             show adb log for specific app
 adb-log-app() {
-    if [ $# -lt 1 ] || [ $# -gt 2 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    if [ $# -lt 1 ] || [ $# -gt 2 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: adb-log-app [PARAMS] PACKAGE"
         echo "Dump the ADB log for a specific PACKAGE."
         echo "Optional PARAMS can be any ADB params, such as:"
         echo "  -e         emulator"
         echo "  -d         device"
         echo "  -s DEVICE  specific device"
-    elif [ $# -eq 1 ] ; then
+    elif [ $# -eq 1 ]; then
         adb logcat | grep $(adb shell ps | grep "$1" | cut -c10-15)
     else
         adb ${*:1:$#-1} logcat | grep $(adb ${*:1:$#-1} shell ps | grep "${*: -1}" | cut -c10-15)
@@ -2275,7 +2275,7 @@ home-initialize() {
     echo "All files and directories replaced will be moved to '${backupdir}'."
     echo "This command should only be run once for a given HOME directory."
     [ -e "${HOME}/.alias" ] && echo "It looks like stow initialization has already occurred" && return 1
-    echo -n "Do you wish to proceed? [yN] " ; read -r a
+    echo -n "Do you wish to proceed? [yN] "; read -r a
 
     case "${a}" in
         y|Y)
@@ -2285,8 +2285,8 @@ home-initialize() {
             (
                 cd "${HOME}" && \
                     mkdir -p "${backupdir}" && \
-                    for file in "${backupfiles[@]}" ; do
-                        if [ -e "${file}" ] ; then
+                    for file in "${backupfiles[@]}"; do
+                        if [ -e "${file}" ]; then
                             echo "  ${file} ==> ${backupdir}"
                             mv "${file}" "${backupdir}/"
                         fi
@@ -2298,7 +2298,7 @@ home-initialize() {
             mkdir -p "${HOME}/.emacs.d"
             mkdir -p "${HOME}/.local/share/applications"
             find "$(configdir)/config/.config" -mindepth 1 -maxdepth 1 -type d | \
-                while read -r dir ; do
+                while read -r dir; do
                     bn=$(basename "${dir}")
                     mkdir -p "${HOME}/.config/${bn}"
                 done
@@ -2315,14 +2315,14 @@ home-initialize() {
             echo "Making other symlinks..."
             (
                 cd "${HOME}" && \
-                    for file in "${symlinkdirs[@]}" ; do
-                        if [ -d "${file}" ] ; then
+                    for file in "${symlinkdirs[@]}"; do
+                        if [ -d "${file}" ]; then
                             echo "  ${file}"
                             ln -sf "${file}" .
                         fi
                     done
             )
-            ;;
+           ;;
     esac
 }
 #        home-restow             restow links from ~/ to ~/config and ~/config-private dirs
@@ -2335,7 +2335,7 @@ home-restow() {
     mkdir -p "${HOME}/.emacs.d"
     mkdir -p "${HOME}/.local/share/applications"
     find "$(configdir)/config/.config" -mindepth 1 -type d | \
-        while read -r dir ; do
+        while read -r dir; do
             bn=$(basename "${dir}")
             mkdir -p "${HOME}/.config/${bn}"
         done
@@ -2354,7 +2354,7 @@ home-restow() {
                     "xfce4/xfconf/xfce-perchannel-xml/xfce4-session.xml" \
                     "xfce4/xfconf/xfce-perchannel-xml/xsettings.xml"
     do
-        if [ -f "${HOME}/.config/${file}" ] && [ ! -L "${HOME}/.config/${file}" ] ; then
+        if [ -f "${HOME}/.config/${file}" ] && [ ! -L "${HOME}/.config/${file}" ]; then
             mv "${HOME}/.config/${file}" "${HOME}/.config/${file}.old"
         fi
     done
@@ -2388,7 +2388,7 @@ make-metapac-groups() {
         awk "$(_getregexp "$1")" "${infile}" | \
             grep -v "^\*" | grep -v "^ *#+NAME: " | grep -v "^ *| *X *|" | \
             grep -v "^ *|---" | grep -v "^ *| *x *|" | \
-            cut -d '|' -f 3 | sort --unique | sed 's/^ *// ; s/ *$//'
+            cut -d '|' -f 3 | sort --unique | sed 's/^ *//; s/ *$//'
     }
 
     _getpackages() {
@@ -2396,21 +2396,21 @@ make-metapac-groups() {
             grep -v "^\*" | grep -v "^ *#+NAME: " | grep -v "^ *| *X *|" | \
             grep "^ *| *| $2 *|" | \
             grep -v "^ *|---" | grep -v "^ *| *x *|" | \
-            cut -d '|' -f 4 | sed 's/^ */    \"/ ; s/ *$/\",/'
+            cut -d '|' -f 4 | sed 's/^ */    \"/; s/ *$/\",/'
     }
 
     _getflatpaks() {
-        _getpackages "$1" "$2" | sed 's/^ *"/    { name = "system:/ ; s/",/", options = { remote = "flathub" } },/'
+        _getpackages "$1" "$2" | sed 's/^ *"/    { name = "system:/; s/",/", options = { remote = "flathub" } },/'
     }
 
     outdir="${HOME}/config/config/.config/metapac/groups"
     mkdir -p "${outdir}"
-    find "${outdir}/" -iname "*.toml" -print | while read -r file ; do
+    find "${outdir}/" -iname "*.toml" -print | while read -r file; do
         rm -r "${file}"
     done
 
-    for backend in "arch" "snap" ; do
-        for group in $(_getgroups ${backend}) ; do
+    for backend in "arch" "snap"; do
+        for group in $(_getgroups ${backend}); do
             repos="$(_getrepos ${backend})"
             printf "%s\n%s\n%s\n%s\n%s\n\n" \
                    "${backend} = {" \
@@ -2422,8 +2422,8 @@ make-metapac-groups() {
         done
     done
 
-    for backend in "dnf" ; do
-        for group in $(_getgroups ${backend}) ; do
+    for backend in "dnf"; do
+        for group in $(_getgroups ${backend}); do
             repos="$(_getrepos ${backend})"
             printf "%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n\n" \
                    "${backend} = {" \
@@ -2438,8 +2438,8 @@ make-metapac-groups() {
         done
     done
 
-    for backend in "flatpak" ; do
-        for group in $(_getgroups ${backend}) ; do
+    for backend in "flatpak"; do
+        for group in $(_getgroups ${backend}); do
             repos="$(_getrepos ${backend})"
             printf "%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n\n" \
                    "${backend} = {" \
@@ -2458,8 +2458,8 @@ make-metapac-groups() {
 ollama-model-install() {
     awk "/^[ \t]*#\+NAME: ollama-models\$/,/^\*/{print \$0}" \
         "${HOME}/org/computer.org" | \
-        sed -n 's/^ *// ; s/ *#.*$// ; /^ollama pull/p' | \
-        while read -r cmd ; do
+        sed -n 's/^ *//; s/ *#.*$//; /^ollama pull/p' | \
+        while read -r cmd; do
             echo "${cmd}"
             eval "${cmd}"
         done

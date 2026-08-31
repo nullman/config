@@ -12,7 +12,7 @@
 #   HOTKEY
 #       [;]COMMAND
 #
-#   HOTKEY      := CHORD_1 ; CHORD_2 ; ... ; CHORD_n
+#   HOTKEY      := CHORD_1; CHORD_2; ...; CHORD_n
 #   CHORD_i     := [MODIFIERS_i +] [~][@]KEYSYM_i
 #   MODIFIERS_i := MODIFIER_i1 + MODIFIER_i2 + ... + MODIFIER_ik
 #
@@ -164,26 +164,26 @@ super + shift + {Prior,Next}
 
 # shrink window width
 super + ctrl + minus
-	bspc node --resize right -40 0 ; bspc node --resize left -40 0
+	bspc node --resize right -40 0; bspc node --resize left -40 0
 
 # expand window width
 super + ctrl + equal
-	bspc node --resize right 40 0 ; bspc node --resize left 40 0
+	bspc node --resize right 40 0; bspc node --resize left 40 0
 
 # shrink window height
 super + ctrl + shift + minus
-	bspc node --resize top 0 -40 ; bspc node --resize bottom -40 0
+	bspc node --resize top 0 -40; bspc node --resize bottom -40 0
 
 # expand window height
 super + ctrl + shift + equal
-	bspc node --resize top 0 40 ; bspc node --resize bottom 40 0
+	bspc node --resize top 0 40; bspc node --resize bottom 40 0
 
 # resize window:
 #   outward with lowercase i/k/j/l keys
 #   inward with uppercase I/K/J/L keys
 # move floating window with arrow keys
 super + ctrl + s : {i,k,j,l,I,K,J,L,Up,Down,Left,Right}
-    n=40 ; \
+    n=40; \
     bspc node \
     { --resize top      0 -$n , \
       --resize bottom   0  $n , \

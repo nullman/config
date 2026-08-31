@@ -22,7 +22,7 @@ imageurl="${baseurl}/refs/heads/main"
 dir="/home/data/media/Graphic/Backgrounds/DistroTube"
 echo "Note: When fetching all new images, the last one tried will error as it won't exist."
 
-if [ $# -ne 0 ] ; then
+if [ $# -ne 0 ]; then
     # fetch single image
     num=$1
     loop=0
@@ -33,18 +33,18 @@ else
     loop=1
 fi
 
-while true ; do
+while true; do
     padded="0000${num}"
     file="${padded: -4}"
     echo "Fetching wallpaper: ${file}"
     url="${imageurl}/${file}"
     wget "${url}.jpg" -O "${dir}/${file}.jpg"
     rc=$?
-    if [ ${rc} != 0 ] ; then
+    if [ ${rc} != 0 ]; then
         rm "${dir}/${file}.jpg"
         wget "${url}.png" -O "${dir}/${file}.png"
         rc=$?
-        if [ ${rc} != 0 ] ; then
+        if [ ${rc} != 0 ]; then
             rm "${dir}/${file}.png"
             exit 1
         fi

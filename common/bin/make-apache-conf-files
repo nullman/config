@@ -16,10 +16,10 @@ read -r a
 case "${a}" in
     y|Y)
         echo "Installing files..."
-        ;;
+       ;;
     *)
         exit 0
-        ;;
+       ;;
 esac
 
 echo "  bw.conf"

@@ -12,9 +12,9 @@ _command() {
     command -v "$1" >/dev/null 2>&1
 }
 
-if _command audacious ; then
+if _command audacious; then
     audacious --enqueue "$@"
-elif _command audacious2 ; then
+elif _command audacious2; then
     audacious2 --enqueue "$@"
 fi
 

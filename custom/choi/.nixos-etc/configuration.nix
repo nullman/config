@@ -675,6 +675,7 @@
       "lp"
       "mlocate"
       "networkmanager"
+      "render"
       "scanner"
       "users"
       "video"

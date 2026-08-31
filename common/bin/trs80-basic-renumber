@@ -36,7 +36,7 @@ ARGUMENT_REGEX="[0-9,[:space:]]+"
 ifs="${IFS}"
 
 _vprint() {
-    local d=${1} ;shift
+    local d=${1};shift
     local s="${@}"
     ((DEBUG)) || s+=$'\r'
     ((DEBUG>=d)) && printf "%s\n" "${s}"
@@ -47,7 +47,7 @@ _eprint() {
 }
 
 rn=0
-while IFS=$'\r\n' read -r t ; do
+while IFS=$'\r\n' read -r t; do
     [ "${t}" =~ ^[0-9]+ ] || continue
     OLD_LNUM[++rn]=${BASH_REMATCH[0]}
     OLD_BODY[rn]="${t:${#OLD_LNUM[rn]}}"
@@ -58,7 +58,7 @@ NR=${rn}
 HIGHEST_NEW_LNUM=NEW_LNUM[OLD_LNUM[NR]]
 
 # loop over every record in OLD_BODY[]
-for ((rn = 1 ; rn <= NR ; rn++)) ; do
+for ((rn = 1; rn <= NR; rn++)); do
     _vprint 1 "${OLD_LNUM[rn]}${OLD_BODY[rn]}"
 
     NEW_BODY=""
@@ -69,7 +69,7 @@ for ((rn = 1 ; rn <= NR ; rn++)) ; do
     CURRENT_NEW_LNUM=${NEW_LNUM[${OLD_LNUM[rn]}]}
 
     # process a line
-    while ((SCAN_POS < OLD_BODY_LEN)) ; do
+    while ((SCAN_POS < OLD_BODY_LEN)); do
 
         REMAINING_OLD_BODY=${OLD_BODY[rn]:$((SCAN_POS-1))}
         _vprint 3 "    position: ${SCAN_POS}"
@@ -107,12 +107,12 @@ for ((rn = 1 ; rn <= NR ; rn++)) ; do
         _vprint 3 "        old argument |${OLD_ARGUMENT}|"
 
         # split the original argument on commas
-        IFS=, ;T=(${OLD_ARGUMENT}) ;IFS="${ifs}"
+        IFS=,;T=(${OLD_ARGUMENT});IFS="${ifs}"
         _vprint 4 "        fields: ${#T[@]}"
 
         # replace each old target with new target
         NEW_ARGUMENT=""
-        for ((t = 0 ; t < ${#T[@]} ; t++)) ;do
+        for ((t = 0; t < ${#T[@]}; t++));do
             OLD_TARGET_LNUM="${T[t]}"
             _vprint 4 "          old[${t}] |${OLD_TARGET_LNUM}|"
 

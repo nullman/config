@@ -22,38 +22,38 @@ opts=
 help=0
 
 # check for prerequisite applicaitons
-if ! _command sensors ; then
+if ! _command sensors; then
     echo "lm_sensors is not installed"
     exit 1
 fi
 
-if ! _command sysbench && ! _command stress ; then
+if ! _command sysbench && ! _command stress; then
     echo "sysbench and stress are not installed"
     exit 1
 fi
 
 # args
-while [ $# -gt 0 ] ; do
+while [ $# -gt 0 ]; do
     key="$1"
     case "${key}" in
         -c|--count)
             count="$2"
             shift
             shift
-            ;;
+           ;;
         -f|--fahrenheit)
             opts="$1"
             shift
-            ;;
+           ;;
         *)
             help=1
             shift
-            ;;
+           ;;
     esac
 done
 
 # help
-if [ ${help} -eq 1 ] ; then
+if [ ${help} -eq 1 ]; then
     echo "Usage: $(basename $0) [OPTIONS]"
     echo "Options:"
     echo "  -c, --count       number of 10 second tests to run [6]"
@@ -62,8 +62,8 @@ if [ ${help} -eq 1 ] ; then
 fi
 
 _gettemp() {
-    #sensors ${opts} | grep "^Package id 0:" | sed 's/^Package id 0: \+// ; s/ \+(high.*$//'
-    #sensors ${opts} | grep "^Core 0" | sed 's/^Core 0: \+// ; s/ \+(high.*$//'
+    #sensors ${opts} | grep "^Package id 0:" | sed 's/^Package id 0: \+//; s/ \+(high.*$//'
+    #sensors ${opts} | grep "^Core 0" | sed 's/^Core 0: \+//; s/ \+(high.*$//'
     sensors ${opts} | grep "^temp1:" | sed 's/^temp1: \+//' | head -n 1
 }
 
@@ -71,15 +71,15 @@ threads="$(lscpu -p | grep -v '^#' | wc -l)"
 
 echo "Performing CPU temperature test on ${threads} threads..."
 
-for x in $(seq ${count}) ; do
+for x in $(seq ${count}); do
     c="00000${x}"
     echo -n "[${c: $((-${#count}))}/${count}] "
     _gettemp $1
-    if _command sysbench ; then
+    if _command sysbench; then
          sysbench --test=cpu --num-threads=${threads} --cpu-max-prime=25000 run >/dev/null 2>&1
-    elif _command stress-ng ; then
+    elif _command stress-ng; then
         stress-ng --cpu ${threads} --timeout 10s >/dev/null 2>&1
-    elif _command stress ; then
+    elif _command stress; then
         stress --cpu ${threads} --timeout 10s >/dev/null 2>&1
     else
         echo "No stress test application found: sysbench, stress-ng, or stress"

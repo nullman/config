@@ -8,7 +8,7 @@ status="$(cat ${dir}/status)"
 
 [ "${capacity}" -lt "90" && "${status}" = "Charging" ] && printf "󰂄" && exit
 
-[ "${capacity}" -lt "20" ] && notify-send -u critical "Low Battery"
+[ "${capacity}" -lt "20" ] && notify-send --urgency critical "Low Battery"
 
 # symbols: 󰁹 󰂂 󰂁 󰂀 󰁿 󰁾 󰁽 󰁼 󰁻 󰁺
 icon="󰁹"

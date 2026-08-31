@@ -247,13 +247,13 @@ _download() {
 
     [ -n "${listname}" ] && echo "List: ${listname}"
 
-    for ((x = 0; x < ${#channels[@]}; x += 1)) ; do
-        channel=$(echo "${channels[$x]}" | sed 's/ *|/|/g ; s/| */|/g')
+    for ((x = 0; x < ${#channels[@]}; x += 1)); do
+        channel=$(echo "${channels[$x]}" | sed 's/ *|/|/g; s/| */|/g')
         dir=$(echo "${channel}" | cut -d '|' -f 1)
         name=$(echo "${channel}" | cut -d '|' -f 2)
         url=$(echo "${channel}" | cut -d '|' -f 3)
         echo "| ${dir} | ${name} | ${url} |"
-        if [ -z "${listname}" ] || [ "${name}" == "${listname}" ] ; then
+        if [ -z "${listname}" ] || [ "${name}" == "${listname}" ]; then
             path="${basedir}/${dir}/${name}"
             cmd="${ytdlp} \
                 --preset-alias sleep \
@@ -290,40 +290,40 @@ _download() {
 archive="--download-archive '"${HOME}/config-private/config/.yt-dlp-download-archive"'"
 
 # handle command line arguments
-while true ; do
+while true; do
     case $1 in
         -l|--list)
-            for ((x = 0; x < ${#channels[@]}; x += 1)) ; do
-                echo "${channels[$x]}" | sed 's/^[^|]*| *// ; s/ *|.*$//'
+            for ((x = 0; x < ${#channels[@]}; x += 1)); do
+                echo "${channels[$x]}" | sed 's/^[^|]*| *//; s/ *|.*$//'
             done
             exit 0
-            ;;
+           ;;
         -r|--restart)
             listname=
-            if [ -n "$2" ] ; then
+            if [ -n "$2" ]; then
                 listname="$2"
                 shift
             fi
             archive="--no-download-archive"
             _download "${archive}" "${listname}"
             exit 0
-            ;;
+           ;;
         -h|-\?|--help)
             _usage 0
             exit 0
-            ;;
+           ;;
         --)
             shift
             break
-            ;;
+           ;;
         -?*)
             echo -e "Invalid option: $1" >&2
             _usage
             exit 1
-            ;;
+           ;;
         *)
             break
-            ;;
+           ;;
     esac
     shift
 done

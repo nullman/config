@@ -60,7 +60,7 @@ alias alhg="
 #
 #        al                      source alias and funct scripts
 alias al="
-    for file in \".alias\" \".funct\" \".alias-work\" \".funct-work\" ; do
+    for file in \".alias\" \".funct\" \".alias-work\" \".funct-work\"; do
         [ -f \${HOME}/\${file} ] && source \${HOME}/\${file}
     done"
 #        spr                     source profile (.shellrc)
@@ -204,7 +204,7 @@ alias xd="xxdiff"
 #        xkeys                   list x11 keys
 alias xkeys="\${PAGER} /usr/include/X11/keysumdef.h"
 #        setdate                 set system date using ntpdate
-alias setdate="sudo ntpdate -su 128.101.101.101 ; sudo hwclock --systohc"
+alias setdate="sudo ntpdate -su 128.101.101.101; sudo hwclock --systohc"
 #        ra                      run-app
 alias ra="run-app"
 #        ccs                     ccache -s (cache status)
@@ -286,7 +286,7 @@ alias xset-key="xset -dpms s off b off r rate 500 35"
 #        imwheel-scroll          imwheel -b 4 8
 alias imwheel-scroll="imwheel -b 4 8"
 #        mac                     mount mac drive and run xhfs
-alias mac="mmac ; xhfs /dev/loop0 \${HOME}/Downloads/macintosh ; umac"
+alias mac="mmac; xhfs /dev/loop0 \${HOME}/Downloads/macintosh; umac"
 #        sm                      configure squirrelmail
 alias sm="/etc/squirrelmail/conf.pl"
 #        debug-on                turn on files (library modules) debugging info
@@ -294,11 +294,11 @@ alias debug-on="export LD_DEBUG=files"
 #        debug-off               turn off files (library modules) debugging info
 alias debug-off="export LD_DEBUG="
 #!#        alsa-reset            restart alsa sound
-#!alias alsa-reset="sudo pkill -u \${USER} pulseaudio ; sudo alsa force-reload"
+#!alias alsa-reset="sudo pkill -u \${USER} pulseaudio; sudo alsa force-reload"
 #!#        alsa-reset            restart alsa sound
 #!alias alsa-reset="sudo alsa force-reload"
 #        pulse-reset             restart pulseaudio sound
-alias pulse-reset="pkill -u \${USER} pulseaudio ; sleep 2 ; pulseaudio --daemonize=no & disown"
+alias pulse-reset="pkill -u \${USER} pulseaudio; sleep 2; pulseaudio --daemonize=no & disown"
 #        kernel                  kernel version
 alias kernel="mhwd-kernel -li"
 #        system-info             inxi -Fx (display system information)
@@ -331,12 +331,12 @@ alias dd-sync="sudo dd conv=fdatasync status=progress"
 #        sxhkdrs                 sxhkd restart
 alias sxhkdrs="pkill -SIGUSR1 -u \${USER} sxhkd"
 #        tint2rs                 tint2 restart
-alias tint2rs="(pkill -u \${USER} tint2 ; tint2 && sleep 1 && \
+alias tint2rs="(pkill -u \${USER} tint2; tint2 && sleep 1 && \
     xdo below -t \$(xdo id -n root) \$(xdo id -N Tint2)) & disown"
 #        ewwrs                   eww restart
 alias ewwrs="(eww --restart open bar && sleep 1 && \
     xdo below -t \$(xdo id -n root) \$(xdo id -n eww))"
-#!alias ewwrs="(pkill -u \${USER} eww ; eww --restart open bar && sleep 1 && \
+#!alias ewwrs="(pkill -u \${USER} eww; eww --restart open bar && sleep 1 && \
 #        xrdb-list               list custom .Xresource settings
 alias xrdb-list="xrdb -query -all"
 #        xrdb-merge-home         merge ~/.Xresource settings into xrdb
@@ -363,7 +363,7 @@ alias ff="fastfetch"
 #        shred-device            shred device (one random pass, one zero pass)
 alias shred-device="sudo shred -v -n1 --random-source=/dev/urandom -z"
 #        microsoft-license       cat /sys/firmware/acpi/tables/MSDM
-alias microsoft-license="sudo cat /sys/firmware/acpi/tables/MSDM ; echo"
+alias microsoft-license="sudo cat /sys/firmware/acpi/tables/MSDM; echo"
 #        grubmc                  grub-mkconfig
 alias grubmc="sudo grub-mkconfig -o /boot/grub/grub.cfg"
 #        grub2mc                 grub2-mkconfig
@@ -410,10 +410,10 @@ alias tech-acronyms="
     curl --silent \"https://en.wikipedia.org/wiki/List_of_computing_and_IT_abbreviations\" | \
     grep \"^<li>\" | \
     grep \"/wiki/\" | \
-    sed 's%^<li><a[^>]\+>\(.\+\)</a>\(.\+\)</li>%\1: \2% ; \
-        s%—%%g ; s%</ul>%% ; s%</\?b>%%g ; s%\&amp;%\&% ; \
-        s%<sup .*</sup>%%g ; s%</div>%%g ; s%</a>$%% ; \
-        s%<a [^>]*>%% ; s%%% ; s%</a>%: %' | \
+    sed 's%^<li><a[^>]\+>\(.\+\)</a>\(.\+\)</li>%\1: \2%; \
+        s%—%%g; s%</ul>%%; s%</\?b>%%g; s%\&amp;%\&%; \
+        s%<sup .*</sup>%%g; s%</div>%%g; s%</a>$%%; \
+        s%<a [^>]*>%%; s%%%; s%</a>%: %' | \
     grep -v '^<li>' | rofi -dmenu -i -p 'Technology Acronyms'"
 
 #
@@ -426,8 +426,8 @@ alias terminal-width-80="
     echo '         1         2         3         4         5         6         7         8'
     echo '12345678901234567890123456789012345678901234567890123456789012345678901234567890'
     echo
-    echo 'Press Enter for terminal height: ' ; read -r a
-    for x in \$(seq 80 -1 2) ; do
+    echo 'Press Enter for terminal height: '; read -r a
+    for x in \$(seq 80 -1 2); do
         echo \${x}
     done"
 #        terminal-width-144      show terminal width grid
@@ -437,8 +437,8 @@ alias terminal-width-144="
     echo '         1         2         3         4         5         6         7         8         9         0         1         2         3         4'
     echo '123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234'
     echo
-    echo 'Press Enter for terminal height: ' ; read -r a
-    for x in \$(seq 144 -1 2) ; do
+    echo 'Press Enter for terminal height: '; read -r a
+    for x in \$(seq 144 -1 2); do
         echo \${x}
     done"
 #        terminal-width-200      show terminal width grid
@@ -448,8 +448,8 @@ alias terminal-width-200="
     echo '         1         2         3         4         5         6         7         8         9         0         1         2         3         4         5         6         7         8         9         0'
     echo '12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890'
     echo
-    echo 'Press Enter for terminal height: ' ; read -r a
-    for x in \$(seq 200 -1 2) ; do
+    echo 'Press Enter for terminal height: '; read -r a
+    for x in \$(seq 200 -1 2); do
         echo \${x}
     done"
 #        terminal-colors         show terminal colors
@@ -460,7 +460,7 @@ alias terminal-colors="
 alias remove-org-font-files="
     (
         cd \"\${HOME}\" && \
-            for dir in config dev web ; do
+            for dir in config dev web; do
                 [ -d \"\${dir}\" ] && \
                     find \"\${HOME}/\${dir}\" -name '*org-src-fontification*' -print | \
                     xargs rm >/dev/null 2>&1
@@ -469,17 +469,17 @@ alias remove-org-font-files="
 #        stopwatch               start stopwatch timer
 alias stopwatch="
     start=\$(date '+%s')
-    while true ; do
+    while true; do
         ts=\$(date '+%s')
         date -u -d @\$((ts - start)) '+%H:%M:%S'
         sleep 1s
     done"
 #        iommu-list              list iommu devices
 alias iommu-list="
-    if [ -d /sys/kernel/iommu_groups ] ; then
-        for group in \$(find /sys/kernel/iommu_groups/* -maxdepth 0 -type d | sed 's%/sys/kernel/iommu_groups/%%' | sort -n) ; do
+    if [ -d /sys/kernel/iommu_groups ]; then
+        for group in \$(find /sys/kernel/iommu_groups/* -maxdepth 0 -type d | sed 's%/sys/kernel/iommu_groups/%%' | sort -n); do
             printf \"\nIOMMU Group: %s\n\" \"\${group}\"
-            for device in /sys/kernel/iommu_groups/\${group}/devices/* ; do
+            for device in /sys/kernel/iommu_groups/\${group}/devices/*; do
                 device=\"\${device#/sys/kernel/iommu_groups/\${group}/devices/}\"
                 lspci -nns \"\${device##*/}\"
             done
@@ -521,28 +521,28 @@ alias create-media-links="
 #
 #        nitrogen-metcalfe-blue  set wallpaper to Metcalfe-Loves-Linux-1.jpg (blue)
 alias nitrogen-metcalfe-blue="
-    if \$(uname -v | grep -q '\(NixOS\|ZEN\)') ; then
+    if \$(uname -v | grep -q '\(NixOS\|ZEN\)'); then
         nitrogen --save --set-tiled /etc/wallpapers/Metcalfe-Loves-Linux-1.jpg
     else
         nitrogen --save --set-tiled /usr/share/backgrounds/Metcalfe-Loves-Linux-1.jpg
     fi"
 #        nitrogen-metcalfe-gray  set wallpaper to Metcalfe-Loves-Linux-2.jpg (gray)
 alias nitrogen-metcalfe-gray="
-    if \$(uname -v | grep -q '\(NixOS\|ZEN\)') ; then
+    if \$(uname -v | grep -q '\(NixOS\|ZEN\)'); then
         nitrogen --save --set-tiled /etc/wallpapers/Metcalfe-Loves-Linux-2.jpg
     else
         nitrogen --save --set-tiled /usr/share/backgrounds/Metcalfe-Loves-Linux-2.jpg
     fi"
 #        nitrogen-metcalfe-orange  set wallpaper to Metcalfe-Loves-Linux-3.jpg (orange)
 alias nitrogen-metcalfe-orange="
-    if \$(uname -v | grep -q '\(NixOS\|ZEN\)') ; then
+    if \$(uname -v | grep -q '\(NixOS\|ZEN\)'); then
         nitrogen --save --set-tiled /etc/wallpapers/Metcalfe-Loves-Linux-3.jpg
     else
         nitrogen --save --set-tiled /usr/share/backgrounds/Metcalfe-Loves-Linux-3.jpg
     fi"
 #        nitrogen-metcalfe-green  set wallpaper to Metcalfe-Loves-Linux-4.jpg (green)
 alias nitrogen-metcalfe-green="
-    if \$(uname -v | grep -q '\(NixOS\|ZEN\)') ; then
+    if \$(uname -v | grep -q '\(NixOS\|ZEN\)'); then
         nitrogen --save --set-tiled /etc/wallpapers/Metcalfe-Loves-Linux-4.jpg
     else
         nitrogen --save --set-tiled /usr/share/backgrounds/Metcalfe-Loves-Linux-4.jpg
@@ -563,7 +563,7 @@ alias emoji="rofimoji --typer xdotool --clipboarder xsel --skin-tone neutral"
 #!alias beep="echo -e -n \"\a\""
 #!#        beep-ten                beep console ten times
 #!alias beep-ten="
-#!    for ((x = 1; x < 10; x++)) ; do
+#!    for ((x = 1; x < 10; x++)); do
 #!        echo -e -n \"\a\"
 #!        sleep 1
 #!    done"
@@ -577,7 +577,7 @@ alias bottles="ffplay -nodisp -autoexit \${HOME}/sounds/bottles.wav >/dev/null 2
 alias beep="ffplay -nodisp -autoexit \${HOME}/sounds/shortbeep.wav >/dev/null 2>&1"
 #        beep-ten                play beep test sound ten times
 alias beep-ten="
-    for ((x = 1; x < 10; x++)) ; do
+    for ((x = 1; x < 10; x++)); do
         ffplay -nodisp -autoexit \${HOME}/sounds/shortbeep.wav >/dev/null 2>&1
         sleep 1
     done"
@@ -682,13 +682,13 @@ alias journalctl-follow-user-unit="journalctl --follow --user -u"
 #        netdev                  network device
 alias netdev="echo \"\$(ip route get 1.1.1.1 | awk '{print \$5}')\""
 #        netip                   show ip address of main network device
-alias netip="ifconfig ${networkdevice} | grep 'inet [0-9]' | sed 's/^.*inet // ; s/ .*$//'"
+alias netip="ifconfig ${networkdevice} | grep 'inet [0-9]' | sed 's/^.*inet //; s/ .*$//'"
 #        netinfo                 show network info of main network device
 alias netinfo="nmcli device show ${networkdevice}"
 #        netdns                  show dns routers of main network device
 alias netdns="nmcli device show ${networkdevice} | grep '^IP4\.DNS'"
 #        netdns-flush            flush dns caches and restart systemd-resolved
-alias netdns-flush="sudo resolvectl flush-caches ; sudo systemctl restart systemd-resolved"
+alias netdns-flush="sudo resolvectl flush-caches; sudo systemctl restart systemd-resolved"
 #        dig-firewall            search firewall dns
 alias dig-firewall="dig @192.168.1.1"
 #        ns                      netstat
@@ -879,7 +879,7 @@ alias edefs="sudoedit /etc/fstab"
 #        edegr                   edit /etc/group
 alias edegr="sudoedit /etc/group"
 #        edeho                   edit /etc/hosts
-alias edeho="sudoedit /etc/hosts ; cat /etc/hosts > \${HOME}/.hosts"
+alias edeho="sudoedit /etc/hosts; cat /etc/hosts > \${HOME}/.hosts"
 #        edeldm                  edit /etc/lightdm/lightdm.conf
 alias edeldm="sudoedit /etc/lightdm/lightdm.conf"
 #        edeldmg                 edit /etc/lightdm/lightdm-gtk-greeter.conf
@@ -959,7 +959,7 @@ alias mvs-tk5="(cd \${HOME}/mvs-tk5 && ./mvs)"
 #!    echo 'Changing DD.MM dates to MM-DD...'
 #!    sed -i 's/DD.MM/MM-DD/g' src/icqface.cc
 #!    echo 'Changing DD-MM-YYYY dates to YYYY-MM-DD...'
-#!    sed -i 's/DD-MM-YYYY/YYYY-MM-DD/g ; s/\&d, \&m, \&y/\&y, \&m, \&d/g' src/icqdialogs.cc"
+#!    sed -i 's/DD-MM-YYYY/YYYY-MM-DD/g; s/\&d, \&m, \&y/\&y, \&m, \&d/g' src/icqdialogs.cc"
 #        gsettings-reset-app-picker-layout  reset application picker
 alias gsettings-reset-app-picker-layout="gsettings reset org.gnome.shell app-picker-layout"
 
@@ -1048,7 +1048,7 @@ alias adb-sync-music-put="
     indir=\"${home}/data/media/Audio\"
     outdir=\"/sdcard/Music/\"
     tmpfile=\"\$(mktemp)\"
-    cat \"\${indir}/Playlists/rated_good.m3u\" | while read -r file ; do
+    cat \"\${indir}/Playlists/rated_good.m3u\" | while read -r file; do
         echo adb shell \\\"mkdir -p \\\\\\\"\${outdir}\${file%/*}\\\\\\\"\\\" >> \"\${tmpfile}\"
         echo adb push \\\"\${indir}/Music/\${file}\\\" \\\"\${outdir}\${file}\\\" >> \"\${tmpfile}\"
     done
@@ -1056,7 +1056,7 @@ alias adb-sync-music-put="
     \"\${tmpfile}\"
     adb push \"\${indir}/Playlists/rated_good.m3u\" \"\${outdir}\""
     #!adb-sync --delete \"\${indir}/Music/\" \"\${outdir}\"
-    #!find \"\${indir}/Playlists/\" -name \"*.m3u\" | while read -r file ; do
+    #!find \"\${indir}/Playlists/\" -name \"*.m3u\" | while read -r file; do
     #!    adb push \"\${file}\" \"\${outdir}\"
     #!done"
 #        adb-sync-download-get    copy backup files from device to computer
@@ -1102,9 +1102,9 @@ alias aptop="apachetop -f /var/log/httpd/access_log"
 alias apsrs="sudo systemctl restart https.service"
 #        sslcert                 build apache-ssl ssl certificate
 alias sslcert="
-    echo -n 'Build apache-ssl certificate? [yN] ' ; read -r a
+    echo -n 'Build apache-ssl certificate? [yN] '; read -r a
     case \${a} in
-        y|Y) ssl-certificate --force ;;
+        y|Y) ssl-certificate --force;;
     esac"
 
 #
@@ -1457,8 +1457,8 @@ alias bzip="bzip2"
 alias unbzip="bzip2 -d -k"
 #!#        intar                   tar files [query user]
 #!alias intar="
-#!    echo -n 'File(s) to tar: ' ; read -r a
-#!    echo -n 'Name of tar: ' ; read b
+#!    echo -n 'File(s) to tar: '; read -r a
+#!    echo -n 'Name of tar: '; read b
 #!    tar -cvf - \"\${a}\" > \"\${b}\""
 #        untar                   un-tar files
 alias untar="tar -xvf"
@@ -1489,7 +1489,7 @@ alias lcron="crontab -l"
 #        acron                   list crontab (active)
 alias acron="crontab -l | grep \"^[^#]\""
 #        edcron                  edit crontab (and copy new crontab to ~/.cron)
-alias edcron="editor=vim crontab -e ; crontab -l > \${HOME}/.cron"
+alias edcron="editor=vim crontab -e; crontab -l > \${HOME}/.cron"
 #        mcron                   crontab -l > ~/.cron
 alias mcron="crontab -l > \${HOME}/.cron"
 
@@ -1539,9 +1539,9 @@ alias duss="du -s -h * | sort -h -r | head -n 40"
 #        emacs-cvs-co            emacs cvs source check-out
 alias emacs-cvs-co="
     echo 'You are about to check-out emacs source tree to current directory.'
-    echo -n 'Do you wish to proceed? [yN] ' ; read -r a
+    echo -n 'Do you wish to proceed? [yN] '; read -r a
     case \${a} in
-        y|Y) cvs -z3 -d:pserver:anonymous@cvs.savannah.gnu.org:/sources/emacs co emacs ;;
+        y|Y) cvs -z3 -d:pserver:anonymous@cvs.savannah.gnu.org:/sources/emacs co emacs;;
     esac"
 #        emacs-cvs-build         emacs cvs source build
 alias emacs-cvs-build="
@@ -1552,7 +1552,7 @@ alias emacs-cvs-build="
 alias emacs-install-v8="
     dir=v8-tmp
     pushd \${HOME}/.emacs.d/
-    if [ -d \${dir} ] ; then
+    if [ -d \${dir} ]; then
         svn checkout http://v8.googlecode.com/svn/trunk/ \${dir}
     else
         svn update \${dir}
@@ -1585,7 +1585,7 @@ alias etags-java="
 #
 # exa
 #
-if _command exa ; then
+if _command exa; then
     #        exa                     (color and group directories first)
     alias exa="exa --color=always --group-directories-first"
     #        la                      exa --color=always --group-directories-first
@@ -1649,21 +1649,21 @@ alias fuvmk="fuser -v -m -k"
 alias gnome-gdm-setup="gksu gdmsetup"
 #        gsetting-values         dump all keybindings
 alias gsetting-values="
-    for schema in \$(gsettings list-schemas | sort) ; do
-        for key in \$(gsettings list-keys \${schema} | sort) ; do
+    for schema in \$(gsettings list-schemas | sort); do
+        for key in \$(gsettings list-keys \${schema} | sort); do
             echo \"\${schema}|\${key}|\$(gsettings get \${schema} \${key})\"
         done
     done | column --table --separator '|' --table-columns SCHEMA,KEY,VALUE"
 #        gsetting-ranges         dump all keybindings
 alias gsetting-ranges="
-    for schema in \$(gsettings list-schemas | sort) ; do
-        for key in \$(gsettings list-keys \${schema} | sort) ; do
+    for schema in \$(gsettings list-schemas | sort); do
+        for key in \$(gsettings list-keys \${schema} | sort); do
             echo \"\${schema}|\${key}|\$(gsettings range \${schema} \${key} |  tr '\n' ' ')\"
         done
     done | column --table --separator '|' --table-columns SCHEMA,KEY,RANGE"
 #        gsetting-gnome-keybindings  dump gnome keybindings
 alias gsetting-gnome-keybindings="
-    for key in \$(gsettings list-keys org.gnome.desktop.wm.keybindings | sort) ; do
+    for key in \$(gsettings list-keys org.gnome.desktop.wm.keybindings | sort); do
         echo \"\${key}|\$(gsettings get org.gnome.desktop.wm.keybindings \${key})\"
     done | column --table --separator '|' --table-columns KEY,VALUE"
 
@@ -1724,7 +1724,7 @@ alias hl="rg --passthru"
 #
 #        java-set-env-java8      set java environment to java 8
 alias java-set-env-java8="
-    if [ $(uname -s) == 'Darwin' ] ; then
+    if [ $(uname -s) == 'Darwin' ]; then
         export JAVA_HOME=\"\$(/usr/libexec/java_home -v 1.8)\"
     else
         sudo archlinux-java set java-8-openjdk && \
@@ -1732,7 +1732,7 @@ alias java-set-env-java8="
     fi"
 #        java-set-env-java11     set java environment to java 11
 alias java-set-env-java11="
-    if [ $(uname -s) == 'Darwin' ] ; then
+    if [ $(uname -s) == 'Darwin' ]; then
         export JAVA_HOME=\"\$(/usr/libexec/java_home -v 11)\"
     else
         sudo archlinux-java set java-11-openjdk && \
@@ -1740,7 +1740,7 @@ alias java-set-env-java11="
     fi"
 #        java-set-env-java18     set java environment to java 18
 alias java-set-env-java18="
-    if [ $(uname -s) == 'Darwin' ] ; then
+    if [ $(uname -s) == 'Darwin' ]; then
         export JAVA_HOME=\"\$(/usr/libexec/java_home -v 18)\"
     else
         sudo archlinux-java set java-18-openjdk && \
@@ -1795,7 +1795,7 @@ alias llmotd="
 # ls
 #
 unalias ls >/dev/null 2>&1
-if ! _command exa ; then
+if ! _command exa; then
     #        ls_                     ls (classify, columns, literal, human-readable, directories-first, auto-color)
     [ "${os}" != "Darwin" ] && alias ls_="ls -F -C -N -h --group-directories-first --color=auto"
     [ "${os}" == "Darwin" ] && alias ls_="gls -F -C -N -h --group-directories-first --color=auto"
@@ -1830,7 +1830,7 @@ if ! _command exa ; then
     #        llag                    ls -l -A (long-format, allmost-all) with grep -i
     alias llag="ls_ -l -A | grep -i"
     #        llp                     ls (pretty format)
-    alias llp="(echo 'PERM LINKS OWNER GROUP SIZE MONTH DAY HH:MM/YEAR NAME' ; ls -l | sed 1d) | column --table"
+    alias llp="(echo 'PERM LINKS OWNER GROUP SIZE MONTH DAY HH:MM/YEAR NAME'; ls -l | sed 1d) | column --table"
     #        dir                     ls (like ftp dir command)
     alias dir="ls_ -l -A | \${PAGER}"
 fi
@@ -1991,14 +1991,14 @@ alias rembot="remind \${HOME}/.reminders-bot | fold -w 72 -s"
 #        today                   today in history
 alias today="
     remind \${HOME}/.reminders-bot | head -c -1 | \
-      sed 's/^Reminders for/Today in history: / ; s/ (today):$// ; /^$/d'"
+      sed 's/^Reminders for/Today in history: /; s/ (today):$//; /^$/d'"
 #        edrem                   edit .reminder file
 alias edrem="\${EDITOR} \${HOME}/.reminders"
 #        edreminders             edit reminder files
 alias edreminders="
     \${EDITOR} \${HOME}/.reminders
     pushd \${HOME}/reminders
-    \$(pathcmd ls) -1 | while read -r file ; do \${EDITOR} \"\${file}\" ; done
+    \$(pathcmd ls) -1 | while read -r file; do \${EDITOR} \"\${file}\"; done
     popd"
 
 #
@@ -2024,7 +2024,7 @@ alias rsync-media-get-synology="rsync -rptx --size-only --progress /mnt/synology
 alias rsync-media-get-synology-limited="rsync -rptx --size-only --progress -f'- /Software/' -f'- /Video/' /mnt/synology/media/ ${home}/data/media/"
 #        rsync-media-get-synology-curated-delete  rsync /mnt/synology/media /home/data/media (specific sub-directories)
 alias rsync-media-get-synology-curated-delete=" \
-    if [ \"$(uname -n)\" == \"mouse\" ] || [ \"$(uname -n)\" == \"bane\" ] ; then
+    if [ \"$(uname -n)\" == \"mouse\" ] || [ \"$(uname -n)\" == \"bane\" ]; then
         rsync -rptx --size-only --progress --delete /mnt/synology/media/Audio/ ${home}/data/media/Audio/ && \
         #rsync -rptx --size-only --progress --delete /mnt/synology/media/Graphic/ ${home}/data/media/Graphic/ && \
         rsync -rptx --size-only --progress --delete \"/mnt/synology/media/Nasa Pictures/\" \"${home}/data/media/Nasa Pictures/\" && \
@@ -2036,21 +2036,21 @@ alias rsync-media-get-synology-curated-delete=" \
     fi"
 #        rsync-media-put-synology  rsync /home/data/media /mnt/synology/media
 alias rsync-media-put-synology="
-    find ${home}/data/media/ -mindepth 1 -maxdepth 1 -type d -not -regex '^\.+$' | sort | while read -r dir ; do
+    find ${home}/data/media/ -mindepth 1 -maxdepth 1 -type d -not -regex '^\.+$' | sort | while read -r dir; do
         rsync -rptx --size-only --progress \
             \"\${dir}\" /mnt/synology/media
     done
     rsync -rptx --size-only --progress ${home}/data/backup /mnt/synology/media/Backup"
 #        rsync-media-put-synology-delete  rsync /home/data/media /mnt/synology/media
 alias rsync-media-put-synology-delete="
-    find ${home}/data/media/ -mindepth 1 -maxdepth 1 -type d -not -regex '^\.+$' | sort | while read -r dir ; do
+    find ${home}/data/media/ -mindepth 1 -maxdepth 1 -type d -not -regex '^\.+$' | sort | while read -r dir; do
         rsync -rptx --size-only --progress --delete \
             \"\${dir}\" /mnt/synology/media
     done
     rsync -rptx --size-only --progress ${home}/data/backup /mnt/synology/media/Backup"
 #        rsync-media-put-synology-delete-dry-run  rsync /home/data/media /mnt/synology/media
 alias rsync-media-put-synology-delete-dry-run="
-    find ${home}/data/media/ -mindepth 1 -maxdepth 1 -type d -not -regex '^\.+$' | sort | while read -r dir ; do
+    find ${home}/data/media/ -mindepth 1 -maxdepth 1 -type d -not -regex '^\.+$' | sort | while read -r dir; do
         rsync -rptx --progress --delete --dry-run \
             \"\${dir}\" /mnt/synology/media
     done"
@@ -2076,7 +2076,7 @@ alias rsync-software-put-iodd="
     dir=''
     [ -d \${dir1} ] && dir=\${dir1}
     [ -d \${dir2} ] && dir=\${dir2}
-    if [ -d \${dir} ] ; then
+    if [ -d \${dir} ]; then
         rsync -rLtxW --size-only --progress --delete ${home}/data/media/Software/ \${dir}/Software/
         sync
     else
@@ -2090,7 +2090,7 @@ alias rsync-music-put-music-sd=" \
     dir=''
     [ -d \${dir1} ] && dir=\${dir1}
     [ -d \${dir2} ] && dir=\${dir2}
-    if [ -d \${dir} ] ; then
+    if [ -d \${dir} ]; then
         rsync -rLtxW --size-only --progress --delete ${home}/data/media/Audio/Playlists/kyle.m3u \${dir}/
         rsync -rLtxW --size-only --progress --delete ${home}/data/media/Audio/Playlists/rated_good.m3u \${dir}/
         rsync -rLtxW --size-only --progress --delete ${home}/data/media/Audio/Music/* \${dir}/
@@ -2107,7 +2107,7 @@ alias rsync-win-apps-put-win_apps-sd="
     dir=''
     [ -d \${dir1} ] && dir=\${dir1}
     [ -d \${dir2} ] && dir=\${dir2}
-    if [ -d \${dir} ] ; then
+    if [ -d \${dir} ]; then
         rsync -rLtxW --size-only --progress --delete -f'- Windows OS/' -f'- Partitions/' ${home}/data/media/Software/Windows* \${dir}/
         rsync -rLtxW --size-only --progress --delete ${home}/data/media/Repos/DOS ${home}/data/media/Repos/FreeDOS \${dir}/
         sync
@@ -2122,7 +2122,7 @@ alias rsync-windows-put-windows-sd="
     dir=''
     [ -d \${dir1} ] && dir=\${dir1}
     [ -d \${dir2} ] && dir=\${dir2}
-    if [ -d \${dir} ] ; then
+    if [ -d \${dir} ]; then
         rsync -rLtxW --size-only --progress --delete -f'- Windows OS/' -f'- Partitions/' ${home}/data/media/Software/Windows* \${dir}/
         rsync -rLtxW --size-only --progress --delete ${home}/data/media/Repos/DOS ${home}/data/media/Repos/FreeDOS \${dir}/
         sync
@@ -2137,7 +2137,7 @@ alias rsync-t43-os2-put-t43-os2-sd=" \
     dir=''
     [ -d \${dir1} ] && dir=\${dir1}
     [ -d \${dir2} ] && dir=\${dir2}
-    if [ -d \${dir} ] ; then
+    if [ -d \${dir} ]; then
         rsync -rLtxW --size-only --progress --delete -f'- ArcaOS/' -f'- CDs/' -f'- OS2/' ${home}/data/media/Software/OS2/* \${dir}/OS2/
         rsync -rLtxW --size-only --progress --delete \"${home}/data/media/Software/Thinkpad T43\" \${dir}/
         sync
@@ -2152,7 +2152,7 @@ alias rsync-mac-put-mac_apps-sd=" \
     dir=''
     [ -d \${dir1} ] && dir=\${dir1}
     [ -d \${dir2} ] && dir=\${dir2}
-    if [ -d \${dir} ] ; then
+    if [ -d \${dir} ]; then
         rsync -rLtxW --size-only --progress --delete -f'- FINDER.DAT' ${home}/data/media/Software/Macintosh/68000 \${dir}/
         rsync -rLtxW --size-only --progress --delete -f'- FINDER.DAT' ${home}/data/media/Software/Macintosh/OS\ X \${dir}/
         rsync -rLtxW --size-only --progress --delete -f'- FINDER.DAT' ${home}/data/media/Software/Macintosh/PPC \${dir}/
@@ -2168,7 +2168,7 @@ alias rsync-c64-put-sd16="
     dir=''
     [ -d \${dir1} ] && dir=\${dir1}
     [ -d \${dir2} ] && dir=\${dir2}
-    if [ -d \${dir} ] ; then
+    if [ -d \${dir} ]; then
         rsync -rLtxW --size-only --progress --delete -f'- TOSEC/' ${home}/data/media/Repos/C64/* \${dir}/
         sync
     else
@@ -2182,7 +2182,7 @@ alias rsync-c64-put-sd128="
     dir=''
     [ -d \${dir1} ] && dir=\${dir1}
     [ -d \${dir2} ] && dir=\${dir2}
-    if [ -d \${dir} ] ; then
+    if [ -d \${dir} ]; then
         rsync -rLtxW --size-only --progress --delete ${home}/data/media/Repos/C64/* \${dir}/
         sync
     else
@@ -2196,7 +2196,7 @@ alias rsync-adult-put-adult-sd="
     dir=''
     [ -d \${dir1} ] && dir=\${dir1}
     [ -d \${dir2} ] && dir=\${dir2}
-    if [ -d \${dir} ] ; then
+    if [ -d \${dir} ]; then
         rsync -rLtxW --size-only --progress --delete -f='- \#recycle' \"/mnt/synology/zzz/\" \"\${dir}/\"
         sync
     else
@@ -2210,7 +2210,7 @@ alias rsync-sdi-get-windows-sd="
     dir=''
     [ -d \${dir1} ] && dir=\${dir1}
     [ -d \${dir2} ] && dir=\${dir2}
-    if [ -d \${dir} ] ; then
+    if [ -d \${dir} ]; then
         #rsync -rLtxW --size-only --progress --delete \"\${dir}/Snappy Driver Installer/\" \"${home}/data/Snappy Driver Installer/\"
         rsync -rLtxW --size-only --progress --delete \"\${dir}/Snappy Driver Installer/\" \"/mnt/synology/media/Snappy Driver Installer/\"
         sync
@@ -2225,7 +2225,7 @@ alias rsync-sdi-put-windows-sd="
     dir=''
     [ -d \${dir1} ] && dir=\${dir1}
     [ -d \${dir2} ] && dir=\${dir2}
-    if [ -d \${dir} ] ; then
+    if [ -d \${dir} ]; then
         #rsync -rLtxW --size-only --progress --delete \"${home}/data/Snappy Driver Installer/\" \"\${dir}/Snappy Driver Installer/\"
         rsync -rLtxW --size-only --progress --delete \"/mnt/synology/media/Snappy Driver Installer/\" \"\${dir}/Snappy Driver Installer/\"
         sync
@@ -2283,13 +2283,13 @@ alias scr="screen -A -D -RR"
 #        scx                     screen -x (attach to an existing screen session)
 alias scx="screen -x"
 #        scd                     screen -d (detach an existing screen session, then start)
-alias scd="screen -d ; \${HOME}/bin/run-screen"
+alias scd="screen -d; \${HOME}/bin/run-screen"
 #        scl                     screen -list (list screen sockets)
 alias scl="screen -list"
 #        scw                     screen -wipe (remove destroyed sessions)
 alias scw="screen -wipe"
-#        scwx                    screen -wipe ; screen -x
-alias scwx="screen -wipe ; screen -x"
+#        scwx                    screen -wipe; screen -x
+alias scwx="screen -wipe; screen -x"
 
 #
 # screen applications
@@ -2412,33 +2412,33 @@ alias sc20="\${HOME}/bin/screen-app 20"
 #!#        nfs-restart             restart nfs
 #!alias nfs-restart="sudo /etc/rc.d/init.d/nfs restart"
 #!#        zope-restart            restart zope
-#!alias zope-restart="sudo /etc/init.d/zope stop ; /etc/init.d/zope start"
+#!alias zope-restart="sudo /etc/init.d/zope stop; /etc/init.d/zope start"
 #!#        zope-restart-debug      restart zope in debug mode
-#!alias zope-restart-debug="sudo /etc/init.d/zope stop ; /etc/init.d/zope start -D"
+#!alias zope-restart-debug="sudo /etc/init.d/zope stop; /etc/init.d/zope start -D"
 
 #
 # sftp (internal)
 #
 #        sftpapoc                sftp apoc
-alias sftpapoc="echo 'sftp:apoc' ; sftp apoc"
+alias sftpapoc="echo 'sftp:apoc'; sftp apoc"
 #        sftpfirewall            sftp firewall
-alias sftpf="echo 'sftp:user@firewall' ; sftp -oPort=22 user@firewall"
+alias sftpf="echo 'sftp:user@firewall'; sftp -oPort=22 user@firewall"
 #        sftpmorpheus            sftp morpheus
-alias sftpmorpheus="echo 'sftp:morpheus' ; sftp morpheus"
+alias sftpmorpheus="echo 'sftp:morpheus'; sftp morpheus"
 #        sftpneo                 sftp neo
-alias sftpneo="echo 'sftp:neo' ; sftp neo"
+alias sftpneo="echo 'sftp:neo'; sftp neo"
 #        sftptank                sftp tank
-alias sftptank="echo 'sftp:tank' ; sftp tank"
+alias sftptank="echo 'sftp:tank'; sftp tank"
 
 #
 # sftp (external)
 #
 #!#        sftpx                   sftp nullware.com
-#!alias sftpx="echo 'sftp:nullware.com' ; sftp ${nullwareip}"
+#!alias sftpx="echo 'sftp:nullware.com'; sftp ${nullwareip}"
 #!#        sftpxr                  sftp nullware.com
-#!alias sftpxr="echo 'sftp:nullware.com:root' ; sftp root@${nullwareip}"
+#!alias sftpxr="echo 'sftp:nullware.com:root'; sftp root@${nullwareip}"
 #!#        sftpxk                  sftp nullware.com
-#!alias sftpxk="echo 'sftp:nullware.com:kyle' ; sftp kyle@${nullwareip}"
+#!alias sftpxk="echo 'sftp:nullware.com:kyle'; sftp kyle@${nullwareip}"
 
 #
 # ssh
@@ -2458,53 +2458,53 @@ alias ssh-agent="
 # ssh logons (internal)
 #
 #        ssh-apoc                ssh apoc
-alias ssh-apoc="echo 'ssh:apoc' ; ssh apoc"
+alias ssh-apoc="echo 'ssh:apoc'; ssh apoc"
 #        ssh-colleen             ssh colleen
-alias ssh-colleen="echo 'ssh:colleen@colleen' ; ssh colleen@colleen"
+alias ssh-colleen="echo 'ssh:colleen@colleen'; ssh colleen@colleen"
 #        ssh-dozer               ssh dozer
-alias ssh-dozer="echo 'ssh:dozer' ; ssh dozer"
+alias ssh-dozer="echo 'ssh:dozer'; ssh dozer"
 #        ssh-firewall            ssh firewall
-alias ssh-firewall="echo 'ssh:user@firewall' ; ssh -p 22 user@firewall"
+alias ssh-firewall="echo 'ssh:user@firewall'; ssh -p 22 user@firewall"
 #        ssh-gemini              ssh gemini
-alias ssh-gemini="echo 'ssh:gemini' ; ssh gemini"
+alias ssh-gemini="echo 'ssh:gemini'; ssh gemini"
 #        ssh-ice                 ssh ice
-alias ssh-ice="echo 'ssh:ice' ; ssh ice"
+alias ssh-ice="echo 'ssh:ice'; ssh ice"
 #        ssh-kali                ssh kali
-alias ssh-kali="echo 'ssh:kali' ; ssh kali-direct"
+alias ssh-kali="echo 'ssh:kali'; ssh kali-direct"
 #        ssh-morpheus            ssh morpheus
-alias ssh-morpheus="echo 'ssh:morpheus' ; ssh morpheus"
+alias ssh-morpheus="echo 'ssh:morpheus'; ssh morpheus"
 #        ssh-morpheusgit         ssh morpheus:git
-alias ssh-morpheusgit="echo 'ssh:git@morpheus' ; ssh -l git morpheus"
+alias ssh-morpheusgit="echo 'ssh:git@morpheus'; ssh -l git morpheus"
 #        ssh-mouse               ssh mouse
-alias ssh-mouse="echo 'ssh:mouse' ; ssh mouse"
+alias ssh-mouse="echo 'ssh:mouse'; ssh mouse"
 #!#        ssh-neo                 ssh neo
-#!alias ssh-neo="echo 'ssh:neo' ; ssh neo"
+#!alias ssh-neo="echo 'ssh:neo'; ssh neo"
 #        ssh-pimodem             ssh pimodem
-alias ssh-pimodem="echo 'ssh:pi@pimodem' ; ssh pi@pimodem"
+alias ssh-pimodem="echo 'ssh:pi@pimodem'; ssh pi@pimodem"
 #        ssh-raspad              ssh raspad
-alias ssh-raspad="echo 'ssh:raspad-usb' ; ssh pi@raspad-usb"
+alias ssh-raspad="echo 'ssh:raspad-usb'; ssh pi@raspad-usb"
 #        ssh-retro               ssh retro
-alias ssh-retro="echo 'ssh:retro' ; ssh retro"
+alias ssh-retro="echo 'ssh:retro'; ssh retro"
 #        ssh-synology            ssh synology
-alias ssh-synology="echo 'ssh:synology' ; ssh kyle-admin@synology"
+alias ssh-synology="echo 'ssh:synology'; ssh kyle-admin@synology"
 #        ssh-switch              ssh switch
-alias ssh-switch="echo 'ssh:switch-direct' ; ssh switch-direct"
+alias ssh-switch="echo 'ssh:switch-direct'; ssh switch-direct"
 #        ssh-trinity             ssh trinity
-alias ssh-trinity="echo 'ssh:trinity' ; ssh trinity"
+alias ssh-trinity="echo 'ssh:trinity'; ssh trinity"
 
 #
 # ssh logons (external)
 #
 #!#        sshx                  ssh nullware.com
-#!alias sshx="echo 'ssh:nullware.com' ; ssh ${nullwareip}"
+#!alias sshx="echo 'ssh:nullware.com'; ssh ${nullwareip}"
 #!#        sshxr                 ssh nullware.com
-#!alias sshxr="echo 'ssh:nullware.com:root' ; ssh -l root ${nullwareip}"
+#!alias sshxr="echo 'ssh:nullware.com:root'; ssh -l root ${nullwareip}"
 #!#        sshxk                 ssh nullware.com
-#!alias sshxk="echo 'ssh:nullware.com:kyle' ; ssh -l kyle ${nullwareip}"
+#!alias sshxk="echo 'ssh:nullware.com:kyle'; ssh -l kyle ${nullwareip}"
 #        ssh-nullware            ssh nullware.com
-alias ssh-nullware="echo 'ssh:kyle@nullware.com' ; ssh kyle@${nullwareip}"
+alias ssh-nullware="echo 'ssh:kyle@nullware.com'; ssh kyle@${nullwareip}"
 #        ssh-roguery             ssh -p 1337 nullman@roguery.xibb.net
-alias ssh-roguery="echo 'nullman@roguery.xibb.net' ; ssh -p 1337 nullman@roguery.xibb.net"
+alias ssh-roguery="echo 'nullman@roguery.xibb.net'; ssh -p 1337 nullman@roguery.xibb.net"
 #!#
 #!# ssh tunnels (external)
 #!#
@@ -2651,8 +2651,8 @@ alias wine-lcars="WINEPREFIX=\${HOME}/.wine-lcars wine \"C:\windows\system32\Sys
 #        wine-ltspice            wine ltspice
 alias wine-ltspice="WINEPREFIX=\${HOME}/.wine-ltspice wine64 \"C:\Program Files\ADI\LTspice\LTspice.exe\" &"
 #        wine-sdi                wine snappy driver installer
-#!alias wine-sdi="(cd \"${home}/data/Snappy Driver Installer\" ; WINEPREFIX=\${HOME}/.wine-sdi wine \"SDI_x64_R2009.exe\" &)"
-alias wine-sdi="(cd \"/mnt/synology/media/Snappy Driver Installer\" ; WINEPREFIX=\${HOME}/.wine-sdi wine \"SDI_x64_R2009.exe\" &)"
+#!alias wine-sdi="(cd \"${home}/data/Snappy Driver Installer\"; WINEPREFIX=\${HOME}/.wine-sdi wine \"SDI_x64_R2009.exe\" &)"
+alias wine-sdi="(cd \"/mnt/synology/media/Snappy Driver Installer\"; WINEPREFIX=\${HOME}/.wine-sdi wine \"SDI_x64_R2009.exe\" &)"
 #        wine-tta                wine through the ages
 alias wine-tta="WINEPREFIX=\${HOME}/.wine-tta wine \"C:\GOG Games\Through the Ages\ThroughTheAges_gog.exe\" &"
 #        wine-winamp             winamp
@@ -2671,13 +2671,13 @@ alias wine-winamp="WINEPREFIX=\${HOME}/.wine-winamp wine \"C:\Program Files (x86
 #        x2xm1                   x2x to mouse1
 alias x2xm1="
     [ -z \"\$(ps -af | grep -v grep | grep x2x | grep \${USER} | grep mouse1)\" ] && ( \
-        ssh mouse1 'DISPLAY=:0 /usr/X11R6/bin/xhost +\$(uname -n)' ;
+        ssh mouse1 'DISPLAY=:0 /usr/X11R6/bin/xhost +\$(uname -n)';
         x2x -west -noautoup -resurface -to mouse1:0
     ) & disown"
 #        x2xm2                   x2x to mouse2
 alias x2xm2="
     [ -z \"\$(ps -af | grep -v grep | grep x2x | grep \${USER} | grep mouse2)\" ] && ( \
-        ssh mouse2 'DISPLAY=:0 /usr/X11R6/bin/xhost +\$(uname -n)' ;
+        ssh mouse2 'DISPLAY=:0 /usr/X11R6/bin/xhost +\$(uname -n)';
         x2x -west -noautoup -resurface -to mouse2:0
     ) & disown"
 
@@ -2688,7 +2688,7 @@ alias x2xm2="
 alias xephyr="Xephyr"
 #        xephyr-1                create a full screen X11 with DISPLAY=:1
 alias xephyr-1="
-    res=\"\$(xrandr | sed -n 's/^.* current //p' | sed 's/,.*$// ; s/ x /x/')\"
+    res=\"\$(xrandr | sed -n 's/^.* current //p' | sed 's/,.*$//; s/ x /x/')\"
     Xephyr -ac -br -noreset -screen ${res} :1"
 #        xephyr-1-640x480        create a 640x480 X11 with DISPLAY=:1
 alias xephyr-1-640x480="Xephyr -ac -br -noreset -screen 640x480 :1"
@@ -2965,7 +2965,7 @@ alias nix-run-ruby="nix-shell \${HOME}/.nixos/ruby-env/ruby-env.nix --run"
 #        nix-run-foundryvtt      nix-shell run foundryvtt
 alias nix-run-foundryvtt="NIXPKGS_ALLOW_UNFREE=1 nix-shell -p steam-run --run \"steam-run \${HOME}/foundry/foundryvtt\""
 #        nix-run-gcs             nix-shell run gcs (gurps character sheet)
-alias nix-run-gcs="NIXPKGS_ALLOW_UNFREE=1 nix-shell -p steam-run --run \"steam-run \${HOME}/gurps/gcs\" ; rm -f \${HOME}/.local/share/applications/com.trollworks.gcs.desktop"
+alias nix-run-gcs="NIXPKGS_ALLOW_UNFREE=1 nix-shell -p steam-run --run \"steam-run \${HOME}/gurps/gcs\"; rm -f \${HOME}/.local/share/applications/com.trollworks.gcs.desktop"
 
 #
 # qubes os
@@ -2993,7 +2993,7 @@ alias qd-copy-qvm-create-windows-qube="
     sudo chmod +x /usr/bin/qvm-create-windows-cube"
 #        qd-copy-slide-show      copy xscreensaver slide show pictures from personal to dom0
 alias qd-copy-slide-show="
-    if [ \"$(uname -n)\" != \"dom0\" ] ; then
+    if [ \"$(uname -n)\" != \"dom0\" ]; then
         echo \"Error: Can only be run on dom0\"
     else
         sudo rm -rf \"/home/data/media/Pictures Slide Show\"
@@ -3024,9 +3024,9 @@ alias niri-pick-color="niri msg pick-color"
 # pacman (Package Manager)
 #
 #        pmu                     pacman -Syu (update packages with refresh)
-alias pmu="sudo pacman -Syu ; source \${HOME}/.xprofile"
+alias pmu="sudo pacman -Syu; source \${HOME}/.xprofile"
 #        pmuf                    pacman -Syyu (update packages with forced refresh)
-alias pmuf="sudo pacman -Syyu ; source \${HOME}/.xprofile"
+alias pmuf="sudo pacman -Syyu; source \${HOME}/.xprofile"
 #        pmi                     pacman -S (install package)
 alias pmi="sudo pacman -S --needed"
 #        pmir                    pacman -S (reinstall package)
@@ -3113,9 +3113,9 @@ alias pacman-clear-cache="
 # paru (Package Manager)
 #
 #        pau                     paru -Syu (update packages with refresh)
-alias pau="paru -Syu ; source \${HOME}/.xprofile"
+alias pau="paru -Syu; source \${HOME}/.xprofile"
 #        pauf                    paru -Syyu (update packages with forced refresh)
-alias pauf="paru -Syyu ; source \${HOME}/.xprofile"
+alias pauf="paru -Syyu; source \${HOME}/.xprofile"
 #        pai                     paru -S (install package)
 alias pai="paru -S --needed"
 #        pair                    paru -S (reinstall package)
@@ -3207,7 +3207,7 @@ alias agrpo="sudo apt-get --purge remove \$(deborphan)"
 #        dpi                     dpkg -i (install)
 alias dpi="sudo dpkg -i"
 #        dpl                     dpkg -l (list)
-alias dpl="COLUMNS=200 ; dpkg -l"
+alias dpl="COLUMNS=200; dpkg -l"
 #        dplg                    dpkg -l (list) with grep
 alias dplg="dpkg -l | grep -i"
 #        dpll                    dpkg --get-selections
@@ -3228,14 +3228,14 @@ alias dprc="sudo dpkg-reconfigure"
 alias dprcl="sudo dpkg-reconfigure -plow locales"
 #        dprcx                   dpkg-reconfigure xserver
 alias dprcx="
-    echo -n 'Reconfigure X? [yN] ' ; read -r a
+    echo -n 'Reconfigure X? [yN] '; read -r a
     case \${a} in
-        y|Y) dpkg-reconfigure xserver-xfree86 xserver-common ;;
+        y|Y) dpkg-reconfigure xserver-xfree86 xserver-common;;
     esac"
 #        dpkg-reinstall          reinstall all packages
 alias dpkg-reinstall="
     echo 'You are about to reinstall all of your currently installed Debian packages.'
-    echo -n 'Do you wish to proceed? [yN] ' ; read -r a
+    echo -n 'Do you wish to proceed? [yN] '; read -r a
     case \${a} in
         y|Y)
             cat /var/lib/dpkg/status |
@@ -3243,7 +3243,7 @@ alias dpkg-reinstall="
               perl -ne 'if (/:\s+(.*)/) { print qq(\${1}\n); }' |
               xargs apt-get --reinstall install or COLUMNS=200 dpkg -l |
               awk '/^ii/{print \${2}}' | xargs apt-get --reinstall install
-            ;;
+           ;;
     esac"
 
 #
@@ -3459,11 +3459,11 @@ EOF
 alias gitrm="
     echo 'You are about to remove the following files:'
     git status | grep '^#' | grep -v 'modified:' | tail -n +5 | sed 's/^#//'
-    echo -n 'Do you wish to proceed? [yN] ' ; read -r a
+    echo -n 'Do you wish to proceed? [yN] '; read -r a
     case \${a} in
         y|Y)
             git status | grep '^#' | grep -v 'modified:' | tail -n +5 | sed 's/^#//' | xargs rm
-        ;;
+       ;;
     esac"
 #        git-commit-to-clipboard  copy HEAD git commit to clipboard
 alias git-commit-to-clipboard="git rev-parse HEAD | tr -d '\n' | xsel && xsel --output | xsel --clipboard"
@@ -3534,8 +3534,8 @@ alias gitpoweb="(cd \${HOME}/web && git push origin)"
 #        gituoall                pull (update) all repositories
 alias gituoall="
     dirs=('config' 'config-private' 'dev' 'doc' 'web')
-    for dir in \${dirs[@]} ; do
-        if [ -d \${HOME}/\${dir} ] ; then
+    for dir in \${dirs[@]}; do
+        if [ -d \${HOME}/\${dir} ]; then
             echo \"Pulling '\${dir}'...\"
             (cd \${HOME}/\${dir} && git pull origin)
         fi
@@ -3549,8 +3549,8 @@ alias gitpohaiku="(cd \${HOME}/haiku && git push origin)"
 #        gituoall                pull (update) all repositories
 alias git-check-home="
     dirs=('config' 'config-private' 'dev' 'doc' 'web')
-    for dir in \${dirs[@]} ; do
-        if [ -d \${HOME}/\${dir} ] ; then
+    for dir in \${dirs[@]}; do
+        if [ -d \${HOME}/\${dir} ]; then
             (cd \${HOME}/\${dir} && grep -r '^<<<<<<< HEAD')
         fi
     done"
@@ -3617,7 +3617,7 @@ alias web-generate-game="(cd \${HOME}/web/bin && ./generate-game && ./publish --
 #!    #dir=\${basedir}/\$(cd \${basedir} && \$(pathcmd ls) -1)/\$(uname -n)
 #!    basedir=/run/media/\${USER}/backup
 #!    dir=\${basedir}/\$(uname -n)
-#!    if [ -d \${dir} ] ; then
+#!    if [ -d \${dir} ]; then
 #!        sudo rsync -aAXv --delete-before ${rsyncexclusions} / \${dir}
 #!    else
 #!        echo \"Cannot find backup directory: \${dir}\"
@@ -3629,9 +3629,9 @@ alias web-generate-game="(cd \${HOME}/web/bin && ./generate-game && ./publish --
 #!    #dir=\${basedir}/\$(cd \${basedir} && \$(pathcmd ls) -1)/\$(uname -n)
 #!    basedir=/run/media/\${USER}/Backup
 #!    dir=\${basedir}/\$(uname -n)
-#!    if [ -d \${dir} ] ; then
+#!    if [ -d \${dir} ]; then
 #!        echo 'Backing up:'
-#!        for d in \"etc\" \"home\" \"root\" \"opt\" ; do
+#!        for d in \"etc\" \"home\" \"root\" \"opt\"; do
 #!            echo \"  /\${d} => \${dir}/\"
 #!            sudo rsync -aAXv --delete-before ${rsyncexclusions} /\${d} \${dir}/
 #!        done
@@ -3643,7 +3643,7 @@ alias web-generate-game="(cd \${HOME}/web/bin && ./generate-game && ./publish --
 alias rsync-home-to-backup="
     basedir=/run/media/\${USER}/backup
     dir=\${basedir}/\$(uname -n)
-    if [ -d \${dir} ] ; then
+    if [ -d \${dir} ]; then
         sudo rsync -aAXv --delete-before /home \${dir}
     else
         echo \"Cannot find backup directory: \${dir}\"
@@ -3656,41 +3656,41 @@ alias rsync-home-to-backup="
 #        make-cron               setup initial crontab
 alias make-cron="
     echo \"You are about to overwrite your crontab with '${config}/custom/\$(uname -n)/.cron'.\"
-    echo -n \"Do you wish to proceed? [yN] \" ; read -r a
+    echo -n \"Do you wish to proceed? [yN] \"; read -r a
     case \${a} in
-        y|Y) crontab ${config}/custom/\$(uname -n)/.cron ;;
+        y|Y) crontab ${config}/custom/\$(uname -n)/.cron;;
     esac"
 #        mkraw                   make raw character device
 alias mkraw="
-  echo -n 'Raw device number: ' ; read -r a
+  echo -n 'Raw device number: '; read -r a
   mknod --mode=644 /dev/raw/raw\${a} c 162 \${a}"
 #!#        copy-hosts                      copy .hosts + .hosts_ssmedia to /etc/hosts
 #!alias copy-hosts="
 #!    echo \"You are about to replace your '/etc/hosts' file with\"
 #!    echo \"/root/.hosts plus '/root/.hosts_ssmedia'.\"
-#!    echo -n \"Do you wish to proceed? [yN] \" ; read -r a
+#!    echo -n \"Do you wish to proceed? [yN] \"; read -r a
 #!    case \${a} in
 #!        y|Y)
 #!            cp -p /etc/hosts /etc/hosts.old
 #!            cp /root/.hosts /etc/hosts
 #!            echo >> /etc/hosts
 #!            cat /root/.hosts_ssmedia >> /etc/hosts
-#!            ;;
+#!           ;;
 #!    esac"
 #!
 #!#        copy-hosts                      copy .hosts to /etc/hosts
 #!alias copy-hosts="
 #!    echo \"You are about to replace your '/etc/hosts' file with '/root/.hosts'.\"
-#!    echo -n \"Do you wish to proceed? [yN] \" ; read -r a
+#!    echo -n \"Do you wish to proceed? [yN] \"; read -r a
 #!    case \${a} in
 #!        y|Y)
 #!            cp -p /etc/hosts /etc/hosts.old
 #!            cp /root/.hosts /etc/hosts
-#!            ;;
+#!           ;;
 #!    esac"
 #        copy-wallpapers         copy wallpapers to system
 alias copy-wallpapers="
-    if \$(uname -v | grep -q '\(NixOS\|ZEN\)') ; then
+    if \$(uname -v | grep -q '\(NixOS\|ZEN\)'); then
         sudo bash -c \"
             mkdir -p /etc/wallpapers
             cp \${HOME}/wallpapers/* /etc/wallpapers/
@@ -3709,7 +3709,7 @@ alias copy-wallpapers="
 #!alias copy-skins="sudo cp -Rp \${HOME}/documents/Skins/* /usr/share/xmms/Skins/"
 #!#        copy-icewm              copy icewm settings to ~/
 #!alias copy-icewm="
-#!    if [ ! -e \${HOME}/.icewm ] ; then
+#!    if [ ! -e \${HOME}/.icewm ]; then
 #!        sudo cp -R /etc/X11/icewm \${HOME}/.icewm
 #!    else
 #!        echo '${HOME}/.icewm already exists'
@@ -3717,7 +3717,7 @@ alias copy-wallpapers="
 #!#        make-ssh-config-external make ~/.ssh/config file (external access)
 #!alias make-ssh-config-external="
 #!    o=\${HOME}/.ssh/config
-#!    if [ ! -e \${o} ] ; then
+#!    if [ ! -e \${o} ]; then
 #!        cat <<EOF > \${o}
 #!# hosts
 #!host firewall
@@ -3745,16 +3745,16 @@ alias copy-wallpapers="
 #        make-ssh-config         make ssh config file
 alias make-ssh-config="
     o=\${HOME}/.ssh/config
-    echo -n \"Reset your '\${HOME}/.ssh/config' file? [yN] \" ; read -r a
+    echo -n \"Reset your '\${HOME}/.ssh/config' file? [yN] \"; read -r a
     case \${a} in
         y|Y)
             echo '# keep ssh logins alive' > \${o}
             echo 'ServerAliveInterval 60' >> \${o}
-            ;;
+           ;;
     esac"
 #!#        make-linuxlogo          setup linux logo
 #!alias make-linuxlogo="
-#!    if [ -x \$(pathcmd linux_logo) ] ; then
+#!    if [ -x \$(pathcmd linux_logo) ]; then
 #!        linux_logo > /etc/motd
 #!        cp -p /etc/inittab /etc/inittab.backup
 #!        cat /etc/inittab.backup | sed 's%respawn:/sbin/getty 38400 tty%respawn:/sbin/getty -f /etc/issue.linuxlogo 38400 tty%' > /etc/inittab
@@ -3766,13 +3766,13 @@ alias make-dict-words="sudo wget https://gist.githubusercontent.com/wchargin/892
 #!#        make-run-on-wakeup-script make /etc/pm/sleep.d/50-run-on-wakup
 #!alias make-run-on-wakeup-script="
 #!    o=/etc/pm/sleep.d/50-run-on-wakup
-#!    if [ ! -e \${o} ] ; then
+#!    if [ ! -e \${o} ]; then
 #!        sudo bash -c \"
 #!            echo '#!/bin/sh' > \${o}
 #!            echo 'case \\\$1 in' >> \${o}
 #!            echo '    resume|thaw)' >> \${o}
 #!            echo '        xmodmap \${HOME}/.Xmodmap >/dev/null 2>&1 & disown' >> \${o}
-#!            echo '        ;;' >> \${o}
+#!            echo '       ;;' >> \${o}
 #!            echo 'esac' >> \${o}
 #!            chmod +x \${o}
 #!        \"

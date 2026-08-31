@@ -27,7 +27,7 @@
 #   HOTKEY
 #       [;]COMMAND
 #
-#   HOTKEY      := CHORD_1 ; CHORD_2 ; ... ; CHORD_n
+#   HOTKEY      := CHORD_1; CHORD_2; ...; CHORD_n
 #   CHORD_i     := [MODIFIERS_i +] [~][@]KEYSYM_i
 #   MODIFIERS_i := MODIFIER_i1 + MODIFIER_i2 + ... + MODIFIER_ik
 #
@@ -110,7 +110,7 @@ XF86AudioLowerVolume
     pactl -- set-sink-volume 0 -5% && notify-send --expire-time=3000 --replace-id=1 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
 
 XF86AudioMute
-    pactl -- set-sink-mute 0 toggle && notify-send --expire-time=3000 --replace-id=1 "$(pactl -- get-sink-mute 0  | sed 's/Mute: no/Unmuted/ ; s/Mute: yes/Muted/')"
+    pactl -- set-sink-mute 0 toggle && notify-send --expire-time=3000 --replace-id=1 "$(pactl -- get-sink-mute 0  | sed 's/Mute: no/Unmuted/; s/Mute: yes/Muted/')"
 
 # XF86AudioMicMute
 
@@ -155,7 +155,7 @@ super + Home
 super + Prior
     pactl -- set-sink-volume 0 +5% && notify-send --expire-time=3000 --replace-id=1 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
 super + Insert
-    pactl -- set-sink-mute 0 toggle && notify-send --expire-time=3000 --replace-id=1 "$(pactl -- get-sink-mute 0  | sed 's/Mute: no/Unmuted/ ; s/Mute: yes/Muted/')"
+    pactl -- set-sink-mute 0 toggle && notify-send --expire-time=3000 --replace-id=1 "$(pactl -- get-sink-mute 0  | sed 's/Mute: no/Unmuted/; s/Mute: yes/Muted/')"
 
 # mpc control
 super + Delete
@@ -181,7 +181,7 @@ super + alt + ctrl + Home
 super + alt + ctrl + End
     pactl -- set-sink-volume 0 -5% && notify-send --expire-time=3000 --replace-id=1 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
 super + alt + ctrl + Insert
-    pactl -- set-sink-mute 0 toggle && notify-send --expire-time=3000 --replace-id=1 "$(pactl -- get-sink-mute 0  | sed 's/Mute: no/Unmuted/ ; s/Mute: yes/Muted/')"
+    pactl -- set-sink-mute 0 toggle && notify-send --expire-time=3000 --replace-id=1 "$(pactl -- get-sink-mute 0  | sed 's/Mute: no/Unmuted/; s/Mute: yes/Muted/')"
 #super + alt + ctrl + Delete
 #    ffplay -nodisp -autoexit "${HOME}/sounds/bottles.wav"
 
@@ -339,13 +339,13 @@ super + shift + r
 
 # # reload xfce-panel: dom0
 # super + shift + r
-#     ((pkill -u ${USER} xfce4-panel ; xfce4-panel && sleep 1 && \
+#     ((pkill -u ${USER} xfce4-panel; xfce4-panel && sleep 1 && \
 #     xdo below -t $(xdo id -n root) $(xdo id -N xfce4-panel)) &) && \
 #     notify-send --expire-time=3000 'Reloading XFCE Panel'
 
 # # reload tint2 panel: dom0
 # super + shift + t
-#     ((pkill -u ${USER} tint2 ; tint2 && sleep 1 && \
+#     ((pkill -u ${USER} tint2; tint2 && sleep 1 && \
 #     xdo below -t $(xdo id -n root) $(xdo id -N tint2)) &) && \
 #     notify-send --expire-time=3000 'Reloading Tint'
 

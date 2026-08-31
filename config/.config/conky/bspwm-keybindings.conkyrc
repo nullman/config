@@ -51,7 +51,7 @@ ${color2}Spr + Ctrl + S${color}  ${alignr}Resize and Move Mode
 ${color2}Spr + Ctrl + B/E${color}  ${alignr}Balance/Equalize Nodes
 ${color2}Spr + Alt + Spc/D/A/Ret${color}  ${alignr}App/Program/Group/Menu
 ${color2}Spr + Alt + W/C/E/O${color}  ${alignr}Window/Clip/Emoji/Bookmarks
-${color2}Spr + Alt + ;/'/P${color}  ${alignr}Typer/Paste/Bitwarden
+${color2}Spr + Alt +;/'/P${color}  ${alignr}Typer/Paste/Bitwarden
 ${color2}Spr + Alt + \${color}  ${alignr}Display Time
 ${color2}Spr + Alt + Y/U${color}  ${alignr}Git Sync Config/Extra
 ${color2}Spr + Alt + S/X${color}  ${alignr}Start/Lock Screensaver

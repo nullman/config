@@ -12,16 +12,16 @@ archive="${urlbase}/archivepix.html"
 root="/home/data/media/Nasa Pictures/apod"
 index="$(mktemp)"
 
-wget "${archive}" -q -O - | grep 'href="ap' | sed 's/^.*\"ap/ap/ ; s/\".*$//' > "${index}"
+wget "${archive}" -q -O - | grep 'href="ap' | sed 's/^.*\"ap/ap/; s/\".*$//' > "${index}"
 
 done=0
-for page in $(cat "${index}") ; do
-    images=($(wget "${urlbase}/${page}" -q -O - | grep 'href="image/' | sed 's/^.*href="// ; s/".*$//'))
-    for image in ${images} ; do
+for page in $(cat "${index}"); do
+    images=($(wget "${urlbase}/${page}" -q -O - | grep 'href="image/' | sed 's/^.*href="//; s/".*$//'))
+    for image in ${images}; do
         file="${root}/${image}"
         dir=$(dirname "${file}")
         mkdir -p "${dir}"
-        if [ -f "${file}" ] ; then
+        if [ -f "${file}" ]; then
             echo "All images downloaded"
             exit 1
         fi
