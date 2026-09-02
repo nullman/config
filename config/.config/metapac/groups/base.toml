@@ -6,7 +6,6 @@ arch = {
     "efibootmgr",
     "firewalld",
     "fwupd",
-    "gst-plugin-pipewire",
     "hw-probe",
     "intel-media-driver",
     "intel-ucode",

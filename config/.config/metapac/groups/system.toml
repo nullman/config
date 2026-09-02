@@ -37,6 +37,7 @@ arch = {
     "fzf",
     "git",
     "go",
+    "gst-plugin-pipewire",
     "gum",
     "gvfs",
     "gvfs-smb",

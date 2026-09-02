@@ -12,7 +12,7 @@ thunar
 #discord
 flatpak run com.discordapp.Discord
 #slack
-flatpak run com.slack.Slack
+#flatpak run com.slack.Slack
 gajim
 dev.geopjr.Tuba
 nheko
