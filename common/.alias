@@ -3602,7 +3602,7 @@ alias web-generate-game="(cd \${HOME}/web/bin && ./generate-game && ./publish --
 #
 # backup
 #
-#!#!       rsyncexclusions         default rsync exclusions
+#!       rsyncexclusions         default rsync exclusions
 #!rsyncexclusions=" \
 #!    -f'- /cache' -f'- /dev/**' -f'- /lost+found' -f'- /media/**' -f'- /mnt/**' -f'- /nix/store/**' -f'- /proc/**' \
 #!    -f'- /run/**' -f'- /sys/**' -f'- /tmp/**' -f'- /var/lib/private/**' -f'- /var/log/**' -f'- /var/tmp/**' \
