@@ -2,7 +2,7 @@ arch = {
   packages = [
     "audacious",
     "audacious-plugins",
-    "brave-bin",
+    "brave-origin-bin",
     "cmus",
     "cool-retro-term",
     "cowsay",
@@ -48,7 +48,6 @@ dnf = {
     "audacious",
     "audacious-plugins",
     "bc",
-    "brave-browser",
     "brave-origin",
     "cmus",
     "cool-retro-term",
