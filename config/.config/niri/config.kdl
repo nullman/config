@@ -134,8 +134,8 @@ workspace "email"  // ""
 workspace "chat"   // ""
 workspace "dev"    // ""
 workspace "ai"     // ""
-//workspace "video"  // ""
-//workspace "vm"     // ""
+workspace "video"  // ""
+workspace "vm"     // ""
 
 // startup applications
 //spawn-at-startup "waybar"
