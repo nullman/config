@@ -24,7 +24,7 @@ hostname_groups_enabled = true
 [hostname_enabled_backends]
 arch = ["arch"]
 bane = ["dnf"]
-choi = ["arch"]
+choi = ["dnf", "flatpak", "snap"]
 dozer = ["arch"]
 fedora = ["dnf", "flatpak", "snap"]
 switch = ["arch"]
