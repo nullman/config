@@ -216,6 +216,7 @@ window-rule {
     match app-id="Google-chrome"
     match app-id="LibreWolf"
     match app-id="brave-browser"
+    match app-id="brave-origin"
     default-column-width { proportion 1.0; }
     open-on-workspace "browse"
 }
