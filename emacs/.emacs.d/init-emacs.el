@@ -16040,8 +16040,8 @@ USING is the remaining peg."
 ;; display completions with details
 (setq completions-detailed t)
 
-;; display completions horizontally
-(setq completions-format 'horizontal)
+;; display completions in columns sorted vertically
+(setq completions-format 'vertical)
 ;; Completions:2 ends here
 
 ;; [[file:init-emacs.org::#completions-vertico-consult-corfu][vertico/consult/corfu:1]]

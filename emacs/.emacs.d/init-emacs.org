@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2026-08-28 12:42 (user)>
+  #+TIMESTAMP: <2026-09-12 22:34 (user)>
 
 * Overview
   :PROPERTIES:
@@ -22742,8 +22742,8 @@
     ;; display completions with details
     (setq completions-detailed t)
 
-    ;; display completions horizontally
-    (setq completions-format 'horizontal)
+    ;; display completions in columns sorted vertically
+    (setq completions-format 'vertical)
   #+END_SRC
 
 *** +ido+
