@@ -23,7 +23,6 @@ dnf = {
     "b43-openfwwf",
     "baobab",
     "brcmfmac-firmware",
-    "breeze-gtk-gtk3",
     "brltty",
     "chrony",
     "cirrus-audio-firmware",
@@ -134,7 +133,6 @@ dnf = {
     "loupe",
     "mcelog",
     "microcode_ctl",
-    "minetest",
     "mt7xxx-firmware",
     "nautilus",
     "NetworkManager-adsl",
@@ -252,7 +250,6 @@ dnf = {
     "virtualbox-guest-additions",
     "vte-profile",
     "wget2-wget",
-    "xdg-desktop-portal-gnome",
     "xdg-desktop-portal-gtk",
     "xdg-user-dirs-gtk",
   ]
