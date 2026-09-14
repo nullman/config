@@ -1633,7 +1633,7 @@ fedora-initialize() {
         "fedora-capslock-control-terminal"
         "fedora-capslock-control-x11"
         "fedora-fonts"
-        #"fedora-dark-mode"
+        "fedora-dark-mode"
         "fedora-synology-mounts"
         "fedora-printer"
         "fedora-rpmfusion"
