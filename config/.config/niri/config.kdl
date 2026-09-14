@@ -50,7 +50,7 @@ switch-events {
 }
 
 layout {
-    gaps 4
+    gaps 8
 
     // when to center a column when changing focus: never, always, on-overflow
     center-focused-column "on-overflow"
