@@ -1,4 +1,4 @@
-;;; auto-menu.el --- Auto Menu Functions
+;;; auto-menu.el --- Auto Menu Functions -*- lexical-binding: t; -*-
 ;;
 ;;; Copyright (C) 2007,2008 Kyle W T Sherman
 ;;
@@ -380,8 +380,7 @@ SUBMENU is for internal use."
 ;; auto menu select
 ;;;###autoload
 (defun auto-menu-select (name items)
-  "Create a menu called NAME consisting of ITEMS,
-and prompt the user to select one.
+  "Prompt user to select from menu NAME consisting of ITEMS.
 
 ITEMS is a list of items. An ITEM is either a list containing the
 following elements that define a menu item:
@@ -391,7 +390,7 @@ following elements that define a menu item:
 
 and SYMBOL is one of:
 
-  VARIABLE is a lisp variable.
+  VARIABLE is a Lisp variable.
   FUNCTION is either a function name or a lambda definition.
   STRING   is a string to be returned verbatim.
 
@@ -443,14 +442,15 @@ sub-menu where:
 
 ;; auto menu file dir
 ;;;###autoload
-(defun auto-menu-file-dir (dir &optional match funct recurse updir)
-  "Return an auto-menu items list containing an item for every
-file in DIR that matches the regexp MATCH (defaults to `.*') with
-FUNCT applied to it (defaults to `find-file').
+(defun auto-menu-file-dir (dir &optional match funct recurse)
+  "Return an `auto-menu' items list containing an item for every file in DIR.
+
+Items must match the regexp MATCH (defaults to `.*').
+
+FUNCT is applied to each item (defaults to `find-file').
 
 If RECURSE is non-nil sub-directories will be recursed (defaults
-to nil).
-UPDIR is for internal use."
+to nil)."
   ;;(interactive "DDirectory: ")
   ;; expand dir to full path
   (setq dir (expand-file-name (file-truename dir)))
@@ -500,7 +500,7 @@ UPDIR is for internal use."
 ;; auto menu file
 ;;;###autoload
 (defun auto-menu-file (files)
-  "Return an auto-menu items list containing an item for every file in FILES.
+  "Return an `auto-menu' items list containing an item for every file in FILES.
 
 FILES is either a list of files an association list containing
 name/file pairs in this format:
@@ -526,7 +526,7 @@ name/file pairs in this format:
 ;; auto menu dired
 ;;;###autoload
 (defun auto-menu-dired (dirs)
-  "Return an auto-menu items list containing an item for every directory in DIRS.
+  "Return an `auto-menu' items list containing an item for every directory in DIRS.
 
 DIRS is either a list of directories or an association list
 containing name/directory pairs in this format:
@@ -552,9 +552,9 @@ containing name/directory pairs in this format:
 ;; auto menu dired remote
 ;;;###autoload
 (defun auto-menu-dired-remote (users servers)
-  "Return an auto-menu items list containing a submenu for every
-server directory in SERVERS, each of which contains a list of
-USERS.
+  "Return an `auto-menu' items list containing a list of SERVERS.
+
+Each server entry contains a list of USERS.
 
 USERS is an association list of users and directories in this format:
 

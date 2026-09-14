@@ -1,4 +1,4 @@
-;;; cycle-buffer.el --- select buffer by cycling through
+;;; cycle-buffer.el --- select buffer by cycling through  -*- lexical-binding: t; -*-
 
 ;; This is free software and in the public domain.
 ;; Author:     Vladimir Alexiev <vladimir.alexiev@ontotext.com>

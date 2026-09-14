@@ -16117,11 +16117,7 @@ USING is the remaining peg."
 (init-message 3 "Completions: vertico/consult/company: consult")
 
 (use-package consult
-  :straight (consult-custom
-             :type git
-             :host github
-             :repo "minad/consult"
-             :pre-build "git checkout 0.17")
+  :straight t
   :after (vertico)
   :bind (;; C-c bindings (mode-specific-map)
          ("C-c h" . consult-history)

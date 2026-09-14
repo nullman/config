@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2026-09-12 22:34 (user)>
+  #+TIMESTAMP: <2026-09-14 14:58 (user)>
 
 * Overview
   :PROPERTIES:
@@ -23545,11 +23545,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         (init-message 3 "Completions: vertico/consult/company: consult")
 
         (use-package consult
-          :straight (consult-custom
-                     :type git
-                     :host github
-                     :repo "minad/consult"
-                     :pre-build "git checkout 0.17")
+          :straight t
           :after (vertico)
           :bind (;; C-c bindings (mode-specific-map)
                  ("C-c h" . consult-history)
