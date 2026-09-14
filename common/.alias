@@ -2021,7 +2021,7 @@ alias rsync-archive="rsync -aAXv --progress"
 #        rsync-media-get-synology  rsync /mnt/synology/media /home/data/media
 alias rsync-media-get-synology="rsync -rptx --size-only --progress /mnt/synology/media/ ${home}/data/media/"
 #        rsync-media-get-synology-limited  rsync /mnt/synology/media /home/data/media (minus software and video directories)
-alias rsync-media-get-synology-limited="rsync -rptx --size-only --progress -f'- /Software/' -f'- /Video/' /mnt/synology/media/ ${home}/data/media/"
+alias rsync-media-get-synology-limited="rsync -rptx --size-only --progress -f'- /Software/' /mnt/synology/media/ ${home}/data/media/"
 #        rsync-media-get-synology-curated-delete  rsync /mnt/synology/media /home/data/media (specific sub-directories)
 alias rsync-media-get-synology-curated-delete=" \
     if [ \"$(uname -n)\" == \"mouse\" ] || [ \"$(uname -n)\" == \"bane\" ]; then
