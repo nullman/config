@@ -8,9 +8,9 @@
 //   https://niri-wm.github.io/niri/Configuration:-Introduction
 //======================================================================
 
-include "input.kdl"
+//include optional=true "input.kdl"
 
-/-input {
+input {
     keyboard {
         // fetch xkb settings from org.freedesktop.locale1; set with ~localectl set-x11-keymap~
         xkb { }
@@ -19,7 +19,7 @@ include "input.kdl"
         repeat-rate  35
 
         // enable numlock on startup
-        numlock
+        //numlock
     }
 
     touchpad {
