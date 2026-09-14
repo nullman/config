@@ -1640,12 +1640,8 @@ fedora-initialize() {
         "fedora-niri"
         "fedora-dms-greeter"
         "fedora-brave"
-        "fedora-ollama"
         "fedora-xscreensaver"
         "fedora-copr"
-        #"fedora-orpie"
-        "fedora-metapac"
-        #"fedora-source-installs"
     )
 
     if [ "$(distribution)" != "fedora" ]; then
