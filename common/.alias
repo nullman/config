@@ -2019,20 +2019,26 @@ alias rsync-rlptx="rsync -rlptx --progress"
 #        rsync-archive           rsync -aAXv --progress
 alias rsync-archive="rsync -aAXv --progress"
 #        rsync-media-get-synology  rsync /mnt/synology/media /home/data/media
-alias rsync-media-get-synology="rsync -rptx --size-only --progress /mnt/synology/media/ ${home}/data/media/"
-#        rsync-media-get-synology-limited  rsync /mnt/synology/media /home/data/media (minus software and video directories)
-alias rsync-media-get-synology-limited="rsync -rptx --size-only --progress -f'- /Software/' /mnt/synology/media/ ${home}/data/media/"
+alias rsync-media-get-synology="
+    for dir in 'Audio' 'Graphic' 'Nasa Pictures' 'Other' 'Pictures' 'Pictures Personal' 'Pictures Slide Show' 'Repos' 'Software' 'Text' 'Video' 'iTunes' ; do
+        rsync -rptx --size-only --progress \"/mnt/synology/media/\${dir}\" ${home}/data/media/
+    done"
+#        rsync-media-get-synology-limited  rsync /mnt/synology/media /home/data/media (minus software directory)
+alias rsync-media-get-synology-limited="
+    for dir in 'Audio' 'Graphic' 'Nasa Pictures' 'Other' 'Pictures' 'Pictures Personal' 'Pictures Slide Show' 'Repos' 'Text' 'Video' 'iTunes' ; do
+        rsync -rptx --size-only --progress \"/mnt/synology/media/\${dir}\" ${home}/data/media/
+    done"
 #        rsync-media-get-synology-curated-delete  rsync /mnt/synology/media /home/data/media (specific sub-directories)
 alias rsync-media-get-synology-curated-delete=" \
     if [ \"$(uname -n)\" == \"mouse\" ] || [ \"$(uname -n)\" == \"bane\" ]; then
-        rsync -rptx --size-only --progress --delete /mnt/synology/media/Audio/ ${home}/data/media/Audio/ && \
-        #rsync -rptx --size-only --progress --delete /mnt/synology/media/Graphic/ ${home}/data/media/Graphic/ && \
+        rsync -rptx --size-only --progress --delete \"/mnt/synology/media/Audio/\" \"${home}/data/media/Audio/\" && \
+        #rsync -rptx --size-only --progress --delete \"/mnt/synology/media/Graphic/\" \"${home}/data/media/Graphic/\" && \
         rsync -rptx --size-only --progress --delete \"/mnt/synology/media/Nasa Pictures/\" \"${home}/data/media/Nasa Pictures/\" && \
-        rsync -rptx --size-only --progress --delete /mnt/synology/media/Pictures/ ${home}/data/media/Pictures/ && \
+        rsync -rptx --size-only --progress --delete \"/mnt/synology/media/Pictures/\" \"${home}/data/media/Pictures/\" && \
         rsync -rptx --size-only --progress --delete \"/mnt/synology/media/Pictures Personal/\" \"${home}/data/media/Pictures Personal/\" && \
         rsync -rptx --size-only --progress --delete \"/mnt/synology/media/Pictures Slide Show/\" \"${home}/data/media/Pictures Slide Show/\" && \
-        rsync -rptx --size-only --progress --delete /mnt/synology/media/Repos/ ${home}/data/media/Repos/ && \
-        rsync -rptx --size-only --progress --delete /mnt/synology/media/Text/ ${home}/data/media/Text/
+        rsync -rptx --size-only --progress --delete \"/mnt/synology/media/Repos/\" \"${home}/data/media/Repos/\" && \
+        rsync -rptx --size-only --progress --delete \"/mnt/synology/media/Text/\" \"${home}/data/media/Text/\"
     fi"
 #        rsync-media-put-synology  rsync /home/data/media /mnt/synology/media
 alias rsync-media-put-synology="

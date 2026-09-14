@@ -64,9 +64,9 @@ _bc merge_overlapping_monitors true
 
 # monitor and desktop settings
 # xfce=22, eww=22, tint2=30, polybar=28
-_bc top_padding                0
+_bc top_padding                28
 _bc right_padding              0
-_bc bottom_padding             28
+_bc bottom_padding             0
 _bc left_padding               0
 
 # desktop settings
