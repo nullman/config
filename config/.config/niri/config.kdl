@@ -137,6 +137,8 @@ workspace "ai"     // ""
 workspace "video"  // ""
 workspace "vm"     // ""
 
+focus-workspace 1
+
 // startup applications
 //spawn-at-startup "waybar"
 //spawn-sh-at-startup "xscreensaver --splash"
@@ -161,15 +163,15 @@ animations {
     slowdown 0.5                        // lower is faster; default is 1.0
 }
 
-// windows have rounded corners
-/-window-rule {
-    geometry-corner-radius 12
+// windows with square corners
+window-rule {
+    geometry-corner-radius 0
     clip-to-geometry true
 }
 
-// windows have square corners
-window-rule {
-    geometry-corner-radius 0
+// windows with rounded corners
+/-window-rule {
+    geometry-corner-radius 12
     clip-to-geometry true
 }
 
