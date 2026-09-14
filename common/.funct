@@ -466,6 +466,9 @@ distribution() {
             debian|ubuntu)
                 dist="debian"
                ;;
+            fedora)
+                dist="fedora"
+               ;;
             gentoo)
                 dist="gentoo"
                ;;
@@ -478,7 +481,7 @@ distribution() {
             qubes)
                 dist="qubes"
                ;;
-            rhel|fedora|centos)
+            rhel|centos)
                 dist="redhat"
                ;;
             slackware)
@@ -1501,7 +1504,7 @@ arch-initialize() {
         awk "${regexp}" "${file}" | tail -n +3 | head -n -1 | sed 's/^[ \t]*//'
     }
 
-    initial=(
+    sections=(
         "arch-group"
         "arch-sudoers"
         "arch-sysctl-conf"
@@ -1510,9 +1513,6 @@ arch-initialize() {
         "arch-capslock-control-terminal"
         "arch-capslock-control-x11"
         "arch-package-managers"
-    )
-
-    standard=(
         "arch-polkit"
         "arch-lightdm"
         "arch-pkgfile"
@@ -1545,8 +1545,6 @@ arch-initialize() {
         #"arch-settings-qt6ct"
         "arch-final"
     )
-
-    sections=(${initial[@]} ${standard[@]})
 
     if [ "$(distribution)" != "arch" ]; then
         echo "Not running Arch"
@@ -1619,6 +1617,57 @@ dnfsis() {
     else
         dnf list --installed 2>/dev/null | grep -i --color=never "^$*" |  sed 's/ [^ ]\+$//'
     fi
+}
+#        fedora-initialize       initial setup of a fedora system
+fedora-initialize() {
+    _getsection() {
+        local file="${HOME}/org/computer.org"
+        local regexp="/^[ \t]*#\+NAME: $1\$/,/^[ \t]*#\+END_SRC\$/{print \$0}"
+        awk "${regexp}" "${file}" | tail -n +3 | head -n -1 | sed 's/^[ \t]*//'
+    }
+
+    sections=(
+        "fedora-timezone"
+        "fedora-sudo-timeout"
+        "fedora-sysctl-conf"
+        "fedora-capslock-control-terminal"
+        "fedora-capslock-control-x11"
+        "fedora-fonts"
+        #"fedora-dark-mode"
+        "fedora-synology-mounts"
+        "fedora-printer"
+        "fedora-rpmfusion"
+        "fedora-niri"
+        "fedora-dms-greeter"
+        "fedora-brave"
+        "fedora-ollama"
+        "fedora-xscreensaver"
+        "fedora-copr"
+        #"fedora-orpie"
+        "fedora-metapac"
+        #"fedora-source-installs"
+    )
+
+    if [ "$(distribution)" != "fedora" ]; then
+        echo "Not running Fedora"
+        return 1
+    fi
+
+    echo
+    echo "========== Fedora Initialization Script =========="
+    echo
+
+    for section in ${sections[@]}; do
+        echo
+        echo "========== ${section} =========="
+        echo
+        #echo "$(_getsection ${section})"
+        eval "$(_getsection ${section})"
+    done
+
+    echo
+    echo "========== Fedora Initialization Complete =========="
+    echo
 }
 
 if [ "$(distribution)" == "guix" ]; then
