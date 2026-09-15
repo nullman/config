@@ -474,21 +474,7 @@ alias stopwatch="
         date -u -d @\$((ts - start)) '+%H:%M:%S'
         sleep 1s
     done"
-#        iommu-list              list iommu devices
-alias iommu-list="
-    if [ -d /sys/kernel/iommu_groups ]; then
-        for group in \$(find /sys/kernel/iommu_groups/* -maxdepth 0 -type d | sed 's%/sys/kernel/iommu_groups/%%' | sort -n); do
-            printf \"\nIOMMU Group: %s\n\" \"\${group}\"
-            for device in /sys/kernel/iommu_groups/\${group}/devices/*; do
-                device=\"\${device#/sys/kernel/iommu_groups/\${group}/devices/}\"
-                lspci -nns \"\${device##*/}\"
-            done
-        done
-    else
-        echo \"Kernel does not support IOMMU\"
-        echo \"Add intel_iommu=on or amd_iommu=on kernel parameters\"
-    fi"
-#        create-media-links      create links in /home/data/medai
+#        create-media-links      create links in /home/data/media
 alias create-media-links="
     dir=\"${home}/data/media\"
     mkdir -p \"\${dir}/iTunes\"
@@ -515,6 +501,20 @@ alias create-media-links="
     ln -s \"../Windows\"
     popd
     popd"
+#        iommu-list              list iommu devices
+alias iommu-list="
+    if [ -d /sys/kernel/iommu_groups ]; then
+        for group in \$(find /sys/kernel/iommu_groups/* -maxdepth 0 -type d | sed 's%/sys/kernel/iommu_groups/%%' | sort -n); do
+            printf \"\nIOMMU Group: %s\n\" \"\${group}\"
+            for device in /sys/kernel/iommu_groups/\${group}/devices/*; do
+                device=\"\${device#/sys/kernel/iommu_groups/\${group}/devices/}\"
+                lspci -nns \"\${device##*/}\"
+            done
+        done
+    else
+        echo \"Kernel does not support IOMMU\"
+        echo \"Add intel_iommu=on or amd_iommu=on kernel parameters\"
+    fi"
 
 #
 # wallpaper
@@ -2022,12 +2022,16 @@ alias rsync-archive="rsync -aAXv --progress"
 alias rsync-media-get-synology="
     for dir in 'Audio' 'Graphic' 'Nasa Pictures' 'Other' 'Pictures' 'Pictures Personal' 'Pictures Slide Show' 'Repos' 'Software' 'Text' 'Video' 'iTunes' ; do
         rsync -rptx --size-only --progress \"/mnt/synology/media/\${dir}\" ${home}/data/media/
-    done"
+    done
+    create-media-links
+    fix-executable-flags \"${home}/data/media/\""
 #        rsync-media-get-synology-limited  rsync /mnt/synology/media /home/data/media (minus software directory)
 alias rsync-media-get-synology-limited="
     for dir in 'Audio' 'Graphic' 'Nasa Pictures' 'Other' 'Pictures' 'Pictures Personal' 'Pictures Slide Show' 'Repos' 'Text' 'Video' 'iTunes' ; do
         rsync -rptx --size-only --progress \"/mnt/synology/media/\${dir}\" ${home}/data/media/
-    done"
+    done
+    create-media-links
+    fix-executable-flags \"${home}/data/media/\""
 #        rsync-media-get-synology-curated-delete  rsync /mnt/synology/media /home/data/media (specific sub-directories)
 alias rsync-media-get-synology-curated-delete=" \
     if [ \"$(uname -n)\" == \"mouse\" ] || [ \"$(uname -n)\" == \"bane\" ]; then

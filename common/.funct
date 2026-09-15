@@ -425,6 +425,18 @@ check-urls() {
         printf 'Done%*s\n' 76
     fi
 }
+#        fix-executable-flags    fix executable flags in current directory (recursively)
+fix-executable-flags() {
+    if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
+        echo "Usage: fix-executable-flags DIR"
+    else
+        find "$1" -type f | while read -r file; do
+            file "${file}" | \
+                grep -qE "(ELF executable|MS-DOS executable|shell script|Perl script|Python script|Ruby script|awk script|bash script)" || \
+                chmod -x "${file}"
+        done
+    fi
+}
 #        colors                  show terminal colors
 colors() {
     local fgc bgc vals seq0
