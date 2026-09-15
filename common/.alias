@@ -484,11 +484,14 @@ alias create-media-links="
     ln -s \"../Audio/Humor/Real Men of Budwiser\"
     ln -s \"../Audio/Books\"
     popd
-    mkdir -p \"\${dir}/iTunes\"
+    pushd \"\${dir}/Audio/Music\"
+    ln -s \"../MODs\"
+    popd
+    mkdir -p \"\${dir}/Audio/MPD\"
     pushd \"\${dir}/Audio/MPD\"
     ln -s \"../Music/Albums\"
-    ln -s \"../Music/MODs\"
     ln -s \"../Music/Singles\"
+    ln -s \"../MODs\"
     popd
     mkdir -p \"\${dir}/Pictures Slide Show\"
     pushd \"\${dir}/Pictures Slide Show\"
