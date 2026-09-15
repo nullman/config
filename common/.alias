@@ -2022,16 +2022,16 @@ alias rsync-archive="rsync -aAXv --progress"
 alias rsync-media-get-synology="
     for dir in 'Audio' 'Graphic' 'Nasa Pictures' 'Other' 'Pictures' 'Pictures Personal' 'Pictures Slide Show' 'Repos' 'Software' 'Text' 'Video' 'iTunes' ; do
         rsync -rptx --size-only --progress \"/mnt/synology/media/\${dir}\" ${home}/data/media/
-    done
-    create-media-links
-    fix-executable-flags \"${home}/data/media/\""
+    done"
+#!create-media-links
+#!fix-executable-flags \"${home}/data/media/\""
 #        rsync-media-get-synology-limited  rsync /mnt/synology/media /home/data/media (minus software directory)
 alias rsync-media-get-synology-limited="
     for dir in 'Audio' 'Graphic' 'Nasa Pictures' 'Other' 'Pictures' 'Pictures Personal' 'Pictures Slide Show' 'Repos' 'Text' 'Video' 'iTunes' ; do
         rsync -rptx --size-only --progress \"/mnt/synology/media/\${dir}\" ${home}/data/media/
-    done
-    create-media-links
-    fix-executable-flags \"${home}/data/media/\""
+    done"
+#!create-media-links
+#!fix-executable-flags \"${home}/data/media/\""
 #        rsync-media-get-synology-curated-delete  rsync /mnt/synology/media /home/data/media (specific sub-directories)
 alias rsync-media-get-synology-curated-delete=" \
     if [ \"$(uname -n)\" == \"mouse\" ] || [ \"$(uname -n)\" == \"bane\" ]; then
