@@ -1,19 +1,3 @@
-;; [[file:init-emacs.org::#constants-colors][Colors:1]]
-(let ((data '(("Color" "Name" "Symbol" "Hex Code") ("Adwaita Dark Background (Original)" "" "" "#29353b") ("Adwaita Dark Background (Darker)" "" "" "#19252b") ("Adwaita Dark Background (Darkest)" "" "" "#09151b") ("Flatland Background" "" "color-background" "#26292c") ("Flatland Foreground" "" "" "#f8f8f8") ("Flatland Cursor" "" "" "#bbbcbd") ("Gray/Blue Background" "" "" "#1b303d") ("White Foreground" "" "color-foreground" "#bbc2cf") ("White Foreground Accent" "" "" "#798188") ("Yellow Cursor" "" "color-cursor" "#eeee22") ("Bright Yellow Highlight" "" "color-paren" "#ffff33") ("White Mouse" "" "color-mouse" "#ffffff") ("Outline Level 1" "pale yellow" "color-1" "#eeffaa") ("Outline Level 2" "light salmon" "color-2" "#ffbbaa") ("Outline Level 3" "sky blue" "color-3" "#aaeeff") ("Outline Level 4" "light green" "color-4" "#bbffaa") ("Outline Level 5" "navajo white" "color-5" "#ffeebb") ("Outline Level 6" "plum" "color-6" "#ffaacc") ("Outline Level 7" "pale turquoise" "color-7" "#bbffee") ("Outline Level 8" "pale green" "color-8" "#99ffbb"))))
-;;------------------------------------------------------------------------------
-;;; Constants: Colors
-;;------------------------------------------------------------------------------
-
-(mapc (lambda (x)
-        (let ((color (caddr x))
-              (value (cadddr x)))
-          (when (> (length color) 0)
-            (set (intern color) value))))
-      (cdr data))
-)
-;; Colors:1 ends here
-
-;; [[file:init-emacs.org::#start-header][Header:1]]
 ;; -*- mode: emacs-lisp; lexical-binding: t; no-byte-compile: t -*-
 ;;==============================================================================
 ;;; init-emacs.el
@@ -31,7 +15,6 @@
 ;;==============================================================================
 ;;; Start
 ;;==============================================================================
-;; Header:1 ends here
 
 ;; [[file:init-emacs.org::#start-status-messages][Status Messages:1]]
 ;;------------------------------------------------------------------------------
@@ -3576,7 +3559,7 @@ by ASCII code. Otherwise, default SORT-TYPE is \"(nil ?f nil
 (defun org-fill-paragraph-extended (&optional justify region)
   "Fix `org-fill-paragraph' when inside an org block."
   (interactive (progn (barf-if-buffer-read-only)
-		              (list (when current-prefix-arg 'full) t)))
+                      (list (when current-prefix-arg 'full) t)))
   (when (eq major-mode 'org-mode)
     (let ((type (org-element-type (org-element-at-point))))
       (cond
@@ -22336,33 +22319,33 @@ Commands:
    ;; ("Emacs Initialization..."
    ;;  ,(auto-menu-file-dir local-init-dir "\\.el\\'" "find-file"))
    ("Emacs Personal Modules..."
-    ,(auto-menu-file-dir local-modules-dir "\\.el\\'" "find-file" t))
+    ,(auto-menu-file-dir local-modules-dir "\\.el\\'" "find-file"))
    ("Bin Files..."
-    ;;,(auto-menu-file-dir "~/bin" nil "find-file" t))
+    ;;,(auto-menu-file-dir "~/bin" nil "find-file"))
     ,(auto-menu-file '(("get-emacs-modules" . "~/bin/get-emacs-modules"))))
    ("Web Org Files..."
-    ,(auto-menu-file-dir "~/web/org" "\\.org\\'" "find-file" t))
+    ,(auto-menu-file-dir "~/web/org" "\\.org\\'" "find-file"))
    ("Org Files..."
     ,(cl-remove-if (lambda (x) (string-prefix-p "agenda-" (car x)))
-                   (auto-menu-file-dir "~/org" "\\.\\(org\\|org\\.gpg\\)\\'" "find-file" t)))
+                   (auto-menu-file-dir "~/org" "\\.\\(org\\|org\\.gpg\\)\\'" "find-file")))
    ("Agenda Files..."
     ,(cl-remove-if (lambda (x) (not (string-prefix-p "agenda-" (car x))))
-                   (auto-menu-file-dir "~/org" "\\.\\(org\\|org\\.gpg\\)\\'" "find-file" t)))
+                   (auto-menu-file-dir "~/org" "\\.\\(org\\|org\\.gpg\\)\\'" "find-file")))
    ("Bookmarks" "load-bookmarks" "Load `~/lynx_bookmarks.html' file.")
    ("Emacs Work Modules..."
-    ,(auto-menu-file-dir local-work-modules-dir "\\.el\\'" "find-file" t))
+    ,(auto-menu-file-dir local-work-modules-dir "\\.el\\'" "find-file"))
    ("CLisp Files..."
-    ,(auto-menu-file-dir "~/dev/clisp" "\\.lisp\\'" "find-file" t))
+    ,(auto-menu-file-dir "~/dev/clisp" "\\.lisp\\'" "find-file"))
    ("Clojure Files..."
-    ,(auto-menu-file-dir "~/dev/clojure" "\\.clj\\'" "find-file" t))
+    ,(auto-menu-file-dir "~/dev/clojure" "\\.clj\\'" "find-file"))
    ("Racket Files..."
-    ,(auto-menu-file-dir "~/dev/racket" "\\.rkt\\'" "find-file" t))
+    ,(auto-menu-file-dir "~/dev/racket" "\\.rkt\\'" "find-file"))
    ("Erlang Files..."
-    ,(auto-menu-file-dir "~/dev/erlang" "\\.erl\\'" "find-file" t))
+    ,(auto-menu-file-dir "~/dev/erlang" "\\.erl\\'" "find-file"))
    ("BASIC Files..."
-    ,(auto-menu-file-dir "~/dev/basic" "\\.bas\\'" "find-file" t))
+    ,(auto-menu-file-dir "~/dev/basic" "\\.bas\\'" "find-file"))
    ("Javascript Files..."
-    ,(auto-menu-file-dir "~/dev/javascript" "\\.js\\'" "find-file" t))))
+    ,(auto-menu-file-dir "~/dev/javascript" "\\.js\\'" "find-file"))))
 ;; Load Menu:1 ends here
 
 ;; [[file:init-emacs.org::#menus-application-menu][Application Menu:1]]
@@ -22422,13 +22405,13 @@ Commands:
    ;; ("Emacs Initialization..."
    ;;  ,(auto-menu-file-dir local-init-dir "\\.el\\'" "safe-load-compile"))
    ("Emacs Personal Modules..."
-    ,(auto-menu-file-dir local-modules-dir "\\.el\\'" "safe-load-compile" t))
+    ,(auto-menu-file-dir local-modules-dir "\\.el\\'" "safe-load-compile"))
    ("CLisp Files..."
-    ,(auto-menu-file-dir "~/dev/clisp" "\\.lisp\\'" "slime-load-file" t))
+    ,(auto-menu-file-dir "~/dev/clisp" "\\.lisp\\'" "slime-load-file"))
    ("Clojure Files..."
-    ,(auto-menu-file-dir "~/dev/clojure" "\\.clj\\'" "slime-load-file" t))
+    ,(auto-menu-file-dir "~/dev/clojure" "\\.clj\\'" "slime-load-file"))
    ("Racket Files..."
-    ,(auto-menu-file-dir "~/dev/racket" "\\.rkt\\'" "slime-load-file" t))))
+    ,(auto-menu-file-dir "~/dev/racket" "\\.rkt\\'" "slime-load-file"))))
 ;; Run-File Menu:1 ends here
 
 ;; [[file:init-emacs.org::#menus-website-menu][Website Menu:1]]
@@ -22627,7 +22610,7 @@ Commands:
 ;; manual menu
 (auto-menu
  "Manuals"
- `(("Help Files" ,(auto-menu-file-dir (concat emacs-home-dir "/help") ".*" "find-or-browse-file" t))
+ `(("Help Files" ,(auto-menu-file-dir (concat emacs-home-dir "/help") ".*" "find-or-browse-file"))
    ("Man Pages" "woman" "Browse man pages.")
    ("Emacs Manual" "(info \"emacs-24/emacs\")" "Open Emacs manual.")
    ("Elisp Manual" "(info \"emacs-24/elisp\")" "Open Elisp manual.")
@@ -22637,7 +22620,7 @@ Commands:
    ("Grep Manual" "(info \"grep\")" "Open Grep pattern matching manual.")
    ("DC Manual" "(info \"dc\")" "Open arbitrary precision RPN Desktop Calculator manual.")
    ("Wget Manual" "(info \"wget\")" "Open Wget manual.")))
-;;("Help Files" ,(auto-menu-file-dir (concat emacs-home-dir "/help") ".*" "find-file" t))
+;;("Help Files" ,(auto-menu-file-dir (concat emacs-home-dir "/help") ".*" "find-file"))
 ;; Manuals Menu:1 ends here
 
 ;; [[file:init-emacs.org::#menus-web-menu][Web Menu:1]]
