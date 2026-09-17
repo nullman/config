@@ -3,9 +3,11 @@
 ;;; Copyright (C) 2007,2008 Kyle W T Sherman
 ;;
 ;; Author:   Kyle W T Sherman <kylewsherman at gmail dot com>
+;; URL: http://nullman.net/emacs/files/local-modules/auto-menu.el.html
 ;; Created:  2007-05-22
 ;; Version:  1.0
-;; Keywords: menu
+;; Keywords: convenience
+;; Package-Requires: ((emacs "24.3"))
 ;;
 ;; This file is not part of GNU Emacs.
 ;;
@@ -114,8 +116,9 @@
 
 ;;; Code:
 
-;; easymenu
+(require 'cl-lib)
 (require 'easymenu)
+(require 'wid-edit)
 
 ;; auto menu sanatize
 (defun auto-menu-sanatize (name)
@@ -125,15 +128,15 @@ Spaces are converted to dashes and anything not in this string is
 removed:
 
 abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-"
-  (let ((legal-regexp "[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012\
-3456789_-]"))
-    (map 'string (lambda (x) x)
-         (cl-loop for x across name
-                  if (string-match legal-regexp (char-to-string x))
-                  collect x
-                  else
-                  if (= x 32)
-                  collect 45))))
+  (let ((legal-regexp
+         "[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-]"))
+    (cl-map 'string (lambda (x) x)
+            (cl-loop for x across name
+                     if (string-match legal-regexp (char-to-string x))
+                     collect x
+                     else
+                     if (= x 32)
+                     collect 45))))
 
 ;; auto menu
 ;;;###autoload

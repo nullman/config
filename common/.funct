@@ -1581,18 +1581,6 @@ arch-initialize() {
 }
 
 #
-# debian
-#
-#        acsg                    apt-cache search with grep
-acsg() {
-    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
-        echo "Usage: acsg QUERY"
-    else
-        apt-cache search "$1" | grep -i "^$1"
-    fi
-}
-
-#
 # fedora
 #
 #        dnfsg                    dnf search with grep
@@ -1676,6 +1664,18 @@ fedora-initialize() {
     echo
     echo "========== Fedora Initialization Complete =========="
     echo
+}
+
+#
+# debian
+#
+#        acsg                    apt-cache search with grep
+acsg() {
+    if [ $# -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
+        echo "Usage: acsg QUERY"
+    else
+        apt-cache search "$1" | grep -i "^$1"
+    fi
 }
 
 if [ "$(distribution)" == "guix" ]; then
