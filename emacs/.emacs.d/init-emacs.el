@@ -5822,8 +5822,8 @@ Example output:
                 nil)
                ;; bookmark
                ((and (stringp (car bm)) (stringp (cadr bm)))
-                (let* ((title (car x))
-                       (uri (cadr x))
+                (let* ((title (car bm))
+                       (uri (cadr bm))
                        (keyword (if (string-match " {\\(.*\\)}$" title)
                                     (match-string-no-properties 1 title)
                                   nil))

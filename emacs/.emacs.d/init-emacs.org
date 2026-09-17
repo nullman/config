@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2026-09-16 21:57 (user)>
+  #+TIMESTAMP: <2026-09-16 22:06 (user)>
 
 * Overview
   :PROPERTIES:
@@ -8445,8 +8445,8 @@
                         nil)
                        ;; bookmark
                        ((and (stringp (car bm)) (stringp (cadr bm)))
-                        (let* ((title (car x))
-                               (uri (cadr x))
+                        (let* ((title (car bm))
+                               (uri (cadr bm))
                                (keyword (if (string-match " {\\(.*\\)}$" title)
                                             (match-string-no-properties 1 title)
                                           nil))
