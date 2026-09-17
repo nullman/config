@@ -2833,6 +2833,12 @@ alias xwit="xwininfo -tree -root"
 alias geometry="xwininfo -root | grep geometry"
 
 #
+# fedora
+#
+#        fedora-rebuild-nvidia-drivers  akmods --rebuild --force
+alias rebuild-nvidia-drivers="sudo akmods --rebuild --force"
+
+#
 # debian
 #
 #        install-debian          run custom debian installation script
