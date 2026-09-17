@@ -480,7 +480,7 @@ to nil)."
                             (string-match "^\\.git$" base-name)
                             (string-match "^\\.svn$" base-name)))
                   (push (list (concat base-name " (dir)")
-                              (auto-menu-file-dir file match funct recurse dir)) items)))
+                              (auto-menu-file-dir file match funct recurse)) items)))
               t)
              ;; matching file (add to menu)
              ((string-match match file)

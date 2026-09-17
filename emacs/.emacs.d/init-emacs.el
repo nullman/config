@@ -22319,33 +22319,32 @@ Commands:
    ;; ("Emacs Initialization..."
    ;;  ,(auto-menu-file-dir local-init-dir "\\.el\\'" "find-file"))
    ("Emacs Personal Modules..."
-    ,(auto-menu-file-dir local-modules-dir "\\.el\\'" "find-file"))
+    ,(auto-menu-file-dir local-modules-dir "\\.el\\'" "find-file" :recurse))
    ("Bin Files..."
-    ;;,(auto-menu-file-dir "~/bin" nil "find-file"))
-    ,(auto-menu-file '(("get-emacs-modules" . "~/bin/get-emacs-modules"))))
+    ,(auto-menu-file-dir "~/bin" nil "find-file" :recurse))
    ("Web Org Files..."
-    ,(auto-menu-file-dir "~/web/org" "\\.org\\'" "find-file"))
+    ,(auto-menu-file-dir "~/web/org" "\\.org\\'" "find-file" :recurse))
    ("Org Files..."
     ,(cl-remove-if (lambda (x) (string-prefix-p "agenda-" (car x)))
-                   (auto-menu-file-dir "~/org" "\\.\\(org\\|org\\.gpg\\)\\'" "find-file")))
+                   (auto-menu-file-dir "~/org" "\\.\\(org\\|org\\.gpg\\)\\'" "find-file" :recurse)))
    ("Agenda Files..."
     ,(cl-remove-if (lambda (x) (not (string-prefix-p "agenda-" (car x))))
-                   (auto-menu-file-dir "~/org" "\\.\\(org\\|org\\.gpg\\)\\'" "find-file")))
+                   (auto-menu-file-dir "~/org" "\\.\\(org\\|org\\.gpg\\)\\'" "find-file" :recurse)))
    ("Bookmarks" "load-bookmarks" "Load `~/lynx_bookmarks.html' file.")
    ("Emacs Work Modules..."
-    ,(auto-menu-file-dir local-work-modules-dir "\\.el\\'" "find-file"))
+    ,(auto-menu-file-dir local-work-modules-dir "\\.el\\'" "find-file" :recurse))
    ("CLisp Files..."
-    ,(auto-menu-file-dir "~/dev/clisp" "\\.lisp\\'" "find-file"))
+    ,(auto-menu-file-dir "~/dev/clisp" "\\.lisp\\'" "find-file" :recurse))
    ("Clojure Files..."
-    ,(auto-menu-file-dir "~/dev/clojure" "\\.clj\\'" "find-file"))
+    ,(auto-menu-file-dir "~/dev/clojure" "\\.clj\\'" "find-file" :recurse))
    ("Racket Files..."
-    ,(auto-menu-file-dir "~/dev/racket" "\\.rkt\\'" "find-file"))
+    ,(auto-menu-file-dir "~/dev/racket" "\\.rkt\\'" "find-file" :recurse))
    ("Erlang Files..."
-    ,(auto-menu-file-dir "~/dev/erlang" "\\.erl\\'" "find-file"))
+    ,(auto-menu-file-dir "~/dev/erlang" "\\.erl\\'" "find-file" :recurse))
    ("BASIC Files..."
-    ,(auto-menu-file-dir "~/dev/basic" "\\.bas\\'" "find-file"))
+    ,(auto-menu-file-dir "~/dev/basic" "\\.bas\\'" "find-file" :recurse))
    ("Javascript Files..."
-    ,(auto-menu-file-dir "~/dev/javascript" "\\.js\\'" "find-file"))))
+    ,(auto-menu-file-dir "~/dev/javascript" "\\.js\\'" "find-file" :recurse))))
 ;; Load Menu:1 ends here
 
 ;; [[file:init-emacs.org::#menus-application-menu][Application Menu:1]]
@@ -22403,15 +22402,15 @@ Commands:
    ;;  ,(auto-menu-file `(("init.el" ,(concat "(safe-load \"" (file-truename (expand-file-name "init.el" emacs-home-dir)) "\")") "Run init.el to re-initialize Emacs.")
    ;;                     ("init-emacs.el" ,(concat "(safe-load \"" (file-truename (expand-file-name "init-emacs.el" emacs-home-dir)) "\")") "Run init-emacs.el to re-initialize Emacs."))))
    ;; ("Emacs Initialization..."
-   ;;  ,(auto-menu-file-dir local-init-dir "\\.el\\'" "safe-load-compile"))
+   ;;  ,(auto-menu-file-dir local-init-dir "\\.el\\'" "safe-load-compile" :recurse))
    ("Emacs Personal Modules..."
-    ,(auto-menu-file-dir local-modules-dir "\\.el\\'" "safe-load-compile"))
+    ,(auto-menu-file-dir local-modules-dir "\\.el\\'" "safe-load-compile" :recurse))
    ("CLisp Files..."
-    ,(auto-menu-file-dir "~/dev/clisp" "\\.lisp\\'" "slime-load-file"))
+    ,(auto-menu-file-dir "~/dev/clisp" "\\.lisp\\'" "slime-load-file" :recurse))
    ("Clojure Files..."
-    ,(auto-menu-file-dir "~/dev/clojure" "\\.clj\\'" "slime-load-file"))
+    ,(auto-menu-file-dir "~/dev/clojure" "\\.clj\\'" "slime-load-file" :recurse))
    ("Racket Files..."
-    ,(auto-menu-file-dir "~/dev/racket" "\\.rkt\\'" "slime-load-file"))))
+    ,(auto-menu-file-dir "~/dev/racket" "\\.rkt\\'" "slime-load-file" :recurse))))
 ;; Run-File Menu:1 ends here
 
 ;; [[file:init-emacs.org::#menus-website-menu][Website Menu:1]]
@@ -22610,7 +22609,7 @@ Commands:
 ;; manual menu
 (auto-menu
  "Manuals"
- `(("Help Files" ,(auto-menu-file-dir (concat emacs-home-dir "/help") ".*" "find-or-browse-file"))
+ `(("Help Files" ,(auto-menu-file-dir (concat emacs-home-dir "/help") ".*" "find-or-browse-file" :recurse))
    ("Man Pages" "woman" "Browse man pages.")
    ("Emacs Manual" "(info \"emacs-24/emacs\")" "Open Emacs manual.")
    ("Elisp Manual" "(info \"emacs-24/elisp\")" "Open Elisp manual.")
@@ -22620,7 +22619,7 @@ Commands:
    ("Grep Manual" "(info \"grep\")" "Open Grep pattern matching manual.")
    ("DC Manual" "(info \"dc\")" "Open arbitrary precision RPN Desktop Calculator manual.")
    ("Wget Manual" "(info \"wget\")" "Open Wget manual.")))
-;;("Help Files" ,(auto-menu-file-dir (concat emacs-home-dir "/help") ".*" "find-file"))
+;;("Help Files" ,(auto-menu-file-dir (concat emacs-home-dir "/help") ".*" "find-file" :recurse))
 ;; Manuals Menu:1 ends here
 
 ;; [[file:init-emacs.org::#menus-web-menu][Web Menu:1]]
