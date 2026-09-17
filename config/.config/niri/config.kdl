@@ -137,8 +137,6 @@ workspace "ai"     // ""
 workspace "video"  // ""
 workspace "vm"     // ""
 
-focus-workspace 1
-
 // startup applications
 //spawn-at-startup "waybar"
 //spawn-sh-at-startup "xscreensaver --splash"
