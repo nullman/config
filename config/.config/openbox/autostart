@@ -34,7 +34,7 @@ _delay() {
 }
 
 # simple x hotkey daemon
-_once sxhkd -c "${HOME}/.config/sxhkd/sxhkdrc" &
+_run "${HOME}/bin/run-sxhkd" &
 
 # xfce settings
 #_once xfsettingsd &

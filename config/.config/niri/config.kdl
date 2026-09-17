@@ -142,6 +142,7 @@ focus-workspace 1
 // startup applications
 //spawn-at-startup "waybar"
 //spawn-sh-at-startup "xscreensaver --splash"
+spawn-sh-at-startup "${HOME}/bin/run-sxhkd"
 
 // do not show hotkey list on startup
 hotkey-overlay {

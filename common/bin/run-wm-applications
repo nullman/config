@@ -39,7 +39,6 @@ _source() {
 # }
 
 # simple x hotkey daemon
-# (might have been started already by .xprofile)
 _run ${HOME}/bin/run-sxhkd &
 
 # qubes os
