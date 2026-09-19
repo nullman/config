@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2026-09-16 22:06 (user)>
+  #+TIMESTAMP: <2026-09-19 14:30 (user)>
 
 * Overview
   :PROPERTIES:
@@ -19304,14 +19304,13 @@
         (defun define-word (&optional word)
           "Return definition of WORD and put it on the `kill-ring'."
           (interactive "MWord: ")
-          (let ((def (with-temp-buffer
-                       (call-process "trans" nil t nil "-no-ansi" (shell-quote-argument word))
-                       (goto-char (point-min))
-                       (when (re-search-forward "^Examples" nil :noerror)
-                         (delete-region (1- (line-beginning-position)) (point-max)))
-                       (buffer-string))))
-            (kill-new def)
-            (message "%s" def)))
+          (let ((buf (help-buffer)))
+          (with-output-to-temp-buffer buf
+            (call-process "trans" nil buf nil "-no-ansi"
+                          (shell-quote-argument word)))
+          (save-excursion
+            (set-buffer buf)
+            (visual-line-mode 1))))
 
         (defun define-word-after-spell-check (word)
           "Define WORD after spell checking.
@@ -25635,6 +25634,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
        ;;(:name "Planet Gnome" :html "https://planet.gnome.org/" :rss "https://feeds.feedburner.com/codinghorror?format=xml" :tag "linux")
        (:name "Linux Foundation" :html "https://www.linuxfoundation.org/" :rss "https://www.linuxfoundation.org/feed/" :tag "linux")
        (:name "Linux Magazine" :html "https://www.linux-magazine.com/" :rss "https://www.linux-magazine.com/rss/feed/lmi_news" :tag "linux")
+       (:name "Raspberry Pi News" :html "https://www.raspberrypi.com/news/" :rss "https://www.raspberrypi.com/news/feed/" :tag "linux")
        (:name "Open Source Voices" :html "https://www.opensourcevoices.org/" :rss "https://feeds.fireside.fm/opensourcevoices/rss" :tag "linux")
        (:name "Luke Smith" :html "https://lukesmith.xyz/" :rss "https://lukesmith.xyz/rss.xml" :tag "linux")
        (:name "Jeff Geerling" :html "https://www.jeffgeerling.com/" :rss "https://www.jeffgeerling.com/blog.xml" :tag "linux")

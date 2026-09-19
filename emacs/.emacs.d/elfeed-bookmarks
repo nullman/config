@@ -22,6 +22,7 @@
  ;;(:name "Planet Gnome" :html "https://planet.gnome.org/" :rss "https://feeds.feedburner.com/codinghorror?format=xml" :tag "linux")
  (:name "Linux Foundation" :html "https://www.linuxfoundation.org/" :rss "https://www.linuxfoundation.org/feed/" :tag "linux")
  (:name "Linux Magazine" :html "https://www.linux-magazine.com/" :rss "https://www.linux-magazine.com/rss/feed/lmi_news" :tag "linux")
+ (:name "Raspberry Pi News" :html "https://www.raspberrypi.com/news/" :rss "https://www.raspberrypi.com/news/feed/" :tag "linux")
  (:name "Open Source Voices" :html "https://www.opensourcevoices.org/" :rss "https://feeds.fireside.fm/opensourcevoices/rss" :tag "linux")
  (:name "Luke Smith" :html "https://lukesmith.xyz/" :rss "https://lukesmith.xyz/rss.xml" :tag "linux")
  (:name "Jeff Geerling" :html "https://www.jeffgeerling.com/" :rss "https://www.jeffgeerling.com/blog.xml" :tag "linux")

@@ -13340,14 +13340,13 @@ it is longer."
 (defun define-word (&optional word)
   "Return definition of WORD and put it on the `kill-ring'."
   (interactive "MWord: ")
-  (let ((def (with-temp-buffer
-               (call-process "trans" nil t nil "-no-ansi" (shell-quote-argument word))
-               (goto-char (point-min))
-               (when (re-search-forward "^Examples" nil :noerror)
-                 (delete-region (1- (line-beginning-position)) (point-max)))
-               (buffer-string))))
-    (kill-new def)
-    (message "%s" def)))
+  (let ((buf (help-buffer)))
+  (with-output-to-temp-buffer buf
+    (call-process "trans" nil buf nil "-no-ansi"
+                  (shell-quote-argument word)))
+  (save-excursion
+    (set-buffer buf)
+    (visual-line-mode 1))))
 
 (defun define-word-after-spell-check (word)
   "Define WORD after spell checking.
