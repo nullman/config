@@ -1635,6 +1635,7 @@ fedora-initialize() {
         "fedora-fonts"
         "fedora-dark-mode"
         "fedora-synology-mounts"
+        "fedora-user-services"
         "fedora-printer"
         "fedora-rpmfusion"
         "fedora-niri"
