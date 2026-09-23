@@ -1,11 +1,11 @@
-;;; any-ini-mode.el --- keyword highlighting for .ini files etc based on a 'source of truth'
+;;; any-ini-mode.el --- keyword highlighting for .ini files etc based on a 'source of truth'  -*- lexical-binding: t; -*-
 
 ;;; Copyright (C) 2002, 2003 Robert Fitzgerald <robert.fitzgerald@t-online.de>
 
 ;;; Author: Robert Fitzgerald <robert.fitzgerald@t-online.de>
 ;;; Created: Mar 2003
 ;;; Version: 1.0.4
-;;; Keywords: convenience 
+;;; Keywords: convenience
 
 ;;; This file is not part of GNU Emacs.
 
@@ -25,24 +25,24 @@
 ;;; Boston, MA 02111-1307, USA.
 
 ;;; Commentary:
- 
-;;; When a file is visted in <any>.ini mode the _valid_ section and parameter names
-;;; are highlighted as keywords, the comments are highlighted as comments and everything 
-;;; else is displayed in your normal font. 
 
-;;; The list of valid section and parameter names is built dynamically, based on a 
+;;; When a file is visted in <any>.ini mode the _valid_ section and parameter names
+;;; are highlighted as keywords, the comments are highlighted as comments and everything
+;;; else is displayed in your normal font.
+
+;;; The list of valid section and parameter names is built dynamically, based on a
 ;;; canonical file ('source of truth') that contains all valid options.
 
-;;; In this way, you can easily spot a mis-typed name when you're editting your files, 
+;;; In this way, you can easily spot a mis-typed name when you're editting your files,
 ;;; rather than having to wait for your application to misbehave.
 
 ;;; It's also useful if, like me, you have users who can't spell 'log_file_path' or
 ;;; colleagues who insist on creating parameters called 'defaulttofirstbackupdirectory'.
- 
+
 ;;; You may also define, among other things, a valid comment character and a
 ;;; valid assignment charcter.
 
-;;; Collectively, the definition of a canonical file and a comment character etc 
+;;; Collectively, the definition of a canonical file and a comment character etc
 ;;; define a 'style' of .ini file.
 ;;;
 ;;; You may set up a default style for all <any>.ini mode buffers, or, more usefully,
@@ -54,7 +54,7 @@
 ;;; `imenu-generic-expression' is set up for each buffer to find the section names
 ;;; and, by default, a menu of section names is automatically added to the menubar.
 ;;;
-;;; If you setup `speedbar' correctly, this means that you can also navigate the 
+;;; If you setup `speedbar' correctly, this means that you can also navigate the
 ;;; sections with `speedbar'.
 ;;;
 ;;; See the `any-ini-imenu' customization group and the documentation for `imenu'
@@ -66,7 +66,7 @@
 ;;; Customization is via the `any-ini' group in the `local' customization section.
 
 ;;;
-;;; To load any-ini-mode on startup, copy this file to your load-path and add this to 
+;;; To load any-ini-mode on startup, copy this file to your load-path and add this to
 ;;; your .emacs file -
 ;;;
 ;;;    (require 'any-ini-mode)
@@ -83,7 +83,7 @@
 ;;; You deal with three applications - larry, mo and curly.
 ;;; Each requires a config file - larry.conf, mo.ini and .curlyrc - and none of the parameter
 ;;; names that are valid in a mo.ini file are valid in a larry.conf or a .curlyrc, etc. etc.
-;;; 
+;;;
 ;;; No problem.
 ;;;
 ;;; First, create a canonical config file for each app (the names of these files are unimportant).
@@ -109,14 +109,14 @@
 ;;; |                                                                                    |
 ;;; --------------------------------------------------------------------------------------
 ;;;
-;;; Next, create 3 styles (call them larry.conf, mo.ini and .curlyrc) in `any-ini-styles-alist' 
+;;; Next, create 3 styles (call them larry.conf, mo.ini and .curlyrc) in `any-ini-styles-alist'
 ;;; and set the canonical file for each type.  You can also specify, for example, that a mo.ini
-;;; uses `<' and `>' to bracket section names and that a .curlyrc uses `:' as its assignment 
+;;; uses `<' and `>' to bracket section names and that a .curlyrc uses `:' as its assignment
 ;;; character.
 ;;;
 ;;; Finally, add this to your .emacs file -
-;;; 
-;;;    (require 'any-ini-mode) 
+;;;
+;;;    (require 'any-ini-mode)
 ;;;    (add-to-list 'auto-mode-alist '(".*\\.ini$" . any-ini-mode))
 ;;;    (add-to-list 'auto-mode-alist '(".*\\.conf$" . any-ini-mode))
 ;;;    (add-to-list 'auto-mode-alist '("\\.curlyrc" . any-ini-mode))
@@ -142,7 +142,7 @@
 ;;; Changes from 1.0.0 to 1.0.1:
 
 ;;; * Use new `any-ini-regexp-opt' function in place of standard `regexp-opt' function.
-;;;   Necessary because of occasional memory problems with `regexp-opt' during parsing 
+;;;   Necessary because of occasional memory problems with `regexp-opt' during parsing
 ;;;   of very large (1500+ lines) files.
 
 ;;; Customization:
@@ -206,7 +206,7 @@ used to disregard comments."
   :group 'any-ini
   :type '(repeat (list :tag "Canonical files" :value ("~/.any.ini.canon" nil)
 		       (file  :tag "Filename")
-		       (choice :tag "Type" 
+		       (choice :tag "Type"
 			       (const :tag "Canonical file" nil)
 			       (const :tag "List of section names" 1)
 			       (const :tag "List of parameter names" 2)))))
@@ -268,7 +268,7 @@ This regexp should describe the characters that make up a valid
 section _name_ only (eg. MY_SECTION-22 ). The mode itself will
 take care of handling any surrounding brackets.
 
-See `any-ini-section-start-chars' and `any-ini-section-end-chars' for 
+See `any-ini-section-start-chars' and `any-ini-section-end-chars' for
 the definition of the bracketting characters.
 
 Default value is \"[-_A-Za-z0-9]+\"."
@@ -280,20 +280,20 @@ Default value is \"[-_A-Za-z0-9]+\"."
 
 NB - No attempt is made to pair-up the characters that start and end a
 section heading.  It's assumed that a section heading that is begun
-by a valid starting character may be ended by _any_ valid ending character. 
+by a valid starting character may be ended by _any_ valid ending character.
 
 Default value is `['.
 
 See also `any-ini-section-end-chars'."
   :group 'any-ini
   :type '(repeat :tag "Section start chars" (character :value ?\[ :tag "Char")))
- 
+
 (defcustom any-ini-section-end-chars '( ?\] )
   "Characters that may end a section heading.
 
 NB - No attempt is made to pair-up the characters that start and end a
 section heading.  It's assumed that a section heading that is begun
-by a valid starting character may be ended by _any_ valid ending character. 
+by a valid starting character may be ended by _any_ valid ending character.
 
 Default value is `]'.
 
@@ -325,7 +325,7 @@ SECT_ENDERS: See the documentation for `any-ini-section-end-chars'."
 	  (string :tag "Style name" :value "new.ini")
 	  (repeat :tag "Canonical files" (list :value ("~/.new.ini.canon" nil)
 			(file  :tag "Filename")
-			(choice :tag "Type" 
+			(choice :tag "Type"
 				(const :tag "Canonical file" nil)
 				(const :tag "List of section names" 1)
 				(const :tag "List of parameter names" 2))))
@@ -397,7 +397,7 @@ any-ini-errorcheck-mode.")
   "Keyword highlighting style to apply to a file.
 
 This variable should be set by `any-ini-set-my-style'.
-Setting it directly won't have the desired effect. 
+Setting it directly won't have the desired effect.
 
 When `any-ini-style' is nil, the default style is applied.
 See also `any-ini-set-my-style' and `any-ini-styles-alist'.
@@ -428,25 +428,25 @@ current buffer.
 If MYSTYLEOVERRIDE is `nil', the name of the currently-visited file will
 be taken as the required style name and will be searched for in `any-ini-styles-alist'.
 
-If a matching style is not found for MYSTYLEOVERRIDE or the filename, the 
+If a matching style is not found for MYSTYLEOVERRIDE or the filename, the
 default style will be applied.
 
-If this function is called with a prefix argument and MYSTYLEOVERRIDE is `nil', 
+If this function is called with a prefix argument and MYSTYLEOVERRIDE is `nil',
 the default style will be applied, regardless of name of the visited file.
 
 The default style is the style described by the global values of -
 
-`any-ini-canonical-ini-files', 
-`any-ini-comment-start-chars', 
+`any-ini-canonical-ini-files',
+`any-ini-comment-start-chars',
 `any-ini-param-name-regexp'
-`any-ini-assignment-chars', 
-`any-ini-section-name-regexp', 
+`any-ini-assignment-chars',
+`any-ini-section-name-regexp',
 `any-ini-section-start-chars'
 `any-ini-section-end-chars'
 "
   (interactive
    (if any-ini-styles-alist
-       (list 
+       (list
 	(completing-read "Apply any-ini-style :" any-ini-styles-alist nil t))
      (message "any-ini-mode : No styles defined.")
      nil))
@@ -481,7 +481,7 @@ parsed in this Emacs session."
   (let (mystylealist nofontlocksyet)
     (if any-ini-style
 	(setq mystylealist (assoc any-ini-style any-ini-styles-alist)))
-    (cond ((not mystylealist) 
+    (cond ((not mystylealist)
 	   (kill-local-variable 'any-ini-font-lock-keywords)
 	   (kill-local-variable 'any-ini-canonical-ini-files)
 	   (kill-local-variable 'any-ini-comment-start-chars)
@@ -504,7 +504,7 @@ parsed in this Emacs session."
 	   (if re-read-canons
 	       ()
 	     (let ((mysavedfontlock (get 'any-ini-styles-alist any-ini-style)))
-	       (if mysavedfontlock 
+	       (if mysavedfontlock
 		   (setq any-ini-font-lock-keywords mysavedfontlock)
 		 (setq nofontlocksyet t))))
 	   (setq any-ini-canonical-ini-files (nth 1 mystylealist))
@@ -522,10 +522,10 @@ parsed in this Emacs session."
 	(setq comment-start (string (nth 0 any-ini-comment-start-chars)))
       (setq comment-start "#"))
     (make-local-variable 'comment-end)
-    (setq comment-end "")    
-    (setq mode-name (concat "<any>" (if (not any-ini-style) 
-					".ini" 
-				      (concat " " any-ini-style)) 
+    (setq comment-end "")
+    (setq mode-name (concat "<any>" (if (not any-ini-style)
+					".ini"
+				      (concat " " any-ini-style))
 			    " file"))
     (when (or nofontlocksyet re-read-canons)
       (put 'any-ini-styles-alist any-ini-style any-ini-font-lock-keywords))))
@@ -533,14 +533,14 @@ parsed in this Emacs session."
 (defvar any-ini-local-syntax-table nil
   "Syntax table used while in <any>.ini mode.
 
-Spaces and tabs are defined as whitespace, linefeeds and formfeeds are defined 
+Spaces and tabs are defined as whitespace, linefeeds and formfeeds are defined
 as comment-ending characters and the defined `any-ini-comment-start-chars' are
 defined as comment-starting characters.")
 
 (defun any-ini-setup-local-syntax-table ()
   "Setup local syntax table based on settings for `any-ini-comment-start-chars'.
 
-Spaces and tabs are defined as whitespace, linefeeds and formfeeds are defined 
+Spaces and tabs are defined as whitespace, linefeeds and formfeeds are defined
 as comment-ending characters and the defined `any-ini-comment-start-chars' are
 defined as comment-starting characters.
 
@@ -617,8 +617,8 @@ for each style, the first time the style is activated in a session."
       ()
     (setq any-ini-font-lock-keywords nil)
     (dolist (mykeyfile any-ini-canonical-ini-files)
-      (setq any-ini-font-lock-keywords 
-	    (append 
+      (setq any-ini-font-lock-keywords
+	    (append
 	     (any-ini-append-keys-from mykeyfile (list nil
 						       nil
 						       any-ini-comment-start-chars
@@ -627,15 +627,15 @@ for each style, the first time the style is activated in a session."
 						       any-ini-section-name-regexp
 						       any-ini-section-start-chars
 						       any-ini-section-end-chars)
-				       ) 
+				       )
 	     any-ini-font-lock-keywords)))
     (setq any-ini-font-lock-keywords
-	  (append (list (cons 
-			 (concat "\\^.*\\([" 
-				 (if any-ini-comment-start-chars 
+	  (append (list (cons
+			 (concat "\\^.*\\(["
+				 (if any-ini-comment-start-chars
 				     any-ini-comment-start-chars
 				  (string ?\#) )
-				 "].*$\\)") 
+				 "].*$\\)")
 			 (list 2 'font-lock-comment-face nil nil))
 			)
 		  any-ini-font-lock-keywords )))
@@ -647,7 +647,7 @@ in `any-ini-font-lock-keywords'."
   (let (mykeyfile myfiletype myparselist isinifile my-font-lock-keywords)
     (setq mykeyfile (nth 0 kfile))
     (setq myfiletype (nth 1 kfile))
-    (cond 
+    (cond
      ( (eq myfiletype 1) (setq myparselist '(t)))       ;; Sections list
      ( (eq myfiletype 2) (setq myparselist '(nil)))     ;; Params list
      ( t (setq isinifile t)             ;; .ini file, parse twice
@@ -655,8 +655,8 @@ in `any-ini-font-lock-keywords'."
      )
     (when (file-exists-p mykeyfile)
       (save-current-buffer
-	(let (mykeywordslist 
-	      mykeyword 
+	(let (mykeywordslist
+	      mykeyword
 	      font
 	      (my-any-ini-comment-start-chars (nth 2 mystylealist))
 	      (my-any-ini-param-name-regexp (nth 3 mystylealist))
@@ -671,15 +671,15 @@ in `any-ini-font-lock-keywords'."
 	    (condition-case e
 		(while t
 		  (cond ((and isinifile sectionfile)
-			 (re-search-forward 
+			 (re-search-forward
 			  (concat "\\(^[ \t]*\\)"
-				  "\\([" 
-				  (if my-any-ini-section-start-chars 
-				      my-any-ini-section-start-chars 
-				      (string ?\[)) 
+				  "\\(["
+				  (if my-any-ini-section-start-chars
+				      my-any-ini-section-start-chars
+				      (string ?\[))
 				  "]\\)"
-				  "\\(" 
-				  (if my-any-ini-section-name-regexp 
+				  "\\("
+				  (if my-any-ini-section-name-regexp
 				      my-any-ini-section-name-regexp
 				    "[-_A-Za-z0-9]+")
 				  "\\)"
@@ -693,7 +693,7 @@ in `any-ini-font-lock-keywords'."
 			  )
 			 (setq mykeyword (match-string 3)))
 			((and isinifile (not sectionfile))
-			 (re-search-forward 
+			 (re-search-forward
 			  (concat "\\(^[ \t]*\\)\\("
 				  (if my-any-ini-param-name-regexp
 				      my-any-ini-param-name-regexp
@@ -708,7 +708,7 @@ in `any-ini-font-lock-keywords'."
 			  )
 			 (setq mykeyword (match-string 2)))
 			(sectionfile
-			 (re-search-forward 
+			 (re-search-forward
 			  (concat "\\(^[ \t]*\\)\\("
 				  (if my-any-ini-section-name-regexp
 				      my-any-ini-section-name-regexp
@@ -717,7 +717,7 @@ in `any-ini-font-lock-keywords'."
 			  )
 			 (setq mykeyword (match-string 2)))
 			((not sectionfile)
-			 (re-search-forward 
+			 (re-search-forward
 			  (concat "\\(^[ \t]*\\)\\("
 				  (if my-any-ini-param-name-regexp
 				      my-any-ini-param-name-regexp
@@ -729,20 +729,20 @@ in `any-ini-font-lock-keywords'."
 		    (setq mykeywordslist (append (list mykeyword) mykeywordslist))))
 	      (search-failed))
 	    (setq my-font-lock-keywords
-		  (append (list 
-			   (cons 
-			    (any-ini-keywords-regexp mykeywordslist sectionfile mystylealist) 
+		  (append (list
+			   (cons
+			    (any-ini-keywords-regexp mykeywordslist sectionfile mystylealist)
 			    (if sectionfile
-				(list 
+				(list
 				 (list 1 'any-ini-section-chars-face nil nil)
 				 (list 2 'any-ini-section-face nil nil)
 				 (list 3 'any-ini-section-chars-face nil nil)
 				 )
-			    (list (list 2 'any-ini-param-face nil nil) 
+			    (list (list 2 'any-ini-param-face nil nil)
 				  (list 4 'any-ini-assigner-face nil nil)
 				  (list 6 'any-ini-value-face nil nil)
 				  (list 7 'font-lock-comment-face nil nil)
-				  ))			    
+				  ))
 			    )
 			   )
 			  my-font-lock-keywords )))
@@ -766,9 +766,9 @@ is wrapped in parentheses to ensure that the keyword part of the regexp is alway
 		(if my-any-ini-section-start-chars
 		    my-any-ini-section-start-chars
 		  (string ?\[))
-		"]\\)" 
-		(any-ini-regexp-opt keywords t) 
-		"\\([" 
+		"]\\)"
+		(any-ini-regexp-opt keywords t)
+		"\\(["
 		(if my-any-ini-section-end-chars
 		    my-any-ini-section-end-chars
 		  (string ?\]))
@@ -780,10 +780,10 @@ is wrapped in parentheses to ensure that the keyword part of the regexp is alway
 		"].*$\\)"
 		)
       (concat "\\(^[ \t]*\\)"
-	      (any-ini-regexp-opt keywords t) 
+	      (any-ini-regexp-opt keywords t)
 	      "\\([ \t]*\\)"
-	      "\\([" 
-	      (if my-any-ini-assignment-chars 
+	      "\\(["
+	      (if my-any-ini-assignment-chars
 		  my-any-ini-assignment-chars
 		(string ?\=))
 	      "]\\)"
@@ -803,7 +803,7 @@ is wrapped in parentheses to ensure that the keyword part of the regexp is alway
 (defun any-ini-regexp-opt (strings paren)
   "Replacement for standard `regexp-opt' function.
 
-This replacement is necessary since the standard function can occasionally cause a memory 
+This replacement is necessary since the standard function can occasionally cause a memory
 error when setting a file's mode from the auto-mode-alist functionality.
 
 Error was \"Variable binding depth exceeds max-specpdl-size\" and happened only with
@@ -818,10 +818,10 @@ large (1500+ lines) canonical files."
   "*Temorarily set fonts in this buffer to highlight spelling errors more clearly.
 
 Resets the comment face and param-related faces in this buffer to `font-lock-string-face'.
-The idea is that this will make it easier to spot errors in a large or heavily-commented 
+The idea is that this will make it easier to spot errors in a large or heavily-commented
 file, as they should show up in `default' face against a relatively neutral background.
 
-The fonts affected are - 
+The fonts affected are -
 
 `font-lock-comment-face'
 `any-ini-param-face'
@@ -858,9 +858,9 @@ The fonts affected are -
   "Setup and display an `imenu' menu of section names for current buffer.
 
 Sets up `imenu-generic-expression' \(see Info Node `(emacs)Imenu'\)
-based on current settings of 
+based on current settings of
 
-`any-ini-section-name-regexp', 
+`any-ini-section-name-regexp',
 `any-ini-section-start-chars',
 `any-ini-section-end-chars'
 
@@ -872,15 +872,15 @@ See Info Node `(emacs)Imenu' for more details."
   (make-local-variable 'imenu-generic-expression)
   (setq imenu-generic-expression
 	(list
-	 (list nil  
+	 (list nil
 	       (concat "\\(^[ \t]*\\)"
-		       "\\([" 
-		       (if any-ini-section-start-chars 
-			   any-ini-section-start-chars 
-			 (string ?\[)) 
+		       "\\(["
+		       (if any-ini-section-start-chars
+			   any-ini-section-start-chars
+			 (string ?\[))
 		       "]\\)"
-		       "\\(" 
-		       (if any-ini-section-name-regexp 
+		       "\\("
+		       (if any-ini-section-name-regexp
 			   any-ini-section-name-regexp
 			 "[-_A-Za-z0-9]+")
 		       "\\)"
@@ -926,4 +926,3 @@ Turning on <any>.ini mode runs the normal hook `any-ini-mode-hook'."
 (provide 'any-ini-mode)
 
 ;;; any-ini-mode.el ends here
-
