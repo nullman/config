@@ -30,8 +30,6 @@ arch = {
     "mupdf-tools",
     "papers",
     "qmmp",
-    "remmina",
-    "remmina-plugin-rdesktop",
     "rpi-imager",
     "scrcpy",
     "sox",

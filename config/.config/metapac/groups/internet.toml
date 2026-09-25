@@ -14,6 +14,9 @@ arch = {
     "opensnitch",
     "quassel-client",
     "quassel-core",
+    "rdesktop",
+    "remmina",
+    "remmina-plugin-rdesktop",
     "slack-desktop",
     "surfraw",
     "syncterm-git",
@@ -22,6 +25,7 @@ arch = {
     "tor-browser-bin",
     "transmission-gtk",
     "tuba",
+    "libgssglue",
   ]
 }
 
