@@ -364,6 +364,10 @@ super + shift + r
 #     xrandr --output $(xrandr | grep ' connected ' | sed 's/ .*//' | head -n 1) --auto && \
 #     notify-send --expire-time=3000 'Resetting video'
 
+# request new tor circuit in sys-whonix
+super + shift + t
+    qvm-run sys-whonix "tor-ctrl signal NEWNYM && notify-send --expire-time=3000 'Requesting new tor circuit'"
+
 # set X11 caps-lock, insert key, keyboard, and mouse speed: dom0
 super + shift + backslash
     (${HOME}/bin/set-x11-settings) && notify-send --expire-time=3000 'X11 settings applied'
