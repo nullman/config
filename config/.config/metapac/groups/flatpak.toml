@@ -13,6 +13,7 @@ flatpak = {
     { name = "system:com.visualstudio.code", options = { remote = "flathub" } },
     { name = "system:im.riot.Riot", options = { remote = "flathub" } },
     { name = "system:io.gitlab.adhami3310.Impression", options = { remote = "flathub" } },
+    { name = "system:it.mijorus.gearlever", options = { remote = "flathub" } },
     { name = "system:org.torproject.torbrowser-launcher", options = { remote = "flathub" } },
     { name = "system:us.zoom.Zoom", options = { remote = "flathub" } },
   ]
