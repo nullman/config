@@ -1,5 +1,6 @@
 arch = {
   packages = [
+    "3270-fonts",
     "noto-fonts",
     "noto-fonts-emoji",
     "ttf-bitstream-vera",
@@ -23,6 +24,7 @@ dnf = {
     "copr.fedorainfracloud.org/skidnik/clipmenu",
   ], 
   packages = [
+    "rbanffy-3270-fonts",
     "bitstream-vera-fonts-all",
     "dejavu-fonts-all",
     "google-noto-fonts-all",
