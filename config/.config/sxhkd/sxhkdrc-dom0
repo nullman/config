@@ -159,11 +159,11 @@ super + Insert
 
 # mpc control
 super + Delete
-    qvm-run personal "mpc prev" && notify-send --app-name="mpd" --expire-time=5000 $([ "${XDG_SESSION_TYPE}" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
+    qvm-run personal "mpc prev && notify-send --app-name=\"mpd\" --expire-time=5000 \$([ \"\${XDG_SESSION_TYPE}\" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg \"\$(\${HOME}/bin/mpd-playing --notify-title)\" \"\$(\${HOME}/bin/mpd-playing --notify-body)\""
 super + End
-    qvm-run personal "mpc toggle" && notify-send --app-name="mpd" --expire-time=5000 $([ "${XDG_SESSION_TYPE}" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
+    qvm-run personal "mpc toggle && notify-send --app-name=\"mpd\" --expire-time=5000 \$([ \"\${XDG_SESSION_TYPE}\" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg \"\$(\${HOME}/bin/mpd-playing --notify-title)\" \"\$(\${HOME}/bin/mpd-playing --notify-body)\""
 super + Next
-    qvm-run personal "mpc next" && notify-send --app-name="mpd" --expire-time=5000 $([ "${XDG_SESSION_TYPE}" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
+    qvm-run personal "mpc next && notify-send --app-name=\"mpd\" --expire-time=5000 \$([ \"\${XDG_SESSION_TYPE}\" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/Adwaita/scalable/mimetypes/audio-x-generic.svg \"\$(\${HOME}/bin/mpd-playing --notify-title)\" \"\$(\${HOME}/bin/mpd-playing --notify-body)\""
 
 #-------------------------------------------------------------------------------
 # Media Key Alternatives

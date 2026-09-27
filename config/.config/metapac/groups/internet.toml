@@ -3,7 +3,6 @@ arch = {
     "brave-origin-bin",
     "copyparty",
     "dino",
-    "discord",
     "element-desktop",
     "filezilla",
     "firefox",
@@ -25,6 +24,7 @@ arch = {
     "tor-browser-bin",
     "transmission-gtk",
     "tuba",
+    "vesktop",
     "libgssglue",
   ]
 }
@@ -55,6 +55,7 @@ dnf = {
     "thunderbird",
     "transmission-gtk",
     "tuba",
+    "vesktop",
     "vdhcoapp",
   ]
 }
