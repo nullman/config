@@ -13,9 +13,9 @@
 # make capslock act like control; make both shift keys toggle capslock
 setxkbmap -option 'shift:both_capslock,caps:ctrl_modifier'
 
-# disable insert key
-# xkbcomp ${DISPLAY} - | sed 's/ Insert / NoSymbol /' | xkbcomp - ${DISPLAY}
-xmodmap -e 'keycode 118 ='
+# # disable insert key
+# #xkbcomp ${DISPLAY} - | sed 's/ Insert / NoSymbol /' | xkbcomp - ${DISPLAY}
+# xmodmap -e 'keycode 118 ='
 
 # set mouse speed and keyboard rate
 xset -dpms s off b off m 2/1 4 r rate 500 35
