@@ -60,10 +60,10 @@ dnf = {
     "waybar",
     "wayland-utils",
     "wev",
-    "wmenu",
-    "wtype",
     "wl-clipboard",
+    "wmenu",
     "wofi",
+    "wtype",
   ]
 }
 

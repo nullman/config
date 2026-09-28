@@ -33,10 +33,11 @@ dnf = {
     "xclip",
     "xdotool",
     "xev",
-    "xorg-x11-server",
     "xorg-x11-server-Xephyr",
+    "xorg-x11-server-Xorg",
     "xrandr",
     "xsel",
+    "xorg-x11-server-common",
   ]
 }
 

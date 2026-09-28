@@ -222,6 +222,8 @@ dnf = {
     "openssh-clients",
     "openssh-server",
     "openssl",
+    "orpie",
+    "pamixer",
     "parted",
     "pipewire-alsa",
     "pipewire-config-raop",

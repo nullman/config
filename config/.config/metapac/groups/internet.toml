@@ -56,8 +56,8 @@ dnf = {
     "thunderbird",
     "transmission-gtk",
     "tuba",
-    "vesktop",
     "vdhcoapp",
+    "vesktop",
     "x3270",
   ]
 }

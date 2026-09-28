@@ -18447,14 +18447,16 @@ by scraping the azlyrics.com site."
            ;;(user-agent "Mozilla/4.0 (MSIE 6.0; Windows NT 5.0)")
            ;;(user-agent "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0; WOW64; Trident/4.0; SLCC1)")
            (user-agent "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36")
-           (referer "http://www.google.com/")
+           (referer "https://www.google.com/")
            (search-file (shell-command-to-string "echo -n /tmp/mingus-search-$$.html"))
            (lyrics-file (shell-command-to-string "echo -n /tmp/mingus-lyrics-$$.html"))
            (parsed-title
-            (replace-regexp-in-string ending-spaces-regexp ""
-                                      (replace-regexp-in-string starting-spaces-regexp ""
-                                                                (replace-regexp-in-string bracket-regexp "" title))))
-           (query (concat "http://www.google.com/search?q="
+            (replace-regexp-in-string
+             ending-spaces-regexp ""
+             (replace-regexp-in-string
+              starting-spaces-regexp ""
+              (replace-regexp-in-string bracket-regexp "" title))))
+           (query (concat "https://www.google.com/search?q="
                           "lyrics "
                           (if artist (concat "\"" artist "\" ") "")
                           "\"" parsed-title "\" "
@@ -18463,81 +18465,86 @@ by scraping the azlyrics.com site."
            url
            lyrics
            error)
-      ;; TODO: make this call asynchronous (using `start-process')
-      (call-process "wget" nil nil nil
-                    "--no-verbose"
-                    "--convert-links"
-                    (concat "--user-agent=" user-agent)
-                    (concat "--referer=" referer)
-                    "-O" search-file
-                    query)
-      (message "Query: %s" query)
-      (message "Command: wget --no-verbose --convert-links --user-agent=\"%s\" --referer=\"%s\" -O \"%s\" \"%s\"" user-agent referer search-file query)
-      (with-temp-buffer
-        (buffer-disable-undo)
-        (condition-case err
-            (progn
-              (insert-file-contents search-file)
-              (goto-char (point-min))
-              (re-search-forward (concat "https://www." site "[^\"]*"))
-              (setq url (match-string-no-properties 0)))
-          ('error
-           (message "Error trying to find lyrics url: %s" err)
-           (setq error t))))
-      (if (and error artist)
-          ;; on error, try again without artist
-          (mingus-get-lyrics-azlyrics nil title)
-        (progn
-          ;; no error, so continue
-          (call-process "wget" nil nil nil
-                        "--no-verbose"
-                        "--convert-links"
-                        (concat "--user-agent=" user-agent)
-                        (concat "--referer=" referer)
-                        "-O" lyrics-file
-                        url)
-          (with-temp-buffer
-            (buffer-disable-undo)
-            (condition-case err
-                (progn
-                  (insert-file-contents lyrics-file)
-                  ;; clean up response
-                  (fundamental-mode)
-                  (goto-char (point-min))
-                  (when (re-search-forward start-regexp nil :noerror)
-                    (forward-line 0)
-                    (forward-line 1)
-                    (let ((pos (point)))
-                      (forward-line -3)
-                      (delete-region (point) pos))
-                    (forward-line -2)
-                    (delete-region (point-min) (point)))
-                  (when (re-search-forward end-regexp nil :noerror)
-                    (delete-region (line-beginning-position) (point-max)))
-                  (goto-char (point-min))
-                  (while (re-search-forward ret-regexp nil :noerror)
-                    (replace-match ""))
-                  (goto-char (point-min))
-                  (while (re-search-forward feat-regexp nil :noerror)
-                    (replace-match "\\1"))
-                  (shr-render-region (point-min) (point-max))
-                  (goto-char (point-max))
-                  (delete-blank-lines)
-                  (goto-char (point-min))
-                  (insert (upcase artist) ": " (upcase title))
-                  (newline)
-                  (newline)
-                  (setq lyrics (buffer-substring-no-properties (point-min) (point-max))))
-              ('error
-               (message "Error trying to format lyrics result: %s" err)))
-            lyrics)))))
+      (unwind-protect
+          (progn
+            ;; TODO: make this call asynchronous (using `start-process')
+            (call-process "wget" nil nil nil
+                          "--no-verbose"
+                          "--convert-links"
+                          (concat "--user-agent=" user-agent)
+                          (concat "--referer=" referer)
+                          "-O" search-file
+                          query)
+            (message "Query: %s" query)
+            (message "Command: wget --no-verbose --convert-links --user-agent=\"%s\" --referer=\"%s\" -O \"%s\" \"%s\""
+                     user-agent referer search-file query)
+            (with-temp-buffer
+              (buffer-disable-undo)
+              (condition-case err
+                  (progn
+                    (insert-file-contents search-file)
+                    (goto-char (point-min))
+                    (re-search-forward (concat "https://www." site "[^<]*"))
+                    (setq url (match-string-no-properties 0)))
+                ('error
+                 (message "Error trying to find lyrics url: %s" err)
+                 (setq error t))))
+            (if (and error artist)
+                ;; on error, try again without artist
+                (mingus-get-lyrics-azlyrics nil title)
+              (progn
+                ;; no error, so continue
+                (call-process "wget" nil nil nil
+                              "--no-verbose"
+                              "--convert-links"
+                              (concat "--user-agent=" user-agent)
+                              (concat "--referer=" referer)
+                              "-O" lyrics-file
+                              url)
+                (with-temp-buffer
+                  (buffer-disable-undo)
+                  (condition-case err
+                      (progn
+                        (insert-file-contents lyrics-file)
+                        ;; clean up response
+                        (fundamental-mode)
+                        (goto-char (point-min))
+                        (when (re-search-forward start-regexp nil :noerror)
+                          (forward-line 0)
+                          (forward-line 1)
+                          (let ((pos (point)))
+                            (forward-line -3)
+                            (delete-region (point) pos))
+                          (forward-line -2)
+                          (delete-region (point-min) (point)))
+                        (when (re-search-forward end-regexp nil :noerror)
+                          (delete-region (line-beginning-position) (point-max)))
+                        (goto-char (point-min))
+                        (while (re-search-forward ret-regexp nil :noerror)
+                          (replace-match ""))
+                        (goto-char (point-min))
+                        (while (re-search-forward feat-regexp nil :noerror)
+                          (replace-match "\\1"))
+                        (shr-render-region (point-min) (point-max))
+                        (goto-char (point-max))
+                        (delete-blank-lines)
+                        (goto-char (point-min))
+                        (insert (upcase artist) ": " (upcase title))
+                        (newline)
+                        (newline)
+                        (setq lyrics (buffer-substring-no-properties (point-min) (point-max))))
+                    ('error
+                     (message "Error trying to format lyrics result: %s" err)))
+                  lyrics))))
+        (delete-file search-file)
+        (delete-file lyrics-file))))
 
   ;; this site seems to be no longer working (2010-04-06)
   (defun mingus-get-lyrics-leoslyrics (artist title)
     "Return the lyrics for a song matching ARTIST and TITLE
 using the api.leoslyrics.com site."
     (interactive)
-    (let ((query (concat "wget -q \"http://api.leoslyrics.com/api_search.php?auth=emacs"
+    (let ((query (concat "wget -q \"https://api.leoslyrics.com/api_search.php?auth=emacs"
                          (if artist (concat "&artist=" (url-hexify-string artist)) "")
                          "&songtitle=" (url-hexify-string title)
                          "\" -O - | xmlstarlet sel -t -v \"/leoslyrics/searchResults/result/@hid\"")))
@@ -18545,7 +18552,7 @@ using the api.leoslyrics.com site."
       (let ((hid (shell-command-to-string query)))
         (when hid
           ;;(message "hid: %s" (url-hexify-string hid))
-          (let ((query (concat "wget -q \"http://api.leoslyrics.com/api_lyrics.php?auth=emacs&hid="
+          (let ((query (concat "wget -q \"https://api.leoslyrics.com/api_lyrics.php?auth=emacs&hid="
                                (url-hexify-string hid)
                                "\" -O - | xmlstarlet sel -t -v \"/leoslyrics/lyric/text/text()\""
                                " | xmlstarlet unesc | tr -d '\r'")))
@@ -18567,61 +18574,65 @@ by scraping the metrolyrics.com site."
            ;;(user-agent "Mozilla/4.0 (MSIE 6.0; Windows NT 5.0)")
            ;;(user-agent "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0; WOW64; Trident/4.0; SLCC1)")
            (user-agent "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36")
-           (referer "http://www.google.com/")
+           (referer "https://www.google.com/")
            (file (shell-command-to-string "echo -n /tmp/mingus-lyrics-$$.html"))
            (parsed-title
             (replace-regexp-in-string ending-spaces-regexp ""
                                       (replace-regexp-in-string starting-spaces-regexp ""
                                                                 (replace-regexp-in-string bracket-regexp "" title))))
-           (query (concat "http://www.google.com/search?q="
+           (query (concat "https://www.google.com/search?q="
                           "lyrics "
                           (if artist "\"" artist "\" " "")
                           "\"" parsed-title "\" "
                           "site:" site
                           "&btnI=Search"))
            (lyrics))
-      ;; TODO: make this call asynchronous (using `start-process')
-      (call-process "wget" nil nil nil
-                    "--no-verbose"
-                    "--convert-links"
-                    (concat "--user-agent=" user-agent)
-                    (concat "--referer=" referer)
-                    "-O" file
-                    query)
-      (message "Query: %s" query)
-      (message "Command: wget --no-verbose --convert-links --user-agent=\"%s\" --referer=\"%s\" -O \"%s\" \"%s\"" user-agent referer file query)
-      (with-temp-buffer
-        (buffer-disable-undo)
-        (condition-case err
-            (progn
-              (insert-file-contents file)
-              ;; clean up response
-              (fundamental-mode)
-              (goto-char (point-min))
-              (when (re-search-forward start-regexp nil :noerror)
-                (forward-line 0)
-                (forward-line 1)
-                (let ((pos (point)))
-                  (forward-line -3)
-                  (delete-region (point) pos))
-                (forward-line -2)
-                (delete-region (point-min) (point)))
-              (when (re-search-forward end-regexp nil :noerror)
-                (delete-region (line-beginning-position) (point-max)))
-              (goto-char (point-min))
-              (while (re-search-forward ret-regexp nil :noerror)
-                (replace-match ""))
-              (shr-render-region (point-min) (point-max))
-              (goto-char (point-max))
-              (delete-blank-lines)
-              (goto-char (point-min))
-              (insert (upcase artist) ": " (upcase title))
-              (newline)
-              (newline)
-              (setq lyrics (buffer-substring-no-properties (point-min) (point-max))))
-          ('error
-           (message "Error trying to format lyrics result: %s" err)))
-        lyrics)))
+      (unwind-protect
+          (progn
+            ;; TODO: make this call asynchronous (using `start-process')
+            (call-process "wget" nil nil nil
+                          "--no-verbose"
+                          "--convert-links"
+                          (concat "--user-agent=" user-agent)
+                          (concat "--referer=" referer)
+                          "-O" file
+                          query)
+            (message "Query: %s" query)
+            (message "Command: wget --no-verbose --convert-links --user-agent=\"%s\" --referer=\"%s\" -O \"%s\" \"%s\"" user-agent referer file query)
+            (with-temp-buffer
+              (buffer-disable-undo)
+              (condition-case err
+                  (progn
+                    (insert-file-contents file)
+                    ;; clean up response
+                    (fundamental-mode)
+                    (goto-char (point-min))
+                    (when (re-search-forward start-regexp nil :noerror)
+                      (forward-line 0)
+                      (forward-line 1)
+                      (let ((pos (point)))
+                        (forward-line -3)
+                        (delete-region (point) pos))
+                      (forward-line -2)
+                      (delete-region (point-min) (point)))
+                    (when (re-search-forward end-regexp nil :noerror)
+                      (delete-region (line-beginning-position) (point-max)))
+                    (goto-char (point-min))
+                    (while (re-search-forward ret-regexp nil :noerror)
+                      (replace-match ""))
+                    (shr-render-region (point-min) (point-max))
+                    (goto-char (point-max))
+                    (delete-blank-lines)
+                    (goto-char (point-min))
+                    (insert (upcase artist) ": " (upcase title))
+                    (newline)
+                    (newline)
+                    (setq lyrics (buffer-substring-no-properties (point-min) (point-max))))
+                ('error
+                 (message "Error trying to format lyrics result: %s" err)))
+              lyrics))
+        (delete-file search-file)
+        (delete-file lyrics-file))))
 
   ;; TODO: add ability to query multiple lyric sites when a result is not found on one
   (defun mingus-get-lyrics ()

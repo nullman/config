@@ -24,12 +24,12 @@ dnf = {
     "copr.fedorainfracloud.org/skidnik/clipmenu",
   ], 
   packages = [
-    "rbanffy-3270-fonts",
     "bitstream-vera-fonts-all",
     "dejavu-fonts-all",
     "google-noto-fonts-all",
     "levien-inconsolata-fonts",
     "linux-libertine-fonts-all",
+    "rbanffy-3270-fonts",
   ]
 }
 
