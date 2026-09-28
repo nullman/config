@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2026-09-27 20:08 (user)>
+  #+TIMESTAMP: <2026-09-28 15:00 (user)>
 
 * Overview
   :PROPERTIES:
@@ -11635,7 +11635,7 @@
       site=""
       force="nil"
 
-      while [[ $# != 0 ]] ; do
+      while [ $# != 0 ] ; do
           arg="$1"
           shift
           if [ "${arg}" == "-s" ] || [ "${arg}" == "--site" ] ; then
