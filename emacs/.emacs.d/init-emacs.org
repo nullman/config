@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2026-09-28 15:00 (user)>
+  #+TIMESTAMP: <2026-09-29 10:45 (user)>
 
 * Overview
   :PROPERTIES:
@@ -11635,13 +11635,13 @@
       site=""
       force="nil"
 
-      while [ $# != 0 ] ; do
+      while [ $# != 0 ]; do
           arg="$1"
           shift
-          if [ "${arg}" == "-s" ] || [ "${arg}" == "--site" ] ; then
+          if [ "${arg}" == "-s" ] || [ "${arg}" == "--site" ]; then
               site="$1"
               shift
-          elif [ "${arg}" == "-f" ] || [ "${arg}" == "--force" ] ; then
+          elif [ "${arg}" == "-f" ] || [ "${arg}" == "--force" ]; then
               force="t"
           else
               echo "$0 usage:"
@@ -19075,7 +19075,7 @@
                                     (command-path "pamac"))))
               (if package-manager
                   (let ((cmd (format
-                              "%s %s %s 2>/dev/null | sed 's/\\x1b\\][^\\\\]*\\\\//g' | grep -A 2 '/%s ' | sed -n ':a ; /^[a-z]*\\/%s / { n ; p }'"
+                              "%s %s %s 2>/dev/null | sed 's/\\x1b\\][^\\\\]*\\\\//g' | grep -A 2 '/%s ' | sed -n ':a; /^[a-z]*\\/%s / { n; p }'"
                               package-manager
                               (if (string= (substring package-manager -5) "pamac")
                                   "search -a"
@@ -28195,7 +28195,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
                                  'font-lock-keyword-face))
                      (get-cmd (concat
                                "cd " mingus-ratings-directory " && "
-                               "(for x in $(ls " mingus-ratings-prefix "*) ; do grep -q -F \""
+                               "(for x in $(ls " mingus-ratings-prefix "*); do grep -q -F \""
                                (replace-regexp-in-string "\"" "\"" file)
                                "\" \"${x}\" && echo ${x: -1}; done)")))
                 ;;(message "get-cmd: %s" get-cmd)
@@ -28233,15 +28233,15 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
                      (playlist (concat mingus-ratings-prefix (number-to-string rating)))
                      (clear-cmd (concat
                                  "cd " mingus-ratings-directory " && "
-                                 "(for x in $(find . -name '" mingus-ratings-prefix "*') ; do grep -v -F \""
+                                 "(for x in $(find . -name '" mingus-ratings-prefix "*'); do grep -v -F \""
                                  (replace-regexp-in-string "\"" "\"" file)
-                                 "\" \"${x}\" > tmp ; mv tmp \"${x}\" ; done)"))
+                                 "\" \"${x}\" > tmp; mv tmp \"${x}\"; done)"))
                      (set-cmd (concat
                                "cd " mingus-ratings-directory " && "
                                "(echo \""
                                (replace-regexp-in-string "\"" "\"" file)
                                "\" >> " playlist ") && "
-                               "(cat " playlist " | sort > tmp ; mv tmp " playlist ")")))
+                               "(cat " playlist " | sort > tmp; mv tmp " playlist ")")))
                 ;;(message "clear-cmd: %s" clear-cmd)
                 ;;(message "set-cmd: %s" set-cmd)
                 ;; make sure ratings directory exists
@@ -29822,7 +29822,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;;                (title (cdr (assq :title details)))
       ;;                (get-cmd (concat
       ;;                          "cd " simple-mpc-ratings-directory " && "
-      ;;                          "(for x in $(ls " simple-mpc-ratings-prefix "*) ; do grep -q -F \""
+      ;;                          "(for x in $(ls " simple-mpc-ratings-prefix "*); do grep -q -F \""
       ;;                          (replace-regexp-in-string "\"" "\"" file)
       ;;                          "\" \"${x}\" && echo ${x: -1}; done)")))
       ;;           ;;(message "get-cmd: %s" get-cmd)
@@ -29856,9 +29856,9 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;;                (playlist (concat simple-mpc-ratings-prefix (number-to-string rating)))
       ;;                (clear-cmd (concat
       ;;                            "cd " simple-mpc-ratings-directory " && "
-      ;;                            "(for x in $(ls " simple-mpc-ratings-prefix "*) ; do grep -v -F \""
+      ;;                            "(for x in $(ls " simple-mpc-ratings-prefix "*); do grep -v -F \""
       ;;                            (replace-regexp-in-string "\"" "\"" file)
-      ;;                            "\" \"${x}\" > tmp ; mv tmp \"${x}\" ; done)"))
+      ;;                            "\" \"${x}\" > tmp; mv tmp \"${x}\"; done)"))
       ;;                (set-cmd (concat
       ;;                          "cd " simple-mpc-ratings-directory " && "
       ;;                          "(echo \""
@@ -34110,7 +34110,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;; superior lisp interaction mode for emacs
       ;; if loading slime errors out because swank-loader.lisp is not found, do:
       ;;   # cd /usr/share/emacs22/site-lisp/slime
-      ;;   # for i in $(ls -1 /usr/share/common-lisp/source/slime/) ; do ln -s /usr/share/common-lisp/source/slime/$i ; done
+      ;;   # for i in $(ls -1 /usr/share/common-lisp/source/slime/); do ln -s /usr/share/common-lisp/source/slime/$i; done
       (use-package slime
         :straight t
         ;; :load-path (;;(lambda () (file-truename (expand-file-name "slime" emacs-modules-dir)))
@@ -35874,7 +35874,7 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         # <<author>>
         #===============================================================================
 
-        if [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+        if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo "Usage: $(basename \$0)"
         echo "$2"
         exit

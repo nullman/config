@@ -13149,7 +13149,7 @@ it is longer."
                             (command-path "pamac"))))
       (if package-manager
           (let ((cmd (format
-                      "%s %s %s 2>/dev/null | sed 's/\\x1b\\][^\\\\]*\\\\//g' | grep -A 2 '/%s ' | sed -n ':a ; /^[a-z]*\\/%s / { n ; p }'"
+                      "%s %s %s 2>/dev/null | sed 's/\\x1b\\][^\\\\]*\\\\//g' | grep -A 2 '/%s ' | sed -n ':a; /^[a-z]*\\/%s / { n; p }'"
                       package-manager
                       (if (string= (substring package-manager -5) "pamac")
                           "search -a"
@@ -18700,7 +18700,7 @@ by scraping the metrolyrics.com site."
                            'font-lock-keyword-face))
                (get-cmd (concat
                          "cd " mingus-ratings-directory " && "
-                         "(for x in $(ls " mingus-ratings-prefix "*) ; do grep -q -F \""
+                         "(for x in $(ls " mingus-ratings-prefix "*); do grep -q -F \""
                          (replace-regexp-in-string "\"" "\"" file)
                          "\" \"${x}\" && echo ${x: -1}; done)")))
           ;;(message "get-cmd: %s" get-cmd)
@@ -18738,15 +18738,15 @@ RATING may be a number from 0 to 5, where 1 is least favorite and
                (playlist (concat mingus-ratings-prefix (number-to-string rating)))
                (clear-cmd (concat
                            "cd " mingus-ratings-directory " && "
-                           "(for x in $(find . -name '" mingus-ratings-prefix "*') ; do grep -v -F \""
+                           "(for x in $(find . -name '" mingus-ratings-prefix "*'); do grep -v -F \""
                            (replace-regexp-in-string "\"" "\"" file)
-                           "\" \"${x}\" > tmp ; mv tmp \"${x}\" ; done)"))
+                           "\" \"${x}\" > tmp; mv tmp \"${x}\"; done)"))
                (set-cmd (concat
                          "cd " mingus-ratings-directory " && "
                          "(echo \""
                          (replace-regexp-in-string "\"" "\"" file)
                          "\" >> " playlist ") && "
-                         "(cat " playlist " | sort > tmp ; mv tmp " playlist ")")))
+                         "(cat " playlist " | sort > tmp; mv tmp " playlist ")")))
           ;;(message "clear-cmd: %s" clear-cmd)
           ;;(message "set-cmd: %s" set-cmd)
           ;; make sure ratings directory exists
@@ -21526,7 +21526,7 @@ Commands:
 ;; superior lisp interaction mode for emacs
 ;; if loading slime errors out because swank-loader.lisp is not found, do:
 ;;   # cd /usr/share/emacs22/site-lisp/slime
-;;   # for i in $(ls -1 /usr/share/common-lisp/source/slime/) ; do ln -s /usr/share/common-lisp/source/slime/$i ; done
+;;   # for i in $(ls -1 /usr/share/common-lisp/source/slime/); do ln -s /usr/share/common-lisp/source/slime/$i; done
 (use-package slime
   :straight t
   ;; :load-path (;;(lambda () (file-truename (expand-file-name "slime" emacs-modules-dir)))
