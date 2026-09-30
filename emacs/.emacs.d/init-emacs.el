@@ -17973,24 +17973,6 @@ And the line would be overlaid like:
 ;;   :after (magit))
 ;; magit:1 ends here
 
-;; [[file:init-emacs.org::#packages-mastodon][mastodon:1]]
-;;------------------------------------------------------------------------------
-;;; Packages: mastodon
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Packages: mastodon")
-
-(use-package mastodon
-  :straight t
-  :after (persist)
-  :config
-  (let* ((env (expand-file-name "~/.mastodon"))
-         (url (string-trim (shell-command-to-string (concat "sed -n 's/mastodon-url=//p' " env))))
-         (username (string-trim (shell-command-to-string (concat "sed -n 's/mastodon-username=//p' " env)))))
-    (setq mastodon-instance-url url
-          mastodon-active-user username)))
-;; mastodon:1 ends here
-
 ;; [[file:init-emacs.org::#modules-mingus][mingus:1]]
 ;;------------------------------------------------------------------------------
 ;;; Packages: mingus
