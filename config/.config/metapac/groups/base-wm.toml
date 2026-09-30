@@ -53,6 +53,8 @@ arch = {
     "xscreensaver",
     "xscreensaver-aerial",
     "libglade",
+    "perl-lwp-protocol-https",
+    "perl-mozilla-ca",
   ]
 }
 
@@ -108,6 +110,8 @@ dnf = {
     "xscreensaver-gl-extras",
     "xset",
     "xwininfo",
+    "perl-LWP-Protocol-https",
+    "perl-Mozilla-CA",
   ]
 }
 
