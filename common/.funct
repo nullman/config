@@ -511,6 +511,9 @@ distribution() {
                         *debian*|*ubuntu*)
                             dist="debian"
                            ;;
+                        *fedora*)
+                            dist="redhat"
+                           ;;
                         *gentoo*)
                             dist="gentoo"
                            ;;
@@ -523,7 +526,7 @@ distribution() {
                         *qubes*)
                             dist="qubes"
                            ;;
-                        *rhel*|*fedora*|*centos*)
+                        *rhel*|*centos*)
                             dist="redhat"
                            ;;
                         *slackware*)
@@ -560,7 +563,7 @@ ver() {
         nixos)
             sed -n "s/^PRETTY_NAME=\"\(.*\)\"/\1/p" "/etc/os-release"
            ;;
-        redhat|fedora)
+        redhat|fedora|qubes)
             if [ -s "/etc/redhat-release" ]; then
                 cat "/etc/redhat-release"
             else

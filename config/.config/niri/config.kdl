@@ -139,6 +139,7 @@ workspace "vm"     // ""
 
 // startup applications
 //spawn-at-startup "waybar"
+spawn-at-startup "niri msg action focus-workspace 1"
 //spawn-sh-at-startup "xscreensaver --splash"
 spawn-sh-at-startup "${HOME}/bin/run-sxhkd"
 
