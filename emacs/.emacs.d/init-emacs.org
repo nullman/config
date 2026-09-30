@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2026-09-30 15:20 (user)>
+  #+TIMESTAMP: <2026-09-30 15:40 (user)>
 
 * Overview
   :PROPERTIES:
@@ -26517,22 +26517,22 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;;(setq gptel-backend gptel-gemini-backend))
     #+END_SRC
 
-*** guix
+*** +guix+
     :PROPERTIES:
     :CUSTOM_ID: packages-guix
     :END:
 
     Popup Interface for Emacs-Guix Commands
 
-    #+BEGIN_SRC emacs-lisp
-      ;;------------------------------------------------------------------------------
-      ;;; Packages: guix
-      ;;------------------------------------------------------------------------------
+    #+BEGIN_SRC emacs-lisp :tangle no
+      ;; ;;------------------------------------------------------------------------------
+      ;; ;;; Packages: guix
+      ;; ;;------------------------------------------------------------------------------
 
-      (init-message 2 "Packages: guix")
+      ;; (init-message 2 "Packages: guix")
 
-      (use-package guix
-        :straight t)
+      ;; (use-package guix
+      ;;   :straight t)
     #+END_SRC
 
 *** helpful

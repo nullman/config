@@ -17380,17 +17380,6 @@ USING is the remaining peg."
 ;;(setq gptel-backend gptel-gemini-backend))
 ;; gptel:1 ends here
 
-;; [[file:init-emacs.org::#packages-guix][guix:1]]
-;;------------------------------------------------------------------------------
-;;; Packages: guix
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Packages: guix")
-
-(use-package guix
-  :straight t)
-;; guix:1 ends here
-
 ;; [[file:init-emacs.org::#modules-helpful][helpful:1]]
 ;;------------------------------------------------------------------------------
 ;;; Packages: helpful
