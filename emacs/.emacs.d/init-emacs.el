@@ -17973,6 +17973,24 @@ And the line would be overlaid like:
 ;;   :after (magit))
 ;; magit:1 ends here
 
+;; [[file:init-emacs.org::#packages-mastodon][+mastodon+:1]]
+;; ;;------------------------------------------------------------------------------
+;; ;;; Packages: mastodon
+;; ;;------------------------------------------------------------------------------
+
+;; (init-message 2 "Packages: mastodon")
+
+;; (use-package mastodon
+;;   :straight t
+;;   :after (persist)
+;;   :config
+;;   (let* ((env (expand-file-name "~/.mastodon"))
+;;          (url (string-trim (shell-command-to-string (concat "sed -n 's/mastodon-url=//p' " env))))
+;;          (username (string-trim (shell-command-to-string (concat "sed -n 's/mastodon-username=//p' " env)))))
+;;     (setq mastodon-instance-url url
+;;           mastodon-active-user username)))
+;; +mastodon+:1 ends here
+
 ;; [[file:init-emacs.org::#modules-mingus][mingus:1]]
 ;;------------------------------------------------------------------------------
 ;;; Packages: mingus
@@ -20416,7 +20434,10 @@ otherwise run `find-file-as-root'."
 (init-message 2 "Modes: Geiser (Racket Scheme REPL)")
 
 (use-package geiser
-  :straight t
+  :straight (geiser
+             :type git
+             :host github
+             :repo "emacsmirror/geiser")
   :commands (geiser-mode
              run-geiser)
   :init
@@ -20447,11 +20468,11 @@ otherwise run `find-file-as-root'."
   (add-hook 'geiser-mode-hook #'custom-geiser-mode-hook)
   (add-hook 'geiser-repl-mode-hook #'custom-geiser-mode-hook))
 
-  ;; (defun geiser-repl-maybe-send--end-of-buffer ()
-  ;;   "Move cursor to end of REPL buffer after eval."
-  ;;   (end-of-buffer))
-  ;; ;; advise `geiser-repl-maybe-send'
-  ;; (advice-add 'geiser-repl-maybe-send :after #'geiser-repl-maybe-send--end-of-buffer))
+;; (defun geiser-repl-maybe-send--end-of-buffer ()
+;;   "Move cursor to end of REPL buffer after eval."
+;;   (end-of-buffer))
+;; ;; advise `geiser-repl-maybe-send'
+;; (advice-add 'geiser-repl-maybe-send :after #'geiser-repl-maybe-send--end-of-buffer))
 
 (use-package geiser-racket
   :straight t
