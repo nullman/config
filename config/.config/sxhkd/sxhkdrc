@@ -98,24 +98,29 @@ control + alt + {Up,Down,Left,Right}
 # Media Keys
 #-------------------------------------------------------------------------------
 
+# brightness up
 XF86MonBrightnessUp
     ${HOME}/bin/system-setting 'brightness' 'up'
 
+# brightness down
 XF86MonBrightnessDown
     ${HOME}/bin/system-setting 'brightness' 'down'
 
+# volume up
 XF86AudioRaiseVolume
     ${HOME}/bin/system-setting 'volume' 'up'
 
+# volume down
 XF86AudioLowerVolume
     ${HOME}/bin/system-setting 'volume' 'down'
 
+# toggle mute
 XF86AudioMute
     ${HOME}/bin/system-setting 'volume' 'toggle-mute'
 
 # XF86AudioMicMute
 
-# XF86Display
+# toggle display
 XF86Display
     ${HOME}/bin/system-setting 'display' 'toggle'
 
@@ -127,44 +132,59 @@ XF86Display
 
 # XF86Favorites
 
+# toggle touchpad
 XF86TouchpadToggle
     touchpad-toggle && notify-send --expire-time=3000 --replace-id=1 'Toggle Touchpad'
 
+# # play audio
 # XF86AudioPlay
 #     playerctl play && notify-send --expire-time=3000 --replace-id=2 'Play Audio'
 
+# # pause audio
 # XF86AudioPause
 #     playerctl pause && notify-send --expire-time=3000 --replace-id=2 'Pause Audio'
 
+# # play next
 # XF86AudioNext
-#     playerctl next && notify-send --expire-time=3000 --replace-id=2 'Next Song'
+#     playerctl next && notify-send --expire-time=3000 --replace-id=2 'Play Next'
 
+# # play previous
 # XF86AudioPrev
-#     playerctl previous && notify-send --expire-time=3000 --replace-id=2 'Previous Song'
+#     playerctl previous && notify-send --expire-time=3000 --replace-id=2 'Play Previous'
 
 #-------------------------------------------------------------------------------
 # Wooting Lekker Keyboard Media Keys
 #-------------------------------------------------------------------------------
 
-# screen brightness
+# brightness up
 super + Print
     ${HOME}/bin/system-setting brightness up
+
+# brightness down
 super + Pause
     ${HOME}/bin/system-setting brightness down
 
-# volume control
+# volume up
 super + Home
     ${HOME}/bin/system-setting volume up
+
+# volume down
 super + Prior
     ${HOME}/bin/system-setting volume down
+
+# toggle mute
 super + Insert
     ${HOME}/bin/system-setting volume 'toggle-mute'
 
-# mpc control
+# mpc: play previous
 super + Delete
     mpc prev && notify-send --app-name=mpd --expire-time=3000 $([ "${XDG_SESSION_TYPE}" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
+
+# mpc: toggle play/pause
 super + End
     mpc toggle && notify-send --app-name=mpd --expire-time=3000 $([ "${XDG_SESSION_TYPE}" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
+
+# mpc: play next
 super + Next
     mpc next && notify-send --app-name=mpd --expire-time=3000 $([ "${XDG_SESSION_TYPE}" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
 
@@ -172,19 +192,27 @@ super + Next
 # Media Key Alternatives
 #-------------------------------------------------------------------------------
 
-# screen brightness
+# brightness up
 super + alt + ctrl + Prior
     ${HOME}/bin/system-setting brightness up
+
+# brightness down
 super + alt + ctrl + Next
     ${HOME}/bin/system-setting brightness down
 
-# volume control
+# volume up
 super + alt + ctrl + Home
     ${HOME}/bin/system-setting volume up
+
+# volume down
 super + alt + ctrl + End
     ${HOME}/bin/system-setting volume down
+
+# toggle mute
 super + alt + ctrl + Insert
     ${HOME}/bin/system-setting volume 'toggle-mute'
+
+# test volume
 super + alt + ctrl + Delete
     ffplay -nodisp -autoexit "${HOME}/sounds/bottles.wav"
 
@@ -200,6 +228,7 @@ super + {h, shift + slash}
     #awk '/^[A-Za-z]/ && last { printf "%-40s | %-40s\n", \"$0\", last } { last="" } /^#/ { last=substr($0, 3) }' | \
     #column -t -s '|' | \
     #rofi -font 'System San Francisco Display 12' -dmenu -i -p "SXHKD Keybindings"
+    #awk '/^[^ \t#]/{ print $0 " | " prev } { prev = $0 }'
 
 # desktop application launcher
 super + alt + space
@@ -363,6 +392,8 @@ super + shift + backslash
 super + b
     notify-send --expire-time=3000 'Connecting to Sennheiser HD 350BT Headphones' && \
     bluetoothctl connect 80:C3:BA:0E:CB:E5
+
+# disconnect from sennheiser hd350bt headphones
 super + shift + b
     notify-send --expire-time=3000 'Disconnecting from Sennheiser HD 350BT Headphones' && \
     bluetoothctl disconnect 80:C3:BA:0E:CB:E5
@@ -371,6 +402,8 @@ super + shift + b
 super + n
     notify-send --expire-time=3000 'Connecting to Powerbeats Pro Headphones' && \
     bluetoothctl connect 14:1A:97:05:81:4C
+
+# disconnect from powerbeats pro headphones
 super + shift + n
     notify-send --expire-time=3000 'Disconnecting from Powerbeats Pro Headphones' && \
     bluetoothctl disconnect 14:1A:97:05:81:4C
@@ -383,53 +416,87 @@ super + shift + n
 # Media
 #-------------------------------------------------------------------------------
 
-# mpc control
+# mpc: toggle play/pause
 super + alt + ctrl + m
     mpc toggle && notify-send --app-name=mpd --expire-time=3000 $([ "${XDG_SESSION_TYPE}" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
+
+# mpc: play previous
 super + alt + ctrl + comma
     mpc prev && notify-send --app-name=mpd --expire-time=3000 $([ "${XDG_SESSION_TYPE}" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
+
+# mpc: play next
 super + alt + ctrl + period
     mpc next && notify-send --app-name=mpd --expire-time=3000 $([ "${XDG_SESSION_TYPE}" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
+
+# mpc: display audio
 super + alt + ctrl + slash
     notify-send --app-name=mpd --expire-time=3000 $([ "${XDG_SESSION_TYPE}" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
 
-# mpc control (media keys)
+# mpc: play previous
 XF86AudioPrev
     mpc prev && notify-send --app-name=mpd --expire-time=3000 $([ "${XDG_SESSION_TYPE}" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
+
+# mpc: toggle play/pause
 XF86AudioPlay
     mpc toggle && notify-send --app-name=mpd --expire-time=3000 $([ "${XDG_SESSION_TYPE}" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
+
+# mpc: stop
 XF86AudioStop
     mpc stop && notify-send --app-name=mpd --expire-time=3000 $([ "${XDG_SESSION_TYPE}" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
+
+# mpc: play next
 XF86AudioNext
     mpc next && notify-send --app-name=mpd --expire-time=3000 $([ "${XDG_SESSION_TYPE}" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
 
-# # spotify control
+# # spotify: play previous
 # super + alt + ctrl + a
 #     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --app-name=spotify --expire-time=3000 --replace-id=2 --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/spotify-playing)"
+
+# # spotify: toggle play/pause
 # super + alt + ctrl + s
 #     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --app-name=spotify --expire-time=3000 --replace-id=2 --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/spotify-playing)"
+
+# # spotify: stop
 # super + alt + ctrl + d
 #     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --app-name=spotify --expire-time=3000 --replace-id=2 --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/spotify-playing)"
+
+# # spotify: play next
 # super + alt + ctrl + f
 #     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --app-name=spotify --expire-time=3000 --replace-id=2 --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/spotify-playing)"
+
+# # spotify: play previous
 # XF86AudioPrevious
 #     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --app-name=spotify --expire-time=3000 --replace-id=2 --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/spotify-playing)"
+
+# # spotify: toggle play/pause
 # XF86AudioPlay
 #     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --app-name=spotify --expire-time=3000 --replace-id=2 --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/spotify-playing)"
+
+# # spotify: stop
 # XF86AudioStop
 #     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --app-name=spotify --expire-time=3000 --replace-id=2 --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/spotify-playing)"
+
+# # spotify: play next
 # XF86AudioNext
 #     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --app-name=spotify --expire-time=3000 --replace-id=2 --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/spotify-playing)"
 
-# media player control
+# spotify: play previous
 super + alt + ctrl + z
     qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --app-name=spotify --expire-time=3000 --replace-id=2 --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/spotify-playing)"
+
+# spotify: toggle play/pause
 super + alt + ctrl + c
     qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --app-name=spotify --expire-time=3000 --replace-id=2 --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/spotify-playing)"
+
+# spotify: stop
 super + alt + ctrl + x
     qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --app-name=spotify --expire-time=3000 --replace-id=2 --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/spotify-playing)"
+
+# spotify: play next
 super + alt + ctrl + b
     qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --app-name=spotify --expire-time=3000 --replace-id=2 --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/spotify-playing)"
+
+# spotify: display audio
 super + alt + ctrl + apostrophe
     notify-send --app-name=spotify --expire-time=3000 --replace-id=2 --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/spotify-playing)"
 
@@ -437,7 +504,7 @@ super + alt + ctrl + apostrophe
 # Applications
 #-------------------------------------------------------------------------------
 
-# terminal
+# launch terminal
 super + alt + t
     alacritty
 

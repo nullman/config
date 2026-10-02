@@ -97,18 +97,23 @@ control + alt + {Up,Down,Left,Right}
 # Media Keys
 #-------------------------------------------------------------------------------
 
+# brightness up
 XF86MonBrightnessUp
     notify-send --expire-time=3000 --replace-id=1 "$(${HOME}/bin/brightness eDP-1 +0.2)"
 
+# brightness down
 XF86MonBrightnessDown
     notify-send --expire-time=3000 --replace-id=1 "$(${HOME}/bin/brightness eDP-1 -0.2)"
 
+# volume up
 XF86AudioRaiseVolume
     pactl -- set-sink-volume 0 +5% && notify-send --expire-time=3000 --replace-id=1 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
 
+# volume down
 XF86AudioLowerVolume
     pactl -- set-sink-volume 0 -5% && notify-send --expire-time=3000 --replace-id=1 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
 
+# toggle mute
 XF86AudioMute
     pactl -- set-sink-mute 0 toggle && notify-send --expire-time=3000 --replace-id=1 "$(pactl -- get-sink-mute 0  | sed 's/Mute: no/Unmuted/; s/Mute: yes/Muted/')"
 
@@ -124,18 +129,23 @@ XF86AudioMute
 
 # XF86Favorites
 
+# toggle touchpad
 XF86TouchpadToggle
     touchpad-toggle && notify-send --expire-time=3000 --replace-id=1 'Toggle Touchpad'
 
+# # play audio
 # XF86AudioPlay
 #     playerctl play && notify-send --expire-time=3000 --replace-id=2 'Play Audio'
 
+# # pause audio
 # XF86AudioPause
 #     playerctl pause && notify-send --expire-time=3000 --replace-id=2 'Pause Audio'
 
+# # play next
 # XF86AudioNext
 #     playerctl next && notify-send --expire-time=3000 --replace-id=2 'Next Song'
 
+# # play previous
 # XF86AudioPrev
 #     playerctl previous && notify-send --expire-time=3000 --replace-id=2 'Previous Song'
 
@@ -143,25 +153,35 @@ XF86TouchpadToggle
 # Wooting Lekker Keyboard Media Keys
 #-------------------------------------------------------------------------------
 
-# screen brightness
+# brightness up
 super + Print
     notify-send --expire-time=3000 --replace-id=1 "$(${HOME}/bin/brightness eDP-1 +0.2)"
+
+# brightness down
 super + Pause
     notify-send --expire-time=3000 --replace-id=1 "$(${HOME}/bin/brightness eDP-1 -0.2)"
 
-# volume control
+# volume up
 super + Home
     pactl -- set-sink-volume 0 -5% && notify-send --expire-time=3000 --replace-id=1 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
+
+# volume down
 super + Prior
     pactl -- set-sink-volume 0 +5% && notify-send --expire-time=3000 --replace-id=1 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
+
+# toggle mute
 super + Insert
     pactl -- set-sink-mute 0 toggle && notify-send --expire-time=3000 --replace-id=1 "$(pactl -- get-sink-mute 0  | sed 's/Mute: no/Unmuted/; s/Mute: yes/Muted/')"
 
-# mpc control
+# mpc [personal]: play previous
 super + Delete
     qvm-run personal "mpc prev && notify-send --app-name=mpd --expire-time=3000 \$([ \"\${XDG_SESSION_TYPE}\" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png \"\$(\${HOME}/bin/mpd-playing --notify-title)\" \"\$(\${HOME}/bin/mpd-playing --notify-body)\""
+
+# mpc [personal]: toggle play/pause
 super + End
     qvm-run personal "mpc toggle && notify-send --app-name=mpd --expire-time=3000 \$([ \"\${XDG_SESSION_TYPE}\" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png \"\$(\${HOME}/bin/mpd-playing --notify-title)\" \"\$(\${HOME}/bin/mpd-playing --notify-body)\""
+
+# mpc [personal]: play next
 super + Next
     qvm-run personal "mpc next && notify-send --app-name=mpd --expire-time=3000 \$([ \"\${XDG_SESSION_TYPE}\" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png \"\$(\${HOME}/bin/mpd-playing --notify-title)\" \"\$(\${HOME}/bin/mpd-playing --notify-body)\""
 
@@ -169,21 +189,29 @@ super + Next
 # Media Key Alternatives
 #-------------------------------------------------------------------------------
 
-# screen brightness
+# brightness up
 super + alt + ctrl + Prior
     notify-send --expire-time=3000 --replace-id=1 "$(${HOME}/bin/brightness eDP-1 +0.2)"
+
+# brightness down
 super + alt + ctrl + Next
     notify-send --expire-time=3000 --replace-id=1 "$(${HOME}/bin/brightness eDP-1 -0.2)"
 
-# volume control
+# volume up
 super + alt + ctrl + Home
     pactl -- set-sink-volume 0 +5% && notify-send --expire-time=3000 --replace-id=1 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
+
+# volume down
 super + alt + ctrl + End
     pactl -- set-sink-volume 0 -5% && notify-send --expire-time=3000 --replace-id=1 "$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)\/.*$/Volume: \1/p')"
+
+# toggle mute
 super + alt + ctrl + Insert
     pactl -- set-sink-mute 0 toggle && notify-send --expire-time=3000 --replace-id=1 "$(pactl -- get-sink-mute 0  | sed 's/Mute: no/Unmuted/; s/Mute: yes/Muted/')"
-#super + alt + ctrl + Delete
-#    ffplay -nodisp -autoexit "${HOME}/sounds/bottles.wav"
+
+# # test volume
+# super + alt + ctrl + Delete
+#     ffplay -nodisp -autoexit "${HOME}/sounds/bottles.wav"
 
 #-------------------------------------------------------------------------------
 # System Tools
@@ -198,81 +226,81 @@ super + {h, shift + slash}
 super + q
     gdbus call --session --dest org.qubesos.appmenu --object-path '/org/qubesos/appmenu' --method org.freedesktop.Application.Activate '{}'
 
-# desktop application launcher: dom0
+# desktop application launcher [dom0]
 super + ctrl + space
     ${HOME}/bin/rofi-qubes-drun
 
-# desktop application launcher: personal
+# desktop application launcher [personal]
 super + alt + space
     qvm-run personal "rofi -normal-window -modi drun -show drun"
 
-# program launcher: dom0
+# program launcher [dom0]
 super + ctrl + d
     rofi -normal-window -modi run -show run
 
-# program launcher: personal
+# program launcher [personal]
 super + d
     qvm-run personal "rofi -normal-window -modi run -show run"
 
-# application group launcher: personal
+# application group launcher [personal]
 super + a
     qvm-run personal "/home/user/bin/application-launcher"
 
-# menu launcher: personal
+# menu launcher [personal]
 super + Return
     qvm-run personal "/home/user/bin/rofi-menu"
 
-# window selector: dom0
+# window selector [dom0]
 super + ctrl + w
     rofi -normal-window -modi window -show window
 
-# window selector: personal
+# window selector [personal]
 super + w
     qvm-run personal "rofi -normal-window -modi window -show window"
 
-# clipmenu selector: personal
+# clipmenu selector [personal]
 super + c
     qvm-run personal "CM_LAUNCHER=rofi clipmenu"
 
-# emoji selector: personal
+# emoji selector [personal]
 super + e
     qvm-run personal "/usr/sbin/rofimoji --typer xdotool --clipboarder xsel --skin-tone neutral"
     #qvm-run personal "/usr/sbin/rofimoji --action print --skin-tone neutral | tr -d '\n' | xsel && xsel --output | xsel --clipboard"
 
-# unicode selector: personal
+# unicode selector [personal]
 super + u
     qvm-run personal "/home/user/bin/rofi-menu unicode"
 
-# footnote symbol selector: personal
+# footnote symbol selector [personal]
 super + shift + u
     qvm-run personal "/home/user/bin/rofi-menu footnotes"
 
-# bookmarks selector: personal
+# bookmarks selector [personal]
 super + o
     qvm-run personal "/home/user/bin/rofi-menu bookmarks"
 
-# bookmarks keyword selector: personal
+# bookmarks keyword selector [personal]
 super + shift + o
     qvm-run personal "/home/user/bin/rofi-menu bookmarks-keyword"
 
-# typer selector: personal
+# typer selector [personal]
 super + semicolon
     qvm-run personal "/home/user/bin/rofi-typer"
 
-# paste selector: personal
+# paste selector [personal]
 super + apostrophe
     qvm-run personal "/home/user/bin/rofi-menu paste"
 
-# spell and define word: personal
+# spell and define word [personal]
 super + s
     qvm-run personal "/home/user/bin/rofi-menu spell"
 
-# # bitwarden selector: personal (clear clipboard after 60 seconds)
+# # bitwarden selector [personal] (clear clipboard after 60 seconds)
 # # first login using 'bw login'
 # super + p
 #     qvm-run personal "bw ???"
 
-# generate password: personal
+# generate password [personal]
 super + p
     qvm-run personal "/home/user/bin/rofi-menu password && notify-send --expire-time=3000 'Random password phrase on clipboard'"
 
@@ -281,23 +309,23 @@ super + backslash
     printf " $(date '+%A')\n$(date '+%Y-%m-%d')\n $(date '+%H:%M:%S')" | \
     yad --text-info --width=532 --height=360 --no-buttons --timeout=3 --fontname='MesloLGS Nerd Font Mono 64' 2>/dev/null
 
-# # edit with emacs: personal
+# # edit with emacs [personal]
 # super + e
 #     qvm-run personal "/usr/sbin/emacsclient --eval '(emacs-everywhere)'"
 
-# git synchronize config: personal
+# git synchronize config [personal]
 super + y
     qvm-run personal "source '/home/user/.funct' && (git-sync-config && echo 'Done') 2>&1 | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"
 
-# git synchronize extra: personal
+# git synchronize extra [personal]
 super + shift + y
     qvm-run personal "source '/home/user/.funct' && (git-sync-extra && echo 'Done') 2>&1 | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"
 
-# start screen saver: dom0
+# start screen saver [dom0]
 super + x
     xscreensaver-command -activate
 
-# start screen saver in lock mode: dom0
+# start screen saver in lock mode [dom0]
 super + shift + x
     xscreensaver-command -lock
 #    xlock
@@ -305,85 +333,89 @@ super + shift + x
 #    ssaverauto --lock
 #    xscreensaver-command -lock
 
-# session menu: dom0
+# session menu [dom0]
 super + shift + q
     ${HOME}/bin/rofi-session-menu -s
 
-# get xprop class name: dom0
+# get xprop class name [dom0]
 super + shift + p
     xprop | grep '^WM_CLASS' | GDK_BACKEND=x11 yad --text-info --width=480 --height=360 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
 
-# kill process clicked: personal
+# kill process clicked [personal]
 super + shift + Delete
     notify-send --expire-time=3000 "Click window to kill" && qvm-run personal "xkill"
 
-# snapshot of entire screen: personal
+# snapshot of entire screen [personal]
 super + alt + Print
     qvm-run personal "scrot --exec 'mv $f ~/Pictures/' && notify-send --expire-time=3000 'Screen snapshot saved'"
 
-# snapshot of active window: personal
+# snapshot of active window [personal]
 super + ctrl + Print
     qvm-run personal "scrot --focused --exec 'mv $f ~/Pictures/' && notify-send --expire-time=3000 'Window snapshot saved'"
 
-# snapshot of selected region: personal
+# snapshot of selected region [personal]
 super + shift + Print
     qvm-run personal "scrot --select --freeze --exec 'mv $f ~/Pictures/' && notify-send --expire-time=3000 'Region snapshot saved'"
 
-# reload sxhkd: dom0
+# reload sxhkd [dom0]
 super + shift + s
     ${HOME}/bin/run-sxhkd && notify-send --expire-time=3000 'Reloading SXHKD'
 
-# reload system tray (polybar): dom0
+# reload system tray (polybar) [dom0]
 super + shift + r
     ${HOME}/bin/system-bar && notify-send --expire-time=3000 'Reloading Polybar'
 
-# # reload xfce-panel: dom0
+# # reload xfce-panel [dom0]
 # super + shift + r
 #     ((pkill -u ${USER} xfce4-panel; xfce4-panel && sleep 1 && \
 #     xdo below -t $(xdo id -n root) $(xdo id -N xfce4-panel)) &) && \
 #     notify-send --expire-time=3000 'Reloading XFCE Panel'
 
-# # reload tint2 panel: dom0
+# # reload tint2 panel [dom0]
 # super + shift + t
 #     ((pkill -u ${USER} tint2; tint2 && sleep 1 && \
 #     xdo below -t $(xdo id -n root) $(xdo id -N tint2)) &) && \
 #     notify-send --expire-time=3000 'Reloading Tint'
 
-# # reload eww panel: personal
+# # reload eww panel [personal]
 # super + shift + e
 #     qvm-run personal "eww --restart open bar && sleep 1 && \
 #         xdo below -t $(xdo id -n root) $(xdo id -n eww) && \
 #         notify-send --expire-time=3000 'Reloading EWW'"
 
-# # reload conky: personal
+# # reload conky [personal]
 # super + shift + c
 #     qvm-run personal "(/home/user/bin/system-wallpaper-displays &) && notify-send --expire-time=3000 'Reloading Conky'"
 
-# # reset video: dom0
+# # reset video [dom0]
 # super + shift + v
 #     xrandr --output $(xrandr | grep ' connected ' | sed 's/ .*//' | head -n 1) --auto && \
 #     notify-send --expire-time=3000 'Resetting video'
 
-# request new tor circuit in sys-whonix
+# request new tor circuit [sys-whonix]
 super + shift + t
     qvm-run sys-whonix "tor-ctrl signal NEWNYM && notify-send --expire-time=3000 'Requesting new tor circuit'"
 
-# set X11 caps-lock, insert key, keyboard, and mouse speed: dom0
+# set X11 caps-lock, insert key, keyboard, and mouse speed [dom0]
 super + shift + backslash
     (${HOME}/bin/set-x11-settings) && notify-send --expire-time=3000 'X11 settings applied'
 
-# connect to sennheiser hd350bt headphones: personal
+# connect to sennheiser hd350bt headphones [personal]
 super + b
     notify-send --expire-time=3000 'Connecting to Sennheiser HD 350BT Headphones' && \
     qvm-run personal "bluetoothctl connect 80:C3:BA:0E:CB:E5"
+
+# disconnect from sennheiser hd350bt headphones [personal]
 super + shift + b
     notify-send --expire-time=3000 'Disconnecting from Sennheiser HD 350BT Headphones' && \
     qvm-run personal "bluetoothctl disconnect 80:C3:BA:0E:CB:E5"
 
-# connect to powerbeats pro headphones: personal
+# connect to powerbeats pro headphones [personal]
 super + n
     notify-send --expire-time=3000 'Connecting to Powerbeats Pro Headphones' && \
     qvm-run personal "bluetoothctl connect 14:1A:97:05:81:4C"
+
+# disconnect from powerbeats pro headphones [personal]
 super + shift + n
     notify-send --expire-time=3000 'Disconnecting from Powerbeats Pro Headphones' && \
     qvm-run personal "bluetoothctl disconnect 14:1A:97:05:81:4C"
@@ -396,53 +428,87 @@ super + shift + n
 # Media
 #-------------------------------------------------------------------------------
 
-# mpc control: personal
+# mpc [personal]: toggle play/pause
 super + alt + ctrl + m
     qvm-run personal "mpc toggle && notify-send --app-name=mpd --expire-time=3000 \$([ \"\${XDG_SESSION_TYPE}\" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png \"\$(\${HOME}/bin/mpd-playing --notify-title)\" \"\$(\${HOME}/bin/mpd-playing --notify-body)\""
+
+# mpc [personal]: play previous
 super + alt + ctrl + comma
     qvm-run personal "mpc prev"
+
+# mpc [personal]: play next
 super + alt + ctrl + period
     qvm-run personal "mpc next"
+
+# mpc [personal]: display audio
 super + alt + ctrl + slash
     qvm-run personal "notify-send --app-name=mpd --expire-time=3000 \$([ \"\${XDG_SESSION_TYPE}\" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png \"\$(\${HOME}/bin/mpd-playing --notify-title)\" \"\$(\${HOME}/bin/mpd-playing --notify-body)\""
 
-# mpc control (media keys): personal
+# mpc [personal]: play previous
 XF86AudioPrev
     qvm-run personal "mpc prev"
+
+# mpc [personal]: toggle play/pause
 XF86AudioPlay
     qvm-run personal "mpc toggle && notify-send --app-name=mpd --expire-time=3000 \$([ \"\${XDG_SESSION_TYPE}\" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png \"\$(\${HOME}/bin/mpd-playing --notify-title)\" \"\$(\${HOME}/bin/mpd-playing --notify-body)\""
+
+# mpc [personal]: stop
 XF86AudioStop
     qvm-run personal "mpc stop && notify-send --app-name=mpd --expire-time=3000 \$([ \"\${XDG_SESSION_TYPE}\" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png \"\$(\${HOME}/bin/mpd-playing --notify-title)\" \"\$(\${HOME}/bin/mpd-playing --notify-body)\""
+
+# mpc [personal]: play next
 XF86AudioNext
     qvm-run personal "mpc next"
 
-# # spotify control: personal
+# # spotify [personal]: play previous
 # super + alt + ctrl + a
 #     qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --app-name=spotify --expire-time=3000 --replace-id=2 --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/spotify-playing)""
+
+# # spotify [personal]: toggle play/pause
 # super + alt + ctrl + s
 #     qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --app-name=spotify --expire-time=3000 --replace-id=2 --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/spotify-playing)""
+
+# # spotify [personal]: stop
 # super + alt + ctrl + d
 #     qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --app-name=spotify --expire-time=3000 --replace-id=2 --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/spotify-playing)""
+
+# # spotify [personal]: play next
 # super + alt + ctrl + f
 #     qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --app-name=spotify --expire-time=3000 --replace-id=2 --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/spotify-playing)""
+
+# # spotify [personal]: play previous
 # XF86AudioPrevious
 #     qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --app-name=spotify --expire-time=3000 --replace-id=2 --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/spotify-playing)""
+
+# # spotify [personal]: toggle play/pause
 # XF86AudioPlay
 #     qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --app-name=spotify --expire-time=3000 --replace-id=2 --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/spotify-playing)""
+
+# # spotify [personal]: stop
 # XF86AudioStop
 #     qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --app-name=spotify --expire-time=3000 --replace-id=2 --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/spotify-playing)""
+
+# # spotify [personal]: play next
 # XF86AudioNext
 #     qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --app-name=spotify --expire-time=3000 --replace-id=2 --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/spotify-playing)""
 
-# media player control: personal
+# spotify: play previous
 super + alt + ctrl + z
     qvm-run personal "qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --app-name=spotify --expire-time=3000 --replace-id=2 --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/spotify-playing)""
+
+# spotify: toggle play/pause
 super + alt + ctrl + c
     qvm-run personal "qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --app-name=spotify --expire-time=3000 --replace-id=2 --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/spotify-playing)""
+
+# spotify: stop
 super + alt + ctrl + x
     qvm-run personal "qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --app-name=spotify --expire-time=3000 --replace-id=2 --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/spotify-playing)""
+
+# spotify: play next
 super + alt + ctrl + b
     qvm-run personal "qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --app-name=spotify --expire-time=3000 --replace-id=2 --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/spotify-playing)""
+
+# spotify: display audio
 super + alt + ctrl + apostrophe
     qvm-run personal "notify-send --app-name=spotify --expire-time=3000 --replace-id=2 --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/spotify-playing)""
 
@@ -450,11 +516,11 @@ super + alt + ctrl + apostrophe
 # Applications
 #-------------------------------------------------------------------------------
 
-# terminal: dom0
+# launch terminal [dom0]
 super + ctrl + t
     alacritty
 
-# terminal: personal
+# launch terminal [personal]
 super + t
     qvm-run personal "/usr/sbin/alacritty"
 
