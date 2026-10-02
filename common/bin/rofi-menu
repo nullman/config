@@ -24,9 +24,9 @@
 set -eu #o pipefail
 
 prompt="rofi -dmenu -i -p"
-promptfont="rofi -dmenu -font 'MesloLGS Nerd Font Mono 12' -i -p"
+promptfont="rofi -dmenu -font 'MesloLGS Nerd Font Mono 12' -keep-right -i -p"
 promptprefix="rofi -dmenu -matching prefix -i -p"
-promptfontprefix="rofi -dmenu -font 'MesloLGS Nerd Font Mono 12' -matching prefix -i -p"
+promptfontprefix="rofi -dmenu -font 'MesloLGS Nerd Font Mono 12' -keep-right -matching prefix -i -p"
 
 if [ "${XDG_SESSION_TYPE}" == "wayland" ]; then
     clip="wl-copy"

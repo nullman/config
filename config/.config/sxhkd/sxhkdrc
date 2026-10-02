@@ -413,8 +413,12 @@ super + shift + n
 #     sudo -i nixos-rebuild switch | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
 
 #-------------------------------------------------------------------------------
-# Media
+# Media: mpc
 #-------------------------------------------------------------------------------
+
+# mpc: select item to play
+super + m
+    ${HOME}/bin/mpd-select
 
 # mpc: toggle play/pause
 super + alt + ctrl + m
@@ -447,6 +451,10 @@ XF86AudioStop
 # mpc: play next
 XF86AudioNext
     mpc next && notify-send --app-name=mpd --expire-time=3000 $([ "${XDG_SESSION_TYPE}" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
+
+#-------------------------------------------------------------------------------
+# Media: Spotify
+#-------------------------------------------------------------------------------
 
 # # spotify: play previous
 # super + alt + ctrl + a

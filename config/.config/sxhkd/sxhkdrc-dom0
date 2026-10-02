@@ -425,8 +425,12 @@ super + shift + n
 #     sudo -i nixos-rebuild switch | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
 
 #-------------------------------------------------------------------------------
-# Media
+# Media: mpc
 #-------------------------------------------------------------------------------
+
+# mpc [personal]: select item to play
+super + m
+    qvm-run personal "$(${HOME}/bin/mpd-select)"
 
 # mpc [personal]: toggle play/pause
 super + alt + ctrl + m
@@ -459,6 +463,10 @@ XF86AudioStop
 # mpc [personal]: play next
 XF86AudioNext
     qvm-run personal "mpc next"
+
+#-------------------------------------------------------------------------------
+# Media: Spotify
+#-------------------------------------------------------------------------------
 
 # # spotify [personal]: play previous
 # super + alt + ctrl + a
