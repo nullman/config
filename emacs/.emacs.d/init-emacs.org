@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2026-09-30 15:57 (user)>
+  #+TIMESTAMP: <2026-10-03 00:47 (user)>
 
 * Overview
   :PROPERTIES:
@@ -5958,6 +5958,43 @@
               (delete-region (point) (progn (forward-line -1) (point))))))
       #+END_SRC
 
+***** org-table-delete-rows-not-in-other-table
+      :PROPERTIES:
+      :CUSTOM_ID: org-mode-functions-org-table-delete-rows-not-in-other-table
+      :END:
+
+      #+BEGIN_SRC emacs-lisp
+        ;;------------------------------------------------------------------------------
+        ;;;; Org Mode: Functions: org-table-delete-rows-not-in-other-table
+        ;;------------------------------------------------------------------------------
+
+        (init-message 3 "Org Mode: Functions: org-table-delete-rows-not-in-other-table")
+
+        (defun org-table-remove-not-in-other-table ()
+          "Delete all rows in current table/column whose field values are not in
+        table in `other-window'."
+          (interactive "*")
+          (save-mark-and-excursion
+            (let ((col1 (org-table-current-column)))
+              (unless (org-table-p)
+                (user-error "Cursor is not in an org-table"))
+              (other-window 1)
+              (unless (org-table-p)
+                (user-error "Cursor of `other-window' is not in an org-table"))
+              (let* ((col2 (org-table-current-column))
+                     (data (mapcar (lambda (x)
+                                     (substring-no-properties (nth (1- col2) x)))
+                                   (remove 'hline (org-table-to-lisp)))))
+                (other-window -1)
+                (goto-char (org-table-begin))
+                (while (org-table-p)
+                  (if (member (string-trim (substring-no-properties
+                                            (org-table-get-field col1)))
+                              data)
+                      (next-line)
+                    (org-table-kill-row)))))))
+      #+END_SRC
+
 ***** org-days-between-dates
       :PROPERTIES:
       :CUSTOM_ID: org-mode-functions-org-days-between-dates
@@ -6303,6 +6340,42 @@
           "Convert region from markdown to org syntax."
           (interactive "r")
           (shell-command-on-region beg end "pandoc -f markdown -t org" t t))
+      #+END_SRC
+
+***** org-insert-url-title
+      :PROPERTIES:
+      :CUSTOM_ID: org-mode-functions-org-insert-url-title
+      :END:
+
+      #+BEGIN_SRC emacs-lisp
+        ;;------------------------------------------------------------------------------
+        ;;;; Org Mode: Functions: org-insert-url-title
+        ;;------------------------------------------------------------------------------
+
+        (init-message 3 "Org Mode: Functions: org-insert-url-title")
+
+        (defun org-insert-url-title (&optional url)
+          "Fetch URL and insert page title.
+
+        URL defaults to `easy-mark' at point."
+          (interactive "*")
+          (save-mark-and-excursion
+            (let* ((url (or url
+                            (progn
+                              (easy-mark)
+                              (buffer-substring-no-properties (region-beginning)
+                                                              (region-end)))))
+                   (title
+                    (shell-command-to-string
+                     (concat
+                      "curl -s "
+                      (string-trim url)
+                      " | sed -n 's%.*<title>\(.*\)</title>.*%\1%p'"))))
+              (beginning-of-line)
+              (newline)
+              (forward-line -1)
+              (org-insert-heading)
+              (insert title))))
       #+END_SRC
 
 *** Hook
@@ -17042,43 +17115,6 @@
         (generate-fill-column-width 100)
         (generate-fill-column-width 120)
       #+END_SRC
-
-*** org-table-delete-rows-not-in-other-table
-    :PROPERTIES:
-    :CUSTOM_ID: functions-org-table-delete-rows-not-in-other-table
-    :END:
-
-    #+BEGIN_SRC emacs-lisp
-      ;;------------------------------------------------------------------------------
-      ;;; Functions: org-table-delete-rows-not-in-other-table
-      ;;------------------------------------------------------------------------------
-
-      (init-message 2 "Functions: org-table-delete-rows-not-in-other-table")
-
-      (defun org-table-remove-not-in-other-table ()
-        "Delete all rows in current table/column whose field values are not in
-      table in `other-window'."
-        (interactive "*")
-        (save-mark-and-excursion
-          (let ((col1 (org-table-current-column)))
-            (unless (org-table-p)
-              (user-error "Cursor is not in an org-table"))
-            (other-window 1)
-            (unless (org-table-p)
-              (user-error "Cursor of `other-window' is not in an org-table"))
-            (let* ((col2 (org-table-current-column))
-                   (data (mapcar (lambda (x)
-                                   (substring-no-properties (nth (1- col2) x)))
-                                 (remove 'hline (org-table-to-lisp)))))
-              (other-window -1)
-              (goto-char (org-table-begin))
-              (while (org-table-p)
-                (if (member (string-trim (substring-no-properties
-                                          (org-table-get-field col1)))
-                            data)
-                    (next-line)
-                  (org-table-kill-row)))))))
-    #+END_SRC
 
 *** Emacs Grouped Functions
     :PROPERTIES:

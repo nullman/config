@@ -3882,6 +3882,38 @@ If BEG and END are given, only that region is exported."
       (delete-region (point) (progn (forward-line -1) (point))))))
 ;; org-table-add-column-from-point:1 ends here
 
+;; [[file:init-emacs.org::#org-mode-functions-org-table-delete-rows-not-in-other-table][org-table-delete-rows-not-in-other-table:1]]
+;;------------------------------------------------------------------------------
+;;;; Org Mode: Functions: org-table-delete-rows-not-in-other-table
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Org Mode: Functions: org-table-delete-rows-not-in-other-table")
+
+(defun org-table-remove-not-in-other-table ()
+  "Delete all rows in current table/column whose field values are not in
+table in `other-window'."
+  (interactive "*")
+  (save-mark-and-excursion
+    (let ((col1 (org-table-current-column)))
+      (unless (org-table-p)
+        (user-error "Cursor is not in an org-table"))
+      (other-window 1)
+      (unless (org-table-p)
+        (user-error "Cursor of `other-window' is not in an org-table"))
+      (let* ((col2 (org-table-current-column))
+             (data (mapcar (lambda (x)
+                             (substring-no-properties (nth (1- col2) x)))
+                           (remove 'hline (org-table-to-lisp)))))
+        (other-window -1)
+        (goto-char (org-table-begin))
+        (while (org-table-p)
+          (if (member (string-trim (substring-no-properties
+                                    (org-table-get-field col1)))
+                      data)
+              (next-line)
+            (org-table-kill-row)))))))
+;; org-table-delete-rows-not-in-other-table:1 ends here
+
 ;; [[file:init-emacs.org::#org-mode-functions-org-days-between-dates][org-days-between-dates:1]]
 ;;------------------------------------------------------------------------------
 ;;;; Org Mode: Functions: org-days-between-dates
@@ -4175,6 +4207,37 @@ If BUFFER is nil, current buffer is used."
   (interactive "r")
   (shell-command-on-region beg end "pandoc -f markdown -t org" t t))
 ;; org-convert-markdown-to-org:1 ends here
+
+;; [[file:init-emacs.org::#org-mode-functions-org-insert-url-title][org-insert-url-title:1]]
+;;------------------------------------------------------------------------------
+;;;; Org Mode: Functions: org-insert-url-title
+;;------------------------------------------------------------------------------
+
+(init-message 3 "Org Mode: Functions: org-insert-url-title")
+
+(defun org-insert-url-title (&optional url)
+  "Fetch URL and insert page title.
+
+URL defaults to `easy-mark' at point."
+  (interactive "*")
+  (save-mark-and-excursion
+    (let* ((url (or url
+                    (progn
+                      (easy-mark)
+                      (buffer-substring-no-properties (region-beginning)
+                                                      (region-end)))))
+           (title
+            (shell-command-to-string
+             (concat
+              "curl -s "
+              (string-trim url)
+              " | sed -n 's%.*<title>\(.*\)</title>.*%\1%p'"))))
+      (beginning-of-line)
+      (newline)
+      (forward-line -1)
+      (org-insert-heading)
+      (insert title))))
+;; org-insert-url-title:1 ends here
 
 ;; [[file:init-emacs.org::#org-mode-hook][Hook:1]]
 ;;------------------------------------------------------------------------------
@@ -11614,38 +11677,6 @@ If BUFFER is nil, use `current-buffer'."
 (generate-fill-column-width 100)
 (generate-fill-column-width 120)
 ;; generate-fill-column-width:1 ends here
-
-;; [[file:init-emacs.org::#functions-org-table-delete-rows-not-in-other-table][org-table-delete-rows-not-in-other-table:1]]
-;;------------------------------------------------------------------------------
-;;; Functions: org-table-delete-rows-not-in-other-table
-;;------------------------------------------------------------------------------
-
-(init-message 2 "Functions: org-table-delete-rows-not-in-other-table")
-
-(defun org-table-remove-not-in-other-table ()
-  "Delete all rows in current table/column whose field values are not in
-table in `other-window'."
-  (interactive "*")
-  (save-mark-and-excursion
-    (let ((col1 (org-table-current-column)))
-      (unless (org-table-p)
-        (user-error "Cursor is not in an org-table"))
-      (other-window 1)
-      (unless (org-table-p)
-        (user-error "Cursor of `other-window' is not in an org-table"))
-      (let* ((col2 (org-table-current-column))
-             (data (mapcar (lambda (x)
-                             (substring-no-properties (nth (1- col2) x)))
-                           (remove 'hline (org-table-to-lisp)))))
-        (other-window -1)
-        (goto-char (org-table-begin))
-        (while (org-table-p)
-          (if (member (string-trim (substring-no-properties
-                                    (org-table-get-field col1)))
-                      data)
-              (next-line)
-            (org-table-kill-row)))))))
-;; org-table-delete-rows-not-in-other-table:1 ends here
 
 ;; [[file:init-emacs.org::#functions-emacs-grouped-functions][Emacs Grouped Functions:1]]
 ;;------------------------------------------------------------------------------
