@@ -61,6 +61,7 @@ MENU:
   footnotes           Footnote Symbols
   git                 Synchronize Repositories
   home                Home Page Bookmarks
+  mpd                 Music Player Daemon
   paste               Paste Strings
   password            Generate Password
   qemu                QEMU Emulator
@@ -90,6 +91,7 @@ if [ $# -lt 1 ]; then
         "󰽒	Footnotes"
         "	Git"
         "⌂	Home"
+        "󰝚	MPD"
         "	Paste"
         "	Password"
         "󰆧	Qemu"
@@ -307,7 +309,7 @@ case "${menu}" in
     home)
         # display home page bookmarks
         if [ $# -lt 2 ]; then
-            sel=$(cat "${HOME}/home-pages/"{home,dev,game}.html | sed -n '/<a id=/p' | \
+            sel=$(cat "${HOME}/home-pages/"{home,dev,media}.html | sed -n '/<a id=/p' | \
                       sed 's/^.*<a id=\"id__\(.*\)__\([^"]*\)\".*$/\1: \2/; s/_/ /g' | \
                       ${prompt} '⌂  Home Page')
         else
@@ -317,10 +319,45 @@ case "${menu}" in
         # open bookmark
         if [ -n "${sel}" ]; then
             id=$(printf '%s' "${sel}" | sed 's/ /_/g; s/:_/__/; s/^/id__/')
-            url=$(grep "${id}" "${HOME}/home-pages/"{home,devk,game}.html | sed 's/^.* href=\"\([^"]*\)\".*$/\1/')
+            url=$(grep "${id}" "${HOME}/home-pages/"{home,dev,media}.html | sed 's/^.* href=\"\([^"]*\)\".*$/\1/')
             (xdg-open "${url}" & disown)
         fi
        ;;
+
+    mpd)
+        # music player daemon selections
+        if [ $# -lt 2 ]; then
+            selections=(
+                "Song"
+                "Album"
+                "Artist"
+            )
+            sel=$(printf '%s\n' "${selections[@]}" | ${prompt} '󰝚  Music Player Daemon')
+        else
+            sel=$2
+        fi
+
+        if [ -n "${sel}" ]; then
+            dir=$(sed -n 's/^music_directory *"\(.*\)"$/\1/p' ${XDG_CONFIG_HOME}/mpd/mpd.conf) || exit 0
+            sel=$(printf '%s' "${sel}" | tr '[:upper:]' '[:lower:]')
+
+            case "${sel}" in
+                song)
+                    file=$(fd '\.mp3$' "${dir}" -p -t f | sed "s%^${dir}/%% ; s%\.mp3$%%" | sort | ${promptfont} '󰝚  MPD: Select Song') || exit 0
+                    (mpc insert "${file}.mp3" && mpc next >/dev/null && mpc play >/dev/null & disown)
+                    ;;
+                album)
+                    file=$(fd '' "${dir}/Albums" -p -t d --min-depth 2 | sed "s%^${dir}/Albums/%% ; s%/$%%" | sort | ${promptfont} '󰝚  MPD: Select Album') || exit 0
+                    (mpc insert "Albums/${file}" && mpc next >/dev/null && mpc play >/dev/null & disown)
+                    ;;
+                artist)
+                    artist=$(fd '\.mp3$' "${dir}" -p -t f | sed "s%^${dir}/%% ; s%.*/%% ; s% - .*%%" | grep -v '\.mp3$' | sort --unique | ${promptfont} '󰝚  MPD: Select Artist') || exit 0
+                    files=$(fd "/${artist} - " "${dir}" -p -t f | sed "s%^${dir}/%%" | sort) || exit 0
+                    ((while IFS= read -r file; do mpc insert "${file}"; done <<< "${files}") && mpc next >/dev/null && mpc play >/dev/null & disown)
+                    ;;
+            esac
+        fi
+        ;;
 
     paste)
         # display paste options
@@ -414,7 +451,7 @@ case "${menu}" in
 
         # run screenshot command
         if [ -n "${sel}" ]; then
-            sel=$(printf "%s" "${sel}" | tr '[:upper:]' '[:lower:]')
+            sel=$(printf '%s' "${sel}" | tr '[:upper:]' '[:lower:]')
             case "${sel}" in
                 screen)
                     eval "${screenshotscreen}" & disown

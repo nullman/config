@@ -441,10 +441,10 @@ fix-executable-flags() {
 colors() {
     local fgc bgc vals seq0
 
-    printf "Color escapes are %s\n" '\e[VALUE;...;VALUEm'
-    printf "Values 30..37 are \e[33mforeground colors\e[m\n"
-    printf "Values 40..47 are \e[43mbackground colors\e[m\n"
-    printf "Value  1 gives a  \e[1mbold-faced look\e[m\n\n"
+    printf 'Color escapes are \e[VALUE;...;VALUEm\n'
+    printf 'Values 30..37 are \e[33mforeground colors\e[m\n'
+    printf 'Values 40..47 are \e[43mbackground colors\e[m\n'
+    printf 'Value  1 gives a  \e[1mbold-faced look\e[m\n\n'
 
     # foreground colors
     for fgc in {30..37}; do
@@ -2473,7 +2473,7 @@ make-metapac-groups() {
     for backend in "arch" "snap"; do
         for group in $(_getgroups ${backend}); do
             repos="$(_getrepos ${backend})"
-            printf "%s\n%s\n%s\n%s\n%s\n\n" \
+            printf '%s\n%s\n%s\n%s\n%s\n\n' \
                    "${backend} = {" \
                    "  packages = [" \
                    "$(_getpackages ${backend} "${group}")" \
@@ -2486,7 +2486,7 @@ make-metapac-groups() {
     for backend in "dnf"; do
         for group in $(_getgroups ${backend}); do
             repos="$(_getrepos ${backend})"
-            printf "%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n\n" \
+            printf '%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n\n' \
                    "${backend} = {" \
                    "  repos = [" \
                    "$(_getrepos ${backend})" \
@@ -2502,7 +2502,7 @@ make-metapac-groups() {
     for backend in "flatpak"; do
         for group in $(_getgroups ${backend}); do
             repos="$(_getrepos ${backend})"
-            printf "%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n\n" \
+            printf '%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n\n' \
                    "${backend} = {" \
                    "  repos = [" \
                    "$(_getrepos ${backend})" \

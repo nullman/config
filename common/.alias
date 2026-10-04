@@ -345,7 +345,7 @@ alias xrdb-merge-home="xrdb -merge \${HOME}/.Xresources"
 alias brh="br -h"
 #        find-duplicate-files    find duplicate files, recursively, starting from current directory
 alias find-duplicate-files="
-    find -not -empty -type f -printf \"%s\n\" | sort -rn | uniq -d | \
+    find -not -empty -type f -printf '%s\n' | sort -rn | uniq -d | \
     xargs -I{} -n1 find -type f -size {}c -print0 | xargs -0 md5sum | \
     sort | uniq -w32 --all-repeated=separate"
 #        fortune-cowsay-lolcat   fortune piped to cowsay piped to lolcat
@@ -510,7 +510,7 @@ alias create-media-links="
 alias iommu-list="
     if [ -d /sys/kernel/iommu_groups ]; then
         for group in \$(find /sys/kernel/iommu_groups/* -maxdepth 0 -type d | sed 's%/sys/kernel/iommu_groups/%%' | sort -n); do
-            printf \"\nIOMMU Group: %s\n\" \"\${group}\"
+            printf '\nIOMMU Group: %s\n' \"\${group}\"
             for device in /sys/kernel/iommu_groups/\${group}/devices/*; do
                 device=\"\${device#/sys/kernel/iommu_groups/\${group}/devices/}\"
                 lspci -nns \"\${device##*/}\"
@@ -804,7 +804,7 @@ alias nm-nullman-disconnect="nmcli connect down nullman"
 # qemu networking
 #
 #        qemu-random-mac         generate a random mac address for use with qemu
-alias qemu-random-mac="printf \"52:54:%02x:%02x:%02x:%02x\n\" \$((\${RANDOM} & 0xff)) \$((\${RANDOM} & 0xff)) \$((\${RANDOM} & 0xff)) \$((\${RANDOM} & 0xff))"
+alias qemu-random-mac="printf '52:54:%02x:%02x:%02x:%02x\n' \$((\${RANDOM} & 0xff)) \$((\${RANDOM} & 0xff)) \$((\${RANDOM} & 0xff)) \$((\${RANDOM} & 0xff))"
 
 #
 # bluetooth
