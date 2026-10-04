@@ -36,8 +36,8 @@ input {
 
 switch-events {
     //lid-close { spawn "swaylock"; }
-    lid-close { spawn "bash" "-c" "[ -e /tmp/.niri-lid-open ] && swaylock; rm /tmp/.niri-lid-open"; }
-    lid-open { spawn "bash" "-c" "touch /tmp/.niri-lid-open"; }
+    //lid-close { spawn "bash" "-c" "[ -e /tmp/.niri-lid-open ] && swaylock; rm /tmp/.niri-lid-open"; }
+    //lid-open { spawn "bash" "-c" "touch /tmp/.niri-lid-open"; }
     //tablet-mode-on { spawn "bash" "-c" "gsettings set org.gnome.desktop.a11y.applications screen-keyboard-enabled true"; }
     //tablet-mode-off { spawn "bash" "-c" "gsettings set org.gnome.desktop.a11y.applications screen-keyboard-enabled false"; }
 }
@@ -142,6 +142,7 @@ workspace "vm"     // ""
 //spawn-at-startup "waybar"
 //spawn-sh-at-startup "xscreensaver --splash"
 spawn-sh-at-startup "${HOME}/bin/run-sxhkd"
+spawn-sh-at-startup "swayidle -w before-sleep 'swaylock' >/dev/null 2>&1 &"
 spawn-sh-at-startup "niri msg action focus-workspace 1"
 
 // do not show hotkey list on startup
