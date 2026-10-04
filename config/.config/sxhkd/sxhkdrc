@@ -418,7 +418,7 @@ super + shift + n
 
 # mpc: select item to play
 super + m
-    ${HOME}/bin/mpd-select
+    ${HOME}/bin/rofi-menu mpd
 
 # mpc: toggle play/pause
 super + alt + ctrl + m

@@ -430,7 +430,7 @@ super + shift + n
 
 # mpc [personal]: select item to play
 super + m
-    qvm-run personal "$(${HOME}/bin/mpd-select)"
+    qvm-run personal "$(${HOME}/bin/rofi-menu mpd)"
 
 # mpc [personal]: toggle play/pause
 super + alt + ctrl + m
