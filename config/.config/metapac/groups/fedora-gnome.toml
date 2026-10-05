@@ -98,8 +98,6 @@ dnf = {
     "gst-thumbnailers",
     "gutenprint-cups",
     "gvfs-afc",
-    "gvfs-afp",
-    "gvfs-archive",
     "gvfs-fuse",
     "gvfs-gphoto2",
     "gvfs-mtp",

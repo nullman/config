@@ -81,7 +81,6 @@ dnf = {
     "pandoc-pdf",
     "phoronix-test-suite",
     "picocom",
-    "procs",
     "sad",
     "sendmail",
     "sharutils",

@@ -255,7 +255,6 @@ dnf = {
     "the_silver_searcher",
     "time",
     "tldr",
-    "tlp",
     "tmux",
     "traceroute",
     "tree",
