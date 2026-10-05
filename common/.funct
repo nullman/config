@@ -1645,6 +1645,7 @@ fedora-initialize() {
         "fedora-dms-greeter"
         "fedora-brave"
         "fedora-xscreensaver"
+        "fedora-dovecot"
         "fedora-copr"
     )
 

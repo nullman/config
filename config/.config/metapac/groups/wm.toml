@@ -61,7 +61,6 @@ dnf = {
   ], 
   packages = [
     "adw-gtk3-theme",
-    "blueman",
     "breeze-cursor-theme",
     "breeze-gtk-gtk2",
     "breeze-gtk-gtk3",

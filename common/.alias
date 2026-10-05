@@ -307,8 +307,8 @@ alias system-info="sudo inxi -Fx"
 alias battery-info="cat /sys/class/power_supply/BAT0/uevent"
 #        graphics-cards          display graphics cards
 alias graphics-cards="lspci -k | grep -A 2 -E '(VGA|3D)'"
-#        nvidia-opengl-renderer  display nvidia opengl renderer
-alias nvidia-opengl-renderer="prime-run glxinfo | grep '^OpenGL renderer'"
+#        prime-run               launch application using nvidia display
+alias prime-run="__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia"
 #        hdp                     hdparm -t --direct
 alias hdp="hdparm -t --direct"
 #        font-aliases            list font aliases
