@@ -3092,42 +3092,42 @@ alias pacman-reset-mirrors-geoip="sudo pacman-mirrors --geoip"
 alias pacman-reset-mirrors-us-rate="sudo reflector -a 10 -c us -f 5 --sort rate --save /etc/pacman.d/mirrorlist"
 #        pacman-reset-repository  pacman reset and rebuild repository (used to recover from an invalid state)
 alias pacman-reset-repository="
-    # update keyring
+    #! update keyring
     sudo pacman -Sy archlinux-keyring
     sudo rm -rf /etc/pacman.d/gnupg
     sudo rm -rf /root/.gnupg
     gpg --refresh-keys
     sudo pacman-key --init
     sudo pacman-key --refresh-keys
-    #sudo pacman-key --populate archlinux manjaro
+    #!sudo pacman-key --populate archlinux manjaro
     sudo pacman-key --populate archlinux
 
-    # remove unused packages (orphans)
+    #! remove unused packages (orphans)
     sudo pacman -Rsn \$(pacman -Qdtq)
 
-    # safely remove old packages
+    #! safely remove old packages
     sudo paccache -rvk3
 
-    # remove all cached packages that are not currently installed, and the unused sync database
+    #! remove all cached packages that are not currently installed, and the unused sync database
     sudo pacman -Sc
 
-    # clear sessions cache
+    #! clear sessions cache
     rm -rf \${HOME}/.cache/sessions/*
 
-    # update packages
+    #! update packages
     sudo pacman -Syyu"
 #        pacman-clear-cache      clear pacman cache and unused packages
 alias pacman-clear-cache="
-    # remove unused packages (orphans)
+    #! remove unused packages (orphans)
     sudo pacman -Rsn \$(pacman -Qdtq)
 
-    # safely remove old packages
+    #! safely remove old packages
     sudo paccache -rvk3
 
-    # remove all cached packages that are not currently installed, and the unused sync database
+    #! remove all cached packages that are not currently installed, and the unused sync database
     sudo pacman -Sc
 
-    # clear sessions cache
+    #! clear sessions cache
     rm -rf \${HOME}/.cache/sessions/*"
 
 #
