@@ -363,7 +363,7 @@ super + shift + s
 
 # reload system tray (polybar) [dom0]
 super + shift + r
-    ${HOME}/bin/system-bar && notify-send --expire-time=3000 'Reloading Polybar'
+    ${HOME}/bin/system-bar && notify-send --expire-time=3000 'Reloading System Bar'
 
 # # reload xfce-panel [dom0]
 # super + shift + r
@@ -403,22 +403,22 @@ super + shift + backslash
 # connect to sennheiser hd350bt headphones [personal]
 super + b
     notify-send --expire-time=3000 'Connecting to Sennheiser HD 350BT Headphones' && \
-    qvm-run personal "bluetoothctl connect 80:C3:BA:0E:CB:E5"
+    qvm-run personal "bluetoothctl power on ; bluetoothctl connect 80:C3:BA:0E:CB:E5"
 
 # disconnect from sennheiser hd350bt headphones [personal]
 super + shift + b
     notify-send --expire-time=3000 'Disconnecting from Sennheiser HD 350BT Headphones' && \
-    qvm-run personal "bluetoothctl disconnect 80:C3:BA:0E:CB:E5"
+    qvm-run personal "bluetoothctl disconnect 80:C3:BA:0E:CB:E5 ; bluetoothctl power off"
 
 # connect to powerbeats pro headphones [personal]
 super + n
     notify-send --expire-time=3000 'Connecting to Powerbeats Pro Headphones' && \
-    qvm-run personal "bluetoothctl connect 14:1A:97:05:81:4C"
+    qvm-run personal "bluetoothctl power on ; bluetoothctl connect 14:1A:97:05:81:4C"
 
 # disconnect from powerbeats pro headphones [personal]
 super + shift + n
     notify-send --expire-time=3000 'Disconnecting from Powerbeats Pro Headphones' && \
-    qvm-run personal "bluetoothctl disconnect 14:1A:97:05:81:4C"
+    qvm-run personal "bluetoothctl disconnect 14:1A:97:05:81:4C ; bluetoothctl power off"
 
 # # nixos-rebuild switch
 # super + shift + r

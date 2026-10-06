@@ -355,7 +355,7 @@ super + shift + s
 
 # reload system tray (polybar)
 super + shift + r
-    ${HOME}/bin/system-bar && notify-send --expire-time=3000 'Reloading Polybar'
+    ${HOME}/bin/system-bar && notify-send --expire-time=3000 'Reloading System Bar'
 
 # # reload system tray (xfce-panel)
 # super + shift + r
@@ -375,38 +375,42 @@ super + shift + r
 #     xdo below -t $(xdo id -n root) $(xdo id -n eww) && \
 #     notify-send --expire-time=3000 'Reloading EWW'
 
-# reload conky
-super + shift + c
-    (${HOME}/bin/system-wallpaper-displays &) && notify-send --expire-time=3000 'Reloading Conky'
+# # reload conky
+# super + shift + c
+#     (${HOME}/bin/system-wallpaper-displays &) && notify-send --expire-time=3000 'Reloading Conky'
 
-# reset video
-super + shift + v
-    xrandr --output $(xrandr | grep ' connected ' | sed 's/ .*//' | head -n 1) --auto && \
-    notify-send --expire-time=3000 'Resetting video'
+# # reset video
+# super + shift + v
+#     xrandr --output $(xrandr | grep ' connected ' | sed 's/ .*//' | head -n 1) --auto && \
+#     notify-send --expire-time=3000 'Resetting video'
 
-# set X11 caps-lock, insert key, keyboard, and mouse speed
-super + shift + backslash
-    (${HOME}/bin/set-x11-settings) && notify-send --expire-time=3000 'X11 settings applied'
+# # set X11 caps-lock, insert key, keyboard, and mouse speed
+# super + shift + backslash
+#     (${HOME}/bin/set-x11-settings) && notify-send --expire-time=3000 'X11 settings applied'
 
 # connect to sennheiser hd350bt headphones
 super + b
     notify-send --expire-time=3000 'Connecting to Sennheiser HD 350BT Headphones' && \
+    bluetoothctl power on \
     bluetoothctl connect 80:C3:BA:0E:CB:E5
 
 # disconnect from sennheiser hd350bt headphones
 super + shift + b
     notify-send --expire-time=3000 'Disconnecting from Sennheiser HD 350BT Headphones' && \
-    bluetoothctl disconnect 80:C3:BA:0E:CB:E5
+    bluetoothctl disconnect 80:C3:BA:0E:CB:E5 \
+    bluetoothctl power off
 
 # connect to powerbeats pro headphones
 super + n
     notify-send --expire-time=3000 'Connecting to Powerbeats Pro Headphones' && \
+    bluetoothctl power on \
     bluetoothctl connect 14:1A:97:05:81:4C
 
 # disconnect from powerbeats pro headphones
 super + shift + n
     notify-send --expire-time=3000 'Disconnecting from Powerbeats Pro Headphones' && \
-    bluetoothctl disconnect 14:1A:97:05:81:4C
+    bluetoothctl disconnect 14:1A:97:05:81:4C \
+    bluetoothctl power off
 
 # # nixos-rebuild switch
 # super + shift + r

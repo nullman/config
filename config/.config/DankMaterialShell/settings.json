@@ -127,6 +127,9 @@
       "cursorHideTimeout": 0
     }
   },
+  "fontFamily": "MesloLGS Nerd Font",
+  "monoFontFamily": "MesloLGS Nerd Font Mono",
+  "fontScale": 1.2,
   "acLockTimeout": 3600,
   "acProfileName": "2",
   "acPostLockMonitorTimeout": 60,
