@@ -7,8 +7,8 @@
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
-REPLACE_ID=1
-EXPIRE_TIME=5000                        # 5 seconds
+REPLACE_ID=$([ "${XDG_SESSION_TYPE}" == "wayland" ] || printf '--replace-id=1')
+EXPIRE_TIME="--expire-time=3000"        # 3 seconds
 
 # check if executable command is found in the path
 _command() {
@@ -39,22 +39,22 @@ notify-send-volume() {
     local volume=$(pamixer --get-volume)
     case $1 in
         mute)
-            _run notify-send --expire-time=${EXPIRE_TIME} --replace-id=${REPLACE_ID} --icon="volume-$1" "Muted"
+            _run notify-send ${EXPIRE_TIME} ${REPLACE_ID} --icon="volume-$1" "Muted"
            ;;
 
         unmute)
-            _run notify-send --expire-time=${EXPIRE_TIME} --replace-id=${REPLACE_ID} --hint=int:value:"${volume}" --icon="volume-$1" "Unmuted"
+            _run notify-send ${EXPIRE_TIME} ${REPLACE_ID} --hint=int:value:"${volume}" --icon="volume-$1" "Unmuted"
            ;;
 
         *)
-            _run notify-send --expire-time=${EXPIRE_TIME} --replace-id=${REPLACE_ID} --hint=int:value:"${volume}" --icon="volume-$1" "Volume $1"
+            _run notify-send ${EXPIRE_TIME} ${REPLACE_ID} --hint=int:value:"${volume}" --icon="volume-$1" "Volume $1"
            ;;
     esac
 }
 
 notify-send-brightness() {
     local brightness=$(light -G | sed 's/\.[0-9]*$//')
-    _run notify-send --expire-time=${EXPIRE_TIME} --replace-id=${REPLACE_ID} --hint=int:value:"${brightness}" --icon="brightness-$1" "Brightness $1"
+    _run notify-send ${EXPIRE_TIME} ${REPLACE_ID} --hint=int:value:"${brightness}" --icon="brightness-$1" "Brightness $1"
 }
 
 case $1 in

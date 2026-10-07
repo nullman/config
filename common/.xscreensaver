@@ -40,7 +40,7 @@ dialogTheme:	default
 settingsGeom:	0,0 0,0
 
 programs:								      \
-		   "ATV4-1080" 	atv4-1080				    \n\
+		     "ATV4-2k" 	atv4-2k					    \n\
 		     "ATV4-4k" 	atv4-4k					    \n\
 -		 "Qix (solid)" 	qix -root -delay 10471 -segments 100 -solid \n\
 -	   "Qix (transparent)" 	qix -root -count 4 -solid -transparent	    \n\
@@ -466,4 +466,3 @@ programs:								      \
 
 pointerHysteresis:  10
 authWarningSlack:   20
-

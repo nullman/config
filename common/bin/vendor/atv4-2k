@@ -1,0 +1,229 @@
+#!/usr/bin/env bash
+
+[[ -z "$XDG_CONFIG_HOME" ]] &&
+    XDG_CONFIG_HOME="${HOME}/.config"
+
+command -v mplayer >/dev/null 2>&1 || {
+    echo "mplayer not found" >&2
+    exit 1;
+}
+
+# path of videos
+videos="/home/data/media/Video/Aerial/1080p"
+
+# day and night videos
+day_videos=(
+    "Alaskan Jellies 1.mov"
+    "Alaskan Jellies 2.mov"
+    "Barracuda.mov"
+    "Bay and Embarcadero.mov"
+    "Bay and Golden Gate.mov"
+    "Buckingham Palace.mov"
+    "Bumpheads.mov"
+    "California Dolphins.mov"
+    "California Kelp Forest.mov"
+    "Castle Tioram.mov"
+    "Central Park.mov"
+    "China - Longji Rice Terraces.mov"
+    "China - Wulingyuan National Park 1.mov"
+    "China - Wulingyuan National Park 2.mov"
+    "Costa Rica Dolphins.mov"
+    "Cownose Rays.mov"
+    "Cuernos del Paine.mov"
+    "Dubai - Downtown.mov"
+    "Dubai - Marina 1.mov"
+    "Dubai - Marina 2.mov"
+    "Dubai - Sheikh Zayed Road (Night).mov"
+    "Dubai - Sheikh Zayed Road.mov"
+    "Embarcadero, Market Street.mov"
+    "Fisherman's Wharf.mov"
+    "Giant Magellan Telescope - Africa Night.mov"
+    "Giant Magellan Telescope - Africa and the Middle East.mov"
+    "Giant Magellan Telescope - Antartica.mov"
+    "Giant Magellan Telescope - Caribbean Day.mov"
+    "Giant Magellan Telescope - Caribbean to Central America.mov"
+    "Giant Magellan Telescope - Caribbean.mov"
+    "Giant Magellan Telescope - Nile Delta.mov"
+    "Giant Magellan Telescope - Northern California to Baja.mov"
+    "Giant Magellan Telescope - Sahara and Italy.mov"
+    "Giant Magellan Telescope - South Africa to North Asia.mov"
+    "Giant Magellan Telescope - West Africa to the Alps.mov"
+    "Golden Gate from SF.mov"
+    "Grand Canyon 1.mov"
+    "Grand Canyon 2.mov"
+    "Grand Canyon 3.mov"
+    "Grand Canyon 4.mov"
+    "Grand Canyon 5.mov"
+    "Gray Reef Sharks.mov"
+    "Great Wall 1.mov"
+    "Great Wall 2.mov"
+    "Great Wall 3.mov"
+    "Greenland - Ilulissat Icefjord 2.mov"
+    "Greenland - Ilulissat Icefjord.mov"
+    "Greenland - Nuussuaq Peninsula.mov"
+    "Half Dome and Nevada Fall.mov"
+    "Hong Kong - Victoria Harbour 1.mov"
+    "Hong Kong - Victoria Harbour 2.mov"
+    "Hong Kong - Victoria Peak.mov"
+    "Hong Kong - Wan Chai.mov"
+    "Humpback Whale.mov"
+    "Isle of Skye.mov"
+    "Jacks.mov"
+    "Jökulgil.mov"
+    "Jökulgilskvísl River.mov"
+    "Kohala Coastline.mov"
+    "Lago Nordenskjöld 1.mov"
+    "Lago Nordenskjöld 2.mov"
+    "Landmannalaugar.mov"
+    "Langisjór.mov"
+    "Laupāhoehoe Nui.mov"
+    "Liwa Oasis 1.mov"
+    "Liwa Oasis 2.mov"
+    "Loch Moidart.mov"
+    "Los Angeles - Griffith Observatory.mov"
+    "Los Angeles - Harbor Freeway.mov"
+    "Los Angeles - Hollywood Hills.mov"
+    "Los Angeles - Los Angeles Int'l Airport.mov"
+    "Los Angeles - Santa Monica Beach.mov"
+    "Lower Manhattan.mov"
+    "Marin Headlands in Fog.mov"
+    "Matthes Crest.mov"
+    "Merced Peak.mov"
+    "Mýrdalsjökull Glacier.mov"
+    "Palau Coral.mov"
+    "Palau Jellies 1.mov"
+    "Palau Jellies 2.mov"
+    "Palau Jellies 3.mov"
+    "Pu'u O 'Umi 1.mov"
+    "Pu'u O 'Umi 2.mov"
+    "Red Sea Coral.mov"
+    "River Thames near Sunset.mov"
+    "River Thames.mov"
+    "Sea Stars.mov"
+    "Seals.mov"
+    "South African Kelp.mov"
+    "Tahiti Waves 1.mov"
+    "Tahiti Waves 2.mov"
+    "Torres del Paine National Park.mov"
+    "Tungnaá.mov"
+    "Tuolumne Meadows.mov"
+    "Upper East Side.mov"
+    "Waimanu Valley.mov"
+    "Yosemite 1.mov"
+    "Yosemite 2.mov"
+    "Yosemite 3.mov"
+    "b1-1.mov"
+    "b1-2.mov"
+    "b1-3.mov"
+    "b10-3.mov"
+    "b2-1.mov"
+    "b2-2.mov"
+    "b2-4.mov"
+    "b3-2.mov"
+    "b3-3.mov"
+    "b4-1.mov"
+    "b4-2.mov"
+    "b4-3.mov"
+    "b5-1.mov"
+    "b5-2.mov"
+    "b5-3.mov"
+    "b6-1.mov"
+    "b6-2.mov"
+    "b6-3.mov"
+    "b6-4.mov"
+    "b7-1.mov"
+    "b7-2.mov"
+    "b7-3.mov"
+    "b8-1.mov"
+    "b8-2.mov"
+    "b8-3.mov"
+    "b9-3.mov"
+)
+
+night_videos=(
+    "Bay Bridge.mov"
+    "Dubai - Approaching Burj Khalifa.mov"
+    "Giant Magellan Telescope - Atlantic Ocean to Spain and France.mov"
+    "Giant Magellan Telescope - Australia.mov"
+    "Giant Magellan Telescope - California to Vegas.mov"
+    "Giant Magellan Telescope - China.mov"
+    "Giant Magellan Telescope - Iran and Afghanistan.mov"
+    "Giant Magellan Telescope - Ireland to Asia.mov"
+    "Giant Magellan Telescope - Italy to Asia.mov"
+    "Giant Magellan Telescope - Korea and Japan Night.mov"
+    "Giant Magellan Telescope - Mexico City to New York.mov"
+    "Giant Magellan Telescope - New Zealand.mov"
+    "Giant Magellan Telescope - North America Aurora.mov"
+    "Hong Kong - Victoria Harbour 2 (Night).mov"
+    "Los Angeles - Downtown.mov"
+    "River Thames at Dusk.mov"
+    "Seventh Avenue.mov"
+    "b1-4.mov"
+    "b2-3.mov"
+    "b3-1.mov"
+    "b9-2.mov"
+)
+
+# files to prevent repeats when playing videos
+day_tracker="${XDG_CONFIG_HOME}/.atv4-2k-day"
+night_tracker="${XDG_CONFIG_HOME}/.atv4-2k-night"
+
+loop() {
+    if [[ ! -s "${day_tracker}" ]]; then
+         for line in "${day_videos[@]}"; do
+              echo "${line}" >> "${day_tracker}"
+         done
+    fi
+    if [[ ! -s "${night_tracker}" ]]; then
+         for line in "${night_videos[@]}"; do
+              echo "${line}" >> "${night_tracker}"
+         done
+    fi
+
+    # set the time of day based on the local clock
+    # where day is after 7AM and before 7PM
+    hour=$(date +%H)
+    if [[ "${hour}" -ge 7 ]] || [[ "${hour}" -lt 19 ]]; then
+        tracker="${day_tracker}"
+    else
+        tracker="${night_tracker}"
+    fi
+
+    # select at random a video to play from the day or night pools
+    count=$(wc -l "${tracker}" | cut -d ' ' -f 1)
+    #echo "${tracker} contains ${count} records"
+    # two conditions:
+    # - 1 line left (one vid) so use the vid and regenerate the list
+    # - 2 or more lines left so select a random number between 1 and count
+    if [[ ${count} -eq 1 ]]; then
+        # last video
+        video=$(sed -n "1 p" "${tracker}")
+
+        # exclude the one we just picked
+        sed -i "/${video}/d" "${tracker}"
+    elif [[ ${count} -ge 2 ]]; then
+        # choose random video
+        rnd=$((RANDOM % count + 1))
+        video=$(sed -n "${rnd} p" "${tracker}")
+
+        # remove the one we just picked
+        sed -i "/$video/d" "$tracker"
+    fi
+    #echo "video: ${video}"
+}
+
+# this part taken from Kevin Cox
+# https://github.com/kevincox/xscreensaver-videos
+
+IFS=$'\n'
+trap : SIGTERM SIGINT SIGHUP
+while (true) #!(keystate lshift)
+do
+    loop
+    if [[ -f "${videos}/${video}" ]]; then
+        mplayer -nosound -really-quiet -nolirc -nostop-xscreensaver -wid "${XSCREENSAVER_WINDOW}" -fs "${videos}/${video}" &
+        pid=$!
+        wait $pid
+        [ $? -gt 128 ] && { kill $pid; exit 128; }
+    fi
+done
