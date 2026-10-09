@@ -1786,9 +1786,8 @@ KEYMAP defaults to `override-global-map'."
   (bind-keys* ("C-SPC" . set-mark-command)) ; default: `set-mark-command'
 
   ;; set rectangle mark
-  (when (fboundp 'cua-set-rectangle-mark)
-    (bind-keys* ("C-x rm" . cua-set-rectangle-mark)
-                ("C-M-SPC" . cua-set-rectangle-mark))) ; default: `mark-sexp'
+  (bind-keys* ("C-x r m" . rectangle-mark-mode)
+              ("C-x SPC" . rectangle-mark-mode))
 
   ;; yank as rectangle
   (when (fboundp 'yank-as-rectangle)
@@ -1853,10 +1852,10 @@ KEYMAP defaults to `override-global-map'."
   (when (fboundp 'mark-full-word)
     (bind-keys* ("M-@" . mark-full-word))) ; default: `mark-word'
 
-  ;; ;; expand region
+  ;; ;; expand region (slow)
   ;; (when (fboundp 'er/expand-region)
   ;;   (bind-keys* ("C-=" . er/expand-region)   ; default: `count-lines-region'
-  ;;               ("C-+" . er/contract-region) ; default: `count-lines-region'
+  ;;               ("C--" . er/contract-region) ; default: `count-lines-region'
   ;;               ("C-M-SPC" . er/expand-region) ; default: `mark-sexp'
   ;;               ("C-M-S-SPC" . er/contract-region)))
 
@@ -17188,19 +17187,19 @@ USING is the remaining peg."
   :init (exec-path-from-shell-initialize))
 ;; exec-path-from-shell:1 ends here
 
-;; [[file:init-emacs.org::#modules-expand-region][expand-region:1]]
+;; [[file:init-emacs.org::#packages-expreg][expreg:1]]
 ;;------------------------------------------------------------------------------
-;;; Packages: expand-region
+;;; Packages: expreg
 ;;------------------------------------------------------------------------------
 
-(init-message 2 "Modules: expand-region")
+(init-message 2 "Packages: expreg")
 
-(use-package expand-region
+(use-package expreg
   :straight t
-  :bind (("C-=" . er/expand-region)     ; default: `count-lines-region'
-         ("C-+" . er/contract-region))) ; default: `negative-argument'
-;;("C--" . er/contract-region))) ; default: `negative-argument'
-;; expand-region:1 ends here
+  :bind (("C-=" . expreg-expand)       ; default: `count-lines-region'
+         ("C--" . expreg-contract)     ; default: `negative-argument'
+         ("C-M-SPC" . expreg-expand))) ; default: `mark-sexp'
+;; expreg:1 ends here
 
 ;; [[file:init-emacs.org::#modules-flycheck][flycheck:1]]
 ;;------------------------------------------------------------------------------

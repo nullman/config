@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2026-10-03 00:47 (user)>
+  #+TIMESTAMP: <2026-10-08 14:03 (user)>
 
 * Overview
   :PROPERTIES:
@@ -3363,9 +3363,8 @@
         (bind-keys* ("C-SPC" . set-mark-command)) ; default: `set-mark-command'
 
         ;; set rectangle mark
-        (when (fboundp 'cua-set-rectangle-mark)
-          (bind-keys* ("C-x rm" . cua-set-rectangle-mark)
-                      ("C-M-SPC" . cua-set-rectangle-mark))) ; default: `mark-sexp'
+        (bind-keys* ("C-x r m" . rectangle-mark-mode)
+                    ("C-x SPC" . rectangle-mark-mode))
 
         ;; yank as rectangle
         (when (fboundp 'yank-as-rectangle)
@@ -3430,10 +3429,10 @@
         (when (fboundp 'mark-full-word)
           (bind-keys* ("M-@" . mark-full-word))) ; default: `mark-word'
 
-        ;; ;; expand region
+        ;; ;; expand region (slow)
         ;; (when (fboundp 'er/expand-region)
         ;;   (bind-keys* ("C-=" . er/expand-region)   ; default: `count-lines-region'
-        ;;               ("C-+" . er/contract-region) ; default: `count-lines-region'
+        ;;               ("C--" . er/contract-region) ; default: `count-lines-region'
         ;;               ("C-M-SPC" . er/expand-region) ; default: `mark-sexp'
         ;;               ("C-M-S-SPC" . er/contract-region)))
 
@@ -26088,25 +26087,26 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
         :init (exec-path-from-shell-initialize))
     #+END_SRC
 
-*** expand-region
+*** +expand-region+
     :PROPERTIES:
-    :CUSTOM_ID: modules-expand-region
+    :CUSTOM_ID: packages-expand-region
     :END:
 
     Increase selected region by semantic units.
 
-    #+BEGIN_SRC emacs-lisp
-      ;;------------------------------------------------------------------------------
-      ;;; Packages: expand-region
-      ;;------------------------------------------------------------------------------
+    #+BEGIN_SRC emacs-lisp :tangle no
+      ;; ;;------------------------------------------------------------------------------
+      ;; ;;; Packages: expand-region
+      ;; ;;------------------------------------------------------------------------------
 
-      (init-message 2 "Modules: expand-region")
+      ;; (init-message 2 "Packages: expand-region")
 
-      (use-package expand-region
-        :straight t
-        :bind (("C-=" . er/expand-region)     ; default: `count-lines-region'
-               ("C-+" . er/contract-region))) ; default: `negative-argument'
-      ;;("C--" . er/contract-region))) ; default: `negative-argument'
+      ;; (use-package expand-region
+      ;;   :straight t
+      ;;   :bind (("C-=" . er/expand-region)       ; default: `count-lines-region'
+      ;;          ("C--" . er/contract-region)     ; default: `negative-argument'
+      ;;          ("C-M-SPC" . er/expand-region))) ; default: `mark-sexp'
+
     #+END_SRC
 
 *** +explain-pause-mode+
@@ -26128,6 +26128,28 @@ o        ;;     (add-to-list 'company-backends #'company-files t))
       ;;              :repo "lastquestion/explain-pause-mode")
       ;;   :config
       ;;   (explain-pause-mode))
+    #+END_SRC
+
+*** expreg
+    :PROPERTIES:
+    :CUSTOM_ID: packages-expreg
+    :END:
+
+    Increase selected region by semantic units.
+
+    #+BEGIN_SRC emacs-lisp
+      ;;------------------------------------------------------------------------------
+      ;;; Packages: expreg
+      ;;------------------------------------------------------------------------------
+
+      (init-message 2 "Packages: expreg")
+
+      (use-package expreg
+        :straight t
+        :bind (("C-=" . expreg-expand)       ; default: `count-lines-region'
+               ("C--" . expreg-contract)     ; default: `negative-argument'
+               ("C-M-SPC" . expreg-expand))) ; default: `mark-sexp'
+
     #+END_SRC
 
 *** flycheck

@@ -28,7 +28,6 @@ dnf = {
     "cirrus-audio-firmware",
     "colorized-logs",
     "compsize",
-    "copr-rpmbuild",
     "cups-browsed",
     "cups-pk-helper",
     "decibels",

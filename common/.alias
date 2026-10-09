@@ -1864,7 +1864,7 @@ alias mpd-service-disable="systemctl --user disable mpd"
 #        mpd-service-restart     systemctl --user restart mpd
 alias mpd-service-restart="systemctl --user restart mpd"
 #        mpd-notify              display artist and title of current song
-alias mpd-notify="notify-send --app-name=mpd --expire-time=3000 \$([ \"\${XDG_SESSION_TYPE}\" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png \"\$(\${HOME}/bin/mpd-playing --notify-title)\" \"\$(\${HOME}/bin/mpd-playing --notify-body)\""
+alias mpd-notify="notify-send --app-name=mpd --expire-time=3000 \$([ \"\${XDG_SESSION_TYPE}\" == \"wayland\" ] || printf '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png \"\$(\${HOME}/bin/mpd-playing --notify-title)\" \"\$(\${HOME}/bin/mpd-playing --notify-body)\""
 #        mpc-update              update mpc database
 alias mpc-update="mpc --wait update"
 
@@ -3302,6 +3302,34 @@ alias mpum="metapac unmanaged"
 alias mpcl="metapac clean"
 #        mpcc                    metapac clean cache (delete cached files)
 alias mpcc="metapac clean-cache"
+
+#
+# flatpak applications
+#
+#        blanket                 flatpak run com.rafaelmardojai.Blanket
+alias blanket="flatpak run com.rafaelmardojai.Blanket"
+#        element                 flatpak run im.riot.Riot
+alias element="flatpak run im.riot.Riot"
+#        lmstudio                flatpak run ai.lmstudio.lm-studio
+alias lmstudio="flatpak run ai.lmstudio.lm-studio"
+#        gearlever               flatpak run it.mijorus.gearlever
+alias gearlever="flatpak run it.mijorus.gearlever"
+#        geekbench6              flatpak run com.geekbench.Geekbench6
+alias geekbench6="flatpak run com.geekbench6.Geekbench6"
+#        impression              flatpak run io.gitlab.adhami3310.Impression
+alias impression="flatpak run io.gitlab.adhami3310.Impression"
+#        notepadqq               flatpak run com.notepadqq.Notepadqq
+alias notepadqq="flatpak run com.notepadqq.Notepadqq"
+#        slack                   flatpak run com.slack.Slack
+alias slack="flatpak run com.slack.Slack"
+#        spotify                 flatpak run com.spotify.Client
+alias spotify="flatpak run com.spotify.Client"
+#        torbrowser              flatpak run org.torproject.torbrowser-launcher
+alias torbrowser="flatpak run org.torproject.torbrowser-launcher"
+#        visual                  flatpak run com.visualstudio.code
+alias visual="flatpak run com.visualstudio.code"
+#        zoom                    flatpak run us.zoom.Zoom
+alias zoom="flatpak run us.zoom.Zoom"
 
 #
 # git

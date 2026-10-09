@@ -157,6 +157,8 @@ dnf = {
     "bzip2",
     "checksec",
     "cifs-utils",
+    "copr-cli",
+    "copr-rpmbuild",
     "coreutils",
     "cryptsetup",
     "cups",
