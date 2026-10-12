@@ -16,8 +16,8 @@ flatpak="flatpak run "
 apps=$(cat "${HOME}/.applications" | sed -n '/^[^ #]/p')
 
 # prompt for keyring authentication
-[ "$(hostname)" == "personal" ] && keyring get SecretService "$(id -un)" 2>/dev/null &
-[ "$(hostname)" == "work" ] && keyring get SecretService "$(id -un)" 2>/dev/null &
+[ "$(hostname)" == "personal" ] && keyring get SecretService "$(id -un)" 2>/dev/null & disown
+[ "$(hostname)" == "work" ] && keyring get SecretService "$(id -un)" 2>/dev/null & disown
 
 cmd="GDK_BACKEND=x11 yad --width=512 --height=512 --list --checklist --column 'Run' --column 'Application' 2>/dev/null"
 for app in ${apps}; do
@@ -41,7 +41,7 @@ for line in ${launch}; do
         app=$(echo "${app}" | sed 's/^.*://')
         #echo "vm: ${vm}, app: ${app}"
         if [ "${vm}" == "dom0" ]; then
-            "${app}" >/dev/null 2>&1 &
+            "${app}" >/dev/null 2>&1 & disown
         elif [ "${vm}" == "personal" ]; then
             if [ "${app}" == "alacritty" ]; then
                 qvm-run personal "alacritty -e \${HOME}/bin/run-screen" >/dev/null 2>&1 & disown

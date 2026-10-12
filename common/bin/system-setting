@@ -4,11 +4,17 @@
 #
 # Modify system volume or brightness.
 #
+# Dependencies: xrandr bc (pamixer|pactl) [light]
+#
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
 
-REPLACE_ID=$([ "${XDG_SESSION_TYPE}" == "wayland" ] || printf '--replace-id=1')
+REPLACE_ID=$([ "${XDG_SESSION_TYPE}" == "wayland" ] || printf '%s' '--replace-id=1')
 EXPIRE_TIME="--expire-time=3000"        # 3 seconds
+
+if [ "$(uname -n)" == "dom0" ]; then
+    DISP=$(xrandr -q | sed -n 's/^\(.*\) connected primary .*$/\1/p')
+fi
 
 # check if executable command is found in the path
 _command() {
@@ -32,11 +38,22 @@ if [ $# -lt 2 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
     echo "  brightness up"
     echo "  brightness down"
     echo "  display toggle"
+    echo "  bluetooth on"
+    echo "  bluetooth off"
+    echo "  bluetooth connect headphones"
+    echo "  bluetooth disconnect headphones"
+    echo "  bluetooth connect earbuds"
+    echo "  bluetooth disconnect earbuds"
     exit 1
 fi
 
 notify-send-volume() {
-    local volume=$(pamixer --get-volume)
+    if _command pamixer; then
+        local volume=$(pamixer --get-volume)
+    else
+        local volume=$(pactl -- get-sink-volume 0 | sed -n 's/^Volume[^\/]*\/ *\([^\/]*\)%.*$/\1/p')
+    fi
+
     case $1 in
         mute)
             _run notify-send ${EXPIRE_TIME} ${REPLACE_ID} --icon="volume-$1" "Muted"
@@ -53,74 +70,209 @@ notify-send-volume() {
 }
 
 notify-send-brightness() {
-    local brightness=$(light -G | sed 's/\.[0-9]*$//')
+    if _command light; then
+        local brightness=$(light -G | sed 's/\.[0-9]*$//')
+    else
+        local brightness=$(printf '%s * 50\n' "$(${HOME}/bin/brightness ${DISP} +0 | sed -n 's/^Brightness: //p')" | bc | sed 's/\.[0-9]*$//')
+    fi
+
     _run notify-send ${EXPIRE_TIME} ${REPLACE_ID} --hint=int:value:"${brightness}" --icon="brightness-$1" "Brightness $1"
 }
 
 case $1 in
     volume)
-        _command pamixer || (echo "Missing pamixer command"; exit 1)
-        case $2 in
-            up)
-                pamixer --unmute
-                pamixer --increase 5 --allow-boost
-                notify-send-volume $2
-               ;;
+        if _command pamixer; then
+            case $2 in
+                up)
+                    pamixer --unmute
+                    pamixer --increase 5 --allow-boost
+                    notify-send-volume $2
+                    ;;
 
-            down)
-                pamixer --unmute
-                pamixer --decrease 5 --allow-boost
-                notify-send-volume $2
-               ;;
+                down)
+                    pamixer --unmute
+                    pamixer --decrease 5 --allow-boost
+                    notify-send-volume $2
+                    ;;
 
-            mute)
-                pamixer --mute
-                notify-send-volume $2
-               ;;
+                mute)
+                    pamixer --mute
+                    notify-send-volume $2
+                    ;;
 
-            unmute)
-                pamixer --unmute
-                notify-send-volume $2
-               ;;
+                unmute)
+                    pamixer --unmute
+                    notify-send-volume $2
+                    ;;
 
-            toggle-mute)
-                pamixer --toggle-mute
-                if $(pamixer --get-mute); then
-                    notify-send-volume mute
-                else
-                    notify-send-volume unmute
-                fi
-               ;;
-        esac
-       ;;
+                toggle-mute)
+                    pamixer --toggle-mute
+                    if $(pamixer --get-mute); then
+                        notify-send-volume mute
+                    else
+                        notify-send-volume unmute
+                    fi
+                    ;;
+            esac
+        else
+            case $2 in
+                up)
+                    pactl -- set-sink-volume 0 +5%
+                    notify-send-volume $2
+                    ;;
+
+                down)
+                    pactl -- set-sink-volume 0 -5%
+                    notify-send-volume $2
+                    ;;
+
+                mute)
+                    pactl -- set-sink-mute 0 1
+                    notify-send-volume $2
+                    ;;
+
+                unmute)
+                    pactl -- set-sink-mute 0 0
+                    notify-send-volume $2
+                    ;;
+
+                toggle-mute)
+                    pactl -- set-sink-mute 0 toggle
+                    if [ "$(pactl -- get-sink-mute 0)" == "Mute: yes" ]; then
+                        notify-send-volume mute
+                    else
+                        notify-send-volume unmute
+                    fi
+                    ;;
+            esac
+        fi
+        ;;
 
     brightness)
-        _command light || (echo "Missing light command"; exit 1)
-        case $2 in
-            up)
-                light -A 2
-                notify-send-brightness $2
-               ;;
+        if _command light; then
+            case $2 in
+                up)
+                    light -A 2
+                    notify-send-brightness $2
+                    ;;
 
-            down)
-                light -U 2
-                notify-send-brightness $2
-               ;;
-        esac
-       ;;
+                down)
+                    light -U 2
+                    notify-send-brightness $2
+                    ;;
+            esac
+        else
+            case $2 in
+                up)
+                    ${HOME}/bin/brightness ${DISP} +0.2
+                    notify-send-brightness $2
+                    ;;
+
+                down)
+                    ${HOME}/bin/brightness ${DISP} -0.2
+                    notify-send-brightness $2
+                    ;;
+            esac
+        fi
+        ;;
 
     display)
-        _command xrandr || (echo "Missing xrandr command"; exit 1)
-        case $2 in
-            toggle)
-                if $(xrandr --listactivemonitors | grep -q "^Monitors: 1$"); then
-                    xrandr --output HDMI-1-0 --auto
-                else
-                    xrandr --output HDMI-1-0 --off
-                fi
-               ;;
-        esac
-       ;;
+        if _command xrandr; then
+            case $2 in
+                toggle)
+                    if $(xrandr --listactivemonitors | grep -q "^Monitors: 1$"); then
+                        xrandr --output HDMI-1-0 --auto
+                    else
+                        xrandr --output HDMI-1-0 --off
+                    fi
+                    ;;
+            esac
+        fi
+        ;;
+
+    bluetooth)
+        if [ "$(uname -n)" != "dom0" ]; then
+            case $2 in
+                on)
+                    _run notify-send ${EXPIRE_TIME} "Bluetooth On"
+                    bluetoothctl power on
+                    ;;
+
+                off)
+                    _run notify-send ${EXPIRE_TIME} "Bluetooth Off"
+                    bluetoothctl power off
+                    ;;
+
+                connect)
+                    case $3 in
+                        headphones)
+                            _run notify-send ${EXPIRE_TIME} "Connecting to Sennheiser HD 350BT Headphones"
+                            bluetoothctl connect 80:C3:BA:0E:CB:E5
+                            ;;
+
+                        earbuds)
+                            _run notify-send ${EXPIRE_TIME} "Connecting to Sennheiser Momentum TW 4 Earbuds"
+                            bluetoothctl connect 80:C3:BA:89:8B:E9
+                            ;;
+                    esac
+                    ;;
+
+                disconnect)
+                    case $3 in
+                        headphones)
+                            _run notify-send ${EXPIRE_TIME} "Disconnecting from Sennheiser HD 350BT Headphones"
+                            bluetoothctl disconnect 80:C3:BA:0E:CB:E5
+                            ;;
+
+                        earbuds)
+                            _run notify-send ${EXPIRE_TIME} "Disconnecting from Sennheiser Momentum TW 4 Earbuds"
+                            bluetoothctl disconnect 80:C3:BA:89:8B:E9
+                            ;;
+                    esac
+                    ;;
+            esac
+        else
+            case $2 in
+                on)
+                    _run notify-send ${EXPIRE_TIME} "Bluetooth On"
+                    qvm-run personal "bluetoothctl power on"
+                    ;;
+
+                off)
+                    _run notify-send ${EXPIRE_TIME} "Bluetooth Off"
+                    qvm-run personal "bluetoothctl power off"
+                    ;;
+
+                connect)
+                    case $3 in
+                        headphones)
+                            _run notify-send ${EXPIRE_TIME} "Connecting to Sennheiser HD 350BT Headphones"
+                            qvm-run personal "bluetoothctl connect 80:C3:BA:0E:CB:E5"
+                            ;;
+
+                        earbuds)
+                            _run notify-send ${EXPIRE_TIME} "Connecting to Sennheiser Momentum TW 4 Earbuds"
+                            qvm-run personal "bluetoothctl connect 80:C3:BA:89:8B:E9"
+                            ;;
+                    esac
+                    ;;
+
+                disconnect)
+                    case $3 in
+                        headphones)
+                            _run notify-send ${EXPIRE_TIME} "Disconnecting from Sennheiser HD 350BT Headphones"
+                            qvm-run personal "bluetoothctl disconnect 80:C3:BA:0E:CB:E5"
+                            ;;
+
+                        earbuds)
+                            _run notify-send ${EXPIRE_TIME} "Disconnecting from Sennheiser Momentum TW 4 Earbuds"
+                            qvm-run personal "bluetoothctl disconnect 80:C3:BA:89:8B:E9"
+                            ;;
+                    esac
+                    ;;
+            esac
+        fi
+        ;;
 esac
 
 #===============================================================================

@@ -17,6 +17,8 @@ arch = {
     "ngspice",
     "shortwave",
     "spotify",
+    "storytold-office",
+    "storytold-suite",
     "gst-plugins-bad",
     "kicad-library",
     "zbar",
