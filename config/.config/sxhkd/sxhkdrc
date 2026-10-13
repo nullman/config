@@ -725,32 +725,24 @@ XF86AudioNext
 #         ${HOME}/bin/music-cotrol spotify next; \
 #     fi
 
-# spotify: play previous
-super + alt + ctrl + z
-    if [ "$(uname -n)" == "dom0" ]; then \
-        qvm-run personal "${HOME}/bin/music-cotrol spotify prev"; \
-    else \
-        ${HOME}/bin/music-cotrol spotify prev; \
-    fi
-
 # spotify: toggle play/pause
-super + alt + ctrl + c
+super + alt + ctrl + z
     if [ "$(uname -n)" == "dom0" ]; then \
         qvm-run personal "${HOME}/bin/music-cotrol spotify toggle"; \
     else \
         ${HOME}/bin/music-cotrol spotify toggle; \
     fi
 
-# spotify: stop
+# spotify: play previous
 super + alt + ctrl + x
     if [ "$(uname -n)" == "dom0" ]; then \
-        qvm-run personal "${HOME}/bin/music-cotrol spotify stop"; \
+        qvm-run personal "${HOME}/bin/music-cotrol spotify prev"; \
     else \
-        ${HOME}/bin/music-cotrol spotify stop; \
+        ${HOME}/bin/music-cotrol spotify prev; \
     fi
 
 # spotify: play next
-super + alt + ctrl + b
+super + alt + ctrl + c
     if [ "$(uname -n)" == "dom0" ]; then \
         qvm-run personal "${HOME}/bin/music-cotrol spotify next"; \
     else \
@@ -758,7 +750,7 @@ super + alt + ctrl + b
     fi
 
 # spotify: display status
-super + alt + ctrl + apostrophe
+super + alt + ctrl + v
     if [ "$(uname -n)" == "dom0" ]; then \
         qvm-run personal "${HOME}/bin/music-cotrol spotify status"; \
     else \

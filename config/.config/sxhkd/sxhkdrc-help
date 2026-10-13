@@ -3,47 +3,46 @@ Simple X Hotkey Daemon Key Bindings
 
 System Tools
 
-|-------+-----+------+-------+--------+-------------------------------------|
-| Super | Alt | Ctrl | Shift | Key    | Description                         |
-|-------+-----+------+-------+--------+-------------------------------------|
-| Super |     |      |       | h      | Display Key Bindings                |
-| Super |     |      | Shift | h      | Display BSPWM Manual                |
-| Super | Alt |      |       | Space  | Desktop Application Launcher        |
-| Super |     |      |       | d      | Program Launcher                    |
-| Super |     |      |       | a      | Group Application Launcher          |
-| Super |     |      |       | Return | Menu Launcher                       |
-| Super |     |      |       | w      | Window Selector                     |
-| Super |     |      |       | Space  | Window/Desktop/Program Selector     |
-| Super |     |      |       | c      | Clipmenu Selector                   |
-| Super |     |      |       | e      | Emoji Selector                      |
-| Super |     |      |       | o      | Bookmarks Selector                  |
-| Super |     |      | Shift | o      | Bookmarks Keyword Selector          |
-| Super |     |      |       | ;      | Typer Selector                      |
-| Super |     |      |       | '      | Paste Selector                      |
-| Super |     |      |       | s      | Spell and Define Word               |
-| Super |     |      |       | p      | Generate Password                   |
-| Super |     |      |       | \      | Display Time                        |
-| Super |     |      |       | y      | Git Synchronize Config              |
-| Super |     |      | Shift | y      | Git Synchronize Extra               |
-| Super |     |      |       | x      | Activate Screensaver                |
-| Super |     |      | Shift | x      | Lock Screen                         |
-| Super |     |      | Shift | q      | Session Menu                        |
-| Super |     |      | Shift | p      | Get XProp Class Name                |
-| Super |     |      | Shift | Delete | Kill Process Clicked                |
-| Super | Alt |      |       | Print  | Screen Snapshot                     |
-| Super |     | Ctrl |       | Print  | Window Snapshot                     |
-| Super |     |      | Shift | Print  | Region Snapshot                     |
-| Super |     |      | Shift | s      | Reload SXHKD                        |
-| Super |     |      | Shift | r      | Reload System Tray                  |
-| Super |     |      | Shift | c      | Reload Conky                        |
-| Super |     |      | Shift | v      | Reset Video                         |
-| Super |     |      | Shift | \      | Reset X11 Settings                  |
-| Super |     |      |       | b      | Connect to Sennheiser Headphones    |
-| Super |     |      | Shift | b      | Disconnect to Sennheiser Headphones |
-| Super |     |      |       | n      | Connect to Powerbeats Headphones    |
-| Super |     |      | Shift | n      | Disconnect to Powerbeats Headphones |
-|-------+-----+------+-------+--------+-------------------------------------|
-#+TBLFM:
+|-------+-----+------+-------+--------+---------------------------------|
+| Super | Alt | Ctrl | Shift | Key    | Description                     |
+|-------+-----+------+-------+--------+---------------------------------|
+| Super |     |      |       | h      | Display Key Bindings            |
+| Super |     |      | Shift | h      | Display BSPWM Manual            |
+| Super | Alt |      |       | Space  | Desktop Application Launcher    |
+| Super |     |      |       | d      | Program Launcher                |
+| Super |     |      |       | a      | Group Application Launcher      |
+| Super |     |      |       | Return | Menu Launcher                   |
+| Super |     |      |       | w      | Window Selector                 |
+| Super |     |      |       | Space  | Window/Desktop/Program Selector |
+| Super |     |      |       | c      | Clipmenu Selector               |
+| Super |     |      |       | e      | Emoji Selector                  |
+| Super |     |      |       | o      | Bookmarks Selector              |
+| Super |     |      | Shift | o      | Bookmarks Keyword Selector      |
+| Super |     |      |       | ;      | Typer Selector                  |
+| Super |     |      |       | '      | Paste Selector                  |
+| Super |     |      |       | s      | Spell and Define Word           |
+| Super |     |      |       | p      | Generate Password               |
+| Super |     |      |       | \      | Display Time                    |
+| Super |     |      |       | y      | Git Synchronize Config          |
+| Super |     |      | Shift | y      | Git Synchronize Extra           |
+| Super |     |      |       | x      | Activate Screensaver            |
+| Super |     |      | Shift | x      | Lock Screen                     |
+| Super |     |      | Shift | q      | Session Menu                    |
+| Super |     |      | Shift | p      | Get XProp Class Name            |
+| Super |     |      | Shift | Delete | Kill Process Clicked            |
+| Super | Alt |      |       | Print  | Screen Snapshot                 |
+| Super |     | Ctrl |       | Print  | Window Snapshot                 |
+| Super |     |      | Shift | Print  | Region Snapshot                 |
+| Super |     |      | Shift | s      | Reload SXHKD                    |
+| Super |     |      | Shift | r      | Reload System Tray              |
+| Super |     |      | Shift | c      | Reload Conky                    |
+| Super |     |      | Shift | v      | Reset Video                     |
+| Super |     |      | Shift | \      | Reset X11 Settings              |
+| Super |     |      |       | b      | Connect to Headphones           |
+| Super |     |      | Shift | b      | Disconnect to Headphones        |
+| Super |     |      |       | n      | Connect to Earbuds              |
+| Super |     |      | Shift | n      | Disconnect to Earbuds           |
+|-------+-----+------+-------+--------+---------------------------------|
 
 Media
 
@@ -60,11 +59,10 @@ Media
 | Super | Alt | Ctrl |       | Comma  | MPD: Play Previous Song   |
 | Super | Alt | Ctrl |       | Period | MPD: Play Next Song       |
 | Super | Alt | Ctrl |       | Slash  | MPD: Display Current Song |
-| Super | Alt | Ctrl |       | z      | MP2: Play Previous Song   |
-| Super | Alt | Ctrl |       | c      | MP2: Play/Pause Song      |
-| Super | Alt | Ctrl |       | x      | MP2: Stop Player          |
-| Super | Alt | Ctrl |       | b      | MP2: Play Next Song       |
-| Super | Alt | Ctrl |       | "      | MP2: Display Current Song |
+| Super | Alt | Ctrl |       | z      | MP2: Play/Pause Song      |
+| Super | Alt | Ctrl |       | x      | MP2: Play Previous Song   |
+| Super | Alt | Ctrl |       | c      | MP2: Play Next Song       |
+| Super | Alt | Ctrl |       | v      | MP2: Display Current Song |
 |-------+-----+------+-------+--------+---------------------------|
 
 Applications
