@@ -341,11 +341,12 @@ super + c
 # emoji selector
 super + e
     if [ "$(uname -n)" == "dom0" ]; then \
-        qvm-run personal "/usr/sbin/rofimoji --typer xdotool --clipboarder xsel --skin-tone neutral"; \
+        qvm-run personal "rofimoji --action print --skin-tone neutral | tr -d '\n' | xsel && xsel --output | xsel --clipboard"; \
+        #qvm-run personal "rofimoji --typer xdotool --clipboarder xsel --skin-tone neutral"; \
     else \
-        rofimoji --typer xdotool --clipboarder xsel --skin-tone neutral; \
+        rofimoji --action print --skin-tone neutral | tr -d '\n' | xsel && xsel --output | xsel --clipboard; \
+        #rofimoji --typer xdotool --clipboarder xsel --skin-tone neutral; \
     fi
-    #rofimoji --action print --skin-tone neutral | tr -d '\n' | xsel && xsel --output | xsel --clipboard; \
 
 # unicode selector
 super + u
@@ -414,12 +415,13 @@ super + p
         qvm-run personal "\${HOME}/bin/rofi-menu password"; \
     else \
         ${HOME}/bin/rofi-menu password; \
-    fi && notify-send --expire-time=3000 'Random password phrase on clipboard'
+    fi
 
 # display time
 super + backslash
     printf "$(date '+%Y-%m-%d')\n $(date '+%H:%M:%S')" | \
-    yad --text-info --width=532 --height=240 --wrap --no-buttons --timeout=3 --fontname='MesloLGS Nerd Font Mono 64' 2>/dev/null
+    yad --text-info --width=532 --height=240 --wrap --no-buttons \
+    --timeout=3 --fontname='MesloLGS Nerd Font Mono 64' 2>/dev/null
 
 # # edit with emacs
 # super + e
@@ -432,7 +434,7 @@ super + backslash
 # git synchronize config
 super + y
     if [ "$(uname -n)" == "dom0" ]; then \
-        qvm-run personal "source '\${HOME}/.funct' && (git-sync-config && echo 'Done') 2>&1 | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"; \
+        qvm-run personal "source '${HOME}/.funct' && (git-sync-config && echo 'Done') 2>&1 | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"; \
     else \
         source "${HOME}/.funct" && (git-sync-config && echo 'Done') 2>&1 | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null; \
     fi
